@@ -2,6 +2,7 @@
  * Declaration rules of C# 14 extension blocks (SF-A02-T83), reported where Roslyn reports them:
  *
  *   CS9283  the block is not in a top-level, non-generic, static class          (the `extension` keyword)
+ *   CS9284  a default value on the receiver parameter                           (the parameter)
  *   CS9285  more than one receiver parameter                                    (each extra parameter)
  *   CS9300  a `ref` receiver that is not a value type or struct-constrained     (the receiver type)
  *   CS9301  an `in` / `ref readonly` receiver that is not a concrete value type (the receiver type)
@@ -57,7 +58,10 @@ export function disallowedMemberToken(member) {
 /** The rules of the block itself: its container and its receiver parameter list. */
 export function checkExtensionBlock(type, block, report) {
   if (!canDeclareExtensions(type)) report(block.firstToken(), 'CS9283');
-  for (const extra of (block.parameterList?.parameters ?? []).slice(1)) report(extra, 'CS9285');
+  const [receiver, ...extras] = block.parameterList?.parameters ?? [];
+  // Roslyn reports the default value on the receiver only; an extra parameter is CS9285 whatever it declares.
+  if (receiver?.default) report(receiver, 'CS9284');
+  for (const extra of extras) report(extra, 'CS9285');
   checkExtensionReceiverName(block, report);
 }
 

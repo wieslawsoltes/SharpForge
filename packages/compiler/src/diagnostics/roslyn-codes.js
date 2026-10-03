@@ -822,6 +822,7 @@ export const roslynCodes=Object.freeze({
  CS9280:["ERR_PartialConstructorInitializer","error",0,"'{0}': only the implementing declaration of a partial constructor can have an initializer"],
  CS9282:["ERR_ExtensionDisallowsMember","error",0,"This member is not allowed in an extension block"],
  CS9283:["ERR_BadExtensionContainingType","error",0,"Extensions must be declared in a top-level, non-generic, static class"],
+ CS9284:["ERR_ExtensionParameterDisallowsDefaultValue","error",0,"The receiver parameter of an extension cannot have a default value"],
  CS9285:["ERR_ReceiverParameterOnlyOne","error",0,"An extension container can have only one receiver parameter"],
  CS9287:["ERR_ReceiverParameterSameNameAsTypeParameter","error",0,"'{0}': a receiver parameter cannot have the same name as an extension container type parameter"],
  CS9290:["ERR_LocalSameNameAsExtensionParameter","error",0,"'{0}': a parameter, local variable, or local function cannot have the same name as an extension parameter"],
