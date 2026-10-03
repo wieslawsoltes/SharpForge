@@ -8,6 +8,9 @@
  *   static method    static R M(P p) static R M<T>(P p)
  *   instance property P { get; set; } static get_P<T>(Receiver r), static set_P<T>(Receiver r, P value)
  *   static property                  static get_P<T>(), static set_P<T>(P value)
+ *   indexer  P this[I i] { get; set; } static get_Item<T>(Receiver r, I i), static set_Item<T>(Receiver r, I i, P value)
+ *                                    (C# 15 preview, provisional: csharplang/proposals/csharp-15.0/extension-indexers.md
+ *                                    revision 1, "Metadata"; the name given by IndexerNameAttribute is not applied)
  *
  * The type parameters of the block come first in the implementation's type parameter list, then the member's own.
  * The implementations are ordinary members of the class (`E.M(r, p)` and `E.get_P(r)` bind as written). What the
@@ -45,8 +48,6 @@ export const ExtensionBlockBuilder = Base =>
           report(disallowed, 'CS9282');
           continue;
         }
-        // Extension indexers are C# 15 preview (SF-A02-T91).
-        if (member.kind === 'IndexerDeclaration') continue;
         const first = members.length;
         if (member.kind === 'MethodDeclaration') this.extensionMethod(type, syntax, member, scope, uri, members);
         else if (member.kind === 'OperatorDeclaration') this.extensionOperator(type, syntax, member, scope, uri, members);
@@ -60,7 +61,10 @@ export const ExtensionBlockBuilder = Base =>
           checkExtensionOperator(member, implementation, report);
           continue;
         }
-        const name = member.identifier.valueText;
+        const isIndexer = member.kind === 'IndexerDeclaration',
+          // The parameters of an indexer follow the receiver; a set accessor ends with `value`.
+          ownParameters = isIndexer ? implementation.parameters.slice(1, implementation.returnsVoid ? -1 : undefined) : [],
+          name = isIndexer ? `this[${ownParameters.map(parameter => parameter.type.toDisplayString()).join(', ')}]` : member.identifier.valueText;
         checkExtensionMember(
           member,
           {
@@ -69,6 +73,7 @@ export const ExtensionBlockBuilder = Base =>
             receiver,
             display: `${type.toDisplayString()}.extension(${receiver?.type?.toDisplayString() ?? ''}).${name}`,
             blockTypeParameters: implementation.typeParameters.slice(0, blockArity),
+            ownParameters,
           },
           report,
         );
@@ -183,19 +188,24 @@ export const ExtensionBlockBuilder = Base =>
       // An instance (compound assignment) operator takes the receiver first; operator resolution does not use it yet.
       type.extensionMembers.push({ name, kind: isStatic ? 'operator' : 'instanceOperator', symbol: method });
     }
+    /** A property of a block, or (C# 15 preview) an indexer: the same accessors with the indexer's parameters after the receiver. */
     extensionProperty(type, block, syntax, scope, uri, members) {
       const list = words(syntax.modifiers),
-        isStatic = list.includes('static'),
-        name = syntax.identifier.valueText;
+        isIndexer = syntax.kind === 'IndexerDeclaration',
+        // "Because indexers are always instance members": `static` is CS0106 as on any indexer (binder/members).
+        isStatic = list.includes('static') && !isIndexer,
+        name = isIndexer ? 'this[]' : syntax.identifier.valueText;
+      if (isIndexer && list.includes('static')) this.report(uri, syntax.thisKeyword, 'CS0106', ['static']);
       let typeSyntax = syntax.type;
       if (typeSyntax.kind === 'RefType') typeSyntax = typeSyntax.type;
       const accessor = (keyword, body) =>
         this.extensionImplementation(type, block, scope, uri, {
-          name: (keyword === 'get' ? 'get_' : 'set_') + name,
+          name: (keyword === 'get' ? 'get_' : 'set_') + (isIndexer ? 'Item' : name),
           syntax: body,
           declaration: syntax,
           isStatic,
           returnTypeSyntax: keyword === 'get' ? syntax.type : null,
+          parameterList: isIndexer ? syntax.parameterList : null,
           valueType: keyword === 'get' ? null : typeSyntax,
         });
       let getMethod = syntax.expressionBody ? accessor('get', syntax) : null,
@@ -213,9 +223,13 @@ export const ExtensionBlockBuilder = Base =>
         containingSymbol: type,
         declaredAccessibility: accessibilityFromSyntax(list, Accessibility.Private),
         modifiers: modifiersFromSyntax(list),
-        locations: [{ uri, ...spanOf(syntax.identifier) }],
+        locations: [{ uri, ...spanOf(syntax.identifier ?? syntax.thisKeyword) }],
         syntax,
       });
+      if (isIndexer) {
+        property.isExtensionIndexer = true;
+        property.parameters = Object.freeze(typed.parameters.slice(1, getMethod ? undefined : -1));
+      }
       // The accessors stay ordinary methods (they can be called by name), so they are attached without `associatedSymbol`.
       property.getMethod = getMethod;
       property.setMethod = setMethod;
