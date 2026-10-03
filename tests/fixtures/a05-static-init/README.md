@@ -40,3 +40,25 @@ It emits the DLL, runtime configuration, tool versions, source/assembly hashes,
 and both outputs under `artifacts/a05-static-init/`. This runner deliberately
 requires the observed native lazy order for this fixture, while the runtime's
 policy remains one of the orders allowed by ECMA-335.
+
+The reusable E04 runner accepts source files or directories with `expected.txt`:
+
+```sh
+node scripts/validate-a05-type-system.js --fixture tests/fixtures/a05-static-init
+node scripts/validate-a05-type-system.js --fixture /path/Program.cs --expected /path/output.txt
+```
+
+Repeat `--fixture` to compare multiple programs, pair each optional `--expected`
+with its preceding fixture, and use `--output` to select the artifact directory.
+With no fixture arguments, the runner includes this fixture, generic statics,
+enums/strings, type tokens, and the native assignability oracle. The latter
+compares native `Type.IsAssignableFrom` with the shared `CastCache`; its report
+explicitly distinguishes that algorithm comparison from same-DLL CIL execution.
+`--casts` selects only that oracle. `DOTNET_PATH` and `DOTNET_TARGET_FRAMEWORK`
+select the SDK executable and target framework. Run only after E04 is assembled.
+
+The runner compiles fixture `.cs` files in Release with no NuGet feeds; it does
+not consume custom project files or dependencies. It retains source, expected
+output, DLL, runtime configuration, source/assembly hashes, tool versions, and
+both results. CRLF is normalized to LF; other output differences fail. Failed
+cases produce evidence and do not prevent remaining cases from being compared.
