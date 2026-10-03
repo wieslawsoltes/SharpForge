@@ -49,3 +49,7 @@ ranks above 32 throw `CilError`. The AST codecs accept `{ maxDepth, maxNodes, si
 for bounded traversal and cancellation. No per-operation state survives disposal
 of the returned byte array or AST. Run `node examples/il/signatures.mjs` for an
 example and `node --test tests/a03-02-signatures.test.js` for the offline corpus.
+
+The [metadata API](METADATA.md) exposes all 53 named table schemas, typed row writers,
+deduplicated heaps, required sorting, uncompressed pointer lists and bounded II.22
+structural diagnostics. See `examples/metadata/table-builder.mjs` for a runnable example.

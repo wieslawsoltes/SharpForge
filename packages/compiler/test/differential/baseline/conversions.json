@@ -1,0 +1,11 @@
+{
+  "conversions/cs0029-int-to-bool": ["diagnostics", "warnings"],
+  "conversions/cs0029-int-to-string": ["diagnostics", "warnings"],
+  "conversions/cs0029-return-type": ["diagnostics", "warnings"],
+  "conversions/cs0029-string-to-int": ["diagnostics", "warnings"],
+  "conversions/cs0030-string-cast-to-int": ["diagnostics", "warnings"],
+  "conversions/cs0031-constant-out-of-range": ["diagnostics", "warnings"],
+  "conversions/cs0266-double-to-int": ["diagnostics", "warnings"],
+  "conversions/cs0266-long-to-int": ["diagnostics", "warnings"],
+  "conversions/cs0664-double-literal-to-float": ["diagnostics", "warnings"]
+}

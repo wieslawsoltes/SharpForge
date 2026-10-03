@@ -96,7 +96,8 @@ export const FunctionTranslation = Base =>
       const root = this.frame.root;
       if (root.localFunctions.has(symbol)) return;
       const at = symbol.locations?.[0];
-      if (symbol.typeParameters?.length) this.unsupported('user-defined generics', at);
+      // A generic local function is declared per construction, where it is called (lowering/generics).
+      if (this.g.generics.isOpenFunction(symbol)) return;
       if (!symbol.body) this.unsupported('extern methods', at);
       const captures = this.capturesOf(symbol),
         extra = [];
@@ -153,8 +154,7 @@ export const FunctionTranslation = Base =>
       const definition = method.originalDefinition ?? method;
       if (definition.methodKind === MethodKind.LocalFunction) return this.localFunctionDelegate(definition, info, node.syntax);
       if (!this.g.isSource(definition)) return this.unsupported('delegates over framework methods', node.syntax);
-      if (definition.typeParameters?.length) return this.unsupported('user-defined generics', node.syntax);
-      const record = this.g.methodOf(definition, node.syntax);
+      const record = this.g.methodOf(method, node.syntax);
       if (record.isStatic) return this.g.delegates.create(info, record, null);
       const receiver = group.receiver ? this.expression(group.receiver) : this.frame.thisExpr?.();
       if (!receiver) return this.unsupported('an instance method group without a receiver', node.syntax);

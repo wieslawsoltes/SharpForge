@@ -7,6 +7,7 @@
  * program contains such a construct; only then is the analysis consulted, and only the diagnostics listed in
  * `semanticRuleCodes` are taken from it - the image and every other diagnostic of the pipeline stand.
  */
+import { needsTopLevelRules } from '../binder/top-level.js';
 
 /** The rules: a source-text filter that is false for almost every program, the syntax that needs the rule, and its codes. */
 const rules = [
@@ -18,8 +19,17 @@ const rules = [
   },
 ];
 
+/** Rules decided from the compilation unit alone: `{ applies(file), codes }`. */
+const unitRules = [
+  {
+    // Top-level statements: placement, the Program type, the `args` parameter, unused local functions (binder/top-level.js).
+    applies: needsTopLevelRules,
+    codes: ['CS8937', 'CS0260', 'CS0101', 'CS0136', 'CS8321'],
+  },
+];
+
 /** Diagnostic codes taken from the semantic analysis of a program the execution pipeline compiled. */
-export const semanticRuleCodes = new Set(rules.flatMap(rule => rule.codes));
+export const semanticRuleCodes = new Set([...rules, ...unitRules].flatMap(rule => rule.codes));
 
 function contains(node, applies) {
   if (applies(node)) return true;
@@ -33,6 +43,7 @@ function contains(node, applies) {
  */
 export function needsSemanticRules(files) {
   for (const file of files) {
+    if (unitRules.some(rule => rule.applies(file))) return true;
     for (const rule of rules) {
       if (rule.text.test(file.source.text) && contains(file.syntax, rule.applies)) return true;
     }

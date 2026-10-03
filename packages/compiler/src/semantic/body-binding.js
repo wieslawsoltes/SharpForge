@@ -1,8 +1,9 @@
 /**
- * Binding of bodies: methods, accessors, constructors with their initializers, field and property
- * initializers and top-level statements, followed by the flow passes over each bound body.
+ * Binding of bodies: methods, accessors, constructors with their initializers and field and property
+ * initializers, followed by the flow passes over each bound body. Top-level statements are bound in
+ * ../binder/top-level.js.
  */
-import { SymbolKind, TypeKind, RefKind, Accessibility, NamedTypeSymbol } from '../symbols/types.js';
+import { SymbolKind, TypeKind, RefKind, ErrorTypeSymbol } from '../symbols/types.js';
 import { MethodKind } from '../symbols/members.js';
 import { checkImplicitBaseCall, checkConstructorCycles, constructorInitializerKind } from '../binder/constructors.js';
 import { BodyBinder } from '../binder/body-binder.js';
@@ -12,7 +13,8 @@ import { analyzeRefSafety } from '../flow/ref-safety.js';
 import { NullableWalker } from '../nullable/walker.js';
 import { checkIteratorBody } from '../binder/iterators.js';
 import { checkAsyncBody } from '../binder/async.js';
-import { isSourceSymbol, isClosedType, containsAwait } from './analysis-helpers.js';
+import { asyncResultType } from '../binder/csharp70.js';
+import { isSourceSymbol, isClosedType } from './analysis-helpers.js';
 
 /** Class mixin: Binding of bodies: methods, accessors, constructors with their initializers, field and property */
 export const BodyBinding = Base =>
@@ -35,16 +37,18 @@ export const BodyBinding = Base =>
         declared = method.returnType;
       let returnType = declared;
       if (isAsync && declared) {
-        if (declared.originalDefinition === this.core.taskT || (declared.name === 'ValueTask' && declared.typeArguments?.length === 1))
-          returnType = declared.typeArguments[0].type;
-        else if (declared.equals(this.core.task) || declared.name === 'ValueTask') returnType = this.core.void;
+        const taskResult = asyncResultType(declared, this.core);
+        if (taskResult) returnType = taskResult;
         else if (
           declared.specialType !== 'System_Void' &&
           !declared.isErrorType() &&
           !['IAsyncEnumerable', 'IAsyncEnumerator'].includes(declared.name) &&
           isClosedType(declared)
-        )
+        ) {
           this.report(context.uri, method.locations[0], 'CS1983');
+          // What the body returns is not checked against a type that cannot be the result of an async method.
+          returnType = ErrorTypeSymbol.unknown;
+        }
       }
       const binder = new BodyBinder(this, {
         ...context,
@@ -139,6 +143,7 @@ export const BodyBinding = Base =>
           if (member.methodKind === MethodKind.Constructor && member.initializerSyntax) {
             const binder = new BodyBinder(this, { ...context, parameters: member.parameters, isConstructorInitializer: true });
             this.bindConstructorInitializer(member, type, binder);
+            context.outerLocals = binder.scopes[0];
           }
           this.bindMethodBody(member, context);
         } else {
@@ -245,64 +250,5 @@ export const BodyBinding = Base =>
       else ctor.baseTarget = r.method;
       this.bound.set({ kind: 'ConstructorInitializer', ctor }, call);
       ctor.initializerCall = call;
-    }
-    /** Top-level statements are the body of the synthesized `<Main>$`; top-level methods become its local functions. */
-    bindTopLevel() {
-      const byFile = new Map();
-      for (const item of this.assembly.topLevel) {
-        if (!byFile.has(item.file)) byFile.set(item.file, []);
-        byFile.get(item.file).push(item);
-      }
-      for (const [file, items] of byFile) {
-        const statements = items.filter(i => i.statement).map(i => i.statement);
-        if (!statements.length) continue;
-        const scope = items[0].scope,
-          uri = file.source.uri,
-          usesAwait = statements.some(s => containsAwait(s));
-        const program = (this.programType ??= Object.assign(
-          new NamedTypeSymbol({
-            name: 'Program',
-            typeKind: TypeKind.Class,
-            containingSymbol: this.assembly.globalNamespace,
-            declaredAccessibility: Accessibility.Internal,
-            baseType: () => this.core.object,
-            isImplicitlyDeclared: true,
-          }),
-          { isSource: true },
-        ));
-        const binder = new BodyBinder(this, {
-          uri,
-          scope,
-          containingType: program,
-          method: null,
-          isStatic: true,
-          isFieldInitializer: false,
-          isTopLevel: true,
-          isAsync: usesAwait,
-          returnType: null,
-          parameters: [
-            {
-              name: 'args',
-              kind: SymbolKind.Parameter,
-              type: this.core.arrayOf(this.core.string),
-              refKind: RefKind.None,
-              isImplicitlyDeclared: true,
-            },
-          ],
-        });
-        const body = binder.block({ statements, span: file.syntax.span, kind: 'Block' }, { statements });
-        body.locals = binder.locals;
-        body.binder = binder;
-        this.bound.set(file, body);
-        for (const d of analyzeDefiniteAssignment(null, body, {
-          core: this.core,
-          languageVersion: this.versionOf(uri).number,
-          containingType: null,
-        }))
-          this.report(uri, d.node, d.code, d.args);
-        for (const d of analyzeRefSafety(null, body)) this.report(uri, d.node, d.code, d.args);
-        if (this.nullableMaps.get(uri)?.anyWarnings ?? this.nullableAt(uri, 0).warnings)
-          for (const d of new NullableWalker(this, uri).analyze(null, body)) this.report(uri, d.node, d.code, d.args, 'warning');
-      }
     }
   };

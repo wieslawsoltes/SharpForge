@@ -130,7 +130,8 @@ export class Compilation {
     const tops=[];
     for(const file of this.files){
       for(const node of file.root.members.filter(n=>n.kind==='Method'))this.declareMethod(null,{...node,modifiers:[...node.modifiers,'static']});
-      if(file.root.statements.length)tops.push({file,statements:file.root.statements});
+      // A local function is a statement too: a file of local functions alone is a program that does nothing.
+      if(file.root.statements.length||file.root.members.some(n=>n.kind==='Method'))tops.push({file,statements:file.root.statements});
     }
     const library=this.options.outputKind==='library';
     // Entry point: top-level statements, else the one suitable static Main (binder/entry-point.js).
