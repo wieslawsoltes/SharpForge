@@ -24,7 +24,7 @@ export function invokeDecimal(vm,descriptor,args) {
   if(ctor) {
     let value;
     if(signature.parameters.length===5){const scale=Number(number(values[4]));if(!Number.isInteger(scale)||scale<0||scale>28)throw new ManagedFault('ArgumentOutOfRangeException','Decimal scale must be between zero and 28');value=decimalFromBits([number(values[0]),number(values[1]),number(values[2]),(scale<<16)|(number(values[3])?0x80000000:0)],context);}
-    else if(signature.parameters[0]==='int[]')value=decimalFromBits(vm.heap.get(args.at(-1)).data,context);
+    else if(signature.parameters[0]==='int[]')value=decimalFromBits(Array.from(vm.heap.get(args.at(-1)).data),context);
     else if(['float','double'].includes(signature.parameters[0]))value=decimalFromFloat(number(values[0]),signature.parameters[0]==='float'?'r4':'r8',context);
     else value=scalarConvert(values[0],signature.parameters[0],'decimal',false,context);
     if(receiver!==null){vm.dereference(receiver,true,value);return result(null);}return result(value);
