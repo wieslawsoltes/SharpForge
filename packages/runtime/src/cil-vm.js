@@ -1,5 +1,5 @@
 import {runtimeTypeRoots,clearRuntimeTypes,runtimeTypeText} from './execution/tokens.js';
-import {checkArrayStore} from './execution/casting.js';
+import {address,dereference} from './execution/managed-pointers.js';
 import {storageDefault,storageValue} from './execution/storage.js';
 import {enumToString} from './execution/enums.js';
 import {literalString,stringRoots,clearStrings} from './execution/strings.js';
@@ -55,7 +55,7 @@ export class CilVirtualMachine {
   }
   // CLI storage locations narrow integers and round single precision on write/load.
   storage(value,type){return storageValue(this,value,type,numericContext);}
-  slotType(frame,arg,index){return arg?(frame.method.signature.isStatic?frame.method.signature.parameters[index]:index===0?'object':frame.method.signature.parameters[index-1]):frame.method.locals[index];}
+  slotType(frame,arg,index){return arg?(frame.method.signature.isStatic?frame.method.signature.parameters[index]:index===0?(this.typeSystem.table(frame.genericIdentity??frame.method.ownerToken).flags.valueType?(frame.genericIdentity??frame.method.owner)+'&':'object'):frame.method.signature.parameters[index-1]):frame.method.locals[index];}
   indirect(value,name){return numericIndirect(value,name,numericContext);}
   resultValue(){const value=this.value(this.returnValue);return this.returnType==='uint'?Number(value)>>>0:this.returnType==='ulong'?BigInt.asUintN(64,value??0n):this.returnType==='bool'?!!value:value;}
   resultDisplay(){return this.returnType==='string'?this.display(this.returnValue):this.format(this.returnValue,this.returnType);}
@@ -72,35 +72,8 @@ export class CilVirtualMachine {
   matches(ref,typeName){return this.typeSystem.matches(ref,typeName);}
   field(token,ref){return this.typeSystem.field(token,ref);}
   notifyWrite(write){this.writeRevision++;if(write.handle!==undefined)this.heap.mutationRevision++;this.onWrite?.({...write,frameId:write.frameId??this.top?.id});}
-  address(kind,index,owner){return Object.freeze({byref:true,kind,index,owner,frameId:this.top.id});}
-  dereference(address,write=false,value){
-    if(!address?.byref)throw new ManagedFault('InvalidProgramException','A managed address is required');
-    let slots, old;
-    if(['box','field','array'].includes(address.kind)){
-      const r=address.kind==='array'?this.indexed(address.owner,address.index):this.heap.get(address.owner);
-      if(address.kind==='box'&&r.kind!=='box')throw new ManagedFault('InvalidProgramException','A boxed value address is required');
-      slots=r.data;
-    } else if(address.kind==='static') {
-      if(!this.statics.has(address.index))throw new ManagedFault('InvalidProgramException','Unknown static slot');
-    } else {
-      if(!['arg','local'].includes(address.kind))throw new ManagedFault('InvalidProgramException','Unknown managed address');
-      const frame=this.frames.find(f=>f.id===address.frameId);
-      if(!frame)throw new ManagedFault('InvalidProgramException','Managed address outlived its frame');
-      slots=address.kind==='arg'?frame.args:frame.locals;
-    }
-    if(slots&&(!Number.isInteger(address.index)||address.index<0||address.index>=slots.length))throw new ManagedFault('InvalidProgramException','Invalid managed address slot');
-    old=slots?slots[address.index]:this.statics.get(address.index);
-    if(write){
-      if(address.kind==='array')checkArrayStore(this.heap,this.heap.get(address.owner),value);
-      if(slots)slots[address.index]=value;else this.statics.set(address.index,value);
-      this.writeRevision++;
-      if(address.owner)this.heap.mutationRevision++;
-      this.onWrite?.({kind:address.kind,index:address.index,frameId:address.frameId,
-        ...(address.owner?{handle:address.owner.h,generation:address.owner.g}:{}),oldValue:old,value});
-      return value;
-    }
-    if(old===undefined)throw new ManagedFault('InvalidProgramException','Uninitialized address');return old;
-  }
+  address(kind,index,owner,options){return address(this,kind,index,owner,options);}
+  dereference(pointer,write=false,value){return dereference(this,pointer,write,value);}
   snapshot(){return snapshotVM(this,'cil');}
   restore(snapshot){return restoreVM(this,snapshot,'cil');}
   indexed(ref,index){const r=this.heap.get(ref),n=number(index);if(r.kind!=='array'||!Number.isInteger(n)||n<0||n>=r.data.length)throw new ManagedFault('IndexOutOfRangeException','Array index out of range');return r;}
