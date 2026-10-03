@@ -52,7 +52,7 @@ TypeSpec/MemberRef metadata, including multidimensional lower-bound constructors
 `pointer(element)`, `byRef(element)` and `functionPointer(signature)` preserve
 canonical structural identity. Function pointer signatures use TypeDesc return
 and parameter types, convention/receiver flags, generic arity and vararg sentinel
-(-1 when absent). Nested byrefs and invalid array elements fail explicitly. Type
+(-1 when absent). Nested byrefs and void/TypedReference array elements fail explicitly. Type
 construction is bounded by `maxConstructedTypes` (default 100,000) and 4,096 display
 name characters. TypeSpecs preserve element/rank identity; bounds are constructor
 arguments, not part of runtime array type identity.
