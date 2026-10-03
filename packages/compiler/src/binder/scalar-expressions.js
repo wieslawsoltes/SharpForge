@@ -37,7 +37,7 @@ function stringCall(binder, value) {
 
 function bindProfile(binder, syntax, binding, profile) {
   if (binding.error) return binder.bad(syntax);
-  const intrinsic = profile === 'array' ? Builtins.find(item => item.arrayRuntime === binding.descriptor) : scalarBuiltinFor(binding.descriptor);
+  const intrinsic = profile === 'array' ? Builtins.find(item => item?.arrayRuntime === binding.descriptor) : scalarBuiltinFor(binding.descriptor);
   const receiver = binding.receiver ? binder.bindExpression(binding.receiver) : null;
   const parameters = binding.descriptor.parameters;
   const args = (binding.arguments ?? syntax.args ?? []).map((argument, index) => {
