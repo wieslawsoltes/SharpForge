@@ -1,3 +1,4 @@
+import {fileURLToPath} from 'node:url';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {readFileSync,readdirSync} from 'node:fs';
@@ -6,7 +7,7 @@ import * as api from '@sharpforge/compiler';
 import {MethodCompiler} from '../packages/compiler/src/method-compiler.js';
 import {Compilation} from '../packages/compiler/src/compilation.js';
 import * as utils from '../packages/compiler/src/type-utils.js';
-const root=new URL('../packages/compiler/src/',import.meta.url).pathname;
+const root=fileURLToPath(new URL('../packages/compiler/src/',import.meta.url));
 const sources=dir=>readdirSync(dir,{withFileTypes:true}).flatMap(e=>e.isDirectory()?sources(join(dir,e.name)):e.name.endsWith('.js')?[join(dir,e.name)]:[]);
 test('A02-T13 index.js only re-exports the public API',()=>{
   const lines=readFileSync(join(root,'index.js'),'utf8').split('\n').filter(l=>l.trim());
