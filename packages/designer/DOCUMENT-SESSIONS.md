@@ -40,6 +40,7 @@ The registry snapshot uses `{version: 1, activeUri, documents}`. Each document s
 `ratio`, `swapped`, `collapsed`, `zoom`, `scrollLeft`, `scrollTop`, `selection`, `editingMode`, `snap`, and `preview`. URI identity is
 case sensitive and never silently decoded or normalized. Recovery clamps finite view values, ignores unsupported versions, filters
 removed URIs, and drops unknown node IDs after source initialization. Live attachments and executable objects are never serialized.
+Session zoom uses the surface's 0.1–8 range (10–800%); snap spacing uses the guide contract's 0.25–1,024 design pixel range.
 
 `session.own(name, resource, dispose)` registers one resource; replacement disposes the former resource. Resources are disposed in
 reverse registration order. The source-sync object is session owned. A rendering adapter receiving a session therefore disposes its
