@@ -1,0 +1,31 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-c75b3637617f6d00c2e8",
+  "kind": "diagnostics",
+  "sourceText": "\nclass C\n{\n    public void M0(int a = 16, int b = 17, int c = 18)\n    {\n    }\n\n    public int f1 = 16;\n    public int f2 = 17;\n    public int f3 = 18;\n\n    public void M1()\n    {\n        M0(16, 17, 18);\n        M0(f1, f2, f3);\n        M0();\n    }\n}\n\nenum E\n{\n    A = 16,\n    B,\n    C = 17,\n    D = 18\n}\n",
+  "sourceSHA256": "311d7982a3dc03701539d84685be4aec271a1b66da1c46e901c90fd5d6d15566",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/Diagnostics/OperationAnalyzerTests.cs",
+    "sha256": "eb33d60956503b30bec29f823f9033347fac98a9029a70b139e6a57a3ad1abef",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/Diagnostics/OperationAnalyzerTests.cs",
+    "license": "MIT",
+    "method": "ValueContextsCSharp",
+    "offset": 26049
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source)",
+  "expected": {
+    "diagnostics": [],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "",
+  "unsupported": [
+    "Upstream reference profile differs from SharpForge closed framework; references retained for reference-qualified adaptation",
+    "Custom upstream compilation/parse options require an adapter"
+  ]
+}

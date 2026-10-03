@@ -14,11 +14,13 @@
  *               CS0751 not in a partial type     CS0750 abstract           CS8798 virtual modifiers need accessibility
  *               CS0758 params on one part only   CS8800 virtual modifiers differ   CS8818 ref returns differ
  *               CS1066 a default value on the implementing part is never used
+ *               CS0761, CS0764, CS8142, CS8663, CS8826: differences between the parts (./partial-method-signatures.js)
  *   properties  CS9248 no implementing part      CS9249 no defining part           CS9250 two defining parts
  *               CS9252 accessor not implemented  CS9255 types differ
  */
 import { SymbolKind, RefKind } from '../types.js';
 import { MethodKind, DeclarationModifiers } from '../members.js';
+import { isSamePartialMethod, partialSignatureRows } from './partial-method-signatures.js';
 import { mergePartialConstructorsAndEvents } from './partial-constructors-events.js';
 
 const accessWords = new Set(['public', 'private', 'protected', 'internal']);
@@ -91,6 +93,23 @@ function methodPairRules(definition, implementation) {
   return rows;
 }
 
+/**
+ * The parts of each partial method. Parts with the same signature belong together (`ref`, `out` and `in` are
+ * different signatures here); an implementing part left without a defining part then takes the defining part that
+ * differs from it only in what a signature does not count (./partial-method-signatures.js).
+ */
+function partialMethodGroups(methods) {
+  const refKinds = method => method.parameters.map(parameter => parameter.refKind ?? RefKind.None).join(','),
+    groups = groupBy(methods, method => method.signatureKey + '|' + refKinds(method)),
+    isImplementing = part => part.hasBody || part.isExtern,
+    lone = (group, implementing) => group.length === 1 && isImplementing(group[0]) === implementing;
+  for (const group of groups.filter(candidate => lone(candidate, true))) {
+    const definitions = groups.find(candidate => lone(candidate, false) && isSamePartialMethod(candidate[0], group[0]));
+    if (definitions) definitions.push(group.pop());
+  }
+  return groups.filter(group => group.length);
+}
+
 /** Merges the parts of one partial method; returns the symbols to remove and the diagnostics. */
 function mergeMethod(parts, type) {
   // An extern partial method has its code elsewhere: it is an implementing part.
@@ -113,6 +132,7 @@ function mergeMethod(parts, type) {
   }
   if (definition && implementation) {
     rows.push(...methodPairRules(definition, implementation), ...adoptCallerSignature(definition, implementation));
+    rows.push(...partialSignatureRows(definition, implementation));
     implementation.partialDefinitionPart = definition;
     definition.partialImplementationPart = implementation;
     removed.push(definition);
@@ -160,7 +180,7 @@ export function mergePartialMembers(type, members) {
     rows.push(...result.rows);
     for (const symbol of result.removed) removed.add(symbol);
   };
-  for (const parts of groupBy(members.filter(isPartialMethod), method => method.signatureKey)) apply(mergeMethod(parts, type));
+  for (const parts of partialMethodGroups(members.filter(isPartialMethod))) apply(mergeMethod(parts, type));
   const propertyKey = property => property.name + '[' + property.parameters.map(p => p.type?.toDisplayString() ?? '?').join(',') + ']';
   for (const parts of groupBy(members.filter(isPartialProperty), propertyKey)) apply(mergeProperty(parts));
   // C# 14: partial constructors and events.

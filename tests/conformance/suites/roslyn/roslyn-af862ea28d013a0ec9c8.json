@@ -1,0 +1,41 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-af862ea28d013a0ec9c8",
+  "kind": "diagnostics",
+  "sourceText": "class C\n{\n    static void M(ref readonly int p) => System.Console.WriteLine(p);\n    static readonly int x = 5;\n    static void Main()\n    {\n        M(out x);\n        int y;\n        M(out y);\n        M(out 6);\n    }\n}",
+  "sourceSHA256": "71766becf1e9f18bbe169d0954477b456af4737d6247c4caea7c662c302b1e4f",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/RefReadonlyParameterTests.cs",
+    "sha256": "94a0c620b0975febab4af5bf7a1536fee292cd72862f8126c0e8c35cfbf49495",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/RefReadonlyParameterTests.cs",
+    "license": "MIT",
+    "method": "RefReadonlyParameter_OutArgument",
+    "offset": 118276
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0199",
+        "severity": "error"
+      },
+      {
+        "code": "CS1615",
+        "severity": "error"
+      },
+      {
+        "code": "CS1510",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n            // (7,15): error CS0199: A static readonly field cannot be used as a ref or out value (except in a static constructor)\n            //         M(out x);\n            Diagnostic(ErrorCode.ERR_RefReadonlyStatic, \"x\").WithLocation(7, 15),\n            // (9,15): error CS1615: Argument 1 may not be passed with the 'out' keyword\n            //         M(out y);\n            Diagnostic(ErrorCode.ERR_BadArgExtraRef, \"y\").WithArguments(\"1\", \"out\").WithLocation(9, 15),\n            // (10,15): error CS1510: A ref or out value must be an assignable variable\n            //         M(out 6);\n            Diagnostic(ErrorCode.ERR_RefLvalueExpected, \"6\").WithLocation(10, 15)",
+  "unsupported": []
+}

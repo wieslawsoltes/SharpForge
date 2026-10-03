@@ -1,0 +1,53 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-8cb1d73e9f3001d0c10f",
+  "kind": "diagnostics",
+  "sourceText": "\nusing System.Runtime.InteropServices;\n\nclass M\n{\n    [DllImport(\"1\", CharSet = null)]\n    static extern int F1();\n\n    [DllImport(\"2\", CharSet = CharSet)]\n    static extern int F2();\n\n    [DllImport(\"3\", CharSet = \"str\")]\n    static extern int F3();\n\n    [DllImport(true)]\n    static extern int F4();\n\n    [DllImport(CharSet)]\n    static extern int F5();\n\n    [DllImport(1)]\n    static extern int F6();\n}\n",
+  "sourceSHA256": "388572c4c87895dd3c57774a7ef0a7b70d354e79e0c4ff1d97e5605a9c3ac2e4",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests_WellKnownAttributes.cs",
+    "sha256": "6d927a5bdb9405565ec70d2c4c97cb9f5f0d51b3a25bcd12a9f4821af6df10ed",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests_WellKnownAttributes.cs",
+    "license": "MIT",
+    "method": "DllImport_InvalidCharsetValue_Null",
+    "offset": 118361
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0037",
+        "severity": "error"
+      },
+      {
+        "code": "CS0119",
+        "severity": "error"
+      },
+      {
+        "code": "CS0029",
+        "severity": "error"
+      },
+      {
+        "code": "CS1503",
+        "severity": "error"
+      },
+      {
+        "code": "CS0119",
+        "severity": "error"
+      },
+      {
+        "code": "CS1503",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (6,31): error CS0037: Cannot convert null to 'System.Runtime.InteropServices.CharSet' because it is a non-nullable value type\n                Diagnostic(ErrorCode.ERR_ValueCantBeNull, \"null\").WithArguments(\"System.Runtime.InteropServices.CharSet\"),\n                // (9,31): error CS0119: 'System.Runtime.InteropServices.CharSet' is a type, which is not valid in the given context\n                Diagnostic(ErrorCode.ERR_BadSKunknown, \"CharSet\").WithArguments(\"System.Runtime.InteropServices.CharSet\", \"type\"),\n                // (12,31): error CS0029: Cannot implicitly convert type 'string' to 'System.Runtime.InteropServices.CharSet'\n                Diagnostic(ErrorCode.ERR_NoImplicitConv, @\"\"\"str\"\"\").WithArguments(\"string\", \"System.Runtime.InteropServices.CharSet\"),\n                // (15,16): error CS1503: Argument 1: cannot convert from 'bool' to 'string'\n                Diagnostic(ErrorCode.ERR_BadArgType, \"true\").WithArguments(\"1\", \"bool\", \"string\"),\n                // (18,16): error CS0119: 'System.Runtime.InteropServices.CharSet' is a type, which is not valid in the given context\n                Diagnostic(ErrorCode.ERR_BadSKunknown, \"CharSet\").WithArguments(\"System.Runtime.InteropServices.CharSet\", \"type\"),\n                // (21,16): error CS1503: Argument 1: cannot convert from 'int' to 'string'\n                Diagnostic(ErrorCode.ERR_BadArgType, \"1\").WithArguments(\"1\", \"int\", \"string\")",
+  "unsupported": []
+}

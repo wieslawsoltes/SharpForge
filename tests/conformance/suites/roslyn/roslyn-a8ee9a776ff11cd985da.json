@@ -1,0 +1,41 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-a8ee9a776ff11cd985da",
+  "kind": "diagnostics",
+  "sourceText": "\nusing System;\nclass Attr<T1> : Attribute { public object Prop { get; set; } }\n\nclass Outer<T2>\n{\n    [Attr<object>(Prop = default(T2))] // 1\n    class Program1 { }\n\n    [Attr<T2>(Prop = default(T2))] // 2, 3\n    class Program2 { }\n}\n",
+  "sourceSHA256": "87e0e0f9764d96137e86c7d9902ca0b018c883a25f16d3190df85aaeafcd0d08",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests.cs",
+    "sha256": "0071ca5e138cfceb6e147b3532046d29be4802f815d77ab3deaf17081480ec2e",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests.cs",
+    "license": "MIT",
+    "method": "GenericAttributeProperty_02",
+    "offset": 440491
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0182",
+        "severity": "error"
+      },
+      {
+        "code": "CS8968",
+        "severity": "error"
+      },
+      {
+        "code": "CS0182",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (7,26): error CS0182: An attribute argument must be a constant expression, typeof expression or array creation expression of an attribute parameter type\n                //     [Attr<object>(Prop = default(T2))] // 1\n                Diagnostic(ErrorCode.ERR_BadAttributeArgument, \"default(T2)\").WithLocation(7, 26),\n                // (10,6): error CS8968: 'T2': an attribute type argument cannot use type parameters\n                //     [Attr<T2>(Prop = default(T2))] // 2, 3\n                Diagnostic(ErrorCode.ERR_AttrTypeArgCannotBeTypeVar, \"Attr<T2>\").WithArguments(\"T2\").WithLocation(10, 6),\n                // (10,22): error CS0182: An attribute argument must be a constant expression, typeof expression or array creation expression of an attribute parameter type\n                //     [Attr<T2>(Prop = default(T2))] // 2, 3\n                Diagnostic(ErrorCode.ERR_BadAttributeArgument, \"default(T2)\").WithLocation(10, 22)",
+  "unsupported": []
+}

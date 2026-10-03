@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "standard-b638bc31303841e761a7",
+  "kind": "spec",
+  "sourceText": "using System;\nusing System.Collections.Generic;\nclass Base\n{\n    public static void M()\n    {\n        Console.WriteLine(\"Base.M\");\n    }\n}\n\nclass Derived: Base\n{\n    public new class M\n    {\n        public static void F()\n        {\n            Console.WriteLine(\"Derived.M.F\");\n        }\n    }\n}\n\nclass Test\n{\n    static void Main()\n    {\n        Derived.M.F();\n    }\n}",
+  "unsupported": [],
+  "target": "exe",
+  "expected": {
+    "diagnostics": [],
+    "ignoredWarnings": [],
+    "stdout": "Derived.M.F\n",
+    "exitCode": 0
+  },
+  "sourceSHA256": "83ef8a6fcef5534c286381ec7dad7dac29f399b81fb0121b9e19a2240779fa86",
+  "originalSource": "class Base\n{\n    public static void M()\n    {\n        Console.WriteLine(\"Base.M\");\n    }\n}\n\nclass Derived: Base\n{\n    public new class M\n    {\n        public static void F()\n        {\n            Console.WriteLine(\"Derived.M.F\");\n        }\n    }\n}\n\nclass Test\n{\n    static void Main()\n    {\n        Derived.M.F();\n    }\n}",
+  "metadata": {
+    "template": "standalone-console",
+    "name": "Hiding",
+    "expectedOutput": [
+      "Derived.M.F"
+    ]
+  },
+  "langVersion": "8.0",
+  "featureId": "csharp-1-0-classes",
+  "mappingScope": "Standard chapter to inventory feature; language level is pinned draft-v8, not feature introduction version",
+  "provenance": {
+    "repository": "dotnet/csharpstandard",
+    "commit": "107068a0fee88b13e9c46ff64f98343ff29ff8ee",
+    "path": "standard/classes.md",
+    "sha256": "590768cdc57083dae7d03ff027e638333a6d8da8662bebc30e4efab661d13ecf",
+    "url": "https://github.com/dotnet/csharpstandard/blob/107068a0fee88b13e9c46ff64f98343ff29ff8ee/standard/classes.md",
+    "license": "MIT",
+    "example": "Hiding",
+    "offsetInUnquotedMarkdown": 64987
+  }
+}

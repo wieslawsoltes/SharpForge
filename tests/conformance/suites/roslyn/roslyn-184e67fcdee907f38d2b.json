@@ -1,0 +1,30 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-184e67fcdee907f38d2b",
+  "kind": "diagnostics",
+  "sourceText": "using System.Collections;\nclass Program\n{\n    static void Main() { }\n\n    internal static bool IsEmpty1(IEnumerable source)\n    {\n        var c = source as ICollection;\n        return c != null && c.Count > 0;\n    }\n\n    internal static bool IsEmpty2(IEnumerable source)\n    {\n        return source is ICollection c && c.Count > 0;\n    }\n\n}",
+  "sourceSHA256": "1c7ae02d8d99c4763a996181697e077640002d115edce481920d8252e5891f14",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/CodeGen/PatternTests.cs",
+    "sha256": "2c5d2be17299314b03e2dae65a1673c5cc2e8a6644cd3483747648fe2e9d0438",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/CodeGen/PatternTests.cs",
+    "license": "MIT",
+    "method": "PatternsVsAs02",
+    "offset": 67549
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source, options: TestOptions.ReleaseDll)",
+  "expected": {
+    "diagnostics": [],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "",
+  "unsupported": [
+    "Custom upstream compilation/parse options require an adapter"
+  ]
+}

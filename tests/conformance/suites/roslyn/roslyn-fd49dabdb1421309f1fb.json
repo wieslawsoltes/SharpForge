@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-fd49dabdb1421309f1fb",
+  "kind": "diagnostics",
+  "sourceText": "\nclass Program\n{\n    public static void M(int i, string s)\n    {\n        // we do not target-type the left-hand-side of an as expression\n        _ = i switch { 1 => i, _ => s } as object;\n    }\n}\n",
+  "sourceSHA256": "35d5e08304caef841ae890baf3b252af9fec24bfcf668483818a4d21f80b06f2",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/CodeGen/PatternTests.cs",
+    "sha256": "2c5d2be17299314b03e2dae65a1673c5cc2e8a6644cd3483747648fe2e9d0438",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/CodeGen/PatternTests.cs",
+    "license": "MIT",
+    "method": "TargetTypedSwitch_As",
+    "offset": 171618
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS8506",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (7,15): error CS8506: No best type was found for the switch expression.\n                //         _ = i switch { 1 => i, _ => s } as object;\n                Diagnostic(ErrorCode.ERR_SwitchExpressionNoBestType, \"switch\").WithLocation(7, 15)\n                ",
+  "unsupported": []
+}

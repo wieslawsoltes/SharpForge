@@ -1,0 +1,30 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-fb06519deacea00de6f8",
+  "kind": "diagnostics",
+  "sourceText": "\n[A]\npublic class C\n{\n}",
+  "sourceSHA256": "25a4b4bfad745762ec018ecd06b7675dda5e3a8a26b70f73a8c7e0eee3e94a3f",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests.cs",
+    "sha256": "0071ca5e138cfceb6e147b3532046d29be4802f815d77ab3deaf17081480ec2e",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests.cs",
+    "license": "MIT",
+    "method": "VerifyGenericAttributeExistenceDoesNotAffectBindingOfNonGenericUsage",
+    "offset": 402598
+  },
+  "langVersion": "9",
+  "target": "library",
+  "references": "references: new[] { libRef })",
+  "options": "(source, parseOptions: TestOptions.Regular9, references: new[] { libRef })",
+  "expected": {
+    "diagnostics": [],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "",
+  "unsupported": [
+    "Upstream reference profile differs from SharpForge closed framework; references retained for reference-qualified adaptation"
+  ]
+}

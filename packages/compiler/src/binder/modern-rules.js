@@ -11,8 +11,12 @@ import { CSharp10Binding } from './csharp10.js';
 import { CSharp11Rules, CSharp11Binding } from './csharp11.js';
 import { CSharp12Rules, ExperimentalUses } from './csharp12.js';
 import { CollectionExpressionBinding } from './collection-expressions.js';
+import { Utf8StringBinding } from './utf8-strings.js';
+import { RefReadonlyParameterBinding } from './ref-readonly-parameters.js';
+import { InlineArrayBinding } from './inline-arrays.js';
 import { CSharp13Rules, CSharp13BodyRules } from './csharp13.js';
 import { CSharp14Rules } from './csharp14.js';
+import { PreviewFeatureRules } from './preview-features.js';
 import { ReservedTypeNames } from './reserved-type-names.js';
 
 export const modernRules = Object.freeze([
@@ -22,6 +26,14 @@ export const modernRules = Object.freeze([
   CSharp13Rules,
   ReservedTypeNames,
   CSharp14Rules,
+  PreviewFeatureRules,
 ]);
 export const modernUseRules = Object.freeze([ExperimentalUses, CSharp13BodyRules]);
-export const modernBindings = Object.freeze([CSharp10Binding, CSharp11Binding, CollectionExpressionBinding]);
+export const modernBindings = Object.freeze([
+  CSharp10Binding,
+  CSharp11Binding,
+  Utf8StringBinding,
+  CollectionExpressionBinding,
+  RefReadonlyParameterBinding,
+  InlineArrayBinding,
+]);

@@ -1,0 +1,35 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-ccf84b413fde294fae45",
+  "kind": "diagnostics",
+  "sourceText": "\npublic class Test\n{\n    public static void Main()\n    {\n        var obj = new TestRef();\n        var value = obj.P;\n    }\n}",
+  "sourceSHA256": "f7b254e98d46f850fae7382c86104e4cd25dd4f2bd328bd54840c4c8c8307522",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/Emit/InAttributeModifierTests.cs",
+    "sha256": "fed7c6d5beeb0e3296094c4c3973b927e627482323c4609b726e7af2365eb925",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/Emit/InAttributeModifierTests.cs",
+    "license": "MIT",
+    "method": "InAttributeModReqIsRejectedOnSignaturesWithoutIsReadOnlyAttribute_Properties",
+    "offset": 114837
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "references: new[] { CompileIL(ilSource) })",
+  "options": "(code, references: new[] { CompileIL(ilSource) })",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0570",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (7,25): error CS0570: 'TestRef.P' is not supported by the language\n                //         var value = obj.P;\n                Diagnostic(ErrorCode.ERR_BindToBogus, \"P\").WithArguments(\"TestRef.P\").WithLocation(7, 25)",
+  "unsupported": [
+    "Upstream reference profile differs from SharpForge closed framework; references retained for reference-qualified adaptation"
+  ]
+}

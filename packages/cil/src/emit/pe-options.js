@@ -12,7 +12,8 @@ export function emissionPEOptions(image, options, framework) {
   const value = { platform: options.platform ?? 'anycpu', outputKind,
     subsystem: options.subsystem ?? (outputKind === 'windows' ? 'windows' : 'console'),
     prefer32Bit: options.prefer32Bit ?? false, nativeEntryStub: framework === 'mscorlib4',
-    deterministic: options.deterministic ?? true, managedResources: options.managedResources ?? [] };
+    deterministic: options.deterministic ?? true, managedResources: options.managedResources ?? [],
+    win32Resources: options.win32Resources };
   peOptions(value);
   return value;
 }

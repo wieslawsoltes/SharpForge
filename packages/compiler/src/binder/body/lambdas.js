@@ -5,7 +5,6 @@
 import { RefKind, ErrorTypeSymbol } from '../../symbols/types.js';
 import { ParameterSymbol } from '../../symbols/members.js';
 import { Conversion, ConversionKind } from '../../conversions/classify.js';
-import { naturalDelegateType } from '../../conversions/method-group.js';
 import { delegateInvoke } from '../../overload/type-inference.js';
 import { anonymousFunctionAnchor, anonymousMethodSignatureErrors } from '../anonymous-methods.js';
 
@@ -48,7 +47,9 @@ export const LambdaBinding = Base =>
       const isAsync = (syntax.modifiers ?? []).some(m => m.text === 'async'),
         isStaticFunction = (syntax.modifiers ?? []).some(m => m.text === 'static'),
         cache = new Map();
-      const node = this.node('Lambda', syntax, null, { form: 'lambda', isAnonymousMethod, parameterSyntax, isAsync });
+      // What the list declares beyond the types: reference kinds, default values and `params` (../lambda-signatures.js).
+      const signature = explicit && !isAnonymousMethod ? this.lambdaSignature(parameterSyntax, explicit, syntax.parameterList ?? null) : null;
+      const node = this.node('Lambda', syntax, null, { form: 'lambda', isAnonymousMethod, parameterSyntax, isAsync, signature });
       const bindWith = (parameterTypes, returnType, quiet, refKinds = null) => {
         const key = signatureKey(parameterTypes, returnType);
         const known = cache.get(key);
@@ -195,7 +196,8 @@ export const LambdaBinding = Base =>
             {
               node: parameterSyntax[i].identifier ?? parameterSyntax[i],
               code: 'CS1678',
-              args: [i + 1, this.display(explicit[i]), this.display(invoke.parameters[i].type)],
+              // Roslyn's format has a reference-kind prefix in front of each of the two types.
+              args: [i + 1, '', this.display(explicit[i]), '', this.display(invoke.parameters[i].type)],
             },
           ];
           return null;
@@ -240,9 +242,10 @@ export const LambdaBinding = Base =>
       // Natural type (C# 10): explicitly typed parameters and an inferable return type.
       node.naturalType = () => {
         if (!explicit) return null;
-        if (declaredReturn) return declaredReturn.isErrorType() ? null : naturalDelegateType(this.core, explicit, declaredReturn);
+        const parameters = signature ?? explicit.map(type => ({ type, refKind: RefKind.None }));
+        if (declaredReturn) return declaredReturn.isErrorType() ? null : this.functionType(parameters, declaredReturn);
         const r = bindWith(explicit, null, true);
-        return r.inferred ? naturalDelegateType(this.core, explicit, r.inferred) : null;
+        return r.inferred ? this.functionType(parameters, r.inferred) : null;
       };
       return node;
     }

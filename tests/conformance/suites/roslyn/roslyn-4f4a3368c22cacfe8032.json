@@ -1,0 +1,28 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-4f4a3368c22cacfe8032",
+  "kind": "diagnostics",
+  "sourceText": "#nullable enable\npartial class C\n{\n    partial event System.Action E;\n    partial event System.Action? F;\n#nullable disable\n    partial event System.Action G;\n}\n\n#nullable disable\npartial class C\n{\n    partial event System.Action E { add { } remove { } }\n    partial event System.Action F { add { } remove { } }\n#nullable enable\n    partial event System.Action G { add { } remove { } }\n}",
+  "sourceSHA256": "14cb37c280c139831ed1746d9f101ced467335866265a116efb6401274f96b74",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/PartialEventsAndConstructorsTests.cs",
+    "sha256": "22775d4d8cac0a450357a9198c2dea11242fe08f897622abc12ce3bd5b713537",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/PartialEventsAndConstructorsTests.cs",
+    "license": "MIT",
+    "method": "Difference_NullabilityContext",
+    "offset": 135498
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source)",
+  "expected": {
+    "diagnostics": [],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "",
+  "unsupported": []
+}

@@ -1,4 +1,5 @@
 import { finalizeDeterministicPE } from './determinism.js';
+import { appendWin32ResourceSection } from './win32-section.js';
 import { patchManagedResourceDirectory } from './managed-resources.js';
 import { desktopEntryStub } from './entry-stub.js';
 import { Writer, CilError, align, utf8 } from '../binary.js';
@@ -96,6 +97,7 @@ export function writeManagedPE(sectionBytes, metadataOffset, metadataLength, ent
     options.directories = { ...options.directories, ...stub.directories };
     additionalSections = [...additionalSections, { name: '.reloc', data: stub.relocation }];
   }
+  additionalSections = appendWin32ResourceSection(section, additionalSections, options);
   const cli = new DataView(section.buffer);
   cli.setUint32(0, 72, true);
   cli.setUint16(4, 2, true);

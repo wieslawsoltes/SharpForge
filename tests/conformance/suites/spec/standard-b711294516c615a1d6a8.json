@@ -1,0 +1,38 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "standard-b711294516c615a1d6a8",
+  "kind": "spec",
+  "sourceText": "class Program { static void Main() {\nRectangle r = new Rectangle\n{\n    P1 = { X = 0, Y = 1 },\n    P2 = { X = 2, Y = 3 }\n};\n} }",
+  "unsupported": [
+    "Upstream multi-file/ellipsis/project template requires explicit adaptation"
+  ],
+  "target": "exe",
+  "expected": {
+    "diagnostics": [],
+    "ignoredWarnings": []
+  },
+  "sourceSHA256": "1dcbc8c834e5f6bd314c7064dfff755afca4c9212e468aee7d7b4bf78e199fa1",
+  "originalSource": "Rectangle r = new Rectangle\n{\n    P1 = { X = 0, Y = 1 },\n    P2 = { X = 2, Y = 3 }\n};",
+  "metadata": {
+    "template": "code-in-main-without-using",
+    "name": "ObjectInitializers3User",
+    "additionalFiles": [
+      "PointWithAutoProps.cs",
+      "RectangleWithConstructorPointAllocation.cs"
+    ]
+  },
+  "langVersion": "8.0",
+  "featureId": "csharp-1-0-expressions",
+  "mappingScope": "Standard chapter to inventory feature; language level is pinned draft-v8, not feature introduction version",
+  "provenance": {
+    "repository": "dotnet/csharpstandard",
+    "commit": "107068a0fee88b13e9c46ff64f98343ff29ff8ee",
+    "path": "standard/expressions.md",
+    "sha256": "86fd8ab8c2608d09cc5267e037ef05a81a46241c464078f7ee9cbb6328c04e92",
+    "url": "https://github.com/dotnet/csharpstandard/blob/107068a0fee88b13e9c46ff64f98343ff29ff8ee/standard/expressions.md",
+    "license": "MIT",
+    "example": "ObjectInitializers3User",
+    "offsetInUnquotedMarkdown": 208846
+  }
+}

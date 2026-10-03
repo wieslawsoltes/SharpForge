@@ -1,0 +1,40 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "standard-252a5914629c1e473b5f",
+  "kind": "spec",
+  "sourceText": "class A\n{\n    public string Text\n    {\n        get => \"hello\";\n        set { }\n    }\n\n    public int Count\n    {\n        get => 5;\n        set { }\n    }\n}\n\nclass B : A\n{\n    private string text = \"goodbye\";\n    private int count = 0;\n\n    public new string Text\n    {\n        get => text;\n        protected set => text = value;\n    }\n\n    protected new int Count\n    {\n        get => count;\n        set => count = value;\n    }\n}\n\nclass M\n{\n    static void Main()\n    {\n        B b = new B();\n        b.Count = 12;       // Calls A.Count set accessor\n        int i = b.Count;    // Calls A.Count get accessor\n        b.Text = \"howdy\";   // Error, B.Text set accessor not accessible\n        string s = b.Text;  // Calls B.Text get accessor\n    }\n}",
+  "unsupported": [],
+  "target": "exe",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0272",
+        "severity": "error"
+      }
+    ],
+    "ignoredWarnings": []
+  },
+  "sourceSHA256": "ef594aa9a1187ec93b145ca9fcc1fe1e9c19aa8a74da4ea60a0f783efa7cf2ad",
+  "originalSource": "class A\n{\n    public string Text\n    {\n        get => \"hello\";\n        set { }\n    }\n\n    public int Count\n    {\n        get => 5;\n        set { }\n    }\n}\n\nclass B : A\n{\n    private string text = \"goodbye\";\n    private int count = 0;\n\n    public new string Text\n    {\n        get => text;\n        protected set => text = value;\n    }\n\n    protected new int Count\n    {\n        get => count;\n        set => count = value;\n    }\n}\n\nclass M\n{\n    static void Main()\n    {\n        B b = new B();\n        b.Count = 12;       // Calls A.Count set accessor\n        int i = b.Count;    // Calls A.Count get accessor\n        b.Text = \"howdy\";   // Error, B.Text set accessor not accessible\n        string s = b.Text;  // Calls B.Text get accessor\n    }\n}",
+  "metadata": {
+    "template": "standalone-console-without-using",
+    "name": "Accessibility1",
+    "expectedErrors": [
+      "CS0272"
+    ]
+  },
+  "langVersion": "8.0",
+  "featureId": "csharp-1-0-classes",
+  "mappingScope": "Standard chapter to inventory feature; language level is pinned draft-v8, not feature introduction version",
+  "provenance": {
+    "repository": "dotnet/csharpstandard",
+    "commit": "107068a0fee88b13e9c46ff64f98343ff29ff8ee",
+    "path": "standard/classes.md",
+    "sha256": "590768cdc57083dae7d03ff027e638333a6d8da8662bebc30e4efab661d13ecf",
+    "url": "https://github.com/dotnet/csharpstandard/blob/107068a0fee88b13e9c46ff64f98343ff29ff8ee/standard/classes.md",
+    "license": "MIT",
+    "example": "Accessibility1",
+    "offsetInUnquotedMarkdown": 191840
+  }
+}
