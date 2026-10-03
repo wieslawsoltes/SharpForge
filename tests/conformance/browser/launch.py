@@ -1,4 +1,4 @@
-"""One supported Chromium session, with retained diagnostics on failure/cancellation.
+"""One supported browser session, with retained diagnostics on failure/cancellation.
 
 Use with sync_playwright() as p, launch_browser(p, __file__) as browser.
 CHROMIUM_EXECUTABLE must name an existing file; otherwise Playwright's pinned
@@ -29,21 +29,40 @@ def results_dir():
     return directory
 
 
-def launch_options(environ=None):
+ENGINES = ('chromium', 'firefox', 'webkit')
+
+
+def selected_engine(environ=None, engine=None):
+    environ = os.environ if environ is None else environ
+    engine = engine or environ.get('SHARPFORGE_BROWSER_ENGINE', 'chromium')
+    if engine not in ENGINES:
+        raise ValueError('Unsupported browser engine: ' + engine)
+    return engine
+
+
+def launch_options(environ=None, engine=None):
     environ = os.environ if environ is None else environ
     options = {'headless': True}
-    executable = environ.get('CHROMIUM_EXECUTABLE', '').strip()
+    engine = selected_engine(environ, engine)
+    variable = engine.upper() + '_EXECUTABLE'
+    executable = environ.get(variable, '').strip()
     if executable:
         path = Path(executable).expanduser().resolve()
         if not path.is_file():
-            raise ValueError('CHROMIUM_EXECUTABLE is not a file: ' + str(path))
+            raise ValueError(variable + ' is not a file: ' + str(path))
         options['executable_path'] = str(path)
     # The supported bundled browser needs no security-disabling launch flags.
     return options
 
 
 class BrowserSession:
-    def __init__(self, browser, suite):
+    def __init__(self, browser, suite, engine=None):
+        self.engine = selected_engine(engine=engine)
+        from importlib.util import spec_from_file_location, module_from_spec
+        spec = spec_from_file_location('sharpforge_csp_monitor', Path(__file__).with_name('csp_monitor.py'))
+        module = module_from_spec(spec)
+        spec.loader.exec_module(module)
+        self.csp = module.CspMonitor()
         self.browser = browser
         self.directory = results_dir() / Path(suite).stem
         self.directory.mkdir(parents=True, exist_ok=True)
@@ -78,6 +97,7 @@ class BrowserSession:
         context = self.browser.new_context(**options)
         context.tracing.start(screenshots=True, snapshots=True, sources=True)
         context.add_init_script('window.__sharpforgeTestImport = path => import(path);')
+        self.csp.attach(context)
         context.on('page', self._page)
         self.contexts.append(context)
         return context
@@ -120,7 +140,8 @@ class BrowserSession:
         self.log.close()
         (self.directory / 'session.json').write_text(json.dumps({
             'suite': self.directory.name, 'passed': failure is None,
-            'browser': self.browser.version, 'executable': launch_options().get('executable_path', 'playwright-managed'),
+            'engine': self.engine, 'cspViolations': self.csp.events,
+            'browser': self.browser.version, 'executable': launch_options(engine=self.engine).get('executable_path', 'playwright-managed'),
             'mode': 'standalone HTML injection' if self.directory.name == 'standalone_test' else ('in-memory' if os.getenv('SHARPFORGE_IN_MEMORY') == '1' else 'http'),
             'seconds': time.monotonic() - self.started, 'diagnosticErrors': diagnostics,
         }, indent=2) + '\n', encoding='utf8')
@@ -149,12 +170,13 @@ class _CheckedPage:
 
 
 @contextmanager
-def launch_browser(playwright, suite):
+def launch_browser(playwright, suite, engine=None):
     global _session
     if _session is not None:
         raise RuntimeError('Nested browser sessions are unsupported')
-    browser = playwright.chromium.launch(**launch_options())
-    session = BrowserSession(browser, suite)
+    engine = selected_engine(engine=engine)
+    browser = getattr(playwright, engine).launch(**launch_options(engine=engine))
+    session = BrowserSession(browser, suite, engine)
     _session = session
     handlers = {}
     def cancel(signum, frame):
@@ -167,6 +189,8 @@ def launch_browser(playwright, suite):
     failure = None
     try:
         yield session
+        session.check_cancelled()
+        session.csp.assert_clean()
     except BaseException as error:
         failure = error
         raise

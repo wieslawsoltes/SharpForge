@@ -1,0 +1,17 @@
+[
+  {
+    "mode": "failure",
+    "passed": true,
+    "realChromium": true
+  },
+  {
+    "mode": "cancel",
+    "passed": true,
+    "realChromium": true
+  },
+  {
+    "mode": "cancel-file",
+    "passed": true,
+    "realChromium": true
+  }
+]
