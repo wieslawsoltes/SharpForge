@@ -60,7 +60,6 @@ const notGated = {
   VarianceSafetyForStaticInterfaceMembers: 'needs the variance check of interface members',
   WithOnStructs: needsOperandTypes,
   WithOnAnonymousTypes: needsOperandTypes,
-  InferredDelegateType: needsOperandTypes,
   ImplicitImplementationOfNonPublicMembers: 'needs the interface implementation map',
   ImprovedInterpolatedStrings: needsOperandTypes,
   AutoDefaultStructs: 'needs definite assignment of struct fields in constructors',

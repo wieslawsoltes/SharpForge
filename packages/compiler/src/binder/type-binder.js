@@ -49,6 +49,8 @@ export class Scope {
 }
 const error = (name, arity = 0) => new ErrorTypeSymbol(name, arity);
 const twa = (type, annotation = NullableAnnotation.Oblivious) => new TypeWithAnnotations(type, annotation);
+/** `var` is recognised only as the whole type of a declaration, never as an element type (`var[]`, `var?`). */
+const elementOptions = options => (options.allowVar ? { ...options, allowVar: false } : options);
 const kindWord = s =>
   s.kind === SymbolKind.Namespace
     ? 'namespace'
@@ -343,8 +345,12 @@ export class TypeBinder {
       }
       case 'IdentifierName': {
         const name = syntax.identifier.valueText;
-        if (options.allowVar && name === 'var' && !this.lookup('var', 0, scope))
-          return { isVar: true, type: error('var'), nullableAnnotation: NullableAnnotation.Oblivious };
+        if (name === 'var' && !this.lookup('var', 0, scope)) {
+          if (options.allowVar) return { isVar: true, type: error('var'), nullableAnnotation: NullableAnnotation.Oblivious };
+          // `var` is a type only in a local declaration: a field, a parameter, `var[]` and `var?` are CS0825.
+          if (!options.quiet) this.report(scope, syntax, 'CS0825');
+          return twa(error('var'));
+        }
         if ((name === 'nint' || name === 'nuint') && !this.lookup(name, 0, scope)) {
           this.host.useFeature?.(scope.uri, syntax, 'NativeInt');
           return plain(this.core.keyword(name));
@@ -363,13 +369,13 @@ export class TypeBinder {
         return plain(symbol);
       }
       case 'ArrayType': {
-        let element = this.bindType(syntax.elementType, scope, options);
+        let element = this.bindType(syntax.elementType, scope, elementOptions(options));
         // Rank specifiers read left to right from the outside in: int[][,] is an array of int[,].
         for (const rank of [...syntax.rankSpecifiers].reverse()) element = plain(this.core.arrayOf(element, rank.sizes.length || 1));
         return element;
       }
       case 'NullableType': {
-        const element = this.bindType(syntax.elementType, scope, options),
+        const element = this.bindType(syntax.elementType, scope, elementOptions(options)),
           t = element.type;
         if (t.kind === SymbolKind.ErrorType) return element;
         if (t.isValueType === true) {

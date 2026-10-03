@@ -11,6 +11,7 @@ import { checkAsyncOrIteratorUse, isRefLike, checkArrayElementType } from '../re
 import { numericKind } from '../../conversions/numeric.js';
 import { isAsyncDisposable } from '../async-streams.js';
 import { reportAwaitOutsideAsync } from '../async.js';
+import { untypedInitializerProblem } from '../implicit-types.js';
 
 const unknown = ErrorTypeSymbol.unknown;
 const isSourceType = t => {
@@ -54,6 +55,7 @@ export const DeclarationBinding = Base =>
         declaredType = isVar ? null : bound.type,
         results = [];
       if (isVar && syntax.variables.length > 1) this.report(syntax, 'CS0819');
+      if (isVar && isConst) this.report(syntax, 'CS0822');
       if (declaredType && declaredType.isStatic) this.report(typeSyntax, 'CS0723', [this.display(declaredType)]);
       if (declaredType && !declaredType.isErrorType()) {
         const bad = checkAsyncOrIteratorUse(
@@ -94,7 +96,9 @@ export const DeclarationBinding = Base =>
             continue;
           }
           if (init.kind === 'ArrayInitializerExpression') {
-            this.report(v.identifier, 'CS0820');
+            this.report(v, 'CS0820');
+            // The local counts as assigned: Roslyn reports the initializer, not an unused variable.
+            local.writes++;
             this.declare(name, local, v.identifier);
             results.push({ local, value: null });
             continue;
@@ -102,52 +106,9 @@ export const DeclarationBinding = Base =>
           value = this.value(isRef && init.kind === 'RefExpression' ? init.expression : init);
           this.declare(name, local, v.identifier);
           if (!value.hasErrors) {
-            let type = value.type;
-            if (value.noNaturalType) {
-              this.report(init, 'CS0173', [this.operandDisplay(value.noNaturalType.left), this.operandDisplay(value.noNaturalType.right)]);
-              type = null;
-              value = this.bad(init);
-            } else if (value.isTargetTypedSwitch) {
-              this.report(init.switchKeyword ?? init, 'CS8506');
-              type = null;
-              value = this.bad(init);
-            } else if (value.form === 'lambda' || value.kind === 'MethodGroup') {
-              // C# 10: lambdas and method groups have a natural delegate type when it can be inferred.
-              const natural =
-                this.version.number >= 10
-                  ? value.form === 'lambda'
-                    ? value.naturalType()
-                    : value.methods.length === 1 && !value.methods[0].arity
-                      ? this.naturalGroupType(value)
-                      : null
-                  : null;
-              if (natural) {
-                const lambda = value;
-                value = this.convert(value, natural, init);
-                if (lambda.form === 'lambda' && !value.hasErrors) this.finishLambda(lambda, natural);
-                type = natural;
-              } else {
-                this.report(
-                  v,
-                  this.version.number >= 10 ? (value.form === 'lambda' ? 'CS8917' : 'CS8917') : 'CS0815',
-                  this.version.number >= 10
-                    ? []
-                    : [value.form === 'lambda' ? (value.isAnonymousMethod ? 'anonymous method' : 'lambda expression') : 'method group'],
-                );
-                type = null;
-              }
-            } else if (!type) {
-              if (value.form === 'collection') this.report(init, 'CS9176');
-              else if (value.form === 'implicitNew') this.report(init, 'CS8754', ['new()']);
-              else
-                this.report(v, 'CS0815', [
-                  value.literal === 'null' ? '<null>' : value.literal === 'default' ? 'default' : value.kind === 'Tuple' ? '(...)' : '?',
-                ]);
-            } else if (type.specialType === 'System_Void') {
-              this.report(v, 'CS0815', ['void']);
-              type = null;
-            }
-            local.setType(type ?? unknown);
+            const typed = this.implicitLocalType(value, init, v);
+            value = typed.value;
+            local.setType(typed.type ?? unknown);
           }
         } else {
           this.declare(name, local, v.identifier);
@@ -218,6 +179,48 @@ export const DeclarationBinding = Base =>
         results.push({ local, value });
       }
       return results;
+    }
+    /**
+     * The type of `var x = value` and the value converted to it: `{ value, type }`, with `type` null (and the
+     * diagnostic reported) when the initializer cannot give the local a type.
+     */
+    implicitLocalType(value, init, declarator) {
+      if (value.noNaturalType) {
+        this.report(init, 'CS0173', [this.operandDisplay(value.noNaturalType.left), this.operandDisplay(value.noNaturalType.right)]);
+        return { value: this.bad(init), type: null };
+      }
+      if (value.isTargetTypedSwitch) {
+        this.report(init.switchKeyword ?? init, 'CS8506');
+        return { value: this.bad(init), type: null };
+      }
+      if (value.form === 'lambda' || value.kind === 'MethodGroup') return this.inferredDelegateLocal(value, init);
+      if (!value.type) {
+        const problem = untypedInitializerProblem(value);
+        this.report(problem.at === 'initializer' ? init : declarator, problem.code, problem.args);
+        return { value, type: null };
+      }
+      if (value.type.specialType === 'System_Void') {
+        this.report(declarator, 'CS0815', ['void']);
+        return { value, type: null };
+      }
+      return { value, type: value.type };
+    }
+    /** C# 10: a lambda or method group initializer gives `var` its natural delegate type; CS8917 when it has none. */
+    inferredDelegateLocal(value, init) {
+      if (!this.d.gate(this.c.uri, init, 'inferredDelegateType')) return { value, type: null };
+      const natural = this.naturalFunctionType(value);
+      if (!natural) {
+        this.report(init, 'CS8917');
+        return { value, type: null };
+      }
+      const converted = this.convert(value, natural, init);
+      if (value.form === 'lambda' && !converted.hasErrors) this.finishLambda(value, natural);
+      return { value: converted, type: natural };
+    }
+    /** The natural delegate type of a lambda or of a method group with exactly one non-generic method, or null. */
+    naturalFunctionType(value) {
+      if (value.form === 'lambda') return value.naturalType();
+      return value.methods.length === 1 && !value.methods[0].arity ? this.naturalGroupType(value) : null;
     }
     naturalGroupType(group) {
       const m = group.methods[0];
