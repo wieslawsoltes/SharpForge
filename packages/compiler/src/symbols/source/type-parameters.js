@@ -50,7 +50,7 @@ export function bindConstraintClauses(parameters,clauses,bindType,report,options
           const text=c.type.toString();
           if(text==='unmanaged'&&c.type.kind==='IdentifierName'){if(index!==0)report(c,'CS0449');else{parameter.hasUnmanagedTypeConstraint=true;parameter.hasValueTypeConstraint=true;}break;}
           if(text==='notnull'&&c.type.kind==='IdentifierName'){if(index!==0)report(c,'CS0449');else parameter.hasNotNullConstraint=true;break;}
-          const type=bindType(c.type);if(!type||type.isErrorType())break;
+          const type=bindType(c.type);if(!type||type.isErrorType()){parameter.hasUnknownConstraint=true;break;}
           if(types.some(t=>t.equals(type))){report(c,'CS0405',[type.toDisplayString()]);break;}
           const isClass=type.typeKind===TypeKind.Class,primaryTaken=parameter.hasReferenceTypeConstraint||parameter.hasValueTypeConstraint;
           if(type.typeKind===TypeKind.Struct||type.typeKind===TypeKind.Enum||type.typeKind===TypeKind.Delegate&&!type.specialType||type.typeKind===TypeKind.Array||isClass&&type.isSealed&&!type.isStatic){report(c.type,'CS0701',[type.toDisplayString()]);break;}

@@ -75,6 +75,7 @@ export function checkAbstractImplementation(type,core){
 /** Declaration-only modifier checks of one member. @returns [{code,args}] */
 export function checkModifiers(member,type){
   const results=[],r=(code,args=[])=>results.push({code,args,member});
+  if(member.kind===SymbolKind.Field&&type.isStatic&&!member.isStatic&&!member.isImplicitlyDeclared)r('CS0708',[member.name]);
   if(member.kind!==SymbolKind.Method&&member.kind!==SymbolKind.Property&&member.kind!==SymbolKind.Event)return results;
   if(member.isImplicitlyDeclared||member.kind===SymbolKind.Method&&member.isAccessor)return results;
   const display=member.toDisplayString(),inInterface=type.typeKind===TypeKind.Interface,vao=member.isVirtual||member.isAbstract||member.isOverride;
