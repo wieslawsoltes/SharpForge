@@ -3,6 +3,7 @@ import {childSlot} from './model.js';
 import {propertyStatement} from './source-edit-properties.js';
 import {sameSourceValue, removeSourceInitializer, removeSourceStatement, sourceInsertion} from './source-text.js';
 import {failSource} from './source-errors.js';
+import {sourceCollectionStatements} from './source-edit-collections.js';
 
 function parentMap(document) {
   return new Map(document.nodes.flatMap(parent => parent.children.map((id, index) => [id, {parent, index}])));
@@ -39,6 +40,10 @@ function deleteNode(base, binding, edits, external) {
     for (const entry of [...(property.previous ?? []), property]) statements.push(entry.statement);
   }
   for (const entries of Object.values(binding.tracks)) for (const entry of entries) statements.push(entry.statement);
+  for (const collection of Object.values(binding.collections ?? {})) {
+    if (collection.dynamic) failSource('Control owns a protected collection', binding.creation, 'SFSYNC_OWNERSHIP');
+    for (const entry of collection.entries) statements.push(...entry.dependencies, entry.statement);
+  }
   for (const event of Object.values(binding.events)) {
     if (event.dynamic) failSource('Control owns protected event subscriptions', event.expression, 'SFSYNC_EVENT');
     for (const subscription of event.subscriptions) statements.push(subscription.statement);
@@ -129,12 +134,13 @@ export function sourceTreeEdits(base, next, names, edits, external) {
     }
   }
   const declarations = [];
-  for (const node of inserted) insertNode(base, node, names, declarations, external);
+  const takenNames = new Set([...base.context.symbols.map(symbol => symbol.name), ...names.values()]);
+  for (const node of inserted) insertNode(base, node, names, declarations, {external, takenNames, design: next});
   edits.push(sourceInsertion(base, declarations, Math.min(end, ...groups.keys())));
   for (const [at, statements] of groups) edits.push(sourceInsertion(base, statements, at));
 }
 
-function insertNode(base, node, names, statements, external) {
+function insertNode(base, node, names, statements, {external, takenNames, design}) {
   const name = names.get(node.id);
   const type = node.projectType ?? node.type;
   const useFields = Object.values(base.bindings).some(binding => binding.field);
@@ -154,6 +160,7 @@ function insertNode(base, node, names, statements, external) {
   }
   for (const key of Object.keys(node.properties)) statements.push(propertyStatement(node, key, name));
   for (const [event, handler] of Object.entries(node.events)) statements.push(`${name}.${event} += ${handler};`);
+  statements.push(...sourceCollectionStatements({design, node, variable: name, takenNames}));
 }
 
 function clearAttachedProperties(base, node, parent, edits) {
