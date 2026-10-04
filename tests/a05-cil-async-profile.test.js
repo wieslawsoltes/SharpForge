@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {codedIndex, methodSignature, methodSpecSignature, verifyCilAssembly} from '@sharpforge/cil';
+import {AssemblyInspector, CilDispatchTable, codedIndex, methodSignature, methodSpecSignature, verifyCilAssembly} from '@sharpforge/cil';
 import {asyncMethodDefinition, asyncTypes} from '../packages/cil/src/async-profile.js';
 import {managedFixture} from './managed-fixtures.js';
 
@@ -35,7 +35,7 @@ test('CIL async ABI generic awaiter result and real Yield type are exact', () =>
 });
 
 function machineFixture({assembly = 'System.Runtime', badDeclaration = false, invalidBody = false,
-  wrongKey = false, localContract = false} = {}) {
+  wrongKey = false, localContract = false, explicit = false, duplicate = false} = {}) {
   return managedFixture({methods: [
     {name: 'Main', locals: [asyncTypes.builder, 'Fixture.Program'], body(writer, context) {
       const {md, resolve} = context;
@@ -52,19 +52,28 @@ function machineFixture({assembly = 'System.Runtime', badDeclaration = false, in
       0, (md.rows[4]?.length ?? 0) + 1, md.rows[6].length + 1]) : md.typeRef(asyncTypes.machine);
     md.add(9, [type & 0xffffff, codedIndex('TypeDefOrRef', contract)]);
     if (wrongKey) md.rows[35][0][5] = md.blob(new Uint8Array(8));
-    if (badDeclaration) {
-      const declaration = md.member(contract, 'MoveNext', methodSignature('int', [], false, resolve));
+    if (badDeclaration || explicit || duplicate) {
+      const declaration = md.member(contract, 'MoveNext', methodSignature(badDeclaration ? 'int' : 'void', [], false, resolve));
       md.add(25, [type & 0xffffff, codedIndex('MethodDefOrRef', methods.MoveNext), codedIndex('MethodDefOrRef', declaration)]);
+      if (duplicate) md.add(25, [type & 0xffffff, codedIndex('MethodDefOrRef', methods.MoveNext), codedIndex('MethodDefOrRef', declaration)]);
     }
   }});
 }
 
 test('CIL async callbacks require trusted reference scope and matching MethodImpl declarations', () => {
   assert.equal(verifyCilAssembly(machineFixture()).success, true);
-  for (const options of [{assembly: 'Impostor.Runtime'}, {wrongKey: true}, {badDeclaration: true}, {localContract: true}]) {
+  for (const options of [{assembly: 'Impostor.Runtime'}, {wrongKey: true}, {badDeclaration: true}, {localContract: true}, {duplicate: true}]) {
     const result = verifyCilAssembly(machineFixture(options));
     assert.equal(result.success, false);
     assert.ok(result.issues.some(issue => issue.code === 'IL_TOKEN' && /identity|MethodImpl|admitted/.test(issue.message)), result.issues);
+  }
+});
+
+test('CIL dispatch admits proved async callback implementations and still rejects malformed declarations', () => {
+  const inspector = new AssemblyInspector(machineFixture({explicit: true}));
+  assert.ok(new CilDispatchTable(inspector).table(0x02000002));
+  for (const options of [{badDeclaration: true}, {duplicate: true}, {explicit: true, wrongKey: true}, {explicit: true, localContract: true}]) {
+    assert.throws(() => new CilDispatchTable(new AssemblyInspector(machineFixture(options))).table(0x02000002));
   }
 });
 

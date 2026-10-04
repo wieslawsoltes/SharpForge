@@ -37,6 +37,7 @@ function implementation(inspector, type, arguments_, name, parameters, entries) 
     }
     declarations.push(entry.body);
   }
+  if (declarations.length > 1) throw new CilError('Duplicate IAsyncStateMachine MethodImpl declaration');
   const candidates = declarations.length ? type.methods.filter(method => declarations.includes(method.token))
     : type.methods.filter(method => method.name === name && (method.flags & 7) === 6);
   const matches = candidates.filter(method => {
@@ -92,4 +93,15 @@ export function isAsyncStructCall(inspector, descriptor) {
   if (!definition || !['start', 'await'].includes(definition.operation)) return false;
   asyncCallbackTargets(inspector, descriptor);
   return true;
+}
+
+/** Intrinsic interface callbacks use their proved local bodies, rather than an external virtual slot. */
+export function isAsyncMethodImplementation(inspector, type, entry) {
+  const declaration = inspector.resolveToken(entry.declaration);
+  if (declaration.owner !== asyncTypes.machine || !['MoveNext', 'SetStateMachine'].includes(declaration.name)) return false;
+  verifyAsyncReferenceCall(inspector, declaration);
+  const machine = asyncStateMachine(inspector, type);
+  if (!machine) return false;
+  // asyncStateMachine validates every matching MethodImpl declaration and its exact local implementation signature.
+  return entry.body === (declaration.name === 'MoveNext' ? machine.moveNext : machine.setStateMachine);
 }
