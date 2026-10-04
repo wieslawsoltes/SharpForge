@@ -131,6 +131,15 @@ export const OperatorBinding = Base =>
       const converted = this.convert(group, other.type, group.syntax);
       return group === left ? [converted, right] : [left, converted];
     }
+    /**
+     * An operand of a lifted user-defined operator that is not nullable itself is converted to the operator's
+     * parameter type (`money + 1` with `Money? money` converts `1` to `Money`); a nullable operand stays as it is.
+     */
+    liftedOperatorOperand(operand, parameterType) {
+      if (!operand.type || isNullableType(operand.type) || operand.type.equals(parameterType)) return operand;
+      const conversion = this.conversions.classifyFromExpression(operand, parameterType);
+      return conversion.exists && conversion.isImplicit ? this.applyConversion(operand, parameterType, conversion) : operand;
+    }
     binaryOperation(syntax, operator, left, right) {
       const delegate = this.delegateOperation(syntax, operator, left, right);
       if (delegate) return delegate;
@@ -151,7 +160,9 @@ export const OperatorBinding = Base =>
       if (r.kind === 'user') {
         const args = r.conversions
           ? [left, right].map((e, i) => (e.type || isTypelessValue(e) ? this.applyConversion(e, r.method.parameters[i].type, r.conversions[i]) : e))
-          : [left, right];
+          : r.isLifted
+            ? [left, right].map((e, i) => this.liftedOperatorOperand(e, r.method.parameters[i].type))
+            : [left, right];
         return this.node('Binary', syntax, r.isLogical ? r.method.returnType : r.resultType, {
           operator,
           left: args[0],

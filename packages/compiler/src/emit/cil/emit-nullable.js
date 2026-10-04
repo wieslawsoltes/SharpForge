@@ -46,6 +46,66 @@ export const NullableEmission = Base =>
       this.il.emit('stloc', slot);
       return slot;
     }
+    /**
+     * A user-defined conversion around nullable values (C# spec 10.6.2): `S?` to `T?` through `S -> T` is lifted
+     * (null stays null), `S?` to a `T` that cannot be null reads `Value`, and `S` to `T?` wraps the result.
+     */
+    userDefinedConversion(node) {
+      const method = node.conversion.method ?? node.method,
+        from = node.operand.type,
+        to = node.type,
+        parameterType = method?.parameters[0].type,
+        liftsOperand = !!from?.isNullableValueType && !parameterType?.isNullableValueType,
+        wrapsResult = to.isNullableValueType && !!method && !method.returnType.isNullableValueType && !isReference(method.returnType);
+      if (!method || (!liftsOperand && !wrapsResult)) return super.userDefinedConversion(node);
+      const il = this.il,
+        convert = operandType => {
+          this.implicitStandardConversion(operandType, parameterType, node.syntax);
+          this.callMethod(method, { isStatic: true, syntax: node.syntax });
+          if (!wrapsResult) return this.implicitStandardConversion(method.returnType, to, node.syntax);
+          this.implicitStandardConversion(method.returnType, to.nullableUnderlyingType, node.syntax);
+          return this.wrapNullable(to);
+        };
+      if (!liftsOperand) {
+        this.expression(node.operand);
+        return convert(from);
+      }
+      const slot = this.nullableOperand(node.operand);
+      if (!wrapsResult) {
+        this.nullableCall(slot, from, 'get_Value');
+        return convert(from.nullableUnderlyingType);
+      }
+      const absent = il.newLabel(),
+        end = il.newLabel();
+      this.nullableCall(slot, from, 'get_HasValue');
+      il.emit('brfalse', absent);
+      this.nullableCall(slot, from, 'GetValueOrDefault');
+      convert(from.nullableUnderlyingType);
+      il.emit('br', end);
+      il.mark(absent);
+      this.defaultValue(to);
+      il.mark(end);
+      return undefined;
+    }
+    /** `x++` over a `T?` with a user-defined operator on `T` is lifted: null stays null. */
+    userIncrement(node, type) {
+      if (!type?.isNullableValueType || node.method.parameters[0].type.isNullableValueType) return super.userIncrement(node, type);
+      const il = this.il,
+        slot = this.temp(type),
+        absent = il.newLabel(),
+        end = il.newLabel();
+      il.emit('stloc', slot);
+      this.nullableCall(slot, type, 'get_HasValue');
+      il.emit('brfalse', absent);
+      this.nullableCall(slot, type, 'GetValueOrDefault');
+      this.callMethod(node.method, { syntax: node.syntax });
+      this.wrapNullable(type);
+      il.emit('br', end);
+      il.mark(absent);
+      this.defaultValue(type);
+      il.mark(end);
+      return undefined;
+    }
     nullableConversion(node) {
       const from = node.operand.type,
         to = node.type;
@@ -126,6 +186,9 @@ export const NullableEmission = Base =>
           value(rightSlot, right.type);
           this.underlyingOperator(node);
         };
+      if (node.method && (relational.has(operator) || operator === '==' || operator === '!=')) {
+        return this.liftedUserComparison(node, operands, () => has(leftSlot, left.type), () => has(rightSlot, right.type));
+      }
       if (operator === '==' || operator === '!=') {
         // Equal when both have the same value and the same presence (two absent values hold the same default).
         this.withOperator(node, '==', operands);
@@ -155,6 +218,40 @@ export const NullableEmission = Base =>
       il.emit('br', end);
       il.mark(absent);
       this.defaultValue(node.type);
+      il.mark(end);
+      return undefined;
+    }
+    /**
+     * A lifted comparison with a user-defined operator calls the operator only when both operands have a value
+     * (it may throw or have effects): `<` and its kin are false otherwise; `==` is true and `!=` false when both
+     * are absent, and the reverse when only one is.
+     */
+    liftedUserComparison(node, operands, hasLeft, hasRight) {
+      const il = this.il,
+        isEquality = !relational.has(node.operator),
+        differ = il.newLabel(),
+        absent = il.newLabel(),
+        end = il.newLabel();
+      if (isEquality) {
+        hasLeft();
+        hasRight();
+        il.emit('bne.un', differ);
+        hasLeft();
+        il.emit('brfalse', absent);
+      } else {
+        hasLeft();
+        hasRight();
+        il.emit('and').emit('brfalse', absent);
+      }
+      operands();
+      il.emit('br', end);
+      il.mark(absent);
+      il.emit('ldc.i4', isEquality && node.operator === '==' ? 1 : 0);
+      if (isEquality) {
+        il.emit('br', end);
+        il.mark(differ);
+        il.emit('ldc.i4', node.operator === '!=' ? 1 : 0);
+      }
       il.mark(end);
       return undefined;
     }

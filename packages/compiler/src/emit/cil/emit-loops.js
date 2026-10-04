@@ -20,8 +20,14 @@ export const LoopEmission = Base =>
     }
     /** Converts the element on the stack to the iteration variable's type and stores it. */
     iterationValue(node, elementType) {
-      const local = node.local;
-      this.elementConversion(elementType, local.type, node.syntax);
+      const local = node.local,
+        operator = node.elementConversion?.method;
+      if (operator) {
+        // `foreach (Money m in decimals)`: the element goes through the user-defined conversion operator.
+        this.implicitStandardConversion(elementType, operator.parameters[0].type, node.syntax);
+        this.callMethod(operator, { syntax: node.syntax });
+        this.implicitStandardConversion(operator.returnType, local.type, node.syntax);
+      } else this.elementConversion(elementType, local.type, node.syntax);
       this.initializeLocal(local);
     }
     /** The explicit conversion `foreach (T x in ...)` applies to each element. */

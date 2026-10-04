@@ -12,8 +12,13 @@ import { reportAwaitOutsideAsync } from '../async.js';
 import { bindAsyncForEach, isOnlyAsyncEnumerable } from '../async-streams.js';
 import { extensionEnumeratorMethod } from '../foreach-extension.js';
 import { inlineArrayShape } from '../inline-arrays.js';
+import { stripNullable } from '../../conversions/nullable.js';
 
 const unknown = ErrorTypeSymbol.unknown;
+/** The types a switch statement governs on without patterns (C# 6), by special type; enums are handled by type kind. */
+const classicSwitchTypes = new Set(
+  ['SByte', 'Byte', 'Int16', 'UInt16', 'Int32', 'UInt32', 'Int64', 'UInt64', 'Char', 'String', 'Boolean'].map(name => 'System_' + name),
+);
 /** `Span<T>` and `ReadOnlySpan<T>` enumerate their elements (their enumerator is a ref struct the registry bridge does not declare). */
 const isSpanType = (type, core) => type.originalDefinition === core.span || type.originalDefinition === core.readOnlySpan;
 const isSourceType = t => {
@@ -112,9 +117,12 @@ export const FlowStatementBinding = Base =>
           return this.forEachDeconstruction(syntax, { collection, elementType: element, enumeration, extensionGetEnumerator: extension });
         const bound = this.bindType(syntax.type.kind === 'RefType' ? syntax.type.type : syntax.type, { allowVar: true }),
           iterationType = bound.isVar ? element : bound.type;
+        let elementConversion = null;
         if (!bound.isVar && !element.isErrorType() && !iterationType.isErrorType()) {
           const c = this.conversions.classifyExplicit(element, iterationType);
           if (!c.exists) this.report(syntax.forEachKeyword, DiagnosticId.CS0030, [this.display(element), this.display(iterationType)]);
+          // A user-defined conversion is a call: code generation needs the operator.
+          else if (c.isUserDefined) elementConversion = c;
         }
         const name = syntax.identifier.valueText,
           local = this.newLocal(name, iterationType, syntax.identifier, LocalDeclarationKind.Foreach);
@@ -130,6 +138,7 @@ export const FlowStatementBinding = Base =>
           collection,
           local,
           elementType: element,
+          elementConversion,
           body,
           isAwait: !!syntax.awaitKeyword,
           enumeration,
@@ -153,8 +162,26 @@ export const FlowStatementBinding = Base =>
         this.report(syntax.expression, DiagnosticId.CS8331, ['property', 'Current']);
       }
     }
+    /**
+     * The governing expression of a switch statement. A value whose own type is not one a C# 6 switch takes
+     * (integral, `char`, `string`, `bool`, an enum) is converted by its user-defined implicit conversion to such a
+     * type when it has exactly one; otherwise the statement matches patterns against the value as it is.
+     */
+    switchGoverning(syntax) {
+      const value = this.value(syntax),
+        type = value.hasErrors ? null : stripNullable(value.type);
+      if (!type || classicSwitchTypes.has(type.specialType) || (type.typeKind !== TypeKind.Class && type.typeKind !== TypeKind.Struct)) return value;
+      const targets = [];
+      for (let owner = type; owner; owner = owner.baseType) {
+        for (const operator of owner.getMembers('op_Implicit')) {
+          const target = operator.returnType && stripNullable(operator.returnType);
+          if (operator.kind === SymbolKind.Method && operator.parameters?.length === 1 && classicSwitchTypes.has(target?.specialType)) targets.push(operator.returnType);
+        }
+      }
+      return targets.length === 1 ? this.convert(value, targets[0], syntax) : value;
+    }
     switchStatement(syntax) {
-      const governing = this.value(syntax.expression),
+      const governing = this.switchGoverning(syntax.expression),
         sw = Object.assign(this.enterLoop(false), { syntax, governing }),
         sections = [],
         seen = new Map();
