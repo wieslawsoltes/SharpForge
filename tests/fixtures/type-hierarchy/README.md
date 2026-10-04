@@ -1,12 +1,13 @@
 # Cross-assembly browser hierarchy
 
-Qualified #2574 scope, stacked on shared SHA-1 prerequisite #4488. Product
-`abcf6f5651dc56954b3a455b1f84bfbec8343e43`; qualification began at `f64097ea1`
-and corrected only a malformed-fixture setup at `2f51cbc0c24c307f7bcade794087338f64ea3689`.
+Qualified #2574 scope, stacked on shared SHA-1 prerequisite #4488. Final product `0de8c5f9ad8c925f89bbee4f8132c6cd9c728c92`. Initial product
+`abcf6f5651dc56954b3a455b1f84bfbec8343e43` began qualification at `f64097ea1`;
+`2f51cbc0c24c307f7bcade794087338f64ea3689` corrected only a fixture setup.
 [Exact revisions, dependency proof and phase results](qualification/qualification.json),
 [raw fixed measurements](qualification/performance.json), [checks](qualification/checks.txt),
 [browser report](qualification/browser-results.json), and [serial driver](qualification/driver.mjs.txt)
-are retained. Product source did not change after the initial qualification head.
+are retained. The final opt-in name-lookup change and its complete second fixed
+schedule are documented below; neither initial samples nor failures were replaced.
 
 ## Behavior and reference evidence
 
@@ -51,7 +52,8 @@ pass, including existing local/nested name-index callers and captured CLR parity
 
 Parent syntax3628/static3624 and child syntax3636/static3632 pass with no errors;
 all manifests are assigned without collisions. Structure reports272 inherited
-findings, none in owned changes. No native or benchmark retry occurred.
+findings, none in owned changes. No native retry occurred. The subsequent product change received exactly one
+fresh fixed benchmark schedule; both schedules and all samples remain available.
 Chromium153.0.8010.12, Firefox155.0 and WebKit26.6 each passed three focused groups
 (shared SHA-1/WebCrypto, authored bounds/ownership, actual two-image native trees).
 Python3.14.7/Playwright1.63.0; CSP enabled; all browsers/server/thread closed.
@@ -76,10 +78,43 @@ Inspectors and symbol index are prepared outside the new-path measurements.
 | New951-node derived tree | unavailable | .584708 / .879042 |
 
 Nested median increases .002679585ms (+8.2415%); p95 increases .00088625ms
-(+2.1823%). Root review of this measured tradeoff is pending; no rerun is planned.
+(+2.1823%). This initial observation prompted a concrete source review, which found the
+new key-lookup closure was being created for existing callers that do not use it.
 Other existing controls are within5%. There is no speedup, significance, shared-
 host causal explanation or measured peak allocation claim. Storage counters are
 logical input-occurrence charges/counts, not actual JavaScript heap ceilings.
+
+## Final opt-in lookup correction
+
+`0de8c5f9a` adds `includeKeyLookup=false` to the internal name index. Its default
+return shape and closure count match the original local/nested adapter path;
+only the new hierarchy binder opts into raw keys and the lookup closure. The
+same bounded cache/index is reused. This avoids allocating the new closure for
+old callers; it is a source-level fact, not a measured peak allocation claim.
+
+The serial follow-up reused the installed, hash-verified dependencies and
+immutable baseline, and replayed both captured native images without any native
+rebuild. All51 affected tests pass, the same three browsers pass, and checks
+again report3636 syntax/3632 static modules with no errors and272 inherited
+structure findings/none owned. [Final tests](qualification/final/child-focused.log),
+[checks](qualification/final/checks.txt), [browser results](qualification/final/browser-results.json),
+[fixed160 observations](qualification/final/performance.json), and
+[driver](qualification/final/driver.mjs.txt) preserve exact commands/revisions.
+No unchanged retry, sample exclusion or tuning occurred.
+
+| Final milliseconds per operation | Before median/p95 | After median/p95 |
+| --- | --- | --- |
+| SHA-1 | .180099380 / .185560420 | .179431250 / .183542500 |
+| Local adapter+resolve | .030421040 / .043473340 | .031900205 / .033976250 |
+| Nested adapter+resolve | .027843545 / .036056670 | .031468130 / .040040830 |
+| New graph construction | unavailable | 2.120875 / 2.428583 |
+| New951-node derived tree | unavailable | .522500 / .557667 |
+
+Final nested median increases .003624585ms (+13.0177%) and p95 .003984160ms
+(+11.0497%). Other existing controls are within5%. Root disposition of this
+remaining measured tradeoff is pending. No improvement is claimed from comparing
+the two runs; the shared-host observations do not establish causality, significance
+or a noise explanation. All320 observations remain committed.
 
 ## Limits
 
