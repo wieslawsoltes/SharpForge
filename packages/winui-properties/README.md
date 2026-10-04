@@ -77,3 +77,7 @@ The approved object writer, serializer, markup extensions and registered namespa
 ## Item models in the XAML branch
 
 The reviewed item-model branch is joined before the final container adapters, keeping the integration patch bounded. Only item-specific files are carried; already integrated resource, style and binding modules retain their current versions.
+
+## Resource contract providers
+
+`registerResourceContracts` and `registerObjectModelContracts` are exported beside their implementation services. These providers add only reserved-area metadata when called by the framework composition layer. This batch preserves their exact definition/member order and does not activate the A15/A16/A17 registry itself.
