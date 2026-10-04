@@ -1,2 +1,45 @@
-.sf-editor{--editor:#1e1e1e;--surface:#252526;--surface2:#333337;--raised:#2d2d30;--text:#dcdcdc;--muted:#aaa;--accent:#007acc;--accent-bg:#094771;--red:#e76c71;--line:#3f3f46;--line-soft:#303033}.sf-editor .tok-keyword{color:#569cd6}.sf-editor .tok-string{color:#ce9178}.sf-editor .tok-type{color:#4ec9b0}.sf-editor .tok-comment{color:#6a9955}.sf-editor .tok-method{color:#dcdcaa}.sf-editor .tok-number{color:#b5cea8}.sf-input::selection{background:#264f788f}
-html[data-theme=light] .sf-editor{--editor:#fff;--surface:#f5f5f5;--surface2:#eee;--raised:#fff;--text:#202020;--muted:#666;--accent:#007acc;--accent-bg:#c9def5;--line:#ccc;--line-soft:#ddd}html[data-theme=light] .sf-editor .tok-keyword,html[data-theme=light] .cm-s-sharpforge .cm-keyword{color:#00f}html[data-theme=light] .sf-editor .tok-string,html[data-theme=light] .cm-s-sharpforge .cm-string{color:#a31515}html[data-theme=light] .sf-editor .tok-type{color:#267f99}html[data-theme=light] .sf-editor .tok-comment,html[data-theme=light] .cm-s-sharpforge .cm-comment{color:#008000}html[data-theme=light] .cm-s-sharpforge .cm-variable,html[data-theme=light] .cm-s-sharpforge .cm-def{color:#202020}
+.sf-editor {
+  --editor: var(--source-editor-editor-background);
+  --surface: var(--source-editor-surface);
+  --surface2: var(--source-editor-secondary-surface);
+  --raised: var(--source-editor-raised);
+  --text: var(--source-editor-foreground);
+  --muted: var(--source-editor-muted-foreground);
+  --accent: var(--source-editor-accent);
+  --accent-bg: var(--source-editor-accent-background);
+  --red: var(--source-editor-error);
+  --line: var(--source-editor-line);
+  --line-soft: var(--source-editor-line-soft);
+}
+.sf-editor .tok-keyword { color: var(--source-editor-editor-syntax-keyword-foreground); }
+.sf-editor .tok-string { color: var(--source-editor-editor-syntax-string-foreground); }
+.sf-editor .tok-type { color: var(--source-editor-editor-syntax-type-foreground); }
+.sf-editor .tok-comment { color: var(--source-editor-editor-syntax-comment-foreground); }
+.sf-editor .tok-method { color: var(--source-editor-editor-syntax-method-foreground); }
+.sf-editor .tok-number { color: var(--source-editor-editor-syntax-number-foreground); }
+.sf-input::selection { background: var(--source-editor-input-selection-background); }
+html[data-theme=light] .sf-editor {
+  --editor: var(--source-editor-editor-background-light);
+  --surface: var(--source-editor-surface-light);
+  --surface2: var(--source-editor-secondary-surface-light);
+  --raised: var(--source-editor-raised-light);
+  --text: var(--source-editor-foreground-light);
+  --muted: var(--source-editor-muted-foreground-light);
+  --accent: var(--source-editor-accent-light);
+  --accent-bg: var(--source-editor-accent-background-light);
+  --line: var(--source-editor-line-light);
+  --line-soft: var(--source-editor-line-soft-light);
+}
+html[data-theme=light] .sf-editor .tok-keyword,html[data-theme=light] .cm-s-sharpforge .cm-keyword {
+  color: var(--source-editor-editor-syntax-keyword-light-foreground);
+}
+html[data-theme=light] .sf-editor .tok-string,html[data-theme=light] .cm-s-sharpforge .cm-string {
+  color: var(--source-editor-editor-syntax-string-light-foreground);
+}
+html[data-theme=light] .sf-editor .tok-type { color: var(--source-editor-editor-syntax-type-light-foreground); }
+html[data-theme=light] .sf-editor .tok-comment,html[data-theme=light] .cm-s-sharpforge .cm-comment {
+  color: var(--source-editor-editor-syntax-comment-light-foreground);
+}
+html[data-theme=light] .cm-s-sharpforge .cm-variable,html[data-theme=light] .cm-s-sharpforge .cm-def {
+  color: var(--source-editor-cm-s-sharpforge-cm-variable-light-foreground);
+}
