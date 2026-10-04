@@ -21,7 +21,9 @@ increment leaves that reset and all frame attachment lifecycles unchanged.
 
 `tests/a05-call-argument-buffers.test.js` covers pooled allocation counters,
 disabled pooling, arity changes, exceptional release, delegate ownership, and
-suspending platform-contract ownership. It has been authored but not executed;
-root's serial validation queue owns execution and any performance measurements.
+suspending platform-contract ownership. Serial Node24.21.0 validation passed
+48 new/frame-pool/verified-stack cases plus the existing delegate/Decimal integration
+regressions at `2043a893`. Broader qualification and performance measurements
+remain queued for the completed scope.
 The counters measure pool allocations, not every JS allocation or retained heap
 byte. No elapsed-time speedup is claimed.
