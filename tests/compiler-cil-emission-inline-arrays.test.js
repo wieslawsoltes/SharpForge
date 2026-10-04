@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { AssemblyInspector, decodeCoded } from '@sharpforge/cil';
-import { compileToAssembly } from '@sharpforge/compiler';
+import { compileToAssembly, compileToReferenceAssembly, createReferenceSet } from '@sharpforge/compiler';
 import { loadReferencePack } from '@sharpforge/compiler/node';
 import { loadFixtures, loadPinned } from '../packages/compiler/test/differential/corpus-store.js';
 import { dotnetHost, sdkVersion, openDotnetScratch, runFixtureOnDotnet } from '../packages/compiler/test/differential/tools/dotnet-axis.mjs';
@@ -10,8 +10,8 @@ const prefix = `using System; using System.Runtime.CompilerServices;
 [InlineArray(4)] struct Quad { private int first; }
 `;
 
-function emit(source) {
-  const result = compileToAssembly(source, { name: 'InlineArrays' });
+function emit(source, options = {}) {
+  const result = compileToAssembly(source, { name: 'InlineArrays', ...options });
   assert.deepEqual(result.diagnostics.filter(row => row.severity === 'error'), []);
   const inspector = new AssemblyInspector(result.assembly);
   return {
@@ -89,6 +89,24 @@ const pack = loadReferencePack();
 const dotnet = dotnetHost();
 const sdk = pack ? sdkVersion(dotnet) : null;
 const skip = !pack || !sdk ? 'a .NET SDK and reference pack are required' : false;
+
+test('A02-T80 imported inline-array attributes and private generic storage retain element types', { skip: !pack }, () => {
+  const library = compileToReferenceAssembly(`using System.Runtime.CompilerServices;
+    namespace External { [InlineArray(3)] public struct Row<T> { private T first; } }`,
+  { name: 'InlineStorage', references: pack.references });
+  assert.ok(library.assembly, JSON.stringify(library.diagnostics));
+  const references = createReferenceSet([...pack.references, { bytes: library.assembly, display: 'InlineStorage.dll' }]);
+  const { lines } = emit(`using System; using External;
+    class Program {
+      static Span<T> Tail<T>(ref Row<T> value) => value[1..];
+      static void Main() { Row<string> row = default; row[^1] = "last"; ReadOnlySpan<string> span = row; }
+    }`, { references });
+  assert.ok(lines('Tail').some(line => line.endsWith('MemoryMarshal::CreateSpan')));
+  assert.ok(lines('Main').some(line => line.endsWith('MemoryMarshal::CreateReadOnlySpan')));
+  const invalid = compileToAssembly(`using System; using External;
+    class Program { static void Main() { Row<string> row = default; ReadOnlySpan<object> span = row; } }`, { references });
+  assert.deepEqual(invalid.diagnostics.filter(row => row.severity === 'error').map(row => row.code), ['CS0029']);
+});
 
 test('A02-T80 inline-array runtime values, aliasing, slices, generic managed elements and bounds', { skip }, t => {
   const fixture = {
