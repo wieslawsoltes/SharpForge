@@ -5,3 +5,4 @@ export * from './virtualization/index.js';
 export * from './contracts/layout.js';
 export * from './automation/index.js';
 export * from './contracts/automation.js';
+export * from './policy/default-templates.js';
