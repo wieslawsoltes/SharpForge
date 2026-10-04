@@ -3,7 +3,7 @@
   "member-required/required-declaration-errors": ["diagnostics", "warnings"],
   "member-required/required-language-version": ["diagnostics", "warnings"],
   "member-required/required-member-must-be-set": ["diagnostics", "warnings"],
-  "member-required/required-members-set-by-initializers": ["diagnostics", "warnings", "bytecode", "cil"],
+  "member-required/required-members-set-by-initializers": ["diagnostics", "warnings", "bytecode", "cil", "directCil"],
   "member-required/required-new-constraint": ["diagnostics", "warnings"],
   "member-required/sets-required-members": ["diagnostics", "warnings"]
 }

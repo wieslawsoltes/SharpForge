@@ -3,5 +3,5 @@
   "extension-declarations/cs1106-cs1109-where-extensions-may-be-declared": ["diagnostics", "warnings"],
   "extension-declarations/cs1113-cs0428-delegates-over-extension-methods": ["diagnostics", "warnings"],
   "extension-declarations/delegates-over-extension-methods-close-over-the-receiver": ["diagnostics", "warnings", "bytecode", "cil"],
-  "extension-declarations/instance-methods-win-and-the-nearest-receiver-type": ["diagnostics", "warnings", "bytecode", "cil"]
+  "extension-declarations/instance-methods-win-and-the-nearest-receiver-type": ["diagnostics", "warnings", "bytecode", "cil", "directCil"]
 }

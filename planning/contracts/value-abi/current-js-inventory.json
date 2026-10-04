@@ -2,8 +2,8 @@
   "schemaVersion": 1,
   "sources": {
     "packages/runtime/src/heap.js": "eecd3fb6a26637b3feb810f233f377c799f05c119e93c71b4a971056529e5d6b",
-    "packages/runtime/src/vm.js": "9889ea83f3d0ee1e24df15057dfd9a43ed000dc52e4371e006cfdfda4e4005da",
-    "packages/runtime/src/cil-vm.js": "35d6cfb8c09251a39157ce1f1bf0124725faa14e0668a248cfc2cb5845528684",
+    "packages/runtime/src/vm.js": "e698585e110a9d30335ee2ea4f86f4f041239a0a99f8a97becd783976f87c629",
+    "packages/runtime/src/cil-vm.js": "7e0cfd8c71f171fb11089fa8767753da4ff71905bd4edff1617821a923293f11",
     "packages/runtime/src/execution/delegate-targets.js": "ec19efa480e2d864ba35268cfee220015e7655d84213502d6d2fc4b95094ae5d",
     "packages/runtime/src/execution/source-ops.js": "d281c22b9072dc0151a2b0b3571c02b29bfe3074dbf783cf879269b6e5af9a22",
     "packages/runtime/src/execution/source-ops/load-store.js": "7a99bedd6eef6f44a618a9f905181df553fa01bb98ee6d9912be4936d87c8a3e",
@@ -17,10 +17,10 @@
     "packages/runtime/src/execution/source-builtins/collections.js": "7c29355d5d9e39fd29641ffb9d2bf0e0ee6b406b70d75829f5dfe57dad0508cc",
     "packages/runtime/src/execution/source-builtins/services.js": "b91d5a6acbd232e5d3e63e7a727e180ec4b7a4baff44ce82a6a51b1f6234cd8e",
     "packages/runtime/src/execution/source-builtins/index.js": "5f158f73b07154bad9b3a3c2602cdac4ef2203b7984f1ad464a8b22d06f8211e",
-    "packages/runtime/src/execution/storage.js": "90796038ab9b92e0bd29c1e48df58c98655f625b330f6dc8df2e48284ab516ad",
+    "packages/runtime/src/execution/storage.js": "f38aeb44cd753cb77f8a3e9e15519ae94436dc4bcb7d24ea96e180526c2d8fe3",
     "packages/runtime/src/execution/numeric-ops.js": "407778ba5fa9b1b97d26e625874dac923b2de5c6e4f9a5a30d42f1b2da7ee2b2",
     "packages/runtime/src/execution/enums.js": "7235807aed0ec81512a186db091608087e4418b38dfbd1cb228cde697a46ff5c",
-    "packages/bytecode/src/index.js": "a7415f7b70d7fa8b44674f85278a307e5cc9cbd7df0544953733eda2a3a1b32d",
+    "packages/bytecode/src/index.js": "3d06bc8813cdd608360f8744c6bd8b7006845af5ac5918ca730b182be04ab058",
     "packages/bytecode/src/builtins.js": "52bdae4e1dc6b2e0c418d6fa38cbb980e616891a03415143a656e6def8060d2b",
     "packages/bytecode/src/numeric/conversions.js": "8ba60ff562911c7c11adb942a0d8b2793bd935cddadf5bc71bb52817b0f16b60",
     "packages/bytecode/src/numeric/float.js": "aa8fe24bf6c9f0967934f377e1553244aa49a6521fb2c41a9e1e996e25a6ebc0",
@@ -68,10 +68,14 @@
     },
     "any": {
       "source": "number | bigint | boolean | null | undefined | {h,g} | enum | float | nativeInt | Decimal",
-      "cil": "number | bigint | null | undefined | {h,g} | float | nativeInt | Decimal | byref | methodPointer | frozen {valueType,fields}"
+      "cil": "number | bigint | null | undefined | {h,g} | float | nativeInt | Decimal | byref | methodPointer | frozen {valueType,fields} | frozen Nullable"
     }
   },
   "additionalShapes": [
+    {
+      "shape": "{nullableType:MethodTable,hasValue:boolean,value}",
+      "meaning": "immutable direct-CIL Nullable with an admitted reference-free copied payload or null; boxes as null or underlying T; ordinary same-VM snapshot-safe"
+    },
     {
       "shape": "{valueType:MethodTable,fields:frozen array}",
       "meaning": "immutable VM-owned direct-CIL reference-free sequential struct; nested copied values; ordinary same-VM snapshot-safe, not portable wire data"

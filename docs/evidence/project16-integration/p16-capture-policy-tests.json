@@ -1,0 +1,38 @@
+{
+  "sourceCommit": "48472269ec106049debc0d448985882463365215",
+  "sourceTree": "8ad180ab94fb21a57e6e9a5c3b17cf553015a717",
+  "startedAt": "2026-10-04T02:11:00.734385+00:00",
+  "command": [
+    "node",
+    "scripts/limited.js",
+    "node",
+    "--test",
+    "tests/a20-invocation-capture-ownership.test.js",
+    "tests/a20-signature-query-index.test.js",
+    "tests/a20-bound-signature-help.test.js",
+    "tests/a20-editor-language-worker.test.js",
+    "tests/a19-call-hierarchy-ownership.test.js",
+    "tests/a19-studio-language-providers.test.js",
+    "tests/compiler-reference-assembly.test.js",
+    "tests/compiler-attribute-emission.test.js",
+    "tests/compiler-hidden-entry-parameters.test.js",
+    "tests/compiler-semantic-model-analysis.test.js"
+  ],
+  "files": [
+    "tests/a20-invocation-capture-ownership.test.js",
+    "tests/a20-signature-query-index.test.js",
+    "tests/a20-bound-signature-help.test.js",
+    "tests/a20-editor-language-worker.test.js",
+    "tests/a19-call-hierarchy-ownership.test.js",
+    "tests/a19-studio-language-providers.test.js",
+    "tests/compiler-reference-assembly.test.js",
+    "tests/compiler-attribute-emission.test.js",
+    "tests/compiler-hidden-entry-parameters.test.js",
+    "tests/compiler-semantic-model-analysis.test.js"
+  ],
+  "untrackedPreservedOutsideCheckout": [
+    "packages/clr/src/type-system/metadata-method-definitions.js"
+  ],
+  "exitCode": 0,
+  "finishedAt": "2026-10-04T02:11:07.874804+00:00"
+}

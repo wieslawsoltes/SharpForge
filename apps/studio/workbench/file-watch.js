@@ -1,5 +1,11 @@
 import {element, button, runAction} from './ui.js';
-import {boundedDocuments, documentSize} from './document-size.js';
+import {AUTOMATIC_DOCUMENT_CHARACTERS, boundedDocuments, documentSize} from './document-size.js';
+import {workbenchError} from './state-events.js';
+
+function sameDiskVersion(left, right) {
+  return left?.record === right.record && left.version === right.version && left.target === right.target && left.text === right.text
+    && left.encoding === right.encoding && left.bom === right.bom && left.byteLength === right.byteLength;
+}
 
 /** Browser file handles are polled only through explicitly supplied readers; permissions are never persisted. */
 export class FileWatch {
@@ -16,44 +22,80 @@ export class FileWatch {
   }
   canReadAutomatically(document) {
     const size = documentSize(this.documents, document);
-    if (size !== null && size <= 8_000_000) return true;
-    if (this.largeFiles.get(document.uri) !== document.version) {
-      this.largeFiles.set(document.uri, document.version);
+    if (size !== null && size <= AUTOMATIC_DOCUMENT_CHARACTERS) return true;
+    const previous = this.largeFiles.get(document.uri);
+    if (previous?.record !== document || previous.version !== document.version) {
+      this.largeFiles.set(document.uri, {record: document, version: document.version});
       this.notify({id: 'large-file-recovery:' + document.uri, code: 'SF-WB-LARGE-RECOVERY', severity: 'info',
         message: document.uri + ' exceeds automatic recovery and disk polling limits. Save it explicitly to preserve changes.'});
     }
     return false;
   }
+  current(document, version) {
+    return !this.disposed && this.documents.get(document.uri) === document && document.version === version;
+  }
+  checkCurrent(document, version) {
+    if (!this.current(document, version)) {
+      throw workbenchError('SF-WB-FILE-WATCH-STALE', 'The document changed after the disk notification');
+    }
+  }
+  prompt(document, version, disk, observed) {
+    const {text} = observed;
+    const checked = action => () => {
+      this.checkCurrent(document, version);
+      if (disk?.isCurrent?.() === false) {
+        throw workbenchError('SF-WB-FILE-WATCH-STALE', 'The save target changed after the disk notification');
+      }
+      return action();
+    };
+    this.notify({id: 'disk-change:' + document.uri, message: document.uri + ' changed outside the IDE.', severity: 'warning',
+      persistent: true, documentUri: document.uri, actions: [
+        {label: 'Reload', run: checked(() => this.reload(document.uri, text, {
+          expectedRecord: document, expectedVersion: version, confirmDirty: true, observation: disk?.observation
+        }))},
+        {label: 'Ignore', run: checked(() => { this.prompted.set(document.uri, observed); })},
+        {label: 'Compare', run: checked(() => this.compare({uri: document.uri, current: document.text, disk: text}))}
+      ]});
+  }
   async poll({signal} = {}) {
     if (this.polling || this.disposed || !this.readDisk) return;
     this.polling = true;
     try {
+      for (const values of [this.baselines, this.prompted, this.largeFiles]) {
+        for (const [uri, value] of values) if (this.documents.get(uri) !== value.record) values.delete(uri);
+      }
       for (const document of this.documents.list()) {
         signal?.throwIfAborted();
         if (!this.canReadAutomatically(document)) continue;
+        const version = document.version;
         const disk = await this.readDisk(document.uri, {signal});
-        if (disk === null || disk === undefined || this.disposed) continue;
+        signal?.throwIfAborted();
+        if (disk === null || disk === undefined || !this.current(document, version)) continue;
         const text = typeof disk === 'string' ? disk : disk.text;
         if (typeof text !== 'string') continue;
+        if (text.length > AUTOMATIC_DOCUMENT_CHARACTERS) throw new RangeError('Disk observation exceeds automatic watch limits');
+        const observed = {record: document, version, text, target: disk?.target,
+          encoding: disk?.encoding, bom: disk?.bom, byteLength: disk?.byteLength};
         const previous = this.baselines.get(document.uri);
-        this.baselines.set(document.uri, text);
-        if (previous === undefined && text === document.text || previous === text || text === document.text) continue;
-        if (this.prompted.get(document.uri) === text) continue;
-        this.prompted.set(document.uri, text);
-        const version = document.version;
-        this.notify({id: 'disk-change:' + document.uri, message: document.uri + ' changed outside the IDE.', severity: 'warning',
-          persistent: true, documentUri: document.uri, actions: [
-            {label: 'Reload', run: () => this.reload(document.uri, text, {expectedVersion: version, confirmDirty: true})},
-            {label: 'Ignore', run: () => { this.prompted.set(document.uri, text); }},
-            {label: 'Compare', run: () => this.compare({uri: document.uri, current: this.documents.get(document.uri)?.text ?? '', disk: text})}
-          ]});
+        this.baselines.set(document.uri, observed);
+        const metadata = this.documents.models?.get(document.uri)?.metadata;
+        const encoding = document.encoding ?? metadata?.encoding ?? 'utf-8';
+        const bom = document.bom ?? metadata?.bom ?? false;
+        const matchesDocument = text === document.text && (observed.encoding === undefined || observed.encoding === encoding)
+          && (observed.bom === undefined || observed.bom === Boolean(bom));
+        if (sameDiskVersion(previous, observed) || matchesDocument) continue;
+        if (sameDiskVersion(this.prompted.get(document.uri), observed)) continue;
+        this.prompted.set(document.uri, observed);
+        this.prompt(document, version, disk, observed);
       }
     } finally { this.polling = false; }
   }
   snapshot() {
     if (this.recoveryPending) return null;
     const records = this.documents.list().filter(document => document.dirty && this.canReadAutomatically(document));
-    const files = boundedDocuments(this.documents, records, {maxFile: 8_000_000, maxTotal: 16_000_000});
+    const files = boundedDocuments(this.documents, records, {
+      maxFile: AUTOMATIC_DOCUMENT_CHARACTERS, maxTotal: AUTOMATIC_DOCUMENT_CHARACTERS * 2
+    });
     if (!files.length) { this.storage?.removeItem(this.key); return null; }
     const payload = {version: 1, timestamp: this.clock(), files};
     const text = JSON.stringify(payload);
@@ -79,7 +121,13 @@ export class FileWatch {
     }, intervalSeconds * 1000);
     this.timer.unref?.();
   }
-  dispose() { this.disposed = true; clearInterval(this.timer); this.baselines.clear(); this.prompted.clear(); }
+  dispose() {
+    this.disposed = true;
+    clearInterval(this.timer);
+    this.baselines.clear();
+    this.prompted.clear();
+    this.largeFiles.clear();
+  }
 }
 
 export function showDiskCompare(dialogs, {uri, current, disk}) {

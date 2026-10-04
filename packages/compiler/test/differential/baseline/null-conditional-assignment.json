@@ -4,7 +4,7 @@
   "null-conditional-assignment/cs1059-increment-and-decrement": ["diagnostics", "warnings"],
   "null-conditional-assignment/cs8978-type-parameter-value": ["diagnostics", "warnings"],
   "null-conditional-assignment/cs9260-below-csharp-14": ["diagnostics", "warnings"],
-  "null-conditional-assignment/generic-targets": ["diagnostics", "warnings", "bytecode", "cil"],
+  "null-conditional-assignment/generic-targets": ["diagnostics", "warnings", "bytecode", "cil", "directCil"],
   "null-conditional-assignment/members-elements-and-events": ["diagnostics", "warnings", "bytecode", "cil"],
-  "null-conditional-assignment/value-of-the-assignment": ["diagnostics", "warnings", "bytecode", "cil"]
+  "null-conditional-assignment/value-of-the-assignment": ["diagnostics", "warnings", "bytecode", "cil", "directCil"]
 }

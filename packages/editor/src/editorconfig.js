@@ -71,24 +71,4 @@ export function editorConfigGlob(pattern) {
   return new RegExp(`${pattern.includes('/') ? '^' : '(?:^|/)'}${result}$`);
 }
 
-/** Save normalization becomes one buffer transaction and respects the selected line-ending convention. */
-export function saveTextEdits(model, options) {
-  const edits = [];
-  for (let line = 0; line < model.lineCount; line++) {
-    const start = model.offsetAt({line, character: 0});
-    const text = model.getLine(line);
-    const contentEnd = start + text.length;
-    const next = line + 1 < model.lineCount ? model.offsetAt({line: line + 1, character: 0}) : contentEnd;
-    const trimmed = options.trimTrailingWhitespace ? text.replace(/[\t ]+$/, '') : text;
-    const ending = next > contentEnd
-      ? options.normalizeLineEndings === false ? model.getText(contentEnd, next) : options.endOfLine : '';
-    const replacement = trimmed + ending;
-    if (replacement !== model.getText(start, next)) edits.push({start, end: next, text: replacement});
-  }
-  if (options.insertFinalNewline && model.length && !/[\r\n]$/.test(model.getText(Math.max(0, model.length - 1)))) {
-    const last = edits.at(-1);
-    if (last?.end === model.length) last.text += options.endOfLine;
-    else edits.push({start: model.length, end: model.length, text: options.endOfLine});
-  }
-  return edits;
-}
+export {saveTextEdits, saveTextEditsAsync} from './save-normalization.js';

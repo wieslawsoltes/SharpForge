@@ -13,3 +13,5 @@ export {wasmEligibility, lowerWasmIR} from './execution/wasm/eligibility.js';
 export {exportSpeedscope} from './execution/profile-export.js';
 export {encodeWasmIR} from './execution/wasm/encoder.js';
 export {instantiateWasmIR} from './execution/wasm/compile.js';
+export {prepareWasmMethod, runWasmSlice, disposeWasmMethod} from './execution/wasm/manual-runtime.js';
+export {wasmTieringStatistics, disposeWasmTiering} from './execution/wasm/tiering.js';

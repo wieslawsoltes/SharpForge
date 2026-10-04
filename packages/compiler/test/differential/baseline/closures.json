@@ -1,6 +1,6 @@
 {
-  "closures/captured-this-and-parameters": ["diagnostics", "warnings", "bytecode", "cil"],
-  "closures/local-functions": ["diagnostics", "warnings", "bytecode", "cil"],
-  "closures/loop-capture-lifetimes": ["diagnostics", "warnings", "bytecode", "cil"],
-  "closures/shared-mutable-state": ["diagnostics", "warnings", "bytecode", "cil"]
+  "closures/captured-this-and-parameters": ["diagnostics", "warnings", "bytecode", "cil", "directCil"],
+  "closures/local-functions": ["diagnostics", "warnings", "bytecode", "cil", "directCil"],
+  "closures/loop-capture-lifetimes": ["diagnostics", "warnings", "bytecode", "cil", "directCil"],
+  "closures/shared-mutable-state": ["diagnostics", "warnings", "bytecode", "cil", "directCil"]
 }

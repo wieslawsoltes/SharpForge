@@ -111,6 +111,8 @@ try:
         page.get_by_role("checkbox", name="Regular expression", exact=True).check()
         page.get_by_role("textbox", name="Find in current file").fill("(\\w+)=(\\d+)")
         page.get_by_role("textbox", name="Replace in current file").fill("$1($2)")
+        wait(page, "document.querySelector('.sf-find-replace')?.dataset.searchState === 'complete' && "
+                   "editor.decorations.get('find')?.length === 2")
         page.get_by_role("button", name="Replace all", exact=True).click()
         wait(page, "editor.value === 'one(12); two(34);'")
         passed.append("regex replace captures use the shared safe search engine")
@@ -119,8 +121,11 @@ try:
         page.evaluate("editor.goto(6); insights.incrementalSearch(1)")
         query = page.get_by_role("textbox", name="Incremental search", exact=True)
         query.fill("alpha")
+        wait(page, "editor.offset === 11 && "
+                   "document.querySelector('.sf-incremental-search [role=status]')?.textContent === 'Forward: alpha'")
         assert page.evaluate("editor.offset") == 11
         query.press("Escape")
+        wait(page, "editor.offset === 6")
         assert page.evaluate("editor.offset") == 6
         passed.append("incremental search restores its original caret on Escape")
 

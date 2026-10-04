@@ -5,5 +5,5 @@
   "global-usings/cs8914-in-a-namespace": ["diagnostics", "warnings"],
   "global-usings/cs8915-after-a-using": ["diagnostics", "warnings"],
   "global-usings/global-using-in-csharp-9": ["diagnostics", "warnings"],
-  "global-usings/namespace-static-and-alias": ["diagnostics", "warnings", "bytecode", "cil"]
+  "global-usings/namespace-static-and-alias": ["diagnostics", "warnings", "bytecode", "cil", "directCil"]
 }
