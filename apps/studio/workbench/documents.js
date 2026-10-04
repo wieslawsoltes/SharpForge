@@ -5,7 +5,7 @@ import { captureDocumentState } from './documents-state.js';
 
 /** Workspace documents own text and editors; prompt/tab placement policies belong to the host. */
 export class DocumentService {
-  constructor({ records = [], createEditor, createModel, modelFactory, saveDocument, maxDocuments = 20_000 } = {}) {
+  constructor({ records = [], createEditor, createModel, modelFactory, saveDocument, coordinateSave, maxDocuments = 20_000 } = {}) {
     this.records = new Map();
     this.recordList = [];
     this.baselines = new Map();
@@ -27,6 +27,7 @@ export class DocumentService {
     this.createEditor = createEditor;
     this.modelFactory = createModel ?? modelFactory;
     this.saveDocument = saveDocument;
+    this.coordinateSave = coordinateSave;
     this.maxDocuments = maxDocuments;
     this.replace(records, { discard: true });
   }
@@ -49,8 +50,9 @@ export class DocumentService {
   }
 
   replace(records, { tabs = [], active = '', discard = false, preserveEditors = false,
-    preserveDirty = false, documentStates = null, signal } = {}) {
+    preserveDirty = false, documentStates = null, commitMetadata, signal } = {}) {
     if (this.disposed) throw workbenchError('DOCUMENTS_DISPOSED', 'Document service is disposed');
+    if (commitMetadata !== undefined && typeof commitMetadata !== 'function') throw new TypeError('Invalid metadata commit contribution');
     if (!Array.isArray(records) || records.length > this.maxDocuments) throw new RangeError('Document limit exceeded');
     if (this.dirtyFiles.size && !discard && !preserveDirty) {
       throw workbenchError('DOCUMENT_DIRTY', 'Save or discard changed documents before replacing the workspace');
@@ -84,7 +86,7 @@ export class DocumentService {
     if (this.active && !this.tabs.includes(this.active)) this.tabs.push(this.active);
     this.revision++;
     staged.commit();
-    this.finishReplacement({ oldModels, oldSubscriptions, oldUris, preserveEditors });
+    this.finishReplacement({ oldModels, oldSubscriptions, oldUris, preserveEditors, commitMetadata });
     return { committed: true, count: this.records.size };
   }
 
@@ -188,15 +190,31 @@ export class DocumentService {
 
   async save(uri) {
     const record = this.require(uri);
-    if (!this.saveDocument) throw workbenchError('DOCUMENT_SAVE_UNAVAILABLE', 'No document save provider is registered');
+    if (!this.saveDocument && !this.coordinateSave) {
+      throw workbenchError('DOCUMENT_SAVE_UNAVAILABLE', 'No document save provider is registered');
+    }
     const editor = this.views.get(uri)?.get(this.activeViews.get(uri))?.editor ?? this.editors.get(uri);
-    const prepared = editor?.prepareSave?.();
-    if (prepared && typeof prepared.then === 'function') await prepared;
-    if (this.records.get(uri) !== record) return false;
-    const snapshot = this.captureSave(uri);
-    const result = await this.saveDocument(snapshot);
+    const isCurrent = () => !this.disposed && this.records.get(uri) === record;
+    const capture = () => {
+      if (!isCurrent()) throw workbenchError('DOCUMENT_SAVE_STALE', 'The document changed ownership during save preparation');
+      return this.captureSave(uri);
+    };
+    const prepare = options => {
+      capture();
+      const pending = editor?.prepareSave?.(options);
+      return pending && typeof pending.then === 'function' ? pending.then(capture) : capture();
+    };
+    let snapshot = this.captureSave(uri);
+    let result;
+    if (this.coordinateSave) {
+      result = await this.coordinateSave({ snapshot, prepare, isCurrent });
+      snapshot = result?.snapshot ?? snapshot;
+    } else {
+      snapshot = await prepare();
+      result = await this.saveDocument(snapshot);
+    }
     if (result === false || result?.ok === false) return false;
-    if (this.records.get(uri) !== record) return false;
+    if (!isCurrent()) return false;
     return this.markSaved(uri, snapshot);
   }
 
@@ -374,8 +392,8 @@ export class DocumentService {
     return unsubscribe;
   }
 
-  finishReplacement({ oldModels, oldSubscriptions, oldUris, preserveEditors }) {
-    const effects = [...oldSubscriptions];
+  finishReplacement({ oldModels, oldSubscriptions, oldUris, preserveEditors, commitMetadata }) {
+    const effects = [...(commitMetadata ? [commitMetadata] : []), ...oldSubscriptions];
     if (!preserveEditors) effects.push(() => this.resetEditors());
     else for (const uri of oldUris) if (!this.records.has(uri)) effects.push(() => this.releaseViews(uri));
     for (const [uri, model] of oldModels) if (this.models.get(uri) !== model) effects.push(() => model.dispose?.());
