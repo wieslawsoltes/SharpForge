@@ -48,7 +48,8 @@ The manual Wasm bridge retains its existing dispatch/activity envelope. Typed ha
 are its ordinary fallback handlers; this change adds no Wasm tier or OSR behavior.
 The runnable example is `examples/runtime/typed-float-slots.mjs`.
 
-Focused Array, raw-loop, IEEE edge, host-edit, byref, snapshot, collection and retirement
-regressions are staged for the serial validation queue. No tests, builds, native runs or
-benchmarks were executed for this increment. Zero per-iteration JS allocation,
-throughput, cold/warm latency and p95/p99 remain unmeasured.
+Serial Node 24 validation at `cb84b4c9` passed all 112 focused tests covering
+Array behavior, raw float loops, IEEE edges, host edits, byrefs, quotas, verified
+stacks, snapshots, collection, pool retirement and the existing manual Wasm bridge.
+Broad native/browser qualification remains deferred. Zero per-iteration JS
+allocation, throughput, cold/warm latency and p95/p99 remain unmeasured.
