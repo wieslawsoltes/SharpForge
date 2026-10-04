@@ -11,7 +11,8 @@
     "tests/msbuild-tools.test.js",
     "tests/a23-nuget-models.test.js",
     "tests/a23-native-central-boundaries.test.js",
-    "tests/a23-native-nuget-reference.test.js"
+    "tests/a23-native-nuget-reference.test.js",
+    "tests/a23-nuget-v3.test.js"
   ],
   "browserScripts": [
     "tests/browser_msbuild_test.py"
