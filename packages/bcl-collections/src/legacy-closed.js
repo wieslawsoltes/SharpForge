@@ -1,5 +1,5 @@
 import {registerOrderingExtensions} from './comparers/contracts.js';
-import {sortItems} from './comparers/ordering.js';
+import {sortList} from './list-sort.js';
 import {fail, integer, bclScalar, array, makeArray} from '@sharpforge/bcl-core';
 import {equal} from './object-equality.js';
 import {registerClosedCollections} from './legacy-contracts.js';
@@ -62,15 +62,9 @@ function mutate(p, descriptor, context) {
   if (descriptor.name === 'RemoveAt' || descriptor.name === 'RemoveRange') return listRemoval(p, descriptor, context);
   if (descriptor.name === 'Remove') return removeListValue(p, context.reference, context.values[0]);
   if (descriptor.name === 'Insert' || descriptor.name === 'AddRange') return listInsertion(p, descriptor, context);
+  if (descriptor.name === 'Sort') return sortList(p, context.reference, context.values[0] ?? null);
   if (descriptor.name === 'Reverse') return reverseList(p, context.reference);
-  const {reference, values, size} = context;
-  const items = data(p, reference).slice(0, size);
-  switch (descriptor.name) {
-    case 'Sort': sortItems(p, items, values[0] ?? null); break;
-    default: fail(p, 'MissingMethodException', descriptor.owner + '.' + descriptor.name);
-  }
-  commitItems(p, reference, items);
-  return null;
+  fail(p, 'MissingMethodException', descriptor.owner + '.' + descriptor.name);
 }
 
 function invokeMember(p, descriptor, context) {

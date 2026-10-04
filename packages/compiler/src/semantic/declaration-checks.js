@@ -20,6 +20,7 @@ import { checkVarianceSafety } from '../conversions/variance.js';
 import { checkNullableSignatures } from '../nullable/signature-checks.js';
 import { uninitializedMembersWithoutConstructor } from '../nullable/uninitialized-members.js';
 import { checkTypeModifiers, signatureNameOf } from '../binder/type-modifiers.js';
+import { nullabilityViolations, declarationNameOf } from '../nullable/constraint-checks.js';
 import { accessRank, baseOrSelf } from './analysis-helpers.js';
 
 /** Class mixin: Declaration-level checks of every source type: hiding, overrides, abstract members, interface */
@@ -134,7 +135,10 @@ export const DeclarationChecks = Base =>
       checkTypeModifierFeatures(type, this.gate);
       // Nullable reference type signature agreement between overrides/implementations and their bases.
       if (this.nullableAt(this.at(type).uri, this.at(type).start).warnings)
-        for (const d of checkNullableSignatures(type)) this.reportAt(d.member, d.code, d.args, 'warning');
+        for (const d of checkNullableSignatures(type)) {
+          if (d.node) this.report(this.at(type).uri, d.node, d.code, d.args, 'warning');
+          else this.reportAt(d.member, d.code, d.args, 'warning');
+        }
       for (const d of uninitializedMembersWithoutConstructor(type))
         if (this.nullableAt(this.at(d.member).uri, this.at(d.member).start).warnings) this.reportAt(d.member, d.code, d.args, 'warning');
     }
@@ -167,6 +171,22 @@ export const DeclarationChecks = Base =>
           );
       }
     }
+    /** CS8714, CS8634, CS8631 for a constructed type written where nullable warnings are enabled. */
+    checkConstructionNullability(construction) {
+      const type = construction.type,
+        definition = type.originalDefinition,
+        uri = construction.scope.uri;
+      if (type.kind !== SymbolKind.NamedType || !type.typeArguments?.length || definition.typeParameters?.length !== type.typeArguments.length) return;
+      if (!this.nullableAt(uri, construction.syntax.span?.start ?? construction.syntax.start ?? 0).warnings) return;
+      const violations = nullabilityViolations([...definition.typeParameters], type.typeArguments, {
+        display: definition.toDisplayString(),
+        isAnnotationContext: (at, position) => this.nullableAt(at, position).annotations,
+      });
+      for (const v of violations) {
+        const node = declarationNameOf(construction.syntax) ?? construction.argSyntax[v.index] ?? construction.syntax;
+        this.report(uri, node, v.code, v.args, 'warning');
+      }
+    }
     /** Constraint checks for every constructed type written in source (deferred until all declarations are known). */
     checkConstructions() {
       const pending = this.constructions.splice(0);
@@ -180,6 +200,7 @@ export const DeclarationChecks = Base =>
             node = v.code === DiagnosticId.CS0718 ? (signatureNameOf(c.syntax) ?? written) : written;
           this.report(c.scope.uri, node, v.code, v.args, v.severity);
         }
+        this.checkConstructionNullability(c);
       }
     }
   };

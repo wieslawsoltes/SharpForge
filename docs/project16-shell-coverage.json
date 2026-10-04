@@ -1,0 +1,2089 @@
+{
+  "format": "sharpforge-project16-coverage",
+  "version": 1,
+  "agent": "shell",
+  "branch": "codex/p16-shell",
+  "scope": "A19 T05,T08,T09,T10 except1575,T11,T12,T13–T42 except1473/1474; root owns shared keybinding service",
+  "sourceBase": "011f2bc3bdd84f8db82a928d117100017211ca78",
+  "entries": [
+    {
+      "issue": 1449,
+      "workId": "SF-A19-T13",
+      "title": "[SF-A19-T13] Complete the Error List window",
+      "owner": "shell",
+      "implementation": "implemented",
+      "files": [
+        "apps/studio/workbench/tools/error-list.js",
+        "apps/studio/workbench/tools/virtual-table.js"
+      ],
+      "focusedTests": [
+        "tests/a19-shell-search.test.js"
+      ],
+      "focusedValidation": {
+        "status": "passed",
+        "batch": "74/74 combined completed-scope cases: 70 shell cases and 4 shared stylesheet contract cases",
+        "runtime": "Node.js v24.19.0",
+        "revision": "d5b1d153",
+        "passed": 74,
+        "failed": 0,
+        "shellCases": 70,
+        "stylesheetContractCases": 4,
+        "command": "node scripts/limited.js node --test tests/a19-shell-commands.test.js tests/a19-shell-settings.test.js tests/a19-shell-search.test.js tests/a19-shell-tools.test.js tests/a19-shell-boundaries.test.js tests/a19-shell-inventory.test.js tests/a19-shell-recents.test.js tests/a19-shell-themes.test.js tests/a00-20-styles.test.js"
+      },
+      "browserTests": [
+        "tests/browser_a19_shell_test.py"
+      ],
+      "browserValidation": "pending-integrated-static-and-standalone",
+      "remainingAcceptanceGaps": []
+    },
+    {
+      "issue": 1450,
+      "workId": "SF-A19-T14",
+      "title": "[SF-A19-T14] Complete the Output window",
+      "owner": "shell",
+      "implementation": "implemented",
+      "files": [
+        "apps/studio/workbench/tools/output.js",
+        "apps/studio/workbench/tools/virtual-table.js"
+      ],
+      "focusedTests": [
+        "tests/a19-shell-search.test.js",
+        "tests/a19-shell-boundaries.test.js"
+      ],
+      "focusedValidation": {
+        "status": "passed",
+        "batch": "74/74 combined completed-scope cases: 70 shell cases and 4 shared stylesheet contract cases",
+        "runtime": "Node.js v24.19.0",
+        "revision": "d5b1d153",
+        "passed": 74,
+        "failed": 0,
+        "shellCases": 70,
+        "stylesheetContractCases": 4,
+        "command": "node scripts/limited.js node --test tests/a19-shell-commands.test.js tests/a19-shell-settings.test.js tests/a19-shell-search.test.js tests/a19-shell-tools.test.js tests/a19-shell-boundaries.test.js tests/a19-shell-inventory.test.js tests/a19-shell-recents.test.js tests/a19-shell-themes.test.js tests/a00-20-styles.test.js"
+      },
+      "browserTests": [
+        "tests/browser_a19_shell_test.py"
+      ],
+      "browserValidation": "pending-integrated-static-and-standalone",
+      "remainingAcceptanceGaps": []
+    },
+    {
+      "issue": 1451,
+      "workId": "SF-A19-T15",
+      "title": "[SF-A19-T15] Add Task List window",
+      "owner": "shell",
+      "implementation": "implemented",
+      "files": [
+        "apps/studio/workbench/tools/task-list.js",
+        "apps/studio/workbench/comment-tasks.js",
+        "apps/studio/workbench/search.worker.js"
+      ],
+      "focusedTests": [
+        "tests/a19-shell-tools.test.js"
+      ],
+      "focusedValidation": {
+        "status": "passed",
+        "batch": "74/74 combined completed-scope cases: 70 shell cases and 4 shared stylesheet contract cases",
+        "runtime": "Node.js v24.19.0",
+        "revision": "d5b1d153",
+        "passed": 74,
+        "failed": 0,
+        "shellCases": 70,
+        "stylesheetContractCases": 4,
+        "command": "node scripts/limited.js node --test tests/a19-shell-commands.test.js tests/a19-shell-settings.test.js tests/a19-shell-search.test.js tests/a19-shell-tools.test.js tests/a19-shell-boundaries.test.js tests/a19-shell-inventory.test.js tests/a19-shell-recents.test.js tests/a19-shell-themes.test.js tests/a00-20-styles.test.js"
+      },
+      "browserTests": [
+        "tests/browser_a19_shell_test.py"
+      ],
+      "browserValidation": "pending-integrated-static-and-standalone",
+      "remainingAcceptanceGaps": []
+    },
+    {
+      "issue": 1452,
+      "workId": "SF-A19-T16",
+      "title": "[SF-A19-T16] Add Class View window",
+      "owner": "shell",
+      "implementation": "implemented-with-explicit-limits",
+      "files": [
+        "apps/studio/workbench/tools/class-view.js",
+        "apps/studio/workbench/tools/tree-host.js",
+        "apps/studio/workbench/search-service.js"
+      ],
+      "focusedTests": [
+        "tests/a19-shell-tools.test.js"
+      ],
+      "focusedValidation": {
+        "status": "passed",
+        "batch": "74/74 combined completed-scope cases: 70 shell cases and 4 shared stylesheet contract cases",
+        "runtime": "Node.js v24.19.0",
+        "revision": "d5b1d153",
+        "passed": 74,
+        "failed": 0,
+        "shellCases": 70,
+        "stylesheetContractCases": 4,
+        "command": "node scripts/limited.js node --test tests/a19-shell-commands.test.js tests/a19-shell-settings.test.js tests/a19-shell-search.test.js tests/a19-shell-tools.test.js tests/a19-shell-boundaries.test.js tests/a19-shell-inventory.test.js tests/a19-shell-recents.test.js tests/a19-shell-themes.test.js tests/a00-20-styles.test.js"
+      },
+      "browserTests": [
+        "tests/browser_a19_shell_test.py"
+      ],
+      "browserValidation": "pending-integrated-static-and-standalone",
+      "remainingAcceptanceGaps": [
+        "Inheritance groups reflect compiler-provided base/derived metadata; unsupported language relationships are not synthesized."
+      ]
+    },
+    {
+      "issue": 1453,
+      "workId": "SF-A19-T17",
+      "title": "[SF-A19-T17] Add Object Browser window",
+      "owner": "shell",
+      "implementation": "implemented-with-explicit-limits",
+      "files": [
+        "apps/studio/workbench/tools/object-browser.js",
+        "apps/studio/workbench/tools/tree-host.js"
+      ],
+      "focusedTests": [
+        "tests/a19-shell-tools.test.js"
+      ],
+      "focusedValidation": {
+        "status": "passed",
+        "batch": "74/74 combined completed-scope cases: 70 shell cases and 4 shared stylesheet contract cases",
+        "runtime": "Node.js v24.19.0",
+        "revision": "d5b1d153",
+        "passed": 74,
+        "failed": 0,
+        "shellCases": 70,
+        "stylesheetContractCases": 4,
+        "command": "node scripts/limited.js node --test tests/a19-shell-commands.test.js tests/a19-shell-settings.test.js tests/a19-shell-search.test.js tests/a19-shell-tools.test.js tests/a19-shell-boundaries.test.js tests/a19-shell-inventory.test.js tests/a19-shell-recents.test.js tests/a19-shell-themes.test.js tests/a00-20-styles.test.js"
+      },
+      "browserTests": [
+        "tests/browser_a19_shell_test.py"
+      ],
+      "browserValidation": "pending-integrated-static-and-standalone",
+      "remainingAcceptanceGaps": [
+        "Registered framework metadata is available; external assembly inspection requires the supplied root metadata adapter."
+      ]
+    },
+    {
+      "issue": 1454,
+      "workId": "SF-A19-T18",
+      "title": "[SF-A19-T18] Unify the Properties window",
+      "owner": "shell",
+      "implementation": "implemented-with-explicit-limits",
+      "files": [
+        "apps/studio/workbench/tools/properties.js",
+        "apps/studio/workbench/shell-models.js"
+      ],
+      "focusedTests": [
+        "tests/a19-shell-tools.test.js"
+      ],
+      "focusedValidation": {
+        "status": "passed",
+        "batch": "74/74 combined completed-scope cases: 70 shell cases and 4 shared stylesheet contract cases",
+        "runtime": "Node.js v24.19.0",
+        "revision": "d5b1d153",
+        "passed": 74,
+        "failed": 0,
+        "shellCases": 70,
+        "stylesheetContractCases": 4,
+        "command": "node scripts/limited.js node --test tests/a19-shell-commands.test.js tests/a19-shell-settings.test.js tests/a19-shell-search.test.js tests/a19-shell-tools.test.js tests/a19-shell-boundaries.test.js tests/a19-shell-inventory.test.js tests/a19-shell-recents.test.js tests/a19-shell-themes.test.js tests/a00-20-styles.test.js"
+      },
+      "browserTests": [
+        "tests/browser_a19_shell_test.py",
+        "tests/browser_vs_workflows_test.py"
+      ],
+      "browserValidation": "pending-integrated-static-and-standalone",
+      "remainingAcceptanceGaps": [
+        "File/project descriptors are read-only unless a registered writer exists; designer local properties use the existing typed property writer."
+      ]
+    },
+    {
+      "issue": 1455,
+      "workId": "SF-A19-T19",
+      "title": "[SF-A19-T19] Add a generic Toolbox host",
+      "owner": "shell",
+      "implementation": "implemented",
+      "files": [
+        "apps/studio/workbench/tools/toolbox.js",
+        "apps/studio/workbench/shell-models.js"
+      ],
+      "focusedTests": [
+        "tests/a19-shell-tools.test.js"
+      ],
+      "focusedValidation": {
+        "status": "passed",
+        "batch": "74/74 combined completed-scope cases: 70 shell cases and 4 shared stylesheet contract cases",
+        "runtime": "Node.js v24.19.0",
+        "revision": "d5b1d153",
+        "passed": 74,
+        "failed": 0,
+        "shellCases": 70,
+        "stylesheetContractCases": 4,
+        "command": "node scripts/limited.js node --test tests/a19-shell-commands.test.js tests/a19-shell-settings.test.js tests/a19-shell-search.test.js tests/a19-shell-tools.test.js tests/a19-shell-boundaries.test.js tests/a19-shell-inventory.test.js tests/a19-shell-recents.test.js tests/a19-shell-themes.test.js tests/a00-20-styles.test.js"
+      },
+      "browserTests": [
+        "tests/browser_a19_shell_test.py",
+        "tests/browser_vs_workflows_test.py"
+      ],
+      "browserValidation": "pending-integrated-static-and-standalone",
+      "remainingAcceptanceGaps": []
+    },
+    {
+      "issue": 1456,
+      "workId": "SF-A19-T20",
+      "title": "[SF-A19-T20] Complete Document Outline for code and design documents",
+      "owner": "shell",
+      "implementation": "implemented-with-explicit-limits",
+      "files": [
+        "apps/studio/workbench/tools/outline.js",
+        "apps/studio/workbench/tools/tree-host.js"
+      ],
+      "focusedTests": [
+        "tests/a19-shell-tools.test.js"
+      ],
+      "focusedValidation": {
+        "status": "passed",
+        "batch": "74/74 combined completed-scope cases: 70 shell cases and 4 shared stylesheet contract cases",
+        "runtime": "Node.js v24.19.0",
+        "revision": "d5b1d153",
+        "passed": 74,
+        "failed": 0,
+        "shellCases": 70,
+        "stylesheetContractCases": 4,
+        "command": "node scripts/limited.js node --test tests/a19-shell-commands.test.js tests/a19-shell-settings.test.js tests/a19-shell-search.test.js tests/a19-shell-tools.test.js tests/a19-shell-boundaries.test.js tests/a19-shell-inventory.test.js tests/a19-shell-recents.test.js tests/a19-shell-themes.test.js tests/a00-20-styles.test.js"
+      },
+      "browserTests": [
+        "tests/browser_a19_shell_test.py",
+        "tests/browser_vs_workflows_test.py"
+      ],
+      "browserValidation": "pending-integrated-static-and-standalone",
+      "remainingAcceptanceGaps": [
+        "Code drag reorder requires a semantic reorder provider and is explicitly rejected without one; designer reparent uses DesignDocument validation."
+      ]
+    },
+    {
+      "issue": 1457,
+      "workId": "SF-A19-T21",
+      "title": "[SF-A19-T21] Add Bookmarks window and commands",
+      "owner": "shell",
+      "implementation": "implemented",
+      "files": [
+        "apps/studio/workbench/tools/bookmarks.js",
+        "apps/studio/workbench/shell-commands.js",
+        "apps/studio/workbench/shell-events.js"
+      ],
+      "focusedTests": [
+        "tests/a19-shell-search.test.js",
+        "tests/a19-shell-boundaries.test.js"
+      ],
+      "focusedValidation": {
+        "status": "passed",
+        "batch": "74/74 combined completed-scope cases: 70 shell cases and 4 shared stylesheet contract cases",
+        "runtime": "Node.js v24.19.0",
+        "revision": "d5b1d153",
+        "passed": 74,
+        "failed": 0,
+        "shellCases": 70,
+        "stylesheetContractCases": 4,
+        "command": "node scripts/limited.js node --test tests/a19-shell-commands.test.js tests/a19-shell-settings.test.js tests/a19-shell-search.test.js tests/a19-shell-tools.test.js tests/a19-shell-boundaries.test.js tests/a19-shell-inventory.test.js tests/a19-shell-recents.test.js tests/a19-shell-themes.test.js tests/a00-20-styles.test.js"
+      },
+      "browserTests": [
+        "tests/browser_a19_shell_test.py"
+      ],
+      "browserValidation": "pending-integrated-static-and-standalone",
+      "remainingAcceptanceGaps": []
+    },
+    {
+      "issue": 1458,
+      "workId": "SF-A19-T22",
+      "title": "[SF-A19-T22] Complete Call Hierarchy window",
+      "owner": "shell",
+      "implementation": "implemented-with-explicit-limits",
+      "files": [
+        "apps/studio/workbench/tools/call-hierarchy.js",
+        "apps/studio/workbench/tools/tree-host.js"
+      ],
+      "focusedTests": [
+        "tests/a19-shell-tools.test.js"
+      ],
+      "focusedValidation": {
+        "status": "passed",
+        "batch": "74/74 combined completed-scope cases: 70 shell cases and 4 shared stylesheet contract cases",
+        "runtime": "Node.js v24.19.0",
+        "revision": "d5b1d153",
+        "passed": 74,
+        "failed": 0,
+        "shellCases": 70,
+        "stylesheetContractCases": 4,
+        "command": "node scripts/limited.js node --test tests/a19-shell-commands.test.js tests/a19-shell-settings.test.js tests/a19-shell-search.test.js tests/a19-shell-tools.test.js tests/a19-shell-boundaries.test.js tests/a19-shell-inventory.test.js tests/a19-shell-recents.test.js tests/a19-shell-themes.test.js tests/a00-20-styles.test.js"
+      },
+      "browserTests": [
+        "tests/browser_a19_shell_test.py"
+      ],
+      "browserValidation": "pending-integrated-static-and-standalone",
+      "remainingAcceptanceGaps": [
+        "Incoming/outgoing calls and sites reflect the bound compiler service; unsupported external call relationships are not fabricated."
+      ]
+    },
+    {
+      "issue": 1459,
+      "workId": "SF-A19-T23",
+      "title": "[SF-A19-T23] Add Code Definition window",
+      "owner": "shell",
+      "implementation": "implemented-with-explicit-limits",
+      "files": [
+        "apps/studio/workbench/tools/code-definition.js",
+        "apps/studio/workbench/document-size.js"
+      ],
+      "focusedTests": [
+        "tests/a19-shell-search.test.js",
+        "tests/a19-shell-tools.test.js",
+        "tests/a19-shell-boundaries.test.js"
+      ],
+      "focusedValidation": {
+        "status": "passed",
+        "batch": "74/74 combined completed-scope cases: 70 shell cases and 4 shared stylesheet contract cases",
+        "runtime": "Node.js v24.19.0",
+        "revision": "d5b1d153",
+        "passed": 74,
+        "failed": 0,
+        "shellCases": 70,
+        "stylesheetContractCases": 4,
+        "command": "node scripts/limited.js node --test tests/a19-shell-commands.test.js tests/a19-shell-settings.test.js tests/a19-shell-search.test.js tests/a19-shell-tools.test.js tests/a19-shell-boundaries.test.js tests/a19-shell-inventory.test.js tests/a19-shell-recents.test.js tests/a19-shell-themes.test.js tests/a00-20-styles.test.js"
+      },
+      "browserTests": [
+        "tests/browser_a19_shell_test.py"
+      ],
+      "browserValidation": "pending-integrated-static-and-standalone",
+      "remainingAcceptanceGaps": [
+        "The 300 ms definition-update threshold requires integrated browser timing; unresolved metadata definitions remain explicit.",
+        "Large definitions display bounded 64 KiB excerpts; full-source editing remains available through normal document navigation."
+      ]
+    },
+    {
+      "issue": 1460,
+      "workId": "SF-A19-T24",
+      "title": "[SF-A19-T24] Complete Find All References results window",
+      "owner": "shell",
+      "implementation": "implemented-with-explicit-limits",
+      "files": [
+        "apps/studio/workbench/tools/references.js"
+      ],
+      "focusedTests": [
+        "tests/a19-shell-search.test.js",
+        "tests/a19-shell-boundaries.test.js"
+      ],
+      "focusedValidation": {
+        "status": "passed",
+        "batch": "74/74 combined completed-scope cases: 70 shell cases and 4 shared stylesheet contract cases",
+        "runtime": "Node.js v24.19.0",
+        "revision": "d5b1d153",
+        "passed": 74,
+        "failed": 0,
+        "shellCases": 70,
+        "stylesheetContractCases": 4,
+        "command": "node scripts/limited.js node --test tests/a19-shell-commands.test.js tests/a19-shell-settings.test.js tests/a19-shell-search.test.js tests/a19-shell-tools.test.js tests/a19-shell-boundaries.test.js tests/a19-shell-inventory.test.js tests/a19-shell-recents.test.js tests/a19-shell-themes.test.js tests/a00-20-styles.test.js"
+      },
+      "browserTests": [
+        "tests/browser_a19_shell_test.py"
+      ],
+      "browserValidation": "pending-integrated-static-and-standalone",
+      "remainingAcceptanceGaps": [
+        "Read/write filters use provider classification; unclassified results remain labeled reference."
+      ]
+    },
+    {
+      "issue": 1461,
+      "workId": "SF-A19-T25",
+      "title": "[SF-A19-T25] Add Test Explorer host window",
+      "owner": "shell",
+      "implementation": "implemented-with-explicit-limits",
+      "files": [
+        "apps/studio/workbench/tools/test-explorer.js"
+      ],
+      "focusedTests": [
+        "tests/a19-shell-tools.test.js",
+        "tests/a19-shell-boundaries.test.js"
+      ],
+      "focusedValidation": {
+        "status": "passed",
+        "batch": "74/74 combined completed-scope cases: 70 shell cases and 4 shared stylesheet contract cases",
+        "runtime": "Node.js v24.19.0",
+        "revision": "d5b1d153",
+        "passed": 74,
+        "failed": 0,
+        "shellCases": 70,
+        "stylesheetContractCases": 4,
+        "command": "node scripts/limited.js node --test tests/a19-shell-commands.test.js tests/a19-shell-settings.test.js tests/a19-shell-search.test.js tests/a19-shell-tools.test.js tests/a19-shell-boundaries.test.js tests/a19-shell-inventory.test.js tests/a19-shell-recents.test.js tests/a19-shell-themes.test.js tests/a00-20-styles.test.js"
+      },
+      "browserTests": [
+        "tests/browser_a19_shell_test.py"
+      ],
+      "browserValidation": "pending-integrated-static-and-standalone",
+      "remainingAcceptanceGaps": [
+        "This issue supplies an adapter host. No built-in xUnit/NUnit/MSTest execution adapter exists, and the UI reports that explicitly."
+      ]
+    },
+    {
+      "issue": 1462,
+      "workId": "SF-A19-T26",
+      "title": "[SF-A19-T26] Extend Diagnostic Tools with timeline and session selector",
+      "owner": "shell",
+      "implementation": "implemented-with-explicit-limits",
+      "files": [
+        "apps/studio/workbench/tools/diagnostic-timeline.js",
+        "apps/studio/workbench/shell-events.js"
+      ],
+      "focusedTests": [
+        "tests/a19-shell-tools.test.js"
+      ],
+      "focusedValidation": {
+        "status": "passed",
+        "batch": "74/74 combined completed-scope cases: 70 shell cases and 4 shared stylesheet contract cases",
+        "runtime": "Node.js v24.19.0",
+        "revision": "d5b1d153",
+        "passed": 74,
+        "failed": 0,
+        "shellCases": 70,
+        "stylesheetContractCases": 4,
+        "command": "node scripts/limited.js node --test tests/a19-shell-commands.test.js tests/a19-shell-settings.test.js tests/a19-shell-search.test.js tests/a19-shell-tools.test.js tests/a19-shell-boundaries.test.js tests/a19-shell-inventory.test.js tests/a19-shell-recents.test.js tests/a19-shell-themes.test.js tests/a00-20-styles.test.js"
+      },
+      "browserTests": [
+        "tests/browser_a19_shell_test.py"
+      ],
+      "browserValidation": "pending-integrated-static-and-standalone",
+      "remainingAcceptanceGaps": [
+        "Actual JS source-VM/direct-CIL worker heap census is supported. Process CPU utilization is unavailable unless reported by a provider; no native backend is claimed."
+      ]
+    },
+    {
+      "issue": 1463,
+      "workId": "SF-A19-T27",
+      "title": "[SF-A19-T27] Add Command Window",
+      "owner": "shell",
+      "implementation": "implemented",
+      "files": [
+        "apps/studio/workbench/tools/command-window.js",
+        "apps/studio/workbench/commands.js"
+      ],
+      "focusedTests": [
+        "tests/a19-shell-commands.test.js"
+      ],
+      "focusedValidation": {
+        "status": "passed",
+        "batch": "74/74 combined completed-scope cases: 70 shell cases and 4 shared stylesheet contract cases",
+        "runtime": "Node.js v24.19.0",
+        "revision": "d5b1d153",
+        "passed": 74,
+        "failed": 0,
+        "shellCases": 70,
+        "stylesheetContractCases": 4,
+        "command": "node scripts/limited.js node --test tests/a19-shell-commands.test.js tests/a19-shell-settings.test.js tests/a19-shell-search.test.js tests/a19-shell-tools.test.js tests/a19-shell-boundaries.test.js tests/a19-shell-inventory.test.js tests/a19-shell-recents.test.js tests/a19-shell-themes.test.js tests/a00-20-styles.test.js"
+      },
+      "browserTests": [
+        "tests/browser_a19_shell_test.py"
+      ],
+      "browserValidation": "pending-integrated-static-and-standalone",
+      "remainingAcceptanceGaps": []
+    },
+    {
+      "issue": 1464,
+      "workId": "SF-A19-T28",
+      "title": "[SF-A19-T28] Bring Solution Explorer toolbar and views to parity",
+      "owner": "shell",
+      "implementation": "implemented-with-explicit-limits",
+      "files": [
+        "apps/studio/workbench/tools/solution-explorer-views.js",
+        "apps/studio/workbench/document-size.js",
+        "apps/studio/workbench/search-service.js"
+      ],
+      "focusedTests": [
+        "tests/a19-shell-tools.test.js",
+        "tests/a19-shell-boundaries.test.js"
+      ],
+      "focusedValidation": {
+        "status": "passed",
+        "batch": "74/74 combined completed-scope cases: 70 shell cases and 4 shared stylesheet contract cases",
+        "runtime": "Node.js v24.19.0",
+        "revision": "d5b1d153",
+        "passed": 74,
+        "failed": 0,
+        "shellCases": 70,
+        "stylesheetContractCases": 4,
+        "command": "node scripts/limited.js node --test tests/a19-shell-commands.test.js tests/a19-shell-settings.test.js tests/a19-shell-search.test.js tests/a19-shell-tools.test.js tests/a19-shell-boundaries.test.js tests/a19-shell-inventory.test.js tests/a19-shell-recents.test.js tests/a19-shell-themes.test.js tests/a00-20-styles.test.js"
+      },
+      "browserTests": [
+        "tests/browser_a19_shell_test.py"
+      ],
+      "browserValidation": "pending-integrated-static-and-standalone",
+      "remainingAcceptanceGaps": [
+        "Independent source views are provided through New Solution Explorer View; the retained legacy primary Explorer remains root-owned.",
+        "Content filtering uses the cancellable search worker with explicit 8-million-unit per-file and 32-million-unit aggregate limits."
+      ]
+    },
+    {
+      "issue": 1465,
+      "workId": "SF-A19-T29",
+      "title": "[SF-A19-T29] Add Error List, Output and Find Results instance routing per session",
+      "owner": "shell",
+      "implementation": "implemented",
+      "files": [
+        "apps/studio/workbench/tools/scope-selector.js",
+        "apps/studio/workbench/shell-tools.js",
+        "apps/studio/workbench/shell.js",
+        "apps/studio/workbench/tools/find-results.js",
+        "apps/studio/workbench/tools/output.js"
+      ],
+      "focusedTests": [
+        "tests/a19-shell-search.test.js",
+        "tests/a19-shell-boundaries.test.js"
+      ],
+      "focusedValidation": {
+        "status": "passed",
+        "batch": "74/74 combined completed-scope cases: 70 shell cases and 4 shared stylesheet contract cases",
+        "runtime": "Node.js v24.19.0",
+        "revision": "d5b1d153",
+        "passed": 74,
+        "failed": 0,
+        "shellCases": 70,
+        "stylesheetContractCases": 4,
+        "command": "node scripts/limited.js node --test tests/a19-shell-commands.test.js tests/a19-shell-settings.test.js tests/a19-shell-search.test.js tests/a19-shell-tools.test.js tests/a19-shell-boundaries.test.js tests/a19-shell-inventory.test.js tests/a19-shell-recents.test.js tests/a19-shell-themes.test.js tests/a00-20-styles.test.js"
+      },
+      "browserTests": [
+        "tests/browser_a19_shell_test.py"
+      ],
+      "browserValidation": "pending-integrated-static-and-standalone",
+      "remainingAcceptanceGaps": []
+    },
+    {
+      "issue": 1466,
+      "workId": "SF-A19-T30",
+      "title": "[SF-A19-T30] Add Start window",
+      "owner": "shell",
+      "implementation": "implemented",
+      "files": [
+        "apps/studio/workbench/start-window.js",
+        "apps/studio/workbench/recent-items.js",
+        "apps/studio/workbench/recent-workspaces.js"
+      ],
+      "focusedTests": [
+        "tests/a19-shell-settings.test.js",
+        "tests/a19-shell-recents.test.js"
+      ],
+      "focusedValidation": {
+        "status": "passed",
+        "batch": "74/74 combined completed-scope cases: 70 shell cases and 4 shared stylesheet contract cases",
+        "runtime": "Node.js v24.19.0",
+        "revision": "d5b1d153",
+        "passed": 74,
+        "failed": 0,
+        "shellCases": 70,
+        "stylesheetContractCases": 4,
+        "command": "node scripts/limited.js node --test tests/a19-shell-commands.test.js tests/a19-shell-settings.test.js tests/a19-shell-search.test.js tests/a19-shell-tools.test.js tests/a19-shell-boundaries.test.js tests/a19-shell-inventory.test.js tests/a19-shell-recents.test.js tests/a19-shell-themes.test.js tests/a00-20-styles.test.js"
+      },
+      "browserTests": [
+        "tests/browser_a19_shell_test.py",
+        "tests/browser_vs_workflows_test.py"
+      ],
+      "browserValidation": "pending-integrated-static-and-standalone",
+      "remainingAcceptanceGaps": [
+        "Root must mount createRecentWorkspaces providers against current/previous recovery and authorized reopen actions. The helper is qualified for encoding/BOM/binary/source metadata, cancelled opens and missing permissions."
+      ]
+    },
+    {
+      "issue": 1467,
+      "workId": "SF-A19-T31",
+      "title": "[SF-A19-T31] Add Options dialog with page tree and search",
+      "owner": "shell",
+      "implementation": "implemented",
+      "files": [
+        "apps/studio/workbench/options-dialog.js",
+        "apps/studio/workbench/options/general-pages.js"
+      ],
+      "focusedTests": [
+        "tests/a19-shell-settings.test.js"
+      ],
+      "focusedValidation": {
+        "status": "passed",
+        "batch": "74/74 combined completed-scope cases: 70 shell cases and 4 shared stylesheet contract cases",
+        "runtime": "Node.js v24.19.0",
+        "revision": "d5b1d153",
+        "passed": 74,
+        "failed": 0,
+        "shellCases": 70,
+        "stylesheetContractCases": 4,
+        "command": "node scripts/limited.js node --test tests/a19-shell-commands.test.js tests/a19-shell-settings.test.js tests/a19-shell-search.test.js tests/a19-shell-tools.test.js tests/a19-shell-boundaries.test.js tests/a19-shell-inventory.test.js tests/a19-shell-recents.test.js tests/a19-shell-themes.test.js tests/a00-20-styles.test.js"
+      },
+      "browserTests": [
+        "tests/browser_a19_shell_test.py"
+      ],
+      "browserValidation": "pending-integrated-static-and-standalone",
+      "remainingAcceptanceGaps": []
+    },
+    {
+      "issue": 1468,
+      "workId": "SF-A19-T32",
+      "title": "[SF-A19-T32] Add keyboard mapping editor",
+      "owner": "shell",
+      "implementation": "implemented",
+      "files": [
+        "apps/studio/workbench/options/keyboard-page.js",
+        "apps/studio/workbench/settings-store.js"
+      ],
+      "focusedTests": [
+        "tests/a19-shell-settings.test.js",
+        "tests/a19-shell-boundaries.test.js"
+      ],
+      "focusedValidation": {
+        "status": "passed",
+        "batch": "74/74 combined completed-scope cases: 70 shell cases and 4 shared stylesheet contract cases",
+        "runtime": "Node.js v24.19.0",
+        "revision": "d5b1d153",
+        "passed": 74,
+        "failed": 0,
+        "shellCases": 70,
+        "stylesheetContractCases": 4,
+        "command": "node scripts/limited.js node --test tests/a19-shell-commands.test.js tests/a19-shell-settings.test.js tests/a19-shell-search.test.js tests/a19-shell-tools.test.js tests/a19-shell-boundaries.test.js tests/a19-shell-inventory.test.js tests/a19-shell-recents.test.js tests/a19-shell-themes.test.js tests/a00-20-styles.test.js"
+      },
+      "browserTests": [
+        "tests/browser_a19_shell_test.py"
+      ],
+      "browserValidation": "pending-integrated-static-and-standalone",
+      "remainingAcceptanceGaps": []
+    },
+    {
+      "issue": 1469,
+      "workId": "SF-A19-T33",
+      "title": "[SF-A19-T33] Add toolbar customisation",
+      "owner": "shell",
+      "implementation": "implemented",
+      "files": [
+        "apps/studio/workbench/toolbars.js",
+        "apps/studio/workbench/toolbar-customize.js"
+      ],
+      "focusedTests": [
+        "tests/a19-shell-commands.test.js",
+        "tests/a19-shell-settings.test.js"
+      ],
+      "focusedValidation": {
+        "status": "passed",
+        "batch": "74/74 combined completed-scope cases: 70 shell cases and 4 shared stylesheet contract cases",
+        "runtime": "Node.js v24.19.0",
+        "revision": "d5b1d153",
+        "passed": 74,
+        "failed": 0,
+        "shellCases": 70,
+        "stylesheetContractCases": 4,
+        "command": "node scripts/limited.js node --test tests/a19-shell-commands.test.js tests/a19-shell-settings.test.js tests/a19-shell-search.test.js tests/a19-shell-tools.test.js tests/a19-shell-boundaries.test.js tests/a19-shell-inventory.test.js tests/a19-shell-recents.test.js tests/a19-shell-themes.test.js tests/a00-20-styles.test.js"
+      },
+      "browserTests": [
+        "tests/browser_a19_shell_test.py"
+      ],
+      "browserValidation": "pending-integrated-static-and-standalone",
+      "remainingAcceptanceGaps": []
+    },
+    {
+      "issue": 1470,
+      "workId": "SF-A19-T34",
+      "title": "[SF-A19-T34] Add notifications hub and info bars",
+      "owner": "shell",
+      "implementation": "implemented",
+      "files": [
+        "apps/studio/workbench/notifications.js",
+        "apps/studio/workbench/status-bar.js"
+      ],
+      "focusedTests": [
+        "tests/a19-shell-settings.test.js"
+      ],
+      "focusedValidation": {
+        "status": "passed",
+        "batch": "74/74 combined completed-scope cases: 70 shell cases and 4 shared stylesheet contract cases",
+        "runtime": "Node.js v24.19.0",
+        "revision": "d5b1d153",
+        "passed": 74,
+        "failed": 0,
+        "shellCases": 70,
+        "stylesheetContractCases": 4,
+        "command": "node scripts/limited.js node --test tests/a19-shell-commands.test.js tests/a19-shell-settings.test.js tests/a19-shell-search.test.js tests/a19-shell-tools.test.js tests/a19-shell-boundaries.test.js tests/a19-shell-inventory.test.js tests/a19-shell-recents.test.js tests/a19-shell-themes.test.js tests/a00-20-styles.test.js"
+      },
+      "browserTests": [
+        "tests/browser_a19_shell_test.py"
+      ],
+      "browserValidation": "pending-integrated-static-and-standalone",
+      "remainingAcceptanceGaps": []
+    },
+    {
+      "issue": 1471,
+      "workId": "SF-A19-T35",
+      "title": "[SF-A19-T35] Add background task centre",
+      "owner": "shell",
+      "implementation": "implemented-with-explicit-limits",
+      "files": [
+        "apps/studio/workbench/task-center.js",
+        "apps/studio/workbench/shell-events.js",
+        "apps/studio/workbench/status-bar.js"
+      ],
+      "focusedTests": [
+        "tests/a19-shell-commands.test.js"
+      ],
+      "focusedValidation": {
+        "status": "passed",
+        "batch": "74/74 combined completed-scope cases: 70 shell cases and 4 shared stylesheet contract cases",
+        "runtime": "Node.js v24.19.0",
+        "revision": "d5b1d153",
+        "passed": 74,
+        "failed": 0,
+        "shellCases": 70,
+        "stylesheetContractCases": 4,
+        "command": "node scripts/limited.js node --test tests/a19-shell-commands.test.js tests/a19-shell-settings.test.js tests/a19-shell-search.test.js tests/a19-shell-tools.test.js tests/a19-shell-boundaries.test.js tests/a19-shell-inventory.test.js tests/a19-shell-recents.test.js tests/a19-shell-themes.test.js tests/a00-20-styles.test.js"
+      },
+      "browserTests": [
+        "tests/browser_a19_shell_test.py"
+      ],
+      "browserValidation": "pending-integrated-static-and-standalone",
+      "remainingAcceptanceGaps": [
+        "Build and shell search operations are connected; external native-job owners must register their cancellable task entries through the host."
+      ]
+    },
+    {
+      "issue": 1472,
+      "workId": "SF-A19-T36",
+      "title": "[SF-A19-T36] Rebuild the status bar into regions",
+      "owner": "shell",
+      "implementation": "implemented",
+      "files": [
+        "apps/studio/workbench/status-bar.js",
+        "apps/studio/workbench/status-position.js"
+      ],
+      "focusedTests": [
+        "tests/a19-shell-commands.test.js",
+        "tests/a19-shell-boundaries.test.js"
+      ],
+      "focusedValidation": {
+        "status": "passed",
+        "batch": "74/74 combined completed-scope cases: 70 shell cases and 4 shared stylesheet contract cases",
+        "runtime": "Node.js v24.19.0",
+        "revision": "d5b1d153",
+        "passed": 74,
+        "failed": 0,
+        "shellCases": 70,
+        "stylesheetContractCases": 4,
+        "command": "node scripts/limited.js node --test tests/a19-shell-commands.test.js tests/a19-shell-settings.test.js tests/a19-shell-search.test.js tests/a19-shell-tools.test.js tests/a19-shell-boundaries.test.js tests/a19-shell-inventory.test.js tests/a19-shell-recents.test.js tests/a19-shell-themes.test.js tests/a00-20-styles.test.js"
+      },
+      "browserTests": [
+        "tests/browser_a19_shell_test.py"
+      ],
+      "browserValidation": "pending-integrated-static-and-standalone",
+      "remainingAcceptanceGaps": [
+        "Exact long-prefix visual columns consume the text lane model index. This shell adapter is tested for cancellation/staleness and bounded Unicode fallback; actual integrated browser columns await qualification."
+      ]
+    },
+    {
+      "issue": 1475,
+      "workId": "SF-A19-T39",
+      "title": "[SF-A19-T39] Add unified search box for features and code",
+      "owner": "shell",
+      "implementation": "implemented",
+      "files": [
+        "apps/studio/workbench/unified-search.js"
+      ],
+      "focusedTests": [
+        "tests/a19-shell-commands.test.js",
+        "tests/a19-shell-search.test.js"
+      ],
+      "focusedValidation": {
+        "status": "passed",
+        "batch": "74/74 combined completed-scope cases: 70 shell cases and 4 shared stylesheet contract cases",
+        "runtime": "Node.js v24.19.0",
+        "revision": "d5b1d153",
+        "passed": 74,
+        "failed": 0,
+        "shellCases": 70,
+        "stylesheetContractCases": 4,
+        "command": "node scripts/limited.js node --test tests/a19-shell-commands.test.js tests/a19-shell-settings.test.js tests/a19-shell-search.test.js tests/a19-shell-tools.test.js tests/a19-shell-boundaries.test.js tests/a19-shell-inventory.test.js tests/a19-shell-recents.test.js tests/a19-shell-themes.test.js tests/a00-20-styles.test.js"
+      },
+      "browserTests": [
+        "tests/browser_a19_shell_test.py"
+      ],
+      "browserValidation": "pending-integrated-static-and-standalone",
+      "remainingAcceptanceGaps": []
+    },
+    {
+      "issue": 1476,
+      "workId": "SF-A19-T40",
+      "title": "[SF-A19-T40] Add solution configuration and platform controls",
+      "owner": "shell",
+      "implementation": "implemented",
+      "files": [
+        "apps/studio/workbench/configuration-manager.js"
+      ],
+      "focusedTests": [
+        "tests/a19-shell-settings.test.js"
+      ],
+      "focusedValidation": {
+        "status": "passed",
+        "batch": "74/74 combined completed-scope cases: 70 shell cases and 4 shared stylesheet contract cases",
+        "runtime": "Node.js v24.19.0",
+        "revision": "d5b1d153",
+        "passed": 74,
+        "failed": 0,
+        "shellCases": 70,
+        "stylesheetContractCases": 4,
+        "command": "node scripts/limited.js node --test tests/a19-shell-commands.test.js tests/a19-shell-settings.test.js tests/a19-shell-search.test.js tests/a19-shell-tools.test.js tests/a19-shell-boundaries.test.js tests/a19-shell-inventory.test.js tests/a19-shell-recents.test.js tests/a19-shell-themes.test.js tests/a00-20-styles.test.js"
+      },
+      "browserTests": [
+        "tests/browser_a19_shell_test.py",
+        "tests/browser_vs_workflows_test.py"
+      ],
+      "browserValidation": "pending-integrated-static-and-standalone",
+      "remainingAcceptanceGaps": []
+    },
+    {
+      "issue": 1477,
+      "workId": "SF-A19-T41",
+      "title": "[SF-A19-T41] Handle external changes, auto-recover and file drops",
+      "owner": "shell",
+      "implementation": "implemented-with-explicit-limits",
+      "files": [
+        "apps/studio/workbench/file-watch.js",
+        "apps/studio/workbench/document-size.js"
+      ],
+      "focusedTests": [
+        "tests/a19-shell-settings.test.js",
+        "tests/a19-shell-boundaries.test.js"
+      ],
+      "focusedValidation": {
+        "status": "passed",
+        "batch": "74/74 combined completed-scope cases: 70 shell cases and 4 shared stylesheet contract cases",
+        "runtime": "Node.js v24.19.0",
+        "revision": "d5b1d153",
+        "passed": 74,
+        "failed": 0,
+        "shellCases": 70,
+        "stylesheetContractCases": 4,
+        "command": "node scripts/limited.js node --test tests/a19-shell-commands.test.js tests/a19-shell-settings.test.js tests/a19-shell-search.test.js tests/a19-shell-tools.test.js tests/a19-shell-boundaries.test.js tests/a19-shell-inventory.test.js tests/a19-shell-recents.test.js tests/a19-shell-themes.test.js tests/a00-20-styles.test.js"
+      },
+      "browserTests": [
+        "tests/browser_a19_shell_test.py"
+      ],
+      "browserValidation": "pending-integrated-static-and-standalone",
+      "remainingAcceptanceGaps": [
+        "Automatic recovery, disk polling and comment scanning skip documents above 8 million UTF-16 units with an explicit notice; deliberate Save/Build remain host-owned."
+      ]
+    },
+    {
+      "issue": 1478,
+      "workId": "SF-A19-T42",
+      "title": "[SF-A19-T42] Add first-run environment selection and keymap scheme import",
+      "owner": "shell",
+      "implementation": "implemented-with-explicit-limits",
+      "files": [
+        "apps/studio/workbench/first-run.js",
+        "apps/studio/workbench/settings-profile.js"
+      ],
+      "focusedTests": [
+        "tests/a19-shell-settings.test.js"
+      ],
+      "focusedValidation": {
+        "status": "passed",
+        "batch": "74/74 combined completed-scope cases: 70 shell cases and 4 shared stylesheet contract cases",
+        "runtime": "Node.js v24.19.0",
+        "revision": "d5b1d153",
+        "passed": 74,
+        "failed": 0,
+        "shellCases": 70,
+        "stylesheetContractCases": 4,
+        "command": "node scripts/limited.js node --test tests/a19-shell-commands.test.js tests/a19-shell-settings.test.js tests/a19-shell-search.test.js tests/a19-shell-tools.test.js tests/a19-shell-boundaries.test.js tests/a19-shell-inventory.test.js tests/a19-shell-recents.test.js tests/a19-shell-themes.test.js tests/a00-20-styles.test.js"
+      },
+      "browserTests": [
+        "tests/browser_a19_shell_test.py",
+        "tests/browser_vs_workflows_test.py"
+      ],
+      "browserValidation": "pending-integrated-static-and-standalone",
+      "remainingAcceptanceGaps": [
+        "Actual editor schemes are Visual Studio, VS Code, Vim, Emacs and Sublime. ReSharper-like is unavailable upstream and is not advertised as functional."
+      ]
+    },
+    {
+      "issue": 1548,
+      "workId": "SF-A19-T05.1",
+      "title": "[SF-A19-T05.1] Build the command catalog on CommandRegistry",
+      "owner": "shell",
+      "implementation": "implemented",
+      "files": [
+        "apps/studio/workbench/commands.js",
+        "apps/studio/workbench/shell-commands.js",
+        "apps/studio/commands/registry.js",
+        "apps/studio/workbench/inventory.js"
+      ],
+      "focusedTests": [
+        "tests/a19-shell-commands.test.js",
+        "tests/a19-shell-inventory.test.js"
+      ],
+      "focusedValidation": {
+        "status": "passed",
+        "batch": "74/74 combined completed-scope cases: 70 shell cases and 4 shared stylesheet contract cases",
+        "runtime": "Node.js v24.19.0",
+        "revision": "d5b1d153",
+        "passed": 74,
+        "failed": 0,
+        "shellCases": 70,
+        "stylesheetContractCases": 4,
+        "command": "node scripts/limited.js node --test tests/a19-shell-commands.test.js tests/a19-shell-settings.test.js tests/a19-shell-search.test.js tests/a19-shell-tools.test.js tests/a19-shell-boundaries.test.js tests/a19-shell-inventory.test.js tests/a19-shell-recents.test.js tests/a19-shell-themes.test.js tests/a00-20-styles.test.js"
+      },
+      "browserTests": [
+        "tests/browser_a19_shell_test.py"
+      ],
+      "browserValidation": "pending-integrated-static-and-standalone",
+      "remainingAcceptanceGaps": []
+    },
+    {
+      "issue": 1549,
+      "workId": "SF-A19-T05.2",
+      "title": "[SF-A19-T05.2] Generate menus from a menu model",
+      "owner": "shell",
+      "implementation": "implemented",
+      "files": [
+        "apps/studio/workbench/menus.js"
+      ],
+      "focusedTests": [
+        "tests/a19-shell-commands.test.js",
+        "tests/a19-shell-inventory.test.js"
+      ],
+      "focusedValidation": {
+        "status": "passed",
+        "batch": "74/74 combined completed-scope cases: 70 shell cases and 4 shared stylesheet contract cases",
+        "runtime": "Node.js v24.19.0",
+        "revision": "d5b1d153",
+        "passed": 74,
+        "failed": 0,
+        "shellCases": 70,
+        "stylesheetContractCases": 4,
+        "command": "node scripts/limited.js node --test tests/a19-shell-commands.test.js tests/a19-shell-settings.test.js tests/a19-shell-search.test.js tests/a19-shell-tools.test.js tests/a19-shell-boundaries.test.js tests/a19-shell-inventory.test.js tests/a19-shell-recents.test.js tests/a19-shell-themes.test.js tests/a00-20-styles.test.js"
+      },
+      "browserTests": [
+        "tests/browser_a19_shell_test.py"
+      ],
+      "browserValidation": "pending-integrated-static-and-standalone",
+      "remainingAcceptanceGaps": []
+    },
+    {
+      "issue": 1550,
+      "workId": "SF-A19-T05.3",
+      "title": "[SF-A19-T05.3] Add keybinding service with chords and scopes",
+      "owner": "root-keybindings + shell-options",
+      "implementation": "implemented-with-explicit-limits",
+      "files": [
+        "apps/studio/workbench/keybindings.js",
+        "apps/studio/workbench/options/keyboard-page.js"
+      ],
+      "focusedTests": [
+        "tests/a19-shell-commands.test.js",
+        "tests/a19-shell-inventory.test.js"
+      ],
+      "focusedValidation": {
+        "status": "passed",
+        "batch": "74/74 combined completed-scope cases: 70 shell cases and 4 shared stylesheet contract cases",
+        "runtime": "Node.js v24.19.0",
+        "revision": "d5b1d153",
+        "passed": 74,
+        "failed": 0,
+        "shellCases": 70,
+        "stylesheetContractCases": 4,
+        "command": "node scripts/limited.js node --test tests/a19-shell-commands.test.js tests/a19-shell-settings.test.js tests/a19-shell-search.test.js tests/a19-shell-tools.test.js tests/a19-shell-boundaries.test.js tests/a19-shell-inventory.test.js tests/a19-shell-recents.test.js tests/a19-shell-themes.test.js tests/a00-20-styles.test.js"
+      },
+      "browserTests": [
+        "tests/browser_a19_shell_test.py"
+      ],
+      "browserValidation": "pending-integrated-static-and-standalone",
+      "remainingAcceptanceGaps": [
+        "Root integrates the shared editor KeybindingService and active-scope routing; shell contributes commands and Options only."
+      ]
+    },
+    {
+      "issue": 1551,
+      "workId": "SF-A19-T05.4",
+      "title": "[SF-A19-T05.4] Add context keys for command enablement",
+      "owner": "shell",
+      "implementation": "implemented",
+      "files": [
+        "apps/studio/workbench/context-keys.js",
+        "apps/studio/workbench/commands.js",
+        "apps/studio/workbench/shell.js"
+      ],
+      "focusedTests": [
+        "tests/a19-shell-commands.test.js",
+        "tests/a19-shell-inventory.test.js"
+      ],
+      "focusedValidation": {
+        "status": "passed",
+        "batch": "74/74 combined completed-scope cases: 70 shell cases and 4 shared stylesheet contract cases",
+        "runtime": "Node.js v24.19.0",
+        "revision": "d5b1d153",
+        "passed": 74,
+        "failed": 0,
+        "shellCases": 70,
+        "stylesheetContractCases": 4,
+        "command": "node scripts/limited.js node --test tests/a19-shell-commands.test.js tests/a19-shell-settings.test.js tests/a19-shell-search.test.js tests/a19-shell-tools.test.js tests/a19-shell-boundaries.test.js tests/a19-shell-inventory.test.js tests/a19-shell-recents.test.js tests/a19-shell-themes.test.js tests/a00-20-styles.test.js"
+      },
+      "browserTests": [
+        "tests/browser_a19_shell_test.py"
+      ],
+      "browserValidation": "pending-integrated-static-and-standalone",
+      "remainingAcceptanceGaps": []
+    },
+    {
+      "issue": 1552,
+      "workId": "SF-A19-T05.5",
+      "title": "[SF-A19-T05.5] Rebuild the command palette on the registry",
+      "owner": "shell",
+      "implementation": "implemented",
+      "files": [
+        "apps/studio/workbench/unified-search.js",
+        "apps/studio/workbench/shell-commands.js"
+      ],
+      "focusedTests": [
+        "tests/a19-shell-commands.test.js",
+        "tests/a19-shell-inventory.test.js"
+      ],
+      "focusedValidation": {
+        "status": "passed",
+        "batch": "74/74 combined completed-scope cases: 70 shell cases and 4 shared stylesheet contract cases",
+        "runtime": "Node.js v24.19.0",
+        "revision": "d5b1d153",
+        "passed": 74,
+        "failed": 0,
+        "shellCases": 70,
+        "stylesheetContractCases": 4,
+        "command": "node scripts/limited.js node --test tests/a19-shell-commands.test.js tests/a19-shell-settings.test.js tests/a19-shell-search.test.js tests/a19-shell-tools.test.js tests/a19-shell-boundaries.test.js tests/a19-shell-inventory.test.js tests/a19-shell-recents.test.js tests/a19-shell-themes.test.js tests/a00-20-styles.test.js"
+      },
+      "browserTests": [
+        "tests/browser_a19_shell_test.py"
+      ],
+      "browserValidation": "pending-integrated-static-and-standalone",
+      "remainingAcceptanceGaps": []
+    },
+    {
+      "issue": 1553,
+      "workId": "SF-A19-T05.6",
+      "title": "[SF-A19-T05.6] Generate toolbars from command contributions",
+      "owner": "shell",
+      "implementation": "implemented",
+      "files": [
+        "apps/studio/workbench/toolbars.js",
+        "apps/studio/workbench/toolbar-customize.js"
+      ],
+      "focusedTests": [
+        "tests/a19-shell-commands.test.js",
+        "tests/a19-shell-inventory.test.js"
+      ],
+      "focusedValidation": {
+        "status": "passed",
+        "batch": "74/74 combined completed-scope cases: 70 shell cases and 4 shared stylesheet contract cases",
+        "runtime": "Node.js v24.19.0",
+        "revision": "d5b1d153",
+        "passed": 74,
+        "failed": 0,
+        "shellCases": 70,
+        "stylesheetContractCases": 4,
+        "command": "node scripts/limited.js node --test tests/a19-shell-commands.test.js tests/a19-shell-settings.test.js tests/a19-shell-search.test.js tests/a19-shell-tools.test.js tests/a19-shell-boundaries.test.js tests/a19-shell-inventory.test.js tests/a19-shell-recents.test.js tests/a19-shell-themes.test.js tests/a00-20-styles.test.js"
+      },
+      "browserTests": [
+        "tests/browser_a19_shell_test.py"
+      ],
+      "browserValidation": "pending-integrated-static-and-standalone",
+      "remainingAcceptanceGaps": []
+    },
+    {
+      "issue": 1564,
+      "workId": "SF-A19-T08.1",
+      "title": "[SF-A19-T08.1] Add versioned settings store",
+      "owner": "shell",
+      "implementation": "implemented",
+      "files": [
+        "apps/studio/workbench/settings-store.js",
+        "apps/studio/workbench/options/general-pages.js"
+      ],
+      "focusedTests": [
+        "tests/a19-shell-settings.test.js",
+        "tests/a19-shell-boundaries.test.js"
+      ],
+      "focusedValidation": {
+        "status": "passed",
+        "batch": "74/74 combined completed-scope cases: 70 shell cases and 4 shared stylesheet contract cases",
+        "runtime": "Node.js v24.19.0",
+        "revision": "d5b1d153",
+        "passed": 74,
+        "failed": 0,
+        "shellCases": 70,
+        "stylesheetContractCases": 4,
+        "command": "node scripts/limited.js node --test tests/a19-shell-commands.test.js tests/a19-shell-settings.test.js tests/a19-shell-search.test.js tests/a19-shell-tools.test.js tests/a19-shell-boundaries.test.js tests/a19-shell-inventory.test.js tests/a19-shell-recents.test.js tests/a19-shell-themes.test.js tests/a00-20-styles.test.js"
+      },
+      "browserTests": [
+        "tests/browser_a19_shell_test.py"
+      ],
+      "browserValidation": "pending-integrated-static-and-standalone",
+      "remainingAcceptanceGaps": []
+    },
+    {
+      "issue": 1565,
+      "workId": "SF-A19-T08.2",
+      "title": "[SF-A19-T08.2] Add settings import and export",
+      "owner": "shell",
+      "implementation": "implemented",
+      "files": [
+        "apps/studio/workbench/settings-profile.js",
+        "apps/studio/workbench/settings-store.js"
+      ],
+      "focusedTests": [
+        "tests/a19-shell-settings.test.js"
+      ],
+      "focusedValidation": {
+        "status": "passed",
+        "batch": "74/74 combined completed-scope cases: 70 shell cases and 4 shared stylesheet contract cases",
+        "runtime": "Node.js v24.19.0",
+        "revision": "d5b1d153",
+        "passed": 74,
+        "failed": 0,
+        "shellCases": 70,
+        "stylesheetContractCases": 4,
+        "command": "node scripts/limited.js node --test tests/a19-shell-commands.test.js tests/a19-shell-settings.test.js tests/a19-shell-search.test.js tests/a19-shell-tools.test.js tests/a19-shell-boundaries.test.js tests/a19-shell-inventory.test.js tests/a19-shell-recents.test.js tests/a19-shell-themes.test.js tests/a00-20-styles.test.js"
+      },
+      "browserTests": [
+        "tests/browser_a19_shell_test.py"
+      ],
+      "browserValidation": "pending-integrated-static-and-standalone",
+      "remainingAcceptanceGaps": []
+    },
+    {
+      "issue": 1566,
+      "workId": "SF-A19-T08.3",
+      "title": "[SF-A19-T08.3] Tokenise themes and add Blue and High Contrast",
+      "owner": "shell",
+      "implementation": "implemented; integrated browser and native visual qualification pending",
+      "files": [
+        "apps/studio/build.contrib.json",
+        "apps/studio/studio.css",
+        "apps/studio/styles/context-menus.css",
+        "apps/studio/styles/debugger-effects.css",
+        "apps/studio/styles/debugger.css",
+        "apps/studio/styles/designer-light.css",
+        "apps/studio/styles/designer-sync.css",
+        "apps/studio/styles/designer.css",
+        "apps/studio/styles/editor-theme.css",
+        "apps/studio/styles/project-wizard.css",
+        "apps/studio/styles/runtime-settings.css",
+        "apps/studio/styles/solution-explorer.css",
+        "apps/studio/styles/status-bar.css",
+        "apps/studio/styles/winui-app.css",
+        "apps/studio/styles/workbench-density.css",
+        "apps/studio/styles/workbench-light.css",
+        "apps/studio/styles/workbench-theme.css",
+        "apps/studio/themes.css",
+        "apps/studio/workbench/designer-tokens.css",
+        "apps/studio/workbench/studio-chrome-colors.css",
+        "apps/studio/workbench/studio-tools-colors.css",
+        "apps/studio/workbench/theme-tokens.css",
+        "apps/studio/workbench/theme.js",
+        "apps/studio/workbench/workbench-shell.css",
+        "planning/contracts/fixtures/css/studio-baseline.json",
+        "planning/contracts/fixtures/css/studio-theme-migration.json",
+        "scripts/quality/theme-colors.js"
+      ],
+      "focusedTests": [
+        "tests/a19-shell-themes.test.js",
+        "tests/a00-20-styles.test.js",
+        "tests/a19-shell-settings.test.js"
+      ],
+      "focusedValidation": {
+        "status": "passed",
+        "batch": "74/74 combined completed-scope cases: 70 shell cases and 4 shared stylesheet contract cases",
+        "runtime": "Node.js v24.19.0",
+        "revision": "d5b1d153",
+        "passed": 74,
+        "failed": 0,
+        "shellCases": 70,
+        "stylesheetContractCases": 4,
+        "command": "node scripts/limited.js node --test tests/a19-shell-commands.test.js tests/a19-shell-settings.test.js tests/a19-shell-search.test.js tests/a19-shell-tools.test.js tests/a19-shell-boundaries.test.js tests/a19-shell-inventory.test.js tests/a19-shell-recents.test.js tests/a19-shell-themes.test.js tests/a00-20-styles.test.js"
+      },
+      "browserTests": [
+        "tests/browser_a19_shell_test.py"
+      ],
+      "browserValidation": "pending-integrated-static-and-standalone",
+      "remainingAcceptanceGaps": [
+        "Native device DPI, browser forced-color rendering and full legacy-view pixel parity require integrated browser/native qualification; this lane has not executed it.",
+        "The literal gate covers the Studio and split release08–14 styles named in #1566. Package-owned editor/controls/docking CSS is outside that accepted source scope."
+      ],
+      "sourceEvidence": {
+        "tokenFiles": [
+          "apps/studio/themes.css",
+          "apps/studio/workbench/designer-tokens.css",
+          "apps/studio/workbench/theme-tokens.css"
+        ],
+        "migratedTokens": 350,
+        "legacyFiles": 26,
+        "preservedPaintDeclarations": 955,
+        "preservedOtherDeclarations": 2421,
+        "legacyStudioBytesBefore": 49885,
+        "legacyStudioBytesAfter": 37644,
+        "literalGateFindings": 0,
+        "baselineRevision": "34a28b52",
+        "preservationFixture": "planning/contracts/fixtures/css/studio-theme-migration.json"
+      }
+    },
+    {
+      "issue": 1567,
+      "workId": "SF-A19-T08.4",
+      "title": "[SF-A19-T08.4] Add density and font settings",
+      "owner": "shell",
+      "implementation": "implemented",
+      "files": [
+        "apps/studio/workbench/theme.js",
+        "apps/studio/workbench/theme-tokens.css",
+        "apps/studio/workbench/options/general-pages.js"
+      ],
+      "focusedTests": [
+        "tests/a19-shell-settings.test.js"
+      ],
+      "focusedValidation": {
+        "status": "passed",
+        "batch": "74/74 combined completed-scope cases: 70 shell cases and 4 shared stylesheet contract cases",
+        "runtime": "Node.js v24.19.0",
+        "revision": "d5b1d153",
+        "passed": 74,
+        "failed": 0,
+        "shellCases": 70,
+        "stylesheetContractCases": 4,
+        "command": "node scripts/limited.js node --test tests/a19-shell-commands.test.js tests/a19-shell-settings.test.js tests/a19-shell-search.test.js tests/a19-shell-tools.test.js tests/a19-shell-boundaries.test.js tests/a19-shell-inventory.test.js tests/a19-shell-recents.test.js tests/a19-shell-themes.test.js tests/a00-20-styles.test.js"
+      },
+      "browserTests": [
+        "tests/browser_a19_shell_test.py"
+      ],
+      "browserValidation": "pending-integrated-static-and-standalone",
+      "remainingAcceptanceGaps": []
+    },
+    {
+      "issue": 1568,
+      "workId": "SF-A19-T09.1",
+      "title": "[SF-A19-T09.1] Add Go To All",
+      "owner": "shell",
+      "implementation": "implemented",
+      "files": [
+        "apps/studio/workbench/unified-search.js",
+        "apps/studio/workbench/search-service.js"
+      ],
+      "focusedTests": [
+        "tests/a19-shell-search.test.js",
+        "tests/a19-shell-boundaries.test.js"
+      ],
+      "focusedValidation": {
+        "status": "passed",
+        "batch": "74/74 combined completed-scope cases: 70 shell cases and 4 shared stylesheet contract cases",
+        "runtime": "Node.js v24.19.0",
+        "revision": "d5b1d153",
+        "passed": 74,
+        "failed": 0,
+        "shellCases": 70,
+        "stylesheetContractCases": 4,
+        "command": "node scripts/limited.js node --test tests/a19-shell-commands.test.js tests/a19-shell-settings.test.js tests/a19-shell-search.test.js tests/a19-shell-tools.test.js tests/a19-shell-boundaries.test.js tests/a19-shell-inventory.test.js tests/a19-shell-recents.test.js tests/a19-shell-themes.test.js tests/a00-20-styles.test.js"
+      },
+      "browserTests": [
+        "tests/browser_a19_shell_test.py"
+      ],
+      "browserValidation": "pending-integrated-static-and-standalone",
+      "remainingAcceptanceGaps": []
+    },
+    {
+      "issue": 1569,
+      "workId": "SF-A19-T09.2",
+      "title": "[SF-A19-T09.2] Upgrade Find in Files",
+      "owner": "shell",
+      "implementation": "implemented",
+      "files": [
+        "apps/studio/workbench/search-engine.js",
+        "apps/studio/workbench/search-service.js",
+        "apps/studio/workbench/search.worker.js",
+        "apps/studio/workbench/tools/find-results.js"
+      ],
+      "focusedTests": [
+        "tests/a19-shell-search.test.js",
+        "tests/a19-shell-boundaries.test.js"
+      ],
+      "focusedValidation": {
+        "status": "passed",
+        "batch": "74/74 combined completed-scope cases: 70 shell cases and 4 shared stylesheet contract cases",
+        "runtime": "Node.js v24.19.0",
+        "revision": "d5b1d153",
+        "passed": 74,
+        "failed": 0,
+        "shellCases": 70,
+        "stylesheetContractCases": 4,
+        "command": "node scripts/limited.js node --test tests/a19-shell-commands.test.js tests/a19-shell-settings.test.js tests/a19-shell-search.test.js tests/a19-shell-tools.test.js tests/a19-shell-boundaries.test.js tests/a19-shell-inventory.test.js tests/a19-shell-recents.test.js tests/a19-shell-themes.test.js tests/a00-20-styles.test.js"
+      },
+      "browserTests": [
+        "tests/browser_a19_shell_test.py"
+      ],
+      "browserValidation": "pending-integrated-static-and-standalone",
+      "remainingAcceptanceGaps": []
+    },
+    {
+      "issue": 1570,
+      "workId": "SF-A19-T09.3",
+      "title": "[SF-A19-T09.3] Add Replace in Files with preview",
+      "owner": "shell",
+      "implementation": "implemented",
+      "files": [
+        "apps/studio/workbench/search-service.js",
+        "apps/studio/workbench/tools/find-results.js"
+      ],
+      "focusedTests": [
+        "tests/a19-shell-search.test.js",
+        "tests/a19-shell-boundaries.test.js"
+      ],
+      "focusedValidation": {
+        "status": "passed",
+        "batch": "74/74 combined completed-scope cases: 70 shell cases and 4 shared stylesheet contract cases",
+        "runtime": "Node.js v24.19.0",
+        "revision": "d5b1d153",
+        "passed": 74,
+        "failed": 0,
+        "shellCases": 70,
+        "stylesheetContractCases": 4,
+        "command": "node scripts/limited.js node --test tests/a19-shell-commands.test.js tests/a19-shell-settings.test.js tests/a19-shell-search.test.js tests/a19-shell-tools.test.js tests/a19-shell-boundaries.test.js tests/a19-shell-inventory.test.js tests/a19-shell-recents.test.js tests/a19-shell-themes.test.js tests/a00-20-styles.test.js"
+      },
+      "browserTests": [
+        "tests/browser_a19_shell_test.py"
+      ],
+      "browserValidation": "pending-integrated-static-and-standalone",
+      "remainingAcceptanceGaps": []
+    },
+    {
+      "issue": 1571,
+      "workId": "SF-A19-T09.4",
+      "title": "[SF-A19-T09.4] Add recent files and recent projects lists",
+      "owner": "shell",
+      "implementation": "implemented-with-explicit-limits",
+      "files": [
+        "apps/studio/workbench/recent-items.js",
+        "apps/studio/workbench/start-window.js",
+        "apps/studio/workbench/shell-events.js",
+        "apps/studio/workbench/recent-workspaces.js"
+      ],
+      "focusedTests": [
+        "tests/a19-shell-search.test.js",
+        "tests/a19-shell-boundaries.test.js",
+        "tests/a19-shell-recents.test.js"
+      ],
+      "focusedValidation": {
+        "status": "passed",
+        "batch": "74/74 combined completed-scope cases: 70 shell cases and 4 shared stylesheet contract cases",
+        "runtime": "Node.js v24.19.0",
+        "revision": "d5b1d153",
+        "passed": 74,
+        "failed": 0,
+        "shellCases": 70,
+        "stylesheetContractCases": 4,
+        "command": "node scripts/limited.js node --test tests/a19-shell-commands.test.js tests/a19-shell-settings.test.js tests/a19-shell-search.test.js tests/a19-shell-tools.test.js tests/a19-shell-boundaries.test.js tests/a19-shell-inventory.test.js tests/a19-shell-recents.test.js tests/a19-shell-themes.test.js tests/a00-20-styles.test.js"
+      },
+      "browserTests": [
+        "tests/browser_a19_shell_test.py"
+      ],
+      "browserValidation": "pending-integrated-static-and-standalone",
+      "remainingAcceptanceGaps": [
+        "Root must mount createRecentWorkspaces providers against current/previous recovery and authorized reopen actions. The helper is qualified for encoding/BOM/binary/source metadata, cancelled opens and missing permissions."
+      ]
+    },
+    {
+      "issue": 1572,
+      "workId": "SF-A19-T09.5",
+      "title": "[SF-A19-T09.5] Add workspace symbol index consumer with cancellation",
+      "owner": "shell",
+      "implementation": "implemented",
+      "files": [
+        "apps/studio/workbench/search-service.js",
+        "apps/studio/workbench/unified-search.js"
+      ],
+      "focusedTests": [
+        "tests/a19-shell-search.test.js",
+        "tests/a19-shell-boundaries.test.js"
+      ],
+      "focusedValidation": {
+        "status": "passed",
+        "batch": "74/74 combined completed-scope cases: 70 shell cases and 4 shared stylesheet contract cases",
+        "runtime": "Node.js v24.19.0",
+        "revision": "d5b1d153",
+        "passed": 74,
+        "failed": 0,
+        "shellCases": 70,
+        "stylesheetContractCases": 4,
+        "command": "node scripts/limited.js node --test tests/a19-shell-commands.test.js tests/a19-shell-settings.test.js tests/a19-shell-search.test.js tests/a19-shell-tools.test.js tests/a19-shell-boundaries.test.js tests/a19-shell-inventory.test.js tests/a19-shell-recents.test.js tests/a19-shell-themes.test.js tests/a00-20-styles.test.js"
+      },
+      "browserTests": [
+        "tests/browser_a19_shell_test.py"
+      ],
+      "browserValidation": "pending-integrated-static-and-standalone",
+      "remainingAcceptanceGaps": []
+    },
+    {
+      "issue": 1573,
+      "workId": "SF-A19-T10.1",
+      "title": "[SF-A19-T10.1] Make the menu bar fully keyboard accessible",
+      "owner": "shell",
+      "implementation": "implemented",
+      "files": [
+        "apps/studio/workbench/menus.js"
+      ],
+      "focusedTests": [
+        "tests/a19-shell-commands.test.js"
+      ],
+      "focusedValidation": {
+        "status": "passed",
+        "batch": "74/74 combined completed-scope cases: 70 shell cases and 4 shared stylesheet contract cases",
+        "runtime": "Node.js v24.19.0",
+        "revision": "d5b1d153",
+        "passed": 74,
+        "failed": 0,
+        "shellCases": 70,
+        "stylesheetContractCases": 4,
+        "command": "node scripts/limited.js node --test tests/a19-shell-commands.test.js tests/a19-shell-settings.test.js tests/a19-shell-search.test.js tests/a19-shell-tools.test.js tests/a19-shell-boundaries.test.js tests/a19-shell-inventory.test.js tests/a19-shell-recents.test.js tests/a19-shell-themes.test.js tests/a00-20-styles.test.js"
+      },
+      "browserTests": [
+        "tests/browser_a19_shell_test.py"
+      ],
+      "browserValidation": "pending-integrated-static-and-standalone",
+      "remainingAcceptanceGaps": []
+    },
+    {
+      "issue": 1574,
+      "workId": "SF-A19-T10.2",
+      "title": "[SF-A19-T10.2] Add accessible dialog host",
+      "owner": "shell",
+      "implementation": "implemented",
+      "files": [
+        "apps/studio/workbench/dialog-host.js",
+        "apps/studio/workbench/options-dialog.js"
+      ],
+      "focusedTests": [
+        "tests/a19-shell-commands.test.js"
+      ],
+      "focusedValidation": {
+        "status": "passed",
+        "batch": "74/74 combined completed-scope cases: 70 shell cases and 4 shared stylesheet contract cases",
+        "runtime": "Node.js v24.19.0",
+        "revision": "d5b1d153",
+        "passed": 74,
+        "failed": 0,
+        "shellCases": 70,
+        "stylesheetContractCases": 4,
+        "command": "node scripts/limited.js node --test tests/a19-shell-commands.test.js tests/a19-shell-settings.test.js tests/a19-shell-search.test.js tests/a19-shell-tools.test.js tests/a19-shell-boundaries.test.js tests/a19-shell-inventory.test.js tests/a19-shell-recents.test.js tests/a19-shell-themes.test.js tests/a00-20-styles.test.js"
+      },
+      "browserTests": [
+        "tests/browser_a19_shell_test.py"
+      ],
+      "browserValidation": "pending-integrated-static-and-standalone",
+      "remainingAcceptanceGaps": []
+    },
+    {
+      "issue": 1576,
+      "workId": "SF-A19-T10.4",
+      "title": "[SF-A19-T10.4] Add status and live-region announcements",
+      "owner": "shell",
+      "implementation": "implemented",
+      "files": [
+        "apps/studio/workbench/announcer.js",
+        "apps/studio/workbench/notifications.js",
+        "apps/studio/workbench/shell-events.js",
+        "apps/studio/workbench/status-position.js"
+      ],
+      "focusedTests": [
+        "tests/a19-shell-commands.test.js",
+        "tests/a19-shell-boundaries.test.js"
+      ],
+      "focusedValidation": {
+        "status": "passed",
+        "batch": "74/74 combined completed-scope cases: 70 shell cases and 4 shared stylesheet contract cases",
+        "runtime": "Node.js v24.19.0",
+        "revision": "d5b1d153",
+        "passed": 74,
+        "failed": 0,
+        "shellCases": 70,
+        "stylesheetContractCases": 4,
+        "command": "node scripts/limited.js node --test tests/a19-shell-commands.test.js tests/a19-shell-settings.test.js tests/a19-shell-search.test.js tests/a19-shell-tools.test.js tests/a19-shell-boundaries.test.js tests/a19-shell-inventory.test.js tests/a19-shell-recents.test.js tests/a19-shell-themes.test.js tests/a00-20-styles.test.js"
+      },
+      "browserTests": [
+        "tests/browser_a19_shell_test.py"
+      ],
+      "browserValidation": "pending-integrated-static-and-standalone",
+      "remainingAcceptanceGaps": []
+    },
+    {
+      "issue": 1577,
+      "workId": "SF-A19-T10.5",
+      "title": "[SF-A19-T10.5] Add shell accessibility regression suite",
+      "owner": "shell",
+      "implementation": "implemented-with-explicit-limits",
+      "files": [
+        "apps/studio/workbench/workbench-shell.css",
+        "apps/studio/workbench/dialog-host.js"
+      ],
+      "focusedTests": [
+        "tests/a19-shell-commands.test.js"
+      ],
+      "focusedValidation": {
+        "status": "passed",
+        "batch": "74/74 combined completed-scope cases: 70 shell cases and 4 shared stylesheet contract cases",
+        "runtime": "Node.js v24.19.0",
+        "revision": "d5b1d153",
+        "passed": 74,
+        "failed": 0,
+        "shellCases": 70,
+        "stylesheetContractCases": 4,
+        "command": "node scripts/limited.js node --test tests/a19-shell-commands.test.js tests/a19-shell-settings.test.js tests/a19-shell-search.test.js tests/a19-shell-tools.test.js tests/a19-shell-boundaries.test.js tests/a19-shell-inventory.test.js tests/a19-shell-recents.test.js tests/a19-shell-themes.test.js tests/a00-20-styles.test.js"
+      },
+      "browserTests": [
+        "tests/browser_a19_shell_test.py"
+      ],
+      "browserValidation": "pending-integrated-static-and-standalone",
+      "remainingAcceptanceGaps": [
+        "New browser suite checks names, menu navigation, modal focus, theme-token text contrast, narrow viewport and forced colors; complete screen-reader and axe-rule coverage is not claimed."
+      ]
+    },
+    {
+      "issue": 1578,
+      "workId": "SF-A19-T11.1",
+      "title": "[SF-A19-T11.1] Add workbench performance marks",
+      "owner": "shell",
+      "implementation": "implemented-with-explicit-limits",
+      "files": [
+        "apps/studio/workbench/perf.js",
+        "apps/studio/workbench/shell.js"
+      ],
+      "focusedTests": [
+        "tests/a19-shell-commands.test.js",
+        "tests/a19-shell-inventory.test.js",
+        "tests/a19-shell-boundaries.test.js"
+      ],
+      "focusedValidation": {
+        "status": "passed",
+        "batch": "74/74 combined completed-scope cases: 70 shell cases and 4 shared stylesheet contract cases",
+        "runtime": "Node.js v24.19.0",
+        "revision": "d5b1d153",
+        "passed": 74,
+        "failed": 0,
+        "shellCases": 70,
+        "stylesheetContractCases": 4,
+        "command": "node scripts/limited.js node --test tests/a19-shell-commands.test.js tests/a19-shell-settings.test.js tests/a19-shell-search.test.js tests/a19-shell-tools.test.js tests/a19-shell-boundaries.test.js tests/a19-shell-inventory.test.js tests/a19-shell-recents.test.js tests/a19-shell-themes.test.js tests/a00-20-styles.test.js"
+      },
+      "browserTests": [
+        "tests/browser_a19_shell_test.py",
+        "tests/browser_workbench_perf_test.py"
+      ],
+      "browserValidation": "pending-integrated-static-and-standalone",
+      "remainingAcceptanceGaps": [
+        "Instrumentation overhead below 1% has not been measured; no allocation claim is made."
+      ]
+    },
+    {
+      "issue": 1579,
+      "workId": "SF-A19-T11.2",
+      "title": "[SF-A19-T11.2] Render only visible tool windows",
+      "owner": "shell",
+      "implementation": "implemented",
+      "files": [
+        "apps/studio/workbench/render-scheduler.js",
+        "apps/studio/workbench/shell.js",
+        "apps/studio/workbench/shell-events.js",
+        "apps/studio/workbench/tools/virtual-table.js"
+      ],
+      "focusedTests": [
+        "tests/a19-shell-commands.test.js",
+        "tests/a19-shell-inventory.test.js",
+        "tests/a19-shell-boundaries.test.js"
+      ],
+      "focusedValidation": {
+        "status": "passed",
+        "batch": "74/74 combined completed-scope cases: 70 shell cases and 4 shared stylesheet contract cases",
+        "runtime": "Node.js v24.19.0",
+        "revision": "d5b1d153",
+        "passed": 74,
+        "failed": 0,
+        "shellCases": 70,
+        "stylesheetContractCases": 4,
+        "command": "node scripts/limited.js node --test tests/a19-shell-commands.test.js tests/a19-shell-settings.test.js tests/a19-shell-search.test.js tests/a19-shell-tools.test.js tests/a19-shell-boundaries.test.js tests/a19-shell-inventory.test.js tests/a19-shell-recents.test.js tests/a19-shell-themes.test.js tests/a00-20-styles.test.js"
+      },
+      "browserTests": [
+        "tests/browser_a19_shell_test.py"
+      ],
+      "browserValidation": "pending-integrated-static-and-standalone",
+      "remainingAcceptanceGaps": []
+    },
+    {
+      "issue": 1580,
+      "workId": "SF-A19-T11.3",
+      "title": "[SF-A19-T11.3] Lazy-load tool modules",
+      "owner": "shell",
+      "implementation": "implemented-with-explicit-limits",
+      "files": [
+        "apps/studio/workbench/lazy-tools.js",
+        "apps/studio/workbench/shell-tools.js"
+      ],
+      "focusedTests": [
+        "tests/a19-shell-commands.test.js",
+        "tests/a19-shell-inventory.test.js",
+        "tests/a19-shell-boundaries.test.js"
+      ],
+      "focusedValidation": {
+        "status": "passed",
+        "batch": "74/74 combined completed-scope cases: 70 shell cases and 4 shared stylesheet contract cases",
+        "runtime": "Node.js v24.19.0",
+        "revision": "d5b1d153",
+        "passed": 74,
+        "failed": 0,
+        "shellCases": 70,
+        "stylesheetContractCases": 4,
+        "command": "node scripts/limited.js node --test tests/a19-shell-commands.test.js tests/a19-shell-settings.test.js tests/a19-shell-search.test.js tests/a19-shell-tools.test.js tests/a19-shell-boundaries.test.js tests/a19-shell-inventory.test.js tests/a19-shell-recents.test.js tests/a19-shell-themes.test.js tests/a00-20-styles.test.js"
+      },
+      "browserTests": [
+        "tests/browser_a19_shell_test.py"
+      ],
+      "browserValidation": "pending-integrated-static-and-standalone",
+      "remainingAcceptanceGaps": [
+        "Root must wire the lazy designer/assembly/disassembly/MSBuild/wizard activation seam and retain standalone dynamic imports; measurable initial-evaluation reduction is pending integrated capture."
+      ]
+    },
+    {
+      "issue": 1581,
+      "workId": "SF-A19-T11.4",
+      "title": "[SF-A19-T11.4] Add performance budget check",
+      "owner": "shell",
+      "implementation": "implemented-with-explicit-limits",
+      "files": [
+        "apps/studio/workbench/perf.js",
+        "scripts/benchmark-workbench.js",
+        "tests/workbench-perf-budget.mjs",
+        "tests/browser_workbench_perf_test.py"
+      ],
+      "focusedTests": [
+        "tests/a19-shell-commands.test.js",
+        "tests/a19-shell-inventory.test.js",
+        "tests/a19-shell-boundaries.test.js"
+      ],
+      "focusedValidation": {
+        "status": "passed",
+        "batch": "74/74 combined completed-scope cases: 70 shell cases and 4 shared stylesheet contract cases",
+        "runtime": "Node.js v24.19.0",
+        "revision": "d5b1d153",
+        "passed": 74,
+        "failed": 0,
+        "shellCases": 70,
+        "stylesheetContractCases": 4,
+        "command": "node scripts/limited.js node --test tests/a19-shell-commands.test.js tests/a19-shell-settings.test.js tests/a19-shell-search.test.js tests/a19-shell-tools.test.js tests/a19-shell-boundaries.test.js tests/a19-shell-inventory.test.js tests/a19-shell-recents.test.js tests/a19-shell-themes.test.js tests/a00-20-styles.test.js"
+      },
+      "browserTests": [
+        "tests/browser_a19_shell_test.py",
+        "tests/browser_workbench_perf_test.py"
+      ],
+      "browserValidation": "pending-integrated-static-and-standalone",
+      "remainingAcceptanceGaps": [
+        "Three independent 501-source captures and strict version2 trace validation are implemented. Actual static/standalone captures and reviewed compatible baseline publication remain pending; capture mode reports no relative regression verdict."
+      ]
+    },
+    {
+      "issue": 1582,
+      "workId": "SF-A19-T12.1",
+      "title": "[SF-A19-T12.1] Author the Visual Studio workflow scenario matrix",
+      "owner": "shell",
+      "implementation": "implemented-with-explicit-limits",
+      "files": [
+        "docs/vs-workflow-matrix.md"
+      ],
+      "focusedTests": [
+        "tests/a19-shell-inventory.test.js"
+      ],
+      "focusedValidation": {
+        "status": "passed",
+        "batch": "74/74 combined completed-scope cases: 70 shell cases and 4 shared stylesheet contract cases",
+        "runtime": "Node.js v24.19.0",
+        "revision": "d5b1d153",
+        "passed": 74,
+        "failed": 0,
+        "shellCases": 70,
+        "stylesheetContractCases": 4,
+        "command": "node scripts/limited.js node --test tests/a19-shell-commands.test.js tests/a19-shell-settings.test.js tests/a19-shell-search.test.js tests/a19-shell-tools.test.js tests/a19-shell-boundaries.test.js tests/a19-shell-inventory.test.js tests/a19-shell-recents.test.js tests/a19-shell-themes.test.js tests/a00-20-styles.test.js"
+      },
+      "browserTests": [
+        "tests/browser_a19_shell_test.py",
+        "tests/browser_vs_workflows_test.py"
+      ],
+      "browserValidation": "pending-integrated-static-and-standalone",
+      "remainingAcceptanceGaps": [
+        "Visual Studio pixel parity and native OS integration remain separately qualified targets."
+      ]
+    },
+    {
+      "issue": 1583,
+      "workId": "SF-A19-T12.2",
+      "title": "[SF-A19-T12.2] Automate the core edit-build-debug-design scenarios",
+      "owner": "shell",
+      "implementation": "implemented-with-explicit-limits",
+      "files": [
+        "tests/browser_vs_workflows_test.py"
+      ],
+      "focusedTests": [
+        "tests/a19-shell-inventory.test.js"
+      ],
+      "focusedValidation": {
+        "status": "passed",
+        "batch": "74/74 combined completed-scope cases: 70 shell cases and 4 shared stylesheet contract cases",
+        "runtime": "Node.js v24.19.0",
+        "revision": "d5b1d153",
+        "passed": 74,
+        "failed": 0,
+        "shellCases": 70,
+        "stylesheetContractCases": 4,
+        "command": "node scripts/limited.js node --test tests/a19-shell-commands.test.js tests/a19-shell-settings.test.js tests/a19-shell-search.test.js tests/a19-shell-tools.test.js tests/a19-shell-boundaries.test.js tests/a19-shell-inventory.test.js tests/a19-shell-recents.test.js tests/a19-shell-themes.test.js tests/a00-20-styles.test.js"
+      },
+      "browserTests": [
+        "tests/browser_a19_shell_test.py",
+        "tests/browser_vs_workflows_test.py"
+      ],
+      "browserValidation": "pending-integrated-static-and-standalone",
+      "remainingAcceptanceGaps": [
+        "Production create/edit/build/breakpoint/design/export browser driver is present; static and standalone executions are pending root integration."
+      ]
+    },
+    {
+      "issue": 1584,
+      "workId": "SF-A19-T12.3",
+      "title": "[SF-A19-T12.3] Track window, command and shortcut inventory against Visual Studio",
+      "owner": "shell",
+      "implementation": "implemented-with-explicit-limits",
+      "files": [
+        "apps/studio/workbench/inventory.js",
+        "apps/studio/workbench/commands.js",
+        "docs/vs-workbench-inventory.json",
+        "docs/vs-workflow-matrix.md"
+      ],
+      "focusedTests": [
+        "tests/a19-shell-inventory.test.js"
+      ],
+      "focusedValidation": {
+        "status": "passed",
+        "batch": "74/74 combined completed-scope cases: 70 shell cases and 4 shared stylesheet contract cases",
+        "runtime": "Node.js v24.19.0",
+        "revision": "d5b1d153",
+        "passed": 74,
+        "failed": 0,
+        "shellCases": 70,
+        "stylesheetContractCases": 4,
+        "command": "node scripts/limited.js node --test tests/a19-shell-commands.test.js tests/a19-shell-settings.test.js tests/a19-shell-search.test.js tests/a19-shell-tools.test.js tests/a19-shell-boundaries.test.js tests/a19-shell-inventory.test.js tests/a19-shell-recents.test.js tests/a19-shell-themes.test.js tests/a00-20-styles.test.js"
+      },
+      "browserTests": [
+        "tests/browser_a19_shell_test.py",
+        "tests/browser_vs_workflows_test.py"
+      ],
+      "browserValidation": "pending-integrated-static-and-standalone",
+      "remainingAcceptanceGaps": [
+        "Workbench inventory covers registered current commands/windows; root owns the separate audited keyboard inventory."
+      ]
+    }
+  ],
+  "validation": {
+    "focusedNodeTests": "74/74 passed in one combined 9-file completed-scope batch at d5b1d153: 70 shell cases plus 4 stylesheet contracts; zero failures/skips.",
+    "repositoryCheck": "Root owns canonical test manifests and full repository qualification; the new eighth shell suite is tests/a19-shell-themes.test.js.",
+    "structure": "Historical check: exit 0 with 260 pre-existing findings. Current theme source scope has zero size/line findings; frozen studio.css shrinks from 49,885 to 37,644 bytes.",
+    "browser": "Drivers authored against production harness; execution pending integrated root build",
+    "native": "No native backend or pixel parity qualification claimed"
+  },
+  "validationSummary": {
+    "sourceRevision": "d5b1d153",
+    "testCasesPresent": 70,
+    "qualification": "One current combined completed-scope Node cohort, 74/74; no shell-owned browser, native or Visual Studio oracle execution.",
+    "latestBatches": [
+      {
+        "revision": "2a35c28c",
+        "passed": 29,
+        "failed": 0,
+        "command": "node scripts/limited.js node --test tests/a19-shell-boundaries.test.js tests/a19-shell-inventory.test.js tests/a19-shell-settings.test.js"
+      },
+      {
+        "revision": "baa27464",
+        "passed": 34,
+        "failed": 0,
+        "command": "node scripts/limited.js node --test tests/a19-shell-recents.test.js tests/a19-shell-settings.test.js tests/a19-shell-boundaries.test.js"
+      },
+      {
+        "revision": "d5b1d153",
+        "passed": 74,
+        "failed": 0,
+        "shellCases": 70,
+        "stylesheetContractCases": 4,
+        "command": "node scripts/limited.js node --test tests/a19-shell-commands.test.js tests/a19-shell-settings.test.js tests/a19-shell-search.test.js tests/a19-shell-tools.test.js tests/a19-shell-boundaries.test.js tests/a19-shell-inventory.test.js tests/a19-shell-recents.test.js tests/a19-shell-themes.test.js tests/a00-20-styles.test.js"
+      }
+    ],
+    "notes": [
+      "The current combined 9-file cohort passed all 70 shell cases and 4 shared stylesheet contract cases. Earlier 29/29 and 34/34 batches overlap this cohort and are not additive.",
+      "The initial native recorder mismatch was fixed by editor commit 7870600d; the current combined cohort includes its canonical key recorder regression.",
+      "The Studio color gate finds zero out-of-place literals, and source fixtures preserve 955 ordered paint plus 2,421 other declarations across 26 original files.",
+      "Browser drivers parse successfully but have not executed in this lane. Static/standalone timing, visual/DPI, forced-color rendering and screen-reader claims remain unqualified.",
+      "The status adapter tests cover the exact cancellable model-column protocol; integrated browser qualification of the text lane native index remains with root."
+    ]
+  },
+  "ownedPaths": [
+    "apps/studio/build.contrib.json",
+    "apps/studio/commands/registry.js",
+    "apps/studio/studio.css",
+    "apps/studio/styles/context-menus.css",
+    "apps/studio/styles/debugger-effects.css",
+    "apps/studio/styles/debugger.css",
+    "apps/studio/styles/designer-light.css",
+    "apps/studio/styles/designer-sync.css",
+    "apps/studio/styles/designer.css",
+    "apps/studio/styles/editor-theme.css",
+    "apps/studio/styles/project-wizard.css",
+    "apps/studio/styles/runtime-settings.css",
+    "apps/studio/styles/solution-explorer.css",
+    "apps/studio/styles/status-bar.css",
+    "apps/studio/styles/winui-app.css",
+    "apps/studio/styles/workbench-density.css",
+    "apps/studio/styles/workbench-light.css",
+    "apps/studio/styles/workbench-theme.css",
+    "apps/studio/themes.css",
+    "apps/studio/workbench/announcer.js",
+    "apps/studio/workbench/commands.js",
+    "apps/studio/workbench/comment-tasks.js",
+    "apps/studio/workbench/configuration-manager.js",
+    "apps/studio/workbench/context-keys.js",
+    "apps/studio/workbench/designer-tokens.css",
+    "apps/studio/workbench/dialog-host.js",
+    "apps/studio/workbench/document-size.js",
+    "apps/studio/workbench/events.js",
+    "apps/studio/workbench/file-watch.js",
+    "apps/studio/workbench/first-run.js",
+    "apps/studio/workbench/inventory.js",
+    "apps/studio/workbench/lazy-tools.js",
+    "apps/studio/workbench/menus.js",
+    "apps/studio/workbench/notifications.js",
+    "apps/studio/workbench/options-dialog.js",
+    "apps/studio/workbench/options/general-pages.js",
+    "apps/studio/workbench/options/keyboard-page.js",
+    "apps/studio/workbench/perf.js",
+    "apps/studio/workbench/recent-items.js",
+    "apps/studio/workbench/recent-workspaces.js",
+    "apps/studio/workbench/render-scheduler.js",
+    "apps/studio/workbench/search-engine.js",
+    "apps/studio/workbench/search-service.js",
+    "apps/studio/workbench/search.worker.js",
+    "apps/studio/workbench/settings-profile.js",
+    "apps/studio/workbench/settings-store.js",
+    "apps/studio/workbench/shell-commands.js",
+    "apps/studio/workbench/shell-events.js",
+    "apps/studio/workbench/shell-models.js",
+    "apps/studio/workbench/shell-tools.js",
+    "apps/studio/workbench/shell.js",
+    "apps/studio/workbench/start-window.js",
+    "apps/studio/workbench/status-bar.js",
+    "apps/studio/workbench/status-position.js",
+    "apps/studio/workbench/studio-chrome-colors.css",
+    "apps/studio/workbench/studio-tools-colors.css",
+    "apps/studio/workbench/task-center.js",
+    "apps/studio/workbench/theme-tokens.css",
+    "apps/studio/workbench/theme.js",
+    "apps/studio/workbench/toolbar-customize.js",
+    "apps/studio/workbench/toolbars.js",
+    "apps/studio/workbench/tools/bookmarks.js",
+    "apps/studio/workbench/tools/call-hierarchy.js",
+    "apps/studio/workbench/tools/class-view.js",
+    "apps/studio/workbench/tools/code-definition.js",
+    "apps/studio/workbench/tools/command-window.js",
+    "apps/studio/workbench/tools/diagnostic-timeline.js",
+    "apps/studio/workbench/tools/error-list.js",
+    "apps/studio/workbench/tools/find-results.js",
+    "apps/studio/workbench/tools/object-browser.js",
+    "apps/studio/workbench/tools/outline.js",
+    "apps/studio/workbench/tools/output.js",
+    "apps/studio/workbench/tools/properties.js",
+    "apps/studio/workbench/tools/references.js",
+    "apps/studio/workbench/tools/scope-selector.js",
+    "apps/studio/workbench/tools/solution-explorer-views.js",
+    "apps/studio/workbench/tools/task-list.js",
+    "apps/studio/workbench/tools/test-explorer.js",
+    "apps/studio/workbench/tools/toolbox.js",
+    "apps/studio/workbench/tools/tree-host.js",
+    "apps/studio/workbench/tools/virtual-table.js",
+    "apps/studio/workbench/ui.js",
+    "apps/studio/workbench/unified-search.js",
+    "apps/studio/workbench/workbench-shell.css",
+    "apps/studio/workbench/worker-request.js",
+    "docs/project16-shell-coverage.json",
+    "docs/vs-workbench-inventory.json",
+    "docs/vs-workflow-matrix.md",
+    "planning/contracts/fixtures/css/studio-baseline.json",
+    "planning/contracts/fixtures/css/studio-theme-migration.json",
+    "scripts/benchmark-workbench.js",
+    "scripts/quality/theme-colors.js",
+    "tests/a00-20-styles.test.js",
+    "tests/a19-shell-boundaries.test.js",
+    "tests/a19-shell-commands.test.js",
+    "tests/a19-shell-inventory.test.js",
+    "tests/a19-shell-recents.test.js",
+    "tests/a19-shell-search.test.js",
+    "tests/a19-shell-settings.test.js",
+    "tests/a19-shell-themes.test.js",
+    "tests/a19-shell-tools.test.js",
+    "tests/browser_a19_shell_test.py",
+    "tests/browser_vs_workflows_test.py",
+    "tests/browser_workbench_perf_test.py",
+    "tests/helpers/studio-theme-proof.js",
+    "tests/workbench-perf-budget.mjs"
+  ],
+  "originalSourceClosure": [
+    "bcd1f02c8c1e32825efbc6fa3e59d869d5eb9801",
+    "9db937a7f6391e2091626b74b59ab8b2c858e904",
+    "7f336b889e8556c798d53de65ca141885d8efe34",
+    "db314b2eccc50017b9777050de3197540268c810",
+    "d6f6f191df8ba61ad93995f1673d201ba94a8288",
+    "c744c223df9994cef197d32ac3a092dd0097a134",
+    "2bb22515d3efdd5f349681db9fc6ddd49a9486f9",
+    "05436e34471c36eb0f1d509f2b01725289d8fc5d",
+    "deab4b5eafb94cea3ab8ba94b1b3d343460d28b8",
+    "9811bffc14fc73c556eec76d7933ea694bb649aa",
+    "3cfec70bfde8133de60fb7d50a4e49e60cf1d869",
+    "9637ce3faa55f191df2f959fc0093e1efffad03f"
+  ],
+  "followupSourceCommits": [
+    "ba3e4b96ae42a524a5b35f4fffd76a002fd9a3df",
+    "26ed77baa1ab9df8f721bc7faa940371c5231ae8",
+    "b0c5868b73622056b429e7008c64301e6e0811b4",
+    "30cd501f80a79852f987491a53a209d13ee03c34",
+    "6b4de7da7ec763a83522aa6e02c53a7f4395350d",
+    "c54d436e34ce2f1d75236fdc5a5248b9957ed190",
+    "2a35c28c9efbb143da01a856a34b52d9df5de307",
+    "e8ae39631f438c4aeef2d8889637be30402cfe04",
+    "d1a0938be67088303f5006900a97a8e5637f8534",
+    "b7599fe75c5129691b95ecc1e9417bd3539edd1a",
+    "baa274644736d0999e34123820e53424df3d6ece",
+    "34a28b52028b1d06839a35c082e56b0962d7e6e2",
+    "0c3a340eeefbeb31f53e3ea97380a8b156c2346c",
+    "f0bbd9bcc844ef1a0d80a78ada2ee5722dc6ba67",
+    "d5b1d1531c4e7dc141b9cc156f551f65f24f8883"
+  ],
+  "reviewSlice": {
+    "branch": "codex/project16/04-workbench-shell",
+    "base": "da59654f10079ecb4326d919ddbdf5e0bed92e67",
+    "sourceRevision": "7a6ad9b8310f55f275d87e2a8eda76d42a8719c6",
+    "includedOwnedPaths": [
+      "apps/studio/build.contrib.json",
+      "apps/studio/commands/registry.js",
+      "apps/studio/studio.css",
+      "apps/studio/styles/context-menus.css",
+      "apps/studio/styles/debugger-effects.css",
+      "apps/studio/styles/debugger.css",
+      "apps/studio/styles/designer-light.css",
+      "apps/studio/styles/designer-sync.css",
+      "apps/studio/styles/designer.css",
+      "apps/studio/styles/editor-theme.css",
+      "apps/studio/styles/project-wizard.css",
+      "apps/studio/styles/runtime-settings.css",
+      "apps/studio/styles/solution-explorer.css",
+      "apps/studio/styles/status-bar.css",
+      "apps/studio/styles/winui-app.css",
+      "apps/studio/styles/workbench-density.css",
+      "apps/studio/styles/workbench-light.css",
+      "apps/studio/styles/workbench-theme.css",
+      "apps/studio/themes.css",
+      "apps/studio/workbench/announcer.js",
+      "apps/studio/workbench/commands.js",
+      "apps/studio/workbench/comment-tasks.js",
+      "apps/studio/workbench/configuration-manager.js",
+      "apps/studio/workbench/context-keys.js",
+      "apps/studio/workbench/designer-tokens.css",
+      "apps/studio/workbench/dialog-host.js",
+      "apps/studio/workbench/document-size.js",
+      "apps/studio/workbench/events.js",
+      "apps/studio/workbench/file-watch.js",
+      "apps/studio/workbench/first-run.js",
+      "apps/studio/workbench/inventory.js",
+      "apps/studio/workbench/lazy-tools.js",
+      "apps/studio/workbench/menus.js",
+      "apps/studio/workbench/notifications.js",
+      "apps/studio/workbench/options-dialog.js",
+      "apps/studio/workbench/options/general-pages.js",
+      "apps/studio/workbench/options/keyboard-page.js",
+      "apps/studio/workbench/perf.js",
+      "apps/studio/workbench/recent-items.js",
+      "apps/studio/workbench/recent-workspaces.js",
+      "apps/studio/workbench/render-scheduler.js",
+      "apps/studio/workbench/search-engine.js",
+      "apps/studio/workbench/search-service.js",
+      "apps/studio/workbench/search.worker.js",
+      "apps/studio/workbench/settings-profile.js",
+      "apps/studio/workbench/settings-store.js",
+      "apps/studio/workbench/shell-commands.js",
+      "apps/studio/workbench/shell-events.js",
+      "apps/studio/workbench/shell-models.js",
+      "apps/studio/workbench/shell-tools.js",
+      "apps/studio/workbench/shell.js",
+      "apps/studio/workbench/start-window.js",
+      "apps/studio/workbench/status-bar.js",
+      "apps/studio/workbench/status-position.js",
+      "apps/studio/workbench/studio-chrome-colors.css",
+      "apps/studio/workbench/studio-tools-colors.css",
+      "apps/studio/workbench/task-center.js",
+      "apps/studio/workbench/theme-tokens.css",
+      "apps/studio/workbench/theme.js",
+      "apps/studio/workbench/toolbar-customize.js",
+      "apps/studio/workbench/toolbars.js",
+      "apps/studio/workbench/tools/bookmarks.js",
+      "apps/studio/workbench/tools/call-hierarchy.js",
+      "apps/studio/workbench/tools/class-view.js",
+      "apps/studio/workbench/tools/code-definition.js",
+      "apps/studio/workbench/tools/command-window.js",
+      "apps/studio/workbench/tools/diagnostic-timeline.js",
+      "apps/studio/workbench/tools/error-list.js",
+      "apps/studio/workbench/tools/find-results.js",
+      "apps/studio/workbench/tools/object-browser.js",
+      "apps/studio/workbench/tools/outline.js",
+      "apps/studio/workbench/tools/output.js",
+      "apps/studio/workbench/tools/properties.js",
+      "apps/studio/workbench/tools/references.js",
+      "apps/studio/workbench/tools/scope-selector.js",
+      "apps/studio/workbench/tools/solution-explorer-views.js",
+      "apps/studio/workbench/tools/task-list.js",
+      "apps/studio/workbench/tools/test-explorer.js",
+      "apps/studio/workbench/tools/toolbox.js",
+      "apps/studio/workbench/tools/tree-host.js",
+      "apps/studio/workbench/tools/virtual-table.js",
+      "apps/studio/workbench/ui.js",
+      "apps/studio/workbench/unified-search.js",
+      "apps/studio/workbench/workbench-shell.css",
+      "apps/studio/workbench/worker-request.js",
+      "docs/project16-shell-coverage.json",
+      "docs/vs-workbench-inventory.json",
+      "docs/vs-workflow-matrix.md",
+      "planning/contracts/fixtures/css/studio-baseline.json",
+      "planning/contracts/fixtures/css/studio-theme-migration.json",
+      "scripts/quality/theme-colors.js",
+      "tests/a00-20-styles.test.js",
+      "tests/a19-shell-boundaries.test.js",
+      "tests/a19-shell-commands.test.js",
+      "tests/a19-shell-inventory.test.js",
+      "tests/a19-shell-recents.test.js",
+      "tests/a19-shell-search.test.js",
+      "tests/a19-shell-settings.test.js",
+      "tests/a19-shell-themes.test.js",
+      "tests/a19-shell-tools.test.js",
+      "tests/helpers/studio-theme-proof.js",
+      "tests/workbench-perf-budget.mjs"
+    ],
+    "deferredPaths": [
+      "scripts/benchmark-workbench.js",
+      "tests/browser_a19_shell_test.py",
+      "tests/browser_vs_workflows_test.py",
+      "tests/browser_workbench_perf_test.py"
+    ],
+    "hostComposition": "apps/studio/studio.js and actual Studio browser/performance drivers are deferred to the final composition layer.",
+    "qualification": "Historical source qualification only. No Node tests, browser suites or builds were rerun while assembling review04.",
+    "aggregateStylesheetSnapshot": "Recomputed statically after the existing docking workbench stylesheet and inherited editor semantic field/event/namespace rules were included. Original theme migration declaration proof is unchanged.",
+    "reviewGuide": "docs/project16-workbench-review.md"
+  }
+}

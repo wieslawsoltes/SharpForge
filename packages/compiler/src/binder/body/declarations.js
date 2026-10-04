@@ -7,7 +7,7 @@ import { SymbolKind, TypeKind, RefKind, ErrorTypeSymbol, ArrayTypeSymbol } from 
 import { LocalDeclarationKind } from '../../symbols/members.js';
 import { implementsInterface } from '../../symbols/substitution.js';
 import { checkRefLocalInitializer, checkRefWritability, recordRefLocal } from '../ref-locals.js';
-import { checkAsyncOrIteratorUse, checkArrayElementType } from '../ref-struct.js';
+import { checkAsyncOrIteratorUse } from '../ref-struct.js';
 import { numericKind } from '../../conversions/numeric.js';
 import { isAsyncDisposable } from '../async-streams.js';
 import { reportAwaitOutsideAsync } from '../async.js';
@@ -66,10 +66,6 @@ export const DeclarationBinding = Base =>
         );
         if (bad?.feature) this.d.gate(this.c.uri, typeSyntax, 'RefUnsafeInIteratorAsync', bad.feature);
         else if (bad) this.report(typeSyntax, bad.code, bad.args);
-        if (declaredType instanceof ArrayTypeSymbol) {
-          const e = checkArrayElementType(declaredType.elementType);
-          if (e) this.report(typeSyntax, e.code, e.args);
-        }
       }
       for (const v of syntax.variables) {
         const name = v.identifier.valueText,

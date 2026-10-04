@@ -70,3 +70,11 @@ export {number, isNumber} from './numeric/numeric-values.js';
 
 export {singleToInt32Bits, doubleToInt64Bits, int32BitsToSingle, int64BitsToDouble} from './numeric/bit-converter.js';
 export {nativeIntegerBits, isNativeInteger, nativeInteger, nativeBinary, nativeSize} from './numeric/native-int.js';
+
+export {
+  decimal, decimalZero, decimalMaxCoefficient, isDecimal, decimalFromBits, decimalBits,
+  decimalParse, decimalFromInteger, decimalFromFloat, decimalToInteger, decimalToFloat,
+  decimalCompare, decimalNegate, decimalAbs, decimalAdd, decimalMultiply, decimalDivide, decimalRemainder,
+  decimalRound, decimalBinary, decimalFormat
+} from './numeric/decimal-ops.js';
+export {decimalIntrinsicDefinitions, isDecimalConstantField} from './decimal-intrinsic-profile.js';

@@ -68,11 +68,11 @@ test('BCL registration participates in framework rollback and cancellation', () 
 test('released BCL groups keep module order and independent registries cannot leak', () => {
   const modules = createBclRegistry(bclModules);
   assert.deepEqual(modules.modules.map(module => module.group), [
-    'bcl-prefix', 'bcl-suffix', 'bcl-suffix', 'runtime14', 'runtime14', 'extensions', 'extensions'
+    'bcl-prefix', 'bcl-suffix', 'bcl-suffix', 'runtime14', 'runtime14', 'extensions', 'extensions', 'extensions'
   ]);
   const empty = createBclRegistry([]);
   assert.equal(empty.modules.length, 0);
-  assert.equal(modules.modules.length, 7);
+  assert.equal(modules.modules.length, 8);
 });
 
 test('BCL registry rejects async contracts and malformed invocation results', () => {

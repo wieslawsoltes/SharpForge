@@ -1,5 +1,7 @@
 import {resolveExecutionField} from './field-profile.js';
 import {supportedDelegateCall} from './delegate-profile.js';
+import {resolveExecutionMethod} from './call-profile.js';
+import {genericDefinitionContext, verifyGenericType, verifyGenericCall} from './generic-profile.js';
 import {frameworkType} from '@sharpforge/framework';
 import { AssemblyInspector } from './inspector.js';
 import { CilError } from './binary.js';
@@ -12,7 +14,7 @@ const numeric = /^ldc\.(i4(\.(m1|[0-8]|s))?|i8|r4|r8)$/;
 const branches = /^(br|brtrue|brfalse|leave)(\.s)?$|^(beq|bge|bgt|ble|blt|bne)(\.un)?(\.s)?$/;
 const conversions = /^conv\.(ovf\.)?(i1|u1|i2|u2|i4|u4|i8|u8|i|u|r4|r8|r)(\.un)?$/;
 export function isExecutableOpcode(name){return simple.has(name)||arithmetic.test(name)||indexed.test(name)||numeric.test(name)||branches.test(name)||conversions.test(name)||/^(ldelem|stelem|ldind|stind)\.(i1|u1|i2|u2|i4|u4|i8|i|r4|r8|ref)$/.test(name);}
-export const primitiveSizes=Object.freeze({'System.Boolean':1,'System.SByte':1,'System.Byte':1,'System.Char':2,'System.Int16':2,'System.UInt16':2,'System.Int32':4,'System.UInt32':4,'System.Int64':8,'System.UInt64':8,'System.Single':4,'System.Double':8});
+export const primitiveSizes=Object.freeze({'System.Boolean':1,'System.SByte':1,'System.Byte':1,'System.Char':2,'System.Int16':2,'System.UInt16':2,'System.Int32':4,'System.UInt32':4,'System.Int64':8,'System.UInt64':8,'System.Single':4,'System.Double':8,'System.Decimal':16});
 export {systemType} from './intrinsic-profile.js';
 import {intrinsicDefinition} from './intrinsic-profile.js';
 export function supportedIntrinsic(descriptor){return intrinsicDefinition(descriptor)!==null;}
@@ -52,7 +54,13 @@ export function verifyCilAssembly(input,{methodToken,arguments:args=[],maxMethod
     let m;try{m=inspector.getMethod(t);}catch(error){issue({token:t},null,'IL_METADATA',error.message);continue;}
     enqueueType(m.ownerToken);
     if(!m.hasBody||m.implFlags&3||m.flags&0x2000){issue(m,null,'IL_NATIVE','Native, runtime and abstract methods are not executable');continue;}
-    if(m.signature.genericArity||m.signature.callingConvention||m.signature.parameters.concat(m.locals,m.signature.returnType).some(t=>!frameworkType(t.replace(/\[\]$/,''))&&/[!*]|`[0-9]|\bpinned\b|\bmod(req|opt)\b/.test(t))){issue(m,null,'IL_SIGNATURE','Generic, native-pointer and modified signatures are inspection-only');continue;}
+    let context;
+    try {
+      context=genericDefinitionContext(inspector,m);
+      if(t===entry&&(context.typeArguments.length||context.methodArguments.length))throw new CilError('Entry point must be closed');
+      if(m.signature.callingConvention)throw new CilError('Non-default calling conventions are inspection-only');
+      for(const type of m.signature.parameters.concat(m.locals,m.signature.returnType))verifyGenericType(inspector,type,context);
+    } catch(error) {issue(m,null,'IL_SIGNATURE',error.message);continue;}
     const map=new Map(m.instructions.map((i,index)=>[i.offset,index]));
     const prefixTails=new Set(m.instructions.filter((instruction,index)=>index>0&&m.instructions[index-1].name==='volatile.').map(instruction=>instruction.offset));
     for(const instruction of m.instructions) {
@@ -68,16 +76,16 @@ export function verifyCilAssembly(input,{methodToken,arguments:args=[],maxMethod
         const next=m.instructions[m.instructions.indexOf(i)+1];
         if(!next||!['ldfld','stfld','ldsfld','stsfld','ldobj','stobj'].includes(next.name)&&!next.name.startsWith('ldind.')&&!next.name.startsWith('stind.'))issue(m,i,'IL_PREFIX','volatile. must precede a supported memory instruction');
       }
-      if(i.name==='ldtoken'){try{const token=inspector.resolveToken(i.operand);if(!['type','method','field'].includes(token.kind))issue(m,i,'IL_TOKEN','ldtoken requires a type, method or field');}catch(error){issue(m,i,'IL_TOKEN',error.message);}}
+      if(['newarr','ldelema','ldelem','stelem','box','unbox.any','ldobj','stobj','initobj','castclass','isinst'].includes(i.name)){try{verifyGenericType(inspector,inspector.metadata.typeName(i.operand),context);}catch(error){issue(m,i,'IL_TYPE',error.message);}}
+      if(i.name==='ldtoken'){try{const token=inspector.resolveToken(i.operand);if(token.kind==='type')verifyGenericType(inspector,token.name,context);if(!['type','method','field'].includes(token.kind))issue(m,i,'IL_TOKEN','ldtoken requires a type, method or field');}catch(error){issue(m,i,'IL_TOKEN',error.message);}}
       if(indexed.test(i.name)){
         const index=i.operand??Number(i.name.split('.').at(-1)),limit=i.name.includes('arg')?m.signature.parameters.length+(m.signature.isStatic?0:1):m.locals.length;
         if(!Number.isInteger(index)||index<0||index>=limit)issue(m,i,'IL_SLOT','Invalid argument/local slot');
       }
-      if(i.name==='ldftn'){try{const d=inspector.resolveToken(i.operand),target=d.resolvedToken??(d.token>>>24===6?d.token:null);if(!target)throw new CilError('External delegate target is not supported');pending.push(target);}catch(error){issue(m,i,'IL_TOKEN',error.message);}}
+      if(i.name==='ldftn'){try{const d=inspector.resolveToken(i.operand);if(d.genericArguments||d.signature.genericArity||/[!`]/.test(d.owner))throw new CilError('Generic delegate targets require closed pointer binding');const target=d.resolvedToken??(d.token>>>24===6?d.token:null);if(!target)throw new CilError('External delegate target is not supported');pending.push(target);}catch(error){issue(m,i,'IL_TOKEN',error.message);}}
       if(['call','callvirt','newobj'].includes(i.name)){
-        try{const d=inspector.resolveToken(i.operand);if(d.kind!=='method')throw new CilError('Call operand is not a method');const target=d.resolvedToken??(d.token>>>24===6?d.token:null);
-          if(d.genericArguments)issue(m,i,'IL_GENERIC','Generic method instantiations are inspection-only');
-          else if(supportedDelegateCall(inspector,d)) { /* Delegate runtime methods have no IL body. */ }
+        try{const d=resolveExecutionMethod(inspector,i.operand,context);verifyGenericCall(inspector,d,context);if(d.kind!=='method')throw new CilError('Call operand is not a method');const target=d.resolvedToken??(d.token>>>24===6?d.token:null);
+          if(supportedDelegateCall(inspector,d)) { /* Delegate runtime methods have no IL body. */ }
           else if(target) {
             if(i.name==='callvirt'&&(inspector.methods.get(target)?.flags&0x40)) {
               const targets=dispatch.targets(target);
@@ -88,8 +96,8 @@ export function verifyCilAssembly(input,{methodToken,arguments:args=[],maxMethod
           if(i.name==='newobj'&&(d.name!=='.ctor'||d.signature.isStatic))issue(m,i,'IL_CTOR','newobj requires an instance constructor');
         }catch(error){issue(m,i,'IL_TOKEN',error.message);}
       }
-      if(['ldsfld','stsfld','ldsflda','newobj'].includes(i.name)){try{enqueueType((i.name==='newobj'?inspector.resolveToken(i.operand):resolveExecutionField(inspector,i.operand)).ownerToken);}catch{/* Reported by token validation. */}}
-      if(['ldfld','stfld','ldsfld','stsfld','ldflda','ldsflda'].includes(i.name)){try{const d=resolveExecutionField(inspector,i.operand);if(d.kind!=='field'||d.token>>>24!==4&&!d.resolvedToken)issue(m,i,'IL_FIELD','External fields are inspection-only');}catch(error){issue(m,i,'IL_TOKEN',error.message);}}
+      if(['ldsfld','stsfld','ldsflda','newobj'].includes(i.name)){try{enqueueType((i.name==='newobj'?resolveExecutionMethod(inspector,i.operand,context):resolveExecutionField(inspector,i.operand,context.typeArguments,context.methodArguments)).ownerToken);}catch{/* Reported by token validation. */}}
+      if(['ldfld','stfld','ldsfld','stsfld','ldflda','ldsflda'].includes(i.name)){try{const d=resolveExecutionField(inspector,i.operand,context.typeArguments,context.methodArguments);if(d.decimalConstant&&i.name==='stsfld')issue(m,i,'IL_FIELD','Decimal constants are readonly');if(d.kind!=='field'||d.token>>>24!==4&&!d.resolvedToken&&!d.decimalConstant)issue(m,i,'IL_FIELD','External fields are inspection-only');}catch(error){issue(m,i,'IL_TOKEN',error.message);}}
     }
     const queue=[[0,0]],heights=new Map();for(const h of m.handlers)if(h.flags!==1)queue.push([map.get(h.target),h.flags===0?1:0]);
     while(queue.length&&issues.length<200){

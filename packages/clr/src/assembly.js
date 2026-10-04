@@ -3,6 +3,7 @@ import { assemblyIdentityFromRow } from './identity.js';
 import { checkCancellation, loadError, LoadErrorCode } from './load-errors.js';
 import { MetadataTypeDefinitions } from './type-system/metadata-type-definitions.js';
 import { MetadataMethodDefinitions } from './type-system/metadata-method-definitions.js';
+import { MetadataParameters } from './type-system/metadata-parameters.js';
 import { MetadataGenericParameters } from './type-system/metadata-generic-parameters.js';
 
 function namedIdentityRow(row, reference) {
@@ -23,6 +24,12 @@ function guidText(bytes) {
   return [[3, 2, 1, 0], [5, 4], [7, 6], [8, 9], [10, 11, 12, 13, 14, 15]].map(group => group.map(hex).join('')).join('-');
 }
 
+function validateHeapLimit(maxBytes) {
+  if (maxBytes !== undefined && (!Number.isSafeInteger(maxBytes) || maxBytes < 0 || maxBytes > 256 * 1024 * 1024)) {
+    throw loadError(LoadErrorCode.InvalidConfiguration, 'Invalid metadata heap byte limit');
+  }
+}
+
 /** One manifest module with cached metadata access and method bodies decoded only on demand. */
 export class RuntimeModule {
   #pe;
@@ -32,6 +39,7 @@ export class RuntimeModule {
   #bodyReads = 0;
   #typeDefinitions;
   #methodDefinitions;
+  #parameterDefinitions;
   #genericParameters;
   constructor(assembly, pe) {
     this.#assembly = assembly;
@@ -59,14 +67,33 @@ export class RuntimeModule {
     return this.#pe.metadata.counts[table] ?? 0;
   }
 
-  string(index) {
+  /** Optional maxBytes bounds UTF-8 bytes before decoding; invalid limits and oversized values produce SFCLR006/007. */
+  string(index, { maxBytes } = {}) {
     this.#assembly.ensureUsable();
+    validateHeapLimit(maxBytes);
+    if (maxBytes !== undefined) {
+      const heap = this.#pe.metadata.streams.get('#Strings');
+      if (!heap && index === 0) return '';
+      if (!Number.isSafeInteger(index) || index < 0 || !heap || index >= heap.length) {
+        throw loadError(LoadErrorCode.InvalidImage, 'Invalid string heap index');
+      }
+      let end = index;
+      while (end < heap.length && heap[end] !== 0 && end - index <= maxBytes) end++;
+      if (end - index > maxBytes) throw loadError(LoadErrorCode.LimitExceeded, 'Metadata string byte limit exceeded');
+      if (end === heap.length) throw loadError(LoadErrorCode.InvalidImage, 'Unterminated metadata string');
+    }
     return this.#pe.metadata.string(index);
   }
 
-  blob(index) {
+  /** Return an owned copy, optionally rejecting maxBytes before materialization (SFCLR006/007 for invalid/exceeded limits). */
+  blob(index, { maxBytes } = {}) {
     this.#assembly.ensureUsable();
-    return new Uint8Array(this.#pe.metadata.blob(index));
+    validateHeapLimit(maxBytes);
+    const bytes = this.#pe.metadata.blob(index);
+    if (maxBytes !== undefined && bytes.byteLength > maxBytes) {
+      throw loadError(LoadErrorCode.LimitExceeded, 'Metadata blob byte limit exceeded');
+    }
+    return new Uint8Array(bytes);
   }
 
   /** Resolve a metadata owner list, including #- pointer table indirection. */
@@ -104,6 +131,13 @@ export class RuntimeModule {
     this.#assembly.ensureUsable();
     this.#methodDefinitions ??= new MetadataMethodDefinitions(this);
     return this.#methodDefinitions.forType(typeToken);
+  }
+
+  /** Frozen positional parameter/return metadata; raw constants are decoded only when requested. */
+  methodParameters(methodToken) {
+    this.#assembly.ensureUsable();
+    this.#parameterDefinitions ??= new MetadataParameters(this);
+    return this.#parameterDefinitions.forMethod(methodToken);
   }
 
   /** Ordered canonical GenericParam identities for a TypeDef; constraints are unresolved metadata tokens. */
