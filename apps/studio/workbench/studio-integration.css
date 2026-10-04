@@ -1,0 +1,17 @@
+.studio-workbench-toolbars { display: flex; flex: none; min-width: 0; flex-wrap: wrap; border-bottom: 1px solid var(--wb-border); }
+.studio-workbench-toolbars .wb-toolbars { display: flex; flex-wrap: wrap; gap: 2px; }
+.studio-workbench-toolbars .wb-toolbar { display: flex; flex-wrap: wrap; align-items: center; border-right: 1px solid var(--wb-border); }
+.studio-workbench-status { flex: none; min-width: 0; }
+.menubar > .wb-menubar { width: 100%; }
+.sf-startup-target, .sf-debug-location-toolbar { display: flex; align-items: center; gap: 5px; flex: none; }
+.sf-debug-location-toolbar { padding: 3px 8px; border-bottom: 1px solid var(--wb-border); }
+.sf-debug-location-toolbar label, .sf-startup-target label { display: flex; align-items: center; gap: 5px; }
+.sf-debug-location-toolbar select { max-width: 220px; padding: 3px; }
+.sf-startup-target select { max-width: 220px; }
+.sf-app-tool { height: 100%; display: flex; flex-direction: column; overflow: hidden; }
+.sf-app-tool .winui-app-root { flex: 1; min-height: 0; }
+@media (max-width: 800px) {
+  .studio-workbench-toolbars { max-height: 74px; overflow: auto; }
+  .sf-debug-location-toolbar { overflow: auto; }
+  .sf-debug-location-toolbar select, .sf-startup-target select { max-width: 140px; }
+}

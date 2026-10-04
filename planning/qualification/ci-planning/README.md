@@ -7,9 +7,9 @@ extend merged A00/A29 APIs from source `9ef76da4447eeb7ddd223bd0ec81ef0a3eee3f04
 | Leaf | Implementation and retained boundary |
 | --- | --- |
 | T13 | `planning-gates.yml` calls a runner using authoritative task/claim/lock identity, ownership/hot-file APIs, DAG, manifests and contract gate. Every subprocess outcome is retained in JSON and the job summary. |
-| T14 | Existing `ci.yml` merge-group execution is preserved. Planning gates and `merge-queue.yml` operate on GitHub's queued combined tree. Existing actual incompatible-branch fixture is reused. |
+| T14 | Existing `ci.yml` merge-group execution is preserved. Planning gates and `merge-queue.yml` remain explicit qualification tools; central queued CI is the automatic merge-group lane. Existing actual incompatible-branch fixture is reused. |
 | T15 | Hourly lease workflow reuses `Claims.reap`, `snapshotBacklog` and `syncReady`. Labels expiry/readiness, preserves ownership and suppresses optional comments; no automatic reassignment. |
-| T16 | Core computes changed-module consumers using the existing import graph, ownership and manifest matrix. Selected owner/consumer areas plus A00/A29 shared tests run in one Node invocation; unknown impact falls back to `npm test`. Queue/manual area workflow runs the full manifest-derived Node/browser matrix. |
+| T16 | Core computes changed-module consumers using the existing import graph, ownership and manifest matrix. Selected owner/consumer areas plus A00/A29 shared tests run in one Node invocation; unknown impact falls back to `npm test`. The manually dispatched area workflow runs the full manifest-derived Node/browser matrix. |
 | T17 | Failure detector retains every attempt; failure then pass is `flaky`, never silent green. Quarantines require an issue, reason and expiry; expired entries fail core. An explicit manual workflow input can measure named files. |
 | T18 | PR template carries resolvable Task identity and evidence/ownership fields. Task/bug forms render the existing lint-required sections and preserve existing owner IDs. |
 | T19 | Pinned Rust workflow requires fmt/clippy/tests/Wasm/cargo-deny/Miri if `rust/` exists. Missing workspace is explicitly not applicable and not qualified. No Rust workspace or safety implementation is invented. |
@@ -22,9 +22,12 @@ fixtures. The test step chooses either impacted Node files or the full `npm test
 configuration, missing/deleted/unresolved modules and non-PR events select the full suite. Full-ci PRs also select full.
 Selection uses the existing static ESM dependency model plus owning areas, not a claim of browser/native impact coverage.
 
-Older T13/T16 requirements predate the user's core-only PR policy. Additional planning/Rust lanes require manual dispatch,
-`full-ci` or a merge group; existing browser/native/release qualifications remain separate. Queue area jobs prepare the built IDE and pinned Playwright dependencies whenever their manifests contain Python/browser scripts, then execute `--browser`; browser-only areas cannot become empty passing cells. Required workflow status configuration is an administrator action;
+Older T13/T16 requirements predate the user's core-only PR policy. Additional planning/Rust lanes now require manual dispatch or an explicit reusable caller; existing browser/native/release qualifications remain separate. Manual area jobs prepare the built IDE and pinned Playwright dependencies whenever their manifests contain Python/browser scripts, then execute `--browser`; browser-only areas cannot become empty passing cells. Required workflow status configuration is an administrator action;
 this batch does not claim to have changed branch protection or enabled a merge queue.
+
+The [serial validation schedule](../serial-validation.md) takes precedence over historical
+trigger descriptions: main keeps core only, central full-ci/merge-group qualification is serial,
+and specialized workflows no longer fan out from that same event.
 
 ## Credentials and trust
 

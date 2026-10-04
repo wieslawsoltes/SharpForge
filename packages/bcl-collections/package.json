@@ -1,0 +1,12 @@
+{
+  "name": "@sharpforge/bcl-collections",
+  "version": "0.14.0",
+  "description": "Managed closed collection contracts and heap operations through the BCL module registry.",
+  "type": "module",
+  "main": "./src/index.js",
+  "exports": {".": "./src/index.js"},
+  "files": ["src", "README.md", "LICENSE"],
+  "license": "MIT",
+  "engines": {"node": ">=22"},
+  "dependencies": {"@sharpforge/bcl-core": "0.14.0"}
+}

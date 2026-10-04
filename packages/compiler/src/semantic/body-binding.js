@@ -132,11 +132,10 @@ export const BodyBinding = Base =>
         if (!type) continue;
         if (member.kind === SymbolKind.Method) {
           if (member.isPrimaryConstructor) {
-            this.bindConstructorInitializer(
-              member,
-              type,
-              new BodyBinder(this, this.context(member, type, { parameters: member.parameters })),
-            );
+            const binder = new BodyBinder(this, this.context(member, type, { parameters: member.parameters }));
+            // A primary constructor has no body, so its optional parameters are bound here (`record R(int X = 1)`).
+            for (const p of member.parameters) if (p.defaultSyntax) this.bindParameterDefault(p, binder);
+            if (member.baseArgumentsSyntax) this.bindConstructorInitializer(member, type, binder);
             continue;
           }
           const context = this.context(member, type);
@@ -180,7 +179,8 @@ export const BodyBinding = Base =>
             member.writes = (member.writes ?? 0) + 1;
             if (!(value.constantValue || value.literal || value.kind === 'Default')) member.nonConstantWrite = true;
           }
-          if (member.kind === SymbolKind.Property && !member.isAutoProperty) this.reportAt(member, 'CS8050');
+          // An interface property with an initializer has a diagnostic of its own (CS8053, binder/member-bodies.js).
+          if (member.kind === SymbolKind.Property && !member.isAutoProperty && type.typeKind !== TypeKind.Interface) this.reportAt(member, 'CS8050');
           this.bound.set(member, { kind: 'Initializer', syntax: init, expression: value, binder });
         }
       }

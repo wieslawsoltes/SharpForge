@@ -283,14 +283,14 @@ class InterpolatedScan {
       }
       const expressionStart = segment.open.end,
         alignmentText = segment.comma < 0 ? '0' : text.slice(segment.comma + 1, segment.alignEnd).trim(),
-        align = Number(alignmentText);
-      if (segment.comma >= 0 && !/^[+-]?\d+$/.test(alignmentText)) this.error(segment.comma, 'Alignment must be a signed integer constant', 'CS8076', 1);
-      if (!Number.isInteger(align) || Math.abs(align) > 100000) this.error(segment.comma, 'Interpolation alignment limit exceeded', 'CS8076', 1);
+        // The alignment is any expression; whether it is an int constant in range is the binder's question (CS0150, CS8094).
+        // This flattened view carries a number, so it holds the value of an integer literal and 0 for anything else.
+        align = /^[+-]?\d+$/.test(alignmentText) ? Number(alignmentText) : 0;
       parts.push({
         expression: text.slice(expressionStart, segment.exprEnd),
         start: expressionStart,
         end: segment.exprEnd,
-        alignment: Number.isInteger(align) ? align : 0,
+        alignment: align,
         format: segment.colon < 0 ? '' : text.slice(segment.formatStart, segment.formatEnd)
       });
     }
