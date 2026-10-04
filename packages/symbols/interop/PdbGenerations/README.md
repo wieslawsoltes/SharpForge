@@ -85,11 +85,19 @@ The harness references Roslyn assemblies from the selected SDK; no NuGet package
 is added. Roslyn emits a baseline and two actual EmitDifference updates, first
 changing method 2 and then method 1. Native SRM reads each method's exact points,
 local signature, scopes and local names. The script compares JavaScript parsing
-and historical lookups before capturing files, SHA-256 identities, SDK/runtime
-and compiler version. The fixture is a runnable example, not a runtime simulator.
-It never calls CLR ApplyUpdate or executes edited methods. Browser, native
-debugger and Rust/Wasm behavior require their own qualification. Until capture
-succeeds, native evidence is pending; constructed fixtures are identified as such.
+and historical lookups against retained files, SHA-256 identities, SDK/runtime
+and compiler version. Native bytes are retained before parity assertions so a
+failed comparison remains reproducible.
+
+The committed corpus was captured on Linux x64 with SDK 10.0.201, CoreCLR 10.0.5
+and the SDK's Roslyn compiler. All three generations matched native SRM. The
+focused reader, minimal-delta width and existing Portable PDB tests passed all
+44 cases with no skips. The capture is in `tests/fixtures/portable-pdb-generations`;
+its `reference.json` records the native values and hashes of every retained input.
+
+The fixture never calls CLR ApplyUpdate or executes edited methods. Browser,
+native debugger and Rust/Wasm behavior require their own qualification. These
+results establish symbol parsing and historical lookup for the captured cases.
 
 Primary implementation sources (blob identities read 2026-10-04):
 
