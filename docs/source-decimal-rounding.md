@@ -28,8 +28,9 @@ Console.WriteLine(decimal.Truncate(-1.99m)); // -1
 ```
 
 This is a partial #1350/#1351 increment. MidpointRounding overloads, Decimal
-Math overloads, Parse/TryParse and the other Decimal library APIs remain outside
-the source profile. Direct CIL retains its existing broader intrinsic profile.
+Math overloads, TryParse and the other Decimal library APIs remain outside
+the source profile. The following Parse increment adds only its string overload.
+Direct CIL retains its existing broader intrinsic profile.
 The existing legacy builtin emission function moved into a focused module with
 its previous mappings preserved.
 
@@ -45,3 +46,41 @@ Scheduled focused validation:
 ```sh
 node scripts/limited.js node --test --test-concurrency=1 tests/a05-source-decimal-rounding.test.js tests/a05-decimal-adapters.test.js tests/a05-decimal-cil.test.js tests/a05-source-numeric-modes.test.js tests/a00-01-value-abi.test.js
 ```
+
+## Parsing strings
+
+The subsequent `decimal.Parse(string s)` source builtin appends one ID,
+`decimal.Parse#1`, after the three rounding entries. Source, reloaded source and
+direct CIL use the existing `invokeDecimal` profile and shared parser. Named
+argument `s` is supported. Parsing produces the same immutable Decimal value
+used by arithmetic, storage and boxing; coefficients never pass through Number.
+
+This profile parses bounded invariant Number-style text: decimal point `.`,
+group separator `,`, leading or trailing signs, and ASCII whitespace U+0009–000D
+or U+0020. A final run of NUL characters is accepted. NUL followed by whitespace,
+interior NUL, NBSP and BOM remain invalid. Null produces ArgumentNullException;
+invalid text produces FormatException; an out-of-range magnitude produces
+OverflowException. More than 4096 input characters is an explicit runtime limit
+and produces FormatException. This limit is not claimed as a .NET limit.
+
+The two text-boundary repairs follow the pinned
+[.NET 10.0.5 Number parser](https://github.com/dotnet/runtime/blob/v10.0.5/src/libraries/Common/src/System/Number.Parsing.Common.cs#L262-L288).
+The [Decimal entry contract](https://github.com/dotnet/runtime/blob/v10.0.5/src/libraries/System.Private.CoreLib/src/System/Decimal.cs)
+uses Number-style parsing. The profile remains invariant: it does not implement
+current-culture selection or provider/NumberStyles/span overloads. Exponents and
+currency strings are rejected by Parse. The standalone `decimalParse` helper
+retains its existing explicit exponent option; that option does not widen the
+source or CIL intrinsic contract.
+
+```csharp
+using System;
+decimal amount = decimal.Parse(s: "1,234.5000");
+Console.WriteLine(amount); // 1234.5000
+```
+
+`tests/a05-source-decimal-parse.test.js` covers scale, rounding, extrema, signed
+zero, string/value storage, null/format/overflow faults, precise whitespace/NUL
+boundaries, the length cap and rejected overloads. These expectations derive
+from the pinned contract; no new native capture or execution is claimed. The
+test file and existing Decimal helper/adapter/CIL tests are queued for serial
+validation. All broader platform and performance qualification remains open.
