@@ -11,6 +11,7 @@
  * Every function returns `{ member, code, args, at? }` rows; `at` is the syntax to report at when it is not the
  * member's name.
  */
+import {DiagnosticId} from '../../diagnostics/codes.js';
 import { SymbolKind, RefKind, ArrayTypeSymbol, TypeKind } from '../../symbols/types.js';
 import { MethodKind } from '../../symbols/members.js';
 import { paramsCollectionShape } from '../../overload/params-collections.js';
@@ -26,8 +27,8 @@ export function checkPropertyDeclarations(type) {
   for (const property of type.getMembers()) {
     if (property.kind !== SymbolKind.Property || property.isImplicitlyDeclared || !property.syntax) continue;
     const display = property.toDisplayString();
-    if (!property.getMethod && !property.setMethod && property.syntax.accessorList) rows.push({ member: property, code: 'CS0548', args: [display] });
-    if (property.type?.specialType === 'System_Void') rows.push({ member: property, code: 'CS0547', args: [display] });
+    if (!property.getMethod && !property.setMethod && property.syntax.accessorList) rows.push({ member: property, code: DiagnosticId.CS0548, args: [display] });
+    if (property.type?.specialType === 'System_Void') rows.push({ member: property, code: DiagnosticId.CS0547, args: [display] });
   }
   return rows;
 }
@@ -36,7 +37,7 @@ export function checkConstantDeclarations(type) {
   const rows = [];
   for (const field of type.getMembers()) {
     if (field.kind !== SymbolKind.Field || !field.isConst || field.isEnumMember) continue;
-    if (modifierTokens(field).some(token => token.text === 'static')) rows.push({ member: field, code: 'CS0504', args: [field.toDisplayString()] });
+    if (modifierTokens(field).some(token => token.text === 'static')) rows.push({ member: field, code: DiagnosticId.CS0504, args: [field.toDisplayString()] });
   }
   return rows;
 }
@@ -46,8 +47,8 @@ export function checkStaticConstructorDeclarations(type) {
   for (const constructor of type.getMembers()) {
     if (constructor.kind !== SymbolKind.Method || constructor.methodKind !== MethodKind.StaticConstructor || !constructor.syntax) continue;
     const display = constructor.toDisplayString();
-    if (constructor.parameters.length) rows.push({ member: constructor, code: 'CS0132', args: [display] });
-    if (modifierTokens(constructor).some(token => accessWords.has(token.text))) rows.push({ member: constructor, code: 'CS0515', args: [display] });
+    if (constructor.parameters.length) rows.push({ member: constructor, code: DiagnosticId.CS0132, args: [display] });
+    if (modifierTokens(constructor).some(token => accessWords.has(token.text))) rows.push({ member: constructor, code: DiagnosticId.CS0515, args: [display] });
   }
   return rows;
 }
@@ -60,16 +61,16 @@ export function checkStaticConstructorDeclarations(type) {
 function paramsTypeProblem(type) {
   if (!type || type.isErrorType?.()) return null;
   const shape = paramsCollectionShape(type);
-  if (type.specialType === 'System_String') return { code: 'CS1729', args: ['string', 0], whole: true };
+  if (type.specialType === 'System_String') return { code: DiagnosticId.CS1729, args: ['string', 0], whole: true };
   const isClassLike = !type.specialType && !(type instanceof ArrayTypeSymbol) && type.typeKind !== TypeKind.Interface;
   if (!shape) {
     const enumerates = isClassLike && (type.allInterfaces ?? []).some(candidate => candidate.name === 'IEnumerable');
-    return enumerates ? { code: 'CS0117', args: [type.toDisplayString(), 'Add'], whole: true } : { code: 'CS0225', args: [] };
+    return enumerates ? { code: DiagnosticId.CS0117, args: [type.toDisplayString(), 'Add'], whole: true } : { code: DiagnosticId.CS0225, args: [] };
   }
   if (shape.kind !== 'collection' || !isSourceSymbol(type)) return null;
   const constructors = type.getMembers('.ctor').filter(member => member.kind === SymbolKind.Method && !member.isStatic);
   return constructors.length && !constructors.some(constructor => constructor.parameters.every(parameter => parameter.isOptional))
-    ? { code: 'CS9228', args: [], whole: true }
+    ? { code: DiagnosticId.CS9228, args: [], whole: true }
     : null;
 }
 
@@ -84,23 +85,23 @@ export function parameterListRows(member, parameters, list) {
   parameters.forEach((parameter, index) => {
     const hasDefault = !!parameter.defaultSyntax;
     if (parameter.isParams) {
-      if (index !== parameters.length - 1) rows.push({ member, code: 'CS0231', args: [], at: parameter.syntax });
+      if (index !== parameters.length - 1) rows.push({ member, code: DiagnosticId.CS0231, args: [], at: parameter.syntax });
       const problem = paramsTypeProblem(parameter.type);
       if (problem) rows.push({ member, code: problem.code, args: problem.args, at: problem.whole ? parameter.syntax : keywordOf(parameter, 'params') });
-      if (hasDefault) rows.push({ member, code: 'CS1751', args: [], at: keywordOf(parameter, 'params') });
+      if (hasDefault) rows.push({ member, code: DiagnosticId.CS1751, args: [], at: keywordOf(parameter, 'params') });
       return;
     }
     if (hasDefault && (parameter.refKind === RefKind.Ref || parameter.refKind === RefKind.Out)) {
-      rows.push({ member, code: 'CS1741', args: [], at: keywordOf(parameter, 'ref') ?? keywordOf(parameter, 'out') });
+      rows.push({ member, code: DiagnosticId.CS1741, args: [], at: keywordOf(parameter, 'ref') ?? keywordOf(parameter, 'out') });
       return;
     }
     // `ref readonly` is for references: a default value makes every call without the argument pass a temporary.
     if (hasDefault && parameter.refKind === RefKind.RefReadOnlyParameter)
-      rows.push({ member, code: 'CS9200', args: [parameter.name], at: parameter.defaultSyntax });
+      rows.push({ member, code: DiagnosticId.CS9200, args: [parameter.name], at: parameter.defaultSyntax });
     if (hasDefault) optionalSeen = true;
     else if (optionalSeen && !orderReported && list) {
       orderReported = true;
-      rows.push({ member, code: 'CS1737', args: [], at: list.closeParenToken ?? list.closeBracketToken });
+      rows.push({ member, code: DiagnosticId.CS1737, args: [], at: list.closeParenToken ?? list.closeBracketToken });
     }
   });
   return rows.filter(row => row.at);

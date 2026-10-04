@@ -8,6 +8,7 @@ import { implementsInterface } from '../../symbols/substitution.js';
 import { yieldBreak } from '../../lowering/iterators.js';
 import { yieldReturn, openRegion, closeRegion } from '../../lowering/iterators/try-regions.js';
 import { n } from './node-factory.js';
+import {disposeMethod} from './dispose-method.js';
 
 /** True when a `yield return` of the enclosing iterator suspends inside `node`. */
 const suspendsInside = node => {
@@ -325,7 +326,7 @@ export const StatementTranslation = Base =>
     disposeCall(resource, syntax) {
       const iterator = this.g.iterators.infoOf(this.imageType(resource.type, syntax));
       if (iterator) return n.call(iterator.dispose, null, [resource.read()]);
-      const dispose = resource.type.getMembers('Dispose').find(m => m.kind === SymbolKind.Method && !m.parameters.length);
+      const dispose = disposeMethod(resource.type, this.g.analysis.core, this.g.bridge);
       if (!dispose) return this.unsupported('using a resource without a Dispose method', syntax);
       return this.memberCall(dispose, resource.read(), [], syntax);
     }
