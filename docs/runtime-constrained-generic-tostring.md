@@ -40,9 +40,11 @@ performance qualification for the original #1357 scope remain open.
 Prepared guest-CIL tests cover both parameter kinds, multiple instantiations and
 slot behavior, bound-descendant verification, existing generic constraints,
 exact owned storage, null/wrong/missing contexts, host GC, snapshot replay across
-code epochs, and stop cleanup. Tests, builds and native runs were not executed
-during implementation. The root-owned serial queue can run:
+code epochs, and stop cleanup. All 179 focused generic/reference/struct and
+prefix checks passed at `d144a91f3` after actual-main integration, using Node
+24.21.0, one worker and a 512 MB old-space limit. Native/browser/performance
+qualification remains deferred:
 
 ```sh
-node scripts/limited.js node --test --test-concurrency=1 tests/a05-constrained-generic-tostring.test.js tests/a05-constrained-reference-tostring.test.js tests/a05-constrained-object-tostring.test.js tests/a05-constrained-generic-reference.test.js tests/a05-constrained-reference-calls.test.js tests/a03-08-prefix-constrained.test.js
+node scripts/limited.js node --test --test-concurrency=1 tests/a05-constrained-generic-tostring.test.js tests/a05-constrained-reference-tostring.test.js tests/a05-constrained-object-tostring.test.js tests/a05-constrained-generic-reference.test.js tests/a05-constrained-generic-value.test.js tests/a05-constrained-reference-calls.test.js tests/a03-08-prefix-constrained.test.js
 ```
