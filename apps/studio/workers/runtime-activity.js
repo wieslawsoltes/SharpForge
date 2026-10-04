@@ -1,7 +1,9 @@
 import {ExecutionOccupancy} from './execution-occupancy.js';
 
 const measuredRequests = Object.freeze({resume: 'debugger', stepBack: 'debugger', reverseContinue: 'debugger',
-  evaluateFunction: 'debugger', collect: 'debugger', uiEvent: 'ui', uiAnimationAdvance: 'ui', uiLayout: 'ui', applyDesign: 'ui'});
+  evaluateFunction: 'debugger', collect: 'debugger', uiEvent: 'ui', uiAnimationAdvance: 'ui', uiLayout: 'ui', applyDesign: 'ui',
+  uiEventRequest: 'ui', uiPrivateInput: 'ui', uiCollectionInput: 'ui', uiRealizeItems: 'ui', uiAutomationAction: 'ui',
+  uiLayoutSnapshot: 'ui', uiEnvironmentSnapshot: 'ui', uiControlStateChanges: 'ui', uiCompositionCompleted: 'ui', uiHostResponse: 'ui'});
 const runnable = new Set(['ready', 'running', 'waiting']);
 
 /** Explicit owner of worker pump, animation and activity timers. Every callback checks the committed launch serial. */
@@ -125,7 +127,11 @@ export class RuntimeActivity {
 
   dispatch(method, params, dispatch) {
     const category = measuredRequests[method];
-    return category ? this.execution.measure(category, () => dispatch(method, params)) : dispatch(method, params);
+    if (!category) return dispatch(method, params);
+    let result;
+    // An acknowledged event may return a Promise; only its synchronous dispatch prefix consumes this interval.
+    this.execution.measure(category, () => { result = dispatch(method, params); });
+    return result;
   }
 
   stop() {
