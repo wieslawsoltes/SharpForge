@@ -11,6 +11,7 @@ test('CLR binding supplies canonical CIL core handles without changing local ver
   const authority = await prepareVerificationCoreTypes(module, bindingOptions);
   assert.ok(Object.isFrozen(authority));
   assert.equal(authority.context, types);
+  assert.equal(authority.sameModule, false);
   for (const role of ['object', 'valueType', 'enum']) {
     const result = authority.resolveType(input.tokens[role]);
     assert.equal(result.value, bindingOptions[role]);
@@ -32,6 +33,7 @@ test('core-module TypeDefs can establish fundamental roots through the same auth
   const { coreModule, core, bindingOptions } = await coreBindingFixture();
   const authority = await prepareVerificationCoreTypes(coreModule, { ...bindingOptions,
     tokens: [core.tokens.object, core.tokens.valueType, core.tokens.enum] });
+  assert.equal(authority.sameModule, true);
   const local = createMetadataVerificationTypeSystem(new AssemblyInspector(core.bytes), { coreTypes: authority });
   for (const role of ['object', 'valueType', 'enum', 'ordinary']) {
     assert.equal(local.typeCategory(local.resolveType(core.tokens[role]).value).value, 'reference');
@@ -69,6 +71,7 @@ test('the prepared lookup owns the token selection and bounded result records', 
   assert.equal(bounded.resolveType(fixture.input.tokens.object).value, fixture.bindingOptions.object);
   assert.equal(bounded.resolveType(fixture.input.tokens.valueType).reason, 'unprepared-core-binding');
   assert.throws(() => { authority.object = null; }, TypeError);
+  assert.throws(() => { authority.sameModule = true; }, TypeError);
   assert.throws(() => { authority.resolveType(fixture.input.tokens.object).value.flags = 0; }, TypeError);
   fixture.context.unload();
   assert.equal(authority.resolveType(fixture.input.tokens.object).value, fixture.bindingOptions.object);

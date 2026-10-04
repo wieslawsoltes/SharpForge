@@ -25,7 +25,11 @@ resolved once. The existing loader separately bounds metadata and traversal.
 Each selected token is resolved through the existing async loader. Only a
 descriptor whose canonical `module` is exactly `coreModule` maps to that CIL
 context's handle. The returned frozen authority contains the context, three
-roots, and a synchronous `resolveType(token)` lookup returning frozen records:
+roots, and immutable `sameModule: inputModule === coreModule`. This is exact
+`RuntimeModule` object identity, independent of names and token values; the
+supplied context/module pairing remains trusted. Consumers must treat an
+absent fact in other host authorities as unknown. Its synchronous
+`resolveType(token)` lookup returns frozen records:
 
 - `known` contains the canonical CIL handle, never a CLR `TypeDesc`.
 - `outside-core-module` covers other modules and host intrinsics.

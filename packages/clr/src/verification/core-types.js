@@ -75,5 +75,6 @@ export async function prepareVerificationCoreTypes(module, options = {}) {
     bindings.set(token, type.module === coreModule ? canonicalResult(context, coreModule, type.metadataToken) : outside);
   }
   checkCancellation(signal);
-  return Object.freeze({ context, ...roots, resolveType: token => bindings.get(token) ?? unprepared });
+  return Object.freeze({ context, ...roots, sameModule: module === coreModule,
+    resolveType: token => bindings.get(token) ?? unprepared });
 }
