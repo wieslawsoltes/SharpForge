@@ -1,0 +1,18 @@
+.explorer-disk-services {
+  flex: none;
+  min-height: 0;
+  max-height: 45%;
+  overflow: auto;
+  font-size: 12px;
+  border-bottom: 1px solid var(--line);
+}
+.explorer-disk-services:has(> .explorer-caption:empty):has(> details[hidden]):has(> div:empty):has(> section[hidden]) {
+  display: none;
+}
+.explorer-disk-services details, .disk-change-prompt { padding: 6px 8px; }
+.explorer-disk-services summary { cursor: pointer; }
+.explorer-disk-services ol { padding-inline-start: 18px; overflow-wrap: anywhere; }
+.explorer-disk-services p { margin: 4px 0; }
+.explorer-disk-services button:focus-visible { outline: 2px solid var(--accent); outline-offset: -2px; }
+.disk-change-comparison textarea { min-height: 80px; }
+.disk-path-results { max-height: 200px; overflow: auto; }
