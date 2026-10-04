@@ -1,5 +1,8 @@
 # @sharpforge/msbuild
 
+[Portable test declaration records](docs/test-symbols.md) expose a lazy lossless
+syntax frontend for framework adapters without executing user source.
+
 Browser-safe MSBuild contracts/client and a separately imported Node native backend. MIT, ES modules, Node 22+ for native APIs. The native engine invokes an installed SDK or MSBuild executable; .NET is not bundled.
 
 ```js
