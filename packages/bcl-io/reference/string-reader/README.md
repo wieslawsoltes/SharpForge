@@ -9,6 +9,12 @@ characters that are not line separators, and repeated Close/Dispose.
 reflection and delegate harness is native-only; independent CIL and platform
 tests exercise those observations without broadening the source profile.
 
+The committed `../string-reader-net10.txt` capture has 45 lines: 35 unchanged
+program observations, a section separator, and nine native fault/base-type
+observations. These include the individual UTF-16 surrogate values, EOF after
+the trailing newline, ArgumentNullException, NullReferenceException, and
+ObjectDisposedException even when the disposed reader was already empty.
+
 The root validation scheduler captures once from this directory, separating
 build output from the oracle:
 

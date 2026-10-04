@@ -6,7 +6,11 @@ Run serially from this directory with pinned SDK 10.0.201/runtime 10.0.5:
 dotnet run --project StringWriter.csproj --configuration Release --verbosity quiet > ../string-writer-net10.txt
 ```
 
-Program.cs runs unchanged through both JavaScript VMs. NativeProgram.cs adds
+Program.cs is preserved exactly as captured. The comparison test replaces its single
+`using (units)` statement with equivalent Write/Dispose calls because semantic
+method-body lowering currently searches only declared Dispose methods, not inherited
+TextWriter members. A separate regression verifies supported top-level `using` on
+both VMs, and the semantic form retains its explicit SF2200 diagnostic. NativeProgram.cs adds
 UTF-16 char writes, TextWriter base dispatch and faults; independent CIL and
 managed-platform tests consume those results without requiring source Char or
 interface/cast support. The capture uses the existing LF newline profile on

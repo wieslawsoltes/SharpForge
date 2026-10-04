@@ -61,10 +61,13 @@ newlines preserve all UTF-16 units. OS-specific defaults and culture providers a
 not supplied by this batch; Windows-default CRLF parity is not claimed.
 
 Pinned .NET 10.0.5 fixtures and focused tests cover both JavaScript VMs, including
-ordinary CIL base dispatch and IDisposable assignability. The writer source fixture
-runs unchanged; Write(char) additionally uses independent CIL and platform coverage
-because source Char remains outside the compiler execution profile. Compiled `using` uses
-the existing direct Dispose lowering. External `IDisposable.Dispose` invocation
+ordinary CIL base dispatch and IDisposable assignability. The writer's captured native
+source is preserved; its comparison test replaces one inherited-Dispose `using` with
+explicit calls. Semantic method-body lowering currently searches only declared Dispose
+methods and reports SF2200 for that form. Supported top-level `using` has separate
+coverage through the existing direct Dispose lowering. Write(char) uses independent
+CIL and platform coverage because source Char remains outside the compiler execution
+profile. External `IDisposable.Dispose` invocation
 itself remains outside the CIL profile; metadata does not add a second dispatch path.
 Rust native/Wasm execution is not qualified by this batch.
 
