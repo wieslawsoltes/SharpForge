@@ -30,8 +30,9 @@ DIM, or source frontend lowering. Those parts of #1357 remain pending.
 Prepared guest-CIL fixtures cover both parameter kinds, class/interface dispatch
 through multiple instantiations, GenericParam constraints, exact byref storage,
 malformed/missing context, unsupported closed types, null, GC, snapshot replay and
-stop cleanup. No tests, native execution or performance measurements have been
-run for this leaf. The root-owned serial queue should run:
+stop cleanup. All 73 tests below passed at `e5de76cc`, using Node 24, one test
+worker and a 512 MB old-space limit. Native and performance qualification remain
+deferred. The root-owned serial queue ran:
 
 ```sh
 node scripts/limited.js node --test --test-concurrency=1 tests/a05-constrained-generic-reference.test.js tests/a05-constrained-reference-calls.test.js tests/a05-constrained-interface-calls.test.js tests/a05-02-generic-calls.test.js tests/a03-08-prefix-constrained.test.js
