@@ -51,7 +51,8 @@ test('A02-T30 operators of DateTime and decimal are the operator methods of the 
   // int -> decimal and decimal -> int are the conversion operators of System.Decimal, also around a lifted operator.
   assert.match(text, /ldloc\.2; call System\.Decimal::op_Implicit/);
   assert.match(text, /call System\.Decimal::op_Explicit/);
-  assert.match(text, /ldc\.i4\.1; call System\.Decimal::op_Implicit; stloc/);
+  // The `1` of the lifted `maybe + 1` is the constant `1m` (it is converted where the operator is bound, as Roslyn does).
+  assert.match(text, /ldc\.i4\.1; (ldc\.i4\.0; ){4}newobj System\.Decimal::\.ctor; stloc/);
   assert.deepEqual(errorsOf('class P { static void Main() { var bad = System.DateTime.MinValue + 1; } }'), ['CS0019']);
 });
 
