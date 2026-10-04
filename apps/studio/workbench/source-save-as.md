@@ -152,3 +152,13 @@ It emitted exactly **209,715,200 bytes in 3,200 writes**, retained no output
 chunks in the sink, and kept the persistent snapshot's lazy text cache
 unmaterialized. This fixture duration is not browser save throughput, a memory
 peak measurement, or editor typing/rendering latency.
+
+At the completed save follow-up source `fc4ee84a`, the unchanged 24-case Save As
+suite passed within a broader 162-case command. Its 200 MiB output fixture took
+7.293 seconds. A separate normalization selection defect was corrected at
+`54892a70` and only the affected normalization/view/configuration tests were
+retried (30/30 passing). The full scope's eventual 163 distinct passing cases
+and exact commands are retained in `packages/editor/VIEW-COVERAGE.md`. The
+historical/current fixture durations are single observations from different
+scope runs on a shared host; they are not a controlled throughput regression
+benchmark or actual browser latency qualification.
