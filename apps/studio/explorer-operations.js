@@ -25,7 +25,7 @@ async function nativeOperation(owner, context, operations, mappings) {
   owner.host.notice('Disk operation completed. Undo is available; multi-file operations are not atomic.');
 }
 
-async function previewOperation(owner, context, operations, mappings) {
+async function previewOperation(owner, context, operations, mappings, options) {
   for (const [path, text] of owner.readSet ?? []) if (context.records.find(record => record.path === path)?.text !== text) {
     throw new Error('Project changed while preparing the operation: ' + path);
   }
@@ -34,6 +34,11 @@ async function previewOperation(owner, context, operations, mappings) {
   let committed = false;
   try {
     prepared = transaction.prepare(operations, mappings);
+    if (options.validate) {
+      if (typeof options.validate !== 'function') throw new TypeError('The Explorer commit guard must be a function');
+      prepared.validate = options.validate;
+      prepared.validate();
+    }
     try {
       const result = await owner.host.commit(prepared);
       if (result?.committed === false) throw new Error('The workspace declined the file operation');
@@ -49,7 +54,7 @@ async function previewOperation(owner, context, operations, mappings) {
 }
 
 /** Run a completed file plan through one native or browser commit boundary, with explicit source-model ownership. */
-export async function performExplorerOperation(owner, operations, mappings = []) {
+export async function performExplorerOperation(owner, operations, mappings = [], options = {}) {
   const context = owner.context();
   if (owner.operationIdentity && context.identity !== owner.operationIdentity) {
     throw new Error('Workspace changed while preparing the file operation');
@@ -58,7 +63,7 @@ export async function performExplorerOperation(owner, operations, mappings = [])
   owner.host.render();
   try {
     if (context.native) return await nativeOperation(owner, context, operations, mappings);
-    return await previewOperation(owner, context, operations, mappings);
+    return await previewOperation(owner, context, operations, mappings, options);
   } finally {
     owner.busy = false;
     owner.host.render();
