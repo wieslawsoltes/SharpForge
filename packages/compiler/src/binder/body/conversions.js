@@ -62,6 +62,7 @@ export const ConversionBinding = Base =>
           e.isTargetTypedSwitch)
       )
         return e.materialize(type);
+      if (e.form === 'tupleLiteral') this.finishTupleLiteralElements(e, type, c);
       if (e.form === 'lambda' && c.kind === ConversionKind.AnonymousFunction) {
         e.boundAs = type;
         return this.node('Conversion', node, type, { operand: e, conversion: c, isExplicit });

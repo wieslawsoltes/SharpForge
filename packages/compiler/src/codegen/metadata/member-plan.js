@@ -40,10 +40,19 @@ export function explicitInterfaceOf(method) {
   return method.explicitInterfaceType ?? method.associatedSymbol?.explicitInterfaceType ?? null;
 }
 
+/**
+ * An accessor of a static auto-property (`static int Count { get; private set; }`). In an interface it is the one
+ * accessor without a written body that still has one: it reads or writes the property's backing field.
+ */
+function isStaticAutoAccessor(method) {
+  const property = method.associatedSymbol;
+  return !!method.isStatic && !!property?.backingField && !property.isAbstract;
+}
+
 /** The MethodDef row of a method symbol declared in `type`: `{symbol, name, flags, implFlags, hasBody, parameters}`. */
 export function plannedMethod(type, method) {
   const inInterface = type.typeKind === TypeKind.Interface,
-    isAbstract = method.isAbstract || (inInterface && !method.hasBody),
+    isAbstract = method.isAbstract || (inInterface && !method.hasBody && !isStaticAutoAccessor(method)),
     explicit = !!explicitInterfaceOf(method);
   return {
     symbol: method,

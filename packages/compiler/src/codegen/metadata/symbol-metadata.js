@@ -23,6 +23,7 @@ import { typeFlags, genericParameterFlags } from './attribute-flags.js';
 import { tupleElementNamesOf } from '../../binder/tuples.js';
 import { dynamicTransformFlags } from './dynamic-flags.js';
 import { staticVirtualImplementations } from './static-interface-implementations.js';
+import { interfaceReimplementations } from './interface-reimplementations.js';
 import { fieldSignature, methodSignature, methodSymbolSignature, propertySignature } from './member-signatures.js';
 
 const TABLE = Object.freeze({ TypeDef: 2, Field: 4, MethodDef: 6, Param: 8 });
@@ -249,7 +250,7 @@ export class SymbolMetadataWriter {
   writeInterfaceImplementations(type, self, plan) {
     const planned = new Map(plan.methods.filter(method => method.symbol).map(method => [method.symbol, method])),
       written = new Map();
-    const implementations = [...(type.interfaceImplementations ?? []), ...staticVirtualImplementations(type)];
+    const implementations = [...(type.interfaceImplementations ?? []), ...staticVirtualImplementations(type), ...interfaceReimplementations(type)];
     for (const [declaration, implementation] of implementations) {
       for (const [declared, implementing] of accessorPairs(declaration, implementation)) {
         const method = planned.get(implementing);

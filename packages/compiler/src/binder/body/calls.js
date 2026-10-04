@@ -17,6 +17,7 @@ import { isVirtualCall } from '../overrides.js';
 import { isCallOmitted } from '../csharp2-misc.js';
 import { receiverPassing } from '../readonly.js';
 import { isAbstractBaseAccess } from '../../symbols/base-implementation.js';
+import { overridesOnReceiver } from '../../overload/override-parameters.js';
 
 const unknown = ErrorTypeSymbol.unknown;
 const isSource = symbol => {
@@ -171,7 +172,9 @@ export const CallBinding = Base =>
       let result = null;
       if (group.methods.length) {
         // An instance method reached without a receiver from a static context is dropped before resolution only if statics remain.
-        result = this.d.overloads.resolve(group.methods, args, { typeArguments: group.typeArguments, name: group.name });
+        const receiverType = group.viaType ? null : (group.receiver?.type ?? this.c.containingType),
+          overrides = overridesOnReceiver(group.methods, receiverType);
+        result = this.d.overloads.resolve(group.methods, args, { typeArguments: group.typeArguments, name: group.name, overrides });
       }
       if ((!result || !result.succeeded) && group.receiver && !group.viaType && group.kind === 'MethodGroup') {
         const scopes = this.extensionScopesOf(group);
@@ -296,8 +299,12 @@ export const CallBinding = Base =>
           return { expression: a, parameter: p, refKind: a.refKind };
         }
         // A typeless target-typed argument (`new()`, a conditional or switch expression, a collection expression) gets its type
-        // here, and so do a `default` literal (unconverted it would be passed as a null reference) and a method group.
-        const converts = conversion && !a.hasErrors && (a.type || a.materialize || a.literal === 'default' || a.kind === 'MethodGroup');
+        // here, and so do a `default` literal (unconverted it would be passed as a null reference), a method group and
+        // a `null` for a parameter of a nullable value type, which is a value (`default(int?)`) and not a reference.
+        // A tuple literal without a type of its own (`(1, null)`, `(key, x => x)`) converts element by element.
+        const nullToNullable = a.literal === 'null' && !!result.parameterTypes[i]?.isNullableValueType,
+          typeless = a.materialize || a.literal === 'default' || a.kind === 'MethodGroup' || a.form === 'tupleLiteral' || nullToNullable,
+          converts = conversion && !a.hasErrors && (a.type || typeless);
         const value = converts ? this.applyConversion(a, result.parameterTypes[i], conversion, a.syntax) : a;
         if (a.form === 'lambda' && !a.hasErrors) this.finishLambda(a, result.parameterTypes[i]);
         return { expression: value, parameter: p, refKind: a.refKind ?? null };
@@ -311,6 +318,7 @@ export const CallBinding = Base =>
         args: converted,
         expanded: result.expanded,
         mapping: result.mapping,
+        defaultsFrom: result.defaultsFrom ?? null,
         isDelegateInvoke,
         isExtension,
         isVirtual:
@@ -420,7 +428,7 @@ export const CallBinding = Base =>
           byAccessor.set(shape, p);
           return shape;
         });
-      const r = this.d.overloads.resolve(shapes, args, { name: 'this' });
+      const r = this.d.overloads.resolve(shapes, args, { name: 'this', overrides: overridesOnReceiver(shapes, type) });
       if (!r.succeeded) {
         if (!indexers.every(isSource)) return this.lenient(syntax);
         const e = r.error;
@@ -437,10 +445,13 @@ export const CallBinding = Base =>
         receiver: target,
         property,
         args: args.map((a, i) => ({
-          expression: r.conversions[i] && (a.type || a.kind === 'MethodGroup') ? this.applyConversion(a, r.parameterTypes[i], r.conversions[i]) : a,
+          expression: r.conversions[i] && (a.type || a.kind === 'MethodGroup' || (a.literal === 'null' && r.parameterTypes[i]?.isNullableValueType))
+            ? this.applyConversion(a, r.parameterTypes[i], r.conversions[i])
+            : a,
           parameter: property.parameters[r.mapping.parameterOf[i]],
         })),
         mapping: r.mapping,
+        defaultsFrom: r.defaultsFrom ?? null,
         expanded: r.expanded,
       });
     }

@@ -75,7 +75,8 @@ export function fieldFlags(field) {
 /**
  * MethodDef.Flags.
  * @param {{implementsInterface: boolean, inInterface: boolean}} facts `implementsInterface`: a non-virtual method an
- *   interface member maps to (the CLR needs it virtual; it is sealed so that C# semantics do not change)
+ *   interface member maps to (the CLR needs it virtual; it is sealed so that C# semantics do not change), or - with
+ *   `inInterface` - the explicit implementation of a base interface's member
  */
 export function methodFlags(method, { implementsInterface, inInterface }) {
   let flags = memberAccessFlags(method) | MethodAttributes.HideBySig;
@@ -98,6 +99,9 @@ export function methodFlags(method, { implementsInterface, inInterface }) {
   if (kind === MethodKind.Constructor) return flags;
   const isAbstract = method.isAbstract || (inInterface && !method.hasBody);
   if (isAbstract) flags |= MethodAttributes.Abstract;
+  // An interface member that implements a member of a base interface (`string IA.Who() => ...`, or `abstract string
+  // IA.Who();` to make it abstract again) takes no slot of its own; the CLR requires it to be final.
+  if (inInterface && implementsInterface) return flags | MethodAttributes.Virtual | MethodAttributes.Final;
   if (isAbstract || method.isVirtual || method.isOverride || inInterface || kind === MethodKind.Destructor) flags |= MethodAttributes.Virtual;
   else if (implementsInterface) flags |= MethodAttributes.Virtual | MethodAttributes.Final | MethodAttributes.NewSlot;
   if ((flags & MethodAttributes.Virtual) && !method.isOverride && kind !== MethodKind.Destructor) flags |= MethodAttributes.NewSlot;

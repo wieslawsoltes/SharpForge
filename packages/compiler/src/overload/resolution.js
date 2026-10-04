@@ -10,6 +10,7 @@
 import {DiagnosticId} from '../diagnostics/codes.js';
 import { RefKind, TypeKind, SymbolDisplayFormat, typeOf } from '../symbols/types.js';
 import { mapArguments, acceptsArgumentCount } from './arguments.js';
+import { namingParameters } from './override-parameters.js';
 import { inferMethodTypeArguments } from './type-inference.js';
 import { numericKind, isSignedKind, isIntegralKind } from '../conversions/numeric.js';
 import { ConversionKind } from '../conversions/classify.js';
@@ -54,10 +55,13 @@ export class OverloadResolver {
    * @returns a Candidate; `failure` is `{kind,...}` when not applicable: 'arity' (type argument count), 'mapping'
    *   (mapArguments error), 'inference' (CS0411), 'refKind' {argument,expected}, 'conversion' {argument,to}
    */
-  analyse(method, args, { typeArguments = null, expanded = false } = {}) {
+  analyse(method, args, { typeArguments = null, expanded = false, overrides = null } = {}) {
     const c = new Candidate(method, method.constructedFrom ?? method);
     c.expanded = expanded;
-    const mapping = mapArguments(method.parameters, args, { expanded });
+    // Argument names and defaults are those of the most derived override on the receiver (override-parameters.js).
+    const override = overrides?.get(method.originalDefinition ?? method) ?? null,
+      mapping = mapArguments(namingParameters(method, override), args, { expanded });
+    c.defaultsFrom = override;
     if (!mapping.ok) {
       c.failure = { kind: 'mapping', error: mapping.error };
       return c;
@@ -147,6 +151,7 @@ export class OverloadResolver {
    * Resolves a call.
    * @param {MethodSymbol[]} methods candidate set (already filtered for accessibility and hiding)
    * @param {object[]} args  @param {{typeArguments?:TypeSymbol[]|null,name?:string,isConstructor?:boolean,isDelegate?:boolean}} [options]
+   *   `options.overrides` (override-parameters.js) names the overrides whose parameter names and defaults the call uses
    * @returns {{succeeded:true,method,expanded,mapping,conversions,candidate}|{succeeded:false,error:{code,args,argument?:number},candidates,best?:Candidate}}
    */
   resolve(methods, args, options = {}) {
@@ -408,6 +413,7 @@ const success = c => ({
   mapping: c.mapping,
   conversions: c.conversions,
   parameterTypes: c.parameterTypes,
+  defaultsFrom: c.defaultsFrom ?? null,
   candidate: c,
 });
 const refPrefix = (parameter, c) =>

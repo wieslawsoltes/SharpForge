@@ -95,7 +95,11 @@ export const TupleEmission = Base =>
       const pushers = literal.elements.map((element, index) => () => {
         const type = types[index].type;
         if (element.kind === 'Tuple' && !element.type) return this.targetTypedTuple(element, type);
-        if (!element.type) return this.defaultValue(type);
+        if (!element.type) {
+          // Only `null` and `default` are their target's default value; anything else needs its bound conversion.
+          if (element.literal === 'null' || element.literal === 'default') return this.defaultValue(type);
+          return this.unsupported('an element of a tuple literal that has no type', element.syntax);
+        }
         this.expression(element);
         return this.implicitStandardConversion(element.type, type, element.syntax);
       });

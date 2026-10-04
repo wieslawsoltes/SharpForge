@@ -9,6 +9,7 @@
 import { RefKind, SymbolKind, TypeKind } from '../../symbols/types.js';
 import { MethodKind } from '../../symbols/members.js';
 import { baseImplementationOf } from '../../symbols/base-implementation.js';
+import { defaultSourceOf } from '../../overload/override-parameters.js';
 import { PropertyLocation } from './locations.js';
 import { isReference, isVoid, primitiveOf } from './type-facts.js';
 
@@ -182,7 +183,7 @@ export const CallEmission = Base =>
         last = parameters.length - 1;
       return parameters.map((parameter, index) => {
         const supplied = args.filter((_, argumentIndex) => positions[argumentIndex] === index);
-        let emit = () => this.defaultArgument(parameter, node, index);
+        let emit = () => this.defaultArgument(defaultSourceOf(node, parameter, index), node, index);
         if (isExpanded && index === last) emit = () => this.paramsArray(parameter.type, supplied, push);
         else if (supplied.length) emit = () => push(supplied[0], parameter);
         return { type: parameter.type, emit };

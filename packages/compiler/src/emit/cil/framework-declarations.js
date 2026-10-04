@@ -32,11 +32,14 @@ const declaredElsewhere = Object.freeze({
  * @param core the CoreTypes  @param method a method symbol  @param {(ordinal: number) => object} typeParameter the
  *   symbol of the method type parameter `!!ordinal`
  * @returns {{name: string, shape: object, typeArguments: object[]}|null} null for a method that is what it seems
+ *   (every other method, and the generic methods of a reference assembly)
  */
 export function genericFrameworkMethod(core, method, typeParameter) {
   const owner = method.containingType?.originalDefinition ?? method.containingType,
     parameter = method.parameters?.length === 1 ? method.parameters[0].type : null;
   if (owner !== core.task || !method.isStatic || !parameter) return null;
+  // A method imported from a reference assembly is declared as it is in .NET: generic, and named by its own signature.
+  if ((method.originalDefinition ?? method).arity) return null;
   const result = typeParameter(0),
     shapeOver = parameterType => ({ isStatic: true, arity: 1, returnType: core.taskT.construct(result), parameters: [{ type: parameterType }] });
   if (method.name === 'FromResult') return { name: 'FromResult', shape: shapeOver(result), typeArguments: [parameter] };
