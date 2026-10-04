@@ -18,8 +18,9 @@ export function validateAnimationValue(kind, value) {
     if (!Number.isFinite(value) || Math.abs(value) > 1e12) throw new RangeError('Invalid numeric animation value');
     return value;
   }
-  components(kind, value);
-  return value;
+  const values = components(kind, value);
+  // Numeric value types capture their components; callers keep ownership of mutable inputs.
+  return Object.freeze(Array.isArray(value) ? [...values] : {...value});
 }
 
 function reconstruct(kind, template, values) {
