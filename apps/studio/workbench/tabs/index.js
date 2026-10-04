@@ -105,6 +105,13 @@ export class DocumentTabs {
     this.mru = [id, ...this.mru.filter(item => item !== id)].slice(0, 8192);
   }
 
+  /** Drops panel navigation history when its workspace document is removed; DocumentService keeps buffer ownership. */
+  forget(id) {
+    this.views.delete(id);
+    this.mru = this.mru.filter(item => item !== id);
+    this.closed = this.closed.filter(entry => entry.id !== id);
+  }
+
   promote(id) {
     if (!this.metadata(id) || !this.layout.panels.has(id)) return false;
     return this.layout.setTabState(id, { preview: false });

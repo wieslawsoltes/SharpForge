@@ -3,6 +3,7 @@ import { DocumentIngress, validateDocumentModel } from './documents-ingress.js';
 import { captureDocumentSave, savedModelBaseline } from './documents-save.js';
 import { captureDocumentState } from './documents-state.js';
 import { reloadDocument } from './documents-reload.js';
+import { documentSource } from './document-source.js';
 
 /** Workspace documents own text and editors; prompt/tab placement policies belong to the host. */
 export class DocumentService {
@@ -331,7 +332,7 @@ export class DocumentService {
   }
 
   releaseViews(uri) {
-    const effects = [];
+    const effects = [...this.views.get(uri)?.values() ?? []].map(view => () => view.editor.prepareViewState?.());
     for (const [viewId, view] of this.views.get(uri) ?? []) {
       effects.push(() => {
         const saved = this.viewStates.get(uri) ?? new Map();
@@ -387,11 +388,11 @@ export class DocumentService {
   observeModel(record, model) {
     const uri = record.uri;
     Object.defineProperties(record, {
-      text: { enumerable: true, configurable: true, get: () => model.text, set: text => this.update(uri, text) },
-      version: { enumerable: true, configurable: true, get: () => model.version },
+      text: { enumerable: true, configurable: true, get: () => documentSource(null, model).text, set: text => this.update(uri, text) },
+      version: { enumerable: true, configurable: true, get: () => documentSource(null, model).version },
       model: { enumerable: false, configurable: true, value: model },
-      source: { enumerable: false, configurable: true, get: () => model.snapshot() },
-      length: { enumerable: false, configurable: true, get: () => model.length }
+      source: { enumerable: false, configurable: true, get: () => documentSource(null, model) },
+      length: { enumerable: false, configurable: true, get: () => documentSource(null, model).length }
     });
     const unsubscribe = model.onDidChange(change => this.modelChanged(uri, record, model, change));
     if (typeof unsubscribe !== 'function') throw new TypeError('Document model subscription must return a disposer');

@@ -1,3 +1,5 @@
+import {loadContext,parkContext} from './execution/context-transitions.js';
+import {forgetContextSuspension} from './execution/context-events.js';
 import {finishContext,cancelContexts} from './execution/frame-retirement.js';
 import {schedulerRootValues} from './execution/frame-roots.js';
 import {TASK,THREAD,taskResult} from '@sharpforge/framework';
@@ -24,7 +26,7 @@ export class CooperativeScheduler {
   capture(){const c={};for(const k of contextFields)if(k in this.vm)c[k]=this.vm[k];return c;}
   ensure(){if(this.enabled)return;this.enabled=true;this.contexts.set(1,{id:1,name:'Main',kind:'main',status:this.vm.state==='terminated'?'completed':'running',frozen:false,parentId:null,task:null,thread:null,wait:null,...this.capture()});}
   save(){if(!this.enabled||this.parked)return;const c=this.contexts.get(this.currentId);if(c)Object.assign(c,this.capture());}
-  load(c){this.parked=false;this.currentId=c.id;for(const k of contextFields)if(k in c)this.vm[k]=c[k];this.vm.state='running';c.status='running';this.steps=0;}
+  load(c){loadContext(this,c,contextFields);}
   get current(){return this.contexts.get(this.currentId);}
   *roots(){yield* schedulerRootValues(this);}
   allFrames(){if(!this.enabled)return this.vm.frames;this.save();return [...this.contexts.values()].flatMap(c=>terminal.has(c.status)?[]:c.frames);}
@@ -120,7 +122,7 @@ export class CooperativeScheduler {
     for(let i=1;i<=ids.length;i++){const c=this.contexts.get(ids[(at+i)%ids.length]);if(c.status==='ready'&&!c.frozen)return c;}
     return null;
   }
-  beforeSlice(){if(!this.enabled||this.suppressed)return;if(['running','ready'].includes(this.vm.state)&&this.current?.frozen){this.save();this.current.status='ready';const next=this.choose();if(next){this.load(next);return;}this.parked=true;this.vm.state='waiting';this.vm.frames=[];if(!this.vm.inspector)this.vm.stack=[];}if(this.vm.state!=='waiting')return;this.turn++;this.poll();const next=this.choose();if(next)this.load(next);}
+  beforeSlice(){if(!this.enabled||this.suppressed)return;if(['running','ready'].includes(this.vm.state)&&this.current?.frozen){this.save();this.current.status='ready';const next=this.choose();if(next){this.load(next);return;}parkContext(this);}if(this.vm.state!=='waiting')return;this.turn++;this.poll();const next=this.choose();if(next)this.load(next);}
   beforeInstruction(){if(!this.enabled||this.suppressed)return;const c=this.current;if(c?.resumeFault){const error=c.resumeFault;c.resumeFault=null;if(this.vm.onException?.(error)){this.vm.pendingFault=error;this.vm.state='paused';return;}if(this.vm.inspector)this.vm.raise(error);else this.vm.handleFault(error);}}
   afterInstruction(){if(!this.enabled||this.suppressed)return;this.turn++;this.steps++;this.save();if(this.vm.state==='paused')return;
     const c=this.current;if(!c)return;
@@ -132,7 +134,7 @@ export class CooperativeScheduler {
     if(c.status==='running'&&!c.frozen&&this.steps<this.quantum&&!this.preferred)return;
     if(c.status==='running')c.status='ready';const next=this.choose();if(next){this.load(next);return;}
     const live=[...this.contexts.values()].some(x=>!terminal.has(x.status));
-    if(live){this.parked=true;this.vm.state='waiting';this.vm.frames=[];if(!this.vm.inspector)this.vm.stack=[];return;}
+    if(live){parkContext(this);return;}
     const main=this.contexts.get(1);this.vm.frames=[];if(!this.vm.inspector)this.vm.stack=[];this.vm.returnValue=main?.returnValue??null;this.vm.exitCode=main?.exitCode??0;this.vm.fault=main?.fault??null;this.vm.state=main?.status==='faulted'?'faulted':'terminated';
   }
   freeze(id,frozen=true){this.ensure();const c=this.contexts.get(id);if(!c||terminal.has(c.status))throw new ManagedFault('InvalidOperationException','No live logical context');c.frozen=!!frozen;return this.threads();}
@@ -141,7 +143,9 @@ export class CooperativeScheduler {
   threads(){if(!this.enabled)return [{id:1,name:'Main',kind:'main',status:this.vm.state,frozen:false,parentId:null,taskId:null,frameIds:this.vm.frames.map(f=>f.id)}];this.save();return [...this.contexts.values()].map(c=>({id:c.id,name:c.name,kind:c.kind,status:c.id===this.currentId&&this.vm.state==='paused'?'paused':c.status,frozen:c.frozen,parentId:c.parentId,taskId:c.taskId??null,waitingFor:c.wait?this.vm.platform.get(c.wait.task,'Id'):null,frameIds:c.frames.map(f=>f.id)}));}
   parallelStacks(){this.save();const stack=c=>[...c.frames].reverse().map(f=>this.vm.inspector?{id:f.id,name:f.method.owner+'::'+f.method.name,methodToken:f.method.token,ilOffset:f.method.instructions[f.pc]?.offset??f.lastOffset}:{id:f.id,name:this.vm.image.methods[f.methodId].qualifiedName,methodId:f.methodId,point:f.point});return {kind:'cooperative',contexts:this.enabled?[...this.contexts.values()].filter(c=>!terminal.has(c.status)).map(c=>({...this.threads().find(t=>t.id===c.id),frames:stack(c)})):[{id:1,name:'Main',kind:'main',frames:stack({frames:this.vm.frames})}],tasks:[...this.tasks.values()].map(t=>({id:t.id,status:t.status,contextId:t.contextId??null,waiters:[...t.waiters],dependencies:(t.dependencies??[]).map(r=>this.vm.platform.get(r,'Id')),resultType:t.resultType}))};}
   snapshot(){if(!this.enabled)return null;this.save();return {parked:this.parked,currentId:this.currentId,nextId:this.nextId,nextTaskId:this.nextTaskId,clock:this.now(),turn:this.turn,steps:this.steps,preferred:this.preferred,contexts:[...this.contexts].map(([id,c])=>[id,cloneContext(c)]),tasks:[...this.tasks].map(([id,t])=>[id,{...t,error:copyExecution(t.error),waiters:[...t.waiters],dependencies:t.dependencies?[...t.dependencies]:null}])};}
-  restore(s){if(!s){this.parked=false;this.enabled=false;this.contexts.clear();this.tasks.clear();return;}this.enabled=true;this.nextId=Math.max(this.nextId,s.nextId);this.nextTaskId=Math.max(this.nextTaskId,s.nextTaskId);this.parked=!!s.parked;this.currentId=s.currentId;this.clock=s.clock;this.epoch=performance.now()-s.clock;this.turn=s.turn;this.steps=s.steps;this.preferred=s.preferred;this.contexts=new Map(s.contexts.map(([id,c])=>[id,cloneContext(c)]));this.tasks=new Map(s.tasks.map(([id,t])=>[id,{...t,error:copyExecution(t.error),waiters:new Set(t.waiters),dependencies:t.dependencies?[...t.dependencies]:null}]));this.save();}
+  restore(s){
+    forgetContextSuspension(this);
+    if(!s){this.parked=false;this.enabled=false;this.contexts.clear();this.tasks.clear();return;}this.enabled=true;this.nextId=Math.max(this.nextId,s.nextId);this.nextTaskId=Math.max(this.nextTaskId,s.nextTaskId);this.parked=!!s.parked;this.currentId=s.currentId;this.clock=s.clock;this.epoch=performance.now()-s.clock;this.turn=s.turn;this.steps=s.steps;this.preferred=s.preferred;this.contexts=new Map(s.contexts.map(([id,c])=>[id,cloneContext(c)]));this.tasks=new Map(s.tasks.map(([id,t])=>[id,{...t,error:copyExecution(t.error),waiters:new Set(t.waiters),dependencies:t.dependencies?[...t.dependencies]:null}]));this.save();}
   prune(){if(!this.enabled)return;for(const [id,t]of this.tasks)if(terminal.has(t.status)){let alive=true;try{this.vm.heap.get(t.ref);}catch{alive=false;}if(!alive)this.tasks.delete(id);}if(this.contexts.size>=this.maxContexts)for(const [id,c]of this.contexts)if(id!==1&&terminal.has(c.status))this.contexts.delete(id);}
   cancelAll(){return cancelContexts(this);}
   async runAsync({signal=null,onSlice=null}={}){while(['ready','running','waiting'].includes(this.vm.state)){

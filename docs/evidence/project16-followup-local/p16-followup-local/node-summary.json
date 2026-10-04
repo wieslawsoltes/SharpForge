@@ -1,0 +1,38 @@
+{
+  "sourceSha": "6085a6ede46cc5f46ea9603d46c3e281b28ec65a",
+  "sourceTree": "6d0162f9eaa11930d30b98b90c4253b11434def0",
+  "trackedDirty": false,
+  "startedAt": "2026-10-04T04:45:36.158877+00:00",
+  "scopes": [
+    {
+      "area": "A19",
+      "command": [
+        "node",
+        "scripts/planning/run-tests.js",
+        "--area",
+        "A19"
+      ],
+      "status": "failed",
+      "startedAt": "2026-10-04T04:45:36.159041+00:00",
+      "log": "/workspace/scratch/6b99131ca908/p16-integration/artifacts/results/p16-followup-local/A19.log",
+      "exitCode": 1,
+      "finishedAt": "2026-10-04T04:45:36.325081+00:00"
+    },
+    {
+      "area": "A20",
+      "command": [
+        "node",
+        "scripts/planning/run-tests.js",
+        "--area",
+        "A20"
+      ],
+      "status": "failed",
+      "startedAt": "2026-10-04T04:45:36.325430+00:00",
+      "log": "/workspace/scratch/6b99131ca908/p16-integration/artifacts/results/p16-followup-local/A20.log",
+      "exitCode": 1,
+      "finishedAt": "2026-10-04T04:45:36.484197+00:00"
+    }
+  ],
+  "finishedAt": "2026-10-04T04:45:36.484524+00:00",
+  "status": "failed"
+}

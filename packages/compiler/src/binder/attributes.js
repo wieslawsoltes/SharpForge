@@ -25,6 +25,7 @@ import { isAccessible } from './accessibility.js';
 import { BodyBinder } from './body-binder.js';
 import { isSourceSymbol } from '../semantic/analysis-helpers.js';
 import { fullNameOf, attributesNamed } from './bound-attributes.js';
+import { importedAttributeUsage, isImportedType } from '../metadata-import/imported-attribute-usage.js';
 
 const defaultUsage = Object.freeze({ validOn: AttributeTargets.All, allowMultiple: false, inherited: true });
 const unknownUsage = Object.freeze({ validOn: AttributeTargets.All, allowMultiple: true, inherited: true, isUnknown: true });
@@ -210,6 +211,12 @@ export const AttributeBinding = Base =>
       for (let t = type.originalDefinition ?? type, depth = 0; t && depth < 64; t = t.baseType?.originalDefinition ?? t.baseType, depth++) {
         if (t.attributeUsage) return t.attributeUsage;
         if (t === this.core.attribute) return defaultUsage;
+        if (isImportedType(t)) {
+          // A class read from metadata declares its usage there; without one its base class decides.
+          const imported = importedAttributeUsage(t);
+          if (imported) return imported;
+          continue;
+        }
         if (!t.isSource) return unknownUsage;
         this.attributesOfType(t);
         if (t.attributeUsage) return t.attributeUsage;
@@ -241,7 +248,7 @@ export const AttributeBinding = Base =>
         if (result.succeeded) {
           bound.attributeConstructor = result.method;
           bound.arguments = binder.finishCall(result, null, positional, syntax, {}).args?.map(argument => argument.expression) ?? [];
-        } else if (!isSourceSymbol(attributeClass) && !attributeClass.attributeUsage) this.incomplete = true;
+        } else if (!isSourceSymbol(attributeClass) && !attributeClass.attributeUsage && !isImportedType(attributeClass)) this.incomplete = true;
         else {
           const error = result.error,
             args = error.code === DiagnosticId.CS1729 ? [attributeClass.toDisplayString(), positional.length] : error.args;
@@ -261,7 +268,8 @@ export const AttributeBinding = Base =>
         closed = true;
       for (let t = bound.attributeClass, depth = 0; t && !member && depth < 64; t = t.baseType, depth++) {
         member = t.getMembers(name).find(m => m.kind === SymbolKind.Field || m.kind === SymbolKind.Property) ?? null;
-        if (!isSourceSymbol(t) && !t.attributeUsage && t !== this.core.attribute && t.specialType !== 'System_Object') closed = false;
+        const isKnown = isSourceSymbol(t) || !!t.attributeUsage || isImportedType(t) || t === this.core.attribute;
+        if (!isKnown && t.specialType !== 'System_Object') closed = false;
       }
       if (!member) {
         if (closed) binder.report(nameNode, DiagnosticId.CS0246, [name]);

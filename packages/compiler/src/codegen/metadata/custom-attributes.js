@@ -21,6 +21,7 @@
 import { encodeCustomAttribute, TypeAttributes, token } from '@sharpforge/cil';
 import { SymbolKind, TypeKind, ArrayTypeSymbol } from '../../symbols/types.js';
 import { MethodKind } from '../../symbols/members.js';
+import { needsTypeSpec } from '../generics.js';
 import { MetadataEmitError, namespaceOf, definitionNameOf } from './type-tokens.js';
 import { methodSignature, methodSymbolSignature } from './member-signatures.js';
 import { tupleElementNamesOf } from '../../binder/tuples.js';
@@ -45,6 +46,7 @@ const pseudoAttributes = new Set([
   'System.Runtime.CompilerServices.SpecialNameAttribute',
 ]);
 const REQUIRED_MEMBER = 'System.Runtime.CompilerServices.RequiredMemberAttribute';
+const IS_BY_REF_LIKE = 'System.Runtime.CompilerServices.IsByRefLikeAttribute';
 const EXTENSION = 'System.Runtime.CompilerServices.ExtensionAttribute';
 const SETS_REQUIRED_MEMBERS = 'System.Diagnostics.CodeAnalysis.SetsRequiredMembersAttribute';
 const REQUIRED_MEMBERS_MESSAGE = 'Constructors of types with required members are not supported in this version of your compiler.';
@@ -155,6 +157,8 @@ export class CustomAttributeWriter {
       }
       // Roslyn writes the attributes it synthesizes for a type before the ones the program applies.
       if (plan.properties.some(property => property.symbol.parameters.length)) this.defaultMember(typeToken, plan);
+      // The runtime refuses a by-reference-like field (a `Span<T>`) in a struct that is not marked as a ref struct.
+      if (type.isRefLikeType) this.wellKnown(typeToken, IS_BY_REF_LIKE);
       this.applied(typeToken, type);
       const requiresMembers = declaresRequiredMember(type);
       if (requiresMembers) this.wellKnown(typeToken, REQUIRED_MEMBER);
@@ -223,9 +227,13 @@ export class CustomAttributeWriter {
       owner = this.types.typeToken(attribute.attributeClass);
     let parameterTypes, constructorToken;
     if (constructor) {
-      const definition = constructor.originalDefinition ?? constructor;
-      parameterTypes = definition.parameters.map(parameter => parameter.type);
-      constructorToken = this.writer.methodTokens.get(definition) ?? this.builder.member(owner, '.ctor', methodSymbolSignature(this.types, definition));
+      const definition = constructor.originalDefinition ?? constructor,
+        // A constructed attribute class (C# 11 `[My<int>]`): the constructor is named on the TypeSpec with the
+        // signature of its definition (`!0`), and the argument is encoded as the type the construction gives it.
+        isConstructed = needsTypeSpec(attribute.attributeClass),
+        defined = isConstructed ? undefined : this.writer.methodTokens.get(definition);
+      parameterTypes = (isConstructed ? constructor : definition).parameters.map(parameter => parameter.type);
+      constructorToken = defined ?? this.builder.member(owner, '.ctor', methodSymbolSignature(this.types, definition));
     } else {
       // The registry lists no constructor for this framework attribute: the one that takes the arguments as written.
       parameterTypes = attribute.arguments.map(argument => argument.type);

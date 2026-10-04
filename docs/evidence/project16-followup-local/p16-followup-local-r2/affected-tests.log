@@ -1,0 +1,30 @@
+✔ pending Studio analysis and another editor whole-project request publish committed rename source only (12.184832ms)
+✔ real rename completion publishes its new version after lease release and remains one undo operation (3.266015ms)
+✔ DocumentService late save acknowledgement survives preview cancellation and subsequent undo (2.167208ms)
+✔ save, operation state, export, diagnostics and bounded ranges share one published source revision (2.167388ms)
+✔ reload and prepared model adoption reject active previews without changing source, baseline or metadata (1.919945ms)
+✔ an atomic change still notifies the second document if the first notification opens its preview (1.763859ms)
+✔ workspace replacement disposes the original preview model and delayed cleanup cannot restore over its replacement (1.23316ms)
+✔ EditorConfig reads committed source even if its model is displaying a temporary preview (0.579403ms)
+✔ workspace commit forwards cancellation into the real asynchronous Studio resource transaction (16.157913ms)
+✔ closing all views releases the owned preview before any same-model view state is cached (2.067688ms)
+✔ preview has a visual root but publishes original source without undo entries or change events (4.582179ms)
+✔ non-owner edits, history, checkpoint restores and competing previews reject without mutation (1.46623ms)
+✔ preview ownership epochs reject old prepared commits and editor rebinding after exact-root restoration (0.507465ms)
+✔ async preparation cannot cross a preview ownership cycle even when root and version are restored (0.711973ms)
+✔ saved markers survive preview cancellation and no-op save captures the committed root (0.802019ms)
+✔ ordinary atomic silent commits publish every root before the first model notification (1.200611ms)
+✔ disposal restores the published source and invalidates delayed preview capabilities (0.406673ms)
+✔ a low-level buffer mutation invalidates publication ownership without restoring over external text (0.405511ms)
+✔ a borrowed buffer remains externally owned and stale preview disposal preserves its advanced root (0.456608ms)
+✔ the preview owner cannot prepare a write over an independently advanced buffer (0.369397ms)
+✔ committed notification ownership survives preview acquisition but cannot be forged or replayed (0.432082ms)
+✔ preview restoration repaints every live view of its model and leaves different documents untouched (0.341214ms)
+ℹ tests 22
+ℹ suites 0
+ℹ pass 22
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1183.446064

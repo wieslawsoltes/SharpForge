@@ -79,6 +79,9 @@ export async function qualify({ stage = 'all', selectedEngine = engine, outputDi
     scopes.push({ id: 'performance:instrumentation', phase: 'performance', command: process.execPath,
       args: ['scripts/limited.js', 'node', 'scripts/bench-workbench-overhead.js', '--browser', selectedEngine,
         '--output', resolve(outputDirectory, 'instrumentation-overhead.json')], timeoutMs: 1_200_000 });
+    scopes.push({ id: 'performance:lazy-evaluation', phase: 'performance', command: process.execPath,
+      args: ['scripts/limited.js', 'node', 'scripts/bench-workbench-lazy-evaluation.js', '--browser', selectedEngine,
+        '--output', resolve(outputDirectory, 'lazy-evaluation.json')], timeoutMs: 1_200_000 });
   }
   for (const scope of scopes) scope.status = 'pending';
   const report = { schemaVersion: 1, kind: 'sharpforge-project16-qualification', stage, engine: selectedEngine,

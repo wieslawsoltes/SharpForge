@@ -3,9 +3,26 @@ import {transformOffset} from '../selections.js';
 import {resolveEditorConfig} from '../editorconfig.js';
 import {prepareEditorSave} from './save-preparation.js';
 
+function normalizeDiagnostics(diagnostics, source) {
+  return diagnostics.map(diagnostic => {
+    const range = diagnostic.range && {start: {...diagnostic.range.start}, end: {...diagnostic.range.end}};
+    const start = Math.max(0, Math.min(source.length, diagnostic.start ?? source.offsetAt(range.start)));
+    const end = range ? source.offsetAt(range.end) : start + (diagnostic.length ?? 0);
+    const severity = typeof diagnostic.severity === 'number' ? ['error', 'warning', 'information', 'hint'][diagnostic.severity - 1]
+      : diagnostic.severity ?? 'error';
+    return {...diagnostic, ...(range ? {range} : {}), start, length: Math.max(0, end - start), severity};
+  });
+}
+
 /** View options and decorations are independently replaceable contributions, never model text. */
 export class EditorPresentation {
-  constructor(editor) { this.editor = editor; this.index = []; this.maximumEnds = []; this.indexRevision = -1; }
+  constructor(editor) {
+    this.editor = editor;
+    this.index = [];
+    this.maximumEnds = [];
+    this.indexRevision = -1;
+    this.pendingDiagnostics = null;
+  }
 
   updateOptions(overrides) {
     const {editor} = this;
@@ -37,7 +54,8 @@ export class EditorPresentation {
   }
   refreshPreview() {
     const {editor} = this;
-    if (editor.disposed) return;
+    if (editor.disposed) { this.pendingDiagnostics = null; return; }
+    this.flushPendingDiagnostics();
     editor.highlightIndex.update(editor.model.snapshot());
     editor.view.layout.reset();
     editor.view.scroll.reset();
@@ -47,19 +65,37 @@ export class EditorPresentation {
   }
   setDiagnostics(diagnostics) {
     const {editor} = this;
-    editor.diagnostics = diagnostics.map(diagnostic => {
-      const start = Math.max(0, Math.min(editor.model.length, diagnostic.start ?? editor.model.offsetAt(diagnostic.range.start)));
-      const end = diagnostic.range ? editor.model.offsetAt(diagnostic.range.end) : start + (diagnostic.length ?? 0);
-      const severity = typeof diagnostic.severity === 'number' ? ['error', 'warning', 'information', 'hint'][diagnostic.severity - 1]
-        : diagnostic.severity ?? 'error';
-      return {...diagnostic, start, length: Math.max(0, end - start), severity};
-    });
+    if (editor.disposed) { this.pendingDiagnostics = null; return; }
+    const model = editor.model;
+    const source = model.publishedSnapshot?.() ?? model.snapshot();
+    const normalized = normalizeDiagnostics(diagnostics, source);
+    if (model.snapshot() !== source) {
+      this.pendingDiagnostics = {model, source, diagnostics: normalized};
+      return;
+    }
+    this.pendingDiagnostics = null;
+    this.applyDiagnostics(normalized, source.version);
+  }
+  flushPendingDiagnostics() {
+    const pending = this.pendingDiagnostics;
+    if (!pending) return;
+    const model = this.editor.model;
+    if (pending.model !== model) { this.pendingDiagnostics = null; return; }
+    const source = model.publishedSnapshot?.() ?? model.snapshot();
+    if (pending.source !== source) { this.pendingDiagnostics = null; return; }
+    if (model.snapshot() !== source) return;
+    this.pendingDiagnostics = null;
+    this.applyDiagnostics(pending.diagnostics, source.version);
+  }
+  applyDiagnostics(diagnostics, version) {
+    const {editor} = this;
+    editor.diagnostics = diagnostics;
     this.setDecorations('diagnostics', editor.diagnostics.map(diagnostic => ({
       start: diagnostic.start, end: diagnostic.start + Math.max(1, diagnostic.length ?? 1), kind: 'diagnostic',
       className: (diagnostic.severity ?? 'error') === 'error' ? 'sf-squiggle' : 'sf-squiggle sf-squiggle-warning',
       hover: `${diagnostic.code ?? ''} ${diagnostic.message ?? ''}`.trim()
     })));
-    editor.insights?.setDiagnostics(editor.diagnostics, editor.model.version);
+    editor.insights?.setDiagnostics(editor.diagnostics, version);
   }
   setDecorations(owner, decorations) {
     if (!Array.isArray(decorations)) throw new TypeError('Decorations must be an array');

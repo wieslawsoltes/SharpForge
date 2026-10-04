@@ -92,9 +92,7 @@ export const ObjectEmission = Base =>
     /** `base()`: the accessible parameterless constructor of the base class. */
     implicitBaseCall(type, constructor) {
       const base = type.baseType ?? this.core.object,
-        target = base
-          .getMembers('.ctor')
-          .find(member => member.methodKind === MethodKind.Constructor && !member.isStatic && !member.parameters.length);
+        target = base.getMembers('.ctor').find(member => member.methodKind === MethodKind.Constructor && !member.isStatic && !member.parameters.length);
       if (target) {
         this.il.emit('ldarg', 0).emit('call', this.tokens.method(target), { pops: 1, pushes: 0 });
         return undefined;
@@ -117,19 +115,14 @@ export const ObjectEmission = Base =>
       }
     }
     /**
-     * C# 9 module initializers run once, in declaration order, before any other code of the module. They are called
-     * at the start of the entry point; a type initializer of the entry point's own type would run before them, so a
-     * program that has both is refused rather than run in another order.
+     * C# 9 module initializers run once, in declaration order, before any other code of the module. Roslyn calls
+     * them from the type initializer of `<Module>`; here they are called at the start of the entry point - which the
+     * direct-CIL runtime also runs - unless the entry point's type has a type initializer, which must not run before
+     * them: then `<Module>::.cctor` calls them (module-initializers.js).
      */
     moduleInitializers() {
-      const initializers = this.program.analysis.assembly.moduleInitializers ?? [];
-      if (!initializers.length) return undefined;
-      const type = this.frame.containingType,
-        hasTypeInitializer =
-          this.program.initializersOf(type, true).length > 0 || type.getMembers().some(member => member.methodKind === MethodKind.StaticConstructor);
-      if (hasTypeInitializer) return this.unsupported('module initializers next to a type initializer of the entry point type');
-      for (const initializer of initializers) this.callMethod(initializer, {});
-      return undefined;
+      if (this.program.moduleRunsInitializers) return;
+      for (const initializer of this.program.analysis.assembly.moduleInitializers ?? []) this.callMethod(initializer, {});
     }
     /** The body of a type initializer starts with the static initializers, in declaration order. */
     staticInitializers(type) {
