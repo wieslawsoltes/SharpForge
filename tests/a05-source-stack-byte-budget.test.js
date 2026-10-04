@@ -192,7 +192,8 @@ for (const engine of ['source', 'reload']) {
     vm.restore(saved);
     vm.stop();
     assert.equal(vm.allFrames().length, 0, 'cancellation releases all parked frames');
-    assert.equal(vm.scheduler.parked, false);
+    assert.ok([...vm.scheduler.contexts.values()].every(context =>
+      ['completed', 'faulted', 'canceled'].includes(context.status)));
     vm.call(vm.image.entryPoint, []);
     assert.equal(vm.frames.length, 1, 'a fresh frame can reserve storage after cancellation');
     vm.stop();
