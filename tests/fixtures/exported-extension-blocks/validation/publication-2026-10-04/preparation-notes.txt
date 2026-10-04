@@ -1,0 +1,4 @@
+The first source-only SDK verification attempt ended with AssertionError before any test or source compilation.
+The checker compared the entire referenceAssemblies object with the pin, which additionally contains an algorithm description.
+The observed count (167) and SHA-256 (a978e7aaf608f22e860328a42319b908a5a084cdb087b28b5c31a1e6726be362) already matched.
+The checker was corrected to compare count and sha256 explicitly. No product source, toolchain, oracle or expected result changed.

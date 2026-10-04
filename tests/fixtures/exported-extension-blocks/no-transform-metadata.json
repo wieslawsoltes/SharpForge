@@ -1,0 +1,843 @@
+{
+  "producer": {
+    "compiler": "SharpForge",
+    "revision": "ed91058416e8c1bbd40fdf3d778f07f615c410c8",
+    "api": "compileToReferenceAssembly",
+    "purpose": "Actual pre-optimization raw nullable metadata and declaration rows, not a Roslyn oracle"
+  },
+  "source": {
+    "file": "NoTransformMethods.cs",
+    "sha256": "4a6b4bfa8158a1b48bf46345ad256f52fa2dcdb0b99d56ae76655be3815820b1"
+  },
+  "PEReference": {
+    "sdkVersion": "10.0.201",
+    "referencePackVersion": "10.0.5",
+    "systemRuntimeSha256": "05f3d5bd170a583b2a61e21d30e200c567e9c2d46452a8684a686a510cb359e3"
+  },
+  "snapshots": {
+    "registry": [
+      {
+        "target": "NoTransformControl.Control",
+        "attributes": [
+          {
+            "name": "System.Runtime.CompilerServices.NullableAttribute",
+            "bytes": [
+              1,
+              0,
+              0,
+              0,
+              0
+            ]
+          },
+          {
+            "name": "System.Runtime.CompilerServices.NullableContextAttribute",
+            "bytes": [
+              1,
+              0,
+              1,
+              0,
+              0
+            ]
+          }
+        ],
+        "generics": []
+      },
+      {
+        "target": "NoTransformControl.Control..ctor",
+        "attributes": [],
+        "generics": [],
+        "parameters": []
+      },
+      {
+        "target": "NoTransformControl.Control.A",
+        "attributes": []
+      },
+      {
+        "target": "NoTransformControl.Control.B",
+        "attributes": []
+      },
+      {
+        "target": "NoTransformControl.Control.C",
+        "attributes": []
+      },
+      {
+        "target": "NoTransformControl.Control.D",
+        "attributes": []
+      },
+      {
+        "target": "NoTransformControl.Control.E",
+        "attributes": []
+      },
+      {
+        "target": "NoTransformControl.Control.Empty",
+        "attributes": [],
+        "generics": [],
+        "parameters": []
+      },
+      {
+        "target": "NoTransformControl.Control.Generic",
+        "attributes": [
+          {
+            "name": "System.Runtime.CompilerServices.NullableContextAttribute",
+            "bytes": [
+              1,
+              0,
+              0,
+              0,
+              0
+            ]
+          }
+        ],
+        "generics": [
+          {
+            "name": "T",
+            "number": 0,
+            "flags": 24,
+            "attributes": [],
+            "constraints": [
+              []
+            ]
+          }
+        ],
+        "parameters": [
+          {
+            "flags": 0,
+            "sequence": 1,
+            "name": "value",
+            "attributes": []
+          }
+        ]
+      },
+      {
+        "target": "NoTransformControl.Control.Oblivious",
+        "attributes": [
+          {
+            "name": "System.Runtime.CompilerServices.NullableContextAttribute",
+            "bytes": [
+              1,
+              0,
+              0,
+              0,
+              0
+            ]
+          }
+        ],
+        "generics": [],
+        "parameters": [
+          {
+            "flags": 0,
+            "sequence": 1,
+            "name": "value",
+            "attributes": []
+          }
+        ]
+      },
+      {
+        "target": "NoTransformControl.Control.Outer`1",
+        "attributes": [
+          {
+            "name": "System.Runtime.CompilerServices.NullableContextAttribute",
+            "bytes": [
+              1,
+              0,
+              0,
+              0,
+              0
+            ]
+          }
+        ],
+        "generics": [
+          {
+            "name": "T",
+            "number": 0,
+            "flags": 24,
+            "attributes": [],
+            "constraints": [
+              []
+            ]
+          }
+        ]
+      },
+      {
+        "target": "NoTransformControl.Control.Outer`1..ctor",
+        "attributes": [],
+        "generics": [],
+        "parameters": []
+      },
+      {
+        "target": "NoTransformControl.Control.Outer`1.Inner`1",
+        "attributes": [],
+        "generics": [
+          {
+            "name": "T",
+            "number": 0,
+            "flags": 24,
+            "attributes": [],
+            "constraints": [
+              []
+            ]
+          },
+          {
+            "name": "U",
+            "number": 1,
+            "flags": 24,
+            "attributes": [],
+            "constraints": [
+              []
+            ]
+          }
+        ]
+      },
+      {
+        "target": "NoTransformControl.Control.Outer`1.Inner`1..ctor",
+        "attributes": [],
+        "generics": [],
+        "parameters": []
+      },
+      {
+        "target": "NoTransformControl.Control.Outer`1.Inner`1.Empty",
+        "attributes": [],
+        "generics": [],
+        "parameters": []
+      },
+      {
+        "target": "NoTransformControl.Control.Outer`1.Inner`1.Generic",
+        "attributes": [],
+        "generics": [
+          {
+            "name": "V",
+            "number": 0,
+            "flags": 24,
+            "attributes": [],
+            "constraints": [
+              []
+            ]
+          }
+        ],
+        "parameters": [
+          {
+            "flags": 0,
+            "sequence": 1,
+            "name": "value",
+            "attributes": []
+          }
+        ]
+      },
+      {
+        "target": "NoTransformControl.Control.Outer`1.Inner`1.Plain",
+        "attributes": [],
+        "generics": [],
+        "parameters": [
+          {
+            "flags": 0,
+            "sequence": 1,
+            "name": "value",
+            "attributes": []
+          }
+        ]
+      },
+      {
+        "target": "NoTransformControl.Control.Plain",
+        "attributes": [],
+        "generics": [],
+        "parameters": [
+          {
+            "flags": 0,
+            "sequence": 1,
+            "name": "value",
+            "attributes": []
+          }
+        ]
+      },
+      {
+        "target": "NoTransformControl.Control.ReturnOnly",
+        "attributes": [
+          {
+            "name": "System.Runtime.CompilerServices.NullableContextAttribute",
+            "bytes": [
+              1,
+              0,
+              2,
+              0,
+              0
+            ]
+          }
+        ],
+        "generics": [],
+        "parameters": []
+      },
+      {
+        "target": "NoTransformControl.GenericDelegate`1",
+        "attributes": [],
+        "generics": [
+          {
+            "name": "T",
+            "number": 0,
+            "flags": 24,
+            "attributes": [],
+            "constraints": [
+              []
+            ]
+          }
+        ]
+      },
+      {
+        "target": "NoTransformControl.GenericDelegate`1..ctor",
+        "attributes": [],
+        "generics": [],
+        "parameters": [
+          {
+            "flags": 0,
+            "sequence": 1,
+            "name": "object",
+            "attributes": []
+          },
+          {
+            "flags": 0,
+            "sequence": 2,
+            "name": "method",
+            "attributes": []
+          }
+        ]
+      },
+      {
+        "target": "NoTransformControl.GenericDelegate`1.BeginInvoke",
+        "attributes": [],
+        "generics": [],
+        "parameters": [
+          {
+            "flags": 0,
+            "sequence": 1,
+            "name": "value",
+            "attributes": []
+          },
+          {
+            "flags": 0,
+            "sequence": 2,
+            "name": "callback",
+            "attributes": []
+          },
+          {
+            "flags": 0,
+            "sequence": 3,
+            "name": "object",
+            "attributes": []
+          }
+        ]
+      },
+      {
+        "target": "NoTransformControl.GenericDelegate`1.EndInvoke",
+        "attributes": [],
+        "generics": [],
+        "parameters": [
+          {
+            "flags": 0,
+            "sequence": 1,
+            "name": "result",
+            "attributes": []
+          }
+        ]
+      },
+      {
+        "target": "NoTransformControl.GenericDelegate`1.Invoke",
+        "attributes": [],
+        "generics": [],
+        "parameters": [
+          {
+            "flags": 0,
+            "sequence": 1,
+            "name": "value",
+            "attributes": []
+          }
+        ]
+      },
+      {
+        "target": "NoTransformControl.PrimitiveDelegate",
+        "attributes": [],
+        "generics": []
+      },
+      {
+        "target": "NoTransformControl.PrimitiveDelegate..ctor",
+        "attributes": [],
+        "generics": [],
+        "parameters": [
+          {
+            "flags": 0,
+            "sequence": 1,
+            "name": "object",
+            "attributes": []
+          },
+          {
+            "flags": 0,
+            "sequence": 2,
+            "name": "method",
+            "attributes": []
+          }
+        ]
+      },
+      {
+        "target": "NoTransformControl.PrimitiveDelegate.BeginInvoke",
+        "attributes": [],
+        "generics": [],
+        "parameters": [
+          {
+            "flags": 0,
+            "sequence": 1,
+            "name": "value",
+            "attributes": []
+          },
+          {
+            "flags": 0,
+            "sequence": 2,
+            "name": "callback",
+            "attributes": []
+          },
+          {
+            "flags": 0,
+            "sequence": 3,
+            "name": "object",
+            "attributes": []
+          }
+        ]
+      },
+      {
+        "target": "NoTransformControl.PrimitiveDelegate.EndInvoke",
+        "attributes": [],
+        "generics": [],
+        "parameters": [
+          {
+            "flags": 0,
+            "sequence": 1,
+            "name": "result",
+            "attributes": []
+          }
+        ]
+      },
+      {
+        "target": "NoTransformControl.PrimitiveDelegate.Invoke",
+        "attributes": [],
+        "generics": [],
+        "parameters": [
+          {
+            "flags": 0,
+            "sequence": 1,
+            "name": "value",
+            "attributes": []
+          }
+        ]
+      }
+    ],
+    "PE": [
+      {
+        "target": "NoTransformControl.Control",
+        "attributes": [
+          {
+            "name": "System.Runtime.CompilerServices.NullableAttribute",
+            "bytes": [
+              1,
+              0,
+              0,
+              0,
+              0
+            ]
+          },
+          {
+            "name": "System.Runtime.CompilerServices.NullableContextAttribute",
+            "bytes": [
+              1,
+              0,
+              1,
+              0,
+              0
+            ]
+          }
+        ],
+        "generics": []
+      },
+      {
+        "target": "NoTransformControl.Control..ctor",
+        "attributes": [],
+        "generics": [],
+        "parameters": []
+      },
+      {
+        "target": "NoTransformControl.Control.A",
+        "attributes": []
+      },
+      {
+        "target": "NoTransformControl.Control.B",
+        "attributes": []
+      },
+      {
+        "target": "NoTransformControl.Control.C",
+        "attributes": []
+      },
+      {
+        "target": "NoTransformControl.Control.D",
+        "attributes": []
+      },
+      {
+        "target": "NoTransformControl.Control.E",
+        "attributes": []
+      },
+      {
+        "target": "NoTransformControl.Control.Empty",
+        "attributes": [],
+        "generics": [],
+        "parameters": []
+      },
+      {
+        "target": "NoTransformControl.Control.Generic",
+        "attributes": [
+          {
+            "name": "System.Runtime.CompilerServices.NullableContextAttribute",
+            "bytes": [
+              1,
+              0,
+              0,
+              0,
+              0
+            ]
+          }
+        ],
+        "generics": [
+          {
+            "name": "T",
+            "number": 0,
+            "flags": 24,
+            "attributes": [],
+            "constraints": [
+              []
+            ]
+          }
+        ],
+        "parameters": [
+          {
+            "flags": 0,
+            "sequence": 1,
+            "name": "value",
+            "attributes": []
+          }
+        ]
+      },
+      {
+        "target": "NoTransformControl.Control.Oblivious",
+        "attributes": [
+          {
+            "name": "System.Runtime.CompilerServices.NullableContextAttribute",
+            "bytes": [
+              1,
+              0,
+              0,
+              0,
+              0
+            ]
+          }
+        ],
+        "generics": [],
+        "parameters": [
+          {
+            "flags": 0,
+            "sequence": 1,
+            "name": "value",
+            "attributes": []
+          }
+        ]
+      },
+      {
+        "target": "NoTransformControl.Control.Outer`1",
+        "attributes": [
+          {
+            "name": "System.Runtime.CompilerServices.NullableContextAttribute",
+            "bytes": [
+              1,
+              0,
+              0,
+              0,
+              0
+            ]
+          }
+        ],
+        "generics": [
+          {
+            "name": "T",
+            "number": 0,
+            "flags": 24,
+            "attributes": [],
+            "constraints": [
+              []
+            ]
+          }
+        ]
+      },
+      {
+        "target": "NoTransformControl.Control.Outer`1..ctor",
+        "attributes": [],
+        "generics": [],
+        "parameters": []
+      },
+      {
+        "target": "NoTransformControl.Control.Outer`1.Inner`1",
+        "attributes": [],
+        "generics": [
+          {
+            "name": "T",
+            "number": 0,
+            "flags": 24,
+            "attributes": [],
+            "constraints": [
+              []
+            ]
+          },
+          {
+            "name": "U",
+            "number": 1,
+            "flags": 24,
+            "attributes": [],
+            "constraints": [
+              []
+            ]
+          }
+        ]
+      },
+      {
+        "target": "NoTransformControl.Control.Outer`1.Inner`1..ctor",
+        "attributes": [],
+        "generics": [],
+        "parameters": []
+      },
+      {
+        "target": "NoTransformControl.Control.Outer`1.Inner`1.Empty",
+        "attributes": [],
+        "generics": [],
+        "parameters": []
+      },
+      {
+        "target": "NoTransformControl.Control.Outer`1.Inner`1.Generic",
+        "attributes": [],
+        "generics": [
+          {
+            "name": "V",
+            "number": 0,
+            "flags": 24,
+            "attributes": [],
+            "constraints": [
+              []
+            ]
+          }
+        ],
+        "parameters": [
+          {
+            "flags": 0,
+            "sequence": 1,
+            "name": "value",
+            "attributes": []
+          }
+        ]
+      },
+      {
+        "target": "NoTransformControl.Control.Outer`1.Inner`1.Plain",
+        "attributes": [],
+        "generics": [],
+        "parameters": [
+          {
+            "flags": 0,
+            "sequence": 1,
+            "name": "value",
+            "attributes": []
+          }
+        ]
+      },
+      {
+        "target": "NoTransformControl.Control.Plain",
+        "attributes": [],
+        "generics": [],
+        "parameters": [
+          {
+            "flags": 0,
+            "sequence": 1,
+            "name": "value",
+            "attributes": []
+          }
+        ]
+      },
+      {
+        "target": "NoTransformControl.Control.ReturnOnly",
+        "attributes": [
+          {
+            "name": "System.Runtime.CompilerServices.NullableContextAttribute",
+            "bytes": [
+              1,
+              0,
+              2,
+              0,
+              0
+            ]
+          }
+        ],
+        "generics": [],
+        "parameters": []
+      },
+      {
+        "target": "NoTransformControl.GenericDelegate`1",
+        "attributes": [],
+        "generics": [
+          {
+            "name": "T",
+            "number": 0,
+            "flags": 24,
+            "attributes": [],
+            "constraints": [
+              []
+            ]
+          }
+        ]
+      },
+      {
+        "target": "NoTransformControl.GenericDelegate`1..ctor",
+        "attributes": [],
+        "generics": [],
+        "parameters": [
+          {
+            "flags": 0,
+            "sequence": 1,
+            "name": "object",
+            "attributes": []
+          },
+          {
+            "flags": 0,
+            "sequence": 2,
+            "name": "method",
+            "attributes": []
+          }
+        ]
+      },
+      {
+        "target": "NoTransformControl.GenericDelegate`1.BeginInvoke",
+        "attributes": [],
+        "generics": [],
+        "parameters": [
+          {
+            "flags": 0,
+            "sequence": 1,
+            "name": "value",
+            "attributes": []
+          },
+          {
+            "flags": 0,
+            "sequence": 2,
+            "name": "callback",
+            "attributes": []
+          },
+          {
+            "flags": 0,
+            "sequence": 3,
+            "name": "object",
+            "attributes": []
+          }
+        ]
+      },
+      {
+        "target": "NoTransformControl.GenericDelegate`1.EndInvoke",
+        "attributes": [],
+        "generics": [],
+        "parameters": [
+          {
+            "flags": 0,
+            "sequence": 1,
+            "name": "result",
+            "attributes": []
+          }
+        ]
+      },
+      {
+        "target": "NoTransformControl.GenericDelegate`1.Invoke",
+        "attributes": [],
+        "generics": [],
+        "parameters": [
+          {
+            "flags": 0,
+            "sequence": 1,
+            "name": "value",
+            "attributes": []
+          }
+        ]
+      },
+      {
+        "target": "NoTransformControl.PrimitiveDelegate",
+        "attributes": [],
+        "generics": []
+      },
+      {
+        "target": "NoTransformControl.PrimitiveDelegate..ctor",
+        "attributes": [],
+        "generics": [],
+        "parameters": [
+          {
+            "flags": 0,
+            "sequence": 1,
+            "name": "object",
+            "attributes": []
+          },
+          {
+            "flags": 0,
+            "sequence": 2,
+            "name": "method",
+            "attributes": []
+          }
+        ]
+      },
+      {
+        "target": "NoTransformControl.PrimitiveDelegate.BeginInvoke",
+        "attributes": [],
+        "generics": [],
+        "parameters": [
+          {
+            "flags": 0,
+            "sequence": 1,
+            "name": "value",
+            "attributes": []
+          },
+          {
+            "flags": 0,
+            "sequence": 2,
+            "name": "callback",
+            "attributes": []
+          },
+          {
+            "flags": 0,
+            "sequence": 3,
+            "name": "object",
+            "attributes": []
+          }
+        ]
+      },
+      {
+        "target": "NoTransformControl.PrimitiveDelegate.EndInvoke",
+        "attributes": [],
+        "generics": [],
+        "parameters": [
+          {
+            "flags": 0,
+            "sequence": 1,
+            "name": "result",
+            "attributes": []
+          }
+        ]
+      },
+      {
+        "target": "NoTransformControl.PrimitiveDelegate.Invoke",
+        "attributes": [],
+        "generics": [],
+        "parameters": [
+          {
+            "flags": 0,
+            "sequence": 1,
+            "name": "value",
+            "attributes": []
+          }
+        ]
+      }
+    ]
+  }
+}

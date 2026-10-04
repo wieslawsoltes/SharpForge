@@ -1,0 +1,35 @@
+from pathlib import Path
+import datetime,hashlib,json,os,shutil,subprocess
+session=Path('/workspace/scratch/7e3d2a445c44')
+root=session/'sf6-metadata-generations'
+plan=json.loads((root/'tests/fixtures/metadata-generations/validation-plan.json').read_text())
+p=plan['baselinePreparation']; baseline=Path(p['destination'])
+assert not baseline.exists()
+receipt={'startedUtc':datetime.datetime.now(datetime.timezone.utc).isoformat(),'diskBefore':shutil.disk_usage(session).free,'commands':[]}
+def run(argv,cwd):
+ r=subprocess.run(argv,cwd=cwd,capture_output=True,text=True)
+ receipt['commands'].append({'argv':argv,'cwd':str(cwd),'exitCode':r.returncode,'stdout':r.stdout,'stderr':r.stderr})
+ assert r.returncode==0,(argv,r.stderr)
+ return r.stdout.strip()
+assert run(['git','config','--get','extensions.worktreeConfig'],session/'SharpForge')=='true'
+for step in p['steps']:
+ cwd=baseline if step.get('cwd') else session
+ if 'argv' in step: run(step['argv'],cwd)
+ else:
+  path=Path(run(step['writeFileResolvedByArgv'],cwd));path.parent.mkdir(parents=True,exist_ok=True)
+  path.write_text(step['contents']);receipt['sparseFile']=str(path);receipt['sparseContents']=step['contents']
+aliasdir=baseline/'node_modules/@sharpforge';aliasdir.mkdir(parents=True)
+receipt['aliases']={}
+for name in plan['prerequisites']['baselinePublicAliases']:
+ alias=aliasdir/name;alias.symlink_to(Path('../../packages')/name)
+ assert alias.resolve()==baseline/'packages'/name
+ receipt['aliases'][name]=str(alias.resolve())
+receipt['head']=run(['git','rev-parse','HEAD'],baseline)
+assert receipt['head']==plan['performance']['baselineCommit']
+receipt['status']=run(['git','status','--porcelain'],baseline)
+receipt['diskAfter']=shutil.disk_usage(session).free
+receipt['finishedUtc']=datetime.datetime.now(datetime.timezone.utc).isoformat()
+receipt['scriptSha256']=hashlib.sha256(Path(__file__).read_bytes()).hexdigest()
+with (session/'metadata-ordinal-baseline-preparation.json').open('x') as out:json.dump(receipt,out,indent=2);out.write('\n')
+print(json.dumps({'head':receipt['head'],'status':receipt['status'],'diskBefore':receipt['diskBefore'],'diskAfter':receipt['diskAfter']}))
+assert receipt['status']=='','Baseline must be clean before benchmark'

@@ -1,0 +1,131 @@
+{
+  "schemaVersion": 1,
+  "id": "ordinal-edafb801-first",
+  "status": "source-only prepared overlay; no new-source execution",
+  "workItem": "SF-A03-T24 / #693",
+  "productCommit": "edafb8018be5b75916c8655e9ff1147b38035a24",
+  "sourceRevisionReceipt": "tests/fixtures/metadata-generations/qualification/ordinal-source-revision.json",
+  "sourceReview": "Approved narrow physical Module ordinal check before aggregate map/heap admission; existing assertion retained and history snapshots added.",
+  "basePlan": {
+    "path": "tests/fixtures/metadata-generations/validation-plan.json",
+    "sha256": "80a4be087ff4a927967f416bb5ce970c91881b41716dd620c9bb74893e2a0169",
+    "rule": "The original plan is immutable. This overlay changes only the source revision, fresh evidence paths and the explicit new-source provenance procedure."
+  },
+  "candidateCheckout": "/workspace/scratch/7e3d2a445c44/sf6-metadata-generations",
+  "recorder": "tests/fixtures/metadata-generations/qualification/ordinal-run-step.py",
+  "baseRecorder": {
+    "path": "tests/fixtures/metadata-generations/qualification/root-run-step.py.txt",
+    "sha256": "e38cfdd8e1141467662cce5bb98a5d39ee406ef613b46e1d8c37ee098c56e0c7"
+  },
+  "paths": {
+    "nativeCapture": "/workspace/scratch/7e3d2a445c44/project6-metadata-generations-native.ordinal-edafb801-first",
+    "execution": "/workspace/scratch/7e3d2a445c44/metadata-qualification-ordinal-edafb801-first",
+    "retainedNative": "tests/fixtures/metadata-generations/reference-ordinal",
+    "retainedExecution": "tests/fixtures/metadata-generations/qualification/execution-ordinal-first",
+    "futurePerformance": "/workspace/scratch/7e3d2a445c44/project6-metadata-generations-performance.ordinal-first"
+  },
+  "immutableEvidence": {
+    "commit": "edafb8018be5b75916c8655e9ff1147b38035a24",
+    "prefixes": [
+      "tests/fixtures/metadata-generations/reference",
+      "tests/fixtures/metadata-generations/qualification",
+      "tests/fixtures/portable-pdb-generations"
+    ],
+    "rule": "Enumerate only files already present at the evidence commit under these prefixes. Require unchanged bytes before and after every phase; newly added overlay files do not replace old evidence.",
+    "firstNativeSha256": "b212069f11b57db48ef2c2d6cd25e87f75fb667f23a2833de7a54df80121aa31",
+    "firstFailedGateStdoutSha256": "fd04604e3de186bacc5081de5d5f03291b95b3a1adaa676d4c8d9eed470feb72"
+  },
+  "environment": {
+    "SHARPFORGE_MAX_PARALLEL_RUNS": "1",
+    "SHARPFORGE_TEST_CONCURRENCY": "1",
+    "SHARPFORGE_MAX_OLD_SPACE_MB": "2048"
+  },
+  "nativeEnvironment": {
+    "SHARPFORGE_ORACLE_DOTNET": "/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/dotnet"
+  },
+  "commands": {
+    "native": [
+      "node", "scripts/limited.js", "node", "tests/fixtures/metadata-generations/capture.mjs",
+      "/workspace/scratch/7e3d2a445c44/project6-metadata-generations-native.ordinal-edafb801-first"
+    ],
+    "verify-external": [
+      "node", "scripts/limited.js", "node", "tests/fixtures/metadata-generations/verify.mjs",
+      "/workspace/scratch/7e3d2a445c44/project6-metadata-generations-native.ordinal-edafb801-first", "--strict-source"
+    ],
+    "verify-retained": [
+      "node", "scripts/limited.js", "node", "tests/fixtures/metadata-generations/verify.mjs",
+      "tests/fixtures/metadata-generations/reference-ordinal", "--strict-source"
+    ],
+    "focused": [
+      "node", "scripts/limited.js", "node", "--test", "--test-concurrency=1",
+      "tests/a03-24-reader-budgets.test.js",
+      "tests/a03-24-minimal-delta.test.js",
+      "tests/a03-24-metadata-generations.test.js",
+      "tests/a03-24-metadata-generation-boundaries.test.js",
+      "tests/a03-24-metadata-generations-native.test.js",
+      "tests/cil-table-widths.test.js",
+      "tests/a03-03-pe-reader.test.js",
+      "tests/a13-14-metadata-tables.test.js",
+      "tests/a13-14-metadata-heaps.test.js",
+      "tests/a13-14-metadata-native.test.js",
+      "tests/a13-05-pdb-generations.test.js"
+    ],
+    "performance": [
+      "node", "scripts/limited.js", "node", "packages/cil/tools/benchmark-metadata-generations.mjs",
+      "--baseline", "/workspace/scratch/7e3d2a445c44/sf6-metadata-generations-baseline-31900dce",
+      "--output", "/workspace/scratch/7e3d2a445c44/project6-metadata-generations-performance.ordinal-first"
+    ]
+  },
+  "order": ["native", "verify-external", "retain-native", "verify-retained", "focused", "performance"],
+  "retention": {
+    "nativeFiles": "Use exactly the twenty retainRelativePaths from the immutable base plan. Copy into the new reference-ordinal directory with exclusive file creation and byte-equality/hash inventory; never overwrite reference/.",
+    "executionFiles": "Preserve every new execution JSON/stdout/stderr and copy-retention record, including failures, under execution-ordinal-first after each phase completes. Keep all first-cohort evidence and raw whitespace unchanged.",
+    "excluded": ["observer project/output", "SDK/Roslyn/runtime payloads", "NuGet caches"],
+    "provenanceScope": "As in the first capture, raw native subprocess evidence covers the four workload commands. Existing resolver version probes retain resolved identities but no raw probe output."
+  },
+  "gateInterpretation": [
+    "The exact eleven-file gate is unchanged. The existing native tests replay the original retained reference on the corrected product; they do not pretend that old source hashes match the new source.",
+    "The fresh capture independently performs native observation and Node replay on the corrected source, and both explicit-path strict verifications check that new capture's source inventory against the corrected checkout.",
+    "Record the new capture/replay counts and actual gate outcomes. The prior 50/51 result stays failed; no new-source success is inferred before execution.",
+    "Stop and release the heavy slot on any new failure. No retry, source edit or benchmark follows automatically."
+  ],
+  "performancePreparation": {
+    "status": "pin/path-only adaptation prepared for review; no measurement; requires successful new-source gate, committed retention, baseline and root slot",
+    "baselineCommit": "31900dce5c1454c1f9c244c9ac14e1798eac3e5f",
+    "preserve": "The existing twenty workloads, 20 warm/100 measured counts, fifteen-child order, guards, units, raw chronology and regression policy remain predetermined. No benchmark has run.",
+    "preparedToolChanges": [
+      "The protocol retains preparationProductCommit=02df6354 for the immutable base plan and sets measured productCommit=edafb801. The existing checkout guard still verifies all product source against that exact measured pin and retains the exact baseline pin.",
+      "The orchestrator checks the old plan's product pin against preparationProductCommit. All original workload/count/guard comparisons remain unchanged.",
+      "The fixed nativeReferenceDirectory is reference-ordinal. The orchestrator and feature worker read its native.json and pass that directory to strict verification. This changed data dependency is necessary to preserve original reference/ and qualify the corrected source.",
+      "The benchmark tool manifest adds this overlay, the source-revision receipt, exact revision diff and recorder. Worker, timing/statistics/guard helpers, workload definitions/counts and the two-import policy allowance remain unchanged."
+    ],
+    "exactDiff": {
+      "path": "tests/fixtures/metadata-generations/qualification/ordinal-benchmark-pin.diff",
+      "baseCommit": "edafb8018be5b75916c8655e9ff1147b38035a24",
+      "format": "git diff --no-ext-diff --binary --unified=0 against baseCommit for the three toolRevisions paths",
+      "sha256": "20c2648e60779936b8b051158d81197e2aa95be617e27cf091eb0fbd79cadb8d"
+    },
+    "toolRevisions": [
+      {
+        "path": "packages/cil/tools/metadata-generations-benchmark-protocol.mjs",
+        "beforeSha256": "839ed5402767ab7fefd1bed5267da46beea2a3148a28827acedc472b105e6a84",
+        "afterSha256": "e775059901df656daa724024400c762bae432a664ec3eee9a64b83b85866024b"
+      },
+      {
+        "path": "packages/cil/tools/benchmark-metadata-generations.mjs",
+        "beforeSha256": "578effdc8c1b6eda250bac06376481c47d823141b29f3357501a9f1b03f40e37",
+        "afterSha256": "acaeec0421c51dd0e01c916645cdc67b88e72f2fbeadceaefb3542ff9ed547aa"
+      },
+      {
+        "path": "packages/cil/tools/metadata-generations-benchmark-features.mjs",
+        "beforeSha256": "c710733d729c617e97bca41f3a48f994f97dc5b28dfb9e8ece325706f082a5c7",
+        "afterSha256": "70fd4da3110f692dcb6d17aa8af9d858c7f4e49027d33dba51c268ced5b7c298"
+      }
+    ]
+  },
+  "disk": {
+    "minimumFreeBeforeFreshCaptureBytes": 268435456,
+    "rule": "Recheck the shared disk before scheduling; reuse the installed pinned SDK and commit only the small evidence payload. No baseline checkout or installation is part of this overlay preparation."
+  },
+  "authorization": "Source preparation only. Root currently owns the heavy slot. Do not invoke any recorder phase until root explicitly grants the next slot."
+}

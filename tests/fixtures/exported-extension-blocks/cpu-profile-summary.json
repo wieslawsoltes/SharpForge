@@ -1,0 +1,720 @@
+{
+  "baseline": {
+    "sampleCount": 957,
+    "topSelf": [
+      {
+        "file": "",
+        "function": "(garbage collector)",
+        "line": 0,
+        "samples": 65,
+        "percent": 6.79
+      },
+      {
+        "file": "syntax/src/lexer/scanner.js",
+        "function": "finish",
+        "line": 201,
+        "samples": 18,
+        "percent": 1.88
+      },
+      {
+        "file": "compiler/src/semantic/declaration-checks.js",
+        "function": "checkType",
+        "line": 36,
+        "samples": 16,
+        "percent": 1.67
+      },
+      {
+        "file": "syntax/src/green.js",
+        "function": "token",
+        "line": 202,
+        "samples": 14,
+        "percent": 1.46
+      },
+      {
+        "file": "cil/src/binary/hash.js",
+        "function": "sha256",
+        "line": 14,
+        "samples": 10,
+        "percent": 1.04
+      },
+      {
+        "file": "compiler/src/symbols/source/member-symbols.js",
+        "function": "method",
+        "line": 70,
+        "samples": 9,
+        "percent": 0.94
+      },
+      {
+        "file": "syntax/src/lexer/scanner.js",
+        "function": "identifierToken",
+        "line": 112,
+        "samples": 9,
+        "percent": 0.94
+      },
+      {
+        "file": "syntax/src/lexer/scanner.js",
+        "function": "run",
+        "line": 250,
+        "samples": 9,
+        "percent": 0.94
+      },
+      {
+        "file": "syntax/src/red.js",
+        "function": "slot",
+        "line": 185,
+        "samples": 9,
+        "percent": 0.94
+      },
+      {
+        "file": "syntax/src/parser/core.js",
+        "function": "green",
+        "line": 123,
+        "samples": 9,
+        "percent": 0.94
+      },
+      {
+        "file": "syntax/src/legacy-adapter.js",
+        "function": "method",
+        "line": 153,
+        "samples": 8,
+        "percent": 0.84
+      },
+      {
+        "file": "syntax/src/lexer/scanner.js",
+        "function": "token",
+        "line": 50,
+        "samples": 8,
+        "percent": 0.84
+      },
+      {
+        "file": "compiler/src/binder/members/declaration-checks.js",
+        "function": "checkType",
+        "line": 38,
+        "samples": 8,
+        "percent": 0.84
+      },
+      {
+        "file": "compiler/src/symbols/types.js",
+        "function": "NamedTypeSymbol",
+        "line": 109,
+        "samples": 8,
+        "percent": 0.84
+      },
+      {
+        "file": "syntax/src/red.js",
+        "function": "_wrap",
+        "line": 153,
+        "samples": 7,
+        "percent": 0.73
+      },
+      {
+        "file": "compiler/src/binder/inheritance.js",
+        "function": "hiddenMembers",
+        "line": 270,
+        "samples": 7,
+        "percent": 0.73
+      },
+      {
+        "file": "compiler/src/bound/semantic-walker.js",
+        "function": "forEachChild",
+        "line": 38,
+        "samples": 7,
+        "percent": 0.73
+      },
+      {
+        "file": "compiler/src/binder/queries.js",
+        "function": "expression",
+        "line": 36,
+        "samples": 7,
+        "percent": 0.73
+      },
+      {
+        "file": "compiler/src/symbols/source/member-symbols.js",
+        "function": "",
+        "line": 38,
+        "samples": 7,
+        "percent": 0.73
+      },
+      {
+        "file": "compiler/src/codegen/metadata/reference-assembly.js",
+        "function": "emitReferenceAssembly",
+        "line": 33,
+        "samples": 7,
+        "percent": 0.73
+      },
+      {
+        "file": "compiler/src/symbols/members.js",
+        "function": "get signatureKey",
+        "line": 78,
+        "samples": 7,
+        "percent": 0.73
+      },
+      {
+        "file": "compiler/src/symbols/members.js",
+        "function": "text",
+        "line": 78,
+        "samples": 7,
+        "percent": 0.73
+      }
+    ],
+    "metadataInclusive": [
+      {
+        "file": "compiler/src/codegen/metadata/reference-assembly.js",
+        "function": "compileToReferenceAssembly",
+        "line": 60,
+        "samples": 889,
+        "percent": 92.89
+      },
+      {
+        "file": "compiler/src/codegen/metadata/reference-assembly.js",
+        "function": "emitReferenceAssembly",
+        "line": 33,
+        "samples": 158,
+        "percent": 16.51
+      },
+      {
+        "file": "compiler/src/codegen/metadata/symbol-metadata.js",
+        "function": "write",
+        "line": 106,
+        "samples": 62,
+        "percent": 6.48
+      },
+      {
+        "file": "compiler/src/codegen/metadata/symbol-metadata.js",
+        "function": "writeMethods",
+        "line": 170,
+        "samples": 42,
+        "percent": 4.39
+      },
+      {
+        "file": "compiler/src/codegen/metadata/member-signatures.js",
+        "function": "methodSymbolSignature",
+        "line": 79,
+        "samples": 20,
+        "percent": 2.09
+      },
+      {
+        "file": "compiler/src/codegen/metadata/symbol-metadata.js",
+        "function": "writeTypeDefinitions",
+        "line": 136,
+        "samples": 15,
+        "percent": 1.57
+      },
+      {
+        "file": "compiler/src/codegen/metadata/member-signatures.js",
+        "function": "methodSignature",
+        "line": 66,
+        "samples": 14,
+        "percent": 1.46
+      },
+      {
+        "file": "compiler/src/codegen/metadata/symbol-metadata.js",
+        "function": "SymbolMetadataWriter",
+        "line": 74,
+        "samples": 11,
+        "percent": 1.15
+      },
+      {
+        "file": "compiler/src/codegen/metadata/symbol-metadata.js",
+        "function": "",
+        "line": 80,
+        "samples": 9,
+        "percent": 0.94
+      },
+      {
+        "file": "compiler/src/codegen/metadata/type-tokens.js",
+        "function": "typeToken",
+        "line": 120,
+        "samples": 9,
+        "percent": 0.94
+      },
+      {
+        "file": "compiler/src/codegen/metadata/member-plan.js",
+        "function": "addMethod",
+        "line": 167,
+        "samples": 8,
+        "percent": 0.84
+      },
+      {
+        "file": "compiler/src/codegen/metadata/member-plan.js",
+        "function": "planMembers",
+        "line": 149,
+        "samples": 8,
+        "percent": 0.84
+      },
+      {
+        "file": "compiler/src/codegen/metadata/type-tokens.js",
+        "function": "definitionToken",
+        "line": 80,
+        "samples": 7,
+        "percent": 0.73
+      },
+      {
+        "file": "compiler/src/codegen/metadata/custom-attributes.js",
+        "function": "write",
+        "line": 93,
+        "samples": 7,
+        "percent": 0.73
+      },
+      {
+        "file": "compiler/src/codegen/metadata/member-plan.js",
+        "function": "plannedMethod",
+        "line": 54,
+        "samples": 6,
+        "percent": 0.63
+      },
+      {
+        "file": "compiler/src/codegen/metadata/member-signatures.js",
+        "function": "passed",
+        "line": 37,
+        "samples": 6,
+        "percent": 0.63
+      },
+      {
+        "file": "compiler/src/codegen/metadata/member-signatures.js",
+        "function": "returned",
+        "line": 48,
+        "samples": 6,
+        "percent": 0.63
+      },
+      {
+        "file": "compiler/src/codegen/metadata/inherited-modifiers.js",
+        "function": "inheritedSignatureModifiers",
+        "line": 55,
+        "samples": 4,
+        "percent": 0.42
+      },
+      {
+        "file": "compiler/src/codegen/metadata/symbol-metadata.js",
+        "function": "",
+        "line": 202,
+        "samples": 4,
+        "percent": 0.42
+      },
+      {
+        "file": "compiler/src/codegen/metadata/member-signatures.js",
+        "function": "",
+        "line": 74,
+        "samples": 3,
+        "percent": 0.31
+      },
+      {
+        "file": "compiler/src/codegen/metadata/member-signatures.js",
+        "function": "customModifiers",
+        "line": 26,
+        "samples": 2,
+        "percent": 0.21
+      },
+      {
+        "file": "compiler/src/codegen/metadata/symbol-metadata.js",
+        "function": "writeTypeRelations",
+        "line": 213,
+        "samples": 2,
+        "percent": 0.21
+      }
+    ],
+    "nullableInclusive": [
+      {
+        "file": "compiler/src/conversions/nullable.js",
+        "function": "stripNullable",
+        "line": 14,
+        "samples": 1,
+        "percent": 0.1
+      }
+    ]
+  },
+  "candidate": {
+    "sampleCount": 1054,
+    "topSelf": [
+      {
+        "file": "",
+        "function": "(garbage collector)",
+        "line": 0,
+        "samples": 70,
+        "percent": 6.64
+      },
+      {
+        "file": "syntax/src/lexer/scanner.js",
+        "function": "finish",
+        "line": 201,
+        "samples": 20,
+        "percent": 1.9
+      },
+      {
+        "file": "compiler/src/symbols/types.js",
+        "function": "NamedTypeSymbol",
+        "line": 109,
+        "samples": 13,
+        "percent": 1.23
+      },
+      {
+        "file": "compiler/src/semantic/body-binding.js",
+        "function": "bindMethodBody",
+        "line": 48,
+        "samples": 12,
+        "percent": 1.14
+      },
+      {
+        "file": "syntax/src/lexer/scanner.js",
+        "function": "token",
+        "line": 50,
+        "samples": 10,
+        "percent": 0.95
+      },
+      {
+        "file": "compiler/src/semantic/declaration-checks.js",
+        "function": "checkType",
+        "line": 36,
+        "samples": 10,
+        "percent": 0.95
+      },
+      {
+        "file": "compiler/src/codegen/metadata/symbol-metadata.js",
+        "function": "writeMethods",
+        "line": 190,
+        "samples": 9,
+        "percent": 0.85
+      },
+      {
+        "file": "syntax/src/lexer/scanner.js",
+        "function": "identifierToken",
+        "line": 112,
+        "samples": 9,
+        "percent": 0.85
+      },
+      {
+        "file": "syntax/src/parser/declarations/members.js",
+        "function": "memberDeclaration",
+        "line": 9,
+        "samples": 9,
+        "percent": 0.85
+      },
+      {
+        "file": "compiler/src/codegen/metadata/inherited-modifiers.js",
+        "function": "inheritedSignatureModifiers",
+        "line": 55,
+        "samples": 9,
+        "percent": 0.85
+      },
+      {
+        "file": "syntax/src/legacy-adapter/types.js",
+        "function": "node",
+        "line": 33,
+        "samples": 8,
+        "percent": 0.76
+      },
+      {
+        "file": "syntax/src/lexer/scanner.js",
+        "function": "sequence",
+        "line": 152,
+        "samples": 8,
+        "percent": 0.76
+      },
+      {
+        "file": "cil/src/metadata/pointer-tables.js",
+        "function": "metadataColumnKind",
+        "line": 16,
+        "samples": 8,
+        "percent": 0.76
+      },
+      {
+        "file": "compiler/src/symbols/members.js",
+        "function": "toDisplayString",
+        "line": 85,
+        "samples": 8,
+        "percent": 0.76
+      },
+      {
+        "file": "compiler/src/symbols/core-types.js",
+        "function": "CoreTypes",
+        "line": 44,
+        "samples": 8,
+        "percent": 0.76
+      },
+      {
+        "file": "cil/src/binary.js",
+        "function": "utf8",
+        "line": 37,
+        "samples": 8,
+        "percent": 0.76
+      },
+      {
+        "file": "compiler/src/binder/members/declaration-checks.js",
+        "function": "checkType",
+        "line": 38,
+        "samples": 8,
+        "percent": 0.76
+      },
+      {
+        "file": "compiler/src/symbols/source/member-symbols.js",
+        "function": "method",
+        "line": 70,
+        "samples": 7,
+        "percent": 0.66
+      },
+      {
+        "file": "syntax/src/parser/core.js",
+        "function": "take",
+        "line": 129,
+        "samples": 7,
+        "percent": 0.66
+      },
+      {
+        "file": "compiler/src/symbols/source/member-symbols.js",
+        "function": "",
+        "line": 38,
+        "samples": 7,
+        "percent": 0.66
+      },
+      {
+        "file": "compiler/src/codegen/metadata/symbol-metadata.js",
+        "function": "write",
+        "line": 126,
+        "samples": 7,
+        "percent": 0.66
+      },
+      {
+        "file": "syntax/src/green.js",
+        "function": "token",
+        "line": 202,
+        "samples": 7,
+        "percent": 0.66
+      }
+    ],
+    "metadataInclusive": [
+      {
+        "file": "compiler/src/codegen/metadata/reference-assembly.js",
+        "function": "compileToReferenceAssembly",
+        "line": 60,
+        "samples": 982,
+        "percent": 93.17
+      },
+      {
+        "file": "compiler/src/codegen/metadata/reference-assembly.js",
+        "function": "emitReferenceAssembly",
+        "line": 33,
+        "samples": 247,
+        "percent": 23.43
+      },
+      {
+        "file": "compiler/src/codegen/metadata/symbol-metadata.js",
+        "function": "write",
+        "line": 126,
+        "samples": 86,
+        "percent": 8.16
+      },
+      {
+        "file": "compiler/src/codegen/metadata/symbol-metadata.js",
+        "function": "writeMethods",
+        "line": 190,
+        "samples": 61,
+        "percent": 5.79
+      },
+      {
+        "file": "compiler/src/codegen/metadata/symbol-metadata.js",
+        "function": "SymbolMetadataWriter",
+        "line": 80,
+        "samples": 41,
+        "percent": 3.89
+      },
+      {
+        "file": "compiler/src/codegen/metadata/custom-attributes.js",
+        "function": "write",
+        "line": 99,
+        "samples": 39,
+        "percent": 3.7
+      },
+      {
+        "file": "compiler/src/codegen/metadata/member-signatures.js",
+        "function": "methodSymbolSignature",
+        "line": 80,
+        "samples": 28,
+        "percent": 2.66
+      },
+      {
+        "file": "compiler/src/codegen/metadata/compiler-attribute-definitions.js",
+        "function": "writeCompilerAttributeDefinitions",
+        "line": 35,
+        "samples": 25,
+        "percent": 2.37
+      },
+      {
+        "file": "compiler/src/codegen/metadata/type-tokens.js",
+        "function": "typeToken",
+        "line": 121,
+        "samples": 15,
+        "percent": 1.42
+      },
+      {
+        "file": "compiler/src/codegen/metadata/type-tokens.js",
+        "function": "definitionToken",
+        "line": 80,
+        "samples": 15,
+        "percent": 1.42
+      },
+      {
+        "file": "compiler/src/codegen/metadata/member-plan.js",
+        "function": "planMembers",
+        "line": 149,
+        "samples": 14,
+        "percent": 1.33
+      },
+      {
+        "file": "compiler/src/codegen/metadata/member-signatures.js",
+        "function": "methodSignature",
+        "line": 67,
+        "samples": 14,
+        "percent": 1.33
+      },
+      {
+        "file": "compiler/src/codegen/metadata/compiler-attribute-registry.js",
+        "function": "getOrCreate",
+        "line": 21,
+        "samples": 14,
+        "percent": 1.33
+      },
+      {
+        "file": "compiler/src/codegen/metadata/ref-declaration-metadata.js",
+        "function": "planRefDeclarationAttributes",
+        "line": 22,
+        "samples": 14,
+        "percent": 1.33
+      },
+      {
+        "file": "compiler/src/codegen/metadata/symbol-metadata.js",
+        "function": "",
+        "line": 89,
+        "samples": 12,
+        "percent": 1.14
+      },
+      {
+        "file": "compiler/src/codegen/metadata/compiler-attribute-definitions.js",
+        "function": "attributeUsage",
+        "line": 22,
+        "samples": 12,
+        "percent": 1.14
+      },
+      {
+        "file": "compiler/src/codegen/metadata/member-plan.js",
+        "function": "addMethod",
+        "line": 167,
+        "samples": 11,
+        "percent": 1.04
+      },
+      {
+        "file": "compiler/src/codegen/metadata/nullable-plan.js",
+        "function": "NullableMetadataPlan",
+        "line": 19,
+        "samples": 11,
+        "percent": 1.04
+      },
+      {
+        "file": "compiler/src/codegen/metadata/inherited-modifiers.js",
+        "function": "inheritedSignatureModifiers",
+        "line": 55,
+        "samples": 11,
+        "percent": 1.04
+      },
+      {
+        "file": "compiler/src/codegen/metadata/compiler-attribute-definitions.js",
+        "function": "compilerAttributeConstructorToken",
+        "line": 10,
+        "samples": 11,
+        "percent": 1.04
+      },
+      {
+        "file": "compiler/src/codegen/metadata/member-signatures.js",
+        "function": "passed",
+        "line": 38,
+        "samples": 10,
+        "percent": 0.95
+      },
+      {
+        "file": "compiler/src/codegen/metadata/symbol-metadata.js",
+        "function": "writeTypeDefinitions",
+        "line": 156,
+        "samples": 10,
+        "percent": 0.95
+      }
+    ],
+    "nullableInclusive": [
+      {
+        "file": "compiler/src/codegen/metadata/nullable-plan.js",
+        "function": "NullableMetadataPlan",
+        "line": 19,
+        "samples": 11,
+        "percent": 1.04
+      },
+      {
+        "file": "compiler/src/codegen/metadata/nullable-plan.js",
+        "function": "finishContexts",
+        "line": 108,
+        "samples": 4,
+        "percent": 0.38
+      },
+      {
+        "file": "compiler/src/codegen/metadata/nullable-plan.js",
+        "function": "typeEntries",
+        "line": 52,
+        "samples": 4,
+        "percent": 0.38
+      },
+      {
+        "file": "compiler/src/codegen/metadata/nullable-plan.js",
+        "function": "compact",
+        "line": 6,
+        "samples": 2,
+        "percent": 0.19
+      },
+      {
+        "file": "compiler/src/nullable/metadata-flags.js",
+        "function": "encodeNullableFlags",
+        "line": 13,
+        "samples": 2,
+        "percent": 0.19
+      },
+      {
+        "file": "compiler/src/codegen/metadata/nullable-plan.js",
+        "function": "methodEntries",
+        "line": 78,
+        "samples": 2,
+        "percent": 0.19
+      },
+      {
+        "file": "compiler/src/codegen/metadata/nullable-plan.js",
+        "function": "chooseContexts",
+        "line": 99,
+        "samples": 1,
+        "percent": 0.09
+      },
+      {
+        "file": "compiler/src/codegen/metadata/nullable-attributes.js",
+        "function": "writeNullableAttributes",
+        "line": 35,
+        "samples": 1,
+        "percent": 0.09
+      },
+      {
+        "file": "compiler/src/codegen/metadata/nullable-plan.js",
+        "function": "entry",
+        "line": 8,
+        "samples": 1,
+        "percent": 0.09
+      },
+      {
+        "file": "compiler/src/nullable/annotations.js",
+        "function": "stateAt",
+        "line": 48,
+        "samples": 1,
+        "percent": 0.09
+      },
+      {
+        "file": "compiler/src/codegen/metadata/nullable-plan.js",
+        "function": "",
+        "line": 85,
+        "samples": 1,
+        "percent": 0.09
+      }
+    ]
+  }
+}

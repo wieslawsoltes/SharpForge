@@ -64,3 +64,4 @@ export { referenceAssemblyMemberIncluded, addReferenceAssemblyAttribute } from '
 export { AssemblyUsageAnalysis } from './browser/analyzers.js';
 export { MetadataTableInspector } from './inspector-tables.js';
 export {readSourceTypeIdentities} from './source-type-identities.js';
+export { MetadataGenerations, metadataGenerationDiagnosticCatalog } from './metadata/delta-reader.js';
