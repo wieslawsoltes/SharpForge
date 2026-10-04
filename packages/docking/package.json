@@ -9,6 +9,7 @@
   },
   "files": [
     "src",
+    "examples",
     "README.md",
     "LICENSE"
   ],
