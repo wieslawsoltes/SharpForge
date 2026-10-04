@@ -1,0 +1,254 @@
+{
+  "before": {
+    "label": "baseline-db446a7a",
+    "node": "v24.21.0",
+    "platform": "darwin",
+    "architecture": "arm64",
+    "results": [
+      {
+        "compact": false,
+        "instructionPairs": 65536,
+        "bytes": 589824,
+        "medianMs": 4.091334000000018,
+        "p95Ms": 8.200540999999987,
+        "medianHeapDelta": 22280,
+        "samples": [
+          {
+            "ms": 8.200540999999987,
+            "heapDelta": 174736
+          },
+          {
+            "ms": 4.003582999999992,
+            "heapDelta": 22280
+          },
+          {
+            "ms": 4.035792000000015,
+            "heapDelta": 20664
+          },
+          {
+            "ms": 4.091334000000018,
+            "heapDelta": 13584
+          },
+          {
+            "ms": 3.524249999999995,
+            "heapDelta": 16928
+          },
+          {
+            "ms": 6.8110000000000355,
+            "heapDelta": 75648
+          },
+          {
+            "ms": 4.375541999999996,
+            "heapDelta": 25496
+          }
+        ]
+      },
+      {
+        "compact": true,
+        "instructionPairs": 65536,
+        "bytes": 324608,
+        "medianMs": 4.369792000000075,
+        "p95Ms": 6.958750000000009,
+        "medianHeapDelta": 13504,
+        "samples": [
+          {
+            "ms": 4.813334000000054,
+            "heapDelta": 22784
+          },
+          {
+            "ms": 4.264374999999973,
+            "heapDelta": 10680
+          },
+          {
+            "ms": 4.926499999999919,
+            "heapDelta": 18368
+          },
+          {
+            "ms": 4.104665999999952,
+            "heapDelta": 72
+          },
+          {
+            "ms": 4.007333000000017,
+            "heapDelta": 72
+          },
+          {
+            "ms": 6.958750000000009,
+            "heapDelta": 69904
+          },
+          {
+            "ms": 4.369792000000075,
+            "heapDelta": 13504
+          }
+        ]
+      }
+    ]
+  },
+  "initialOwnPropertyCheck": {
+    "label": "opcode-name-guard",
+    "node": "v24.21.0",
+    "platform": "darwin",
+    "architecture": "arm64",
+    "results": [
+      {
+        "compact": false,
+        "instructionPairs": 65536,
+        "bytes": 589824,
+        "medianMs": 6.524999999999977,
+        "p95Ms": 10.043959000000001,
+        "medianHeapDelta": 24224,
+        "samples": [
+          {
+            "ms": 9.355957999999987,
+            "heapDelta": 142144
+          },
+          {
+            "ms": 6.524999999999977,
+            "heapDelta": 26104
+          },
+          {
+            "ms": 5.637292000000002,
+            "heapDelta": 16352
+          },
+          {
+            "ms": 5.945166999999998,
+            "heapDelta": 19640
+          },
+          {
+            "ms": 10.043959000000001,
+            "heapDelta": 17536
+          },
+          {
+            "ms": 8.933000000000021,
+            "heapDelta": 119024
+          },
+          {
+            "ms": 5.987916999999982,
+            "heapDelta": 24224
+          }
+        ]
+      },
+      {
+        "compact": true,
+        "instructionPairs": 65536,
+        "bytes": 324608,
+        "medianMs": 6.518833999999998,
+        "p95Ms": 9.404958000000022,
+        "medianHeapDelta": 10824,
+        "samples": [
+          {
+            "ms": 6.518833999999998,
+            "heapDelta": 72
+          },
+          {
+            "ms": 8.219916999999953,
+            "heapDelta": 10824
+          },
+          {
+            "ms": 5.99958300000003,
+            "heapDelta": 20824
+          },
+          {
+            "ms": 5.824874999999963,
+            "heapDelta": 72
+          },
+          {
+            "ms": 5.884874999999965,
+            "heapDelta": 72
+          },
+          {
+            "ms": 9.354750000000024,
+            "heapDelta": 67192
+          },
+          {
+            "ms": 9.404958000000022,
+            "heapDelta": 32216
+          }
+        ]
+      }
+    ]
+  },
+  "finalPrivateLookup": {
+    "label": "private-catalog-name-lookup",
+    "node": "v24.21.0",
+    "platform": "darwin",
+    "architecture": "arm64",
+    "results": [
+      {
+        "compact": false,
+        "instructionPairs": 65536,
+        "bytes": 589824,
+        "medianMs": 2.3530000000000086,
+        "p95Ms": 5.362541000000007,
+        "medianHeapDelta": 18080,
+        "samples": [
+          {
+            "ms": 1.8505830000000003,
+            "heapDelta": 3584
+          },
+          {
+            "ms": 5.362541000000007,
+            "heapDelta": 155656
+          },
+          {
+            "ms": 2.2482080000000053,
+            "heapDelta": 18080
+          },
+          {
+            "ms": 2.292457999999982,
+            "heapDelta": 18560
+          },
+          {
+            "ms": 2.894541000000004,
+            "heapDelta": 17416
+          },
+          {
+            "ms": 4.410917000000012,
+            "heapDelta": 59280
+          },
+          {
+            "ms": 2.3530000000000086,
+            "heapDelta": 16808
+          }
+        ]
+      },
+      {
+        "compact": true,
+        "instructionPairs": 65536,
+        "bytes": 324608,
+        "medianMs": 2.8270419999999774,
+        "p95Ms": 5.370666999999997,
+        "medianHeapDelta": 22432,
+        "samples": [
+          {
+            "ms": 5.370666999999997,
+            "heapDelta": 70256
+          },
+          {
+            "ms": 2.8270419999999774,
+            "heapDelta": 11368
+          },
+          {
+            "ms": 3.3470000000000084,
+            "heapDelta": 23008
+          },
+          {
+            "ms": 2.407083,
+            "heapDelta": 72
+          },
+          {
+            "ms": 2.3759170000000154,
+            "heapDelta": 72
+          },
+          {
+            "ms": 4.944375000000008,
+            "heapDelta": 57776
+          },
+          {
+            "ms": 2.5102080000000058,
+            "heapDelta": 22432
+          }
+        ]
+      }
+    ]
+  }
+}

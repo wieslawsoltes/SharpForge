@@ -18,6 +18,7 @@
  *   properties  CS9248 no implementing part      CS9249 no defining part           CS9250 two defining parts
  *               CS9252 accessor not implemented  CS9255 types differ
  */
+import {DiagnosticId} from '../../diagnostics/codes.js';
 import { SymbolKind, RefKind } from '../types.js';
 import { MethodKind, DeclarationModifiers } from '../members.js';
 import { isSamePartialMethod, partialSignatureRows } from './partial-method-signatures.js';
@@ -57,7 +58,7 @@ function adoptCallerSignature(definition, implementation) {
   definition.parameters.forEach((from, index) => {
     const to = implementation.parameters[index];
     if (!to) return;
-    if (to.defaultSyntax) rows.push({ member: implementation, code: 'CS1066', args: [to.name], at: to.locations?.[0] });
+    if (to.defaultSyntax) rows.push({ member: implementation, code: DiagnosticId.CS1066, args: [to.name], at: to.locations?.[0] });
     to.defaultSyntax = from.defaultSyntax ?? null;
     to.hasExplicitDefaultValue = !!from.defaultSyntax;
     to.isOptional = !!from.defaultSyntax;
@@ -69,14 +70,14 @@ function adoptCallerSignature(definition, implementation) {
 
 function methodRules(method, type) {
   const rows = [];
-  if (!type.isPartial) rows.push({ member: method, code: 'CS0751', args: [] });
+  if (!type.isPartial) rows.push({ member: method, code: DiagnosticId.CS0751, args: [] });
   // An interface member without a body is abstract without saying so: only the modifier itself is the error.
-  if (wordsOf(method).includes('abstract')) rows.push({ member: method, code: 'CS0750', args: [] });
+  if (wordsOf(method).includes('abstract')) rows.push({ member: method, code: DiagnosticId.CS0750, args: [] });
   if (hasAccessibility(method)) return rows;
   const display = method.toDisplayString();
-  if ([...virtualWords, 'extern'].some(word => wordsOf(method).includes(word))) rows.push({ member: method, code: 'CS8798', args: [display] });
-  if (!method.returnsVoid) rows.push({ member: method, code: 'CS8796', args: [display] });
-  else if (method.parameters.some(p => p.refKind === RefKind.Out)) rows.push({ member: method, code: 'CS8797', args: [display] });
+  if ([...virtualWords, 'extern'].some(word => wordsOf(method).includes(word))) rows.push({ member: method, code: DiagnosticId.CS8798, args: [display] });
+  if (!method.returnsVoid) rows.push({ member: method, code: DiagnosticId.CS8796, args: [display] });
+  else if (method.parameters.some(p => p.refKind === RefKind.Out)) rows.push({ member: method, code: DiagnosticId.CS8797, args: [display] });
   return rows;
 }
 
@@ -84,12 +85,12 @@ function methodPairRules(definition, implementation) {
   const rows = [],
     row = code => rows.push({ member: implementation, code, args: [] }),
     endsWithParams = method => !!method.parameters.at(-1)?.isParams;
-  if (definition.refKind !== implementation.refKind) row('CS8818');
-  else if (!sameType(definition.returnType, implementation.returnType)) row('CS8817');
-  if (definition.isStatic !== implementation.isStatic) row('CS0763');
-  if (definition.declaredAccessibility !== implementation.declaredAccessibility) row('CS8799');
-  if (virtualModifiersOf(definition) !== virtualModifiersOf(implementation)) row('CS8800');
-  if (endsWithParams(definition) !== endsWithParams(implementation)) row('CS0758');
+  if (definition.refKind !== implementation.refKind) row(DiagnosticId.CS8818);
+  else if (!sameType(definition.returnType, implementation.returnType)) row(DiagnosticId.CS8817);
+  if (definition.isStatic !== implementation.isStatic) row(DiagnosticId.CS0763);
+  if (definition.declaredAccessibility !== implementation.declaredAccessibility) row(DiagnosticId.CS8799);
+  if (virtualModifiersOf(definition) !== virtualModifiersOf(implementation)) row(DiagnosticId.CS8800);
+  if (endsWithParams(definition) !== endsWithParams(implementation)) row(DiagnosticId.CS0758);
   return rows;
 }
 
@@ -121,13 +122,13 @@ function mergeMethod(parts, type) {
     rows = parts.flatMap(part => methodRules(part, type)),
     removed = [];
   for (const extra of definitions.slice(1)) {
-    rows.push({ member: extra, code: 'CS0756', args: [] }, { member: extra, code: 'CS0111', args: [extra.name, type.toDisplayString()] });
+    rows.push({ member: extra, code: DiagnosticId.CS0756, args: [] }, { member: extra, code: DiagnosticId.CS0111, args: [extra.name, type.toDisplayString()] });
     removed.push(extra);
   }
   for (const extra of implementations.slice(1)) {
-    rows.push({ member: extra, code: 'CS0757', args: [] });
+    rows.push({ member: extra, code: DiagnosticId.CS0757, args: [] });
     // Next to a defining part a repeated implementation is only that; two implementations alone are also duplicates.
-    if (!definition) rows.push({ member: extra, code: 'CS0111', args: [extra.name, type.toDisplayString()] });
+    if (!definition) rows.push({ member: extra, code: DiagnosticId.CS0111, args: [extra.name, type.toDisplayString()] });
     removed.push(extra);
   }
   if (definition && implementation) {
@@ -136,17 +137,17 @@ function mergeMethod(parts, type) {
     implementation.partialDefinitionPart = definition;
     definition.partialImplementationPart = implementation;
     removed.push(definition);
-  } else if (implementation) rows.push({ member: implementation, code: 'CS0759', args: [implementation.toDisplayString()] });
-  else if (hasAccessibility(definition)) rows.push({ member: definition, code: 'CS8795', args: [definition.toDisplayString()] });
+  } else if (implementation) rows.push({ member: implementation, code: DiagnosticId.CS0759, args: [implementation.toDisplayString()] });
+  else if (hasAccessibility(definition)) rows.push({ member: definition, code: DiagnosticId.CS8795, args: [definition.toDisplayString()] });
   else definition.isUnimplementedPartial = true;
   return { removed, rows };
 }
 
 function propertyPairRules(definition, implementation) {
   const rows = [];
-  if (!sameType(definition.type, implementation.type)) rows.push({ member: implementation, code: 'CS9255', args: [] });
+  if (!sameType(definition.type, implementation.type)) rows.push({ member: implementation, code: DiagnosticId.CS9255, args: [] });
   for (const kind of ['getMethod', 'setMethod'])
-    if (definition[kind] && !implementation[kind]) rows.push({ member: implementation, code: 'CS9252', args: [definition[kind].toDisplayString()] });
+    if (definition[kind] && !implementation[kind]) rows.push({ member: implementation, code: DiagnosticId.CS9252, args: [definition[kind].toDisplayString()] });
   return rows;
 }
 
@@ -157,13 +158,13 @@ function mergeProperty(parts) {
     [implementation] = implementations,
     rows = [],
     removed = [];
-  for (const extra of definitions.slice(1)) rows.push({ member: extra, code: 'CS9250', args: [] });
+  for (const extra of definitions.slice(1)) rows.push({ member: extra, code: DiagnosticId.CS9250, args: [] });
   if (definition && implementation) {
     rows.push(...propertyPairRules(definition, implementation), ...adoptCallerSignature(definition, implementation));
     implementation.partialDefinitionPart = definition;
     removed.push(definition);
-  } else if (implementation) rows.push({ member: implementation, code: 'CS9249', args: [implementation.toDisplayString()] });
-  else rows.push({ member: definition, code: 'CS9248', args: [definition.toDisplayString()] });
+  } else if (implementation) rows.push({ member: implementation, code: DiagnosticId.CS9249, args: [implementation.toDisplayString()] });
+  else rows.push({ member: definition, code: DiagnosticId.CS9248, args: [definition.toDisplayString()] });
   return { removed, rows };
 }
 

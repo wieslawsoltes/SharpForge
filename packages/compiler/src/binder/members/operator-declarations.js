@@ -12,6 +12,7 @@
  * Each check returns `{ member, code, args }` rows; the caller reports them at the member's location (the operator
  * token, or the target type of a conversion).
  */
+import {DiagnosticId} from '../../diagnostics/codes.js';
 import { SymbolKind, TypeKind, Accessibility } from '../../symbols/types.js';
 import { MethodKind } from '../../symbols/members.js';
 import { stripNullable } from '../../conversions/nullable.js';
@@ -35,22 +36,22 @@ function checkOperator(method, type, operators) {
   const token = method.operatorToken,
     count = method.parameters.length,
     display = method.toDisplayString();
-  if (!unaryOnly.has(token) && !(unaryOrBinary.has(token) && count === 1) && count !== 2) return [{ member: method, code: 'CS1534', args: [token] }];
-  if (unaryOnly.has(token) && count !== 1) return [{ member: method, code: 'CS1535', args: [token] }];
+  if (!unaryOnly.has(token) && !(unaryOrBinary.has(token) && count === 1) && count !== 2) return [{ member: method, code: DiagnosticId.CS1534, args: [token] }];
+  if (unaryOnly.has(token) && count !== 1) return [{ member: method, code: DiagnosticId.CS1535, args: [token] }];
   const rows = [],
     operands = method.parameters.map(p => p.type);
-  if (method.returnType.specialType === 'System_Void') rows.push({ member: method, code: 'CS0590', args: [] });
+  if (method.returnType.specialType === 'System_Void') rows.push({ member: method, code: DiagnosticId.CS0590, args: [] });
   else if (token === '++' || token === '--') {
-    if (!isContaining(operands[0], type)) rows.push({ member: method, code: 'CS0559', args: [] });
-    else if (!isContaining(method.returnType, type)) rows.push({ member: method, code: 'CS0448', args: [] });
+    if (!isContaining(operands[0], type)) rows.push({ member: method, code: DiagnosticId.CS0559, args: [] });
+    else if (!isContaining(method.returnType, type)) rows.push({ member: method, code: DiagnosticId.CS0448, args: [] });
   } else if (count === 1) {
-    if (!isContaining(operands[0], type)) rows.push({ member: method, code: 'CS0562', args: [] });
+    if (!isContaining(operands[0], type)) rows.push({ member: method, code: DiagnosticId.CS0562, args: [] });
     else if ((token === 'true' || token === 'false') && method.returnType.specialType !== 'System_Boolean')
-      rows.push({ member: method, code: 'CS0215', args: [] });
-  } else if (!operands.some(operand => isContaining(operand, type))) rows.push({ member: method, code: 'CS0563', args: [] });
+      rows.push({ member: method, code: DiagnosticId.CS0215, args: [] });
+  } else if (!operands.some(operand => isContaining(operand, type))) rows.push({ member: method, code: DiagnosticId.CS0563, args: [] });
   const partner = pairs[token];
   if (partner && !operators.some(other => other.operatorToken === partner && sameParameters(other, method)))
-    rows.push({ member: method, code: 'CS0216', args: [display, partner] });
+    rows.push({ member: method, code: DiagnosticId.CS0216, args: [display, partner] });
   return rows;
 }
 
@@ -60,18 +61,18 @@ function checkConversion(method, type, seen) {
   if (!from || method.parameters.length !== 1) return [];
   const fromSelf = isContaining(from, type),
     toSelf = isContaining(to, type);
-  if (fromSelf && toSelf) return [{ member: method, code: 'CS0555', args: [] }];
-  if (!fromSelf && !toSelf) return [{ member: method, code: 'CS0556', args: [] }];
+  if (fromSelf && toSelf) return [{ member: method, code: DiagnosticId.CS0555, args: [] }];
+  if (!fromSelf && !toSelf) return [{ member: method, code: DiagnosticId.CS0556, args: [] }];
   const other = fromSelf ? to : from;
-  if (other.typeKind === TypeKind.Dynamic) return [{ member: method, code: 'CS1964', args: [method.toDisplayString()] }];
-  if (other.typeKind === TypeKind.Interface) return [{ member: method, code: 'CS0552', args: [method.toDisplayString()] }];
+  if (other.typeKind === TypeKind.Dynamic) return [{ member: method, code: DiagnosticId.CS1964, args: [method.toDisplayString()] }];
+  if (other.typeKind === TypeKind.Interface) return [{ member: method, code: DiagnosticId.CS0552, args: [method.toDisplayString()] }];
   // `explicit operator checked T` is declared next to `explicit operator T`: only the same form twice is a duplicate.
   const isChecked = other => other.name === 'op_CheckedExplicit',
     duplicate = seen.find(
       earlier => isChecked(earlier) === isChecked(method) && earlier.parameters[0].type.equals(from) && earlier.returnType.equals(to),
     );
   seen.push(method);
-  return duplicate ? [{ member: method, code: 'CS0557', args: [type.toDisplayString()] }] : [];
+  return duplicate ? [{ member: method, code: DiagnosticId.CS0557, args: [type.toDisplayString()] }] : [];
 }
 
 /** True when the type overrides the method `name` of System.Object with `parameterCount` parameters. */
@@ -92,9 +93,9 @@ export function checkOperatorDeclarations(type) {
   for (const method of members) {
     if (!isOperator(method) && !isConversion(method)) continue;
     if (method.declaredAccessibility !== Accessibility.Public || !method.isStatic) {
-      rows.push({ member: method, code: 'CS0558', args: [method.toDisplayString()] });
+      rows.push({ member: method, code: DiagnosticId.CS0558, args: [method.toDisplayString()] });
       // A conversion to or from `dynamic` is reported whatever else is wrong with the declaration.
-      if (isConversion(method) && typesKnown(method)) rows.push(...checkConversion(method, type, []).filter(row => row.code === 'CS1964'));
+      if (isConversion(method) && typesKnown(method)) rows.push(...checkConversion(method, type, []).filter(row => row.code === DiagnosticId.CS1964));
       continue;
     }
     if (!typesKnown(method)) continue;
@@ -102,8 +103,8 @@ export function checkOperatorDeclarations(type) {
   }
   if (operators.some(o => o.operatorToken === '==' || o.operatorToken === '!=')) {
     const display = type.toDisplayString();
-    if (!overridesObjectMethod(type, 'Equals', 1)) rows.push({ member: type, code: 'CS0660', args: [display] });
-    if (!overridesObjectMethod(type, 'GetHashCode', 0)) rows.push({ member: type, code: 'CS0661', args: [display] });
+    if (!overridesObjectMethod(type, 'Equals', 1)) rows.push({ member: type, code: DiagnosticId.CS0660, args: [display] });
+    if (!overridesObjectMethod(type, 'GetHashCode', 0)) rows.push({ member: type, code: DiagnosticId.CS0661, args: [display] });
   }
   return rows;
 }

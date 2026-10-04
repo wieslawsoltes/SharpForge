@@ -11,6 +11,7 @@
  *
  * No call is ever redirected: a program that has the attribute does not compile, so it cannot run un-intercepted.
  */
+import {DiagnosticId} from '../diagnostics/codes.js';
 import { attributesNamed } from './bound-attributes.js';
 
 const interceptsLocationAttribute = 'System.Runtime.CompilerServices.InterceptsLocationAttribute';
@@ -44,19 +45,19 @@ export function checkInterceptor(method) {
       version = constantOf(first);
     if (attribute.arguments.length === 2 && typeof version === 'number') {
       if (version !== 1) {
-        rows.push({ at: attribute.syntax.name, code: 'CS9232', args: [version] });
+        rows.push({ at: attribute.syntax.name, code: DiagnosticId.CS9232, args: [version] });
         continue;
       }
       if (base64Length(constantOf(second)) < checksumBytes + positionBytes) {
-        rows.push({ at: attribute.syntax.name, code: 'CS9231', args: [] });
+        rows.push({ at: attribute.syntax.name, code: DiagnosticId.CS9231, args: [] });
         continue;
       }
     }
     const names = namespaceNames(method.containingType);
-    if (!names.length) rows.push({ at: attribute.syntax, code: 'CS9206', args: [] });
+    if (!names.length) rows.push({ at: attribute.syntax, code: DiagnosticId.CS9206, args: [] });
     else {
       const property = `<InterceptorsNamespaces>$(InterceptorsNamespaces);${names.join('.')}</InterceptorsNamespaces>`;
-      rows.push({ at: attribute.syntax, code: 'CS9137', args: [property] });
+      rows.push({ at: attribute.syntax, code: DiagnosticId.CS9137, args: [property] });
     }
   }
   return rows;

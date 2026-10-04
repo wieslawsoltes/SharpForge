@@ -293,6 +293,12 @@ negative zero, shortest round-trip digits and uppercase, padded exponents.
 The .NET 10.0.5 numeric oracle covers fifty bit patterns through scalar, mixed
 array and dictionary serialization in both JavaScript VMs. The existing
 `JsonException` policy for nonfinite input is retained; native .NET reports
-`ArgumentException`. This change does not qualify Single/Decimal formatting or
-correct the existing CIL boolean-box unwrapping behavior.
+`ArgumentException`. Single/Decimal formatting remains unqualified.
+The registered `Dictionary<int, T>` and `Dictionary<string, T>` profiles serialize
+keys as property names in collection enumeration order, including numeric-looking
+string keys. Declared boolean dictionary values and boxed Boolean/Char values
+retain their JSON types. Dictionary traversal is shared with the collection
+package so removed entries and reused slots follow its enumeration policy.
+The source compiler still rejects `char` values with `SF2003`; boxed Char
+serialization is qualified through independently assembled CIL.
 Custom encoders and arbitrary object reflection are not supported.
