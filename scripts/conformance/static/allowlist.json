@@ -86,6 +86,13 @@
       "reason": "Developer-run Constant benchmark loads the metadata importer from an explicitly selected trusted local baseline or its fixed workspace path; the tool is not shipped in the product."
     },
     {
+      "path": "packages/compiler/bench/unions-paired.bench.mjs",
+      "operation": "dynamic-import",
+      "count": 1,
+      "sha256": "870f793b642673fb43ba8abe2acc047050c7da7f1cd5b15f5f9346baef4320a9",
+      "reason": "Developer-run union benchmark loads only the fixed direct-CIL compiler module from two explicitly selected trusted local checkouts. Exact commits and clean tracked files are checked before and after each sequential worker; checkout paths are executable host input and the benchmark is not shipped in the product."
+    },
+    {
       "path": "packages/compiler/smoke.mjs",
       "operation": "dynamic-import",
       "count": 3,
