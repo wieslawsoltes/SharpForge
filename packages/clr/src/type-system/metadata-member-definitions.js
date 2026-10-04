@@ -1,15 +1,22 @@
 import { createMethodDesc } from './method-desc.js';
 import { createFieldDesc } from './field-desc.js';
+import { createPropertyDesc } from './property-desc.js';
+import { createEventDesc, initializeEventType } from './event-desc.js';
 import { loadError, LoadErrorCode } from '../load-errors.js';
 
 const empty = Object.freeze([]);
 const kinds = Object.freeze({
-  method: { table: 6, pointer: 5, list: 'MethodList', name: 3, flags: 2, implementationFlags: 1, signature: 4, create: createMethodDesc },
+  method: { table: 6, pointer: 5, list: 'MethodList', name: 3, flags: 2, implementationFlags: 1, signature: 4, create: createMethodDesc,
+    nameOptions: Object.freeze({ maxBytes: 16 * 1024 }) },
   field: { table: 4, pointer: 3, list: 'FieldList', name: 1, flags: 0, signature: 2, create: createFieldDesc,
     nameOptions: Object.freeze({ maxBytes: 4096 }) },
+  property: { table: 23, pointer: 22, map: 21, list: 'PropertyList', name: 1, flags: 0, signature: 2, create: createPropertyDesc,
+    nameOptions: Object.freeze({ maxBytes: 4096 }) },
+  event: { table: 20, pointer: 19, map: 18, list: 'EventList', name: 1, flags: 0, create: createEventDesc,
+    nameOptions: Object.freeze({ maxBytes: 4096 }), initialize: initializeEventType },
 });
 
-/** One module's bounded definition ownership index; schemas share MethodList/FieldList traversal and caches. */
+/** Module-owned definition caches with direct TypeDef lists or indirect PropertyMap/EventMap lists. */
 export class MetadataMemberDefinitions {
   #module;
   #kind;
@@ -27,14 +34,25 @@ export class MetadataMemberDefinitions {
     if (this.#owners) return;
     const typeCount = this.#module.rowCount(2);
     const memberCount = this.#module.rowCount(this.#kind.table);
-    if (typeCount + memberCount + this.#module.rowCount(this.#kind.pointer) > 100000) {
+    const mapCount = this.#kind.map ? this.#module.rowCount(this.#kind.map) : 0;
+    if (typeCount + memberCount + mapCount + this.#module.rowCount(this.#kind.pointer) > 100000) {
       throw loadError(LoadErrorCode.LimitExceeded, 'Member definition row limit exceeded');
     }
     const owners = new Uint32Array(memberCount + 1);
     const lists = new Map();
-    for (let rid = 1; rid <= typeCount; rid++) {
-      const typeToken = 0x02000000 + rid;
-      const tokens = this.#module.list(typeToken, this.#kind.list);
+    const mappedOwners = this.#kind.map ? new Set() : null;
+    const mappedStarts = this.#kind.map ? new Set() : null;
+    for (let rid = 1; rid <= (this.#kind.map ? mapCount : typeCount); rid++) {
+      const listToken = (this.#kind.map ?? 2) * 0x1000000 + rid;
+      const map = this.#kind.map ? this.#module.row(listToken) : null;
+      const typeRid = map ? map[0] : rid;
+      if (!typeRid || typeRid > typeCount || mappedOwners?.has(typeRid) || mappedStarts?.has(map[1])) {
+        throw loadError(LoadErrorCode.InvalidImage, 'Invalid or duplicate member map owner');
+      }
+      mappedOwners?.add(typeRid);
+      mappedStarts?.add(map[1]);
+      const typeToken = 0x02000000 + typeRid;
+      const tokens = this.#module.list(listToken, this.#kind.list);
       for (const token of tokens) {
         const member = token & 0xffffff;
         if (token >>> 24 !== this.#kind.table || !member || member > memberCount || owners[member]) {
@@ -87,9 +105,11 @@ export class MetadataMemberDefinitions {
     this.#index();
     const name = this.#module.string(row[this.#kind.name], this.#kind.nameOptions);
     if (name.length > 4096) throw loadError(LoadErrorCode.LimitExceeded, 'Member name length exceeded');
-    const descriptor = this.#kind.create({ name, module: this.#module, token, flags: row[this.#kind.flags],
+    const state = { name, module: this.#module, token, flags: row[this.#kind.flags],
       implementationFlags: row[this.#kind.implementationFlags], signatureIndex: row[this.#kind.signature],
-      declaringType: this.#module.typeDefinition(this.#owners[token & 0xffffff]) });
+      declaringType: this.#module.typeDefinition(this.#owners[token & 0xffffff]) };
+    this.#kind.initialize?.(state, row);
+    const descriptor = this.#kind.create(state);
     this.#descriptors.set(token, descriptor);
     return descriptor;
   }

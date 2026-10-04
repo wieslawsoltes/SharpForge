@@ -1,0 +1,185 @@
+{
+  "oracle": "ILVerify",
+  "version": "10.0.5",
+  "sdk": "10.0.201",
+  "runtime": "10.0.5",
+  "toolSHA256": "ca75cb4d2299ee5413eaf602a6ba87b7c089f3785d06f6b8ccad013d4e4646be",
+  "sourceSHA256": "6147041375b1125a7ad0f2e70994946f7710474d013ac09936b69af1e4d8dd1c",
+  "assemblySHA256": "826655ef7088b64b09f1952ac19c78ad9ecd46bbe2cd0ccf9ce507cf932e84f9",
+  "environment": {
+    "platform": "darwin-arm64",
+    "osRelease": "25.6.0",
+    "node": "v24.21.0",
+    "image": {
+      "kind": "local",
+      "pinnedImage": false,
+      "reason": "Local OS is recorded, not an immutable runner image."
+    },
+    "imageOS": null,
+    "imageVersion": null
+  },
+  "references": {
+    "count": 167,
+    "sha256": "a978e7aaf608f22e860328a42319b908a5a084cdb087b28b5c31a1e6726be362"
+  },
+  "observations": [
+    {
+      "name": "Constrained",
+      "code": "DwD+FgIAAAFvAQAACio=",
+      "oracle": {
+        "accepted": true,
+        "errors": []
+      },
+      "diagnostic": null,
+      "raw": {
+        "stdout": "All Classes and Methods in <temporary>/PrefixTypes.dll Verified.\nTypes found: 0\nTypes verified: 2\nMethods found: 9\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 0,
+        "signal": null,
+        "elapsedMs": 74.81766700000003
+      }
+    },
+    {
+      "name": "Readonly",
+      "code": "Ahb+Ho8CAAABSio=",
+      "oracle": {
+        "accepted": true,
+        "errors": []
+      },
+      "diagnostic": null,
+      "raw": {
+        "stdout": "All Classes and Methods in <temporary>/PrefixTypes.dll Verified.\nTypes found: 0\nTypes verified: 2\nMethods found: 9\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 0,
+        "signal": null,
+        "elapsedMs": 73.035167
+      }
+    },
+    {
+      "name": "BadConstrained",
+      "code": "DwD+FgIAAAEoAQAACio=",
+      "oracle": {
+        "accepted": false,
+        "errors": [
+          "Constrained",
+          "StackUnexpected",
+          "ThisMismatch"
+        ]
+      },
+      "diagnostic": "CILPC0002",
+      "raw": {
+        "stdout": "[IL]: Error [StackUnexpected]: [<temporary>/PrefixTypes.dll : Fixture.Program::BadConstrained(int32)][offset 0x00000008][found address of Int32][expected ref 'object'] Unexpected type on the stack.\n[IL]: Error [ThisMismatch]: [<temporary>/PrefixTypes.dll : Fixture.Program::BadConstrained(int32)][offset 0x00000008] The 'this' parameter to the call must be the calling method's 'this' parameter.\n[IL]: Error [Constrained]: [<temporary>/PrefixTypes.dll : Fixture.Program::BadConstrained(int32)][offset 0x00000008] Missing callvirt following constrained prefix.\n3 Error(s) Verifying <temporary>/PrefixTypes.dll\nTypes found: 0\nTypes verified: 2\nMethods found: 9\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 2,
+        "signal": null,
+        "elapsedMs": 74.30775
+      }
+    },
+    {
+      "name": "BadReadonly",
+      "code": "/h4AKg==",
+      "oracle": {
+        "accepted": false,
+        "errors": [
+          "ReadOnly"
+        ]
+      },
+      "diagnostic": "CILPC0003",
+      "raw": {
+        "stdout": "[IL]: Error [ReadOnly]: [<temporary>/PrefixTypes.dll : Fixture.Program::BadReadonly()][offset 0x00000002] Missing ldelema or call following readonly prefix.\n1 Error(s) Verifying <temporary>/PrefixTypes.dll\nTypes found: 0\nTypes verified: 2\nMethods found: 9\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 2,
+        "signal": null,
+        "elapsedMs": 73.04874999999993
+      }
+    },
+    {
+      "name": "RepeatedConstrained",
+      "code": "DwD+FgIAAAH+FgIAAAFvAQAACio=",
+      "oracle": {
+        "accepted": false,
+        "errors": [
+          "Constrained"
+        ]
+      },
+      "diagnostic": "CILPC0001",
+      "raw": {
+        "stdout": "[IL]: Error [Constrained]: [<temporary>/PrefixTypes.dll : Fixture.Program::RepeatedConstrained(int32)][offset 0x00000008] Missing callvirt following constrained prefix.\n1 Error(s) Verifying <temporary>/PrefixTypes.dll\nTypes found: 0\nTypes verified: 2\nMethods found: 9\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 2,
+        "signal": null,
+        "elapsedMs": 77.12179100000003
+      }
+    },
+    {
+      "name": "RepeatedReadonly",
+      "code": "Ahb+Hv4ejwIAAAFKKg==",
+      "oracle": {
+        "accepted": false,
+        "errors": [
+          "ReadOnly"
+        ]
+      },
+      "diagnostic": "CILPC0001",
+      "raw": {
+        "stdout": "[IL]: Error [ReadOnly]: [<temporary>/PrefixTypes.dll : Fixture.Program::RepeatedReadonly(int32[])][offset 0x00000004] Missing ldelema or call following readonly prefix.\n1 Error(s) Verifying <temporary>/PrefixTypes.dll\nTypes found: 0\nTypes verified: 2\nMethods found: 9\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 2,
+        "signal": null,
+        "elapsedMs": 76.41570899999999
+      }
+    },
+    {
+      "name": "MissingType",
+      "code": "DwD+Fv//AAFvAQAACio=",
+      "oracle": {
+        "accepted": false,
+        "errors": [
+          "TokenResolve"
+        ]
+      },
+      "diagnostic": "CILPC0004",
+      "raw": {
+        "stdout": "[IL]: Error [TokenResolve]: [<temporary>/PrefixTypes.dll : Fixture.Program::MissingType(int32)][offset 0x00000002][token  0x0100FFFF] Unable to resolve token.\n1 Error(s) Verifying <temporary>/PrefixTypes.dll\nTypes found: 0\nTypes verified: 2\nMethods found: 9\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 2,
+        "signal": null,
+        "elapsedMs": 74.98470799999996
+      }
+    },
+    {
+      "name": "ReadonlyStore",
+      "code": "Ahb+Ho8CAAABFlQq",
+      "oracle": {
+        "accepted": false,
+        "errors": [
+          "ReadOnlyIllegalWrite"
+        ]
+      },
+      "diagnostic": null,
+      "raw": {
+        "stdout": "[IL]: Error [ReadOnlyIllegalWrite]: [<temporary>/PrefixTypes.dll : Fixture.Program::ReadonlyStore(int32[])][offset 0x0000000A] Illegal write to readonly ByRef.\n1 Error(s) Verifying <temporary>/PrefixTypes.dll\nTypes found: 0\nTypes verified: 2\nMethods found: 9\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 2,
+        "signal": null,
+        "elapsedMs": 74.69916699999999
+      }
+    },
+    {
+      "name": "ArrayAddress",
+      "code": "AhYW/h4oAgAACkoq",
+      "oracle": {
+        "accepted": true,
+        "errors": []
+      },
+      "diagnostic": "CILPC0006",
+      "raw": {
+        "stdout": "All Classes and Methods in <temporary>/PrefixTypes.dll Verified.\nTypes found: 0\nTypes verified: 2\nMethods found: 9\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 0,
+        "signal": null,
+        "elapsedMs": 77.58991700000001
+      }
+    }
+  ]
+}

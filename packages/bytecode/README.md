@@ -29,3 +29,13 @@ is part of this API contract.
 
 The [closed project reference contract](PROJECT-REFERENCES.md) documents explicit PE
 identity/hash descriptors, shared admission bounds and appended external opcodes.
+
+## Builtin metadata
+
+`builtinOwners`, `builtinMemberShape(builtin)` and `builtinParameterType(builtin, type)` expose the same
+core intrinsic owner and parameter rules used by the compiler. Pass descriptors from `Builtins` or
+`BuiltinMap`; the functions project metadata without modifying descriptors, stable numeric IDs,
+receiver-inclusive runtime parameter lists or execution behavior. `builtinMemberShape` returns
+`{name, instance, property}`. Core builtin entries whose names begin with `$` are internal and should
+not be shown as source API members. Framework contracts continue to use their registered owner and
+signature metadata.

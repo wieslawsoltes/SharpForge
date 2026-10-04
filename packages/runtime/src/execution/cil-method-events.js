@@ -1,4 +1,5 @@
 import {RuntimeEventLog, RuntimeEventName} from './runtime-events.js';
+import {observeWasmCall} from './wasm/call-tier-state.js';
 
 // Host observations belong to the VM lifetime, not its rewindable execution graph.
 const observers = new WeakMap();
@@ -18,6 +19,7 @@ export function cilRuntimeEvents(vm) {
 }
 
 export function enterCilMethod(vm, frame, reason = 'call') {
+  if (reason === 'call') observeWasmCall(vm, frame);
   if (reason === 'call') vm.profiler?.enter(frame);
   const observer = observers.get(vm);
   if (!observer) return;

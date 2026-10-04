@@ -1,0 +1,206 @@
+{
+  "baselineCommit": "ceced1c2ad0b7acead2333609d8568ab41f2f902",
+  "baselineTree": "5a805282c2662f09047b75d7a43c191b06956ea9",
+  "preSignatureSource": "3f7e51a69cff658e55103626fd3ba1a2128692e3",
+  "capturedMain": "9ac2d74d2b3992e80eb697474178e58269b17ce5",
+  "reviewBase": "eec216696f4c1f73a5be541bfa2fac3a1f8ea42f",
+  "purpose": "Match the same landed compiler/runtime changes on both sides of the signature-retention comparison",
+  "resolutions": [
+    {
+      "path": "apps/studio/msbuild-tools.js",
+      "reason": "main unchanged since review04"
+    },
+    {
+      "path": "apps/studio/runtime.worker.js",
+      "reason": "main unchanged since review04"
+    },
+    {
+      "path": "apps/studio/workbench/build.js",
+      "reason": "main unchanged since review04"
+    },
+    {
+      "path": "apps/studio/workbench/document-size.js",
+      "reason": "main unchanged since review04"
+    },
+    {
+      "path": "apps/studio/workbench/documents.js",
+      "reason": "main unchanged since review04"
+    },
+    {
+      "path": "apps/studio/workbench/file-watch.js",
+      "reason": "main unchanged since review04"
+    },
+    {
+      "path": "apps/studio/workbench/first-run.js",
+      "reason": "main unchanged since review04"
+    },
+    {
+      "path": "apps/studio/workbench/launch-profiles.js",
+      "reason": "main unchanged since review04"
+    },
+    {
+      "path": "apps/studio/workbench/lazy-features/native-configuration.js",
+      "reason": "main unchanged since review04"
+    },
+    {
+      "path": "apps/studio/workbench/options-dialog.js",
+      "reason": "main unchanged since review04"
+    },
+    {
+      "path": "apps/studio/workbench/recent-workspaces.js",
+      "reason": "main unchanged since review04"
+    },
+    {
+      "path": "apps/studio/workbench/search-service.js",
+      "reason": "main unchanged since review04"
+    },
+    {
+      "path": "apps/studio/workbench/sessions.js",
+      "reason": "main unchanged since review04"
+    },
+    {
+      "path": "apps/studio/workbench/settings-profile.js",
+      "reason": "main unchanged since review04"
+    },
+    {
+      "path": "apps/studio/workbench/settings-store.js",
+      "reason": "main unchanged since review04"
+    },
+    {
+      "path": "apps/studio/workbench/shell-commands.js",
+      "reason": "main unchanged since review04"
+    },
+    {
+      "path": "apps/studio/workbench/shell-events.js",
+      "reason": "main unchanged since review04"
+    },
+    {
+      "path": "apps/studio/workbench/shell-models.js",
+      "reason": "main unchanged since review04"
+    },
+    {
+      "path": "apps/studio/workbench/shell-tools.js",
+      "reason": "main unchanged since review04"
+    },
+    {
+      "path": "apps/studio/workbench/shell.js",
+      "reason": "main unchanged since review04"
+    },
+    {
+      "path": "apps/studio/workbench/studio-keyboard.js",
+      "reason": "main unchanged since review04"
+    },
+    {
+      "path": "apps/studio/workbench/tabs/index.js",
+      "reason": "main unchanged since review04"
+    },
+    {
+      "path": "apps/studio/workbench/task-center.js",
+      "reason": "main unchanged since review04"
+    },
+    {
+      "path": "apps/studio/workbench/tools/class-view.js",
+      "reason": "main unchanged since review04"
+    },
+    {
+      "path": "apps/studio/workbench/tools/code-definition.js",
+      "reason": "main unchanged since review04"
+    },
+    {
+      "path": "apps/studio/workbench/tools/diagnostic-timeline.js",
+      "reason": "main unchanged since review04"
+    },
+    {
+      "path": "apps/studio/workbench/tools/object-browser.js",
+      "reason": "main unchanged since review04"
+    },
+    {
+      "path": "apps/studio/workbench/tools/outline.js",
+      "reason": "main unchanged since review04"
+    },
+    {
+      "path": "apps/studio/workbench/tools/references.js",
+      "reason": "main unchanged since review04"
+    },
+    {
+      "path": "apps/studio/workbench/tools/tree-host.js",
+      "reason": "main unchanged since review04"
+    },
+    {
+      "path": "apps/studio/workbench/worker-request.js",
+      "reason": "main unchanged since review04"
+    },
+    {
+      "path": "docs/a19-session-evidence.md",
+      "reason": "main unchanged since review04"
+    },
+    {
+      "path": "docs/a19-session-integration.md",
+      "reason": "main unchanged since review04"
+    },
+    {
+      "path": "docs/a19-session-services.md",
+      "reason": "main unchanged since review04"
+    },
+    {
+      "path": "docs/bcl-api.md",
+      "reason": "pre-signature baseline unchanged since review04"
+    },
+    {
+      "path": "docs/project16-shell-coverage.json",
+      "reason": "main unchanged since review04"
+    },
+    {
+      "path": "docs/vs-workbench-inventory.json",
+      "reason": "main unchanged since review04"
+    },
+    {
+      "path": "docs/vs-workflow-matrix.md",
+      "reason": "main unchanged since review04"
+    },
+    {
+      "path": "packages/bcl-core/src/modules.js",
+      "reason": "pre-signature baseline unchanged since review04"
+    },
+    {
+      "path": "packages/compiler/src/compilation.js",
+      "reason": "combine both using reviewed source base"
+    },
+    {
+      "path": "packages/project-system/README.md",
+      "reason": "main unchanged since review04"
+    },
+    {
+      "path": "packages/runtime/src/cil-vm.js",
+      "reason": "pre-signature baseline unchanged since review04"
+    },
+    {
+      "path": "packages/runtime/src/execution/initialize-source.js",
+      "reason": "pre-signature baseline unchanged since review04"
+    },
+    {
+      "path": "packages/runtime/src/vm.js",
+      "reason": "pre-signature baseline unchanged since review04"
+    },
+    {
+      "path": "scripts/conformance/static/allowlist.json",
+      "reason": "main unchanged since review04"
+    },
+    {
+      "path": "tests/a07-13-registry.test.js",
+      "reason": "pre-signature baseline unchanged since review04"
+    },
+    {
+      "path": "tests/a19-builtin-extensions.test.js",
+      "reason": "main unchanged since review04"
+    },
+    {
+      "path": "tests/a19-studio-keyboard.test.js",
+      "reason": "main unchanged since review04"
+    },
+    {
+      "path": "tests/manifests/A19.json",
+      "reason": "main unchanged since review04"
+    }
+  ]
+}

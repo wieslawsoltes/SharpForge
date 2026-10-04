@@ -1,0 +1,7 @@
+Exception filters are inspection-only
+External member 'System.ArgumentException::.ctor' is not implemented
+External member 'System.InvalidOperationException::.ctor' is not implemented
+External member 'System.NotSupportedException::.ctor' is not implemented
+External member 'System.Threading.Monitor::Enter' is not implemented
+External member 'System.Threading.Monitor::Exit' is not implemented
+Opcode 'endfilter' is inspection-only
