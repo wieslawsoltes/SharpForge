@@ -8,5 +8,5 @@
   "name-lookup/cs0246-unknown-type": ["diagnostics", "warnings"],
   "name-lookup/cs0246-unknown-type-in-new": ["diagnostics", "warnings"],
   "name-lookup/cs0246-unknown-type-in-signature": ["diagnostics", "warnings"],
-  "name-lookup/shadowing-field-with-local": ["diagnostics", "warnings", "bytecode", "cil"]
+  "name-lookup/shadowing-field-with-local": ["diagnostics", "warnings", "bytecode", "cil", "directCil"]
 }

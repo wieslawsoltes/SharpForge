@@ -1,4 +1,6 @@
 {
+  "inheritance/abstract-class": ["directCil"],
+  "inheritance/base-calls": ["directCil"],
   "inheritance/cs0029-cs0030-reference-conversions": ["diagnostics", "warnings"],
   "inheritance/cs0108-cs0109-hiding": ["diagnostics", "warnings"],
   "inheritance/cs0108-hides-inherited": ["diagnostics", "warnings"],
@@ -12,5 +14,7 @@
   "inheritance/cs0513-cs0500-abstract": ["diagnostics", "warnings"],
   "inheritance/cs0534-abstract-not-implemented": ["diagnostics", "warnings"],
   "inheritance/cs0540-cs0539-explicit-implementation": ["diagnostics", "warnings"],
-  "inheritance/cs7036-base-constructor": ["diagnostics", "warnings"]
+  "inheritance/cs7036-base-constructor": ["diagnostics", "warnings"],
+  "inheritance/new-hides-member": ["directCil"],
+  "inheritance/type-tests-and-casts": ["directCil"]
 }

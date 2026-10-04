@@ -2,5 +2,5 @@
   "using-static/cs0103-extension-and-instance-members-are-not-imported": ["diagnostics", "warnings"],
   "using-static/cs0229-cs0121-cs0104-the-same-name-from-two-types": ["diagnostics", "warnings"],
   "using-static/cs7007-cs0246-what-using-static-may-name": ["diagnostics", "warnings"],
-  "using-static/static-members-nested-types-and-enum-members": ["diagnostics", "warnings", "bytecode", "cil"]
+  "using-static/static-members-nested-types-and-enum-members": ["diagnostics", "warnings", "bytecode", "cil", "directCil"]
 }
