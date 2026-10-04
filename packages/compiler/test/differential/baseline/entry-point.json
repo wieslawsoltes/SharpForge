@@ -1,11 +1,11 @@
 {
   "entry-point/instance-main": ["diagnostics", "warnings"],
-  "entry-point/int-main-with-args": ["diagnostics", "warnings", "bytecode", "cil"],
+  "entry-point/int-main-with-args": ["diagnostics", "warnings", "bytecode", "cil", "directCil"],
   "entry-point/main-ignored-by-top-level": ["diagnostics", "warnings"],
   "entry-point/no-main": ["diagnostics", "warnings"],
-  "entry-point/top-level-statements": ["diagnostics", "warnings", "bytecode", "cil"],
+  "entry-point/top-level-statements": ["diagnostics", "warnings", "bytecode", "cil", "directCil"],
   "entry-point/two-mains": ["diagnostics", "warnings"],
-  "entry-point/void-main": ["diagnostics", "warnings", "bytecode", "cil"],
+  "entry-point/void-main": ["diagnostics", "warnings", "bytecode", "cil", "directCil"],
   "entry-point/wrong-parameter": ["diagnostics", "warnings"],
   "entry-point/wrong-return-type": ["diagnostics", "warnings"],
   "entry-point/wrong-signature-next-to-valid": ["diagnostics", "warnings"]

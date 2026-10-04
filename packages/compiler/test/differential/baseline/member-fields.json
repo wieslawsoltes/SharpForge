@@ -1,5 +1,5 @@
 {
   "member-fields/const-errors": ["diagnostics", "warnings"],
-  "member-fields/const-readonly-and-static-readonly": ["diagnostics", "warnings", "bytecode", "cil"],
+  "member-fields/const-readonly-and-static-readonly": ["diagnostics", "warnings", "bytecode", "cil", "directCil"],
   "member-fields/readonly-errors": ["diagnostics", "warnings"]
 }

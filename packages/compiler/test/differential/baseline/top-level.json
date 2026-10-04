@@ -1,5 +1,5 @@
 {
-  "top-level/args-local-functions-and-return-value": ["diagnostics", "warnings", "bytecode", "cil"],
+  "top-level/args-local-functions-and-return-value": ["diagnostics", "warnings", "bytecode", "cil", "directCil"],
   "top-level/await-and-return-value": ["diagnostics", "warnings", "bytecode", "cil"],
   "top-level/cs0029-cs0026-return-and-this": ["diagnostics", "warnings"],
   "top-level/cs0101-program-must-be-a-class": ["diagnostics", "warnings"],
@@ -11,7 +11,7 @@
   "top-level/cs8803-statement-after-a-declaration": ["diagnostics", "warnings"],
   "top-level/cs8803-statement-after-a-type": ["diagnostics", "warnings"],
   "top-level/cs8937-only-empty-statements": ["diagnostics", "warnings"],
-  "top-level/labels-and-goto": ["diagnostics", "warnings", "bytecode", "cil"],
-  "top-level/statements-are-members-of-partial-program": ["diagnostics", "warnings", "bytecode", "cil"],
-  "top-level/types-after-the-statements": ["diagnostics", "warnings", "bytecode", "cil"]
+  "top-level/labels-and-goto": ["diagnostics", "warnings", "bytecode", "cil", "directCil"],
+  "top-level/statements-are-members-of-partial-program": ["diagnostics", "warnings", "bytecode", "cil", "directCil"],
+  "top-level/types-after-the-statements": ["diagnostics", "warnings", "bytecode", "cil", "directCil"]
 }

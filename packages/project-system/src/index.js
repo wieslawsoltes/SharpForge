@@ -1,4 +1,6 @@
 import {readLegacySolution} from './legacy-solution.js';
+import {projectFileMap, isTextRecord, recordText, compilationRecords} from './workspace-records.js';
+export {isSourceSnapshot, cloneWorkspaceRecord, recordSource, isTextRecord} from './workspace-records.js';
 export * from './legacy-solution.js';
 import { parseXml, xmlEscape } from './xml.js';
 export * from './xml.js';
@@ -19,13 +21,10 @@ export { evaluateCondition } from './conditions.js';
 
 export class ProjectSystem {
   constructor(files,{configuration='Debug',platform='AnyCPU',targetFramework='',properties={},maxFiles=5000}={}){
-    this.files=new Map();this.projects=new Map();this.diagnostics=[];this.configuration=configuration;this.platform=platform;this.targetFramework=targetFramework;this.globalProperties=Object.fromEntries(Object.entries(properties).map(([k,v])=>[k.toLowerCase(),String(v)]));
-    const input=files instanceof Map?[...files].map(([path,v])=>typeof v==='string'?{path,text:v}:{...v,path}):files;
-    if(!Array.isArray(input)||input.length>maxFiles)throw new Error('Workspace file limit exceeded');
-    for(const f of input){const path=normalizePath(f.path??f.uri);if(this.files.has(path))throw new Error(`Duplicate workspace path: ${path}`);if(typeof f.text!=='string'&&!(f.bytes instanceof Uint8Array))throw new Error(`No file contents: ${path}`);this.files.set(path,{...f,path});}
+    this.files=projectFileMap(files,maxFiles);this.projects=new Map();this.diagnostics=[];this.configuration=configuration;this.platform=platform;this.targetFramework=targetFramework;this.globalProperties=Object.fromEntries(Object.entries(properties).map(([k,v])=>[k.toLowerCase(),String(v)]));
   }
   diagnostic(path,message,severity='warning',code='SFP1001'){const d={path,message,severity,code};if(!this.diagnostics.some(x=>x.path===path&&x.message===message))this.diagnostics.push(d);return d;}
-  text(path){const file=this.files.get(path);if(!file||typeof file.text!=='string')throw new Error(`Missing text file '${path}'. Open its containing folder to grant access to sibling files.`);return file.text;}
+  text(path){const file=this.files.get(path);if(!isTextRecord(file))throw new Error(`Missing text file '${path}'. Open its containing folder to grant access to sibling files.`);return recordText(file);}
   load(entry){
     entry=normalizePath(entry);this.projects.clear();this.diagnostics=[];let solution={path:entry,name:baseName(entry).replace(/\.(slnx|csproj)$/i,''),folders:[],items:[],projectPaths:[]};
     if(/\.sln$/i.test(entry)){solution=readLegacySolution(this.text(entry),entry);this.diagnostics.push(...solution.diagnostics);delete solution.diagnostics;}else if(/\.slnx$/i.test(entry)){
@@ -128,7 +127,7 @@ export class ProjectSystem {
     for(const ref of references)this.diagnostic(path,`Binary reference '${ref.name}' is inspectable but not linked by the source compiler.`,'error','SFP1101');
     for(const ref of packageReferences)this.diagnostic(path,`Package '${ref.name}' is recorded; restore/linking require native MSBuild, not the browser preview.`,'error','SFP1102');
     if(analyzers.length)this.diagnostic(path,'Roslyn Analyzer DLLs are inspection-only; JavaScript extensions use Tools → Generators & analyzers.','error','SFP1103');
-    for(const file of compile.keys())if(!this.files.has(file)||typeof this.files.get(file).text!=='string')this.diagnostic(path,`Compile file '${file}' is missing. Open the containing folder or select all referenced files.`,'error','SFP1005');
+    for(const file of compile.keys())if(!isTextRecord(this.files.get(file)))this.diagnostic(path,`Compile file '${file}' is missing. Open the containing folder or select all referenced files.`,'error','SFP1005');
     const frameworks=splitList(props.targetframeworks??props.targetframework??'');if(frameworks.length>1)this.diagnostic(path,`Multi-targeting is loaded for inspection; the browser uses one runtime profile, not ${frameworks.join(', ')}.`);
     return {path,imports,targets,usingTasks,itemDefinitions:definitions,name:props.assemblyname??props.msbuildprojectname,sdk,properties:{...props},targetFramework:props.targetframework??frameworks[0]??'',targetFrameworks:frameworks,outputType:props.outputtype??'Library',items,compile:[...compile.values()],projectReferences,references,packageReferences,additionalFiles,analyzers};
   }
@@ -137,7 +136,7 @@ export class ProjectSystem {
   compilationFiles(startup=this.solution?.projectPaths[0]){
     if(!this.projects.has(startup))throw new Error('Startup project was not loaded');const paths=new Set(),seen=new Set();
     const visit=path=>{if(seen.has(path))return;seen.add(path);const project=this.projects.get(path);if(!project)return;for(const ref of project.projectReferences)visit(ref.path);for(const item of project.compile)paths.add(item.path);};visit(startup);
-    return [...paths].filter(path=>typeof this.files.get(path)?.text==='string').map(uri=>({uri,text:this.files.get(uri).text,version:1}));
+    return compilationRecords(paths,this.files);
   }
   compilationOptions(startup=this.solution?.projectPaths[0]){
     if(!this.projects.has(startup))throw new Error('Startup project was not loaded');

@@ -9,7 +9,11 @@ A frame costs a 16-byte logical header, eight bytes for each reserved evaluation
 slot, and metadata-sized arguments/locals rounded up to an eight-byte slot.
 References, managed addresses and primitive values therefore consume at least
 eight bytes; Decimal storage consumes sixteen. Instance receivers and closed
-generic signatures are included. This is managed accounting, **not JavaScript
+generic signatures are included. Admitted user structs and Nullable values use
+their aligned layout, including nested fields and padding. A struct containing
+two Decimal fields reserves 32 bytes; three byte fields reserve one eight-byte
+logical slot. The same calculation applies to snapshot preflight.
+This is managed accounting, **not JavaScript
 heap/RSS usage**. Pool retention and temporary call argument buffers have their
 existing separate budget. There is no change to the Array-based operand carrier.
 
@@ -28,9 +32,15 @@ Changes to a host byte limit take effect before the next dispatched instruction.
 Budget overflow is the existing fatal `StackOverflowException` category.
 
 This is the CIL increment alongside #1401. The [source/reloaded-source follow-up](source-stack-byte-budget.md)
-documents shared-stack admission. Unboxed typed operand storage and wider #82 qualification remain open.
+documents shared-stack admission. [Optional typed float slots](typed-float-slots.md)
+are available separately; wider #82 qualification remains open.
 No throughput, allocation-rate or physical memory improvement is claimed.
 All 95 focused byte-budget, verified-stack, pooled-frame, root-visitor and
 call-buffer tests passed serially with Node 24.21.0 at `3a9f50ba`, with a 512 MB
 heap limit and concurrency 1. Core static/build validation is recorded on the PR.
 Broader platform and performance qualification remains staged.
+
+The aggregate-layout accounting fix passed all 77 focused aggregate, CIL/source
+budget, Nullable and struct-storage tests serially at `132768e3` on Node 24.
+Its exact-boundary cases cover both native ABIs, nested Decimal fields, small
+fields, argument admission before allocation, and atomic snapshot rejection.

@@ -10,5 +10,5 @@
   "definite-assignment/cs0165-try-catch": ["diagnostics", "warnings"],
   "definite-assignment/cs0177-out-not-assigned": ["diagnostics", "warnings"],
   "definite-assignment/cs0269-out-read-before-assign": ["diagnostics", "warnings"],
-  "definite-assignment/out-parameter-assigns": ["diagnostics", "warnings", "bytecode", "cil"]
+  "definite-assignment/out-parameter-assigns": ["diagnostics", "warnings", "bytecode", "cil", "directCil"]
 }

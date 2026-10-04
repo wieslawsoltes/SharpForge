@@ -43,8 +43,14 @@ Host-entry negative cases cover readonly, foreign and expired addresses.
 The former constructor-rejection test now asserts successful value construction
 while retaining its prohibition on class-shaped struct allocation.
 
-No tests, builds or native commands were executed during implementation.
-Root owns the serial validation slot:
+Serial Node 24 validation at `68d9123b` passed all 70 focused instance-call,
+storage, boxing, Nullable, frame-pool, method-event and aggregate-quota tests.
+The actual merged typed-frame and quota implementations are included. After
+adding typed-frame/native-ABI receiver and GC combinations in `a80d1271`, all
+10 instance-call tests passed again. Broad native/browser/performance
+qualification remains deferred.
+
+Focused command:
 
 ```sh
 node scripts/limited.js node --test --test-concurrency=1 tests/a05-value-instance-calls.test.js tests/a05-value-storage.test.js tests/a05-value-boxing.test.js tests/a05-nullable-cil.test.js tests/a05-frame-pool.test.js tests/a05-cil-method-events.test.js

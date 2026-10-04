@@ -20,6 +20,7 @@ export class OptionsDialog {
   }
   open(initialPage) {
     const draft = this.settings.snapshot();
+    const changes = {};
     let selected = initialPage ?? this.pages.keys().next().value;
     let pageCleanup;
     const handle = this.dialogs.open({
@@ -40,6 +41,8 @@ export class OptionsDialog {
           pageCleanup = page.render(pageHost, {draft, signal: dialog.signal, update: (category, key, value) => {
             draft[category] ??= {};
             draft[category][key] = value;
+            changes[category] ??= {};
+            changes[category][key] = value;
           }});
           for (const node of tree.querySelectorAll('[data-page]')) {
             node.setAttribute('aria-selected', String(node.dataset.page === id));
@@ -88,7 +91,7 @@ export class OptionsDialog {
       },
       actions: [{label: 'OK', run: () => {
         for (const page of this.pages.values()) page.validate?.(draft);
-        this.settings.apply(draft);
+        this.settings.apply(changes, {clearWorkspaceOverrides: true});
         return true;
       }}]
     });

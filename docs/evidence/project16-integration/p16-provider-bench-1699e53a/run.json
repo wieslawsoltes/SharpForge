@@ -1,0 +1,47 @@
+{
+  "baselineRevision": "ceced1c2ad0b7acead2333609d8568ab41f2f902",
+  "candidateRevision": "1699e53a664bb54752a216a98f59a9f947da5eeb",
+  "capturedMain": "9ac2d74d2b3992e80eb697474178e58269b17ce5",
+  "startedAt": "2026-10-04T01:45:28.058837+00:00",
+  "sharedHost": true,
+  "commands": [
+    [
+      "node",
+      "scripts/limited.js",
+      "node",
+      "--expose-gc",
+      "/workspace/scratch/6b99131ca908/p16-provider-bench-1699e53a/baseline/a20-provider-binding.mjs",
+      "--calls",
+      "96",
+      "--samples",
+      "15",
+      "--warmups",
+      "5",
+      "--output",
+      "/workspace/scratch/6b99131ca908/p16-provider-bench-1699e53a/baseline.json"
+    ],
+    [
+      "node",
+      "scripts/limited.js",
+      "node",
+      "--expose-gc",
+      "/workspace/scratch/6b99131ca908/p16-provider-bench-1699e53a/candidate/a20-provider-binding.mjs",
+      "--calls",
+      "96",
+      "--samples",
+      "15",
+      "--warmups",
+      "5",
+      "--output",
+      "/workspace/scratch/6b99131ca908/p16-provider-bench-1699e53a/candidate.json"
+    ],
+    [
+      "node",
+      "scripts/benchmarks/a20-provider-binding-compare.mjs",
+      "/workspace/scratch/6b99131ca908/p16-provider-bench-1699e53a/baseline.json",
+      "/workspace/scratch/6b99131ca908/p16-provider-bench-1699e53a/candidate.json"
+    ]
+  ],
+  "finishedAt": "2026-10-04T01:45:52.486202+00:00",
+  "comparisonExitCode": 0
+}

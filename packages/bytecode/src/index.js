@@ -8,6 +8,7 @@ import {recordSourceStacks,discardSourceStacks} from './source-stack-proof.js';
 export {verifiedSourceStackBound} from './source-stack-proof.js';
 import {Builtins} from './builtins.js';
 export {Builtins,BuiltinMap,frameworkBuiltin,CONTRACT_BUILTIN_OFFSET,createBuiltinRegistry} from './builtins.js';
+export {builtinOwners,builtinMemberShape,builtinParameterType} from './builtin-metadata.js';
 export function disassemble(image, methodId) {
   const methods=methodId===undefined?image.methods:[image.methods[methodId]];
   return methods.map(m=>({name:m.qualifiedName,id:m.id,instructions:Array.from({length:m.code.length/3},(_,i)=>({offset:i,op:OpName[m.code[i*3]],a:m.code[i*3+1],b:m.code[i*3+2],point:m.code[i*3]===Op.SEQ?image.sequencePoints[m.code[i*3+1]]:null}))}));
