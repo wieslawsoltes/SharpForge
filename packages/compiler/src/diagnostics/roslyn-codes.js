@@ -807,6 +807,7 @@ export const roslynCodes=Object.freeze({
  CS9099:["WRN_OptionalParamValueMismatch","warning",1,"Parameter {0} has default value '{1:10}' in lambda but '{2:10}' in the target delegate type."],
  CS9100:["WRN_ParamsArrayInLambdaOnly","warning",1,"Parameter {0} has params modifier in lambda but not in target delegate type."],
  CS9105:["ERR_InvalidPrimaryConstructorParameterReference","error",0,"Cannot use primary constructor parameter '{0}' in this context."],
+ CS9108:["ERR_AnonDelegateCantUseRefLike","error",0,"Cannot use parameter '{0}' that has ref-like type inside an anonymous method, lambda expression, query expression, or local function"],
  CS9109:["ERR_UnsupportedPrimaryConstructorParameterCapturingRef","error",0,"Cannot use ref, out, or in primary constructor parameter '{0}' inside an instance member"],
  CS9113:["WRN_UnreadPrimaryConstructorParameter","warning",1,"Parameter '{0}' is unread."],
  CS9114:["ERR_AssgReadonlyPrimaryConstructorParameter","error",0,"A primary constructor parameter of a readonly type cannot be assigned to (except in init-only setter of the type or a variable initializer)"],
