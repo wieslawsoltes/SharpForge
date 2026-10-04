@@ -76,6 +76,8 @@ export class TypeTokens {
   }
   /** TypeDef or TypeRef token of a type definition. */
   definitionToken(type) {
+    // An anonymous type is declared by its generic class (symbols/synthesized/anonymous-types.js).
+    if (type.isAnonymousType) return this.definitionToken(type.metadataForm());
     const definition = type.originalDefinition ?? type,
       defined = this.definitions.get(definition);
     if (defined) return defined;

@@ -1,0 +1,25 @@
+{ value = 3, Twice = 2 }3 { value = s, Twice = 2 }s
+{ item = 1, Text = 1 }|{ item = 2, Text = 2 }
+{ pair = { Held = 5, extra = e }, Again = e }e
+{ value = 2.5 }|2.5
+{ X = 1, Y = 2 } 12
+True False False False False
+True True False
+True
+{ First = 1, Second = 2, Third = 3 }
+{ Name = Ann, Age = 30, City = , local = 7 }
+1.5 2 { Value = 1.5 } 
+{ }
+True
+{ A = 1, B = 2, C = three, D = 4, E = 5, F = 6, G = 2020, H =  }
+False True
+{ Name = Ann, Decade = 3 }; { Name = Bob, Decade = 2 }; { Name = Cid, Decade = 3 }
+Oslo 30 2 { Key = { City = Oslo, Age = 30 }, Count = 2 }
+Rome 25 1 { Key = { City = Rome, Age = 25 }, Count = 1 }
+2 2
+{ initial = C, City = Oslo } { initial = A, City = Oslo }
+1 2
+True True True 2
+Name:String:False,Age:Int32:False
+3 2
+{ Number = 4, Twice = 8 }
