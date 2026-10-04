@@ -122,9 +122,74 @@ physical census of them does not claim native acceptance.
 node scripts/limited.js node --test tests/a13-10-metadata-inventory.test.js tests/a13-10-metadata-inventory-native.test.js
 ```
 
+Include the existing `tests/a13-07-cfg.test.js` and
+`tests/a13-07-cfg-reference.test.js` in the coordinated run to check the unchanged
+method reconstruction/CFG pipeline. Their retained fixture lives under
+`tests/fixtures/decompiler-cfg`. A sparse validation checkout needs its own
+public package aliases for CIL, bytecode, framework, bcl-core, bcl-collections,
+symbols and archive; aliases must resolve to that checkout's package sources.
+
 These new tests have not yet run. The authored browser entry point is
 `tests/fixtures/decompiler-inventory/browser.mjs`; serve the repository package
 import map and call its `run()` in each real Chromium, Firefox and WebKit engine.
 Browser and other OS results remain pending. This is a JavaScript metadata/
 decompiler feature; CLR execution, native decompilers and Rust/Wasm runtime
 execution are not provided or qualified by this inventory.
+
+## Controlled performance comparison
+
+`packages/cil/tools/benchmark-decompiler-inventory.mjs` compares actual merged
+main `c1693a9e322295a43d90c3335885b5b5b3cf8daa` with inventory product source
+`7da8bdc75f834c1ebaa2c4b2585461fca80d7c97`. Documentation/tool commits may follow
+the candidate, but any changed package source, package manifest or fixture
+rejects the run. Each checkout resolves and hashes its own public CIL package
+and complete declared workspace dependency closure. Mixed source aliases and
+modified tracked files reject before dynamic imports or measurement. Checkout
+paths are trusted operator input, never paths supplied by an assembly.
+
+The benchmark reuses `arithmeticLibrary()` and the retained native CFG assembly,
+with identical bytes for both libraries and separate inspector instances. It
+reuses the CFG driver's alternating variant/rotating case protocol: 20 warmup
+rounds and 100 measured rounds for each case/workload/variant. Each sample times
+20 calls. Median averages the middle two samples; p95/p99 use nearest rank over
+the **batch-mean ns/call** values, not individual-call tail latency. Every warmup
+and measured sample remains in chronological order.
+
+Three workloads keep default API overhead distinct from the new stage:
+
+- `decompileAssembly.bytes` measures the full byte-input API, including the
+  existing reader and inspector construction, for baseline and candidate.
+- `decompileAssembly.cachedInspector` compares the same API using separate
+  prewarmed inspector/method caches from each checkout.
+- `inventoryOnly.cachedInspector` measures only candidate census, classification
+  and option validation, using already computed method results. It has no
+  baseline counterpart and must not be reported as a speedup.
+
+Before measurement and after every timed batch, the driver checks all previous
+assembly fields and every complete method result, including source, diagnostics
+and CFG. It verifies every inventory table count, raw row, token, coordinate,
+status count, declared-name summary and method-output link against the existing
+baseline table inspector; repeated and isolated inventories must match the full
+candidate API result exactly. Every returned result is consumed outside timing.
+
+The timed interval contains only API calls and storing their result references.
+Each batch retains 20 results until its memory observation. Observed heap and
+ArrayBuffer deltas include GC effects and retained output; they are not total
+allocation counters. Reports include raw samples, source/fixture/output hashes,
+Git commit/tree identities, runtime/CPU/OS facts and workload dimensions. Initial
+imports and correctness guards are outside measurement, so no process-cold
+latency is claimed. Whole-API changes also include replacing the legacy full
+summary used only for the assembly name; the isolated workload identifies the
+inventory stage's cost without treating the net change as a same-output speedup.
+
+Run once in the coordinated quiet slot from a clean candidate checkout:
+
+```sh
+node scripts/limited.js node --expose-gc packages/cil/tools/benchmark-decompiler-inventory.mjs \
+  --baseline /path/to/sharpforge-c1693a9e \
+  --output /path/outside/checkouts/inventory-benchmark.json
+```
+
+The output must be a new file outside both checkouts; existing reports are never
+overwritten. The driver has not been executed for this candidate. Performance,
+including any default API overhead, remains unmeasured until that scheduled run.
