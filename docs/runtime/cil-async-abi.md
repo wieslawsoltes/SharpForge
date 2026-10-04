@@ -17,6 +17,13 @@ After the reviewed owner-rejection optimization, the unchanged 16 focused tests 
 again at `35e1914a2811681cd5aaac8ba0a7741fe4f441c5`, with zero skips. That repeat and
 its single paired measurement are recorded in `qualification/owner-filter-review.json`
 under the same fixture directory; the earlier adjacent results retain their original head.
+After merging main at `f009e2949f3311f0ca84a4a6bc694535140d130b`, frozen source
+`8d1388a1d98238a88ee9c3737cf9d1887fd60aed` passed the same 16 async tests plus
+26 module-initialization tests (42 passed, zero failures/skips). This covers the shared
+verifier composition with both module startup and async callback roots. The before/after
+import inventories matched 1,417 tracked modules exactly. The raw log and source inventory
+are recorded in `qualification/main-integration.json`; no performance measurement or
+generic addendum was repeated at that merge.
 The frozen baseline is recorded in `tests/fixtures/cil-async/qualification/pre-fix.json`:
 six focused failures, zero skips, and eight genuine Roslyn Debug/Release programs that
 ran on .NET while their CIL VM admission was rejected.
