@@ -1,0 +1,817 @@
+
+=== install ===
+
+added 28 packages in 286ms
+
+=== native ===
+{
+  "passed": true,
+  "methods": 2,
+  "unnamedSlots": 2,
+  "reference": {
+    "sdk": "10.0.201",
+    "compilerVersion": "5.3.0-2.26153.122 (4d3023de605a78ba3e59e50c657eed70f125c68a)",
+    "compilerSha256": "3ec75447e847f97b2cb3d861463f6de7ea421f2092aaacc7458579adccf8fc16",
+    "runtime": "10.0.5",
+    "mode": "Release",
+    "optimized": true,
+    "sourceSha256": "59fcbdeab56827cfc8b9f36f1d3e431c62fa9197f869aab097b6bdf3a31b261c",
+    "assemblySha256": "6ca9c7f4b2e54ef06165da991e2d6c1ae1eda44ead31c15f6b05b1777b364a73",
+    "pdbSha256": "c109422b2fa946695e6cdfaeeb8b5c547e7b3da14b9864cfe0cf07fb706fc037"
+  }
+}
+
+=== old-header-fixture-error ===
+✖ CLI headers are authoritative when in-range PDB signatures disagree or bodies are absent (3.050875ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 0
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 163.408375
+
+✖ failing tests:
+
+test at tests/a13-04-unnamed-slots.test.js:206:1
+✖ CLI headers are authoritative when in-range PDB signatures disagree or bodies are absent (3.050875ms)
+  Error [SymbolError]: Root local scope must span the method
+      at fail (file:///private/tmp/sharpforge-a13-unnamed-red/packages/symbols/src/contracts.js:32:9)
+      at writeMethodScopes (file:///private/tmp/sharpforge-a13-unnamed-red/packages/symbols/src/scope-writer.js:54:5)
+      at emitPortablePdb (file:///private/tmp/sharpforge-a13-unnamed-red/packages/symbols/src/pdb-writer.js:66:5)
+      at fixture (file:///private/tmp/sharpforge-a13-unnamed-red/tests/a13-04-unnamed-slots.test.js:34:15)
+      at TestContext.<anonymous> (file:///private/tmp/sharpforge-a13-unnamed-red/tests/a13-04-unnamed-slots.test.js:207:17)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.start (node:internal/test_runner/test:1262:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17)
+
+=== old-header-document-error ===
+✖ CLI headers are authoritative when in-range PDB signatures disagree or bodies are absent (6.007ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 0
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 152.924042
+
+✖ failing tests:
+
+test at tests/a13-04-unnamed-slots.test.js:206:1
+✖ CLI headers are authoritative when in-range PDB signatures disagree or bodies are absent (6.007ms)
+  AssertionError [ERR_ASSERTION]: The input did not match the regular expression /local signatures differ/. Input:
+  
+  'CilError: Truncated binary data at 0x1'
+  
+      at TestContext.<anonymous> (file:///private/tmp/sharpforge-a13-unnamed-red-corrected/tests/a13-04-unnamed-slots.test.js:212:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.start (node:internal/test_runner/test:1262:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: CilError: Truncated binary data at 0x1
+        at Reader.need (file:///Users/wieslawsoltes/GitHub/SharpForge-a13-unnamed-slots/packages/cil/src/binary.js:25:90)
+        at Reader.u8 (file:///Users/wieslawsoltes/GitHub/SharpForge-a13-unnamed-slots/packages/cil/src/binary.js:26:15)
+        at Reader.compressed (file:///Users/wieslawsoltes/GitHub/SharpForge-a13-unnamed-slots/packages/cil/src/binary.js:35:33)
+        at readSequencePoints (file:///private/tmp/sharpforge-a13-unnamed-red-corrected/packages/symbols/src/sequence-points.js:8:31)
+        at file:///private/tmp/sharpforge-a13-unnamed-red-corrected/packages/symbols/src/pdb-reader.js:62:8
+        at Array.map (<anonymous>)
+        at readPortablePdb (file:///private/tmp/sharpforge-a13-unnamed-red-corrected/packages/symbols/src/pdb-reader.js:59:39)
+        at attachPortablePdb (file:///private/tmp/sharpforge-a13-unnamed-red-corrected/packages/symbols/src/debug-directory-writer.js:117:18)
+        at file:///private/tmp/sharpforge-a13-unnamed-red-corrected/tests/a13-04-unnamed-slots.test.js:212:35
+        at getActual (node:assert:611:5),
+    expected: /local signatures differ/,
+    operator: 'throws',
+    diff: 'simple'
+  }
+
+=== old-header ===
+✖ CLI headers are authoritative when in-range PDB signatures disagree or bodies are absent (9.406709ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 0
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 156.66125
+
+✖ failing tests:
+
+test at tests/a13-04-unnamed-slots.test.js:206:1
+✖ CLI headers are authoritative when in-range PDB signatures disagree or bodies are absent (9.406709ms)
+  AssertionError [ERR_ASSERTION]: Missing expected exception.
+      at TestContext.<anonymous> (file:///private/tmp/sharpforge-a13-unnamed-red-valid-pdb/tests/a13-04-unnamed-slots.test.js:217:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.start (node:internal/test_runner/test:1262:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: /local signatures differ/,
+    operator: 'throws',
+    diff: 'simple'
+  }
+
+=== focused-hidden-point-error ===
+✔ public header-only reader returns owned tiny/fat facts without decoding exception sections (5.900917ms)
+✔ header reader rejects raw token, RVA, short header and code extent boundaries (5.025708ms)
+✔ bound slots without LocalVariable rows expose null names and declared types without invented scopes (2.0395ms)
+✔ recorded declarations and hidden flags are preserved while reused slots never choose an invented name (0.714709ms)
+✔ an empty tiny-method signature differs from missing method metadata and invalid query tokens (0.815125ms)
+✔ slot method/aggregate bounds and cancellation precede slot materialization (1.258959ms)
+✔ unnamed-slot inspection validates method-header signature tokens before dereferencing rows (0.315958ms)
+✔ Release CLR slot types and SRM declarations match without reconstructing eliminated variables (3.211209ms)
+✖ CLI headers are authoritative when in-range PDB signatures disagree or bodies are absent (1.243417ms)
+ℹ tests 9
+ℹ suites 0
+ℹ pass 8
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 149.835334
+
+✖ failing tests:
+
+test at tests/a13-04-unnamed-slots.test.js:206:1
+✖ CLI headers are authoritative when in-range PDB signatures disagree or bodies are absent (1.243417ms)
+  AssertionError [ERR_ASSERTION]: The input did not match the regular expression /requires a CIL method body/. Input:
+  
+  'CilError: Method has no body'
+  
+      at TestContext.<anonymous> (file:///Users/wieslawsoltes/GitHub/SharpForge-a13-unnamed-slots/tests/a13-04-unnamed-slots.test.js:224:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: CilError: Method has no body
+        at readMethodBody (file:///Users/wieslawsoltes/GitHub/SharpForge-a13-unnamed-slots/packages/cil/src/pe/method-body.js:34:22)
+        at result.methodBody (file:///Users/wieslawsoltes/GitHub/SharpForge-a13-unnamed-slots/packages/cil/src/pe/reader.js:117:38)
+        at loadSymbols (file:///Users/wieslawsoltes/GitHub/SharpForge-a13-unnamed-slots/packages/symbols/src/symbol-loader.js:34:21)
+        at file:///Users/wieslawsoltes/GitHub/SharpForge-a13-unnamed-slots/tests/a13-04-unnamed-slots.test.js:224:23
+        at getActual (node:assert:611:5)
+        at strict.throws (node:assert:759:24)
+        at TestContext.<anonymous> (file:///Users/wieslawsoltes/GitHub/SharpForge-a13-unnamed-slots/tests/a13-04-unnamed-slots.test.js:224:10)
+        at Test.runInAsyncScope (node:async_hooks:227:14)
+        at Test.run (node:internal/test_runner/test:1402:25)
+        at Test.processPendingSubtests (node:internal/test_runner/test:974:18),
+    expected: /requires a CIL method body/,
+    operator: 'throws',
+    diff: 'simple'
+  }
+
+=== focused ===
+✔ public header-only reader returns owned tiny/fat facts without decoding exception sections (6.863458ms)
+✔ header reader rejects raw token, RVA, short header and code extent boundaries (3.13775ms)
+✔ bound slots without LocalVariable rows expose null names and declared types without invented scopes (1.678958ms)
+✔ recorded declarations and hidden flags are preserved while reused slots never choose an invented name (0.682834ms)
+✔ an empty tiny-method signature differs from missing method metadata and invalid query tokens (0.820959ms)
+✔ slot method/aggregate bounds and cancellation precede slot materialization (1.31525ms)
+✔ unnamed-slot inspection validates method-header signature tokens before dereferencing rows (0.334041ms)
+✔ Release CLR slot types and SRM declarations match without reconstructing eliminated variables (5.924417ms)
+✔ CLI headers are authoritative when in-range PDB signatures disagree or bodies are absent (1.018292ms)
+ℹ tests 9
+ℹ suites 0
+ℹ pass 9
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 442.095209
+
+=== affected ===
+✔ declared metadata names are atomic even when they contain signature punctuation (0.946958ms)
+✔ legacy type inspection accepts byrefs while TypeSpec decoding remains strict (0.301625ms)
+✔ compiler synthesized closure, delegate, tuple and iterator classes retain their identities (81.322375ms)
+✔ signature AST matches independently generated SRM and Roslyn bytes and shapes (9.320334ms)
+✔ compatibility writers encode every primitive using its intrinsic element code (0.614167ms)
+✔ nested generic arguments preserve argument boundaries and class/value semantics (0.273292ms)
+✔ modifiers retain nesting order and properties encode their own header (0.22ms)
+✔ multi-dimensional array shapes preserve signed bounds and reject holes (1.196708ms)
+✔ malformed signature blobs reject truncation, invalid forms and excessive work (0.335625ms)
+✔ malformed ASTs reject illegal contexts, cycles, invalid tokens and headers (0.177958ms)
+✔ MetadataBuilder deduplicates nested TypeSpec bytes (1.367459ms)
+✔ filter and fault payloads round trip through small, fat and automatic sections (5.420291ms)
+✔ legacy fat bytes and filter union payload remain compatible (0.341875ms)
+✔ small section boundaries include UInt16 offsets, byte lengths and twenty clauses (0.407084ms)
+✔ malformed flags, payloads, ranges, headers and section limits fail before encoding (0.252084ms)
+✔ caller byte ownership and cancellation are preserved (1.373042ms)
+✔ native CoreCLR executes filter and fault fixtures and SRM reads every encoded region (4.368041ms)
+✔ source placement errors carry their exact instruction offset (1.193625ms)
+✔ filter termination is lexical, including unreachable final instructions (0.207208ms)
+✔ endfinally needs the innermost region, while rethrow can use any enclosing catch (0.154ms)
+✔ filter handlers permit rethrow and catch context ends at handlerEnd (0.075125ms)
+✔ placement leaves transfer and stack validation explicit, returns owned tree and respects limits (0.144625ms)
+✔ existing native filter/fault methods and all retained Roslyn PDB fixture methods satisfy source placement (9.476042ms)
+✔ EH trees own frozen regions, preserve clause precedence and coalesce shared tries (1.2135ms)
+✔ whole clauses can nest in tries and handlers with innermost clauses first (0.174125ms)
+✔ scalar clause diagnostic CILR0004 (0.230958ms)
+✔ scalar clause diagnostic CILR0005 (0.077709ms)
+✔ scalar clause diagnostic CILR0006 (0.067542ms)
+✔ scalar clause diagnostic CILR0007 (0.059792ms)
+✔ scalar clause diagnostic CILR0008 (0.057375ms)
+✔ scalar clause diagnostic CILR0009 (0.056459ms)
+✔ scalar clause diagnostic CILR0010 (0.2055ms)
+✔ scalar clause diagnostic CILR0011 (0.138625ms)
+✔ scalar clause diagnostic CILR0012 (0.093167ms)
+✔ scalar clause diagnostic CILR0013 (0.086416ms)
+✔ scalar clause diagnostic CILR0014 (0.071541ms)
+✔ scalar clause diagnostic CILR0015 (0.064584ms)
+✔ lexical graph diagnostic CILR0021 (0.071625ms)
+✔ lexical graph diagnostic CILR0022 (0.081792ms)
+✔ lexical graph diagnostic CILR0023 (0.054041ms)
+✔ lexical graph diagnostic CILR0024 (0.052042ms)
+✔ lexical graph diagnostic CILR0025 (0.053041ms)
+✔ lexical graph diagnostic CILR0026 (0.0535ms)
+✔ lexical graph diagnostic CILR0027 (0.046333ms)
+✔ all five EH boundaries exclude operands and prefix-group interiors (0.359375ms)
+✔ input, size, depth, decoder and cancellation limits are explicit (0.298375ms)
+✔ native executed filter/fault method layouts pass the structural tree validator (4.0575ms)
+✔ every IL method in the three retained Roslyn PDB fixtures passes lexical validation (3.605041ms)
+✔ wide shared-try sets and deep valid trees remain bounded without recursive traversal (8.907208ms)
+✔ pinned native corpus spans two Roslyn versions and both source languages (0.64475ms)
+✔ native CDI bytes: 5.3.0-2.26153.122 (4d3023de605a78ba3e59e50c657eed70f125c68a) cs (3.658709ms)
+✔ native CDI bytes: 5.3.0-2.26153.122 (4d3023de605a78ba3e59e50c657eed70f125c68a) vb (1.459709ms)
+✔ native CDI bytes: 4.8.0-7.23558.1 (e0917286) cs (1.674666ms)
+✔ native CDI bytes: 4.8.0-7.23558.1 (e0917286) vb (1.232333ms)
+✔ bound DateTime literals match VB/SRM ticks and unspecified kind (6.843875ms)
+✔ DateTime ticks preserve minimum, full native maximum and a single 100ns unit (4.282791ms)
+✔ DateTime payloads reject native out-of-range ticks, wrong length and class markers (4.68775ms)
+✔ DateTime custom modifiers and owned scalars survive input mutation (2.467291ms)
+✔ explicitly unbound DateTime stays unresolved (1.357125ms)
+✔ DateTime uses the shared declared-framework identity gate and does not decode lookalikes (0.387916ms)
+✔ bound decimal constant matches native SRM value with exact coefficient and scale (5.632042ms)
+✔ decimal limits and negative zero retain all 96 bits and the scale without floating-point conversion (4.078292ms)
+✔ decimal custom modifiers survive identity binding (0.844125ms)
+✔ decimal payload length, scale and value-type marker are checked after identity binding (3.08725ms)
+✔ unbound symbols retain unresolved decimal payloads (0.80125ms)
+✔ same-name nested types, different namespaces and TypeSpec handles are not treated as System.Decimal (0.150083ms)
+✔ known framework AssemblyRef tokens and own Assembly public keys establish declared identity (0.325625ms)
+✔ custom-assembly lookalikes, wrong keys, cultures and unsupported flags stay unresolved (0.15875ms)
+✔ framework public keys are bounded before hashing (0.093333ms)
+✔ aggregate assembly keys and scope count are bounded across distinct type references (18.819959ms)
+✔ bound decimal values own their scalar representation after PE/PDB mutation (2.678792ms)
+✔ native nested namespace import context preserves the SRM parent chain and recorded order (9.1215ms)
+✔ all nine import kinds survive projection with assembly and type names (2.371334ms)
+✔ standalone handles stay unresolved; returned lists and public metadata cannot mutate owned context (3.932792ms)
+✔ existing public AST formatter resolves constructed and nested import type names (1.010458ms)
+✔ parent cycles, references, aggregate counts and maximum chain depth are bounded (0.279375ms)
+✔ import handles, name bytes and aggregate decode budgets fail before expansion (0.1335ms)
+✔ TypeSpec and metadata-name limits precede type expansion (0.456583ms)
+✔ bound local enum matches retained native SRM scalar and validates its declared underlying type (7.593125ms)
+✔ a local enum cannot silently use a different scalar kind (3.289333ms)
+✔ pointer lists and modified field signatures resolve once without borrowing metadata into results (0.799083ms)
+✔ external TypeRef and constructed TypeSpec enums keep decoded scalars explicitly unverified (0.08275ms)
+✔ wrong base identity and malformed enum instance fields fail explicitly (1.462458ms)
+✔ field range and aggregate budgets reject before expanding lists (0.8355ms)
+✔ signature and name budgets run before AST/string expansion (0.47325ms)
+✔ public signature display hook overrides selected nodes and preserves default formatting (0.75825ms)
+✔ public display children share depth, node and cancellation budgets (0.26375ms)
+✔ two captured Roslyn versions annotate bound locals through native CDI payloads (9.631833ms)
+✔ dynamic flags address occurrences, with generic containers, arrays, byrefs and padding (1.0675ms)
+✔ tuple names follow reverse nested decoding and flatten long ValueTuple rest chains (1.02625ms)
+✔ constant CDI joins preserve values and expose owned scope annotations (0.792417ms)
+✔ type-dependent constant annotations support authored TypeSpec null without claiming a C# tuple const (0.818209ms)
+✔ unresolved enum TypeSpec annotations keep the scalar value and an explicit reason (0.733833ms)
+✔ lookalike tuples and mismatched flags/counts stay explicit without changing declared types (1.282625ms)
+✔ annotation parents, duplicates, per-record and aggregate limits precede expansion (0.349292ms)
+✔ native local constants pin compiler/source/blob provenance and scalar values (6.011375ms)
+✔ custom modifiers preserve order and enum handles expose tokens without changing scalar shape (0.379375ms)
+✔ UTF-16 strings preserve BOM, unmatched surrogates and embedded NUL; null remains distinct (0.247625ms)
+✔ malformed constants reject truncation, trailing bytes and invalid type handles (0.191833ms)
+✔ general signatures retain owned raw bytes and explicit unresolved type payloads (0.102833ms)
+✔ modifier, row and aggregate byte limits apply before expansion and copying (2.6975ms)
+✔ constant names are bounded before metadata string decoding (0.094333ms)
+✔ SRM-built Nullable TypeSpecs bind sixteen CLR boxed defaults without claiming C# const generation (5.292584ms)
+✔ nullable defaults preserve modifiers and reject class markers without guessing present payloads (3.490709ms)
+✔ open, constructed, reference and modified arguments remain unresolved; lookalikes never bind (0.325583ms)
+✔ malformed TypeSpecs reject truncated, trailing and over-budget signatures (0.163584ms)
+✔ TypeSpec aggregate preflight limits precede expansion and deduplicate repeated references (0.682416ms)
+✔ nullable results retain owned raw bytes and remain stable after input mutation (0.646417ms)
+✔ native lexical tree and local signatures match SRM children and DecodeLocalSignature (11.357583ms)
+✔ hidden locals, constant row ids, equal ranges, disjoint roots and slot reuse are preserved (0.301041ms)
+✔ local binding owns exact byref/pinned/generic-parameter ASTs and fresh results (1.048666ms)
+✔ absent sequence-point rows use the PE local signature; nil signatures are explicit (0.266084ms)
+✔ bad slot, nonlocal signature, invalid token and signature limits fail before expansion (0.766583ms)
+✔ linear scope construction rejects ordering/overlap and bounds maximum nesting and entries (0.577209ms)
+✔ PDB local names are bounded before tree snapshots, including overlapping heap offsets (5.368417ms)
+✔ oversized PDB local-signature RIDs cannot alias valid StandAloneSig tokens (0.200541ms)
+ℹ tests 116
+ℹ suites 0
+ℹ pass 116
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 2288.431625
+
+=== bodies ===
+✔ filter and fault payloads round trip through small, fat and automatic sections (5.694417ms)
+✔ legacy fat bytes and filter union payload remain compatible (1.736125ms)
+✔ small section boundaries include UInt16 offsets, byte lengths and twenty clauses (0.446167ms)
+✔ malformed flags, payloads, ranges, headers and section limits fail before encoding (0.242417ms)
+✔ caller byte ownership and cancellation are preserved (0.157917ms)
+✔ native CoreCLR executes filter and fault fixtures and SRM reads every encoded region (2.810916ms)
+✔ source placement errors carry their exact instruction offset (1.327958ms)
+✔ filter termination is lexical, including unreachable final instructions (0.224958ms)
+✔ endfinally needs the innermost region, while rethrow can use any enclosing catch (0.173834ms)
+✔ filter handlers permit rethrow and catch context ends at handlerEnd (0.084041ms)
+✔ placement leaves transfer and stack validation explicit, returns owned tree and respects limits (0.165583ms)
+✔ existing native filter/fault methods and all retained Roslyn PDB fixture methods satisfy source placement (9.811333ms)
+✔ EH trees own frozen regions, preserve clause precedence and coalesce shared tries (1.335125ms)
+✔ whole clauses can nest in tries and handlers with innermost clauses first (0.191125ms)
+✔ scalar clause diagnostic CILR0004 (0.247292ms)
+✔ scalar clause diagnostic CILR0005 (0.0785ms)
+✔ scalar clause diagnostic CILR0006 (0.070875ms)
+✔ scalar clause diagnostic CILR0007 (0.059208ms)
+✔ scalar clause diagnostic CILR0008 (0.062792ms)
+✔ scalar clause diagnostic CILR0009 (0.063791ms)
+✔ scalar clause diagnostic CILR0010 (0.08425ms)
+✔ scalar clause diagnostic CILR0011 (0.109417ms)
+✔ scalar clause diagnostic CILR0012 (0.072333ms)
+✔ scalar clause diagnostic CILR0013 (0.079417ms)
+✔ scalar clause diagnostic CILR0014 (0.058875ms)
+✔ scalar clause diagnostic CILR0015 (0.050417ms)
+✔ lexical graph diagnostic CILR0021 (0.305291ms)
+✔ lexical graph diagnostic CILR0022 (0.119208ms)
+✔ lexical graph diagnostic CILR0023 (0.066125ms)
+✔ lexical graph diagnostic CILR0024 (0.088166ms)
+✔ lexical graph diagnostic CILR0025 (0.081875ms)
+✔ lexical graph diagnostic CILR0026 (0.059916ms)
+✔ lexical graph diagnostic CILR0027 (0.049917ms)
+✔ all five EH boundaries exclude operands and prefix-group interiors (0.417292ms)
+✔ input, size, depth, decoder and cancellation limits are explicit (0.312334ms)
+✔ native executed filter/fault method layouts pass the structural tree validator (2.802208ms)
+✔ every IL method in the three retained Roslyn PDB fixtures passes lexical validation (7.07325ms)
+✔ wide shared-try sets and deep valid trees remain bounded without recursive traversal (10.041292ms)
+✔ native lexical tree and local signatures match SRM children and DecodeLocalSignature (14.051875ms)
+✔ hidden locals, constant row ids, equal ranges, disjoint roots and slot reuse are preserved (0.297959ms)
+✔ local binding owns exact byref/pinned/generic-parameter ASTs and fresh results (1.088958ms)
+✔ absent sequence-point rows use the PE local signature; nil signatures are explicit (0.26175ms)
+✔ bad slot, nonlocal signature, invalid token and signature limits fail before expansion (0.748833ms)
+✔ linear scope construction rejects ordering/overlap and bounds maximum nesting and entries (0.615333ms)
+✔ PDB local names are bounded before tree snapshots, including overlapping heap offsets (5.188958ms)
+✔ oversized PDB local-signature RIDs cannot alias valid StandAloneSig tokens (0.253708ms)
+✔ public header-only reader returns owned tiny/fat facts without decoding exception sections (6.084834ms)
+✔ header reader rejects raw token, RVA, short header and code extent boundaries (5.2345ms)
+✔ bound slots without LocalVariable rows expose null names and declared types without invented scopes (1.950333ms)
+✔ recorded declarations and hidden flags are preserved while reused slots never choose an invented name (0.801625ms)
+✔ an empty tiny-method signature differs from missing method metadata and invalid query tokens (0.850333ms)
+✔ slot method/aggregate bounds and cancellation precede slot materialization (1.331667ms)
+✔ unnamed-slot inspection validates method-header signature tokens before dereferencing rows (0.314ms)
+✔ Release CLR slot types and SRM declarations match without reconstructing eliminated variables (4.187ms)
+✔ CLI headers are authoritative when in-range PDB signatures disagree or bodies are absent (1.095291ms)
+ℹ tests 55
+ℹ suites 0
+ℹ pass 55
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 753.530667
+
+=== browser-property-order-error ===
+Traceback (most recent call last):
+  File "/tmp/sharpforge-a13-browser-scope.py", line 60, in <module>
+    result = page.evaluate("async () => (await import('/__a13__.mjs')).run()")
+  File "/Users/wieslawsoltes/GitHub/SharpForge-a13-unnamed-slots/tests/conformance/browser/launch.py", line 168, in checked
+    result = value(*args, **kwargs)
+  File "/private/tmp/sharpforge-bcl-browser-venv/lib/python3.14/site-packages/playwright/sync_api/_generated.py", line 9413, in evaluate
+    self._sync(
+    ~~~~~~~~~~^
+        self._impl_obj.evaluate(expression=expression, arg=mapping.to_impl(arg))
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/private/tmp/sharpforge-bcl-browser-venv/lib/python3.14/site-packages/playwright/_impl/_sync_base.py", line 115, in _sync
+    return task.result()
+           ~~~~~~~~~~~^^
+  File "/private/tmp/sharpforge-bcl-browser-venv/lib/python3.14/site-packages/playwright/_impl/_page.py", line 474, in evaluate
+    return await self._main_frame.evaluate(expression, arg)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/private/tmp/sharpforge-bcl-browser-venv/lib/python3.14/site-packages/playwright/_impl/_frame.py", line 346, in evaluate
+    await self._channel.send(
+    ...<6 lines>...
+    )
+  File "/private/tmp/sharpforge-bcl-browser-venv/lib/python3.14/site-packages/playwright/_impl/_connection.py", line 76, in send
+    return await self._connection.wrap_api_call(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<3 lines>...
+    )
+    ^
+  File "/private/tmp/sharpforge-bcl-browser-venv/lib/python3.14/site-packages/playwright/_impl/_connection.py", line 632, in wrap_api_call
+    raise rewrite_error(error, f"{parsed_st['apiName']}: {error}") from None
+playwright._impl._errors.Error: Page.evaluate: Error: native scope tree: values differ
+    at equal (http://127.0.0.1:59011/__a13__.mjs:4:66)
+    at Module.run (http://127.0.0.1:59011/__a13__.mjs:53:3)
+    at async <anonymous>:337:30
+
+=== browser-webkit-missing ===
+Traceback (most recent call last):
+  File "/tmp/sharpforge-a13-browser-scope.py", line 56, in <module>
+    with launch_browser(playwright, __file__, engine=engine, mode='A13 public source modules') as browser:
+         ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/contextlib.py", line 141, in __enter__
+    return next(self.gen)
+  File "/Users/wieslawsoltes/GitHub/SharpForge-a13-unnamed-slots/tests/conformance/browser/launch.py", line 180, in launch_browser
+    browser = getattr(playwright, engine).launch(**launch_options(engine=engine))
+  File "/private/tmp/sharpforge-bcl-browser-venv/lib/python3.14/site-packages/playwright/sync_api/_generated.py", line 16814, in launch
+    self._sync(
+    ~~~~~~~~~~^
+        self._impl_obj.launch(
+        ^^^^^^^^^^^^^^^^^^^^^^
+    ...<17 lines>...
+        )
+        ^
+    )
+    ^
+  File "/private/tmp/sharpforge-bcl-browser-venv/lib/python3.14/site-packages/playwright/_impl/_sync_base.py", line 115, in _sync
+    return task.result()
+           ~~~~~~~~~~~^^
+  File "/private/tmp/sharpforge-bcl-browser-venv/lib/python3.14/site-packages/playwright/_impl/_browser_type.py", line 101, in launch
+    await self._channel.send(
+        "launch", TimeoutSettings.launch_timeout, params
+    )
+  File "/private/tmp/sharpforge-bcl-browser-venv/lib/python3.14/site-packages/playwright/_impl/_connection.py", line 76, in send
+    return await self._connection.wrap_api_call(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<3 lines>...
+    )
+    ^
+  File "/private/tmp/sharpforge-bcl-browser-venv/lib/python3.14/site-packages/playwright/_impl/_connection.py", line 632, in wrap_api_call
+    raise rewrite_error(error, f"{parsed_st['apiName']}: {error}") from None
+playwright._impl._errors.Error: BrowserType.launch: Executable doesn't exist at /Users/wieslawsoltes/Library/Caches/ms-playwright/webkit-2359/pw_run.sh
+╔════════════════════════════════════════════════════════════╗
+║ Looks like Playwright was just installed or updated.       ║
+║ Please run the following command to download new browsers: ║
+║                                                            ║
+║     playwright install                                     ║
+║                                                            ║
+║ <3 Playwright Team                                         ║
+╚════════════════════════════════════════════════════════════╝
+
+=== browser ===
+{
+  "revision": "54c856db3a1b569ce177c3ad4b8af8f39e3f4398",
+  "host": "macOS-26.6-arm64-arm-64bit-Mach-O",
+  "python": "3.14.7 (main, Aug  5 2026, 10:29:49) [Clang 21.0.0 (clang-2100.1.1.101)]",
+  "playwright": "1.63.0",
+  "moduleSha256": "4ca08e801bcc8018361824ac96cf25c74d69cd46219110827723697356bd45bd",
+  "mode": "HTTP source modules/import map, CSP enabled",
+  "engines": [
+    {
+      "engine": "chromium",
+      "passed": true,
+      "version": "153.0.8010.12",
+      "checks": [
+        "native effective imports",
+        "import ownership/invalid scope",
+        "native typed scope tree",
+        "scope ownership/invalid method",
+        "authored dynamic/tuple/constant joins",
+        "annotation ownership/shared formatter budget",
+        "Release native unnamed slots/no invented names",
+        "slot ownership/unbound/bounds/cancellation"
+      ]
+    },
+    {
+      "engine": "firefox",
+      "passed": true,
+      "version": "155.0",
+      "checks": [
+        "native effective imports",
+        "import ownership/invalid scope",
+        "native typed scope tree",
+        "scope ownership/invalid method",
+        "authored dynamic/tuple/constant joins",
+        "annotation ownership/shared formatter budget",
+        "Release native unnamed slots/no invented names",
+        "slot ownership/unbound/bounds/cancellation"
+      ]
+    },
+    {
+      "engine": "webkit",
+      "passed": true,
+      "version": "26.6",
+      "checks": [
+        "native effective imports",
+        "import ownership/invalid scope",
+        "native typed scope tree",
+        "scope ownership/invalid method",
+        "authored dynamic/tuple/constant joins",
+        "annotation ownership/shared formatter budget",
+        "Release native unnamed slots/no invented names",
+        "slot ownership/unbound/bounds/cancellation"
+      ]
+    }
+  ],
+  "passed": true
+}
+
+=== check ===
+
+> sharpforge@0.14.0 check
+> node scripts/run.js check
+
+{
+  "areas": 30,
+  "nodeFiles": 860,
+  "browserScripts": 36,
+  "unassigned": 0,
+  "duplicate": 0
+}
+Checked 3313 JavaScript modules; 0 syntax errors.
+{
+  "passed": true,
+  "inspected": 3309,
+  "modules": 3309,
+  "errors": []
+}
+
+=== structure ===
+
+> sharpforge@0.14.0 check:structure
+> node scripts/quality/check-structure.js
+
+Structure gate: 271 problem(s)
+packages/bytecode/src/builtins.js: new file exceeds lineLength 292 > 160
+packages/bytecode/src/runtime-builtins.js: new file exceeds lineLength 510 > 160
+packages/cil/src/execution-profile.js: lineLength grew 335 -> 466 (legacy file may only shrink)
+packages/cil/src/field-profile.js: new file exceeds lineLength 220 > 160
+packages/cil/src/intrinsic-profile.js: new file exceeds lineLength 299 > 160
+packages/compiler/scripts/generate-bound-nodes.js: new file exceeds lineLength 345 > 160
+packages/compiler/scripts/generate-diagnostic-codes.js: new file exceeds lineLength 379 > 160
+packages/compiler/smoke.mjs: new file exceeds lineLength 230 > 160
+packages/compiler/src/binder/accessibility.js: new file exceeds lineLength 235 > 160
+packages/compiler/src/binder/anonymous-methods.js: new file exceeds lineLength 163 > 160
+packages/compiler/src/binder/binder.js: new file exceeds lineLength 305 > 160
+packages/compiler/src/binder/body/lambdas.js: new file exceeds lineLength 183 > 160
+packages/compiler/src/binder/csharp11.js: new file exceeds lineLength 168 > 160
+packages/compiler/src/binder/entry-point.js: new file exceeds lineLength 293 > 160
+packages/compiler/src/binder/expressions.js: new file exceeds lineLength 796 > 160
+packages/compiler/src/binder/extension-indexers.js: new file exceeds lineLength 162 > 160
+packages/compiler/src/binder/field-keyword.js: new file exceeds lineLength 164 > 160
+packages/compiler/src/binder/function-pointers.js: new file exceeds lineLength 171 > 160
+packages/compiler/src/binder/lookup.js: new file exceeds lineLength 361 > 160
+packages/compiler/src/binder/members/initializers.js: new file exceeds lineLength 161 > 160
+packages/compiler/src/binder/method-context.js: new file exceeds lineLength 481 > 160
+packages/compiler/src/binder/operators.js: new file exceeds lineLength 345 > 160
+packages/compiler/src/binder/preview-features.js: new file exceeds lineLength 170 > 160
+packages/compiler/src/binder/ref-kinds.js: new file exceeds lineLength 175 > 160
+packages/compiler/src/binder/ref-locals.js: new file exceeds lineLength 180 > 160
+packages/compiler/src/binder/special-members.js: new file exceeds lineLength 167 > 160
+packages/compiler/src/binder/statements.js: new file exceeds lineLength 546 > 160
+packages/compiler/src/binder/type-binder.js: new file exceeds lineLength 162 > 160
+packages/compiler/src/binder/type-modifiers.js: new file exceeds lineLength 162 > 160
+packages/compiler/src/binder/using-check.js: new file exceeds lineLength 264 > 160
+packages/compiler/src/binder/usings.js: new file exceeds lineLength 246 > 160
+packages/compiler/src/bound/dump.js: new file exceeds lineLength 200 > 160
+packages/compiler/src/bound/nodes.js: new file exceeds bytes 57860 > 40000, lineLength 5294 > 160
+packages/compiler/src/bound/rewriter.js: new file exceeds lineLength 253 > 160
+packages/compiler/src/codegen/ir-emitter.js: new file exceeds lineLength 380 > 160
+packages/compiler/src/compilation.js: new file exceeds lineLength 684 > 160
+packages/compiler/src/compile.js: new file exceeds lineLength 446 > 160
+packages/compiler/src/constants/constant-value.js: new file exceeds lineLength 247 > 160
+packages/compiler/src/constants/fold.js: new file exceeds lineLength 233 > 160
+packages/compiler/src/conversions.js: new file exceeds lineLength 236 > 160
+packages/compiler/src/declarations.js: new file exceeds lineLength 460 > 160
+packages/compiler/src/diagnostics/codes.js: new file exceeds lineLength 238 > 160
+packages/compiler/src/diagnostics/roslyn-codes.js: new file exceeds lines 895 > 500, bytes 120908 > 40000, lineLength 312 > 160
+packages/compiler/src/diagnostics/suppression.js: new file exceeds lineLength 319 > 160
+packages/compiler/src/flow/cfg.js: new file exceeds lineLength 380 > 160
+packages/compiler/src/flow/definite-assignment.js: new file exceeds lineLength 284 > 160
+packages/compiler/src/flow/escape/checks.js: new file exceeds lineLength 178 > 160
+packages/compiler/src/flow/method-flow.js: new file exceeds lineLength 236 > 160
+packages/compiler/src/flow/reachability.js: new file exceeds lineLength 263 > 160
+packages/compiler/src/flow/region-analysis.js: new file exceeds lineLength 343 > 160
+packages/compiler/src/lowering/generated-names.js: new file exceeds lineLength 652 > 160
+packages/compiler/src/lowering/local-rewriter.js: new file exceeds lineLength 280 > 160
+packages/compiler/src/metadata-import/assembly-identity.js: new file exceeds lineLength 319 > 160
+packages/compiler/src/metadata-import/attributes.js: new file exceeds lineLength 415 > 160
+packages/compiler/src/metadata-import/compilation-references.js: new file exceeds lineLength 169 > 160
+packages/compiler/src/metadata-import/pe-metadata.js: new file exceeds lineLength 417 > 160
+packages/compiler/src/metadata-import/pe-symbols.js: new file exceeds lineLength 1036 > 160
+packages/compiler/src/metadata-import/reference-manager.js: new file exceeds lineLength 471 > 160
+packages/compiler/src/method-compiler.js: new file exceeds lineLength 969 > 160
+packages/compiler/src/method-pipeline.js: new file exceeds lineLength 261 > 160
+packages/compiler/src/options.js: new file exceeds lineLength 419 > 160
+packages/compiler/src/overload/operators.js: new file exceeds lineLength 163 > 160
+packages/compiler/src/semantic/constants.js: new file exceeds lineLength 166 > 160
+packages/compiler/src/semantic/execution-model.js: new file exceeds lineLength 334 > 160
+packages/compiler/src/symbols/awaiter-types.js: new file exceeds lineLength 161 > 160
+packages/compiler/src/symbols/compilation-symbols.js: new file exceeds lineLength 391 > 160
+packages/compiler/src/symbols/legacy-types.js: new file exceeds lineLength 212 > 160
+packages/compiler/src/symbols/members.js: new file exceeds lineLength 692 > 160
+packages/compiler/src/symbols/namespaces.js: new file exceeds lineLength 297 > 160
+packages/compiler/src/symbols/registry-bridge.js: new file exceeds lineLength 520 > 160
+packages/compiler/src/symbols/source/declaration-table.js: new file exceeds lineLength 348 > 160
+packages/compiler/src/symbols/source/extension-block-checks.js: new file exceeds lineLength 164 > 160
+packages/compiler/src/symbols/source/partial-constructors-events.js: new file exceeds lineLength 169 > 160
+packages/compiler/src/symbols/special-types.js: new file exceeds lineLength 548 > 160
+packages/compiler/src/symbols/types.js: new file exceeds lineLength 623 > 160
+packages/compiler/src/symbols/well-known-members.js: new file exceeds lineLength 360 > 160
+packages/compiler/src/type-utils.js: new file exceeds lineLength 507 > 160
+packages/compiler/test/accessibility/generate-roslyn-accessibility.js: new file exceeds lineLength 373 > 160
+packages/compiler/test/bound/fixtures.js: new file exceeds lineLength 277 > 160
+packages/compiler/test/bound/update-snapshots.js: new file exceeds lineLength 229 > 160
+packages/compiler/test/constants/expressions.js: new file exceeds lineLength 1756 > 160
+packages/compiler/test/constants/generate.js: new file exceeds lineLength 209 > 160
+packages/compiler/test/differential/harness.js: new file exceeds lineLength 211 > 160
+packages/compiler/test/differential/run.test.js: new file exceeds lineLength 235 > 160
+packages/compiler/test/differential/tools/pin.mjs: new file exceeds lineLength 307 > 160
+packages/compiler/test/suppression/fixtures.js: new file exceeds lineLength 570 > 160
+packages/compute/smoke.mjs: new file exceeds lineLength 277 > 160
+packages/debugger/smoke.mjs: new file exceeds lineLength 537 > 160
+packages/designer/smoke.mjs: new file exceeds lineLength 509 > 160
+packages/extensions/smoke.mjs: new file exceeds lineLength 282 > 160
+packages/framework/src/contributions/core-controls-12.js: new file exceeds lineLength 295 > 160
+packages/framework/src/contributions/core-controls.js: new file exceeds lineLength 407 > 160
+packages/framework/src/contributions/core-system.js: new file exceeds lineLength 413 > 160
+packages/framework/src/contributions/core-xaml.js: new file exceeds lineLength 436 > 160
+packages/framework/src/registry-validation.js: new file exceeds lineLength 246 > 160
+packages/framework/src/registry.js: new file exceeds lineLength 319 > 160
+packages/network/smoke.mjs: new file exceeds lineLength 695 > 160
+packages/protocol/smoke.mjs: new file exceeds lineLength 258 > 160
+packages/runtime/smoke.mjs: new file exceeds lineLength 216 > 160
+packages/runtime/src/execution/calls.js: new file exceeds lineLength 181 > 160
+packages/runtime/src/execution/casting.js: new file exceeds lineLength 259 > 160
+packages/runtime/src/execution/eh.js: new file exceeds lineLength 227 > 160
+packages/runtime/src/execution/enums.js: new file exceeds lineLength 208 > 160
+packages/runtime/src/execution/handlers/array.js: new file exceeds lineLength 384 > 160
+packages/runtime/src/execution/handlers/branch.js: new file exceeds lineLength 195 > 160
+packages/runtime/src/execution/handlers/indirect.js: new file exceeds lineLength 212 > 160
+packages/runtime/src/execution/intrinsics.js: new file exceeds lineLength 193 > 160
+packages/runtime/src/execution/method-table.js: new file exceeds lineLength 404 > 160
+packages/runtime/src/execution/numeric-ops.js: new file exceeds lineLength 438 > 160
+packages/runtime/src/execution/source-eh.js: new file exceeds lineLength 164 > 160
+packages/runtime/src/execution/static-init.js: new file exceeds lineLength 231 > 160
+packages/runtime/src/execution/tokens.js: new file exceeds lineLength 222 > 160
+packages/runtime/src/execution/type-system.js: new file exceeds lineLength 220 > 160
+packages/winui/smoke.mjs: new file exceeds lineLength 445 > 160
+apps/studio/automation-api.js: new file exceeds lineLength 341 > 160
+apps/studio/commands/core.js: new file exceeds lineLength 2081 > 160
+apps/studio/dialogs/about.js: new file exceeds lineLength 4588 > 160
+apps/studio/icons.js: new file exceeds lineLength 1917 > 160
+apps/studio/menus/context.js: new file exceeds lineLength 2461 > 160
+apps/studio/menus/registry.js: new file exceeds lineLength 426 > 160
+apps/studio/samples-designer.js: lineLength grew 5116 -> 5182 (legacy file may only shrink)
+apps/studio/services/registry.js: new file exceeds lineLength 596 > 160
+apps/studio/settings/storage.js: new file exceeds lineLength 333 > 160
+apps/studio/styles/debugger-advanced.css: new file exceeds lineLength 888 > 160
+apps/studio/styles/debugger-parallel.css: new file exceeds lineLength 883 > 160
+apps/studio/styles/debugger-responsive.css: new file exceeds lineLength 184 > 160
+apps/studio/styles/docking.css: new file exceeds lineLength 481 > 160
+apps/studio/styles/editor-overlays.css: new file exceeds lineLength 273 > 160
+apps/studio/styles/explorer-dialogs.css: new file exceeds lineLength 236 > 160
+apps/studio/styles/workbench-responsive.css: new file exceeds lineLength 173 > 160
+apps/studio/tools/core.js: new file exceeds lineLength 1952 > 160
+apps/studio/tools/debugger-automation.js: new file exceeds lineLength 187 > 160
+apps/studio/tools/definitions.js: new file exceeds lineLength 1161 > 160
+apps/studio/tools/docking-automation.js: new file exceeds lineLength 593 > 160
+apps/studio/tools/msbuild-automation.js: new file exceeds lineLength 425 > 160
+apps/studio/tools/registry.js: new file exceeds lineLength 682 > 160
+apps/studio/tools/workspace-automation.js: new file exceeds lineLength 324 > 160
+scripts/benchmark-compute14.js: lineLength grew 364 -> 570 (legacy file may only shrink)
+scripts/benchmark-release14.js: lineLength grew 295 -> 460 (legacy file may only shrink)
+scripts/benchmark.js: lineLength grew 453 -> 479 (legacy file may only shrink)
+scripts/benchmarks/a05-call-offsets.mjs: new file exceeds lineLength 237 > 160
+scripts/conformance/browser-report.js: new file exceeds lineLength 272 > 160
+scripts/conformance/ci-planning/impact.js: new file exceeds lineLength 171 > 160
+scripts/conformance/ci-stats.js: new file exceeds lineLength 223 > 160
+scripts/conformance/coverage.js: new file exceeds lineLength 213 > 160
+scripts/conformance/diff/benchmark.js: new file exceeds lineLength 772 > 160
+scripts/conformance/diff/classify.js: new file exceeds lineLength 350 > 160
+scripts/conformance/diff/engines/clr.js: new file exceeds lineLength 613 > 160
+scripts/conformance/diff/engines/rust.js: new file exceeds lineLength 736 > 160
+scripts/conformance/diff/engines/vm.js: new file exceeds lineLength 607 > 160
+scripts/conformance/diff/fixtures.js: new file exceeds lineLength 275 > 160
+scripts/conformance/diff/gc/compare.js: new file exceeds lineLength 186 > 160
+scripts/conformance/diff/gc/js-collector.js: new file exceeds lineLength 207 > 160
+scripts/conformance/diff/gc-trace.js: new file exceeds lineLength 213 > 160
+scripts/conformance/diff/host/console.js: new file exceeds lineLength 280 > 160
+scripts/conformance/diff/process.js: new file exceeds lineLength 507 > 160
+scripts/conformance/diff/reduce.js: new file exceeds lineLength 765 > 160
+scripts/conformance/diff/result.js: new file exceeds lineLength 201 > 160
+scripts/conformance/diff/run.js: new file exceeds lineLength 1135 > 160
+scripts/conformance/env-report.js: new file exceeds lineLength 307 > 160
+scripts/conformance/gc/stress.js: new file exceeds lineLength 169 > 160
+scripts/conformance/inventory/baseline.js: new file exceeds lineLength 284 > 160
+scripts/conformance/inventory/bcl-api-diff.js: new file exceeds lineLength 207 > 160
+scripts/conformance/inventory/benchmark.js: new file exceeds lineLength 248 > 160
+scripts/conformance/inventory/common.js: new file exceeds lineLength 450 > 160
+scripts/conformance/inventory/csharp.js: new file exceeds lineLength 384 > 160
+scripts/conformance/inventory/denominator.js: new file exceeds lineLength 328 > 160
+scripts/conformance/inventory/diagnostics.js: new file exceeds lineLength 181 > 160
+scripts/conformance/inventory/ecma335.js: new file exceeds lineLength 318 > 160
+scripts/conformance/inventory/gap-ids.js: new file exceeds lineLength 342 > 160
+scripts/conformance/inventory/generate.js: new file exceeds lineLength 782 > 160
+scripts/conformance/inventory/ide.js: new file exceeds lineLength 582 > 160
+scripts/conformance/inventory/native-metadata.js: new file exceeds lineLength 229 > 160
+scripts/conformance/inventory/reference-language.js: new file exceeds lineLength 191 > 160
+scripts/conformance/inventory/runtime-gc.js: new file exceeds lineLength 206 > 160
+scripts/conformance/inventory/runtime-runner.js: new file exceeds lineLength 202 > 160
+scripts/conformance/oracle/bcl-run.js: new file exceeds lineLength 179 > 160
+scripts/conformance/oracle/clr-run.js: new file exceeds lineLength 229 > 160
+scripts/conformance/oracle/fixtures.js: new file exceeds lineLength 268 > 160
+scripts/conformance/oracle/license-policy.js: new file exceeds lineLength 201 > 160
+scripts/conformance/oracle/process.js: new file exceeds lineLength 245 > 160
+scripts/conformance/oracle/qualify.js: new file exceeds lineLength 274 > 160
+scripts/conformance/oracle/roslyn-compile.js: new file exceeds lineLength 631 > 160
+scripts/conformance/oracle/store.js: new file exceeds lineLength 240 > 160
+scripts/conformance/oracle/toolchain.js: new file exceeds lineLength 335 > 160
+scripts/conformance/oracle/winui-expected-fixtures.js: new file exceeds lineLength 194 > 160
+scripts/conformance/oracle/winui-expected.js: new file exceeds lineLength 206 > 160
+scripts/conformance/oracle/winui-measure/run.js: new file exceeds lineLength 184 > 160
+scripts/conformance/oracle/winui-run.js: new file exceeds lineLength 281 > 160
+scripts/conformance/perf/ab.js: new file exceeds lineLength 858 > 160
+scripts/conformance/perf/alloc.js: new file exceeds lineLength 441 > 160
+scripts/conformance/perf/compare.js: new file exceeds lineLength 465 > 160
+scripts/conformance/perf/controls.js: new file exceeds lineLength 400 > 160
+scripts/conformance/perf/core.js: new file exceeds lineLength 375 > 160
+scripts/conformance/perf/legacy.js: new file exceeds lineLength 198 > 160
+scripts/conformance/perf/measure.js: new file exceeds lineLength 297 > 160
+scripts/conformance/perf/normalize-browser.js: new file exceeds lineLength 281 > 160
+scripts/conformance/perf/normalize.js: new file exceeds lineLength 298 > 160
+scripts/conformance/perf/process.js: new file exceeds lineLength 284 > 160
+scripts/conformance/perf/registry.js: new file exceeds lineLength 325 > 160
+scripts/conformance/perf/size-budget.js: new file exceeds lineLength 366 > 160
+scripts/conformance/perf/summary.js: new file exceeds lineLength 187 > 160
+scripts/conformance/perf/update-baseline.js: new file exceeds lineLength 257 > 160
+scripts/conformance/perf/workloads.js: new file exceeds lineLength 372 > 160
+scripts/conformance/protocol/messages.js: new file exceeds lineLength 207 > 160
+scripts/conformance/protocol/probe.js: new file exceeds lineLength 170 > 160
+scripts/conformance/protocol/record.js: new file exceeds lineLength 210 > 160
+scripts/conformance/protocol/replay.js: new file exceeds lineLength 184 > 160
+scripts/conformance/protocol/schema.js: new file exceeds lineLength 281 > 160
+scripts/conformance/protocol/session.js: new file exceeds lineLength 189 > 160
+scripts/conformance/record-skips.js: new file exceeds lineLength 176 > 160
+scripts/conformance/serve-modes.js: new file exceeds lineLength 242 > 160
+scripts/planning/abi/benchmark.js: new file exceeds lineLength 1095 > 160
+scripts/planning/abi/check-versions.js: new file exceeds lineLength 375 > 160
+scripts/planning/abi/example.js: new file exceeds lineLength 209 > 160
+scripts/planning/abi/gen-value-fixtures.js: new file exceeds lineLength 650 > 160
+scripts/planning/abi/value-codec.js: new file exceeds lineLength 407 > 160
+scripts/planning/audit.js: new file exceeds lineLength 285 > 160
+scripts/planning/benchmark-registries.js: new file exceeds lineLength 600 > 160
+scripts/planning/bootstrap-project.js: new file exceeds lineLength 292 > 160
+scripts/planning/capture-evidence.js: new file exceeds lineLength 206 > 160
+scripts/planning/check-contract-change.js: new file exceeds lineLength 272 > 160
+scripts/planning/check-contract-implementations.js: new file exceeds lineLength 521 > 160
+scripts/planning/check-ownership.js: new file exceeds lineLength 397 > 160
+scripts/planning/check-path-collisions.js: new file exceeds lineLength 253 > 160
+scripts/planning/check-root-providers.js: new file exceeds lineLength 642 > 160
+scripts/planning/check-test-manifests.js: new file exceeds lineLength 206 > 160
+scripts/planning/css-rules.js: new file exceeds lineLength 185 > 160
+scripts/planning/dag.js: new file exceeds lineLength 200 > 160
+scripts/planning/gen-codeowners.js: new file exceeds lineLength 383 > 160
+scripts/planning/gen-ownership.js: new file exceeds lineLength 216 > 160
+scripts/planning/gen-schema-fixtures.js: new file exceeds lineLength 1232 > 160
+scripts/planning/golden-output.js: new file exceeds lineLength 192 > 160
+scripts/planning/handoff.js: new file exceeds lineLength 325 > 160
+scripts/planning/impacted-tests.js: new file exceeds lineLength 175 > 160
+scripts/planning/inventory-values.js: new file exceeds lineLength 4641 > 160
+scripts/planning/lib/claim-cli.js: new file exceeds lineLength 368 > 160
+scripts/planning/lib/claims.js: new file exceeds lineLength 291 > 160
+scripts/planning/lib/deps-parse.js: new file exceeds lineLength 172 > 160
+scripts/planning/lib/evidence.js: new file exceeds lineLength 229 > 160
+scripts/planning/lib/gh-retry.js: new file exceeds lineLength 212 > 160
+scripts/planning/lib/github-project.js: new file exceeds lineLength 643 > 160
+scripts/planning/lib/io.js: new file exceeds lineLength 211 > 160
+scripts/planning/lib/paths.js: new file exceeds lineLength 223 > 160
+scripts/planning/lint-backlog.js: new file exceeds lineLength 207 > 160
+scripts/planning/readiness.js: new file exceeds lineLength 193 > 160
+scripts/planning/ready.js: new file exceeds lineLength 299 > 160
+scripts/planning/resume.js: new file exceeds lineLength 259 > 160
+scripts/planning/rollup-invalidation.js: new file exceeds lineLength 171 > 160
+scripts/planning/rollup-publish.js: new file exceeds lineLength 464 > 160
+scripts/planning/rollup.js: new file exceeds lineLength 417 > 160
+scripts/planning/run-safepoint-fixtures.js: new file exceeds lineLength 337 > 160
+scripts/planning/run-tests.js: new file exceeds lineLength 226 > 160
+scripts/planning/schema/adapters.js: new file exceeds lineLength 855 > 160
+scripts/planning/schema/benchmark-lowering.js: new file exceeds lineLength 389 > 160
+scripts/planning/schema/example-coverage.js: new file exceeds lineLength 1101 > 160
+scripts/planning/schema/lower-method-body.js: new file exceeds lineLength 855 > 160
+scripts/planning/schema/qualify-rust.js: new file exceeds lineLength 1965 > 160
+scripts/planning/schema/rust/src/main.rs: new file exceeds lineLength 764 > 160
+scripts/planning/schema/validate.js: new file exceeds lineLength 506 > 160
+scripts/planning/snapshot-backlog.js: new file exceeds lineLength 787 > 160
+scripts/planning/snapshot-contract-ids.js: new file exceeds lineLength 510 > 160
+scripts/planning/sync-ready.js: new file exceeds lineLength 286 > 160
+scripts/planning/testing/fake-github.js: new file exceeds lineLength 388 > 160
+scripts/planning/validate-dag.js: new file exceeds lineLength 204 > 160
+scripts/run.js: new file exceeds lineLength 232 > 160
+scripts/validate-a05-dispatch.js: new file exceeds lineLength 344 > 160
+scripts/validate-a05-faults.mjs: new file exceeds lineLength 211 > 160
+scripts/validate-a05-numeric-dotnet.js: new file exceeds lineLength 192 > 160
+scripts/validate-a05-static-init.js: new file exceeds lineLength 349 > 160
+scripts/validate-a05-type-system.js: new file exceeds lineLength 449 > 160

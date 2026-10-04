@@ -141,4 +141,11 @@ or its binary encoding; the callback-absent formatting contract is unchanged.
 
 The opt-in [verifier member context](VERIFIER-MEMBERS.md) adds bounded, canonical local field/method declaration resolution to type relations.
 
+`readMethodHeader(pe, methodToken)` reads owned scalar tiny/fat CIL header facts
+(`fileOffset`, `headerSize`, `codeOffset`, `codeSize`, `sectionEnd`, `maxStack`,
+`localSignature`, `moreSections`, `initLocals`) or null for an absent RVA.
+It validates raw MethodDef tokens, RVA/header/code extents and never decodes IL
+or exception sections. Invalid input throws `CilError`. `pe.methodBody` shares
+the same header parser and retains its existing result shape.
+
 Runtime admission checks [reachable try-entry stack heights](VERIFIER-HANDLER-ENTRY.md) before granting stack-capacity proofs.

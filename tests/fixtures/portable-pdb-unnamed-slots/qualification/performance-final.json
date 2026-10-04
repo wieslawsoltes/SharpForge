@@ -1,0 +1,708 @@
+{
+  "revisions": {
+    "before": "1e1f86a1de13f90d068e35f3882a1564f3d4ff5b",
+    "after": "54c856db3a1b569ce177c3ad4b8af8f39e3f4398",
+    "oldGuard": "65516e98f0d4cfec9c3ee9b93d95ad984a0119f6"
+  },
+  "node": "v24.21.0",
+  "host": "darwin arm64 Apple M3 Pro",
+  "startedAt": "2026-10-04T05:47:54.561Z",
+  "protocol": {
+    "pairsPerControl": 20,
+    "loadWarmups": 30,
+    "loadsPerSample": 100,
+    "bodyWarmups": 1000,
+    "bodyBatchesPerSample": 1000,
+    "methodsPerBodyBatch": 25,
+    "order": "AB/BA alternating",
+    "gcBeforeEachSample": true,
+    "median": "mean of positions10and11",
+    "p95": "nearest-rank position19",
+    "dependencies": "Baseline symbols and CIL sources archived at exact before revision with own workspace links; unchanged transitive archive/bytecode/framework packages resolve through current workspace."
+  },
+  "fixtures": {
+    "assemblyBytes": 12800,
+    "assemblySha256": "2bc24dbbe692eea3cabc20af34808395d8f3c649ff955b1116edc85cf7b33226",
+    "pdbBytes": 12180,
+    "pdbSha256": "4c4b2edea79e17147cec25dc25dc0543223525c69560b93ce203a855fec9b48e",
+    "harnessSha256": "605f173737d0cb6e47935bdb8bbad13aba5e5b3d47670ae48fa150b77c1e87ad"
+  },
+  "observations": {
+    "before": {
+      "constants": 18,
+      "enumValue": -1234,
+      "enumType": "short",
+      "bodiesSha256": "7bd1a08fc85cc260a1839c95abffa5a74dad6ec86cfd161677111fbadaccef20"
+    },
+    "after": {
+      "constants": 18,
+      "enumValue": -1234,
+      "enumType": "short",
+      "bodiesSha256": "7bd1a08fc85cc260a1839c95abffa5a74dad6ec86cfd161677111fbadaccef20"
+    }
+  },
+  "summaries": {
+    "load": {
+      "before": {
+        "medianMs": 0.6079366649999998,
+        "p95Ms": 0.6666958399999998
+      },
+      "after": {
+        "medianMs": 0.65802458,
+        "p95Ms": 0.7165079200000002
+      }
+    },
+    "methodBodies": {
+      "before": {
+        "medianMs": 0.006683312499999828,
+        "p95Ms": 0.009345584000000145
+      },
+      "after": {
+        "medianMs": 0.007695521000000099,
+        "p95Ms": 0.011313458000000082
+      }
+    }
+  },
+  "chronologicalSamples": [
+    {
+      "control": "load",
+      "pair": 0,
+      "label": "before",
+      "startOffsetMs": 57.996208000000024,
+      "elapsedMs": 66.44604199999998,
+      "perOperationMs": 0.6644604199999997
+    },
+    {
+      "control": "load",
+      "pair": 0,
+      "label": "after",
+      "startOffsetMs": 127.95845800000001,
+      "elapsedMs": 68.650375,
+      "perOperationMs": 0.68650375
+    },
+    {
+      "control": "load",
+      "pair": 1,
+      "label": "after",
+      "startOffsetMs": 200.60362500000002,
+      "elapsedMs": 67.25579099999999,
+      "perOperationMs": 0.6725579099999999
+    },
+    {
+      "control": "load",
+      "pair": 1,
+      "label": "before",
+      "startOffsetMs": 271.412875,
+      "elapsedMs": 63.53733299999999,
+      "perOperationMs": 0.6353733299999998
+    },
+    {
+      "control": "load",
+      "pair": 2,
+      "label": "before",
+      "startOffsetMs": 337.99629100000004,
+      "elapsedMs": 66.66958399999999,
+      "perOperationMs": 0.6666958399999998
+    },
+    {
+      "control": "load",
+      "pair": 2,
+      "label": "after",
+      "startOffsetMs": 408.305291,
+      "elapsedMs": 73.23029199999996,
+      "perOperationMs": 0.7323029199999996
+    },
+    {
+      "control": "load",
+      "pair": 3,
+      "label": "after",
+      "startOffsetMs": 485.559166,
+      "elapsedMs": 71.65079200000002,
+      "perOperationMs": 0.7165079200000002
+    },
+    {
+      "control": "load",
+      "pair": 3,
+      "label": "before",
+      "startOffsetMs": 560.905041,
+      "elapsedMs": 65.446417,
+      "perOperationMs": 0.65446417
+    },
+    {
+      "control": "load",
+      "pair": 4,
+      "label": "before",
+      "startOffsetMs": 629.828916,
+      "elapsedMs": 56.617834000000016,
+      "perOperationMs": 0.5661783400000001
+    },
+    {
+      "control": "load",
+      "pair": 4,
+      "label": "after",
+      "startOffsetMs": 689.445125,
+      "elapsedMs": 68.74350000000004,
+      "perOperationMs": 0.6874350000000004
+    },
+    {
+      "control": "load",
+      "pair": 5,
+      "label": "after",
+      "startOffsetMs": 761.2776660000001,
+      "elapsedMs": 59.11137499999995,
+      "perOperationMs": 0.5911137499999995
+    },
+    {
+      "control": "load",
+      "pair": 5,
+      "label": "before",
+      "startOffsetMs": 824.163291,
+      "elapsedMs": 74.07337500000006,
+      "perOperationMs": 0.7407337500000005
+    },
+    {
+      "control": "load",
+      "pair": 6,
+      "label": "before",
+      "startOffsetMs": 904.9699579999999,
+      "elapsedMs": 66.19387500000016,
+      "perOperationMs": 0.6619387500000016
+    },
+    {
+      "control": "load",
+      "pair": 6,
+      "label": "after",
+      "startOffsetMs": 974.156125,
+      "elapsedMs": 66.69016600000009,
+      "perOperationMs": 0.666901660000001
+    },
+    {
+      "control": "load",
+      "pair": 7,
+      "label": "after",
+      "startOffsetMs": 1044.331833,
+      "elapsedMs": 57.62291700000014,
+      "perOperationMs": 0.5762291700000014
+    },
+    {
+      "control": "load",
+      "pair": 7,
+      "label": "before",
+      "startOffsetMs": 1104.9245,
+      "elapsedMs": 62.57600000000002,
+      "perOperationMs": 0.6257600000000002
+    },
+    {
+      "control": "load",
+      "pair": 8,
+      "label": "before",
+      "startOffsetMs": 1170.414041,
+      "elapsedMs": 60.57595900000001,
+      "perOperationMs": 0.6057595900000001
+    },
+    {
+      "control": "load",
+      "pair": 8,
+      "label": "after",
+      "startOffsetMs": 1234.028708,
+      "elapsedMs": 66.05012499999998,
+      "perOperationMs": 0.6605012499999998
+    },
+    {
+      "control": "load",
+      "pair": 9,
+      "label": "after",
+      "startOffsetMs": 1303.787583,
+      "elapsedMs": 59.27879200000007,
+      "perOperationMs": 0.5927879200000007
+    },
+    {
+      "control": "load",
+      "pair": 9,
+      "label": "before",
+      "startOffsetMs": 1366.822958,
+      "elapsedMs": 62.7845420000001,
+      "perOperationMs": 0.627845420000001
+    },
+    {
+      "control": "load",
+      "pair": 10,
+      "label": "before",
+      "startOffsetMs": 1433.339291,
+      "elapsedMs": 58.06008399999996,
+      "perOperationMs": 0.5806008399999996
+    },
+    {
+      "control": "load",
+      "pair": 10,
+      "label": "after",
+      "startOffsetMs": 1494.865875,
+      "elapsedMs": 66.30687499999999,
+      "perOperationMs": 0.6630687499999999
+    },
+    {
+      "control": "load",
+      "pair": 11,
+      "label": "after",
+      "startOffsetMs": 1564.40925,
+      "elapsedMs": 65.55479100000002,
+      "perOperationMs": 0.6555479100000002
+    },
+    {
+      "control": "load",
+      "pair": 11,
+      "label": "before",
+      "startOffsetMs": 1633.458541,
+      "elapsedMs": 61.71370900000011,
+      "perOperationMs": 0.617137090000001
+    },
+    {
+      "control": "load",
+      "pair": 12,
+      "label": "before",
+      "startOffsetMs": 1698.097625,
+      "elapsedMs": 53.091207999999824,
+      "perOperationMs": 0.5309120799999982
+    },
+    {
+      "control": "load",
+      "pair": 12,
+      "label": "after",
+      "startOffsetMs": 1754.956208,
+      "elapsedMs": 66.88666699999999,
+      "perOperationMs": 0.6688666699999999
+    },
+    {
+      "control": "load",
+      "pair": 13,
+      "label": "after",
+      "startOffsetMs": 1824.787666,
+      "elapsedMs": 57.3420000000001,
+      "perOperationMs": 0.5734200000000009
+    },
+    {
+      "control": "load",
+      "pair": 13,
+      "label": "before",
+      "startOffsetMs": 1885.5964999999999,
+      "elapsedMs": 60.799875000000156,
+      "perOperationMs": 0.6079987500000016
+    },
+    {
+      "control": "load",
+      "pair": 14,
+      "label": "before",
+      "startOffsetMs": 1949.4204160000002,
+      "elapsedMs": 53.5954999999999,
+      "perOperationMs": 0.5359549999999991
+    },
+    {
+      "control": "load",
+      "pair": 14,
+      "label": "after",
+      "startOffsetMs": 2006.03,
+      "elapsedMs": 64.97533299999986,
+      "perOperationMs": 0.6497533299999987
+    },
+    {
+      "control": "load",
+      "pair": 15,
+      "label": "after",
+      "startOffsetMs": 2073.85675,
+      "elapsedMs": 64.32091599999967,
+      "perOperationMs": 0.6432091599999967
+    },
+    {
+      "control": "load",
+      "pair": 15,
+      "label": "before",
+      "startOffsetMs": 2141.457625,
+      "elapsedMs": 60.78745799999979,
+      "perOperationMs": 0.6078745799999978
+    },
+    {
+      "control": "load",
+      "pair": 16,
+      "label": "before",
+      "startOffsetMs": 2205.3802910000004,
+      "elapsedMs": 52.21154200000001,
+      "perOperationMs": 0.5221154200000001
+    },
+    {
+      "control": "load",
+      "pair": 16,
+      "label": "after",
+      "startOffsetMs": 2261.8293750000003,
+      "elapsedMs": 64.93766599999981,
+      "perOperationMs": 0.649376659999998
+    },
+    {
+      "control": "load",
+      "pair": 17,
+      "label": "after",
+      "startOffsetMs": 2331.2247079999997,
+      "elapsedMs": 62.270292000000154,
+      "perOperationMs": 0.6227029200000015
+    },
+    {
+      "control": "load",
+      "pair": 17,
+      "label": "before",
+      "startOffsetMs": 2396.32925,
+      "elapsedMs": 60.64658300000019,
+      "perOperationMs": 0.6064658300000019
+    },
+    {
+      "control": "load",
+      "pair": 18,
+      "label": "before",
+      "startOffsetMs": 2460.3577910000004,
+      "elapsedMs": 59.119416999999885,
+      "perOperationMs": 0.5911941699999989
+    },
+    {
+      "control": "load",
+      "pair": 18,
+      "label": "after",
+      "startOffsetMs": 2523.109125,
+      "elapsedMs": 66.10529099999985,
+      "perOperationMs": 0.6610529099999986
+    },
+    {
+      "control": "load",
+      "pair": 19,
+      "label": "after",
+      "startOffsetMs": 2593.008541,
+      "elapsedMs": 62.78304200000002,
+      "perOperationMs": 0.6278304200000002
+    },
+    {
+      "control": "load",
+      "pair": 19,
+      "label": "before",
+      "startOffsetMs": 2659.060458,
+      "elapsedMs": 59.67337499999985,
+      "perOperationMs": 0.5967337499999985
+    },
+    {
+      "control": "methodBodies",
+      "pair": 0,
+      "label": "before",
+      "startOffsetMs": 2737.3767500000004,
+      "elapsedMs": 4.349624999999833,
+      "perOperationMs": 0.004349624999999833
+    },
+    {
+      "control": "methodBodies",
+      "pair": 0,
+      "label": "after",
+      "startOffsetMs": 2744.807041,
+      "elapsedMs": 10.49204200000031,
+      "perOperationMs": 0.01049204200000031
+    },
+    {
+      "control": "methodBodies",
+      "pair": 1,
+      "label": "after",
+      "startOffsetMs": 2763.6312500000004,
+      "elapsedMs": 4.785707999999886,
+      "perOperationMs": 0.004785707999999886
+    },
+    {
+      "control": "methodBodies",
+      "pair": 1,
+      "label": "before",
+      "startOffsetMs": 2771.51725,
+      "elapsedMs": 7.945124999999734,
+      "perOperationMs": 0.007945124999999734
+    },
+    {
+      "control": "methodBodies",
+      "pair": 2,
+      "label": "before",
+      "startOffsetMs": 2783.1590830000005,
+      "elapsedMs": 5.117874999999913,
+      "perOperationMs": 0.005117874999999912
+    },
+    {
+      "control": "methodBodies",
+      "pair": 2,
+      "label": "after",
+      "startOffsetMs": 2792.814666,
+      "elapsedMs": 12.321542000000136,
+      "perOperationMs": 0.012321542000000137
+    },
+    {
+      "control": "methodBodies",
+      "pair": 3,
+      "label": "after",
+      "startOffsetMs": 2812.8919159999996,
+      "elapsedMs": 4.671625000000404,
+      "perOperationMs": 0.004671625000000404
+    },
+    {
+      "control": "methodBodies",
+      "pair": 3,
+      "label": "before",
+      "startOffsetMs": 2822.651833,
+      "elapsedMs": 9.720749999999953,
+      "perOperationMs": 0.009720749999999953
+    },
+    {
+      "control": "methodBodies",
+      "pair": 4,
+      "label": "before",
+      "startOffsetMs": 2840.4205,
+      "elapsedMs": 5.025916000000052,
+      "perOperationMs": 0.005025916000000052
+    },
+    {
+      "control": "methodBodies",
+      "pair": 4,
+      "label": "after",
+      "startOffsetMs": 2848.760083,
+      "elapsedMs": 10.986625000000004,
+      "perOperationMs": 0.010986625000000003
+    },
+    {
+      "control": "methodBodies",
+      "pair": 5,
+      "label": "after",
+      "startOffsetMs": 2867.8975,
+      "elapsedMs": 4.896750000000338,
+      "perOperationMs": 0.004896750000000338
+    },
+    {
+      "control": "methodBodies",
+      "pair": 5,
+      "label": "before",
+      "startOffsetMs": 2876.485791,
+      "elapsedMs": 9.090375000000222,
+      "perOperationMs": 0.009090375000000222
+    },
+    {
+      "control": "methodBodies",
+      "pair": 6,
+      "label": "before",
+      "startOffsetMs": 2890.372458,
+      "elapsedMs": 5.421499999999924,
+      "perOperationMs": 0.005421499999999924
+    },
+    {
+      "control": "methodBodies",
+      "pair": 6,
+      "label": "after",
+      "startOffsetMs": 2899.021208,
+      "elapsedMs": 10.751458000000184,
+      "perOperationMs": 0.010751458000000184
+    },
+    {
+      "control": "methodBodies",
+      "pair": 7,
+      "label": "after",
+      "startOffsetMs": 2917.4862080000003,
+      "elapsedMs": 4.806750000000193,
+      "perOperationMs": 0.004806750000000193
+    },
+    {
+      "control": "methodBodies",
+      "pair": 7,
+      "label": "before",
+      "startOffsetMs": 2925.334541,
+      "elapsedMs": 9.345584000000144,
+      "perOperationMs": 0.009345584000000145
+    },
+    {
+      "control": "methodBodies",
+      "pair": 8,
+      "label": "before",
+      "startOffsetMs": 2939.228083,
+      "elapsedMs": 4.930624999999964,
+      "perOperationMs": 0.004930624999999964
+    },
+    {
+      "control": "methodBodies",
+      "pair": 8,
+      "label": "after",
+      "startOffsetMs": 2947.319125,
+      "elapsedMs": 10.616915999999947,
+      "perOperationMs": 0.010616915999999947
+    },
+    {
+      "control": "methodBodies",
+      "pair": 9,
+      "label": "after",
+      "startOffsetMs": 2965.569708,
+      "elapsedMs": 4.557832999999846,
+      "perOperationMs": 0.004557832999999846
+    },
+    {
+      "control": "methodBodies",
+      "pair": 9,
+      "label": "before",
+      "startOffsetMs": 2972.9953750000004,
+      "elapsedMs": 9.302415999999994,
+      "perOperationMs": 0.009302415999999994
+    },
+    {
+      "control": "methodBodies",
+      "pair": 10,
+      "label": "before",
+      "startOffsetMs": 2985.7184159999997,
+      "elapsedMs": 5.071542000000136,
+      "perOperationMs": 0.005071542000000136
+    },
+    {
+      "control": "methodBodies",
+      "pair": 10,
+      "label": "after",
+      "startOffsetMs": 2994.0370000000003,
+      "elapsedMs": 10.78979100000015,
+      "perOperationMs": 0.010789791000000151
+    },
+    {
+      "control": "methodBodies",
+      "pair": 11,
+      "label": "after",
+      "startOffsetMs": 3012.4996659999997,
+      "elapsedMs": 4.722584000000097,
+      "perOperationMs": 0.004722584000000097
+    },
+    {
+      "control": "methodBodies",
+      "pair": 11,
+      "label": "before",
+      "startOffsetMs": 3020.681375,
+      "elapsedMs": 8.946791000000303,
+      "perOperationMs": 0.008946791000000303
+    },
+    {
+      "control": "methodBodies",
+      "pair": 12,
+      "label": "before",
+      "startOffsetMs": 3033.011791,
+      "elapsedMs": 5.1776669999999285,
+      "perOperationMs": 0.005177666999999928
+    },
+    {
+      "control": "methodBodies",
+      "pair": 12,
+      "label": "after",
+      "startOffsetMs": 3040.9635,
+      "elapsedMs": 10.964915999999903,
+      "perOperationMs": 0.010964915999999903
+    },
+    {
+      "control": "methodBodies",
+      "pair": 13,
+      "label": "after",
+      "startOffsetMs": 3059.5772079999997,
+      "elapsedMs": 4.507750000000215,
+      "perOperationMs": 0.004507750000000215
+    },
+    {
+      "control": "methodBodies",
+      "pair": 13,
+      "label": "before",
+      "startOffsetMs": 3066.7989580000003,
+      "elapsedMs": 9.045333000000028,
+      "perOperationMs": 0.009045333000000029
+    },
+    {
+      "control": "methodBodies",
+      "pair": 14,
+      "label": "before",
+      "startOffsetMs": 3079.1375829999997,
+      "elapsedMs": 5.088125000000218,
+      "perOperationMs": 0.005088125000000218
+    },
+    {
+      "control": "methodBodies",
+      "pair": 14,
+      "label": "after",
+      "startOffsetMs": 3088.6207910000003,
+      "elapsedMs": 11.179666999999881,
+      "perOperationMs": 0.011179666999999881
+    },
+    {
+      "control": "methodBodies",
+      "pair": 15,
+      "label": "after",
+      "startOffsetMs": 3107.406041,
+      "elapsedMs": 4.898999999999887,
+      "perOperationMs": 0.004898999999999887
+    },
+    {
+      "control": "methodBodies",
+      "pair": 15,
+      "label": "before",
+      "startOffsetMs": 3115.253208,
+      "elapsedMs": 9.202792000000045,
+      "perOperationMs": 0.009202792000000045
+    },
+    {
+      "control": "methodBodies",
+      "pair": 16,
+      "label": "before",
+      "startOffsetMs": 3127.827708,
+      "elapsedMs": 5.136124999999993,
+      "perOperationMs": 0.005136124999999993
+    },
+    {
+      "control": "methodBodies",
+      "pair": 16,
+      "label": "after",
+      "startOffsetMs": 3135.7446659999996,
+      "elapsedMs": 11.0529590000001,
+      "perOperationMs": 0.0110529590000001
+    },
+    {
+      "control": "methodBodies",
+      "pair": 17,
+      "label": "after",
+      "startOffsetMs": 3154.282,
+      "elapsedMs": 4.637040999999954,
+      "perOperationMs": 0.004637040999999954
+    },
+    {
+      "control": "methodBodies",
+      "pair": 17,
+      "label": "before",
+      "startOffsetMs": 3162.5474999999997,
+      "elapsedMs": 8.996708000000126,
+      "perOperationMs": 0.008996708000000126
+    },
+    {
+      "control": "methodBodies",
+      "pair": 18,
+      "label": "before",
+      "startOffsetMs": 3179.5134580000004,
+      "elapsedMs": 5.335458000000017,
+      "perOperationMs": 0.005335458000000017
+    },
+    {
+      "control": "methodBodies",
+      "pair": 18,
+      "label": "after",
+      "startOffsetMs": 3187.73675,
+      "elapsedMs": 11.313458000000082,
+      "perOperationMs": 0.011313458000000082
+    },
+    {
+      "control": "methodBodies",
+      "pair": 19,
+      "label": "after",
+      "startOffsetMs": 3206.9952080000003,
+      "elapsedMs": 4.887083000000075,
+      "perOperationMs": 0.004887083000000075
+    },
+    {
+      "control": "methodBodies",
+      "pair": 19,
+      "label": "before",
+      "startOffsetMs": 3214.8611250000004,
+      "elapsedMs": 9.150124999999662,
+      "perOperationMs": 0.009150124999999662
+    }
+  ]
+}
