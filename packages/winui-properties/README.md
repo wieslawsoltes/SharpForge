@@ -41,3 +41,7 @@ Application-owned UI services for SharpForge. Instances have explicit lifetimes;
 ## Typed styles and transactional setters
 
 `Style`, `Setter` and `StyleApplication` validate complete setter plans before changing any store. Typed styles seal transitively, preserve higher-precedence local/binding/animation values and track implicit/theme resources without rebuilding unrelated consumers. Definition factories can explicitly select the released `legacyMutable` profile: its weak observer leases revalidate and update all applications transactionally, with at most 1024 consumers per mutation. The actual Style(string) ABI opt-in arrives with resource adapters. BindingBase and PropertyPath definitions are carried unchanged from their independent prerequisite branch; binding execution is separate.
+
+## XAML syntax and literals
+
+`XamlXmlReader`, `XamlSchema` and the documented literal converters are joined from their independently reviewed branch. The lexical/type-allowlist layer has no activation capability by itself. The next writer batch connects it to the approved style/template factories and explicit constructor/property services.
