@@ -14,6 +14,8 @@ import { legacyGreenToken, ownText } from '../green.js';
 const nestingLimit = 200,
   empty = Object.freeze([]),
   fixedTokens = new WeakMap();
+// Reserved syntax kinds are immutable metadata; keyword membership remains the public, live Set.
+const reservedTokenKinds = new Map(Object.entries(reservedKeywordKinds));
 /** Per-cache tables for keyword and punctuation tokens with no leading trivia or one leading space, keyed by the (pre-hashed) kind. */
 const fixedFor = cache => {
   let tables = fixedTokens.get(cache);
@@ -111,12 +113,13 @@ export class Scanner {
   }
   identifierToken(raw) {
     const scan = scanIdentifier(this.text, raw.start);
+    const kind = !scan.verbatim && !scan.hasEscapes && keywords.has(scan.value) ? scan.value : 'identifier';
     this.i = scan.end;
     raw.value = ownText(scan.value);
-    raw.kind = !scan.verbatim && !scan.hasEscapes && keywords.has(scan.value) ? scan.value : 'identifier';
-    raw.syntaxKind = reservedKeywordKinds[raw.kind] ?? 'IdentifierToken';
+    raw.kind = kind;
+    raw.syntaxKind = kind === 'identifier' ? 'IdentifierToken' : reservedTokenKinds.get(kind) ?? 'IdentifierToken';
     if (scan.verbatim || scan.hasEscapes) raw.flags = { verbatim: scan.verbatim, escaped: scan.hasEscapes };
-    else if (raw.kind !== 'identifier') raw.fixed = true;
+    else if (kind !== 'identifier') raw.fixed = true;
   }
   /** An operator or punctuation token, or a BadToken (CS1056) for a character that starts no token. */
   operatorToken(raw) {
