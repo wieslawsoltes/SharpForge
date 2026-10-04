@@ -7,3 +7,4 @@ export {registerBuiltInAttachedProperties} from './attached.js';
 export {propertyValuesEqual} from './value-equality.js';
 export {EffectiveValueEmitter} from './change-emitter.js';
 export {registerPropertyAdapters} from './adapters.js';
+export {createJavaScriptStyleSystem} from './javascript-style-system.js';
