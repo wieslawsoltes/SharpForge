@@ -1,5 +1,7 @@
 import { GitError } from './errors.js';
 
+const hexadecimal = Object.freeze(Array.from({ length: 256 }, (_, value) => value.toString(16).padStart(2, '0')));
+
 const formats = Object.freeze({
   sha1: Object.freeze({
     name: 'sha1', algorithm: 'sha1', oidBytes: 20, oidLength: 40,
@@ -23,12 +25,8 @@ export function getObjectFormat(algorithm = 'sha1') {
 /** Convert binary object IDs or checksums to lowercase hexadecimal without coercion. */
 export function bytesToHex(bytes) {
   if (!(bytes instanceof Uint8Array)) throw new TypeError('Expected Uint8Array');
-  const characters = new Array(bytes.length * 2);
-  const digits = '0123456789abcdef';
-  for (let index = 0; index < bytes.length; index++) {
-    characters[index * 2] = digits[bytes[index] >>> 4];
-    characters[index * 2 + 1] = digits[bytes[index] & 15];
-  }
+  const characters = new Array(bytes.length);
+  for (let index = 0; index < bytes.length; index++) characters[index] = hexadecimal[bytes[index]];
   return characters.join('');
 }
 
