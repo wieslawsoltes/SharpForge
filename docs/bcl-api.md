@@ -679,8 +679,9 @@ Registered families: <code>builder</code>.
 | 524315 | <code>void System.Text.StringBuilder::CopyTo(int, char[], int, int)</code> | implemented |
 | 524316 | <code>System.Text.StringBuilder System.Text.StringBuilder::Append(long)</code> | implemented |
 | 524317 | <code>System.Text.StringBuilder System.Text.StringBuilder::Append(ulong)</code> | implemented |
+| 524319 | <code>System.Text.StringBuilder System.Text.StringBuilder::Append(string, int, int)</code> | implemented |
 
-Pinned reference: 38 implemented and 70 missing exact metadata rows.
+Pinned reference: 39 implemented and 69 missing exact metadata rows.
 
 | Reference kind | Exact reference signature | Status | Matching ABI IDs |
 | --- | --- | --- | --- |
@@ -717,7 +718,7 @@ Pinned reference: 38 implemented and 70 missing exact metadata rows.
 | method | <code>System.Text.StringBuilder::Append``0(System.SByte):System.Text.StringBuilder instance</code> | missing | — |
 | method | <code>System.Text.StringBuilder::Append``0(System.Single):System.Text.StringBuilder instance</code> | missing | — |
 | method | <code>System.Text.StringBuilder::Append``0(System.String):System.Text.StringBuilder instance</code> | implemented | 807 |
-| method | <code>System.Text.StringBuilder::Append``0(System.String,System.Int32,System.Int32):System.Text.StringBuilder instance</code> | missing | — |
+| method | <code>System.Text.StringBuilder::Append``0(System.String,System.Int32,System.Int32):System.Text.StringBuilder instance</code> | implemented | 524319 |
 | method | <code>System.Text.StringBuilder::Append``0(System.Text.StringBuilder):System.Text.StringBuilder instance</code> | missing | — |
 | method | <code>System.Text.StringBuilder::Append``0(System.Text.StringBuilder,System.Int32,System.Int32):System.Text.StringBuilder instance</code> | missing | — |
 | method | <code>System.Text.StringBuilder::Append``0(System.Text.StringBuilder+AppendInterpolatedStringHandler&amp;):System.Text.StringBuilder instance</code> | missing | — |
