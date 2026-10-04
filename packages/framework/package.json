@@ -19,6 +19,8 @@
   "dependencies": {
     "@sharpforge/bcl-core": "0.14.0",
     "@sharpforge/bcl-collections": "0.14.0",
+    "@sharpforge/winui-properties": "0.14.0",
+    "@sharpforge/winui-controls": "0.14.0",
     "@sharpforge/rendering": "0.14.0"
   }
 }
