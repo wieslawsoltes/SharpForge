@@ -5,6 +5,7 @@
 import { RefKind } from '../../symbols/types.js';
 import { compressUnsigned, ElementType, typeDefOrRefEncoded } from '../generics.js';
 import { inheritedSignatureModifiers } from './inherited-modifiers.js';
+import { readonlyParameterModifiers, readonlyReturnModifier } from './ref-signatures.js';
 
 const FIELD = 0x06;
 const PROPERTY = 0x08;
@@ -26,7 +27,7 @@ function typeBytes(types, type) {
 function customModifiers(types, modifiers) {
   return (modifiers ?? []).flatMap(modifier => [
     modifier.isOptional ? CMOD_OPTIONAL : CMOD_REQUIRED,
-    ...typeDefOrRefEncoded(types.definitionToken(modifier.type)),
+    ...typeDefOrRefEncoded(modifier.token ?? types.definitionToken(modifier.type)),
   ]);
 }
 
@@ -79,16 +80,17 @@ export function methodSignature(types, shape) {
 export function methodSymbolSignature(types, method) {
   // A source method repeats the custom modifiers of the imported member it overrides or implements.
   const inherited = method.returnCustomModifiers ? null : inheritedSignatureModifiers(method),
-    parameters = inherited
-      ? method.parameters.map((parameter, index) => ({ type: parameter.type, refKind: parameter.refKind, customModifiers: inherited.parameters[index] }))
-      : method.parameters;
+    parameters = method.parameters.map((parameter, index) => ({
+      type: parameter.type, refKind: parameter.refKind,
+      customModifiers: readonlyParameterModifiers(types, method, parameter, inherited?.parameters[index]),
+    }));
   return methodSignature(types, {
     isStatic: method.isStatic,
     arity: method.typeParameters?.length ?? 0,
     returnType: method.returnType,
     refKind: method.refKind,
     // An `init` accessor is a setter only compilers that know the feature may call.
-    returnModifier: method.isInitOnly ? IS_EXTERNAL_INIT : null,
+    returnModifier: method.isInitOnly ? IS_EXTERNAL_INIT : readonlyReturnModifier(method),
     returnCustomModifiers: method.returnCustomModifiers ?? inherited?.returned ?? null,
     parameters,
   });

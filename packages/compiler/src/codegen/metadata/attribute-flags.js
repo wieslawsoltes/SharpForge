@@ -113,7 +113,7 @@ export function methodFlags(method, { implementsInterface, inInterface }) {
 export function parameterFlags(parameter) {
   let flags = 0;
   if (parameter.refKind === RefKind.Out) flags |= ParamAttributes.Out;
-  if (parameter.refKind === RefKind.In) flags |= ParamAttributes.In;
+  if (parameter.refKind === RefKind.In || parameter.refKind === RefKind.RefReadOnlyParameter) flags |= ParamAttributes.In;
   if (parameter.isOptional) flags |= ParamAttributes.Optional;
   return flags;
 }

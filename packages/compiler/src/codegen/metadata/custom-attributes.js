@@ -30,6 +30,9 @@ import { tupleElementNamesOf } from '../../binder/tuples.js';
 import { dynamicTransformFlags } from './dynamic-flags.js';
 import { contractAssemblyOf } from './reference-contracts.js';
 import { writeParameterAttributes } from './parameter-metadata.js';
+import { writeExtensionBlockAttributes } from './extension-block-attributes.js';
+import { writeUnmanagedAttributes } from './unmanaged-metadata.js';
+import { writeRefSafetyRulesAttribute, writeReadonlyReturnAttribute } from './ref-declaration-metadata.js';
 
 const ASSEMBLY_TOKEN = token(0x20, 1);
 const TYPE_DEF_TABLE = 2;
@@ -138,6 +141,9 @@ export class CustomAttributeWriter {
       for (const { symbol } of plan.events) this.applied(this.writer.eventTokens.get(symbol), symbol);
     }
     if (declaresExtensions) this.wellKnown(ASSEMBLY_TOKEN, EXTENSION);
+    writeExtensionBlockAttributes(this, declaresExtensions);
+    writeUnmanagedAttributes(this);
+    writeRefSafetyRulesAttribute(this);
   }
   method(planned) {
     const symbol = planned.symbol,
@@ -156,6 +162,7 @@ export class CustomAttributeWriter {
     if (symbol.recordMember || (symbol.isCopyConstructor && symbol.isImplicitlyDeclared)) this.compilerGenerated(planned.token);
     const returnToken = planned.returnParameterToken;
     if (returnToken) {
+      writeReadonlyReturnAttribute(this, returnToken, symbol);
       for (const declaration of returnAttributeSymbols(symbol)) this.applied(returnToken, declaration, 'return');
       this.tupleElementNames(returnToken, symbol.returnType);
       this.dynamic(returnToken, symbol.returnType, isByReference(symbol.refKind));

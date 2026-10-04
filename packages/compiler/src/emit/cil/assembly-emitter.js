@@ -21,6 +21,7 @@ import { MethodEmitter } from './method-emitter.js';
 import { SynthesizedMembers, isEntryPointMethod } from './synthesized-members.js';
 import { UnsupportedInCil } from './unsupported.js';
 import { nameThroughInstantiations, synthesizedMembersByToken } from './instantiated-members.js';
+import { installExtensionBlockBodies } from './extension-block-bodies.js';
 
 const CLI_HEADER_SIZE = 72;
 const initializedKinds = new Set([SymbolKind.Field, SymbolKind.Property, SymbolKind.Event]);
@@ -46,6 +47,7 @@ export class AssemblyEmitter {
       synthesized = new SynthesizedMembers(this.analysis),
       writer = new SymbolMetadataWriter(builder, this.analysis, { bodyRva: method => this.bodyAddresses.get(method), synthesized });
     writer.allocateTokens();
+    installExtensionBlockBodies(writer);
     this.tokens = new MemberTokens(writer);
     /** The synthesized members by definition token; rebuilt when tokens move or a field is added. */
     this.synthesizedIndex = { byToken: null };
@@ -108,6 +110,7 @@ export class AssemblyEmitter {
   methodBody(type, planned) {
     const program = this,
       symbol = planned.symbol;
+    if (planned.emitBody) return planned.emitBody(program);
     if (!symbol) {
       if (!planned.emitBody) throw new UnsupportedInCil(`the synthesized member '${type?.name}.${planned.name}'`, type?.locations?.[0]);
       return planned.emitBody(program);

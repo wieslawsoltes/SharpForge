@@ -4,6 +4,7 @@ import { MetadataEmitError } from './type-tokens.js';
 import { methodSignature } from './member-signatures.js';
 import { constantTypeOf, constantRowValue, NULL_REFERENCE_CONSTANT } from './constant-metadata.js';
 import { parameterDefaultConstant } from '../../constants/parameter-default.js';
+import { writeRefParameterAttributes } from './ref-declaration-metadata.js';
 
 const DECIMAL_CONSTANT = 'System.Runtime.CompilerServices.DecimalConstantAttribute';
 const PARAM_COLLECTION = 'System.Runtime.CompilerServices.ParamCollectionAttribute';
@@ -28,6 +29,7 @@ export function writeParameterConstant(builder, parent, parameter) {
 
 /** Emits parameter markers and the decimal default encoding required by native reflection and importing compilers. */
 export function writeParameterAttributes(writer, parent, parameter) {
+  writeRefParameterAttributes(writer, parent, parameter);
   if (parameter.isParams) {
     writer.wellKnown(parent, parameter.type instanceof ArrayTypeSymbol ? 'System.ParamArrayAttribute' : PARAM_COLLECTION);
   }

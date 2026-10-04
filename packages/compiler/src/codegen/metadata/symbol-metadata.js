@@ -27,6 +27,9 @@ import { interfaceReimplementations } from './interface-reimplementations.js';
 import { fieldSignature, methodSignature, methodSymbolSignature, propertySignature } from './member-signatures.js';
 import { constantTypeOf, constantRowValue, NULL_REFERENCE_CONSTANT } from './constant-metadata.js';
 import { writeParameterConstant } from './parameter-metadata.js';
+import { ExtensionBlockMetadataPlan } from './extension-block-plan.js';
+import { valueTypeConstraintToken } from './unmanaged-metadata.js';
+import { declarationRefSafetyVersion, hasReadonlyReturn } from './ref-declaration-metadata.js';
 import { hasReturnAttributes } from './attribute-targets.js';
 
 const TABLE = Object.freeze({ TypeDef: 2, Field: 4, MethodDef: 6, Param: 8 });
@@ -75,9 +78,14 @@ export class SymbolMetadataWriter {
     this.builder = builder;
     this.core = analysis.core;
     this.bodyRvaOf = typeof bodyRva === 'function' ? bodyRva : () => bodyRva;
-    this.types = [...sourceTypesInMetadataOrder(analysis.assembly), ...(synthesized?.types ?? [])];
+    const declared = sourceTypesInMetadataOrder(analysis.assembly);
+    this.extensions = new ExtensionBlockMetadataPlan(analysis, declared);
+    this.refSafetyRulesVersion = declarationRefSafetyVersion(analysis);
+    this.types = [...declared, ...this.extensions.types, ...(synthesized?.types ?? [])];
     this.tokens = new TypeTokens(builder, this.types, assemblyResolverOf(analysis));
-    this.plans = new Map(this.types.map(type => [type, planMembers(type, this.core, field => analysis.constantOf(field))]));
+    this.plans = new Map(this.types.map(type => [type,
+      this.extensions.plans.get(type) ?? planMembers(type, this.core, field => analysis.constantOf(field)),
+    ]));
     if (synthesized) for (const type of this.types) synthesized.extend(type, this.plans.get(type));
     /** The methods of `<Module>`, the first TypeDef row: they take the first MethodDef rows. */
     this.moduleMethods = synthesized?.moduleMethods ?? [];
@@ -142,7 +150,7 @@ export class SymbolMetadataWriter {
         hasStaticConstructor = plan.methods.some(method => method.name === '.cctor' && !method.isInitializerOnly),
         base = type.typeKind === TypeKind.Interface ? null : type.baseType;
       builder.addRow('TypeDef', {
-        Flags: typeFlags(type, { hasStaticConstructor }),
+        Flags: plan.typeFlags ?? typeFlags(type, { hasStaticConstructor }),
         Name: definitionNameOf(type),
         Namespace: namespaceOf(type),
         Extends: base ? this.tokens.typeToken(base) : 0,
@@ -192,7 +200,8 @@ export class SymbolMetadataWriter {
           ParamList: nextParameter,
         });
         const returned = method.symbol?.returnType;
-        if (returned && (tupleElementNamesOf(returned) || dynamicTransformFlags(returned) || hasReturnAttributes(method.symbol))) {
+        if (returned && (tupleElementNamesOf(returned) || dynamicTransformFlags(returned) ||
+          hasReturnAttributes(method.symbol) || hasReadonlyReturn(method.symbol))) {
           // The return value has a Param row (sequence 0) only when an attribute is written on it.
           method.returnParameterToken = this.builder.addRow('Param', { Flags: 0, Sequence: 0, Name: '' });
           this.returnParameterTokens.set(method.symbol, method.returnParameterToken);
@@ -225,7 +234,7 @@ export class SymbolMetadataWriter {
     // `plan.classSize`: the size code generation gives a struct (the buffer struct of a fixed-size buffer).
     if (plan.classSize) builder.addRow('ClassLayout', { PackingSize: 0, ClassSize: plan.classSize, Parent: self });
     else if (type.typeKind === TypeKind.Struct && !hasInstanceField) builder.addRow('ClassLayout', { PackingSize: 0, ClassSize: 1, Parent: self });
-    this.writeGenericParameters(self, this.allTypeParameters(type), ownTokens);
+    this.writeGenericParameters(self, plan.metadataTypeParameters ?? this.allTypeParameters(type), ownTokens);
     for (const method of plan.methods) {
       if (method.symbol?.typeParameters?.length) this.writeGenericParameters(method.token, method.symbol.typeParameters);
       // A synthesized generic method declares copies of the type parameters it was written over.
@@ -299,6 +308,8 @@ export class SymbolMetadataWriter {
   }
   /** The type parameters a TypeDef declares: those of its enclosing types first, as VAR numbers them. */
   allTypeParameters(type) {
+    const declared = this.plans.get(type)?.metadataTypeParameters;
+    if (declared) return declared;
     const outer = type.containingType ? this.allTypeParameters(type.containingType) : [];
     return [...outer, ...(type.typeParameters ?? [])];
   }
@@ -308,7 +319,7 @@ export class SymbolMetadataWriter {
       this.genericParameterRows.push({ symbol: parameter, token: row, owner });
       // `struct` is also written as a constraint to System.ValueType, as Roslyn writes it.
       if (parameter.hasValueTypeConstraint || parameter.hasUnmanagedTypeConstraint) {
-        const constraintRow = this.builder.addRow('GenericParamConstraint', { Owner: row, Constraint: this.builder.typeRef('System.ValueType') });
+        const constraintRow = this.builder.addRow('GenericParamConstraint', { Owner: row, Constraint: valueTypeConstraintToken(this, parameter) });
         this.genericConstraintRows.push({ symbol: parameter, type: this.core.valueType, token: constraintRow, owner: row });
       }
       for (const constraint of parameter.constraintTypes ?? []) {
