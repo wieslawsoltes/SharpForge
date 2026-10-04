@@ -10,9 +10,11 @@
  * A namespace of the base class library that the framework registry does not model is not an error: the host's
  * `tolerateNamespace` decides from the explicit BCL namespace list (symbols/bcl-namespaces.js).
  */
+import {DiagnosticId} from '../diagnostics/codes.js';
 import { SymbolKind } from '../symbols/types.js';
 import { bindExternAliases } from './reference-lookup.js';
 import { implicitUsingsUri } from './global-usings.js';
+import { checkUsingDirectiveSyntax, checkAliasTargetType } from './using-alias-rules.js';
 
 const nameKinds = new Set(['IdentifierName', 'QualifiedName', 'AliasQualifiedName', 'GenericName']);
 const textOf = syntax => syntax.toString().replace(/\s+/g, '');
@@ -41,8 +43,9 @@ export function bindUsingDirectives(binder, scope, createOuterScope) {
       at = isForeign ? { uri: origin } : scope;
     const target = directive.namespaceOrType,
       alias = directive.alias?.name?.identifier?.valueText ?? null;
+    if (!isForeign) for (const problem of checkUsingDirectiveSyntax(directive, !!host.allowUnsafe)) binder.report(at, problem.node, problem.code, []);
     if (alias) {
-      if (bound.aliases.has(alias)) binder.report(at, directive.alias.name, 'CS1537', [alias]);
+      if (bound.aliases.has(alias)) binder.report(at, directive.alias.name, DiagnosticId.CS1537, [alias]);
       else bound.aliases.set(alias, { syntax: directive, scope: isForeign ? foreignScope(outer, origin) : outer, target: undefined });
       continue;
     }
@@ -58,14 +61,14 @@ export function bindUsingDirectives(binder, scope, createOuterScope) {
       previous = seen.get(key);
     if (previous) {
       // Repeating a directive of the same file is CS0105; repeating a global using of another file is not reported.
-      if (previous === 'own' && !isForeign) binder.report(scope, target, 'CS0105', [symbol.toDisplayString()]);
+      if (previous === 'own' && !isForeign) binder.report(scope, target, DiagnosticId.CS0105, [symbol.toDisplayString()]);
       if (!isForeign) seen.set(key, 'own');
       continue;
     }
     seen.set(key, isForeign ? 'foreign' : 'own');
     const isNamespace = symbol.kind === SymbolKind.Namespace;
     if (directive.staticKeyword) {
-      if (isNamespace) binder.report(at, target, 'CS7007', [symbol.toDisplayString()]);
+      if (isNamespace) binder.report(at, target, DiagnosticId.CS7007, [symbol.toDisplayString()]);
       else bound.staticTypes.push(symbol);
     } else if (isNamespace) {
       bound.namespaces.push(symbol);
@@ -73,7 +76,7 @@ export function bindUsingDirectives(binder, scope, createOuterScope) {
       // types and extension methods the registry does not list: what it could supply is unknown, like an unmodelled using.
       const isImplicit = origin === implicitUsingsUri;
       if (!symbol.getTypeMembers().length && host.tolerateNamespace?.(textOf(target), { isImplicit })) host.unknownUsing?.();
-    } else binder.report(at, target, 'CS0138', [symbol.toDisplayString()]);
+    } else binder.report(at, target, DiagnosticId.CS0138, [symbol.toDisplayString()]);
   }
   return bound;
 }
@@ -99,6 +102,8 @@ export function bindAliasTarget(binder, entry) {
   entry.target = null;
   const target = entry.syntax.namespaceOrType;
   entry.target = nameKinds.has(target.kind) ? binder.bindNamespaceOrType(target, entry.scope) : binder.bindType(target, entry.scope).type;
+  const problem = checkAliasTargetType(entry.syntax, entry.target);
+  if (problem) binder.report(entry.scope, problem.node, problem.code, []);
   return entry.target;
 }
 

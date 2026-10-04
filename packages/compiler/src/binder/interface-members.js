@@ -7,6 +7,7 @@
  * members, and generic code calls them through a type parameter (`T.Create()`), which a back end emits as a
  * `constrained.` call. Such an interface cannot be used as a type argument (CS8920).
  */
+import {DiagnosticId} from '../diagnostics/codes.js';
 import { TypeKind, SymbolKind } from '../symbols/types.js';
 import { MethodKind } from '../symbols/members.js';
 import { allInterfacesOf } from '../symbols/substitution.js';
@@ -26,8 +27,8 @@ export function checkInterfaceMemberKinds(iface) {
   if (iface.typeKind !== TypeKind.Interface) return results;
   for (const member of iface.getMembers()) {
     if (member.isImplicitlyDeclared) continue;
-    if (member.kind === SymbolKind.Field && !member.isStatic && !member.isConst) results.push({ code: 'CS0525', args: [], member });
-    else if (member.kind === SymbolKind.Method && member.methodKind === MethodKind.Constructor) results.push({ code: 'CS0526', args: [], member });
+    if (member.kind === SymbolKind.Field && !member.isStatic && !member.isConst) results.push({ code: DiagnosticId.CS0525, args: [], member });
+    else if (member.kind === SymbolKind.Method && member.methodKind === MethodKind.Constructor) results.push({ code: DiagnosticId.CS0526, args: [], member });
   }
   return results;
 }
@@ -86,7 +87,7 @@ export function mostSpecificImplementation(type, member, core) {
   );
   if (best.length === 1) return best[0].reabstracted ? { none: true } : { member: best[0].member };
   return {
-    error: { code: 'CS8705', args: [member.toDisplayString(), best[0].member.toDisplayString(), best[1].member.toDisplayString()] },
+    error: { code: DiagnosticId.CS8705, args: [member.toDisplayString(), best[0].member.toDisplayString(), best[1].member.toDisplayString()] },
   };
 }
 /**
@@ -99,6 +100,15 @@ export function staticMembersOfTypeParameter(parameter, name, core) {
   for (const iface of allInterfacesOf(parameter, core))
     for (const m of iface.getMembers(name)) if (m.isStatic && (m.isAbstract || m.isVirtual)) out.push(m);
   return out;
+}
+/**
+ * A static abstract / virtual interface member named through a type (`T.Zero`, `IAdd<T>.Zero`): it can be reached
+ * only through a type parameter, which the access is then constrained to.
+ * @returns {null|{constrainedTo:object}|{code:string}} null for any other member; `code` is CS8926
+ */
+export function staticVirtualAccess(member, receiverType) {
+  if (!member.isStatic || !(member.isAbstract || member.isVirtual) || member.containingType?.typeKind !== TypeKind.Interface) return null;
+  return receiverType?.typeKind === TypeKind.TypeParameter ? { constrainedTo: receiverType } : { code: DiagnosticId.CS8926 };
 }
 /** An interface with static abstract members that lack a most specific implementation cannot be a type argument (CS8920). */
 export function canBeTypeArgument(iface) {

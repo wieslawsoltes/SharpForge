@@ -9,6 +9,7 @@
  *   CS8826  (warning, level 6) any other difference: parameter or type parameter names, nullable annotations,
  *           `dynamic` against `object`
  */
+import {DiagnosticId} from '../../diagnostics/codes.js';
 import { TypeMap, TypeCompareKind } from '../types.js';
 
 const loose = TypeCompareKind.IgnoreTupleNames | TypeCompareKind.IgnoreNullableModifiersForReferenceTypes | TypeCompareKind.IgnoreDynamic;
@@ -68,20 +69,20 @@ export function partialSignatureRows(definition, implementation) {
     map = typeParameterMap(definition, implementation);
   (definition.typeParameters ?? []).forEach((parameter, index) => {
     const other = implementation.typeParameters[index];
-    if (constraintKey(parameter, TypeMap.empty) !== constraintKey(other, map)) row('CS0761', [implementation.toDisplayString(), other.name]);
+    if (constraintKey(parameter, TypeMap.empty) !== constraintKey(other, map)) row(DiagnosticId.CS0761, [implementation.toDisplayString(), other.name]);
   });
-  if (wordsOf(definition).includes('readonly') !== wordsOf(implementation).includes('readonly')) row('CS8663');
+  if (wordsOf(definition).includes('readonly') !== wordsOf(implementation).includes('readonly')) row(DiagnosticId.CS8663);
   // A return type that is another type altogether is CS8817 (partial-members.js); here only what a signature ignores.
   const comparable = sameTypes(definition, implementation, loose);
   if (comparable && !sameTypes(definition, implementation, exceptTupleNames)) {
-    row('CS8142', [definition.toDisplayString(), implementation.toDisplayString()]);
+    row(DiagnosticId.CS8142, [definition.toDisplayString(), implementation.toDisplayString()]);
     return rows;
   }
   const namesDiffer =
     definition.parameters.some((parameter, index) => parameter.name !== implementation.parameters[index].name) ||
     (definition.typeParameters ?? []).some((parameter, index) => parameter.name !== implementation.typeParameters[index].name);
   const typesDiffer =
-    comparable && (!sameTypes(definition, implementation, TypeCompareKind.ConsiderEverything) || hasNullableDifference(definition, implementation));
-  if (namesDiffer || typesDiffer) row('CS8826', [definition.toDisplayString(), implementation.toDisplayString()]);
+    comparable && (!sameTypes(definition, implementation, TypeCompareKind.StrictNullability) || hasNullableDifference(definition, implementation));
+  if (namesDiffer || typesDiffer) row(DiagnosticId.CS8826, [definition.toDisplayString(), implementation.toDisplayString()]);
   return rows;
 }

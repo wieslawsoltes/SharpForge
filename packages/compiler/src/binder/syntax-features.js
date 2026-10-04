@@ -81,8 +81,8 @@ function accessorFeatures(node, context, use) {
 }
 
 function functionFeatures(node, context, use) {
-  const asyncToken = [...(node.modifiers ?? [])].find(token => token.text === 'async');
-  if (asyncToken) use('Async', asyncToken);
+  // Roslyn reports an async method or local function at its name (lambdas and `await` are reported by the parser).
+  if (has(node, 'async')) use('Async', node.identifier ?? [...node.modifiers].find(token => token.text === 'async'));
   if (node.kind === 'MethodDeclaration') {
     if (has(node, 'readonly')) use('ReadOnlyMembers', node.identifier);
     if (node.identifier.valueText === 'ToString' && has(node, 'sealed') && context.enclosingType?.kind === 'RecordDeclaration') {
@@ -114,7 +114,11 @@ function parameterFeatures(node, context, use) {
   const scoped = [...(node.modifiers ?? [])].find(token => token.text === 'scoped');
   if (scoped) use('RefFields', scoped);
   if (context.inLambdaParameters) return;
-  if (has(node, 'this') && (has(node, 'ref') || has(node, 'in'))) use('RefExtensionMethods', node);
+  if (has(node, 'this') && (has(node, 'ref') || has(node, 'in'))) {
+    // Roslyn reports the later of `this` and `ref`/`in`: `ref this int x` at `this`, `this ref int x` at `ref`.
+    const pair = [...node.modifiers].filter(token => ['this', 'ref', 'in'].includes(token.text));
+    use('RefExtensionMethods', pair[pair.length - 1]);
+  }
   if (has(node, 'params') && node.type && node.type.kind !== 'ArrayType') use('ParamsCollections', node);
 }
 
@@ -136,9 +140,11 @@ function fieldFeatures(node, context, use) {
   constantFeatures(node, context, use);
   const record = context.enclosingType;
   if (record?.kind !== 'RecordDeclaration' && record?.kind !== 'RecordStructDeclaration') return;
-  const positional = new Set([...(record.parameterList?.parameters ?? [])].map(p => p.identifier.valueText));
+  // Roslyn reports the positional parameter that the field stands for, not the field.
+  const positional = new Map([...(record.parameterList?.parameters ?? [])].map(p => [p.identifier.valueText, p]));
   for (const variable of declaration.variables) {
-    if (positional.has(variable.identifier.valueText)) use('PositionalFieldsInRecords', variable.identifier);
+    const parameter = positional.get(variable.identifier.valueText);
+    if (parameter) use('PositionalFieldsInRecords', parameter);
   }
 }
 
@@ -183,11 +189,11 @@ function invocationFeatures(node, context, use) {
 }
 
 function implicitElementAccessFeatures(node, context, use) {
-  for (const argument of node.argumentList.arguments) {
-    if (argument.expression.kind === 'IndexExpression' || argument.expression.kind === 'RangeExpression') {
-      use('ImplicitIndexerInitializer', argument.expression);
-    }
-  }
+  // Roslyn reports the whole element access (`[^1]`), once.
+  const implicit = [...node.argumentList.arguments].some(
+    argument => argument.expression.kind === 'IndexExpression' || argument.expression.kind === 'RangeExpression',
+  );
+  if (implicit) use('ImplicitIndexerInitializer', node);
 }
 
 function assignmentFeatures(node, context, use) {
@@ -210,6 +216,9 @@ const detectors = {
   ParenthesizedLambdaExpression: functionFeatures,
   AnonymousMethodExpression: functionFeatures,
   Parameter: parameterFeatures,
+  // Roslyn gates the discard pattern as a recursive pattern (C# 8), next to the construct that contains it.
+  RecursivePattern: (node, context, use) => use('RecursivePatterns', node),
+  DiscardPattern: (node, context, use) => use('RecursivePatterns', node),
   ScopedType: (node, context, use) => use('RefFields', node.firstToken()),
   StackAllocArrayCreationExpression: stackAllocFeatures,
   ImplicitStackAllocArrayCreationExpression: stackAllocFeatures,
@@ -223,7 +232,6 @@ const detectors = {
   SimpleAssignmentExpression: assignmentFeatures,
   DeclarationExpression: declarationExpressionFeatures,
   DeclarationPattern: declarationExpressionFeatures,
-  DiscardDesignation: (node, context, use) => use('Discards', node),
   UsingStatement: (node, context, use) => node.awaitKeyword && use('AsyncUsing', node.awaitKeyword),
   UnsafeStatement: (node, context, use) => context.inAsyncOrIterator && use('RefUnsafeInIteratorAsync', node.unsafeKeyword),
   ForStatement: (node, context, use) => node.declaration?.type.kind === 'RefType' && use('RefFor', node.declaration.type),

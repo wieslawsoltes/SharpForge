@@ -7,3 +7,4 @@ export * from './diagnostics.js';
 export * from './sarif.js';
 export * from './project-context.js';
 export * from './rid.js';
+export * from './testing/index.js';

@@ -12,6 +12,7 @@
  * Nothing is thrown for C# level failures. `checked` is the overflow context of the expression: C# folds constants
  * checked unless the expression is inside `unchecked(...)`, whatever /checked says.
  */
+import {DiagnosticId} from '../diagnostics/codes.js';
 import {ConstantValue,Decimal,foldError,isFoldError,integralRanges,isIntegralType,enumUnderlyingType,enumTypeName,sameEnumType,bigIntToFloat} from './constant-value.js';
 export {ConstantValue,Decimal,foldError,isFoldError,literalConstant,negatedLiteralConstant} from './constant-value.js';
 
@@ -67,13 +68,13 @@ const compare=(op,order)=>ConstantValue.bool(op==='=='?order===0:op==='!='?order
 
 function integralBinary(op,type,x,y,checked){
   const [min]=integralRanges[type];
-  const result=value=>inRange(type,value)?ConstantValue.integral(type,value):checked?foldError('CS0220'):ConstantValue.integral(type,wrap(type,value));
+  const result=value=>inRange(type,value)?ConstantValue.integral(type,value):checked?foldError(DiagnosticId.CS0220):ConstantValue.integral(type,wrap(type,value));
   switch(op){
     case '+':return result(x+y);
     case '-':return result(x-y);
     case '*':return result(x*y);
-    case '/':if(y===0n)return foldError('CS0020');if(min<0n&&x===min&&y===-1n)return checked?foldError('CS0220'):ConstantValue.integral(type,min);return ConstantValue.integral(type,x/y);
-    case '%':if(y===0n)return foldError('CS0020');return ConstantValue.integral(type,min<0n&&y===-1n?0n:x%y);
+    case '/':if(y===0n)return foldError(DiagnosticId.CS0020);if(min<0n&&x===min&&y===-1n)return checked?foldError(DiagnosticId.CS0220):ConstantValue.integral(type,min);return ConstantValue.integral(type,x/y);
+    case '%':if(y===0n)return foldError(DiagnosticId.CS0020);return ConstantValue.integral(type,min<0n&&y===-1n?0n:x%y);
     case '&':return ConstantValue.integral(type,x&y);
     case '|':return ConstantValue.integral(type,x|y);
     case '^':return ConstantValue.integral(type,x^y);
@@ -90,11 +91,11 @@ function floatingBinary(op,type,a,b){
   }
 }
 function decimalBinary(op,a,b){
-  const make=d=>d?new ConstantValue('decimal',d):foldError('CS0463');
+  const make=d=>d?new ConstantValue('decimal',d):foldError(DiagnosticId.CS0463);
   switch(op){
     case '+':return make(a.add(b));case '-':return make(a.subtract(b));case '*':return make(a.multiply(b));
-    case '/':return b.isZero?foldError('CS0020'):make(a.divide(b));
-    case '%':return b.isZero?foldError('CS0020'):make(a.remainder(b));
+    case '/':return b.isZero?foldError(DiagnosticId.CS0020):make(a.divide(b));
+    case '%':return b.isZero?foldError(DiagnosticId.CS0020):make(a.remainder(b));
     default:return COMPARISONS.includes(op)?compare(op,a.compare(b)):null;
   }
 }
@@ -140,7 +141,7 @@ function enumBinary(op,left,right,checked){
 function convertIntegral(value,type,enumType,checked){
   const big=value.bigint;
   if(inRange(type,big))return ConstantValue.integral(type,big,enumType);
-  if(checked)return foldError('CS0221',[value.displayValue,enumType?enumTypeName(enumType):type]);
+  if(checked)return foldError(DiagnosticId.CS0221,[value.displayValue,enumType?enumTypeName(enumType):type]);
   const size=BigInt({sbyte:8,byte:8,short:16,ushort:16,char:16,int:32,uint:32,long:64,ulong:64}[type]);
   return ConstantValue.integral(type,integralRanges[type][0]<0n?BigInt.asIntN(Number(size),big):BigInt.asUintN(Number(size),big),enumType);
 }
@@ -166,7 +167,7 @@ export function foldUnary(op,operand,{checked=true}={}){
     if(op==='~')return ConstantValue.integral(type,wrap(type,~x));
     if(op!=='-'||type==='ulong')return null;
     if(type==='uint')return ConstantValue.long(-x);
-    return inRange(type,-x)?ConstantValue.integral(type,-x):checked?foldError('CS0220'):ConstantValue.integral(type,x);
+    return inRange(type,-x)?ConstantValue.integral(type,-x):checked?foldError(DiagnosticId.CS0220):ConstantValue.integral(type,x);
   }
   if(op==='+')return operand;
   if(op!=='-')return null;
@@ -231,15 +232,15 @@ export function foldConversion(value,type,{checked=true}={}){
     if(value.isIntegral)return convertIntegral(value,to.type,to.enumType,checked);
     if(value.type==='decimal'){
       const big=value.value.truncate();
-      return inRange(to.type,big)?ConstantValue.integral(to.type,big,to.enumType):foldError('CS0031',[value.displayValue,to.name]);
+      return inRange(to.type,big)?ConstantValue.integral(to.type,big,to.enumType):foldError(DiagnosticId.CS0031,[value.displayValue,to.name]);
     }
     const truncated=Math.trunc(value.value);
     if(Number.isFinite(truncated)&&inRange(to.type,BigInt(truncated)))return ConstantValue.integral(to.type,BigInt(truncated),to.enumType);
-    return checked?foldError('CS0221',[value.displayValue,to.name]):ConstantValue.integral(to.type,0n,to.enumType);
+    return checked?foldError(DiagnosticId.CS0221,[value.displayValue,to.name]):ConstantValue.integral(to.type,0n,to.enumType);
   }
   if(to.type==='decimal'){
     const d=value.isIntegral?Decimal.fromBigInt(value.bigint):value.type==='decimal'?value.value:Decimal.fromDouble(value.value,value.type==='float');
-    return d?new ConstantValue('decimal',d):foldError('CS0031',[value.displayValue,'decimal']);
+    return d?new ConstantValue('decimal',d):foldError(DiagnosticId.CS0031,[value.displayValue,'decimal']);
   }
   const double=value.isIntegral?Number(value.bigint):value.type==='decimal'?value.value.toDouble():value.value;
   if(to.type==='double')return new ConstantValue('double',double);

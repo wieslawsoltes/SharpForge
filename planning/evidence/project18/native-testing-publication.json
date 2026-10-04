@@ -1,0 +1,46 @@
+{
+  "schemaVersion": 1,
+  "scope": "A23 T11 native test adapter and service contribution",
+  "sourceCommit": "4a49a23b773b62088057d83e3e6ac6e573390578",
+  "base": {
+    "branch": "codex/p18-native-testing-base",
+    "sha": "84b5678eb8a4284edee508d659244566e65bb12d",
+    "parents": [
+      "0dfdc76c253dace9d2c0870a25c11b1900cef2c8",
+      "79dc1c551c4b8013be028c0e42d0ac220d7b7886"
+    ]
+  },
+  "sourceBlob": "c93726cf4893bc951f9d854b32e3cf0380303102",
+  "testProjection": "All original assertions preserved; imports changed to public package entries.",
+  "qualification": [
+    {
+      "path": "planning/evidence/project18/native-studio/node22.log",
+      "sha256": "271a15a28b3675c08441960dfdbe519bcedbfa7a47719c757ca887fc311f3a03",
+      "selectedRecords": [
+        "ok 1 - A23 T11 host seam collects actual report files and exposes only retained session artifacts",
+        "ok 2 - A23 T11 nonblocking service sessions cancel the host and leave unexecuted tests not-run",
+        "ok 3 - A23 T11 adapters reject untrusted requests and never turn a missing TRX into passing tests",
+        "ok 4 - A23 T11 service discovery preserves HTTP source metadata and rejects oversized metadata before execution"
+      ],
+      "result": "4/4 pass in completed 106/106 scope; zero skips"
+    },
+    {
+      "path": "planning/evidence/project18/native-studio/node26.log",
+      "sha256": "91496f7ce81002540e065fc8393b762a843f2ea7c0156485ea4b46ba3ff877df",
+      "selectedRecords": [
+        "\u2714 A23 T11 host seam collects actual report files and exposes only retained session artifacts (17.335866ms)",
+        "\u2714 A23 T11 nonblocking service sessions cancel the host and leave unexecuted tests not-run (6.893265ms)",
+        "\u2714 A23 T11 adapters reject untrusted requests and never turn a missing TRX into passing tests (4.243653ms)",
+        "\u2714 A23 T11 service discovery preserves HTTP source metadata and rejects oversized metadata before execution (3.437307ms)"
+      ],
+      "result": "4/4 pass in completed 106/106 scope; zero skips"
+    }
+  ],
+  "projectionQualification": "No duplicate execution. Native transport and engine retain their own published qualification. Required core pending.",
+  "remaining": [
+    "Four tests inject the process executor and write real local report files; they are not actual Microsoft test-host qualification.",
+    "Pinned xUnit/NUnit/MSTest/coverage packages were unavailable after a bounded 50-second restore timeout; no native framework pass claimed.",
+    "Native debugger handoff exposes PID and cancellation only; process attachment is outside this adapter.",
+    "Arbitrary MTP host versions and Windows/macOS framework runs remain unqualified."
+  ]
+}

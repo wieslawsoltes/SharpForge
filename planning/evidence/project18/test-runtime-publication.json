@@ -1,0 +1,48 @@
+{
+  "schemaVersion": 1,
+  "productSource": "3f27179225cfc6fab8b13b919bf8bb695831efa1",
+  "productBlobs": {
+    "packages/msbuild/src/testing/portable/assertion-profile.js": "dbcd6a44048bc908c23b1bec0be7b4d1af0e991a",
+    "packages/msbuild/src/testing/portable/harness.js": "e10373a229a002926ec0821f0493d9c12215cd00",
+    "packages/msbuild/src/testing/portable/provider-projection.js": "6197dcd92bcba8633e4f586965abfe06b9045539",
+    "packages/msbuild/src/testing/portable/runtime-data.js": "44e5ce66103d99162630e03c1b822830301b74b9",
+    "packages/msbuild/src/testing/portable/managed-runtime.js": "6b2dbbe338174060fbf4c263c18f0a69c5a17426"
+  },
+  "priorQualification": {
+    "nodes": [
+      "22.23.3",
+      "26.10.0"
+    ],
+    "scopePassed": 135,
+    "scopeFailed": 0,
+    "captures": [
+      "planning/evidence/project18/testing/node22.tap",
+      "planning/evidence/project18/testing/node26.tap"
+    ],
+    "node22CaptureSha256": "1da313e5473a0ce2adda04e1be83212e9c01229fd6b64f4fe9f3cf5f3e8d7c5b",
+    "selectedCases": [
+      "T39 source/cil three-framework managed execution",
+      "T39 source/cil shared collection fixtures",
+      "T36 source/cil computed member and jagged data",
+      "T39 unsupported APIs retain runnable neighbors"
+    ],
+    "selectedCount": 9,
+    "selectedPassed": 9
+  },
+  "newContractTests": {
+    "file": "tests/a23-test-runtime-contract.test.js",
+    "count": 5,
+    "status": "pending parent scheduled qualification"
+  },
+  "dependencies": {
+    "symbols": "https://github.com/wieslawsoltes/SharpForge/pull/3789",
+    "invocation": "https://github.com/wieslawsoltes/SharpForge/pull/3680",
+    "publishedJoin": "acba61f8aa503f1e4ff482b283eb08ca52c6d0cd"
+  },
+  "pending": [
+    "New focused public tests",
+    "Protected root package-lock synchronization by root owner",
+    "Native framework parity; pinned package restore unavailable",
+    "Rust native/Wasm invocation unsupported"
+  ]
+}

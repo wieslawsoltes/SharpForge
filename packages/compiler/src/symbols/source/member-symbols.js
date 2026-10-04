@@ -2,6 +2,7 @@
  * Member symbols of source types: fields, events, methods, constructors, destructors, operators and
  * conversions, with their parameters, type parameters and constraint clauses.
  */
+import {DiagnosticId} from '../../diagnostics/codes.js';
 import { TypeKind, Accessibility, RefKind, TypeWithAnnotations } from '../types.js';
 import {
   MethodSymbol,
@@ -37,7 +38,7 @@ export const MemberSymbolBuilder = Base =>
       return (list?.parameters ?? []).map((p, ordinal) => {
         const mods = words(p.modifiers),
           name = p.identifier.valueText;
-        if (seen.has(name) && name) this.report(uri, p.identifier, 'CS0100', [name]);
+        if (seen.has(name) && name) this.report(uri, p.identifier, DiagnosticId.CS0100, [name]);
         seen.add(name);
         const refKind = mods.includes('out')
           ? RefKind.Out
@@ -195,7 +196,7 @@ export const MemberSymbolBuilder = Base =>
               name: isStatic ? '.cctor' : '.ctor',
               kind: isStatic ? MethodKind.StaticConstructor : MethodKind.Constructor,
             });
-          if (syntax.identifier.valueText !== type.name) this.report(uri, syntax.identifier, 'CS1520');
+          if (syntax.identifier.valueText !== type.name) this.report(uri, syntax.identifier, DiagnosticId.CS1520);
           ctor.initializerSyntax = syntax.initializer ?? null;
           members.push(ctor);
           return;

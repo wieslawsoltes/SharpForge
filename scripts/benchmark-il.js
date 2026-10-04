@@ -1,9 +1,8 @@
-/** Paired same-process benchmark: compilation, IL load, and VM execution are separate costs.
- * No claimed comparison with CoreCLR, Roslyn, other engines, or debugger-history recording.
- */
+/** Paired IR/IL microbenchmarks; not a CoreCLR, Roslyn, other-engine or debugger-history comparison. */
 import { performance } from 'node:perf_hooks';
 import { cpus, platform, arch } from 'node:os';
 import { writeFile } from 'node:fs/promises';
+import { resultPath } from './conformance/results.js';
 import { compile } from '../packages/compiler/src/index.js';
 import { emitAssembly, emitAssemblyDetailed, loadAssembly } from '../packages/cil/src/index.js';
 import { serializeImage } from '../packages/bytecode/src/index.js';
@@ -46,4 +45,4 @@ for(const [name,source]of workloads){
  const result={name,rawPairs:ir.map((ms,i)=>({irMs:ms,ilMs:il[i]})),ir:stats(ir),ilPredecoded:stats(il),medianPairedRatio:quantile(ratios,.5),instructions:sample.stats.instructions,exitCode:sample.exitCode,heapAllocations:sample.stats.heap.allocations,heapCollections:sample.stats.heap.collections};report.execution.push(result);
  console.log(`${name}: IR ${result.ir.medianMs.toFixed(2)} ms, IL-predecoded ${result.ilPredecoded.medianMs.toFixed(2)} ms, paired ratio ${result.medianPairedRatio.toFixed(3)}; ${result.instructions} identical instructions`);
 }
-await writeFile(process.env.BENCH_REPORT??new URL('../docs/il-benchmark.json',import.meta.url),JSON.stringify(report,null,2)+'\n');
+await writeFile(process.env.BENCH_REPORT??await resultPath('il-benchmark.json'),JSON.stringify(report,null,2)+'\n');

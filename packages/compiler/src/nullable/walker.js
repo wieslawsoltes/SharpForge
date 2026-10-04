@@ -8,18 +8,26 @@
  *   CS8618  non-nullable field or property not initialised when a constructor exits
  *   CS8625  null literal converted to a non-nullable reference type
  *
- * A state maps a variable to 'notNull' or 'maybeNull'; a variable without an entry has the state its declared
+ * A variable is a local, a parameter, a field or property of `this`, a static member, or a member of another variable
+ * (`x.Next.Name`). A state maps a variable to 'notNull' or 'maybeNull'; a variable without an entry has the state its declared
  * annotation gives it. Branches join to 'maybeNull' when either side is; `x == null`, `x is null`, `x is T`,
  * `x?.M()`, `x ?? y` and the analysis attributes (nullable/attributes.js) split or refine states. Loops iterate to a
  * fixed point of the state at the loop head, as Roslyn does (nullable/walker-loops.js).
  */
+import {DiagnosticId} from '../diagnostics/codes.js';
 import { NullableConditions } from './walker-conditions.js';
+import { NullableConditionalAccess } from './walker-conditional-access.js';
+import { NullableMemberSlots } from './walker-member-slots.js';
+import { NullableAttributeRules } from './walker-attributes.js';
+import { NullableTypeArgumentChecks } from './walker-type-arguments.js';
+import { NullableLambdas } from './walker-lambdas.js';
 import { NullableLoops } from './walker-loops.js';
 import { NullableRules } from './walker-rules.js';
 import { NOT_NULL, MAYBE_NULL, joinStates, FlowState, joinFlow } from './flow-state.js';
 import { NullableAnnotation, RefKind, SymbolKind } from '../symbols/types.js';
 import { MethodKind } from '../symbols/members.js';
-import { allowsNull, argumentStateAfterCall, doesNotReturn, membersNotNullAfterCall, resultState } from './attributes.js';
+import { allowsNull, disallowsNull, argumentStateAfterCall, doesNotReturn, membersNotNullAfterCall, resultState } from './attributes.js';
+import { frameworkResultState } from './framework-annotations.js';
 import { boundChildren } from '../flow/semantic-assignment.js';
 
 const isReferenceLike = type => !!type && type.isReferenceType === true;
@@ -59,22 +67,20 @@ class NullableWalkerCore {
 
   // ---- variables ----
 
-  /** The tracked variable an expression denotes: a local, a parameter or a field/auto-property of `this`. */
+  /** The tracked variable an expression denotes: a local or a parameter (members: nullable/walker-member-slots.js). */
   variableOf(expression) {
     if (!expression) return null;
     if (expression.kind === 'Local') return expression.local;
     if (expression.kind === 'Parameter') return expression.parameter;
-    const viaThis = !expression.receiver || expression.receiver.kind === 'This';
-    if (expression.kind === 'FieldAccess' && viaThis && !expression.field.isStatic)
-      return expression.field.originalDefinition ?? expression.field;
-    if (expression.kind === 'PropertyAccess' && viaThis && expression.property.isAutoProperty) return expression.property;
+    if (expression.kind === 'DeclarationExpression') return expression.local ?? null;
     return null;
   }
 
   declaredAnnotation(expression) {
     switch (expression.kind) {
       case 'Local':
-        return expression.local.declaredAnnotation ?? null;
+      case 'DeclarationExpression':
+        return expression.local?.declaredAnnotation ?? null;
       case 'Parameter':
         return expression.parameter.typeWithAnnotations?.nullableAnnotation ?? null;
       case 'FieldAccess':
@@ -132,17 +138,6 @@ class NullableWalkerCore {
         this.replace(flow, joinFlow(branches.whenTrue, branches.whenFalse));
         return joinStates(whenTrue, whenFalse);
       }
-      case 'ConditionalAccess': {
-        this.expression(node.receiver, flow);
-        const inner = flow.clone();
-        const receiver = this.variableOf(node.receiver);
-        if (receiver) inner.set(receiver, NOT_NULL);
-        this.expression(node.whenNotNull, inner);
-        return MAYBE_NULL;
-      }
-      case 'Lambda':
-        if (node.body) this.lambdaBody(node.body, flow.clone());
-        return NOT_NULL;
       case 'Binary':
         if (node.operator === '&&' || node.operator === '||') {
           const branches = this.condition(node, flow);
@@ -160,23 +155,12 @@ class NullableWalkerCore {
     flow.entries = other.entries;
   }
 
-  lambdaBody(body, flow) {
-    const saved = this.method;
-    const savedTargets = this.jumpTargets;
-    this.method = null;
-    this.jumpTargets = [];
-    if ('completes' in body) this.statement(body, flow);
-    else this.expression(body, flow);
-    this.method = saved;
-    this.jumpTargets = savedTargets;
-  }
-
   /** Reports a dereference of a possibly null receiver and marks the variable not-null afterwards. */
   dereference(receiver, flow) {
     if (!receiver || receiver.kind === 'This' || receiver.kind === 'Base' || receiver.kind === 'ConditionalReceiver') return;
     const state = this.expression(receiver, flow);
     if (state !== MAYBE_NULL || !isReferenceLike(receiver.type)) return;
-    this.warn(receiver.syntax, 'CS8602');
+    this.warn(receiver.syntax, DiagnosticId.CS8602);
     const variable = this.variableOf(receiver);
     if (variable) flow.set(variable, NOT_NULL);
   }
@@ -187,35 +171,67 @@ class NullableWalkerCore {
     const variable = this.variableOf(node);
     const tracked = variable ? flow.get(variable) : undefined;
     if (tracked !== undefined) return tracked;
-    return resultState(member) ?? this.declaredState(node);
+    return resultState(member) ?? frameworkResultState(member) ?? this.declaredState(node);
   }
 
   call(node, flow) {
     const method = node.method ?? node.constructor;
     if (node.receiver && method && !method.isStatic && !node.isExtension) this.dereference(node.receiver, flow);
-    for (const argument of node.args ?? []) this.argument(argument, method, flow);
+    const states = (node.args ?? []).map(argument => this.argument(argument, method, flow));
     for (const initializer of node.initializers ?? []) this.expression(initializer.value, flow);
     if (!method || node.kind === 'ObjectCreation') return NOT_NULL;
-    for (const argument of node.args ?? []) this.applyPostcondition(argument, null, flow);
-    this.applyMemberPostconditions(method, null, flow);
-    if (doesNotReturn(method)) this.replace(flow, new FlowState(new Map([['<unreachable>', NOT_NULL]])));
-    return resultState(method, { returnValue: true }) ?? (isAnnotated(method.returnTypeWithAnnotations) ? MAYBE_NULL : NOT_NULL);
+    for (const argument of node.args ?? []) {
+      this.applyPostcondition(argument, null, flow);
+      this.checkStoredArgument(argument, flow);
+    }
+    this.applyMemberPostconditions(method, null, flow, node.receiver);
+    if (doesNotReturn(method)) this.markUnreachable(flow);
+    return this.callResult(node, method, states);
+  }
+
+  /** The null-state of the value a call returns; `argumentStates` are the states of `node.args`, in order. */
+  callResult(node, method) {
+    const declared = resultState(method, { returnValue: true }) ?? frameworkResultState(method, node.receiver?.type);
+    return declared ?? (isAnnotated(method.returnTypeWithAnnotations) ? MAYBE_NULL : NOT_NULL);
+  }
+
+  markUnreachable(flow) {
+    this.replace(flow, new FlowState(new Map([['<unreachable>', NOT_NULL]])));
+  }
+
+  /** An `out` or `ref` argument whose variable is not nullable must not be left possibly null by the callee. */
+  checkStoredArgument(argument, flow) {
+    const value = argument.expression ?? argument;
+    if ((argument.refKind !== RefKind.Out && argument.refKind !== RefKind.Ref) || value.suppressed) return;
+    const variable = this.variableOf(value);
+    if (!variable || flow.get(variable) !== MAYBE_NULL || !isReferenceLike(value.type)) return;
+    if (this.declaredAnnotation(value) !== NullableAnnotation.NotAnnotated) return;
+    const isMember = value.kind === 'FieldAccess' || value.kind === 'PropertyAccess';
+    this.warn(value.syntax, isMember ? DiagnosticId.CS8601 : DiagnosticId.CS8600);
   }
 
   argument(argument, method, flow) {
     const value = argument.expression ?? argument;
     const parameter = argument.parameter;
-    if (argument.refKind === RefKind.Out) {
+    if (argument.refKind === RefKind.Out || argument.refKind === RefKind.Ref) {
+      // The callee stores into the variable: afterwards it has the state the parameter type gives it.
+      if (value.receiver) this.dereference(value.receiver, flow);
       const variable = this.variableOf(value);
-      if (variable && parameter) flow.set(variable, isAnnotated(parameter.typeWithAnnotations) ? MAYBE_NULL : NOT_NULL);
-      return;
+      if (variable && parameter) this.assignVariable(flow, variable, isAnnotated(parameter.typeWithAnnotations) ? MAYBE_NULL : NOT_NULL);
+      return NOT_NULL;
     }
     const state = this.expression(value, flow);
-    if (state !== MAYBE_NULL || !parameter || value.suppressed) return;
-    const acceptsNull = !isNotAnnotated(parameter.typeWithAnnotations) || !isReferenceLike(parameter.type) || allowsNull(parameter);
-    if (acceptsNull) return;
-    if (this.isNullLiteral(value)) this.warn(value.syntax, 'CS8625');
-    else this.warn(value.syntax, 'CS8604', [parameter.name, (method.originalDefinition ?? method).toDisplayString()]);
+    if (state !== MAYBE_NULL || !parameter || value.suppressed) return state;
+    if (!isReferenceLike(parameter.type) || !this.rejectsNull(parameter)) return state;
+    if (this.isNullLiteral(value)) this.warn(value.syntax, DiagnosticId.CS8625);
+    else this.warn(value.syntax, DiagnosticId.CS8604, [parameter.name, (method.originalDefinition ?? method).toDisplayString()]);
+    return state;
+  }
+
+  /** True when null may not be passed for the parameter: a non-nullable type without [AllowNull], or [DisallowNull]. */
+  rejectsNull(parameter) {
+    if (disallowsNull(parameter)) return true;
+    return isNotAnnotated(parameter.typeWithAnnotations) && !allowsNull(parameter);
   }
 
   isNullLiteral(node) {
@@ -230,12 +246,20 @@ class NullableWalkerCore {
     if (state) flow.set(variable, state);
   }
 
-  applyMemberPostconditions(method, returned, flow) {
+  /** [MemberNotNull] / [MemberNotNullWhen]: the named members of the receiver (or of `this`) are not null afterwards. */
+  applyMemberPostconditions(method, returned, flow, receiver = null) {
     const type = method.containingType;
     for (const name of membersNotNullAfterCall(method, returned)) {
       const member = type?.getMembers(name)[0];
-      if (member) flow.set(member.kind === SymbolKind.Field ? (member.originalDefinition ?? member) : member, NOT_NULL);
+      const variable = member ? this.memberOf(receiver, member) : null;
+      if (variable) flow.set(variable, NOT_NULL);
     }
+  }
+
+  /** The variable of `member` of `this` (members of other receivers: nullable/walker-member-slots.js). */
+  memberOf(receiver, member) {
+    if (receiver && receiver.kind !== 'This' && receiver.kind !== 'Base') return null;
+    return member.kind === SymbolKind.Field ? (member.originalDefinition ?? member) : member;
   }
 
   assignment(node, flow) {
@@ -244,24 +268,32 @@ class NullableWalkerCore {
     const state = this.expression(node.right, flow);
     this.checkAssignment(target, node.right, state);
     const variable = this.variableOf(target);
-    if (variable) flow.set(variable, state);
+    if (variable) this.assignVariable(flow, variable, state, node.right);
     return state;
+  }
+
+  /** Stores a new value in a variable (members: nullable/walker-member-slots.js). */
+  assignVariable(flow, variable, state) {
+    flow.assign(variable, state);
   }
 
   /** Warns when a possibly null value is stored into a non-nullable reference location. */
   checkAssignment(target, value, state) {
     if (state !== MAYBE_NULL || value.suppressed || !isReferenceLike(target.type)) return;
-    if (this.declaredAnnotation(target) !== NullableAnnotation.NotAnnotated) return;
-    const member = target.field ?? target.property ?? target.parameter;
-    if (member && allowsNull(member)) return;
-    if (this.isNullLiteral(value)) this.warn(value.syntax, target.kind === 'Local' ? 'CS8600' : 'CS8625');
-    else this.warn(value.syntax, target.kind === 'Local' ? 'CS8600' : 'CS8601');
+    // [AllowNull] and [DisallowNull] are about what a setter or a caller may store: inside the method a parameter has
+    // its declared type.
+    const member = target.field ?? target.property;
+    const isNonNullable = this.declaredAnnotation(target) === NullableAnnotation.NotAnnotated && !(member && allowsNull(member));
+    if (!isNonNullable && !(member && disallowsNull(member))) return;
+    const isLocalOrParameter = target.kind === 'Local' || target.kind === 'Parameter';
+    if (isLocalOrParameter) this.warn(value.syntax, DiagnosticId.CS8600);
+    else this.warn(value.syntax, this.isNullLiteral(value) ? DiagnosticId.CS8625 : DiagnosticId.CS8601);
   }
 
   conversion(node, flow) {
     const state = this.expression(node.operand, flow);
     const isUnboxing = node.conversion?.kind === 'Unboxing' && node.type?.isValueType === true && !node.type.isNullableValueType;
-    if (isUnboxing && state === MAYBE_NULL) this.warn(node.syntax, 'CS8605');
+    if (isUnboxing && state === MAYBE_NULL) this.warn(node.syntax, DiagnosticId.CS8605);
     if (node.type?.isValueType === true && !node.type.isNullableValueType) return NOT_NULL;
     return state;
   }
@@ -353,7 +385,7 @@ class NullableWalkerCore {
       const local = declaration.local;
       const target = { kind: 'Local', local, type: local.type };
       this.checkAssignment(target, declaration.value, state);
-      flow.set(local, state);
+      this.assignVariable(flow, local, state, declaration.value);
     }
     return flow;
   }
@@ -364,7 +396,7 @@ class NullableWalkerCore {
     const returnType = method.returnTypeWithAnnotations;
     if (!isNotAnnotated(returnType) || !isReferenceLike(method.returnType)) return;
     if (resultState(method, { returnValue: true }) === MAYBE_NULL) return;
-    this.warn(value.syntax, 'CS8603');
+    this.warn(value.syntax, DiagnosticId.CS8603);
   }
 
   /** When a constructor exits, every non-nullable reference field and auto-property must hold a non-null value. */
@@ -380,10 +412,11 @@ class NullableWalkerCore {
       if (!isNotAnnotated(member.typeWithAnnotations) || !isReferenceLike(member.type)) continue;
       const key = isField ? (member.originalDefinition ?? member) : member;
       if (flow.get(key) === NOT_NULL) continue;
-      this.warn(method.locations[0], 'CS8618', [isField ? 'field' : 'property', member.name]);
+      this.warn(method.locations[0], DiagnosticId.CS8618, [isField ? 'field' : 'property', member.name]);
     }
   }
 }
 
 /** The nullable flow walker: statements and expressions (above) composed with the condition and loop rules. */
-export class NullableWalker extends NullableRules(NullableLoops(NullableConditions(NullableWalkerCore))) {}
+const NullableConditionRules = Base => NullableConditionalAccess(NullableAttributeRules(NullableConditions(NullableTypeArgumentChecks(Base))));
+export class NullableWalker extends NullableRules(NullableLoops(NullableConditionRules(NullableMemberSlots(NullableLambdas(NullableWalkerCore))))) {}

@@ -1,3 +1,4 @@
+import {scalarMetadataType} from './scalar-emission.js';
 import { parseSignatureType } from './metadata/signature-parser.js';
 import { fieldSignature, methodSignature, localSignature, propertySignature } from './metadata/signature-members.js';
 
@@ -11,7 +12,12 @@ export class EmitterSignatures {
   }
 
   type(type) {
-    return parseSignatureType(type, this.resolveToken, this.options);
+    if (typeof type === 'string' && /(?:^|[<, ])(?:decimal|System\.Decimal)(?:$|[>\[&,])/.test(type)) {
+      const decimal = {kind: 'valuetype', token: this.resolveToken('System.Decimal')};
+      this.options.namedTypes.set('decimal', decimal);
+      this.options.namedTypes.set('System.Decimal', decimal);
+    }
+    return parseSignatureType(scalarMetadataType(type), this.resolveToken, this.options);
   }
 
   types(types) {

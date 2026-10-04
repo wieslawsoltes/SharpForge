@@ -1,5 +1,14 @@
 # @sharpforge/msbuild
 
+The opt-in [native testing contribution](docs/test-native-adapter.md) exposes
+trusted discovery, cancellable run sessions, reports and retained artifacts.
+
+Native test discovery, TRX/Cobertura parsing and runner argument contracts are
+documented in [docs/test-native-formats.md](docs/test-native-formats.md).
+
+[Portable test declaration records](docs/test-symbols.md) expose a lazy lossless
+syntax frontend for framework adapters without executing user source.
+
 Browser-safe MSBuild contracts/client and a separately imported Node native backend. MIT, ES modules, Node 22+ for native APIs. The native engine invokes an installed SDK or MSBuild executable; .NET is not bundled.
 
 The public native process and host trust APIs are documented in [native-process.md](docs/native-process.md).
@@ -30,3 +39,20 @@ A default job times out after 30 minutes; default captured output is 32 MiB and 
 ## 0.8 disk explorer API
 
 `MSBuildClient.inspectItem`, `mutate` and `undoMutation` use the authenticated host's file-operation routes. The Node `NativeWorkspace` exposes the same bounded create/mkdir/move/copy/delete/write machinery with SHA-256 snapshots and quarantined undo. Binary reads support managed assembly inspection without source replacement. Read docs/explorer-keymaps.md before embedding: batches are not atomic, conflicts/partial completions are reported, undo receipts are in-memory and quarantined content is not automatically purged. File editing is distinct from native build trust.
+
+[Managed test preparation](docs/test-runtime.md) compiles prepared declarations into
+an isolated source or CIL session and retains explicit unsupported-test diagnostics.
+
+## Shared test records and run sessions
+
+The public package entry exports `createTestCase`, `testCaseId`, `createTestResult`,
+`TestOutcome`, `TEST_MODEL_VERSION`, `createTestTree`, `defineTestAdapter` and
+`TestRunSession`. Providers share stable discovery identity, explicit results and
+cancellable progress while retaining separate execution capabilities. See
+[the test protocol](docs/test-model.md) for fields, bounds, ownership and lifecycle.
+
+[Portable framework discovery](docs/test-discovery.md) describes the xUnit, NUnit
+and MSTest adapter registry, data evaluation controls and explicit boundaries.
+
+[Portable test sessions](docs/portable-testing.md) execute the managed framework
+profile with isolated fixtures, cancellation, explicit outcomes and replayable progress.

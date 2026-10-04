@@ -7,6 +7,7 @@
  * An argument is `{type, constantValue?, literal?, form?, convert?, refKind?, name?, lambda?, methodGroup?}` - the
  * shape `Conversions.classifyFromExpression` and the type inferrer consume.
  */
+import {DiagnosticId} from '../diagnostics/codes.js';
 import { RefKind, TypeKind, SymbolDisplayFormat, typeOf } from '../symbols/types.js';
 import { mapArguments, acceptsArgumentCount } from './arguments.js';
 import { inferMethodTypeArguments } from './type-inference.js';
@@ -62,7 +63,7 @@ export class OverloadResolver {
       return c;
     }
     if (expanded && !paramsElementType(method.parameters.at(-1).type)) {
-      c.failure = { kind: 'mapping', error: { code: 'CS1501', kind: 'notExpandable' } };
+      c.failure = { kind: 'mapping', error: { code: DiagnosticId.CS1501, kind: 'notExpandable' } };
       return c;
     }
     c.mapping = mapping;
@@ -192,7 +193,7 @@ export class OverloadResolver {
       const pair = best.length > 1 ? best : applicable;
       return {
         succeeded: false,
-        error: { code: 'CS0121', args: [memberDisplay(pair[0].definition), memberDisplay(pair[1].definition)] },
+        error: { code: DiagnosticId.CS0121, args: [memberDisplay(pair[0].definition), memberDisplay(pair[1].definition)] },
         candidates: analysed,
         ambiguous: pair.map(c => c.method),
       };
@@ -227,14 +228,14 @@ export class OverloadResolver {
     return [...analysed].sort((a, b) => rank(a) - rank(b) || badCount(a) - badCount(b))[0] ?? null;
   }
   failureDiagnostic(analysed, args, { name = null, isConstructor = false, isDelegate = false } = {}) {
-    if (!analysed.length) return { code: 'CS1501', args: [name ?? '?', args.length] };
+    if (!analysed.length) return { code: DiagnosticId.CS1501, args: [name ?? '?', args.length] };
     const best = this.bestFailure(analysed, args),
       method = best.definition,
       shown = name ?? (isConstructor ? method.containingType?.name : method.name),
       f = best.failure;
     if (f.kind === 'conversion')
       return {
-        code: 'CS1503',
+        code: DiagnosticId.CS1503,
         args: [
           f.argument + 1,
           argumentDisplay(args[f.argument]),
@@ -245,29 +246,29 @@ export class OverloadResolver {
     if (f.kind === 'refKind') {
       const takesNoKeyword = f.expected === RefKind.In || f.expected === RefKind.RefReadOnlyParameter;
       if (f.expected === RefKind.None || (takesNoKeyword && f.given !== RefKind.None))
-        return { code: 'CS1615', args: [f.argument + 1, f.given], argument: f.argument };
-      return { code: 'CS1620', args: [f.argument + 1, f.expected], argument: f.argument };
+        return { code: DiagnosticId.CS1615, args: [f.argument + 1, f.given], argument: f.argument };
+      return { code: DiagnosticId.CS1620, args: [f.argument + 1, f.expected], argument: f.argument };
     }
-    if (f.kind === 'inference') return { code: 'CS0411', args: f.error.args };
+    if (f.kind === 'inference') return { code: DiagnosticId.CS0411, args: f.error.args };
     if (f.kind === 'arity')
       return {
-        code: method.arity ? 'CS0305' : 'CS0308',
+        code: method.arity ? DiagnosticId.CS0305 : DiagnosticId.CS0308,
         args: method.arity ? [memberDisplay(method), 'method group', method.arity] : [memberDisplay(method), 'method'],
       };
     const e = f.error;
-    if (e.kind === 'noSuchName') return { code: 'CS1739', args: [isDelegate ? shown : shown, e.name], argument: e.argument };
-    if (e.kind === 'nameUsedTwice') return { code: 'CS1740', args: [e.name], argument: e.argument };
-    if (e.kind === 'namedAlreadyPositional') return { code: 'CS1744', args: [e.name], argument: e.argument };
-    if (e.kind === 'badNonTrailingName') return { code: 'CS8323', args: [e.name], argument: e.argument };
+    if (e.kind === 'noSuchName') return { code: DiagnosticId.CS1739, args: [isDelegate ? shown : shown, e.name], argument: e.argument };
+    if (e.kind === 'nameUsedTwice') return { code: DiagnosticId.CS1740, args: [e.name], argument: e.argument };
+    if (e.kind === 'namedAlreadyPositional') return { code: DiagnosticId.CS1744, args: [e.name], argument: e.argument };
+    if (e.kind === 'badNonTrailingName') return { code: DiagnosticId.CS8323, args: [e.name], argument: e.argument };
     // Too few arguments: Roslyn names the first required parameter without an argument when exactly one candidate
     // could otherwise be meant; with several candidates of other arities it reports the argument count.
     const missing = analysed.filter(c => c.failure.kind === 'mapping' && c.failure.error.kind === 'missing');
     if (e.kind === 'missing' && analysed.length === 1) {
       const c = missing.sort((a, b) => a.definition.parameters.length - b.definition.parameters.length)[0];
-      return { code: 'CS7036', args: [c.failure.error.parameter.name, memberDisplay(c.definition)] };
+      return { code: DiagnosticId.CS7036, args: [c.failure.error.parameter.name, memberDisplay(c.definition)] };
     }
     return {
-      code: isDelegate ? 'CS1593' : isConstructor ? 'CS1729' : 'CS1501',
+      code: isDelegate ? DiagnosticId.CS1593 : isConstructor ? DiagnosticId.CS1729 : DiagnosticId.CS1501,
       args: isConstructor ? [method.containingType?.toDisplayString() ?? shown, args.length] : [shown, args.length],
     };
   }
@@ -334,6 +335,10 @@ export class OverloadResolver {
   /** 1 when converting the argument to t1 is better than to t2, -1 for the reverse, 0 when neither is better. */
   betterConversion(arg, t1, c1, t2, c2) {
     if (this.conversions.isIdentity(t1, t2)) return 0;
+    // C# 10: for an interpolated string that is not a constant, the conversion to a handler type is the better one.
+    const handler1 = c1?.kind === ConversionKind.InterpolatedStringHandler,
+      handler2 = c2?.kind === ConversionKind.InterpolatedStringHandler;
+    if (handler1 !== handler2 && !arg.constantValue) return handler1 ? 1 : -1;
     const exact = t => arg.type && !arg.literal && this.conversions.isIdentity(arg.type, t);
     if (exact(t1) && !exact(t2)) return 1;
     if (exact(t2) && !exact(t1)) return -1;

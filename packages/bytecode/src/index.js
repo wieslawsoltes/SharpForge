@@ -1,3 +1,4 @@
+import {verifyNumericInstruction,verifyScalarConstant} from './numeric/source-profile.js';
 import {enumTypes,frameworkType} from '@sharpforge/framework';
 export {smallInteger, smallIntegerIndirect} from './numeric/small-int.js';
 export {managedExceptionTypes, exceptionTypeName, exceptionBaseType, exceptionHResult, exceptionMatches} from './exception-types.js';
@@ -7,7 +8,7 @@ export const FORMAT_VERSION = 2;
 export const EnumConvertBase = 65536;
 export const Op = Object.freeze(Object.fromEntries(['SEQ','CONST','LDLOC','STLOC','LDSTATIC','STSTATIC','LDFLD','STFLD','DUP','POP','BINARY','UNARY','JUMP','JFALSE','JTRUE','CALL','BUILTIN','RET','NEWOBJ','NEWARR','LDELEM','STELEM','LENGTH','THROW','RETHROW','CONVERT','NOP','ENDFINALLY','DELEGATE','ENUM'].map((n,i)=>[n,i])));
 export const OpName = Object.freeze(Object.keys(Op));
-export const Binary = Object.freeze(Object.fromEntries(['+','-','*','/','%','==','!=','<','<=','>','>=','&','|','^','<<','>>'].map((n,i)=>[n,i])));
+export const Binary = Object.freeze(Object.fromEntries(['+','-','*','/','%','==','!=','<','<=','>','>=','&','|','^','<<','>>','>>>'].map((n,i)=>[n,i])));
 export const BinaryName = Object.freeze(Object.keys(Binary));
 export const Unary = Object.freeze({ '-':0, '+':1, '!':2, '~':3 });
 export const UnaryName = Object.freeze(Object.keys(Unary));
@@ -24,6 +25,7 @@ export function verifyImage(image){
   const errors=[];
   if(image?.formatVersion!==FORMAT_VERSION||!Array.isArray(image?.methods)||!Array.isArray(image?.constants)||!Array.isArray(image?.types)||!Array.isArray(image?.sequencePoints)||!Array.isArray(image?.statics))return ['Malformed or incompatible bytecode image'];
   const fail=(m,pc,msg)=>{if(errors.length<100)errors.push(`${m?.qualifiedName??'<image>'}:${pc}: ${msg}`);};
+  if(!image.constants.every(verifyScalarConstant)||!image.statics.every(s=>verifyScalarConstant(s.value)))fail(null,0,'Invalid scalar constant');
   if(image.outputKind==='library'?image.entryPoint!==null:!Number.isInteger(image.entryPoint)||!image.methods[image.entryPoint])fail(null,0,'Invalid entry point');
   for(const m of image.methods){
     if(!(m.code instanceof Int32Array)||m.code.length%3||m.code.length>3_000_000||!Array.isArray(m.locals)||!Array.isArray(m.handlers)){fail(m,0,'Invalid code or metadata');continue;}
@@ -39,9 +41,9 @@ export function verifyImage(image){
         case Op.LDSTATIC:case Op.STSTATIC:if(a<0||a>=image.statics.length)fail(m,pc,'Invalid static');if(op===Op.LDSTATIC)delta=1;else need=1;break;
         case Op.LDFLD:need=1;break;case Op.STFLD:need=2;delta=-1;break;
         case Op.DUP:need=1;delta=1;break;case Op.POP:need=1;delta=-1;break;
-        case Op.BINARY:need=2;delta=-1;if(!BinaryName[a])fail(m,pc,'Invalid binary operator');if(![0,1,2,3,5].includes(b)||b===5&&!['+','-','*'].includes(BinaryName[a]))fail(m,pc,'Invalid binary mode');break;
-        case Op.CONVERT:need=1;if(a!==0&&a!==1&&!enumTypes[a-EnumConvertBase]||![0,1].includes(b)||b===1&&a===1)fail(m,pc,'Invalid numeric conversion');break;
-        case Op.UNARY:need=1;if(!UnaryName[a]||![0,1,5].includes(b)||b===5&&a!==0)fail(m,pc,'Invalid unary operator');break;
+        case Op.BINARY:need=2;delta=-1;if(!BinaryName[a])fail(m,pc,'Invalid binary operator');if(!verifyNumericInstruction('binary',BinaryName[a],b))fail(m,pc,'Invalid binary mode');break;
+        case Op.CONVERT:need=1;if(!verifyNumericInstruction('convert',a,b))fail(m,pc,'Invalid numeric conversion');break;
+        case Op.UNARY:need=1;if(!verifyNumericInstruction('unary',UnaryName[a],b))fail(m,pc,'Invalid unary operator');break;
         case Op.JUMP:break;case Op.JFALSE:case Op.JTRUE:need=1;delta=-1;break;
         case Op.CALL:if(!image.methods[a])fail(m,pc,'Invalid method');else if(b!==image.methods[a].parameters.length+(image.methods[a].isStatic?0:1))fail(m,pc,'Invalid argument count');need=b;delta=1-b;break;
         case Op.BUILTIN:if(!Builtins[a]||b<Builtins[a].min||b>Builtins[a].max)fail(m,pc,'Invalid intrinsic');need=b;delta=1-b;break;
@@ -61,9 +63,15 @@ export function verifyImage(image){
   return errors;
 }
 
-export {float, floatBinary, floatCompare, finiteFloat, ieeeRemainder} from './numeric/float.js';
-export {int64Binary, int64Compare, int64Unary} from './numeric/int64.js';
-export {uint32Binary, uint32Compare} from './numeric/uint32.js';
-
-export {convert, conversionTargets} from './numeric/conversions.js';
-export {number, isNumber} from './numeric/numeric-values.js';
+export {
+  float, floatBinary, floatCompare, finiteFloat, ieeeRemainder, int64Binary, int64Compare, int64Unary,
+  uint32Binary, uint32Compare, convert, conversionTargets, number, isNumber,
+  singleToInt32Bits, doubleToInt64Bits, int32BitsToSingle, int64BitsToDouble,
+  nativeIntegerBits, isNativeInteger, nativeInteger, nativeBinary, nativeSize,
+  decimal, decimalZero, decimalMaxCoefficient, isDecimal, decimalFromBits, decimalBits,
+  decimalParse, decimalFromInteger, decimalFromFloat, decimalToInteger, decimalToFloat,
+  decimalCompare, decimalNegate, decimalAbs, decimalAdd, decimalMultiply, decimalDivide, decimalRemainder,
+  decimalRound, decimalBinary, decimalFormat, decimalIntrinsicDefinitions, isDecimalConstantField,
+  NumericType, numericTypeNames, numericAliases, numericTypeName, numericTypeId, numericMode,
+  decodeNumericMode, isNumericMode, integerType, encodeScalar, decodeScalar
+} from './numeric/index.js';

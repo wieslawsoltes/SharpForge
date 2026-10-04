@@ -10,6 +10,7 @@
  *
  * Both statements are awaits: outside an async function they report CS4032, CS4033 or CS4034 at the `await` keyword.
  */
+import {DiagnosticId} from '../diagnostics/codes.js';
 import { SymbolKind } from '../symbols/types.js';
 import { lookupMembers } from './inheritance.js';
 import { extensionEnumeratorMethod } from './foreach-extension.js';
@@ -70,7 +71,7 @@ export function bindAsyncForEach(binder, collection, syntax) {
     return { ...extended, isExtension: true };
   }
   const display = binder.display(type);
-  binder.report(syntax, isEnumerable(type, binder.core, within) ? 'CS8415' : 'CS8411', [display, 'GetAsyncEnumerator']);
+  binder.report(syntax, isEnumerable(type, binder.core, within) ? DiagnosticId.CS8415 : DiagnosticId.CS8411, [display, 'GetAsyncEnumerator']);
   return null;
 }
 

@@ -1,0 +1,38 @@
+{
+  "schemaVersion": 1,
+  "productSource": "3f27179225cfc6fab8b13b919bf8bb695831efa1",
+  "productBlobs": {
+    "packages/msbuild/src/testing/portable/data-sources.js": "d0d2b30daa9fdfc6c561c295c7a82fb840db7f1b",
+    "packages/msbuild/src/testing/portable/discovery-shared.js": "984de5412a08eb080e0cb71ccae6ce7755e8cb49",
+    "packages/msbuild/src/testing/portable/discovery.js": "0cb900c11ef9bcec1f770b4125c18a2a7afec6e2",
+    "packages/msbuild/src/testing/portable/xunit.js": "ea9ead3b02e09f12bdb1b7ed1838d6c5056a5c9c",
+    "packages/msbuild/src/testing/portable/nunit.js": "79d6b770b193a88ac2cc5328aeb758f05a1651a7",
+    "packages/msbuild/src/testing/portable/mstest.js": "c1c462f53371521a01310b450b0d089b0614a155"
+  },
+  "tests": {
+    "file": "tests/a23-36-38-portable-discovery.test.js",
+    "cases": 4,
+    "change": "Only the package import becomes its public entry; every existing assertion is preserved"
+  },
+  "qualification": {
+    "nodes": [
+      "22.23.3",
+      "26.10.0"
+    ],
+    "scopePassed": 135,
+    "scopeFailed": 0,
+    "selectedPassed": 4,
+    "selectedFailed": 0,
+    "captures": [
+      "planning/evidence/project18/testing/node22.tap",
+      "planning/evidence/project18/testing/node26.tap"
+    ],
+    "node22CaptureSha256": "1da313e5473a0ce2adda04e1be83212e9c01229fd6b64f4fe9f3cf5f3e8d7c5b"
+  },
+  "dependencyJoin": "1ac29694e320a4adae56349cf8af9f6c71ac616c",
+  "limits": [
+    "Native package-pinned framework discovery parity remains unqualified after the recorded restore timeout",
+    "No duplicate projection qualification run",
+    "Core check pending"
+  ]
+}

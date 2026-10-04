@@ -161,7 +161,7 @@ test('A02-T02.6 a task over a reference result shares the registry task over obj
     'static async Task<Animal> Make() { await Task.Yield(); return new Animal(); } static async Task Main() { Console.WriteLine(Make()); await Make(); }',
   );
   assert.match(notExecutable(printed).message, /converting a constructed generic type to 'object'/);
-  // A task of a value the runtime cannot represent is still named.
+  // Numeric values are supported; unregistered Task<long> contracts remain a separate capability.
   const wide = asyncProgram('', 'static async Task<long> Make() { await Task.Yield(); return 1; } static async Task Main() { await Make(); }');
-  assert.match(notExecutable(wide).message, /64-bit integers/);
+  assert.match(notExecutable(wide).message, /framework registry has no.*Task<long>/);
 });

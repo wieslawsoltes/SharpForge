@@ -6,9 +6,11 @@
  *   positional  `{kind: 'tuple'|'method', type, method, isExtension, parts: [{type, pattern, syntax}]}`
  *   ListPattern `{inputType, elementType, patterns, sliceIndex, local}`; a `SlicePattern {pattern}` sits at `sliceIndex`
  */
+import {DiagnosticId} from '../../diagnostics/codes.js';
 import { ArrayTypeSymbol, ErrorTypeSymbol } from '../../symbols/types.js';
 import { numericKind } from '../../conversions/numeric.js';
 import { deconstructionOf } from '../deconstruction.js';
+import { typeTestOutcome } from '../../conversions/reference.js';
 import { checkSwitchArms } from '../../flow/pattern-exhaustiveness.js';
 
 const unknown = ErrorTypeSymbol.unknown;
@@ -32,7 +34,7 @@ export const StructuralPatternBinding = Base =>
       }
       const split = deconstructionOf(this, type, subpatterns.length, this.node('DeconstructionValue', clause, type, {}));
       if (split.error) {
-        if (split.isArity) this.report(clause, 'CS8502', [this.display(type), type.typeArguments.length, subpatterns.length]);
+        if (split.isArity) this.report(clause, DiagnosticId.CS8502, [this.display(type), type.typeArguments.length, subpatterns.length]);
         else for (const problem of split.error) this.report(clause, problem.code, problem.args);
         bindAll(subpatterns.map(() => unknown));
         return null;
@@ -53,14 +55,14 @@ export const StructuralPatternBinding = Base =>
       if (isUsable(inputType) && !isArray) {
         // A simple type is known to have neither a length nor an indexer; other types may get them from the framework.
         if (numericKind(inputType) || inputType.specialType === 'System_Boolean') {
-          this.report(syntax, 'CS8985', [this.display(inputType)]);
-          this.report(syntax, 'CS0021', [this.display(inputType)]);
+          this.report(syntax, DiagnosticId.CS8985, [this.display(inputType)]);
+          this.report(syntax, DiagnosticId.CS0021, [this.display(inputType)]);
         } else this.incomplete = this.d.incomplete = true;
       }
       let sliceIndex = -1;
       const patterns = syntax.patterns.map((item, index) => {
         if (item.kind !== 'SlicePattern') return this.pattern(item, elementType, null);
-        if (sliceIndex >= 0) this.report(item, 'CS8980');
+        if (sliceIndex >= 0) this.report(item, DiagnosticId.CS8980);
         else sliceIndex = index;
         return { kind: 'SlicePattern', syntax: item, pattern: item.pattern ? this.pattern(item.pattern, isArray ? inputType : unknown, null) : null };
       });
@@ -82,11 +84,12 @@ export const StructuralPatternBinding = Base =>
         constants.add(key);
         return true;
       });
-      for (const problem of checkSwitchArms(type, checked, site)) this.report(problem.node, problem.code, problem.args);
+      const isSubtype = (derived, base) => typeTestOutcome(derived, base, this.core) === 'always';
+      for (const problem of checkSwitchArms(type, checked, { ...site, isSubtype })) this.report(problem.node, problem.code, problem.args);
     }
     /** A slice outside a list pattern. */
     straySlicePattern(syntax) {
-      this.report(syntax, 'CS8980');
+      this.report(syntax, DiagnosticId.CS8980);
       if (syntax.pattern) this.pattern(syntax.pattern, unknown, null);
       return { kind: 'SlicePattern', syntax, pattern: null, hasErrors: true };
     }

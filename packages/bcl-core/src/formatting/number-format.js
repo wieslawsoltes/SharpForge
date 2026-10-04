@@ -41,7 +41,7 @@ export function formatBclValue(platform, value, format = '', alignment = 0, type
   integer(platform, alignment, -100000, 100000);
   const scalar = bclScalar(platform, value);
   const valueType = type ?? typeOf(platform, value);
-  let result = text(platform, value, valueType);
+  let result = platform.bclHost.formatDecimal?.(scalar, format) ?? text(platform, value, valueType);
   if (scalar !== null && typeof scalar === 'number' && format) {
     const match = /^([dDxXfFnNeEgGpPrR])(\d{0,2})$/.exec(format);
     if (!match) fail(platform, 'FormatException', 'Unsupported numeric format ' + format);

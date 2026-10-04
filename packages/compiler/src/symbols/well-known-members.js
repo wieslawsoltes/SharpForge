@@ -1,3 +1,4 @@
+import {DiagnosticId} from '../diagnostics/codes.js';
 import {ArrayTypeSymbol,SymbolKind} from './types.js';
 import {MethodKind} from './members.js';
 import {coreTypeDescriptor} from './special-types.js';
@@ -63,7 +64,7 @@ export class WellKnownMembers {
   /** The member symbol, or null after reporting CS0656 ("Missing compiler required member 'Type.Member'") at `node`. */
   get(id,node=null,containingType=null){
     const key=containingType?null:id;if(key&&this.cache.has(key))return this.cache.get(key);const member=this.find(id,containingType);if(key&&member)this.cache.set(key,member);
-    if(!member&&this.report&&!this.reported.has(id)){this.reported.add(id);const d=table.get(id),t=coreTypeDescriptor(d.type);this.report(node,'CS0656',[(t.namespace?t.namespace+'.':'')+t.name,d.name]);}
+    if(!member&&this.report&&!this.reported.has(id)){this.reported.add(id);const d=table.get(id),t=coreTypeDescriptor(d.type);this.report(node,DiagnosticId.CS0656,[(t.namespace?t.namespace+'.':'')+t.name,d.name]);}
     return member;
   }
   has(id,containingType=null){return this.find(id,containingType)!==null;}

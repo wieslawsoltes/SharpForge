@@ -12,7 +12,9 @@
  *   - A returned value that does not convert to the delegate's return type is CS1662 next to the conversion error
  *     (lambdas too).
  */
+import {DiagnosticId} from '../diagnostics/codes.js';
 import { RefKind, SymbolKind } from '../symbols/types.js';
+import { isRefLike } from './ref-struct.js';
 
 const refWords = { ref: RefKind.Ref, out: RefKind.Out, in: RefKind.In };
 const byReference = kind => !!kind && kind !== RefKind.None;
@@ -35,7 +37,7 @@ export function anonymousMethodSignatureErrors(syntax, parameterSyntax, invoke) 
   // A simple lambda `x => ...` has a bare identifier for a parameter: it declares no ref kind and takes the delegate's.
   if (isLambda && !(parameterSyntax ?? []).every(parameter => parameter.kind === 'Parameter')) return null;
   if (!parameterSyntax) {
-    return invoke.parameters.some(parameter => parameter.refKind === RefKind.Out) ? [{ node: syntax.delegateKeyword, code: 'CS1688', args: [] }] : null;
+    return invoke.parameters.some(parameter => parameter.refKind === RefKind.Out) ? [{ node: syntax.delegateKeyword, code: DiagnosticId.CS1688, args: [] }] : null;
   }
   if (parameterSyntax.length !== invoke.parameters.length) return null;
   for (let i = 0; i < parameterSyntax.length; i++) {
@@ -43,7 +45,7 @@ export function anonymousMethodSignatureErrors(syntax, parameterSyntax, invoke) 
       expected = invoke.parameters[i].refKind ?? RefKind.None;
     if (declared === expected || (!byReference(declared) && !byReference(expected))) continue;
     const node = parameterSyntax[i].identifier ?? parameterSyntax[i];
-    return [byReference(expected) ? { node, code: 'CS1676', args: [i + 1, expected] } : { node, code: 'CS1677', args: [i + 1, declared] }];
+    return [byReference(expected) ? { node, code: DiagnosticId.CS1676, args: [i + 1, expected] } : { node, code: DiagnosticId.CS1677, args: [i + 1, declared] }];
   }
   return null;
 }
@@ -62,8 +64,16 @@ export const AnonymousMethodBinding = Base =>
       // Only a value whose own type does not convert: an inner anonymous function or method group has its own errors.
       const isTyped = !!value.type || !!value.literal,
         mismatch = isTyped && converted.hasErrors && !value.hasErrors && !this.conversions.classifyFromExpression(value, type).isImplicit;
-      if (this.c.isLambda && mismatch) this.report(node, 'CS1662', [this.c.isAnonymousMethod ? 'anonymous method' : 'lambda expression']);
+      if (this.c.isLambda && mismatch) this.report(node, DiagnosticId.CS1662, [this.c.isAnonymousMethod ? 'anonymous method' : 'lambda expression']);
       return converted;
+    }
+    /**
+     * A local or parameter of a ref struct type lives on the stack of the function that declares it: an anonymous
+     * function or a local function cannot capture it (CS8175 for a local, CS9108 for a parameter).
+     */
+    reportCapturedRefLike(symbol, syntax) {
+      if (!isRefLike(symbol.type) || this.scopes.some(scope => scope.get(symbol.name) === symbol)) return;
+      this.report(syntax, symbol.kind === SymbolKind.Parameter ? DiagnosticId.CS9108 : DiagnosticId.CS8175, [symbol.name]);
     }
     isOuterByRefParameter(symbol) {
       if (symbol.kind !== SymbolKind.Parameter || !byReference(symbol.refKind)) return false;

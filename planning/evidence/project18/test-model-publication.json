@@ -1,0 +1,75 @@
+{
+  "format": "SharpForge.PublicationProjection/1",
+  "unit": "test-model",
+  "issues": [
+    3090
+  ],
+  "baseCommit": "b34fa27b7812a62f8c10cf81c83d2cbfdd0b347a",
+  "productSource": "4a49a23b773b62088057d83e3e6ac6e573390578",
+  "files": [
+    {
+      "path": "packages/msbuild/src/testing/model.js",
+      "sourceBlob": "b2dd5e264ca28b6088a3a71f00047e056eb33572",
+      "sha256": "86109a2603121f697dc99037b760d42c2ee87345660a313e6a936a562a3b2be8"
+    },
+    {
+      "path": "packages/msbuild/src/testing/session.js",
+      "sourceBlob": "cae40112482fbd2bfee8cb54797c31b6c174fd3e",
+      "sha256": "fee4a17c5f40ef3126801189ddb0b2e27f09b9d5dad91395ece22695d34e5a38"
+    },
+    {
+      "path": "packages/msbuild/docs/test-model.md",
+      "sourceBlob": "a274c8ceb4bef5574ec2da25f85059612d8cb495",
+      "sha256": "10c85e5ea3ccacfc02fcfa077acda3bc3c86952dad270f059a6c8b86977f8d3b"
+    },
+    {
+      "path": "tests/a23-test-model-contract.test.js",
+      "sourceBlob": "d32fcdb2e8a7c5b9a65064ab0731b95aba163544",
+      "sha256": "c8fb3d198d5c0c708dd8d9cb2abb996aa012ad6312ba911ff345997b457fef1c"
+    }
+  ],
+  "derivedComposition": [
+    "Incremental public testing barrel exports only model and session APIs.",
+    "Public package entry exports that barrel without adding execution adapters.",
+    "Package files includes protocol docs; README describes the public surface.",
+    "A23 area manifest includes tests/a23-*.test.js."
+  ],
+  "qualification": {
+    "kind": "selected tests in one completed integration cohort",
+    "node": "22.23.3",
+    "source": "4a49a23b773b62088057d83e3e6ac6e573390578",
+    "testFiles": [
+      "tests/a23-test-model-contract.test.js"
+    ],
+    "passed": 9,
+    "failed": 0,
+    "skipped": 0,
+    "selectedTapRecords": [
+      "ok 653 - A23 T35 public test identity survives provider enrichment and normalizes project separators",
+      "ok 654 - A23 T35 public discovery records copy containers and preserve explicit unsupported and skip reasons",
+      "ok 655 - A23 T35 discovery identifiers, traits, rows and source spans enforce their public bounds",
+      "ok 656 - A23 T35 result outcomes remain explicit and durations are nonnegative finite milliseconds",
+      "ok 657 - A23 T35 public explorer projection groups and sorts records and rejects duplicate identities",
+      "ok 658 - A23 T35 adapter contracts require discovery, execution, cancellation and close methods",
+      "ok 659 - A23 T35 session cursors report bounded replay loss and console progress never creates a result",
+      "ok 660 - A23 T35 cancellation preserves completed results and marks unfinished tests not run",
+      "ok 661 - A23 T35 sessions reject invalid budgets and cursors, and disposal releases the event observer"
+    ],
+    "rawCapture": "planning/evidence/project18/integration/upstream-qualification/node22-runtime-initial.tap",
+    "rawCaptureSha256": "0542e0eb3da4b9cee8057f74d45dbbf59322e6fbdb4f345293ef2583b5409a7b",
+    "cohort": {
+      "files": 79,
+      "tests": 794,
+      "passed": 788,
+      "failed": 6,
+      "skipped": 0
+    },
+    "projectionExecution": "No duplicate projection test run; exact implementation and public-contract blobs above were exercised in the integration cohort.",
+    "pending": "The ordinary required core check runs on this draft; the six retained integration failures are outside this isolated protocol and tracked separately."
+  },
+  "boundaries": [
+    "No framework discovery or test execution adapter is included.",
+    "Native framework package qualification and Windows/macOS/Rust/Wasm coverage are not claimed.",
+    "Nested provider payloads remain provider-owned; session event count bounds do not replace adapter byte limits."
+  ]
+}
