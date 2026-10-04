@@ -1,10 +1,10 @@
 import {frameworkAssignable} from '@sharpforge/framework';
-import {BinaryName, isNumericMode, decodeNumericMode} from '@sharpforge/bytecode';
+import {BinaryName, isNumericMode, decodeNumericMode, numericTypeName} from '@sharpforge/bytecode';
 import {CilError} from './binary.js';
 
 /** Types of source constants, including lossless JSON scalar carriers. */
 export function constantType(value, flags = 0) {
-  if (value?.scalar) return value.scalar;
+  if (value?.scalar) return numericTypeName(value.scalar);
   if (value === null) return 'null';
   if (typeof value === 'boolean') return 'bool';
   if (typeof value === 'string') return 'string';
