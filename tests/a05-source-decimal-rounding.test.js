@@ -5,7 +5,7 @@ import {createHash} from 'node:crypto';
 import {compileToIL} from '@sharpforge/compiler';
 import {loadAssembly} from '@sharpforge/cil';
 import {VirtualMachine, CilVirtualMachine} from '@sharpforge/runtime';
-import {Builtins, BuiltinMap, decimalIntrinsicDefinitions} from '@sharpforge/bytecode';
+import {BuiltinMap, decimalIntrinsicDefinitions} from '@sharpforge/bytecode';
 import {decodeDecimalBuiltin} from '../packages/cil/src/builtin-emission.js';
 
 function artifact(body, members = '') {
@@ -34,7 +34,7 @@ function output(body, expected, members = '') {
 
 test('source Decimal rounding appends distinct wire identities backed by the existing profile', () => {
   const previous = BuiltinMap.get('$type.long.GetType').id;
-  const entries = Object.values(Builtins).filter(builtin => ['Round', 'Truncate'].includes(builtin.decimal?.name));
+  const entries = ['decimal.Truncate#1', 'decimal.Round#1', 'decimal.Round#2'].map(name => BuiltinMap.get(name));
   assert.deepEqual(entries.map(entry => entry.id), [previous + 1, previous + 2, previous + 3]);
   assert.equal(new Set(entries.map(entry => entry.name)).size, 3);
   for (const entry of entries) {
@@ -95,7 +95,7 @@ test('the source family preserves the existing captured native Round result', ()
 });
 
 test('source admission rejects unregistered overloads and internal wire names', () => {
-  for (const expression of ['decimal.Round(1.25m, 2, 0)', 'decimal.Round(1.25)', 'decimal.Round(null)',
+  for (const expression of ['decimal.Round(1.25m, 2, 1)', 'decimal.Round(1.25)', 'decimal.Round(null)',
     'decimal.RoundDigits(1.25m, 2)', 'decimal.Truncate(1.25m, 1)']) {
     const compiled = compileToIL(`using System; class P { static void Main() { Console.WriteLine(${expression}); } }`);
     assert.equal(compiled.success, false, expression);
@@ -110,8 +110,7 @@ test('reload matches the complete Decimal signature rather than just the method 
   assert.equal(decodeDecimalBuiltin({...original, sig: {...original.sig, parameters: ['decimal', 'System.Int32']}}),
     BuiltinMap.get('decimal.Round#2'));
   for (const replacement of [
-    {kind: 'property'}, {isStatic: false}, {returnType: 'double'}, {parameters: ['System.Decimal', 'System.MidpointRounding']},
-    {parameters: ['System.Decimal', 'int', 'System.MidpointRounding']}, {parameters: ['double', 'int']},
+    {kind: 'property'}, {isStatic: false}, {returnType: 'double'}, {parameters: ['double', 'int']},
     {genericArity: 1}, {callingConvention: 5}, {sentinel: 1}, {explicitThis: true}
   ]) {
     assert.equal(decodeDecimalBuiltin({...original, sig: {...original.sig, ...replacement}}), null, JSON.stringify(replacement));

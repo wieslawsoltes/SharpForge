@@ -27,9 +27,10 @@ Console.WriteLine(decimal.Round(amount, 2)); // 1.24
 Console.WriteLine(decimal.Truncate(-1.99m)); // -1
 ```
 
-This is a partial #1350/#1351 increment. MidpointRounding overloads, Decimal
-Math overloads, TryParse and the other Decimal library APIs remain outside
-the source profile. The following Parse increment adds only its string overload.
+This is a partial #1350/#1351 increment. The later
+[MidpointRounding overloads](source-decimal-rounding-modes.md) append distinct
+wire entries separately. TryParse and other unregistered Decimal library APIs
+remain outside the source profile. The following Parse increment adds only its string overload.
 Direct CIL retains its existing broader intrinsic profile.
 The existing legacy builtin emission function moved into a focused module with
 its previous mappings preserved.
