@@ -95,6 +95,8 @@ export function createEditorInsights(editor, options = {}) {
     nextDiagnostic: direction => decorations.nextDiagnostic(direction),
     setDiagnostics: (items, version) => decorations.setDiagnostics(items, version),
     refresh,
+    beforeEdit: () => snippets.beforeEdit(),
+    afterEdit: () => snippets.afterEdit(),
     beforeinput(event) {
       if (rename.origin) { event.preventDefault(); return true; }
       formatting.beforeinput(event);

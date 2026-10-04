@@ -1,5 +1,6 @@
 import {findTextMatches, expandReplacement} from '@sharpforge/text';
 import {readWorkspaceDocument, prepareWorkspaceEdit} from '../services/workspace-edit.js';
+import {cooperativeLiteralSearch, workerRegexSearch} from './cooperative-search.js';
 
 export function preserveReplacementCase(replacement, matched) {
   const letters = matched.replace(/[^\p{L}]/gu, '');
@@ -34,6 +35,32 @@ export class EditorSearchSession {
     const result = findTextMatches(snapshots, query, {regex: options.regex, matchCase: options.matchCase,
       wholeWord: options.wholeWord, multiline: true, maxMatches: 10_000, maxSteps: options.maxSteps ?? 2_000_000,
       signal: options.signal, timeLimitMs: options.timeLimitMs ?? 12});
+    this.matches = options.scope === 'selection' ? result.matches.filter(match =>
+      match.uri === options.uri && match.start >= options.selection.start && match.end <= options.selection.end) : result.matches;
+    this.truncated = result.truncated;
+    this.documents = new Map(snapshots.map(document => [document.uri, document]));
+    return {...result, matches: this.matches};
+  }
+
+  async searchAsync(query, options = {}) {
+    const documents = options.scope === 'open' ? this.workspace.listDocuments?.() ?? [] :
+      [this.workspace.getDocument(options.uri)];
+    const snapshots = documents.map(document => {
+      if (!document) throw new Error('Search document is unavailable');
+      const source = document.source ?? document.model?.snapshot?.() ?? document;
+      return {uri: document.uri ?? source.uri, version: document.version ?? source.version,
+        length: source.length ?? source.text.length, get text() { return source.text; },
+        getText: (start, end) => source.getText?.(start, end) ?? source.text.slice(start, end)};
+    });
+    const settings = {...options, maxMatches: 10_000};
+    const result = options.regex ? await workerRegexSearch(snapshots, query, settings) :
+      await cooperativeLiteralSearch(snapshots, query, settings);
+    if (options.signal?.aborted) throw new DOMException('Search cancelled', 'AbortError');
+    for (const snapshot of snapshots) {
+      if (this.workspace.getDocument(snapshot.uri).version !== snapshot.version) throw new Error('Search source changed');
+    }
+    this.query = query;
+    this.options = {...options};
     this.matches = options.scope === 'selection' ? result.matches.filter(match =>
       match.uri === options.uri && match.start >= options.selection.start && match.end <= options.selection.end) : result.matches;
     this.truncated = result.truncated;

@@ -39,11 +39,14 @@ export class SignatureHelpWidget {
 
   async open(triggerCharacter) {
     const editor = this.context.editor;
-    const call = signatureCallContext(editor.value, editor.offset, editor.lexed?.tokens);
+    if (!this.context.options.languageServicesInLargeFiles &&
+        (editor.model?.length ?? editor.value.length) > (this.context.options.maxSemanticCharacters ?? 2_000_000)) return;
+    const offset = editor.offset;
+    const call = signatureCallContext(editor.value, offset, editor.lexed?.tokens);
     if (!call) return this.close();
     const result = await this.context.request('signatureHelp', {offset: editor.offset, triggerCharacter,
       callStart: call.start, activeParameter: call.argument});
-    if (!result) return;
+    if (!result || editor.offset !== offset) return;
     const help = result.value;
     if (!help?.signatures?.length) return this.close();
     this.signatures = help.signatures;

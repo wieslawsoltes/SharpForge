@@ -26,7 +26,7 @@ export class PeekDefinitionWidget {
     const editor = this.context.editor;
     const offset = editor.offset;
     const result = await this.context.request('definition', {offset, peek: true});
-    if (!result) return;
+    if (!result || editor.offset !== offset) return;
     const values = result.value?.locations ?? result.value;
     this.locations = (Array.isArray(values) ? values : values ? [values] : []).map(location => ({
       ...location, uri: location.uri ?? location.targetUri, range: location.range ?? location.targetSelectionRange
@@ -41,7 +41,9 @@ export class PeekDefinitionWidget {
   }
 
   async select(index) {
+    const generation = this.selectionGeneration = (this.selectionGeneration ?? 0) + 1;
     await this.serial;
+    if (generation !== this.selectionGeneration || this.element.hidden) return;
     const target = this.locations[index];
     if (!target) return;
     this.selectedIndex = index;
@@ -53,7 +55,8 @@ export class PeekDefinitionWidget {
     catch (error) {
       if (!this.context.services.supports('readDocument')) throw error;
       const result = await this.context.request('readDocument', {targetUri: target.uri}, {key: 'peek-document'});
-      if (!result || this.locations[index] !== target) return;
+      if (!result || generation !== this.selectionGeneration || this.locations[index] !== target) return;
+      if (!result.value || typeof result.value.text !== 'string') throw new Error(`Definition source is unavailable: ${target.uri}`);
       document = {...result.value, uri: target.uri, readOnly: true};
     }
     this.target = {...target, version: document.version, text: document.text};
@@ -103,6 +106,7 @@ export class PeekDefinitionWidget {
   }
 
   close() {
+    this.selectionGeneration = (this.selectionGeneration ?? 0) + 1;
     this.context.guard.cancel('definition');
     this.context.guard.cancel('peek-document');
     this.context.editor.setViewZones?.('peek', []);

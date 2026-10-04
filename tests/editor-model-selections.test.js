@@ -150,3 +150,24 @@ test('multicaret clipboard round-trips N fragments and rectangular pastes grow m
   assert.equal(box.value, 'a');
   assert.throws(() => pasteSelections(target, 'x', { metadata: '{' }), /Malformed/);
 });
+
+test('explicit nested groups override per-command stops and selection jumps while preserving saved state identity', () => {
+  const model = new EditorModel('one two');
+  const saved = model.undoStack.stateId;
+  model.beginUndoGroup('snippet');
+  model.applyEdits([{ start: 0, end: 3, text: 'ONE' }], { command: 'typing', undoStop: true });
+  model.setSelections([{ anchor: 7, active: 4 }]);
+  model.beginUndoGroup('mirror');
+  model.applyEdits([{ start: 4, end: 7, text: 'TWO' }], { command: 'snippet-mirror', undoStop: true });
+  model.endUndoGroup();
+  model.endUndoGroup();
+  assert.equal(model.value, 'ONE TWO');
+  assert.equal(model.undoStack.depth, 1);
+  assert.notEqual(model.undoStack.stateId, saved);
+  model.undo();
+  assert.equal(model.value, 'one two');
+  assert.equal(model.undoStack.stateId, saved);
+  assert.equal(model.isDirty, false);
+  model.redo();
+  assert.equal(model.value, 'ONE TWO');
+});

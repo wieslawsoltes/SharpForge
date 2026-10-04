@@ -1,34 +1,27 @@
 """Actual CodeEditor DOM acceptance. Synthetic composition is not native IME certification.
 
-Run with an installed Playwright Chromium. The fixture serves local repository modules,
+Run with the supported Playwright engine. The fixture serves built repository modules and the production CSP,
 uses the real persistent model, and fails rather than silently skipping a missing browser.
 """
-import functools
-import http.server
 import json
-from pathlib import Path
-import threading
 from playwright.sync_api import sync_playwright
-
-ROOT = Path(__file__).resolve().parents[1]
-
-
-class QuietHandler(http.server.SimpleHTTPRequestHandler):
-    def log_message(self, format, *args):
-        pass
+from conformance.browser.launch import launch_browser, results_dir, selected_engine
+from conformance.browser.editor_fixture import editor_fixture
+from conformance.browser.matrix_common import policy, wait
 
 
-server = http.server.ThreadingHTTPServer(("127.0.0.1", 0), functools.partial(QuietHandler, directory=str(ROOT)))
-threading.Thread(target=server.serve_forever, daemon=True).start()
 passed = []
+failure = None
 try:
-    with sync_playwright() as playwright:
-        browser = playwright.chromium.launch(headless=True, args=["--no-sandbox"])
+    with editor_fixture('a20-editor-view') as address, sync_playwright() as playwright, \
+            launch_browser(playwright, __file__) as browser:
         page = browser.new_page(viewport={"width": 1200, "height": 900})
         errors = []
         page.on("pageerror", lambda error: errors.append(str(error)))
-        page.goto(f"http://127.0.0.1:{server.server_port}/tests/fixtures/a20-editor-view.html")
-        page.wait_for_function("window.editor !== undefined")
+        response = page.goto(address)
+        assert response and response.status == 200
+        policy(response.headers)
+        wait(page, "window.editor !== undefined")
 
         def setup(text, options=None):
             page.evaluate("args => setupView(args)", {"text": text, "options": options or {}})
@@ -125,7 +118,12 @@ try:
         assert page.locator(".sf-viewport, .sf-input, .sf-insight-popup").count() == 0
         assert not errors, errors
         passed.append("complete disposal removes view/input/widgets with no uncaught browser errors")
-        browser.close()
+except BaseException as error:
+    failure = {"type": type(error).__name__, "message": str(error)}
+    raise
 finally:
-    server.shutdown()
-print(json.dumps({"passed": len(passed), "checks": passed, "nativeImeCertified": False, "screenReaderCertified": False}, indent=2))
+    report = {"status": "failed" if failure else "passed", "engine": selected_engine(),
+              "passed": len(passed), "checks": passed, "failure": failure,
+              "nativeImeCertified": False, "screenReaderCertified": False}
+    (results_dir() / 'a20-editor-view.json').write_text(json.dumps(report, indent=2) + '\n', encoding='utf8')
+    print(json.dumps(report, indent=2))
