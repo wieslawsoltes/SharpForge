@@ -54,6 +54,10 @@ Canvas, SVG and reported GPU fallbacks share bounded pixel-center brush sampling
 
 `Canvas2DBackend` executes the complete drawing command ABI with balanced transforms/clips, transparent stroke-only geometry and the chosen working color space. Cached layer pixels remain local to their content; placement changes reuse them. Partial redraw first clears the damaged interior while preserving pixels outside it.
 
+## SVG projection
+
+`SvgBackend` preserves scoped transforms/clips and paints actual stroke geometry. Gradients retain coordinate, spread and interpolation policy. Numeric text consumes provider glyph outlines; native runs retain their measured font runs. Operations requiring shared raster semantics report the Canvas fallback.
+
 ## Validation
 
 Focused cases were authored and included in the completed A17 scope gate. The publication manifest records its exact prior evidence and any subsequent repair. Required core is pending on this exact branch tree. Browser pixels, native WinUI comparisons and physical GPU qualification are separate gates.
