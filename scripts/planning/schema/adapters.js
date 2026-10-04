@@ -85,6 +85,11 @@ export function validateBody(body,{requireExecutable=false}={}){
     if(JSON.stringify(i.successors)!==JSON.stringify(expectedSuccessors))invalid('Operation and control-flow successors differ');
     if(i.opcode==='load-local'&&i.resultType!==body.locals[i.operands[0]])invalid('Local load type differs from declared local');
     if(i.opcode==='load-argument'&&i.resultType!==body.parameters[i.operands[0]])invalid('Argument load type differs from signature');
+    if(i.opcode==='local-address'||i.opcode==='argument-address'){
+      const slots=i.opcode==='local-address'?body.locals:body.parameters,slot=i.operands?.[0];
+      if(!Array.isArray(i.operands)||i.operands.length!==1||!Number.isInteger(slot)||slot<0||slot>=slots.length)invalid('Address operand must name one declared slot');
+      if(i.inputTypes.length||i.outputTypes.length!==1||i.outputTypes[0]!=='byref:'+slots[slot])invalid('Address effect differs from its declared slot');
+    }
   }
   const max=body.instructions.reduce((value,i)=>Math.max(value,i.stackIn.length,i.stackOut.length),0);if(body.maxStack!==max)invalid('Maximum stack differs from typed stream');
   for(const region of body.exceptionRegions){const stack=body.instructions[region.handlerStart].stackIn,expected=body.encoding==='cil'&&region.kind==='catch'?[region.catchType]:[];if(JSON.stringify(stack)!==JSON.stringify(expected))invalid('Exception handler entry stack is invalid');}

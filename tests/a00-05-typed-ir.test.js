@@ -148,3 +148,54 @@ test('A00 serialized method entry stays empty while catch entries retain their c
   }
   assert.deepEqual([...encodings].sort(),['bytecode','cil']);
 });
+
+// Synthetic serialized instructions keep annotation algebra consistent while testing address semantics.
+function serializedAddress(opcode,{slot=0,prefix=false,empty=false,operands=[slot],inputTypes=[],outputTypes}={}){
+  const {body}=serializedReturn('cil',true);
+  body.locals=['i32','ref:System.String'];body.localStorageTypes=['System.Int32','System.String'];
+  body.parameters=['i64','f32'];body.parameterStorageTypes=['System.Int64','System.Single'];
+  const local=opcode==='local-address';
+  if(empty){body[local?'locals':'parameters']=[];body[local?'localStorageTypes':'parameterStorageTypes']=[];}
+  const slots=local?body.locals:body.parameters,instructions=[];let stack=[];
+  const emit=(operation,args,inputs,outputs,sourceOpcode)=>{
+    const offset=instructions.length,next=[...stack.slice(0,stack.length-inputs.length),...outputs];
+    instructions.push({offset,opcode:operation,operands:args,inputTypes:inputs,outputTypes:outputs,
+      resultType:outputs.at(-1)??'void',stackIn:stack,stackOut:next,successors:operation==='return'?[]:[offset+1],
+      sourceEncoding:'cil',sourceOffset:offset,sourceOpcode});stack=next;
+  };
+  if(prefix)emit('constant',[7],[],['i32'],'ldc.i4');
+  emit(opcode,operands,inputTypes,outputTypes??['byref:'+(slots[slot]??'i32')],local?'ldloca':'ldarga');
+  while(stack.length)emit('discard',[],[stack.at(-1)],[],'pop');
+  emit('return',[{discardPadding:false}],[],[],'ret');
+  body.instructions=instructions;body.exceptionRegions=[];body.safepoints=[];
+  body.maxStack=Math.max(...instructions.flatMap(i=>[i.stackIn.length,i.stackOut.length]));
+  return body;
+}
+
+test('A00 serialized addresses preserve declared first and last slots and stack prefixes',()=>{
+  for(const opcode of ['local-address','argument-address'])for(const slot of [0,1])for(const prefix of [false,true]){
+    const body=serializedAddress(opcode,{slot,prefix});validateReturn(body);
+    const address=body.instructions.find(i=>i.opcode===opcode),slots=opcode==='local-address'?body.locals:body.parameters;
+    assert.deepEqual(address.inputTypes,[]);assert.deepEqual(address.outputTypes,['byref:'+slots[slot]]);
+    assert.deepEqual(address.stackOut,[...(prefix?['i32']:[]),'byref:'+slots[slot]]);
+  }
+});
+
+test('A00 serialized addresses reject absent or malformed declared slots',()=>{
+  for(const opcode of ['local-address','argument-address']){
+    const cases=[{empty:true},...[-1,0.5,'0',2,Number.MAX_SAFE_INTEGER].map(slot=>({slot})),{operands:[]},{operands:[0,1]}];
+    for(const options of cases){
+      const body=serializedAddress(opcode,options);validate(schema,body);
+      assert.throws(()=>validateBody(body,{requireExecutable:true}),{code:'SCHEMA_INVALID',message:/Address operand must name one declared slot/});
+    }
+  }
+});
+
+test('A00 serialized addresses reject falsified consumption and result effects',()=>{
+  for(const opcode of ['local-address','argument-address'])for(const effect of [
+    {outputTypes:[]},{outputTypes:['byref:i32','byref:i32']},{outputTypes:['byref:f64']},{prefix:true,inputTypes:['i32']}
+  ]){
+    const body=serializedAddress(opcode,effect);validate(schema,body);
+    assert.throws(()=>validateBody(body,{requireExecutable:true}),{code:'SCHEMA_INVALID',message:/Address effect differs from its declared slot/});
+  }
+});
