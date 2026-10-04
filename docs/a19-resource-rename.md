@@ -103,7 +103,12 @@ snapshot's full-text materialization flag. The complete-scope command was
 `node scripts/limited.js node --test --test-concurrency=1 tests/a19-explorer-resource-transaction.test.js tests/a19-explorer-snapshots.test.js tests/a19-explorer-source-plans.test.js tests/a19-document-operation-state.test.js tests/a19-prepared-documents.test.js tests/a19-document-snapshot-save.test.js tests/a19-documents-state.test.js tests/release08-commands.test.js`.
 On Node 24.19.0 it ran 73 tests in 2.3507 seconds: 72 passed, including all nine new
 resource cases, and one existing save test found that the host API dependency
-delayed the legacy synchronous snapshot capture. That save timing correction is
-owned by the DocumentService host API scope; its affected-file result is recorded
-after the fix. No test assertion was weakened. Actual browser rename UI and native
-filesystem qualification remain separate.
+delayed the legacy synchronous snapshot capture. The DocumentService owner fixed
+that timing in `646b033d` (applied here as `4c79d3eb`), preserving synchronous
+provider acquisition and awaiting only genuine asynchronous preparation. The
+entire affected file then passed 6/6 with no skips in 0.3007 seconds through
+`node scripts/limited.js node --test --test-concurrency=1 tests/a19-document-snapshot-save.test.js`.
+All 73 distinct cases have therefore passed across the initial run and affected
+rerun; this is not a claim of one uninterrupted 73-test pass. No assertion was
+weakened. Actual browser rename UI and native filesystem qualification remain
+separate.

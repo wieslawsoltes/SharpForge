@@ -50,6 +50,17 @@ Paths in the source column are relative to `apps/studio/workbench/` unless other
 
 ## Scope and limits
 
+The later atomic editor resource-rename host dependency (`c4fe63eb`) extends the
+DocumentService file-operation state with guarded whole-workspace validation and
+matching metadata publication before reset subscribers. It supports A20 #1488
+and #1617 through `apps/studio/explorer-resource-transaction.js`, with exact host
+contracts in `docs/a19-resource-rename.md`. The complete focused scope ran 73
+cases: 72 passed, including all nine new resource tests, and the shared save API
+dependency exposed one synchronous capture regression. The owner corrected it in
+`646b033d`; the affected snapshot-save file then passed 6/6, zero skips. These are
+73 distinct eventual passes across the two runs. Commands, durations and concrete
+native/browser limits are recorded in the resource-rename document.
+
 Both JavaScript engines execute the argv/environment fixtures: the source VM and direct managed CIL interpreter. Real production worker transport is exercised through a Node worker harness. The browser fixture is owned by the integration/editor-insight agents and must be reported separately after it runs against the built Studio. Neither a native CLR/Wasm launch test nor a Visual Studio visual oracle was run in this worktree.
 
 Program argv is separate from explicit managed method parameters, bounded to 1,024 strings / 1,048,576 UTF-16 code units total with 65,536 units per string. Per-launch environment data is an immutable, case-sensitive map with 256 keys maximum and explicit per-name/value/total limits. The managed surface added is `System.Environment.GetEnvironmentVariable(string)` only: no process mutation, host OS environment, user/machine overload, or hidden import of credentials. Unsupported launch targets must report their capability rejection explicitly.
