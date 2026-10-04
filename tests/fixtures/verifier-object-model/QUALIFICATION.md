@@ -1,8 +1,9 @@
 # Object verifier qualification protocol and evidence
 
-The authorized serial slot completed one native capture and the focused runs
-recorded below. Browser checks and the 24-child performance cohort have not run
-and still require an explicit serial slot. No performance gate pass is claimed.
+The authorized serial slots completed one native capture, the focused runs and
+one 24-child performance cohort recorded below. The measured performance costs
+received a specific automated-review exception; no threshold pass or human
+approval is claimed. Browser checks remain unrun.
 
 ## Recorded results
 
@@ -12,7 +13,7 @@ and still require an explicit serial slot. No performance gate pass is claimed.
 | [Initial focused log](qualification/focused-node.log.json) | `73f9ab77` | 14 files, 80 tests: 79 passed, 1 failed during malformed-fixture serialization |
 | [Correction log](qualification/correction-node.log.json) | `31b18645` | Annotation file plus strict native replay: 8 passed, 0 failed |
 | Browser API | None | Not run |
-| Performance | None | Prepared; not run |
+| [Performance cohort](PERFORMANCE.md) | `407ece8a` against `88c861e3` | 24 children completed; all recorded guards passed; five median threshold exceedances and adverse tails retained under an explicit automated-review exception |
 
 Both Node runs had zero cancellations and skips. The initial failure and exact
 raw output remain retained. It encoded a CustomAttributeType as `0x7fffb`
@@ -107,6 +108,13 @@ node scripts/limited.js node --test --test-concurrency=1 \
 
 ## Existing-path comparison and added object costs
 
+The cohort completed once on 2026-10-04. [PERFORMANCE.md](PERFORMANCE.md)
+records all nine control comparisons and six new capability costs, exact source/
+time/hash identities, sample/guard accounting, source review and exception scope.
+The complete 786,744-byte original cohort/log/receipt and byte-exact independent
+review are retained under `qualification/`; previous native/failure/correction
+records are unchanged. The following protocol describes the executed cohort.
+
 `benchmark-object-verifier.mjs` reuses the existing numeric, field, literal,
 memory and object fixture helpers. It imports the public API and fixtures from
 the selected checkout, verifies that checkout owns its CIL package alias, and
@@ -145,7 +153,9 @@ entry points remain checkout-specific. Both worktrees and the harness must be
 clean and unchanged, so retain and commit actual qualification evidence before
 starting performance. Put performance output outside both tracked checkouts.
 
-In the explicitly granted benchmark slot, execute once from the candidate root:
+The exact executed argv and fixed output directory are retained in the
+[execution receipt](qualification/performance-407ece8a/execution.json).
+This is the replay form of that one-wrapper invocation; it is not a new run:
 
 ```sh
 object_performance_dir="$(mktemp -d /workspace/scratch/7e3d2a445c44/project6-object-performance.XXXXXX)"

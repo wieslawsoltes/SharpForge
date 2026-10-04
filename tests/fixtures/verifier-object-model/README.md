@@ -75,8 +75,19 @@ while preserving its out-of-range target and adding an explicit `CILVM0001`
 assertion. The annotation file plus strict native replay then passed 8/8; no
 unrelated tests or native captures were rerun. Both logs remain retained. Product
 source, native cases and expectations were unchanged. The benchmark guard tests
-passed within the initial run; the benchmark cohort itself has not executed.
+passed within the initial run. The predefined benchmark cohort subsequently ran
+once at `407ece8a` against literal-qualified `88c861e3`: all 24 serial children
+and recorded correctness guards completed. [PERFORMANCE.md](PERFORMANCE.md)
+retains every control/tail comparison and six added-capability costs, together
+with the complete original cohort/log/receipt and independent source review.
 
-Browser and performance qualification remain pending their serial slots. Broader
+Five median regressions exceeded 5%, and additional tails increased. The
+coordinator explicitly accepted these measured costs as a specific automated-
+review exception, not a threshold pass or human approval. No concrete avoidable
+work was found on regressing source paths; causation remains unestablished, and
+the measurements are not dismissed as noise. No product optimization or rerun
+was performed as part of this evidence retention.
+
+Browser qualification remains pending its serial slot. Broader
 source-VM/direct-CIL/native/Wasm execution admission remains outside this typed API
 batch; #2403 and constructor/exception follow-ups stay open.
