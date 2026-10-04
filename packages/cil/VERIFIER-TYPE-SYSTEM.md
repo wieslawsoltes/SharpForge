@@ -10,8 +10,11 @@ construction; retained facts contain no PE views, descriptors or signature ASTs.
 Queries return frozen `{status: 'known', value}` or
 `{status: 'unknown', reason, token}` results:
 
-- `resolveType(token)` resolves local non-generic TypeDefs. TypeRefs (including
-  module-local references), TypeSpecs and open generic definitions are unknown.
+- `resolveType(token)` resolves local non-generic TypeDefs and explicit
+  Module-scoped TypeRefs whose namespace/name uniquely names a top-level local
+  definition. Both tokens return the same canonical result and identity. Nil,
+  ModuleRef, AssemblyRef and nested TypeRef scopes remain unknown, as do
+  TypeSpecs and open generic definitions.
 - `baseType(type)` resolves the declared direct base; a missing base is known
   `null`. `interfaces(type)` returns a frozen array of results for the direct
   InterfaceImpl edges, preserving unknown entries.
@@ -34,10 +37,22 @@ substitution, external assembly loading, member resolution and access queries
 remain open on #2400 and subsequent verifier tasks. No runtime engine is enabled
 by this opt-in metadata API; browser/native/Wasm qualification remains staged.
 
-Construction snapshots and cycle-checks O(types + edges + generic parameters) facts. Each hierarchy
+Local-reference lookup indexes exact namespace/name UTF-8 bytes during
+construction; it never joins display names or uses Unicode normalization.
+The index excludes the global module type and nested definitions. Ambiguous
+and missing names remain `unresolved-type-reference`; generic targets remain
+`generic-definition`. Alias edges are normalized before local cycle and
+class/interface-kind validation. Only numeric aliases survive construction,
+so the temporary name index does not become another identity registry.
+
+Construction snapshots and cycle-checks O(types + references + edges + generic
+parameters + indexed name bytes) facts. Each hierarchy
 query is O(reachable types + edges), with no persistent pair cache. Defaults and
-hard maxima are 65,535 TypeDefs, 65,535 total type/InterfaceImpl rows, 65,535
-GenericParam rows, 4,096 visited query nodes and depth 256. Options `maxTypes`,
+hard maxima are 65,535 TypeDefs, 65,535 TypeRefs, 65,535 total type/InterfaceImpl
+rows, 65,535 GenericParam rows, 1 MiB of unique indexed heap-name bytes, 4,096
+visited query nodes and depth 256. Each indexed name/namespace is limited to
+1 KiB. The name index is constructed only when an explicit local Module scope
+is present. Options `maxTypes`, `maxTypeReferences`, `maxTypeNameBytes`,
 `maxEdges`, `maxQueryNodes`, `maxDepth` may lower these limits; `signal` cancels
 construction and queries. These limits cover the adapter, not earlier inspector
 construction. Malformed local hierarchy/token data throws `CILVT0001`, budget
