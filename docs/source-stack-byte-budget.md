@@ -45,7 +45,11 @@ Snapshot restore checks active and parked shared-stack segments and total reserv
 bytes before changing execution or heap state. Source restoration keeps its
 existing pause/resume contract.
 
-Focused source, emitted-CIL and reloaded-source regressions are staged for the
-serial validation queue. No tests, builds or benchmarks were run for this leaf.
+Serial Node 24 validation at `65530cf7` passed 63 of 65 source/CIL budget,
+proof, snapshot and source-dispatch tests. Two new cancellation fixtures assumed
+that manually calling an entry point restarted a canceled async scheduler. They
+now assert released frames, terminal contexts and fresh frame admission directly.
+All 24 source-budget/proof tests passed at `6c47cb80`. No production change was
+needed for those fixture corrections. Broader qualification remains staged.
 Typed operand carriers, physical memory savings, performance measurements and
 Rust/Wasm execution qualification remain outside this increment.
