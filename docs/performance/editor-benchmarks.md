@@ -25,7 +25,7 @@ node --expose-gc scripts/benchmark-editor-memory.js --undo-steps 100 --output ar
 node scripts/check-editor-perf.js --baseline docs/performance/editor-model-baseline.json --current artifacts/editor-model.json
 ```
 
-`--sizes` accepts a comma-separated list of byte counts for targeted investigation. Standard baseline qualification uses all four required sizes. Browser execution supports the installed Playwright dependency and a supported `--executable` override or `CHROMIUM_EXECUTABLE`, `FIREFOX_EXECUTABLE`, `WEBKIT_EXECUTABLE` environment variable. The loopback harness server serves only repository resources and pins the import map with a Content Security Policy hash; it does not enable `unsafe-eval`.
+`--sizes` accepts a comma-separated list of byte counts for targeted investigation, up to an explicit 256 MiB maximum. For example, `--sizes 209715200` selects the 200 MiB qualification case. Standard baseline qualification still uses the four default sizes ending at 100 MiB; accepting a larger option does not constitute a measurement of it. Browser execution supports the installed Playwright dependency, `SHARPFORGE_PLAYWRIGHT_MODULE` for an explicit installed module path, and a supported `--executable` override or `CHROMIUM_EXECUTABLE`, `FIREFOX_EXECUTABLE`, `WEBKIT_EXECUTABLE` environment variable. The loopback harness server serves only repository resources and pins the import map with a Content Security Policy hash; it does not enable `unsafe-eval`. Startup uses bounded protocol `page.evaluate` polling with cancellation and an independent deadline, including if an evaluation hangs.
 
 ## Statistics and reproducibility
 
