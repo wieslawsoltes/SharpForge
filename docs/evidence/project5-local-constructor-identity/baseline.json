@@ -1,0 +1,37 @@
+{
+  "kind": "baseline",
+  "head": "bd91c105aa9fa1f765ae0d8254ca99783535df23",
+  "tree": "d45f8adde2400164ff6c977cb32968ca7c3ce3aa",
+  "command": [
+    "node",
+    "scripts/limited.js",
+    "node",
+    "--test",
+    "--test-concurrency=1",
+    "--test-reporter=tap",
+    "tests/a05-local-constructor-identity.test.js"
+  ],
+  "cwd": "/workspace/scratch/1692a10afba9/canonical-object-identity-qualification/baseline-bd91c105a",
+  "sourceInventory": "baseline-source.json",
+  "sourceInventorySha256": "2ab5223eeb1d01fa013a99b20a7811fc210430ea8fa3cc8e0c0fc0bea57dcbcd",
+  "environment": {
+    "DOTNET_ROOT": "/workspace/scratch/1692a10afba9/toolchain/dotnet",
+    "DOTNET": "/workspace/scratch/1692a10afba9/toolchain/dotnet/dotnet",
+    "SHARPFORGE_ORACLE_DOTNET": "/workspace/scratch/1692a10afba9/toolchain/dotnet/dotnet"
+  },
+  "startedUtc": "2026-10-04T20:56:37Z",
+  "exitCode": 1,
+  "wallSeconds": 0.7442428869981086,
+  "changedSourceFiles": [],
+  "logSha256": "aee6616a6b879e72cb3c1dca014d0dcf25078b1cb4563348505225b8b5f5f1a7",
+  "logBytes": 1694,
+  "tapSummary": {
+    "tests": "1",
+    "pass": "0",
+    "fail": "1",
+    "cancelled": "0",
+    "skipped": "0",
+    "todo": "0",
+    "duration_ms": "577.307442"
+  }
+}
