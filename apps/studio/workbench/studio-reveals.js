@@ -68,17 +68,18 @@ export class StudioReveals {
   install(document) {
     if (this.disposed) throw new Error('Studio reveal navigation is disposed');
     if (this.documents.has(document)) return this.documents.get(document);
+    const capture = { capture: true };
     const input = event => {
       if (event.type !== 'keydown' || !modifierKeys.has(event.key)) this.policy.userIntent();
     };
     const dispose = () => {
       if (!this.documents.delete(document)) return;
-      document.removeEventListener('pointerdown', input, true);
-      document.removeEventListener('keydown', input, true);
+      document.removeEventListener('pointerdown', input, capture);
+      document.removeEventListener('keydown', input, capture);
       document.defaultView?.removeEventListener('unload', dispose);
     };
-    document.addEventListener('pointerdown', input, true);
-    document.addEventListener('keydown', input, true);
+    document.addEventListener('pointerdown', input, capture);
+    document.addEventListener('keydown', input, capture);
     document.defaultView?.addEventListener('unload', dispose, { once: true });
     this.documents.set(document, dispose);
     return dispose;

@@ -140,3 +140,21 @@ work, foreign/old identities, restart, cancellation, command availability, nativ
 limitations, explicit project forwarding and profile preservation. These 28 cases
 are pending the root agent's consolidated affected-scope validation; no new
 browser or native qualification is claimed by this source handoff.
+
+### Corrections from the consolidated host batch
+
+The first affected-scope run at `4b1c0291` observed 302 passing and three failing
+tests out of 305. Two failures belong to this shell follow-up. The reveal fixture
+correctly requires input after document unload to leave the captured intent
+unchanged. Registration and cleanup now share explicit capture options, avoiding
+the host EventTarget's boolean-removal mismatch. The original intent assertion
+remains, with additional keyboard and full-disposal checks.
+
+The registry fixture's original 28 compiler / 46 runtime counts were stale.
+`f8fb82ce` added ten editor requests; `3f1d57b8` added `resolveCodeAction`,
+`outlineReorder`, and `validateWorkspaceEdit`; `1a4d8b8a` added runtime
+`executionMetrics`. The fixture now records all 41 compiler and 47 runtime names
+explicitly and retains exhaustive dispatch, duplicate, unknown-method,
+malformed-parameter and disposal checks. No protocol declaration, handler,
+request meaning, or automation lock changes in this correction. Its affected
+rerun remains pending; these edits do not constitute a passing result.
