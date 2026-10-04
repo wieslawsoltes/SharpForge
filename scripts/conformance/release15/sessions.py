@@ -5,6 +5,7 @@ workbench, Worker, event receiver, renderer, or replacement application host.
 """
 import json
 import os
+import subprocess
 from urllib.parse import urlparse
 
 from browser_harness import wait_condition
@@ -14,6 +15,31 @@ DASHBOARD = 'Dashboard/Dashboard.csproj'
 MONITOR = 'Monitor/Monitor.csproj'
 SOURCE = 'Dashboard/View.cs'
 PROCESS = '.sf-debug-location-toolbar select[aria-label="Process"]'
+
+
+class BrowserOperationError(RuntimeError):
+    def __init__(self, details):
+        self.browser = details
+        super().__init__(details.get('stack') or details.get('message') or 'Browser operation failed')
+
+
+def failure_details(error):
+    result = {'type': type(error).__name__, 'message': str(error)}
+    if isinstance(error, BrowserOperationError):
+        result['browser'] = error.browser
+    return result
+
+
+def source_revision(root):
+    try:
+        result = subprocess.run(['git', '-C', str(root), 'rev-parse', '--verify', 'HEAD'],
+                                capture_output=True, text=True, check=True, timeout=5)
+        commit = result.stdout.strip()
+        if len(commit) not in (40, 64) or any(character not in '0123456789abcdef' for character in commit):
+            raise ValueError('Git did not return an exact commit')
+        return {'commit': commit}
+    except (OSError, subprocess.SubprocessError, ValueError) as error:
+        return {'commit': None, 'unavailable': type(error).__name__}
 
 
 def require(value, message):
@@ -29,7 +55,46 @@ class SessionAcceptance:
         self.increment = 1
 
     def evaluate(self, code, arg=None):
-        return self.page.evaluate(code, arg)
+        # Catch inside the browser: Playwright otherwise retains only the outer
+        # AggregateError message/stack and drops its listener errors and cause.
+        # The expression/function is sent through the normal Page.evaluate API;
+        # no page eval(), Function constructor or production method is replaced.
+        expression = '''async argument => {
+          try {
+            const operation = (OPERATION);
+            return {ok:true, value:await (typeof operation === 'function' ? operation(argument) : operation)};
+          } catch (error) {
+            const seen = new Set(); let remaining = 48;
+            const text = value => {try {return String(value).slice(0, 8192);} catch {return '[unreadable]';}};
+            const read = (value, key) => {try {return value[key];} catch {return '[unreadable ' + key + ']';}};
+            const describe = (value, depth = 0) => {
+              if (remaining-- <= 0 || depth > 6) return {truncated:true};
+              if (value === null || !['object','function'].includes(typeof value)) {
+                return {name:typeof value, message:text(value)};
+              }
+              if (seen.has(value)) return {circular:true};
+              seen.add(value);
+              const result = {name:text(read(value,'name') ?? 'Error'), message:text(read(value,'message') ?? value)};
+              for (const key of ['stack','code']) {
+                const field = read(value,key);
+                if (field !== undefined) result[key] = text(field);
+              }
+              const cause = read(value,'cause');
+              if (cause !== undefined) result.cause = describe(cause,depth + 1);
+              const errors = read(value,'errors');
+              if (Array.isArray(errors)) {
+                result.errors = errors.slice(0, 8).map(item => describe(item,depth + 1));
+                if (errors.length > 8) result.omittedErrors = errors.length - 8;
+              }
+              return result;
+            };
+            return {ok:false, error:describe(error)};
+          }
+        }'''.replace('OPERATION', code, 1)
+        result = self.page.evaluate(expression, arg)
+        if not result['ok']:
+            raise BrowserOperationError(result['error'])
+        return result.get('value')
 
     def wait(self, predicate, timeout=30000):
         wait_condition(self.page, predicate, timeout=timeout)
@@ -381,13 +446,19 @@ class SessionAcceptance:
 
 def sessions(page, root, output):
     suite = SessionAcceptance(page, root, output)
+    browser = page.context.browser
     report = {'target': 'production-studio-real-workers', 'requirement': 'session-isolation',
+              'browser': {'name': browser.browser_type.name, 'version': browser.version},
+              'source': source_revision(root),
               'requiredLiveApplications': 3, 'projects': [DASHBOARD, MONITOR], 'duplicateProject': DASHBOARD,
               'checks': suite.checks, 'status': 'running',
               'unexecutedPhases': [],
               'limits': ['This run qualifies only its recorded browser/host.',
                          'Grant routing is exercised without outbound HTTP; transport enforcement is a separate obligation.',
                          'Late callbacks are real pending worker replies across restart, not delayed provider/network callbacks.']}
+    # The shared RPC child can be terminated before browser teardown writes its
+    # own session metadata. Retain observed provenance before any scenario action.
+    (output / 'sessions-report.json').write_text(json.dumps(report, indent=2) + '\n', encoding='utf8')
     phases = [('three-live-applications', suite.prepare), ('selected-debugger', suite.debugger),
               ('selected-hot-reload', suite.hot_reload), ('selected-designer', suite.designer),
               ('independent-grant-targets', suite.grants), ('targeted-stop-restart', suite.restart),
@@ -406,7 +477,7 @@ def sessions(page, root, output):
         return report
     except BaseException as error:
         report['status'] = 'failed'
-        report['failure'] = {'type': type(error).__name__, 'message': str(error)}
+        report['failure'] = failure_details(error)
         if not any(check['name'] == report.get('activePhase') for check in suite.checks):
             suite.checks.append({'name': report.get('activePhase'), 'status': 'failed', 'error': report['failure']})
         completed = {check['name'] for check in suite.checks}
@@ -418,7 +489,7 @@ def sessions(page, root, output):
             suite.evaluate("sharpforge.execute('stop-all')")
             suite.wait('sharpforge.workbenchServices.sessions.list({liveOnly:true}).length === 0')
         except BaseException as error:
-            report['cleanupFailure'] = {'type': type(error).__name__, 'message': str(error)}
+            report['cleanupFailure'] = failure_details(error)
             if report['status'] in ('passed', 'blocked'):
                 report['status'] = 'failed'
                 raise
