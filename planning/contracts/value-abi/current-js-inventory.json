@@ -2,9 +2,9 @@
   "schemaVersion": 1,
   "sources": {
     "packages/runtime/src/heap.js": "28b86fe51a4a4cd93b7701b682fa2363a07d8a9c6370fd734e96690b16fe853c",
-    "packages/runtime/src/vm.js": "0933befbe5fbeb9254009bd092df831404a9edb113bd04a9a9c967c0900a6cd3",
+    "packages/runtime/src/vm.js": "1c3b7cc3fd74d01171ad53f0020de398c8c901906814ef829c9a7c2c633a1f51",
     "packages/runtime/src/cil-vm.js": "cfc6a650de2722f2a9851b8b0287c3af834481999010b19bee5e388865b8cf15",
-    "packages/bytecode/src/index.js": "527e90a22c3838eba06c314d2663e3d6575ac76007b94c928b53247c19189040",
+    "packages/bytecode/src/index.js": "a7415f7b70d7fa8b44674f85278a307e5cc9cbd7df0544953733eda2a3a1b32d",
     "packages/bytecode/src/builtins.js": "52bdae4e1dc6b2e0c418d6fa38cbb980e616891a03415143a656e6def8060d2b"
   },
   "resultKinds": {
@@ -21,11 +21,11 @@
       "cil": "bigint (signed Int64)"
     },
     "double": {
-      "source": "number (IEEE 754 binary64)",
+      "source": "number | frozen {float: r8, value: number} (IEEE 754 binary64)",
       "cil": "frozen {float: r8, value: number}"
     },
     "numeric": {
-      "source": "number",
+      "source": "number | bigint | frozen float | nativeInt | Decimal",
       "cil": "number | bigint | frozen {float: r4|r8, value: number} | frozen {nativeInt: 32|64, value: number|bigint}"
     },
     "bool": {
@@ -45,18 +45,18 @@
       "cil": "ManagedFault with optional reference, frames"
     },
     "any": {
-      "source": "number | bigint | boolean | null | undefined | {h,g} | enum carrier",
+      "source": "number | bigint | boolean | null | undefined | {h,g} | enum | float | nativeInt | Decimal",
       "cil": "number | bigint | null | undefined | {h,g} | float | nativeInt | Decimal | byref | methodPointer"
     }
   },
   "additionalShapes": [
     {
       "shape": "{decimal:true, coefficient:bigint, scale:0..28, negative:boolean}",
-      "meaning": "immutable System.Decimal value, unsigned 96-bit coefficient; exact CIL storage and boxing; shared source operation helpers; not a portable wire value"
+      "meaning": "immutable System.Decimal value, unsigned 96-bit coefficient; exact source/CIL arithmetic, storage and boxing; not a portable wire value"
     },
     {
       "shape": "{nativeInt: 32|64, value: number|bigint}",
-      "meaning": "immutable CIL native-integer stack category; signed payload at the explicitly configured ABI width; not a portable pointer"
+      "meaning": "immutable source/CIL native-integer stack category; signed payload at the explicitly configured ABI width; not a portable pointer"
     },
     {
       "shape": "{enumType, underlyingType, value}",
@@ -91,12 +91,12 @@
     "ManagedHeap.allocate returns Object.freeze({h,g})",
     "ManagedHeap.array caps length at 1000000",
     "CilVirtualMachine.storage/convert implement narrow and BigInt integer categories",
-    "VirtualMachine.binary uses number with Int32 modes"
+    "VirtualMachine.binary preserves legacy modes and delegates typed modes to shared scalar helpers"
   ],
   "unsupported": [
     "Rust engine qualification",
     "Wasm runtime qualification",
-    "Decimal source/frontend and cross-platform execution qualification",
+    "Numeric source/direct-CIL cross-platform execution qualification",
     "arbitrary value structs in source VM"
   ]
 }

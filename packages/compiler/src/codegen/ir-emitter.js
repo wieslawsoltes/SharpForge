@@ -1,3 +1,5 @@
+import {emitScalarExpression} from './scalar-expressions.js';
+import {scalarImageConstant, isScalarType, scalarDefault} from './scalar-values.js';
 import {canonicalType,frameworkType,enumTypes} from '@sharpforge/framework';
 import {EnumConvertBase,Op,Binary,Unary,BuiltinMap,frameworkBuiltin} from '@sharpforge/bytecode';
 import {isReference,defaultValue} from '../type-utils.js';
@@ -23,7 +25,7 @@ export class IrEmitter {
   get pc(){return this.code.length/3;}
   emit(op,a=0,b=0){const at=this.pc;this.code.push(op,a,b);return at;}
   patch(at,target=this.pc){this.code[at*3+1]=target;}
-  emitConstant(value,type){this.emit(Op.CONST,this.c.constant(value),type==='double'?1:0);}
+  emitConstant(value,type){this.emit(Op.CONST,this.c.constant(isScalarType(type)?scalarImageConstant(value,type):value),type==='double'?1:0);}
   emitContract(contract){const b=frameworkBuiltin(contract);this.emit(Op.BUILTIN,b.id,b.min);}
   // ---- locals ------------------------------------------------------------------------------------------------
   addLocal(name,type,node,hidden){const slot=this.locals.length,local={name,type,slot,hidden,scopeStartPc:this.pc,isConst:node.isConst??false,isUsing:node.isUsing??false,isIteration:node.isIteration??false,declaredAt:node.start,scopeEnd:this.scopeNode?.end??this.m.node.end};this.locals.push(local);return local;}
@@ -42,7 +44,7 @@ export class IrEmitter {
   closeScope(locals){for(const local of locals){const slot=this.slots.get(local);if(slot!==undefined)this.locals[slot].scopeEndPc=this.pc;}}
   seq(node){if(!node||node.debugHidden)return;const source=this.c.sources.get(node.uri);if(!source)return;const pos=source.positionAt(node.start),point={id:this.c.sequencePoints.length,methodId:this.m.id,offset:this.pc,uri:node.uri,start:node.start,end:node.end,line:pos.line+1,column:pos.character+1};this.c.sequencePoints.push(point);this.emit(Op.SEQ,point.id);}
   /** Emits a complete method body followed by the implicit return. */
-  build(body){this.stmt(body);this.emitConstant(defaultValue(this.m.returnType));this.emit(Op.RET);this.finish();}
+  build(body){this.stmt(body);this.emitConstant(isScalarType(this.m.returnType)?scalarDefault(this.m.returnType):defaultValue(this.m.returnType),this.m.returnType);this.emit(Op.RET);this.finish();}
   finish(){this.m.code=Int32Array.from(this.code);this.m.locals=this.locals.map(l=>({...l,...(!l.hidden?{scopeEndPc:l.scopeEndPc??this.pc}:{})}));this.m.handlers=this.handlers;}
   // ---- statements --------------------------------------------------------------------------------------------
   stmt(node){
@@ -107,9 +109,10 @@ export class IrEmitter {
     this.emit(Op.BINARY,Binary[operator],binaryMode(operator,left,classifyBinary(operator,left,right).result,checked));
   }
   expr(node){
+    if(emitScalarExpression(this,node))return;
     switch(node.kind){
       case 'Literal':this.emitConstant(node.value,node.legacyType);break;
-      case 'DefaultExpression':this.emitConstant(defaultValue(node.legacyType),node.legacyType);break;
+      case 'DefaultExpression':this.emitConstant(isScalarType(node.legacyType)?scalarDefault(node.legacyType):defaultValue(node.legacyType),node.legacyType);break;
       case 'Local':this.emit(Op.LDLOC,this.slot(node.local));break;
       case 'Parameter':this.emit(Op.LDLOC,this.slot(node.parameter));break;
       case 'ThisReference':this.emit(Op.LDLOC,this.thisSlot??0);break;

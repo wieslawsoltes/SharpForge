@@ -1,6 +1,6 @@
 import {isDecimal, decimalFormat} from './execution/decimal.js';
+import {formatSourceNumber} from './execution/source-number-format.js';
 import {nativeIntegerBits} from './execution/native-int.js';
-import {formatDoubleDefault} from '@sharpforge/bcl-core';
 import {isReference} from './heap.js';
 import {enumToString} from './execution/enums.js';
 import {runtimeTypeText} from './execution/tokens.js';
@@ -11,11 +11,13 @@ const boxedDisplayTypes = Object.freeze({
   'System.UInt32': 'uint',
   'System.UInt64': 'ulong',
   'System.IntPtr': 'nint',
-  'System.UIntPtr': 'nuint'
+  'System.UIntPtr': 'nuint',
+  'System.Single': 'float',
+  'System.Double': 'double'
 });
 
 /** Preserve source managed-value display semantics, with invariant binary64 numeric text. */
-export function formatSourceValue(vm, value) {
+export function formatSourceValue(vm, value, type) {
   if (isDecimal(value)) return decimalFormat(value);
   const name = runtimeTypeText(vm, value) ?? enumToString(vm, value);
   if (name !== null) return name;
@@ -25,11 +27,12 @@ export function formatSourceValue(vm, value) {
   if (value === false) return 'False';
   if (isReference(value)) {
     const record = vm.heap.get(value);
+    if (record.kind === 'box') return vm.format(record.data[0], record.type);
     if (record.kind === 'string') return record.data;
     if (record.kind === 'exception') return record.type + ': ' + vm.format(record.data[0]);
     return record.type;
   }
-  return typeof value === 'number' ? formatDoubleDefault(value) : String(value);
+  return formatSourceNumber(vm, value, type) ?? String(value);
 }
 
 /** Preserve CIL boxing, enums and typed integer display before binary64 numeric formatting. */
@@ -53,5 +56,5 @@ export function formatCilValue(vm, value, type) {
     const record = vm.heap.get(native);
     return record.kind === 'exception' ? record.type + ': ' + vm.format(record.data[0]) : record.type;
   }
-  return typeof native === 'number' ? formatDoubleDefault(native) : String(native);
+  return formatSourceNumber(vm, value, type) ?? String(native);
 }
