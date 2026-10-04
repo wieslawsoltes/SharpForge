@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
 import { readFile } from 'node:fs/promises';
-import { CilError, MetadataBuilder, readMetadata, readPE } from '@sharpforge/cil';
+import { CilError, MetadataBuilder, metadataReaderDiagnosticCatalog, readMetadata, readPE } from '@sharpforge/cil';
 
 function input() {
   const builder = new MetadataBuilder('ReaderBudget');
@@ -25,6 +25,11 @@ test('optional physical metadata reader rejects invalid bounds', () => {
   for (const options of [null, [], false, { maxRows: -1 }, { maxRows: 0.5 }, { maxRows: 1_000_001 }]) {
     assert.throws(() => readMetadata(input(), options), CilError);
   }
+  for (const signal of [true, 1, 'aborted', {}, { aborted: 1 }, () => false]) {
+    assert.throws(() => readMetadata(input(), { signal }), /Metadata signal/);
+  }
+  assert.equal(readMetadata(input(), { signal: null }).counts[26], 300);
+  assert.equal(typeof metadataReaderDiagnosticCatalog.MD_READ_CANCELED, 'string');
 });
 
 test('physical metadata parsing checks cancellation before and during row decoding', () => {

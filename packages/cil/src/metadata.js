@@ -3,6 +3,7 @@ import { initializeMetadataBuilder } from './metadata/builder-state.js';
 import { encodeTypeSignature } from './metadata/signature-writer.js';
 import { parseSignatureType } from './metadata/signature-parser.js';
 export { readMetadata } from './metadata/reader.js';
+export { metadataReaderDiagnosticCatalog } from './metadata/reader-budget.js';
 import {canonicalType} from '@sharpforge/framework';
 export { validateMetadata, metadataDiagnosticCatalog } from './metadata/validate.js';
 import { writeMetadataTables } from './metadata/table-stream.js';

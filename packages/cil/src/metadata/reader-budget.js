@@ -1,5 +1,17 @@
 import { CilError } from '../binary/error.js';
 
+export const metadataReaderDiagnosticCatalog = Object.freeze({
+  MD_READ_CANCELED: 'Physical metadata reading was canceled before returning a reader',
+});
+
+/** Structural signal admission also accepts browser/worker signals from another realm. */
+export function metadataReadSignal(signal) {
+  if (signal != null && (typeof signal !== 'object' || typeof signal.aborted !== 'boolean')) {
+    throw new CilError('Metadata signal must expose a boolean aborted property');
+  }
+  return signal;
+}
+
 /** Optional per-read bounds; ordinary callers retain the existing one-million-row limit. */
 export class MetadataReadBudget {
   constructor(options) {
@@ -10,7 +22,7 @@ export class MetadataReadBudget {
     if (!Number.isInteger(this.maxRows) || this.maxRows < 0 || this.maxRows > 1_000_000) {
       throw new CilError('Metadata reader row limit must be an integer from 0 through 1000000');
     }
-    this.signal = options.signal;
+    this.signal = metadataReadSignal(options.signal);
     this.check();
   }
 
