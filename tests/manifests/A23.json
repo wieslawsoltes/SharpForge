@@ -21,7 +21,11 @@
     "tests/project-evaluation-items.test.js",
     "tests/project-evaluation-central-packages.test.js",
     "tests/project-evaluation-expressions.test.js",
-    "tests/project-core-contract.test.js"
+    "tests/project-core-contract.test.js",
+    "tests/project-evaluation-targets.test.js",
+    "tests/project-evaluation-build-stages.test.js",
+    "tests/project-evaluation-build.test.js",
+    "tests/project-evaluation-contexts.test.js"
   ],
   "browserScripts": [
     "tests/browser_msbuild_test.py"
