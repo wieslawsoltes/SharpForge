@@ -139,8 +139,9 @@ editorIntegration=createStudioEditorFactory({services:workbenchServices,state:()
   getTestCodeLens:()=>testCodeLens,requestHost:editorHostCommand}),
  applyResourceTransaction:(plan,{signal}={})=>applyExplorerResourceTransaction(plan,{documents:workbenchServices.documents,explorer:explorerActions,signal}),
  supportsResourceRename:()=>!state.nativeMode,
+ getLanguageAvailability:params=>projectServices.languageAvailability(params),
  getConfigurationRecords:()=>explorerContext().records,getLanguageOptions:()=>studioEditorOptions(workbenchShell?.settings.snapshot()),
- requestCompiler:(method,params,options)=>projectServices.request(method,params,options),requestHost:editorHostCommand,
+ requestCompiler,requestHost:editorHostCommand,
  onKeymapState:(uri,value)=>{if(!state.active||state.active===uri)updateKeymapStatus(value);},
  onCursor:(uri,position)=>{if(state.active===uri)$('#status-cursor').textContent=`Ln ${position.line+1}, Col ${position.character+1}`;workbenchShell?.update({type:'cursor'});},
  onFocus:(uri,instance)=>{editor=instance;editors.set(uri,instance);state.active=uri;renderBreadcrumb();workbenchShell?.update({type:'selection'});},
@@ -315,9 +316,8 @@ function setEditorDecorations(){for(const [uri,instance]of editors){
 function showNextStatement(){if(state.debug?.state!=='paused')return;state.inspectedThreadFrames=null;state.inspectedThreadId=null;state.frameId=state.debug.frames[0]?.id??null;state.inspectedLocals=null;const point=state.debug.point;if(point&&matchesDebugSource(point.uri)){openFile(point.uri);editor.gotoLine(point.line,point.column);}else if(point&&state.debugSources.has(point.uri))advancedTools.showSymbolSource(point);else if(state.debug.profile==='managed-il')setPanel('disassembly');setEditorDecorations();renderPanel('stack');refreshWatches();}
 async function selectDebugFrame(id){if(!['paused','waiting'].includes(state.debug?.state))return;const frame=[...(state.inspectedThreadFrames??[]),...state.debug.frames].find(f=>f.id===id);if(!frame)return;state.frameId=id;const sessionId=state.debug.sessionId,locals=await runtime.request('locals',{frameId:id,sessionId});if(state.debug?.sessionId!==sessionId||state.frameId!==id||!['paused','waiting'].includes(state.debug.state))return;state.inspectedLocals=locals;if(frame.source&&matchesDebugSource(frame.source)){openFile(frame.source);editor.gotoLine(frame.line,frame.column);}setEditorDecorations();renderPanel('stack');renderPanel('debug');if(state.debug.profile==='managed-il')renderPanel('disassembly');await refreshWatches();}
 
-
 function scheduleAnalysis(){
- if(state.nativeMode||[...workbenchServices.documents.models.values()].some(model=>model.buffer.length>8*1024*1024))return;
+ if(state.nativeMode)return;
  clearTimeout(state.analyzeTimer);state.analyzeTimer=setTimeout(analyze,250);
 }
 function analyze(){return execution.analyze();}

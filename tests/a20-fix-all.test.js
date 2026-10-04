@@ -101,7 +101,7 @@ function workspaceActions({shared = false, records: suppliedRecords, owned: supp
     files: (closure ?? owned).get(id).map(uri => documents.get(uri)), compilationOptions: {outputKind: 'library'}
   })});
   for (const id of owned.keys()) builds.register({id, name: id});
-  const projects = {services: {builds}, sync() {}, serviceFor(uri, id) {
+  const projects = {services: {builds}, sync() {}, sourceUris: id => (closure ?? owned).get(id), serviceFor(uri, id) {
     return builds.get(id ?? [...owned].find(([, uris]) => uris.includes(uri))[0]);
   }};
   const actions = createWorkspaceLanguageActions({projects, documents, getProjectDocuments: id => owned.get(id)});
