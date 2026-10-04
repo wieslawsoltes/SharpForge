@@ -14,6 +14,7 @@ import { walk } from '../../bound/semantic-walker.js';
 import { sourceTypesInMetadataOrder } from '../../codegen/metadata/symbol-metadata.js';
 import { MethodEmitter } from './method-emitter.js';
 import { planClosures } from './closure-plan.js';
+import { planStateMachines } from './state-machine-plan.js';
 import { completeFieldLikeEvent } from './synthesized-events.js';
 import { planPrimaryCaptures } from './primary-constructor-captures.js';
 
@@ -45,7 +46,10 @@ export class SynthesizedMembers {
     this.closures = planClosures(analysis, this.topLevel);
     this.primaryCaptures = planPrimaryCaptures(analysis);
     /** Types to append after the source types. */
-    this.types = [...(programType && !declared.includes(programType) ? [programType] : []), ...this.closures.types];
+    this.stateMachines = planStateMachines(analysis, this.closures);
+    const ownProgram = programType && !declared.includes(programType) ? [programType] : [];
+    // State machine classes come last: their field lists grow while bodies are emitted.
+    this.types = [...ownProgram, ...this.closures.types, ...this.stateMachines.types];
     /** The planned entry of the synthesized entry point, once `extend` has seen its type. */
     this.entryPoint = null;
   }
@@ -59,10 +63,10 @@ export class SynthesizedMembers {
     if (!declaresTypeInitializer && this.hasStaticInitializers(type)) plan.methods.push(this.typeInitializer(type));
     for (const event of plan.events) completeFieldLikeEvent(type, event, plan);
     plan.fields.push(...(this.primaryCaptures.byType.get(type) ?? []));
-    const closureMembers = this.closures.additions.get(type);
-    if (closureMembers) {
-      plan.fields.push(...closureMembers.fields);
-      plan.methods.push(...closureMembers.methods);
+    for (const additions of [this.closures.additions.get(type), this.stateMachines.additions.get(type)]) {
+      if (!additions) continue;
+      plan.fields.push(...additions.fields);
+      plan.methods.push(...additions.methods);
     }
   }
   hasStaticInitializers(type) {

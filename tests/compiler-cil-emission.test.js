@@ -122,10 +122,6 @@ test('A02-T30 a construct without an emitter is SF2200 naming it, never a wrong 
   );
   assert.match(errorsOf(pointer)[0].message, /not executable on this runtime profile: it uses \S/);
   assert.ok(errorsOf(pointer)[0].start > 0, 'the diagnostic is at the construct');
-  const iterator = emit(`using System.Collections.Generic;
-    class C { static IEnumerable<int> Numbers() { yield return 1; } static void Main() { } }`);
-  assert.equal(iterator.assembly, null);
-  assert.match(errorsOf(iterator)[0].message, /iterator methods/);
 });
 
 test('A02-T30 a program with errors yields its diagnostics and no assembly', () => {

@@ -13,42 +13,27 @@
  * The capture analysis itself is lowering/closures.js. Synthesized types are nested in the containing type, so that
  * their code may use its private members.
  */
-import { MethodAttributes, FieldAttributes, MethodImplAttributes } from '@sharpforge/cil';
-import { NamedTypeSymbol, TypeKind, Accessibility, SymbolKind } from '../../symbols/types.js';
+import { MethodAttributes, MethodImplAttributes } from '@sharpforge/cil';
+import { SymbolKind } from '../../symbols/types.js';
 import { MethodKind } from '../../symbols/members.js';
 import { analyzeCaptures } from '../../lowering/closures.js';
 import { parameterFlags } from '../../codegen/metadata/attribute-flags.js';
-import { IlBuilder } from './il-builder.js';
+import { SynthesizedTypes } from './synthesized-types.js';
 import { MethodEmitter } from './method-emitter.js';
 import { UnsupportedInCil } from './unsupported.js';
 
-const CONSTRUCTOR_FLAGS =
-  MethodAttributes.Public | MethodAttributes.HideBySig | MethodAttributes.SpecialName | MethodAttributes.RTSpecialName;
 const CLOSURE_METHOD_FLAGS = MethodAttributes.Assembly | MethodAttributes.HideBySig;
 const OWNER_METHOD_FLAGS = MethodAttributes.Private | MethodAttributes.HideBySig;
 const THIS_FIELD_NAME = '<>4__this';
 
-/** `ldarg.0; call object::.ctor(); ret` */
-function objectConstructorBody(program) {
-  const core = program.core,
-    shape = { isStatic: false, returnType: core.void, parameters: [] },
-    il = new IlBuilder();
-  il.emit('ldarg', 0).emit('call', program.tokens.external(core.object, '.ctor', shape), { pops: 1, pushes: 0 });
-  return il.emit('ret', undefined, { pops: 0, pushes: 0 });
-}
-
-export class ClosurePlan {
+export class ClosurePlan extends SynthesizedTypes {
   /** @param analysis a SemanticAnalysis that has run without errors */
   constructor(analysis) {
-    this.core = analysis.core;
+    super(analysis.core);
     /** Lambda node or local function symbol -> its plan. */
     this.functions = new Map();
     /** Variable symbol -> the cell class it lives in. */
     this.cells = new Map();
-    /** Synthesized type symbols, in the order they get their TypeDef rows. */
-    this.types = [];
-    /** Type symbol (source or synthesized) -> the fields and methods synthesized into it. */
-    this.additions = new Map();
     this.cellClasses = new Map();
     this.ordinals = new Map();
   }
@@ -71,51 +56,10 @@ export class ClosurePlan {
     for (const variable of captures.captured) this.cells.set(variable, this.cellClass(context.owner, variable.type));
     for (const [key, functionCaptures] of captures.functions) this.planFunction(key, functionCaptures, context);
   }
-  additionsTo(type) {
-    let entry = this.additions.get(type);
-    if (!entry) {
-      entry = { fields: [], methods: [] };
-      this.additions.set(type, entry);
-    }
-    return entry;
-  }
   nextOrdinal(owner) {
     const ordinal = this.ordinals.get(owner) ?? 0;
     this.ordinals.set(owner, ordinal + 1);
     return ordinal;
-  }
-  /** A synthesized class nested in `owner`, with a public parameterless constructor. */
-  nestedClass(owner, name) {
-    const core = this.core,
-      type = new NamedTypeSymbol({
-        name,
-        typeKind: TypeKind.Class,
-        containingSymbol: owner,
-        declaredAccessibility: Accessibility.Private,
-        baseType: () => core.object,
-        isSealed: true,
-        isImplicitlyDeclared: true,
-      }),
-      constructor = {
-        symbol: null,
-        name: '.ctor',
-        flags: CONSTRUCTOR_FLAGS,
-        implFlags: MethodImplAttributes.IL,
-        hasBody: true,
-        isCompilerGenerated: true,
-        shape: { isStatic: false, returnType: core.void, parameters: [] },
-        parameters: [],
-        emitBody: objectConstructorBody,
-      };
-    type.isSource = true;
-    this.types.push(type);
-    this.additionsTo(type).methods.push(constructor);
-    return { type, constructor };
-  }
-  field(type, name, fieldType) {
-    const field = { symbol: null, name, flags: FieldAttributes.Public, type: fieldType, constant: null, isCompilerGenerated: true };
-    this.additionsTo(type).fields.push(field);
-    return field;
   }
   /** The cell class of `owner` for variables of `valueType`: `{type, constructor, value}`. */
   cellClass(owner, valueType) {
@@ -181,7 +125,8 @@ export class ClosurePlan {
       method: plan.symbol,
       function: plan,
     });
-    if (plan.body?.binder?.c?.isIterator) emitter.unsupported('iterator local functions', plan.key.syntax);
+    const machine = program.stateMachines.of(plan);
+    if (machine) return emitter.iteratorKickoff(machine);
     if (plan.isLambda ? plan.key.isAsync : plan.symbol.isAsync) emitter.unsupported('async lambdas and local functions', plan.key.syntax);
     return emitter.body(plan.body);
   }

@@ -28,6 +28,8 @@ import { DelegateEmission } from './emit-delegates.js';
 import { ReferenceEmission } from './emit-references.js';
 import { IndexRangeEmission } from './emit-index-range.js';
 import { PrimaryCaptureEmission } from './primary-constructor-captures.js';
+import { StateMachineEmission } from './emit-state-machine.js';
+import { IteratorEmission } from './emit-iterators.js';
 
 const families = [
   ConstantEmission,
@@ -55,6 +57,8 @@ const families = [
   ReferenceEmission,
   IndexRangeEmission,
   PrimaryCaptureEmission,
+  StateMachineEmission,
+  IteratorEmission,
 ];
 
 export class MethodEmitter extends families.reduce((composed, family) => family(composed), EmitterCore) {}

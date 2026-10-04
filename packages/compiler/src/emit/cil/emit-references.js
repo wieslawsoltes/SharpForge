@@ -77,7 +77,7 @@ export const ReferenceEmission = Base =>
       if (this.isReferenceCall(node)) return new IndirectLocation(this, () => this.referenceCall(node), node.type);
       // `this = value` in a struct stores the whole value through the managed pointer the method received.
       if (node.kind === 'This' && !this.frame.isStatic && !isReference(this.frame.containingType) && !this.frame.function?.closure) {
-        return new IndirectLocation(this, () => this.il.emit('ldarg', 0), this.frame.containingType);
+        return new IndirectLocation(this, () => this.pushFrameObject(), this.frame.containingType);
       }
       return super.location(node);
     }

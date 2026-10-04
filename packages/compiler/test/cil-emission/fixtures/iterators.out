@@ -1,0 +1,44 @@
+created, nothing ran
+started with 4
+ran to the end
+numbers: 0 1 9
+started with 4
+ran to the end
+again: 0 1 9
+started with 9
+stopped: 0 1 9 16
+same object: True False
+started with 4
+started with 4
+True 0, True 0
+True 1
+1;two;3.5;
+boxed 1
+open outer
+inner finally
+close outer
+after using
+guarded: first second third fourth
+open outer
+saw first
+saw second
+inner finally
+close outer
+open outer
+got first
+got second
+inner finally
+close outer
+caught failed inside
+open outer
+close outer
+after dispose: False
+unstarted disposed: False
+tree: a b c
+scaled: 2 6 12 20
+struct copy: 7 8 9
+started with 2
+ran to the end
+flatten: 0 1 2 6 100 101 102
+captures 39
+switched: 100 101 -1 14

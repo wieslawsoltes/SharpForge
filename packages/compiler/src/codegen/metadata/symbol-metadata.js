@@ -174,6 +174,11 @@ export class SymbolMetadataWriter {
     this.writeGenericParameters(self, this.allTypeParameters(type));
     for (const method of plan.methods) {
       if (method.symbol?.typeParameters?.length) this.writeGenericParameters(method.token, method.symbol.typeParameters);
+      // A synthesized method names the interface slots it fills: `{owner, name, shape}`.
+      for (const slot of method.overrides ?? []) {
+        const declaration = builder.member(this.tokens.typeToken(slot.owner), slot.name, methodSignature(this.tokens, slot.shape));
+        builder.addRow('MethodImpl', { Class: self, MethodBody: method.token, MethodDeclaration: declaration });
+      }
       if (!method.symbol || !explicitInterfaceOf(method.symbol)) continue;
       // An explicit implementation has a name of its own, so the slot it fills is stated by a MethodImpl row.
       for (const [declaration, implementation] of type.interfaceImplementations ?? []) {
