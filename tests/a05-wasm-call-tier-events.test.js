@@ -79,10 +79,13 @@ test('call TierUp subscriber failures stay outside guest faults and restore does
     assert.equal(vm.top.pc, 0);
     assert.deepEqual(vm.top.args, [4]);
     unsubscribe();
+    const selectedCalls = wasmTieringStatistics(vm).selectedCalls;
     const snapshot = vm.snapshot();
     vm.restore(snapshot);
     assert.equal(tierEvents(vm).length, 1);
-    assert.equal(wasmTieringStatistics(vm).selectedCalls, 0);
+    assert.equal(wasmTieringStatistics(vm).selectedCalls, selectedCalls, 'restore does not observe another call');
+    assert.equal(wasmTieringStatistics(vm).compiledBytes, 0);
+    assert.deepEqual(wasmTieringStatistics(vm).methods, []);
     disposeWasmTiering(vm);
     vm.state = 'running';
     assert.equal(vm.run().returnValue, 8);
