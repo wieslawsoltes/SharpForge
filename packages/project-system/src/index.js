@@ -7,12 +7,7 @@ export * from './disk.js';
 import { normalizePath, directoryName, baseName } from './paths.js';
 export * from './paths.js';
 const splitList=value=>String(value??'').split(';').map(s=>s.trim()).filter(Boolean);
-const regexCache=new Map();
-export function matchesGlob(path,pattern){
-  let regex=regexCache.get(pattern);
-  if(!regex){let out='^';for(let i=0;i<pattern.length;i++){const c=pattern[i];if(c==='*'&&pattern[i+1]==='*'){i++;if(pattern[i+1]==='/'){i++;out+='(?:.*/)?';}else out+='.*';}else if(c==='*')out+='[^/]*';else if(c==='?')out+='[^/]';else out+=c.replace(/[.*+?^${}()|[\]\\]/g,'\\$&');}regex=new RegExp(out+'$');if(regexCache.size>2048)regexCache.clear();regexCache.set(pattern,regex);}
-  return regex.test(path);
-}
+import { matchesGlob } from './evaluation/path-index.js';
 
 import { evaluateCondition } from './conditions.js';
 export { evaluateCondition } from './conditions.js';
