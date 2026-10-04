@@ -11,3 +11,5 @@ export {framePoolStatistics} from './execution/frame-pool.js';
 export {instructionProfile} from './execution/profiler.js';
 export {wasmEligibility, lowerWasmIR} from './execution/wasm/eligibility.js';
 export {exportSpeedscope} from './execution/profile-export.js';
+export {encodeWasmIR} from './execution/wasm/encoder.js';
+export {instantiateWasmIR} from './execution/wasm/compile.js';
