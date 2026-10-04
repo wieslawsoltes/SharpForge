@@ -135,6 +135,8 @@ The opt-in [verifier type-system adapter](VERIFIER-TYPE-SYSTEM.md) resolves boun
 
 The opt-in [typed numeric verifier](VERIFIER-NUMERIC.md) propagates primitive stack
 types through decoded method blocks, with explicit rejected and unknown results.
+Its registered [indirect memory policies](VERIFIER-MEMORY.md) check primitive
+managed-pointer loads and stores while retaining storage-width distinctions.
 
 `formatSignatureType(node, metadata, options)` optionally accepts
 `formatType(node, formatChild)`, returning a display string or `undefined` to
@@ -366,3 +368,45 @@ Construction is linear in bounded metadata/name bytes plus resolved edges; queri
 visit each expanded type once and are bounded by returned occurrences. The feature
 and retained native reference are prepared but unvalidated; see
 `tests/fixtures/type-hierarchy/README.md` for the scheduled evidence plan.
+
+### Instruction usage analysis
+
+`new AssemblyUsageAnalysis(inspector, options)` snapshots instruction occurrences
+for one loaded module without executing it or retaining its PE, decoded bodies,
+inspector, signature ASTs or binding context. It reuses the existing bounded CIL
+member/type resolver and its caches. The legacy `inspector.callGraph()` keeps its
+complete list, method-error records and ordinary decorated-method cache behavior.
+
+`analysis.query(relation, token, { offset: 0, limit: 100, signal })` returns owned
+`{ entries, total, nextOffset, complete }` in physical MethodDef/IL order. Pages
+have at most1000 occurrences; zero-length/past-end pages have no continuation.
+There is no per-query whole-result scan/copy. Each entry contains source/operand/
+resolved-target tokens, stable source/target MVID token URIs, offset, opcode,
+resolution status/reason and an optional instantiated-type token. Local MemberRef
+aliases share canonical definition queries while their raw-token queries retain
+the exact encoded occurrences. Unsupported/external bindings retain raw identities
+and explicit `unknown` reasons, never a display-name match.
+
+Supported relations are `uses` (MethodDef's non-string token operands), `used-by`
+(reverse occurrences), `instantiated-by` (`newobj`'s declared type), and
+`assigned-by` (direct `stfld`/`stsfld` writes). `newarr` uses its element type but
+does not construct an element instance. Indirect writes, virtual dispatch targets,
+reflection and dynamic execution are not inferred. `overridden-by` and
+`implemented-by` remain unsupported pending a genuine host-provided canonical
+method-slot contract; issue #2573 remains open for those capabilities.
+
+Construction options independently lower hard maxima: `maxMethods:16384`,
+`maxCodeBytes:4194304` (all body occurrences, including shared RVAs),
+`maxMethodCodeBytes:1048576`, `maxInstructions:250000`, `maxUsages:100000`, plus
+`signal`. All method headers/code sizes are checked before IL or binding snapshots;
+only one method's decoded instructions are held at a time. Each occurrence has
+at most seven index entries. `metadataLimits` forwards lowerable limits to the
+existing verification context; its defaults bound rows, names/signatures and
+query depth independently. These are logical/count bounds, not measured heap
+ceilings. Invalid limits/metadata/IL throw `CilError`; unsupported non-CIL bodies
+produce owned `diagnostics`, and pages then report `complete:false`. Completeness
+covers CIL body scanning, not resolution of every external reference.
+
+[Focused fixtures and pending qualification](../../tests/fixtures/usage-relations/README.md)
+cover the initial four relations; broad execution/cross-platform coverage is not
+implied by metadata inspection.

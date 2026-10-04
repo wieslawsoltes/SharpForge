@@ -1,4 +1,5 @@
-import {fail, integer, string, text} from '../host.js';
+import {MAX, fail, integer, string, text} from '../host.js';
+import {nonnegativeIndex} from './string-builder-append-range.js';
 
 const owner = 'System.Text.StringBuilder';
 
@@ -16,6 +17,11 @@ export function registerStringBuilderCharacterInsertExtensions({member}) {
 /** Append Boolean insertion after the established ranged replacement contract. */
 export function registerStringBuilderBooleanInsertExtensions({member}) {
   member(owner, 'Insert', ['int', 'bool'], owner);
+}
+
+/** Append repeated string insertion after the established Boolean insertion contract. */
+export function registerStringBuilderRepeatedInsertExtensions({member}) {
+  member(owner, 'Insert', ['int', 'string', 'int'], owner);
 }
 
 function rangeError(platform, parameter) {
@@ -39,6 +45,19 @@ export function insertBuilderCharacter(platform, reference, values, insertText) 
 export function insertBuilderBoolean(platform, reference, values, insertText) {
   const index = insertionIndex(platform, reference, values[0]);
   return insertText(platform, reference, index, text(platform, values[1], 'bool'));
+}
+
+/** Validate count before index; bound repeated text before materialization and reuse the existing storage commit. */
+export function insertBuilderRepeatedString(platform, reference, values, insertText) {
+  const count = nonnegativeIndex(platform, values[2], 'count');
+  const index = insertionIndex(platform, reference, values[0]);
+  const value = string(platform, values[1], true);
+  if (!value || count === 0) return reference;
+  const available = MAX - platform.get(reference, '$length', 0);
+  if (count > Math.floor(available / value.length)) {
+    fail(platform, 'OutOfMemoryException', 'StringBuilder host text allocation limit exceeded');
+  }
+  return insertText(platform, reference, index, count === 1 ? value : value.repeat(count));
 }
 
 function stageChunks(platform, storage, count, range) {

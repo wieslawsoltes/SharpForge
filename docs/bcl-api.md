@@ -697,8 +697,9 @@ Registered families: <code>builder</code>.
 | 524336 | <code>System.Text.StringBuilder System.Text.StringBuilder::Insert(int, char)</code> | implemented |
 | 524337 | <code>System.Text.StringBuilder System.Text.StringBuilder::Replace(string, string, int, int)</code> | implemented |
 | 524338 | <code>System.Text.StringBuilder System.Text.StringBuilder::Insert(int, bool)</code> | implemented |
+| 524339 | <code>System.Text.StringBuilder System.Text.StringBuilder::Insert(int, string, int)</code> | implemented |
 
-Pinned reference: 55 implemented and 53 missing exact metadata rows.
+Pinned reference: 56 implemented and 52 missing exact metadata rows.
 
 | Reference kind | Exact reference signature | Status | Matching ABI IDs |
 | --- | --- | --- | --- |
@@ -793,7 +794,7 @@ Pinned reference: 55 implemented and 53 missing exact metadata rows.
 | method | <code>System.Text.StringBuilder::Insert``0(System.Int32,System.SByte):System.Text.StringBuilder instance</code> | missing | — |
 | method | <code>System.Text.StringBuilder::Insert``0(System.Int32,System.Single):System.Text.StringBuilder instance</code> | missing | — |
 | method | <code>System.Text.StringBuilder::Insert``0(System.Int32,System.String):System.Text.StringBuilder instance</code> | implemented | 814 |
-| method | <code>System.Text.StringBuilder::Insert``0(System.Int32,System.String,System.Int32):System.Text.StringBuilder instance</code> | missing | — |
+| method | <code>System.Text.StringBuilder::Insert``0(System.Int32,System.String,System.Int32):System.Text.StringBuilder instance</code> | implemented | 524339 |
 | method | <code>System.Text.StringBuilder::Insert``0(System.Int32,System.UInt16):System.Text.StringBuilder instance</code> | missing | — |
 | method | <code>System.Text.StringBuilder::Insert``0(System.Int32,System.UInt32):System.Text.StringBuilder instance</code> | missing | — |
 | method | <code>System.Text.StringBuilder::Insert``0(System.Int32,System.UInt64):System.Text.StringBuilder instance</code> | missing | — |

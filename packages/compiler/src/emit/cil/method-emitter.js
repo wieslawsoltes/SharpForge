@@ -49,6 +49,7 @@ import { AnonymousTypeEmission } from './emit-anonymous-types.js';
 import { InterpolatedHandlerEmission } from './emit-interpolated-handlers.js';
 import { PointerEmission } from './emit-pointers.js';
 import { FixedEmission } from './emit-fixed.js';
+import { InlineArrayEmission } from './emit-inline-arrays.js';
 import { FunctionPointerEmission } from './emit-function-pointers.js';
 
 const families = [
@@ -98,6 +99,7 @@ const families = [
   InterpolatedHandlerEmission,
   PointerEmission,
   FixedEmission,
+  InlineArrayEmission,
   FunctionPointerEmission,
 ];
 
