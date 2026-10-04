@@ -1,0 +1,202 @@
+{
+  "runtime": ".NET 10.0.5",
+  "signatures": {
+    "100663297": {
+      "parameters": 0,
+      "returnsVoid": true,
+      "hasThis": false,
+      "explicitThis": false,
+      "header": 0,
+      "requiredParameters": 0
+    },
+    "100663298": {
+      "parameters": 0,
+      "returnsVoid": true,
+      "hasThis": false,
+      "explicitThis": false,
+      "header": 0,
+      "requiredParameters": 0
+    },
+    "100663299": {
+      "parameters": 0,
+      "returnsVoid": true,
+      "hasThis": false,
+      "explicitThis": false,
+      "header": 0,
+      "requiredParameters": 0
+    },
+    "100663300": {
+      "parameters": 0,
+      "returnsVoid": false,
+      "hasThis": false,
+      "explicitThis": false,
+      "header": 0,
+      "requiredParameters": 0
+    },
+    "100663301": {
+      "parameters": 0,
+      "returnsVoid": false,
+      "hasThis": false,
+      "explicitThis": false,
+      "header": 0,
+      "requiredParameters": 0
+    },
+    "100663302": {
+      "parameters": 0,
+      "returnsVoid": true,
+      "hasThis": false,
+      "explicitThis": false,
+      "header": 0,
+      "requiredParameters": 0
+    },
+    "100663303": {
+      "parameters": 0,
+      "returnsVoid": true,
+      "hasThis": false,
+      "explicitThis": false,
+      "header": 0,
+      "requiredParameters": 0
+    },
+    "100663304": {
+      "parameters": 0,
+      "returnsVoid": true,
+      "hasThis": false,
+      "explicitThis": false,
+      "header": 0,
+      "requiredParameters": 0
+    }
+  },
+  "methods": [
+    {
+      "token": 100663297,
+      "name": "Tiny1",
+      "headerSize": 12,
+      "headerHex": "133000000100000000000000",
+      "maxStack": 0,
+      "codeHex": "2a",
+      "localSignature": 0,
+      "localSignatureRawToken": 285212672,
+      "initLocals": true,
+      "handlers": []
+    },
+    {
+      "token": 100663298,
+      "name": "Tiny63",
+      "headerSize": 12,
+      "headerHex": "133000003f00000000000000",
+      "maxStack": 0,
+      "codeHex": "00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000002a",
+      "localSignature": 0,
+      "localSignatureRawToken": 285212672,
+      "initLocals": true,
+      "handlers": []
+    },
+    {
+      "token": 100663299,
+      "name": "Fat64",
+      "headerSize": 12,
+      "headerHex": "033000004000000000000000",
+      "maxStack": 0,
+      "codeHex": "0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000002a",
+      "localSignature": 0,
+      "localSignatureRawToken": 285212672,
+      "initLocals": false,
+      "handlers": []
+    },
+    {
+      "token": 100663300,
+      "name": "Stack8",
+      "headerSize": 1,
+      "headerHex": "42",
+      "maxStack": 8,
+      "codeHex": "1616161616161616262626262626262a",
+      "localSignature": 0,
+      "localSignatureRawToken": 285212672,
+      "initLocals": false,
+      "handlers": []
+    },
+    {
+      "token": 100663301,
+      "name": "Stack9",
+      "headerSize": 12,
+      "headerHex": "033009001200000000000000",
+      "maxStack": 9,
+      "codeHex": "16161616161616161626262626262626262a",
+      "localSignature": 0,
+      "localSignatureRawToken": 285212672,
+      "initLocals": false,
+      "handlers": []
+    },
+    {
+      "token": 100663302,
+      "name": "FatLocalZero",
+      "headerSize": 12,
+      "headerHex": "133000000100000001000011",
+      "maxStack": 0,
+      "codeHex": "2a",
+      "localSignature": 285212673,
+      "localSignatureRawToken": 285212673,
+      "initLocals": true,
+      "handlers": []
+    },
+    {
+      "token": 100663303,
+      "name": "InvalidUnderflow",
+      "headerSize": 12,
+      "headerHex": "133001000200000000000000",
+      "maxStack": 1,
+      "codeHex": "262a",
+      "localSignature": 0,
+      "localSignatureRawToken": 285212672,
+      "initLocals": true,
+      "handlers": []
+    },
+    {
+      "token": 100663304,
+      "name": "InvalidJoin",
+      "headerSize": 12,
+      "headerHex": "133002000800000000000000",
+      "maxStack": 2,
+      "codeHex": "163a01000000172a",
+      "localSignature": 0,
+      "localSignatureRawToken": 285212672,
+      "initLocals": true,
+      "handlers": []
+    }
+  ],
+  "loadError": null,
+  "executions": {
+    "Cases::Tiny1": {
+      "value": null,
+      "error": null
+    },
+    "Cases::Tiny63": {
+      "value": null,
+      "error": null
+    },
+    "Cases::Fat64": {
+      "value": null,
+      "error": null
+    },
+    "Cases::Stack8": {
+      "value": 0,
+      "error": null
+    },
+    "Cases::Stack9": {
+      "value": 0,
+      "error": null
+    },
+    "Cases::FatLocalZero": {
+      "value": null,
+      "error": null
+    },
+    "Cases::InvalidUnderflow": {
+      "value": null,
+      "error": "System.InvalidProgramException"
+    },
+    "Cases::InvalidJoin": {
+      "value": null,
+      "error": "System.InvalidProgramException"
+    }
+  }
+}

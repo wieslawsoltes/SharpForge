@@ -1,0 +1,899 @@
+{
+  "schemaVersion": 1,
+  "reviewer": "Task coordinator automated review",
+  "utc": "2026-10-04T21:05:08.121715+00:00",
+  "decision": "Accept the measured corpus regression and every other quantified adverse latency/heap observation as an explicit correctness-cost exception under CONTRIBUTING section4 for this bounded method-header batch; automated reviewer sign-off, no threshold pass or human approval.",
+  "candidate": "3ddd6460260d93f0a5258bd84ac62158e36dce10",
+  "product": "3316898efee4a9d23b8e0cb87919b9de28a1084a",
+  "baseline": "e60b0764782f1122439e5b161cb9494c75724e32",
+  "evidence": [
+    {
+      "path": "/workspace/scratch/7e3d2a445c44/method-header-qualification-review-3ddd6460.json",
+      "bytes": 106097,
+      "sha256": "5552ed65e951c208b9d223efeae662e2b38fd39a4eb36a2d97a44a0b5d2d960c"
+    },
+    {
+      "path": "/workspace/scratch/7e3d2a445c44/method-header-qualification-review-3ddd6460.md",
+      "bytes": 5995,
+      "sha256": "bc783e1d85033e229cbec7e534a6c39243d4fab8e5edb93aae2dc8df49229d56"
+    },
+    {
+      "path": "/workspace/scratch/7e3d2a445c44/method-header-benchmarks-3316898e/baseline-controls.json",
+      "bytes": 8950,
+      "sha256": "b85487303114d2e839363080882b5a0647742856969c63720a56854bc982dfe9"
+    },
+    {
+      "path": "/workspace/scratch/7e3d2a445c44/method-header-benchmarks-3316898e/candidate-controls.json",
+      "bytes": 8828,
+      "sha256": "c197e837e1bce0952d4baa62f07051b968a8dd730f64cadfa483afe613be4074"
+    },
+    {
+      "path": "/workspace/scratch/7e3d2a445c44/method-header-benchmarks-3316898e/baseline-corpus.json",
+      "bytes": 13557,
+      "sha256": "450f906c42ec3e1ffb65820586522ec72819bb922f118d1a0ad0f90f6f64850d"
+    },
+    {
+      "path": "/workspace/scratch/7e3d2a445c44/method-header-benchmarks-3316898e/candidate-corpus.json",
+      "bytes": 13456,
+      "sha256": "71a7887e221845c64178434b69fd79d7a43699ca05970a071cf539d730e60a5c"
+    }
+  ],
+  "comparisons": [
+    {
+      "workload": "controls",
+      "sides": {
+        "baseline": {
+          "latencyMs": {
+            "median": 4.863360000000057,
+            "p95": 6.5865859999998975,
+            "p99": 8.566827000000103,
+            "mean": 5.2178431099999925,
+            "min": 4.083288999999695,
+            "max": 11.719437999999627
+          },
+          "singleObservationsMs": {
+            "import": 826.9933729999999,
+            "firstCompile": 70.64505600000007
+          },
+          "heapDeltaBytes": {
+            "median": 795452.0,
+            "mean": 791289.84,
+            "p95": 818320,
+            "p99": 837808,
+            "min": 571456,
+            "max": 842792
+          },
+          "quarterMediansMs": [
+            5.3442099999999755,
+            5.24206200000026,
+            4.580559999999878,
+            4.681107999999767
+          ],
+          "assemblyBytes": 1536,
+          "sumHeaderBytes": 36,
+          "methods": [
+            {
+              "name": "Empty",
+              "token": 100663297,
+              "fileOffset": 584,
+              "headerSize": 12,
+              "codeOffset": 596,
+              "codeSize": 1,
+              "sectionEnd": 1536,
+              "maxStack": 1,
+              "localSignature": 0,
+              "moreSections": false,
+              "initLocals": true,
+              "codeSHA256": "684888c0ebb17f374298b65ee2807526c066094c701bcc7ebbe1c1095f494fc1",
+              "handlers": []
+            },
+            {
+              "name": "Literal",
+              "token": 100663298,
+              "fileOffset": 600,
+              "headerSize": 12,
+              "codeOffset": 612,
+              "codeSize": 3,
+              "sectionEnd": 1536,
+              "maxStack": 1,
+              "localSignature": 0,
+              "moreSections": false,
+              "initLocals": true,
+              "codeSHA256": "e2a8c0ff7fbf9ab5aa09f7bbd6ffee28dbcd5aae34ecac394f36498a3690f374",
+              "handlers": []
+            },
+            {
+              "name": "Identity",
+              "token": 100663299,
+              "fileOffset": 616,
+              "headerSize": 12,
+              "codeOffset": 628,
+              "codeSize": 2,
+              "sectionEnd": 1536,
+              "maxStack": 1,
+              "localSignature": 0,
+              "moreSections": false,
+              "initLocals": true,
+              "codeSHA256": "2434fdab84f43e54e4b865934d087d41b9b807519d2c3f311d71fe007360f8ae",
+              "handlers": []
+            }
+          ]
+        },
+        "candidate": {
+          "latencyMs": {
+            "median": 4.73443999999995,
+            "p95": 5.768673999999919,
+            "p99": 7.216030000000046,
+            "mean": 4.805944560000009,
+            "min": 4.011353000000099,
+            "max": 8.189320999999836
+          },
+          "singleObservationsMs": {
+            "import": 635.955964,
+            "firstCompile": 88.061377
+          },
+          "heapDeltaBytes": {
+            "median": 821560.0,
+            "mean": 817611.2,
+            "p95": 847000,
+            "p99": 868360,
+            "min": 578904,
+            "max": 1088272
+          },
+          "quarterMediansMs": [
+            4.4213850000001,
+            4.716219000000137,
+            4.7991799999999785,
+            4.957173000000239
+          ],
+          "assemblyBytes": 1536,
+          "sumHeaderBytes": 3,
+          "methods": [
+            {
+              "name": "Empty",
+              "token": 100663297,
+              "fileOffset": 584,
+              "headerSize": 1,
+              "codeOffset": 585,
+              "codeSize": 1,
+              "sectionEnd": 1536,
+              "maxStack": 8,
+              "localSignature": 0,
+              "moreSections": false,
+              "initLocals": false,
+              "codeSHA256": "684888c0ebb17f374298b65ee2807526c066094c701bcc7ebbe1c1095f494fc1",
+              "handlers": []
+            },
+            {
+              "name": "Literal",
+              "token": 100663298,
+              "fileOffset": 588,
+              "headerSize": 1,
+              "codeOffset": 589,
+              "codeSize": 3,
+              "sectionEnd": 1536,
+              "maxStack": 8,
+              "localSignature": 0,
+              "moreSections": false,
+              "initLocals": false,
+              "codeSHA256": "e2a8c0ff7fbf9ab5aa09f7bbd6ffee28dbcd5aae34ecac394f36498a3690f374",
+              "handlers": []
+            },
+            {
+              "name": "Identity",
+              "token": 100663299,
+              "fileOffset": 592,
+              "headerSize": 1,
+              "codeOffset": 593,
+              "codeSize": 2,
+              "sectionEnd": 1536,
+              "maxStack": 8,
+              "localSignature": 0,
+              "moreSections": false,
+              "initLocals": false,
+              "codeSHA256": "2434fdab84f43e54e4b865934d087d41b9b807519d2c3f311d71fe007360f8ae",
+              "handlers": []
+            }
+          ]
+        }
+      }
+    },
+    {
+      "workload": "corpus",
+      "sides": {
+        "baseline": {
+          "latencyMs": {
+            "median": 14.240625000000023,
+            "p95": 17.621568000000025,
+            "p99": 20.982804999999644,
+            "mean": 14.510690770000007,
+            "min": 12.653328999999758,
+            "max": 21.28975700000001
+          },
+          "singleObservationsMs": {
+            "import": 607.4249219999999,
+            "firstCompile": 134.67947200000003
+          },
+          "heapDeltaBytes": {
+            "median": 3358356.0,
+            "mean": 3362602.72,
+            "p95": 3387768,
+            "p99": 3592328,
+            "min": 3148176,
+            "max": 3637760
+          },
+          "quarterMediansMs": [
+            14.184477999999899,
+            14.15202999999974,
+            14.987939000000097,
+            13.441677000000254
+          ],
+          "assemblyBytes": 2560,
+          "sumHeaderBytes": 156,
+          "methods": [
+            {
+              "name": "Empty",
+              "token": 100663297,
+              "fileOffset": 584,
+              "headerSize": 12,
+              "codeOffset": 596,
+              "codeSize": 1,
+              "sectionEnd": 2560,
+              "maxStack": 1,
+              "localSignature": 0,
+              "moreSections": false,
+              "initLocals": true,
+              "codeSHA256": "684888c0ebb17f374298b65ee2807526c066094c701bcc7ebbe1c1095f494fc1",
+              "handlers": []
+            },
+            {
+              "name": "Literal",
+              "token": 100663298,
+              "fileOffset": 600,
+              "headerSize": 12,
+              "codeOffset": 612,
+              "codeSize": 3,
+              "sectionEnd": 2560,
+              "maxStack": 1,
+              "localSignature": 0,
+              "moreSections": false,
+              "initLocals": true,
+              "codeSHA256": "e2a8c0ff7fbf9ab5aa09f7bbd6ffee28dbcd5aae34ecac394f36498a3690f374",
+              "handlers": []
+            },
+            {
+              "name": "Sum",
+              "token": 100663299,
+              "fileOffset": 616,
+              "headerSize": 12,
+              "codeOffset": 628,
+              "codeSize": 26,
+              "sectionEnd": 2560,
+              "maxStack": 2,
+              "localSignature": 0,
+              "moreSections": false,
+              "initLocals": true,
+              "codeSHA256": "14ceaedccfaa53cf7da7cee483128789568f82cf5392ce0f0ae0fc580806239b",
+              "handlers": []
+            },
+            {
+              "name": "DeepCall",
+              "token": 100663300,
+              "fileOffset": 656,
+              "headerSize": 12,
+              "codeOffset": 668,
+              "codeSize": 18,
+              "sectionEnd": 2560,
+              "maxStack": 10,
+              "localSignature": 0,
+              "moreSections": false,
+              "initLocals": true,
+              "codeSHA256": "281c882791de1edba008578c62ff33af1801d054922d8502ceaca22e0a44a56b",
+              "handlers": []
+            },
+            {
+              "name": "Loop",
+              "token": 100663301,
+              "fileOffset": 688,
+              "headerSize": 12,
+              "codeOffset": 700,
+              "codeSize": 23,
+              "sectionEnd": 2560,
+              "maxStack": 2,
+              "localSignature": 285212673,
+              "moreSections": false,
+              "initLocals": true,
+              "codeSHA256": "9bd0984f136ed23bf60d3617045a464f83085a586e82c0aa13c9a61c73201137",
+              "handlers": []
+            },
+            {
+              "name": "Filtered",
+              "token": 100663302,
+              "fileOffset": 724,
+              "headerSize": 12,
+              "codeOffset": 736,
+              "codeSize": 44,
+              "sectionEnd": 2560,
+              "maxStack": 2,
+              "localSignature": 285212674,
+              "moreSections": true,
+              "initLocals": true,
+              "codeSHA256": "6fb1f919d5e1edf0a562532d40a70491a88e36d95288de98ff23b56462192912",
+              "handlers": [
+                {
+                  "start": 2,
+                  "end": 8,
+                  "target": 30,
+                  "handlerEnd": 35,
+                  "catchType": 8,
+                  "flags": 1,
+                  "kind": "filter"
+                },
+                {
+                  "start": 2,
+                  "end": 37,
+                  "target": 37,
+                  "handlerEnd": 42,
+                  "catchType": 0,
+                  "flags": 2,
+                  "kind": "finally"
+                }
+              ]
+            },
+            {
+              "name": "Allocated",
+              "token": 100663303,
+              "fileOffset": 832,
+              "headerSize": 12,
+              "codeOffset": 844,
+              "codeSize": 31,
+              "sectionEnd": 2560,
+              "maxStack": 4,
+              "localSignature": 285212675,
+              "moreSections": false,
+              "initLocals": true,
+              "codeSHA256": "ec9de7a1a78c48dde998cbba2604390203ca36eb395bbe1d8d45ff995cb6049d",
+              "handlers": []
+            },
+            {
+              "name": "Patterns",
+              "token": 100663304,
+              "fileOffset": 876,
+              "headerSize": 12,
+              "codeOffset": 888,
+              "codeSize": 126,
+              "sectionEnd": 2560,
+              "maxStack": 5,
+              "localSignature": 285212676,
+              "moreSections": false,
+              "initLocals": true,
+              "codeSHA256": "f41f6349a9e2f8a5d7999449f7f6b079ce41871ae6e3219a13b5f1b441821ff3",
+              "handlers": []
+            },
+            {
+              "name": "Echo",
+              "token": 100663305,
+              "fileOffset": 1016,
+              "headerSize": 12,
+              "codeOffset": 1028,
+              "codeSize": 2,
+              "sectionEnd": 2560,
+              "maxStack": 1,
+              "localSignature": 0,
+              "moreSections": false,
+              "initLocals": true,
+              "codeSHA256": "2434fdab84f43e54e4b865934d087d41b9b807519d2c3f311d71fe007360f8ae",
+              "handlers": []
+            },
+            {
+              "name": "Indirect",
+              "token": 100663306,
+              "fileOffset": 1032,
+              "headerSize": 12,
+              "codeOffset": 1044,
+              "codeSize": 18,
+              "sectionEnd": 2560,
+              "maxStack": 2,
+              "localSignature": 285212678,
+              "moreSections": false,
+              "initLocals": true,
+              "codeSHA256": "f7182ce13a749e740e92265c4a771cf2872625843eb9cffa824fa385e75c8556",
+              "handlers": []
+            },
+            {
+              "name": "get_Value",
+              "token": 100663307,
+              "fileOffset": 1064,
+              "headerSize": 12,
+              "codeOffset": 1076,
+              "codeSize": 7,
+              "sectionEnd": 2560,
+              "maxStack": 1,
+              "localSignature": 0,
+              "moreSections": false,
+              "initLocals": true,
+              "codeSHA256": "a42b33234bad279ec5d573c04257ab8869486dcf80efe867031389346376ebbe",
+              "handlers": []
+            },
+            {
+              "name": "set_Value",
+              "token": 100663308,
+              "fileOffset": 1084,
+              "headerSize": 12,
+              "codeOffset": 1096,
+              "codeSize": 8,
+              "sectionEnd": 2560,
+              "maxStack": 2,
+              "localSignature": 0,
+              "moreSections": false,
+              "initLocals": true,
+              "codeSHA256": "1a01b68e1ac30751014d0b2f3d7635e6d259cc1d0c9c4fa0c0b71d74230857ae",
+              "handlers": []
+            },
+            {
+              "name": ".ctor",
+              "token": 100663309,
+              "fileOffset": 1104,
+              "headerSize": 12,
+              "codeOffset": 1116,
+              "codeSize": 7,
+              "sectionEnd": 2560,
+              "maxStack": 1,
+              "localSignature": 0,
+              "moreSections": false,
+              "initLocals": true,
+              "codeSHA256": "88ec70e6abb21ae6d3450349dbcac7523e840180a4e69f192be3ab972eebb171",
+              "handlers": []
+            }
+          ]
+        },
+        "candidate": {
+          "latencyMs": {
+            "median": 16.246553000000176,
+            "p95": 19.195050000000265,
+            "p99": 23.137672000000066,
+            "mean": 16.69202470000002,
+            "min": 14.411863000000267,
+            "max": 24.122980000000098
+          },
+          "singleObservationsMs": {
+            "import": 783.9755620000001,
+            "firstCompile": 119.73585500000013
+          },
+          "heapDeltaBytes": {
+            "median": 3652304.0,
+            "mean": 3656973.76,
+            "p95": 3680144,
+            "p99": 3693944,
+            "min": 3621480,
+            "max": 4013672
+          },
+          "quarterMediansMs": [
+            16.265955999999733,
+            16.539017999999942,
+            15.762767000000167,
+            16.337360999999873
+          ],
+          "assemblyBytes": 2560,
+          "sumHeaderBytes": 79,
+          "methods": [
+            {
+              "name": "Empty",
+              "token": 100663297,
+              "fileOffset": 584,
+              "headerSize": 1,
+              "codeOffset": 585,
+              "codeSize": 1,
+              "sectionEnd": 2560,
+              "maxStack": 8,
+              "localSignature": 0,
+              "moreSections": false,
+              "initLocals": false,
+              "codeSHA256": "684888c0ebb17f374298b65ee2807526c066094c701bcc7ebbe1c1095f494fc1",
+              "handlers": []
+            },
+            {
+              "name": "Literal",
+              "token": 100663298,
+              "fileOffset": 588,
+              "headerSize": 1,
+              "codeOffset": 589,
+              "codeSize": 3,
+              "sectionEnd": 2560,
+              "maxStack": 8,
+              "localSignature": 0,
+              "moreSections": false,
+              "initLocals": false,
+              "codeSHA256": "e2a8c0ff7fbf9ab5aa09f7bbd6ffee28dbcd5aae34ecac394f36498a3690f374",
+              "handlers": []
+            },
+            {
+              "name": "Sum",
+              "token": 100663299,
+              "fileOffset": 592,
+              "headerSize": 1,
+              "codeOffset": 593,
+              "codeSize": 26,
+              "sectionEnd": 2560,
+              "maxStack": 8,
+              "localSignature": 0,
+              "moreSections": false,
+              "initLocals": false,
+              "codeSHA256": "14ceaedccfaa53cf7da7cee483128789568f82cf5392ce0f0ae0fc580806239b",
+              "handlers": []
+            },
+            {
+              "name": "DeepCall",
+              "token": 100663300,
+              "fileOffset": 620,
+              "headerSize": 12,
+              "codeOffset": 632,
+              "codeSize": 18,
+              "sectionEnd": 2560,
+              "maxStack": 10,
+              "localSignature": 0,
+              "moreSections": false,
+              "initLocals": true,
+              "codeSHA256": "281c882791de1edba008578c62ff33af1801d054922d8502ceaca22e0a44a56b",
+              "handlers": []
+            },
+            {
+              "name": "Loop",
+              "token": 100663301,
+              "fileOffset": 652,
+              "headerSize": 12,
+              "codeOffset": 664,
+              "codeSize": 23,
+              "sectionEnd": 2560,
+              "maxStack": 2,
+              "localSignature": 285212673,
+              "moreSections": false,
+              "initLocals": true,
+              "codeSHA256": "9bd0984f136ed23bf60d3617045a464f83085a586e82c0aa13c9a61c73201137",
+              "handlers": []
+            },
+            {
+              "name": "Filtered",
+              "token": 100663302,
+              "fileOffset": 688,
+              "headerSize": 12,
+              "codeOffset": 700,
+              "codeSize": 44,
+              "sectionEnd": 2560,
+              "maxStack": 2,
+              "localSignature": 285212674,
+              "moreSections": true,
+              "initLocals": true,
+              "codeSHA256": "6fb1f919d5e1edf0a562532d40a70491a88e36d95288de98ff23b56462192912",
+              "handlers": [
+                {
+                  "start": 2,
+                  "end": 8,
+                  "target": 30,
+                  "handlerEnd": 35,
+                  "catchType": 8,
+                  "flags": 1,
+                  "kind": "filter"
+                },
+                {
+                  "start": 2,
+                  "end": 37,
+                  "target": 37,
+                  "handlerEnd": 42,
+                  "catchType": 0,
+                  "flags": 2,
+                  "kind": "finally"
+                }
+              ]
+            },
+            {
+              "name": "Allocated",
+              "token": 100663303,
+              "fileOffset": 796,
+              "headerSize": 12,
+              "codeOffset": 808,
+              "codeSize": 31,
+              "sectionEnd": 2560,
+              "maxStack": 4,
+              "localSignature": 285212675,
+              "moreSections": false,
+              "initLocals": true,
+              "codeSHA256": "ec9de7a1a78c48dde998cbba2604390203ca36eb395bbe1d8d45ff995cb6049d",
+              "handlers": []
+            },
+            {
+              "name": "Patterns",
+              "token": 100663304,
+              "fileOffset": 840,
+              "headerSize": 12,
+              "codeOffset": 852,
+              "codeSize": 126,
+              "sectionEnd": 2560,
+              "maxStack": 3,
+              "localSignature": 285212676,
+              "moreSections": false,
+              "initLocals": true,
+              "codeSHA256": "f41f6349a9e2f8a5d7999449f7f6b079ce41871ae6e3219a13b5f1b441821ff3",
+              "handlers": []
+            },
+            {
+              "name": "Echo",
+              "token": 100663305,
+              "fileOffset": 980,
+              "headerSize": 1,
+              "codeOffset": 981,
+              "codeSize": 2,
+              "sectionEnd": 2560,
+              "maxStack": 8,
+              "localSignature": 0,
+              "moreSections": false,
+              "initLocals": false,
+              "codeSHA256": "2434fdab84f43e54e4b865934d087d41b9b807519d2c3f311d71fe007360f8ae",
+              "handlers": []
+            },
+            {
+              "name": "Indirect",
+              "token": 100663306,
+              "fileOffset": 984,
+              "headerSize": 12,
+              "codeOffset": 996,
+              "codeSize": 18,
+              "sectionEnd": 2560,
+              "maxStack": 2,
+              "localSignature": 285212678,
+              "moreSections": false,
+              "initLocals": true,
+              "codeSHA256": "f7182ce13a749e740e92265c4a771cf2872625843eb9cffa824fa385e75c8556",
+              "handlers": []
+            },
+            {
+              "name": "get_Value",
+              "token": 100663307,
+              "fileOffset": 1016,
+              "headerSize": 1,
+              "codeOffset": 1017,
+              "codeSize": 7,
+              "sectionEnd": 2560,
+              "maxStack": 8,
+              "localSignature": 0,
+              "moreSections": false,
+              "initLocals": false,
+              "codeSHA256": "a42b33234bad279ec5d573c04257ab8869486dcf80efe867031389346376ebbe",
+              "handlers": []
+            },
+            {
+              "name": "set_Value",
+              "token": 100663308,
+              "fileOffset": 1024,
+              "headerSize": 1,
+              "codeOffset": 1025,
+              "codeSize": 8,
+              "sectionEnd": 2560,
+              "maxStack": 8,
+              "localSignature": 0,
+              "moreSections": false,
+              "initLocals": false,
+              "codeSHA256": "1a01b68e1ac30751014d0b2f3d7635e6d259cc1d0c9c4fa0c0b71d74230857ae",
+              "handlers": []
+            },
+            {
+              "name": ".ctor",
+              "token": 100663309,
+              "fileOffset": 1036,
+              "headerSize": 1,
+              "codeOffset": 1037,
+              "codeSize": 7,
+              "sectionEnd": 2560,
+              "maxStack": 8,
+              "localSignature": 0,
+              "moreSections": false,
+              "initLocals": false,
+              "codeSHA256": "88ec70e6abb21ae6d3450349dbcac7523e840180a4e69f192be3ab972eebb171",
+              "handlers": []
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "allAdverseLatencyObservations": [
+    {
+      "workload": "controls",
+      "kind": "singleObservationsMs",
+      "metric": "firstCompile",
+      "baseline": 70.64505600000007,
+      "candidate": 88.061377,
+      "delta": 17.416320999999925,
+      "changePercent": 24.65327651520286
+    },
+    {
+      "workload": "corpus",
+      "kind": "latencyMs",
+      "metric": "median",
+      "baseline": 14.240625000000023,
+      "candidate": 16.246553000000176,
+      "delta": 2.0059280000001536,
+      "changePercent": 14.08595479482222
+    },
+    {
+      "workload": "corpus",
+      "kind": "latencyMs",
+      "metric": "p95",
+      "baseline": 17.621568000000025,
+      "candidate": 19.195050000000265,
+      "delta": 1.57348200000024,
+      "changePercent": 8.929296189761526
+    },
+    {
+      "workload": "corpus",
+      "kind": "latencyMs",
+      "metric": "p99",
+      "baseline": 20.982804999999644,
+      "candidate": 23.137672000000066,
+      "delta": 2.154867000000422,
+      "changePercent": 10.269680340643017
+    },
+    {
+      "workload": "corpus",
+      "kind": "latencyMs",
+      "metric": "mean",
+      "baseline": 14.510690770000007,
+      "candidate": 16.69202470000002,
+      "delta": 2.1813339300000116,
+      "changePercent": 15.032598823687904
+    },
+    {
+      "workload": "corpus",
+      "kind": "latencyMs",
+      "metric": "min",
+      "baseline": 12.653328999999758,
+      "candidate": 14.411863000000267,
+      "delta": 1.758534000000509,
+      "changePercent": 13.897797172590254
+    },
+    {
+      "workload": "corpus",
+      "kind": "latencyMs",
+      "metric": "max",
+      "baseline": 21.28975700000001,
+      "candidate": 24.122980000000098,
+      "delta": 2.833223000000089,
+      "changePercent": 13.30791610256561
+    },
+    {
+      "workload": "corpus",
+      "kind": "singleObservationsMs",
+      "metric": "import",
+      "baseline": 607.4249219999999,
+      "candidate": 783.9755620000001,
+      "delta": 176.55064000000016,
+      "changePercent": 29.06542580088609
+    }
+  ],
+  "allAdverseHeapObservations": [
+    {
+      "workload": "controls",
+      "kind": "heapDeltaBytes",
+      "metric": "median",
+      "baseline": 795452.0,
+      "candidate": 821560.0,
+      "delta": 26108.0,
+      "changePercent": 3.2821590743375983
+    },
+    {
+      "workload": "controls",
+      "kind": "heapDeltaBytes",
+      "metric": "mean",
+      "baseline": 791289.84,
+      "candidate": 817611.2,
+      "delta": 26321.359999999986,
+      "changePercent": 3.3263867004788006
+    },
+    {
+      "workload": "controls",
+      "kind": "heapDeltaBytes",
+      "metric": "p95",
+      "baseline": 818320,
+      "candidate": 847000,
+      "delta": 28680,
+      "changePercent": 3.5047414214488315
+    },
+    {
+      "workload": "controls",
+      "kind": "heapDeltaBytes",
+      "metric": "p99",
+      "baseline": 837808,
+      "candidate": 868360,
+      "delta": 30552,
+      "changePercent": 3.646658900368571
+    },
+    {
+      "workload": "controls",
+      "kind": "heapDeltaBytes",
+      "metric": "min",
+      "baseline": 571456,
+      "candidate": 578904,
+      "delta": 7448,
+      "changePercent": 1.3033374398028874
+    },
+    {
+      "workload": "controls",
+      "kind": "heapDeltaBytes",
+      "metric": "max",
+      "baseline": 842792,
+      "candidate": 1088272,
+      "delta": 245480,
+      "changePercent": 29.126996934000317
+    },
+    {
+      "workload": "corpus",
+      "kind": "heapDeltaBytes",
+      "metric": "median",
+      "baseline": 3358356.0,
+      "candidate": 3652304.0,
+      "delta": 293948.0,
+      "changePercent": 8.752734969133712
+    },
+    {
+      "workload": "corpus",
+      "kind": "heapDeltaBytes",
+      "metric": "mean",
+      "baseline": 3362602.72,
+      "candidate": 3656973.76,
+      "delta": 294371.0399999996,
+      "changePercent": 8.754261639329176
+    },
+    {
+      "workload": "corpus",
+      "kind": "heapDeltaBytes",
+      "metric": "p95",
+      "baseline": 3387768,
+      "candidate": 3680144,
+      "delta": 292376,
+      "changePercent": 8.63034304592285
+    },
+    {
+      "workload": "corpus",
+      "kind": "heapDeltaBytes",
+      "metric": "p99",
+      "baseline": 3592328,
+      "candidate": 3693944,
+      "delta": 101616,
+      "changePercent": 2.8286949298616415
+    },
+    {
+      "workload": "corpus",
+      "kind": "heapDeltaBytes",
+      "metric": "min",
+      "baseline": 3148176,
+      "candidate": 3621480,
+      "delta": 473304,
+      "changePercent": 15.0342293442298
+    },
+    {
+      "workload": "corpus",
+      "kind": "heapDeltaBytes",
+      "metric": "max",
+      "baseline": 3637760,
+      "candidate": 4013672,
+      "delta": 375912,
+      "changePercent": 10.33361189303308
+    }
+  ],
+  "correctnessRationale": [
+    "Eager builder depth can precede later instruction insertion and branch relaxation. The completed byte stream therefore receives canonical instruction, EH and bounded dataflow validation before exact maxstack is encoded.",
+    "The implementation reuses fixedStackEffect, prefix-group decoding, exception-region/control-flow validation and DataflowWorklist; it does not introduce an independent opcode or handler-height authority.",
+    "Tiny admission is explicit and obeys code-size, locals, stack, handlers and dynamic-allocation/initLocals facts. Omitted low-level headerFormat preserves legacy fat encoding; exact fatzero and tiny implicit8 are documented.",
+    "Native observations, six valid body/header boundaries, invalid-program controls, unchanged public/friend reference-output compatibility and79focused tests passed. The13corpus method scalar/header/IL facts match native observations under documented EH field normalization.",
+    "All methodIL, local signatures, code sizes and EH clauses match the benchmark baseline. Patterns carries finalgraph fatmaxstack3 instead of5; DeepCall remainsfat10. Headerbytes decrease36to3and156to79 while PE file sizes remain1536and2560.",
+    "A2.005928ms median whole-corpus cost(+14.085955percent) is accepted to ensure finalized-IL analysis and correct header policy. The fullp95/p99, mean, extrema, one-shot and heap adverse observations are also accepted."
+  ],
+  "limits": [
+    "Four original independent processes, one per variant/workload; no benchmark rerun.400measured and484total chronological compile samples preserved.",
+    "One-shot imports and first compiles are isolated observations, not distributions; their causal attribution is not established.",
+    "Whole-checkout comparison includes additional final-stream decoding/EH/dataflow work but does not isolate the cost of one function or tiny encoding.",
+    "GC exposed/requested before eachcompile; heapUsed deltas include temporary objects and are not allocation rates, retained heap or peak memory. No regression is dismissed as GC or shared-host noise.",
+    "Recorded shared Linuxx64/CoreCLR target only; no broaderengine/cross-platform qualification claim. Trackingissue2391remainsopen for legacyemitter/replay/schema and other acceptance gaps."
+  ],
+  "additionalExecutionByReview": false
+}

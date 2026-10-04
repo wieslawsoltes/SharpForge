@@ -1,0 +1,388 @@
+{
+  "runtime": ".NET 10.0.5",
+  "signatures": {
+    "100663297": {
+      "parameters": 0,
+      "returnsVoid": true,
+      "hasThis": false,
+      "explicitThis": false,
+      "header": 0,
+      "requiredParameters": 0
+    },
+    "100663298": {
+      "parameters": 0,
+      "returnsVoid": false,
+      "hasThis": false,
+      "explicitThis": false,
+      "header": 0,
+      "requiredParameters": 0
+    },
+    "100663299": {
+      "parameters": 10,
+      "returnsVoid": false,
+      "hasThis": false,
+      "explicitThis": false,
+      "header": 0,
+      "requiredParameters": 10
+    },
+    "100663300": {
+      "parameters": 0,
+      "returnsVoid": false,
+      "hasThis": false,
+      "explicitThis": false,
+      "header": 0,
+      "requiredParameters": 0
+    },
+    "100663301": {
+      "parameters": 0,
+      "returnsVoid": false,
+      "hasThis": false,
+      "explicitThis": false,
+      "header": 0,
+      "requiredParameters": 0
+    },
+    "100663302": {
+      "parameters": 0,
+      "returnsVoid": false,
+      "hasThis": false,
+      "explicitThis": false,
+      "header": 0,
+      "requiredParameters": 0
+    },
+    "100663303": {
+      "parameters": 0,
+      "returnsVoid": false,
+      "hasThis": false,
+      "explicitThis": false,
+      "header": 0,
+      "requiredParameters": 0
+    },
+    "100663304": {
+      "parameters": 0,
+      "returnsVoid": false,
+      "hasThis": false,
+      "explicitThis": false,
+      "header": 0,
+      "requiredParameters": 0
+    },
+    "100663305": {
+      "parameters": 1,
+      "returnsVoid": false,
+      "hasThis": false,
+      "explicitThis": false,
+      "header": 0,
+      "requiredParameters": 1
+    },
+    "100663306": {
+      "parameters": 0,
+      "returnsVoid": false,
+      "hasThis": false,
+      "explicitThis": false,
+      "header": 0,
+      "requiredParameters": 0
+    },
+    "100663307": {
+      "parameters": 0,
+      "returnsVoid": false,
+      "hasThis": true,
+      "explicitThis": false,
+      "header": 32,
+      "requiredParameters": 0
+    },
+    "100663308": {
+      "parameters": 1,
+      "returnsVoid": true,
+      "hasThis": true,
+      "explicitThis": false,
+      "header": 32,
+      "requiredParameters": 1
+    },
+    "100663309": {
+      "parameters": 0,
+      "returnsVoid": true,
+      "hasThis": true,
+      "explicitThis": false,
+      "header": 32,
+      "requiredParameters": 0
+    },
+    "167772161": {
+      "parameters": 1,
+      "returnsVoid": true,
+      "hasThis": true,
+      "explicitThis": false,
+      "header": 32,
+      "requiredParameters": 1
+    },
+    "167772162": {
+      "parameters": 0,
+      "returnsVoid": true,
+      "hasThis": true,
+      "explicitThis": false,
+      "header": 32,
+      "requiredParameters": 0
+    },
+    "167772163": {
+      "parameters": 1,
+      "returnsVoid": true,
+      "hasThis": true,
+      "explicitThis": false,
+      "header": 32,
+      "requiredParameters": 1
+    },
+    "167772164": {
+      "parameters": 1,
+      "returnsVoid": true,
+      "hasThis": true,
+      "explicitThis": false,
+      "header": 32,
+      "requiredParameters": 1
+    },
+    "167772165": {
+      "parameters": 0,
+      "returnsVoid": true,
+      "hasThis": true,
+      "explicitThis": false,
+      "header": 32,
+      "requiredParameters": 0
+    },
+    "167772166": {
+      "parameters": 1,
+      "returnsVoid": true,
+      "hasThis": true,
+      "explicitThis": false,
+      "header": 32,
+      "requiredParameters": 1
+    },
+    "167772167": {
+      "parameters": 0,
+      "returnsVoid": true,
+      "hasThis": true,
+      "explicitThis": false,
+      "header": 32,
+      "requiredParameters": 0
+    },
+    "167772168": {
+      "parameters": 0,
+      "returnsVoid": true,
+      "hasThis": true,
+      "explicitThis": false,
+      "header": 32,
+      "requiredParameters": 0
+    },
+    "167772169": {
+      "parameters": 0,
+      "returnsVoid": true,
+      "hasThis": true,
+      "explicitThis": false,
+      "header": 32,
+      "requiredParameters": 0
+    },
+    "285212678": {
+      "parameters": 1,
+      "returnsVoid": false,
+      "hasThis": false,
+      "explicitThis": false,
+      "header": 0,
+      "requiredParameters": 1
+    }
+  },
+  "methods": [
+    {
+      "token": 100663297,
+      "name": "Empty",
+      "headerSize": 1,
+      "headerHex": "06",
+      "maxStack": 8,
+      "codeHex": "2a",
+      "localSignature": 285212672,
+      "initLocals": false,
+      "handlers": []
+    },
+    {
+      "token": 100663298,
+      "name": "Literal",
+      "headerSize": 1,
+      "headerHex": "0e",
+      "maxStack": 8,
+      "codeHex": "1f2a2a",
+      "localSignature": 285212672,
+      "initLocals": false,
+      "handlers": []
+    },
+    {
+      "token": 100663299,
+      "name": "Sum",
+      "headerSize": 1,
+      "headerHex": "6a",
+      "maxStack": 8,
+      "codeHex": "020358045805580e04580e05580e06580e07580e08580e09582a",
+      "localSignature": 285212672,
+      "initLocals": false,
+      "handlers": []
+    },
+    {
+      "token": 100663300,
+      "name": "DeepCall",
+      "headerSize": 12,
+      "headerHex": "13300a001200000000000000",
+      "maxStack": 10,
+      "codeHex": "1718191a1b1c1d1e1f091f0a28030000062a",
+      "localSignature": 285212672,
+      "initLocals": true,
+      "handlers": []
+    },
+    {
+      "token": 100663301,
+      "name": "Loop",
+      "headerSize": 12,
+      "headerHex": "133002001500000001000011",
+      "maxStack": 2,
+      "codeHex": "160a160b2b080607580a0717580b071f0c32f3062a",
+      "localSignature": 285212673,
+      "initLocals": true,
+      "handlers": []
+    },
+    {
+      "token": 100663302,
+      "name": "Filtered",
+      "headerSize": 12,
+      "headerHex": "1b3002002a00000002000011",
+      "maxStack": 2,
+      "codeHex": "170a730800000a7a750b000001252d0426162b08260617fe0116fe03fe11261d0ade050618580adc062a",
+      "localSignature": 285212674,
+      "initLocals": true,
+      "handlers": [
+        {
+          "flags": 1,
+          "start": 2,
+          "end": 8,
+          "target": 30,
+          "handlerEnd": 35,
+          "catchType": 0,
+          "filterOffset": 8
+        },
+        {
+          "flags": 2,
+          "start": 2,
+          "end": 35,
+          "target": 35,
+          "handlerEnd": 40,
+          "catchType": 0,
+          "filterOffset": null
+        }
+      ]
+    },
+    {
+      "token": 100663303,
+      "name": "Allocated",
+      "headerSize": 12,
+      "headerHex": "133003001700000003000011",
+      "maxStack": 3,
+      "codeHex": "1ee0fe0f0a061f1454061a581f1654064a061a584a582a",
+      "localSignature": 285212675,
+      "initLocals": true,
+      "handlers": []
+    },
+    {
+      "token": 100663304,
+      "name": "Patterns",
+      "headerSize": 12,
+      "headerHex": "133003004500000004000011",
+      "maxStack": 3,
+      "codeHex": "730d000006251f2a6f0c0000060a062c0c066f0b0000061f2afe012b011616fe03062c09066f0b000006163003162b011858062c0a066f0b0000061f643203162b011a582a",
+      "localSignature": 285212676,
+      "initLocals": true,
+      "handlers": []
+    },
+    {
+      "token": 100663305,
+      "name": "Echo",
+      "headerSize": 1,
+      "headerHex": "0a",
+      "maxStack": 8,
+      "codeHex": "022a",
+      "localSignature": 285212672,
+      "initLocals": false,
+      "handlers": []
+    },
+    {
+      "token": 100663306,
+      "name": "Indirect",
+      "headerSize": 12,
+      "headerHex": "133002001000000005000011",
+      "maxStack": 2,
+      "codeHex": "fe06090000060a1f2a0629060000112a",
+      "localSignature": 285212677,
+      "initLocals": true,
+      "handlers": []
+    },
+    {
+      "token": 100663307,
+      "name": "get_Value",
+      "headerSize": 1,
+      "headerHex": "1e",
+      "maxStack": 8,
+      "codeHex": "027b010000042a",
+      "localSignature": 285212672,
+      "initLocals": false,
+      "handlers": []
+    },
+    {
+      "token": 100663308,
+      "name": "set_Value",
+      "headerSize": 1,
+      "headerHex": "22",
+      "maxStack": 8,
+      "codeHex": "02037d010000042a",
+      "localSignature": 285212672,
+      "initLocals": false,
+      "handlers": []
+    },
+    {
+      "token": 100663309,
+      "name": ".ctor",
+      "headerSize": 1,
+      "headerHex": "1e",
+      "maxStack": 8,
+      "codeHex": "02280900000a2a",
+      "localSignature": 285212672,
+      "initLocals": false,
+      "handlers": []
+    }
+  ],
+  "loadError": null,
+  "executions": {
+    "HeaderCorpus::Empty": {
+      "value": null,
+      "error": null
+    },
+    "HeaderCorpus::Literal": {
+      "value": 42,
+      "error": null
+    },
+    "HeaderCorpus::DeepCall": {
+      "value": 55,
+      "error": null
+    },
+    "HeaderCorpus::Loop": {
+      "value": 66,
+      "error": null
+    },
+    "HeaderCorpus::Filtered": {
+      "value": 9,
+      "error": null
+    },
+    "HeaderCorpus::Allocated": {
+      "value": 42,
+      "error": null
+    },
+    "HeaderCorpus::Patterns": {
+      "value": 7,
+      "error": null
+    },
+    "HeaderCorpus::Indirect": {
+      "value": 42,
+      "error": null
+    }
+  }
+}

@@ -1,0 +1,230 @@
+{
+  "step": "native",
+  "status": "failed",
+  "argv": [
+    "node",
+    "scripts/limited.js",
+    "node",
+    "tests/fixtures/a03-method-headers/capture.mjs",
+    "/workspace/scratch/7e3d2a445c44/method-header-qualification-f261715f/native-first"
+  ],
+  "cwd": "/workspace/scratch/7e3d2a445c44/sf6-maxstack",
+  "originalArgv": [
+    "node",
+    "scripts/limited.js",
+    "node",
+    "tests/fixtures/a03-method-headers/capture.mjs",
+    "/workspace/scratch/7e3d2a445c44/sf6-maxstack/artifacts/a03-method-headers-3316898e"
+  ],
+  "planSha256": "880824acdbc5b4c5a99d3851e7ba30f3ba8a1f08075b21ff5152acaff8891ac6",
+  "recorderSha256": "af49c101c992225514c301a3f15b3896e7127cb7efe8dbc23c2d6a507cd2af76",
+  "preflightStartedAt": "2026-10-04T19:12:07.901820+00:00",
+  "qualification": "failed",
+  "sourceBefore": {
+    "path": "/workspace/scratch/7e3d2a445c44/method-header-qualification-f261715f/steps/native/source-before.json",
+    "bytes": 601458,
+    "sha256": "0e260d3e015bbf56c05dc3066d0db72a004896883291413ebd63992639daf498"
+  },
+  "startedAt": "2026-10-04T19:12:08.979095+00:00",
+  "timeoutSeconds": 900,
+  "availableDiskBytesBefore": 535072768,
+  "environment": {
+    "PATH": "/root/.codex/tmp/arg0/codex-arg0FW6Pa9:/opt/codex/codex-path:/opt/codex/runtimes/codex-primary-runtime/dependencies/bin/override:/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin:/opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin:/opt/codex/runtimes/codex-primary-runtime/dependencies/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/opt/codex/runtimes/codex-primary-runtime/dependencies/bin/fallback",
+    "LANG": "C.UTF-8",
+    "LC_ALL": "C.UTF-8",
+    "TZ": "Europe/Berlin",
+    "TMPDIR": null,
+    "CI": null,
+    "GITHUB_ACTIONS": null,
+    "NODE_OPTIONS": null,
+    "DOTNET_ROOT": "/workspace/scratch/7e3d2a445c44/dotnet-10.0.201",
+    "DOTNET": "/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/dotnet",
+    "SHARPFORGE_ORACLE_DOTNET": "/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/dotnet",
+    "SHARPFORGE_ILASM": "/workspace/scratch/7e3d2a445c44/dotnet-tools/ilasm",
+    "DOTNET_ROLL_FORWARD": null,
+    "DOTNET_ROLL_FORWARD_TO_PRERELEASE": null,
+    "DOTNET_CLI_TELEMETRY_OPTOUT": null,
+    "DOTNET_NOLOGO": null,
+    "SHARPFORGE_MAX_PARALLEL_RUNS": "1",
+    "SHARPFORGE_TEST_CONCURRENCY": "1",
+    "SHARPFORGE_MAX_OLD_SPACE_MB": "2048",
+    "GIT_OPTIONAL_LOCKS": "0"
+  },
+  "environmentScope": "Public execution settings only; unlisted inherited variables are not serialized.",
+  "pid": 51,
+  "exitCode": 1,
+  "signal": null,
+  "elapsedSeconds": 3.1300742640014505,
+  "finishedAt": "2026-10-04T19:12:12.109463+00:00",
+  "availableDiskBytesAfter": 534806528,
+  "failure": {
+    "type": "AssertionError",
+    "message": "Prepared command exited 1; preserve this attempt and stop"
+  },
+  "outerLogs": [
+    {
+      "path": "/workspace/scratch/7e3d2a445c44/method-header-qualification-f261715f/steps/native/stdout.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/workspace/scratch/7e3d2a445c44/method-header-qualification-f261715f/steps/native/stderr.log",
+      "bytes": 1492,
+      "sha256": "94b13b9143d8c55da52040a3042f48c3197d9c51b8fa20fc66f4bf0f9e845c1f"
+    }
+  ],
+  "outputInventory": [
+    {
+      "path": "/workspace/scratch/7e3d2a445c44/method-header-qualification-f261715f/native-first/Observer.dll",
+      "bytes": 22528,
+      "sha256": "9f81f5c628d59fa610f2fe8883bf458d9a504ed8036cd67eb1f6a801d5b731f3"
+    },
+    {
+      "path": "/workspace/scratch/7e3d2a445c44/method-header-qualification-f261715f/native-first/Observer.runtimeconfig.json",
+      "bytes": 100,
+      "sha256": "75494a2c9c324d9e814bc41acfc719b493d28cde3980caf1643b2bdbd85dddb6"
+    },
+    {
+      "path": "/workspace/scratch/7e3d2a445c44/method-header-qualification-f261715f/native-first/Program.cs",
+      "bytes": 6560,
+      "sha256": "6839b078cb3befe22bebc2e2d7bd710924a4b3c3c6acc809e901188723350fa6"
+    },
+    {
+      "path": "/workspace/scratch/7e3d2a445c44/method-header-qualification-f261715f/native-first/Roslyn.dll",
+      "bytes": 4608,
+      "sha256": "b41eef889c82b09826e99f33360b444e582f4835c070da91a875242727314de1"
+    },
+    {
+      "path": "/workspace/scratch/7e3d2a445c44/method-header-qualification-f261715f/native-first/SharpForge.dll",
+      "bytes": 2560,
+      "sha256": "3d52cf8f642a5bb90dfe912d29a02055adaefde533ce33e451a31581e936c7aa"
+    },
+    {
+      "path": "/workspace/scratch/7e3d2a445c44/method-header-qualification-f261715f/native-first/boundaries.il",
+      "bytes": 2610,
+      "sha256": "dc3262799596e9622b55a8df264f2378ad8ef7f0e48c05f33e9ee4fcaecbb1b9"
+    },
+    {
+      "path": "/workspace/scratch/7e3d2a445c44/method-header-qualification-f261715f/native-first/capture.json",
+      "bytes": 127521,
+      "sha256": "5c5f8e397b1c029617b4778746bfdd40531a2179cbb0802a9624679e462f502e"
+    },
+    {
+      "path": "/workspace/scratch/7e3d2a445c44/method-header-qualification-f261715f/native-first/capture.mjs",
+      "bytes": 8418,
+      "sha256": "6e6d6c858bd7e29d6940228469df5cba227a25004cf25197d9004d37aa8e79a6"
+    },
+    {
+      "path": "/workspace/scratch/7e3d2a445c44/method-header-qualification-f261715f/native-first/corpus.cs",
+      "bytes": 1307,
+      "sha256": "6c7a86183afc367e4eb817c3644ea3018ac9756c1211afc1a0556e723c36c8a4"
+    },
+    {
+      "path": "/workspace/scratch/7e3d2a445c44/method-header-qualification-f261715f/native-first/input.js",
+      "bytes": 3242,
+      "sha256": "95c8ad7d4978eb7fb421351f080a77db0d404ec1c2e9df8574bc48735084f118"
+    },
+    {
+      "path": "/workspace/scratch/7e3d2a445c44/method-header-qualification-f261715f/native-first/process-01.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/workspace/scratch/7e3d2a445c44/method-header-qualification-f261715f/native-first/process-01.stdout.log",
+      "bytes": 9,
+      "sha256": "38c8354f0a1a3a4e913e03fe6396aa12c2ef1d427921d44b19123e42dcb74e92"
+    },
+    {
+      "path": "/workspace/scratch/7e3d2a445c44/method-header-qualification-f261715f/native-first/process-02.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/workspace/scratch/7e3d2a445c44/method-header-qualification-f261715f/native-first/process-02.stdout.log",
+      "bytes": 63,
+      "sha256": "4d0c9a4904503f1705fefa87cf647485beb84f2ab0e692c446b4abdd615db85f"
+    },
+    {
+      "path": "/workspace/scratch/7e3d2a445c44/method-header-qualification-f261715f/native-first/process-03.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/workspace/scratch/7e3d2a445c44/method-header-qualification-f261715f/native-first/process-03.stdout.log",
+      "bytes": 222,
+      "sha256": "0f888c5dfd832ce30d94fff56d4bdaeeb327567b09d34f328f2cb80e7e9c3633"
+    },
+    {
+      "path": "/workspace/scratch/7e3d2a445c44/method-header-qualification-f261715f/native-first/process-04.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/workspace/scratch/7e3d2a445c44/method-header-qualification-f261715f/native-first/process-04.stdout.log",
+      "bytes": 61,
+      "sha256": "335ee5c8674ef201012063d1afcf0c093316d04c0c357f69b6322dea86a5529d"
+    },
+    {
+      "path": "/workspace/scratch/7e3d2a445c44/method-header-qualification-f261715f/native-first/process-05.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/workspace/scratch/7e3d2a445c44/method-header-qualification-f261715f/native-first/process-05.stdout.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/workspace/scratch/7e3d2a445c44/method-header-qualification-f261715f/native-first/process-06.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/workspace/scratch/7e3d2a445c44/method-header-qualification-f261715f/native-first/process-06.stdout.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/workspace/scratch/7e3d2a445c44/method-header-qualification-f261715f/native-first/process-07.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/workspace/scratch/7e3d2a445c44/method-header-qualification-f261715f/native-first/process-07.stdout.log",
+      "bytes": 9422,
+      "sha256": "3e6cd09a9720768c1004d6f41cf6b36484ff3c2ec971a41033bc7e7bed877629"
+    },
+    {
+      "path": "/workspace/scratch/7e3d2a445c44/method-header-qualification-f261715f/native-first/process-08.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/workspace/scratch/7e3d2a445c44/method-header-qualification-f261715f/native-first/process-08.stdout.log",
+      "bytes": 8496,
+      "sha256": "d31c895076865684ad18efcd389ff717a394834550fa85616f1e11907cc3807b"
+    },
+    {
+      "path": "/workspace/scratch/7e3d2a445c44/method-header-qualification-f261715f/native-first/process-09.stderr.log",
+      "bytes": 178,
+      "sha256": "213a769d205eba5a852520bf10615bc13f5fcf7dff88391ff6596b81f73c7395"
+    },
+    {
+      "path": "/workspace/scratch/7e3d2a445c44/method-header-qualification-f261715f/native-first/process-09.stdout.log",
+      "bytes": 766,
+      "sha256": "e4ce89da523a52318f20d40f7c471ed667c218c41f3f75a098f516d48fe27326"
+    },
+    {
+      "path": "/workspace/scratch/7e3d2a445c44/method-header-qualification-f261715f/native-first/process-capture.mjs",
+      "bytes": 2766,
+      "sha256": "376cf307467c9ccca6407019f0cd76078b48a30b1686b970ee50679adb3a0fef"
+    }
+  ],
+  "sourceAfter": {
+    "path": "/workspace/scratch/7e3d2a445c44/method-header-qualification-f261715f/steps/native/source-after.json",
+    "bytes": 601458,
+    "sha256": "0e260d3e015bbf56c05dc3066d0db72a004896883291413ebd63992639daf498"
+  },
+  "sourcesAndToolsUnchanged": true,
+  "recordFinishedAt": "2026-10-04T19:12:12.447981+00:00"
+}

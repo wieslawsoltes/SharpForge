@@ -1,0 +1,19 @@
+
+.NET IL Assembler.  Version 10.0.5
+Copyright (c) Microsoft Corporation.  All rights reserved.
+Assembling '/dll.il'  to EXE --> '/dll.exe'
+Could not open /dll.il
+
+Assembling '/output:/workspace/scratch/7e3d2a445c44/method-header-qualification-f261715f/native-first/NativeBoundaries.dll'  to EXE --> '/dll.exe'
+Could not open /output:/workspace/scratch/7e3d2a445c44/method-header-qualification-f261715f/native-first/NativeBoundaries.dll
+
+Assembling '/workspace/scratch/7e3d2a445c44/method-header-qualification-f261715f/native-first/boundaries.il'  to EXE --> '/dll.exe'
+Source file is UTF-8
+
+Assembled method Cases::Tiny1
+Assembled method Cases::Tiny63
+Assembled method Cases::Fat64
+Assembled method Cases::Stack8
+Assembled method Cases::Stack9
+
+***** FAILURE ***** 

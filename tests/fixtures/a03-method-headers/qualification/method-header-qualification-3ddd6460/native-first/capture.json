@@ -1,0 +1,2570 @@
+{
+  "schemaVersion": 1,
+  "commands": [
+    {
+      "id": "01",
+      "executable": "/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/dotnet",
+      "args": [
+        "--version"
+      ],
+      "cwd": "/workspace/scratch/7e3d2a445c44/sf6-maxstack/tests/conformance/oracle",
+      "environment": {
+        "PATH": "/root/.codex/tmp/arg0/codex-arg0FW6Pa9:/opt/codex/codex-path:/opt/codex/runtimes/codex-primary-runtime/dependencies/bin/override:/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin:/opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin:/opt/codex/runtimes/codex-primary-runtime/dependencies/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/opt/codex/runtimes/codex-primary-runtime/dependencies/bin/fallback",
+        "LANG": "C.UTF-8",
+        "LC_ALL": "C.UTF-8",
+        "TZ": "Europe/Berlin",
+        "TMPDIR": null,
+        "DOTNET_ROOT": "/workspace/scratch/7e3d2a445c44/dotnet-10.0.201",
+        "DOTNET": "/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/dotnet",
+        "SHARPFORGE_ORACLE_DOTNET": "/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/dotnet",
+        "SHARPFORGE_ILASM": "/workspace/scratch/7e3d2a445c44/dotnet-tools/ilasm",
+        "NODE_OPTIONS": "--max-old-space-size=2048",
+        "SHARPFORGE_MAX_PARALLEL_RUNS": "1",
+        "SHARPFORGE_TEST_CONCURRENCY": "1",
+        "SHARPFORGE_MAX_OLD_SPACE_MB": "2048",
+        "DOTNET_CLI_TELEMETRY_OPTOUT": "1",
+        "DOTNET_NOLOGO": "1",
+        "DOTNET_CLI_UI_LANGUAGE": "en-US",
+        "VSLANG": "1033",
+        "COMPlus_DbgEnableMiniDump": "0",
+        "DOTNET_ROLL_FORWARD": "Disable",
+        "DOTNET_ROLL_FORWARD_TO_PRERELEASE": "0"
+      },
+      "environmentScope": "Public execution settings; unlisted inherited variables are not serialized.",
+      "timeoutMs": 30000,
+      "maxOutputBytes": 1048576,
+      "startedAt": "2026-10-04T19:53:36.237Z",
+      "status": "exited",
+      "logs": {
+        "stdout": {
+          "path": "process-01.stdout.log",
+          "bytes": 9,
+          "sha256": "38c8354f0a1a3a4e913e03fe6396aa12c2ef1d427921d44b19123e42dcb74e92"
+        },
+        "stderr": {
+          "path": "process-01.stderr.log",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      },
+      "finishedAt": "2026-10-04T19:53:36.386Z",
+      "stdout": "10.0.201\n",
+      "stderr": "",
+      "exitCode": 0,
+      "signal": null,
+      "elapsedMs": 148.38024899999994
+    },
+    {
+      "id": "02",
+      "executable": "/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/dotnet",
+      "args": [
+        "--list-sdks"
+      ],
+      "cwd": "/workspace/scratch/7e3d2a445c44/sf6-maxstack/tests/conformance/oracle",
+      "environment": {
+        "PATH": "/root/.codex/tmp/arg0/codex-arg0FW6Pa9:/opt/codex/codex-path:/opt/codex/runtimes/codex-primary-runtime/dependencies/bin/override:/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin:/opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin:/opt/codex/runtimes/codex-primary-runtime/dependencies/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/opt/codex/runtimes/codex-primary-runtime/dependencies/bin/fallback",
+        "LANG": "C.UTF-8",
+        "LC_ALL": "C.UTF-8",
+        "TZ": "Europe/Berlin",
+        "TMPDIR": null,
+        "DOTNET_ROOT": "/workspace/scratch/7e3d2a445c44/dotnet-10.0.201",
+        "DOTNET": "/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/dotnet",
+        "SHARPFORGE_ORACLE_DOTNET": "/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/dotnet",
+        "SHARPFORGE_ILASM": "/workspace/scratch/7e3d2a445c44/dotnet-tools/ilasm",
+        "NODE_OPTIONS": "--max-old-space-size=2048",
+        "SHARPFORGE_MAX_PARALLEL_RUNS": "1",
+        "SHARPFORGE_TEST_CONCURRENCY": "1",
+        "SHARPFORGE_MAX_OLD_SPACE_MB": "2048",
+        "DOTNET_CLI_TELEMETRY_OPTOUT": "1",
+        "DOTNET_NOLOGO": "1",
+        "DOTNET_CLI_UI_LANGUAGE": "en-US",
+        "VSLANG": "1033",
+        "COMPlus_DbgEnableMiniDump": "0",
+        "DOTNET_ROLL_FORWARD": "Disable",
+        "DOTNET_ROLL_FORWARD_TO_PRERELEASE": "0"
+      },
+      "environmentScope": "Public execution settings; unlisted inherited variables are not serialized.",
+      "timeoutMs": 30000,
+      "maxOutputBytes": 1048576,
+      "startedAt": "2026-10-04T19:53:36.388Z",
+      "status": "exited",
+      "logs": {
+        "stdout": {
+          "path": "process-02.stdout.log",
+          "bytes": 63,
+          "sha256": "4d0c9a4904503f1705fefa87cf647485beb84f2ab0e692c446b4abdd615db85f"
+        },
+        "stderr": {
+          "path": "process-02.stderr.log",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      },
+      "finishedAt": "2026-10-04T19:53:36.393Z",
+      "stdout": "10.0.201 [/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/sdk]\n",
+      "stderr": "",
+      "exitCode": 0,
+      "signal": null,
+      "elapsedMs": 4.608620999999971
+    },
+    {
+      "id": "03",
+      "executable": "/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/dotnet",
+      "args": [
+        "--list-runtimes"
+      ],
+      "cwd": "/workspace/scratch/7e3d2a445c44/sf6-maxstack/tests/conformance/oracle",
+      "environment": {
+        "PATH": "/root/.codex/tmp/arg0/codex-arg0FW6Pa9:/opt/codex/codex-path:/opt/codex/runtimes/codex-primary-runtime/dependencies/bin/override:/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin:/opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin:/opt/codex/runtimes/codex-primary-runtime/dependencies/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/opt/codex/runtimes/codex-primary-runtime/dependencies/bin/fallback",
+        "LANG": "C.UTF-8",
+        "LC_ALL": "C.UTF-8",
+        "TZ": "Europe/Berlin",
+        "TMPDIR": null,
+        "DOTNET_ROOT": "/workspace/scratch/7e3d2a445c44/dotnet-10.0.201",
+        "DOTNET": "/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/dotnet",
+        "SHARPFORGE_ORACLE_DOTNET": "/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/dotnet",
+        "SHARPFORGE_ILASM": "/workspace/scratch/7e3d2a445c44/dotnet-tools/ilasm",
+        "NODE_OPTIONS": "--max-old-space-size=2048",
+        "SHARPFORGE_MAX_PARALLEL_RUNS": "1",
+        "SHARPFORGE_TEST_CONCURRENCY": "1",
+        "SHARPFORGE_MAX_OLD_SPACE_MB": "2048",
+        "DOTNET_CLI_TELEMETRY_OPTOUT": "1",
+        "DOTNET_NOLOGO": "1",
+        "DOTNET_CLI_UI_LANGUAGE": "en-US",
+        "VSLANG": "1033",
+        "COMPlus_DbgEnableMiniDump": "0",
+        "DOTNET_ROLL_FORWARD": "Disable",
+        "DOTNET_ROLL_FORWARD_TO_PRERELEASE": "0"
+      },
+      "environmentScope": "Public execution settings; unlisted inherited variables are not serialized.",
+      "timeoutMs": 30000,
+      "maxOutputBytes": 1048576,
+      "startedAt": "2026-10-04T19:53:36.394Z",
+      "status": "exited",
+      "logs": {
+        "stdout": {
+          "path": "process-03.stdout.log",
+          "bytes": 222,
+          "sha256": "0f888c5dfd832ce30d94fff56d4bdaeeb327567b09d34f328f2cb80e7e9c3633"
+        },
+        "stderr": {
+          "path": "process-03.stderr.log",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      },
+      "finishedAt": "2026-10-04T19:53:36.398Z",
+      "stdout": "Microsoft.AspNetCore.App 10.0.5 [/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/shared/Microsoft.AspNetCore.App]\nMicrosoft.NETCore.App 10.0.5 [/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/shared/Microsoft.NETCore.App]\n",
+      "stderr": "",
+      "exitCode": 0,
+      "signal": null,
+      "elapsedMs": 4.236493999999993
+    },
+    {
+      "id": "04",
+      "executable": "/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/dotnet",
+      "args": [
+        "/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/sdk/10.0.201/Roslyn/bincore/csc.dll",
+        "-version"
+      ],
+      "cwd": "/workspace/scratch/7e3d2a445c44/sf6-maxstack/tests/conformance/oracle",
+      "environment": {
+        "PATH": "/root/.codex/tmp/arg0/codex-arg0FW6Pa9:/opt/codex/codex-path:/opt/codex/runtimes/codex-primary-runtime/dependencies/bin/override:/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin:/opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin:/opt/codex/runtimes/codex-primary-runtime/dependencies/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/opt/codex/runtimes/codex-primary-runtime/dependencies/bin/fallback",
+        "LANG": "C.UTF-8",
+        "LC_ALL": "C.UTF-8",
+        "TZ": "Europe/Berlin",
+        "TMPDIR": null,
+        "DOTNET_ROOT": "/workspace/scratch/7e3d2a445c44/dotnet-10.0.201",
+        "DOTNET": "/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/dotnet",
+        "SHARPFORGE_ORACLE_DOTNET": "/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/dotnet",
+        "SHARPFORGE_ILASM": "/workspace/scratch/7e3d2a445c44/dotnet-tools/ilasm",
+        "NODE_OPTIONS": "--max-old-space-size=2048",
+        "SHARPFORGE_MAX_PARALLEL_RUNS": "1",
+        "SHARPFORGE_TEST_CONCURRENCY": "1",
+        "SHARPFORGE_MAX_OLD_SPACE_MB": "2048",
+        "DOTNET_CLI_TELEMETRY_OPTOUT": "1",
+        "DOTNET_NOLOGO": "1",
+        "DOTNET_CLI_UI_LANGUAGE": "en-US",
+        "VSLANG": "1033",
+        "COMPlus_DbgEnableMiniDump": "0",
+        "DOTNET_ROLL_FORWARD": "Disable",
+        "DOTNET_ROLL_FORWARD_TO_PRERELEASE": "0"
+      },
+      "environmentScope": "Public execution settings; unlisted inherited variables are not serialized.",
+      "timeoutMs": 30000,
+      "maxOutputBytes": 1048576,
+      "startedAt": "2026-10-04T19:53:36.447Z",
+      "status": "exited",
+      "logs": {
+        "stdout": {
+          "path": "process-04.stdout.log",
+          "bytes": 61,
+          "sha256": "335ee5c8674ef201012063d1afcf0c093316d04c0c357f69b6322dea86a5529d"
+        },
+        "stderr": {
+          "path": "process-04.stderr.log",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      },
+      "finishedAt": "2026-10-04T19:53:36.526Z",
+      "stdout": "5.3.0-2.26153.122 (4d3023de605a78ba3e59e50c657eed70f125c68a)\n",
+      "stderr": "",
+      "exitCode": 0,
+      "signal": null,
+      "elapsedMs": 78.52465199999995
+    },
+    {
+      "id": "05",
+      "executable": "/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/dotnet",
+      "args": [
+        "/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/sdk/10.0.201/Roslyn/bincore/csc.dll",
+        "-nologo",
+        "-noconfig",
+        "-nostdlib+",
+        "-warn:0",
+        "-deterministic+",
+        "-unsafe+",
+        "-optimize+",
+        "-langversion:latest",
+        "-r:/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/Microsoft.CSharp.dll",
+        "-r:/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/Microsoft.VisualBasic.Core.dll",
+        "-r:/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/Microsoft.VisualBasic.dll",
+        "-r:/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/Microsoft.Win32.Primitives.dll",
+        "-r:/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/Microsoft.Win32.Registry.dll",
+        "-r:/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.AppContext.dll",
+        "-r:/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Buffers.dll",
+        "-r:/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Collections.Concurrent.dll",
+        "-r:/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Collections.Immutable.dll",
+        "-r:/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Collections.NonGeneric.dll",
+        "-r:/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Collections.Specialized.dll",
+        "-r:/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Collections.dll",
+        "-r:/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.ComponentModel.Annotations.dll",
+        "-r:/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.ComponentModel.DataAnnotations.dll",
+        "-r:/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.ComponentModel.EventBasedAsync.dll",
+        "-r:/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.ComponentModel.Primitives.dll",
+        "-r:/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.ComponentModel.TypeConverter.dll",
+        "-r:/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.ComponentModel.dll",
+        "-r:/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Configuration.dll",
+        "-r:/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Console.dll",
+        "-r:/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Core.dll",
+        "-r:/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Data.Common.dll",
+        "-r:/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Data.DataSetExtensions.dll",
+        "-r:/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Data.dll",
+        "-r:/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Diagnostics.Contracts.dll",
+        "-r:/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Diagnostics.Debug.dll",
+        "-r:/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Diagnostics.DiagnosticSource.dll",
+        "-r:/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Diagnostics.FileVersionInfo.dll",
+        "-r:/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Diagnostics.Process.dll",
+        "-r:/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Diagnostics.StackTrace.dll",
+        "-r:/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Diagnostics.TextWriterTraceListener.dll",
+        "-r:/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Diagnostics.Tools.dll",
+        "-r:/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Diagnostics.TraceSource.dll",
+        "-r:/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Diagnostics.Tracing.dll",
+        "-r:/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Drawing.Primitives.dll",
+        "-r:/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Drawing.dll",
+        "-r:/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Dynamic.Runtime.dll",
+        "-r:/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Formats.Asn1.dll",
+        "-r:/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Formats.Tar.dll",
+        "-r:/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Globalization.Calendars.dll",
+        "-r:/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Globalization.Extensions.dll",
+        "-r:/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Globalization.dll",
+        "-r:/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.IO.Compression.Brotli.dll",
+        "-r:/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.IO.Compression.FileSystem.dll",
+        "-r:/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.IO.Compression.ZipFile.dll",
+        "-r:/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.IO.Compression.dll",
+        "-r:/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.IO.FileSystem.AccessControl.dll",
+        "-r:/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.IO.FileSystem.DriveInfo.dll",
+        "-r:/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.IO.FileSystem.Primitives.dll",
+        "-r:/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.IO.FileSystem.Watcher.dll",
+        "-r:/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.IO.FileSystem.dll",
+        "-r:/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.IO.IsolatedStorage.dll",
+        "-r:/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.IO.MemoryMappedFiles.dll",
+        "-r:/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.IO.Pipelines.dll",
+        "-r:/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.IO.Pipes.AccessControl.dll",
+        "-r:/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.IO.Pipes.dll",
+        "-r:/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.IO.UnmanagedMemoryStream.dll",
+        "-r:/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.IO.dll",
+        "-r:/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Linq.AsyncEnumerable.dll",
+        "-r:/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Linq.Expressions.dll",
+        "-r:/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Linq.Parallel.dll",
+        "-r:/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Linq.Queryable.dll",
+        "-r:/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Linq.dll",
+        "-r:/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Memory.dll",
+        "-r:/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Net.Http.Json.dll",
+        "-r:/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Net.Http.dll",
+        "-r:/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Net.HttpListener.dll",
+        "-r:/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Net.Mail.dll",
+        "-r:/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Net.NameResolution.dll",
+        "-r:/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Net.NetworkInformation.dll",
+        "-r:/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Net.Ping.dll",
+        "-r:/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Net.Primitives.dll",
+        "-r:/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Net.Quic.dll",
+        "-r:/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Net.Requests.dll",
+        "-r:/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Net.Security.dll",
+        "-r:/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Net.ServerSentEvents.dll",
+        "-r:/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Net.ServicePoint.dll",
+        "-r:/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Net.Sockets.dll",
+        "-r:/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Net.WebClient.dll",
+        "-r:/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Net.WebHeaderCollection.dll",
+        "-r:/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Net.WebProxy.dll",
+        "-r:/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Net.WebSockets.Client.dll",
+        "-r:/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Net.WebSockets.dll",
+        "-r:/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Net.dll",
+        "-r:/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Numerics.Vectors.dll",
+        "-r:/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Numerics.dll",
+        "-r:/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.ObjectModel.dll",
+        "-r:/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Reflection.DispatchProxy.dll",
+        "-r:/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Reflection.Emit.ILGeneration.dll",
+        "-r:/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Reflection.Emit.Lightweight.dll",
+        "-r:/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Reflection.Emit.dll",
+        "-r:/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Reflection.Extensions.dll",
+        "-r:/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Reflection.Metadata.dll",
+        "-r:/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Reflection.Primitives.dll",
+        "-r:/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Reflection.TypeExtensions.dll",
+        "-r:/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Reflection.dll",
+        "-r:/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Resources.Reader.dll",
+        "-r:/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Resources.ResourceManager.dll",
+        "-r:/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Resources.Writer.dll",
+        "-r:/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Runtime.CompilerServices.Unsafe.dll",
+        "-r:/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Runtime.CompilerServices.VisualC.dll",
+        "-r:/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Runtime.Extensions.dll",
+        "-r:/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Runtime.Handles.dll",
+        "-r:/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Runtime.InteropServices.JavaScript.dll",
+        "-r:/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Runtime.InteropServices.RuntimeInformation.dll",
+        "-r:/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Runtime.InteropServices.dll",
+        "-r:/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Runtime.Intrinsics.dll",
+        "-r:/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Runtime.Loader.dll",
+        "-r:/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Runtime.Numerics.dll",
+        "-r:/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Runtime.Serialization.Formatters.dll",
+        "-r:/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Runtime.Serialization.Json.dll",
+        "-r:/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Runtime.Serialization.Primitives.dll",
+        "-r:/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Runtime.Serialization.Xml.dll",
+        "-r:/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Runtime.Serialization.dll",
+        "-r:/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Runtime.dll",
+        "-r:/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Security.AccessControl.dll",
+        "-r:/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Security.Claims.dll",
+        "-r:/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Security.Cryptography.Algorithms.dll",
+        "-r:/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Security.Cryptography.Cng.dll",
+        "-r:/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Security.Cryptography.Csp.dll",
+        "-r:/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Security.Cryptography.Encoding.dll",
+        "-r:/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Security.Cryptography.OpenSsl.dll",
+        "-r:/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Security.Cryptography.Primitives.dll",
+        "-r:/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Security.Cryptography.X509Certificates.dll",
+        "-r:/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Security.Cryptography.dll",
+        "-r:/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Security.Principal.Windows.dll",
+        "-r:/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Security.Principal.dll",
+        "-r:/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Security.SecureString.dll",
+        "-r:/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Security.dll",
+        "-r:/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.ServiceModel.Web.dll",
+        "-r:/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.ServiceProcess.dll",
+        "-r:/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Text.Encoding.CodePages.dll",
+        "-r:/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Text.Encoding.Extensions.dll",
+        "-r:/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Text.Encoding.dll",
+        "-r:/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Text.Encodings.Web.dll",
+        "-r:/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Text.Json.dll",
+        "-r:/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Text.RegularExpressions.dll",
+        "-r:/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Threading.AccessControl.dll",
+        "-r:/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Threading.Channels.dll",
+        "-r:/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Threading.Overlapped.dll",
+        "-r:/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Threading.Tasks.Dataflow.dll",
+        "-r:/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Threading.Tasks.Extensions.dll",
+        "-r:/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Threading.Tasks.Parallel.dll",
+        "-r:/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Threading.Tasks.dll",
+        "-r:/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Threading.Thread.dll",
+        "-r:/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Threading.ThreadPool.dll",
+        "-r:/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Threading.Timer.dll",
+        "-r:/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Threading.dll",
+        "-r:/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Transactions.Local.dll",
+        "-r:/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Transactions.dll",
+        "-r:/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.ValueTuple.dll",
+        "-r:/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Web.HttpUtility.dll",
+        "-r:/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Web.dll",
+        "-r:/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Windows.dll",
+        "-r:/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Xml.Linq.dll",
+        "-r:/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Xml.ReaderWriter.dll",
+        "-r:/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Xml.Serialization.dll",
+        "-r:/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Xml.XDocument.dll",
+        "-r:/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Xml.XPath.XDocument.dll",
+        "-r:/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Xml.XPath.dll",
+        "-r:/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Xml.XmlDocument.dll",
+        "-r:/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Xml.XmlSerializer.dll",
+        "-r:/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Xml.dll",
+        "-r:/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.dll",
+        "-r:/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/WindowsBase.dll",
+        "-r:/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/mscorlib.dll",
+        "-r:/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/netstandard.dll",
+        "-target:exe",
+        "-out:/workspace/scratch/7e3d2a445c44/method-header-qualification-3ddd6460/native-first/Observer.dll",
+        "/workspace/scratch/7e3d2a445c44/method-header-qualification-3ddd6460/native-first/Program.cs"
+      ],
+      "cwd": "/workspace/scratch/7e3d2a445c44/method-header-qualification-3ddd6460/native-first",
+      "environment": {
+        "PATH": "/root/.codex/tmp/arg0/codex-arg0FW6Pa9:/opt/codex/codex-path:/opt/codex/runtimes/codex-primary-runtime/dependencies/bin/override:/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin:/opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin:/opt/codex/runtimes/codex-primary-runtime/dependencies/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/opt/codex/runtimes/codex-primary-runtime/dependencies/bin/fallback",
+        "LANG": "C.UTF-8",
+        "LC_ALL": "C.UTF-8",
+        "TZ": "Europe/Berlin",
+        "TMPDIR": null,
+        "DOTNET_ROOT": "/workspace/scratch/7e3d2a445c44/dotnet-10.0.201",
+        "DOTNET": "/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/dotnet",
+        "SHARPFORGE_ORACLE_DOTNET": "/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/dotnet",
+        "SHARPFORGE_ILASM": "/workspace/scratch/7e3d2a445c44/dotnet-tools/ilasm",
+        "NODE_OPTIONS": "--max-old-space-size=2048",
+        "SHARPFORGE_MAX_PARALLEL_RUNS": "1",
+        "SHARPFORGE_TEST_CONCURRENCY": "1",
+        "SHARPFORGE_MAX_OLD_SPACE_MB": "2048",
+        "DOTNET_CLI_TELEMETRY_OPTOUT": "1",
+        "DOTNET_NOLOGO": "1",
+        "DOTNET_CLI_UI_LANGUAGE": "en-US",
+        "VSLANG": "1033",
+        "COMPlus_DbgEnableMiniDump": "0",
+        "DOTNET_ROLL_FORWARD": "Disable",
+        "DOTNET_ROLL_FORWARD_TO_PRERELEASE": "0"
+      },
+      "environmentScope": "Public execution settings; unlisted inherited variables are not serialized.",
+      "timeoutMs": 60000,
+      "maxOutputBytes": 1048576,
+      "startedAt": "2026-10-04T19:53:36.531Z",
+      "status": "exited",
+      "logs": {
+        "stdout": {
+          "path": "process-05.stdout.log",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "stderr": {
+          "path": "process-05.stderr.log",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      },
+      "finishedAt": "2026-10-04T19:53:37.438Z",
+      "stdout": "",
+      "stderr": "",
+      "exitCode": 0,
+      "signal": null,
+      "elapsedMs": 906.61685
+    },
+    {
+      "id": "06",
+      "executable": "/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/dotnet",
+      "args": [
+        "/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/sdk/10.0.201/Roslyn/bincore/csc.dll",
+        "-nologo",
+        "-noconfig",
+        "-nostdlib+",
+        "-warn:0",
+        "-deterministic+",
+        "-unsafe+",
+        "-optimize+",
+        "-langversion:latest",
+        "-r:/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/Microsoft.CSharp.dll",
+        "-r:/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/Microsoft.VisualBasic.Core.dll",
+        "-r:/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/Microsoft.VisualBasic.dll",
+        "-r:/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/Microsoft.Win32.Primitives.dll",
+        "-r:/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/Microsoft.Win32.Registry.dll",
+        "-r:/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.AppContext.dll",
+        "-r:/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Buffers.dll",
+        "-r:/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Collections.Concurrent.dll",
+        "-r:/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Collections.Immutable.dll",
+        "-r:/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Collections.NonGeneric.dll",
+        "-r:/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Collections.Specialized.dll",
+        "-r:/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Collections.dll",
+        "-r:/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.ComponentModel.Annotations.dll",
+        "-r:/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.ComponentModel.DataAnnotations.dll",
+        "-r:/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.ComponentModel.EventBasedAsync.dll",
+        "-r:/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.ComponentModel.Primitives.dll",
+        "-r:/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.ComponentModel.TypeConverter.dll",
+        "-r:/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.ComponentModel.dll",
+        "-r:/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Configuration.dll",
+        "-r:/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Console.dll",
+        "-r:/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Core.dll",
+        "-r:/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Data.Common.dll",
+        "-r:/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Data.DataSetExtensions.dll",
+        "-r:/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Data.dll",
+        "-r:/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Diagnostics.Contracts.dll",
+        "-r:/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Diagnostics.Debug.dll",
+        "-r:/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Diagnostics.DiagnosticSource.dll",
+        "-r:/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Diagnostics.FileVersionInfo.dll",
+        "-r:/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Diagnostics.Process.dll",
+        "-r:/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Diagnostics.StackTrace.dll",
+        "-r:/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Diagnostics.TextWriterTraceListener.dll",
+        "-r:/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Diagnostics.Tools.dll",
+        "-r:/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Diagnostics.TraceSource.dll",
+        "-r:/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Diagnostics.Tracing.dll",
+        "-r:/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Drawing.Primitives.dll",
+        "-r:/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Drawing.dll",
+        "-r:/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Dynamic.Runtime.dll",
+        "-r:/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Formats.Asn1.dll",
+        "-r:/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Formats.Tar.dll",
+        "-r:/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Globalization.Calendars.dll",
+        "-r:/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Globalization.Extensions.dll",
+        "-r:/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Globalization.dll",
+        "-r:/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.IO.Compression.Brotli.dll",
+        "-r:/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.IO.Compression.FileSystem.dll",
+        "-r:/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.IO.Compression.ZipFile.dll",
+        "-r:/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.IO.Compression.dll",
+        "-r:/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.IO.FileSystem.AccessControl.dll",
+        "-r:/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.IO.FileSystem.DriveInfo.dll",
+        "-r:/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.IO.FileSystem.Primitives.dll",
+        "-r:/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.IO.FileSystem.Watcher.dll",
+        "-r:/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.IO.FileSystem.dll",
+        "-r:/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.IO.IsolatedStorage.dll",
+        "-r:/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.IO.MemoryMappedFiles.dll",
+        "-r:/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.IO.Pipelines.dll",
+        "-r:/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.IO.Pipes.AccessControl.dll",
+        "-r:/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.IO.Pipes.dll",
+        "-r:/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.IO.UnmanagedMemoryStream.dll",
+        "-r:/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.IO.dll",
+        "-r:/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Linq.AsyncEnumerable.dll",
+        "-r:/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Linq.Expressions.dll",
+        "-r:/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Linq.Parallel.dll",
+        "-r:/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Linq.Queryable.dll",
+        "-r:/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Linq.dll",
+        "-r:/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Memory.dll",
+        "-r:/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Net.Http.Json.dll",
+        "-r:/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Net.Http.dll",
+        "-r:/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Net.HttpListener.dll",
+        "-r:/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Net.Mail.dll",
+        "-r:/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Net.NameResolution.dll",
+        "-r:/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Net.NetworkInformation.dll",
+        "-r:/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Net.Ping.dll",
+        "-r:/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Net.Primitives.dll",
+        "-r:/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Net.Quic.dll",
+        "-r:/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Net.Requests.dll",
+        "-r:/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Net.Security.dll",
+        "-r:/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Net.ServerSentEvents.dll",
+        "-r:/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Net.ServicePoint.dll",
+        "-r:/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Net.Sockets.dll",
+        "-r:/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Net.WebClient.dll",
+        "-r:/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Net.WebHeaderCollection.dll",
+        "-r:/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Net.WebProxy.dll",
+        "-r:/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Net.WebSockets.Client.dll",
+        "-r:/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Net.WebSockets.dll",
+        "-r:/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Net.dll",
+        "-r:/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Numerics.Vectors.dll",
+        "-r:/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Numerics.dll",
+        "-r:/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.ObjectModel.dll",
+        "-r:/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Reflection.DispatchProxy.dll",
+        "-r:/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Reflection.Emit.ILGeneration.dll",
+        "-r:/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Reflection.Emit.Lightweight.dll",
+        "-r:/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Reflection.Emit.dll",
+        "-r:/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Reflection.Extensions.dll",
+        "-r:/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Reflection.Metadata.dll",
+        "-r:/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Reflection.Primitives.dll",
+        "-r:/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Reflection.TypeExtensions.dll",
+        "-r:/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Reflection.dll",
+        "-r:/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Resources.Reader.dll",
+        "-r:/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Resources.ResourceManager.dll",
+        "-r:/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Resources.Writer.dll",
+        "-r:/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Runtime.CompilerServices.Unsafe.dll",
+        "-r:/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Runtime.CompilerServices.VisualC.dll",
+        "-r:/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Runtime.Extensions.dll",
+        "-r:/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Runtime.Handles.dll",
+        "-r:/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Runtime.InteropServices.JavaScript.dll",
+        "-r:/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Runtime.InteropServices.RuntimeInformation.dll",
+        "-r:/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Runtime.InteropServices.dll",
+        "-r:/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Runtime.Intrinsics.dll",
+        "-r:/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Runtime.Loader.dll",
+        "-r:/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Runtime.Numerics.dll",
+        "-r:/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Runtime.Serialization.Formatters.dll",
+        "-r:/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Runtime.Serialization.Json.dll",
+        "-r:/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Runtime.Serialization.Primitives.dll",
+        "-r:/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Runtime.Serialization.Xml.dll",
+        "-r:/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Runtime.Serialization.dll",
+        "-r:/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Runtime.dll",
+        "-r:/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Security.AccessControl.dll",
+        "-r:/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Security.Claims.dll",
+        "-r:/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Security.Cryptography.Algorithms.dll",
+        "-r:/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Security.Cryptography.Cng.dll",
+        "-r:/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Security.Cryptography.Csp.dll",
+        "-r:/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Security.Cryptography.Encoding.dll",
+        "-r:/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Security.Cryptography.OpenSsl.dll",
+        "-r:/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Security.Cryptography.Primitives.dll",
+        "-r:/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Security.Cryptography.X509Certificates.dll",
+        "-r:/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Security.Cryptography.dll",
+        "-r:/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Security.Principal.Windows.dll",
+        "-r:/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Security.Principal.dll",
+        "-r:/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Security.SecureString.dll",
+        "-r:/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Security.dll",
+        "-r:/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.ServiceModel.Web.dll",
+        "-r:/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.ServiceProcess.dll",
+        "-r:/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Text.Encoding.CodePages.dll",
+        "-r:/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Text.Encoding.Extensions.dll",
+        "-r:/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Text.Encoding.dll",
+        "-r:/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Text.Encodings.Web.dll",
+        "-r:/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Text.Json.dll",
+        "-r:/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Text.RegularExpressions.dll",
+        "-r:/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Threading.AccessControl.dll",
+        "-r:/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Threading.Channels.dll",
+        "-r:/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Threading.Overlapped.dll",
+        "-r:/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Threading.Tasks.Dataflow.dll",
+        "-r:/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Threading.Tasks.Extensions.dll",
+        "-r:/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Threading.Tasks.Parallel.dll",
+        "-r:/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Threading.Tasks.dll",
+        "-r:/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Threading.Thread.dll",
+        "-r:/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Threading.ThreadPool.dll",
+        "-r:/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Threading.Timer.dll",
+        "-r:/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Threading.dll",
+        "-r:/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Transactions.Local.dll",
+        "-r:/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Transactions.dll",
+        "-r:/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.ValueTuple.dll",
+        "-r:/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Web.HttpUtility.dll",
+        "-r:/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Web.dll",
+        "-r:/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Windows.dll",
+        "-r:/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Xml.Linq.dll",
+        "-r:/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Xml.ReaderWriter.dll",
+        "-r:/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Xml.Serialization.dll",
+        "-r:/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Xml.XDocument.dll",
+        "-r:/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Xml.XPath.XDocument.dll",
+        "-r:/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Xml.XPath.dll",
+        "-r:/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Xml.XmlDocument.dll",
+        "-r:/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Xml.XmlSerializer.dll",
+        "-r:/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Xml.dll",
+        "-r:/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.dll",
+        "-r:/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/WindowsBase.dll",
+        "-r:/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/mscorlib.dll",
+        "-r:/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/netstandard.dll",
+        "-target:library",
+        "-out:/workspace/scratch/7e3d2a445c44/method-header-qualification-3ddd6460/native-first/Roslyn.dll",
+        "/workspace/scratch/7e3d2a445c44/method-header-qualification-3ddd6460/native-first/corpus.cs"
+      ],
+      "cwd": "/workspace/scratch/7e3d2a445c44/method-header-qualification-3ddd6460/native-first",
+      "environment": {
+        "PATH": "/root/.codex/tmp/arg0/codex-arg0FW6Pa9:/opt/codex/codex-path:/opt/codex/runtimes/codex-primary-runtime/dependencies/bin/override:/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin:/opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin:/opt/codex/runtimes/codex-primary-runtime/dependencies/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/opt/codex/runtimes/codex-primary-runtime/dependencies/bin/fallback",
+        "LANG": "C.UTF-8",
+        "LC_ALL": "C.UTF-8",
+        "TZ": "Europe/Berlin",
+        "TMPDIR": null,
+        "DOTNET_ROOT": "/workspace/scratch/7e3d2a445c44/dotnet-10.0.201",
+        "DOTNET": "/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/dotnet",
+        "SHARPFORGE_ORACLE_DOTNET": "/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/dotnet",
+        "SHARPFORGE_ILASM": "/workspace/scratch/7e3d2a445c44/dotnet-tools/ilasm",
+        "NODE_OPTIONS": "--max-old-space-size=2048",
+        "SHARPFORGE_MAX_PARALLEL_RUNS": "1",
+        "SHARPFORGE_TEST_CONCURRENCY": "1",
+        "SHARPFORGE_MAX_OLD_SPACE_MB": "2048",
+        "DOTNET_CLI_TELEMETRY_OPTOUT": "1",
+        "DOTNET_NOLOGO": "1",
+        "DOTNET_CLI_UI_LANGUAGE": "en-US",
+        "VSLANG": "1033",
+        "COMPlus_DbgEnableMiniDump": "0",
+        "DOTNET_ROLL_FORWARD": "Disable",
+        "DOTNET_ROLL_FORWARD_TO_PRERELEASE": "0"
+      },
+      "environmentScope": "Public execution settings; unlisted inherited variables are not serialized.",
+      "timeoutMs": 60000,
+      "maxOutputBytes": 1048576,
+      "startedAt": "2026-10-04T19:53:37.440Z",
+      "status": "exited",
+      "logs": {
+        "stdout": {
+          "path": "process-06.stdout.log",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "stderr": {
+          "path": "process-06.stderr.log",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      },
+      "finishedAt": "2026-10-04T19:53:38.196Z",
+      "stdout": "",
+      "stderr": "",
+      "exitCode": 0,
+      "signal": null,
+      "elapsedMs": 755.340267
+    },
+    {
+      "id": "07",
+      "executable": "/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/dotnet",
+      "args": [
+        "--fx-version",
+        "10.0.5",
+        "/workspace/scratch/7e3d2a445c44/method-header-qualification-3ddd6460/native-first/Observer.dll",
+        "/workspace/scratch/7e3d2a445c44/method-header-qualification-3ddd6460/native-first/Roslyn.dll"
+      ],
+      "cwd": "/workspace/scratch/7e3d2a445c44/method-header-qualification-3ddd6460/native-first",
+      "environment": {
+        "PATH": "/root/.codex/tmp/arg0/codex-arg0FW6Pa9:/opt/codex/codex-path:/opt/codex/runtimes/codex-primary-runtime/dependencies/bin/override:/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin:/opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin:/opt/codex/runtimes/codex-primary-runtime/dependencies/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/opt/codex/runtimes/codex-primary-runtime/dependencies/bin/fallback",
+        "LANG": "C.UTF-8",
+        "LC_ALL": "C.UTF-8",
+        "TZ": "Europe/Berlin",
+        "TMPDIR": null,
+        "DOTNET_ROOT": "/workspace/scratch/7e3d2a445c44/dotnet-10.0.201",
+        "DOTNET": "/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/dotnet",
+        "SHARPFORGE_ORACLE_DOTNET": "/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/dotnet",
+        "SHARPFORGE_ILASM": "/workspace/scratch/7e3d2a445c44/dotnet-tools/ilasm",
+        "NODE_OPTIONS": "--max-old-space-size=2048",
+        "SHARPFORGE_MAX_PARALLEL_RUNS": "1",
+        "SHARPFORGE_TEST_CONCURRENCY": "1",
+        "SHARPFORGE_MAX_OLD_SPACE_MB": "2048",
+        "DOTNET_CLI_TELEMETRY_OPTOUT": "1",
+        "DOTNET_NOLOGO": "1",
+        "DOTNET_CLI_UI_LANGUAGE": "en-US",
+        "VSLANG": "1033",
+        "COMPlus_DbgEnableMiniDump": "0",
+        "DOTNET_ROLL_FORWARD": "Disable",
+        "DOTNET_ROLL_FORWARD_TO_PRERELEASE": "0"
+      },
+      "environmentScope": "Public execution settings; unlisted inherited variables are not serialized.",
+      "timeoutMs": 60000,
+      "maxOutputBytes": 1048576,
+      "startedAt": "2026-10-04T19:53:38.358Z",
+      "status": "exited",
+      "logs": {
+        "stdout": {
+          "path": "process-07.stdout.log",
+          "bytes": 9422,
+          "sha256": "3e6cd09a9720768c1004d6f41cf6b36484ff3c2ec971a41033bc7e7bed877629"
+        },
+        "stderr": {
+          "path": "process-07.stderr.log",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      },
+      "finishedAt": "2026-10-04T19:53:38.483Z",
+      "stdout": "{\n  \"runtime\": \".NET 10.0.5\",\n  \"signatures\": {\n    \"100663297\": {\n      \"parameters\": 0,\n      \"returnsVoid\": true,\n      \"hasThis\": false,\n      \"explicitThis\": false,\n      \"header\": 0,\n      \"requiredParameters\": 0\n    },\n    \"100663298\": {\n      \"parameters\": 0,\n      \"returnsVoid\": false,\n      \"hasThis\": false,\n      \"explicitThis\": false,\n      \"header\": 0,\n      \"requiredParameters\": 0\n    },\n    \"100663299\": {\n      \"parameters\": 10,\n      \"returnsVoid\": false,\n      \"hasThis\": false,\n      \"explicitThis\": false,\n      \"header\": 0,\n      \"requiredParameters\": 10\n    },\n    \"100663300\": {\n      \"parameters\": 0,\n      \"returnsVoid\": false,\n      \"hasThis\": false,\n      \"explicitThis\": false,\n      \"header\": 0,\n      \"requiredParameters\": 0\n    },\n    \"100663301\": {\n      \"parameters\": 0,\n      \"returnsVoid\": false,\n      \"hasThis\": false,\n      \"explicitThis\": false,\n      \"header\": 0,\n      \"requiredParameters\": 0\n    },\n    \"100663302\": {\n      \"parameters\": 0,\n      \"returnsVoid\": false,\n      \"hasThis\": false,\n      \"explicitThis\": false,\n      \"header\": 0,\n      \"requiredParameters\": 0\n    },\n    \"100663303\": {\n      \"parameters\": 0,\n      \"returnsVoid\": false,\n      \"hasThis\": false,\n      \"explicitThis\": false,\n      \"header\": 0,\n      \"requiredParameters\": 0\n    },\n    \"100663304\": {\n      \"parameters\": 0,\n      \"returnsVoid\": false,\n      \"hasThis\": false,\n      \"explicitThis\": false,\n      \"header\": 0,\n      \"requiredParameters\": 0\n    },\n    \"100663305\": {\n      \"parameters\": 1,\n      \"returnsVoid\": false,\n      \"hasThis\": false,\n      \"explicitThis\": false,\n      \"header\": 0,\n      \"requiredParameters\": 1\n    },\n    \"100663306\": {\n      \"parameters\": 0,\n      \"returnsVoid\": false,\n      \"hasThis\": false,\n      \"explicitThis\": false,\n      \"header\": 0,\n      \"requiredParameters\": 0\n    },\n    \"100663307\": {\n      \"parameters\": 0,\n      \"returnsVoid\": false,\n      \"hasThis\": true,\n      \"explicitThis\": false,\n      \"header\": 32,\n      \"requiredParameters\": 0\n    },\n    \"100663308\": {\n      \"parameters\": 1,\n      \"returnsVoid\": true,\n      \"hasThis\": true,\n      \"explicitThis\": false,\n      \"header\": 32,\n      \"requiredParameters\": 1\n    },\n    \"100663309\": {\n      \"parameters\": 0,\n      \"returnsVoid\": true,\n      \"hasThis\": true,\n      \"explicitThis\": false,\n      \"header\": 32,\n      \"requiredParameters\": 0\n    },\n    \"167772161\": {\n      \"parameters\": 1,\n      \"returnsVoid\": true,\n      \"hasThis\": true,\n      \"explicitThis\": false,\n      \"header\": 32,\n      \"requiredParameters\": 1\n    },\n    \"167772162\": {\n      \"parameters\": 0,\n      \"returnsVoid\": true,\n      \"hasThis\": true,\n      \"explicitThis\": false,\n      \"header\": 32,\n      \"requiredParameters\": 0\n    },\n    \"167772163\": {\n      \"parameters\": 1,\n      \"returnsVoid\": true,\n      \"hasThis\": true,\n      \"explicitThis\": false,\n      \"header\": 32,\n      \"requiredParameters\": 1\n    },\n    \"167772164\": {\n      \"parameters\": 1,\n      \"returnsVoid\": true,\n      \"hasThis\": true,\n      \"explicitThis\": false,\n      \"header\": 32,\n      \"requiredParameters\": 1\n    },\n    \"167772165\": {\n      \"parameters\": 0,\n      \"returnsVoid\": true,\n      \"hasThis\": true,\n      \"explicitThis\": false,\n      \"header\": 32,\n      \"requiredParameters\": 0\n    },\n    \"167772166\": {\n      \"parameters\": 1,\n      \"returnsVoid\": true,\n      \"hasThis\": true,\n      \"explicitThis\": false,\n      \"header\": 32,\n      \"requiredParameters\": 1\n    },\n    \"167772167\": {\n      \"parameters\": 0,\n      \"returnsVoid\": true,\n      \"hasThis\": true,\n      \"explicitThis\": false,\n      \"header\": 32,\n      \"requiredParameters\": 0\n    },\n    \"167772168\": {\n      \"parameters\": 0,\n      \"returnsVoid\": true,\n      \"hasThis\": true,\n      \"explicitThis\": false,\n      \"header\": 32,\n      \"requiredParameters\": 0\n    },\n    \"167772169\": {\n      \"parameters\": 0,\n      \"returnsVoid\": true,\n      \"hasThis\": true,\n      \"explicitThis\": false,\n      \"header\": 32,\n      \"requiredParameters\": 0\n    },\n    \"285212678\": {\n      \"parameters\": 1,\n      \"returnsVoid\": false,\n      \"hasThis\": false,\n      \"explicitThis\": false,\n      \"header\": 0,\n      \"requiredParameters\": 1\n    }\n  },\n  \"methods\": [\n    {\n      \"token\": 100663297,\n      \"name\": \"Empty\",\n      \"headerSize\": 1,\n      \"headerHex\": \"06\",\n      \"maxStack\": 8,\n      \"codeHex\": \"2a\",\n      \"localSignature\": 0,\n      \"localSignatureRawToken\": 285212672,\n      \"initLocals\": false,\n      \"handlers\": []\n    },\n    {\n      \"token\": 100663298,\n      \"name\": \"Literal\",\n      \"headerSize\": 1,\n      \"headerHex\": \"0e\",\n      \"maxStack\": 8,\n      \"codeHex\": \"1f2a2a\",\n      \"localSignature\": 0,\n      \"localSignatureRawToken\": 285212672,\n      \"initLocals\": false,\n      \"handlers\": []\n    },\n    {\n      \"token\": 100663299,\n      \"name\": \"Sum\",\n      \"headerSize\": 1,\n      \"headerHex\": \"6a\",\n      \"maxStack\": 8,\n      \"codeHex\": \"020358045805580e04580e05580e06580e07580e08580e09582a\",\n      \"localSignature\": 0,\n      \"localSignatureRawToken\": 285212672,\n      \"initLocals\": false,\n      \"handlers\": []\n    },\n    {\n      \"token\": 100663300,\n      \"name\": \"DeepCall\",\n      \"headerSize\": 12,\n      \"headerHex\": \"13300a001200000000000000\",\n      \"maxStack\": 10,\n      \"codeHex\": \"1718191a1b1c1d1e1f091f0a28030000062a\",\n      \"localSignature\": 0,\n      \"localSignatureRawToken\": 285212672,\n      \"initLocals\": true,\n      \"handlers\": []\n    },\n    {\n      \"token\": 100663301,\n      \"name\": \"Loop\",\n      \"headerSize\": 12,\n      \"headerHex\": \"133002001500000001000011\",\n      \"maxStack\": 2,\n      \"codeHex\": \"160a160b2b080607580a0717580b071f0c32f3062a\",\n      \"localSignature\": 285212673,\n      \"localSignatureRawToken\": 285212673,\n      \"initLocals\": true,\n      \"handlers\": []\n    },\n    {\n      \"token\": 100663302,\n      \"name\": \"Filtered\",\n      \"headerSize\": 12,\n      \"headerHex\": \"1b3002002a00000002000011\",\n      \"maxStack\": 2,\n      \"codeHex\": \"170a730800000a7a750b000001252d0426162b08260617fe0116fe03fe11261d0ade050618580adc062a\",\n      \"localSignature\": 285212674,\n      \"localSignatureRawToken\": 285212674,\n      \"initLocals\": true,\n      \"handlers\": [\n        {\n          \"flags\": 1,\n          \"start\": 2,\n          \"end\": 8,\n          \"target\": 30,\n          \"handlerEnd\": 35,\n          \"catchType\": 0,\n          \"filterOffset\": 8\n        },\n        {\n          \"flags\": 2,\n          \"start\": 2,\n          \"end\": 35,\n          \"target\": 35,\n          \"handlerEnd\": 40,\n          \"catchType\": 0,\n          \"filterOffset\": null\n        }\n      ]\n    },\n    {\n      \"token\": 100663303,\n      \"name\": \"Allocated\",\n      \"headerSize\": 12,\n      \"headerHex\": \"133003001700000003000011\",\n      \"maxStack\": 3,\n      \"codeHex\": \"1ee0fe0f0a061f1454061a581f1654064a061a584a582a\",\n      \"localSignature\": 285212675,\n      \"localSignatureRawToken\": 285212675,\n      \"initLocals\": true,\n      \"handlers\": []\n    },\n    {\n      \"token\": 100663304,\n      \"name\": \"Patterns\",\n      \"headerSize\": 12,\n      \"headerHex\": \"133003004500000004000011\",\n      \"maxStack\": 3,\n      \"codeHex\": \"730d000006251f2a6f0c0000060a062c0c066f0b0000061f2afe012b011616fe03062c09066f0b000006163003162b011858062c0a066f0b0000061f643203162b011a582a\",\n      \"localSignature\": 285212676,\n      \"localSignatureRawToken\": 285212676,\n      \"initLocals\": true,\n      \"handlers\": []\n    },\n    {\n      \"token\": 100663305,\n      \"name\": \"Echo\",\n      \"headerSize\": 1,\n      \"headerHex\": \"0a\",\n      \"maxStack\": 8,\n      \"codeHex\": \"022a\",\n      \"localSignature\": 0,\n      \"localSignatureRawToken\": 285212672,\n      \"initLocals\": false,\n      \"handlers\": []\n    },\n    {\n      \"token\": 100663306,\n      \"name\": \"Indirect\",\n      \"headerSize\": 12,\n      \"headerHex\": \"133002001000000005000011\",\n      \"maxStack\": 2,\n      \"codeHex\": \"fe06090000060a1f2a0629060000112a\",\n      \"localSignature\": 285212677,\n      \"localSignatureRawToken\": 285212677,\n      \"initLocals\": true,\n      \"handlers\": []\n    },\n    {\n      \"token\": 100663307,\n      \"name\": \"get_Value\",\n      \"headerSize\": 1,\n      \"headerHex\": \"1e\",\n      \"maxStack\": 8,\n      \"codeHex\": \"027b010000042a\",\n      \"localSignature\": 0,\n      \"localSignatureRawToken\": 285212672,\n      \"initLocals\": false,\n      \"handlers\": []\n    },\n    {\n      \"token\": 100663308,\n      \"name\": \"set_Value\",\n      \"headerSize\": 1,\n      \"headerHex\": \"22\",\n      \"maxStack\": 8,\n      \"codeHex\": \"02037d010000042a\",\n      \"localSignature\": 0,\n      \"localSignatureRawToken\": 285212672,\n      \"initLocals\": false,\n      \"handlers\": []\n    },\n    {\n      \"token\": 100663309,\n      \"name\": \".ctor\",\n      \"headerSize\": 1,\n      \"headerHex\": \"1e\",\n      \"maxStack\": 8,\n      \"codeHex\": \"02280900000a2a\",\n      \"localSignature\": 0,\n      \"localSignatureRawToken\": 285212672,\n      \"initLocals\": false,\n      \"handlers\": []\n    }\n  ],\n  \"loadError\": null,\n  \"executions\": {\n    \"HeaderCorpus::Empty\": {\n      \"value\": null,\n      \"error\": null\n    },\n    \"HeaderCorpus::Literal\": {\n      \"value\": 42,\n      \"error\": null\n    },\n    \"HeaderCorpus::DeepCall\": {\n      \"value\": 55,\n      \"error\": null\n    },\n    \"HeaderCorpus::Loop\": {\n      \"value\": 66,\n      \"error\": null\n    },\n    \"HeaderCorpus::Filtered\": {\n      \"value\": 9,\n      \"error\": null\n    },\n    \"HeaderCorpus::Allocated\": {\n      \"value\": 42,\n      \"error\": null\n    },\n    \"HeaderCorpus::Patterns\": {\n      \"value\": 7,\n      \"error\": null\n    },\n    \"HeaderCorpus::Indirect\": {\n      \"value\": 42,\n      \"error\": null\n    }\n  }\n}\n",
+      "stderr": "",
+      "exitCode": 0,
+      "signal": null,
+      "elapsedMs": 122.22191999999995
+    },
+    {
+      "id": "08",
+      "executable": "/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/dotnet",
+      "args": [
+        "--fx-version",
+        "10.0.5",
+        "/workspace/scratch/7e3d2a445c44/method-header-qualification-3ddd6460/native-first/Observer.dll",
+        "/workspace/scratch/7e3d2a445c44/method-header-qualification-3ddd6460/native-first/SharpForge.dll"
+      ],
+      "cwd": "/workspace/scratch/7e3d2a445c44/method-header-qualification-3ddd6460/native-first",
+      "environment": {
+        "PATH": "/root/.codex/tmp/arg0/codex-arg0FW6Pa9:/opt/codex/codex-path:/opt/codex/runtimes/codex-primary-runtime/dependencies/bin/override:/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin:/opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin:/opt/codex/runtimes/codex-primary-runtime/dependencies/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/opt/codex/runtimes/codex-primary-runtime/dependencies/bin/fallback",
+        "LANG": "C.UTF-8",
+        "LC_ALL": "C.UTF-8",
+        "TZ": "Europe/Berlin",
+        "TMPDIR": null,
+        "DOTNET_ROOT": "/workspace/scratch/7e3d2a445c44/dotnet-10.0.201",
+        "DOTNET": "/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/dotnet",
+        "SHARPFORGE_ORACLE_DOTNET": "/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/dotnet",
+        "SHARPFORGE_ILASM": "/workspace/scratch/7e3d2a445c44/dotnet-tools/ilasm",
+        "NODE_OPTIONS": "--max-old-space-size=2048",
+        "SHARPFORGE_MAX_PARALLEL_RUNS": "1",
+        "SHARPFORGE_TEST_CONCURRENCY": "1",
+        "SHARPFORGE_MAX_OLD_SPACE_MB": "2048",
+        "DOTNET_CLI_TELEMETRY_OPTOUT": "1",
+        "DOTNET_NOLOGO": "1",
+        "DOTNET_CLI_UI_LANGUAGE": "en-US",
+        "VSLANG": "1033",
+        "COMPlus_DbgEnableMiniDump": "0",
+        "DOTNET_ROLL_FORWARD": "Disable",
+        "DOTNET_ROLL_FORWARD_TO_PRERELEASE": "0"
+      },
+      "environmentScope": "Public execution settings; unlisted inherited variables are not serialized.",
+      "timeoutMs": 60000,
+      "maxOutputBytes": 1048576,
+      "startedAt": "2026-10-04T19:53:38.491Z",
+      "status": "exited",
+      "logs": {
+        "stdout": {
+          "path": "process-08.stdout.log",
+          "bytes": 8496,
+          "sha256": "d31c895076865684ad18efcd389ff717a394834550fa85616f1e11907cc3807b"
+        },
+        "stderr": {
+          "path": "process-08.stderr.log",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      },
+      "finishedAt": "2026-10-04T19:53:38.604Z",
+      "stdout": "{\n  \"runtime\": \".NET 10.0.5\",\n  \"signatures\": {\n    \"100663297\": {\n      \"parameters\": 0,\n      \"returnsVoid\": true,\n      \"hasThis\": false,\n      \"explicitThis\": false,\n      \"header\": 0,\n      \"requiredParameters\": 0\n    },\n    \"100663298\": {\n      \"parameters\": 0,\n      \"returnsVoid\": false,\n      \"hasThis\": false,\n      \"explicitThis\": false,\n      \"header\": 0,\n      \"requiredParameters\": 0\n    },\n    \"100663299\": {\n      \"parameters\": 10,\n      \"returnsVoid\": false,\n      \"hasThis\": false,\n      \"explicitThis\": false,\n      \"header\": 0,\n      \"requiredParameters\": 10\n    },\n    \"100663300\": {\n      \"parameters\": 0,\n      \"returnsVoid\": false,\n      \"hasThis\": false,\n      \"explicitThis\": false,\n      \"header\": 0,\n      \"requiredParameters\": 0\n    },\n    \"100663301\": {\n      \"parameters\": 0,\n      \"returnsVoid\": false,\n      \"hasThis\": false,\n      \"explicitThis\": false,\n      \"header\": 0,\n      \"requiredParameters\": 0\n    },\n    \"100663302\": {\n      \"parameters\": 0,\n      \"returnsVoid\": false,\n      \"hasThis\": false,\n      \"explicitThis\": false,\n      \"header\": 0,\n      \"requiredParameters\": 0\n    },\n    \"100663303\": {\n      \"parameters\": 0,\n      \"returnsVoid\": false,\n      \"hasThis\": false,\n      \"explicitThis\": false,\n      \"header\": 0,\n      \"requiredParameters\": 0\n    },\n    \"100663304\": {\n      \"parameters\": 0,\n      \"returnsVoid\": false,\n      \"hasThis\": false,\n      \"explicitThis\": false,\n      \"header\": 0,\n      \"requiredParameters\": 0\n    },\n    \"100663305\": {\n      \"parameters\": 1,\n      \"returnsVoid\": false,\n      \"hasThis\": false,\n      \"explicitThis\": false,\n      \"header\": 0,\n      \"requiredParameters\": 1\n    },\n    \"100663306\": {\n      \"parameters\": 0,\n      \"returnsVoid\": false,\n      \"hasThis\": false,\n      \"explicitThis\": false,\n      \"header\": 0,\n      \"requiredParameters\": 0\n    },\n    \"100663307\": {\n      \"parameters\": 0,\n      \"returnsVoid\": false,\n      \"hasThis\": true,\n      \"explicitThis\": false,\n      \"header\": 32,\n      \"requiredParameters\": 0\n    },\n    \"100663308\": {\n      \"parameters\": 1,\n      \"returnsVoid\": true,\n      \"hasThis\": true,\n      \"explicitThis\": false,\n      \"header\": 32,\n      \"requiredParameters\": 1\n    },\n    \"100663309\": {\n      \"parameters\": 0,\n      \"returnsVoid\": true,\n      \"hasThis\": true,\n      \"explicitThis\": false,\n      \"header\": 32,\n      \"requiredParameters\": 0\n    },\n    \"167772161\": {\n      \"parameters\": 0,\n      \"returnsVoid\": true,\n      \"hasThis\": true,\n      \"explicitThis\": false,\n      \"header\": 32,\n      \"requiredParameters\": 0\n    },\n    \"167772162\": {\n      \"parameters\": 0,\n      \"returnsVoid\": true,\n      \"hasThis\": true,\n      \"explicitThis\": false,\n      \"header\": 32,\n      \"requiredParameters\": 0\n    },\n    \"167772163\": {\n      \"parameters\": 0,\n      \"returnsVoid\": true,\n      \"hasThis\": true,\n      \"explicitThis\": false,\n      \"header\": 32,\n      \"requiredParameters\": 0\n    },\n    \"285212677\": {\n      \"parameters\": 1,\n      \"returnsVoid\": false,\n      \"hasThis\": false,\n      \"explicitThis\": false,\n      \"header\": 0,\n      \"requiredParameters\": 1\n    }\n  },\n  \"methods\": [\n    {\n      \"token\": 100663297,\n      \"name\": \"Empty\",\n      \"headerSize\": 1,\n      \"headerHex\": \"06\",\n      \"maxStack\": 8,\n      \"codeHex\": \"2a\",\n      \"localSignature\": 0,\n      \"localSignatureRawToken\": 285212672,\n      \"initLocals\": false,\n      \"handlers\": []\n    },\n    {\n      \"token\": 100663298,\n      \"name\": \"Literal\",\n      \"headerSize\": 1,\n      \"headerHex\": \"0e\",\n      \"maxStack\": 8,\n      \"codeHex\": \"1f2a2a\",\n      \"localSignature\": 0,\n      \"localSignatureRawToken\": 285212672,\n      \"initLocals\": false,\n      \"handlers\": []\n    },\n    {\n      \"token\": 100663299,\n      \"name\": \"Sum\",\n      \"headerSize\": 1,\n      \"headerHex\": \"6a\",\n      \"maxStack\": 8,\n      \"codeHex\": \"020358045805580e04580e05580e06580e07580e08580e09582a\",\n      \"localSignature\": 0,\n      \"localSignatureRawToken\": 285212672,\n      \"initLocals\": false,\n      \"handlers\": []\n    },\n    {\n      \"token\": 100663300,\n      \"name\": \"DeepCall\",\n      \"headerSize\": 12,\n      \"headerHex\": \"13300a001200000000000000\",\n      \"maxStack\": 10,\n      \"codeHex\": \"1718191a1b1c1d1e1f091f0a28030000062a\",\n      \"localSignature\": 0,\n      \"localSignatureRawToken\": 285212672,\n      \"initLocals\": true,\n      \"handlers\": []\n    },\n    {\n      \"token\": 100663301,\n      \"name\": \"Loop\",\n      \"headerSize\": 12,\n      \"headerHex\": \"133002001700000001000011\",\n      \"maxStack\": 2,\n      \"codeHex\": \"160a160b2b080607580a0717580b071f0cfe042df1062a\",\n      \"localSignature\": 285212673,\n      \"localSignatureRawToken\": 285212673,\n      \"initLocals\": true,\n      \"handlers\": []\n    },\n    {\n      \"token\": 100663302,\n      \"name\": \"Filtered\",\n      \"headerSize\": 12,\n      \"headerHex\": \"1b3002002c00000002000011\",\n      \"maxStack\": 2,\n      \"codeHex\": \"170a730100000a7a7501000001252d0426162b08260617fe0116fe03fe11261d0ade00de050618580adc062a\",\n      \"localSignature\": 285212674,\n      \"localSignatureRawToken\": 285212674,\n      \"initLocals\": true,\n      \"handlers\": [\n        {\n          \"flags\": 1,\n          \"start\": 2,\n          \"end\": 8,\n          \"target\": 30,\n          \"handlerEnd\": 35,\n          \"catchType\": 0,\n          \"filterOffset\": 8\n        },\n        {\n          \"flags\": 2,\n          \"start\": 2,\n          \"end\": 37,\n          \"target\": 37,\n          \"handlerEnd\": 42,\n          \"catchType\": 0,\n          \"filterOffset\": null\n        }\n      ]\n    },\n    {\n      \"token\": 100663303,\n      \"name\": \"Allocated\",\n      \"headerSize\": 12,\n      \"headerHex\": \"133004001f00000003000011\",\n      \"maxStack\": 4,\n      \"codeHex\": \"18e01ad9fe0f0a061f14540617d31a5a581f1654064a0617d31a5a584a582a\",\n      \"localSignature\": 285212675,\n      \"localSignatureRawToken\": 285212675,\n      \"initLocals\": true,\n      \"handlers\": []\n    },\n    {\n      \"token\": 100663304,\n      \"name\": \"Patterns\",\n      \"headerSize\": 12,\n      \"headerHex\": \"133003007e00000004000011\",\n      \"maxStack\": 3,\n      \"codeHex\": \"730d0000060b071f2a6f0c000006070a060c160d082c18092d0a086f0b0000061304170d11041f2afe012c03172b011606130516130611052c1a11062d0c11056f0b0000061307171306110716fe022c03182b01165806130816130911082c1b11092d0c11086f0b000006130a171309110a1f64fe042c031a2b0116582a\",\n      \"localSignature\": 285212676,\n      \"localSignatureRawToken\": 285212676,\n      \"initLocals\": true,\n      \"handlers\": []\n    },\n    {\n      \"token\": 100663305,\n      \"name\": \"Echo\",\n      \"headerSize\": 1,\n      \"headerHex\": \"0a\",\n      \"maxStack\": 8,\n      \"codeHex\": \"022a\",\n      \"localSignature\": 0,\n      \"localSignatureRawToken\": 285212672,\n      \"initLocals\": false,\n      \"handlers\": []\n    },\n    {\n      \"token\": 100663306,\n      \"name\": \"Indirect\",\n      \"headerSize\": 12,\n      \"headerHex\": \"133002001200000006000011\",\n      \"maxStack\": 2,\n      \"codeHex\": \"fe06090000060a060b1f2a0729050000112a\",\n      \"localSignature\": 285212678,\n      \"localSignatureRawToken\": 285212678,\n      \"initLocals\": true,\n      \"handlers\": []\n    },\n    {\n      \"token\": 100663307,\n      \"name\": \"get_Value\",\n      \"headerSize\": 1,\n      \"headerHex\": \"1e\",\n      \"maxStack\": 8,\n      \"codeHex\": \"027b010000042a\",\n      \"localSignature\": 0,\n      \"localSignatureRawToken\": 285212672,\n      \"initLocals\": false,\n      \"handlers\": []\n    },\n    {\n      \"token\": 100663308,\n      \"name\": \"set_Value\",\n      \"headerSize\": 1,\n      \"headerHex\": \"22\",\n      \"maxStack\": 8,\n      \"codeHex\": \"02037d010000042a\",\n      \"localSignature\": 0,\n      \"localSignatureRawToken\": 285212672,\n      \"initLocals\": false,\n      \"handlers\": []\n    },\n    {\n      \"token\": 100663309,\n      \"name\": \".ctor\",\n      \"headerSize\": 1,\n      \"headerHex\": \"1e\",\n      \"maxStack\": 8,\n      \"codeHex\": \"02280200000a2a\",\n      \"localSignature\": 0,\n      \"localSignatureRawToken\": 285212672,\n      \"initLocals\": false,\n      \"handlers\": []\n    }\n  ],\n  \"loadError\": null,\n  \"executions\": {\n    \"HeaderCorpus::Empty\": {\n      \"value\": null,\n      \"error\": null\n    },\n    \"HeaderCorpus::Literal\": {\n      \"value\": 42,\n      \"error\": null\n    },\n    \"HeaderCorpus::DeepCall\": {\n      \"value\": 55,\n      \"error\": null\n    },\n    \"HeaderCorpus::Loop\": {\n      \"value\": 66,\n      \"error\": null\n    },\n    \"HeaderCorpus::Filtered\": {\n      \"value\": 9,\n      \"error\": null\n    },\n    \"HeaderCorpus::Allocated\": {\n      \"value\": 42,\n      \"error\": null\n    },\n    \"HeaderCorpus::Patterns\": {\n      \"value\": 7,\n      \"error\": null\n    },\n    \"HeaderCorpus::Indirect\": {\n      \"value\": 42,\n      \"error\": null\n    }\n  }\n}\n",
+      "stderr": "",
+      "exitCode": 0,
+      "signal": null,
+      "elapsedMs": 112.31297600000016
+    },
+    {
+      "id": "09",
+      "executable": "/workspace/scratch/7e3d2a445c44/dotnet-tools/ilasm",
+      "args": [
+        "-dll",
+        "-output:/workspace/scratch/7e3d2a445c44/method-header-qualification-3ddd6460/native-first/NativeBoundaries.dll",
+        "/workspace/scratch/7e3d2a445c44/method-header-qualification-3ddd6460/native-first/boundaries.il"
+      ],
+      "cwd": "/workspace/scratch/7e3d2a445c44/method-header-qualification-3ddd6460/native-first",
+      "environment": {
+        "PATH": "/root/.codex/tmp/arg0/codex-arg0FW6Pa9:/opt/codex/codex-path:/opt/codex/runtimes/codex-primary-runtime/dependencies/bin/override:/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin:/opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin:/opt/codex/runtimes/codex-primary-runtime/dependencies/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/opt/codex/runtimes/codex-primary-runtime/dependencies/bin/fallback",
+        "LANG": "C.UTF-8",
+        "LC_ALL": "C.UTF-8",
+        "TZ": "Europe/Berlin",
+        "TMPDIR": null,
+        "DOTNET_ROOT": "/workspace/scratch/7e3d2a445c44/dotnet-10.0.201",
+        "DOTNET": "/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/dotnet",
+        "SHARPFORGE_ORACLE_DOTNET": "/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/dotnet",
+        "SHARPFORGE_ILASM": "/workspace/scratch/7e3d2a445c44/dotnet-tools/ilasm",
+        "NODE_OPTIONS": "--max-old-space-size=2048",
+        "SHARPFORGE_MAX_PARALLEL_RUNS": "1",
+        "SHARPFORGE_TEST_CONCURRENCY": "1",
+        "SHARPFORGE_MAX_OLD_SPACE_MB": "2048",
+        "DOTNET_CLI_TELEMETRY_OPTOUT": "1",
+        "DOTNET_NOLOGO": "1",
+        "DOTNET_CLI_UI_LANGUAGE": "en-US",
+        "VSLANG": "1033",
+        "COMPlus_DbgEnableMiniDump": "0",
+        "DOTNET_ROLL_FORWARD": "Disable",
+        "DOTNET_ROLL_FORWARD_TO_PRERELEASE": "0"
+      },
+      "environmentScope": "Public execution settings; unlisted inherited variables are not serialized.",
+      "timeoutMs": 60000,
+      "maxOutputBytes": 1048576,
+      "startedAt": "2026-10-04T19:53:38.619Z",
+      "status": "exited",
+      "logs": {
+        "stdout": {
+          "path": "process-09.stdout.log",
+          "bytes": 821,
+          "sha256": "1a17bcdc3cc6125b87a49ec2fb12f47b837820bb7f4c483e663e5e4325f7aef2"
+        },
+        "stderr": {
+          "path": "process-09.stderr.log",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      },
+      "finishedAt": "2026-10-04T19:53:38.625Z",
+      "stdout": "\n.NET IL Assembler.  Version 10.0.5\nCopyright (c) Microsoft Corporation.  All rights reserved.\nAssembling '/workspace/scratch/7e3d2a445c44/method-header-qualification-3ddd6460/native-first/boundaries.il'  to DLL --> '/workspace/scratch/7e3d2a445c44/method-header-qualification-3ddd6460/native-first/NativeBoundaries.dll'\nSource file is UTF-8\n\nAssembled method Cases::Tiny1\nAssembled method Cases::Tiny63\nAssembled method Cases::Fat64\nAssembled method Cases::Stack8\nAssembled method Cases::Stack9\nAssembled method Cases::FatLocalZero\nAssembled method Cases::InvalidUnderflow\nAssembled method Cases::InvalidJoin\nCreating PE file\n\nEmitting classes:\nClass 1:\tCases\n\nEmitting fields and methods:\nGlobal \t\nClass 1\tMethods: 8;\t\n\nEmitting events and properties:\nGlobal \t\nClass 1\t\nWriting PE file\nOperation completed successfully\n",
+      "stderr": "",
+      "exitCode": 0,
+      "signal": null,
+      "elapsedMs": 5.724711000000298
+    },
+    {
+      "id": "10",
+      "executable": "/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/dotnet",
+      "args": [
+        "--fx-version",
+        "10.0.5",
+        "/workspace/scratch/7e3d2a445c44/method-header-qualification-3ddd6460/native-first/Observer.dll",
+        "/workspace/scratch/7e3d2a445c44/method-header-qualification-3ddd6460/native-first/NativeBoundaries.dll"
+      ],
+      "cwd": "/workspace/scratch/7e3d2a445c44/method-header-qualification-3ddd6460/native-first",
+      "environment": {
+        "PATH": "/root/.codex/tmp/arg0/codex-arg0FW6Pa9:/opt/codex/codex-path:/opt/codex/runtimes/codex-primary-runtime/dependencies/bin/override:/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin:/opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin:/opt/codex/runtimes/codex-primary-runtime/dependencies/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/opt/codex/runtimes/codex-primary-runtime/dependencies/bin/fallback",
+        "LANG": "C.UTF-8",
+        "LC_ALL": "C.UTF-8",
+        "TZ": "Europe/Berlin",
+        "TMPDIR": null,
+        "DOTNET_ROOT": "/workspace/scratch/7e3d2a445c44/dotnet-10.0.201",
+        "DOTNET": "/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/dotnet",
+        "SHARPFORGE_ORACLE_DOTNET": "/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/dotnet",
+        "SHARPFORGE_ILASM": "/workspace/scratch/7e3d2a445c44/dotnet-tools/ilasm",
+        "NODE_OPTIONS": "--max-old-space-size=2048",
+        "SHARPFORGE_MAX_PARALLEL_RUNS": "1",
+        "SHARPFORGE_TEST_CONCURRENCY": "1",
+        "SHARPFORGE_MAX_OLD_SPACE_MB": "2048",
+        "DOTNET_CLI_TELEMETRY_OPTOUT": "1",
+        "DOTNET_NOLOGO": "1",
+        "DOTNET_CLI_UI_LANGUAGE": "en-US",
+        "VSLANG": "1033",
+        "COMPlus_DbgEnableMiniDump": "0",
+        "DOTNET_ROLL_FORWARD": "Disable",
+        "DOTNET_ROLL_FORWARD_TO_PRERELEASE": "0"
+      },
+      "environmentScope": "Public execution settings; unlisted inherited variables are not serialized.",
+      "timeoutMs": 60000,
+      "maxOutputBytes": 1048576,
+      "startedAt": "2026-10-04T19:53:38.630Z",
+      "status": "exited",
+      "logs": {
+        "stdout": {
+          "path": "process-10.stdout.log",
+          "bytes": 4831,
+          "sha256": "764c9858ea8ee92f7c74984f7317d0593c2921e8d9e84acc57f258cf7e916109"
+        },
+        "stderr": {
+          "path": "process-10.stderr.log",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      },
+      "finishedAt": "2026-10-04T19:53:38.759Z",
+      "stdout": "{\n  \"runtime\": \".NET 10.0.5\",\n  \"signatures\": {\n    \"100663297\": {\n      \"parameters\": 0,\n      \"returnsVoid\": true,\n      \"hasThis\": false,\n      \"explicitThis\": false,\n      \"header\": 0,\n      \"requiredParameters\": 0\n    },\n    \"100663298\": {\n      \"parameters\": 0,\n      \"returnsVoid\": true,\n      \"hasThis\": false,\n      \"explicitThis\": false,\n      \"header\": 0,\n      \"requiredParameters\": 0\n    },\n    \"100663299\": {\n      \"parameters\": 0,\n      \"returnsVoid\": true,\n      \"hasThis\": false,\n      \"explicitThis\": false,\n      \"header\": 0,\n      \"requiredParameters\": 0\n    },\n    \"100663300\": {\n      \"parameters\": 0,\n      \"returnsVoid\": false,\n      \"hasThis\": false,\n      \"explicitThis\": false,\n      \"header\": 0,\n      \"requiredParameters\": 0\n    },\n    \"100663301\": {\n      \"parameters\": 0,\n      \"returnsVoid\": false,\n      \"hasThis\": false,\n      \"explicitThis\": false,\n      \"header\": 0,\n      \"requiredParameters\": 0\n    },\n    \"100663302\": {\n      \"parameters\": 0,\n      \"returnsVoid\": true,\n      \"hasThis\": false,\n      \"explicitThis\": false,\n      \"header\": 0,\n      \"requiredParameters\": 0\n    },\n    \"100663303\": {\n      \"parameters\": 0,\n      \"returnsVoid\": true,\n      \"hasThis\": false,\n      \"explicitThis\": false,\n      \"header\": 0,\n      \"requiredParameters\": 0\n    },\n    \"100663304\": {\n      \"parameters\": 0,\n      \"returnsVoid\": true,\n      \"hasThis\": false,\n      \"explicitThis\": false,\n      \"header\": 0,\n      \"requiredParameters\": 0\n    }\n  },\n  \"methods\": [\n    {\n      \"token\": 100663297,\n      \"name\": \"Tiny1\",\n      \"headerSize\": 1,\n      \"headerHex\": \"06\",\n      \"maxStack\": 8,\n      \"codeHex\": \"2a\",\n      \"localSignature\": 0,\n      \"localSignatureRawToken\": 285212672,\n      \"initLocals\": false,\n      \"handlers\": []\n    },\n    {\n      \"token\": 100663298,\n      \"name\": \"Tiny63\",\n      \"headerSize\": 1,\n      \"headerHex\": \"fe\",\n      \"maxStack\": 8,\n      \"codeHex\": \"00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000002a\",\n      \"localSignature\": 0,\n      \"localSignatureRawToken\": 285212672,\n      \"initLocals\": false,\n      \"handlers\": []\n    },\n    {\n      \"token\": 100663299,\n      \"name\": \"Fat64\",\n      \"headerSize\": 12,\n      \"headerHex\": \"033000004000000000000000\",\n      \"maxStack\": 0,\n      \"codeHex\": \"0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000002a\",\n      \"localSignature\": 0,\n      \"localSignatureRawToken\": 285212672,\n      \"initLocals\": false,\n      \"handlers\": []\n    },\n    {\n      \"token\": 100663300,\n      \"name\": \"Stack8\",\n      \"headerSize\": 1,\n      \"headerHex\": \"42\",\n      \"maxStack\": 8,\n      \"codeHex\": \"1616161616161616262626262626262a\",\n      \"localSignature\": 0,\n      \"localSignatureRawToken\": 285212672,\n      \"initLocals\": false,\n      \"handlers\": []\n    },\n    {\n      \"token\": 100663301,\n      \"name\": \"Stack9\",\n      \"headerSize\": 12,\n      \"headerHex\": \"033009001200000000000000\",\n      \"maxStack\": 9,\n      \"codeHex\": \"16161616161616161626262626262626262a\",\n      \"localSignature\": 0,\n      \"localSignatureRawToken\": 285212672,\n      \"initLocals\": false,\n      \"handlers\": []\n    },\n    {\n      \"token\": 100663302,\n      \"name\": \"FatLocalZero\",\n      \"headerSize\": 12,\n      \"headerHex\": \"133000000100000001000011\",\n      \"maxStack\": 0,\n      \"codeHex\": \"2a\",\n      \"localSignature\": 285212673,\n      \"localSignatureRawToken\": 285212673,\n      \"initLocals\": true,\n      \"handlers\": []\n    },\n    {\n      \"token\": 100663303,\n      \"name\": \"InvalidUnderflow\",\n      \"headerSize\": 12,\n      \"headerHex\": \"133001000200000000000000\",\n      \"maxStack\": 1,\n      \"codeHex\": \"262a\",\n      \"localSignature\": 0,\n      \"localSignatureRawToken\": 285212672,\n      \"initLocals\": true,\n      \"handlers\": []\n    },\n    {\n      \"token\": 100663304,\n      \"name\": \"InvalidJoin\",\n      \"headerSize\": 12,\n      \"headerHex\": \"133002000800000000000000\",\n      \"maxStack\": 2,\n      \"codeHex\": \"163a01000000172a\",\n      \"localSignature\": 0,\n      \"localSignatureRawToken\": 285212672,\n      \"initLocals\": true,\n      \"handlers\": []\n    }\n  ],\n  \"loadError\": null,\n  \"executions\": {\n    \"Cases::Tiny1\": {\n      \"value\": null,\n      \"error\": null\n    },\n    \"Cases::Tiny63\": {\n      \"value\": null,\n      \"error\": null\n    },\n    \"Cases::Fat64\": {\n      \"value\": null,\n      \"error\": null\n    },\n    \"Cases::Stack8\": {\n      \"value\": 0,\n      \"error\": null\n    },\n    \"Cases::Stack9\": {\n      \"value\": 0,\n      \"error\": null\n    },\n    \"Cases::FatLocalZero\": {\n      \"value\": null,\n      \"error\": null\n    },\n    \"Cases::InvalidUnderflow\": {\n      \"value\": null,\n      \"error\": \"System.InvalidProgramException\"\n    },\n    \"Cases::InvalidJoin\": {\n      \"value\": null,\n      \"error\": \"System.InvalidProgramException\"\n    }\n  }\n}\n",
+      "stderr": "",
+      "exitCode": 0,
+      "signal": null,
+      "elapsedMs": 127.70920500000011
+    },
+    {
+      "id": "11",
+      "executable": "/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/dotnet",
+      "args": [
+        "--fx-version",
+        "10.0.5",
+        "/workspace/scratch/7e3d2a445c44/method-header-qualification-3ddd6460/native-first/Observer.dll",
+        "/workspace/scratch/7e3d2a445c44/method-header-qualification-3ddd6460/native-first/ProductBoundaries.dll"
+      ],
+      "cwd": "/workspace/scratch/7e3d2a445c44/method-header-qualification-3ddd6460/native-first",
+      "environment": {
+        "PATH": "/root/.codex/tmp/arg0/codex-arg0FW6Pa9:/opt/codex/codex-path:/opt/codex/runtimes/codex-primary-runtime/dependencies/bin/override:/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin:/opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin:/opt/codex/runtimes/codex-primary-runtime/dependencies/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/opt/codex/runtimes/codex-primary-runtime/dependencies/bin/fallback",
+        "LANG": "C.UTF-8",
+        "LC_ALL": "C.UTF-8",
+        "TZ": "Europe/Berlin",
+        "TMPDIR": null,
+        "DOTNET_ROOT": "/workspace/scratch/7e3d2a445c44/dotnet-10.0.201",
+        "DOTNET": "/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/dotnet",
+        "SHARPFORGE_ORACLE_DOTNET": "/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/dotnet",
+        "SHARPFORGE_ILASM": "/workspace/scratch/7e3d2a445c44/dotnet-tools/ilasm",
+        "NODE_OPTIONS": "--max-old-space-size=2048",
+        "SHARPFORGE_MAX_PARALLEL_RUNS": "1",
+        "SHARPFORGE_TEST_CONCURRENCY": "1",
+        "SHARPFORGE_MAX_OLD_SPACE_MB": "2048",
+        "DOTNET_CLI_TELEMETRY_OPTOUT": "1",
+        "DOTNET_NOLOGO": "1",
+        "DOTNET_CLI_UI_LANGUAGE": "en-US",
+        "VSLANG": "1033",
+        "COMPlus_DbgEnableMiniDump": "0",
+        "DOTNET_ROLL_FORWARD": "Disable",
+        "DOTNET_ROLL_FORWARD_TO_PRERELEASE": "0"
+      },
+      "environmentScope": "Public execution settings; unlisted inherited variables are not serialized.",
+      "timeoutMs": 60000,
+      "maxOutputBytes": 1048576,
+      "startedAt": "2026-10-04T19:53:38.765Z",
+      "status": "exited",
+      "logs": {
+        "stdout": {
+          "path": "process-11.stdout.log",
+          "bytes": 3639,
+          "sha256": "fd0c73bf70859fb173e05833d944303c23312998484e00a16e372318d36e64f5"
+        },
+        "stderr": {
+          "path": "process-11.stderr.log",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      },
+      "finishedAt": "2026-10-04T19:53:38.871Z",
+      "stdout": "{\n  \"runtime\": \".NET 10.0.5\",\n  \"signatures\": {\n    \"100663297\": {\n      \"parameters\": 0,\n      \"returnsVoid\": true,\n      \"hasThis\": false,\n      \"explicitThis\": false,\n      \"header\": 0,\n      \"requiredParameters\": 0\n    },\n    \"100663298\": {\n      \"parameters\": 0,\n      \"returnsVoid\": true,\n      \"hasThis\": false,\n      \"explicitThis\": false,\n      \"header\": 0,\n      \"requiredParameters\": 0\n    },\n    \"100663299\": {\n      \"parameters\": 0,\n      \"returnsVoid\": true,\n      \"hasThis\": false,\n      \"explicitThis\": false,\n      \"header\": 0,\n      \"requiredParameters\": 0\n    },\n    \"100663300\": {\n      \"parameters\": 0,\n      \"returnsVoid\": false,\n      \"hasThis\": false,\n      \"explicitThis\": false,\n      \"header\": 0,\n      \"requiredParameters\": 0\n    },\n    \"100663301\": {\n      \"parameters\": 0,\n      \"returnsVoid\": false,\n      \"hasThis\": false,\n      \"explicitThis\": false,\n      \"header\": 0,\n      \"requiredParameters\": 0\n    },\n    \"100663302\": {\n      \"parameters\": 0,\n      \"returnsVoid\": true,\n      \"hasThis\": false,\n      \"explicitThis\": false,\n      \"header\": 0,\n      \"requiredParameters\": 0\n    }\n  },\n  \"methods\": [\n    {\n      \"token\": 100663297,\n      \"name\": \"Tiny1\",\n      \"headerSize\": 1,\n      \"headerHex\": \"06\",\n      \"maxStack\": 8,\n      \"codeHex\": \"2a\",\n      \"localSignature\": 0,\n      \"localSignatureRawToken\": 285212672,\n      \"initLocals\": false,\n      \"handlers\": []\n    },\n    {\n      \"token\": 100663298,\n      \"name\": \"Tiny63\",\n      \"headerSize\": 1,\n      \"headerHex\": \"fe\",\n      \"maxStack\": 8,\n      \"codeHex\": \"00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000002a\",\n      \"localSignature\": 0,\n      \"localSignatureRawToken\": 285212672,\n      \"initLocals\": false,\n      \"handlers\": []\n    },\n    {\n      \"token\": 100663299,\n      \"name\": \"Fat64\",\n      \"headerSize\": 12,\n      \"headerHex\": \"133000004000000000000000\",\n      \"maxStack\": 0,\n      \"codeHex\": \"0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000002a\",\n      \"localSignature\": 0,\n      \"localSignatureRawToken\": 285212672,\n      \"initLocals\": true,\n      \"handlers\": []\n    },\n    {\n      \"token\": 100663300,\n      \"name\": \"Stack8\",\n      \"headerSize\": 1,\n      \"headerHex\": \"42\",\n      \"maxStack\": 8,\n      \"codeHex\": \"1616161616161616262626262626262a\",\n      \"localSignature\": 0,\n      \"localSignatureRawToken\": 285212672,\n      \"initLocals\": false,\n      \"handlers\": []\n    },\n    {\n      \"token\": 100663301,\n      \"name\": \"Stack9\",\n      \"headerSize\": 12,\n      \"headerHex\": \"133009001200000000000000\",\n      \"maxStack\": 9,\n      \"codeHex\": \"16161616161616161626262626262626262a\",\n      \"localSignature\": 0,\n      \"localSignatureRawToken\": 285212672,\n      \"initLocals\": true,\n      \"handlers\": []\n    },\n    {\n      \"token\": 100663302,\n      \"name\": \"FatLocalZero\",\n      \"headerSize\": 12,\n      \"headerHex\": \"133000000100000001000011\",\n      \"maxStack\": 0,\n      \"codeHex\": \"2a\",\n      \"localSignature\": 285212673,\n      \"localSignatureRawToken\": 285212673,\n      \"initLocals\": true,\n      \"handlers\": []\n    }\n  ],\n  \"loadError\": null,\n  \"executions\": {\n    \"Cases::Tiny1\": {\n      \"value\": null,\n      \"error\": null\n    },\n    \"Cases::Tiny63\": {\n      \"value\": null,\n      \"error\": null\n    },\n    \"Cases::Fat64\": {\n      \"value\": null,\n      \"error\": null\n    },\n    \"Cases::Stack8\": {\n      \"value\": 0,\n      \"error\": null\n    },\n    \"Cases::Stack9\": {\n      \"value\": 0,\n      \"error\": null\n    },\n    \"Cases::FatLocalZero\": {\n      \"value\": null,\n      \"error\": null\n    }\n  }\n}\n",
+      "stderr": "",
+      "exitCode": 0,
+      "signal": null,
+      "elapsedMs": 104.74714700000004
+    }
+  ],
+  "observations": {
+    "roslyn": {
+      "assembly": "/workspace/scratch/7e3d2a445c44/method-header-qualification-3ddd6460/native-first/Roslyn.dll",
+      "assemblySHA256": "b41eef889c82b09826e99f33360b444e582f4835c070da91a875242727314de1",
+      "bytes": 4608,
+      "observed": {
+        "runtime": ".NET 10.0.5",
+        "signatures": {
+          "100663297": {
+            "parameters": 0,
+            "returnsVoid": true,
+            "hasThis": false,
+            "explicitThis": false,
+            "header": 0,
+            "requiredParameters": 0
+          },
+          "100663298": {
+            "parameters": 0,
+            "returnsVoid": false,
+            "hasThis": false,
+            "explicitThis": false,
+            "header": 0,
+            "requiredParameters": 0
+          },
+          "100663299": {
+            "parameters": 10,
+            "returnsVoid": false,
+            "hasThis": false,
+            "explicitThis": false,
+            "header": 0,
+            "requiredParameters": 10
+          },
+          "100663300": {
+            "parameters": 0,
+            "returnsVoid": false,
+            "hasThis": false,
+            "explicitThis": false,
+            "header": 0,
+            "requiredParameters": 0
+          },
+          "100663301": {
+            "parameters": 0,
+            "returnsVoid": false,
+            "hasThis": false,
+            "explicitThis": false,
+            "header": 0,
+            "requiredParameters": 0
+          },
+          "100663302": {
+            "parameters": 0,
+            "returnsVoid": false,
+            "hasThis": false,
+            "explicitThis": false,
+            "header": 0,
+            "requiredParameters": 0
+          },
+          "100663303": {
+            "parameters": 0,
+            "returnsVoid": false,
+            "hasThis": false,
+            "explicitThis": false,
+            "header": 0,
+            "requiredParameters": 0
+          },
+          "100663304": {
+            "parameters": 0,
+            "returnsVoid": false,
+            "hasThis": false,
+            "explicitThis": false,
+            "header": 0,
+            "requiredParameters": 0
+          },
+          "100663305": {
+            "parameters": 1,
+            "returnsVoid": false,
+            "hasThis": false,
+            "explicitThis": false,
+            "header": 0,
+            "requiredParameters": 1
+          },
+          "100663306": {
+            "parameters": 0,
+            "returnsVoid": false,
+            "hasThis": false,
+            "explicitThis": false,
+            "header": 0,
+            "requiredParameters": 0
+          },
+          "100663307": {
+            "parameters": 0,
+            "returnsVoid": false,
+            "hasThis": true,
+            "explicitThis": false,
+            "header": 32,
+            "requiredParameters": 0
+          },
+          "100663308": {
+            "parameters": 1,
+            "returnsVoid": true,
+            "hasThis": true,
+            "explicitThis": false,
+            "header": 32,
+            "requiredParameters": 1
+          },
+          "100663309": {
+            "parameters": 0,
+            "returnsVoid": true,
+            "hasThis": true,
+            "explicitThis": false,
+            "header": 32,
+            "requiredParameters": 0
+          },
+          "167772161": {
+            "parameters": 1,
+            "returnsVoid": true,
+            "hasThis": true,
+            "explicitThis": false,
+            "header": 32,
+            "requiredParameters": 1
+          },
+          "167772162": {
+            "parameters": 0,
+            "returnsVoid": true,
+            "hasThis": true,
+            "explicitThis": false,
+            "header": 32,
+            "requiredParameters": 0
+          },
+          "167772163": {
+            "parameters": 1,
+            "returnsVoid": true,
+            "hasThis": true,
+            "explicitThis": false,
+            "header": 32,
+            "requiredParameters": 1
+          },
+          "167772164": {
+            "parameters": 1,
+            "returnsVoid": true,
+            "hasThis": true,
+            "explicitThis": false,
+            "header": 32,
+            "requiredParameters": 1
+          },
+          "167772165": {
+            "parameters": 0,
+            "returnsVoid": true,
+            "hasThis": true,
+            "explicitThis": false,
+            "header": 32,
+            "requiredParameters": 0
+          },
+          "167772166": {
+            "parameters": 1,
+            "returnsVoid": true,
+            "hasThis": true,
+            "explicitThis": false,
+            "header": 32,
+            "requiredParameters": 1
+          },
+          "167772167": {
+            "parameters": 0,
+            "returnsVoid": true,
+            "hasThis": true,
+            "explicitThis": false,
+            "header": 32,
+            "requiredParameters": 0
+          },
+          "167772168": {
+            "parameters": 0,
+            "returnsVoid": true,
+            "hasThis": true,
+            "explicitThis": false,
+            "header": 32,
+            "requiredParameters": 0
+          },
+          "167772169": {
+            "parameters": 0,
+            "returnsVoid": true,
+            "hasThis": true,
+            "explicitThis": false,
+            "header": 32,
+            "requiredParameters": 0
+          },
+          "285212678": {
+            "parameters": 1,
+            "returnsVoid": false,
+            "hasThis": false,
+            "explicitThis": false,
+            "header": 0,
+            "requiredParameters": 1
+          }
+        },
+        "methods": [
+          {
+            "token": 100663297,
+            "name": "Empty",
+            "headerSize": 1,
+            "headerHex": "06",
+            "maxStack": 8,
+            "codeHex": "2a",
+            "localSignature": 0,
+            "localSignatureRawToken": 285212672,
+            "initLocals": false,
+            "handlers": []
+          },
+          {
+            "token": 100663298,
+            "name": "Literal",
+            "headerSize": 1,
+            "headerHex": "0e",
+            "maxStack": 8,
+            "codeHex": "1f2a2a",
+            "localSignature": 0,
+            "localSignatureRawToken": 285212672,
+            "initLocals": false,
+            "handlers": []
+          },
+          {
+            "token": 100663299,
+            "name": "Sum",
+            "headerSize": 1,
+            "headerHex": "6a",
+            "maxStack": 8,
+            "codeHex": "020358045805580e04580e05580e06580e07580e08580e09582a",
+            "localSignature": 0,
+            "localSignatureRawToken": 285212672,
+            "initLocals": false,
+            "handlers": []
+          },
+          {
+            "token": 100663300,
+            "name": "DeepCall",
+            "headerSize": 12,
+            "headerHex": "13300a001200000000000000",
+            "maxStack": 10,
+            "codeHex": "1718191a1b1c1d1e1f091f0a28030000062a",
+            "localSignature": 0,
+            "localSignatureRawToken": 285212672,
+            "initLocals": true,
+            "handlers": []
+          },
+          {
+            "token": 100663301,
+            "name": "Loop",
+            "headerSize": 12,
+            "headerHex": "133002001500000001000011",
+            "maxStack": 2,
+            "codeHex": "160a160b2b080607580a0717580b071f0c32f3062a",
+            "localSignature": 285212673,
+            "localSignatureRawToken": 285212673,
+            "initLocals": true,
+            "handlers": []
+          },
+          {
+            "token": 100663302,
+            "name": "Filtered",
+            "headerSize": 12,
+            "headerHex": "1b3002002a00000002000011",
+            "maxStack": 2,
+            "codeHex": "170a730800000a7a750b000001252d0426162b08260617fe0116fe03fe11261d0ade050618580adc062a",
+            "localSignature": 285212674,
+            "localSignatureRawToken": 285212674,
+            "initLocals": true,
+            "handlers": [
+              {
+                "flags": 1,
+                "start": 2,
+                "end": 8,
+                "target": 30,
+                "handlerEnd": 35,
+                "catchType": 0,
+                "filterOffset": 8
+              },
+              {
+                "flags": 2,
+                "start": 2,
+                "end": 35,
+                "target": 35,
+                "handlerEnd": 40,
+                "catchType": 0,
+                "filterOffset": null
+              }
+            ]
+          },
+          {
+            "token": 100663303,
+            "name": "Allocated",
+            "headerSize": 12,
+            "headerHex": "133003001700000003000011",
+            "maxStack": 3,
+            "codeHex": "1ee0fe0f0a061f1454061a581f1654064a061a584a582a",
+            "localSignature": 285212675,
+            "localSignatureRawToken": 285212675,
+            "initLocals": true,
+            "handlers": []
+          },
+          {
+            "token": 100663304,
+            "name": "Patterns",
+            "headerSize": 12,
+            "headerHex": "133003004500000004000011",
+            "maxStack": 3,
+            "codeHex": "730d000006251f2a6f0c0000060a062c0c066f0b0000061f2afe012b011616fe03062c09066f0b000006163003162b011858062c0a066f0b0000061f643203162b011a582a",
+            "localSignature": 285212676,
+            "localSignatureRawToken": 285212676,
+            "initLocals": true,
+            "handlers": []
+          },
+          {
+            "token": 100663305,
+            "name": "Echo",
+            "headerSize": 1,
+            "headerHex": "0a",
+            "maxStack": 8,
+            "codeHex": "022a",
+            "localSignature": 0,
+            "localSignatureRawToken": 285212672,
+            "initLocals": false,
+            "handlers": []
+          },
+          {
+            "token": 100663306,
+            "name": "Indirect",
+            "headerSize": 12,
+            "headerHex": "133002001000000005000011",
+            "maxStack": 2,
+            "codeHex": "fe06090000060a1f2a0629060000112a",
+            "localSignature": 285212677,
+            "localSignatureRawToken": 285212677,
+            "initLocals": true,
+            "handlers": []
+          },
+          {
+            "token": 100663307,
+            "name": "get_Value",
+            "headerSize": 1,
+            "headerHex": "1e",
+            "maxStack": 8,
+            "codeHex": "027b010000042a",
+            "localSignature": 0,
+            "localSignatureRawToken": 285212672,
+            "initLocals": false,
+            "handlers": []
+          },
+          {
+            "token": 100663308,
+            "name": "set_Value",
+            "headerSize": 1,
+            "headerHex": "22",
+            "maxStack": 8,
+            "codeHex": "02037d010000042a",
+            "localSignature": 0,
+            "localSignatureRawToken": 285212672,
+            "initLocals": false,
+            "handlers": []
+          },
+          {
+            "token": 100663309,
+            "name": ".ctor",
+            "headerSize": 1,
+            "headerHex": "1e",
+            "maxStack": 8,
+            "codeHex": "02280900000a2a",
+            "localSignature": 0,
+            "localSignatureRawToken": 285212672,
+            "initLocals": false,
+            "handlers": []
+          }
+        ],
+        "loadError": null,
+        "executions": {
+          "HeaderCorpus::Empty": {
+            "value": null,
+            "error": null
+          },
+          "HeaderCorpus::Literal": {
+            "value": 42,
+            "error": null
+          },
+          "HeaderCorpus::DeepCall": {
+            "value": 55,
+            "error": null
+          },
+          "HeaderCorpus::Loop": {
+            "value": 66,
+            "error": null
+          },
+          "HeaderCorpus::Filtered": {
+            "value": 9,
+            "error": null
+          },
+          "HeaderCorpus::Allocated": {
+            "value": 42,
+            "error": null
+          },
+          "HeaderCorpus::Patterns": {
+            "value": 7,
+            "error": null
+          },
+          "HeaderCorpus::Indirect": {
+            "value": 42,
+            "error": null
+          }
+        }
+      },
+      "results": [
+        {
+          "token": 100663297,
+          "name": "Empty",
+          "analysis": {
+            "status": "complete",
+            "maxStack": 0,
+            "diagnostics": [],
+            "hasDynamicStackAllocation": false
+          }
+        },
+        {
+          "token": 100663298,
+          "name": "Literal",
+          "analysis": {
+            "status": "complete",
+            "maxStack": 1,
+            "diagnostics": [],
+            "hasDynamicStackAllocation": false
+          }
+        },
+        {
+          "token": 100663299,
+          "name": "Sum",
+          "analysis": {
+            "status": "complete",
+            "maxStack": 2,
+            "diagnostics": [],
+            "hasDynamicStackAllocation": false
+          }
+        },
+        {
+          "token": 100663300,
+          "name": "DeepCall",
+          "analysis": {
+            "status": "complete",
+            "maxStack": 10,
+            "diagnostics": [],
+            "hasDynamicStackAllocation": false
+          }
+        },
+        {
+          "token": 100663301,
+          "name": "Loop",
+          "analysis": {
+            "status": "complete",
+            "maxStack": 2,
+            "diagnostics": [],
+            "hasDynamicStackAllocation": false
+          }
+        },
+        {
+          "token": 100663302,
+          "name": "Filtered",
+          "analysis": {
+            "status": "complete",
+            "maxStack": 2,
+            "diagnostics": [],
+            "hasDynamicStackAllocation": false
+          }
+        },
+        {
+          "token": 100663303,
+          "name": "Allocated",
+          "analysis": {
+            "status": "complete",
+            "maxStack": 3,
+            "diagnostics": [],
+            "hasDynamicStackAllocation": true
+          }
+        },
+        {
+          "token": 100663304,
+          "name": "Patterns",
+          "analysis": {
+            "status": "complete",
+            "maxStack": 3,
+            "diagnostics": [],
+            "hasDynamicStackAllocation": false
+          }
+        },
+        {
+          "token": 100663305,
+          "name": "Echo",
+          "analysis": {
+            "status": "complete",
+            "maxStack": 1,
+            "diagnostics": [],
+            "hasDynamicStackAllocation": false
+          }
+        },
+        {
+          "token": 100663306,
+          "name": "Indirect",
+          "analysis": {
+            "status": "complete",
+            "maxStack": 2,
+            "diagnostics": [],
+            "hasDynamicStackAllocation": false
+          }
+        },
+        {
+          "token": 100663307,
+          "name": "get_Value",
+          "analysis": {
+            "status": "complete",
+            "maxStack": 1,
+            "diagnostics": [],
+            "hasDynamicStackAllocation": false
+          }
+        },
+        {
+          "token": 100663308,
+          "name": "set_Value",
+          "analysis": {
+            "status": "complete",
+            "maxStack": 2,
+            "diagnostics": [],
+            "hasDynamicStackAllocation": false
+          }
+        },
+        {
+          "token": 100663309,
+          "name": ".ctor",
+          "analysis": {
+            "status": "complete",
+            "maxStack": 1,
+            "diagnostics": [],
+            "hasDynamicStackAllocation": false
+          }
+        }
+      ]
+    },
+    "compiler": {
+      "assembly": "/workspace/scratch/7e3d2a445c44/method-header-qualification-3ddd6460/native-first/SharpForge.dll",
+      "assemblySHA256": "3d52cf8f642a5bb90dfe912d29a02055adaefde533ce33e451a31581e936c7aa",
+      "bytes": 2560,
+      "observed": {
+        "runtime": ".NET 10.0.5",
+        "signatures": {
+          "100663297": {
+            "parameters": 0,
+            "returnsVoid": true,
+            "hasThis": false,
+            "explicitThis": false,
+            "header": 0,
+            "requiredParameters": 0
+          },
+          "100663298": {
+            "parameters": 0,
+            "returnsVoid": false,
+            "hasThis": false,
+            "explicitThis": false,
+            "header": 0,
+            "requiredParameters": 0
+          },
+          "100663299": {
+            "parameters": 10,
+            "returnsVoid": false,
+            "hasThis": false,
+            "explicitThis": false,
+            "header": 0,
+            "requiredParameters": 10
+          },
+          "100663300": {
+            "parameters": 0,
+            "returnsVoid": false,
+            "hasThis": false,
+            "explicitThis": false,
+            "header": 0,
+            "requiredParameters": 0
+          },
+          "100663301": {
+            "parameters": 0,
+            "returnsVoid": false,
+            "hasThis": false,
+            "explicitThis": false,
+            "header": 0,
+            "requiredParameters": 0
+          },
+          "100663302": {
+            "parameters": 0,
+            "returnsVoid": false,
+            "hasThis": false,
+            "explicitThis": false,
+            "header": 0,
+            "requiredParameters": 0
+          },
+          "100663303": {
+            "parameters": 0,
+            "returnsVoid": false,
+            "hasThis": false,
+            "explicitThis": false,
+            "header": 0,
+            "requiredParameters": 0
+          },
+          "100663304": {
+            "parameters": 0,
+            "returnsVoid": false,
+            "hasThis": false,
+            "explicitThis": false,
+            "header": 0,
+            "requiredParameters": 0
+          },
+          "100663305": {
+            "parameters": 1,
+            "returnsVoid": false,
+            "hasThis": false,
+            "explicitThis": false,
+            "header": 0,
+            "requiredParameters": 1
+          },
+          "100663306": {
+            "parameters": 0,
+            "returnsVoid": false,
+            "hasThis": false,
+            "explicitThis": false,
+            "header": 0,
+            "requiredParameters": 0
+          },
+          "100663307": {
+            "parameters": 0,
+            "returnsVoid": false,
+            "hasThis": true,
+            "explicitThis": false,
+            "header": 32,
+            "requiredParameters": 0
+          },
+          "100663308": {
+            "parameters": 1,
+            "returnsVoid": true,
+            "hasThis": true,
+            "explicitThis": false,
+            "header": 32,
+            "requiredParameters": 1
+          },
+          "100663309": {
+            "parameters": 0,
+            "returnsVoid": true,
+            "hasThis": true,
+            "explicitThis": false,
+            "header": 32,
+            "requiredParameters": 0
+          },
+          "167772161": {
+            "parameters": 0,
+            "returnsVoid": true,
+            "hasThis": true,
+            "explicitThis": false,
+            "header": 32,
+            "requiredParameters": 0
+          },
+          "167772162": {
+            "parameters": 0,
+            "returnsVoid": true,
+            "hasThis": true,
+            "explicitThis": false,
+            "header": 32,
+            "requiredParameters": 0
+          },
+          "167772163": {
+            "parameters": 0,
+            "returnsVoid": true,
+            "hasThis": true,
+            "explicitThis": false,
+            "header": 32,
+            "requiredParameters": 0
+          },
+          "285212677": {
+            "parameters": 1,
+            "returnsVoid": false,
+            "hasThis": false,
+            "explicitThis": false,
+            "header": 0,
+            "requiredParameters": 1
+          }
+        },
+        "methods": [
+          {
+            "token": 100663297,
+            "name": "Empty",
+            "headerSize": 1,
+            "headerHex": "06",
+            "maxStack": 8,
+            "codeHex": "2a",
+            "localSignature": 0,
+            "localSignatureRawToken": 285212672,
+            "initLocals": false,
+            "handlers": []
+          },
+          {
+            "token": 100663298,
+            "name": "Literal",
+            "headerSize": 1,
+            "headerHex": "0e",
+            "maxStack": 8,
+            "codeHex": "1f2a2a",
+            "localSignature": 0,
+            "localSignatureRawToken": 285212672,
+            "initLocals": false,
+            "handlers": []
+          },
+          {
+            "token": 100663299,
+            "name": "Sum",
+            "headerSize": 1,
+            "headerHex": "6a",
+            "maxStack": 8,
+            "codeHex": "020358045805580e04580e05580e06580e07580e08580e09582a",
+            "localSignature": 0,
+            "localSignatureRawToken": 285212672,
+            "initLocals": false,
+            "handlers": []
+          },
+          {
+            "token": 100663300,
+            "name": "DeepCall",
+            "headerSize": 12,
+            "headerHex": "13300a001200000000000000",
+            "maxStack": 10,
+            "codeHex": "1718191a1b1c1d1e1f091f0a28030000062a",
+            "localSignature": 0,
+            "localSignatureRawToken": 285212672,
+            "initLocals": true,
+            "handlers": []
+          },
+          {
+            "token": 100663301,
+            "name": "Loop",
+            "headerSize": 12,
+            "headerHex": "133002001700000001000011",
+            "maxStack": 2,
+            "codeHex": "160a160b2b080607580a0717580b071f0cfe042df1062a",
+            "localSignature": 285212673,
+            "localSignatureRawToken": 285212673,
+            "initLocals": true,
+            "handlers": []
+          },
+          {
+            "token": 100663302,
+            "name": "Filtered",
+            "headerSize": 12,
+            "headerHex": "1b3002002c00000002000011",
+            "maxStack": 2,
+            "codeHex": "170a730100000a7a7501000001252d0426162b08260617fe0116fe03fe11261d0ade00de050618580adc062a",
+            "localSignature": 285212674,
+            "localSignatureRawToken": 285212674,
+            "initLocals": true,
+            "handlers": [
+              {
+                "flags": 1,
+                "start": 2,
+                "end": 8,
+                "target": 30,
+                "handlerEnd": 35,
+                "catchType": 0,
+                "filterOffset": 8
+              },
+              {
+                "flags": 2,
+                "start": 2,
+                "end": 37,
+                "target": 37,
+                "handlerEnd": 42,
+                "catchType": 0,
+                "filterOffset": null
+              }
+            ]
+          },
+          {
+            "token": 100663303,
+            "name": "Allocated",
+            "headerSize": 12,
+            "headerHex": "133004001f00000003000011",
+            "maxStack": 4,
+            "codeHex": "18e01ad9fe0f0a061f14540617d31a5a581f1654064a0617d31a5a584a582a",
+            "localSignature": 285212675,
+            "localSignatureRawToken": 285212675,
+            "initLocals": true,
+            "handlers": []
+          },
+          {
+            "token": 100663304,
+            "name": "Patterns",
+            "headerSize": 12,
+            "headerHex": "133003007e00000004000011",
+            "maxStack": 3,
+            "codeHex": "730d0000060b071f2a6f0c000006070a060c160d082c18092d0a086f0b0000061304170d11041f2afe012c03172b011606130516130611052c1a11062d0c11056f0b0000061307171306110716fe022c03182b01165806130816130911082c1b11092d0c11086f0b000006130a171309110a1f64fe042c031a2b0116582a",
+            "localSignature": 285212676,
+            "localSignatureRawToken": 285212676,
+            "initLocals": true,
+            "handlers": []
+          },
+          {
+            "token": 100663305,
+            "name": "Echo",
+            "headerSize": 1,
+            "headerHex": "0a",
+            "maxStack": 8,
+            "codeHex": "022a",
+            "localSignature": 0,
+            "localSignatureRawToken": 285212672,
+            "initLocals": false,
+            "handlers": []
+          },
+          {
+            "token": 100663306,
+            "name": "Indirect",
+            "headerSize": 12,
+            "headerHex": "133002001200000006000011",
+            "maxStack": 2,
+            "codeHex": "fe06090000060a060b1f2a0729050000112a",
+            "localSignature": 285212678,
+            "localSignatureRawToken": 285212678,
+            "initLocals": true,
+            "handlers": []
+          },
+          {
+            "token": 100663307,
+            "name": "get_Value",
+            "headerSize": 1,
+            "headerHex": "1e",
+            "maxStack": 8,
+            "codeHex": "027b010000042a",
+            "localSignature": 0,
+            "localSignatureRawToken": 285212672,
+            "initLocals": false,
+            "handlers": []
+          },
+          {
+            "token": 100663308,
+            "name": "set_Value",
+            "headerSize": 1,
+            "headerHex": "22",
+            "maxStack": 8,
+            "codeHex": "02037d010000042a",
+            "localSignature": 0,
+            "localSignatureRawToken": 285212672,
+            "initLocals": false,
+            "handlers": []
+          },
+          {
+            "token": 100663309,
+            "name": ".ctor",
+            "headerSize": 1,
+            "headerHex": "1e",
+            "maxStack": 8,
+            "codeHex": "02280200000a2a",
+            "localSignature": 0,
+            "localSignatureRawToken": 285212672,
+            "initLocals": false,
+            "handlers": []
+          }
+        ],
+        "loadError": null,
+        "executions": {
+          "HeaderCorpus::Empty": {
+            "value": null,
+            "error": null
+          },
+          "HeaderCorpus::Literal": {
+            "value": 42,
+            "error": null
+          },
+          "HeaderCorpus::DeepCall": {
+            "value": 55,
+            "error": null
+          },
+          "HeaderCorpus::Loop": {
+            "value": 66,
+            "error": null
+          },
+          "HeaderCorpus::Filtered": {
+            "value": 9,
+            "error": null
+          },
+          "HeaderCorpus::Allocated": {
+            "value": 42,
+            "error": null
+          },
+          "HeaderCorpus::Patterns": {
+            "value": 7,
+            "error": null
+          },
+          "HeaderCorpus::Indirect": {
+            "value": 42,
+            "error": null
+          }
+        }
+      },
+      "results": [
+        {
+          "token": 100663297,
+          "name": "Empty",
+          "analysis": {
+            "status": "complete",
+            "maxStack": 0,
+            "diagnostics": [],
+            "hasDynamicStackAllocation": false
+          }
+        },
+        {
+          "token": 100663298,
+          "name": "Literal",
+          "analysis": {
+            "status": "complete",
+            "maxStack": 1,
+            "diagnostics": [],
+            "hasDynamicStackAllocation": false
+          }
+        },
+        {
+          "token": 100663299,
+          "name": "Sum",
+          "analysis": {
+            "status": "complete",
+            "maxStack": 2,
+            "diagnostics": [],
+            "hasDynamicStackAllocation": false
+          }
+        },
+        {
+          "token": 100663300,
+          "name": "DeepCall",
+          "analysis": {
+            "status": "complete",
+            "maxStack": 10,
+            "diagnostics": [],
+            "hasDynamicStackAllocation": false
+          }
+        },
+        {
+          "token": 100663301,
+          "name": "Loop",
+          "analysis": {
+            "status": "complete",
+            "maxStack": 2,
+            "diagnostics": [],
+            "hasDynamicStackAllocation": false
+          }
+        },
+        {
+          "token": 100663302,
+          "name": "Filtered",
+          "analysis": {
+            "status": "complete",
+            "maxStack": 2,
+            "diagnostics": [],
+            "hasDynamicStackAllocation": false
+          }
+        },
+        {
+          "token": 100663303,
+          "name": "Allocated",
+          "analysis": {
+            "status": "complete",
+            "maxStack": 4,
+            "diagnostics": [],
+            "hasDynamicStackAllocation": true
+          }
+        },
+        {
+          "token": 100663304,
+          "name": "Patterns",
+          "analysis": {
+            "status": "complete",
+            "maxStack": 3,
+            "diagnostics": [],
+            "hasDynamicStackAllocation": false
+          }
+        },
+        {
+          "token": 100663305,
+          "name": "Echo",
+          "analysis": {
+            "status": "complete",
+            "maxStack": 1,
+            "diagnostics": [],
+            "hasDynamicStackAllocation": false
+          }
+        },
+        {
+          "token": 100663306,
+          "name": "Indirect",
+          "analysis": {
+            "status": "complete",
+            "maxStack": 2,
+            "diagnostics": [],
+            "hasDynamicStackAllocation": false
+          }
+        },
+        {
+          "token": 100663307,
+          "name": "get_Value",
+          "analysis": {
+            "status": "complete",
+            "maxStack": 1,
+            "diagnostics": [],
+            "hasDynamicStackAllocation": false
+          }
+        },
+        {
+          "token": 100663308,
+          "name": "set_Value",
+          "analysis": {
+            "status": "complete",
+            "maxStack": 2,
+            "diagnostics": [],
+            "hasDynamicStackAllocation": false
+          }
+        },
+        {
+          "token": 100663309,
+          "name": ".ctor",
+          "analysis": {
+            "status": "complete",
+            "maxStack": 1,
+            "diagnostics": [],
+            "hasDynamicStackAllocation": false
+          }
+        }
+      ]
+    },
+    "ilasm": {
+      "assembly": "/workspace/scratch/7e3d2a445c44/method-header-qualification-3ddd6460/native-first/NativeBoundaries.dll",
+      "assemblySHA256": "c04d25f78963fe3755e906a9cf49c494723dce767f1dfe61d78700bf35b4d9fd",
+      "bytes": 2048,
+      "observed": {
+        "runtime": ".NET 10.0.5",
+        "signatures": {
+          "100663297": {
+            "parameters": 0,
+            "returnsVoid": true,
+            "hasThis": false,
+            "explicitThis": false,
+            "header": 0,
+            "requiredParameters": 0
+          },
+          "100663298": {
+            "parameters": 0,
+            "returnsVoid": true,
+            "hasThis": false,
+            "explicitThis": false,
+            "header": 0,
+            "requiredParameters": 0
+          },
+          "100663299": {
+            "parameters": 0,
+            "returnsVoid": true,
+            "hasThis": false,
+            "explicitThis": false,
+            "header": 0,
+            "requiredParameters": 0
+          },
+          "100663300": {
+            "parameters": 0,
+            "returnsVoid": false,
+            "hasThis": false,
+            "explicitThis": false,
+            "header": 0,
+            "requiredParameters": 0
+          },
+          "100663301": {
+            "parameters": 0,
+            "returnsVoid": false,
+            "hasThis": false,
+            "explicitThis": false,
+            "header": 0,
+            "requiredParameters": 0
+          },
+          "100663302": {
+            "parameters": 0,
+            "returnsVoid": true,
+            "hasThis": false,
+            "explicitThis": false,
+            "header": 0,
+            "requiredParameters": 0
+          },
+          "100663303": {
+            "parameters": 0,
+            "returnsVoid": true,
+            "hasThis": false,
+            "explicitThis": false,
+            "header": 0,
+            "requiredParameters": 0
+          },
+          "100663304": {
+            "parameters": 0,
+            "returnsVoid": true,
+            "hasThis": false,
+            "explicitThis": false,
+            "header": 0,
+            "requiredParameters": 0
+          }
+        },
+        "methods": [
+          {
+            "token": 100663297,
+            "name": "Tiny1",
+            "headerSize": 1,
+            "headerHex": "06",
+            "maxStack": 8,
+            "codeHex": "2a",
+            "localSignature": 0,
+            "localSignatureRawToken": 285212672,
+            "initLocals": false,
+            "handlers": []
+          },
+          {
+            "token": 100663298,
+            "name": "Tiny63",
+            "headerSize": 1,
+            "headerHex": "fe",
+            "maxStack": 8,
+            "codeHex": "00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000002a",
+            "localSignature": 0,
+            "localSignatureRawToken": 285212672,
+            "initLocals": false,
+            "handlers": []
+          },
+          {
+            "token": 100663299,
+            "name": "Fat64",
+            "headerSize": 12,
+            "headerHex": "033000004000000000000000",
+            "maxStack": 0,
+            "codeHex": "0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000002a",
+            "localSignature": 0,
+            "localSignatureRawToken": 285212672,
+            "initLocals": false,
+            "handlers": []
+          },
+          {
+            "token": 100663300,
+            "name": "Stack8",
+            "headerSize": 1,
+            "headerHex": "42",
+            "maxStack": 8,
+            "codeHex": "1616161616161616262626262626262a",
+            "localSignature": 0,
+            "localSignatureRawToken": 285212672,
+            "initLocals": false,
+            "handlers": []
+          },
+          {
+            "token": 100663301,
+            "name": "Stack9",
+            "headerSize": 12,
+            "headerHex": "033009001200000000000000",
+            "maxStack": 9,
+            "codeHex": "16161616161616161626262626262626262a",
+            "localSignature": 0,
+            "localSignatureRawToken": 285212672,
+            "initLocals": false,
+            "handlers": []
+          },
+          {
+            "token": 100663302,
+            "name": "FatLocalZero",
+            "headerSize": 12,
+            "headerHex": "133000000100000001000011",
+            "maxStack": 0,
+            "codeHex": "2a",
+            "localSignature": 285212673,
+            "localSignatureRawToken": 285212673,
+            "initLocals": true,
+            "handlers": []
+          },
+          {
+            "token": 100663303,
+            "name": "InvalidUnderflow",
+            "headerSize": 12,
+            "headerHex": "133001000200000000000000",
+            "maxStack": 1,
+            "codeHex": "262a",
+            "localSignature": 0,
+            "localSignatureRawToken": 285212672,
+            "initLocals": true,
+            "handlers": []
+          },
+          {
+            "token": 100663304,
+            "name": "InvalidJoin",
+            "headerSize": 12,
+            "headerHex": "133002000800000000000000",
+            "maxStack": 2,
+            "codeHex": "163a01000000172a",
+            "localSignature": 0,
+            "localSignatureRawToken": 285212672,
+            "initLocals": true,
+            "handlers": []
+          }
+        ],
+        "loadError": null,
+        "executions": {
+          "Cases::Tiny1": {
+            "value": null,
+            "error": null
+          },
+          "Cases::Tiny63": {
+            "value": null,
+            "error": null
+          },
+          "Cases::Fat64": {
+            "value": null,
+            "error": null
+          },
+          "Cases::Stack8": {
+            "value": 0,
+            "error": null
+          },
+          "Cases::Stack9": {
+            "value": 0,
+            "error": null
+          },
+          "Cases::FatLocalZero": {
+            "value": null,
+            "error": null
+          },
+          "Cases::InvalidUnderflow": {
+            "value": null,
+            "error": "System.InvalidProgramException"
+          },
+          "Cases::InvalidJoin": {
+            "value": null,
+            "error": "System.InvalidProgramException"
+          }
+        }
+      },
+      "results": [
+        {
+          "token": 100663297,
+          "name": "Tiny1",
+          "analysis": {
+            "status": "complete",
+            "maxStack": 0,
+            "diagnostics": [],
+            "hasDynamicStackAllocation": false
+          }
+        },
+        {
+          "token": 100663298,
+          "name": "Tiny63",
+          "analysis": {
+            "status": "complete",
+            "maxStack": 0,
+            "diagnostics": [],
+            "hasDynamicStackAllocation": false
+          }
+        },
+        {
+          "token": 100663299,
+          "name": "Fat64",
+          "analysis": {
+            "status": "complete",
+            "maxStack": 0,
+            "diagnostics": [],
+            "hasDynamicStackAllocation": false
+          }
+        },
+        {
+          "token": 100663300,
+          "name": "Stack8",
+          "analysis": {
+            "status": "complete",
+            "maxStack": 8,
+            "diagnostics": [],
+            "hasDynamicStackAllocation": false
+          }
+        },
+        {
+          "token": 100663301,
+          "name": "Stack9",
+          "analysis": {
+            "status": "complete",
+            "maxStack": 9,
+            "diagnostics": [],
+            "hasDynamicStackAllocation": false
+          }
+        },
+        {
+          "token": 100663302,
+          "name": "FatLocalZero",
+          "analysis": {
+            "status": "complete",
+            "maxStack": 0,
+            "diagnostics": [],
+            "hasDynamicStackAllocation": false
+          }
+        },
+        {
+          "token": 100663303,
+          "name": "InvalidUnderflow",
+          "analysis": {
+            "status": "invalid",
+            "maxStack": null,
+            "diagnostics": [
+              {
+                "code": "CILMS0003",
+                "offset": 0,
+                "message": "Evaluation stack underflow at 0x0"
+              }
+            ],
+            "hasDynamicStackAllocation": null
+          }
+        },
+        {
+          "token": 100663304,
+          "name": "InvalidJoin",
+          "analysis": {
+            "status": "invalid",
+            "maxStack": null,
+            "diagnostics": [
+              {
+                "code": "CILMS0003",
+                "offset": 7,
+                "message": "Inconsistent stack height at join at 0x7"
+              }
+            ],
+            "hasDynamicStackAllocation": null
+          }
+        }
+      ]
+    },
+    "body-writer": {
+      "assembly": "/workspace/scratch/7e3d2a445c44/method-header-qualification-3ddd6460/native-first/ProductBoundaries.dll",
+      "assemblySHA256": "875448d2ab331cd0538462db12d273f8c0b0f9c7e0f918336b3f4bdf0e4bbbf7",
+      "bytes": 1536,
+      "observed": {
+        "runtime": ".NET 10.0.5",
+        "signatures": {
+          "100663297": {
+            "parameters": 0,
+            "returnsVoid": true,
+            "hasThis": false,
+            "explicitThis": false,
+            "header": 0,
+            "requiredParameters": 0
+          },
+          "100663298": {
+            "parameters": 0,
+            "returnsVoid": true,
+            "hasThis": false,
+            "explicitThis": false,
+            "header": 0,
+            "requiredParameters": 0
+          },
+          "100663299": {
+            "parameters": 0,
+            "returnsVoid": true,
+            "hasThis": false,
+            "explicitThis": false,
+            "header": 0,
+            "requiredParameters": 0
+          },
+          "100663300": {
+            "parameters": 0,
+            "returnsVoid": false,
+            "hasThis": false,
+            "explicitThis": false,
+            "header": 0,
+            "requiredParameters": 0
+          },
+          "100663301": {
+            "parameters": 0,
+            "returnsVoid": false,
+            "hasThis": false,
+            "explicitThis": false,
+            "header": 0,
+            "requiredParameters": 0
+          },
+          "100663302": {
+            "parameters": 0,
+            "returnsVoid": true,
+            "hasThis": false,
+            "explicitThis": false,
+            "header": 0,
+            "requiredParameters": 0
+          }
+        },
+        "methods": [
+          {
+            "token": 100663297,
+            "name": "Tiny1",
+            "headerSize": 1,
+            "headerHex": "06",
+            "maxStack": 8,
+            "codeHex": "2a",
+            "localSignature": 0,
+            "localSignatureRawToken": 285212672,
+            "initLocals": false,
+            "handlers": []
+          },
+          {
+            "token": 100663298,
+            "name": "Tiny63",
+            "headerSize": 1,
+            "headerHex": "fe",
+            "maxStack": 8,
+            "codeHex": "00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000002a",
+            "localSignature": 0,
+            "localSignatureRawToken": 285212672,
+            "initLocals": false,
+            "handlers": []
+          },
+          {
+            "token": 100663299,
+            "name": "Fat64",
+            "headerSize": 12,
+            "headerHex": "133000004000000000000000",
+            "maxStack": 0,
+            "codeHex": "0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000002a",
+            "localSignature": 0,
+            "localSignatureRawToken": 285212672,
+            "initLocals": true,
+            "handlers": []
+          },
+          {
+            "token": 100663300,
+            "name": "Stack8",
+            "headerSize": 1,
+            "headerHex": "42",
+            "maxStack": 8,
+            "codeHex": "1616161616161616262626262626262a",
+            "localSignature": 0,
+            "localSignatureRawToken": 285212672,
+            "initLocals": false,
+            "handlers": []
+          },
+          {
+            "token": 100663301,
+            "name": "Stack9",
+            "headerSize": 12,
+            "headerHex": "133009001200000000000000",
+            "maxStack": 9,
+            "codeHex": "16161616161616161626262626262626262a",
+            "localSignature": 0,
+            "localSignatureRawToken": 285212672,
+            "initLocals": true,
+            "handlers": []
+          },
+          {
+            "token": 100663302,
+            "name": "FatLocalZero",
+            "headerSize": 12,
+            "headerHex": "133000000100000001000011",
+            "maxStack": 0,
+            "codeHex": "2a",
+            "localSignature": 285212673,
+            "localSignatureRawToken": 285212673,
+            "initLocals": true,
+            "handlers": []
+          }
+        ],
+        "loadError": null,
+        "executions": {
+          "Cases::Tiny1": {
+            "value": null,
+            "error": null
+          },
+          "Cases::Tiny63": {
+            "value": null,
+            "error": null
+          },
+          "Cases::Fat64": {
+            "value": null,
+            "error": null
+          },
+          "Cases::Stack8": {
+            "value": 0,
+            "error": null
+          },
+          "Cases::Stack9": {
+            "value": 0,
+            "error": null
+          },
+          "Cases::FatLocalZero": {
+            "value": null,
+            "error": null
+          }
+        }
+      },
+      "results": [
+        {
+          "token": 100663297,
+          "name": "Tiny1",
+          "analysis": {
+            "status": "complete",
+            "maxStack": 0,
+            "diagnostics": [],
+            "hasDynamicStackAllocation": false
+          }
+        },
+        {
+          "token": 100663298,
+          "name": "Tiny63",
+          "analysis": {
+            "status": "complete",
+            "maxStack": 0,
+            "diagnostics": [],
+            "hasDynamicStackAllocation": false
+          }
+        },
+        {
+          "token": 100663299,
+          "name": "Fat64",
+          "analysis": {
+            "status": "complete",
+            "maxStack": 0,
+            "diagnostics": [],
+            "hasDynamicStackAllocation": false
+          }
+        },
+        {
+          "token": 100663300,
+          "name": "Stack8",
+          "analysis": {
+            "status": "complete",
+            "maxStack": 8,
+            "diagnostics": [],
+            "hasDynamicStackAllocation": false
+          }
+        },
+        {
+          "token": 100663301,
+          "name": "Stack9",
+          "analysis": {
+            "status": "complete",
+            "maxStack": 9,
+            "diagnostics": [],
+            "hasDynamicStackAllocation": false
+          }
+        },
+        {
+          "token": 100663302,
+          "name": "FatLocalZero",
+          "analysis": {
+            "status": "complete",
+            "maxStack": 0,
+            "diagnostics": [],
+            "hasDynamicStackAllocation": false
+          }
+        }
+      ]
+    }
+  },
+  "sourceSHA256": {
+    "Program.cs": "6839b078cb3befe22bebc2e2d7bd710924a4b3c3c6acc809e901188723350fa6",
+    "corpus.cs": "6c7a86183afc367e4eb817c3644ea3018ac9756c1211afc1a0556e723c36c8a4",
+    "capture.mjs": "550ecfb8cc8382aced1a90c6bc48e3332ff181527a9ae819d34e52ec0b65a7c7",
+    "input.js": "6ea970f236170e2e7cb43317a48ce3bc910123cf8a75e5716a57f3478781ff61",
+    "process-capture.mjs": "376cf307467c9ccca6407019f0cd76078b48a30b1686b970ee50679adb3a0fef",
+    "boundaries.il": "b9ea045ef323d507ba84031f67fb3daf8f9ac392b2f94620f7538c06dd52fd0e"
+  },
+  "qualified": true,
+  "startedAt": "2026-10-04T19:53:36.232Z",
+  "argv": [
+    "/opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin/node",
+    "/workspace/scratch/7e3d2a445c44/sf6-maxstack/tests/fixtures/a03-method-headers/capture.mjs",
+    "/workspace/scratch/7e3d2a445c44/method-header-qualification-3ddd6460/native-first"
+  ],
+  "cwd": "/workspace/scratch/7e3d2a445c44/sf6-maxstack",
+  "toolchain": {
+    "sdk": "10.0.201",
+    "runtime": "10.0.5",
+    "referencePack": "10.0.5",
+    "roslyn": {
+      "version": "5.3.0-2.26153.122 (4d3023de605a78ba3e59e50c657eed70f125c68a)",
+      "sha256": "4913fa70d10c99901edbb825fdedcc92465be08665016a5d258ea45f953624f0"
+    },
+    "referenceAssemblies": {
+      "count": 167,
+      "sha256": "a978e7aaf608f22e860328a42319b908a5a084cdb087b28b5c31a1e6726be362"
+    }
+  },
+  "environment": {
+    "platform": "linux-x64",
+    "osRelease": "6.18.44",
+    "node": "v24.19.0",
+    "image": {
+      "kind": "local",
+      "pinnedImage": false,
+      "reason": "Local OS is recorded, not an immutable runner image."
+    },
+    "imageOS": null,
+    "imageVersion": null
+  },
+  "environmentVariables": {
+    "SHARPFORGE_ORACLE_DOTNET": "/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/dotnet",
+    "SHARPFORGE_ILASM": "/workspace/scratch/7e3d2a445c44/dotnet-tools/ilasm",
+    "DOTNET_ROOT": "/workspace/scratch/7e3d2a445c44/dotnet-10.0.201"
+  },
+  "assembler": {
+    "executable": "/workspace/scratch/7e3d2a445c44/dotnet-tools/ilasm",
+    "rid": "linux-x64",
+    "url": "https://api.nuget.org/v3-flatcontainer/runtime.linux-x64.microsoft.netcore.ilasm/10.0.5/runtime.linux-x64.microsoft.netcore.ilasm.10.0.5.nupkg",
+    "packageSHA256": "9a8fa85d3c7477531806ef84a14f364b74b0ea12e91aaf0c343558a52525c037",
+    "entry": "runtimes/linux-x64/native/ilasm",
+    "sha256": "7547ca6f434f3c0cc2d84adfe4caf93bf460de812d5ec13450c31e9af89d9748"
+  },
+  "compiler": {
+    "success": true,
+    "diagnostics": []
+  },
+  "finishedAt": "2026-10-04T19:53:38.876Z"
+}

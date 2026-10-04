@@ -1,0 +1,77 @@
+{
+  "schema": 1,
+  "status": "failed-source-only-preflight; no qualification or benchmark launched",
+  "recordedAt": "2026-10-04T20:09:07.282390+00:00",
+  "sourceToolSession": 22823,
+  "sourceToolOutputChunk": "3c573e",
+  "sourcePreflightExitCode": 1,
+  "failure": {
+    "type": "AssertionError",
+    "check": "absence of other limited.js or native/benchmark processes",
+    "observedProcesses": [
+      {
+        "pid": 905534,
+        "argv": [
+          "node",
+          "scripts/limited.js",
+          "node",
+          "--expose-gc",
+          "bench/vm/qualification.js",
+          "--runner",
+          "a05-linux-x64-node24",
+          "--suite",
+          "profiler",
+          "--profiler-mode",
+          "off",
+          "--samples",
+          "100",
+          "--warmup",
+          "10",
+          "--native-bits",
+          "64",
+          "--seed",
+          "12012",
+          "--resamples",
+          "10000",
+          "--timeout-seconds",
+          "1800",
+          "--profiler-reference",
+          "/workspace/scratch/42f7738360b9/a05-final-36a2af53287a563fd47d3a33b8e6e6382a726d35/profiler-off/profiler-reference.json",
+          "--out",
+          "/workspace/scratch/42f7738360b9/a05-final-36a2af53287a563fd47d3a33b8e6e6382a726d35/profiler-off/profiler-off-100-attempt1.json"
+        ]
+      },
+      {
+        "pid": 906529,
+        "argv": [
+          "node",
+          "scripts/limited.js",
+          "node",
+          "--test",
+          "--test-concurrency=1",
+          "tests/compiler-usings-roslyn.test.js",
+          "tests/compiler-binder-csharp6.test.js",
+          "tests/compiler-extension-indexers.test.js"
+        ]
+      }
+    ],
+    "scope": "These are observed limited.js wrapper argv. Whether each wrapper was waiting or had a running workload child was not inspected. No other-workspace file contents were read and neither process was signaled."
+  },
+  "completedChecksBeforeFailure": [
+    "Exact candidate 3ddd6460260d93f0a5258bd84ac62158e36dce10 and original baseline e60b0764782f1122439e5b161cb9494c75724e32 HEAD/tree and clean status",
+    "Pinned plan c29a45dcbc86dfae886d404ae6a62d863b5dae8d64fa1af7c8c7a27eacab04b5 and recorder 9ba748c491c798f5ec320e5e27d8665c8c6387a589ddd918188cf35c76ed6655",
+    "All 2457 source files and 414 tool files, original preparation records, source archive and own aliases",
+    "Native/refout/focused prerequisites and all current/prior evidence records",
+    "All four original benchmark output paths and step directories absent",
+    "No execution lock and expected Node executable/startup flags"
+  ],
+  "diskGuardReached": false,
+  "successfulPreflightReceiptExists": false,
+  "benchmarksLaunched": 0,
+  "productFailure": false,
+  "sourceOrHarnessChanged": false,
+  "outputsConsumed": false,
+  "quietGrant": "Cancelled by root after this failure; no silent retry",
+  "heavySlot": "Returned to root",
+  "nextAction": "Resume SSA source-only review. A later preflight/benchmark attempt requires new explicit scheduling."
+}

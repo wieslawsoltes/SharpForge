@@ -1,0 +1,80 @@
+{
+  "schema": 1,
+  "createdAt": "2026-10-04T18:26:35.813821+00:00",
+  "disposition": "test-passed-recorder-failed",
+  "testWasRerun": false,
+  "originalRecorderOutcomeChanged": false,
+  "originalRecorderStatus": "failed",
+  "originalQualificationStatus": "failed",
+  "actualTestProcessExitCode": 0,
+  "actualTestResult": {
+    "reporter": "node-spec",
+    "tests": 1,
+    "suites": 0,
+    "pass": 1,
+    "fail": 0,
+    "cancelled": 0,
+    "skipped": 0,
+    "todo": 0
+  },
+  "testResultLine": "\u2714 header capture preserves the admitted command and partial native output when the canonical runner rejects (9.375782ms)",
+  "actualArgv": [
+    "node",
+    "scripts/limited.js",
+    "node",
+    "--test",
+    "tests/a03-05-header-capture.test.js"
+  ],
+  "cwd": "/workspace/scratch/7e3d2a445c44/sf6-maxstack",
+  "startedAt": "2026-10-04T18:23:01.298365+00:00",
+  "finishedAt": "2026-10-04T18:23:01.515391+00:00",
+  "elapsedSeconds": 0.2168661509967933,
+  "recorderFailure": {
+    "type": "AssertionError",
+    "message": ""
+  },
+  "recorderFailureAnalysis": "The unchanged original recorder recognizes only lines whose marker is #. Actual Node stdout contains exactly one complete set of \u2139 spec counters, so its counter dictionary remained empty and its tests>0 assertion failed after the test process exited successfully.",
+  "independentReviewMethod": "Read the original raw stdout without executing or importing the test. Require exactly one literal line for each of the seven observed counters; verify the named passing test line, empty stderr, exit 0, exact original argv, and hashes of the original failed execution record and before/after snapshots. The retained snapshots match every source, alias, and tool pin in the reviewed original plan.",
+  "sourcesAndToolsUnchanged": true,
+  "candidateHead": "c0e3352e0d68298c5e9653b3e118c28453a193ef",
+  "baselineHead": "e60b0764782f1122439e5b161cb9494c75724e32",
+  "beforeAfterSnapshotSha256": "aa429f6eab530ead35b2095367a738d7f30efaa6528de9fa3bce5c73d4b1a55a",
+  "evidenceFiles": [
+    {
+      "path": "/workspace/scratch/7e3d2a445c44/method-header-qualification-c0e3352e/steps/adapter/execution.json",
+      "bytes": 3430,
+      "sha256": "84a36517eb7835dd356c6e84cb75a749712938ece2d4c91b0b8ac7906306c23b"
+    },
+    {
+      "path": "/workspace/scratch/7e3d2a445c44/method-header-qualification-c0e3352e/steps/adapter/stdout.log",
+      "bytes": 238,
+      "sha256": "ec77f51546c9e9811ac1d3beb30f7234ee53469ab9340a4062d2add2f69f955e"
+    },
+    {
+      "path": "/workspace/scratch/7e3d2a445c44/method-header-qualification-c0e3352e/steps/adapter/stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/workspace/scratch/7e3d2a445c44/method-header-qualification-c0e3352e/steps/adapter/source-before.json",
+      "bytes": 601458,
+      "sha256": "aa429f6eab530ead35b2095367a738d7f30efaa6528de9fa3bce5c73d4b1a55a"
+    },
+    {
+      "path": "/workspace/scratch/7e3d2a445c44/method-header-qualification-c0e3352e/steps/adapter/source-after.json",
+      "bytes": 601458,
+      "sha256": "aa429f6eab530ead35b2095367a738d7f30efaa6528de9fa3bce5c73d4b1a55a"
+    },
+    {
+      "path": "/workspace/scratch/7e3d2a445c44/method-header-run-step-c0e3352e.py",
+      "bytes": 13612,
+      "sha256": "a38bb5c75403c79102f110b68e150a1a57c300856ec3798c708d15fe638b4988"
+    },
+    {
+      "path": "/workspace/scratch/7e3d2a445c44/method-header-preflight-c0e3352e.json",
+      "bytes": 1019134,
+      "sha256": "e02ab46edd9cdd1e996f3bb70afdbce2365667492ca0a245676078f0aa4a7544"
+    }
+  ],
+  "prerequisiteUse": "This separate adjudication may satisfy only the completed adapter-test prerequisite. It neither changes the original failed recorder status nor qualifies native, refout, focused, or benchmark steps."
+}

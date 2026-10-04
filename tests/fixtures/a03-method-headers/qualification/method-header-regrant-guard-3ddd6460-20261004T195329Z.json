@@ -1,0 +1,42 @@
+{
+  "checkedAt": "2026-10-04T19:53:29.033333+00:00",
+  "head": "3ddd6460260d93f0a5258bd84ac62158e36dce10",
+  "expectedHead": "3ddd6460260d93f0a5258bd84ac62158e36dce10",
+  "tree": "ae6fd8f3340ef8b6dbfca5614e52ce46f944bc23",
+  "expectedTree": "ae6fd8f3340ef8b6dbfca5614e52ce46f944bc23",
+  "statusPorcelain": "",
+  "files": [
+    {
+      "path": "/workspace/scratch/7e3d2a445c44/method-header-preflight-3ddd6460.json",
+      "bytes": 1060708,
+      "sha256": "c29a45dcbc86dfae886d404ae6a62d863b5dae8d64fa1af7c8c7a27eacab04b5",
+      "expectedSha256": "c29a45dcbc86dfae886d404ae6a62d863b5dae8d64fa1af7c8c7a27eacab04b5",
+      "matches": true
+    },
+    {
+      "path": "/workspace/scratch/7e3d2a445c44/method-header-run-step-3ddd6460.py",
+      "bytes": 15420,
+      "sha256": "9ba748c491c798f5ec320e5e27d8665c8c6387a589ddd918188cf35c76ed6655",
+      "expectedSha256": "9ba748c491c798f5ec320e5e27d8665c8c6387a589ddd918188cf35c76ed6655",
+      "matches": true
+    }
+  ],
+  "freeBytes": 801988608,
+  "minimumFreeBytes": 402653184,
+  "freshDestinations": [
+    {
+      "path": "/workspace/scratch/7e3d2a445c44/method-header-qualification-3ddd6460",
+      "absent": true
+    },
+    {
+      "path": "/workspace/scratch/7e3d2a445c44/method-header-qualification-3ddd6460/native-first",
+      "absent": true
+    },
+    {
+      "path": "/workspace/scratch/7e3d2a445c44/method-header-qualification-3ddd6460/steps/native",
+      "absent": true
+    }
+  ],
+  "nativePreviouslyLaunched": false,
+  "passed": true
+}
