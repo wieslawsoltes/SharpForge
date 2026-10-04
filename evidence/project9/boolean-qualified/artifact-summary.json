@@ -1,0 +1,89 @@
+{
+  "baseline": "af5450dacbdc2734432b13dffa63efb10eb93145",
+  "candidate": "af29812a6b0ca0184a79cc6bcddd01bf0a02fb6a",
+  "complete": true,
+  "packageComparison": [
+    {
+      "package": "bcl-core",
+      "baselineBytes": 67931,
+      "candidateBytes": 68398,
+      "deltaBytes": 467,
+      "percent": 0.687462277899642,
+      "baselineUnpackedBytes": 250817,
+      "candidateUnpackedBytes": 252196,
+      "unpackedDeltaBytes": 1379,
+      "unpackedPercent": 0.5498032430018673
+    },
+    {
+      "package": "bytecode",
+      "baselineBytes": 23795,
+      "candidateBytes": 24274,
+      "deltaBytes": 479,
+      "percent": 2.0130279470476964,
+      "baselineUnpackedBytes": 82246,
+      "candidateUnpackedBytes": 83877,
+      "unpackedDeltaBytes": 1631,
+      "unpackedPercent": 1.983075164749648
+    },
+    {
+      "package": "cil",
+      "baselineBytes": 232083,
+      "candidateBytes": 232882,
+      "deltaBytes": 799,
+      "percent": 0.3442733849527979,
+      "baselineUnpackedBytes": 826065,
+      "candidateUnpackedBytes": 828903,
+      "unpackedDeltaBytes": 2838,
+      "unpackedPercent": 0.34355649979118663
+    },
+    {
+      "package": "compiler",
+      "baselineBytes": 1064667,
+      "candidateBytes": 1064983,
+      "deltaBytes": 316,
+      "percent": 0.029680641928409024,
+      "baselineUnpackedBytes": 4049731,
+      "candidateUnpackedBytes": 4051077,
+      "unpackedDeltaBytes": 1346,
+      "unpackedPercent": 0.03323677547966142
+    },
+    {
+      "package": "framework",
+      "baselineBytes": 22295,
+      "candidateBytes": 22695,
+      "deltaBytes": 400,
+      "percent": 1.794124243103834,
+      "baselineUnpackedBytes": 70967,
+      "candidateUnpackedBytes": 71961,
+      "unpackedDeltaBytes": 994,
+      "unpackedPercent": 1.4006510068059752
+    },
+    {
+      "package": "runtime",
+      "baselineBytes": 177316,
+      "candidateBytes": 179162,
+      "deltaBytes": 1846,
+      "percent": 1.0410792032303995,
+      "baselineUnpackedBytes": 627002,
+      "candidateUnpackedBytes": 633338,
+      "unpackedDeltaBytes": 6336,
+      "unpackedPercent": 1.0105230924303266
+    }
+  ],
+  "browser": {
+    "baseline": {
+      "manifest": "boolean-baseline-assets.json",
+      "sha256": "4e5203107e8a30a7e40d089b6e39ff39a776e20267ba3d43421532342f99a6da",
+      "totalBytes": 112935639,
+      "fileCount": 5547
+    },
+    "candidate": {
+      "manifest": "boolean-candidate-final-assets.json",
+      "sha256": "3db2de7746a498b62df7c988502df04de25c82cf575da36c40c6ebebf432df58",
+      "totalBytes": 112989490,
+      "fileCount": 5554
+    },
+    "deltaBytes": 53851,
+    "percent": 0.0476829107948884
+  }
+}

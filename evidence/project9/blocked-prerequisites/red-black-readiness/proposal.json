@@ -1,0 +1,17 @@
+[
+  {
+    "child": "SF-A08-T04.1",
+    "parent": "SF-A08-T04",
+    "dependency": "SF-A00-T02",
+    "sourceIssue": 2664,
+    "reason": "Issue #2664 delivers an internal heap-owned tree through existing public package and platform seams, without registering new managed collection types or members. The broader sorted-collection parent retains its registry contribution prerequisite."
+  },
+  {
+    "child": "SF-A08-T04.1",
+    "parent": "SF-A08-T04",
+    "dependency": "SF-A02-T02",
+    "sourceIssue": 2664,
+    "reason": "Issue #2664 operates on opaque managed values with an explicit synchronous host comparison policy and adds no C# binding or generic public API. The broader sorted-collection parent retains its compiler binding prerequisite."
+  }
+]
+

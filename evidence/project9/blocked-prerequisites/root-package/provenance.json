@@ -1,0 +1,86 @@
+{
+  "schemaVersion": 1,
+  "purpose": "Unapplied root package-lock prerequisite for the already-authored IO workspace; no authority is granted by this artifact.",
+  "repository": "wieslawsoltes/SharpForge",
+  "patch": {
+    "file": "project9-package-lock.patch",
+    "bytes": 1368,
+    "sha256": "8a5dbf77311a81382eef091968b06dfa77be0920385f8eb49dcd2ea6652b230b",
+    "originalPath": "/workspace/scratch/f5d98b1de49e/project9-package-lock.patch",
+    "applied": false
+  },
+  "base": {
+    "file": "package-lock.base.json",
+    "bytes": 10877,
+    "sha256": "0795c3e9cb2007594de2fa207c2a97d80bb927f146f68d8566934485cbddf0cd",
+    "sourceWorktree": "/workspace/scratch/f5d98b1de49e/SharpForge-p9-writer-scalars",
+    "sourceCommit": "fe8288772be85395909d5de582c444db3d605ca3",
+    "gitBlob": "61aa0aad42fe8ccb71ab679100a14237544c5f7f",
+    "sourcePath": "package-lock.json",
+    "publishedOldestIOHead": "0e7c56d8e9175ffad7c03dd7fd61ac0f1783b4a4",
+    "sameBytesDoNotAuthorizeEditing": true,
+    "sourceCommitIsLocalQualificationRevision": true,
+    "publishedMatchingBaseCommit": "00c2489e659cbeaa29e9c5dfa4a3137fae4bd4ad",
+    "publishedMatchingSourceUrl": "https://github.com/wieslawsoltes/SharpForge/blob/00c2489e659cbeaa29e9c5dfa4a3137fae4bd4ad/package-lock.json",
+    "publishedMatchingBytesVerified": true
+  },
+  "protectedPathPolicy": {
+    "file": "planning/contracts/locks.json",
+    "sha256": "9f69d4732082cecb6ab4f8929161ac81c55bf009960f97e1b3d38d344b115a19",
+    "lock": "package-json",
+    "paths": [
+      "package.json",
+      "package-lock.json"
+    ]
+  },
+  "authoritativeLockObservation": {
+    "ref": "refs/heads/agent-locks/package-json",
+    "refUrl": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/ref/heads/agent-locks/package-json",
+    "commit": "d538f55223dd3fcfcd234e170af8a166da81ad86",
+    "immutableClaimUrl": "https://github.com/wieslawsoltes/SharpForge/blob/d538f55223dd3fcfcd234e170af8a166da81ad86/claim.json",
+    "immutableContentsUrl": "https://api.github.com/repos/wieslawsoltes/SharpForge/contents/claim.json?ref=d538f55223dd3fcfcd234e170af8a166da81ad86",
+    "snapshotFile": "claim-package-json.json",
+    "agent": "codex-p19-core",
+    "task": "SF-A25-T01.1",
+    "issue": 2072,
+    "generation": "8f3f406a-3f3e-4ea7-ac65-258a5b41afe9",
+    "expires": "2026-10-04T20:04:09.592Z",
+    "unchangedSinceEarlierRead": true
+  },
+  "refRefreshEnd": "2026-10-04 17:42:34 UTC",
+  "changes": [
+    {
+      "path": "packages[\"node_modules/@sharpforge/bcl-io\"]",
+      "value": {
+        "resolved": "packages/bcl-io",
+        "link": true
+      }
+    },
+    {
+      "path": "packages[\"packages/bcl-io\"]",
+      "summary": "0.14.0 workspace metadata, MIT license, @sharpforge/bcl-core 0.14.0 dependency, Node >=22"
+    },
+    {
+      "path": "packages[\"packages/framework\"].dependencies[\"@sharpforge/bcl-io\"]",
+      "value": "0.14.0"
+    },
+    {
+      "path": "packages[\"packages/runtime\"].dependencies[\"@sharpforge/bcl-io\"]",
+      "value": "0.14.0"
+    }
+  ],
+  "installationEvidence": {
+    "localFailureLog": "../io/io-clean-install-gate.log",
+    "originalPublishedJobsAndSteps": "../io/io-published-status.json",
+    "freshCheckConclusions": "../io/io-checks-fresh.json",
+    "failedStep": "Run npm ci --ignore-scripts --no-audit --no-fund",
+    "freshStepLogsRetrieved": false
+  },
+  "requiredAction": "Current owner integrates on oldest IO workspace branch, or explicitly coordinates the generation-aware lock handoff. Reconcile real manifests, merge through the stack, then run real clean install and required checks on exact updated heads.",
+  "limits": [
+    "Not applied to any tracked lock by this bundle.",
+    "No product or dependency command executed by this bundle.",
+    "--package-lock=false setup and offline smoke do not prove clean source install or hosted core success.",
+    "The same base lock on the Boolean branch is not a reason to add the absent IO workspace there."
+  ]
+}

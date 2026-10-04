@@ -1,0 +1,8 @@
+{
+  "archive": "qualification.tar.gz",
+  "bytes": 4649911,
+  "sha256": "6a96a18ec0f827af61caee0cac5afb2feda7ba30ae09eeb9da949b880ec41914",
+  "manifestSha256": "40413c87fa6755665a4974924701ff3434fa16d5cf70dbe4cb8facc7f4c91c51",
+  "filesInArchive": 272,
+  "payloadUncompressedBytes": 9407687
+}

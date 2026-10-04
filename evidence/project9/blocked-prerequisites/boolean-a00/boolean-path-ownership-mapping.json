@@ -1,0 +1,2494 @@
+{
+  "schemaVersion": 1,
+  "createdAt": "2026-10-04T17:44:24.020705+00:00",
+  "repository": "wieslawsoltes/SharpForge",
+  "baseCommit": "af5450dacbdc2734432b13dffa63efb10eb93145",
+  "currentCommit": "af29812a6b0ca0184a79cc6bcddd01bf0a02fb6a",
+  "currentMeans": "frozen local product commit; not a claim about the current remote main tip",
+  "publishedTreeMapping": {
+    "branch": "codex/a07-boolean-string-fields",
+    "publishedCommit": "d6c6eb24eae3a7116b4bb5497c68b40b90aa3d2c",
+    "localMeasuredHead": "af29812a6b0ca0184a79cc6bcddd01bf0a02fb6a",
+    "tree": "d934a12e448fc825ad49a535ced67a801e98e57c",
+    "parent": "af5450dacbdc2734432b13dffa63efb10eb93145",
+    "publishedCommitUrl": "https://github.com/wieslawsoltes/SharpForge/commit/d6c6eb24eae3a7116b4bb5497c68b40b90aa3d2c",
+    "publishedTreeUrl": "https://github.com/wieslawsoltes/SharpForge/tree/d6c6eb24eae3a7116b4bb5497c68b40b90aa3d2c",
+    "localGitTreeEqualityVerified": true
+  },
+  "inputs": [
+    {
+      "path": "artifacts/project9-resume/boolean-publish-manifest.json",
+      "sha256": "3ddf970cea540ff3816ee251e7423e3a62b54c681f367fd0323fba6b57243cff"
+    },
+    {
+      "path": "artifacts/project9-resume/boolean-publication.json",
+      "sha256": "f287dce142c9ffe22ecc387bd6ff1550c3d4f2d4a83d273cf7f9d812be2a53fc"
+    }
+  ],
+  "policyEvidence": [
+    {
+      "path": "planning/contracts/locks.json",
+      "exists": true,
+      "blob": "aacc2e33df440c326725bb3e068d7ee42a89c6de",
+      "sha256": "9f69d4732082cecb6ab4f8929161ac81c55bf009960f97e1b3d38d344b115a19",
+      "bytes": 448,
+      "mode": "100644",
+      "sourceUrl": "https://github.com/wieslawsoltes/SharpForge/blob/af29812a6b0ca0184a79cc6bcddd01bf0a02fb6a/planning/contracts/locks.json",
+      "publishedSourceUrl": "https://github.com/wieslawsoltes/SharpForge/blob/d6c6eb24eae3a7116b4bb5497c68b40b90aa3d2c/planning/contracts/locks.json"
+    },
+    {
+      "path": "planning/contracts/ownership.json",
+      "exists": true,
+      "blob": "f09169285b6e336e572143cbac43b70f0e3aba1c",
+      "sha256": "e37cbc4bb8ebb36b7e93b616161975bbf3252d4f00742280883f40caf2bb5bf2",
+      "bytes": 7713,
+      "mode": "100644",
+      "sourceUrl": "https://github.com/wieslawsoltes/SharpForge/blob/af29812a6b0ca0184a79cc6bcddd01bf0a02fb6a/planning/contracts/ownership.json",
+      "publishedSourceUrl": "https://github.com/wieslawsoltes/SharpForge/blob/d6c6eb24eae3a7116b4bb5497c68b40b90aa3d2c/planning/contracts/ownership.json"
+    },
+    {
+      "path": "planning/contracts/ownership-exceptions.json",
+      "exists": true,
+      "blob": "beae82a0cf2bd90de249c1aa4e0d0d5030e7e5bc",
+      "sha256": "c5eca783383a2a027b0ca83ab53714fed0ee9d48ddd4ac8020eb90e207459b57",
+      "bytes": 449,
+      "mode": "100644",
+      "sourceUrl": "https://github.com/wieslawsoltes/SharpForge/blob/af29812a6b0ca0184a79cc6bcddd01bf0a02fb6a/planning/contracts/ownership-exceptions.json",
+      "publishedSourceUrl": "https://github.com/wieslawsoltes/SharpForge/blob/d6c6eb24eae3a7116b4bb5497c68b40b90aa3d2c/planning/contracts/ownership-exceptions.json"
+    },
+    {
+      "path": "scripts/planning/check-ownership.js",
+      "exists": true,
+      "blob": "944052078860d7720ffd2e25f1c640ea7edf1a49",
+      "sha256": "de1a175b20950665212b5893eee36b8b18eb10aea0e462c65cbc493663e8d8df",
+      "bytes": 1866,
+      "mode": "100644",
+      "sourceUrl": "https://github.com/wieslawsoltes/SharpForge/blob/af29812a6b0ca0184a79cc6bcddd01bf0a02fb6a/scripts/planning/check-ownership.js",
+      "publishedSourceUrl": "https://github.com/wieslawsoltes/SharpForge/blob/d6c6eb24eae3a7116b4bb5497c68b40b90aa3d2c/scripts/planning/check-ownership.js"
+    },
+    {
+      "path": "scripts/planning/lib/paths.js",
+      "exists": true,
+      "blob": "7d777d31457ee5aca70cd1980dac6c676ea116dd",
+      "sha256": "fab543106f1372d3606401ea244916d6f7e57e0282c53a8c3ac591c8cdffa685",
+      "bytes": 1256,
+      "mode": "100644",
+      "sourceUrl": "https://github.com/wieslawsoltes/SharpForge/blob/af29812a6b0ca0184a79cc6bcddd01bf0a02fb6a/scripts/planning/lib/paths.js",
+      "publishedSourceUrl": "https://github.com/wieslawsoltes/SharpForge/blob/d6c6eb24eae3a7116b4bb5497c68b40b90aa3d2c/scripts/planning/lib/paths.js"
+    },
+    {
+      "path": "planning/AGENTS.md",
+      "exists": true,
+      "blob": "245266a2c34c31ead80a2f59780163a9407e3aa6",
+      "sha256": "f225e96f0363edee4f6c2e88499eb0e1923682cb040c656f28964dc279fa3523",
+      "bytes": 4891,
+      "mode": "100644",
+      "sourceUrl": "https://github.com/wieslawsoltes/SharpForge/blob/af29812a6b0ca0184a79cc6bcddd01bf0a02fb6a/planning/AGENTS.md",
+      "publishedSourceUrl": "https://github.com/wieslawsoltes/SharpForge/blob/d6c6eb24eae3a7116b4bb5497c68b40b90aa3d2c/planning/AGENTS.md"
+    },
+    {
+      "path": "CONTRIBUTING.md",
+      "exists": true,
+      "blob": "26109807072b4efef714195920b822d525a7ed85",
+      "sha256": "d0ec90f2229c7ebb14bc0f96d35001f9777e3ca7eb5afdd66be5536dc7b1283f",
+      "bytes": 16516,
+      "mode": "100644",
+      "sourceUrl": "https://github.com/wieslawsoltes/SharpForge/blob/af29812a6b0ca0184a79cc6bcddd01bf0a02fb6a/CONTRIBUTING.md",
+      "publishedSourceUrl": "https://github.com/wieslawsoltes/SharpForge/blob/d6c6eb24eae3a7116b4bb5497c68b40b90aa3d2c/CONTRIBUTING.md"
+    }
+  ],
+  "policyRules": [
+    {
+      "path": "planning/AGENTS.md",
+      "lines": "4-7",
+      "quote": "The Project item owns the task identity, branch and lease; implementation branches are separate from reserved claim, operation-mutex and lock refs. Never take over a live or expired lease implicitly. Follow the ownership map and hold the specific hot-file lock before changing a shared file."
+    },
+    {
+      "path": "planning/contracts/ownership-exceptions.json",
+      "key": "policy",
+      "quote": "Docs-only applies only if every changed file matches. Generated exceptions are exactly listed; new generated outputs are never inferred. Shared hot-file locks override normal area ownership."
+    },
+    {
+      "path": "scripts/planning/check-ownership.js",
+      "lines": "9-15",
+      "summary": "Hot-lock matching is evaluated before normal area/evidence/generated coverage. docsOnly applies only when every changed file matches; this 47-file mixed product change does not qualify. Missing area coverage is reported outside area, not implicitly granted."
+    },
+    {
+      "path": "CONTRIBUTING.md",
+      "lines": "10-18",
+      "summary": "Cross-package imports use public entry points, deliberate public contracts are documented/tested, extension uses seams, and stable identifiers/formats retain meaning."
+    }
+  ],
+  "summary": {
+    "manifestFileCount": 47,
+    "gitDiffFileCount": 47,
+    "exactManifestMatchesGitDiff": true,
+    "allManifestCurrentBlobsAndSha256Match": true,
+    "allWorkingFileBytesMatchFrozenCurrent": true,
+    "hotLockMatchedChangedPathCount": 0,
+    "areaScopeMatchCounts": {
+      "A02": 5,
+      "A03": 1,
+      "A04": 1,
+      "A05": 10,
+      "A07": 17
+    },
+    "pathsWithoutAreaScopeMatch": [
+      "docs/bcl-api.md",
+      "docs/readonly-string-fields.md",
+      "packages/bytecode/src/numeric/source-profile.js",
+      "packages/bytecode/src/readonly-field-constants.js",
+      "packages/cil/src/analysis-types.js",
+      "packages/cil/src/emit/constants.js",
+      "packages/cil/src/emit/emission-context.js",
+      "packages/cil/src/load/field-span.js",
+      "packages/framework/README.md",
+      "packages/framework/src/readonly-fields.js",
+      "packages/runtime/README.md",
+      "scripts/benchmarks/a07-boolean-string-fields.mjs",
+      "tests/fixtures/a07/boolean-string-fields.js"
+    ],
+    "docsOnlyExceptionApplies": false,
+    "protectedAndFacadePathsChecked": 60,
+    "allProtectedAndFacadePathsUnchanged": true
+  },
+  "files": [
+    {
+      "path": "docs/bcl-api.md",
+      "status": "M",
+      "base": {
+        "exists": true,
+        "blob": "5a3a1a11889e22a11d8b090aadd90bf87460ff76",
+        "sha256": "400287ddae37e752ae8b3b83b5823b1d090a24c3d014e1f3d6b0f904e8ab1598",
+        "bytes": 98170,
+        "mode": "100644",
+        "sourceUrl": "https://github.com/wieslawsoltes/SharpForge/blob/af5450dacbdc2734432b13dffa63efb10eb93145/docs/bcl-api.md"
+      },
+      "current": {
+        "exists": true,
+        "blob": "0aa950e1ecd0981284d77a6aced1f15fbfe226de",
+        "sha256": "83277704f6a1b490e2b1026e4427b5e4429a0e45653d03cc9a99d8fd699e7e01",
+        "bytes": 98474,
+        "mode": "100644",
+        "sourceUrl": "https://github.com/wieslawsoltes/SharpForge/blob/af29812a6b0ca0184a79cc6bcddd01bf0a02fb6a/docs/bcl-api.md",
+        "publishedSourceUrl": "https://github.com/wieslawsoltes/SharpForge/blob/d6c6eb24eae3a7116b4bb5497c68b40b90aa3d2c/docs/bcl-api.md"
+      },
+      "matchesManifest": true,
+      "workingBytesMatchFrozenCurrent": true,
+      "hotLockMatches": [],
+      "ownershipScopeMatches": [],
+      "listedGeneratedExceptions": [],
+      "docsOnlyPatternMatches": [
+        "docs/**/*.md"
+      ],
+      "caveats": [
+        "no-lock-match-does-not-grant-authority",
+        "active-claim-and-cross-area-authorization-not-assessed",
+        "no-area-write-or-evidence-glob-match"
+      ]
+    },
+    {
+      "path": "docs/readonly-string-fields.md",
+      "status": "A",
+      "base": {
+        "exists": false,
+        "blob": null,
+        "sha256": null,
+        "bytes": null,
+        "sourceUrl": null
+      },
+      "current": {
+        "exists": true,
+        "blob": "651c4579408459e2208d7beb2493bfdc76f5da22",
+        "sha256": "f30c22133f4e67501bd61969902dcc11a7f8115af9f6488434cab3c42ac1bdd4",
+        "bytes": 12853,
+        "mode": "100644",
+        "sourceUrl": "https://github.com/wieslawsoltes/SharpForge/blob/af29812a6b0ca0184a79cc6bcddd01bf0a02fb6a/docs/readonly-string-fields.md",
+        "publishedSourceUrl": "https://github.com/wieslawsoltes/SharpForge/blob/d6c6eb24eae3a7116b4bb5497c68b40b90aa3d2c/docs/readonly-string-fields.md"
+      },
+      "matchesManifest": true,
+      "workingBytesMatchFrozenCurrent": true,
+      "hotLockMatches": [],
+      "ownershipScopeMatches": [],
+      "listedGeneratedExceptions": [],
+      "docsOnlyPatternMatches": [
+        "docs/**/*.md"
+      ],
+      "caveats": [
+        "no-lock-match-does-not-grant-authority",
+        "active-claim-and-cross-area-authorization-not-assessed",
+        "no-area-write-or-evidence-glob-match"
+      ]
+    },
+    {
+      "path": "packages/bcl-core/README.md",
+      "status": "M",
+      "base": {
+        "exists": true,
+        "blob": "ff1cbd97687a5b51a593ed5d08f4ed2028dfc6f2",
+        "sha256": "4cd54a4fc3004f0beded814cfa86799d6b3d2165460d8e39ac47c3523125a280",
+        "bytes": 78931,
+        "mode": "100644",
+        "sourceUrl": "https://github.com/wieslawsoltes/SharpForge/blob/af5450dacbdc2734432b13dffa63efb10eb93145/packages/bcl-core/README.md"
+      },
+      "current": {
+        "exists": true,
+        "blob": "927be2a047b1060207e8f044951f413570454af5",
+        "sha256": "f4336667b099a17091c5c82cc13c1f1e2e8c9ab5e3263d7c3ab37787614121e0",
+        "bytes": 79371,
+        "mode": "100644",
+        "sourceUrl": "https://github.com/wieslawsoltes/SharpForge/blob/af29812a6b0ca0184a79cc6bcddd01bf0a02fb6a/packages/bcl-core/README.md",
+        "publishedSourceUrl": "https://github.com/wieslawsoltes/SharpForge/blob/d6c6eb24eae3a7116b4bb5497c68b40b90aa3d2c/packages/bcl-core/README.md"
+      },
+      "matchesManifest": true,
+      "workingBytesMatchFrozenCurrent": true,
+      "hotLockMatches": [],
+      "ownershipScopeMatches": [
+        {
+          "area": "A07",
+          "kind": "write",
+          "pattern": "packages/bcl-core/**"
+        }
+      ],
+      "listedGeneratedExceptions": [],
+      "docsOnlyPatternMatches": [],
+      "caveats": [
+        "no-lock-match-does-not-grant-authority",
+        "active-claim-and-cross-area-authorization-not-assessed"
+      ]
+    },
+    {
+      "path": "packages/bcl-core/reference/boolean-string-fields-net10.json",
+      "status": "A",
+      "base": {
+        "exists": false,
+        "blob": null,
+        "sha256": null,
+        "bytes": null,
+        "sourceUrl": null
+      },
+      "current": {
+        "exists": true,
+        "blob": "345e36fe0c3defde0d1fa35da6d64394dc71e5b6",
+        "sha256": "5155917b117ab8906d00c4863efa0220cd9b0140bd847037418585701dd13d69",
+        "bytes": 3290,
+        "mode": "100644",
+        "sourceUrl": "https://github.com/wieslawsoltes/SharpForge/blob/af29812a6b0ca0184a79cc6bcddd01bf0a02fb6a/packages/bcl-core/reference/boolean-string-fields-net10.json",
+        "publishedSourceUrl": "https://github.com/wieslawsoltes/SharpForge/blob/d6c6eb24eae3a7116b4bb5497c68b40b90aa3d2c/packages/bcl-core/reference/boolean-string-fields-net10.json"
+      },
+      "matchesManifest": true,
+      "workingBytesMatchFrozenCurrent": true,
+      "hotLockMatches": [],
+      "ownershipScopeMatches": [
+        {
+          "area": "A07",
+          "kind": "write",
+          "pattern": "packages/bcl-core/**"
+        }
+      ],
+      "listedGeneratedExceptions": [],
+      "docsOnlyPatternMatches": [],
+      "caveats": [
+        "no-lock-match-does-not-grant-authority",
+        "active-claim-and-cross-area-authorization-not-assessed"
+      ]
+    },
+    {
+      "path": "packages/bcl-core/reference/boolean-string-fields/.gitignore",
+      "status": "A",
+      "base": {
+        "exists": false,
+        "blob": null,
+        "sha256": null,
+        "bytes": null,
+        "sourceUrl": null
+      },
+      "current": {
+        "exists": true,
+        "blob": "cd42ee34e873b4ddf17cdeeed2e6c0d4e094c62b",
+        "sha256": "6c5082c7e6de3e350189c67a1aacf757485ecc26e0a3cf96683528565f3e5f12",
+        "bytes": 10,
+        "mode": "100644",
+        "sourceUrl": "https://github.com/wieslawsoltes/SharpForge/blob/af29812a6b0ca0184a79cc6bcddd01bf0a02fb6a/packages/bcl-core/reference/boolean-string-fields/.gitignore",
+        "publishedSourceUrl": "https://github.com/wieslawsoltes/SharpForge/blob/d6c6eb24eae3a7116b4bb5497c68b40b90aa3d2c/packages/bcl-core/reference/boolean-string-fields/.gitignore"
+      },
+      "matchesManifest": true,
+      "workingBytesMatchFrozenCurrent": true,
+      "hotLockMatches": [],
+      "ownershipScopeMatches": [
+        {
+          "area": "A07",
+          "kind": "write",
+          "pattern": "packages/bcl-core/**"
+        }
+      ],
+      "listedGeneratedExceptions": [],
+      "docsOnlyPatternMatches": [],
+      "caveats": [
+        "no-lock-match-does-not-grant-authority",
+        "active-claim-and-cross-area-authorization-not-assessed"
+      ]
+    },
+    {
+      "path": "packages/bcl-core/reference/boolean-string-fields/BooleanStringFieldsReference.csproj",
+      "status": "A",
+      "base": {
+        "exists": false,
+        "blob": null,
+        "sha256": null,
+        "bytes": null,
+        "sourceUrl": null
+      },
+      "current": {
+        "exists": true,
+        "blob": "f171653975c831d0216752d46ef837d80d385a70",
+        "sha256": "772eff4e2c0f9b0327bb80d130bf73799ec1f47fb8ff8a7572162535705973d4",
+        "bytes": 339,
+        "mode": "100644",
+        "sourceUrl": "https://github.com/wieslawsoltes/SharpForge/blob/af29812a6b0ca0184a79cc6bcddd01bf0a02fb6a/packages/bcl-core/reference/boolean-string-fields/BooleanStringFieldsReference.csproj",
+        "publishedSourceUrl": "https://github.com/wieslawsoltes/SharpForge/blob/d6c6eb24eae3a7116b4bb5497c68b40b90aa3d2c/packages/bcl-core/reference/boolean-string-fields/BooleanStringFieldsReference.csproj"
+      },
+      "matchesManifest": true,
+      "workingBytesMatchFrozenCurrent": true,
+      "hotLockMatches": [],
+      "ownershipScopeMatches": [
+        {
+          "area": "A07",
+          "kind": "write",
+          "pattern": "packages/bcl-core/**"
+        }
+      ],
+      "listedGeneratedExceptions": [],
+      "docsOnlyPatternMatches": [],
+      "caveats": [
+        "no-lock-match-does-not-grant-authority",
+        "active-claim-and-cross-area-authorization-not-assessed"
+      ]
+    },
+    {
+      "path": "packages/bcl-core/reference/boolean-string-fields/Program.cs",
+      "status": "A",
+      "base": {
+        "exists": false,
+        "blob": null,
+        "sha256": null,
+        "bytes": null,
+        "sourceUrl": null
+      },
+      "current": {
+        "exists": true,
+        "blob": "8c1791d8e7864984ca22bca798b505b7110caf65",
+        "sha256": "8cc63fdef39f630d63cb50718c68de43b759004c059ceb2dc08503d0dfb14dc0",
+        "bytes": 5487,
+        "mode": "100644",
+        "sourceUrl": "https://github.com/wieslawsoltes/SharpForge/blob/af29812a6b0ca0184a79cc6bcddd01bf0a02fb6a/packages/bcl-core/reference/boolean-string-fields/Program.cs",
+        "publishedSourceUrl": "https://github.com/wieslawsoltes/SharpForge/blob/d6c6eb24eae3a7116b4bb5497c68b40b90aa3d2c/packages/bcl-core/reference/boolean-string-fields/Program.cs"
+      },
+      "matchesManifest": true,
+      "workingBytesMatchFrozenCurrent": true,
+      "hotLockMatches": [],
+      "ownershipScopeMatches": [
+        {
+          "area": "A07",
+          "kind": "write",
+          "pattern": "packages/bcl-core/**"
+        }
+      ],
+      "listedGeneratedExceptions": [],
+      "docsOnlyPatternMatches": [],
+      "caveats": [
+        "no-lock-match-does-not-grant-authority",
+        "active-claim-and-cross-area-authorization-not-assessed"
+      ]
+    },
+    {
+      "path": "packages/bcl-core/reference/boolean-string-fields/README.md",
+      "status": "A",
+      "base": {
+        "exists": false,
+        "blob": null,
+        "sha256": null,
+        "bytes": null,
+        "sourceUrl": null
+      },
+      "current": {
+        "exists": true,
+        "blob": "2220073be55a45f2512a137b78102004dbdba60b",
+        "sha256": "7a71de3f11b2e1e49ab7088e42f3996b36fcecbf460e5f39ae1453680968c310",
+        "bytes": 3677,
+        "mode": "100644",
+        "sourceUrl": "https://github.com/wieslawsoltes/SharpForge/blob/af29812a6b0ca0184a79cc6bcddd01bf0a02fb6a/packages/bcl-core/reference/boolean-string-fields/README.md",
+        "publishedSourceUrl": "https://github.com/wieslawsoltes/SharpForge/blob/d6c6eb24eae3a7116b4bb5497c68b40b90aa3d2c/packages/bcl-core/reference/boolean-string-fields/README.md"
+      },
+      "matchesManifest": true,
+      "workingBytesMatchFrozenCurrent": true,
+      "hotLockMatches": [],
+      "ownershipScopeMatches": [
+        {
+          "area": "A07",
+          "kind": "write",
+          "pattern": "packages/bcl-core/**"
+        }
+      ],
+      "listedGeneratedExceptions": [],
+      "docsOnlyPatternMatches": [],
+      "caveats": [
+        "no-lock-match-does-not-grant-authority",
+        "active-claim-and-cross-area-authorization-not-assessed"
+      ]
+    },
+    {
+      "path": "packages/bcl-core/src/modules.js",
+      "status": "M",
+      "base": {
+        "exists": true,
+        "blob": "b07387564ada2fa6ef21d00987bb4c1e2dbb1ff0",
+        "sha256": "de2c9c8bc26d280a5ba9df47077027f86d2a1ad1eb843515f92e0915f45b1d3b",
+        "bytes": 1035,
+        "mode": "100644",
+        "sourceUrl": "https://github.com/wieslawsoltes/SharpForge/blob/af5450dacbdc2734432b13dffa63efb10eb93145/packages/bcl-core/src/modules.js"
+      },
+      "current": {
+        "exists": true,
+        "blob": "cd30af96fc7e6bcf525c6a696df6c6a7937087f0",
+        "sha256": "038359e1e42bbfeaf6e0ecc50c7be1c48589de50866a6ca10bff3de96441bd65",
+        "bytes": 1103,
+        "mode": "100644",
+        "sourceUrl": "https://github.com/wieslawsoltes/SharpForge/blob/af29812a6b0ca0184a79cc6bcddd01bf0a02fb6a/packages/bcl-core/src/modules.js",
+        "publishedSourceUrl": "https://github.com/wieslawsoltes/SharpForge/blob/d6c6eb24eae3a7116b4bb5497c68b40b90aa3d2c/packages/bcl-core/src/modules.js"
+      },
+      "matchesManifest": true,
+      "workingBytesMatchFrozenCurrent": true,
+      "hotLockMatches": [],
+      "ownershipScopeMatches": [
+        {
+          "area": "A07",
+          "kind": "write",
+          "pattern": "packages/bcl-core/**"
+        }
+      ],
+      "listedGeneratedExceptions": [],
+      "docsOnlyPatternMatches": [],
+      "caveats": [
+        "no-lock-match-does-not-grant-authority",
+        "active-claim-and-cross-area-authorization-not-assessed"
+      ]
+    },
+    {
+      "path": "packages/bcl-core/src/system/boolean.js",
+      "status": "A",
+      "base": {
+        "exists": false,
+        "blob": null,
+        "sha256": null,
+        "bytes": null,
+        "sourceUrl": null
+      },
+      "current": {
+        "exists": true,
+        "blob": "71e42b39dc4cad348bbcd66fe1ebb35ae329a13e",
+        "sha256": "14f13a32dcdef5424db76744ab569b455fa493132dce1f6c919d43a6e2e423c0",
+        "bytes": 871,
+        "mode": "100644",
+        "sourceUrl": "https://github.com/wieslawsoltes/SharpForge/blob/af29812a6b0ca0184a79cc6bcddd01bf0a02fb6a/packages/bcl-core/src/system/boolean.js",
+        "publishedSourceUrl": "https://github.com/wieslawsoltes/SharpForge/blob/d6c6eb24eae3a7116b4bb5497c68b40b90aa3d2c/packages/bcl-core/src/system/boolean.js"
+      },
+      "matchesManifest": true,
+      "workingBytesMatchFrozenCurrent": true,
+      "hotLockMatches": [],
+      "ownershipScopeMatches": [
+        {
+          "area": "A07",
+          "kind": "write",
+          "pattern": "packages/bcl-core/**"
+        }
+      ],
+      "listedGeneratedExceptions": [],
+      "docsOnlyPatternMatches": [],
+      "caveats": [
+        "no-lock-match-does-not-grant-authority",
+        "active-claim-and-cross-area-authorization-not-assessed"
+      ]
+    },
+    {
+      "path": "packages/bytecode/src/numeric/source-profile.js",
+      "status": "M",
+      "base": {
+        "exists": true,
+        "blob": "3bfe6e25477938a09ac5a2e1ea1d63d769557ab9",
+        "sha256": "1d0e26fee23490199ed6a167c1e770e5239c1757a630f1186a5c8bcf9fc5ffdd",
+        "bytes": 1618,
+        "mode": "100644",
+        "sourceUrl": "https://github.com/wieslawsoltes/SharpForge/blob/af5450dacbdc2734432b13dffa63efb10eb93145/packages/bytecode/src/numeric/source-profile.js"
+      },
+      "current": {
+        "exists": true,
+        "blob": "9f5a1fb90c345526846cddda7cc2c4e6f069fc8f",
+        "sha256": "8b72d774232dc5b778bca1d688c795809facaec72c339da1706ad49357c846dd",
+        "bytes": 1859,
+        "mode": "100644",
+        "sourceUrl": "https://github.com/wieslawsoltes/SharpForge/blob/af29812a6b0ca0184a79cc6bcddd01bf0a02fb6a/packages/bytecode/src/numeric/source-profile.js",
+        "publishedSourceUrl": "https://github.com/wieslawsoltes/SharpForge/blob/d6c6eb24eae3a7116b4bb5497c68b40b90aa3d2c/packages/bytecode/src/numeric/source-profile.js"
+      },
+      "matchesManifest": true,
+      "workingBytesMatchFrozenCurrent": true,
+      "hotLockMatches": [],
+      "ownershipScopeMatches": [],
+      "listedGeneratedExceptions": [],
+      "docsOnlyPatternMatches": [],
+      "caveats": [
+        "no-lock-match-does-not-grant-authority",
+        "active-claim-and-cross-area-authorization-not-assessed",
+        "no-area-write-or-evidence-glob-match"
+      ]
+    },
+    {
+      "path": "packages/bytecode/src/readonly-field-constants.js",
+      "status": "A",
+      "base": {
+        "exists": false,
+        "blob": null,
+        "sha256": null,
+        "bytes": null,
+        "sourceUrl": null
+      },
+      "current": {
+        "exists": true,
+        "blob": "b2a258a2be121de8fa50a3309345bd4a5923a4dd",
+        "sha256": "a9cd86d89e6b6c078295ff74e690b02cbc83093e405d90db3647da265f38e7c5",
+        "bytes": 1390,
+        "mode": "100644",
+        "sourceUrl": "https://github.com/wieslawsoltes/SharpForge/blob/af29812a6b0ca0184a79cc6bcddd01bf0a02fb6a/packages/bytecode/src/readonly-field-constants.js",
+        "publishedSourceUrl": "https://github.com/wieslawsoltes/SharpForge/blob/d6c6eb24eae3a7116b4bb5497c68b40b90aa3d2c/packages/bytecode/src/readonly-field-constants.js"
+      },
+      "matchesManifest": true,
+      "workingBytesMatchFrozenCurrent": true,
+      "hotLockMatches": [],
+      "ownershipScopeMatches": [],
+      "listedGeneratedExceptions": [],
+      "docsOnlyPatternMatches": [],
+      "caveats": [
+        "no-lock-match-does-not-grant-authority",
+        "active-claim-and-cross-area-authorization-not-assessed",
+        "no-area-write-or-evidence-glob-match"
+      ]
+    },
+    {
+      "path": "packages/cil/src/analysis-types.js",
+      "status": "M",
+      "base": {
+        "exists": true,
+        "blob": "0b7415203a60dc6419dee8cc3d35f7ea94189714",
+        "sha256": "6b5e25bbecee3c2e2985397ba87f015ebd6a8ea4dc1bf801365c6974d65ea743",
+        "bytes": 1831,
+        "mode": "100644",
+        "sourceUrl": "https://github.com/wieslawsoltes/SharpForge/blob/af5450dacbdc2734432b13dffa63efb10eb93145/packages/cil/src/analysis-types.js"
+      },
+      "current": {
+        "exists": true,
+        "blob": "60c474c092ba2dcd7efa43b4d8a7dad56bf0a700",
+        "sha256": "f83ef278be4cec216304e4e0bf668eea136681a3c309b07b99840fcf7dd76fe3",
+        "bytes": 1940,
+        "mode": "100644",
+        "sourceUrl": "https://github.com/wieslawsoltes/SharpForge/blob/af29812a6b0ca0184a79cc6bcddd01bf0a02fb6a/packages/cil/src/analysis-types.js",
+        "publishedSourceUrl": "https://github.com/wieslawsoltes/SharpForge/blob/d6c6eb24eae3a7116b4bb5497c68b40b90aa3d2c/packages/cil/src/analysis-types.js"
+      },
+      "matchesManifest": true,
+      "workingBytesMatchFrozenCurrent": true,
+      "hotLockMatches": [],
+      "ownershipScopeMatches": [],
+      "listedGeneratedExceptions": [],
+      "docsOnlyPatternMatches": [],
+      "caveats": [
+        "no-lock-match-does-not-grant-authority",
+        "active-claim-and-cross-area-authorization-not-assessed",
+        "no-area-write-or-evidence-glob-match"
+      ]
+    },
+    {
+      "path": "packages/cil/src/emit/constants.js",
+      "status": "A",
+      "base": {
+        "exists": false,
+        "blob": null,
+        "sha256": null,
+        "bytes": null,
+        "sourceUrl": null
+      },
+      "current": {
+        "exists": true,
+        "blob": "e1564bb790505f26cb476024fa838941d9859fac",
+        "sha256": "6265b73e55b2d653bfdfe959e6b99c3811a595950cdade199c0bd295775baf09",
+        "bytes": 985,
+        "mode": "100644",
+        "sourceUrl": "https://github.com/wieslawsoltes/SharpForge/blob/af29812a6b0ca0184a79cc6bcddd01bf0a02fb6a/packages/cil/src/emit/constants.js",
+        "publishedSourceUrl": "https://github.com/wieslawsoltes/SharpForge/blob/d6c6eb24eae3a7116b4bb5497c68b40b90aa3d2c/packages/cil/src/emit/constants.js"
+      },
+      "matchesManifest": true,
+      "workingBytesMatchFrozenCurrent": true,
+      "hotLockMatches": [],
+      "ownershipScopeMatches": [],
+      "listedGeneratedExceptions": [],
+      "docsOnlyPatternMatches": [],
+      "caveats": [
+        "no-lock-match-does-not-grant-authority",
+        "active-claim-and-cross-area-authorization-not-assessed",
+        "no-area-write-or-evidence-glob-match"
+      ]
+    },
+    {
+      "path": "packages/cil/src/emit/emission-context.js",
+      "status": "M",
+      "base": {
+        "exists": true,
+        "blob": "8fac76fc4e0ec559f8e4326e38125afb1b02d1c6",
+        "sha256": "4021f667b06e32add49ae34682345a3c50d824f0638b5031d54ba49096f0ae1c",
+        "bytes": 909,
+        "mode": "100644",
+        "sourceUrl": "https://github.com/wieslawsoltes/SharpForge/blob/af5450dacbdc2734432b13dffa63efb10eb93145/packages/cil/src/emit/emission-context.js"
+      },
+      "current": {
+        "exists": true,
+        "blob": "780d409c74cfaf659a8d3bccb7e0ee16e5555f3b",
+        "sha256": "736a7a569888f25238e9e74a65188a3aa17ba210d31f7babbe8f02cff6474d52",
+        "bytes": 1439,
+        "mode": "100644",
+        "sourceUrl": "https://github.com/wieslawsoltes/SharpForge/blob/af29812a6b0ca0184a79cc6bcddd01bf0a02fb6a/packages/cil/src/emit/emission-context.js",
+        "publishedSourceUrl": "https://github.com/wieslawsoltes/SharpForge/blob/d6c6eb24eae3a7116b4bb5497c68b40b90aa3d2c/packages/cil/src/emit/emission-context.js"
+      },
+      "matchesManifest": true,
+      "workingBytesMatchFrozenCurrent": true,
+      "hotLockMatches": [],
+      "ownershipScopeMatches": [],
+      "listedGeneratedExceptions": [],
+      "docsOnlyPatternMatches": [],
+      "caveats": [
+        "no-lock-match-does-not-grant-authority",
+        "active-claim-and-cross-area-authorization-not-assessed",
+        "no-area-write-or-evidence-glob-match"
+      ]
+    },
+    {
+      "path": "packages/cil/src/emitter.js",
+      "status": "M",
+      "base": {
+        "exists": true,
+        "blob": "1c29a2d4abdd993586e3b82395593d7fe5ee8059",
+        "sha256": "edb2318984353a7b1262f9bd03a5d3d93a485203d7954fbde32355f420829926",
+        "bytes": 17656,
+        "mode": "100644",
+        "sourceUrl": "https://github.com/wieslawsoltes/SharpForge/blob/af5450dacbdc2734432b13dffa63efb10eb93145/packages/cil/src/emitter.js"
+      },
+      "current": {
+        "exists": true,
+        "blob": "2e668fd149868e73d8ad933da9454e381272dd2f",
+        "sha256": "983903a7a33c50823fcc04b72a800c691892d2430f69f5f72c173d07fb96ef80",
+        "bytes": 17421,
+        "mode": "100644",
+        "sourceUrl": "https://github.com/wieslawsoltes/SharpForge/blob/af29812a6b0ca0184a79cc6bcddd01bf0a02fb6a/packages/cil/src/emitter.js",
+        "publishedSourceUrl": "https://github.com/wieslawsoltes/SharpForge/blob/d6c6eb24eae3a7116b4bb5497c68b40b90aa3d2c/packages/cil/src/emitter.js"
+      },
+      "matchesManifest": true,
+      "workingBytesMatchFrozenCurrent": true,
+      "hotLockMatches": [],
+      "ownershipScopeMatches": [
+        {
+          "area": "A03",
+          "kind": "write",
+          "pattern": "packages/cil/src/emitter.js"
+        }
+      ],
+      "listedGeneratedExceptions": [],
+      "docsOnlyPatternMatches": [],
+      "caveats": [
+        "no-lock-match-does-not-grant-authority",
+        "active-claim-and-cross-area-authorization-not-assessed"
+      ]
+    },
+    {
+      "path": "packages/cil/src/load/field-span.js",
+      "status": "A",
+      "base": {
+        "exists": false,
+        "blob": null,
+        "sha256": null,
+        "bytes": null,
+        "sourceUrl": null
+      },
+      "current": {
+        "exists": true,
+        "blob": "63e64e409c842c92aff8bd39ced02d8edb2387a6",
+        "sha256": "274d7fe77dbaa7cfd9e37aa5eb6a3f9eeec014d512a27dc9b6e5564af35b1b55",
+        "bytes": 1792,
+        "mode": "100644",
+        "sourceUrl": "https://github.com/wieslawsoltes/SharpForge/blob/af29812a6b0ca0184a79cc6bcddd01bf0a02fb6a/packages/cil/src/load/field-span.js",
+        "publishedSourceUrl": "https://github.com/wieslawsoltes/SharpForge/blob/d6c6eb24eae3a7116b4bb5497c68b40b90aa3d2c/packages/cil/src/load/field-span.js"
+      },
+      "matchesManifest": true,
+      "workingBytesMatchFrozenCurrent": true,
+      "hotLockMatches": [],
+      "ownershipScopeMatches": [],
+      "listedGeneratedExceptions": [],
+      "docsOnlyPatternMatches": [],
+      "caveats": [
+        "no-lock-match-does-not-grant-authority",
+        "active-claim-and-cross-area-authorization-not-assessed",
+        "no-area-write-or-evidence-glob-match"
+      ]
+    },
+    {
+      "path": "packages/cil/src/loader.js",
+      "status": "M",
+      "base": {
+        "exists": true,
+        "blob": "e748c4aaca949afa3a01699ff52cdef502f416bc",
+        "sha256": "95614d0604785c04cdbef6d446aef2245df218ccbd296f7e8574752d22c711b1",
+        "bytes": 17604,
+        "mode": "100644",
+        "sourceUrl": "https://github.com/wieslawsoltes/SharpForge/blob/af5450dacbdc2734432b13dffa63efb10eb93145/packages/cil/src/loader.js"
+      },
+      "current": {
+        "exists": true,
+        "blob": "acebf306e57b4e42ccd770091fb1a2440fab5441",
+        "sha256": "2911a9c55aa478033c9d1986f2dd88f0609421ba7ce9b22a9264c641e2c5fbc8",
+        "bytes": 17261,
+        "mode": "100644",
+        "sourceUrl": "https://github.com/wieslawsoltes/SharpForge/blob/af29812a6b0ca0184a79cc6bcddd01bf0a02fb6a/packages/cil/src/loader.js",
+        "publishedSourceUrl": "https://github.com/wieslawsoltes/SharpForge/blob/d6c6eb24eae3a7116b4bb5497c68b40b90aa3d2c/packages/cil/src/loader.js"
+      },
+      "matchesManifest": true,
+      "workingBytesMatchFrozenCurrent": true,
+      "hotLockMatches": [],
+      "ownershipScopeMatches": [
+        {
+          "area": "A04",
+          "kind": "write",
+          "pattern": "packages/cil/src/loader.js"
+        }
+      ],
+      "listedGeneratedExceptions": [],
+      "docsOnlyPatternMatches": [],
+      "caveats": [
+        "no-lock-match-does-not-grant-authority",
+        "active-claim-and-cross-area-authorization-not-assessed"
+      ]
+    },
+    {
+      "path": "packages/compiler/src/codegen/registered-fields.js",
+      "status": "M",
+      "base": {
+        "exists": true,
+        "blob": "cf09f2b4cbd3698f528c31e8801099cc6f1d3a00",
+        "sha256": "370e271dec1742e6bc31ec0a1a15975bbeb621590428c3feb73677ed6f1ff1e8",
+        "bytes": 1104,
+        "mode": "100644",
+        "sourceUrl": "https://github.com/wieslawsoltes/SharpForge/blob/af5450dacbdc2734432b13dffa63efb10eb93145/packages/compiler/src/codegen/registered-fields.js"
+      },
+      "current": {
+        "exists": true,
+        "blob": "4666c66961b2926744aa45cde546c5a0e8e3da3d",
+        "sha256": "05c780cf17c0d802995abcb882324d21432b110d4744e08d3ec69671fae38740",
+        "bytes": 1611,
+        "mode": "100644",
+        "sourceUrl": "https://github.com/wieslawsoltes/SharpForge/blob/af29812a6b0ca0184a79cc6bcddd01bf0a02fb6a/packages/compiler/src/codegen/registered-fields.js",
+        "publishedSourceUrl": "https://github.com/wieslawsoltes/SharpForge/blob/d6c6eb24eae3a7116b4bb5497c68b40b90aa3d2c/packages/compiler/src/codegen/registered-fields.js"
+      },
+      "matchesManifest": true,
+      "workingBytesMatchFrozenCurrent": true,
+      "hotLockMatches": [],
+      "ownershipScopeMatches": [
+        {
+          "area": "A02",
+          "kind": "write",
+          "pattern": "packages/compiler/**"
+        }
+      ],
+      "listedGeneratedExceptions": [],
+      "docsOnlyPatternMatches": [],
+      "caveats": [
+        "no-lock-match-does-not-grant-authority",
+        "active-claim-and-cross-area-authorization-not-assessed"
+      ]
+    },
+    {
+      "path": "packages/compiler/src/framework-receivers.js",
+      "status": "M",
+      "base": {
+        "exists": true,
+        "blob": "72f5c5f9c6634bdf2cc4e3b08dda517ab70c4a3e",
+        "sha256": "7a400131935f993edb25f7a01ae4fb8695cbc7c085281e2afd72ff5568d67481",
+        "bytes": 1566,
+        "mode": "100644",
+        "sourceUrl": "https://github.com/wieslawsoltes/SharpForge/blob/af5450dacbdc2734432b13dffa63efb10eb93145/packages/compiler/src/framework-receivers.js"
+      },
+      "current": {
+        "exists": true,
+        "blob": "19081c2b5719db097cdfa7d8cec9d2bea9931f4c",
+        "sha256": "30465d6fc6707b482780dadcffbae54db01dc2159e088dc57c1c8db405a25af1",
+        "bytes": 1779,
+        "mode": "100644",
+        "sourceUrl": "https://github.com/wieslawsoltes/SharpForge/blob/af29812a6b0ca0184a79cc6bcddd01bf0a02fb6a/packages/compiler/src/framework-receivers.js",
+        "publishedSourceUrl": "https://github.com/wieslawsoltes/SharpForge/blob/d6c6eb24eae3a7116b4bb5497c68b40b90aa3d2c/packages/compiler/src/framework-receivers.js"
+      },
+      "matchesManifest": true,
+      "workingBytesMatchFrozenCurrent": true,
+      "hotLockMatches": [],
+      "ownershipScopeMatches": [
+        {
+          "area": "A02",
+          "kind": "write",
+          "pattern": "packages/compiler/**"
+        }
+      ],
+      "listedGeneratedExceptions": [],
+      "docsOnlyPatternMatches": [],
+      "caveats": [
+        "no-lock-match-does-not-grant-authority",
+        "active-claim-and-cross-area-authorization-not-assessed"
+      ]
+    },
+    {
+      "path": "packages/compiler/src/framework.js",
+      "status": "M",
+      "base": {
+        "exists": true,
+        "blob": "4af380232283e7710e600853731388562917db4a",
+        "sha256": "268b8ea5fcd7ab22380e7b7f211bdad56ba49bce4fa39d1bde5433934987a425",
+        "bytes": 10488,
+        "mode": "100644",
+        "sourceUrl": "https://github.com/wieslawsoltes/SharpForge/blob/af5450dacbdc2734432b13dffa63efb10eb93145/packages/compiler/src/framework.js"
+      },
+      "current": {
+        "exists": true,
+        "blob": "de8e6f8135a59bc957bbd3ae74b41ef3537a1b7f",
+        "sha256": "28969690374ada9c9e936aa9935092b05bbce0b8d7d3ca39d1582c48edf7f300",
+        "bytes": 10461,
+        "mode": "100644",
+        "sourceUrl": "https://github.com/wieslawsoltes/SharpForge/blob/af29812a6b0ca0184a79cc6bcddd01bf0a02fb6a/packages/compiler/src/framework.js",
+        "publishedSourceUrl": "https://github.com/wieslawsoltes/SharpForge/blob/d6c6eb24eae3a7116b4bb5497c68b40b90aa3d2c/packages/compiler/src/framework.js"
+      },
+      "matchesManifest": true,
+      "workingBytesMatchFrozenCurrent": true,
+      "hotLockMatches": [],
+      "ownershipScopeMatches": [
+        {
+          "area": "A02",
+          "kind": "write",
+          "pattern": "packages/compiler/**"
+        }
+      ],
+      "listedGeneratedExceptions": [],
+      "docsOnlyPatternMatches": [],
+      "caveats": [
+        "no-lock-match-does-not-grant-authority",
+        "active-claim-and-cross-area-authorization-not-assessed"
+      ]
+    },
+    {
+      "path": "packages/compiler/src/lowering/local-rewriter.js",
+      "status": "M",
+      "base": {
+        "exists": true,
+        "blob": "f286855f2828dc032b7cd9e24757938ffc13d921",
+        "sha256": "a54bc4c9d858add31ae96b2ac2fa01928fad35cebda69c090c61f65eb39e96b6",
+        "bytes": 5010,
+        "mode": "100644",
+        "sourceUrl": "https://github.com/wieslawsoltes/SharpForge/blob/af5450dacbdc2734432b13dffa63efb10eb93145/packages/compiler/src/lowering/local-rewriter.js"
+      },
+      "current": {
+        "exists": true,
+        "blob": "a1c014ee1d44f367500df620e1e8f04f2ed35231",
+        "sha256": "2f5757a54092823d0113b368846198cd0a2a3daf99737f11d55527dc1ecfd181",
+        "bytes": 5065,
+        "mode": "100644",
+        "sourceUrl": "https://github.com/wieslawsoltes/SharpForge/blob/af29812a6b0ca0184a79cc6bcddd01bf0a02fb6a/packages/compiler/src/lowering/local-rewriter.js",
+        "publishedSourceUrl": "https://github.com/wieslawsoltes/SharpForge/blob/d6c6eb24eae3a7116b4bb5497c68b40b90aa3d2c/packages/compiler/src/lowering/local-rewriter.js"
+      },
+      "matchesManifest": true,
+      "workingBytesMatchFrozenCurrent": true,
+      "hotLockMatches": [],
+      "ownershipScopeMatches": [
+        {
+          "area": "A02",
+          "kind": "write",
+          "pattern": "packages/compiler/**"
+        }
+      ],
+      "listedGeneratedExceptions": [],
+      "docsOnlyPatternMatches": [],
+      "caveats": [
+        "no-lock-match-does-not-grant-authority",
+        "active-claim-and-cross-area-authorization-not-assessed"
+      ]
+    },
+    {
+      "path": "packages/compiler/src/symbols/registry-fields.js",
+      "status": "M",
+      "base": {
+        "exists": true,
+        "blob": "d41e850014604a5a592f784b657dd7c713f630df",
+        "sha256": "ee04c20276c37cc312a7ce79f9a4c0c75cbd86e9475619295dfc036d9d2994fd",
+        "bytes": 1169,
+        "mode": "100644",
+        "sourceUrl": "https://github.com/wieslawsoltes/SharpForge/blob/af5450dacbdc2734432b13dffa63efb10eb93145/packages/compiler/src/symbols/registry-fields.js"
+      },
+      "current": {
+        "exists": true,
+        "blob": "8f105395cc84d571502ba24d09c49a8ff7b58995",
+        "sha256": "9819f3a6bcf9da8ab15890486672aa008c3cff62071a596e158c541fdc89d4b6",
+        "bytes": 1767,
+        "mode": "100644",
+        "sourceUrl": "https://github.com/wieslawsoltes/SharpForge/blob/af29812a6b0ca0184a79cc6bcddd01bf0a02fb6a/packages/compiler/src/symbols/registry-fields.js",
+        "publishedSourceUrl": "https://github.com/wieslawsoltes/SharpForge/blob/d6c6eb24eae3a7116b4bb5497c68b40b90aa3d2c/packages/compiler/src/symbols/registry-fields.js"
+      },
+      "matchesManifest": true,
+      "workingBytesMatchFrozenCurrent": true,
+      "hotLockMatches": [],
+      "ownershipScopeMatches": [
+        {
+          "area": "A02",
+          "kind": "write",
+          "pattern": "packages/compiler/**"
+        }
+      ],
+      "listedGeneratedExceptions": [],
+      "docsOnlyPatternMatches": [],
+      "caveats": [
+        "no-lock-match-does-not-grant-authority",
+        "active-claim-and-cross-area-authorization-not-assessed"
+      ]
+    },
+    {
+      "path": "packages/framework/README.md",
+      "status": "M",
+      "base": {
+        "exists": true,
+        "blob": "84bbe6e81c3caf573e18438bd77e23cbb894e55c",
+        "sha256": "92cd93b6a10f8d1ef46ab9ec4df90c0c6aad83eb71c10e55ab21febe18a9cf4e",
+        "bytes": 5033,
+        "mode": "100644",
+        "sourceUrl": "https://github.com/wieslawsoltes/SharpForge/blob/af5450dacbdc2734432b13dffa63efb10eb93145/packages/framework/README.md"
+      },
+      "current": {
+        "exists": true,
+        "blob": "58ce5e6829862984f89b2112504bb1ac1452313a",
+        "sha256": "817ae92df3aa14edd6953822f0feae5ff10e81ac850948d641283d2899597a18",
+        "bytes": 5811,
+        "mode": "100644",
+        "sourceUrl": "https://github.com/wieslawsoltes/SharpForge/blob/af29812a6b0ca0184a79cc6bcddd01bf0a02fb6a/packages/framework/README.md",
+        "publishedSourceUrl": "https://github.com/wieslawsoltes/SharpForge/blob/d6c6eb24eae3a7116b4bb5497c68b40b90aa3d2c/packages/framework/README.md"
+      },
+      "matchesManifest": true,
+      "workingBytesMatchFrozenCurrent": true,
+      "hotLockMatches": [],
+      "ownershipScopeMatches": [],
+      "listedGeneratedExceptions": [],
+      "docsOnlyPatternMatches": [],
+      "caveats": [
+        "no-lock-match-does-not-grant-authority",
+        "active-claim-and-cross-area-authorization-not-assessed",
+        "no-area-write-or-evidence-glob-match"
+      ]
+    },
+    {
+      "path": "packages/framework/src/readonly-fields.js",
+      "status": "M",
+      "base": {
+        "exists": true,
+        "blob": "3538c80d76c29ef4d3076a03503b03012a6dad3a",
+        "sha256": "acbcfc3132234e25fc99b7f9a3cae10b4ee46ad099df4cf9e3e65cf3f7bf1203",
+        "bytes": 4794,
+        "mode": "100644",
+        "sourceUrl": "https://github.com/wieslawsoltes/SharpForge/blob/af5450dacbdc2734432b13dffa63efb10eb93145/packages/framework/src/readonly-fields.js"
+      },
+      "current": {
+        "exists": true,
+        "blob": "8068f02228172980287a2888dd7843f78314c64f",
+        "sha256": "a9545e065e085c46e2f4f732a63bbfd78035c037dda7ea2963400aac8df1470f",
+        "bytes": 5010,
+        "mode": "100644",
+        "sourceUrl": "https://github.com/wieslawsoltes/SharpForge/blob/af29812a6b0ca0184a79cc6bcddd01bf0a02fb6a/packages/framework/src/readonly-fields.js",
+        "publishedSourceUrl": "https://github.com/wieslawsoltes/SharpForge/blob/d6c6eb24eae3a7116b4bb5497c68b40b90aa3d2c/packages/framework/src/readonly-fields.js"
+      },
+      "matchesManifest": true,
+      "workingBytesMatchFrozenCurrent": true,
+      "hotLockMatches": [],
+      "ownershipScopeMatches": [],
+      "listedGeneratedExceptions": [],
+      "docsOnlyPatternMatches": [],
+      "caveats": [
+        "no-lock-match-does-not-grant-authority",
+        "active-claim-and-cross-area-authorization-not-assessed",
+        "no-area-write-or-evidence-glob-match"
+      ]
+    },
+    {
+      "path": "packages/runtime/README.md",
+      "status": "M",
+      "base": {
+        "exists": true,
+        "blob": "12cc1ac799e8c9a36f40c4d20758dc0c1fe2718c",
+        "sha256": "0190375182177cd3f757caccc2c5fc85baea02a118d7c16413a8483b73b18e04",
+        "bytes": 5980,
+        "mode": "100644",
+        "sourceUrl": "https://github.com/wieslawsoltes/SharpForge/blob/af5450dacbdc2734432b13dffa63efb10eb93145/packages/runtime/README.md"
+      },
+      "current": {
+        "exists": true,
+        "blob": "9453c6e79ff9e1786f7d2531ebb75bb659700e0e",
+        "sha256": "e18d7fd0f9c1fb45baeea2e303b2208b443de0bf169a153657433a6ec9c4f028",
+        "bytes": 6729,
+        "mode": "100644",
+        "sourceUrl": "https://github.com/wieslawsoltes/SharpForge/blob/af29812a6b0ca0184a79cc6bcddd01bf0a02fb6a/packages/runtime/README.md",
+        "publishedSourceUrl": "https://github.com/wieslawsoltes/SharpForge/blob/d6c6eb24eae3a7116b4bb5497c68b40b90aa3d2c/packages/runtime/README.md"
+      },
+      "matchesManifest": true,
+      "workingBytesMatchFrozenCurrent": true,
+      "hotLockMatches": [],
+      "ownershipScopeMatches": [],
+      "listedGeneratedExceptions": [],
+      "docsOnlyPatternMatches": [],
+      "caveats": [
+        "no-lock-match-does-not-grant-authority",
+        "active-claim-and-cross-area-authorization-not-assessed",
+        "no-area-write-or-evidence-glob-match"
+      ]
+    },
+    {
+      "path": "packages/runtime/src/execution/calls.js",
+      "status": "M",
+      "base": {
+        "exists": true,
+        "blob": "07c81eea7f1fd22102f7bb72767bcb0499f09eb4",
+        "sha256": "75aaf1a4bcc3b55fa40e1bb3748957bb56c2fc14dca1a66e7acbb7e30fc6dca0",
+        "bytes": 7184,
+        "mode": "100644",
+        "sourceUrl": "https://github.com/wieslawsoltes/SharpForge/blob/af5450dacbdc2734432b13dffa63efb10eb93145/packages/runtime/src/execution/calls.js"
+      },
+      "current": {
+        "exists": true,
+        "blob": "96ca097de0dd4cb4017ad988d320a6dc21f1afa1",
+        "sha256": "96da5d87b6197c3719e016d3f722ad968bd1672c3d117e284bac45a247df8735",
+        "bytes": 7243,
+        "mode": "100644",
+        "sourceUrl": "https://github.com/wieslawsoltes/SharpForge/blob/af29812a6b0ca0184a79cc6bcddd01bf0a02fb6a/packages/runtime/src/execution/calls.js",
+        "publishedSourceUrl": "https://github.com/wieslawsoltes/SharpForge/blob/d6c6eb24eae3a7116b4bb5497c68b40b90aa3d2c/packages/runtime/src/execution/calls.js"
+      },
+      "matchesManifest": true,
+      "workingBytesMatchFrozenCurrent": true,
+      "hotLockMatches": [],
+      "ownershipScopeMatches": [
+        {
+          "area": "A05",
+          "kind": "write",
+          "pattern": "packages/runtime/src/execution/**"
+        }
+      ],
+      "listedGeneratedExceptions": [],
+      "docsOnlyPatternMatches": [],
+      "caveats": [
+        "no-lock-match-does-not-grant-authority",
+        "active-claim-and-cross-area-authorization-not-assessed"
+      ]
+    },
+    {
+      "path": "packages/runtime/src/execution/external-field-values.js",
+      "status": "M",
+      "base": {
+        "exists": true,
+        "blob": "f2546e1c51c48c6a7ec32d50f68aae17b5e2bcf5",
+        "sha256": "cd4dd8a6e239d2096c80d17f6b8da73769c8b00b651643a995cc3dfe41e6c7b5",
+        "bytes": 620,
+        "mode": "100644",
+        "sourceUrl": "https://github.com/wieslawsoltes/SharpForge/blob/af5450dacbdc2734432b13dffa63efb10eb93145/packages/runtime/src/execution/external-field-values.js"
+      },
+      "current": {
+        "exists": true,
+        "blob": "1a929d05ccda27a26f3bbe06d905b562adbec187",
+        "sha256": "ae78891081232410a1a05d99ba8de207bef909d549ea9aea1aa68475e67c0fef",
+        "bytes": 1125,
+        "mode": "100644",
+        "sourceUrl": "https://github.com/wieslawsoltes/SharpForge/blob/af29812a6b0ca0184a79cc6bcddd01bf0a02fb6a/packages/runtime/src/execution/external-field-values.js",
+        "publishedSourceUrl": "https://github.com/wieslawsoltes/SharpForge/blob/d6c6eb24eae3a7116b4bb5497c68b40b90aa3d2c/packages/runtime/src/execution/external-field-values.js"
+      },
+      "matchesManifest": true,
+      "workingBytesMatchFrozenCurrent": true,
+      "hotLockMatches": [],
+      "ownershipScopeMatches": [
+        {
+          "area": "A05",
+          "kind": "write",
+          "pattern": "packages/runtime/src/execution/**"
+        }
+      ],
+      "listedGeneratedExceptions": [],
+      "docsOnlyPatternMatches": [],
+      "caveats": [
+        "no-lock-match-does-not-grant-authority",
+        "active-claim-and-cross-area-authorization-not-assessed"
+      ]
+    },
+    {
+      "path": "packages/runtime/src/execution/handlers/load-store.js",
+      "status": "M",
+      "base": {
+        "exists": true,
+        "blob": "2993e20ed950a21b6e9e7dcdfe764222eba4c547",
+        "sha256": "b5c35273ede5ced77c0aaa6b406bfc3ab48cc62658dab0248d61081488ef7a7c",
+        "bytes": 1595,
+        "mode": "100644",
+        "sourceUrl": "https://github.com/wieslawsoltes/SharpForge/blob/af5450dacbdc2734432b13dffa63efb10eb93145/packages/runtime/src/execution/handlers/load-store.js"
+      },
+      "current": {
+        "exists": true,
+        "blob": "d4c701f9f4859d048b883262715e158d63804b49",
+        "sha256": "3fc9451f8500008d3d70f456c4e99661411432a72948389a01bd27cb537581cd",
+        "bytes": 1662,
+        "mode": "100644",
+        "sourceUrl": "https://github.com/wieslawsoltes/SharpForge/blob/af29812a6b0ca0184a79cc6bcddd01bf0a02fb6a/packages/runtime/src/execution/handlers/load-store.js",
+        "publishedSourceUrl": "https://github.com/wieslawsoltes/SharpForge/blob/d6c6eb24eae3a7116b4bb5497c68b40b90aa3d2c/packages/runtime/src/execution/handlers/load-store.js"
+      },
+      "matchesManifest": true,
+      "workingBytesMatchFrozenCurrent": true,
+      "hotLockMatches": [],
+      "ownershipScopeMatches": [
+        {
+          "area": "A05",
+          "kind": "write",
+          "pattern": "packages/runtime/src/execution/**"
+        }
+      ],
+      "listedGeneratedExceptions": [],
+      "docsOnlyPatternMatches": [],
+      "caveats": [
+        "no-lock-match-does-not-grant-authority",
+        "active-claim-and-cross-area-authorization-not-assessed"
+      ]
+    },
+    {
+      "path": "packages/runtime/src/execution/handlers/object-model.js",
+      "status": "M",
+      "base": {
+        "exists": true,
+        "blob": "c95ec1bd9e7ef9aaa4844887079a322c1bc7492c",
+        "sha256": "2583a58022cbb0a0f57d17ef03a4b9f23ecacd43d66fd5c4c4ccfdc05249807b",
+        "bytes": 1533,
+        "mode": "100644",
+        "sourceUrl": "https://github.com/wieslawsoltes/SharpForge/blob/af5450dacbdc2734432b13dffa63efb10eb93145/packages/runtime/src/execution/handlers/object-model.js"
+      },
+      "current": {
+        "exists": true,
+        "blob": "e46f5d0784cb3fa23f442a516f841c118f81fe0d",
+        "sha256": "ec13f5d6a41c657a11671696986138c3229e5893057891f1fd277315cdf51c20",
+        "bytes": 1577,
+        "mode": "100644",
+        "sourceUrl": "https://github.com/wieslawsoltes/SharpForge/blob/af29812a6b0ca0184a79cc6bcddd01bf0a02fb6a/packages/runtime/src/execution/handlers/object-model.js",
+        "publishedSourceUrl": "https://github.com/wieslawsoltes/SharpForge/blob/d6c6eb24eae3a7116b4bb5497c68b40b90aa3d2c/packages/runtime/src/execution/handlers/object-model.js"
+      },
+      "matchesManifest": true,
+      "workingBytesMatchFrozenCurrent": true,
+      "hotLockMatches": [],
+      "ownershipScopeMatches": [
+        {
+          "area": "A05",
+          "kind": "write",
+          "pattern": "packages/runtime/src/execution/**"
+        }
+      ],
+      "listedGeneratedExceptions": [],
+      "docsOnlyPatternMatches": [],
+      "caveats": [
+        "no-lock-match-does-not-grant-authority",
+        "active-claim-and-cross-area-authorization-not-assessed"
+      ]
+    },
+    {
+      "path": "packages/runtime/src/execution/readonly-string-fields.js",
+      "status": "A",
+      "base": {
+        "exists": false,
+        "blob": null,
+        "sha256": null,
+        "bytes": null,
+        "sourceUrl": null
+      },
+      "current": {
+        "exists": true,
+        "blob": "de5676f89ba2424258a7734c19db12dae9c25754",
+        "sha256": "37777e468caf8863219091971512f781fa360470801fe896dadc21f40e6ba1fb",
+        "bytes": 1831,
+        "mode": "100644",
+        "sourceUrl": "https://github.com/wieslawsoltes/SharpForge/blob/af29812a6b0ca0184a79cc6bcddd01bf0a02fb6a/packages/runtime/src/execution/readonly-string-fields.js",
+        "publishedSourceUrl": "https://github.com/wieslawsoltes/SharpForge/blob/d6c6eb24eae3a7116b4bb5497c68b40b90aa3d2c/packages/runtime/src/execution/readonly-string-fields.js"
+      },
+      "matchesManifest": true,
+      "workingBytesMatchFrozenCurrent": true,
+      "hotLockMatches": [],
+      "ownershipScopeMatches": [
+        {
+          "area": "A05",
+          "kind": "write",
+          "pattern": "packages/runtime/src/execution/**"
+        }
+      ],
+      "listedGeneratedExceptions": [],
+      "docsOnlyPatternMatches": [],
+      "caveats": [
+        "no-lock-match-does-not-grant-authority",
+        "active-claim-and-cross-area-authorization-not-assessed"
+      ]
+    },
+    {
+      "path": "packages/runtime/src/execution/source-numbers.js",
+      "status": "M",
+      "base": {
+        "exists": true,
+        "blob": "86700b8edf060171d00178b9e26ae5542c74fc6e",
+        "sha256": "a4314c4024599c99fee05220fa44b328f40e8adc8d823a5b100bb250920a4836",
+        "bytes": 1261,
+        "mode": "100644",
+        "sourceUrl": "https://github.com/wieslawsoltes/SharpForge/blob/af5450dacbdc2734432b13dffa63efb10eb93145/packages/runtime/src/execution/source-numbers.js"
+      },
+      "current": {
+        "exists": true,
+        "blob": "d5aa08201595f29c7883c156bfcbcf8242e7a2d2",
+        "sha256": "e28af5926158656e911f264c6e717e3ec93840b5f5b27bb2b2479a6f7b9ae34f",
+        "bytes": 1806,
+        "mode": "100644",
+        "sourceUrl": "https://github.com/wieslawsoltes/SharpForge/blob/af29812a6b0ca0184a79cc6bcddd01bf0a02fb6a/packages/runtime/src/execution/source-numbers.js",
+        "publishedSourceUrl": "https://github.com/wieslawsoltes/SharpForge/blob/d6c6eb24eae3a7116b4bb5497c68b40b90aa3d2c/packages/runtime/src/execution/source-numbers.js"
+      },
+      "matchesManifest": true,
+      "workingBytesMatchFrozenCurrent": true,
+      "hotLockMatches": [],
+      "ownershipScopeMatches": [
+        {
+          "area": "A05",
+          "kind": "write",
+          "pattern": "packages/runtime/src/execution/**"
+        }
+      ],
+      "listedGeneratedExceptions": [],
+      "docsOnlyPatternMatches": [],
+      "caveats": [
+        "no-lock-match-does-not-grant-authority",
+        "active-claim-and-cross-area-authorization-not-assessed"
+      ]
+    },
+    {
+      "path": "packages/runtime/src/execution/source-ops/load-store.js",
+      "status": "M",
+      "base": {
+        "exists": true,
+        "blob": "ec704818e45c2dfba58410fe4561abfb5da33c00",
+        "sha256": "7a99bedd6eef6f44a618a9f905181df553fa01bb98ee6d9912be4936d87c8a3e",
+        "bytes": 1020,
+        "mode": "100644",
+        "sourceUrl": "https://github.com/wieslawsoltes/SharpForge/blob/af5450dacbdc2734432b13dffa63efb10eb93145/packages/runtime/src/execution/source-ops/load-store.js"
+      },
+      "current": {
+        "exists": true,
+        "blob": "7cd42cd4492fb5f00393c802d12f449c81a04483",
+        "sha256": "cc2d261e88534fee06259ae92e512aa26d35b4f373ed086f9743611d686f7116",
+        "bytes": 1076,
+        "mode": "100644",
+        "sourceUrl": "https://github.com/wieslawsoltes/SharpForge/blob/af29812a6b0ca0184a79cc6bcddd01bf0a02fb6a/packages/runtime/src/execution/source-ops/load-store.js",
+        "publishedSourceUrl": "https://github.com/wieslawsoltes/SharpForge/blob/d6c6eb24eae3a7116b4bb5497c68b40b90aa3d2c/packages/runtime/src/execution/source-ops/load-store.js"
+      },
+      "matchesManifest": true,
+      "workingBytesMatchFrozenCurrent": true,
+      "hotLockMatches": [],
+      "ownershipScopeMatches": [
+        {
+          "area": "A05",
+          "kind": "write",
+          "pattern": "packages/runtime/src/execution/**"
+        }
+      ],
+      "listedGeneratedExceptions": [],
+      "docsOnlyPatternMatches": [],
+      "caveats": [
+        "no-lock-match-does-not-grant-authority",
+        "active-claim-and-cross-area-authorization-not-assessed"
+      ]
+    },
+    {
+      "path": "packages/runtime/src/execution/statics.js",
+      "status": "M",
+      "base": {
+        "exists": true,
+        "blob": "787ce51db44c9ffa25b89a8699f85e7ba4e3e3bb",
+        "sha256": "44c949f915eaf68d02831e20c881464783bd647de8318f3d794122ad39a1c8b5",
+        "bytes": 2430,
+        "mode": "100644",
+        "sourceUrl": "https://github.com/wieslawsoltes/SharpForge/blob/af5450dacbdc2734432b13dffa63efb10eb93145/packages/runtime/src/execution/statics.js"
+      },
+      "current": {
+        "exists": true,
+        "blob": "60f1c6fa3d26b756dabd691e34580e0e2fd04f0d",
+        "sha256": "7cac5309121c3aa50c9096e142866484dfa758fcd89b08e4a314a13a03abec05",
+        "bytes": 2435,
+        "mode": "100644",
+        "sourceUrl": "https://github.com/wieslawsoltes/SharpForge/blob/af29812a6b0ca0184a79cc6bcddd01bf0a02fb6a/packages/runtime/src/execution/statics.js",
+        "publishedSourceUrl": "https://github.com/wieslawsoltes/SharpForge/blob/d6c6eb24eae3a7116b4bb5497c68b40b90aa3d2c/packages/runtime/src/execution/statics.js"
+      },
+      "matchesManifest": true,
+      "workingBytesMatchFrozenCurrent": true,
+      "hotLockMatches": [],
+      "ownershipScopeMatches": [
+        {
+          "area": "A05",
+          "kind": "write",
+          "pattern": "packages/runtime/src/execution/**"
+        }
+      ],
+      "listedGeneratedExceptions": [],
+      "docsOnlyPatternMatches": [],
+      "caveats": [
+        "no-lock-match-does-not-grant-authority",
+        "active-claim-and-cross-area-authorization-not-assessed"
+      ]
+    },
+    {
+      "path": "packages/runtime/src/execution/string-initialization.js",
+      "status": "A",
+      "base": {
+        "exists": false,
+        "blob": null,
+        "sha256": null,
+        "bytes": null,
+        "sourceUrl": null
+      },
+      "current": {
+        "exists": true,
+        "blob": "1a195d8fd877d42102523ae96b2abd465786bacb",
+        "sha256": "4b6752fe2cc129f33d3fc5712caa99d2a560753ebd2a28ace6c15371c02703a7",
+        "bytes": 2200,
+        "mode": "100644",
+        "sourceUrl": "https://github.com/wieslawsoltes/SharpForge/blob/af29812a6b0ca0184a79cc6bcddd01bf0a02fb6a/packages/runtime/src/execution/string-initialization.js",
+        "publishedSourceUrl": "https://github.com/wieslawsoltes/SharpForge/blob/d6c6eb24eae3a7116b4bb5497c68b40b90aa3d2c/packages/runtime/src/execution/string-initialization.js"
+      },
+      "matchesManifest": true,
+      "workingBytesMatchFrozenCurrent": true,
+      "hotLockMatches": [],
+      "ownershipScopeMatches": [
+        {
+          "area": "A05",
+          "kind": "write",
+          "pattern": "packages/runtime/src/execution/**"
+        }
+      ],
+      "listedGeneratedExceptions": [],
+      "docsOnlyPatternMatches": [],
+      "caveats": [
+        "no-lock-match-does-not-grant-authority",
+        "active-claim-and-cross-area-authorization-not-assessed"
+      ]
+    },
+    {
+      "path": "packages/runtime/src/execution/strings.js",
+      "status": "M",
+      "base": {
+        "exists": true,
+        "blob": "9538d4cd712fd4f33c41b7bd98ed6ba655c76c8a",
+        "sha256": "a6fc2db5b46a6ee42c3c7ea96af1e38e48a244870283e0f85bab7faa6f16d6b7",
+        "bytes": 3295,
+        "mode": "100644",
+        "sourceUrl": "https://github.com/wieslawsoltes/SharpForge/blob/af5450dacbdc2734432b13dffa63efb10eb93145/packages/runtime/src/execution/strings.js"
+      },
+      "current": {
+        "exists": true,
+        "blob": "abab8db4a1370a9c72d9eb79e714eaf243172b72",
+        "sha256": "c19dcacb80321f8de1930d0a297a0f8abe0e11ee162352f61a1a2e8eba479892",
+        "bytes": 3570,
+        "mode": "100644",
+        "sourceUrl": "https://github.com/wieslawsoltes/SharpForge/blob/af29812a6b0ca0184a79cc6bcddd01bf0a02fb6a/packages/runtime/src/execution/strings.js",
+        "publishedSourceUrl": "https://github.com/wieslawsoltes/SharpForge/blob/d6c6eb24eae3a7116b4bb5497c68b40b90aa3d2c/packages/runtime/src/execution/strings.js"
+      },
+      "matchesManifest": true,
+      "workingBytesMatchFrozenCurrent": true,
+      "hotLockMatches": [],
+      "ownershipScopeMatches": [
+        {
+          "area": "A05",
+          "kind": "write",
+          "pattern": "packages/runtime/src/execution/**"
+        }
+      ],
+      "listedGeneratedExceptions": [],
+      "docsOnlyPatternMatches": [],
+      "caveats": [
+        "no-lock-match-does-not-grant-authority",
+        "active-claim-and-cross-area-authorization-not-assessed"
+      ]
+    },
+    {
+      "path": "scripts/benchmarks/a07-boolean-string-fields.mjs",
+      "status": "A",
+      "base": {
+        "exists": false,
+        "blob": null,
+        "sha256": null,
+        "bytes": null,
+        "sourceUrl": null
+      },
+      "current": {
+        "exists": true,
+        "blob": "8acffa8fd7bfbaad4d7bf7eba2798d137ac857c4",
+        "sha256": "ba0202edda201ad0755f16e4e30811c90e8b9b5027b940b08819b63ae207c14e",
+        "bytes": 12685,
+        "mode": "100644",
+        "sourceUrl": "https://github.com/wieslawsoltes/SharpForge/blob/af29812a6b0ca0184a79cc6bcddd01bf0a02fb6a/scripts/benchmarks/a07-boolean-string-fields.mjs",
+        "publishedSourceUrl": "https://github.com/wieslawsoltes/SharpForge/blob/d6c6eb24eae3a7116b4bb5497c68b40b90aa3d2c/scripts/benchmarks/a07-boolean-string-fields.mjs"
+      },
+      "matchesManifest": true,
+      "workingBytesMatchFrozenCurrent": true,
+      "hotLockMatches": [],
+      "ownershipScopeMatches": [],
+      "listedGeneratedExceptions": [],
+      "docsOnlyPatternMatches": [],
+      "caveats": [
+        "no-lock-match-does-not-grant-authority",
+        "active-claim-and-cross-area-authorization-not-assessed",
+        "no-area-write-or-evidence-glob-match"
+      ]
+    },
+    {
+      "path": "tests/a07-13-registry.test.js",
+      "status": "M",
+      "base": {
+        "exists": true,
+        "blob": "faef8974257542a33017bdcb061452d14b31e766",
+        "sha256": "2537aa343ad3ad360ce331a15063a1b8a3d314160e53c6472ae85dd52946ca0f",
+        "bytes": 5783,
+        "mode": "100644",
+        "sourceUrl": "https://github.com/wieslawsoltes/SharpForge/blob/af5450dacbdc2734432b13dffa63efb10eb93145/tests/a07-13-registry.test.js"
+      },
+      "current": {
+        "exists": true,
+        "blob": "c5abc6a5fa9a64595ff2ceb4e6168cfecd9f3c07",
+        "sha256": "d26bfafd13cef77a83ffd78062f5afbb5847fa8cee87740dd4d668067fed0259",
+        "bytes": 5892,
+        "mode": "100644",
+        "sourceUrl": "https://github.com/wieslawsoltes/SharpForge/blob/af29812a6b0ca0184a79cc6bcddd01bf0a02fb6a/tests/a07-13-registry.test.js",
+        "publishedSourceUrl": "https://github.com/wieslawsoltes/SharpForge/blob/d6c6eb24eae3a7116b4bb5497c68b40b90aa3d2c/tests/a07-13-registry.test.js"
+      },
+      "matchesManifest": true,
+      "workingBytesMatchFrozenCurrent": true,
+      "hotLockMatches": [],
+      "ownershipScopeMatches": [
+        {
+          "area": "A07",
+          "kind": "evidence",
+          "pattern": "tests/a07-*.test.js"
+        }
+      ],
+      "listedGeneratedExceptions": [],
+      "docsOnlyPatternMatches": [],
+      "caveats": [
+        "no-lock-match-does-not-grant-authority",
+        "active-claim-and-cross-area-authorization-not-assessed"
+      ]
+    },
+    {
+      "path": "tests/a07-boolean-string-field-cancellation.test.js",
+      "status": "A",
+      "base": {
+        "exists": false,
+        "blob": null,
+        "sha256": null,
+        "bytes": null,
+        "sourceUrl": null
+      },
+      "current": {
+        "exists": true,
+        "blob": "5f84cfef3e847249b97fbd3af83bafbc3476e782",
+        "sha256": "cc3a360027d200ba66e39d0183a45aa070caed1ceb5b7c5d5e1065c9edc01d45",
+        "bytes": 6326,
+        "mode": "100644",
+        "sourceUrl": "https://github.com/wieslawsoltes/SharpForge/blob/af29812a6b0ca0184a79cc6bcddd01bf0a02fb6a/tests/a07-boolean-string-field-cancellation.test.js",
+        "publishedSourceUrl": "https://github.com/wieslawsoltes/SharpForge/blob/d6c6eb24eae3a7116b4bb5497c68b40b90aa3d2c/tests/a07-boolean-string-field-cancellation.test.js"
+      },
+      "matchesManifest": true,
+      "workingBytesMatchFrozenCurrent": true,
+      "hotLockMatches": [],
+      "ownershipScopeMatches": [
+        {
+          "area": "A07",
+          "kind": "evidence",
+          "pattern": "tests/a07-*.test.js"
+        }
+      ],
+      "listedGeneratedExceptions": [],
+      "docsOnlyPatternMatches": [],
+      "caveats": [
+        "no-lock-match-does-not-grant-authority",
+        "active-claim-and-cross-area-authorization-not-assessed"
+      ]
+    },
+    {
+      "path": "tests/a07-boolean-string-field-cil.test.js",
+      "status": "A",
+      "base": {
+        "exists": false,
+        "blob": null,
+        "sha256": null,
+        "bytes": null,
+        "sourceUrl": null
+      },
+      "current": {
+        "exists": true,
+        "blob": "bef627233888e9d3255c2bf3817296e367f32278",
+        "sha256": "f36371eea5b40c3fe6884d3cd21c566b5eb5e052740a535b69637d11852a87ca",
+        "bytes": 8854,
+        "mode": "100644",
+        "sourceUrl": "https://github.com/wieslawsoltes/SharpForge/blob/af29812a6b0ca0184a79cc6bcddd01bf0a02fb6a/tests/a07-boolean-string-field-cil.test.js",
+        "publishedSourceUrl": "https://github.com/wieslawsoltes/SharpForge/blob/d6c6eb24eae3a7116b4bb5497c68b40b90aa3d2c/tests/a07-boolean-string-field-cil.test.js"
+      },
+      "matchesManifest": true,
+      "workingBytesMatchFrozenCurrent": true,
+      "hotLockMatches": [],
+      "ownershipScopeMatches": [
+        {
+          "area": "A07",
+          "kind": "evidence",
+          "pattern": "tests/a07-*.test.js"
+        }
+      ],
+      "listedGeneratedExceptions": [],
+      "docsOnlyPatternMatches": [],
+      "caveats": [
+        "no-lock-match-does-not-grant-authority",
+        "active-claim-and-cross-area-authorization-not-assessed"
+      ]
+    },
+    {
+      "path": "tests/a07-boolean-string-field-compiler.test.js",
+      "status": "A",
+      "base": {
+        "exists": false,
+        "blob": null,
+        "sha256": null,
+        "bytes": null,
+        "sourceUrl": null
+      },
+      "current": {
+        "exists": true,
+        "blob": "fe8cb79b74d236bfb1399e5c0102f5a6ac46b387",
+        "sha256": "9cc201a93888d443156f02e30a116bb2d0c2188af98c80947f7fe8268d663e14",
+        "bytes": 8884,
+        "mode": "100644",
+        "sourceUrl": "https://github.com/wieslawsoltes/SharpForge/blob/af29812a6b0ca0184a79cc6bcddd01bf0a02fb6a/tests/a07-boolean-string-field-compiler.test.js",
+        "publishedSourceUrl": "https://github.com/wieslawsoltes/SharpForge/blob/d6c6eb24eae3a7116b4bb5497c68b40b90aa3d2c/tests/a07-boolean-string-field-compiler.test.js"
+      },
+      "matchesManifest": true,
+      "workingBytesMatchFrozenCurrent": true,
+      "hotLockMatches": [],
+      "ownershipScopeMatches": [
+        {
+          "area": "A07",
+          "kind": "evidence",
+          "pattern": "tests/a07-*.test.js"
+        }
+      ],
+      "listedGeneratedExceptions": [],
+      "docsOnlyPatternMatches": [],
+      "caveats": [
+        "no-lock-match-does-not-grant-authority",
+        "active-claim-and-cross-area-authorization-not-assessed"
+      ]
+    },
+    {
+      "path": "tests/a07-boolean-string-field-lifetime.test.js",
+      "status": "A",
+      "base": {
+        "exists": false,
+        "blob": null,
+        "sha256": null,
+        "bytes": null,
+        "sourceUrl": null
+      },
+      "current": {
+        "exists": true,
+        "blob": "19e0d61554f2c69fb40b1c97f2efd107f4fab89b",
+        "sha256": "1d99edfd42ec39fa84fd69e4430f9d1f9a8d40bd6a34eb46d96e1236bb2b1541",
+        "bytes": 5816,
+        "mode": "100644",
+        "sourceUrl": "https://github.com/wieslawsoltes/SharpForge/blob/af29812a6b0ca0184a79cc6bcddd01bf0a02fb6a/tests/a07-boolean-string-field-lifetime.test.js",
+        "publishedSourceUrl": "https://github.com/wieslawsoltes/SharpForge/blob/d6c6eb24eae3a7116b4bb5497c68b40b90aa3d2c/tests/a07-boolean-string-field-lifetime.test.js"
+      },
+      "matchesManifest": true,
+      "workingBytesMatchFrozenCurrent": true,
+      "hotLockMatches": [],
+      "ownershipScopeMatches": [
+        {
+          "area": "A07",
+          "kind": "evidence",
+          "pattern": "tests/a07-*.test.js"
+        }
+      ],
+      "listedGeneratedExceptions": [],
+      "docsOnlyPatternMatches": [],
+      "caveats": [
+        "no-lock-match-does-not-grant-authority",
+        "active-claim-and-cross-area-authorization-not-assessed"
+      ]
+    },
+    {
+      "path": "tests/a07-boolean-string-field-reentry.test.js",
+      "status": "A",
+      "base": {
+        "exists": false,
+        "blob": null,
+        "sha256": null,
+        "bytes": null,
+        "sourceUrl": null
+      },
+      "current": {
+        "exists": true,
+        "blob": "49190e1f18fc261bf060a63667bbc72df204cc8c",
+        "sha256": "e945be03e6a74f851fcc791a4db1cb5769633f02839cdb388def4da0958426cd",
+        "bytes": 5789,
+        "mode": "100644",
+        "sourceUrl": "https://github.com/wieslawsoltes/SharpForge/blob/af29812a6b0ca0184a79cc6bcddd01bf0a02fb6a/tests/a07-boolean-string-field-reentry.test.js",
+        "publishedSourceUrl": "https://github.com/wieslawsoltes/SharpForge/blob/d6c6eb24eae3a7116b4bb5497c68b40b90aa3d2c/tests/a07-boolean-string-field-reentry.test.js"
+      },
+      "matchesManifest": true,
+      "workingBytesMatchFrozenCurrent": true,
+      "hotLockMatches": [],
+      "ownershipScopeMatches": [
+        {
+          "area": "A07",
+          "kind": "evidence",
+          "pattern": "tests/a07-*.test.js"
+        }
+      ],
+      "listedGeneratedExceptions": [],
+      "docsOnlyPatternMatches": [],
+      "caveats": [
+        "no-lock-match-does-not-grant-authority",
+        "active-claim-and-cross-area-authorization-not-assessed"
+      ]
+    },
+    {
+      "path": "tests/a07-boolean-string-fields-reference.test.js",
+      "status": "A",
+      "base": {
+        "exists": false,
+        "blob": null,
+        "sha256": null,
+        "bytes": null,
+        "sourceUrl": null
+      },
+      "current": {
+        "exists": true,
+        "blob": "657bec1d5a97ffdccae82b9845b33cf766e0773e",
+        "sha256": "5b5de315f51d62f33db74f7e24569a49c2284be2c3e980f6c5ccef8b84d66798",
+        "bytes": 7159,
+        "mode": "100644",
+        "sourceUrl": "https://github.com/wieslawsoltes/SharpForge/blob/af29812a6b0ca0184a79cc6bcddd01bf0a02fb6a/tests/a07-boolean-string-fields-reference.test.js",
+        "publishedSourceUrl": "https://github.com/wieslawsoltes/SharpForge/blob/d6c6eb24eae3a7116b4bb5497c68b40b90aa3d2c/tests/a07-boolean-string-fields-reference.test.js"
+      },
+      "matchesManifest": true,
+      "workingBytesMatchFrozenCurrent": true,
+      "hotLockMatches": [],
+      "ownershipScopeMatches": [
+        {
+          "area": "A07",
+          "kind": "evidence",
+          "pattern": "tests/a07-*.test.js"
+        }
+      ],
+      "listedGeneratedExceptions": [],
+      "docsOnlyPatternMatches": [],
+      "caveats": [
+        "no-lock-match-does-not-grant-authority",
+        "active-claim-and-cross-area-authorization-not-assessed"
+      ]
+    },
+    {
+      "path": "tests/a07-boolean-string-fields-registry.test.js",
+      "status": "A",
+      "base": {
+        "exists": false,
+        "blob": null,
+        "sha256": null,
+        "bytes": null,
+        "sourceUrl": null
+      },
+      "current": {
+        "exists": true,
+        "blob": "90aaebd4183d467a428211777b9e1c31adb8f012",
+        "sha256": "c58bc1d8e64dd18764e0b3ff4367f001001dcf0ae8fcf6cf743424d394cee58a",
+        "bytes": 3956,
+        "mode": "100644",
+        "sourceUrl": "https://github.com/wieslawsoltes/SharpForge/blob/af29812a6b0ca0184a79cc6bcddd01bf0a02fb6a/tests/a07-boolean-string-fields-registry.test.js",
+        "publishedSourceUrl": "https://github.com/wieslawsoltes/SharpForge/blob/d6c6eb24eae3a7116b4bb5497c68b40b90aa3d2c/tests/a07-boolean-string-fields-registry.test.js"
+      },
+      "matchesManifest": true,
+      "workingBytesMatchFrozenCurrent": true,
+      "hotLockMatches": [],
+      "ownershipScopeMatches": [
+        {
+          "area": "A07",
+          "kind": "evidence",
+          "pattern": "tests/a07-*.test.js"
+        }
+      ],
+      "listedGeneratedExceptions": [],
+      "docsOnlyPatternMatches": [],
+      "caveats": [
+        "no-lock-match-does-not-grant-authority",
+        "active-claim-and-cross-area-authorization-not-assessed"
+      ]
+    },
+    {
+      "path": "tests/a07-readonly-string-wire.test.js",
+      "status": "A",
+      "base": {
+        "exists": false,
+        "blob": null,
+        "sha256": null,
+        "bytes": null,
+        "sourceUrl": null
+      },
+      "current": {
+        "exists": true,
+        "blob": "8b271253e818de38a0c2dcead1f6787c360abb9f",
+        "sha256": "21d26de2758aa7a9246f06962a04b0300e36ff8bf8c565484c5a3be268305d6c",
+        "bytes": 7547,
+        "mode": "100644",
+        "sourceUrl": "https://github.com/wieslawsoltes/SharpForge/blob/af29812a6b0ca0184a79cc6bcddd01bf0a02fb6a/tests/a07-readonly-string-wire.test.js",
+        "publishedSourceUrl": "https://github.com/wieslawsoltes/SharpForge/blob/d6c6eb24eae3a7116b4bb5497c68b40b90aa3d2c/tests/a07-readonly-string-wire.test.js"
+      },
+      "matchesManifest": true,
+      "workingBytesMatchFrozenCurrent": true,
+      "hotLockMatches": [],
+      "ownershipScopeMatches": [
+        {
+          "area": "A07",
+          "kind": "evidence",
+          "pattern": "tests/a07-*.test.js"
+        }
+      ],
+      "listedGeneratedExceptions": [],
+      "docsOnlyPatternMatches": [],
+      "caveats": [
+        "no-lock-match-does-not-grant-authority",
+        "active-claim-and-cross-area-authorization-not-assessed"
+      ]
+    },
+    {
+      "path": "tests/fixtures/a07/boolean-string-fields.js",
+      "status": "A",
+      "base": {
+        "exists": false,
+        "blob": null,
+        "sha256": null,
+        "bytes": null,
+        "sourceUrl": null
+      },
+      "current": {
+        "exists": true,
+        "blob": "0bc56844617812a356d5d67f1f98dbb0a66c1586",
+        "sha256": "c648decb1f1762a0ecc2f0e7ca7e99563ab6eb773431e5b56a62c49eabf0bbd4",
+        "bytes": 3650,
+        "mode": "100644",
+        "sourceUrl": "https://github.com/wieslawsoltes/SharpForge/blob/af29812a6b0ca0184a79cc6bcddd01bf0a02fb6a/tests/fixtures/a07/boolean-string-fields.js",
+        "publishedSourceUrl": "https://github.com/wieslawsoltes/SharpForge/blob/d6c6eb24eae3a7116b4bb5497c68b40b90aa3d2c/tests/fixtures/a07/boolean-string-fields.js"
+      },
+      "matchesManifest": true,
+      "workingBytesMatchFrozenCurrent": true,
+      "hotLockMatches": [],
+      "ownershipScopeMatches": [],
+      "listedGeneratedExceptions": [],
+      "docsOnlyPatternMatches": [],
+      "caveats": [
+        "no-lock-match-does-not-grant-authority",
+        "active-claim-and-cross-area-authorization-not-assessed",
+        "no-area-write-or-evidence-glob-match"
+      ]
+    }
+  ],
+  "unchangedHotAndPublicFacadeEvidence": [
+    {
+      "path": ".github/workflows/browser-matrix.yml",
+      "baseBlob": "3c2b197c959e970474a9aaaa531f161b0a39aeff",
+      "currentBlob": "3c2b197c959e970474a9aaaa531f161b0a39aeff",
+      "identical": true,
+      "hotLockKeys": [
+        "ci-workflows"
+      ],
+      "baseUrl": "https://github.com/wieslawsoltes/SharpForge/blob/af5450dacbdc2734432b13dffa63efb10eb93145/.github/workflows/browser-matrix.yml",
+      "currentUrl": "https://github.com/wieslawsoltes/SharpForge/blob/af29812a6b0ca0184a79cc6bcddd01bf0a02fb6a/.github/workflows/browser-matrix.yml",
+      "publishedCurrentUrl": "https://github.com/wieslawsoltes/SharpForge/blob/d6c6eb24eae3a7116b4bb5497c68b40b90aa3d2c/.github/workflows/browser-matrix.yml"
+    },
+    {
+      "path": ".github/workflows/ci-stats.yml",
+      "baseBlob": "c4c5e95c9b4973fe579df3e33a298442d6a8c4b7",
+      "currentBlob": "c4c5e95c9b4973fe579df3e33a298442d6a8c4b7",
+      "identical": true,
+      "hotLockKeys": [
+        "ci-workflows"
+      ],
+      "baseUrl": "https://github.com/wieslawsoltes/SharpForge/blob/af5450dacbdc2734432b13dffa63efb10eb93145/.github/workflows/ci-stats.yml",
+      "currentUrl": "https://github.com/wieslawsoltes/SharpForge/blob/af29812a6b0ca0184a79cc6bcddd01bf0a02fb6a/.github/workflows/ci-stats.yml",
+      "publishedCurrentUrl": "https://github.com/wieslawsoltes/SharpForge/blob/d6c6eb24eae3a7116b4bb5497c68b40b90aa3d2c/.github/workflows/ci-stats.yml"
+    },
+    {
+      "path": ".github/workflows/ci.yml",
+      "baseBlob": "edd217608d5a5f56b31b693f4f39d53b18dd02d9",
+      "currentBlob": "edd217608d5a5f56b31b693f4f39d53b18dd02d9",
+      "identical": true,
+      "hotLockKeys": [
+        "ci-workflows"
+      ],
+      "baseUrl": "https://github.com/wieslawsoltes/SharpForge/blob/af5450dacbdc2734432b13dffa63efb10eb93145/.github/workflows/ci.yml",
+      "currentUrl": "https://github.com/wieslawsoltes/SharpForge/blob/af29812a6b0ca0184a79cc6bcddd01bf0a02fb6a/.github/workflows/ci.yml",
+      "publishedCurrentUrl": "https://github.com/wieslawsoltes/SharpForge/blob/d6c6eb24eae3a7116b4bb5497c68b40b90aa3d2c/.github/workflows/ci.yml"
+    },
+    {
+      "path": ".github/workflows/coverage.yml",
+      "baseBlob": "83c8c8bbce1ecbdb9ac83aa5d89a208c9124fc99",
+      "currentBlob": "83c8c8bbce1ecbdb9ac83aa5d89a208c9124fc99",
+      "identical": true,
+      "hotLockKeys": [
+        "ci-workflows"
+      ],
+      "baseUrl": "https://github.com/wieslawsoltes/SharpForge/blob/af5450dacbdc2734432b13dffa63efb10eb93145/.github/workflows/coverage.yml",
+      "currentUrl": "https://github.com/wieslawsoltes/SharpForge/blob/af29812a6b0ca0184a79cc6bcddd01bf0a02fb6a/.github/workflows/coverage.yml",
+      "publishedCurrentUrl": "https://github.com/wieslawsoltes/SharpForge/blob/d6c6eb24eae3a7116b4bb5497c68b40b90aa3d2c/.github/workflows/coverage.yml"
+    },
+    {
+      "path": ".github/workflows/differential.yml",
+      "baseBlob": "2ba33d4f542e34c88b6033667031098eac4858e3",
+      "currentBlob": "2ba33d4f542e34c88b6033667031098eac4858e3",
+      "identical": true,
+      "hotLockKeys": [
+        "ci-workflows"
+      ],
+      "baseUrl": "https://github.com/wieslawsoltes/SharpForge/blob/af5450dacbdc2734432b13dffa63efb10eb93145/.github/workflows/differential.yml",
+      "currentUrl": "https://github.com/wieslawsoltes/SharpForge/blob/af29812a6b0ca0184a79cc6bcddd01bf0a02fb6a/.github/workflows/differential.yml",
+      "publishedCurrentUrl": "https://github.com/wieslawsoltes/SharpForge/blob/d6c6eb24eae3a7116b4bb5497c68b40b90aa3d2c/.github/workflows/differential.yml"
+    },
+    {
+      "path": ".github/workflows/fuzz.yml",
+      "baseBlob": "d8da315d4127ddde272869a448b0232c5e9e1e38",
+      "currentBlob": "d8da315d4127ddde272869a448b0232c5e9e1e38",
+      "identical": true,
+      "hotLockKeys": [
+        "ci-workflows"
+      ],
+      "baseUrl": "https://github.com/wieslawsoltes/SharpForge/blob/af5450dacbdc2734432b13dffa63efb10eb93145/.github/workflows/fuzz.yml",
+      "currentUrl": "https://github.com/wieslawsoltes/SharpForge/blob/af29812a6b0ca0184a79cc6bcddd01bf0a02fb6a/.github/workflows/fuzz.yml",
+      "publishedCurrentUrl": "https://github.com/wieslawsoltes/SharpForge/blob/d6c6eb24eae3a7116b4bb5497c68b40b90aa3d2c/.github/workflows/fuzz.yml"
+    },
+    {
+      "path": ".github/workflows/gc-stress.yml",
+      "baseBlob": "cb48595cecfde43c6a07ec8c5b69f5ea6a58f6fc",
+      "currentBlob": "cb48595cecfde43c6a07ec8c5b69f5ea6a58f6fc",
+      "identical": true,
+      "hotLockKeys": [
+        "ci-workflows"
+      ],
+      "baseUrl": "https://github.com/wieslawsoltes/SharpForge/blob/af5450dacbdc2734432b13dffa63efb10eb93145/.github/workflows/gc-stress.yml",
+      "currentUrl": "https://github.com/wieslawsoltes/SharpForge/blob/af29812a6b0ca0184a79cc6bcddd01bf0a02fb6a/.github/workflows/gc-stress.yml",
+      "publishedCurrentUrl": "https://github.com/wieslawsoltes/SharpForge/blob/d6c6eb24eae3a7116b4bb5497c68b40b90aa3d2c/.github/workflows/gc-stress.yml"
+    },
+    {
+      "path": ".github/workflows/gc-trace.yml",
+      "baseBlob": "8a3da249b148fc25bae92cf3119afa943793f2f0",
+      "currentBlob": "8a3da249b148fc25bae92cf3119afa943793f2f0",
+      "identical": true,
+      "hotLockKeys": [
+        "ci-workflows"
+      ],
+      "baseUrl": "https://github.com/wieslawsoltes/SharpForge/blob/af5450dacbdc2734432b13dffa63efb10eb93145/.github/workflows/gc-trace.yml",
+      "currentUrl": "https://github.com/wieslawsoltes/SharpForge/blob/af29812a6b0ca0184a79cc6bcddd01bf0a02fb6a/.github/workflows/gc-trace.yml",
+      "publishedCurrentUrl": "https://github.com/wieslawsoltes/SharpForge/blob/d6c6eb24eae3a7116b4bb5497c68b40b90aa3d2c/.github/workflows/gc-trace.yml"
+    },
+    {
+      "path": ".github/workflows/inventory.yml",
+      "baseBlob": "b9bb814298323667fe15de9ca71115cfc2b35e44",
+      "currentBlob": "b9bb814298323667fe15de9ca71115cfc2b35e44",
+      "identical": true,
+      "hotLockKeys": [
+        "ci-workflows"
+      ],
+      "baseUrl": "https://github.com/wieslawsoltes/SharpForge/blob/af5450dacbdc2734432b13dffa63efb10eb93145/.github/workflows/inventory.yml",
+      "currentUrl": "https://github.com/wieslawsoltes/SharpForge/blob/af29812a6b0ca0184a79cc6bcddd01bf0a02fb6a/.github/workflows/inventory.yml",
+      "publishedCurrentUrl": "https://github.com/wieslawsoltes/SharpForge/blob/d6c6eb24eae3a7116b4bb5497c68b40b90aa3d2c/.github/workflows/inventory.yml"
+    },
+    {
+      "path": ".github/workflows/lease-reaper.yml",
+      "baseBlob": "3926b5e6566e7adbd29fe5ded0070a798ee9891a",
+      "currentBlob": "3926b5e6566e7adbd29fe5ded0070a798ee9891a",
+      "identical": true,
+      "hotLockKeys": [
+        "ci-workflows"
+      ],
+      "baseUrl": "https://github.com/wieslawsoltes/SharpForge/blob/af5450dacbdc2734432b13dffa63efb10eb93145/.github/workflows/lease-reaper.yml",
+      "currentUrl": "https://github.com/wieslawsoltes/SharpForge/blob/af29812a6b0ca0184a79cc6bcddd01bf0a02fb6a/.github/workflows/lease-reaper.yml",
+      "publishedCurrentUrl": "https://github.com/wieslawsoltes/SharpForge/blob/d6c6eb24eae3a7116b4bb5497c68b40b90aa3d2c/.github/workflows/lease-reaper.yml"
+    },
+    {
+      "path": ".github/workflows/merge-queue.yml",
+      "baseBlob": "5ec8eae946998878690cee8e092bfd29138132b1",
+      "currentBlob": "5ec8eae946998878690cee8e092bfd29138132b1",
+      "identical": true,
+      "hotLockKeys": [
+        "ci-workflows"
+      ],
+      "baseUrl": "https://github.com/wieslawsoltes/SharpForge/blob/af5450dacbdc2734432b13dffa63efb10eb93145/.github/workflows/merge-queue.yml",
+      "currentUrl": "https://github.com/wieslawsoltes/SharpForge/blob/af29812a6b0ca0184a79cc6bcddd01bf0a02fb6a/.github/workflows/merge-queue.yml",
+      "publishedCurrentUrl": "https://github.com/wieslawsoltes/SharpForge/blob/d6c6eb24eae3a7116b4bb5497c68b40b90aa3d2c/.github/workflows/merge-queue.yml"
+    },
+    {
+      "path": ".github/workflows/native.yml",
+      "baseBlob": "f4742061b3a33af1824473e63935e03ea936fa5e",
+      "currentBlob": "f4742061b3a33af1824473e63935e03ea936fa5e",
+      "identical": true,
+      "hotLockKeys": [
+        "ci-workflows"
+      ],
+      "baseUrl": "https://github.com/wieslawsoltes/SharpForge/blob/af5450dacbdc2734432b13dffa63efb10eb93145/.github/workflows/native.yml",
+      "currentUrl": "https://github.com/wieslawsoltes/SharpForge/blob/af29812a6b0ca0184a79cc6bcddd01bf0a02fb6a/.github/workflows/native.yml",
+      "publishedCurrentUrl": "https://github.com/wieslawsoltes/SharpForge/blob/d6c6eb24eae3a7116b4bb5497c68b40b90aa3d2c/.github/workflows/native.yml"
+    },
+    {
+      "path": ".github/workflows/oracles.yml",
+      "baseBlob": "8d741fde2775f8c6a1df1006b32d737dbd48d633",
+      "currentBlob": "8d741fde2775f8c6a1df1006b32d737dbd48d633",
+      "identical": true,
+      "hotLockKeys": [
+        "ci-workflows"
+      ],
+      "baseUrl": "https://github.com/wieslawsoltes/SharpForge/blob/af5450dacbdc2734432b13dffa63efb10eb93145/.github/workflows/oracles.yml",
+      "currentUrl": "https://github.com/wieslawsoltes/SharpForge/blob/af29812a6b0ca0184a79cc6bcddd01bf0a02fb6a/.github/workflows/oracles.yml",
+      "publishedCurrentUrl": "https://github.com/wieslawsoltes/SharpForge/blob/d6c6eb24eae3a7116b4bb5497c68b40b90aa3d2c/.github/workflows/oracles.yml"
+    },
+    {
+      "path": ".github/workflows/pages.yml",
+      "baseBlob": "5058f5a83c369cf661c6e0ef213c8de55d0c4f5f",
+      "currentBlob": "5058f5a83c369cf661c6e0ef213c8de55d0c4f5f",
+      "identical": true,
+      "hotLockKeys": [
+        "ci-workflows"
+      ],
+      "baseUrl": "https://github.com/wieslawsoltes/SharpForge/blob/af5450dacbdc2734432b13dffa63efb10eb93145/.github/workflows/pages.yml",
+      "currentUrl": "https://github.com/wieslawsoltes/SharpForge/blob/af29812a6b0ca0184a79cc6bcddd01bf0a02fb6a/.github/workflows/pages.yml",
+      "publishedCurrentUrl": "https://github.com/wieslawsoltes/SharpForge/blob/d6c6eb24eae3a7116b4bb5497c68b40b90aa3d2c/.github/workflows/pages.yml"
+    },
+    {
+      "path": ".github/workflows/perf.yml",
+      "baseBlob": "b397410f9d0c257fdfbae28260a33d18eead243f",
+      "currentBlob": "b397410f9d0c257fdfbae28260a33d18eead243f",
+      "identical": true,
+      "hotLockKeys": [
+        "ci-workflows"
+      ],
+      "baseUrl": "https://github.com/wieslawsoltes/SharpForge/blob/af5450dacbdc2734432b13dffa63efb10eb93145/.github/workflows/perf.yml",
+      "currentUrl": "https://github.com/wieslawsoltes/SharpForge/blob/af29812a6b0ca0184a79cc6bcddd01bf0a02fb6a/.github/workflows/perf.yml",
+      "publishedCurrentUrl": "https://github.com/wieslawsoltes/SharpForge/blob/d6c6eb24eae3a7116b4bb5497c68b40b90aa3d2c/.github/workflows/perf.yml"
+    },
+    {
+      "path": ".github/workflows/planning-gates.yml",
+      "baseBlob": "c2ed22bf087711e2f2e59e5c0a9e54546e8e31a8",
+      "currentBlob": "c2ed22bf087711e2f2e59e5c0a9e54546e8e31a8",
+      "identical": true,
+      "hotLockKeys": [
+        "ci-workflows"
+      ],
+      "baseUrl": "https://github.com/wieslawsoltes/SharpForge/blob/af5450dacbdc2734432b13dffa63efb10eb93145/.github/workflows/planning-gates.yml",
+      "currentUrl": "https://github.com/wieslawsoltes/SharpForge/blob/af29812a6b0ca0184a79cc6bcddd01bf0a02fb6a/.github/workflows/planning-gates.yml",
+      "publishedCurrentUrl": "https://github.com/wieslawsoltes/SharpForge/blob/d6c6eb24eae3a7116b4bb5497c68b40b90aa3d2c/.github/workflows/planning-gates.yml"
+    },
+    {
+      "path": ".github/workflows/preview.yml",
+      "baseBlob": "bfac73d294f14b768124b1d23828e83fd54eb995",
+      "currentBlob": "bfac73d294f14b768124b1d23828e83fd54eb995",
+      "identical": true,
+      "hotLockKeys": [
+        "ci-workflows"
+      ],
+      "baseUrl": "https://github.com/wieslawsoltes/SharpForge/blob/af5450dacbdc2734432b13dffa63efb10eb93145/.github/workflows/preview.yml",
+      "currentUrl": "https://github.com/wieslawsoltes/SharpForge/blob/af29812a6b0ca0184a79cc6bcddd01bf0a02fb6a/.github/workflows/preview.yml",
+      "publishedCurrentUrl": "https://github.com/wieslawsoltes/SharpForge/blob/d6c6eb24eae3a7116b4bb5497c68b40b90aa3d2c/.github/workflows/preview.yml"
+    },
+    {
+      "path": ".github/workflows/project16-qualification.yml",
+      "baseBlob": "692353521db8a8c62cd3cd5143a8ad4f268f0a93",
+      "currentBlob": "692353521db8a8c62cd3cd5143a8ad4f268f0a93",
+      "identical": true,
+      "hotLockKeys": [
+        "ci-workflows"
+      ],
+      "baseUrl": "https://github.com/wieslawsoltes/SharpForge/blob/af5450dacbdc2734432b13dffa63efb10eb93145/.github/workflows/project16-qualification.yml",
+      "currentUrl": "https://github.com/wieslawsoltes/SharpForge/blob/af29812a6b0ca0184a79cc6bcddd01bf0a02fb6a/.github/workflows/project16-qualification.yml",
+      "publishedCurrentUrl": "https://github.com/wieslawsoltes/SharpForge/blob/d6c6eb24eae3a7116b4bb5497c68b40b90aa3d2c/.github/workflows/project16-qualification.yml"
+    },
+    {
+      "path": ".github/workflows/protocol-replay.yml",
+      "baseBlob": "66c6e8f72b74578d55f9d7db184531bc361ad5a6",
+      "currentBlob": "66c6e8f72b74578d55f9d7db184531bc361ad5a6",
+      "identical": true,
+      "hotLockKeys": [
+        "ci-workflows"
+      ],
+      "baseUrl": "https://github.com/wieslawsoltes/SharpForge/blob/af5450dacbdc2734432b13dffa63efb10eb93145/.github/workflows/protocol-replay.yml",
+      "currentUrl": "https://github.com/wieslawsoltes/SharpForge/blob/af29812a6b0ca0184a79cc6bcddd01bf0a02fb6a/.github/workflows/protocol-replay.yml",
+      "publishedCurrentUrl": "https://github.com/wieslawsoltes/SharpForge/blob/d6c6eb24eae3a7116b4bb5497c68b40b90aa3d2c/.github/workflows/protocol-replay.yml"
+    },
+    {
+      "path": ".github/workflows/release.yml",
+      "baseBlob": "01221621d5570343e8bb5904f133fb39d1bd9bff",
+      "currentBlob": "01221621d5570343e8bb5904f133fb39d1bd9bff",
+      "identical": true,
+      "hotLockKeys": [
+        "ci-workflows"
+      ],
+      "baseUrl": "https://github.com/wieslawsoltes/SharpForge/blob/af5450dacbdc2734432b13dffa63efb10eb93145/.github/workflows/release.yml",
+      "currentUrl": "https://github.com/wieslawsoltes/SharpForge/blob/af29812a6b0ca0184a79cc6bcddd01bf0a02fb6a/.github/workflows/release.yml",
+      "publishedCurrentUrl": "https://github.com/wieslawsoltes/SharpForge/blob/d6c6eb24eae3a7116b4bb5497c68b40b90aa3d2c/.github/workflows/release.yml"
+    },
+    {
+      "path": ".github/workflows/repro.yml",
+      "baseBlob": "e88c194f7945d2153cf4e94d0164ccf196854b7b",
+      "currentBlob": "e88c194f7945d2153cf4e94d0164ccf196854b7b",
+      "identical": true,
+      "hotLockKeys": [
+        "ci-workflows"
+      ],
+      "baseUrl": "https://github.com/wieslawsoltes/SharpForge/blob/af5450dacbdc2734432b13dffa63efb10eb93145/.github/workflows/repro.yml",
+      "currentUrl": "https://github.com/wieslawsoltes/SharpForge/blob/af29812a6b0ca0184a79cc6bcddd01bf0a02fb6a/.github/workflows/repro.yml",
+      "publishedCurrentUrl": "https://github.com/wieslawsoltes/SharpForge/blob/d6c6eb24eae3a7116b4bb5497c68b40b90aa3d2c/.github/workflows/repro.yml"
+    },
+    {
+      "path": ".github/workflows/rust-safety.yml",
+      "baseBlob": "347c15159a7e685da9e5a0bd043633a6c77e9e23",
+      "currentBlob": "347c15159a7e685da9e5a0bd043633a6c77e9e23",
+      "identical": true,
+      "hotLockKeys": [
+        "ci-workflows"
+      ],
+      "baseUrl": "https://github.com/wieslawsoltes/SharpForge/blob/af5450dacbdc2734432b13dffa63efb10eb93145/.github/workflows/rust-safety.yml",
+      "currentUrl": "https://github.com/wieslawsoltes/SharpForge/blob/af29812a6b0ca0184a79cc6bcddd01bf0a02fb6a/.github/workflows/rust-safety.yml",
+      "publishedCurrentUrl": "https://github.com/wieslawsoltes/SharpForge/blob/d6c6eb24eae3a7116b4bb5497c68b40b90aa3d2c/.github/workflows/rust-safety.yml"
+    },
+    {
+      "path": ".github/workflows/rust.yml",
+      "baseBlob": "7b08bbafbce7ad5c0ff6e519ea14bf35d0bf5629",
+      "currentBlob": "7b08bbafbce7ad5c0ff6e519ea14bf35d0bf5629",
+      "identical": true,
+      "hotLockKeys": [
+        "ci-workflows"
+      ],
+      "baseUrl": "https://github.com/wieslawsoltes/SharpForge/blob/af5450dacbdc2734432b13dffa63efb10eb93145/.github/workflows/rust.yml",
+      "currentUrl": "https://github.com/wieslawsoltes/SharpForge/blob/af29812a6b0ca0184a79cc6bcddd01bf0a02fb6a/.github/workflows/rust.yml",
+      "publishedCurrentUrl": "https://github.com/wieslawsoltes/SharpForge/blob/d6c6eb24eae3a7116b4bb5497c68b40b90aa3d2c/.github/workflows/rust.yml"
+    },
+    {
+      "path": ".github/workflows/security.yml",
+      "baseBlob": "5906a202be159b8baf78627a929d5dfa8265afac",
+      "currentBlob": "5906a202be159b8baf78627a929d5dfa8265afac",
+      "identical": true,
+      "hotLockKeys": [
+        "ci-workflows"
+      ],
+      "baseUrl": "https://github.com/wieslawsoltes/SharpForge/blob/af5450dacbdc2734432b13dffa63efb10eb93145/.github/workflows/security.yml",
+      "currentUrl": "https://github.com/wieslawsoltes/SharpForge/blob/af29812a6b0ca0184a79cc6bcddd01bf0a02fb6a/.github/workflows/security.yml",
+      "publishedCurrentUrl": "https://github.com/wieslawsoltes/SharpForge/blob/d6c6eb24eae3a7116b4bb5497c68b40b90aa3d2c/.github/workflows/security.yml"
+    },
+    {
+      "path": ".github/workflows/spec-watch.yml",
+      "baseBlob": "cae2dd785b7b23a2c7f64534cfe836f86c2a8786",
+      "currentBlob": "cae2dd785b7b23a2c7f64534cfe836f86c2a8786",
+      "identical": true,
+      "hotLockKeys": [
+        "ci-workflows"
+      ],
+      "baseUrl": "https://github.com/wieslawsoltes/SharpForge/blob/af5450dacbdc2734432b13dffa63efb10eb93145/.github/workflows/spec-watch.yml",
+      "currentUrl": "https://github.com/wieslawsoltes/SharpForge/blob/af29812a6b0ca0184a79cc6bcddd01bf0a02fb6a/.github/workflows/spec-watch.yml",
+      "publishedCurrentUrl": "https://github.com/wieslawsoltes/SharpForge/blob/d6c6eb24eae3a7116b4bb5497c68b40b90aa3d2c/.github/workflows/spec-watch.yml"
+    },
+    {
+      "path": ".github/workflows/winui-measure.yml",
+      "baseBlob": "46a5cb26d4eeb174aa0ac7ee4c67e9436032cc7d",
+      "currentBlob": "46a5cb26d4eeb174aa0ac7ee4c67e9436032cc7d",
+      "identical": true,
+      "hotLockKeys": [
+        "ci-workflows"
+      ],
+      "baseUrl": "https://github.com/wieslawsoltes/SharpForge/blob/af5450dacbdc2734432b13dffa63efb10eb93145/.github/workflows/winui-measure.yml",
+      "currentUrl": "https://github.com/wieslawsoltes/SharpForge/blob/af29812a6b0ca0184a79cc6bcddd01bf0a02fb6a/.github/workflows/winui-measure.yml",
+      "publishedCurrentUrl": "https://github.com/wieslawsoltes/SharpForge/blob/d6c6eb24eae3a7116b4bb5497c68b40b90aa3d2c/.github/workflows/winui-measure.yml"
+    },
+    {
+      "path": "apps/studio/studio.js",
+      "baseBlob": "c0533101ee8dae94c5216aae6ded4fb9d1be87c0",
+      "currentBlob": "c0533101ee8dae94c5216aae6ded4fb9d1be87c0",
+      "identical": true,
+      "hotLockKeys": [
+        "studio"
+      ],
+      "baseUrl": "https://github.com/wieslawsoltes/SharpForge/blob/af5450dacbdc2734432b13dffa63efb10eb93145/apps/studio/studio.js",
+      "currentUrl": "https://github.com/wieslawsoltes/SharpForge/blob/af29812a6b0ca0184a79cc6bcddd01bf0a02fb6a/apps/studio/studio.js",
+      "publishedCurrentUrl": "https://github.com/wieslawsoltes/SharpForge/blob/d6c6eb24eae3a7116b4bb5497c68b40b90aa3d2c/apps/studio/studio.js"
+    },
+    {
+      "path": "package-lock.json",
+      "baseBlob": "61aa0aad42fe8ccb71ab679100a14237544c5f7f",
+      "currentBlob": "61aa0aad42fe8ccb71ab679100a14237544c5f7f",
+      "identical": true,
+      "hotLockKeys": [
+        "package-json"
+      ],
+      "baseUrl": "https://github.com/wieslawsoltes/SharpForge/blob/af5450dacbdc2734432b13dffa63efb10eb93145/package-lock.json",
+      "currentUrl": "https://github.com/wieslawsoltes/SharpForge/blob/af29812a6b0ca0184a79cc6bcddd01bf0a02fb6a/package-lock.json",
+      "publishedCurrentUrl": "https://github.com/wieslawsoltes/SharpForge/blob/d6c6eb24eae3a7116b4bb5497c68b40b90aa3d2c/package-lock.json"
+    },
+    {
+      "path": "package.json",
+      "baseBlob": "118c0a9af4dc292d5df8f7c5e02121f8309957fe",
+      "currentBlob": "118c0a9af4dc292d5df8f7c5e02121f8309957fe",
+      "identical": true,
+      "hotLockKeys": [
+        "package-json"
+      ],
+      "baseUrl": "https://github.com/wieslawsoltes/SharpForge/blob/af5450dacbdc2734432b13dffa63efb10eb93145/package.json",
+      "currentUrl": "https://github.com/wieslawsoltes/SharpForge/blob/af29812a6b0ca0184a79cc6bcddd01bf0a02fb6a/package.json",
+      "publishedCurrentUrl": "https://github.com/wieslawsoltes/SharpForge/blob/d6c6eb24eae3a7116b4bb5497c68b40b90aa3d2c/package.json"
+    },
+    {
+      "path": "packages/archive/src/index.js",
+      "baseBlob": "ff63e441537160b7d7aaed3c5321cb2d01d16895",
+      "currentBlob": "ff63e441537160b7d7aaed3c5321cb2d01d16895",
+      "identical": true,
+      "hotLockKeys": [],
+      "baseUrl": "https://github.com/wieslawsoltes/SharpForge/blob/af5450dacbdc2734432b13dffa63efb10eb93145/packages/archive/src/index.js",
+      "currentUrl": "https://github.com/wieslawsoltes/SharpForge/blob/af29812a6b0ca0184a79cc6bcddd01bf0a02fb6a/packages/archive/src/index.js",
+      "publishedCurrentUrl": "https://github.com/wieslawsoltes/SharpForge/blob/d6c6eb24eae3a7116b4bb5497c68b40b90aa3d2c/packages/archive/src/index.js"
+    },
+    {
+      "path": "packages/bcl-collections/src/index.js",
+      "baseBlob": "9af07490ea777fbe02f95e578c6bfa3a874d9179",
+      "currentBlob": "9af07490ea777fbe02f95e578c6bfa3a874d9179",
+      "identical": true,
+      "hotLockKeys": [],
+      "baseUrl": "https://github.com/wieslawsoltes/SharpForge/blob/af5450dacbdc2734432b13dffa63efb10eb93145/packages/bcl-collections/src/index.js",
+      "currentUrl": "https://github.com/wieslawsoltes/SharpForge/blob/af29812a6b0ca0184a79cc6bcddd01bf0a02fb6a/packages/bcl-collections/src/index.js",
+      "publishedCurrentUrl": "https://github.com/wieslawsoltes/SharpForge/blob/d6c6eb24eae3a7116b4bb5497c68b40b90aa3d2c/packages/bcl-collections/src/index.js"
+    },
+    {
+      "path": "packages/bcl-core/src/index.js",
+      "baseBlob": "0b9ecee6dac60c27faec0afe8d2f70796451cd56",
+      "currentBlob": "0b9ecee6dac60c27faec0afe8d2f70796451cd56",
+      "identical": true,
+      "hotLockKeys": [],
+      "baseUrl": "https://github.com/wieslawsoltes/SharpForge/blob/af5450dacbdc2734432b13dffa63efb10eb93145/packages/bcl-core/src/index.js",
+      "currentUrl": "https://github.com/wieslawsoltes/SharpForge/blob/af29812a6b0ca0184a79cc6bcddd01bf0a02fb6a/packages/bcl-core/src/index.js",
+      "publishedCurrentUrl": "https://github.com/wieslawsoltes/SharpForge/blob/d6c6eb24eae3a7116b4bb5497c68b40b90aa3d2c/packages/bcl-core/src/index.js"
+    },
+    {
+      "path": "packages/bytecode/src/index.js",
+      "baseBlob": "e1a2111b3a037441882f29de7e0d71a7e3ac6f80",
+      "currentBlob": "e1a2111b3a037441882f29de7e0d71a7e3ac6f80",
+      "identical": true,
+      "hotLockKeys": [
+        "bytecode-index"
+      ],
+      "baseUrl": "https://github.com/wieslawsoltes/SharpForge/blob/af5450dacbdc2734432b13dffa63efb10eb93145/packages/bytecode/src/index.js",
+      "currentUrl": "https://github.com/wieslawsoltes/SharpForge/blob/af29812a6b0ca0184a79cc6bcddd01bf0a02fb6a/packages/bytecode/src/index.js",
+      "publishedCurrentUrl": "https://github.com/wieslawsoltes/SharpForge/blob/d6c6eb24eae3a7116b4bb5497c68b40b90aa3d2c/packages/bytecode/src/index.js"
+    },
+    {
+      "path": "packages/cil/src/index.js",
+      "baseBlob": "3702153086f613f9bc77e38ba3c7174b72e0c43c",
+      "currentBlob": "3702153086f613f9bc77e38ba3c7174b72e0c43c",
+      "identical": true,
+      "hotLockKeys": [],
+      "baseUrl": "https://github.com/wieslawsoltes/SharpForge/blob/af5450dacbdc2734432b13dffa63efb10eb93145/packages/cil/src/index.js",
+      "currentUrl": "https://github.com/wieslawsoltes/SharpForge/blob/af29812a6b0ca0184a79cc6bcddd01bf0a02fb6a/packages/cil/src/index.js",
+      "publishedCurrentUrl": "https://github.com/wieslawsoltes/SharpForge/blob/d6c6eb24eae3a7116b4bb5497c68b40b90aa3d2c/packages/cil/src/index.js"
+    },
+    {
+      "path": "packages/clr/src/index.js",
+      "baseBlob": "a3b2f7336d4024712fa7e4089ea6bc81666db695",
+      "currentBlob": "a3b2f7336d4024712fa7e4089ea6bc81666db695",
+      "identical": true,
+      "hotLockKeys": [],
+      "baseUrl": "https://github.com/wieslawsoltes/SharpForge/blob/af5450dacbdc2734432b13dffa63efb10eb93145/packages/clr/src/index.js",
+      "currentUrl": "https://github.com/wieslawsoltes/SharpForge/blob/af29812a6b0ca0184a79cc6bcddd01bf0a02fb6a/packages/clr/src/index.js",
+      "publishedCurrentUrl": "https://github.com/wieslawsoltes/SharpForge/blob/d6c6eb24eae3a7116b4bb5497c68b40b90aa3d2c/packages/clr/src/index.js"
+    },
+    {
+      "path": "packages/compiler/src/index.js",
+      "baseBlob": "0403f02f20663c29b70d8c9c968e048ceb85cd63",
+      "currentBlob": "0403f02f20663c29b70d8c9c968e048ceb85cd63",
+      "identical": true,
+      "hotLockKeys": [
+        "compiler-index"
+      ],
+      "baseUrl": "https://github.com/wieslawsoltes/SharpForge/blob/af5450dacbdc2734432b13dffa63efb10eb93145/packages/compiler/src/index.js",
+      "currentUrl": "https://github.com/wieslawsoltes/SharpForge/blob/af29812a6b0ca0184a79cc6bcddd01bf0a02fb6a/packages/compiler/src/index.js",
+      "publishedCurrentUrl": "https://github.com/wieslawsoltes/SharpForge/blob/d6c6eb24eae3a7116b4bb5497c68b40b90aa3d2c/packages/compiler/src/index.js"
+    },
+    {
+      "path": "packages/compute/src/index.js",
+      "baseBlob": "cf413670ec93dc09cbcb80db14af55233d961834",
+      "currentBlob": "cf413670ec93dc09cbcb80db14af55233d961834",
+      "identical": true,
+      "hotLockKeys": [],
+      "baseUrl": "https://github.com/wieslawsoltes/SharpForge/blob/af5450dacbdc2734432b13dffa63efb10eb93145/packages/compute/src/index.js",
+      "currentUrl": "https://github.com/wieslawsoltes/SharpForge/blob/af29812a6b0ca0184a79cc6bcddd01bf0a02fb6a/packages/compute/src/index.js",
+      "publishedCurrentUrl": "https://github.com/wieslawsoltes/SharpForge/blob/d6c6eb24eae3a7116b4bb5497c68b40b90aa3d2c/packages/compute/src/index.js"
+    },
+    {
+      "path": "packages/controls/src/index.js",
+      "baseBlob": "d7587e3dfcfd3e33b011b46f117439e6aa8d7005",
+      "currentBlob": "d7587e3dfcfd3e33b011b46f117439e6aa8d7005",
+      "identical": true,
+      "hotLockKeys": [],
+      "baseUrl": "https://github.com/wieslawsoltes/SharpForge/blob/af5450dacbdc2734432b13dffa63efb10eb93145/packages/controls/src/index.js",
+      "currentUrl": "https://github.com/wieslawsoltes/SharpForge/blob/af29812a6b0ca0184a79cc6bcddd01bf0a02fb6a/packages/controls/src/index.js",
+      "publishedCurrentUrl": "https://github.com/wieslawsoltes/SharpForge/blob/d6c6eb24eae3a7116b4bb5497c68b40b90aa3d2c/packages/controls/src/index.js"
+    },
+    {
+      "path": "packages/debugger/src/index.js",
+      "baseBlob": "725cca7a7282a7767b17c7c2dd807113125d71a8",
+      "currentBlob": "725cca7a7282a7767b17c7c2dd807113125d71a8",
+      "identical": true,
+      "hotLockKeys": [],
+      "baseUrl": "https://github.com/wieslawsoltes/SharpForge/blob/af5450dacbdc2734432b13dffa63efb10eb93145/packages/debugger/src/index.js",
+      "currentUrl": "https://github.com/wieslawsoltes/SharpForge/blob/af29812a6b0ca0184a79cc6bcddd01bf0a02fb6a/packages/debugger/src/index.js",
+      "publishedCurrentUrl": "https://github.com/wieslawsoltes/SharpForge/blob/d6c6eb24eae3a7116b4bb5497c68b40b90aa3d2c/packages/debugger/src/index.js"
+    },
+    {
+      "path": "packages/designer/src/index.js",
+      "baseBlob": "e5ab7959706d997dcba51d8ede17094ab902e980",
+      "currentBlob": "e5ab7959706d997dcba51d8ede17094ab902e980",
+      "identical": true,
+      "hotLockKeys": [],
+      "baseUrl": "https://github.com/wieslawsoltes/SharpForge/blob/af5450dacbdc2734432b13dffa63efb10eb93145/packages/designer/src/index.js",
+      "currentUrl": "https://github.com/wieslawsoltes/SharpForge/blob/af29812a6b0ca0184a79cc6bcddd01bf0a02fb6a/packages/designer/src/index.js",
+      "publishedCurrentUrl": "https://github.com/wieslawsoltes/SharpForge/blob/d6c6eb24eae3a7116b4bb5497c68b40b90aa3d2c/packages/designer/src/index.js"
+    },
+    {
+      "path": "packages/docking/src/index.js",
+      "baseBlob": "a47a6691b2fdeaa9b2facc7e30b5148a18e7d9e6",
+      "currentBlob": "a47a6691b2fdeaa9b2facc7e30b5148a18e7d9e6",
+      "identical": true,
+      "hotLockKeys": [],
+      "baseUrl": "https://github.com/wieslawsoltes/SharpForge/blob/af5450dacbdc2734432b13dffa63efb10eb93145/packages/docking/src/index.js",
+      "currentUrl": "https://github.com/wieslawsoltes/SharpForge/blob/af29812a6b0ca0184a79cc6bcddd01bf0a02fb6a/packages/docking/src/index.js",
+      "publishedCurrentUrl": "https://github.com/wieslawsoltes/SharpForge/blob/d6c6eb24eae3a7116b4bb5497c68b40b90aa3d2c/packages/docking/src/index.js"
+    },
+    {
+      "path": "packages/editor/src/index.js",
+      "baseBlob": "e8518b2018fd826f13fd707a7aa05b55a5385d8d",
+      "currentBlob": "e8518b2018fd826f13fd707a7aa05b55a5385d8d",
+      "identical": true,
+      "hotLockKeys": [],
+      "baseUrl": "https://github.com/wieslawsoltes/SharpForge/blob/af5450dacbdc2734432b13dffa63efb10eb93145/packages/editor/src/index.js",
+      "currentUrl": "https://github.com/wieslawsoltes/SharpForge/blob/af29812a6b0ca0184a79cc6bcddd01bf0a02fb6a/packages/editor/src/index.js",
+      "publishedCurrentUrl": "https://github.com/wieslawsoltes/SharpForge/blob/d6c6eb24eae3a7116b4bb5497c68b40b90aa3d2c/packages/editor/src/index.js"
+    },
+    {
+      "path": "packages/extensions/src/index.js",
+      "baseBlob": "e33d9d0e59d3b54d3d6bb60093a5b025e5f93abb",
+      "currentBlob": "e33d9d0e59d3b54d3d6bb60093a5b025e5f93abb",
+      "identical": true,
+      "hotLockKeys": [],
+      "baseUrl": "https://github.com/wieslawsoltes/SharpForge/blob/af5450dacbdc2734432b13dffa63efb10eb93145/packages/extensions/src/index.js",
+      "currentUrl": "https://github.com/wieslawsoltes/SharpForge/blob/af29812a6b0ca0184a79cc6bcddd01bf0a02fb6a/packages/extensions/src/index.js",
+      "publishedCurrentUrl": "https://github.com/wieslawsoltes/SharpForge/blob/d6c6eb24eae3a7116b4bb5497c68b40b90aa3d2c/packages/extensions/src/index.js"
+    },
+    {
+      "path": "packages/framework/src/index.js",
+      "baseBlob": "4dbdf0b1d6fa05e6024f8fb7533984ab86c74daf",
+      "currentBlob": "4dbdf0b1d6fa05e6024f8fb7533984ab86c74daf",
+      "identical": true,
+      "hotLockKeys": [
+        "framework-index"
+      ],
+      "baseUrl": "https://github.com/wieslawsoltes/SharpForge/blob/af5450dacbdc2734432b13dffa63efb10eb93145/packages/framework/src/index.js",
+      "currentUrl": "https://github.com/wieslawsoltes/SharpForge/blob/af29812a6b0ca0184a79cc6bcddd01bf0a02fb6a/packages/framework/src/index.js",
+      "publishedCurrentUrl": "https://github.com/wieslawsoltes/SharpForge/blob/d6c6eb24eae3a7116b4bb5497c68b40b90aa3d2c/packages/framework/src/index.js"
+    },
+    {
+      "path": "packages/language/src/index.js",
+      "baseBlob": "23e0c68af8ef976d21caef9b0cdd96b9b1fc102a",
+      "currentBlob": "23e0c68af8ef976d21caef9b0cdd96b9b1fc102a",
+      "identical": true,
+      "hotLockKeys": [],
+      "baseUrl": "https://github.com/wieslawsoltes/SharpForge/blob/af5450dacbdc2734432b13dffa63efb10eb93145/packages/language/src/index.js",
+      "currentUrl": "https://github.com/wieslawsoltes/SharpForge/blob/af29812a6b0ca0184a79cc6bcddd01bf0a02fb6a/packages/language/src/index.js",
+      "publishedCurrentUrl": "https://github.com/wieslawsoltes/SharpForge/blob/d6c6eb24eae3a7116b4bb5497c68b40b90aa3d2c/packages/language/src/index.js"
+    },
+    {
+      "path": "packages/msbuild/src/index.js",
+      "baseBlob": "251de7fd0080c67868539e82ff5d8d23e46f5469",
+      "currentBlob": "251de7fd0080c67868539e82ff5d8d23e46f5469",
+      "identical": true,
+      "hotLockKeys": [],
+      "baseUrl": "https://github.com/wieslawsoltes/SharpForge/blob/af5450dacbdc2734432b13dffa63efb10eb93145/packages/msbuild/src/index.js",
+      "currentUrl": "https://github.com/wieslawsoltes/SharpForge/blob/af29812a6b0ca0184a79cc6bcddd01bf0a02fb6a/packages/msbuild/src/index.js",
+      "publishedCurrentUrl": "https://github.com/wieslawsoltes/SharpForge/blob/d6c6eb24eae3a7116b4bb5497c68b40b90aa3d2c/packages/msbuild/src/index.js"
+    },
+    {
+      "path": "packages/network/src/index.js",
+      "baseBlob": "d82c97d1309ec221371a4dda489265b80b189166",
+      "currentBlob": "d82c97d1309ec221371a4dda489265b80b189166",
+      "identical": true,
+      "hotLockKeys": [],
+      "baseUrl": "https://github.com/wieslawsoltes/SharpForge/blob/af5450dacbdc2734432b13dffa63efb10eb93145/packages/network/src/index.js",
+      "currentUrl": "https://github.com/wieslawsoltes/SharpForge/blob/af29812a6b0ca0184a79cc6bcddd01bf0a02fb6a/packages/network/src/index.js",
+      "publishedCurrentUrl": "https://github.com/wieslawsoltes/SharpForge/blob/d6c6eb24eae3a7116b4bb5497c68b40b90aa3d2c/packages/network/src/index.js"
+    },
+    {
+      "path": "packages/project-system/src/index.js",
+      "baseBlob": "ac7f1483c2b76fcea180c94481c506495465fb17",
+      "currentBlob": "ac7f1483c2b76fcea180c94481c506495465fb17",
+      "identical": true,
+      "hotLockKeys": [],
+      "baseUrl": "https://github.com/wieslawsoltes/SharpForge/blob/af5450dacbdc2734432b13dffa63efb10eb93145/packages/project-system/src/index.js",
+      "currentUrl": "https://github.com/wieslawsoltes/SharpForge/blob/af29812a6b0ca0184a79cc6bcddd01bf0a02fb6a/packages/project-system/src/index.js",
+      "publishedCurrentUrl": "https://github.com/wieslawsoltes/SharpForge/blob/d6c6eb24eae3a7116b4bb5497c68b40b90aa3d2c/packages/project-system/src/index.js"
+    },
+    {
+      "path": "packages/protocol/src/index.js",
+      "baseBlob": "9f6d3f835929ebe4c6fa04b17ce697ac103a62b1",
+      "currentBlob": "9f6d3f835929ebe4c6fa04b17ce697ac103a62b1",
+      "identical": true,
+      "hotLockKeys": [],
+      "baseUrl": "https://github.com/wieslawsoltes/SharpForge/blob/af5450dacbdc2734432b13dffa63efb10eb93145/packages/protocol/src/index.js",
+      "currentUrl": "https://github.com/wieslawsoltes/SharpForge/blob/af29812a6b0ca0184a79cc6bcddd01bf0a02fb6a/packages/protocol/src/index.js",
+      "publishedCurrentUrl": "https://github.com/wieslawsoltes/SharpForge/blob/d6c6eb24eae3a7116b4bb5497c68b40b90aa3d2c/packages/protocol/src/index.js"
+    },
+    {
+      "path": "packages/refactoring/src/index.js",
+      "baseBlob": "0caad73b64aca36ddce4088bd5e571b5554ec976",
+      "currentBlob": "0caad73b64aca36ddce4088bd5e571b5554ec976",
+      "identical": true,
+      "hotLockKeys": [],
+      "baseUrl": "https://github.com/wieslawsoltes/SharpForge/blob/af5450dacbdc2734432b13dffa63efb10eb93145/packages/refactoring/src/index.js",
+      "currentUrl": "https://github.com/wieslawsoltes/SharpForge/blob/af29812a6b0ca0184a79cc6bcddd01bf0a02fb6a/packages/refactoring/src/index.js",
+      "publishedCurrentUrl": "https://github.com/wieslawsoltes/SharpForge/blob/d6c6eb24eae3a7116b4bb5497c68b40b90aa3d2c/packages/refactoring/src/index.js"
+    },
+    {
+      "path": "packages/runtime/src/cil-vm.js",
+      "baseBlob": "e91616a52bdabe84d2236837fbdb43a656ba99a5",
+      "currentBlob": "e91616a52bdabe84d2236837fbdb43a656ba99a5",
+      "identical": true,
+      "hotLockKeys": [
+        "cil-vm"
+      ],
+      "baseUrl": "https://github.com/wieslawsoltes/SharpForge/blob/af5450dacbdc2734432b13dffa63efb10eb93145/packages/runtime/src/cil-vm.js",
+      "currentUrl": "https://github.com/wieslawsoltes/SharpForge/blob/af29812a6b0ca0184a79cc6bcddd01bf0a02fb6a/packages/runtime/src/cil-vm.js",
+      "publishedCurrentUrl": "https://github.com/wieslawsoltes/SharpForge/blob/d6c6eb24eae3a7116b4bb5497c68b40b90aa3d2c/packages/runtime/src/cil-vm.js"
+    },
+    {
+      "path": "packages/runtime/src/index.js",
+      "baseBlob": "3eec9ede4c2667c7212b8709f8fd9336fdbbddc7",
+      "currentBlob": "3eec9ede4c2667c7212b8709f8fd9336fdbbddc7",
+      "identical": true,
+      "hotLockKeys": [],
+      "baseUrl": "https://github.com/wieslawsoltes/SharpForge/blob/af5450dacbdc2734432b13dffa63efb10eb93145/packages/runtime/src/index.js",
+      "currentUrl": "https://github.com/wieslawsoltes/SharpForge/blob/af29812a6b0ca0184a79cc6bcddd01bf0a02fb6a/packages/runtime/src/index.js",
+      "publishedCurrentUrl": "https://github.com/wieslawsoltes/SharpForge/blob/d6c6eb24eae3a7116b4bb5497c68b40b90aa3d2c/packages/runtime/src/index.js"
+    },
+    {
+      "path": "packages/runtime/src/vm.js",
+      "baseBlob": "ebb3774acbed38f5c61ded625dad8ee13df017e3",
+      "currentBlob": "ebb3774acbed38f5c61ded625dad8ee13df017e3",
+      "identical": true,
+      "hotLockKeys": [
+        "vm"
+      ],
+      "baseUrl": "https://github.com/wieslawsoltes/SharpForge/blob/af5450dacbdc2734432b13dffa63efb10eb93145/packages/runtime/src/vm.js",
+      "currentUrl": "https://github.com/wieslawsoltes/SharpForge/blob/af29812a6b0ca0184a79cc6bcddd01bf0a02fb6a/packages/runtime/src/vm.js",
+      "publishedCurrentUrl": "https://github.com/wieslawsoltes/SharpForge/blob/d6c6eb24eae3a7116b4bb5497c68b40b90aa3d2c/packages/runtime/src/vm.js"
+    },
+    {
+      "path": "packages/symbols/src/index.js",
+      "baseBlob": "73c6c587506d05ecde7a1916babf22c17434f229",
+      "currentBlob": "73c6c587506d05ecde7a1916babf22c17434f229",
+      "identical": true,
+      "hotLockKeys": [],
+      "baseUrl": "https://github.com/wieslawsoltes/SharpForge/blob/af5450dacbdc2734432b13dffa63efb10eb93145/packages/symbols/src/index.js",
+      "currentUrl": "https://github.com/wieslawsoltes/SharpForge/blob/af29812a6b0ca0184a79cc6bcddd01bf0a02fb6a/packages/symbols/src/index.js",
+      "publishedCurrentUrl": "https://github.com/wieslawsoltes/SharpForge/blob/d6c6eb24eae3a7116b4bb5497c68b40b90aa3d2c/packages/symbols/src/index.js"
+    },
+    {
+      "path": "packages/syntax/src/index.js",
+      "baseBlob": "8c64405050b569cedc31f5bda43f674228ce3d8e",
+      "currentBlob": "8c64405050b569cedc31f5bda43f674228ce3d8e",
+      "identical": true,
+      "hotLockKeys": [],
+      "baseUrl": "https://github.com/wieslawsoltes/SharpForge/blob/af5450dacbdc2734432b13dffa63efb10eb93145/packages/syntax/src/index.js",
+      "currentUrl": "https://github.com/wieslawsoltes/SharpForge/blob/af29812a6b0ca0184a79cc6bcddd01bf0a02fb6a/packages/syntax/src/index.js",
+      "publishedCurrentUrl": "https://github.com/wieslawsoltes/SharpForge/blob/d6c6eb24eae3a7116b4bb5497c68b40b90aa3d2c/packages/syntax/src/index.js"
+    },
+    {
+      "path": "packages/syntax/src/parser.js",
+      "baseBlob": "5a2b27db46737fec40dd05cb8e5457ec08787304",
+      "currentBlob": "5a2b27db46737fec40dd05cb8e5457ec08787304",
+      "identical": true,
+      "hotLockKeys": [
+        "parser"
+      ],
+      "baseUrl": "https://github.com/wieslawsoltes/SharpForge/blob/af5450dacbdc2734432b13dffa63efb10eb93145/packages/syntax/src/parser.js",
+      "currentUrl": "https://github.com/wieslawsoltes/SharpForge/blob/af29812a6b0ca0184a79cc6bcddd01bf0a02fb6a/packages/syntax/src/parser.js",
+      "publishedCurrentUrl": "https://github.com/wieslawsoltes/SharpForge/blob/d6c6eb24eae3a7116b4bb5497c68b40b90aa3d2c/packages/syntax/src/parser.js"
+    },
+    {
+      "path": "packages/templates/src/index.js",
+      "baseBlob": "aaa5748aaa8dc30d80c1d4133791b8e1dbfdd828",
+      "currentBlob": "aaa5748aaa8dc30d80c1d4133791b8e1dbfdd828",
+      "identical": true,
+      "hotLockKeys": [],
+      "baseUrl": "https://github.com/wieslawsoltes/SharpForge/blob/af5450dacbdc2734432b13dffa63efb10eb93145/packages/templates/src/index.js",
+      "currentUrl": "https://github.com/wieslawsoltes/SharpForge/blob/af29812a6b0ca0184a79cc6bcddd01bf0a02fb6a/packages/templates/src/index.js",
+      "publishedCurrentUrl": "https://github.com/wieslawsoltes/SharpForge/blob/d6c6eb24eae3a7116b4bb5497c68b40b90aa3d2c/packages/templates/src/index.js"
+    },
+    {
+      "path": "packages/text/src/index.js",
+      "baseBlob": "1a46e0fee17c1506a1584242e849a26e7ab061ce",
+      "currentBlob": "1a46e0fee17c1506a1584242e849a26e7ab061ce",
+      "identical": true,
+      "hotLockKeys": [],
+      "baseUrl": "https://github.com/wieslawsoltes/SharpForge/blob/af5450dacbdc2734432b13dffa63efb10eb93145/packages/text/src/index.js",
+      "currentUrl": "https://github.com/wieslawsoltes/SharpForge/blob/af29812a6b0ca0184a79cc6bcddd01bf0a02fb6a/packages/text/src/index.js",
+      "publishedCurrentUrl": "https://github.com/wieslawsoltes/SharpForge/blob/d6c6eb24eae3a7116b4bb5497c68b40b90aa3d2c/packages/text/src/index.js"
+    },
+    {
+      "path": "packages/winui/src/index.js",
+      "baseBlob": "2bb2545f1aa3b0d653ed5fa2e198f359576e0638",
+      "currentBlob": "2bb2545f1aa3b0d653ed5fa2e198f359576e0638",
+      "identical": true,
+      "hotLockKeys": [],
+      "baseUrl": "https://github.com/wieslawsoltes/SharpForge/blob/af5450dacbdc2734432b13dffa63efb10eb93145/packages/winui/src/index.js",
+      "currentUrl": "https://github.com/wieslawsoltes/SharpForge/blob/af29812a6b0ca0184a79cc6bcddd01bf0a02fb6a/packages/winui/src/index.js",
+      "publishedCurrentUrl": "https://github.com/wieslawsoltes/SharpForge/blob/d6c6eb24eae3a7116b4bb5497c68b40b90aa3d2c/packages/winui/src/index.js"
+    },
+    {
+      "path": "packages/workspace/src/index.js",
+      "baseBlob": "b5f11169c5283c91cde044e56a132bf2ea8018be",
+      "currentBlob": "b5f11169c5283c91cde044e56a132bf2ea8018be",
+      "identical": true,
+      "hotLockKeys": [],
+      "baseUrl": "https://github.com/wieslawsoltes/SharpForge/blob/af5450dacbdc2734432b13dffa63efb10eb93145/packages/workspace/src/index.js",
+      "currentUrl": "https://github.com/wieslawsoltes/SharpForge/blob/af29812a6b0ca0184a79cc6bcddd01bf0a02fb6a/packages/workspace/src/index.js",
+      "publishedCurrentUrl": "https://github.com/wieslawsoltes/SharpForge/blob/d6c6eb24eae3a7116b4bb5497c68b40b90aa3d2c/packages/workspace/src/index.js"
+    }
+  ],
+  "caveats": [
+    "This is a static path/registry mapping, not a formal check-ownership execution or Ready/claim/lease determination.",
+    "No active agent identity or authorization conclusion is made. The coordinating parent is independently reading the authoritative claims.",
+    "A hotLockMatches empty array proves only absence from the current checked-in locks.json patterns. It does not authorize an edit or defeat another task reservation.",
+    "Area scope coverage identifies registered globs, not complete semantic ownership. Bytecode/framework leaves, unlisted CIL leaves, documentation, benchmark and test-fixture paths require explicit coordination analysis where no area glob matches.",
+    "The A00 owner-handoff proposal is unapplied and is not part of these 47 product paths. Reserved prerequisite changes must be assessed separately.",
+    "No source, lock, claim, ref or public API state was changed; no product code, build, test, benchmark or CI was executed."
+  ],
+  "authorizationAssessment": "Unresolved: no task claim, Project Agent/Lease, ownership transfer, or permission is established by this mapping. Absence of hot-lock matches is not authority."
+}

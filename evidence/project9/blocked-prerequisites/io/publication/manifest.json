@@ -1,0 +1,1791 @@
+{
+  "schemaVersion": 1,
+  "preparedAtUtc": "2026-10-04T16:48:44.704717+00:00",
+  "publication": {
+    "status": "prepared-unpublished",
+    "plannedBranch": "codex/project9-io-qualified-evidence",
+    "plannedDirectory": "evidence/project9/io-qualified",
+    "remoteMutationPerformed": false,
+    "verifyHashesImmediatelyBeforeUpload": true
+  },
+  "repository": "wieslawsoltes/SharpForge",
+  "revisions": {
+    "commonMain": "00c2489e659cbeaa29e9c5dfa4a3137fae4bd4ad",
+    "baseline": "726fbd8303042c7634a057807b51adeaddffa9a8",
+    "testedProduct": "f8414bfcadbab039280d580a8152ac21f9fe6452",
+    "measuredProduct": "f8414bfcadbab039280d580a8152ac21f9fe6452",
+    "finalLocal": "fe8288772be85395909d5de582c444db3d605ca3",
+    "finalTestReplay": "fe8288772be85395909d5de582c444db3d605ca3",
+    "finalTree": "541c835f876aefd506ec55ee30511929f131accd",
+    "onlyFinalDelta": [
+      "packages/bcl-io/README.md"
+    ]
+  },
+  "stack": [
+    {
+      "pr": 4509,
+      "branch": "codex/a09-string-reader",
+      "original": "408cae030fcf2738c38e13ad33a3efe5ecade0e2",
+      "head": "cb3806f9b637aa5fdf7934d399ad1d059783ac5c",
+      "tree": "9404357709535f7a645947bec0cac09f39ef7e64",
+      "url": "https://github.com/wieslawsoltes/SharpForge/pull/4509",
+      "bodyDraft": "pr-4509-body.md",
+      "remoteMutationPerformedByReviewer": false
+    },
+    {
+      "pr": 4510,
+      "branch": "codex/a09-string-writer",
+      "original": "3ffe7b9b7dd65475429d797b8825a81b2b33b1e3",
+      "head": "e7ccdca8d6c2cea6bf628d377fb02fa46c202565",
+      "tree": "49e0b9f01fc4e9c3da605de08ce8b7040cb5a824",
+      "url": "https://github.com/wieslawsoltes/SharpForge/pull/4510",
+      "bodyDraft": "pr-4510-body.md",
+      "remoteMutationPerformedByReviewer": false
+    },
+    {
+      "pr": 4513,
+      "branch": "codex/a09-string-reader-buffer",
+      "original": "6f1e0c1dd89d8dc9129f10446ad548cb82a8fd37",
+      "head": "b9fb955e4aab9fa2464fd7afe17c1a6d23563c08",
+      "tree": "725b722d373cf79253f52a3cbfad5a3eaf42acd3",
+      "url": "https://github.com/wieslawsoltes/SharpForge/pull/4513",
+      "bodyDraft": "pr-4513-body.md",
+      "remoteMutationPerformedByReviewer": false
+    },
+    {
+      "pr": 4514,
+      "branch": "codex/a09-string-writer-object",
+      "original": "376c1955474d04a5386e22352a8f27a18a46f2c5",
+      "head": "42e745b5878774245d7b9dc63385731f8576834e",
+      "tree": "bf2d16ec64a00cc587d336a2dab6525a6154a4ff",
+      "url": "https://github.com/wieslawsoltes/SharpForge/pull/4514",
+      "bodyDraft": "pr-4514-body.md",
+      "remoteMutationPerformedByReviewer": false
+    },
+    {
+      "pr": 4515,
+      "branch": "codex/a09-string-writer-buffer",
+      "original": "955da4bb7197d027c5471034ed01e6e4dcd60a31",
+      "head": "3472e24862e5ae36954230a16b75d4a6b9e2f9ec",
+      "tree": "bbe2cb04eb78f45a427a99963d96523ffa7e3709",
+      "url": "https://github.com/wieslawsoltes/SharpForge/pull/4515",
+      "bodyDraft": "pr-4515-body.md",
+      "remoteMutationPerformedByReviewer": false
+    },
+    {
+      "pr": 4516,
+      "branch": "codex/a09-string-writer-line-buffer",
+      "original": "cbeffbae0b2968f82c5fefa2ca6b9bae8c67f82c",
+      "head": "59c078a6a6fea5d5c99c06148a871ad5fb46dc98",
+      "tree": "3602a3677baaf0e68afaadc3cd2ab2244b7061ff",
+      "url": "https://github.com/wieslawsoltes/SharpForge/pull/4516",
+      "bodyDraft": "pr-4516-body.md",
+      "remoteMutationPerformedByReviewer": false
+    },
+    {
+      "pr": 4517,
+      "branch": "codex/a09-string-writer-char-line",
+      "original": "bac87e4fcb3264886d6eeb6fff4c8089c29865c4",
+      "head": "726fbd8303042c7634a057807b51adeaddffa9a8",
+      "tree": "ddd94ac0868ecf995463b8af0d1c97a2fcb2e8a4",
+      "url": "https://github.com/wieslawsoltes/SharpForge/pull/4517",
+      "bodyDraft": "pr-4517-body.md",
+      "remoteMutationPerformedByReviewer": false
+    },
+    {
+      "pr": 4542,
+      "branch": "codex/a09-string-writer-scalars",
+      "original": "c01f8b5bede834b067a270a105edd2e059355157",
+      "head": "fe8288772be85395909d5de582c444db3d605ca3",
+      "tree": "541c835f876aefd506ec55ee30511929f131accd",
+      "url": "https://github.com/wieslawsoltes/SharpForge/pull/4542",
+      "bodyDraft": "pr-4542-body.md",
+      "remoteMutationPerformedByReviewer": false,
+      "measuredProductHead": "f8414bfcadbab039280d580a8152ac21f9fe6452"
+    }
+  ],
+  "validation": {
+    "finalTestReplay": {
+      "kind": "actual-final-revision-test-execution",
+      "argv": [
+        "node",
+        "scripts/limited.js",
+        "node",
+        "--test",
+        "--test-reporter=tap",
+        "--test-concurrency=1",
+        "tests/a05-synchronous-host-callbacks.test.js",
+        "tests/a07-framework-object-string.test.js",
+        "tests/a07-stopwatch-clock-boundary.test.js",
+        "tests/a07-stopwatch-object-string.test.js",
+        "tests/a09-json-escaping.test.js",
+        "tests/a09-json-int64.test.js",
+        "tests/a09-json-integer-keys.test.js",
+        "tests/a09-json-number-formatting.test.js",
+        "tests/a09-string-reader-buffer.test.js",
+        "tests/a09-string-reader.test.js",
+        "tests/a09-string-writer-buffer.test.js",
+        "tests/a09-string-writer-char-line.test.js",
+        "tests/a09-string-writer-line-buffer.test.js",
+        "tests/a09-string-writer-object.test.js",
+        "tests/a09-string-writer-scalars-state.test.js",
+        "tests/a09-string-writer-scalars.test.js",
+        "tests/a09-string-writer-string-line.test.js",
+        "tests/a09-string-writer.test.js"
+      ],
+      "cwd": "/workspace/scratch/f5d98b1de49e/SharpForge-p9-writer-scalars",
+      "revision": "fe8288772be85395909d5de582c444db3d605ca3",
+      "tree": "541c835f876aefd506ec55ee30511929f131accd",
+      "node": "v24.19.0",
+      "platform": "Linux-6.18.44-x86_64-with-glibc2.39",
+      "startedAt": "2026-10-04T16:44:23.162298+00:00",
+      "testFiles": [
+        {
+          "path": "tests/a05-synchronous-host-callbacks.test.js",
+          "sha256": "d67cfceab874aa3f450b288d7d75728b81dd91c6ef77ceec6e531b57dc7e6838"
+        },
+        {
+          "path": "tests/a07-framework-object-string.test.js",
+          "sha256": "063290f47f140f695fcc0ec84adf145ab918b50e0c28b8684289a982509f628b"
+        },
+        {
+          "path": "tests/a07-stopwatch-clock-boundary.test.js",
+          "sha256": "1029eb6a68531e21be6a57be3dcdd7e0d0c26f9a78ad44b5c43db7557210752c"
+        },
+        {
+          "path": "tests/a07-stopwatch-object-string.test.js",
+          "sha256": "f7dfc6dd14f6d9043c3821ef9c0db482e08e2b2dbb14432dea1a4cd6a99ba9f0"
+        },
+        {
+          "path": "tests/a09-json-escaping.test.js",
+          "sha256": "460db49e6260ae002aa046ede0ff88b37990508c5710a36a8a01a220cc3db114"
+        },
+        {
+          "path": "tests/a09-json-int64.test.js",
+          "sha256": "754da88c3e9ff9ba62037c839885d318107dda70fd97174d181aa9f23ab685ff"
+        },
+        {
+          "path": "tests/a09-json-integer-keys.test.js",
+          "sha256": "b03fb44fe380a222e5ed218b248cc47424c813bc024aca84873eb2f474331086"
+        },
+        {
+          "path": "tests/a09-json-number-formatting.test.js",
+          "sha256": "3751e55adeeda739cfa195cc6cdc8757e6fe9855c69e6b43c10a41814fe1f8d7"
+        },
+        {
+          "path": "tests/a09-string-reader-buffer.test.js",
+          "sha256": "56a3a62bd2543eb1cd92067f68a041597986bf02bd0368f0634dbf6c8b7d5d86"
+        },
+        {
+          "path": "tests/a09-string-reader.test.js",
+          "sha256": "574f040c4f71f69d98f964f42ff4cb3774bf196e61da488c182f8772fb522280"
+        },
+        {
+          "path": "tests/a09-string-writer-buffer.test.js",
+          "sha256": "7d9aea959a3fcf352ad01c37b9ecfdc578a3862ccb39fb112893eb561dd18c5c"
+        },
+        {
+          "path": "tests/a09-string-writer-char-line.test.js",
+          "sha256": "d3ac796ac03b3b740149c58ea1e02e96e88296e0ec1442bf7eda82576c82483c"
+        },
+        {
+          "path": "tests/a09-string-writer-line-buffer.test.js",
+          "sha256": "d93e77027f5425fabd19e45ba0ea75f17b2b8b354aa6fca6740367aca094f187"
+        },
+        {
+          "path": "tests/a09-string-writer-object.test.js",
+          "sha256": "a73415a6ab437aab10910ee92639cae575a750c86c3d89030a6ac03d3e9024eb"
+        },
+        {
+          "path": "tests/a09-string-writer-scalars-state.test.js",
+          "sha256": "a806c0310ef332d024adf02a09dfa37409ff39c0ec638d0e8e81200aaec65886"
+        },
+        {
+          "path": "tests/a09-string-writer-scalars.test.js",
+          "sha256": "f1f8ae640e6d07340d2b657c4db42a62bdd8b153b73b73594e7f78e123d8c5c6"
+        },
+        {
+          "path": "tests/a09-string-writer-string-line.test.js",
+          "sha256": "a5b03a266d40e49125cef5990e78dfdfbc3ffc321acf89850c3b6456b5ce0d1f"
+        },
+        {
+          "path": "tests/a09-string-writer.test.js",
+          "sha256": "90ddb99a10d99132678df9e214fd49032141abb3c2bc743034b5bece74b71c1c"
+        }
+      ],
+      "tap": "io-final-replay-tests.tap",
+      "finishedAt": "2026-10-04T16:44:46.179239+00:00",
+      "exitCode": 0,
+      "tapSha256": "61ced2a96f0a98c1809cf96763dc2c0d3bdd690d5d783751ba9901488cc9679c",
+      "summary": {
+        "tests": 278,
+        "pass": 278,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      }
+    },
+    "historicalProductTests": {
+      "revision": "f8414bfcadbab039280d580a8152ac21f9fe6452",
+      "tests": 278,
+      "passed": 278,
+      "failed": 0,
+      "cancelled": 0,
+      "skipped": 0,
+      "todo": 0,
+      "originalArgv": null,
+      "argvLimit": "Original invocation not retained in TAP; do not infer it from the earlier 244-test PR command."
+    },
+    "staticCheck": {
+      "revision": "f8414bfcadbab039280d580a8152ac21f9fe6452",
+      "passed": true,
+      "areas": 30,
+      "nodeFiles": 1127,
+      "syntaxModules": 4072,
+      "syntaxErrors": 0,
+      "staticImportModules": 4068,
+      "staticImportErrors": 0
+    },
+    "structure": {
+      "revision": "f8414bfcadbab039280d580a8152ac21f9fe6452",
+      "mode": "non-strict",
+      "completed": true,
+      "reportedExistingWarnings": 268,
+      "warningFreeStrictPassClaimed": false
+    },
+    "browserBuilds": {
+      "baseline": "726fbd8303042c7634a057807b51adeaddffa9a8",
+      "candidate": "f8414bfcadbab039280d580a8152ac21f9fe6452",
+      "passed": true
+    },
+    "packageSmoke": {
+      "revision": "f8414bfcadbab039280d580a8152ac21f9fe6452",
+      "passed": true,
+      "packages": 29,
+      "steps": 45,
+      "mode": "All 29 workspace tarballs installed offline in an isolated project, without source workspace links",
+      "node": "v24.19.0",
+      "smokeSteps": [
+        "compiler:compile",
+        "runtime:source-vm",
+        "cil:ordinary-roundtrip",
+        "workspace:workspace-apis",
+        "extensions:build-info",
+        "refactoring:explicit-type",
+        "project-system:project-load",
+        "docking:layout-undo",
+        "text:unicode-search",
+        "compiler:library-invocation",
+        "debugger:cil-step",
+        "protocol:unicode-framing",
+        "editor:stylesheet",
+        "compiler:finally-checked-dispose",
+        "debugger:reverse-replay",
+        "editor:viewport-navigation",
+        "extensions:immutable-schema",
+        "project-system:overflow-options",
+        "controls:tree-commands",
+        "editor:keymaps-classic-css",
+        "controls:stylesheet",
+        "project-system:solution-membership",
+        "debugger:remap-breakpoints",
+        "msbuild:native-api",
+        "debugger:source-cil-breakpoints",
+        "protocol:configuration-done",
+        "symbols:source-checksum",
+        "framework:manifest-contracts",
+        "winui:host-apis",
+        "runtime:async-delay",
+        "winui:code-first-scene",
+        "debugger:set-next-statement",
+        "templates:solution-plan",
+        "archive:zip-roundtrip",
+        "project-system:restored-solution",
+        "designer:scene-patch",
+        "debugger:structural-enc",
+        "designer:source-sync",
+        "runtime:closed-bcl",
+        "winui:animation",
+        "compute:simd-workers",
+        "compiler:preview-collections",
+        "runtime:json-serialization",
+        "network:http-transports",
+        "compiler:execution-report"
+      ],
+      "finalDocsOnlyTarballFileIdentityVerifiedSeparately": true
+    }
+  },
+  "performance": {
+    "baseline": "726fbd8303042c7634a057807b51adeaddffa9a8",
+    "candidate": "f8414bfcadbab039280d580a8152ac21f9fe6452",
+    "runnerSha256": "a2cbf021f0c215a7963aa8ecbe24997bb6445220e8e4a40f0807a0e8a9cbd327",
+    "programIdentity": {
+      "source": "class Program { static void Main() {} }",
+      "sourceSha256": "b01aafb078834d803cdb6e55f358558aefddaa44cd224fe0065c26d11ff57a22",
+      "fixtureSha256": "f8e83167502593e91f8c754a745136e96eee385fd94e393a1630a3ff1ec4f31e",
+      "imageSha256": "6348a90d87d1eb8033747998eebbf955cfd4b7d2993e9e8bb4e5dcadd765462a",
+      "assemblySha256": "212c5a974d6e8483284f418c3ffab29284c9b3001beb585acf2436c111ae6e98"
+    },
+    "configuration": {
+      "node": "v24.19.0",
+      "platform": "linux",
+      "arch": "x64",
+      "cpu": "AMD EPYC 9V74 80-Core Processor",
+      "calls": 256,
+      "length": 256,
+      "warmups": 1,
+      "samples": 5,
+      "hostGc": true,
+      "selectedEngines": [
+        "source",
+        "cil"
+      ],
+      "selectedCases": [
+        "string-control",
+        "string-line-control",
+        "character-control",
+        "character-line-control",
+        "separate-character-control",
+        "whole-buffer-write-control",
+        "slice-buffer-write-control",
+        "whole-buffer-line-control",
+        "slice-buffer-line-control",
+        "separate-whole-buffer-control",
+        "separate-slice-buffer-control",
+        "scalar-bool-Write-string-control",
+        "scalar-bool-WriteLine-string-control",
+        "scalar-int-Write-string-control",
+        "scalar-int-WriteLine-string-control",
+        "scalar-uint-Write-string-control",
+        "scalar-uint-WriteLine-string-control",
+        "scalar-long-Write-string-control",
+        "scalar-long-WriteLine-string-control",
+        "scalar-ulong-Write-string-control",
+        "scalar-ulong-WriteLine-string-control",
+        "scalar-float-Write-string-control",
+        "scalar-float-WriteLine-string-control",
+        "scalar-double-Write-string-control",
+        "scalar-double-WriteLine-string-control",
+        "scalar-decimal-Write-string-control",
+        "scalar-decimal-WriteLine-string-control"
+      ],
+      "workloadOrder": "released-controls-first"
+    },
+    "processOrder": [
+      "A1",
+      "B1",
+      "B2",
+      "A2"
+    ],
+    "retainedSamplesPerRevisionPerCase": 10,
+    "oldControlsPerEngine": 27,
+    "engines": [
+      "source",
+      "cil"
+    ],
+    "newCostsPerEngine": 24,
+    "medianDefinition": "Median of all ten retained values, averaging middle pair.",
+    "p95Definition": "Nearest rank of ten pooled values: maximum retained observation.",
+    "measuredCounters": [
+      "managedAllocations",
+      "managedAllocatedBytes",
+      "slotWrites"
+    ],
+    "allOldCounterSamplesEqualAndExpected": true,
+    "allNewCounterSamplesExpected": true,
+    "medianExceptions": [
+      {
+        "engine": "source",
+        "case": "whole-buffer-write-control",
+        "baselineMedianMs": 4.841599500000257,
+        "candidateMedianMs": 6.204146499999979,
+        "medianChangePercent": 28.142497123102594,
+        "medianDeltaMs": 1.3625469999997222,
+        "baselineP95Ms": 7.37218299999995,
+        "candidateP95Ms": 10.266165999999885,
+        "p95ChangePercent": 39.25544170566513,
+        "p95DeltaMs": 2.8939829999999347,
+        "decision": "accepted",
+        "reviewerKind": "independent Codex agent; not human review"
+      },
+      {
+        "engine": "source",
+        "case": "scalar-int-Write-string-control",
+        "baselineMedianMs": 1.4638804999999593,
+        "candidateMedianMs": 1.7094425000004776,
+        "medianChangePercent": 16.774729904560193,
+        "medianDeltaMs": 0.2455620000005183,
+        "baselineP95Ms": 2.5135929999996733,
+        "candidateP95Ms": 2.0469480000001568,
+        "p95ChangePercent": -18.564859147824542,
+        "p95DeltaMs": -0.4666449999995166,
+        "decision": "accepted",
+        "reviewerKind": "independent Codex agent; not human review"
+      },
+      {
+        "engine": "source",
+        "case": "scalar-ulong-WriteLine-string-control",
+        "baselineMedianMs": 2.703022000000601,
+        "candidateMedianMs": 2.845886999999493,
+        "medianChangePercent": 5.285380585095512,
+        "medianDeltaMs": 0.14286499999889202,
+        "baselineP95Ms": 4.047357999999804,
+        "candidateP95Ms": 4.056982000000062,
+        "p95ChangePercent": 0.23778474748856748,
+        "p95DeltaMs": 0.009624000000258093,
+        "decision": "accepted",
+        "reviewerKind": "independent Codex agent; not human review"
+      },
+      {
+        "engine": "source",
+        "case": "scalar-float-WriteLine-string-control",
+        "baselineMedianMs": 2.483689499999855,
+        "candidateMedianMs": 2.6290635000000293,
+        "medianChangePercent": 5.853147102332357,
+        "medianDeltaMs": 0.14537400000017442,
+        "baselineP95Ms": 5.616081999999551,
+        "candidateP95Ms": 3.7929540000004636,
+        "p95ChangePercent": -32.46263142167856,
+        "p95DeltaMs": -1.8231279999990875,
+        "decision": "accepted",
+        "reviewerKind": "independent Codex agent; not human review"
+      },
+      {
+        "engine": "source",
+        "case": "scalar-decimal-Write-string-control",
+        "baselineMedianMs": 1.7267620000002353,
+        "candidateMedianMs": 1.8773385000004055,
+        "medianChangePercent": 8.720165257293688,
+        "medianDeltaMs": 0.1505765000001702,
+        "baselineP95Ms": 2.3308049999996,
+        "candidateP95Ms": 2.3298989999993864,
+        "p95ChangePercent": -0.03887069060748427,
+        "p95DeltaMs": -0.0009060000002136803,
+        "decision": "accepted",
+        "reviewerKind": "independent Codex agent; not human review"
+      },
+      {
+        "engine": "cil",
+        "case": "character-control",
+        "baselineMedianMs": 1.6414920000000848,
+        "candidateMedianMs": 2.116275000000087,
+        "medianChangePercent": 28.9238692604032,
+        "medianDeltaMs": 0.4747830000000022,
+        "baselineP95Ms": 2.784161999999924,
+        "candidateP95Ms": 2.6385380000001533,
+        "p95ChangePercent": -5.230442768767574,
+        "p95DeltaMs": -0.1456239999997706,
+        "decision": "accepted",
+        "reviewerKind": "independent Codex agent; not human review"
+      },
+      {
+        "engine": "cil",
+        "case": "character-line-control",
+        "baselineMedianMs": 2.973329000000149,
+        "candidateMedianMs": 4.5224210000000085,
+        "medianChangePercent": 52.099582656335095,
+        "medianDeltaMs": 1.5490919999998596,
+        "baselineP95Ms": 7.168595000000096,
+        "candidateP95Ms": 4.801395000000184,
+        "p95ChangePercent": -33.021812503006245,
+        "p95DeltaMs": -2.3671999999999116,
+        "decision": "accepted",
+        "reviewerKind": "independent Codex agent; not human review"
+      },
+      {
+        "engine": "cil",
+        "case": "whole-buffer-write-control",
+        "baselineMedianMs": 5.789978500000188,
+        "candidateMedianMs": 6.816611499999908,
+        "medianChangePercent": 17.73120573763247,
+        "medianDeltaMs": 1.0266329999997197,
+        "baselineP95Ms": 7.56771099999969,
+        "candidateP95Ms": 7.544006000000081,
+        "p95ChangePercent": -0.3132387058597974,
+        "p95DeltaMs": -0.023704999999608845,
+        "decision": "accepted",
+        "reviewerKind": "independent Codex agent; not human review"
+      },
+      {
+        "engine": "cil",
+        "case": "slice-buffer-write-control",
+        "baselineMedianMs": 5.664648999999827,
+        "candidateMedianMs": 6.1795954999997775,
+        "medianChangePercent": 9.090527939153281,
+        "medianDeltaMs": 0.5149464999999509,
+        "baselineP95Ms": 7.352493999999751,
+        "candidateP95Ms": 9.634587999999894,
+        "p95ChangePercent": 31.038366029271437,
+        "p95DeltaMs": 2.282094000000143,
+        "decision": "accepted",
+        "reviewerKind": "independent Codex agent; not human review"
+      },
+      {
+        "engine": "cil",
+        "case": "scalar-bool-WriteLine-string-control",
+        "baselineMedianMs": 2.7030464999998003,
+        "candidateMedianMs": 2.987214500000391,
+        "medianChangePercent": 10.512878709286433,
+        "medianDeltaMs": 0.28416800000059084,
+        "baselineP95Ms": 3.489328000000569,
+        "candidateP95Ms": 3.8906180000003587,
+        "p95ChangePercent": 11.500495224287445,
+        "p95DeltaMs": 0.40128999999978987,
+        "decision": "accepted",
+        "reviewerKind": "independent Codex agent; not human review"
+      },
+      {
+        "engine": "cil",
+        "case": "scalar-int-Write-string-control",
+        "baselineMedianMs": 1.4617284999999356,
+        "candidateMedianMs": 1.8520665000000918,
+        "medianChangePercent": 26.703864636981045,
+        "medianDeltaMs": 0.39033800000015617,
+        "baselineP95Ms": 1.8055829999993875,
+        "candidateP95Ms": 2.3078910000003816,
+        "p95ChangePercent": 27.81971252504949,
+        "p95DeltaMs": 0.5023080000009941,
+        "decision": "accepted",
+        "reviewerKind": "independent Codex agent; not human review"
+      },
+      {
+        "engine": "cil",
+        "case": "scalar-long-WriteLine-string-control",
+        "baselineMedianMs": 2.3278254999995625,
+        "candidateMedianMs": 2.791067000000112,
+        "medianChangePercent": 19.90018152136561,
+        "medianDeltaMs": 0.4632415000005494,
+        "baselineP95Ms": 3.600199999999859,
+        "candidateP95Ms": 3.9688530000003084,
+        "p95ChangePercent": 10.239792233777688,
+        "p95DeltaMs": 0.36865300000044954,
+        "decision": "accepted",
+        "reviewerKind": "independent Codex agent; not human review"
+      },
+      {
+        "engine": "cil",
+        "case": "scalar-float-WriteLine-string-control",
+        "baselineMedianMs": 2.7314040000001114,
+        "candidateMedianMs": 3.836177499999849,
+        "medianChangePercent": 40.4470924110711,
+        "medianDeltaMs": 1.1047734999997374,
+        "baselineP95Ms": 4.561072000000422,
+        "candidateP95Ms": 4.788066000000072,
+        "p95ChangePercent": 4.976768619298899,
+        "p95DeltaMs": 0.22699399999964953,
+        "decision": "accepted",
+        "reviewerKind": "independent Codex agent; not human review"
+      },
+      {
+        "engine": "cil",
+        "case": "scalar-double-Write-string-control",
+        "baselineMedianMs": 1.8395284999996875,
+        "candidateMedianMs": 2.1421024999995097,
+        "medianChangePercent": 16.448454046777393,
+        "medianDeltaMs": 0.30257399999982226,
+        "baselineP95Ms": 3.0079100000002654,
+        "candidateP95Ms": 2.3965919999991456,
+        "p95ChangePercent": -20.32367989737279,
+        "p95DeltaMs": -0.6113180000011198,
+        "decision": "accepted",
+        "reviewerKind": "independent Codex agent; not human review"
+      },
+      {
+        "engine": "cil",
+        "case": "scalar-decimal-WriteLine-string-control",
+        "baselineMedianMs": 2.364254500000243,
+        "candidateMedianMs": 3.1021385000003647,
+        "medianChangePercent": 31.210007213692357,
+        "medianDeltaMs": 0.7378840000001219,
+        "baselineP95Ms": 3.453545000000304,
+        "candidateP95Ms": 3.8217960000001767,
+        "p95ChangePercent": 10.662985425116522,
+        "p95DeltaMs": 0.3682509999998729,
+        "decision": "accepted",
+        "reviewerKind": "independent Codex agent; not human review"
+      }
+    ],
+    "p95Exceptions": [
+      {
+        "engine": "source",
+        "case": "string-control",
+        "baselineMedianMs": 2.7244534999999814,
+        "candidateMedianMs": 1.9276874999999905,
+        "medianChangePercent": -29.24498436108366,
+        "medianDeltaMs": -0.796765999999991,
+        "baselineP95Ms": 4.018595999999889,
+        "candidateP95Ms": 4.311455999999907,
+        "p95ChangePercent": 7.2876198552934035,
+        "p95DeltaMs": 0.29286000000001877,
+        "decision": "accepted",
+        "reviewerKind": "independent Codex agent; not human review"
+      },
+      {
+        "engine": "source",
+        "case": "character-control",
+        "baselineMedianMs": 1.9901745000000801,
+        "candidateMedianMs": 1.8263540000000376,
+        "medianChangePercent": -8.23146412538378,
+        "medianDeltaMs": -0.16382050000004256,
+        "baselineP95Ms": 2.6742300000000796,
+        "candidateP95Ms": 3.7463259999999536,
+        "p95ChangePercent": 40.089895035200485,
+        "p95DeltaMs": 1.072095999999874,
+        "decision": "accepted",
+        "reviewerKind": "independent Codex agent; not human review"
+      },
+      {
+        "engine": "source",
+        "case": "character-line-control",
+        "baselineMedianMs": 2.7825239999999667,
+        "candidateMedianMs": 2.825792500000148,
+        "medianChangePercent": 1.555009049344469,
+        "medianDeltaMs": 0.04326850000018112,
+        "baselineP95Ms": 3.6522970000000896,
+        "candidateP95Ms": 4.725563999999849,
+        "p95ChangePercent": 29.38608223810204,
+        "p95DeltaMs": 1.0732669999997597,
+        "decision": "accepted",
+        "reviewerKind": "independent Codex agent; not human review"
+      },
+      {
+        "engine": "source",
+        "case": "whole-buffer-write-control",
+        "baselineMedianMs": 4.841599500000257,
+        "candidateMedianMs": 6.204146499999979,
+        "medianChangePercent": 28.142497123102594,
+        "medianDeltaMs": 1.3625469999997222,
+        "baselineP95Ms": 7.37218299999995,
+        "candidateP95Ms": 10.266165999999885,
+        "p95ChangePercent": 39.25544170566513,
+        "p95DeltaMs": 2.8939829999999347,
+        "decision": "accepted",
+        "reviewerKind": "independent Codex agent; not human review"
+      },
+      {
+        "engine": "source",
+        "case": "scalar-bool-Write-string-control",
+        "baselineMedianMs": 1.789328999999725,
+        "candidateMedianMs": 1.7417694999999185,
+        "medianChangePercent": -2.657951667905334,
+        "medianDeltaMs": -0.047559499999806576,
+        "baselineP95Ms": 2.2286850000000413,
+        "candidateP95Ms": 5.725453999999445,
+        "p95ChangePercent": 156.89830550299115,
+        "p95DeltaMs": 3.4967689999994036,
+        "decision": "accepted",
+        "reviewerKind": "independent Codex agent; not human review"
+      },
+      {
+        "engine": "source",
+        "case": "scalar-int-WriteLine-string-control",
+        "baselineMedianMs": 2.105168500000218,
+        "candidateMedianMs": 2.0764859999999317,
+        "medianChangePercent": -1.362480010520939,
+        "medianDeltaMs": -0.02868250000028638,
+        "baselineP95Ms": 2.404323000000659,
+        "candidateP95Ms": 4.039005000000543,
+        "p95ChangePercent": 67.9892843016282,
+        "p95DeltaMs": 1.6346819999998843,
+        "decision": "accepted",
+        "reviewerKind": "independent Codex agent; not human review"
+      },
+      {
+        "engine": "source",
+        "case": "scalar-uint-WriteLine-string-control",
+        "baselineMedianMs": 2.3943334999999024,
+        "candidateMedianMs": 1.765769999999975,
+        "medianChangePercent": -26.25212820185463,
+        "medianDeltaMs": -0.6285634999999274,
+        "baselineP95Ms": 3.0864549999996598,
+        "candidateP95Ms": 3.298706999999922,
+        "p95ChangePercent": 6.876886265968096,
+        "p95DeltaMs": 0.21225200000026234,
+        "decision": "accepted",
+        "reviewerKind": "independent Codex agent; not human review"
+      },
+      {
+        "engine": "source",
+        "case": "scalar-float-Write-string-control",
+        "baselineMedianMs": 1.778984500000206,
+        "candidateMedianMs": 1.466925999999603,
+        "medianChangePercent": -17.541383862566928,
+        "medianDeltaMs": -0.3120585000006031,
+        "baselineP95Ms": 3.6640150000002905,
+        "candidateP95Ms": 4.016581999999289,
+        "p95ChangePercent": 9.622422397260122,
+        "p95DeltaMs": 0.35256699999899865,
+        "decision": "accepted",
+        "reviewerKind": "independent Codex agent; not human review"
+      },
+      {
+        "engine": "source",
+        "case": "scalar-double-Write-string-control",
+        "baselineMedianMs": 1.8720814999996946,
+        "candidateMedianMs": 1.8232539999999062,
+        "medianChangePercent": -2.6081930727800295,
+        "medianDeltaMs": -0.048827499999788415,
+        "baselineP95Ms": 2.6923259999994116,
+        "candidateP95Ms": 2.8640380000015284,
+        "p95ChangePercent": 6.377830916544069,
+        "p95DeltaMs": 0.17171200000211684,
+        "decision": "accepted",
+        "reviewerKind": "independent Codex agent; not human review"
+      },
+      {
+        "engine": "cil",
+        "case": "string-control",
+        "baselineMedianMs": 2.6481314999999768,
+        "candidateMedianMs": 1.763095499999963,
+        "medianChangePercent": -33.42114996932825,
+        "medianDeltaMs": -0.8850360000000137,
+        "baselineP95Ms": 3.113344999999981,
+        "candidateP95Ms": 4.822226999999884,
+        "p95ChangePercent": 54.88893778235029,
+        "p95DeltaMs": 1.7088819999999032,
+        "decision": "accepted",
+        "reviewerKind": "independent Codex agent; not human review"
+      },
+      {
+        "engine": "cil",
+        "case": "string-line-control",
+        "baselineMedianMs": 3.6666980000001104,
+        "candidateMedianMs": 3.2209434999999758,
+        "medianChangePercent": -12.156837023396017,
+        "medianDeltaMs": -0.4457545000001346,
+        "baselineP95Ms": 5.229915000000119,
+        "candidateP95Ms": 7.675307999999859,
+        "p95ChangePercent": 46.7577962548088,
+        "p95DeltaMs": 2.44539299999974,
+        "decision": "accepted",
+        "reviewerKind": "independent Codex agent; not human review"
+      },
+      {
+        "engine": "cil",
+        "case": "slice-buffer-write-control",
+        "baselineMedianMs": 5.664648999999827,
+        "candidateMedianMs": 6.1795954999997775,
+        "medianChangePercent": 9.090527939153281,
+        "medianDeltaMs": 0.5149464999999509,
+        "baselineP95Ms": 7.352493999999751,
+        "candidateP95Ms": 9.634587999999894,
+        "p95ChangePercent": 31.038366029271437,
+        "p95DeltaMs": 2.282094000000143,
+        "decision": "accepted",
+        "reviewerKind": "independent Codex agent; not human review"
+      },
+      {
+        "engine": "cil",
+        "case": "scalar-bool-WriteLine-string-control",
+        "baselineMedianMs": 2.7030464999998003,
+        "candidateMedianMs": 2.987214500000391,
+        "medianChangePercent": 10.512878709286433,
+        "medianDeltaMs": 0.28416800000059084,
+        "baselineP95Ms": 3.489328000000569,
+        "candidateP95Ms": 3.8906180000003587,
+        "p95ChangePercent": 11.500495224287445,
+        "p95DeltaMs": 0.40128999999978987,
+        "decision": "accepted",
+        "reviewerKind": "independent Codex agent; not human review"
+      },
+      {
+        "engine": "cil",
+        "case": "scalar-int-Write-string-control",
+        "baselineMedianMs": 1.4617284999999356,
+        "candidateMedianMs": 1.8520665000000918,
+        "medianChangePercent": 26.703864636981045,
+        "medianDeltaMs": 0.39033800000015617,
+        "baselineP95Ms": 1.8055829999993875,
+        "candidateP95Ms": 2.3078910000003816,
+        "p95ChangePercent": 27.81971252504949,
+        "p95DeltaMs": 0.5023080000009941,
+        "decision": "accepted",
+        "reviewerKind": "independent Codex agent; not human review"
+      },
+      {
+        "engine": "cil",
+        "case": "scalar-uint-WriteLine-string-control",
+        "baselineMedianMs": 2.6823419999996077,
+        "candidateMedianMs": 2.4591339999997217,
+        "medianChangePercent": -8.321384819680656,
+        "medianDeltaMs": -0.22320799999988594,
+        "baselineP95Ms": 3.5056610000001456,
+        "candidateP95Ms": 4.980980000000272,
+        "p95ChangePercent": 42.08390372029884,
+        "p95DeltaMs": 1.4753190000001268,
+        "decision": "accepted",
+        "reviewerKind": "independent Codex agent; not human review"
+      },
+      {
+        "engine": "cil",
+        "case": "scalar-long-WriteLine-string-control",
+        "baselineMedianMs": 2.3278254999995625,
+        "candidateMedianMs": 2.791067000000112,
+        "medianChangePercent": 19.90018152136561,
+        "medianDeltaMs": 0.4632415000005494,
+        "baselineP95Ms": 3.600199999999859,
+        "candidateP95Ms": 3.9688530000003084,
+        "p95ChangePercent": 10.239792233777688,
+        "p95DeltaMs": 0.36865300000044954,
+        "decision": "accepted",
+        "reviewerKind": "independent Codex agent; not human review"
+      },
+      {
+        "engine": "cil",
+        "case": "scalar-double-WriteLine-string-control",
+        "baselineMedianMs": 3.1154130000004443,
+        "candidateMedianMs": 2.6587625000001935,
+        "medianChangePercent": -14.65778373526032,
+        "medianDeltaMs": -0.45665050000025076,
+        "baselineP95Ms": 4.5849770000004355,
+        "candidateP95Ms": 5.08530299999984,
+        "p95ChangePercent": 10.912290290646109,
+        "p95DeltaMs": 0.5003259999994043,
+        "decision": "accepted",
+        "reviewerKind": "independent Codex agent; not human review"
+      },
+      {
+        "engine": "cil",
+        "case": "scalar-decimal-WriteLine-string-control",
+        "baselineMedianMs": 2.364254500000243,
+        "candidateMedianMs": 3.1021385000003647,
+        "medianChangePercent": 31.210007213692357,
+        "medianDeltaMs": 0.7378840000001219,
+        "baselineP95Ms": 3.453545000000304,
+        "candidateP95Ms": 3.8217960000001767,
+        "p95ChangePercent": 10.662985425116522,
+        "p95DeltaMs": 0.3682509999998729,
+        "decision": "accepted",
+        "reviewerKind": "independent Codex agent; not human review"
+      }
+    ],
+    "decision": "accept all listed exceptions after the concrete dispatch cleanup",
+    "reviewerKind": "independent Codex agent; not human approval",
+    "causalAttribution": "Unresolved for individual movements; ordinary Write and unchanged buffers are not attributed to the second disposal gate.",
+    "limitations": [
+      "One serial root job on a shared machine; pooled p95 is the maximum of ten samples. No host JavaScript allocation or managed-GC-count measurement. Every retained sample is included.",
+      "Direct platform calls, not interpreter or compiler throughput.",
+      "Setup, prepared arguments, explicit host GC and final materialization excluded.",
+      "Builder growth and the normal array-write observer included.",
+      "New overloads have no baseline; earlier cohorts are retained separately.",
+      "No general speedup, no-regression, noise, human-review or backend-parity claim."
+    ]
+  },
+  "package": {
+    "baseline": {
+      "revision": "726fbd8303042c7634a057807b51adeaddffa9a8",
+      "compressedBytes": 9439,
+      "unpackedBytes": 29892,
+      "files": 12
+    },
+    "final": {
+      "revision": "fe8288772be85395909d5de582c444db3d605ca3",
+      "compressedBytes": 11460,
+      "unpackedBytes": 36133,
+      "files": 13,
+      "sha256": "bf9615f0da254b2d6cc58054475e4362a8d56c9a2c7ace0c0d4a6c851ced9973"
+    },
+    "compressedDeltaBytes": 2021,
+    "compressedDeltaPercent": 21.411166437122574,
+    "unpackedDeltaBytes": 6241,
+    "unpackedDeltaPercent": 20.87849591864044,
+    "growthComposition": {
+      "sourceBytes": 1879,
+      "documentationBytes": 4362
+    },
+    "newDependencies": false,
+    "packedFixturesOrBenchmarks": false,
+    "decision": "accept both >10% size exceptions",
+    "reviewerKind": "independent Codex agent; not human approval"
+  },
+  "browser": {
+    "baseline": {
+      "revision": "726fbd8303042c7634a057807b51adeaddffa9a8",
+      "files": 5269,
+      "bytes": 110064607,
+      "leaves": {
+        "packages/bcl-io/src/string-writer.js": {
+          "sourceSha256": "13a986e5123b942bd3139697e86512c218d4dde07e1b92df78114880da0fc6ce",
+          "builtSha256": "ee3d6bff597bf3513ebcfe4201e8cf0cfe4723c1ba0b699d4d4dac85d2fa2ac9",
+          "sourceBytes": 4252,
+          "builtBytes": 4259
+        },
+        "packages/bcl-io/src/string-writer-builder.js": {
+          "sourceSha256": "c9fa931cfe1695546fb5f16983d49343c9e7a0b5ec99cce508935eca9b407ca6",
+          "builtSha256": "f67921fbc69c274da361ea44ac7cb85d88d5f0d8153b4f1938917d400852781b",
+          "sourceBytes": 1730,
+          "builtBytes": 1737
+        }
+      }
+    },
+    "candidate": {
+      "revision": "f8414bfcadbab039280d580a8152ac21f9fe6452",
+      "files": 5270,
+      "bytes": 110073130,
+      "leaves": {
+        "packages/bcl-io/src/string-writer.js": {
+          "sourceSha256": "faac5d137964074527a621914e9aa78da8961fe55f48c28a731ceaebca22ad5e",
+          "builtSha256": "1e6959598c47a87fba19e8298fcc5823043e963eaa2c007366be28a0b85bff26",
+          "sourceBytes": 4693,
+          "builtBytes": 4700
+        },
+        "packages/bcl-io/src/string-writer-builder.js": {
+          "sourceSha256": "940f50c538837e4411a7864aae00e6c1e473ee44c1ff5045dee47d786f578443",
+          "builtSha256": "8fe4d138226367298a68d6aebe4a59555cccb32b578dcba691ee97338fc28e2b",
+          "sourceBytes": 2348,
+          "builtBytes": 2355
+        }
+      }
+    },
+    "deltaBytes": 8523,
+    "percent": 0.007743633700529884,
+    "decision": "accept within-budget growth; all 5270 candidate asset hashes verified"
+  },
+  "cleanInstall": {
+    "revision": "fe8288772be85395909d5de582c444db3d605ca3",
+    "command": [
+      "npm",
+      "ci",
+      "--ignore-scripts",
+      "--no-audit",
+      "--no-fund"
+    ],
+    "exitCode": 1,
+    "rootLockSha256": "0795c3e9cb2007594de2fa207c2a97d80bb927f146f68d8566934485cbddf0cd",
+    "rootLockUnchanged": true,
+    "log": "/workspace/scratch/f5d98b1de49e/SharpForge-p9-writer-scalars/artifacts/project9-resume/io-clean-install-gate.log"
+  },
+  "coordinationBlocker": {
+    "status": "blocked; reserved ref remains authoritative",
+    "observationSource": "Integration owner relayed a fresh authoritative connector GET; not a reviewer-side GET",
+    "recordedAtUtc": "2026-10-04T16:48:44.704717+00:00",
+    "exactAuthoritativeReadTimestampRetained": false,
+    "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/contents/claim.json?ref=agent-locks%2Fpackage-json",
+    "ref": "agent-locks/package-json",
+    "agent": "codex-p19-core",
+    "task": "SF-A25-T01.1",
+    "issue": 2072,
+    "generation": "8f3f406a-3f3e-4ea7-ac65-258a5b41afe9",
+    "heartbeatAt": "2026-10-03T20:04:09.592Z",
+    "expiresAt": "2026-10-04T20:04:09.592Z",
+    "requiresFreshReadBeforePublication": true,
+    "interpretation": "Mismatched claimed paths and empty locks[] do not release the authoritative reserved ref.",
+    "missingLockEntryPaths": [
+      [
+        "packages",
+        "node_modules/@sharpforge/bcl-io"
+      ],
+      [
+        "packages",
+        "packages/bcl-io"
+      ],
+      [
+        "packages",
+        "packages/framework",
+        "dependencies",
+        "@sharpforge/bcl-io"
+      ],
+      [
+        "packages",
+        "packages/runtime",
+        "dependencies",
+        "@sharpforge/bcl-io"
+      ]
+    ],
+    "nextStep": "Coordinate release or authorized handoff, repair the oldest IO branch, merge upward, then run npm ci and required core checks."
+  },
+  "nativeReferences": {
+    "sdk": "10.0.201",
+    "runtime": "10.0.5",
+    "platform": "Linux x64",
+    "culture": "Invariant",
+    "defaultNewline": "LF",
+    "scalarRows": {
+      "ordinary": 312,
+      "nativeOnlyTransitions": 24
+    },
+    "stringLineRows": {
+      "ordinary": 144,
+      "nativeOnlyTransitions": 36
+    },
+    "limits": "Native subclass observations do not qualify SharpForge custom subclasses; no Windows/culture/native/Wasm parity claim."
+  },
+  "mergeReadiness": {
+    "ready": false,
+    "reason": "Root lockfile repair and actual clean npm ci plus required hosted core checks remain pending.",
+    "budgetReviewComplete": true,
+    "broaderIssue2723RemainsOpen": true
+  },
+  "artifacts": [
+    {
+      "sourcePath": "/workspace/scratch/f5d98b1de49e/SharpForge-p9-writer-scalars/artifacts/project9-resume/publication/README.md",
+      "publicationPath": "evidence/project9/io-qualified/README.md",
+      "bytes": 2169,
+      "sha256": "1add474e69713e64e30a64570266e01afc4aed954b45c987850ef21e8141ea4e",
+      "category": "prepared-publication-metadata"
+    },
+    {
+      "sourcePath": "/workspace/scratch/f5d98b1de49e/SharpForge-p9-writer-scalars/artifacts/project9-resume/publication/lock-observation.json",
+      "publicationPath": "evidence/project9/io-qualified/lock-observation.json",
+      "bytes": 1328,
+      "sha256": "e3fa04090133be8df0ccab63728bb4654c9b790c8e4a01d0499f73554f29b943",
+      "category": "prepared-publication-metadata"
+    },
+    {
+      "sourcePath": "/workspace/scratch/f5d98b1de49e/SharpForge-p9-writer-scalars/artifacts/project9-resume/publication/original-pr-bodies/pr-4509-body.md",
+      "publicationPath": "evidence/project9/io-qualified/metadata/original-pr-bodies/pr-4509-body.md",
+      "bytes": 5431,
+      "sha256": "3e463eff7fd612dea8653e4546307975fb48b26f2939f0ae3270f19fa15bad09",
+      "category": "original-published-pr-context"
+    },
+    {
+      "sourcePath": "/workspace/scratch/f5d98b1de49e/SharpForge-p9-writer-scalars/artifacts/project9-resume/publication/original-pr-bodies/pr-4509-metadata.json",
+      "publicationPath": "evidence/project9/io-qualified/metadata/original-pr-bodies/pr-4509-metadata.json",
+      "bytes": 362,
+      "sha256": "9c6f9ab9940cefa8895c8d9ed40095509e284bd209c9c9c25cd3aa372d338bbd",
+      "category": "original-published-pr-context"
+    },
+    {
+      "sourcePath": "/workspace/scratch/f5d98b1de49e/SharpForge-p9-writer-scalars/artifacts/project9-resume/publication/original-pr-bodies/pr-4510-body.md",
+      "publicationPath": "evidence/project9/io-qualified/metadata/original-pr-bodies/pr-4510-body.md",
+      "bytes": 6347,
+      "sha256": "a4c2de345ae98fca97e09e93d0ee7dca0e35f2ad807be6bdcc602fa0d958dc10",
+      "category": "original-published-pr-context"
+    },
+    {
+      "sourcePath": "/workspace/scratch/f5d98b1de49e/SharpForge-p9-writer-scalars/artifacts/project9-resume/publication/original-pr-bodies/pr-4510-metadata.json",
+      "publicationPath": "evidence/project9/io-qualified/metadata/original-pr-bodies/pr-4510-metadata.json",
+      "bytes": 381,
+      "sha256": "5041b6af278b2f03258a68b1dcf610c2afae5a557928801b6bef82734ea1842b",
+      "category": "original-published-pr-context"
+    },
+    {
+      "sourcePath": "/workspace/scratch/f5d98b1de49e/SharpForge-p9-writer-scalars/artifacts/project9-resume/publication/original-pr-bodies/pr-4513-body.md",
+      "publicationPath": "evidence/project9/io-qualified/metadata/original-pr-bodies/pr-4513-body.md",
+      "bytes": 6037,
+      "sha256": "4323217f18f212f1b9effe0ca1bf82b95e0b8e7329519c925bf9d9b4eb3a2aa5",
+      "category": "original-published-pr-context"
+    },
+    {
+      "sourcePath": "/workspace/scratch/f5d98b1de49e/SharpForge-p9-writer-scalars/artifacts/project9-resume/publication/original-pr-bodies/pr-4513-metadata.json",
+      "publicationPath": "evidence/project9/io-qualified/metadata/original-pr-bodies/pr-4513-metadata.json",
+      "bytes": 380,
+      "sha256": "a36f3ee07b6e9edb65f731551baec5e5f23303cae1a838a5b9d3c399cf28a2b9",
+      "category": "original-published-pr-context"
+    },
+    {
+      "sourcePath": "/workspace/scratch/f5d98b1de49e/SharpForge-p9-writer-scalars/artifacts/project9-resume/publication/original-pr-bodies/pr-4514-body.md",
+      "publicationPath": "evidence/project9/io-qualified/metadata/original-pr-bodies/pr-4514-body.md",
+      "bytes": 4909,
+      "sha256": "5045dc0278885fc0e96ea187677d10a898298fc13b9b1dc5109b72aba9440f92",
+      "category": "original-published-pr-context"
+    },
+    {
+      "sourcePath": "/workspace/scratch/f5d98b1de49e/SharpForge-p9-writer-scalars/artifacts/project9-resume/publication/original-pr-bodies/pr-4514-metadata.json",
+      "publicationPath": "evidence/project9/io-qualified/metadata/original-pr-bodies/pr-4514-metadata.json",
+      "bytes": 393,
+      "sha256": "90c64c5bbf7d2a65a72c418e015c07514adc899eb17a5c507fcc5d9d926a6ee4",
+      "category": "original-published-pr-context"
+    },
+    {
+      "sourcePath": "/workspace/scratch/f5d98b1de49e/SharpForge-p9-writer-scalars/artifacts/project9-resume/publication/original-pr-bodies/pr-4515-body.md",
+      "publicationPath": "evidence/project9/io-qualified/metadata/original-pr-bodies/pr-4515-body.md",
+      "bytes": 7776,
+      "sha256": "8d52881197ddce00c6e2e407f7f6ea681e6942905b48f253822ef75fb27af6f0",
+      "category": "original-published-pr-context"
+    },
+    {
+      "sourcePath": "/workspace/scratch/f5d98b1de49e/SharpForge-p9-writer-scalars/artifacts/project9-resume/publication/original-pr-bodies/pr-4515-metadata.json",
+      "publicationPath": "evidence/project9/io-qualified/metadata/original-pr-bodies/pr-4515-metadata.json",
+      "bytes": 396,
+      "sha256": "48161cb85f7c013a476cf7f5943a2088fd43ed6e91db9d9f5abea27f48a75eb5",
+      "category": "original-published-pr-context"
+    },
+    {
+      "sourcePath": "/workspace/scratch/f5d98b1de49e/SharpForge-p9-writer-scalars/artifacts/project9-resume/publication/original-pr-bodies/pr-4516-body.md",
+      "publicationPath": "evidence/project9/io-qualified/metadata/original-pr-bodies/pr-4516-body.md",
+      "bytes": 6589,
+      "sha256": "b3d55b6477543a4a5d0a5026a3d3da809ffee7f909ea32b728c1930b8f6cb6bd",
+      "category": "original-published-pr-context"
+    },
+    {
+      "sourcePath": "/workspace/scratch/f5d98b1de49e/SharpForge-p9-writer-scalars/artifacts/project9-resume/publication/original-pr-bodies/pr-4516-metadata.json",
+      "publicationPath": "evidence/project9/io-qualified/metadata/original-pr-bodies/pr-4516-metadata.json",
+      "bytes": 406,
+      "sha256": "7a3c707b4f665c25be9750f16700115e12b2fa1bf237a71c98884bcb1cf1bc78",
+      "category": "original-published-pr-context"
+    },
+    {
+      "sourcePath": "/workspace/scratch/f5d98b1de49e/SharpForge-p9-writer-scalars/artifacts/project9-resume/publication/original-pr-bodies/pr-4517-body.md",
+      "publicationPath": "evidence/project9/io-qualified/metadata/original-pr-bodies/pr-4517-body.md",
+      "bytes": 7059,
+      "sha256": "98b0a66a503a6f706774676a2f5c2b02a5cb4b0da3f9da34532ac91cd9ce6b1e",
+      "category": "original-published-pr-context"
+    },
+    {
+      "sourcePath": "/workspace/scratch/f5d98b1de49e/SharpForge-p9-writer-scalars/artifacts/project9-resume/publication/original-pr-bodies/pr-4517-metadata.json",
+      "publicationPath": "evidence/project9/io-qualified/metadata/original-pr-bodies/pr-4517-metadata.json",
+      "bytes": 402,
+      "sha256": "31a450c2d9d3c3f46b7d6d49411947aaf7304d57b6806c5d71cbd301554d0a71",
+      "category": "original-published-pr-context"
+    },
+    {
+      "sourcePath": "/workspace/scratch/f5d98b1de49e/SharpForge-p9-writer-scalars/artifacts/project9-resume/publication/original-pr-bodies/pr-4542.json",
+      "publicationPath": "evidence/project9/io-qualified/metadata/original-pr-bodies/pr-4542.json",
+      "bytes": 7758,
+      "sha256": "56c6327a3a1fcf3cc695e37c4bf1d7fe32fad0954151b5da70fd3304ae12f758",
+      "category": "original-published-pr-context"
+    },
+    {
+      "sourcePath": "/workspace/scratch/f5d98b1de49e/SharpForge-p9-writer-scalars/artifacts/project9-resume/publication/pr-4509-body.md",
+      "publicationPath": "evidence/project9/io-qualified/metadata/pr-4509-body.md",
+      "bytes": 4284,
+      "sha256": "d1d9a128011d2eab52f0fd72bcc25b2225fae85845c187d2acb5ebfa862307ac",
+      "category": "prepared-pr-body-not-published"
+    },
+    {
+      "sourcePath": "/workspace/scratch/f5d98b1de49e/SharpForge-p9-writer-scalars/artifacts/project9-resume/publication/pr-4510-body.md",
+      "publicationPath": "evidence/project9/io-qualified/metadata/pr-4510-body.md",
+      "bytes": 4675,
+      "sha256": "2e5d8279942daf4ed11b9677bc171d40282d8519c6a7db34ae060c1483d62f75",
+      "category": "prepared-pr-body-not-published"
+    },
+    {
+      "sourcePath": "/workspace/scratch/f5d98b1de49e/SharpForge-p9-writer-scalars/artifacts/project9-resume/publication/pr-4513-body.md",
+      "publicationPath": "evidence/project9/io-qualified/metadata/pr-4513-body.md",
+      "bytes": 4671,
+      "sha256": "f74e1de77c550317ab8b118d660b719fbdf2e4cb8bfce2fda8f9fb85ca7235fc",
+      "category": "prepared-pr-body-not-published"
+    },
+    {
+      "sourcePath": "/workspace/scratch/f5d98b1de49e/SharpForge-p9-writer-scalars/artifacts/project9-resume/publication/pr-4514-body.md",
+      "publicationPath": "evidence/project9/io-qualified/metadata/pr-4514-body.md",
+      "bytes": 4426,
+      "sha256": "79de09f0dca70bd8c48e2df184275b7221d973e46eca870e0ffcbe7f82bf15f5",
+      "category": "prepared-pr-body-not-published"
+    },
+    {
+      "sourcePath": "/workspace/scratch/f5d98b1de49e/SharpForge-p9-writer-scalars/artifacts/project9-resume/publication/pr-4515-body.md",
+      "publicationPath": "evidence/project9/io-qualified/metadata/pr-4515-body.md",
+      "bytes": 4648,
+      "sha256": "8828b78584a612ec41d0a0b4a8739636821089598caae592f93e8c4281a2e080",
+      "category": "prepared-pr-body-not-published"
+    },
+    {
+      "sourcePath": "/workspace/scratch/f5d98b1de49e/SharpForge-p9-writer-scalars/artifacts/project9-resume/publication/pr-4516-body.md",
+      "publicationPath": "evidence/project9/io-qualified/metadata/pr-4516-body.md",
+      "bytes": 4449,
+      "sha256": "a019b7f47cb5cf642e23a7b93f35cb9a038b87327d3a376c67f66e493395210f",
+      "category": "prepared-pr-body-not-published"
+    },
+    {
+      "sourcePath": "/workspace/scratch/f5d98b1de49e/SharpForge-p9-writer-scalars/artifacts/project9-resume/publication/pr-4517-body.md",
+      "publicationPath": "evidence/project9/io-qualified/metadata/pr-4517-body.md",
+      "bytes": 4500,
+      "sha256": "9815c0888aec94f20b8d1a79ecbe0d566c34a2082aa037f4e773f5dc22fe5a3b",
+      "category": "prepared-pr-body-not-published"
+    },
+    {
+      "sourcePath": "/workspace/scratch/f5d98b1de49e/SharpForge-p9-writer-scalars/artifacts/project9-resume/publication/pr-4542-body.md",
+      "publicationPath": "evidence/project9/io-qualified/metadata/pr-4542-body.md",
+      "bytes": 8163,
+      "sha256": "78e5a377011fe00de69b5432fb2560831806bd0dac5425fd775e0b43ef4db9c7",
+      "category": "prepared-pr-body-not-published"
+    },
+    {
+      "sourcePath": "/workspace/scratch/f5d98b1de49e/SharpForge-p9-writer-scalars/artifacts/project9-resume/publication/reconstructed-test-inputs.json",
+      "publicationPath": "evidence/project9/io-qualified/metadata/reconstructed-test-inputs.json",
+      "bytes": 132772,
+      "sha256": "e98b0a3329de2cd130abca5f13f380e9c35a49e7860907e79825807f6843464a",
+      "category": "reconstructed-not-original-argv"
+    },
+    {
+      "sourcePath": "/workspace/scratch/f5d98b1de49e/SharpForge-p9-writer-scalars/artifacts/project9-resume/publication/publication-plan.json",
+      "publicationPath": "evidence/project9/io-qualified/publication-plan.json",
+      "bytes": 5857,
+      "sha256": "5d59cce1df6d5bfb9091b79866520f4e75fb0e01bcb2151fc532b308fdd943d9",
+      "category": "prepared-publication-metadata"
+    },
+    {
+      "sourcePath": "/workspace/scratch/f5d98b1de49e/SharpForge-p9-writer-scalars/artifacts/project9-resume/publication/qualification-review.md",
+      "publicationPath": "evidence/project9/io-qualified/qualification-review.md",
+      "bytes": 5726,
+      "sha256": "4a0819f12a570478c94c90937df6c8551f2b7c4e41e766d5e2ec6c8136850ea6",
+      "category": "prepared-publication-metadata"
+    },
+    {
+      "sourcePath": "/workspace/scratch/f5d98b1de49e/SharpForge-p9-writer-scalars/artifacts/project9-resume/io-benchmark-local-install.log",
+      "publicationPath": "evidence/project9/io-qualified/raw/io-benchmark-local-install.log",
+      "bytes": 120,
+      "sha256": "ba216fa44c52862b1690b1bf0c69acb80c76350d836fd866dd0d21f10a63c0ba",
+      "category": "local-setup-not-clean-ci",
+      "note": "Local workspace setup used --package-lock=false; this does not prove npm ci."
+    },
+    {
+      "sourcePath": "/workspace/scratch/f5d98b1de49e/SharpForge-p9-writer-scalars/artifacts/project9-resume/io-clean-install-gate.json",
+      "publicationPath": "evidence/project9/io-qualified/raw/io-clean-install-gate.json",
+      "bytes": 419,
+      "sha256": "ac85ee7cd4b938505fc1fbb794ca4d7b6f059987bfedfbb8a0e63760e618fd51",
+      "category": "final-documentation-head",
+      "revision": "fe8288772be85395909d5de582c444db3d605ca3"
+    },
+    {
+      "sourcePath": "/workspace/scratch/f5d98b1de49e/SharpForge-p9-writer-scalars/artifacts/project9-resume/io-clean-install-gate.log",
+      "publicationPath": "evidence/project9/io-qualified/raw/io-clean-install-gate.log",
+      "bytes": 1397,
+      "sha256": "1d211bc0d8f7e2977e2984b0f1f2a3aef9f3f8c0b589c0c3054095f7301381d3",
+      "category": "final-documentation-head",
+      "revision": "fe8288772be85395909d5de582c444db3d605ca3"
+    },
+    {
+      "sourcePath": "/workspace/scratch/f5d98b1de49e/SharpForge-p9-writer-scalars/artifacts/project9-resume/io-dispatch-baseline-assets.json",
+      "publicationPath": "evidence/project9/io-qualified/raw/io-dispatch-baseline-assets.json",
+      "bytes": 984871,
+      "sha256": "08a615a92225cada957b7ffd66b114c8473521a545f2f678d84b850e0b4d3a47",
+      "category": "integrated-baseline",
+      "revision": "726fbd8303042c7634a057807b51adeaddffa9a8"
+    },
+    {
+      "sourcePath": "/workspace/scratch/f5d98b1de49e/SharpForge-p9-writer-scalars/artifacts/project9-resume/io-dispatch-baseline-build.log",
+      "publicationPath": "evidence/project9/io-qualified/raw/io-dispatch-baseline-build.log",
+      "bytes": 206,
+      "sha256": "de4f3fb768d19f2d36810b6733c9d3a0cda2fb0f315396a4f5dc68a9a761294f",
+      "category": "integrated-baseline",
+      "revision": "726fbd8303042c7634a057807b51adeaddffa9a8"
+    },
+    {
+      "sourcePath": "/workspace/scratch/f5d98b1de49e/SharpForge-p9-writer-scalars/artifacts/project9-resume/io-dispatch-baseline-pack.json",
+      "publicationPath": "evidence/project9/io-qualified/raw/io-dispatch-baseline-pack.json",
+      "bytes": 1613,
+      "sha256": "f8641c2568d0bce5661f2f555e8e869cb41b85317362cd412daad9b0c6538040",
+      "category": "integrated-baseline",
+      "revision": "726fbd8303042c7634a057807b51adeaddffa9a8"
+    },
+    {
+      "sourcePath": "/workspace/scratch/f5d98b1de49e/SharpForge-p9-writer-scalars/artifacts/project9-resume/io-dispatch-baseline-pack/sharpforge-bcl-io-0.14.0.tgz",
+      "publicationPath": "evidence/project9/io-qualified/raw/io-dispatch-baseline-pack/sharpforge-bcl-io-0.14.0.tgz",
+      "bytes": 9439,
+      "sha256": "e5c9dfff6ba06cf0832be51aa7084241fde20809727a8aa653c81ebe79c56143",
+      "category": "integrated-baseline",
+      "revision": "726fbd8303042c7634a057807b51adeaddffa9a8"
+    },
+    {
+      "sourcePath": "/workspace/scratch/f5d98b1de49e/SharpForge-p9-writer-scalars/artifacts/project9-resume/io-dispatch-benchmark-driver.log",
+      "publicationPath": "evidence/project9/io-qualified/raw/io-dispatch-benchmark-driver.log",
+      "bytes": 17398,
+      "sha256": "3d691690ac89921d32d31197f1e7b868ec8d5ea74c85e22c5ca0fafcd94ecd94",
+      "category": "final-product-qualification",
+      "revision": "f8414bfcadbab039280d580a8152ac21f9fe6452"
+    },
+    {
+      "sourcePath": "/workspace/scratch/f5d98b1de49e/SharpForge-p9-writer-scalars/artifacts/project9-resume/io-dispatch-browser-size.json",
+      "publicationPath": "evidence/project9/io-qualified/raw/io-dispatch-browser-size.json",
+      "bytes": 1551,
+      "sha256": "ec59ca66d263528050c763e3045f7b14328362ee80349ca46b04e23f1ac58025",
+      "category": "final-product-qualification",
+      "revision": "f8414bfcadbab039280d580a8152ac21f9fe6452"
+    },
+    {
+      "sourcePath": "/workspace/scratch/f5d98b1de49e/SharpForge-p9-writer-scalars/artifacts/project9-resume/io-dispatch-candidate-assets.json",
+      "publicationPath": "evidence/project9/io-qualified/raw/io-dispatch-candidate-assets.json",
+      "bytes": 985049,
+      "sha256": "7191b685d9c22f189f4b1f58ad6208d21ff91663524ea6b0639f005214bccd3a",
+      "category": "final-product-qualification",
+      "revision": "f8414bfcadbab039280d580a8152ac21f9fe6452"
+    },
+    {
+      "sourcePath": "/workspace/scratch/f5d98b1de49e/SharpForge-p9-writer-scalars/artifacts/project9-resume/io-dispatch-candidate-build.log",
+      "publicationPath": "evidence/project9/io-qualified/raw/io-dispatch-candidate-build.log",
+      "bytes": 206,
+      "sha256": "de4f3fb768d19f2d36810b6733c9d3a0cda2fb0f315396a4f5dc68a9a761294f",
+      "category": "final-product-qualification",
+      "revision": "f8414bfcadbab039280d580a8152ac21f9fe6452"
+    },
+    {
+      "sourcePath": "/workspace/scratch/f5d98b1de49e/SharpForge-p9-writer-scalars/artifacts/project9-resume/io-dispatch-candidate-check.log",
+      "publicationPath": "evidence/project9/io-qualified/raw/io-dispatch-candidate-check.log",
+      "bytes": 382,
+      "sha256": "bcfae71487c921884bf2d2fa2f6e6f34abe20805f789d949afdcf64aeb1b8f88",
+      "category": "final-product-qualification",
+      "revision": "f8414bfcadbab039280d580a8152ac21f9fe6452"
+    },
+    {
+      "sourcePath": "/workspace/scratch/f5d98b1de49e/SharpForge-p9-writer-scalars/artifacts/project9-resume/io-dispatch-candidate-structure.log",
+      "publicationPath": "evidence/project9/io-qualified/raw/io-dispatch-candidate-structure.log",
+      "bytes": 21576,
+      "sha256": "a8888970b3767a88b27831a7c21c407ff08c6333aa7d5ddbf6ad27af01973328",
+      "category": "final-product-qualification",
+      "revision": "f8414bfcadbab039280d580a8152ac21f9fe6452"
+    },
+    {
+      "sourcePath": "/workspace/scratch/f5d98b1de49e/SharpForge-p9-writer-scalars/artifacts/project9-resume/io-dispatch-controls-abba/A-program-identity.json",
+      "publicationPath": "evidence/project9/io-qualified/raw/io-dispatch-controls-abba/A-program-identity.json",
+      "bytes": 404,
+      "sha256": "ae38345ca67c368c6d0c0dc241c932d9016ab4153696941a603534d1255a43e9",
+      "category": "final-controls-raw",
+      "revision": "726fbd8303042c7634a057807b51adeaddffa9a8"
+    },
+    {
+      "sourcePath": "/workspace/scratch/f5d98b1de49e/SharpForge-p9-writer-scalars/artifacts/project9-resume/io-dispatch-controls-abba/A1.json",
+      "publicationPath": "evidence/project9/io-qualified/raw/io-dispatch-controls-abba/A1.json",
+      "bytes": 81058,
+      "sha256": "638eb12b09f49e1ef9ec1bd66fe8a5da739fd6bcc9230429549593ff8125b15f",
+      "category": "final-controls-raw",
+      "revision": "726fbd8303042c7634a057807b51adeaddffa9a8"
+    },
+    {
+      "sourcePath": "/workspace/scratch/f5d98b1de49e/SharpForge-p9-writer-scalars/artifacts/project9-resume/io-dispatch-controls-abba/A1.log",
+      "publicationPath": "evidence/project9/io-qualified/raw/io-dispatch-controls-abba/A1.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "category": "final-controls-raw",
+      "revision": "726fbd8303042c7634a057807b51adeaddffa9a8"
+    },
+    {
+      "sourcePath": "/workspace/scratch/f5d98b1de49e/SharpForge-p9-writer-scalars/artifacts/project9-resume/io-dispatch-controls-abba/A2.json",
+      "publicationPath": "evidence/project9/io-qualified/raw/io-dispatch-controls-abba/A2.json",
+      "bytes": 81024,
+      "sha256": "e1d163b9c2bae0dc651822d42c1e34b0d2d2492ccb86d6e531ca96219d015fa2",
+      "category": "final-controls-raw",
+      "revision": "726fbd8303042c7634a057807b51adeaddffa9a8"
+    },
+    {
+      "sourcePath": "/workspace/scratch/f5d98b1de49e/SharpForge-p9-writer-scalars/artifacts/project9-resume/io-dispatch-controls-abba/A2.log",
+      "publicationPath": "evidence/project9/io-qualified/raw/io-dispatch-controls-abba/A2.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "category": "final-controls-raw",
+      "revision": "726fbd8303042c7634a057807b51adeaddffa9a8"
+    },
+    {
+      "sourcePath": "/workspace/scratch/f5d98b1de49e/SharpForge-p9-writer-scalars/artifacts/project9-resume/io-dispatch-controls-abba/B-program-identity.json",
+      "publicationPath": "evidence/project9/io-qualified/raw/io-dispatch-controls-abba/B-program-identity.json",
+      "bytes": 404,
+      "sha256": "ae38345ca67c368c6d0c0dc241c932d9016ab4153696941a603534d1255a43e9",
+      "category": "final-controls-raw",
+      "revision": "f8414bfcadbab039280d580a8152ac21f9fe6452"
+    },
+    {
+      "sourcePath": "/workspace/scratch/f5d98b1de49e/SharpForge-p9-writer-scalars/artifacts/project9-resume/io-dispatch-controls-abba/B1.json",
+      "publicationPath": "evidence/project9/io-qualified/raw/io-dispatch-controls-abba/B1.json",
+      "bytes": 96917,
+      "sha256": "c4d09c7ed8bb3872cd7d31d3ed0d833f3f6703afd0d920eed68509080b4f1a49",
+      "category": "final-controls-raw",
+      "revision": "f8414bfcadbab039280d580a8152ac21f9fe6452"
+    },
+    {
+      "sourcePath": "/workspace/scratch/f5d98b1de49e/SharpForge-p9-writer-scalars/artifacts/project9-resume/io-dispatch-controls-abba/B1.log",
+      "publicationPath": "evidence/project9/io-qualified/raw/io-dispatch-controls-abba/B1.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "category": "final-controls-raw",
+      "revision": "f8414bfcadbab039280d580a8152ac21f9fe6452"
+    },
+    {
+      "sourcePath": "/workspace/scratch/f5d98b1de49e/SharpForge-p9-writer-scalars/artifacts/project9-resume/io-dispatch-controls-abba/B2.json",
+      "publicationPath": "evidence/project9/io-qualified/raw/io-dispatch-controls-abba/B2.json",
+      "bytes": 96923,
+      "sha256": "9b1271ad25ee7cb4502bfcad998517d25929924bd154dc4348bf972dd78ccbb7",
+      "category": "final-controls-raw",
+      "revision": "f8414bfcadbab039280d580a8152ac21f9fe6452"
+    },
+    {
+      "sourcePath": "/workspace/scratch/f5d98b1de49e/SharpForge-p9-writer-scalars/artifacts/project9-resume/io-dispatch-controls-abba/B2.log",
+      "publicationPath": "evidence/project9/io-qualified/raw/io-dispatch-controls-abba/B2.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "category": "final-controls-raw",
+      "revision": "f8414bfcadbab039280d580a8152ac21f9fe6452"
+    },
+    {
+      "sourcePath": "/workspace/scratch/f5d98b1de49e/SharpForge-p9-writer-scalars/artifacts/project9-resume/io-dispatch-controls-summary.json",
+      "publicationPath": "evidence/project9/io-qualified/raw/io-dispatch-controls-summary.json",
+      "bytes": 268379,
+      "sha256": "0e2806fb0bb47628e0738946240ca78f4614b28d27c7031be8f704ccd2f11704",
+      "category": "final-product-qualification",
+      "revision": "f8414bfcadbab039280d580a8152ac21f9fe6452"
+    },
+    {
+      "sourcePath": "/workspace/scratch/f5d98b1de49e/SharpForge-p9-writer-scalars/artifacts/project9-resume/io-dispatch-final-tests.tap",
+      "publicationPath": "evidence/project9/io-qualified/raw/io-dispatch-final-tests.tap",
+      "bytes": 68322,
+      "sha256": "661b10bee9539c026a58ccaf7d0cff37276901b6c87e20b724f52c6d0d3390c4",
+      "category": "final-product-qualification",
+      "revision": "f8414bfcadbab039280d580a8152ac21f9fe6452"
+    },
+    {
+      "sourcePath": "/workspace/scratch/f5d98b1de49e/SharpForge-p9-writer-scalars/artifacts/project9-resume/io-dispatch-new-scalar-costs.json",
+      "publicationPath": "evidence/project9/io-qualified/raw/io-dispatch-new-scalar-costs.json",
+      "bytes": 71003,
+      "sha256": "ec483001fee7855b07d4f4ca791c81d83f8a553d3180cc7975d73e0ac8b0eed1",
+      "category": "final-product-qualification",
+      "revision": "f8414bfcadbab039280d580a8152ac21f9fe6452"
+    },
+    {
+      "sourcePath": "/workspace/scratch/f5d98b1de49e/SharpForge-p9-writer-scalars/artifacts/project9-resume/io-dispatch-new-scalar-costs.log",
+      "publicationPath": "evidence/project9/io-qualified/raw/io-dispatch-new-scalar-costs.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "category": "final-product-qualification",
+      "revision": "f8414bfcadbab039280d580a8152ac21f9fe6452"
+    },
+    {
+      "sourcePath": "/workspace/scratch/f5d98b1de49e/SharpForge-p9-writer-scalars/artifacts/project9-resume/io-dispatch-package-results/package-results.json",
+      "publicationPath": "evidence/project9/io-qualified/raw/io-dispatch-package-results/package-results.json",
+      "bytes": 3888,
+      "sha256": "798a56b4b6e750e3d402e56c9ecd6ad09d4a3e64021d7faf45e49e04c9c73833",
+      "category": "final-product-qualification",
+      "revision": "f8414bfcadbab039280d580a8152ac21f9fe6452"
+    },
+    {
+      "sourcePath": "/workspace/scratch/f5d98b1de49e/SharpForge-p9-writer-scalars/artifacts/project9-resume/io-dispatch-package-size.json",
+      "publicationPath": "evidence/project9/io-qualified/raw/io-dispatch-package-size.json",
+      "bytes": 4737,
+      "sha256": "59adae9a2e4b94e0f07acb487d5f9f3c7172c50f93861130aefb6c8d6838f0e8",
+      "category": "superseded-product-package",
+      "revision": "f8414bfcadbab039280d580a8152ac21f9fe6452",
+      "note": "11,112-byte package at product head, superseded by final README-only 11,460-byte package."
+    },
+    {
+      "sourcePath": "/workspace/scratch/f5d98b1de49e/SharpForge-p9-writer-scalars/artifacts/project9-resume/io-dispatch-package-smoke.log",
+      "publicationPath": "evidence/project9/io-qualified/raw/io-dispatch-package-smoke.log",
+      "bytes": 2733,
+      "sha256": "55435bb975aaa8104fb69d2165996938a59cc27775f6ae6306a588ca2f8f5641",
+      "category": "final-product-qualification",
+      "revision": "f8414bfcadbab039280d580a8152ac21f9fe6452"
+    },
+    {
+      "sourcePath": "/workspace/scratch/f5d98b1de49e/SharpForge-p9-writer-scalars/artifacts/project9-resume/io-final-package-size.json",
+      "publicationPath": "evidence/project9/io-qualified/raw/io-final-package-size.json",
+      "bytes": 3567,
+      "sha256": "57a87cb1798f5a2d6bad9aad789504b632a3072c79a1af51faf382f0ac147b26",
+      "category": "final-documentation-head",
+      "revision": "fe8288772be85395909d5de582c444db3d605ca3"
+    },
+    {
+      "sourcePath": "/workspace/scratch/f5d98b1de49e/SharpForge-p9-writer-scalars/artifacts/project9-resume/io-final-package/sharpforge-bcl-io-0.14.0.tgz",
+      "publicationPath": "evidence/project9/io-qualified/raw/io-final-package/sharpforge-bcl-io-0.14.0.tgz",
+      "bytes": 11460,
+      "sha256": "bf9615f0da254b2d6cc58054475e4362a8d56c9a2c7ace0c0d4a6c851ced9973",
+      "category": "final-documentation-head",
+      "revision": "fe8288772be85395909d5de582c444db3d605ca3"
+    },
+    {
+      "sourcePath": "/workspace/scratch/f5d98b1de49e/SharpForge-p9-writer-scalars/artifacts/project9-resume/io-final-replay-execution.json",
+      "publicationPath": "evidence/project9/io-qualified/raw/io-final-replay-execution.json",
+      "bytes": 4406,
+      "sha256": "496c104a773434d2c0c4b35eb684b933769a543ab619dbabc6cafad77de58813",
+      "category": "final-documentation-head",
+      "revision": "fe8288772be85395909d5de582c444db3d605ca3"
+    },
+    {
+      "sourcePath": "/workspace/scratch/f5d98b1de49e/SharpForge-p9-writer-scalars/artifacts/project9-resume/io-final-replay-tests.tap",
+      "publicationPath": "evidence/project9/io-qualified/raw/io-final-replay-tests.tap",
+      "bytes": 68305,
+      "sha256": "61ced2a96f0a98c1809cf96763dc2c0d3bdd690d5d783751ba9901488cc9679c",
+      "category": "final-documentation-head",
+      "revision": "fe8288772be85395909d5de582c444db3d605ca3"
+    },
+    {
+      "sourcePath": "/workspace/scratch/f5d98b1de49e/SharpForge-p9-writer-scalars/artifacts/project9-resume/io-integrated-benchmark-driver.log",
+      "publicationPath": "evidence/project9/io-qualified/raw/io-integrated-benchmark-driver.log",
+      "bytes": 17417,
+      "sha256": "efa9973f5870d1868374a3d670e4d0cec4ae4bb006730fac69523ccac42f016c",
+      "category": "retained-before-dispatch-cleanup",
+      "note": "Historical cohort; do not pool with final data or claim its failures remain unfixed."
+    },
+    {
+      "sourcePath": "/workspace/scratch/f5d98b1de49e/SharpForge-p9-writer-scalars/artifacts/project9-resume/io-integrated-controls-abba/A-program-identity.json",
+      "publicationPath": "evidence/project9/io-qualified/raw/io-integrated-controls-abba/A-program-identity.json",
+      "bytes": 404,
+      "sha256": "ae38345ca67c368c6d0c0dc241c932d9016ab4153696941a603534d1255a43e9",
+      "category": "retained-before-dispatch-cleanup"
+    },
+    {
+      "sourcePath": "/workspace/scratch/f5d98b1de49e/SharpForge-p9-writer-scalars/artifacts/project9-resume/io-integrated-controls-abba/A1.json",
+      "publicationPath": "evidence/project9/io-qualified/raw/io-integrated-controls-abba/A1.json",
+      "bytes": 81013,
+      "sha256": "b51d8190f014d001a14c1e4c80ac52ed3f77cfdb83a75fd20a50bd9c47fedf4e",
+      "category": "retained-before-dispatch-cleanup"
+    },
+    {
+      "sourcePath": "/workspace/scratch/f5d98b1de49e/SharpForge-p9-writer-scalars/artifacts/project9-resume/io-integrated-controls-abba/A1.log",
+      "publicationPath": "evidence/project9/io-qualified/raw/io-integrated-controls-abba/A1.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "category": "retained-before-dispatch-cleanup"
+    },
+    {
+      "sourcePath": "/workspace/scratch/f5d98b1de49e/SharpForge-p9-writer-scalars/artifacts/project9-resume/io-integrated-controls-abba/A2.json",
+      "publicationPath": "evidence/project9/io-qualified/raw/io-integrated-controls-abba/A2.json",
+      "bytes": 81072,
+      "sha256": "cf6c263870aff598bdddaf79888c88a7070fd6616ca57b1f6ba22b3c391b8b68",
+      "category": "retained-before-dispatch-cleanup"
+    },
+    {
+      "sourcePath": "/workspace/scratch/f5d98b1de49e/SharpForge-p9-writer-scalars/artifacts/project9-resume/io-integrated-controls-abba/A2.log",
+      "publicationPath": "evidence/project9/io-qualified/raw/io-integrated-controls-abba/A2.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "category": "retained-before-dispatch-cleanup"
+    },
+    {
+      "sourcePath": "/workspace/scratch/f5d98b1de49e/SharpForge-p9-writer-scalars/artifacts/project9-resume/io-integrated-controls-abba/B-program-identity.json",
+      "publicationPath": "evidence/project9/io-qualified/raw/io-integrated-controls-abba/B-program-identity.json",
+      "bytes": 404,
+      "sha256": "ae38345ca67c368c6d0c0dc241c932d9016ab4153696941a603534d1255a43e9",
+      "category": "retained-before-dispatch-cleanup"
+    },
+    {
+      "sourcePath": "/workspace/scratch/f5d98b1de49e/SharpForge-p9-writer-scalars/artifacts/project9-resume/io-integrated-controls-abba/B1.json",
+      "publicationPath": "evidence/project9/io-qualified/raw/io-integrated-controls-abba/B1.json",
+      "bytes": 96983,
+      "sha256": "aab37fa2d1463efb7cd38061e6ebc301188753c22ab4e0dc9e63325d73977aef",
+      "category": "retained-before-dispatch-cleanup"
+    },
+    {
+      "sourcePath": "/workspace/scratch/f5d98b1de49e/SharpForge-p9-writer-scalars/artifacts/project9-resume/io-integrated-controls-abba/B1.log",
+      "publicationPath": "evidence/project9/io-qualified/raw/io-integrated-controls-abba/B1.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "category": "retained-before-dispatch-cleanup"
+    },
+    {
+      "sourcePath": "/workspace/scratch/f5d98b1de49e/SharpForge-p9-writer-scalars/artifacts/project9-resume/io-integrated-controls-abba/B2.json",
+      "publicationPath": "evidence/project9/io-qualified/raw/io-integrated-controls-abba/B2.json",
+      "bytes": 96937,
+      "sha256": "a3502e5d6152134f4f1e7d03d3344875d94ab1a9582965b9f0e41e174eb59fa9",
+      "category": "retained-before-dispatch-cleanup"
+    },
+    {
+      "sourcePath": "/workspace/scratch/f5d98b1de49e/SharpForge-p9-writer-scalars/artifacts/project9-resume/io-integrated-controls-abba/B2.log",
+      "publicationPath": "evidence/project9/io-qualified/raw/io-integrated-controls-abba/B2.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "category": "retained-before-dispatch-cleanup"
+    },
+    {
+      "sourcePath": "/workspace/scratch/f5d98b1de49e/SharpForge-p9-writer-scalars/artifacts/project9-resume/io-integrated-controls-summary.json",
+      "publicationPath": "evidence/project9/io-qualified/raw/io-integrated-controls-summary.json",
+      "bytes": 268419,
+      "sha256": "029013754483866d6615f3312f51f7e9aab95095fb81dde911eebb9ead71e178",
+      "category": "retained-before-dispatch-cleanup",
+      "note": "Historical cohort; do not pool with final data or claim its failures remain unfixed."
+    },
+    {
+      "sourcePath": "/workspace/scratch/f5d98b1de49e/SharpForge-p9-writer-scalars/artifacts/project9-resume/io-integrated-local-install.log",
+      "publicationPath": "evidence/project9/io-qualified/raw/io-integrated-local-install.log",
+      "bytes": 120,
+      "sha256": "bfc4854f012d3ac4b3808f776d4583fbd45142e185a1395332f742971d1990bc",
+      "category": "local-setup-not-clean-ci",
+      "note": "Local workspace setup used --package-lock=false; this does not prove npm ci."
+    },
+    {
+      "sourcePath": "/workspace/scratch/f5d98b1de49e/SharpForge-p9-writer-scalars/artifacts/project9-resume/io-integrated-new-scalar-costs.json",
+      "publicationPath": "evidence/project9/io-qualified/raw/io-integrated-new-scalar-costs.json",
+      "bytes": 70979,
+      "sha256": "0b3e90e085fe19d7c16df11d2b75e0135a8c11b5bc0d63cbd75af7e914355693",
+      "category": "retained-before-dispatch-cleanup",
+      "note": "Historical cohort; do not pool with final data or claim its failures remain unfixed."
+    },
+    {
+      "sourcePath": "/workspace/scratch/f5d98b1de49e/SharpForge-p9-writer-scalars/artifacts/project9-resume/io-integrated-tests.tap",
+      "publicationPath": "evidence/project9/io-qualified/raw/io-integrated-tests.tap",
+      "bytes": 70200,
+      "sha256": "3f797e17f1f281d98ec38c3f15bde1b7302f0355944fbddaa2a303e1808e51ce",
+      "category": "retained-before-dispatch-cleanup",
+      "note": "Historical cohort; do not pool with final data or claim its failures remain unfixed."
+    },
+    {
+      "sourcePath": "/workspace/scratch/f5d98b1de49e/SharpForge-p9-writer-scalars/artifacts/project9-resume/io-integration.json",
+      "publicationPath": "evidence/project9/io-qualified/raw/io-integration.json",
+      "bytes": 6230,
+      "sha256": "ef37c64cb72cf68b87562aca3b8d053a7c6f2bc4ed65f60d2f8d37d8ba10703b",
+      "category": "integration-history",
+      "revision": "fe8288772be85395909d5de582c444db3d605ca3",
+      "note": "Historical fields retain their own product revisions; final manifest identities are explicit."
+    },
+    {
+      "sourcePath": "/workspace/scratch/f5d98b1de49e/SharpForge-p9-writer-scalars/artifacts/project9-resume/io-json-char-final-tests.tap",
+      "publicationPath": "evidence/project9/io-qualified/raw/io-json-char-final-tests.tap",
+      "bytes": 3308,
+      "sha256": "30a90d3ec58c2bc330bff9d272d6bde26646374b832d9af0ac56167fb7aa46ac",
+      "category": "retained-before-dispatch-cleanup",
+      "note": "Historical cohort; do not pool with final data or claim its failures remain unfixed."
+    },
+    {
+      "sourcePath": "/workspace/scratch/f5d98b1de49e/StringWriterScalars-native.log",
+      "publicationPath": "evidence/project9/io-qualified/raw/native/StringWriterScalars-native.log",
+      "bytes": 154,
+      "sha256": "65b30dae302776020e0f9d0481006f02580d2202b7b40d11500e31116dd9c1bb",
+      "category": "native-build-log",
+      "note": "Retained build output; the actual runtime observations are in the pinned fixture JSON, not these short logs."
+    },
+    {
+      "sourcePath": "/workspace/scratch/f5d98b1de49e/StringWriterStringLine-native.log",
+      "publicationPath": "evidence/project9/io-qualified/raw/native/StringWriterStringLine-native.log",
+      "bytes": 60,
+      "sha256": "2c4561c46f736361e08273973b1d77a43d5e8a6507b0309e62baf9de8420b6cf",
+      "category": "native-build-log",
+      "note": "Retained build output; the actual runtime observations are in the pinned fixture JSON, not these short logs."
+    },
+    {
+      "sourcePath": "/workspace/scratch/f5d98b1de49e/SharpForge-pr4517/artifacts/project9-resume/scalar-benchmark-before.json",
+      "publicationPath": "evidence/project9/io-qualified/raw/original-mixed-baseline/scalar-benchmark-before.json",
+      "bytes": 85412,
+      "sha256": "1b15750be36af179bed2bca6f906c7b98813f9de727c3cec429ab6aefdf2317b",
+      "category": "original-mixed-order-historical-cohort"
+    },
+    {
+      "sourcePath": "/workspace/scratch/f5d98b1de49e/SharpForge-pr4517/artifacts/project9-resume/scalar-benchmark-long-before.json",
+      "publicationPath": "evidence/project9/io-qualified/raw/original-mixed-baseline/scalar-benchmark-long-before.json",
+      "bytes": 85969,
+      "sha256": "bd42248f6e59daf47fd34aa8d278315c8ed008e4891c2bcd0227c2e63f489bc8",
+      "category": "original-mixed-order-historical-cohort"
+    },
+    {
+      "sourcePath": "/workspace/scratch/f5d98b1de49e/SharpForge-p9-writer-scalars/artifacts/sharpforge-bcl-io-0.14.0.tgz",
+      "publicationPath": "evidence/project9/io-qualified/raw/product-package/sharpforge-bcl-io-0.14.0.tgz",
+      "bytes": 11112,
+      "sha256": "dfc51b7929ff3ab85356d4d2e5923d0635915bf50abc5ed0d5672fef17d69704",
+      "category": "superseded-product-package",
+      "revision": "f8414bfcadbab039280d580a8152ac21f9fe6452",
+      "note": "Actual product-head package used for the 29-package smoke; final docs-only artifact is separate."
+    },
+    {
+      "sourcePath": "/workspace/scratch/f5d98b1de49e/SharpForge-p9-writer-scalars/artifacts/project9-resume/run-io-dispatch-benchmarks.py",
+      "publicationPath": "evidence/project9/io-qualified/raw/run-io-dispatch-benchmarks.py",
+      "bytes": 7611,
+      "sha256": "a3f64d7cdc793666331853abc8ec32900fad514a6006d24e964981f58b56e506",
+      "category": "final-product-qualification",
+      "revision": "f8414bfcadbab039280d580a8152ac21f9fe6452"
+    },
+    {
+      "sourcePath": "/workspace/scratch/f5d98b1de49e/SharpForge-p9-writer-scalars/artifacts/project9-resume/run-io-integrated-benchmarks.py",
+      "publicationPath": "evidence/project9/io-qualified/raw/run-io-integrated-benchmarks.py",
+      "bytes": 7619,
+      "sha256": "ece5d19d1cdbde59b4dd059efd31d73cbad2eec3515dd97522f392561817da11",
+      "category": "retained-before-dispatch-cleanup",
+      "note": "Historical cohort; do not pool with final data or claim its failures remain unfixed."
+    },
+    {
+      "sourcePath": "/workspace/scratch/f5d98b1de49e/SharpForge-p9-writer-scalars/artifacts/project9-resume/scalar-benchmark-after.json",
+      "publicationPath": "evidence/project9/io-qualified/raw/scalar-benchmark-after.json",
+      "bytes": 170765,
+      "sha256": "f78f9033f0be2948cb25609c357db202f2a9d2e4c26ea8d12aeae0d43e586381",
+      "category": "original-mixed-order-historical-cohort"
+    },
+    {
+      "sourcePath": "/workspace/scratch/f5d98b1de49e/SharpForge-p9-writer-scalars/artifacts/project9-resume/scalar-benchmark-long-after.json",
+      "publicationPath": "evidence/project9/io-qualified/raw/scalar-benchmark-long-after.json",
+      "bytes": 171922,
+      "sha256": "fb18050d367f675c4c17d37e86311b4011b6b0da087869e7315631bc2857f646",
+      "category": "original-mixed-order-historical-cohort"
+    },
+    {
+      "sourcePath": "/workspace/scratch/f5d98b1de49e/SharpForge-p9-writer-scalars/packages/bcl-io/benchmarks/README.md",
+      "publicationPath": "evidence/project9/io-qualified/source/packages/bcl-io/benchmarks/README.md",
+      "bytes": 7422,
+      "sha256": "90fa91ad41badc8eeb3cef48e54b595af2a0f97799e550672383fed79f0b750b",
+      "category": "committed-runner-or-native-reference",
+      "revision": "fe8288772be85395909d5de582c444db3d605ca3"
+    },
+    {
+      "sourcePath": "/workspace/scratch/f5d98b1de49e/SharpForge-p9-writer-scalars/packages/bcl-io/benchmarks/string-writer-scalars.mjs",
+      "publicationPath": "evidence/project9/io-qualified/source/packages/bcl-io/benchmarks/string-writer-scalars.mjs",
+      "bytes": 11835,
+      "sha256": "a2cbf021f0c215a7963aa8ecbe24997bb6445220e8e4a40f0807a0e8a9cbd327",
+      "category": "committed-runner-or-native-reference",
+      "revision": "fe8288772be85395909d5de582c444db3d605ca3"
+    },
+    {
+      "sourcePath": "/workspace/scratch/f5d98b1de49e/SharpForge-p9-writer-scalars/packages/bcl-io/reference/string-writer-scalars-net10.json",
+      "publicationPath": "evidence/project9/io-qualified/source/packages/bcl-io/reference/string-writer-scalars-net10.json",
+      "bytes": 197799,
+      "sha256": "ca02ecd8569682d18180e0b1c51f4efb09f861a09dc355accd4310dffeb2d21e",
+      "category": "committed-runner-or-native-reference",
+      "revision": "fe8288772be85395909d5de582c444db3d605ca3"
+    },
+    {
+      "sourcePath": "/workspace/scratch/f5d98b1de49e/SharpForge-p9-writer-scalars/packages/bcl-io/reference/string-writer-scalars/Program.cs",
+      "publicationPath": "evidence/project9/io-qualified/source/packages/bcl-io/reference/string-writer-scalars/Program.cs",
+      "bytes": 9067,
+      "sha256": "2a9b8bcb46891606d84ba65655942516ba2cb3584c9de1dead9c7c922cc9f013",
+      "category": "committed-runner-or-native-reference",
+      "revision": "fe8288772be85395909d5de582c444db3d605ca3"
+    },
+    {
+      "sourcePath": "/workspace/scratch/f5d98b1de49e/SharpForge-p9-writer-scalars/packages/bcl-io/reference/string-writer-scalars/README.md",
+      "publicationPath": "evidence/project9/io-qualified/source/packages/bcl-io/reference/string-writer-scalars/README.md",
+      "bytes": 4805,
+      "sha256": "2cffea6b855b4d54d29f6ba7b76aa6ba94dcdad3a46ae81f63bba0af075e25fa",
+      "category": "committed-runner-or-native-reference",
+      "revision": "fe8288772be85395909d5de582c444db3d605ca3"
+    },
+    {
+      "sourcePath": "/workspace/scratch/f5d98b1de49e/SharpForge-p9-writer-scalars/packages/bcl-io/reference/string-writer-scalars/StringWriterScalars.csproj",
+      "publicationPath": "evidence/project9/io-qualified/source/packages/bcl-io/reference/string-writer-scalars/StringWriterScalars.csproj",
+      "bytes": 339,
+      "sha256": "772eff4e2c0f9b0327bb80d130bf73799ec1f47fb8ff8a7572162535705973d4",
+      "category": "committed-runner-or-native-reference",
+      "revision": "fe8288772be85395909d5de582c444db3d605ca3"
+    },
+    {
+      "sourcePath": "/workspace/scratch/f5d98b1de49e/SharpForge-p9-writer-scalars/packages/bcl-io/reference/string-writer-scalars/global.json",
+      "publicationPath": "evidence/project9/io-qualified/source/packages/bcl-io/reference/string-writer-scalars/global.json",
+      "bytes": 79,
+      "sha256": "6529cae77b7eed8b594d53f5cf43859718112623c1e0c975a4fc5c364f4ef1d6",
+      "category": "committed-runner-or-native-reference",
+      "revision": "fe8288772be85395909d5de582c444db3d605ca3"
+    },
+    {
+      "sourcePath": "/workspace/scratch/f5d98b1de49e/SharpForge-p9-writer-scalars/packages/bcl-io/reference/string-writer-string-line-net10.json",
+      "publicationPath": "evidence/project9/io-qualified/source/packages/bcl-io/reference/string-writer-string-line-net10.json",
+      "bytes": 110473,
+      "sha256": "61bb501df12b86a5682ccd3aeeaaba497dfde74745231bcc293e99395129b05e",
+      "category": "committed-runner-or-native-reference",
+      "revision": "fe8288772be85395909d5de582c444db3d605ca3"
+    },
+    {
+      "sourcePath": "/workspace/scratch/f5d98b1de49e/SharpForge-p9-writer-scalars/packages/bcl-io/reference/string-writer-string-line/Program.cs",
+      "publicationPath": "evidence/project9/io-qualified/source/packages/bcl-io/reference/string-writer-string-line/Program.cs",
+      "bytes": 6345,
+      "sha256": "c2e7a66aa4059fa4b1a61a6d2edd347592f06a12f92bc2452bcb89a349025717",
+      "category": "committed-runner-or-native-reference",
+      "revision": "fe8288772be85395909d5de582c444db3d605ca3"
+    },
+    {
+      "sourcePath": "/workspace/scratch/f5d98b1de49e/SharpForge-p9-writer-scalars/packages/bcl-io/reference/string-writer-string-line/README.md",
+      "publicationPath": "evidence/project9/io-qualified/source/packages/bcl-io/reference/string-writer-string-line/README.md",
+      "bytes": 4280,
+      "sha256": "56c6da59c269e9ca999f769cb25e51c323dde2e84b3a38e50b23b590a3d336e7",
+      "category": "committed-runner-or-native-reference",
+      "revision": "fe8288772be85395909d5de582c444db3d605ca3"
+    },
+    {
+      "sourcePath": "/workspace/scratch/f5d98b1de49e/SharpForge-p9-writer-scalars/packages/bcl-io/reference/string-writer-string-line/StringWriterStringLine.csproj",
+      "publicationPath": "evidence/project9/io-qualified/source/packages/bcl-io/reference/string-writer-string-line/StringWriterStringLine.csproj",
+      "bytes": 339,
+      "sha256": "772eff4e2c0f9b0327bb80d130bf73799ec1f47fb8ff8a7572162535705973d4",
+      "category": "committed-runner-or-native-reference",
+      "revision": "fe8288772be85395909d5de582c444db3d605ca3"
+    },
+    {
+      "sourcePath": "/workspace/scratch/f5d98b1de49e/SharpForge-p9-writer-scalars/packages/bcl-io/reference/string-writer-string-line/global.json",
+      "publicationPath": "evidence/project9/io-qualified/source/packages/bcl-io/reference/string-writer-string-line/global.json",
+      "bytes": 79,
+      "sha256": "6529cae77b7eed8b594d53f5cf43859718112623c1e0c975a4fc5c364f4ef1d6",
+      "category": "committed-runner-or-native-reference",
+      "revision": "fe8288772be85395909d5de582c444db3d605ca3"
+    },
+    {
+      "sourcePath": "/workspace/scratch/f5d98b1de49e/SharpForge-p9-writer-scalars/tests/fixtures/text-writer/engines.js",
+      "publicationPath": "evidence/project9/io-qualified/source/tests/fixtures/text-writer/engines.js",
+      "bytes": 4663,
+      "sha256": "f8e83167502593e91f8c754a745136e96eee385fd94e393a1630a3ff1ec4f31e",
+      "category": "committed-runner-or-native-reference",
+      "revision": "fe8288772be85395909d5de582c444db3d605ca3"
+    }
+  ]
+}

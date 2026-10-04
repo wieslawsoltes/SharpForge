@@ -1,0 +1,130 @@
+diff --git a/planning/contracts/schema/bytecode-image.v2.schema.json b/planning/contracts/schema/bytecode-image.v2.schema.json
+--- a/planning/contracts/schema/bytecode-image.v2.schema.json
++++ b/planning/contracts/schema/bytecode-image.v2.schema.json
+@@ -149,8 +149,33 @@
+           "number",
+           "boolean",
+           "string",
+-          "null"
+-        ]
++          "null",
++          "object"
++        ],
++        "properties": {
++          "readonlyField": {
++            "type": "object",
++            "properties": {
++              "owner": {
++                "type": "string",
++                "minLength": 1
++              },
++              "name": {
++                "type": "string",
++                "minLength": 1
++              }
++            },
++            "required": [
++              "owner",
++              "name"
++            ],
++            "additionalProperties": false
++          }
++        },
++        "required": [
++          "readonlyField"
++        ],
++        "additionalProperties": false
+       },
+       "maxItems": 1000000
+     },
+diff --git a/tests/a00-05-metadata.test.js b/tests/a00-05-metadata.test.js
+--- a/tests/a00-05-metadata.test.js
++++ b/tests/a00-05-metadata.test.js
+@@ -1,5 +1,5 @@
+ import test from 'node:test';import assert from 'node:assert/strict';import {readFileSync,readdirSync,mkdtempSync,writeFileSync,rmSync} from 'node:fs';import {join,resolve} from 'node:path';import {tmpdir} from 'node:os';import {execFileSync} from 'node:child_process';
+-import {compileToIL} from '@sharpforge/compiler';import {AssemblyInspector} from '@sharpforge/cil';import {readPortablePdb} from '@sharpforge/symbols';import {serializeImage,verifyImage} from '@sharpforge/bytecode';import {types,canonicalType} from '@sharpforge/framework';
++import {compileToIL} from '@sharpforge/compiler';import {AssemblyInspector} from '@sharpforge/cil';import {readPortablePdb} from '@sharpforge/symbols';import {serializeImage,deserializeImage,verifyImage} from '@sharpforge/bytecode';import {types,canonicalType} from '@sharpforge/framework';
+ import {coverageText} from '../scripts/planning/schema/example-coverage.js';
+ import {validate,SchemaError} from '../scripts/planning/schema/validate.js';import {generate,stable} from '../scripts/planning/gen-schema-fixtures.js';import {typeIdentity,validateTypeSemantics,validateSignature,validateSpan,sourceSpan,validateBody,SymbolTable,symbolId} from '../scripts/planning/schema/adapters.js';
+ const base=new URL('../planning/contracts/',import.meta.url);const schema=name=>JSON.parse(readFileSync(new URL('schema/'+name+'.schema.json',base)));const fixtures=name=>JSON.parse(readFileSync(new URL('fixtures/schema/'+name+'.json',base)));
+@@ -143,3 +143,63 @@
+   assert.throws(()=>validate({minLength:1,maxLength:1,pattern:'^[a-z]$'},'😀'),{code:'SCHEMA_INVALID'});
+   for(const value of [null,0,true,[],{}])validate({minLength:2,maxLength:3},value);
+ });
++
++
++test('A00 serialized readonly string fields pass structural validation before deserialization', () => {
++  const compiled = compileToIL('class P { static void Main() { Console.WriteLine(bool.TrueString); Console.WriteLine(bool.FalseString); } }');
++  assert(compiled.success, JSON.stringify(compiled.diagnostics));
++  const document = JSON.parse(serializeImage(compiled.image));
++  validate(schema('bytecode-image.v2'), document);
++  const image = deserializeImage(JSON.stringify(document));
++  assert.deepEqual(verifyImage(image), []);
++  assert.deepEqual(image.constants.filter(value => value?.readonlyField).map(value => value.readonlyField.name).sort(),
++    ['FalseString', 'TrueString']);
++});
++
++test('A00 readonly string structural shape is closed and excluded from static defaults', () => {
++  const contract = schema('bytecode-image.v2'), item = contract.properties.constants.items;
++  const marker = {readonlyField: {owner: 'System.Boolean', name: 'TrueString'}};
++  validate(item, marker);
++  const cases = [{}, {readonlyField: null}, {readonlyField: []}, {readonlyField: {}},
++    {readonlyField: {owner: 'System.Boolean'}}, {readonlyField: {...marker.readonlyField, extra: true}},
++    {...marker, extra: true}, {readonlyField: {...marker.readonlyField, owner: ''}},
++    {readonlyField: {...marker.readonlyField, name: 1}}, {readonlyField: {...marker.readonlyField, name: ''}},
++    [], {numericType: 'long', value: '1'}];
++  for (const value of cases) assert.throws(() => validate(item, value), {code: 'SCHEMA_INVALID'});
++  assert.throws(() => validate(contract.properties.statics.items,
++    {name: 'P.Value', type: 'string', value: marker}), {code: 'SCHEMA_INVALID'});
++  // Registry identity, NUL exclusion and UTF-16 limits belong to semantic validation.
++  validate(item, {readonlyField: {owner: 'Unknown.Type', name: 'Text'}});
++});
++
++test('A00 structurally valid field strings retain semantic NUL and UTF-16 length rejection', () => {
++  const compiled = compileToIL('class P { static void Main() { Console.WriteLine(bool.TrueString); } }');
++  assert(compiled.success, JSON.stringify(compiled.diagnostics));
++  const document = JSON.parse(serializeImage(compiled.image));
++  const index = document.constants.findIndex(value => value?.readonlyField);
++  assert(index >= 0);
++  const marker = document.constants[index].readonlyField;
++  for (const field of [{...marker, owner: 'A\0B'}, {...marker, name: 'A\0B'},
++    {...marker, owner: 'x'.repeat(1025)}, {...marker, name: 'x'.repeat(513)},
++    {...marker, owner: '\u{1f600}'.repeat(513)}, {...marker, name: '\u{1f600}'.repeat(257)}]) {
++    const candidate = structuredClone(document);
++    candidate.constants[index] = {readonlyField: field};
++    validate(schema('bytecode-image.v2'), candidate);
++    assert(verifyImage(deserializeImage(JSON.stringify(candidate))).some(error => error.includes('Invalid scalar constant')));
++  }
++});
++
++test('A00 primitive constants retain the exact pre-carrier validation node budget', () => {
++  const before = {type: 'array', items: {type: ['number', 'boolean', 'string', 'null']}};
++  const after = schema('bytecode-image.v2').properties.constants;
++  const values = [null, true, false, 0, -0, 1.5, '', 'text'];
++  const budget = 2 + values.length * 2;
++  for (const contract of [before, after]) {
++    assert.equal(validate(contract, values, {maxNodes: budget}), values);
++    assert.throws(() => validate(contract, values, {maxNodes: budget - 1}), {code: 'SCHEMA_LIMIT'});
++    for (const value of values) {
++      assert.equal(validate(contract.items, value, {maxNodes: 2}), value);
++      assert.throws(() => validate(contract.items, value, {maxNodes: 1}), {code: 'SCHEMA_LIMIT'});
++    }
++  }
++});
+diff --git a/planning/contracts/schema/README.md b/planning/contracts/schema/README.md
+--- a/planning/contracts/schema/README.md
++++ b/planning/contracts/schema/README.md
+@@ -16,3 +16,13 @@
+ available for archival structural validation; the current interpreter rejects
+ format 1 images, which must be recompiled. The Rust structural reader checks the
+ version constant declared by the selected schema.
++
++
++Format 2 constants also admit the closed `{readonlyField:{owner,name}}` string-field
++carrier. Its object keywords apply only to the added object alternative, preserving
++the primitive validation node budget. The structural schema checks a closed record
++with nonempty owner/name strings; the bytecode verifier checks exact registry owner,
++field name, string type, static/readonly policy, NUL exclusion, and UTF-16 limits. Static
++default values retain their original primitive-only schema. A field initializer
++executes a field-read instruction. No new opcode, contract ID, or format version is
++introduced by this additive carrier.

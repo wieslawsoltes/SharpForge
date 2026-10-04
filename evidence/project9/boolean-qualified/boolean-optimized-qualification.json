@@ -1,0 +1,194 @@
+{
+  "revision": "af29812a6b0ca0184a79cc6bcddd01bf0a02fb6a",
+  "tree": "d934a12e448fc825ad49a535ced67a801e98e57c",
+  "baseline": "af5450dacbdc2734432b13dffa63efb10eb93145",
+  "node": "v24.19.0",
+  "platform": "Linux-6.18.44-x86_64-with-glibc2.39",
+  "lockBeforeSha256": "0795c3e9cb2007594de2fa207c2a97d80bb927f146f68d8566934485cbddf0cd",
+  "commands": [
+    {
+      "name": "install",
+      "argv": [
+        "node",
+        "scripts/limited.js",
+        "npm",
+        "ci",
+        "--ignore-scripts",
+        "--no-audit",
+        "--no-fund"
+      ],
+      "revision": "af29812a6b0ca0184a79cc6bcddd01bf0a02fb6a",
+      "startedAt": "2026-10-04T17:29:28.501941+00:00",
+      "output": "artifacts/project9-resume/boolean-optimized-install.log",
+      "exitCode": 0,
+      "finishedAt": "2026-10-04T17:29:29.134422+00:00",
+      "sha256": "e6c3fad0fcc793968adadb3dcb537e029a57c3f4b659068375e401abe39fde58"
+    },
+    {
+      "name": "tests",
+      "argv": [
+        "node",
+        "scripts/limited.js",
+        "node",
+        "--test",
+        "--test-concurrency=1",
+        "--test-reporter=tap",
+        "tests/a07-boolean-string-fields-registry.test.js",
+        "tests/a07-boolean-string-fields-reference.test.js",
+        "tests/a07-boolean-string-field-compiler.test.js",
+        "tests/a07-boolean-string-field-cil.test.js",
+        "tests/a07-readonly-string-wire.test.js",
+        "tests/a07-boolean-string-field-lifetime.test.js",
+        "tests/a07-boolean-string-field-reentry.test.js",
+        "tests/a07-boolean-string-field-cancellation.test.js",
+        "tests/a07-readonly-fields.test.js",
+        "tests/a07-readonly-field-cil.test.js",
+        "tests/a05-enums-strings.test.js",
+        "tests/a05-scalar-wire-validation.test.js",
+        "tests/a05-synchronous-host-callbacks.test.js",
+        "tests/a05-allocation-observer-roots.test.js",
+        "tests/a05-object-constructor-metadata.test.js",
+        "tests/a05-source-object-construction.test.js",
+        "tests/a07-13-registry.test.js",
+        "tests/a07-20-inventory.test.js"
+      ],
+      "revision": "af29812a6b0ca0184a79cc6bcddd01bf0a02fb6a",
+      "startedAt": "2026-10-04T17:29:29.136740+00:00",
+      "output": "artifacts/project9-resume/boolean-optimized-tests.tap",
+      "exitCode": 0,
+      "finishedAt": "2026-10-04T17:29:47.927619+00:00",
+      "sha256": "cd4318a9eb90386943ba4331c5054b1ced8d5a115bd6bef3ae01b852e423b92a",
+      "summary": {
+        "tests": 316,
+        "pass": 316,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      }
+    },
+    {
+      "name": "check",
+      "argv": [
+        "node",
+        "scripts/limited.js",
+        "npm",
+        "run",
+        "check"
+      ],
+      "revision": "af29812a6b0ca0184a79cc6bcddd01bf0a02fb6a",
+      "startedAt": "2026-10-04T17:29:47.933573+00:00",
+      "output": "artifacts/project9-resume/boolean-optimized-check.log",
+      "exitCode": 0,
+      "finishedAt": "2026-10-04T17:29:56.061457+00:00",
+      "sha256": "facc28cfe9f9a3421cbf04c8cf4bc702022942ecb769a91a203c074c5eb1d9ad"
+    },
+    {
+      "name": "structure",
+      "argv": [
+        "node",
+        "scripts/limited.js",
+        "npm",
+        "run",
+        "check:structure"
+      ],
+      "revision": "af29812a6b0ca0184a79cc6bcddd01bf0a02fb6a",
+      "startedAt": "2026-10-04T17:29:56.064591+00:00",
+      "output": "artifacts/project9-resume/boolean-optimized-structure.log",
+      "exitCode": 0,
+      "finishedAt": "2026-10-04T17:29:56.903864+00:00",
+      "sha256": "070dcde7f3cbc300bc7f3f366fad611f823aff1fa21d4a2b3b6614d851b97083"
+    },
+    {
+      "name": "build",
+      "argv": [
+        "node",
+        "scripts/limited.js",
+        "npm",
+        "run",
+        "build"
+      ],
+      "revision": "af29812a6b0ca0184a79cc6bcddd01bf0a02fb6a",
+      "startedAt": "2026-10-04T17:29:57.020425+00:00",
+      "output": "artifacts/project9-resume/boolean-optimized-build.log",
+      "exitCode": 0,
+      "finishedAt": "2026-10-04T17:30:06.078869+00:00",
+      "sha256": "de4f3fb768d19f2d36810b6733c9d3a0cda2fb0f315396a4f5dc68a9a761294f"
+    }
+  ],
+  "testInputs": [
+    {
+      "path": "tests/a07-boolean-string-fields-registry.test.js",
+      "sha256": "c58bc1d8e64dd18764e0b3ff4367f001001dcf0ae8fcf6cf743424d394cee58a"
+    },
+    {
+      "path": "tests/a07-boolean-string-fields-reference.test.js",
+      "sha256": "5b5de315f51d62f33db74f7e24569a49c2284be2c3e980f6c5ccef8b84d66798"
+    },
+    {
+      "path": "tests/a07-boolean-string-field-compiler.test.js",
+      "sha256": "9cc201a93888d443156f02e30a116bb2d0c2188af98c80947f7fe8268d663e14"
+    },
+    {
+      "path": "tests/a07-boolean-string-field-cil.test.js",
+      "sha256": "f36371eea5b40c3fe6884d3cd21c566b5eb5e052740a535b69637d11852a87ca"
+    },
+    {
+      "path": "tests/a07-readonly-string-wire.test.js",
+      "sha256": "21d26de2758aa7a9246f06962a04b0300e36ff8bf8c565484c5a3be268305d6c"
+    },
+    {
+      "path": "tests/a07-boolean-string-field-lifetime.test.js",
+      "sha256": "1d99edfd42ec39fa84fd69e4430f9d1f9a8d40bd6a34eb46d96e1236bb2b1541"
+    },
+    {
+      "path": "tests/a07-boolean-string-field-reentry.test.js",
+      "sha256": "e945be03e6a74f851fcc791a4db1cb5769633f02839cdb388def4da0958426cd"
+    },
+    {
+      "path": "tests/a07-boolean-string-field-cancellation.test.js",
+      "sha256": "cc3a360027d200ba66e39d0183a45aa070caed1ceb5b7c5d5e1065c9edc01d45"
+    },
+    {
+      "path": "tests/a07-readonly-fields.test.js",
+      "sha256": "ec0560f0f8c15a66bbc7434c014e0e309019f54f6e53cde53bb6b4558d9fab29"
+    },
+    {
+      "path": "tests/a07-readonly-field-cil.test.js",
+      "sha256": "99fec42c95215534a229c6f3fb867ca1953567a53f00eefb4f0b5c0abecfe093"
+    },
+    {
+      "path": "tests/a05-enums-strings.test.js",
+      "sha256": "e50ae5dd3748e30abf5690f468dfae170071aefcd943edf28815175c8ec22952"
+    },
+    {
+      "path": "tests/a05-scalar-wire-validation.test.js",
+      "sha256": "fc770cee10965012af770d29729611d04bb23579248a0cda9f4a80f661225c21"
+    },
+    {
+      "path": "tests/a05-synchronous-host-callbacks.test.js",
+      "sha256": "d67cfceab874aa3f450b288d7d75728b81dd91c6ef77ceec6e531b57dc7e6838"
+    },
+    {
+      "path": "tests/a05-allocation-observer-roots.test.js",
+      "sha256": "7babc557008138bdad28dac55cdcb7ef825a81b663b469f42f20731bb6bdf6cb"
+    },
+    {
+      "path": "tests/a05-object-constructor-metadata.test.js",
+      "sha256": "43f3955ad4f1482635dd15d8c04842b25a7764e2e5654d1f0df8ca78467221ae"
+    },
+    {
+      "path": "tests/a05-source-object-construction.test.js",
+      "sha256": "d3a2cdbfcc764e7a2b924eba3a2ff66f099515fd05bc5aaa380bfd24b69bfd5b"
+    },
+    {
+      "path": "tests/a07-13-registry.test.js",
+      "sha256": "d26bfafd13cef77a83ffd78062f5afbb5847fa8cee87740dd4d668067fed0259"
+    },
+    {
+      "path": "tests/a07-20-inventory.test.js",
+      "sha256": "36e1f21ad736f7857d95a9762285d5429b94c2d7830035761eed64ea25781259"
+    }
+  ],
+  "lockAfterSha256": "0795c3e9cb2007594de2fa207c2a97d80bb927f146f68d8566934485cbddf0cd"
+}

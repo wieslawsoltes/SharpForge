@@ -1,0 +1,505 @@
+{
+  "reviewer": "independent Codex agent /root/review_insert_repeat",
+  "humanReview": false,
+  "candidate": "af29812a6b0ca0184a79cc6bcddd01bf0a02fb6a",
+  "tree": "d934a12e448fc825ad49a535ced67a801e98e57c",
+  "baseline": "af5450dacbdc2734432b13dffa63efb10eb93145",
+  "runnerSha256": "ba0202edda201ad0755f16e4e30811c90e8b9b5027b940b08819b63ae207c14e",
+  "summaryPath": "artifacts/project9-resume/boolean-optimized-controls-summary.json",
+  "summarySha256": "19102c57942c2d06f27e69c6d7a52fa316eac83a9746f57115a6b18ee5445e33",
+  "executionPath": "artifacts/project9-resume/boolean-optimized-benchmark-execution.json",
+  "executionSha256": "1500a312ed278cb52be33377c7576086567ef59ae48f8dd28401377471e25b72",
+  "evidenceAudit": "Independently read and hashed all 42 raw reports; validated sequential ABBA/new-case order, exit status, exact revision/runner/selector, 5000 iterations, 5 warmups, 9 retained samples, matching workload hashes and every managed counter; recomputed ten pooled median/p95 summaries and two new-cost summaries. No product execution.",
+  "performanceDecision": "accept with four explicit median exceptions and explicit adverse-tail decisions below",
+  "packageSizeDecision": "pending actual package measurements",
+  "browserSizeDecision": "pending final browser contents and provenance",
+  "rows": [
+    {
+      "engine": "source",
+      "case": "literalCold",
+      "baseline": {
+        "median": 8.000348499999973,
+        "p95": 21.599038000000064
+      },
+      "candidate": {
+        "median": 11.427716500000031,
+        "p95": 13.583818000000065
+      },
+      "medianDeltaMs": 3.427368000000058,
+      "medianPercent": 42.84023377231716,
+      "p95Percent": -37.109152731709514,
+      "counters": {
+        "managedAllocations": {
+          "baseline": [
+            5000
+          ],
+          "candidate": [
+            5000
+          ]
+        },
+        "managedAllocatedBytes": {
+          "baseline": [
+            287780
+          ],
+          "candidate": [
+            287780
+          ]
+        },
+        "managedCollections": {
+          "baseline": [
+            3
+          ],
+          "candidate": [
+            3
+          ]
+        }
+      },
+      "decision": "accepted-exception",
+      "rationale": "Accept the +3.427368 ms per 5000 distinct strings (+685.474 ns per initialization) correctness cost. Cold pending-operation tracking, bounded reentry, host snapshot/restore boundary, post-observer canonical recheck and stop checks prevent demonstrated publication/lifetime defects. These costs remain linear in initialized strings; managed allocation, bytes and collection counts are unchanged. The smaller candidate tail does not erase the median regression.",
+      "p95DeltaMs": -8.01522
+    },
+    {
+      "engine": "source",
+      "case": "literalLoop",
+      "baseline": {
+        "median": 19.27965699999993,
+        "p95": 34.85801900000001
+      },
+      "candidate": {
+        "median": 20.428898999999888,
+        "p95": 28.29137700000001
+      },
+      "medianDeltaMs": 1.1492419999999584,
+      "medianPercent": 5.960904802403699,
+      "p95Percent": -18.838253545045113,
+      "counters": {
+        "managedAllocations": {
+          "baseline": [
+            1
+          ],
+          "candidate": [
+            1
+          ]
+        },
+        "managedAllocatedBytes": {
+          "baseline": [
+            38
+          ],
+          "candidate": [
+            38
+          ]
+        },
+        "managedCollections": {
+          "baseline": [
+            0
+          ],
+          "candidate": [
+            0
+          ]
+        }
+      },
+      "decision": "accepted-exception",
+      "rationale": "Accept the +1.149242 ms per 5000 complete loop iterations (+229.848 ns/iteration) exception. Warm hits now avoid transient pool/options construction; the necessary source CONST termination check remains, including numeric constants in the loop. No additional per-hit managed allocation or Map construction was added. This is a whole-batch loop delta, not a measured isolated cost of that check; the lower tail does not offset the median regression.",
+      "p95DeltaMs": -6.566642000000002
+    },
+    {
+      "engine": "source",
+      "case": "staticStringLoop",
+      "baseline": {
+        "median": 19.483108000000016,
+        "p95": 37.50917299999992
+      },
+      "candidate": {
+        "median": 20.37843799999996,
+        "p95": 30.139646999999968
+      },
+      "medianDeltaMs": 0.8953299999999444,
+      "medianPercent": 4.595416706615518,
+      "p95Percent": -19.64726335075414,
+      "counters": {
+        "managedAllocations": {
+          "baseline": [
+            1
+          ],
+          "candidate": [
+            1
+          ]
+        },
+        "managedAllocatedBytes": {
+          "baseline": [
+            38
+          ],
+          "candidate": [
+            38
+          ]
+        },
+        "managedCollections": {
+          "baseline": [
+            0
+          ],
+          "candidate": [
+            0
+          ]
+        }
+      },
+      "decision": "accepted-within-median-budget",
+      "rationale": "Accept within the 5% median budget (+4.595417%); candidate p95 is lower. No exception is required. Do not use this row to offset other regressions.",
+      "p95DeltaMs": -7.369525999999951
+    },
+    {
+      "engine": "source",
+      "case": "readonlyScalarLoop",
+      "baseline": {
+        "median": 16.371295499999974,
+        "p95": 33.77560799999992
+      },
+      "candidate": {
+        "median": 16.952364500000044,
+        "p95": 26.735570000000052
+      },
+      "medianDeltaMs": 0.5810690000000704,
+      "medianPercent": 3.5493159353215065,
+      "p95Percent": -20.843556687417397,
+      "counters": {
+        "managedAllocations": {
+          "baseline": [
+            0
+          ],
+          "candidate": [
+            0
+          ]
+        },
+        "managedAllocatedBytes": {
+          "baseline": [
+            0
+          ],
+          "candidate": [
+            0
+          ]
+        },
+        "managedCollections": {
+          "baseline": [
+            0
+          ],
+          "candidate": [
+            0
+          ]
+        }
+      },
+      "decision": "accepted-within-median-budget",
+      "rationale": "Accept within the 5% median budget (+3.549316%); candidate p95 is lower. This is the source scalar-CONST control with zero managed allocations, not a field-allocation workload.",
+      "p95DeltaMs": -7.040037999999868
+    },
+    {
+      "engine": "cil",
+      "case": "literalCold",
+      "baseline": {
+        "median": 12.050074999999879,
+        "p95": 20.261696999999913
+      },
+      "candidate": {
+        "median": 17.62253700000008,
+        "p95": 28.946797999999944
+      },
+      "medianDeltaMs": 5.5724620000002005,
+      "medianPercent": 46.244210098279524,
+      "p95Percent": 42.8646277752553,
+      "counters": {
+        "managedAllocations": {
+          "baseline": [
+            5000
+          ],
+          "candidate": [
+            5000
+          ]
+        },
+        "managedAllocatedBytes": {
+          "baseline": [
+            287780
+          ],
+          "candidate": [
+            287780
+          ]
+        },
+        "managedCollections": {
+          "baseline": [
+            3
+          ],
+          "candidate": [
+            3
+          ]
+        }
+      },
+      "decision": "accepted-exception",
+      "rationale": "Accept both the +5.572462 ms median and +8.685101 ms observed p95 per 5000 distinct strings. Cold initialization retains the same pending/reentry/host-boundary/canonical-publication/stop guarantees as source. Median cost is +1114.492 ns per initialization; all managed counters match. The p95 increase of 42.864628% is adverse evidence and is explicitly included in this acceptance, not dismissed as noise or explained by unchanged managed GC counts.",
+      "p95DeltaMs": 8.685101000000031
+    },
+    {
+      "engine": "cil",
+      "case": "literalLoop",
+      "baseline": {
+        "median": 110.08624299999997,
+        "p95": 186.938404
+      },
+      "candidate": {
+        "median": 120.17601050000007,
+        "p95": 205.78511500000013
+      },
+      "medianDeltaMs": 10.089767500000107,
+      "medianPercent": 9.165330040375807,
+      "p95Percent": 10.081775920158243,
+      "counters": {
+        "managedAllocations": {
+          "baseline": [
+            1
+          ],
+          "candidate": [
+            1
+          ]
+        },
+        "managedAllocatedBytes": {
+          "baseline": [
+            38
+          ],
+          "candidate": [
+            38
+          ]
+        },
+        "managedCollections": {
+          "baseline": [
+            0
+          ],
+          "candidate": [
+            0
+          ]
+        }
+      },
+      "decision": "accepted-exception",
+      "rationale": "Accept both the +10.0897675 ms median and +18.846711 ms observed p95 per 5000 full interpreted iterations. The ldstr post-call state guard prevents a stopped allocating instruction from pushing into retired caller storage; warm lookup already uses the shared direct heap/map fast path. No pending-map work or pool-wrapper allocation occurs on warm hits. The measured +2017.954 ns/iteration is the whole interpreter-loop delta, not an isolated guard cost. Attribution to particular checks/JIT behavior remains unresolved; no further concrete safe simplification was found.",
+      "p95DeltaMs": 18.84671100000014
+    },
+    {
+      "engine": "cil",
+      "case": "staticStringLoop",
+      "baseline": {
+        "median": 139.96993499999985,
+        "p95": 206.78107799999998
+      },
+      "candidate": {
+        "median": 107.8359835,
+        "p95": 157.1200570000001
+      },
+      "medianDeltaMs": -32.13395149999985,
+      "medianPercent": -22.95775267738739,
+      "p95Percent": -24.016230827464735,
+      "counters": {
+        "managedAllocations": {
+          "baseline": [
+            1
+          ],
+          "candidate": [
+            1
+          ]
+        },
+        "managedAllocatedBytes": {
+          "baseline": [
+            38
+          ],
+          "candidate": [
+            38
+          ]
+        },
+        "managedCollections": {
+          "baseline": [
+            0
+          ],
+          "candidate": [
+            0
+          ]
+        }
+      },
+      "decision": "accepted-within-median-budget",
+      "rationale": "Accept within budget; measured median and p95 are lower for this cohort. This is an individual observation, not evidence of a general speedup and not a credit against other rows.",
+      "p95DeltaMs": -49.66102099999989
+    },
+    {
+      "engine": "cil",
+      "case": "readonlyScalarLoop",
+      "baseline": {
+        "median": 136.22788550000018,
+        "p95": 173.66464099999985
+      },
+      "candidate": {
+        "median": 123.94647899999995,
+        "p95": 163.67981599999985
+      },
+      "medianDeltaMs": -12.28140650000023,
+      "medianPercent": -9.015339594330129,
+      "p95Percent": -5.749486448424468,
+      "counters": {
+        "managedAllocations": {
+          "baseline": [
+            0
+          ],
+          "candidate": [
+            0
+          ]
+        },
+        "managedAllocatedBytes": {
+          "baseline": [
+            0
+          ],
+          "candidate": [
+            0
+          ]
+        },
+        "managedCollections": {
+          "baseline": [
+            0
+          ],
+          "candidate": [
+            0
+          ]
+        }
+      },
+      "decision": "accepted-within-median-budget",
+      "rationale": "Accept within budget; this compiled control executes ldc.i8, not external ldsfld. Lower measured median/p95 are not a credit against other rows.",
+      "p95DeltaMs": -9.984825
+    },
+    {
+      "engine": "cil",
+      "case": "stringConstructorLoop",
+      "baseline": {
+        "median": 93.11788300000012,
+        "p95": 160.92577100000017
+      },
+      "candidate": {
+        "median": 90.52965000000006,
+        "p95": 111.819074
+      },
+      "medianDeltaMs": -2.5882330000000593,
+      "medianPercent": -2.7795230267424142,
+      "p95Percent": -30.515123025261204,
+      "counters": {
+        "managedAllocations": {
+          "baseline": [
+            2
+          ],
+          "candidate": [
+            2
+          ]
+        },
+        "managedAllocatedBytes": {
+          "baseline": [
+            56
+          ],
+          "candidate": [
+            56
+          ]
+        },
+        "managedCollections": {
+          "baseline": [
+            0
+          ],
+          "candidate": [
+            0
+          ]
+        }
+      },
+      "decision": "accepted-within-median-budget",
+      "rationale": "Accept within budget; median -2.779523% and lower p95. One empty char array and one cold empty string remain the only two allocations. This control does not measure nonempty UTF-16 copying.",
+      "p95DeltaMs": -49.10669700000017
+    },
+    {
+      "engine": "cil",
+      "case": "readonlyScalarFieldLoop",
+      "baseline": {
+        "median": 50.2348414999999,
+        "p95": 69.71467699999994
+      },
+      "candidate": {
+        "median": 49.59125349999999,
+        "p95": 73.05098500000008
+      },
+      "medianDeltaMs": -0.6435879999999088,
+      "medianPercent": -1.2811586157784771,
+      "p95Percent": 4.785660844416095,
+      "counters": {
+        "managedAllocations": {
+          "baseline": [
+            0
+          ],
+          "candidate": [
+            0
+          ]
+        },
+        "managedAllocatedBytes": {
+          "baseline": [
+            0
+          ],
+          "candidate": [
+            0
+          ]
+        },
+        "managedCollections": {
+          "baseline": [
+            0
+          ],
+          "candidate": [
+            0
+          ]
+        }
+      },
+      "decision": "accepted-within-median-budget",
+      "rationale": "Accept median within budget (-1.281159%) and explicitly accept the observed tail increase of +3.336308 ms (+4.785661%) per 5000 genuine field-load loop iterations. This independent ldsfld control initializes one numeric static slot and then reuses it without managed allocation. Tail movement remains reported; it is not called noise.",
+      "p95DeltaMs": 3.3363080000001446
+    }
+  ],
+  "newFields": [
+    {
+      "engine": "source",
+      "case": "readonlyStringLoop",
+      "median": 23.890972999999804,
+      "p95": 31.43499500000007,
+      "counters": {
+        "managedAllocations": [
+          2
+        ],
+        "managedAllocatedBytes": [
+          70
+        ],
+        "managedCollections": [
+          0
+        ]
+      },
+      "decision": "accepted as reported new-operation cost; no baseline comparison"
+    },
+    {
+      "engine": "cil",
+      "case": "readonlyStringLoop",
+      "median": 121.24384600000008,
+      "p95": 178.33294999999998,
+      "counters": {
+        "managedAllocations": [
+          2
+        ],
+        "managedAllocatedBytes": [
+          70
+        ],
+        "managedCollections": [
+          0
+        ]
+      },
+      "decision": "accepted as reported new-operation cost; no baseline comparison"
+    }
+  ],
+  "limitations": [
+    "Initial bcd18820 cohort remains rejected and retained; final acceptance applies only to af29812a with final ba0202ed runner and its own ABBA baseline.",
+    "No average-offset or general-speedup claim. Full-loop movement is not statistically isolated overhead of one check; allocation counters cover managed heap only, not host JavaScript allocations.",
+    "Five excluded warmups and nine samples per process, 18 pooled per revision per old control. Nearest-rank p95 at n=18 is the largest retained observation, not a precise population tail estimate.",
+    "Benchmarks ran serially under the root owner on a shared Linux x64 AMD EPYC 9V74 host with Node v24.19.0; no claim of exclusive machine isolation.",
+    "Cold literal rows are direct VM API calls; other rows include interpreter work and first initialization. Setup/compilation/admission/explicit host GC/checks are excluded; automatic managed GC is included.",
+    "No main-thread latency guarantee, no cross-platform/Rust/Wasm execution or A00/schema approval implied.",
+    "No further tuning or repeated sampling recommended absent a concrete new defect."
+  ]
+}

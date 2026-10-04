@@ -1,0 +1,3417 @@
+{
+  "main": "00c2489e659cbeaa29e9c5dfa4a3137fae4bd4ad",
+  "steps": [
+    {
+      "pr": 4509,
+      "branch": "codex/a09-string-reader",
+      "original": "408cae030fcf2738c38e13ad33a3efe5ecade0e2",
+      "head": "cb3806f9b637aa5fdf7934d399ad1d059783ac5c",
+      "tree": "9404357709535f7a645947bec0cac09f39ef7e64",
+      "baseTree": "afa8345922fbd7f22cf509ff3093e1bfb86b646a",
+      "files": [
+        {
+          "path": "packages/bcl-io/LICENSE",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "8322174098c0fb19eba36bef02c2aa37d55d393f",
+          "bytes": 1080
+        },
+        {
+          "path": "packages/bcl-io/README.md",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "4718c762c817e7636b5f3130a4984dda185d15f8",
+          "bytes": 2309
+        },
+        {
+          "path": "packages/bcl-io/build.contrib.json",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "d7d4f8953982c2985e4396d566c70024d53a0337",
+          "bytes": 154
+        },
+        {
+          "path": "packages/bcl-io/package.json",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "138a01bd9c0f71b21bb0f78ed2a4a84a90c44338",
+          "bytes": 379
+        },
+        {
+          "path": "packages/bcl-io/reference/string-reader-net10.txt",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "bf7529abed8dae21cbde2d04bf68867826094731",
+          "bytes": 342
+        },
+        {
+          "path": "packages/bcl-io/reference/string-reader/.gitignore",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "4ded7c4c7a8068942c0289ea8e7913d1815a183c",
+          "bytes": 12
+        },
+        {
+          "path": "packages/bcl-io/reference/string-reader/NativeProgram.cs",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "9b927541f98f48ef7a9841d3b9b4e49a5bb1fdd9",
+          "bytes": 1169
+        },
+        {
+          "path": "packages/bcl-io/reference/string-reader/Program.cs",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "6a6185023575ff7c12ef93e04153e20a6ea42223",
+          "bytes": 2208
+        },
+        {
+          "path": "packages/bcl-io/reference/string-reader/README.md",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "f9ab11dfaa4a1ee79e84602a66792688d3b10762",
+          "bytes": 1215
+        },
+        {
+          "path": "packages/bcl-io/reference/string-reader/StringReader.csproj",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "6934a2c3c828ee213ea0a7690c5830a41e3cc14b",
+          "bytes": 357
+        },
+        {
+          "path": "packages/bcl-io/reference/string-reader/global.json",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "da5c94450940dd26bb9cbecb64bc9e43498a31a1",
+          "bytes": 59
+        },
+        {
+          "path": "packages/bcl-io/smoke.mjs",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "ac58908329ec98b02b29ce618781a4bb788d59f4",
+          "bytes": 962
+        },
+        {
+          "path": "packages/bcl-io/src/index.js",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "4b104a31a87d65475082bd4369eaead7a71e004c",
+          "bytes": 511
+        },
+        {
+          "path": "packages/bcl-io/src/string-reader.js",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "57abd72b5687f87288a5d8b3003a1edc87cc47a1",
+          "bytes": 2874
+        },
+        {
+          "path": "packages/bcl-io/src/text-reader-writer.js",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "33a8f484a379524605e4de565df5b1e2f5788d33",
+          "bytes": 1318
+        },
+        {
+          "path": "packages/framework/package.json",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "35f270bf82acf405d797458106c17ab4d08b7898",
+          "bytes": 517
+        },
+        {
+          "path": "packages/framework/src/contributions/io-serialization.js",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "6287af66b5003747d2eded91d24cd4509849d722",
+          "bytes": 355
+        },
+        {
+          "path": "packages/framework/src/contributions/manifest.js",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "a8361ceac8f3721aaf010ddf39afd77ed4c6f9f3",
+          "bytes": 2308
+        },
+        {
+          "path": "packages/runtime/package.json",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "b7743827ec1844a077133b0ca7a5abc3316aa03b",
+          "bytes": 743
+        },
+        {
+          "path": "packages/runtime/src/bcl-adapter.js",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "8595f5569c9bd55ea7968d6b1bd01edf2ee28d02",
+          "bytes": 2255
+        },
+        {
+          "path": "planning/qualification/size-budgets.json",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "3981cb9837028dcab05ee4972d5e92d35162c6ec",
+          "bytes": 3671
+        },
+        {
+          "path": "tests/a09-string-reader.test.js",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "e2eb3c17d476f4b53cefeeffcfebdb39ae75423d",
+          "bytes": 8985
+        },
+        {
+          "path": "tests/fixtures/text-reader/engines.js",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "e2f4ee2037bac2c34d7159c603098b42450bbcfc",
+          "bytes": 3886
+        },
+        {
+          "path": "tests/manifests/A09.json",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "0dfcbd120f59f4d915017fd86e8887904872761c",
+          "bytes": 353
+        }
+      ]
+    },
+    {
+      "pr": 4510,
+      "branch": "codex/a09-string-writer",
+      "original": "3ffe7b9b7dd65475429d797b8825a81b2b33b1e3",
+      "parent": "cb3806f9b637aa5fdf7934d399ad1d059783ac5c",
+      "head": "e7ccdca8d6c2cea6bf628d377fb02fa46c202565",
+      "tree": "49e0b9f01fc4e9c3da605de08ce8b7040cb5a824",
+      "baseTree": "afa8345922fbd7f22cf509ff3093e1bfb86b646a",
+      "files": [
+        {
+          "path": "packages/bcl-io/LICENSE",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "8322174098c0fb19eba36bef02c2aa37d55d393f",
+          "bytes": 1080
+        },
+        {
+          "path": "packages/bcl-io/README.md",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "6925825d22895e393ab0e5a121dbdb0065af55c1",
+          "bytes": 3874
+        },
+        {
+          "path": "packages/bcl-io/build.contrib.json",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "d7d4f8953982c2985e4396d566c70024d53a0337",
+          "bytes": 154
+        },
+        {
+          "path": "packages/bcl-io/package.json",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "138a01bd9c0f71b21bb0f78ed2a4a84a90c44338",
+          "bytes": 379
+        },
+        {
+          "path": "packages/bcl-io/reference/string-reader-net10.txt",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "bf7529abed8dae21cbde2d04bf68867826094731",
+          "bytes": 342
+        },
+        {
+          "path": "packages/bcl-io/reference/string-reader/.gitignore",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "4ded7c4c7a8068942c0289ea8e7913d1815a183c",
+          "bytes": 12
+        },
+        {
+          "path": "packages/bcl-io/reference/string-reader/NativeProgram.cs",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "9b927541f98f48ef7a9841d3b9b4e49a5bb1fdd9",
+          "bytes": 1169
+        },
+        {
+          "path": "packages/bcl-io/reference/string-reader/Program.cs",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "6a6185023575ff7c12ef93e04153e20a6ea42223",
+          "bytes": 2208
+        },
+        {
+          "path": "packages/bcl-io/reference/string-reader/README.md",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "f9ab11dfaa4a1ee79e84602a66792688d3b10762",
+          "bytes": 1215
+        },
+        {
+          "path": "packages/bcl-io/reference/string-reader/StringReader.csproj",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "6934a2c3c828ee213ea0a7690c5830a41e3cc14b",
+          "bytes": 357
+        },
+        {
+          "path": "packages/bcl-io/reference/string-reader/global.json",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "da5c94450940dd26bb9cbecb64bc9e43498a31a1",
+          "bytes": 59
+        },
+        {
+          "path": "packages/bcl-io/reference/string-writer-net10.txt",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "905b8b0a6129b563f9d20a0d86d703283713fe7b",
+          "bytes": 319
+        },
+        {
+          "path": "packages/bcl-io/reference/string-writer/.gitignore",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "cd42ee34e873b4ddf17cdeeed2e6c0d4e094c62b",
+          "bytes": 10
+        },
+        {
+          "path": "packages/bcl-io/reference/string-writer/NativeProgram.cs",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "0abd609f2e151f0317d429bccde556e06b06a98f",
+          "bytes": 1721
+        },
+        {
+          "path": "packages/bcl-io/reference/string-writer/Program.cs",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "ad4666461c1bd3ab04c4dfbcedffae591bb2d4e2",
+          "bytes": 1792
+        },
+        {
+          "path": "packages/bcl-io/reference/string-writer/README.md",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "838e8a800ea8c4373f8002a87a70f81bdc0a2912",
+          "bytes": 1468
+        },
+        {
+          "path": "packages/bcl-io/reference/string-writer/StringWriter.csproj",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "6934a2c3c828ee213ea0a7690c5830a41e3cc14b",
+          "bytes": 357
+        },
+        {
+          "path": "packages/bcl-io/reference/string-writer/global.json",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "753a2fc144e077381e4bca7bf77335ce212a9f99",
+          "bytes": 63
+        },
+        {
+          "path": "packages/bcl-io/smoke.mjs",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "6d5bf40ccd7d13602f8684bda0803fe18645543a",
+          "bytes": 1580
+        },
+        {
+          "path": "packages/bcl-io/src/index.js",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "319bb32d49cffcb843370d1e5607ec5f922b96d2",
+          "bytes": 604
+        },
+        {
+          "path": "packages/bcl-io/src/string-reader.js",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "57abd72b5687f87288a5d8b3003a1edc87cc47a1",
+          "bytes": 2874
+        },
+        {
+          "path": "packages/bcl-io/src/string-writer-builder.js",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "b25e3a49dd1c2e1106520734622a4d601e2c5b8a",
+          "bytes": 1422
+        },
+        {
+          "path": "packages/bcl-io/src/string-writer.js",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "de9461f83dc1274d1d82ccfa7f7328924f9882c6",
+          "bytes": 3376
+        },
+        {
+          "path": "packages/bcl-io/src/text-reader-writer.js",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "33a8f484a379524605e4de565df5b1e2f5788d33",
+          "bytes": 1318
+        },
+        {
+          "path": "packages/bcl-io/src/text-writer.js",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "20b64071dee434ef933a93c9670c644746850c42",
+          "bytes": 1412
+        },
+        {
+          "path": "packages/framework/package.json",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "35f270bf82acf405d797458106c17ab4d08b7898",
+          "bytes": 517
+        },
+        {
+          "path": "packages/framework/src/contributions/io-serialization.js",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "6287af66b5003747d2eded91d24cd4509849d722",
+          "bytes": 355
+        },
+        {
+          "path": "packages/framework/src/contributions/manifest.js",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "a8361ceac8f3721aaf010ddf39afd77ed4c6f9f3",
+          "bytes": 2308
+        },
+        {
+          "path": "packages/runtime/package.json",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "b7743827ec1844a077133b0ca7a5abc3316aa03b",
+          "bytes": 743
+        },
+        {
+          "path": "packages/runtime/src/bcl-adapter.js",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "8595f5569c9bd55ea7968d6b1bd01edf2ee28d02",
+          "bytes": 2255
+        },
+        {
+          "path": "planning/qualification/size-budgets.json",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "3981cb9837028dcab05ee4972d5e92d35162c6ec",
+          "bytes": 3671
+        },
+        {
+          "path": "tests/a09-string-reader.test.js",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "f39847372014ff3542ab667e017ee3d9905a1541",
+          "bytes": 9144
+        },
+        {
+          "path": "tests/a09-string-writer.test.js",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "50a891853ca4e1e03015d62d5085ddbc7f8b8973",
+          "bytes": 10353
+        },
+        {
+          "path": "tests/fixtures/text-reader/engines.js",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "e2f4ee2037bac2c34d7159c603098b42450bbcfc",
+          "bytes": 3886
+        },
+        {
+          "path": "tests/fixtures/text-writer/engines.js",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "29fc9ee04244b224970c2e1d25cc66f1acb76db9",
+          "bytes": 4663
+        },
+        {
+          "path": "tests/manifests/A09.json",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "cc110e5ab51a532439dee449fe55e3b743d9f73c",
+          "bytes": 392
+        }
+      ]
+    },
+    {
+      "pr": 4513,
+      "branch": "codex/a09-string-reader-buffer",
+      "original": "6f1e0c1dd89d8dc9129f10446ad548cb82a8fd37",
+      "parent": "e7ccdca8d6c2cea6bf628d377fb02fa46c202565",
+      "head": "b9fb955e4aab9fa2464fd7afe17c1a6d23563c08",
+      "tree": "725b722d373cf79253f52a3cbfad5a3eaf42acd3",
+      "baseTree": "afa8345922fbd7f22cf509ff3093e1bfb86b646a",
+      "files": [
+        {
+          "path": "packages/bcl-io/LICENSE",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "8322174098c0fb19eba36bef02c2aa37d55d393f",
+          "bytes": 1080
+        },
+        {
+          "path": "packages/bcl-io/README.md",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "7b3ed35bb6d384825d6a0c20e5feee8962aebd18",
+          "bytes": 5323
+        },
+        {
+          "path": "packages/bcl-io/build.contrib.json",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "d7d4f8953982c2985e4396d566c70024d53a0337",
+          "bytes": 154
+        },
+        {
+          "path": "packages/bcl-io/package.json",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "138a01bd9c0f71b21bb0f78ed2a4a84a90c44338",
+          "bytes": 379
+        },
+        {
+          "path": "packages/bcl-io/reference/string-reader-buffer-net10.json",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "e841a1a9b8ce01d2f2f9f76d03684fbc11445bbc",
+          "bytes": 27793
+        },
+        {
+          "path": "packages/bcl-io/reference/string-reader-buffer/.gitignore",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "cd42ee34e873b4ddf17cdeeed2e6c0d4e094c62b",
+          "bytes": 10
+        },
+        {
+          "path": "packages/bcl-io/reference/string-reader-buffer/Program.cs",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "d65a7c389ab93c22e0b355b35adc4be613d4faa5",
+          "bytes": 3747
+        },
+        {
+          "path": "packages/bcl-io/reference/string-reader-buffer/README.md",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "c75dcda79a6dffe7892738ac5481b11f0b1248de",
+          "bytes": 812
+        },
+        {
+          "path": "packages/bcl-io/reference/string-reader-buffer/ReaderBuffer.csproj",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "f171653975c831d0216752d46ef837d80d385a70",
+          "bytes": 339
+        },
+        {
+          "path": "packages/bcl-io/reference/string-reader-buffer/global.json",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "8f4c9ef17eacde34bbbd70b442736638d764575a",
+          "bytes": 55
+        },
+        {
+          "path": "packages/bcl-io/reference/string-reader-net10.txt",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "bf7529abed8dae21cbde2d04bf68867826094731",
+          "bytes": 342
+        },
+        {
+          "path": "packages/bcl-io/reference/string-reader/.gitignore",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "4ded7c4c7a8068942c0289ea8e7913d1815a183c",
+          "bytes": 12
+        },
+        {
+          "path": "packages/bcl-io/reference/string-reader/NativeProgram.cs",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "9b927541f98f48ef7a9841d3b9b4e49a5bb1fdd9",
+          "bytes": 1169
+        },
+        {
+          "path": "packages/bcl-io/reference/string-reader/Program.cs",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "6a6185023575ff7c12ef93e04153e20a6ea42223",
+          "bytes": 2208
+        },
+        {
+          "path": "packages/bcl-io/reference/string-reader/README.md",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "f9ab11dfaa4a1ee79e84602a66792688d3b10762",
+          "bytes": 1215
+        },
+        {
+          "path": "packages/bcl-io/reference/string-reader/StringReader.csproj",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "6934a2c3c828ee213ea0a7690c5830a41e3cc14b",
+          "bytes": 357
+        },
+        {
+          "path": "packages/bcl-io/reference/string-reader/global.json",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "da5c94450940dd26bb9cbecb64bc9e43498a31a1",
+          "bytes": 59
+        },
+        {
+          "path": "packages/bcl-io/reference/string-writer-net10.txt",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "905b8b0a6129b563f9d20a0d86d703283713fe7b",
+          "bytes": 319
+        },
+        {
+          "path": "packages/bcl-io/reference/string-writer/.gitignore",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "cd42ee34e873b4ddf17cdeeed2e6c0d4e094c62b",
+          "bytes": 10
+        },
+        {
+          "path": "packages/bcl-io/reference/string-writer/NativeProgram.cs",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "0abd609f2e151f0317d429bccde556e06b06a98f",
+          "bytes": 1721
+        },
+        {
+          "path": "packages/bcl-io/reference/string-writer/Program.cs",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "ad4666461c1bd3ab04c4dfbcedffae591bb2d4e2",
+          "bytes": 1792
+        },
+        {
+          "path": "packages/bcl-io/reference/string-writer/README.md",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "838e8a800ea8c4373f8002a87a70f81bdc0a2912",
+          "bytes": 1468
+        },
+        {
+          "path": "packages/bcl-io/reference/string-writer/StringWriter.csproj",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "6934a2c3c828ee213ea0a7690c5830a41e3cc14b",
+          "bytes": 357
+        },
+        {
+          "path": "packages/bcl-io/reference/string-writer/global.json",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "753a2fc144e077381e4bca7bf77335ce212a9f99",
+          "bytes": 63
+        },
+        {
+          "path": "packages/bcl-io/smoke.mjs",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "723a0e88c3d75d6416052c46cb58173a8f9e0823",
+          "bytes": 1580
+        },
+        {
+          "path": "packages/bcl-io/src/index.js",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "74e0628dd135afbfec4ef622f4568b6118b3bf54",
+          "bytes": 770
+        },
+        {
+          "path": "packages/bcl-io/src/string-reader-buffer.js",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "024812a7b239f8bc3821f763fef946b8735b6bc0",
+          "bytes": 2360
+        },
+        {
+          "path": "packages/bcl-io/src/string-reader.js",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "a54c588c6cebfc614a3f35a5c0d1ce4497f1e875",
+          "bytes": 3086
+        },
+        {
+          "path": "packages/bcl-io/src/string-writer-builder.js",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "b25e3a49dd1c2e1106520734622a4d601e2c5b8a",
+          "bytes": 1422
+        },
+        {
+          "path": "packages/bcl-io/src/string-writer.js",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "de9461f83dc1274d1d82ccfa7f7328924f9882c6",
+          "bytes": 3376
+        },
+        {
+          "path": "packages/bcl-io/src/text-reader-writer.js",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "4bfc374c1e721d6ba94ffa69d56b4e0fc616bf25",
+          "bytes": 1494
+        },
+        {
+          "path": "packages/bcl-io/src/text-writer.js",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "6a97b0f290abe907e941d17a5bdb8cb00e62bc0a",
+          "bytes": 1429
+        },
+        {
+          "path": "packages/framework/package.json",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "35f270bf82acf405d797458106c17ab4d08b7898",
+          "bytes": 517
+        },
+        {
+          "path": "packages/framework/src/contributions/io-serialization.js",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "6287af66b5003747d2eded91d24cd4509849d722",
+          "bytes": 355
+        },
+        {
+          "path": "packages/framework/src/contributions/manifest.js",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "a8361ceac8f3721aaf010ddf39afd77ed4c6f9f3",
+          "bytes": 2308
+        },
+        {
+          "path": "packages/runtime/package.json",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "b7743827ec1844a077133b0ca7a5abc3316aa03b",
+          "bytes": 743
+        },
+        {
+          "path": "packages/runtime/src/bcl-adapter.js",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "8595f5569c9bd55ea7968d6b1bd01edf2ee28d02",
+          "bytes": 2255
+        },
+        {
+          "path": "planning/qualification/size-budgets.json",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "3981cb9837028dcab05ee4972d5e92d35162c6ec",
+          "bytes": 3671
+        },
+        {
+          "path": "tests/a09-string-reader-buffer.test.js",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "aa4f43db7615c4e0816728fe60ab40fee3080e4e",
+          "bytes": 10210
+        },
+        {
+          "path": "tests/a09-string-reader.test.js",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "3feeaafbec63eeacbbe5f836ad10a42f28714c55",
+          "bytes": 9147
+        },
+        {
+          "path": "tests/a09-string-writer.test.js",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "50a891853ca4e1e03015d62d5085ddbc7f8b8973",
+          "bytes": 10353
+        },
+        {
+          "path": "tests/fixtures/text-reader/buffer.js",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "924222ea140fcefd9632956da6e3489af5aebe54",
+          "bytes": 4516
+        },
+        {
+          "path": "tests/fixtures/text-reader/engines.js",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "e2f4ee2037bac2c34d7159c603098b42450bbcfc",
+          "bytes": 3886
+        },
+        {
+          "path": "tests/fixtures/text-writer/engines.js",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "29fc9ee04244b224970c2e1d25cc66f1acb76db9",
+          "bytes": 4663
+        },
+        {
+          "path": "tests/manifests/A09.json",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "c087bd2f4f7ba18b4f7267afc31548a5c775ba80",
+          "bytes": 438
+        }
+      ]
+    },
+    {
+      "pr": 4514,
+      "branch": "codex/a09-string-writer-object",
+      "original": "376c1955474d04a5386e22352a8f27a18a46f2c5",
+      "parent": "b9fb955e4aab9fa2464fd7afe17c1a6d23563c08",
+      "head": "42e745b5878774245d7b9dc63385731f8576834e",
+      "tree": "bf2d16ec64a00cc587d336a2dab6525a6154a4ff",
+      "resolution": "Retain all four registered framework Object.ToString owners, including both Stopwatch and StringWriter.",
+      "baseTree": "afa8345922fbd7f22cf509ff3093e1bfb86b646a",
+      "files": [
+        {
+          "path": "packages/bcl-io/LICENSE",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "8322174098c0fb19eba36bef02c2aa37d55d393f",
+          "bytes": 1080
+        },
+        {
+          "path": "packages/bcl-io/README.md",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "65e07820271d7b1511006ed513acc4d35a41fbb0",
+          "bytes": 6021
+        },
+        {
+          "path": "packages/bcl-io/build.contrib.json",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "d7d4f8953982c2985e4396d566c70024d53a0337",
+          "bytes": 154
+        },
+        {
+          "path": "packages/bcl-io/package.json",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "138a01bd9c0f71b21bb0f78ed2a4a84a90c44338",
+          "bytes": 379
+        },
+        {
+          "path": "packages/bcl-io/reference/string-reader-buffer-net10.json",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "e841a1a9b8ce01d2f2f9f76d03684fbc11445bbc",
+          "bytes": 27793
+        },
+        {
+          "path": "packages/bcl-io/reference/string-reader-buffer/.gitignore",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "cd42ee34e873b4ddf17cdeeed2e6c0d4e094c62b",
+          "bytes": 10
+        },
+        {
+          "path": "packages/bcl-io/reference/string-reader-buffer/Program.cs",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "d65a7c389ab93c22e0b355b35adc4be613d4faa5",
+          "bytes": 3747
+        },
+        {
+          "path": "packages/bcl-io/reference/string-reader-buffer/README.md",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "c75dcda79a6dffe7892738ac5481b11f0b1248de",
+          "bytes": 812
+        },
+        {
+          "path": "packages/bcl-io/reference/string-reader-buffer/ReaderBuffer.csproj",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "f171653975c831d0216752d46ef837d80d385a70",
+          "bytes": 339
+        },
+        {
+          "path": "packages/bcl-io/reference/string-reader-buffer/global.json",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "8f4c9ef17eacde34bbbd70b442736638d764575a",
+          "bytes": 55
+        },
+        {
+          "path": "packages/bcl-io/reference/string-reader-net10.txt",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "bf7529abed8dae21cbde2d04bf68867826094731",
+          "bytes": 342
+        },
+        {
+          "path": "packages/bcl-io/reference/string-reader/.gitignore",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "4ded7c4c7a8068942c0289ea8e7913d1815a183c",
+          "bytes": 12
+        },
+        {
+          "path": "packages/bcl-io/reference/string-reader/NativeProgram.cs",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "9b927541f98f48ef7a9841d3b9b4e49a5bb1fdd9",
+          "bytes": 1169
+        },
+        {
+          "path": "packages/bcl-io/reference/string-reader/Program.cs",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "6a6185023575ff7c12ef93e04153e20a6ea42223",
+          "bytes": 2208
+        },
+        {
+          "path": "packages/bcl-io/reference/string-reader/README.md",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "f9ab11dfaa4a1ee79e84602a66792688d3b10762",
+          "bytes": 1215
+        },
+        {
+          "path": "packages/bcl-io/reference/string-reader/StringReader.csproj",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "6934a2c3c828ee213ea0a7690c5830a41e3cc14b",
+          "bytes": 357
+        },
+        {
+          "path": "packages/bcl-io/reference/string-reader/global.json",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "da5c94450940dd26bb9cbecb64bc9e43498a31a1",
+          "bytes": 59
+        },
+        {
+          "path": "packages/bcl-io/reference/string-writer-net10.txt",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "905b8b0a6129b563f9d20a0d86d703283713fe7b",
+          "bytes": 319
+        },
+        {
+          "path": "packages/bcl-io/reference/string-writer-object-net10.json",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "ebe0cc76a4959541a0c6e6ce9711399c2e06e0d5",
+          "bytes": 1308
+        },
+        {
+          "path": "packages/bcl-io/reference/string-writer-object/.gitignore",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "cd42ee34e873b4ddf17cdeeed2e6c0d4e094c62b",
+          "bytes": 10
+        },
+        {
+          "path": "packages/bcl-io/reference/string-writer-object/Program.cs",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "f9b457f5b81ef565f9fc32dcd66b74bebdb01fbc",
+          "bytes": 1631
+        },
+        {
+          "path": "packages/bcl-io/reference/string-writer-object/README.md",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "da28ec1382d8dbbbd5b37975765899228163534c",
+          "bytes": 689
+        },
+        {
+          "path": "packages/bcl-io/reference/string-writer-object/StringWriterObject.csproj",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "f171653975c831d0216752d46ef837d80d385a70",
+          "bytes": 339
+        },
+        {
+          "path": "packages/bcl-io/reference/string-writer-object/global.json",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "8f4c9ef17eacde34bbbd70b442736638d764575a",
+          "bytes": 55
+        },
+        {
+          "path": "packages/bcl-io/reference/string-writer/.gitignore",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "cd42ee34e873b4ddf17cdeeed2e6c0d4e094c62b",
+          "bytes": 10
+        },
+        {
+          "path": "packages/bcl-io/reference/string-writer/NativeProgram.cs",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "0abd609f2e151f0317d429bccde556e06b06a98f",
+          "bytes": 1721
+        },
+        {
+          "path": "packages/bcl-io/reference/string-writer/Program.cs",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "ad4666461c1bd3ab04c4dfbcedffae591bb2d4e2",
+          "bytes": 1792
+        },
+        {
+          "path": "packages/bcl-io/reference/string-writer/README.md",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "838e8a800ea8c4373f8002a87a70f81bdc0a2912",
+          "bytes": 1468
+        },
+        {
+          "path": "packages/bcl-io/reference/string-writer/StringWriter.csproj",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "6934a2c3c828ee213ea0a7690c5830a41e3cc14b",
+          "bytes": 357
+        },
+        {
+          "path": "packages/bcl-io/reference/string-writer/global.json",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "753a2fc144e077381e4bca7bf77335ce212a9f99",
+          "bytes": 63
+        },
+        {
+          "path": "packages/bcl-io/smoke.mjs",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "723a0e88c3d75d6416052c46cb58173a8f9e0823",
+          "bytes": 1580
+        },
+        {
+          "path": "packages/bcl-io/src/index.js",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "74e0628dd135afbfec4ef622f4568b6118b3bf54",
+          "bytes": 770
+        },
+        {
+          "path": "packages/bcl-io/src/string-reader-buffer.js",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "024812a7b239f8bc3821f763fef946b8735b6bc0",
+          "bytes": 2360
+        },
+        {
+          "path": "packages/bcl-io/src/string-reader.js",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "a54c588c6cebfc614a3f35a5c0d1ce4497f1e875",
+          "bytes": 3086
+        },
+        {
+          "path": "packages/bcl-io/src/string-writer-builder.js",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "b25e3a49dd1c2e1106520734622a4d601e2c5b8a",
+          "bytes": 1422
+        },
+        {
+          "path": "packages/bcl-io/src/string-writer.js",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "de9461f83dc1274d1d82ccfa7f7328924f9882c6",
+          "bytes": 3376
+        },
+        {
+          "path": "packages/bcl-io/src/text-reader-writer.js",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "4bfc374c1e721d6ba94ffa69d56b4e0fc616bf25",
+          "bytes": 1494
+        },
+        {
+          "path": "packages/bcl-io/src/text-writer.js",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "634be1cf0c506e9225c8fa8733bf094c9c870daa",
+          "bytes": 1461
+        },
+        {
+          "path": "packages/framework/package.json",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "35f270bf82acf405d797458106c17ab4d08b7898",
+          "bytes": 517
+        },
+        {
+          "path": "packages/framework/src/contributions/io-serialization.js",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "6287af66b5003747d2eded91d24cd4509849d722",
+          "bytes": 355
+        },
+        {
+          "path": "packages/framework/src/contributions/manifest.js",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "a8361ceac8f3721aaf010ddf39afd77ed4c6f9f3",
+          "bytes": 2308
+        },
+        {
+          "path": "packages/runtime/package.json",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "b7743827ec1844a077133b0ca7a5abc3316aa03b",
+          "bytes": 743
+        },
+        {
+          "path": "packages/runtime/src/bcl-adapter.js",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "8595f5569c9bd55ea7968d6b1bd01edf2ee28d02",
+          "bytes": 2255
+        },
+        {
+          "path": "planning/qualification/size-budgets.json",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "3981cb9837028dcab05ee4972d5e92d35162c6ec",
+          "bytes": 3671
+        },
+        {
+          "path": "tests/a07-framework-object-string.test.js",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "b996345ead5cde9656d5acb5916bcc9074d5d818",
+          "bytes": 10860
+        },
+        {
+          "path": "tests/a09-string-reader-buffer.test.js",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "aa4f43db7615c4e0816728fe60ab40fee3080e4e",
+          "bytes": 10210
+        },
+        {
+          "path": "tests/a09-string-reader.test.js",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "3feeaafbec63eeacbbe5f836ad10a42f28714c55",
+          "bytes": 9147
+        },
+        {
+          "path": "tests/a09-string-writer-object.test.js",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "a95761e55d3331971e1862c2728c74e65155cadc",
+          "bytes": 6665
+        },
+        {
+          "path": "tests/a09-string-writer.test.js",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "50a891853ca4e1e03015d62d5085ddbc7f8b8973",
+          "bytes": 10353
+        },
+        {
+          "path": "tests/fixtures/text-reader/buffer.js",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "924222ea140fcefd9632956da6e3489af5aebe54",
+          "bytes": 4516
+        },
+        {
+          "path": "tests/fixtures/text-reader/engines.js",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "e2f4ee2037bac2c34d7159c603098b42450bbcfc",
+          "bytes": 3886
+        },
+        {
+          "path": "tests/fixtures/text-writer/engines.js",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "29fc9ee04244b224970c2e1d25cc66f1acb76db9",
+          "bytes": 4663
+        },
+        {
+          "path": "tests/manifests/A09.json",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "8d20ff835209bbb4508dd75950016023b8c16020",
+          "bytes": 484
+        }
+      ]
+    },
+    {
+      "pr": 4515,
+      "branch": "codex/a09-string-writer-buffer",
+      "original": "955da4bb7197d027c5471034ed01e6e4dcd60a31",
+      "parent": "42e745b5878774245d7b9dc63385731f8576834e",
+      "head": "3472e24862e5ae36954230a16b75d4a6b9e2f9ec",
+      "tree": "bbe2cb04eb78f45a427a99963d96523ffa7e3709",
+      "baseTree": "afa8345922fbd7f22cf509ff3093e1bfb86b646a",
+      "files": [
+        {
+          "path": "packages/bcl-io/LICENSE",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "8322174098c0fb19eba36bef02c2aa37d55d393f",
+          "bytes": 1080
+        },
+        {
+          "path": "packages/bcl-io/README.md",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "ca3ab7ace62bfef7b71ee280afefa4be4ad3416b",
+          "bytes": 7835
+        },
+        {
+          "path": "packages/bcl-io/build.contrib.json",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "d7d4f8953982c2985e4396d566c70024d53a0337",
+          "bytes": 154
+        },
+        {
+          "path": "packages/bcl-io/package.json",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "138a01bd9c0f71b21bb0f78ed2a4a84a90c44338",
+          "bytes": 379
+        },
+        {
+          "path": "packages/bcl-io/reference/string-reader-buffer-net10.json",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "e841a1a9b8ce01d2f2f9f76d03684fbc11445bbc",
+          "bytes": 27793
+        },
+        {
+          "path": "packages/bcl-io/reference/string-reader-buffer/.gitignore",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "cd42ee34e873b4ddf17cdeeed2e6c0d4e094c62b",
+          "bytes": 10
+        },
+        {
+          "path": "packages/bcl-io/reference/string-reader-buffer/Program.cs",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "d65a7c389ab93c22e0b355b35adc4be613d4faa5",
+          "bytes": 3747
+        },
+        {
+          "path": "packages/bcl-io/reference/string-reader-buffer/README.md",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "c75dcda79a6dffe7892738ac5481b11f0b1248de",
+          "bytes": 812
+        },
+        {
+          "path": "packages/bcl-io/reference/string-reader-buffer/ReaderBuffer.csproj",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "f171653975c831d0216752d46ef837d80d385a70",
+          "bytes": 339
+        },
+        {
+          "path": "packages/bcl-io/reference/string-reader-buffer/global.json",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "8f4c9ef17eacde34bbbd70b442736638d764575a",
+          "bytes": 55
+        },
+        {
+          "path": "packages/bcl-io/reference/string-reader-net10.txt",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "bf7529abed8dae21cbde2d04bf68867826094731",
+          "bytes": 342
+        },
+        {
+          "path": "packages/bcl-io/reference/string-reader/.gitignore",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "4ded7c4c7a8068942c0289ea8e7913d1815a183c",
+          "bytes": 12
+        },
+        {
+          "path": "packages/bcl-io/reference/string-reader/NativeProgram.cs",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "9b927541f98f48ef7a9841d3b9b4e49a5bb1fdd9",
+          "bytes": 1169
+        },
+        {
+          "path": "packages/bcl-io/reference/string-reader/Program.cs",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "6a6185023575ff7c12ef93e04153e20a6ea42223",
+          "bytes": 2208
+        },
+        {
+          "path": "packages/bcl-io/reference/string-reader/README.md",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "f9ab11dfaa4a1ee79e84602a66792688d3b10762",
+          "bytes": 1215
+        },
+        {
+          "path": "packages/bcl-io/reference/string-reader/StringReader.csproj",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "6934a2c3c828ee213ea0a7690c5830a41e3cc14b",
+          "bytes": 357
+        },
+        {
+          "path": "packages/bcl-io/reference/string-reader/global.json",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "da5c94450940dd26bb9cbecb64bc9e43498a31a1",
+          "bytes": 59
+        },
+        {
+          "path": "packages/bcl-io/reference/string-writer-buffer-net10.json",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "1245b8740de3fbc22c8636a874aa69e70a5e3994",
+          "bytes": 31788
+        },
+        {
+          "path": "packages/bcl-io/reference/string-writer-buffer/.gitignore",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "cd42ee34e873b4ddf17cdeeed2e6c0d4e094c62b",
+          "bytes": 10
+        },
+        {
+          "path": "packages/bcl-io/reference/string-writer-buffer/Program.cs",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "edb7d4b8211d02973446b11a3115be57317b96a4",
+          "bytes": 3641
+        },
+        {
+          "path": "packages/bcl-io/reference/string-writer-buffer/README.md",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "5697c5fa08f57f36048dee26a11f66e2326536f9",
+          "bytes": 846
+        },
+        {
+          "path": "packages/bcl-io/reference/string-writer-buffer/WriterBuffer.csproj",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "f171653975c831d0216752d46ef837d80d385a70",
+          "bytes": 339
+        },
+        {
+          "path": "packages/bcl-io/reference/string-writer-buffer/global.json",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "8f4c9ef17eacde34bbbd70b442736638d764575a",
+          "bytes": 55
+        },
+        {
+          "path": "packages/bcl-io/reference/string-writer-net10.txt",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "905b8b0a6129b563f9d20a0d86d703283713fe7b",
+          "bytes": 319
+        },
+        {
+          "path": "packages/bcl-io/reference/string-writer-object-net10.json",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "ebe0cc76a4959541a0c6e6ce9711399c2e06e0d5",
+          "bytes": 1308
+        },
+        {
+          "path": "packages/bcl-io/reference/string-writer-object/.gitignore",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "cd42ee34e873b4ddf17cdeeed2e6c0d4e094c62b",
+          "bytes": 10
+        },
+        {
+          "path": "packages/bcl-io/reference/string-writer-object/Program.cs",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "f9b457f5b81ef565f9fc32dcd66b74bebdb01fbc",
+          "bytes": 1631
+        },
+        {
+          "path": "packages/bcl-io/reference/string-writer-object/README.md",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "da28ec1382d8dbbbd5b37975765899228163534c",
+          "bytes": 689
+        },
+        {
+          "path": "packages/bcl-io/reference/string-writer-object/StringWriterObject.csproj",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "f171653975c831d0216752d46ef837d80d385a70",
+          "bytes": 339
+        },
+        {
+          "path": "packages/bcl-io/reference/string-writer-object/global.json",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "8f4c9ef17eacde34bbbd70b442736638d764575a",
+          "bytes": 55
+        },
+        {
+          "path": "packages/bcl-io/reference/string-writer/.gitignore",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "cd42ee34e873b4ddf17cdeeed2e6c0d4e094c62b",
+          "bytes": 10
+        },
+        {
+          "path": "packages/bcl-io/reference/string-writer/NativeProgram.cs",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "0abd609f2e151f0317d429bccde556e06b06a98f",
+          "bytes": 1721
+        },
+        {
+          "path": "packages/bcl-io/reference/string-writer/Program.cs",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "ad4666461c1bd3ab04c4dfbcedffae591bb2d4e2",
+          "bytes": 1792
+        },
+        {
+          "path": "packages/bcl-io/reference/string-writer/README.md",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "838e8a800ea8c4373f8002a87a70f81bdc0a2912",
+          "bytes": 1468
+        },
+        {
+          "path": "packages/bcl-io/reference/string-writer/StringWriter.csproj",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "6934a2c3c828ee213ea0a7690c5830a41e3cc14b",
+          "bytes": 357
+        },
+        {
+          "path": "packages/bcl-io/reference/string-writer/global.json",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "753a2fc144e077381e4bca7bf77335ce212a9f99",
+          "bytes": 63
+        },
+        {
+          "path": "packages/bcl-io/smoke.mjs",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "9ba97972f14997e87b939f46b4a8d60345c862e1",
+          "bytes": 1692
+        },
+        {
+          "path": "packages/bcl-io/src/character-buffer.js",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "74f302cda765f48913663ae6b69b97fb8144b420",
+          "bytes": 1192
+        },
+        {
+          "path": "packages/bcl-io/src/index.js",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "74e0628dd135afbfec4ef622f4568b6118b3bf54",
+          "bytes": 770
+        },
+        {
+          "path": "packages/bcl-io/src/string-reader-buffer.js",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "421a3b06eb4226f381014b76159ab91eb8f1b720",
+          "bytes": 1494
+        },
+        {
+          "path": "packages/bcl-io/src/string-reader.js",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "a54c588c6cebfc614a3f35a5c0d1ce4497f1e875",
+          "bytes": 3086
+        },
+        {
+          "path": "packages/bcl-io/src/string-writer-buffer.js",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "884211b90349b2bb9d1d4f4e1099e9186e876069",
+          "bytes": 1821
+        },
+        {
+          "path": "packages/bcl-io/src/string-writer-builder.js",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "f54291f5c79eb9213e83429c7feaf1e1368498f2",
+          "bytes": 1730
+        },
+        {
+          "path": "packages/bcl-io/src/string-writer.js",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "e578ee3aaac82552de0d8c96dc9cf7429d91851c",
+          "bytes": 3612
+        },
+        {
+          "path": "packages/bcl-io/src/text-reader-writer.js",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "4bfc374c1e721d6ba94ffa69d56b4e0fc616bf25",
+          "bytes": 1494
+        },
+        {
+          "path": "packages/bcl-io/src/text-writer.js",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "189a260476961c34a7a18977d5d57ca7ea7a712e",
+          "bytes": 1644
+        },
+        {
+          "path": "packages/framework/package.json",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "35f270bf82acf405d797458106c17ab4d08b7898",
+          "bytes": 517
+        },
+        {
+          "path": "packages/framework/src/contributions/io-serialization.js",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "6287af66b5003747d2eded91d24cd4509849d722",
+          "bytes": 355
+        },
+        {
+          "path": "packages/framework/src/contributions/manifest.js",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "a8361ceac8f3721aaf010ddf39afd77ed4c6f9f3",
+          "bytes": 2308
+        },
+        {
+          "path": "packages/runtime/package.json",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "b7743827ec1844a077133b0ca7a5abc3316aa03b",
+          "bytes": 743
+        },
+        {
+          "path": "packages/runtime/src/bcl-adapter.js",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "8595f5569c9bd55ea7968d6b1bd01edf2ee28d02",
+          "bytes": 2255
+        },
+        {
+          "path": "planning/qualification/size-budgets.json",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "01d97d702f345864947ec3f4b7317f213eebc54d",
+          "bytes": 3771
+        },
+        {
+          "path": "scripts/benchmarks/a09-string-writer-buffer.mjs",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "1c663beb817a6b3ae7b24bb6ba09d566a271842c",
+          "bytes": 4000
+        },
+        {
+          "path": "tests/a07-framework-object-string.test.js",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "b996345ead5cde9656d5acb5916bcc9074d5d818",
+          "bytes": 10860
+        },
+        {
+          "path": "tests/a09-string-reader-buffer.test.js",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "adb963c8463705cb7b03971909d7fd895041e78a",
+          "bytes": 10378
+        },
+        {
+          "path": "tests/a09-string-reader.test.js",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "3feeaafbec63eeacbbe5f836ad10a42f28714c55",
+          "bytes": 9147
+        },
+        {
+          "path": "tests/a09-string-writer-buffer.test.js",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "6168a26b47c1b94a0fcc91a046cd5b3214f360ad",
+          "bytes": 13093
+        },
+        {
+          "path": "tests/a09-string-writer-object.test.js",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "a95761e55d3331971e1862c2728c74e65155cadc",
+          "bytes": 6665
+        },
+        {
+          "path": "tests/a09-string-writer.test.js",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "50a891853ca4e1e03015d62d5085ddbc7f8b8973",
+          "bytes": 10353
+        },
+        {
+          "path": "tests/fixtures/text-reader/buffer.js",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "924222ea140fcefd9632956da6e3489af5aebe54",
+          "bytes": 4516
+        },
+        {
+          "path": "tests/fixtures/text-reader/engines.js",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "e2f4ee2037bac2c34d7159c603098b42450bbcfc",
+          "bytes": 3886
+        },
+        {
+          "path": "tests/fixtures/text-writer/engines.js",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "29fc9ee04244b224970c2e1d25cc66f1acb76db9",
+          "bytes": 4663
+        },
+        {
+          "path": "tests/manifests/A09.json",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "3218027029ceb259b4bfbe1418041bab6cf879e8",
+          "bytes": 530
+        }
+      ]
+    },
+    {
+      "pr": 4516,
+      "branch": "codex/a09-string-writer-line-buffer",
+      "original": "cbeffbae0b2968f82c5fefa2ca6b9bae8c67f82c",
+      "parent": "3472e24862e5ae36954230a16b75d4a6b9e2f9ec",
+      "head": "59c078a6a6fea5d5c99c06148a871ad5fb46dc98",
+      "tree": "3602a3677baaf0e68afaadc3cd2ab2244b7061ff",
+      "baseTree": "afa8345922fbd7f22cf509ff3093e1bfb86b646a",
+      "files": [
+        {
+          "path": "packages/bcl-io/LICENSE",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "8322174098c0fb19eba36bef02c2aa37d55d393f",
+          "bytes": 1080
+        },
+        {
+          "path": "packages/bcl-io/README.md",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "4806864156016990ffb1b7e8852e9f73e1c1eb57",
+          "bytes": 9546
+        },
+        {
+          "path": "packages/bcl-io/build.contrib.json",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "d7d4f8953982c2985e4396d566c70024d53a0337",
+          "bytes": 154
+        },
+        {
+          "path": "packages/bcl-io/package.json",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "138a01bd9c0f71b21bb0f78ed2a4a84a90c44338",
+          "bytes": 379
+        },
+        {
+          "path": "packages/bcl-io/reference/string-reader-buffer-net10.json",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "e841a1a9b8ce01d2f2f9f76d03684fbc11445bbc",
+          "bytes": 27793
+        },
+        {
+          "path": "packages/bcl-io/reference/string-reader-buffer/.gitignore",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "cd42ee34e873b4ddf17cdeeed2e6c0d4e094c62b",
+          "bytes": 10
+        },
+        {
+          "path": "packages/bcl-io/reference/string-reader-buffer/Program.cs",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "d65a7c389ab93c22e0b355b35adc4be613d4faa5",
+          "bytes": 3747
+        },
+        {
+          "path": "packages/bcl-io/reference/string-reader-buffer/README.md",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "c75dcda79a6dffe7892738ac5481b11f0b1248de",
+          "bytes": 812
+        },
+        {
+          "path": "packages/bcl-io/reference/string-reader-buffer/ReaderBuffer.csproj",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "f171653975c831d0216752d46ef837d80d385a70",
+          "bytes": 339
+        },
+        {
+          "path": "packages/bcl-io/reference/string-reader-buffer/global.json",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "8f4c9ef17eacde34bbbd70b442736638d764575a",
+          "bytes": 55
+        },
+        {
+          "path": "packages/bcl-io/reference/string-reader-net10.txt",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "bf7529abed8dae21cbde2d04bf68867826094731",
+          "bytes": 342
+        },
+        {
+          "path": "packages/bcl-io/reference/string-reader/.gitignore",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "4ded7c4c7a8068942c0289ea8e7913d1815a183c",
+          "bytes": 12
+        },
+        {
+          "path": "packages/bcl-io/reference/string-reader/NativeProgram.cs",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "9b927541f98f48ef7a9841d3b9b4e49a5bb1fdd9",
+          "bytes": 1169
+        },
+        {
+          "path": "packages/bcl-io/reference/string-reader/Program.cs",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "6a6185023575ff7c12ef93e04153e20a6ea42223",
+          "bytes": 2208
+        },
+        {
+          "path": "packages/bcl-io/reference/string-reader/README.md",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "f9ab11dfaa4a1ee79e84602a66792688d3b10762",
+          "bytes": 1215
+        },
+        {
+          "path": "packages/bcl-io/reference/string-reader/StringReader.csproj",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "6934a2c3c828ee213ea0a7690c5830a41e3cc14b",
+          "bytes": 357
+        },
+        {
+          "path": "packages/bcl-io/reference/string-reader/global.json",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "da5c94450940dd26bb9cbecb64bc9e43498a31a1",
+          "bytes": 59
+        },
+        {
+          "path": "packages/bcl-io/reference/string-writer-buffer-net10.json",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "1245b8740de3fbc22c8636a874aa69e70a5e3994",
+          "bytes": 31788
+        },
+        {
+          "path": "packages/bcl-io/reference/string-writer-buffer/.gitignore",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "cd42ee34e873b4ddf17cdeeed2e6c0d4e094c62b",
+          "bytes": 10
+        },
+        {
+          "path": "packages/bcl-io/reference/string-writer-buffer/Program.cs",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "edb7d4b8211d02973446b11a3115be57317b96a4",
+          "bytes": 3641
+        },
+        {
+          "path": "packages/bcl-io/reference/string-writer-buffer/README.md",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "5697c5fa08f57f36048dee26a11f66e2326536f9",
+          "bytes": 846
+        },
+        {
+          "path": "packages/bcl-io/reference/string-writer-buffer/WriterBuffer.csproj",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "f171653975c831d0216752d46ef837d80d385a70",
+          "bytes": 339
+        },
+        {
+          "path": "packages/bcl-io/reference/string-writer-buffer/global.json",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "8f4c9ef17eacde34bbbd70b442736638d764575a",
+          "bytes": 55
+        },
+        {
+          "path": "packages/bcl-io/reference/string-writer-line-buffer-net10.json",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "d00c4e7c7265d1d6d7c8a59ea441f447bccc52af",
+          "bytes": 47565
+        },
+        {
+          "path": "packages/bcl-io/reference/string-writer-line-buffer/.gitignore",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "cd42ee34e873b4ddf17cdeeed2e6c0d4e094c62b",
+          "bytes": 10
+        },
+        {
+          "path": "packages/bcl-io/reference/string-writer-line-buffer/Program.cs",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "f3911bf7e0d6f3e5ffc7011ca9e5aed2481aba46",
+          "bytes": 5882
+        },
+        {
+          "path": "packages/bcl-io/reference/string-writer-line-buffer/README.md",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "c1c108c704357027d7189acf22c1db147a0d78a4",
+          "bytes": 1170
+        },
+        {
+          "path": "packages/bcl-io/reference/string-writer-line-buffer/WriterLineBuffer.csproj",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "f171653975c831d0216752d46ef837d80d385a70",
+          "bytes": 339
+        },
+        {
+          "path": "packages/bcl-io/reference/string-writer-line-buffer/global.json",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "8f4c9ef17eacde34bbbd70b442736638d764575a",
+          "bytes": 55
+        },
+        {
+          "path": "packages/bcl-io/reference/string-writer-net10.txt",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "905b8b0a6129b563f9d20a0d86d703283713fe7b",
+          "bytes": 319
+        },
+        {
+          "path": "packages/bcl-io/reference/string-writer-object-net10.json",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "ebe0cc76a4959541a0c6e6ce9711399c2e06e0d5",
+          "bytes": 1308
+        },
+        {
+          "path": "packages/bcl-io/reference/string-writer-object/.gitignore",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "cd42ee34e873b4ddf17cdeeed2e6c0d4e094c62b",
+          "bytes": 10
+        },
+        {
+          "path": "packages/bcl-io/reference/string-writer-object/Program.cs",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "f9b457f5b81ef565f9fc32dcd66b74bebdb01fbc",
+          "bytes": 1631
+        },
+        {
+          "path": "packages/bcl-io/reference/string-writer-object/README.md",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "da28ec1382d8dbbbd5b37975765899228163534c",
+          "bytes": 689
+        },
+        {
+          "path": "packages/bcl-io/reference/string-writer-object/StringWriterObject.csproj",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "f171653975c831d0216752d46ef837d80d385a70",
+          "bytes": 339
+        },
+        {
+          "path": "packages/bcl-io/reference/string-writer-object/global.json",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "8f4c9ef17eacde34bbbd70b442736638d764575a",
+          "bytes": 55
+        },
+        {
+          "path": "packages/bcl-io/reference/string-writer/.gitignore",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "cd42ee34e873b4ddf17cdeeed2e6c0d4e094c62b",
+          "bytes": 10
+        },
+        {
+          "path": "packages/bcl-io/reference/string-writer/NativeProgram.cs",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "0abd609f2e151f0317d429bccde556e06b06a98f",
+          "bytes": 1721
+        },
+        {
+          "path": "packages/bcl-io/reference/string-writer/Program.cs",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "ad4666461c1bd3ab04c4dfbcedffae591bb2d4e2",
+          "bytes": 1792
+        },
+        {
+          "path": "packages/bcl-io/reference/string-writer/README.md",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "838e8a800ea8c4373f8002a87a70f81bdc0a2912",
+          "bytes": 1468
+        },
+        {
+          "path": "packages/bcl-io/reference/string-writer/StringWriter.csproj",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "6934a2c3c828ee213ea0a7690c5830a41e3cc14b",
+          "bytes": 357
+        },
+        {
+          "path": "packages/bcl-io/reference/string-writer/global.json",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "753a2fc144e077381e4bca7bf77335ce212a9f99",
+          "bytes": 63
+        },
+        {
+          "path": "packages/bcl-io/smoke.mjs",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "2771ca97e322c67c5263982ee7abc057606e7cf2",
+          "bytes": 1809
+        },
+        {
+          "path": "packages/bcl-io/src/character-buffer.js",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "74f302cda765f48913663ae6b69b97fb8144b420",
+          "bytes": 1192
+        },
+        {
+          "path": "packages/bcl-io/src/index.js",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "74e0628dd135afbfec4ef622f4568b6118b3bf54",
+          "bytes": 770
+        },
+        {
+          "path": "packages/bcl-io/src/string-reader-buffer.js",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "421a3b06eb4226f381014b76159ab91eb8f1b720",
+          "bytes": 1494
+        },
+        {
+          "path": "packages/bcl-io/src/string-reader.js",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "a54c588c6cebfc614a3f35a5c0d1ce4497f1e875",
+          "bytes": 3086
+        },
+        {
+          "path": "packages/bcl-io/src/string-writer-buffer.js",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "884211b90349b2bb9d1d4f4e1099e9186e876069",
+          "bytes": 1821
+        },
+        {
+          "path": "packages/bcl-io/src/string-writer-builder.js",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "f54291f5c79eb9213e83429c7feaf1e1368498f2",
+          "bytes": 1730
+        },
+        {
+          "path": "packages/bcl-io/src/string-writer.js",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "87011c3f6697f968196351aa1dc007faaeca65d0",
+          "bytes": 4114
+        },
+        {
+          "path": "packages/bcl-io/src/text-reader-writer.js",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "4bfc374c1e721d6ba94ffa69d56b4e0fc616bf25",
+          "bytes": 1494
+        },
+        {
+          "path": "packages/bcl-io/src/text-writer.js",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "3ad964a8cc1b5bc0ef338698bf7963306507f530",
+          "bytes": 1768
+        },
+        {
+          "path": "packages/framework/package.json",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "35f270bf82acf405d797458106c17ab4d08b7898",
+          "bytes": 517
+        },
+        {
+          "path": "packages/framework/src/contributions/io-serialization.js",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "6287af66b5003747d2eded91d24cd4509849d722",
+          "bytes": 355
+        },
+        {
+          "path": "packages/framework/src/contributions/manifest.js",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "a8361ceac8f3721aaf010ddf39afd77ed4c6f9f3",
+          "bytes": 2308
+        },
+        {
+          "path": "packages/runtime/package.json",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "b7743827ec1844a077133b0ca7a5abc3316aa03b",
+          "bytes": 743
+        },
+        {
+          "path": "packages/runtime/src/bcl-adapter.js",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "8595f5569c9bd55ea7968d6b1bd01edf2ee28d02",
+          "bytes": 2255
+        },
+        {
+          "path": "planning/qualification/size-budgets.json",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "01d97d702f345864947ec3f4b7317f213eebc54d",
+          "bytes": 3771
+        },
+        {
+          "path": "scripts/benchmarks/a09-string-writer-buffer.mjs",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "1c663beb817a6b3ae7b24bb6ba09d566a271842c",
+          "bytes": 4000
+        },
+        {
+          "path": "scripts/benchmarks/a09-string-writer-line-buffer.mjs",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "94f6ee8da5bb905acf7487b70e8cfd8dbe2b2dd6",
+          "bytes": 4253
+        },
+        {
+          "path": "tests/a07-framework-object-string.test.js",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "b996345ead5cde9656d5acb5916bcc9074d5d818",
+          "bytes": 10860
+        },
+        {
+          "path": "tests/a09-string-reader-buffer.test.js",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "5dc619d0dad8e12c19f50053feccf3c32a1e131e",
+          "bytes": 10550
+        },
+        {
+          "path": "tests/a09-string-reader.test.js",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "3feeaafbec63eeacbbe5f836ad10a42f28714c55",
+          "bytes": 9147
+        },
+        {
+          "path": "tests/a09-string-writer-buffer.test.js",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "2e5155657dd50160f6f693aaa224a94ed74ede00",
+          "bytes": 10095
+        },
+        {
+          "path": "tests/a09-string-writer-line-buffer.test.js",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "5d4f3031277971bea44347c703cf253539084551",
+          "bytes": 12087
+        },
+        {
+          "path": "tests/a09-string-writer-object.test.js",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "a95761e55d3331971e1862c2728c74e65155cadc",
+          "bytes": 6665
+        },
+        {
+          "path": "tests/a09-string-writer.test.js",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "50a891853ca4e1e03015d62d5085ddbc7f8b8973",
+          "bytes": 10353
+        },
+        {
+          "path": "tests/fixtures/text-reader/buffer.js",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "924222ea140fcefd9632956da6e3489af5aebe54",
+          "bytes": 4516
+        },
+        {
+          "path": "tests/fixtures/text-reader/engines.js",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "e2f4ee2037bac2c34d7159c603098b42450bbcfc",
+          "bytes": 3886
+        },
+        {
+          "path": "tests/fixtures/text-writer/buffer-cases.js",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "fa2ba60a00db002611000364ef991efe02432f66",
+          "bytes": 4322
+        },
+        {
+          "path": "tests/fixtures/text-writer/engines.js",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "29fc9ee04244b224970c2e1d25cc66f1acb76db9",
+          "bytes": 4663
+        },
+        {
+          "path": "tests/manifests/A09.json",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "c7d03a728d91d9cea7b9fb507b6b4178d9bd454f",
+          "bytes": 581
+        }
+      ]
+    },
+    {
+      "pr": 4517,
+      "branch": "codex/a09-string-writer-char-line",
+      "original": "bac87e4fcb3264886d6eeb6fff4c8089c29865c4",
+      "parent": "59c078a6a6fea5d5c99c06148a871ad5fb46dc98",
+      "head": "726fbd8303042c7634a057807b51adeaddffa9a8",
+      "tree": "ddd94ac0868ecf995463b8af0d1c97a2fcb2e8a4",
+      "baseTree": "afa8345922fbd7f22cf509ff3093e1bfb86b646a",
+      "files": [
+        {
+          "path": "packages/bcl-io/LICENSE",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "8322174098c0fb19eba36bef02c2aa37d55d393f",
+          "bytes": 1080
+        },
+        {
+          "path": "packages/bcl-io/README.md",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "469f500fee8cf7a40650fc021609197b86445169",
+          "bytes": 10773
+        },
+        {
+          "path": "packages/bcl-io/build.contrib.json",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "d7d4f8953982c2985e4396d566c70024d53a0337",
+          "bytes": 154
+        },
+        {
+          "path": "packages/bcl-io/package.json",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "138a01bd9c0f71b21bb0f78ed2a4a84a90c44338",
+          "bytes": 379
+        },
+        {
+          "path": "packages/bcl-io/reference/string-reader-buffer-net10.json",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "e841a1a9b8ce01d2f2f9f76d03684fbc11445bbc",
+          "bytes": 27793
+        },
+        {
+          "path": "packages/bcl-io/reference/string-reader-buffer/.gitignore",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "cd42ee34e873b4ddf17cdeeed2e6c0d4e094c62b",
+          "bytes": 10
+        },
+        {
+          "path": "packages/bcl-io/reference/string-reader-buffer/Program.cs",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "d65a7c389ab93c22e0b355b35adc4be613d4faa5",
+          "bytes": 3747
+        },
+        {
+          "path": "packages/bcl-io/reference/string-reader-buffer/README.md",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "c75dcda79a6dffe7892738ac5481b11f0b1248de",
+          "bytes": 812
+        },
+        {
+          "path": "packages/bcl-io/reference/string-reader-buffer/ReaderBuffer.csproj",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "f171653975c831d0216752d46ef837d80d385a70",
+          "bytes": 339
+        },
+        {
+          "path": "packages/bcl-io/reference/string-reader-buffer/global.json",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "8f4c9ef17eacde34bbbd70b442736638d764575a",
+          "bytes": 55
+        },
+        {
+          "path": "packages/bcl-io/reference/string-reader-net10.txt",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "bf7529abed8dae21cbde2d04bf68867826094731",
+          "bytes": 342
+        },
+        {
+          "path": "packages/bcl-io/reference/string-reader/.gitignore",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "4ded7c4c7a8068942c0289ea8e7913d1815a183c",
+          "bytes": 12
+        },
+        {
+          "path": "packages/bcl-io/reference/string-reader/NativeProgram.cs",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "9b927541f98f48ef7a9841d3b9b4e49a5bb1fdd9",
+          "bytes": 1169
+        },
+        {
+          "path": "packages/bcl-io/reference/string-reader/Program.cs",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "6a6185023575ff7c12ef93e04153e20a6ea42223",
+          "bytes": 2208
+        },
+        {
+          "path": "packages/bcl-io/reference/string-reader/README.md",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "f9ab11dfaa4a1ee79e84602a66792688d3b10762",
+          "bytes": 1215
+        },
+        {
+          "path": "packages/bcl-io/reference/string-reader/StringReader.csproj",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "6934a2c3c828ee213ea0a7690c5830a41e3cc14b",
+          "bytes": 357
+        },
+        {
+          "path": "packages/bcl-io/reference/string-reader/global.json",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "da5c94450940dd26bb9cbecb64bc9e43498a31a1",
+          "bytes": 59
+        },
+        {
+          "path": "packages/bcl-io/reference/string-writer-buffer-net10.json",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "1245b8740de3fbc22c8636a874aa69e70a5e3994",
+          "bytes": 31788
+        },
+        {
+          "path": "packages/bcl-io/reference/string-writer-buffer/.gitignore",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "cd42ee34e873b4ddf17cdeeed2e6c0d4e094c62b",
+          "bytes": 10
+        },
+        {
+          "path": "packages/bcl-io/reference/string-writer-buffer/Program.cs",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "edb7d4b8211d02973446b11a3115be57317b96a4",
+          "bytes": 3641
+        },
+        {
+          "path": "packages/bcl-io/reference/string-writer-buffer/README.md",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "5697c5fa08f57f36048dee26a11f66e2326536f9",
+          "bytes": 846
+        },
+        {
+          "path": "packages/bcl-io/reference/string-writer-buffer/WriterBuffer.csproj",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "f171653975c831d0216752d46ef837d80d385a70",
+          "bytes": 339
+        },
+        {
+          "path": "packages/bcl-io/reference/string-writer-buffer/global.json",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "8f4c9ef17eacde34bbbd70b442736638d764575a",
+          "bytes": 55
+        },
+        {
+          "path": "packages/bcl-io/reference/string-writer-char-line-net10.json",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "62be3f5f9750132356d060946b72783114f46139",
+          "bytes": 14634
+        },
+        {
+          "path": "packages/bcl-io/reference/string-writer-char-line/.gitignore",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "cd42ee34e873b4ddf17cdeeed2e6c0d4e094c62b",
+          "bytes": 10
+        },
+        {
+          "path": "packages/bcl-io/reference/string-writer-char-line/Program.cs",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "cbf4010bc18e91c01648d6d3e904375fa93f345f",
+          "bytes": 3680
+        },
+        {
+          "path": "packages/bcl-io/reference/string-writer-char-line/README.md",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "fb78ab18128473577ec866d91c838b0c7f0128f8",
+          "bytes": 1016
+        },
+        {
+          "path": "packages/bcl-io/reference/string-writer-char-line/WriterCharLine.csproj",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "f171653975c831d0216752d46ef837d80d385a70",
+          "bytes": 339
+        },
+        {
+          "path": "packages/bcl-io/reference/string-writer-char-line/global.json",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "8f4c9ef17eacde34bbbd70b442736638d764575a",
+          "bytes": 55
+        },
+        {
+          "path": "packages/bcl-io/reference/string-writer-line-buffer-net10.json",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "d00c4e7c7265d1d6d7c8a59ea441f447bccc52af",
+          "bytes": 47565
+        },
+        {
+          "path": "packages/bcl-io/reference/string-writer-line-buffer/.gitignore",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "cd42ee34e873b4ddf17cdeeed2e6c0d4e094c62b",
+          "bytes": 10
+        },
+        {
+          "path": "packages/bcl-io/reference/string-writer-line-buffer/Program.cs",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "f3911bf7e0d6f3e5ffc7011ca9e5aed2481aba46",
+          "bytes": 5882
+        },
+        {
+          "path": "packages/bcl-io/reference/string-writer-line-buffer/README.md",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "c1c108c704357027d7189acf22c1db147a0d78a4",
+          "bytes": 1170
+        },
+        {
+          "path": "packages/bcl-io/reference/string-writer-line-buffer/WriterLineBuffer.csproj",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "f171653975c831d0216752d46ef837d80d385a70",
+          "bytes": 339
+        },
+        {
+          "path": "packages/bcl-io/reference/string-writer-line-buffer/global.json",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "8f4c9ef17eacde34bbbd70b442736638d764575a",
+          "bytes": 55
+        },
+        {
+          "path": "packages/bcl-io/reference/string-writer-net10.txt",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "905b8b0a6129b563f9d20a0d86d703283713fe7b",
+          "bytes": 319
+        },
+        {
+          "path": "packages/bcl-io/reference/string-writer-object-net10.json",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "ebe0cc76a4959541a0c6e6ce9711399c2e06e0d5",
+          "bytes": 1308
+        },
+        {
+          "path": "packages/bcl-io/reference/string-writer-object/.gitignore",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "cd42ee34e873b4ddf17cdeeed2e6c0d4e094c62b",
+          "bytes": 10
+        },
+        {
+          "path": "packages/bcl-io/reference/string-writer-object/Program.cs",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "f9b457f5b81ef565f9fc32dcd66b74bebdb01fbc",
+          "bytes": 1631
+        },
+        {
+          "path": "packages/bcl-io/reference/string-writer-object/README.md",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "da28ec1382d8dbbbd5b37975765899228163534c",
+          "bytes": 689
+        },
+        {
+          "path": "packages/bcl-io/reference/string-writer-object/StringWriterObject.csproj",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "f171653975c831d0216752d46ef837d80d385a70",
+          "bytes": 339
+        },
+        {
+          "path": "packages/bcl-io/reference/string-writer-object/global.json",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "8f4c9ef17eacde34bbbd70b442736638d764575a",
+          "bytes": 55
+        },
+        {
+          "path": "packages/bcl-io/reference/string-writer/.gitignore",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "cd42ee34e873b4ddf17cdeeed2e6c0d4e094c62b",
+          "bytes": 10
+        },
+        {
+          "path": "packages/bcl-io/reference/string-writer/NativeProgram.cs",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "0abd609f2e151f0317d429bccde556e06b06a98f",
+          "bytes": 1721
+        },
+        {
+          "path": "packages/bcl-io/reference/string-writer/Program.cs",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "ad4666461c1bd3ab04c4dfbcedffae591bb2d4e2",
+          "bytes": 1792
+        },
+        {
+          "path": "packages/bcl-io/reference/string-writer/README.md",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "838e8a800ea8c4373f8002a87a70f81bdc0a2912",
+          "bytes": 1468
+        },
+        {
+          "path": "packages/bcl-io/reference/string-writer/StringWriter.csproj",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "6934a2c3c828ee213ea0a7690c5830a41e3cc14b",
+          "bytes": 357
+        },
+        {
+          "path": "packages/bcl-io/reference/string-writer/global.json",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "753a2fc144e077381e4bca7bf77335ce212a9f99",
+          "bytes": 63
+        },
+        {
+          "path": "packages/bcl-io/smoke.mjs",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "5fc6e01b0590140eb8d0c1d49d5f801e752aed05",
+          "bytes": 1834
+        },
+        {
+          "path": "packages/bcl-io/src/character-buffer.js",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "74f302cda765f48913663ae6b69b97fb8144b420",
+          "bytes": 1192
+        },
+        {
+          "path": "packages/bcl-io/src/index.js",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "74e0628dd135afbfec4ef622f4568b6118b3bf54",
+          "bytes": 770
+        },
+        {
+          "path": "packages/bcl-io/src/string-reader-buffer.js",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "421a3b06eb4226f381014b76159ab91eb8f1b720",
+          "bytes": 1494
+        },
+        {
+          "path": "packages/bcl-io/src/string-reader.js",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "a54c588c6cebfc614a3f35a5c0d1ce4497f1e875",
+          "bytes": 3086
+        },
+        {
+          "path": "packages/bcl-io/src/string-writer-buffer.js",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "884211b90349b2bb9d1d4f4e1099e9186e876069",
+          "bytes": 1821
+        },
+        {
+          "path": "packages/bcl-io/src/string-writer-builder.js",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "f54291f5c79eb9213e83429c7feaf1e1368498f2",
+          "bytes": 1730
+        },
+        {
+          "path": "packages/bcl-io/src/string-writer.js",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "79a1998f794a1faefa3fa38a9ec63b5e3bc088ba",
+          "bytes": 4252
+        },
+        {
+          "path": "packages/bcl-io/src/text-reader-writer.js",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "4bfc374c1e721d6ba94ffa69d56b4e0fc616bf25",
+          "bytes": 1494
+        },
+        {
+          "path": "packages/bcl-io/src/text-writer.js",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "dad8659a3113c1c86581a7ac09eaa393bf801736",
+          "bytes": 1821
+        },
+        {
+          "path": "packages/framework/package.json",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "35f270bf82acf405d797458106c17ab4d08b7898",
+          "bytes": 517
+        },
+        {
+          "path": "packages/framework/src/contributions/io-serialization.js",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "6287af66b5003747d2eded91d24cd4509849d722",
+          "bytes": 355
+        },
+        {
+          "path": "packages/framework/src/contributions/manifest.js",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "a8361ceac8f3721aaf010ddf39afd77ed4c6f9f3",
+          "bytes": 2308
+        },
+        {
+          "path": "packages/runtime/package.json",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "b7743827ec1844a077133b0ca7a5abc3316aa03b",
+          "bytes": 743
+        },
+        {
+          "path": "packages/runtime/src/bcl-adapter.js",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "8595f5569c9bd55ea7968d6b1bd01edf2ee28d02",
+          "bytes": 2255
+        },
+        {
+          "path": "planning/qualification/size-budgets.json",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "01d97d702f345864947ec3f4b7317f213eebc54d",
+          "bytes": 3771
+        },
+        {
+          "path": "scripts/benchmarks/a09-string-writer-buffer.mjs",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "1c663beb817a6b3ae7b24bb6ba09d566a271842c",
+          "bytes": 4000
+        },
+        {
+          "path": "scripts/benchmarks/a09-string-writer-line-buffer.mjs",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "fa7df409b081f476058f33f3fcf9774590e12902",
+          "bytes": 4558
+        },
+        {
+          "path": "tests/a07-framework-object-string.test.js",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "b996345ead5cde9656d5acb5916bcc9074d5d818",
+          "bytes": 10860
+        },
+        {
+          "path": "tests/a09-string-reader-buffer.test.js",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "ae6559dd247dd2999a63fb3e23e8305914517c56",
+          "bytes": 10661
+        },
+        {
+          "path": "tests/a09-string-reader.test.js",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "3feeaafbec63eeacbbe5f836ad10a42f28714c55",
+          "bytes": 9147
+        },
+        {
+          "path": "tests/a09-string-writer-buffer.test.js",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "2e5155657dd50160f6f693aaa224a94ed74ede00",
+          "bytes": 10095
+        },
+        {
+          "path": "tests/a09-string-writer-char-line.test.js",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "92b24d122d23eafbd025c7efc321f8f167b52284",
+          "bytes": 12332
+        },
+        {
+          "path": "tests/a09-string-writer-line-buffer.test.js",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "5d4f3031277971bea44347c703cf253539084551",
+          "bytes": 12087
+        },
+        {
+          "path": "tests/a09-string-writer-object.test.js",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "a95761e55d3331971e1862c2728c74e65155cadc",
+          "bytes": 6665
+        },
+        {
+          "path": "tests/a09-string-writer.test.js",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "50a891853ca4e1e03015d62d5085ddbc7f8b8973",
+          "bytes": 10353
+        },
+        {
+          "path": "tests/fixtures/text-reader/buffer.js",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "924222ea140fcefd9632956da6e3489af5aebe54",
+          "bytes": 4516
+        },
+        {
+          "path": "tests/fixtures/text-reader/engines.js",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "e2f4ee2037bac2c34d7159c603098b42450bbcfc",
+          "bytes": 3886
+        },
+        {
+          "path": "tests/fixtures/text-writer/buffer-cases.js",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "fa2ba60a00db002611000364ef991efe02432f66",
+          "bytes": 4322
+        },
+        {
+          "path": "tests/fixtures/text-writer/engines.js",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "29fc9ee04244b224970c2e1d25cc66f1acb76db9",
+          "bytes": 4663
+        },
+        {
+          "path": "tests/manifests/A09.json",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "1ad3cdfc5a204f5a9c85079c5abd74f60b163f10",
+          "bytes": 630
+        }
+      ]
+    },
+    {
+      "pr": 4542,
+      "branch": "codex/a09-string-writer-scalars",
+      "original": "c01f8b5bede834b067a270a105edd2e059355157",
+      "localRunnerHead": "2ad30f33c7cdbb6e27178ebc874bd3b166a1fe0b",
+      "preservedRemoteMerge": "6c49380180c0f3949b963ac370eef17d7ff15d09",
+      "parent": "726fbd8303042c7634a057807b51adeaddffa9a8",
+      "head": "fe8288772be85395909d5de582c444db3d605ca3",
+      "tree": "541c835f876aefd506ec55ee30511929f131accd",
+      "resolution": "Retain corrected benchmark runner and README from 2ad when preserving the published c01 scalar head.",
+      "integratedProductHead": "7c8ddde425f7e2369c952be04b1fe562e8f77e8d",
+      "headBeforeJsonFixtureCorrection": "9b18416e8153f15a51b4cc9368bfe4dda9214590",
+      "headBeforeDispatchRefactor": "211db93e66b6b539540291c208ff6fdb971cc93f",
+      "baseTree": "afa8345922fbd7f22cf509ff3093e1bfb86b646a",
+      "files": [
+        {
+          "path": "docs/runtime14-api.md",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "50d2f6ace84a97c274c9d20df406c843a415bf01",
+          "bytes": 12625
+        },
+        {
+          "path": "packages/bcl-io/LICENSE",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "8322174098c0fb19eba36bef02c2aa37d55d393f",
+          "bytes": 1080
+        },
+        {
+          "path": "packages/bcl-io/README.md",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "7de56cd7eceb657cc6594eef90fadd7dd72ade5b",
+          "bytes": 15135
+        },
+        {
+          "path": "packages/bcl-io/benchmarks/README.md",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "ca7df336609ffc39b3614db8648109442547e325",
+          "bytes": 7422
+        },
+        {
+          "path": "packages/bcl-io/benchmarks/string-writer-scalars.mjs",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "c8ec3cf95daa58e47b50b3b108777fca7fb23e20",
+          "bytes": 11835
+        },
+        {
+          "path": "packages/bcl-io/build.contrib.json",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "d7d4f8953982c2985e4396d566c70024d53a0337",
+          "bytes": 154
+        },
+        {
+          "path": "packages/bcl-io/package.json",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "138a01bd9c0f71b21bb0f78ed2a4a84a90c44338",
+          "bytes": 379
+        },
+        {
+          "path": "packages/bcl-io/reference/string-reader-buffer-net10.json",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "e841a1a9b8ce01d2f2f9f76d03684fbc11445bbc",
+          "bytes": 27793
+        },
+        {
+          "path": "packages/bcl-io/reference/string-reader-buffer/.gitignore",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "cd42ee34e873b4ddf17cdeeed2e6c0d4e094c62b",
+          "bytes": 10
+        },
+        {
+          "path": "packages/bcl-io/reference/string-reader-buffer/Program.cs",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "d65a7c389ab93c22e0b355b35adc4be613d4faa5",
+          "bytes": 3747
+        },
+        {
+          "path": "packages/bcl-io/reference/string-reader-buffer/README.md",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "c75dcda79a6dffe7892738ac5481b11f0b1248de",
+          "bytes": 812
+        },
+        {
+          "path": "packages/bcl-io/reference/string-reader-buffer/ReaderBuffer.csproj",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "f171653975c831d0216752d46ef837d80d385a70",
+          "bytes": 339
+        },
+        {
+          "path": "packages/bcl-io/reference/string-reader-buffer/global.json",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "8f4c9ef17eacde34bbbd70b442736638d764575a",
+          "bytes": 55
+        },
+        {
+          "path": "packages/bcl-io/reference/string-reader-net10.txt",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "bf7529abed8dae21cbde2d04bf68867826094731",
+          "bytes": 342
+        },
+        {
+          "path": "packages/bcl-io/reference/string-reader/.gitignore",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "4ded7c4c7a8068942c0289ea8e7913d1815a183c",
+          "bytes": 12
+        },
+        {
+          "path": "packages/bcl-io/reference/string-reader/NativeProgram.cs",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "9b927541f98f48ef7a9841d3b9b4e49a5bb1fdd9",
+          "bytes": 1169
+        },
+        {
+          "path": "packages/bcl-io/reference/string-reader/Program.cs",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "6a6185023575ff7c12ef93e04153e20a6ea42223",
+          "bytes": 2208
+        },
+        {
+          "path": "packages/bcl-io/reference/string-reader/README.md",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "f9ab11dfaa4a1ee79e84602a66792688d3b10762",
+          "bytes": 1215
+        },
+        {
+          "path": "packages/bcl-io/reference/string-reader/StringReader.csproj",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "6934a2c3c828ee213ea0a7690c5830a41e3cc14b",
+          "bytes": 357
+        },
+        {
+          "path": "packages/bcl-io/reference/string-reader/global.json",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "da5c94450940dd26bb9cbecb64bc9e43498a31a1",
+          "bytes": 59
+        },
+        {
+          "path": "packages/bcl-io/reference/string-writer-buffer-net10.json",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "1245b8740de3fbc22c8636a874aa69e70a5e3994",
+          "bytes": 31788
+        },
+        {
+          "path": "packages/bcl-io/reference/string-writer-buffer/.gitignore",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "cd42ee34e873b4ddf17cdeeed2e6c0d4e094c62b",
+          "bytes": 10
+        },
+        {
+          "path": "packages/bcl-io/reference/string-writer-buffer/Program.cs",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "edb7d4b8211d02973446b11a3115be57317b96a4",
+          "bytes": 3641
+        },
+        {
+          "path": "packages/bcl-io/reference/string-writer-buffer/README.md",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "5697c5fa08f57f36048dee26a11f66e2326536f9",
+          "bytes": 846
+        },
+        {
+          "path": "packages/bcl-io/reference/string-writer-buffer/WriterBuffer.csproj",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "f171653975c831d0216752d46ef837d80d385a70",
+          "bytes": 339
+        },
+        {
+          "path": "packages/bcl-io/reference/string-writer-buffer/global.json",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "8f4c9ef17eacde34bbbd70b442736638d764575a",
+          "bytes": 55
+        },
+        {
+          "path": "packages/bcl-io/reference/string-writer-char-line-net10.json",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "62be3f5f9750132356d060946b72783114f46139",
+          "bytes": 14634
+        },
+        {
+          "path": "packages/bcl-io/reference/string-writer-char-line/.gitignore",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "cd42ee34e873b4ddf17cdeeed2e6c0d4e094c62b",
+          "bytes": 10
+        },
+        {
+          "path": "packages/bcl-io/reference/string-writer-char-line/Program.cs",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "cbf4010bc18e91c01648d6d3e904375fa93f345f",
+          "bytes": 3680
+        },
+        {
+          "path": "packages/bcl-io/reference/string-writer-char-line/README.md",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "fb78ab18128473577ec866d91c838b0c7f0128f8",
+          "bytes": 1016
+        },
+        {
+          "path": "packages/bcl-io/reference/string-writer-char-line/WriterCharLine.csproj",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "f171653975c831d0216752d46ef837d80d385a70",
+          "bytes": 339
+        },
+        {
+          "path": "packages/bcl-io/reference/string-writer-char-line/global.json",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "8f4c9ef17eacde34bbbd70b442736638d764575a",
+          "bytes": 55
+        },
+        {
+          "path": "packages/bcl-io/reference/string-writer-line-buffer-net10.json",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "d00c4e7c7265d1d6d7c8a59ea441f447bccc52af",
+          "bytes": 47565
+        },
+        {
+          "path": "packages/bcl-io/reference/string-writer-line-buffer/.gitignore",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "cd42ee34e873b4ddf17cdeeed2e6c0d4e094c62b",
+          "bytes": 10
+        },
+        {
+          "path": "packages/bcl-io/reference/string-writer-line-buffer/Program.cs",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "f3911bf7e0d6f3e5ffc7011ca9e5aed2481aba46",
+          "bytes": 5882
+        },
+        {
+          "path": "packages/bcl-io/reference/string-writer-line-buffer/README.md",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "c1c108c704357027d7189acf22c1db147a0d78a4",
+          "bytes": 1170
+        },
+        {
+          "path": "packages/bcl-io/reference/string-writer-line-buffer/WriterLineBuffer.csproj",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "f171653975c831d0216752d46ef837d80d385a70",
+          "bytes": 339
+        },
+        {
+          "path": "packages/bcl-io/reference/string-writer-line-buffer/global.json",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "8f4c9ef17eacde34bbbd70b442736638d764575a",
+          "bytes": 55
+        },
+        {
+          "path": "packages/bcl-io/reference/string-writer-net10.txt",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "905b8b0a6129b563f9d20a0d86d703283713fe7b",
+          "bytes": 319
+        },
+        {
+          "path": "packages/bcl-io/reference/string-writer-object-net10.json",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "ebe0cc76a4959541a0c6e6ce9711399c2e06e0d5",
+          "bytes": 1308
+        },
+        {
+          "path": "packages/bcl-io/reference/string-writer-object/.gitignore",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "cd42ee34e873b4ddf17cdeeed2e6c0d4e094c62b",
+          "bytes": 10
+        },
+        {
+          "path": "packages/bcl-io/reference/string-writer-object/Program.cs",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "f9b457f5b81ef565f9fc32dcd66b74bebdb01fbc",
+          "bytes": 1631
+        },
+        {
+          "path": "packages/bcl-io/reference/string-writer-object/README.md",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "da28ec1382d8dbbbd5b37975765899228163534c",
+          "bytes": 689
+        },
+        {
+          "path": "packages/bcl-io/reference/string-writer-object/StringWriterObject.csproj",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "f171653975c831d0216752d46ef837d80d385a70",
+          "bytes": 339
+        },
+        {
+          "path": "packages/bcl-io/reference/string-writer-object/global.json",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "8f4c9ef17eacde34bbbd70b442736638d764575a",
+          "bytes": 55
+        },
+        {
+          "path": "packages/bcl-io/reference/string-writer-scalars-net10.json",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "fa09198aad96141a925607c851054b06b50d2417",
+          "bytes": 197799
+        },
+        {
+          "path": "packages/bcl-io/reference/string-writer-scalars/.gitignore",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "cd42ee34e873b4ddf17cdeeed2e6c0d4e094c62b",
+          "bytes": 10
+        },
+        {
+          "path": "packages/bcl-io/reference/string-writer-scalars/Program.cs",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "a3cab54d7ba9b7956f5b07c2494e497af73bcf14",
+          "bytes": 9067
+        },
+        {
+          "path": "packages/bcl-io/reference/string-writer-scalars/README.md",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "acefceeaadff4a840f0578bacffdd32858d74d94",
+          "bytes": 4805
+        },
+        {
+          "path": "packages/bcl-io/reference/string-writer-scalars/StringWriterScalars.csproj",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "f171653975c831d0216752d46ef837d80d385a70",
+          "bytes": 339
+        },
+        {
+          "path": "packages/bcl-io/reference/string-writer-scalars/global.json",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "666da1f58b610332f959435a3c0019332e3de667",
+          "bytes": 79
+        },
+        {
+          "path": "packages/bcl-io/reference/string-writer-string-line-net10.json",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "48f00b37b7ec7a3e594e400889d205d08fddbd3b",
+          "bytes": 110473
+        },
+        {
+          "path": "packages/bcl-io/reference/string-writer-string-line/.gitignore",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "cd42ee34e873b4ddf17cdeeed2e6c0d4e094c62b",
+          "bytes": 10
+        },
+        {
+          "path": "packages/bcl-io/reference/string-writer-string-line/Program.cs",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "729befd14a08f1e933436c47771f0e284103faf3",
+          "bytes": 6345
+        },
+        {
+          "path": "packages/bcl-io/reference/string-writer-string-line/README.md",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "3666dfb4ebd9e19741997013be548ffb02c1e0d0",
+          "bytes": 4280
+        },
+        {
+          "path": "packages/bcl-io/reference/string-writer-string-line/StringWriterStringLine.csproj",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "f171653975c831d0216752d46ef837d80d385a70",
+          "bytes": 339
+        },
+        {
+          "path": "packages/bcl-io/reference/string-writer-string-line/global.json",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "666da1f58b610332f959435a3c0019332e3de667",
+          "bytes": 79
+        },
+        {
+          "path": "packages/bcl-io/reference/string-writer/.gitignore",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "cd42ee34e873b4ddf17cdeeed2e6c0d4e094c62b",
+          "bytes": 10
+        },
+        {
+          "path": "packages/bcl-io/reference/string-writer/NativeProgram.cs",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "0abd609f2e151f0317d429bccde556e06b06a98f",
+          "bytes": 1721
+        },
+        {
+          "path": "packages/bcl-io/reference/string-writer/Program.cs",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "ad4666461c1bd3ab04c4dfbcedffae591bb2d4e2",
+          "bytes": 1792
+        },
+        {
+          "path": "packages/bcl-io/reference/string-writer/README.md",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "838e8a800ea8c4373f8002a87a70f81bdc0a2912",
+          "bytes": 1468
+        },
+        {
+          "path": "packages/bcl-io/reference/string-writer/StringWriter.csproj",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "6934a2c3c828ee213ea0a7690c5830a41e3cc14b",
+          "bytes": 357
+        },
+        {
+          "path": "packages/bcl-io/reference/string-writer/global.json",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "753a2fc144e077381e4bca7bf77335ce212a9f99",
+          "bytes": 63
+        },
+        {
+          "path": "packages/bcl-io/smoke.mjs",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "bf75823b49dad29d5a3d35244f8d6db30fe19706",
+          "bytes": 2076
+        },
+        {
+          "path": "packages/bcl-io/src/character-buffer.js",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "74f302cda765f48913663ae6b69b97fb8144b420",
+          "bytes": 1192
+        },
+        {
+          "path": "packages/bcl-io/src/index.js",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "74e0628dd135afbfec4ef622f4568b6118b3bf54",
+          "bytes": 770
+        },
+        {
+          "path": "packages/bcl-io/src/string-reader-buffer.js",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "421a3b06eb4226f381014b76159ab91eb8f1b720",
+          "bytes": 1494
+        },
+        {
+          "path": "packages/bcl-io/src/string-reader.js",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "a54c588c6cebfc614a3f35a5c0d1ce4497f1e875",
+          "bytes": 3086
+        },
+        {
+          "path": "packages/bcl-io/src/string-writer-buffer.js",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "884211b90349b2bb9d1d4f4e1099e9186e876069",
+          "bytes": 1821
+        },
+        {
+          "path": "packages/bcl-io/src/string-writer-builder.js",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "051a18df6de4d8c6f265f4891911a646f2186777",
+          "bytes": 2348
+        },
+        {
+          "path": "packages/bcl-io/src/string-writer-scalars.js",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "63e2df593627ea951f543fb98551eb031360dc58",
+          "bytes": 719
+        },
+        {
+          "path": "packages/bcl-io/src/string-writer.js",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "d49bdbafed64e0f319973cd8fcdca416a632ea0c",
+          "bytes": 4693
+        },
+        {
+          "path": "packages/bcl-io/src/text-reader-writer.js",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "4bfc374c1e721d6ba94ffa69d56b4e0fc616bf25",
+          "bytes": 1494
+        },
+        {
+          "path": "packages/bcl-io/src/text-writer.js",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "107a9be008d073967e7586365c5d0e18b753d1e7",
+          "bytes": 1922
+        },
+        {
+          "path": "packages/framework/package.json",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "35f270bf82acf405d797458106c17ab4d08b7898",
+          "bytes": 517
+        },
+        {
+          "path": "packages/framework/src/contributions/io-serialization.js",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "6287af66b5003747d2eded91d24cd4509849d722",
+          "bytes": 355
+        },
+        {
+          "path": "packages/framework/src/contributions/manifest.js",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "a8361ceac8f3721aaf010ddf39afd77ed4c6f9f3",
+          "bytes": 2308
+        },
+        {
+          "path": "packages/runtime/package.json",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "b7743827ec1844a077133b0ca7a5abc3316aa03b",
+          "bytes": 743
+        },
+        {
+          "path": "packages/runtime/src/bcl-adapter.js",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "8595f5569c9bd55ea7968d6b1bd01edf2ee28d02",
+          "bytes": 2255
+        },
+        {
+          "path": "planning/qualification/size-budgets.json",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "01d97d702f345864947ec3f4b7317f213eebc54d",
+          "bytes": 3771
+        },
+        {
+          "path": "scripts/benchmarks/a09-string-writer-buffer.mjs",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "1c663beb817a6b3ae7b24bb6ba09d566a271842c",
+          "bytes": 4000
+        },
+        {
+          "path": "scripts/benchmarks/a09-string-writer-line-buffer.mjs",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "fa7df409b081f476058f33f3fcf9774590e12902",
+          "bytes": 4558
+        },
+        {
+          "path": "tests/a07-framework-object-string.test.js",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "b996345ead5cde9656d5acb5916bcc9074d5d818",
+          "bytes": 10860
+        },
+        {
+          "path": "tests/a09-json-integer-keys.test.js",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "a4b3ad35c05bcf77d61075c1a1fb640fc10e636a",
+          "bytes": 6742
+        },
+        {
+          "path": "tests/a09-string-reader-buffer.test.js",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "9d438d494f2d2cb0723294acb2a28edd44e75ba0",
+          "bytes": 10661
+        },
+        {
+          "path": "tests/a09-string-reader.test.js",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "3feeaafbec63eeacbbe5f836ad10a42f28714c55",
+          "bytes": 9147
+        },
+        {
+          "path": "tests/a09-string-writer-buffer.test.js",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "2e5155657dd50160f6f693aaa224a94ed74ede00",
+          "bytes": 10095
+        },
+        {
+          "path": "tests/a09-string-writer-char-line.test.js",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "92b24d122d23eafbd025c7efc321f8f167b52284",
+          "bytes": 12332
+        },
+        {
+          "path": "tests/a09-string-writer-line-buffer.test.js",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "b561ee737dfbf0225128d61b3edec05c61d50538",
+          "bytes": 12137
+        },
+        {
+          "path": "tests/a09-string-writer-object.test.js",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "a95761e55d3331971e1862c2728c74e65155cadc",
+          "bytes": 6665
+        },
+        {
+          "path": "tests/a09-string-writer-scalars-state.test.js",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "aac62e72f659d007a03871f740960b9ef6478bb4",
+          "bytes": 11762
+        },
+        {
+          "path": "tests/a09-string-writer-scalars.test.js",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "f55bdecb91ad839eda44a03958c9073367a9d44d",
+          "bytes": 11677
+        },
+        {
+          "path": "tests/a09-string-writer-string-line.test.js",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "31fe5276d1c102cd22d3f9c77b235142de77c6aa",
+          "bytes": 8687
+        },
+        {
+          "path": "tests/a09-string-writer.test.js",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "50a891853ca4e1e03015d62d5085ddbc7f8b8973",
+          "bytes": 10353
+        },
+        {
+          "path": "tests/fixtures/json-integer-keys/README.md",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "4521b9a9be03789c83b647a21222f4a1ee7d9b56",
+          "bytes": 1546
+        },
+        {
+          "path": "tests/fixtures/text-reader/buffer.js",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "924222ea140fcefd9632956da6e3489af5aebe54",
+          "bytes": 4516
+        },
+        {
+          "path": "tests/fixtures/text-reader/engines.js",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "e2f4ee2037bac2c34d7159c603098b42450bbcfc",
+          "bytes": 3886
+        },
+        {
+          "path": "tests/fixtures/text-writer/buffer-cases.js",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "fa2ba60a00db002611000364ef991efe02432f66",
+          "bytes": 4322
+        },
+        {
+          "path": "tests/fixtures/text-writer/engines.js",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "29fc9ee04244b224970c2e1d25cc66f1acb76db9",
+          "bytes": 4663
+        },
+        {
+          "path": "tests/fixtures/text-writer/scalars.js",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "27efeddf71a8566528169019317547e88649f422",
+          "bytes": 7347
+        },
+        {
+          "path": "tests/fixtures/text-writer/string-line.js",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "b6b5dccbce3e5f2059fed650baa74baf61556dd4",
+          "bytes": 2812
+        },
+        {
+          "path": "tests/manifests/A09.json",
+          "mode": "100644",
+          "type": "blob",
+          "sha": "33ccb0581982550726c187a4de4de5a1b62f5080",
+          "bytes": 781
+        }
+      ]
+    }
+  ]
+}

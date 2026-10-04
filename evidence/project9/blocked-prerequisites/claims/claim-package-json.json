@@ -1,0 +1,22 @@
+{
+  "version": 1,
+  "task": "SF-A25-T01.1",
+  "issue": 2072,
+  "agent": "codex-p19-core",
+  "branch": "codex/project19-core",
+  "expires": "2026-10-04T20:04:09.592Z",
+  "heartbeat": "2026-10-03T20:04:09.592Z",
+  "lastHeartbeatComment": null,
+  "locks": [],
+  "generation": "8f3f406a-3f3e-4ea7-ac65-258a5b41afe9",
+  "sequence": 0,
+  "event": "claim",
+  "at": "2026-10-03T20:04:09.592Z",
+  "paths": [
+    "packages/git/package.json",
+    "packages/git/src/errors.js",
+    "packages/git/src/index.js",
+    "packages/git/build.contrib.json"
+  ],
+  "projectProjection": "unavailable: GitHub connector exposes repository refs but no Project field API"
+}

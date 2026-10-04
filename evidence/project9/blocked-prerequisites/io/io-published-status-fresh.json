@@ -1,0 +1,248 @@
+{
+  "schemaVersion": 1,
+  "repository": "wieslawsoltes/SharpForge",
+  "retrievedAt": "2026-10-04T17:30:40.293Z",
+  "retrievalStartedAt": "2026-10-04T17:29:48.345Z",
+  "method": "Read-only GitHub connector GET of pull-request REST resources and issue-search counts",
+  "pullRequests": [
+    {
+      "number": 4509,
+      "title": "SF-A09-T03.1: add synchronous StringReader operations",
+      "workId": "SF-A09-T03.1",
+      "state": "open",
+      "draft": true,
+      "merged": false,
+      "mergedAt": null,
+      "closedAt": null,
+      "updatedAt": "2026-10-04T17:16:01Z",
+      "mergeCommitSha": "ceea65a27b3edc174381f51306932e741a29ce3f",
+      "actualMergeCommitSha": null,
+      "head": {
+        "ref": "codex/a09-string-reader",
+        "sha": "0e7c56d8e9175ffad7c03dd7fd61ac0f1783b4a4"
+      },
+      "base": {
+        "ref": "main",
+        "sha": "00c2489e659cbeaa29e9c5dfa4a3137fae4bd4ad"
+      },
+      "retrievedAt": "2026-10-04T17:29:48.345Z",
+      "sourceUrl": "https://api.github.com/repos/wieslawsoltes/SharpForge/pulls/4509",
+      "htmlUrl": "https://github.com/wieslawsoltes/SharpForge/pull/4509"
+    },
+    {
+      "number": 4510,
+      "title": "SF-A09-T03.1: add synchronous StringWriter primitives",
+      "workId": "SF-A09-T03.1",
+      "state": "open",
+      "draft": true,
+      "merged": false,
+      "mergedAt": null,
+      "closedAt": null,
+      "updatedAt": "2026-10-04T17:16:03Z",
+      "mergeCommitSha": "ef5f766893aed766419acffe7b5699a8395ffff1",
+      "actualMergeCommitSha": null,
+      "head": {
+        "ref": "codex/a09-string-writer",
+        "sha": "2e6a7c5ba0eceaee24df8452ff54f098215eeef0"
+      },
+      "base": {
+        "ref": "codex/a09-string-reader",
+        "sha": "0e7c56d8e9175ffad7c03dd7fd61ac0f1783b4a4"
+      },
+      "retrievedAt": "2026-10-04T17:30:07.909Z",
+      "sourceUrl": "https://api.github.com/repos/wieslawsoltes/SharpForge/pulls/4510",
+      "htmlUrl": "https://github.com/wieslawsoltes/SharpForge/pull/4510"
+    },
+    {
+      "number": 4513,
+      "title": "SF-A09-T03.1: add buffered StringReader reads",
+      "workId": "SF-A09-T03.1",
+      "state": "open",
+      "draft": true,
+      "merged": false,
+      "mergedAt": null,
+      "closedAt": null,
+      "updatedAt": "2026-10-04T17:16:48Z",
+      "mergeCommitSha": "0a7d705cb079a4e345aaf04588ea244f6efcd05b",
+      "actualMergeCommitSha": null,
+      "head": {
+        "ref": "codex/a09-string-reader-buffer",
+        "sha": "d46b27fd25a681cc675c63cff3d32bf5c26c867a"
+      },
+      "base": {
+        "ref": "codex/a09-string-writer",
+        "sha": "2e6a7c5ba0eceaee24df8452ff54f098215eeef0"
+      },
+      "retrievedAt": "2026-10-04T17:30:07.927Z",
+      "sourceUrl": "https://api.github.com/repos/wieslawsoltes/SharpForge/pulls/4513",
+      "htmlUrl": "https://github.com/wieslawsoltes/SharpForge/pull/4513"
+    },
+    {
+      "number": 4514,
+      "title": "SF-A09-T03.1: support StringWriter.ToString through object references",
+      "workId": "SF-A09-T03.1",
+      "state": "open",
+      "draft": true,
+      "merged": false,
+      "mergedAt": null,
+      "closedAt": null,
+      "updatedAt": "2026-10-04T17:17:15Z",
+      "mergeCommitSha": "1abff1c9bbf31dbe0a8f0e351f644f62bd109eb3",
+      "actualMergeCommitSha": null,
+      "head": {
+        "ref": "codex/a09-string-writer-object",
+        "sha": "d1499d108d127c9e1fcc6d37c0b4a0dd998feca7"
+      },
+      "base": {
+        "ref": "codex/a09-string-reader-buffer",
+        "sha": "d46b27fd25a681cc675c63cff3d32bf5c26c867a"
+      },
+      "retrievedAt": "2026-10-04T17:30:07.955Z",
+      "sourceUrl": "https://api.github.com/repos/wieslawsoltes/SharpForge/pulls/4514",
+      "htmlUrl": "https://github.com/wieslawsoltes/SharpForge/pull/4514"
+    },
+    {
+      "number": 4515,
+      "title": "SF-A09-T03.1: add StringWriter character buffer writes",
+      "workId": "SF-A09-T03.1",
+      "state": "open",
+      "draft": true,
+      "merged": false,
+      "mergedAt": null,
+      "closedAt": null,
+      "updatedAt": "2026-10-04T17:18:01Z",
+      "mergeCommitSha": "2d74644ad407d6f5f0e3af0b534cffb89f43ed69",
+      "actualMergeCommitSha": null,
+      "head": {
+        "ref": "codex/a09-string-writer-buffer",
+        "sha": "41a42061e3f647a4ea1f7c38937d55d7c62fc63d"
+      },
+      "base": {
+        "ref": "codex/a09-string-writer-object",
+        "sha": "d1499d108d127c9e1fcc6d37c0b4a0dd998feca7"
+      },
+      "retrievedAt": "2026-10-04T17:30:08.033Z",
+      "sourceUrl": "https://api.github.com/repos/wieslawsoltes/SharpForge/pulls/4515",
+      "htmlUrl": "https://github.com/wieslawsoltes/SharpForge/pull/4515"
+    },
+    {
+      "number": 4516,
+      "title": "SF-A09-T03.1: add StringWriter character buffer line writes",
+      "workId": "SF-A09-T03.1",
+      "state": "open",
+      "draft": true,
+      "merged": false,
+      "mergedAt": null,
+      "closedAt": null,
+      "updatedAt": "2026-10-04T17:18:46Z",
+      "mergeCommitSha": "98dcfac0b1cc8998c476bddc6f0608785cb33508",
+      "actualMergeCommitSha": null,
+      "head": {
+        "ref": "codex/a09-string-writer-line-buffer",
+        "sha": "b7e6fdfba9d4847fbc9c3c2ae20e893525663e5d"
+      },
+      "base": {
+        "ref": "codex/a09-string-writer-buffer",
+        "sha": "41a42061e3f647a4ea1f7c38937d55d7c62fc63d"
+      },
+      "retrievedAt": "2026-10-04T17:30:07.937Z",
+      "sourceUrl": "https://api.github.com/repos/wieslawsoltes/SharpForge/pulls/4516",
+      "htmlUrl": "https://github.com/wieslawsoltes/SharpForge/pull/4516"
+    },
+    {
+      "number": 4517,
+      "title": "SF-A09-T03.1: add StringWriter character line writes",
+      "workId": "SF-A09-T03.1",
+      "state": "open",
+      "draft": true,
+      "merged": false,
+      "mergedAt": null,
+      "closedAt": null,
+      "updatedAt": "2026-10-04T17:19:34Z",
+      "mergeCommitSha": "1d526404eb4ec18ff3eca877cbd39c22177bc80b",
+      "actualMergeCommitSha": null,
+      "head": {
+        "ref": "codex/a09-string-writer-char-line",
+        "sha": "3493f1b49e849b05274fc910d4e1a7f993e22a38"
+      },
+      "base": {
+        "ref": "codex/a09-string-writer-line-buffer",
+        "sha": "b7e6fdfba9d4847fbc9c3c2ae20e893525663e5d"
+      },
+      "retrievedAt": "2026-10-04T17:30:08.040Z",
+      "sourceUrl": "https://api.github.com/repos/wieslawsoltes/SharpForge/pulls/4517",
+      "htmlUrl": "https://github.com/wieslawsoltes/SharpForge/pull/4517"
+    },
+    {
+      "number": 4542,
+      "title": "SF-A09-T03.1: Complete scalar StringWriter writes and string-line disposal order",
+      "workId": "SF-A09-T03.1",
+      "state": "open",
+      "draft": true,
+      "merged": false,
+      "mergedAt": null,
+      "closedAt": null,
+      "updatedAt": "2026-10-04T17:20:21Z",
+      "mergeCommitSha": "ad8a177fdd6652d83c868f071619cd84b80e37ec",
+      "actualMergeCommitSha": null,
+      "head": {
+        "ref": "codex/a09-string-writer-scalars",
+        "sha": "16909aa003c61d63bcbe654cefda19e71f09d942"
+      },
+      "base": {
+        "ref": "codex/a09-string-writer-char-line",
+        "sha": "3493f1b49e849b05274fc910d4e1a7f993e22a38"
+      },
+      "retrievedAt": "2026-10-04T17:30:08.212Z",
+      "sourceUrl": "https://api.github.com/repos/wieslawsoltes/SharpForge/pulls/4542",
+      "htmlUrl": "https://github.com/wieslawsoltes/SharpForge/pull/4542"
+    }
+  ],
+  "project9": {
+    "query": "project:wieslawsoltes/9 is:issue",
+    "open": 300,
+    "closed": 11,
+    "total": 311,
+    "queries": [
+      {
+        "state": "open",
+        "query": "project:wieslawsoltes/9 is:issue is:open",
+        "count": 300,
+        "incompleteResults": false,
+        "retrievedAt": "2026-10-04T17:29:48.345Z",
+        "sourceUrl": "https://api.github.com/search/issues?q=project%3Awieslawsoltes%2F9%20is%3Aissue%20is%3Aopen&per_page=1",
+        "htmlUrl": "https://github.com/search?q=project%3Awieslawsoltes%2F9%20is%3Aissue%20is%3Aopen&type=issues"
+      },
+      {
+        "state": "closed",
+        "query": "project:wieslawsoltes/9 is:issue is:closed",
+        "count": 11,
+        "incompleteResults": false,
+        "retrievedAt": "2026-10-04T17:30:08.160Z",
+        "sourceUrl": "https://api.github.com/search/issues?q=project%3Awieslawsoltes%2F9%20is%3Aissue%20is%3Aclosed&per_page=1",
+        "htmlUrl": "https://github.com/search?q=project%3Awieslawsoltes%2F9%20is%3Aissue%20is%3Aclosed&type=issues"
+      },
+      {
+        "state": "total",
+        "query": "project:wieslawsoltes/9 is:issue",
+        "count": 311,
+        "incompleteResults": false,
+        "retrievedAt": "2026-10-04T17:30:07.909Z",
+        "sourceUrl": "https://api.github.com/search/issues?q=project%3Awieslawsoltes%2F9%20is%3Aissue&per_page=1",
+        "htmlUrl": "https://github.com/search?q=project%3Awieslawsoltes%2F9%20is%3Aissue&type=issues"
+      }
+    ]
+  },
+  "summary": {
+    "openPullRequests": 8,
+    "draftPullRequests": 8,
+    "mergedPullRequests": 0
+  },
+  "notes": [
+    "mergeCommitSha preserves the REST merge_commit_sha field, which can be a provisional test-merge SHA for an unmerged pull request. actualMergeCommitSha is null unless merged is true.",
+    "base.sha and head.sha are the values returned by the pull-request resource; base.sha is not asserted to be the latest remote main tip.",
+    "Issue totals are GitHub issue-search results for the explicit Project 9 query, with incomplete_results preserved; they do not establish Project Status, formal Ready, ownership, or merge readiness.",
+    "This snapshot is normalized read evidence, not a qualification result. No GitHub state was mutated."
+  ]
+}
+

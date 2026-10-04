@@ -1,0 +1,152 @@
+{
+  "reviewer": "independent Codex agent /root/review_insert_repeat with delegated browser audit",
+  "humanReview": false,
+  "candidate": "af29812a6b0ca0184a79cc6bcddd01bf0a02fb6a",
+  "tree": "d934a12e448fc825ad49a535ced67a801e98e57c",
+  "baseline": "af5450dacbdc2734432b13dffa63efb10eb93145",
+  "packageDecision": "accept all six compressed and unpacked package budgets; no >10% exception required",
+  "browserDecision": "accept within10% budget; final actual assets and source provenance verified",
+  "performanceDecision": "Previously accepted timing exceptions remain unchanged; original performance review artifacts are preserved byte-for-byte.",
+  "evidence": {
+    "qualification": {
+      "path": "boolean-artifact-qualification.json",
+      "sha256": "f02ff8aa9d54358b22b13f985ae5753a2b7569ad61b55aa876a6e2094c36be2c"
+    },
+    "assetProvenance": {
+      "path": "boolean-final-asset-provenance.json",
+      "sha256": "e8ab8728a369e46101606d92a45fbd3ab0e1e2acb44e8c5029fd5ea65fd6784d"
+    },
+    "baselineManifest": {
+      "path": "boolean-baseline-assets.json",
+      "sha256": "4e5203107e8a30a7e40d089b6e39ff39a776e20267ba3d43421532342f99a6da"
+    },
+    "candidateManifest": {
+      "path": "boolean-candidate-final-assets.json",
+      "sha256": "3db2de7746a498b62df7c988502df04de25c82cf575da36c40c6ebebf432df58"
+    },
+    "performanceReview": {
+      "path": "boolean-optimized-performance-review.md",
+      "sha256": "2cd0a8d308b6710d2b96d0ca87351a8a29f0f29af6150f8964a23d51cae27ad3"
+    },
+    "performanceReviewJson": {
+      "path": "boolean-optimized-performance-review.json",
+      "sha256": "ce85d47d8edad0b58b2f724e519b9f33ecae45fe93e26957873202af6102ba3a"
+    }
+  },
+  "packageAudit": {
+    "actualTarballs": 12,
+    "verifiedRegularFiles": 2264,
+    "allPayloadsMatchReportedSha256AndExactRevisionGitBlobAndPath": true,
+    "noArchiveLinks": true,
+    "packageJsonUnchangedAcrossRevisions": true,
+    "noPackedFixturesBenchmarksScriptsTestsArtifactsNodeModules": true,
+    "comparison": [
+      {
+        "package": "bcl-core",
+        "baselineBytes": 67931,
+        "candidateBytes": 68398,
+        "deltaBytes": 467,
+        "percent": 0.687462277899642,
+        "baselineUnpackedBytes": 250817,
+        "candidateUnpackedBytes": 252196,
+        "unpackedDeltaBytes": 1379,
+        "unpackedPercent": 0.5498032430018673
+      },
+      {
+        "package": "bytecode",
+        "baselineBytes": 23795,
+        "candidateBytes": 24274,
+        "deltaBytes": 479,
+        "percent": 2.0130279470476964,
+        "baselineUnpackedBytes": 82246,
+        "candidateUnpackedBytes": 83877,
+        "unpackedDeltaBytes": 1631,
+        "unpackedPercent": 1.983075164749648
+      },
+      {
+        "package": "cil",
+        "baselineBytes": 232083,
+        "candidateBytes": 232882,
+        "deltaBytes": 799,
+        "percent": 0.3442733849527979,
+        "baselineUnpackedBytes": 826065,
+        "candidateUnpackedBytes": 828903,
+        "unpackedDeltaBytes": 2838,
+        "unpackedPercent": 0.34355649979118663
+      },
+      {
+        "package": "compiler",
+        "baselineBytes": 1064667,
+        "candidateBytes": 1064983,
+        "deltaBytes": 316,
+        "percent": 0.029680641928409024,
+        "baselineUnpackedBytes": 4049731,
+        "candidateUnpackedBytes": 4051077,
+        "unpackedDeltaBytes": 1346,
+        "unpackedPercent": 0.03323677547966142
+      },
+      {
+        "package": "framework",
+        "baselineBytes": 22295,
+        "candidateBytes": 22695,
+        "deltaBytes": 400,
+        "percent": 1.794124243103834,
+        "baselineUnpackedBytes": 70967,
+        "candidateUnpackedBytes": 71961,
+        "unpackedDeltaBytes": 994,
+        "unpackedPercent": 1.4006510068059752
+      },
+      {
+        "package": "runtime",
+        "baselineBytes": 177316,
+        "candidateBytes": 179162,
+        "deltaBytes": 1846,
+        "percent": 1.0410792032303995,
+        "baselineUnpackedBytes": 627002,
+        "candidateUnpackedBytes": 633338,
+        "unpackedDeltaBytes": 6336,
+        "unpackedPercent": 1.0105230924303266
+      }
+    ]
+  },
+  "browserAudit": {
+    "baseline": {
+      "manifest": "boolean-baseline-assets.json",
+      "sha256": "4e5203107e8a30a7e40d089b6e39ff39a776e20267ba3d43421532342f99a6da",
+      "totalBytes": 112935639,
+      "fileCount": 5547
+    },
+    "candidate": {
+      "manifest": "boolean-candidate-final-assets.json",
+      "sha256": "3db2de7746a498b62df7c988502df04de25c82cf575da36c40c6ebebf432df58",
+      "totalBytes": 112989490,
+      "fileCount": 5554
+    },
+    "deltaBytes": 53851,
+    "percent": 0.0476829107948884,
+    "all11101ActualAssetsRehashedAndCompletePathSetsVerified": true,
+    "changedAssets": 33,
+    "newAssets": 7,
+    "removedAssets": 0,
+    "changedSourceLeaves": 30,
+    "byteEqualSourceLeaves": 15,
+    "documentedImportRewriteLeaves": 15,
+    "runtimeWorker": {
+      "path": "dist/runtime.worker.js",
+      "bytes": 3349493,
+      "sha256": "e0e99a062a278006f5a1778e495e35d26f9d67f34d50422208bee63b7aff6b56",
+      "finalImplementationMarkersPresent": [
+        "function findInterned(heap, entries, text)",
+        "const cached = vm.constantValues.get(index);",
+        "function initializeReadonlyString(vm, field, values, key)"
+      ]
+    }
+  },
+  "limitations": [
+    "Read-only artifact/hash/archive/Git inspection; no product commands, tests, builds, installs, native captures or benchmarks executed by reviewers.",
+    "Actual tarballs correspond to exact recorded revisions; package qualification does not imply a newly repeated offline install/smoke matrix.",
+    "Actual browser manifests/leaves and bundled final-helper markers verified; no independent byte-for-byte rebundling was performed.",
+    "Initial rejected timing cohort remains retained; no general speedup or averaging offsets claimed.",
+    "Size approval does not imply unrelated A00/schema ownership clearance or broader platform qualification."
+  ]
+}

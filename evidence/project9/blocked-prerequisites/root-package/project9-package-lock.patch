@@ -1,0 +1,49 @@
+--- a/package-lock.json
++++ b/package-lock.json
+@@ -26,6 +26,10 @@
+       "resolved": "packages/bcl-core",
+       "link": true
+     },
++    "node_modules/@sharpforge/bcl-io": {
++      "resolved": "packages/bcl-io",
++      "link": true
++    },
+     "node_modules/@sharpforge/bytecode": {
+       "resolved": "packages/bytecode",
+       "link": true
+@@ -146,6 +150,17 @@
+       "name": "@sharpforge/bcl-core",
+       "version": "0.14.0",
+       "license": "MIT",
++      "engines": {
++        "node": ">=22"
++      }
++    },
++    "packages/bcl-io": {
++      "name": "@sharpforge/bcl-io",
++      "version": "0.14.0",
++      "license": "MIT",
++      "dependencies": {
++        "@sharpforge/bcl-core": "0.14.0"
++      },
+       "engines": {
+         "node": ">=22"
+       }
+@@ -276,7 +291,8 @@
+       "license": "MIT",
+       "dependencies": {
+         "@sharpforge/bcl-collections": "0.14.0",
+-        "@sharpforge/bcl-core": "0.14.0"
++        "@sharpforge/bcl-core": "0.14.0",
++        "@sharpforge/bcl-io": "0.14.0"
+       },
+       "engines": {
+         "node": ">=22"
+@@ -363,6 +379,7 @@
+       "dependencies": {
+         "@sharpforge/bcl-collections": "0.14.0",
+         "@sharpforge/bcl-core": "0.14.0",
++        "@sharpforge/bcl-io": "0.14.0",
+         "@sharpforge/bytecode": "0.14.0",
+         "@sharpforge/cil": "0.14.0",
+         "@sharpforge/compute": "0.14.0",

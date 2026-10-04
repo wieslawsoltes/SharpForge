@@ -1,0 +1,144 @@
+{
+  "schemaVersion": 1,
+  "refRefresh": "2026-10-04 17:42:34 UTC",
+  "issueSource": "https://api.github.com/repos/wieslawsoltes/SharpForge/issues/783",
+  "issue": {
+    "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/issues/783",
+    "repository_url": "https://api.github.com/repos/wieslawsoltes/SharpForge",
+    "labels_url": "https://api.github.com/repos/wieslawsoltes/SharpForge/issues/783/labels{/name}",
+    "comments_url": "https://api.github.com/repos/wieslawsoltes/SharpForge/issues/783/comments",
+    "events_url": "https://api.github.com/repos/wieslawsoltes/SharpForge/issues/783/events",
+    "html_url": "https://github.com/wieslawsoltes/SharpForge/issues/783",
+    "id": 5689170931,
+    "node_id": "I_kwDOU59Ms88AAAABUxnb8w",
+    "number": 783,
+    "title": "[SF-A07-T21] Implement System.Object, ValueType and Boolean members",
+    "user": {
+      "login": "wieslawsoltes",
+      "id": 2297442,
+      "node_id": "MDQ6VXNlcjIyOTc0NDI=",
+      "avatar_url": "https://avatars.githubusercontent.com/u/2297442?v=4",
+      "gravatar_id": "",
+      "url": "https://api.github.com/users/wieslawsoltes",
+      "html_url": "https://github.com/wieslawsoltes",
+      "followers_url": "https://api.github.com/users/wieslawsoltes/followers",
+      "following_url": "https://api.github.com/users/wieslawsoltes/following{/other_user}",
+      "gists_url": "https://api.github.com/users/wieslawsoltes/gists{/gist_id}",
+      "starred_url": "https://api.github.com/users/wieslawsoltes/starred{/owner}{/repo}",
+      "subscriptions_url": "https://api.github.com/users/wieslawsoltes/subscriptions",
+      "organizations_url": "https://api.github.com/users/wieslawsoltes/orgs",
+      "repos_url": "https://api.github.com/users/wieslawsoltes/repos",
+      "events_url": "https://api.github.com/users/wieslawsoltes/events{/privacy}",
+      "received_events_url": "https://api.github.com/users/wieslawsoltes/received_events",
+      "type": "User",
+      "user_view_type": "public",
+      "site_admin": false
+    },
+    "labels": [
+      {
+        "id": 12523593524,
+        "node_id": "LA_kwDOU59Ms88AAAAC6nbfNA",
+        "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/labels/area:A07",
+        "name": "area:A07",
+        "color": "1D76DB",
+        "default": false,
+        "description": "BCL primitives text time and globalization",
+        "archived_at": null,
+        "archived_by": null
+      },
+      {
+        "id": 12523599350,
+        "node_id": "LA_kwDOU59Ms88AAAAC6nb19g",
+        "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/labels/kind:task",
+        "name": "kind:task",
+        "color": "0E8A16",
+        "default": false,
+        "description": "Feature-sized work; claim it or its sub-issues",
+        "archived_at": null,
+        "archived_by": null
+      },
+      {
+        "id": 12523599590,
+        "node_id": "LA_kwDOU59Ms88AAAAC6nb25g",
+        "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/labels/priority:P0",
+        "name": "priority:P0",
+        "color": "B60205",
+        "default": false,
+        "description": "Unblocks others or explicitly requested now",
+        "archived_at": null,
+        "archived_by": null
+      },
+      {
+        "id": 12523600264,
+        "node_id": "LA_kwDOU59Ms88AAAAC6nb5iA",
+        "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/labels/state:blocked",
+        "name": "state:blocked",
+        "color": "D4C5F9",
+        "default": false,
+        "description": "Waiting on listed dependencies",
+        "archived_at": null,
+        "archived_by": null
+      }
+    ],
+    "state": "open",
+    "locked": false,
+    "assignees": [],
+    "milestone": null,
+    "comments": 0,
+    "created_at": "2026-10-03T11:24:48Z",
+    "updated_at": "2026-10-03T11:24:48Z",
+    "closed_at": null,
+    "assignee": null,
+    "author_association": "OWNER",
+    "active_lock_reason": null,
+    "sub_issues_summary": {
+      "total": 0,
+      "completed": 0,
+      "percent_completed": 0
+    },
+    "parent_issue_url": "https://api.github.com/repos/wieslawsoltes/SharpForge/issues/539",
+    "issue_dependencies_summary": {
+      "blocked_by": 0,
+      "total_blocked_by": 0,
+      "blocking": 0,
+      "total_blocking": 0
+    },
+    "body": "<!-- sharpforge-backlog:SF-A07-T21 -->\n\n**Parent:** #539 (SF-A07-E04) · **Workstream:** A07 — BCL primitives text time and globalization · **Priority:** P0\n\n## Deliverable\n\nAdd packages/bcl-core/src/system/object.js: Object.Equals (static and virtual), ReferenceEquals, GetHashCode (stable identity hash stored on the heap record), ToString default (type full name), MemberwiseClone, GetType bridge; ValueType field-wise Equals/GetHashCode; Boolean Parse/TryParse/ToString/CompareTo/TrueString/FalseString.\n\n## Acceptance criteria\n\n- [ ] Struct default Equals compares fields; identity hash survives GC compaction and snapshots; bool.Parse(\" TRUE \") is true.\n\n- [ ] Positive, negative and boundary tests added; every affected engine/platform verified, unsupported targets recorded explicitly.\n\n## Ownership\n\n**Owns:** `packages/bcl-core/src/system/object.js`. Workstream write scope: `packages/bcl-core/**`. Shared hot files (`compiler/src/index.js`, `syntax/src/parser.js`, runtime dispatchers, `framework/src/index.js`, `studio.js`) are edited only through the A00 seams or with an explicit lock recorded in the project's **Lock keys** field.\n\n## Claiming\n\nClaim this task directly if it has no sub-issues; otherwise claim one of its sub-issues. Set **Agent**, **Lease expires** and **Branch** on the project item and move **Status** to *Claimed*.\n",
+    "closed_by": null,
+    "reactions": {
+      "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/issues/783/reactions",
+      "total_count": 0,
+      "+1": 0,
+      "-1": 0,
+      "laugh": 0,
+      "hooray": 0,
+      "confused": 0,
+      "heart": 0,
+      "rocket": 0,
+      "eyes": 0
+    },
+    "timeline_url": "https://api.github.com/repos/wieslawsoltes/SharpForge/issues/783/timeline",
+    "performed_via_github_app": null,
+    "state_reason": null,
+    "pinned_comment": null
+  },
+  "commentsSource": "https://api.github.com/repos/wieslawsoltes/SharpForge/issues/783/comments?per_page=100&page=1",
+  "comments": [],
+  "independentContentsObservation": {
+    "source": "https://api.github.com/repos/wieslawsoltes/SharpForge/contents/claim.json?ref=agent%2FSF-A07-T21",
+    "response": {
+      "error": "GitHub API error 404: {\"message\":\"No commit found for the ref agent/SF-A07-T21\",\"documentation_url\":\"https://docs.github.com/v3/repos/contents/\",\"status\":\"404\"}",
+      "error_code": "NOT_FOUND",
+      "error_data": {
+        "message": "No commit found for the ref agent/SF-A07-T21",
+        "documentation_url": "https://docs.github.com/v3/repos/contents/",
+        "status": "404"
+      }
+    }
+  },
+  "projectAgent": null,
+  "projectLeaseExpires": null,
+  "projectStatus": null,
+  "projectFieldsObservation": "Not retrieved; connector has no Projects field interface.",
+  "conclusion": "No authoritative SF-A07-T21 ref exists in these reads and no issue comment or assignee supplies an owner continuation. The alleged codex-p9-bcl-core task lease is unverified. Preserve ownership/readiness reconciliation before promotion and keep #783 open."
+}

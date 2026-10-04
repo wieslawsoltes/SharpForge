@@ -1,0 +1,290 @@
+{
+  "revision": "af29812a6b0ca0184a79cc6bcddd01bf0a02fb6a",
+  "tree": "d934a12e448fc825ad49a535ced67a801e98e57c",
+  "allEmittedChangedLeavesMatchExpectedGitTransformation": true,
+  "transformation": "scripts/build-module-paths.js rewrites only quoted @sharpforge/<name> package entry paths for JavaScript leaves",
+  "transformerSha256": "56b1da0812a4f2756c00ccac82b1120f6dad88b026c51d3a42601d4fe37e989d",
+  "checkedFiles": [
+    {
+      "path": "docs/bcl-api.md",
+      "assetPath": "dist/docs/bcl-api.md",
+      "bytes": 98474,
+      "sha256": "83277704f6a1b490e2b1026e4427b5e4429a0e45653d03cc9a99d8fd699e7e01",
+      "sourceSha256": "83277704f6a1b490e2b1026e4427b5e4429a0e45653d03cc9a99d8fd699e7e01",
+      "sourceGitBlob": "0aa950e1ecd0981284d77a6aced1f15fbfe226de",
+      "modulePathRewriteOnly": false
+    },
+    {
+      "path": "docs/readonly-string-fields.md",
+      "assetPath": "dist/docs/readonly-string-fields.md",
+      "bytes": 12853,
+      "sha256": "f30c22133f4e67501bd61969902dcc11a7f8115af9f6488434cab3c42ac1bdd4",
+      "sourceSha256": "f30c22133f4e67501bd61969902dcc11a7f8115af9f6488434cab3c42ac1bdd4",
+      "sourceGitBlob": "651c4579408459e2208d7beb2493bfdc76f5da22",
+      "modulePathRewriteOnly": false
+    },
+    {
+      "path": "packages/bcl-core/src/modules.js",
+      "assetPath": "dist/packages/bcl-core/src/modules.js",
+      "bytes": 1103,
+      "sha256": "038359e1e42bbfeaf6e0ecc50c7be1c48589de50866a6ca10bff3de96441bd65",
+      "sourceSha256": "038359e1e42bbfeaf6e0ecc50c7be1c48589de50866a6ca10bff3de96441bd65",
+      "sourceGitBlob": "cd30af96fc7e6bcf525c6a696df6c6a7937087f0",
+      "modulePathRewriteOnly": false
+    },
+    {
+      "path": "packages/bcl-core/src/system/boolean.js",
+      "assetPath": "dist/packages/bcl-core/src/system/boolean.js",
+      "bytes": 871,
+      "sha256": "14f13a32dcdef5424db76744ab569b455fa493132dce1f6c919d43a6e2e423c0",
+      "sourceSha256": "14f13a32dcdef5424db76744ab569b455fa493132dce1f6c919d43a6e2e423c0",
+      "sourceGitBlob": "71e42b39dc4cad348bbcd66fe1ebb35ae329a13e",
+      "modulePathRewriteOnly": false
+    },
+    {
+      "path": "packages/bytecode/src/numeric/source-profile.js",
+      "assetPath": "dist/packages/bytecode/src/numeric/source-profile.js",
+      "bytes": 1869,
+      "sha256": "87d708d5e373836a7a31335f0ee39f9e38dd09696045a133c83622a6645eaa7f",
+      "sourceSha256": "8b72d774232dc5b778bca1d688c795809facaec72c339da1706ad49357c846dd",
+      "sourceGitBlob": "9f5a1fb90c345526846cddda7cc2c4e6f069fc8f",
+      "modulePathRewriteOnly": true
+    },
+    {
+      "path": "packages/bytecode/src/readonly-field-constants.js",
+      "assetPath": "dist/packages/bytecode/src/readonly-field-constants.js",
+      "bytes": 1397,
+      "sha256": "2ae1d5a8a6aa9c25dca89d5ccfc1a97df2846f3f5e4fbeae35b58e00e6a7868f",
+      "sourceSha256": "a9cd86d89e6b6c078295ff74e690b02cbc83093e405d90db3647da265f38e7c5",
+      "sourceGitBlob": "b2a258a2be121de8fa50a3309345bd4a5923a4dd",
+      "modulePathRewriteOnly": true
+    },
+    {
+      "path": "packages/cil/src/analysis-types.js",
+      "assetPath": "dist/packages/cil/src/analysis-types.js",
+      "bytes": 1954,
+      "sha256": "6a3f294eeb8e9aa8991085aaf89af71b3bfb14bf20d6f2e30f5d419a59d8a653",
+      "sourceSha256": "f83ef278be4cec216304e4e0bf668eea136681a3c309b07b99840fcf7dd76fe3",
+      "sourceGitBlob": "60c474c092ba2dcd7efa43b4d8a7dad56bf0a700",
+      "modulePathRewriteOnly": true
+    },
+    {
+      "path": "packages/cil/src/emit/constants.js",
+      "assetPath": "dist/packages/cil/src/emit/constants.js",
+      "bytes": 985,
+      "sha256": "6265b73e55b2d653bfdfe959e6b99c3811a595950cdade199c0bd295775baf09",
+      "sourceSha256": "6265b73e55b2d653bfdfe959e6b99c3811a595950cdade199c0bd295775baf09",
+      "sourceGitBlob": "e1564bb790505f26cb476024fa838941d9859fac",
+      "modulePathRewriteOnly": false
+    },
+    {
+      "path": "packages/cil/src/emit/emission-context.js",
+      "assetPath": "dist/packages/cil/src/emit/emission-context.js",
+      "bytes": 1439,
+      "sha256": "736a7a569888f25238e9e74a65188a3aa17ba210d31f7babbe8f02cff6474d52",
+      "sourceSha256": "736a7a569888f25238e9e74a65188a3aa17ba210d31f7babbe8f02cff6474d52",
+      "sourceGitBlob": "780d409c74cfaf659a8d3bccb7e0ee16e5555f3b",
+      "modulePathRewriteOnly": false
+    },
+    {
+      "path": "packages/cil/src/emitter.js",
+      "assetPath": "dist/packages/cil/src/emitter.js",
+      "bytes": 17435,
+      "sha256": "d1935a6c8e7a4d4456219e4e987232ffb4d86b8e2a4d8963590bbd585e72f390",
+      "sourceSha256": "983903a7a33c50823fcc04b72a800c691892d2430f69f5f72c173d07fb96ef80",
+      "sourceGitBlob": "2e668fd149868e73d8ad933da9454e381272dd2f",
+      "modulePathRewriteOnly": true
+    },
+    {
+      "path": "packages/cil/src/load/field-span.js",
+      "assetPath": "dist/packages/cil/src/load/field-span.js",
+      "bytes": 1802,
+      "sha256": "150928a9370f9ba7da2da7f00258f38bbf6bc3ad036b1a85aae36e0921f86efc",
+      "sourceSha256": "274d7fe77dbaa7cfd9e37aa5eb6a3f9eeec014d512a27dc9b6e5564af35b1b55",
+      "sourceGitBlob": "63e64e409c842c92aff8bd39ced02d8edb2387a6",
+      "modulePathRewriteOnly": true
+    },
+    {
+      "path": "packages/cil/src/loader.js",
+      "assetPath": "dist/packages/cil/src/loader.js",
+      "bytes": 17275,
+      "sha256": "2848f229312ded4e389708304991944a66d77652c0ed2eb1ae4490ca3659d71b",
+      "sourceSha256": "2911a9c55aa478033c9d1986f2dd88f0609421ba7ce9b22a9264c641e2c5fbc8",
+      "sourceGitBlob": "acebf306e57b4e42ccd770091fb1a2440fab5441",
+      "modulePathRewriteOnly": true
+    },
+    {
+      "path": "packages/compiler/src/codegen/registered-fields.js",
+      "assetPath": "dist/packages/compiler/src/codegen/registered-fields.js",
+      "bytes": 1611,
+      "sha256": "05c780cf17c0d802995abcb882324d21432b110d4744e08d3ec69671fae38740",
+      "sourceSha256": "05c780cf17c0d802995abcb882324d21432b110d4744e08d3ec69671fae38740",
+      "sourceGitBlob": "4666c66961b2926744aa45cde546c5a0e8e3da3d",
+      "modulePathRewriteOnly": false
+    },
+    {
+      "path": "packages/compiler/src/framework-receivers.js",
+      "assetPath": "dist/packages/compiler/src/framework-receivers.js",
+      "bytes": 1786,
+      "sha256": "7b43ab032c367e64ea02bab3ce919ef75534c59547f7f2bf70de106e9ebf8a36",
+      "sourceSha256": "30465d6fc6707b482780dadcffbae54db01dc2159e088dc57c1c8db405a25af1",
+      "sourceGitBlob": "19081c2b5719db097cdfa7d8cec9d2bea9931f4c",
+      "modulePathRewriteOnly": true
+    },
+    {
+      "path": "packages/compiler/src/framework.js",
+      "assetPath": "dist/packages/compiler/src/framework.js",
+      "bytes": 10475,
+      "sha256": "c029821a59d6d6cc7004d1dcd87e4eaed35085cc7d8adbc35b90509b2c8afbc8",
+      "sourceSha256": "28969690374ada9c9e936aa9935092b05bbce0b8d7d3ca39d1582c48edf7f300",
+      "sourceGitBlob": "de8e6f8135a59bc957bbd3ae74b41ef3537a1b7f",
+      "modulePathRewriteOnly": true
+    },
+    {
+      "path": "packages/compiler/src/lowering/local-rewriter.js",
+      "assetPath": "dist/packages/compiler/src/lowering/local-rewriter.js",
+      "bytes": 5065,
+      "sha256": "2f5757a54092823d0113b368846198cd0a2a3daf99737f11d55527dc1ecfd181",
+      "sourceSha256": "2f5757a54092823d0113b368846198cd0a2a3daf99737f11d55527dc1ecfd181",
+      "sourceGitBlob": "a1c014ee1d44f367500df620e1e8f04f2ed35231",
+      "modulePathRewriteOnly": false
+    },
+    {
+      "path": "packages/compiler/src/symbols/registry-fields.js",
+      "assetPath": "dist/packages/compiler/src/symbols/registry-fields.js",
+      "bytes": 1777,
+      "sha256": "cb42d61a204d75335450847796233c4a4aa22490debdc38ed2b36291f5de34e8",
+      "sourceSha256": "9819f3a6bcf9da8ab15890486672aa008c3cff62071a596e158c541fdc89d4b6",
+      "sourceGitBlob": "8f105395cc84d571502ba24d09c49a8ff7b58995",
+      "modulePathRewriteOnly": true
+    },
+    {
+      "path": "packages/framework/README.md",
+      "assetPath": "dist/packages/framework/README.md",
+      "bytes": 5811,
+      "sha256": "817ae92df3aa14edd6953822f0feae5ff10e81ac850948d641283d2899597a18",
+      "sourceSha256": "817ae92df3aa14edd6953822f0feae5ff10e81ac850948d641283d2899597a18",
+      "sourceGitBlob": "58ce5e6829862984f89b2112504bb1ac1452313a",
+      "modulePathRewriteOnly": false
+    },
+    {
+      "path": "packages/framework/src/readonly-fields.js",
+      "assetPath": "dist/packages/framework/src/readonly-fields.js",
+      "bytes": 5010,
+      "sha256": "a9545e065e085c46e2f4f732a63bbfd78035c037dda7ea2963400aac8df1470f",
+      "sourceSha256": "a9545e065e085c46e2f4f732a63bbfd78035c037dda7ea2963400aac8df1470f",
+      "sourceGitBlob": "8068f02228172980287a2888dd7843f78314c64f",
+      "modulePathRewriteOnly": false
+    },
+    {
+      "path": "packages/runtime/README.md",
+      "assetPath": "dist/packages/runtime/README.md",
+      "bytes": 6729,
+      "sha256": "e18d7fd0f9c1fb45baeea2e303b2208b443de0bf169a153657433a6ec9c4f028",
+      "sourceSha256": "e18d7fd0f9c1fb45baeea2e303b2208b443de0bf169a153657433a6ec9c4f028",
+      "sourceGitBlob": "9453c6e79ff9e1786f7d2531ebb75bb659700e0e",
+      "modulePathRewriteOnly": false
+    },
+    {
+      "path": "packages/runtime/src/execution/calls.js",
+      "assetPath": "dist/packages/runtime/src/execution/calls.js",
+      "bytes": 7253,
+      "sha256": "655c1fcb9c2ea2780bf8058e56d9cb6801a765fc69060fed79ff2b3dc0a93382",
+      "sourceSha256": "96da5d87b6197c3719e016d3f722ad968bd1672c3d117e284bac45a247df8735",
+      "sourceGitBlob": "96ca097de0dd4cb4017ad988d320a6dc21f1afa1",
+      "modulePathRewriteOnly": true
+    },
+    {
+      "path": "packages/runtime/src/execution/external-field-values.js",
+      "assetPath": "dist/packages/runtime/src/execution/external-field-values.js",
+      "bytes": 1135,
+      "sha256": "31f9f0692ad0aafbf48e61bd5f466165c53381266b053c1cc624f6dbd7a51f37",
+      "sourceSha256": "ae78891081232410a1a05d99ba8de207bef909d549ea9aea1aa68475e67c0fef",
+      "sourceGitBlob": "1a929d05ccda27a26f3bbe06d905b562adbec187",
+      "modulePathRewriteOnly": true
+    },
+    {
+      "path": "packages/runtime/src/execution/handlers/load-store.js",
+      "assetPath": "dist/packages/runtime/src/execution/handlers/load-store.js",
+      "bytes": 1662,
+      "sha256": "3fc9451f8500008d3d70f456c4e99661411432a72948389a01bd27cb537581cd",
+      "sourceSha256": "3fc9451f8500008d3d70f456c4e99661411432a72948389a01bd27cb537581cd",
+      "sourceGitBlob": "d4c701f9f4859d048b883262715e158d63804b49",
+      "modulePathRewriteOnly": false
+    },
+    {
+      "path": "packages/runtime/src/execution/handlers/object-model.js",
+      "assetPath": "dist/packages/runtime/src/execution/handlers/object-model.js",
+      "bytes": 1577,
+      "sha256": "ec13f5d6a41c657a11671696986138c3229e5893057891f1fd277315cdf51c20",
+      "sourceSha256": "ec13f5d6a41c657a11671696986138c3229e5893057891f1fd277315cdf51c20",
+      "sourceGitBlob": "e46f5d0784cb3fa23f442a516f841c118f81fe0d",
+      "modulePathRewriteOnly": false
+    },
+    {
+      "path": "packages/runtime/src/execution/readonly-string-fields.js",
+      "assetPath": "dist/packages/runtime/src/execution/readonly-string-fields.js",
+      "bytes": 1841,
+      "sha256": "ed2e780f0a2cb5deb27c2bd83f6e6d27819b3b9c1e01c0da0d54f4e57fe57290",
+      "sourceSha256": "37777e468caf8863219091971512f781fa360470801fe896dadc21f40e6ba1fb",
+      "sourceGitBlob": "de5676f89ba2424258a7734c19db12dae9c25754",
+      "modulePathRewriteOnly": true
+    },
+    {
+      "path": "packages/runtime/src/execution/source-numbers.js",
+      "assetPath": "dist/packages/runtime/src/execution/source-numbers.js",
+      "bytes": 1816,
+      "sha256": "18749f851331e7c394edb176284b15e04b1e7209d33cbd2503f4d635f43b4bdd",
+      "sourceSha256": "e28af5926158656e911f264c6e717e3ec93840b5f5b27bb2b2479a6f7b9ae34f",
+      "sourceGitBlob": "d5aa08201595f29c7883c156bfcbcf8242e7a2d2",
+      "modulePathRewriteOnly": true
+    },
+    {
+      "path": "packages/runtime/src/execution/source-ops/load-store.js",
+      "assetPath": "dist/packages/runtime/src/execution/source-ops/load-store.js",
+      "bytes": 1089,
+      "sha256": "be0706b6f2038a7d18904ea72e1aad8b237a8d49dc723eeb54c9fa8caab37ba4",
+      "sourceSha256": "cc2d261e88534fee06259ae92e512aa26d35b4f373ed086f9743611d686f7116",
+      "sourceGitBlob": "7cd42cd4492fb5f00393c802d12f449c81a04483",
+      "modulePathRewriteOnly": true
+    },
+    {
+      "path": "packages/runtime/src/execution/statics.js",
+      "assetPath": "dist/packages/runtime/src/execution/statics.js",
+      "bytes": 2445,
+      "sha256": "61a6a8b7b94f83b4fa258288e1500eb0a04701de2421f6bcfeb387ac0a678162",
+      "sourceSha256": "7cac5309121c3aa50c9096e142866484dfa758fcd89b08e4a314a13a03abec05",
+      "sourceGitBlob": "60f1c6fa3d26b756dabd691e34580e0e2fd04f0d",
+      "modulePathRewriteOnly": true
+    },
+    {
+      "path": "packages/runtime/src/execution/string-initialization.js",
+      "assetPath": "dist/packages/runtime/src/execution/string-initialization.js",
+      "bytes": 2200,
+      "sha256": "4b6752fe2cc129f33d3fc5712caa99d2a560753ebd2a28ace6c15371c02703a7",
+      "sourceSha256": "4b6752fe2cc129f33d3fc5712caa99d2a560753ebd2a28ace6c15371c02703a7",
+      "sourceGitBlob": "1a195d8fd877d42102523ae96b2abd465786bacb",
+      "modulePathRewriteOnly": false
+    },
+    {
+      "path": "packages/runtime/src/execution/strings.js",
+      "assetPath": "dist/packages/runtime/src/execution/strings.js",
+      "bytes": 3570,
+      "sha256": "c19dcacb80321f8de1930d0a297a0f8abe0e11ee162352f61a1a2e8eba479892",
+      "sourceSha256": "c19dcacb80321f8de1930d0a297a0f8abe0e11ee162352f61a1a2e8eba479892",
+      "sourceGitBlob": "abab8db4a1370a9c72d9eb79e714eaf243172b72",
+      "modulePathRewriteOnly": false
+    }
+  ],
+  "runtimeWorker": {
+    "path": "dist/runtime.worker.js",
+    "bytes": 3349493,
+    "sha256": "e0e99a062a278006f5a1778e495e35d26f9d67f34d50422208bee63b7aff6b56",
+    "finalImplementationMarkersPresent": [
+      "function findInterned(heap, entries, text)",
+      "const cached = vm.constantValues.get(index);",
+      "function initializeReadonlyString(vm, field, values, key)"
+    ]
+  },
+  "bundleProvenance": "Fresh successful build at the recorded revision; raw asset manifest hashes every emitted file. Marker checks confirm final optimized scalar cache, literal lookup and readonly-string initialization are in the runtime worker; they are not an independent byte-for-byte rebundling proof."
+}

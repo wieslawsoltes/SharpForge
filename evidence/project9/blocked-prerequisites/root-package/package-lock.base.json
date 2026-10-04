@@ -1,0 +1,436 @@
+{
+  "name": "sharpforge",
+  "version": "0.14.0",
+  "lockfileVersion": 3,
+  "requires": true,
+  "packages": {
+    "": {
+      "name": "sharpforge",
+      "version": "0.14.0",
+      "workspaces": [
+        "packages/*"
+      ],
+      "engines": {
+        "node": ">=22"
+      }
+    },
+    "node_modules/@sharpforge/archive": {
+      "resolved": "packages/archive",
+      "link": true
+    },
+    "node_modules/@sharpforge/bcl-collections": {
+      "resolved": "packages/bcl-collections",
+      "link": true
+    },
+    "node_modules/@sharpforge/bcl-core": {
+      "resolved": "packages/bcl-core",
+      "link": true
+    },
+    "node_modules/@sharpforge/bytecode": {
+      "resolved": "packages/bytecode",
+      "link": true
+    },
+    "node_modules/@sharpforge/cil": {
+      "resolved": "packages/cil",
+      "link": true
+    },
+    "node_modules/@sharpforge/clr": {
+      "resolved": "packages/clr",
+      "link": true
+    },
+    "node_modules/@sharpforge/compiler": {
+      "resolved": "packages/compiler",
+      "link": true
+    },
+    "node_modules/@sharpforge/compute": {
+      "resolved": "packages/compute",
+      "link": true
+    },
+    "node_modules/@sharpforge/controls": {
+      "resolved": "packages/controls",
+      "link": true
+    },
+    "node_modules/@sharpforge/debugger": {
+      "resolved": "packages/debugger",
+      "link": true
+    },
+    "node_modules/@sharpforge/designer": {
+      "resolved": "packages/designer",
+      "link": true
+    },
+    "node_modules/@sharpforge/docking": {
+      "resolved": "packages/docking",
+      "link": true
+    },
+    "node_modules/@sharpforge/editor": {
+      "resolved": "packages/editor",
+      "link": true
+    },
+    "node_modules/@sharpforge/extensions": {
+      "resolved": "packages/extensions",
+      "link": true
+    },
+    "node_modules/@sharpforge/framework": {
+      "resolved": "packages/framework",
+      "link": true
+    },
+    "node_modules/@sharpforge/language": {
+      "resolved": "packages/language",
+      "link": true
+    },
+    "node_modules/@sharpforge/msbuild": {
+      "resolved": "packages/msbuild",
+      "link": true
+    },
+    "node_modules/@sharpforge/network": {
+      "resolved": "packages/network",
+      "link": true
+    },
+    "node_modules/@sharpforge/project-system": {
+      "resolved": "packages/project-system",
+      "link": true
+    },
+    "node_modules/@sharpforge/protocol": {
+      "resolved": "packages/protocol",
+      "link": true
+    },
+    "node_modules/@sharpforge/refactoring": {
+      "resolved": "packages/refactoring",
+      "link": true
+    },
+    "node_modules/@sharpforge/runtime": {
+      "resolved": "packages/runtime",
+      "link": true
+    },
+    "node_modules/@sharpforge/symbols": {
+      "resolved": "packages/symbols",
+      "link": true
+    },
+    "node_modules/@sharpforge/syntax": {
+      "resolved": "packages/syntax",
+      "link": true
+    },
+    "node_modules/@sharpforge/templates": {
+      "resolved": "packages/templates",
+      "link": true
+    },
+    "node_modules/@sharpforge/text": {
+      "resolved": "packages/text",
+      "link": true
+    },
+    "node_modules/@sharpforge/winui": {
+      "resolved": "packages/winui",
+      "link": true
+    },
+    "node_modules/@sharpforge/workspace": {
+      "resolved": "packages/workspace",
+      "link": true
+    },
+    "packages/archive": {
+      "name": "@sharpforge/archive",
+      "version": "0.14.0",
+      "license": "MIT"
+    },
+    "packages/bcl-collections": {
+      "name": "@sharpforge/bcl-collections",
+      "version": "0.14.0",
+      "license": "MIT",
+      "dependencies": {
+        "@sharpforge/bcl-core": "0.14.0"
+      },
+      "engines": {
+        "node": ">=22"
+      }
+    },
+    "packages/bcl-core": {
+      "name": "@sharpforge/bcl-core",
+      "version": "0.14.0",
+      "license": "MIT",
+      "engines": {
+        "node": ">=22"
+      }
+    },
+    "packages/bytecode": {
+      "name": "@sharpforge/bytecode",
+      "version": "0.14.0",
+      "license": "MIT",
+      "dependencies": {
+        "@sharpforge/framework": "0.14.0"
+      },
+      "engines": {
+        "node": ">=22"
+      }
+    },
+    "packages/cil": {
+      "name": "@sharpforge/cil",
+      "version": "0.14.0",
+      "license": "MIT",
+      "dependencies": {
+        "@sharpforge/bytecode": "0.14.0",
+        "@sharpforge/framework": "0.14.0"
+      },
+      "engines": {
+        "node": ">=22"
+      }
+    },
+    "packages/clr": {
+      "name": "@sharpforge/clr",
+      "version": "0.14.0",
+      "license": "MIT",
+      "dependencies": {
+        "@sharpforge/archive": "0.14.0",
+        "@sharpforge/cil": "0.14.0"
+      },
+      "engines": {
+        "node": ">=22"
+      }
+    },
+    "packages/compiler": {
+      "name": "@sharpforge/compiler",
+      "version": "0.14.0",
+      "license": "MIT",
+      "dependencies": {
+        "@sharpforge/bytecode": "0.14.0",
+        "@sharpforge/cil": "0.14.0",
+        "@sharpforge/framework": "0.14.0",
+        "@sharpforge/symbols": "0.14.0",
+        "@sharpforge/syntax": "0.14.0",
+        "@sharpforge/text": "0.14.0"
+      },
+      "engines": {
+        "node": ">=22"
+      }
+    },
+    "packages/compute": {
+      "name": "@sharpforge/compute",
+      "version": "0.14.0",
+      "license": "MIT",
+      "engines": {
+        "node": ">=22"
+      }
+    },
+    "packages/controls": {
+      "name": "@sharpforge/controls",
+      "version": "0.14.0",
+      "license": "MIT",
+      "engines": {
+        "node": ">=22"
+      }
+    },
+    "packages/debugger": {
+      "name": "@sharpforge/debugger",
+      "version": "0.14.0",
+      "license": "MIT",
+      "dependencies": {
+        "@sharpforge/runtime": "0.14.0",
+        "@sharpforge/symbols": "0.14.0",
+        "@sharpforge/syntax": "0.14.0",
+        "@sharpforge/text": "0.14.0"
+      },
+      "engines": {
+        "node": ">=22"
+      }
+    },
+    "packages/designer": {
+      "name": "@sharpforge/designer",
+      "version": "0.14.0",
+      "license": "MIT",
+      "dependencies": {
+        "@sharpforge/framework": "0.14.0",
+        "@sharpforge/syntax": "0.14.0",
+        "@sharpforge/text": "0.14.0"
+      }
+    },
+    "packages/docking": {
+      "name": "@sharpforge/docking",
+      "version": "0.14.0",
+      "license": "MIT"
+    },
+    "packages/editor": {
+      "name": "@sharpforge/editor",
+      "version": "0.14.0",
+      "license": "MIT",
+      "dependencies": {
+        "@sharpforge/syntax": "0.14.0",
+        "@sharpforge/text": "0.14.0"
+      },
+      "engines": {
+        "node": ">=22"
+      }
+    },
+    "packages/extensions": {
+      "name": "@sharpforge/extensions",
+      "version": "0.14.0",
+      "license": "MIT",
+      "dependencies": {
+        "@sharpforge/syntax": "0.14.0",
+        "@sharpforge/text": "0.14.0"
+      },
+      "engines": {
+        "node": ">=22"
+      }
+    },
+    "packages/framework": {
+      "name": "@sharpforge/framework",
+      "version": "0.14.0",
+      "license": "MIT",
+      "dependencies": {
+        "@sharpforge/bcl-collections": "0.14.0",
+        "@sharpforge/bcl-core": "0.14.0"
+      },
+      "engines": {
+        "node": ">=22"
+      }
+    },
+    "packages/language": {
+      "name": "@sharpforge/language",
+      "version": "0.14.0",
+      "license": "MIT",
+      "dependencies": {
+        "@sharpforge/bytecode": "0.14.0",
+        "@sharpforge/framework": "0.14.0",
+        "@sharpforge/syntax": "0.14.0"
+      },
+      "engines": {
+        "node": ">=22"
+      }
+    },
+    "packages/msbuild": {
+      "name": "@sharpforge/msbuild",
+      "version": "0.14.0",
+      "license": "MIT",
+      "dependencies": {
+        "@sharpforge/network": "0.14.0",
+        "@sharpforge/project-system": "0.14.0"
+      },
+      "bin": {
+        "sharpforge-msbuild": "bin/sharpforge-msbuild.js"
+      },
+      "engines": {
+        "node": ">=22"
+      }
+    },
+    "packages/network": {
+      "name": "@sharpforge/network",
+      "version": "0.14.0",
+      "license": "MIT",
+      "engines": {
+        "node": ">=22"
+      }
+    },
+    "packages/project-system": {
+      "name": "@sharpforge/project-system",
+      "version": "0.14.0",
+      "license": "MIT",
+      "dependencies": {
+        "@sharpforge/archive": "0.14.0"
+      }
+    },
+    "packages/protocol": {
+      "name": "@sharpforge/protocol",
+      "version": "0.14.0",
+      "license": "MIT",
+      "dependencies": {
+        "@sharpforge/debugger": "0.14.0",
+        "@sharpforge/language": "0.14.0",
+        "@sharpforge/refactoring": "0.14.0",
+        "@sharpforge/workspace": "0.14.0"
+      },
+      "bin": {
+        "sharpforge-dap": "bin/sharpforge-dap.js",
+        "sharpforge-lsp": "bin/sharpforge-lsp.js"
+      },
+      "engines": {
+        "node": ">=22"
+      }
+    },
+    "packages/refactoring": {
+      "name": "@sharpforge/refactoring",
+      "version": "0.14.0",
+      "license": "MIT",
+      "dependencies": {
+        "@sharpforge/syntax": "0.14.0",
+        "@sharpforge/text": "0.14.0"
+      },
+      "engines": {
+        "node": ">=22"
+      }
+    },
+    "packages/runtime": {
+      "name": "@sharpforge/runtime",
+      "version": "0.14.0",
+      "license": "MIT",
+      "dependencies": {
+        "@sharpforge/bcl-collections": "0.14.0",
+        "@sharpforge/bcl-core": "0.14.0",
+        "@sharpforge/bytecode": "0.14.0",
+        "@sharpforge/cil": "0.14.0",
+        "@sharpforge/compute": "0.14.0",
+        "@sharpforge/designer": "0.14.0",
+        "@sharpforge/framework": "0.14.0",
+        "@sharpforge/network": "0.14.0"
+      },
+      "engines": {
+        "node": ">=22"
+      }
+    },
+    "packages/symbols": {
+      "name": "@sharpforge/symbols",
+      "version": "0.14.0",
+      "license": "MIT",
+      "dependencies": {
+        "@sharpforge/archive": "0.14.0",
+        "@sharpforge/cil": "0.14.0"
+      }
+    },
+    "packages/syntax": {
+      "name": "@sharpforge/syntax",
+      "version": "0.14.0",
+      "license": "MIT",
+      "dependencies": {
+        "@sharpforge/text": "0.14.0"
+      },
+      "engines": {
+        "node": ">=22"
+      }
+    },
+    "packages/templates": {
+      "name": "@sharpforge/templates",
+      "version": "0.14.0",
+      "license": "MIT",
+      "dependencies": {
+        "@sharpforge/archive": "0.14.0",
+        "@sharpforge/project-system": "0.14.0"
+      }
+    },
+    "packages/text": {
+      "name": "@sharpforge/text",
+      "version": "0.14.0",
+      "license": "MIT",
+      "engines": {
+        "node": ">=22"
+      }
+    },
+    "packages/winui": {
+      "name": "@sharpforge/winui",
+      "version": "0.14.0",
+      "license": "MIT",
+      "dependencies": {
+        "@sharpforge/framework": "0.14.0"
+      }
+    },
+    "packages/workspace": {
+      "name": "@sharpforge/workspace",
+      "version": "0.14.0",
+      "license": "MIT",
+      "dependencies": {
+        "@sharpforge/compiler": "0.14.0",
+        "@sharpforge/syntax": "0.14.0",
+        "@sharpforge/text": "0.14.0"
+      },
+      "engines": {
+        "node": ">=22"
+      }
+    }
+  }
+}

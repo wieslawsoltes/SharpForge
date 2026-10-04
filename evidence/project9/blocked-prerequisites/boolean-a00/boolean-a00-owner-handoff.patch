@@ -1,0 +1,498 @@
+diff --git a/packages/bytecode/src/index.js b/packages/bytecode/src/index.js
+--- a/packages/bytecode/src/index.js
++++ b/packages/bytecode/src/index.js
+@@ -6,6 +6,7 @@
+ export {FORMAT_VERSION,EnumConvertBase,Op,OpName,Binary,BinaryName,Unary,UnaryName} from './opcodes.js';
+ import {recordSourceStacks,discardSourceStacks} from './source-stack-proof.js';
+ export {verifiedSourceStackBound} from './source-stack-proof.js';
++export {verifyReadonlyFieldConstant} from './readonly-field-constants.js';
+ import {Builtins} from './builtins.js';
+ export {Builtins,BuiltinMap,frameworkBuiltin,CONTRACT_BUILTIN_OFFSET,createBuiltinRegistry} from './builtins.js';
+ export {builtinOwners,builtinMemberShape,builtinParameterType} from './builtin-metadata.js';
+diff --git a/planning/contracts/schema/bytecode-image.v2.schema.json b/planning/contracts/schema/bytecode-image.v2.schema.json
+--- a/planning/contracts/schema/bytecode-image.v2.schema.json
++++ b/planning/contracts/schema/bytecode-image.v2.schema.json
+@@ -149,8 +149,33 @@
+           "number",
+           "boolean",
+           "string",
+-          "null"
+-        ]
++          "null",
++          "object"
++        ],
++        "properties": {
++          "readonlyField": {
++            "type": "object",
++            "properties": {
++              "owner": {
++                "type": "string",
++                "minLength": 1
++              },
++              "name": {
++                "type": "string",
++                "minLength": 1
++              }
++            },
++            "required": [
++              "owner",
++              "name"
++            ],
++            "additionalProperties": false
++          }
++        },
++        "required": [
++          "readonlyField"
++        ],
++        "additionalProperties": false
+       },
+       "maxItems": 1000000
+     },
+diff --git a/scripts/planning/check-contract-change.js b/scripts/planning/check-contract-change.js
+--- a/scripts/planning/check-contract-change.js
++++ b/scripts/planning/check-contract-change.js
+@@ -36,23 +36,90 @@
+     after.anyOf.some(branch => isDeepStrictEqual(before, branch));
+ }
+ 
++// A widened subschema can narrow an unchanged oneOf reached through a reference.
++// New carrier/items rules are enabled only for a reference-free whole schema.
++function schemaReferenceContext(schema) {
++  const pending = [schema], seen = new Set();
++  const scopeKeys = new Set(['$ref', '$dynamicRef', '$recursiveRef', '$id', '$anchor', '$dynamicAnchor', '$recursiveAnchor']);
++  while (pending.length) {
++    const value = pending.pop();
++    if (!value || typeof value !== 'object') continue;
++    if (seen.has(value)) return true;
++    seen.add(value);
++    if (Object.keys(value).some(key => scopeKeys.has(key))) return true;
++    for (const child of Object.values(value)) pending.push(child);
++  }
++  return false;
++}
++
++// This proof adds only a closed inline string-record alternative. Object-only
++// keywords cannot constrain any previously admitted primitive, and no union
++// traversal is introduced on the primitive validation path.
++function closedStringRecord(schema, annotations, depth = 0) {
++  if (!schema || typeof schema !== 'object' || Array.isArray(schema) || depth >= 8) return false;
++  if (schema.type !== 'object' || schema.additionalProperties !== false ||
++      !Object.keys(schema).every(key => ['type', 'properties', 'required', 'additionalProperties'].includes(key) ||
++        annotations.has(key))) return false;
++  const properties = schema.properties;
++  if (!properties || typeof properties !== 'object' || Array.isArray(properties)) return false;
++  const names = Object.keys(properties), required = schema.required;
++  if (!names.length || !Array.isArray(required) || required.length !== names.length ||
++      new Set(required).size !== required.length ||
++      required.some(name => typeof name !== 'string' || !Object.hasOwn(properties, name))) return false;
++  return Object.values(properties).every(property => {
++    if (!property || typeof property !== 'object' || Array.isArray(property)) return false;
++    if (property.type === 'object') return closedStringRecord(property, annotations, depth + 1);
++    if (property.type !== 'string' || !Object.keys(property).every(key =>
++      ['type', 'minLength', 'maxLength', 'pattern'].includes(key) || annotations.has(key))) return false;
++    for (const key of ['minLength', 'maxLength']) {
++      if (Object.hasOwn(property, key) && (!Number.isSafeInteger(property[key]) || property[key] < 0)) return false;
++    }
++    if (property.maxLength !== undefined && (property.minLength ?? 0) > property.maxLength) return false;
++    if (Object.hasOwn(property, 'pattern')) {
++      if (typeof property.pattern !== 'string') return false;
++      try { new RegExp(property.pattern, 'u'); } catch { return false; }
++    }
++    return true;
++  });
++}
++
++function additiveClosedObjectCarrier(before, after, annotations) {
++  const types = before.type;
++  if (!Array.isArray(types) || !types.length || new Set(types).size !== types.length ||
++      !types.every(type => ['number', 'integer', 'boolean', 'string', 'null'].includes(type)) ||
++      !Object.keys(before).every(key => key === 'type' || annotations.has(key)) ||
++      !isDeepStrictEqual(after.type, [...types, 'object'])) return false;
++  return closedStringRecord({...after, type: 'object'}, annotations);
++}
++
+ // A deliberately conservative schema proof: unknown validation keywords and
+ // conjunction/exclusive-union extensions may narrow acceptance and need a bump.
+ export function additiveSchema(before,after) {
++  const carrierContext=!schemaReferenceContext(before)&&!schemaReferenceContext(after);
++  return additiveSchemaInContext(before,after,carrierContext);
++}
++
++function additiveSchemaInContext(before,after,carrierContext) {
+   if(isDeepStrictEqual(before,after))return true;
+   if(before===false)return true;
+   if(!before||!after||typeof before!=='object'||typeof after!=='object'||Array.isArray(before)||Array.isArray(after))return false;
+   const annotation=new Set(['title','description','$comment','examples']);
+   if(additiveStringPatternUnion(before,after,annotation))return true;
++  if(carrierContext&&additiveClosedObjectCarrier(before,after,annotation))return true;
+   for(const [name,value] of Object.entries(before)){
+     if(annotation.has(name))continue;
+     if(!Object.hasOwn(after,name))return false;
+     if(isDeepStrictEqual(value,after[name]))continue;
+     if(name==='required') {if(!Array.isArray(after[name])||!after[name].every(v=>value.includes(v)))return false;}
+     else if(name==='enum'||name==='anyOf') {if(!Array.isArray(after[name])||!value.every(v=>after[name].some(w=>isDeepStrictEqual(v,w))))return false;}
++    else if(name==='items') {
++      if(!carrierContext||before.type!=='array'||after.type!=='array'||!value||typeof value!=='object'||Array.isArray(value)||
++        !after.items||typeof after.items!=='object'||Array.isArray(after.items)||
++        !additiveSchemaInContext(value,after.items,carrierContext))return false;
++    }
+     else if(name==='properties'||name==='$defs') {
+       if(!after[name]||typeof after[name]!=='object'||Array.isArray(after[name]))return false;
+-      if(!Object.keys(value).every(k=>Object.hasOwn(after[name],k)&&additiveSchema(value[k],after[name][k])))return false;
++      if(!Object.keys(value).every(k=>Object.hasOwn(after[name],k)&&additiveSchemaInContext(value[k],after[name][k],carrierContext)))return false;
+       if(name==='properties'&&before.additionalProperties!==false&&Object.keys(after[name]).some(k=>!Object.hasOwn(value,k)))return false;
+     }else return false;
+   }
+diff --git a/planning/contracts/tests/gates.test.js b/planning/contracts/tests/gates.test.js
+--- a/planning/contracts/tests/gates.test.js
++++ b/planning/contracts/tests/gates.test.js
+@@ -1,6 +1,6 @@
+ import test from 'node:test';
+ import assert from 'node:assert/strict';
+-import { mkdtempSync, mkdirSync, writeFileSync, rmSync } from 'node:fs';
++import { mkdtempSync, mkdirSync, writeFileSync, rmSync, readFileSync } from 'node:fs';
+ import { tmpdir } from 'node:os';
+ import { join, dirname } from 'node:path';
+ import { execFileSync } from 'node:child_process';
+@@ -9,6 +9,7 @@
+ import { impactedTests } from '../../../scripts/planning/impacted-tests.js';
+ import { checkContractChange } from '../../../scripts/planning/check-contract-change.js';
+ import { contractGate } from '../../../scripts/planning/contract-gate.js';
++import { validate } from '../../../scripts/planning/schema/validate.js';
+ const versions={framework:1,bytecode:1,value:1,metadata:1};
+ const write=(root,path,text)=>{mkdirSync(dirname(join(root,path)),{recursive:true});writeFileSync(join(root,path),text);};
+ 
+@@ -145,3 +146,112 @@
+     assert.equal(contractGate({root,commands,signal:AbortSignal.abort()}).checks.length,0);
+   } finally {rmSync(root,{recursive:true,force:true});}
+ });
++
++
++test('closed readonly-field carrier is additive through uniform constant items without a version bump', () => {
++  const path = 'planning/contracts/schema/bytecode-image.v2.schema.json';
++  const after = JSON.parse(readFileSync(new URL('../schema/bytecode-image.v2.schema.json', import.meta.url), 'utf8'));
++  assert(after.properties.constants.items.type.includes('object'));
++  const before = structuredClone(after);
++  before.properties.constants.items = {type: ['number', 'boolean', 'string', 'null']};
++  const result = checkContractChange({before: {[path]: before}, after: {[path]: after},
++    beforeVersions: versions, afterVersions: versions});
++  assert.deepEqual(result.errors, []);
++  assert.deepEqual(result.changes, [{path, component: 'bytecode', breaking: false}]);
++});
++
++test('closed-object carrier proof rejects unrelated alternatives and narrowing constraints', () => {
++  const path = 'planning/contracts/schema/bytecode-image.v2.schema.json';
++  const primitives = {type: ['number', 'boolean', 'string', 'null']};
++  const carrier = JSON.parse(readFileSync(new URL('../schema/bytecode-image.v2.schema.json', import.meta.url), 'utf8'))
++    .properties.constants.items;
++  const mutate = change => { const value = structuredClone(carrier); change(value); return value; };
++  const cases = [
++    ['removed old primitive', primitives, {...carrier, type: ['number', 'boolean', 'string', 'object']}],
++    ['reordered types', primitives, {...carrier, type: ['object', ...primitives.type]}],
++    ['unrelated added primitive', primitives, {...carrier, type: [...primitives.type, 'integer', 'object']}],
++    ['array alternative', primitives, {...carrier, type: [...primitives.type, 'array']}],
++    ['duplicate type', primitives, {...carrier, type: [...primitives.type, 'object', 'object']}],
++    ['old object acceptance', {...primitives, type: [...primitives.type, 'object']}, carrier],
++    ['old primitive constraint', {...primitives, maxLength: 8}, {...carrier, maxLength: 8}],
++    ['new primitive constraint', primitives, {...carrier, minLength: 1}],
++    ['unknown validation keyword', primitives, {...carrier, minProperties: 1}],
++    ['reference scope', primitives, {...carrier, $id: 'https://example.test/carrier'}],
++    ['arbitrary object', primitives, {type: [...primitives.type, 'object']}],
++    ['open record', primitives, {...carrier, additionalProperties: true}],
++    ['missing closure', primitives, mutate(value => { delete value.additionalProperties; })],
++    ['missing required', primitives, mutate(value => { delete value.required; })],
++    ['unknown required key', primitives, {...carrier, required: ['missing']}],
++    ['duplicate required key', primitives, {...carrier, required: ['readonlyField', 'readonlyField']}],
++    ['nested open record', primitives, mutate(value => { value.properties.readonlyField.additionalProperties = true; })],
++    ['nested optional property', primitives, mutate(value => { value.properties.readonlyField.required = ['owner']; })],
++    ['nested reference', primitives, mutate(value => { value.properties.readonlyField.properties.owner = {$ref: '#/owner'}; })],
++    ['nested union', primitives, mutate(value => { value.properties.readonlyField.properties.owner = {anyOf: [{type: 'string'}]}; })],
++    ['invalid pattern', primitives, mutate(value => { value.properties.readonlyField.properties.owner.pattern = '['; })],
++    ['invalid length', primitives, mutate(value => { value.properties.readonlyField.properties.owner.maxLength = -1; })],
++  ];
++  for (const [name, before, after] of cases) {
++    const result = checkContractChange({before: {[path]: before}, after: {[path]: after},
++      beforeVersions: versions, afterVersions: versions});
++    assert.equal(result.changes[0].breaking, true, name);
++    assert.equal(result.errors.length, 2, name);
++  }
++});
++
++test('uniform item proof retains array constraints and rejects tuple or boolean-item changes', () => {
++  const path = 'planning/contracts/schema/bytecode-image.v2.schema.json';
++  const primitives = {type: ['number', 'boolean', 'string', 'null']};
++  const carrier = JSON.parse(readFileSync(new URL('../schema/bytecode-image.v2.schema.json', import.meta.url), 'utf8'))
++    .properties.constants.items;
++  const before = {type: 'array', items: primitives, maxItems: 1000000};
++  for (const [name, input, after] of [
++    ['narrower array bound', before, {...before, items: carrier, maxItems: 999999}],
++    ['new uniqueness constraint', before, {...before, items: carrier, uniqueItems: true}],
++    ['tuple output', before, {...before, items: [carrier]}],
++    ['tuple input', {...before, items: [primitives]}, {...before, items: carrier}],
++    ['boolean input', {...before, items: true}, {...before, items: carrier}],
++    ['boolean output', before, {...before, items: true}],
++    ['missing explicit array type', {items: primitives}, {items: carrier}],
++  ]) {
++    const result = checkContractChange({before: {[path]: input}, after: {[path]: after},
++      beforeVersions: versions, afterVersions: versions});
++    assert.equal(result.changes[0].breaking, true, name);
++    assert.equal(result.errors.length, 2, name);
++  }
++});
++
++test('carrier item widening cannot hide a narrowing referenced oneOf elsewhere in the schema', () => {
++  const path = 'planning/contracts/schema/bytecode-image.v2.schema.json';
++  const primitives = {type: ['number', 'boolean', 'string', 'null']};
++  const carrier = JSON.parse(readFileSync(new URL('../schema/bytecode-image.v2.schema.json', import.meta.url), 'utf8'))
++    .properties.constants.items;
++  const before = {type: 'object', properties: {
++    constants: {type: 'array', items: primitives},
++    payload: {oneOf: [{$ref: '#/properties/constants/items'}, {type: 'object'}]},
++  }, required: ['constants', 'payload'], additionalProperties: false};
++  const after = structuredClone(before);
++  after.properties.constants.items = carrier;
++  const document = {constants: [], payload: {readonlyField: {owner: 'System.Boolean', name: 'TrueString'}}};
++  assert.equal(validate(before, document), document);
++  assert.throws(() => validate(after, document), {code: 'SCHEMA_INVALID'});
++  const result = checkContractChange({before: {[path]: before}, after: {[path]: after},
++    beforeVersions: versions, afterVersions: versions});
++  assert.equal(result.changes[0].breaking, true);
++  assert.equal(result.errors.length, 2);
++});
++
++test('new carrier proofs conservatively reject reference and scope contexts outside the changed item', () => {
++  const path = 'planning/contracts/schema/bytecode-image.v2.schema.json';
++  const primitives = {type: ['number', 'boolean', 'string', 'null']};
++  const carrier = JSON.parse(readFileSync(new URL('../schema/bytecode-image.v2.schema.json', import.meta.url), 'utf8'))
++    .properties.constants.items;
++  for (const keyword of ['$ref', '$dynamicRef', '$recursiveRef', '$id', '$anchor', '$dynamicAnchor', '$recursiveAnchor']) {
++    const before = {type: 'object', properties: {constants: {type: 'array', items: primitives},
++      unrelated: {[keyword]: '#/properties/constants/items'}}, additionalProperties: false};
++    const after = structuredClone(before); after.properties.constants.items = carrier;
++    const result = checkContractChange({before: {[path]: before}, after: {[path]: after},
++      beforeVersions: versions, afterVersions: versions});
++    assert.equal(result.changes[0].breaking, true, keyword);
++    assert.equal(result.errors.length, 2, keyword);
++  }
++});
+diff --git a/scripts/planning/schema/lower-method-body.js b/scripts/planning/schema/lower-method-body.js
+--- a/scripts/planning/schema/lower-method-body.js
++++ b/scripts/planning/schema/lower-method-body.js
+@@ -1,4 +1,4 @@
+-import {OpName,BinaryName,UnaryName,Builtins} from '../../../packages/bytecode/src/index.js';
++import {OpName,BinaryName,UnaryName,Builtins,verifyReadonlyFieldConstant} from '../../../packages/bytecode/src/index.js';
+ import {canonicalType,frameworkType,frameworkAssignable} from '../../../packages/framework/src/index.js';
+ import {SchemaError} from './validate.js';
+ 
+@@ -53,6 +53,14 @@
+ function sourceTarget(method){return {id:String(method.id),owner:method.owner===null?null:typeName(method.owner),name:method.name,parameters:[...(!method.isStatic?[stackType(method.owner)]:[]),...method.parameters.map(p=>stackType(p.type))],returnType:stackType(method.returnType),parameterStorage:[...(!method.isStatic?[typeName(method.owner)]:[]),...method.parameters.map(p=>typeName(p.type))],returnStorage:typeName(method.returnType)};}
+ function cilTarget(inspector,token){const d=inspector.resolveToken(token);if(d.kind!=='method'||d.genericArguments||d.signature.genericArity)fail('SCHEMA_UNSUPPORTED','Uninstantiated or unknown method signature');return {id:String(token),owner:typeName(d.owner),name:d.name,parameters:[...(!d.signature.isStatic?[stackType(d.owner)]:[]),...d.signature.parameters.map(stackType)],returnType:stackType(d.signature.returnType),parameterStorage:[...(!d.signature.isStatic?[typeName(d.owner)]:[]),...d.signature.parameters.map(typeName)],returnStorage:typeName(d.signature.returnType),isStatic:d.signature.isStatic};}
+ 
++function sourceReadonlyField(value, hint) {
++  if (value === null || !['object', 'function'].includes(typeof value) || !('readonlyField' in value)) return null;
++  if (hint !== 0 || !verifyReadonlyFieldConstant(value)) fail('SCHEMA_INVALID', 'Invalid readonly string field carrier');
++  const {owner, name} = value.readonlyField;
++  return {id: 'field:' + JSON.stringify([owner, name]), owner, name,
++    type: 'ref:System.String', storageType: 'System.String'};
++}
++
+ /** Lower one instruction. Every effect is explicit, including source-VM value-retaining stores. */
+ function transfer(raw,offset,input,env){
+   const {method,encoding,context,index,locals,parameters,returnType,regions}=env,source=encoding==='bytecode',name=raw.name;
+@@ -69,7 +77,16 @@
+   if(source){
+     switch(name){
+       case 'SEQ':case 'NOP':return emit('nop',[],0,[]);
+-      case 'CONST':{if(![0,1].includes(b))fail('SCHEMA_UNSUPPORTED','Unknown constant numeric hint');if(!Number.isInteger(a)||a<0||a>=context.image.constants.length)fail('SCHEMA_INVALID','Invalid constant index');const value=context.image.constants[a],type=value===null?'null':typeof value==='string'?'ref:System.String':typeof value==='boolean'?'i32':typeof value==='number'?(b===1?'f64':Number.isInteger(value)&&value>=-2147483648&&value<=2147483647?'i32':'f64'):fail('SCHEMA_UNSUPPORTED','Unsupported constant carrier');return emit('constant',[typeof value==='boolean'?Number(value):value],0,[type]);}
++      case 'CONST':{
++        if(![0,1].includes(b))fail('SCHEMA_UNSUPPORTED','Unknown constant numeric hint');
++        if(!Number.isInteger(a)||a<0||a>=context.image.constants.length)fail('SCHEMA_INVALID','Invalid constant index');
++        const value=context.image.constants[a],field=sourceReadonlyField(value,b);
++        if(field)return emit('load-static',[field],0,[field.type]);
++        const type=value===null?'null':typeof value==='string'?'ref:System.String':typeof value==='boolean'?'i32':
++          typeof value==='number'?(b===1?'f64':Number.isInteger(value)&&value>=-2147483648&&value<=2147483647?'i32':'f64'):
++          fail('SCHEMA_UNSUPPORTED','Unsupported constant carrier');
++        return emit('constant',[typeof value==='boolean'?Number(value):value],0,[type]);
++      }
+       case 'ENUM':return emit('constant',[b],0,['i32']);
+       case 'LDLOC':return emit('load-local',[a],0,[local(a)]);
+       case 'STLOC':return emit('store-local',[a,{retainValue:true}],1,[local(a)],[local(a)]);
+diff --git a/tests/a00-05-metadata.test.js b/tests/a00-05-metadata.test.js
+--- a/tests/a00-05-metadata.test.js
++++ b/tests/a00-05-metadata.test.js
+@@ -1,5 +1,5 @@
+ import test from 'node:test';import assert from 'node:assert/strict';import {readFileSync,readdirSync,mkdtempSync,writeFileSync,rmSync} from 'node:fs';import {join,resolve} from 'node:path';import {tmpdir} from 'node:os';import {execFileSync} from 'node:child_process';
+-import {compileToIL} from '@sharpforge/compiler';import {AssemblyInspector} from '@sharpforge/cil';import {readPortablePdb} from '@sharpforge/symbols';import {serializeImage,verifyImage} from '@sharpforge/bytecode';import {types,canonicalType} from '@sharpforge/framework';
++import {compileToIL} from '@sharpforge/compiler';import {AssemblyInspector} from '@sharpforge/cil';import {readPortablePdb} from '@sharpforge/symbols';import {serializeImage,deserializeImage,verifyImage} from '@sharpforge/bytecode';import {types,canonicalType} from '@sharpforge/framework';
+ import {coverageText} from '../scripts/planning/schema/example-coverage.js';
+ import {validate,SchemaError} from '../scripts/planning/schema/validate.js';import {generate,stable} from '../scripts/planning/gen-schema-fixtures.js';import {typeIdentity,validateTypeSemantics,validateSignature,validateSpan,sourceSpan,validateBody,SymbolTable,symbolId} from '../scripts/planning/schema/adapters.js';
+ const base=new URL('../planning/contracts/',import.meta.url);const schema=name=>JSON.parse(readFileSync(new URL('schema/'+name+'.schema.json',base)));const fixtures=name=>JSON.parse(readFileSync(new URL('fixtures/schema/'+name+'.json',base)));
+@@ -143,3 +143,63 @@
+   assert.throws(()=>validate({minLength:1,maxLength:1,pattern:'^[a-z]$'},'😀'),{code:'SCHEMA_INVALID'});
+   for(const value of [null,0,true,[],{}])validate({minLength:2,maxLength:3},value);
+ });
++
++
++test('A00 serialized readonly string fields pass structural validation before deserialization', () => {
++  const compiled = compileToIL('class P { static void Main() { Console.WriteLine(bool.TrueString); Console.WriteLine(bool.FalseString); } }');
++  assert(compiled.success, JSON.stringify(compiled.diagnostics));
++  const document = JSON.parse(serializeImage(compiled.image));
++  validate(schema('bytecode-image.v2'), document);
++  const image = deserializeImage(JSON.stringify(document));
++  assert.deepEqual(verifyImage(image), []);
++  assert.deepEqual(image.constants.filter(value => value?.readonlyField).map(value => value.readonlyField.name).sort(),
++    ['FalseString', 'TrueString']);
++});
++
++test('A00 readonly string structural shape is closed and excluded from static defaults', () => {
++  const contract = schema('bytecode-image.v2'), item = contract.properties.constants.items;
++  const marker = {readonlyField: {owner: 'System.Boolean', name: 'TrueString'}};
++  validate(item, marker);
++  const cases = [{}, {readonlyField: null}, {readonlyField: []}, {readonlyField: {}},
++    {readonlyField: {owner: 'System.Boolean'}}, {readonlyField: {...marker.readonlyField, extra: true}},
++    {...marker, extra: true}, {readonlyField: {...marker.readonlyField, owner: ''}},
++    {readonlyField: {...marker.readonlyField, name: 1}}, {readonlyField: {...marker.readonlyField, name: ''}},
++    [], {numericType: 'long', value: '1'}];
++  for (const value of cases) assert.throws(() => validate(item, value), {code: 'SCHEMA_INVALID'});
++  assert.throws(() => validate(contract.properties.statics.items,
++    {name: 'P.Value', type: 'string', value: marker}), {code: 'SCHEMA_INVALID'});
++  // Registry identity, NUL exclusion and UTF-16 limits belong to semantic validation.
++  validate(item, {readonlyField: {owner: 'Unknown.Type', name: 'Text'}});
++});
++
++test('A00 structurally valid field strings retain semantic NUL and UTF-16 length rejection', () => {
++  const compiled = compileToIL('class P { static void Main() { Console.WriteLine(bool.TrueString); } }');
++  assert(compiled.success, JSON.stringify(compiled.diagnostics));
++  const document = JSON.parse(serializeImage(compiled.image));
++  const index = document.constants.findIndex(value => value?.readonlyField);
++  assert(index >= 0);
++  const marker = document.constants[index].readonlyField;
++  for (const field of [{...marker, owner: 'A\0B'}, {...marker, name: 'A\0B'},
++    {...marker, owner: 'x'.repeat(1025)}, {...marker, name: 'x'.repeat(513)},
++    {...marker, owner: '\u{1f600}'.repeat(513)}, {...marker, name: '\u{1f600}'.repeat(257)}]) {
++    const candidate = structuredClone(document);
++    candidate.constants[index] = {readonlyField: field};
++    validate(schema('bytecode-image.v2'), candidate);
++    assert(verifyImage(deserializeImage(JSON.stringify(candidate))).some(error => error.includes('Invalid scalar constant')));
++  }
++});
++
++test('A00 primitive constants retain the exact pre-carrier validation node budget', () => {
++  const before = {type: 'array', items: {type: ['number', 'boolean', 'string', 'null']}};
++  const after = schema('bytecode-image.v2').properties.constants;
++  const values = [null, true, false, 0, -0, 1.5, '', 'text'];
++  const budget = 2 + values.length * 2;
++  for (const contract of [before, after]) {
++    assert.equal(validate(contract, values, {maxNodes: budget}), values);
++    assert.throws(() => validate(contract, values, {maxNodes: budget - 1}), {code: 'SCHEMA_LIMIT'});
++    for (const value of values) {
++      assert.equal(validate(contract.items, value, {maxNodes: 2}), value);
++      assert.throws(() => validate(contract.items, value, {maxNodes: 1}), {code: 'SCHEMA_LIMIT'});
++    }
++  }
++});
+diff --git a/tests/a00-05-typed-ir.test.js b/tests/a00-05-typed-ir.test.js
+--- a/tests/a00-05-typed-ir.test.js
++++ b/tests/a00-05-typed-ir.test.js
+@@ -199,3 +199,65 @@
+     assert.throws(()=>validateBody(body,{requireExecutable:true}),{code:'SCHEMA_INVALID',message:/Address effect differs from its declared slot/});
+   }
+ });
++
++
++test('A00 readonly source carriers and CIL fields lower to existing typed load-static operations', () => {
++  const bodies = lowered('class P { static void Main() { Console.WriteLine(bool.TrueString); Console.WriteLine(bool.FalseString); } }');
++  for (const encoding of ['bytecode', 'cil']) {
++    const selected = bodies.filter(body => body.encoding === encoding);
++    for (const body of selected) { validate(schema, body); validateBody(body, {requireExecutable: true}); }
++    const fields = selected.flatMap(body => body.instructions)
++      .filter(instruction => instruction.opcode === 'load-static' && instruction.operands[0].owner === 'System.Boolean');
++    assert.deepEqual([...new Set(fields.map(instruction => instruction.operands[0].name))].sort(), ['FalseString', 'TrueString']);
++    for (const instruction of fields) {
++      const field = instruction.operands[0];
++      assert.equal(field.type, 'ref:System.String');
++      assert.equal(field.storageType, 'System.String');
++      assert.deepEqual(instruction.inputTypes, []);
++      assert.deepEqual(instruction.outputTypes, ['ref:System.String']);
++      assert.deepEqual(instruction.stackOut, [...instruction.stackIn, 'ref:System.String']);
++      assert.equal(instruction.sourceOpcode, encoding === 'bytecode' ? 'CONST' : 'ldsfld');
++      if (encoding === 'bytecode') assert.equal(field.id, 'field:' + JSON.stringify([field.owner, field.name]));
++    }
++  }
++});
++
++test('A00 source readonly field lowering rejects malformed, alias and non-string field identities without getters', () => {
++  const marker = {readonlyField: {owner: 'System.Boolean', name: 'TrueString'}};
++  const check = value => {
++    const image = imageWith([[Op.CONST, 0, 0], [Op.RET, 0, 0]]);
++    image.methods[0].returnType = 'string'; image.constants = [value];
++    return methodBody(image.methods[0], 'bytecode', {image});
++  };
++  const valid = check(marker);
++  validate(schema, valid); validateBody(valid, {requireExecutable: true});
++  const cases = [{readonlyField: null}, {...marker, extra: 1},
++    {readonlyField: {...marker.readonlyField, extra: 1}},
++    {readonlyField: {...marker.readonlyField, owner: 'Boolean'}},
++    {readonlyField: {...marker.readonlyField, name: 'Missing'}},
++    {readonlyField: {owner: 'System.Diagnostics.Stopwatch', name: 'Frequency'}},
++    Object.create(marker), Object.assign(() => {}, marker)];
++  for (const value of cases) assert.throws(() => check(value), {code: 'SCHEMA_INVALID'});
++  let reads = 0;
++  const accessor = Object.defineProperty({}, 'readonlyField', {enumerable: true, get() { reads++; return marker.readonlyField; }});
++  const nested = {readonlyField: {name: 'TrueString'}};
++  Object.defineProperty(nested.readonlyField, 'owner', {enumerable: true, get() { reads++; return 'System.Boolean'; }});
++  for (const value of [accessor, nested]) assert.throws(() => check(value), {code: 'SCHEMA_INVALID'});
++  assert.equal(reads, 0);
++  const numericHint = imageWith([[Op.CONST, 0, 1], [Op.RET, 0, 0]]);
++  numericHint.methods[0].returnType = 'string'; numericHint.constants = [marker];
++  assert.throws(() => methodBody(numericHint.methods[0], 'bytecode', {image: numericHint}), {code: 'SCHEMA_INVALID'});
++  assert.throws(() => check({unknown: true}), {code: 'SCHEMA_UNSUPPORTED'});
++});
++
++test('A00 source readonly field loads retain a preceding typed stack value', () => {
++  const image = imageWith([[Op.CONST, 0, 0], [Op.CONST, 1, 0], [Op.POP, 0, 0], [Op.RET, 0, 0]]);
++  image.methods[0].returnType = 'int';
++  image.constants = [42, {readonlyField: {owner: 'System.Boolean', name: 'TrueString'}}];
++  const body = methodBody(image.methods[0], 'bytecode', {image});
++  validate(schema, body); validateBody(body, {requireExecutable: true});
++  assert.equal(body.instructions[0].opcode, 'constant');
++  assert.equal(body.instructions[1].opcode, 'load-static');
++  assert.deepEqual(body.instructions[1].stackIn, ['i32']);
++  assert.deepEqual(body.instructions[1].stackOut, ['i32', 'ref:System.String']);
++});
+diff --git a/planning/contracts/schema/README.md b/planning/contracts/schema/README.md
+--- a/planning/contracts/schema/README.md
++++ b/planning/contracts/schema/README.md
+@@ -16,3 +16,13 @@
+ available for archival structural validation; the current interpreter rejects
+ format 1 images, which must be recompiled. The Rust structural reader checks the
+ version constant declared by the selected schema.
++
++
++Format 2 constants also admit the closed `{readonlyField:{owner,name}}` string-field
++carrier. Its object keywords apply only to the added object alternative, preserving
++the primitive validation node budget. The structural schema checks a closed record
++with nonempty owner/name strings; the bytecode verifier checks exact registry owner,
++field name, string type, static/readonly policy, NUL exclusion, and UTF-16 limits. Static
++default values retain their original primitive-only schema. A field initializer
++executes a field-read instruction. No new opcode, contract ID, or format version is
++introduced by this additive carrier.
+diff --git a/planning/contracts/schema/method-body.md b/planning/contracts/schema/method-body.md
+--- a/planning/contracts/schema/method-body.md
++++ b/planning/contracts/schema/method-body.md
+@@ -13,3 +13,15 @@
+ Supported lowering covers the source bytecode operation set, direct CIL numeric/local/argument operations, conditional/unconditional/switch control flow, calls/constructors/function addresses, managed object/array/field/static access, casts/boxing and catch/finally exits. Indirect memory operations are explicitly rejected until address lifetime proofs are provided. `calli`, unresolved generics, general filter/fault dispatch and unrecognized opcodes are rejected. This contract does not claim that a new managed runtime executes the exported IR; it supplies validated, executable-typed semantic input for one.
+ 
+ `validateBody(body,{requireExecutable:true})` is the reader gate: it checks resolved concrete types, operation membership, typed stack effects, declared local/argument load types, edge joins, target bounds, maximum stack and exception entry stacks. Structural JSON schema additionally rejects a resolved record with null result annotations. Tests cover all methods (including generated helpers) of parked-frame, native-callback and nested-finally in both encodings, plus mixed-type joins, mismatched effects, unsupported instructions and malformed offsets. Existing JS interpreter execution fixtures independently prove the behavior of those source programs.
++
++
++A validated source `CONST` readonly-string-field carrier lowers to the existing
++`load-static` operation, with zero inputs and one `ref:System.String` output. Its
++descriptor retains canonical declaring owner, field name, and `System.String`
++storage type. The source descriptor ID is `field:` plus the JSON array of owner and
++name; it is an encoding-scoped identity, not a new numeric ABI ID. CIL `ldsfld`
++continues to use its metadata token ID and the same semantic field descriptor.
++The shared bytecode field validator rejects aliases, unknown/non-string fields,
++accessors, inherited/function tags, and extra keys before lowering reads values.
++Numeric hints are invalid on this field carrier. Ordinary constants keep their
++existing lowering and declared types.

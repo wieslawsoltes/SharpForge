@@ -1,0 +1,130 @@
+diff --git a/scripts/planning/schema/lower-method-body.js b/scripts/planning/schema/lower-method-body.js
+--- a/scripts/planning/schema/lower-method-body.js
++++ b/scripts/planning/schema/lower-method-body.js
+@@ -1,4 +1,4 @@
+-import {OpName,BinaryName,UnaryName,Builtins} from '../../../packages/bytecode/src/index.js';
++import {OpName,BinaryName,UnaryName,Builtins,verifyReadonlyFieldConstant} from '../../../packages/bytecode/src/index.js';
+ import {canonicalType,frameworkType,frameworkAssignable} from '../../../packages/framework/src/index.js';
+ import {SchemaError} from './validate.js';
+ 
+@@ -53,6 +53,14 @@
+ function sourceTarget(method){return {id:String(method.id),owner:method.owner===null?null:typeName(method.owner),name:method.name,parameters:[...(!method.isStatic?[stackType(method.owner)]:[]),...method.parameters.map(p=>stackType(p.type))],returnType:stackType(method.returnType),parameterStorage:[...(!method.isStatic?[typeName(method.owner)]:[]),...method.parameters.map(p=>typeName(p.type))],returnStorage:typeName(method.returnType)};}
+ function cilTarget(inspector,token){const d=inspector.resolveToken(token);if(d.kind!=='method'||d.genericArguments||d.signature.genericArity)fail('SCHEMA_UNSUPPORTED','Uninstantiated or unknown method signature');return {id:String(token),owner:typeName(d.owner),name:d.name,parameters:[...(!d.signature.isStatic?[stackType(d.owner)]:[]),...d.signature.parameters.map(stackType)],returnType:stackType(d.signature.returnType),parameterStorage:[...(!d.signature.isStatic?[typeName(d.owner)]:[]),...d.signature.parameters.map(typeName)],returnStorage:typeName(d.signature.returnType),isStatic:d.signature.isStatic};}
+ 
++function sourceReadonlyField(value, hint) {
++  if (value === null || !['object', 'function'].includes(typeof value) || !('readonlyField' in value)) return null;
++  if (hint !== 0 || !verifyReadonlyFieldConstant(value)) fail('SCHEMA_INVALID', 'Invalid readonly string field carrier');
++  const {owner, name} = value.readonlyField;
++  return {id: 'field:' + JSON.stringify([owner, name]), owner, name,
++    type: 'ref:System.String', storageType: 'System.String'};
++}
++
+ /** Lower one instruction. Every effect is explicit, including source-VM value-retaining stores. */
+ function transfer(raw,offset,input,env){
+   const {method,encoding,context,index,locals,parameters,returnType,regions}=env,source=encoding==='bytecode',name=raw.name;
+@@ -69,7 +77,16 @@
+   if(source){
+     switch(name){
+       case 'SEQ':case 'NOP':return emit('nop',[],0,[]);
+-      case 'CONST':{if(![0,1].includes(b))fail('SCHEMA_UNSUPPORTED','Unknown constant numeric hint');if(!Number.isInteger(a)||a<0||a>=context.image.constants.length)fail('SCHEMA_INVALID','Invalid constant index');const value=context.image.constants[a],type=value===null?'null':typeof value==='string'?'ref:System.String':typeof value==='boolean'?'i32':typeof value==='number'?(b===1?'f64':Number.isInteger(value)&&value>=-2147483648&&value<=2147483647?'i32':'f64'):fail('SCHEMA_UNSUPPORTED','Unsupported constant carrier');return emit('constant',[typeof value==='boolean'?Number(value):value],0,[type]);}
++      case 'CONST':{
++        if(![0,1].includes(b))fail('SCHEMA_UNSUPPORTED','Unknown constant numeric hint');
++        if(!Number.isInteger(a)||a<0||a>=context.image.constants.length)fail('SCHEMA_INVALID','Invalid constant index');
++        const value=context.image.constants[a],field=sourceReadonlyField(value,b);
++        if(field)return emit('load-static',[field],0,[field.type]);
++        const type=value===null?'null':typeof value==='string'?'ref:System.String':typeof value==='boolean'?'i32':
++          typeof value==='number'?(b===1?'f64':Number.isInteger(value)&&value>=-2147483648&&value<=2147483647?'i32':'f64'):
++          fail('SCHEMA_UNSUPPORTED','Unsupported constant carrier');
++        return emit('constant',[typeof value==='boolean'?Number(value):value],0,[type]);
++      }
+       case 'ENUM':return emit('constant',[b],0,['i32']);
+       case 'LDLOC':return emit('load-local',[a],0,[local(a)]);
+       case 'STLOC':return emit('store-local',[a,{retainValue:true}],1,[local(a)],[local(a)]);
+diff --git a/tests/a00-05-typed-ir.test.js b/tests/a00-05-typed-ir.test.js
+--- a/tests/a00-05-typed-ir.test.js
++++ b/tests/a00-05-typed-ir.test.js
+@@ -199,3 +199,65 @@
+     assert.throws(()=>validateBody(body,{requireExecutable:true}),{code:'SCHEMA_INVALID',message:/Address effect differs from its declared slot/});
+   }
+ });
++
++
++test('A00 readonly source carriers and CIL fields lower to existing typed load-static operations', () => {
++  const bodies = lowered('class P { static void Main() { Console.WriteLine(bool.TrueString); Console.WriteLine(bool.FalseString); } }');
++  for (const encoding of ['bytecode', 'cil']) {
++    const selected = bodies.filter(body => body.encoding === encoding);
++    for (const body of selected) { validate(schema, body); validateBody(body, {requireExecutable: true}); }
++    const fields = selected.flatMap(body => body.instructions)
++      .filter(instruction => instruction.opcode === 'load-static' && instruction.operands[0].owner === 'System.Boolean');
++    assert.deepEqual([...new Set(fields.map(instruction => instruction.operands[0].name))].sort(), ['FalseString', 'TrueString']);
++    for (const instruction of fields) {
++      const field = instruction.operands[0];
++      assert.equal(field.type, 'ref:System.String');
++      assert.equal(field.storageType, 'System.String');
++      assert.deepEqual(instruction.inputTypes, []);
++      assert.deepEqual(instruction.outputTypes, ['ref:System.String']);
++      assert.deepEqual(instruction.stackOut, [...instruction.stackIn, 'ref:System.String']);
++      assert.equal(instruction.sourceOpcode, encoding === 'bytecode' ? 'CONST' : 'ldsfld');
++      if (encoding === 'bytecode') assert.equal(field.id, 'field:' + JSON.stringify([field.owner, field.name]));
++    }
++  }
++});
++
++test('A00 source readonly field lowering rejects malformed, alias and non-string field identities without getters', () => {
++  const marker = {readonlyField: {owner: 'System.Boolean', name: 'TrueString'}};
++  const check = value => {
++    const image = imageWith([[Op.CONST, 0, 0], [Op.RET, 0, 0]]);
++    image.methods[0].returnType = 'string'; image.constants = [value];
++    return methodBody(image.methods[0], 'bytecode', {image});
++  };
++  const valid = check(marker);
++  validate(schema, valid); validateBody(valid, {requireExecutable: true});
++  const cases = [{readonlyField: null}, {...marker, extra: 1},
++    {readonlyField: {...marker.readonlyField, extra: 1}},
++    {readonlyField: {...marker.readonlyField, owner: 'Boolean'}},
++    {readonlyField: {...marker.readonlyField, name: 'Missing'}},
++    {readonlyField: {owner: 'System.Diagnostics.Stopwatch', name: 'Frequency'}},
++    Object.create(marker), Object.assign(() => {}, marker)];
++  for (const value of cases) assert.throws(() => check(value), {code: 'SCHEMA_INVALID'});
++  let reads = 0;
++  const accessor = Object.defineProperty({}, 'readonlyField', {enumerable: true, get() { reads++; return marker.readonlyField; }});
++  const nested = {readonlyField: {name: 'TrueString'}};
++  Object.defineProperty(nested.readonlyField, 'owner', {enumerable: true, get() { reads++; return 'System.Boolean'; }});
++  for (const value of [accessor, nested]) assert.throws(() => check(value), {code: 'SCHEMA_INVALID'});
++  assert.equal(reads, 0);
++  const numericHint = imageWith([[Op.CONST, 0, 1], [Op.RET, 0, 0]]);
++  numericHint.methods[0].returnType = 'string'; numericHint.constants = [marker];
++  assert.throws(() => methodBody(numericHint.methods[0], 'bytecode', {image: numericHint}), {code: 'SCHEMA_INVALID'});
++  assert.throws(() => check({unknown: true}), {code: 'SCHEMA_UNSUPPORTED'});
++});
++
++test('A00 source readonly field loads retain a preceding typed stack value', () => {
++  const image = imageWith([[Op.CONST, 0, 0], [Op.CONST, 1, 0], [Op.POP, 0, 0], [Op.RET, 0, 0]]);
++  image.methods[0].returnType = 'int';
++  image.constants = [42, {readonlyField: {owner: 'System.Boolean', name: 'TrueString'}}];
++  const body = methodBody(image.methods[0], 'bytecode', {image});
++  validate(schema, body); validateBody(body, {requireExecutable: true});
++  assert.equal(body.instructions[0].opcode, 'constant');
++  assert.equal(body.instructions[1].opcode, 'load-static');
++  assert.deepEqual(body.instructions[1].stackIn, ['i32']);
++  assert.deepEqual(body.instructions[1].stackOut, ['i32', 'ref:System.String']);
++});
+diff --git a/planning/contracts/schema/method-body.md b/planning/contracts/schema/method-body.md
+--- a/planning/contracts/schema/method-body.md
++++ b/planning/contracts/schema/method-body.md
+@@ -13,3 +13,15 @@
+ Supported lowering covers the source bytecode operation set, direct CIL numeric/local/argument operations, conditional/unconditional/switch control flow, calls/constructors/function addresses, managed object/array/field/static access, casts/boxing and catch/finally exits. Indirect memory operations are explicitly rejected until address lifetime proofs are provided. `calli`, unresolved generics, general filter/fault dispatch and unrecognized opcodes are rejected. This contract does not claim that a new managed runtime executes the exported IR; it supplies validated, executable-typed semantic input for one.
+ 
+ `validateBody(body,{requireExecutable:true})` is the reader gate: it checks resolved concrete types, operation membership, typed stack effects, declared local/argument load types, edge joins, target bounds, maximum stack and exception entry stacks. Structural JSON schema additionally rejects a resolved record with null result annotations. Tests cover all methods (including generated helpers) of parked-frame, native-callback and nested-finally in both encodings, plus mixed-type joins, mismatched effects, unsupported instructions and malformed offsets. Existing JS interpreter execution fixtures independently prove the behavior of those source programs.
++
++
++A validated source `CONST` readonly-string-field carrier lowers to the existing
++`load-static` operation, with zero inputs and one `ref:System.String` output. Its
++descriptor retains canonical declaring owner, field name, and `System.String`
++storage type. The source descriptor ID is `field:` plus the JSON array of owner and
++name; it is an encoding-scoped identity, not a new numeric ABI ID. CIL `ldsfld`
++continues to use its metadata token ID and the same semantic field descriptor.
++The shared bytecode field validator rejects aliases, unknown/non-string fields,
++accessors, inherited/function tags, and extra keys before lowering reads values.
++Numeric hints are invalid on this field carrier. Ordinary constants keep their
++existing lowering and declared types.

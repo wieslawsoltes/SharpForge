@@ -1,0 +1,201 @@
+{
+  "purpose": "Exact source-copy manifest; generated files are listed in the final bundle manifest.",
+  "files": [
+    {
+      "source": "/workspace/scratch/f5d98b1de49e/SharpForge-p9-runtime-baseline/artifacts/project9-resume/boolean-a00-owner-handoff.patch",
+      "path": "boolean-a00/boolean-a00-owner-handoff.patch",
+      "bytes": 33803,
+      "sha256": "61970b65da7d2dbadb166f1c266bd336b258403a83ba17f04a7195aa68658b2e",
+      "exactBytesPreserved": true
+    },
+    {
+      "source": "/workspace/scratch/f5d98b1de49e/SharpForge-p9-runtime-baseline/artifacts/project9-resume/boolean-a00-owner-handoff.md",
+      "path": "boolean-a00/boolean-a00-owner-handoff.md",
+      "bytes": 9429,
+      "sha256": "87a4499d8daad986909b9ea11e108f3d752d759d40394899de1c8cd0bd110ac8",
+      "exactBytesPreserved": true
+    },
+    {
+      "source": "/workspace/scratch/f5d98b1de49e/SharpForge-p9-runtime-baseline/artifacts/project9-resume/boolean-a00-owner-handoff.manifest.json",
+      "path": "boolean-a00/boolean-a00-owner-handoff.manifest.json",
+      "bytes": 4694,
+      "sha256": "33f6a644cb6e769d5a165ef7207e159f9c82b2e9ead6330e6a6b89b18a5ab2b1",
+      "exactBytesPreserved": true
+    },
+    {
+      "source": "/workspace/scratch/f5d98b1de49e/SharpForge-p9-runtime-baseline/artifacts/project9-resume/boolean-a00-public-facade-owner.patch",
+      "path": "boolean-a00/boolean-a00-public-facade-owner.patch",
+      "bytes": 747,
+      "sha256": "48b226069a634926a464816c2d12295b911610e68b65e874ac009464478d498d",
+      "exactBytesPreserved": true
+    },
+    {
+      "source": "/workspace/scratch/f5d98b1de49e/SharpForge-p9-runtime-baseline/artifacts/project9-resume/boolean-a00-gate-owner.patch",
+      "path": "boolean-a00/boolean-a00-gate-owner.patch",
+      "bytes": 14602,
+      "sha256": "5c523000789b5111173bb77c2803ac25eb34e78c0e0f86f5e37529f1f2bd6db9",
+      "exactBytesPreserved": true
+    },
+    {
+      "source": "/workspace/scratch/f5d98b1de49e/SharpForge-p9-runtime-baseline/artifacts/project9-resume/boolean-a00-schema-owner.patch",
+      "path": "boolean-a00/boolean-a00-schema-owner.patch",
+      "bytes": 7700,
+      "sha256": "540d156c853ad4b4b15c4b017c397dcbd85b618c1a89baf0d5960ed61737fb52",
+      "exactBytesPreserved": true
+    },
+    {
+      "source": "/workspace/scratch/f5d98b1de49e/SharpForge-p9-runtime-baseline/artifacts/project9-resume/boolean-a00-typed-body-owner.patch",
+      "path": "boolean-a00/boolean-a00-typed-body-owner.patch",
+      "bytes": 10754,
+      "sha256": "da0629c206a6b7afbe715d007c74a0e77afd65bdc58b726767345697418236e3",
+      "exactBytesPreserved": true
+    },
+    {
+      "source": "/workspace/scratch/f5d98b1de49e/SharpForge-p9-writer-scalars/artifacts/project9-resume/red-black-readiness/README.md",
+      "path": "red-black-readiness/README.md",
+      "bytes": 9777,
+      "sha256": "23fe5a05b08989e7fe4835c5e5cb3e2046e7e756aa4bb6a4a0ea038c2f5dc7ce",
+      "exactBytesPreserved": true
+    },
+    {
+      "source": "/workspace/scratch/f5d98b1de49e/SharpForge-p9-writer-scalars/artifacts/project9-resume/red-black-readiness/proposal.json",
+      "path": "red-black-readiness/proposal.json",
+      "bytes": 753,
+      "sha256": "3dfb7b2fc504e47c8ffc985f1f11d1d63fd6f2c3459a3f59d16cb6ccdbbd0c78",
+      "exactBytesPreserved": true
+    },
+    {
+      "source": "/workspace/scratch/f5d98b1de49e/SharpForge-p9-writer-scalars/artifacts/project9-resume/red-black-readiness/claim-SF-A00-T09.2.json",
+      "path": "red-black-readiness/claim-SF-A00-T09.2.json",
+      "bytes": 1699,
+      "sha256": "351ce306938cdf080504a2dc1efb9134b4d37f953157782e9db94fa0c7c092c2",
+      "exactBytesPreserved": true
+    },
+    {
+      "source": "/workspace/scratch/f5d98b1de49e/SharpForge-p9-writer-scalars/artifacts/project9-resume/red-black-readiness/claim-SF-A00-T09.3.json",
+      "path": "red-black-readiness/claim-SF-A00-T09.3.json",
+      "bytes": 2087,
+      "sha256": "d93b0d3ab6e5e4c7f476105c019828271cd8c572ce75e8bea18ae366129b7b0f",
+      "exactBytesPreserved": true
+    },
+    {
+      "source": "/workspace/scratch/f5d98b1de49e/SharpForge-p9-writer-scalars/artifacts/project9-resume/red-black-readiness/provenance.json",
+      "path": "red-black-readiness/provenance.json",
+      "bytes": 22402,
+      "sha256": "a1f7dad2ae80099edd016b3ee28b336ca5709b857b5bbd3ce79c4fddc12a1c57",
+      "exactBytesPreserved": true
+    },
+    {
+      "source": "/workspace/scratch/f5d98b1de49e/SharpForge-p9-writer-scalars/artifacts/project9-resume/red-black-readiness/SHA256SUMS",
+      "path": "red-black-readiness/SHA256SUMS",
+      "bytes": 418,
+      "sha256": "bf14b4b8e2124fd45141e723afae1e2326a33bda6d48d2154dd3a0762051c053",
+      "exactBytesPreserved": true
+    },
+    {
+      "source": "/workspace/scratch/f5d98b1de49e/project9-package-lock.patch",
+      "path": "root-package/project9-package-lock.patch",
+      "bytes": 1368,
+      "sha256": "8a5dbf77311a81382eef091968b06dfa77be0920385f8eb49dcd2ea6652b230b",
+      "exactBytesPreserved": true
+    },
+    {
+      "source": "/workspace/scratch/f5d98b1de49e/SharpForge-p9-writer-scalars/package-lock.json",
+      "path": "root-package/package-lock.base.json",
+      "bytes": 10877,
+      "sha256": "0795c3e9cb2007594de2fa207c2a97d80bb927f146f68d8566934485cbddf0cd",
+      "exactBytesPreserved": true
+    },
+    {
+      "source": "/workspace/scratch/f5d98b1de49e/SharpForge-p9-writer-scalars/artifacts/project9-resume/io-published-status.json",
+      "path": "io/io-published-status.json",
+      "bytes": 6440,
+      "sha256": "dbcab9d15321ba238a5a950e8376efe89f23aa9768aa6618f099dd54c8e7f124",
+      "exactBytesPreserved": true
+    },
+    {
+      "source": "/workspace/scratch/f5d98b1de49e/SharpForge-p9-writer-scalars/artifacts/project9-resume/io-publish-manifest.json",
+      "path": "io/io-publish-manifest.json",
+      "bytes": 111872,
+      "sha256": "798402855f0ba3de9d21f6715fcf97f1bb3f3bc5285b6c6a645429ef6b66b820",
+      "exactBytesPreserved": true
+    },
+    {
+      "source": "/workspace/scratch/f5d98b1de49e/SharpForge-p9-writer-scalars/artifacts/project9-resume/io-clean-install-gate.log",
+      "path": "io/io-clean-install-gate.log",
+      "bytes": 1397,
+      "sha256": "1d211bc0d8f7e2977e2984b0f1f2a3aef9f3f8c0b589c0c3054095f7301381d3",
+      "exactBytesPreserved": true
+    },
+    {
+      "source": "/workspace/scratch/f5d98b1de49e/SharpForge-p9-writer-scalars/artifacts/project9-resume/publication/README.md",
+      "path": "io/publication/README.md",
+      "bytes": 2169,
+      "sha256": "1add474e69713e64e30a64570266e01afc4aed954b45c987850ef21e8141ea4e",
+      "exactBytesPreserved": true
+    },
+    {
+      "source": "/workspace/scratch/f5d98b1de49e/SharpForge-p9-writer-scalars/artifacts/project9-resume/publication/manifest.json",
+      "path": "io/publication/manifest.json",
+      "bytes": 86099,
+      "sha256": "f27863bc7ad88cf90ce906741e16f860b22c0d9870a1620abce7c8365cafad90",
+      "exactBytesPreserved": true
+    },
+    {
+      "source": "/workspace/scratch/f5d98b1de49e/SharpForge-p9-writer-scalars/artifacts/project9-resume/publication/lock-observation.json",
+      "path": "io/publication/lock-observation.json",
+      "bytes": 1328,
+      "sha256": "e3fa04090133be8df0ccab63728bb4654c9b790c8e4a01d0499f73554f29b943",
+      "exactBytesPreserved": true
+    },
+    {
+      "source": "/workspace/scratch/f5d98b1de49e/SharpForge-p9-writer-scalars/artifacts/project9-resume/publication/publication-plan.json",
+      "path": "io/publication/publication-plan.json",
+      "bytes": 5857,
+      "sha256": "5d59cce1df6d5bfb9091b79866520f4e75fb0e01bcb2151fc532b308fdd943d9",
+      "exactBytesPreserved": true
+    },
+    {
+      "source": "/workspace/scratch/f5d98b1de49e/SharpForge-p9-writer-scalars/artifacts/project9-resume/publication/qualification-review.md",
+      "path": "io/publication/qualification-review.md",
+      "bytes": 5726,
+      "sha256": "4a0819f12a570478c94c90937df6c8551f2b7c4e41e766d5e2ec6c8136850ea6",
+      "exactBytesPreserved": true
+    },
+    {
+      "source": "/workspace/scratch/f5d98b1de49e/SharpForge-p9-writer-scalars/artifacts/project9-resume/publication/evidence-git-manifest.json",
+      "path": "io/publication/evidence-git-manifest.json",
+      "bytes": 32332,
+      "sha256": "bf2f1e47d11c0fb2212476d35783891709f907a0b450a004a1d79e82bdc0bb86",
+      "exactBytesPreserved": true
+    },
+    {
+      "source": "/workspace/scratch/f5d98b1de49e/SharpForge-p9-runtime-baseline/artifacts/project9-resume/io-published-status-fresh.json",
+      "path": "io/io-published-status-fresh.json",
+      "bytes": 9530,
+      "sha256": "ceb7ded4b641ac785500e56532864c327ad4b8fc6c8306aec562647523a386b8",
+      "exactBytesPreserved": true
+    },
+    {
+      "source": "/workspace/scratch/f5d98b1de49e/SharpForge-p9-runtime-baseline/artifacts/project9-resume/io-checks-fresh.json",
+      "path": "io/io-checks-fresh.json",
+      "bytes": 55142,
+      "sha256": "07b84d4f0fa785509649861b9e870837f37ac2d346bab4e7f24820e2da15eceb",
+      "exactBytesPreserved": true
+    },
+    {
+      "source": "/workspace/scratch/f5d98b1de49e/SharpForge-p9-runtime-baseline/artifacts/project9-resume/boolean-path-ownership-mapping.json",
+      "path": "boolean-a00/boolean-path-ownership-mapping.json",
+      "bytes": 116782,
+      "sha256": "0028618585b3ee4caa0cc0cf071024854c254d202c6b768ab46d8218cdd4d496",
+      "exactBytesPreserved": true
+    },
+    {
+      "source": "/workspace/scratch/f5d98b1de49e/SharpForge-p9-runtime-baseline/artifacts/project9-resume/project9-readiness-ui-observation.json",
+      "path": "red-black-readiness/project9-readiness-ui-observation.json",
+      "bytes": 1031,
+      "sha256": "581966af0094d930a8a5d40054bdec80bc6838ab8995415814949b5ef2143267",
+      "exactBytesPreserved": true
+    }
+  ]
+}

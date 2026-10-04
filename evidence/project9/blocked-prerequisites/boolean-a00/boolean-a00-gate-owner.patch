@@ -1,0 +1,227 @@
+diff --git a/scripts/planning/check-contract-change.js b/scripts/planning/check-contract-change.js
+--- a/scripts/planning/check-contract-change.js
++++ b/scripts/planning/check-contract-change.js
+@@ -36,23 +36,90 @@
+     after.anyOf.some(branch => isDeepStrictEqual(before, branch));
+ }
+ 
++// A widened subschema can narrow an unchanged oneOf reached through a reference.
++// New carrier/items rules are enabled only for a reference-free whole schema.
++function schemaReferenceContext(schema) {
++  const pending = [schema], seen = new Set();
++  const scopeKeys = new Set(['$ref', '$dynamicRef', '$recursiveRef', '$id', '$anchor', '$dynamicAnchor', '$recursiveAnchor']);
++  while (pending.length) {
++    const value = pending.pop();
++    if (!value || typeof value !== 'object') continue;
++    if (seen.has(value)) return true;
++    seen.add(value);
++    if (Object.keys(value).some(key => scopeKeys.has(key))) return true;
++    for (const child of Object.values(value)) pending.push(child);
++  }
++  return false;
++}
++
++// This proof adds only a closed inline string-record alternative. Object-only
++// keywords cannot constrain any previously admitted primitive, and no union
++// traversal is introduced on the primitive validation path.
++function closedStringRecord(schema, annotations, depth = 0) {
++  if (!schema || typeof schema !== 'object' || Array.isArray(schema) || depth >= 8) return false;
++  if (schema.type !== 'object' || schema.additionalProperties !== false ||
++      !Object.keys(schema).every(key => ['type', 'properties', 'required', 'additionalProperties'].includes(key) ||
++        annotations.has(key))) return false;
++  const properties = schema.properties;
++  if (!properties || typeof properties !== 'object' || Array.isArray(properties)) return false;
++  const names = Object.keys(properties), required = schema.required;
++  if (!names.length || !Array.isArray(required) || required.length !== names.length ||
++      new Set(required).size !== required.length ||
++      required.some(name => typeof name !== 'string' || !Object.hasOwn(properties, name))) return false;
++  return Object.values(properties).every(property => {
++    if (!property || typeof property !== 'object' || Array.isArray(property)) return false;
++    if (property.type === 'object') return closedStringRecord(property, annotations, depth + 1);
++    if (property.type !== 'string' || !Object.keys(property).every(key =>
++      ['type', 'minLength', 'maxLength', 'pattern'].includes(key) || annotations.has(key))) return false;
++    for (const key of ['minLength', 'maxLength']) {
++      if (Object.hasOwn(property, key) && (!Number.isSafeInteger(property[key]) || property[key] < 0)) return false;
++    }
++    if (property.maxLength !== undefined && (property.minLength ?? 0) > property.maxLength) return false;
++    if (Object.hasOwn(property, 'pattern')) {
++      if (typeof property.pattern !== 'string') return false;
++      try { new RegExp(property.pattern, 'u'); } catch { return false; }
++    }
++    return true;
++  });
++}
++
++function additiveClosedObjectCarrier(before, after, annotations) {
++  const types = before.type;
++  if (!Array.isArray(types) || !types.length || new Set(types).size !== types.length ||
++      !types.every(type => ['number', 'integer', 'boolean', 'string', 'null'].includes(type)) ||
++      !Object.keys(before).every(key => key === 'type' || annotations.has(key)) ||
++      !isDeepStrictEqual(after.type, [...types, 'object'])) return false;
++  return closedStringRecord({...after, type: 'object'}, annotations);
++}
++
+ // A deliberately conservative schema proof: unknown validation keywords and
+ // conjunction/exclusive-union extensions may narrow acceptance and need a bump.
+ export function additiveSchema(before,after) {
++  const carrierContext=!schemaReferenceContext(before)&&!schemaReferenceContext(after);
++  return additiveSchemaInContext(before,after,carrierContext);
++}
++
++function additiveSchemaInContext(before,after,carrierContext) {
+   if(isDeepStrictEqual(before,after))return true;
+   if(before===false)return true;
+   if(!before||!after||typeof before!=='object'||typeof after!=='object'||Array.isArray(before)||Array.isArray(after))return false;
+   const annotation=new Set(['title','description','$comment','examples']);
+   if(additiveStringPatternUnion(before,after,annotation))return true;
++  if(carrierContext&&additiveClosedObjectCarrier(before,after,annotation))return true;
+   for(const [name,value] of Object.entries(before)){
+     if(annotation.has(name))continue;
+     if(!Object.hasOwn(after,name))return false;
+     if(isDeepStrictEqual(value,after[name]))continue;
+     if(name==='required') {if(!Array.isArray(after[name])||!after[name].every(v=>value.includes(v)))return false;}
+     else if(name==='enum'||name==='anyOf') {if(!Array.isArray(after[name])||!value.every(v=>after[name].some(w=>isDeepStrictEqual(v,w))))return false;}
++    else if(name==='items') {
++      if(!carrierContext||before.type!=='array'||after.type!=='array'||!value||typeof value!=='object'||Array.isArray(value)||
++        !after.items||typeof after.items!=='object'||Array.isArray(after.items)||
++        !additiveSchemaInContext(value,after.items,carrierContext))return false;
++    }
+     else if(name==='properties'||name==='$defs') {
+       if(!after[name]||typeof after[name]!=='object'||Array.isArray(after[name]))return false;
+-      if(!Object.keys(value).every(k=>Object.hasOwn(after[name],k)&&additiveSchema(value[k],after[name][k])))return false;
++      if(!Object.keys(value).every(k=>Object.hasOwn(after[name],k)&&additiveSchemaInContext(value[k],after[name][k],carrierContext)))return false;
+       if(name==='properties'&&before.additionalProperties!==false&&Object.keys(after[name]).some(k=>!Object.hasOwn(value,k)))return false;
+     }else return false;
+   }
+diff --git a/planning/contracts/tests/gates.test.js b/planning/contracts/tests/gates.test.js
+--- a/planning/contracts/tests/gates.test.js
++++ b/planning/contracts/tests/gates.test.js
+@@ -1,6 +1,6 @@
+ import test from 'node:test';
+ import assert from 'node:assert/strict';
+-import { mkdtempSync, mkdirSync, writeFileSync, rmSync } from 'node:fs';
++import { mkdtempSync, mkdirSync, writeFileSync, rmSync, readFileSync } from 'node:fs';
+ import { tmpdir } from 'node:os';
+ import { join, dirname } from 'node:path';
+ import { execFileSync } from 'node:child_process';
+@@ -9,6 +9,7 @@
+ import { impactedTests } from '../../../scripts/planning/impacted-tests.js';
+ import { checkContractChange } from '../../../scripts/planning/check-contract-change.js';
+ import { contractGate } from '../../../scripts/planning/contract-gate.js';
++import { validate } from '../../../scripts/planning/schema/validate.js';
+ const versions={framework:1,bytecode:1,value:1,metadata:1};
+ const write=(root,path,text)=>{mkdirSync(dirname(join(root,path)),{recursive:true});writeFileSync(join(root,path),text);};
+ 
+@@ -145,3 +146,112 @@
+     assert.equal(contractGate({root,commands,signal:AbortSignal.abort()}).checks.length,0);
+   } finally {rmSync(root,{recursive:true,force:true});}
+ });
++
++
++test('closed readonly-field carrier is additive through uniform constant items without a version bump', () => {
++  const path = 'planning/contracts/schema/bytecode-image.v2.schema.json';
++  const after = JSON.parse(readFileSync(new URL('../schema/bytecode-image.v2.schema.json', import.meta.url), 'utf8'));
++  assert(after.properties.constants.items.type.includes('object'));
++  const before = structuredClone(after);
++  before.properties.constants.items = {type: ['number', 'boolean', 'string', 'null']};
++  const result = checkContractChange({before: {[path]: before}, after: {[path]: after},
++    beforeVersions: versions, afterVersions: versions});
++  assert.deepEqual(result.errors, []);
++  assert.deepEqual(result.changes, [{path, component: 'bytecode', breaking: false}]);
++});
++
++test('closed-object carrier proof rejects unrelated alternatives and narrowing constraints', () => {
++  const path = 'planning/contracts/schema/bytecode-image.v2.schema.json';
++  const primitives = {type: ['number', 'boolean', 'string', 'null']};
++  const carrier = JSON.parse(readFileSync(new URL('../schema/bytecode-image.v2.schema.json', import.meta.url), 'utf8'))
++    .properties.constants.items;
++  const mutate = change => { const value = structuredClone(carrier); change(value); return value; };
++  const cases = [
++    ['removed old primitive', primitives, {...carrier, type: ['number', 'boolean', 'string', 'object']}],
++    ['reordered types', primitives, {...carrier, type: ['object', ...primitives.type]}],
++    ['unrelated added primitive', primitives, {...carrier, type: [...primitives.type, 'integer', 'object']}],
++    ['array alternative', primitives, {...carrier, type: [...primitives.type, 'array']}],
++    ['duplicate type', primitives, {...carrier, type: [...primitives.type, 'object', 'object']}],
++    ['old object acceptance', {...primitives, type: [...primitives.type, 'object']}, carrier],
++    ['old primitive constraint', {...primitives, maxLength: 8}, {...carrier, maxLength: 8}],
++    ['new primitive constraint', primitives, {...carrier, minLength: 1}],
++    ['unknown validation keyword', primitives, {...carrier, minProperties: 1}],
++    ['reference scope', primitives, {...carrier, $id: 'https://example.test/carrier'}],
++    ['arbitrary object', primitives, {type: [...primitives.type, 'object']}],
++    ['open record', primitives, {...carrier, additionalProperties: true}],
++    ['missing closure', primitives, mutate(value => { delete value.additionalProperties; })],
++    ['missing required', primitives, mutate(value => { delete value.required; })],
++    ['unknown required key', primitives, {...carrier, required: ['missing']}],
++    ['duplicate required key', primitives, {...carrier, required: ['readonlyField', 'readonlyField']}],
++    ['nested open record', primitives, mutate(value => { value.properties.readonlyField.additionalProperties = true; })],
++    ['nested optional property', primitives, mutate(value => { value.properties.readonlyField.required = ['owner']; })],
++    ['nested reference', primitives, mutate(value => { value.properties.readonlyField.properties.owner = {$ref: '#/owner'}; })],
++    ['nested union', primitives, mutate(value => { value.properties.readonlyField.properties.owner = {anyOf: [{type: 'string'}]}; })],
++    ['invalid pattern', primitives, mutate(value => { value.properties.readonlyField.properties.owner.pattern = '['; })],
++    ['invalid length', primitives, mutate(value => { value.properties.readonlyField.properties.owner.maxLength = -1; })],
++  ];
++  for (const [name, before, after] of cases) {
++    const result = checkContractChange({before: {[path]: before}, after: {[path]: after},
++      beforeVersions: versions, afterVersions: versions});
++    assert.equal(result.changes[0].breaking, true, name);
++    assert.equal(result.errors.length, 2, name);
++  }
++});
++
++test('uniform item proof retains array constraints and rejects tuple or boolean-item changes', () => {
++  const path = 'planning/contracts/schema/bytecode-image.v2.schema.json';
++  const primitives = {type: ['number', 'boolean', 'string', 'null']};
++  const carrier = JSON.parse(readFileSync(new URL('../schema/bytecode-image.v2.schema.json', import.meta.url), 'utf8'))
++    .properties.constants.items;
++  const before = {type: 'array', items: primitives, maxItems: 1000000};
++  for (const [name, input, after] of [
++    ['narrower array bound', before, {...before, items: carrier, maxItems: 999999}],
++    ['new uniqueness constraint', before, {...before, items: carrier, uniqueItems: true}],
++    ['tuple output', before, {...before, items: [carrier]}],
++    ['tuple input', {...before, items: [primitives]}, {...before, items: carrier}],
++    ['boolean input', {...before, items: true}, {...before, items: carrier}],
++    ['boolean output', before, {...before, items: true}],
++    ['missing explicit array type', {items: primitives}, {items: carrier}],
++  ]) {
++    const result = checkContractChange({before: {[path]: input}, after: {[path]: after},
++      beforeVersions: versions, afterVersions: versions});
++    assert.equal(result.changes[0].breaking, true, name);
++    assert.equal(result.errors.length, 2, name);
++  }
++});
++
++test('carrier item widening cannot hide a narrowing referenced oneOf elsewhere in the schema', () => {
++  const path = 'planning/contracts/schema/bytecode-image.v2.schema.json';
++  const primitives = {type: ['number', 'boolean', 'string', 'null']};
++  const carrier = JSON.parse(readFileSync(new URL('../schema/bytecode-image.v2.schema.json', import.meta.url), 'utf8'))
++    .properties.constants.items;
++  const before = {type: 'object', properties: {
++    constants: {type: 'array', items: primitives},
++    payload: {oneOf: [{$ref: '#/properties/constants/items'}, {type: 'object'}]},
++  }, required: ['constants', 'payload'], additionalProperties: false};
++  const after = structuredClone(before);
++  after.properties.constants.items = carrier;
++  const document = {constants: [], payload: {readonlyField: {owner: 'System.Boolean', name: 'TrueString'}}};
++  assert.equal(validate(before, document), document);
++  assert.throws(() => validate(after, document), {code: 'SCHEMA_INVALID'});
++  const result = checkContractChange({before: {[path]: before}, after: {[path]: after},
++    beforeVersions: versions, afterVersions: versions});
++  assert.equal(result.changes[0].breaking, true);
++  assert.equal(result.errors.length, 2);
++});
++
++test('new carrier proofs conservatively reject reference and scope contexts outside the changed item', () => {
++  const path = 'planning/contracts/schema/bytecode-image.v2.schema.json';
++  const primitives = {type: ['number', 'boolean', 'string', 'null']};
++  const carrier = JSON.parse(readFileSync(new URL('../schema/bytecode-image.v2.schema.json', import.meta.url), 'utf8'))
++    .properties.constants.items;
++  for (const keyword of ['$ref', '$dynamicRef', '$recursiveRef', '$id', '$anchor', '$dynamicAnchor', '$recursiveAnchor']) {
++    const before = {type: 'object', properties: {constants: {type: 'array', items: primitives},
++      unrelated: {[keyword]: '#/properties/constants/items'}}, additionalProperties: false};
++    const after = structuredClone(before); after.properties.constants.items = carrier;
++    const result = checkContractChange({before: {[path]: before}, after: {[path]: after},
++      beforeVersions: versions, afterVersions: versions});
++    assert.equal(result.changes[0].breaking, true, keyword);
++    assert.equal(result.errors.length, 2, keyword);
++  }
++});

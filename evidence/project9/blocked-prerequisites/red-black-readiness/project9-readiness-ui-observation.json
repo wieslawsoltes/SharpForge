@@ -1,0 +1,21 @@
+{
+  "checkedAt": "2026-10-04 17:45:41 UTC",
+  "method": "Read-only public GitHub Projects UI through browser; no project fields or claims were modified",
+  "project": "https://github.com/users/wieslawsoltes/projects/9",
+  "readyQueue": {
+    "url": "https://github.com/users/wieslawsoltes/projects/9/views/3",
+    "filter": "status:Ready -kind:Epic",
+    "matchingItems": 0
+  },
+  "redBlackLeaf": {
+    "issue": 2664,
+    "task": "SF-A08-T04.1",
+    "url": "https://github.com/users/wieslawsoltes/projects/9/views/1?filterQuery=SF-A08-T04.1",
+    "matchingItems": 1,
+    "status": "Backlog",
+    "issueState": "open",
+    "observedRow": "[SF-A08-T04.1] Implement a red-black tree core shared by sorted collections, status: open Backlog"
+  },
+  "authentication": "Public signed-out page; Agent and Lease fields were not visible in this view.",
+  "limitation": "UI observations establish the displayed status at this time. They do not create a canonical planning snapshot, prove prerequisite qualification, or grant a task claim."
+}

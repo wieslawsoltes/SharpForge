@@ -1,0 +1,105 @@
+{
+  "baseCommit": "af29812a6b0ca0184a79cc6bcddd01bf0a02fb6a",
+  "applied": false,
+  "execution": "No project code or tests executed",
+  "files": [
+    {
+      "path": "packages/bytecode/src/index.js",
+      "beforeSha256": "0a4906fc6b51585ed9f8a9060f10d9de5cc5699e642ba91a71baa4188181b963",
+      "beforeGitBlob": "e1a2111b3a037441882f29de7e0d71a7e3ac6f80",
+      "proposedSha256": "41467a09dcf56834ae4a15d1bf799885deaa22d8fc9137140df73e3aac138dca"
+    },
+    {
+      "path": "planning/contracts/schema/bytecode-image.v2.schema.json",
+      "beforeSha256": "4dba4e32c0d690ef9c77682a265a9f3da1d37059396f037bb4815bfe2a825e61",
+      "beforeGitBlob": "ca802c89ef740eabc36540849b7affceeaaf7329",
+      "proposedSha256": "4330bd5cb8e004682c41ba5d25eeec6967def466c545caa612e9c1808ddbd6cf"
+    },
+    {
+      "path": "scripts/planning/check-contract-change.js",
+      "beforeSha256": "99d77c1fdad2e5cfad6b964730f5aa277078df154c386673e6aff27c14b920ad",
+      "beforeGitBlob": "150902b0a11580b0e0ccb803951616e3dcd0c39f",
+      "proposedSha256": "a51c688dfc26a2b28a7f9ae3f05e0a24f981f9f5e71d25175853e36094931728"
+    },
+    {
+      "path": "planning/contracts/tests/gates.test.js",
+      "beforeSha256": "a1bc40081c9f1ed8f2bab9955e3be627be4df40479d6c16a8d86d6d510f6d1cb",
+      "beforeGitBlob": "e249b2c2244acfa019dc8e8ddafe69d38ee38747",
+      "proposedSha256": "c30eedccebdd5b1d0f4629300fba606d5a4693248143f9d8a793bb398212832a"
+    },
+    {
+      "path": "scripts/planning/schema/lower-method-body.js",
+      "beforeSha256": "5ad49721f4870105728b37b6da9d0ca78aaff84988d616dfe2630eaeb408ada8",
+      "beforeGitBlob": "71bc533c863e6beb6e343cccb5635eeb94e2667e",
+      "proposedSha256": "b35c557a52f2c05664f9ab5917eaeda141368763e64ef6176b169821bdaf8285"
+    },
+    {
+      "path": "tests/a00-05-metadata.test.js",
+      "beforeSha256": "77b865eaee404b93596b0bd3e485a4c1d43683b912cccea2c884cc9c6064dc46",
+      "beforeGitBlob": "6f88dd951e76cc2a324103d961bf4899b27920a2",
+      "proposedSha256": "c87d6b0dd022ee2acba636b14b01c6dac1c4316ce71fb9553e2eba9f8786e0ef"
+    },
+    {
+      "path": "tests/a00-05-typed-ir.test.js",
+      "beforeSha256": "5ab149a942f4115448346ea62f4f823eb1b4fb4d076222f6d3084073b48774df",
+      "beforeGitBlob": "8e9b1b19cfc9b43948ed8391cbb5886899145789",
+      "proposedSha256": "f33d51e93681d438c19feae1111f8bbedece9cb317d5beae82a471bf91050f78"
+    },
+    {
+      "path": "planning/contracts/schema/README.md",
+      "beforeSha256": "3c405a7fb8b2afd168042351e1ca5b43aa1ab8b0d78389346724d62111db00f7",
+      "beforeGitBlob": "43ddf48d077e34edfdbddef8072799fb13758476",
+      "proposedSha256": "5c4a3ed5d1639758bba83b323ed88ff34d3c6cad6190673663c55ba4dd5c48f9"
+    },
+    {
+      "path": "planning/contracts/schema/method-body.md",
+      "beforeSha256": "405ba74a3be4270ad60daebaba176e4a349abbff6de1b83299405a3f4083ffdd",
+      "beforeGitBlob": "f89eb15b2eda0b19161349acd403979a36fcb66f",
+      "proposedSha256": "ad58ab84d472aaa85e158c1a7d1f0321f7e4d512a7e299d603abb186e1008dfe"
+    }
+  ],
+  "patchSha256": "61970b65da7d2dbadb166f1c266bd336b258403a83ba17f04a7195aa68658b2e",
+  "ownerPatches": [
+    {
+      "owner": "Public bytecode facade owner: confirm live protected-index claim and lock",
+      "issue": "Separate prerequisite; not covered by #1062/#1066 reservations",
+      "path": "artifacts/project9-resume/boolean-a00-public-facade-owner.patch",
+      "sha256": "48b226069a634926a464816c2d12295b911610e68b65e874ac009464478d498d",
+      "files": [
+        "packages/bytecode/src/index.js"
+      ]
+    },
+    {
+      "owner": "codex-p4-planning",
+      "issue": "#1101",
+      "path": "artifacts/project9-resume/boolean-a00-gate-owner.patch",
+      "sha256": "5c523000789b5111173bb77c2803ac25eb34e78c0e0f86f5e37529f1f2bd6db9",
+      "files": [
+        "scripts/planning/check-contract-change.js",
+        "planning/contracts/tests/gates.test.js"
+      ]
+    },
+    {
+      "owner": "codex-p4-abi",
+      "issue": "#1062",
+      "path": "artifacts/project9-resume/boolean-a00-schema-owner.patch",
+      "sha256": "540d156c853ad4b4b15c4b017c397dcbd85b618c1a89baf0d5960ed61737fb52",
+      "files": [
+        "planning/contracts/schema/bytecode-image.v2.schema.json",
+        "tests/a00-05-metadata.test.js",
+        "planning/contracts/schema/README.md"
+      ]
+    },
+    {
+      "owner": "codex-p4-abi",
+      "issue": "#1066",
+      "path": "artifacts/project9-resume/boolean-a00-typed-body-owner.patch",
+      "sha256": "da0629c206a6b7afbe715d007c74a0e77afd65bdc58b726767345697418236e3",
+      "files": [
+        "scripts/planning/schema/lower-method-body.js",
+        "tests/a00-05-typed-ir.test.js",
+        "planning/contracts/schema/method-body.md"
+      ]
+    }
+  ]
+}

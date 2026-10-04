@@ -1,0 +1,1906 @@
+TAP version 13
+# Subtest: ManagedHeap: a committed string survives collection in its allocation observer
+ok 1 - ManagedHeap: a committed string survives collection in its allocation observer
+  ---
+  duration_ms: 4.341796
+  type: 'test'
+  ...
+# Subtest: ManagedHeap: a committed array survives collection in its allocation observer
+ok 2 - ManagedHeap: a committed array survives collection in its allocation observer
+  ---
+  duration_ms: 0.928351
+  type: 'test'
+  ...
+# Subtest: ManagedHeap: a committed object survives collection in its allocation observer
+ok 3 - ManagedHeap: a committed object survives collection in its allocation observer
+  ---
+  duration_ms: 0.481415
+  type: 'test'
+  ...
+# Subtest: ManagedHeap: nested allocation notifications retain every unfinished allocation
+ok 4 - ManagedHeap: nested allocation notifications retain every unfinished allocation
+  ---
+  duration_ms: 0.734137
+  type: 'test'
+  ...
+# Subtest: ManagedHeap: a throwing nested observer releases temporary roots and preserves caller roots
+ok 5 - ManagedHeap: a throwing nested observer releases temporary roots and preserves caller roots
+  ---
+  duration_ms: 0.994909
+  type: 'test'
+  ...
+# Subtest: ManagedHeap: one-shot roots survive reservation and returning string notification
+ok 6 - ManagedHeap: one-shot roots survive reservation and returning string notification
+  ---
+  duration_ms: 0.835305
+  type: 'test'
+  ...
+# Subtest: ManagedHeap: one-shot roots survive reservation and throwing string notification
+ok 7 - ManagedHeap: one-shot roots survive reservation and throwing string notification
+  ---
+  duration_ms: 0.515045
+  type: 'test'
+  ...
+# Subtest: ManagedHeap: one-shot roots survive reservation and returning object notification
+ok 8 - ManagedHeap: one-shot roots survive reservation and returning object notification
+  ---
+  duration_ms: 0.442829
+  type: 'test'
+  ...
+# Subtest: ManagedHeap: one-shot roots survive reservation and throwing object notification
+ok 9 - ManagedHeap: one-shot roots survive reservation and throwing object notification
+  ---
+  duration_ms: 0.407047
+  type: 'test'
+  ...
+# Subtest: ManagedHeap: returning growth observers retain the committed owner and children
+ok 10 - ManagedHeap: returning growth observers retain the committed owner and children
+  ---
+  duration_ms: 0.861152
+  type: 'test'
+  ...
+# Subtest: ManagedHeap: throwing growth observers retain the committed owner and children
+ok 11 - ManagedHeap: throwing growth observers retain the committed owner and children
+  ---
+  duration_ms: 0.466684
+  type: 'test'
+  ...
+# Subtest: source VM: a committed string survives collection in its allocation observer
+ok 12 - source VM: a committed string survives collection in its allocation observer
+  ---
+  duration_ms: 52.218629
+  type: 'test'
+  ...
+# Subtest: source VM: a committed array survives collection in its allocation observer
+ok 13 - source VM: a committed array survives collection in its allocation observer
+  ---
+  duration_ms: 2.379329
+  type: 'test'
+  ...
+# Subtest: source VM: a committed object survives collection in its allocation observer
+ok 14 - source VM: a committed object survives collection in its allocation observer
+  ---
+  duration_ms: 1.386513
+  type: 'test'
+  ...
+# Subtest: source VM: nested allocation notifications retain every unfinished allocation
+ok 15 - source VM: nested allocation notifications retain every unfinished allocation
+  ---
+  duration_ms: 1.650069
+  type: 'test'
+  ...
+# Subtest: source VM: a throwing nested observer releases temporary roots and preserves caller roots
+ok 16 - source VM: a throwing nested observer releases temporary roots and preserves caller roots
+  ---
+  duration_ms: 1.304983
+  type: 'test'
+  ...
+# Subtest: source VM: one-shot roots survive reservation and returning string notification
+ok 17 - source VM: one-shot roots survive reservation and returning string notification
+  ---
+  duration_ms: 1.111791
+  type: 'test'
+  ...
+# Subtest: source VM: one-shot roots survive reservation and throwing string notification
+ok 18 - source VM: one-shot roots survive reservation and throwing string notification
+  ---
+  duration_ms: 1.130367
+  type: 'test'
+  ...
+# Subtest: source VM: one-shot roots survive reservation and returning object notification
+ok 19 - source VM: one-shot roots survive reservation and returning object notification
+  ---
+  duration_ms: 9.659293
+  type: 'test'
+  ...
+# Subtest: source VM: one-shot roots survive reservation and throwing object notification
+ok 20 - source VM: one-shot roots survive reservation and throwing object notification
+  ---
+  duration_ms: 1.376108
+  type: 'test'
+  ...
+# Subtest: source VM: returning growth observers retain the committed owner and children
+ok 21 - source VM: returning growth observers retain the committed owner and children
+  ---
+  duration_ms: 1.277203
+  type: 'test'
+  ...
+# Subtest: source VM: throwing growth observers retain the committed owner and children
+ok 22 - source VM: throwing growth observers retain the committed owner and children
+  ---
+  duration_ms: 0.76353
+  type: 'test'
+  ...
+# Subtest: CIL VM: a committed string survives collection in its allocation observer
+ok 23 - CIL VM: a committed string survives collection in its allocation observer
+  ---
+  duration_ms: 11.677773
+  type: 'test'
+  ...
+# Subtest: CIL VM: a committed array survives collection in its allocation observer
+ok 24 - CIL VM: a committed array survives collection in its allocation observer
+  ---
+  duration_ms: 1.985341
+  type: 'test'
+  ...
+# Subtest: CIL VM: a committed object survives collection in its allocation observer
+ok 25 - CIL VM: a committed object survives collection in its allocation observer
+  ---
+  duration_ms: 1.477927
+  type: 'test'
+  ...
+# Subtest: CIL VM: nested allocation notifications retain every unfinished allocation
+ok 26 - CIL VM: nested allocation notifications retain every unfinished allocation
+  ---
+  duration_ms: 1.344852
+  type: 'test'
+  ...
+# Subtest: CIL VM: a throwing nested observer releases temporary roots and preserves caller roots
+ok 27 - CIL VM: a throwing nested observer releases temporary roots and preserves caller roots
+  ---
+  duration_ms: 1.591804
+  type: 'test'
+  ...
+# Subtest: CIL VM: one-shot roots survive reservation and returning string notification
+ok 28 - CIL VM: one-shot roots survive reservation and returning string notification
+  ---
+  duration_ms: 1.256412
+  type: 'test'
+  ...
+# Subtest: CIL VM: one-shot roots survive reservation and throwing string notification
+ok 29 - CIL VM: one-shot roots survive reservation and throwing string notification
+  ---
+  duration_ms: 1.334787
+  type: 'test'
+  ...
+# Subtest: CIL VM: one-shot roots survive reservation and returning object notification
+ok 30 - CIL VM: one-shot roots survive reservation and returning object notification
+  ---
+  duration_ms: 1.038323
+  type: 'test'
+  ...
+# Subtest: CIL VM: one-shot roots survive reservation and throwing object notification
+ok 31 - CIL VM: one-shot roots survive reservation and throwing object notification
+  ---
+  duration_ms: 1.342589
+  type: 'test'
+  ...
+# Subtest: CIL VM: returning growth observers retain the committed owner and children
+ok 32 - CIL VM: returning growth observers retain the committed owner and children
+  ---
+  duration_ms: 1.116116
+  type: 'test'
+  ...
+# Subtest: CIL VM: throwing growth observers retain the committed owner and children
+ok 33 - CIL VM: throwing growth observers retain the committed owner and children
+  ---
+  duration_ms: 1.023071
+  type: 'test'
+  ...
+# Subtest: source VM: allocation observers remain synchronous while event subscribers remain deferred
+ok 34 - source VM: allocation observers remain synchronous while event subscribers remain deferred
+  ---
+  duration_ms: 1.774692
+  type: 'test'
+  ...
+# Subtest: CIL VM: allocation observers remain synchronous while event subscribers remain deferred
+ok 35 - CIL VM: allocation observers remain synchronous while event subscribers remain deferred
+  ---
+  duration_ms: 1.253258
+  type: 'test'
+  ...
+# Subtest: enums source: explicit numeric and enum casts preserve identity and checked boundaries
+ok 36 - enums source: explicit numeric and enum casts preserve identity and checked boundaries
+  ---
+  duration_ms: 96.101104
+  type: 'test'
+  ...
+# Subtest: strings source: literal identity, runtime allocation, and explicit interning
+ok 37 - strings source: literal identity, runtime allocation, and explicit interning
+  ---
+  duration_ms: 18.213577
+  type: 'test'
+  ...
+# Subtest: strings source: pool snapshot replay and stop release managed roots
+ok 38 - strings source: pool snapshot replay and stop release managed roots
+  ---
+  duration_ms: 8.045327
+  type: 'test'
+  ...
+# Subtest: enums source: framework enum locals and boxing retain names and HasFlag
+ok 39 - enums source: framework enum locals and boxing retain names and HasFlag
+  ---
+  duration_ms: 6.84054
+  type: 'test'
+  ...
+# Subtest: enums reload: explicit numeric and enum casts preserve identity and checked boundaries
+ok 40 - enums reload: explicit numeric and enum casts preserve identity and checked boundaries
+  ---
+  duration_ms: 14.809605
+  type: 'test'
+  ...
+# Subtest: strings reload: literal identity, runtime allocation, and explicit interning
+ok 41 - strings reload: literal identity, runtime allocation, and explicit interning
+  ---
+  duration_ms: 10.170073
+  type: 'test'
+  ...
+# Subtest: strings reload: pool snapshot replay and stop release managed roots
+ok 42 - strings reload: pool snapshot replay and stop release managed roots
+  ---
+  duration_ms: 6.030462
+  type: 'test'
+  ...
+# Subtest: enums reload: framework enum locals and boxing retain names and HasFlag
+ok 43 - enums reload: framework enum locals and boxing retain names and HasFlag
+  ---
+  duration_ms: 7.934244
+  type: 'test'
+  ...
+# Subtest: enums cil: explicit numeric and enum casts preserve identity and checked boundaries
+ok 44 - enums cil: explicit numeric and enum casts preserve identity and checked boundaries
+  ---
+  duration_ms: 29.884189
+  type: 'test'
+  ...
+# Subtest: strings cil: literal identity, runtime allocation, and explicit interning
+ok 45 - strings cil: literal identity, runtime allocation, and explicit interning
+  ---
+  duration_ms: 11.946077
+  type: 'test'
+  ...
+# Subtest: strings cil: pool snapshot replay and stop release managed roots
+ok 46 - strings cil: pool snapshot replay and stop release managed roots
+  ---
+  duration_ms: 5.75647
+  type: 'test'
+  ...
+# Subtest: enums cil: framework enum locals and boxing retain names and HasFlag
+ok 47 - enums cil: framework enum locals and boxing retain names and HasFlag
+  ---
+  duration_ms: 8.607911
+  type: 'test'
+  ...
+# Subtest: strings: weak pools drop collected handles and reject handles reused for another object
+ok 48 - strings: weak pools drop collected handles and reject handles reused for another object
+  ---
+  duration_ms: 0.569565
+  type: 'test'
+  ...
+# Subtest: strings: weak VM pools remain snapshotable without host WeakRefs
+ok 49 - strings: weak VM pools remain snapshotable without host WeakRefs
+  ---
+  duration_ms: 7.062746
+  type: 'test'
+  ...
+# Subtest: strings: intern rejects null and non-string references without growing the pool
+ok 50 - strings: intern rejects null and non-string references without growing the pool
+  ---
+  duration_ms: 0.53213
+  type: 'test'
+  ...
+# Subtest: strings: character indexing exposes exact UTF-16 code units in both intrinsic paths
+ok 51 - strings: character indexing exposes exact UTF-16 code units in both intrinsic paths
+  ---
+  duration_ms: 5.628423
+  type: 'test'
+  ...
+# Subtest: enums: source Op.ENUM preserves type while numeric conversions use underlying storage
+ok 52 - enums: source Op.ENUM preserves type while numeric conversions use underlying storage
+  ---
+  duration_ms: 3.700987
+  type: 'test'
+  ...
+# Subtest: enums: underlying signed and unsigned widths preserve boundary values
+ok 53 - enums: underlying signed and unsigned widths preserve boundary values
+  ---
+  duration_ms: 0.179273
+  type: 'test'
+  ...
+# Subtest: enums CIL: independently authored boxed enum names and runtime type identity
+ok 54 - enums CIL: independently authored boxed enum names and runtime type identity
+  ---
+  duration_ms: 5.091836
+  type: 'test'
+  ...
+# Subtest: enums CIL: flags names, unknown values, zero and unsigned metadata boundaries
+ok 55 - enums CIL: flags names, unknown values, zero and unsigned metadata boundaries
+  ---
+  duration_ms: 7.203162
+  type: 'test'
+  ...
+# Subtest: enums CIL: unboxed arithmetic retains the declared enum when boxed again
+ok 56 - enums CIL: unboxed arithmetic retains the declared enum when boxed again
+  ---
+  duration_ms: 1.80723
+  type: 'test'
+  ...
+# Subtest: strings CIL: independent literal tokens intern but concatenation allocates a distinct reference
+ok 57 - strings CIL: independent literal tokens intern but concatenation allocates a distinct reference
+  ---
+  duration_ms: 1.498196
+  type: 'test'
+  ...
+# Subtest: enums: zero-initialized static fields preserve enum identity across all engines
+ok 58 - enums: zero-initialized static fields preserve enum identity across all engines
+  ---
+  duration_ms: 9.373414
+  type: 'test'
+  ...
+# Subtest: enums CIL: zero-initialized locals and arrays use the underlying zero value
+ok 59 - enums CIL: zero-initialized locals and arrays use the underlying zero value
+  ---
+  duration_ms: 1.577493
+  type: 'test'
+  ...
+# Subtest: enums CIL: boxed enum managed addresses cannot be confused with underlying int boxes
+ok 60 - enums CIL: boxed enum managed addresses cannot be confused with underlying int boxes
+  ---
+  duration_ms: 1.327416
+  type: 'test'
+  ...
+# Subtest: enums CIL: UInt32 enum unboxing retains signed evaluation-stack bits for conv.i8
+ok 61 - enums CIL: UInt32 enum unboxing retains signed evaluation-stack bits for conv.i8
+  ---
+  duration_ms: 0.975701
+  type: 'test'
+  ...
+# Subtest: Object constructor decoder admits each pinned facade identity without rewriting its version
+ok 62 - Object constructor decoder admits each pinned facade identity without rewriting its version
+  ---
+  duration_ms: 11.006849
+  type: 'test'
+  ...
+# Subtest: Object constructor decoder requires an exact zero-argument newobj and rejects ordinary base calls
+ok 63 - Object constructor decoder requires an exact zero-argument newobj and rejects ordinary base calls
+  ---
+  duration_ms: 1.265075
+  type: 'test'
+  ...
+# Subtest: Object constructor decoder rejects forged raw namespaces, names and nested or module scopes
+ok 64 - Object constructor decoder rejects forged raw namespaces, names and nested or module scopes
+  ---
+  duration_ms: 4.842441
+  type: 'test'
+  ...
+# Subtest: Object constructor decoder checks raw signature details omitted by the display signature
+ok 65 - Object constructor decoder checks raw signature details omitted by the display signature
+  ---
+  duration_ms: 1.908539
+  type: 'test'
+  ...
+# Subtest: Object constructor decoder rejects forged keys, cultures, flags and facade names
+ok 66 - Object constructor decoder rejects forged keys, cultures, flags and facade names
+  ---
+  duration_ms: 3.817507
+  type: 'test'
+  ...
+# Subtest: Object constructor canonical reload preserves zero arguments in net8 and mscorlib4 profiles
+ok 67 - Object constructor canonical reload preserves zero arguments in net8 and mscorlib4 profiles
+  ---
+  duration_ms: 105.364056
+  type: 'test'
+  ...
+# Subtest: canonical reload rejects a forged AssemblyRef even when canonical replay could reproduce it
+ok 68 - canonical reload rejects a forged AssemblyRef even when canonical replay could reproduce it
+  ---
+  duration_ms: 7.468801
+  type: 'test'
+  ...
+# Subtest: present but falsy scalar tags are rejected in constants and static initializers
+ok 69 - present but falsy scalar tags are rejected in constants and static initializers
+  ---
+  duration_ms: 2.314814
+  type: 'test'
+  ...
+# Subtest: source load adapters do not return malformed scalar wire records as guest objects
+ok 70 - source load adapters do not return malformed scalar wire records as guest objects
+  ---
+  duration_ms: 0.714898
+  type: 'test'
+  ...
+# Subtest: ordinary constants and valid scalar records retain their load behavior
+ok 71 - ordinary constants and valid scalar records retain their load behavior
+  ---
+  duration_ms: 0.628561
+  type: 'test'
+  ...
+# Subtest: Object allocation appends wire 1848 after the released scalar families without an A07 contract
+ok 72 - Object allocation appends wire 1848 after the released scalar families without an A07 contract
+  ---
+  duration_ms: 1.376731
+  type: 'test'
+  ...
+# Subtest: Object allocation bound: fresh identities allocate once in source, reloaded source and CIL
+ok 73 - Object allocation bound: fresh identities allocate once in source, reloaded source and CIL
+  ---
+  duration_ms: 124.736903
+  type: 'test'
+  ...
+# Subtest: Object allocation bound: aliases, empty initializers and object members retain CLR identity across GC
+ok 74 - Object allocation bound: aliases, empty initializers and object members retain CLR identity across GC
+  ---
+  duration_ms: 36.238718
+  type: 'test'
+  ...
+# Subtest: Object allocation bound: a user class named Object retains its constructor and fields
+ok 75 - Object allocation bound: a user class named Object retains its constructor and fields
+  ---
+  duration_ms: 29.180537
+  type: 'test'
+  ...
+# Subtest: Object allocation bound: constructor arity, names and destination types stay checked
+ok 76 - Object allocation bound: constructor arity, names and destination types stay checked
+  ---
+  duration_ms: 10.546893
+  type: 'test'
+  ...
+# Subtest: Object allocation bound: a synchronous allocation observer cannot resume a stopped caller
+ok 77 - Object allocation bound: a synchronous allocation observer cannot resume a stopped caller
+  ---
+  duration_ms: 15.077113
+  type: 'test'
+  ...
+# Subtest: Object allocation legacy: fresh identities allocate once in source, reloaded source and CIL
+ok 78 - Object allocation legacy: fresh identities allocate once in source, reloaded source and CIL
+  ---
+  duration_ms: 14.640151
+  type: 'test'
+  ...
+# Subtest: Object allocation legacy: aliases, empty initializers and object members retain CLR identity across GC
+ok 79 - Object allocation legacy: aliases, empty initializers and object members retain CLR identity across GC
+  ---
+  duration_ms: 19.065258
+  type: 'test'
+  ...
+# Subtest: Object allocation legacy: a user class named Object retains its constructor and fields
+ok 80 - Object allocation legacy: a user class named Object retains its constructor and fields
+  ---
+  duration_ms: 21.497128
+  type: 'test'
+  ...
+# Subtest: Object allocation legacy: constructor arity, names and destination types stay checked
+ok 81 - Object allocation legacy: constructor arity, names and destination types stay checked
+  ---
+  duration_ms: 6.090431
+  type: 'test'
+  ...
+# Subtest: Object allocation legacy: a synchronous allocation observer cannot resume a stopped caller
+ok 82 - Object allocation legacy: a synchronous allocation observer cannot resume a stopped caller
+  ---
+  duration_ms: 15.317366
+  type: 'test'
+  ...
+# Subtest: direct CIL Object construction and derived base calls retain distinct allocation and initialization
+ok 83 - direct CIL Object construction and derived base calls retain distinct allocation and initialization
+  ---
+  duration_ms: 18.761332
+  type: 'test'
+  ...
+# Subtest: standalone Object allocation preserves managed roots, snapshots and allocation failure cleanup
+ok 84 - standalone Object allocation preserves managed roots, snapshots and allocation failure cleanup
+  ---
+  duration_ms: 1.105112
+  type: 'test'
+  ...
+# Subtest: synchronous host callback source: receiver, nested scopes and result inspection retain the boundary
+ok 85 - synchronous host callback source: receiver, nested scopes and result inspection retain the boundary
+  ---
+  duration_ms: 101.519891
+  type: 'test'
+  ...
+# Subtest: synchronous host callback source: callback and inspection failures release the scope unchanged
+ok 86 - synchronous host callback source: callback and inspection failures release the scope unchanged
+  ---
+  duration_ms: 1.01523
+  type: 'test'
+  ...
+# Subtest: synchronous host callback source: explicit stop keeps the boundary until callback completion
+ok 87 - synchronous host callback source: explicit stop keeps the boundary until callback completion
+  ---
+  duration_ms: 0.799403
+  type: 'test'
+  ...
+# Subtest: synchronous host callback cil: receiver, nested scopes and result inspection retain the boundary
+ok 88 - synchronous host callback cil: receiver, nested scopes and result inspection retain the boundary
+  ---
+  duration_ms: 14.207767
+  type: 'test'
+  ...
+# Subtest: synchronous host callback cil: callback and inspection failures release the scope unchanged
+ok 89 - synchronous host callback cil: callback and inspection failures release the scope unchanged
+  ---
+  duration_ms: 2.315409
+  type: 'test'
+  ...
+# Subtest: synchronous host callback cil: explicit stop keeps the boundary until callback completion
+ok 90 - synchronous host callback cil: explicit stop keeps the boundary until callback completion
+  ---
+  duration_ms: 1.793222
+  type: 'test'
+  ...
+# Subtest: BCL contributions extend contracts and dispatch through one family registration
+ok 91 - BCL contributions extend contracts and dispatch through one family registration
+  ---
+  duration_ms: 1.809196
+  type: 'test'
+  ...
+# Subtest: BCL dispatch reuses resolved types and preserves standalone owner lookup
+ok 92 - BCL dispatch reuses resolved types and preserves standalone owner lookup
+  ---
+  duration_ms: 0.227133
+  type: 'test'
+  ...
+# Subtest: BCL registry rejects duplicate ownership and malformed contributions
+ok 93 - BCL registry rejects duplicate ownership and malformed contributions
+  ---
+  duration_ms: 0.548665
+  type: 'test'
+  ...
+# Subtest: BCL registration participates in framework rollback and cancellation
+ok 94 - BCL registration participates in framework rollback and cancellation
+  ---
+  duration_ms: 0.437402
+  type: 'test'
+  ...
+# Subtest: released BCL groups keep module order and independent registries cannot leak
+ok 95 - released BCL groups keep module order and independent registries cannot leak
+  ---
+  duration_ms: 0.547514
+  type: 'test'
+  ...
+# Subtest: BCL registry rejects async contracts and malformed invocation results
+ok 96 - BCL registry rejects async contracts and malformed invocation results
+  ---
+  duration_ms: 0.357104
+  type: 'test'
+  ...
+# Subtest: A07 inventory is byte-stable and contains all registered module members
+ok 97 - A07 inventory is byte-stable and contains all registered module members
+  ---
+  duration_ms: 35.391784
+  type: 'test'
+  ...
+# Subtest: A07 inventory rejects a removed registered member and altered reference status
+ok 98 - A07 inventory rejects a removed registered member and altered reference status
+  ---
+  duration_ms: 18.135093
+  type: 'test'
+  ...
+# Subtest: A07 inventory exposes additional registered signatures as documentation drift
+ok 99 - A07 inventory exposes additional registered signatures as documentation drift
+  ---
+  duration_ms: 11.599487
+  type: 'test'
+  ...
+# Subtest: A07 exact reference comparison does not equate a closed Array overload with a generic method
+ok 100 - A07 exact reference comparison does not equate a closed Array overload with a generic method
+  ---
+  duration_ms: 5.732536
+  type: 'test'
+  ...
+# Subtest: A07 released String contract section remains byte-identical
+ok 101 - A07 released String contract section remains byte-identical
+  ---
+  duration_ms: 2.67022
+  type: 'test'
+  ...
+# Subtest: A07 reference snapshot retains real extractor and source assembly hashes
+ok 102 - A07 reference snapshot retains real extractor and source assembly hashes
+  ---
+  duration_ms: 1.272148
+  type: 'test'
+  ...
+# Subtest: A07 inventory handles an empty module and rejects duplicate ownership
+ok 103 - A07 inventory handles an empty module and rejects duplicate ownership
+  ---
+  duration_ms: 0.402361
+  type: 'test'
+  ...
+# Subtest: String cancellation source/field, completed false: host stop prevents publication and restore permits retry
+ok 104 - String cancellation source/field, completed false: host stop prevents publication and restore permits retry
+  ---
+  duration_ms: 77.213138
+  type: 'test'
+  ...
+# Subtest: String cancellation source/field, completed true: host stop prevents publication and restore permits retry
+ok 105 - String cancellation source/field, completed true: host stop prevents publication and restore permits retry
+  ---
+  duration_ms: 1.63507
+  type: 'test'
+  ...
+# Subtest: String cancellation source/field: explicit stop wins over a later observer exception
+ok 106 - String cancellation source/field: explicit stop wins over a later observer exception
+  ---
+  duration_ms: 0.614602
+  type: 'test'
+  ...
+# Subtest: String cancellation source/literal, completed false: host stop prevents publication and restore permits retry
+ok 107 - String cancellation source/literal, completed false: host stop prevents publication and restore permits retry
+  ---
+  duration_ms: 0.877558
+  type: 'test'
+  ...
+# Subtest: String cancellation source/literal, completed true: host stop prevents publication and restore permits retry
+ok 108 - String cancellation source/literal, completed true: host stop prevents publication and restore permits retry
+  ---
+  duration_ms: 0.92672
+  type: 'test'
+  ...
+# Subtest: String cancellation source/literal: explicit stop wins over a later observer exception
+ok 109 - String cancellation source/literal: explicit stop wins over a later observer exception
+  ---
+  duration_ms: 0.51082
+  type: 'test'
+  ...
+# Subtest: String cancellation reload/field, completed false: host stop prevents publication and restore permits retry
+ok 110 - String cancellation reload/field, completed false: host stop prevents publication and restore permits retry
+  ---
+  duration_ms: 7.682758
+  type: 'test'
+  ...
+# Subtest: String cancellation reload/field, completed true: host stop prevents publication and restore permits retry
+ok 111 - String cancellation reload/field, completed true: host stop prevents publication and restore permits retry
+  ---
+  duration_ms: 3.129674
+  type: 'test'
+  ...
+# Subtest: String cancellation reload/field: explicit stop wins over a later observer exception
+ok 112 - String cancellation reload/field: explicit stop wins over a later observer exception
+  ---
+  duration_ms: 10.317296
+  type: 'test'
+  ...
+# Subtest: String cancellation reload/literal, completed false: host stop prevents publication and restore permits retry
+ok 113 - String cancellation reload/literal, completed false: host stop prevents publication and restore permits retry
+  ---
+  duration_ms: 2.644302
+  type: 'test'
+  ...
+# Subtest: String cancellation reload/literal, completed true: host stop prevents publication and restore permits retry
+ok 114 - String cancellation reload/literal, completed true: host stop prevents publication and restore permits retry
+  ---
+  duration_ms: 2.176224
+  type: 'test'
+  ...
+# Subtest: String cancellation reload/literal: explicit stop wins over a later observer exception
+ok 115 - String cancellation reload/literal: explicit stop wins over a later observer exception
+  ---
+  duration_ms: 1.883204
+  type: 'test'
+  ...
+# Subtest: String cancellation cil/field, completed false: host stop prevents publication and restore permits retry
+ok 116 - String cancellation cil/field, completed false: host stop prevents publication and restore permits retry
+  ---
+  duration_ms: 7.753111
+  type: 'test'
+  ...
+# Subtest: String cancellation cil/field, completed true: host stop prevents publication and restore permits retry
+ok 117 - String cancellation cil/field, completed true: host stop prevents publication and restore permits retry
+  ---
+  duration_ms: 4.517096
+  type: 'test'
+  ...
+# Subtest: String cancellation cil/field: explicit stop wins over a later observer exception
+ok 118 - String cancellation cil/field: explicit stop wins over a later observer exception
+  ---
+  duration_ms: 1.923433
+  type: 'test'
+  ...
+# Subtest: String cancellation cil/literal, completed false: host stop prevents publication and restore permits retry
+ok 119 - String cancellation cil/literal, completed false: host stop prevents publication and restore permits retry
+  ---
+  duration_ms: 1.389419
+  type: 'test'
+  ...
+# Subtest: String cancellation cil/literal, completed true: host stop prevents publication and restore permits retry
+ok 120 - String cancellation cil/literal, completed true: host stop prevents publication and restore permits retry
+  ---
+  duration_ms: 3.253747
+  type: 'test'
+  ...
+# Subtest: String cancellation cil/literal: explicit stop wins over a later observer exception
+ok 121 - String cancellation cil/literal: explicit stop wins over a later observer exception
+  ---
+  duration_ms: 1.142857
+  type: 'test'
+  ...
+# Subtest: String cancellation source/field: a real allocating instruction cannot repopulate retired stacks
+ok 122 - String cancellation source/field: a real allocating instruction cannot repopulate retired stacks
+  ---
+  duration_ms: 7.509033
+  type: 'test'
+  ...
+# Subtest: String cancellation source/literal: a real allocating instruction cannot repopulate retired stacks
+ok 123 - String cancellation source/literal: a real allocating instruction cannot repopulate retired stacks
+  ---
+  duration_ms: 4.036135
+  type: 'test'
+  ...
+# Subtest: String cancellation reload/field: a real allocating instruction cannot repopulate retired stacks
+ok 124 - String cancellation reload/field: a real allocating instruction cannot repopulate retired stacks
+  ---
+  duration_ms: 5.403131
+  type: 'test'
+  ...
+# Subtest: String cancellation reload/literal: a real allocating instruction cannot repopulate retired stacks
+ok 125 - String cancellation reload/literal: a real allocating instruction cannot repopulate retired stacks
+  ---
+  duration_ms: 4.901675
+  type: 'test'
+  ...
+# Subtest: String cancellation cil/field: a real allocating instruction cannot repopulate retired stacks
+ok 126 - String cancellation cil/field: a real allocating instruction cannot repopulate retired stacks
+  ---
+  duration_ms: 4.129853
+  type: 'test'
+  ...
+# Subtest: String cancellation cil/literal: a real allocating instruction cannot repopulate retired stacks
+ok 127 - String cancellation cil/literal: a real allocating instruction cannot repopulate retired stacks
+  ---
+  duration_ms: 2.012815
+  type: 'test'
+  ...
+# Subtest: String cancellation cil/empty-string-constructor: a real allocating instruction cannot repopulate retired stacks
+ok 128 - String cancellation cil/empty-string-constructor: a real allocating instruction cannot repopulate retired stacks
+  ---
+  duration_ms: 3.730867
+  type: 'test'
+  ...
+# Subtest: Boolean fields CIL: unknown field fails at field admission with a valid entry-method signature
+ok 129 - Boolean fields CIL: unknown field fails at field admission with a valid entry-method signature
+  ---
+  duration_ms: 15.900842
+  type: 'test'
+  ...
+# Subtest: Boolean fields CIL: unknown owner fails at field admission with a valid entry-method signature
+ok 130 - Boolean fields CIL: unknown owner fails at field admission with a valid entry-method signature
+  ---
+  duration_ms: 2.37066
+  type: 'test'
+  ...
+# Subtest: Boolean fields CIL: owner display collision fails at field admission with a valid entry-method signature
+ok 131 - Boolean fields CIL: owner display collision fails at field admission with a valid entry-method signature
+  ---
+  duration_ms: 2.257164
+  type: 'test'
+  ...
+# Subtest: Boolean fields CIL: wrong primitive fails at field admission with a valid entry-method signature
+ok 132 - Boolean fields CIL: wrong primitive fails at field admission with a valid entry-method signature
+  ---
+  duration_ms: 1.975891
+  type: 'test'
+  ...
+# Subtest: Boolean fields CIL: named class disguised as primitive string fails at field admission with a valid entry-method signature
+ok 133 - Boolean fields CIL: named class disguised as primitive string fails at field admission with a valid entry-method signature
+  ---
+  duration_ms: 2.485078
+  type: 'test'
+  ...
+# Subtest: Boolean fields CIL: named value type disguised as primitive string fails at field admission with a valid entry-method signature
+ok 134 - Boolean fields CIL: named value type disguised as primitive string fails at field admission with a valid entry-method signature
+  ---
+  duration_ms: 1.571557
+  type: 'test'
+  ...
+# Subtest: Boolean fields CIL: array fails at field admission with a valid entry-method signature
+ok 135 - Boolean fields CIL: array fails at field admission with a valid entry-method signature
+  ---
+  duration_ms: 1.772562
+  type: 'test'
+  ...
+# Subtest: Boolean fields CIL: required modifier fails at field admission with a valid entry-method signature
+ok 136 - Boolean fields CIL: required modifier fails at field admission with a valid entry-method signature
+  ---
+  duration_ms: 1.618727
+  type: 'test'
+  ...
+# Subtest: Boolean fields CIL: optional modifier fails at field admission with a valid entry-method signature
+ok 137 - Boolean fields CIL: optional modifier fails at field admission with a valid entry-method signature
+  ---
+  duration_ms: 1.869365
+  type: 'test'
+  ...
+# Subtest: Boolean fields CIL: wrong assembly fails at field admission with a valid entry-method signature
+ok 138 - Boolean fields CIL: wrong assembly fails at field admission with a valid entry-method signature
+  ---
+  duration_ms: 1.656491
+  type: 'test'
+  ...
+# Subtest: Boolean fields CIL: unapproved legacy core fails at field admission with a valid entry-method signature
+ok 139 - Boolean fields CIL: unapproved legacy core fails at field admission with a valid entry-method signature
+  ---
+  duration_ms: 1.288231
+  type: 'test'
+  ...
+# Subtest: Boolean fields CIL: wrong token fails at field admission with a valid entry-method signature
+ok 140 - Boolean fields CIL: wrong token fails at field admission with a valid entry-method signature
+  ---
+  duration_ms: 1.203267
+  type: 'test'
+  ...
+# Subtest: Boolean fields CIL: unsigned identity fails at field admission with a valid entry-method signature
+ok 141 - Boolean fields CIL: unsigned identity fails at field admission with a valid entry-method signature
+  ---
+  duration_ms: 1.155967
+  type: 'test'
+  ...
+# Subtest: Boolean fields CIL: non-neutral culture fails at field admission with a valid entry-method signature
+ok 142 - Boolean fields CIL: non-neutral culture fails at field admission with a valid entry-method signature
+  ---
+  duration_ms: 1.174635
+  type: 'test'
+  ...
+# Subtest: Boolean fields CIL: malformed byref field data is rejected by the metadata parser
+ok 143 - Boolean fields CIL: malformed byref field data is rejected by the metadata parser
+  ---
+  duration_ms: 1.350563
+  type: 'test'
+  ...
+# Subtest: Boolean fields CIL: stsfld cannot write, take an address or substitute instance access
+ok 144 - Boolean fields CIL: stsfld cannot write, take an address or substitute instance access
+  ---
+  duration_ms: 1.480764
+  type: 'test'
+  ...
+# Subtest: Boolean fields CIL: ldsflda cannot write, take an address or substitute instance access
+ok 145 - Boolean fields CIL: ldsflda cannot write, take an address or substitute instance access
+  ---
+  duration_ms: 1.3149
+  type: 'test'
+  ...
+# Subtest: Boolean fields CIL: ldfld cannot write, take an address or substitute instance access
+ok 146 - Boolean fields CIL: ldfld cannot write, take an address or substitute instance access
+  ---
+  duration_ms: 1.341079
+  type: 'test'
+  ...
+# Subtest: Boolean fields CIL: stfld cannot write, take an address or substitute instance access
+ok 147 - Boolean fields CIL: stfld cannot write, take an address or substitute instance access
+  ---
+  duration_ms: 1.091783
+  type: 'test'
+  ...
+# Subtest: Boolean fields CIL: ldflda cannot write, take an address or substitute instance access
+ok 148 - Boolean fields CIL: ldflda cannot write, take an address or substitute instance access
+  ---
+  duration_ms: 1.034749
+  type: 'test'
+  ...
+# Subtest: Boolean fields CIL: runtime address defenses preserve the cached readonly reference after restore
+ok 149 - Boolean fields CIL: runtime address defenses preserve the cached readonly reference after restore
+  ---
+  duration_ms: 10.841355
+  type: 'test'
+  ...
+# Subtest: Boolean fields CIL: same-named local definition storage remains writable
+ok 150 - Boolean fields CIL: same-named local definition storage remains writable
+  ---
+  duration_ms: 4.560044
+  type: 'test'
+  ...
+# Subtest: Boolean fields CIL: same-named local definition-member storage remains writable
+ok 151 - Boolean fields CIL: same-named local definition-member storage remains writable
+  ---
+  duration_ms: 2.107914
+  type: 'test'
+  ...
+# Subtest: Boolean fields CIL: same-named local module-member storage remains writable
+ok 152 - Boolean fields CIL: same-named local module-member storage remains writable
+  ---
+  duration_ms: 7.165218
+  type: 'test'
+  ...
+# Subtest: Boolean field canonical loader: exact field metadata is required and adjacent instructions cannot become field markers
+ok 153 - Boolean field canonical loader: exact field metadata is required and adjacent instructions cannot become field markers
+  ---
+  duration_ms: 1.68941
+  type: 'test'
+  ...
+# Subtest: Boolean field canonical loader rejects forged assembly identities even when canonical replay could preserve their bytes
+ok 154 - Boolean field canonical loader rejects forged assembly identities even when canonical replay could preserve their bytes
+  ---
+  duration_ms: 93.504617
+  type: 'test'
+  ...
+# Subtest: Readonly numeric controls keep their nonallocating static initialization path
+ok 155 - Readonly numeric controls keep their nonallocating static initialization path
+  ---
+  duration_ms: 1.920076
+  type: 'test'
+  ...
+# Subtest: Boolean field symbols remain readonly primitive-struct members with no constant or accessor identity
+ok 156 - Boolean field symbols remain readonly primitive-struct members with no constant or accessor identity
+  ---
+  duration_ms: 31.651534
+  type: 'test'
+  ...
+# Subtest: Readonly string symbol lowering retains canonical registry provenance for dotted nested registry names
+ok 157 - Readonly string symbol lowering retains canonical registry provenance for dotted nested registry names
+  ---
+  duration_ms: 0.615312
+  type: 'test'
+  ...
+# Subtest: Boolean fields bound: source, canonical reload and CIL preserve genuine field provenance and static initialization
+ok 158 - Boolean fields bound: source, canonical reload and CIL preserve genuine field provenance and static initialization
+  ---
+  duration_ms: 139.553143
+  type: 'test'
+  ...
+# Subtest: Boolean fields bound: field reads keep the CS0198 language restriction
+ok 159 - Boolean fields bound: field reads keep the CS0198 language restriction
+  ---
+  duration_ms: 21.594356
+  type: 'test'
+  ...
+# Subtest: Boolean fields bound: field reads keep the CS0198 language restriction
+ok 160 - Boolean fields bound: field reads keep the CS0198 language restriction
+  ---
+  duration_ms: 4.271584
+  type: 'test'
+  ...
+# Subtest: Boolean fields bound: field reads keep the CS0133 language restriction
+ok 161 - Boolean fields bound: field reads keep the CS0133 language restriction
+  ---
+  duration_ms: 5.480027
+  type: 'test'
+  ...
+# Subtest: Boolean fields bound: field reads keep the CS0199 language restriction
+ok 162 - Boolean fields bound: field reads keep the CS0199 language restriction
+  ---
+  duration_ms: 4.222872
+  type: 'test'
+  ...
+# Subtest: Boolean fields bound: a same-named source class retains its mutable storage
+ok 163 - Boolean fields bound: a same-named source class retains its mutable storage
+  ---
+  duration_ms: 4.07772
+  type: 'test'
+  ...
+# Subtest: Boolean fields bound: locals and parameters shadow the Boolean alias
+ok 164 - Boolean fields bound: locals and parameters shadow the Boolean alias
+  ---
+  duration_ms: 6.822605
+  type: 'test'
+  ...
+# Subtest: Boolean fields bound: escaped identifiers do not acquire predefined-type meaning
+ok 165 - Boolean fields bound: escaped identifiers do not acquire predefined-type meaning
+  ---
+  duration_ms: 8.334862
+  type: 'test'
+  ...
+# Subtest: Boolean fields legacy: source, canonical reload and CIL preserve genuine field provenance and static initialization
+ok 166 - Boolean fields legacy: source, canonical reload and CIL preserve genuine field provenance and static initialization
+  ---
+  duration_ms: 15.678541
+  type: 'test'
+  ...
+# Subtest: Boolean fields legacy: field reads keep the CS0198 language restriction
+ok 167 - Boolean fields legacy: field reads keep the CS0198 language restriction
+  ---
+  duration_ms: 3.547382
+  type: 'test'
+  ...
+# Subtest: Boolean fields legacy: field reads keep the CS0198 language restriction
+ok 168 - Boolean fields legacy: field reads keep the CS0198 language restriction
+  ---
+  duration_ms: 3.217218
+  type: 'test'
+  ...
+# Subtest: Boolean fields legacy: field reads keep the CS0133 language restriction
+ok 169 - Boolean fields legacy: field reads keep the CS0133 language restriction
+  ---
+  duration_ms: 2.832754
+  type: 'test'
+  ...
+# Subtest: Boolean fields legacy: field reads keep the CS0199 language restriction
+ok 170 - Boolean fields legacy: field reads keep the CS0199 language restriction
+  ---
+  duration_ms: 2.808268
+  type: 'test'
+  ...
+# Subtest: Boolean fields legacy: a same-named source class retains its mutable storage
+ok 171 - Boolean fields legacy: a same-named source class retains its mutable storage
+  ---
+  duration_ms: 2.6597
+  type: 'test'
+  ...
+# Subtest: Boolean fields legacy: locals and parameters shadow the Boolean alias
+ok 172 - Boolean fields legacy: locals and parameters shadow the Boolean alias
+  ---
+  duration_ms: 4.171337
+  type: 'test'
+  ...
+# Subtest: Boolean fields legacy: escaped identifiers do not acquire predefined-type meaning
+ok 173 - Boolean fields legacy: escaped identifiers do not acquire predefined-type meaning
+  ---
+  duration_ms: 5.281475
+  type: 'test'
+  ...
+# Subtest: Boolean fields: the full semantic CIL compiler emits genuine field references and executes their values
+ok 174 - Boolean fields: the full semantic CIL compiler emits genuine field references and executes their values
+  ---
+  duration_ms: 23.760112
+  type: 'test'
+  ...
+# Subtest: Boolean field lifetime source, weak false: canonical values are retained by field storage
+ok 175 - Boolean field lifetime source, weak false: canonical values are retained by field storage
+  ---
+  duration_ms: 77.134361
+  type: 'test'
+  ...
+# Subtest: Boolean field lifetime source, weak true: canonical values are retained by field storage
+ok 176 - Boolean field lifetime source, weak true: canonical values are retained by field storage
+  ---
+  duration_ms: 1.345043
+  type: 'test'
+  ...
+# Subtest: Boolean field lifetime source: snapshots before and after initialization restore the exact retained references
+ok 177 - Boolean field lifetime source: snapshots before and after initialization restore the exact retained references
+  ---
+  duration_ms: 2.110085
+  type: 'test'
+  ...
+# Subtest: Boolean field lifetime source: two VMs own independent references and snapshots
+ok 178 - Boolean field lifetime source: two VMs own independent references and snapshots
+  ---
+  duration_ms: 1.167903
+  type: 'test'
+  ...
+# Subtest: Boolean field lifetime source: field-first nested allocation preserves the published canonical string
+ok 179 - Boolean field lifetime source: field-first nested allocation preserves the published canonical string
+  ---
+  duration_ms: 1.025604
+  type: 'test'
+  ...
+# Subtest: Boolean field lifetime source: literal-first nested allocation preserves the published canonical string
+ok 180 - Boolean field lifetime source: literal-first nested allocation preserves the published canonical string
+  ---
+  duration_ms: 0.665186
+  type: 'test'
+  ...
+# Subtest: Boolean field lifetime source: a collector in the allocation observer cannot reclaim the unfinished field value
+ok 181 - Boolean field lifetime source: a collector in the allocation observer cannot reclaim the unfinished field value
+  ---
+  duration_ms: 0.608953
+  type: 'test'
+  ...
+# Subtest: Boolean field lifetime reload, weak false: canonical values are retained by field storage
+ok 182 - Boolean field lifetime reload, weak false: canonical values are retained by field storage
+  ---
+  duration_ms: 7.368195
+  type: 'test'
+  ...
+# Subtest: Boolean field lifetime reload, weak true: canonical values are retained by field storage
+ok 183 - Boolean field lifetime reload, weak true: canonical values are retained by field storage
+  ---
+  duration_ms: 3.052977
+  type: 'test'
+  ...
+# Subtest: Boolean field lifetime reload: snapshots before and after initialization restore the exact retained references
+ok 184 - Boolean field lifetime reload: snapshots before and after initialization restore the exact retained references
+  ---
+  duration_ms: 8.917837
+  type: 'test'
+  ...
+# Subtest: Boolean field lifetime reload: two VMs own independent references and snapshots
+ok 185 - Boolean field lifetime reload: two VMs own independent references and snapshots
+  ---
+  duration_ms: 3.987868
+  type: 'test'
+  ...
+# Subtest: Boolean field lifetime reload: field-first nested allocation preserves the published canonical string
+ok 186 - Boolean field lifetime reload: field-first nested allocation preserves the published canonical string
+  ---
+  duration_ms: 1.753591
+  type: 'test'
+  ...
+# Subtest: Boolean field lifetime reload: literal-first nested allocation preserves the published canonical string
+ok 187 - Boolean field lifetime reload: literal-first nested allocation preserves the published canonical string
+  ---
+  duration_ms: 1.715255
+  type: 'test'
+  ...
+# Subtest: Boolean field lifetime reload: a collector in the allocation observer cannot reclaim the unfinished field value
+ok 188 - Boolean field lifetime reload: a collector in the allocation observer cannot reclaim the unfinished field value
+  ---
+  duration_ms: 1.659934
+  type: 'test'
+  ...
+# Subtest: Boolean field lifetime cil, weak false: canonical values are retained by field storage
+ok 189 - Boolean field lifetime cil, weak false: canonical values are retained by field storage
+  ---
+  duration_ms: 7.275919
+  type: 'test'
+  ...
+# Subtest: Boolean field lifetime cil, weak true: canonical values are retained by field storage
+ok 190 - Boolean field lifetime cil, weak true: canonical values are retained by field storage
+  ---
+  duration_ms: 1.456485
+  type: 'test'
+  ...
+# Subtest: Boolean field lifetime cil: snapshots before and after initialization restore the exact retained references
+ok 191 - Boolean field lifetime cil: snapshots before and after initialization restore the exact retained references
+  ---
+  duration_ms: 2.064528
+  type: 'test'
+  ...
+# Subtest: Boolean field lifetime cil: two VMs own independent references and snapshots
+ok 192 - Boolean field lifetime cil: two VMs own independent references and snapshots
+  ---
+  duration_ms: 3.031105
+  type: 'test'
+  ...
+# Subtest: Boolean field lifetime cil: field-first nested allocation preserves the published canonical string
+ok 193 - Boolean field lifetime cil: field-first nested allocation preserves the published canonical string
+  ---
+  duration_ms: 1.303852
+  type: 'test'
+  ...
+# Subtest: Boolean field lifetime cil: literal-first nested allocation preserves the published canonical string
+ok 194 - Boolean field lifetime cil: literal-first nested allocation preserves the published canonical string
+  ---
+  duration_ms: 1.025153
+  type: 'test'
+  ...
+# Subtest: Boolean field lifetime cil: a collector in the allocation observer cannot reclaim the unfinished field value
+ok 195 - Boolean field lifetime cil: a collector in the allocation observer cannot reclaim the unfinished field value
+  ---
+  duration_ms: 0.951335
+  type: 'test'
+  ...
+# Subtest: String initialization source/field: swallowed same-key reentry still aborts outer publication and permits retry
+ok 196 - String initialization source/field: swallowed same-key reentry still aborts outer publication and permits retry
+  ---
+  duration_ms: 93.375648
+  type: 'test'
+  ...
+# Subtest: String initialization source/field: observer exception identity and pending cleanup survive retry
+ok 197 - String initialization source/field: observer exception identity and pending cleanup survive retry
+  ---
+  duration_ms: 0.951285
+  type: 'test'
+  ...
+# Subtest: String initialization source/literal: swallowed same-key reentry still aborts outer publication and permits retry
+ok 198 - String initialization source/literal: swallowed same-key reentry still aborts outer publication and permits retry
+  ---
+  duration_ms: 0.776448
+  type: 'test'
+  ...
+# Subtest: String initialization source/literal: observer exception identity and pending cleanup survive retry
+ok 199 - String initialization source/literal: observer exception identity and pending cleanup survive retry
+  ---
+  duration_ms: 0.676852
+  type: 'test'
+  ...
+# Subtest: String initialization source: completed cross-field observer changes survive a later outer failure
+ok 200 - String initialization source: completed cross-field observer changes survive a later outer failure
+  ---
+  duration_ms: 1.842642
+  type: 'test'
+  ...
+# Subtest: String initialization source: heap exhaustion publishes no field or pool placeholder
+ok 201 - String initialization source: heap exhaustion publishes no field or pool placeholder
+  ---
+  duration_ms: 1.165629
+  type: 'test'
+  ...
+# Subtest: String initialization source/field: active allocation rejects snapshot without replacing live state
+ok 202 - String initialization source/field: active allocation rejects snapshot without replacing live state
+  ---
+  duration_ms: 1.187481
+  type: 'test'
+  ...
+# Subtest: String initialization source/literal: active allocation rejects snapshot without replacing live state
+ok 203 - String initialization source/literal: active allocation rejects snapshot without replacing live state
+  ---
+  duration_ms: 0.96864
+  type: 'test'
+  ...
+# Subtest: String initialization source/field: active allocation rejects restore without replacing live state
+ok 204 - String initialization source/field: active allocation rejects restore without replacing live state
+  ---
+  duration_ms: 0.785362
+  type: 'test'
+  ...
+# Subtest: String initialization source/literal: active allocation rejects restore without replacing live state
+ok 205 - String initialization source/literal: active allocation rejects restore without replacing live state
+  ---
+  duration_ms: 0.90001
+  type: 'test'
+  ...
+# Subtest: String initialization reload/field: swallowed same-key reentry still aborts outer publication and permits retry
+ok 206 - String initialization reload/field: swallowed same-key reentry still aborts outer publication and permits retry
+  ---
+  duration_ms: 7.072081
+  type: 'test'
+  ...
+# Subtest: String initialization reload/field: observer exception identity and pending cleanup survive retry
+ok 207 - String initialization reload/field: observer exception identity and pending cleanup survive retry
+  ---
+  duration_ms: 9.976139
+  type: 'test'
+  ...
+# Subtest: String initialization reload/literal: swallowed same-key reentry still aborts outer publication and permits retry
+ok 208 - String initialization reload/literal: swallowed same-key reentry still aborts outer publication and permits retry
+  ---
+  duration_ms: 3.298326
+  type: 'test'
+  ...
+# Subtest: String initialization reload/literal: observer exception identity and pending cleanup survive retry
+ok 209 - String initialization reload/literal: observer exception identity and pending cleanup survive retry
+  ---
+  duration_ms: 2.312612
+  type: 'test'
+  ...
+# Subtest: String initialization reload: completed cross-field observer changes survive a later outer failure
+ok 210 - String initialization reload: completed cross-field observer changes survive a later outer failure
+  ---
+  duration_ms: 2.293904
+  type: 'test'
+  ...
+# Subtest: String initialization reload: heap exhaustion publishes no field or pool placeholder
+ok 211 - String initialization reload: heap exhaustion publishes no field or pool placeholder
+  ---
+  duration_ms: 1.843644
+  type: 'test'
+  ...
+# Subtest: String initialization reload/field: active allocation rejects snapshot without replacing live state
+ok 212 - String initialization reload/field: active allocation rejects snapshot without replacing live state
+  ---
+  duration_ms: 1.778638
+  type: 'test'
+  ...
+# Subtest: String initialization reload/literal: active allocation rejects snapshot without replacing live state
+ok 213 - String initialization reload/literal: active allocation rejects snapshot without replacing live state
+  ---
+  duration_ms: 1.971901
+  type: 'test'
+  ...
+# Subtest: String initialization reload/field: active allocation rejects restore without replacing live state
+ok 214 - String initialization reload/field: active allocation rejects restore without replacing live state
+  ---
+  duration_ms: 1.679403
+  type: 'test'
+  ...
+# Subtest: String initialization reload/literal: active allocation rejects restore without replacing live state
+ok 215 - String initialization reload/literal: active allocation rejects restore without replacing live state
+  ---
+  duration_ms: 2.223641
+  type: 'test'
+  ...
+# Subtest: String initialization cil/field: swallowed same-key reentry still aborts outer publication and permits retry
+ok 216 - String initialization cil/field: swallowed same-key reentry still aborts outer publication and permits retry
+  ---
+  duration_ms: 7.549792
+  type: 'test'
+  ...
+# Subtest: String initialization cil/field: observer exception identity and pending cleanup survive retry
+ok 217 - String initialization cil/field: observer exception identity and pending cleanup survive retry
+  ---
+  duration_ms: 1.599325
+  type: 'test'
+  ...
+# Subtest: String initialization cil/literal: swallowed same-key reentry still aborts outer publication and permits retry
+ok 218 - String initialization cil/literal: swallowed same-key reentry still aborts outer publication and permits retry
+  ---
+  duration_ms: 1.847649
+  type: 'test'
+  ...
+# Subtest: String initialization cil/literal: observer exception identity and pending cleanup survive retry
+ok 219 - String initialization cil/literal: observer exception identity and pending cleanup survive retry
+  ---
+  duration_ms: 1.37824
+  type: 'test'
+  ...
+# Subtest: String initialization cil: completed cross-field observer changes survive a later outer failure
+ok 220 - String initialization cil: completed cross-field observer changes survive a later outer failure
+  ---
+  duration_ms: 1.942699
+  type: 'test'
+  ...
+# Subtest: String initialization cil: heap exhaustion publishes no field or pool placeholder
+ok 221 - String initialization cil: heap exhaustion publishes no field or pool placeholder
+  ---
+  duration_ms: 1.351181
+  type: 'test'
+  ...
+# Subtest: String initialization cil/field: active allocation rejects snapshot without replacing live state
+ok 222 - String initialization cil/field: active allocation rejects snapshot without replacing live state
+  ---
+  duration_ms: 1.417399
+  type: 'test'
+  ...
+# Subtest: String initialization cil/literal: active allocation rejects snapshot without replacing live state
+ok 223 - String initialization cil/literal: active allocation rejects snapshot without replacing live state
+  ---
+  duration_ms: 1.713432
+  type: 'test'
+  ...
+# Subtest: String initialization cil/field: active allocation rejects restore without replacing live state
+ok 224 - String initialization cil/field: active allocation rejects restore without replacing live state
+  ---
+  duration_ms: 1.231185
+  type: 'test'
+  ...
+# Subtest: String initialization cil/literal: active allocation rejects restore without replacing live state
+ok 225 - String initialization cil/literal: active allocation rejects restore without replacing live state
+  ---
+  duration_ms: 2.932611
+  type: 'test'
+  ...
+# Subtest: Boolean fields: native capture identifies the frozen .NET 10.0.5 source, project and runtime assembly
+ok 226 - Boolean fields: native capture identifies the frozen .NET 10.0.5 source, project and runtime assembly
+  ---
+  duration_ms: 2.398697
+  type: 'test'
+  ...
+# Subtest: Boolean fields: registered inventory matches all native public fields without inventing accessors or constants
+ok 227 - Boolean fields: registered inventory matches all native public fields without inventing accessors or constants
+  ---
+  duration_ms: 0.267142
+  type: 'test'
+  ...
+# Subtest: Boolean fields: native value, copy, interning and culture observations remain explicit
+ok 228 - Boolean fields: native value, copy, interning and culture observations remain explicit
+  ---
+  duration_ms: 0.254814
+  type: 'test'
+  ...
+# Subtest: Boolean fields bound source: values, lengths and literal identity match the native capture
+ok 229 - Boolean fields bound source: values, lengths and literal identity match the native capture
+  ---
+  duration_ms: 106.278198
+  type: 'test'
+  ...
+# Subtest: Boolean fields legacy source: values, lengths and literal identity match the native capture
+ok 230 - Boolean fields legacy source: values, lengths and literal identity match the native capture
+  ---
+  duration_ms: 16.040782
+  type: 'test'
+  ...
+# Subtest: Boolean field FalseString: independent runtime CIL with weak interning false matches native
+ok 231 - Boolean field FalseString: independent runtime CIL with weak interning false matches native
+  ---
+  duration_ms: 30.270308
+  type: 'test'
+  ...
+# Subtest: Boolean field TrueString: independent runtime CIL with weak interning false matches native
+ok 232 - Boolean field TrueString: independent runtime CIL with weak interning false matches native
+  ---
+  duration_ms: 10.049347
+  type: 'test'
+  ...
+# Subtest: Boolean field FalseString: independent runtime CIL with weak interning true matches native
+ok 233 - Boolean field FalseString: independent runtime CIL with weak interning true matches native
+  ---
+  duration_ms: 3.008732
+  type: 'test'
+  ...
+# Subtest: Boolean field TrueString: independent runtime CIL with weak interning true matches native
+ok 234 - Boolean field TrueString: independent runtime CIL with weak interning true matches native
+  ---
+  duration_ms: 2.542548
+  type: 'test'
+  ...
+# Subtest: Boolean field FalseString: independent core CIL with weak interning false matches native
+ok 235 - Boolean field FalseString: independent core CIL with weak interning false matches native
+  ---
+  duration_ms: 2.690396
+  type: 'test'
+  ...
+# Subtest: Boolean field TrueString: independent core CIL with weak interning false matches native
+ok 236 - Boolean field TrueString: independent core CIL with weak interning false matches native
+  ---
+  duration_ms: 2.188759
+  type: 'test'
+  ...
+# Subtest: Boolean field FalseString: independent core CIL with weak interning true matches native
+ok 237 - Boolean field FalseString: independent core CIL with weak interning true matches native
+  ---
+  duration_ms: 2.078358
+  type: 'test'
+  ...
+# Subtest: Boolean field TrueString: independent core CIL with weak interning true matches native
+ok 238 - Boolean field TrueString: independent core CIL with weak interning true matches native
+  ---
+  duration_ms: 1.942048
+  type: 'test'
+  ...
+# Subtest: Boolean fields: a field-only module registers a value type without method IDs or property accessors
+ok 239 - Boolean fields: a field-only module registers a value type without method IDs or property accessors
+  ---
+  duration_ms: 1.385863
+  type: 'test'
+  ...
+# Subtest: Boolean fields: genuine readonly descriptors preserve exact text and both approved assembly scopes
+ok 240 - Boolean fields: genuine readonly descriptors preserve exact text and both approved assembly scopes
+  ---
+  duration_ms: 0.651325
+  type: 'test'
+  ...
+# Subtest: Readonly string fields: plain UTF-16 values retain exact code units and conservative defaults
+ok 241 - Readonly string fields: plain UTF-16 values retain exact code units and conservative defaults
+  ---
+  duration_ms: 0.488046
+  type: 'test'
+  ...
+# Subtest: Boolean fields: appending the module preserves every existing contract and primitive signature spelling
+ok 242 - Boolean fields: appending the module preserves every existing contract and primitive signature spelling
+  ---
+  duration_ms: 25.995264
+  type: 'test'
+  ...
+# Subtest: readonly fields: direct CIL runtime Frequency preserves its exact value and scope
+ok 243 - readonly fields: direct CIL runtime Frequency preserves its exact value and scope
+  ---
+  duration_ms: 19.506106
+  type: 'test'
+  ...
+# Subtest: readonly fields: direct CIL runtime IsHighResolution preserves its exact value and scope
+ok 244 - readonly fields: direct CIL runtime IsHighResolution preserves its exact value and scope
+  ---
+  duration_ms: 3.234073
+  type: 'test'
+  ...
+# Subtest: readonly fields: direct CIL runtime Maximum preserves its exact value and scope
+ok 245 - readonly fields: direct CIL runtime Maximum preserves its exact value and scope
+  ---
+  duration_ms: 2.386638
+  type: 'test'
+  ...
+# Subtest: readonly fields: direct CIL core Frequency preserves its exact value and scope
+ok 246 - readonly fields: direct CIL core Frequency preserves its exact value and scope
+  ---
+  duration_ms: 1.987961
+  type: 'test'
+  ...
+# Subtest: readonly fields: direct CIL core IsHighResolution preserves its exact value and scope
+ok 247 - readonly fields: direct CIL core IsHighResolution preserves its exact value and scope
+  ---
+  duration_ms: 2.485573
+  type: 'test'
+  ...
+# Subtest: readonly fields: direct CIL core Maximum preserves its exact value and scope
+ok 248 - readonly fields: direct CIL core Maximum preserves its exact value and scope
+  ---
+  duration_ms: 1.673289
+  type: 'test'
+  ...
+# Subtest: readonly fields: compatible facade versions are admitted without rewriting the original AssemblyRef version
+ok 249 - readonly fields: compatible facade versions are admitted without rewriting the original AssemblyRef version
+  ---
+  duration_ms: 4.13039
+  type: 'test'
+  ...
+# Subtest: readonly fields: direct CIL rejects wrong field name
+ok 250 - readonly fields: direct CIL rejects wrong field name
+  ---
+  duration_ms: 5.666107
+  type: 'test'
+  ...
+# Subtest: readonly fields: direct CIL rejects wrong owner
+ok 251 - readonly fields: direct CIL rejects wrong owner
+  ---
+  duration_ms: 1.888636
+  type: 'test'
+  ...
+# Subtest: readonly fields: direct CIL rejects owner display collision in the global namespace
+ok 252 - readonly fields: direct CIL rejects owner display collision in the global namespace
+  ---
+  duration_ms: 1.816199
+  type: 'test'
+  ...
+# Subtest: readonly fields: direct CIL rejects owner display collision in a different namespace
+ok 253 - readonly fields: direct CIL rejects owner display collision in a different namespace
+  ---
+  duration_ms: 1.450601
+  type: 'test'
+  ...
+# Subtest: readonly fields: direct CIL rejects wrong signature width
+ok 254 - readonly fields: direct CIL rejects wrong signature width
+  ---
+  duration_ms: 1.441618
+  type: 'test'
+  ...
+# Subtest: readonly fields: direct CIL rejects named class signature disguised as a primitive
+ok 255 - readonly fields: direct CIL rejects named class signature disguised as a primitive
+  ---
+  duration_ms: 1.469971
+  type: 'test'
+  ...
+# Subtest: readonly fields: direct CIL rejects named value signature disguised as a primitive
+ok 256 - readonly fields: direct CIL rejects named value signature disguised as a primitive
+  ---
+  duration_ms: 4.621602
+  type: 'test'
+  ...
+# Subtest: readonly fields: direct CIL rejects required signature modifier
+ok 257 - readonly fields: direct CIL rejects required signature modifier
+  ---
+  duration_ms: 1.741359
+  type: 'test'
+  ...
+# Subtest: readonly fields: direct CIL rejects optional signature modifier
+ok 258 - readonly fields: direct CIL rejects optional signature modifier
+  ---
+  duration_ms: 1.487826
+  type: 'test'
+  ...
+# Subtest: readonly fields: direct CIL rejects array signature
+ok 259 - readonly fields: direct CIL rejects array signature
+  ---
+  duration_ms: 1.248966
+  type: 'test'
+  ...
+# Subtest: readonly fields: direct CIL rejects assembly lookalike
+ok 260 - readonly fields: direct CIL rejects assembly lookalike
+  ---
+  duration_ms: 0.999739
+  type: 'test'
+  ...
+# Subtest: readonly fields: direct CIL rejects unapproved facade
+ok 261 - readonly fields: direct CIL rejects unapproved facade
+  ---
+  duration_ms: 1.004737
+  type: 'test'
+  ...
+# Subtest: readonly fields: direct CIL rejects unapproved legacy core
+ok 262 - readonly fields: direct CIL rejects unapproved legacy core
+  ---
+  duration_ms: 0.848597
+  type: 'test'
+  ...
+# Subtest: readonly fields: direct CIL rejects wrong signing token
+ok 263 - readonly fields: direct CIL rejects wrong signing token
+  ---
+  duration_ms: 0.842939
+  type: 'test'
+  ...
+# Subtest: readonly fields: direct CIL rejects unsigned scope
+ok 264 - readonly fields: direct CIL rejects unsigned scope
+  ---
+  duration_ms: 0.8713
+  type: 'test'
+  ...
+# Subtest: readonly fields: direct CIL rejects non-neutral culture
+ok 265 - readonly fields: direct CIL rejects non-neutral culture
+  ---
+  duration_ms: 1.637757
+  type: 'test'
+  ...
+# Subtest: readonly fields: malformed byref field signatures are rejected by metadata parsing
+ok 266 - readonly fields: malformed byref field signatures are rejected by metadata parsing
+  ---
+  duration_ms: 1.148108
+  type: 'test'
+  ...
+# Subtest: readonly fields: direct CIL rejects stsfld on a nonaddressable readonly static field
+ok 267 - readonly fields: direct CIL rejects stsfld on a nonaddressable readonly static field
+  ---
+  duration_ms: 1.288994
+  type: 'test'
+  ...
+# Subtest: readonly fields: direct CIL rejects ldsflda on a nonaddressable readonly static field
+ok 268 - readonly fields: direct CIL rejects ldsflda on a nonaddressable readonly static field
+  ---
+  duration_ms: 1.018237
+  type: 'test'
+  ...
+# Subtest: readonly fields: direct CIL rejects ldfld on a nonaddressable readonly static field
+ok 269 - readonly fields: direct CIL rejects ldfld on a nonaddressable readonly static field
+  ---
+  duration_ms: 1.039969
+  type: 'test'
+  ...
+# Subtest: readonly fields: direct CIL rejects stfld on a nonaddressable readonly static field
+ok 270 - readonly fields: direct CIL rejects stfld on a nonaddressable readonly static field
+  ---
+  duration_ms: 0.703264
+  type: 'test'
+  ...
+# Subtest: readonly fields: direct CIL rejects ldflda on a nonaddressable readonly static field
+ok 271 - readonly fields: direct CIL rejects ldflda on a nonaddressable readonly static field
+  ---
+  duration_ms: 0.676855
+  type: 'test'
+  ...
+# Subtest: readonly fields: descriptor-specific address policy permits reads while indirect writes remain rejected
+ok 272 - readonly fields: descriptor-specific address policy permits reads while indirect writes remain rejected
+  ---
+  duration_ms: 1.716723
+  type: 'test'
+  ...
+# Subtest: readonly fields: runtime access guards and immutable static values survive snapshot replay
+ok 273 - readonly fields: runtime access guards and immutable static values survive snapshot replay
+  ---
+  duration_ms: 2.42235
+  type: 'test'
+  ...
+# Subtest: readonly fields: a same-named local definition token remains ordinary mutable storage
+ok 274 - readonly fields: a same-named local definition token remains ordinary mutable storage
+  ---
+  duration_ms: 3.360779
+  type: 'test'
+  ...
+# Subtest: readonly fields: a same-named local member token remains ordinary mutable storage
+ok 275 - readonly fields: a same-named local member token remains ordinary mutable storage
+  ---
+  duration_ms: 1.154376
+  type: 'test'
+  ...
+# Subtest: readonly fields: Decimal field loads, readable addresses, and indirect write rejection retain existing behavior
+ok 276 - readonly fields: Decimal field loads, readable addresses, and indirect write rejection retain existing behavior
+  ---
+  duration_ms: 3.725024
+  type: 'test'
+  ...
+# Subtest: readonly fields: symbols expose exact static readonly fields without accessors or constant flags
+ok 277 - readonly fields: symbols expose exact static readonly fields without accessors or constant flags
+  ---
+  duration_ms: 4.188305
+  type: 'test'
+  ...
+# Subtest: readonly fields: copied descriptors and scalar payloads remain immutable and JSON-safe
+ok 278 - readonly fields: copied descriptors and scalar payloads remain immutable and JSON-safe
+  ---
+  duration_ms: 2.37485
+  type: 'test'
+  ...
+# Subtest: readonly fields: field map accessors are rejected without invoking host code
+ok 279 - readonly fields: field map accessors are rejected without invoking host code
+  ---
+  duration_ms: 0.49675
+  type: 'test'
+  ...
+# Subtest: readonly fields: type accessors are rejected without invoking host code
+ok 280 - readonly fields: type accessors are rejected without invoking host code
+  ---
+  duration_ms: 0.267513
+  type: 'test'
+  ...
+# Subtest: readonly fields: scalar value accessors are rejected without invoking host code
+ok 281 - readonly fields: scalar value accessors are rejected without invoking host code
+  ---
+  duration_ms: 0.252992
+  type: 'test'
+  ...
+# Subtest: readonly fields: assembly scope accessors are rejected without invoking host code
+ok 282 - readonly fields: assembly scope accessors are rejected without invoking host code
+  ---
+  duration_ms: 0.242456
+  type: 'test'
+  ...
+# Subtest: readonly fields: mutable descriptors fail transactionally and can be retried
+ok 283 - readonly fields: mutable descriptors fail transactionally and can be retried
+  ---
+  duration_ms: 0.618049
+  type: 'test'
+  ...
+# Subtest: readonly fields: instance descriptors fail transactionally and can be retried
+ok 284 - readonly fields: instance descriptors fail transactionally and can be retried
+  ---
+  duration_ms: 1.66038
+  type: 'test'
+  ...
+# Subtest: readonly fields: inexact number descriptors fail transactionally and can be retried
+ok 285 - readonly fields: inexact number descriptors fail transactionally and can be retried
+  ---
+  duration_ms: 0.423242
+  type: 'test'
+  ...
+# Subtest: readonly fields: wrong scalar type descriptors fail transactionally and can be retried
+ok 286 - readonly fields: wrong scalar type descriptors fail transactionally and can be retried
+  ---
+  duration_ms: 0.555807
+  type: 'test'
+  ...
+# Subtest: readonly fields: out of range descriptors fail transactionally and can be retried
+ok 287 - readonly fields: out of range descriptors fail transactionally and can be retried
+  ---
+  duration_ms: 0.337937
+  type: 'test'
+  ...
+# Subtest: readonly fields: host object descriptors fail transactionally and can be retried
+ok 288 - readonly fields: host object descriptors fail transactionally and can be retried
+  ---
+  duration_ms: 0.337466
+  type: 'test'
+  ...
+# Subtest: readonly fields: CoreLib-only scope descriptors fail transactionally and can be retried
+ok 289 - readonly fields: CoreLib-only scope descriptors fail transactionally and can be retried
+  ---
+  duration_ms: 0.312399
+  type: 'test'
+  ...
+# Subtest: readonly fields: duplicate scope descriptors fail transactionally and can be retried
+ok 290 - readonly fields: duplicate scope descriptors fail transactionally and can be retried
+  ---
+  duration_ms: 0.762261
+  type: 'test'
+  ...
+# Subtest: readonly fields: unknown scope descriptors fail transactionally and can be retried
+ok 291 - readonly fields: unknown scope descriptors fail transactionally and can be retried
+  ---
+  duration_ms: 0.279071
+  type: 'test'
+  ...
+# Subtest: readonly fields: bound/source lowers exact profile values after binding
+ok 292 - readonly fields: bound/source lowers exact profile values after binding
+  ---
+  duration_ms: 169.379858
+  type: 'test'
+  ...
+# Subtest: readonly fields: bound/profile-cil lowers exact profile values after binding
+ok 293 - readonly fields: bound/profile-cil lowers exact profile values after binding
+  ---
+  duration_ms: 50.623754
+  type: 'test'
+  ...
+# Subtest: readonly fields: bound preserves CS0198 for System.Diagnostics.ReadonlyFieldProfile.Frequency = 1L;
+ok 294 - readonly fields: bound preserves CS0198 for System.Diagnostics.ReadonlyFieldProfile.Frequency = 1L;
+  ---
+  duration_ms: 6.400626
+  type: 'test'
+  ...
+# Subtest: readonly fields: bound preserves CS0198 for System.Diagnostics.ReadonlyFieldProfile.Frequency++;
+ok 295 - readonly fields: bound preserves CS0198 for System.Diagnostics.ReadonlyFieldProfile.Frequency++;
+  ---
+  duration_ms: 2.83116
+  type: 'test'
+  ...
+# Subtest: readonly fields: bound preserves CS0133 for const long value = System.Diagnostics.ReadonlyFieldProfile.Frequency;
+ok 296 - readonly fields: bound preserves CS0133 for const long value = System.Diagnostics.ReadonlyFieldProfile.Frequency;
+  ---
+  duration_ms: 8.761355
+  type: 'test'
+  ...
+# Subtest: readonly fields: bound preserves CS0199 for ref long value = ref System.Diagnostics.ReadonlyFieldProfile.Frequency;
+ok 297 - readonly fields: bound preserves CS0199 for ref long value = ref System.Diagnostics.ReadonlyFieldProfile.Frequency;
+  ---
+  duration_ms: 3.119094
+  type: 'test'
+  ...
+# Subtest: readonly fields: legacy/source lowers exact profile values after binding
+ok 298 - readonly fields: legacy/source lowers exact profile values after binding
+  ---
+  duration_ms: 42.417391
+  type: 'test'
+  ...
+# Subtest: readonly fields: legacy/profile-cil lowers exact profile values after binding
+ok 299 - readonly fields: legacy/profile-cil lowers exact profile values after binding
+  ---
+  duration_ms: 20.380721
+  type: 'test'
+  ...
+# Subtest: readonly fields: legacy preserves CS0198 for System.Diagnostics.ReadonlyFieldProfile.Frequency = 1L;
+ok 300 - readonly fields: legacy preserves CS0198 for System.Diagnostics.ReadonlyFieldProfile.Frequency = 1L;
+  ---
+  duration_ms: 4.660139
+  type: 'test'
+  ...
+# Subtest: readonly fields: legacy preserves CS0198 for System.Diagnostics.ReadonlyFieldProfile.Frequency++;
+ok 301 - readonly fields: legacy preserves CS0198 for System.Diagnostics.ReadonlyFieldProfile.Frequency++;
+  ---
+  duration_ms: 4.337745
+  type: 'test'
+  ...
+# Subtest: readonly fields: legacy preserves CS0133 for const long value = System.Diagnostics.ReadonlyFieldProfile.Frequency;
+ok 302 - readonly fields: legacy preserves CS0133 for const long value = System.Diagnostics.ReadonlyFieldProfile.Frequency;
+  ---
+  duration_ms: 5.349982
+  type: 'test'
+  ...
+# Subtest: readonly fields: legacy preserves CS0199 for ref long value = ref System.Diagnostics.ReadonlyFieldProfile.Frequency;
+ok 303 - readonly fields: legacy preserves CS0199 for ref long value = ref System.Diagnostics.ReadonlyFieldProfile.Frequency;
+  ---
+  duration_ms: 4.870016
+  type: 'test'
+  ...
+# Subtest: readonly fields: direct CIL compiler emits genuine scoped field MemberRefs
+ok 304 - readonly fields: direct CIL compiler emits genuine scoped field MemberRefs
+  ---
+  duration_ms: 20.630087
+  type: 'test'
+  ...
+# Subtest: readonly fields: bound same-named source declarations retain their own mutable storage
+ok 305 - readonly fields: bound same-named source declarations retain their own mutable storage
+  ---
+  duration_ms: 11.474632
+  type: 'test'
+  ...
+# Subtest: readonly fields: bound locals and parameters shadow framework type aliases
+ok 306 - readonly fields: bound locals and parameters shadow framework type aliases
+  ---
+  duration_ms: 21.319861
+  type: 'test'
+  ...
+# Subtest: readonly fields: legacy same-named source declarations retain their own mutable storage
+ok 307 - readonly fields: legacy same-named source declarations retain their own mutable storage
+  ---
+  duration_ms: 6.130019
+  type: 'test'
+  ...
+# Subtest: readonly fields: legacy locals and parameters shadow framework type aliases
+ok 308 - readonly fields: legacy locals and parameters shadow framework type aliases
+  ---
+  duration_ms: 8.550425
+  type: 'test'
+  ...
+# Subtest: Readonly string marker: JSON roundtrip retains a closed identity and genuine canonical field loads
+ok 309 - Readonly string marker: JSON roundtrip retains a closed identity and genuine canonical field loads
+  ---
+  duration_ms: 24.642755
+  type: 'test'
+  ...
+# Subtest: Readonly string marker: malformed, missing, aliased and non-string identities are rejected before execution
+ok 310 - Readonly string marker: malformed, missing, aliased and non-string identities are rejected before execution
+  ---
+  duration_ms: 1.781348
+  type: 'test'
+  ...
+# Subtest: Readonly string marker: field-tag and identity accessors are rejected without invoking host code
+ok 311 - Readonly string marker: field-tag and identity accessors are rejected without invoking host code
+  ---
+  duration_ms: 0.332819
+  type: 'test'
+  ...
+# Subtest: Readonly string marker: static-default placement is rejected by construction and source-profile emission
+ok 312 - Readonly string marker: static-default placement is rejected by construction and source-profile emission
+  ---
+  duration_ms: 0.476841
+  type: 'test'
+  ...
+# Subtest: Readonly string marker: unsupported legacy emission fails before producing a mismatched framework identity
+ok 313 - Readonly string marker: unsupported legacy emission fails before producing a mismatched framework identity
+  ---
+  duration_ms: 0.264129
+  type: 'test'
+  ...
+# Subtest: Readonly string marker: direct source adapters never return malformed tag payloads as guest values
+ok 314 - Readonly string marker: direct source adapters never return malformed tag payloads as guest values
+  ---
+  duration_ms: 0.308083
+  type: 'test'
+  ...
+# Subtest: Readonly string descriptors: the exact one-million-code-unit bound accepts UTF-16 and rejects oversized or host values
+ok 315 - Readonly string descriptors: the exact one-million-code-unit bound accepts UTF-16 and rejects oversized or host values
+  ---
+  duration_ms: 827.857417
+  type: 'test'
+  ...
+# Subtest: Readonly string descriptors: replacement accessors roll back without reading the proposed value
+ok 316 - Readonly string descriptors: replacement accessors roll back without reading the proposed value
+  ---
+  duration_ms: 0.445785
+  type: 'test'
+  ...
+1..316
+# tests 316
+# suites 0
+# pass 316
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 15143.006382

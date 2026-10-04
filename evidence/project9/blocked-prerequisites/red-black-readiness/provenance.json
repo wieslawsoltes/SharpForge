@@ -1,0 +1,363 @@
+{
+  "artifactVersion": 1,
+  "purpose": "Unapplied planning-owner handoff for SF-A08-T04.1; this artifact grants no claim or readiness.",
+  "retrievedAt": "2026-10-04 16:43:03 UTC",
+  "issue": {
+    "number": 2664,
+    "workId": "SF-A08-T04.1",
+    "url": "https://github.com/wieslawsoltes/SharpForge/issues/2664",
+    "implementation": "unimplemented",
+    "qualification": "unqualified",
+    "claimRef": {
+      "name": "refs/heads/agent/SF-A08-T04.1",
+      "observedStatus": 404,
+      "source": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/ref/heads/agent/SF-A08-T04.1"
+    }
+  },
+  "project": {
+    "url": "https://github.com/users/wieslawsoltes/projects/9",
+    "issueStatus": "Backlog",
+    "statusObservation": {
+      "source": "Live browser UI observed and reported by /root during this session",
+      "filter": "SF-A08-T04.1",
+      "matchingRows": 1,
+      "authentication": "signed out",
+      "exactObservationTime": null
+    },
+    "readyViewObservation": {
+      "source": "Live browser UI observed and reported by /root during this session",
+      "view": 3,
+      "savedFilter": "status:Ready -kind:Epic",
+      "matchingItems": 0,
+      "exactObservationTime": null
+    },
+    "counts": {
+      "open": 300,
+      "closed": 11,
+      "incompleteResults": false,
+      "source": "Fresh connector GitHub issue searches with project:wieslawsoltes/9, is:issue, and is:open/is:closed",
+      "interpretation": "Issue states, not a count of technically blocked work. No all-items implementation-readiness claim."
+    }
+  },
+  "policy": {
+    "file": "planning/contracts/dependency-scopes.json",
+    "changeKind": "Append only the two entries in proposal.json to the existing exceptions array after owner review; do not replace the policy.",
+    "applied": false,
+    "requiresOwnerScopeExtension": true,
+    "governingDocs": [
+      "planning/AGENTS.md",
+      "planning/contracts/claim-protocol.md",
+      "planning/contracts/dependencies.md"
+    ],
+    "introductionCommit": "3ca460d1bdd016a91ff044f833c40ddfbb08fa7a"
+  },
+  "owners": [
+    {
+      "task": "SF-A00-T09.2",
+      "issue": 1093,
+      "agent": "codex-p4-planning",
+      "branch": "codex/a00-release-snapshot",
+      "generation": "117718c3-53f8-4e13-9f93-50ddec0e9906",
+      "expires": "2026-10-05T08:43:57.750Z",
+      "claimRef": "refs/heads/agent/SF-A00-T09.2",
+      "claimCommit": "3fda2d3b02640332e8ad8aeee864e4b1063a9032",
+      "claimSource": "https://api.github.com/repos/wieslawsoltes/SharpForge/contents/claim.json?ref=3fda2d3b02640332e8ad8aeee864e4b1063a9032",
+      "snapshotFile": "claim-SF-A00-T09.2.json",
+      "activePaths": [
+        "scripts/planning/snapshot-backlog.js",
+        "planning/contracts/tests/governance-snapshot.test.js",
+        "planning/backlog.snapshot.json"
+      ],
+      "currentAuthorization": "Same-owner1093 continuation under Project4 goal: normalize declared release area and parent metadata, preserve existing Axx conventions, correct only area/parent in four existing snapshot rows, and add isolated downstream regression coverage. Explicit three-path scope, no Status/Evidence/sibling/legacy changes or issue comments. Complete scope before serial validation."
+    },
+    {
+      "task": "SF-A00-T09.3",
+      "issue": 1094,
+      "agent": "codex-p4-planning",
+      "branch": "codex/a00-dependency-scopes",
+      "generation": "bcb8e1ee-0e51-47fa-a013-b29a82153c90",
+      "expires": "2026-10-05T08:59:56.877Z",
+      "claimRef": "refs/heads/agent/SF-A00-T09.3",
+      "claimCommit": "90b232153afde795614096570090a96a2dee6f9c",
+      "claimSource": "https://api.github.com/repos/wieslawsoltes/SharpForge/contents/claim.json?ref=90b232153afde795614096570090a96a2dee6f9c",
+      "snapshotFile": "claim-SF-A00-T09.3.json",
+      "activePaths": [
+        "scripts/planning/validate-dag.js",
+        "scripts/planning/ready.js",
+        "planning/contracts/dependency-scopes.json",
+        "planning/contracts/dependencies.md",
+        "planning/contracts/tests/dependency-scopes.test.js"
+      ],
+      "currentAuthorization": "Same-owner1094/1095 continuation under Project4 goal: explicit versioned inherited-dependency scope at release425-to-parent418 boundary omits only parent-declared RustA27T08 for JS/SIMD scope, as required by both issues; retain own, other ancestor/transitive dependencies and all contracts. Five explicit paths include isolated new test beyond old governance test glob. Preserve all Status/Evidence/sibling/legacy fields and foreign branches. Docs-only open PR overlaps contain inherited root grammar already on main; preserve it and document scoped policy. Complete scope before serial validation."
+    }
+  ],
+  "codeEvidence": {
+    "assessedMain": "00c2489e659cbeaa29e9c5dfa4a3137fae4bd4ad",
+    "mergedHashSetPR": "https://github.com/wieslawsoltes/SharpForge/pull/4562",
+    "mergedStopwatchPR": "https://github.com/wieslawsoltes/SharpForge/pull/4567",
+    "snapshotIntroductionCommit": "eb177276727e5de7b076cbcf63abd88e1b16377d",
+    "snapshotLastMetadataFix": "d4406970a8154af97509876d36c8321c68b02e07",
+    "qualificationNote": "Existing-seam qualification is retained with the completed parent-agent batches and their PRs. This handoff performed no validation execution and gives no qualification to the unimplemented tree."
+  },
+  "sourceFiles": {
+    "worktree": "/workspace/scratch/f5d98b1de49e/SharpForge-p9-writer-scalars",
+    "branch": "codex/a09-string-writer-scalars",
+    "head": "fe8288772be85395909d5de582c444db3d605ca3",
+    "originMain": "00c2489e659cbeaa29e9c5dfa4a3137fae4bd4ad",
+    "status": "",
+    "files": [
+      {
+        "path": "planning/contracts/dependency-scopes.json",
+        "bytes": 349,
+        "sha256": "2335b7c4206481dae5b99a819877d31d66b97feeee430af6f234482cbe98e100",
+        "headGitBlob": "afa13297ba06e73bd21c6ad8751ec111ff387e79",
+        "originMainGitBlob": "afa13297ba06e73bd21c6ad8751ec111ff387e79",
+        "lastCommit": "3ca460d1bdd016a91ff044f833c40ddfbb08fa7a",
+        "headUrl": "https://github.com/wieslawsoltes/SharpForge/blob/fe8288772be85395909d5de582c444db3d605ca3/planning/contracts/dependency-scopes.json",
+        "mainUrl": "https://github.com/wieslawsoltes/SharpForge/blob/00c2489e659cbeaa29e9c5dfa4a3137fae4bd4ad/planning/contracts/dependency-scopes.json"
+      },
+      {
+        "path": "planning/contracts/dependencies.md",
+        "bytes": 5855,
+        "sha256": "077bdf92777af630e805ab7870937b931c20bb79232f2593392c0b4a95590747",
+        "headGitBlob": "df59ccf1cb91f0b3b4feff839e60891665063835",
+        "originMainGitBlob": "df59ccf1cb91f0b3b4feff839e60891665063835",
+        "lastCommit": "3ca460d1bdd016a91ff044f833c40ddfbb08fa7a",
+        "headUrl": "https://github.com/wieslawsoltes/SharpForge/blob/fe8288772be85395909d5de582c444db3d605ca3/planning/contracts/dependencies.md",
+        "mainUrl": "https://github.com/wieslawsoltes/SharpForge/blob/00c2489e659cbeaa29e9c5dfa4a3137fae4bd4ad/planning/contracts/dependencies.md"
+      },
+      {
+        "path": "planning/contracts/tests/dependency-scopes.test.js",
+        "bytes": 16234,
+        "sha256": "87164b52870318eee52d3a292967af7e529baefff71423d13b3472a28ffec498",
+        "headGitBlob": "f4553e8fa32e30326101cb83da80f3a118137dbe",
+        "originMainGitBlob": "f4553e8fa32e30326101cb83da80f3a118137dbe",
+        "lastCommit": "3ca460d1bdd016a91ff044f833c40ddfbb08fa7a",
+        "headUrl": "https://github.com/wieslawsoltes/SharpForge/blob/fe8288772be85395909d5de582c444db3d605ca3/planning/contracts/tests/dependency-scopes.test.js",
+        "mainUrl": "https://github.com/wieslawsoltes/SharpForge/blob/00c2489e659cbeaa29e9c5dfa4a3137fae4bd4ad/planning/contracts/tests/dependency-scopes.test.js"
+      },
+      {
+        "path": "scripts/planning/validate-dag.js",
+        "bytes": 4782,
+        "sha256": "de5d184f23da30d7d3da89bb6c68d067aae8c0c7f7fe4050f0f8a48cb965b29d",
+        "headGitBlob": "6aea984c0159707239b0e8a8c3b1b7a73f5cd786",
+        "originMainGitBlob": "6aea984c0159707239b0e8a8c3b1b7a73f5cd786",
+        "lastCommit": "3ca460d1bdd016a91ff044f833c40ddfbb08fa7a",
+        "headUrl": "https://github.com/wieslawsoltes/SharpForge/blob/fe8288772be85395909d5de582c444db3d605ca3/scripts/planning/validate-dag.js",
+        "mainUrl": "https://github.com/wieslawsoltes/SharpForge/blob/00c2489e659cbeaa29e9c5dfa4a3137fae4bd4ad/scripts/planning/validate-dag.js"
+      },
+      {
+        "path": "scripts/planning/ready.js",
+        "bytes": 3643,
+        "sha256": "e833ce182d3bd54f927b252ed380c4abb76aa2fc51fa752c70c4c0b6ddb2cfd2",
+        "headGitBlob": "5c5da99b67ee54e659e8c3e251b1d1093db937c2",
+        "originMainGitBlob": "5c5da99b67ee54e659e8c3e251b1d1093db937c2",
+        "lastCommit": "3ca460d1bdd016a91ff044f833c40ddfbb08fa7a",
+        "headUrl": "https://github.com/wieslawsoltes/SharpForge/blob/fe8288772be85395909d5de582c444db3d605ca3/scripts/planning/ready.js",
+        "mainUrl": "https://github.com/wieslawsoltes/SharpForge/blob/00c2489e659cbeaa29e9c5dfa4a3137fae4bd4ad/scripts/planning/ready.js"
+      },
+      {
+        "path": "scripts/planning/lib/claims.js",
+        "bytes": 13141,
+        "sha256": "5b5cc6a9f5121fe4255308cedc38e4bbfedebcc8bacec107801552b6e13d8ca4",
+        "headGitBlob": "399163edb83eca5b342d6341b37a0c1fe8e80d5a",
+        "originMainGitBlob": "399163edb83eca5b342d6341b37a0c1fe8e80d5a",
+        "lastCommit": "960266c71ab6f7322be6a36e4e3c4d1a582b129c",
+        "headUrl": "https://github.com/wieslawsoltes/SharpForge/blob/fe8288772be85395909d5de582c444db3d605ca3/scripts/planning/lib/claims.js",
+        "mainUrl": "https://github.com/wieslawsoltes/SharpForge/blob/00c2489e659cbeaa29e9c5dfa4a3137fae4bd4ad/scripts/planning/lib/claims.js"
+      },
+      {
+        "path": "scripts/planning/lib/claim-cli.js",
+        "bytes": 2038,
+        "sha256": "c8142e9857cee75e471ad4adab1031e713645a8a25fdb4dcf5408e4e2159f023",
+        "headGitBlob": "dd6e9017011245a7c6835d3d84f82f76dff37511",
+        "originMainGitBlob": "dd6e9017011245a7c6835d3d84f82f76dff37511",
+        "lastCommit": "afaf5f68edde9ba059935db89a84d639026aac11",
+        "headUrl": "https://github.com/wieslawsoltes/SharpForge/blob/fe8288772be85395909d5de582c444db3d605ca3/scripts/planning/lib/claim-cli.js",
+        "mainUrl": "https://github.com/wieslawsoltes/SharpForge/blob/00c2489e659cbeaa29e9c5dfa4a3137fae4bd4ad/scripts/planning/lib/claim-cli.js"
+      },
+      {
+        "path": "scripts/planning/lib/github-project.js",
+        "bytes": 7539,
+        "sha256": "ace2adf03ce1517cb2b4b6ed7ae6e0ea54a9e67ac1bc93aa5e4f6e947fc0ab8b",
+        "headGitBlob": "b988e8ae12993541f8494100ebd5b6f8a7605c24",
+        "originMainGitBlob": "b988e8ae12993541f8494100ebd5b6f8a7605c24",
+        "lastCommit": "afaf5f68edde9ba059935db89a84d639026aac11",
+        "headUrl": "https://github.com/wieslawsoltes/SharpForge/blob/fe8288772be85395909d5de582c444db3d605ca3/scripts/planning/lib/github-project.js",
+        "mainUrl": "https://github.com/wieslawsoltes/SharpForge/blob/00c2489e659cbeaa29e9c5dfa4a3137fae4bd4ad/scripts/planning/lib/github-project.js"
+      },
+      {
+        "path": "scripts/planning/snapshot-backlog.js",
+        "bytes": 4286,
+        "sha256": "7ae9beadb3213b233f651494e99fc5d7ab02a3a70923875f367e31740a8602d2",
+        "headGitBlob": "f99f3ef629956bd3da4bdb017dabe7ad84a3a01b",
+        "originMainGitBlob": "f99f3ef629956bd3da4bdb017dabe7ad84a3a01b",
+        "lastCommit": "d4406970a8154af97509876d36c8321c68b02e07",
+        "headUrl": "https://github.com/wieslawsoltes/SharpForge/blob/fe8288772be85395909d5de582c444db3d605ca3/scripts/planning/snapshot-backlog.js",
+        "mainUrl": "https://github.com/wieslawsoltes/SharpForge/blob/00c2489e659cbeaa29e9c5dfa4a3137fae4bd4ad/scripts/planning/snapshot-backlog.js"
+      },
+      {
+        "path": "planning/contracts/tests/governance-snapshot.test.js",
+        "bytes": 11969,
+        "sha256": "ba51aa354bf46f26caf25514bab4cb23269d419e7878f9f7084411056964bbe6",
+        "headGitBlob": "1edca6bef15eacb1b02f11c43d62edc11f3f4e45",
+        "originMainGitBlob": "1edca6bef15eacb1b02f11c43d62edc11f3f4e45",
+        "lastCommit": "d4406970a8154af97509876d36c8321c68b02e07",
+        "headUrl": "https://github.com/wieslawsoltes/SharpForge/blob/fe8288772be85395909d5de582c444db3d605ca3/planning/contracts/tests/governance-snapshot.test.js",
+        "mainUrl": "https://github.com/wieslawsoltes/SharpForge/blob/00c2489e659cbeaa29e9c5dfa4a3137fae4bd4ad/planning/contracts/tests/governance-snapshot.test.js"
+      },
+      {
+        "path": "planning/backlog.snapshot.json",
+        "bytes": 3381345,
+        "sha256": "b4ad3fba206f4d511308273303904a69e7609f5b89e5290bcbb895559fdc91f5",
+        "headGitBlob": "9364ed6bf5e65f69a66d8e42cb7932e61d11cfae",
+        "originMainGitBlob": "9364ed6bf5e65f69a66d8e42cb7932e61d11cfae",
+        "lastCommit": "d4406970a8154af97509876d36c8321c68b02e07",
+        "headUrl": "https://github.com/wieslawsoltes/SharpForge/blob/fe8288772be85395909d5de582c444db3d605ca3/planning/backlog.snapshot.json",
+        "mainUrl": "https://github.com/wieslawsoltes/SharpForge/blob/00c2489e659cbeaa29e9c5dfa4a3137fae4bd4ad/planning/backlog.snapshot.json"
+      },
+      {
+        "path": "planning/contracts/claim-protocol.md",
+        "bytes": 7586,
+        "sha256": "cf3e4e4cac46a03eadf7ada258fb9aaf6498c52fd3176cae51bbb2eaffd178ae",
+        "headGitBlob": "70a812938c334300509f2b6009599fa5abe13528",
+        "originMainGitBlob": "70a812938c334300509f2b6009599fa5abe13528",
+        "lastCommit": "bcce5c946b60b328a0793fe585d35f7af7e3b71c",
+        "headUrl": "https://github.com/wieslawsoltes/SharpForge/blob/fe8288772be85395909d5de582c444db3d605ca3/planning/contracts/claim-protocol.md",
+        "mainUrl": "https://github.com/wieslawsoltes/SharpForge/blob/00c2489e659cbeaa29e9c5dfa4a3137fae4bd4ad/planning/contracts/claim-protocol.md"
+      },
+      {
+        "path": "planning/AGENTS.md",
+        "bytes": 4891,
+        "sha256": "f225e96f0363edee4f6c2e88499eb0e1923682cb040c656f28964dc279fa3523",
+        "headGitBlob": "245266a2c34c31ead80a2f59780163a9407e3aa6",
+        "originMainGitBlob": "245266a2c34c31ead80a2f59780163a9407e3aa6",
+        "lastCommit": "24efc487d309ab92540b81fbc3b3c2a230bcb344",
+        "headUrl": "https://github.com/wieslawsoltes/SharpForge/blob/fe8288772be85395909d5de582c444db3d605ca3/planning/AGENTS.md",
+        "mainUrl": "https://github.com/wieslawsoltes/SharpForge/blob/00c2489e659cbeaa29e9c5dfa4a3137fae4bd4ad/planning/AGENTS.md"
+      },
+      {
+        "path": "packages/bcl-collections/src/index.js",
+        "bytes": 170,
+        "sha256": "1178768fcfffef81408ef5fc0c1f9d1227ad08a5114aff33ae8b512be72df7d6",
+        "headGitBlob": "9af07490ea777fbe02f95e578c6bfa3a874d9179",
+        "originMainGitBlob": "9af07490ea777fbe02f95e578c6bfa3a874d9179",
+        "lastCommit": "707919785043200d043e11e20b2985d6b2fb93cd",
+        "headUrl": "https://github.com/wieslawsoltes/SharpForge/blob/fe8288772be85395909d5de582c444db3d605ca3/packages/bcl-collections/src/index.js",
+        "mainUrl": "https://github.com/wieslawsoltes/SharpForge/blob/00c2489e659cbeaa29e9c5dfa4a3137fae4bd4ad/packages/bcl-collections/src/index.js"
+      },
+      {
+        "path": "packages/bcl-collections/package.json",
+        "bytes": 411,
+        "sha256": "225ea8f0758022cd3c8c3217d224cdbea98602b7258de9f4c7d16387fc55041e",
+        "headGitBlob": "3e22a4ab7614afdd259f5461af5f3ed406b47b23",
+        "originMainGitBlob": "3e22a4ab7614afdd259f5461af5f3ed406b47b23",
+        "lastCommit": "97eee447a0f27d378de20e46fd37de6a41a221c5",
+        "headUrl": "https://github.com/wieslawsoltes/SharpForge/blob/fe8288772be85395909d5de582c444db3d605ca3/packages/bcl-collections/package.json",
+        "mainUrl": "https://github.com/wieslawsoltes/SharpForge/blob/00c2489e659cbeaa29e9c5dfa4a3137fae4bd4ad/packages/bcl-collections/package.json"
+      },
+      {
+        "path": "packages/runtime/src/platform.js",
+        "bytes": 28905,
+        "sha256": "7f8be4ad9509dadd6f57fd35aad9c8eeab2859ba7509fe1f12bfeb5d00ad5bf2",
+        "headGitBlob": "c1386e32242902d9569ac1b7ad4b655274953190",
+        "originMainGitBlob": "c1386e32242902d9569ac1b7ad4b655274953190",
+        "lastCommit": "f7f46704ff690eee6658bd70e4be4b1e425c74d4",
+        "headUrl": "https://github.com/wieslawsoltes/SharpForge/blob/fe8288772be85395909d5de582c444db3d605ca3/packages/runtime/src/platform.js",
+        "mainUrl": "https://github.com/wieslawsoltes/SharpForge/blob/00c2489e659cbeaa29e9c5dfa4a3137fae4bd4ad/packages/runtime/src/platform.js"
+      },
+      {
+        "path": "packages/runtime/src/heap.js",
+        "bytes": 10010,
+        "sha256": "18f9201ba7964579158a26671359ac34aa2f5ba97ec56ee601e0ee102ec6408e",
+        "headGitBlob": "5e40d6e3430d0bd46442de10db3ca4dbafade655",
+        "originMainGitBlob": "5e40d6e3430d0bd46442de10db3ca4dbafade655",
+        "lastCommit": "24a3aa75e39ec28086497db8af2cec09ec842237",
+        "headUrl": "https://github.com/wieslawsoltes/SharpForge/blob/fe8288772be85395909d5de582c444db3d605ca3/packages/runtime/src/heap.js",
+        "mainUrl": "https://github.com/wieslawsoltes/SharpForge/blob/00c2489e659cbeaa29e9c5dfa4a3137fae4bd4ad/packages/runtime/src/heap.js"
+      },
+      {
+        "path": "packages/runtime/src/execution/heap-allocation.js",
+        "bytes": 1749,
+        "sha256": "f7a65236d4dd52f4084a55898fd0e0c1fcbfb4b6fef3de7e61e68e03ce43b0d9",
+        "headGitBlob": "97d498a8f137d70a0d728ea2dc2f427cfa6aa17d",
+        "originMainGitBlob": "97d498a8f137d70a0d728ea2dc2f427cfa6aa17d",
+        "lastCommit": "24a3aa75e39ec28086497db8af2cec09ec842237",
+        "headUrl": "https://github.com/wieslawsoltes/SharpForge/blob/fe8288772be85395909d5de582c444db3d605ca3/packages/runtime/src/execution/heap-allocation.js",
+        "mainUrl": "https://github.com/wieslawsoltes/SharpForge/blob/00c2489e659cbeaa29e9c5dfa4a3137fae4bd4ad/packages/runtime/src/execution/heap-allocation.js"
+      },
+      {
+        "path": "packages/runtime/src/execution/heap-collection.js",
+        "bytes": 2809,
+        "sha256": "88b476818d63259cabedc195c52a015871e04c6ca9db89eb871c1c258222df02",
+        "headGitBlob": "6272c180c738252fac11f8f43bd01967752032f0",
+        "originMainGitBlob": "6272c180c738252fac11f8f43bd01967752032f0",
+        "lastCommit": "487c2eb294cc5c0374666570cb0f538240efaa5a",
+        "headUrl": "https://github.com/wieslawsoltes/SharpForge/blob/fe8288772be85395909d5de582c444db3d605ca3/packages/runtime/src/execution/heap-collection.js",
+        "mainUrl": "https://github.com/wieslawsoltes/SharpForge/blob/00c2489e659cbeaa29e9c5dfa4a3137fae4bd4ad/packages/runtime/src/execution/heap-collection.js"
+      },
+      {
+        "path": "packages/runtime/src/bcl-adapter.js",
+        "bytes": 2255,
+        "sha256": "fbe92a4f39cf2f9b5bb042e1d3df6adad74cc104c72651114d10faaf24428c0d",
+        "headGitBlob": "8595f5569c9bd55ea7968d6b1bd01edf2ee28d02",
+        "originMainGitBlob": "1484b96a91c2e1f70177f44c5791795729eaad66",
+        "lastCommit": "cb3806f9b637aa5fdf7934d399ad1d059783ac5c",
+        "headUrl": "https://github.com/wieslawsoltes/SharpForge/blob/fe8288772be85395909d5de582c444db3d605ca3/packages/runtime/src/bcl-adapter.js",
+        "mainUrl": "https://github.com/wieslawsoltes/SharpForge/blob/00c2489e659cbeaa29e9c5dfa4a3137fae4bd4ad/packages/runtime/src/bcl-adapter.js"
+      },
+      {
+        "path": "packages/runtime/src/execution/host-callbacks.js",
+        "bytes": 876,
+        "sha256": "681d8fed3a3040a5ddbcd6b73739603808f9df6c1dc9ff494e12beef30c85c3c",
+        "headGitBlob": "9d2cc29850d47ccf9c6c439a490cd4697b0124d4",
+        "originMainGitBlob": "9d2cc29850d47ccf9c6c439a490cd4697b0124d4",
+        "lastCommit": "5481399d42a5c8934a218b9ce6ee2202ca33fa7a",
+        "headUrl": "https://github.com/wieslawsoltes/SharpForge/blob/fe8288772be85395909d5de582c444db3d605ca3/packages/runtime/src/execution/host-callbacks.js",
+        "mainUrl": "https://github.com/wieslawsoltes/SharpForge/blob/00c2489e659cbeaa29e9c5dfa4a3137fae4bd4ad/packages/runtime/src/execution/host-callbacks.js"
+      },
+      {
+        "path": "packages/runtime/src/snapshot.js",
+        "bytes": 8546,
+        "sha256": "274ad492884992d3d2b08b1014f571b91cc023c8b003d9c34f9afad8f829db8a",
+        "headGitBlob": "a0909764ba550877b5ac6c4b1f6273a8c1df780e",
+        "originMainGitBlob": "a0909764ba550877b5ac6c4b1f6273a8c1df780e",
+        "lastCommit": "7dad6dc651c844eb73eb249f8a21a179ade2000f",
+        "headUrl": "https://github.com/wieslawsoltes/SharpForge/blob/fe8288772be85395909d5de582c444db3d605ca3/packages/runtime/src/snapshot.js",
+        "mainUrl": "https://github.com/wieslawsoltes/SharpForge/blob/00c2489e659cbeaa29e9c5dfa4a3137fae4bd4ad/packages/runtime/src/snapshot.js"
+      },
+      {
+        "path": "tests/a05-allocation-observer-roots.test.js",
+        "bytes": 10077,
+        "sha256": "7babc557008138bdad28dac55cdcb7ef825a81b663b469f42f20731bb6bdf6cb",
+        "headGitBlob": "a52b7dbe4c6bc615759970df45601e3f636ee0c0",
+        "originMainGitBlob": "a52b7dbe4c6bc615759970df45601e3f636ee0c0",
+        "lastCommit": "24a3aa75e39ec28086497db8af2cec09ec842237",
+        "headUrl": "https://github.com/wieslawsoltes/SharpForge/blob/fe8288772be85395909d5de582c444db3d605ca3/tests/a05-allocation-observer-roots.test.js",
+        "mainUrl": "https://github.com/wieslawsoltes/SharpForge/blob/00c2489e659cbeaa29e9c5dfa4a3137fae4bd4ad/tests/a05-allocation-observer-roots.test.js"
+      },
+      {
+        "path": "tests/a08-hashset-capacity-reentry.test.js",
+        "bytes": 14271,
+        "sha256": "00d7f9fdff33836045485731e068368051ba6bdc68aa4f70427d67d27e703b1a",
+        "headGitBlob": "8cd3ea94f418234762b598e33693159e201b4ea4",
+        "originMainGitBlob": "8cd3ea94f418234762b598e33693159e201b4ea4",
+        "lastCommit": "24a3aa75e39ec28086497db8af2cec09ec842237",
+        "headUrl": "https://github.com/wieslawsoltes/SharpForge/blob/fe8288772be85395909d5de582c444db3d605ca3/tests/a08-hashset-capacity-reentry.test.js",
+        "mainUrl": "https://github.com/wieslawsoltes/SharpForge/blob/00c2489e659cbeaa29e9c5dfa4a3137fae4bd4ad/tests/a08-hashset-capacity-reentry.test.js"
+      }
+    ],
+    "canonicalSnapshot": {
+      "updatedAt": "2026-10-03T12:55:45.654Z",
+      "issueCount": 1381,
+      "contains2664": false,
+      "defaultBranch": "main"
+    }
+  },
+  "changes": {
+    "trackedFiles": [],
+    "remoteMutations": [],
+    "executedValidation": []
+  }
+}
+

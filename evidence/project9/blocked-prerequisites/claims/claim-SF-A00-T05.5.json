@@ -1,0 +1,30 @@
+{
+  "version": 1,
+  "task": "SF-A00-T05.5",
+  "issue": 1066,
+  "agent": "codex-p4-abi",
+  "branch": "codex/a00-ir-slot-addresses",
+  "expires": "2026-10-05T05:50:33.634Z",
+  "heartbeat": "2026-10-04T05:50:33.634Z",
+  "locks": [],
+  "generation": "59c1a235-3afb-4a50-af39-461867e6ea68",
+  "sequence": 2,
+  "event": "branch",
+  "at": "2026-10-04T06:07:17.210Z",
+  "qualification": "deferred",
+  "paths": [
+    "scripts/planning/schema/adapters.js",
+    "tests/a00-05-typed-ir.test.js"
+  ],
+  "activePaths": [
+    "scripts/planning/schema/adapters.js",
+    "tests/a00-05-typed-ir.test.js"
+  ],
+  "previousBranch": "codex/a00-abi",
+  "legacyLockKeys": "planning/contracts/{value-abi*,handle-abi.md,fault-abi*,versions.json,gc-*,safepoints*,exception-dispatch*,host-operations*,pause-snapshot*,schema/**,fixtures/**,sf-metadata-stream.md}; scripts/planning/{abi/**,schema/**,inventory-values.js,check-root-providers.js,run-safepoint-fixtures.js,gen-schema-fixtures.js}; tests/a00-{01,04,05}*",
+  "legacyStatus": "Backlog",
+  "legacyEvidence": "https://github.com/wieslawsoltes/SharpForge/pull/1835",
+  "authorization": "Root explicitly authorized same-owner codex-p4-abi legacy #1066 resume for exactly adapters.js and a00-05-typed-ir.test.js return consumption/output/void-padding semantics. Preserve Status, Evidence, legacy Lock keys and all sibling reservations. No source/qualification execution before complete authored and reviewed frozen draft; root owns all validation.",
+  "stackParentBranch": "codex/a00-ir-entry-stack",
+  "continuationAuthorization": "Root explicitly authorized same two-path local-address/argument-address operand, declared-slot bounds and stack-effect reader scope, stacked on #4392; no author validation or schema/runtime changes."
+}

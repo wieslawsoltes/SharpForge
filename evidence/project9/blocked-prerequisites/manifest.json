@@ -1,0 +1,554 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-10-04T17:55:14.244308+00:00",
+  "repository": "wieslawsoltes/SharpForge",
+  "purpose": "Concrete unapplied owner prerequisites and unposted issue handoff drafts for Project #9.",
+  "publicationUrlPlaceholder": "[[BLOCKED_PREREQUISITES_BUNDLE_URL]]",
+  "mutations": {
+    "trackedFiles": [],
+    "issues": [],
+    "projectFields": [],
+    "claims": [],
+    "refs": [],
+    "messagesSent": [],
+    "projectExecution": []
+  },
+  "sourceCopies": {
+    "manifest": "copied-files.json",
+    "fileCount": 28,
+    "allOriginalBytesRechecked": true
+  },
+  "scope": {
+    "project9": {
+      "query": "project:wieslawsoltes/9 is:issue",
+      "open": 300,
+      "closed": 11,
+      "total": 311,
+      "queries": [
+        {
+          "state": "open",
+          "query": "project:wieslawsoltes/9 is:issue is:open",
+          "count": 300,
+          "incompleteResults": false,
+          "retrievedAt": "2026-10-04T17:29:48.345Z",
+          "sourceUrl": "https://api.github.com/search/issues?q=project%3Awieslawsoltes%2F9%20is%3Aissue%20is%3Aopen&per_page=1",
+          "htmlUrl": "https://github.com/search?q=project%3Awieslawsoltes%2F9%20is%3Aissue%20is%3Aopen&type=issues"
+        },
+        {
+          "state": "closed",
+          "query": "project:wieslawsoltes/9 is:issue is:closed",
+          "count": 11,
+          "incompleteResults": false,
+          "retrievedAt": "2026-10-04T17:30:08.160Z",
+          "sourceUrl": "https://api.github.com/search/issues?q=project%3Awieslawsoltes%2F9%20is%3Aissue%20is%3Aclosed&per_page=1",
+          "htmlUrl": "https://github.com/search?q=project%3Awieslawsoltes%2F9%20is%3Aissue%20is%3Aclosed&type=issues"
+        },
+        {
+          "state": "total",
+          "query": "project:wieslawsoltes/9 is:issue",
+          "count": 311,
+          "incompleteResults": false,
+          "retrievedAt": "2026-10-04T17:30:07.909Z",
+          "sourceUrl": "https://api.github.com/search/issues?q=project%3Awieslawsoltes%2F9%20is%3Aissue&per_page=1",
+          "htmlUrl": "https://github.com/search?q=project%3Awieslawsoltes%2F9%20is%3Aissue&type=issues"
+        }
+      ]
+    },
+    "projectUi": {
+      "checkedAt": "2026-10-04 17:45:41 UTC",
+      "method": "Read-only public GitHub Projects UI through browser; no project fields or claims were modified",
+      "project": "https://github.com/users/wieslawsoltes/projects/9",
+      "readyQueue": {
+        "url": "https://github.com/users/wieslawsoltes/projects/9/views/3",
+        "filter": "status:Ready -kind:Epic",
+        "matchingItems": 0
+      },
+      "redBlackLeaf": {
+        "issue": 2664,
+        "task": "SF-A08-T04.1",
+        "url": "https://github.com/users/wieslawsoltes/projects/9/views/1?filterQuery=SF-A08-T04.1",
+        "matchingItems": 1,
+        "status": "Backlog",
+        "issueState": "open",
+        "observedRow": "[SF-A08-T04.1] Implement a red-black tree core shared by sorted collections, status: open Backlog"
+      },
+      "authentication": "Public signed-out page; Agent and Lease fields were not visible in this view.",
+      "limitation": "UI observations establish the displayed status at this time. They do not create a canonical planning snapshot, prove prerequisite qualification, or grant a task claim."
+    },
+    "ioSummary": {
+      "openPullRequests": 8,
+      "draftPullRequests": 8,
+      "mergedPullRequests": 0
+    },
+    "ioChecksSummary": {
+      "heads": 8,
+      "checkRuns": 72,
+      "completed": 72,
+      "conclusions": {
+        "skipped": 64,
+        "failure": 8
+      },
+      "coreFailureHeads": 8
+    },
+    "claimObservation": "claims/observations.json",
+    "noOwnerReleaseObserved": true,
+    "booleanClaimObservation": "claims/issue-783-ownership-observation.json",
+    "booleanOwnershipUnresolved": true,
+    "redBlackImplementation": "unimplemented",
+    "redBlackQualification": "unqualified"
+  },
+  "boolean": {
+    "measuredCommit": "af29812a6b0ca0184a79cc6bcddd01bf0a02fb6a",
+    "publishedCommit": "d6c6eb24eae3a7116b4bb5497c68b40b90aa3d2c",
+    "tree": "d934a12e448fc825ad49a535ced67a801e98e57c",
+    "sameTreeVerifiedByMapping": true,
+    "productFileCount": 47,
+    "hotLockChangedFileCount": 0,
+    "pathMapping": "boolean-a00/boolean-path-ownership-mapping.json",
+    "a00CombinedPatchSha256": "61970b65da7d2dbadb166f1c266bd336b258403a83ba17f04a7195aa68658b2e",
+    "a00ProposedFileCount": 9,
+    "a00Applied": false,
+    "wholeIssue783Complete": false,
+    "portableSourceContractQualified": false,
+    "publishedReplay": {
+      "tests": 316,
+      "pass": 316,
+      "fail": 0,
+      "cancelled": 0,
+      "skipped": 0,
+      "todo": 0,
+      "tapSha256": "e353db73377e51ac074235d6e3f4ba8d67cc02ea6db68ecf2a35b4b80b060d52",
+      "source": "Root supplied completed replay result; full Boolean qualification evidence is published beside this bundle."
+    }
+  },
+  "ioEvidence": {
+    "commit": "c890bec08d53bf08295a36d67874a49f26672c8b",
+    "url": "https://github.com/wieslawsoltes/SharpForge/tree/c890bec08d53bf08295a36d67874a49f26672c8b/evidence/project9/io-qualified",
+    "historicalPendingTextPreserved": true,
+    "freshStatusSupersedesHistoricalPublicationWording": true,
+    "allEightDraftsUnmerged": true,
+    "rootLockPatchApplied": false,
+    "cleanInstallQualified": false
+  },
+  "issueHandoffDrafts": [
+    {
+      "issue": 1043,
+      "path": "handoffs/issue-1043-boolean-public-facade.md",
+      "posted": false
+    },
+    {
+      "issue": 1062,
+      "path": "handoffs/issue-1062-boolean-schema.md",
+      "posted": false
+    },
+    {
+      "issue": 1066,
+      "path": "handoffs/issue-1066-boolean-typed-body.md",
+      "posted": false
+    },
+    {
+      "issue": 1093,
+      "path": "handoffs/issue-1093-red-black-snapshot.md",
+      "posted": false
+    },
+    {
+      "issue": 1094,
+      "path": "handoffs/issue-1094-red-black-dependency-scope.md",
+      "posted": false
+    },
+    {
+      "issue": 1101,
+      "path": "handoffs/issue-1101-boolean-gate.md",
+      "posted": false
+    },
+    {
+      "issue": 2072,
+      "path": "handoffs/issue-2072-package-lock.md",
+      "posted": false
+    }
+  ],
+  "governingSourceEvidence": [
+    {
+      "path": "planning/contracts/claim-protocol.md",
+      "bytes": 7586,
+      "sha256": "cf3e4e4cac46a03eadf7ada258fb9aaf6498c52fd3176cae51bbb2eaffd178ae",
+      "gitBlobAtMeasuredTree": "70a812938c334300509f2b6009599fa5abe13528",
+      "publishedSourceUrl": "https://github.com/wieslawsoltes/SharpForge/blob/d6c6eb24eae3a7116b4bb5497c68b40b90aa3d2c/planning/contracts/claim-protocol.md"
+    },
+    {
+      "path": "planning/contracts/locks.json",
+      "bytes": 448,
+      "sha256": "9f69d4732082cecb6ab4f8929161ac81c55bf009960f97e1b3d38d344b115a19",
+      "gitBlobAtMeasuredTree": "aacc2e33df440c326725bb3e068d7ee42a89c6de",
+      "publishedSourceUrl": "https://github.com/wieslawsoltes/SharpForge/blob/d6c6eb24eae3a7116b4bb5497c68b40b90aa3d2c/planning/contracts/locks.json"
+    },
+    {
+      "path": "planning/AGENTS.md",
+      "bytes": 4891,
+      "sha256": "f225e96f0363edee4f6c2e88499eb0e1923682cb040c656f28964dc279fa3523",
+      "gitBlobAtMeasuredTree": "245266a2c34c31ead80a2f59780163a9407e3aa6",
+      "publishedSourceUrl": "https://github.com/wieslawsoltes/SharpForge/blob/d6c6eb24eae3a7116b4bb5497c68b40b90aa3d2c/planning/AGENTS.md"
+    },
+    {
+      "path": "scripts/planning/lib/claims.js",
+      "bytes": 13141,
+      "sha256": "5b5cc6a9f5121fe4255308cedc38e4bbfedebcc8bacec107801552b6e13d8ca4",
+      "gitBlobAtMeasuredTree": "399163edb83eca5b342d6341b37a0c1fe8e80d5a",
+      "publishedSourceUrl": "https://github.com/wieslawsoltes/SharpForge/blob/d6c6eb24eae3a7116b4bb5497c68b40b90aa3d2c/scripts/planning/lib/claims.js"
+    },
+    {
+      "path": "scripts/planning/lib/claim-cli.js",
+      "bytes": 2038,
+      "sha256": "c8142e9857cee75e471ad4adab1031e713645a8a25fdb4dcf5408e4e2159f023",
+      "gitBlobAtMeasuredTree": "dd6e9017011245a7c6835d3d84f82f76dff37511",
+      "publishedSourceUrl": "https://github.com/wieslawsoltes/SharpForge/blob/d6c6eb24eae3a7116b4bb5497c68b40b90aa3d2c/scripts/planning/lib/claim-cli.js"
+    },
+    {
+      "path": "scripts/planning/ready.js",
+      "bytes": 3643,
+      "sha256": "e833ce182d3bd54f927b252ed380c4abb76aa2fc51fa752c70c4c0b6ddb2cfd2",
+      "gitBlobAtMeasuredTree": "5c5da99b67ee54e659e8c3e251b1d1093db937c2",
+      "publishedSourceUrl": "https://github.com/wieslawsoltes/SharpForge/blob/d6c6eb24eae3a7116b4bb5497c68b40b90aa3d2c/scripts/planning/ready.js"
+    },
+    {
+      "path": "planning/contracts/dependency-scopes.json",
+      "bytes": 349,
+      "sha256": "2335b7c4206481dae5b99a819877d31d66b97feeee430af6f234482cbe98e100",
+      "gitBlobAtMeasuredTree": "afa13297ba06e73bd21c6ad8751ec111ff387e79",
+      "publishedSourceUrl": "https://github.com/wieslawsoltes/SharpForge/blob/d6c6eb24eae3a7116b4bb5497c68b40b90aa3d2c/planning/contracts/dependency-scopes.json"
+    },
+    {
+      "path": "planning/backlog.snapshot.json",
+      "bytes": 3381345,
+      "sha256": "b4ad3fba206f4d511308273303904a69e7609f5b89e5290bcbb895559fdc91f5",
+      "gitBlobAtMeasuredTree": "9364ed6bf5e65f69a66d8e42cb7932e61d11cfae",
+      "publishedSourceUrl": "https://github.com/wieslawsoltes/SharpForge/blob/d6c6eb24eae3a7116b4bb5497c68b40b90aa3d2c/planning/backlog.snapshot.json"
+    }
+  ],
+  "integrity": {
+    "filesExclude": [
+      "manifest.json",
+      "SHA256SUMS"
+    ],
+    "sha256SumsIncludesManifest": true,
+    "sha256SumsExcludesItself": true,
+    "exactCopiesVerified": true,
+    "jsonParsed": true,
+    "projectValidationExecuted": false
+  },
+  "files": [
+    {
+      "path": "README.md",
+      "bytes": 10397,
+      "sha256": "e232b38e8c84edd18ae38a400c3b21c6b5d58638b0b7cd45f08be072b5afec3d",
+      "origin": "generated-read-only-handoff"
+    },
+    {
+      "path": "boolean-a00/boolean-a00-gate-owner.patch",
+      "bytes": 14602,
+      "sha256": "5c523000789b5111173bb77c2803ac25eb34e78c0e0f86f5e37529f1f2bd6db9",
+      "origin": "exact-copy"
+    },
+    {
+      "path": "boolean-a00/boolean-a00-owner-handoff.manifest.json",
+      "bytes": 4694,
+      "sha256": "33f6a644cb6e769d5a165ef7207e159f9c82b2e9ead6330e6a6b89b18a5ab2b1",
+      "origin": "exact-copy"
+    },
+    {
+      "path": "boolean-a00/boolean-a00-owner-handoff.md",
+      "bytes": 9429,
+      "sha256": "87a4499d8daad986909b9ea11e108f3d752d759d40394899de1c8cd0bd110ac8",
+      "origin": "exact-copy"
+    },
+    {
+      "path": "boolean-a00/boolean-a00-owner-handoff.patch",
+      "bytes": 33803,
+      "sha256": "61970b65da7d2dbadb166f1c266bd336b258403a83ba17f04a7195aa68658b2e",
+      "origin": "exact-copy"
+    },
+    {
+      "path": "boolean-a00/boolean-a00-public-facade-owner.patch",
+      "bytes": 747,
+      "sha256": "48b226069a634926a464816c2d12295b911610e68b65e874ac009464478d498d",
+      "origin": "exact-copy"
+    },
+    {
+      "path": "boolean-a00/boolean-a00-schema-owner.patch",
+      "bytes": 7700,
+      "sha256": "540d156c853ad4b4b15c4b017c397dcbd85b618c1a89baf0d5960ed61737fb52",
+      "origin": "exact-copy"
+    },
+    {
+      "path": "boolean-a00/boolean-a00-typed-body-owner.patch",
+      "bytes": 10754,
+      "sha256": "da0629c206a6b7afbe715d007c74a0e77afd65bdc58b726767345697418236e3",
+      "origin": "exact-copy"
+    },
+    {
+      "path": "boolean-a00/boolean-path-ownership-mapping.json",
+      "bytes": 116782,
+      "sha256": "0028618585b3ee4caa0cc0cf071024854c254d202c6b768ab46d8218cdd4d496",
+      "origin": "exact-copy"
+    },
+    {
+      "path": "boolean-a00/product-ownership.md",
+      "bytes": 2830,
+      "sha256": "6348e93f061ac022773b1d20b4aa3857f5b151daf6820ced01e36cfacc8eeb44",
+      "origin": "generated-read-only-handoff"
+    },
+    {
+      "path": "boolean-a00/review.md",
+      "bytes": 2551,
+      "sha256": "43549db6076bbecb648ddf74b076fbf1ae52f25090cbe491543fc37920666e54",
+      "origin": "generated-read-only-handoff"
+    },
+    {
+      "path": "bundle-review.json",
+      "bytes": 1347,
+      "sha256": "740ea31264f89982b4e219e46b12d978dd9f00d4ce722c52f4a5bc2f0b5d4388",
+      "origin": "generated-read-only-handoff"
+    },
+    {
+      "path": "claims/claim-SF-A00-T02.5.json",
+      "bytes": 1769,
+      "sha256": "2f4716ff7ae1d8aa024c7ea8b9b25985c1a9d069dcb41add137a2233e4170cc5",
+      "origin": "generated-read-only-handoff"
+    },
+    {
+      "path": "claims/claim-SF-A00-T05.1.json",
+      "bytes": 1522,
+      "sha256": "ae8b7c67dca29864680137c7e280d17fe9d3c9cfbc76460bba10766379d75033",
+      "origin": "generated-read-only-handoff"
+    },
+    {
+      "path": "claims/claim-SF-A00-T05.5.json",
+      "bytes": 1761,
+      "sha256": "af9a543609bc4c56dcf3069ef257bf04e98a8d858766676ea637c947af0854af",
+      "origin": "generated-read-only-handoff"
+    },
+    {
+      "path": "claims/claim-SF-A00-T09.2.json",
+      "bytes": 1698,
+      "sha256": "5ead52544bf3983eee7d13f8925affe8bc6d62065cfb992e079ea4b9aea012a5",
+      "origin": "generated-read-only-handoff"
+    },
+    {
+      "path": "claims/claim-SF-A00-T09.3.json",
+      "bytes": 2086,
+      "sha256": "3b93de88f2b5371f0714f91d2f661529fdecc05652f32899546817545ca3206e",
+      "origin": "generated-read-only-handoff"
+    },
+    {
+      "path": "claims/claim-SF-A00-T10.4.json",
+      "bytes": 1386,
+      "sha256": "478f333411069dc5d901a6204ac68ba10d97d46bcdf7e0b3856e53af91b53678",
+      "origin": "generated-read-only-handoff"
+    },
+    {
+      "path": "claims/claim-package-json.json",
+      "bytes": 648,
+      "sha256": "82d69157b621f75008e9eb7569be2dcd1e6b127fcee9355e5c959065cdaebcbf",
+      "origin": "generated-read-only-handoff"
+    },
+    {
+      "path": "claims/issue-783-ownership-observation.json",
+      "bytes": 7311,
+      "sha256": "9d686725cef9c858abecaf46295b6ee8712ac7c2e45a5af73021f96eda5301f7",
+      "origin": "generated-read-only-handoff"
+    },
+    {
+      "path": "claims/observations.json",
+      "bytes": 8507,
+      "sha256": "4a02436e821c2049bd98ff7f79d0bf2c258f2065472df1f9ca03690f78010fa6",
+      "origin": "generated-read-only-handoff"
+    },
+    {
+      "path": "copied-files.json",
+      "bytes": 9737,
+      "sha256": "ca88ce10b93423e60f5a1b800bb7744c69ff4c6e606f0c8fa63fc73931d4b802",
+      "origin": "generated-read-only-handoff"
+    },
+    {
+      "path": "handoffs/issue-1043-boolean-public-facade.md",
+      "bytes": 2850,
+      "sha256": "3f6f875d5e50a1d5bac21ba9602cf0db1ed5407fd9feb6ad158d5ce270f2d417",
+      "origin": "generated-read-only-handoff"
+    },
+    {
+      "path": "handoffs/issue-1062-boolean-schema.md",
+      "bytes": 2885,
+      "sha256": "fbe7460dc4e9dbda693077d15faab14787542f168544a925542b49263c6c76bf",
+      "origin": "generated-read-only-handoff"
+    },
+    {
+      "path": "handoffs/issue-1066-boolean-typed-body.md",
+      "bytes": 2785,
+      "sha256": "82c43098109dbcc5537c8f02110a83ac6b3b93b77a3b854abf7e518127b17492",
+      "origin": "generated-read-only-handoff"
+    },
+    {
+      "path": "handoffs/issue-1093-red-black-snapshot.md",
+      "bytes": 2903,
+      "sha256": "cc89e9f7fc235e0f31b4f16e8f500b86fbc891cde48d5865a75ace231ec7dc8a",
+      "origin": "generated-read-only-handoff"
+    },
+    {
+      "path": "handoffs/issue-1094-red-black-dependency-scope.md",
+      "bytes": 3103,
+      "sha256": "6aa3d10e33f61606d2202360fcffa20f05174c46710c1d4d47eefd8f89539083",
+      "origin": "generated-read-only-handoff"
+    },
+    {
+      "path": "handoffs/issue-1101-boolean-gate.md",
+      "bytes": 2686,
+      "sha256": "37c38d5c6562b95952f03dcddca92234c0a5731c9b7d89e0e29ac4e33138aeaf",
+      "origin": "generated-read-only-handoff"
+    },
+    {
+      "path": "handoffs/issue-2072-package-lock.md",
+      "bytes": 2948,
+      "sha256": "c9bf2792bc87e9328616c455df0e2e54432b4450e65f28666f14b1d23cfcddac",
+      "origin": "generated-read-only-handoff"
+    },
+    {
+      "path": "io/README.md",
+      "bytes": 4021,
+      "sha256": "a9b6239e9c650a7fcbc51ca7dbeabec6927cb05a10ec8be96fc32e5ff55d78fe",
+      "origin": "generated-read-only-handoff"
+    },
+    {
+      "path": "io/io-checks-fresh.json",
+      "bytes": 55142,
+      "sha256": "07b84d4f0fa785509649861b9e870837f37ac2d346bab4e7f24820e2da15eceb",
+      "origin": "exact-copy"
+    },
+    {
+      "path": "io/io-clean-install-gate.log",
+      "bytes": 1397,
+      "sha256": "1d211bc0d8f7e2977e2984b0f1f2a3aef9f3f8c0b589c0c3054095f7301381d3",
+      "origin": "exact-copy"
+    },
+    {
+      "path": "io/io-publish-manifest.json",
+      "bytes": 111872,
+      "sha256": "798402855f0ba3de9d21f6715fcf97f1bb3f3bc5285b6c6a645429ef6b66b820",
+      "origin": "exact-copy"
+    },
+    {
+      "path": "io/io-published-status-fresh.json",
+      "bytes": 9530,
+      "sha256": "ceb7ded4b641ac785500e56532864c327ad4b8fc6c8306aec562647523a386b8",
+      "origin": "exact-copy"
+    },
+    {
+      "path": "io/io-published-status.json",
+      "bytes": 6440,
+      "sha256": "dbcab9d15321ba238a5a950e8376efe89f23aa9768aa6618f099dd54c8e7f124",
+      "origin": "exact-copy"
+    },
+    {
+      "path": "io/publication/README.md",
+      "bytes": 2169,
+      "sha256": "1add474e69713e64e30a64570266e01afc4aed954b45c987850ef21e8141ea4e",
+      "origin": "exact-copy"
+    },
+    {
+      "path": "io/publication/evidence-git-manifest.json",
+      "bytes": 32332,
+      "sha256": "bf2f1e47d11c0fb2212476d35783891709f907a0b450a004a1d79e82bdc0bb86",
+      "origin": "exact-copy"
+    },
+    {
+      "path": "io/publication/lock-observation.json",
+      "bytes": 1328,
+      "sha256": "e3fa04090133be8df0ccab63728bb4654c9b790c8e4a01d0499f73554f29b943",
+      "origin": "exact-copy"
+    },
+    {
+      "path": "io/publication/manifest.json",
+      "bytes": 86099,
+      "sha256": "f27863bc7ad88cf90ce906741e16f860b22c0d9870a1620abce7c8365cafad90",
+      "origin": "exact-copy"
+    },
+    {
+      "path": "io/publication/publication-plan.json",
+      "bytes": 5857,
+      "sha256": "5d59cce1df6d5bfb9091b79866520f4e75fb0e01bcb2151fc532b308fdd943d9",
+      "origin": "exact-copy"
+    },
+    {
+      "path": "io/publication/qualification-review.md",
+      "bytes": 5726,
+      "sha256": "4a0819f12a570478c94c90937df6c8551f2b7c4e41e766d5e2ec6c8136850ea6",
+      "origin": "exact-copy"
+    },
+    {
+      "path": "red-black-readiness/README.md",
+      "bytes": 9777,
+      "sha256": "23fe5a05b08989e7fe4835c5e5cb3e2046e7e756aa4bb6a4a0ea038c2f5dc7ce",
+      "origin": "exact-copy"
+    },
+    {
+      "path": "red-black-readiness/SHA256SUMS",
+      "bytes": 418,
+      "sha256": "bf14b4b8e2124fd45141e723afae1e2326a33bda6d48d2154dd3a0762051c053",
+      "origin": "exact-copy"
+    },
+    {
+      "path": "red-black-readiness/claim-SF-A00-T09.2.json",
+      "bytes": 1699,
+      "sha256": "351ce306938cdf080504a2dc1efb9134b4d37f953157782e9db94fa0c7c092c2",
+      "origin": "exact-copy"
+    },
+    {
+      "path": "red-black-readiness/claim-SF-A00-T09.3.json",
+      "bytes": 2087,
+      "sha256": "d93b0d3ab6e5e4c7f476105c019828271cd8c572ce75e8bea18ae366129b7b0f",
+      "origin": "exact-copy"
+    },
+    {
+      "path": "red-black-readiness/project9-readiness-ui-observation.json",
+      "bytes": 1031,
+      "sha256": "581966af0094d930a8a5d40054bdec80bc6838ab8995415814949b5ef2143267",
+      "origin": "exact-copy"
+    },
+    {
+      "path": "red-black-readiness/proposal.json",
+      "bytes": 753,
+      "sha256": "3dfb7b2fc504e47c8ffc985f1f11d1d63fd6f2c3459a3f59d16cb6ccdbbd0c78",
+      "origin": "exact-copy"
+    },
+    {
+      "path": "red-black-readiness/provenance.json",
+      "bytes": 22402,
+      "sha256": "a1f7dad2ae80099edd016b3ee28b336ca5709b857b5bbd3ce79c4fddc12a1c57",
+      "origin": "exact-copy"
+    },
+    {
+      "path": "root-package/README.md",
+      "bytes": 2970,
+      "sha256": "863b7749afc46bd72b6cb4b3248737c337475929babc95fdab29e36eab440ac2",
+      "origin": "generated-read-only-handoff"
+    },
+    {
+      "path": "root-package/package-lock.base.json",
+      "bytes": 10877,
+      "sha256": "0795c3e9cb2007594de2fa207c2a97d80bb927f146f68d8566934485cbddf0cd",
+      "origin": "exact-copy"
+    },
+    {
+      "path": "root-package/project9-package-lock.patch",
+      "bytes": 1368,
+      "sha256": "8a5dbf77311a81382eef091968b06dfa77be0920385f8eb49dcd2ea6652b230b",
+      "origin": "exact-copy"
+    },
+    {
+      "path": "root-package/provenance.json",
+      "bytes": 3955,
+      "sha256": "cb32963734e4b13fa72bd23b8ea43382f7f66e5abb15da3aeefde2e570db7a02",
+      "origin": "generated-read-only-handoff"
+    }
+  ],
+  "independentAccuracyReview": "bundle-review.json"
+}

@@ -1,0 +1,39 @@
+{
+  "status": "blocked; reserved ref remains authoritative",
+  "observationSource": "Integration owner relayed a fresh authoritative connector GET; not a reviewer-side GET",
+  "recordedAtUtc": "2026-10-04T16:48:44.704717+00:00",
+  "exactAuthoritativeReadTimestampRetained": false,
+  "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/contents/claim.json?ref=agent-locks%2Fpackage-json",
+  "ref": "agent-locks/package-json",
+  "agent": "codex-p19-core",
+  "task": "SF-A25-T01.1",
+  "issue": 2072,
+  "generation": "8f3f406a-3f3e-4ea7-ac65-258a5b41afe9",
+  "heartbeatAt": "2026-10-03T20:04:09.592Z",
+  "expiresAt": "2026-10-04T20:04:09.592Z",
+  "requiresFreshReadBeforePublication": true,
+  "interpretation": "Mismatched claimed paths and empty locks[] do not release the authoritative reserved ref.",
+  "missingLockEntryPaths": [
+    [
+      "packages",
+      "node_modules/@sharpforge/bcl-io"
+    ],
+    [
+      "packages",
+      "packages/bcl-io"
+    ],
+    [
+      "packages",
+      "packages/framework",
+      "dependencies",
+      "@sharpforge/bcl-io"
+    ],
+    [
+      "packages",
+      "packages/runtime",
+      "dependencies",
+      "@sharpforge/bcl-io"
+    ]
+  ],
+  "nextStep": "Coordinate release or authorized handoff, repair the oldest IO branch, merge upward, then run npm ci and required core checks."
+}

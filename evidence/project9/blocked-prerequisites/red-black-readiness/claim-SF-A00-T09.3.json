@@ -1,0 +1,35 @@
+{
+  "version": 1,
+  "task": "SF-A00-T09.3",
+  "issue": 1094,
+  "agent": "codex-p4-planning",
+  "branch": "codex/a00-dependency-scopes",
+  "expires": "2026-10-05T08:59:56.877Z",
+  "heartbeat": "2026-10-04T08:59:56.877Z",
+  "locks": [],
+  "generation": "bcb8e1ee-0e51-47fa-a013-b29a82153c90",
+  "sequence": 0,
+  "event": "resume-legacy",
+  "at": "2026-10-04T08:59:56.877Z",
+  "qualification": "deferred",
+  "paths": [
+    "scripts/planning/validate-dag.js",
+    "scripts/planning/ready.js",
+    "planning/contracts/dependency-scopes.json",
+    "planning/contracts/dependencies.md",
+    "planning/contracts/tests/dependency-scopes.test.js"
+  ],
+  "activePaths": [
+    "scripts/planning/validate-dag.js",
+    "scripts/planning/ready.js",
+    "planning/contracts/dependency-scopes.json",
+    "planning/contracts/dependencies.md",
+    "planning/contracts/tests/dependency-scopes.test.js"
+  ],
+  "previousBranch": "codex/a00-governance",
+  "legacyLockKeys": "scripts/planning/{lib/deps-parse.js,lib/task-ref.js,gen-ownership.js,check-ownership.js,check-hot-files.js,gen-codeowners.js,snapshot-backlog.js,validate-dag.js,ready.js,dag-export.js,bootstrap-project.js,lint-backlog.js,check-path-collisions.js}; planning/{backlog.snapshot.json,catalog.json,contracts/ownership*,contracts/dependenc*,contracts/tests/governance*}; .github/CODEOWNERS; tests/a00-{08,09}*",
+  "legacyStatus": "Backlog",
+  "legacyEvidence": "https://github.com/wieslawsoltes/SharpForge/pull/1836",
+  "authorization": "Same-owner1094/1095 continuation under Project4 goal: explicit versioned inherited-dependency scope at release425-to-parent418 boundary omits only parent-declared RustA27T08 for JS/SIMD scope, as required by both issues; retain own, other ancestor/transitive dependencies and all contracts. Five explicit paths include isolated new test beyond old governance test glob. Preserve all Status/Evidence/sibling/legacy fields and foreign branches. Docs-only open PR overlaps contain inherited root grammar already on main; preserve it and document scoped policy. Complete scope before serial validation."
+}
+

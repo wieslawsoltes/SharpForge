@@ -1,0 +1,192 @@
+{
+  "published": [
+    {
+      "pr": 4509,
+      "branch": "codex/a09-string-reader",
+      "original": "408cae030fcf2738c38e13ad33a3efe5ecade0e2",
+      "localHead": "cb3806f9b637aa5fdf7934d399ad1d059783ac5c",
+      "tree": "9404357709535f7a645947bec0cac09f39ef7e64",
+      "publishedSha": "0e7c56d8e9175ffad7c03dd7fd61ac0f1783b4a4",
+      "parent": "00c2489e659cbeaa29e9c5dfa4a3137fae4bd4ad"
+    },
+    {
+      "pr": 4510,
+      "branch": "codex/a09-string-writer",
+      "original": "3ffe7b9b7dd65475429d797b8825a81b2b33b1e3",
+      "localHead": "e7ccdca8d6c2cea6bf628d377fb02fa46c202565",
+      "tree": "49e0b9f01fc4e9c3da605de08ce8b7040cb5a824",
+      "publishedSha": "2e6a7c5ba0eceaee24df8452ff54f098215eeef0",
+      "parent": "0e7c56d8e9175ffad7c03dd7fd61ac0f1783b4a4"
+    },
+    {
+      "pr": 4513,
+      "branch": "codex/a09-string-reader-buffer",
+      "original": "6f1e0c1dd89d8dc9129f10446ad548cb82a8fd37",
+      "localHead": "b9fb955e4aab9fa2464fd7afe17c1a6d23563c08",
+      "tree": "725b722d373cf79253f52a3cbfad5a3eaf42acd3",
+      "publishedSha": "d46b27fd25a681cc675c63cff3d32bf5c26c867a",
+      "parent": "2e6a7c5ba0eceaee24df8452ff54f098215eeef0"
+    },
+    {
+      "pr": 4514,
+      "branch": "codex/a09-string-writer-object",
+      "original": "376c1955474d04a5386e22352a8f27a18a46f2c5",
+      "localHead": "42e745b5878774245d7b9dc63385731f8576834e",
+      "tree": "bf2d16ec64a00cc587d336a2dab6525a6154a4ff",
+      "publishedSha": "d1499d108d127c9e1fcc6d37c0b4a0dd998feca7",
+      "parent": "d46b27fd25a681cc675c63cff3d32bf5c26c867a"
+    },
+    {
+      "pr": 4515,
+      "branch": "codex/a09-string-writer-buffer",
+      "original": "955da4bb7197d027c5471034ed01e6e4dcd60a31",
+      "localHead": "3472e24862e5ae36954230a16b75d4a6b9e2f9ec",
+      "tree": "bbe2cb04eb78f45a427a99963d96523ffa7e3709",
+      "publishedSha": "41a42061e3f647a4ea1f7c38937d55d7c62fc63d",
+      "parent": "d1499d108d127c9e1fcc6d37c0b4a0dd998feca7"
+    },
+    {
+      "pr": 4516,
+      "branch": "codex/a09-string-writer-line-buffer",
+      "original": "cbeffbae0b2968f82c5fefa2ca6b9bae8c67f82c",
+      "localHead": "59c078a6a6fea5d5c99c06148a871ad5fb46dc98",
+      "tree": "3602a3677baaf0e68afaadc3cd2ab2244b7061ff",
+      "publishedSha": "b7e6fdfba9d4847fbc9c3c2ae20e893525663e5d",
+      "parent": "41a42061e3f647a4ea1f7c38937d55d7c62fc63d"
+    },
+    {
+      "pr": 4517,
+      "branch": "codex/a09-string-writer-char-line",
+      "original": "bac87e4fcb3264886d6eeb6fff4c8089c29865c4",
+      "localHead": "726fbd8303042c7634a057807b51adeaddffa9a8",
+      "tree": "ddd94ac0868ecf995463b8af0d1c97a2fcb2e8a4",
+      "publishedSha": "3493f1b49e849b05274fc910d4e1a7f993e22a38",
+      "parent": "b7e6fdfba9d4847fbc9c3c2ae20e893525663e5d"
+    },
+    {
+      "pr": 4542,
+      "branch": "codex/a09-string-writer-scalars",
+      "original": "c01f8b5bede834b067a270a105edd2e059355157",
+      "localHead": "fe8288772be85395909d5de582c444db3d605ca3",
+      "tree": "541c835f876aefd506ec55ee30511929f131accd",
+      "publishedSha": "16909aa003c61d63bcbe654cefda19e71f09d942",
+      "parent": "3493f1b49e849b05274fc910d4e1a7f993e22a38"
+    }
+  ],
+  "ci": [
+    {
+      "pr": 4509,
+      "head": "0e7c56d8e9175ffad7c03dd7fd61ac0f1783b4a4",
+      "run": 37219525779,
+      "conclusion": "failure",
+      "coreJob": 111486858818,
+      "coreConclusion": "failure",
+      "failedSteps": [
+        "Run npm ci --ignore-scripts --no-audit --no-fund"
+      ]
+    },
+    {
+      "pr": 4510,
+      "head": "2e6a7c5ba0eceaee24df8452ff54f098215eeef0",
+      "run": 37219638256,
+      "conclusion": "failure",
+      "coreJob": 111487186732,
+      "coreConclusion": "failure",
+      "failedSteps": [
+        "Run npm ci --ignore-scripts --no-audit --no-fund"
+      ]
+    },
+    {
+      "pr": 4513,
+      "head": "d46b27fd25a681cc675c63cff3d32bf5c26c867a",
+      "run": 37219856626,
+      "conclusion": "failure",
+      "coreJob": 111487814717,
+      "coreConclusion": "failure",
+      "failedSteps": [
+        "Run npm ci --ignore-scripts --no-audit --no-fund"
+      ]
+    },
+    {
+      "pr": 4514,
+      "head": "d1499d108d127c9e1fcc6d37c0b4a0dd998feca7",
+      "run": 37219903432,
+      "conclusion": "failure",
+      "coreJob": 111487951103,
+      "coreConclusion": "failure",
+      "failedSteps": [
+        "Run npm ci --ignore-scripts --no-audit --no-fund"
+      ]
+    },
+    {
+      "pr": 4515,
+      "head": "41a42061e3f647a4ea1f7c38937d55d7c62fc63d",
+      "run": 37219931558,
+      "conclusion": "failure",
+      "coreJob": 111488032130,
+      "coreConclusion": "failure",
+      "failedSteps": [
+        "Run npm ci --ignore-scripts --no-audit --no-fund"
+      ]
+    },
+    {
+      "pr": 4516,
+      "head": "b7e6fdfba9d4847fbc9c3c2ae20e893525663e5d",
+      "run": 37219978693,
+      "conclusion": "failure",
+      "coreJob": 111488171618,
+      "coreConclusion": "failure",
+      "failedSteps": [
+        "Run npm ci --ignore-scripts --no-audit --no-fund"
+      ]
+    },
+    {
+      "pr": 4517,
+      "head": "3493f1b49e849b05274fc910d4e1a7f993e22a38",
+      "run": 37220026480,
+      "conclusion": "failure",
+      "coreJob": 111488307842,
+      "coreConclusion": "failure",
+      "failedSteps": [
+        "Run npm ci --ignore-scripts --no-audit --no-fund"
+      ]
+    },
+    {
+      "pr": 4542,
+      "head": "16909aa003c61d63bcbe654cefda19e71f09d942",
+      "run": 37220076321,
+      "conclusion": "failure",
+      "coreJob": 111488458356,
+      "coreConclusion": "failure",
+      "failedSteps": [
+        "Run npm ci --ignore-scripts --no-audit --no-fund"
+      ]
+    }
+  ],
+  "evidenceCommit": "c890bec08d53bf08295a36d67874a49f26672c8b",
+  "packageLock": {
+    "checkedAt": "2026-10-04 17:10:29 UTC",
+    "content": {
+      "version": 1,
+      "task": "SF-A25-T01.1",
+      "issue": 2072,
+      "agent": "codex-p19-core",
+      "branch": "codex/project19-core",
+      "expires": "2026-10-04T20:04:09.592Z",
+      "heartbeat": "2026-10-03T20:04:09.592Z",
+      "lastHeartbeatComment": null,
+      "locks": [],
+      "generation": "8f3f406a-3f3e-4ea7-ac65-258a5b41afe9",
+      "sequence": 0,
+      "event": "claim",
+      "at": "2026-10-03T20:04:09.592Z",
+      "paths": [
+        "packages/git/package.json",
+        "packages/git/src/errors.js",
+        "packages/git/src/index.js",
+        "packages/git/build.contrib.json"
+      ],
+      "projectProjection": "unavailable: GitHub connector exposes repository refs but no Project field API"
+    }
+  }
+}

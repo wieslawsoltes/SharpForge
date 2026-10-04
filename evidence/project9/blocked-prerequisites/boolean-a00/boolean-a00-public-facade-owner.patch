@@ -1,0 +1,11 @@
+diff --git a/packages/bytecode/src/index.js b/packages/bytecode/src/index.js
+--- a/packages/bytecode/src/index.js
++++ b/packages/bytecode/src/index.js
+@@ -6,6 +6,7 @@
+ export {FORMAT_VERSION,EnumConvertBase,Op,OpName,Binary,BinaryName,Unary,UnaryName} from './opcodes.js';
+ import {recordSourceStacks,discardSourceStacks} from './source-stack-proof.js';
+ export {verifiedSourceStackBound} from './source-stack-proof.js';
++export {verifyReadonlyFieldConstant} from './readonly-field-constants.js';
+ import {Builtins} from './builtins.js';
+ export {Builtins,BuiltinMap,frameworkBuiltin,CONTRACT_BUILTIN_OFFSET,createBuiltinRegistry} from './builtins.js';
+ export {builtinOwners,builtinMemberShape,builtinParameterType} from './builtin-metadata.js';

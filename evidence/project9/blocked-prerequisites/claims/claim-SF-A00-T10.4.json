@@ -1,0 +1,29 @@
+{
+  "version": 1,
+  "task": "SF-A00-T10.4",
+  "issue": 1101,
+  "agent": "codex-p4-planning",
+  "branch": "codex/a00-release-evidence",
+  "expires": "2026-10-04T23:59:59.999Z",
+  "heartbeat": "2026-10-03T20:39:54.725Z",
+  "lastHeartbeatComment": null,
+  "locks": [],
+  "generation": "24d7a5c8-07ee-4aff-af8d-a7414bf01bb4",
+  "sequence": 3,
+  "event": "branch-advance",
+  "at": "2026-10-04T08:25:42.060Z",
+  "previousBranch": "codex/a00-review-gates",
+  "releasedLocks": {
+    "ci-workflows": "29cd6c4956c57bd4a39acecf0f5d6d59620792b4"
+  },
+  "unlockReason": "Review-gates implementation completed; no open PR or active author, clean owned worktree. Explicitly release own CI write reservation for subsequent independently claimed work. Retain task ownership and acceptance evidence unchanged.",
+  "paths": [
+    "scripts/planning/check-contract-change.js",
+    "planning/contracts/tests/gates.test.js"
+  ],
+  "activePaths": [
+    "scripts/planning/check-contract-change.js",
+    "planning/contracts/tests/gates.test.js"
+  ],
+  "authorization": "Continue own merged1101 gate task with a restricted sound proof for unions retaining an unchanged reference-free string-pattern branch. Coordinate with release evidence1104/1105 scope on same branch. Preserve generation, Status, Evidence, lease and released CI locks; reserve only checker and gate tests. No metadata ABI or label changes."
+}

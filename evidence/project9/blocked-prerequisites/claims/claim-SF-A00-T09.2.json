@@ -1,0 +1,30 @@
+{
+  "version": 1,
+  "task": "SF-A00-T09.2",
+  "issue": 1093,
+  "agent": "codex-p4-planning",
+  "branch": "codex/a00-release-snapshot",
+  "expires": "2026-10-05T08:43:57.750Z",
+  "heartbeat": "2026-10-04T08:43:57.750Z",
+  "locks": [],
+  "generation": "117718c3-53f8-4e13-9f93-50ddec0e9906",
+  "sequence": 0,
+  "event": "resume-legacy",
+  "at": "2026-10-04T08:43:57.750Z",
+  "qualification": "deferred",
+  "paths": [
+    "scripts/planning/snapshot-backlog.js",
+    "planning/contracts/tests/governance-snapshot.test.js",
+    "planning/backlog.snapshot.json"
+  ],
+  "activePaths": [
+    "scripts/planning/snapshot-backlog.js",
+    "planning/contracts/tests/governance-snapshot.test.js",
+    "planning/backlog.snapshot.json"
+  ],
+  "previousBranch": "codex/a00-governance",
+  "legacyLockKeys": "scripts/planning/{lib/deps-parse.js,lib/task-ref.js,gen-ownership.js,check-ownership.js,check-hot-files.js,gen-codeowners.js,snapshot-backlog.js,validate-dag.js,ready.js,dag-export.js,bootstrap-project.js,lint-backlog.js,check-path-collisions.js}; planning/{backlog.snapshot.json,catalog.json,contracts/ownership*,contracts/dependenc*,contracts/tests/governance*}; .github/CODEOWNERS; tests/a00-{08,09}*",
+  "legacyStatus": "Backlog",
+  "legacyEvidence": "https://github.com/wieslawsoltes/SharpForge/pull/1836",
+  "authorization": "Same-owner1093 continuation under Project4 goal: normalize declared release area and parent metadata, preserve existing Axx conventions, correct only area/parent in four existing snapshot rows, and add isolated downstream regression coverage. Explicit three-path scope, no Status/Evidence/sibling/legacy changes or issue comments. Complete scope before serial validation."
+}
