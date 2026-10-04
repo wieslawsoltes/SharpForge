@@ -127,3 +127,5 @@ Embedded data emission and bounded inspection are documented in [RESOURCES.md](.
 Win32 version, manifest and ICO emission is documented in [WIN32-RESOURCES.md](./WIN32-RESOURCES.md).
 
 Opt-in [memory-prefix validation](PREFIX-MEMORY.md) checks volatile/unaligned/no. targets and duplicate prefixes.
+
+Opt-in [type-prefix validation](PREFIX-CONSTRAINED.md) checks constrained/readonly lexical targets and type-token row extents.
