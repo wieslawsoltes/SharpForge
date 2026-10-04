@@ -194,6 +194,10 @@ Registration preserves released numeric identities and exposes typed geometry, b
 
 `createRenderingCoverage` derives exact type/member identities from the supplied integrated registry and records the actual adapter source. Unknown methods remain review-runtime-dispatch rows. The generator emits deterministic JSON and Markdown with explicit native-input, material and backend policies; generated artifacts are implementation metadata rather than passing qualification results.
 
+## Worker native text
+
+`NativeCanvasTextProvider` uses supplied Canvas metrics when the worker has OffscreenCanvas. Its data-only opaque run packets round-trip through display lists and render on the host. Missing Canvas capability produces an explicit diagnostic.
+
 ## Validation
 
 Focused cases are authored. The publication manifest records the exact previously tested selection, subsequent repairs and any unrun new fixtures. Required core is pending on this exact branch tree. Browser pixels, native WinUI comparisons and physical GPU qualification are separate gates.
