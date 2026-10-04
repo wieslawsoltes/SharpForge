@@ -30,9 +30,19 @@ export function createWorkbenchServices(options = {}) {
   const documents = new DocumentService({
     records: options.records, createEditor: options.createEditor, saveDocument: options.saveDocument
   });
+  const defaultSnapshot = (projectId, project) => {
+    const snapshot = project.snapshot ?? project;
+    return {
+      ...snapshot,
+      files: (snapshot.files ?? []).map(file => {
+        const document = documents.get(file.uri ?? file.path);
+        return document ? { ...file, text: document.text, version: document.version } : file;
+      })
+    };
+  };
   const builds = new BuildServices({
     workerFactory: options.workerFactory, compilerUrl: options.compilerUrl,
-    snapshot: options.getProjectSnapshot, output, diagnostics, onError: options.onError
+    snapshot: options.getProjectSnapshot ?? defaultSnapshot, output, diagnostics, onError: options.onError
   });
   const sessions = new SessionManager({
     maxSessions: options.maxSessions, workerFactory: options.workerFactory,
@@ -50,8 +60,8 @@ export function createWorkbenchServices(options = {}) {
   });
   const queue = new BuildQueue(builds, { output });
   const launches = new LaunchOrchestrator({
-    builds, sessions, startup, profiles, breakpoints, output,
-    onApplication: options.onApplication, launchOptions: options.launchOptions
+    builds, sessions, startup, profiles, breakpoints, output, queue,
+    onApplication: options.onApplication, launchOptions: options.launchOptions, launchCapabilities: options.launchCapabilities
   });
   let workspaceState = null;
   const disposers = [

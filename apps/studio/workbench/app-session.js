@@ -54,6 +54,7 @@ export class AppSession {
       onEvent: (event, envelope) => this.receive(event, envelope.generation),
       onError: error => {
         this.state = 'faulted';
+        this.debug = { ...this.debug, event: 'state', sessionId: this.runtimeSession, state: 'faulted', uiActive: false };
         this.ended = true;
         this.launchBusy = false;
         this.emit('error', { error });
@@ -168,10 +169,14 @@ export class AppSession {
     this.emit('starting');
     const abort = () => {
       this.worker.restart(abortError(signal.reason));
+      this.runtimeSession = null;
+      this.expectedRuntimeSession = 1;
       this.launchEpoch++;
       this.launchBusy = false;
       this.state = 'stopped';
+      this.debug = null;
       this.ended = true;
+      this.emit('state', { event: null });
       this.emit('ended');
     };
     signal?.addEventListener('abort', abort, { once: true });
@@ -185,8 +190,10 @@ export class AppSession {
     } catch (error) {
       if (epoch === this.launchEpoch) {
         this.state = 'faulted';
+        this.debug = { ...this.debug, event: 'state', sessionId: this.runtimeSession, state: 'faulted', uiActive: false };
         this.ended = true;
         this.emit('error', { error });
+        this.emit('state', { event: this.debug });
         this.emit('ended');
       }
       throw error;
@@ -211,7 +218,11 @@ export class AppSession {
       return Promise.reject(workbenchError('SESSION_BUSY', 'Wait for the current debug operation to complete'));
     }
     const { identity: ignoredIdentity, appId: ignoredApp, ...wire } = params;
-    const promise = this.worker.request(method, { ...wire, sessionId: this.runtimeSession ?? undefined }, options);
+    const identity = this.identity;
+    const promise = this.worker.request(method, { ...wire, sessionId: this.runtimeSession ?? undefined }, options).then(result => {
+      if (this.identity !== identity) throw workbenchError('SESSION_STALE', 'Application changed while the request was running');
+      return result;
+    });
     if (!controlMethods.has(method)) return promise;
     this.controlBusy = true;
     const pending = { method, promise: null };
@@ -258,9 +269,10 @@ export class AppSession {
 
   async detach() {
     if (!this.debugging) return;
-    await this.request('breakpointsEnabled', { enabled: false });
-    await this.request('exceptionBreak', { mode: 'none', rules: [] });
-    if (this.state === 'paused') await this.request('resume', { mode: 'continue' });
+    const identity = this.identity;
+    await this.request('breakpointsEnabled', { enabled: false, identity });
+    await this.request('exceptionBreak', { mode: 'none', rules: [], identity });
+    if (this.state === 'paused') await this.request('resume', { mode: 'continue', identity });
     this.debugging = false;
     this.detached = true;
     this.emit('detached');

@@ -198,3 +198,35 @@ test('combined debug status reflects multiple applications and exact paused coun
   });
   sessions.dispose();
 });
+
+test('a ended active session can be retired at a one-session limit and releases retained output', async () => {
+  const fake = fakeWorkers(fakeRuntime);
+  const output = new OutputChannels({ maxChannels: 7 });
+  const sessions = new SessionManager({ workerFactory: fake.factory, output, maxSessions: 1 });
+  const first = sessions.create({ projectId: 'A' });
+  await launch(first);
+  await first.stop();
+  const second = sessions.create({ projectId: 'B' });
+  await launch(second);
+  assert.equal(sessions.active, second);
+  assert.equal(output.get(first.channelId), null);
+  assert.equal(fake.workers[0].terminated, true);
+  sessions.dispose();
+  output.dispose();
+});
+
+test('worker failure clears stale live UI flags and unlocks only the failed app', async () => {
+  const fake = fakeWorkers(fakeRuntime);
+  const sessions = new SessionManager({ workerFactory: fake.factory });
+  const first = sessions.create({ projectId: 'A' });
+  const second = sessions.create({ projectId: 'B' });
+  await Promise.all([launch(first), launch(second)]);
+  fake.workers[0].emit({ event: 'state', sessionId: 1, state: 'terminated', uiActive: true, output: '', stats: {} });
+  assert.equal(first.live, true);
+  fake.workers[0].onerror({ message: 'runtime crashed' });
+  assert.equal(first.live, false);
+  assert.equal(first.readOnly, false);
+  assert.equal(legacyDebug(first).state, 'faulted');
+  assert.equal(second.live, true);
+  sessions.dispose();
+});
