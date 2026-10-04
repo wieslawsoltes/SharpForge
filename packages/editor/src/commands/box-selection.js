@@ -1,4 +1,4 @@
-import { offsetAtVisualColumn, visualColumnAt } from '@sharpforge/text';
+import { expandTabs, offsetAtVisualColumn, visualColumnAt } from '@sharpforge/text';
 
 /** Build rectangular selections in visual columns, including tabs, wide clusters and virtual space. */
 export function createBoxSelections(source, {
@@ -36,11 +36,15 @@ export function setBoxSelection(model, options) {
 }
 
 /** Edit only selected visual cells. Partial tabs are replaced with equivalent unselected prefix/suffix spaces. */
-export function boxSelectionEdits(source, selections, text) {
+export function boxSelectionEdits(source, selections, text, { padVirtualSpace = true, maxInsertedCharacters = 16 * 1024 * 1024 } = {}) {
+  if (!Number.isSafeInteger(maxInsertedCharacters) || maxInsertedCharacters < 0 || maxInsertedCharacters > 1000000000) {
+    throw new RangeError('Invalid box insertion character budget');
+  }
   const replacements = Array.isArray(text) ? text : selections.map(() => text);
   if (replacements.length !== selections.length || replacements.some(value => typeof value !== 'string')) {
     throw new RangeError('Expected one text replacement per box row');
   }
+  let insertedCharacters = 0;
   return selections.map((selection, index) => {
     const box = selection.box;
     if (!box) throw new TypeError('Selection is not rectangular');
@@ -48,8 +52,10 @@ export function boxSelectionEdits(source, selections, text) {
     const lineStart = source.getLineStart?.(box.line) ?? source.lineStart(box.line);
     const start = offsetAtVisualColumn(line, box.startColumn, { tabSize: box.tabSize });
     const end = offsetAtVisualColumn(line, box.endColumn, { tabSize: box.tabSize, bias: 'right' });
-    const prefix = start.virtualSpaces || (start.insideTab ? start.intraColumn : 0);
+    const prefix = (padVirtualSpace ? start.virtualSpaces : 0) || (start.insideTab ? start.intraColumn : 0);
     const suffix = end.insideTab ? end.column - box.endColumn : 0;
+    insertedCharacters += prefix + replacements[index].length + suffix;
+    if (insertedCharacters > maxInsertedCharacters) throw new RangeError('Box insertion exceeds the character budget');
     const collapsedWide = box.startColumn === box.endColumn && !start.insideTab;
     return {
       start: lineStart + start.offset, end: lineStart + (collapsedWide ? start.offset : end.offset),
@@ -59,8 +65,19 @@ export function boxSelectionEdits(source, selections, text) {
   });
 }
 
+/** Copy complete selected graphemes, expanding only tabs and virtual cells within the rectangle. */
+export function boxSelectionText(source, selection, { padVirtualSpace = true } = {}) {
+  const box = selection.box;
+  if (!box) throw new TypeError('Selection is not rectangular');
+  const expanded = expandTabs(source.getLine(box.line), { tabSize: box.tabSize });
+  const first = offsetAtVisualColumn(expanded, box.startColumn);
+  const last = offsetAtVisualColumn(expanded, box.endColumn, { bias: 'right' });
+  const padding = padVirtualSpace ? Math.max(0, last.virtualSpaces - first.virtualSpaces) : 0;
+  return expanded.slice(first.offset, last.offset) + ' '.repeat(padding);
+}
+
 export function applyBoxText(model, text, options = {}) {
-  const edits = boxSelectionEdits(model, model.selections, text);
+  const edits = boxSelectionEdits(model, model.selections, text, options);
   let delta = 0;
   const selections = edits.map(edit => {
     const active = edit.start + delta + edit.caretInText;

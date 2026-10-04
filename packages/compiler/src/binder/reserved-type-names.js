@@ -1,3 +1,4 @@
+import {DiagnosticId} from '../diagnostics/codes.js';
 /**
  * Type names that became contextual keywords (SF-A02-T12.1): a documented breaking change each time. From the
  * language version that introduced the keyword, a type or type parameter with that name is reported; below it the
@@ -12,11 +13,11 @@
  * An escaped name (`@record`) is not reported. Using aliases with these names are not checked here.
  */
 const reservedTypeNames = Object.freeze({
-  record: { version: 9, code: 'CS8860' },
-  required: { version: 11, code: 'CS9029' },
-  scoped: { version: 11, code: 'CS9062' },
-  file: { version: 11, code: 'CS9056' },
-  extension: { version: 14, code: 'CS9306' },
+  record: { version: 9, code: DiagnosticId.CS8860 },
+  required: { version: 11, code: DiagnosticId.CS9029 },
+  scoped: { version: 11, code: DiagnosticId.CS9062 },
+  file: { version: 11, code: DiagnosticId.CS9056 },
+  extension: { version: 14, code: DiagnosticId.CS9306 },
 });
 
 /** The rule a declared type name breaks at `version`, or null. `identifier` is the name token as written. */

@@ -11,6 +11,8 @@ import { UnsignedShiftLowering } from './unsigned-shift.js';
 import { DynamicLowering } from './dynamic.js';
 import { ComInteropLowering } from './com-interop.js';
 import { ExceptionFilterLowering } from './exception-filters.js';
+import { InterpolatedStringHandlerLowering } from './interpolated-string-handlers.js';
+import { StringElementLowering } from './string-elements.js';
 
 // One entry per line: batches that add a lowering then change different lines.
 export const languageLowerings = Object.freeze([
@@ -22,4 +24,6 @@ export const languageLowerings = Object.freeze([
   DynamicLowering,
   ComInteropLowering,
   ExceptionFilterLowering,
+  InterpolatedStringHandlerLowering,
+  StringElementLowering,
 ]);

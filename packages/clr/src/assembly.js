@@ -2,6 +2,10 @@ import { readPE } from '@sharpforge/cil';
 import { assemblyIdentityFromRow } from './identity.js';
 import { checkCancellation, loadError, LoadErrorCode } from './load-errors.js';
 import { MetadataTypeDefinitions } from './type-system/metadata-type-definitions.js';
+import { MetadataMemberDefinitions } from './type-system/metadata-member-definitions.js';
+import { MetadataConstants } from './type-system/metadata-constants.js';
+import { MetadataAccessors } from './type-system/metadata-accessors.js';
+import { MetadataParameters } from './type-system/metadata-parameters.js';
 import { MetadataGenericParameters } from './type-system/metadata-generic-parameters.js';
 
 function namedIdentityRow(row, reference) {
@@ -22,6 +26,12 @@ function guidText(bytes) {
   return [[3, 2, 1, 0], [5, 4], [7, 6], [8, 9], [10, 11, 12, 13, 14, 15]].map(group => group.map(hex).join('')).join('-');
 }
 
+function validateHeapLimit(maxBytes) {
+  if (maxBytes !== undefined && (!Number.isSafeInteger(maxBytes) || maxBytes < 0 || maxBytes > 256 * 1024 * 1024)) {
+    throw loadError(LoadErrorCode.InvalidConfiguration, 'Invalid metadata heap byte limit');
+  }
+}
+
 /** One manifest module with cached metadata access and method bodies decoded only on demand. */
 export class RuntimeModule {
   #pe;
@@ -30,6 +40,13 @@ export class RuntimeModule {
   #typeHandles = new Map();
   #bodyReads = 0;
   #typeDefinitions;
+  #methodDefinitions;
+  #fieldDefinitions;
+  #propertyDefinitions;
+  #eventDefinitions;
+  #accessors;
+  #constants;
+  #parameterDefinitions;
   #genericParameters;
   constructor(assembly, pe) {
     this.#assembly = assembly;
@@ -57,14 +74,33 @@ export class RuntimeModule {
     return this.#pe.metadata.counts[table] ?? 0;
   }
 
-  string(index) {
+  /** Optional maxBytes bounds UTF-8 bytes before decoding; invalid limits and oversized values produce SFCLR006/007. */
+  string(index, { maxBytes } = {}) {
     this.#assembly.ensureUsable();
+    validateHeapLimit(maxBytes);
+    if (maxBytes !== undefined) {
+      const heap = this.#pe.metadata.streams.get('#Strings');
+      if (!heap && index === 0) return '';
+      if (!Number.isSafeInteger(index) || index < 0 || !heap || index >= heap.length) {
+        throw loadError(LoadErrorCode.InvalidImage, 'Invalid string heap index');
+      }
+      let end = index;
+      while (end < heap.length && heap[end] !== 0 && end - index <= maxBytes) end++;
+      if (end - index > maxBytes) throw loadError(LoadErrorCode.LimitExceeded, 'Metadata string byte limit exceeded');
+      if (end === heap.length) throw loadError(LoadErrorCode.InvalidImage, 'Unterminated metadata string');
+    }
     return this.#pe.metadata.string(index);
   }
 
-  blob(index) {
+  /** Return an owned copy, optionally rejecting maxBytes before materialization (SFCLR006/007 for invalid/exceeded limits). */
+  blob(index, { maxBytes } = {}) {
     this.#assembly.ensureUsable();
-    return new Uint8Array(this.#pe.metadata.blob(index));
+    validateHeapLimit(maxBytes);
+    const bytes = this.#pe.metadata.blob(index);
+    if (maxBytes !== undefined && bytes.byteLength > maxBytes) {
+      throw loadError(LoadErrorCode.LimitExceeded, 'Metadata blob byte limit exceeded');
+    }
+    return new Uint8Array(bytes);
   }
 
   /** Resolve a metadata owner list, including #- pointer table indirection. */
@@ -90,6 +126,90 @@ export class RuntimeModule {
     return this.#typeDefinitions.get(token);
   }
 
+  /** Canonical MethodDef identity; decoding signatures and bodies remains explicit and lazy. */
+  methodDefinition(token) {
+    this.#assembly.ensureUsable();
+    this.#methodDefinitions ??= new MetadataMemberDefinitions(this);
+    return this.#methodDefinitions.get(token);
+  }
+
+  /** Immutable declared method list in metadata order; this does not apply reflection BindingFlags. */
+  methodDefinitions(typeToken) {
+    this.#assembly.ensureUsable();
+    this.#methodDefinitions ??= new MetadataMemberDefinitions(this);
+    return this.#methodDefinitions.forType(typeToken);
+  }
+
+  /** Frozen positional parameter/return metadata; raw constants are decoded only when requested. */
+  methodParameters(methodToken) {
+    this.#assembly.ensureUsable();
+    this.#parameterDefinitions ??= new MetadataParameters(this);
+    return this.#parameterDefinitions.forMethod(methodToken);
+  }
+
+  /** Canonical FieldDef metadata identity; signatures and raw constants remain lazy. */
+  fieldDefinition(token) {
+    this.#assembly.ensureUsable();
+    this.#fieldDefinitions ??= new MetadataMemberDefinitions(this, 'field');
+    return this.#fieldDefinitions.get(token);
+  }
+
+  /** Frozen declared-field list in metadata order, including #- FieldPtr indirection. */
+  fieldDefinitions(typeToken) {
+    this.#assembly.ensureUsable();
+    this.#fieldDefinitions ??= new MetadataMemberDefinitions(this, 'field');
+    return this.#fieldDefinitions.forType(typeToken);
+  }
+
+  /** Canonical Property metadata identity with lazy signature and accessor links. */
+  propertyDefinition(token) {
+    this.#assembly.ensureUsable();
+    this.#propertyDefinitions ??= new MetadataMemberDefinitions(this, 'property');
+    return this.#propertyDefinitions.get(token);
+  }
+
+  /** Frozen declared-property list through PropertyMap and optional #- PropertyPtr indirection. */
+  propertyDefinitions(typeToken) {
+    this.#assembly.ensureUsable();
+    this.#propertyDefinitions ??= new MetadataMemberDefinitions(this, 'property');
+    return this.#propertyDefinitions.forType(typeToken);
+  }
+
+  /** Frozen {getMethod, setMethod, otherMethods} using canonical methods; no visibility filtering or execution. */
+  propertyAccessors(token) {
+    this.#assembly.ensureUsable();
+    this.#accessors ??= new MetadataAccessors(this);
+    return this.#accessors.get(token);
+  }
+
+  /** Canonical Event metadata identity; the event type is an unresolved module-relative token. */
+  eventDefinition(token) {
+    this.#assembly.ensureUsable();
+    this.#eventDefinitions ??= new MetadataMemberDefinitions(this, 'event');
+    return this.#eventDefinitions.get(token);
+  }
+
+  /** Frozen declared-event list through EventMap and optional #- EventPtr indirection. */
+  eventDefinitions(typeToken) {
+    this.#assembly.ensureUsable();
+    this.#eventDefinitions ??= new MetadataMemberDefinitions(this, 'event');
+    return this.#eventDefinitions.forType(typeToken);
+  }
+
+  /** Frozen {addMethod, removeMethod, raiseMethod, otherMethods}; no visibility filtering or invocation. */
+  eventAccessors(token) {
+    this.#assembly.ensureUsable();
+    this.#accessors ??= new MetadataAccessors(this);
+    return this.#accessors.get(token, 20);
+  }
+
+  /** Frozen raw Constant value for a Field/Param/Property token, or null; malformed metadata yields SFCLR005/007. */
+  constant(token) {
+    this.#assembly.ensureUsable();
+    this.#constants ??= new MetadataConstants(this);
+    return this.#constants.get(token);
+  }
+
   /** Ordered canonical GenericParam identities for a TypeDef; constraints are unresolved metadata tokens. */
   genericParameters(typeToken) {
     this.#assembly.ensureUsable();
@@ -97,7 +217,14 @@ export class RuntimeModule {
     return this.#genericParameters.forType(typeToken);
   }
 
-  /** Canonical TypeDef-owned GenericParam token lookup; method parameters remain unsupported. */
+  /** Canonical MethodDef-owned generic parameter identities, checked against signature arity. */
+  methodGenericParameters(methodToken) {
+    this.#assembly.ensureUsable();
+    this.#genericParameters ??= new MetadataGenericParameters(this);
+    return this.#genericParameters.forMethod(methodToken);
+  }
+
+  /** Canonical GenericParam token lookup for either TypeDef or MethodDef ownership. */
   genericParameter(token) {
     this.#assembly.ensureUsable();
     this.#genericParameters ??= new MetadataGenericParameters(this);

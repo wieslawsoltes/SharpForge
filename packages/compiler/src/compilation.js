@@ -2,9 +2,9 @@ import {DiagnosticId} from './diagnostics/codes.js';
 import {languageVersion} from './modern.js';
 import {reportFieldKeywordUses} from './binder/field-keyword.js';
 import {lowerAsyncFiles} from './async-lowering.js';
-import {frameworkType,taskResult,findContracts} from '@sharpforge/framework';
+import {frameworkType} from '@sharpforge/framework';
 import {diagnostic} from '@sharpforge/text';
-import {Op,frameworkBuiltin,FORMAT_VERSION,serializeImage} from '@sharpforge/bytecode';
+import {Op,FORMAT_VERSION,serializeImage} from '@sharpforge/bytecode';
 import {supported,normalize,defaultValue,typeText} from './type-utils.js';
 import {formatMessage,defaultSeverity,featureNotAvailableCode} from './diagnostics/codes.js';
 import {MethodCompiler} from './method-compiler.js';
@@ -22,13 +22,14 @@ import {NullableContextMap} from './nullable/annotations.js';
 import {typeSyntaxSpan} from './binder/type-spans.js';
 import {syntaxFeatureChecks} from './syntax-features.js';
 import {reconcileWithSemanticAnalysis} from './semantic-integration.js';
+import {declareTopLevelEntry,declareEntryStartup} from './codegen/entry-startup.js';
 export class Compilation {
   constructor(parsedFiles, options={}) {
     const syntaxChecks = syntaxFeatureChecks(parsedFiles, options);
     this.syntaxFeatureFailures = syntaxChecks.unavailable;
     this.syntaxFeatureDiagnostics = syntaxChecks.diagnostics;
     this.inputFiles=parsedFiles;parsedFiles=lowerAsyncFiles(parsedFiles);this.files=parsedFiles;this.options=options;this.sources=new Map(parsedFiles.map(p=>[p.source.uri,p.source]));
-    this.diagnostics=parserDiagnosticsWithoutSuppressMessage(parsedFiles);for(const d of syntaxChecks.diagnostics)if(!this.diagnostics.some(existing=>existing.uri===d.uri&&existing.start===d.start&&existing.length===d.length&&existing.code===d.code&&existing.message===d.message))this.diagnostics.push(d);this.symbols=[];this.references=[];this.types=[];this.typeMap=new Map();this.methods=[];this.methodIndex=new MethodIndex();this.statics=[];this.constants=[];this.constantMap=new Map();this.sequencePoints=[];
+    this.diagnostics=parserDiagnosticsWithoutSuppressMessage(parsedFiles).filter(d=>!syntaxChecks.isSuperseded(d));for(const d of syntaxChecks.diagnostics)if(!this.diagnostics.some(existing=>existing.uri===d.uri&&existing.start===d.start&&existing.length===d.length&&existing.code===d.code&&existing.message===d.message))this.diagnostics.push(d);this.symbols=[];this.references=[];this.types=[];this.typeMap=new Map();this.methods=[];this.methodIndex=new MethodIndex();this.statics=[];this.constants=[];this.constantMap=new Map();this.sequencePoints=[];
     // 'bound' binds to a bound tree, analyses flow, lowers and then emits; 'legacy' is the fused string-typed method compiler.
     this.nullableMaps=new Map();this.fullNames=new Map();this.simpleNames=new Map();this.fileUsings=new Map();this.binderChains=new Map();this.pipeline=options.pipeline??globalThis.process?.env?.SHARPFORGE_PIPELINE??Compilation.defaultPipeline;this.semantic=new CompilationSymbols(this);this.boundPipeline=null;
   }
@@ -141,7 +142,7 @@ export class Compilation {
     const selection=findEntryPoint({methods:this.methods,topLevel:tops,isLibrary:library,mainTypeName:this.options.mainTypeName??null,types:this.types,root:this.files[0]?.root??{},asyncMainAvailable:node=>this.requireFeature(node,7.1,'async main')});
     for(const d of selection.diagnostics)this.report(d.node?.nameSpan?{uri:d.node.uri,start:d.node.nameSpan.start,end:d.node.nameSpan.end}:d.node,d.code,d.args);
     let entry=selection.method;
-    if(selection.kind==='topLevel'){const {file,statements}=selection.topLevel;entry=this.declareMethod(null,{kind:'Method',name:'<Main>',returnType:'void',parameters:[],modifiers:['static'],body:{kind:'Block',statements,start:0,end:file.source.length,uri:file.source.uri},uri:file.source.uri,start:0,end:file.source.length});}
+    if(selection.kind==='topLevel')entry=declareTopLevelEntry(this,selection.topLevel);
     // Per-type instance initializer routines execute before constructors.
     for(const type of this.types){
       const statements=type.fields.filter(f=>f.node.initializer&&!f.isStatic).map(f=>({kind:'ExpressionStatement',uri:f.node.uri,start:f.node.start,end:f.node.end,expression:{kind:'Assignment',operator:'=',left:{kind:'Member',target:{kind:'Name',name:'this',uri:f.node.uri,start:f.node.start,end:f.node.start},name:f.name,nameSpan:f.node.nameSpan,uri:f.node.uri,start:f.node.start,end:f.node.end},right:f.node.initializer,uri:f.node.uri,start:f.node.start,end:f.node.end}}));
@@ -151,17 +152,7 @@ export class Compilation {
     for(const method of [...this.methods]){if(bound)bound.bindMethod(method);else new MethodCompiler(this,method).build();}
     // Library type initializers are real .cctor methods; the CLI has no entry-point token.
     if(library)for(const type of this.types){const fields=this.statics.filter(f=>f.owner===type&&f.node.initializer);if(!fields.length)continue;const node={...type.node,kind:'Method',name:'.cctor',parameters:[],returnType:'void',modifiers:['static'],body:{kind:'Block',statements:[],start:0,end:0,uri:type.node.uri}},method=this.declareMethod(type,node,true);if(bound){bound.bindInitializers(method,fields);continue;}const b=new MethodCompiler(this,method);for(const field of fields){const actual=b.typedExpr(field.node.initializer,field.type);b.checkAssign(field.type,actual,field.node);b.emit(Op.STSTATIC,field.index);b.emit(Op.POP);}b.emitConstant(null);b.emit(Op.RET);b.finish();}
-    let entryId=library?null:entry?.id??0;
-    if(entry){
-      if(entry.node.asyncRole==='kickoff'&&entry.returnType==='void')this.report(entry.node,DiagnosticId.CS4009);
-      const node={...entry.node,name:'<startup>',parameters:[],returnType:taskResult(entry.returnType)??entry.returnType,modifiers:['static'],body:{kind:'Block',statements:[],start:0,end:0,uri:entry.node.uri}};
-      const startup=this.declareMethod(null,node,true),awaited=taskResult(entry.returnType)!==null,awaitContract=awaited?findContracts('SharpForge.Runtime.Async','Await',true).find(x=>x.parameters[0]===entry.returnType):null,awaitBuiltin=awaitContract?frameworkBuiltin(awaitContract):null;
-      // The startup method runs the static initializers, calls the entry point and awaits a Task-returning Main.
-      const tail=b=>{if(entry.parameters.length){b.emitConstant(0);b.emit(Op.NEWARR,this.constant('string'));}b.emit(Op.CALL,entry.id,entry.parameters.length);if(awaited){if(awaitBuiltin)b.emit(Op.BUILTIN,awaitBuiltin.id,1);else{b.emit(Op.POP);b.emitConstant(null);}}b.emit(Op.RET);};
-      if(bound)bound.bindInitializers(startup,this.statics.filter(f=>f.node.initializer),{ownerPerField:true,tail});
-      else{const b=new MethodCompiler(this,startup);for(const field of this.statics){if(field.node.initializer){b.m.owner=field.owner;const type=b.typedExpr(field.node.initializer,field.type);b.checkAssign(field.type,type,field.node);b.emit(Op.STSTATIC,field.index);b.emit(Op.POP);}} b.m.owner=null;tail(b);b.finish();}
-      if(awaited&&!awaitBuiltin)this.report(entry.node,DiagnosticId.CS0028,[entry.qualifiedName],'error');entryId=startup.id;
-    }
+    const entryId=entry?declareEntryStartup(this,entry,bound):library?null:0;
     if(bound)bound.emit();
     const image={formatVersion:FORMAT_VERSION,name:this.options.name??'Application',...(library?{outputKind:'library'}:{}),entryPoint:entryId,constants:this.constants,sequencePoints:this.sequencePoints,
       sources:this.files.map(f=>({uri:f.source.uri,text:f.source.text,version:f.source.version})),

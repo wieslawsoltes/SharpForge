@@ -8,6 +8,7 @@
  * module adds the conversion rules that are specific to enums: only the literal 0 converts implicitly, every numeric
  * type converts explicitly both ways, and constant folding stays in the underlying type.
  */
+import {DiagnosticId} from '../diagnostics/codes.js';
 import { ConstantValue } from '../constants/constant-value.js';
 import { foldBinary, foldConversion } from '../constants/fold.js';
 import { integralRange, numericKind } from '../conversions/numeric.js';
@@ -32,7 +33,7 @@ export function bindEnumMembers(enumType, core, evaluate, report) {
   const valueOf = field => {
     if (state.get(field) === 'done') return field.enumValue;
     if (state.get(field) === 'active') {
-      report(uriOf(field), field.locations[0], 'CS0110', [field.toDisplayString()]);
+      report(uriOf(field), field.locations[0], DiagnosticId.CS0110, [field.toDisplayString()]);
       state.set(field, 'done');
       field.enumValue = null;
       field.constantValue = null;
@@ -45,12 +46,12 @@ export function bindEnumMembers(enumType, core, evaluate, report) {
       const bound = evaluate(init, field.scope, field);
       if (bound.errors) value = null;
       else if (!bound.constant) {
-        report(uriOf(field), init, 'CS0133', [field.toDisplayString()]);
+        report(uriOf(field), init, DiagnosticId.CS0133, [field.toDisplayString()]);
       } else {
         const c = bound.constant,
           sameEnum = c.isEnum && bound.type?.equals(enumType);
         if (!c.isIntegral || (c.isEnum && !sameEnum)) {
-          report(uriOf(field), init, 'CS0266', [
+          report(uriOf(field), init, DiagnosticId.CS0266, [
             bound.type?.toDisplayString() ?? c.typeName,
             core.enumUnderlying(enumType).toDisplayString(),
           ]);
@@ -58,9 +59,9 @@ export function bindEnumMembers(enumType, core, evaluate, report) {
           const v = c.bigint,
             fromKind = c.type;
           // An int constant narrows implicitly when in range; other types need an implicit numeric conversion.
-          if (v < lo || v > hi) report(uriOf(field), init, 'CS0031', [String(v), kind]);
+          if (v < lo || v > hi) report(uriOf(field), init, DiagnosticId.CS0031, [String(v), kind]);
           else if (!sameEnum && fromKind !== kind && fromKind !== 'int' && !implicitTo(fromKind, kind))
-            report(uriOf(field), init, 'CS0266', [fromKind, kind]);
+            report(uriOf(field), init, DiagnosticId.CS0266, [fromKind, kind]);
           else value = v;
         }
       }
@@ -71,7 +72,7 @@ export function bindEnumMembers(enumType, core, evaluate, report) {
         const previous = valueOf(fields[index - 1]);
         if (previous !== null) {
           if (previous + 1n > hi) {
-            report(uriOf(field), field.locations[0], 'CS0543', [field.toDisplayString()]);
+            report(uriOf(field), field.locations[0], DiagnosticId.CS0543, [field.toDisplayString()]);
           } else value = previous + 1n;
         }
       }

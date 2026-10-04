@@ -13,7 +13,6 @@
     "tests/project-context-contract.test.js",
     "tests/project-input-contract.test.js",
     "tests/project-expression-contract.test.js",
-    "tests/a23-09-project-edits.test.js",
     "tests/project-edits-roundtrip.test.js",
     "tests/project-resource-contract.test.js",
     "tests/project-solution-reader.test.js",
@@ -26,10 +25,7 @@
     "tests/project-evaluation-build-stages.test.js",
     "tests/project-evaluation-build.test.js",
     "tests/project-evaluation-contexts.test.js",
-    "tests/a23-native-command-lines.test.js",
-    "tests/a23-native-process.test.js",
-    "tests/a23-native-engine.test.js",
-    "tests/a23-12-evaluation-differential.test.js"
+    "tests/a23-*.test.js"
   ],
   "browserScripts": [
     "tests/browser_msbuild_test.py"

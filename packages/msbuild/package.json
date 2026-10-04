@@ -20,7 +20,11 @@
   ],
   "dependencies": {
     "@sharpforge/project-system": "0.14.0",
-    "@sharpforge/network": "0.14.0"
+    "@sharpforge/network": "0.14.0",
+    "@sharpforge/archive": "0.14.0",
+    "@sharpforge/compiler": "0.14.0",
+    "@sharpforge/syntax": "0.14.0",
+    "@sharpforge/runtime": "0.14.0"
   },
   "engines": {
     "node": ">=22"

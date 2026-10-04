@@ -6,3 +6,6 @@ export * from './csc-args.js';
 export * from './diagnostics.js';
 export * from './sarif.js';
 export * from './evaluation-differential.js';
+export * from './project-context.js';
+export * from './rid.js';
+export * from './testing/index.js';

@@ -8,6 +8,7 @@
  * one input-safe (CS1961), walking return types, parameter types (flipped), ref/out parameters (invariant),
  * constraints on generic methods and nested constructed types.
  */
+import {DiagnosticId} from '../diagnostics/codes.js';
 import { Variance, TypeKind, SymbolKind, NamedTypeSymbol, ArrayTypeSymbol, RefKind, typeOf } from '../symbols/types.js';
 
 /**
@@ -101,7 +102,7 @@ export function checkVarianceSafety(type, { staticMembers = false } = {}) {
     if (violation)
       results.push({
         // A static member is exempt from C# 9 on: below it the violation names the version that lifts the rule.
-        code: inStaticMember ? 'CS8904' : 'CS1961',
+        code: inStaticMember ? DiagnosticId.CS8904 : DiagnosticId.CS1961,
         args: [
           member.toDisplayString(),
           violation.parameter.name,

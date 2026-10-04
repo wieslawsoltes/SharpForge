@@ -1,0 +1,65 @@
+{
+  "schemaVersion": 1,
+  "scope": "A23 T10 solution mappings and legacy serialization",
+  "sourceCommit": "4a49a23b773b62088057d83e3e6ac6e573390578",
+  "base": {
+    "pullRequest": 3666,
+    "branch": "codex/p18-solution-reader",
+    "sha": "67e5bf9a70f1390b1f909572f1bd2c8fb6fe6228"
+  },
+  "sourceFiles": {
+    "packages/msbuild/src/solution-defaults.js": "25c891696475ada00b931d7abc9db1969b9f1560",
+    "packages/msbuild/src/solution-configurations.js": "7532d332edbd8d08a7bf4a2a6d34b32369a3e591",
+    "packages/msbuild/src/solution-selection.js": "e718cc73cb863bbe15d8b35026d3d1041aa58a12",
+    "packages/msbuild/src/sln-configurations.js": "25e8e08b6e5f1d62a4caf32de6d20db987cd64a7",
+    "packages/msbuild/src/sln-writer.js": "c381864f6e7b5ebec5e0cc7d2bce1cf4d42e9e63"
+  },
+  "extractions": {
+    "solution-inspection.js": "Formatted extraction of original solution.js inspection/creation behavior; legacy facade shrinks.",
+    "tests/a23-solution-configuration-contract.test.js": "Public-import projection of eight existing test cases. B05 reader assertions retained; ProjectSystem integration assertions remain unchanged in original a23-10 file for its separate evaluator-dependent qualification."
+  },
+  "qualification": [
+    {
+      "path": "planning/evidence/project18/testing/node22.tap",
+      "sha256": "1da313e5473a0ce2adda04e1be83212e9c01229fd6b64f4fe9f3cf5f3e8d7c5b",
+      "selectedRecords": [
+        "ok 30 - A23 T10.1 default inference and last matching configuration rules map each project independently",
+        "ok 31 - A23 T10.3 default solution infers Debug/Release and CLR vs VC platform rules",
+        "ok 32 - A23 T10.1 custom type rules support inheritance and IsBuildable without overriding later project rules",
+        "ok 33 - A23 T10.4 project requests and configuration-manager selection retain mapped globals",
+        "ok 34 - A23 T10.4 saved solution context maps native project requests once, with cancellation and unknown-project errors",
+        "ok 35 - A23 T10.2/T10.5 legacy writer preserves GUIDs, folders, dependencies, unsupported projects and Build.0 selection",
+        "ok 36 - A23 B05 unsupported project types remain visible and unloaded, never in portable compilation projectPaths",
+        "ok 37 - A23 T10 rejects malformed mappings, duplicate identities, limits and cancellation"
+      ],
+      "result": "8/8 pass in completed 135/135 scope; zero skips"
+    },
+    {
+      "path": "planning/evidence/project18/testing/node26.tap",
+      "sha256": "9807dc8ec4bd9eb839f9868aa6418cb6aeea43b248c13bb777b3e3b5c4e8c314",
+      "selectedRecords": [
+        "ok 30 - A23 T10.1 default inference and last matching configuration rules map each project independently",
+        "ok 31 - A23 T10.3 default solution infers Debug/Release and CLR vs VC platform rules",
+        "ok 32 - A23 T10.1 custom type rules support inheritance and IsBuildable without overriding later project rules",
+        "ok 33 - A23 T10.4 project requests and configuration-manager selection retain mapped globals",
+        "ok 34 - A23 T10.4 saved solution context maps native project requests once, with cancellation and unknown-project errors",
+        "ok 35 - A23 T10.2/T10.5 legacy writer preserves GUIDs, folders, dependencies, unsupported projects and Build.0 selection",
+        "ok 36 - A23 B05 unsupported project types remain visible and unloaded, never in portable compilation projectPaths",
+        "ok 37 - A23 T10 rejects malformed mappings, duplicate identities, limits and cancellation"
+      ],
+      "result": "8/8 pass in completed 135/135 scope; zero skips"
+    }
+  ],
+  "projectionQualification": "No duplicate run claimed. Public facade/inspection extraction receives the next bounded scheduled follow-up; ordinary core pending.",
+  "nativeEvidence": {
+    "path": "planning/evidence/project18/testing/solutions-native.json",
+    "result": "22 assertions passed with SDK 10.0.201 / MSBuild 18.3.0.15422; Linux only."
+  },
+  "remaining": [
+    "Native build request wiring belongs to the dependent native service batch.",
+    "Configuration-manager UI and evaluator projectProperties integration belong to dependent batches.",
+    "No Windows or macOS qualification is claimed.",
+    "Legacy writer retains structured unknown sections, not original whitespace/comments/bytes."
+  ],
+  "publicationCorrection": "SLNX and SLN readers cap configurations at 4096 before expansion. The bounded-product regression is authored and awaits the scheduled focused follow-up; prior qualification predates this rejection-only guard."
+}

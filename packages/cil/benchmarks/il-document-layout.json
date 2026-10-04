@@ -1,0 +1,293 @@
+{
+  "before": {
+    "label": "baseline-ead84e6f",
+    "mode": "default",
+    "node": "v24.21.0",
+    "platform": "darwin",
+    "architecture": "arm64",
+    "results": [
+      {
+        "count": 1000,
+        "documentCharacters": 18135,
+        "medianMs": 1.8418749999999875,
+        "p95Ms": 2.014125000000007,
+        "medianHeapDelta": 2296112,
+        "samples": [
+          {
+            "ms": 1.845249999999993,
+            "heapDelta": 2316448,
+            "resultBytes": 3072
+          },
+          {
+            "ms": 2.014125000000007,
+            "heapDelta": 2606808,
+            "resultBytes": 3072
+          },
+          {
+            "ms": 2.0037499999999966,
+            "heapDelta": 1846680,
+            "resultBytes": 3072
+          },
+          {
+            "ms": 1.6537919999999815,
+            "heapDelta": 2273808,
+            "resultBytes": 3072
+          },
+          {
+            "ms": 1.8418749999999875,
+            "heapDelta": 2294760,
+            "resultBytes": 3072
+          },
+          {
+            "ms": 1.6586250000000007,
+            "heapDelta": 2296112,
+            "resultBytes": 3072
+          },
+          {
+            "ms": 1.8415419999999756,
+            "heapDelta": 2794392,
+            "resultBytes": 3072
+          }
+        ]
+      },
+      {
+        "count": 5000,
+        "documentCharacters": 83595,
+        "medianMs": 5.080417000000011,
+        "p95Ms": 10.834292000000005,
+        "medianHeapDelta": 8917816,
+        "samples": [
+          {
+            "ms": 10.834292000000005,
+            "heapDelta": 8889024,
+            "resultBytes": 11264
+          },
+          {
+            "ms": 9.111209000000002,
+            "heapDelta": 9145872,
+            "resultBytes": 11264
+          },
+          {
+            "ms": 6.007999999999981,
+            "heapDelta": 9123304,
+            "resultBytes": 11264
+          },
+          {
+            "ms": 4.737540999999993,
+            "heapDelta": 8909336,
+            "resultBytes": 11264
+          },
+          {
+            "ms": 5.080417000000011,
+            "heapDelta": 8917816,
+            "resultBytes": 11264
+          },
+          {
+            "ms": 5.019749999999988,
+            "heapDelta": 8910808,
+            "resultBytes": 11264
+          },
+          {
+            "ms": 5.043165999999985,
+            "heapDelta": 8918136,
+            "resultBytes": 11264
+          }
+        ]
+      }
+    ]
+  },
+  "after": {
+    "label": "extracted-default",
+    "mode": "default",
+    "node": "v24.21.0",
+    "platform": "darwin",
+    "architecture": "arm64",
+    "results": [
+      {
+        "count": 1000,
+        "documentCharacters": 18135,
+        "medianMs": 1.813999999999993,
+        "p95Ms": 2.161416999999986,
+        "medianHeapDelta": 2199640,
+        "samples": [
+          {
+            "ms": 2.161416999999986,
+            "heapDelta": 2212168,
+            "resultBytes": 3072
+          },
+          {
+            "ms": 1.813999999999993,
+            "heapDelta": 2240264,
+            "resultBytes": 3072
+          },
+          {
+            "ms": 1.8406249999999886,
+            "heapDelta": 2204616,
+            "resultBytes": 3072
+          },
+          {
+            "ms": 1.296416999999991,
+            "heapDelta": 2140808,
+            "resultBytes": 3072
+          },
+          {
+            "ms": 2.0453329999999994,
+            "heapDelta": 2183200,
+            "resultBytes": 3072
+          },
+          {
+            "ms": 1.7432090000000073,
+            "heapDelta": 2189144,
+            "resultBytes": 3072
+          },
+          {
+            "ms": 1.7732500000000186,
+            "heapDelta": 2199640,
+            "resultBytes": 3072
+          }
+        ]
+      },
+      {
+        "count": 5000,
+        "documentCharacters": 83595,
+        "medianMs": 5.131582999999978,
+        "p95Ms": 5.264375000000001,
+        "medianHeapDelta": 8393376,
+        "samples": [
+          {
+            "ms": 5.188749999999999,
+            "heapDelta": 8406016,
+            "resultBytes": 11264
+          },
+          {
+            "ms": 4.556666999999976,
+            "heapDelta": 8393376,
+            "resultBytes": 11264
+          },
+          {
+            "ms": 5.131582999999978,
+            "heapDelta": 8391608,
+            "resultBytes": 11264
+          },
+          {
+            "ms": 4.699999999999989,
+            "heapDelta": 8403240,
+            "resultBytes": 11264
+          },
+          {
+            "ms": 5.264375000000001,
+            "heapDelta": 8384936,
+            "resultBytes": 11264
+          },
+          {
+            "ms": 4.885792000000009,
+            "heapDelta": 8585512,
+            "resultBytes": 11264
+          },
+          {
+            "ms": 5.200708999999989,
+            "heapDelta": 8311360,
+            "resultBytes": 11264
+          }
+        ]
+      }
+    ]
+  },
+  "layout": {
+    "label": "explicit-layout",
+    "mode": "layout",
+    "node": "v24.21.0",
+    "platform": "darwin",
+    "architecture": "arm64",
+    "results": [
+      {
+        "count": 1000,
+        "documentCharacters": 18135,
+        "medianMs": 2.394666000000001,
+        "p95Ms": 2.7168330000000083,
+        "medianHeapDelta": 2652264,
+        "samples": [
+          {
+            "ms": 2.7168330000000083,
+            "heapDelta": 2728448,
+            "resultBytes": 3072
+          },
+          {
+            "ms": 2.394666000000001,
+            "heapDelta": 3171872,
+            "resultBytes": 3072
+          },
+          {
+            "ms": 2.0024170000000083,
+            "heapDelta": 2617544,
+            "resultBytes": 3072
+          },
+          {
+            "ms": 2.670000000000016,
+            "heapDelta": 2652264,
+            "resultBytes": 3072
+          },
+          {
+            "ms": 2.494665999999995,
+            "heapDelta": 2668912,
+            "resultBytes": 3072
+          },
+          {
+            "ms": 1.9011669999999867,
+            "heapDelta": 2615528,
+            "resultBytes": 3072
+          },
+          {
+            "ms": 2.315291000000002,
+            "heapDelta": 2525360,
+            "resultBytes": 3072
+          }
+        ]
+      },
+      {
+        "count": 5000,
+        "documentCharacters": 83595,
+        "medianMs": 6.766290999999995,
+        "p95Ms": 8.350083999999981,
+        "medianHeapDelta": 11359880,
+        "samples": [
+          {
+            "ms": 6.576499999999982,
+            "heapDelta": 11373800,
+            "resultBytes": 11264
+          },
+          {
+            "ms": 8.074959000000007,
+            "heapDelta": 11658264,
+            "resultBytes": 11264
+          },
+          {
+            "ms": 7.368334000000004,
+            "heapDelta": 11348736,
+            "resultBytes": 11264
+          },
+          {
+            "ms": 6.766290999999995,
+            "heapDelta": 11359880,
+            "resultBytes": 11264
+          },
+          {
+            "ms": 8.350083999999981,
+            "heapDelta": 11642424,
+            "resultBytes": 11264
+          },
+          {
+            "ms": 6.424082999999996,
+            "heapDelta": 11091768,
+            "resultBytes": 11264
+          },
+          {
+            "ms": 6.437457999999992,
+            "heapDelta": 11105416,
+            "resultBytes": 11264
+          }
+        ]
+      }
+    ]
+  }
+}

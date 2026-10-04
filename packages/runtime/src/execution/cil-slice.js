@@ -1,3 +1,4 @@
+import {flushFramePool} from './frame-pool.js';
 import {ManagedFault} from '../heap.js';
 import {fatalFaults} from './eh.js';
 import {flushCilMethodEvents} from './cil-method-events.js';
@@ -18,6 +19,7 @@ function raiseInstructionFault(vm, error) {
 export function runCilSlice(vm, {instructionBudget = 15000, timeBudgetMs = 8, onInstruction = null} = {}) {
   let started;
   try {
+    vm.profiler?.beginSlice();
     vm.scheduler.beforeSlice();
     if (vm.state === 'ready') vm.state = 'running';
     if (vm.state !== 'running') return vm.state;
@@ -47,11 +49,15 @@ export function runCilSlice(vm, {instructionBudget = 15000, timeBudgetMs = 8, on
       } catch (error) {
         raiseInstructionFault(vm, error);
       }
+      flushFramePool(vm);
       vm.scheduler.afterInstruction();
     }
     return vm.state;
   } finally {
     if (started !== undefined) vm.elapsedMs += performance.now() - started;
+    flushFramePool(vm);
+    vm.profiler?.closeSlice();
     flushCilMethodEvents(vm);
+    vm.profiler?.reportClockFailure();
   }
 }

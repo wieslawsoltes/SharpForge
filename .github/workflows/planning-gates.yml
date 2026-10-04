@@ -2,16 +2,42 @@ name: Planning contract gates
 on:
   workflow_dispatch:
     inputs:
+      pr_number:
+        description: PR number to qualify at the exact head and base below
+        required: true
+        type: string
+      head_sha:
+        description: Exact 40-character PR head commit SHA
+        required: true
+        type: string
+      base_sha:
+        description: Exact 40-character PR base commit SHA
+        required: true
+        type: string
       flake_files:
         description: Optional comma-separated Node test files for explicit failure retries
         required: false
         type: string
   workflow_call:
+    secrets:
+      PLANNING_PROJECT_READ_TOKEN:
+        description: Read-only Project credential for trusted ownership qualification
+        required: true
+    inputs:
+      pr_number:
+        required: true
+        type: string
+      head_sha:
+        required: true
+        type: string
+      base_sha:
+        required: true
+        type: string
 permissions:
   contents: read
   pull-requests: read
 concurrency:
-  group: planning-${{ github.event.pull_request.number || github.ref }}
+  group: planning-${{ inputs.pr_number }}
   cancel-in-progress: false
 jobs:
   gates:
@@ -22,24 +48,43 @@ jobs:
         with:
           fetch-depth: 0
           persist-credentials: false
+          path: planning-tools
       - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
         with:
           node-version: '24.21.0'
+      - name: Resolve the requested PR snapshot before checking out PR code
+        id: context
+        env:
+          GH_TOKEN: ${{ github.token }}
+          PLANNING_PR: ${{ inputs.pr_number }}
+          PLANNING_HEAD_SHA: ${{ inputs.head_sha }}
+          PLANNING_BASE_SHA: ${{ inputs.base_sha }}
+        run: node planning-tools/scripts/conformance/ci-planning/context.js --output "$RUNNER_TEMP/planning-pr.json"
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: ${{ steps.context.outputs.head_sha }}
+          fetch-depth: 0
+          persist-credentials: false
+          path: qualified-pr
       - run: npm ci --ignore-scripts --no-audit --no-fund
+        working-directory: qualified-pr
       - name: Ownership, DAG, manifests, contracts and combined-tree regression
         env:
           GH_TOKEN: ${{ github.token }}
-        run: node scripts/conformance/ci-planning/gates.js
+          PROJECT_READ_TOKEN: ${{ secrets.PLANNING_PROJECT_READ_TOKEN }}
+        run: node planning-tools/scripts/conformance/ci-planning/gates.js --root qualified-pr --context "$RUNNER_TEMP/planning-pr.json"
       - name: Explicit flake measurement
-        if: always() && github.event_name == 'workflow_dispatch' && inputs.flake_files != ''
+        if: always() && steps.context.outcome == 'success' && github.event_name == 'workflow_dispatch' && inputs.flake_files != ''
         env:
           FLAKE_FILES: ${{ inputs.flake_files }}
-        run: node scripts/conformance/flaky/detect.js --files "$FLAKE_FILES" --output artifacts/flaky.json
+        run: node ../planning-tools/scripts/conformance/flaky/detect.js --files "$FLAKE_FILES" --output artifacts/flaky.json
+        working-directory: qualified-pr
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
         if: always()
         with:
           name: planning-gates-${{ github.run_id }}-${{ github.run_attempt }}
           path: |
             artifacts/planning-gates.json
-            artifacts/flaky.json
+            qualified-pr/artifacts/flaky.json
+            ${{ runner.temp }}/planning-pr.json
           if-no-files-found: error
