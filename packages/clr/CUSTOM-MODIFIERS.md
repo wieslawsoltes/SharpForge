@@ -36,8 +36,24 @@ positions, prefix bounds and unload. The independent persisted Reflection.Emit
 fixture compares real CoreCLR field, property, method return/argument and property
 index-parameter queries, including TypeDef and TypeRef modifiers. TypeSpec token
 extent handling has authored coverage; resolved TypeSpec semantics are not claimed.
-Native capture, focused tests, performance controls and checks are pending the
-scheduled serial validation slot.
+SDK 10.0.201/CoreCLR 10.0.5 captured nine independent records; all 45 affected
+Field/Property/Method tests pass on Node 24.21.0. Syntax/static checks pass
+(2,678/2,674 modules); structure reports 269 existing findings, none in CLR or
+changed files. All local validation ran serially through the limiter.
+
+On a shared Apple M3 Pro/darwin-arm64, new modifier queries for all nine records
+measured cold median 44.667 µs / p95 165.417 µs; cached field required+optional
+queries measured 0.009167 µs / p95 0.026138 µs. The unchanged property-parameter
+control used exact parent c652049f and product 5e11101e with identical script and
+fixture: cold medians 88.709/89.458 µs and p95 317.459/366.667 µs; cached medians
+0.009554/0.009542 µs and p95 0.022517/0.022608 µs. Cold p95 increased by
+49.208 µs (+15.5%) and cached p95 by 0.0917 ns. The root reviewer explicitly
+accepted these costs for the bounded lazy modifier capability and one private
+cache slot per descriptor; unchanged access paths do not traverse modifiers.
+This shared-host pair cannot establish causality; no general speed or significance
+claim is made. All 600 raw measured samples, source commits and fixture/script
+hashes are retained in `benchmarks/custom-modifiers-node24.json`. Added descriptor
+footprint and allocation totals were not measured. No benchmark was repeated or retuned.
 
 ```sh
 node scripts/limited.js node packages/clr/tools/capture-custom-modifiers.mjs tests/fixtures/clr-custom-modifiers
