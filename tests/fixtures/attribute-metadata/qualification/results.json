@@ -1,0 +1,14 @@
+{
+  "compilerSourceCommit": "15e0ed5ee0ad4055845dbaa7feadde3b1051fb5e",
+  "focusedTests": {
+    "pass": 36,
+    "fail": 0,
+    "skip": 0
+  },
+  "nativeFixtures": {
+    "attribute-targets": "equal to actual Roslyn output",
+    "pseudo-attributes": "equal to actual Roslyn output"
+  },
+  "focusedCommand": "DOTNET_ROOT=<sdk-root> DOTNET=<dotnet-host> node scripts/limited.js node --test tests/compiler-attribute-targets.test.js tests/compiler-attribute-emission.test.js tests/compiler-pseudo-attributes.test.js tests/compiler-attributes.test.js tests/compiler-special-members.test.js tests/compiler-parameter-default-metadata.test.js",
+  "nativeCommand": "DOTNET_ROOT=<sdk-root> DOTNET=<dotnet-host> node scripts/limited.js node packages/compiler/test/cil-emission/verify-dotnet.mjs --references --only <attribute-targets|pseudo-attributes>"
+}
