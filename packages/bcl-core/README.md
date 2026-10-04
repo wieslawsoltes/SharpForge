@@ -5,6 +5,29 @@ runtime or framework dependency. Hosts supply `bclHost.fault(type, message)`,
 `bclHost.isReference(value)` and `bclHost.frameworkType(name)` on each platform.
 The fault service must throw the host's managed exception.
 
+`createHostStringOrdering({Collator})` creates a synchronous nullable-string
+comparer with immutable host provenance. `Collator` defaults to `Intl.Collator`;
+the optional constructor supplies a test seam, not a managed callback API.
+`defaultStringOrdering(platform)` privately caches one provider per platform.
+Missing English standard collation or unsupported resolved options raise
+`NotSupportedException`; there is no ordinal fallback.
+
+Default List sorting, Array sorting and typed/null-comparer Array.BinarySearch
+share this host-normalized `invariant-host` profile. It explicitly requests English
+standard/root collation, tertiary sensitivity, no numeric ordering, no case-first
+override and significant punctuation. Explicit StringComparer.Ordinal remains
+UTF-16 ordinal. Comparator zero, including culture-equal distinct strings, is
+BinarySearch equality. Sort does not promise an order within equal-key groups.
+
+This profile follows host Intl/ICU data. It does not pin ICU, implement managed
+thread CurrentCulture (#2616), or complete CompareInfo/StringComparer culture
+APIs (#2619/#2621). Browser ICU versions may be unavailable. In particular, Intl
+normalization differs from the pinned native .NET default on five combining-mark
+boundary pairs: the host considers them equal while native .NET distinguishes
+them. The separate native boundary oracle and `scripts/probe-string-ordering.mjs`
+report those differences; issues #829/#2619/#2621 remain open for an exact backend.
+See [the reference](reference/culture-ordering-boundaries/README.md).
+
 Each family module has `name`, `families`, `contracts(registry)` and
 `invoke(platform, descriptor, arguments)` members. Invocation returns
 `{handled: true, value}` or `{handled: false}` synchronously. Module registration
@@ -92,8 +115,8 @@ Unsupported custom comparers on nonempty arrays raise `NotSupportedException`.
 One-dimensional arrays with explicit lower bounds remain unsupported by this
 execution profile; multidimensional arrays raise `RankException`.
 
-A null comparer retains the released ordinal default string profile. Default
-invariant ordering is still outstanding in #829. The pinned 33-case .NET capture
+A null comparer uses the shared host-backed string profile described above.
+Exact native invariant ordering is still outstanding in #829. The pinned 33-case .NET capture
 under `reference/array-comparer` covers this actual non-generic overload and its
 object comparisons/faults. Ordinary tests also consume the prior 97-string
 ordinal search corpus. NaN comparisons and rank rejection are covered through
