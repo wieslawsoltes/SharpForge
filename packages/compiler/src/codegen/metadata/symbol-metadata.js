@@ -19,7 +19,7 @@ import { needsTypeSpec } from '../generics.js';
 import { TypeTokens, namespaceOf, definitionNameOf } from './type-tokens.js';
 import { planMembers, explicitInterfaceOf } from './member-plan.js';
 import { typeFlags, genericParameterFlags } from './attribute-flags.js';
-import { tupleElementNamesOf } from './tuple-element-names.js';
+import { tupleElementNamesOf } from '../../binder/tuples.js';
 import { staticVirtualImplementations } from './static-interface-implementations.js';
 import { fieldSignature, methodSignature, methodSymbolSignature, propertySignature } from './member-signatures.js';
 
