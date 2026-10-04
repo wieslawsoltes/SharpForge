@@ -1,5 +1,5 @@
-Constrained prefix requires callvirt in the ECMA-335 profile at 0x0
-Constrained prefix requires callvirt in the ECMA-335 profile at 0x2
-Generic aggregate values require T03 value storage
-Invalid MethodImpl owner or virtual declaration
-Native, runtime and abstract methods are not executable
+IL_NATIVE: Native, runtime and abstract methods are not executable
+IL_PREFIX: Constrained prefix requires callvirt in the ECMA-335 profile at 0x0
+IL_PREFIX: Constrained prefix requires callvirt in the ECMA-335 profile at 0x2
+IL_TOKEN: Invalid MethodImpl owner or virtual declaration
+IL_TOKEN: Struct generic arguments require a static Apply<T>(ref T, ...) constrained interface forwarder
