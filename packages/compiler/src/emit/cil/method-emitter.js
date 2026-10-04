@@ -39,6 +39,8 @@ import { StateMachineEmission } from './emit-state-machine.js';
 import { IteratorEmission } from './emit-iterators.js';
 import { AsyncEmission } from './emit-async.js';
 import { AsyncTryEmission } from './emit-async-try.js';
+import { AsyncIteratorEmission } from './emit-async-iterators.js';
+import { ExpressionTreeEmission } from './emit-expression-trees.js';
 
 const families = [
   ConstantEmission,
@@ -77,6 +79,8 @@ const families = [
   IteratorEmission,
   AsyncEmission,
   AsyncTryEmission,
+  AsyncIteratorEmission,
+  ExpressionTreeEmission,
 ];
 
 export class MethodEmitter extends families.reduce((composed, family) => family(composed), EmitterCore) {}

@@ -34,7 +34,7 @@ function output(body, expected, members = '') {
 
 test('source Decimal rounding appends distinct wire identities backed by the existing profile', () => {
   const previous = BuiltinMap.get('$type.long.GetType').id;
-  const entries = Object.values(Builtins).filter(builtin => builtin.decimal);
+  const entries = Object.values(Builtins).filter(builtin => ['Round', 'Truncate'].includes(builtin.decimal?.name));
   assert.deepEqual(entries.map(entry => entry.id), [previous + 1, previous + 2, previous + 3]);
   assert.equal(new Set(entries.map(entry => entry.name)).size, 3);
   for (const entry of entries) {
@@ -96,7 +96,7 @@ test('the source family preserves the existing captured native Round result', ()
 
 test('source admission rejects unregistered overloads and internal wire names', () => {
   for (const expression of ['decimal.Round(1.25m, 2, 0)', 'decimal.Round(1.25)', 'decimal.Round(null)',
-    'decimal.RoundDigits(1.25m, 2)', 'decimal.Truncate(1.25m, 1)', 'decimal.Parse("1.25")']) {
+    'decimal.RoundDigits(1.25m, 2)', 'decimal.Truncate(1.25m, 1)']) {
     const compiled = compileToIL(`using System; class P { static void Main() { Console.WriteLine(${expression}); } }`);
     assert.equal(compiled.success, false, expression);
     assert(compiled.diagnostics.some(diagnostic => diagnostic.severity === 'error'), expression);

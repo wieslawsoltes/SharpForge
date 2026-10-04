@@ -3,6 +3,9 @@ import {appendCompositeFormat} from '../formatting/composite-format.js';
 import {appendBuilderCharacter} from './string-builder-append.js';
 import {accessBuilderCharacter} from './string-builder-indexer.js';
 import {copyBuilderCharacters} from './string-builder-copy.js';
+import {appendBuilderRange} from './string-builder-append-range.js';
+import {appendBuilderArray} from './string-builder-append-array.js';
+import {appendBuilderValue} from './string-builder-append-builder.js';
 
 const owner = 'System.Text.StringBuilder';
 const maximumCapacity = 2147483647;
@@ -191,9 +194,13 @@ function invokeMember(platform, descriptor, reference, values, scalars) {
       capacity(platform, scalars[0], platform.get(reference, '$length', 0));
       platform.set(reference, '$capacity', scalars[0]);
       return null;
-    case 'Append': return descriptor.parameters[0] === 'char'
-      ? appendBuilderCharacter(platform, reference, scalars, appendText)
-      : appendText(platform, reference, text(platform, values[0], descriptor.parameters[0]));
+    case 'Append':
+      if (descriptor.parameters[0] === 'char[]') return appendBuilderArray(platform, reference, values, scalars, appendText);
+      if (descriptor.parameters[0] === owner) return appendBuilderValue(platform, reference, values[0], bufferText, appendText);
+      if (descriptor.parameters.length === 3) return appendBuilderRange(platform, reference, scalars, appendText);
+      return descriptor.parameters[0] === 'char'
+        ? appendBuilderCharacter(platform, reference, scalars, appendText)
+        : appendText(platform, reference, text(platform, values[0], descriptor.parameters[0]));
     case 'AppendLine': return appendText(platform, reference, (values.length ? text(platform, values[0]) : '') + '\n');
     case 'AppendFormat': return appendFormat(platform, descriptor, reference, values);
     case 'EnsureCapacity':

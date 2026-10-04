@@ -21,6 +21,11 @@ export function registerStringLastSearchStartExtensions({member}) {
   member('System.String', 'LastIndexOf', ['string', 'int', 'System.StringComparison'], 'int');
 }
 
+/** Append after signed/unsigned Int64 StringBuilder Append without shifting earlier A07 slots. */
+export function registerStringLastSearchWindowExtensions({member}) {
+  member('System.String', 'LastIndexOf', ['string', 'int', 'int', 'System.StringComparison'], 'int');
+}
+
 /** Preserve Contains validation and diagnostics while sharing the first-match search. */
 export function containsWithComparison(platform, receiver, value, mode) {
   return indexOfWithComparison(platform, receiver, value, mode, 'Contains') >= 0;
@@ -83,20 +88,37 @@ export function lastIndexOfWithComparison(platform, receiver, value, mode) {
 export function lastIndexOfFromWithComparison(platform, receiver, value, startIndex, mode) {
   validateSearchValue(platform, value);
   validateStringComparisonMode(platform, mode);
-  const minimum = receiver.length === 0 ? -1 : 0;
-  if (!Number.isInteger(startIndex) || startIndex < minimum || startIndex > receiver.length) {
-    fail(platform, 'ArgumentOutOfRangeException', "Start index is outside the string. (Parameter 'startIndex')");
-  }
+  const endIndex = lastSearchEnd(platform, receiver, startIndex);
   requireOrdinalStringComparison(platform, mode, 'LastIndexOf');
-  return lastIndexOfValidated(receiver, value, mode, Math.min(startIndex + 1, receiver.length));
+  return lastIndexOfValidated(receiver, value, mode, endIndex);
 }
 
-function lastIndexOfValidated(receiver, value, mode, endIndex) {
-  if (value.length > endIndex) return -1;
+/** Normalize native backward start/count quirks using the dispatcher's existing scalar argument array. */
+export function lastIndexOfWindowWithComparison(platform, receiver, args) {
+  const [value, startIndex, requestedCount, mode] = args;
+  validateSearchValue(platform, value);
+  validateStringComparisonMode(platform, mode);
+  const endIndex = lastSearchEnd(platform, receiver, startIndex);
+  // Native empty receivers discard count; the Length alias consumes one unit only when count is positive.
+  const count = receiver.length === 0 ? 0
+    : startIndex === receiver.length && requestedCount > 0 ? requestedCount - 1 : requestedCount;
+  if (!Number.isInteger(count) || count < 0 || count > endIndex) {
+    fail(platform, 'ArgumentOutOfRangeException', "Count is outside the string. (Parameter 'count')");
+  }
+  requireOrdinalStringComparison(platform, mode, 'LastIndexOf');
+  return lastIndexOfValidated(receiver, value, mode, endIndex, endIndex - count);
+}
+
+function lastIndexOfValidated(receiver, value, mode, endIndex, startIndex = 0) {
+  if (value.length > endIndex - startIndex) return -1;
   if (value.length === 0) return endIndex;
   if (receiver === value) return 0;
-  if (mode === 4) return receiver.lastIndexOf(value, endIndex - value.length);
-  return lastIndexOfOrdinalIgnoreCase(receiver, value, endIndex);
+  if (mode === 4) {
+    // Host search may inspect the excluded prefix; reject any match below the lower bound without slicing.
+    const result = receiver.lastIndexOf(value, endIndex - value.length);
+    return result < startIndex ? -1 : result;
+  }
+  return lastIndexOfOrdinalIgnoreCase(receiver, value, endIndex, startIndex);
 }
 
 function validateSearch(platform, value, mode, member) {
@@ -112,4 +134,12 @@ function validateSearchStart(platform, receiver, startIndex) {
   if (!Number.isInteger(startIndex) || startIndex < 0 || startIndex > receiver.length) {
     fail(platform, 'ArgumentOutOfRangeException', "Start index is outside the string. (Parameter 'startIndex')");
   }
+}
+
+function lastSearchEnd(platform, receiver, startIndex) {
+  const minimum = receiver.length === 0 ? -1 : 0;
+  if (!Number.isInteger(startIndex) || startIndex < minimum || startIndex > receiver.length) {
+    fail(platform, 'ArgumentOutOfRangeException', "Start index is outside the string. (Parameter 'startIndex')");
+  }
+  return Math.min(startIndex + 1, receiver.length);
 }
