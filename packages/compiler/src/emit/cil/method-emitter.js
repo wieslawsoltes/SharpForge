@@ -43,6 +43,7 @@ import { AsyncEmission } from './emit-async.js';
 import { AsyncTryEmission } from './emit-async-try.js';
 import { AsyncIteratorEmission } from './emit-async-iterators.js';
 import { ExpressionTreeEmission } from './emit-expression-trees.js';
+import { StackAllocEmission } from './emit-stackalloc.js';
 
 const families = [
   ConstantEmission,
@@ -85,6 +86,7 @@ const families = [
   AsyncTryEmission,
   AsyncIteratorEmission,
   ExpressionTreeEmission,
+  StackAllocEmission,
 ];
 
 export class MethodEmitter extends families.reduce((composed, family) => family(composed), EmitterCore) {}

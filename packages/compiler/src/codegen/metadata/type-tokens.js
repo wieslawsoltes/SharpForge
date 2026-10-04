@@ -40,6 +40,8 @@ function stableHash(text) {
  * hashes the path with SHA-256).
  */
 export function definitionNameOf(type) {
+  // A delegate type the compiler declares for a lambda or method group (C# 10) cannot be named in source.
+  if (type.isSynthesizedDelegate) return '<>f__AnonymousDelegate' + type.synthesizedOrdinal;
   if (!type.isFileLocal) return type.metadataName;
   const uri = String(type.locations?.[0]?.uri ?? ''),
     stem = (uri.split(/[\\/]/).pop() ?? '').replace(/\.[^.]*$/, '').replace(/[^A-Za-z0-9_]/g, '_');
