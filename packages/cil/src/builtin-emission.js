@@ -75,7 +75,8 @@ function stringTarget(member, count) {
 }
 
 /** Emit a source builtin as an ordinary CLI call, retaining the released legacy mappings. */
-export function emitBuiltin(context, writer, id, count, types, adapt) {
+export function emitBuiltin(context, writer, id, types, adapt) {
+  const count = types.length;
   const builtin = Builtins[id], name = builtin.name;
   if (builtin.decimal) {
     const descriptor = builtin.decimal;

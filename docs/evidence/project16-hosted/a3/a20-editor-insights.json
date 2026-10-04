@@ -1,0 +1,16 @@
+{
+  "status": "failed",
+  "engine": "chromium",
+  "passed": 5,
+  "checks": [
+    "completion renders kind/filter/docs and applies selected text",
+    "completion Escape preserves typed text",
+    "snippet fields mirror while typing and Tab advances without losing source",
+    "inline rename previews/cancels exactly and commits across three real models",
+    "code action preview is exact and does not mutate until Apply"
+  ],
+  "failure": {
+    "type": "AssertionError",
+    "message": ""
+  }
+}

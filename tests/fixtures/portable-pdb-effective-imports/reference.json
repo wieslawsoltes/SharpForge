@@ -1,0 +1,53 @@
+{
+  "schemaVersion": 1,
+  "reference": {
+    "sdk": "10.0.201",
+    "compilerVersion": "5.3.0-2.26153.122 (4d3023de605a78ba3e59e50c657eed70f125c68a)",
+    "compilerSha256": "3ec75447e847f97b2cb3d861463f6de7ea421f2092aaacc7458579adccf8fc16",
+    "runtime": "10.0.5",
+    "mode": "Debug",
+    "sourceSha256": "c71bdb44c50eee9caf9d5c523d900f8a812b3899df66759d4573cb5453fc8887",
+    "assemblySha256": "17ad50fb1e79dbc7d1064a9538ef406379949dd919169b36e6a611594ba4d258",
+    "pdbSha256": "de9436dc9b12ffc8b3a8168eb42876d4a45d81e0d44c2c048e4a20b5e1ae16ad"
+  },
+  "native": {
+    "runtime": "10.0.5",
+    "method": 100663317,
+    "importScope": 4,
+    "entries": [
+      {
+        "kind": 1,
+        "scopeId": 2,
+        "alias": null,
+        "namespace": "System",
+        "type": null,
+        "typeName": null
+      },
+      {
+        "kind": 1,
+        "scopeId": 3,
+        "alias": null,
+        "namespace": "System.Text",
+        "type": null,
+        "typeName": null
+      },
+      {
+        "kind": 9,
+        "scopeId": 3,
+        "alias": "Alias",
+        "namespace": null,
+        "type": 16777253,
+        "typeName": "System.Text.StringBuilder"
+      },
+      {
+        "kind": 3,
+        "scopeId": 4,
+        "alias": null,
+        "namespace": null,
+        "type": 16777254,
+        "typeName": "System.Math"
+      }
+    ],
+    "result": 7
+  }
+}

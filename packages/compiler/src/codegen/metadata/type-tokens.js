@@ -6,7 +6,7 @@
  * generic, an array, a type parameter - is a TypeSpec over its signature blob.
  */
 import { token } from '@sharpforge/cil';
-import { SymbolKind } from '../../symbols/types.js';
+import { SymbolKind, substituteType } from '../../symbols/types.js';
 import { encodeTypeSignature, needsTypeSpec, typeDefOrRefEncoded, ElementType } from '../generics.js';
 import { contractAssemblyOf } from './reference-contracts.js';
 
@@ -26,6 +26,25 @@ export function namespaceOf(type) {
   return names.join('.');
 }
 
+/** FNV-1a over the UTF-16 code units of a text, as eight hexadecimal digits: a stable name component. */
+function stableHash(text) {
+  let hash = 0x811c9dc5;
+  for (let index = 0; index < text.length; index++) hash = Math.imul(hash ^ text.charCodeAt(index), 0x01000193);
+  return (hash >>> 0).toString(16).toUpperCase().padStart(8, '0');
+}
+
+/**
+ * The TypeDef name of a source type. A C# 11 `file` type is named `<File>F<hash>__Name`, as Roslyn names it, so that
+ * equally named file-local types of different files do not collide; the hash here is of the file's URI (Roslyn
+ * hashes the path with SHA-256).
+ */
+export function definitionNameOf(type) {
+  if (!type.isFileLocal) return type.metadataName;
+  const uri = String(type.locations?.[0]?.uri ?? ''),
+    stem = (uri.split(/[\\/]/).pop() ?? '').replace(/\.[^.]*$/, '').replace(/[^A-Za-z0-9_]/g, '_');
+  return `<${stem}>F${stableHash(uri)}__${type.metadataName}`;
+}
+
 export class TypeTokens {
   /** @param builder a MetadataBuilder  @param {object[]} sourceTypes the source type definitions in TypeDef order (after `<Module>`) */
   constructor(builder, sourceTypes) {
@@ -33,6 +52,19 @@ export class TypeTokens {
     this.definitions = new Map(sourceTypes.map((type, index) => [type, token(2, index + 2)]));
     this.references = new Map();
     this.tokenOf = definition => this.definitionToken(definition);
+    /** The substitution types are read under before they are encoded, or null (see `within`). */
+    this.substitution = null;
+  }
+  /**
+   * A view of these tokens that reads every type under a substitution before encoding it: the code of a synthesized
+   * generic class names the type parameters of the method it was made for by the class's own ones.
+   * @param substitution a TypeMap, or null for these tokens themselves
+   */
+  within(substitution) {
+    if (!substitution) return this;
+    const view = Object.create(this);
+    view.substitution = substitution;
+    return view;
   }
   /** TypeDef or TypeRef token of a type definition. */
   definitionToken(type) {
@@ -55,7 +87,7 @@ export class TypeTokens {
   /** The signature bytes of a type (ECMA-335 II.23.2.12). */
   signature(type) {
     try {
-      return encodeTypeSignature(type, this.tokenOf);
+      return encodeTypeSignature(this.substitution ? substituteType(type, this.substitution) : type, this.tokenOf);
     } catch (error) {
       // The encoder names the type it has no signature for (a function pointer, `dynamic`); anything else is a defect.
       if (/^Cannot encode /.test(error?.message ?? '')) throw new MetadataEmitError(error.message);
