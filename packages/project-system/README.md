@@ -70,3 +70,9 @@ folders are excluded by default. This inventory API leaves the existing eager
 lazy document lifecycle.
 
 Focused validation: `node scripts/limited.js node --test tests/a24-disk-scan.test.js tests/workspace-io.test.js`.
+
+## Prepared project input
+
+The portable evaluator preserves immutable source descriptors during discovery,
+hydration and compilation. See [Prepared project records](PREPARED_PROJECTS.md)
+for the admission contract and corrected integration evidence.
