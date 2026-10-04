@@ -74,6 +74,7 @@ test('core intrinsic metadata uses accepted arities, canonical owners, instance 
   assert.equal(write.overloadCount, 1);
   assert.match(write.text.slice(write.selection.start, write.selection.end), /void WriteLine\(\);/u);
   const substring = await metadata.definition({owner: 'System.String', name: 'Substring', argumentCount: 1});
+  assert.equal(substring.overloadCount, 1, 'overlapping registered/core signatures are shown once');
   const signature = substring.text.slice(substring.selection.start, substring.selection.end);
   assert.match(signature, /^string Substring\(int arg0\);$/u);
   assert.doesNotMatch(signature, /static/u);

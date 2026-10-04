@@ -2,14 +2,15 @@ import {intrinsicMetadata} from './intrinsic-model.js';
 
 /** Registered framework and core intrinsic metadata remain distinct from an inspected PE assembly. */
 export async function frameworkMetadata() {
-  const {types, contracts, propertiesFor, eventsFor, ABI_VERSION, frameworkType} = await import('@sharpforge/framework');
+  const {types, contracts, propertiesFor, eventsFor, ABI_VERSION, frameworkType, canonicalType} = await import('@sharpforge/framework');
   const intrinsic = await intrinsicMetadata();
   const members = new Map();
   for (const contract of contracts) {
     const list = members.get(contract.owner) ?? [];
     list.push({token: 'contract:' + contract.id, name: contract.name, owner: contract.owner, kind: contract.kind === 'constructor' ? 'constructor' : 'method',
       parameters: contract.parameters.map((type, index) => ({type, name: 'arg' + index})), type: contract.result,
-      signature: `${contract.isStatic ? 'static ' : ''}${contract.result} ${contract.name}(${contract.parameters.join(', ')});`,
+      signature: `${contract.isStatic ? 'static ' : ''}${contract.result} ${contract.name}(` +
+        contract.parameters.map((type, index) => type + ' arg' + index).join(', ') + ');',
       contractId: contract.id});
     members.set(contract.owner, list);
   }
@@ -28,10 +29,15 @@ export async function frameworkMetadata() {
       namespace: type.name.slice(0, Math.max(0, type.name.lastIndexOf('.'))), members: list,
       signature: `${type.kind} ${type.name}${type.base ? ' : ' + type.base : ''}`});
   }
+  const memberKey = member => [member.kind, member.name, ...(member.parameters ?? []).map(parameter => canonicalType(parameter.type))].join(':');
   for (const type of intrinsic.types) {
     const existing = models.find(model => model.name === type.name);
-    if (existing) existing.members.push(...type.members);
-    else models.push(type);
+    if (!existing) { models.push(type); continue; }
+    const signatures = new Set(existing.members.map(memberKey));
+    for (const member of type.members) if (!signatures.has(memberKey(member))) {
+      existing.members.push(member);
+      signatures.add(memberKey(member));
+    }
   }
   return {schemaVersion: 1, kind: 'framework', name: 'SharpForge Framework', version: String(ABI_VERSION),
     identity: 'SharpForge Framework ABI ' + ABI_VERSION, mvid: null,
