@@ -1,6 +1,6 @@
-import { expandTabs, normalizeEol, offsetAtVisualColumn, visualColumnAt } from '@sharpforge/text';
+import { normalizeEol, visualColumnAt } from '@sharpforge/text';
 import { replaceSelections } from './multi-caret.js';
-import { applyBoxText, boxSelectionEdits, createBoxSelections } from './box-selection.js';
+import { applyBoxText, boxSelectionEdits, boxSelectionText, createBoxSelections } from './box-selection.js';
 
 export const SELECTION_CLIPBOARD_MIME = 'application/x-sharpforge-selections+json';
 
@@ -11,13 +11,7 @@ export function copySelections(model, { eol = model.metadata?.dominantEol ?? '\n
   const fragments = model.selections.map(selection => {
     const start = Math.min(selection.anchor, selection.active);
     const end = Math.max(selection.anchor, selection.active);
-    if (selection.box) {
-      const info = selection.box;
-      const expanded = expandTabs(model.getLine(info.line), { tabSize: info.tabSize });
-      const first = offsetAtVisualColumn(expanded, info.startColumn);
-      const last = offsetAtVisualColumn(expanded, info.endColumn, { bias: 'right' });
-      return expanded.slice(first.offset, last.offset) + ' '.repeat(Math.max(0, last.virtualSpaces - first.virtualSpaces));
-    }
+    if (selection.box) return boxSelectionText(model, selection);
     return lineCopy ? model.getLine(model.positionAt(start).line) : model.getText(start, end);
   });
   const kind = box ? 'box' : lineCopy ? 'line' : 'multicaret';
@@ -51,9 +45,13 @@ export function pasteBox(model, fragments, options = {}) {
   const selections = createBoxSelections(model, {
     anchorLine: position.line, activeLine: position.line + existing - 1, anchorColumn: column, activeColumn: column, tabSize
   });
-  const edits = boxSelectionEdits(model, selections, fragments.slice(0, existing));
+  const edits = boxSelectionEdits(model, selections, fragments.slice(0, existing), options);
   const eol = model.metadata?.dominantEol ?? '\n';
   if (existing < fragments.length) {
+    const limit = options.maxInsertedCharacters ?? 16 * 1024 * 1024;
+    const inserted = edits.reduce((size, edit) => size + edit.text.length, 0);
+    const tailSize = fragments.slice(existing).reduce((size, fragment) => size + eol.length + column + fragment.length, 0);
+    if (inserted + tailSize > limit) throw new RangeError('Box insertion exceeds the character budget');
     const tail = fragments.slice(existing).map(fragment => eol + ' '.repeat(column) + fragment).join('');
     const last = edits.at(-1);
     if (last.end === model.length) last.text += tail;

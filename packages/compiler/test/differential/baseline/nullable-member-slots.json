@@ -1,0 +1,7 @@
+{
+  "nullable-member-slots/assignments-and-copies": ["diagnostics", "warnings"],
+  "nullable-member-slots/calls-loops-and-lambdas": ["diagnostics", "warnings"],
+  "nullable-member-slots/cs8605-unboxing-possible-null": ["diagnostics", "warnings"],
+  "nullable-member-slots/null-tests-of-members": ["diagnostics", "warnings"],
+  "nullable-member-slots/structs-and-property-patterns": ["diagnostics", "warnings"]
+}
