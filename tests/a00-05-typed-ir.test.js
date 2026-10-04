@@ -121,3 +121,30 @@ test('A00 serialized returns require an explicit well-formed padding operand',()
     assert.throws(()=>validateReturn(body),{code:'SCHEMA_INVALID',message:/explicit void padding/});
   }
 });
+
+test('A00 serialized method entry rejects a return value without a producer',()=>{
+  for(const encoding of ['bytecode','cil']){
+    const {body,instruction}=serializedReturn(encoding);validateReturn(body);
+    body.returnType='i32';body.returnStorageType='System.Int32';
+    body.instructions=[{...instruction,offset:0,sourceOffset:0,inputTypes:['i32'],stackIn:['i32']}];
+    body.exceptionRegions=[];body.safepoints=[];body.maxStack=1;
+    // The return consumes its entire stack and produces nothing, but no instruction supplied its value.
+    validate(schema,body);
+    assert.throws(()=>validateBody(body,{requireExecutable:true}),{code:'SCHEMA_INVALID',message:/Method entry stack must be empty/});
+  }
+});
+
+test('A00 serialized method entry stays empty while catch entries retain their conventions',()=>{
+  const bodies=JSON.parse(readFileSync(new URL('../planning/contracts/fixtures/schema/nested-finally.bodies.json',import.meta.url)));
+  const encodings=new Set();
+  for(const body of bodies){
+    const catches=body.exceptionRegions.filter(region=>region.kind==='catch');
+    if(!catches.length)continue;
+    encodings.add(body.encoding);assert.deepEqual(body.instructions[0].stackIn,[]);validateReturn(body);
+    for(const region of catches){
+      assert(region.handlerStart>0);
+      assert.deepEqual(body.instructions[region.handlerStart].stackIn,body.encoding==='cil'?[region.catchType]:[]);
+    }
+  }
+  assert.deepEqual([...encodings].sort(),['bytecode','cil']);
+});

@@ -61,6 +61,7 @@ export function validateBody(body,{requireExecutable=false}={}){
   for(const r of body.exceptionRegions)if(r.start>=r.end||r.end>n||r.handlerStart>=r.handlerEnd||r.handlerEnd>n||r.filterStart!==null&&r.filterStart>=n)invalid('Invalid exception region boundary');
   for(const s of body.safepoints)if(s.offset>=n)invalid('Invalid safepoint offset');
   if(body.typeState!=='resolved')return body;
+  if(body.instructions[0].stackIn.length)invalid('Method entry stack must be empty');
   if(body.localStorageTypes?.length!==body.locals.length||body.parameterStorageTypes?.length!==body.parameters.length)invalid('Storage signature lengths differ');
   if(body.locals.some((type,index)=>stackType(body.localStorageTypes[index])!==type)||body.parameters.some((type,index)=>stackType(body.parameterStorageTypes[index])!==type)||stackType(body.returnStorageType)!==body.returnType)invalid('Storage and stack signature types differ');
   if(!validType(body.returnType)||[...body.locals,...body.parameters].some(t=>!validType(t)||t==='void'))invalid('Malformed body signature');
