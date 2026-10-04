@@ -1,6 +1,6 @@
 import { findTextMatches } from '@sharpforge/text';
 import { adjacentCharacter } from '../commands/movement.js';
-import { findCharacter, motionRange, vimMotion, vimWord } from './vim-motions.js';
+import { findCharacter, motionRange, normalPoint, vimMotion, vimWord } from './vim-motions.js';
 import { textObject } from './vim-text-objects.js';
 import { VimRegisters } from './vim-registers.js';
 import { VimExCommands } from './vim-ex.js';
@@ -69,6 +69,7 @@ export class VimKeymap {
     return consumed;
   }
   feed(key, replay = false) {
+    if (this.disposed || this.context.disposed) return false;
     if (this.recording && !(key === 'q' && this.mode === 'normal' && !this.pending)) this.recording.tokens.push(key);
     if (this.recording?.tokens.length > 10000) throw new RangeError('Vim macro exceeds 10,000 keys');
     this.keys.push(key);
@@ -98,7 +99,7 @@ export class VimKeymap {
       /\S/u.test(this.context.slice(this.point, this.point + 1)) ? (key === 'w' ? 'e' : 'E') : key;
     const motion = vimMotion(this.context, motionKey, this.point, { count, explicitCount: counted.explicit,
       goalColumn: this.goalColumn, lastFind: this.lastFind });
-    if (motion) { this.acceptMotion(motion); return true; }
+    if (motion) return this.acceptMotion(motion) ?? true;
     const handlers = this.commandHandlers(counted.count);
     const handler = handlers[key];
     if (handler) return handler() ?? true;
@@ -110,16 +111,25 @@ export class VimKeymap {
     const context = this.context;
     const point = this.point;
     return {
-      i: () => enterInsert(this), a: () => { context.goto(adjacentCharacter(context, point, 1)); enterInsert(this); },
-      I: () => { context.goto(context.lineStart(context.position(point).line) + context.line(context.position(point).line).match(/^\s*/u)[0].length); enterInsert(this); },
+      i: () => enterInsert(this),
+      a: () => {
+        context.goto(Math.min(context.lineEnd(context.position(point).line), adjacentCharacter(context, point, 1)));
+        enterInsert(this);
+      },
+      I: () => {
+        const line = context.position(point).line;
+        context.goto(context.lineStart(line) + context.line(line).match(/^\s*/u)[0].length);
+        enterInsert(this);
+      },
       A: () => { context.goto(context.lineEnd(context.position(point).line)); enterInsert(this); },
       o: () => this.openLine(false), O: () => this.openLine(true), R: () => enterInsert(this, 'replace'),
       r: () => { this.pending = { kind: 'replace', count }; },
       x: () => removeCharacters(this, false, count), X: () => removeCharacters(this, true, count),
       s: () => {
         let end = point;
-        for (let index = 0; index < count; index++) end = adjacentCharacter(context, end, 1);
-        applyOperator(this, 'c', [{ start: point, end, linewise: false }]);
+        const limit = context.lineEnd(context.position(point).line);
+        for (let index = 0; index < count && end < limit; index++) end = Math.min(limit, adjacentCharacter(context, end, 1));
+        return applyOperator(this, 'c', [{ start: point, end, linewise: false }]);
       },
       S: () => this.lineOperator('c', count), D: () => this.toEnd('d'), C: () => this.toEnd('c'), Y: () => this.lineOperator('y', count),
       p: () => pasteRegister(this, false, count), P: () => pasteRegister(this, true, count),
@@ -151,10 +161,9 @@ export class VimKeymap {
     if (key === 'Ctrl+r') { this.pending = { kind: 'insert-register' }; return true; }
     if (this.pending?.kind === 'insert-register') {
       this.pending = null;
-      const version = this.context.buffer.version;
-      const uri = this.context.uri;
+      const capture = this.context.capture();
       return this.registers.read(key).then(value => {
-        if (version !== this.context.buffer.version || uri !== this.context.uri) throw new Error('Document changed while reading a register');
+        this.context.assertCurrent(capture, 'reading a register');
         this.context.insert(value.text, { source: 'vim-insert', undoStop: false });
         this.changed = true;
       });
@@ -166,26 +175,35 @@ export class VimKeymap {
       this.changed = true;
       return true;
     }
-    if (replay || this.mode === 'replace' && (key.length === 1 || key === 'Space')) {
+    if (replay || this.mode === 'replace' && ([...key].length === 1 || key === 'Space')) {
       if (key === 'Backspace') { this.context.editor.deleteText?.(-1); return true; }
       if (key === 'Enter') { this.context.editor.insertNewline?.(); return true; }
       if (key === 'Tab') { this.context.insert('\t', { undoStop: false }); this.changed = true; return true; }
-      if (key.length === 1 || key === 'Space') {
-        const point = this.context.selection.head;
+      if ([...key].length === 1 || key === 'Space') {
         const text = key === 'Space' ? ' ' : key;
-        const end = this.mode === 'replace' ? Math.min(this.context.lineEnd(this.context.position(point).line),
-          adjacentCharacter(this.context, point, 1)) : point;
-        this.context.apply([{ start: point, deleteCount: end - point, text }],
-          [{ anchor: point + text.length, head: point + text.length }], { source: 'vim-insert', undoStop: false });
+        if (this.mode === 'insert') this.context.insert(text, { source: 'vim-insert', undoStop: false });
+        else {
+          let delta = 0;
+          const selections = [];
+          const edits = this.context.selections.map(selection => {
+            const start = selection.head;
+            const end = Math.min(this.context.lineEnd(this.context.position(start).line), adjacentCharacter(this.context, start, 1));
+            const head = start + delta + text.length;
+            selections.push({ anchor: head, head });
+            delta += text.length - (end - start);
+            return { start, deleteCount: end - start, text };
+          });
+          this.context.apply(edits, selections, { source: 'vim-insert', undoStop: false });
+        }
         this.changed = true;
         return true;
       }
     }
-    if (key.length === 1 || key === 'Space' || ['Backspace', 'Enter', 'Tab', 'Delete'].includes(key)) this.changed = true;
+    if ([...key].length === 1 || key === 'Space' || ['Backspace', 'Enter', 'Tab', 'Delete'].includes(key)) this.changed = true;
     return false;
   }
   beginOperator(operation) {
-    if (this.mode.startsWith('visual')) { applyOperator(this, operation, visualRanges(this)); return true; }
+    if (this.mode.startsWith('visual')) return applyOperator(this, operation, visualRanges(this)) ?? true;
     const { count } = this.takeCount();
     if (this.operator?.operation === operation) return this.lineOperator(operation, count * this.operator.count);
     this.operator = { operation, count, start: this.context.selection.head };
@@ -194,14 +212,14 @@ export class VimKeymap {
   }
   lineOperator(operation, count) {
     const line = this.context.position(this.point).line;
-    applyOperator(this, operation, [{ start: this.context.lineStart(line),
+    return applyOperator(this, operation, [{ start: this.context.lineStart(line),
       end: this.context.lineEnd(Math.min(this.context.lineCount - 1, line + count - 1), true), linewise: true }]);
     return true;
   }
   acceptMotion(motion) {
-    if (this.operator) applyOperator(this, this.operator.operation, [motionRange(this.context, this.operator.start, motion)]);
+    if (this.operator) return applyOperator(this, this.operator.operation, [motionRange(this.context, this.operator.start, motion)]);
     else if (this.mode.startsWith('visual')) { this.visualHead = motion.target; updateVisual(this); this.keys = []; }
-    else { this.context.goto(motion.target); this.resetPending(); }
+    else { this.context.goto(normalPoint(this.context, motion.target)); this.resetPending(); }
   }
   completePending(key) {
     const pending = this.pending;
@@ -234,8 +252,8 @@ export class VimKeymap {
       const { count } = this.takeCount();
       const range = textObject(this.context, this.point, key, pending.around, count * (this.operator?.count ?? 1));
       if (!range) throw new Error(`Text object '${key}' was not found`);
-      if (this.operator) applyOperator(this, this.operator.operation, [range]);
-      else { this.visualAnchor = range.start; this.visualHead = Math.max(range.start, range.end - 1); updateVisual(this); }
+      if (this.operator) return applyOperator(this, this.operator.operation, [range]);
+      else { this.visualAnchor = range.start; this.visualHead = Math.max(range.start, adjacentCharacter(this.context, range.end, -1)); updateVisual(this); }
       return true;
     }
     if (pending.kind === 'g') return this.gCommand(key, pending.count);
@@ -249,7 +267,11 @@ export class VimKeymap {
     if (pending.kind === 'replace') {
       const start = this.point;
       let end = start;
-      for (let index = 0; index < pending.count; index++) end = adjacentCharacter(this.context, end, 1);
+      const limit = this.context.lineEnd(this.context.position(start).line);
+      for (let index = 0; index < pending.count; index++) {
+        if (end >= limit) { this.resetPending(); return true; }
+        end = Math.min(limit, adjacentCharacter(this.context, end, 1));
+      }
       this.context.apply([{ start, deleteCount: end - start, text: key.repeat(pending.count) }], [{ anchor: start, head: start }]);
       this.changed = true;
       this.finishChange();
@@ -268,7 +290,8 @@ export class VimKeymap {
     if (key === 'd') { this.context.host('definition'); return true; }
     if (key === 'v' && this.visualRange) { toggleVisual(this, 'visual'); return true; }
     if (key === 'e' || key === 'E') {
-      const target = vimWord(this.context, vimWord(this.context, this.point, { direction: -1 }), { direction: -1 });
+      let target = this.point;
+      for (let index = 0; index < count; index++) target = vimWord(this.context, target, { direction: -1, end: true, big: key === 'E' });
       this.acceptMotion({ target, linewise: false, inclusive: true });
       return true;
     }
@@ -279,7 +302,7 @@ export class VimKeymap {
     const line = context.position(this.point).line;
     const start = above ? context.lineStart(line) : context.lineEnd(line);
     const indent = context.line(line).match(/^\s*/u)[0];
-    const newline = context.editor.options?.eol ?? '\n';
+    const newline = context.eol;
     const text = above ? indent + newline : newline + indent;
     const head = start + (above ? indent.length : text.length);
     enterInsert(this);
@@ -289,8 +312,9 @@ export class VimKeymap {
   toEnd(operation) { applyOperator(this, operation, [{ start: this.point, end: this.context.lineEnd(this.context.position(this.point).line) }]); }
   changeCharacterCase(count) {
     let end = this.point;
-    for (let index = 0; index < count; index++) end = adjacentCharacter(this.context, end, 1);
-    applyOperator(this, 'g~', [{ start: this.point, end, linewise: false }]);
+    const limit = this.context.lineEnd(this.context.position(this.point).line);
+    for (let index = 0; index < count && end < limit; index++) end = Math.min(limit, adjacentCharacter(this.context, end, 1));
+    return applyOperator(this, 'g~', [{ start: this.point, end, linewise: false }]);
   }
   toggleRecording() {
     if (this.recording) {
@@ -307,21 +331,30 @@ export class VimKeymap {
     this.context.editor.model?.beginUndoGroup?.('vim-macro');
     try {
       for (let repeat = 0; repeat < count; repeat++) for (const key of [...tokens]) {
-        if (this.cancelReplay || ++this.replaySteps > 10000) throw new RangeError('Vim macro cancelled or key budget exceeded');
+        if (this.disposed || this.context.disposed || this.cancelReplay || ++this.replaySteps > 10000) {
+          throw new RangeError('Vim macro cancelled or key budget exceeded');
+        }
         await this.feed(key, true);
       }
     } finally { this.context.editor.model?.endUndoGroup?.(); this.replayDepth--; }
     this.keys = [];
   }
   openPrompt(prefix) {
-    const submit = value => prefix === ':' ? this.ex.execute(value) : this.searchPattern(value, prefix === '?' ? -1 : 1);
+    const capture = this.context.capture();
+    const submit = value => {
+      this.context.assertCurrent(capture, 'waiting for Vim input');
+      return prefix === ':' ? this.ex.execute(value) : this.searchPattern(value, prefix === '?' ? -1 : 1);
+    };
     if (this.prompt) return Promise.resolve(this.prompt(prefix)).then(value => value == null ? undefined : submit(value));
     this.closePrompt?.();
     this.closePrompt = openKeymapPrompt(this.context.editor, { prefix,
       value: prefix === ':' && this.mode.startsWith('visual') ? "'<,'>" : '', onSubmit: submit });
     return true;
   }
-  searchPattern(pattern, direction = 1) { this.search = { pattern, direction, matchCase: !this.context.editor.options?.vimIgnoreCase }; return this.findNext(); }
+  searchPattern(pattern, direction = 1) {
+    this.search = { pattern, direction, matchCase: !this.context.editor.options?.vimIgnoreCase };
+    return this.findNext();
+  }
   searchWord(direction) {
     const range = textObject(this.context, this.point, 'w');
     if (!range) return;
@@ -349,8 +382,11 @@ export class VimKeymap {
     this.acceptMotion(vimMotion(this.context, direction > 0 ? 'j' : 'k', this.point, { count }));
   }
   dispose() {
+    this.disposed = true;
+    this.cancelReplay = true;
     this.closePrompt?.();
     if (this.inUndoGroup) this.context.editor.model?.endUndoGroup?.();
+    this.inUndoGroup = false;
     this.registers.dispose();
     this.marks.clear();
   }

@@ -94,11 +94,13 @@ export class VimExCommands {
     const replacement = parsed.replacement.replace(/\\([1-9])/g, (_, group) => '$' + group)
       .replace(/(^|[^\\])&/g, (_, prefix) => prefix + '$&').replace(/\\&/g, '&');
     const context = this.context;
+    if (!parsed.flags.includes('n') && context.readOnly) return false;
+    const matchCase = parsed.flags.includes('I') || !parsed.flags.includes('i') && !context.editor.options?.vimIgnoreCase;
     const start = context.lineStart(first);
     const end = context.lineEnd(last, true);
     const text = context.slice(start, end);
     const result = findTextMatches([{ uri: context.uri, text }], pattern, {
-      regex: true, matchCase: parsed.flags.includes('I') || !parsed.flags.includes('i'), maxMatches: 10000, multiline: true
+      regex: true, matchCase, maxMatches: 10000, multiline: true
     });
     const lines = new Set();
     const matches = result.matches.filter(match => {
@@ -113,7 +115,7 @@ export class VimExCommands {
         text: expandReplacement(replacement, match, text) }));
       context.apply(edits);
     }
-    this.state.search = { pattern, direction: 1, matchCase: !parsed.flags.includes('i') };
+    this.state.search = { pattern, direction: 1, matchCase };
     context.status(`${matches.length} substitutions on ${lines.size} lines`);
     return matches.length;
   }
@@ -147,7 +149,7 @@ export class VimExCommands {
     const lines = [];
     for (let line = range.first; line <= range.last; line++) lines.push(this.context.line(line));
     lines.sort();
-    const text = (flags === 'u' ? [...new Set(lines)] : lines).join(this.context.editor.options?.eol ?? '\n');
+    const text = (flags === 'u' ? [...new Set(lines)] : lines).join(this.context.eol);
     const start = this.context.lineStart(range.first);
     return this.context.apply([{ start, deleteCount: this.context.lineEnd(range.last) - start, text }]);
   }
