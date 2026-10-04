@@ -1,0 +1,17 @@
+[
+  {
+    "code": "CS0656",
+    "message": "Missing compiler required member 'System.ReadOnlySpan`1..ctor'",
+    "file": "Missing.cs",
+    "range": {
+      "start": {
+        "line": 0,
+        "character": 74
+      },
+      "end": {
+        "line": 0,
+        "character": 79
+      }
+    }
+  }
+]

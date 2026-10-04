@@ -62,6 +62,7 @@ export class AssemblyEmitter {
     this.primaryCaptures = synthesized.primaryCaptures.byParameter;
     this.records = synthesized.records;
     this.fixedBuffers = synthesized.fixedBuffers.byField;
+    this.utf8Literals = synthesized.utf8Literals;
     // A state machine class gets fields while its `MoveNext` is emitted, which moves the field tokens of the classes
     // after it (`emitBodies` allocates again): those bodies come first, class by class, and nothing emitted before
     // names a later class's fields.
@@ -70,6 +71,7 @@ export class AssemblyEmitter {
     for (const type of lateFieldTypes) this.emitBodies(type, writer, section);
     for (const type of writer.types) if (!lateFieldTypes.has(type)) this.emitBodies(type, writer, section);
     writer.write();
+    synthesized.utf8Literals.writeRvas(writer, section);
     new CustomAttributeWriter(writer, this.analysis).write();
     const isLibrary = options.outputKind === 'library',
       entryPoint = isLibrary ? 0 : this.entryPointToken(writer, synthesized);

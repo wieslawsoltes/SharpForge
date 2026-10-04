@@ -1,0 +1,329 @@
+✖ A02-T77 actual CLR spans preserve bytes, terminal zero, GC lifetime and zero literal allocations (1768.795322ms)
+✔ A02-T77 actual references select RVA lowering and preserve Roslyn UTF-8 bytes (227.957985ms)
+✔ A02-T77 a missing optional pointer constructor uses the real array/start/length fallback (348.167958ms)
+✖ A02-T77 a missing required array constructor reports Roslyn CS0656 even when pointer ctor exists (229.010735ms)
+✖ A02-T77 repeated literal sites preserve the actual missing-constructor diagnostic count (191.449747ms)
+✔ A02-T77 a constructor initializer retains its literal file in required-member diagnostics (230.744694ms)
+✔ A02-T77 UTF-8 literals use static field addresses and the pointer span constructor without arrays (99.198885ms)
+✖ A02-T77 exact UTF-8 payloads, empty data and deduplication survive real PE layout (44.648961ms)
+✖ A02-T77 nested functions, initializer calls, generic methods and late state machines share planned data (18.495994ms)
+✖ A02-T77 executable assemblies retain literal data; reference assemblies omit body-only storage (26.913173ms)
+✔ A02-T77 malformed UTF-16, language gates and non-literal operators remain C# diagnostics (13.764961ms)
+✔ A02-T77 the bytecode execution profile reports its unsupported span contract explicitly (22.490507ms)
+ℹ tests 12
+ℹ suites 0
+ℹ pass 6
+ℹ fail 6
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 6179.283208
+
+✖ failing tests:
+
+test at tests/compiler-cil-utf8-rva-native.test.js:16:1
+✖ A02-T77 actual CLR spans preserve bytes, terminal zero, GC lifetime and zero literal allocations (1768.795322ms)
+  AssertionError [ERR_ASSERTION]: registry
+  + actual - expected
+  
+  + [
+  +   {
+  +     code: 'CS0246',
+  +     length: 10,
+  +     message: "The type or namespace name 'MethodImplAttribute' could not be found (are you missing a using directive or an assembly reference?)",
+  +     range: {
+  +       end: {
+  +         character: 15,
+  +         line: 7
+  +       },
+  +       start: {
+  +         character: 5,
+  +         line: 7
+  +       }
+  +     },
+  +     severity: 'error',
+  +     start: 182,
+  +     uri: 'Program.cs',
+  +     version: 1
+  +   },
+  +   {
+  +     code: 'CS0246',
+  +     length: 10,
+  +     message: "The type or namespace name 'MethodImpl' could not be found (are you missing a using directive or an assembly reference?)",
+  +     range: {
+  +       end: {
+  +         character: 15,
+  +         line: 7
+  +       },
+  +       start: {
+  +         character: 5,
+  +         line: 7
+  +       }
+  +     },
+  +     severity: 'error',
+  +     start: 182,
+  +     uri: 'Program.cs',
+  +     version: 1
+  +   }
+  + ]
+  - []
+  
+      at TestContext.<anonymous> (file:///workspace/scratch/1692a10afba9/p5-nullable-metadata/tests/compiler-cil-utf8-rva-native.test.js:33:14)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: [ { uri: 'Program.cs', version: 1, start: 182, length: 10, code: 'CS0246', message: "The type or namespace name 'MethodImplAttribute' could not be found (are you missing a using directive or an assembly reference?)", severity: 'error', range: [Object] }, { uri: 'Program.cs', version: 1, start: 182, length: 10, code: 'CS0246', message: "The type or namespace name 'MethodImpl' could not be found (are you missing a using directive or an assembly reference?)", severity: 'error', range: [Object] } ],
+    expected: [],
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }
+
+test at tests/compiler-cil-utf8-rva-reference.test.js:44:1
+✖ A02-T77 a missing required array constructor reports Roslyn CS0656 even when pointer ctor exists (229.010735ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  
+    [
+      [
+        'CS0656',
+  +     "Missing compiler required member 'System.ReadOnlySpan<T>..ctor'"
+  -     "Missing compiler required member 'System.ReadOnlySpan`1..ctor'"
+      ]
+    ]
+  
+      at TestContext.<anonymous> (file:///workspace/scratch/1692a10afba9/p5-nullable-metadata/tests/compiler-cil-utf8-rva-reference.test.js:50:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: [ [ 'CS0656', "Missing compiler required member 'System.ReadOnlySpan<T>..ctor'" ] ],
+    expected: [ [ 'CS0656', "Missing compiler required member 'System.ReadOnlySpan`1..ctor'" ] ],
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }
+
+test at tests/compiler-cil-utf8-rva-reference.test.js:57:1
+✖ A02-T77 repeated literal sites preserve the actual missing-constructor diagnostic count (191.449747ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  
+    [
+      [
+        'CS0656',
+  +     "Missing compiler required member 'System.ReadOnlySpan<T>..ctor'"
+  -     "Missing compiler required member 'System.ReadOnlySpan`1..ctor'"
+      ],
+  -   [
+  -     'CS0656',
+  -     "Missing compiler required member 'System.ReadOnlySpan`1..ctor'"
+  -   ]
+    ]
+  
+      at TestContext.<anonymous> (file:///workspace/scratch/1692a10afba9/p5-nullable-metadata/tests/compiler-cil-utf8-rva-reference.test.js:63:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: [ [ 'CS0656', "Missing compiler required member 'System.ReadOnlySpan<T>..ctor'" ] ],
+    expected: [ [ 'CS0656', "Missing compiler required member 'System.ReadOnlySpan`1..ctor'" ], [ 'CS0656', "Missing compiler required member 'System.ReadOnlySpan`1..ctor'" ] ],
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }
+
+test at tests/compiler-cil-utf8-rva.test.js:29:1
+✖ A02-T77 exact UTF-8 payloads, empty data and deduplication survive real PE layout (44.648961ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  
+  + [
+  +   {
+  +     code: 'CS0246',
+  +     length: 10,
+  +     message: "The type or namespace name 'MethodImplAttribute' could not be found (are you missing a using directive or an assembly reference?)",
+  +     range: {
+  +       end: {
+  +         character: 15,
+  +         line: 7
+  +       },
+  +       start: {
+  +         character: 5,
+  +         line: 7
+  +       }
+  +     },
+  +     severity: 'error',
+  +     start: 182,
+  +     uri: 'Program.cs',
+  +     version: 1
+  +   },
+  +   {
+  +     code: 'CS0246',
+  +     length: 10,
+  +     message: "The type or namespace name 'MethodImpl' could not be found (are you missing a using directive or an assembly reference?)",
+  +     range: {
+  +       end: {
+  +         character: 15,
+  +         line: 7
+  +       },
+  +       start: {
+  +         character: 5,
+  +         line: 7
+  +       }
+  +     },
+  +     severity: 'error',
+  +     start: 182,
+  +     uri: 'Program.cs',
+  +     version: 1
+  +   }
+  + ]
+  - []
+  
+      at emit (file:///workspace/scratch/1692a10afba9/p5-nullable-metadata/tests/compiler-cil-utf8-rva.test.js:13:10)
+      at TestContext.<anonymous> (file:///workspace/scratch/1692a10afba9/p5-nullable-metadata/tests/compiler-cil-utf8-rva.test.js:30:17)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: [ { uri: 'Program.cs', version: 1, start: 182, length: 10, code: 'CS0246', message: "The type or namespace name 'MethodImplAttribute' could not be found (are you missing a using directive or an assembly reference?)", severity: 'error', range: [Object] }, { uri: 'Program.cs', version: 1, start: 182, length: 10, code: 'CS0246', message: "The type or namespace name 'MethodImpl' could not be found (are you missing a using directive or an assembly reference?)", severity: 'error', range: [Object] } ],
+    expected: [],
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }
+
+test at tests/compiler-cil-utf8-rva.test.js:51:1
+✖ A02-T77 nested functions, initializer calls, generic methods and late state machines share planned data (18.495994ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  
+  + [
+  +   {
+  +     code: 'CS0246',
+  +     length: 10,
+  +     message: "The type or namespace name 'MethodImplAttribute' could not be found (are you missing a using directive or an assembly reference?)",
+  +     range: {
+  +       end: {
+  +         character: 15,
+  +         line: 7
+  +       },
+  +       start: {
+  +         character: 5,
+  +         line: 7
+  +       }
+  +     },
+  +     severity: 'error',
+  +     start: 182,
+  +     uri: 'Program.cs',
+  +     version: 1
+  +   },
+  +   {
+  +     code: 'CS0246',
+  +     length: 10,
+  +     message: "The type or namespace name 'MethodImpl' could not be found (are you missing a using directive or an assembly reference?)",
+  +     range: {
+  +       end: {
+  +         character: 15,
+  +         line: 7
+  +       },
+  +       start: {
+  +         character: 5,
+  +         line: 7
+  +       }
+  +     },
+  +     severity: 'error',
+  +     start: 182,
+  +     uri: 'Program.cs',
+  +     version: 1
+  +   }
+  + ]
+  - []
+  
+      at emit (file:///workspace/scratch/1692a10afba9/p5-nullable-metadata/tests/compiler-cil-utf8-rva.test.js:13:10)
+      at TestContext.<anonymous> (file:///workspace/scratch/1692a10afba9/p5-nullable-metadata/tests/compiler-cil-utf8-rva.test.js:52:17)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: [ { uri: 'Program.cs', version: 1, start: 182, length: 10, code: 'CS0246', message: "The type or namespace name 'MethodImplAttribute' could not be found (are you missing a using directive or an assembly reference?)", severity: 'error', range: [Object] }, { uri: 'Program.cs', version: 1, start: 182, length: 10, code: 'CS0246', message: "The type or namespace name 'MethodImpl' could not be found (are you missing a using directive or an assembly reference?)", severity: 'error', range: [Object] } ],
+    expected: [],
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }
+
+test at tests/compiler-cil-utf8-rva.test.js:63:1
+✖ A02-T77 executable assemblies retain literal data; reference assemblies omit body-only storage (26.913173ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  
+  + [
+  +   {
+  +     code: 'CS0246',
+  +     length: 10,
+  +     message: "The type or namespace name 'MethodImplAttribute' could not be found (are you missing a using directive or an assembly reference?)",
+  +     range: {
+  +       end: {
+  +         character: 15,
+  +         line: 7
+  +       },
+  +       start: {
+  +         character: 5,
+  +         line: 7
+  +       }
+  +     },
+  +     severity: 'error',
+  +     start: 182,
+  +     uri: 'Program.cs',
+  +     version: 1
+  +   },
+  +   {
+  +     code: 'CS0246',
+  +     length: 10,
+  +     message: "The type or namespace name 'MethodImpl' could not be found (are you missing a using directive or an assembly reference?)",
+  +     range: {
+  +       end: {
+  +         character: 15,
+  +         line: 7
+  +       },
+  +       start: {
+  +         character: 5,
+  +         line: 7
+  +       }
+  +     },
+  +     severity: 'error',
+  +     start: 182,
+  +     uri: 'Program.cs',
+  +     version: 1
+  +   }
+  + ]
+  - []
+  
+      at TestContext.<anonymous> (file:///workspace/scratch/1692a10afba9/p5-nullable-metadata/tests/compiler-cil-utf8-rva.test.js:70:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: [ { uri: 'Program.cs', version: 1, start: 182, length: 10, code: 'CS0246', message: "The type or namespace name 'MethodImplAttribute' could not be found (are you missing a using directive or an assembly reference?)", severity: 'error', range: [Object] }, { uri: 'Program.cs', version: 1, start: 182, length: 10, code: 'CS0246', message: "The type or namespace name 'MethodImpl' could not be found (are you missing a using directive or an assembly reference?)", severity: 'error', range: [Object] } ],
+    expected: [],
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }

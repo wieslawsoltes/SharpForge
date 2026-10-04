@@ -1,0 +1,234 @@
+{
+  "baseline": "bf85020e6024cdd679a0234d9f050ca7dedddf53",
+  "candidate": "41972f6bff4704c5e7597387cfda45f89c3670db",
+  "comparisons": [
+    {
+      "mode": "registry",
+      "fixture": "utf8",
+      "baseline": {
+        "medianMs": 13.787903999999344,
+        "p95Ms": 19.781114000000343,
+        "assemblyBytes": 22016
+      },
+      "candidate": {
+        "medianMs": 6.046963499999947,
+        "p95Ms": 13.261642000000393,
+        "assemblyBytes": 5632
+      },
+      "changePercent": {
+        "medianMs": -56.14298228359993,
+        "p95Ms": -32.958062928103224,
+        "assemblyBytes": -74.4186046511628
+      }
+    },
+    {
+      "mode": "registry",
+      "fixture": "noUtf8",
+      "baseline": {
+        "medianMs": 4.771741500000644,
+        "p95Ms": 13.65361699999994,
+        "assemblyBytes": 3584
+      },
+      "candidate": {
+        "medianMs": 4.862329999999929,
+        "p95Ms": 8.441523999999845,
+        "assemblyBytes": 3584
+      },
+      "changePercent": {
+        "medianMs": 1.898436870464848,
+        "p95Ms": -38.173716166200634,
+        "assemblyBytes": 0.0
+      }
+    },
+    {
+      "mode": "cachedReferences",
+      "fixture": "utf8",
+      "baseline": {
+        "medianMs": 12.557235000000219,
+        "p95Ms": 25.00721700000031,
+        "assemblyBytes": 22016
+      },
+      "candidate": {
+        "medianMs": 7.151865499999985,
+        "p95Ms": 12.190279000000373,
+        "assemblyBytes": 5632
+      },
+      "changePercent": {
+        "medianMs": -43.04585762709816,
+        "p95Ms": -51.25295629657541,
+        "assemblyBytes": -74.4186046511628
+      }
+    },
+    {
+      "mode": "cachedReferences",
+      "fixture": "noUtf8",
+      "baseline": {
+        "medianMs": 5.017366499999298,
+        "p95Ms": 9.639994000001025,
+        "assemblyBytes": 3584
+      },
+      "candidate": {
+        "medianMs": 6.985406499999499,
+        "p95Ms": 12.205740999999762,
+        "assemblyBytes": 3584
+      },
+      "changePercent": {
+        "medianMs": 39.22456133113808,
+        "p95Ms": 26.615649345823922,
+        "assemblyBytes": 0.0
+      }
+    }
+  ],
+  "memoryDeltas": [
+    {
+      "revision": "baseline",
+      "mode": "registry",
+      "fixture": "utf8",
+      "heapDeltaBytes": {
+        "median": 10778492.0,
+        "p95": 11763208,
+        "min": -46440784,
+        "max": 14920408
+      },
+      "arrayBufferDeltaBytes": {
+        "median": 511627.0,
+        "p95": 511627,
+        "min": -3982831,
+        "max": 511627
+      }
+    },
+    {
+      "revision": "baseline",
+      "mode": "registry",
+      "fixture": "noUtf8",
+      "heapDeltaBytes": {
+        "median": 4050024.0,
+        "p95": 4454928,
+        "min": -53598264,
+        "max": 4588232
+      },
+      "arrayBufferDeltaBytes": {
+        "median": 49087.0,
+        "p95": 49087,
+        "min": -1812932,
+        "max": 49087
+      }
+    },
+    {
+      "revision": "baseline",
+      "mode": "cachedReferences",
+      "fixture": "utf8",
+      "heapDeltaBytes": {
+        "median": 11469152.0,
+        "p95": 12306768,
+        "min": -48244448,
+        "max": 14313248
+      },
+      "arrayBufferDeltaBytes": {
+        "median": 511627.0,
+        "p95": 511627,
+        "min": -1404346,
+        "max": 511627
+      }
+    },
+    {
+      "revision": "baseline",
+      "mode": "cachedReferences",
+      "fixture": "noUtf8",
+      "heapDeltaBytes": {
+        "median": 4493524.0,
+        "p95": 4778144,
+        "min": -53273736,
+        "max": 4898080
+      },
+      "arrayBufferDeltaBytes": {
+        "median": 49087.0,
+        "p95": 49087,
+        "min": -1764178,
+        "max": 49087
+      }
+    },
+    {
+      "revision": "current",
+      "mode": "registry",
+      "fixture": "utf8",
+      "heapDeltaBytes": {
+        "median": 4561980.0,
+        "p95": 4995112,
+        "min": -53163096,
+        "max": 5278128
+      },
+      "arrayBufferDeltaBytes": {
+        "median": 88538.0,
+        "p95": 88538,
+        "min": -1664456,
+        "max": 88538
+      }
+    },
+    {
+      "revision": "current",
+      "mode": "registry",
+      "fixture": "noUtf8",
+      "heapDeltaBytes": {
+        "median": 4208208.0,
+        "p95": 4451912,
+        "min": 4117024,
+        "max": 4643368
+      },
+      "arrayBufferDeltaBytes": {
+        "median": 49087.0,
+        "p95": 49087,
+        "min": -1535576,
+        "max": 49087
+      }
+    },
+    {
+      "revision": "current",
+      "mode": "cachedReferences",
+      "fixture": "utf8",
+      "heapDeltaBytes": {
+        "median": 5031108.0,
+        "p95": 5283456,
+        "min": -52117224,
+        "max": 5588448
+      },
+      "arrayBufferDeltaBytes": {
+        "median": 88538.0,
+        "p95": 88538,
+        "min": -1696186,
+        "max": 88538
+      }
+    },
+    {
+      "revision": "current",
+      "mode": "cachedReferences",
+      "fixture": "noUtf8",
+      "heapDeltaBytes": {
+        "median": 4646252.0,
+        "p95": 5038352,
+        "min": -52858888,
+        "max": 5124000
+      },
+      "arrayBufferDeltaBytes": {
+        "median": 49087.0,
+        "p95": 49087,
+        "min": -1509497,
+        "max": 49087
+      }
+    }
+  ],
+  "retainedAcrossMeasuredRounds": {
+    "heapDeltaBytes": -2969240,
+    "arrayBufferDeltaBytes": -1261587
+  },
+  "rawSha256": "cc2fad44c115f4d0162bfb958fbae0e71ceb1f09ec684de095ae0ffe31859db5",
+  "runs": 1,
+  "warmupRounds": 80,
+  "measuredRounds": 24,
+  "budgetException": {
+    "mode": "cachedReferences",
+    "fixture": "noUtf8",
+    "reason": "Measured control regression accepted for allocation-free UTF-8 static-data correctness and target-contract preservation; mechanism not isolated by this comparison.",
+    "signOff": "Implementation author accepts this explicitly quantified correctness cost; no overall performance pass is claimed."
+  }
+}

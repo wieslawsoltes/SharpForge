@@ -128,6 +128,13 @@
       "reason": "Developer-only benchmark imports fixed API and fixture paths from an operator-selected trusted checkout; managed data never selects modules."
     },
     {
+      "path": "packages/compiler/bench/utf8-rva.bench.js",
+      "operation": "dynamic-import",
+      "count": 1,
+      "sha256": "84e5538c58b562bde3c86ea5a06bc642bb26f412cdbfad902fe25f4e280dd43f",
+      "reason": "Developer-run UTF-8 benchmark resolves the fixed public @sharpforge/compiler entry from operator-selected trusted local checkouts, verifies revision-local resolution and the exact baseline commit, and never executes document or assembly data as JavaScript."
+    },
+    {
       "path": "packages/compiler/smoke.mjs",
       "operation": "dynamic-import",
       "count": 3,

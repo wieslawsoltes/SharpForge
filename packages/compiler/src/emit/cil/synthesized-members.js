@@ -24,6 +24,7 @@ import { asyncEntryPoint } from './async-members.js';
 import { moduleTypeInitializer } from './module-initializers.js';
 import { planAnonymousTemplate } from './anonymous-type-members.js';
 import { planFixedBuffers, extendWithFixedBuffers } from './fixed-buffers.js';
+import { Utf8DataPlan } from './utf8-data-plan.js';
 
 const ENTRY_FLAGS = MethodAttributes.Private | MethodAttributes.Static | MethodAttributes.HideBySig;
 const TYPE_INITIALIZER_FLAGS = ENTRY_FLAGS | MethodAttributes.SpecialName | MethodAttributes.RTSpecialName;
@@ -62,6 +63,7 @@ export class SynthesizedMembers {
       anonymousTemplates = (analysis.anonymousTemplates ?? []).map(entry => entry.symbol);
     /** Types to append after the source types. State machine classes come last: their field lists grow while bodies are emitted. */
     this.fixedBuffers = planFixedBuffers(declared, analysis.core);
+    this.utf8Literals = new Utf8DataPlan(analysis);
     this.types = [
       ...ownProgram,
       ...this.fixedBuffers.types,
@@ -69,6 +71,7 @@ export class SynthesizedMembers {
       ...anonymousTemplates,
       ...this.closures.types,
       ...this.dynamicSites.types,
+      ...this.utf8Literals.types,
       ...this.stateMachines.types,
     ];
     /** The planned entry of the synthesized entry point, once `extend` has seen its type. */
@@ -92,6 +95,7 @@ export class SynthesizedMembers {
   }
   /** Adds the synthesized members of one type to its plan. */
   extend(type, plan) {
+    this.utf8Literals.extend(type, plan);
     if (type.isAnonymousTemplate) planAnonymousTemplate(type, plan, this.core);
     extendWithFixedBuffers(this.fixedBuffers, type, plan);
     if (this.topLevel?.type === type) {

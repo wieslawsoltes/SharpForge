@@ -4,8 +4,8 @@ import {DiagnosticId} from '../diagnostics/codes.js';
  * it is not a `string`, a `byte[]` or an `object`, and no conversion to them exists (CS0029 through the ordinary
  * conversion rules). `+` joins two UTF-8 literals into one; with any other operand it is CS0019.
  *
- * Bound node: `Utf8Literal { text }` of type `ReadOnlySpan<byte>`. It is not executable: the runtime has no spans, so
- * code generation reports the construct (SF2200). The lexer reports text that has no UTF-8 form (CS9026).
+ * Bound node: `Utf8Literal { text }` of type `ReadOnlySpan<byte>`. Direct CIL wraps assembly data in a span; the
+ * bytecode execution profile reports its unsupported span contract (SF2200). Invalid UTF-16 is CS9026 in the lexer.
  */
 
 /** True for the syntax of a UTF-8 literal or of a concatenation of UTF-8 literals. */
