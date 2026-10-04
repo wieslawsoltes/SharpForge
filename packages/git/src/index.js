@@ -23,6 +23,7 @@ export * from './history.js';
 export * from './blame.js';
 export * from './graph-layout.js';
 export * from './service.js';
+export * from './factory.js';
 export * from './worker/client.js';
 export * from './worker/server.js';
 export * from './worker/protocol.js';
