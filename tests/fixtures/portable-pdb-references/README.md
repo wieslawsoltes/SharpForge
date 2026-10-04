@@ -48,7 +48,7 @@ coverage beyond the concrete engines/host below remains unverified.
   Python 3.14.7 / Playwright 1.63.0. This includes all 27 CDI parent extents,
   heap columns and the existing native scope/import/slot contracts. This is
   library-browser qualification, not CLR execution, Windows/Linux, VM or Wasm
-  coverage. [Runnable combined harness](../../portable-pdb-budgets/browser.py)
+  coverage. [Runnable combined harness](https://github.com/wieslawsoltes/SharpForge/blob/9af3ee4b51f66f12c2743060cf508750cd847b49/tests/fixtures/portable-pdb-budgets/browser.py)
   is retained with #4417; its recorded module hash identifies the actual run.
 - This source passed syntax/static checks (3407/3403 modules, zero errors),
   manifests (895 Node files/37 browser scripts/30 areas, no missing/duplicate
