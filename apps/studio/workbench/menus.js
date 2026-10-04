@@ -1,3 +1,4 @@
+import {mergeMenuContributions} from './menu-contributions.js';
 import {button, element, runAction} from './ui.js';
 
 export const workbenchMenus = Object.freeze([
@@ -30,7 +31,8 @@ export function menuCommands(menu, registry, keybindings) {
   }));
 }
 
-export function mountMenuBar(host, {registry, menus = workbenchMenus, keybindings, execute, onError}) {
+export function mountMenuBar(host, {registry, menus = workbenchMenus, menuContributions = [], keybindings, execute, onError}) {
+  menus = mergeMenuContributions(menus, menuContributions);
   const document = host.ownerDocument;
   const controller = new AbortController();
   const bar = element(document, 'nav', {className: 'wb-menubar', role: 'menubar', 'aria-label': 'Main menu'});

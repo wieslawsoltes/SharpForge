@@ -266,7 +266,7 @@ export class WorkbenchShell {
     const onError = error => this.onError(error);
     if (menuHost) {
       this.menuBar = mountMenuBar(menuHost, {registry: this.commands, keybindings: this.options.keybindings,
-        execute: id => this.execute(id), onError});
+        execute: id => this.execute(id), onError, menuContributions: this.options.menuContributions});
       this.disposers.push(() => this.menuBar.dispose());
     }
     if (toolbarHost) {
