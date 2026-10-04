@@ -1,3 +1,4 @@
+export {Compositor} from './compositor.js';
 export {CompositionStrokeDashArray} from './stroke-dash-array.js';
 export {CompositionObject} from './composition-object.js';
 export {CompositionPropertySet} from './property-set.js';
@@ -10,5 +11,11 @@ export {CompositionGeometry, CompositionRectangleGeometry, CompositionRoundedRec
 export {InsetClip, RectangleClip, GeometricClip} from './clips.js';
 export {CompositionEffectFactory, CompositionEffectBrush, evaluateEffect, validateEffectGraph} from './effects.js';
 export {compositionLightingPolicy, createCompositionLight} from './lights.js';
+export {KeyFrameAnimation, CompositionEasingFunction, AnimationController} from './keyframe-animations.js';
+export {ExpressionAnimation} from './expression-animation.js';
+export {parseCompositionExpression} from './expression-parser.js';
+export {evaluateCompositionExpression} from './expression-evaluator.js';
+export {ImplicitAnimationCollection, CompositionAnimationGroup, CompositionScopedBatch} from './implicit-animations.js';
 export {trimGeometry} from './trim-geometry.js';
+export {encodeCompositionContent, encodeCompositionLayers} from './content.js';
 export {DropShadow} from './shadows.js';
