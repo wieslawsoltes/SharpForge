@@ -4,7 +4,7 @@ import {decodeScalar} from './scalar-codec.js';
 
 /** Reject malformed scalar wire data before executing a source image. ABI-specific limits apply at load. */
 export function verifyScalarConstant(value) {
-  if (!value?.scalar) return true;
+  if (value === null || typeof value !== 'object' || !Object.hasOwn(value, 'scalar')) return true;
   try {
     decodeScalar(value, {nativeIntBits: 64});
     return true;

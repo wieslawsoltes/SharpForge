@@ -4,6 +4,8 @@ import {defaultValue} from './source-ops.js';
 import {sourceNumericContext} from './scalar-ops.js';
 import {literalString} from './strings.js';
 
+const hasScalarTag = value => value !== null && typeof value === 'object' && Object.hasOwn(value, 'scalar');
+
 export function initializeSourceNumbers(vm) {
   bindNativeAbi(vm.options);
 }
@@ -12,14 +14,14 @@ export function initializeSourceNumbers(vm) {
 export function sourceConstant(vm, index) {
   const raw = vm.image.constants[index];
   if (typeof raw === 'string') return literalString(vm, raw);
-  if (!raw?.scalar) return raw;
+  if (!hasScalarTag(raw)) return raw;
   if (!vm.constantValues.has(index)) vm.constantValues.set(index, decodeScalar(raw, sourceNumericContext(vm)));
   return vm.constantValues.get(index);
 }
 
 export function sourceInitialValue(vm, slot) {
   if (slot.value === null) return defaultValue(slot.type, vm);
-  return slot.value?.scalar ? decodeScalar(slot.value, sourceNumericContext(vm)) : slot.value;
+  return hasScalarTag(slot.value) ? decodeScalar(slot.value, sourceNumericContext(vm)) : slot.value;
 }
 
 export function sourceIndex(value) {
