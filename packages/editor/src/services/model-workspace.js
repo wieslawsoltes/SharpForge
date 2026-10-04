@@ -10,7 +10,9 @@ export class EditorModelWorkspace {
   getDocument(uri) {
     const model = this.models.get(uri);
     if (!model) return undefined;
-    return {uri, text: model.snapshot().text, version: model.version, readOnly: model.readOnly, model};
+    const source = model.snapshot();
+    return {uri, get text() { return source.text; }, length: source.length, source,
+      version: model.version, readOnly: model.readOnly, model};
   }
 
   listDocuments() { return [...this.models.keys()].map(uri => this.getDocument(uri)); }

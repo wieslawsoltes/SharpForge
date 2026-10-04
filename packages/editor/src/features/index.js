@@ -1,5 +1,6 @@
 export {createEditorInsights} from './insights.js';
 export {EditorSearchSession, preserveReplacementCase} from './search-session.js';
+export {cooperativeLiteralSearch, workerRegexSearch} from './cooperative-search.js';
 export {SmartTyping, smartNewline, cachedLexicalContext} from './smart-typing.js';
 export {EditorFormatting} from './formatting.js';
 export {RenamePreview} from './rename-preview.js';

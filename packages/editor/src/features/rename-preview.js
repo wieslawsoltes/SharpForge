@@ -30,6 +30,7 @@ export class RenamePreview {
   }
 
   repaint() {
+    if (this.editor.refreshPreview) return this.editor.refreshPreview();
     this.editor.paint?.();
     this.editor.view?.render?.();
   }
