@@ -302,7 +302,8 @@ export const CallBinding = Base =>
         // here, and so do a `default` literal (unconverted it would be passed as a null reference), a method group and
         // a `null` for a parameter of a nullable value type, which is a value (`default(int?)`) and not a reference.
         // A tuple literal without a type of its own (`(1, null)`, `(key, x => x)`) converts element by element.
-        const nullToNullable = a.literal === 'null' && !!result.parameterTypes[i]?.isNullableValueType,
+        // (So is a `null` that reaches the parameter through a user-defined conversion operator.)
+        const nullToNullable = a.literal === 'null' && (!!result.parameterTypes[i]?.isNullableValueType || !!conversion?.isUserDefined),
           typeless = a.materialize || a.literal === 'default' || a.kind === 'MethodGroup' || a.form === 'tupleLiteral' || nullToNullable,
           converts = conversion && !a.hasErrors && (a.type || typeless);
         const value = converts ? this.applyConversion(a, result.parameterTypes[i], conversion, a.syntax) : a;

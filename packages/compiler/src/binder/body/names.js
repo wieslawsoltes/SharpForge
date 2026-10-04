@@ -221,6 +221,9 @@ export const NameBinding = Base =>
           if (!r && options.nameofOperand) {
             if (options.memberAccessLeft) this.d.gate(this.c.uri, syntax, 'InstanceMemberInNameof');
           } else if (!r) {
+            // `Color Color` where there is no instance (a static member, a field initializer): `Color.Red` names the type.
+            const asType = options.memberAccessLeft ? this.colorColorType(syntax, first) : null;
+            if (asType) return asType;
             used();
             this.report(syntax, this.c.isFieldInitializer && !this.c.isStatic && !outer ? DiagnosticId.CS0236 : DiagnosticId.CS0120, [first.toDisplayString()]);
             return this.bad(syntax);
@@ -255,6 +258,13 @@ export const NameBinding = Base =>
           return this.node('EventAccess', syntax, first.type, { event: first, receiver: r });
       }
       return this.lenient(syntax);
+    }
+    /** The type an identifier names when it binds to an instance member whose type has the member's name, or null. */
+    colorColorType(syntax, member) {
+      if (syntax.kind !== 'IdentifierName' || member.type?.name !== syntax.identifier.valueText) return null;
+      const found = this.d.typeBinder.lookup(member.type.name, 0, this.typeScope);
+      if (!found || found !== (member.type.originalDefinition ?? member.type)) return null;
+      return this.node('TypeExpression', syntax, null, { referencedType: member.type });
     }
     construct(definition, typeArguments, node) {
       if (definition.arity !== typeArguments.length) {

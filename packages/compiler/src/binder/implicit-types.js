@@ -1,4 +1,5 @@
 import {DiagnosticId} from '../diagnostics/codes.js';
+import { TypeCompareKind } from '../symbols/types.js';
 /**
  * Implicit typing (SF-A02-T52): the best common type of a set of expressions (implicitly typed arrays, the inferred
  * return type of a lambda) and the rules for the initializer of a `var` local.
@@ -8,8 +9,20 @@ import {DiagnosticId} from '../diagnostics/codes.js';
  */
 
 /** The better of two candidate types: the one the other converts to implicitly, or null when neither or both do. */
+/** Two tuple types that differ only in element names merge into one that keeps the names both have (Roslyn's MergeTupleNames). */
+function mergeTupleNames(first, second) {
+  if (!first.isTupleType || !second.isTupleType || !first.withTupleElementNames) return null;
+  if (!first.equals(second, TypeCompareKind.IgnoreTupleNames)) return null;
+  const left = first.tupleElementNames ?? [],
+    right = second.tupleElementNames ?? [],
+    names = left.map((name, index) => (name && name === right[index] ? name : null));
+  return first.withTupleElementNames(names.some(Boolean) ? names : null);
+}
+
 function betterType(first, second, converts) {
   if (first.equals(second)) return first;
+  const merged = mergeTupleNames(first, second);
+  if (merged) return merged;
   const firstToSecond = converts(first, second),
     secondToFirst = converts(second, first);
   if (firstToSecond === secondToFirst) return null;

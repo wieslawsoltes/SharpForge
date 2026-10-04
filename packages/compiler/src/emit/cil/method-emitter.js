@@ -23,6 +23,7 @@ import { LockEmission } from './emit-lock.js';
 import { AccessorEmission } from './emit-accessors.js';
 import { JumpEmission } from './emit-jumps.js';
 import { NullableEmission } from './emit-nullable.js';
+import { LiftedUserOperatorEmission } from './emit-lifted-user-operators.js';
 import { InitializerEmission } from './emit-initializers.js';
 import { TypeOperatorEmission } from './emit-type-operators.js';
 import { ClosureEmission } from './emit-closures.js';
@@ -70,6 +71,7 @@ const families = [
   AccessorEmission,
   JumpEmission,
   NullableEmission,
+  LiftedUserOperatorEmission,
   InitializerEmission,
   TypeOperatorEmission,
   ClosureEmission,

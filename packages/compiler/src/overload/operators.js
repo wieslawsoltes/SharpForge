@@ -248,12 +248,14 @@ export class OperatorResolver {
     }
     if (operator === '+' && (lt.specialType === 'System_String' || rt.specialType === 'System_String')) {
       if (lt.specialType === 'System_Void' || rt.specialType === 'System_Void') return null;
-      return builtin(
-        'string',
-        lt.specialType === 'System_String' ? core.string : core.object,
-        rt.specialType === 'System_String' ? core.string : core.object,
-        core.string,
-      );
+      // `string + object` unless the other operand has a user-defined implicit conversion to string: then
+      // `string + string` is the better operator, and the operand is converted by its operator.
+      const operandType = type => {
+        if (type.specialType === 'System_String') return core.string;
+        const toString = type.typeKind === TypeKind.Class || type.typeKind === TypeKind.Struct ? this.conversions.classifyImplicit(type, core.string) : null;
+        return toString?.exists && toString.isUserDefined ? core.string : core.object;
+      };
+      return builtin('string', operandType(lt), operandType(rt), core.string);
     }
     const l0 = stripNullable(lt),
       r0 = stripNullable(rt),
