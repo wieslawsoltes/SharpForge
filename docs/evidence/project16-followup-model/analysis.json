@@ -1,0 +1,464 @@
+{
+  "format": "sharpforge-project16-preview-model-comparison",
+  "version": 1,
+  "sources": [
+    {
+      "label": "baseline",
+      "commit": "8d1be9cffa04b0fd7390e5cb6fe5f6c03b997557",
+      "tree": "dc9d4e337b91c6e878e7c6c7d65f013667b5ec6b"
+    },
+    {
+      "label": "candidate",
+      "commit": "80dfe3f5a7d18731915bf9b6b770f816911b4f0f",
+      "tree": "b105d155bff6efd72967652fd340634f6444b8a9"
+    }
+  ],
+  "environment": {
+    "node": "v24.19.0",
+    "v8": "13.6.233.17-node.51",
+    "platform": "linux",
+    "arch": "x64",
+    "cpu": "AMD EPYC 9V74 80-Core Processor",
+    "logicalCpus": 9
+  },
+  "captureOrder": [
+    "baseline",
+    "candidate"
+  ],
+  "sharedHost": true,
+  "configuration": {
+    "sizes": [
+      1024,
+      1048576
+    ],
+    "samples": 101,
+    "warmups": 10
+  },
+  "counts": {
+    "rowsPerCapture": 10,
+    "samplesPerRow": 101,
+    "rawSamplesPerCapture": 1010,
+    "rawSamplesBothCaptures": 2020,
+    "coldSamplesPerCapture": 10,
+    "warmupsPerCapture": 100,
+    "timedInvocationsPerCapture": 1120,
+    "p95RowsAboveFivePercent": 5,
+    "medianRowsAboveFivePercent": 3
+  },
+  "correctness": {
+    "baseline": true,
+    "candidate": true
+  },
+  "comparator": {
+    "command": [
+      "node",
+      "scripts/check-editor-perf.js",
+      "--baseline",
+      "docs/evidence/project16-followup-model/baseline.json",
+      "--current",
+      "docs/evidence/project16-followup-model/candidate.json",
+      "--threshold",
+      "0.05",
+      "--output",
+      "docs/evidence/project16-followup-model/comparator.json"
+    ],
+    "exitCode": 1,
+    "passed": false,
+    "threshold": 0.05,
+    "metric": "p95Ms"
+  },
+  "harness": [
+    {
+      "path": "scripts/benchmark-editor.js",
+      "identical": true,
+      "gitBlob": "9723be5c3b810fac34c55cd1e10264797c64a3bb",
+      "sha256": "c44554cb887720b5ac7a2a5a4e728de2c352acd466b62e176354be89f861d9b6",
+      "bytes": 1207
+    },
+    {
+      "path": "scripts/editor-benchmarks/model.js",
+      "identical": true,
+      "gitBlob": "fb71e742eaa7ab9e5c96b2f70dd0919b5bf2db95",
+      "sha256": "51427bc6efef1a22f9b7ae587b7943c134858fb07850bb2c4cf65ca5a4f6fdaa",
+      "bytes": 4450
+    },
+    {
+      "path": "scripts/editor-benchmarks/common.js",
+      "identical": true,
+      "gitBlob": "f3893f433af81295d67eec62a38f055eae784502",
+      "sha256": "4e36eedc6d6103080f2106bf2b66e0087399d4134e9b6de60d77ce23e64cb03d",
+      "bytes": 3042
+    },
+    {
+      "path": "scripts/editor-benchmarks/fixtures.js",
+      "identical": true,
+      "gitBlob": "aa88de983d43b4ebf7933f8b70c5b48bfb18f579",
+      "sha256": "47e54a6f1a93cea59174842d3340191bba5af9f09dd6de9f6818efcfd7a412a3",
+      "bytes": 935
+    },
+    {
+      "path": "scripts/editor-benchmarks/limits.js",
+      "identical": true,
+      "gitBlob": "bf1b9720ee7a1289c65beb458879e10e8a2d4307",
+      "sha256": "5b550e9134b28ef4665f369ccb15284c0cf16f8179689b8ca46cfe9555097d0e",
+      "bytes": 400
+    },
+    {
+      "path": "scripts/check-editor-perf.js",
+      "identical": true,
+      "gitBlob": "0d60474d81741cb020afbb8314ce11660de9c819",
+      "sha256": "a783c9c69e2892f8a4d813fd3021eec90cf7614c5577efd46063283ad9457dd0",
+      "bytes": 4119
+    },
+    {
+      "path": "scripts/limited.js",
+      "identical": true,
+      "gitBlob": "cecc071634fa4b4b738dfaa0a1ac516bf3e059dd",
+      "sha256": "d60fa1310cc85ce9426914dd4b79b1b500dcb2eab0928b422d24994d90a650f7",
+      "bytes": 1280
+    },
+    {
+      "path": "package.json",
+      "identical": true,
+      "gitBlob": "118c0a9af4dc292d5df8f7c5e02121f8309957fe",
+      "sha256": "9ed396895997e7afbdb0951b22f56210ed9a66efc19753609107d0a4240ecfe8",
+      "bytes": 3136
+    },
+    {
+      "path": "package-lock.json",
+      "identical": true,
+      "gitBlob": "61aa0aad42fe8ccb71ab679100a14237544c5f7f",
+      "sha256": "0795c3e9cb2007594de2fa207c2a97d80bb927f146f68d8566934485cbddf0cd",
+      "bytes": 10877
+    }
+  ],
+  "rows": [
+    {
+      "operation": "model.edit",
+      "backend": "node-model",
+      "sizeBytes": 1024,
+      "samplesPerCapture": 101,
+      "baselineColdMs": 1.0506540000000086,
+      "candidateColdMs": 1.180228999999997,
+      "p50Ms": {
+        "baseline": 0.01548400000001493,
+        "candidate": 0.014761999999990394,
+        "deltaMs": -0.0007220000000245363,
+        "relativeChange": -0.0466287780950555,
+        "percentChange": -4.6628778095055505,
+        "exceedsFivePercent": false
+      },
+      "p95Ms": {
+        "baseline": 0.06041099999998778,
+        "candidate": 0.03010600000001773,
+        "deltaMs": -0.03030499999997005,
+        "relativeChange": -0.5016470510333578,
+        "percentChange": -50.164705103335784,
+        "exceedsFivePercent": false
+      },
+      "p99Ms": {
+        "baseline": 0.1603319999999826,
+        "candidate": 0.041984000000013566,
+        "deltaMs": -0.11834799999996903,
+        "relativeChange": -0.7381433525433593,
+        "percentChange": -73.81433525433593,
+        "exceedsFivePercent": false
+      }
+    },
+    {
+      "operation": "model.paste64KiB",
+      "backend": "node-model",
+      "sizeBytes": 1024,
+      "samplesPerCapture": 101,
+      "baselineColdMs": 1.2028940000000148,
+      "candidateColdMs": 1.551559999999995,
+      "p50Ms": {
+        "baseline": 0.3959970000000226,
+        "candidate": 0.412811999999974,
+        "deltaMs": 0.016814999999951397,
+        "relativeChange": 0.042462442897169606,
+        "percentChange": 4.2462442897169606,
+        "exceedsFivePercent": false
+      },
+      "p95Ms": {
+        "baseline": 0.548057,
+        "candidate": 0.6322730000000263,
+        "deltaMs": 0.08421600000002627,
+        "relativeChange": 0.15366284893729354,
+        "percentChange": 15.366284893729354,
+        "exceedsFivePercent": true
+      },
+      "p99Ms": {
+        "baseline": 0.7635209999999688,
+        "candidate": 0.7316829999999754,
+        "deltaMs": -0.03183799999999337,
+        "relativeChange": -0.04169891856280927,
+        "percentChange": -4.169891856280927,
+        "exceedsFivePercent": false
+      }
+    },
+    {
+      "operation": "model.undo64KiB",
+      "backend": "node-model",
+      "sizeBytes": 1024,
+      "samplesPerCapture": 101,
+      "baselineColdMs": 0.045127999999976964,
+      "candidateColdMs": 0.041422000000011394,
+      "p50Ms": {
+        "baseline": 0.008893000000000484,
+        "candidate": 0.010096000000032745,
+        "deltaMs": 0.0012030000000322616,
+        "relativeChange": 0.13527493534602453,
+        "percentChange": 13.527493534602453,
+        "exceedsFivePercent": true
+      },
+      "p95Ms": {
+        "baseline": 0.0277709999999729,
+        "candidate": 0.04090099999996255,
+        "deltaMs": 0.01312999999998965,
+        "relativeChange": 0.4727953620684333,
+        "percentChange": 47.27953620684333,
+        "exceedsFivePercent": true
+      },
+      "p99Ms": {
+        "baseline": 0.0710770000000025,
+        "candidate": 0.10912500000000591,
+        "deltaMs": 0.03804800000000341,
+        "relativeChange": 0.5353067799710465,
+        "percentChange": 53.53067799710465,
+        "exceedsFivePercent": true
+      }
+    },
+    {
+      "operation": "model.findLiteral",
+      "backend": "node-model",
+      "sizeBytes": 1024,
+      "samplesPerCapture": 101,
+      "baselineColdMs": 1.2488529999999969,
+      "candidateColdMs": 1.4905580000000214,
+      "p50Ms": {
+        "baseline": 0.047190999999997985,
+        "candidate": 0.026649999999960983,
+        "deltaMs": -0.020541000000037002,
+        "relativeChange": -0.4352736750659634,
+        "percentChange": -43.527367506596335,
+        "exceedsFivePercent": false
+      },
+      "p95Ms": {
+        "baseline": 0.0826940000000036,
+        "candidate": 0.09586400000000594,
+        "deltaMs": 0.013170000000002346,
+        "relativeChange": 0.1592618569666695,
+        "percentChange": 15.92618569666695,
+        "exceedsFivePercent": true
+      },
+      "p99Ms": {
+        "baseline": 0.10345599999999422,
+        "candidate": 1.9630610000000388,
+        "deltaMs": 1.8596050000000446,
+        "relativeChange": 17.974839545315387,
+        "percentChange": 1797.4839545315388,
+        "exceedsFivePercent": true
+      }
+    },
+    {
+      "operation": "model.viewportQuery60Lines",
+      "backend": "node-model",
+      "sizeBytes": 1024,
+      "samplesPerCapture": 101,
+      "baselineColdMs": 0.2739530000000059,
+      "candidateColdMs": 0.319911999999988,
+      "p50Ms": {
+        "baseline": 0.011947999999961212,
+        "candidate": 0.012147999999967851,
+        "deltaMs": 0.0002000000000066393,
+        "relativeChange": 0.016739203214537035,
+        "percentChange": 1.6739203214537035,
+        "exceedsFivePercent": false
+      },
+      "p95Ms": {
+        "baseline": 0.06250500000004422,
+        "candidate": 0.039158999999983735,
+        "deltaMs": -0.023346000000060485,
+        "relativeChange": -0.37350611951114265,
+        "percentChange": -37.35061195111427,
+        "exceedsFivePercent": false
+      },
+      "p99Ms": {
+        "baseline": 0.09760700000003908,
+        "candidate": 0.07320999999996047,
+        "deltaMs": -0.024397000000078606,
+        "relativeChange": -0.24995133545820314,
+        "percentChange": -24.995133545820313,
+        "exceedsFivePercent": false
+      }
+    },
+    {
+      "operation": "model.edit",
+      "backend": "node-model",
+      "sizeBytes": 1048576,
+      "samplesPerCapture": 101,
+      "baselineColdMs": 0.3161569999999756,
+      "candidateColdMs": 0.3087859999999978,
+      "p50Ms": {
+        "baseline": 0.012289000000009764,
+        "candidate": 0.0166449999999827,
+        "deltaMs": 0.004355999999972937,
+        "relativeChange": 0.3544633411969629,
+        "percentChange": 35.44633411969629,
+        "exceedsFivePercent": true
+      },
+      "p95Ms": {
+        "baseline": 0.02739099999996597,
+        "candidate": 0.04832299999998213,
+        "deltaMs": 0.02093200000001616,
+        "relativeChange": 0.7641926180147554,
+        "percentChange": 76.41926180147553,
+        "exceedsFivePercent": true
+      },
+      "p99Ms": {
+        "baseline": 0.041071999999985565,
+        "candidate": 0.06932399999999461,
+        "deltaMs": 0.028252000000009048,
+        "relativeChange": 0.6878652123105518,
+        "percentChange": 68.78652123105518,
+        "exceedsFivePercent": true
+      }
+    },
+    {
+      "operation": "model.paste64KiB",
+      "backend": "node-model",
+      "sizeBytes": 1048576,
+      "samplesPerCapture": 101,
+      "baselineColdMs": 0.5104989999999816,
+      "candidateColdMs": 0.5727730000000406,
+      "p50Ms": {
+        "baseline": 0.3862519999999563,
+        "candidate": 0.39697899999998754,
+        "deltaMs": 0.01072700000003124,
+        "relativeChange": 0.027772024481510726,
+        "percentChange": 2.7772024481510726,
+        "exceedsFivePercent": false
+      },
+      "p95Ms": {
+        "baseline": 0.6148869999999533,
+        "candidate": 0.5084770000000276,
+        "deltaMs": -0.10640999999992573,
+        "relativeChange": -0.17305618755955776,
+        "percentChange": -17.305618755955777,
+        "exceedsFivePercent": false
+      },
+      "p99Ms": {
+        "baseline": 0.7504519999999957,
+        "candidate": 0.7888289999999643,
+        "deltaMs": 0.038376999999968575,
+        "relativeChange": 0.05113851385560819,
+        "percentChange": 5.113851385560819,
+        "exceedsFivePercent": true
+      }
+    },
+    {
+      "operation": "model.undo64KiB",
+      "backend": "node-model",
+      "sizeBytes": 1048576,
+      "samplesPerCapture": 101,
+      "baselineColdMs": 0.010835999999983414,
+      "candidateColdMs": 0.011736999999982345,
+      "p50Ms": {
+        "baseline": 0.008331999999995787,
+        "candidate": 0.008963999999991756,
+        "deltaMs": 0.0006319999999959691,
+        "relativeChange": 0.07585213634136934,
+        "percentChange": 7.585213634136934,
+        "exceedsFivePercent": true
+      },
+      "p95Ms": {
+        "baseline": 0.022173000000009324,
+        "candidate": 0.018658000000016273,
+        "deltaMs": -0.0035149999999930515,
+        "relativeChange": -0.15852613538950855,
+        "percentChange": -15.852613538950855,
+        "exceedsFivePercent": false
+      },
+      "p99Ms": {
+        "baseline": 0.03690599999998767,
+        "candidate": 0.041021999999998116,
+        "deltaMs": 0.004116000000010445,
+        "relativeChange": 0.11152658104405289,
+        "percentChange": 11.152658104405289,
+        "exceedsFivePercent": true
+      }
+    },
+    {
+      "operation": "model.findLiteral",
+      "backend": "node-model",
+      "sizeBytes": 1048576,
+      "samplesPerCapture": 101,
+      "baselineColdMs": 16.316633000000024,
+      "candidateColdMs": 14.657310999999993,
+      "p50Ms": {
+        "baseline": 15.282963999999993,
+        "candidate": 15.567623000000026,
+        "deltaMs": 0.2846590000000333,
+        "relativeChange": 0.018625902671761452,
+        "percentChange": 1.8625902671761452,
+        "exceedsFivePercent": false
+      },
+      "p95Ms": {
+        "baseline": 18.10062300000004,
+        "candidate": 27.890755000000013,
+        "deltaMs": 9.790131999999971,
+        "relativeChange": 0.5408726539412454,
+        "percentChange": 54.08726539412454,
+        "exceedsFivePercent": true
+      },
+      "p99Ms": {
+        "baseline": 20.96522200000004,
+        "candidate": 29.744719999999916,
+        "deltaMs": 8.779497999999876,
+        "relativeChange": 0.41876484780365586,
+        "percentChange": 41.87648478036559,
+        "exceedsFivePercent": true
+      }
+    },
+    {
+      "operation": "model.viewportQuery60Lines",
+      "backend": "node-model",
+      "sizeBytes": 1048576,
+      "samplesPerCapture": 101,
+      "baselineColdMs": 0.21138900000005378,
+      "candidateColdMs": 0.15052700000023833,
+      "p50Ms": {
+        "baseline": 0.043364999999994325,
+        "candidate": 0.04436699999996563,
+        "deltaMs": 0.0010019999999713036,
+        "relativeChange": 0.023106191628535333,
+        "percentChange": 2.3106191628535333,
+        "exceedsFivePercent": false
+      },
+      "p95Ms": {
+        "baseline": 0.09047600000030798,
+        "candidate": 0.0632450000002791,
+        "deltaMs": -0.02723100000002887,
+        "relativeChange": -0.30097484415686127,
+        "percentChange": -30.097484415686125,
+        "exceedsFivePercent": false
+      },
+      "p99Ms": {
+        "baseline": 0.11321099999986473,
+        "candidate": 0.07815700000037396,
+        "deltaMs": -0.03505399999949077,
+        "relativeChange": -0.30963422281874253,
+        "percentChange": -30.96342228187425,
+        "exceedsFivePercent": false
+      }
+    }
+  ],
+  "reviewDecision": {
+    "reviewer": "Root integration reviewer /root",
+    "userApproval": false,
+    "decision": "Accept the measured regressions for source-publication, ABA and real-notification correctness guarantees",
+    "fivePercentGatePassed": false,
+    "limits": "One ordered baseline/candidate pair on a shared host; no causal attribution, statistical speedup, allocation measurement or browser result."
+  }
+}

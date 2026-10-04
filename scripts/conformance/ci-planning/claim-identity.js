@@ -1,5 +1,15 @@
 import { resolveTask } from '../../planning/lib/task-ref.js';
 
+function declaredArea(body) {
+  // Release tasks declare their owning area in the live issue's metadata.
+  // Keep the same bounded plain/bold inline header format as backlog snapshots.
+  if (typeof body !== 'string') return undefined;
+  const header = body.split(/^##[ \t]/m, 1)[0];
+  const field = header.match(/(?:^|[.·][ \t]+)[ \t]*(?:\*\*)?Area:(?:\*\*)?[ \t]*([^\r\n]*)/m)?.[1];
+  const value = field?.split(/[ \t]+·[ \t]+|\.[ \t]+(?=(?:\*\*)?[A-Z][\w ]*:)/, 1)[0];
+  return value?.match(/^(?:\*\*)?(A\d{2})(?:\*\*)?(?=[ \t.·]|$)/)?.[1];
+}
+
 /** Resolve claims from authoritative refs, never from a PR's self-declared lock list. */
 export async function claimedIdentity(client, pullRequest, now = Date.now()) {
   const task = resolveTask({ branch: pullRequest.head.ref, body: pullRequest.body ?? '' });
@@ -19,8 +29,7 @@ export async function claimedIdentity(client, pullRequest, now = Date.now()) {
     if (!record || record.generation !== claim.generation || record.task !== task) throw new Error(`Unverified lock ${key}`);
     locks.push({ key, paths: record.paths ?? [] });
   }
-  const area = task.match(/^SF-(A\d{2})-/)?.[1];
-  if (!area) throw new Error('Release overlays require an explicit area-owned task for planning gates');
+  const area = task.match(/^SF-(A\d{2})-/)?.[1] ?? declaredArea(items[0].content.body);
+  if (!area) throw new Error(`Release task ${task} requires an explicit Area declaration in its live issue header`);
   return { task, area, locks };
 }
-

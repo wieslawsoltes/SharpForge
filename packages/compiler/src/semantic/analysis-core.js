@@ -16,6 +16,7 @@ import { Conversions } from '../conversions/classify.js';
 import { OverloadResolver } from '../overload/resolution.js';
 import { OperatorResolver } from '../overload/operators.js';
 import { resolveBases } from '../binder/inheritance.js';
+import { checkConstructedMethod } from '../binder/constraints.js';
 import { createFeatureGate } from '../binder/feature-check.js';
 import { formatMessage, defaultSeverity, hasDiagnosticCode } from '../diagnostics/codes.js';
 import { NullableContextMap } from '../nullable/annotations.js';
@@ -31,6 +32,7 @@ export class AnalysisCore {
   /**
    * @param {object[]} files parsed files (`parse()` results with `syntax`, `source`, `directives`)
    * @param {object} [options] compilation options: langVersion, langVersionByUri, nullableContext, name, references (imported global namespaces)
+   * `captureInvocations` additionally retains editor method-group candidates; diagnostics/emission leave it disabled.
    */
   constructor(files, options = {}) {
     this.files = files.filter(f => f.syntax);
@@ -43,10 +45,13 @@ export class AnalysisCore {
     const latest = this.versionOf(this.files[0]?.source.uri).number;
     this.conversions = new Conversions(this.core, { numericIntPtr: latest >= 11, firstClassSpans: latest >= 14 });
     this.overloads = new OverloadResolver(this.conversions, this.core);
+    // C# 7.3: the constraints of a generic candidate take part in overload resolution (overload/resolution.js).
+    this.overloads.violatesConstraints = method => checkConstructedMethod(method, this.core).some(violation => violation.severity !== 'warning');
     this.operators = new OperatorResolver(this.conversions, this.core, this.overloads);
     this.constructions = [];
     this.nullableMaps = new Map();
     this.bound = new Map();
+    this.invocations = options.captureInvocations === true ? new Map() : null;
     this.constantState = new Map();
     this.unexecutable = new Map();
     this.typeBinder = new TypeBinder({
@@ -104,6 +109,14 @@ export class AnalysisCore {
       if (this.references.isUnification(d.code)) this.report(this.files[0]?.source.uri, { start: 0, end: 0 }, d.code, d.args);
       else this.report(uri, node, d.code, d.args);
     }
+  }
+
+  /** Retain method groups per document; syntax keys also preserve incomplete-call nesting boundaries. */
+  recordInvocation(context, syntax, target, result) {
+    let invocations = this.invocations.get(context.uri);
+    if (!invocations) this.invocations.set(context.uri, invocations = new Map());
+    invocations.set(syntax, {target, result,
+      isStatic: context.isStatic, instanceInitializer: context.isFieldInitializer && !context.isStaticInitializer});
   }
   /** The reason (`{code,args}`) the nearest unresolved base type of an imported type is missing, or null. */
   missingBaseReason(type) {
@@ -173,6 +186,9 @@ export class AnalysisCore {
     if (this.hasUnknownUsings) return false;
     if (type.typeKind === TypeKind.TypeParameter)
       return !type.hasUnknownConstraint && [...type.constraintTypes].every(c => this.closedHierarchy(c));
+    // With a referenced core library every type is read from metadata with all its members: only a type that could
+    // not be resolved leaves the hierarchy open.
+    if (this.references.hasCoreLibrary) return !baseTypeChain(type, this.core).some(t => t.isErrorType?.());
     if (type.typeKind === TypeKind.Delegate || type.elementType) return false;
     for (const t of baseTypeChain(type, this.core)) {
       // The members of a source type and of an anonymous type are all known.
@@ -182,9 +198,12 @@ export class AnalysisCore {
     }
     return type.typeKind !== TypeKind.Interface || (isSourceSymbol(type) && type.allInterfaces.every(i => isSourceSymbol(i)));
   }
-  /** The registry lists a subset of each framework type's members, so a missing member proves nothing. */
+  /**
+   * The registry lists a subset of each framework type's members, so a missing member proves nothing. Reference
+   * assemblies list them all.
+   */
   registryIsComplete() {
-    return false;
+    return this.references.hasCoreLibrary;
   }
   isError(code) {
     return defaultSeverity(code) === 'error';

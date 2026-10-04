@@ -75,7 +75,8 @@ export function fieldFlags(field) {
 /**
  * MethodDef.Flags.
  * @param {{implementsInterface: boolean, inInterface: boolean}} facts `implementsInterface`: a non-virtual method an
- *   interface member maps to (the CLR needs it virtual; it is sealed so that C# semantics do not change)
+ *   interface member maps to (the CLR needs it virtual; it is sealed so that C# semantics do not change), or - with
+ *   `inInterface` - the explicit implementation of a base interface's member
  */
 export function methodFlags(method, { implementsInterface, inInterface }) {
   let flags = memberAccessFlags(method) | MethodAttributes.HideBySig;
@@ -85,10 +86,22 @@ export function methodFlags(method, { implementsInterface, inInterface }) {
     if (kind === MethodKind.StaticConstructor) flags = (flags & ~MethodAttributes.MemberAccessMask) | MethodAttributes.Private;
   }
   if (specialNameKinds.has(kind)) flags |= MethodAttributes.SpecialName;
-  if (method.isStatic || kind === MethodKind.StaticConstructor) return flags | MethodAttributes.Static;
+  if (method.isStatic || kind === MethodKind.StaticConstructor) {
+    flags |= MethodAttributes.Static;
+    // C# 11: a static abstract or virtual interface member occupies a slot that the implementing type fills.
+    // (An accessor takes the modifiers of its property or event.)
+    const declared = method.associatedSymbol ?? method,
+      isAbstract = !!(method.isAbstract || declared.isAbstract),
+      isVirtual = isAbstract || !!(method.isVirtual || declared.isVirtual);
+    if (inInterface && isVirtual) flags |= MethodAttributes.Virtual | (isAbstract ? MethodAttributes.Abstract : 0);
+    return flags;
+  }
   if (kind === MethodKind.Constructor) return flags;
   const isAbstract = method.isAbstract || (inInterface && !method.hasBody);
   if (isAbstract) flags |= MethodAttributes.Abstract;
+  // An interface member that implements a member of a base interface (`string IA.Who() => ...`, or `abstract string
+  // IA.Who();` to make it abstract again) takes no slot of its own; the CLR requires it to be final.
+  if (inInterface && implementsInterface) return flags | MethodAttributes.Virtual | MethodAttributes.Final;
   if (isAbstract || method.isVirtual || method.isOverride || inInterface || kind === MethodKind.Destructor) flags |= MethodAttributes.Virtual;
   else if (implementsInterface) flags |= MethodAttributes.Virtual | MethodAttributes.Final | MethodAttributes.NewSlot;
   if ((flags & MethodAttributes.Virtual) && !method.isOverride && kind !== MethodKind.Destructor) flags |= MethodAttributes.NewSlot;
@@ -105,6 +118,9 @@ export function parameterFlags(parameter) {
   return flags;
 }
 
+/** GenericParamAttributes.AllowByRefLike (.NET 9 metadata): the type parameter takes ref struct arguments. */
+const ALLOW_BY_REF_LIKE = 0x0020;
+
 /** GenericParam.Flags: variance and the special constraints. */
 export function genericParameterFlags(parameter) {
   let flags = 0;
@@ -115,5 +131,7 @@ export function genericParameterFlags(parameter) {
     flags |= GenericParamAttributes.NotNullableValueTypeConstraint | GenericParamAttributes.DefaultConstructorConstraint;
   }
   if (parameter.hasConstructorConstraint) flags |= GenericParamAttributes.DefaultConstructorConstraint;
+  // C# 13 `allows ref struct` (ECMA-335 augments: AllowByRefLike); without it the runtime rejects a ref struct argument.
+  if (parameter.allowsRefLikeType) flags |= ALLOW_BY_REF_LIKE;
   return flags;
 }

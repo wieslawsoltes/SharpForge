@@ -1,0 +1,32 @@
+{
+  "qualifiedProduct": "f9d00bdcddd2f5804cc0469a0353b14daf5f879a",
+  "initialProduct": "2919717f5",
+  "node": "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+  "environment": {
+    "SHARPFORGE_TEST_CONCURRENCY": "1",
+    "SHARPFORGE_MAX_PARALLEL_RUNS": "1",
+    "SHARPFORGE_MAX_OLD_SPACE_MB": "1024",
+    "SHARPFORGE_ILASM": "/tmp/sharpforge-verifier-tools/ilasm",
+    "SHARPFORGE_ILVERIFY": "/tmp/sharpforge-verifier-tools/ilverify/ILVerify.dll",
+    "SHARPFORGE_ORACLE_DOTNET": "/Users/wieslawsoltes/.dotnet/dotnet",
+    "PATH_prefix": "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin"
+  },
+  "launches": [
+    [
+      "node",
+      "scripts/limited.js",
+      "node",
+      "/tmp/a03-numeric-driver.mjs"
+    ],
+    [
+      "node",
+      "scripts/limited.js",
+      "node",
+      "/tmp/a03-numeric-driver.mjs",
+      "5"
+    ]
+  ],
+  "driverSHA256": "f7540fb8e6456f212812cbf94c8c73fdd03749a0383b9b45e481106c4a61789a",
+  "serialized": true,
+  "repeatBenchmarks": false
+}

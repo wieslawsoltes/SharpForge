@@ -1,0 +1,62 @@
+import assert from 'node:assert/strict';
+import { spawnSync } from 'node:child_process';
+import { mkdirSync, readFileSync, realpathSync, writeFileSync } from 'node:fs';
+import { createHash } from 'node:crypto';
+import path from 'node:path';
+
+const root = '/tmp/sharpforge-a03-nested-type-references';
+const baselineRoot = '/tmp/sharpforge-a03-nested-type-reference-baseline';
+const evidence = '/tmp/a03-nested-type-references-validation';
+assert.match(process.version, /^v24\./, 'Qualification requires Node 24');
+assert.equal(process.env.SHARPFORGE_MAX_PARALLEL_RUNS, '1');
+assert.equal(process.env.SHARPFORGE_TEST_CONCURRENCY, '1');
+assert.equal(process.env.SHARPFORGE_MAX_OLD_SPACE_MB, '1024');
+mkdirSync(evidence, { recursive: true });
+const records = [];
+function run(label, command, args, expected = 0, cwd = root) {
+  const log = path.join(evidence, `${label}.log`);
+  writeFileSync(log, '', { flag: 'wx' });
+  const started = new Date().toISOString();
+  const result = spawnSync(command, args, { cwd, env: process.env, encoding: 'utf8', maxBuffer: 16 * 1024 * 1024 });
+  writeFileSync(log, result.stdout + result.stderr);
+  records.push({ label, command, args, cwd, started, completed: new Date().toISOString(),
+    exitCode: result.status, signal: result.signal, error: result.error?.message });
+  writeFileSync(path.join(evidence, 'commands-resume.json'), JSON.stringify(records, null, 2) + '\n');
+  process.stdout.write(`${label}: ${result.status}\n${result.stdout}${result.stderr}`);
+  assert.equal(result.status, expected, `${label}: unexpected exit`);
+  assert.equal(result.signal, null, `${label}: signal`);
+  return result;
+}
+const node = (label, args, expected) => run(label, process.execPath, args, expected);
+const initial = JSON.parse(readFileSync(path.join(evidence, 'hashes.json'), 'utf8'));
+const hash = value => createHash('sha256').update(value).digest('hex');
+const changed = 'tests/fixtures/a03-nested-type-references/member-input.js';
+for (const [file, digest] of Object.entries(initial.candidate.files)) {
+  if (file !== changed) assert.equal(hash(readFileSync(path.join(root, file))), digest, file);
+}
+writeFileSync(path.join(evidence, 'resume-proof.json'), JSON.stringify({
+  productUnchanged: true, initialHead: initial.candidate.commit, fixture: changed,
+  beforeSHA256: initial.candidate.files[changed], afterSHA256: hash(readFileSync(path.join(root, changed))),
+  reason: 'CoreCLR rejected appended enclosing Outer after Middle/Child. Use preceding Base as enclosing definition; member tokens and signatures remain unchanged.',
+  retainedInvalidCapture: 'member-native.json', correctedCapture: 'member-native-corrected.json',
+  resolveTypeCaptureAndAllBaselineSamplesRetained: true,
+}, null, 2) + '\n', { flag: 'wx' });
+writeFileSync(path.join(root, 'tests/fixtures/a03-nested-type-references/member-native.json'),
+  readFileSync(path.join(evidence, 'member-native-corrected.json')));
+node('focused-tests', ['--test', '--test-concurrency=1',
+  'tests/a03-07-nested-type-references.test.js', 'tests/a03-07-local-type-references.test.js', 'tests/a03-07-local-type-references-native.test.js',
+  'tests/a03-07-type-system.test.js', 'tests/a03-07-type-system-native.test.js', 'tests/a03-verification-types.test.js',
+  'tests/a03-07-members.test.js', 'tests/a03-07-members-inherited.test.js', 'tests/a03-07-type-access.test.js',
+  'tests/a03-07-nested-access.test.js', 'tests/a03-07-member-access.test.js', 'tests/a03-coded-index-bounds.test.js']);
+node('candidate-local-performance', ['--expose-gc', 'packages/cil/tools/benchmark-nested-type-references.mjs',
+  path.join(evidence, 'candidate-local-performance.json')]);
+node('candidate-existing-performance', ['--expose-gc', 'packages/cil/tools/benchmark-verifier-types.mjs',
+  path.join(evidence, 'candidate-existing-performance.json')]);
+node('candidate-local-alias-performance', ['--expose-gc', 'packages/cil/tools/benchmark-local-type-references.mjs',
+  path.join(evidence, 'candidate-local-alias-performance.json')]);
+node('manifests', ['scripts/planning/check-test-manifests.js']);
+node('syntax', ['scripts/check.js']);
+node('static-imports', ['scripts/conformance/static/check-imports.js', '--output', path.join(evidence, 'static-imports.json')]);
+node('structure', ['scripts/quality/check-structure.js']);
+run('diff-check', 'git', ['diff', '--check']);
+console.log(`Validation evidence: ${evidence}`);

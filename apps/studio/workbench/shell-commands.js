@@ -14,7 +14,8 @@ export function registerShellCommands(shell) {
       dialogs: shell.dialogs, settings: shell.settings, download: shell.options.download, onError: error => shell.onError(error)
     })),
     descriptor('commands', 'Search Features and Code', () => search({}), 'Ctrl+Q'),
-    descriptor('workbench.goToAll', 'Go To All', () => search({goTo: true}), 'Ctrl+T'),
+    descriptor('workbench.goToAll', 'Go To All', invocation => search({goTo: true,
+      query: invocation?.args?.[0]?.query ?? ''}), 'Ctrl+T'),
     descriptor('workbench.goToLine', 'Go To Line', () => search({goTo: true, query: ':'}), 'Ctrl+G'),
     descriptor('workbench.recent', 'Go To Recent File', () => search({goTo: true, query: 'recent '})),
     descriptor('workbench.replaceFiles', 'Replace in Files', () => shell.activateTool('replace-files'), 'Ctrl+Shift+H'),

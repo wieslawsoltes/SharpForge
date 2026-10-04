@@ -11,6 +11,7 @@ import { CSharp10Binding } from './csharp10.js';
 import { CSharp11Rules, CSharp11Binding } from './csharp11.js';
 import { CSharp12Rules, ExperimentalUses } from './csharp12.js';
 import { CollectionExpressionBinding } from './collection-expressions.js';
+import { CollectionBuilderBinding } from './collection-builders.js';
 import { Utf8StringBinding } from './utf8-strings.js';
 import { RefReadonlyParameterBinding } from './ref-readonly-parameters.js';
 import { InlineArrayBinding } from './inline-arrays.js';
@@ -40,6 +41,7 @@ export const modernBindings = Object.freeze([
   CSharp11Binding,
   Utf8StringBinding,
   CollectionExpressionBinding,
+  CollectionBuilderBinding,
   RefReadonlyParameterBinding,
   InlineArrayBinding,
   FunctionPointerBinding,

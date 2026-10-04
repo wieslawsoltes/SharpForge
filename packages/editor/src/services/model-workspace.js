@@ -3,21 +3,36 @@ import {EditorServiceError} from './providers.js';
 
 /** Atomic workspace adapter for EditorModel instances: root swaps precede every change notification. */
 export class EditorModelWorkspace {
-  constructor(models = new Map()) {
+  constructor(models = new Map(), {applyResourceTransaction, supportsResourceRename = Boolean(applyResourceTransaction)} = {}) {
     this.models = models;
+    this.applyResourceTransaction = applyResourceTransaction;
+    this.resourceRenameCapability = supportsResourceRename;
+  }
+
+  get supportsResourceRename() {
+    return typeof this.resourceRenameCapability === 'function' ? this.resourceRenameCapability() === true :
+      this.resourceRenameCapability === true;
   }
 
   getDocument(uri) {
     const model = this.models.get(uri);
     if (!model) return undefined;
-    const source = model.snapshot();
+    const source = model.publishedSnapshot?.() ?? model.snapshot();
     return {uri, get text() { return source.text; }, length: source.length, source,
-      version: model.version, readOnly: model.readOnly, model};
+      version: source.version, readOnly: model.readOnly, model};
   }
 
   listDocuments() { return [...this.models.keys()].map(uri => this.getDocument(uri)); }
 
-  applyTransaction(plan) {
+  applyTransaction(plan, {signal} = {}) {
+    if (signal?.aborted) throw new DOMException('Workspace edit cancelled', 'AbortError');
+    if (plan.resources?.length) {
+      if (!this.supportsResourceRename || typeof this.applyResourceTransaction !== 'function') {
+        throw new EditorServiceError('SFED1103', 'This workspace does not support atomic resource rename');
+      }
+      // The resource host stages every text/model and path change together. Never edit live models first.
+      return this.applyResourceTransaction(plan, {signal});
+    }
     const staged = plan.changes.map(change => {
       const current = readWorkspaceDocument(this, change.uri);
       if (current.version !== change.version || current.text !== change.before || current.readOnly) {

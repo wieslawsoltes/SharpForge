@@ -1,0 +1,52 @@
+{
+  "target": "production-studio-real-workers",
+  "status": "passed",
+  "engine": "webkit",
+  "checks": [
+    {
+      "name": "solution import uses Studio project and compiler services",
+      "passed": true
+    },
+    {
+      "name": "toolbar retains the selected launch profile separately for each project",
+      "passed": true
+    },
+    {
+      "name": "Start toolbar launches two actual WinUI applications with isolated profile output",
+      "passed": true,
+      "resources": [
+        {
+          "worker": "running",
+          "generation": 1,
+          "pendingRequests": 0,
+          "heapBytes": 998,
+          "heapObjects": 13,
+          "engine": "source-vm"
+        },
+        {
+          "worker": "running",
+          "generation": 1,
+          "pendingRequests": 0,
+          "heapBytes": 988,
+          "heapObjects": 13,
+          "engine": "source-vm"
+        }
+      ]
+    },
+    {
+      "name": "Process selector and Stop toolbar affect only the selected application",
+      "passed": true
+    },
+    {
+      "name": "failing background project build preserves active project, application, output and diagnostics",
+      "passed": true
+    },
+    {
+      "name": "Start New Instance retains the selected profile and Stop All releases every application lock",
+      "passed": true
+    }
+  ],
+  "failure": null,
+  "pageErrors": [],
+  "milliseconds": 9003.54
+}

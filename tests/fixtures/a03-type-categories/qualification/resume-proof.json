@@ -1,0 +1,8 @@
+{
+  "candidateHead": "41982b9ef9c1841200dbf6490f5c57044848f72a",
+  "reason": "Expected malformed-TypeDef diagnostic moves from CILVM0001 to earlier CILVT0001 guard",
+  "beforeTestSHA256": "5036ef98da33e20bbe3bebb9123f9f2e13e0ea64de5fca68de2b877268b25440",
+  "afterTestSHA256": "524137ae4b74b80916a287eef14792fde740eb4aa4fd565a2b251227b1f92054",
+  "nativeSHA256": "f15a760763f38c0469ba8fd9b343b77ed929620cf8aea56067f775808d049f2a",
+  "browserRunnerSHA256": "0f34f99c39a2a6774d39153f699de1ef9a030a07ca6393f0fec8ce8f5f74328d"
+}

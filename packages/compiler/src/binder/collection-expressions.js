@@ -18,7 +18,7 @@
  */
 import {DiagnosticId} from '../diagnostics/codes.js';
 import { SymbolKind, TypeKind, ArrayTypeSymbol, NamedTypeSymbol } from '../symbols/types.js';
-import { MethodKind } from '../symbols/members.js';
+import { MethodKind, LocalDeclarationKind } from '../symbols/members.js';
 import { Conversion, ConversionKind } from '../conversions/classify.js';
 import { implementsInterface, findConstruction } from '../symbols/substitution.js';
 import { attributesNamed } from './bound-attributes.js';
@@ -186,7 +186,8 @@ export const CollectionExpressionBinding = Base =>
         if (element.spread) {
           const spread = element.spread,
             array = spread.type instanceof ArrayTypeSymbol ? spread : this.receiverCall(spread.type, 'ToArray', [], at, spread);
-          call = array && this.receiverCall(type, 'AddRange', [argument(array)], at, receiver);
+          // A spread without `ToArray()` (an iterator, an interface) is appended as the sequence it is.
+          call = this.receiverCall(type, 'AddRange', [argument(array ?? spread)], at, receiver) ?? this.spreadByAdd(type, spread, at, node.syntax);
           if (!call) return null;
         } else {
           // A collection of a source type takes the element as written: `Add` decides the conversion.
@@ -196,6 +197,23 @@ export const CollectionExpressionBinding = Base =>
         if (call && !call.hasErrors) calls.push(call);
       }
       return { ...creation, collectionInitializers: calls, isCollectionExpression: true };
+    }
+    /**
+     * A spread into a collection that has no `AddRange` (`HashSet<T>`, a source collection): `foreach (var item in
+     * spread) collection.Add(item);`, stated as a bound `foreach` among the collection initializers. Only for
+     * compilations bound against references - the image pipeline names the collection node instead.
+     */
+    spreadByAdd(type, spread, at, syntax) {
+      const elementType = this.spreadElementType(spread);
+      if (!elementType || this.core.object.metadataToken === undefined) return null;
+      const local = this.newLocal('<spread>', elementType, at, LocalDeclarationKind.Foreach),
+        item = Object.assign(this.node('Local', at, elementType, { local }), { refKind: null, name: null }),
+        add = this.addCall(type, [item], at, syntax);
+      if (!add || add.hasErrors) return null;
+      local.writes++;
+      local.reads++;
+      const body = { kind: 'ExpressionStatement', syntax: at, completes: true, expression: add };
+      return { kind: 'ForEach', syntax: at, completes: true, collection: spread, local, elementType, body, isAwait: false };
     }
     /** `receiver.name(values)` for an instance method of `type`, or null when no overload applies. */
     receiverCall(type, name, values, syntax, receiver) {

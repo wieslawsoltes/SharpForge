@@ -1,0 +1,99 @@
+[
+  {
+    "command": "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+    "args": [
+      "--test",
+      "--test-concurrency=1",
+      "tests/a03-numeric-transfers.test.js",
+      "tests/a03-verifier-dataflow.test.js",
+      "tests/a03-verification-types.test.js"
+    ],
+    "cwd": "/tmp/sharpforge-project6-a03-numeric-transfers",
+    "started": "2026-10-04T08:39:11.507Z",
+    "completed": "2026-10-04T08:39:12.153Z",
+    "status": 0,
+    "signal": null,
+    "log": "05-focused-after-decoder-review"
+  },
+  {
+    "command": "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+    "args": [
+      "--expose-gc",
+      "packages/cil/tools/benchmark-handler-entry.mjs",
+      "/tmp/a03-numeric-validation/baseline.json"
+    ],
+    "cwd": "/tmp/sharpforge-project6-a03-numeric-transfers-baseline",
+    "started": "2026-10-04T08:39:12.153Z",
+    "completed": "2026-10-04T08:39:12.619Z",
+    "status": 0,
+    "signal": null,
+    "log": "06-benchmark-baseline"
+  },
+  {
+    "command": "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+    "args": [
+      "--expose-gc",
+      "packages/cil/tools/benchmark-handler-entry.mjs",
+      "/tmp/a03-numeric-validation/candidate.json"
+    ],
+    "cwd": "/tmp/sharpforge-project6-a03-numeric-transfers",
+    "started": "2026-10-04T08:39:12.619Z",
+    "completed": "2026-10-04T08:39:13.153Z",
+    "status": 0,
+    "signal": null,
+    "log": "07-benchmark-candidate"
+  },
+  {
+    "command": "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+    "args": [
+      "packages/cil/tools/benchmark-numeric-verifier.mjs",
+      "/tmp/a03-numeric-validation/numeric.json"
+    ],
+    "cwd": "/tmp/sharpforge-project6-a03-numeric-transfers",
+    "started": "2026-10-04T08:39:13.153Z",
+    "completed": "2026-10-04T08:39:13.532Z",
+    "status": 0,
+    "signal": null,
+    "log": "08-benchmark-numeric"
+  },
+  {
+    "command": "/tmp/sharpforge-bcl-browser-venv/bin/python",
+    "args": [
+      "/tmp/a03-numeric-browser.py",
+      "/tmp/sharpforge-project6-a03-numeric-transfers",
+      "/tmp/a03-numeric-validation/browser"
+    ],
+    "cwd": "/tmp/sharpforge-project6-a03-numeric-transfers",
+    "started": "2026-10-04T08:39:13.532Z",
+    "completed": "2026-10-04T08:39:20.093Z",
+    "status": 0,
+    "signal": null,
+    "log": "09-browser"
+  },
+  {
+    "command": "npm",
+    "args": [
+      "run",
+      "check"
+    ],
+    "cwd": "/tmp/sharpforge-project6-a03-numeric-transfers",
+    "started": "2026-10-04T08:39:20.094Z",
+    "completed": "2026-10-04T08:39:22.922Z",
+    "status": 0,
+    "signal": null,
+    "log": "10-check"
+  },
+  {
+    "command": "npm",
+    "args": [
+      "run",
+      "check:structure"
+    ],
+    "cwd": "/tmp/sharpforge-project6-a03-numeric-transfers",
+    "started": "2026-10-04T08:39:22.922Z",
+    "completed": "2026-10-04T08:39:23.222Z",
+    "status": 0,
+    "signal": null,
+    "log": "11-structure"
+  }
+]

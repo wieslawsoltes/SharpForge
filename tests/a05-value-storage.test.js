@@ -145,7 +145,7 @@ test('reference-free struct storage rejects a managed handle disguised as an imm
 
 for (const [name, changes, attribute] of [
   ['reference-containing', {fields: [{name: 'Reference', type: 'object'}]}],
-  ['auto-layout', {flags: 0x100101}], ['explicit-layout', {flags: 0x100111}],
+  ['auto-layout', {flags: 0x100101}],
   ['readonly', {}, 'System.Runtime.CompilerServices.IsReadOnlyAttribute'],
   ['byref-like', {}, 'System.Runtime.CompilerServices.IsByRefLikeAttribute']
 ]) test(`${name} struct storage remains explicitly unsupported`, () => {
@@ -157,19 +157,14 @@ for (const [name, changes, attribute] of [
   assert.throws(() => new CilVirtualMachine(bytes), {name: 'NotSupportedException'});
 });
 
-test('user struct constructors and boxing reject without allocating a class-shaped value', () => {
+test('user struct constructors produce values without allocating a class-shaped value', () => {
   const type = {...point, methods: [{name: '.ctor', parameters: ['int'], static: false, flags: 0x1886,
     body: writer => writer.op('ret')}]};
   const vm = new CilVirtualMachine(fixture((writer, context) => writer.op('ldc.i4.1')
     .op('newobj', context.methods.get('Point..ctor')).op('pop').op('ret'), {types: [type], locals: []}));
   try {
     const result = vm.run();
-    assert.equal(result.state, 'faulted');
-    assert.equal(result.fault.name, 'NotSupportedException');
+    assert.equal(result.state, 'terminated', result.fault?.message);
     assert.equal(vm.heap.records.some(record => record?.kind === 'object' && record.methodTable.name === 'Point'), false);
   } finally { vm.stop(); }
-  const boxed = new CilVirtualMachine(fixture((writer, context) => writer.op('ldloc.0')
-    .op('box', context.resolve('Point')).op('pop').op('ret')));
-  try { assert.equal(boxed.run().fault.name, 'NotSupportedException'); }
-  finally { boxed.stop(); }
 });

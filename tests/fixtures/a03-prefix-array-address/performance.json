@@ -1,0 +1,293 @@
+{
+  "baseline": "1db2e1d5",
+  "candidate": "311c2f8bd911c578952ed398ae5c8d7fab405cbe",
+  "machine": "Apple M3 Pro, macOS arm64",
+  "context": "Sole scheduled team validation job on shared host; not statistically controlled. Heap deltas are not allocation or RSS measurements.",
+  "runs": [
+    {
+      "name": "control-before",
+      "mode": "control",
+      "node": "v24.21.0",
+      "platform": "darwin",
+      "architecture": "arm64",
+      "results": [
+        {
+          "count": 1000,
+          "bytes": 11000,
+          "medianMs": 0.7435839999999985,
+          "p95Ms": 0.8762080000000054,
+          "samples": [
+            {
+              "ms": 0.8762080000000054,
+              "heapDelta": 1712280,
+              "groups": 1000
+            },
+            {
+              "ms": 0.7797079999999994,
+              "heapDelta": 1041632,
+              "groups": 1000
+            },
+            {
+              "ms": 0.7435839999999985,
+              "heapDelta": 1039616,
+              "groups": 1000
+            },
+            {
+              "ms": 0.7815419999999875,
+              "heapDelta": 1051768,
+              "groups": 1000
+            },
+            {
+              "ms": 0.6700419999999951,
+              "heapDelta": 879024,
+              "groups": 1000
+            },
+            {
+              "ms": 0.6705000000000041,
+              "heapDelta": 872856,
+              "groups": 1000
+            },
+            {
+              "ms": 0.6687080000000094,
+              "heapDelta": 867624,
+              "groups": 1000
+            }
+          ]
+        },
+        {
+          "count": 5000,
+          "bytes": 55000,
+          "medianMs": 2.0830840000000137,
+          "p95Ms": 2.7417500000000246,
+          "samples": [
+            {
+              "ms": 2.0830840000000137,
+              "heapDelta": 4343400,
+              "groups": 5000
+            },
+            {
+              "ms": 2.7417500000000246,
+              "heapDelta": 4397112,
+              "groups": 5000
+            },
+            {
+              "ms": 2.1956670000000145,
+              "heapDelta": 4325936,
+              "groups": 5000
+            },
+            {
+              "ms": 1.2620830000000183,
+              "heapDelta": 4248592,
+              "groups": 5000
+            },
+            {
+              "ms": 2.3920000000000243,
+              "heapDelta": 3138344,
+              "groups": 5000
+            },
+            {
+              "ms": 1.7649579999999787,
+              "heapDelta": 3082504,
+              "groups": 5000
+            },
+            {
+              "ms": 1.803291999999999,
+              "heapDelta": 3090240,
+              "groups": 5000
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "control-after",
+      "mode": "control",
+      "node": "v24.21.0",
+      "platform": "darwin",
+      "architecture": "arm64",
+      "results": [
+        {
+          "count": 1000,
+          "bytes": 11000,
+          "medianMs": 0.7772080000000017,
+          "p95Ms": 0.8896250000000094,
+          "samples": [
+            {
+              "ms": 0.8896250000000094,
+              "heapDelta": 1067704,
+              "groups": 1000
+            },
+            {
+              "ms": 0.8507079999999974,
+              "heapDelta": 1096072,
+              "groups": 1000
+            },
+            {
+              "ms": 0.7772080000000017,
+              "heapDelta": 1041040,
+              "groups": 1000
+            },
+            {
+              "ms": 0.7699169999999924,
+              "heapDelta": 1042880,
+              "groups": 1000
+            },
+            {
+              "ms": 0.8845410000000129,
+              "heapDelta": 1044776,
+              "groups": 1000
+            },
+            {
+              "ms": 0.678167000000002,
+              "heapDelta": 881664,
+              "groups": 1000
+            },
+            {
+              "ms": 0.6832090000000051,
+              "heapDelta": 869464,
+              "groups": 1000
+            }
+          ]
+        },
+        {
+          "count": 5000,
+          "bytes": 55000,
+          "medianMs": 2.650459000000012,
+          "p95Ms": 2.8123329999999953,
+          "samples": [
+            {
+              "ms": 2.300374999999974,
+              "heapDelta": 4365520,
+              "groups": 5000
+            },
+            {
+              "ms": 2.8123329999999953,
+              "heapDelta": 4407256,
+              "groups": 5000
+            },
+            {
+              "ms": 2.7454589999999826,
+              "heapDelta": 4408688,
+              "groups": 5000
+            },
+            {
+              "ms": 2.650459000000012,
+              "heapDelta": 4424848,
+              "groups": 5000
+            },
+            {
+              "ms": 2.0114169999999945,
+              "heapDelta": 3130376,
+              "groups": 5000
+            },
+            {
+              "ms": 2.685083999999989,
+              "heapDelta": 3147432,
+              "groups": 5000
+            },
+            {
+              "ms": 2.432457999999997,
+              "heapDelta": 3149920,
+              "groups": 5000
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "new-api",
+      "mode": "address",
+      "node": "v24.21.0",
+      "platform": "darwin",
+      "architecture": "arm64",
+      "results": [
+        {
+          "count": 1000,
+          "bytes": 7000,
+          "medianMs": 0.788209000000009,
+          "p95Ms": 0.9865839999999935,
+          "samples": [
+            {
+              "ms": 0.9865839999999935,
+              "heapDelta": 1101136,
+              "groups": 1000
+            },
+            {
+              "ms": 0.9749999999999943,
+              "heapDelta": 1121536,
+              "groups": 1000
+            },
+            {
+              "ms": 0.788209000000009,
+              "heapDelta": 1072088,
+              "groups": 1000
+            },
+            {
+              "ms": 0.7963749999999976,
+              "heapDelta": 1065616,
+              "groups": 1000
+            },
+            {
+              "ms": 0.7540000000000049,
+              "heapDelta": 1073184,
+              "groups": 1000
+            },
+            {
+              "ms": 0.698166999999998,
+              "heapDelta": 1053928,
+              "groups": 1000
+            },
+            {
+              "ms": 0.7161250000000052,
+              "heapDelta": 1069056,
+              "groups": 1000
+            }
+          ]
+        },
+        {
+          "count": 5000,
+          "bytes": 35000,
+          "medianMs": 1.610083000000003,
+          "p95Ms": 2.7243749999999807,
+          "samples": [
+            {
+              "ms": 1.6054169999999885,
+              "heapDelta": 5081144,
+              "groups": 5000
+            },
+            {
+              "ms": 1.610083000000003,
+              "heapDelta": 5068512,
+              "groups": 5000
+            },
+            {
+              "ms": 1.871875000000017,
+              "heapDelta": 5073464,
+              "groups": 5000
+            },
+            {
+              "ms": 2.005625000000009,
+              "heapDelta": 5068728,
+              "groups": 5000
+            },
+            {
+              "ms": 1.1990830000000017,
+              "heapDelta": 3883568,
+              "groups": 5000
+            },
+            {
+              "ms": 1.2785000000000082,
+              "heapDelta": 3890264,
+              "groups": 5000
+            },
+            {
+              "ms": 2.7243749999999807,
+              "heapDelta": 4007112,
+              "groups": 5000
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

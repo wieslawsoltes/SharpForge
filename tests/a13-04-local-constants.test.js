@@ -53,6 +53,7 @@ test('custom modifiers preserve order and enum handles expose tokens without cha
     decoded: true,
     enumType: encodedType,
     enumTypeToken: typeToken,
+    enumTypeVerified: false,
     customModifiers: [
       { required: true, typeToken },
       { required: false, typeToken: 0x02000001 },

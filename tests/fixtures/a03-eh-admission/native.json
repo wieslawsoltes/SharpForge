@@ -1,0 +1,406 @@
+{
+  "oracle": "ILVerify",
+  "version": "10.0.5",
+  "sdk": "10.0.201",
+  "runtime": "10.0.5",
+  "toolSHA256": "ca75cb4d2299ee5413eaf602a6ba87b7c089f3785d06f6b8ccad013d4e4646be",
+  "inputSHA256": "f52db82896a5a10b0cbf6cd3c261db597f802c4286e72b487cd1a428c21c0e9f",
+  "environment": {
+    "platform": "darwin-arm64",
+    "osRelease": "25.6.0",
+    "node": "v24.21.0",
+    "image": {
+      "kind": "local",
+      "pinnedImage": false,
+      "reason": "Local OS is recorded, not an immutable runner image."
+    },
+    "imageOS": null,
+    "imageVersion": null
+  },
+  "references": {
+    "count": 167,
+    "sha256": "a978e7aaf608f22e860328a42319b908a5a084cdb087b28b5c31a1e6726be362"
+  },
+  "observations": [
+    {
+      "name": "valid-0",
+      "assemblySHA256": "15bad134bb9b4fd5023babbd40120c71bbc5ce61502f7444e440d8dd22f65ab3",
+      "expected": true,
+      "verify": {
+        "stdout": "All Classes and Methods in <temporary>/valid-0.dll Verified.\nTypes found: 2\nTypes verified: 2\nMethods found: 1\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 0,
+        "signal": null,
+        "elapsedMs": 75.75329200000004
+      },
+      "oracle": {
+        "accepted": true,
+        "errors": []
+      },
+      "admission": {
+        "success": true,
+        "issues": []
+      }
+    },
+    {
+      "name": "valid-2",
+      "assemblySHA256": "a322631e5869cbf00a4a1e2fdee7c06f592f2a33c4bd9754b1e589fa797c803a",
+      "expected": true,
+      "verify": {
+        "stdout": "All Classes and Methods in <temporary>/valid-2.dll Verified.\nTypes found: 2\nTypes verified: 2\nMethods found: 1\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 0,
+        "signal": null,
+        "elapsedMs": 74.97329200000001
+      },
+      "oracle": {
+        "accepted": true,
+        "errors": []
+      },
+      "admission": {
+        "success": true,
+        "issues": []
+      }
+    },
+    {
+      "name": "valid-4",
+      "assemblySHA256": "4d464cc45febff15a3b179b4cfd01f9facac35aa960be9ba38f2e25d6b2f419b",
+      "expected": true,
+      "verify": {
+        "stdout": "All Classes and Methods in <temporary>/valid-4.dll Verified.\nTypes found: 2\nTypes verified: 2\nMethods found: 1\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 0,
+        "signal": null,
+        "elapsedMs": 75.09045799999996
+      },
+      "oracle": {
+        "accepted": true,
+        "errors": []
+      },
+      "admission": {
+        "success": true,
+        "issues": []
+      }
+    },
+    {
+      "name": "rethrow",
+      "assemblySHA256": "054505d865fd6f9710e2a8e3e4bdfd2da912276ad14a584824ec43682da608ea",
+      "expected": true,
+      "verify": {
+        "stdout": "All Classes and Methods in <temporary>/rethrow.dll Verified.\nTypes found: 2\nTypes verified: 2\nMethods found: 1\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 0,
+        "signal": null,
+        "elapsedMs": 75.71154200000001
+      },
+      "oracle": {
+        "accepted": true,
+        "errors": []
+      },
+      "admission": {
+        "success": true,
+        "issues": []
+      }
+    },
+    {
+      "name": "first-try-entry",
+      "assemblySHA256": "0e1e15085414fde31fc03e9ac62697dc2e7877dd5f00479524572a51c02a168b",
+      "expected": true,
+      "verify": {
+        "stdout": "All Classes and Methods in <temporary>/first-try-entry.dll Verified.\nTypes found: 2\nTypes verified: 2\nMethods found: 1\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 0,
+        "signal": null,
+        "elapsedMs": 74.60816599999998
+      },
+      "oracle": {
+        "accepted": true,
+        "errors": []
+      },
+      "admission": {
+        "success": true,
+        "issues": []
+      }
+    },
+    {
+      "name": "branch-exit",
+      "assemblySHA256": "ede6ac39cb52f9f5342a41800c0fa0bde2fabc7b5bb2d3678af27dc26f5bbdbd",
+      "expected": false,
+      "verify": {
+        "stdout": "[IL]: Error [BranchOutOfTry]: [<temporary>/branch-exit.dll : Fixture.Program::Main()][offset 0x00000001] Branch out of try block.\n1 Error(s) Verifying <temporary>/branch-exit.dll\nTypes found: 2\nTypes verified: 2\nMethods found: 1\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 2,
+        "signal": null,
+        "elapsedMs": 76.14675
+      },
+      "oracle": {
+        "accepted": false,
+        "errors": [
+          "BranchOutOfTry"
+        ]
+      },
+      "admission": {
+        "success": false,
+        "issues": [
+          {
+            "methodToken": 100663297,
+            "method": "Fixture.Program::Main",
+            "offset": 1,
+            "code": "IL_EH_FLOW",
+            "message": "Branch exits an exception region at 0x1",
+            "diagnostic": "CILCF0008"
+          }
+        ]
+      }
+    },
+    {
+      "name": "branch-middle",
+      "assemblySHA256": "b9ed80588912255e439d1676d7bd260a813ceea1a651391272f23328faa7f7ac",
+      "expected": false,
+      "verify": {
+        "stdout": "[IL]: Error [BranchIntoTry]: [<temporary>/branch-middle.dll : Fixture.Program::Main()][offset 0x00000000] Branch into try block.\n1 Error(s) Verifying <temporary>/branch-middle.dll\nTypes found: 2\nTypes verified: 2\nMethods found: 1\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 2,
+        "signal": null,
+        "elapsedMs": 76.18058399999995
+      },
+      "oracle": {
+        "accepted": false,
+        "errors": [
+          "BranchIntoTry"
+        ]
+      },
+      "admission": {
+        "success": false,
+        "issues": [
+          {
+            "methodToken": 100663297,
+            "method": "Fixture.Program::Main",
+            "offset": 0,
+            "code": "IL_EH_FLOW",
+            "message": "Branch enters an exception region at 0x0",
+            "diagnostic": "CILCF0009"
+          }
+        ]
+      }
+    },
+    {
+      "name": "branch-handler",
+      "assemblySHA256": "3b1ae03b5ec73cc3294fa13ce496b5af196d7e19663ff31b00e8bf4ee1012e1c",
+      "expected": false,
+      "verify": {
+        "stdout": "[IL]: Error [BranchIntoHandler]: [<temporary>/branch-handler.dll : Fixture.Program::Main()][offset 0x00000001] Branch into exception handler block.\n1 Error(s) Verifying <temporary>/branch-handler.dll\nTypes found: 2\nTypes verified: 2\nMethods found: 1\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 2,
+        "signal": null,
+        "elapsedMs": 76.16758300000004
+      },
+      "oracle": {
+        "accepted": false,
+        "errors": [
+          "BranchIntoHandler"
+        ]
+      },
+      "admission": {
+        "success": false,
+        "issues": [
+          {
+            "methodToken": 100663297,
+            "method": "Fixture.Program::Main",
+            "offset": 1,
+            "code": "IL_EH_FLOW",
+            "message": "Branch enters an exception region at 0x1",
+            "diagnostic": "CILCF0009"
+          }
+        ]
+      }
+    },
+    {
+      "name": "leave-middle",
+      "assemblySHA256": "adab640cf71e3a057bccc62507b41d8ff38bdb448b89f362d4967ca7594c6ae0",
+      "expected": false,
+      "verify": {
+        "stdout": "[IL]: Error [LeaveIntoTry]: [<temporary>/leave-middle.dll : Fixture.Program::Main()][offset 0x00000000] Leave into try block.\n1 Error(s) Verifying <temporary>/leave-middle.dll\nTypes found: 2\nTypes verified: 2\nMethods found: 1\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 2,
+        "signal": null,
+        "elapsedMs": 76.520084
+      },
+      "oracle": {
+        "accepted": false,
+        "errors": [
+          "LeaveIntoTry"
+        ]
+      },
+      "admission": {
+        "success": false,
+        "issues": [
+          {
+            "methodToken": 100663297,
+            "method": "Fixture.Program::Main",
+            "offset": 0,
+            "code": "IL_EH_FLOW",
+            "message": "Leave enters a try interior without an associated catch at 0x0",
+            "diagnostic": "CILCF0019"
+          }
+        ]
+      }
+    },
+    {
+      "name": "switch-exit",
+      "assemblySHA256": "eb5b9ff69419605cb780450d79e31d22da6ba42ff04de5865ec9a22939568db2",
+      "expected": false,
+      "verify": {
+        "stdout": "[IL]: Error [BranchOutOfTry]: [<temporary>/switch-exit.dll : Fixture.Program::Main()][offset 0x00000002] Branch out of try block.\n1 Error(s) Verifying <temporary>/switch-exit.dll\nTypes found: 2\nTypes verified: 2\nMethods found: 1\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 2,
+        "signal": null,
+        "elapsedMs": 78.56975000000011
+      },
+      "oracle": {
+        "accepted": false,
+        "errors": [
+          "BranchOutOfTry"
+        ]
+      },
+      "admission": {
+        "success": false,
+        "issues": [
+          {
+            "methodToken": 100663297,
+            "method": "Fixture.Program::Main",
+            "offset": 2,
+            "code": "IL_EH_FLOW",
+            "message": "Branch exits an exception region at 0x2",
+            "diagnostic": "CILCF0008"
+          }
+        ]
+      }
+    },
+    {
+      "name": "return",
+      "assemblySHA256": "6552dbd7fa06e1ef7c1f432eeaf92fcbcc0061d3c7aecc54c500c0cf931f9af1",
+      "expected": false,
+      "verify": {
+        "stdout": "[IL]: Error [ReturnFromTry]: [<temporary>/return.dll : Fixture.Program::Main()][offset 0x00000001] Return out of try block.\n1 Error(s) Verifying <temporary>/return.dll\nTypes found: 2\nTypes verified: 2\nMethods found: 1\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 2,
+        "signal": null,
+        "elapsedMs": 76.45325000000003
+      },
+      "oracle": {
+        "accepted": false,
+        "errors": [
+          "ReturnFromTry"
+        ]
+      },
+      "admission": {
+        "success": false,
+        "issues": [
+          {
+            "methodToken": 100663297,
+            "method": "Fixture.Program::Main",
+            "offset": 1,
+            "code": "IL_EH_FLOW",
+            "message": "Ret is forbidden inside exception regions at 0x1",
+            "diagnostic": "CILCF0002"
+          }
+        ]
+      }
+    },
+    {
+      "name": "fallthrough",
+      "assemblySHA256": "236991015355fdf4180fdbac447f26ee1fd37c86dd1e4eebb4b5599fddf85385",
+      "expected": false,
+      "verify": {
+        "stdout": "[IL]: Error [FallthroughException]: [<temporary>/fallthrough.dll : Fixture.Program::Main()][offset 0x00000001] Fallthrough the end of an exception block.\n[IL]: Error [FallthroughIntoHandler]: [<temporary>/fallthrough.dll : Fixture.Program::Main()][offset 0x00000001] Fallthrough into an exception handler.\n2 Error(s) Verifying <temporary>/fallthrough.dll\nTypes found: 2\nTypes verified: 2\nMethods found: 1\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 2,
+        "signal": null,
+        "elapsedMs": 75.729333
+      },
+      "oracle": {
+        "accepted": false,
+        "errors": [
+          "FallthroughException",
+          "FallthroughIntoHandler"
+        ]
+      },
+      "admission": {
+        "success": false,
+        "issues": [
+          {
+            "methodToken": 100663297,
+            "method": "Fixture.Program::Main",
+            "offset": 1,
+            "code": "IL_EH_FLOW",
+            "message": "Fall-through exits an exception region at 0x1",
+            "diagnostic": "CILCF0010"
+          }
+        ]
+      }
+    },
+    {
+      "name": "handler-escape-2",
+      "assemblySHA256": "e7c3f92e6f1000931d0dbefdf0baffb55c45a67a828b5d304830d905b829d93e",
+      "expected": false,
+      "verify": {
+        "stdout": "[IL]: Error [LeaveOutOfFinally]: [<temporary>/handler-escape-2.dll : Fixture.Program::Main()][offset 0x00000006] Leave out of finally block.\n1 Error(s) Verifying <temporary>/handler-escape-2.dll\nTypes found: 2\nTypes verified: 2\nMethods found: 1\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 2,
+        "signal": null,
+        "elapsedMs": 76.548542
+      },
+      "oracle": {
+        "accepted": false,
+        "errors": [
+          "LeaveOutOfFinally"
+        ]
+      },
+      "admission": {
+        "success": false,
+        "issues": [
+          {
+            "methodToken": 100663297,
+            "method": "Fixture.Program::Main",
+            "offset": 6,
+            "code": "IL_EH_FLOW",
+            "message": "Leave exits a filter, finally or fault handler at 0x6",
+            "diagnostic": "CILCF0015"
+          }
+        ]
+      }
+    },
+    {
+      "name": "handler-escape-4",
+      "assemblySHA256": "a0366142bf458c6c9ebed266011df4c36599a87cda149c1a2248fc8e890100bf",
+      "expected": false,
+      "verify": {
+        "stdout": "[IL]: Error [LeaveOutOfFault]: [<temporary>/handler-escape-4.dll : Fixture.Program::Main()][offset 0x00000006] Leave out of fault block.\n1 Error(s) Verifying <temporary>/handler-escape-4.dll\nTypes found: 2\nTypes verified: 2\nMethods found: 1\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 2,
+        "signal": null,
+        "elapsedMs": 76.26229199999989
+      },
+      "oracle": {
+        "accepted": false,
+        "errors": [
+          "LeaveOutOfFault"
+        ]
+      },
+      "admission": {
+        "success": false,
+        "issues": [
+          {
+            "methodToken": 100663297,
+            "method": "Fixture.Program::Main",
+            "offset": 6,
+            "code": "IL_EH_FLOW",
+            "message": "Leave exits a filter, finally or fault handler at 0x6",
+            "diagnostic": "CILCF0015"
+          }
+        ]
+      }
+    }
+  ]
+}

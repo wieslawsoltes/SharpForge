@@ -1,0 +1,207 @@
+{
+  "schemaVersion": 1,
+  "family": "string",
+  "source": "String.cs",
+  "cases": [
+    {
+      "id": "string-empty-length",
+      "category": "boundary",
+      "exception": null
+    },
+    {
+      "id": "string-surrogate-length",
+      "category": "boundary",
+      "exception": null
+    },
+    {
+      "id": "string-concat-null",
+      "category": "boundary",
+      "exception": null
+    },
+    {
+      "id": "string-concat-objects",
+      "category": "positive",
+      "exception": null
+    },
+    {
+      "id": "string-null-or-empty",
+      "category": "boundary",
+      "exception": null
+    },
+    {
+      "id": "string-whitespace-nbsp",
+      "category": "boundary",
+      "exception": null
+    },
+    {
+      "id": "string-ordinal-equal",
+      "category": "positive",
+      "exception": null
+    },
+    {
+      "id": "string-ordinal-ignore-case",
+      "category": "positive",
+      "exception": null
+    },
+    {
+      "id": "string-ordinal-compare",
+      "category": "positive",
+      "exception": null
+    },
+    {
+      "id": "string-substring-middle",
+      "category": "positive",
+      "exception": null
+    },
+    {
+      "id": "string-substring-at-end",
+      "category": "boundary",
+      "exception": null
+    },
+    {
+      "id": "string-substring-negative",
+      "category": "negative",
+      "exception": "System.ArgumentOutOfRangeException"
+    },
+    {
+      "id": "string-substring-overrun",
+      "category": "negative",
+      "exception": "System.ArgumentOutOfRangeException"
+    },
+    {
+      "id": "string-index-found",
+      "category": "positive",
+      "exception": null
+    },
+    {
+      "id": "string-index-missing",
+      "category": "boundary",
+      "exception": null
+    },
+    {
+      "id": "string-index-offset",
+      "category": "positive",
+      "exception": null
+    },
+    {
+      "id": "string-last-index",
+      "category": "positive",
+      "exception": null
+    },
+    {
+      "id": "string-starts-with",
+      "category": "positive",
+      "exception": null
+    },
+    {
+      "id": "string-ends-with",
+      "category": "positive",
+      "exception": null
+    },
+    {
+      "id": "string-contains-empty",
+      "category": "boundary",
+      "exception": null
+    },
+    {
+      "id": "string-replace-text",
+      "category": "positive",
+      "exception": null
+    },
+    {
+      "id": "string-replace-char",
+      "category": "positive",
+      "exception": null
+    },
+    {
+      "id": "string-replace-empty-old",
+      "category": "negative",
+      "exception": "System.ArgumentException"
+    },
+    {
+      "id": "string-split-empty",
+      "category": "boundary",
+      "exception": null
+    },
+    {
+      "id": "string-split-remove-empty",
+      "category": "positive",
+      "exception": null
+    },
+    {
+      "id": "string-split-trim",
+      "category": "positive",
+      "exception": null
+    },
+    {
+      "id": "string-join-null-element",
+      "category": "boundary",
+      "exception": null
+    },
+    {
+      "id": "string-pad-left",
+      "category": "positive",
+      "exception": null
+    },
+    {
+      "id": "string-pad-right",
+      "category": "positive",
+      "exception": null
+    },
+    {
+      "id": "string-pad-negative",
+      "category": "negative",
+      "exception": "System.ArgumentOutOfRangeException"
+    },
+    {
+      "id": "string-trim-whitespace",
+      "category": "positive",
+      "exception": null
+    },
+    {
+      "id": "string-trim-characters",
+      "category": "positive",
+      "exception": null
+    },
+    {
+      "id": "string-insert-middle",
+      "category": "positive",
+      "exception": null
+    },
+    {
+      "id": "string-remove-middle",
+      "category": "positive",
+      "exception": null
+    },
+    {
+      "id": "string-remove-at-end",
+      "category": "boundary",
+      "exception": null
+    },
+    {
+      "id": "string-char-array",
+      "category": "positive",
+      "exception": null
+    },
+    {
+      "id": "string-normalize-composed",
+      "category": "positive",
+      "exception": null
+    },
+    {
+      "id": "string-upper-invariant",
+      "category": "positive",
+      "exception": null
+    },
+    {
+      "id": "string-lower-culture",
+      "category": "positive",
+      "exception": null
+    },
+    {
+      "id": "string-char-index-outside",
+      "category": "negative",
+      "exception": "System.IndexOutOfRangeException"
+    }
+  ]
+}

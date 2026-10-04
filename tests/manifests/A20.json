@@ -2,36 +2,32 @@
   "schemaVersion": 1,
   "area": "A20",
   "nodeGlobs": [
-    "tests/a20-07-keybindings.test.js",
-    "tests/a20-09-profiles.test.js",
-    "tests/a20-editor-cooperative-search.test.js",
-    "tests/a20-editor-formatting.test.js",
-    "tests/a20-editor-package-corrections.test.js",
-    "tests/a20-editor-search-diff.test.js",
-    "tests/a20-editor-services.test.js",
-    "tests/a20-editor-snippets-intelligence.test.js",
-    "tests/a20-view-editing-options.test.js",
-    "tests/a20-view-incremental-folding.test.js",
-    "tests/a20-view-input.test.js",
-    "tests/a20-view-layout.test.js",
-    "tests/a20-vim-blocks.test.js",
-    "tests/editor-model-selections.test.js",
-    "tests/editor-vim.test.js",
     "tests/release05-editor-refactoring.test.js",
     "tests/release06-editor-refactoring.test.js",
+    "tests/a20-*.test.js",
+    "tests/editor-model-selections.test.js",
+    "tests/editor-vim.test.js",
     "tests/text-buffer.test.js",
     "tests/text-diff-merge.test.js",
     "tests/text-search-regex.test.js",
-    "tests/text-unicode.test.js"
+    "tests/text-unicode.test.js",
+    "tests/text-visual-columns.test.js",
+    "tests/text-cooperative-edits.test.js"
   ],
   "browserScripts": [
     "tests/browser_a20_insights_test.py",
-    "tests/browser_a20_view_test.py"
+    "tests/browser_a20_language_providers_test.py",
+    "tests/browser_a20_view_test.py",
+    "tests/browser_a20_studio_large_file_test.py"
   ],
-  "requiredServices": [],
-  "timeout": 300000,
+  "requiredServices": [
+    "studio-http",
+    "chromium"
+  ],
+  "timeout": 1200000,
   "tags": [
     "editor",
+    "scope-qualification",
     "completed-scope",
     "staged-validation"
   ]

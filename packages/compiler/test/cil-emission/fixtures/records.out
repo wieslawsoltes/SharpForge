@@ -1,0 +1,46 @@
+Point { X = 1, Y = 2 }
+True
+False
+True True False False
+True
+3
+True False True
+Point { X = 10, Y = 2 } Point { X = 1, Y = 2 }
+True
+Named { X = 1, Y = 2, Name = n, Tag = t }
+3nt
+Named { X = 1, Y = 2, Name = n, Tag = t }
+False
+False
+True
+False
+False
+Named { X = 1, Y = 20, Name = n, Tag = t }
+True
+Labeled { X = 3, Y = 4, Name = n, Tag = none, Label = l }
+Labeled { X = 30, Y = 4, Name = n, Tag = none, Label = L }
+ln34
+True
+Circle { Kind = circle, Area = 12, Radius = 2 } circle 12
+Square { Kind = square, Area = 9, Side = 3 } square 9
+True
+False
+20.5 deg
+True
+False
+Vector { Dx = 3, Dy = 4, Length2 = 25 } Vector { Dx = 3, Dy = 5, Length2 = 34 } 25
+True True False True
+Vector { Dx = 30, Dy = 4, Length2 = 916 }
+26
+Money { Amount = 5, Currency = EUR }
+True
+True
+Vector { Dx = 0, Dy = 0, Length2 = 0 }
+Box { Value = 7, Label = seven, Uses = 0 }
+True
+False
+Box { Value = , Label = empty, Uses = 0 }
+True
+Options { Name = o, Level = 1, Verbose = True }
+Options { Name = o, Level = 5, Verbose = True }
+Ann10x

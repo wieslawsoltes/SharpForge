@@ -37,12 +37,19 @@ function endFilter(instruction, cursor) {
     reject('CILCF0005', instruction.offset);
   }
 }
-function tail(instruction, cursor) {
+export function validateTailPlacement(instruction, cursor) {
   if (cursor.region) reject('CILCF0006', instruction.offset);
 }
 
 const placementChecks = Object.freeze({ rethrow, ret: returnInstruction, jmp: jump, endfinally: endFinally,
-  endfilter: endFilter, 'tail.': tail });
+  endfilter: endFilter, 'tail.': validateTailPlacement });
+
+const outsideRegions = Object.freeze({ region: null, catches: 0 });
+
+/** Internal no-clause seam: reuse placement rules without constructing a lexical tree or cursor. */
+export function validateInstructionOutsideRegions(instruction) {
+  if (Object.hasOwn(placementChecks, instruction.name)) placementChecks[instruction.name](instruction, outsideRegions);
+}
 
 /** Check EH-sensitive instruction placement, returning an immutable lexical tree; branch/leave edges are separate. */
 export function validateExceptionInstructionPlacement(code, handlers, options = {}) {

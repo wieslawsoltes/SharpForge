@@ -1,0 +1,347 @@
+{
+  "schemaVersion": 1,
+  "kind": "sharpforge-project16-hosted-browser-archive",
+  "attempt": "m1",
+  "sourceSha": "25ef23b0fb86eb3be4151492c2ef6bbc51f0a82e",
+  "sourceTree": "a0922a5f98e4ce38cd377d109a083a1da77df9a1",
+  "workflowRunId": 37184861392,
+  "jobId": 111384572220,
+  "workflowUrl": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37184861392",
+  "jobUrl": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37184861392/job/111384572220",
+  "runConclusion": "failure",
+  "jobConclusion": "failure",
+  "stage": "browser",
+  "engine": "webkit",
+  "runnerLabel": "macos-latest",
+  "startedAt": "2026-10-04T07:08:37.210Z",
+  "finishedAt": "2026-10-04T07:09:38.068Z",
+  "counts": {
+    "selected": 9,
+    "passed": 8,
+    "failed": 1
+  },
+  "captureOnly": true,
+  "baselineProfile": null,
+  "archiveIntegrity": {
+    "rawFileCount": 43,
+    "rawBytes": 200889,
+    "artifactMemberCount": 38,
+    "artifactMemberBytes": 72079,
+    "allZipMembersMatchExtractedFiles": true,
+    "allCopiesReadBackIdentical": true,
+    "originalLineEndingsAndEncodingPreserved": true,
+    "verification": "ZIP/member bytes and copied files matched; every staged Git blob also matched its original byte count and SHA256.",
+    "gitTextNormalization": false,
+    "stagedGitBlobsMatchOriginalSha256": true
+  },
+  "provenance": "Original downloaded artifact, extracted members, job log and supplied connector API responses are preserved byte for byte.",
+  "limits": [
+    "Standalone failed during initial file navigation; pinned-source review explains an automation offline-mode limitation without changing the failed outcome.",
+    "Browser functional scopes only; no Node-area or performance phases selected.",
+    "API jobs response is retained as supplied by the connector; omitted API fields are not reconstructed.",
+    "No test, build, browser, benchmark or workflow execution was performed to create this archive."
+  ],
+  "files": [
+    {
+      "path": "a19-shell-results.json",
+      "sourcePath": "p16-hosted-m1/a19-shell-results.json",
+      "kind": "artifact-member",
+      "bytes": 3053,
+      "sha256": "d59f6db9c5aa08179176b75f0da1a1ed97427f29e694a385f8a126d7ec705aa4"
+    },
+    {
+      "path": "a20-editor-insights.json",
+      "sourcePath": "p16-hosted-m1/a20-editor-insights.json",
+      "kind": "artifact-member",
+      "bytes": 999,
+      "sha256": "6e96082debc4d21f0ca6a697318dba0cf43dde94daa68706be0caf6800867741"
+    },
+    {
+      "path": "a20-editor-view.json",
+      "sourcePath": "p16-hosted-m1/a20-editor-view.json",
+      "kind": "artifact-member",
+      "bytes": 903,
+      "sha256": "1f6599007a7783d477fb2fdde76243ab7bb2c801b8ed6875b23275d820b8f2ee"
+    },
+    {
+      "path": "a19-multi-session-results.json",
+      "sourcePath": "p16-hosted-m1/a19-multi-session-results.json",
+      "kind": "artifact-member",
+      "bytes": 1383,
+      "sha256": "804cb9c1dff465764adab509d1a1e64c06a096b0c5070ce3b99c79b90daefad5"
+    },
+    {
+      "path": "a20-language-providers.json",
+      "sourcePath": "p16-hosted-m1/a20-language-providers.json",
+      "kind": "artifact-member",
+      "bytes": 374,
+      "sha256": "03f7a77016c5ecb3078c7b12b4e172c844976c280abe6190cb05768a08aa63f8"
+    },
+    {
+      "path": "browser_a19_docking_test/session.json",
+      "sourcePath": "p16-hosted-m1/browser_a19_docking_test/session.json",
+      "kind": "artifact-member",
+      "bytes": 240,
+      "sha256": "fdd0a25e06d0ffc6091de73a9483513a8b64da7a46cf7957039a4f7a08f51077"
+    },
+    {
+      "path": "browser_a19_docking_test/console.log",
+      "sourcePath": "p16-hosted-m1/browser_a19_docking_test/console.log",
+      "kind": "artifact-member",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "browser_a19_lazy_tools_test/console.log",
+      "sourcePath": "p16-hosted-m1/browser_a19_lazy_tools_test/console.log",
+      "kind": "artifact-member",
+      "bytes": 50,
+      "sha256": "ae146ccdf168df50426f578aff0bc64e65ff053b6731421f111810893db572e7"
+    },
+    {
+      "path": "browser_a19_lazy_tools_test/session.json",
+      "sourcePath": "p16-hosted-m1/browser_a19_lazy_tools_test/session.json",
+      "kind": "artifact-member",
+      "bytes": 243,
+      "sha256": "2bd0118b586721ea3d5969888cb424b86d6d14dc35bfb0a3e7f538caf2f5b874"
+    },
+    {
+      "path": "browser_a19_shell_test/console.log",
+      "sourcePath": "p16-hosted-m1/browser_a19_shell_test/console.log",
+      "kind": "artifact-member",
+      "bytes": 50,
+      "sha256": "1769df37a73e6201e5a336d689caec8f60de0a904ad1558ad5ae341d9a684de7"
+    },
+    {
+      "path": "browser_a19_shell_test/session.json",
+      "sourcePath": "p16-hosted-m1/browser_a19_shell_test/session.json",
+      "kind": "artifact-member",
+      "bytes": 239,
+      "sha256": "a403408937c737fe692c563e633e1bf852812dcd8db13efd856795bc943608f7"
+    },
+    {
+      "path": "browser_a20_insights_test/console.log",
+      "sourcePath": "p16-hosted-m1/browser_a20_insights_test/console.log",
+      "kind": "artifact-member",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "browser_a20_insights_test/session.json",
+      "sourcePath": "p16-hosted-m1/browser_a20_insights_test/session.json",
+      "kind": "artifact-member",
+      "bytes": 241,
+      "sha256": "272475bb4917b3e6c51ae921eb7894d701cf0ccae4cd298800021cd4af9d2340"
+    },
+    {
+      "path": "browser_a20_language_providers_test/console.log",
+      "sourcePath": "p16-hosted-m1/browser_a20_language_providers_test/console.log",
+      "kind": "artifact-member",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "browser_a20_language_providers_test/session.json",
+      "sourcePath": "p16-hosted-m1/browser_a20_language_providers_test/session.json",
+      "kind": "artifact-member",
+      "bytes": 252,
+      "sha256": "7dee5be13d28ef0438916aa7b2cb6548e69effc5336a37b8bea17ddf3796240f"
+    },
+    {
+      "path": "browser_a20_view_test/console.log",
+      "sourcePath": "p16-hosted-m1/browser_a20_view_test/console.log",
+      "kind": "artifact-member",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "browser_a20_view_test/session.json",
+      "sourcePath": "p16-hosted-m1/browser_a20_view_test/session.json",
+      "kind": "artifact-member",
+      "bytes": 238,
+      "sha256": "390dbd182dcb82541f8a6f5711c67d96bd4a9c270d06f7ca34a2849a96d479a6"
+    },
+    {
+      "path": "browser_multi_session_test/console.log",
+      "sourcePath": "p16-hosted-m1/browser_multi_session_test/console.log",
+      "kind": "artifact-member",
+      "bytes": 50,
+      "sha256": "17015008584777e562a4f3c8cdf825f9e06b5f716ddba47e50f4453a51f33d7b"
+    },
+    {
+      "path": "browser_multi_session_test/session.json",
+      "sourcePath": "p16-hosted-m1/browser_multi_session_test/session.json",
+      "kind": "artifact-member",
+      "bytes": 242,
+      "sha256": "f5109e14d566de4267f811f25d3a163a430af824af1ce5eeaf81a6cb605e6678"
+    },
+    {
+      "path": "browser_vs_workflows_standalone_test/console.log",
+      "sourcePath": "p16-hosted-m1/browser_vs_workflows_standalone_test/console.log",
+      "kind": "artifact-member",
+      "bytes": 2533,
+      "sha256": "af4eed8b62abebadbaffbece7d217a158ef23f614f654d5468a6d4587f9c1902"
+    },
+    {
+      "path": "browser_vs_workflows_standalone_test/screenshot.png",
+      "sourcePath": "p16-hosted-m1/browser_vs_workflows_standalone_test/screenshot.png",
+      "kind": "artifact-member",
+      "bytes": 27570,
+      "sha256": "7fda87da1757582b96415a4aadd25ff6cda89b887c47ff36a3a33a235f5a2034"
+    },
+    {
+      "path": "browser_vs_workflows_standalone_test/session.json",
+      "sourcePath": "p16-hosted-m1/browser_vs_workflows_standalone_test/session.json",
+      "kind": "artifact-member",
+      "bytes": 254,
+      "sha256": "251e5da97647603c45475b184b4d49beff3a3f0990687a9e403b60b97f54c4b5"
+    },
+    {
+      "path": "browser_vs_workflows_test/console.log",
+      "sourcePath": "p16-hosted-m1/browser_vs_workflows_test/console.log",
+      "kind": "artifact-member",
+      "bytes": 50,
+      "sha256": "e7020715832bc22e38d780fbf557cf6d0899f88891226f6c705c3a55878927bb"
+    },
+    {
+      "path": "browser_vs_workflows_standalone_test/trace.zip",
+      "sourcePath": "p16-hosted-m1/browser_vs_workflows_standalone_test/trace.zip",
+      "kind": "artifact-member",
+      "bytes": 23088,
+      "sha256": "504eb7ea91d1afb176266238fbb04253d6f3c228c9fc66d636118126f96c59ae"
+    },
+    {
+      "path": "browser_vs_workflows_test/session.json",
+      "sourcePath": "p16-hosted-m1/browser_vs_workflows_test/session.json",
+      "kind": "artifact-member",
+      "bytes": 241,
+      "sha256": "750a1c45f645b7611db0441edce98bd2a9e1434fd8db007079293f550d727377"
+    },
+    {
+      "path": "qualification-summary.json",
+      "sourcePath": "p16-hosted-m1/qualification-summary.json",
+      "kind": "artifact-member",
+      "bytes": 4445,
+      "sha256": "5de1821fd27330b60959b3e37ba3631d333dc8fd3eb5206046d2f2735c7aec62"
+    },
+    {
+      "path": "source.json",
+      "sourcePath": "p16-hosted-m1/source.json",
+      "kind": "artifact-member",
+      "bytes": 502,
+      "sha256": "c4884ffd5dd33ef847164ebce49167883c0854bcb64bc27a02caa9d89caee031"
+    },
+    {
+      "path": "suite-editor-insights.json",
+      "sourcePath": "p16-hosted-m1/suite-editor-insights.json",
+      "kind": "artifact-member",
+      "bytes": 232,
+      "sha256": "1f4449c28a17780e8cdf6977fbeab8c148a73cc30fc797c37ad4e16dd5546872"
+    },
+    {
+      "path": "suite-editor-providers.json",
+      "sourcePath": "p16-hosted-m1/suite-editor-providers.json",
+      "kind": "artifact-member",
+      "bytes": 245,
+      "sha256": "b22a5b42d12ae19f0c5399b2508988bff08a63f6d472e4231b8075af0fc706f3"
+    },
+    {
+      "path": "suite-editor-view.json",
+      "sourcePath": "p16-hosted-m1/suite-editor-view.json",
+      "kind": "artifact-member",
+      "bytes": 225,
+      "sha256": "25effb8cda5cd89c11353915ec72ac01f5fc178ceeb56de5b9a4e9d92694481e"
+    },
+    {
+      "path": "suite-workbench-docking.json",
+      "sourcePath": "p16-hosted-m1/suite-workbench-docking.json",
+      "kind": "artifact-member",
+      "bytes": 234,
+      "sha256": "29704bfcd0c40b4fa6f2558dd837b6580220578ba0130400cbad64ca74429f46"
+    },
+    {
+      "path": "suite-workbench-lazy.json",
+      "sourcePath": "p16-hosted-m1/suite-workbench-lazy.json",
+      "kind": "artifact-member",
+      "bytes": 234,
+      "sha256": "22c7cb8639bd718630ac028aa94755468d56238e1bc9b87ea10aaf9bfc5e8e32"
+    },
+    {
+      "path": "suite-workbench-sessions.json",
+      "sourcePath": "p16-hosted-m1/suite-workbench-sessions.json",
+      "kind": "artifact-member",
+      "bytes": 237,
+      "sha256": "b750c0de78d2933a3c492232b3343fc0f2e1319714d7306faba54466d08c45ff"
+    },
+    {
+      "path": "suite-workbench-shell.json",
+      "sourcePath": "p16-hosted-m1/suite-workbench-shell.json",
+      "kind": "artifact-member",
+      "bytes": 231,
+      "sha256": "389372c025cab7a8058435bde49304be1ab5027591053028161e8124d62b4527"
+    },
+    {
+      "path": "suite-workbench-workflows-standalone.json",
+      "sourcePath": "p16-hosted-m1/suite-workbench-workflows-standalone.json",
+      "kind": "artifact-member",
+      "bytes": 260,
+      "sha256": "7ee769cc5f7f5e9348d2770d2a9176c1449a99a265a0c5f2b2b04077f64fee6c"
+    },
+    {
+      "path": "suite-workbench-workflows.json",
+      "sourcePath": "p16-hosted-m1/suite-workbench-workflows.json",
+      "kind": "artifact-member",
+      "bytes": 237,
+      "sha256": "ce38086a88661b5a4671f1829561d691a845b9b3ac8bb83f91e494fac6061a59"
+    },
+    {
+      "path": "vs-workflow-results.json",
+      "sourcePath": "p16-hosted-m1/vs-workflow-results.json",
+      "kind": "artifact-member",
+      "bytes": 1758,
+      "sha256": "1ac60ebcd2dc3d47529ebf3c5ad302a8df0d76f32013f3490ad1db95a593dbdf"
+    },
+    {
+      "path": "vs-workflow-standalone-results.json",
+      "sourcePath": "p16-hosted-m1/vs-workflow-standalone-results.json",
+      "kind": "artifact-member",
+      "bytes": 946,
+      "sha256": "ee86e6bf1b7c59b7a0d8a25e4753aa9321809a1c803e1b3e70fe19ac9c99d155"
+    },
+    {
+      "path": "artifact.zip",
+      "sourcePath": "attachments/f6b30ad8-8c23-4222-98fe-49accdffdadc/p16-hosted-m1.zip",
+      "kind": "original-artifact-zip",
+      "bytes": 37289,
+      "sha256": "420c7388efaeb54e1079d53b7434171311b67c6b0947fbdac61346781ab4c92d"
+    },
+    {
+      "path": "job.log",
+      "sourcePath": "p16-hosted-m1-job.log",
+      "kind": "original-job-log",
+      "bytes": 72779,
+      "sha256": "42c77b2461e2925cb0467a6aa5530c763a067dba28f77470ac0eb1d0655465f6"
+    },
+    {
+      "path": "run.json",
+      "sourcePath": "p16-hosted-m1-run.json",
+      "kind": "connector-api-snapshot",
+      "bytes": 14484,
+      "sha256": "388dc775bf8c7ec13f7a6f487a4f4cb5f88825e1123b21d80877332a278a5d07"
+    },
+    {
+      "path": "jobs.json",
+      "sourcePath": "p16-hosted-m1-jobs.json",
+      "kind": "connector-api-snapshot",
+      "bytes": 3359,
+      "sha256": "311ddf4d6ca1e15e884ecdc2be0b0bc107c2002aa2846e6626642c3c8344e241"
+    },
+    {
+      "path": "artifacts.json",
+      "sourcePath": "p16-hosted-m1-artifacts.json",
+      "kind": "connector-api-snapshot",
+      "bytes": 899,
+      "sha256": "5c83f133861e32c373678355166aaa45fc7e9064ba3e0893bf9f303a3b778cb4"
+    }
+  ]
+}

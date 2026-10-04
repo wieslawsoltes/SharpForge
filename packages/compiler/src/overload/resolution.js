@@ -10,6 +10,7 @@
 import {DiagnosticId} from '../diagnostics/codes.js';
 import { RefKind, TypeKind, SymbolDisplayFormat, typeOf } from '../symbols/types.js';
 import { mapArguments, acceptsArgumentCount } from './arguments.js';
+import { namingParameters } from './override-parameters.js';
 import { inferMethodTypeArguments } from './type-inference.js';
 import { numericKind, isSignedKind, isIntegralKind } from '../conversions/numeric.js';
 import { ConversionKind } from '../conversions/classify.js';
@@ -54,10 +55,13 @@ export class OverloadResolver {
    * @returns a Candidate; `failure` is `{kind,...}` when not applicable: 'arity' (type argument count), 'mapping'
    *   (mapArguments error), 'inference' (CS0411), 'refKind' {argument,expected}, 'conversion' {argument,to}
    */
-  analyse(method, args, { typeArguments = null, expanded = false } = {}) {
+  analyse(method, args, { typeArguments = null, expanded = false, overrides = null } = {}) {
     const c = new Candidate(method, method.constructedFrom ?? method);
     c.expanded = expanded;
-    const mapping = mapArguments(method.parameters, args, { expanded });
+    // Argument names and defaults are those of the most derived override on the receiver (override-parameters.js).
+    const override = overrides?.get(method.originalDefinition ?? method) ?? null,
+      mapping = mapArguments(namingParameters(method, override), args, { expanded });
+    c.defaultsFrom = override;
     if (!mapping.ok) {
       c.failure = { kind: 'mapping', error: mapping.error };
       return c;
@@ -118,11 +122,14 @@ export class OverloadResolver {
         (wanted === RefKind.RefReadOnlyParameter && [RefKind.None, RefKind.In, RefKind.Ref].includes(given));
       // COM interop: `ref` may be omitted on a call to a COM interface method; the argument is then passed by value.
       // An argument that does not convert to the parameter type is still reported as a missing `ref`.
-      const mayOmit = !refOk && wanted === RefKind.Ref && given === RefKind.None && !!this.allowsRefOmission?.(method),
+      // C# 10: an interpolated string is passed to a `ref` handler parameter without `ref` (the handler is a temporary).
+      const missingRef = !refOk && wanted === RefKind.Ref && given === RefKind.None,
+        comOmit = missingRef && !!this.allowsRefOmission?.(method),
+        mayOmit = comOmit || (missingRef && args[i].form === 'interpolatedString'),
         byValue = mayOmit ? this.conversions.classifyFromExpression(args[i], c.parameterTypes[i]) : null,
-        omitsRef = !!byValue?.exists && byValue.isImplicit;
-      if (omitsRef) c.omitsRef = true;
-      else if (!refOk) {
+        omitsRef = !!byValue?.exists && byValue.isImplicit && (comOmit || byValue.kind === ConversionKind.InterpolatedStringHandler);
+      if (omitsRef && comOmit) c.omitsRef = true;
+      if (!omitsRef && !refOk) {
         c.failure ??= { kind: 'refKind', argument: i, expected: wanted, given };
         c.conversions.push(null);
         continue;
@@ -147,6 +154,7 @@ export class OverloadResolver {
    * Resolves a call.
    * @param {MethodSymbol[]} methods candidate set (already filtered for accessibility and hiding)
    * @param {object[]} args  @param {{typeArguments?:TypeSymbol[]|null,name?:string,isConstructor?:boolean,isDelegate?:boolean}} [options]
+   *   `options.overrides` (override-parameters.js) names the overrides whose parameter names and defaults the call uses
    * @returns {{succeeded:true,method,expanded,mapping,conversions,candidate}|{succeeded:false,error:{code,args,argument?:number},candidates,best?:Candidate}}
    */
   resolve(methods, args, options = {}) {
@@ -163,6 +171,12 @@ export class OverloadResolver {
       analysed.push(expanded.applicable ? expanded : preferFailure(normal, expanded));
     }
     let applicable = analysed.filter(c => c.applicable);
+    // C# 7.3: a candidate whose type arguments violate its constraints is not a candidate - as long as another one
+    // is left; a lone violator stays and the binder reports its constraint.
+    if (applicable.length > 1 && this.violatesConstraints) {
+      const satisfying = applicable.filter(c => !c.method.typeArguments?.length || !this.violatesConstraints(c.method));
+      if (satisfying.length) applicable = satisfying;
+    }
     // Candidates declared in a base type of an applicable candidate's type are removed (spec 12.6.4.1).
     if (applicable.length > 1 && !options.keepBaseCandidates) {
       const hidden = c =>
@@ -290,6 +304,12 @@ export class OverloadResolver {
     if (a.expanded !== b.expanded) return !a.expanded;
     if (a.expanded && b.expanded && a.definition.parameters.length !== b.definition.parameters.length)
       return a.definition.parameters.length > b.definition.parameters.length;
+    // C# 13: two expanded forms that take no argument into their params collection (`string.Format("text")` over
+    // `params object[]` and `params ReadOnlySpan<object>`) are decided by the better collection type alone.
+    if (a.expanded && b.expanded) {
+      const collection = betterParamsCollection(a.method.parameters.at(-1).type, b.method.parameters.at(-1).type, this.conversions);
+      if (collection !== 0) return collection > 0;
+    }
     if (a.usedDefaults !== b.usedDefaults) return !a.usedDefaults;
     const specific = this.moreSpecific(a, b);
     if (specific !== 0) return specific > 0;
@@ -402,6 +422,7 @@ const success = c => ({
   mapping: c.mapping,
   conversions: c.conversions,
   parameterTypes: c.parameterTypes,
+  defaultsFrom: c.defaultsFrom ?? null,
   candidate: c,
 });
 const refPrefix = (parameter, c) =>

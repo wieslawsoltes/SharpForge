@@ -1,0 +1,893 @@
+Discovered 57 Node test files and 4 Python suites in 1 area manifests. Node reports executed test counts below.
+▶ VS Code shortcuts apply independently specified text, caret, view and host results
+  ✔ ArrowLeft (16.831438ms)
+  ✔ Shift+ArrowLeft (1.737601ms)
+  ✔ ArrowRight (1.74426ms)
+  ✔ Shift+ArrowRight (2.461753ms)
+  ✔ ArrowUp (1.29952ms)
+  ✔ Shift+ArrowUp (1.162333ms)
+  ✔ ArrowDown (1.118046ms)
+  ✔ Shift+ArrowDown (1.112698ms)
+  ✔ Home (1.317887ms)
+  ✔ Shift+Home (2.164384ms)
+  ✔ End (0.920809ms)
+  ✔ Shift+End (0.978105ms)
+  ✔ Mod+Home (0.747928ms)
+  ✔ Mod+Shift+Home (0.679244ms)
+  ✔ Mod+End (0.854148ms)
+  ✔ Mod+Shift+End (1.33289ms)
+  ✔ Mod+ArrowLeft (1.847065ms)
+  ✔ Mod+Shift+ArrowLeft (0.763111ms)
+  ✔ Mod+ArrowRight (1.110976ms)
+  ✔ Mod+Shift+ArrowRight (0.704242ms)
+  ✔ PageUp (0.674708ms)
+  ✔ Shift+PageUp (0.63646ms)
+  ✔ PageDown (1.728777ms)
+  ✔ Shift+PageDown (0.852004ms)
+  ✔ Backspace (2.639831ms)
+  ✔ Delete (1.031085ms)
+  ✔ Mod+Backspace (1.156834ms)
+  ✔ Mod+Delete (2.238636ms)
+  ✔ Enter (1.75725ms)
+  ✔ Tab (1.315945ms)
+  ✔ Shift+Tab (1.22012ms)
+  ✔ Mod+A (0.818344ms)
+  ✔ Mod+X (1.145568ms)
+  ✔ Mod+V (1.491329ms)
+  ✔ Mod+C (0.74262ms)
+  ✔ Mod+Z (1.621395ms)
+  ✔ Mod+Y (1.182734ms)
+  ✔ Mod+Shift+Z (0.848109ms)
+  ✔ Mod+D (2.11554ms)
+  ✔ Mod+Shift+L (1.768837ms)
+  ✔ Mod+Shift+K (1.154ms)
+  ✔ Mod+L (2.113838ms)
+  ✔ Mod+Enter (1.01462ms)
+  ✔ Mod+Shift+Enter (0.831193ms)
+  ✔ Alt+Shift+ArrowUp (1.450648ms)
+  ✔ Alt+Shift+ArrowDown (0.903943ms)
+  ✔ Alt+ArrowUp (1.219689ms)
+  ✔ Alt+ArrowDown (0.980829ms)
+  ✔ Mod+Alt+ArrowUp (1.062432ms)
+  ✔ Mod+Alt+ArrowDown (0.940619ms)
+  ✔ Mod+Shift+\ (1.260802ms)
+  ✔ Mod+] (0.977294ms)
+  ✔ Mod+[ (0.910212ms)
+  ✔ Mod+ArrowUp (0.891424ms)
+  ✔ Mod+ArrowDown (1.892244ms)
+  ✔ Mod+Shift+[ (0.894529ms)
+  ✔ Mod+Shift+] (0.655098ms)
+  ✔ Mod+K Mod+0 (0.977124ms)
+  ✔ Mod+K Mod+J (0.777323ms)
+  ✔ Mod+K Mod+C (1.387072ms)
+  ✔ Mod+K Mod+U (0.998756ms)
+  ✔ Mod+/ (1.069924ms)
+  ✔ Alt+Z (0.857263ms)
+  ✔ Escape (0.931615ms)
+  ✔ Insert (0.859967ms)
+  ✔ Mod+= (0.791854ms)
+  ✔ Mod+- (0.871774ms)
+  ✔ Mod+0 (2.187939ms)
+  ✔ Mod+P (0.771263ms)
+  ✔ Mod+Shift+P (0.930473ms)
+  ✔ F1 (0.575568ms)
+  ✔ Mod+, (0.581897ms)
+  ✔ Mod+K Mod+S (0.905296ms)
+  ✔ Mod+S (0.876081ms)
+  ✔ Mod+Shift+S (0.950434ms)
+  ✔ Mod+F4 (0.824603ms)
+  ✔ Ctrl+F6 (0.852906ms)
+  ✔ Ctrl+Shift+F6 (0.572884ms)
+  ✔ Mod+Alt+N (1.099328ms)
+  ✔ Mod+Alt+O (0.636971ms)
+  ✔ Mod+\ (0.605023ms)
+  ✔ Alt+ArrowLeft (2.124694ms)
+  ✔ Alt+ArrowRight (0.823051ms)
+  ✔ F12 (0.976783ms)
+  ✔ Shift+F12 (1.818903ms)
+  ✔ Mod+Shift+F (0.740697ms)
+  ✔ Mod+Shift+H (0.800026ms)
+  ✔ Mod+F (0.713085ms)
+  ✔ Mod+H (0.606394ms)
+  ✔ F3 (0.56365ms)
+  ✔ Shift+F3 (0.786195ms)
+  ✔ Mod+Space (0.726676ms)
+  ✔ Mod+Shift+Space (0.680677ms)
+  ✔ Mod+K Mod+I (0.588698ms)
+  ✔ Mod+. (0.732575ms)
+  ✔ F2 (1.716379ms)
+  ✔ Alt+Shift+F (1.004194ms)
+  ✔ Alt+Shift+ArrowRight (0.597912ms)
+  ✔ Alt+Shift+ArrowLeft (0.694337ms)
+✔ VS Code shortcuts apply independently specified text, caret, view and host results (133.423518ms)
+✔ normalizes platform modifiers and real shifted punctuation without intercepting AltGraph or IME (0.460685ms)
+✔ macOS profile editing uses Meta while physical Ctrl bindings remain distinct (0.977274ms)
+✔ context expressions are bounded boolean predicates without evaluation side effects (0.936802ms)
+✔ resolver honors scope, priority, predicates, disposal, and atomic replacement of invalid bindings (0.70915ms)
+✔ chord cancellation, failure and timeout leave no stale pending input (0.355466ms)
+✔ a higher-priority chord prefix suppresses a lower-priority destructive command even after timeout (0.264509ms)
+✔ all shipped profile bindings have executable command registrations (1.427122ms)
+✔ Visual Studio bindings and unbound known commands match the pinned inventory (32.05069ms)
+✔ readonly commands and editing aliases preserve text/history while navigation remains available (1.778021ms)
+✔ completion filter aliases call the implemented insight API with directions (0.878325ms)
+✔ profile switches preserve the authoritative model, undo, primary selection, view and native state (20.016486ms)
+✔ resuming Vim insert after a profile switch opens a new complete undo group (5.12548ms)
+✔ Emacs mark extends motion, exchanges ends and kills the marked region with one undo (3.010339ms)
+✔ Emacs successive kills append, yank cycles distinct entries, and unrelated commands end a yank chain (4.189048ms)
+✔ Emacs ring bounds and marks stay independent between views and track document edits (2.783087ms)
+✔ Sublime occurrences and split-line carets edit the actual model atomically (3.095789ms)
+✔ native text edits preserve CRLF and deduplicate two carets on one copied line (1.700024ms)
+✔ clipboard distributes multiline fragments, remembers line copy and undoes all caret pastes together (2.32111ms)
+▶ denied and stale clipboard requests never mutate text, history or selections
+  ✔ Edit.Cut (1.096834ms)
+  ✔ Edit.Paste (1.041631ms)
+  ✔ selection (1.488966ms)
+  ✔ document (0.774638ms)
+  ✔ dispose (0.645504ms)
+  ✔ profile (0.951755ms)
+  ✔ readonly (0.798314ms)
+✔ denied and stale clipboard requests never mutate text, history or selections (7.717248ms)
+✔ CodeMirror protocol is a live model projection with operation undo and savepoint cleanliness (1.437879ms)
+✔ document marks follow edits, are cleared on model replacement, and dispose releases subscriptions (2.34732ms)
+node:internal/modules/package_json_reader:301
+  throw new ERR_MODULE_NOT_FOUND(packageName, fileURLToPath(base), null);
+        ^
+
+Error [ERR_MODULE_NOT_FOUND]: Cannot find package '@sharpforge/bcl-collections' imported from /workspace/scratch/6b99131ca908/p16-integration/packages/framework/src/bcl-contracts.js
+    at Object.getPackageJSONURL (node:internal/modules/package_json_reader:301:9)
+    at packageResolve (node:internal/modules/esm/resolve:768:81)
+    at moduleResolve (node:internal/modules/esm/resolve:859:18)
+    at defaultResolve (node:internal/modules/esm/resolve:992:11)
+    at #cachedDefaultResolve (node:internal/modules/esm/loader:701:20)
+    at #resolveAndMaybeBlockOnLoaderThread (node:internal/modules/esm/loader:721:38)
+    at ModuleLoader.resolveSync (node:internal/modules/esm/loader:759:56)
+    at #resolve (node:internal/modules/esm/loader:683:17)
+    at ModuleLoader.getOrCreateModuleJob (node:internal/modules/esm/loader:603:35)
+    at ModuleJob.syncLink (node:internal/modules/esm/module_job:163:33) {
+  code: 'ERR_MODULE_NOT_FOUND'
+}
+
+Node.js v24.19.0
+✖ tests/a20-bound-signature-help.test.js (142.186533ms)
+✔ A20 pre-cancelled and queued-cancelled disk saves do not start a read or write (15.775571ms)
+✔ A20 cancelling an acquired prepared baseline releases its private model and preserves the live source (4.126804ms)
+✔ A20 cancellation during permission and stream acquisition prevents any committed write (11.475887ms)
+✔ A20 a mid-stream cancellation aborts before close and retains the previous baseline/version (12.535224ms)
+✔ A20 close is the per-file commit boundary; cancellation prevents later files and preserves exact partial written results (14.636232ms)
+✔ A20 a cancellation after the final close starts does not falsely report an uncommitted file (7.96998ms)
+✔ model benchmark measures all five actual operations and preserves source correctness (19.346511ms)
+✔ model benchmark cancellation is explicit and produces no pretend successful report (0.739936ms)
+✔ memory runner refuses unavailable GC and preserves signed deltas (0.591321ms)
+✔ browser harness serves the real editor entry under a strict CSP and rejects malformed resource URLs (41.219913ms)
+✔ 200 MiB qualification is explicitly accepted without growing defaults or allocating a large fixture (1.634835ms)
+✔ browser readiness only uses evaluate and stops once the real API appears (3.832339ms)
+✔ browser readiness has a deadline even when evaluate hangs, and propagates page errors or cancellation (11.181142ms)
+✔ chunk boundaries preserve the shared matcher nonoverlap, case-fold and word-boundary semantics (17.109042ms)
+✔ cooperative search is cancellable between slices and reports progress without publishing partial success (1.203915ms)
+✔ persistent snapshots are read in bounded slices without materializing document text (6.512121ms)
+✔ global match limits remain exact when each chunk contains rejected whole-word matches (55.448065ms)
+✔ regex worker receives bounded chunks and cancellation terminates its isolated computation (8.196461ms)
+✔ real paste source triggers bounded range formatting and its own undo transaction (4.418283ms)
+✔ disabled paste/type/completion triggers and formatting recursion schedule no work (0.556068ms)
+✔ on-type formatting uses the registered provider and read-only editors cannot commit it (0.7297ms)
+✔ A20 shared-model locks update each pane, reject prepared edits, and preserve rollback and history (5.475096ms)
+✔ A20 read-only construction and subscription disposal do not change document revisions (0.714327ms)
+✔ A20 same-line offscreen edits reconcile wrap counts and zone mapping without visiting the line (9.558996ms)
+✔ A20 wrap measurement stays chunked after a large same-line-count replacement (1.960607ms)
+✔ A20 deleting a brace or region marker on one line refreshes the actual folding provider (6.509838ms)
+✔ A20 real workspace configuration applies ancestor sections, per-language overlays and ordinary EOL preservation (3.222439ms)
+✔ A20 EditorConfig input is bounded, model-aware, ordered, atomic and unaffected by unrelated root flags (0.903112ms)
+✔ A20 multi-caret deletion retains blocked carets and merges overlapping word deletions in one undo step (10.149917ms)
+✔ A20 invalid load chunk sizes reject before reading or replacing the document (1.336876ms)
+✔ A20 overlapping whole-line expansions transform every selected line once (1.179659ms)
+✔ A20 project/disk path-only records apply configuration without flattening source snapshots (0.374975ms)
+node:internal/modules/package_json_reader:301
+  throw new ERR_MODULE_NOT_FOUND(packageName, fileURLToPath(base), null);
+        ^
+
+Error [ERR_MODULE_NOT_FOUND]: Cannot find package '@sharpforge/bcl-collections' imported from /workspace/scratch/6b99131ca908/p16-integration/packages/framework/src/bcl-contracts.js
+    at Object.getPackageJSONURL (node:internal/modules/package_json_reader:301:9)
+    at packageResolve (node:internal/modules/esm/resolve:768:81)
+    at moduleResolve (node:internal/modules/esm/resolve:859:18)
+    at defaultResolve (node:internal/modules/esm/resolve:992:11)
+    at #cachedDefaultResolve (node:internal/modules/esm/loader:701:20)
+    at #resolveAndMaybeBlockOnLoaderThread (node:internal/modules/esm/loader:721:38)
+    at ModuleLoader.resolveSync (node:internal/modules/esm/loader:759:56)
+    at #resolve (node:internal/modules/esm/loader:683:17)
+    at ModuleLoader.getOrCreateModuleJob (node:internal/modules/esm/loader:603:35)
+    at ModuleJob.syncLink (node:internal/modules/esm/module_job:163:33) {
+  code: 'ERR_MODULE_NOT_FOUND'
+}
+
+Node.js v24.19.0
+✖ tests/a20-editor-language-worker.test.js (150.322178ms)
+✔ A20 shared-model locks update each pane, reject prepared edits, and preserve rollback and history (4.404943ms)
+✔ A20 read-only construction and subscription disposal do not change document revisions (1.308473ms)
+✔ A20 same-line offscreen edits reconcile wrap counts and zone mapping without visiting the line (7.754104ms)
+✔ A20 wrap measurement stays chunked after a large same-line-count replacement (1.013128ms)
+✔ A20 deleting a brace or region marker on one line refreshes the actual folding provider (6.415144ms)
+✔ A20 multi-caret deletion retains blocked carets and merges overlapping word deletions in one undo step (9.334077ms)
+✔ A20 invalid load chunk sizes reject before reading or replacing the document (1.238167ms)
+✔ A20 overlapping whole-line expansions transform every selected line once (1.369055ms)
+✔ nearest-rank percentiles preserve raw outliers and reject malformed samples (1.509256ms)
+✔ 100MB fixture uses exact byte/code-unit size with one deterministic middle search target (119.426826ms)
+✔ performance gate fails strictly above20percent p95 and passes exact20percent boundary (11.109033ms)
+✔ retained memory budgets bound each real component and preserve signed measurement noise (0.501777ms)
+✔ one regressed size/operation cannot be hidden by another faster row (0.314805ms)
+✔ gate rejects missing browser evidence, changed runners, tampered percentiles and failed correctness (0.477239ms)
+✔ zero baseline and missing/duplicate benchmark rows cannot silently pass (0.320703ms)
+✔ regex replacement with numbered and named groups spans open documents atomically (7.116452ms)
+✔ find selection scope retains the captured range, whole-word filters and preserve-case replacements (1.98226ms)
+✔ selection search counts only its captured scope and restores original regex capture coordinates (5.358021ms)
+✔ single-editor and selection snapshots stay lazy and reject replaced model identities (23.677898ms)
+✔ a newer search supersedes pending matches and an invalid pattern cannot reuse an older result (9.786689ms)
+✔ invalid regex and stale replace preview leave source unchanged and history stays bounded (1.579793ms)
+✔ side-by-side and inline rows share hunks and preserve line alignment around insertion and deletion (1.794617ms)
+✔ merge preserves unresolved conflict bytes until a chosen side, both or manual result is accepted (7.711919ms)
+✔ independent merge changes are accepted automatically and adjacent conflict offsets track replacement length (0.526925ms)
+✔ every declared service can be supplied by a standalone fake provider (2.485128ms)
+✔ RPC adapter advertises only pure registered methods and passes cancellation through (0.236006ms)
+✔ request generations reject older versions, edits at identical caret offsets and out-of-order results (0.966317ms)
+✔ guard propagates errors, isolates feature channels and cancels on dispose (0.297368ms)
+✔ guard retains persistent snapshot identities and compares target document versions independently (1.082733ms)
+✔ three-document edits commit before any subscriber and undo in one step per document (3.874954ms)
+✔ stale, overlapping, missing, readonly and invalid LSP edits fail before any mutation (0.997855ms)
+✔ LSP document changes and captured versions require an explicit host for resource operations (0.605293ms)
+✔ version change after preview blocks commit and an internal participant failure rolls back history (1.207691ms)
+✔ rename preview updates source without publishing then cancel restores exact bytes and undo state (0.857864ms)
+✔ diagnostic severities and semantic overlays are version checked and preserve lexical coverage (0.684893ms)
+✔ snippet placeholders, forward mirrors, variables, choices and final stop use UTF-16 offsets (2.171405ms)
+✔ nested snippet placeholders and escaped punctuation are retained (0.355395ms)
+✔ invalid, recursive, excessive and transform snippets fail explicitly (0.585573ms)
+✔ all builtin snippets expand and all required C# and surrounding templates are present (0.502158ms)
+✔ snippet primary edits and synchronous linked mirrors undo together through editor edit hooks (4.392435ms)
+✔ completion fuzzy matches prefer prefix, preserve match positions, support filters and use bounded MRU (0.431691ms)
+✔ signature nesting counts only commas in the active call and ignores literals (2.185616ms)
+✔ smart newline uses source EOL, indentation settings and a caret between empty braces (0.331129ms)
+✔ ordinary model switches retain selections, folding and scroll without transferring model ownership (5.203027ms)
+✔ a removed model cannot reinsert itself or overwrite folding state when its old view is disposed (0.555858ms)
+✔ an externally replaced model keeps its registry entry and cache when the previous view saves state (0.66318ms)
+✔ standalone explicit same-URI replacement discards state belonging to the previous model (0.626084ms)
+node:internal/modules/package_json_reader:301
+  throw new ERR_MODULE_NOT_FOUND(packageName, fileURLToPath(base), null);
+        ^
+
+Error [ERR_MODULE_NOT_FOUND]: Cannot find package '@sharpforge/bcl-collections' imported from /workspace/scratch/6b99131ca908/p16-integration/packages/framework/src/bcl-contracts.js
+    at Object.getPackageJSONURL (node:internal/modules/package_json_reader:301:9)
+    at packageResolve (node:internal/modules/esm/resolve:768:81)
+    at moduleResolve (node:internal/modules/esm/resolve:859:18)
+    at defaultResolve (node:internal/modules/esm/resolve:992:11)
+    at #cachedDefaultResolve (node:internal/modules/esm/loader:701:20)
+    at #resolveAndMaybeBlockOnLoaderThread (node:internal/modules/esm/loader:721:38)
+    at ModuleLoader.resolveSync (node:internal/modules/esm/loader:759:56)
+    at #resolve (node:internal/modules/esm/loader:683:17)
+    at ModuleLoader.getOrCreateModuleJob (node:internal/modules/esm/loader:603:35)
+    at ModuleJob.syncLink (node:internal/modules/esm/module_job:163:33) {
+  code: 'ERR_MODULE_NOT_FOUND'
+}
+
+Node.js v24.19.0
+✖ tests/a20-fix-all.test.js (157.003473ms)
+✔ incremental forward search begins at a large origin and repeats beyond 10000 matches before wrapping (13.415411ms)
+✔ incremental reverse search selects the nearest preceding match and wraps from the actual caret (1.322264ms)
+✔ extending and shortening an incremental query always returns to the opening origin (1.241402ms)
+✔ cancel restores the opening range, while accepting preserves the selected match without edits (0.801509ms)
+✔ an explicit navigation budget failure leaves the original selection and displays the limit (0.78285ms)
+✔ an exhausted scope and an empty query display their result without moving the caret (2.017613ms)
+✔ a delayed incremental result is discarded after edit (1.805633ms)
+✔ a delayed incremental result is discarded after replace model (0.659955ms)
+✔ a newer incremental query supersedes a delayed search without stale navigation or status (0.527065ms)
+✔ close cancels a pending search and prevents subsequent late results (0.412683ms)
+✔ dispose cancels a pending search and prevents subsequent late results (0.325441ms)
+✔ host navigation failures are handled inside the incremental request and reported to the user (0.395036ms)
+✔ closing during asynchronous host navigation passes cancellation and suppresses a stale status (0.368275ms)
+✔ same-document insight navigation uses the host preview and awaits focus restoration (2.982999ms)
+✔ cross-document insight navigation preserves host group options and restores focus after failure (0.765204ms)
+node:internal/modules/package_json_reader:301
+  throw new ERR_MODULE_NOT_FOUND(packageName, fileURLToPath(base), null);
+        ^
+
+Error [ERR_MODULE_NOT_FOUND]: Cannot find package '@sharpforge/bcl-collections' imported from /workspace/scratch/6b99131ca908/p16-integration/packages/framework/src/bcl-contracts.js
+    at Object.getPackageJSONURL (node:internal/modules/package_json_reader:301:9)
+    at packageResolve (node:internal/modules/esm/resolve:768:81)
+    at moduleResolve (node:internal/modules/esm/resolve:859:18)
+    at defaultResolve (node:internal/modules/esm/resolve:992:11)
+    at #cachedDefaultResolve (node:internal/modules/esm/loader:701:20)
+    at #resolveAndMaybeBlockOnLoaderThread (node:internal/modules/esm/loader:721:38)
+    at ModuleLoader.resolveSync (node:internal/modules/esm/loader:759:56)
+    at #resolve (node:internal/modules/esm/loader:683:17)
+    at ModuleLoader.getOrCreateModuleJob (node:internal/modules/esm/loader:603:35)
+    at ModuleJob.syncLink (node:internal/modules/esm/module_job:163:33) {
+  code: 'ERR_MODULE_NOT_FOUND'
+}
+
+Node.js v24.19.0
+✖ tests/a20-invocation-capture-ownership.test.js (86.525052ms)
+✔ A20 disk defaults still reject source files or save text exceeding 2000000 bytes (9.057139ms)
+✔ A20 explicit readDirectory limits permit >2MB source save and survive the read/write boundary (167.509444ms)
+✔ A20 FileList limits propagate to DiskWorkspace and total encoded bytes preflight every write (10.427374ms)
+✔ A20 UTF-16 limits count encoded bytes including BOM and retain encoding on save (1.357787ms)
+✔ A20 serialized saves reject a queued stale version and permission-time conflicts before writing (4.263779ms)
+node:internal/modules/package_json_reader:301
+  throw new ERR_MODULE_NOT_FOUND(packageName, fileURLToPath(base), null);
+        ^
+
+Error [ERR_MODULE_NOT_FOUND]: Cannot find package '@sharpforge/bcl-collections' imported from /workspace/scratch/6b99131ca908/p16-integration/packages/framework/src/bcl-contracts.js
+    at Object.getPackageJSONURL (node:internal/modules/package_json_reader:301:9)
+    at packageResolve (node:internal/modules/esm/resolve:768:81)
+    at moduleResolve (node:internal/modules/esm/resolve:859:18)
+    at defaultResolve (node:internal/modules/esm/resolve:992:11)
+    at #cachedDefaultResolve (node:internal/modules/esm/loader:701:20)
+    at #resolveAndMaybeBlockOnLoaderThread (node:internal/modules/esm/loader:721:38)
+    at ModuleLoader.resolveSync (node:internal/modules/esm/loader:759:56)
+    at #resolve (node:internal/modules/esm/loader:683:17)
+    at ModuleLoader.getOrCreateModuleJob (node:internal/modules/esm/loader:603:35)
+    at ModuleJob.syncLink (node:internal/modules/esm/module_job:163:33) {
+  code: 'ERR_MODULE_NOT_FOUND'
+}
+
+Node.js v24.19.0
+✖ tests/a20-method-completion.test.js (205.064548ms)
+✔ A20 prefixWorkspace rebases persistent source identity and leaves the input model caller-owned (8.624236ms)
+✔ A20 manifest extraction rebases source identities after validating all destination paths (4.776743ms)
+✔ A20 unchanged source paths preserve descriptors and model ownership without a rebase provider (4.745371ms)
+✔ A20 failed rebasing disposes only newly created models and preserves every original (3.053515ms)
+✔ A20 invalid manifest settings reject before any prepared source is rebased (2.397455ms)
+✔ A20 nested manifest rebasing keeps granted disk handles, source baselines and save versions aligned (12.627973ms)
+✔ A20 rebased disk sessions serialize with pending original saves and reject their stale baseline (12.555994ms)
+✔ A20 FileList→DiskWorkspace→ProjectSystem retains prepared descriptors and never reads lazy source text during discovery (10.19883ms)
+✔ A20 failed and cancelled FileList reads dispose their own completed models and publish no partial batch (5.25168ms)
+✔ A20 failed directory iteration disposes prepared models after traversal loses access (3.909937ms)
+✔ A20 prepared utf-8 source saves captured snapshots in chunks, preserving BOM, pairs and disk versions (26.204388ms)
+✔ A20 prepared utf-16le source saves captured snapshots in chunks, preserving BOM, pairs and disk versions (24.911863ms)
+✔ A20 prepared utf-16be source saves captured snapshots in chunks, preserving BOM, pairs and disk versions (22.177865ms)
+✔ A20 snapshot saves enforce encoded byte limits before write permission or stream creation (2.175511ms)
+✔ A20 prepared baseline checks detect permission-time external changes before any stream opens (6.998424ms)
+✔ A20 prepared save I/O failure aborts its stream and retains the prior baseline and disk version (7.290865ms)
+✔ A20 invalid source reader records are rejected and cleaned up without a lazy text read (2.026336ms)
+✔ A20 default binary-source handling remains intact while explicit reader limits reject before slicing (8.699339ms)
+✔ A20 public source encoding shares exact BOM/byte bounds and leaves stream commit ownership with the caller (3.690135ms)
+node:internal/modules/package_json_reader:301
+  throw new ERR_MODULE_NOT_FOUND(packageName, fileURLToPath(base), null);
+        ^
+
+Error [ERR_MODULE_NOT_FOUND]: Cannot find package '@sharpforge/bcl-collections' imported from /workspace/scratch/6b99131ca908/p16-integration/packages/framework/src/bcl-contracts.js
+    at Object.getPackageJSONURL (node:internal/modules/package_json_reader:301:9)
+    at packageResolve (node:internal/modules/esm/resolve:768:81)
+    at moduleResolve (node:internal/modules/esm/resolve:859:18)
+    at defaultResolve (node:internal/modules/esm/resolve:992:11)
+    at #cachedDefaultResolve (node:internal/modules/esm/loader:701:20)
+    at #resolveAndMaybeBlockOnLoaderThread (node:internal/modules/esm/loader:721:38)
+    at ModuleLoader.resolveSync (node:internal/modules/esm/loader:759:56)
+    at #resolve (node:internal/modules/esm/loader:683:17)
+    at ModuleLoader.getOrCreateModuleJob (node:internal/modules/esm/loader:603:35)
+    at ModuleJob.syncLink (node:internal/modules/esm/module_job:163:33) {
+  code: 'ERR_MODULE_NOT_FOUND'
+}
+
+Node.js v24.19.0
+✖ tests/a20-provider-transactions.test.js (212.734791ms)
+node:internal/modules/package_json_reader:301
+  throw new ERR_MODULE_NOT_FOUND(packageName, fileURLToPath(base), null);
+        ^
+
+Error [ERR_MODULE_NOT_FOUND]: Cannot find package '@sharpforge/bcl-collections' imported from /workspace/scratch/6b99131ca908/p16-integration/packages/framework/src/bcl-contracts.js
+    at Object.getPackageJSONURL (node:internal/modules/package_json_reader:301:9)
+    at packageResolve (node:internal/modules/esm/resolve:768:81)
+    at moduleResolve (node:internal/modules/esm/resolve:859:18)
+    at defaultResolve (node:internal/modules/esm/resolve:992:11)
+    at #cachedDefaultResolve (node:internal/modules/esm/loader:701:20)
+    at #resolveAndMaybeBlockOnLoaderThread (node:internal/modules/esm/loader:721:38)
+    at ModuleLoader.resolveSync (node:internal/modules/esm/loader:759:56)
+    at #resolve (node:internal/modules/esm/loader:683:17)
+    at ModuleLoader.getOrCreateModuleJob (node:internal/modules/esm/loader:603:35)
+    at ModuleJob.syncLink (node:internal/modules/esm/module_job:163:33) {
+  code: 'ERR_MODULE_NOT_FOUND'
+}
+
+Node.js v24.19.0
+✖ tests/a20-rename-preview-isolation.test.js (233.690933ms)
+✔ ReSharper-like is a native profile with stable identity and preserves the Visual Studio default (14.361578ms)
+✔ duplicate edits every selected range in one model transaction and undo restores primary direction (5.303848ms)
+✔ line duplication and joining use native CRLF-aware commands (2.503886ms)
+✔ line and shifted-punctuation block comment shortcuts change the real model and remain reversible (2.870028ms)
+✔ ReSharper move-line gestures preserve the original line terminators and undo history (2.163673ms)
+✔ language and selection gestures invoke the supported provider contract exactly once (2.514582ms)
+✔ navigation and browser-alternative chords preserve query arguments, URI and caret at the host seam (1.977542ms)
+✔ a language provider can complete formatting and rename through the same model and shared undo stack (2.759852ms)
+✔ absent snippet providers report explicit unavailability and never edit the document (3.528451ms)
+✔ read-only, composing, AltGraph and disposed views cannot perform ReSharper edits (1.242494ms)
+✔ the portable Mac mapping uses Meta and retains browser chord alternatives (2.978932ms)
+✔ profile switches preserve model identity, undo, selections, folds, bookmarks and modal state (7.256474ms)
+✔ A20 Save As without a utf-8 BOM retains the encoding on both later baseline checks (25.340525ms)
+✔ A20 utf-8 output refuses unpaired surrogates before closing or downloading (22.415363ms)
+✔ A20 utf-8 disk preflight rejects lossy captured and legacy input before opening a stream (2.554532ms)
+✔ A20 Save As without a utf-16le BOM retains the encoding on both later baseline checks (15.971846ms)
+✔ A20 utf-16le output refuses unpaired surrogates before closing or downloading (22.943219ms)
+✔ A20 utf-16le disk preflight rejects lossy captured and legacy input before opening a stream (2.112145ms)
+✔ A20 Save As without a utf-16be BOM retains the encoding on both later baseline checks (16.513744ms)
+✔ A20 utf-16be output refuses unpaired surrogates before closing or downloading (18.963267ms)
+✔ A20 utf-16be disk preflight rejects lossy captured and legacy input before opening a stream (2.205165ms)
+✔ A20 direct source output reports a boundary high surrogate and leaves abort/close ownership to its caller (0.79605ms)
+✔ A20 the default disk reader retains an explicitly known no-BOM UTF-16 baseline (7.02247ms)
+✔ A20 source output rejects NUL and an ambiguous leading BOM character without committing or downloading (1.407933ms)
+✔ A20 rebasing retains the old encoded-byte baseline when the prepared source has changed (2.149361ms)
+✔ A20 unchanged rebasing keeps a provably current byte baseline without reading text (1.582837ms)
+✔ A20 a no-option save of an actual 200 MiB line is synchronous; enabled tail trim commits once without a whole-text view (1270.179093ms)
+✔ A20 trailing-whitespace scans use bounded backward windows and yield before finishing a long logical line (461.743782ms)
+✔ A20 save normalization matches terminator/trim semantics while preserving significant whitespace and one undo transaction (132.720849ms)
+✔ A20 aborted normalization leaves source, selections, dirty marker and undo history untouched (2.112255ms)
+✔ A20 changed source, replaced model and changed text options reject private normalization before commit (2.475162ms)
+✔ A20 private preparation rejects invalid limits and excessive edits without applying a partial line batch (0.738804ms)
+✔ A20 prepared commits use the latest view selections and the shared contribution transaction (12.833985ms)
+✔ A20 trimming before a requested final newline retains a content-end caret before that new terminator (0.837953ms)
+✔ A20 a shared read-only transition during preparation never changes the buffer (11.044406ms)
+✔ A20 Save As starts the picker before asynchronous preparation and writes only its exact replacement capture (6.587495ms)
+✔ A20 dismissing a picker never runs a normalization callback (0.565533ms)
+✔ A20 cancellation or a preparation rejection cannot open a write stream or download (0.812155ms)
+✔ A20 a replacement capture must retain URI and a current, consistent version before write acquisition (0.912005ms)
+✔ A20 download fallback prepares exactly once and still cannot report a confirmed native save (3.298013ms)
+✔ single-match navigation reaches forward and backward origins beyond 10000 earlier matches (2.938731ms)
+✔ navigation finds nearest overlapping matches and wrapped spans crossing the original origin (0.542277ms)
+✔ scalar matches survive chunk seams and origins inside UTF-16 pairs in either direction (6.539853ms)
+✔ navigation retains literal case folding, Unicode word boundaries and merged selection exclusions (1.640554ms)
+✔ a near-end origin in a virtual 200 MiB ASCII source requests only bounded nearby slices (0.72271ms)
+✔ cooperative navigation holds an immutable source snapshot while the original buffer changes (1.960226ms)
+✔ step and elapsed limits fail explicitly before an incomplete scan could report wrapping or no match (0.67673ms)
+✔ navigation honors cancellation before scanning and between cooperative chunks (0.721307ms)
+✔ navigation rejects invalid bounds and oversized exclusions without reading unbounded source text (1.004836ms)
+✔ Add Next Occurrence advances after the primary range beyond 10000 matches and wraps around selected ranges (2.432949ms)
+✔ Add Next Occurrence skips existing ranges and preserves the explicit 10000-selection capacity (11.24025ms)
+✔ Add Next Occurrence excludes a candidate containing an existing empty caret (0.646424ms)
+node:internal/modules/package_json_reader:301
+  throw new ERR_MODULE_NOT_FOUND(packageName, fileURLToPath(base), null);
+        ^
+
+Error [ERR_MODULE_NOT_FOUND]: Cannot find package '@sharpforge/bcl-collections' imported from /workspace/scratch/6b99131ca908/p16-integration/packages/framework/src/bcl-contracts.js
+    at Object.getPackageJSONURL (node:internal/modules/package_json_reader:301:9)
+    at packageResolve (node:internal/modules/esm/resolve:768:81)
+    at moduleResolve (node:internal/modules/esm/resolve:859:18)
+    at defaultResolve (node:internal/modules/esm/resolve:992:11)
+    at #cachedDefaultResolve (node:internal/modules/esm/loader:701:20)
+    at #resolveAndMaybeBlockOnLoaderThread (node:internal/modules/esm/loader:721:38)
+    at ModuleLoader.resolveSync (node:internal/modules/esm/loader:759:56)
+    at #resolve (node:internal/modules/esm/loader:683:17)
+    at ModuleLoader.getOrCreateModuleJob (node:internal/modules/esm/loader:603:35)
+    at ModuleJob.syncLink (node:internal/modules/esm/module_job:163:33) {
+  code: 'ERR_MODULE_NOT_FOUND'
+}
+
+Node.js v24.19.0
+✖ tests/a20-semantic-providers.test.js (142.400064ms)
+node:internal/modules/package_json_reader:301
+  throw new ERR_MODULE_NOT_FOUND(packageName, fileURLToPath(base), null);
+        ^
+
+Error [ERR_MODULE_NOT_FOUND]: Cannot find package '@sharpforge/bcl-collections' imported from /workspace/scratch/6b99131ca908/p16-integration/packages/framework/src/bcl-contracts.js
+    at Object.getPackageJSONURL (node:internal/modules/package_json_reader:301:9)
+    at packageResolve (node:internal/modules/esm/resolve:768:81)
+    at moduleResolve (node:internal/modules/esm/resolve:859:18)
+    at defaultResolve (node:internal/modules/esm/resolve:992:11)
+    at #cachedDefaultResolve (node:internal/modules/esm/loader:701:20)
+    at #resolveAndMaybeBlockOnLoaderThread (node:internal/modules/esm/loader:721:38)
+    at ModuleLoader.resolveSync (node:internal/modules/esm/loader:759:56)
+    at #resolve (node:internal/modules/esm/loader:683:17)
+    at ModuleLoader.getOrCreateModuleJob (node:internal/modules/esm/loader:603:35)
+    at ModuleJob.syncLink (node:internal/modules/esm/module_job:163:33) {
+  code: 'ERR_MODULE_NOT_FOUND'
+}
+
+Node.js v24.19.0
+✖ tests/a20-signature-query-index.test.js (145.697357ms)
+✔ A20 prepared utf-8 ingress retains BOM and streaming decoder state at byte boundaries (176.033981ms)
+✔ A20 prepared utf-16le ingress retains BOM and streaming decoder state at byte boundaries (236.528358ms)
+✔ A20 prepared utf-16be ingress retains BOM and streaming decoder state at byte boundaries (233.407928ms)
+✔ A20 prepared empty and BOM-only files remain empty and editable without load history (13.263211ms)
+✔ A20 Studio reads >2 MB File inputs in bounded slices and retains a stable original snapshot (32.953675ms)
+✔ A20 source loading cancels before I/O and between chunks without returning a partial model (5.17849ms)
+✔ A20 invalid chunk bounds and resource limits fail before a File read (0.870012ms)
+✔ A20 malformed encodings, binary NUL, inconsistent chunks and I/O failures reject the staged load (12.64532ms)
+✔ A20 CodeEditor large-file policy adopts only a complete decoded model and detects disposed loads (43.684809ms)
+✔ Save As invokes the picker during the calling gesture before any source read (9.256059ms)
+✔ Save As preserves utf-8, BOM, split surrogate pairs, and CRLF (9.235978ms)
+✔ Save As preserves utf-16le, BOM, split surrogate pairs, and CRLF (7.659401ms)
+✔ Save As preserves utf-16be, BOM, split surrogate pairs, and CRLF (5.607857ms)
+✔ Save As writes the BOM for empty sources and supports captured legacy text data properties (4.604794ms)
+✔ Save As streams an actual 200 MiB ASCII source without retaining or reading whole text (7103.825101ms)
+✔ a cancelled native picker leaves the source unread and does not initiate an export (1.557509ms)
+✔ pre-cancellation skips the picker and cancellation while acquiring a stream aborts it unread (0.955852ms)
+✔ cancellation aborts a pending native write and never commits or writes a second chunk (1.587995ms)
+✔ a native save is not confirmed until close completes; late cancellation does not undo a committed save (4.712848ms)
+✔ a picker failure rejects, never exports, and aborts an acquired native stream (0.75609ms)
+✔ a createWritable failure rejects, never exports, and aborts an acquired native stream (0.206962ms)
+✔ a write failure rejects, never exports, and aborts an acquired native stream (0.287304ms)
+✔ a close failure rejects, never exports, and aborts an acquired native stream (0.877183ms)
+✔ encoded output caps, progress errors, and failed cleanup remain explicit failures (1.068241ms)
+✔ a byte cap after a completed chunk aborts staged output and does not close the destination (1.433602ms)
+✔ invalid native handles and streams report explicit errors, with cleanup when available (0.422607ms)
+✔ download fallback with no picker preserves binary encoding but cannot confirm a save (2.762926ms)
+✔ download fallback with read-only handle preserves binary encoding but cannot confirm a save (0.919968ms)
+✔ download fallback with unsupported writable preserves binary encoding but cannot confirm a save (0.692895ms)
+✔ download cancellation and unavailable hosts reject or cancel before falsely claiming an export (4.521649ms)
+✔ the browser fallback uses a binary Blob URL and removes its temporary download link (1.845313ms)
+✔ invalid source metadata and mutable or lazy-only sources fail before a picker opens (0.412222ms)
+✔ suggested names use URI basenames, including Windows paths and empty trailing components (3.947523ms)
+✔ a complete 501-file loose-source import stages without mutating existing sources (642.678681ms)
+✔ failed later source reads leave every existing input untouched and enforce encoding/path policy (1.606844ms)
+✔ legacy JSON project conversion retains settings and rejects invalid metadata before loading (1.184476ms)
+node:internal/modules/package_json_reader:301
+  throw new ERR_MODULE_NOT_FOUND(packageName, fileURLToPath(base), null);
+        ^
+
+Error [ERR_MODULE_NOT_FOUND]: Cannot find package '@sharpforge/bcl-collections' imported from /workspace/scratch/6b99131ca908/p16-integration/packages/framework/src/bcl-contracts.js
+    at Object.getPackageJSONURL (node:internal/modules/package_json_reader:301:9)
+    at packageResolve (node:internal/modules/esm/resolve:768:81)
+    at moduleResolve (node:internal/modules/esm/resolve:859:18)
+    at defaultResolve (node:internal/modules/esm/resolve:992:11)
+    at #cachedDefaultResolve (node:internal/modules/esm/loader:701:20)
+    at #resolveAndMaybeBlockOnLoaderThread (node:internal/modules/esm/loader:721:38)
+    at ModuleLoader.resolveSync (node:internal/modules/esm/loader:759:56)
+    at #resolve (node:internal/modules/esm/loader:683:17)
+    at ModuleLoader.getOrCreateModuleJob (node:internal/modules/esm/loader:603:35)
+    at ModuleJob.syncLink (node:internal/modules/esm/module_job:163:33) {
+  code: 'ERR_MODULE_NOT_FOUND'
+}
+
+Node.js v24.19.0
+✖ tests/a20-studio-streamed-workspace.test.js (213.968956ms)
+node:internal/modules/package_json_reader:301
+  throw new ERR_MODULE_NOT_FOUND(packageName, fileURLToPath(base), null);
+        ^
+
+Error [ERR_MODULE_NOT_FOUND]: Cannot find package '@sharpforge/bcl-collections' imported from /workspace/scratch/6b99131ca908/p16-integration/packages/framework/src/bcl-contracts.js
+    at Object.getPackageJSONURL (node:internal/modules/package_json_reader:301:9)
+    at packageResolve (node:internal/modules/esm/resolve:768:81)
+    at moduleResolve (node:internal/modules/esm/resolve:859:18)
+    at defaultResolve (node:internal/modules/esm/resolve:992:11)
+    at #cachedDefaultResolve (node:internal/modules/esm/loader:701:20)
+    at #resolveAndMaybeBlockOnLoaderThread (node:internal/modules/esm/loader:721:38)
+    at ModuleLoader.resolveSync (node:internal/modules/esm/loader:759:56)
+    at #resolve (node:internal/modules/esm/loader:683:17)
+    at ModuleLoader.getOrCreateModuleJob (node:internal/modules/esm/loader:603:35)
+    at ModuleJob.syncLink (node:internal/modules/esm/module_job:163:33) {
+  code: 'ERR_MODULE_NOT_FOUND'
+}
+
+Node.js v24.19.0
+✖ tests/a20-studio-workspace-budgets.test.js (195.913227ms)
+✔ SF-A20-T25: region wrapping preserves LF body endings and does not indent later lines (5.16572ms)
+✔ SF-A20-T25: block wrapping uses configured two-space indentation with LF (1.611901ms)
+✔ SF-A20-T25: region wrapping preserves CRLF body endings and does not indent later lines (0.653385ms)
+✔ SF-A20-T25: block wrapping uses configured two-space indentation with CRLF (0.528107ms)
+✔ SF-A20-T25: region wrapping preserves CR body endings and does not indent later lines (0.518122ms)
+✔ SF-A20-T25: block wrapping uses configured two-space indentation with CR (0.468387ms)
+✔ SF-A20-T25: mixed body terminators are unchanged while new wrapper lines use configured EOL (0.553354ms)
+✔ SF-A20-T25: region preserves existing body indentation with indentation excluded from the selection (0.680005ms)
+✔ SF-A20-T25: block templates use tabs and preserve relative body tabs (0.63604ms)
+✔ SF-A20-T25: each selected-text placeholder follows its own indentation context (0.690892ms)
+✔ SF-A20-T25: selected snippet-looking text and empty lines remain literal (0.400835ms)
+✔ SF-A20-T25: read-only surrounding does not modify text or history (0.234303ms)
+✔ SF-A20-T25: template EOL adaptation includes CR and preserves the existing public literal-indent contract (0.251489ms)
+✔ SF-A20-T25: contextual variable formatting preserves placeholder ranges and rejects invalid formatter output (0.667167ms)
+✔ B01: Visual Studio Ctrl+K Ctrl+S reaches Surround With once and applies a production snippet in one undo (24.473908ms)
+✔ B01: a missing Surround With provider reports its absence without opening code actions (3.875464ms)
+✔ SF-A20-T41: untabify resets visual columns at every LF line (2.48023ms)
+✔ SF-A20-T41: tabify converts every LF indentation without changing terminators (0.390058ms)
+✔ SF-A20-T41: untabify resets visual columns at every CRLF line (0.253212ms)
+✔ SF-A20-T41: tabify converts every CRLF indentation without changing terminators (0.117047ms)
+✔ SF-A20-T41: untabify resets visual columns at every CR line (0.138268ms)
+✔ SF-A20-T41: tabify converts every CR indentation without changing terminators (0.104328ms)
+✔ SF-A20-T41: tab conversion preserves mixed EOL, blank lines and tab columns in mixed indentation (0.191108ms)
+✔ SF-A20-T41: disjoint multiline selections convert in one undo transaction and restore selection state (4.199924ms)
+✔ SF-A20-T41: read-only tab conversion leaves the model and history unchanged (0.389307ms)
+✔ source-indexed lenses are unresolved and lazy, ordered, project-owned and never materialize document text (3.339646ms)
+✔ actual editor service command runs only the selected registry test through TaskCenter and refreshes real status (1.791361ms)
+✔ real failed and skipped outcomes resolve with their observed state and do not fabricate timing (0.643431ms)
+✔ forged or stale source, span, test and project identities cannot resolve or execute (1.176534ms)
+✔ linked documents require exact stable project ownership; a display label never selects a project (0.49694ms)
+✔ discovery invalidates moved locations and captures omitted versions only on actual rediscovery (0.434004ms)
+✔ cancelling a lens run preserves an independent Test Explorer run and reports actual cancellation (0.777102ms)
+✔ unregistering a real provider aborts its run, invalidates lenses and cannot leave a clickable old action (0.668949ms)
+✔ disposing CodeLens cancels only its runs, removes refresh listeners and rejects later requests (0.730492ms)
+✔ an optional operation wrapper cannot bypass provider execution or reuse its delayed run after completion (0.427705ms)
+✔ deferred execution revalidates source and discovery ownership before starting the test (0.274183ms)
+✔ provider errors still emit final invalidation and resolve to the actual failed registry state (0.373053ms)
+✔ pre-aborted requests and malformed commands fail before starting provider work (0.395627ms)
+✔ document bounds and the editor lens cap reject unusable or excessive discoveries explicitly (9.577693ms)
+✔ A20 multi-caret editing commits one undo group and grapheme delete preserves boundaries (4.274096ms)
+✔ A20 deletion boundaries and smart newline at EOF are valid no-ops or atomic edits (1.042392ms)
+✔ A20 overtype never replaces a newline and virtual space is materialized only by typing (0.644062ms)
+✔ A20 advanced transforms preserve multi-caret atomicity and Unicode case expansion (1.365509ms)
+✔ A20 editorconfig precedence changes indentation per path and save applies EOL trim/final newline (1.738551ms)
+✔ A20 clipboard ring bounds entries and drag move preserves one undo transaction (0.506875ms)
+✔ A20 bookmarks and unsaved/saved/reverted change marks follow undo (0.870022ms)
+✔ A20 chunk loading commits once and cancellation or malformed UTF-8 keeps original model (16.288539ms)
+✔ A20 advanced caret transforms and disjoint line moves preserve EOLs and undo selections (5.426474ms)
+✔ A20 advanced sorting preserves CRLF and read-only rejects transforms (0.634287ms)
+✔ A20 incremental syntax reconverges within 200 lines in a 100000-line document (490.785679ms)
+✔ A20 incremental syntax matches full lexing after multiline literal and comment edits (4.698987ms)
+✔ A20 folding validates nesting and expands edits in hidden ranges (0.854479ms)
+✔ A20 folding state persists per document and fallback handles regions comments usings (2.249442ms)
+✔ A20 folding ignores stale and disposed language responses (0.606605ms)
+✔ A20 typed folding provider cancels older requests and restores saved collapsed state after discovery (0.426173ms)
+✔ A20 native clipboard retains per-caret fragments, line-copy metadata and malformed payload fallback (4.975172ms)
+✔ A20 view model adapter follows document switches and keeps view selections independent (0.37815ms)
+✔ A20 synthetic composition commits once, cancels safely and cannot cross document identity (1.019378ms)
+✔ A20 rename preview refreshes token/layout caches without publishing or recording edits (1.878163ms)
+✔ A20 line layout round trips grapheme offsets, tabs, CJK and emoji (2.779912ms)
+✔ A20 visual line map handles 500000 lines with wraps, hidden intervals and inverse lookup (5.144628ms)
+✔ A20 wrap covers source without splitting extended graphemes (0.658863ms)
+✔ A20 viewport bounds materialized rows and folds preserve logical line numbering (26.946016ms)
+✔ A20 whitespace changes only decoration data and overview endpoints are exact (0.465963ms)
+✔ A20 leading and inline zones retain row mapping through repeated layout resets (1.16712ms)
+✔ A20 long-line fragments clamp stale horizontal scroll and use bounded text reads (1.63085ms)
+✔ Vim block deletion uses display columns across partial tabs, wide graphemes, combining text and short lines (21.486413ms)
+✔ Vim block change types on every selected row and retains virtual space in one history group (3.841363ms)
+▶ Vim block insert, append and end-of-line append honor their distinct short-line behavior
+  ✔ I ! Escape (2.129832ms)
+  ✔ A ! Escape (2.621763ms)
+  ✔ $ A ! Escape (1.553012ms)
+  ✔ D (1.516547ms)
+  ✔ C ! Escape (1.67087ms)
+✔ Vim block insert, append and end-of-line append honor their distinct short-line behavior (10.39062ms)
+✔ Vim block registers preserve rows on counted normal puts, visual puts and puts beyond the final line (3.080005ms)
+✔ Vim asynchronous clipboard keeps block metadata only while clipboard text still matches (1.746905ms)
+✔ Vim visual replacement splits tabs and fills virtual cells without splitting surrogate pairs (3.12983ms)
+▶ Vim block shifts use the left boundary, count, shift width and tab policy
+  ✔ 2 > spaces=true (1.365299ms)
+  ✔ < spaces=true (0.959747ms)
+  ✔ 2 > spaces=false (0.910513ms)
+✔ Vim block shifts use the left boundary, count, shift width and tab policy (3.689684ms)
+✔ Vim normal vertical moves preserve display column and block corner switches preserve the selected rectangle (1.309064ms)
+▶ Vim visual aliases operate on the selected text rather than normal-mode single-character ranges
+  ✔ x (0.897914ms)
+  ✔ U (1.499111ms)
+  ✔ u (0.798264ms)
+  ✔ ~ (0.692204ms)
+  ✔ r# (0.741198ms)
+✔ Vim visual aliases operate on the selected text rather than normal-mode single-character ranges (5.048333ms)
+✔ Vim block edits reject malformed metadata, excessive virtual replacement and locked models before mutation (1.152929ms)
+✔ selection normalization deterministically merges overlap and preserves primary direction and head alias (1.9095ms)
+✔ model stores operation undo independent of a 500 KB document and restores save points (44.907648ms)
+✔ five-caret typing is one undo step with exact selection restore; time/command coalescing has explicit boundaries (1.244466ms)
+✔ random operations undo and redo against retained string oracles (27.787024ms)
+✔ model prepares atomic workspace participants and rollback preserves document/history/selection/scroll (4.269659ms)
+✔ multi-caret commands add occurrences, remove newest and insert line-end carets (10.69613ms)
+✔ box typing splits partial tabs, uses wide visual columns and inserts virtual spaces (2.464126ms)
+✔ multicaret clipboard round-trips N fragments and rectangular pastes grow missing lines atomically (1.715667ms)
+✔ box deletion avoids manufacturing virtual spaces and insertion budgets reject before any model edit (0.553404ms)
+✔ explicit nested groups override per-command stops and selection jumps while preserving saved state identity (0.587046ms)
+▶ Vim counts multiply operators, motions and line ranges and each edit undoes as one operation
+  ✔ 2d2w (18.423013ms)
+  ✔ 2dd (2.578989ms)
+  ✔ Gdd (3.286736ms)
+  ✔ de (1.676058ms)
+  ✔ dw (2.424957ms)
+  ✔ D (1.359129ms)
+  ✔ J (1.213129ms)
+  ✔ gJ (1.530779ms)
+✔ Vim counts multiply operators, motions and line ranges and each edit undoes as one operation (34.134006ms)
+✔ Vim normal movements, finds and character deletes stay at grapheme and CRLF line boundaries (5.44402ms)
+▶ Vim word-end, backward-end, find/till, paragraph, line and document motions have expected offsets
+  ✔ 2w at 0 (0.804423ms)
+  ✔ ge at 8 (1.543788ms)
+  ✔ 2ge at 8 (0.553725ms)
+  ✔ 2e at 0 (0.561657ms)
+  ✔ W at 0 (0.525072ms)
+  ✔ fc at 0 (0.582589ms)
+  ✔ tc at 0 (0.604341ms)
+  ✔ Fa at 6 (0.574015ms)
+  ✔ tB at 0 (0.505984ms)
+  ✔ } at 0 (0.484691ms)
+  ✔ ^ at 5 (1.08081ms)
+  ✔ 0 at 6 (0.536809ms)
+  ✔ G at 0 (0.464941ms)
+  ✔ gg at 12 (0.719485ms)
+  ✔ 2G at 0 (0.508958ms)
+✔ Vim word-end, backward-end, find/till, paragraph, line and document motions have expected offsets (11.286971ms)
+▶ Vim change, insert, replace and open-line sessions share one explicit history group
+  ✔ c w N E W Escape (2.226728ms)
+  ✔ i a b c Escape (0.804313ms)
+  ✔ R X Y Escape (0.750712ms)
+  ✔ r 😀 (0.634207ms)
+  ✔ o X Escape (1.439761ms)
+  ✔ O X Escape (0.697222ms)
+  ✔ c c X Escape (0.891925ms)
+✔ Vim change, insert, replace and open-line sessions share one explicit history group (8.066184ms)
+▶ Vim text objects use half-open word, quote, nested bracket, sentence and paragraph ranges
+  ✔ diw (0.773396ms)
+  ✔ daw (0.64314ms)
+  ✔ di" (0.651983ms)
+  ✔ di( (0.759585ms)
+  ✔ 2da( (0.626124ms)
+  ✔ dis (0.572693ms)
+  ✔ dip (3.575812ms)
+✔ Vim text objects use half-open word, quote, nested bracket, sentence and paragraph ranges (8.26244ms)
+✔ Vim visual character, line and block operators edit the real multi-selection model (6.549798ms)
+✔ Vim visual put replaces the selected range instead of inserting beside it (1.16057ms)
+✔ Vim indent, case operators, matching pairs and repeated find use their native command ranges (2.543336ms)
+✔ Vim named, appended, yank, numbered and black-hole registers preserve their contracts (1.239359ms)
+✔ Vim marks track buffer edits, retain profile state and route cross-document jumps through the host (1.92271ms)
+✔ Vim macros, repeated changes and insertion replay use one undo group per replay (7.315742ms)
+✔ Vim search uses bounded regex with wraparound, counts and reverse direction (28.693581ms)
+✔ Ex substitution captures, line scopes, flags and bounded failures are atomic (3.451345ms)
+✔ Ex settings and workspace requests use the common host and honor failed saves (1.63793ms)
+✔ Vim denied system-register delete and paste leave the model unchanged (0.99489ms)
+✔ Vim delayed clipboard and prompt responses reject stale or disposed editor state (1.146799ms)
+✔ Vim read-only mode and browser composition preserve the text and undo state (1.186009ms)
+﹣ Unsupported target: shell commands and external filters (0.06625ms) # The browser editor has no shell or process-execution authority.
+﹣ Unsupported target: Vimscript and plugin loading (0.072329ms) # The native modal adapter is not a Vimscript interpreter or plugin runtime.
+﹣ Unsupported target: terminal buffers (0.036795ms) # Terminal emulation is outside the editor document and keymap scope.
+﹣ Unsupported target: native Vim regex extensions (0.02662ms) # Search uses the documented bounded regex engine rather than Vim magic expressions.
+﹣ Unsupported target: operating-system primary selection (0.027652ms) # The injected asynchronous clipboard API exposes ordinary clipboard text.
+﹣ Unsupported target: unlimited recursive macros (0.028362ms) # Native macros have explicit recursion, key-count and register-memory budgets.
+﹣ Unsupported target: desktop Vim executable parity (0.024608ms) # Node fixtures qualify this native model; no installed desktop Vim is used as an oracle.
+﹣ Unsupported target: browser key interception and assistive technology (0.024868ms) # Operating-system/browser key delivery and screen readers need browser/manual qualification.
+node:internal/modules/package_json_reader:301
+  throw new ERR_MODULE_NOT_FOUND(packageName, fileURLToPath(base), null);
+        ^
+
+Error [ERR_MODULE_NOT_FOUND]: Cannot find package '@sharpforge/bcl-collections' imported from /workspace/scratch/6b99131ca908/p16-integration/packages/framework/src/bcl-contracts.js
+    at Object.getPackageJSONURL (node:internal/modules/package_json_reader:301:9)
+    at packageResolve (node:internal/modules/esm/resolve:768:81)
+    at moduleResolve (node:internal/modules/esm/resolve:859:18)
+    at defaultResolve (node:internal/modules/esm/resolve:992:11)
+    at #cachedDefaultResolve (node:internal/modules/esm/loader:701:20)
+    at #resolveAndMaybeBlockOnLoaderThread (node:internal/modules/esm/loader:721:38)
+    at ModuleLoader.resolveSync (node:internal/modules/esm/loader:759:56)
+    at #resolve (node:internal/modules/esm/loader:683:17)
+    at ModuleLoader.getOrCreateModuleJob (node:internal/modules/esm/loader:603:35)
+    at ModuleJob.syncLink (node:internal/modules/esm/module_job:163:33) {
+  code: 'ERR_MODULE_NOT_FOUND'
+}
+
+Node.js v24.19.0
+✖ tests/release05-editor-refactoring.test.js (159.990605ms)
+node:internal/modules/package_json_reader:301
+  throw new ERR_MODULE_NOT_FOUND(packageName, fileURLToPath(base), null);
+        ^
+
+Error [ERR_MODULE_NOT_FOUND]: Cannot find package '@sharpforge/bcl-collections' imported from /workspace/scratch/6b99131ca908/p16-integration/packages/framework/src/bcl-contracts.js
+    at Object.getPackageJSONURL (node:internal/modules/package_json_reader:301:9)
+    at packageResolve (node:internal/modules/esm/resolve:768:81)
+    at moduleResolve (node:internal/modules/esm/resolve:859:18)
+    at defaultResolve (node:internal/modules/esm/resolve:992:11)
+    at #cachedDefaultResolve (node:internal/modules/esm/loader:701:20)
+    at #resolveAndMaybeBlockOnLoaderThread (node:internal/modules/esm/loader:721:38)
+    at ModuleLoader.resolveSync (node:internal/modules/esm/loader:759:56)
+    at #resolve (node:internal/modules/esm/loader:683:17)
+    at ModuleLoader.getOrCreateModuleJob (node:internal/modules/esm/loader:603:35)
+    at ModuleJob.syncLink (node:internal/modules/esm/module_job:163:33) {
+  code: 'ERR_MODULE_NOT_FOUND'
+}
+
+Node.js v24.19.0
+✖ tests/release06-editor-refactoring.test.js (214.833995ms)
+✔ piece table: 100000 deterministic mixed-EOL/UTF-16 edits match a string oracle (394.251392ms)
+✔ piece table: reading a 100 MB buffer boundary materializes only the requested slice (594.296799ms)
+✔ line index: CRLF seams, CR/LF splits and all coordinate boundaries remain exact (0.851594ms)
+✔ text buffer: multi-edits are one immutable version with inverse coordinates and exact ranges (1.031035ms)
+✔ text buffer: prepare/commit is atomic; overlap, stale versions and disposed changes fail explicitly (0.506645ms)
+✔ text buffer: indexed EOL metadata and UTF encodings preserve BOM, mixed endings and final newline (1.056203ms)
+✔ text buffer: start/middle/end edits in one million lines remain indexed and below a 2 ms p95 budget (92.799208ms)
+ℹ [{"region":"start","median":0.006509000000050946,"p95":0.009904999999889696},{"region":"middle","median":0.008332999999993262,"p95":0.016485000000102445},{"region":"end","median":0.004286999999976615,"p95":0.00772200000005796}]
+✔ cooperative preparation matches synchronous UTF-16 ranges and publishes only at its explicit commit (18.065448ms)
+✔ cooperative large inverse construction yields while retaining one model undo operation (170.150342ms)
+✔ cooperative preparation honors cancellation, disposal and snapshot identity without publishing partial changes (2.699582ms)
+✔ cooperative ordered edit input validates bounds, ordering, edit count and chunk controls (0.865185ms)
+✔ cooperative insertion normalizes CRLF across single-unit windows and keeps the one-version contract (36.005597ms)
+✔ adjacent deletions and a replacement retain an unambiguous inverse transaction (1.442235ms)
+✔ prepared model binding enforces ownership, current revisions and read-only state (0.701227ms)
+✔ Myers diff: randomized scripts round-trip and match the dynamic-programming minimum (44.107777ms)
+✔ line diff retains CRLF offsets and bounded character/word refinement (1.330798ms)
+✔ diff limits return an exact replacement fallback and cancellation remains explicit (0.943092ms)
+✔ merge3 automatically combines independent edits and identical changes (6.94765ms)
+✔ merge3 conflicts carry exact stable branch/base/result ranges and preserve dominant EOL (1.14026ms)
+✔ bounded regex matches the native safe-fixture oracle: a+/ (3.079384ms)
+✔ bounded regex matches the native safe-fixture oracle: a+?/ (0.392361ms)
+✔ bounded regex matches the native safe-fixture oracle: a{2,4}/ (0.359362ms)
+✔ bounded regex matches the native safe-fixture oracle: (?:ab|a)+/ (0.527606ms)
+✔ bounded regex matches the native safe-fixture oracle: (a|b)\1/ (0.489789ms)
+✔ bounded regex matches the native safe-fixture oracle: (?<word>\w+):(?<number>\d+)/ (0.56375ms)
+✔ bounded regex matches the native safe-fixture oracle: foo(?=bar)/ (0.224198ms)
+✔ bounded regex matches the native safe-fixture oracle: foo(?!bar)/ (0.25224ms)
+✔ bounded regex matches the native safe-fixture oracle: (?<=foo)bar/ (0.436388ms)
+✔ bounded regex matches the native safe-fixture oracle: (?<!foo)bar/ (0.392682ms)
+✔ bounded regex matches the native safe-fixture oracle: ^(\w+)\r?$/m (0.42395ms)
+✔ bounded regex matches the native safe-fixture oracle: a.*b/s (0.225591ms)
+✔ bounded regex matches the native safe-fixture oracle: [a-z]+/i (0.508436ms)
+✔ bounded regex matches the native safe-fixture oracle: [^0-9]+/ (0.273032ms)
+✔ bounded regex matches the native safe-fixture oracle: a*/ (0.195795ms)
+✔ bounded regex matches the native safe-fixture oracle: (?=(aa))/ (0.219751ms)
+✔ bounded regex matches the native safe-fixture oracle: (a?)*/ (0.233632ms)
+✔ bounded regex matches the native safe-fixture oracle: \p{L}+/ (1.254853ms)
+✔ bounded regex matches the native safe-fixture oracle: \u{1F600}/ (0.193732ms)
+✔ bounded regex matches the native safe-fixture oracle: \bfoo\b/ (0.407715ms)
+✔ bounded regex matches the native safe-fixture oracle: (a(b)?)+/ (0.157768ms)
+✔ literal search preserves Unicode folding, UTF-16 spans and whole-word semantics (1.723339ms)
+✔ regex replacement expands captures, names, escapes and multiline patterns atomically (1.054751ms)
+✔ invalid/unsupported patterns report stable positions instead of native engine errors (0.47019ms)
+✔ pathological regex is interrupted inside the interpreter and a process watchdog remains a second boundary (105.632129ms)
+✔ search cancellation, result limits and empty-match advancement are bounded (1.116935ms)
+✔ grapheme movement keeps clusters intact: "áb" (1.918123ms)
+✔ grapheme movement keeps clusters intact: "👩‍👩‍👧‍👦!" (0.428757ms)
+✔ grapheme movement keeps clusters intact: "🇵🇱🇯🇵x" (0.360033ms)
+✔ grapheme movement keeps clusters intact: "👍🏽👍" (0.148725ms)
+✔ grapheme movement keeps clusters intact: "\r\nX" (0.170037ms)
+✔ grapheme movement keeps clusters intact: "각각" (0.202215ms)
+✔ grapheme movement keeps clusters intact: "क्‍ष" (0.183106ms)
+✔ word/subword navigation handles acronym humps, digits, underscores and CJK (10.975384ms)
+✔ visual columns distinguish UTF-16 characters, graphemes, tabs, wide characters and virtual space (1.837541ms)
+✔ pinned segmentation passes every Unicode 16.0 extended-grapheme conformance row (13.209764ms)
+﹣ default and explicit native segmentation retain Unicode 16.0 host compatibility (0.304559ms) # The native comparison is pinned to a Unicode 16.0 Intl runtime
+✔ existing editor grapheme fixtures agree with the actual host Intl segmenter (9.234839ms)
+✔ chunked columns agree at every UTF-16 position, including split graphemes, pairs, tabs and CRLF (25.16693ms)
+✔ a 200 MiB single line yields, stays chunk bounded, and supports exact subsequent cached lookups (1817.393914ms)
+✔ an unfinished multi-megabyte combining cluster retains only numeric state across chunks (71.061083ms)
+✔ edits reuse the indexed prefix and invalidate changed answers, including surrogate and combining seams (338.427332ms)
+✔ unaffected line checkpoints relocate across earlier edits and joined or split lines never reuse wrong columns (1.540503ms)
+✔ model columns survive undo/redo, invalidate silent rollback, and retain shared read-only behavior (2.475292ms)
+✔ cancel, stale text and disposal reject promptly and release pending work (2.336924ms)
+✔ checkpoint, result, line and pending budgets are enforced without a document-length cutoff (4.345113ms)
+ℹ tests 573
+ℹ suites 0
+ℹ pass 551
+ℹ fail 13
+ℹ cancelled 0
+ℹ skipped 9
+ℹ todo 0
+ℹ duration_ms 25574.679018
+
+✖ failing tests:
+
+test at tests/a20-bound-signature-help.test.js:1:1
+✖ tests/a20-bound-signature-help.test.js (142.186533ms)
+  'test failed'
+
+test at tests/a20-editor-language-worker.test.js:1:1
+✖ tests/a20-editor-language-worker.test.js (150.322178ms)
+  'test failed'
+
+test at tests/a20-fix-all.test.js:1:1
+✖ tests/a20-fix-all.test.js (157.003473ms)
+  'test failed'
+
+test at tests/a20-invocation-capture-ownership.test.js:1:1
+✖ tests/a20-invocation-capture-ownership.test.js (86.525052ms)
+  'test failed'
+
+test at tests/a20-method-completion.test.js:1:1
+✖ tests/a20-method-completion.test.js (205.064548ms)
+  'test failed'
+
+test at tests/a20-provider-transactions.test.js:1:1
+✖ tests/a20-provider-transactions.test.js (212.734791ms)
+  'test failed'
+
+test at tests/a20-rename-preview-isolation.test.js:1:1
+✖ tests/a20-rename-preview-isolation.test.js (233.690933ms)
+  'test failed'
+
+test at tests/a20-semantic-providers.test.js:1:1
+✖ tests/a20-semantic-providers.test.js (142.400064ms)
+  'test failed'
+
+test at tests/a20-signature-query-index.test.js:1:1
+✖ tests/a20-signature-query-index.test.js (145.697357ms)
+  'test failed'
+
+test at tests/a20-studio-streamed-workspace.test.js:1:1
+✖ tests/a20-studio-streamed-workspace.test.js (213.968956ms)
+  'test failed'
+
+test at tests/a20-studio-workspace-budgets.test.js:1:1
+✖ tests/a20-studio-workspace-budgets.test.js (195.913227ms)
+  'test failed'
+
+test at tests/release05-editor-refactoring.test.js:1:1
+✖ tests/release05-editor-refactoring.test.js (159.990605ms)
+  'test failed'
+
+test at tests/release06-editor-refactoring.test.js:1:1
+✖ tests/release06-editor-refactoring.test.js (214.833995ms)
+  'test failed'
