@@ -19,7 +19,7 @@
  * the TypeDef flag; the others (StructLayout, DllImport, MethodImpl, ...) are skipped and listed as a limit.
  */
 import { encodeCustomAttribute, TypeAttributes, token } from '@sharpforge/cil';
-import { SymbolKind, RefKind } from '../../symbols/types.js';
+import { ArrayTypeSymbol, SymbolKind, RefKind } from '../../symbols/types.js';
 import { MethodKind } from '../../symbols/members.js';
 import { needsTypeSpec } from '../generics.js';
 import { fullNameOf, serializedTypeName } from './serialized-type-names.js';
