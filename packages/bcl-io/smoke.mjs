@@ -7,13 +7,22 @@ export async function smoke({api}) {
   api.registerIoModules({
     define(name, options) { types.set(name, options); },
     member(owner, name, parameters, result) { members.push({owner, name, parameters, result}); },
-    ctor(owner, parameters) { members.push({owner, name: '.ctor', parameters}); }
+    ctor(owner, parameters) { members.push({owner, name: '.ctor', parameters}); },
+    prop(owner, name, result) {
+      members.push({owner, name: 'get_' + name, parameters: [], result});
+      members.push({owner, name: 'set_' + name, parameters: [result], result: 'void'});
+    }
   });
   assert.equal(types.get('System.IO.TextReader').isAbstract, true);
   assert.equal(types.get('System.IO.StringReader').base, 'System.IO.TextReader');
-  assert.equal(members.length, 7);
+  assert.equal(types.get('System.IO.TextWriter').isAbstract, true);
+  assert.equal(types.get('System.IO.StringWriter').base, 'System.IO.TextWriter');
+  assert.equal(members.length, 20);
+  assert.equal(members.filter(member => /System\.IO\.(TextReader|StringReader)$/.test(member.owner)).length, 7);
   assert(members.some(member => member.name === 'ReadLine' && member.result === 'string'));
   assert.equal(api.ioModules[0], api.stringReaderModule);
+  assert.equal(api.ioModules[1], api.stringWriterModule);
+  assert(members.some(member => member.name === 'get_NewLine' && member.result === 'string'));
   const registry = createBclRegistry(api.ioModules);
   assert.deepEqual(registry.invoke({bclHost: {frameworkType: () => null}}, {owner: 'unknown'}, []), {handled: false});
 }
