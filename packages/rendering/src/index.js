@@ -13,3 +13,7 @@ export * from './media/colors.js';
 export * from './drawing/bounds.js';
 export * from './brushes/shadows.js';
 export * from './resources/resource-table.js';
+export * from './frame-scheduler.js';
+export * from './frame-metrics.js';
+export * from './dirty-regions.js';
+export * from './layer-cache.js';
