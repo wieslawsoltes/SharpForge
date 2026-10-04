@@ -6,6 +6,8 @@ import { distribution, environment, schemaVersion, validateOptions } from './com
 import { searchMarker } from './fixtures.js';
 
 export function loadPlaywright() {
+  const explicit = process.env.SHARPFORGE_PLAYWRIGHT_MODULE;
+  if (explicit) return createRequire(import.meta.url)(resolve(explicit));
   const roots = [process.env.CODEX_PRIMARY_RUNTIME_NODE_MODULES, process.cwd()].filter(Boolean);
   for (const root of roots) {
     try { return createRequire(resolve(root, 'sharpforge-benchmark.cjs'))('playwright'); }
