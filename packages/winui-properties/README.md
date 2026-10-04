@@ -25,3 +25,7 @@ Application-owned UI services for SharpForge. Instances have explicit lifetimes;
 ## Fluent theme resources
 
 `FluentResources` provides the pinned Light, Dark and HighContrast color and brush catalog. The resource inventory records its upstream revision; THIRD-PARTY-NOTICES.md contains the accompanying license. Accent ramps update live consumers, and `connectThemeHost` attaches browser theme and forced-color observations that disconnect with their explicit lease. HighContrast values use CSS system color tokens.
+
+## XAML syntax and literals
+
+`XamlXmlReader` reads positioned, namespace-aware XML with independent byte, node, depth and text budgets. `XamlSchema` provides a closed registered type/member allowlist and explicit namespace aliases. `convertXamlValue` converts documented scalar, enum and UI value literals and delegates optional geometry conversion to the host. Object construction, markup extensions and serialization are added by subsequent XAML writer batches.
