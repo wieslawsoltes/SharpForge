@@ -1,6 +1,7 @@
 import { WorkerClient } from './worker-client.js';
 import { WorkbenchEvents, abortError, requireIdentifier, workbenchError } from './state-events.js';
 import { defaultSessionSettings, sessionLaunchSettings, validateSessionSettings } from './session-settings.js';
+import { setDebugSources } from '../debug-sources.js';
 
 const liveStates = new Set(['created', 'launching', 'ready', 'running', 'waiting', 'paused']);
 const controlMethods = new Set([
@@ -23,7 +24,7 @@ export class AppSession {
     this.state = 'created';
     this.debug = null;
     this.debugging = true;
-    this.debugSources = new Map();
+    setDebugSources(this, []);
     this.watchResults = new Map();
     this.watches = [];
     this.frameId = null;
@@ -111,7 +112,7 @@ export class AppSession {
       this.expectedRuntimeSession = serial;
     }
     if (event.event === 'loaded') {
-      this.debugSources = new Map((event.sources ?? []).filter(source => typeof source.text === 'string').map(source => [source.uri, source.text]));
+      setDebugSources(this, event.sources);
       this.immediateHistory = [];
       this.emit('loaded', { event });
     } else if (event.event === 'output') {
@@ -166,7 +167,7 @@ export class AppSession {
     this.watchResults.clear();
     this.frameId = null;
     this.threadId = null;
-    this.debugSources.clear();
+    setDebugSources(this, []);
     this.emit('starting');
     const abort = () => {
       this.worker.restart(abortError(signal.reason));
