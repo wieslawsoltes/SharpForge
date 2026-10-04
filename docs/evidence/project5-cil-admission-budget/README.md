@@ -35,7 +35,8 @@ The existing registered CIL member, type and callback profiles are untouched.
 
 The seam makes one copy proportional to the option count at admission, and one
 when callback verification adds a new method. It adds no work per executed
-instruction. Performance has not been measured for this source checkpoint.
+instruction. Measurements of the standalone publication checkpoint are recorded
+below.
 
 ## Qualification
 
