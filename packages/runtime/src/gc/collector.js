@@ -34,6 +34,7 @@ export class Collector {
     this.cards = new CardTable(heap, options);
     this.marker = new IncrementalMarker(heap, this.blocks, this.cards);
     this.cycle = null;
+    this.completing = null;
     this.sweep = null;
     this.promotion = null;
     this.lastResult = null;
@@ -99,14 +100,16 @@ export class Collector {
   }
 
   /** Publish an already performed bulk store with one card update and precise reference-range shading. */
-  bulkWriteBarrier(ownerReference, start, count) {
+  bulkWriteBarrier(ownerReference, start, count, values = null) {
     const record = this.heap.get(ownerReference);
     const descriptor = record.descriptor;
     if (descriptor.scan === 'none' || count === 0) return;
     this.cards.dirty(ownerReference);
     if (!this.active || !this.marker.isMarked(ownerReference)) return;
     if (descriptor.scan === 'all') {
-      this.heap.visitEdgeRange(record, start, count, this.marker.barrierVisit);
+      if (values) {
+        for (let index = 0; index < count; index++) this.marker.barrierVisit(values[index]);
+      } else this.heap.visitEdgeRange(record, start, count, this.marker.barrierVisit);
       return;
     }
     const slots = descriptor.referenceSlots;
@@ -118,7 +121,9 @@ export class Collector {
       else high = middle;
     }
     const end = start + count;
-    for (let index = low; index < slots.length && slots[index] < end; index++) this.marker.barrierVisit(record.data[slots[index]]);
+    for (let index = low; index < slots.length && slots[index] < end; index++) {
+      this.marker.barrierVisit(values ? values[slots[index] - start] : record.data[slots[index]]);
+    }
   }
 
   rootBarrier(value) {
@@ -231,6 +236,7 @@ export class Collector {
   step(budget = 128) {
     validateBudget(budget);
     if (this.closed || this.heap.closed) throw new ManagedFault('ObjectDisposedException', 'Managed collector is disposed');
+    if (this.completing) return this.completionStatus();
     if (!this.active) return this.status(0);
     if (!this.heap.events.observersDeferred) {
       return this.heap.withRoots(this.cycle.extraRoots,
@@ -281,6 +287,7 @@ export class Collector {
     }
     this.heap.safepoints?.assertStopped();
     const roots = Array.from(extraRoots);
+    if (this.completing) return this.coalesceCompletion(roots, request);
     if (!request.blocking) {
       if (!this.active) return this.start(roots, request);
       this.retainAdditionalRoots(roots);
@@ -305,16 +312,55 @@ export class Collector {
     }
   }
 
+  completionStatus() {
+    return {phase: 'complete', state: 'complete', active: true, done: false, work: 0,
+      generation: this.completing.generation, result: null, coalesced: true};
+  }
+
+  coalesceCompletion(roots, request) {
+    const cycle = this.completing;
+    for (const value of roots) {
+      cycle.extraRoots.push(value);
+      this.rootBarrier(value);
+    }
+    this.heap.retainObserverRoots(roots);
+    const compactLarge = shouldCompactLarge(this.heap.settings, request);
+    if (cycle.generation < request.generation || request.compacting && !cycle.compactingCompletion
+      || compactLarge && !cycle.compactLargeCompletion) {
+      const previous = cycle.followupRequest;
+      cycle.followupRequest = {...request, generation: Math.max(request.generation, previous?.generation ?? 0),
+        compacting: request.compacting || !!previous?.compacting, compactLarge: compactLarge || !!previous?.compactLarge};
+    }
+    return this.completionStatus();
+  }
+
   complete() {
+    if (this.completing || !this.cycle) return;
     const cycle = this.cycle;
+    const previousPhase = cycle.phase;
+    this.completing = cycle;
+    cycle.phase = 'complete';
+    try {
+      this.finishCollection(cycle);
+    } finally {
+      this.completing = null;
+      if (this.cycle === cycle) cycle.phase = previousPhase;
+    }
+    if (cycle.followupRequest) this.start(cycle.extraRoots, cycle.followupRequest);
+  }
+
+  finishCollection(cycle) {
     cycle.survivingBytes = this.survivingBytes();
     const stats = this.heap.stats;
     const request = cycle.request;
     const compactLarge = shouldCompactLarge(this.heap.settings, request);
+    cycle.compactLargeCompletion = compactLarge;
     let compaction = null;
-    if (cycle.generation === 2 && (request.compacting || compactLarge)) {
+    cycle.compactingCompletion = cycle.generation === 2 && (request.compacting || compactLarge);
+    if (cycle.compactingCompletion) {
       const started = performance.now();
       compaction = this.heap.spaces?.compact?.({ generation: 2, includeLarge: compactLarge }) ?? null;
+      if (this.cycle !== cycle) throw new ManagedFault('InvalidOperationException', 'Collection changed during atomic completion');
       this.recordPause(performance.now() - started, 'sweepMs');
     }
     stats.collections++;
@@ -341,7 +387,6 @@ export class Collector {
     this.heap.settings?.onCollectionComplete?.(this.lastResult, request);
     this.heap.notifications?.afterCollection?.(this.lastResult, request);
     this.heap.events?.collectionEnd?.(this.lastResult, request);
-    if (cycle.followupRequest) this.start(cycle.extraRoots, cycle.followupRequest);
   }
 
   status(work) {
@@ -363,6 +408,9 @@ export class Collector {
   }
 
   snapshot() {
+    if (this.completing || this.cycle?.phase === 'complete') {
+      throw new ManagedFault('InvalidOperationException', 'Cannot snapshot during atomic collection completion');
+    }
     return { version: 1, budgets: this.budgets.snapshot(), blocks: this.blocks.snapshot(), cards: this.cards.snapshot(),
       marker: this.marker.snapshot(), cycle: this.cycle ? { ...this.cycle, request: { ...this.cycle.request },
         extraRoots: [...this.cycle.extraRoots], beforeBytes: [...this.cycle.beforeBytes],
@@ -370,7 +418,14 @@ export class Collector {
       sweep: this.sweep?.snapshot() ?? null, promotion: this.promotion?.snapshot() ?? null, lastResult: this.lastResult };
   }
 
+  assertRestorable(state) {
+    if (this.completing || state?.cycle?.phase === 'complete') {
+      throw new ManagedFault('InvalidOperationException', 'Cannot restore an atomic collection completion');
+    }
+  }
+
   restore(state) {
+    this.assertRestorable(state);
     this.budgets.restore(state?.budgets);
     this.blocks.restore(state?.blocks);
     this.cards.restore(state?.cards);

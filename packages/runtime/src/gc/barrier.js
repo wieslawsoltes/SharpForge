@@ -1,5 +1,6 @@
 import {ManagedFault} from './fault.js';
 import {isReference, rootReference} from './reference.js';
+import {storeHostPayload, copyHostPayload, fillHostPayload} from './host-payload-mutation.js';
 
 function validateValue(heap, value) {
   const reference = rootReference(value);
@@ -7,15 +8,16 @@ function validateValue(heap, value) {
   return reference ? 1 : 0;
 }
 
-function writableRecord(heap, reference, index) {
+function writableBinding(heap, reference, index) {
   const record = heap.get(reference);
   if (record.kind === 'string' || record.space === 'frozen') {
     throw new ManagedFault('InvalidOperationException', 'Managed storage is immutable');
   }
-  if (!Number.isInteger(index) || index < 0 || index >= record.data.length) {
+  const binding = heap.spaces.getBinding(record, false);
+  if (!Number.isInteger(index) || index < 0 || index >= binding.length) {
     throw new ManagedFault('IndexOutOfRangeException', 'Managed storage index is outside its bounds');
   }
-  return record;
+  return binding;
 }
 
 function range(length, start, count) {
@@ -39,15 +41,22 @@ export class HeapBarriers {
   }
 
   store(reference, index, value, site) {
-    const record = writableRecord(this.heap, reference, index);
-    const referenceCount = validateValue(this.heap, value);
-    const previous = this.onStore ? record.data[index] : undefined;
+    const binding = writableBinding(this.heap, reference, index);
+    const record = binding.record;
+    if (record.data !== binding.view || this.onStore) return storeHostPayload(this, binding, index, value, {site});
+    validateValue(this.heap, value);
     record.data[index] = value;
+    return this.publishStore(reference, index, value, site, undefined);
+  }
+
+  /** An already validated physical scalar store publishes the same single element barrier. */
+  publishStore(reference, index, value, site, previous) {
+    const child = rootReference(value);
     const omitted = this.disabledSites?.has(site) ?? false;
-    if (!omitted) this.heap.collector.writeBarrier(reference, rootReference(value) ?? value);
+    if (!omitted) this.heap.collector.writeBarrier(reference, child ?? value);
     this.heap.background?.writeBarrier(reference);
     this.stores++;
-    this.referenceStores += referenceCount;
+    this.referenceStores += child ? 1 : 0;
     this.heap.noteMutation();
     this.onStore?.({site, owner: reference, index, oldValue: previous, newValue: value, omitted});
     return value;
@@ -79,16 +88,20 @@ export class HeapBarriers {
   bulkCopy(destination, start, source, sourceStart, count) {
     const record = this.heap.get(destination);
     const sourceRecord = isReference(source) ? this.heap.get(source) : null;
-    const data = sourceRecord ? sourceRecord.data : source;
-    if (record.kind === 'string' || record.space === 'frozen' || typeof data?.length !== 'number') {
+    if (record.kind === 'string' || record.space === 'frozen') {
       throw new ManagedFault('ArgumentException', 'Mutable indexed storage required');
     }
-    range(record.data.length, start, count);
-    range(data.length, sourceStart, count);
+    const target = this.heap.spaces.getBinding(record, false);
+    const from = sourceRecord ? this.heap.spaces.getBinding(sourceRecord, false) : this.heap.spaces.views.get(source);
+    if (record.data !== target.view || !from || sourceRecord && sourceRecord.data !== from.view || this.onStore) {
+      return copyHostPayload(this, target, start, source, {sourceStart, count});
+    }
+    range(target.length, start, count);
+    range(from.length, sourceStart, count);
     let referenceStores = 0;
     // Primitive descriptors prove that validation cannot discover a managed reference.
-    if (sourceRecord?.descriptor.scan !== 'none') {
-      for (let offset = 0; offset < count; offset++) referenceStores += validateValue(this.heap, data[sourceStart + offset]);
+    if (from.record.descriptor.scan !== 'none') {
+      for (let offset = 0; offset < count; offset++) referenceStores += validateValue(this.heap, from.view[sourceStart + offset]);
     }
     this.heap.spaces.bulkCopy(destination, start, source, sourceStart, count);
     this.publishRange(destination, start, count, 'bulk-copy', {referenceStores});
@@ -98,7 +111,9 @@ export class HeapBarriers {
   fillArray(destination, start, count, value) {
     const record = this.heap.get(destination);
     if (record.kind !== 'array' || record.space === 'frozen') throw new ManagedFault('ArgumentException', 'Mutable array required');
-    range(record.data.length, start, count);
+    const binding = this.heap.spaces.getBinding(record, false);
+    if (record.data !== binding.view || this.onStore) return fillHostPayload(this, binding, start, count, value);
+    range(binding.length, start, count);
     const referenceStores = validateValue(this.heap, value) * count;
     this.heap.spaces.fillArray(destination, start, count, value);
     this.publishRange(destination, start, count, 'array-fill', {referenceStores});
@@ -106,15 +121,22 @@ export class HeapBarriers {
   }
 
   /** A spatial operation already performed the writes; publish one range to each observer. */
-  publishRange(destination, start, count, site, {barrier = true, referenceStores = 0} = {}) {
+  publishRange(destination, start, count, site, {
+    barrier = true, referenceStores = 0, values = null, notify = true, scalar = false, previous, value, partial = false
+  } = {}) {
     if (count === 0) return;
     const omitted = this.disabledSites?.has(site) ?? false;
-    if (barrier && !omitted) this.heap.collector.bulkWriteBarrier(destination, start, count);
+    if (barrier && !omitted) this.heap.collector.bulkWriteBarrier(destination, start, count, values);
     this.heap.background?.writeBarrier(destination);
     this.stores += count;
     this.referenceStores += referenceStores;
     this.heap.noteMutation();
-    this.onStore?.({site, owner: destination, index: start, count, omitted});
+    if (!this.onStore) return null;
+    const event = scalar ? {site, owner: destination, index: start, oldValue: previous, newValue: value, omitted}
+      : {site, owner: destination, index: start, count, omitted};
+    if (partial) event.partial = true;
+    if (notify) this.onStore(event);
+    return event;
   }
 
   snapshot() {
