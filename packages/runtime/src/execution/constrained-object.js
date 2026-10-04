@@ -25,6 +25,10 @@ export function constrainedInt32Plan(vm, token, descriptor) {
   return profileFor(vm).objects.int32(token, descriptor);
 }
 
+export function constrainedPrimitivePlan(vm, token, descriptor) {
+  return profileFor(vm).objects.primitive(token, descriptor);
+}
+
 export function constrainedObjectPlan(vm, table, descriptor) {
   if (!isAggregateType(table) || table.flags.nullable || table.genericArity ||
       table.typeArguments.length || table.containsGenericParameters) return null;

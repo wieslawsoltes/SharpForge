@@ -224,7 +224,7 @@ test('a throwing host formatter does not consume or rewrite the receiver', () =>
   }, {}, ThrowingVM);
 });
 
-for (const call of [{constraint: 'System.Int64'}, {constraint: 'System.UInt32'}, {constraint: 'System.Double'},
+for (const call of [{constraint: 'System.Single'}, {constraint: 'System.UInt32'}, {constraint: 'System.Double'},
   {constraint: 'spec'}, {member: 'GetHashCode'}, {member: 'Equals'}, {explicitThis: true}]) {
   test(`unsupported constrained signature ${JSON.stringify(call)} stays rejected`, () => {
     const report = verifyCilAssembly(fixture(call));

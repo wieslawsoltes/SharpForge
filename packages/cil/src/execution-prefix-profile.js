@@ -24,7 +24,7 @@ export class ExecutionPrefixProfile {
     const parameter = prefix.operand >>> 24 === 27 && /^!!?\d+$/.test(name);
     if (parameter) verifyGenericType(this.inspector, name, context);
     const declaration = resolveExecutionMethod(this.inspector, next.operand, context);
-    if (this.objects.int32(prefix.operand, declaration)) return null;
+    if (this.objects.primitive(prefix.operand, declaration)) return null;
     const type = this.types.get(prefix.operand);
     const base = type?.baseToken ? this.inspector.metadata.typeName(type.baseToken) : null;
     if (!parameter && (!type || !base || type.flags & 0x20 || base === 'System.Enum' || this.genericOwners.has(type.token))) {

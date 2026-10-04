@@ -21,15 +21,17 @@ A formatting exception or managed heap limit therefore preserves the operand
 and balances temporary roots. Prefix handling remains stateless, so ordinary
 pause/snapshot/restore and code-epoch invalidation need no new snapshot fields.
 
-`ConstrainedObjectProfile.int32(typeToken, descriptor)` is the shared metadata
-predicate for this leaf. It caches TypeRef classification and reuses
-`declaration(descriptor)` for exact Object.ToString shape and the raw ordinary
-HasThis header. Other primitives, concrete TypeSpecs, generic parameters,
-GetHashCode/Equals, ExplicitThis and source compiler lowering are not added.
+`ConstrainedObjectProfile.int32(typeToken, descriptor)` preserves its Int32-only
+boolean query. The shared `primitive(typeToken, descriptor)` query also supports
+the [Int64/UInt64 increment](runtime-constrained-int64-tostring.md). It caches
+TypeRef classification and reuses `declaration(descriptor)` for exact
+Object.ToString shape and the raw ordinary HasThis header. Other primitives,
+concrete TypeSpecs, generic parameters, GetHashCode/Equals, ExplicitThis and
+source compiler lowering are not added.
 This implements one bounded part of #1357, whose full acceptance remains open.
 
 The former primitive-rejection case in `a05-constrained-object-tostring.test.js`
-now uses Int64 because Int32 is intentionally supported. New guest metadata
+now uses Double because Int32, Int64 and UInt64 are intentionally supported. New guest metadata
 fixtures assert Int32 bounds, exactly one result allocation, storage locations,
 invalid/foreign/expired addresses, allocation/host faults, collection, snapshots
 and metadata replacement. Native/browser parity and performance qualification
