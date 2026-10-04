@@ -59,7 +59,9 @@ test('only calls after readiness use Wasm; the current frame stays interpreted w
     assert.equal(vm.instructions, baseline.instructions);
     assert.deepEqual(instructionProfile(vm), instructionProfile(baseline));
     assert(framePoolStatistics(vm).reused >= 2);
-    assert.deepEqual(Object.keys(vm).filter(key => !['binary', 'step'].includes(key)), keys);
+    delete vm.binary;
+    delete vm.step;
+    assert.deepEqual(Object.keys(vm), keys);
     assert.deepEqual(Object.keys(vm.snapshot()), snapshotKeys);
   } finally { vm.stop(); baseline.stop(); }
 });
@@ -146,8 +148,11 @@ test('restore drops selections and never treats an already running restored fram
     pauseAtCall(vm, 'Twice', 2);
     await settled(vm);
     pauseAtCall(vm, 'Twice', 3);
+    const observedBinary = vm.binary;
+    delete vm.binary; // Test instrumentation is not part of the registered snapshot schema.
     const snapshot = vm.snapshot(), attempts = wasmTieringStatistics(vm).compilationAttempts;
     vm.restore(snapshot);
+    vm.binary = observedBinary;
     assert.equal(wasmTieringStatistics(vm).compiledBytes, 0);
     assert.equal(wasmTieringStatistics(vm).methods.length, 0);
     const before = multiplications;
