@@ -37,3 +37,7 @@ Application-owned UI services for SharpForge. Instances have explicit lifetimes;
 ## Combined binding lifetime
 
 Observable and compiled bindings share the same property/observable foundation. This dependency join exposes the checked expression compiler, token tracker, phase scheduler and owner groups alongside BindingOperations. All three rewind fixtures retain their assertions; deferred XAML enters after template construction is available.
+
+## Deferred XAML binding
+
+x:Load reserves names without creating controls. FindName and compiled load bindings realize fresh elements, preserve placement and own per-activation cleanup. Factory, attachment and afterBuild share the host construction root scope; later activation does not depend on the original writer still running. Rewind restores identities without replaying factories, user callbacks or converters.
