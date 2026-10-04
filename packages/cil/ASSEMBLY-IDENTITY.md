@@ -34,8 +34,11 @@ not the host's culture registry. Invalid values produce `CilError`, surfaced as 
 the compiler. Defaults retain the existing version `0.2.0.0` and invariant culture.
 
 Canonical source replay reads identity from actual metadata instead of an embedded copy.
-Explicit definition and reference options are supported here. AssemblyVersion/AssemblyCulture
-source attributes remain separate work under SF-A03-T03.8. Signing is independent of version/culture.
+Explicit definition and reference options are supported here. SDK-generated `assemblyAttributes`
+also project a deterministic AssemblyVersion into the same row; a conflicting explicit version is
+rejected. Other supported generated string attributes retain their real CustomAttribute rows.
+Culture is normalized once by the metadata builder and canonical replay reads the actual row.
+General source attribute binding remains separate work. Signing is independent of version/culture.
 
 Native `AssemblyName.GetAssemblyName` on .NET 10.0.5 confirms all five fixture identities
 under `tests/fixtures/a03-assembly-definition`. Focused tests pass for both JavaScript engines
@@ -65,7 +68,6 @@ Native `Assembly.GetReferencedAssemblies` on .NET 10.0.5 confirms versions 9.0.0
 focused tests cover both JavaScript engines, malformed inputs and legacy defaults.
 
 The full-key flag follows the [AssemblyFlags.PublicKey contract](https://learn.microsoft.com/en-us/dotnet/api/system.reflection.assemblyflags).
-
 ## Friend assembly access
 
 `grantsInternalsAccess(declarations, identity)` is the shared compiler and CIL graph rule for

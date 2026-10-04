@@ -1,3 +1,4 @@
+import {analyzeProjectInstruction} from './analysis-project-references.js';
 import {enumTypes} from '@sharpforge/framework';
 import { EnumConvertBase, Op, Builtins, verifyImage, numericTypeName } from '@sharpforge/bytecode';
 import { CilError } from './binary.js';
@@ -7,7 +8,7 @@ export function analyzeMethod(image,method) {
   const count=method.code.length/3,states=Array(count),outputs=Array(count),queue=[[0,[]]],typeMap=new Map(image.types.map(t=>[t.name,t]));let maxStack=0;
   for(const h of method.handlers)queue.push([h.target,[]]);let work=0;
   function transfer(pc,input) {const stack=[...input],op=method.code[pc*3],a=method.code[pc*3+1],b=method.code[pc*3+2],pop=()=>{if(!stack.length)throw new CilError(`Stack underflow in ${method.qualifiedName}:${pc}`);return stack.pop();};
-    switch(op){
+    if (!analyzeProjectInstruction(image, op, {argument:a, count:b, stack, pop})) switch(op){
       case Op.ENUM:stack.push(enumTypes[a]);break;case Op.DELEGATE:pop();stack.push(image.constants[b]);break;case Op.CONST:stack.push(constantType(image.constants[a],b));break;
       case Op.LDLOC:stack.push(method.locals[a].type);break;case Op.LDSTATIC:stack.push(image.statics[a].type);break;
       case Op.STLOC:pop();stack.push(method.locals[a].type);break;case Op.STSTATIC:pop();stack.push(image.statics[a].type);break;

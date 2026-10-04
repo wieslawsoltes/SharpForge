@@ -126,6 +126,11 @@ Embedded data emission and bounded inspection are documented in [RESOURCES.md](.
 
 Win32 version, manifest and ICO emission is documented in [WIN32-RESOURCES.md](./WIN32-RESOURCES.md).
 
+The [project metadata contract](PROJECT-METADATA.md) documents generated assembly
+attributes, resources, source type/member visibility, named properties and canonical
+unlinked external-reference emission. It preserves the existing public emitter and
+loader result shapes.
+
 Opt-in [memory-prefix validation](PREFIX-MEMORY.md) checks volatile/unaligned/no. targets and duplicate prefixes.
 
 Opt-in [type-prefix validation](PREFIX-CONSTRAINED.md) checks constrained/readonly lexical targets and type-token row extents.

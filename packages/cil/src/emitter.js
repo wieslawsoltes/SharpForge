@@ -1,7 +1,12 @@
-import {emitScalarInstruction, emitScalarConversion, scalarMetadataType} from './scalar-emission.js';
+import {memberAccessFlags} from './metadata/member-definitions.js';
+import {emissionMethodDebugInfo} from './emit/method-debug-info.js';
+import {emitHelper, projectTypeInitializer} from './emit/helpers.js';
+import {createInstructionProfile, handlerLayout, isValue, prepareProjectReferenceMembers,
+  prepareProjectReferenceTypes, scalarMetadataType} from './emit/instruction-profile.js';
+import {emissionDebugProfile} from './emit/debug-profile.js';
 import { prepareEmission } from './emit/emission-context.js';
-import { emissionTypeDescriptors } from './emit/type-descriptors.js';
-import { debugPEOptions, finishEmittedPE } from './emit/pe-options.js';
+import {applyMemberDefinitions} from './emit/member-definitions.js';
+import { finishEmittedPE } from './emit/pe-options.js';
 import { EmitterSignatures } from './emitter-signatures.js';
 import { emitObjectBuiltin } from './object-builtin-mapping.js';
 import { emitPropertyMetadata } from './emitter-properties.js';
@@ -13,65 +18,56 @@ import { CilWriter } from './opcodes.js';
 import { TEXT_RVA, writeMethodBody } from './pe.js';
 import { analyzeMethod, constantType } from './analysis.js';
 const markerName='SharpForge.<>AllocationToken';
-const isValue=t=>(numericTypeId(t)!==undefined||t==='bool')||['enum','value'].includes(frameworkType(t)?.kind);
 const binaryCodes={'+':'add','-':'sub','*':'mul','/':'div','%':'rem','&':'and','|':'or','^':'xor','<<':'shl','>>':'shr'};
 /** Emits genuine PE/CLI metadata and CIL bodies. No JS source, host eval or embedded executable bytecode. */
 export function emitAssembly(image,options={}) { return emitAssemblyDetailed(image,options).bytes; }
 export function emitAssemblyDetailed(image,options={}) {
-  const {name,framework,embedSources,includeDebug,peOptions,metadata,started}=prepareEmission(image,options);
+  const {name,framework,embedSources,includeDebug,peOptions,metadata,typeDescriptors,memberDefinitions,started}=prepareEmission(image,options);
   const context={image,metadata,framework,typeTokens:new Map(),methodTokens:new Map(),fieldTokens:new Map(),staticTokens:[],allocTokens:new Map(),descriptors:[],helperToken:0};
   context.resolveType=t=>context.typeTokens.get(t)??metadata.typeRef(cliSystemName(scalarMetadataType(t)));
   const objectToken=context.resolveType('object');
-  const typeDescriptors=emissionTypeDescriptors(image,peOptions);
   typeDescriptors.forEach((t,index)=>{t.token=token(2,index+1);if(t.original)context.typeTokens.set(t.original.name,t.token);if(t.marker)context.typeTokens.set(markerName,t.token);});
+  prepareProjectReferenceTypes(context);
   context.signatures=new EmitterSignatures(context.typeTokens,context.resolveType);
+  prepareProjectReferenceMembers(context);
   // Preallocate all definition tokens before signatures or bodies can reference them.
   let nextMethod=1,nextField=1;
   for(const type of typeDescriptors){type.fieldStart=nextField;type.methodStart=nextMethod;type.fields=[];type.methods=[];
     if(type.original){for(const f of type.original.fields){const field={...f,token:token(4,nextField++),isStatic:false};context.fieldTokens.set(type.name+':'+f.index,field.token);type.fields.push(field);}image.statics.forEach((f,index)=>{if(f.name.slice(0,f.name.lastIndexOf('.'))===type.name){const field={...f,name:f.name.slice(f.name.lastIndexOf('.')+1),token:token(4,nextField++),isStatic:true};context.staticTokens[index]=field.token;type.fields.push(field);}});}
     const originals=image.methods.filter(m=>type.program?m.owner===null:type.original&&m.owner===type.name);
-    for(const method of originals){const d={token:token(6,nextMethod++),name:method.name==='.ctor'?'<ctor-body>':method.name,parameters:method.parameters,returnType:method.returnType,isStatic:method.isStatic,flags:method.implementsDispose?0x1e6:method.accessor?(0x880|(method.isStatic?0x10:0)|({public:6,private:1,protected:4,internal:3}[method.accessor.access]??1)):method.name==='.cctor'?0x1891:method.name==='.ctor'?0x83:(method.isStatic?0x96:0x86),original:method,type};context.methodTokens.set(method.id,d.token);type.methods.push(d);context.descriptors.push(d);}
+    for(const method of originals){const d={token:token(6,nextMethod++),name:method.name==='.ctor'?'<ctor-body>':method.name,parameters:method.parameters,returnType:method.returnType,isStatic:method.isStatic,flags:method.implementsDispose?0x1e6:method.accessor?(0x880|(method.isStatic?0x10:0)|(memberAccessFlags.get(method.accessor.access)??1)):method.name==='.cctor'?0x1891:method.name==='.ctor'?0x83:(method.isStatic?0x96:0x86),original:method,type};context.methodTokens.set(method.id,d.token);type.methods.push(d);context.descriptors.push(d);}
     if(type.program){const d={token:token(6,nextMethod++),name:'<assert>',parameters:[{name:'condition',type:'bool'},{name:'message',type:'string'}],returnType:'void',isStatic:true,flags:0x93,helper:'assert',type};type.methods.push(d);context.descriptors.push(d);context.helperToken=d.token;}
     if(type.original){const raw={token:token(6,nextMethod++),name:'.ctor',parameters:[{name:'allocation',type:markerName}],returnType:'void',isStatic:false,flags:0x1883,helper:'allocate',type};context.allocTokens.set(type.original.id,raw.token);type.methods.push(raw);context.descriptors.push(raw);
       const ctors=originals.filter(m=>m.name==='.ctor');for(const ctor of ctors.length?ctors:[null]){const d={token:token(6,nextMethod++),name:'.ctor',parameters:ctor?.parameters??[],returnType:'void',isStatic:false,flags:0x1886,helper:'constructor',ctor,type};type.methods.push(d);context.descriptors.push(d);}}
+    const initializer = projectTypeInitializer(context, type, originals, token(6, nextMethod), options);
+    if (initializer) { nextMethod++; type.methods.push(initializer); context.descriptors.push(initializer); }
   }
-  for(const t of typeDescriptors){metadata.add(2,[t.flags,metadata.string(t.name),metadata.string(t.namespace),t.name==='<Module>'?0:codedIndex('TypeDefOrRef',objectToken),t.fieldStart,t.methodStart]);for(const f of t.fields)metadata.add(4,[(f.isStatic?0x10:0)|(f.backing?1:6),metadata.string(f.name),metadata.blob(context.signatures.field(f.type))]);}
+  applyMemberDefinitions(context,typeDescriptors,memberDefinitions);
+  for(const t of typeDescriptors){metadata.add(2,[t.flags,metadata.string(t.metadataName??t.name),metadata.string(t.namespace),t.name==='<Module>'?0:codedIndex('TypeDefOrRef',objectToken),t.fieldStart,t.methodStart]);for(const f of t.fields)metadata.add(4,[f.flags??((f.isStatic?0x10:0)|(f.backing?1:6)),metadata.string(f.name),metadata.blob(context.signatures.field(f.type))]);}
   for(const t of typeDescriptors)for(const name of t.original?.interfaces??[])metadata.add(9,[t.token&0xffffff,codedIndex('TypeDefOrRef',context.resolveType(name))]);
   let paramRow=1;for(const d of context.descriptors){d.row=metadata.add(6,[0,0,d.flags,metadata.string(d.name),metadata.blob(context.signatures.method(d.returnType,d.parameters.map(p=>p.type),d.isStatic)),paramRow]);if(d.row!==d.token)throw new CilError('Method token allocation mismatch');for(let i=0;i<d.parameters.length;i++){metadata.add(8,[0,i+1,metadata.string(d.parameters[i].name)]);paramRow++;}}
   emitPropertyMetadata(typeDescriptors, context);
   context.external=(owner,name,returnType,parameters,isStatic=true)=>metadata.member(context.resolveType(owner),name,context.signatures.method(returnType,parameters,isStatic));
   const section=new Writer().zero(72),debugMethods=[];let ilBytes=0;
   for(const d of context.descriptors){section.pad();const rva=TEXT_RVA+section.length;metadata.rows[6][(d.token&0xffffff)-1][0]=rva;const body=d.original?emitMethod(context,d):emitHelper(context,d);d.body=body;ilBytes+=body.code.length;const sig=body.locals.length?metadata.add(17,[metadata.blob(context.signatures.locals(body.locals))]):0;section.bytes(writeMethodBody(body.code,sig,body.maxStack,body.handlers));
-    if(d.original)debugMethods.push({...(d.original.asyncRole?{asyncRole:d.original.asyncRole,asyncOrigin:d.original.asyncOrigin}:{}),id:d.original.id,token:d.token,name:d.original.name,qualifiedName:d.original.qualifiedName,...(d.original.sourceRange?{sourceRange:d.original.sourceRange}:{}),...(d.original.accessor?{accessor:d.original.accessor}:{}),locals:d.original.locals.map(({type,...local})=>local),spans:body.spans});
+    if(d.original)debugMethods.push(emissionMethodDebugInfo(d,body));
   }
-  debugMethods.sort((a,b)=>a.id-b.id);const debug={format:'SharpForge.CIL',version:1,framework,name,...debugPEOptions(peOptions),entry:image.entryPoint,...(image.outputKind==='library'?{outputKind:'library'}:{}),types:image.types.map(t=>({id:t.id,token:context.typeTokens.get(t.name),initializer:t.initializer})),statics:context.staticTokens,methods:debugMethods,sequencePoints:image.sequencePoints.map(p=>({...p,ilOffset:debugMethods[p.methodId].spans[p.offset][0],methodToken:context.methodTokens.get(p.methodId)})),sources:image.sources.map(s=>embedSources?s:({uri:s.uri,version:s.version}))};
+  const debug = emissionDebugProfile({image, framework, name, peOptions, context, debugMethods, embedSources,
+    projectOptions: {...options, memberDefinitions}, typeDescriptors});
   const {bytes,metadataBytes}=finishEmittedPE({section,metadata,debug,includeDebug,entryToken:image.outputKind==='library'?0:context.methodTokens.get(image.entryPoint),options:peOptions});
   return {bytes,debug:includeDebug?debug:null,symbolData:{...debug,sources:image.sources},metrics:{emitIlMs:performance.now()-started,assemblyBytes:bytes.length,ilBytes,metadataBytes,methods:context.descriptors.length},framework};
 }
-function emitHelper(c,d) {
-  const w=new CilWriter(),objectCtor=c.external('object','.ctor','void',[],false);let maxStack=2;
-  if(d.helper==='allocate')w.local('ldarg',0).op('call',objectCtor).op('ret');
-  else if(d.helper==='constructor'){w.local('ldarg',0).op('call',objectCtor);const init=d.type.original.initializer;if(init!==undefined)w.local('ldarg',0).op('call',c.methodTokens.get(init));if(d.ctor){w.local('ldarg',0);d.parameters.forEach((p,i)=>w.local('ldarg',i+1));w.op('call',c.methodTokens.get(d.ctor.id));maxStack=d.parameters.length+1;}w.op('ret');}
-  else if(d.helper==='assert'){w.local('ldarg',0);const at=w.length;w.op('brtrue',0).local('ldarg',1).op('newobj',c.external('Exception','.ctor','void',['string'],false)).op('throw');const done=w.length;w.op('ret');w.patch32(at+1,done-(at+5));}
-  return {code:w.finish(),locals:[],maxStack,handlers:[]};
-}
-function handlerLayout(method) {return method.handlers.map(h=>{if(h.kind==='finally')return {...h,handlerEndPc:h.handlerEnd};const after=method.code[h.end*3]===Op.JUMP?method.code[h.end*3+1]:null;if(after===null)throw new CilError('Unsupported exception region layout');const siblings=method.handlers.filter(other=>other.start===h.start&&other.end===h.end&&other.target>h.target).sort((a,b)=>a.target-b.target);return {...h,handlerEndPc:siblings[0]?.target??after};});}
 function emitMethod(c,d) {
   const m=d.original,analysis=analyzeMethod(c.image,m),w=new CilWriter(),locals=m.locals.map(l=>l.type),scratch=new Map(),spans=[],starts=[],patches=[],prefixes=new Map(),handlers=handlerLayout(m),n=m.code.length/3;
   const getScratch=(type,index=0)=>{type=type==='null'?'object':type;const key=type+':'+index;if(scratch.has(key))return scratch.get(key);const slot=locals.length;if(slot>=65535)throw new CilError('Scratch locals exceed CLI limit');locals.push(type);scratch.set(key,slot);return slot;};
   const args=m.parameters.length+(m.isStatic?0:1);for(let i=0;i<args;i++)w.local('ldarg',i).local('stloc',i);
-  const needs=(from,to)=>from!==to&&((numericTypeId(to)!==undefined&&numericTypeId(from)!==undefined)||(to==='object'&&isValue(from)));
-  function convert(from,to){if(from===to||from==='null')return;if(numericTypeId(to)!==undefined&&numericTypeId(from)!==undefined)emitScalarConversion(w,c,from,to);else if(to==='object'&&isValue(from))w.op('box',c.resolveType(from));}
-  function adapt(from,to){if(from.length!==to.length)throw new CilError('Invalid conversion stack shape');if(!from.some((t,i)=>needs(t,to[i])))return;let lowest=from.findIndex((t,i)=>needs(t,to[i]));const slots=new Map();for(let i=from.length-1;i>lowest;i--){const slot=getScratch(from[i],i);slots.set(i,slot);w.local('stloc',slot);}convert(from[lowest],to[lowest]);for(let i=lowest+1;i<from.length;i++){w.local('ldloc',slots.get(i));convert(from[i],to[i]);}}
-  function relative(name,target){const at=w.length;w.op(name,0);patches.push({at:at+1,end:at+5,target});}
-  function zones(pc){const result=[];handlers.forEach((h,i)=>{if(pc>=h.start&&pc<=h.end)result.push('t'+i);if(pc>=h.target&&pc<h.handlerEndPc)result.push('h'+i);});return result;}
-  function leaves(pc,target){const targetZones=zones(target);return zones(pc).some(z=>!targetZones.includes(z));}
+  const {needs,convert,adapt,relative,zones,leaves,emit}=createInstructionProfile(c,w,{getScratch,handlers,patches});
   const returnSlot=handlers.length&&m.returnType!=='void'?getScratch(m.returnType,999):null;
   for(let pc=0;pc<n;pc++){
     const handler=handlers.find(h=>h.target===pc);if(handler){prefixes.set(pc,w.length);if(handler.kind!=='finally')w.local('stloc',handler.slot);}
     const begin=w.length;starts[pc]=begin;const op=m.code[pc*3],a=m.code[pc*3+1],b=m.code[pc*3+2],input=analysis.states[pc];
     const top=input.at(-1),left=input.at(-2);let terminal=false;
-    if(!emitScalarInstruction(w,c,{op,a,b}))switch(op){
+    if (!emit(op,a,b,input)) switch(op){
       case Op.ENUM:w.integer(b).op('box',c.resolveType(enumTypes[a])).op('unbox.any',c.resolveType(enumTypes[a]));break;case Op.DELEGATE:{const type=c.image.constants[b];w.op('ldftn',c.methodTokens.get(a)).op('newobj',c.external(type,'.ctor','void',['object','nint'],false));break;}case Op.SEQ:w.op('nop');break;case Op.NOP:w.op('nop').op('nop');break;case Op.ENDFINALLY:w.op('endfinally');terminal=true;break;
       case Op.CONST:{const value=c.image.constants[a],type=constantType(value,b);if(type==='null')w.op('ldnull');else if(type==='string')w.op('ldstr',0x70000000|c.metadata.userString(value));else if(type==='double')w.op('ldc.r8',value);else {w.integer(value===true?1:value===false?0:value);if(type==='bool')w.op('conv.u1');}break;}
       case Op.LDLOC:w.local('ldloc',a);break;
