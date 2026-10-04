@@ -44,3 +44,4 @@ export * from './lfs-push.js';
 export * from './submodules.js';
 export * from './sparse.js';
 export * from './maintenance.js';
+export * from './archive.js';
