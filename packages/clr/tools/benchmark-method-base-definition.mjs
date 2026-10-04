@@ -2,11 +2,13 @@ import { performance } from 'node:perf_hooks';
 import { cpus } from 'node:os';
 import { readFileSync } from 'node:fs';
 import { baseContext } from '../../../tests/clr-methods-base-fixtures.js';
+import { functionPointerContext } from '../../../tests/clr-methods-base-function-pointer-fixtures.js';
 
 const fixture = process.argv[2] ?? new URL('../../../tests/fixtures/clr-method-base-definition/native-method-bases.json', import.meta.url);
 const native = JSON.parse(readFileSync(fixture));
 const image = Buffer.from(native.image, 'base64');
 const load = async () => {
+  if (process.argv[3] === '--function-pointers') return (await functionPointerContext().loadFromStream(image)).manifestModule;
   // PersistedAssemblyBuilder fixtures reference CoreLib instead of System.Runtime.
   const context = baseContext(process.argv[3] === '--corelib-intrinsics' ? { typeOptions: {
     resolveExternalType({ namespace, name }) { return context.types.intrinsic(`${namespace}.${name}`); },

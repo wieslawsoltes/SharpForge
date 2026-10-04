@@ -19,8 +19,16 @@
       "const": 1
     },
     "leafId": {
-      "type": "string",
-      "pattern": "^SF-A\\d{2}-[TB]\\d+(?:\\.\\d+)?$"
+      "anyOf": [
+        {
+          "type": "string",
+          "pattern": "^SF-A\\d{2}-[TB]\\d+(?:\\.\\d+)?$"
+        },
+        {
+          "type": "string",
+          "pattern": "^SF-R\\d{3}-[TB]\\d{2}(?:\\.\\d+)?$"
+        }
+      ]
     },
     "capabilityId": {
       "type": "string",

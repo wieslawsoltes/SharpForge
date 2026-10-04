@@ -22,11 +22,15 @@ function sortedNames(directory, accept) {
     .sort(byCodeUnit);
 }
 
-/** The programs of one feature directory as output fixtures; line ends are normalised so the pin hash is portable. */
-function programsOf(directory) {
+/**
+ * The programs of one feature directory as output fixtures; line ends are normalised so the pin hash is portable.
+ * A feature whose name ends in `-unsafe` is compiled with `/unsafe`.
+ */
+function programsOf(directory, featureName) {
+  const options = { referencesOnly: true, ...(featureName.endsWith('-unsafe') ? { allowUnsafe: true } : {}) };
   return sortedNames(directory, entry => entry.isFile() && entry.name.endsWith('.cs')).map(name => {
     const source = readFileSync(join(directory, name), 'utf8').replace(/\r\n?/g, '\n');
-    return out(name.slice(0, -'.cs'.length), source, { referencesOnly: true });
+    return out(name.slice(0, -'.cs'.length), source, options);
   });
 }
 
@@ -37,5 +41,5 @@ function programsOf(directory) {
  */
 export function programFamily(family) {
   const directory = join(fixturesDirectory, family);
-  return sortedNames(directory, entry => entry.isDirectory()).flatMap(name => feature(name, programsOf(join(directory, name))));
+  return sortedNames(directory, entry => entry.isDirectory()).flatMap(name => feature(name, programsOf(join(directory, name), name)));
 }

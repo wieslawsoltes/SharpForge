@@ -22,7 +22,7 @@ signatures remain lazy; no executable body is read.
 This is an explicit partial GetBaseDefinition contract. Class/covariant MethodImpl
 slot mappings, strict access checks,
 generic base instantiation, type generic variables,
-TypeSpec/open-generic modifier definitions, function-pointer signature types, array sizes and nonzero
+TypeSpec/open-generic modifier definitions, unsupported function-pointer headers, array sizes and nonzero
 lower bounds require later services and fail with `SFCLR012` when traversal needs them.
 Opaque host intrinsics have no method metadata: reaching one before locating a
 slot introduction also fails, so an Object override cannot silently become its
@@ -72,6 +72,44 @@ measured cold median/p95 159.417/435.875 µs and cached 122.750/173.375 ns.
 are retained. The existing cached result path is unchanged. These measurements
 establish no cause, noise, significance or general speedup claim; allocation
 counts and peak memory were not measured. No repeat or retuning was requested.
+
+Managed/default and unmanaged function-pointer signatures participate in the
+same bounded key recursion. Matching preserves the exact calling-convention
+header, parameter count, return type and each parameter type, including nested
+function pointers, supported modifiers and enclosing method generic positions.
+This follows [CoreCLR's function-pointer signature comparison](https://github.com/dotnet/runtime/blob/v10.0.5/src/coreclr/vm/siginfo.cpp#L3822).
+Function pointers with their own generic header, has-this/explicit-this, vararg
+or native-vararg conventions remain unsupported and report SFCLR012. The
+supported convention values are default, cdecl, stdcall, thiscall, fastcall and
+unmanaged (0, 1, 2, 3, 4 and 9). This compares metadata signatures; it does not
+invoke pointers, normalize ABI conventions or claim execution support.
+
+Function-pointer-bearing generic argument subtrees remain unsupported, including
+beneath arrays or nested generic instances. The existing scalar generic-argument
+context preserves both this and the modifier boundary without a second tree walk.
+No registry or persistent cache is added. Existing signature depth/node limits,
+context identity limits and cancellation checks bound recursive work; successful
+keys remain cached through the existing service.
+
+Function-pointer qualification used SDK 10.0.201/CoreCLR 10.0.5: twelve matching
+records and six independent three-level mismatches agree with native roots
+(managed/unmanaged, unmanaged convention, arity, return/parameter identity and
+nested signature). All 41 focused tests in ten files pass, with no skips. Native
+source/image hashes are mandatory and no emitted pointer is invoked. Syntax/static
+checks pass (3,575/3,571 modules); manifests contain 971 Node files and 37 browser
+scripts. Structure reports 271 existing findings, none in changed files. One
+limiter ran every local validation step serially with a 1 GiB Node heap cap.
+
+On shared Apple M3 Pro/darwin-arm64, Node 24.21.0, existing 23-method cold median
+was 166.334 → 164.042 µs and p95 378.750 → 352.334 µs. Cached median was
+147.541 → 156.208 ns (+8.667 ns/+5.874%) and p95 222.000 → 186.250 ns.
+The integration reviewer explicitly accepted the cached median increase for this
+complete capability. Cached lookup implementation is unchanged; that code fact
+does not establish causality. The new eighteen-method fixture measured cold
+median 300.750 µs / p95 1,009.250 µs and cached median 190.750 ns / p95 1,209.833 ns.
+All [600 raw samples and source-resolution evidence](benchmarks/function-pointer-overrides-node24.json)
+are retained. No reruns, causal/noise attribution or general speedup claim;
+allocation totals and peak memory remain unmeasured.
 
 Constrained generic methods now follow the same implicit class-slot walk. Each
 matched override edge compares method GenericParam constraints separately from
