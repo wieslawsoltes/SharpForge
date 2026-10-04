@@ -2,6 +2,7 @@ import {NameScope} from './name-scope.js';
 import {DisposableScope} from '../object-model/disposable-scope.js';
 import {ResourceFault} from '../resources/errors.js';
 import {ValueSource} from '../property/property-store.js';
+import {withUIConstruction} from '../object-model/construction-roots.js';
 
 /** Runtime adapters provide creation/parenting; templates own every subscription created for an instance. */
 export class TemplateContext {
@@ -117,6 +118,10 @@ export class FrameworkTemplate {
 
   instantiate(options = {}) {
     const context = options instanceof TemplateContext ? options : new TemplateContext(options);
+    return withUIConstruction(context.adapter, () => this.instantiateContext(context), [context.owner, context.data]);
+  }
+
+  instantiateContext(context) {
     context.signal?.throwIfAborted();
     let nodes = context.nodes;
     try {
