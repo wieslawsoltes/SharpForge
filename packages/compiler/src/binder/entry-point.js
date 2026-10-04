@@ -1,3 +1,4 @@
+import {DiagnosticId} from '../diagnostics/codes.js';
 import {taskResult} from '@sharpforge/framework';
 /**
  * Entry-point selection.
@@ -31,21 +32,21 @@ export function entryPointSignature(method){
  */
 export function findEntryPoint({methods,topLevel=[],isLibrary=false,mainTypeName=null,types=[],asyncMainAvailable=()=>true,root=null}){
   const diagnostics=[],report=(node,code,args=[])=>diagnostics.push({node:node??root,code,args});
-  if(topLevel.length>1)report(topLevel[1].file.root,'CS8802');
-  if(isLibrary){if(topLevel.length)report(topLevel[0].file.root,'CS8805');return {kind:null,method:null,topLevel:null,diagnostics};}
+  if(topLevel.length>1)report(topLevel[1].file.root,DiagnosticId.CS8802);
+  if(isLibrary){if(topLevel.length)report(topLevel[0].file.root,DiagnosticId.CS8805);return {kind:null,method:null,topLevel:null,diagnostics};}
   let candidates=methods.filter(m=>m.name==='Main'&&m.isStatic&&!m.synthetic);
-  if(topLevel.length){for(const m of candidates)report(m.node,'CS7022',[display(m)]);return {kind:'topLevel',method:null,topLevel:topLevel[0],diagnostics};}
+  if(topLevel.length){for(const m of candidates)report(m.node,DiagnosticId.CS7022,[display(m)]);return {kind:'topLevel',method:null,topLevel:topLevel[0],diagnostics};}
   if(mainTypeName){
-    const type=types.find(t=>t.fullName===mainTypeName||t.name===mainTypeName);if(!type){report(null,'CS1555',[mainTypeName]);return {kind:null,method:null,topLevel:null,diagnostics};}
+    const type=types.find(t=>t.fullName===mainTypeName||t.name===mainTypeName);if(!type){report(null,DiagnosticId.CS1555,[mainTypeName]);return {kind:null,method:null,topLevel:null,diagnostics};}
     candidates=candidates.filter(m=>m.owner===type);
-    if(!candidates.some(m=>entryPointSignature(m).valid)){report(type.node,'CS1558',[type.fullName??type.name]);return {kind:null,method:null,topLevel:null,diagnostics};}
+    if(!candidates.some(m=>entryPointSignature(m).valid)){report(type.node,DiagnosticId.CS1558,[type.fullName??type.name]);return {kind:null,method:null,topLevel:null,diagnostics};}
   }
   const viable=[];
-  for(const m of candidates){const signature=entryPointSignature(m);if(!signature.valid){report(m.node,'CS0028',[display(m)]);continue;}if(signature.isAsync&&!asyncMainAvailable(m.node))continue;viable.push({method:m,...signature});}
+  for(const m of candidates){const signature=entryPointSignature(m);if(!signature.valid){report(m.node,DiagnosticId.CS0028,[display(m)]);continue;}if(signature.isAsync&&!asyncMainAvailable(m.node))continue;viable.push({method:m,...signature});}
   // A synchronous Main wins over async ones, which are then reported as unused.
   let chosen=viable;const synchronous=viable.filter(v=>!v.isAsync);
-  if(synchronous.length&&synchronous.length<viable.length){for(const v of viable)if(v.isAsync)report(v.method.node,'CS8892',[display(v.method),display(synchronous[0].method)]);chosen=synchronous;}
-  if(!chosen.length){report(null,'CS5001');return {kind:null,method:null,topLevel:null,diagnostics};}
-  if(chosen.length>1){const ordered=[...chosen].sort((a,b)=>String(a.method.node.uri).localeCompare(String(b.method.node.uri))||a.method.node.start-b.method.node.start);report(ordered[0].method.node,'CS0017');return {kind:'main',method:ordered[0].method,topLevel:null,diagnostics};}
+  if(synchronous.length&&synchronous.length<viable.length){for(const v of viable)if(v.isAsync)report(v.method.node,DiagnosticId.CS8892,[display(v.method),display(synchronous[0].method)]);chosen=synchronous;}
+  if(!chosen.length){report(null,DiagnosticId.CS5001);return {kind:null,method:null,topLevel:null,diagnostics};}
+  if(chosen.length>1){const ordered=[...chosen].sort((a,b)=>String(a.method.node.uri).localeCompare(String(b.method.node.uri))||a.method.node.start-b.method.node.start);report(ordered[0].method.node,DiagnosticId.CS0017);return {kind:'main',method:ordered[0].method,topLevel:null,diagnostics};}
   return {kind:'main',method:chosen[0].method,topLevel:null,diagnostics};
 }

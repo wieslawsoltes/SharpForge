@@ -1,0 +1,257 @@
+{
+  "before": {
+    "label": "baseline-3aca665d",
+    "mode": "decode",
+    "node": "v24.21.0",
+    "platform": "darwin",
+    "architecture": "arm64",
+    "results": [
+      {
+        "count": 1000,
+        "inputBytes": 5001,
+        "resultBytes": 5001,
+        "medianMs": 0.35558400000000745,
+        "p95Ms": 0.3657079999999979,
+        "medianHeapDelta": 399512,
+        "samples": [
+          {
+            "ms": 0.3657079999999979,
+            "heapDelta": 399776
+          },
+          {
+            "ms": 0.34866699999999184,
+            "heapDelta": 399008
+          },
+          {
+            "ms": 0.35558400000000745,
+            "heapDelta": 399512
+          },
+          {
+            "ms": 0.3617500000000007,
+            "heapDelta": 678136
+          },
+          {
+            "ms": 0.10424999999999329,
+            "heapDelta": 366912
+          },
+          {
+            "ms": 0.08774999999999977,
+            "heapDelta": 366912
+          },
+          {
+            "ms": 0.3601670000000041,
+            "heapDelta": 400032
+          }
+        ]
+      },
+      {
+        "count": 10000,
+        "inputBytes": 50001,
+        "resultBytes": 50001,
+        "medianMs": 2.8568340000000205,
+        "p95Ms": 3.234499999999997,
+        "medianHeapDelta": 4145184,
+        "samples": [
+          {
+            "ms": 2.9297909999999945,
+            "heapDelta": 4149808
+          },
+          {
+            "ms": 2.3498749999999973,
+            "heapDelta": 2773968
+          },
+          {
+            "ms": 2.8568340000000205,
+            "heapDelta": 4145184
+          },
+          {
+            "ms": 2.327583000000004,
+            "heapDelta": 2776856
+          },
+          {
+            "ms": 3.0061249999999973,
+            "heapDelta": 4145408
+          },
+          {
+            "ms": 2.3738329999999905,
+            "heapDelta": 2778200
+          },
+          {
+            "ms": 3.234499999999997,
+            "heapDelta": 4149792
+          }
+        ]
+      }
+    ]
+  },
+  "after": {
+    "label": "extracted-decode",
+    "mode": "decode",
+    "node": "v24.21.0",
+    "platform": "darwin",
+    "architecture": "arm64",
+    "results": [
+      {
+        "count": 1000,
+        "inputBytes": 5001,
+        "resultBytes": 5001,
+        "medianMs": 0.291499999999985,
+        "p95Ms": 0.586416000000014,
+        "medianHeapDelta": 383760,
+        "samples": [
+          {
+            "ms": 0.586416000000014,
+            "heapDelta": 399776
+          },
+          {
+            "ms": 0.32083299999999326,
+            "heapDelta": 972384
+          },
+          {
+            "ms": 0.10699999999999932,
+            "heapDelta": 367488
+          },
+          {
+            "ms": 0.10508400000000506,
+            "heapDelta": 367208
+          },
+          {
+            "ms": 0.14066600000001017,
+            "heapDelta": 366920
+          },
+          {
+            "ms": 0.291499999999985,
+            "heapDelta": 383760
+          },
+          {
+            "ms": 0.30750000000000455,
+            "heapDelta": 384056
+          }
+        ]
+      },
+      {
+        "count": 10000,
+        "inputBytes": 50001,
+        "resultBytes": 50001,
+        "medianMs": 2.0544590000000085,
+        "p95Ms": 2.1859159999999918,
+        "medianHeapDelta": 2362800,
+        "samples": [
+          {
+            "ms": 2.0998749999999973,
+            "heapDelta": 4042848
+          },
+          {
+            "ms": 2.1859159999999918,
+            "heapDelta": 4051112
+          },
+          {
+            "ms": 2.0544590000000085,
+            "heapDelta": 2359096
+          },
+          {
+            "ms": 1.9866250000000036,
+            "heapDelta": 2362800
+          },
+          {
+            "ms": 1.8311669999999935,
+            "heapDelta": 2304608
+          },
+          {
+            "ms": 2.101124999999996,
+            "heapDelta": 2363696
+          },
+          {
+            "ms": 2.0196669999999983,
+            "heapDelta": 2358112
+          }
+        ]
+      }
+    ]
+  },
+  "layout": {
+    "label": "branch-layout",
+    "mode": "layout",
+    "node": "v24.21.0",
+    "platform": "darwin",
+    "architecture": "arm64",
+    "results": [
+      {
+        "count": 1000,
+        "inputBytes": 5001,
+        "resultBytes": 4809,
+        "medianMs": 3.5843749999999943,
+        "p95Ms": 3.766707999999994,
+        "medianHeapDelta": 580208,
+        "samples": [
+          {
+            "ms": 3.5843749999999943,
+            "heapDelta": 393352
+          },
+          {
+            "ms": 3.0409589999999866,
+            "heapDelta": 603208
+          },
+          {
+            "ms": 3.247917000000001,
+            "heapDelta": 570280
+          },
+          {
+            "ms": 3.0835419999999942,
+            "heapDelta": 581216
+          },
+          {
+            "ms": 3.766707999999994,
+            "heapDelta": 579456
+          },
+          {
+            "ms": 3.6193329999999833,
+            "heapDelta": 580208
+          },
+          {
+            "ms": 3.609624999999994,
+            "heapDelta": 580368
+          }
+        ]
+      },
+      {
+        "count": 10000,
+        "inputBytes": 50001,
+        "resultBytes": 49809,
+        "medianMs": 16.515625,
+        "p95Ms": 25.930165999999986,
+        "medianHeapDelta": 6935968,
+        "samples": [
+          {
+            "ms": 24.97079199999999,
+            "heapDelta": 6919752
+          },
+          {
+            "ms": 14.449749999999995,
+            "heapDelta": 6963344
+          },
+          {
+            "ms": 15.668833000000006,
+            "heapDelta": 6478808
+          },
+          {
+            "ms": 17.40391699999998,
+            "heapDelta": 6954128
+          },
+          {
+            "ms": 16.515625,
+            "heapDelta": 6960360
+          },
+          {
+            "ms": 25.930165999999986,
+            "heapDelta": 6930536
+          },
+          {
+            "ms": 14.452875000000006,
+            "heapDelta": 6935968
+          }
+        ]
+      }
+    ]
+  }
+}

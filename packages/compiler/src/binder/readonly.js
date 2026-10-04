@@ -10,6 +10,7 @@
  * readonly no copy is needed; otherwise the compiler calls it on a defensive copy - and warns CS8656 when the
  * receiver is `this` in a readonly member.
  */
+import {DiagnosticId} from '../diagnostics/codes.js';
 import { TypeKind, SymbolKind } from '../symbols/types.js';
 import { MethodKind } from '../symbols/members.js';
 import { classifyVariable } from './ref-kinds.js';
@@ -42,30 +43,30 @@ export function checkReadOnlyDeclarations(type) {
   if (type.typeKind !== TypeKind.Struct) {
     for (const m of type.getMembers()) {
       const onMethod = m.kind === SymbolKind.Method && m.isReadOnly && !m.isAccessor && m.methodKind === MethodKind.Ordinary;
-      if (onMethod || (m.kind === SymbolKind.Property && declaredReadOnly(m))) results.push({ code: 'CS0106', args: ['readonly'], member: m });
+      if (onMethod || (m.kind === SymbolKind.Property && declaredReadOnly(m))) results.push({ code: DiagnosticId.CS0106, args: ['readonly'], member: m });
     }
     return results;
   }
   for (const m of type.getMembers()) {
     if (m.isImplicitlyDeclared && !m.isPositional) continue;
     if (type.isReadOnly && !m.isStatic) {
-      if (m.kind === SymbolKind.Field && !m.isReadOnly) results.push({ code: 'CS8340', args: [], member: m });
+      if (m.kind === SymbolKind.Field && !m.isReadOnly) results.push({ code: DiagnosticId.CS8340, args: [], member: m });
       else if (m.kind === SymbolKind.Property && m.isAutoProperty && m.setMethod && !m.setMethod.isInitOnly)
-        results.push({ code: 'CS8341', args: [], member: m });
-      else if (m.kind === SymbolKind.Event && m.isFieldLike) results.push({ code: 'CS8342', args: [], member: m });
+        results.push({ code: DiagnosticId.CS8341, args: [], member: m });
+      else if (m.kind === SymbolKind.Event && m.isFieldLike) results.push({ code: DiagnosticId.CS8342, args: [], member: m });
     }
     if (m.kind === SymbolKind.Method && m.isReadOnly && !m.isAccessor) {
-      if (m.isStatic) results.push({ code: 'CS8657', args: [m.toDisplayString()], member: m });
-      else if (m.methodKind === MethodKind.Constructor) results.push({ code: 'CS0106', args: ['readonly'], member: m });
+      if (m.isStatic) results.push({ code: DiagnosticId.CS8657, args: [m.toDisplayString()], member: m });
+      else if (m.methodKind === MethodKind.Constructor) results.push({ code: DiagnosticId.CS0106, args: ['readonly'], member: m });
     }
     if (m.kind === SymbolKind.Property && declaredReadOnly(m)) {
       m.isReadOnlyMember = true;
-      if (m.isStatic) results.push({ code: 'CS8657', args: [m.toDisplayString()], member: m });
+      if (m.isStatic) results.push({ code: DiagnosticId.CS8657, args: [m.toDisplayString()], member: m });
       else if (m.isAutoProperty && m.setMethod && !m.setMethod.isInitOnly)
-        results.push({ code: 'CS8659', args: [m.toDisplayString()], member: m });
+        results.push({ code: DiagnosticId.CS8659, args: [m.toDisplayString()], member: m });
     } else if (m.kind === SymbolKind.Property && everyAccessorDeclaredReadOnly(m)) {
       // `readonly` on both accessors says what `readonly` on the property says.
-      results.push({ code: 'CS8661', args: [m.toDisplayString()], member: m });
+      results.push({ code: DiagnosticId.CS8661, args: [m.toDisplayString()], member: m });
     }
   }
   return results;
@@ -94,7 +95,7 @@ export function receiverPassing(receiver, member, context = {}) {
   const result = { mode: 'copy' };
   if (receiver.kind === 'This' && context.method && isEffectivelyReadOnly(context.method) && method && !method.isStatic)
     result.warning = {
-      code: 'CS8656',
+      code: DiagnosticId.CS8656,
       args: [
         method.methodKind === MethodKind.PropertyGet || method.methodKind === MethodKind.PropertySet
           ? member.toDisplayString() + (method.methodKind === MethodKind.PropertyGet ? '.get' : '.set')

@@ -13,6 +13,7 @@
  *       file-local), CS9053 (as its base class), CS9054 (nested), CS9052 (with an accessibility modifier) and
  *       CS9071 (declared twice in one file). The image class of such a type has a name unique to its file.
  */
+import {DiagnosticId} from '../diagnostics/codes.js';
 import { SymbolKind, TypeKind } from '../symbols/types.js';
 import { MethodKind } from '../symbols/members.js';
 import { Conversion } from '../conversions/classify.js';
@@ -36,13 +37,13 @@ export function checkCheckedOperators(type) {
     const isConversion = method.methodKind === MethodKind.Conversion,
       token = isConversion ? null : method.operatorToken;
     if (!isConversion && !checkable.has(token)) {
-      rows.push({ member: method, code: 'CS9023', args: [token], at: keyword });
+      rows.push({ member: method, code: DiagnosticId.CS9023, args: [token], at: keyword });
       continue;
     }
     if (!isCheckedOperatorName(method.name)) continue;
     const plain = uncheckedOperatorName(method.name);
     if (!operators.some(other => other.name === plain && sameOperatorSignature(other, method)))
-      rows.push({ member: method, code: 'CS9025', args: [method.toDisplayString()] });
+      rows.push({ member: method, code: DiagnosticId.CS9025, args: [method.toDisplayString()] });
   }
   return rows;
 }
@@ -88,14 +89,14 @@ export function checkFileLocalTypes(type) {
     display = type.toDisplayString(),
     words = type.modifierWords ?? [];
   if (words.includes('file')) {
-    if (type.containingType) rows.push({ member: type, code: 'CS9054', args: [display] });
-    else if (words.some(word => ['public', 'internal', 'private', 'protected'].includes(word))) rows.push({ member: type, code: 'CS9052', args: [display] });
+    if (type.containingType) rows.push({ member: type, code: DiagnosticId.CS9054, args: [display] });
+    else if (words.some(word => ['public', 'internal', 'private', 'protected'].includes(word))) rows.push({ member: type, code: DiagnosticId.CS9052, args: [display] });
   }
   if (isFileLocalType(type)) return rows;
-  if (isFileLocalType(type.baseType)) rows.push({ member: type, code: 'CS9053', args: [type.baseType.toDisplayString(), display] });
+  if (isFileLocalType(type.baseType)) rows.push({ member: type, code: DiagnosticId.CS9053, args: [type.baseType.toDisplayString(), display] });
   const report = (member, types) => {
     const used = types.map(fileLocalIn).find(Boolean);
-    if (used) rows.push({ member, code: 'CS9051', args: [used.toDisplayString(), display] });
+    if (used) rows.push({ member, code: DiagnosticId.CS9051, args: [used.toDisplayString(), display] });
   };
   if (type.typeKind === TypeKind.Delegate) {
     const invoke = type.delegateInvokeMethod;
@@ -171,11 +172,11 @@ export const CSharp11Rules = Base =>
         [plain, suffixed] = [find(text), find(text + 'Attribute')],
         candidates = [namedType(plain), namedType(suffixed)].filter(type => this.isAttributeClass(type));
       if (written.some(argument => argument.kind === 'OmittedTypeArgument')) {
-        this.report(uri, simple, 'CS7003');
+        this.report(uri, simple, DiagnosticId.CS7003);
         return null;
       }
       if (candidates.length > 1) {
-        this.report(uri, simple, 'CS1614', [text, ...candidates.map(type => type.toDisplayString())]);
+        this.report(uri, simple, DiagnosticId.CS1614, [text, ...candidates.map(type => type.toDisplayString())]);
         return null;
       }
       if (!candidates.length) {
@@ -188,8 +189,8 @@ export const CSharp11Rules = Base =>
       if (typeArguments.some(type => type.isErrorType())) return null;
       const open = typeArguments.find(hasTypeParameter),
         hidden = written.findIndex((argument, index) => unrepresentable(argument, typeArguments[index]));
-      if (open) this.report(uri, simple, 'CS8968', [open.toDisplayString()]);
-      if (hidden >= 0) this.report(uri, simple, 'CS8970', [written[hidden].toString().trim()]);
+      if (open) this.report(uri, simple, DiagnosticId.CS8968, [open.toDisplayString()]);
+      if (hidden >= 0) this.report(uri, simple, DiagnosticId.CS8970, [written[hidden].toString().trim()]);
       return this.checkAttributeClass(candidates[0].construct(...typeArguments), name, uri);
     }
     findTypeForAttribute(name, arity, container, scope) {
@@ -207,8 +208,8 @@ export const CSharp11Rules = Base =>
           .map(candidate => this.findTypeForAttribute(candidate, arity, container, scope)?.wrongArity)
           .find(type => type && (type.arity === 0 || this.isAttributeClass(type)));
       if (!wrong) return false;
-      if (wrong.arity) this.report(uri, simple, 'CS0305', [wrong.toDisplayString(), wrong.arity]);
-      else this.report(uri, simple, 'CS0308', [wrong.toDisplayString(), 'type']);
+      if (wrong.arity) this.report(uri, simple, DiagnosticId.CS0305, [wrong.toDisplayString(), wrong.arity]);
+      else this.report(uri, simple, DiagnosticId.CS0308, [wrong.toDisplayString(), 'type']);
       return true;
     }
   };

@@ -82,6 +82,9 @@ test('A02-T29 a compilation with errors binds and analyses every method but emit
 });
 test('A02-T29 verification rejects a pipeline that changes the image',()=>{
   const previous=globalThis.SHARPFORGE_PIPELINE_MISMATCH;let seen=null;globalThis.SHARPFORGE_PIPELINE_MISMATCH=m=>{seen=m;};
-  try{compile('int x;if(true)x=1;Console.WriteLine(x);',{pipeline:'verify'});assert(seen&&seen.tolerated,'a flow-only difference is tolerated and reported to the hook');assert.deepEqual(seen.onlyLegacy.map(k=>k.slice(0,6)),['CS0165']);assert.deepEqual(seen.success,[false,true]);}
+  // `implicitUsings:false` keeps `Console` out of the semantic analysis, so each pipeline's own flow diagnostics stand
+  // and differ; with `System` in scope the analysis gives both pipelines Roslyn's answer and there is nothing to report.
+  try{compile('int x;if(true)x=1;Console.WriteLine(x);',{pipeline:'verify'});assert.equal(seen,null,'both pipelines agree with Roslyn');
+    compile('int x;if(true)x=1;Console.WriteLine(x);',{pipeline:'verify',implicitUsings:false});assert(seen&&seen.tolerated,'a flow-only difference is tolerated and reported to the hook');assert.deepEqual(seen.onlyLegacy.map(k=>k.slice(0,6)),['CS0165']);assert.deepEqual(seen.success,[false,true]);}
   finally{globalThis.SHARPFORGE_PIPELINE_MISMATCH=previous;}
 });
