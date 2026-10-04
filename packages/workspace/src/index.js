@@ -10,3 +10,5 @@ export * from './recovery/schema.js';
 export * from './recovery/integrity.js';
 export * from './recovery/opfs-store.js';
 export * from './recovery/receipt-store.js';
+export * from './watch.js';
+export * from './watch-coalesce.js';
