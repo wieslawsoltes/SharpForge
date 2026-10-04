@@ -40,8 +40,8 @@ managed values. Each written array slot uses the ordinary write observer; the
 cursor commits after copying. Observer failures can leave completed buffer writes
 visible with the original cursor, and temporary roots are always released. GC and
 snapshots preserve both the buffer and reader state. The separate 56-row .NET
-capture executes as source bytecode and independently assembled CIL. Source Char
-syntax remains guarded; this slice does not add compiler capabilities.
+capture executes as source bytecode and independently assembled CIL. Bound and legacy
+source character-array calls have separate coverage on both VMs.
 
 StringWriter adds default and StringBuilder constructors, NewLine, Write(char/string),
 WriteLine()/WriteLine(string), Flush, Close, Dispose, GetStringBuilder and ToString.

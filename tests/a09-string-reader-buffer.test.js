@@ -4,7 +4,7 @@ import {readFileSync} from 'node:fs';
 import {createHash} from 'node:crypto';
 import {compileToIL} from '@sharpforge/compiler';
 import {findContracts} from '@sharpforge/framework';
-import {ManagedFault} from '@sharpforge/runtime';
+import {ManagedFault, VirtualMachine, CilVirtualMachine} from '@sharpforge/runtime';
 import {registerIoModules} from '@sharpforge/bcl-io';
 import {readerPlatform, readerContract, parentType} from './fixtures/text-reader/engines.js';
 import {bufferContract, bufferReader} from './fixtures/text-reader/buffer.js';
@@ -180,11 +180,19 @@ test('SF-A09-T03 buffer: native capture pins exact source bytes and UTF-16 bound
 });
 
 for (const pipeline of ['bound', 'legacy']) {
-  test(`SF-A09-T03 buffer ${pipeline}: source Char remains an explicit profile boundary`, () => {
-    const result = compileToIL('using System.IO; var reader = new StringReader("x"); ' +
-      "reader.Read(new char[] {'x'}, 0, 1);", {pipeline});
-    assert.equal(result.success, false);
-    assert(result.diagnostics.some(row => row.severity === 'error' && ['SF2003', 'SF2200'].includes(row.code)),
-      JSON.stringify(result.diagnostics));
-  });
+  for (const [engine, create] of Object.entries({source: program => new VirtualMachine(program.image), cil: program => new CilVirtualMachine(program.assembly)})) {
+    test(`SF-A09-T03 buffer ${pipeline} ${engine}: source character arrays preserve destination slices`, () => {
+      const program = compileToIL('using System.IO; var reader = new StringReader("xy"); ' +
+        "var buffer = new char[] {'a', 'b', 'c'};" +
+        'Console.WriteLine(reader.Read(buffer, 1, 1));Console.WriteLine((int)buffer[0]);Console.WriteLine((int)buffer[1]);' +
+        'Console.WriteLine(reader.ReadBlock(buffer, 2, 1));Console.WriteLine((int)buffer[2]);Console.WriteLine(reader.Peek());', {pipeline});
+      assert.equal(program.success, true, JSON.stringify(program.diagnostics));
+      const vm = create(program);
+      try {
+        const result = vm.run();
+        assert.equal(result.state, 'terminated', result.fault?.stack);
+        assert.equal(result.output, '1\n97\n120\n1\n121\n-1\n');
+      } finally {vm.stop();}
+    });
+  }
 }

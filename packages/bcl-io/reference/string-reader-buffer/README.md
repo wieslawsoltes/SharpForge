@@ -11,5 +11,5 @@ and ReadBlock with UTF-16 buffer slices. It retains integer code units, includin
 isolated and split surrogates, and records counts, resulting storage, subsequent
 Peek results, validation precedence and exact exception types. Source bytes and
 toolchain versions are pinned in the output. Tests execute identical inputs as
-source bytecode and independently assembled CIL; they do not claim source Char
-syntax support. Never replace native rows with runtime-produced expectations.
+source bytecode and independently assembled CIL. Separate bound and legacy source
+tests cover character-array calls on both VMs. Never replace native rows with runtime-produced expectations.
