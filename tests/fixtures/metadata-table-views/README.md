@@ -1,7 +1,9 @@
 # Metadata table views — SF-A13-T14 / #704
 
-Implementation and focused cases are prepared for the serialized validation slot.
-No passing runtime, native or browser qualification is claimed by this description.
+All 14 focused Node tests passed on Node 24.19.0, Linux x64, including the
+retained native SRM comparisons. The native capture used .NET SDK 10.0.201 and
+CoreCLR 10.0.5. The exact focused log and source hashes are retained in
+`qualification`. Browser and other operating-system qualification remain pending.
 
 `fixture.js` extends the established A03 structural metadata fixture to physically
 include all 45 CLI tables in a `#-` image, including the five pointer tables, EnC
@@ -53,7 +55,7 @@ PDB external references are numeric in the native output and explicitly `externa
 in the inspector. All four heaps have native handle/value/offset probes, including
 a string suffix, GUID zero/endian order, blob data and empty/Unicode user strings.
 
-The intended retained output is `native.json`. It records exact toolchain and host
+The retained output is `native.json`. It records exact toolchain and host
 facts, compiler/fixture/template/image hashes, compilation outcome, raw CoreCLR
 stdout/stderr and parsed observations. The normal native-reference test reads that
 file without compiling, running a subprocess or changing tracked files. A missing
@@ -61,7 +63,7 @@ reference is a failing gate, not a skipped qualification.
 
 ## Scheduled checks
 
-Register these three files in A13 and run them together through `scripts/limited.js`:
+These three files are registered in A13 and ran together through `scripts/limited.js`:
 
 - `tests/a13-14-metadata-tables.test.js`
 - `tests/a13-14-metadata-heaps.test.js`
