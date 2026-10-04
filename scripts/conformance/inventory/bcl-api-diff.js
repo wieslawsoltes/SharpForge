@@ -17,7 +17,7 @@ export function compareMembers(reference, { domain = 'BCL', specRevision = 'dotn
     let implemented = false, contractIds = [];
     if (member.kind === 'type') implemented = !!descriptor;
     else if (member.kind === 'method') {
-      const contract = methods.get(signatureKey({ ...member, owner }));
+      const contract = methods.get(signatureKey({ ...member, owner }, { requireHeader: true }));
       implemented = !!contract; contractIds = contract ? [contract.id] : [];
     } else if (member.kind === 'property') {
       const property = descriptor?.properties?.[member.name];
