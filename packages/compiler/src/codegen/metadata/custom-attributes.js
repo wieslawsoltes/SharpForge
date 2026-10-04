@@ -26,6 +26,7 @@ import { fullNameOf, serializedTypeName } from './serialized-type-names.js';
 import { descriptorOf, valueOf, fixedValues } from './attribute-values.js';
 import { returnAttributeSymbols, returnAttributeSource } from './attribute-targets.js';
 import { writeNullableAttributes } from './nullable-attributes.js';
+import { writeTupleRelationAttributes } from './tuple-relation-attributes.js';
 import { methodSignature, methodSymbolSignature } from './member-signatures.js';
 import { tupleElementNamesOf } from '../../binder/tuples.js';
 import { dynamicTransformFlags } from './dynamic-flags.js';
@@ -124,6 +125,7 @@ export class CustomAttributeWriter {
     }
     if (declaresExtensions) this.wellKnown(ASSEMBLY_TOKEN, EXTENSION);
     writeNullableAttributes(this);
+    writeTupleRelationAttributes(this);
   }
   method(planned) {
     const symbol = planned.symbol,
