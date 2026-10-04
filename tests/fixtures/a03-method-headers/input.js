@@ -16,7 +16,7 @@ export function nativeSource() {
       ...Array(Math.max(0, item.depth - 1)).fill('pop'), 'ret'];
     return `.method public static ${item.result === 'int' ? 'int32' : 'void'} ${item.name}() cil managed {
       .maxstack ${item.depth}
-      ${item.local ? '.locals init (int32 value)' : ''}
+      ${item.local ? ".locals init (int32 'value')" : ''}
       ${operations.join('\n      ')}
     }`;
   });

@@ -109,7 +109,8 @@ try {
   await writeFile(path.join(output, 'boundaries.il'), ilSource);
   capture.sourceSHA256['boundaries.il'] = sha256(ilSource);
   const native = path.join(output, 'NativeBoundaries.dll');
-  await run(ilasm, ['/dll', '/output:' + native, path.join(output, 'boundaries.il')]);
+  const prefix = process.platform === 'win32' ? '/' : '-';
+  await run(ilasm, [`${prefix}dll`, `${prefix}output:${native}`, path.join(output, 'boundaries.il')]);
   const productBoundaryPath = path.join(output, 'ProductBoundaries.dll');
   await writeFile(productBoundaryPath, productBoundaries());
   const nativeBoundaries = await observe('ilasm', native, toolchain, observer);
