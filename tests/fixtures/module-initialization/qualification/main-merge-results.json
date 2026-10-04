@@ -1,0 +1,26 @@
+{
+  "testedCommit": "06262d653d2435266089a4cb617078d4aeaada05",
+  "testedTree": "0e7398dd1e410e4738478605b56e7d93e5697cef",
+  "mergedMain": "892d06a7d312f4bcf94a25cf7eb0d282dc20edf2",
+  "tests": 114,
+  "passed": 114,
+  "failed": 0,
+  "skipped": 0,
+  "durationMs": 20957.135411,
+  "cleanBeforeAndAfter": true,
+  "logSha256": "44d176f14a8e3e68fa5200ea6586532a57229e4cbdff05ac421f2bebf1cad938",
+  "command": [
+    "node",
+    "scripts/limited.js",
+    "node",
+    "--test",
+    "--test-concurrency=1",
+    "tests/compiler-module-initialization.test.js",
+    "tests/compiler-module-initialization-native.test.js",
+    "tests/a05-21-static-init.test.js",
+    "tests/managed-il.test.js",
+    "tests/compiler-cil-emission-delegates-refs.test.js",
+    "tests/compiler-pin-selection.test.js"
+  ],
+  "scope": "Same six focused/native test files and the same explicit async VM negative boundary as the isolated114-test replay. Main merged because GitHub reported an actual allowlist conflict; all main manifest entries and exact module benchmark entry retained."
+}

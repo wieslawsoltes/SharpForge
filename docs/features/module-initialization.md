@@ -47,3 +47,13 @@ acceptance of the measured startup cost. It does not use a semantically failing 
 This batch qualifies module startup on the JavaScript CIL VM and native CLR. It does not claim new Rust/Wasm backend
 startup support or browser timing. The broader Project #5 item #653 also includes covariant returns and SkipLocalsInit;
 those require their own current acceptance replay and remain open. Canonical source-image loading is unchanged.
+
+## Replay after the required main merge
+
+GitHub reported an actual allowlist conflict against main `892d06a7`. After retaining every main entry and the exact
+module benchmark entry, merge `06262d653d2435266089a4cb617078d4aeaada05` passed the same **114/114 tests with zero
+skips** in 20.957 seconds, with tracked-clean checks before and after. The raw log and exact command/hash are in
+`main-merge-focused.log` and `main-merge-results.json` beside the earlier evidence. Existing main PDB/attribute
+lowering composed without source conflicts; this replay validates their combination with module startup. The paired
+performance measurements remain explicitly tied to their earlier exact candidate and were not relabeled as a
+measurement of unrelated main changes.
