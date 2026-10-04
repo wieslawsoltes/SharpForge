@@ -54,10 +54,25 @@ serial command is:
 node scripts/limited.js node --test tests/a19-call-hierarchy-ownership.test.js tests/a19-shell-tools.test.js tests/a19-studio-language-providers.test.js tests/a20-method-completion.test.js tests/a20-bound-signature-help.test.js tests/a20-editor-language-worker.test.js
 ```
 
-At this source-writing checkpoint that command is **pending**. No build, broad
-test cohort, browser, native or external compiler oracle has been run for this
-correction batch. Existing completed-scope evidence remains in
-`docs/a20-insight-coverage.json` and `docs/project16-implementation.json`; it does
-not stand in for qualification of these new changes. Invocation retention adds
-one analysis-owned record per bound invocation; no performance improvement or
-unmeasured overhead figure is claimed.
+The root coordinator ran the completed corrective scope at
+`4b1c02914fcb512e963eb1f824598548e5bcf884`: **305 tests, 302 passed, three
+failed, zero skipped**. Its retained log is `p16-correction-cohort.log` in the
+session qualification artifacts. All **19 new cases** in the three files above
+passed: seven Call Hierarchy, eight bound-signature and four completion cases.
+This is actual Node/provider evidence, not a browser or external-oracle pass.
+
+One older failure was in `tests/a19-studio-composition.test.js`: it required the
+worker parameters to omit `projectId`. That encoded the behavior intentionally
+changed by the Call Hierarchy ownership fix. The corrected assertion requires
+the exact Beta compiler service ID for both URI-routed and explicitly selected
+linked-file requests. Existing assertions that the selected build/startup
+project remains Alpha are preserved, with an additional startup assertion
+after the linked-file request. The affected-file rerun is **pending** at this
+checkpoint; the other two failing fixtures are owned by the shell lane.
+
+Existing completed-scope evidence remains in `docs/a20-insight-coverage.json`
+and `docs/project16-implementation.json`. Invocation retention adds one
+analysis-owned record per bound invocation. Its before/after measurement is
+prepared in `docs/a20-provider-binding-benchmark.md` and is **not yet executed**;
+no performance improvement or unmeasured overhead figure is claimed. No
+browser, native or external compiler oracle was run for this correction batch.

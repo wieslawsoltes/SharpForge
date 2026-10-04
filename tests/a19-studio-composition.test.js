@@ -36,9 +36,12 @@ test('Studio routes language requests by document membership without selecting b
   assert.equal(services.builds.activeId, alpha);
   assert.equal(state.startupProject, alpha);
   assert.equal(fake.workers[1].requests[0].params.files.some(file => file.uri === 'Alpha/Program.cs'), false);
+  assert.equal(fake.workers[1].requests[0].params.projectId, beta);
   await projects.request('hover', { uri: 'Shared.cs', projectId: beta });
-  assert.equal(Object.hasOwn(fake.workers[1].requests[1].params, 'projectId'), false);
+  // Prepared language results retain the actual worker owner for later navigation and lazy queries.
+  assert.equal(fake.workers[1].requests[1].params.projectId, beta);
   assert.equal(services.builds.activeId, alpha);
+  assert.equal(state.startupProject, alpha);
   state.active = 'Beta/Program.cs';
   assert.equal(projects.currentProjectId, beta);
   state.active = 'Shared.cs';
