@@ -6,17 +6,19 @@ import {invokeIntrinsic} from './intrinsics.js';
 import {stringFromChars} from './strings.js';
 import {cilCallFrame} from './call-frames.js';
 import {framePool} from './frame-pool.js';
-import {systemType,intrinsicDefinition,supportedDelegateCall} from '@sharpforge/cil';
+import {systemType,intrinsicDefinition,nullableElementType,supportedDelegateCall} from '@sharpforge/cil';
 import {invokeBoundDelegate} from './delegate-targets.js';
 import {ManagedFault} from '../heap.js';
 import {SUSPENDED} from '../platform.js';
 import {storageDefault} from './storage.js';
 import {ensureTypeInitialized} from './static-init.js';
+import {nullableValue, invokeNullableFramework} from './nullable.js';
 import {enterCilMethod} from './cil-method-events.js';
 import {verifiedMethod} from './token-cache.js';
 import {resolveVirtualTarget} from './inline-cache.js';
 
 export function call(vm,token,args,extra={}) {
+  vm.platform?.ui?.bindingServices?.events.beforeCall(token,args);
   if(vm.frames.length>=vm.options.maxFrames)throw new ManagedFault('StackOverflowException','Managed call depth exceeded');
   const method=instantiatedMethod(vm,token,extra.genericIdentity??null,extra.methodArguments??[]);
   if(!method.signature.isStatic)rejectValueInstance(vm,extra.genericIdentity??method.ownerToken);
@@ -63,7 +65,12 @@ export function invoke(vm,instruction) {
       caller.stack.push(invokeDecimal(vm,descriptor,args).value);return;
     }
     if(instruction.name==='newobj'&&descriptor.owner==='System.String'&&descriptor.signature.parameters.join(',')==='char[]'){caller.stack.push(stringFromChars(vm,args[0]));return;}
-    if(instruction.name==='newobj'&&contract){caller.stack.push(vm.platform.invoke(contract,args));return;}
+    if(instruction.name==='newobj'&&contract){caller.stack.push(invokeNullableFramework(vm,contract,args));return;}
+    if (instruction.name === 'newobj' && nullableElementType(descriptor.owner) &&
+      intrinsicDefinition(descriptor)?.implementation === 'nullableCtor') {
+      caller.stack.push(nullableValue(vm, descriptor.owner, true, args[0]));
+      return;
+    }
     if(instruction.name==='newobj') {
       let ref;
       if(target){const layout=vm.layout(genericIdentity??descriptor.ownerToken);ref=vm.heap.object(layout.methodTable,layout.fields.map(field=>storageDefault(vm,field.type)));}

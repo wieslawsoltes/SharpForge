@@ -2,10 +2,8 @@ import {Op} from '@sharpforge/bytecode';
 import {ManagedFault} from '../../heap.js';
 import {defaultValue,checkSourceArrayStore} from '../source-ops.js';
 import {sourceIndex} from '../source-numbers.js';
-
-function fieldDefault(field) {
-  return defaultValue(field.type,this);
-}
+import {createSourceObject} from '../source-objects.js';
+import {copyFrameworkValue} from '../framework-values.js';
 
 /** Preserve source object/array carriers and write-notification order. */
 export const sourceObjectHandlers = Object.freeze({
@@ -18,13 +16,13 @@ export const sourceObjectHandlers = Object.freeze({
     const value=vm.stack.pop(),ref=vm.stack.pop(),record=vm.heap.get(ref);
     if(a>=record.data.length||record.kind!=='object')throw new ManagedFault('InvalidProgramException','Invalid field index');
     const oldValue=record.data[a];
-    record.data[a]=value;
-    vm.stack.push(value);
-    vm.notifyWrite({kind:'field',handle:ref.h,generation:ref.g,index:a,value,oldValue});
+    const stored=vm.heap.withRoots([ref,value],()=>copyFrameworkValue(vm,value,record.methodTable.fields[a]?.type.name));
+    record.data[a]=stored;
+    vm.stack.push(stored);
+    vm.notifyWrite({kind:'field',handle:ref.h,generation:ref.g,index:a,value:stored,oldValue});
   },
   [Op.NEWOBJ](vm,frame,a) {
-    const type=vm.image.types[a];
-    vm.stack.push(vm.heap.object(type.name,type.fields.map(fieldDefault,vm)));
+    vm.stack.push(createSourceObject(vm,a));
   },
   [Op.NEWARR](vm,frame,a) {
     const length=sourceIndex(vm.stack.pop()),type=vm.image.constants[a],ref=vm.heap.array(type,length);
@@ -39,9 +37,10 @@ export const sourceObjectHandlers = Object.freeze({
     const value=vm.stack.pop(),index=sourceIndex(vm.stack.pop()),ref=vm.stack.pop();
     const record=vm.indexed(ref,index),oldValue=record.data[index];
     checkSourceArrayStore(vm,record,value);
-    record.data[index]=value;
-    vm.stack.push(value);
-    vm.notifyWrite({kind:'array',handle:ref.h,generation:ref.g,index,value,oldValue});
+    const stored=vm.heap.withRoots([ref,value],()=>copyFrameworkValue(vm,value,record.methodTable.elementType.name));
+    record.data[index]=stored;
+    vm.stack.push(stored);
+    vm.notifyWrite({kind:'array',handle:ref.h,generation:ref.g,index,value:stored,oldValue});
   },
   [Op.LENGTH](vm) {
     const record=vm.heap.get(vm.stack.pop());

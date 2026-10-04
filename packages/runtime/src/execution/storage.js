@@ -3,6 +3,9 @@ import {resolveCallType} from './generic-calls.js';
 import {ManagedFault} from '../heap.js';
 import {defaults,storage as numericStorage} from './numeric-ops.js';
 import {enumInfo,enumUnderlying} from './enums.js';
+import {nullableElementType} from '@sharpforge/cil';
+import {nullableValue, requireNullable} from './nullable.js';
+import {copyFrameworkValue, isFrameworkValueType} from './framework-values.js';
 
 /** Physical static keys can include a closed generic owner and a thread identity. */
 export function staticStorageType(vm, key) {
@@ -15,6 +18,7 @@ export function staticStorageType(vm, key) {
 /** CLI enum storage has the width of value__, while its header keeps enum identity. */
 export function storageDefault(vm,type) {
   if(vm.inspector)type=resolveCallType(vm,type);
+  if(nullableElementType(type))return nullableValue(vm,type,false);
   const table=vm.inspector?vm.typeSystem.table(type):null;
   if(table&&isAggregateType(table))return createValue(vm,table);
   const info=enumInfo(vm,type);
@@ -23,6 +27,8 @@ export function storageDefault(vm,type) {
 export function storageValue(vm,value,type,numericContext) {
   numericContext ??= vm.options;
   if(vm.inspector)type=resolveCallType(vm,type);
+  if(nullableElementType(type))return requireNullable(vm,value,type);
+  if(isFrameworkValueType(type))return copyFrameworkValue(vm,value,type);
   const table=vm.inspector?vm.typeSystem.table(type):null;
   if(table&&isAggregateType(table)) {
     if(value===null)throw new ManagedFault('InvalidCastException','A struct value is required');
