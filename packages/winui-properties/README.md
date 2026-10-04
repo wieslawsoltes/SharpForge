@@ -1,21 +1,11 @@
 # @sharpforge/winui-properties
 
-Framework-independent UI services with explicit application lifetimes.
+Application-owned UI services for SharpForge. Instances have explicit lifetimes; the package has no external runtime dependencies or import-time registrations.
 
-## Member adapter registry
+## UI member adapters
 
-`UIExtensionRegistry` owns one application's managed/JavaScript member adapters.
-Register an owner, member kind, name and optional arity with a synchronous handler.
-Resolution uses exact arity before wildcard arity, then the host's declared base
-chain. The host supplies canonical type names and base-type lookup; the registry
-never imports or initializes a runtime, browser, renderer or framework registry.
+`UIExtensionRegistry` registers constructor, method and property handlers by owner and signature. The injected context owns platform conversion and task handling.
 
-`register()` returns an idempotent disposer. Duplicate registrations, invalid
-arities and ancestry cycles fail explicitly. `invoke()` returns `{handled, value}`
-for a registered member and `{handled: false}` otherwise. Asynchronous adapters
-must return a task recognized by the host's explicit `isTask` service; arbitrary
-Promises are rejected. `clear()` releases every registration for teardown.
+## Dependency property registration
 
-Import `UIExtensionRegistry` from `@sharpforge/winui-properties`. The package's
-additional property, binding and presentation services are published in dependent
-feature batches. No framework contract or opcode identifiers change in this seam.
+`DependencyPropertyRegistry` allocates immutable identities per owner and validates defaults before publishing them. Attached properties retain their declaring owner; inherited lookups reuse that identity. `PropertyMetadata` supplies callbacks, factory defaults and validation policy to the consuming host. Registry snapshots retain token identity and reject cross-registry tokens.
