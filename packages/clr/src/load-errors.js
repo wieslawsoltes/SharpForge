@@ -12,6 +12,7 @@ export const LoadErrorCode = Object.freeze({
   UnsupportedFramework: 'SFCLR010',
   RecursiveResolution: 'SFCLR011',
   TypeLoad: 'SFCLR012',
+  UnsupportedFeature: 'SFCLR013',
 });
 
 const exceptionTypes = Object.freeze({
@@ -20,6 +21,7 @@ const exceptionTypes = Object.freeze({
   SFCLR008: 'System.ObjectDisposedException',
   SFCLR009: 'System.OperationCanceledException',
   SFCLR012: 'System.TypeLoadException',
+  SFCLR013: 'System.NotSupportedException',
 });
 
 /** A managed exception descriptor carried by a JavaScript Error with deterministic diagnostics. */

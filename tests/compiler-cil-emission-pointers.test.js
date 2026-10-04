@@ -105,17 +105,22 @@ test('A02-T30 a fixed-size buffer is a nested struct of the buffer size with a F
   }
 });
 
-test('A02-T30 a fixed-size buffer of a generic struct is refused, never misnamed', () => {
+test('A02-T30 a fixed-size buffer of a generic struct has a nested generic storage type', () => {
   const result = compileToAssembly(
     `unsafe struct Box<T> { public fixed int Data[2]; public T Value; }
      unsafe class P { static void Main() { Box<int> box = new Box<int>(); box.Data[0] = 1; System.Console.WriteLine(box.Data[0]); } }`,
     { name: 'Sample', allowUnsafe: true },
   );
-  assert.equal(result.assembly, null);
+  assert.ok(result.assembly);
   assert.deepEqual(
     result.diagnostics.filter(entry => entry.severity === 'error').map(entry => entry.code),
-    ['SF2200'],
+    [],
   );
+  const inspector = new AssemblyInspector(result.assembly);
+  const buffer = inspector.types.find(type => type.name.endsWith('<Data>e__FixedBuffer'));
+  assert.ok(buffer);
+  const parameters = inspector.metadata.rows[42].filter(row => decodeCoded('TypeOrMethodDef', row[2]) === buffer.token);
+  assert.equal(parameters.length, 1, 'the buffer inherits Box<T> type parameter in metadata');
 });
 
 test('A02-T30 the diagnostics of unsafe code are unchanged', () => {

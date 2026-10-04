@@ -1,6 +1,6 @@
 # @sharpforge/cil
 
-Genuine ECMA-335 PE/CLI emission, typed CIL lowering, bounded metadata/IL loading, canonical-profile verification and disassembly. JavaScript ESM. Version 0.6.0. MIT. Only sibling dependency: `@sharpforge/bytecode`.
+Genuine ECMA-335 PE/CLI emission, typed CIL lowering, bounded metadata/IL loading, canonical-profile verification and disassembly. JavaScript ESM. Version 0.6.0. MIT. Sibling dependencies: `@sharpforge/bytecode` and `@sharpforge/framework`.
 
 ```js
 import { emitAssembly, loadAssembly, formatAssembly } from '@sharpforge/cil';
@@ -20,6 +20,56 @@ The browser loader supports the exact emitted `SharpForge.CIL/1` profile. It che
 The root source release includes the complete backend contract, public API examples, measurements, regression suite, independent .NET execution test harness and compatibility boundaries. The packages are local tarballs, not registry-published.
 
 0.6 emits actual checked arithmetic/conversion instructions and InterfaceImpl metadata for concrete IDisposable resources, alongside finally cleanup. The canonical loader reconstructs and verifies these supported forms.
+
+## Registered external readonly fields
+
+`resolveExecutionField` admits a closed field profile from
+`frameworkType(owner).fields`. Admission requires a genuine field MemberRef with
+an external top-level TypeRef owner, its exact registered owner/name/signature, and an
+approved assembly scope. Field definitions and locally scoped references continue
+to use ordinary local storage, including a local type with the same name.
+Owner namespace and metadata name, and the field's primitive signature AST,
+are checked independently of the inspector's display strings.
+
+The approved identities are `System.Runtime` with public key token
+`b03f5f7f11d50a3a` and `System.Private.CoreLib` with token
+`7cec85d7bea7798e`, both with neutral culture. Each descriptor must include
+`System.Runtime` for source emission and may additionally opt into CoreLib for
+native CIL; registration rejects CoreLib-only profiles. Scope names, tokens,
+and culture are matched exactly;
+assembly versions are preserved but deliberately not compared, allowing facade
+version compatibility. This policy does not admit arbitrary `System`, `mscorlib`,
+unsigned, or similarly named assemblies. These are closed execution profiles,
+not general external assembly loading or field providers.
+
+The returned field retains its original token, owner, and signature, adds
+`isStatic: true`/`isInitOnly: true`, and carries an immutable `externalField`
+descriptor. `executionFieldAccessError(field, opcode)` returns a policy error
+string or `null`; the admission verifier and runtime storage share this helper.
+`ldsfld` loads the declared value. Instance access and writes are rejected.
+`ldsflda` requires the descriptor's `addressable` opt-in, and indirect writes
+remain rejected even when readable addresses are permitted. Existing Decimal
+loads and readable managed addresses retain their prior behavior.
+
+`compileToAssembly` binds these members as actual readonly fields and emits real
+`ldsfld` instructions with field MemberRefs. The separate source-image route,
+`compile`/`compileToIL`, substitutes fixed profile values after field binding;
+its generated CIL contains scalar load instructions. Neither route marks the
+symbol as a C# constant: const initializers and readonly writes retain language
+diagnostics. Direct-CIL storage decodes each JSON scalar once per static slot,
+and the initialized value participates in existing snapshot/restore behavior.
+
+The focused regression files are `tests/a07-readonly-fields.test.js` and
+`tests/a07-readonly-field-cil.test.js`. The baseline-compatible
+`scripts/benchmarks/a07-readonly-field-loads.mjs` harness measures ordinary
+static loads in both revisions and registered loads in the candidate; it reports
+whole-loop timing, including VM execution overhead, rather than isolated opcode
+or allocation cost. Copy the identical harness into `scripts/benchmarks/` in
+each worktree and run each copy from its own worktree; fixed static imports use
+that worktree's public packages. Pass `--mode baseline` or `--mode candidate`
+and `--output /absolute/result.json` through `node scripts/limited.js node
+scripts/benchmarks/a07-readonly-field-loads.mjs`. There is no `--workspace` option;
+the report derives its workspace path from the script's location.
 
 ## Signature codecs
 
@@ -135,6 +185,8 @@ The opt-in [verifier type-system adapter](VERIFIER-TYPE-SYSTEM.md) resolves boun
 
 The opt-in [typed numeric verifier](VERIFIER-NUMERIC.md) propagates primitive stack
 types through decoded method blocks, with explicit rejected and unknown results.
+Its registered [indirect memory policies](VERIFIER-MEMORY.md) check primitive
+managed-pointer loads and stores while retaining storage-width distinctions.
 
 `formatSignatureType(node, metadata, options)` optionally accepts
 `formatType(node, formatChild)`, returning a display string or `undefined` to
@@ -366,3 +418,45 @@ Construction is linear in bounded metadata/name bytes plus resolved edges; queri
 visit each expanded type once and are bounded by returned occurrences. The feature
 and retained native reference are prepared but unvalidated; see
 `tests/fixtures/type-hierarchy/README.md` for the scheduled evidence plan.
+
+### Instruction usage analysis
+
+`new AssemblyUsageAnalysis(inspector, options)` snapshots instruction occurrences
+for one loaded module without executing it or retaining its PE, decoded bodies,
+inspector, signature ASTs or binding context. It reuses the existing bounded CIL
+member/type resolver and its caches. The legacy `inspector.callGraph()` keeps its
+complete list, method-error records and ordinary decorated-method cache behavior.
+
+`analysis.query(relation, token, { offset: 0, limit: 100, signal })` returns owned
+`{ entries, total, nextOffset, complete }` in physical MethodDef/IL order. Pages
+have at most1000 occurrences; zero-length/past-end pages have no continuation.
+There is no per-query whole-result scan/copy. Each entry contains source/operand/
+resolved-target tokens, stable source/target MVID token URIs, offset, opcode,
+resolution status/reason and an optional instantiated-type token. Local MemberRef
+aliases share canonical definition queries while their raw-token queries retain
+the exact encoded occurrences. Unsupported/external bindings retain raw identities
+and explicit `unknown` reasons, never a display-name match.
+
+Supported relations are `uses` (MethodDef's non-string token operands), `used-by`
+(reverse occurrences), `instantiated-by` (`newobj`'s declared type), and
+`assigned-by` (direct `stfld`/`stsfld` writes). `newarr` uses its element type but
+does not construct an element instance. Indirect writes, virtual dispatch targets,
+reflection and dynamic execution are not inferred. `overridden-by` and
+`implemented-by` remain unsupported pending a genuine host-provided canonical
+method-slot contract; issue #2573 remains open for those capabilities.
+
+Construction options independently lower hard maxima: `maxMethods:16384`,
+`maxCodeBytes:4194304` (all body occurrences, including shared RVAs),
+`maxMethodCodeBytes:1048576`, `maxInstructions:250000`, `maxUsages:100000`, plus
+`signal`. All method headers/code sizes are checked before IL or binding snapshots;
+only one method's decoded instructions are held at a time. Each occurrence has
+at most seven index entries. `metadataLimits` forwards lowerable limits to the
+existing verification context; its defaults bound rows, names/signatures and
+query depth independently. These are logical/count bounds, not measured heap
+ceilings. Invalid limits/metadata/IL throw `CilError`; unsupported non-CIL bodies
+produce owned `diagnostics`, and pages then report `complete:false`. Completeness
+covers CIL body scanning, not resolution of every external reference.
+
+[Focused fixtures and pending qualification](../../tests/fixtures/usage-relations/README.md)
+cover the initial four relations; broad execution/cross-platform coverage is not
+implied by metadata inspection.

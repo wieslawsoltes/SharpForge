@@ -8,6 +8,7 @@ import { isRegisteredReferenceUpcast } from '../../conversions/registered-refere
 import { needsPrimitiveBox, primitiveBoxContract } from '../../primitive-boxing.js';
 import { n } from './node-factory.js';
 import { interpolatedText } from '../../binder/csharp6.js';
+import {registeredFieldLiteral} from '../registered-fields.js';
 
 const foldableTypes = new Set(['int', 'double', 'bool', 'string']);
 const formatValue = () => findContracts('SharpForge.Runtime.Formatting', 'FormatValue', true)[0];
@@ -67,7 +68,7 @@ export const ExpressionTranslation = Base =>
       return this.frame.thisExpr ? this.frame.thisExpr() : this.unsupported('this in this position', node.syntax);
     }
     exprFieldAccess(node) {
-      return this.assignStatic(node, this.fieldReference(node));
+      return registeredFieldLiteral(node.field) ?? this.assignStatic(node, this.fieldReference(node));
     }
     /** A field as a readable and assignable node. */
     fieldReference(node) {
