@@ -1,0 +1,160 @@
+✖ direct CIL async native reference: Completed (1507.367631ms)
+ℹ Roslyn/CoreCLR SDK 10.0.201; reference pack 10.0.5; requested optimize- and optimize+
+✖ direct CIL async native reference: Suspended (1278.355271ms)
+ℹ Roslyn/CoreCLR SDK 10.0.201; reference pack 10.0.5; requested optimize- and optimize+
+✖ direct CIL async native reference: Exceptions (1165.314915ms)
+ℹ Roslyn/CoreCLR SDK 10.0.201; reference pack 10.0.5; requested optimize- and optimize+
+✖ direct CIL async native reference: Retention (1336.198385ms)
+ℹ Roslyn/CoreCLR SDK 10.0.201; reference pack 10.0.5; requested optimize- and optimize+
+✖ direct CIL async native reference: WaitAndDelay (1153.651679ms)
+ℹ Roslyn/CoreCLR SDK 10.0.201; reference pack 10.0.5; requested optimize- and optimize+
+✖ direct CIL async native reference: Mutation (1185.284681ms)
+ℹ Roslyn/CoreCLR SDK 10.0.201; reference pack 10.0.5; requested optimize- and optimize+
+✖ direct CIL async snapshot roots and exactly-once continuation: Retention (1102.434925ms)
+ℹ Roslyn/CoreCLR SDK 10.0.201; reference pack 10.0.5; requested optimize- and optimize+
+✖ direct CIL async snapshot roots and exactly-once continuation: Mutation (1200.994778ms)
+ℹ Roslyn/CoreCLR SDK 10.0.201; reference pack 10.0.5; requested optimize- and optimize+
+✔ direct CIL async builder reachability rejects invalid MoveNext before execution (1183.337422ms)
+ℹ Roslyn/CoreCLR SDK 10.0.201; reference pack 10.0.5; requested optimize- and optimize+
+✔ CIL async ABI matcher requires complete generic and byref member signatures (2.168476ms)
+✔ CIL async ABI generic awaiter result and real Yield type are exact (0.44209ms)
+✔ CIL async callbacks require trusted reference scope and matching MethodImpl declarations (26.91037ms)
+✔ CIL async callback-only bodies remain mandatory verifier roots (1.869387ms)
+ℹ tests 13
+ℹ suites 0
+ℹ pass 5
+ℹ fail 8
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 12825.194281
+
+✖ failing tests:
+
+test at tests/a05-cil-async-native.test.js:55:30
+✖ direct CIL async native reference: Completed (1507.367631ms)
+  Error [CilError]: External virtual declarations are not executable
+      at VirtualDispatch.definition (file:///workspace/scratch/1692a10afba9/p5-inline-arrays/packages/cil/src/dispatch-profile.js:37:24)
+      at VirtualDispatch.addExplicitImplementations (file:///workspace/scratch/1692a10afba9/p5-inline-arrays/packages/cil/src/dispatch-profile.js:143:32)
+      at VirtualDispatch.table (file:///workspace/scratch/1692a10afba9/p5-inline-arrays/packages/cil/src/dispatch-profile.js:89:12)
+      at VirtualDispatch.table (file:///workspace/scratch/1692a10afba9/p5-inline-arrays/packages/runtime/src/execution/vtable.js:13:25)
+      at new CilTypeSystem (file:///workspace/scratch/1692a10afba9/p5-inline-arrays/packages/runtime/src/execution/type-system.js:32:36)
+      at get typeSystem (file:///workspace/scratch/1692a10afba9/p5-inline-arrays/packages/runtime/src/cil-vm.js:52:95)
+      at new CilVirtualMachine (file:///workspace/scratch/1692a10afba9/p5-inline-arrays/packages/runtime/src/cil-vm.js:40:198)
+      at TestContext.<anonymous> (file:///workspace/scratch/1692a10afba9/p5-inline-arrays/tests/a05-cil-async-native.test.js:62:27)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25) {
+    offset: undefined
+  }
+
+test at tests/a05-cil-async-native.test.js:55:30
+✖ direct CIL async native reference: Suspended (1278.355271ms)
+  Error [CilError]: External virtual declarations are not executable
+      at VirtualDispatch.definition (file:///workspace/scratch/1692a10afba9/p5-inline-arrays/packages/cil/src/dispatch-profile.js:37:24)
+      at VirtualDispatch.addExplicitImplementations (file:///workspace/scratch/1692a10afba9/p5-inline-arrays/packages/cil/src/dispatch-profile.js:143:32)
+      at VirtualDispatch.table (file:///workspace/scratch/1692a10afba9/p5-inline-arrays/packages/cil/src/dispatch-profile.js:89:12)
+      at VirtualDispatch.table (file:///workspace/scratch/1692a10afba9/p5-inline-arrays/packages/runtime/src/execution/vtable.js:13:25)
+      at new CilTypeSystem (file:///workspace/scratch/1692a10afba9/p5-inline-arrays/packages/runtime/src/execution/type-system.js:32:36)
+      at get typeSystem (file:///workspace/scratch/1692a10afba9/p5-inline-arrays/packages/runtime/src/cil-vm.js:52:95)
+      at new CilVirtualMachine (file:///workspace/scratch/1692a10afba9/p5-inline-arrays/packages/runtime/src/cil-vm.js:40:198)
+      at TestContext.<anonymous> (file:///workspace/scratch/1692a10afba9/p5-inline-arrays/tests/a05-cil-async-native.test.js:62:27)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25) {
+    offset: undefined
+  }
+
+test at tests/a05-cil-async-native.test.js:55:30
+✖ direct CIL async native reference: Exceptions (1165.314915ms)
+  Error [CilError]: External virtual declarations are not executable
+      at VirtualDispatch.definition (file:///workspace/scratch/1692a10afba9/p5-inline-arrays/packages/cil/src/dispatch-profile.js:37:24)
+      at VirtualDispatch.addExplicitImplementations (file:///workspace/scratch/1692a10afba9/p5-inline-arrays/packages/cil/src/dispatch-profile.js:143:32)
+      at VirtualDispatch.table (file:///workspace/scratch/1692a10afba9/p5-inline-arrays/packages/cil/src/dispatch-profile.js:89:12)
+      at VirtualDispatch.table (file:///workspace/scratch/1692a10afba9/p5-inline-arrays/packages/runtime/src/execution/vtable.js:13:25)
+      at new CilTypeSystem (file:///workspace/scratch/1692a10afba9/p5-inline-arrays/packages/runtime/src/execution/type-system.js:32:36)
+      at get typeSystem (file:///workspace/scratch/1692a10afba9/p5-inline-arrays/packages/runtime/src/cil-vm.js:52:95)
+      at new CilVirtualMachine (file:///workspace/scratch/1692a10afba9/p5-inline-arrays/packages/runtime/src/cil-vm.js:40:198)
+      at TestContext.<anonymous> (file:///workspace/scratch/1692a10afba9/p5-inline-arrays/tests/a05-cil-async-native.test.js:62:27)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25) {
+    offset: undefined
+  }
+
+test at tests/a05-cil-async-native.test.js:55:30
+✖ direct CIL async native reference: Retention (1336.198385ms)
+  Error [CilError]: External virtual declarations are not executable
+      at VirtualDispatch.definition (file:///workspace/scratch/1692a10afba9/p5-inline-arrays/packages/cil/src/dispatch-profile.js:37:24)
+      at VirtualDispatch.addExplicitImplementations (file:///workspace/scratch/1692a10afba9/p5-inline-arrays/packages/cil/src/dispatch-profile.js:143:32)
+      at VirtualDispatch.table (file:///workspace/scratch/1692a10afba9/p5-inline-arrays/packages/cil/src/dispatch-profile.js:89:12)
+      at VirtualDispatch.table (file:///workspace/scratch/1692a10afba9/p5-inline-arrays/packages/runtime/src/execution/vtable.js:13:25)
+      at new CilTypeSystem (file:///workspace/scratch/1692a10afba9/p5-inline-arrays/packages/runtime/src/execution/type-system.js:32:36)
+      at get typeSystem (file:///workspace/scratch/1692a10afba9/p5-inline-arrays/packages/runtime/src/cil-vm.js:52:95)
+      at new CilVirtualMachine (file:///workspace/scratch/1692a10afba9/p5-inline-arrays/packages/runtime/src/cil-vm.js:40:198)
+      at TestContext.<anonymous> (file:///workspace/scratch/1692a10afba9/p5-inline-arrays/tests/a05-cil-async-native.test.js:62:27)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25) {
+    offset: undefined
+  }
+
+test at tests/a05-cil-async-native.test.js:55:30
+✖ direct CIL async native reference: WaitAndDelay (1153.651679ms)
+  Error [CilError]: External virtual declarations are not executable
+      at VirtualDispatch.definition (file:///workspace/scratch/1692a10afba9/p5-inline-arrays/packages/cil/src/dispatch-profile.js:37:24)
+      at VirtualDispatch.addExplicitImplementations (file:///workspace/scratch/1692a10afba9/p5-inline-arrays/packages/cil/src/dispatch-profile.js:143:32)
+      at VirtualDispatch.table (file:///workspace/scratch/1692a10afba9/p5-inline-arrays/packages/cil/src/dispatch-profile.js:89:12)
+      at VirtualDispatch.table (file:///workspace/scratch/1692a10afba9/p5-inline-arrays/packages/runtime/src/execution/vtable.js:13:25)
+      at new CilTypeSystem (file:///workspace/scratch/1692a10afba9/p5-inline-arrays/packages/runtime/src/execution/type-system.js:32:36)
+      at get typeSystem (file:///workspace/scratch/1692a10afba9/p5-inline-arrays/packages/runtime/src/cil-vm.js:52:95)
+      at new CilVirtualMachine (file:///workspace/scratch/1692a10afba9/p5-inline-arrays/packages/runtime/src/cil-vm.js:40:198)
+      at TestContext.<anonymous> (file:///workspace/scratch/1692a10afba9/p5-inline-arrays/tests/a05-cil-async-native.test.js:62:27)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25) {
+    offset: undefined
+  }
+
+test at tests/a05-cil-async-native.test.js:55:30
+✖ direct CIL async native reference: Mutation (1185.284681ms)
+  Error [CilError]: External virtual declarations are not executable
+      at VirtualDispatch.definition (file:///workspace/scratch/1692a10afba9/p5-inline-arrays/packages/cil/src/dispatch-profile.js:37:24)
+      at VirtualDispatch.addExplicitImplementations (file:///workspace/scratch/1692a10afba9/p5-inline-arrays/packages/cil/src/dispatch-profile.js:143:32)
+      at VirtualDispatch.table (file:///workspace/scratch/1692a10afba9/p5-inline-arrays/packages/cil/src/dispatch-profile.js:89:12)
+      at VirtualDispatch.table (file:///workspace/scratch/1692a10afba9/p5-inline-arrays/packages/runtime/src/execution/vtable.js:13:25)
+      at new CilTypeSystem (file:///workspace/scratch/1692a10afba9/p5-inline-arrays/packages/runtime/src/execution/type-system.js:32:36)
+      at get typeSystem (file:///workspace/scratch/1692a10afba9/p5-inline-arrays/packages/runtime/src/cil-vm.js:52:95)
+      at new CilVirtualMachine (file:///workspace/scratch/1692a10afba9/p5-inline-arrays/packages/runtime/src/cil-vm.js:40:198)
+      at TestContext.<anonymous> (file:///workspace/scratch/1692a10afba9/p5-inline-arrays/tests/a05-cil-async-native.test.js:62:27)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25) {
+    offset: undefined
+  }
+
+test at tests/a05-cil-async-native.test.js:73:50
+✖ direct CIL async snapshot roots and exactly-once continuation: Retention (1102.434925ms)
+  Error [CilError]: External virtual declarations are not executable
+      at VirtualDispatch.definition (file:///workspace/scratch/1692a10afba9/p5-inline-arrays/packages/cil/src/dispatch-profile.js:37:24)
+      at VirtualDispatch.addExplicitImplementations (file:///workspace/scratch/1692a10afba9/p5-inline-arrays/packages/cil/src/dispatch-profile.js:143:32)
+      at VirtualDispatch.table (file:///workspace/scratch/1692a10afba9/p5-inline-arrays/packages/cil/src/dispatch-profile.js:89:12)
+      at VirtualDispatch.table (file:///workspace/scratch/1692a10afba9/p5-inline-arrays/packages/runtime/src/execution/vtable.js:13:25)
+      at new CilTypeSystem (file:///workspace/scratch/1692a10afba9/p5-inline-arrays/packages/runtime/src/execution/type-system.js:32:36)
+      at get typeSystem (file:///workspace/scratch/1692a10afba9/p5-inline-arrays/packages/runtime/src/cil-vm.js:52:95)
+      at new CilVirtualMachine (file:///workspace/scratch/1692a10afba9/p5-inline-arrays/packages/runtime/src/cil-vm.js:40:198)
+      at TestContext.<anonymous> (file:///workspace/scratch/1692a10afba9/p5-inline-arrays/tests/a05-cil-async-native.test.js:79:18)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25) {
+    offset: undefined
+  }
+
+test at tests/a05-cil-async-native.test.js:73:50
+✖ direct CIL async snapshot roots and exactly-once continuation: Mutation (1200.994778ms)
+  Error [CilError]: External virtual declarations are not executable
+      at VirtualDispatch.definition (file:///workspace/scratch/1692a10afba9/p5-inline-arrays/packages/cil/src/dispatch-profile.js:37:24)
+      at VirtualDispatch.addExplicitImplementations (file:///workspace/scratch/1692a10afba9/p5-inline-arrays/packages/cil/src/dispatch-profile.js:143:32)
+      at VirtualDispatch.table (file:///workspace/scratch/1692a10afba9/p5-inline-arrays/packages/cil/src/dispatch-profile.js:89:12)
+      at VirtualDispatch.table (file:///workspace/scratch/1692a10afba9/p5-inline-arrays/packages/runtime/src/execution/vtable.js:13:25)
+      at new CilTypeSystem (file:///workspace/scratch/1692a10afba9/p5-inline-arrays/packages/runtime/src/execution/type-system.js:32:36)
+      at get typeSystem (file:///workspace/scratch/1692a10afba9/p5-inline-arrays/packages/runtime/src/cil-vm.js:52:95)
+      at new CilVirtualMachine (file:///workspace/scratch/1692a10afba9/p5-inline-arrays/packages/runtime/src/cil-vm.js:40:198)
+      at TestContext.<anonymous> (file:///workspace/scratch/1692a10afba9/p5-inline-arrays/tests/a05-cil-async-native.test.js:79:18)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25) {
+    offset: undefined
+  }
