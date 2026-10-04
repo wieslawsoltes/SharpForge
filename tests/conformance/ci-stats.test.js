@@ -37,6 +37,7 @@ test('collector binds jobs to each run attempt and fails truncated capture', asy
 function attempted(number, duration, conclusion = 'success') {
   const value = { ...run(1, number * 60), run_attempt: number, conclusion };
   const started = Date.parse('2026-10-01T00:00:05Z') + (number - 1) * 60000;
+  value.run_started_at = new Date(started).toISOString();
   value.jobs = [{ ...value.jobs[0], id: 100 + number, conclusion,
     started_at: new Date(started).toISOString(), completed_at: new Date(started + duration * 1000).toISOString() }];
   return value;
@@ -139,4 +140,33 @@ test('cancelled jobs that never started have no invented execution duration', ()
   assert.equal(workflow.recordedJobSeconds, 0);
   assert.equal(workflow.jobs[0].samples, 0);
   assert.equal(workflow.jobs[0].p95Seconds, null);
+});
+
+test('initial PR queue excludes rerun delay while lifecycle ends at latest completion', async () => {
+  const first = attempted(1, 40, 'failure'), second = attempted(2, 10);
+  second.run_started_at = '2026-10-01T00:15:05Z';
+  second.updated_at = '2026-10-01T00:15:30Z';
+  second.jobs[0].started_at = second.run_started_at;
+  second.jobs[0].completed_at = '2026-10-01T00:15:15Z';
+  const captured = await collectRuns({ repository: 'test/repo', since: '2026-10-01', request: historyRequest([first, second]) });
+  const report = ciStatistics(captured, { ...budget, maxQueueP95Seconds: 5 }), workflow = report.workflows[0];
+  assert.equal(captured[0].run_started_at, second.run_started_at);
+  assert.equal(captured[0].attempts[0].run_started_at, first.run_started_at);
+  assert.deepEqual(workflow.queue, { samples: 1, p50Seconds: 5, p95Seconds: 5 });
+  assert.deepEqual(workflow.duration, { samples: 1, p50Seconds: 930, p95Seconds: 930 });
+  assert.equal(workflow.recordedJobSeconds, 50);
+  assert.equal(report.passed, true);
+  assert.equal(ciStatistics(captured, { ...budget, maxQueueP95Seconds: 4 }).passed, false);
+  assert.match(statsMarkdown(report), /Initial queue p50/);
+});
+
+test('initial queue accepts an immediate start and rejects invalid first-attempt timestamps', () => {
+  const first = attempted(1, 40, 'failure'), second = attempted(2, 10);
+  const latest = { ...second, attempts: [first, second] };
+  first.run_started_at = first.created_at;
+  assert.deepEqual(ciStatistics([latest], budget).workflows[0].queue, { samples: 1, p50Seconds: 0, p95Seconds: 0 });
+  for (const value of [undefined, null, 'invalid', '2026-09-30T23:59:59Z']) {
+    first.run_started_at = value;
+    assert.throws(() => ciStatistics([latest], budget), /timestamps/);
+  }
 });
