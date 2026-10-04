@@ -1,0 +1,31 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-056b1ed10171c005dea9",
+  "kind": "diagnostics",
+  "sourceText": "\n[assembly: RefersToLib] // to bind this, we'll want to lookup type C in 'lib' (during overload resolution of attribute constructors) albeit irrelevant\n// but C won't exist\n",
+  "sourceSHA256": "3ea8c83ba72c6d6a7e849ceb4dfcc6b8d7d76a16f987415b405a2d2fea85dfc5",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests.cs",
+    "sha256": "0071ca5e138cfceb6e147b3532046d29be4802f815d77ab3deaf17081480ec2e",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests.cs",
+    "license": "MIT",
+    "method": "AttributeWithTypeReferenceToCurrentCompilation_WithMissingType_WithIrrelevantType",
+    "offset": 6167
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "references: new[] { compWithReferenceToLib.ToMetadataReference() }, assemblyName: \"lib\")",
+  "options": "(newLib_cs, references: new[] { compWithReferenceToLib.ToMetadataReference() }, assemblyName: \"lib\")",
+  "expected": {
+    "diagnostics": [],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "",
+  "unsupported": [
+    "Upstream reference profile differs from SharpForge closed framework; references retained for reference-qualified adaptation",
+    "Custom upstream compilation/parse options require an adapter"
+  ]
+}

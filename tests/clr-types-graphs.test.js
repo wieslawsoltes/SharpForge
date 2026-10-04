@@ -57,15 +57,16 @@ test('CLR graph loading retains canonical shared identities and rejects invalid 
   await assert.rejects(wrong.types.load(wrongModule, 0x02000002), /returned Wrong for System.Object/);
 });
 
-test('CLR unresolved framework references and constructed inheritance stay explicit diagnostics', async () => {
+test('CLR unresolved framework references and generic inheritance stay explicit diagnostics', async () => {
   const unconfigured = new AssemblyLoadSession().defaultContext;
   const module = (await unconfigured.loadFromStream(managedFixture())).manifestModule;
   await assert.rejects(unconfigured.types.load(module, 0x02000002), error => error.code === LoadErrorCode.MissingAssembly);
   const constructed = managedFixture({ name: 'ConstructedType', decorate({ md }) {
-    md.add(27, [md.blob(Uint8Array.of(0x1d, 8))]);
+    const generic = md.typeRef('System.Collections.Generic.IList`1');
+    md.add(27, [md.blob(Uint8Array.of(0x15, 0x12, ((generic & 0xffffff) << 2) | 1, 1, 8))]);
   } });
   const constructedModule = (await unconfigured.loadFromStream(constructed)).manifestModule;
-  await assert.rejects(unconfigured.types.load(constructedModule, 0x1b000001), /constructed-type loading/);
+  await assert.rejects(unconfigured.types.load(constructedModule, 0x1b000001), /generic\/modifier type services/);
   const cyclic = managedFixture({ name: 'CyclicTypeRef', decorate({ md }) {
     md.rows[1][0][0] = 7;
   } });

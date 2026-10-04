@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-033f46abe207e162299b",
+  "kind": "diagnostics",
+  "sourceText": "public class A\n{\n    internal class B\n    {\n        protected B(C o)\n        {\n            o.Goo();\n        }\n    }\n}",
+  "sourceSHA256": "b444884bb43bfec85908ce60e58815f0aeaa9780586017f08f64e5e313196756",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/Attributes/InternalsVisibleToAndStrongNameTests.cs",
+    "sha256": "9e10a51f7f673a0e4ecef9e74c9a16fba06fbe3b89f9e5f5374503377b2b2a09",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/Attributes/InternalsVisibleToAndStrongNameTests.cs",
+    "license": "MIT",
+    "method": "IVTBasicMetadata",
+    "offset": 40492
+  },
+  "langVersion": "default",
+  "target": "library",
+  "references": "references: new[] { AssemblyMetadata.CreateFromStream(otherStream, leaveOpen: true).GetReference() },\n            assemblyName: \"WantsIVTAccessButCantHave\",\n            options: TestOptions.SigningReleaseDll,\n            parseOptions: parseOptions)",
+  "options": "(\n    @\"public class A\n{\n    internal class B\n    {\n        protected B(C o)\n        {\n            o.Goo();\n        }\n    }\n}\",\n            references: new[] { AssemblyMetadata.CreateFromStream(otherStream, leaveOpen: true).GetReference() },\n            assemblyName: \"WantsIVTAccessButCantHave\",\n            options: TestOptions.SigningReleaseDll,\n            parseOptions: parseOptions)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS1061",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "Diagnostic(ErrorCode.ERR_NoSuchMemberOrExtension, \"Goo\").WithArguments(\"C\", \"Goo\")",
+  "unsupported": [
+    "Dynamic or customized parse options require adaptation",
+    "Upstream reference profile differs from SharpForge closed framework; references retained for reference-qualified adaptation",
+    "Custom upstream compilation/parse options require an adapter"
+  ]
+}

@@ -1,0 +1,36 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-acb6f65d9530fc6eb8ab",
+  "kind": "diagnostics",
+  "sourceText": "\nusing System;\n\nclass M\n{\n    static M()\n    {\n        Console.Write((object)Test((dynamic)2));\n    }\n\n    object Test(object obj)\n    {\n        return obj;\n    }\n\n    static void Main()\n    {\n    }\n}\n",
+  "sourceSHA256": "450899bc6530c81ed0f53ba3ab425ff456a7dd8a8e377ec940ed3db55e131816",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenTests.cs",
+    "sha256": "dae53259abfabce8d6076c19e32fbeece50934d98a2aa892d9416a8e94b054d4",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenTests.cs",
+    "license": "MIT",
+    "method": "StaticCtorInstance",
+    "offset": 398210
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0120",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (8,31): error CS0120: An object reference is required for the non-static field, method, or property 'M.Test(object)'\n                //         Console.Write((object)Test((dynamic)2));\n                Diagnostic(ErrorCode.ERR_ObjectRequired, \"Test\").WithArguments(\"M.Test(object)\").WithLocation(8, 31)\n            ",
+  "unsupported": [
+    "Upstream reference profile differs from SharpForge closed framework; references retained for reference-qualified adaptation",
+    "Custom upstream compilation/parse options require an adapter"
+  ]
+}

@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-b1817e7c8b3ac8c9d6b8",
+  "kind": "diagnostics",
+  "sourceText": "\nclass C\n{\n    static void Error()\n    {\n        _ = 1;\n    }\n    static void Ok()\n    {\n        int _;\n        _ = 1;\n        System.Console.Write(_);\n    }\n}\n",
+  "sourceSHA256": "b91d05fd3b8346bd1941871410f5caf41180329690f7895083297229fd9d519f",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenDeconstructTests.cs",
+    "sha256": "b4b241a9467aa7aedab041db48710bfca3c6fa2c132364de10965fe8ea233f5a",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenDeconstructTests.cs",
+    "license": "MIT",
+    "method": "SingleDiscardInAssignmentInCSharp6",
+    "offset": 222450
+  },
+  "langVersion": "6",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source, parseOptions: TestOptions.Regular6)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS8059",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (6,9): error CS8059: Feature 'discards' is not available in C# 6. Please use language version 7.0 or greater.\n                //         _ = 1;\n                Diagnostic(ErrorCode.ERR_FeatureNotAvailableInVersion6, \"_\").WithArguments(\"discards\", \"7.0\").WithLocation(6, 9)\n                ",
+  "unsupported": []
+}

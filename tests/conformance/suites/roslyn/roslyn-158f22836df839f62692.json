@@ -1,0 +1,30 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-158f22836df839f62692",
+  "kind": "diagnostics",
+  "sourceText": "\nusing System.Threading.Tasks;\nclass Program\n{\n    async Task<int> M1(object o, Task<bool> c, int r)\n    {\n        return o switch\n        {\n            Q { F: { P1: true } } when await c => r, // error: cached Q.F is alive\n            Q { F: { P2: true } } => 2,\n            _ => 3,\n        };\n    }\n    async Task<int> M2(object o, Task<bool> c, int r)\n    {\n        return o switch\n        {\n            Q { F: { P1: true } } when await c => r, // ok: only Q.P1 is live\n            Q { F: { P1: true } } => 2,\n            _ => 3,\n        };\n    }\n    async Task<int> M3(object o, bool c, Task<int> r)\n    {\n        return o switch\n        {\n            Q { F: { P1: true } } when c => await r, // ok: nothing alive at await\n            Q { F: { P2: true } } => 2,\n            _ => 3,\n        };\n    }\n    async Task<int> M4(object o, Task<bool> c, int r)\n    {\n        return o switch\n        {\n            Q { F: { P1: true } } when await c => r, // ok: no switch state is alive\n            _ => 3,\n        };\n    }\n}\npublic class Q\n{\n    public S F => throw null!;\n}\npublic ref struct S\n{\n    public bool P1 => true;\n    public bool P2 => true;\n}\n",
+  "sourceSHA256": "52929cd207ed5b03d44860e9c27bb8127269e4e201a5ac81d4408616664fe749",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenAsyncSpillTests.cs",
+    "sha256": "d53a41f5a22e30f0369be8a24a0d430582966a9ef2840b365b86f1f68ce5f3b1",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenAsyncSpillTests.cs",
+    "license": "MIT",
+    "method": "RefStructInAsyncStateMachineWithWhenClause",
+    "offset": 395030
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source, options: TestOptions.DebugDll)",
+  "expected": {
+    "diagnostics": [],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "",
+  "unsupported": [
+    "Custom upstream compilation/parse options require an adapter"
+  ]
+}

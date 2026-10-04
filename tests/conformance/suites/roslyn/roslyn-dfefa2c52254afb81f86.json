@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-dfefa2c52254afb81f86",
+  "kind": "diagnostics",
+  "sourceText": "\nclass C\n{\n\n    void M1(C c1)\n    {\n        int x, y;\n        _ = (bool?)null ?? (c1?.M(x = y = 0) ?? false)\n            ? x.ToString()\n            : y.ToString(); // 1\n    }\n\n    void M2(C c1)\n    {\n        int x, y;\n        _ = (bool?)null ?? (c1?.M(x = y = 0) ?? true)\n            ? x.ToString() // 2\n            : y.ToString();\n    }\n\n    bool M(object obj) { return true; }\n}\n",
+  "sourceSHA256": "a5f4b7b4c2febeb78b7b8d4cefcee140f847243ea855b90ee0deae3b24b228bd",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/FlowAnalysis/FlowTests.cs",
+    "sha256": "14071e2f2e1eb3d9baf2ff8cca3f12824bda71ee0a2d177ebd988416b03d9245",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/FlowAnalysis/FlowTests.cs",
+    "license": "MIT",
+    "method": "CondAccess_NullCoalescing_10",
+    "offset": 143672
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0165",
+        "severity": "error"
+      },
+      {
+        "code": "CS0165",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (10,15): error CS0165: Use of unassigned local variable 'y'\n                //             : y.ToString(); // 1\n                Diagnostic(ErrorCode.ERR_UseDefViolation, \"y\").WithArguments(\"y\").WithLocation(10, 15),\n                // (17,15): error CS0165: Use of unassigned local variable 'x'\n                //             ? x.ToString() // 2\n                Diagnostic(ErrorCode.ERR_UseDefViolation, \"x\").WithArguments(\"x\").WithLocation(17, 15)",
+  "unsupported": []
+}

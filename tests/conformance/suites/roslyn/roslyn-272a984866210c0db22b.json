@@ -1,0 +1,45 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-272a984866210c0db22b",
+  "kind": "diagnostics",
+  "sourceText": "\nusing System;\nclass C\n{\n    public void M() => Prop = Prop;\n\n    [Obsolete]\n    public int Prop { [Obsolete] get; [Obsolete] set; }\n}\n",
+  "sourceSHA256": "ecad1c894bf3e5318ec9cd28e6a0f52b968ace2b421f8a2f714977aea08a8fef",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests_WellKnownAttributes.cs",
+    "sha256": "6d927a5bdb9405565ec70d2c4c97cb9f5f0d51b3a25bcd12a9f4821af6df10ed",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests_WellKnownAttributes.cs",
+    "license": "MIT",
+    "method": "TestObsoleteOnPropertyAndAccessors",
+    "offset": 486254
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(code)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0612",
+        "severity": "warning"
+      },
+      {
+        "code": "CS0612",
+        "severity": "warning"
+      },
+      {
+        "code": "CS0612",
+        "severity": "warning"
+      },
+      {
+        "code": "CS0612",
+        "severity": "warning"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (5,24): warning CS0612: 'C.Prop' is obsolete\n                //     public void M() => Prop = Prop;\n                Diagnostic(ErrorCode.WRN_DeprecatedSymbol, \"Prop\").WithArguments(\"C.Prop\").WithLocation(5, 24),\n                // (5,24): warning CS0612: 'C.Prop.set' is obsolete\n                //     public void M() => Prop = Prop;\n                Diagnostic(ErrorCode.WRN_DeprecatedSymbol, \"Prop\").WithArguments(\"C.Prop.set\").WithLocation(5, 24),\n                // (5,31): warning CS0612: 'C.Prop' is obsolete\n                //     public void M() => Prop = Prop;\n                Diagnostic(ErrorCode.WRN_DeprecatedSymbol, \"Prop\").WithArguments(\"C.Prop\").WithLocation(5, 31),\n                // (5,31): warning CS0612: 'C.Prop.get' is obsolete\n                //     public void M() => Prop = Prop;\n                Diagnostic(ErrorCode.WRN_DeprecatedSymbol, \"Prop\").WithArguments(\"C.Prop.get\").WithLocation(5, 31)",
+  "unsupported": []
+}

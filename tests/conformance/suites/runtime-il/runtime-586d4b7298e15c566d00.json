@@ -1,0 +1,30 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "runtime-586d4b7298e15c566d00",
+  "kind": "runtime",
+  "sourceText": "// Licensed to the .NET Foundation under one or more agreements.\n// The .NET Foundation licenses this file to you under the MIT license.\n//\n\nusing System;\n\n\n// Do a complex 5 dimensional Jagged array.\nstruct Complex\n{\n  public int a,b,c;\n  public void mul_em()\n  {\n\tc = a * b;\n  }\n};\n\npublic class Complex_Array_Test\n{\n\t\n\tpublic static int Main()\n\t{\n\t\tConsole.WriteLine(\"Starting...\");\n\t\tint SIZE = 10;\n\n\t//Create an array that is jagged.\n\t// in last 2d, the array looks like:\n\t//  Complex\n\t//  Complex Complex \n\t//  Complex Complex Complex \n\t//  Complex Complex Complex Complex \n\t//  Complex Complex Complex Complex Complex \n\t//\n\n\t\tComplex [][][][][] foo = new Complex[SIZE][][][][];\n\t\tint i,j,k,l,m;\n                Int64 sum=0;\n\n\t\tfor(i=0;i<SIZE;i++)\n\t\t{\n\t\t\tfoo[i] = new Complex[i][][][];\n\t\t\tfor(j=0;j<i;j++)\n\t\t\t{\n\t\t\t\tfoo[i][j] = new Complex[j][][];\n\t\t\t\tfor(k=0;k<j;k++)\n\t\t\t\t{\n\t\t\t\t\tfoo[i][j][k] = new Complex[k][];\n\t\t\t\t\tfor(l=0;l<k;l++)\n\t\t\t\t\t{\n\t\t\t\t\t\tfoo[i][j][k][l] = new Complex[l];\n\t\t\t\t\t\tfor(m=0;m<l;m++)\n\t\t\t\t\t\t{\n\t\t\t\t\t\t\tfoo[i][j][k][l][m].a = i*j;\n\t\t\t\t\t\t\tfoo[i][j][k][l][m].b = k*l*m;\n\t\t\t\t\t\t\tfoo[i][j][k][l][m].mul_em();\n\t\t\t\t\t\t}\n\t\t\t\t\t}\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\n\t\tfor(i=0;i<SIZE;i++)\n\t\t\tfor(j=0;j<i;j++)\n\t\t\t\tfor(k=0;k<j;k++)\n\t\t\t\t\tfor(l=0;l<k;l++)\n\t\t\t\t\t for(m=0;m<l;m++)\n\t\t\t\t\t {\n                                          sum+=foo[i][j][k][l][m].c;\n\t\t\t\t\t  //Console.Write(\" \"+foo[i][j][k][l][m].c.ToString());\n\t\t\t\t\t }\n\n\n\t\tif(sum==269325)\t\n\t\t{\n\t\t\tConsole.WriteLine(\"Everything Worked!\");\n\t\t\treturn 100;\n\t\t}\n \t\telse\n\t\t{\n\t\t\tConsole.WriteLine(\"Something is broken!\");\n\t\t\treturn 1;\n\t\t}\n\t}\n}\n",
+  "language": "csharp",
+  "unsupported": [],
+  "opcodeFamilies": [],
+  "sourceSHA256": "e65a71e3e7927e3cc963a2ad5814513e7916f8a4330c0f7ee808a5a4ddff9ed6",
+  "originalSource": "// Licensed to the .NET Foundation under one or more agreements.\n// The .NET Foundation licenses this file to you under the MIT license.\n//\n\nusing System;\nusing Xunit;\n\n// Do a complex 5 dimensional Jagged array.\nstruct Complex\n{\n  public int a,b,c;\n  public void mul_em()\n  {\n\tc = a * b;\n  }\n};\n\npublic class Complex_Array_Test\n{\n\t[Fact]\n\tpublic static int TestEntryPoint()\n\t{\n\t\tConsole.WriteLine(\"Starting...\");\n\t\tint SIZE = 10;\n\n\t//Create an array that is jagged.\n\t// in last 2d, the array looks like:\n\t//  Complex\n\t//  Complex Complex \n\t//  Complex Complex Complex \n\t//  Complex Complex Complex Complex \n\t//  Complex Complex Complex Complex Complex \n\t//\n\n\t\tComplex [][][][][] foo = new Complex[SIZE][][][][];\n\t\tint i,j,k,l,m;\n                Int64 sum=0;\n\n\t\tfor(i=0;i<SIZE;i++)\n\t\t{\n\t\t\tfoo[i] = new Complex[i][][][];\n\t\t\tfor(j=0;j<i;j++)\n\t\t\t{\n\t\t\t\tfoo[i][j] = new Complex[j][][];\n\t\t\t\tfor(k=0;k<j;k++)\n\t\t\t\t{\n\t\t\t\t\tfoo[i][j][k] = new Complex[k][];\n\t\t\t\t\tfor(l=0;l<k;l++)\n\t\t\t\t\t{\n\t\t\t\t\t\tfoo[i][j][k][l] = new Complex[l];\n\t\t\t\t\t\tfor(m=0;m<l;m++)\n\t\t\t\t\t\t{\n\t\t\t\t\t\t\tfoo[i][j][k][l][m].a = i*j;\n\t\t\t\t\t\t\tfoo[i][j][k][l][m].b = k*l*m;\n\t\t\t\t\t\t\tfoo[i][j][k][l][m].mul_em();\n\t\t\t\t\t\t}\n\t\t\t\t\t}\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\n\t\tfor(i=0;i<SIZE;i++)\n\t\t\tfor(j=0;j<i;j++)\n\t\t\t\tfor(k=0;k<j;k++)\n\t\t\t\t\tfor(l=0;l<k;l++)\n\t\t\t\t\t for(m=0;m<l;m++)\n\t\t\t\t\t {\n                                          sum+=foo[i][j][k][l][m].c;\n\t\t\t\t\t  //Console.Write(\" \"+foo[i][j][k][l][m].c.ToString());\n\t\t\t\t\t }\n\n\n\t\tif(sum==269325)\t\n\t\t{\n\t\t\tConsole.WriteLine(\"Everything Worked!\");\n\t\t\treturn 100;\n\t\t}\n \t\telse\n\t\t{\n\t\t\tConsole.WriteLine(\"Something is broken!\");\n\t\t\treturn 1;\n\t\t}\n\t}\n}\n",
+  "provenance": {
+    "repository": "dotnet/runtime",
+    "commit": "081d220c0a773ffb7c6bea6b48727833576a65ef",
+    "path": "src/tests/JIT/Directed/Arrays/complex1.cs",
+    "sha256": "50895a77be544dd02c690e11a5aca207c1abb6022e6f069c155acdec5367b5de",
+    "url": "https://github.com/dotnet/runtime/blob/081d220c0a773ffb7c6bea6b48727833576a65ef/src/tests/JIT/Directed/Arrays/complex1.cs",
+    "license": "MIT"
+  },
+  "namespace": "JIT",
+  "langVersion": "preview",
+  "target": "exe",
+  "references": [
+    "pinned net10.0 reference pack"
+  ],
+  "expected": {
+    "exitCode": 100
+  },
+  "adaptation": "Remove Fact/OuterLoop discovery attributes and Xunit using; rename TestEntryPoint to Main. Test body unchanged."
+}

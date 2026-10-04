@@ -1,0 +1,53 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-2df23592d2c54c1830f1",
+  "kind": "diagnostics",
+  "sourceText": "\n#nullable enable\n\nclass C\n{\n    public C M0(object x) => this;\n\n    public void M1(C? c)\n    {\n        int w, x, y, z;\n        _ = (c?.M0(w = x = 1))?.M0(y = z = 1) != null\n            ? w.ToString() + y.ToString()\n            : x.ToString() + z.ToString(); // 1, 2\n    }\n\n    public void M2(C? c)\n    {\n        int w, x, y, z;\n        _ = (c?.M0(w = x = 1)?.M0(y = z = 1))?.GetHashCode() != null\n            ? w.ToString() + y.ToString()\n            : x.ToString() + z.ToString(); // 3, 4\n    }\n\n    public void M3(C? c)\n    {\n        int x, y;\n        _ = ((object?)c?.M0(x = y = 1))?.GetHashCode() != null\n            ? x.ToString() + y.ToString()\n            : x.ToString() + y.ToString(); // 5, 6\n    }\n}\n",
+  "sourceSHA256": "1180fb5a9ca0a9f1adc2ce0290b3fcab91180558f3e24887e28958848448f862",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/FlowAnalysis/FlowTests.cs",
+    "sha256": "14071e2f2e1eb3d9baf2ff8cca3f12824bda71ee0a2d177ebd988416b03d9245",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/FlowAnalysis/FlowTests.cs",
+    "license": "MIT",
+    "method": "EqualsCondAccess_LeftCondAccess",
+    "offset": 202870
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0165",
+        "severity": "error"
+      },
+      {
+        "code": "CS0165",
+        "severity": "error"
+      },
+      {
+        "code": "CS0165",
+        "severity": "error"
+      },
+      {
+        "code": "CS0165",
+        "severity": "error"
+      },
+      {
+        "code": "CS0165",
+        "severity": "error"
+      },
+      {
+        "code": "CS0165",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (13,15): error CS0165: Use of unassigned local variable 'x'\n                //             : x.ToString() + z.ToString(); // 1, 2\n                Diagnostic(ErrorCode.ERR_UseDefViolation, \"x\").WithArguments(\"x\").WithLocation(13, 15),\n                // (13,30): error CS0165: Use of unassigned local variable 'z'\n                //             : x.ToString() + z.ToString(); // 1, 2\n                Diagnostic(ErrorCode.ERR_UseDefViolation, \"z\").WithArguments(\"z\").WithLocation(13, 30),\n                // (21,15): error CS0165: Use of unassigned local variable 'x'\n                //             : x.ToString() + z.ToString(); // 3, 4\n                Diagnostic(ErrorCode.ERR_UseDefViolation, \"x\").WithArguments(\"x\").WithLocation(21, 15),\n                // (21,30): error CS0165: Use of unassigned local variable 'z'\n                //             : x.ToString() + z.ToString(); // 3, 4\n                Diagnostic(ErrorCode.ERR_UseDefViolation, \"z\").WithArguments(\"z\").WithLocation(21, 30),\n                // (29,15): error CS0165: Use of unassigned local variable 'x'\n                //             : x.ToString() + y.ToString(); // 5, 6\n                Diagnostic(ErrorCode.ERR_UseDefViolation, \"x\").WithArguments(\"x\").WithLocation(29, 15),\n                // (29,30): error CS0165: Use of unassigned local variable 'y'\n                //             : x.ToString() + y.ToString(); // 5, 6\n                Diagnostic(ErrorCode.ERR_UseDefViolation, \"y\").WithArguments(\"y\").WithLocation(29, 30)\n                ",
+  "unsupported": []
+}

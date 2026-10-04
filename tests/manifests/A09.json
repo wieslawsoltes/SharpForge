@@ -1,7 +1,12 @@
 {
   "schemaVersion": 1,
   "area": "A09",
-  "nodeGlobs": [],
+  "nodeGlobs": [
+    "tests/a09-json-escaping.test.js",
+    "tests/a09-json-number-formatting.test.js",
+    "tests/a09-json-integer-keys.test.js",
+    "tests/a09-json-int64.test.js"
+  ],
   "browserScripts": [],
   "requiredServices": [],
   "timeout": 300000,

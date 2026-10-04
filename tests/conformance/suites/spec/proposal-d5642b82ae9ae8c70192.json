@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "proposal-d5642b82ae9ae8c70192",
+  "kind": "spec",
+  "sourceText": "using System;\nusing System.Linq;\n\nfile class MyFileLocalAttribute : Attribute { }\n\n[MyFileLocalAttribute]\npublic class C\n{\n    public static void Main()\n    {\n        var attribute = typeof(C).CustomAttributes.Where(attr => attr.AttributeType == typeof(MyFileLocalAttribute)).First();\n        Console.Write(attribute); // outputs the generated name of the file-local attribute type\n    }\n}",
+  "sourceSHA256": "36224853c48b9d928d0eecbc125d74c178965a94c47a611c8db8700840c84bd0",
+  "target": "library",
+  "featureId": "csharp-11-0-file-local-types",
+  "langVersion": "11.0",
+  "expected": {
+    "referenceDiagnostics": true
+  },
+  "unsupported": [],
+  "mappingScope": "Exact inventory specSection; fenced fragment compiled as library against pinned Roslyn, not assumed valid standalone program",
+  "provenance": {
+    "repository": "dotnet/csharplang",
+    "commit": "05eb4800fc3dc76259ccd49ac01f1eeb49222380",
+    "path": "proposals/csharp-11.0/file-local-types.md",
+    "sha256": "c9907c62543e8698e69f8bd26b0435b3365ebd1e7405b79536b18134385374b6",
+    "url": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-11.0/file-local-types.md",
+    "license": "NOASSERTION",
+    "offset": 6030
+  }
+}

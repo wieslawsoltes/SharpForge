@@ -1,0 +1,28 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-de83a1fbdf207b8edf8a",
+  "kind": "diagnostics",
+  "sourceText": "\nstruct S\n{\n    public int x, y;\n    public S(int x, int y) : this() { this.x = x; this.y = y; }\n}\n",
+  "sourceSHA256": "da0dd83411142a5e32863280d82a6694e9278c15d9b8726a3fec4c2ca8a62116",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/FlowAnalysis/StructTests.cs",
+    "sha256": "0d6911ec2e8d7c03c9c20562c37c9d1959883735b8a2e5c0af7af46861c1379a",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/FlowAnalysis/StructTests.cs",
+    "license": "MIT",
+    "method": "SelfDefaultConstructor",
+    "offset": 2119
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(program)",
+  "expected": {
+    "diagnostics": [],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "",
+  "unsupported": []
+}

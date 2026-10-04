@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-270016850283d6fbc175",
+  "kind": "diagnostics",
+  "sourceText": "using System;\nclass Program\n{\n    public static void Main(string[] args)\n    {\n        var x = new X();\n        Console.Write(M1<B>(new A()) ?? x);\n        Console.Write(M2<B>(new A()) ?? x);\n        Console.Write(M1<B>(new B()) ?? x);\n        Console.Write(M2<B>(new B()) ?? x);\n    }\n    public static T M1<T>(A o) where T : class\n    {\n        return o is T t ? t : default(T);\n    }\n    public static T M2<T>(A o) where T : class\n    {\n        switch (o)\n        {\n            case T t:\n                return t;\n            default:\n                return default(T);\n        }\n    }\n}\nclass A\n{\n}\nclass B : A\n{\n}\nclass X : B { }\n",
+  "sourceSHA256": "092fa203e33ee01f58157a5e3a432f4a1cfc4e37c91b56f5ddea908bccb1bce4",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/CodeGen/SwitchTests.cs",
+    "sha256": "8a2559010768d72741326ab4614a72fc6d01c52c1dbef1652639b4fae3d66229",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/CodeGen/SwitchTests.cs",
+    "license": "MIT",
+    "method": "TestMatchWithTypeParameter_04",
+    "offset": 290150
+  },
+  "langVersion": "7",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source, parseOptions: TestOptions.Regular7)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS8314",
+        "severity": "error"
+      },
+      {
+        "code": "CS8314",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (14,21): error CS8413: An expression of type 'A' cannot be handled by a pattern of type 'T' in C# 7.0. Please use language version 7.1 or greater.\n                //         return o is T t ? t : default(T);\n                Diagnostic(ErrorCode.ERR_PatternWrongGenericTypeInVersion, \"T\").WithArguments(\"A\", \"T\", \"7.0\", \"7.1\").WithLocation(14, 21),\n                // (20,18): error CS8413: An expression of type 'A' cannot be handled by a pattern of type 'T' in C# 7.0. Please use language version 7.1 or greater.\n                //             case T t:\n                Diagnostic(ErrorCode.ERR_PatternWrongGenericTypeInVersion, \"T\").WithArguments(\"A\", \"T\", \"7.0\", \"7.1\").WithLocation(20, 18)\n                ",
+  "unsupported": []
+}

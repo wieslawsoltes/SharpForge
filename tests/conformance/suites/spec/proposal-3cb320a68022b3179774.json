@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "proposal-3cb320a68022b3179774",
+  "kind": "spec",
+  "sourceText": "ref T Choice(bool condition, ref T consequence, ref T alternative)\n{\n    if (condition)\n    {\n         return ref consequence;\n    }\n    else\n    {\n         return ref alternative;\n    }\n}",
+  "sourceSHA256": "b91dc07728f4710ecef7bf5b5d6b58c8f7b5608695e78a6fa354bec23b5d8c87",
+  "target": "library",
+  "featureId": "csharp-7-2-ref-conditional",
+  "langVersion": "7.2",
+  "expected": {
+    "referenceDiagnostics": true
+  },
+  "unsupported": [],
+  "mappingScope": "Exact inventory specSection; fenced fragment compiled as library against pinned Roslyn, not assumed valid standalone program",
+  "provenance": {
+    "repository": "dotnet/csharplang",
+    "commit": "05eb4800fc3dc76259ccd49ac01f1eeb49222380",
+    "path": "proposals/csharp-7.2/conditional-ref.md",
+    "sha256": "0690f63744b2894157b0ecb3f25a4bcdfa2b42b90bd3cb74b555cda05de3f8c4",
+    "url": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-7.2/conditional-ref.md",
+    "license": "NOASSERTION",
+    "offset": 271
+  }
+}
