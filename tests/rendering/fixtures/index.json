@@ -1,0 +1,336 @@
+{
+  "version": 1,
+  "specification": "SharpForge A17 / Microsoft.WindowsAppSDK 1.8.260921001; native oracle captures remain pending",
+  "windowsAppSdkVersion": "1.8.260921001",
+  "fixtures": [
+    {
+      "id": "path-corpus-100", "scene": "path-reference", "width": 640, "height": 640, "canvasReference": true,
+      "tolerance": {"maxChannel": 16, "meanChannel": 1, "differentPixelFraction": 0.04},
+      "reference": {"status": "pending-native", "kind": "browser-native-path-and-svg"}
+    },
+    {
+      "id": "shapes", "scene": "shapes", "width": 128, "height": 96,
+      "tolerance": {"maxChannel": 8, "meanChannel": 1.0, "differentPixelFraction": 0.05},
+      "reference": {"status": "pending-native", "kind": "rendered-backend-baseline"}
+    },
+    {
+      "id": "strokes", "scene": "strokes", "width": 128, "height": 96,
+      "tolerance": {"maxChannel": 8, "meanChannel": 1.0, "differentPixelFraction": 0.05},
+      "reference": {"status": "pending-native", "kind": "rendered-backend-baseline"}
+    },
+    {
+      "id": "gradients", "scene": "gradients", "width": 128, "height": 96,
+      "tolerance": {"maxChannel": 8, "meanChannel": 1.0, "differentPixelFraction": 0.05},
+      "reference": {"status": "pending-native", "kind": "rendered-backend-baseline"}
+    },
+    {
+      "id": "images", "scene": "images", "width": 128, "height": 96,
+      "tolerance": {"maxChannel": 8, "meanChannel": 1.0, "differentPixelFraction": 0.05},
+      "reference": {"status": "pending-native", "kind": "rendered-backend-baseline"}
+    },
+    {
+      "id": "clips", "scene": "clips", "width": 128, "height": 96,
+      "tolerance": {"maxChannel": 8, "meanChannel": 1.0, "differentPixelFraction": 0.05},
+      "reference": {"status": "pending-native", "kind": "rendered-backend-baseline"}
+    },
+    {
+      "id": "effects", "scene": "effects", "width": 128, "height": 96,
+      "tolerance": {"maxChannel": 16, "meanChannel": 1.0, "differentPixelFraction": 0.05},
+      "reference": {"status": "pending-native", "kind": "rendered-backend-baseline"}
+    },
+    {
+      "id": "opacity", "scene": "opacity", "width": 128, "height": 96,
+      "tolerance": {"maxChannel": 8, "meanChannel": 1.0, "differentPixelFraction": 0.05},
+      "reference": {"status": "pending-native", "kind": "rendered-backend-baseline"}
+    },
+    {
+      "id": "text", "scene": "text", "width": 128, "height": 96,
+      "tolerance": {"maxChannel": 16, "meanChannel": 1.0, "differentPixelFraction": 0.05},
+      "reference": {"status": "pending-native", "kind": "rendered-backend-baseline"}
+    },
+    {
+      "id": "chrome-button", "scene": "control-chrome", "control": "Button", "width": 128, "height": 48,
+      "scope": "registered fallback renderer chrome; default templates are separate gallery fixtures",
+      "tolerance": {"maxChannel": 8, "meanChannel": 0.5, "differentPixelFraction": 0.02},
+      "reference": {"status": "pending-native", "kind": "rendered-backend-baseline"}
+    },
+    {
+      "id": "chrome-checkbox", "scene": "control-chrome", "control": "CheckBox", "width": 128, "height": 48,
+      "scope": "registered fallback renderer chrome; default templates are separate gallery fixtures",
+      "tolerance": {"maxChannel": 8, "meanChannel": 0.5, "differentPixelFraction": 0.02},
+      "reference": {"status": "pending-native", "kind": "rendered-backend-baseline"}
+    },
+    {
+      "id": "chrome-radiobutton", "scene": "control-chrome", "control": "RadioButton", "width": 128, "height": 48,
+      "scope": "registered fallback renderer chrome; default templates are separate gallery fixtures",
+      "tolerance": {"maxChannel": 8, "meanChannel": 0.5, "differentPixelFraction": 0.02},
+      "reference": {"status": "pending-native", "kind": "rendered-backend-baseline"}
+    },
+    {
+      "id": "chrome-toggleswitch", "scene": "control-chrome", "control": "ToggleSwitch", "width": 128, "height": 48,
+      "scope": "registered fallback renderer chrome; default templates are separate gallery fixtures",
+      "tolerance": {"maxChannel": 8, "meanChannel": 0.5, "differentPixelFraction": 0.02},
+      "reference": {"status": "pending-native", "kind": "rendered-backend-baseline"}
+    },
+    {
+      "id": "chrome-slider", "scene": "control-chrome", "control": "Slider", "width": 128, "height": 48,
+      "scope": "registered fallback renderer chrome; default templates are separate gallery fixtures",
+      "tolerance": {"maxChannel": 8, "meanChannel": 0.5, "differentPixelFraction": 0.02},
+      "reference": {"status": "pending-native", "kind": "rendered-backend-baseline"}
+    },
+    {
+      "id": "chrome-progressbar", "scene": "control-chrome", "control": "ProgressBar", "width": 128, "height": 48,
+      "scope": "registered fallback renderer chrome; default templates are separate gallery fixtures",
+      "tolerance": {"maxChannel": 8, "meanChannel": 0.5, "differentPixelFraction": 0.02},
+      "reference": {"status": "pending-native", "kind": "rendered-backend-baseline"}
+    },
+    {
+      "id": "chrome-progressring", "scene": "control-chrome", "control": "ProgressRing", "width": 128, "height": 48,
+      "scope": "registered fallback renderer chrome; default templates are separate gallery fixtures",
+      "tolerance": {"maxChannel": 8, "meanChannel": 0.5, "differentPixelFraction": 0.02},
+      "reference": {"status": "pending-native", "kind": "rendered-backend-baseline"}
+    },
+    {
+      "id": "chrome-togglebutton", "scene": "control-chrome", "control": "ToggleButton", "width": 128, "height": 48,
+      "scope": "registered fallback renderer chrome; default templates are separate gallery fixtures",
+      "tolerance": {"maxChannel": 8, "meanChannel": 0.5, "differentPixelFraction": 0.02},
+      "reference": {"status": "pending-native", "kind": "rendered-backend-baseline"}
+    },
+    {
+      "id": "chrome-textbox", "scene": "control-chrome", "control": "TextBox", "width": 128, "height": 48,
+      "scope": "registered fallback renderer chrome; default templates are separate gallery fixtures",
+      "tolerance": {"maxChannel": 8, "meanChannel": 0.5, "differentPixelFraction": 0.02},
+      "reference": {"status": "pending-native", "kind": "rendered-backend-baseline"}
+    },
+    {
+      "id": "chrome-passwordbox", "scene": "control-chrome", "control": "PasswordBox", "width": 128, "height": 48,
+      "scope": "registered fallback renderer chrome; default templates are separate gallery fixtures",
+      "tolerance": {"maxChannel": 8, "meanChannel": 0.5, "differentPixelFraction": 0.02},
+      "reference": {"status": "pending-native", "kind": "rendered-backend-baseline"}
+    },
+    {
+      "id": "chrome-listviewitem", "scene": "control-chrome", "control": "ListViewItem", "width": 128, "height": 48,
+      "scope": "registered fallback renderer chrome; default templates are separate gallery fixtures",
+      "tolerance": {"maxChannel": 8, "meanChannel": 0.5, "differentPixelFraction": 0.02},
+      "reference": {"status": "pending-native", "kind": "rendered-backend-baseline"}
+    },
+    {
+      "id": "chrome-combobox", "scene": "control-chrome", "control": "ComboBox", "width": 128, "height": 48,
+      "scope": "registered fallback renderer chrome; default templates are separate gallery fixtures",
+      "tolerance": {"maxChannel": 8, "meanChannel": 0.5, "differentPixelFraction": 0.02},
+      "reference": {"status": "pending-native", "kind": "rendered-backend-baseline"}
+    },
+    {
+      "id": "chrome-contentcontrol", "scene": "control-chrome", "control": "ContentControl", "width": 128, "height": 48,
+      "scope": "registered fallback renderer chrome; default templates are separate gallery fixtures",
+      "tolerance": {"maxChannel": 8, "meanChannel": 0.5, "differentPixelFraction": 0.02},
+      "reference": {"status": "pending-native", "kind": "rendered-backend-baseline"}
+    },
+    {
+      "id": "chrome-popup", "scene": "control-chrome", "control": "Popup", "width": 128, "height": 48,
+      "scope": "registered fallback renderer chrome; default templates are separate gallery fixtures",
+      "tolerance": {"maxChannel": 8, "meanChannel": 0.5, "differentPixelFraction": 0.02},
+      "reference": {"status": "pending-native", "kind": "rendered-backend-baseline"}
+    },
+    {
+      "id": "chrome-flyoutpresenter", "scene": "control-chrome", "control": "FlyoutPresenter", "width": 128, "height": 48,
+      "scope": "registered fallback renderer chrome; default templates are separate gallery fixtures",
+      "tolerance": {"maxChannel": 8, "meanChannel": 0.5, "differentPixelFraction": 0.02},
+      "reference": {"status": "pending-native", "kind": "rendered-backend-baseline"}
+    },
+    {
+      "id": "chrome-menuflyoutpresenter", "scene": "control-chrome", "control": "MenuFlyoutPresenter", "width": 128, "height": 48,
+      "scope": "registered fallback renderer chrome; default templates are separate gallery fixtures",
+      "tolerance": {"maxChannel": 8, "meanChannel": 0.5, "differentPixelFraction": 0.02},
+      "reference": {"status": "pending-native", "kind": "rendered-backend-baseline"}
+    },
+    {
+      "id": "chrome-contentdialog", "scene": "control-chrome", "control": "ContentDialog", "width": 128, "height": 48,
+      "scope": "registered fallback renderer chrome; default templates are separate gallery fixtures",
+      "tolerance": {"maxChannel": 8, "meanChannel": 0.5, "differentPixelFraction": 0.02},
+      "reference": {"status": "pending-native", "kind": "rendered-backend-baseline"}
+    },
+    {
+      "id": "instances-10k", "scene": "instances-10k", "width": 1000, "height": 1000, "benchmark": true,
+      "tolerance": {"maxChannel": 8, "meanChannel": 0.5, "differentPixelFraction": 0.02},
+      "reference": {"status": "pending-native", "kind": "rendered-backend-baseline"}
+    },
+    {
+      "id": "gallery-button", "scene": "control-gallery", "control": "Button", "width": 160, "height": 64, "template": "default",
+      "tolerance": {"maxChannel": 8, "meanChannel": 0.5, "differentPixelFraction": 0.02},
+      "reference": {"status": "pending-native", "kind": "public-facade-default-template"}
+    },
+    {
+      "id": "gallery-checkbox", "scene": "control-gallery", "control": "CheckBox", "width": 160, "height": 64, "template": "default",
+      "tolerance": {"maxChannel": 8, "meanChannel": 0.5, "differentPixelFraction": 0.02},
+      "reference": {"status": "pending-native", "kind": "public-facade-default-template"}
+    },
+    {
+      "id": "gallery-radiobutton", "scene": "control-gallery", "control": "RadioButton", "width": 160, "height": 64, "template": "default",
+      "tolerance": {"maxChannel": 8, "meanChannel": 0.5, "differentPixelFraction": 0.02},
+      "reference": {"status": "pending-native", "kind": "public-facade-default-template"}
+    },
+    {
+      "id": "gallery-toggleswitch", "scene": "control-gallery", "control": "ToggleSwitch", "width": 160, "height": 64, "template": "default",
+      "tolerance": {"maxChannel": 8, "meanChannel": 0.5, "differentPixelFraction": 0.02},
+      "reference": {"status": "pending-native", "kind": "public-facade-default-template"}
+    },
+    {
+      "id": "gallery-slider", "scene": "control-gallery", "control": "Slider", "width": 160, "height": 64, "template": "default",
+      "tolerance": {"maxChannel": 8, "meanChannel": 0.5, "differentPixelFraction": 0.02},
+      "reference": {"status": "pending-native", "kind": "public-facade-default-template"}
+    },
+    {
+      "id": "gallery-progressbar", "scene": "control-gallery", "control": "ProgressBar", "width": 160, "height": 64, "template": "default",
+      "tolerance": {"maxChannel": 8, "meanChannel": 0.5, "differentPixelFraction": 0.02},
+      "reference": {"status": "pending-native", "kind": "public-facade-default-template"}
+    },
+    {
+      "id": "gallery-progressring", "scene": "control-gallery", "control": "ProgressRing", "width": 160, "height": 64, "template": "default",
+      "tolerance": {"maxChannel": 8, "meanChannel": 0.5, "differentPixelFraction": 0.02},
+      "reference": {"status": "pending-native", "kind": "public-facade-default-template"}
+    },
+    {
+      "id": "gallery-togglebutton", "scene": "control-gallery", "control": "ToggleButton", "width": 160, "height": 64, "template": "default",
+      "tolerance": {"maxChannel": 8, "meanChannel": 0.5, "differentPixelFraction": 0.02},
+      "reference": {"status": "pending-native", "kind": "public-facade-default-template"}
+    },
+    {
+      "id": "gallery-textbox", "scene": "control-gallery", "control": "TextBox", "width": 160, "height": 64, "template": "default",
+      "tolerance": {"maxChannel": 8, "meanChannel": 0.5, "differentPixelFraction": 0.02},
+      "reference": {"status": "pending-native", "kind": "public-facade-default-template"}
+    },
+    {
+      "id": "gallery-passwordbox", "scene": "control-gallery", "control": "PasswordBox", "width": 160, "height": 64, "template": "default",
+      "tolerance": {"maxChannel": 8, "meanChannel": 0.5, "differentPixelFraction": 0.02},
+      "reference": {"status": "pending-native", "kind": "public-facade-default-template"}
+    },
+    {
+      "id": "gallery-listviewitem", "scene": "control-gallery", "control": "ListViewItem", "width": 160, "height": 64, "template": "default",
+      "tolerance": {"maxChannel": 8, "meanChannel": 0.5, "differentPixelFraction": 0.02},
+      "reference": {"status": "pending-native", "kind": "public-facade-default-template"}
+    },
+    {
+      "id": "gallery-combobox", "scene": "control-gallery", "control": "ComboBox", "width": 160, "height": 64, "template": "default",
+      "tolerance": {"maxChannel": 8, "meanChannel": 0.5, "differentPixelFraction": 0.02},
+      "reference": {"status": "pending-native", "kind": "public-facade-default-template"}
+    },
+    {
+      "id": "gallery-contentcontrol", "scene": "control-gallery", "control": "ContentControl", "width": 160, "height": 64, "template": "default",
+      "tolerance": {"maxChannel": 8, "meanChannel": 0.5, "differentPixelFraction": 0.02},
+      "reference": {"status": "pending-native", "kind": "public-facade-default-template"}
+    },
+    {
+      "id": "gallery-flyoutpresenter", "scene": "control-gallery", "control": "FlyoutPresenter", "width": 160, "height": 64, "template": "default",
+      "tolerance": {"maxChannel": 8, "meanChannel": 0.5, "differentPixelFraction": 0.02},
+      "reference": {"status": "pending-native", "kind": "public-facade-default-template"}
+    },
+    {
+      "id": "gallery-menuflyoutpresenter", "scene": "control-gallery", "control": "MenuFlyoutPresenter", "width": 160, "height": 64,
+      "template": "default", "tolerance": {"maxChannel": 8, "meanChannel": 0.5, "differentPixelFraction": 0.02},
+      "reference": {"status": "pending-native", "kind": "public-facade-default-template"}
+    },
+    {
+      "id": "gallery-contentdialog", "scene": "control-gallery", "control": "ContentDialog", "width": 160, "height": 64, "template": "default",
+      "tolerance": {"maxChannel": 8, "meanChannel": 0.5, "differentPixelFraction": 0.02},
+      "reference": {"status": "pending-native", "kind": "public-facade-default-template"}
+    },
+    {
+      "id": "gallery-button-explicit", "scene": "control-gallery", "control": "Button", "template": "explicit", "width": 160, "height": 64,
+      "tolerance": {"maxChannel": 8, "meanChannel": 0.5, "differentPixelFraction": 0.02},
+      "reference": {"status": "pending-native", "kind": "public-facade-typed-template"}
+    },
+    {
+      "id": "effect-saturation", "scene": "effects", "effectType": "Saturation", "width": 128, "height": 96,
+      "tolerance": {"maxChannel": 16, "meanChannel": 1, "differentPixelFraction": 0.05},
+      "reference": {"status": "pending-native", "kind": "rendered-backend-baseline"}
+    },
+    {
+      "id": "effect-opacity", "scene": "effects", "effectType": "Opacity", "width": 128, "height": 96,
+      "tolerance": {"maxChannel": 16, "meanChannel": 1, "differentPixelFraction": 0.05},
+      "reference": {"status": "pending-native", "kind": "rendered-backend-baseline"}
+    },
+    {
+      "id": "effect-tint", "scene": "effects", "effectType": "Tint", "width": 128, "height": 96,
+      "tolerance": {"maxChannel": 16, "meanChannel": 1, "differentPixelFraction": 0.05},
+      "reference": {"status": "pending-native", "kind": "rendered-backend-baseline"}
+    },
+    {
+      "id": "effect-colorsource", "scene": "effects", "effectType": "ColorSource", "width": 128, "height": 96,
+      "tolerance": {"maxChannel": 16, "meanChannel": 1, "differentPixelFraction": 0.05},
+      "reference": {"status": "pending-native", "kind": "rendered-backend-baseline"}
+    },
+    {
+      "id": "effect-blend", "scene": "effects", "effectType": "Blend", "width": 128, "height": 96,
+      "tolerance": {"maxChannel": 16, "meanChannel": 1, "differentPixelFraction": 0.05},
+      "reference": {"status": "pending-native", "kind": "rendered-backend-baseline"}
+    },
+    {
+      "id": "effect-arithmeticcomposite", "scene": "effects", "effectType": "ArithmeticComposite", "width": 128, "height": 96,
+      "tolerance": {"maxChannel": 16, "meanChannel": 1, "differentPixelFraction": 0.05},
+      "reference": {"status": "pending-native", "kind": "rendered-backend-baseline"}
+    },
+    {
+      "id": "composition-brushes", "scene": "composition-brushes", "width": 128, "height": 128, "backdrop": true,
+      "tolerance": {"maxChannel": 16, "meanChannel": 1, "differentPixelFraction": 0.05},
+      "reference": {"status": "pending-native", "kind": "rendered-backend-baseline"}
+    },
+    {
+      "id": "composition-trim", "scene": "composition-trim", "width": 128, "height": 96,
+      "tolerance": {"maxChannel": 16, "meanChannel": 1, "differentPixelFraction": 0.05},
+      "reference": {"status": "pending-native", "kind": "rendered-backend-baseline"}
+    },
+    {
+      "id": "effects-dpr2", "scene": "effects", "width": 128, "height": 96, "dpr": 2,
+      "tolerance": {"maxChannel": 16, "meanChannel": 1, "differentPixelFraction": 0.05},
+      "reference": {"status": "pending-native", "kind": "rendered-backend-baseline"}
+    },
+    {
+      "id": "numeric-text-10", "scene": "numeric-text", "width": 640, "height": 64, "fontSize": 10, "canvasReference": true,
+      "tolerance": {"maxChannel": 16, "meanChannel": 1, "differentPixelFraction": 0.02},
+      "reference": {"status": "pending-native", "kind": "pinned-numeric-glyphs"}
+    },
+    {
+      "id": "numeric-text-12", "scene": "numeric-text", "width": 640, "height": 64, "fontSize": 12, "canvasReference": true,
+      "tolerance": {"maxChannel": 16, "meanChannel": 1, "differentPixelFraction": 0.02},
+      "reference": {"status": "pending-native", "kind": "pinned-numeric-glyphs"}
+    },
+    {
+      "id": "numeric-text-16", "scene": "numeric-text", "width": 640, "height": 96, "fontSize": 16, "canvasReference": true,
+      "tolerance": {"maxChannel": 16, "meanChannel": 1, "differentPixelFraction": 0.02},
+      "reference": {"status": "pending-native", "kind": "pinned-numeric-glyphs"}
+    },
+    {
+      "id": "numeric-text-24", "scene": "numeric-text", "width": 640, "height": 128, "fontSize": 24, "canvasReference": true,
+      "tolerance": {"maxChannel": 16, "meanChannel": 1, "differentPixelFraction": 0.02},
+      "reference": {"status": "pending-native", "kind": "pinned-numeric-glyphs"}
+    },
+    {
+      "id": "numeric-text-48", "scene": "numeric-text", "width": 640, "height": 224, "fontSize": 48, "canvasReference": true,
+      "tolerance": {"maxChannel": 16, "meanChannel": 1, "differentPixelFraction": 0.02},
+      "reference": {"status": "pending-native", "kind": "pinned-numeric-glyphs"}
+    },
+    {
+      "id": "numeric-text-72", "scene": "numeric-text", "width": 640, "height": 320, "fontSize": 72, "canvasReference": true,
+      "tolerance": {"maxChannel": 16, "meanChannel": 1, "differentPixelFraction": 0.02},
+      "reference": {"status": "pending-native", "kind": "pinned-numeric-glyphs"}
+    },
+    {
+      "id": "numeric-text-dpr2", "scene": "numeric-text", "width": 512, "height": 96, "fontSize": 16, "dpr": 2,
+      "canvasReference": true, "tolerance": {"maxChannel": 16, "meanChannel": 1, "differentPixelFraction": 0.02},
+      "reference": {"status": "pending-native", "kind": "pinned-numeric-glyphs"}
+    },
+    {
+      "id": "numeric-text-color", "scene": "numeric-text", "width": 640, "height": 192, "fontSize": 48,
+      "text": "😀 👩‍💻 👍🏽\n👨‍👩‍👧‍👦 🏳️‍🌈", "canvasReference": true, "colorGlyphs": true,
+      "tolerance": {"maxChannel": 16, "meanChannel": 1, "differentPixelFraction": 0.02},
+      "reference": {"status": "pending-native", "kind": "pinned-color-glyphs"}
+    },
+    {
+      "id": "numeric-text-variable", "scene": "numeric-text", "width": 640, "height": 96, "fontSize": 24,
+      "fontWeight": 700, "fontStyle": "italic", "underline": true, "text": "AV fi Á — variable italic",
+      "canvasReference": true, "tolerance": {"maxChannel": 16, "meanChannel": 1, "differentPixelFraction": 0.02},
+      "reference": {"status": "pending-native", "kind": "pinned-numeric-glyphs"}
+    }
+  ]
+}
