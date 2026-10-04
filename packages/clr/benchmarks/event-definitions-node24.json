@@ -6,8 +6,7 @@
   "environment": "Shared Apple M3 Pro/darwin-arm64. Serial runs; causal uncertainty remains. No significance or general speedup claim.",
   "allocationCount": "not measured",
   "change": "One early validated-table return removes repeated row-limit reads; no benchmark retuning.",
-  "review": "Root reviewer accepted remaining Property cold p95 +24.083 microseconds (+16.5%) and cached p95 +1.713 nanoseconds for the shared Property/Event accessor capability."
-,
+  "review": "Root reviewer accepted remaining Property cold p95 +24.083 microseconds (+16.5%) and cached p95 +1.713 nanoseconds for the shared Property/Event accessor capability.",
   "measurements": [
     {"stage": "parent", "kind": "property", "node": "v24.21.0", "cpu": "Apple M3 Pro", "platform": "darwin", "arch": "arm64", "properties": 9, "allocationCount": "not measured", "previousEquivalentImplementation": false, "results": [{"name": "cold fixture properties, signatures and accessors", "unit": "microseconds/operation", "median": 54.04099999999801, "p95": 146.04199999999423, "p99": 1067.0420000000008}, {"name": "cached property identity and signature", "unit": "microseconds/operation", "median": 0.010304099999999039, "p95": 0.035029099999999855, "p99": 0.1491000000000014}]},
     {"stage": "head", "kind": "property", "node": "v24.21.0", "cpu": "Apple M3 Pro", "platform": "darwin", "arch": "arm64", "properties": 9, "allocationCount": "not measured", "previousEquivalentImplementation": false, "results": [{"name": "cold fixture properties, signatures and accessors", "unit": "microseconds/operation", "median": 64.08299999999656, "p95": 143.16700000000537, "p99": 1129.249999999999}, {"name": "cached property identity and signature", "unit": "microseconds/operation", "median": 0.012904200000001254, "p95": 0.037024999999999864, "p99": 0.12922089999999997}]},
