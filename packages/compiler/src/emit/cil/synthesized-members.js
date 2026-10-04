@@ -186,6 +186,7 @@ function isEntryPointTask(type) {
  * or, for an async `Main`, `Task` or `Task<int>`.
  */
 export function isEntryPointMethod(method) {
+  if (method.isExtensionMetadataDeclaration) return false;
   if (!method.isStatic || method.methodKind !== MethodKind.Ordinary || method.name !== 'Main' || method.typeParameters?.length) return false;
   const parameters = method.parameters,
     takesArguments = parameters.length === 1 && parameters[0].type?.elementType?.specialType === 'System_String' && parameters[0].type.rank === 1;
