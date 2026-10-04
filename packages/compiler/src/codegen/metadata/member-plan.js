@@ -127,7 +127,9 @@ function delegateMethods(type, core) {
     constructor,
     { symbol: invoke, name: 'Invoke', flags: DELEGATE_INVOKE_FLAGS, implFlags: runtime, hasBody: false, parameters },
     member('BeginInvoke', DELEGATE_INVOKE_FLAGS, { isStatic: false, returnType: 'System.IAsyncResult', parameters: begin }, begin),
-    member('EndInvoke', DELEGATE_INVOKE_FLAGS, { isStatic: false, returnType: invoke.returnType, refKind: invoke.refKind, parameters: end }, end),
+    { ...member('EndInvoke', DELEGATE_INVOKE_FLAGS, {
+      isStatic: false, returnType: invoke.returnType, refKind: invoke.refKind, parameters: end,
+    }, end), returnAttributeSource: invoke },
   ];
 }
 

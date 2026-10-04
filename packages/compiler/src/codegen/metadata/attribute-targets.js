@@ -1,6 +1,6 @@
 import { TypeKind } from '../../symbols/types.js';
 
-/** Delegate declarations place return attributes on their runtime-implemented Invoke method. */
+/** Invoke and EndInvoke both inherit the delegate declaration's return attributes. */
 export function returnAttributeSymbols(method) {
   if (!method) return [];
   const type = method.containingType;
@@ -9,4 +9,9 @@ export function returnAttributeSymbols(method) {
 
 export function hasReturnAttributes(method) {
   return returnAttributeSymbols(method).some(symbol => symbol.boundAttributes?.some(attribute => attribute.location === 'return'));
+}
+
+/** A planned runtime member may share the source return contract without sharing a MethodDef symbol. */
+export function returnAttributeSource(planned) {
+  return planned.symbol ?? planned.attributeSymbol ?? planned.returnAttributeSource;
 }

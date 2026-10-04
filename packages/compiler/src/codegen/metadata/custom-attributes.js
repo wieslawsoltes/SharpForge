@@ -24,7 +24,7 @@ import { MethodKind } from '../../symbols/members.js';
 import { needsTypeSpec } from '../generics.js';
 import { fullNameOf, serializedTypeName } from './serialized-type-names.js';
 import { descriptorOf, valueOf, fixedValues } from './attribute-values.js';
-import { returnAttributeSymbols } from './attribute-targets.js';
+import { returnAttributeSymbols, returnAttributeSource } from './attribute-targets.js';
 import { methodSignature, methodSymbolSignature } from './member-signatures.js';
 import { tupleElementNamesOf } from '../../binder/tuples.js';
 import { dynamicTransformFlags } from './dynamic-flags.js';
@@ -127,6 +127,12 @@ export class CustomAttributeWriter {
     const symbol = planned.symbol,
       owner = symbol?.associatedSymbol;
     if (planned.associatedSymbol) this.applied(planned.token, planned.associatedSymbol, 'method');
+    const returnToken = planned.returnParameterToken, returnSource = returnAttributeSource(planned);
+    if (returnToken && returnSource) {
+      for (const declaration of returnAttributeSymbols(returnSource)) this.applied(returnToken, declaration, 'return');
+      this.tupleElementNames(returnToken, returnSource.returnType);
+      this.dynamic(returnToken, returnSource.returnType, isByReference(returnSource.refKind));
+    }
     if (!symbol) {
       // A synthesized accessor of a field-like event (delegate members are runtime-implemented and carry nothing).
       if (planned.isCompilerGenerated) this.compilerGenerated(planned.token);
@@ -138,12 +144,6 @@ export class CustomAttributeWriter {
     if (owner?.kind === SymbolKind.Property && owner.isAutoProperty) this.compilerGenerated(planned.token);
     // The members a record synthesizes, its copy constructor included.
     if (symbol.recordMember || (symbol.isCopyConstructor && symbol.isImplicitlyDeclared)) this.compilerGenerated(planned.token);
-    const returnToken = planned.returnParameterToken;
-    if (returnToken) {
-      for (const declaration of returnAttributeSymbols(symbol)) this.applied(returnToken, declaration, 'return');
-      this.tupleElementNames(returnToken, symbol.returnType);
-      this.dynamic(returnToken, symbol.returnType, isByReference(symbol.refKind));
-    }
     for (const [index, parameter] of symbol.parameters.entries()) {
       const parameterToken = planned.parameterTokens[index];
       if (!parameterToken) continue;

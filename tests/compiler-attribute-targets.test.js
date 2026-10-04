@@ -66,6 +66,9 @@ for (const [name, emit] of [['executable', compileToAssembly], ['reference', com
       assert.equal(token >>> 24, 8, tag);
       assert.equal(metadata.row(token)[1], 0, tag);
     }
+    const delegateReturns = attributes.filter(attribute => attribute.owner === 'TagAttribute'
+      && attribute.decoded.constructorArguments[0].value === 'delegate-return');
+    assert.equal(delegateReturns.length, 2, 'Invoke and EndInvoke both carry the return attribute');
     const setter = tags.get('setter-value');
     assert.equal(setter >>> 24, 8);
     assert.equal(metadata.string(metadata.row(setter)[2]), 'value');

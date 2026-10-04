@@ -27,7 +27,7 @@ import { interfaceReimplementations } from './interface-reimplementations.js';
 import { fieldSignature, methodSignature, methodSymbolSignature, propertySignature } from './member-signatures.js';
 import { constantTypeOf, constantRowValue, NULL_REFERENCE_CONSTANT } from './constant-metadata.js';
 import { writeParameterConstant } from './parameter-metadata.js';
-import { hasReturnAttributes } from './attribute-targets.js';
+import { hasReturnAttributes, returnAttributeSource } from './attribute-targets.js';
 
 const TABLE = Object.freeze({ TypeDef: 2, Field: 4, MethodDef: 6, Param: 8 });
 const SEMANTICS = Object.freeze({ Setter: 1, Getter: 2, AddOn: 8, RemoveOn: 16 });
@@ -191,11 +191,11 @@ export class SymbolMetadataWriter {
           Signature: signature,
           ParamList: nextParameter,
         });
-        const returned = method.symbol?.returnType;
-        if (returned && (tupleElementNamesOf(returned) || dynamicTransformFlags(returned) || hasReturnAttributes(method.symbol))) {
+        const returnSource = returnAttributeSource(method), returned = returnSource?.returnType;
+        if (returned && (tupleElementNamesOf(returned) || dynamicTransformFlags(returned) || hasReturnAttributes(returnSource))) {
           // The return value has a Param row (sequence 0) only when an attribute is written on it.
           method.returnParameterToken = this.builder.addRow('Param', { Flags: 0, Sequence: 0, Name: '' });
-          this.returnParameterTokens.set(method.symbol, method.returnParameterToken);
+          if (method.symbol) this.returnParameterTokens.set(method.symbol, method.returnParameterToken);
           nextParameter++;
         }
         method.parameterTokens = [];
