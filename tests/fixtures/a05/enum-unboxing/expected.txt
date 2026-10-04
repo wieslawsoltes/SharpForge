@@ -1,0 +1,22 @@
+-128
+255
+-32768
+65535
+-2147483648
+4294967295
+-9223372036854775808
+18446744073709551615
+17
+-2147483648
+29
+Choice
+29
+True
+True
+False
+False
+31
+False
+sign rejected
+width rejected
+reverse sign rejected

@@ -8,9 +8,11 @@ import subprocess
 import sys
 import time
 import uuid
+from project16_suites import PROJECT16_SUITES
 
 ROOT = Path(__file__).resolve().parents[3]
 SUITES = {
+    **PROJECT16_SUITES,
     'security': 'conformance/browser/xss_test.py',
     'browser': 'browser_test.py', 'managed': 'browser_managed_test.py',
     'workspace': 'browser_workspace_test.py', 'msbuild': 'browser_msbuild_test.py',

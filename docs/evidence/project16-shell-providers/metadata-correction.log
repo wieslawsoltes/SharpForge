@@ -1,0 +1,41 @@
+✔ public builtin metadata retains actual owners, source receivers and operand categories (19.114077ms)
+✔ shared builtin metadata preserves binding and both emitted runtime artifacts (61.383005ms)
+✔ PE metadata exposes actual generic List members, names, parameter signatures, properties and namespaces (18.202532ms)
+✔ metadata source carries the exact PE identity, source version and matching overload selection (7.34045ms)
+✔ metadata versions never collapse same-name assemblies or infer an ambiguous owner (2.720643ms)
+✔ framework member caret resolves Console.WriteLine rather than treating it as a type name (70.632965ms)
+✖ core intrinsic metadata uses accepted arities, canonical owners, instance parameters and property shape (23.858462ms)
+✔ bound assembly simple identity selects actual PE metadata and rejects multiple matching versions (28.136304ms)
+✔ reference sources use authorized HintPath bytes, transitive project visibility and no source text getters (33.00732ms)
+✔ unavailable, ambiguous and invalid PE references return explicit Object Browser diagnostic rows (32.296398ms)
+✔ metadata inspection rejects byte and declaration limits before returning a partial model (1.430657ms)
+✔ catalog cancellation terminates its dedicated metadata worker and does not cache late replies (32.315566ms)
+✔ Code Definition reads only a bounded caret fragment and prioritizes structured bound owners (27.361646ms)
+✔ Code Definition source definitions bypass metadata and retain exact selection (0.249666ms)
+ℹ tests 14
+ℹ suites 0
+ℹ pass 13
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1114.633617
+
+✖ failing tests:
+
+test at tests/a19-metadata-providers.test.js:71:1
+✖ core intrinsic metadata uses accepted arities, canonical owners, instance parameters and property shape (23.858462ms)
+  AssertionError [ERR_ASSERTION]: The input did not match the regular expression /^string Substring\(int arg0\);$/u. Input:
+  
+  'string Substring(int);'
+  
+      at TestContext.<anonymous> (file:///workspace/scratch/6b99131ca908/p16-shell/tests/a19-metadata-providers.test.js:78:10)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'string Substring(int);',
+    expected: /^string Substring\(int arg0\);$/u,
+    operator: 'match',
+    diff: 'simple'
+  }

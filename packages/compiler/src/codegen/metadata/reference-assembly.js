@@ -15,6 +15,7 @@ import { parseCompilerInput } from '../../parse-input.js';
 import { SemanticAnalysis } from '../../semantic-analysis.js';
 import { adapterPseudo } from '../../semantic-integration.js';
 import { SymbolMetadataWriter } from './symbol-metadata.js';
+import { CustomAttributeWriter } from './custom-attributes.js';
 import { MetadataEmitError } from './type-tokens.js';
 
 const CLI_HEADER_SIZE = 72;
@@ -33,6 +34,7 @@ export function emitReferenceAssembly(analysis, options = {}) {
   const bodyRva = TEXT_RVA + section.length;
   section.bytes(writeMethodBody(THROW_NULL, 0, 1, []));
   const writer = new SymbolMetadataWriter(builder, analysis, { bodyRva }).write();
+  new CustomAttributeWriter(writer, analysis).write();
   section.pad();
   const metadataOffset = section.length,
     metadata = builder.finish(null, section.finish());

@@ -1,5 +1,5 @@
 {
-  "operators/comparison-and-logic": ["diagnostics", "warnings", "bytecode", "cil"],
+  "operators/comparison-and-logic": ["diagnostics", "warnings", "bytecode", "cil", "directCil"],
   "operators/cs0019-and-on-ints": ["diagnostics", "warnings"],
   "operators/cs0019-int-plus-bool": ["diagnostics", "warnings"],
   "operators/cs0019-string-minus": ["diagnostics", "warnings"],
@@ -7,7 +7,7 @@
   "operators/cs0023-not-on-int": ["diagnostics", "warnings"],
   "operators/cs0131-assign-to-expression": ["diagnostics", "warnings"],
   "operators/cs0173-ternary-mismatch": ["diagnostics", "warnings"],
-  "operators/null-coalescing": ["diagnostics", "warnings", "bytecode", "cil"],
-  "operators/short-circuit": ["diagnostics", "warnings", "bytecode", "cil"],
-  "operators/ternary-chain": ["diagnostics", "warnings", "bytecode", "cil"]
+  "operators/null-coalescing": ["diagnostics", "warnings", "bytecode", "cil", "directCil"],
+  "operators/short-circuit": ["diagnostics", "warnings", "bytecode", "cil", "directCil"],
+  "operators/ternary-chain": ["diagnostics", "warnings", "bytecode", "cil", "directCil"]
 }

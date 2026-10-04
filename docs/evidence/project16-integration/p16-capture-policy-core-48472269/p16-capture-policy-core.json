@@ -1,0 +1,89 @@
+{
+  "sourceCommit": "48472269ec106049debc0d448985882463365215",
+  "sourceTree": "8ad180ab94fb21a57e6e9a5c3b17cf553015a717",
+  "capturedMain": "9ac2d74d2b3992e80eb697474178e58269b17ce5",
+  "startedAt": "2026-10-04T02:16:06.884707+00:00",
+  "untrackedPreservedOutsideCheckout": [
+    "packages/clr/src/type-system/metadata-method-definitions.js"
+  ],
+  "steps": [
+    {
+      "name": "check",
+      "command": [
+        "node",
+        "scripts/limited.js",
+        "npm",
+        "run",
+        "check"
+      ],
+      "exitCode": 0,
+      "elapsedSeconds": 4.248347558997921,
+      "log": "/workspace/scratch/6b99131ca908/p16-capture-policy-check.log"
+    },
+    {
+      "name": "review",
+      "command": [
+        "node",
+        "scripts/limited.js",
+        "node",
+        "--input-type=module",
+        "-e",
+        "import {reviewGates} from './scripts/planning/review-gates.js'; const result=reviewGates({event:{pull_request:{base:{sha:'9ac2d74d2b3992e80eb697474178e58269b17ce5'},head:{sha:'48472269ec106049debc0d448985882463365215'},labels:[]}},eventName:'pull_request',expectedSha:'48472269ec106049debc0d448985882463365215'});console.log(JSON.stringify({...result,evidenceKind:'local immutable snapshot review; not a hosted PR event'},null,2));if(!result.passed)process.exitCode=1;"
+      ],
+      "exitCode": 0,
+      "elapsedSeconds": 0.35309389299800387,
+      "log": "/workspace/scratch/6b99131ca908/p16-capture-policy-review.log"
+    },
+    {
+      "name": "quarantine",
+      "command": [
+        "node",
+        "scripts/limited.js",
+        "node",
+        "scripts/conformance/flaky/detect.js",
+        "--check-quarantine"
+      ],
+      "exitCode": 0,
+      "elapsedSeconds": 0.12799621699741692,
+      "log": "/workspace/scratch/6b99131ca908/p16-capture-policy-quarantine.log"
+    },
+    {
+      "name": "build",
+      "command": [
+        "node",
+        "scripts/limited.js",
+        "npm",
+        "run",
+        "build"
+      ],
+      "exitCode": 0,
+      "elapsedSeconds": 4.434398491001048,
+      "log": "/workspace/scratch/6b99131ca908/p16-capture-policy-build.log"
+    },
+    {
+      "name": "standalone",
+      "command": [
+        "node",
+        "scripts/limited.js",
+        "node",
+        "scripts/standalone.js"
+      ],
+      "exitCode": 0,
+      "elapsedSeconds": 1.4625007289978385,
+      "log": "/workspace/scratch/6b99131ca908/p16-capture-policy-standalone.log"
+    },
+    {
+      "name": "checkout",
+      "command": [
+        "node",
+        "scripts/limited.js",
+        "node",
+        "scripts/conformance/clean-checkout.js"
+      ],
+      "exitCode": 1,
+      "elapsedSeconds": 0.1744571189992712,
+      "log": "/workspace/scratch/6b99131ca908/p16-capture-policy-checkout.log"
+    }
+  ],
+  "finishedAt": "2026-10-04T02:16:17.687635+00:00"
+}

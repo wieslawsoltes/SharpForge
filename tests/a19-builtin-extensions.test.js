@@ -27,8 +27,12 @@ test('copying sparse extension registries preserves holes instead of allocating 
 test('environment registration uses the existing A07 reserved block without changing released slots', () => {
   const area = areaReservations.find(value => value.name === 'A07');
   const environment = contracts.filter(value => value.owner === 'System.Environment');
+  const appendFormat = contracts.find(value => value.owner === 'System.Text.StringBuilder'
+    && value.name === 'AppendFormat' && value.parameters.length === 2 && value.parameters[1] === 'object[]');
+  assert.equal(area.start, 524_288);
+  assert.equal(appendFormat.id, 524_288);
   assert.equal(environment.length, 1);
-  assert.equal(environment[0].id, area.start);
+  assert.equal(environment[0].id, 524_289);
   assert.equal(environment[0].name, 'GetEnvironmentVariable');
   assert.equal(Builtins[1781].name, 'string.Intern');
   assert.equal(Builtins[1792].name, '$type.long.GetType');

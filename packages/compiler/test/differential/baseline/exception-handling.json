@@ -1,10 +1,11 @@
 {
-  "exception-handling/catch-finally-order-and-rethrow": ["diagnostics", "warnings", "bytecode", "cil"],
+  "exception-handling/catch-finally-order-and-rethrow": ["diagnostics", "warnings", "bytecode", "cil", "directCil"],
   "exception-handling/catch-order": ["diagnostics", "warnings"],
   "exception-handling/catch-order-with-source-hierarchy": ["diagnostics", "warnings"],
   "exception-handling/catch-variable-scope-and-use": ["diagnostics", "warnings"],
   "exception-handling/caught-and-thrown-types": ["diagnostics", "warnings"],
-  "exception-handling/exception-in-catch-and-finally-replaces": ["diagnostics", "warnings", "bytecode", "cil"],
+  "exception-handling/exception-in-catch-and-finally-replaces": ["diagnostics", "warnings", "bytecode", "cil", "directCil"],
   "exception-handling/rethrow-placement": ["diagnostics", "warnings"],
+  "exception-handling/typed-catch-of-runtime-exceptions": ["directCil"],
   "exception-handling/unreachable-after-throw-and-try": ["diagnostics", "warnings"]
 }

@@ -1,6 +1,6 @@
 {
   "anonymous-methods/body-rules": ["diagnostics", "warnings"],
   "anonymous-methods/captures-and-multicast": ["diagnostics", "warnings", "bytecode", "cil"],
-  "anonymous-methods/parameterless-form-fits-any-signature": ["diagnostics", "warnings", "bytecode", "cil"],
+  "anonymous-methods/parameterless-form-fits-any-signature": ["diagnostics", "warnings", "bytecode", "cil", "directCil"],
   "anonymous-methods/signature-rules": ["diagnostics", "warnings"]
 }
