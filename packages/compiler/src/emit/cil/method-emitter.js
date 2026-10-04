@@ -43,6 +43,11 @@ import { AsyncEmission } from './emit-async.js';
 import { AsyncTryEmission } from './emit-async-try.js';
 import { AsyncIteratorEmission } from './emit-async-iterators.js';
 import { ExpressionTreeEmission } from './emit-expression-trees.js';
+import { StackAllocEmission } from './emit-stackalloc.js';
+import { AnonymousTypeEmission } from './emit-anonymous-types.js';
+import { InterpolatedHandlerEmission } from './emit-interpolated-handlers.js';
+import { PointerEmission } from './emit-pointers.js';
+import { FixedEmission } from './emit-fixed.js';
 
 const families = [
   ConstantEmission,
@@ -85,6 +90,11 @@ const families = [
   AsyncTryEmission,
   AsyncIteratorEmission,
   ExpressionTreeEmission,
+  StackAllocEmission,
+  AnonymousTypeEmission,
+  InterpolatedHandlerEmission,
+  PointerEmission,
+  FixedEmission,
 ];
 
 export class MethodEmitter extends families.reduce((composed, family) => family(composed), EmitterCore) {}

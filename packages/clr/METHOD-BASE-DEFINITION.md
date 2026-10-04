@@ -22,12 +22,50 @@ signatures remain lazy; no executable body is read.
 This is an explicit partial GetBaseDefinition contract. Class/covariant MethodImpl
 slot mappings, strict access checks,
 generic base instantiation, constrained generic methods, type generic variables,
-generic-instance/modifier/function-pointer signature types, array sizes and nonzero
+modifier/function-pointer signature types, array sizes and nonzero
 lower bounds require later services and fail with `SFCLR012` when traversal needs them.
 Opaque host intrinsics have no method metadata: reaching one before locating a
 slot introduction also fails, so an Object override cannot silently become its
 own root. A complete metadata chain with no matching ancestor introduces the
 reuse-slot method itself. This is not a full MethodDef validity or visibility pass.
+
+Generic-instance signature types now match by canonical open definition identity
+and recursively compared argument keys. This supports ordinary overrides whose
+return/parameter types include `Box<int>`, nested instantiations, arrays and method
+generic variables. TypeDef and TypeRef spellings of one definition share identity;
+same-named types from separate assemblies or different argument lists do not.
+No constructed TypeDesc or executable generic type is created. Definition arity
+and class/value category must match. Constrained/variant definitions, unsafe
+generic arguments and TypeSpec definition indirection reject with `SFCLR012`;
+generic declaring/base classes and type-variable substitution remain unsupported.
+The existing GenericParam service supplies ownership and constraints. A lazy
+per-context weak cache retains successful definition arities; each uncached
+definition preflights GenericParam/constraint row counts against the context
+budget. Cancellation precedes publishing definition/signature/root caches.
+Signature decoding supplies the existing depth/node bounds. No new definition
+cache is allocated on paths without generic-instance signatures.
+
+Generic-signature qualification captured 13 independent C# records on SDK
+10.0.201/CoreCLR 10.0.5. All 24 focused generic/base/interface tests passed without
+skips; the final mandatory oracle also passed after adding source/image hash
+assertions and removing its draft skip. Syntax/static checks passed (3,355/3,351
+modules); structure reported 271 existing findings, none in changed files.
+Capture reuses `capture-method-base-definition.mjs` with the explicit
+`tests/fixtures/clr-method-base-generic/Program.cs` source. Its source and image
+hashes are retained; executable fixture bytes were unchanged when recording those
+hashes. The benchmark accepts that fixture's `native-method-bases.json` path.
+
+The exact-parent control (`605ecb90` → `6a12868c`) measured cold 23-method median
+153.541 → 153.459 µs and p95 363.333 → 320.959 µs. Cached median was
+0.135625 → 0.123625 µs, p95 0.182875 → 0.185625 µs (+1.504%, +2.750 ns).
+The new 13-method fixture measured cold median 179.417 µs / p95 349.750 µs and
+cached median 0.122750 µs / p95 0.179292 µs. All 600 raw samples, p99, commands,
+exact sources and fixture hashes are in [benchmark evidence](benchmarks/generic-overrides-node24.json).
+Runs were serial on shared Apple M3 Pro/darwin-arm64, Node 24.21.0, with a 1 GiB
+heap cap. No speed, causal or statistical significance claim is made; allocations
+and cache footprint were not measured. The detached control imported its CLR
+implementation through direct relative paths; its node_modules link shared only
+byte-identical transitive CIL/archive trees, verified by Git tree IDs.
 
 Interface-only MethodImpl rows are now isolated from class virtual slots. The
 service validates owner/token extents, local MethodDef body ownership and duplicate

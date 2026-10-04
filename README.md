@@ -160,6 +160,9 @@ npm start          # builds and serves Studio at http://127.0.0.1:4173
 node apps/cli/main.js run Program.cs                 # compile and run
 node apps/cli/main.js compile Program.cs -o app.dll  # emit a .NET assembly
 node apps/cli/main.js exec app.dll                   # run an assembly
+node apps/cli/main.js compile Program.cs --format dotnet -o app.dll && dotnet app.dll
+                                                     # a real .NET assembly, bound against the installed
+                                                     # SDK's reference pack, run by the .NET runtime
 node apps/cli/main.js decompile library.dll          # inspect any assembly
 node apps/cli/main.js new console --name Hello -o ./Hello
 node apps/cli/main.js --help

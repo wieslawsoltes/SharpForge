@@ -2,7 +2,7 @@ import {callSourceFrame} from './execution/call-frames.js';
 import {beginSourceStackInstruction,handleSourceInstructionFault} from './execution/source-stack-admission.js';
 import {rootValues} from './execution/frame-roots.js';
 import {executionProfiler} from './execution/profiler.js';
-import {sourceRuntimeEvents, flushSourceRuntimeEvents} from './execution/source-runtime-events.js';
+import {sourceRuntimeEvents, flushSourceRuntimeEvents, restoreSourceMethodEvents} from './execution/source-runtime-events.js';
 import {flushFramePool} from './execution/frame-pool.js';
 import {stopExecution} from './execution/stop.js';
 import {sourceConstant} from './execution/source-numbers.js';
@@ -50,6 +50,7 @@ export class VirtualMachine {
     while(this.state==='running'&&this.frames.length&&count<instructionBudget){
       if((count&255)===0&&performance.now()-started>=timeBudgetMs)break;
       this.scheduler.beforeInstruction();if(this.state!=='running'||!this.frames.length)break;const frame=this.top,method=this.image.methods[frame.methodId],code=method.code,base=frame.pc*3,op=code[base],a=code[base+1],b=code[base+2];
+      const frameId = frame.id, methodId = frame.methodId;
       if(!beginSourceStackInstruction(this,frame))break;
       if(op===Op.SEQ){frame.point=this.image.sequencePoints[a];this.currentPoint=frame.point;if(onSequence?.(frame.point,frame)){this.sourcePause=true;this.state='paused';break;}}
       this.sourcePause=false;frame.pc++;count++;this.instructions++;
@@ -57,7 +58,9 @@ export class VirtualMachine {
         if(this.instructions>this.options.maxInstructions)throw new ManagedFault('InstructionLimitException','Program exceeded its instruction budget');
         profiler?.instruction(frame);
         if(!dispatchSourceOpcode(this,frame,op,a,b))throw new ManagedFault('InvalidProgramException','Unknown instruction');
-      }catch(error){if(!handleSourceInstructionFault(this,error))break;}finally{flushFramePool(this);}
+      } catch (error) {
+        if (!handleSourceInstructionFault(this, error, {frame, opcode: op, index: base / 3, method: methodId, frameId})) break;
+      } finally { flushFramePool(this); }
       this.scheduler.afterInstruction();
     }
     this.currentPoint=this.top?.point??null;this.elapsedMs+=performance.now()-started;return this.state;
@@ -74,5 +77,9 @@ export class VirtualMachine {
   stop(){stopExecution(this);}
   statistics(){return {artifactFormat:this.image.il?'ECMA-335':'SharpForge IR',assembly:this.image.il?{bytes:this.image.il.assemblyBytes,loadMs:this.image.il.loadMs,decodeMs:this.image.il.decodeMs,verificationMs:this.image.il.verificationMs}:null,instructions:this.instructions,elapsedMs:this.elapsedMs,frames:this.frames.length,heap:{...this.heap.stats,maxBytes:this.heap.maxBytes,threshold:this.heap.threshold}};}
   snapshot(){return snapshotVM(this,'source');}
-  restore(snapshot){return restoreVM(this,snapshot,'source');}
+  restore(snapshot) {
+    const result = restoreVM(this, snapshot, 'source');
+    restoreSourceMethodEvents(this);
+    return result;
+  }
 }

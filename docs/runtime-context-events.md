@@ -1,10 +1,11 @@
-# Cooperative CIL context events
+# Cooperative runtime context events
 
-With `runtimeEvents: true`, `Suspend` records a live active CIL context losing
+With `runtimeEvents: true`, `Suspend` records a live active context losing
 execution when the cooperative scheduler switches to another context or parks
 because nothing is runnable. `Resume` records a previously observed suspended
 context becoming active again. A newly queued context's first activation emits
-neither event. Payloads contain only `{context, frame}`: logical context ID and
+neither event. Direct CIL, source and reloaded-source VMs use the same scheduler
+observer. Payloads contain only `{context, frame}`: logical context ID and
 the top managed frame ID at that transition. They are not OS thread identifiers.
 
 The events are emitted after the existing load or park operation commits. The
@@ -20,8 +21,8 @@ no guest frames, task handles, or stacks. There are no new VM, context, schedule
 or snapshot fields. Completion removes a context's observation, and cancellation
 or stop clears the observation baseline without inventing a `Resume` for work
 that never ran again. Bookkeeping is constant-time per transition and allocates
-no event payload when CIL events are disabled. Source-VM event instrumentation is
-outside this delivery; its existing scheduling behavior is preserved.
+no event payload when events are disabled. Source support reuses these exact
+transition hooks and weak observation state; it adds no scheduling policy.
 
 Restore explicitly starts a fresh observation baseline. Existing log history
 remains chronological, but its old suspensions are not paired with the restored
@@ -41,11 +42,16 @@ with `{runtimeEvents: true, virtualTime: true}`. `vm.run()` parks it and queues
 `runSlice()` delivers the resume notification. Filter the log for
 `RuntimeEventName.Suspend` and `RuntimeEventName.Resume`.
 
-This partial #1403 increment has authored direct-CIL regression cases in
-`tests/a05-context-events.test.js`. Initial validation passed 21 of 22 focused
-checks. The remaining fixture compared a waiting snapshot with a completed
-context, whose existing retirement cleanup adds a delegate field. After moving
-that assertion to the restore boundary, all eight context-event cases passed at
-`8910aabb`. Product behavior was unchanged. Checks used Node 24, one worker, and
-a 512 MB old-space limit. Broader platform/performance qualification remains
-staged; no performance result is claimed.
+Direct-CIL regression cases are in `tests/a05-context-events.test.js`. Initial
+validation passed 21 of 22 focused checks; after moving a snapshot-schema
+assertion to the actual restore boundary, all eight context-event cases passed
+at `8910aabb`. Product behavior was unchanged. Checks used Node 24, one worker,
+and a 512 MB old-space limit.
+
+Source and reloaded-source cases are in `tests/a05-source-context-events.test.js`.
+The source extension covers actual wait/wake, round-robin switch, freeze,
+cancellation, restore, disabled instrumentation and host callback failures.
+All 76 focused source/CIL context, source exception, source method and source
+method-load checks passed at `4eee89b7f`, using Node 24.21.0, one worker
+and a 512 MB old-space limit. Broader #1403 platform/performance qualification
+remains deferred; no performance result is claimed.
