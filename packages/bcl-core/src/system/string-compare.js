@@ -34,6 +34,22 @@ function ordinalUpper(point) {
   return simpleUpperPoint(point);
 }
 
+/** Match a valid UTF-16 range of second.length units without reading beyond either boundary. */
+export function equalsOrdinalIgnoreCaseRange(first, start, second) {
+  const end = start + second.length;
+  let left = start;
+  let right = 0;
+  while (left < end && right < second.length) {
+    // A high surrogate at the range end stays isolated even if the original string continues with a low surrogate.
+    const firstPoint = left + 1 < end ? first.codePointAt(left) : first.charCodeAt(left);
+    const secondPoint = second.codePointAt(right);
+    if (firstPoint !== secondPoint && ordinalUpper(firstPoint) !== ordinalUpper(secondPoint)) return false;
+    left += firstPoint > 0xffff ? 2 : 1;
+    right += secondPoint > 0xffff ? 2 : 1;
+  }
+  return left === end && right === second.length;
+}
+
 /** Compare nullable strings with the captured ordinal fold in O(n) time and constant auxiliary space. */
 export function compareOrdinalIgnoreCase(first, second) {
   if (first === second) return 0;

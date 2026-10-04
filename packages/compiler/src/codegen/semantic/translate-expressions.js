@@ -38,6 +38,11 @@ export const ExpressionTranslation = Base =>
       if (node.kind === 'Conversion' && node.operand?.type) this.imageType(node.operand.type, node.syntax);
       if (value.isNull) return n.nullLiteral(node.type ? this.imageType(node.type, node.syntax) : 'object');
       const type = node.type ? this.imageType(node.type, node.syntax) : null;
+      if (node.kind === 'FieldAccess' && value.isEnum && value.enumType === node.type &&
+          this.g.bridge.registryName(node.type) === type) {
+        // The existing enum field IR emits Op.ENUM, retaining the registered carrier on both engines.
+        return {kind: 'FieldAccess', legacyType: type, isExpression: true, receiver: null, field: null, constantValue: value};
+      }
       if (!type || !foldableTypes.has(type)) return null;
       const raw = typeof value.value === 'bigint' ? Number(value.value) : value.value;
       return n.literal(raw, type);

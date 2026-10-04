@@ -15,14 +15,14 @@ export function registerStringBuilder({define, member, ctor, prop}) {
   for (const parameters of [[], ['string']]) member(owner, 'AppendLine', parameters, owner);
   const methods = [
     ['Clear', [], owner],
-    ['ToString', [], 'string'],
+    ['ToString', [], 'string', {objectToStringOverride: true}],
     ['ToString', ['int', 'int'], 'string'],
     ['Insert', ['int', 'string'], owner],
     ['Remove', ['int', 'int'], owner],
     ['Replace', ['string', 'string'], owner],
     ['EnsureCapacity', ['int'], 'int']
   ];
-  for (const [name, parameters, result] of methods) member(owner, name, parameters, result);
+  for (const [name, parameters, result, options] of methods) member(owner, name, parameters, result, options);
   for (let count = 1; count <= 3; count++) {
     member(owner, 'AppendFormat', ['string', ...Array(count).fill('object')], owner);
   }
