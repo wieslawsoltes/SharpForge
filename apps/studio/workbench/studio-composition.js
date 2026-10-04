@@ -9,6 +9,7 @@ import { createStudioMetadataReader } from './studio-metadata-reference.js';
 import { createStudioEditorHost } from './studio-editor-host.js';
 import { mountStudioSessions } from './studio-session-ui.js';
 import { mountStudioShell } from './studio-shell.js';
+import { startStudioWorkspace } from './studio-workspace-startup.js';
 
 export function studioEditorOptions(settings) {
   const { endOfLine, normalizeLineEndings, ...options } = settings?.editor ?? {};
@@ -246,14 +247,7 @@ function registerCommands(context, owners) {
 }
 
 function startWorkspace(context, owners) {
-  const recovered = context.recover();
-  if (recovered) {
-    context.renderWorkspace();
-    if (context.projects.sourceUris(context.projects.selectedId).length) context.build(true);
-  } else {
-    context.loadSample('particles', true);
-  }
-  owners.workbenchShell.startup({ recovered }).catch(error => context.toast(error.message, 'error'));
+  owners.ready = startStudioWorkspace(context, owners.workbenchShell);
   context.automation.contributeAutomation('', {
     get workbenchShell() { return owners.workbenchShell; },
     getShell: () => owners.workbenchShell,
