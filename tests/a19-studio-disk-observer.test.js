@@ -11,28 +11,31 @@ for (const encoding of ['utf-8', 'utf-16le', 'utf-16be']) {
     const {uri, handle, disk, documents, observer} = context;
     const record = documents.get(uri);
     const model = documents.models.get(uri);
-    const version = disk.getVersion(uri);
-    context.external('class C { string Text = "😀界"; }\r\n', {bom: true});
-    const observed = await observer.read(uri);
-    assert.equal(observed.encoding, encoding);
-    assert.equal(observed.bom, true);
-    assert.equal(observed.text, 'class C { string Text = "😀界"; }\r\n');
-    assert.equal('model' in observed, false);
-    assert.equal('source' in observed, false);
-    assert.equal(await context.reload(observed), true);
-    assert.equal(documents.get(uri), record);
-    assert.equal(documents.models.get(uri), model);
-    assert.equal(record.dirty, false);
-    assert.equal(model.metadata.encoding, encoding);
-    assert.equal(model.metadata.bom, true);
-    assert.equal(record.source, record.originalSource);
-    assert.equal(disk.getVersion(uri), version + 1);
-    documents.update(uri, observed.text + '// next\n', {version: record.version});
-    const captured = documents.captureSave(uri);
-    await disk.save([captured]);
-    documents.markSaved(uri, captured);
-    assert.deepEqual(handle.bytes, encodeWorkspaceFile({path: uri, text: captured.text, encoding, bom: true}));
-    assert.equal(record.dirty, false);
+    for (const bom of [false, true]) {
+      const version = disk.getVersion(uri);
+      context.external('class C { string Text = "😀界"; }\r\n', {bom});
+      const observed = await observer.read(uri);
+      assert.equal(observed.encoding, encoding);
+      assert.equal(observed.bom, bom);
+      assert.equal(observed.text, 'class C { string Text = "😀界"; }\r\n');
+      assert.equal('model' in observed, false);
+      assert.equal('source' in observed, false);
+      assert.equal(await context.reload(observed), true);
+      assert.equal(documents.get(uri), record);
+      assert.equal(documents.models.get(uri), model);
+      assert.equal(disk.byPath.get(uri).model, undefined);
+      assert.equal(record.dirty, false);
+      assert.equal(model.metadata.encoding, encoding);
+      assert.equal(model.metadata.bom, bom);
+      assert.equal(record.source, record.originalSource);
+      assert.equal(disk.getVersion(uri), version + 1);
+      documents.update(uri, observed.text + '// next\n', {version: record.version});
+      const captured = documents.captureSave(uri);
+      await disk.save([captured]);
+      documents.markSaved(uri, captured);
+      assert.deepEqual(handle.bytes, encodeWorkspaceFile({path: uri, text: captured.text, encoding, bom}));
+      assert.equal(record.dirty, false);
+    }
     assert(handle.reads.every(read => read.end - read.start <= 256 * 1024));
   });
 }
@@ -59,6 +62,21 @@ test('A19 a Save As target overrides the original workspace handle and receives 
   assert.equal(new TextDecoder().decode(chosenHandle.bytes), 'save to chosen');
   assert.equal(new TextDecoder().decode(originalHandle.bytes), 'original external');
   assert.equal(originalHandle.metrics.opened, 0);
+});
+
+test('A19 an empty no-BOM UTF-16 observation remains an editable zero-byte source after reload', async t => {
+  const context = await diskObservationContext(t, {encoding: 'utf-16le'});
+  const {uri, observer, documents, disk, handle} = context;
+  context.external('');
+  const observed = await observer.read(uri);
+  assert.equal(observed.text, '');
+  assert.equal(observed.byteLength, 0);
+  await context.reload(observed);
+  assert.equal(documents.get(uri).text, '');
+  assert.equal(documents.get(uri).byteLength, 0);
+  documents.update(uri, 'new');
+  await disk.save([documents.captureSave(uri)]);
+  assert.deepEqual(handle.bytes, encodeWorkspaceFile({path: uri, text: 'new', encoding: 'utf-16le', bom: false}));
 });
 
 test('A19 same-URI workspace replacement and later editor edits both invalidate an old observation', async t => {
@@ -176,6 +194,27 @@ test('A19 a replaced target or record during decoding returns no stale observati
   gate.resolve();
   assert.equal(await reading, null);
   assert.equal(documents.get(uri).text, 'replacement');
+});
+
+test('A19 cancellation during a decoded chunk prevents observation publication and leaves the document unchanged', async t => {
+  const context = await diskObservationContext(t);
+  const {uri, observer, documents} = context;
+  const controller = new AbortController();
+  const file = new Blob(['x'.repeat(300_000)]);
+  const reads = [];
+  const watched = {size: file.size, slice(start, end) {
+    reads.push({start, end});
+    return {async arrayBuffer() {
+      const bytes = await file.slice(start, end).arrayBuffer();
+      if (end > 3) controller.abort();
+      return bytes;
+    }};
+  }};
+  const handle = {async getFile() { return watched; }};
+  context.target = new DiskWorkspace([{path: uri, text: 'original'}], new Map([[uri, handle]]), 'Cancelled', [], [], observationLimits);
+  await assert.rejects(observer.read(uri, {signal: controller.signal}), {name: 'AbortError'});
+  assert.deepEqual(reads, [{start: 0, end: 3}, {start: 0, end: 256 * 1024}]);
+  assert.equal(documents.get(uri).text, 'original');
 });
 
 test('A19 watch reads admit exactly 8,000,000 decoded characters and reject larger or invalid encodings', async t => {

@@ -103,8 +103,9 @@ before acceptance. Callbacks must not perform asynchronous work.
 
 Acceptance replaces the stored descriptor record, updates its source,
 encoding/BOM and byte size, increments the disk revision once, and returns
-`{path, version, byteLength}`. It does not write the physical file or adopt a
-model. Precommit rejection leaves disk state unchanged; an error after `accept`
+`{path, version, byteLength}`. The cache retains immutable content without a
+borrowed editor model; it neither writes the physical file nor adopts or disposes
+a model. Precommit rejection leaves disk state unchanged; an error after `accept`
 has `committed:true`, so notification failures cannot be mistaken for a rollback.
 `SFPROJECT_DISK_OBSERVATION_STALE` identifies changed target/revision/content.
 The workbench observer uses this API for external reload so its next actual

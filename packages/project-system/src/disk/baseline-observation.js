@@ -43,6 +43,7 @@ function stageObservedRecord(workspace, observed) {
   }
   // Build a detached descriptor record so a caller-supplied setter cannot mutate documents during host preparation.
   const descriptors = Object.getOwnPropertyDescriptors(record);
+  delete descriptors.model;
   const source = observed.content;
   descriptors.text = {enumerable: true, configurable: true,
     get() { return typeof this.source === 'string' ? this.source : this.source.getText(0, this.source.length); },
