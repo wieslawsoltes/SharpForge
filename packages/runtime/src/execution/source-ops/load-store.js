@@ -1,5 +1,6 @@
 import {Op} from '@sharpforge/bytecode';
 import {ManagedFault} from '../../heap.js';
+import {copyFrameworkValue} from '../framework-values.js';
 
 /** Source stores retain their assigned value on the shared evaluation stack. */
 export const sourceLoadStoreHandlers = Object.freeze({
@@ -12,7 +13,7 @@ export const sourceLoadStoreHandlers = Object.freeze({
   },
   [Op.STLOC](vm,frame,a) {
     const oldValue=frame.locals[a];
-    frame.locals[a]=vm.stack.at(-1);
+    frame.locals[a]=copyFrameworkValue(vm,vm.stack.at(-1),vm.image.methods[frame.methodId].locals[a]?.type);
     vm.notifyWrite({kind:'local',frameId:frame.id,index:a,value:frame.locals[a],oldValue});
   },
   [Op.LDSTATIC](vm,frame,a) {
@@ -20,7 +21,7 @@ export const sourceLoadStoreHandlers = Object.freeze({
   },
   [Op.STSTATIC](vm,frame,a) {
     const oldValue=vm.statics[a];
-    vm.statics[a]=vm.stack.at(-1);
+    vm.statics[a]=copyFrameworkValue(vm,vm.stack.at(-1),vm.image.statics[a]?.type);
     vm.notifyWrite({kind:'static',index:a,value:vm.statics[a],oldValue});
   },
   [Op.DUP](vm) {

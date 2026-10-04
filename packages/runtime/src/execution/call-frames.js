@@ -4,6 +4,7 @@ import {ManagedFault} from '../heap.js';
 import {framePool} from './frame-pool.js';
 import {methodOffsets} from './method-offsets.js';
 import {storageDefault} from './storage.js';
+import {copyFrameworkValue} from './framework-values.js';
 
 /** Copy normalized arguments into owned storage; call scratch buffers never escape. */
 export function cilCallFrame(vm, method, args, extra) {
@@ -17,18 +18,22 @@ export function cilCallFrame(vm, method, args, extra) {
     frame.method = method;
     frame.offsets = methodOffsets(method);
     frame.needsInitialization = method.name !== '.cctor';
-    const offset = method.signature.isStatic ? 0 : 1;
-    if (offset) frame.args[0] = args[0];
-    for (let index = offset; index < args.length; index++) {
-      const type = method.signature.parameters[index - offset];
-      frame.args[index] = type === undefined ? args[index] : vm.storage(args[index], type);
-    }
-    for (let index = 0; index < method.locals.length; index++) {
-      frame.locals[index] = method.initLocals ? storageDefault(vm, method.locals[index]) : undefined;
-    }
-    Object.assign(frame, extra);
-    commitStackFrame(ticket, frame);
-    return frame;
+    return vm.heap.withRoots(args, () => {
+      const offset = method.signature.isStatic ? 0 : 1;
+      if (offset) frame.args[0] = args[0];
+      for (let index = offset; index < args.length; index++) {
+        const type = method.signature.parameters[index - offset];
+        frame.args[index] = type === undefined ? args[index] : vm.storage(args[index], type);
+        vm.heap.pins.push(frame.args[index]);
+      }
+      for (let index = 0; index < method.locals.length; index++) {
+        frame.locals[index] = method.initLocals ? storageDefault(vm, method.locals[index]) : undefined;
+        vm.heap.pins.push(frame.locals[index]);
+      }
+      Object.assign(frame, extra);
+      commitStackFrame(ticket, frame);
+      return frame;
+    });
   } catch (error) {
     cancelStackFrame(ticket);
     if (frame) pool.retire(frame);
@@ -38,6 +43,7 @@ export function cilCallFrame(vm, method, args, extra) {
 
 /** Source frames reuse locals while retaining the existing shared evaluation stack. */
 export function callSourceFrame(vm, methodId, args) {
+  vm.platform?.ui?.bindingServices?.events.beforeCall(methodId, args);
   if (vm.frames.length >= vm.options.maxFrames) throw new ManagedFault('StackOverflowException', 'Maximum managed call depth exceeded');
   const method = vm.image.methods[methodId];
   if (!method.isStatic && args[0] === null) throw new ManagedFault('NullReferenceException', 'Cannot call an instance method on null');
@@ -45,8 +51,15 @@ export function callSourceFrame(vm, methodId, args) {
   frame.id = ++vm.frameId;
   frame.methodId = methodId;
   frame.base = vm.stack.length;
-  for (let index = 0; index < args.length; index++) frame.locals[index] = args[index];
-  vm.frames.push(frame);
+  try {
+    vm.heap.withRoots(args, () => {
+      for (let index = 0; index < args.length; index++) {
+        frame.locals[index] = copyFrameworkValue(vm, args[index], method.locals[index]?.type);
+        vm.heap.pins.push(frame.locals[index]);
+      }
+      vm.frames.push(frame);
+    });
+  } catch (error) { framePool(vm).retire(frame); throw error; }
   vm.profiler?.enter(frame);
 }
 

@@ -2,6 +2,7 @@ import {popPooledFrame} from './frame-retirement.js';
 import {continuationRootValues} from './frame-roots.js';
 import {ManagedFault} from '../heap.js';
 import {exceptionMatches} from './exception-types.js';
+import {copyFrameworkValue} from './framework-values.js';
 
 export function frameState() { return {exception: null, caught: [], unwinds: []}; }
 
@@ -34,14 +35,17 @@ export function finalizers(vm, frame, source, target = Infinity) {
 }
 
 export function finishReturn(vm, frame, value) {
-  vm.stack.length = frame.base;
-  popPooledFrame(vm);
-  if (vm.frames.length) vm.stack.push(value);
-  else {
-    vm.returnValue = value;
-    vm.state = 'terminated';
-    vm.exitCode = typeof value === 'number' ? value | 0 : 0;
-  }
+  value = copyFrameworkValue(vm, value, vm.image.methods[frame.methodId].returnType);
+  vm.heap.withRoots([value], () => {
+    vm.stack.length = frame.base;
+    popPooledFrame(vm);
+    if (vm.frames.length) vm.stack.push(value);
+    else {
+      vm.returnValue = value;
+      vm.state = 'terminated';
+      vm.exitCode = typeof value === 'number' ? value | 0 : 0;
+    }
+  });
 }
 
 export function transfer(vm, frame, kind, target, value) {

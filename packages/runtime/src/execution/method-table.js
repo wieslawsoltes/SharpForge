@@ -4,6 +4,10 @@ import {frameworkType, canonicalType} from '@sharpforge/framework';
 import {exceptionTypeName, exceptionBaseType} from './exception-types.js';
 
 const aliases = {object:'System.Object',string:'System.String',bool:'System.Boolean',char:'System.Char',sbyte:'System.SByte',byte:'System.Byte',short:'System.Int16',ushort:'System.UInt16',int:'System.Int32',uint:'System.UInt32',long:'System.Int64',ulong:'System.UInt64',float:'System.Single',double:'System.Double',decimal:'System.Decimal',nint:'System.IntPtr',nuint:'System.UIntPtr',void:'System.Void'};
+const primitiveNames = Object.freeze(Object.fromEntries(Object.entries(aliases).map(([name, type]) => [type, name])));
+
+/** Preserve primitive storage spellings while retaining the method table's canonical CLR identity. */
+export function primitiveTypeName(type) { return primitiveNames[type] ?? type; }
 const primitiveSizes = {'System.Boolean':1,'System.Char':2,'System.SByte':1,'System.Byte':1,'System.Int16':2,'System.UInt16':2,'System.Int32':4,'System.UInt32':4,'System.Int64':8,'System.UInt64':8,'System.Single':4,'System.Double':8,'System.Decimal':16,'System.IntPtr':4,'System.UIntPtr':4,'System.Void':0};
 const genericPrefix = 'System.Collections.Generic.';
 const genericNames = new Set(['IEnumerable','IEnumerator','ICollection','IList','IReadOnlyCollection','IReadOnlyList','IComparer','IEqualityComparer','List','Dictionary','HashSet','Queue','Stack']);
@@ -143,6 +147,10 @@ export class MethodTableRegistry {
         interfaces:(template.interfaces??[]).map(type=>substitute(type,args)),flags:{...definition.flags,genericDefinition:false},variance:template.variance??definition.variance,
         fields:(template.fields??[]).map(field=>({...field,type:substitute(field.type,args),...(field.storageType?{storageType:substitute(field.storageType,args)}:{})})),enumUnderlyingType:template.enumUnderlyingType,vtable:template.vtable??definition.vtable,
         valueSize:template.valueSize};
+      const framework = frameworkType(name);
+      if (framework && (framework.kind === 'interface' || framework.interfaces?.length)) {
+        descriptor = {name, genericDefinition: definition, typeArguments: args, ...frameworkMethodTable(framework)};
+      }
     }
     descriptor??={name,...builtin(name,this.nativeIntBits)};
     const token=descriptor.token??this.nextToken--,table=new MethodTable(this,name,token);

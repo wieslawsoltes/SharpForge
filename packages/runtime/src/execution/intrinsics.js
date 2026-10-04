@@ -9,6 +9,7 @@ import {float} from './numeric-ops.js';
 import {internString,isInternedString,referenceEquals,stringChar,stringFromChars} from './strings.js';
 import {enumToString,enumHasFlag} from './enums.js';
 import {objectType,typeFromHandle,typeEquals,typeName,typeHandle,typeProperty,runtimeTypeText} from './tokens.js';
+import {invokeNullable, invokeNullableFramework} from './nullable.js';
 
 function legacyHost(vm, formatType = null) {
   const cache = vm.platform;
@@ -40,6 +41,10 @@ function stringReceiver(context) {
   return value;
 }
 const implementations={
+  nullableCtor: ({vm, descriptor, self, parameters}) => invokeNullable(vm, descriptor, self, parameters),
+  nullableHasValue: ({vm, descriptor, self, parameters}) => invokeNullable(vm, descriptor, self, parameters),
+  nullableValue: ({vm, descriptor, self, parameters}) => invokeNullable(vm, descriptor, self, parameters),
+  nullableDefault: ({vm, descriptor, self, parameters}) => invokeNullable(vm, descriptor, self, parameters),
   decimal:({vm,descriptor,self,parameters})=>invokeDecimal(vm,descriptor,descriptor.signature.isStatic?parameters:[self,...parameters]).value,
   bitConverter:({descriptor,parameters})=>invokeBitConverter(descriptor,parameters),
   nativeSize:({vm})=>nativeSize(vm.options),
@@ -128,7 +133,7 @@ const sharedConversions = new Set(['convertInt32', 'convertDouble', 'convertStri
 export const intrinsicHandlers=new Map(intrinsicDefinitions.map(definition=>{
   if(!definition.contract&&!implementations[definition.implementation])throw new Error(`Missing intrinsic implementation '${definition.implementation}'`);
   return [definition.key,(vm,descriptor,args,selected=definition,isVirtual=false)=>{
-    if(selected.contract)return vm.platform.invoke(selected.contract,args);
+    if(selected.contract)return invokeNullableFramework(vm,selected.contract,args);
     const self=descriptor.signature.isStatic?null:args[0],parameters=descriptor.signature.isStatic?args:args.slice(1);
     if(!descriptor.signature.isStatic&&self===null)throw new ManagedFault('NullReferenceException','Null instance receiver');
     // Shared conversions decode their own arguments through the host adapter.
