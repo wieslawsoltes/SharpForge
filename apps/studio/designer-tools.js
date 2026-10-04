@@ -1,71 +1,289 @@
+import {DesignDocument, DesignerSession, DesignerOptionsService, DesignerAssetPreviewStore} from '@sharpforge/designer';
+import {ContextMenu} from '@sharpforge/controls';
+import {WinUIHost} from '@sharpforge/winui';
 import {DesignerSourceSync} from './designer-source-sync.js';
+import {DesignerResourceSourceSync} from './designer-resource-sync.js';
 import {DesignerChrome} from './designer-chrome.js';
-import {DesignDocument,createDesign,designControls,propertySchema,childSlot,designScene,designFromScene,designPatch,resolvedProperties,generateDesignCode,generateDesignProject,track} from '../../packages/designer/src/index.js';
-import {frameworkType,frameworkAssignable,eventsFor,XAML,CONTROLS,MEDIA} from '../../packages/framework/src/index.js';
-import {WinUIHost} from '../../packages/winui/src/index.js';
-import {TreeModel,TreeView,ContextMenu} from '../../packages/controls/src/index.js';
-import {escapeHtml as E} from '../../packages/editor/src/index.js';
-export const DESIGN_TOOLS=['designer','designer-toolbox','designer-tree','designer-properties','designer-layout','designer-styles','designer-source'];
-const short=t=>t?.split('.').at(-1)??'';
-const show=v=>v===undefined||v===null?'':typeof v==='object'?v.valueType?.endsWith('Thickness')?['Left','Top','Right','Bottom'].map(k=>v[k]).join(', '):v.valueType?.endsWith('CornerRadius')?['TopLeft','TopRight','BottomRight','BottomLeft'].map(k=>v[k]).join(', '):v.Color?'#'+[v.Color.A,v.Color.R,v.Color.G,v.Color.B].map(n=>n.toString(16).padStart(2,'0')).join(''):JSON.stringify(v):String(v);
-const trackText=t=>t.GridUnitType===0?'Auto':t.GridUnitType===2?(t.Value===1?'':t.Value)+'*':String(t.Value);
+import {DesignerSurfaceController} from './designer-surface-controller.js';
+import {DesignerToolbox} from './designer-toolbox.js';
+import {DesignerOutline} from './designer-outline.js';
+import {DesignerAccessibility} from './designer-accessibility.js';
+import {DesignerLiveAttachment} from './designer-live-attachment.js';
+import {DesignerPropertyController} from './designer-property-view.js';
+import {DesignerResourceController} from './designer-resource-view.js';
+import {DesignerResourceGallery} from './designer-resource-gallery.js';
+import {DesignerResourceContext, assertDesignerResourceAction, isDesignerResourceDocument} from './designer-resource-context.js';
+import {DesignerOptionsController} from './designer-options-view.js';
+import {DesignerAssetPreviewController} from './designer-property-preview.js';
+import {mountDesignerSurface, resizeDesignerArtboard} from './designer-surface-view.js';
+import {createDesignerActions, renderDesignerSource} from './designer-actions.js';
+import {disposeDesignerTools} from './designer-tools-disposal.js';
+import {DesignerDocumentUpdates} from './designer-document-updates.js';
+import {buildDesignerPreviewScene} from './designer-preview-scene.js';
+
+export const DESIGN_TOOLS = Object.freeze(['designer', 'designer-toolbox', 'designer-tree', 'designer-properties',
+  'designer-layout', 'designer-styles', 'designer-source']);
+
+/** Owns the visual tools for one session; shared Studio services are supplied explicitly. */
 export class DesignerTools {
- constructor(services){Object.assign(this,services);this.document=new DesignDocument();this.zoom=.8;this.mode='pixel';this.snap=8;this.preview=false;this.live=null;this.initialized=false;this.status='Design document · no application code runs until Build & Run';this.styleKey='Accent';this.resourceKind='style';this.templatePart=null;this.search='';this.propertySearch='';this.modelSubscription=this.document.subscribe(e=>this.update(e));this.menu=new ContextMenu({onError:e=>this.error(e)});this.sourceSync=new DesignerSourceSync(this);this.chrome=new DesignerChrome(this);}
- error(e){this.status=e.message??String(e);this.toast(this.status,'error');this.statusElement&&(this.statusElement.textContent=this.status);}
- async safe(action){try{return await action();}catch(e){this.error(e);return null;}}
- panel(id){return this.docking.content.get(id);}
- renderTool(id){if(!DESIGN_TOOLS.includes(id))return false;this.ensure();if(id==='designer-source')this.renderSource();else if(id==='designer-properties')this.renderProperties();else if(id==='designer-layout')this.renderLayout();else if(id==='designer-styles')this.renderResources();requestAnimationFrame(()=>this.drawAdorners());return true;}
- replace(value,{live=null,path='View.sfdesign.json'}={}){if(this.sourceSync.session&&!this.sourceSync.loading)this.sourceSync.disconnect();const next=new DesignDocument(value);this.modelSubscription?.();this.document=next;this.modelSubscription=next.subscribe(e=>this.update(e));this.live=live;this.path=path;this.status=live?'Live application attached · edits are staged until Apply to live':'Design document opened';this.update({kind:'load'});}
- ensure(){if(this.initialized)return;this.initialized=true;this.path??='View.sfdesign.json';const p=this.panel('designer');p.classList.add('sf-design-tool');p.innerHTML=`<div class="panel-tools design-toolbar"><button data-design-action="new">New</button><button data-design-action="open">Open</button><button data-design-action="save">Save</button><button data-design-action="download">Export JSON</button><span class="design-divider"></span><button data-design-action="undo" title="Undo (Ctrl+Z)">↶</button><button data-design-action="redo" title="Redo (Ctrl+Y)">↷</button><select id="designer-mode" aria-label="Designer editing mode"><option value="pixel">Pixel editing</option><option value="layout">Layout editing</option></select><label>Snap <input id="designer-snap" type="number" min="1" max="64" value="8"></label><select id="designer-zoom" aria-label="Artboard zoom">${[25,50,67,80,100,125,150,200].map(n=>`<option value="${n}" ${n===80?'selected':''}>${n}%</option>`).join('')}</select><button data-design-action="fit">Fit</button><button data-design-action="preview">Preview</button></div><div class="panel-tools design-toolbar"><button data-design-action="attach">Attach running app</button><button data-design-action="apply">Apply to live</button><button data-design-action="generate">Build & Run C#</button><button data-design-action="source">Generated code</button><span class="panel-spacer"></span><label>W <input id="designer-width" type="number" min="100" max="10000" value="960"></label><label>H <input id="designer-height" type="number" min="100" max="10000" value="640"></label><select id="designer-backend" aria-label="Preview renderer"><option value="auto">Auto renderer</option><option value="dom">DOM</option><option value="canvas2d">Canvas2D</option><option value="webgpu">WebGPU + fallback</option></select></div><div class="design-scroll" tabindex="0" aria-label="WinUI design surface"><div class="design-ruler horizontal"></div><div class="design-ruler vertical"></div><div class="design-size"><div class="design-stage"><div class="design-preview"></div><div class="design-overlay"></div></div></div></div><div class="design-status" role="status"></div>`;
-  this.stage=p.querySelector('.design-stage');this.previewRoot=p.querySelector('.design-preview');this.overlay=p.querySelector('.design-overlay');this.scroller=p.querySelector('.design-scroll');this.statusElement=p.querySelector('.design-status');
-  this.host=new WinUIHost(this.previewRoot,{onEvent:(id,event,payload)=>{if(!this.preview)return;this.status='Preview input only · managed handlers run in the WinUI Application panel';this.statusElement.textContent=this.status;},onLayout:()=>this.drawAdorners(),onMetrics:m=>{this.metrics=m;},onError:e=>this.error(e)});
-  for(const b of p.querySelectorAll('[data-design-action]'))b.onclick=()=>this.safe(()=>this.action(b.dataset.designAction));
-  p.querySelector('#designer-mode').onchange=e=>{this.mode=e.target.value;this.drawAdorners();};p.querySelector('#designer-snap').onchange=e=>{this.snap=Math.max(1,Math.min(64,Number(e.target.value)||1));};p.querySelector('#designer-zoom').onchange=e=>{this.zoom=Number(e.target.value)/100;this.resizeArtboard();};p.querySelector('#designer-backend').onchange=e=>this.host.setBackend(e.target.value);
-  for(const [selector,property]of [['#designer-width','width'],['#designer-height','height']])p.querySelector(selector).onchange=e=>this.safe(()=>this.document.change('Resize artboard',d=>{d[property]=Number(e.target.value);}));
-  this.stage.addEventListener('pointerdown',e=>this.pointerDown(e),true);this.scroller.addEventListener('keydown',e=>this.keydown(e));this.scroller.addEventListener('wheel',e=>{if(!e.ctrlKey&&!e.metaKey)return;e.preventDefault();const box=this.scroller.getBoundingClientRect(),x=e.clientX-box.left,y=e.clientY-box.top,old=this.zoom;this.zoom=Math.max(.1,Math.min(4,old*Math.exp(-e.deltaY*.002)));this.resizeArtboard();this.scroller.scrollLeft=(this.scroller.scrollLeft+x)*this.zoom/old-x;this.scroller.scrollTop=(this.scroller.scrollTop+y)*this.zoom/old-y;},{passive:false});this.scroller.addEventListener('pointerdown',e=>{if(e.button!==1)return;e.preventDefault();e.stopPropagation();const x=e.clientX,y=e.clientY,left=this.scroller.scrollLeft,top=this.scroller.scrollTop;this.trackPointer(e,ev=>{this.scroller.scrollLeft=left+x-ev.clientX;this.scroller.scrollTop=top+y-ev.clientY;},()=>{});},true);this.stage.addEventListener('contextmenu',e=>{e.preventDefault();e.stopPropagation();this.context(e);});this.stage.addEventListener('dragover',e=>{if(e.dataTransfer.types.includes('application/x-sharpforge-control')){e.preventDefault();e.dataTransfer.dropEffect='copy';}});this.stage.addEventListener('drop',e=>{const type=e.dataTransfer.getData('application/x-sharpforge-control');if(type){e.preventDefault();this.safe(()=>this.insert(type,{x:e.clientX,y:e.clientY}));}});
-  this.resizeObserver=new ResizeObserver(()=>this.drawAdorners());this.resizeObserver.observe(this.stage);
-  const toolbox=this.panel('designer-toolbox');toolbox.classList.add('design-side');toolbox.innerHTML='<div class="panel-tools"><b>Toolbox</b><span class="panel-spacer"></span><span>WinUI web</span></div><input id="designer-tool-filter" aria-label="Search toolbox" placeholder="Search controls"><div class="design-toolbox-list"></div>';toolbox.querySelector('input').oninput=e=>{this.search=e.target.value;this.renderToolbox();};
-  const tree=this.panel('designer-tree');tree.classList.add('design-side');tree.innerHTML='<div class="panel-tools"><b>Document outline</b><button data-tree-up title="Move up">↑</button><button data-tree-down title="Move down">↓</button><button data-tree-delete title="Delete">×</button></div><input aria-label="Search visual tree" placeholder="Search visual tree"><div class="design-tree"></div>';this.treeModel=new TreeModel();this.treeView=new TreeView(tree.querySelector('.design-tree'),{model:this.treeModel,label:'WinUI visual tree',onSelect:nodes=>{if(!this.syncing)this.document.select(nodes.length?nodes.map(n=>n.id):[this.document.value.root]);},onOpen:n=>{this.document.select(n.id);this.docking.activate('designer-properties');},onContextMenu:({event,x,y,anchor,node})=>{if(node&&!this.document.selection.includes(node.id))this.document.select(node.id);this.context({clientX:x??event.clientX,clientY:y??event.clientY,target:anchor??event.target});},onCommand:command=>this.safe(()=>this.action(command==='delete'?'delete':command==='copy'?'copy':command)),onDrop:(nodes,target,{copy:duplicate})=>this.safe(()=>{const candidate=new DesignDocument(this.document.value),ids=[];for(const n of nodes){const id=duplicate?candidate.duplicate(n.id):n.id;candidate.move(id,target.id);ids.push(id);}this.document.change('Move visual tree selection',d=>Object.assign(d,candidate.snapshot()));this.document.select(ids);}),onError:e=>this.error(e)});tree.querySelector('input').oninput=e=>this.treeModel.setFilter(e.target.value);tree.querySelector('[data-tree-up]').onclick=()=>this.safe(()=>this.reorder(-1));tree.querySelector('[data-tree-down]').onclick=()=>this.safe(()=>this.reorder(1));tree.querySelector('[data-tree-delete]').onclick=()=>this.safe(()=>this.document.remove());
-  for(const id of ['designer-properties','designer-layout','designer-styles','designer-source'])this.panel(id).classList.add('design-side');
-  this.chrome.install();this.update({kind:'initialize'});
- }
- update(event={}){if(!this.initialized)return;this.syncing=true;try{const d=this.document.value;const tree=id=>{const n=this.document.node(id);return {id,label:(n.properties.Name?n.properties.Name+' · ':'')+short(n.type),kind:'control',icon:childSlot(n.type)?'▰':'◇',defaultExpanded:true,branch:!!childSlot(n.type),dropTarget:!!childSlot(n.type),draggable:id!==d.root,children:n.children.map(tree)};};if(event.kind==='load')this.treeModel.seen=new Set();this.treeModel.setNodes([tree(d.root)]);for(const id of this.document.selection)for(const ancestor of this.treeModel.ancestors(id))this.treeModel.expanded.add(ancestor);this.treeModel.cachedRows=null;this.treeModel.selected=new Set(this.document.selection);this.treeView.render();if(event.kind!=='selection'){this.host.load(designScene(d));this.host.flush();this.resizeArtboard();}this.renderToolbox();this.renderProperties();this.renderLayout();this.renderResources();if(this.state.panel==='designer-source')this.renderSource();this.panel('designer').querySelector('[data-design-action="undo"]').disabled=!this.document.undoStack.length;this.panel('designer').querySelector('[data-design-action="redo"]').disabled=!this.document.redoStack.length;this.panel('designer').querySelector('[data-design-action="apply"]').disabled=!this.live;this.statusElement.textContent=this.status+' · revision '+this.document.revision+(event.kind==='selection'?'':' · '+event.kind);this.drawAdorners();this.chrome.renderSelection();this.chrome.rulers();this.sourceSync.designChanged(event);}finally{this.syncing=false;}}
- resizeArtboard(){const d=this.document.value;this.stage.style.width=d.width+'px';this.stage.style.height=d.height+'px';this.previewRoot.style.width=d.width+'px';this.previewRoot.style.height=d.height+'px';this.stage.style.transform=`scale(${this.zoom})`;const zoomSelect=this.panel('designer').querySelector('#designer-zoom'),percent=Math.round(this.zoom*100);zoomSelect.querySelector('[data-custom]')?.remove();if(![...zoomSelect.options].some(o=>Number(o.value)===percent)){const option=zoomSelect.ownerDocument.createElement('option');option.value=String(percent);option.textContent=percent+'%';option.dataset.custom='true';zoomSelect.append(option);}zoomSelect.value=String(percent);const size=this.stage.parentElement;size.style.width=d.width*this.zoom+'px';size.style.height=d.height*this.zoom+'px';this.panel('designer').querySelector('#designer-width').value=d.width;this.panel('designer').querySelector('#designer-height').value=d.height;this.stage.classList.toggle('interactive',this.preview);this.drawAdorners();this.chrome.rulers();}
- renderToolbox(){const box=this.panel('designer-toolbox').querySelector('.design-toolbox-list'),controls=designControls.filter(c=>c.type!==XAML+'Window'&&(c.name+' '+c.category).toLowerCase().includes(this.search.toLowerCase()));box.innerHTML=[...new Set(controls.map(c=>c.category))].map(category=>`<h4>${E(category)}</h4>${controls.filter(c=>c.category===category).map(c=>`<button data-control="${E(c.type)}" draggable="true" title="Insert ${E(c.name)}"><span>${c.category==='Layout'?'▦':c.category==='Input'?'▤':'◇'}</span>${E(c.name)}</button>`).join('')}`).join('');for(const b of box.querySelectorAll('[data-control]')){b.onclick=()=>this.safe(()=>this.insert(b.dataset.control));b.ondragstart=e=>{e.dataTransfer.setData('application/x-sharpforge-control',b.dataset.control);e.dataTransfer.effectAllowed='copy';};}this.chrome.toolbox();}
- insert(type,point){const doc=this.document,selected=doc.node();let parent=selected;while(parent&&!childSlot(parent.type))parent=doc.parent(parent.id);if(!parent)throw new Error('Select a layout container');const slot=childSlot(parent.type);if(!slot.many&&parent.children.length)throw new Error('Select the panel inside this content control before inserting');const p={};if(point&&parent.type===CONTROLS+'Canvas'){const r=this.host.elements.get(parent.id).getBoundingClientRect();p.Left=Math.round((point.x-r.left)/this.zoom/this.snap)*this.snap;p.Top=Math.round((point.y-r.top)/this.zoom/this.snap)*this.snap;}return doc.add(type,parent.id,p);}
- renderProperties(){const el=this.panel('designer-properties'),selected=this.document.selection.map(id=>this.document.node(id)).filter(Boolean),n=selected[0];if(!n){el.textContent='Select a control';return;}const d=this.document.value,schema=propertySchema(n.type),resolved=resolvedProperties(d,n),supported=Object.entries(schema).filter(([k,p])=>!p.readOnly&&!p.isStatic&&!['Style','Template','Child','Content'].includes(k)||k==='Content'&&n.children.length===0).filter(([k,p])=>['string','int','double','bool','object'].includes(p.type)||frameworkType(p.type)?.kind==='enum'||[XAML+'Thickness',XAML+'CornerRadius',MEDIA+'Brush',MEDIA+'SolidColorBrush'].includes(p.type)).filter(([k])=>selected.every(n=>propertySchema(n.type)[k]));
-  el.innerHTML=`<div class="panel-tools"><b>${selected.length>1?selected.length+' controls':E(n.properties.Name||short(n.type))}</b><span class="panel-spacer"></span><small>${E(short(n.type))}</small></div><input class="design-property-search" aria-label="Search properties" placeholder="Search properties" value="${E(this.propertySearch)}"><div class="design-resource-select"><label>Style<select data-design-ref="style"><option value="">(none)</option>${Object.keys(d.styles).filter(k=>propertySchema(n.type).Style&&frameworkAssignable(d.styles[k].targetType,n.type)).map(k=>`<option ${n.style===k?'selected':''}>${E(k)}</option>`).join('')}</select></label>${schema.Template?`<label>Template<select data-design-ref="template"><option value="">(default)</option>${Object.keys(d.templates).filter(k=>frameworkAssignable(d.templates[k].targetType,n.type)).map(k=>`<option ${n.template===k?'selected':''}>${E(k)}</option>`).join('')}</select></label>`:''}</div><div class="design-property-list">${supported.filter(([k])=>k.toLowerCase().includes(this.propertySearch.toLowerCase())).sort(([a],[b])=>a.localeCompare(b)).map(([k,p])=>{const v=resolved.properties[k],values=frameworkType(p.type)?.values,mixed=selected.some(s=>JSON.stringify(resolvedProperties(d,s).properties[k])!==JSON.stringify(v));let input;if(p.type==='bool')input=`<input type="checkbox" ${v?'checked':''} data-property="${E(k)}">`;else if(values)input=`<select data-property="${E(k)}">${Object.entries(values).map(([name,value])=>`<option value="${value}" ${v===value?'selected':''}>${E(name)}</option>`).join('')}</select>`;else input=`<input data-property="${E(k)}" value="${mixed?'':E(show(v))}" placeholder="${mixed?'Mixed':p.type==='double'?'Auto / unset':''}" ${['double','int'].includes(p.type)?'type="number" step="any"':''}>`;return `<div class="design-property-row" title="${E(resolved.sources[k]??'unset')}"><label>${E(k)}</label>${input}<button data-clear="${E(k)}" title="Clear local value; reveal style/default" class="${resolved.sources[k]==='local'?'local-value':''}">◇</button></div>`;}).join('')}</div><details class="design-events"><summary>Events · managed handlers</summary>${Object.keys(eventsFor(n.type)).map(event=>`<label>${E(event)}<input data-design-event="${E(event)}" value="${E(n.events[event]??'')}" placeholder="Program.On${E(event)}"></label>`).join('')}<p>Handlers are generated as separate C# methods. Live patches preserve existing handlers; new handlers require a code update.</p></details>`;
-  const search=el.querySelector('.design-property-search');search.oninput=e=>{this.propertySearch=e.target.value;const start=e.target.selectionStart;this.renderProperties();const input=el.querySelector('.design-property-search');input.focus();input.setSelectionRange(start,start);};for(const input of el.querySelectorAll('[data-property]'))input.onchange=()=>this.safe(()=>{const name=input.dataset.property,p=schema[name];this.document.setProperty(name,p.type==='bool'?input.checked:input.value===''?undefined:input.value);});for(const b of el.querySelectorAll('[data-clear]'))b.onclick=()=>this.safe(()=>this.document.setProperty(b.dataset.clear,undefined));for(const select of el.querySelectorAll('[data-design-ref]'))select.onchange=()=>this.safe(()=>this.document.setReference(select.dataset.designRef,select.value));for(const input of el.querySelectorAll('[data-design-event]'))input.onchange=()=>this.safe(()=>this.document.change('Edit event',d=>{const item=d.nodes.find(i=>i.id===n.id);if(input.value.trim())item.events[input.dataset.designEvent]=input.value.trim();else delete item.events[input.dataset.designEvent];}));this.chrome.properties();
- }
- renderLayout(){const el=this.panel('designer-layout'),n=this.document.node();if(!n)return;const parent=this.document.parent(n.id),grid=n.type===CONTROLS+'Grid'?n:parent?.type===CONTROLS+'Grid'?parent:null;el.innerHTML=`<div class="panel-tools"><b>Layout</b><span>${E(short(n.type))}</span></div><section><h4>Selection commands</h4><div class="design-command-grid">${['left','center','right','top','middle','bottom','equal-width','equal-height','distribute-x','distribute-y'].map(a=>`<button data-align="${a}">${E(a.replaceAll('-',' '))}</button>`).join('')}</div><p>Align/distribute controls in a common Canvas. Pixel moves use snapped Canvas coordinates; layout mode drags Grid children between cells.</p></section><section><h4>Hierarchy</h4><label>Parent<select id="design-parent">${this.document.value.nodes.filter(x=>childSlot(x.type)&&x.id!==n.id).map(x=>`<option value="${E(x.id)}" ${parent?.id===x.id?'selected':''}>${E(x.properties.Name||x.id)} (${E(short(x.type))})</option>`).join('')}</select></label><button data-reparent ${n.id===this.document.value.root?'disabled':''}>Move to parent</button><button data-to-grid>Convert selected panel to Grid</button><button data-to-canvas>Convert selected panel to Canvas</button><button data-to-stack>Convert selected panel to StackPanel</button></section>${grid?`<section><h4>Grid tracks · ${E(grid.properties.Name||grid.id)}</h4><label>Rows<input id="design-grid-rows" value="${E((grid.rows??[]).map(trackText).join(', '))}" placeholder="Auto, *, 80"></label><label>Columns<input id="design-grid-cols" value="${E((grid.columns??[]).map(trackText).join(', '))}" placeholder="240, 2*, *"></label><button id="design-grid-apply">Apply tracks</button><p>Auto sizes to content; * shares remaining space; numbers are device-independent pixels.</p></section>`:''}`;
-  for(const b of el.querySelectorAll('[data-align]'))b.onclick=()=>this.safe(()=>this.align(b.dataset.align));el.querySelector('[data-reparent]').onclick=()=>this.safe(()=>this.document.move(n.id,el.querySelector('#design-parent').value));for(const [selector,type]of [['[data-to-grid]','Grid'],['[data-to-canvas]','Canvas'],['[data-to-stack]','StackPanel']])el.querySelector(selector).onclick=()=>this.safe(()=>this.document.change('Convert layout',d=>{const item=d.nodes.find(i=>i.id===n.id);if(!['Canvas','Grid','StackPanel'].includes(short(item.type)))throw new Error('Select a layout panel');item.type=CONTROLS+type;delete item.rows;delete item.columns;for(const k of Object.keys(item.properties))if(!propertySchema(item.type)[k])delete item.properties[k];if(type!=='Canvas')for(const child of item.children){const c=d.nodes.find(i=>i.id===child);delete c.properties.Left;delete c.properties.Top;}}));if(grid)el.querySelector('#design-grid-apply').onclick=()=>this.safe(()=>this.document.tracks(grid.id,el.querySelector('#design-grid-rows').value.split(',').map(s=>s.trim()).filter(Boolean),el.querySelector('#design-grid-cols').value.split(',').map(s=>s.trim()).filter(Boolean)));
- }
- align(action){const ids=this.document.selection;if(ids.length<2)throw new Error('Select at least two sibling controls');const parent=this.document.parent(ids[0]);if(!parent||parent.type!==CONTROLS+'Canvas'||ids.some(id=>this.document.parent(id)?.id!==parent.id))throw new Error('Alignment requires a common Canvas parent');const bounds=ids.map(id=>({id,...this.rect(id)})),first=bounds[0],result={};for(const b of bounds){const value={};if(action==='left')value.Left=first.Left;if(action==='right')value.Left=first.Left+first.Width-b.Width;if(action==='center')value.Left=first.Left+(first.Width-b.Width)/2;if(action==='top')value.Top=first.Top;if(action==='bottom')value.Top=first.Top+first.Height-b.Height;if(action==='middle')value.Top=first.Top+(first.Height-b.Height)/2;if(action==='equal-width')value.Width=first.Width;if(action==='equal-height')value.Height=first.Height;result[b.id]=value;}if(action.startsWith('distribute')){const x=action.endsWith('x'),position=x?'Left':'Top',extent=x?'Width':'Height';bounds.sort((a,b)=>a[position]-b[position]);const total=bounds.at(-1)[position]+bounds.at(-1)[extent]-bounds[0][position],gap=(total-bounds.reduce((s,b)=>s+b[extent],0))/(bounds.length-1);let at=bounds[0][position];for(const b of bounds){result[b.id][position]=at;at+=b[extent]+gap;}}this.document.geometry(result);}
- renderResources(){const el=this.panel('designer-styles'),d=this.document.value,isTemplate=this.resourceKind==='template',table=isTemplate?d.templates:d.styles;this.styleKey=Object.hasOwn(table,this.styleKey)?this.styleKey:Object.keys(table)[0]??'';const resource=table[this.styleKey],selection=this.document.node()??this.document.node(this.document.value.root);el.innerHTML=`<div class="panel-tools"><b>Styles & Templates</b><select id="design-resource-kind"><option value="style" ${!isTemplate?'selected':''}>Styles</option><option value="template" ${isTemplate?'selected':''}>Templates</option></select></div><div class="panel-tools"><select id="design-resource-key"><option value="">Select resource</option>${Object.keys(table).map(key=>`<option ${key===this.styleKey?'selected':''}>${E(key)}</option>`).join('')}</select><button id="design-resource-new">New</button><button id="design-resource-apply" ${!resource?'disabled':''}>Assign</button></div>${resource?`<section><label>Target type<input id="design-resource-target" value="${E(short(resource.targetType))}" readonly></label>${!isTemplate?`<label>Based on<select id="design-style-based"><option value="">(none)</option>${Object.keys(d.styles).filter(k=>k!==this.styleKey).map(k=>`<option ${k===resource.basedOn?'selected':''}>${E(k)}</option>`).join('')}</select></label><label><input id="design-style-implicit" type="checkbox" ${resource.implicit?'checked':''}> Apply implicitly to exact type</label>`:''}</section>${isTemplate?'<div class="design-template-parts"></div>':''}<section><h4>${isTemplate?'Selected template part':'Setters'}</h4><div class="design-resource-properties"></div><div class="design-resource-add"><select id="design-setter-name"></select><input id="design-setter-value" placeholder="Value"><button id="design-setter-add">Set</button></div>${isTemplate?'<label>Bind part property to owner property<input id="design-binding-source" placeholder="Content, Text, Foreground…"></label><button id="design-binding-add">Bind selected property</button>':''}</section><details><summary>Resource JSON</summary><textarea id="design-resource-json" spellcheck="false">${E(JSON.stringify(resource,null,2))}</textarea><button id="design-resource-json-apply">Validate and apply JSON</button></details>`:'<p class="advanced-note">Create a resource for the selected control. Local property values override style setters. Templates clone a separate visual tree for each instance.</p>'}`;
-  el.querySelector('#design-resource-kind').onchange=e=>{this.resourceKind=e.target.value;this.styleKey='';this.renderResources();};el.querySelector('#design-resource-key').onchange=e=>{this.styleKey=e.target.value;this.templatePart=null;this.renderResources();};el.querySelector('#design-resource-new').onclick=()=>this.safe(()=>{let key=(isTemplate?'Template':'Style')+'1',i=1;while(table[key])key=(isTemplate?'Template':'Style')+(++i);let type=selection.type;if(isTemplate&&!propertySchema(type).Template||!isTemplate&&!propertySchema(type).Style)type=CONTROLS+'Button';this.styleKey=key;if(isTemplate)this.document.setTemplate(key,{targetType:type,root:{id:'border',type:CONTROLS+'Border',properties:{Padding:12,Background:'#214664',CornerRadius:6},children:[short(type)==='TextBox'?{id:'presenter',type:CONTROLS+'TextBox',properties:{FontSize:16,Foreground:'#ffffff'},bindings:{Text:'Text'},children:[]}:{id:'presenter',type:CONTROLS+'ContentPresenter',properties:{},bindings:{Content:'Content'},children:[]}]}});else this.document.setStyle(key,{targetType:type,setters:{}});});el.querySelector('#design-resource-apply').onclick=()=>this.safe(()=>this.document.setReference(isTemplate?'template':'style',this.styleKey));if(!resource)return;
-  const mutate=(label,fn)=>this.document.change(label,d=>fn((isTemplate?d.templates:d.styles)[this.styleKey]));
-  el.querySelector('#design-resource-json-apply').onclick=()=>this.safe(()=>{const value=JSON.parse(el.querySelector('#design-resource-json').value);isTemplate?this.document.setTemplate(this.styleKey,value):this.document.setStyle(this.styleKey,value);});
-  let part;if(isTemplate){const parts=[];const visit=(n,level=0)=>{parts.push({n,level});n.children?.forEach(c=>visit(c,level+1));};visit(resource.root);part=parts.find(p=>p.n.id===this.templatePart)?.n??resource.root;this.templatePart=part.id;const tree=el.querySelector('.design-template-parts');tree.innerHTML=parts.map(({n,level})=>`<button data-template-part="${E(n.id)}" class="${n.id===part.id?'selected':''}" style="padding-left:${12+level*14}px">${E(short(n.type))} · ${E(n.id)}</button>`).join('')+`<div class="panel-tools"><select id="design-template-add-type">${designControls.filter(c=>c.type!==XAML+'Window').map(c=>`<option value="${E(c.type)}">${E(c.name)}</option>`).join('')}</select><button id="design-template-add">Add part</button><button id="design-template-remove" ${part===resource.root?'disabled':''}>Delete</button></div>`;for(const b of tree.querySelectorAll('[data-template-part]'))b.onclick=()=>{this.templatePart=b.dataset.templatePart;this.renderResources();};const find=(root,id)=>root.id===id?root:(root.children??[]).map(n=>find(n,id)).find(Boolean);tree.querySelector('#design-template-add').onclick=()=>this.safe(()=>mutate('Insert template part',r=>{const p=find(r.root,this.templatePart);let id='part'+(parts.length+1);while(parts.some(x=>x.n.id===id))id+='_';p.children??=[];p.children.push({id,type:tree.querySelector('#design-template-add-type').value,properties:{},children:[]});this.templatePart=id;}));tree.querySelector('#design-template-remove').onclick=()=>this.safe(()=>mutate('Delete template part',r=>{const prune=p=>{p.children=(p.children??[]).filter(c=>c.id!==this.templatePart);p.children.forEach(prune);};prune(r.root);this.templatePart=r.root.id;}));}
-  else{el.querySelector('#design-style-based').onchange=e=>this.safe(()=>mutate('Change base style',r=>{r.basedOn=e.target.value||null;}));el.querySelector('#design-style-implicit').onchange=e=>this.safe(()=>mutate('Toggle implicit style',r=>{r.implicit=e.target.checked;}));}
-  const props=isTemplate?part.properties:resource.setters,type=isTemplate?part.type:resource.targetType,options=Object.entries(propertySchema(type)).filter(([k,p])=>!p.readOnly&&!p.isStatic&&!['Style','Template','Child'].includes(k));el.querySelector('#design-setter-name').innerHTML=options.map(([k])=>`<option>${E(k)}</option>`).join('');el.querySelector('.design-resource-properties').innerHTML=Object.entries(props??{}).map(([k,v])=>`<div class="design-property-row"><label>${E(k)}</label><span>${E(show(v))}</span><button data-remove-setter="${E(k)}">×</button></div>`).join('');const selectedPart=r=>{let found;const walk=p=>{if(p.id===this.templatePart)found=p;p.children?.forEach(walk);};walk(r.root);return found;};el.querySelector('#design-setter-add').onclick=()=>this.safe(()=>mutate('Edit resource value',r=>{const values=isTemplate?(selectedPart(r).properties??={}):r.setters;const key=el.querySelector('#design-setter-name').value;const typeDescriptor=propertySchema(type)[key];let value=el.querySelector('#design-setter-value').value;if(typeDescriptor.type==='bool')value=value==='true';values[key]=value;}));for(const b of el.querySelectorAll('[data-remove-setter]'))b.onclick=()=>this.safe(()=>mutate('Remove setter',r=>{delete (isTemplate?selectedPart(r).properties:r.setters)[b.dataset.removeSetter];}));if(isTemplate)el.querySelector('#design-binding-add').onclick=()=>this.safe(()=>mutate('Bind template property',r=>{const p=selectedPart(r);p.bindings??={};p.bindings[el.querySelector('#design-setter-name').value]=el.querySelector('#design-binding-source').value.trim();}));
- }
- renderSource(){if(!this.initialized)return;const el=this.panel('designer-source');let source;try{source=generateDesignCode(this.document.value);}catch(e){source='// '+e.message;}el.innerHTML=`<div class="panel-tools"><b>Design source</b><button data-source-download>Export .g.cs</button><button data-source-json>Export JSON</button></div><details open><summary>Generated C# · user handlers are separate</summary><textarea class="design-code" spellcheck="false" readonly>${E(source)}</textarea></details><details><summary>Design document JSON</summary><textarea class="design-code" data-design-json spellcheck="false">${E(this.document.serialize())}</textarea><button data-source-apply>Validate and apply design JSON</button></details>`;el.querySelector('[data-source-download]').onclick=()=>this.download('DesignedView.g.cs',source,'text/plain');el.querySelector('[data-source-json]').onclick=()=>this.download(this.path,this.document.serialize(),'application/json');el.querySelector('[data-source-apply]').onclick=()=>this.safe(()=>{const parsed=JSON.parse(el.querySelector('[data-design-json]').value);this.document.change('Apply document JSON',d=>{for(const k of Object.keys(d))delete d[k];Object.assign(d,parsed);});});this.chrome.source(el);}
- rect(id){const e=this.host.elements.get(id),parent=this.document.parent(id),p=parent?this.host.elements.get(parent.id):this.previewRoot;if(!e)return {Left:0,Top:0,Width:100,Height:30};const a=e.getBoundingClientRect(),b=p?.getBoundingClientRect()??this.stage.getBoundingClientRect();const values=resolvedProperties(this.document.value,this.document.node(id)).properties,finite=(v,f)=>Number.isFinite(v)?v:Math.round(f*1000)/1000;return {Left:finite(parent?.type===CONTROLS+'Canvas'?values.Left:undefined,(a.left-b.left)/this.zoom),Top:finite(parent?.type===CONTROLS+'Canvas'?values.Top:undefined,(a.top-b.top)/this.zoom),Width:finite(values.Width,a.width/this.zoom),Height:finite(values.Height,a.height/this.zoom)};}
- drawAdorners(){if(!this.initialized||!this.stage.isConnected||this.drag)return;this.overlay.replaceChildren();if(this.preview)return;const origin=this.stage.getBoundingClientRect(),doc=this.overlay.ownerDocument;for(const id of this.document.selection){const element=this.host.elements.get(id);if(!element)continue;const r=element.getBoundingClientRect(),box=doc.createElement('div');box.className='design-selection';box.dataset.selectionId=id;Object.assign(box.style,{left:(r.left-origin.left)/this.zoom+'px',top:(r.top-origin.top)/this.zoom+'px',width:r.width/this.zoom+'px',height:r.height/this.zoom+'px'});const label=doc.createElement('span');label.className='design-measure';label.textContent=`${this.document.node(id).properties.Name||short(this.document.node(id).type)} · ${Math.round(r.width/this.zoom)} × ${Math.round(r.height/this.zoom)}`;box.append(label);if(id!==this.document.value.root)for(const handle of ['n','ne','e','se','s','sw','w','nw']){const h=doc.createElement('button');h.type='button';h.className='design-handle '+handle;h.dataset.resize=handle;h.dataset.controlId=id;h.setAttribute('aria-label','Resize '+handle);box.append(h);}this.overlay.append(box);}this.drawGridTracks();}
- pointerDown(e){if(this.preview||e.button!==0)return;const boundary=e.target.closest('[data-grid-axis]');if(boundary){this.resizeGridTrack(e,boundary);return;}const handle=e.target.closest('[data-resize]'),el=e.target.closest('[data-sf-id]'),id=handle?.dataset.controlId??this.host.nodes.get(el?.dataset.sfId)?.designId??el?.dataset.sfId;if(!id||!this.document.node(id))return;if(e.shiftKey&&childSlot(this.document.node(id).type)?.many){this.marquee(e,id);return;}e.preventDefault();e.stopPropagation();this.scroller.focus({preventScroll:true});if(e.ctrlKey||e.metaKey){this.document.select(this.document.selection.includes(id)?(this.document.selection.length===1?[this.document.value.root]:this.document.selection.filter(x=>x!==id)):[...this.document.selection,id]);return;}if(!this.document.selection.includes(id))this.document.select(id);if(id===this.document.value.root)return;const ids=handle?[id]:this.document.selection.filter(x=>x!==this.document.value.root);this.drag={ids,handle:handle?.dataset.resize,startX:e.clientX,startY:e.clientY,rects:Object.fromEntries(ids.map(id=>[id,this.rect(id)])),revision:this.document.revision};const doc=this.stage.ownerDocument,move=event=>this.pointerMove(event),end=event=>{doc.removeEventListener('pointermove',move);doc.removeEventListener('pointerup',end);doc.removeEventListener('pointercancel',cancel);this.pointerEnd(event);},cancel=()=>{doc.removeEventListener('pointermove',move);doc.removeEventListener('pointerup',end);doc.removeEventListener('pointercancel',cancel);this.drag=null;this.host.load(designScene(this.document.value));this.host.flush();this.drawAdorners();};doc.addEventListener('pointermove',move);doc.addEventListener('pointerup',end);doc.addEventListener('pointercancel',cancel);}
- pointerMove(e){const drag=this.drag;if(!drag)return;const snap=e.altKey?1:this.snap,dx=Math.round((e.clientX-drag.startX)/this.zoom/snap)*snap,dy=Math.round((e.clientY-drag.startY)/this.zoom/snap)*snap;drag.dx=dx;drag.dy=dy;drag.next={};for(const id of drag.ids){const r=drag.rects[id],next={...r},h=drag.handle;if(h){if(h.includes('e'))next.Width=Math.max(4,r.Width+dx);if(h.includes('s'))next.Height=Math.max(4,r.Height+dy);if(h.includes('w')){next.Width=Math.max(4,r.Width-dx);next.Left=r.Left+r.Width-next.Width;}if(h.includes('n')){next.Height=Math.max(4,r.Height-dy);next.Top=r.Top+r.Height-next.Height;}}else{next.Left+=dx;next.Top+=dy;}drag.next[id]=next;const box=this.overlay.querySelector(`[data-selection-id="${CSS.escape(id)}"]`);if(box){const parent=this.document.parent(id),parentRect=this.host.elements.get(parent?.id)?.getBoundingClientRect()??this.stage.getBoundingClientRect(),stage=this.stage.getBoundingClientRect();Object.assign(box.style,{left:(parentRect.left-stage.left)/this.zoom+next.Left+'px',top:(parentRect.top-stage.top)/this.zoom+next.Top+'px',width:next.Width+'px',height:next.Height+'px'});box.querySelector('.design-measure').textContent=`${Math.round(next.Left)}, ${Math.round(next.Top)} · ${Math.round(next.Width)} × ${Math.round(next.Height)}`;}}}
- pointerEnd(e){const drag=this.drag;this.drag=null;if(!drag?.next||!drag.dx&&!drag.dy){this.drawAdorners();return;}this.safe(()=>{if(drag.revision!==this.document.revision)throw new Error('Design changed while dragging');if(this.mode==='layout'&&!drag.handle){this.document.change('Move between Grid cells',d=>{for(const id of drag.ids){const n=d.nodes.find(n=>n.id===id),parent=d.nodes.find(n=>n.children.includes(id));if(parent?.type!==CONTROLS+'Grid')throw new Error('Layout drag moves Grid children. Use the tree to reorder StackPanel children.');const element=this.host.elements.get(parent.id),box=element.getBoundingClientRect(),style=element.ownerDocument.defaultView.getComputedStyle(element),index=(coord,tracks)=>{let sum=0;for(let i=0;i<tracks.length;i++){sum+=parseFloat(tracks[i])||0;if(coord<sum)return i;}return Math.max(0,tracks.length-1);};n.properties.Row=index((e.clientY-box.top)/this.zoom,style.gridTemplateRows.split(' '));n.properties.Column=index((e.clientX-box.left)/this.zoom,style.gridTemplateColumns.split(' '));delete n.properties.Left;delete n.properties.Top;}});}else{const rects={};for(const [id,r]of Object.entries(drag.next)){const parent=this.document.parent(id);if(!drag.handle&&parent?.type!==CONTROLS+'Canvas')throw new Error('Pixel movement requires a Canvas parent. Use Layout to convert or reparent.');rects[id]=drag.handle&&parent?.type!==CONTROLS+'Canvas'?{Width:r.Width,Height:r.Height}:r;}this.document.geometry(rects);}});this.drawAdorners();}
- trackPointer(start,move,done,cancel=()=>{}){const doc=this.stage.ownerDocument;let active=true;const cleanup=()=>{active=false;doc.removeEventListener('pointermove',onMove);doc.removeEventListener('pointerup',onUp);doc.removeEventListener('pointercancel',onCancel);doc.removeEventListener('keydown',onKey,true);};const onMove=e=>{if(active&&e.pointerId===start.pointerId)move(e);},onUp=e=>{if(e.pointerId!==start.pointerId)return;cleanup();done(e);},onCancel=()=>{cleanup();cancel();},onKey=e=>{if(e.key==='Escape'){e.preventDefault();e.stopPropagation();onCancel();}};doc.addEventListener('pointermove',onMove);doc.addEventListener('pointerup',onUp);doc.addEventListener('pointercancel',onCancel);doc.addEventListener('keydown',onKey,true);}
- marquee(e,parent){e.preventDefault();e.stopPropagation();const start={x:e.clientX,y:e.clientY},selection=e.ctrlKey?[...this.document.selection]:[],box=this.stage.ownerDocument.createElement('div');box.className='design-marquee';this.overlay.append(box);let end=start;const draw=p=>{end={x:p.clientX,y:p.clientY};const origin=this.stage.getBoundingClientRect();Object.assign(box.style,{left:(Math.min(start.x,end.x)-origin.left)/this.zoom+'px',top:(Math.min(start.y,end.y)-origin.top)/this.zoom+'px',width:Math.abs(start.x-end.x)/this.zoom+'px',height:Math.abs(start.y-end.y)/this.zoom+'px'});};this.trackPointer(e,draw,()=>{box.remove();const ids=this.document.node(parent).children.filter(id=>{const r=this.host.elements.get(id)?.getBoundingClientRect();return r&&r.right>=Math.min(start.x,end.x)&&r.left<=Math.max(start.x,end.x)&&r.bottom>=Math.min(start.y,end.y)&&r.top<=Math.max(start.y,end.y);});this.document.select([...new Set([...selection,...ids])].length?[...new Set([...selection,...ids])]:[parent]);},()=>box.remove());}
- drawGridTracks(){if(this.mode!=='layout')return;const current=this.document.node(),grid=current?.type===CONTROLS+'Grid'?current:this.document.parent(current?.id);if(grid?.type!==CONTROLS+'Grid')return;const element=this.host.elements.get(grid.id);if(!element)return;const rect=element.getBoundingClientRect(),origin=this.stage.getBoundingClientRect(),css=element.ownerDocument.defaultView.getComputedStyle(element);for(const axis of ['rows','columns']){const sizes=(axis==='rows'?css.gridTemplateRows:css.gridTemplateColumns).split(' ').map(parseFloat),spacing=parseFloat(axis==='rows'?css.rowGap:css.columnGap)||0;let pos=0;for(let i=0;i<sizes.length-1;i++){pos+=sizes[i]+spacing;const line=this.stage.ownerDocument.createElement('button');line.type='button';line.className='design-grid-track '+axis;line.dataset.gridAxis=axis;line.dataset.gridIndex=i;line.dataset.gridId=grid.id;line.setAttribute('aria-label',`Resize Grid ${axis} ${i+1} boundary`);line.title='Drag to resize adjacent tracks. Star pairs retain proportions; mixed tracks become pixels.';Object.assign(line.style,axis==='rows'?{left:(rect.left-origin.left)/this.zoom+'px',top:(rect.top-origin.top)/this.zoom+pos+'px',width:rect.width/this.zoom+'px'}:{left:(rect.left-origin.left)/this.zoom+pos+'px',top:(rect.top-origin.top)/this.zoom+'px',height:rect.height/this.zoom+'px'});this.overlay.append(line);}}}
- resizeGridTrack(e,handle){e.preventDefault();e.stopPropagation();const {gridId,gridAxis}=handle.dataset,index=Number(handle.dataset.gridIndex),grid=this.document.node(gridId),element=this.host.elements.get(gridId),css=element.ownerDocument.defaultView.getComputedStyle(element),sizes=(gridAxis==='rows'?css.gridTemplateRows:css.gridTemplateColumns).split(' ').map(parseFloat),start=gridAxis==='rows'?e.clientY:e.clientX,version=this.document.revision;let delta=0;this.trackPointer(e,p=>{delta=Math.round(((gridAxis==='rows'?p.clientY:p.clientX)-start)/this.zoom/this.snap)*this.snap;delta=Math.max(4-sizes[index],Math.min(sizes[index+1]-4,delta));handle.style.transform=gridAxis==='rows'?`translateY(${delta}px)`:`translateX(${delta}px)`;},()=>this.safe(()=>{if(version!==this.document.revision)throw new Error('Design changed while resizing Grid tracks');if(!delta){this.drawAdorners();return;}this.document.change('Resize adjacent Grid tracks',d=>{const n=d.nodes.find(x=>x.id===gridId),tracks=n[gridAxis]??sizes.map(n=>track(n)),a=tracks[index],b=tracks[index+1],left=sizes[index]+delta,right=sizes[index+1]-delta;if(a?.GridUnitType===2&&b?.GridUnitType===2){const total=a.Value+b.Value;tracks[index]=track((total*left/(left+right))+'*');tracks[index+1]=track((total*right/(left+right))+'*');}else{tracks[index]=track(left);tracks[index+1]=track(right);}n[gridAxis]=tracks;});}),()=>this.drawAdorners());}
- reorder(delta){const id=this.document.selection[0],p=this.document.parent(id);if(!p)throw new Error('Select a child');const i=p.children.indexOf(id);this.document.move(id,p.id,Math.max(0,Math.min(p.children.length-1,i+delta)));}
- keydown(e){if(e.target.matches('input,select,textarea')||this.preview)return;if(['ArrowLeft','ArrowRight','ArrowUp','ArrowDown','Delete','F10'].includes(e.key)||(e.ctrlKey||e.metaKey)&&['z','y','c','v','d','s','x'].includes(e.key.toLowerCase()))e.stopPropagation();if((e.ctrlKey||e.metaKey)&&['s','x'].includes(e.key.toLowerCase())){e.preventDefault();this.safe(()=>this.action(e.key.toLowerCase()==='s'?'save':'cut'));return;}if((e.ctrlKey||e.metaKey)&&e.key.toLowerCase()==='z'){e.preventDefault();this.document.undo(e.shiftKey);return;}if((e.ctrlKey||e.metaKey)&&e.key.toLowerCase()==='y'){e.preventDefault();this.document.undo(true);return;}if((e.ctrlKey||e.metaKey)&&['c','v'].includes(e.key.toLowerCase())){e.preventDefault();this.safe(()=>this.action(e.key.toLowerCase()==='c'?'copy':'paste'));return;}if((e.ctrlKey||e.metaKey)&&e.key.toLowerCase()==='d'){e.preventDefault();this.safe(()=>this.document.duplicate());return;}if(e.key==='Delete'){e.preventDefault();this.safe(()=>this.document.remove());return;}if(e.key==='F10'&&e.shiftKey){e.preventDefault();const r=this.stage.getBoundingClientRect();this.context({clientX:r.left+50,clientY:r.top+50,target:this.scroller});return;}if(['ArrowLeft','ArrowRight','ArrowUp','ArrowDown'].includes(e.key)){e.preventDefault();this.safe(()=>{const amount=e.shiftKey?this.snap:1,rects={};for(const id of this.document.selection){if(this.document.parent(id)?.type!==CONTROLS+'Canvas')throw new Error('Arrow nudging requires a Canvas child');const r=this.rect(id);rects[id]={Left:r.Left+(e.key==='ArrowLeft'?-amount:e.key==='ArrowRight'?amount:0),Top:r.Top+(e.key==='ArrowUp'?-amount:e.key==='ArrowDown'?amount:0)};}this.document.geometry(rects);});}}
- context(e){this.menu.show({document:e.target?.ownerDocument??this.stage.ownerDocument,anchor:e.target,x:e.clientX,y:e.clientY,items:[{label:'Properties',action:()=>this.docking.activate('designer-properties')},{label:'Layout',action:()=>this.docking.activate('designer-layout')},null,{label:'Copy',shortcut:'Ctrl+C',action:()=>this.action('copy')},{label:'Paste',shortcut:'Ctrl+V',enabled:!!this.clipboard,action:()=>this.action('paste')},{label:'Group in',children:['Canvas','Grid','StackPanel'].map(type=>({label:type,action:()=>this.document.group(CONTROLS+type)}))},{label:'Ungroup',action:()=>this.document.ungroup()},{label:'Duplicate',shortcut:'Ctrl+D',action:()=>this.document.duplicate()},{label:'Delete',shortcut:'Delete',action:()=>this.document.remove()},{label:'Move up',action:()=>this.reorder(-1)},{label:'Move down',action:()=>this.reorder(1)},null,{label:'Undo',shortcut:'Ctrl+Z',enabled:!!this.document.undoStack.length,action:()=>this.document.undo()},{label:'Redo',shortcut:'Ctrl+Y',enabled:!!this.document.redoStack.length,action:()=>this.document.undo(true)},null,{label:'Apply staged changes to live application',enabled:!!this.live,action:()=>this.applyLive()},{label:'Save design',action:()=>this.save()}]});}
- async save(){await this.saveDocument(this.path,this.document.serialize());this.document.savedRevision=this.document.revision;this.status='Saved '+this.path+' in the workspace (included in ZIP export)';this.update({kind:'saved'});}
- async attach(){const state=this.state.debug;if(!state?.uiActive)throw new Error('Run a WinUI application before attaching');const sessionId=state.sessionId,snapshot=await this.request('designSnapshot'),scene=snapshot.scene;if(sessionId!==this.state.debug?.sessionId)throw new Error('Debug session changed');const d=designFromScene(scene,{name:this.state.name});this.replace(d,{live:{sessionId,baseline:structuredClone(d),revision:snapshot.revision}});this.docking.reset('designer');}
- async applyLive(){if(!this.live||this.live.sessionId!==this.state.debug?.sessionId||!this.state.debug?.uiActive)throw new Error('The live application session has closed or changed. Attach the running application again.');const revision=this.document.revision,live=this.live,sent=this.document.snapshot(),patch=designPatch(live.baseline,sent),result=await this.request('applyDesign',{patch,expectedRevision:live.revision});if(live!==this.live)throw new Error('Designer target changed during apply');live.revision=result.revision;const applied=sent;for(const n of applied.nodes)if(result.bindings[n.id])n.runtimeId=result.bindings[n.id];live.baseline=applied;for(const n of this.document.value.nodes)if(result.bindings[n.id])n.runtimeId=result.bindings[n.id];this.status=`Applied ${result.commands} changes · managed control identities and event handlers retained${revision!==this.document.revision?' · newer design edits are still staged':''}`;this.update({kind:'live apply'});return result;}
- async action(action){this.ensure();switch(action){case 'new':this.sourceSync.disconnect();this.replace(createDesign());break;case 'open':{const records=this.records().filter(r=>r.path.endsWith('.sfdesign.json'));if(records.length){const selected=await this.choose('Open design document',records.map(r=>r.path));if(selected)this.replace(JSON.parse(records.find(r=>r.path===selected).text),{path:selected});}else{const doc=this.stage.ownerDocument,input=doc.createElement('input');input.type='file';input.accept='.json';input.onchange=()=>this.safe(async()=>{const f=input.files[0];if(f)this.replace(JSON.parse(await f.text()),{path:f.name.endsWith('.sfdesign.json')?f.name:'View.sfdesign.json'});});input.click();}break;}case 'save':return this.save();case 'download':this.download(this.path,this.document.serialize(),'application/json');break;case 'undo':this.document.undo();break;case 'redo':this.document.undo(true);break;case 'delete':this.document.remove();break;case 'duplicate':this.document.duplicate();break;case 'parent':{const p=this.document.parent(this.document.selection[0]);if(p)this.document.select(p.id);break;}case 'properties':this.docking.activate('designer-properties');break;case 'rename':this.docking.activate('designer-properties');this.propertySearch='Name';this.renderProperties();this.panel('designer-properties').querySelector('[data-property=Name]')?.focus();break;case 'cut':this.clipboard=this.document.snapshot();this.clipboardSelection=[...this.document.selection];this.document.remove();this.status='Design selection cut';break;case 'copy':this.clipboard=this.document.snapshot();this.clipboardSelection=[...this.document.selection];this.status='Design selection copied';break;case 'paste':if(!this.clipboard)throw new Error('No design selection copied');this.document.paste(this.clipboard,this.clipboardSelection);break;case 'fit':this.zoom=Math.max(.1,Math.min(2,(this.scroller.clientWidth-70)/this.document.value.width,(this.scroller.clientHeight-70)/this.document.value.height));this.resizeArtboard();break;case 'preview':this.preview=!this.preview;this.status=this.preview?'Interactive HTML preview · C# callbacks run only in the managed application':'Design mode · drag/select controls';this.resizeArtboard();this.statusElement.textContent=this.status;break;case 'attach':return this.attach();case 'apply':return this.applyLive();case 'source':this.docking.activate('designer-source');this.renderSource();break;case 'generate':{const records=generateDesignProject(this.document.value);await this.createWorkspace(records);await this.runApplication();this.status='Generated project is running. Attach it to edit live state.';break;}default:throw new Error('Unsupported designer command '+action);}}
- snapshot(){return {sourceSync:this.sourceSync.snapshot(),viewMode:this.chrome.mode,document:this.document.snapshot(),revision:this.document.revision,selection:[...this.document.selection],live:!!this.live,status:this.status,zoom:this.zoom,metrics:this.metrics};}
- dispose(){this.sourceSync.dispose();this.chrome.dispose();this.modelSubscription?.();this.treeView?.dispose();this.resizeObserver?.disconnect();this.host?.dispose();this.menu.close();}
+  constructor(services) {
+    Object.assign(this, services);
+    this.ownsSession = !services.session;
+    this.session = services.session ?? new DesignerSession('View.sfdesign.json');
+    this.initialized = false;
+    this.disposed = false;
+    this.syncing = false;
+    this.search = '';
+    this.propertySearch = '';
+    this.styleKey = 'Accent';
+    this.resourceKind = 'style';
+    this.clipboardStore ??= {};
+    this.menu = new ContextMenu({onError: error => this.error(error)});
+    this.designerOptions ??= new DesignerOptionsService(services.settings);
+    const SourceSync = this.session.kind === 'resources' ? DesignerResourceSourceSync : DesignerSourceSync;
+    this.sourceSync = this.session.sourceSync ?? new SourceSync(this);
+    this.session.sourceSync = this.sourceSync;
+    this.sourceSync.auto = this.designerOptions.value.autoSync;
+    this.naming = this.designerOptions.value.naming;
+    this.chrome = new DesignerChrome(this);
+    this.toolbox = new DesignerToolbox(this);
+    this.outline = new DesignerOutline(this);
+    this.accessibility = new DesignerAccessibility(this);
+    this.surface = new DesignerSurfaceController(this);
+    this.properties = new DesignerPropertyController(this);
+    this.resources = new DesignerResourceController(this);
+    this.resourceContext = new DesignerResourceContext(this);
+    this.resourceGallery = new DesignerResourceGallery(this);
+    this.options = new DesignerOptionsController(this);
+    this.liveAttachment = new DesignerLiveAttachment(this);
+    this.assetPreviews = new DesignerAssetPreviewStore({
+      readAsset: path => this.readAsset(path),
+      createObjectURL: blob => URL.createObjectURL(blob),
+      revokeObjectURL: url => URL.revokeObjectURL(url),
+      makeBlob: (bytes, type) => new Blob([bytes], {type})
+    });
+    this.assetPreviewController = new DesignerAssetPreviewController(this);
+    this.updates = new DesignerDocumentUpdates(this);
+    this.actions = createDesignerActions(this);
+    this.subscribeDocument();
+  }
+
+  get document() { return this.templateScope?.document ?? this.session.document; }
+  get resourceDocument() { return isDesignerResourceDocument(this); }
+  get zoom() { return this.session.zoom; }
+  set zoom(value) { this.session.zoom = value; }
+  get mode() { return this.session.mode; }
+  set mode(value) { this.session.mode = value; }
+  get snap() { return this.session.snap; }
+  set snap(value) { this.session.snap = value; }
+  get preview() { return this.session.preview; }
+  set preview(value) { this.session.preview = value; }
+  get live() { return this.session.live; }
+  set live(value) { this.session.live = value; }
+  get status() { return this.session.status; }
+  set status(value) { this.session.status = value; }
+  get path() { return this.session.path; }
+  set path(value) { this.session.path = value; }
+  get controlsRoot() { return this.chrome.commandBar?.element ?? this.panel('designer'); }
+  get clipboard() { return this.clipboardStore.document; }
+  set clipboard(value) { this.clipboardStore.document = value; }
+  get clipboardSelection() { return this.clipboardStore.selection; }
+  set clipboardSelection(value) { this.clipboardStore.selection = value; }
+
+  subscribeDocument() {
+    this.modelSubscription?.();
+    this.modelSubscription = this.document.subscribe(event => this.update(event));
+  }
+
+  panel(id) { return this.panelResolver?.(id) ?? this.docking.content.get(id); }
+
+  error(error) {
+    this.status = error.message ?? String(error);
+    this.toast?.(this.status, 'error');
+    if (this.statusElement) this.statusElement.textContent = this.status;
+    this.accessibility?.reportError?.(error);
+  }
+
+  async safe(action) {
+    try { return await action(); }
+    catch (error) { this.error(error); return null; }
+  }
+
+  ensure() {
+    if (this.initialized || this.disposed) return;
+    this.initialized = true;
+    mountDesignerSurface(this);
+    this.host = new WinUIHost(this.previewRoot, {
+      onEvent: () => {
+        if (!this.preview) return;
+        this.status = 'Preview input only · managed handlers run in the application';
+        this.statusElement.textContent = this.status;
+      },
+      onLayout: () => { this.surface.geometry.invalidate(); this.drawAdorners(); },
+      onMetrics: metrics => { this.metrics = metrics; },
+      onError: error => this.error(error)
+    });
+    this.resizeObserver = new ResizeObserver(() => { this.surface.geometry.invalidate(); this.drawAdorners(); });
+    this.resizeObserver.observe(this.stage);
+    this.chrome.install();
+    this.surface.install();
+    this.accessibility.install();
+    this.liveAttachment.install();
+    this.sourceSync.install?.();
+    this.update({kind: 'initialize'});
+  }
+
+  renderTool(id) {
+    if (!DESIGN_TOOLS.includes(id)) return false;
+    this.ensure();
+    this.updates.renderTool(id);
+    this.drawAdorners();
+    return true;
+  }
+
+  replace(value, {live = null, path = 'View.sfdesign.json'} = {}) {
+    const next = new DesignDocument(value);
+    this.cancelSurfaceEdits();
+    if (this.templateScope) this.resources.leaveTemplate(false);
+    if (this.sourceSync.session && !this.sourceSync.loading) this.sourceSync.disconnect();
+    const previous = this.session.document;
+    this.session.document = next;
+    this.subscribeDocument();
+    previous.dispose();
+    this.live = live;
+    this.path = path;
+    this.status = live ? 'Live application attached · changes are staged until Apply to live' : 'Design document opened';
+    this.update({kind: 'load'});
+  }
+
+  enterTemplateScope(scope) {
+    if (this.templateScope) throw new Error('A template is already being edited');
+    this.cancelSurfaceEdits();
+    this.templateScope = scope;
+    this.subscribeDocument();
+    this.update({kind: 'template-scope'});
+  }
+
+  leaveTemplateScope(scope) {
+    if (this.templateScope !== scope) return;
+    this.cancelSurfaceEdits();
+    this.templateScope = null;
+    this.subscribeDocument();
+    this.update({kind: 'template-scope'});
+    this.sourceSync.designChanged({kind: 'template edit'});
+  }
+
+  cancelSurfaceEdits() {
+    this.surface.cancelPointer?.();
+    this.surface.finishKeyboard(true);
+    this.surface.text.cancel();
+    this.resources?.playback.stop(false);
+  }
+
+  update(event = {}) {
+    return this.updates.update(event);
+  }
+
+  updateTree(event) {
+    return this.updates.updateTree(event);
+  }
+
+  flushVisiblePanels() { this.updates.flushVisible(); }
+
+  buildPreviewScene() { return buildDesignerPreviewScene(this); }
+
+  updatePreview(event) { return this.updates.preview.update(event); }
+
+  updateButtons() {
+    for (const [action, disabled] of [['undo', !this.canUndo()], ['redo', !this.canUndo(true)], ['apply', !this.live]]) {
+      const button = this.controlsRoot.querySelector('[data-design-action="' + action + '"]');
+      if (button) button.disabled = disabled;
+    }
+  }
+
+  resizeArtboard() {
+    if (!this.initialized || !this.stage || this.disposed) return;
+    resizeDesignerArtboard(this);
+    this.surface.preview.applyDimensions();
+    this.surface.geometry.invalidate();
+    this.drawAdorners();
+    this.chrome.rulers();
+  }
+
+  renderToolbox() {
+    this.toolbox.install();
+    if (!this.resourceContext.renderPanel('designer-toolbox')) this.toolbox.render();
+  }
+  insert(type, point) { assertDesignerResourceAction(this, 'insert'); return this.toolbox.insert(type, point); }
+  renderProperties() { if (!this.resourceContext.renderPanel('designer-properties')) this.properties.render(); }
+  renderResources() { this.resources.render(); }
+  renderLayout() { if (!this.resourceContext.renderPanel('designer-layout')) this.surface.layout.render(); }
+  renderSource() { renderDesignerSource(this); }
+  rect(id) { return this.surface.rect(id); }
+  drawAdorners() { if (!this.resourceDocument) { this.surface.drawAdorners(); this.accessibility.adorners(); } }
+  pointerDown(event) { if (!this.resourceDocument) return this.surface.pointerDown(event); }
+  keydown(event) { if (!this.resourceDocument) return this.surface.keydown(event); }
+  context(event) { if (!this.resourceDocument) return this.surface.context(event); }
+  align(action) { assertDesignerResourceAction(this, action); return this.surface.align(action); }
+  drawGridTracks() { return this.surface.drawGridTracks(); }
+  trackPointer(...args) { return this.surface.trackPointer(...args); }
+  reorder(delta) { assertDesignerResourceAction(this, 'reorder'); return this.surface.command(delta < 0 ? 'order:backward' : 'order:forward'); }
+  attach(sessionId, options) { assertDesignerResourceAction(this, 'attach'); return this.liveAttachment.attach(sessionId, options); }
+  applyLive(options) { assertDesignerResourceAction(this, 'apply'); return this.liveAttachment.apply(options); }
+  componentDefinition(id) {
+    const node = this.document.node(id);
+    return node ? this.projectRoots?.definition(node) ?? null : null;
+  }
+
+  openComponent(id = this.document.selection[0]) {
+    const definition = this.componentDefinition(id);
+    if (!definition) throw new Error('The selected control has no project design document');
+    return this.openDesignDocument(definition.uri);
+  }
+
+  canUndo(redo = false) {
+    if (!this.templateScope && this.sourceSync.session && !this.sourceSync.dirty()) {
+      return this.canUndoSource?.(this.session.uri, redo) ?? false;
+    }
+    return (redo ? this.document.redoStack : this.document.undoStack).length > 0;
+  }
+
+  undo(redo = false) {
+    this.surface.finishKeyboard();
+    if (!this.templateScope && this.sourceSync.session && !this.sourceSync.dirty()) {
+      return this.undoSource?.(this.session.uri, redo) ?? false;
+    }
+    return this.document.undo(redo);
+  }
+
+  async readAsset(path) {
+    const record = this.records().find(item => item.path === path);
+    if (!record) throw new Error('Project image is no longer available');
+    if (record.bytes) return record.bytes;
+    if (typeof record.text === 'string') return new TextEncoder().encode(record.text);
+    throw new Error('Project asset has no available bytes');
+  }
+
+  async save() {
+    if (this.session.kind !== 'design' && this.sourceSync.session) return this.sourceSync.write();
+    await this.saveDocument(this.path, this.session.document.serialize());
+    this.session.document.savedRevision = this.session.document.revision;
+    this.status = 'Saved ' + this.path;
+    this.update({kind: 'saved'});
+  }
+
+  async action(action) {
+    this.ensure();
+    assertDesignerResourceAction(this, action);
+    if (this.actions.has(action)) return this.actions.get(action)();
+    return this.surface.command(action);
+  }
+
+  snapshot() {
+    return {uri: this.session.uri, sourceSync: this.sourceSync.snapshot(), viewMode: this.chrome.mode,
+      document: this.document.snapshot(), revision: this.document.revision, selection: [...this.document.selection],
+      live: !!this.live, status: this.status, zoom: this.zoom, metrics: this.metrics};
+  }
+
+  dispose() { disposeDesignerTools(this); }
 }

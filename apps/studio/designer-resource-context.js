@@ -1,6 +1,6 @@
 import {DesignerAuthoringError} from '@sharpforge/designer';
 
-const dictionaryActions = new Set(['new', 'open', 'save', 'download', 'undo', 'redo', 'source', 'options', 'properties']);
+const dictionaryActions = new Set(['more', 'new', 'open', 'save', 'download', 'undo', 'redo', 'source', 'options', 'properties']);
 const applicationActions = new Set(['attach', 'apply', 'run-app', 'generate']);
 const visualPanels = ['designer-toolbox', 'designer-properties', 'designer-layout', 'designer-tree'];
 const canvasControls = '#designer-mode,#designer-snap,#designer-zoom,#designer-width,#designer-height,#designer-backend';
