@@ -91,13 +91,25 @@ No registry or persistent cache is added. Existing signature depth/node limits,
 context identity limits and cancellation checks bound recursive work; successful
 keys remain cached through the existing service.
 
-This function-pointer increment has eight authored tests and a mandatory native
-plan with twelve matches plus six independent three-level mismatches (managed
-versus unmanaged, specific unmanaged convention, arity, return/parameter type and
-nested signature). Source/image provenance is mandatory and no emitted pointer
-is invoked. Installation, native capture, focused tests, paired controls, the
-new-fixture benchmark and checks are pending the serial validation slot; no
-passing result or performance claim is made for this increment yet.
+Function-pointer qualification used SDK 10.0.201/CoreCLR 10.0.5: twelve matching
+records and six independent three-level mismatches agree with native roots
+(managed/unmanaged, unmanaged convention, arity, return/parameter identity and
+nested signature). All 41 focused tests in ten files pass, with no skips. Native
+source/image hashes are mandatory and no emitted pointer is invoked. Syntax/static
+checks pass (3,575/3,571 modules); manifests contain 971 Node files and 37 browser
+scripts. Structure reports 271 existing findings, none in changed files. One
+limiter ran every local validation step serially with a 1 GiB Node heap cap.
+
+On shared Apple M3 Pro/darwin-arm64, Node 24.21.0, existing 23-method cold median
+was 166.334 → 164.042 µs and p95 378.750 → 352.334 µs. Cached median was
+147.541 → 156.208 ns (+8.667 ns/+5.874%) and p95 222.000 → 186.250 ns.
+The integration reviewer explicitly accepted the cached median increase for this
+complete capability. Cached lookup implementation is unchanged; that code fact
+does not establish causality. The new eighteen-method fixture measured cold
+median 300.750 µs / p95 1,009.250 µs and cached median 190.750 ns / p95 1,209.833 ns.
+All [600 raw samples and source-resolution evidence](benchmarks/function-pointer-overrides-node24.json)
+are retained. No reruns, causal/noise attribution or general speedup claim;
+allocation totals and peak memory remain unmeasured.
 
 Constrained generic methods now follow the same implicit class-slot walk. Each
 matched override edge compares method GenericParam constraints separately from

@@ -7,9 +7,10 @@ signatures, byrefs, pointers, custom calling-convention modifiers, method return
 types and enclosing method generic parameters. No function pointer is invoked.
 Type-load failures are retained as records instead of being silently skipped.
 
-Capture and tests are pending the exclusive validation slot. The mandatory
-reference test requires all eighteen observations and matching source/image
-hashes; it has no availability skip. Existing capture and benchmark seams apply:
+SDK 10.0.201/CoreCLR 10.0.5 captured all eighteen observations with no type-load
+errors; all native roots agree with the loader. The mandatory reference test
+checks matching source/image hashes and has no availability skip. All 41 focused
+tests passed under the serial limiter. Existing capture and benchmark seams apply:
 
 ```
 node packages/clr/tools/capture-method-base-definition.mjs tests/fixtures/clr-method-base-function-pointers tests/fixtures/clr-method-base-function-pointers/Program.cs --unsafe
