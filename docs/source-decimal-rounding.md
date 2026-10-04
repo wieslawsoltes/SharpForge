@@ -291,5 +291,7 @@ Console.WriteLine(decimal.ToDouble(d: 16777217m)); // 16777217
 source and direct-CIL cases for actual stored carrier tags and IEEE bits,
 binary rounding boundaries, the full Decimal range, signed zero, named-argument
 evaluation, typed boxes, widening after Single rounding and rejected signatures.
-It records no new native execution or platform/performance evidence. Qualification
-remains in the serial queue, and #1350/#1351 remain open.
+All 30 focused floating-conversion, integral-conversion, and Decimal-operation
+checks passed at `7a06ec21`, using Node 24, one worker, and a 512 MB old-space
+limit. Native/platform/performance evidence remains deferred; #1350/#1351 stay
+open.
