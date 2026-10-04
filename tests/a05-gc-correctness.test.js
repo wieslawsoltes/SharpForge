@@ -104,5 +104,5 @@ test('GC source typing: Int64 results cannot silently narrow into an Int32 local
   assert.equal(BuiltinMap.get('GC.GetTotalMemory').result, 'long');
   const result = compile('int bytes = GC.GetTotalMemory(false);');
   assert.equal(result.success, false);
-  assert(result.diagnostics.some(diagnostic => diagnostic.code === 'CS0029'));
+  assert(result.diagnostics.some(diagnostic => diagnostic.code === 'CS0266'));
 });
