@@ -1,0 +1,1435 @@
+{
+  "sdk": "10.0.201",
+  "runtime": "10.0.5",
+  "sourceSha256": "6b3fc730421e2681a05732fa4427bde967b7de725ac3d562a6564ac5fc457b83",
+  "rows": [
+    {
+      "id": "get-index--2147483648",
+      "write": false,
+      "index": -2147483648,
+      "value": 90,
+      "segments": [
+        [
+          97,
+          98
+        ],
+        [
+          0
+        ],
+        [
+          55296
+        ],
+        [
+          99,
+          100,
+          56320
+        ]
+      ],
+      "result": null,
+      "output": [
+        97,
+        98,
+        0,
+        55296,
+        99,
+        100,
+        56320
+      ],
+      "length": 7,
+      "capacityBefore": 16,
+      "capacity": 16,
+      "maxCapacity": 2147483647,
+      "fault": "IndexOutOfRangeException",
+      "parameter": null
+    },
+    {
+      "id": "get-index--1",
+      "write": false,
+      "index": -1,
+      "value": 90,
+      "segments": [
+        [
+          97,
+          98
+        ],
+        [
+          0
+        ],
+        [
+          55296
+        ],
+        [
+          99,
+          100,
+          56320
+        ]
+      ],
+      "result": null,
+      "output": [
+        97,
+        98,
+        0,
+        55296,
+        99,
+        100,
+        56320
+      ],
+      "length": 7,
+      "capacityBefore": 16,
+      "capacity": 16,
+      "maxCapacity": 2147483647,
+      "fault": "IndexOutOfRangeException",
+      "parameter": null
+    },
+    {
+      "id": "get-index-0",
+      "write": false,
+      "index": 0,
+      "value": 90,
+      "segments": [
+        [
+          97,
+          98
+        ],
+        [
+          0
+        ],
+        [
+          55296
+        ],
+        [
+          99,
+          100,
+          56320
+        ]
+      ],
+      "result": 97,
+      "output": [
+        97,
+        98,
+        0,
+        55296,
+        99,
+        100,
+        56320
+      ],
+      "length": 7,
+      "capacityBefore": 16,
+      "capacity": 16,
+      "maxCapacity": 2147483647,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "get-index-1",
+      "write": false,
+      "index": 1,
+      "value": 90,
+      "segments": [
+        [
+          97,
+          98
+        ],
+        [
+          0
+        ],
+        [
+          55296
+        ],
+        [
+          99,
+          100,
+          56320
+        ]
+      ],
+      "result": 98,
+      "output": [
+        97,
+        98,
+        0,
+        55296,
+        99,
+        100,
+        56320
+      ],
+      "length": 7,
+      "capacityBefore": 16,
+      "capacity": 16,
+      "maxCapacity": 2147483647,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "get-index-2",
+      "write": false,
+      "index": 2,
+      "value": 90,
+      "segments": [
+        [
+          97,
+          98
+        ],
+        [
+          0
+        ],
+        [
+          55296
+        ],
+        [
+          99,
+          100,
+          56320
+        ]
+      ],
+      "result": 0,
+      "output": [
+        97,
+        98,
+        0,
+        55296,
+        99,
+        100,
+        56320
+      ],
+      "length": 7,
+      "capacityBefore": 16,
+      "capacity": 16,
+      "maxCapacity": 2147483647,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "get-index-3",
+      "write": false,
+      "index": 3,
+      "value": 90,
+      "segments": [
+        [
+          97,
+          98
+        ],
+        [
+          0
+        ],
+        [
+          55296
+        ],
+        [
+          99,
+          100,
+          56320
+        ]
+      ],
+      "result": 55296,
+      "output": [
+        97,
+        98,
+        0,
+        55296,
+        99,
+        100,
+        56320
+      ],
+      "length": 7,
+      "capacityBefore": 16,
+      "capacity": 16,
+      "maxCapacity": 2147483647,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "get-index-4",
+      "write": false,
+      "index": 4,
+      "value": 90,
+      "segments": [
+        [
+          97,
+          98
+        ],
+        [
+          0
+        ],
+        [
+          55296
+        ],
+        [
+          99,
+          100,
+          56320
+        ]
+      ],
+      "result": 99,
+      "output": [
+        97,
+        98,
+        0,
+        55296,
+        99,
+        100,
+        56320
+      ],
+      "length": 7,
+      "capacityBefore": 16,
+      "capacity": 16,
+      "maxCapacity": 2147483647,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "get-index-5",
+      "write": false,
+      "index": 5,
+      "value": 90,
+      "segments": [
+        [
+          97,
+          98
+        ],
+        [
+          0
+        ],
+        [
+          55296
+        ],
+        [
+          99,
+          100,
+          56320
+        ]
+      ],
+      "result": 100,
+      "output": [
+        97,
+        98,
+        0,
+        55296,
+        99,
+        100,
+        56320
+      ],
+      "length": 7,
+      "capacityBefore": 16,
+      "capacity": 16,
+      "maxCapacity": 2147483647,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "get-index-6",
+      "write": false,
+      "index": 6,
+      "value": 90,
+      "segments": [
+        [
+          97,
+          98
+        ],
+        [
+          0
+        ],
+        [
+          55296
+        ],
+        [
+          99,
+          100,
+          56320
+        ]
+      ],
+      "result": 56320,
+      "output": [
+        97,
+        98,
+        0,
+        55296,
+        99,
+        100,
+        56320
+      ],
+      "length": 7,
+      "capacityBefore": 16,
+      "capacity": 16,
+      "maxCapacity": 2147483647,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "get-index-7",
+      "write": false,
+      "index": 7,
+      "value": 90,
+      "segments": [
+        [
+          97,
+          98
+        ],
+        [
+          0
+        ],
+        [
+          55296
+        ],
+        [
+          99,
+          100,
+          56320
+        ]
+      ],
+      "result": null,
+      "output": [
+        97,
+        98,
+        0,
+        55296,
+        99,
+        100,
+        56320
+      ],
+      "length": 7,
+      "capacityBefore": 16,
+      "capacity": 16,
+      "maxCapacity": 2147483647,
+      "fault": "IndexOutOfRangeException",
+      "parameter": null
+    },
+    {
+      "id": "get-index-2147483647",
+      "write": false,
+      "index": 2147483647,
+      "value": 90,
+      "segments": [
+        [
+          97,
+          98
+        ],
+        [
+          0
+        ],
+        [
+          55296
+        ],
+        [
+          99,
+          100,
+          56320
+        ]
+      ],
+      "result": null,
+      "output": [
+        97,
+        98,
+        0,
+        55296,
+        99,
+        100,
+        56320
+      ],
+      "length": 7,
+      "capacityBefore": 16,
+      "capacity": 16,
+      "maxCapacity": 2147483647,
+      "fault": "IndexOutOfRangeException",
+      "parameter": null
+    },
+    {
+      "id": "get-empty--1",
+      "write": false,
+      "index": -1,
+      "value": 65,
+      "segments": [],
+      "result": null,
+      "output": [],
+      "length": 0,
+      "capacityBefore": 16,
+      "capacity": 16,
+      "maxCapacity": 2147483647,
+      "fault": "IndexOutOfRangeException",
+      "parameter": null
+    },
+    {
+      "id": "get-empty-0",
+      "write": false,
+      "index": 0,
+      "value": 65,
+      "segments": [],
+      "result": null,
+      "output": [],
+      "length": 0,
+      "capacityBefore": 16,
+      "capacity": 16,
+      "maxCapacity": 2147483647,
+      "fault": "IndexOutOfRangeException",
+      "parameter": null
+    },
+    {
+      "id": "get-empty-1",
+      "write": false,
+      "index": 1,
+      "value": 65,
+      "segments": [],
+      "result": null,
+      "output": [],
+      "length": 0,
+      "capacityBefore": 16,
+      "capacity": 16,
+      "maxCapacity": 2147483647,
+      "fault": "IndexOutOfRangeException",
+      "parameter": null
+    },
+    {
+      "id": "get-null--1",
+      "write": false,
+      "index": -1,
+      "value": 65,
+      "segments": null,
+      "result": null,
+      "output": null,
+      "length": null,
+      "capacityBefore": null,
+      "capacity": null,
+      "maxCapacity": null,
+      "fault": "NullReferenceException",
+      "parameter": null
+    },
+    {
+      "id": "get-null-0",
+      "write": false,
+      "index": 0,
+      "value": 65,
+      "segments": null,
+      "result": null,
+      "output": null,
+      "length": null,
+      "capacityBefore": null,
+      "capacity": null,
+      "maxCapacity": null,
+      "fault": "NullReferenceException",
+      "parameter": null
+    },
+    {
+      "id": "get-null-2147483647",
+      "write": false,
+      "index": 2147483647,
+      "value": 65,
+      "segments": null,
+      "result": null,
+      "output": null,
+      "length": null,
+      "capacityBefore": null,
+      "capacity": null,
+      "maxCapacity": null,
+      "fault": "NullReferenceException",
+      "parameter": null
+    },
+    {
+      "id": "set-index--2147483648",
+      "write": true,
+      "index": -2147483648,
+      "value": 90,
+      "segments": [
+        [
+          97,
+          98
+        ],
+        [
+          0
+        ],
+        [
+          55296
+        ],
+        [
+          99,
+          100,
+          56320
+        ]
+      ],
+      "result": null,
+      "output": [
+        97,
+        98,
+        0,
+        55296,
+        99,
+        100,
+        56320
+      ],
+      "length": 7,
+      "capacityBefore": 16,
+      "capacity": 16,
+      "maxCapacity": 2147483647,
+      "fault": "ArgumentOutOfRangeException",
+      "parameter": "index"
+    },
+    {
+      "id": "set-index--1",
+      "write": true,
+      "index": -1,
+      "value": 90,
+      "segments": [
+        [
+          97,
+          98
+        ],
+        [
+          0
+        ],
+        [
+          55296
+        ],
+        [
+          99,
+          100,
+          56320
+        ]
+      ],
+      "result": null,
+      "output": [
+        97,
+        98,
+        0,
+        55296,
+        99,
+        100,
+        56320
+      ],
+      "length": 7,
+      "capacityBefore": 16,
+      "capacity": 16,
+      "maxCapacity": 2147483647,
+      "fault": "ArgumentOutOfRangeException",
+      "parameter": "index"
+    },
+    {
+      "id": "set-index-0",
+      "write": true,
+      "index": 0,
+      "value": 90,
+      "segments": [
+        [
+          97,
+          98
+        ],
+        [
+          0
+        ],
+        [
+          55296
+        ],
+        [
+          99,
+          100,
+          56320
+        ]
+      ],
+      "result": null,
+      "output": [
+        90,
+        98,
+        0,
+        55296,
+        99,
+        100,
+        56320
+      ],
+      "length": 7,
+      "capacityBefore": 16,
+      "capacity": 16,
+      "maxCapacity": 2147483647,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "set-index-1",
+      "write": true,
+      "index": 1,
+      "value": 90,
+      "segments": [
+        [
+          97,
+          98
+        ],
+        [
+          0
+        ],
+        [
+          55296
+        ],
+        [
+          99,
+          100,
+          56320
+        ]
+      ],
+      "result": null,
+      "output": [
+        97,
+        90,
+        0,
+        55296,
+        99,
+        100,
+        56320
+      ],
+      "length": 7,
+      "capacityBefore": 16,
+      "capacity": 16,
+      "maxCapacity": 2147483647,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "set-index-2",
+      "write": true,
+      "index": 2,
+      "value": 90,
+      "segments": [
+        [
+          97,
+          98
+        ],
+        [
+          0
+        ],
+        [
+          55296
+        ],
+        [
+          99,
+          100,
+          56320
+        ]
+      ],
+      "result": null,
+      "output": [
+        97,
+        98,
+        90,
+        55296,
+        99,
+        100,
+        56320
+      ],
+      "length": 7,
+      "capacityBefore": 16,
+      "capacity": 16,
+      "maxCapacity": 2147483647,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "set-index-3",
+      "write": true,
+      "index": 3,
+      "value": 90,
+      "segments": [
+        [
+          97,
+          98
+        ],
+        [
+          0
+        ],
+        [
+          55296
+        ],
+        [
+          99,
+          100,
+          56320
+        ]
+      ],
+      "result": null,
+      "output": [
+        97,
+        98,
+        0,
+        90,
+        99,
+        100,
+        56320
+      ],
+      "length": 7,
+      "capacityBefore": 16,
+      "capacity": 16,
+      "maxCapacity": 2147483647,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "set-index-4",
+      "write": true,
+      "index": 4,
+      "value": 90,
+      "segments": [
+        [
+          97,
+          98
+        ],
+        [
+          0
+        ],
+        [
+          55296
+        ],
+        [
+          99,
+          100,
+          56320
+        ]
+      ],
+      "result": null,
+      "output": [
+        97,
+        98,
+        0,
+        55296,
+        90,
+        100,
+        56320
+      ],
+      "length": 7,
+      "capacityBefore": 16,
+      "capacity": 16,
+      "maxCapacity": 2147483647,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "set-index-5",
+      "write": true,
+      "index": 5,
+      "value": 90,
+      "segments": [
+        [
+          97,
+          98
+        ],
+        [
+          0
+        ],
+        [
+          55296
+        ],
+        [
+          99,
+          100,
+          56320
+        ]
+      ],
+      "result": null,
+      "output": [
+        97,
+        98,
+        0,
+        55296,
+        99,
+        90,
+        56320
+      ],
+      "length": 7,
+      "capacityBefore": 16,
+      "capacity": 16,
+      "maxCapacity": 2147483647,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "set-index-6",
+      "write": true,
+      "index": 6,
+      "value": 90,
+      "segments": [
+        [
+          97,
+          98
+        ],
+        [
+          0
+        ],
+        [
+          55296
+        ],
+        [
+          99,
+          100,
+          56320
+        ]
+      ],
+      "result": null,
+      "output": [
+        97,
+        98,
+        0,
+        55296,
+        99,
+        100,
+        90
+      ],
+      "length": 7,
+      "capacityBefore": 16,
+      "capacity": 16,
+      "maxCapacity": 2147483647,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "set-index-7",
+      "write": true,
+      "index": 7,
+      "value": 90,
+      "segments": [
+        [
+          97,
+          98
+        ],
+        [
+          0
+        ],
+        [
+          55296
+        ],
+        [
+          99,
+          100,
+          56320
+        ]
+      ],
+      "result": null,
+      "output": [
+        97,
+        98,
+        0,
+        55296,
+        99,
+        100,
+        56320
+      ],
+      "length": 7,
+      "capacityBefore": 16,
+      "capacity": 16,
+      "maxCapacity": 2147483647,
+      "fault": "ArgumentOutOfRangeException",
+      "parameter": "index"
+    },
+    {
+      "id": "set-index-2147483647",
+      "write": true,
+      "index": 2147483647,
+      "value": 90,
+      "segments": [
+        [
+          97,
+          98
+        ],
+        [
+          0
+        ],
+        [
+          55296
+        ],
+        [
+          99,
+          100,
+          56320
+        ]
+      ],
+      "result": null,
+      "output": [
+        97,
+        98,
+        0,
+        55296,
+        99,
+        100,
+        56320
+      ],
+      "length": 7,
+      "capacityBefore": 16,
+      "capacity": 16,
+      "maxCapacity": 2147483647,
+      "fault": "ArgumentOutOfRangeException",
+      "parameter": "index"
+    },
+    {
+      "id": "set-empty--1",
+      "write": true,
+      "index": -1,
+      "value": 65,
+      "segments": [],
+      "result": null,
+      "output": [],
+      "length": 0,
+      "capacityBefore": 16,
+      "capacity": 16,
+      "maxCapacity": 2147483647,
+      "fault": "ArgumentOutOfRangeException",
+      "parameter": "index"
+    },
+    {
+      "id": "set-empty-0",
+      "write": true,
+      "index": 0,
+      "value": 65,
+      "segments": [],
+      "result": null,
+      "output": [],
+      "length": 0,
+      "capacityBefore": 16,
+      "capacity": 16,
+      "maxCapacity": 2147483647,
+      "fault": "ArgumentOutOfRangeException",
+      "parameter": "index"
+    },
+    {
+      "id": "set-empty-1",
+      "write": true,
+      "index": 1,
+      "value": 65,
+      "segments": [],
+      "result": null,
+      "output": [],
+      "length": 0,
+      "capacityBefore": 16,
+      "capacity": 16,
+      "maxCapacity": 2147483647,
+      "fault": "ArgumentOutOfRangeException",
+      "parameter": "index"
+    },
+    {
+      "id": "set-null--1",
+      "write": true,
+      "index": -1,
+      "value": 65,
+      "segments": null,
+      "result": null,
+      "output": null,
+      "length": null,
+      "capacityBefore": null,
+      "capacity": null,
+      "maxCapacity": null,
+      "fault": "NullReferenceException",
+      "parameter": null
+    },
+    {
+      "id": "set-null-0",
+      "write": true,
+      "index": 0,
+      "value": 65,
+      "segments": null,
+      "result": null,
+      "output": null,
+      "length": null,
+      "capacityBefore": null,
+      "capacity": null,
+      "maxCapacity": null,
+      "fault": "NullReferenceException",
+      "parameter": null
+    },
+    {
+      "id": "set-null-2147483647",
+      "write": true,
+      "index": 2147483647,
+      "value": 65,
+      "segments": null,
+      "result": null,
+      "output": null,
+      "length": null,
+      "capacityBefore": null,
+      "capacity": null,
+      "maxCapacity": null,
+      "fault": "NullReferenceException",
+      "parameter": null
+    },
+    {
+      "id": "set-unit-0",
+      "write": true,
+      "index": 2,
+      "value": 0,
+      "segments": [
+        [
+          97,
+          98
+        ],
+        [
+          0
+        ],
+        [
+          55296
+        ],
+        [
+          99,
+          100,
+          56320
+        ]
+      ],
+      "result": null,
+      "output": [
+        97,
+        98,
+        0,
+        55296,
+        99,
+        100,
+        56320
+      ],
+      "length": 7,
+      "capacityBefore": 16,
+      "capacity": 16,
+      "maxCapacity": 2147483647,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "set-unit-10",
+      "write": true,
+      "index": 2,
+      "value": 10,
+      "segments": [
+        [
+          97,
+          98
+        ],
+        [
+          0
+        ],
+        [
+          55296
+        ],
+        [
+          99,
+          100,
+          56320
+        ]
+      ],
+      "result": null,
+      "output": [
+        97,
+        98,
+        10,
+        55296,
+        99,
+        100,
+        56320
+      ],
+      "length": 7,
+      "capacityBefore": 16,
+      "capacity": 16,
+      "maxCapacity": 2147483647,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "set-unit-13",
+      "write": true,
+      "index": 2,
+      "value": 13,
+      "segments": [
+        [
+          97,
+          98
+        ],
+        [
+          0
+        ],
+        [
+          55296
+        ],
+        [
+          99,
+          100,
+          56320
+        ]
+      ],
+      "result": null,
+      "output": [
+        97,
+        98,
+        13,
+        55296,
+        99,
+        100,
+        56320
+      ],
+      "length": 7,
+      "capacityBefore": 16,
+      "capacity": 16,
+      "maxCapacity": 2147483647,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "set-unit-55295",
+      "write": true,
+      "index": 2,
+      "value": 55295,
+      "segments": [
+        [
+          97,
+          98
+        ],
+        [
+          0
+        ],
+        [
+          55296
+        ],
+        [
+          99,
+          100,
+          56320
+        ]
+      ],
+      "result": null,
+      "output": [
+        97,
+        98,
+        55295,
+        55296,
+        99,
+        100,
+        56320
+      ],
+      "length": 7,
+      "capacityBefore": 16,
+      "capacity": 16,
+      "maxCapacity": 2147483647,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "set-unit-55296",
+      "write": true,
+      "index": 2,
+      "value": 55296,
+      "segments": [
+        [
+          97,
+          98
+        ],
+        [
+          0
+        ],
+        [
+          55296
+        ],
+        [
+          99,
+          100,
+          56320
+        ]
+      ],
+      "result": null,
+      "output": [
+        97,
+        98,
+        55296,
+        55296,
+        99,
+        100,
+        56320
+      ],
+      "length": 7,
+      "capacityBefore": 16,
+      "capacity": 16,
+      "maxCapacity": 2147483647,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "set-unit-56319",
+      "write": true,
+      "index": 2,
+      "value": 56319,
+      "segments": [
+        [
+          97,
+          98
+        ],
+        [
+          0
+        ],
+        [
+          55296
+        ],
+        [
+          99,
+          100,
+          56320
+        ]
+      ],
+      "result": null,
+      "output": [
+        97,
+        98,
+        56319,
+        55296,
+        99,
+        100,
+        56320
+      ],
+      "length": 7,
+      "capacityBefore": 16,
+      "capacity": 16,
+      "maxCapacity": 2147483647,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "set-unit-56320",
+      "write": true,
+      "index": 2,
+      "value": 56320,
+      "segments": [
+        [
+          97,
+          98
+        ],
+        [
+          0
+        ],
+        [
+          55296
+        ],
+        [
+          99,
+          100,
+          56320
+        ]
+      ],
+      "result": null,
+      "output": [
+        97,
+        98,
+        56320,
+        55296,
+        99,
+        100,
+        56320
+      ],
+      "length": 7,
+      "capacityBefore": 16,
+      "capacity": 16,
+      "maxCapacity": 2147483647,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "set-unit-57343",
+      "write": true,
+      "index": 2,
+      "value": 57343,
+      "segments": [
+        [
+          97,
+          98
+        ],
+        [
+          0
+        ],
+        [
+          55296
+        ],
+        [
+          99,
+          100,
+          56320
+        ]
+      ],
+      "result": null,
+      "output": [
+        97,
+        98,
+        57343,
+        55296,
+        99,
+        100,
+        56320
+      ],
+      "length": 7,
+      "capacityBefore": 16,
+      "capacity": 16,
+      "maxCapacity": 2147483647,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "set-unit-65535",
+      "write": true,
+      "index": 2,
+      "value": 65535,
+      "segments": [
+        [
+          97,
+          98
+        ],
+        [
+          0
+        ],
+        [
+          55296
+        ],
+        [
+          99,
+          100,
+          56320
+        ]
+      ],
+      "result": null,
+      "output": [
+        97,
+        98,
+        65535,
+        55296,
+        99,
+        100,
+        56320
+      ],
+      "length": 7,
+      "capacityBefore": 16,
+      "capacity": 16,
+      "maxCapacity": 2147483647,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "set-same-unit",
+      "write": true,
+      "index": 0,
+      "value": 97,
+      "segments": [
+        [
+          97,
+          98
+        ],
+        [
+          0
+        ],
+        [
+          55296
+        ],
+        [
+          99,
+          100,
+          56320
+        ]
+      ],
+      "result": null,
+      "output": [
+        97,
+        98,
+        0,
+        55296,
+        99,
+        100,
+        56320
+      ],
+      "length": 7,
+      "capacityBefore": 16,
+      "capacity": 16,
+      "maxCapacity": 2147483647,
+      "fault": null,
+      "parameter": null
+    }
+  ]
+}
