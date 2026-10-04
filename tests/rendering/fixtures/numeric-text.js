@@ -29,7 +29,7 @@ export function fixtureLoader(base) {
 
 function verifyNumericBackend(surface, definition, evidence) {
   if (!surface) throw new Error('Numeric text fixture requires a retained rendering surface');
-  if (surface.backend !== 'webgpu') return {...evidence, observedGlyphInstances: null, observedColorGlyphInstances: null};
+  if (surface.backend !== 'webgpu') return {passed: true, ...evidence, observedGlyphInstances: null, observedColorGlyphInstances: null};
   const commands = surface.renderer.plan?.root.commands ?? [];
   let observedGlyphInstances = 0, observedColorGlyphInstances = 0;
   for (const command of commands) {
@@ -41,7 +41,7 @@ function verifyNumericBackend(surface, definition, evidence) {
   }
   if (!observedGlyphInstances) throw new Error('HarfBuzz fixture did not exercise the numeric GPU glyph pipeline');
   if (definition.colorGlyphs && !observedColorGlyphInstances) throw new Error('Color glyph fixture rendered no intrinsic RGBA instances');
-  return {...evidence, observedGlyphInstances, observedColorGlyphInstances};
+  return {passed: true, ...evidence, observedGlyphInstances, observedColorGlyphInstances};
 }
 
 export function canvasReference(createCanvas, textService, list, resources, definition) {
