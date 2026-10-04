@@ -31,6 +31,7 @@ export class AnalysisCore {
   /**
    * @param {object[]} files parsed files (`parse()` results with `syntax`, `source`, `directives`)
    * @param {object} [options] compilation options: langVersion, langVersionByUri, nullableContext, name, references (imported global namespaces)
+   * `captureInvocations` additionally retains editor method-group candidates; diagnostics/emission leave it disabled.
    */
   constructor(files, options = {}) {
     this.files = files.filter(f => f.syntax);
@@ -47,7 +48,7 @@ export class AnalysisCore {
     this.constructions = [];
     this.nullableMaps = new Map();
     this.bound = new Map();
-    this.invocations = new Map();
+    this.invocations = options.captureInvocations === true ? new Map() : null;
     this.constantState = new Map();
     this.unexecutable = new Map();
     this.typeBinder = new TypeBinder({

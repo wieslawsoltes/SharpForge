@@ -90,7 +90,7 @@ constructed-receiver call and a generic-method call for each repetition.
 | Local functions | Repeated calls to a lexically declared local function. |
 | Incomplete instance call | Complete preceding calls followed by an unfinished invocation and missing closing syntax. |
 
-Each family has four independently warmed phases:
+Each family has five independently warmed phases:
 
 - **`compile`:** public `compile(input, {outputKind: 'library', pipeline: 'bound'})`,
   including parsing, execution-profile binding/emission and any semantic
@@ -109,6 +109,12 @@ Each family has four independently warmed phases:
   queries. Both batch time and time divided by 64 are reported. The retained
   heap delta includes the last result and model changes; it does not claim
   that all 64 intermediate results remain live.
+- **`compiled-model-first-query`:** build a fresh public `Compilation` and
+  prepare its source model before timing, then measure its first signature
+  query. If the model reused capture-free semantic fallback, this phase includes
+  the private candidate analysis and its retained graph as well as the document
+  index. This cost differs from a model whose original source bind captured
+  invocation candidates. It must remain visible in the result table.
 
 All phases use public compiler entry points. Syntax and text preparation use
 their public package entry points too. The harness neither imports compiler
@@ -153,6 +159,8 @@ strongly reachable. Public result observation follows the second measurement.
   also retains its primed index. Both that model and the final signature result
   remain strongly reachable at the post-query GC measurement. First-query
   heap growth therefore exposes the deferred index and returned result.
+  The compiled-model phase also exposes a separately retained candidate
+  analysis when the original compilation did not request invocation capture.
 - `uncollectedHeapDeltaBytes` is an allocation-pressure proxy. Automatic GC can
   run during the timed operation, so it is **not total allocated bytes or an
   allocation rate**. The harness makes no per-object allocation-count claim.
@@ -237,6 +245,60 @@ node scripts/limited.js node --expose-gc "$provider_generic_root/candidate/a20-p
 node scripts/benchmarks/a20-provider-binding-compare.mjs \
   "$provider_generic_root/baseline.json" "$provider_generic_root/candidate.json" > "$provider_generic_root/comparison.json"
 ```
+
+## Invocation capture ownership after the focused observation
+
+The coordinator completed that 101-sample capture with matched source and
+observations. Generic source-model binding measured median 22.9921 → 21.9837 ms
+(−4.39%), p95 33.7089 → 27.1283 ms (−19.52%), and +109,104 bytes retained heap.
+Generic compile measured median 38.7040 → 41.4977 ms (+7.22%) and p95
+46.7355 → 59.5490 ms (+27.42%). Direct-model first-query p95 was 0.415637 ms;
+repeated-query p95 was 0.00716692 ms per query. Preserve these alongside the
+earlier fifteen-sample observations. The raw files are in session artifact
+directory `p16-provider-tail-1699e53a`.
+
+The compile entry, compilation driver, direct method pipeline and semantic
+fallback modules are byte-identical between those matched revisions. The
+**executed dependency graph is not identical**: the generic fixture reaches
+`reconcileWithSemanticAnalysis`, which runs the lossless `SemanticAnalysis`
+and its changed `BodyBinder.invocation`. The original capture hook therefore
+allocated candidate records during compilation even though compilation only
+consumes diagnostics and executable bound trees. No signature index was built
+in that path. Its unchanged compile result is a profile rejection (four
+`SF1012` diagnostics plus `SF2200`, no emitted image), so this measurement must
+not be described as successful generic-code emission.
+
+The source establishes added work in the timed path; it does not isolate how
+much of the observed +2.7937 ms median difference is due to that work. No noise
+claim or attribution of the entire difference to record allocation is made.
+Compile retained-heap median fell by 4,688 bytes, which does not disprove
+transient allocation while the temporary compilation was alive.
+
+The subsequent ownership correction is source-ready:
+
+- Ordinary semantic analysis and compilation fallback allocate no invocation
+  map or candidate records. The binder still performs the same resolution and
+  returns the same bound result; capture is an optional subsequent operation.
+- A source model that performs a new analysis opts into capture in that bind.
+- A source model reusing a complete compilation analysis keeps that exact
+  analysis for symbols/references. Its first valid signature request creates
+  one private capture-enabled analysis using the same parsed files and
+  effective options. The signature index caches it for later requests. The
+  original diagnostics, symbols and bound graph are not mutated.
+
+This policy removes unused compile-only retention. It deliberately pays a
+separate bind and retains its graph when a later signature request follows a
+capture-free compilation. `compiled-model-first-query` now measures that
+specific cost; it must not be inferred from the much smaller direct-model
+first-query timing above. Neither the ownership correction nor this new phase
+has been executed at this source checkpoint.
+
+`tests/a20-invocation-capture-ownership.test.js` supplies four focused cases for
+compile-only retention, reused queries, private once-only capture, direct-model
+capture and invalid requests. The coordinator owns the affected semantic
+cohort and the same focused generic comparison with the new identical harness.
+That follow-up must use a newly captured corrected candidate; `1699e53a` above
+identifies the historical observation before this ownership correction.
 
 No browser, native CLR, Visual Studio or performance qualification success is
 implied by the presence of this harness.

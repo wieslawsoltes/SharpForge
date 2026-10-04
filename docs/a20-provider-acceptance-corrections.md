@@ -31,10 +31,15 @@ same registration seam without introducing a parallel request implementation.
 read-only query. The binder records invocation candidates outside executable
 bound nodes. This retains the actual receiver and access rules for incomplete
 calls without adding syntax-name lookup or modifying emission/flow semantics.
-The query index is built lazily once per requested document within its source
-model. It uses sorted opening offsets, containing-invocation links and binary
-opening-offset lookup; repeated
-queries do not rescan or rebind the source. Candidate display reuses symbol
+Invocation capture is enabled by source-model analysis; ordinary compilation
+fallback keeps no editor candidate records. A model reusing a complete fallback
+preserves it for ordinary queries and privately captures candidates on its
+first signature request, retaining the same parsed files and effective options.
+This extra analysis is cached and its first-query time/heap cost has a separate
+benchmark phase. The query index is built lazily once per requested document
+within its source model. It uses sorted opening offsets, containing-invocation
+links and binary opening-offset lookup; repeated queries do not rescan or
+rebind the source. Candidate display reuses symbol
 formatting and bound generic substitutions. A supplied `callStart` selects a
 containing invocation, and argument separators come from its syntax list.
 

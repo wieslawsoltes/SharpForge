@@ -9,7 +9,7 @@ import {SourceText} from '@sharpforge/text';
 
 const options = Object.freeze({outputKind: 'library', pipeline: 'bound'});
 const hash = value => createHash('sha256').update(value).digest('hex');
-const queryPhases = Object.freeze({'signature-first-query': 1, 'signature-repeated-query': 64});
+const queryPhases = Object.freeze({'signature-first-query': 1, 'signature-repeated-query': 64, 'compiled-model-first-query': 1});
 const caseNames = Object.freeze({instance: 'instance-overloads', generic: 'constructed-generic-receiver',
   local: 'local-functions', incomplete: 'incomplete-instance-call'});
 
@@ -72,6 +72,7 @@ function prepare(fixture, phase) {
   const source = new SourceText(fixture.text, fixture.uri);
   const compilation = new Compilation([parse(source)], options);
   if (phase === 'source-model-bind') return {execute: () => compilation.getSourceModel()};
+  if (phase === 'compiled-model-first-query') compilation.build();
   const model = compilation.getSourceModel();
   const queryOptions = {callStart: fixture.callStart};
   const queryCount = queryPhases[phase];
@@ -174,6 +175,7 @@ function main() {
       'Source-model-bind measures public Compilation.getSourceModel on fresh parsed input, including binding and eager indexes.',
       'Signature-first-query uses a freshly bound model; its timing and retained heap include any deferred document-index construction.',
       'Signature-repeated-query primes that model once outside timing, then measures 64 queries; per-query time divides the total by 64.',
+      'Compiled-model-first-query builds and prepares the model before timing, then includes any capture needed by its first signature query.',
       'Query heap baselines already retain the bound model; post-GC query deltas retain that model and the last signature result.',
       'A revision without the signature API reports those phases unavailable; candidate-only results are not before/after comparisons.',
       'Retained heap is the post-GC live result delta; uncollected heap is a GC-dependent proxy, not total allocated bytes.',
