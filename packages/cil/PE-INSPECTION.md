@@ -165,7 +165,7 @@ output uses preallocated ASCII storage. Storage is linear in owned output; a
 repeated debug range is counted and copied for every occurrence.
 
 PE snapshots are opt-in for `summary({ includePE: true })`; `peOptions` supplies
-the same limits. Ordinary summaries add inexpensive `imageKind` and method
+the same limits. Ordinary summaries add `imageKind` and method
 admission facts without copying PE payloads. Public method cache identity and the
 separate typed-consumer decode cache are preserved.
 
@@ -186,3 +186,8 @@ source-provenance checks, passed 130/130 tests with no skips. See the
 [qualification summary](../../tests/fixtures/pe-inspection/qualification/summary.json)
 for the exact source/toolchain, commands, hashes, and remaining browser/performance
 qualification. The input assemblies were not executed.
+
+The [performance protocol](PE-PERFORMANCE.md) prepares a guarded comparison with
+the exact pre-PE main revision and separate costs for the new `inspectPE` API.
+That protocol is prepared without execution; it does not establish performance
+qualification.
