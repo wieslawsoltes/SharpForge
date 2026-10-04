@@ -51,8 +51,13 @@ Generic targets, open signatures, external targets, `ldvirtftn`, `tail.`, `jmp`,
 raw function-pointer dereferences, and source-compiler lowering remain outside
 this increment. These boundaries do not change existing delegate binding.
 
-Authored coverage is in `tests/a05-managed-calli.test.js` and
-`tests/a05-calli-stack-byte-budget.test.js`; the retained Roslyn
-example is `tests/fixtures/a05-calli/Program.cs`. Local execution and broader
-platform qualification are pending the serial validation queue. No performance
-or native parity result is claimed by this delivery.
+All 133 focused tests passed at `a0df70f1`, including managed calli, function
+pointer stack quotas, existing stack budgets, delegates, generic calls, generic
+struct forwarders, direct struct calls and ABI inventory. This includes the
+peer-review repair that sizes callable signatures with array arguments as pointer
+storage. The run used Node 24, one worker and a 512 MB old-space limit after
+integrating main `4fa3aa4f` and regenerating the merged ABI inventory.
+
+The retained Roslyn example is `tests/fixtures/a05-calli/Program.cs`; it was not
+compiled or executed for this leaf. Broad platform qualification remains deferred.
+No performance or fresh native parity result is claimed.
