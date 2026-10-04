@@ -2,6 +2,8 @@
  * C# 1 block-like statements: `lock`, `checked` / `unchecked` / `unsafe` blocks and `switch` with sections that keep
  * every label and statement in order (fall-through is a binder diagnostic, not a parser one).
  */
+import { Precedence } from '../../lexer/operators.js';
+
 export const blockStatementMethods = {
   lockStatement(attributeLists) {
     const keyword = this.take();
@@ -50,7 +52,7 @@ export const blockStatementMethods = {
     const keyword = this.take();
     if (keyword.kind === 'DefaultKeyword') return this.n('DefaultSwitchLabel', keyword, this.expect(':'));
     const start = this.current,
-      pattern = this.pattern(true),
+      pattern = this.pattern(true, Precedence.Conditional),
       when = this.atWord('when') ? this.n('WhenClause', this.takeWord('when'), this.expression()) : null;
     if (pattern.kind === 'ConstantPattern' && !when) return this.n('CaseSwitchLabel', keyword, pattern.children[0], this.expect(':'));
     this.feature('PatternMatching', start);

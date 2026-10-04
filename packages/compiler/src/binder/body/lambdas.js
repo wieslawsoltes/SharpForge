@@ -307,7 +307,14 @@ export const LambdaBinding = Base =>
         arms.map(a => ({ pattern: a.pattern, when: a.when, node: a.syntax.pattern })),
         { isExpression: true, node: syntax.switchKeyword },
       );
-      const type = this.bestCommonType(arms.map(a => a.value));
+      // The natural type is the best common type of the arms, provided every arm converts to it: in
+      // `x switch { 1 => State.On, _ => null }` the `null` does not, and the type comes from the target (`State?`).
+      const common = this.bestCommonType(arms.map(a => a.value)),
+        converts = value => {
+          const conversion = this.conversions.classifyFromExpression(value, common);
+          return conversion.exists && conversion.isImplicit;
+        },
+        type = common && arms.every(a => converts(a.value)) ? common : null;
       if (!type) return this.targetTypedSwitch(syntax, governing, arms);
       return this.node('SwitchExpression', syntax, type, {
         governing,
