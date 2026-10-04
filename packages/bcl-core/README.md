@@ -373,6 +373,21 @@ Reads cost O(chunk count); writes cost O(chunk count + affected chunk length).
 The generated reference inventory still reports indexed-property metadata rows
 separately from the implemented accessor signatures.
 
+`StringBuilder.CopyTo(int, char[], int, int)` appends at ID 524315. Its 50-case
+pinned .NET 10.0.5 reference includes null/negative/zero-count precedence and
+the native array overload's unchecked Int32 subtraction. Validation completes
+before any destination write; a valid zero count returns before snapshotting.
+Nonempty copies snapshot and root only the live source chunk references plus
+the destination, then scan the chunks once and write individual UTF-16 units.
+There is no whole-builder flattening or per-unit managed string allocation.
+The operation costs O(live chunks + copied units) time and O(live chunks) host
+references, with zero managed allocations. Every completed destination write
+increments the heap revision and emits an array notification. If an observer
+throws, the completed prefix remains. If it changes the builder, the original
+chunk snapshot supplies the remaining copied units. These callback rules are
+the explicit host profile, not a native concurrency guarantee. CopyTo itself
+does not mutate the builder; the Span overload and remaining APIs stay open.
+
 StringBuilder reports the .NET default `MaxCapacity` of `Int32.MaxValue`
 (`2147483647`) in both metadata and execution. The host separately limits text
 and requested capacity to 1,000,000 UTF-16 code units. Exceeding that allocation

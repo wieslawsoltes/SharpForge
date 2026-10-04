@@ -176,6 +176,48 @@ for (const engine of ['source', 'cil']) {
       assert.equal(heap.pins.length, 0);
     } finally { heap.maxBytes = budget; builder.stop(); }
   });
+
+  test(`StringBuilder CopyTo ${engine}: chunk contents are visited once and units after the copy window are not flattened`, () => {
+    const builder = segmentedBuilder(engine, Array.from({length: 32}, (_, index) => String.fromCharCode(65 + index).repeat(8)));
+    const {platform, reference} = builder;
+    const destination = destinationFor(builder, 130);
+    const storage = platform.heap.get(platform.get(reference, '$data')).data;
+    const records = storage.slice(0, 32).map(value => platform.heap.get(value));
+    const values = records.map(record => record.data);
+    const reads = new Uint32Array(records.length);
+    try {
+      records.forEach((record, index) => Object.defineProperty(record, 'data', {
+        configurable: true, get() { reads[index]++; return values[index]; }
+      }));
+      copyBuilderTo(platform, reference, destination, range(3, 1, 128));
+      assert.deepEqual([...reads], [...Array(17).fill(1), ...Array(15).fill(0)]);
+      assert.deepEqual(platform.heap.get(destination).data, [46, ...units(values.join('').slice(3, 131)), 46]);
+    } finally {
+      records.forEach((record, index) => Object.defineProperty(record, 'data', {
+        configurable: true, writable: true, enumerable: true, value: values[index]
+      }));
+      builder.stop();
+    }
+  });
+
+  test(`StringBuilder CopyTo ${engine}: malformed host array/scalar inputs fail before writing`, () => {
+    const builder = segmentedBuilder(engine);
+    const {platform, reference} = builder;
+    const destination = destinationFor(builder);
+    try {
+      const wrongType = platform.heap.allocate('array', 'int[]', [46]);
+      assert.throws(() => copyBuilderTo(platform, reference, wrongType, range(0, 0, 1)), {name: 'ArgumentException'});
+      for (const [values, parameter] of [[range(NaN, 0, 0), 'sourceIndex'],
+        [range(0, 1.5, 0), 'destinationIndex'], [range(0, 0, Infinity), 'count']]) {
+        assert.throws(() => copyBuilderTo(platform, reference, destination, values), error => {
+          assert.equal(error.name, 'ArgumentOutOfRangeException');
+          assert(error.message.includes("Parameter '" + parameter + "'"));
+          return true;
+        });
+      }
+      assert.deepEqual(platform.heap.get(destination).data, Array(9).fill(46));
+    } finally { builder.stop(); }
+  });
 }
 
 for (const pipeline of ['bound', 'legacy']) {
