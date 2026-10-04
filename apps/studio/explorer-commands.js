@@ -42,7 +42,7 @@ export class ExplorerCommands {
   if(node?.path&&/\.(csproj|slnx|sln)$/i.test(node.path)&&this.host.workspaceAction)items.push(action('Open as Workspace Entry','open-workspace-entry'));
   if(node?.path&&/\.sln$/i.test(node.path)&&this.host.workspaceAction)items.push(action('Convert to SLNX (keep original)…','convert-sln','',canChange));
   if(this.host.windowMenu)items.push(null,{label:"Window",children:()=>this.host.windowMenu()});
-  return items;
+  return [...items,...this.host.contextItems?.(node,nodes)??[]];
  }
  async run(action,node=null,selection=[],event=null){let ownsOperation=false;try{
   const c=this.context(),nodes=this.nodes(node,selection);
