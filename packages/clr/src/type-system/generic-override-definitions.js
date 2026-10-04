@@ -9,6 +9,11 @@ export class GenericOverrideDefinitions {
   #definitions = new WeakMap();
   constructor(loader, limit) { this.#loader = loader; this.#limit = limit; }
   async resolve(module, node, signal) {
+    if (![1, 2].includes(node.type.token >>> 24)) throw unsupported('Generic override definition requires a TypeDef or TypeRef');
+    if (node.arguments.some(argument => ['byref', 'pointer', 'functionPointer'].includes(argument.kind) ||
+      (argument.kind === 'primitive' && ['void', 'typedref'].includes(argument.name)))) {
+      throw unsupported('Generic override arguments require ordinary managed signature types');
+    }
     const definition = await this.#loader.load(module, node.type.token, { signal });
     checkCancellation(signal);
     if ((node.type.kind === 'valuetype') !== ['valuetype', 'enum'].includes(definition.kind)) {

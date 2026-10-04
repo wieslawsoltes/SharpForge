@@ -22,12 +22,35 @@ signatures remain lazy; no executable body is read.
 This is an explicit partial GetBaseDefinition contract. Class/covariant MethodImpl
 slot mappings, strict access checks,
 generic base instantiation, constrained generic methods, type generic variables,
-generic-instance/modifier/function-pointer signature types, array sizes and nonzero
+modifier/function-pointer signature types, array sizes and nonzero
 lower bounds require later services and fail with `SFCLR012` when traversal needs them.
 Opaque host intrinsics have no method metadata: reaching one before locating a
 slot introduction also fails, so an Object override cannot silently become its
 own root. A complete metadata chain with no matching ancestor introduces the
 reuse-slot method itself. This is not a full MethodDef validity or visibility pass.
+
+Generic-instance signature types now match by canonical open definition identity
+and recursively compared argument keys. This supports ordinary overrides whose
+return/parameter types include `Box<int>`, nested instantiations, arrays and method
+generic variables. TypeDef and TypeRef spellings of one definition share identity;
+same-named types from separate assemblies or different argument lists do not.
+No constructed TypeDesc or executable generic type is created. Definition arity
+and class/value category must match. Constrained/variant definitions, unsafe
+generic arguments and TypeSpec definition indirection reject with `SFCLR012`;
+generic declaring/base classes and type-variable substitution remain unsupported.
+The existing GenericParam service supplies ownership and constraints. A lazy
+per-context weak cache retains successful definition arities; each uncached
+definition preflights GenericParam/constraint row counts against the context
+budget. Cancellation precedes publishing definition/signature/root caches.
+Signature decoding supplies the existing depth/node bounds. No new definition
+cache is allocated on paths without generic-instance signatures.
+
+Generic-signature authored tests and an independent C# fixture are committed;
+native capture, affected tests, control/new-capability measurements and checks
+await the serial validation slot. No native/performance claim for this increment
+is made yet. Capture reuses `capture-method-base-definition.mjs` with the explicit
+`tests/fixtures/clr-method-base-generic/Program.cs` source; the existing benchmark
+accepts that fixture's `native-method-bases.json` path as its optional argument.
 
 Interface-only MethodImpl rows are now isolated from class virtual slots. The
 service validates owner/token extents, local MethodDef body ownership and duplicate

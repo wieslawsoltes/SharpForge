@@ -1,4 +1,5 @@
 import { cliSystemName } from '@sharpforge/cil';
+import { GenericOverrideDefinitions } from './generic-override-definitions.js';
 import { checkCancellation, loadError, LoadErrorCode } from '../load-errors.js';
 
 const fail = message => loadError(LoadErrorCode.TypeLoad, message);
@@ -10,6 +11,7 @@ export class OverrideSignatures {
   #identities = new WeakMap();
   #count = 0;
   #limit;
+  #genericDefinitions;
   constructor(loader, limit) { this.#loader = loader; this.#limit = limit; }
   #identity(type) {
     if (!this.#identities.has(type)) {
@@ -49,6 +51,13 @@ export class OverrideSignatures {
     if (node.kind === 'genericParameter' && node.scope === 'method') {
       if (node.index >= arity) throw fail('Override signature method parameter exceeds its generic arity');
       return `m${node.index}`;
+    }
+    if (node.kind === 'genericInstance') {
+      this.#genericDefinitions ??= new GenericOverrideDefinitions(this.#loader, this.#limit);
+      const definition = await this.#genericDefinitions.resolve(module, node, signal);
+      const argumentsList = [];
+      for (const argument of node.arguments) argumentsList.push(await this.#type(argument, module, arity, signal));
+      return `g${this.#identity(definition)}[${argumentsList.join(';')}]`;
     }
     if (['byref', 'pointer', 'szarray', 'array'].includes(node.kind)) {
       if (node.kind === 'array' && (node.sizes.length || node.lowerBounds.some(bound => bound !== 0))) {
