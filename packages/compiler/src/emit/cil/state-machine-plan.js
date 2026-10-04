@@ -1,6 +1,6 @@
 /**
- * State machines, declaration half (SF-A02-T30): the class an iterator becomes. It runs before tokens are allocated,
- * after closure conversion (a lambda or local function can be an iterator too).
+ * State machines, declaration half (SF-A02-T30): the class an iterator or an async function becomes. It runs before
+ * tokens are allocated, after closure conversion (a lambda or local function can be an iterator or async too).
  *
  *   kickoff      the method as the program declared it; its body only creates the state machine
  *   class        `<Name>d__N`, nested in the containing type, with the fields every machine has: `<>1__state`, the
@@ -16,6 +16,8 @@ import { MethodKind } from '../../symbols/members.js';
 import { SynthesizedTypes } from './synthesized-types.js';
 import { UnsupportedInCil } from './unsupported.js';
 import { declareIterator, iteratorShapeOf } from './iterator-members.js';
+import { declareAsync, asyncStateMachineInterface } from './async-members.js';
+import { asyncBuilderOf } from './async-builders.js';
 
 const FIELD_TABLE = 4;
 const STATE_FIELD_NAME = '<>1__state';
@@ -24,7 +26,7 @@ const THIS_FIELD_NAME = '<>4__this';
 /** One state machine: its class, its fixed fields and the kickoff it was made from. */
 export class StateMachine {
   constructor(kind, kickoff, type) {
-    /** 'iterator' */
+    /** 'iterator' or 'async' */
     this.kind = kind;
     /** `{key, owner, name, uri, isStatic, parameters, returnType, body, receiverType, function, method}` */
     this.kickoff = kickoff;
@@ -67,21 +69,26 @@ export class StateMachinePlan extends SynthesizedTypes {
   get lateFieldTypes() {
     return this.types;
   }
-  /** Plans the state machine of one kickoff when its body is an iterator. */
+  /** Plans the state machine of one kickoff when its body is an iterator or async. */
   plan(kickoff) {
-    const context = kickoff.body?.binder?.c;
-    if (!context?.isIterator) return;
-    if (kickoff.isAsync) throw new UnsupportedInCil('async iterators', kickoff.syntax, kickoff.uri);
-    if (kickoff.owner.isGenericType || kickoff.isGeneric) {
-      throw new UnsupportedInCil('iterators in generic types or methods', kickoff.syntax, kickoff.uri);
-    }
-    const shape = iteratorShapeOf(kickoff.returnType, this.core);
-    if (!shape) throw new UnsupportedInCil(`an iterator returning '${kickoff.returnType.toDisplayString()}'`, kickoff.syntax, kickoff.uri);
-    const name = `<${kickoff.name}>d__${this.closures.nextOrdinal(kickoff.owner)}`,
-      { type } = this.nestedClass(kickoff.owner, name, { interfaces: shape.interfaces, hasDefaultConstructor: false }),
-      machine = new StateMachine('iterator', kickoff, type);
+    const isIterator = !!kickoff.body?.binder?.c?.isIterator,
+      refuse = construct => {
+        throw new UnsupportedInCil(construct, kickoff.syntax, kickoff.uri);
+      };
+    if (!isIterator && !kickoff.isAsync) return;
+    if (isIterator && kickoff.isAsync) refuse('async iterators');
+    if (kickoff.owner.isGenericType || kickoff.isGeneric) refuse(`${isIterator ? 'iterators' : 'async methods'} in generic types or methods`);
+    const returned = kickoff.returnType.toDisplayString(),
+      shape = isIterator ? (iteratorShapeOf(kickoff.returnType, this.core) ?? refuse(`an iterator returning '${returned}'`)) : null,
+      builder = isIterator ? null : (asyncBuilderOf(kickoff.returnType, this.core) ?? refuse(`an async method returning '${returned}'`)),
+      name = `<${kickoff.name}>d__${this.closures.nextOrdinal(kickoff.owner)}`,
+      interfaces = isIterator ? shape.interfaces : [asyncStateMachineInterface(this.core)],
+      { type, constructor } = this.nestedClass(kickoff.owner, name, { interfaces, hasDefaultConstructor: !isIterator }),
+      machine = new StateMachine(isIterator ? 'iterator' : 'async', kickoff, type);
+    machine.instanceConstructor = constructor;
     machine.fields.state = this.field(type, STATE_FIELD_NAME, this.core.int);
-    declareIterator(this, machine, shape);
+    if (isIterator) declareIterator(this, machine, shape);
+    else declareAsync(this, machine, builder);
     if (kickoff.receiverType) machine.fields.receiver = this.field(type, THIS_FIELD_NAME, kickoff.receiverType);
     this.machines.set(kickoff.key, machine);
   }
@@ -111,7 +118,7 @@ function kickoffOfFunction(plan) {
   return {
     key: plan,
     owner: plan.owner,
-    name: plan.method.name.replace(/[<>|]/g, '_'),
+    name: plan.method.name,
     uri: plan.uri,
     syntax: plan.key.syntax ?? plan.symbol?.locations?.[0] ?? null,
     isStatic: plan.isStatic,
@@ -127,12 +134,17 @@ function kickoffOfFunction(plan) {
 }
 
 /**
- * Plans the state machine of every iterator of an analysed compilation.
+ * Plans the state machine of every iterator and async function of an analysed compilation.
  * @param analysis a SemanticAnalysis that has run without errors  @param closures its ClosurePlan
+ * @param {object|null} topLevel the kickoff of async top-level statements (`{key, owner, parameters, returnType, body, uri}`)
  * @returns {StateMachinePlan}
  */
-export function planStateMachines(analysis, closures) {
+export function planStateMachines(analysis, closures, topLevel = null) {
   const plan = new StateMachinePlan(analysis, closures);
+  if (topLevel) {
+    const statements = { name: '<Main>$', syntax: null, isStatic: true, isAsync: true, isGeneric: false };
+    plan.plan({ ...topLevel, ...statements, receiverType: null, function: null, method: null });
+  }
   for (const [key, body] of analysis.bound) {
     if (key?.kind !== SymbolKind.Method || !key.containingType || key.methodKind === MethodKind.LocalFunction) continue;
     plan.plan(kickoffOfMethod(key, body, key.uri ?? key.locations?.[0]?.uri ?? null));

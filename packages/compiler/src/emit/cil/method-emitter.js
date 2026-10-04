@@ -33,6 +33,8 @@ import { DeconstructionEmission } from './emit-deconstruction.js';
 import { RecordEmission } from './records/emit-records.js';
 import { StateMachineEmission } from './emit-state-machine.js';
 import { IteratorEmission } from './emit-iterators.js';
+import { AsyncEmission } from './emit-async.js';
+import { AsyncTryEmission } from './emit-async-try.js';
 
 const families = [
   ConstantEmission,
@@ -65,6 +67,8 @@ const families = [
   RecordEmission,
   StateMachineEmission,
   IteratorEmission,
+  AsyncEmission,
+  AsyncTryEmission,
 ];
 
 export class MethodEmitter extends families.reduce((composed, family) => family(composed), EmitterCore) {}

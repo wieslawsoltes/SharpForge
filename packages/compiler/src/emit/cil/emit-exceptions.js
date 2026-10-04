@@ -102,7 +102,7 @@ export const ExceptionEmission = Base =>
           if (clause.local) this.initializeLocal(clause.local);
           else il.emit('pop');
         }
-        this.statement(clause.block);
+        this.catchBlock(clause);
         if (il.isReachable) il.emit('leave', exit);
         il.addRegion(region);
         handlerStart = handlerEnd;
@@ -110,6 +110,10 @@ export const ExceptionEmission = Base =>
       // The end of the last handler: a boundary only, nothing falls into it.
       il.mark(handlerStart);
       return undefined;
+    }
+    /** The statements of a handler; the exception is already in the clause's variable. */
+    catchBlock(clause) {
+      return this.statement(clause.block);
     }
     /**
      * The filter block of `catch (T e) when (condition)` (ECMA-335 II.19.4): it runs during the first pass of exception

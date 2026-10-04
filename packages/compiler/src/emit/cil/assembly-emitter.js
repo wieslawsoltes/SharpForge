@@ -98,7 +98,10 @@ export class AssemblyEmitter {
         method: symbol,
       });
     const machine = this.stateMachines.of(symbol);
-    if (machine) return emitter.iteratorKickoff(machine);
+    if (machine) {
+      if (isEntryPointMethod(symbol)) emitter.moduleInitializers();
+      return emitter.kickoffBody(machine);
+    }
     if (bound?.binder?.c?.isIterator) emitter.unsupported('iterator methods', symbol.locations?.[0]);
     if (symbol.isAsync) emitter.unsupported('async methods', symbol.locations?.[0]);
     if (symbol.methodKind === MethodKind.Constructor) return emitter.body(bound, () => emitter.constructorPrologue(symbol));
@@ -128,11 +131,15 @@ export class AssemblyEmitter {
   /** The entry point: the top-level statements, else the single static `Main`. */
   entryPointToken(writer, synthesized) {
     if (synthesized.entryPoint) return synthesized.entryPoint.token;
-    const candidates = [...writer.methodTokens].filter(([method]) => isEntryPointMethod(method));
+    // A `Main` that returns a task is the entry point only when no other `Main` is; `<Main>` then waits for it.
+    const all = [...writer.methodTokens].filter(([method]) => isEntryPointMethod(method)),
+      synchronous = all.filter(([method]) => !synthesized.asyncEntryPoints.has(method)),
+      candidates = synchronous.length ? synchronous : all;
     if (candidates.length !== 1) {
       throw new UnsupportedInCil(candidates.length ? 'several Main methods' : 'a program without an entry point');
     }
-    return candidates[0][1];
+    const [method, token] = candidates[0];
+    return synthesized.asyncEntryPoints.get(method)?.token ?? token;
   }
 }
 
