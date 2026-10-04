@@ -1,0 +1,114 @@
+{
+  "base": "41ebd76987aa912659310d4015607f46110358ab",
+  "head": "cdfcf495c6988989fba501441f52e6f2ea25a2b4",
+  "tree": "3ab91c5692092db66985f90a0f49f03b2166fb21",
+  "sourceOwnedDelta": "e4936627b3642085924c55e5aed5eafaeb948e21",
+  "canonicalAncestorExcluded": "43fa19c425700e1c4703190f100239c06dd97a75",
+  "changedFilesMatchOriginalOwnedBlobs": [
+    "docs/cil-local-constructor-identity.md",
+    "docs/evidence/project5-local-constructor-identity/baseline-complete.json",
+    "docs/evidence/project5-local-constructor-identity/baseline-complete.log.gz",
+    "docs/evidence/project5-local-constructor-identity/baseline-source-complete.json.gz",
+    "docs/evidence/project5-local-constructor-identity/baseline-source.json.gz",
+    "docs/evidence/project5-local-constructor-identity/baseline.json",
+    "docs/evidence/project5-local-constructor-identity/baseline.log.gz",
+    "docs/evidence/project5-local-constructor-identity/candidate-source-complete.json.gz",
+    "docs/evidence/project5-local-constructor-identity/candidate-source-replay-complete.json.gz",
+    "docs/evidence/project5-local-constructor-identity/candidate-source.json.gz",
+    "docs/evidence/project5-local-constructor-identity/candidate.json",
+    "docs/evidence/project5-local-constructor-identity/candidate.log.gz",
+    "docs/evidence/project5-local-constructor-identity/canonical-consumer-first.json",
+    "docs/evidence/project5-local-constructor-identity/canonical-consumer-first.log.gz",
+    "docs/evidence/project5-local-constructor-identity/capture-before-replay-expansion.py.txt",
+    "docs/evidence/project5-local-constructor-identity/capture-initial.py.txt",
+    "docs/evidence/project5-local-constructor-identity/capture.py.txt",
+    "docs/evidence/project5-local-constructor-identity/dispatch-paired-launcher.json",
+    "docs/evidence/project5-local-constructor-identity/dispatch-paired-launcher.log.gz",
+    "docs/evidence/project5-local-constructor-identity/dispatch-paired.json.gz",
+    "docs/evidence/project5-local-constructor-identity/dispatch-paired.py.txt",
+    "docs/evidence/project5-local-constructor-identity/original-replays-complete.json",
+    "docs/evidence/project5-local-constructor-identity/original-replays-complete.log.gz",
+    "docs/evidence/project5-local-constructor-identity/original-replays.json",
+    "docs/evidence/project5-local-constructor-identity/original-replays.log.gz",
+    "docs/evidence/project5-local-constructor-identity/pre-fix-observations.json",
+    "docs/evidence/project5-local-constructor-identity/qualification-manifest.json",
+    "docs/evidence/project5-local-constructor-identity/source-export-helper.py.txt",
+    "packages/runtime/bench/local-constructor-identity.mjs",
+    "packages/runtime/src/execution/calls.js",
+    "tests/a05-local-constructor-identity.test.js"
+  ],
+  "packageAliases": [
+    {
+      "package": "@sharpforge/archive",
+      "manifestSha256": "e67cb79a2461944333ebe3f583705c2ba499dbc542f9ec34be8fa355e0264221",
+      "target": "/workspace/scratch/1692a10afba9/p5-local-constructor-identity-publish/packages/archive"
+    },
+    {
+      "package": "@sharpforge/bcl-collections",
+      "manifestSha256": "225ea8f0758022cd3c8c3217d224cdbea98602b7258de9f4c7d16387fc55041e",
+      "target": "/workspace/scratch/1692a10afba9/p5-local-constructor-identity-publish/packages/bcl-collections"
+    },
+    {
+      "package": "@sharpforge/bcl-core",
+      "manifestSha256": "b5c0b3309973d0258ca62e584c34d98b0bbbd9e55802a368bc36388ca70ac253",
+      "target": "/workspace/scratch/1692a10afba9/p5-local-constructor-identity-publish/packages/bcl-core"
+    },
+    {
+      "package": "@sharpforge/bytecode",
+      "manifestSha256": "3a4815e50844cb30c392ba0e58266a8dc27ab39ce8897972a4cbf4354a65b27a",
+      "target": "/workspace/scratch/1692a10afba9/p5-local-constructor-identity-publish/packages/bytecode"
+    },
+    {
+      "package": "@sharpforge/cil",
+      "manifestSha256": "e2aa3c40568d55dba9f1d681b89fa8498b1b23f1da89792ff36eb0b2858efc43",
+      "target": "/workspace/scratch/1692a10afba9/p5-local-constructor-identity-publish/packages/cil"
+    },
+    {
+      "package": "@sharpforge/compiler",
+      "manifestSha256": "398f840f63ad46ee5ffae77390f5a2a8a922617bcbf70afc75d54400ea54fd02",
+      "target": "/workspace/scratch/1692a10afba9/p5-local-constructor-identity-publish/packages/compiler"
+    },
+    {
+      "package": "@sharpforge/compute",
+      "manifestSha256": "3cfaaa9c82855f42f3d77db144e032f4367245f011c07028a1df6404f89c75de",
+      "target": "/workspace/scratch/1692a10afba9/p5-local-constructor-identity-publish/packages/compute"
+    },
+    {
+      "package": "@sharpforge/designer",
+      "manifestSha256": "7509d180ed04e3596efc4de923817a167a46265182eb4ce8dfc3af6e8c0d0a31",
+      "target": "/workspace/scratch/1692a10afba9/p5-local-constructor-identity-publish/packages/designer"
+    },
+    {
+      "package": "@sharpforge/framework",
+      "manifestSha256": "ee9eb72f27365f10d83bc1e3ac096ff939c125a5c0a01643c6e90637f57c21a3",
+      "target": "/workspace/scratch/1692a10afba9/p5-local-constructor-identity-publish/packages/framework"
+    },
+    {
+      "package": "@sharpforge/network",
+      "manifestSha256": "e68e0f28755bb4f2b2512fe4edede14fa8f2ca2deab420a5f1d0f0a32773b2ff",
+      "target": "/workspace/scratch/1692a10afba9/p5-local-constructor-identity-publish/packages/network"
+    },
+    {
+      "package": "@sharpforge/runtime",
+      "manifestSha256": "f34d42d8e3b15b6114f72035137299de18413234ab6a2cce15f7f7c02fef1b38",
+      "target": "/workspace/scratch/1692a10afba9/p5-local-constructor-identity-publish/packages/runtime"
+    },
+    {
+      "package": "@sharpforge/symbols",
+      "manifestSha256": "cc128e140a5f55859114083a1c029d57ea56fb6524d7ac2fe82bd20cb1109647",
+      "target": "/workspace/scratch/1692a10afba9/p5-local-constructor-identity-publish/packages/symbols"
+    },
+    {
+      "package": "@sharpforge/syntax",
+      "manifestSha256": "ac7a6c1df3e1cf25b9498a11a85821981fc646f9730672979c5f7e33d8e4607e",
+      "target": "/workspace/scratch/1692a10afba9/p5-local-constructor-identity-publish/packages/syntax"
+    },
+    {
+      "package": "@sharpforge/text",
+      "manifestSha256": "7473f059108beba68d139dc08e0693f44745aa50f9fbfd5122fc0844c09decf8",
+      "target": "/workspace/scratch/1692a10afba9/p5-local-constructor-identity-publish/packages/text"
+    }
+  ],
+  "provenance": "f2c3d8ead44bcac77062362071ac086565a034cc\nSF-A02-T29: reproduce local constructor identity collisions\n\n(cherry picked from commit 8d27cc1e2401e8d9a4b4a921cfdd824549937e5a)\n\nf54534a3456835bf4e833522ce494df980023f13\nSF-A02-T29: isolate the genuine framework construction control\n\n(cherry picked from commit bd91c105aa9fa1f765ae0d8254ca99783535df23)\n\ncfdbb43e63b6fd115aabdeda1fd89506130ecdda\nSF-A02-T29: prioritize resolved local constructor targets\n\n(cherry picked from commit 4ff5a1ccb789eabd69d82386304c2d4014e3a015)\n\ncdfcf495c6988989fba501441f52e6f2ea25a2b4\nSF-A02-T29: qualify local constructor identity and dispatch cost\n\n(cherry picked from commit e4936627b3642085924c55e5aed5eafaeb948e21)\n\n",
+  "testExecution": "Not run; waiting for coordinating agent to grant the heavy slot"
+}

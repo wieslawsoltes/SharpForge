@@ -1,0 +1,41 @@
+{
+  "kind": "original-replays",
+  "head": "4ff5a1ccb789eabd69d82386304c2d4014e3a015",
+  "tree": "5390c6cc03ed69672e80d54f04c4b761a3175856",
+  "command": [
+    "node",
+    "scripts/limited.js",
+    "node",
+    "--test",
+    "--test-concurrency=1",
+    "--test-reporter=tap",
+    "tests/compiler-canonical-managed-replay.test.js",
+    "tests/compiler-direct-cil-adjacent-replay.test.js"
+  ],
+  "cwd": "/workspace/scratch/1692a10afba9/p5-canonical-object-identity",
+  "sourceInventory": "candidate-source-complete.json",
+  "sourceInventorySha256": "468cf6a7e054a83a42545177c6d97316324a88ddfb9efebb38fb44a319be1108",
+  "launcherSha256": "aebff8d26afaace087622c6908d5671e67d8a72b2671b2ce25075bfd90912858",
+  "environment": {
+    "DOTNET_ROOT": "/workspace/scratch/1692a10afba9/toolchain/dotnet",
+    "DOTNET": "/workspace/scratch/1692a10afba9/toolchain/dotnet/dotnet",
+    "SHARPFORGE_ORACLE_DOTNET": "/workspace/scratch/1692a10afba9/toolchain/dotnet/dotnet"
+  },
+  "startedUtc": "2026-10-04T21:01:43Z",
+  "exitCode": 1,
+  "wallSeconds": 2.465026644000318,
+  "changedSourceFiles": [],
+  "logSha256": "2720763ac1bdd6cf3d9e97ac833629df4c8964eee8a0881435852e765b317556",
+  "logBytes": 26050,
+  "headAfter": "4ff5a1ccb789eabd69d82386304c2d4014e3a015",
+  "statusAfter": "",
+  "tapSummary": {
+    "tests": "5",
+    "pass": "1",
+    "fail": "4",
+    "cancelled": "0",
+    "skipped": "0",
+    "todo": "0",
+    "duration_ms": "2270.179526"
+  }
+}

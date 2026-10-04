@@ -1,0 +1,24 @@
+{
+  "command": [
+    "node",
+    "scripts/limited.js",
+    "python3",
+    "/workspace/scratch/1692a10afba9/canonical-object-identity-qualification/dispatch-paired.py"
+  ],
+  "cwd": "/workspace/scratch/1692a10afba9/p5-canonical-object-identity",
+  "startedUtc": "2026-10-04T21:05:41Z",
+  "inputs": {
+    "dispatch-bench.mjs": "5e2388d1ca5c3f7814a9396d8ae388b0bef0299fa3169cfb3c62f912367c255d",
+    "dispatch-paired.py": "1a17f3a90da3c0177c29aa8cdc24e1b34b45e1c51db7ff22cb8d1f404ae65e8d",
+    "source-export-helper.py": "d96b609f43e40edb2cac20910674bf9982b5f1a095b0c88277f8c29b84602ad6"
+  },
+  "environment": {
+    "DOTNET_ROOT": "/workspace/scratch/1692a10afba9/toolchain/dotnet",
+    "DOTNET": "/workspace/scratch/1692a10afba9/toolchain/dotnet/dotnet",
+    "SHARPFORGE_ORACLE_DOTNET": "/workspace/scratch/1692a10afba9/toolchain/dotnet/dotnet"
+  },
+  "exitCode": 0,
+  "wallSeconds": 15.733400816003268,
+  "logSha256": "d7cfc3d4cf0d7ddea3260132c550a34e4121619b9bd9362ade9dd0240f4f0f7d",
+  "changedInputs": []
+}
