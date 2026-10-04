@@ -29,3 +29,4 @@ export * from './up-to-date.js';
 export * from './build-service.js';
 export * from './binlog/query.js';
 export * from './binlog/reader.js';
+export { shutdownBuildServers } from './build-server.js';
