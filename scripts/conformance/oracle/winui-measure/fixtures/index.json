@@ -1,0 +1,6 @@
+{
+  "schemaVersion": 1,
+  "fixtures": [
+    { "id": "button-default", "file": "button-default.xaml", "viewport": { "width": 320, "height": 240 }, "expected": "loaded", "description": "Default button properties, native layout and automation peer." }
+  ]
+}
