@@ -8,6 +8,6 @@
   "partial-methods/cs8400-extended-partial-methods-in-csharp-8": ["diagnostics", "warnings"],
   "partial-methods/cs8663-readonly-on-one-part-only": ["diagnostics", "warnings"],
   "partial-methods/cs8795-cs8796-cs8797-cs8798-what-needs-accessibility": ["diagnostics", "warnings"],
-  "partial-methods/definition-names-defaults-and-extended-forms": ["diagnostics", "warnings", "bytecode", "cil"],
-  "partial-methods/unimplemented-calls-are-removed": ["diagnostics", "warnings", "bytecode", "cil"]
+  "partial-methods/definition-names-defaults-and-extended-forms": ["diagnostics", "warnings", "bytecode", "cil", "directCil"],
+  "partial-methods/unimplemented-calls-are-removed": ["diagnostics", "warnings", "bytecode", "cil", "directCil"]
 }

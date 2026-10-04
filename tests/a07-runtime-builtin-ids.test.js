@@ -49,7 +49,9 @@ test('SF-A07-B06 reserved BCL contracts preserve every released builtin ID and s
   }
   assert.equal(table[1781].name, 'string.Intern');
   assert.equal(table[1792].name, '$type.long.GetType');
-  assert.equal(table[1793], undefined, 'The reserved gap remains unassigned');
+  assert.equal(table[1793].name, 'decimal.Truncate#1');
+  assert.equal(table[locked.contractOffset + boundaries[0].start - 1], undefined,
+    'The gap before the reserved A07 range remains unassigned');
   assert.equal(table.length, locked.contractOffset + boundaries[1].start + 1);
   assert(Object.isFrozen(table));
 });

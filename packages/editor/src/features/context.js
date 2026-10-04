@@ -10,6 +10,7 @@ export function createInsightContext(editor, options) {
   const document = editor.element.ownerDocument;
   const lifetime = new WidgetLifetime();
   const guard = new AsyncRequestGuard(() => editorRevision(editor));
+  const requestSuspensions = new Set();
   const workspace = options.workspace ?? editorWorkspace(editor);
   const statusElement = node(document, 'div', {className: 'sf-insight-status', role: 'status', 'aria-live': 'polite'});
   editor.element.append(statusElement);
@@ -26,8 +27,14 @@ export function createInsightContext(editor, options) {
         return undefined;
       }
     },
+    canRequest(method) {
+      if (lifetime.disposed) return false;
+      for (const allowed of requestSuspensions) if (!allowed.has(method)) return false;
+      if (!editor.model?.previewActive) return true;
+      return requestSuspensions.size > 0 && editor.model.snapshot() === editor.model.publishedSnapshot();
+    },
     async request(method, parameters = {}, requestOptions = {}) {
-      if (!services.supports(method)) return undefined;
+      if (!services.supports(method) || !context.canRequest(method)) return undefined;
       const maximum = options.maxSemanticCharacters ?? 2_000_000;
       if (method !== 'readDocument' && !options.languageServicesInLargeFiles && (editor.model?.length ?? editor.value.length) > maximum) {
         return undefined;
@@ -36,6 +43,13 @@ export function createInsightContext(editor, options) {
       const validation = method === 'readDocument' ? {...requestOptions, validateResponseVersion: false} : requestOptions;
       const result = await guard.run(requestOptions.key ?? method, value => services.invoke(method, value), parameters, validation);
       return result ? {...result, versions} : undefined;
+    },
+    // Temporary model previews must never advance the host's monotonic semantic workspace.
+    suspendRequests(allowedMethods = []) {
+      const allowed = new Set(allowedMethods);
+      guard.cancelAll();
+      requestSuspensions.add(allowed);
+      return () => requestSuspensions.delete(allowed);
     },
     async navigate(location, navigationOptions = {}) {
       const uri = location.uri ?? location.targetUri;
@@ -55,13 +69,18 @@ export function createInsightContext(editor, options) {
       if (uri === editor.uri) return editor.goto(destination.start, destination.end);
       return editor.request('openDocument', destination);
     },
+    hostRequest(method, parameters) {
+      if (editor.model?.previewActive || !context.canRequest(method)) return undefined;
+      return editor.request(method, parameters);
+    },
     command(command) {
+      if (editor.model?.previewActive || !context.canRequest('executeCommand')) return undefined;
       if (services.supports('executeCommand')) return services.invoke('executeCommand', {
         command: command.command ?? command.id ?? command, arguments: command.arguments ?? [],
-        uri: editor.uri, version: editor.model?.version ?? editor.sourceSnapshot().version,
+        uri: editor.uri, version: editorRevision(editor).version,
         signal: new AbortController().signal
       });
-      return editor.request(command.command ?? command.id ?? command, command.arguments?.[0] ?? {uri: editor.uri, offset: editor.offset});
+      return context.hostRequest(command.command ?? command.id ?? command, command.arguments?.[0] ?? {uri: editor.uri, offset: editor.offset});
     }
   };
   return context;

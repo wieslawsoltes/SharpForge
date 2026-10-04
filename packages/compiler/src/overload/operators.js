@@ -78,6 +78,22 @@ const builtin = (family, leftType, rightType, resultType, isLifted = false, extr
 const isNullLiteral = e => e.literal === 'null';
 const isEnum = t => !!t && t.typeKind === TypeKind.Enum;
 
+/**
+ * True for one operator reached through both operands: the same symbol, or the same definition seen as a member of
+ * two equal constructions (`Box<int>` written twice is two type symbols, each with members of its own).
+ */
+function isSameOperator(first, second) {
+  if (first === second) return true;
+  const definition = first.originalDefinition ?? first;
+  return definition !== first && definition === (second.originalDefinition ?? second) && !!first.containingType?.equals(second.containingType);
+}
+
+/**
+ * The special types whose operators are user-defined operator methods (`decimal.op_Addition`, `DateTime.op_Subtraction`);
+ * the operators of the other special types are the predefined ones of the language.
+ */
+const specialTypesWithOperators = new Set(['System_Decimal', 'System_DateTime']);
+
 export class OperatorResolver {
   /** @param conversions Conversions  @param core CoreTypes  @param overloads OverloadResolver */
   constructor(conversions, core, overloads) {
@@ -97,7 +113,7 @@ export class OperatorResolver {
     if (!t || (t.typeKind === TypeKind.TypeParameter && !t.constraintTypes.length)) return [];
     const out = [];
     for (const b of t.typeKind === TypeKind.Interface ? [t] : baseTypeChain(t, this.core)) {
-      if (b.specialType && b.specialType !== 'System_Decimal' && b.typeKind !== TypeKind.Interface) continue;
+      if (b.specialType && !specialTypesWithOperators.has(b.specialType) && b.typeKind !== TypeKind.Interface) continue;
       for (const m of b.getMembers(name)) if (m.kind === SymbolKind.Method && m.isStatic) out.push(m);
       if (out.length) break;
     }
@@ -111,7 +127,7 @@ export class OperatorResolver {
       const declared = isChecked
         ? withCheckedOperators(this.declared(o.type, name), this.declared(o.type, checkedOperatorName(name)))
         : this.declared(o.type, name);
-      for (const m of declared) if (m.parameters.length === parameterCount && !candidates.includes(m)) candidates.push(m);
+      for (const m of declared) if (m.parameters.length === parameterCount && !candidates.some(known => isSameOperator(known, m))) candidates.push(m);
     }
     if (!candidates.length) return null;
     const applies = m => this.overloads.resolve([m], operands, { keepBaseCandidates: true }).succeeded,
@@ -296,6 +312,9 @@ export class OperatorResolver {
       return builtin('delegate', rt, rt, rt);
     // reference equality
     if (equality.has(operator)) {
+      // `string == string` is the predefined string equality (by value), not reference equality (C# 12.12.8).
+      const bothStrings = lt.specialType === 'System_String' && rt.specialType === 'System_String';
+      if (bothStrings) return builtin('string', core.string, core.string, core.bool);
       const refLike = t => t.isReferenceType === true || (t.typeKind === TypeKind.TypeParameter && t.isValueType !== true);
       if (
         refLike(lt) &&

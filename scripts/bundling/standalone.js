@@ -30,7 +30,9 @@ function __sharpforgeWorkerUrl(id) {
     if (typeof source !== 'string') throw new Error('Unknown embedded worker');
     __sharpforgeWorkerUrls.set(id, URL.createObjectURL(new Blob([source], {type: 'text/javascript'})));
   }
-  return new URL(__sharpforgeWorkerUrls.get(id));
+  const asset = new URL(__sharpforgeWorkerUrls.get(id));
+  Object.defineProperty(asset, 'workerType', {value: 'classic'});
+  return asset;
 }
 globalThis.addEventListener?.('pagehide', event => {
   if (event.persisted) return;

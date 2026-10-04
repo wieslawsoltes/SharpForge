@@ -1,0 +1,66 @@
+import { cpus, platform, arch } from 'node:os';
+import { readFileSync } from 'node:fs';
+import { createHash } from 'node:crypto';
+import { loadSymbols as beforeLoad } from '/tmp/sharpforge-a13-annotations-base/packages/symbols/src/index.js';
+import { loadSymbols as afterLoad } from '/Users/wieslawsoltes/GitHub/SharpForge-a13-local-annotations/packages/symbols/src/index.js';
+import { formatSignatureType as beforeFormat } from '/tmp/sharpforge-a13-annotations-base/packages/cil/src/index.js';
+import { formatSignatureType as afterFormat } from '/Users/wieslawsoltes/GitHub/SharpForge-a13-local-annotations/packages/cil/src/index.js';
+const root = '/Users/wieslawsoltes/GitHub/SharpForge-a13-local-annotations';
+const directory = root + '/tests/fixtures/portable-pdb-local-constants';
+const assembly = readFileSync(directory + '/LocalConstants.dll');
+const pdb = readFileSync(directory + '/LocalConstants.pdb');
+const revisions = JSON.parse(readFileSync('/tmp/sharpforge-a13-annotations-revisions.json', 'utf8'));
+const primitive = name => ({ kind: 'primitive', name });
+const types = [primitive('int'),
+  { kind: 'genericInstance', type: { kind: 'class', token: 0x01000001 }, arguments: [primitive('object'), {kind: 'szarray', element: primitive('string')}] },
+  { kind: 'functionPointer', signature: { returnType: primitive('int'), parameters: [{kind: 'byref', element: primitive('object')}] } },
+];
+const metadata = { typeName: () => 'System.Collections.Generic.Dictionary`2' };
+const observations = {};
+const loaders = { before: beforeLoad, after: afterLoad };
+const formatters = { before: beforeFormat, after: afterFormat };
+for (const label of ['before', 'after']) {
+  const symbols = loaders[label](assembly, pdb);
+  const enumeration = symbols.constants.find(constant => constant.name === 'Enumeration');
+  if (!symbols.bound || enumeration?.value !== -1234 || enumeration?.type !== 'short') throw Error('Load control mismatch');
+  const displays = types.map(type => formatters[label](type, metadata));
+  observations[label] = { constants: symbols.constants.length, enumValue: enumeration.value, enumType: enumeration.type, enumTypeVerified: enumeration.enumTypeVerified, displays };
+}
+if (JSON.stringify(observations.before) !== JSON.stringify(observations.after)) throw Error('Control results differ');
+const controls = {
+  load: { iterations: 100, warmups: 30, actions: { before: () => beforeLoad(assembly, pdb).bound, after: () => afterLoad(assembly, pdb).bound } },
+  formatWithoutCallback: { iterations: 2000, warmups: 2000, actions: Object.fromEntries(Object.entries(formatters).map(([label, format]) => [label, () => {
+    let length = 0;
+    for (const type of types) length += format(type, metadata).length;
+    return length;
+  }])) },
+};
+const chronologicalSamples = [], summaries = {};
+const startedAt = new Date().toISOString(), start = performance.now();
+for (const [control, { iterations, warmups, actions }] of Object.entries(controls)) {
+  for (let warmup = 0; warmup < warmups; warmup++) { actions.before(); actions.after(); }
+  for (let pair = 0; pair < 20; pair++) {
+    for (const label of pair % 2 === 0 ? ['before', 'after'] : ['after', 'before']) {
+      globalThis.gc?.();
+      let observed;
+      const sampleStart = performance.now();
+      for (let iteration = 0; iteration < iterations; iteration++) observed = actions[label]();
+      const elapsedMs = performance.now() - sampleStart;
+      if (!observed) throw Error('Missing benchmark result');
+      chronologicalSamples.push({ control, pair, label, startOffsetMs: sampleStart - start, elapsedMs, perOperationMs: elapsedMs / iterations });
+    }
+  }
+  summaries[control] = {};
+  for (const label of ['before', 'after']) {
+    const values = chronologicalSamples.filter(sample => sample.control === control && sample.label === label).map(sample => sample.perOperationMs).sort((left, right) => left - right);
+    summaries[control][label] = { medianMs: (values[9] + values[10]) / 2, p95Ms: values[18] };
+  }
+}
+const hash = bytes => createHash('sha256').update(bytes).digest('hex');
+console.log(JSON.stringify({ revisions, node: process.version, host: `${platform()} ${arch()} ${cpus()[0].model}`,
+  startedAt, protocol: { pairsPerControl: 20, loadWarmups: 30, loadsPerSample: 100, formatterWarmups: 2000, formatterBatchesPerSample: 2000,
+  typesPerFormatterBatch: 3, order: 'AB/BA alternating', gcBeforeEachSample: true, median: 'mean of positions10and11', p95: 'nearest-rank position19',
+  dependencies: 'Baseline symbols and cil sources archived at exact before revision; unchanged transitive archive/bytecode/framework packages resolve through current workspace.' },
+  fixtures: { assemblyBytes: assembly.length, assemblySha256: hash(assembly), pdbBytes: pdb.length, pdbSha256: hash(pdb), formatterAstSha256: hash(JSON.stringify(types)), harnessSha256: hash(readFileSync('/tmp/sharpforge-a13-annotations-interleaved.mjs')) },
+  observations, summaries, chronologicalSamples,
+}, null, 2));
