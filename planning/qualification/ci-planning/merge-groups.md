@@ -18,8 +18,43 @@ queue configuration or branch protection has been changed.
 The saved context can only be consumed on its exact group checkout. Validation
 reconstructs the sequence and rejects omitted, reordered or substituted PRs before
 any claim lookup or qualification command. Context capture alone is not a passing
-combined-tree qualification. The separate gate/workflow integration consumes this
-context while retaining the existing manual, serial qualification policy.
+combined-tree qualification. The manual `merge-queue.yml` workflow consumes this context while retaining the
+existing serial qualification policy.
 
 Regressions use temporary real Git repositories and fake read-only GitHub
 responses. They do not establish live GitHub queue topology or token access.
+
+## Manual combined-tree gate
+
+Dispatch `merge-queue.yml` with `head_sha`, `base_sha`, `head_ref` and `base_ref`.
+The dispatch revision supplies the trusted harness in `planning-tools/`; the
+pinned combined commit is checked out separately in `qualified-group/` with full
+history. The resolver runs before dependency installation or candidate commands.
+Both checkouts disable persisted Git credentials.
+
+The trusted runner checks each constituent's authoritative task, Project branch,
+claim lease and lock generation. The pinned base supplies ownership/hot-file
+policy. Both the constituent's own diff and its actual contribution from the
+previous queue tree must obey that PR's claim; merge-resolution edits cannot
+escape ownership review. Contract changes and seam locks are likewise reviewed
+on both diffs, using only that PR's API labels. Labels and locks are never pooled
+across the group. Duplicate contract IDs in the actual combined commits fail
+before any candidate-controlled integration commands.
+
+Successful review runs DAG, manifests and contract integration on the actual
+combined checkout, serially, with API tokens removed from child environments.
+Only a passing gate emits the full manifest-derived area matrix. Every area job
+checks out the same resolved group SHA and runs Node/browser consumers, one cell
+at a time. Browser prerequisites and the final all-area gate are retained.
+The context, gate outcomes and full consumer plan are saved as workflow artifacts.
+The trusted gate step receives the existing `PLANNING_PROJECT_READ_TOKEN` secret
+as `PROJECT_READ_TOKEN` for read-only Project GraphQL queries. Repository reads
+continue to use the read-only `github.token`; both transports reject mutations.
+Missing either credential fails explicitly before transport. The Project token is
+absent from resolver/install/area steps and stripped from candidate subprocesses.
+This wiring does not create or configure the secret; missing access remains a failure.
+
+The central `ci.yml` merge-group trigger and ordinary minimal core are unchanged.
+This explicit lane is not automatically required by branch protection, and its
+success is not implied by an ordinary core result. Hosted queue execution, live
+Project access and platform/browser qualification remain unclaimed until run.
