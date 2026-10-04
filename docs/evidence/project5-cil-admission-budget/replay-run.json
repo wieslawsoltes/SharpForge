@@ -1,0 +1,31 @@
+{
+  "head": "bfe3cb1f1d8c2d70b4b59bb291587159502d9c00",
+  "headAfter": "bfe3cb1f1d8c2d70b4b59bb291587159502d9c00",
+  "tree": "a3173612a1d509a30f777f0815e7a903ab622c9a",
+  "command": [
+    "node",
+    "scripts/limited.js",
+    "node",
+    "--test",
+    "--test-concurrency=1",
+    "tests/compiler-canonical-managed-replay.test.js",
+    "tests/compiler-direct-cil-adjacent-replay.test.js"
+  ],
+  "environment": {
+    "DOTNET_ROOT": "/workspace/scratch/1692a10afba9/toolchain/dotnet",
+    "DOTNET": "/workspace/scratch/1692a10afba9/toolchain/dotnet/dotnet",
+    "SHARPFORGE_ORACLE_DOTNET": "/workspace/scratch/1692a10afba9/toolchain/dotnet/dotnet"
+  },
+  "exitCode": 1,
+  "wallSeconds": 2.481136203998176,
+  "platform": "Linux-6.18.44-x86_64-with-glibc2.39",
+  "node": "v24.19.0",
+  "sourceInputCount": 2309,
+  "staticGraphModuleCount": 1559,
+  "sourceAndGraphUnchanged": true,
+  "beforeSnapshotSha256": "458c1e977d11226ee9459b872fd44319675a6e7240c700a5a949b6efbecf0fde",
+  "afterSnapshotSha256": "458c1e977d11226ee9459b872fd44319675a6e7240c700a5a949b6efbecf0fde",
+  "statusAfter": "",
+  "logBytes": 57493,
+  "logSha256": "f0635ad8bf6a93417473ff1b12322581fa29828d5c4673bc223a2437de5dbbe8"
+}
