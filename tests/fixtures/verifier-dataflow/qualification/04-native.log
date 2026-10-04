@@ -1,0 +1,8 @@
+file:///private/tmp/sharpforge-project6-a03-dataflow/tests/fixtures/verifier-dataflow/capture.mjs:14
+if (!tools.supported) throw new Error(tools.reason);
+                            ^
+
+Error: Set SHARPFORGE_ILASM and SHARPFORGE_ILVERIFY to pinned tools.
+    at file:///private/tmp/sharpforge-project6-a03-dataflow/tests/fixtures/verifier-dataflow/capture.mjs:14:29
+
+Node.js v24.21.0

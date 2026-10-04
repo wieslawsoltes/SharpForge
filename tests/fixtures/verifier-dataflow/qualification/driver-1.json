@@ -1,0 +1,57 @@
+[
+  {
+    "command": "npm",
+    "args": [
+      "ci",
+      "--ignore-scripts",
+      "--no-audit",
+      "--no-fund"
+    ],
+    "cwd": "/tmp/sharpforge-project6-a03-dataflow",
+    "started": "2026-10-04T07:59:21.776Z",
+    "completed": "2026-10-04T07:59:22.135Z",
+    "status": 0,
+    "signal": null,
+    "log": "01-install-candidate-node24"
+  },
+  {
+    "command": "npm",
+    "args": [
+      "ci",
+      "--ignore-scripts",
+      "--no-audit",
+      "--no-fund"
+    ],
+    "cwd": "/tmp/sharpforge-project6-a03-dataflow-baseline",
+    "started": "2026-10-04T07:59:22.135Z",
+    "completed": "2026-10-04T07:59:22.332Z",
+    "status": 0,
+    "signal": null,
+    "log": "02-install-baseline-node24"
+  },
+  {
+    "command": "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+    "args": [
+      "tests/fixtures/verifier-dataflow/baseline.mjs"
+    ],
+    "cwd": "/tmp/sharpforge-project6-a03-dataflow-baseline",
+    "started": "2026-10-04T07:59:22.332Z",
+    "completed": "2026-10-04T07:59:22.483Z",
+    "status": 1,
+    "signal": null,
+    "log": "03-failing-before-node24"
+  },
+  {
+    "command": "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+    "args": [
+      "tests/fixtures/verifier-dataflow/capture.mjs",
+      "tests/fixtures/verifier-dataflow/native.json"
+    ],
+    "cwd": "/tmp/sharpforge-project6-a03-dataflow",
+    "started": "2026-10-04T07:59:22.483Z",
+    "completed": "2026-10-04T07:59:22.623Z",
+    "status": 1,
+    "signal": null,
+    "log": "04-native"
+  }
+]
