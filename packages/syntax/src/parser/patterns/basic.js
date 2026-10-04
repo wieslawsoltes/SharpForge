@@ -52,10 +52,8 @@ export const basicPatternMethods = {
       return this.n('VarPattern', this.takeWord('var'), this.designation());
     if (this.isWord(token, '_') && !['.', '(', '{', '<', '::'].includes(next.kind) && !this.isDesignationAhead(this.i + 1))
       return this.n('DiscardPattern', this.take('UnderscoreToken'));
-    // Only directly after `is` can a `?` be the conditional operator (`x is T ? a : b`); in a case label, a switch
-    // arm or a subpattern `int?[] items` is a type.
     const info = {},
-      mode = (this.patternPrecedence ?? Precedence.Shift) === Precedence.Shift ? 'afterIs' : undefined,
+      mode = 'afterIs',
       end = kind === 'await' || (this.isWord(token, 'nameof') && next.kind === '(') ? -1 : this.scanType(this.i, info, mode);
     if (end > this.i) {
       const follower = this.tokens[Math.min(end, this.tokens.length - 1)];

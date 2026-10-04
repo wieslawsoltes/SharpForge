@@ -206,6 +206,19 @@ export const NullableEmission = Base =>
       this.constantValue(constant, pattern.syntax);
       return this.il.emit('ceq').emit('brfalse', fail);
     }
+    /** `x is { } v`, `x is (a, b)` over a nullable value: it has a value, and the pattern is matched against that. */
+    matchRecursivePattern(pattern, input, fail) {
+      if (!input.type?.isNullableValueType || pattern.testedType) return super.matchRecursivePattern(pattern, input, fail);
+      return super.matchRecursivePattern(pattern, this.nullableValueInput(input, fail), fail);
+    }
+    /** The value of a nullable input as an input of its own (`{slot, type}`), or a branch to `fail`; read once per run. */
+    nullableValueInput(input, fail) {
+      const type = input.type.nullableUnderlyingType,
+        read = () => this.nullableCall(input.slot, input.type, 'GetValueOrDefault');
+      this.nullableCall(input.slot, input.type, 'get_HasValue');
+      this.il.emit('brfalse', fail);
+      return { slot: this.readOnce(input.slot, 'nullable:value', type, read), type };
+    }
     unboxedInput(input, type, fail) {
       if (!input.type?.isNullableValueType) return super.unboxedInput(input, type, fail);
       this.nullableCall(input.slot, input.type, 'get_HasValue');

@@ -17,6 +17,21 @@ const isSource = symbol => {
   return false;
 };
 
+/**
+ * A qualified name read as the member access it may also be. After `is` the parser cannot tell `x is A.B` (a type)
+ * from a constant (`x is Color.Red`, `n is Limits.Max`), and gives the name as a type; the constant is found by
+ * binding the same tokens as an expression.
+ */
+function asMemberAccess(syntax) {
+  if (syntax.kind !== 'QualifiedName') return syntax;
+  return Object.create(syntax, {
+    kind: { value: 'SimpleMemberAccessExpression' },
+    expression: { value: asMemberAccess(syntax.left) },
+    name: { value: syntax.right },
+    operatorToken: { value: syntax.dotToken },
+  });
+}
+
 /** Class mixin: `is`, `as`, null-conditional access (lifted to Nullable<T> for value results), await and throw. */
 export const TypeTestBinding = Base =>
   class extends Base {
@@ -32,7 +47,8 @@ export const TypeTestBinding = Base =>
       this.quiet = [];
       let type;
       try {
-        type = this.bindType(typeSyntax).type;
+        // The first attempt reports nothing: when the name is no type it may still be a constant.
+        type = this.bindType(typeSyntax, { quiet: true }).type;
       } finally {
         this.quiet = saved;
       }
@@ -65,9 +81,10 @@ export const TypeTestBinding = Base =>
       const saved = this.quiet;
       this.quiet = [];
       try {
-        const e = this.expression(syntax);
+        const e = this.expression(asMemberAccess(syntax));
         if (e.hasErrors || e.kind === 'TypeExpression' || !e.constantValue) return null;
-        return { kind: 'ConstantPattern', syntax, value: operand.type ? this.convertQuiet(e, operand.type) : e };
+        const conversion = operand.type ? this.conversions.classifyFromExpression(e, operand.type) : null;
+        return { kind: 'ConstantPattern', syntax, value: conversion?.exists ? this.constantPatternValue(e, operand.type, conversion) : e };
       } finally {
         this.quiet = saved;
       }
