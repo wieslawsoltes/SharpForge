@@ -184,7 +184,6 @@ export class CodeEditor {
     this.viewStates.set(this.uri, {selections: this.getSelections(), primaryIndex: this.primaryIndex,
       top: this.view.scrollTop, left: this.view.viewport.scrollLeft, folds: this.folding.regions.map(region => ({...region})),
       bookmarks: this.bookmarks, changeTracking: this.changeTracking});
-    this.models.set(this.uri, this.model);
   }
 
   setValue(text) {
