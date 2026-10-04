@@ -10,6 +10,8 @@ public static class InspectUtf8
         ref byte first = ref MemoryMarshal.GetReference(value);
         Console.WriteLine(name + ":" + value.Length + ":" + Convert.ToHexString(value) + ":" + Unsafe.Add(ref first, value.Length));
     }
+    // Keep the measured calls intact even when the tested compiler does not emit MethodImpl attributes.
+    [MethodImpl(MethodImplOptions.NoInlining | MethodImplOptions.NoOptimization)]
     private static int ReadMany()
     {
         int sum = 0;
