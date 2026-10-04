@@ -23,7 +23,9 @@ try {
     const source = accessIL(fixture), assembly = path.join(temporary, fixture.name + '.dll');
     const file = path.join(temporary, fixture.name + '.il');
     await writeFile(file, source);
-    const assembled = await runProcess(tools.ilasm, ['/dll', `/output:${assembly}`, file], { cwd: temporary, timeoutMs: 30000 });
+    const prefix = process.platform === 'win32' ? '/' : '-';
+    const assembled = await runProcess(tools.ilasm, [`${prefix}dll`, `${prefix}output:${assembly}`, file],
+      { cwd: temporary, timeoutMs: 30000 });
     const attempt = { name: fixture.name, sourceSHA256: sha256(source), assembled: normalize(assembled) };
     attempts.push(attempt);
     await writeFile(output + '.raw.json', JSON.stringify(attempts, null, 2) + '\n');
