@@ -182,7 +182,36 @@ checks justifies this captured correctness cost. This is an accepted exception,
 not a passing speed budget or evidence that the single line caused all latency
 variation. The shared host and differences between processes limit broader
 performance conclusions. No repeat or extra optimization was requested for this
-batch. Publication-tree execution remains a separate required gate.
+batch.
+
+## Standalone publication qualification
+
+The publication branch starts at qualified main
+`41ebd76987aa912659310d4015607f46110358ab` and preserves the four owned source,
+test, and evidence commits through `-x` cherry-picks. The canonical consumer
+branch's `43fa19c425700e1c4703190f100239c06dd97a75` head is not an ancestor.
+The four-commit source head had 31 changed file blobs, each matching the preserved
+source branch at `e4936627b3642085924c55e5aed5eafaeb948e21`. Its only production
+source difference from main is the single call-selection line described above.
+
+On 2026-10-04 the clean publication source head
+`cdfcf495c6988989fba501441f52e6f2ea25a2b4`, tree
+`3ab91c5692092db66985f90a0f49f03b2166fb21`, passed all eight focused controls:
+8 passed, 0 failed, 0 skipped. TAP duration was 1,395.765241 ms; launcher wall time
+was 1.639428515 seconds. Every materialized Git blob, all 14 package aliases into
+the isolated publication worktree, HEAD, and clean worktree status were checked
+before and after execution and remained unchanged. The launcher retained all
+three pinned DOTNET environment variables. Assertions and instruction budgets
+were unchanged, and no additional timing run was performed.
+
+The raw 2,224-byte publication log has SHA-256
+`59bcd41ae09c80802a82b710b81dbabbee82aa97e47c2fd1e0a368d0a34e683e`.
+Its launcher report, source inventory, preparation/provenance record, capture
+script, and lossless log are included in the evidence manifest. This successful
+publication replay satisfies the condition on the explicit performance budget
+exception above. The later publication evidence commit changes documentation and
+evidence only; the qualified production and test sources remain those at the
+recorded publication source head.
 
 Project #5's wider canonical CIL acceptance work remains open. This batch did not
 run a native, browser, or Wasm replay; its executed qualification covers the

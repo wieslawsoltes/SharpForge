@@ -1,0 +1,99 @@
+"""Capture only the eight focused controls on the isolated publication tree."""
+import hashlib
+import json
+import os
+from pathlib import Path
+import re
+import subprocess
+import time
+
+ROOT = Path(__file__).resolve().parent
+WORKTREE = Path('/workspace/scratch/1692a10afba9/p5-local-constructor-identity-publish')
+HEAD = 'cdfcf495c6988989fba501441f52e6f2ea25a2b4'
+BASE = '41ebd76987aa912659310d4015607f46110358ab'
+COMMAND = ['node', 'scripts/limited.js', 'node', '--test', '--test-concurrency=1',
+           '--test-reporter=tap', 'tests/a05-local-constructor-identity.test.js']
+LOG = ROOT / 'publication-controls.log'
+REPORT = ROOT / 'publication-controls.json'
+INVENTORY = ROOT / 'publication-source.json'
+
+
+def digest(data):
+    return hashlib.sha256(data).hexdigest()
+
+
+def git(*args):
+    return subprocess.check_output(['git', *args], cwd=WORKTREE)
+
+
+def files():
+    result = []
+    for item in git('ls-files', '--stage', '-z').split(b'\0'):
+        if not item:
+            continue
+        metadata, raw_name = item.split(b'\t', 1)
+        name = raw_name.decode()
+        path = WORKTREE / name
+        if not path.is_file():
+            continue
+        mode, blob, stage = metadata.decode().split()
+        if mode != '100644' and mode != '100755' or stage != '0' or path.is_symlink():
+            raise ValueError('Unexpected materialized source entry: ' + name)
+        raw = path.read_bytes()
+        actual_blob = hashlib.sha1(b'blob ' + str(len(raw)).encode() + b'\0' + raw).hexdigest()
+        if actual_blob != blob:
+            raise ValueError('Materialized file differs from the indexed Git blob: ' + name)
+        result.append({'path': name, 'gitBlob': blob, 'sha256': digest(raw), 'bytes': len(raw)})
+    return result
+
+
+def aliases():
+    result = []
+    for manifest in sorted((WORKTREE / 'packages').glob('*/package.json')):
+        name = json.loads(manifest.read_text())['name'].split('/', 1)[1]
+        alias = WORKTREE / 'node_modules/@sharpforge' / name
+        if not alias.is_symlink() or alias.resolve() != WORKTREE / 'packages' / name:
+            raise ValueError('Package alias does not point into the publication worktree: ' + name)
+        result.append({'name': name, 'target': str(alias.resolve())})
+    if len(result) != 14:
+        raise ValueError('Unexpected publication package graph')
+    return result
+
+
+if any(path.exists() for path in (LOG, REPORT, INVENTORY)):
+    raise SystemExit('Refusing to replace an existing publication capture')
+if git('rev-parse', 'HEAD').decode().strip() != HEAD or git('status', '--porcelain').strip():
+    raise SystemExit('Publication head or clean status changed before capture')
+inventory = {'commit': HEAD, 'tree': git('rev-parse', 'HEAD^{tree}').decode().strip(),
+             'base': BASE, 'files': files(), 'packageAliases': aliases()}
+INVENTORY.write_text(json.dumps(inventory, indent=2) + '\n')
+environment = dict(os.environ)
+dotnet = '/workspace/scratch/1692a10afba9/toolchain/dotnet'
+environment.update(DOTNET_ROOT=dotnet, DOTNET=dotnet + '/dotnet', SHARPFORGE_ORACLE_DOTNET=dotnet + '/dotnet')
+report = {'head': HEAD, 'tree': inventory['tree'], 'base': BASE, 'command': COMMAND,
+          'cwd': str(WORKTREE), 'sourceInventory': INVENTORY.name,
+          'sourceInventorySha256': digest(INVENTORY.read_bytes()),
+          'launcherSha256': digest(Path(__file__).read_bytes()),
+          'environment': {key: environment[key] for key in ['DOTNET_ROOT', 'DOTNET', 'SHARPFORGE_ORACLE_DOTNET']},
+          'startedUtc': time.strftime('%Y-%m-%dT%H:%M:%SZ', time.gmtime())}
+started = time.perf_counter()
+with LOG.open('xb') as stream:
+    process = subprocess.run(COMMAND, cwd=WORKTREE, env=environment, stdout=stream, stderr=subprocess.STDOUT)
+report.update(exitCode=process.returncode, wallSeconds=time.perf_counter() - started,
+              logSha256=digest(LOG.read_bytes()), logBytes=LOG.stat().st_size,
+              headAfter=git('rev-parse', 'HEAD').decode().strip(),
+              statusAfter=git('status', '--porcelain').decode())
+report['tapSummary'] = dict(re.findall(r'^# (tests|pass|fail|cancelled|skipped|todo|duration_ms) ([\d.]+)$',
+                                    LOG.read_text(), re.MULTILINE))
+try:
+    report['sourceFilesUnchanged'] = files() == inventory['files']
+    report['packageAliasesUnchanged'] = aliases() == inventory['packageAliases']
+except Exception as error:
+    report['sourceValidationError'] = str(error)
+REPORT.write_text(json.dumps(report, indent=2) + '\n')
+print(json.dumps(report, indent=2))
+if not report.get('sourceFilesUnchanged') or not report.get('packageAliasesUnchanged'):
+    raise SystemExit('Publication source graph changed during capture')
+if report['headAfter'] != HEAD or report['statusAfter']:
+    raise SystemExit('Publication head or clean status changed during capture')
+raise SystemExit(process.returncode)

@@ -160,6 +160,41 @@
       "sha256": "d96b609f43e40edb2cac20910674bf9982b5f1a095b0c88277f8c29b84602ad6",
       "originalBytes": 12230,
       "originalSha256": "d96b609f43e40edb2cac20910674bf9982b5f1a095b0c88277f8c29b84602ad6"
+    },
+    {
+      "path": "publication-controls.json",
+      "bytes": 1437,
+      "sha256": "06d2ccb7df32368a0f3533586cc8130a710f03b6323cc008ae513b82d6766ebc",
+      "originalBytes": 1437,
+      "originalSha256": "06d2ccb7df32368a0f3533586cc8130a710f03b6323cc008ae513b82d6766ebc"
+    },
+    {
+      "path": "publication-controls.log.gz",
+      "bytes": 527,
+      "sha256": "5bd67d8e77268eb646bfe0ecfcd76d5684b246fe62956dea9a2ef6f18096e7ad",
+      "originalBytes": 2224,
+      "originalSha256": "59bcd41ae09c80802a82b710b81dbabbee82aa97e47c2fd1e0a368d0a34e683e"
+    },
+    {
+      "path": "publication-source.json.gz",
+      "bytes": 117756,
+      "sha256": "c16ae264e7bc67f94b670dd2c5be5fab7571e65fd5d3b62af001a618f54137db",
+      "originalBytes": 361722,
+      "originalSha256": "5596fc07a6b44e1b364317bdb8b6fc14a2a3ffba703d2239c130a2d54c121a48"
+    },
+    {
+      "path": "publication-capture.py.txt",
+      "bytes": 4859,
+      "sha256": "fa8ae5f03a1e38cf1d55e7a34957b70a40a3f44e2cff72f22b650c4db02e9dda",
+      "originalBytes": 4859,
+      "originalSha256": "fa8ae5f03a1e38cf1d55e7a34957b70a40a3f44e2cff72f22b650c4db02e9dda"
+    },
+    {
+      "path": "publication-preparation.json",
+      "bytes": 7163,
+      "sha256": "ac81128a6f23ffab12a0aa073d59501752bcd06f979f2f843814616e3bc4f793",
+      "originalBytes": 7163,
+      "originalSha256": "ac81128a6f23ffab12a0aa073d59501752bcd06f979f2f843814616e3bc4f793"
     }
   ],
   "benchmarkSource": {
@@ -169,7 +204,7 @@
   "candidateSourceHead": "4ff5a1ccb789eabd69d82386304c2d4014e3a015",
   "testOnlyBaselineHead": "bd91c105aa9fa1f765ae0d8254ca99783535df23",
   "performanceDisposition": {
-    "status": "Budget exception accepted, contingent on publication-tree eight-control replay",
+    "status": "Budget exception accepted; required publication-tree eight-control replay passed",
     "authorReviewer": "Coordinating author/reviewer /root",
     "dateUtc": "2026-10-04",
     "reviewedReport": "dispatch-paired.json.gz",
@@ -191,6 +226,42 @@
     "guardFindings": "PE bytes and hashes, output, return value, instructions, managed allocations, and allocated bytes are equal across both sides. Only runtime/src/execution/calls.js differs in the captured runtime source graph.",
     "limits": "Shared host; not a passing speed budget or proof that all latency variation is caused by the changed line. Every process and sample is retained.",
     "furtherPerformanceExecution": "No repeat or extra optimization required for this batch",
-    "publicationControls": "Pending on standalone publication tree"
+    "publicationControls": {
+      "status": "Passed 8 of 8, with 0 failures or skips",
+      "head": "cdfcf495c6988989fba501441f52e6f2ea25a2b4",
+      "tree": "3ab91c5692092db66985f90a0f49f03b2166fb21",
+      "report": "publication-controls.json"
+    }
+  },
+  "publicationQualification": {
+    "base": "41ebd76987aa912659310d4015607f46110358ab",
+    "head": "cdfcf495c6988989fba501441f52e6f2ea25a2b4",
+    "tree": "3ab91c5692092db66985f90a0f49f03b2166fb21",
+    "report": "publication-controls.json",
+    "log": "publication-controls.log.gz",
+    "logOriginalSha256": "59bcd41ae09c80802a82b710b81dbabbee82aa97e47c2fd1e0a368d0a34e683e",
+    "sourceInventory": "publication-source.json.gz",
+    "sourceInventoryOriginalSha256": "5596fc07a6b44e1b364317bdb8b6fc14a2a3ffba703d2239c130a2d54c121a48",
+    "captureSource": "publication-capture.py.txt",
+    "captureSourceSha256": "fa8ae5f03a1e38cf1d55e7a34957b70a40a3f44e2cff72f22b650c4db02e9dda",
+    "preparationAndProvenance": "publication-preparation.json",
+    "result": {
+      "tests": "8",
+      "pass": "8",
+      "fail": "0",
+      "cancelled": "0",
+      "skipped": "0",
+      "todo": "0",
+      "duration_ms": "1395.765241"
+    },
+    "sourceFilesUnchanged": true,
+    "packageAliasesUnchanged": true,
+    "headUnchanged": true,
+    "cleanBeforeAndAfter": true,
+    "additionalTimingRun": false
+  },
+  "pullRequestBody": {
+    "path": "docs/evidence/project5-local-constructor-identity/pull-request-body.md",
+    "sha256": "f1ff2e11301400ac8c5154009a270a49ff732dc26ab31ab87a50a25827b02361"
   }
 }
