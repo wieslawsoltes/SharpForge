@@ -18,7 +18,8 @@
           "args": [
             "tests/browser_test.py"
           ]
-        }
+        },
+        {"task": "a18:test:browser:geometry"}
       ]
     },
     "a19:test:browser:managed": {
@@ -122,14 +123,7 @@
       ]
     },
     "a19:test:browser:designer": {
-      "steps": [
-        {
-          "command": "python",
-          "args": [
-            "tests/browser_release12_test.py"
-          ]
-        }
-      ]
+      "steps": [{"task": "a18:test:browser"}]
     },
     "a19:test:browser:sync": {
       "steps": [
