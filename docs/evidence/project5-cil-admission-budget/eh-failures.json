@@ -1,0 +1,81 @@
+{
+  "testedHead": "43fa19c425700e1c4703190f100239c06dd97a75",
+  "sourceLogSha256": "7b57bbfc9e2bc9528980283cd5d93a35b83074fa3d2e862fde4fc277be116b9b",
+  "observations": [
+    {
+      "case": "\u2716 canonical managed replay: extension iterator, closure and chained extension properties execute together (51.928242ms)",
+      "observation": {
+        "phase": "admission",
+        "error": {
+          "name": "CilError",
+          "message": "Managed IL verification failed: Program::Main: Invalid exception region input or options",
+          "stack": "CilError: Managed IL verification failed: Program::Main: Invalid exception region input or options\n    at requireVerifiedCil (file:///workspace/scratch/1692a10afba9/p5-canonical-cil/packages/runtime/src/execution/verification-error.js:16:13)\n    at new CilVirtualMachine (file:///workspace/scratch/1692a10afba9/p5-canonical-cil/packages/runtime/src/cil-vm.js:38:5)\n    at managedReplayEvidence (file:///workspace/scratch/1692a10afba9/p5-canonical-cil/tests/support/managed-replay-evidence.js:27:10)\n    at TestContext.<anonymous> (file:///workspace/scratch/1692a10afba9/p5-canonical-cil/tests/compiler-canonical-managed-replay.test.js:67:22)\n    at Test.runInAsyncScope (node:async_hooks:227:14)\n    at Test.run (node:internal/test_runner/test:1382:25)\n    at Test.processPendingSubtests (node:internal/test_runner/test:960:18)\n    at Test.postRun (node:internal/test_runner/test:1522:19)\n    at Test.run (node:internal/test_runner/test:1447:12)\n    at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3)",
+          "issues": [
+            {
+              "methodToken": 100663301,
+              "method": "Program::Main",
+              "code": "IL_EH_FLOW",
+              "message": "Invalid exception region input or options",
+              "diagnostic": "CILR0001"
+            }
+          ]
+        },
+        "sourceSha256": "d01fd2b9b73b266a09fb08df9de87580b4f6a26baea913b749f6066ea6f4a0ae",
+        "success": true,
+        "diagnostics": [],
+        "assemblyBytes": 4608,
+        "assemblySha256": "9fee4adf09337ad5c49029001d793952463e26d0ee82cd7b074db71527566d04"
+      }
+    },
+    {
+      "case": "\u2716 canonical managed replay: local iterator captures the receiver and mutable outer local and runs finally (20.435884ms)",
+      "observation": {
+        "phase": "admission",
+        "error": {
+          "name": "CilError",
+          "message": "Managed IL verification failed: Program::Main: Invalid exception region input or options",
+          "stack": "CilError: Managed IL verification failed: Program::Main: Invalid exception region input or options\n    at requireVerifiedCil (file:///workspace/scratch/1692a10afba9/p5-canonical-cil/packages/runtime/src/execution/verification-error.js:16:13)\n    at new CilVirtualMachine (file:///workspace/scratch/1692a10afba9/p5-canonical-cil/packages/runtime/src/cil-vm.js:38:5)\n    at managedReplayEvidence (file:///workspace/scratch/1692a10afba9/p5-canonical-cil/tests/support/managed-replay-evidence.js:27:10)\n    at TestContext.<anonymous> (file:///workspace/scratch/1692a10afba9/p5-canonical-cil/tests/compiler-canonical-managed-replay.test.js:67:22)\n    at Test.runInAsyncScope (node:async_hooks:227:14)\n    at Test.run (node:internal/test_runner/test:1382:25)\n    at Test.processPendingSubtests (node:internal/test_runner/test:960:18)\n    at Test.postRun (node:internal/test_runner/test:1522:19)\n    at Test.run (node:internal/test_runner/test:1447:12)\n    at async Test.processPendingSubtests (node:internal/test_runner/test:960:7)",
+          "issues": [
+            {
+              "methodToken": 100663298,
+              "method": "Program::Main",
+              "code": "IL_EH_FLOW",
+              "message": "Invalid exception region input or options",
+              "diagnostic": "CILR0001"
+            }
+          ]
+        },
+        "sourceSha256": "f22cf22ff9e8d55ba2da0737498a4fdefc21377e9ec653138515e85887cb4d99",
+        "success": true,
+        "diagnostics": [],
+        "assemblyBytes": 5120,
+        "assemblySha256": "d2c241ca2d305b0d1659eef58bf00a9cb09815d196e5c7427ff8217c90aae386"
+      }
+    },
+    {
+      "case": "\u2716 independent direct-CIL replay: by-reference/ref-out-in-parameters-share-the-variable (39.264642ms)",
+      "observation": {
+        "phase": "admission",
+        "error": {
+          "name": "CilError",
+          "message": "Managed IL verification failed: Program::Main: Invalid exception region input or options",
+          "stack": "CilError: Managed IL verification failed: Program::Main: Invalid exception region input or options\n    at requireVerifiedCil (file:///workspace/scratch/1692a10afba9/p5-canonical-cil/packages/runtime/src/execution/verification-error.js:16:13)\n    at new CilVirtualMachine (file:///workspace/scratch/1692a10afba9/p5-canonical-cil/packages/runtime/src/cil-vm.js:38:5)\n    at managedReplayEvidence (file:///workspace/scratch/1692a10afba9/p5-canonical-cil/tests/support/managed-replay-evidence.js:27:10)\n    at TestContext.<anonymous> (file:///workspace/scratch/1692a10afba9/p5-canonical-cil/tests/compiler-direct-cil-adjacent-replay.test.js:28:22)\n    at Test.runInAsyncScope (node:async_hooks:227:14)\n    at Test.run (node:internal/test_runner/test:1382:25)\n    at Test.processPendingSubtests (node:internal/test_runner/test:960:18)\n    at Test.postRun (node:internal/test_runner/test:1522:19)\n    at Test.run (node:internal/test_runner/test:1447:12)\n    at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3)",
+          "issues": [
+            {
+              "methodToken": 100663306,
+              "method": "Program::Main",
+              "code": "IL_EH_FLOW",
+              "message": "Invalid exception region input or options",
+              "diagnostic": "CILR0001"
+            }
+          ]
+        },
+        "sourceSha256": "9271ce1331abb0239529ddb66ccf2e46492b28620941a6fa07284318f6a9b6bb",
+        "success": true,
+        "diagnostics": [],
+        "assemblyBytes": 3072,
+        "assemblySha256": "41a1266099b6449f611df80891e2bbce080e5c69787685b8c75817c36ef2316d"
+      }
+    }
+  ]
+}
