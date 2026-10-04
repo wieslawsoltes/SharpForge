@@ -34,6 +34,7 @@ try {
     observation.oracle = parseILVerify(verify);
     await writeFile(output, JSON.stringify(capture, null, 2) + '\n');
     assert.equal(observation.oracle.accepted, fixture.accepted, `${fixture.name}: ${verify.stdout}\n${verify.stderr}`);
+    if (!fixture.accepted) assert.ok(observation.oracle.errors.includes('TryNonEmptyStack'), fixture.name);
   }
   console.log(JSON.stringify(capture.observations.map(value => ({ name: value.name, accepted: value.oracle.accepted }))));
 } finally {

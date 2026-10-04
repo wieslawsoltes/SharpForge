@@ -1,6 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
+import { createHash } from 'node:crypto';
 import { AssemblyInspector, verifyCilAssembly } from '@sharpforge/cil';
 import { verifiedStackBound } from '../packages/cil/src/verified-stack.js';
 import { validateHandlerEntryHeights } from '../packages/cil/src/verify/handlers-access.js';
@@ -53,11 +54,16 @@ test('nested try entry consumes the enclosing catch exception before entering th
 
 test('twelve retained ILVerify cases agree with reachable try-entry admission', () => {
   const capture = JSON.parse(readFileSync(new URL('./fixtures/a03-handler-entry/native.json', import.meta.url), 'utf8'));
+  const hash = bytes => createHash('sha256').update(bytes).digest('hex');
+  assert.equal(capture.inputSHA256, hash(readFileSync(new URL('./fixtures/a03-handler-entry/input.js', import.meta.url))));
   assert.equal(capture.observations.length, nativeCases.length);
   for (const fixture of nativeCases) {
     const native = capture.observations.find(value => value.name === fixture.name);
     assert.equal(native.oracle.accepted, fixture.accepted, fixture.name);
-    const result = verifyCilAssembly(entryFixture(fixture.options).bytes);
+    if (!fixture.accepted) assert.ok(native.oracle.errors.includes('TryNonEmptyStack'), fixture.name);
+    const { bytes } = entryFixture(fixture.options);
+    assert.equal(native.assemblySHA256, hash(bytes), fixture.name);
+    const result = verifyCilAssembly(bytes);
     assert.equal(result.success, native.oracle.accepted, JSON.stringify({ fixture: fixture.name, issues: result.issues }));
   }
 });
