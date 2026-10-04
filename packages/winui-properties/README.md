@@ -15,3 +15,7 @@ Application-owned UI services for SharpForge. Instances have explicit lifetimes;
 `Binding` retains explicit source, mode, conversion and fallback configuration. An absent source or fallback uses `UnsetValue`, while an explicit null remains a value. `RelativeSource` and definition snapshots preserve the selected source policy without invoking application code. `PropertyPath` stores immutable path text; `parsePropertyPath` produces bounded, frozen member/indexer/attached-property steps with positional syntax failures. The parser defaults to 4,096 characters and 128 segments.
 
 The executable binding engine and managed adapters consume these definitions in later batches.
+
+## Property ABI provider
+
+registerPropertyContracts accepts an explicit reserved framework registry. It appends typed metadata and dependency property callbacks, Binding/RelativeSource/converter contracts, observable notifications, vector/list interfaces and inheritable text/attached identifiers without redefining released members. Importing this provider does not register it in the default framework registry.
