@@ -120,17 +120,46 @@ compiler, runtime, platform and input hashes. The separate `edge-roslyn.json` ob
 `edge-source.cs` with SDK 10.0.201 and CoreCLR 10.0.5 on Linux x64, using `/refonly /target:library /deterministic+`
 and `/langversion:latest`, the installed reference-pack assemblies and the observer revision identified in that snapshot. It records source,
 compiler, observer and reference-image hashes, canonical interface names and the file-local attribute exception above.
-The source was named `Source.cs` during capture; file-local name hashes are compiler-specific. The focused Node gate
-passed 40 tests at `e14947ea`; four separate parameter-default reference-pack tests skipped because their SDK path was
-not configured. The native observer probe passed at `b939cb00`; the first complete public comparison identified
-missing synthesized attributes, virtual/event flag differences and unnecessary fixed-buffer storage TypeDefs.
-Those captured differences drive the focused regressions. At `1435807c`, the 40-test focused gate passed without skips
-and the full public metadata comparison passed. The subsequent both-image consumer probe disproved the original blanket
-consumer-success assumption: native output rejected the three fixed buffers with `CS0648`, while the missing serialized
-element identity in SharpForge caused `CS0570`. The qualified-identity correction, both-image positive/negative consumer
-checks, friend comparison and performance remain pending.
+The source was named `Source.cs` during capture; file-local name hashes are compiler-specific.
+
+The complete focused gate passed **45 tests, with no failures or skips**, at source revision
+`b40e8f7b5b8f5d06ad992da4a0b7446d667a056e`. This includes the A03-T22 tests, executable generic fixed-buffer regressions
+and existing compiler attribute-emission tests. The native capture then passed both public and friend cases using
+SDK **10.0.201**, Roslyn **5.3.0-2.26153.122**, reference pack/CoreCLR **10.0.5**, on Linux x64. Both cases have 15 source
+types, one standard marker and only throw-null managed bodies (20 public-case bodies, 25 friend-case bodies).
+Both load attempts match Roslyn's `BadImageFormatException` and HRESULT `-2146234280`; the marker-free control loads.
+Positive consumers compile against both images. The original full consumer produces identical `CS0648` diagnostics
+and exact source spans for all three fixed buffers. Friend access succeeds in the friend case and yields the same
+`CS1061` diagnostic in the public case.
+
+[`qualification.json`](../tests/fixtures/a03-reference-assemblies/qualification.json) records the tested source revision,
+tool versions, input and output hashes, test count and native consumer observations. Full image/metadata comparisons,
+raw compiler commands, stdout and SARIF are retained under `artifacts/a03-reference-assemblies-qualified-b40/` by that
+capture. Subsequent documentation commits do not change the tested source identity. Performance remains unmeasured.
 Browser, Rust-native and Wasm execution are not qualified by these checks: the output is a compile-time reference
 assembly and its marker deliberately prevents execution loading.
+
+## Benchmark protocol
+
+The benchmark driver uses this same rich source fixture for every selected compiler checkout. It records compiler and
+driver revisions, source/output hashes, compiler entry path/hash, tracked changes, and each compiler dependency's
+resolved path. Every `@sharpforge` dependency must resolve inside the selected compiler checkout, so a baseline cannot
+silently import current packages. Only a trusted developer-selected local checkout entry point can be loaded.
+
+The first-compilation timing excludes module import. The driver retains 120 repeated timings and heap deltas in
+chronological order, excludes the first 20 from summary statistics, and reports the remaining 100 samples. Median is
+the mean of the two middle sorted samples; p95/p99 use nearest rank. Compile success, marker/private-member policy and
+fixture-type guards run outside timing, and every repeated output must equal the first assembly byte for byte.
+A baseline that silently ignores `refout` fails the marker and private-member guards. With `--expose-gc`, garbage
+collection runs before each sample. Heap-used deltas are not total allocation or retained-heap measurements.
+
+Run each command alone, using a baseline that accepts the rich fixture and has its own workspace aliases:
+
+```sh
+node scripts/limited.js node --expose-gc packages/cil/tools/benchmark-reference-assemblies.mjs --mode metadata --compiler /baseline/packages/compiler/src/index.js --output artifacts/refout-baseline.json
+node scripts/limited.js node --expose-gc packages/cil/tools/benchmark-reference-assemblies.mjs --mode metadata --output artifacts/refout-metadata.json
+node scripts/limited.js node --expose-gc packages/cil/tools/benchmark-reference-assemblies.mjs --mode refout --output artifacts/refout-current.json
+```
 
 ## Changes outside A03
 
