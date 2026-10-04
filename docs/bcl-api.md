@@ -832,8 +832,10 @@ Registered families: <code>string</code>.
 | 1283 | <code>static string System.String::Format(string, object, object, object, object)</code> | implemented |
 | 1284 | <code>static string System.String::Format(string, object[])</code> | implemented |
 | 524298 | <code>static int System.String::CompareOrdinal(string, int, string, int, int)</code> | implemented |
+| 524299 | <code>static bool System.String::Equals(string, string, System.StringComparison)</code> | implemented |
+| 524300 | <code>bool System.String::Equals(string, System.StringComparison)</code> | implemented |
 
-Pinned reference: 37 implemented and 149 missing exact metadata rows.
+Pinned reference: 39 implemented and 147 missing exact metadata rows.
 
 | Reference kind | Exact reference signature | Status | Matching ABI IDs |
 | --- | --- | --- | --- |
@@ -897,8 +899,8 @@ Pinned reference: 37 implemented and 149 missing exact metadata rows.
 | method | <code>System.String::Equals``0(System.Object):System.Boolean instance</code> | missing | — |
 | method | <code>System.String::Equals``0(System.String):System.Boolean instance</code> | missing | — |
 | method | <code>System.String::Equals``0(System.String,System.String):System.Boolean static</code> | implemented | 1253 |
-| method | <code>System.String::Equals``0(System.String,System.String,System.StringComparison):System.Boolean static</code> | missing | — |
-| method | <code>System.String::Equals``0(System.String,System.StringComparison):System.Boolean instance</code> | missing | — |
+| method | <code>System.String::Equals``0(System.String,System.String,System.StringComparison):System.Boolean static</code> | implemented | 524299 |
+| method | <code>System.String::Equals``0(System.String,System.StringComparison):System.Boolean instance</code> | implemented | 524300 |
 | method | <code>System.String::Format``0(System.IFormatProvider,System.String,System.Object):System.String static</code> | missing | — |
 | method | <code>System.String::Format``0(System.IFormatProvider,System.String,System.Object,System.Object):System.String static</code> | missing | — |
 | method | <code>System.String::Format``0(System.IFormatProvider,System.String,System.Object,System.Object,System.Object):System.String static</code> | missing | — |
