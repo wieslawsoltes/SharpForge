@@ -125,6 +125,12 @@ samples, median, nearest-rank p95, minimum and maximum. With fifteen samples
 the nearest-rank p95 is the maximum; this is a coarse descriptive tail measure,
 not an estimate with a claimed confidence interval.
 
+An optional `--case` selects exactly one known family: `instance-overloads`,
+`constructed-generic-receiver`, `local-functions`, or `incomplete-instance-call`.
+Omitting it keeps all four families. Unknown names are rejected. The report
+records the selected name, or `null` for all families, in `settings.case`; the
+comparator requires identical settings and corpus on both sides.
+
 Imports, explicit GC, result observations and report writing occur outside the
 timer. The baseline and candidate run in separate processes, so neither can
 reuse the other's modules or compilation objects. Machine, CPU, Node/V8,
@@ -197,6 +203,40 @@ an old report with a new one, or claim the revised binding phase alone meets
 the cost of first signature help. Query rows use separate fresh models and
 their medians must not be added to binding medians as if that were a measured
 combined operation.
+
+## Focused generic tail diagnostic
+
+The synchronized provider/new-main metadata cohort passed 50/50 at
+`1699e53a664bb54752a216a98f59a9f947da5eeb`. The matched-main comparison against
+`ceced1c2ad0b7acead2333609d8568ab41f2f902` kept all eight timing medians at or
+below +0.17%, but generic source-model-binding p95 was 27.546 → 36.100 ms
+(+31.05%). With fifteen samples, that p95 is the maximum. Preserve this
+observation and its raw samples; do not replace it with the diagnostic below.
+
+The following single-family capture uses 101 samples and ten warmups on each
+side. Its nearest-rank p95 is the 96th ordered sample, rather than the maximum.
+It retains compile, bind, first-query and repeated-query phases, including
+candidate-only query costs when the baseline API is absent. This is a focused
+investigation of that concrete tail, not another four-family qualification.
+The filter and command are source-ready; this diagnostic is **not yet run** at
+this checkpoint. Stop after this capture unless it identifies a stable issue.
+
+Run the current exporter so both captured source revisions receive the same
+new harness; previously exported runners do not include the case filter.
+
+```sh
+provider_generic_root=$(mktemp -d /workspace/scratch/6b99131ca908/p16-provider-generic.XXXXXX)
+node scripts/benchmarks/a20-provider-binding-export.mjs \
+  ceced1c2ad0b7acead2333609d8568ab41f2f902 "$provider_generic_root/baseline"
+node scripts/benchmarks/a20-provider-binding-export.mjs \
+  1699e53a664bb54752a216a98f59a9f947da5eeb "$provider_generic_root/candidate"
+node scripts/limited.js node --expose-gc "$provider_generic_root/baseline/a20-provider-binding.mjs" \
+  --case constructed-generic-receiver --calls 96 --samples 101 --warmups 10 --output "$provider_generic_root/baseline.json"
+node scripts/limited.js node --expose-gc "$provider_generic_root/candidate/a20-provider-binding.mjs" \
+  --case constructed-generic-receiver --calls 96 --samples 101 --warmups 10 --output "$provider_generic_root/candidate.json"
+node scripts/benchmarks/a20-provider-binding-compare.mjs \
+  "$provider_generic_root/baseline.json" "$provider_generic_root/candidate.json" > "$provider_generic_root/comparison.json"
+```
 
 No browser, native CLR, Visual Studio or performance qualification success is
 implied by the presence of this harness.
