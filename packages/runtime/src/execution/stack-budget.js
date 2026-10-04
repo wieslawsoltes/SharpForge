@@ -1,4 +1,4 @@
-import {normalizeCallType, verifiedStackBound} from '@sharpforge/cil';
+import {normalizeCallType, parseFunctionPointerType, verifiedStackBound} from '@sharpforge/cil';
 import {ManagedFault} from '../heap.js';
 import {executionCodeState} from './code-version.js';
 import {sourceStackSlots} from './source-stack-size.js';
@@ -29,6 +29,9 @@ function overflow() {
 function storageBytes(vm, type) {
   // Custom modifiers affect access/call contracts, not physical storage width.
   const name = normalizeCallType(type).replace(/\s+mod(?:req|opt)\([^)]*\)/g, '').replace(/\s+pinned$/, '');
+  // Function-pointer signatures describe code, not a MethodTable name. Their
+  // pointee arguments (including arrays/generics) do not affect physical width.
+  if (parseFunctionPointerType(name)) return Math.max(slotBytes, vm.heap.methodTables.nativeIntBits / 8);
   const table = vm.inspector ? vm.typeSystem.table(name) : vm.heap.methodTables.get(name);
   const layout = table.flags.nullable || vm.inspector && isAggregateType(table);
   const bytes = layout ? valueLayout(vm, table).size : table.flags.valueType ? table.valueSize : slotBytes;
