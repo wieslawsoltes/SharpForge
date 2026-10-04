@@ -3,6 +3,7 @@ import { generateSdkSources } from './sdk/generated-sources.js';
 import { createTargetGraph } from './targets.js';
 import { evaluateResources } from '../resources.js';
 import { readLaunchSettings } from '../launch-settings.js';
+import { isTextRecord } from '../workspace-records.js';
 
 const metadata = item => ({ ...item.metadata });
 
@@ -15,7 +16,8 @@ export function evaluationResult(context, root) {
     const data = metadata(item);
     compile.set(item.path, { path: item.path, link: getCaseInsensitive(data, 'Link') ?? null,
       ...(Object.keys(data).length ? { metadata: data } : {}) });
-    if (typeof context.files.get(item.path)?.text !== 'string' && context.files.get(item.path)?.lazy !== true) {
+    const file = context.files.get(item.path);
+    if (!isTextRecord(file) && file?.lazy !== true) {
       context.diagnostic(`Compile file '${item.path}' is missing. Open the containing folder or select all referenced files.`, null, 'SFP1005');
     }
   }

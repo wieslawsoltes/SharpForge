@@ -1,3 +1,4 @@
+import {cloneWorkspaceRecord, isTextRecord, recordText, compilationRecords} from './workspace-records.js';
 import { normalizePath } from './paths.js';
 import { WorkspacePathIndex } from './evaluation/path-index.js';
 import { evaluateProjectContexts } from './multi-target.js';
@@ -29,16 +30,16 @@ export class ProjectSystem {
     this.targetFramework = targetFramework;
     this.globalProperties = Object.fromEntries(Object.entries(properties).map(([key, value]) => [key.toLowerCase(), String(value)]));
     const input = files instanceof Map ? [...files].map(([path, value]) => typeof value === 'string'
-      ? { path, text: value } : { ...value, path }) : files;
+      ? { path, text: value } : cloneWorkspaceRecord(value, path)) : files;
     if (!Array.isArray(input) || input.length > maxFiles) throw new Error('Workspace file limit exceeded');
     for (const file of input) {
       const path = normalizePath(file.path ?? file.uri);
       if (this.files.has(path)) throw new Error(`Duplicate workspace path: ${path}`);
       const lazy = file.lazy === true && Number.isFinite(file.size) && file.size >= 0;
-      if (typeof file.text !== 'string' && !(file.bytes instanceof Uint8Array) && !lazy) {
+      if (!isTextRecord(file) && !(file.bytes instanceof Uint8Array) && !lazy) {
         throw new Error(`No file contents: ${path}`);
       }
-      this.files.set(path, { ...file, path });
+      this.files.set(path, cloneWorkspaceRecord(file, path));
     }
     this.pathIndex = new WorkspacePathIndex(this.files.keys(), options);
   }
@@ -51,10 +52,10 @@ export class ProjectSystem {
   }
   text(path) {
     const file = this.files.get(path);
-    if (!file || typeof file.text !== 'string') {
+    if (!isTextRecord(file)) {
       throw new Error(`Missing text file '${path}'. Open its containing folder to grant access to sibling files.`);
     }
-    return file.text;
+    return recordText(file);
   }
   load(entry) {
     return loadProjectSystem(this, entry);
@@ -73,10 +74,13 @@ export class ProjectSystem {
   /** Hydration replaces both ordinary records and any context-specific metadata-only output. */
   setBuildFile(path, record, { contextId } = {}) {
     path = normalizePath(path);
-    if (typeof record?.text !== 'string' && !(record?.bytes instanceof Uint8Array)) {
+    if (!isTextRecord(record) && !(record?.bytes instanceof Uint8Array)) {
       throw new Error('Hydration did not return file contents.');
     }
-    const file = { ...record, path, lazy: false };
+    const file = cloneWorkspaceRecord(Object.defineProperties({}, {
+      ...Object.getOwnPropertyDescriptors(record),
+      lazy: {value: false, writable: true, configurable: true, enumerable: true},
+    }), path);
     this.files.set(path, file);
     this.pathIndex.add(path);
     const context = this.evaluationContextVariants.get(contextId);
@@ -139,7 +143,7 @@ export class ProjectSystem {
       for (const item of project.compile) {
         const file = this.buildFile(item.path, { contextId: project.contextId });
         if (file?.lazy) throw new Error(`Compile file '${item.path}' must be hydrated before compilation.`);
-        if (typeof file?.text === 'string') sources.set(item.path, { uri: item.path, text: file.text, version: file.version ?? 1 });
+        if (isTextRecord(file)) sources.set(item.path, file);
       }
       for (const source of project.generatedSources ?? []) {
         if (source.kind === 'assembly-info' && !includeAssemblyInfo) {
@@ -151,7 +155,7 @@ export class ProjectSystem {
       }
     };
     visit(startup);
-    return [...sources.values()];
+    return compilationRecords(sources.keys(), sources);
   }
   compilationOptions(startup = this.solution?.projectPaths[0]) {
     return combinedCompilationOptions(this, startup);

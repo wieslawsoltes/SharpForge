@@ -50,3 +50,9 @@ The Explorer snapshot tests exercise these exports through the package entry poi
 The public `sanitizeStartupConfiguration`, `sanitizeLaunchProfileMetadata` and `sanitizeSessionUserSettings` functions validate and copy these fields. Their optional context accepts `paths: Set<string>` for workspace paths or `projectIds: Set<string>` for loaded project identities. A project ID must be a portable relative path; `$workspace` identifies the loose-source workspace. Archive manifests require other project IDs to name included `.csproj` files. Workbench staging separately validates executable project kinds and profile references before replacing a workspace.
 
 The exported `startupActions`, `startupModes`, `sessionUserSettingsLimits` and immutable `sessionUserSettingsContributions` table define this schema once. Limits are 1,024 projects, 64 profiles per project, 512 characters per profile ID, 200 per profile name and 4 MiB of compact metadata characters. Serialized workspace manifests also enforce the existing 4 MiB UTF-8 byte budget, including their other settings and indentation. Unknown fields are discarded; invalid versions, paths, duplicate IDs, selections or bounds throw before the import returns settings. Compute metadata is a preference, not a grant: the runtime validates whether its selected backend is supported.
+
+## Prepared project input
+
+The portable evaluator preserves immutable source descriptors during discovery,
+hydration and compilation. See [Prepared project records](PREPARED_PROJECTS.md)
+for the admission contract and corrected integration evidence.
