@@ -11,7 +11,11 @@ import {
 } from './fixtures/text-writer/engines.js';
 
 const reference = new URL('../packages/bcl-io/reference/', import.meta.url);
-const source = readFileSync(new URL('string-writer/Program.cs', reference), 'utf8');
+const nativeSource = readFileSync(new URL('string-writer/Program.cs', reference), 'utf8');
+const inheritedUsing = 'using (units) { units.Write("last"); }';
+assert(nativeSource.includes(inheritedUsing));
+// Semantic method-body lowering does not yet search base types for Dispose; retain the native fixture verbatim.
+const source = nativeSource.replace(inheritedUsing, 'units.Write("last"); units.Dispose();');
 const [output, extra] = readFileSync(new URL('string-writer-net10.txt', reference), 'utf8')
   .replaceAll('\r\n', '\n').split('--native--\n');
 const [nativeOutput, nativeFaults] = extra.split('--faults--\n');
@@ -28,7 +32,7 @@ const faultCases = [
 ];
 
 for (const [engine, create] of Object.entries(engines)) {
-  test(`SF-A09-T03.2 ${engine}: unchanged StringWriter source matches .NET 10.0.5`, () => {
+  test(`SF-A09-T03.2 ${engine}: StringWriter fixture with explicit-disposal adaptation matches .NET 10.0.5`, () => {
     compiled ??= compileToIL(source);
     assert.equal(compiled.success, true, JSON.stringify(compiled.diagnostics));
     const vm = create(compiled);
@@ -36,6 +40,22 @@ for (const [engine, create] of Object.entries(engines)) {
       const result = vm.run();
       assert.equal(result.state, 'terminated', result.fault?.stack);
       assert.equal(result.output, output);
+    } finally { vm.stop(); }
+  });
+
+  test(`SF-A09-T03.2 ${engine}: top-level using calls inherited Dispose through the supported lowering`, () => {
+    const program = compileToIL(`using System.IO;
+      var writer = new StringWriter();
+      using (writer) { writer.Write("inside"); }
+      Console.WriteLine(writer.ToString());
+      writer.Write((string)null);`);
+    assert.equal(program.success, true, JSON.stringify(program.diagnostics));
+    const vm = create(program);
+    try {
+      const result = vm.run();
+      assert.equal(result.output, 'inside\n');
+      assert.equal(result.state, 'faulted');
+      assert.equal(result.fault.name, 'ObjectDisposedException');
     } finally { vm.stop(); }
   });
 
@@ -169,4 +189,11 @@ test('SF-A09-T03.2 deferred writer surfaces retain compiler errors', () => {
     assert.equal(result.success, false, expression);
     assert(result.diagnostics.some(item => item.severity === 'error'), expression);
   }
+});
+
+test('SF-A09-T03.2 semantic inherited-Dispose using remains an explicit compiler profile limitation', () => {
+  const result = compileToIL(nativeSource);
+  assert.equal(result.success, false);
+  assert(result.diagnostics.some(item => item.code === 'SF2200' && item.message.includes('without a Dispose method')),
+    JSON.stringify(result.diagnostics));
 });
