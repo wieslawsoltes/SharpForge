@@ -11,7 +11,11 @@
   },
   "files": [
     "src",
+    "docs",
+    "examples",
     "README.md",
+    "VIEW.md",
+    "VIEW-COVERAGE.md",
     "LICENSE"
   ],
   "license": "MIT",

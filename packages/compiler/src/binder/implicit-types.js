@@ -1,3 +1,4 @@
+import {DiagnosticId} from '../diagnostics/codes.js';
 /**
  * Implicit typing (SF-A02-T52): the best common type of a set of expressions (implicitly typed arrays, the inferred
  * return type of a lambda) and the rules for the initializer of a `var` local.
@@ -62,8 +63,8 @@ function untypedInitializerName(value) {
  * @param value the bound initializer  @returns {null|{code:string,args:string[],at:'initializer'|'declarator'}}
  */
 export function untypedInitializerProblem(value) {
-  if (value.form === 'collection') return { code: 'CS9176', args: [], at: 'initializer' };
-  if (value.form === 'implicitNew') return { code: 'CS8754', args: ['new()'], at: 'initializer' };
-  if (value.literal === 'default') return { code: 'CS8716', args: [], at: 'initializer' };
-  return { code: 'CS0815', args: [untypedInitializerName(value)], at: 'declarator' };
+  if (value.form === 'collection') return { code: DiagnosticId.CS9176, args: [], at: 'initializer' };
+  if (value.form === 'implicitNew') return { code: DiagnosticId.CS8754, args: ['new()'], at: 'initializer' };
+  if (value.literal === 'default') return { code: DiagnosticId.CS8716, args: [], at: 'initializer' };
+  return { code: DiagnosticId.CS0815, args: [untypedInitializerName(value)], at: 'declarator' };
 }

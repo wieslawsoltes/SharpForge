@@ -7,6 +7,7 @@
  * tuple literals, throw). The result is an immutable `Conversion` whose `kind` follows Roslyn's ConversionKind.
  */
 import { TypeKind, NamedTypeSymbol, TypeParameterSymbol, TypeCompareKind } from '../symbols/types.js';
+import { tupleElements } from '../symbols/tuple-elements.js';
 import { numericKind, implicitNumericConversion, explicitNumericConversion } from './numeric.js';
 import { implicitConstantConversion } from './constant-narrowing.js';
 import { nativeIntegerKind, isNativeIdentity, isIntPtrFamily } from './native-int.js';
@@ -15,6 +16,7 @@ import { hasImplicitReferenceConversion, hasBoxingConversion, hasExplicitReferen
 import { resolveUserDefinedConversion } from './user-defined.js';
 import { hasImplicitSpanConversion, hasExplicitSpanConversion } from './span.js';
 import { pointerConversionKind } from './pointer.js';
+import { isInterpolatedStringHandlerType } from './interpolated-string-handler.js';
 
 export const ConversionKind = Object.freeze(
   Object.fromEntries(
@@ -33,6 +35,7 @@ export const ConversionKind = Object.freeze(
       'ImplicitTuple',
       'ImplicitTupleLiteral',
       'InterpolatedString',
+      'InterpolatedStringHandler',
       'MethodGroup',
       'AnonymousFunction',
       'ImplicitThrow',
@@ -73,6 +76,7 @@ const implicitKinds = new Set([
   'ImplicitTuple',
   'ImplicitTupleLiteral',
   'InterpolatedString',
+  'InterpolatedStringHandler',
   'MethodGroup',
   'AnonymousFunction',
   'ImplicitThrow',
@@ -92,6 +96,8 @@ export class Conversion {
     this.candidates = extra.candidates ?? null;
     this.error = extra.error ?? null;
     this.steps = extra.steps ?? null;
+    // The bound handler pattern of an interpolated string handler conversion (binder/interpolated-string-handlers.js).
+    this.handler = extra.handler ?? null;
     Object.freeze(this);
   }
   get exists() {
@@ -192,8 +198,8 @@ export class Conversions {
     if (pointerConversionKind(from, to, t => this.kindOf(t)) === K.ImplicitPointerToVoid) return simple.ImplicitPointerToVoid;
     if (hasImplicitReferenceConversion(from, to, this.core)) return simple.ImplicitReference;
     if (hasBoxingConversion(from, to, this.core)) return simple.Boxing;
-    if (isTuple(from) && isTuple(to) && from.typeArguments.length === to.typeArguments.length) {
-      const parts = from.typeArguments.map((x, i) => this.classifyImplicit(x.type, to.typeArguments[i].type));
+    if (isTuple(from) && isTuple(to) && tupleElements(from).length === tupleElements(to).length) {
+      const parts = tupleElements(from).map((x, i) => this.classifyImplicit(x.type, tupleElements(to)[i].type));
       if (parts.every(p => p.exists && p.isImplicit)) return new Conversion(K.ImplicitTuple, { underlying: parts });
     }
     if (this.firstClassSpans && hasImplicitSpanConversion(from, to, this.core)) return simple.ImplicitSpan;
@@ -225,8 +231,8 @@ export class Conversions {
     if (to.typeKind === TypeKind.Dynamic) return simple.ExplicitDynamic;
     if (hasExplicitReferenceConversion(from, to, this.core)) return simple.ExplicitReference;
     if (hasUnboxingConversion(from, to, this.core)) return simple.Unboxing;
-    if (isTuple(from) && isTuple(to) && from.typeArguments.length === to.typeArguments.length) {
-      const parts = from.typeArguments.map((x, i) => this.classifyExplicit(x.type, to.typeArguments[i].type));
+    if (isTuple(from) && isTuple(to) && tupleElements(from).length === tupleElements(to).length) {
+      const parts = tupleElements(from).map((x, i) => this.classifyExplicit(x.type, tupleElements(to)[i].type));
       if (parts.every(p => p.exists)) return new Conversion(K.ExplicitTuple, { underlying: parts });
     }
     if (this.firstClassSpans && hasExplicitSpanConversion(from, to, this.core)) return simple.ExplicitSpan;
@@ -303,6 +309,7 @@ export class Conversions {
       case 'interpolatedString':
         if (['FormattableString', 'IFormattable'].includes(to.name) && to.containingNamespace?.name === 'System')
           return simple.InterpolatedString;
+        if (isInterpolatedStringHandlerType(to)) return simple.InterpolatedStringHandler;
         break;
     }
     const from = expression.type;
@@ -347,9 +354,9 @@ export class Conversions {
    * converts implicitly, ExplicitTupleLiteral (casts only) when every element converts at all, otherwise null.
    */
   tupleLiteralConversion(expression, target, forCast) {
-    if (!isTuple(target) || target.typeArguments.length !== expression.elements.length) return null;
+    if (!isTuple(target) || tupleElements(target).length !== expression.elements.length) return null;
     const classify = (element, type) => (forCast ? this.classifyCastFromExpression(element, type) : this.classifyFromExpression(element, type));
-    const parts = expression.elements.map((element, index) => classify(element, target.typeArguments[index].type));
+    const parts = expression.elements.map((element, index) => classify(element, tupleElements(target)[index].type));
     if (!parts.every(part => part.exists)) return null;
     const isImplicit = parts.every(part => part.isImplicit);
     if (!isImplicit && !forCast) return null;
