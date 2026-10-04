@@ -31,3 +31,6 @@ A default job times out after 30 minutes; default captured output is 32 MiB and 
 ## 0.8 disk explorer API
 
 `MSBuildClient.inspectItem`, `mutate` and `undoMutation` use the authenticated host's file-operation routes. The Node `NativeWorkspace` exposes the same bounded create/mkdir/move/copy/delete/write machinery with SHA-256 snapshots and quarantined undo. Binary reads support managed assembly inspection without source replacement. Read docs/explorer-keymaps.md before embedding: batches are not atomic, conflicts/partial completions are reported, undo receipts are in-memory and quarantined content is not automatically purged. File editing is distinct from native build trust.
+
+[Managed test preparation](docs/test-runtime.md) compiles prepared declarations into
+an isolated source or CIL session and retains explicit unsupported-test diagnostics.
