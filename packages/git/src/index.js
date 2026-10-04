@@ -22,6 +22,7 @@ export * from './protocol/pktline.js';
 export * from './protocol/advertisement.js';
 export * from './protocol/v1.js';
 export * from './protocol/v2.js';
+export * from './protocol/fetch.js';
 export * from './pack/reader.js';
 export * from './pack/writer.js';
 export * from './pack/delta.js';
