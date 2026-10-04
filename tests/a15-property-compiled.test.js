@@ -1,6 +1,8 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {ObservableObject, createCompiledBindings, validateCompiledBindingDescriptor} from '@sharpforge/winui-properties';
+import {
+  ObservableObject, createCompiledBindings, validateCompiledBindingDescriptor, BindingPhaseScheduler, DeferredElementScope
+} from '@sharpforge/winui-properties';
 
 const member = 0x17000001;
 const other = 0x17000002;
@@ -104,3 +106,39 @@ test('A15 compiled event bindings invoke token methods with sender and event arg
   assert.equal(events.size, 0);
 });
 
+test('A15 deferred elements realize on FindName, unload and reject recursive realization', () => {
+  const active = new Map();
+  let created = 0;
+  let disposed = 0;
+  const scope = new DeferredElementScope({
+    attach: (name, value) => active.set(name, value), detach: name => active.delete(name), dispose: () => disposed++
+  });
+  scope.register('Deferred', () => ({id: ++created}));
+  assert.equal(scope.peek('Deferred'), null);
+  assert.equal(scope.FindName('Deferred').id, 1);
+  scope.setLoad('Deferred', false);
+  assert.equal(disposed, 1);
+  assert.equal(active.size, 0);
+  scope.setLoad('Deferred', true);
+  assert.equal(scope.FindName('Deferred').id, 2);
+  scope.register('Cycle', () => scope.FindName('Cycle'));
+  assert.throws(() => scope.FindName('Cycle'), {kind: 'InvalidOperationException'});
+  scope.dispose();
+  assert.equal(disposed, 2);
+});
+
+test('A15 phases run in ascending order across frames and recycling cancels pending work', () => {
+  const frames = [];
+  const order = [];
+  const phases = new BindingPhaseScheduler({requestFrame: frame => frames.push(frame), maxPerFrame: 2});
+  phases.enqueue(3, () => order.push(3));
+  phases.enqueue(1, () => order.push(1));
+  phases.enqueue(2, () => order.push(2));
+  frames.shift()();
+  assert.deepEqual(order, [1]);
+  frames.shift()();
+  assert.deepEqual(order, [1, 2]);
+  phases.cancel();
+  frames.shift()();
+  assert.deepEqual(order, [1, 2]);
+});

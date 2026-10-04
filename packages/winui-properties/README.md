@@ -21,3 +21,7 @@ Application-owned UI services for SharpForge. Instances have explicit lifetimes;
 ## Compiled token tracking
 
 The versioned descriptor compiler resolves typed expressions through an injected authoritative symbol table. `CompiledBindings` tracks every member/indexer and function argument, retargets changed intermediate objects and applies property/event bindings. Initialize, Update, StopTracking and Dispose have explicit subscription behavior. BindBack receives the target value and suppresses converter-feedback echoes; no reflective fallback is used.
+
+## Compiled phases and owner lifetimes
+
+`BindingPhaseScheduler` runs bounded phases in ascending order across frames and cancels recycled work. `CompiledBindingGroup` separates target ownership from weak root facades, while snapshots restore identity without evaluating sources or converters. `DeferredElementScope` realizes named factories on demand and owns each activation lifetime; XAML writer integration follows after the template/name-scope join.
