@@ -1,3 +1,4 @@
+import {renameLanguageSymbol, prepareWorkspaceTypeRename} from './rename.js';
 import {types as frameworkTypes,frameworkType,canonicalType,propertiesFor,eventsFor,findContracts,contracts} from '@sharpforge/framework';
 import { findTextMatches } from '@sharpforge/text';
 import { keywords } from '@sharpforge/syntax';
@@ -28,10 +29,9 @@ export class LanguageService {
   hover(uri,offset){const symbol=this.symbolAt(uri,offset);if(symbol&&!symbol.name.startsWith("<"))return {contents:symbolDetail(symbol),start:symbol.start,end:symbol.end,symbol};const token=this.workspace.syntax(uri).tokens.find(t=>offset>=t.start&&offset<=t.end);if(token){const t=frameworkType(token.text);if(t)return {contents:t.name+' · managed web framework ('+t.kind+')',start:token.start,end:token.end};const completion=this.completions(uri,token.end).find(i=>i.label===token.text);if(completion&&completion.kind!=='keyword')return {contents:completion.detail,start:token.start,end:token.end};}if(token&&intrinsicDocs[token.text])return {contents:intrinsicDocs[token.text],start:token.start,end:token.end};const d=this.workspace.compile().diagnostics.find(d=>d.uri===uri&&offset>=d.start&&offset<=d.start+d.length);return d?{contents:`${d.code}: ${d.message}`,start:d.start,end:d.start+d.length}:null;}
   definition(uri,offset){const symbol=this.symbolAt(uri,offset);return symbol?{uri:symbol.uri,start:symbol.start,end:symbol.end}:null;}
   references(uri,offset,includeDeclaration=true){const ref=this.reference(uri,offset);if(!ref)return [];return this.workspace.compile().references.filter(r=>r.symbolId===ref.symbolId&&(includeDeclaration||!r.declaration)).map(r=>({uri:r.uri,start:r.start,end:r.end}));}
-  rename(uri,offset,newName){
-    if(!/^[\p{L}_][\p{L}\p{N}_]*$/u.test(newName)||keywords.has(newName))throw new Error('The new name must be a non-keyword C# identifier');const symbol=this.symbolAt(uri,offset);if(!symbol)throw new Error('No bound symbol at this position');if(symbol.kind==='class')throw new Error('Type rename is not supported until all type syntax is bound');
-    const result=this.workspace.compile();if(result.symbols.some(s=>s.id!==symbol.id&&s.name===newName&&s.kind===symbol.kind&&(s.method===symbol.method||s.owner===symbol.owner)))throw new Error(`'${newName}' conflicts with an existing symbol`);
-    const references=this.references(uri,offset);if(references.some(r=>!this.workspace.documents.has(r.uri)))throw new Error('Rename would edit read-only generated source');return references.map(r=>({...r,newText:newName}));
+  rename(uri,offset,newName){return renameLanguageSymbol(this,uri,offset,newName);}
+  prepareTypeRename(uri,offset,newName,options={}) {
+    return prepareWorkspaceTypeRename(this.workspace,uri,offset,newName,options);
   }
   findInFiles(query,options={}){return findTextMatches([...this.workspace.documents.values()].map(d=>d.source),query,options);}
   callHierarchy(uri,offset){const symbol=this.symbolAt(uri,offset);return symbol?.kind==='method'?[this.callItem(symbol)]:[];}
