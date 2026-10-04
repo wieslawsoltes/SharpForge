@@ -1,10 +1,11 @@
 import {OpfsRecoveryStore, WorkspaceReceiptStore, RecentWorkspaceHandles, WorkspaceRevisionChannel, WorkspaceConflictCoordinator, WorkspaceSaveLocks,
-  hashWorkspaceBytes, workspaceRecordBytes, migrateWorkspaceRecovery} from '@sharpforge/workspace';
+  hashWorkspaceBytes, hashWorkspaceRecord, workspaceRecordSource, workspaceRecordBytes, migrateWorkspaceRecovery} from '@sharpforge/workspace';
+import {studioDiskLimits} from '../workbench/workspace-limits.js';
+import {sameRevisionContents as sameContents, captureRevisionRecord, readRevisionContent} from './revision-records.js';
 
-const sameContents = (document, file) => document && file && document.text === file.text && document.bytes === file.bytes &&
-  document.encoding === file.encoding && document.bom === file.bom && document.originalText === file.originalText &&
-  document.lineEndings === file.lineEndings && document.preferredLineEnding === file.preferredLineEnding &&
-  document.preserveLineEndings === file.preserveLineEndings;
+const recoveryLimits = {maxFiles: studioDiskLimits.maxFiles, maxBytes: studioDiskLimits.maxTotalBytes * 4,
+  maxEncodedBytes: studioDiskLimits.maxTotalBytes * 8};
+const unloaded = record => record?.lazy && !workspaceRecordSource(record) && typeof record.text !== 'string' && !record.bytes;
 
 /** Explorer recovery and revision lifecycle. Directory identity is bound to isSameEntry, independent of names and session epochs. */
 export class ExplorerPersistence {
@@ -73,8 +74,9 @@ export class ExplorerPersistence {
         if (generation !== this.generation || this.disposed) return;
         this.workspaceDirectory = workspace;
         this.store = new OpfsRecoveryStore({directory, storage: this.environment.navigator.storage,
-          onWarning: value => this.warning(value)});
-        this.receiptStore = new WorkspaceReceiptStore({directory: await directory.getDirectoryHandle('transactions', {create: true})});
+          onWarning: value => this.warning(value), limits: recoveryLimits});
+        this.receiptStore = new WorkspaceReceiptStore({directory: await directory.getDirectoryHandle('transactions', {create: true}),
+          maxSnapshotBytes: recoveryLimits.maxBytes});
         this.lastReceipt = await this.receiptStore.load();
         if (this.lastReceipt && !this.lastReceipt.status.startsWith('committed')) this.warning({code: 'SFW1133',
           message: 'An interrupted file operation has a recovery receipt with ' + this.lastReceipt.completedMutations.length + ' completed disk changes.'});
@@ -86,13 +88,13 @@ export class ExplorerPersistence {
         channelFactory: name => new this.environment.BroadcastChannel(name), onError: error => this.warning({message: error.message}),
         onRevision: remote => { this.conflicts.observe(remote); this.onChange?.(); }});
       this.conflicts = new WorkspaceConflictCoordinator({channel: this.channel,
-        getDocument: path => this.documentFor(path), applyResolution: async resolution => {
+        getDocument: path => this.documentFor(path), readLocal: (document, options) => this.readLocal(document, options),
+        applyResolution: async resolution => {
           const response = await this.onCommand('apply-conflict-resolution', {path: resolution.path}, [], {resolution});
           if (response?.error) throw new Error(response.error);
           this.baselines.set(resolution.path, resolution.content);
           const current = this.documents.get(resolution.path);
-          if (current) this.documents.set(resolution.path, {...current,
-            revision: Math.max(current.revision, resolution.revision), baseContent: resolution.content});
+          if (current) current.revision = Math.max(current.revision, resolution.revision);
         }});
     }
   }
@@ -119,10 +121,23 @@ export class ExplorerPersistence {
   documentFor(path) {
     const document = this.documents.get(path);
     const file = this.liveFiles.get(path);
-    if (!file || !document || file.lazy && typeof file.text !== 'string' && !file.bytes) return null;
-    if (sameContents(document, file)) return document;
+    if (!file || !document || unloaded(file)) return null;
+    const metadata = {path, revision: document.revision, hash: document.hash, encoding: document.encoding, bom: document.bom};
+    if (sameContents(document, file)) return metadata;
     // Visible edits invalidate a conflict dialog even while their asynchronous digest is pending.
-    return {...document, revision: document.revision + 1, hash: null};
+    return {...metadata, revision: document.revision + 1, hash: null};
+  }
+
+  async readLocal(observed, options = {}) {
+    const current = this.documentFor(observed.path);
+    if (!current || current.hash !== observed.hash || current.revision !== observed.revision) {
+      throw new Error('SFW1422: Local document changed while preparing conflict contents');
+    }
+    const record = this.documents.get(observed.path);
+    return {...observed, content: readRevisionContent(record, options),
+      baseContent: readRevisionContent(this.baselines.get(observed.path), options), bytes: record.bytes,
+      originalText: record.originalText, lineEndings: record.lineEndings, preferredLineEnding: record.preferredLineEnding,
+      preserveLineEndings: record.preserveLineEndings};
   }
 
   canReleaseDocument(path) {
@@ -133,7 +148,7 @@ export class ExplorerPersistence {
   releaseDocument(path) {
     const data = this.getData();
     const file = (data.records ?? data.files ?? []).find(record => (record.path ?? record.uri) === path);
-    if (!file?.lazy || typeof file.text === 'string' || file.bytes || data.tabs?.includes(path) || data.dirty?.includes(path) ||
+    if (!unloaded(file) || data.tabs?.includes(path) || data.dirty?.includes(path) ||
         !this.canReleaseDocument(path)) return false;
     this.liveFiles.set(path, file);
     const document = this.documents.get(path);
@@ -167,22 +182,20 @@ export class ExplorerPersistence {
     if (this.disposed || generation !== this.generation) return;
     for (const source of data.records ?? data.files ?? []) {
       const path = source.path ?? source.uri;
-      if (source.lazy && typeof source.text !== 'string' && !source.bytes) { this.releaseDocument(path); continue; }
-      const file = {...source};
+      if (unloaded(source)) { this.releaseDocument(path); continue; }
+      const file = captureRevisionRecord(source);
       if (!sameContents(file, this.liveFiles.get(path))) continue;
       const previous = this.documents.get(path);
       if (sameContents(previous, file)) continue;
-      const bytes = workspaceRecordBytes(file);
-      const hash = await hashWorkspaceBytes(bytes);
+      const hash = await hashWorkspaceRecord(file);
       if (this.disposed || generation !== this.generation) return;
       if (!sameContents(file, this.liveFiles.get(path))) continue;
-      const content = typeof file.text === 'string' ? file.text : bytes.slice();
-      if (!this.baselines.has(path)) this.baselines.set(path, content);
+      if (!this.baselines.has(path)) this.baselines.set(path, file);
       const revision = Math.max(file.version ?? data.revision ?? 0, (this.documents.get(path)?.revision ?? -1) + 1);
-      const document = {path, revision, hash, text: file.text, bytes: file.bytes, encoding: file.encoding, bom: file.bom,
-        originalText: file.originalText, lineEndings: file.lineEndings, preferredLineEnding: file.preferredLineEnding,
-        preserveLineEndings: file.preserveLineEndings,
-        content, baseContent: this.baselines.get(path), baseHash: previous?.hash ?? hash};
+      const document = Object.defineProperties({}, {...Object.getOwnPropertyDescriptors(file),
+        revision: {value: revision, writable: true}, hash: {value: hash, configurable: true, writable: true},
+        baseHash: {value: previous?.hash ?? hash, configurable: true}
+      });
       this.documents.set(path, document);
       this.contentRevision++;
       this.channel?.publishRevision(document);
@@ -211,7 +224,7 @@ export class ExplorerPersistence {
       const record = migrateWorkspaceRecovery({records, identity: this.identity, name: data.name, folders: data.folders,
         active: data.active, entry: data.entry, startup: data.startup, breakpoints: data.breakpoints, revision: data.revision,
         settings: data.settings, appDescriptors: data.appDescriptors, explorer: data.explorer, recentTemplates: data.recentTemplates,
-        dirty: data.dirty, savedAt: Date.now(), openDocuments: data.tabs ?? []});
+        dirty: data.dirty, documentStates: data.documentStates, savedAt: Date.now(), openDocuments: data.tabs ?? []}, recoveryLimits);
       const store = this.store;
       if (store) await store.save(record);
       if (generation !== this.generation || this.disposed) continue;
@@ -228,10 +241,10 @@ export class ExplorerPersistence {
       throw new Error('SFW1423: Cross-window contents require an OPFS checkpoint; import the other window snapshot');
     }
     const directory = await this.workspaceDirectory.getDirectoryHandle('window-' + remote.sender);
-    const result = await new OpfsRecoveryStore({directory}).load();
+    const result = await new OpfsRecoveryStore({directory, limits: recoveryLimits}).load();
     const record = result.record?.records.find(file => file.path === remote.path);
     if (!record) throw new Error('SFW1423: Other window recovery is not ready; retry after its checkpoint completes');
-    return {content: typeof record.text === 'string' ? record.text : record.bytes, bytes: workspaceRecordBytes(record)};
+    return {content: readRevisionContent(record), bytes: workspaceRecordBytes(record, {maxBytes: 16 * 1024 * 1024})};
   }
 
   async prepareConflict(path) {
@@ -258,7 +271,7 @@ export class ExplorerPersistence {
     for await (const [name, child] of directory.entries()) {
       if (!name.startsWith('window-') || child.kind !== 'directory') continue;
       if (++count > 64) { this.warning({message: 'Recovery window limit reached; showing first 64 snapshots'}); break; }
-      const result = await new OpfsRecoveryStore({directory: child}).load();
+      const result = await new OpfsRecoveryStore({directory: child, limits: recoveryLimits}).load();
       if (result.record) results.push(result.record);
       for (const diagnostic of result.diagnostics) this.warning(diagnostic);
     }
