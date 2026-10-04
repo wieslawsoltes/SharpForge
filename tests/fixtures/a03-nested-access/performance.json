@@ -1,0 +1,437 @@
+{
+  "baselineCommit": "8ae8188b0ff6f8fbd431cf49c447c102aebe2bbc",
+  "productCommit": "99ae54558bb2772649be222d6d8ac64903638255",
+  "environment": {
+    "host": "Apple M3 Pro, Mac15,6, 18 GiB RAM",
+    "os": "macOS 26.6 (25G72)",
+    "node": "24.21.0",
+    "sharedHost": true,
+    "teamHeavyConcurrency": 1,
+    "testConcurrency": 1,
+    "nodeHeapMiB": 1024
+  },
+  "controlSHA256": "e67d621f07e992715e1124de673d992540b2c49906f1bd0fd5c5f9ef13e55202",
+  "fixtureSHA256": "537c2af0a544c418ade28ecf72492bb481b9fcddeb6ba7ae9aeb69d8d60db5a0",
+  "nestedHarnessSHA256": "25f691bb820562348f3c7376e1dccfa2927653483a57adde2ecbffe55d98ecb3",
+  "warmupsExcluded": 2,
+  "measuredSamplesPerCase": 7,
+  "baseline": {
+    "node": "v24.21.0",
+    "platform": "darwin",
+    "architecture": "arm64",
+    "results": [
+      {
+        "name": "construct-context",
+        "iterations": 64,
+        "samples": [
+          {
+            "microseconds": 32.39192187500039,
+            "heapDeltaPerCall": 64863.375
+          },
+          {
+            "microseconds": 45.02670312500001,
+            "heapDeltaPerCall": 63758.5
+          },
+          {
+            "microseconds": 41.80664062499994,
+            "heapDeltaPerCall": 62766.125
+          },
+          {
+            "microseconds": 42.83462499999979,
+            "heapDeltaPerCall": 59180.625
+          },
+          {
+            "microseconds": 47.628906249999936,
+            "heapDeltaPerCall": 59353.625
+          },
+          {
+            "microseconds": 34.720703125000085,
+            "heapDeltaPerCall": 58954.625
+          },
+          {
+            "microseconds": 32.46615624999993,
+            "heapDeltaPerCall": 54505.5
+          }
+        ],
+        "medianUs": 41.80664062499994,
+        "p95Us": 47.628906249999936
+      },
+      {
+        "name": "cached-member",
+        "iterations": 16384,
+        "samples": [
+          {
+            "microseconds": 0.0237070312500004,
+            "heapDeltaPerCall": 32.0419921875
+          },
+          {
+            "microseconds": 0.02309924316406392,
+            "heapDeltaPerCall": 32.615234375
+          },
+          {
+            "microseconds": 0.013369262695312606,
+            "heapDeltaPerCall": 0.03466796875
+          },
+          {
+            "microseconds": 0.014294921874999714,
+            "heapDeltaPerCall": 0.03466796875
+          },
+          {
+            "microseconds": 0.013341247558593464,
+            "heapDeltaPerCall": 0.03466796875
+          },
+          {
+            "microseconds": 0.013801574707032749,
+            "heapDeltaPerCall": 0.57568359375
+          },
+          {
+            "microseconds": 0.014175415039062098,
+            "heapDeltaPerCall": 0.03466796875
+          }
+        ],
+        "medianUs": 0.014175415039062098,
+        "p95Us": 0.0237070312500004
+      },
+      {
+        "name": "public-access",
+        "iterations": 16384,
+        "samples": [
+          {
+            "microseconds": 0.037734985351561834,
+            "heapDeltaPerCall": 56.04296875
+          },
+          {
+            "microseconds": 0.03494512939452958,
+            "heapDeltaPerCall": 56.04296875
+          },
+          {
+            "microseconds": 0.01755780029296869,
+            "heapDeltaPerCall": 0.494140625
+          },
+          {
+            "microseconds": 0.017901123046875494,
+            "heapDeltaPerCall": 0.03466796875
+          },
+          {
+            "microseconds": 0.11431884765624942,
+            "heapDeltaPerCall": 1.08544921875
+          },
+          {
+            "microseconds": 0.06215155029296732,
+            "heapDeltaPerCall": 0.02392578125
+          },
+          {
+            "microseconds": 0.04501092529296882,
+            "heapDeltaPerCall": 0.02392578125
+          }
+        ],
+        "medianUs": 0.037734985351561834,
+        "p95Us": 0.11431884765624942
+      },
+      {
+        "name": "family-access",
+        "iterations": 1024,
+        "samples": [
+          {
+            "microseconds": 0.32104492187498557,
+            "heapDeltaPerCall": 1880.75
+          },
+          {
+            "microseconds": 0.3254794921875026,
+            "heapDeltaPerCall": 1880.75
+          },
+          {
+            "microseconds": 0.3485107421875022,
+            "heapDeltaPerCall": 1883.765625
+          },
+          {
+            "microseconds": 0.3188876953125197,
+            "heapDeltaPerCall": 1881.84375
+          },
+          {
+            "microseconds": 0.3092451171874955,
+            "heapDeltaPerCall": 1880.75
+          },
+          {
+            "microseconds": 0.31591796875002354,
+            "heapDeltaPerCall": 1880.75
+          },
+          {
+            "microseconds": 0.432617187499984,
+            "heapDeltaPerCall": 1885.8984375
+          }
+        ],
+        "medianUs": 0.32104492187498557,
+        "p95Us": 0.432617187499984
+      }
+    ]
+  },
+  "candidate": {
+    "node": "v24.21.0",
+    "platform": "darwin",
+    "architecture": "arm64",
+    "results": [
+      {
+        "name": "construct-context",
+        "iterations": 64,
+        "samples": [
+          {
+            "microseconds": 32.958984375,
+            "heapDeltaPerCall": 66498.625
+          },
+          {
+            "microseconds": 44.87759375000011,
+            "heapDeltaPerCall": 65129.25
+          },
+          {
+            "microseconds": 31.563156249999835,
+            "heapDeltaPerCall": 65229
+          },
+          {
+            "microseconds": 41.03256250000031,
+            "heapDeltaPerCall": 60532
+          },
+          {
+            "microseconds": 40.932296874999885,
+            "heapDeltaPerCall": 60881.125
+          },
+          {
+            "microseconds": 43.10937499999979,
+            "heapDeltaPerCall": 60429.5
+          },
+          {
+            "microseconds": 39.78971875000026,
+            "heapDeltaPerCall": 56868.25
+          }
+        ],
+        "medianUs": 40.932296874999885,
+        "p95Us": 44.87759375000011
+      },
+      {
+        "name": "cached-member",
+        "iterations": 16384,
+        "samples": [
+          {
+            "microseconds": 0.023671447753906283,
+            "heapDeltaPerCall": 32.0419921875
+          },
+          {
+            "microseconds": 0.01688128662109302,
+            "heapDeltaPerCall": 8.7841796875
+          },
+          {
+            "microseconds": 0.008496643066405879,
+            "heapDeltaPerCall": 0.03076171875
+          },
+          {
+            "microseconds": 0.014793395996094347,
+            "heapDeltaPerCall": 0.03466796875
+          },
+          {
+            "microseconds": 0.01333618164062536,
+            "heapDeltaPerCall": 0.03466796875
+          },
+          {
+            "microseconds": 0.014236450195312389,
+            "heapDeltaPerCall": 0.96484375
+          },
+          {
+            "microseconds": 0.008872985839843833,
+            "heapDeltaPerCall": 0.02392578125
+          }
+        ],
+        "medianUs": 0.014236450195312389,
+        "p95Us": 0.023671447753906283
+      },
+      {
+        "name": "public-access",
+        "iterations": 16384,
+        "samples": [
+          {
+            "microseconds": 0.041801452636717334,
+            "heapDeltaPerCall": 0.03466796875
+          },
+          {
+            "microseconds": 0.022224426269531333,
+            "heapDeltaPerCall": 0.47021484375
+          },
+          {
+            "microseconds": 0.01864880371093766,
+            "heapDeltaPerCall": 0.25439453125
+          },
+          {
+            "microseconds": 0.018231750488281392,
+            "heapDeltaPerCall": 0.03466796875
+          },
+          {
+            "microseconds": 0.017491699218750295,
+            "heapDeltaPerCall": 0.03466796875
+          },
+          {
+            "microseconds": 0.01738488769531185,
+            "heapDeltaPerCall": 0.03466796875
+          },
+          {
+            "microseconds": 0.017478942871093292,
+            "heapDeltaPerCall": 0.03466796875
+          }
+        ],
+        "medianUs": 0.018231750488281392,
+        "p95Us": 0.041801452636717334
+      },
+      {
+        "name": "family-access",
+        "iterations": 1024,
+        "samples": [
+          {
+            "microseconds": 0.3339443359375027,
+            "heapDeltaPerCall": 1880.75
+          },
+          {
+            "microseconds": 0.3312988281249929,
+            "heapDeltaPerCall": 1880.75
+          },
+          {
+            "microseconds": 0.3326015625000067,
+            "heapDeltaPerCall": 1883
+          },
+          {
+            "microseconds": 0.33845996093748165,
+            "heapDeltaPerCall": 1880.75
+          },
+          {
+            "microseconds": 0.3253984374999852,
+            "heapDeltaPerCall": 1880.75
+          },
+          {
+            "microseconds": 0.5631914062499965,
+            "heapDeltaPerCall": 1880.75
+          },
+          {
+            "microseconds": 0.41959667968749503,
+            "heapDeltaPerCall": 1886.6484375
+          }
+        ],
+        "medianUs": 0.3339443359375027,
+        "p95Us": 0.5631914062499965
+      }
+    ]
+  },
+  "nestedQueries": {
+    "node": "v24.21.0",
+    "platform": "darwin",
+    "architecture": "arm64",
+    "results": [
+      {
+        "name": "enclosing-private",
+        "iterations": 1024,
+        "samples": [
+          {
+            "microseconds": 0.21850585937499556,
+            "heapDeltaPerCall": 189.1875
+          },
+          {
+            "microseconds": 0.22615624999999806,
+            "heapDeltaPerCall": 187.875
+          },
+          {
+            "microseconds": 0.22652148437500574,
+            "heapDeltaPerCall": 188.0390625
+          },
+          {
+            "microseconds": 0.21769238281249548,
+            "heapDeltaPerCall": 187.953125
+          },
+          {
+            "microseconds": 0.2029218749999978,
+            "heapDeltaPerCall": 187.8515625
+          },
+          {
+            "microseconds": 0.10603808593749597,
+            "heapDeltaPerCall": 184.5546875
+          },
+          {
+            "microseconds": 0.20686816406251252,
+            "heapDeltaPerCall": 184.5546875
+          }
+        ],
+        "medianUs": 0.21769238281249548,
+        "p95Us": 0.22652148437500574
+      },
+      {
+        "name": "private-container-denied",
+        "iterations": 1024,
+        "samples": [
+          {
+            "microseconds": 0.16284179687500733,
+            "heapDeltaPerCall": 232.6328125
+          },
+          {
+            "microseconds": 0.17476464843751982,
+            "heapDeltaPerCall": 232.5546875
+          },
+          {
+            "microseconds": 0.16337109375000325,
+            "heapDeltaPerCall": 232.5546875
+          },
+          {
+            "microseconds": 0.10685253906247971,
+            "heapDeltaPerCall": 232.5546875
+          },
+          {
+            "microseconds": 0.166503906250004,
+            "heapDeltaPerCall": 232.5546875
+          },
+          {
+            "microseconds": 0.16508007812501835,
+            "heapDeltaPerCall": 232.5546875
+          },
+          {
+            "microseconds": 0.17985058593750214,
+            "heapDeltaPerCall": 232.5546875
+          }
+        ],
+        "medianUs": 0.16508007812501835,
+        "p95Us": 0.17985058593750214
+      },
+      {
+        "name": "enclosing-family-receiver",
+        "iterations": 1024,
+        "samples": [
+          {
+            "microseconds": 0.54931640625,
+            "heapDeltaPerCall": 3376.921875
+          },
+          {
+            "microseconds": 0.5120039062500026,
+            "heapDeltaPerCall": 3386.3125
+          },
+          {
+            "microseconds": 0.6346845703125159,
+            "heapDeltaPerCall": 3391.9453125
+          },
+          {
+            "microseconds": 0.4691572265624888,
+            "heapDeltaPerCall": 3376.921875
+          },
+          {
+            "microseconds": 0.4635009765625031,
+            "heapDeltaPerCall": 3376.921875
+          },
+          {
+            "microseconds": 0.47367382812499303,
+            "heapDeltaPerCall": 3376.921875
+          },
+          {
+            "microseconds": 0.4329423828125234,
+            "heapDeltaPerCall": 3377
+          }
+        ],
+        "medianUs": 0.47367382812499303,
+        "p95Us": 0.6346845703125159
+      }
+    ]
+  },
+  "interpretation": "One fixed pair on a shared host. Samples remain chronological; no significance, noise, causal or speedup claim. Heap deltas are not allocation counts or peak memory.",
+  "integrationSignoff": "Root accepted flat-family p95 +0.130574 us/+30.18% and median +0.012899 us/+4.02% for bounded nested caller/target visibility and protected-receiver capability. Flat queries allocate no lexical scratch state; no selected rerun."
+}
