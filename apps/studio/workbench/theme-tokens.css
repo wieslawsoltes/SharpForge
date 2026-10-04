@@ -68,3 +68,152 @@
     --wb-success: CanvasText;
   }
 }
+
+/* A18 document designer colors share the workbench theme and forced-color lifecycle. */
+:root {
+  --design-background: #1b2028;
+  --design-panel: #232a34;
+  --design-raised: #2a323e;
+  --design-input: #1c232c;
+  --design-hover: #33485c;
+  --design-pressed: #244763;
+  --design-line: #485466;
+  --design-line-soft: #363e4a;
+  --design-foreground: #d7e2ef;
+  --design-muted: #aebed0;
+  --design-subtle: #91a2b7;
+  --design-accent: #69c6ff;
+  --design-focus: #8bd6ff;
+  --design-primary: #0e6099;
+  --design-primary-hover: #1679b6;
+  --design-on-primary: #ffffff;
+  --design-success: #9ad6ba;
+  --design-warning: #ffd299;
+  --design-warning-background: #342e27;
+  --design-grid-dot: #47526288;
+  --design-shadow: #0007;
+  --design-selection-fill: #40aaff19;
+  --design-selection-border: #69c6ff;
+  --design-handle-background: #e6f4ff;
+  --design-error: var(--wb-error);
+  --design-binding: #9e80ff;
+  --design-resource: #2aa99b;
+  --design-dialog-shadow: #0005;
+  --design-dialog-backdrop: #0008;
+  --design-app-shadow: #0006;
+  --design-stage-background: var(--designer-base-stage-background);
+  --design-sample-light-background: #f5f5f5;
+  --design-sample-light-foreground: #222;
+  --design-sample-dark-background: #202020;
+  --design-sample-dark-foreground: #eee;
+  --design-preview-contrast-background: #000;
+  --design-preview-contrast-foreground: #fff;
+  --design-preview-contrast-accent: #ff0;
+}
+
+html[data-theme="light"] {
+  --design-background: #dfe5ed;
+  --design-panel: #f4f7fb;
+  --design-raised: #dfe7f0;
+  --design-input: #ffffff;
+  --design-hover: #cedded;
+  --design-pressed: #bed9ee;
+  --design-line: #aebed0;
+  --design-line-soft: #c6d1df;
+  --design-foreground: #213a52;
+  --design-muted: #3b536d;
+  --design-subtle: #49637f;
+  --design-accent: #005a92;
+  --design-focus: #005a92;
+  --design-primary: #005a92;
+  --design-primary-hover: #00436e;
+  --design-success: #236844;
+  --design-warning: #814206;
+  --design-warning-background: #fff0d9;
+  --design-grid-dot: #71869f88;
+  --design-shadow: #172e4c33;
+  --design-selection-fill: #007acc19;
+  --design-selection-border: #005a92;
+  --design-binding: #5f3baa;
+  --design-resource: #0c7569;
+}
+
+html[data-theme="blue"],
+html[data-theme="high-contrast"] {
+  --design-background: var(--wb-bg);
+  --design-panel: var(--wb-panel);
+  --design-raised: var(--wb-raised);
+  --design-input: var(--wb-bg);
+  --design-hover: var(--wb-raised);
+  --design-pressed: var(--wb-selected);
+  --design-line: var(--wb-border);
+  --design-line-soft: var(--wb-border);
+  --design-foreground: var(--wb-fg);
+  --design-muted: var(--wb-muted);
+  --design-subtle: var(--wb-muted);
+  --design-accent: var(--wb-accent);
+  --design-focus: var(--wb-accent);
+  --design-primary: var(--wb-selected);
+  --design-primary-hover: var(--wb-raised);
+  --design-on-primary: var(--wb-selected-fg);
+  --design-success: var(--wb-success);
+  --design-warning: var(--wb-warning);
+  --design-warning-background: var(--wb-bg);
+  --design-grid-dot: var(--wb-border);
+  --design-shadow: var(--wb-shadow);
+  --design-selection-fill: transparent;
+  --design-selection-border: var(--wb-accent);
+  --design-handle-background: var(--wb-fg);
+  --design-binding: var(--wb-accent);
+  --design-resource: var(--wb-accent);
+  --design-dialog-shadow: var(--wb-shadow);
+  --design-app-shadow: var(--wb-shadow);
+}
+html[data-theme="high-contrast"] {
+  --design-grid-dot: var(--wb-bg);
+}
+@media (forced-colors: active) {
+  :root, :root[data-theme] {
+    --design-background: var(--wb-bg);
+    --design-panel: var(--wb-panel);
+    --design-raised: var(--wb-raised);
+    --design-input: var(--wb-bg);
+    --design-hover: var(--wb-raised);
+    --design-pressed: var(--wb-selected);
+    --design-line: var(--wb-border);
+    --design-line-soft: var(--wb-border);
+    --design-foreground: var(--wb-fg);
+    --design-muted: var(--wb-muted);
+    --design-subtle: var(--wb-muted);
+    --design-accent: var(--wb-accent);
+    --design-focus: var(--wb-accent);
+    --design-primary: var(--wb-selected);
+    --design-primary-hover: var(--wb-raised);
+    --design-on-primary: var(--wb-selected-fg);
+    --design-success: var(--wb-success);
+    --design-warning: var(--wb-warning);
+    --design-warning-background: var(--wb-bg);
+    --design-grid-dot: var(--wb-border);
+    --design-shadow: var(--wb-shadow);
+    --design-selection-fill: transparent;
+    --design-selection-border: var(--wb-accent);
+    --design-handle-background: var(--wb-fg);
+    --design-binding: var(--wb-accent);
+    --design-resource: var(--wb-accent);
+    --design-dialog-shadow: var(--wb-shadow);
+    --design-app-shadow: var(--wb-shadow);
+    --design-grid-dot: Canvas;
+    --design-shadow: transparent;
+    --design-dialog-shadow: transparent;
+    --design-app-shadow: transparent;
+    --design-stage-background: Canvas;
+    --design-dialog-backdrop: Canvas;
+    --design-sample-light-background: Canvas;
+    --design-sample-light-foreground: CanvasText;
+    --design-sample-dark-background: Canvas;
+    --design-sample-dark-foreground: CanvasText;
+    --design-preview-contrast-background: Canvas;
+    --design-preview-contrast-foreground: CanvasText;
+    --design-preview-contrast-accent: Highlight;
+  }
+}

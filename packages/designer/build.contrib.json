@@ -1,6 +1,35 @@
 {
   "schemaVersion": 1,
-  "styles": [],
+  "styles": [
+    {
+      "source": "apps/studio/designer-surface.css",
+      "order": 9001
+    },
+    {
+      "source": "apps/studio/designer-panels.css",
+      "order": 9002
+    },
+    {
+      "source": "apps/studio/styles/designer-documents.css",
+      "order": 13000
+    },
+    {
+      "source": "apps/studio/designer-property.css",
+      "order": 13001
+    },
+    {
+      "source": "apps/studio/designer-chrome.css",
+      "order": 13002
+    },
+    {
+      "source": "apps/studio/designer-app-host.css",
+      "order": 13003
+    },
+    {
+      "source": "apps/studio/designer-resource-gallery.css",
+      "order": 13004
+    }
+  ],
   "workers": [],
   "assets": [
     {

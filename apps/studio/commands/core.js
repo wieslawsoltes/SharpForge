@@ -1,3 +1,4 @@
+import {undoSourceEditor} from '../designer-editor-history.js';
 import {storage,storageKeys} from '../settings/storage.js';
 export function registerStudioCommands(registry,context){
 const {EDITOR_KEYMAPS,toolDefinitions}=context;
@@ -6,7 +7,7 @@ metadata.push(['setNext','Set Next Statement','Ctrl+Shift+F10'],['hotReload','Ho
 metadata.push(['showNext','Show Next Statement',''],['newFunctionBreakpoint','New Function Breakpoint',''],['debugSettings','Debugger and Exception Settings',''],['immediate','Immediate — safe evaluation',''],['muteBreakpoints','Toggle All Breakpoints','']);
 metadata.push(['settings','Environment: Keyboard profile',''],...EDITOR_KEYMAPS.map(k=>['keymap:'+k.id,'Keyboard: '+k.label,'']),['toggleBreakpoint','Debug: Toggle Breakpoint','F9'],['removeBreakpoints','Debug: Remove All Breakpoints','Ctrl+Shift+F9']);
 const handlers=new Map();
-for(const id of ["designer"])handlers.set(id,async(command)=>{const {designerTools,docking,renderPanel,state}=context;designerTools.ensure();docking.reset('designer');state.panel='designer';renderPanel('designer');return;});
+for(const id of ["designer"])handlers.set(id,()=>context.designerTools.open());
 for(const id of ["setNext"])handlers.set(id,async(command)=>{const {advancedTools}=context;await advancedTools.setNext();return;});
 for(const id of ["hotReload"])handlers.set(id,async(command)=>{const {setPanel}=context;setPanel('hot-reload');return;});
 for(const id of ["threads"])handlers.set(id,async(command)=>{const {setPanel}=context;setPanel('threads');return;});
@@ -84,8 +85,8 @@ for(const id of ["clearOutput"])handlers.set(id,async(command)=>{const {renderPa
 for(const id of ["callHierarchy"])handlers.set(id,async(command)=>{const {editor,showCallHierarchy,state}=context;await showCallHierarchy({uri:state.active,offset:editor?.offset??0});return;});
 for(const id of ["heap"])handlers.set(id,async(command)=>{const {inspectHeap}=context;await inspectHeap();return;});
 for(const id of ["collect"])handlers.set(id,async(command)=>{const {formatBytes,runtime,state,toast}=context;if(state.debug){const stats=await runtime.request('collect');toast(`Collection reclaimed ${stats.freedThisCollection} objects (${formatBytes(stats.bytesThisCollection)}).`);}else toast('Run a program before collecting managed memory.');return;});
-for(const id of ["undo"])handlers.set(id,async(command)=>{const {editor}=context;editor?.undo();return;});
-for(const id of ["redo"])handlers.set(id,async(command)=>{const {editor}=context;editor?.undo(true);return;});
+for(const id of ["undo"])handlers.set(id,async()=>undoSourceEditor(context));
+for(const id of ["redo"])handlers.set(id,async()=>undoSourceEditor(context,true));
 for(const id of ["find"])handlers.set(id,async(command)=>{const {editor}=context;editor.findBox.classList.remove('hidden');editor.findBox.querySelector('input').focus();return;});
 for(const id of ["definition","references","rename"])handlers.set(id,async(command)=>{const {editor,languageRequest,state}=context;await languageRequest(command,{uri:state.active,offset:editor.offset});return;});
 for(const id of ["toggleExplorer"])handlers.set(id,async(command)=>{const {toggleTool}=context;toggleTool('solution');return;});

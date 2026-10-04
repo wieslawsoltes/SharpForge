@@ -1,4 +1,4 @@
-import {DesignerAuthoringError, DesignerStateTransition, designerBrushCss, designerPreviewDecorations} from '../../packages/designer/src/index.js';
+import {DesignerAuthoringError, DesignerStateTransition} from '../../packages/designer/src/index.js';
 
 /** One surface preview owns its clock and stops before a document, revision or preview owner changes. */
 export class DesignerStatePlayback {
@@ -21,15 +21,7 @@ export class DesignerStatePlayback {
   present(scene) {
     this.view.host.load(scene);
     this.view.host.flush();
-    this.decorate(designerPreviewDecorations(scene));
     this.view.drawAdorners();
-  }
-
-  decorate(decorations) {
-    for (const decoration of decorations) {
-      const element = this.view.host.elements.get(decoration.id);
-      if (element) element.style[decoration.property] = decoration.value;
-    }
   }
 
   show(baseScene, scene) {
@@ -48,7 +40,6 @@ export class DesignerStatePlayback {
     this.clock = clock;
     this.session = session;
     this.present(session.initialScene);
-    const decorations = new Map(designerPreviewDecorations(fromScene).map(item => [item.id + ':' + item.property, item]));
     let start = null;
     const tick = timestamp => {
       this.frame = null;
@@ -62,14 +53,6 @@ export class DesignerStatePlayback {
         const commands = session.commandsAt(elapsed);
         this.view.host.apply(commands);
         this.view.host.flush();
-        for (const command of commands) {
-          if (!['Background', 'Fill'].includes(command.property)) continue;
-          const key = command.id + ':background';
-          if (command.value?.GradientStops) {
-            decorations.set(key, {id: command.id, property: 'background', value: designerBrushCss(command.value)});
-          } else decorations.delete(key);
-        }
-        this.decorate(decorations.values());
         this.view.drawAdorners();
         if (elapsed < session.duration) this.frame = clock.requestAnimationFrame(tick);
         else { session.dispose(); this.session = null; }

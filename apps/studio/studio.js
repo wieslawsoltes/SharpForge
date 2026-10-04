@@ -11,13 +11,18 @@ import {registerStudioCommands} from './commands/core.js';
 import {createMenuRegistry} from './menus/registry.js';
 import {registerStudioMenus} from './menus/core.js';
 import {createContextMenus} from './menus/context.js';
+import {StudioContextMenuRouter} from './menus/document-context.js';
 import {createToolRegistry} from './tools/registry.js';
 import {createStudioRenderers} from './tools/core.js';
+import {SourceSymbolPresentation} from './source-symbol-presentation.js';
 import {createAutomationApi} from './automation-api.js';
 import {icon} from './icons.js';
 import {createAboutDialogs} from './dialogs/about.js';
 import {RuntimeTools} from './runtime-tools.js';
-import {DesignerTools} from './designer-tools.js';
+import {createDesignerWorkbench} from './designer-workbench.js';
+import {DesignerMainAppSources} from './designer-main-app-sources.js';
+import {applyDesignerSourceTransaction,applyStudioSourceChange} from './designer-source-transaction.js';
+import {DesignerWorkerChannel} from './designer-worker-channel.js';
 import {ProjectWizard} from './project-wizard.js';
 import {importWorkspaceRecords,workspaceManifestRecord,importWorkspaceZip,exportWorkspaceZip,validateWorkspaceSettings,workspaceCandidates,writeNewDirectory,decodeWorkspaceFile,encodeWorkspaceFile,prefixWorkspace,convertLegacySolution} from '../../packages/project-system/src/index.js';
 import {validateFilePlan,createProjectPlan,createItemPlan,projectTemplates,itemTemplates} from '../../packages/templates/src/index.js';
@@ -27,7 +32,7 @@ import {SolutionExplorer} from './solution-explorer.js';
 import {ExplorerCommands} from './explorer-commands.js';
 import {ContextMenu} from '../../packages/controls/src/index.js';
 import {EDITOR_KEYMAPS} from '../../packages/editor/src/index.js';
-import {remapSourceBreakpoints,sourceBreakpointAt} from '../../packages/debugger/src/breakpoints.js';
+import {remapSourceBreakpoints,sourceBreakpointAt} from '@sharpforge/debugger';
 import { MSBuildTools } from './msbuild-tools.js';
 import {NavigationHistory} from '../../packages/editor/src/index.js';
 import { DisassemblyTool } from './disassembly-tool.js';
@@ -36,19 +41,19 @@ import { ProjectSystem, DiskWorkspace, readBrowserFiles, readDirectory, addSolut
 import { AssemblyWorkbench } from './assembly-workbench.js';
 import { CodeEditor, escapeHtml as E } from '../../packages/editor/src/index.js';
 import { SourceText } from '../../packages/text/src/index.js';
-import { disassemble, serializeImage } from '../../packages/bytecode/src/index.js';
-import { disassembleAssembly, formatAssembly, createRuntimeConfig } from '../../packages/cil/src/index.js';
+import { serializeImage } from '../../packages/bytecode/src/index.js';
+import { formatAssembly, createRuntimeConfig } from '../../packages/cil/src/index.js';
 import { samples } from './samples.js';
 const studioServices=createServiceRegistry();
 studioServices.registerAll([{name:'commands',factory:createCommandRegistry,dispose:r=>r.dispose()},{name:'menus',factory:createMenuRegistry,dispose:r=>r.dispose()},{name:'tools',factory:createToolRegistry,dispose:r=>r.dispose()},{name:'automation',factory:createAutomationApi,dispose:r=>r.dispose()}]);
 const commandRegistry=studioServices.get('commands'),menuRegistry=studioServices.get('menus'),toolRegistry=studioServices.get('tools'),automation=studioServices.get('automation');
 const toolMounts=new Map();
-const studioRenderers=createStudioRenderers({get $(){return $;},get $$(){return $$;},get E(){return E;},get advancedTools(){return advancedTools;},get breakOnWrite(){return breakOnWrite;},get debugTools(){return debugTools;},get designerTools(){return designerTools;},get disassemble(){return disassemble;},get disassembleAssembly(){return disassembleAssembly;},get docking(){return docking;},get editLocal(){return editLocal;},get empty(){return empty;},get formatBytes(){return formatBytes;},get hydrate(){return hydrate;},get ilDebugger(){return ilDebugger;},get inspectObject(){return inspectObject;},get nativeBuild(){return nativeBuild;},get openFile(){return openFile;},get openMenuAt(){return openMenuAt;},get refreshWatches(){return refreshWatches;},get runtimeTools(){return runtimeTools;},get saveLocal(){return saveLocal;},get selectDebugFrame(){return selectDebugFrame;},get setPanel(){return setPanel;},get state(){return state;},get toast(){return toast;},get workbench(){return workbench;},get applyRefactoring(){return applyRefactoring;},get build(){return build;},get closeModal(){return closeModal;},get download(){return download;},get loadSample(){return loadSample;},get reloadDiskProject(){return reloadDiskProject;},get requestCompiler(){return requestCompiler;},get samples(){return samples;},get setStartupProject(){return setStartupProject;},get showModal(){return showModal;},get toolDefinitions(){return toolDefinitions;},get EDITOR_KEYMAPS(){return EDITOR_KEYMAPS;},get setEditorKeymap(){return setEditorKeymap;}});
-for(const {id,title}of toolDefinitions)toolRegistry.registerTool(id,title,element=>studioRenderers.renderPanel(id,element));
-const contextMenus=createContextMenus({get EDITOR_KEYMAPS(){return EDITOR_KEYMAPS;},get advancedTools(){return advancedTools;},get breakpointItems(){return breakpointItems;},get copyText(){return copyText;},get languageRequest(){return languageRequest;},get pasteEditor(){return pasteEditor;},get refreshWatches(){return refreshWatches;},get setEditorKeymap(){return setEditorKeymap;},get setPanel(){return setPanel;},get state(){return state;},get $(){return $;},get E(){return E;},get ask(){return ask;},get breakOnWrite(){return breakOnWrite;},get build(){return build;},get debugTools(){return debugTools;},get dockMenuItems(){return dockMenuItems;},get docking(){return docking;},get download(){return download;},get editLocal(){return editLocal;},get execute(){return execute;},get explorerActions(){return explorerActions;},get inspectObject(){return inspectObject;},get renderPanel(){return renderPanel;},get saveLocal(){return saveLocal;},get solutionExplorer(){return solutionExplorer;},get sourceBreakpointAt(){return sourceBreakpointAt;},get toggleBreakpoint(){return toggleBreakpoint;},get syncBreakpoints(){return syncBreakpoints;},get setEditorDecorations(){return setEditorDecorations;},get editBreakpoint(){return editBreakpoint;},get runtime(){return runtime;},get launch(){return launch;},get editorHostCommand(){return editorHostCommand;},get openFile(){return openFile;}});
+const studioRenderers=createStudioRenderers({get sourceSymbols(){return sourceSymbols;},get $(){return $;},get $$(){return $$;},get E(){return E;},get advancedTools(){return advancedTools;},get breakOnWrite(){return breakOnWrite;},get debugTools(){return debugTools;},get designerTools(){return designerTools;},get docking(){return docking;},get editLocal(){return editLocal;},get empty(){return empty;},get formatBytes(){return formatBytes;},get hydrate(){return hydrate;},get ilDebugger(){return ilDebugger;},get inspectObject(){return inspectObject;},get nativeBuild(){return nativeBuild;},get openFile(){return openFile;},get openMenuAt(){return openMenuAt;},get refreshWatches(){return refreshWatches;},get runtimeTools(){return runtimeTools;},get saveLocal(){return saveLocal;},get selectDebugFrame(){return selectDebugFrame;},get setPanel(){return setPanel;},get state(){return state;},get toast(){return toast;},get workbench(){return workbench;},get applyRefactoring(){return applyRefactoring;},get build(){return build;},get closeModal(){return closeModal;},get download(){return download;},get loadSample(){return loadSample;},get reloadDiskProject(){return reloadDiskProject;},get requestCompiler(){return requestCompiler;},get samples(){return samples;},get setStartupProject(){return setStartupProject;},get showModal(){return showModal;},get toolDefinitions(){return toolDefinitions;},get EDITOR_KEYMAPS(){return EDITOR_KEYMAPS;},get setEditorKeymap(){return setEditorKeymap;}});
+studioRenderers.registerTools(toolRegistry,toolDefinitions);
+const contextMenus=createContextMenus({undoSource:(uri,redo)=>designerWorkbench.undoSource(uri,redo),get EDITOR_KEYMAPS(){return EDITOR_KEYMAPS;},get advancedTools(){return advancedTools;},get breakpointItems(){return breakpointItems;},get copyText(){return copyText;},get languageRequest(){return languageRequest;},get pasteEditor(){return pasteEditor;},get refreshWatches(){return refreshWatches;},get setEditorKeymap(){return setEditorKeymap;},get setPanel(){return setPanel;},get state(){return state;},get $(){return $;},get E(){return E;},get ask(){return ask;},get breakOnWrite(){return breakOnWrite;},get build(){return build;},get debugTools(){return debugTools;},get dockMenuItems(){return dockMenuItems;},get docking(){return docking;},get download(){return download;},get editLocal(){return editLocal;},get execute(){return execute;},get explorerActions(){return explorerActions;},get inspectObject(){return inspectObject;},get renderPanel(){return renderPanel;},get saveLocal(){return saveLocal;},get solutionExplorer(){return solutionExplorer;},get sourceBreakpointAt(){return sourceBreakpointAt;},get toggleBreakpoint(){return toggleBreakpoint;},get syncBreakpoints(){return syncBreakpoints;},get setEditorDecorations(){return setEditorDecorations;},get editBreakpoint(){return editBreakpoint;},get runtime(){return runtime;},get launch(){return launch;},get editorHostCommand(){return editorHostCommand;},get openFile(){return openFile;}});
 for(const [id,builder]of Object.entries(contextMenus))menuRegistry.registerMenu(id,builder);
 registerStudioMenus(menuRegistry,{toolDefinitions});
-registerStudioCommands(commandRegistry,{get designerTools(){return designerTools;},get docking(){return docking;},get renderPanel(){return renderPanel;},get state(){return state;},get advancedTools(){return advancedTools;},get setPanel(){return setPanel;},get showNextStatement(){return showNextStatement;},get debugTools(){return debugTools;},get nativeBuild(){return nativeBuild;},get navigate(){return navigate;},get openFolder(){return openFolder;},get $(){return $;},get saveToDisk(){return saveToDisk;},get createCsproj(){return createCsproj;},get download(){return download;},get createSlnx(){return createSlnx;},get openAssemblyExplorer(){return openAssemblyExplorer;},get codeActions(){return codeActions;},get languageRequest(){return languageRequest;},get launch(){return launch;},get build(){return build;},get runtime(){return runtime;},get ilDebugger(){return ilDebugger;},get stopQuietly(){return stopQuietly;},get runToCursor(){return runToCursor;},get step(){return step;},get editor(){return editor;},get editorHostCommand(){return editorHostCommand;},get exportProject(){return exportProject;},get exportLegacyProject(){return exportLegacyProject;},get openProjectWizard(){return openProjectWizard;},get saveWorkspaceFolder(){return saveWorkspaceFolder;},get newFile(){return newFile;},get toast(){return toast;},get createRuntimeConfig(){return createRuntimeConfig;},get formatAssembly(){return formatAssembly;},get serializeImage(){return serializeImage;},get aboutDialog(){return aboutDialog;},get shortcutsDialog(){return shortcutsDialog;},get profileDialog(){return profileDialog;},get architectureDialog(){return architectureDialog;},get commandsDialog(){return commandsDialog;},get saveLocal(){return saveLocal;},get showCallHierarchy(){return showCallHierarchy;},get inspectHeap(){return inspectHeap;},get formatBytes(){return formatBytes;},get toggleTool(){return toggleTool;},get importFiles(){return importFiles;},get EDITOR_KEYMAPS(){return EDITOR_KEYMAPS;},get setEditorKeymap(){return setEditorKeymap;},get toggleBreakpoint(){return toggleBreakpoint;},get toolDefinitions(){return toolDefinitions;}});
+registerStudioCommands(commandRegistry,{undoSource:(uri,redo)=>designerWorkbench.undoSource(uri,redo),get designerTools(){return designerTools;},get docking(){return docking;},get renderPanel(){return renderPanel;},get state(){return state;},get advancedTools(){return advancedTools;},get setPanel(){return setPanel;},get showNextStatement(){return showNextStatement;},get debugTools(){return debugTools;},get nativeBuild(){return nativeBuild;},get navigate(){return navigate;},get openFolder(){return openFolder;},get $(){return $;},get saveToDisk(){return saveToDisk;},get createCsproj(){return createCsproj;},get download(){return download;},get createSlnx(){return createSlnx;},get openAssemblyExplorer(){return openAssemblyExplorer;},get codeActions(){return codeActions;},get languageRequest(){return languageRequest;},get launch(){return launch;},get build(){return build;},get runtime(){return runtime;},get ilDebugger(){return ilDebugger;},get stopQuietly(){return stopQuietly;},get runToCursor(){return runToCursor;},get step(){return step;},get editor(){return editor;},get editorHostCommand(){return editorHostCommand;},get exportProject(){return exportProject;},get exportLegacyProject(){return exportLegacyProject;},get openProjectWizard(){return openProjectWizard;},get saveWorkspaceFolder(){return saveWorkspaceFolder;},get newFile(){return newFile;},get toast(){return toast;},get createRuntimeConfig(){return createRuntimeConfig;},get formatAssembly(){return formatAssembly;},get serializeImage(){return serializeImage;},get aboutDialog(){return aboutDialog;},get shortcutsDialog(){return shortcutsDialog;},get profileDialog(){return profileDialog;},get architectureDialog(){return architectureDialog;},get commandsDialog(){return commandsDialog;},get saveLocal(){return saveLocal;},get showCallHierarchy(){return showCallHierarchy;},get inspectHeap(){return inspectHeap;},get formatBytes(){return formatBytes;},get toggleTool(){return toggleTool;},get importFiles(){return importFiles;},get EDITOR_KEYMAPS(){return EDITOR_KEYMAPS;},get setEditorKeymap(){return setEditorKeymap;},get toggleBreakpoint(){return toggleBreakpoint;},get toolDefinitions(){return toolDefinitions;}});
 const aboutDialogs=createAboutDialogs({get showModal(){return showModal;},get $(){return $;},get shortcutsDialog(){return shortcutsDialog;}});
 window.addEventListener('pagehide',event=>{if(!event.persisted)studioServices.dispose();});
 let panelLookup=null;
@@ -56,26 +61,30 @@ const $=(selector,root=document)=>root.querySelector(selector)??(root===document
 
 
 function hydrate(root=document){$$('[data-icon]',root).forEach(el=>el.innerHTML=icon(el.dataset.icon));}
-class WorkerClient{
- constructor(url,onEvent=()=>{}){this.next=0;this.pending=new Map();this.worker=new Worker(url,{type:'module'});this.worker.onmessage=e=>{const m=e.data;if(m.event){onEvent(m);return;}const p=this.pending.get(m.id);if(!p)return;clearTimeout(p.timer);this.pending.delete(m.id);m.error?p.reject(new Error(m.error.message)):p.resolve(m.result);};this.worker.onerror=e=>{for(const p of this.pending.values()){clearTimeout(p.timer);p.reject(new Error(e.message||'Worker failed to initialize'));}this.pending.clear();toast('Worker failed: '+(e.message??'unknown error'),'error');};}
- request(method,params={}){const id=++this.next;return new Promise((resolve,reject)=>{const timer=setTimeout(()=>{this.pending.delete(id);reject(new Error(`Worker request '${method}' timed out`));},30000);this.pending.set(id,{resolve,reject,timer});this.worker.postMessage({id,method,params});});}
-}
 const state={langVersion:'14',debugSettings:{...debuggerDefaults},functionBreakpoints:[],debugSources:new Map(),immediateHistory:[],launchEpoch:0,launchBusy:false,extraFiles:[],folders:[],membershipDirty:false,keymap:'visual-studio',itemSelection:[],nativeMode:false,nativeWorkspace:null,nativeJob:null,projectSystem:null,projectSnapshot:null,startupProject:null,disk:null,diskRevision:0,configuration:'Debug',projectDiagnostics:[],toolReferences:[],extensionConfig:null,files:[],name:'ParticleLab',active:'Program.cs',tabs:[],revision:1,result:null,image:null,assembly:null,ilDump:null,disassemblyFormat:'cil',importedAssembly:false,buildDirty:false,dirtyFiles:new Set(),logs:[],programOutput:'',panel:'output',debug:null,breakpoints:{},watches:['total','tick','particles.Length'],watchResults:new Map(),frameId:null,readOnly:false,analyzeTimer:null,saveTimer:null,compileBusy:false,selectedMethod:null,outputKind:'all',modalClose:null};
 try{const preferences=JSON.parse(storage.getItem(storageKeys.editor)??'{}');if(EDITOR_KEYMAPS.some(k=>k.id===preferences.keymap))state.keymap=preferences.keymap;}catch{}
 try{const p=JSON.parse(storage.getItem(storageKeys.debugger)??'{}');for(const key of Object.keys(debuggerDefaults))if(typeof p[key]===typeof debuggerDefaults[key])state.debugSettings[key]=p[key];}catch{}
 const sharedMenu=new ContextMenu({root:$('#menu-popup'),onError:error=>toast(error.message,'error')});
-const compiler=new WorkerClient(new URL('./compiler.worker.js',import.meta.url));
-const runtime=new WorkerClient(new URL('./runtime.worker.js',import.meta.url),runtimeEvent);
+const workerFailure = error => toast('Worker failed: ' + error.message, 'error');
+const compiler = new DesignerWorkerChannel(new Worker(new URL('./compiler.worker.js', import.meta.url), {type: 'module'}),
+  {kind: 'compiler', onFailure: workerFailure});
+const runtime = new DesignerWorkerChannel(new Worker(new URL('./runtime.worker.js', import.meta.url), {type: 'module'}),
+  {kind: 'runtime', onEvent: runtimeEvent, onFailure: workerFailure});
+studioServices.register('compilerWorker', () => compiler, channel => channel.dispose());
+studioServices.register('runtimeWorker', () => runtime, channel => channel.dispose());
 const runtimeRequest=runtime.request.bind(runtime);let pendingDebugControl=null;
 const executionCommands=new Set(['resume','stepBack','reverseContinue','runToCursor','runToInstruction','setNextStatement','hotReload','applyDesign']);
-runtime.request=(method,params={})=>{
+runtime.request=(method,params={},options={})=>{
  if(executionCommands.has(method)&&pendingDebugControl)return pendingDebugControl;
- const promise=runtimeRequest(method,method==='launch'?params:{sessionId:state.runtimeSession,...params});
+ const promise=runtimeRequest(method,method==='launch'?params:{sessionId:state.runtimeSession,...params},options);
  if(!executionCommands.has(method))return promise;
  state.controlBusy=true;updateDebugButtons();const control=promise.finally(()=>{if(pendingDebugControl===control){pendingDebugControl=null;state.controlBusy=false;updateDebugButtons();}});pendingDebugControl=control;return control;
 };
 hydrate();
-let editor=null,advancedTools=null,designerTools=null,runtimeTools=null;
+let editor=null,advancedTools=null,designerTools=null,designerWorkbench=null,runtimeTools=null;
+const mainAppSources=new DesignerMainAppSources({
+ files:()=>state.files,workspaceId:()=>designerWorkbench?.workspaceId(),revision:()=>state.revision
+});
 const editors=new Map();
 const navigation=new NavigationHistory();let navigationReplay=false;
 const currentLocation=()=>editor&&state.active?{uri:state.active,start:editor.offset,end:editor.input.selectionEnd}:null;
@@ -84,43 +93,39 @@ function navigate(direction){let target=navigation[direction](currentLocation())
 
 function createSourceDocument(uri){
  const root=document.createElement('div');root.className='source-document';root.dataset.sourceUri=uri;
+ if(/\.sfdesign\.json$/i.test(uri))return designerWorkbench.documents.wrap(uri,root,null,designerWorkbench.documents.file(uri));
  const host=document.createElement('div');host.className='editor-host';root.append(host);
- const instance=new CodeEditor(host,{keymap:state.keymap,onKeymapState:value=>{if(!state.active||state.active===uri)updateKeymapStatus(value);},onChange:text=>{if(state.applyingEdits)return;const file=state.files.find(f=>f.uri===uri);if(!file)return;state.breakpoints[uri]=remapSourceBreakpoints(file.text,text,state.breakpoints[uri]??[]);file.text=text;file.version++;state.revision++;state.buildDirty=true;state.dirtyFiles.add(uri);state.diskRevision++;renderTabs();renderTree();saveSoon();scheduleAnalysis();setEditorDecorations();designerTools?.sourceSync.sourceChanged(uri);},onCursor:position=>{if(state.active===uri){$('#status-cursor').textContent=`Ln ${position.line+1}, Col ${position.character+1}`;updateKeymapStatus({keymap:state.keymap,mode:editors.get(uri)?.modalMode});}},onBreakpoint:line=>toggleBreakpoint(uri,line),onBreakpointEdit:(line,event)=>event?showBreakpointMenu(uri,line,event):editBreakpoint(uri,line),request:languageRequest});
+ const instance=new CodeEditor(host,{keymap:state.keymap,onKeymapState:value=>{if(!state.active||state.active===uri)updateKeymapStatus(value);},onChange:text=>{if(!applyStudioSourceChange({state,uri,text,remapBreakpoints:remapSourceBreakpoints}))return;renderTabs();renderTree();saveSoon();scheduleAnalysis();setEditorDecorations();designerWorkbench?.sourceChanged(uri);},onCursor:position=>{if(state.active===uri){$('#status-cursor').textContent=`Ln ${position.line+1}, Col ${position.character+1}`;updateKeymapStatus({keymap:state.keymap,mode:editors.get(uri)?.modalMode});}},onBreakpoint:line=>toggleBreakpoint(uri,line),onBreakpointEdit:(line,event)=>event?showBreakpointMenu(uri,line,event):editBreakpoint(uri,line),request:languageRequest});
  editors.set(uri,instance);instance.setModel(uri,state.files.find(f=>f.uri===uri)?.text??'');instance.input.setAttribute('aria-label',uri+' — C# source editor');
- instance.input.addEventListener('focus',()=>{if(state.active!==uri)openFile(uri);});
- return root;
+ return designerWorkbench?.documents.wrap(uri,root,instance)??root;
 }
-function resetEditors(){navigation.clear();navigationButtons();for(const id of [...docking.host.popouts.keys()])if(id.startsWith('source:'))docking.host.returnPopout(id);for(const instance of editors.values())instance.dispose();editors.clear();editor=null;if(typeof docking!=='undefined')for(const id of [...docking.content.keys()])if(id.startsWith('source:')){docking.host.contents.delete(id);docking.content.delete(id);}}
-const docking=new StudioDocking({createDocument:createSourceDocument,onActivate:id=>{if(id.startsWith('source:'))openFile(id.slice(7));else {state.panel=id;renderPanel(id);}},onError:error=>toast(error.message,'error'),onClose:id=>{if(id.startsWith('source:')){state.tabs=state.tabs.filter(uri=>'source:'+uri!==id);const next=docking.layout.groups().flatMap(g=>g.panels).find(p=>p.startsWith('source:'));if(state.active===id.slice(7)&&next)openFile(next.slice(7));}saveLocal();}});
+function resetEditors(){designerWorkbench?.reset();navigation.clear();navigationButtons();for(const id of [...docking.host.popouts.keys()])if(id.startsWith('source:'))docking.host.returnPopout(id);for(const instance of editors.values())instance.dispose();editors.clear();editor=null;if(typeof docking!=='undefined')for(const id of [...docking.content.keys()])if(id.startsWith('source:')){docking.host.contents.delete(id);docking.content.delete(id);}}
+const docking=new StudioDocking({createDocument:createSourceDocument,onActivate:id=>{if(id.startsWith('source:'))openFile(id.slice(7));else {state.panel=id;studioRenderers.refreshResultTool(id);renderPanel(id);}},onError:error=>toast(error.message,'error'),onClose:id=>{if(id.startsWith('source:')){state.tabs=state.tabs.filter(uri=>'source:'+uri!==id);const next=docking.layout.groups().flatMap(g=>g.panels).find(p=>p.startsWith('source:'));if(state.active===id.slice(7)&&next)openFile(next.slice(7));}saveLocal();}});
 panelLookup=docking.content;
+const sourceSymbols = studioServices.register('sourceSymbols', () => new SourceSymbolPresentation({
+ state, docking, breadcrumb: $('#breadcrumb-file'), navigation: $('#symbol-nav'), openSource: openFile
+}), value => value.dispose());
 runtimeTools=new RuntimeTools({state,request:(...a)=>runtime.request(...a),build:()=>build(),save:saveLocal,toast});
 const debugTools=new DebuggerTools({state,docking,request:(...a)=>runtime.request(...a),ask,toast,save:saveLocal,openFile,render:renderPanel,decorate:setEditorDecorations,syncSource:syncBreakpoints,editSource:editBreakpoint,toggleSource:toggleBreakpoint,showNext:()=>showNextStatement(),onSettings:()=>{
 $('#exception-mode').value=state.debugSettings.exceptionBreak;}});
-advancedTools=new DebuggerExtensions({state,docking,request:(...args)=>runtime.request(...args),compile:()=>requestCompiler('build'),
+advancedTools=new DebuggerExtensions({state,docking,onVisualSelection:ids=>designerWorkbench?.apps.fromVisualTree(ids),request:(...args)=>runtime.request(...args),compile:()=>requestCompiler('build'),
  setReadOnly:value=>{state.readOnly=value;editors.forEach(e=>e.setReadOnly(value));updateDebugButtons();setEditorDecorations();},
  restoreFiles:files=>{state.applyingEdits=true;try{for(const original of files){const f=state.files.find(f=>f.uri===original.uri);if(f){f.text=original.text;f.version++;const e=editors.get(f.uri);if(e)e.setModel(f.uri,f.text);}}}finally{state.applyingEdits=false;}state.revision++;state.buildDirty=false;renderTabs();scheduleAnalysis();},
  commitBuild:result=>{state.image=result.image;state.assembly=result.assembly;state.result=result;state.ilDump=null;state.buildDirty=false;applyAnalysis(result);renderTabs();},
  cursor:()=>{const p=editor.sourceSnapshot().positionAt(editor.offset);return {uri:editor.uri,line:p.line+1,column:p.character+1};},download,toast,render:renderPanel,selectFrame:selectDebugFrame,showNext:showNextStatement});
 
 
-designerTools=new DesignerTools({state,docking,request:(...args)=>runtime.request(...args),toast,download,
- records:()=>explorerContext().records,choose:chooseExplorer,
- sourceFiles:()=>state.files,openSource:openFile,
- editSourceText:(uri,text,version)=>{const f=state.files.find(f=>f.uri===uri);if(!f||f.version!==version)throw new Error('Source changed');if(state.readOnly)throw new Error('Begin Edit and Continue before editing');applyEdits([{uri,start:0,end:f.text.length,newText:text,version}]);},
- applySourceEdits:async(uri,plan,version,beforeApply)=>{if(state.readOnly)throw new Error('Begin Edit and Continue before editing');const revision=state.revision,edits=plan.edits.map(e=>({uri,start:e.start,end:e.end,newText:e.text,version}));if(state.files.find(f=>f.uri===uri)?.version!==version)throw new Error('Source changed before validation');await requestCompiler('validateDesigner',{action:{title:'Synchronize design to C#',edits}});if(state.revision!==revision||state.files.find(f=>f.uri===uri)?.version!==version)throw new Error('Workspace changed while validating designer changes');beforeApply();applyEdits(edits);},
- saveDocument:async(path,text)=>{
-  path=normalizePath(path);validateItemPath(path);if(!path.endsWith('.sfdesign.json'))throw new Error('Design documents must use .sfdesign.json');
-  if(state.nativeMode)throw new Error('Export the design JSON for native workspaces. Browser workspace saving never silently writes native disk files.');
-  const existing=explorerContext().records.find(f=>f.path===path);if(existing?.bytes&&!existing.text)throw new Error('Refusing to overwrite a binary asset');
-  const record={...existing,path,text};delete record.bytes;
-  if(state.projectSystem)state.projectSystem.files.set(path,record);
-  else {state.extraFiles=state.extraFiles.filter(f=>f.path!==path);state.extraFiles.push(record);}
-  state.dirtyFiles.add(path);state.membershipDirty=true;state.diskRevision++;state.revision++;renderTree();saveLocal();
- },
- createWorkspace:async records=>{
-  if(!globalThis.confirm('Build this design as a new browser C# workspace? The current workspace is saved to local recovery. Export a ZIP to keep a separate copy.'))throw new Error('Build design cancelled');
-  saveLocal();await loadDiskRecords(records,{entry:'DesignerApp.slnx',name:'DesignerApp'});
- },runApplication:()=>launch(false)});
+designerWorkbench=studioServices.register('designer',()=>createDesignerWorkbench({
+ state,docking,compiler,runtimeRequest,editors,commandRegistry,automation,hostDocument:document,settings:storage,
+ runtimeState:()=>mainAppSources.state(state.debug),
+ toast,download,applyEdits,requestCompiler,runtimeOptions:()=>runtimeTools.launchOptions(),records:()=>explorerContext().records,choose:chooseExplorer,
+ openSource:openFile,renderTree,renderPanel,saveLocal,saveSoon,loadWorkspace:loadDiskRecords,runApplication:()=>launch(false),
+ selectVisual:(ids,{sessionId})=>{
+  if(state.debug?.sessionId!==sessionId)return;
+  advancedTools.selectedVisual=ids[0]??null;advancedTools.renderVisual(docking.content.get('visual-tree'));
+ }
+}),value=>value.dispose());
+designerTools=designerWorkbench.tools;
 
 $('#exception-mode').value=state.debugSettings.exceptionBreak;
 const workbench=new AssemblyWorkbench({openFile:()=>$('#assembly-file-input').click(),request:(method,params)=>compiler.request(method,params),download,invoke:invokeAssembly,onStatus:message=>toast(message,'error')});
@@ -158,13 +163,13 @@ function log(text,type='system'){state.logs.push({text,type,time:time()});if(sta
 function toast(message,type='info'){const el=document.createElement('div');el.className='toast '+type;el.textContent=message;const host=$('#toasts');host.append(el);while(host.children.length>4)host.firstElementChild.remove();setTimeout(()=>el.remove(),5500);}
 function status(message,kind='ready'){const el=$('#status-state');el.innerHTML=icon(kind==='error'?'warning':kind==='paused'?'bug':kind==='running'?'play':'check')+' '+E(message);}
 function saveSoon(){if(state.nativeMode){refreshEngineIndicators();return;}clearTimeout(state.saveTimer);$('#status-saved').innerHTML=icon('save')+' Saving…';state.saveTimer=setTimeout(saveLocal,250);}
-function recoveryData(){const c=explorerContext();return {langVersion:state.langVersion,format:'sharpforge-project',version:1,name:state.name,extensions:state.extensionConfig,folders:state.folders,mode:state.workspaceMode,membershipDirty:state.membershipDirty,configuration:state.configuration,startupProject:state.startupProject,entry:state.projectSystem?.solution?.path,diskRecords:c.records.map(f=>({...f,bytes:undefined,base64:f.bytes?encodeBase64(f.bytes):undefined})),files:state.files,active:state.active,tabs:state.tabs,breakpoints:state.breakpoints,functionBreakpoints:state.functionBreakpoints,watches:state.watches,theme:document.documentElement.dataset.theme};}
+function recoveryData(){const c=explorerContext();return {langVersion:state.langVersion,format:'sharpforge-project',version:1,name:state.name,extensions:state.extensionConfig,folders:state.folders,mode:state.workspaceMode,membershipDirty:state.membershipDirty,configuration:state.configuration,startupProject:state.startupProject,entry:state.projectSystem?.solution?.path,diskRecords:c.records.map(f=>({...f,bytes:undefined,base64:f.bytes?encodeBase64(f.bytes):undefined})),files:state.files,active:state.active,tabs:state.tabs,breakpoints:state.breakpoints,functionBreakpoints:state.functionBreakpoints,watches:state.watches,theme:document.documentElement.dataset.theme,designer:designerWorkbench?.documents.snapshot()};}
 function saveLocal(){if(state.nativeMode){refreshEngineIndicators();return;}try{storage.setItem(storageKeys.workspace,JSON.stringify(recoveryData()));$('#status-saved').innerHTML=icon('check')+' Saved locally';return true;}catch(error){$('#status-saved').textContent='Recovery unavailable — export ZIP';return false;}}
 function recover(){try{const project=JSON.parse(storage.getItem(storageKeys.workspace));if(project?.format!=='sharpforge-project'||project.version!==1||!Array.isArray(project.files)||!project.files.every(f=>typeof f.uri==='string'&&typeof f.text==='string'))return false;
  const records=project.diskRecords?.map(r=>({...r,bytes:r.base64?Uint8Array.from(atob(r.base64),c=>c.charCodeAt(0)):undefined}))??[...(project.extraFiles??[]),...project.files.map(f=>({path:f.uri,text:f.text}))];validateFilePlan({records,folders:project.folders??[]},[]);
  state.extraFiles=records.filter(r=>!/\.cs$/i.test(r.path)||typeof r.text!=='string');state.folders=project.folders??[];state.workspaceMode=project.mode??'solution';state.membershipDirty=project.membershipDirty??false;state.configuration=project.configuration??'Debug';state.startupProject=project.startupProject??null;state.disk=new DiskWorkspace(records);
  if(project.entry){state.projectSystem=new ProjectSystem(records,{configuration:state.configuration,maxFiles:20000});state.projectSnapshot=state.projectSystem.load(project.entry);}
- state.langVersion=/^(?:[1-9]|1[0-4]|preview)$/.test(project.langVersion)?project.langVersion:'14';state.name=project.name??'Application';state.extensionConfig=project.extensions??null;state.files=project.files.map((f,i)=>({...f,version:Date.now()+i}));state.active=project.active??state.files[0]?.uri??'';state.tabs=project.tabs?.filter(t=>state.files.some(f=>f.uri===t))??(state.active?[state.active]:[]);state.breakpoints=project.breakpoints??{};state.functionBreakpoints=project.functionBreakpoints??[];state.watches=project.watches??[];if(project.theme==='light')document.documentElement.dataset.theme='light';return true;
+ state.langVersion=/^(?:[1-9]|1[0-4]|preview)$/.test(project.langVersion)?project.langVersion:'14';state.name=project.name??'Application';state.extensionConfig=project.extensions??null;state.files=project.files.map((f,i)=>({...f,version:Date.now()+i}));state.active=project.active??state.files[0]?.uri??'';state.tabs=project.tabs?.filter(t=>state.files.some(f=>f.uri===t)||records.some(r=>r.path===t&&t.endsWith('.sfdesign.json')))??(state.active?[state.active]:[]);state.breakpoints=project.breakpoints??{};state.functionBreakpoints=project.functionBreakpoints??[];state.watches=project.watches??[];if(project.theme==='light')document.documentElement.dataset.theme='light';designerWorkbench?.documents.restore(project.designer);return true;
  }catch{return false;}}
 
 async function loadSample(id,initial=false){
@@ -188,25 +193,30 @@ function refreshEngineIndicators(){
 }
 function renderWorkspace(){
  $('.title-project').innerHTML=E(state.name)+' <span>—</span> <span>JavaScript C# toolchain</span>';$('.solution-heading b').textContent=`Solution '${state.name}'`;$('#project-name').textContent=state.name;$('#file-count').textContent=`(${state.files.length} files)`;
- if(!state.files.some(f=>f.uri===state.active))state.active=state.files[0]?.uri;if(!state.tabs.includes(state.active))state.active&&state.tabs.push(state.active);
- renderTree();renderTabs();const file=activeFile();if(file&&editor&&(editor.uri!==file.uri||editor.value!==file.text))editor.setModel(file.uri,file.text);renderBreadcrumb();setEditorDecorations();renderPanel();refreshEngineIndicators();updateDebugButtons();
+ designerWorkbench?.documents.syncFiles();
+ const documents=designerWorkbench?.documentFiles()??state.files;
+ if(!documents.some(f=>f.uri===state.active))state.active=documents[0]?.uri;if(!state.tabs.includes(state.active))state.active&&state.tabs.push(state.active);
+ renderTree();renderTabs();const file=activeFile();if(file&&editor&&(editor.uri!==file.uri||editor.value!==file.text))editor.setModel(file.uri,file.text);sourceSymbols.update();setEditorDecorations();renderPanel();refreshEngineIndicators();updateDebugButtons();
 }
 function renderTree(){solutionExplorer.render();}
 
 function renderTabs(){
- docking.sync(state.files,state.tabs,state.active);
- for(const file of state.files)docking.title('source:'+file.uri,(state.dirtyFiles.has(file.uri)?'● ':'')+file.uri.split('/').at(-1));
+ const documents=designerWorkbench?.documentFiles()??state.files;docking.sync(documents,state.tabs,state.active);
+ for(const file of documents)docking.title('source:'+file.uri,(state.dirtyFiles.has(file.uri)?'● ':'')+file.uri.split('/').at(-1));
  if(state.active)editor=editors.get(state.active)??editor;
 }
-function openFile(uri,offset=null,end=offset){
- const file=state.files.find(f=>f.uri===uri);if(!file)return;const record=!navigationReplay&&(state.active!==uri||offset!==null);if(record&&currentLocation())navigation.update(currentLocation());if(!state.tabs.includes(uri))state.tabs.push(uri);state.active=uri;
- if(!docking.layout.panels.has('source:'+uri))renderTabs();docking.layout.open('source:'+uri);
- editor=editors.get(uri);if(!editor){docking.host.contents.delete('source:'+uri);docking.content.delete('source:'+uri);docking.host.render();editor=editors.get(uri);}
- if(editor.uri!==uri||editor.value!==file.text)editor.setModel(uri,file.text);editor.setReadOnly(state.readOnly);renderTree();renderBreadcrumb();setEditorDecorations();if(offset!==null)editor.goto(offset,end);if(record)navigation.push(currentLocation());navigationButtons();saveSoon();
+function openFile(uri, offset = null, end = offset) {
+ const navigate = () => openSourceFile(uri, offset, end);
+ return designerWorkbench ? designerWorkbench.documents.navigateSource(uri, navigate) : navigate();
 }
-function renderBreadcrumb(){
- $('#breadcrumb-file').innerHTML='<span class="file-icon">C#</span>'+E(state.active??'');const symbols=state.result?.symbols.filter(s=>s.uri===state.active&&s.kind!=='local'&&!s.name.startsWith('<'))??[];
- $('#symbol-nav').innerHTML='<option value="">Navigate to symbol</option>'+symbols.map(s=>`<option value="${s.start}">${E((s.owner?s.owner+'.':'')+s.name+(s.kind==='method'?'(…)':''))}</option>`).join('');
+function openSourceFile(uri,offset=null,end=offset){
+ let file=designerWorkbench?.documents.file(uri)??state.files.find(f=>f.uri===uri);if(!file)return;
+ if(/\.cs$/i.test(uri)&&!state.files.some(f=>f.uri===uri)){file={uri,text:file.text,version:Date.now()};state.files.push(file);state.revision++;scheduleAnalysis();}
+ const record=!navigationReplay&&(state.active!==uri||offset!==null);if(record&&currentLocation())navigation.update(currentLocation());if(!state.tabs.includes(uri))state.tabs.push(uri);state.active=uri;
+ if(!docking.layout.panels.has('source:'+uri))renderTabs();docking.layout.open('source:'+uri);
+ if(/\.sfdesign\.json$/i.test(uri)){editor=null;designerWorkbench.documents.activate(uri);renderTree();sourceSymbols.update();saveSoon();return;}
+ editor=editors.get(uri);if(!editor){docking.host.contents.delete('source:'+uri);docking.content.delete('source:'+uri);docking.host.render();editor=editors.get(uri);}
+ if(editor.uri!==uri||editor.value!==file.text)editor.setModel(uri,file.text);editor.setReadOnly(state.readOnly);renderTree();sourceSymbols.update();setEditorDecorations();if(offset!==null)editor.goto(offset,end);designerWorkbench?.documents.activate(uri);if(record)navigation.push(currentLocation());navigationButtons();saveSoon();
 }
 function matchesDebugSource(uri){const file=state.files.find(f=>f.uri===uri),embedded=state.debugSources.get(uri);return !!file&&typeof embedded==='string'&&embedded===file.text;}
 function setEditorDecorations(){for(const [uri,instance]of editors){
@@ -225,10 +235,11 @@ function scheduleAnalysis(){if(state.nativeMode)return;clearTimeout(state.analyz
 async function analyze(){if(state.nativeMode)return;const revision=state.revision;try{const result=await requestCompiler('analyze');if(revision!==state.revision)return;applyAnalysis(result);}catch(e){toast(e.message,'error');}}
 function applyAnalysis(result){
  const extra=projectErrors().filter(d=>!result.diagnostics.some(r=>r.code===d.code&&r.message===d.message));if(extra.length)result={...result,success:false,diagnostics:[...result.diagnostics,...extra],metrics:{...result.metrics,errors:(result.metrics.errors??0)+extra.length}};
+ designerWorkbench?.updateCatalog(result).catch(error=>toast(error.message,'error'));
  if(result.pdb)state.pdb=result.pdb;state.result=result;const m=result.metrics;$('#compile-ms').textContent=(m.totalMs??m.compileMs??0).toFixed(1);$('#timing-fill').style.width=Math.min(100,Math.max(2,(m.totalMs??m.compileMs??0)/50*100))+'%';$('#metric-files').textContent=m.files??state.files.length;$('#metric-tokens').textContent=(m.tokens??0).toLocaleString();$('#metric-bytecode').textContent=(m.instructions??0).toLocaleString();$('#metric-errors').textContent=m.errors??0;$('#metric-errors').style.color=m.errors?'var(--red)':'var(--green)';
  const errors=result.diagnostics.filter(d=>d.severity==='error').length;$('#error-count').textContent=errors;$('#error-count').classList.toggle('has-errors',errors>0);const warnings=result.diagnostics.filter(d=>d.severity==='warning').length;$('#inline-diagnostics').innerHTML=`<span class="dot ${errors?'red':warnings?'purple':'green'}"></span> ${errors?errors+' '+(errors===1?'error':'errors'):warnings?warnings+' '+(warnings===1?'warning':'warnings'):'No issues'}`;
  if(!state.debug||['terminated','faulted'].includes(state.debug.state)){status(errors?`${errors} compiler errors`:'Ready',errors?'error':'ready');$('#session-title').textContent=errors?'Build needs attention':'Compiler ready';$('#session-subtitle').textContent=errors?'Open Error List to inspect diagnostics':`${state.files.length} files · ${m.methods??0} compiled methods`;$('#session-tag').textContent=errors?'ERROR':'READY';$('#session-dot').className='session-dot'+(errors?' error':'');}
- setEditorDecorations();renderBreadcrumb();renderTree();renderPanel('problems');renderPanel('bytecode');renderPanel('outline');renderPanel('generated');
+ setEditorDecorations();sourceSymbols.update();renderTree();renderPanel('problems');renderPanel('bytecode');renderPanel('generated');
 }
 async function build(silent=false){
  if(state.nativeMode){if(silent)return null;setPanel('msbuild');return nativeBuild.run('build');}
@@ -247,15 +258,17 @@ async function launch(debug=true,options={}){
  if(debug&&state.debug?.state==='paused'){await runtime.request('resume',{mode:'continue'});return;}
  if(state.nativeMode){setPanel('msbuild');throw new Error('Build native projects with MSBuild, then Inspect IL to debug supported CIL. Native process attachment is unavailable; Portable PDBs can be loaded for supported managed DLLs.');}
  if(state.projectSystem?.projects.get(state.startupProject)?.outputType?.toLowerCase()==='library'){const built=await build();if(built?.success){await openAssemblyExplorer(built.assembly);toast('Library built. Select a method in Assembly Explorer.');}return;}
+ const sourceTicket=mainAppSources.capture({compilationFiles:serializedFiles(),eligible:!state.importedAssembly||state.buildDirty});
  const epoch=++state.launchEpoch;state.launchBusy=true;updateDebugButtons();
  try{const result=await build();if(epoch!==state.launchEpoch||!result?.success)return;
  state.programOutput='';state.frameId=null;state.lastManagedLaunch=null;state.debugSources=new Map();
  const stopOnEntry=options.stopOnEntry??state.debugSettings.stopOnEntry;
  log(debug?(stopOnEntry?'Debugger attached · explicit break on entry':'Debugger attached · running to breakpoint'):'Starting without breakpoints',debug?'debug':'system');setPanel(debug?'debug':'output');
+ mainAppSources.arm(sourceTicket,{compilationFiles:serializedFiles(),previousSessionId:state.runtimeSession});
  await runtime.request('launch',{assembly:result.assembly,...state.debugSettings,...runtimeTools.launchOptions(),...options,debug,stopOnEntry:debug&&stopOnEntry,breakpoints:state.breakpoints,functionBreakpoints:state.functionBreakpoints,exceptionBreak:state.debugSettings.exceptionBreak});
- }finally{state.launchBusy=false;updateDebugButtons();}
+ }finally{mainAppSources.cancelPending();state.launchBusy=false;updateDebugButtons();}
 }
-async function stopQuietly(){state.launchEpoch++;if(state.debug&&(['paused','running','ready','waiting'].includes(state.debug.state)||state.debug.uiActive)){try{await runtime.request('stop',{sessionId:undefined});}catch{}}state.debug=null;state.hotEdit=false;if(advancedTools)advancedTools.hotBase=null;state.debugSources.clear();state.watchEpoch=(state.watchEpoch??0)+1;objectRequest++;state.readOnly=false;editors.forEach(e=>e.setReadOnly(false));updateDebugButtons();setEditorDecorations();}
+async function stopQuietly(){state.launchEpoch++;mainAppSources.clear();if(state.debug&&(['paused','running','ready','waiting'].includes(state.debug.state)||state.debug.uiActive)){try{await runtime.request('stop',{sessionId:undefined});}catch{}}state.debug=null;state.hotEdit=false;if(advancedTools)advancedTools.hotBase=null;state.debugSources.clear();state.watchEpoch=(state.watchEpoch??0)+1;objectRequest++;state.readOnly=false;editors.forEach(e=>e.setReadOnly(false));updateDebugButtons();setEditorDecorations();}
 async function step(mode){const reverse=['stepBack','reverseContinue'].includes(mode);if(state.debug?.state!=='paused'&&!(reverse&&['terminated','faulted'].includes(state.debug?.state))){if(['next','stepIn'].includes(mode)&&state.debug?.state!=='running')return launch(true,{stopOnEntry:true});return;}await runtime.request(reverse?mode:'resume',reverse?{}:{mode});}
 async function runToCursor(){const position=new SourceText(editor.value,state.active).positionAt(editor.offset),target={uri:state.active,line:position.line+1,column:position.character+1};if(state.debug?.state==='paused'){if(!matchesDebugSource(target.uri))throw new Error('The active document does not match the source embedded in this debug assembly');return runtime.request('runToCursor',target);}return launch(true,{runToCursor:target,stopOnEntry:false});}
 
@@ -264,11 +277,11 @@ function renderPanelSoon(){if(panelFrame)return;panelFrame=requestAnimationFrame
 function runtimeEvent(event){
  if(event.sessionId!==undefined&&event.sessionId<(state.runtimeSession??0))return;if(event.event==='state'&&event.sessionId!==undefined){if(event.sessionId!==(state.runtimeSession??0)){lastDebugKey='';state.watchEpoch=(state.watchEpoch??0)+1;objectRequest++;}state.runtimeSession=event.sessionId;}
  if(event.event==='ui'){advancedTools?.onUI(event.commands);return;}
- if(event.event==='loaded'){state.runtimeSession=event.sessionId;state.debugSources=new Map(event.sources.filter(s=>typeof s.text==='string').map(s=>[s.uri,s.text]));state.immediateHistory=[];return;}
+ if(event.event==='loaded'){state.runtimeSession=event.sessionId;mainAppSources.loaded(event.sessionId);state.debugSources=new Map(event.sources.filter(s=>typeof s.text==='string').map(s=>[s.uri,s.text]));state.immediateHistory=[];return;}
  if(event.event==='output'){state.programOutput+=event.text;renderPanelSoon();return;}
  if(event.event==='error'||event.event==='runtimeerror'){toast(event.message,'error');return;}
  if(event.event!=='state')return;
- const previous=state.debug;state.debug=event;if(event.profile==='managed-il'&&state.lastManagedLaunch)state.lastManagedLaunch.instructionBreakpoints=(event.breakpoints??[]).filter(b=>!b.source).map(({instructionReference,condition,conditionMode,hitCondition,logMessage,enabled,oneShot})=>({instructionReference,condition,conditionMode,hitCondition,logMessage,enabled,oneShot}));state.programOutput=event.output;advancedTools?.onState(event);state.readOnly=!state.hotEdit&&(['running','paused','ready','waiting'].includes(event.state)||event.uiActive);editors.forEach(e=>e.setReadOnly(state.readOnly));updateDebugButtons();refreshEngineIndicators();updateRuntimeMetrics(event);
+ const previous=state.debug;state.debug=event;designerWorkbench?.apps.refresh();if(event.profile==='managed-il'&&state.lastManagedLaunch)state.lastManagedLaunch.instructionBreakpoints=(event.breakpoints??[]).filter(b=>!b.source).map(({instructionReference,condition,conditionMode,hitCondition,logMessage,enabled,oneShot})=>({instructionReference,condition,conditionMode,hitCondition,logMessage,enabled,oneShot}));state.programOutput=event.output;advancedTools?.onState(event);state.readOnly=!state.hotEdit&&(['running','paused','ready','waiting'].includes(event.state)||event.uiActive);editors.forEach(e=>e.setReadOnly(state.readOnly));updateDebugButtons();refreshEngineIndicators();updateRuntimeMetrics(event);
  const key=(event.sessionId??0)+':'+event.state+':'+event.stats.instructions+':'+JSON.stringify(event.locals?.map(v=>v.value));
  if(event.state==='paused'&&key!==lastDebugKey){state.inspectedLocals=null;state.inspectedThreadFrames=null;state.inspectedThreadId=null;state.frameId=event.frames[0]?.id??null;if(event.point&&matchesDebugSource(event.point.uri)){openFile(event.point.uri);editor.gotoLine(event.point.line,event.point.column);}setEditorDecorations();refreshWatches();if(!['debug','stack','breakpoints','bytecode','disassembly','immediate','debug-session','watch','threads','parallel-stacks','hot-reload','symbols','symbol-source','winui'].includes(state.panel))setPanel('debug');else renderPanel();if(event.profile==='managed-il')renderPanel('disassembly');}
  if((event.state==='faulted'||event.state==='terminated'&&!event.uiActive)&&previous?.state!==event.state){editors.forEach(e=>{e.setExecutionLocation(null);e.setSelectedFrameLine(null);});if(event.state==='faulted'){log(`${event.fault?.type}: ${event.fault?.message}`,'error');setPanel('output');}else{log(`Program exited · ${event.stats.instructions.toLocaleString()} instructions · ${event.stats.elapsedMs.toFixed(2)} ms VM time`,'debug');setPanel('output');}state.watchResults.clear();}
@@ -294,7 +307,11 @@ async function refreshWatches(){if(state.debug?.state!=='paused'){state.watchRes
 async function languageRequest(method,params){try{if(['save','closeDocument','openDocument','nextDocument','previousDocument','findFiles'].includes(method))return await editorHostCommand(method,params);if(method==='hover'&&state.debug?.state==='paused'&&matchesDebugSource(params.uri)){const file=state.files.find(f=>f.uri===params.uri),offset=params.offset;let start=offset,end=offset;while(start>0&&/[\w]/.test(file.text[start-1]))start--;while(end<file.text.length&&/[\w]/.test(file.text[end]))end++;const expression=file.text.slice(start,end);if(/^[A-Za-z_]\w*$/.test(expression)){const sessionId=state.debug.sessionId,frameId=state.frameId;try{const value=await runtime.request('evaluate',{expression,frameId,sessionId});if(state.debug?.sessionId===sessionId&&state.frameId===frameId)return {contents:expression+' = '+value.result+'\n'+value.type+' · selected paused frame · side-effect-free data tip'};}catch{}}}
  if(method==='callHierarchy'){await showCallHierarchy(params);return;}if(method==='codeActions')return await codeActions(params);if(method==='format'){const action=await requestCompiler('format',params);return await applyRefactoring(action);}if(method==='definition'){const result=await requestCompiler(method,params);if(result)openFile(result.uri,result.start,result.end);else toast('No bound definition at this position.');return result;}if(method==='references'){const refs=await requestCompiler(method,params);showReferences(refs);return refs;}if(method==='rename'){if(state.readOnly){toast('Stop debugging before renaming.');return;}const name=await ask('Rename symbol',`<div class="form-row"><label for="new-symbol">New name</label><input id="new-symbol" autofocus placeholder="New identifier"></div><p>Applies bound references only. Type renaming is not yet supported.</p>`,'Rename',()=>$('#new-symbol').value.trim());if(!name)return;const edits=await requestCompiler('rename',{...params,newName:name});await applyRefactoring({title:`Renamed ${edits.length} bound occurrences.`,edits});return;}
  return await requestCompiler(method,params);}catch(error){if(['hover','completion'].includes(method))return null;toast(error.message,'error');if(['save','closeDocument','openDocument'].includes(method))return false;}}
-function applyEdits(edits){state.applyingEdits=true;try{for(const file of state.files){const fileEdits=edits.filter(e=>e.uri===file.uri).sort((a,b)=>b.start-a.start);if(!fileEdits.length)continue;const before=file.text;for(const e of fileEdits)file.text=file.text.slice(0,e.start)+e.newText+file.text.slice(e.end);state.breakpoints[file.uri]=remapSourceBreakpoints(before,file.text,state.breakpoints[file.uri]??[]);file.version++;state.dirtyFiles.add(file.uri);const instance=editors.get(file.uri);if(instance&&instance.value!==file.text)instance.setValue(file.text);}}finally{state.applyingEdits=false;}state.revision++;state.diskRevision++;state.buildDirty=true;renderWorkspace();saveLocal();analyze();for(const uri of new Set(edits.map(e=>e.uri)))designerTools?.sourceSync.sourceChanged(uri);}
+function applyEdits(edits){
+ const uris=applyDesignerSourceTransaction({state,editors,edits,remapBreakpoints:remapSourceBreakpoints});
+ if(!uris.length)return;
+ renderWorkspace();saveLocal();analyze();for(const uri of uris)designerWorkbench?.sourceChanged(uri);
+}
 
 function showReferences(refs){state.toolReferences=refs;setPanel('references');}
 function toggleBreakpoint(uri,line){const bps=state.breakpoints[uri]??=[];const existing=sourceBreakpointAt(bps,state.debug?.profile!=='managed-il'&&!state.buildDirty?state.debug?.breakpoints?.filter(b=>b.uri===uri)??[]:[],line);const index=bps.indexOf(existing);if(index>=0)bps.splice(index,1);else bps.push({line,enabled:true});bps.sort((a,b)=>a.line-b.line);syncBreakpoints(uri);setEditorDecorations();renderPanel('breakpoints');saveLocal();}
@@ -382,22 +399,17 @@ function profileDialog(...args){return aboutDialogs.profileDialog(...args);}
 function architectureDialog(...args){return aboutDialogs.architectureDialog(...args);}
 function aboutDialog(...args){return aboutDialogs.aboutDialog(...args);}
 
-function commandsDialog(){showModal('Command palette',`<input class="command-input" id="command-filter" placeholder="Type a command…" autofocus><div class="command-list" id="command-list"></div>`,{footer:'<span class="muted" style="font-size:10px">Search commands · Enter executes the first match · Escape closes</span>'});const render=()=>{const q=$('#command-filter').value.toLowerCase(),items=commandRegistry.list().filter(c=>c[1].toLowerCase().includes(q));$('#command-list').innerHTML=items.map(([id,name,key],i)=>`<button data-palette="${id}" class="${i===0?'selected':''}">${E(name)}<span>${E(key)}</span></button>`).join('');$$('[data-palette]',$('#modal')).forEach(b=>b.onclick=()=>{closeModal();execute(b.dataset.palette);});};$('#command-filter').oninput=render;$('#command-filter').onkeydown=e=>{if(e.key==='Enter')$('#command-list button')?.click();};render();}
+function commandsDialog(){showModal('Command palette',`<input class="command-input" id="command-filter" placeholder="Type a command…" autofocus><div class="command-list" id="command-list"></div>`,{footer:'<span class="muted" style="font-size:10px">Search commands · Enter executes the first match · Escape closes</span>'});const render=()=>{const q=$('#command-filter').value.toLowerCase(),items=commandRegistry.list().filter(c=>c[1].toLowerCase().includes(q));$('#command-list').innerHTML=items.map(([id,name,key],i)=>`<button data-palette="${id}" ${commandRegistry.canExecute(id)?'':'disabled'} class="${i===0?'selected':''}">${E(name)}<span>${E(key)}</span></button>`).join('');$$('[data-palette]',$('#modal')).forEach(b=>b.onclick=()=>{closeModal();execute(b.dataset.palette);});};$('#command-filter').oninput=render;$('#command-filter').onkeydown=e=>{if(e.key==='Enter')$('#command-list button')?.click();};render();}
 
 function openMenuAt(x,y,items,options={}){sharedMenu.show({items:items.map(item=>Array.isArray(item)?[item[0],typeof item[1]==='function'?item[1]:()=>execute(item[1]),item[2],item[3]]:item),x,y,...options});}
 function closeMenu(){sharedMenu.close(false);$$('[data-menu]').forEach(b=>b.classList.remove('active'));}
-
-
-
-
-
 async function execute(command){try{return await commandRegistry.execute(command);}catch(error){toast(error.message,'error');}}
 document.addEventListener('click',e=>{const b=e.target.closest('[data-command]');if(b&&!b.disabled)execute(b.dataset.command);});
 for(const content of docking.content.values())content.addEventListener('click',e=>{const button=e.target.closest('[data-command]');if(button){e.stopPropagation();if(!button.disabled)execute(button.dataset.command);}});
 $$('[data-menu]').forEach(button=>button.onclick=()=>{const active=button.classList.contains('active');closeMenu();if(active)return;button.classList.add('active');const rect=button.getBoundingClientRect();openMenuAt(rect.left,rect.bottom,menuRegistry.items(button.dataset.menu));});
 $$('[data-panel]').forEach(b=>b.onclick=()=>setPanel(b.dataset.panel));
 
-$('#symbol-nav').onchange=e=>{if(e.target.value!=='')editor.goto(Number(e.target.value));};$('#exception-mode').onchange=()=>debugTools.configure({exceptionBreak:$('#exception-mode').value}).catch(error=>toast(error.message,'error'));
+$('#exception-mode').onchange=()=>debugTools.configure({exceptionBreak:$('#exception-mode').value}).catch(error=>toast(error.message,'error'));
 $('#file-input').onchange=async e=>{try{if(e.target.files.length)await importFiles([...e.target.files]);}catch(error){toast(error.message,'error');}finally{e.target.value='';}};
 $('#zip-input').onchange=async e=>{try{if(e.target.files[0])await openWorkspaceZip(e.target.files[0]);}catch(error){toast(error.message,'error');}finally{e.target.value='';}};
 $('#modal-backdrop').addEventListener('pointerdown',e=>{if(e.target.id==='modal-backdrop')closeModal();});
@@ -533,6 +545,7 @@ async function openExplorerNode(node){
  if(node.kind==='assembly'){const bytes=state.nativeMode?await nativeBuild.client.binary(node.path):explorerContext().records.find(r=>r.path===node.path)?.bytes;if(!bytes)throw new Error('Assembly bytes are not present in this workspace');await openDecompilerFile(bytes,node.path);return;}
  if(state.nativeMode){if(!/\.(cs|csproj|slnx|sln|props|targets|json|txt|md|xml|resx|resw|config|css|html|js|ts|svg|yml|yaml|rsp|editorconfig)$/i.test(node.path))return previewWorkspaceFile(node.path);await nativeBuild.open(node.path);return;}
  if(node.kind==='source'){if(!state.files.some(f=>f.uri===node.path)){const record=explorerContext().records.find(r=>r.path===node.path);if(typeof record?.text!=='string')throw new Error('Source is missing from the selected disk files');state.files.push({uri:node.path,text:record.text,version:Date.now()});renderWorkspace();}openFile(node.path);return;}
+ if(node.path?.endsWith('.sfdesign.json')){openFile(node.path);return;}
  const record=explorerContext().records.find(r=>r.path===node.path);if(typeof record?.text!=='string'){return previewWorkspaceFile(node.path);}
  const before=record.text,revision=state.revision;const text=await ask('Edit '+node.path,`<p>Browser workspace edit. This does not execute MSBuild. Export the workspace to preserve all project files.</p><textarea id="explorer-text" aria-label="Project or text file source" class="explorer-text" spellcheck="false">${E(before)}</textarea>`,'Apply',()=>$('#explorer-text').value);
  if(text===null||text===before)return;if(revision!==state.revision)throw new Error('Workspace changed while the file was open; no edit was applied');await explorerActions.perform([{kind:'write',path:node.path,text}]);
@@ -545,7 +558,7 @@ async function explorerProjectCommand(action,node){const path=node?.project??nod
  if(action==='restore'||action==='evaluate')throw new Error('This operation requires the native MSBuild host');
  if(node?.kind==='project'&&path&&path!==state.startupProject)await setStartupProject(path);else return build();
 }
-const explorerActions=new ExplorerCommands({wizardProject:node=>openProjectWizard({add:true,node}),wizardItem:node=>openItemWizard(node),workspaceAction:(id,node)=>workspaceExplorerAction(id,node),context:explorerContext,windowMenu:()=>dockMenuItems("solution"),menu:options=>sharedMenu.show(options),error:error=>toast(error.message,'error'),notice:toast,copy:copyText,pathDialog,pickFiles:pickExistingItems,choose:chooseExplorer,confirm:(title,paths,note)=>ask(title,`<p>${E(note)}</p><pre>${E(paths.join('\n'))}</pre>`,'Delete',()=>true),properties:showItemProperties,open:openExplorerNode,render:renderTree,commit:commitExplorerRecords,saveNative:()=>nativeBuild.save(),refreshNative:refreshNativeExplorer,refresh:async()=>{if(state.nativeMode){if(nativeSourceChanges().length||nativeBuild.sourceChanges().length){await nativeBuild.refresh();toast('Tree refreshed. Dirty buffers were preserved. Save or reopen changed files explicitly.');}else await refreshNativeExplorer();}else renderTree();},project:explorerProjectCommand,document:(action,uri)=>{if(action==='popout')return docking.host.popout('source:'+uri);const group=docking.layout.groups().find(g=>g.panels.includes('source:'+uri));if(group)docking.layout.dock('source:'+uri,group.id,'right');}});
+const explorerActions=new ExplorerCommands({designerMenu:node=>designerWorkbench.commands.menuItems(node),wizardProject:node=>openProjectWizard({add:true,node}),wizardItem:node=>openItemWizard(node),workspaceAction:(id,node)=>workspaceExplorerAction(id,node),context:explorerContext,windowMenu:()=>dockMenuItems("solution"),menu:options=>sharedMenu.show(options),error:error=>toast(error.message,'error'),notice:toast,copy:copyText,pathDialog,pickFiles:pickExistingItems,choose:chooseExplorer,confirm:(title,paths,note)=>ask(title,`<p>${E(note)}</p><pre>${E(paths.join('\n'))}</pre>`,'Delete',()=>true),properties:showItemProperties,open:openExplorerNode,render:renderTree,commit:commitExplorerRecords,saveNative:()=>nativeBuild.save(),refreshNative:refreshNativeExplorer,refresh:async()=>{if(state.nativeMode){if(nativeSourceChanges().length||nativeBuild.sourceChanges().length){await nativeBuild.refresh();toast('Tree refreshed. Dirty buffers were preserved. Save or reopen changed files explicitly.');}else await refreshNativeExplorer();}else renderTree();},project:explorerProjectCommand,document:(action,uri)=>{if(action==='popout')return docking.host.popout('source:'+uri);const group=docking.layout.groups().find(g=>g.panels.includes('source:'+uri));if(group)docking.layout.dock('source:'+uri,group.id,'right');}});
 const solutionExplorer=new SolutionExplorer($('#solution'),{getData:explorerContext,onOpen:node=>openExplorerNode(node),onCommand:(...args)=>explorerActions.run(...args),onMenu:options=>sharedMenu.show(options),onProperties:nodeProperties,onError:error=>toast(error.message,'error')});explorerActions.host.explorer=solutionExplorer;
 
 function updateKeymapStatus(value={keymap:state.keymap}){let button=document.getElementById('editor-keymap-status');if(!button)return;const label=EDITOR_KEYMAPS.find(k=>k.id===value.keymap)?.label??'Visual Studio';button.textContent=label.replace(' (default)','')+(value.keymap==='vim'?' · '+(value.mode??'normal').toUpperCase():value.mode?.includes('…')?' · '+value.mode:'');button.title='Keyboard profile — '+label;}
@@ -572,19 +585,10 @@ function showBreakpointMenu(uri,line,event){sharedMenu.show({items:breakpointIte
 async function pasteEditor(instance){if(instance.input.readOnly)return;let text;try{text=await navigator.clipboard.readText();}catch{text=await ask('Paste',`<p>Clipboard reading is unavailable. Paste into this field, then Insert.</p><textarea id="paste-text" class="explorer-text" autofocus></textarea>`,'Insert',()=>$('#paste-text').value);}if(text!==null&&text!==undefined)instance.insert(text);instance.focus();}
 function editorContextItems(...args){return menuRegistry.items('editorContextItems',...args);}
 function panelContextItems(...args){return menuRegistry.items('panelContextItems',...args);}
-const contextDocuments=new WeakSet();
-function installContextDocument(doc){if(contextDocuments.has(doc))return;contextDocuments.add(doc);
- const show=(event,keyboard=false)=>{const target=event.target;if(!target?.closest||target.closest('.sf-menu,#modal-backdrop,.sf-tree'))return;const source=target.closest('[data-source-uri]'),tab=target.closest('[data-dock-tab]'),tool=target.closest('[data-tool]');let items,anchor=target,x=event.clientX,y=event.clientY;
-  if(keyboard){const r=target.getBoundingClientRect();x=r.left+Math.min(40,r.width/2);y=r.top+Math.min(30,r.height);}
-  if(tab){items=dockMenuItems(tab.dataset.dockTab);}
-  else if(source){const instance=editors.get(source.dataset.sourceUri);if(!instance)return;const gutter=target.closest('[data-line]');if(gutter)items=breakpointItems(instance.uri,Number(gutter.dataset.line));else items=editorContextItems(instance);anchor=instance.keymapAdapter?.cm.getInputField()??instance.input;}
-  else if(tool)items=panelContextItems(tool.dataset.tool,target);
-  if(!items)return;event.preventDefault();event.stopImmediatePropagation();sharedMenu.show({items,x,y,anchor,document:doc});
- };
- doc.addEventListener('contextmenu',event=>show(event),true);doc.addEventListener('keydown',event=>{if(event.key==='ContextMenu'||event.shiftKey&&event.key==='F10')show(event,true);},true);
-}
-installContextDocument(document);
-const dockPopout=docking.host.popout.bind(docking.host);docking.host.popout=id=>{const result=dockPopout(id),child=docking.host.popouts.get(id)?.window;if(child)installContextDocument(child.document);return result;};
+const contextRouter = new StudioContextMenuRouter({editors, menu: sharedMenu, dockItems: dockMenuItems,
+ breakpointItems, editorItems: editorContextItems, panelItems: panelContextItems});
+contextRouter.install(document);
+const dockPopout=docking.host.popout.bind(docking.host);docking.host.popout=id=>{const result=dockPopout(id),child=docking.host.popouts.get(id)?.window;if(child)contextRouter.install(child.document);return result;};
 
 // Project/solution creation and portable workspace IO. ZIP is data only, never code execution.
 function workspaceSettings(){return {langVersion:state.langVersion,name:state.name,mode:state.workspaceMode??(state.projectSystem?'solution':'folder'),entry:state.projectSystem?.solution?.path??undefined,startup:state.startupProject??undefined,configuration:state.configuration,active:state.active,tabs:state.tabs,breakpoints:state.breakpoints,functionBreakpoints:state.functionBreakpoints,extensions:state.extensionConfig};}

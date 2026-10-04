@@ -41,8 +41,8 @@ export function activeThemePalette(styles, theme, forced = false) {
       if (!record.property.startsWith('--')) continue;
       const forcedRule = record.context.some(context => context.includes('forced-colors: active'));
       if (forcedRule && !forced) continue;
-      const selected = record.selector.match(/\[data-theme=(?:"([^"]+)"|([^\]]+))\]/);
-      if (selected && (selected[1] ?? selected[2]) !== theme) continue;
+      const selected = [...record.selector.matchAll(/\[data-theme=(?:"([^"]+)"|([^\]]+))\]/g)];
+      if (selected.length && selected.every(match => (match[1] ?? match[2]) !== theme)) continue;
       palette.set(record.property, record.value);
     }
   }
