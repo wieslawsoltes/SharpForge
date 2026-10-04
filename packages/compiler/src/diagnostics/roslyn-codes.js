@@ -850,6 +850,7 @@ export const roslynCodes=Object.freeze({
  CS9215:["ERR_CollectionExpressionMissingAdd","error",0,"Collection expression type '{0}' must have an instance or extension method 'Add' that can be called with a single argument."],
  CS9217:["ERR_RefLocalAcrossAwait","error",0,"A 'ref' local cannot be preserved across 'await' or 'yield' boundary."],
  CS9228:["ERR_ParamsCollectionMissingConstructor","error",0,"Non-array params collection type must have an applicable constructor that can be called with no arguments."],
+ CS9230:["ERR_CannotDynamicInvokeOnExpression","error",0,"Cannot perform a dynamic invocation on an expression with type '{0}'."],
  CS9231:["ERR_InterceptsLocationDataInvalidFormat","error",0,"The data argument to InterceptsLocationAttribute is not in the correct format."],
  CS9232:["ERR_InterceptsLocationUnsupportedVersion","error",0,"Version '{0}' of the interceptors format is not supported. The latest supported version is '1'."],
  CS9238:["ERR_BadYieldInUnsafe","error",0,"Cannot use 'yield return' in an 'unsafe' block"],
