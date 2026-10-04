@@ -5,8 +5,8 @@ Hosted qualification a5, run `37178840757`, at public commit
 `29023ed8b962b6d91671bdb0c0359d905ef2659e`) failed the real 200 MiB File import
 with `Studio import: Document exceeds the source size limit`. Chromium
 153.0.8010.12 launched; this was an actual application failure. The original
-failure remains evidence, and this correction has not yet been executed locally
-or in a browser.
+failure remains evidence. At the initial source handoff this correction had not
+been executed locally or in a browser; the later local observations are recorded below.
 
 The reader and DocumentService had accepted the prepared source. A small sibling
 editor could then request language information for the whole project. Its compiler
@@ -55,7 +55,7 @@ the existing ProjectSystem dependency-closure traversal; allowed compiler snapsh
 remain bounded by 100 sources of at most 2,000,000 units each. No new timing or
 memory claim is made for this correction.
 
-Authored regression scope (not yet run):
+Regression scope:
 
 - `tests/a19-studio-large-source-composition.test.js`: actual 200 MiB Node File/Blob
   slicing through `importStudioFiles` → workspace loader → DocumentService, automatic
@@ -75,3 +75,18 @@ Authored regression scope (not yet run):
 Browser UI, real operating-system File selection, physical I/O, cross-engine latency
 and native-host qualification remain separate. Root owns one serial completed-scope
 validation cohort and the next actual hosted File-input run.
+
+Local completed-scope validation at `cae69484` subsequently observed A19: 790 total,
+787 passed, 3 failed; A20: 722 total, 712 passed, 1 failed, 9 skipped. All 12 newly
+authored source-policy/composition/availability cases passed in those runs. Raw logs
+are retained by the integration owner under `artifacts/results/p16-a5-corrections-local`.
+These totals are separate area runs, not a claim that every case passed.
+
+Two of those failures were older status expectations in
+`a19-studio-composition.test.js` and `a20-studio-streamed-workspace.test.js`, which
+still required the previous 8 MiB automatic-build message. Their corrected assertions
+now require the exact `STUDIO_COMPILER_SOURCE_LIMIT` message, offending URI, actual
+UTF-16 size, unchanged 2,000,000-unit compiler bound and available editing/save/search
+operations, plus the owning project identity. Existing no-worker, prepared-model,
+lazy-source, ingress-bound, edit and undo assertions remain intact. This expectation
+correction has not yet been rerun; the original failed runs remain part of the history.

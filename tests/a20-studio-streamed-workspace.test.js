@@ -33,7 +33,10 @@ test('200 MiB File reaches the actual Studio workspace model through chunked ing
   assert.equal(source.statistics.textMaterialized, false);
   assert.equal(captures, 0);
   assert.equal(canRecoverStudioWorkspace(services.documents), false);
-  assert(calls.statuses.includes('Large file mode — automatic build disabled'));
+  assert(calls.statuses.includes("STUDIO_COMPILER_SOURCE_LIMIT: Source 'Large.cs' has 209715200 UTF-16 units; "
+    + 'the compiler supports at most 2000000 per source. Editing, saving and text search remain available; '
+    + 'project language services and compilation are unavailable.'));
+  assert.equal(context.projectServices.sourceAvailability().projectId, '$workspace');
   assert.equal(fake.workers.flatMap(worker => worker.requests).length, 0);
   assert.deepEqual(calls.errors, []);
   prepared.model.applyEdits([{ start: 209_715_199, end: 209_715_200, text: 'y' }]);
