@@ -200,3 +200,48 @@ named-argument evaluation, arrays, boxing, integral widening and rejected
 signatures. Math overloads, additional Decimal library APIs and generic numeric
 interfaces are not admitted by this registration. Tests and platform/performance
 qualification remain pending in the serial queue; #1350/#1351 remain open.
+
+## Static integral conversions
+
+Eight one-argument methods append after Abs. Each uses the exact existing
+System.Decimal intrinsic signature, including its result width and parameter name:
+
+| Method | Parameter | Result |
+|---|---|---|
+| ToSByte | `decimal value` | `sbyte` |
+| ToByte | `decimal value` | `byte` |
+| ToInt16 | `decimal value` | `short` |
+| ToUInt16 | `decimal value` | `ushort` |
+| ToInt32 | `decimal d` | `int` |
+| ToUInt32 | `decimal d` | `uint` |
+| ToInt64 | `decimal d` | `long` |
+| ToUInt64 | `decimal d` | `ulong` |
+
+The existing intrinsic truncates toward zero, then checks the destination bounds.
+For example, ToByte accepts -0.9 as zero and 255.9 as 255, while -1 and 256 throw
+OverflowException. This rule applies inside both `checked` and `unchecked`.
+It follows the pinned .NET 10.0.5
+[Decimal conversion implementations](https://github.com/dotnet/runtime/blob/v10.0.5/src/libraries/System.Private.CoreLib/src/System/Decimal.cs#L645-L804).
+No conversion or overflow policy is changed by the source registrations.
+
+```csharp
+using System;
+byte count = decimal.ToByte(value: 255.9m);
+ulong largest = decimal.ToUInt64(d: 18446744073709551615.9m);
+Console.WriteLine(count);   // 255
+Console.WriteLine(largest); // 18446744073709551615
+```
+
+Source typing, ordinary CLI calls, reload, storage, boxing and text formatting
+reuse their existing declared-width contracts. Internal UInt32/UInt64 values
+keep the shared signed CLI bit-pattern carriers; their declared types govern
+widening and display. Each wire name is `decimal.ToName#1`, with append-only IDs
+and exact return-type validation. No new implicit operand or result conversions
+are admitted. ToSingle, ToDouble, GetBits and other unregistered Decimal members
+remain separate work.
+
+`tests/a05-source-decimal-integral-conversions.test.js` authors three-engine
+coverage for every signed/unsigned width, fractional boundary truncation,
+negative zero, both overflow boundaries and checked contexts, named evaluation,
+arrays, exact boxed types, unsigned formatting and Decimal widening. Validation
+and native/platform/performance evidence remain staged; #1350/#1351 stay open.
