@@ -3,7 +3,7 @@ import {numericTypeName} from '@sharpforge/bytecode';
 import {admitStackPush} from './frame-stack.js';
 import {StackCategory} from './numeric-stack-types.js';
 import {floatSlots, SmallLongSlotTag} from './typed-stack.js';
-import {smallLongNumber, smallLongOperation, compareSmallLong} from './int64-fast.js';
+import {smallLongNumber, smallLongOperation, smallLongConversion, compareSmallLong} from './int64-fast.js';
 
 const comparisons = Object.freeze({
   eq: order => order === 0, ne: order => order !== 0,
@@ -80,11 +80,29 @@ function binaryHandler(name, generic) {
   });
 }
 
-/** Tagged safe Numbers are private Int64 slots; original handlers receive BigInt on every fallback. */
+function conversionHandler(name, generic) {
+  const convert = smallLongConversion(name);
+  if (!convert) return null;
+  return guarded(generic, 0, 0, (vm, frame, instruction, slots) => {
+    const index = frame.stack.length - 1;
+    const value = slots.values[index];
+    // An Int32 fact cannot authorize edited float/native/Int64 tags or noncanonical Numbers.
+    if (slots.tags[index] !== 0 || !Number.isInteger(value) || value < -2147483648 || value > 2147483647) {
+      return generic(vm, frame, instruction);
+    }
+    const result = convert(value);
+    if (result === undefined) return generic(vm, frame, instruction);
+    vm.pop();
+    pushLong(vm, slots, result);
+  });
+}
+
+/** Tagged safe Numbers are private Int64 slots; fallback preserves each original CLI operand category. */
 export function smallLongHandler(method, instruction, state, generic) {
   if (!state) return null;
   const name = instruction.name;
   let handler = slotHandler(method, instruction, state, generic);
+  if (!handler && state.at(-1) === StackCategory.i4) handler = conversionHandler(name, generic);
   if (!handler && name === 'ldc.i8') handler = guarded(generic, 0, 1, (vm, frame, current, slots) => {
     const value = smallLongNumber(current.operand);
     if (value === undefined) return generic(vm, frame, current);
