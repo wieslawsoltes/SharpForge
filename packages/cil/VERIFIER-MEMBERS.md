@@ -76,3 +76,6 @@ changes are retained in `tests/fixtures/a03-verifier-members/performance.json`.
 Heap deltas are not allocation counts or peak memory. This is a new opt-in API;
 there is no previous implementation or speedup comparison. The existing lighter
 hierarchy factory and query paths are unchanged.
+
+The same context also exposes the [local type-access query](VERIFIER-TYPE-ACCESS.md),
+reusing nested visibility and enclosing-caller privileges without a member or receiver.
