@@ -10,6 +10,10 @@ Application-owned retained drawing services for SharpForge. The package register
 
 `DrawingContext` records shape, image, text and layer commands in DIP coordinates. `DisplayList` seals immutable snapshots, validates its versioned wire envelope, replays through an injected adapter and diffs retained element versions. Opaque platform objects require resource handles before serialization.
 
+## Pinned Unicode segmentation
+
+Unicode17 property tables drive bounded extended-grapheme segmentation and script lookup. The checked-in license and provenance identify the source inputs and transformation. Segmentation keeps surrogate pairs, combining sequences, Indic conjuncts and emoji ZWJ sequences intact.
+
 ## Validation
 
 Focused cases were authored and included in the completed A17 scope gate. The publication manifest records its exact prior evidence and any subsequent repair. Required core is pending on this exact branch tree. Browser pixels, native WinUI comparisons and physical GPU qualification are separate gates.

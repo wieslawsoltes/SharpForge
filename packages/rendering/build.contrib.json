@@ -7,6 +7,11 @@
       "source": "packages/rendering/src",
       "target": "packages/rendering/src",
       "order": 1700
+    },
+    {
+      "source": "packages/rendering/vendor",
+      "target": "packages/rendering/vendor",
+      "order": 1701
     }
   ]
 }
