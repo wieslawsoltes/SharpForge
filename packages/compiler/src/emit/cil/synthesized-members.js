@@ -15,6 +15,7 @@ import { sourceTypesInMetadataOrder } from '../../codegen/metadata/symbol-metada
 import { MethodEmitter } from './method-emitter.js';
 import { planClosures } from './closure-plan.js';
 import { completeFieldLikeEvent } from './synthesized-events.js';
+import { planPrimaryCaptures } from './primary-constructor-captures.js';
 
 const ENTRY_FLAGS = MethodAttributes.Private | MethodAttributes.Static | MethodAttributes.HideBySig;
 const TYPE_INITIALIZER_FLAGS = ENTRY_FLAGS | MethodAttributes.SpecialName | MethodAttributes.RTSpecialName;
@@ -42,6 +43,7 @@ export class SynthesizedMembers {
       declared = sourceTypesInMetadataOrder(analysis.assembly);
     this.topLevel = topLevel ? { file: topLevel[0], body: topLevel[1], type: programType } : null;
     this.closures = planClosures(analysis, this.topLevel);
+    this.primaryCaptures = planPrimaryCaptures(analysis);
     /** Types to append after the source types. */
     this.types = [...(programType && !declared.includes(programType) ? [programType] : []), ...this.closures.types];
     /** The planned entry of the synthesized entry point, once `extend` has seen its type. */
@@ -56,6 +58,7 @@ export class SynthesizedMembers {
     const declaresTypeInitializer = plan.methods.some(method => method.name === '.cctor');
     if (!declaresTypeInitializer && this.hasStaticInitializers(type)) plan.methods.push(this.typeInitializer(type));
     for (const event of plan.events) completeFieldLikeEvent(type, event, plan);
+    plan.fields.push(...(this.primaryCaptures.byType.get(type) ?? []));
     const closureMembers = this.closures.additions.get(type);
     if (closureMembers) {
       plan.fields.push(...closureMembers.fields);

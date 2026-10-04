@@ -64,7 +64,7 @@ export const ArrayEmission = Base =>
         end = il.newLabel();
       this.expression(node.collection);
       il.emit('stloc', array).emit('ldc.i4', 0).emit('stloc', index).emit('br', test);
-      il.mark(body);
+      il.mark(body, 0);
       il.emit('ldloc', array).emit('ldloc', index);
       this.loadElement(arrayType.elementType);
       this.iterationValue(node, arrayType.elementType);

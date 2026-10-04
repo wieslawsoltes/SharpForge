@@ -17,6 +17,7 @@ import { ObjectEmission } from './emit-objects.js';
 import { ArrayEmission } from './emit-arrays.js';
 import { StringEmission } from './emit-strings.js';
 import { ExceptionEmission } from './emit-exceptions.js';
+import { LockEmission } from './emit-lock.js';
 import { AccessorEmission } from './emit-accessors.js';
 import { JumpEmission } from './emit-jumps.js';
 import { NullableEmission } from './emit-nullable.js';
@@ -24,6 +25,9 @@ import { InitializerEmission } from './emit-initializers.js';
 import { TypeOperatorEmission } from './emit-type-operators.js';
 import { ClosureEmission } from './emit-closures.js';
 import { DelegateEmission } from './emit-delegates.js';
+import { ReferenceEmission } from './emit-references.js';
+import { IndexRangeEmission } from './emit-index-range.js';
+import { PrimaryCaptureEmission } from './primary-constructor-captures.js';
 
 const families = [
   ConstantEmission,
@@ -40,6 +44,7 @@ const families = [
   ArrayEmission,
   StringEmission,
   ExceptionEmission,
+  LockEmission,
   AccessorEmission,
   JumpEmission,
   NullableEmission,
@@ -47,6 +52,9 @@ const families = [
   TypeOperatorEmission,
   ClosureEmission,
   DelegateEmission,
+  ReferenceEmission,
+  IndexRangeEmission,
+  PrimaryCaptureEmission,
 ];
 
 export class MethodEmitter extends families.reduce((composed, family) => family(composed), EmitterCore) {}

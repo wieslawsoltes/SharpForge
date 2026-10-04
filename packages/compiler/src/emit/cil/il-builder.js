@@ -41,39 +41,50 @@ export class IlBuilder {
     this.locals = [];
     this.regions = [];
     this.labelCount = 0;
-    /** Current stack depth, or null after an instruction that does not fall through. */
+    /** Current stack depth, or null after an instruction that does not fall through: what follows cannot run. */
     this.depth = 0;
     this.maxDepth = 0;
-    /** True between an instruction that does not fall through and the next label: that code cannot run. */
-    this.isDead = false;
   }
   /** A branch target that `mark` places later (or earlier, for a loop). */
   newLabel() {
     return { id: this.labelCount++, depth: undefined, marked: false };
   }
   /**
-   * Places a label before the next instruction.
-   * @param {number} [entryDepth] the stack depth on entry when control only arrives from outside the instruction
-   *   stream (1 at a catch handler, 0 at a finally handler)
+   * Places a label before the next instruction. After an instruction that does not fall through, the code at a label
+   * is reachable only when a branch has targeted it or `entryDepth` is given; otherwise it stays unreachable.
+   * @param {number} [entryDepth] the stack depth on entry when control arrives in a way the stream does not show: 1
+   *   at a catch handler, 0 at a finally handler, at a loop body entered from its test and at a source label
    */
   mark(label, entryDepth) {
     if (label.marked) throw new IlBuilderError('IL label marked twice');
     label.marked = true;
     if (entryDepth !== undefined) label.depth = entryDepth;
-    if (this.depth === null || this.isDead) this.depth = label.depth ?? 0;
+    if (this.depth === null) this.depth = label.depth ?? null;
     else if (label.depth === undefined) label.depth = this.depth;
     else if (label.depth !== this.depth) throw new IlBuilderError(`Stack depth ${this.depth} meets ${label.depth} at a label`);
-    this.isDead = false;
-    this.maxDepth = Math.max(this.maxDepth, this.depth);
+    if (this.depth !== null) this.maxDepth = Math.max(this.maxDepth, this.depth);
     this.instructions.push({ label });
     return this;
   }
-  /** True when the next instruction can be reached by falling through. */
-  get isReachable() {
-    return this.depth !== null && !this.isDead;
+  /** The position of the next instruction in the stream, for `insert`. */
+  get position() {
+    return this.instructions.length;
   }
   /**
-   * Adds an instruction.
+   * Inserts stack-neutral instructions at an earlier position (the reset of a flag that code emitted afterwards
+   * turned out to need). @param {{name: string, operand?: any}[]} instructions each pushes at most one value
+   */
+  insert(position, instructions) {
+    this.instructions.splice(position, 0, ...instructions);
+    this.maxDepth += 1;
+  }
+  /** True when the next instruction can be reached by falling through. */
+  get isReachable() {
+    return this.depth !== null;
+  }
+  /**
+   * Adds an instruction. Unreachable code is not emitted: an instruction after one that does not fall through is
+   * dropped until a reachable label is marked (the stream must end in a transfer, and .NET rejects a body that does not).
    * @param {string} name the opcode name  @param [operand] a number, a label, a list of labels (switch) or a bigint
    * @param {{pops: number, pushes: number}} [effect] required for `call`, `callvirt`, `newobj`, `calli` and `ret`
    */
@@ -82,18 +93,11 @@ export class IlBuilder {
     if (!opcode) throw new IlBuilderError(`Unknown CIL opcode '${name}'`);
     const { pops, pushes } = effect ?? fixedEffects.get(name) ?? {};
     if (pops === undefined) throw new IlBuilderError(`'${name}' needs its stack effect`);
-    // Code after an unconditional transfer is unreachable until a label is marked. It is still encoded, but its stack
-    // is not tracked: the value an abandoned expression would have produced is simply assumed.
-    if (this.depth === null) {
-      this.depth = 0;
-      this.isDead = true;
-    }
-    if (this.isDead) this.depth = Math.max(this.depth, pops);
+    if (this.depth === null) return this;
     if (this.depth < pops) throw new IlBuilderError(`'${name}' pops ${pops} from a stack of ${this.depth}`);
     this.depth = this.depth - pops + pushes;
-    this.instructions.push({ name, operand });
-    if (this.isDead) return this;
     this.maxDepth = Math.max(this.maxDepth, this.depth);
+    this.instructions.push({ name, operand });
     if (leavesStackEmpty.has(name)) this.depth = 0;
     for (const target of branchTargets(opcode, operand)) this.reach(target, name);
     if (endsFlow.has(opcode.flowControl)) this.depth = null;
@@ -139,7 +143,8 @@ export class IlBuilder {
         if (offset === undefined) throw new IlBuilderError('A protected region ends at an unmarked label');
         return offset;
       };
-    const handlers = this.regions.map(region => ({
+    // A region whose protected code was unreachable has no extent; it protects nothing.
+    const handlers = this.regions.filter(region => offsetOf(region.tryStart) !== offsetOf(region.tryEnd)).map(region => ({
       flags: EXCEPTION_FLAGS[region.kind],
       start: offsetOf(region.tryStart),
       end: offsetOf(region.tryEnd),

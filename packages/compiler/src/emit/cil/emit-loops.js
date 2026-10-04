@@ -48,7 +48,7 @@ export const LoopEmission = Base =>
         length = { isStatic: false, returnType: this.core.int, parameters: [] };
       this.expression(node.collection);
       il.emit('stloc', text).emit('ldc.i4', 0).emit('stloc', index).emit('br', test);
-      il.mark(body);
+      il.mark(body, 0);
       il.emit('ldloc', text).emit('ldloc', index);
       il.emit('callvirt', this.tokens.external(string, 'get_Chars', chars), { pops: 2, pushes: 1 });
       this.iterationValue(node, this.core.char);
@@ -89,7 +89,7 @@ export const LoopEmission = Base =>
           body = il.newLabel(),
           end = il.newLabel();
         il.emit('br', test);
-        il.mark(body);
+        il.mark(body, 0);
         pushEnumerator();
         this.callMethod(current.getMethod, { receiver });
         this.iterationValue(node, current.type);

@@ -1,4 +1,5 @@
 import {SizeOfProfile} from './sizeof-profile.js';
+import {ExecutionPrefixProfile} from './execution-prefix-profile.js';
 import {recordVerifiedStacks, verifiedStackEntry} from './verified-stack.js';
 import {verifyExecutionToken} from './token-profile.js';
 import {resolveExecutionField} from './field-profile.js';
@@ -26,7 +27,7 @@ export function selectMethod(inspector,selection,args){
  * This is a constrained runtime verifier, NOT an implementation of the CLR verifier/type system. */
 export function verifyCilAssembly(input,{methodToken,arguments:args=[],maxMethods=10000,...options}={}){
   const inspector=input instanceof AssemblyInspector?input:new AssemblyInspector(input,options),issues=[],visited=new Set(),pending=[],stackHeights={},entry=selectMethod(inspector,methodToken,args);
-  const dispatch=new CilDispatchTable(inspector),verifiedStacks=new Map(),sizes=new SizeOfProfile(inspector);
+  const dispatch=new CilDispatchTable(inspector),verifiedStacks=new Map(),sizes=new SizeOfProfile(inspector),prefixes=new ExecutionPrefixProfile(inspector);
   const issue=(m,i,code,message)=>{if(issues.length<200)issues.push({methodToken:m?.token,method:m?m.owner+'::'+m.name:undefined,offset:i?.offset,code,message});};
   if(!(inspector.pe.flags&1)||inspector.pe.flags&0x10)issue(null,null,'IL_IMAGE','Only IL-only managed images are executable');pending.push(entry);
   // Static initializers can be reached by allocation, field access or method invocation.
@@ -45,21 +46,12 @@ export function verifyCilAssembly(input,{methodToken,arguments:args=[],maxMethod
       for(const type of m.signature.parameters.concat(m.locals,m.signature.returnType))verifyGenericType(inspector,type,context);
     } catch(error) {issue(m,null,'IL_SIGNATURE',error.message);continue;}
     const map=new Map(m.instructions.map((i,index)=>[i.offset,index]));
-    const prefixTails=new Set(m.instructions.filter((instruction,index)=>index>0&&m.instructions[index-1].name==='volatile.').map(instruction=>instruction.offset));
-    for(const instruction of m.instructions) {
-      const targets=instruction.name==='switch'?instruction.operand:instruction.operandKind.startsWith('br')?[instruction.operand]:[];
-      if(targets.some(target=>prefixTails.has(target)))issue(m,instruction,'IL_PREFIX','Control flow cannot enter a prefixed instruction after its prefix');
-    }
-    for(const handler of m.handlers)if([handler.start,handler.end,handler.target,handler.handlerEnd].some(offset=>prefixTails.has(offset)))issue(m,null,'IL_PREFIX','An exception region cannot split an instruction prefix');
+    prefixes.verify(m,context,issue);
     for(const h of m.handlers)if(h.flags===1)issue(m,null,'IL_FILTER','Exception filters are inspection-only');
     for(const i of m.instructions){
       if(!isExecutableOpcode(i.name)){issue(m,i,'IL_OPCODE',`Opcode '${i.name}' is inspection-only`);continue;}
       if(i.name==='sizeof')sizes.verify(m,i,context,issue);
       if(['cpobj','unbox'].includes(i.name))verifyPrimitiveStorageOperand(inspector,m,i,issue);
-      if(i.name==='volatile.') {
-        const next=m.instructions[m.instructions.indexOf(i)+1];
-        if(!next||!['ldfld','stfld','ldsfld','stsfld','ldobj','stobj'].includes(next.name)&&!next.name.startsWith('ldind.')&&!next.name.startsWith('stind.'))issue(m,i,'IL_PREFIX','volatile. must precede a supported memory instruction');
-      }
       if(['newarr','ldelema','ldelem','stelem','box','unbox.any','ldobj','stobj','initobj','castclass','isinst'].includes(i.name)){try{verifyGenericType(inspector,inspector.metadata.typeName(i.operand),context);}catch(error){issue(m,i,'IL_TYPE',error.message);}}
       if(i.name==='ldtoken'){try{verifyExecutionToken(inspector,i.operand,context);}catch(error){issue(m,i,'IL_TOKEN',error.message);}}
       if(indexedInstructions.test(i.name)){

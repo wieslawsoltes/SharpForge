@@ -135,8 +135,11 @@ export class ClosurePlan {
       symbol = isLambda ? null : key,
       ordinal = this.nextOrdinal(owner),
       variables = [...captures.variables],
-      parameters = (isLambda ? key.parameters : symbol.parameters) ?? [],
-      returnType = isLambda ? key.boundAs?.delegateInvokeMethod?.returnType : symbol.returnType;
+      invoke = isLambda ? key.boundAs?.delegateInvokeMethod : null,
+      // `delegate { ... }` without a parameter list fits any signature: the method takes the delegate's parameters.
+      takesDelegateParameters = isLambda && key.isAnonymousMethod && !key.parameterSyntax && !!invoke,
+      parameters = (takesDelegateParameters ? invoke.parameters : isLambda ? key.parameters : symbol.parameters) ?? [],
+      returnType = isLambda ? invoke?.returnType : symbol.returnType;
     if (symbol?.typeParameters?.length) throw new UnsupportedInCil('generic local functions', symbol.locations?.[0] ?? null, uri);
     let closure = null;
     if (variables.length) {

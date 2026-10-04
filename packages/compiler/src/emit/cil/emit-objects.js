@@ -52,6 +52,12 @@ export const ObjectEmission = Base =>
       return this.implicitBaseCall(type, constructor);
     }
     chainedConstructorCall(call) {
+      const target = call.method.containingType;
+      if (call.method.isImplicitlyDeclared && !isReference(target)) {
+        // `: this()` of a struct without a declared parameterless constructor zero-initializes the value.
+        this.il.emit('ldarg', 0).emit('initobj', this.tokens.type(target));
+        return;
+      }
       this.il.emit('ldarg', 0);
       this.arguments(call, call.method);
       this.il.emit('call', this.tokens.method(call.method), { pops: call.method.parameters.length + 1, pushes: 0 });

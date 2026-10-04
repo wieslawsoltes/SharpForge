@@ -59,8 +59,9 @@ export const PatternEmission = Base =>
     exprIsPattern(node) {
       const il = this.il,
         fail = il.newLabel(),
-        end = il.newLabel();
-      this.patternMatch(node.pattern, this.spillValue(node.operand), fail);
+        end = il.newLabel(),
+        input = this.spillValue(node.operand);
+      this.withSharedReads(() => this.patternMatch(node.pattern, input, fail));
       il.emit('ldc.i4', 1).emit('br', end);
       il.mark(fail);
       il.emit('ldc.i4', 0);
@@ -70,9 +71,9 @@ export const PatternEmission = Base =>
     branchOnPattern(node, target, sense) {
       const il = this.il,
         input = this.spillValue(node.operand);
-      if (!sense) return this.patternMatch(node.pattern, input, target);
+      if (!sense) return this.withSharedReads(() => this.patternMatch(node.pattern, input, target));
       const fail = il.newLabel();
-      this.patternMatch(node.pattern, input, fail);
+      this.withSharedReads(() => this.patternMatch(node.pattern, input, fail));
       il.emit('br', target);
       il.mark(fail);
       return undefined;
@@ -136,20 +137,19 @@ export const PatternEmission = Base =>
       const il = this.il,
         type = pattern.testedType ?? pattern.inputType ?? input.type;
       let narrowed = input;
-      if (pattern.testedType && !pattern.testedType.equals(input.type)) {
-        narrowed = { slot: this.temp(type), type };
-        this.typeTest(type, input, fail, () => il.emit('stloc', narrowed.slot));
-      } else this.matchNotNull(input, fail);
+      if (pattern.testedType && !pattern.testedType.equals(input.type)) narrowed = this.narrowedInput(input, type, fail);
+      else this.matchNotNull(input, fail);
       const pushValue = () => il.emit(isReference(narrowed.type) ? 'ldloc' : 'ldloca', narrowed.slot);
       for (const property of pattern.properties ?? []) {
-        if (!property.member) return this.unsupported('this property pattern', property.syntax);
-        const part = { slot: this.temp(property.member.type), type: property.member.type };
-        pushValue();
-        this.readMember(property.member, narrowed.type);
-        il.emit('stloc', part.slot);
-        this.patternMatch(property.pattern, part, fail);
+        const member = property.member;
+        if (!member) return this.unsupported('this property pattern', property.syntax);
+        const read = () => {
+          pushValue();
+          this.readMember(member, narrowed.type);
+        };
+        this.patternMatch(property.pattern, { slot: this.readOnce(narrowed.slot, member, member.type, read), type: member.type }, fail);
       }
-      if (pattern.hasPositional) this.positionalParts(pattern, pushValue, narrowed.type, fail);
+      if (pattern.hasPositional) this.positionalParts(pattern, narrowed, pushValue, fail);
       if (pattern.local) {
         il.emit('ldloc', narrowed.slot);
         this.initializeLocal(pattern.local);
@@ -169,18 +169,112 @@ export const PatternEmission = Base =>
       return this.callMethod(member.getMethod, { receiver: { type: receiverType } });
     }
     /** `(p1, p2)` over a type with a `Deconstruct` method: the parts are its `out` arguments. */
-    positionalParts(pattern, pushValue, type, fail) {
+    positionalParts(pattern, narrowed, pushValue, fail) {
       const positional = pattern.positional,
         method = positional?.method;
       if (!positional || positional.kind !== 'method' || !method || positional.isExtension) {
         return this.unsupported('positional patterns over tuples and extension Deconstruct methods', pattern.syntax);
       }
-      const parts = positional.parts.map(part => ({ slot: this.temp(part.type), type: part.type }));
-      pushValue();
-      for (const part of parts) this.il.emit('ldloca', part.slot);
-      this.callMethod(method, { receiver: { type } });
+      const parts = this.deconstructedParts(positional, narrowed, pushValue);
       positional.parts.forEach((part, index) => this.patternMatch(part.pattern, parts[index], fail));
       return undefined;
+    }
+    /**
+     * Emits tests that share what they read: inside `emitTests` a member of a value is read, a value is narrowed to
+     * a type and `Deconstruct` is called at most once per run, however many patterns ask - as C# guarantees for the
+     * arms of one switch. The flags that record what was done are cleared where the tests begin.
+     */
+    withSharedReads(emitTests) {
+      const outer = this.sharedReads,
+        start = this.il.position,
+        shared = { flags: [], entries: new Map() };
+      this.sharedReads = shared;
+      try {
+        emitTests();
+      } finally {
+        this.sharedReads = outer;
+      }
+      const resets = shared.flags.flatMap(slot => [{ name: 'ldc.i4', operand: 0 }, { name: 'stloc', operand: slot }]);
+      if (resets.length) this.il.insert(start, resets);
+    }
+    /** The shared record of `key` for the value in `ownerSlot`, created by `create(flag)` on first use; null outside `withSharedReads`. */
+    sharedEntry(ownerSlot, key, create) {
+      const shared = this.sharedReads;
+      if (!shared) return null;
+      let perOwner = shared.entries.get(ownerSlot);
+      if (!perOwner) shared.entries.set(ownerSlot, (perOwner = new Map()));
+      let entry = perOwner.get(key);
+      if (!entry) {
+        const flag = this.temp(this.core.int);
+        shared.flags.push(flag);
+        entry = create(flag);
+        perOwner.set(key, entry);
+      }
+      return entry;
+    }
+    /** Evaluates `read` into a temporary - once per run when reads are shared - and returns the temporary's slot. */
+    readOnce(ownerSlot, key, type, read) {
+      const il = this.il,
+        entry = this.sharedEntry(ownerSlot, key, flag => ({ flag, value: this.temp(type) }));
+      if (!entry) {
+        const slot = this.temp(type);
+        read();
+        il.emit('stloc', slot);
+        return slot;
+      }
+      const done = il.newLabel();
+      il.emit('ldloc', entry.flag).emit('brtrue', done);
+      read();
+      il.emit('stloc', entry.value).emit('ldc.i4', 1).emit('stloc', entry.flag);
+      il.mark(done);
+      return entry.value;
+    }
+    /** The input narrowed to `type` (`{slot, type}`), or a branch to `fail`; the type test is shared like a read. */
+    narrowedInput(input, type, fail) {
+      const il = this.il,
+        key = this.tokens.type(type),
+        entry = this.sharedEntry(input.slot, key, flag => ({ flag, value: this.temp(type) }));
+      if (!entry) {
+        const slot = this.temp(type);
+        this.typeTest(type, input, fail, () => il.emit('stloc', slot));
+        return { slot, type };
+      }
+      // The flag is 0 before the test, 1 when the value has the type and 2 when it has not.
+      const known = il.newLabel(),
+        mismatch = il.newLabel(),
+        matched = il.newLabel();
+      il.emit('ldloc', entry.flag).emit('brtrue', known);
+      this.typeTest(type, input, mismatch, () => il.emit('stloc', entry.value));
+      il.emit('ldc.i4', 1).emit('stloc', entry.flag).emit('br', matched);
+      il.mark(mismatch);
+      il.emit('ldc.i4', 2).emit('stloc', entry.flag).emit('br', fail);
+      il.mark(known);
+      il.emit('ldloc', entry.flag).emit('ldc.i4', 2).emit('beq', fail);
+      il.mark(matched);
+      return { slot: entry.value, type };
+    }
+    /** The parts `Deconstruct` yields for the narrowed value: `[{slot, type}]`, the call shared like a read. */
+    deconstructedParts(positional, narrowed, pushValue) {
+      const il = this.il,
+        method = positional.method,
+        newParts = () => positional.parts.map(part => ({ slot: this.temp(part.type), type: part.type })),
+        call = parts => {
+          pushValue();
+          for (const part of parts) il.emit('ldloca', part.slot);
+          this.callMethod(method, { receiver: { type: narrowed.type } });
+        },
+        entry = this.sharedEntry(narrowed.slot, method, flag => ({ flag, parts: newParts() }));
+      if (!entry) {
+        const parts = newParts();
+        call(parts);
+        return parts;
+      }
+      const done = il.newLabel();
+      il.emit('ldloc', entry.flag).emit('brtrue', done);
+      call(entry.parts);
+      il.emit('ldc.i4', 1).emit('stloc', entry.flag);
+      il.mark(done);
+      return entry.parts;
     }
     matchConstantPattern(pattern, input, fail) {
       const il = this.il,

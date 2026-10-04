@@ -1,5 +1,5 @@
 const simple = new Set([
-  'volatile.', 'ldtoken', 'ldftn', 'nop', 'break', 'ldnull', 'dup', 'pop', 'ret', 'switch', 'ldstr',
+  'constrained.', 'volatile.', 'ldtoken', 'ldftn', 'nop', 'break', 'ldnull', 'dup', 'pop', 'ret', 'switch', 'ldstr',
   'newobj', 'call', 'callvirt', 'throw', 'rethrow', 'endfinally', 'ldlen', 'newarr', 'ldfld', 'stfld',
   'ldsfld', 'stsfld', 'ldflda', 'ldsflda', 'ldobj', 'stobj', 'initobj', 'ldelema', 'ldelem', 'stelem',
   'box', 'unbox', 'unbox.any', 'cpobj', 'sizeof', 'castclass', 'isinst', 'ckfinite',
@@ -20,7 +20,7 @@ export function isExecutableOpcode(name) {
 /** Return [popped, pushed] slot counts; call signatures are resolved through the inspector. */
 export function stackEffect(inspector, method, instruction) {
   const name = instruction.name;
-  if (name === 'volatile.' || name === 'nop' || name === 'break' || name === 'endfinally' || name === 'rethrow'
+  if (name === 'constrained.' || name === 'volatile.' || name === 'nop' || name === 'break' || name === 'endfinally' || name === 'rethrow'
     || /^br(\.s)?$/.test(name) || /^leave/.test(name)) return [0, 0];
   if (name === 'ldtoken' || name === 'ldftn' || name === 'sizeof' || name === 'ldnull' || name === 'ldstr'
     || numeric.test(name) || /^ld(arg|loc)/.test(name) || name === 'ldsfld' || name === 'ldsflda') return [0, 1];

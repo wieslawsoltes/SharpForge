@@ -30,7 +30,8 @@ ordered `customModifiers` (`required`, `typeToken`), object/string null and type
 class null. Existing character values remain numeric UTF-16 units and 64-bit
 integers remain BigInt. Strings preserve BOMs, embedded NUL and unmatched UTF-16
 surrogates. Enums retain the historical coded `enumType` and additionally expose
-the full `enumTypeToken`; this is a handle, not a resolved enum definition.
+the full `enumTypeToken` and `enumTypeVerified: false`; standalone reading does
+not resolve enum definitions.
 Typed null exposes `type: 'class'`, `typeToken` and `value: null`.
 Malformed Boolean values, fixed-width payloads, trailing data and out-of-range
 handles fail explicitly. Type-dependent general constants (including decimal,
@@ -46,6 +47,20 @@ constant, capped at 1,024. Constant names are capped at 3,072 UTF-8 bytes before
 decoding and 1,024 UTF-16 units afterward. These options also apply through
 `loadSymbols`. Native C# examples and offline reference data are in
 `interop/LocalConstants` and `tests/fixtures/portable-pdb-local-constants`.
+
+For bound local TypeDef enums, `loadSymbols` verifies the metadata-declared
+framework `System.Enum` base and exactly one special `value__` instance field.
+Its scalar signature must match the constant's encoded kind; mismatches,
+unsupported bases and malformed fields fail explicitly. Successful checks set
+`enumTypeVerified: true`; this verifies base identity and underlying scalar type,
+not every ECMA type-definition rule. TypeRef/TypeSpec enums and unbound symbols
+retain decoded scalar values with `enumTypeVerified: false`; external assemblies
+are not loaded. FieldPtr indirection and field custom modifiers are supported.
+Before list expansion, the binder caps selected enums at 1,024 and fields at
+4,096 per enum / 65,536 total. Inspected instance-field signatures are capped at
+4 KiB each / 1 MiB total, with decoder depth 32 / nodes 256; names use the same
+bounded metadata-name reader. Definitions are checked once per load and no PE
+views or signature ASTs escape. This reuses the captured native C# short enum.
 
 For bound symbols, `loadSymbols` recognizes a top-level `System.Decimal` or
 `System.DateTime` TypeDef/TypeRef only when its declared assembly scope matches an invariant-culture
@@ -77,6 +92,19 @@ signature, modifiers and unbound behavior apply. VB Date literals and SRM
 `scripts/validate-pdb-datetime-constants.mjs`; offline tests read that corpus.
 Calendar formatting, time-zone conversion, DateTimeOffset and general type
 resolution are separate capabilities.
+
+Payload-free `VALUETYPE` constants referencing a TypeSpec for `System.Nullable<T>`
+now bind to `type: 'nullable'`, `value: null`, `decoded: true` and
+`defaultValue: true`. The original TypeSpec token and owned raw signature remain
+available. This represents the boxed default (no value), not a fabricated value
+of `T`. The nullable definition uses the same declared framework identity gate.
+Closed arguments supported here are Boolean, Char, signed/unsigned integer widths,
+Single, Double, IntPtr, UIntPtr and identity-checked Decimal/DateTime. Other
+constructed types, generic variables, modified arguments and nonempty nullable
+payloads remain explicitly unresolved. TypeSpec count (1,024), each blob (4 KiB)
+and aggregate bytes (1 MiB) are checked before decoding; each AST has depth 32
+and node 256 limits. ASTs/PE views do not escape the load. The native reference
+uses SRM-built metadata and CLR boxed defaults, not C# nullable const declarations.
 
 Source documents accept `hashAlgorithm` and `language` GUIDs and a `hash`
 Uint8Array. SHA-1, SHA-256, SHA-384 and SHA-512 are computed synchronously when omitted;

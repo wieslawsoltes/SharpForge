@@ -4,7 +4,7 @@ import {ManagedFault} from '../heap.js';
 import {prepareCall} from './calls.js';
 import {getDecodePlan} from './decode-plan.js';
 import {cilHandlers} from './handlers/index.js';
-import {dispatchWasmCall} from './wasm/call-tier-state.js';
+import {dispatchWasmCall, observeWasmBackedge, selectWasmOsr} from './wasm/call-tier-state.js';
 
 const dispatching = new WeakSet();
 export const cilStepActive = vm => dispatching.has(vm);
@@ -15,6 +15,7 @@ export function executeCilStep(vm, dispatcher = null) {
   dispatching.add(vm);
   try {
     const frame = vm.top;
+    const frameId = frame.id;
     beginFrameInstruction(vm, frame);
     if (frame.needsInitialization && !prepareCall(vm, frame)) return;
     const plan = vm.options.decodePlans === false ? null : getDecodePlan(vm, frame.method);
@@ -35,6 +36,8 @@ export function executeCilStep(vm, dispatcher = null) {
       profiler?.instruction(frame);
       if (dispatcher) dispatcher(vm, frame, instruction, index, handler);
       else dispatchWasmCall(vm, frame, instruction, index, handler);
+      const hotBackedge = observeWasmBackedge(vm, frame, instruction, index, frameId);
+      if (!dispatcher && hotBackedge) selectWasmOsr(vm, frame, hotBackedge, frameId);
       succeeded = true;
     } finally {
       flushFramePool(vm);

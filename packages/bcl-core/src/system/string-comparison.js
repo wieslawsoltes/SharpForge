@@ -2,15 +2,25 @@ import {fail} from '../host.js';
 import {compareOrdinal} from './string-comparer.js';
 import {compareOrdinalIgnoreCase, compareOrdinalIgnoreCaseRange, compareOrdinalRange} from './string-compare.js';
 
-/** Validate the enum before operation-specific shortcuts; culture modes remain unsupported. */
-export function validateStringComparison(platform, mode, member) {
+/** Validate the enum independently of operation-specific argument checks and culture support. */
+export function validateStringComparisonMode(platform, mode) {
   if (!Number.isInteger(mode) || mode < 0 || mode > 5) {
     fail(platform, 'ArgumentException', "Invalid string comparison type. (Parameter 'comparisonType')");
   }
+}
+
+/** Reject valid culture modes after the caller has checked its native argument precedence. */
+export function requireOrdinalStringComparison(platform, mode, member) {
   if (mode < 4) {
     fail(platform, 'NotSupportedException',
       `String.${member} supports only StringComparison.Ordinal and OrdinalIgnoreCase; culture modes are not implemented`);
   }
+}
+
+/** Validate the enum before operation-specific shortcuts; culture modes remain unsupported. */
+export function validateStringComparison(platform, mode, member) {
+  validateStringComparisonMode(platform, mode);
+  requireOrdinalStringComparison(platform, mode, member);
 }
 
 /** Compare nullable strings without allocating folded copies; only the result sign is specified. */

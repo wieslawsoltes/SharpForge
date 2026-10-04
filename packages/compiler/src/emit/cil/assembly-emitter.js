@@ -46,6 +46,7 @@ export class AssemblyEmitter {
     /** Every type the assembly defines, for questions that need the whole program (who derives from a class). */
     this.sourceTypes = writer.types;
     this.closures = synthesized.closures;
+    this.primaryCaptures = synthesized.primaryCaptures.byParameter;
     for (const type of writer.types) {
       for (const method of writer.plans.get(type).methods) {
         if (!method.hasBody) continue;

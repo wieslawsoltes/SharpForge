@@ -1,0 +1,5 @@
+<TextBlock xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+           xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+           x:Name="Subject" AutomationProperties.Name="Wrapped sample text"
+           Width="180" TextWrapping="Wrap"
+           Text="SharpForge measures a fixed sentence that wraps across several lines." />

@@ -133,3 +133,7 @@ including open generic definitions. A metadata handle does not instantiate
 that type or allocate its storage. TypeSpec handles retain signature arity and
 declaring-context variable checks; open generic locals, allocations and other
 storage operations remain subject to their existing restrictions.
+
+Opt-in [memory-prefix validation](PREFIX-MEMORY.md) checks volatile/unaligned/no. targets and duplicate prefixes.
+
+Opt-in [type-prefix validation](PREFIX-CONSTRAINED.md) checks constrained/readonly lexical targets and type-token row extents.

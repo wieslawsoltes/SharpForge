@@ -1,9 +1,11 @@
 import {executionCodeState} from '../code-version.js';
 import {prepareWasmMethod, preparedWasmDispatch, disposeWasmMethod} from './manual-runtime.js';
 import {installWasmCallTier, wasmCallTierOwner} from './call-tier-state.js';
+import {wasmBackedgeStatistics} from './backedge-counters.js';
 
 const bounds = Object.freeze({
   callThreshold: [32, 1, 1000000000], maxMethods: [64, 1, 1024], maxConcurrentCompilations: [1, 1, 4],
+  backedgeThreshold: [256, 1, 1000000000], maxBackedgesPerMethod: [64, 1, 1024],
   maxMethodInstructions: [4096, 1, 65536], maxAnalysisSlots: [262144, 1, 16777216],
   maxBytes: [262144, 1, 16777216], maxCompiledBytes: [4194304, 1, 67108864]
 });
@@ -11,8 +13,11 @@ const bounds = Object.freeze({
 function configuration(option) {
   if (option === true) option = {};
   if (!option || typeof option !== 'object' || Array.isArray(option)) throw new TypeError('wasmTiering must be a boolean or options');
-  for (const key of Object.keys(option)) if (!Object.hasOwn(bounds, key)) throw new TypeError('Unknown Wasm tiering option: ' + key);
-  const options = {};
+  for (const key of Object.keys(option)) {
+    if (key !== 'osr' && !Object.hasOwn(bounds, key)) throw new TypeError('Unknown Wasm tiering option: ' + key);
+  }
+  if (option.osr !== undefined && typeof option.osr !== 'boolean') throw new TypeError('Wasm tiering osr must be a boolean');
+  const options = {osr: option.osr ?? false};
   for (const [key, [fallback, min, max]] of Object.entries(bounds)) {
     const value = option[key] ?? fallback;
     if (!Number.isSafeInteger(value) || value < min || value > max) throw new RangeError('Invalid Wasm tiering ' + key);
@@ -117,10 +122,12 @@ export function wasmTieringStatistics(vm) {
     compilationAttempts: owner.attempts, cancellations: owner.cancellations,
     calls: state?.calls ?? 0, overflowCalls: state?.overflowCalls ?? 0,
     selectedCalls: state?.selectedCalls ?? 0, selectedInstructions: state?.selectedInstructions ?? 0,
+    osrTransitions: state?.osrTransitions ?? 0, osrRejectedEntries: state?.osrRejectedEntries ?? 0,
     compiledBytes: state?.compiledBytes ?? 0,
     methods: Object.freeze([...(state?.records.values() ?? [])].map(record => Object.freeze({
       token: record.token, name: record.name, calls: record.calls, status: record.status,
-      bytes: record.bytes, reason: record.reason ? Object.freeze({...record.reason}) : null
+      bytes: record.bytes, reason: record.reason ? Object.freeze({...record.reason}) : null,
+      ...wasmBackedgeStatistics(record)
     })))
   });
 }

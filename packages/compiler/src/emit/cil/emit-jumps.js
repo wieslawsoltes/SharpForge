@@ -17,7 +17,8 @@ export const JumpEmission = Base =>
       return label;
     }
     stmtLabeled(node) {
-      this.il.mark(this.labelOf(node.symbol ?? node.label));
+      // A source label may be reached by a `goto` that comes later in the stream.
+      this.il.mark(this.labelOf(node.symbol ?? node.label), 0);
       this.statement(node.statement ?? node.body);
     }
     stmtGoto(node) {

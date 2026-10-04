@@ -15,7 +15,7 @@ export async function loadCorpus(directory = corpusRoot) {
   const canonicalRoot = await realpath(directory), common = await readFile(path.join(directory, 'Common.cs'));
   if (path.dirname(await realpath(path.join(directory, 'Common.cs'))) !== canonicalRoot) throw new Error('BCL common source escapes corpus');
   const names = (await readdir(directory)).filter(name => name.endsWith('.json')).sort();
-  if (!names.length || names.length > families.length) throw new Error('BCL family catalog is empty or exceeds bound');
+  if (names.length !== families.length) throw new Error('BCL corpus requires all five families and 200 cases');
   const loaded = [], ids = new Set();
   for (const name of names) {
     if (!families.some(family => name === family + '.json')) throw new Error('Unknown BCL family catalog');

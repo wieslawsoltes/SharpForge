@@ -8,8 +8,6 @@
  * calls `Add` on it. The bound targets name the object being initialized as their receiver: the creation node, the
  * enclosing target, or an `ImplicitReceiver` placeholder.
  */
-import { isReference } from './type-facts.js';
-
 const isNestedInitializer = value => value?.kind === 'ObjectInitializer' || value?.kind === 'CollectionInitializer';
 
 /** Class mixin: initializers. */
@@ -60,17 +58,15 @@ export const InitializerEmission = Base =>
       }
       return undefined;
     }
-    /** `Member = { ... }` initializes the object the member already holds; a struct member is initialized in place. */
+    /**
+     * `Member = { ... }` initializes the object the member holds. The member is read again for every nested
+     * initializer (`x.Items.Add(a); x.Items.Add(b);`), which is what C# specifies and what a getter with side
+     * effects observes; a struct member is initialized in place.
+     */
     nestedInitializer(target, value) {
-      const il = this.il,
-        location = this.location(target);
-      let inner;
-      if (isReference(target.type)) {
-        const slot = this.temp(target.type);
-        location.load();
-        il.emit('stloc', slot);
-        inner = { value: () => il.emit('ldloc', slot), address: () => il.emit('ldloca', slot) };
-      } else inner = { value: () => location.load(), address: () => location.address() };
+      const location = this.location(target);
+      location.capture();
+      const inner = { value: () => location.load(), address: () => location.address() };
       // The nested targets name this target as their receiver.
       this.substitutions.set(target, inner);
       try {

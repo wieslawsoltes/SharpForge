@@ -290,43 +290,56 @@ export const NullableEmission = Base =>
       if (isUsed) il.emit('ldloc', result);
       return isUsed ? undefined : false;
     }
-    /** `receiver?.access`: the access runs when the receiver is not null; otherwise the result is null (or nothing). */
+    /**
+     * `a?.b?.c`: each receiver of the chain is evaluated once and tested; when one is null the whole expression is
+     * null (or nothing, as a statement). Only the last access produces the value, wrapped in `T?` when it is a value.
+     */
     exprConditionalAccess(node, isUsed) {
       const il = this.il,
-        receiverType = node.receiver.type,
-        slot = this.temp(receiverType),
         absent = il.newLabel(),
         end = il.newLabel(),
-        saved = this.conditionalReceiver,
-        accessIsVoid = isVoid(node.whenNotNull.type),
-        producesValue = isUsed && !accessIsVoid;
-      this.expression(node.receiver);
-      il.emit('stloc', slot);
-      if (receiverType.isNullableValueType) {
-        this.nullableCall(slot, receiverType, 'get_HasValue');
-        this.conditionalReceiver = () => this.nullableCall(slot, receiverType, 'GetValueOrDefault');
-      } else {
-        if (!isReference(receiverType)) il.emit('ldloc', slot).emit('box', this.tokens.type(receiverType));
-        else il.emit('ldloc', slot);
-        this.conditionalReceiver = () => il.emit('ldloc', slot);
-      }
-      il.emit('brfalse', absent);
+        saved = this.conditionalReceiver;
+      let last = node;
+      while (last.whenNotNull.kind === 'ConditionalAccess') last = last.whenNotNull;
+      const access = last.whenNotNull,
+        producesValue = isUsed && !isVoid(access.type);
       try {
-        if (producesValue) this.expression(node.whenNotNull);
-        else this.effect(node.whenNotNull);
+        for (let link = node; ; link = link.whenNotNull) {
+          this.conditionalLink(link, absent);
+          if (link === last) break;
+        }
+        if (producesValue) this.expression(access);
+        else this.effect(access);
       } finally {
         this.conditionalReceiver = saved;
       }
-      if (producesValue && node.isLifted && !node.whenNotNull.type?.isNullableValueType) this.wrapNullable(node.type);
       if (!producesValue) {
         il.mark(absent);
         return false;
       }
+      if (node.type.isNullableValueType && !access.type?.isNullableValueType) this.wrapNullable(node.type);
       il.emit('br', end);
       il.mark(absent);
       this.defaultValue(node.type);
       il.mark(end);
       return undefined;
+    }
+    /** Evaluates the receiver of one `?.` into a temporary, leaves to `absent` when it is null, and makes it the placeholder's value. */
+    conditionalLink(link, absent) {
+      const il = this.il,
+        type = link.receiver.type,
+        slot = this.temp(type);
+      this.expression(link.receiver);
+      il.emit('stloc', slot);
+      if (type.isNullableValueType) {
+        this.nullableCall(slot, type, 'get_HasValue');
+        this.conditionalReceiver = () => this.nullableCall(slot, type, 'GetValueOrDefault');
+      } else {
+        il.emit('ldloc', slot);
+        if (!isReference(type)) il.emit('box', this.tokens.type(type));
+        this.conditionalReceiver = () => il.emit('ldloc', slot);
+      }
+      il.emit('brfalse', absent);
     }
     exprConditionalReceiver(node) {
       if (!this.conditionalReceiver) return this.unsupported('a null-conditional receiver in this position', node.syntax);

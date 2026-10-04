@@ -37,12 +37,12 @@ function endFilter(instruction, cursor) {
     reject('CILCF0005', instruction.offset);
   }
 }
-function tail(instruction, cursor) {
+export function validateTailPlacement(instruction, cursor) {
   if (cursor.region) reject('CILCF0006', instruction.offset);
 }
 
 const placementChecks = Object.freeze({ rethrow, ret: returnInstruction, jmp: jump, endfinally: endFinally,
-  endfilter: endFilter, 'tail.': tail });
+  endfilter: endFilter, 'tail.': validateTailPlacement });
 
 /** Check EH-sensitive instruction placement, returning an immutable lexical tree; branch/leave edges are separate. */
 export function validateExceptionInstructionPlacement(code, handlers, options = {}) {
