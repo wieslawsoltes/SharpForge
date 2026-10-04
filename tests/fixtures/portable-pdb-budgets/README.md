@@ -20,3 +20,17 @@ the existing inflater's declared-size and output limits.
 
 Performance measurements, affected Node contracts, shared browser smoke and
 required checks are pending. No throughput or allocation improvement claim.
+
+The scheduled combined #4397/#4417 batch uses one candidate install, with own
+symbols links for each revision and reused dependencies only after matching
+their Git tree/manifest hashes. It runs #4397's ten tests on its exact source,
+then one affected suite on #4417. `comparison.mjs.txt` specifies a single fixed
+20-round three-revision schedule for parse/load controls, retaining all 120
+chronological samples and exact revisions/fixture hashes. No native rebuild.
+
+`browser.py <repository> <output-directory>` runs one shared Chromium, Firefox
+and WebKit round, sequentially. Its sibling module reuses the already retained
+scope/import/annotation/slot qualification and adds reference/budget boundaries.
+The runner records each failed engine before rethrowing and closes every browser
+and server. The planned command uses the existing pinned Playwright environment;
+neither this runner nor the prepared Node comparison has been executed yet.
