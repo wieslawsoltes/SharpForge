@@ -3,14 +3,23 @@ import { workspaceManifestRecord, importWorkspaceRecords } from './archive.js';
 
 /** Backpressured workspace export. The returned promise completes only after the sink is closed. */
 export async function exportWorkspaceZipTo({ records, folders = [], settings = {} }, sink, options = {}) {
-  const manifest = workspaceManifestRecord(settings, records);
-  const entries = records.map(record => ({
-    path: record.path ?? record.uri, mode: record.mode, mtime: record.mtime,
-    stream: record.stream ? () => typeof record.stream === 'function' ? record.stream() : record.stream :
-      record.source ? () => record.source : async function* () { yield encodeWorkspaceFile(record); }
-  }));
-  entries.push(manifest, ...folders.map(path => ({ path, directory: true })));
-  return writeZipTo(entries, sink, options);
+  const writer = sink?.getWriter ? sink.getWriter() : sink;
+  let entries;
+  try {
+    const manifest = workspaceManifestRecord(settings, records);
+    entries = records.map(record => ({
+      path: record.path ?? record.uri, mode: record.mode, mtime: record.mtime,
+      stream: record.stream ? () => typeof record.stream === 'function' ? record.stream() : record.stream :
+        record.source ? () => record.source : async function* () { yield encodeWorkspaceFile(record); }
+    }));
+    entries.push(manifest, ...folders.map(path => ({ path, directory: true })));
+  } catch (error) {
+    try { await writer?.abort?.(error); } catch (abortError) { error.abortError = abortError; }
+    finally { writer?.releaseLock?.(); }
+    throw error;
+  }
+  // The ZIP layer takes this writer directly; it owns close/abort/release after the handoff.
+  return writeZipTo(entries, writer, options);
 }
 
 /** Read payloads one file at a time. The workspace records remain bounded by maxTotalBytes. */
