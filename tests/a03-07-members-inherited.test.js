@@ -83,6 +83,12 @@ test('pinned native inherited ResolveMember observations retain fixture and sour
   const capture = JSON.parse(readFileSync(new URL('./fixtures/a03-verifier-members/inherited-native.json', import.meta.url), 'utf8'));
   const { bytes, context, tokens } = fixture();
   const hash = value => createHash('sha256').update(value).digest('hex');
+  const template = readFileSync(new URL('./fixtures/a03-verifier-members/InheritedProgram.cs', import.meta.url), 'utf8');
+  const names = [...Object.keys(inheritedKnownCases), 'inheritedConstructor', 'missing'];
+  const source = template.replace('ASSEMBLY_BASE64', Buffer.from(bytes).toString('base64'))
+    .replace('MEMBER_TOKENS', names.map(name => tokens[name]).join(', '));
+  assert.equal(capture.templateSHA256, hash(template));
+  assert.equal(capture.sourceSHA256, hash(source));
   assert.equal(capture.fixtureSHA256, hash(bytes));
   assert.equal(capture.inputSHA256, hash(readFileSync(new URL('./fixtures/a03-verifier-members/inherited-input.js', import.meta.url))));
   assert.equal(capture.execution.exitCode, 0);
