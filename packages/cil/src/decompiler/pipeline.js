@@ -3,6 +3,8 @@ import { formatAssembly } from '../disassembler.js';
 import { reconstructCSharp } from './csharp.js';
 import { decodedControlFlowGraph } from './cfg.js';
 import { controlFlowCancellation, controlFlowOptions, isControlFlowInterruption } from './cfg-contracts.js';
+import { inventoryOptions } from './inventory-contracts.js';
+import { createMetadataInventory, finishMetadataInventory, inventoryAssemblyName } from './inventory.js';
 
 function inspectorFor(input) {
   return input instanceof AssemblyInspector ? input : new AssemblyInspector(input);
@@ -39,22 +41,25 @@ export function decompileMethod(input, methodToken, options = {}) {
   }
 }
 
-/** Decompile each inspected method while preserving per-method failures and whole-assembly source output. */
+/** Decompile each inspected method, preserving failures and an owned physical-row inventory with explicit source limits. */
 export function decompileAssembly(input, options = {}) {
   const limits = controlFlowOptions(options);
+  const inventoryLimits = inventoryOptions(options.inventory, limits.signal);
   const inspector = inspectorFor(input);
+  const inventory = createMetadataInventory(inspector, inventoryLimits);
   const methods = [];
   for (const method of inspector.methods.values()) {
     controlFlowCancellation(limits.signal);
     try {
-      methods.push(decompileMethod(inspector, method.token, limits));
+      methods.push(decompileMethod(inspector, method.token, options));
     } catch (error) {
       if (isControlFlowInterruption(error)) throw error;
       methods.push({ ...methodIdentity(method), language: 'cil', complete: false, source: `// ${error.message}`,
         diagnostics: [{ code: 'INVALID_METHOD', message: error.message }], controlFlowGraph: null });
     }
   }
-  return { name: inspector.summary({ includeMethods: false }).name, methods,
+  finishMetadataInventory(inventory, methods, limits.signal);
+  return { name: inventoryAssemblyName(inventory), methods, inventory, sourceComplete: false,
     reconstructed: methods.filter(method => method.complete).length, total: methods.length,
     source: methods.map(method => `// ${method.name}\n${method.source}`).join('\n') };
 }
