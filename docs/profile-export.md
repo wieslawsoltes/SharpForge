@@ -35,12 +35,18 @@ and browser qualification.
 
 | Capability | Source / reload | Direct CIL | Qualification |
 | --- | --- | --- | --- |
-| Instruction-weighted Speedscope JSON | Implemented | Implemented | Authored; serial execution pending |
-| Empty, recursive and capacity-overflow profiles | Supported input shapes | Supported input shapes | Focused tests authored |
+| Instruction-weighted Speedscope JSON | Implemented | Implemented | Focused Node 24.21.0 tests passed |
+| Empty, recursive and capacity-overflow profiles | Supported input shapes | Supported input shapes | Focused tests passed |
 | Duration or `.nettrace` output | Not provided | Not provided | Separate work required |
 
 The schema fixture is an unmodified copy retrieved from the official URL on
 2026-10-04. Tests exercise its required JSON shape as well as method/weight
 semantics, invalid inputs, ownership, and real profiles from all three engines.
-No tests, builds, browser runs or benchmarks were executed while preparing this
-batch. Speedscope application loading and performance measurements remain queued.
+All 28 focused tests passed serially with Node 24.21.0 at `4314866a`:
+
+```sh
+node scripts/limited.js node --test --test-concurrency=1 tests/a05-10-profile-export.test.js
+```
+
+Speedscope application loading, browser qualification and performance measurements
+remain queued for the completed scope.
