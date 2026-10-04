@@ -25,7 +25,7 @@ There are no frame fields, pool changes or snapshot schema additions. Frozen
 Int32 IDs remain unchanged. Typed-float handlers can share the cached category
 facts without sharing either option's dispatch switch.
 
-Focused tests are staged for deterministic full-width arithmetic differentials,
+All 93 focused tests passed at `f629a526`, covering deterministic full-width arithmetic differentials,
 host-edited values, shifts, comparisons, calls, snapshots, pooled frames, instruction
 quotas and coexistence with Int32/float handlers. Direct-CIL tests reuse the unchanged
 22-row [.NET 10.0.5 boundary fixture](../tests/fixtures/a05/int64-arithmetic/native-boundaries.json)
@@ -34,6 +34,6 @@ with its existing provenance; no new native output was generated.
 This is an adjacent T08 width increment, not completion of #1396's Int32
 qualification or #1397's guarded small-long carrier. Source/reloaded-source
 specialization, native-width and Decimal handlers, and changes to BigInt storage
-remain outside this slice. Tests, builds and benchmarks were not run in the
-implementation slot. Allocation, throughput, latency and platform qualification
+remain outside this slice. Required PR checks run after this focused validation. Builds and benchmarks were
+not run in the implementation slot. Allocation, throughput, latency and platform qualification
 remain unmeasured; no speedup is claimed.
