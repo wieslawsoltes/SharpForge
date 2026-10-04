@@ -53,6 +53,10 @@ base host styles before the editor styles and later Studio theme overrides.
 
 External auto-hide toggles may set `data-dock-toggle="panel-id"` to preserve the existing pointerdown/click toggle race fix. Pointer and keyboard resizing preserves focused content and selection; active tabs are revealed horizontally without scrolling document or tool bodies.
 
+Focusing an already visible docked panel preserves its connected DOM through the pending click while still
+notifying layout subscribers and `onActivate`. Selecting a hidden tab, changing panel placement, and opening
+or returning popouts continue to render the changed layout.
+
 Popouts adopt the exact panel element into a real same-origin child and return it on close. Popup blocking is reported as `SFDOCK004`. The opener must remain alive. Native cross-process docking, unrelated browser-tab merging, arbitrary cross-origin transport and persistent OS window geometry are outside the contract.
 
 Studio's higher-level `DocumentTabs`, navigation, shared views and Window menus are documented in [`docs/a19-docking-workbench.md`](../../docs/a19-docking-workbench.md).
