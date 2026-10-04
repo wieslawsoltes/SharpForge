@@ -7,7 +7,7 @@ import {
 } from '../heap.js';
 import {
   SUSPENDED
-} from '../platform.js';
+} from '../suspension.js';
 import {
   boundDelegateCall,
   boundDelegatesEqual

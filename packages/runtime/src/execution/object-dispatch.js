@@ -34,6 +34,11 @@ export function constrainedObjectPlan(vm, table, descriptor) {
   return profileFor(vm).objects.select(table.definitionToken, descriptor);
 }
 
+/** Nullable owns its Object overrides; a present payload can enter the underlying exact slot. */
+export function constrainedNullableObjectPlan(vm, table, descriptor) {
+  return table.flags.nullable && !table.containsGenericParameters && profileFor(vm).objects.declaration(descriptor) ? table : null;
+}
+
 export function constrainedReferenceObjectPlan(vm, table, descriptor) {
   if (table.flags.valueType || table.flags.interface || table.containsGenericParameters) return null;
   const profile = profileFor(vm);

@@ -1,7 +1,7 @@
 import {CilError} from './binary.js';
 import {token} from './metadata.js';
 import {genericTypeParts} from './field-profile.js';
-import {callSignatureKey, instantiateSignature, normalizeCallType} from './call-profile.js';
+import {callSignatureKey, instantiateSignature, normalizeCallType, resolveExecutionMethod} from './call-profile.js';
 
 const stateMachine = 'System.Runtime.CompilerServices.IAsyncStateMachine';
 const enumerable = 'System.Collections.IEnumerable', enumerator = 'System.Collections.IEnumerator';
@@ -33,8 +33,11 @@ function interfaceMembers(dispatch) {
   if (indexed) return indexed;
   indexed = new Map();
   for (let index = 0; index < (dispatch.inspector.metadata.rows[10]?.length ?? 0); index++) {
-    const member = dispatch.inspector.resolveToken(token(10, index + 1));
-    if (member.kind !== 'method' || member.resolvedToken || !frameworkInterfaceDefinition(member)) continue;
+    const raw = dispatch.inspector.resolveToken(token(10, index + 1));
+    if (raw.kind !== 'method' || raw.resolvedToken || !methods.has(genericTypeParts(raw.owner).definition)) continue;
+    // MemberRef signatures use VAR even when their TypeSpec owner is closed.
+    const member = resolveExecutionMethod(dispatch.inspector, raw.token, {}, raw);
+    if (member.resolvedToken || !frameworkInterfaceDefinition(member)) continue;
     const owner = genericTypeParts(member.owner).definition;
     if (!indexed.has(owner)) indexed.set(owner, []);
     indexed.get(owner).push(member);

@@ -65,12 +65,22 @@ jobs:
       - name: Exercise actual Wasm, CSP, debugger, and Speedscope import
         env:
           ENGINE: ${{ matrix.engine }}
-        run: python tests/fixtures/a05-browser/qualify.py --engine "$ENGINE"
+        # Official Speedscope requires WebGL; Firefox headless has no GL driver on this runner.
+        # Playwright's supported headed Linux path uses Xvfb without changing browser security.
+        run: |
+          if [[ "$ENGINE" == firefox ]]; then
+            xvfb-run --auto-servernum python tests/fixtures/a05-browser/qualify.py --engine "$ENGINE" --headed
+          else
+            python tests/fixtures/a05-browser/qualify.py --engine "$ENGINE"
+          fi
       - name: Preserve setup and interruption failures
         if: always()
         env:
           ENGINE: ${{ matrix.engine }}
-        run: python tests/fixtures/a05-browser/qualify.py --engine "$ENGINE" --finalize
+        run: |
+          options=()
+          if [[ "$ENGINE" == firefox ]]; then options+=(--headed); fi
+          python tests/fixtures/a05-browser/qualify.py --engine "$ENGINE" --finalize "${options[@]}"
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
         if: always()
         with:

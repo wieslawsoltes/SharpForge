@@ -45,9 +45,25 @@ enums, strings, tokens, assignability, exceptions, two-await async replay, synch
 memory. First-chance handler failure uses the versioned .NET 8/10 fail-fast contract; unhandled callback failures use a separate
 expected-abnormal-exit mode. These outcomes do not count as successful normal process termination.
 
-The current plan contains 32 independent cases, including the actual managed virtual-delegate and multicast protocol.
-SDK 10 can qualify all 32; SDK 8 has 29 eligible cases and three explicit numeric-policy exclusions. These are plan counts,
-not recorded execution results. Earlier retained reports describing a 31-case plan keep their original revision and counts.
+The current plan contains 34 independent cases, including the actual managed virtual-delegate and multicast protocol,
+the combined Swap/out/ref-indexer/in-struct example, and native-width behavior.
+SDK 10 can qualify all 34; SDK 8 has 31 eligible cases and three explicit numeric-policy exclusions. These are plan counts,
+not recorded execution results. Earlier retained reports describing 31- or 32-case plans keep their original revision and counts.
+
+The byref and native-width cases use `--source-routes`: the native runner compares the same Roslyn DLL in .NET and CIL,
+then compiles the exact native source with SharpForge and compares source, emitted-CIL reload and direct CIL against the
+actual native stdout and exit code. A separate probe executes with the guest runtime configuration and reports
+`IntPtr.Size` and process architecture; every VM route uses that observed ABI. The reports retain each route independently.
+The [byref fixture](../tests/fixtures/a05/byref-calls/README.md) is byte-identical to the existing runnable example;
+its authored expected trace is checked against native execution and is never relabeled a captured result.
+
+The varargs case still executes on every host. `--managed-varargs` classifies an observed native execution failure only when
+the CLR reports exactly `System.InvalidProgramException: Vararg calling convention not supported.` and terminates abnormally.
+Compiler errors, unrelated exceptions/signals, successful-but-different output and VM failures remain failures. The raw native
+exit/signal/stdout/stderr and SDK/architecture provenance are retained. The VM must independently match the authored trace;
+that result is explicitly **not native parity**. Its aggregate status is `unsupported`, making an otherwise passing cell `partial`.
+Hosts that execute the fixture successfully, including the observed Windows SDK 8/10 cells, still require full native comparison.
+This is an observation-driven target policy, with no OS preskip; original failed CI artifacts are unchanged.
 
 The conversion policy and large numeric oracle pin the .NET 10 JIT. Their .NET 8 cells are explicitly `unsupported` and never
 count as passes; a cell with only passes and declared unsupported cases is `partial`, not a full pass. On .NET 10 the native

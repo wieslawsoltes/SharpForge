@@ -14,7 +14,12 @@ the exact `GetValue`/`SetValue` index overloads. Array runtime contracts cover
 
 The memory contracts cover supported `Span<T>` and `ReadOnlySpan<T>` constructors,
 indexing, slicing, length queries, array conversion, and pinnable references;
-`Unsafe.As<TFrom,TTo>(ref TFrom)`; and the byte-array BitConverter overloads.
+`Unsafe.As<TFrom,TTo>(ref TFrom)`; `Unsafe.Unbox<T>(object)`; and the byte-array
+BitConverter overloads. `Unsafe.Unbox<T>` requires a closed non-nullable value type
+with an admitted layout and returns the existing owned mutable box interior.
+It shares ordinary unboxing's exact struct identity, compatible enum-underlying
+types, null/type faults, managed roots and snapshot behavior. It does not create
+an unchecked raw-memory alias or change the box's runtime type.
 ReadOnlySpan's recognized readonly return modifier retains readonly receiver
 semantics. Conversion to writable Span is not inferred from a readonly signature.
 Existing Nullable and scalar BitConverter handlers keep their established carrier

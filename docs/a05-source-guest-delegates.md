@@ -21,11 +21,11 @@ multicast subsequence removal, delegate variables, capturing lambdas, and an unh
 old heap is collected. `tests/a05-source-monitor-queues.test.js` schedules both a stored Action and a direct lambda.
 These new cases require the integration runner qualification; this document records implementation, not a passing run.
 
-Guest event delivery follows the pinned CoreCLR 8/10 policy, including
-[`ExceptionNotificationFilter` and delivery in v10.0.5](https://github.com/dotnet/runtime/blob/v10.0.5/src/coreclr/vm/excep.cpp).
-First-chance callbacks can receive nested notifications. If a fault escapes a first-chance callback, the first-pass
-notification filter fails fast with `ExecutionEngineException` before finally cleanup, outer catches or unhandled
-events run. The VM retains the throwing frames for inspection and reports the managed `0x80131506` process code.
+Guest event delivery has an explicit [first-chance failure compatibility policy](a05-first-chance-native-policy.md).
+First-chance callbacks can receive nested notifications. If a fault escapes a first-chance callback, the notification
+boundary fails fast with `ExecutionEngineException`. The default `before-unwind` policy preserves callback frames;
+the `after-unwind` policy runs callback cleanup before failing, while preserving the original throwing context.
+Outer catches and unhandled events do not resume. The VM reports the managed `0x80131506` process code.
 `UnhandledException` callback failures are isolated instead: callback cleanup runs, later subscribers retain their
 captured order and the original terminating exception remains unchanged. Its null sender is supported by both the
 [v8.0.0 native AppDomain delivery](https://github.com/dotnet/runtime/blob/v8.0.0/src/coreclr/vm/appdomain.cpp) and the
@@ -33,8 +33,10 @@ captured order and the original terminating exception remains unchanged. Its nul
 
 `tests/a05-exception-event-policy.test.js` uses the retained first-chance and unhandled native fixture sources on
 source, reloaded source and CIL, including local and portable replay before and after a failed callback. Native
-qualification must record the actual SDK/runtime version. The development source.dot.net first-chance isolation
-policy differs from these pinned versions; it is not this runtime's compatibility target.
+qualification records the SDK separately from a native runtime probe. An SDK pin does not pin the runtime patch:
+the retained SDK 10 CI traces ran callback cleanup, while SDK 8 traces did not. Expected output is explicitly declared
+for the selected compatibility policy and is never inferred from guest output. Development source.dot.net isolation
+behavior is not the selected failfast contract.
 
 Native commands, run serially through the repository's resource wrapper:
 

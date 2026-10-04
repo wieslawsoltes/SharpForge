@@ -7,6 +7,8 @@ const fixtureCases = [
   ['value-instance-calls', 'a05/value-instance-calls'],
   ['virtual-slots', 'a05/virtual-slots'],
   ['delegates', 'a05/delegates'],
+  ['byref-calls', 'a05/byref-calls', '--source-routes'],
+  ['native-width', 'a05/native-width', '--source-routes'],
   ['default-interfaces', 'a05/default-interfaces'],
   ['generic-calls', 'a05/generic-calls'],
   ['source-generic-values', 'a05/source-generic-values'],
@@ -16,7 +18,7 @@ const fixtureCases = [
   ['tokens', 'a05/tokens'],
   ['statics', 'a05-statics'],
   ['calli', 'a05-calli', '--unsafe'],
-  ['varargs', 'a05-source-varargs'],
+  ['varargs', 'a05-source-varargs', '--managed-varargs'],
   ['control-exceptions', 'a05-control-exceptions'],
   ['runtime-faults', 'a05/runtime-faults'],
   ['decimal', 'a05/decimal'],
@@ -36,8 +38,11 @@ export function nativeQualificationPlan({output, framework}) {
   const cases = fixtureCases.map(([id, fixture, ...flags]) => ({
     id,
     args: [fixtureScript, '--fixture', 'tests/fixtures/' + fixture, ...flags,
+      ...(id === 'first-chance-policy' ? ['--first-chance-policy', framework === 'net10.0' ? 'after-unwind' : 'before-unwind',
+        '--expected', 'tests/fixtures/a05/first-chance-policy/' + (framework === 'net10.0' ? 'expected-after-unwind.txt' : 'expected.txt')] : []),
       '--framework', framework, '--output', evidence(id)],
-    evidence: evidence(id)
+    evidence: evidence(id),
+    ...(id === 'varargs' ? {outcomeReport: join(evidence(id), 'qualification.json')} : {})
   }));
   cases.push({id: 'assignability', evidence: evidence('assignability'), args: [fixtureScript, '--casts',
     '--framework', framework, '--output', evidence('assignability')]});

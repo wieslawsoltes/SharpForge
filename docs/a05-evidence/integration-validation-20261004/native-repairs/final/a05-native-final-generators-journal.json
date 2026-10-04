@@ -1,0 +1,38 @@
+{
+  "revision": "8f6eba479ee93874b092f55ec9ffb825ded950f9",
+  "tree": "e5081c0ab138129057fd13b4b7629c32ae0e39c6",
+  "cwd": "/workspace/scratch/42f7738360b9/a05-integration",
+  "environment": {
+    "SHARPFORGE_MAX_PARALLEL_RUNS": "1",
+    "SHARPFORGE_TEST_CONCURRENCY": "1",
+    "SHARPFORGE_MAX_OLD_SPACE_MB": "512"
+  },
+  "runs": [
+    {
+      "log": "/workspace/scratch/42f7738360b9/a05-native-final-diagnostic-codes-r2.log",
+      "command": [
+        "node",
+        "scripts/limited.js",
+        "node",
+        "packages/compiler/scripts/generate-diagnostic-codes.js",
+        "--check"
+      ],
+      "startedAt": "2026-10-04T18:14:12Z",
+      "exitCode": 0,
+      "finishedAt": "2026-10-04T18:14:13Z"
+    },
+    {
+      "log": "/workspace/scratch/42f7738360b9/a05-native-final-bound-nodes-r2.log",
+      "command": [
+        "node",
+        "scripts/limited.js",
+        "node",
+        "packages/compiler/scripts/generate-bound-nodes.js",
+        "--check"
+      ],
+      "startedAt": "2026-10-04T18:14:13Z",
+      "exitCode": 0,
+      "finishedAt": "2026-10-04T18:14:13Z"
+    }
+  ]
+}

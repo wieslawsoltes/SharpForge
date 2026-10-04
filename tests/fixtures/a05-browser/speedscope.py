@@ -106,6 +106,18 @@ def import_file(page, url, file, expected, directory):
     response = page.goto(url)
     if response is None or response.status != 200:
         raise AssertionError('Official Speedscope UI did not load over HTTP')
+    directory.mkdir(parents=True, exist_ok=True)
+    graphics = page.evaluate("""() => {
+      const gl = document.createElement('canvas').getContext('webgl');
+      if (!gl) return {available: false};
+      const result = {available: true, version: gl.getParameter(gl.VERSION),
+        vendor: gl.getParameter(gl.VENDOR), renderer: gl.getParameter(gl.RENDERER)};
+      gl.getExtension('WEBGL_lose_context')?.loseContext();
+      return result;
+    }""")
+    (directory / 'graphics.json').write_text(json.dumps(graphics, indent=2) + '\n', encoding='utf8')
+    if not graphics['available'] or errors:
+        raise AssertionError('Official Speedscope requires working WebGL: ' + repr({'graphics': graphics, 'pageErrors': errors}))
     page.locator('#file').set_input_files(str(file))
     page.wait_for_function('(name) => document.title === name + " - speedscope"', arg=expected['name'])
     # The official v1.24 application handles this keyboard shortcut; no app state injection.
@@ -121,4 +133,5 @@ def import_file(page, url, file, expected, directory):
     page.screenshot(path=str(directory / 'speedscope.png'), full_page=True)
     if errors or dialogs:
         raise AssertionError('Speedscope import emitted a page error or dialog: ' + repr(observation))
-    return {'passed': True, 'fileSha256': hashlib.sha256(file.read_bytes()).hexdigest(), **assert_table(rows, expected)}
+    return {'passed': True, 'graphics': graphics, 'fileSha256': hashlib.sha256(file.read_bytes()).hexdigest(),
+            **assert_table(rows, expected)}

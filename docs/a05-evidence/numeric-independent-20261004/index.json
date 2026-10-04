@@ -1,0 +1,264 @@
+{
+  "format": "SharpForge.IndependentNumericEvidenceIndex/1",
+  "date": "2026-10-04",
+  "originalLedgerUnchanged": "docs/a05-project7-acceptance-audit.json (54e3bba84 assessment retained)",
+  "notAProjectCompletionClaim": true,
+  "resultsNotSummed": true,
+  "reports": [
+    {
+      "revision": "5379d076a4b3152966a6680435ea694fbf907de3",
+      "tree": "e801b5c281bb90fc89c848d5dbac833b4df2d915",
+      "byref": {
+        "tests": 6,
+        "pass": 6,
+        "fail": 0,
+        "skip": 0
+      },
+      "numeric": {
+        "tests": 11,
+        "pass": 4,
+        "fail": 7,
+        "skip": 0
+      }
+    },
+    {
+      "revision": "139917fe5f1a623c75642abbc1e9bbab0dc536df",
+      "tree": "748bb1224f1a3d6e852646163904408e5c0a16a5",
+      "numeric": {
+        "tests": 11,
+        "pass": 10,
+        "fail": 1,
+        "skip": 0
+      },
+      "full100kThreeRoutes": "passed; retained, not rerun"
+    },
+    {
+      "revision": "b3673745c998dc571a82b56920d8b82549ef4a0e",
+      "tree": "20af49265d17a71cab113824a469243dbed17589",
+      "testedWorkingState": "d3c670cf8 plus exact b367 runtime/test changes, committed after passing tests",
+      "literalConstants": {
+        "tests": 16,
+        "pass": 16,
+        "fail": 0,
+        "skip": 0,
+        "testedState": "Pre-commit literal repair, before a comment-only addition to the focused test; see original r2 log. Later18-test run includes the committed literal repair."
+      },
+      "constantAndFloatBoundaries": {
+        "tests": 18,
+        "pass": 18,
+        "fail": 0,
+        "skip": 0
+      },
+      "selectedNativeMatrix": {
+        "tests": 1,
+        "pass": 1,
+        "fail": 0,
+        "skip": 0,
+        "cases": 2112
+      }
+    }
+  ],
+  "criterionMapping": [
+    {
+      "issue": 1370,
+      "title": "[SF-A05-T03.7] Add GC-during-byref stress tests for nested ref calls",
+      "criteria": [
+        {
+          "index": 0,
+          "text": "No stale-reference fault and no lost write across 1,000 randomized programs; removing byref owner rooting in roots() makes the test fail."
+        }
+      ],
+      "status": "passed_at_5379d076a",
+      "evidence": "a05-independent-replay-5379d076a-20261004/byref-gc-stress-execution.json",
+      "scope": "1000 distinct CIL programs,131341 actual instruction-boundary collections,96 source/reload/compiler-CIL counterparts and owner-removal negative controls. Native/Rust/browser not qualified."
+    },
+    {
+      "issue": 1344,
+      "title": "[SF-A05-T01.1] Implement Int64/UInt64 value helpers with exact wrap, checked and unsigned semantics",
+      "criteria": [
+        {
+          "index": 0,
+          "text": "Randomized differential test of 100k operand pairs against a reference table generated from native .NET (checked into tests/fixtures) matches for every op including MinValue/-1 and shift counts >= 64."
+        }
+      ],
+      "status": "passed_at_139917fe5f",
+      "evidence": "a05-native-numeric-replay-139917fe5f-20261004/completion.json",
+      "scope": "100000 saved native operand pairs across29 signed/unsigned operations pass helper comparison and the same C# program through source,reloaded source,direct CIL. Earlier 10/11 batch failure is retained separately."
+    },
+    {
+      "issue": 1345,
+      "title": "[SF-A05-T01.2] Implement small-integer storage normalization (sbyte, byte, short, ushort, char, bool) for locals, args, fields and elements",
+      "criteria": [
+        {
+          "index": 0,
+          "text": "Tests store out-of-range values through every location kind (local, arg, field, static, array element, byref) and read back the CLR-truncated value in the CIL engine."
+        }
+      ],
+      "status": "passed_at_139917fe5f",
+      "evidence": "a05-native-numeric-replay-139917fe5f-20261004/numeric-differential.log",
+      "scope": "Authored direct CIL small storage matrix spans all6 locations and6 storage types; source small-storage and ref fixture also passes all3 routes."
+    },
+    {
+      "issue": 1349,
+      "title": "[SF-A05-T01.6] Implement float-to-integer conversion table (conv.*, conv.ovf.*, conv.*.un) with .NET 9 saturating behaviour",
+      "criteria": [
+        {
+          "index": 0,
+          "text": "An exhaustive matrix test (15 targets x 5 source kinds x boundary values incl. NaN, +-Inf, 2^31, 2^63, 2^64) matches a .NET-generated fixture."
+        }
+      ],
+      "status": "passed_for_recorded_13_targets_at_b3673745c",
+      "evidence": "a05-native-conversion-repair-b3673745c-20261004/completion.json",
+      "scope": "2112 native cases,5 source kinds,13 ECMA conversion destinations and33 opcode variants pass helper/source/reload/CIL. Original criterion says15 targets while its deliverable enumerates13; discrepancy preserved, no fabricated targets."
+    },
+    {
+      "issue": 1351,
+      "title": "[SF-A05-T01.8] Add long, uint, ulong, short, byte, sbyte, char, float, decimal value modes to the source bytecode VM",
+      "criteria": [
+        {
+          "index": 0,
+          "text": "The same numeric differential fixtures used for the CIL engine pass in the source VM; long x = int.MaxValue; x++ prints 2147483648."
+        }
+      ],
+      "status": "three_route_numeric_oracle_evidence_split_by_revision",
+      "evidence": "a05-native-numeric-replay-139917fe5f-20261004/numeric-differential.log",
+      "scope": "All full-run numeric families passed at139917; conversion matrix later passed atb367. This report does not rerun the dedicated long-increment example or claim one combined clean11/11 execution."
+    },
+    {
+      "issue": 1353,
+      "title": "[SF-A05-T01.10] Build the cross-engine numeric differential harness",
+      "criteria": [
+        {
+          "index": 0,
+          "text": "Harness reports per-engine mismatches with operand values; CI fails on any divergence."
+        }
+      ],
+      "status": "mismatch_and_repair_evidence_recorded",
+      "evidence": "a05-independent-replay-5379d076a-20261004/numeric-differential.log",
+      "scope": "Original failures identify diagnostics and conversion failure names source engine,operand matrix,row. Harness regression6/6 records mismatch self-tests; native source fixtures now consumed verbatim and hash-checked."
+    },
+    {
+      "issue": 1395,
+      "title": "[SF-A05-T08.1] Unbox float representation on the CIL evaluation stack",
+      "criteria": [
+        {
+          "index": 0,
+          "text": "A double-heavy loop allocates zero JS objects per iteration (measured by --trace-gc or allocation counter); float differential tests still pass."
+        }
+      ],
+      "status": "float_differential_clause_supported_allocation_separate",
+      "evidence": "a05-native-numeric-replay-139917fe5f-20261004/numeric-differential.log",
+      "scope": "Native float family passed at139917 and corrected nonfinite conversion matrix passes atb367. Zero-JS-object allocation clause requires independent allocation trace evidence."
+    }
+  ],
+  "remainingScope": [
+    "Fresh SDK/OS/browser/Rust/Wasm qualification remains independent; this LinuxNode replay uses pinned .NET10 macOSARM64 oracle and ABI64.",
+    "No ABI32 oracle qualification claimed.",
+    "Historical execution results stay at measured revisions; final integration path-identity review remains separate.",
+    "Original literal15-target wording is not silently rewritten to13.",
+    "No allocation,performance or whole-project pass follows from these numeric results."
+  ],
+  "resourceNote": "Preflight runtime.heapLimit describes the unwrapped metadata-inspection process. Test commands run under limited.js with SHARPFORGE_MAX_OLD_SPACE_MB=512 and concurrency1; the preflight value is not a measured child-test heap limit.",
+  "files": [
+    {
+      "path": "a05-independent-replay-5379d076a-20261004/preflight.json",
+      "bytes": 12788,
+      "sha256": "a033a110d5cd656552567ee348f00fe8602bf5cfffa3fc1c53e80bfbb7b2cff6"
+    },
+    {
+      "path": "a05-independent-replay-5379d076a-20261004/numeric-differential.log",
+      "bytes": 122377,
+      "sha256": "5d87b7b94f6196289b0d8cdbcfb16bdbf66e5910945c276d18dba53a171b528c"
+    },
+    {
+      "path": "a05-independent-replay-5379d076a-20261004/completion.json",
+      "bytes": 2871,
+      "sha256": "308b9352f996540a60595af1d23e47835be2b650b44b2262bf6183a2f40589e7"
+    },
+    {
+      "path": "a05-independent-replay-5379d076a-20261004/byref-gc-stress-execution.json",
+      "bytes": 1199,
+      "sha256": "ea309bc653eb6910d41897b4ec6d9499b8018b6df5689fb5c6701904fa3e451e"
+    },
+    {
+      "path": "a05-independent-replay-5379d076a-20261004/byref-gc-stress.log",
+      "bytes": 1867,
+      "sha256": "d047414cc9eac3807d987391a638cbcd73a656246a1c4736b27a370da17aff3f"
+    },
+    {
+      "path": "a05-independent-replay-5379d076a-20261004/byref-gc-stress.json",
+      "bytes": 655210,
+      "sha256": "9af3a84af907e926c3d287d5a27323f4d8fd320ad9f8623e8e3bc18fe18c8e9d"
+    },
+    {
+      "path": "a05-independent-replay-5379d076a-20261004/numeric-differential-execution.json",
+      "bytes": 1045,
+      "sha256": "efb947b0c06eab62d995149d34957217678c476f141b76226af4453653aa100d"
+    },
+    {
+      "path": "a05-native-numeric-replay-139917fe5f-20261004/preflight.json",
+      "bytes": 12431,
+      "sha256": "7359ee4982e0aed5a97060d1dbe9a09afadba8308141be535f4f118d1586be30"
+    },
+    {
+      "path": "a05-native-numeric-replay-139917fe5f-20261004/numeric-differential.log",
+      "bytes": 2514,
+      "sha256": "7f6a82a44c882c0aa7715e443b4a700c3901ff43afe4f9982cd01cdfbc84643f"
+    },
+    {
+      "path": "a05-native-numeric-replay-139917fe5f-20261004/completion.json",
+      "bytes": 1523,
+      "sha256": "0ec791894dce8a832790f6f895df44de30532157901da0a43d9c9241f5eb3357"
+    },
+    {
+      "path": "a05-native-numeric-replay-139917fe5f-20261004/numeric-differential-execution.json",
+      "bytes": 1045,
+      "sha256": "56347d4a7015f1aeddb60dd5904ae7ed2d9aa13d2f3f519e99776ee1b8f5527c"
+    },
+    {
+      "path": "a05-native-conversion-repair-b3673745c-20261004/completion.json",
+      "bytes": 14937,
+      "sha256": "836cb27767facaa6457a5b8c3188b5437b779b7b96213f247e54fe26ae6fcd75"
+    },
+    {
+      "path": "a05-native-conversion-repair-b3673745c-20261004/a05-integer-literal-boundary-r2.log",
+      "bytes": 1684,
+      "sha256": "7217556c936a38d624624c9387152be6fc12dfafbb87780203ba74f2a5423b2e"
+    },
+    {
+      "path": "a05-native-conversion-repair-b3673745c-20261004/a05-native-conversion-matrix-r1.log",
+      "bytes": 2634,
+      "sha256": "58e2dab44b892e6eb67f0ca52acb5e6e779dd5e0e7f760d65044e5380c522e6a"
+    },
+    {
+      "path": "a05-native-conversion-repair-b3673745c-20261004/a05-integer-literal-boundary-r1.log",
+      "bytes": 4232,
+      "sha256": "dc6be43c718e8e52af3deb3ed4696bcc473d8e886a11c4991b26551849372e94"
+    },
+    {
+      "path": "a05-native-conversion-repair-b3673745c-20261004/a05-native-conversion-matrix-r2.log",
+      "bytes": 227,
+      "sha256": "10a23a5319926a796ef90dd847fd0ab4f4fa5d068e35ef83b84d73e98b8d291f"
+    },
+    {
+      "path": "a05-native-conversion-repair-b3673745c-20261004/a05-integer-floating-boundaries-r3.log",
+      "bytes": 1896,
+      "sha256": "c27a6795b2298997c377bfe624ffa55c2b251a4d337c53455f507710a7a65831"
+    },
+    {
+      "path": "run-a05-independent-replay-5379d076a.py",
+      "bytes": 4961,
+      "sha256": "885042ec9a38e8c9219a82b7ce47da737ec53168d16d6886b98371a793982a1b"
+    },
+    {
+      "path": "run-a05-native-numeric-replay-139917fe5f.py",
+      "bytes": 4888,
+      "sha256": "f52ae48e8bc87fc488bd64451ec2965463d2c25e5a45fba43b5a370358c67b51"
+    },
+    {
+      "path": "a05-numeric-oracle-source-r1.log",
+      "bytes": 681,
+      "sha256": "c721604148b576e9a9edcd91c180f9d43e3f810228a38ed46cceb657ed03b084"
+    }
+  ]
+}

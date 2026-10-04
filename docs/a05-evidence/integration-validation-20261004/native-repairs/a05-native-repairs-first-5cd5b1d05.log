@@ -1,0 +1,141 @@
+✔ generic signatures normalize aliases without changing opaque metadata identifiers (1.378685ms)
+✔ closed method cache uses canonical handles and shares the original instruction body (31.998419ms)
+✔ generic cache limits and malformed contexts are rejected without changing existing methods (10.160333ms)
+✔ nested generic class fields and constructors retain their closed owner (13.278753ms)
+✔ default(T), initobj, typeof(T), generic arrays and box T use the current frame (12.686544ms)
+✔ generic type context and generic method context are substituted independently (6.3997ms)
+✔ snapshot retains a suspended concrete frame while derived instantiation caches are discarded (20.63711ms)
+✔ generic reference constraints reject a value argument before entering its method body (4.506099ms)
+✔ malformed generic variables and missing MethodSpec are verification diagnostics (2.657433ms)
+✔ A05 T29 two real MoveNext suspensions resume through finally and return a result (70.94382ms)
+✔ A05 T29 paused await snapshots preserve boxed machine, waiter and builder identities (46.646264ms)
+✔ A05 T29 awaiter raises a task fault inside MoveNext and cleanup executes once (38.386321ms)
+✔ A05 T29 cancellation during an await drops all pending continuations (17.505722ms)
+✔ A05 T29 constructor root enumeration precedes scheduler creation (1.18519ms)
+✔ A05 T29 async descriptors validate closed signatures and reachable compiler methods (6.480368ms)
+✔ A05 T29 builder default copies materialize distinct task identities and reject double completion (15.299882ms)
+✔ A05 T29 default and wrong-task awaiters fail deterministically (1.820174ms)
+✔ A05 T29 default YieldAwaiter is valid and always asynchronous (5.197975ms)
+✔ A05 T29 TaskAwaiter.OnCompleted resumes a verified managed delegate (8.221245ms)
+✔ A05 T29 async void faults are posted outside the synchronous caller and snapshotted (5.754983ms)
+✔ A05 T29 malformed async snapshots reject before live execution changes (34.768587ms)
+✔ A05 T29 awaiting snapshots accept the wake-up boundary before GetResult (17.249385ms)
+✔ A05 T29 snapshot validation uses saved roots after the live machine is collected (22.751157ms)
+✔ A05 T29 canceled task history remains restorable after its machine is collected (12.526178ms)
+✔ T29 external iterator interfaces enter verified explicit implementations and dispose once (45.055476ms)
+✔ T29 iterator interface calls retain owning frames across portable replay (27.495845ms)
+✔ T29 external MethodImpl admission rejects wrong signatures, owners and duplicate slots (11.064371ms)
+✔ inherited Exception.GetType MemberRefs preserve exact signature and actual receiver type (41.948714ms)
+✔ T04 exception signature aliases preserve exact constructor and result matching (0.534174ms)
+✔ native fault qualification retains platform-specific exits while requiring identical ordered traces (2.146092ms)
+✔ native fault qualification accepts canonical System names without erasing foreign namespaces (2.160603ms)
+✔ successful exits, unrelated signals, wrong exceptions and changed event order cannot qualify (0.940711ms)
+✔ ordinary success fixtures keep exact zero-exit semantics (0.332418ms)
+✔ first-chance failfast requires the pinned native HRESULT and the VM fatal boundary (0.653119ms)
+✔ native fixture projects opt into unsafe compilation only for explicitly selected fixtures (0.297006ms)
+✔ observed CLR varargs rejection remains unsupported after an independent authored VM trace succeeds (2.530417ms)
+✔ varargs policy cannot hide wrong native exceptions, successful native divergence, signals or VM failures (1.162438ms)
+✔ A05 native plan keeps SDK policy, unsafe compilation and replay evidence explicit (1.980539ms)
+UNSUPPORTED varargs: /tmp/sharpforge-a05-observed-target-FEH3Y5/varargs/result.json
+FAILED varargs: /tmp/sharpforge-a05-observed-target-FEH3Y5/varargs/result.json
+✔ native plan propagates only a completed observed unsupported outcome and never turns it into a pass (23.387817ms)
+FAILED failed: /tmp/sharpforge-a05-plan-gK0EKq/failed/result.json
+BLOCKED dependent: /tmp/sharpforge-a05-plan-gK0EKq/dependent/result.json
+UNSUPPORTED sdk-policy: /tmp/sharpforge-a05-plan-gK0EKq/sdk-policy/result.json
+PASSED last: /tmp/sharpforge-a05-plan-gK0EKq/last/result.json
+✔ A05 native aggregation continues independent failures and never counts unavailable evidence as a pass (24.971583ms)
+BLOCKED fixture: /tmp/sharpforge-a05-missing-sdk-I7aBwG/fixture/result.json
+✔ A05 native missing SDK blocks every case and retains a complete failed report (2.942602ms)
+✔ Roslyn-shaped constrained Nullable Object slots preserve absence and exact underlying box identity (53.521882ms)
+✔ constrained Nullable text retains Boolean Char and unsigned formatting from the native fixture (7.50933ms)
+✔ constrained Nullable overrides mutate the original payload while copied wrappers remain independent (57.658087ms)
+✔ constrained Nullable managed override retains its original interior receiver through snapshot replay (41.153125ms)
+✔ a symbolic Nullable<T> constrained call resolves the executing closed generic method context (9.581022ms)
+✔ constrained Nullable rejects a substituted address with a different declared closed type (3.354327ms)
+✔ Nullable constrained admission does not accept Object overloads or reference type arguments (3.575531ms)
+✔ Roslyn async regression consumes the exact SDK8 native-qualified DLL and source (2.452693ms)
+✔ generic suffix parsing preserves generated CLI identifiers and nested argument lists (2.58031ms)
+✔ generated generic method tables retain exact definitions, closed fields and argument limits (2.986326ms)
+✔ actual Roslyn generic iterator MethodImpl rows resolve specialized external slots (69.946191ms)
+✔ actual Roslyn iterator still rejects a duplicated MethodImpl declaration (2.629001ms)
+✖ actual SDK8 async and iterator output survives both same-machine await snapshots and portable replay (37.09239ms)
+✔ A05 a generic interface first lookup retains identity through recursive primitive materialization (3.194672ms)
+✔ A05 method tables retain canonical primitive, token and generic identities (3.924455ms)
+✔ A05 method tables describe inherited storage and interface implementation slots (1.035962ms)
+✔ A05 source image tables retain type and field identities across namespaces (1.360799ms)
+✔ A05 heap headers survive collection, snapshots and metadata registry replacement (4.428785ms)
+✔ A05 recursive generic reference fields materialize without losing their closed identity (0.5656ms)
+✔ A05 invalid method table definitions fail without retaining broken identities (1.098564ms)
+✔ A05 CIL headers distinguish namespaced virtual method declarations (29.920958ms)
+✔ A05 CIL metadata tables preserve enum backing widths and rebuilt heap headers (1.602714ms)
+✔ A05 CIL GenericParam variance and TypeSpec identities feed the same cast lattice (1.566801ms)
+✔ actual SDK8 value-boxing DLL retains native Unsafe.Unbox behavior (49.661271ms)
+✔ actual SDK8 value-instance-calls DLL retains native Unsafe.Unbox behavior (20.818998ms)
+✔ actual SDK8 enum-unboxing DLL retains native Unsafe.Unbox behavior (21.490074ms)
+✔ Unsafe.Unbox admits the exact SDK8 MethodSpec contract and rejects neighboring signatures (2.086635ms)
+✔ a real MethodSpec returns a mutable struct box interior without changing original and copied values (36.937833ms)
+✔ Unsafe.Unbox retains enum-underlying compatibility while preserving box identity (11.896453ms)
+✔ Unsafe.Unbox faults for null, an inexact struct, wrong primitive width and invalid generic constraints (19.901982ms)
+✖ Unsafe.Unbox interiors alone retain owned boxes across GC and snapshot replay then expire after retirement (7.570324ms)
+ℹ tests 72
+ℹ suites 0
+ℹ pass 70
+ℹ fail 2
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 8199.239774
+
+✖ failing tests:
+
+test at tests/a05-roslyn-async-admission.test.js:77:1
+✖ actual SDK8 async and iterator output survives both same-machine await snapshots and portable replay (37.09239ms)
+  AssertionError [ERR_ASSERTION]: NotSupportedException: Managed layout is not implemented: auto-layout Program+<Work>d__2
+      at unsupported (file:///workspace/scratch/42f7738360b9/a05-integration/packages/runtime/src/execution/value-layout.js:14:9)
+      at aggregateLayout (file:///workspace/scratch/42f7738360b9/a05-integration/packages/runtime/src/execution/value-layout.js:74:66)
+      at layoutFor (file:///workspace/scratch/42f7738360b9/a05-integration/packages/runtime/src/execution/value-layout.js:126:20)
+      at valueLayout (file:///workspace/scratch/42f7738360b9/a05-integration/packages/runtime/src/execution/value-layout.js:138:10)
+      at storageBytes (file:///workspace/scratch/42f7738360b9/a05-integration/packages/runtime/src/execution/stack-budget.js:44:26)
+      at methodSize (file:///workspace/scratch/42f7738360b9/a05-integration/packages/runtime/src/execution/stack-budget.js:73:47)
+      at frameBytes (file:///workspace/scratch/42f7738360b9/a05-integration/packages/runtime/src/execution/stack-budget.js:83:17)
+      at reserveStackFrame (file:///workspace/scratch/42f7738360b9/a05-integration/packages/runtime/src/execution/stack-budget.js:151:17)
+      at cilCallFrame (file:///workspace/scratch/42f7738360b9/a05-integration/packages/runtime/src/execution/call-frames.js:33:18)
+      at enterManagedCall (file:///workspace/scratch/42f7738360b9/a05-integration/packages/runtime/src/execution/managed-call-entry.js:44:13)
+  + actual - expected
+  
+  + 'faulted'
+  - 'waiting'
+  
+      at qualifyAsyncAssembly (file:///workspace/scratch/42f7738360b9/a05-integration/scripts/a05-async-qualification.js:22:12)
+      at TestContext.<anonymous> (file:///workspace/scratch/42f7738360b9/a05-integration/tests/a05-roslyn-async-admission.test.js:78:35)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 'faulted',
+    expected: 'waiting',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/a05-unsafe-unbox.test.js:103:1
+✖ Unsafe.Unbox interiors alone retain owned boxes across GC and snapshot replay then expire after retirement (7.570324ms)
+  AssertionError [ERR_ASSERTION]: Missing expected exception (InvalidReferenceException).
+      at TestContext.<anonymous> (file:///workspace/scratch/42f7738360b9/a05-integration/tests/a05-unsafe-unbox.test.js:117:12)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: { name: 'InvalidReferenceException' },
+    operator: 'throws',
+    diff: 'simple'
+  }

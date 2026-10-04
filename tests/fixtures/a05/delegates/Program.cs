@@ -59,7 +59,7 @@ class Program
         chain -= chain;
         Console.WriteLine(chain == null);
 
-        try { Base missing = null; Func<int> invalid = missing.Get; }
+        try { Base missing = null; Func<int> invalid = missing.Get; Console.WriteLine(invalid == null); }
         catch (NullReferenceException) { Console.WriteLine("null capture"); }
         try { Func<int> missing = null; missing(); }
         catch (NullReferenceException) { Console.WriteLine("null invoke"); }

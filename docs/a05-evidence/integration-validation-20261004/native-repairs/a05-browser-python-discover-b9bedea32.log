@@ -1,0 +1,43 @@
+..........EE
+======================================================================
+ERROR: test_workflow_diagnostics (unittest.loader._FailedTest.test_workflow_diagnostics)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_workflow_diagnostics
+Traceback (most recent call last):
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/loader.py", line 396, in _find_test_path
+    module = self._get_module_from_name(name)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/loader.py", line 339, in _get_module_from_name
+    __import__(name)
+  File "/workspace/scratch/42f7738360b9/a05-integration/tests/conformance/browser/test_workflow_diagnostics.py", line 10, in <module>
+    from conformance.browser import workflow_loading
+  File "/workspace/scratch/42f7738360b9/a05-integration/tests/conformance/browser/workflow_loading.py", line 8, in <module>
+    from browser_harness import complete_startup, load_application, wait_condition
+  File "/workspace/scratch/42f7738360b9/a05-integration/tests/browser_harness.py", line 12, in <module>
+    from playwright.sync_api import Page
+ModuleNotFoundError: No module named 'playwright'
+
+
+======================================================================
+ERROR: test_workflow_loading (unittest.loader._FailedTest.test_workflow_loading)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_workflow_loading
+Traceback (most recent call last):
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/loader.py", line 396, in _find_test_path
+    module = self._get_module_from_name(name)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/loader.py", line 339, in _get_module_from_name
+    __import__(name)
+  File "/workspace/scratch/42f7738360b9/a05-integration/tests/conformance/browser/test_workflow_loading.py", line 10, in <module>
+    from conformance.browser import launch, workflow_loading
+  File "/workspace/scratch/42f7738360b9/a05-integration/tests/conformance/browser/workflow_loading.py", line 8, in <module>
+    from browser_harness import complete_startup, load_application, wait_condition
+  File "/workspace/scratch/42f7738360b9/a05-integration/tests/browser_harness.py", line 12, in <module>
+    from playwright.sync_api import Page
+ModuleNotFoundError: No module named 'playwright'
+
+
+----------------------------------------------------------------------
+Ran 12 tests in 10.090s
+
+FAILED (errors=2)

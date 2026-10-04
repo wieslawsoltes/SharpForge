@@ -5,11 +5,12 @@ import {prepareValueReceiver} from './value-calls.js';
 import {requireValueInterfaceTarget} from './value-dispatch.js';
 import {cachedTypeName, verifiedMethod} from './token-cache.js';
 import {resolveCallType} from './generic-calls.js';
-import {constrainedPrimitivePlan, constrainedObjectPlan, constrainedReferenceObjectPlan,
+import {constrainedPrimitivePlan, constrainedObjectPlan, constrainedReferenceObjectPlan, constrainedNullableObjectPlan,
   requireConstrainedObjectBound, invokeConstrainedObject} from './constrained-object.js';
 import {requireGenericStructArgument} from './generic-constraints.js';
 import {invokeConstrainedPrimitive} from './constrained-primitive.js';
 import {callPrefix} from './call-prefix.js';
+import {invokeConstrainedNullable} from './constrained-nullable.js';
 
 function closedConstraint(vm, caller, token) {
   if ([1, 2].includes(token >>> 24)) return vm.typeSystem.table(token);
@@ -42,6 +43,10 @@ export function constrainedCallType(vm, caller, instruction, descriptor) {
     return primitive;
   }
   const table = closedConstraint(vm, caller, prefix.operand);
+  if (constrainedNullableObjectPlan(vm, table, descriptor)) {
+    if (prefix.operand >>> 24 === 27) requireConstrainedObjectBound(vm, caller, prefix.operand, table);
+    return table;
+  }
   const objectPlan = table.flags.primitive ? constrainedPrimitivePlan(vm, table.name, descriptor)
     : constrainedObjectPlan(vm, table, descriptor);
   if (objectPlan) {
@@ -102,6 +107,9 @@ export function invokeConstrainedValue(vm, caller, descriptor, table) {
   const count = descriptor.signature.parameters.length + 1;
   const receiver = caller.stack[caller.stack.length - count];
   const current = receiverStorage(vm, receiver, table);
+  if (constrainedNullableObjectPlan(vm, table, descriptor)) {
+    return invokeConstrainedNullable(vm, caller, descriptor, table);
+  }
   if (table.flags.primitive) {
     const plan = constrainedPrimitivePlan(vm, table.name, descriptor);
     if (plan) return invokeConstrainedPrimitive(vm, caller, receiver, current, {plan, descriptor});

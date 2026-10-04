@@ -1,0 +1,14 @@
+Native/expected stdout
++ actual - expected
+... Skipped lines
+
+  'True\n' +
+    'False\n' +
+    '142\n' +
+    '3\n' +
+    'ABC\n' +
+...
+    'True\n' +
+-   'null capture\n' +
+    'null invoke\n'
+

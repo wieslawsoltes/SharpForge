@@ -29,7 +29,7 @@ cannot establish actual browser, CSP, or Speedscope UI behavior.
 | `wasm-execution` | A real prepared CIL method instantiates in browser WebAssembly and uses native arithmetic. Its output, full instruction profile, and instruction count equal interpreted CIL; a zero-time slice executes nothing. |
 | `debugger-deopt` | A hot loop enters Wasm through OSR, a real `CilDebugSession` instruction breakpoint deoptimizes it, and single stepping exposes the expected PC, locals, and operand stack. Resume uses canonical arithmetic and cannot silently select Wasm again. |
 | `profile-exports` | Source, reloaded source image, and CIL guest programs execute and export actual recorded instruction profiles. The profile files and exact VM method counts are retained. |
-| `csp-denied-fallback` | A separate real HTTP document omits `wasm-unsafe-eval`. Actual compilation fails with `WASM_COMPILE`, the browser emits an enforced CSP violation, and automatic tiering records fallback while interpreted execution produces the correct result. |
+| `csp-denied-fallback` | A separate real HTTP document omits `wasm-unsafe-eval`. The same valid native module compiles under the allowed policy and fails with a native CSP `CompileError` under denial. Actual generated-code compilation fails with `WASM_COMPILE`, and tiering records fallback while interpreted execution produces the correct result. Policy events are validated whenever delivered; WebKit may instead establish denial through the paired native compilation proof. |
 | `speedscope-source`, `speedscope-reload`, `speedscope-cil` | The official UI imports each generated file through its real file input. Its visible Sandwich table must contain every recorded method with the exact displayed Total and Self counts; the sum of displayed Self counts must equal actual VM instructions. |
 
 The runtime documents use the shipped `createBrowserCsp()` value with one added
@@ -43,8 +43,15 @@ case. No guest profile is uploaded to a third-party service.
 The shared browser launcher rejects unexpected CSP events. Only the dedicated
 denial case accepts its expected negative launch result, after validating the
 document URI, enforced script directive, and `wasm-eval`/`eval` blocked URI.
-Its retained launcher `session.json` therefore records the expected CSP rejection;
-the qualification row records whether that negative requirement was satisfied.
+Chromium and Firefox require that policy event. WebKit 26.6 in the actual CI run
+rejected compilation without delivering an event. For that engine only, absence
+of an event requires the independent paired native compilation proof: identical
+valid bytes must compile under the allowed policy, then fail as a native
+`WebAssembly.CompileError` whose message identifies CSP in the denial document.
+Missing controls, malformed-byte failures, other error types, and unrelated
+policy events fail. The row explicitly records `eventObserved: false` in that
+case; no event is inferred. The successful runtime observation is saved before
+validating the launcher outcome, so a later monitor failure cannot erase it.
 
 ## Official Speedscope pin
 
@@ -77,8 +84,22 @@ python -m playwright install --with-deps chromium
 python tests/fixtures/a05-browser/qualify.py --engine chromium
 ```
 
-Repeat serially for `firefox` and `webkit`, using a distinct `--output` directory
-for each. Tracked source must be clean so the recorded revision identifies the
+Repeat serially for `webkit`. For Firefox on Linux, run the actual browser headed
+under Xvfb so the official UI has a WebGL context:
+
+```sh
+python -m playwright install --with-deps firefox
+xvfb-run --auto-servernum python tests/fixtures/a05-browser/qualify.py --engine firefox --headed
+```
+
+Use a distinct `--output` directory for each engine. This follows
+[Playwright's headed Linux CI instructions](https://playwright.dev/python/docs/ci#running-headed);
+it does not disable browser security or replace WebGL. The original headless
+Firefox run at `e09324d3` failed before import with exhausted GL driver options
+and Speedscope's `Setup failure`. Each UI case now records the native WebGL
+availability, version, vendor, and renderer before attempting import. The launch
+options are recorded both in the report and each browser session. Headless mode
+remains the default for the shared launcher, Chromium, and WebKit. Tracked source must be clean so the recorded revision identifies the
 executed implementation. Missing browser binaries, unavailable official UI assets, failed
 compilation under the allowed policy, and unavailable required profile files are
 failures, never silently passing or skipped cells. Preparation is the only

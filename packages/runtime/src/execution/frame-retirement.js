@@ -1,4 +1,4 @@
-import {finishControlContext} from './scheduler-async-faults.js';
+import {finishControlContext} from './scheduler-context-completion.js';
 import {retirePooledFrame, flushFramePool, clearFramePool} from './frame-pool.js';
 import {releaseStackFrame, clearStackBudget} from './stack-budget.js';
 import {forgetContextSuspension} from './context-events.js';

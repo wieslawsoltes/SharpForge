@@ -8,6 +8,7 @@ import {arrayInteger} from './array-limits.js';
 import {valueLayout} from './value-layout.js';
 import {scalarAccess} from './scalar-bytes.js';
 import {number, storage} from './numeric-ops.js';
+import {unsafeUnboxValue} from './boxing.js';
 
 function readBits(vm, view, table) {
   if (table.name === 'System.Single') return int32BitsToSingle(view.getInt32(0, true));
@@ -38,6 +39,7 @@ function bitCall(vm, definition, args) {
 }
 
 const spanOperations = Object.freeze({
+  unboxReference: (vm, context) => unsafeUnboxValue(vm, context.parameters[0], context.element),
   spanString: (vm, context) => spanFromString(vm, context.parameters[0]),
   spanCtor: (vm, context) => context.descriptor.signature.parameters[0].includes('*')
     ? spanCreate(vm, context.element, context.parameters[0], context.parameters[1], {readonly: context.readonly})

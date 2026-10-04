@@ -8,6 +8,7 @@ import {pushControlFrame as pushFrame, retireExceptionFrame as popFrame} from '.
 import {frameById, nextFrameId} from './frame-lifetimes.js';
 import {exceptionMatches} from './exception-types.js';
 import {isFatalFault, markUnhandled} from './unhandled.js';
+import {firstChanceFailurePolicy} from './exception-event-failure.js';
 
 export function frameState() { return {exception: null, caught: [], unwinds: []}; }
 
@@ -142,7 +143,11 @@ function searchStep(vm, search) {
     }
     if (frame.exceptionEventContinuation) {
       const fatal = firstChanceCallbackFailure(frame, search.error);
-      if (fatal) { markUnhandled(vm, fatal); return null; }
+      if (fatal) {
+        if (firstChanceFailurePolicy(frame.exceptionEventContinuation) === 'before-unwind') { markUnhandled(vm, fatal); return null; }
+        search.selection = {kind: 'event-failfast', frameId: frame.id};
+        return {phase: 'unwind', search};
+      }
       search.selection = {kind: 'event-failure', frameId: frame.id};
       return {phase: 'unwind', search};
     }
@@ -173,6 +178,13 @@ function finishPending(vm, frame) {
   if (unwind.catch) { enterCatch(vm, frame, unwind.catch, unwind.error); return null; }
   if (unwind.search.selection?.kind === 'filter-failure' && unwind.search.selection.frameId === frame.id) {
     return {phase: 'search', search: finishFilter(vm, 0)};
+  }
+  if (unwind.search.selection?.kind === 'event-failfast' && unwind.search.selection.frameId === frame.id) {
+    const fatal = firstChanceCallbackFailure(frame, unwind.search.error);
+    popFrame(vm);
+    vm.stack.length = frame.base;
+    markUnhandled(vm, fatal);
+    return null;
   }
   if (unwind.search.selection?.kind === 'event-failure' && unwind.search.selection.frameId === frame.id) {
     popFrame(vm);

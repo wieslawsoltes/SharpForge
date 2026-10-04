@@ -1,0 +1,28 @@
+{
+  "id": "control-exceptions",
+  "status": "failed",
+  "command": {
+    "executable": "/Users/runner/hostedtoolcache/node/22.23.2/arm64/bin/node",
+    "arguments": [
+      "scripts/validate-a05-type-system.js",
+      "--fixture",
+      "tests/fixtures/a05-control-exceptions",
+      "--framework",
+      "net10.0",
+      "--output",
+      "/Users/runner/work/SharpForge/SharpForge/artifacts/a05-native/control-exceptions/evidence"
+    ],
+    "cwd": "/Users/runner/work/SharpForge/SharpForge/"
+  },
+  "environment": {},
+  "timeoutMs": 300000,
+  "evidence": "control-exceptions/evidence",
+  "report": "control-exceptions/result.json",
+  "startedAt": "2026-10-04T17:25:36.374Z",
+  "durationMs": 2348.5468330000003,
+  "exitCode": 1,
+  "signal": null,
+  "stdout": "control-exceptions/stdout.log",
+  "stderr": "control-exceptions/stderr.log",
+  "finishedAt": "2026-10-04T17:25:38.747Z"
+}

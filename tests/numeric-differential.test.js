@@ -5,7 +5,7 @@ import {CilVirtualMachine} from '@sharpforge/runtime';
 import {binary, compare} from '../packages/runtime/src/execution/numeric-ops.js';
 import {formatSourceNumber} from '../packages/runtime/src/execution/source-number-format.js';
 import {numericOracle, numericDifferential} from './support/numeric-differential.js';
-import {int64Pairs, int64Operations, int64OracleSource, uint32OracleSource, smallStorageOracleSource, numericFamilies, numericPairCount}
+import {int64Pairs, int64Operations, numericFamilies, numericPairCount}
   from './support/numeric-oracle-spec.js';
 import {conversionMatrixSource} from './support/numeric-conversion-matrix.js';
 import {smallStorageFixture} from './support/numeric-storage-fixtures.js';
@@ -52,7 +52,7 @@ test('T01.1/T01.10 100,000 native operand pairs cover every signed and unsigned 
 
 test('T01.8/T01.10 the same 100,000-pair C# program matches native in all three execution routes', () => {
   const {text, provenance} = numericOracle('int64.txt.gz');
-  numericDifferential(int64OracleSource(), text, {
+  numericDifferential(numericOracle('int64.cs').text, text, {
     family: '100k Int64 matrix', nativeIntBits: provenance.nativeIntBits,
     vmOptions: {maxInstructions: 2_000_000_000, maxOutputCharacters: 256 * 1024 * 1024},
   });
@@ -60,7 +60,9 @@ test('T01.8/T01.10 the same 100,000-pair C# program matches native in all three 
 
 for (const family of numericFamilies) test('T01.10 native numeric family: ' + family.name, () => {
   const {text, provenance} = numericOracle(family.name + '.txt');
-  numericDifferential(family.source, text, {family: family.name, nativeIntBits: provenance.nativeIntBits});
+  numericDifferential(numericOracle(family.name + '.cs').text, text, {
+    family: family.name, nativeIntBits: provenance.nativeIntBits,
+  });
 });
 
 function matrixInput(item) {
@@ -98,7 +100,7 @@ test('T01.6/T01.10 exhaustive source/target/checked/.un matrix matches native op
   // Bounded source files avoid compiler size limits without changing any operation.
   for (let offset = 0; offset < cases.length; offset += 48) {
     const chunk = cases.slice(offset, offset + 48);
-    numericDifferential(chunk.map(conversionMatrixSource).join('\n'),
+    numericDifferential('using System;\n' + chunk.map(conversionMatrixSource).join('\n'),
       expected.slice(offset, offset + chunk.length).join('\n') + '\n', {
         family: 'conversion matrix', operands: chunk.map(item => item.id).join(', '), nativeIntBits: chunk[0].nativeIntBits,
       });
@@ -129,11 +131,15 @@ test('T01.3/T01.10 complete UInt32 boundary matrix matches native signed stack p
     }
   }
   assert.equal(expected.next().done, true);
-  numericDifferential(uint32OracleSource(), text, {family: 'UInt32 matrix', nativeIntBits: provenance.nativeIntBits});
+  numericDifferential(numericOracle('uint32-matrix.cs').text, text, {
+    family: 'UInt32 matrix', nativeIntBits: provenance.nativeIntBits,
+  });
 });
 
 
 test('T01.2/T01.8/T01.10 source small storage and ref calls match the native family', () => {
   const {text, provenance} = numericOracle('small-storage.txt');
-  numericDifferential(smallStorageOracleSource(), text, {family: 'small storage', nativeIntBits: provenance.nativeIntBits});
+  numericDifferential(numericOracle('small-storage.cs').text, text, {
+    family: 'small storage', nativeIntBits: provenance.nativeIntBits,
+  });
 });

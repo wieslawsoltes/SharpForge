@@ -1,0 +1,11 @@
+{
+  "suite": "wasm-execution",
+  "passed": true,
+  "engine": "chromium",
+  "cspViolations": [],
+  "browser": "153.0.8010.12",
+  "executable": "playwright-managed",
+  "mode": "A05 public runtime / allowed CSP",
+  "seconds": 2.8246849569999313,
+  "diagnosticErrors": []
+}

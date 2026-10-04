@@ -1,0 +1,24 @@
+✔ the legacy constant adapter defers imprecise integer tokens without changing Int32 minimum folding (2.326197ms)
+✔ exact signed minimum and unsigned maximum literals execute through source, reload and CIL (198.012253ms)
+✔ an out-of-range implicit signed assignment reports a source diagnostic rather than throwing (4.312346ms)
+✔ native conversion fixture operands keep unary minus inside the contextual-type cast (18.671364ms)
+✔ floating conversion evidence binds the actual source to two pinned native runs (1.428121ms)
+✔ floating constants and runtime casts retain distinct native results: bound (161.051734ms)
+✔ floating constants and runtime casts retain distinct native results: legacy (22.796706ms)
+✔ constant conversion integration emits identical images through both compiler pipelines (7.241245ms)
+✔ constant folding retains invalid conversion and checked overflow diagnostics: bound (29.519322ms)
+✔ constant folding retains invalid conversion and checked overflow diagnostics: legacy (32.551713ms)
+✔ A02-T32 ConstantValue is a typed, immutable value for every primitive and for enums (3.283999ms)
+✔ A02-T32 fold API: results, not-constant and error records (2.325605ms)
+✔ A02-T32 Decimal models System.Decimal scale and rounding (1.096145ms)
+✔ A02-T32 evaluateConstant keeps the current AST profile behaviour on top of fold.js (12.933241ms)
+✔ A02-T32 corpus is a Roslyn pin of a few hundred constant expressions (1.18181ms)
+✔ A02-T32 constant folding matches Roslyn results and diagnostics on the whole corpus (73.731672ms)
+ℹ tests 16
+ℹ suites 0
+ℹ pass 16
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 3256.064069

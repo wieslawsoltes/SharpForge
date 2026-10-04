@@ -40,9 +40,11 @@ def selected_engine(environ=None, engine=None):
     return engine
 
 
-def launch_options(environ=None, engine=None):
+def launch_options(environ=None, engine=None, *, headless=True):
     environ = os.environ if environ is None else environ
-    options = {'headless': True}
+    if not isinstance(headless, bool):
+        raise ValueError('headless must be an explicit boolean')
+    options = {'headless': headless}
     engine = selected_engine(environ, engine)
     variable = engine.upper() + '_EXECUTABLE'
     executable = environ.get(variable, '').strip()
@@ -56,9 +58,10 @@ def launch_options(environ=None, engine=None):
 
 
 class BrowserSession:
-    def __init__(self, browser, suite, engine=None, *, mode=None):
+    def __init__(self, browser, suite, engine=None, *, mode=None, launch_config=None):
         self.engine = selected_engine(engine=engine)
         self.mode = mode
+        self.launch_config = dict(launch_config if launch_config is not None else launch_options(engine=self.engine))
         from importlib.util import spec_from_file_location, module_from_spec
         spec = spec_from_file_location('sharpforge_csp_monitor', Path(__file__).with_name('csp_monitor.py'))
         module = module_from_spec(spec)
@@ -142,7 +145,8 @@ class BrowserSession:
         (self.directory / 'session.json').write_text(json.dumps({
             'suite': self.directory.name, 'passed': failure is None,
             'engine': self.engine, 'cspViolations': self.csp.events,
-            'browser': self.browser.version, 'executable': launch_options(engine=self.engine).get('executable_path', 'playwright-managed'),
+            'browser': self.browser.version, 'executable': self.launch_config.get('executable_path', 'playwright-managed'),
+            'launchOptions': self.launch_config,
             'mode': self.mode or ('standalone HTML injection' if self.directory.name == 'standalone_test'
                                  else ('in-memory' if os.getenv('SHARPFORGE_IN_MEMORY') == '1' else 'http')),
             'seconds': time.monotonic() - self.started, 'diagnosticErrors': diagnostics,
@@ -172,13 +176,14 @@ class _CheckedPage:
 
 
 @contextmanager
-def launch_browser(playwright, suite, engine=None, *, mode=None):
+def launch_browser(playwright, suite, engine=None, *, mode=None, headless=True):
     global _session
     if _session is not None:
         raise RuntimeError('Nested browser sessions are unsupported')
     engine = selected_engine(engine=engine)
-    browser = getattr(playwright, engine).launch(**launch_options(engine=engine))
-    session = BrowserSession(browser, suite, engine, mode=mode)
+    options = launch_options(engine=engine, headless=headless)
+    browser = getattr(playwright, engine).launch(**options)
+    session = BrowserSession(browser, suite, engine, mode=mode, launch_config=options)
     _session = session
     handlers = {}
     def cancel(signum, frame):

@@ -1,0 +1,27 @@
+✔ A05 T29 two real MoveNext suspensions resume through finally and return a result (48.492096ms)
+✔ A05 T29 paused await snapshots preserve boxed machine, waiter and builder identities (45.790259ms)
+✔ A05 T29 awaiter raises a task fault inside MoveNext and cleanup executes once (16.964999ms)
+✔ A05 T29 cancellation during an await drops all pending continuations (8.887138ms)
+✔ A05 T29 constructor root enumeration precedes scheduler creation (0.607512ms)
+✔ A05 T29 async descriptors validate closed signatures and reachable compiler methods (4.712048ms)
+✔ A05 T29 builder default copies materialize distinct task identities and reject double completion (3.95742ms)
+✔ A05 T29 default and wrong-task awaiters fail deterministically (1.572789ms)
+✔ A05 T29 default YieldAwaiter is valid and always asynchronous (1.62111ms)
+✔ A05 T29 TaskAwaiter.OnCompleted resumes a verified managed delegate (5.810491ms)
+✔ A05 T29 async void faults are posted outside the synchronous caller and snapshotted (2.776677ms)
+✔ A05 T29 malformed async snapshots reject before live execution changes (23.800645ms)
+✔ A05 T29 awaiting snapshots accept the wake-up boundary before GetResult (12.745834ms)
+✔ A05 T29 snapshot validation uses saved roots after the live machine is collected (20.786068ms)
+✔ A05 T29 canceled task history remains restorable after its machine is collected (15.094642ms)
+✔ source: filter, event, delegate and managed-array continuations expose every owner (11.440647ms)
+✔ source: scheduler async state, unhandled delivery and synchronization roots remain reachable (1.929804ms)
+✔ cil: filter, event, delegate and managed-array continuations expose every owner (15.672972ms)
+✔ cil: scheduler async state, unhandled delivery and synchronization roots remain reachable (7.801365ms)
+ℹ tests 19
+ℹ suites 0
+ℹ pass 19
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 2019.220009

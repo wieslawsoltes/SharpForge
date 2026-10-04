@@ -1,0 +1,41 @@
+✔ source: first-chance failure policy validates exact values and preserves the default (142.936414ms)
+✔ source: after-unwind runs callback cleanup and handles cleanup throws=false (3.895964ms)
+✔ source: after-unwind runs callback cleanup and handles cleanup throws=true (20.031359ms)
+✔ source: cleanup suspension preserves captured policy through local and portable restore (32.641515ms)
+✔ source: older captured notifications without a policy retain before-unwind behavior (13.392746ms)
+✔ source: terminal diagnostic graphs survive GC and local/portable snapshots (15.385334ms)
+✔ source: malformed captured policies and failfast boundaries reject atomically (6.414945ms)
+✔ source: runtime resource failure during cleanup bypasses further unwinding and notifications (3.366335ms)
+✔ source: after-unwind policy leaves ordinary unhandled throwing frames and finally blocks untouched (7.939785ms)
+✔ reload: first-chance failure policy validates exact values and preserves the default (103.961935ms)
+✔ reload: after-unwind runs callback cleanup and handles cleanup throws=false (12.024045ms)
+✔ reload: after-unwind runs callback cleanup and handles cleanup throws=true (11.385737ms)
+✔ reload: cleanup suspension preserves captured policy through local and portable restore (65.770747ms)
+✔ reload: older captured notifications without a policy retain before-unwind behavior (58.495629ms)
+✔ reload: terminal diagnostic graphs survive GC and local/portable snapshots (22.690535ms)
+✔ reload: malformed captured policies and failfast boundaries reject atomically (12.993379ms)
+✔ reload: runtime resource failure during cleanup bypasses further unwinding and notifications (14.214764ms)
+✔ reload: after-unwind policy leaves ordinary unhandled throwing frames and finally blocks untouched (11.917909ms)
+✔ cil: first-chance failure policy validates exact values and preserves the default (35.602886ms)
+✔ cil: after-unwind runs callback cleanup and handles cleanup throws=false (13.083011ms)
+✔ cil: after-unwind runs callback cleanup and handles cleanup throws=true (29.287098ms)
+✔ cil: cleanup suspension preserves captured policy through local and portable restore (44.383386ms)
+✔ cil: older captured notifications without a policy retain before-unwind behavior (31.330269ms)
+✔ cil: terminal diagnostic graphs survive GC and local/portable snapshots (21.882999ms)
+✔ cil: malformed captured policies and failfast boundaries reject atomically (13.570136ms)
+✔ cil: runtime resource failure during cleanup bypasses further unwinding and notifications (9.02613ms)
+✔ cil: after-unwind policy leaves ordinary unhandled throwing frames and finally blocks untouched (8.029377ms)
+✔ source: weak intern snapshot drops collected generations without mutating the live cache (33.190471ms)
+✔ source: weak capture never launders foreign or forged handle ownership (4.612667ms)
+✔ source: invalid expired strong intern entries remain subject to strict validation (1.727147ms)
+✔ cil: weak intern snapshot drops collected generations without mutating the live cache (36.772414ms)
+✔ cil: weak capture never launders foreign or forged handle ownership (9.645501ms)
+✔ cil: invalid expired strong intern entries remain subject to strict validation (3.13158ms)
+ℹ tests 33
+ℹ suites 0
+ℹ pass 33
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 3497.508239

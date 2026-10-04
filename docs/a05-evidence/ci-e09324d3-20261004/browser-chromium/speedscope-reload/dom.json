@@ -1,0 +1,23 @@
+{
+  "title": "A05 browser reload - speedscope",
+  "rows": [
+    [],
+    [
+      "10 (53%)",
+      "10 (53%)",
+      "Program.A05BrowserTwice"
+    ],
+    [
+      "17 (89%)",
+      "7 (37%)",
+      "Program.Main"
+    ],
+    [
+      "19 (100%)",
+      "2 (11%)",
+      "<startup>"
+    ]
+  ],
+  "pageErrors": [],
+  "dialogs": []
+}

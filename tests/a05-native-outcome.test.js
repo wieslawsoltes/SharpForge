@@ -2,6 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import {verifyNativeOutcome} from '../scripts/a05-native-outcome.js';
 import {nativeFixtureProject} from '../scripts/a05-native-project.js';
+import {verifyNativeTargetOutcome, nativeFixtureStatus, nativeTargetCaseOutcome} from '../scripts/a05-native-target-policy.js';
 
 const output = 'first\nsecond\nterminal\n';
 const failure = () => ({
@@ -80,4 +81,45 @@ test('native fixture projects opt into unsafe compilation only for explicitly se
   assert.match(nativeFixtureProject('net8.0'), /<AllowUnsafeBlocks>false<\/AllowUnsafeBlocks>/);
   assert.match(nativeFixtureProject('net10.0', true), /<AllowUnsafeBlocks>true<\/AllowUnsafeBlocks>/);
   assert.match(nativeFixtureProject('net8.0'), /<TargetFramework>net8\.0<\/TargetFramework>/);
+});
+
+const unsupportedVarargs = () => ({expectedOutput: '42\n',
+  native: {exitCode: null, signal: 'SIGABRT', output: '',
+    stderr: 'Unhandled exception. System.InvalidProgramException: Vararg calling convention not supported.\n   at Program.Main()\n'},
+  cil: {state: 'terminated', exitCode: 0, output: '42\n'}});
+
+test('observed CLR varargs rejection remains unsupported after an independent authored VM trace succeeds', () => {
+  const report = unsupportedVarargs();
+  const native = structuredClone(report.native);
+  report.status = verifyNativeTargetOutcome(report, true);
+  assert.equal(report.status, 'unsupported');
+  assert.deepEqual(report.native, native, 'preserve the complete native failure observation');
+  assert.equal(report.nativeUnsupported.nativeParity, false);
+  assert.equal(report.nativeUnsupported.cilAuthoredTracePassed, true);
+  const summary = {...nativeFixtureStatus([report]), fixtures: [report]};
+  assert.deepEqual({status: summary.status, passed: summary.passed}, {status: 'partial', passed: false});
+  assert.equal(nativeTargetCaseOutcome(summary), 'unsupported');
+  report.nativeUnsupported.cilAuthoredTracePassed = false;
+  assert.throws(() => nativeTargetCaseOutcome(summary), assert.AssertionError);
+});
+
+test('varargs policy cannot hide wrong native exceptions, successful native divergence, signals or VM failures', () => {
+  assert.throws(() => verifyNativeTargetOutcome(unsupportedVarargs()), assert.AssertionError);
+  for (const mutate of [
+    report => { report.native.stderr = 'Unhandled exception. System.InvalidProgramException: Different failure.\n'; },
+    report => { report.native.stderr = 'Unhandled exception. Acme.InvalidProgramException: Vararg calling convention not supported.\n'; },
+    report => { report.native.stderr = 'error CS0000: Vararg calling convention not supported.\n'; },
+    report => { report.native.signal = 'SIGTERM'; },
+    report => { report.native.signal = null; report.native.exitCode = 0; },
+    report => { report.cil.state = 'faulted'; },
+    report => { report.cil.exitCode = 1; },
+    report => { report.cil.output = 'wrong\n'; }
+  ]) {
+    const report = unsupportedVarargs(); mutate(report);
+    assert.throws(() => verifyNativeTargetOutcome(report, true), assert.AssertionError);
+  }
+  const report = unsupportedVarargs();
+  report.native = {exitCode: 0, signal: null, output: '42\n', stderr: ''};
+  assert.equal(verifyNativeTargetOutcome(report, true), 'passed', 'supported hosts must retain the native comparison');
+  assert.equal(report.nativeUnsupported, undefined);
 });

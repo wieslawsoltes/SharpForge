@@ -1631,6 +1631,30 @@
             "assessment": "Authored focused positive/negative/boundary tests are linked above; current-revision and affected-platform results remain incomplete."
           }
         ]
+      },
+      "repair_checkpoint_8f6eba479": {
+        "revision": "8f6eba479ee93874b092f55ec9ffb825ded950f9",
+        "date": "2026-10-04",
+        "method": "Additive review of retained run reports, unchanged native fixtures and coordinator-reported final serial validation; this documentation update runs no tests.",
+        "criterion_results": [
+          {
+            "criterion_index": 0,
+            "status": "retained_native_assembly_execution_and_replay_passed",
+            "assessment": "The actual SDK8 Roslyn async DLL now passes complete native-output comparison with local and portable replay at both await points. Managed auto-layout stack/root plans repair the previous admission failure. The final broad and focused repair selections pass; fresh SDK/OS workflow qualification remains pending."
+          },
+          {
+            "criterion_index": 1,
+            "status": "affected_platform_qualification_pending",
+            "assessment": "Node and retained-native-oracle/DLL results are scoped above. Fresh native SDK/OS, browser, Rust/Wasm-host and ABI32 outcomes are independent; unsupported targets are not counted as passing."
+          }
+        ],
+        "evidence_paths": [
+          "tests/a05-roslyn-async-admission.test.js",
+          "tests/fixtures/a05-async/native-sdk8/qualification.json",
+          "docs/runtime-managed-state-machine-layout.md",
+          "docs/a05-evidence/integration-validation-20261004/native-repairs/final/README.md"
+        ],
+        "not_an_issue_closure": true
       }
     },
     {
@@ -1853,6 +1877,28 @@
             "assessment": "Authored focused positive/negative/boundary tests are linked above; current-revision and affected-platform results remain incomplete."
           }
         ]
+      },
+      "repair_checkpoint_8f6eba479": {
+        "revision": "8f6eba479ee93874b092f55ec9ffb825ded950f9",
+        "date": "2026-10-04",
+        "method": "Additive review of retained run reports, unchanged native fixtures and coordinator-reported final serial validation; this documentation update runs no tests.",
+        "criterion_results": [
+          {
+            "criterion_index": 0,
+            "status": "native_oracle_replay_passed_at_recorded_revision",
+            "assessment": "100,000 saved native operand pairs across all 29 signed/unsigned operations passed the helper comparison and the same C# program in source, reloaded source and direct CIL. The complete batch remains 10/11 at 139917fe5f; its conversion failure is retained. No full replay is claimed at this checkpoint."
+          },
+          {
+            "criterion_index": 1,
+            "status": "affected_platform_qualification_pending",
+            "assessment": "Node and retained-native-oracle/DLL results are scoped above. Fresh native SDK/OS, browser, Rust/Wasm-host and ABI32 outcomes are independent; unsupported targets are not counted as passing."
+          }
+        ],
+        "evidence_paths": [
+          "docs/a05-evidence/numeric-independent-20261004/a05-native-numeric-replay-139917fe5f-20261004/completion.json",
+          "docs/a05-evidence/numeric-independent-20261004/a05-native-numeric-replay-139917fe5f-20261004/numeric-differential.log"
+        ],
+        "not_an_issue_closure": true
       }
     },
     {
@@ -1922,6 +1968,28 @@
             "assessment": "Authored focused positive/negative/boundary tests are linked above; current-revision and affected-platform results remain incomplete."
           }
         ]
+      },
+      "repair_checkpoint_8f6eba479": {
+        "revision": "8f6eba479ee93874b092f55ec9ffb825ded950f9",
+        "date": "2026-10-04",
+        "method": "Additive review of retained run reports, unchanged native fixtures and coordinator-reported final serial validation; this documentation update runs no tests.",
+        "criterion_results": [
+          {
+            "criterion_index": 0,
+            "status": "native_oracle_replay_passed_at_recorded_revision",
+            "assessment": "The authored small-storage CIL matrix covers all six locations and six types; the source small-storage/ref fixture also passed all three routes at 139917fe5f."
+          },
+          {
+            "criterion_index": 1,
+            "status": "affected_platform_qualification_pending",
+            "assessment": "Node and retained-native-oracle/DLL results are scoped above. Fresh native SDK/OS, browser, Rust/Wasm-host and ABI32 outcomes are independent; unsupported targets are not counted as passing."
+          }
+        ],
+        "evidence_paths": [
+          "docs/a05-evidence/numeric-independent-20261004/a05-native-numeric-replay-139917fe5f-20261004/numeric-differential.log",
+          "tests/support/numeric-storage-fixtures.js"
+        ],
+        "not_an_issue_closure": true
       }
     },
     {
@@ -1995,6 +2063,28 @@
             "assessment": "Authored focused positive/negative/boundary tests are linked above; current-revision and affected-platform results remain incomplete."
           }
         ]
+      },
+      "repair_checkpoint_8f6eba479": {
+        "revision": "8f6eba479ee93874b092f55ec9ffb825ded950f9",
+        "date": "2026-10-04",
+        "method": "Additive review of retained run reports, unchanged native fixtures and coordinator-reported final serial validation; this documentation update runs no tests.",
+        "criterion_results": [
+          {
+            "criterion_index": 0,
+            "status": "native_oracle_replay_passed_at_recorded_revision",
+            "assessment": "The UInt32 family and full boundary matrix passed helper and three-engine comparisons against the unchanged .NET oracle at 139917fe5f, including signed stack bit patterns and checked overflow."
+          },
+          {
+            "criterion_index": 1,
+            "status": "affected_platform_qualification_pending",
+            "assessment": "Node and retained-native-oracle/DLL results are scoped above. Fresh native SDK/OS, browser, Rust/Wasm-host and ABI32 outcomes are independent; unsupported targets are not counted as passing."
+          }
+        ],
+        "evidence_paths": [
+          "docs/a05-evidence/numeric-independent-20261004/a05-native-numeric-replay-139917fe5f-20261004/numeric-differential.log",
+          "tests/fixtures/a05/numeric-oracle/uint32.cs"
+        ],
+        "not_an_issue_closure": true
       }
     },
     {
@@ -2067,6 +2157,28 @@
             "assessment": "Authored focused positive/negative/boundary tests are linked above; current-revision and affected-platform results remain incomplete."
           }
         ]
+      },
+      "repair_checkpoint_8f6eba479": {
+        "revision": "8f6eba479ee93874b092f55ec9ffb825ded950f9",
+        "date": "2026-10-04",
+        "method": "Additive review of retained run reports, unchanged native fixtures and coordinator-reported final serial validation; this documentation update runs no tests.",
+        "criterion_results": [
+          {
+            "criterion_index": 0,
+            "status": "partial_criterion_evidence",
+            "assessment": "The native integer family and conversion matrix pass against the ABI64 oracle. This does not prove the original both-widths native comparison; independent ABI32 evidence remains pending."
+          },
+          {
+            "criterion_index": 1,
+            "status": "affected_platform_qualification_pending",
+            "assessment": "Node and retained-native-oracle/DLL results are scoped above. Fresh native SDK/OS, browser, Rust/Wasm-host and ABI32 outcomes are independent; unsupported targets are not counted as passing."
+          }
+        ],
+        "evidence_paths": [
+          "docs/a05-evidence/numeric-independent-20261004/a05-native-numeric-replay-139917fe5f-20261004/numeric-differential.log",
+          "docs/a05-evidence/numeric-independent-20261004/a05-native-conversion-repair-b3673745c-20261004/completion.json"
+        ],
+        "not_an_issue_closure": true
       }
     },
     {
@@ -2134,6 +2246,28 @@
             "assessment": "Authored focused positive/negative/boundary tests are linked above; current-revision and affected-platform results remain incomplete."
           }
         ]
+      },
+      "repair_checkpoint_8f6eba479": {
+        "revision": "8f6eba479ee93874b092f55ec9ffb825ded950f9",
+        "date": "2026-10-04",
+        "method": "Additive review of retained run reports, unchanged native fixtures and coordinator-reported final serial validation; this documentation update runs no tests.",
+        "criterion_results": [
+          {
+            "criterion_index": 0,
+            "status": "recorded_matrix_passed_target_count_discrepancy_explicit",
+            "assessment": "All 2,112 cases across five source kinds, thirteen valid conversion destinations and thirty-three opcode variants passed helpers/source/reload/direct CIL after the literal and floating-carrier fixes. The original criterion says fifteen targets while the deliverable enumerates thirteen; its exact wording is preserved. The oracle is .NET10, not a freshly executed .NET9 target."
+          },
+          {
+            "criterion_index": 1,
+            "status": "affected_platform_qualification_pending",
+            "assessment": "Node and retained-native-oracle/DLL results are scoped above. Fresh native SDK/OS, browser, Rust/Wasm-host and ABI32 outcomes are independent; unsupported targets are not counted as passing."
+          }
+        ],
+        "evidence_paths": [
+          "docs/a05-evidence/numeric-independent-20261004/a05-native-conversion-repair-b3673745c-20261004/completion.json",
+          "docs/a05-evidence/numeric-independent-20261004/README.md"
+        ],
+        "not_an_issue_closure": true
       }
     },
     {
@@ -2230,6 +2364,28 @@
             "assessment": "Authored focused positive/negative/boundary tests are linked above; current-revision and affected-platform results remain incomplete."
           }
         ]
+      },
+      "repair_checkpoint_8f6eba479": {
+        "revision": "8f6eba479ee93874b092f55ec9ffb825ded950f9",
+        "date": "2026-10-04",
+        "method": "Additive review of retained run reports, unchanged native fixtures and coordinator-reported final serial validation; this documentation update runs no tests.",
+        "criterion_results": [
+          {
+            "criterion_index": 0,
+            "status": "native_oracle_replay_passed_at_recorded_revision",
+            "assessment": "The saved Decimal program covers 0.1+0.2, 1/3, MaxValue+1 overflow and boxed 1.10 scale preservation; exact .NET output passed in source, reloaded source and direct CIL at 139917fe5f."
+          },
+          {
+            "criterion_index": 1,
+            "status": "affected_platform_qualification_pending",
+            "assessment": "Node and retained-native-oracle/DLL results are scoped above. Fresh native SDK/OS, browser, Rust/Wasm-host and ABI32 outcomes are independent; unsupported targets are not counted as passing."
+          }
+        ],
+        "evidence_paths": [
+          "docs/a05-evidence/numeric-independent-20261004/a05-native-numeric-replay-139917fe5f-20261004/numeric-differential.log",
+          "tests/fixtures/a05/numeric-oracle/decimal.cs"
+        ],
+        "not_an_issue_closure": true
       }
     },
     {
@@ -2298,6 +2454,28 @@
             "assessment": "Authored focused positive/negative/boundary tests are linked above; current-revision and affected-platform results remain incomplete."
           }
         ]
+      },
+      "repair_checkpoint_8f6eba479": {
+        "revision": "8f6eba479ee93874b092f55ec9ffb825ded950f9",
+        "date": "2026-10-04",
+        "method": "Additive review of retained run reports, unchanged native fixtures and coordinator-reported final serial validation; this documentation update runs no tests.",
+        "criterion_results": [
+          {
+            "criterion_index": 0,
+            "status": "three_route_native_fixture_evidence_added",
+            "assessment": "All full-run scalar families passed at 139917fe5f, including the 100,000-pair program in all three engines. The conversion matrix passed separately after repair. These revision-scoped results close the previously missing cross-engine fixture replay evidence; they do not fabricate one clean combined 11/11 run or independently rerun every example in this observation."
+          },
+          {
+            "criterion_index": 1,
+            "status": "affected_platform_qualification_pending",
+            "assessment": "Node and retained-native-oracle/DLL results are scoped above. Fresh native SDK/OS, browser, Rust/Wasm-host and ABI32 outcomes are independent; unsupported targets are not counted as passing."
+          }
+        ],
+        "evidence_paths": [
+          "docs/a05-evidence/numeric-independent-20261004/a05-native-numeric-replay-139917fe5f-20261004/numeric-differential.log",
+          "docs/a05-evidence/numeric-independent-20261004/a05-native-conversion-repair-b3673745c-20261004/completion.json"
+        ],
+        "not_an_issue_closure": true
       }
     },
     {
@@ -2366,6 +2544,29 @@
             "assessment": "Authored focused positive/negative/boundary tests are linked above; current-revision and affected-platform results remain incomplete."
           }
         ]
+      },
+      "repair_checkpoint_8f6eba479": {
+        "revision": "8f6eba479ee93874b092f55ec9ffb825ded950f9",
+        "date": "2026-10-04",
+        "method": "Additive review of retained run reports, unchanged native fixtures and coordinator-reported final serial validation; this documentation update runs no tests.",
+        "criterion_results": [
+          {
+            "criterion_index": 0,
+            "status": "native_oracle_family_evidence_added",
+            "assessment": "The checked-shift native fixture passed source/reloaded-source/direct-CIL comparison at 139917fe5f. The complete repaired checked/unchecked/unsigned-source conversion matrix passed separately."
+          },
+          {
+            "criterion_index": 1,
+            "status": "affected_platform_qualification_pending",
+            "assessment": "Node and retained-native-oracle/DLL results are scoped above. Fresh native SDK/OS, browser, Rust/Wasm-host and ABI32 outcomes are independent; unsupported targets are not counted as passing."
+          }
+        ],
+        "evidence_paths": [
+          "docs/a05-evidence/numeric-independent-20261004/a05-native-numeric-replay-139917fe5f-20261004/numeric-differential.log",
+          "tests/fixtures/a05/numeric-oracle/checked-shift.cs",
+          "docs/a05-evidence/numeric-independent-20261004/a05-native-conversion-repair-b3673745c-20261004/completion.json"
+        ],
+        "not_an_issue_closure": true
       }
     },
     {
@@ -2435,6 +2636,29 @@
             "assessment": "Authored focused positive/negative/boundary tests are linked above; current-revision and affected-platform results remain incomplete."
           }
         ]
+      },
+      "repair_checkpoint_8f6eba479": {
+        "revision": "8f6eba479ee93874b092f55ec9ffb825ded950f9",
+        "date": "2026-10-04",
+        "method": "Additive review of retained run reports, unchanged native fixtures and coordinator-reported final serial validation; this documentation update runs no tests.",
+        "criterion_results": [
+          {
+            "criterion_index": 0,
+            "status": "harness_divergence_and_repair_evidence_added",
+            "assessment": "The retained failing runs demonstrate nonzero exit on divergence and identify engine, operand list and output row. Six focused exact-source/harness/artifact tests passed. Saved source files are now hash-verified inputs; native expected files and operand counts were unchanged. All formerly failing families now have separate passing evidence."
+          },
+          {
+            "criterion_index": 1,
+            "status": "affected_platform_qualification_pending",
+            "assessment": "Node and retained-native-oracle/DLL results are scoped above. Fresh native SDK/OS, browser, Rust/Wasm-host and ABI32 outcomes are independent; unsupported targets are not counted as passing."
+          }
+        ],
+        "evidence_paths": [
+          "docs/a05-evidence/numeric-independent-20261004/a05-numeric-oracle-source-r1.log",
+          "docs/a05-evidence/numeric-independent-20261004/README.md",
+          "docs/a05-evidence/numeric-independent-20261004/index.json"
+        ],
+        "not_an_issue_closure": true
       }
     },
     {
@@ -3054,6 +3278,16 @@
             "assessment": "Authored focused positive/negative/boundary tests are linked above; current-revision and affected-platform results remain incomplete."
           }
         ]
+      },
+      "native_qualification_follow_up": {
+        "date": "2026-10-04",
+        "status": "exact_native_fixture_and_three_route_comparison_authored",
+        "criterion_index": 0,
+        "source": "tests/fixtures/a05/byref-calls/Program.cs",
+        "source_identity": "Byte-identical to examples/runtime/managed-references.mjs exported source, enforced by regression.",
+        "runner": "scripts/validate-a05-type-system.js --fixture tests/fixtures/a05/byref-calls --source-routes",
+        "plan": "Runs SDK8 andSDK10 native cells; Roslyn CIL and all3 compiler routes compare actual native output using observed pointer width.",
+        "qualification": "Unit/adapter checks passed; fresh native execution remains pending. Authored expected output is not a captured oracle."
       }
     },
     {
@@ -3422,6 +3656,30 @@
             "assessment": "Authored focused positive/negative/boundary tests are linked above; current-revision and affected-platform results remain incomplete."
           }
         ]
+      },
+      "repair_checkpoint_8f6eba479": {
+        "revision": "8f6eba479ee93874b092f55ec9ffb825ded950f9",
+        "date": "2026-10-04",
+        "method": "Additive review of retained run reports, unchanged native fixtures and coordinator-reported final serial validation; this documentation update runs no tests.",
+        "criterion_results": [
+          {
+            "criterion_index": 0,
+            "status": "native_assembly_and_boundary_repair_evidence_added",
+            "assessment": "Exact Unsafe.Unbox<T> admission/runtime behavior is checked using three retained SDK8 DLLs (value boxing, enum unboxing and value instance calls). Foreign-VM references remain rejected. Nullable constrained Object calls and boxing repairs have focused passing evidence; this observation does not claim every affected SDK/platform has been rerun."
+          },
+          {
+            "criterion_index": 1,
+            "status": "affected_platform_qualification_pending",
+            "assessment": "Node and retained-native-oracle/DLL results are scoped above. Fresh native SDK/OS, browser, Rust/Wasm-host and ABI32 outcomes are independent; unsupported targets are not counted as passing."
+          }
+        ],
+        "evidence_paths": [
+          "tests/a05-unsafe-unbox-native-replay.test.js",
+          "tests/fixtures/a05/unsafe-unbox-native/capture.json",
+          "tests/a05-nullable-constrained-object.test.js",
+          "docs/a05-evidence/integration-validation-20261004/native-repairs/final/README.md"
+        ],
+        "not_an_issue_closure": true
       }
     },
     {
@@ -3713,6 +3971,28 @@
             "assessment": "Authored focused positive/negative/boundary tests are linked above; current-revision and affected-platform results remain incomplete."
           }
         ]
+      },
+      "repair_checkpoint_8f6eba479": {
+        "revision": "8f6eba479ee93874b092f55ec9ffb825ded950f9",
+        "date": "2026-10-04",
+        "method": "Additive review of retained run reports, unchanged native fixtures and coordinator-reported final serial validation; this documentation update runs no tests.",
+        "criterion_results": [
+          {
+            "criterion_index": 0,
+            "status": "fresh_node_stress_passed_at_checkpoint",
+            "assessment": "The fresh 8f6eba479 repeat passed six tests with the same 1,000-program corpus, 131,341 actual instruction collections, 96 source/reloaded/compiler-CIL counterparts and owner-root-removal negative controls. The original clean 5379d076a report remains unchanged. Source cannot create unbox interiors; direct CIL covers box ownership."
+          },
+          {
+            "criterion_index": 1,
+            "status": "affected_platform_qualification_pending",
+            "assessment": "Node and retained-native-oracle/DLL results are scoped above. Fresh native SDK/OS, browser, Rust/Wasm-host and ABI32 outcomes are independent; unsupported targets are not counted as passing."
+          }
+        ],
+        "evidence_paths": [
+          "docs/a05-evidence/integration-validation-20261004/native-repairs/final/a05-native-final-byref.log",
+          "docs/a05-evidence/numeric-independent-20261004/a05-independent-replay-5379d076a-20261004/byref-gc-stress.json"
+        ],
+        "not_an_issue_closure": true
       }
     },
     {
@@ -4214,6 +4494,29 @@
             "assessment": "Authored focused positive/negative/boundary tests are linked above; current-revision and affected-platform results remain incomplete."
           }
         ]
+      },
+      "repair_checkpoint_8f6eba479": {
+        "revision": "8f6eba479ee93874b092f55ec9ffb825ded950f9",
+        "date": "2026-10-04",
+        "method": "Additive review of retained run reports, unchanged native fixtures and coordinator-reported final serial validation; this documentation update runs no tests.",
+        "criterion_results": [
+          {
+            "criterion_index": 0,
+            "status": "policy_and_snapshot_repairs_tested_fresh_native_matrix_pending",
+            "assessment": "Explicit before-unwind and after-unwind first-chance callback policies retain fatal behavior, inspection state and snapshot replay. Target selection is declared before execution, with an independent runtime probe for failfast fixtures. Original failed remote traces remain unchanged; local policy/snapshot tests pass, but fresh SDK/OS event-order qualification is pending."
+          },
+          {
+            "criterion_index": 1,
+            "status": "affected_platform_qualification_pending",
+            "assessment": "Node and retained-native-oracle/DLL results are scoped above. Fresh native SDK/OS, browser, Rust/Wasm-host and ABI32 outcomes are independent; unsupported targets are not counted as passing."
+          }
+        ],
+        "evidence_paths": [
+          "docs/a05-first-chance-native-policy.md",
+          "docs/a05-evidence/integration-validation-20261004/policy-weak-intern/README.md",
+          "docs/a05-evidence/integration-validation-20261004/native-repairs/final/README.md"
+        ],
+        "not_an_issue_closure": true
       }
     },
     {
@@ -5347,6 +5650,28 @@
             "assessment": "Authored focused positive/negative/boundary tests are linked above; current-revision and affected-platform results remain incomplete."
           }
         ]
+      },
+      "repair_checkpoint_8f6eba479": {
+        "revision": "8f6eba479ee93874b092f55ec9ffb825ded950f9",
+        "date": "2026-10-04",
+        "method": "Additive review of retained run reports, unchanged native fixtures and coordinator-reported final serial validation; this documentation update runs no tests.",
+        "criterion_results": [
+          {
+            "criterion_index": 0,
+            "status": "float_differential_clause_supported_allocation_pending",
+            "assessment": "The native float family passed in the full 139917fe5f replay; nonfinite conversions passed the repaired complete matrix. This supports only the float-differential clause. A fresh prescribed per-iteration allocation trace remains independent and pending."
+          },
+          {
+            "criterion_index": 1,
+            "status": "affected_platform_qualification_pending",
+            "assessment": "Node and retained-native-oracle/DLL results are scoped above. Fresh native SDK/OS, browser, Rust/Wasm-host and ABI32 outcomes are independent; unsupported targets are not counted as passing."
+          }
+        ],
+        "evidence_paths": [
+          "docs/a05-evidence/numeric-independent-20261004/a05-native-numeric-replay-139917fe5f-20261004/numeric-differential.log",
+          "docs/a05-evidence/numeric-independent-20261004/a05-native-conversion-repair-b3673745c-20261004/completion.json"
+        ],
+        "not_an_issue_closure": true
       }
     },
     {
@@ -7181,5 +7506,94 @@
         "detail": "This static audit found no further demonstrated runtime defect beyond the assigned callback/Object/generic failures. This is not an exhaustive proof of completion; tests/platforms and exact parent artifacts remain open."
       }
     ]
+  },
+  "integration_repair_checkpoint": {
+    "revision": "8f6eba479ee93874b092f55ec9ffb825ded950f9",
+    "date": "2026-10-04",
+    "supersedes_for_repair_status_only": "54e3bba842f5b03c3364ee8db9b4978eb05f71b5",
+    "historical_fields_preserved": true,
+    "progress_path": "docs/a05-project7-progress.md",
+    "issue_observations": [
+      725,
+      1344,
+      1345,
+      1346,
+      1347,
+      1349,
+      1350,
+      1351,
+      1352,
+      1353,
+      1366,
+      1370,
+      1379,
+      1395
+    ],
+    "passing_selections": [
+      {
+        "revision": "02c941f5308a3c4575026d3ef31352ba9d93dacf",
+        "selection": "broad A05/preemption/security",
+        "tests": 3320,
+        "passed": 3320,
+        "failed": 0,
+        "skipped": 0,
+        "evidence": "docs/a05-evidence/integration-validation-20261004/native-repairs/final/a05-native-repairs-full-02c941f53.log"
+      },
+      {
+        "selection": "final focused native repairs",
+        "tests": 63,
+        "passed": 63,
+        "failed": 0,
+        "skipped": 0,
+        "evidence": "docs/a05-evidence/integration-validation-20261004/native-repairs/final/a05-native-final-focused-r1.log",
+        "revision_source": "See retained final manifest; no inferred commit substituted."
+      },
+      {
+        "revision": "8f6eba479ee93874b092f55ec9ffb825ded950f9",
+        "selection": "literal/constant regression",
+        "tests": 16,
+        "passed": 16,
+        "failed": 0,
+        "skipped": 0,
+        "evidence": "docs/a05-evidence/integration-validation-20261004/native-repairs/final/a05-native-final-constants.log"
+      },
+      {
+        "revision": "8f6eba479ee93874b092f55ec9ffb825ded950f9",
+        "selection": "byref GC stress",
+        "tests": 6,
+        "passed": 6,
+        "failed": 0,
+        "skipped": 0,
+        "evidence": "docs/a05-evidence/integration-validation-20261004/native-repairs/final/a05-native-final-byref.log"
+      }
+    ],
+    "repository_gates": {
+      "npm_check": "passed at8f6eba479",
+      "quarantine": "rerun passed with zero active entries",
+      "build": "Failed at8f6eba479 on static module cycles; dependency-boundary repairs through39055a8527e840b4534c45ffca122f3f89466106 await build rerun."
+    },
+    "numeric_evidence": "docs/a05-evidence/numeric-independent-20261004/index.json",
+    "remote_matrix": {
+      "revision": "e09324d3e83d742d47eb39b8f0482c38dc0f8756",
+      "state": "completed with failures retained; repairs integrated, new published CI pending",
+      "evidence": "docs/a05-evidence/ci-e09324d3-20261004/README.md"
+    },
+    "remaining_measurements": [
+      "Source Fibonacci1.5x remains inconclusive; virtual dispatch3x remains missed.",
+      "Profiler-off overhead remains missed/inconclusive; fresh paired qualification required.",
+      "Fresh root scans and snapshot retention after runtime/root changes.",
+      "Original float per-iteration allocation protocol, full-size fairness, final specialized numerical differentials and performance targets.",
+      "T12 two complete same-revision/runner stable repeats, populated phase baseline and actual candidate gate."
+    ],
+    "counts_are_not_summed": true,
+    "project_complete": false,
+    "issues_closed": false,
+    "build_follow_up": {
+      "measured_revision": "807879f511a877ba7e5e1e0e63d9b9b75ba91319",
+      "source_equivalent_integration": "39055a8527e840b4534c45ffca122f3f89466106",
+      "status": "strict_build_passed",
+      "evidence": "docs/a05-evidence/integration-validation-20261004/build-cycle-repair/README.md",
+      "scope": "Relevant packages, runtime, apps and scripts trees match; original8f failed build remains unchanged. Focused dependency-boundary cohorts passed78/78 and19/19, not summed with broad selections."
+    }
   }
 }

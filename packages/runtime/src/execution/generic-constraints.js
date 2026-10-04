@@ -1,11 +1,11 @@
 import {decodeCoded, methodGenericParameters, substituteCallType, primitiveSizes} from '@sharpforge/cil';
 import {ManagedFault} from '../heap.js';
 import {isAggregateType, requireValueStorage} from './value-types.js';
-import {valueLayout} from './value-layout.js';
+import {managedValueLayout, valueLayout} from './value-layout.js';
 
 /** Canonical method admission is derived from the code epoch, never snapshot or heap state. */
 export function requireGenericStructArgument(vm, owner, type) {
-  valueLayout(vm, type);
+  managedValueLayout(vm, type);
   const element = type.flags.nullable ? type.nullableType : type;
   if (isAggregateType(element)) requireValueStorage(vm, element);
 }

@@ -7,6 +7,7 @@ import json
 import os
 from pathlib import Path
 import platform
+import re
 import subprocess
 import sys
 import time
@@ -45,10 +46,22 @@ def provenance(engine):
             'cases': [{'id': name, 'passed': False, 'status': 'not-run'} for name in CASES]}
 
 
-def expected_csp(events, url):
+def expected_csp(events, url, *, engine=None, probe=None, allowed_probe=None):
     violations = [event for event in events if event.get('source') == 'event']
     if not violations:
-        raise AssertionError('Real CSP denial must produce a browser securitypolicyviolation event')
+        # WebKit 26.6 rejects native compilation without delivering a policy event.
+        # Require the same valid bytes to compile in the allowed document and fail
+        # with an actual policy-specific CompileError in this denied document.
+        error = (probe or {}).get('error', {})
+        valid_probe = (engine == 'webkit' and allowed_probe == {
+            'moduleHex': '0061736d01000000', 'compiled': True, 'nativeModule': True}
+            and (probe or {}).get('moduleHex') == allowed_probe['moduleHex']
+            and probe.get('compiled') is False and error.get('name') == 'CompileError'
+            and error.get('nativeCompileError') is True
+            and re.search(r'WebAssembly', error.get('message', ''), re.I)
+            and re.search(r'Content Security Policy|\bCSP\b', error.get('message', ''), re.I))
+        if not valid_probe:
+            raise AssertionError('CSP denial requires a policy event or WebKit native allowed/denied compile proof')
     for event in events:
         if event.get('source') == 'event':
             valid = (event.get('documentURI') == url and event.get('directive') in ('script-src', 'script-src-elem')
@@ -57,6 +70,8 @@ def expected_csp(events, url):
             valid = event.get('source') == 'console' and event.get('url') == url and 'script-src' in event.get('message', '')
         if not valid:
             raise AssertionError('Unexpected CSP violation in denial-only document: ' + repr(event))
+    return {'eventObserved': bool(violations),
+            'denialEvidence': 'securitypolicyviolation' if violations else 'native-csp-compile-rejection'}
 
 
 def restrict_requests(context):
@@ -72,7 +87,7 @@ def restrict_requests(context):
     return blocked
 
 
-def runtime_case(playwright, engine, name, source_url, policies, output):
+def runtime_case(playwright, engine, name, source_url, policies, output, *, headless=True, allowed_probe=None):
     from conformance.browser.launch import launch_browser
     denied = name == 'csp-denied-fallback'
     path = 'denied' if denied else 'allowed'
@@ -81,9 +96,8 @@ def runtime_case(playwright, engine, name, source_url, policies, output):
                 'profile-exports': 'profileExports', 'csp-denied-fallback': 'cspDeniedFallback'}[name]
     module = MODULE + ('profiles.mjs' if name == 'profile-exports' else 'runtime.mjs')
     result, events = None, []
-    caught_expected_violation = False
     try:
-        with launch_browser(playwright, name, engine=engine, mode='A05 public runtime / ' + path + ' CSP') as browser:
+        with launch_browser(playwright, name, engine=engine, headless=headless, mode='A05 public runtime / ' + path + ' CSP') as browser:
             context = browser.new_context(locale='en-US', viewport={'width': 1280, 'height': 900})
             blocked = restrict_requests(context)
             page = context.new_page()
@@ -101,16 +115,18 @@ def runtime_case(playwright, engine, name, source_url, policies, output):
                 # Flush event bindings before checking the launcher's expected negative observation.
                 page.evaluate('() => new Promise(resolve => setTimeout(resolve, 0))')
             events = browser.csp.events
+            directory = output / name
+            directory.mkdir(parents=True, exist_ok=True)
+            (directory / 'runtime-observation.json').write_text(json.dumps(
+                {'url': url, 'result': result, 'cspEvents': events}, indent=2) + '\n', encoding='utf8')
     except AssertionError as error:
         # The shared launcher deliberately fails on CSP violations. Only this exact
         # denial fixture may interpret its independently verified negative result.
         if not denied or result is None or type(error).__name__ != 'CspViolation':
             raise
-        expected_csp(events, url)
-        caught_expected_violation = True
+        expected_csp(events, url, engine=engine, probe=result.get('nativeProbe'), allowed_probe=allowed_probe)
     if denied:
-        if not caught_expected_violation:
-            raise AssertionError('CSP monitor did not observe the expected compile denial')
+        result['cspObservation'] = expected_csp(events, url, engine=engine, probe=result.get('nativeProbe'), allowed_probe=allowed_probe)
         result['expectedCspViolations'] = events
     if name == 'profile-exports':
         for exported in result['exports']:
@@ -121,9 +137,9 @@ def runtime_case(playwright, engine, name, source_url, policies, output):
     return result
 
 
-def speedscope_case(playwright, engine, name, ui_url, exported, output):
+def speedscope_case(playwright, engine, name, ui_url, exported, output, *, headless=True):
     from conformance.browser.launch import launch_browser
-    with launch_browser(playwright, name, engine=engine, mode='Official Speedscope UI file import') as browser:
+    with launch_browser(playwright, name, engine=engine, headless=headless, mode='Official Speedscope UI file import') as browser:
         context = browser.new_context(locale='en-US', viewport={'width': 1280, 'height': 900})
         blocked = restrict_requests(context)
         page = context.new_page()
@@ -147,7 +163,7 @@ def run(args, report, report_path):
         report['speedscopeSetupError'] = str(error)
     handler, policies = source_handler(ROOT)
     report['policies'] = policies
-    exports = {}
+    exports, allowed_probe = {}, None
     with ExitStack() as stack:
         source_url = stack.enter_context(serving(handler))
         ui_url = None
@@ -165,9 +181,12 @@ def run(args, report, report_path):
                     route = name.removeprefix('speedscope-')
                     if not ui_url or route not in exports:
                         raise RuntimeError('Required official UI or actual browser profile export is unavailable')
-                    result = speedscope_case(playwright, args.engine, name, ui_url, exports[route], args.output)
+                    result = speedscope_case(playwright, args.engine, name, ui_url, exports[route], args.output, headless=not args.headed)
                 else:
-                    result = runtime_case(playwright, args.engine, name, source_url, policies, args.output)
+                    result = runtime_case(playwright, args.engine, name, source_url, policies, args.output,
+                                          headless=not args.headed, allowed_probe=allowed_probe)
+                    if name == 'wasm-execution':
+                        allowed_probe = result['nativeProbe']
                     if name == 'profile-exports':
                         exports = {item['engine']: item for item in result['exports']}
                 row.update(result)
@@ -182,6 +201,7 @@ def run(args, report, report_path):
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--engine', choices=('chromium', 'firefox', 'webkit'), default='chromium')
+    parser.add_argument('--headed', action='store_true', help='Use a real headed browser; Linux CI requires Xvfb')
     parser.add_argument('--output', type=Path, default=ROOT / 'artifacts/a05-browser')
     parser.add_argument('--assets', type=Path, default=ROOT / 'artifacts/a05-browser-assets')
     mode = parser.add_mutually_exclusive_group()
@@ -198,6 +218,7 @@ def main():
         report = json.loads(report_path.read_text(encoding='utf8'))
     else:
         report = provenance(args.engine)
+        report['launchOptions'] = {'headless': not args.headed}
     os.environ['SHARPFORGE_RESULTS_DIR'] = str(args.output)
     if args.finalize:
         for row in report['cases']:

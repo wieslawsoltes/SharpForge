@@ -1,0 +1,11 @@
+{
+  "suite": "debugger-deopt",
+  "passed": true,
+  "engine": "firefox",
+  "cspViolations": [],
+  "browser": "155.0",
+  "executable": "playwright-managed",
+  "mode": "A05 public runtime / allowed CSP",
+  "seconds": 4.519214957000003,
+  "diagnosticErrors": []
+}

@@ -1,0 +1,32 @@
+✖ T01.6/T01.10 exhaustive source/target/checked/.un matrix matches native operand by operand (5277.502602ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 0
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 7019.074472
+
+✖ failing tests:
+
+test at tests/numeric-differential.test.js:94:1
+✖ T01.6/T01.10 exhaustive source/target/checked/.un matrix matches native operand by operand (5277.502602ms)
+  AssertionError [ERR_ASSERTION]: conversion matrix / source / r8:conv.i4:4294967296, r8:conv.i4:9223372036854774784, r8:conv.i4:9223372036854775808, r8:conv.i4:18446744073709549568, r8:conv.i4:18446744073709551616, r8:conv.i4:NaN, r8:conv.i4:Infinity, r8:conv.i4:-Infinity, r8:conv.ovf.i4:0, r8:conv.ovf.i4:-0, r8:conv.ovf.i4:1.5, r8:conv.ovf.i4:-1.5, r8:conv.ovf.i4:127.9, r8:conv.ovf.i4:255.9, r8:conv.ovf.i4:32767.9, r8:conv.ovf.i4:65535.9, r8:conv.ovf.i4:2147483647.9, r8:conv.ovf.i4:2147483648, r8:conv.ovf.i4:-2147483648.9, r8:conv.ovf.i4:4294967295.9, r8:conv.ovf.i4:4294967296, r8:conv.ovf.i4:9223372036854774784, r8:conv.ovf.i4:9223372036854775808, r8:conv.ovf.i4:18446744073709549568, r8:conv.ovf.i4:18446744073709551616, r8:conv.ovf.i4:NaN, r8:conv.ovf.i4:Infinity, r8:conv.ovf.i4:-Infinity, r8:conv.ovf.i4.un:0, r8:conv.ovf.i4.un:-0, r8:conv.ovf.i4.un:1.5, r8:conv.ovf.i4.un:-1.5, r8:conv.ovf.i4.un:127.9, r8:conv.ovf.i4.un:255.9, r8:conv.ovf.i4.un:32767.9, r8:conv.ovf.i4.un:65535.9, r8:conv.ovf.i4.un:2147483647.9, r8:conv.ovf.i4.un:2147483648, r8:conv.ovf.i4.un:-2147483648.9, r8:conv.ovf.i4.un:4294967295.9, r8:conv.ovf.i4.un:4294967296, r8:conv.ovf.i4.un:9223372036854774784, r8:conv.ovf.i4.un:9223372036854775808, r8:conv.ovf.i4.un:18446744073709549568, r8:conv.ovf.i4.un:18446744073709551616, r8:conv.ovf.i4.un:NaN, r8:conv.ovf.i4.un:Infinity, r8:conv.ovf.i4.un:-Infinity, output row 7
+  
+  '0\n' !== '21'
+  
+      at compareExecution (file:///workspace/scratch/42f7738360b9/a05-source-memory/tests/support/numeric-differential.js:43:16)
+      at numericDifferential (file:///workspace/scratch/42f7738360b9/a05-source-memory/tests/support/numeric-differential.js:69:23)
+      at TestContext.<anonymous> (file:///workspace/scratch/42f7738360b9/a05-source-memory/tests/numeric-differential.test.js:103:5)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.start (node:internal/test_runner/test:1242:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: '0\n',
+    expected: '21',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }

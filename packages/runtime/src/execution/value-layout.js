@@ -1,6 +1,7 @@
 import {ManagedFault} from '../heap.js';
 import {executionCodeState} from './code-version.js';
 import {validateReferenceLayout} from './reference-layout.js';
+import {hasManagedStateMachineLayout} from './managed-state-machine-layout.js';
 
 // Layouts contain metadata only. A code epoch, assembly or registry replacement drops them.
 const caches = new WeakMap();
@@ -30,7 +31,7 @@ function cacheFor(vm) {
     const classes = rows?.[15] ?? [];
     const fields = rows?.[16] ?? [];
     if (classes.length + fields.length > maxLayoutRows) unsupported('layout metadata row budget exceeded');
-    cache = {plans: new WeakMap(), definitions: vm.inspector ? vm.typeSystem.types : null,
+    cache = {plans: new WeakMap(), managedPlans: new WeakMap(), definitions: vm.inspector ? vm.typeSystem.types : null,
       classes: indexRows(classes, 2), fields: indexRows(fields, 1)};
     caches.set(state, cache);
   }
@@ -71,7 +72,8 @@ function aggregateLayout(vm, table, cache, context) {
   const fields = table.flags.nullable
     ? [{type: vm.heap.methodTables.get('bool')}, {type: table.nullableType}]
     : table.fields;
-  if (definition && fields.length && !(definition.flags & 0x18)) unsupported('auto-layout ' + table.name);
+  if (definition && fields.length && !(definition.flags & 0x18) &&
+      !(context.managed && hasManagedStateMachineLayout(vm, table))) unsupported('auto-layout ' + table.name);
   context.remainingFields -= fields.length;
   if (context.remainingFields < 0) unsupported('value layout field budget exceeded');
   const offsets = [];
@@ -105,7 +107,7 @@ function aggregateLayout(vm, table, cache, context) {
 
 function layoutFor(vm, table, cache, context) {
   requireClosed(table);
-  if (cache.plans.has(table)) return cache.plans.get(table);
+  if (context.plans.has(table)) return context.plans.get(table);
   const active = context.active;
   if (active.has(table)) invalid('Recursive value layout');
   if (active.size >= 128) invalid('Value layout nesting limit exceeded');
@@ -126,7 +128,7 @@ function layoutFor(vm, table, cache, context) {
     try { layout = aggregateLayout(vm, table, cache, context); }
     finally { active.delete(table); }
   }
-  cache.plans.set(table, layout);
+  context.plans.set(table, layout);
   return layout;
 }
 
@@ -135,7 +137,15 @@ export function valueLayout(vm, type) {
   const table = vm.inspector ? vm.typeSystem.table(type) : vm.heap.methodTables.get(type);
   const cache = cacheFor(vm);
   if (cache.plans.has(table)) return cache.plans.get(table);
-  return layoutFor(vm, table, cache, {active: new Set(), remainingFields: maxLayoutFields});
+  return layoutFor(vm, table, cache, {active: new Set(), remainingFields: maxLayoutFields, plans: cache.plans, managed: false});
+}
+
+/** Canonical logical field storage for managed copies and stack quotas; never used for raw bytes or sizeof. */
+export function managedValueLayout(vm, type) {
+  const table = vm.inspector ? vm.typeSystem.table(type) : vm.heap.methodTables.get(type);
+  const cache = cacheFor(vm);
+  if (cache.managedPlans.has(table)) return cache.managedPlans.get(table);
+  return layoutFor(vm, table, cache, {active: new Set(), remainingFields: maxLayoutFields, plans: cache.managedPlans, managed: true});
 }
 
 /** sizeof resolves the executing generic context through the existing MethodTable service. */

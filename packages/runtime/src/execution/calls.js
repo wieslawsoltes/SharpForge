@@ -15,7 +15,7 @@ import {pushIntrinsicCallResult} from './intrinsic-call-result.js';
 import {stringFromChars} from './strings.js';
 import {framePool} from './frame-pool.js';
 import {systemType,intrinsicDefinition,supportedDelegateCall} from '@sharpforge/cil';
-import {invokeBoundDelegate} from './delegate-targets.js';
+import {invokeBoundDelegate} from './delegate-calls.js';
 import {ManagedFault} from '../heap.js';
 import {SUSPENDED} from '../platform.js';
 import {storageDefault} from './storage.js';

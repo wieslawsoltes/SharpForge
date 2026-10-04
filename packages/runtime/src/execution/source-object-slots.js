@@ -1,5 +1,5 @@
 import {sourceObjectSlot, objectSlotKey} from '@sharpforge/bytecode';
-import {ManagedFault} from '../heap.js';
+import {ManagedFault} from './managed-fault.js';
 
 /** Retain ordinary source method identities and add only exact Object override slots. */
 export function sourceVirtualSlots(image, owner) {

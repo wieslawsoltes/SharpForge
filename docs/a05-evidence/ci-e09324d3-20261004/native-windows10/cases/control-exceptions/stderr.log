@@ -1,0 +1,23 @@
+CIL/native stdout
++ actual - expected
+
++ '0\ninner-finally\n9\nthrowing-filter\nfallback\nfinally-3\nfinally-2\nfinally-1\n42\n'
+- '0\n' +
+-   'inner-finally\n' +
+-   '9\n' +
+-   'throwing-filter\n' +
+-   'fallback\n' +
+-   'finally-3\n' +
+-   'finally-2\n' +
+-   'finally-1\n' +
+-   '42\n' +
+-   'replacement\n' +
+-   'arithmetic\n' +
+-   'system\n' +
+-   'index\n' +
+-   'True\n' +
+-   'False\n' +
+-   'True\n' +
+-   'inner\n' +
+-   'True\n'
+

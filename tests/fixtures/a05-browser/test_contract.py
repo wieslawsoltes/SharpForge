@@ -48,5 +48,33 @@ class EvidenceContract(unittest.TestCase):
             expected_csp([], url)
 
 
+    def test_eventless_webkit_requires_independent_native_allowed_and_denied_proof(self):
+        url = 'http://127.0.0.1:1234/denied.html'
+        allowed = {'moduleHex': '0061736d01000000', 'compiled': True, 'nativeModule': True}
+        rejected = {'moduleHex': allowed['moduleHex'], 'compiled': False, 'error': {
+            'name': 'CompileError', 'nativeCompileError': True,
+            'message': "Refused to create a WebAssembly object because of Content Security Policy"}}
+        result = expected_csp([], url, engine='webkit', probe=rejected, allowed_probe=allowed)
+        self.assertEqual(result, {'eventObserved': False, 'denialEvidence': 'native-csp-compile-rejection'})
+        for engine in ('chromium', 'firefox', None):
+            with self.subTest(engine=engine), self.assertRaises(AssertionError):
+                expected_csp([], url, engine=engine, probe=rejected, allowed_probe=allowed)
+        for control in (None, {**allowed, 'compiled': False}, {**allowed, 'nativeModule': False},
+                        {**allowed, 'moduleHex': 'invalid'}):
+            with self.subTest(control=control), self.assertRaises(AssertionError):
+                expected_csp([], url, engine='webkit', probe=rejected, allowed_probe=control)
+        failures = [{**rejected, 'compiled': True}, {**rejected, 'moduleHex': 'invalid'},
+                    {**rejected, 'error': {**rejected['error'], 'nativeCompileError': False}},
+                    {**rejected, 'error': {**rejected['error'], 'name': 'TypeError'}},
+                    {**rejected, 'error': {**rejected['error'], 'message': 'WebAssembly: invalid module'}}]
+        for probe in failures:
+            with self.subTest(probe=probe), self.assertRaises(AssertionError):
+                expected_csp([], url, engine='webkit', probe=probe, allowed_probe=allowed)
+        with self.assertRaisesRegex(AssertionError, 'Unexpected CSP'):
+            expected_csp([{'source': 'event', 'documentURI': url, 'directive': 'style-src',
+                           'blockedURI': 'inline', 'disposition': 'enforce'}], url,
+                         engine='webkit', probe=rejected, allowed_probe=allowed)
+
+
 if __name__ == '__main__':
     unittest.main()

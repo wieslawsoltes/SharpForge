@@ -1,0 +1,81 @@
+{
+  "format": "SharpForge.A05ValidationCheckpoint/1",
+  "revision": "46ed6141a29e2a08523449a9ca89ce395d8e9e07",
+  "tree": "2b7e28c4de03ff6c305668d2e882ac654be2500f",
+  "workingDirectory": "/workspace/scratch/42f7738360b9/a05-integration",
+  "environment": {
+    "SHARPFORGE_MAX_PARALLEL_RUNS": "1",
+    "SHARPFORGE_TEST_CONCURRENCY": "1",
+    "SHARPFORGE_MAX_OLD_SPACE_MB": "512"
+  },
+  "scope": "Local native-width/byref qualification harness and source-route checks; no fresh native matrix or Windows x86 process execution claim. Counts overlap earlier cohorts.",
+  "preflightNote": "An initial argument inventory used nonexistent a05-source-byref-scenarios.test.js; the runner stopped before starting any test. The correct a05-byref-call-scenarios.test.js input is used below.",
+  "journal": {
+    "file": "a05-native-new-criteria-journal.json",
+    "bytes": 1900,
+    "sha256": "62c942e383ddba1da0084e2ccd9add542b99ee46c0e79fa7252cd17e2a788328"
+  },
+  "records": [
+    {
+      "file": "a05-native-new-criteria-focused.log",
+      "bytes": 3631,
+      "sha256": "04942578b5167d9ccfd28920b37228591d1b06e182a61a7439a6a4057907d316",
+      "command": [
+        "node",
+        "scripts/limited.js",
+        "node",
+        "--expose-gc",
+        "--test",
+        "--test-concurrency=1",
+        "tests/a05-byref-native-source-routes.test.js",
+        "tests/a05-native-width-qualification.test.js",
+        "tests/a05-native-runtime-probe.test.js",
+        "tests/a05-native-qualification.test.js",
+        "tests/a05-native-outcome.test.js",
+        "tests/a05-byref-call-scenarios.test.js"
+      ],
+      "startedAt": "2026-10-04T18:30:53Z",
+      "finishedAt": "2026-10-04T18:31:00Z",
+      "exitCode": 0,
+      "result": "passed",
+      "tests": 28,
+      "passed": 28,
+      "failed": 0,
+      "skipped": 0,
+      "cancelled": 0,
+      "todo": 0,
+      "durationMs": 6129.876855
+    },
+    {
+      "file": "a05-native-new-criteria-npm-check.log",
+      "bytes": 382,
+      "sha256": "edfb4710d887d641c02a0f93910c2faf316b683521351842df332c06511c4655",
+      "command": [
+        "node",
+        "scripts/limited.js",
+        "npm",
+        "run",
+        "check"
+      ],
+      "startedAt": "2026-10-04T18:31:00Z",
+      "finishedAt": "2026-10-04T18:31:09Z",
+      "exitCode": 0,
+      "result": "passed"
+    },
+    {
+      "file": "a05-native-new-criteria-license.log",
+      "bytes": 88,
+      "sha256": "5a27cc00be0c8dec1cbdd5b7b2b3169a159277c45ed22ae3ae0ec82348cbd353",
+      "command": [
+        "node",
+        "scripts/limited.js",
+        "node",
+        "scripts/conformance/oracle/license-policy.js"
+      ],
+      "startedAt": "2026-10-04T18:31:09Z",
+      "finishedAt": "2026-10-04T18:31:10Z",
+      "exitCode": 0,
+      "result": "passed"
+    }
+  ]
+}

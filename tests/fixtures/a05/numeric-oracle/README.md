@@ -33,6 +33,10 @@ and instruction quotas remain enforced. Failures identify the engine and output
 row; conversion cases additionally include the original source/target/operand.
 The storage fixture generator invokes the
 same authored DLL through native reflection, including argument and byref stores.
+Whole-program cases replay the hash-verified `.cs` artifact that the CLR compiled,
+including its explicit `using System;` directive. Bounded conversion snippets use
+the same namespace import. Omitting that directive leaves `Exception` unresolved
+in semantic binding and does not reproduce the native program's compilation context.
 Rust native/Wasm execution remains unqualified: this repository currently has no
 such execution engine adapter. Browser execution of these shared helpers requires
 the assembled browser gate and does not count as a native CLR qualification.

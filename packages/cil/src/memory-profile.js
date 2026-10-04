@@ -49,6 +49,10 @@ function scalarOperation(name, call) {
       arguments_.every(managedMemoryElement) && equal(parameters, [arguments_[0] + '&']) && result === arguments_[1] + '&') {
     return {operation: 'reinterpret', owner, element: null};
   }
+  if (owner === 'System.Runtime.CompilerServices.Unsafe' && name === 'Unbox' && arity === 1 &&
+      managedMemoryElement(arguments_[0]) && equal(parameters, ['object']) && result === arguments_[0] + '&') {
+    return {operation: 'unboxReference', owner, element: arguments_[0]};
+  }
   if (owner !== 'System.BitConverter' || arity) return null;
   if (name === 'GetBytes' && parameters.length === 1 && Object.values(bitValues).includes(parameters[0]) && result === 'byte[]') {
     return {operation: 'bitBytes', owner, element: null};

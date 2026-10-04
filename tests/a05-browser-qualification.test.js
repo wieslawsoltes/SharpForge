@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {wasmExecution, debuggerDeopt} from './fixtures/a05-browser/runtime.mjs';
+import {wasmExecution, debuggerDeopt, cspDeniedFallback} from './fixtures/a05-browser/runtime.mjs';
 import {profileExports} from './fixtures/a05-browser/profiles.mjs';
 
 // Node verifies fixture assertions only. This suite cannot establish a browser,
@@ -8,6 +8,7 @@ import {profileExports} from './fixtures/a05-browser/profiles.mjs';
 test('browser Wasm fixture requires native arithmetic and preserves exact instruction/profile totals', async () => {
   const result = await wasmExecution();
   assert.equal(result.passed, true);
+  assert.deepEqual(result.nativeProbe, {moduleHex: '0061736d01000000', compiled: true, nativeModule: true});
   assert.equal(result.hostArithmeticCalls, 0);
   assert(result.instructions > 0);
   assert.equal(result.instructions, result.referenceInstructions);
@@ -40,4 +41,8 @@ test('browser native arithmetic fixture fails when a required WebAssembly depend
     globalThis.WebAssembly = undefined;
     await assert.rejects(wasmExecution(), /actual browser WebAssembly is required/);
   } finally { globalThis.WebAssembly = original; }
+});
+
+test('denial fixture cannot pass when native compilation is actually allowed', async () => {
+  await assert.rejects(cspDeniedFallback(), /denied CSP rejects a valid native module/);
 });

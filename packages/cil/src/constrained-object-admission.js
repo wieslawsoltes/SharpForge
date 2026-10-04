@@ -62,10 +62,24 @@ export function admitConstrainedObject(profile, input, reachable) {
     } else reachableObjectTargets(profile, descriptor, reachable);
     return null;
   }
-  const parts = genericTypeParts(name), type = profile.objects.names.get(parts.definition);
+  let parts = genericTypeParts(name);
+  const nullable = parts.definition === 'System.Nullable`1' && parts.arguments.length === 1;
+  if (nullable) {
+    const element = normalizeCallType(parts.arguments[0]);
+    if (scalarFields.has(element)) return null;
+    if (/^!!?\d+$/.test(element)) {
+      reachableObjectTargets(profile, descriptor, reachable);
+      return null;
+    }
+    parts = genericTypeParts(element);
+  }
+  const type = profile.objects.names.get(parts.definition);
   if (!type || type.flags & 0x20 || profile.genericOwners.has(type.token) && !parts.arguments.length) {
     return 'constrained. Object execution requires a closed managed primitive, class or user struct';
   }
+  const base = type.baseToken ? profile.inspector.metadata.typeName(type.baseToken) : null;
+  if (nullable && base === 'System.Enum') return null;
+  if (nullable && base !== 'System.ValueType') return 'constrained. Nullable Object calls require a non-nullable value argument';
   const plan = profile.objects.select(type.token, descriptor);
   if (plan) {
     if (plan.target) reachable.push(plan.target);

@@ -1,4 +1,3 @@
-import {invokeDelegateOperation} from './delegate-invocations.js';
 import {createMethodPointer} from './method-pointers.js';
 import {managedDelegateSignature} from '@sharpforge/cil';
 import {ManagedFault, isReference} from '../heap.js';
@@ -62,7 +61,7 @@ export function constructBoundDelegate(vm, type, receiver, pointer) {
   return vm.platform.make(type, {method: pointer.token, receiver, mode}, 'delegate');
 }
 
-function delegateRecord(vm, reference) {
+export function delegateRecord(vm, reference) {
   const record = vm.heap.get(reference);
   if (record.kind !== 'delegate') throw fault('Managed delegate required');
   return record;
@@ -102,17 +101,4 @@ export function boundDelegateCall(vm, reference, args) {
   const mode = bindingMode(vm, reference, method);
   if (!['static', 'closed-static', 'open-instance', 'closed-instance'].includes(mode)) throw fault('Unknown delegate binding mode');
   return {method, arguments: mode === 'closed-static' || mode === 'closed-instance' ? [receiver, ...args] : [...args]};
-}
-
-/** Leaves ordinary calls and returns on main's existing frame/scheduler path. */
-export function invokeBoundDelegate(vm, descriptor, args, constructing) {
-  if (constructing) return constructBoundDelegate(vm, descriptor.ownerInstance ?? descriptor.owner, args[0], args[1]);
-  if (descriptor.name === '.ctor') throw new ManagedFault('NotSupportedException', 'Delegate construction requires newobj');
-  if (descriptor.name !== 'Invoke') return invokeDelegateOperation(vm, descriptor, args);
-  delegateRecord(vm, args[0]);
-  const expected = vm.heap.methodTables.get(descriptor.ownerInstance ?? descriptor.owner);
-  if (!castCacheFor(vm.heap.methodTables).isAssignableFrom(expected, vm.heap.get(args[0]).methodTable)) {
-    throw fault('Delegate invocation receiver type mismatch');
-  }
-  return vm.scheduler.callDelegate(args[0], args.slice(1));
 }

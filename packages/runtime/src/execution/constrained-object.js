@@ -8,7 +8,7 @@ import {framePool} from './frame-pool.js';
 import {instantiatedMethod} from './generics.js';
 import {SUSPENDED} from '../suspension.js';
 export {constrainedInt32Plan, constrainedPrimitivePlan, constrainedObjectPlan,
-  constrainedReferenceObjectPlan, requireConstrainedObjectBound} from './object-dispatch.js';
+  constrainedReferenceObjectPlan, constrainedNullableObjectPlan, requireConstrainedObjectBound} from './object-dispatch.js';
 
 /** Enter the exact override on its original byref, or root a copied box for the inherited intrinsic. */
 export function invokeConstrainedObject(vm, caller, descriptor, {table, plan, receiver, current}) {

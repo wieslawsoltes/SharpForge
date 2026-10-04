@@ -1,0 +1,22 @@
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> sharpforge@0.14.0 build
+> node scripts/run.js build
+
+file:///workspace/scratch/42f7738360b9/a05-integration/scripts/bundling/module-graph.js:10
+    if (active.has(id)) throw new Error(`Static module cycle: ${modules[id].path}`);
+                              ^
+
+Error: Static module cycle: /workspace/scratch/42f7738360b9/a05-integration/dist/packages/runtime/src/heap.js
+    at visit (file:///workspace/scratch/42f7738360b9/a05-integration/scripts/bundling/module-graph.js:10:31)
+    at visit (file:///workspace/scratch/42f7738360b9/a05-integration/scripts/bundling/module-graph.js:13:69)
+    at visit (file:///workspace/scratch/42f7738360b9/a05-integration/scripts/bundling/module-graph.js:13:69)
+    at visit (file:///workspace/scratch/42f7738360b9/a05-integration/scripts/bundling/module-graph.js:13:69)
+    at visit (file:///workspace/scratch/42f7738360b9/a05-integration/scripts/bundling/module-graph.js:13:69)
+    at visit (file:///workspace/scratch/42f7738360b9/a05-integration/scripts/bundling/module-graph.js:13:69)
+    at validateStaticGraph (file:///workspace/scratch/42f7738360b9/a05-integration/scripts/bundling/module-graph.js:17:33)
+    at collectModules (file:///workspace/scratch/42f7738360b9/a05-integration/scripts/bundling/module-graph.js:100:3)
+    at async bundleWorker (file:///workspace/scratch/42f7738360b9/a05-integration/scripts/bundle-worker.js:7:17)
+    at async file:///workspace/scratch/42f7738360b9/a05-integration/scripts/build.js:22:23
+
+Node.js v24.19.0

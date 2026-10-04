@@ -1,0 +1,22 @@
+......E
+======================================================================
+ERROR: test_matrix (unittest.loader._FailedTest.test_matrix)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_matrix
+Traceback (most recent call last):
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/loader.py", line 137, in loadTestsFromName
+    module = __import__(module_name)
+             ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/scratch/42f7738360b9/a05-integration/tests/conformance/browser/test_matrix.py", line 11, in <module>
+    from conformance.browser.run_matrix import bounded
+  File "/workspace/scratch/42f7738360b9/a05-integration/tests/conformance/browser/run_matrix.py", line 11, in <module>
+    from conformance.browser.run_suite import cancel
+  File "/workspace/scratch/42f7738360b9/a05-integration/tests/conformance/browser/run_suite.py", line 11, in <module>
+    from project16_suites import PROJECT16_SUITES
+ModuleNotFoundError: No module named 'project16_suites'
+
+
+----------------------------------------------------------------------
+Ran 7 tests in 0.010s
+
+FAILED (errors=1)

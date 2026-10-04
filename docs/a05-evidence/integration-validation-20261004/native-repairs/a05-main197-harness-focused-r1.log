@@ -1,0 +1,26 @@
+✔ browser Wasm fixture requires native arithmetic and preserves exact instruction/profile totals (31.428859ms)
+✔ browser debugger fixture proves OSR, actual breakpoint, canonical step, and interpreted resume (22.794644ms)
+✔ browser profile fixtures export actual source/reload/CIL counts and named guest methods (97.970341ms)
+✔ browser native arithmetic fixture fails when a required WebAssembly dependency is unavailable (3.190889ms)
+✔ float allocation instrumentation covers the factory return and rejects a changed allocation site (1.553644ms)
+✔ float trace parsing keeps exact carrier counts distinct from V8 byte observations (0.857985ms)
+✔ real isolated float counter detects generic carriers and zero typed warm-loop carriers (1900.476676ms)
+✔ float measurement bounds and required evidence destination are explicit (1.447654ms)
+✔ reused CIL dispatch activity state preserves nested entry, normal exit and thrown dispatch cleanup (25.081274ms)
+✔ per-iteration allocation evidence preserves positive fixed slice costs and separate all-run limits (2.410025ms)
+✔ a single observed byte of growth or any loop collection stays inconclusive without tolerance (0.392867ms)
+✔ exact loop allocation counters cannot be hidden by flat or falling V8 bytes (0.360589ms)
+✔ partial workloads, altered warmup, mismatched engines and missing allocation controls cannot qualify (0.535025ms)
+✔ allocation trace includes all in-loop bytes and closing pre-collection allocation, not retained size (0.72939ms)
+✔ retained reports keep their historical labels while fixed-loop interpretation distinguishes real allocation growth (3.997289ms)
+✔ native provenance retains exact tree and generated SDK file while permitting untracked evidence (47.416534ms)
+✔ native provenance rejects unstaged and staged tracked edits before native work (95.983686ms)
+✔ native provenance records public workflow and PR identities without copying the event payload (33.820239ms)
+ℹ tests 18
+ℹ suites 0
+ℹ pass 18
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 4168.265358

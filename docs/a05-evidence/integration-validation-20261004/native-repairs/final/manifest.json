@@ -1,0 +1,460 @@
+{
+  "format": "SharpForge.A05ValidationCheckpoint/1",
+  "scope": "Final repair Node cohorts and static/build checks on distinct measured revisions. Overlapping counts must not be summed. Build failure retained.",
+  "workingDirectory": "/workspace/scratch/42f7738360b9/a05-integration",
+  "sourceProvenance": "Coordinator-supplied exact revisions/trees/commands except explicitly unavailable generator/initial sparse-failure argv. Original raw outputs copied without rewriting.",
+  "environmentProvenance": "Resource controls supplied by coordinator. Byref log embeds Node/platform/clean tracked-tree/corpus metadata; other logs do not establish a complete benchmark fingerprint.",
+  "records": [
+    {
+      "file": "a05-native-repairs-full-02c941f53.log",
+      "bytes": 310841,
+      "sha256": "bcf40cf53e0fb224c11fbf40402e3cc01e7a12858d7702a0e6f2a28c2c0cb584",
+      "revision": "02c941f5308a3c4575026d3ef31352ba9d93dacf",
+      "tree": "57813bab805cabd9e5a85ca1a077f3b12af54691",
+      "exitCode": 0,
+      "result": "passed",
+      "command": [
+        "node",
+        "scripts/limited.js",
+        "node",
+        "--expose-gc",
+        "--test",
+        "--test-concurrency=1",
+        "tests/a05-*.test.js",
+        "tests/preemption.test.js",
+        "tests/conformance/security/limits.test.js"
+      ],
+      "commandProvenance": "Coordinator supplied exact argv with repository wrapper",
+      "environment": {
+        "SHARPFORGE_MAX_PARALLEL_RUNS": "1",
+        "SHARPFORGE_TEST_CONCURRENCY": "1",
+        "SHARPFORGE_MAX_OLD_SPACE_MB": "512"
+      },
+      "note": "Broad A05/preemption/security selection; shell expands the recorded glob. No numeric-differential, byref stress or full-repository claim.",
+      "shellExpansion": "Recorded wildcard selection; expanded per-file argv was not retained.",
+      "kind": "node-tests",
+      "tests": 3320,
+      "passed": 3320,
+      "failed": 0,
+      "skipped": 0,
+      "cancelled": 0,
+      "todo": 0,
+      "durationMs": 369203.956585
+    },
+    {
+      "file": "a05-native-final-focused-r1.log",
+      "bytes": 7017,
+      "sha256": "35760e0c6d68439e763ec690582ae15c6ee3aef22196f1a7b1ef04ef0b09cec4",
+      "revision": "02c941f5308a3c4575026d3ef31352ba9d93dacf",
+      "tree": "57813bab805cabd9e5a85ca1a077f3b12af54691",
+      "exitCode": 0,
+      "result": "passed",
+      "command": [
+        "node",
+        "scripts/limited.js",
+        "node",
+        "--expose-gc",
+        "--test",
+        "--test-concurrency=1",
+        "tests/a05-memory-native-replay.test.js",
+        "tests/a05-first-chance-unwind-policy.test.js",
+        "tests/a05-weak-intern-snapshot.test.js",
+        "tests/a05-managed-state-machine-layout.test.js",
+        "tests/a05-roslyn-async-admission.test.js",
+        "tests/a05-native-runtime-probe.test.js",
+        "tests/a05-native-outcome.test.js",
+        "tests/a05-native-qualification.test.js"
+      ],
+      "commandProvenance": "Coordinator supplied exact argv with repository wrapper",
+      "environment": {
+        "SHARPFORGE_MAX_PARALLEL_RUNS": "1",
+        "SHARPFORGE_TEST_CONCURRENCY": "1",
+        "SHARPFORGE_MAX_OLD_SPACE_MB": "512"
+      },
+      "note": "Eight-file retained-native/policy/snapshot selection.",
+      "kind": "node-tests",
+      "tests": 63,
+      "passed": 63,
+      "failed": 0,
+      "skipped": 0,
+      "cancelled": 0,
+      "todo": 0,
+      "durationMs": 6951.566972
+    },
+    {
+      "file": "a05-native-final-npm-check.log",
+      "bytes": 382,
+      "sha256": "3f5deab38cb53846182a6c53a2206e4f23f2202969258abd7c6e103fc3876dca",
+      "revision": "8f6eba479ee93874b092f55ec9ffb825ded950f9",
+      "tree": "e5081c0ab138129057fd13b4b7629c32ae0e39c6",
+      "exitCode": 0,
+      "result": "passed",
+      "command": [
+        "node",
+        "scripts/limited.js",
+        "npm",
+        "run",
+        "check"
+      ],
+      "commandProvenance": "Coordinator supplied exact argv with repository wrapper",
+      "environment": {
+        "SHARPFORGE_MAX_PARALLEL_RUNS": "1",
+        "SHARPFORGE_TEST_CONCURRENCY": "1",
+        "SHARPFORGE_MAX_OLD_SPACE_MB": "512"
+      },
+      "note": "Manifests, syntax and static import checks.",
+      "kind": "static-check"
+    },
+    {
+      "file": "a05-native-final-constants.log",
+      "bytes": 1685,
+      "sha256": "56ac85df0ef98013a213825bde5c1532921d8b64ccd2bfb66ada52a5e6a1ccb7",
+      "revision": "8f6eba479ee93874b092f55ec9ffb825ded950f9",
+      "tree": "e5081c0ab138129057fd13b4b7629c32ae0e39c6",
+      "exitCode": 0,
+      "result": "passed",
+      "command": [
+        "node",
+        "scripts/limited.js",
+        "node",
+        "--test",
+        "--test-concurrency=1",
+        "tests/compiler-constant-folding.test.js",
+        "tests/compiler-constant-conversion-integration.test.js",
+        "tests/a05-integer-literal-profile-boundaries.test.js"
+      ],
+      "commandProvenance": "Coordinator supplied exact argv with repository wrapper",
+      "environment": {
+        "SHARPFORGE_MAX_PARALLEL_RUNS": "1",
+        "SHARPFORGE_TEST_CONCURRENCY": "1",
+        "SHARPFORGE_MAX_OLD_SPACE_MB": "512"
+      },
+      "note": "Constants and integer-literal boundaries after the structural extraction.",
+      "kind": "node-tests",
+      "tests": 16,
+      "passed": 16,
+      "failed": 0,
+      "skipped": 0,
+      "cancelled": 0,
+      "todo": 0,
+      "durationMs": 3256.064069
+    },
+    {
+      "file": "a05-native-final-diagnostic-codes.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "revision": "8f6eba479ee93874b092f55ec9ffb825ded950f9",
+      "tree": "e5081c0ab138129057fd13b4b7629c32ae0e39c6",
+      "exitCode": 0,
+      "result": "passed",
+      "command": null,
+      "commandProvenance": "Exact argv unavailable; not reconstructed",
+      "environment": {
+        "SHARPFORGE_MAX_PARALLEL_RUNS": "1",
+        "SHARPFORGE_TEST_CONCURRENCY": "1",
+        "SHARPFORGE_MAX_OLD_SPACE_MB": "512"
+      },
+      "note": "Coordinator reports diagnostic-code generator check passed; zero-byte log; exact generator argv not retained or reconstructed.",
+      "kind": "static-check"
+    },
+    {
+      "file": "a05-bound-nodes-02c941f53.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "revision": "02c941f5308a3c4575026d3ef31352ba9d93dacf",
+      "tree": "57813bab805cabd9e5a85ca1a077f3b12af54691",
+      "exitCode": 0,
+      "result": "passed",
+      "command": null,
+      "commandProvenance": "Exact argv unavailable; not reconstructed",
+      "environment": {
+        "SHARPFORGE_MAX_PARALLEL_RUNS": "1",
+        "SHARPFORGE_TEST_CONCURRENCY": "1",
+        "SHARPFORGE_MAX_OLD_SPACE_MB": "512"
+      },
+      "note": "Coordinator reports bound-node generator check passed; zero-byte log; exact generator argv not retained or reconstructed.",
+      "kind": "static-check"
+    },
+    {
+      "file": "a05-native-final-quarantine.log",
+      "bytes": 81,
+      "sha256": "a79903c4f101819bb56e39a329badc39490fd4e06020a4cb91578788ef71a73c",
+      "revision": "8f6eba479ee93874b092f55ec9ffb825ded950f9",
+      "tree": "e5081c0ab138129057fd13b4b7629c32ae0e39c6",
+      "exitCode": 1,
+      "result": "failed",
+      "command": null,
+      "commandProvenance": "Exact argv unavailable; not reconstructed",
+      "environment": {
+        "SHARPFORGE_MAX_PARALLEL_RUNS": "1",
+        "SHARPFORGE_TEST_CONCURRENCY": "1",
+        "SHARPFORGE_MAX_OLD_SPACE_MB": "512"
+      },
+      "note": "Original quarantine attempt failed because sparse checkout omitted planning/qualification/quarantine.json. Exact argv not retained separately; corrected invocation is independently journaled.",
+      "kind": "static-check"
+    },
+    {
+      "file": "a05-oracle-license-9f55b3391.log",
+      "bytes": 134,
+      "sha256": "33330d25bc95d9c9cf225ac7de8ed7146f72e09ace1f3ed4f393df3e7eaf2257",
+      "revision": "9f55b33913537d9c03813f5808da40c19a4d5394",
+      "tree": "aecaccffc1686802b5baefcb12d35468f47cfca6",
+      "exitCode": 1,
+      "result": "failed",
+      "command": null,
+      "commandProvenance": "Exact argv unavailable; not reconstructed",
+      "environment": {
+        "SHARPFORGE_MAX_PARALLEL_RUNS": "1",
+        "SHARPFORGE_TEST_CONCURRENCY": "1",
+        "SHARPFORGE_MAX_OLD_SPACE_MB": "512"
+      },
+      "note": "Original license-policy attempt failed because sparse checkout omitted planning/qualification/oracle-licenses.json. Exact argv not retained separately.",
+      "kind": "static-check"
+    },
+    {
+      "file": "a05-oracle-license-9f55b3391-r2.log",
+      "bytes": 88,
+      "sha256": "85738762ccc36d24cedf340593d085bdc1307d26b99373a021d3671a6b66e6f1",
+      "revision": "9f55b33913537d9c03813f5808da40c19a4d5394",
+      "tree": "aecaccffc1686802b5baefcb12d35468f47cfca6",
+      "exitCode": 0,
+      "result": "passed",
+      "command": [
+        "node",
+        "scripts/limited.js",
+        "node",
+        "scripts/conformance/oracle/license-policy.js"
+      ],
+      "commandProvenance": "Coordinator supplied exact argv with repository wrapper",
+      "environment": {
+        "SHARPFORGE_MAX_PARALLEL_RUNS": "1",
+        "SHARPFORGE_TEST_CONCURRENCY": "1",
+        "SHARPFORGE_MAX_OLD_SPACE_MB": "512"
+      },
+      "note": "License-policy check passed after materializing unchanged tracked policy configuration.",
+      "kind": "static-check"
+    },
+    {
+      "file": "a05-structure-9f55b3391.log",
+      "bytes": 21330,
+      "sha256": "b9dfbfc9142317766de5629fe3d504c34727c1814d02babebdd95ee5ca6f91a7",
+      "revision": "9f55b33913537d9c03813f5808da40c19a4d5394",
+      "tree": "aecaccffc1686802b5baefcb12d35468f47cfca6",
+      "exitCode": 0,
+      "result": "passed",
+      "command": [
+        "node",
+        "scripts/limited.js",
+        "npm",
+        "run",
+        "check:structure"
+      ],
+      "commandProvenance": "Coordinator supplied exact argv with repository wrapper",
+      "environment": {
+        "SHARPFORGE_MAX_PARALLEL_RUNS": "1",
+        "SHARPFORGE_TEST_CONCURRENCY": "1",
+        "SHARPFORGE_MAX_OLD_SPACE_MB": "512"
+      },
+      "note": "Advisory structural check: exit zero does not mean no reported structural warnings. Later source-only style repairs are separate.",
+      "kind": "static-check"
+    },
+    {
+      "file": "a05-native-final-quarantine-r2.log",
+      "bytes": 27,
+      "sha256": "e9db67ddde45a2aafa58cd5388e9d6d9a091670a5eaf91731ab5dc9d2825cb16",
+      "revision": "8f6eba479ee93874b092f55ec9ffb825ded950f9",
+      "tree": "e5081c0ab138129057fd13b4b7629c32ae0e39c6",
+      "exitCode": 0,
+      "result": "passed",
+      "command": [
+        "node",
+        "scripts/limited.js",
+        "node",
+        "scripts/conformance/flaky/detect.js",
+        "--check-quarantine"
+      ],
+      "commandProvenance": "Byte-retained final gates journal",
+      "environment": {
+        "SHARPFORGE_MAX_PARALLEL_RUNS": "1",
+        "SHARPFORGE_TEST_CONCURRENCY": "1",
+        "SHARPFORGE_MAX_OLD_SPACE_MB": "512"
+      },
+      "note": "Passed quarantine check with active count zero.",
+      "kind": "static-check",
+      "startedAt": "2026-10-04T18:12:38Z",
+      "finishedAt": "2026-10-04T18:12:38Z"
+    },
+    {
+      "file": "a05-native-final-byref.log",
+      "bytes": 1869,
+      "sha256": "001edc3f2189baea3c50fbe60607b80fad72fb548a8aa8ebe456acb4bb9e0908",
+      "revision": "8f6eba479ee93874b092f55ec9ffb825ded950f9",
+      "tree": "e5081c0ab138129057fd13b4b7629c32ae0e39c6",
+      "exitCode": 0,
+      "result": "passed",
+      "command": [
+        "node",
+        "scripts/limited.js",
+        "node",
+        "--expose-gc",
+        "--test",
+        "--test-concurrency=1",
+        "tests/byref-gc-stress.test.js"
+      ],
+      "commandProvenance": "Byte-retained final gates journal",
+      "environment": {
+        "SHARPFORGE_MAX_PARALLEL_RUNS": "1",
+        "SHARPFORGE_TEST_CONCURRENCY": "1",
+        "SHARPFORGE_MAX_OLD_SPACE_MB": "512"
+      },
+      "note": "Six-test instruction-GC corpus; embedded clean-checkout and full corpus provenance retained. Not fresh native/browser qualification.",
+      "kind": "node-tests",
+      "tests": 6,
+      "passed": 6,
+      "failed": 0,
+      "skipped": 0,
+      "cancelled": 0,
+      "todo": 0,
+      "durationMs": 9229.394128,
+      "startedAt": "2026-10-04T18:12:38Z",
+      "finishedAt": "2026-10-04T18:12:47Z",
+      "embeddedProvenance": {
+        "format": "SharpForge.ByrefGCStress/1",
+        "seed": "0x53464237",
+        "count": 1000,
+        "commit": "8f6eba479ee93874b092f55ec9ffb825ded950f9",
+        "trackedDirty": false,
+        "environment": {
+          "node": "v24.19.0",
+          "platform": "linux",
+          "arch": "x64"
+        },
+        "generator": {
+          "tests/byref-gc-stress.test.js": "773dfe99cb2e16ddf286759259b7301cd900121736569f43717118066f74b266",
+          "tests/support/byref-stress-programs.js": "1712e2de28d63eea16f1b8257ff3229070fea1c968e078494324f420789caf13",
+          "tests/support/byref-stress-runner.js": "ba873d445124fcc89d8f7c60e374690d48141f63b764e98411093552b2705b9f",
+          "tests/support/generic-call-fixture.js": "8d7bba12fe3f4462cfd7d64ef2ffb58db1d4d31d771f7f1fb0d3fbc022031d3c"
+        },
+        "corpusSHA256": "18c91f4e6fabf4b7f28afd8e760ff33a3438ac301e1174811241c029f431f140",
+        "uniqueAssemblies": 1000,
+        "ownerCounts": {
+          "field": 334,
+          "array": 333,
+          "box": 333
+        },
+        "depths": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "instructions": 131341,
+        "collections": 131341,
+        "sourceCounterparts": {
+          "count": 96,
+          "engines": [
+            "source",
+            "reloaded-source",
+            "compiled-cil"
+          ]
+        },
+        "nativeQualification": false,
+        "unsupported": [
+          "Native/Rust/browser qualification is not established by this Node report.",
+          "Source bytecode cannot create an unbox interior; box ownership is exercised by independent direct CIL."
+        ]
+      }
+    },
+    {
+      "file": "a05-native-final-build.log",
+      "bytes": 1591,
+      "sha256": "cf472fedb9fc903ea260fd0b845012425a322d54807687732364e06b5518aa9f",
+      "revision": "8f6eba479ee93874b092f55ec9ffb825ded950f9",
+      "tree": "e5081c0ab138129057fd13b4b7629c32ae0e39c6",
+      "exitCode": 1,
+      "result": "failed",
+      "command": [
+        "node",
+        "scripts/limited.js",
+        "npm",
+        "run",
+        "build"
+      ],
+      "commandProvenance": "Byte-retained final gates journal",
+      "environment": {
+        "SHARPFORGE_MAX_PARALLEL_RUNS": "1",
+        "SHARPFORGE_TEST_CONCURRENCY": "1",
+        "SHARPFORGE_MAX_OLD_SPACE_MB": "512"
+      },
+      "note": "Build failed on a static module cycle through dist/packages/runtime/src/heap.js. This failure is not superseded within this archive.",
+      "kind": "build",
+      "startedAt": "2026-10-04T18:12:47Z",
+      "finishedAt": "2026-10-04T18:12:57Z"
+    },
+    {
+      "file": "a05-native-final-diagnostic-codes-r2.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "revision": "8f6eba479ee93874b092f55ec9ffb825ded950f9",
+      "tree": "e5081c0ab138129057fd13b4b7629c32ae0e39c6",
+      "exitCode": 0,
+      "result": "passed",
+      "command": [
+        "node",
+        "scripts/limited.js",
+        "node",
+        "packages/compiler/scripts/generate-diagnostic-codes.js",
+        "--check"
+      ],
+      "commandProvenance": "Byte-retained final generators journal",
+      "environment": {
+        "SHARPFORGE_MAX_PARALLEL_RUNS": "1",
+        "SHARPFORGE_TEST_CONCURRENCY": "1",
+        "SHARPFORGE_MAX_OLD_SPACE_MB": "512"
+      },
+      "kind": "static-check",
+      "startedAt": "2026-10-04T18:14:12Z",
+      "finishedAt": "2026-10-04T18:14:13Z",
+      "note": "Fresh generator check rerun with exact invocation recorded; zero-byte output preserved."
+    },
+    {
+      "file": "a05-native-final-bound-nodes-r2.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "revision": "8f6eba479ee93874b092f55ec9ffb825ded950f9",
+      "tree": "e5081c0ab138129057fd13b4b7629c32ae0e39c6",
+      "exitCode": 0,
+      "result": "passed",
+      "command": [
+        "node",
+        "scripts/limited.js",
+        "node",
+        "packages/compiler/scripts/generate-bound-nodes.js",
+        "--check"
+      ],
+      "commandProvenance": "Byte-retained final generators journal",
+      "environment": {
+        "SHARPFORGE_MAX_PARALLEL_RUNS": "1",
+        "SHARPFORGE_TEST_CONCURRENCY": "1",
+        "SHARPFORGE_MAX_OLD_SPACE_MB": "512"
+      },
+      "kind": "static-check",
+      "startedAt": "2026-10-04T18:14:13Z",
+      "finishedAt": "2026-10-04T18:14:13Z",
+      "note": "Fresh generator check rerun with exact invocation recorded; zero-byte output preserved."
+    }
+  ],
+  "journals": [
+    {
+      "file": "a05-native-final-gates-journal.json",
+      "sha256": "d679973baa27d46241e4c98807b3b3f0e3cd53799f7a491ecb1923a972d5b7cf",
+      "bytes": 1419
+    },
+    {
+      "file": "a05-native-final-generators-journal.json",
+      "bytes": 1093,
+      "sha256": "091d469cedbc4b89b188dbb900990193e94474afd253d4b273614ed863e83154"
+    }
+  ]
+}

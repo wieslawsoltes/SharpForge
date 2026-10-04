@@ -2,7 +2,8 @@ import {decodeCoded} from '@sharpforge/cil';
 import {frameworkType} from '@sharpforge/framework';
 import {ManagedFault, isReference} from '../heap.js';
 import {defaults, storage as numericStorage} from './numeric-ops.js';
-import {valueLayout} from './value-layout.js';
+import {managedValueLayout} from './value-layout.js';
+import {hasManagedStateMachineLayout} from './managed-state-machine-layout.js';
 import {executionCodeState} from './code-version.js';
 import {byteLayout, hasExplicitLayout} from './explicit-layout.js';
 import {createExplicitValue, copyExplicitValue, replaceExplicitField} from './explicit-values.js';
@@ -42,10 +43,11 @@ export function requireValueStorage(vm, table) {
   if (cache.types.has(table)) return;
   const definition = vm.typeSystem?.types.get(table.definitionToken);
   const layoutKind = definition?.flags & 0x18;
-  if ((!definition || layoutKind !== 8 && layoutKind !== 0x10) && !table.flags.runtimeValue ||
+  if ((!definition || layoutKind !== 8 && layoutKind !== 0x10) && !table.flags.runtimeValue &&
+      !hasManagedStateMachineLayout(vm, table) ||
       table.flags.nullable || table.flags.refStruct ||
       cache.restricted.has(table.definitionToken)) unsupported(table.name);
-  valueLayout(vm, table);
+  managedValueLayout(vm, table);
   if (hasExplicitLayout(vm, table)) byteLayout(vm, table);
   cache.types.add(table);
 }

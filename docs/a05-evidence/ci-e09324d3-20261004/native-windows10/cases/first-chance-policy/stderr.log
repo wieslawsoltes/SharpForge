@@ -1,0 +1,6 @@
+Native/expected stdout
++ actual - expected
+
++ 'first:original\nfirst:subscriber\nsecond:subscriber\ncleanup\n'
+- 'first:original\nfirst:subscriber\nsecond:subscriber\n'
+

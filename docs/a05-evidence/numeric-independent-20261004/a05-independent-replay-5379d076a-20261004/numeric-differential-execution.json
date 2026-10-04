@@ -1,0 +1,34 @@
+{
+  "name": "numeric-differential",
+  "command": [
+    "/opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin/node",
+    "scripts/limited.js",
+    "/opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin/node",
+    "--expose-gc",
+    "--test",
+    "--test-concurrency=1",
+    "tests/numeric-differential.test.js"
+  ],
+  "resourceEnvironment": {
+    "SHARPFORGE_TEST_CONCURRENCY": "1",
+    "SHARPFORGE_MAX_PARALLEL_RUNS": "1",
+    "SHARPFORGE_MAX_OLD_SPACE_MB": "512",
+    "NODE_OPTIONS": null
+  },
+  "startedUTC": "2026-10-04T17:06:58.313845+00:00",
+  "completedUTC": "2026-10-04T17:07:04.373749+00:00",
+  "elapsedSeconds": 6.059909892999713,
+  "exitCode": 1,
+  "startIdentity": {
+    "commit": "5379d076a4b3152966a6680435ea694fbf907de3",
+    "tree": "e801b5c281bb90fc89c848d5dbac833b4df2d915",
+    "status": "",
+    "trackedDirty": false
+  },
+  "endIdentity": {
+    "commit": "5379d076a4b3152966a6680435ea694fbf907de3",
+    "tree": "e801b5c281bb90fc89c848d5dbac833b4df2d915",
+    "status": "",
+    "trackedDirty": false
+  }
+}

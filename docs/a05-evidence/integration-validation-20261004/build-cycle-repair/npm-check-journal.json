@@ -1,0 +1,21 @@
+{
+  "revision": "d1044a1707a6b72b90a5cbf14c8eb45da0b259eb",
+  "tree": "5b1b546dd88064cc4a7da1416f16787d7f235ff2",
+  "cwd": "/workspace/scratch/42f7738360b9/a05-integration",
+  "environment": {
+    "SHARPFORGE_MAX_PARALLEL_RUNS": "1",
+    "SHARPFORGE_TEST_CONCURRENCY": "1",
+    "SHARPFORGE_MAX_OLD_SPACE_MB": "512"
+  },
+  "command": [
+    "node",
+    "scripts/limited.js",
+    "npm",
+    "run",
+    "check"
+  ],
+  "log": "/workspace/scratch/42f7738360b9/a05-native-final-cycle-npm-check.log",
+  "startedAt": "2026-10-04T18:21:14Z",
+  "exitCode": 0,
+  "finishedAt": "2026-10-04T18:21:23Z"
+}

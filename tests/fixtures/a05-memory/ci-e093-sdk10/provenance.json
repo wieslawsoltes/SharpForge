@@ -1,0 +1,40 @@
+{
+  "format": "SharpForge.A05MemoryCiCapture/1",
+  "revision": "e09324d3e83d742d47eb39b8f0482c38dc0f8756",
+  "tree": "3322938bc25bfd2ba108ffdc77f1202aa2dabbb8",
+  "workflowRunId": 37219653301,
+  "jobId": 111487229260,
+  "artifact": {
+    "id": 11310236705,
+    "sha256": "64b579b777a9afc12fdf1eb61951e828435384010504bc14ee8ac96d0776c670",
+    "bytes": 10789994,
+    "url": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37219653301/artifacts/11310236705",
+    "entryDirectory": "memory/evidence/a05-memory"
+  },
+  "sourceSha256": "df7f67b2fb323b6331ee6fb77094b1874c828d8abdeadea6f419cf8829f7ca23",
+  "files": {
+    "Qualification.dll": {
+      "sha256": "eef67faf3b1c9dba9f191c2690c070dbbac417255d89b1220ee35090b9756456",
+      "bytes": 5632
+    },
+    "Qualification.runtimeconfig.json": {
+      "sha256": "9950d4583cfc9a106857c0d5b8a75b53e8774852b57b80bc3823a74d44a4d87f",
+      "bytes": 330
+    },
+    "qualification.json": {
+      "sha256": "4998d685f615167348cf2022b64fdf5e61ff9b8eafe5b2d05e2028de8b0dd690",
+      "bytes": 3436
+    }
+  },
+  "metadataInspection": {
+    "fieldRVA": 1,
+    "initializers": 1,
+    "provenance": "Derived by AssemblyInspector from the retained DLL during archival; not a new native execution."
+  },
+  "nativeRuntimePatch": null,
+  "qualificationLimits": [
+    "The original report records SDK 10.0.201 and installed runtimes, not the runtime patch loaded by the guest process.",
+    "Compiler and reference-assembly file hashes were not captured by this CI runner. This is not the separately pinned capture.mjs output."
+  ],
+  "preservation": "qualification.json, Qualification.dll and Qualification.runtimeconfig.json are copied byte-for-byte from the hashed original artifact."
+}

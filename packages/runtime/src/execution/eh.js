@@ -7,6 +7,7 @@ import {frameById} from './frame-lifetimes.js';
 import {enterFilter, finishFilter} from './eh-filters.js';
 import {activeClauses, stageExceptionalUnwind, stageLeave, enterSelectedCatch} from './eh-nesting.js';
 import {isFatalFault, markUnhandled} from './unhandled.js';
+import {firstChanceFailurePolicy} from './exception-event-failure.js';
 export {fatalFaults} from './unhandled.js';
 export {createExceptionState} from './exception-state.js';
 
@@ -46,7 +47,11 @@ function searchStep(vm, search) {
     }
     if (frame.exceptionEventContinuation) {
       const fatal = firstChanceCallbackFailure(frame, search.error);
-      if (fatal) { markUnhandled(vm, fatal); return null; }
+      if (fatal) {
+        if (firstChanceFailurePolicy(frame.exceptionEventContinuation) === 'before-unwind') { markUnhandled(vm, fatal); return null; }
+        search.selection = {kind: 'event-failfast', frameId: frame.id};
+        return {phase: 'unwind', search};
+      }
       search.selection = {kind: 'event-failure', frameId: frame.id};
       return {phase: 'unwind', search};
     }
@@ -78,6 +83,12 @@ function finishPending(vm, frame) {
   const search = pending.search;
   if (search?.selection?.kind === 'filter-failure' && search.selection.frameId === frame.id) {
     return {phase: 'search', search: finishFilter(vm, 0)};
+  }
+  if (search?.selection?.kind === 'event-failfast' && search.selection.frameId === frame.id) {
+    const fatal = firstChanceCallbackFailure(frame, search.error);
+    popFrame(vm);
+    markUnhandled(vm, fatal);
+    return null;
   }
   if (search?.selection?.kind === 'event-failure' && search.selection.frameId === frame.id) {
     popFrame(vm);

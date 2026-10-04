@@ -1,0 +1,60 @@
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> sharpforge@0.14.0 check
+> node scripts/run.js check
+
+{
+  "areas": 30,
+  "nodeFiles": 1288,
+  "browserScripts": 38,
+  "unassigned": 0,
+  "duplicate": 0
+}
+Checked 4609 JavaScript modules; 0 syntax errors.
+{
+  "passed": false,
+  "inspected": 4560,
+  "modules": 4597,
+  "errors": [
+    {
+      "path": "tests/fixtures/a05-memory/replay.mjs",
+      "message": "ENOENT: no such file or directory, lstat '/workspace/scratch/42f7738360b9/packages'"
+    },
+    {
+      "path": "scripts/validate-a05-type-system.js",
+      "operation": "dynamic-import",
+      "sha256": "7f99f29988878cc6ddc6e57f74988a9004ccf4b8f96a34425643cc958e3edbf9",
+      "count": 2,
+      "lines": [
+        179,
+        180
+      ],
+      "message": "Unreviewed dynamic-code use or changed file"
+    },
+    {
+      "path": "tests/a05-profiler-reference-dependencies.test.js",
+      "operation": "dynamic-import",
+      "sha256": "df5fdca0bcf747df9b90c463145cf9995174a2fd324d11b02baacfea9e2aa263",
+      "count": 1,
+      "lines": [
+        61
+      ],
+      "message": "Unreviewed dynamic-code use or changed file"
+    },
+    {
+      "path": "planning/qualification/integration-performance/compiler-adapters/compiler.mjs",
+      "operation": "dynamic-import",
+      "message": "Stale or mismatched allow-list entry"
+    },
+    {
+      "path": "planning/qualification/integration-performance/size/measure.mjs",
+      "operation": "dynamic-import",
+      "message": "Stale or mismatched allow-list entry"
+    },
+    {
+      "path": "scripts/validate-a05-type-system.js",
+      "operation": "dynamic-import",
+      "message": "Stale or mismatched allow-list entry"
+    }
+  ]
+}

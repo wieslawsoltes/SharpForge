@@ -44,7 +44,7 @@ export function conversionMatrixSource(item) {
   let input = item.input;
   if (item.source === 'i8') input += 'L';
   if (item.source === 'r4' || item.source === 'r8') input = floatingLiteral(input, sourceType);
-  if (item.source === 'native') input = '(nint)' + input + 'L';
+  if (item.source === 'native') input = '(nint)(' + input + 'L)';
   const checked = item.opcode.includes('.ovf.');
   const unsigned = item.opcode.endsWith('.un');
   let value = 'value';

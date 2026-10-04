@@ -1,0 +1,10 @@
+Read-only diagnostic of the dist graph left by the failed build at 8f6eba479.
+Static import/export edges only; no modules executed, no bundle policy changed.
+1. packages/runtime/src/heap.js -> packages/runtime/src/execution/method-table.js -> packages/runtime/src/execution/source-object-slots.js -> packages/runtime/src/heap.js
+2. packages/runtime/src/execution/delegate-invocations.js -> packages/runtime/src/platform.js -> packages/runtime/src/execution/delegate-invocations.js
+3. packages/runtime/src/execution/exception-events.js -> packages/runtime/src/execution/delegate-invocations.js -> packages/runtime/src/platform.js -> packages/runtime/src/execution/control-contracts.js -> packages/runtime/src/execution/exception-events.js
+4. packages/runtime/src/execution/delegate-invocations.js -> packages/runtime/src/platform.js -> packages/runtime/src/execution/control-contracts.js -> packages/runtime/src/execution/delegate-invocations.js
+5. packages/runtime/src/execution/unhandled.js -> packages/runtime/src/execution/exception-events.js -> packages/runtime/src/execution/delegate-invocations.js -> packages/runtime/src/platform.js -> packages/runtime/src/bcl-adapter.js -> packages/runtime/src/execution/managed-object-string.js -> packages/runtime/src/execution/synchronous-call.js -> packages/runtime/src/execution/frame-retirement.js -> packages/runtime/src/execution/scheduler-async-faults.js -> packages/runtime/src/execution/unhandled.js
+6. packages/runtime/src/execution/frame-retirement.js -> packages/runtime/src/execution/scheduler-async-faults.js -> packages/runtime/src/execution/frame-retirement.js
+7. packages/runtime/src/execution/delegate-invocations.js -> packages/runtime/src/platform.js -> packages/runtime/src/execution/delegate-targets.js -> packages/runtime/src/execution/delegate-invocations.js
+Visited files: 923 Backedge paths: 7

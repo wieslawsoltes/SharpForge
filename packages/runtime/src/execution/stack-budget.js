@@ -3,7 +3,7 @@ import {normalizeCallType, parseFunctionPointerType, verifiedStackBound} from '@
 import {ManagedFault} from '../heap.js';
 import {executionCodeState} from './code-version.js';
 import {sourceStackSlots} from './source-stack-size.js';
-import {valueLayout} from './value-layout.js';
+import {managedValueLayout} from './value-layout.js';
 import {isAggregateType} from './value-types.js';
 import {isVarargsStorage} from './varargs-storage.js';
 
@@ -41,7 +41,7 @@ function storageBytes(vm, type) {
   // These owned capability records have explicit logical slot widths, not a
   // raw CLI value layout. Keep sizeof and aggregate storage admission separate.
   const layout = !isVarargsStorage(table) && (table.flags.nullable || vm.inspector && isAggregateType(table));
-  const bytes = layout ? valueLayout(vm, table).size : table.flags.valueType ? table.valueSize : slotBytes;
+  const bytes = layout ? managedValueLayout(vm, table).size : table.flags.valueType ? table.valueSize : slotBytes;
   if (!Number.isSafeInteger(bytes) || bytes < 0) throw new TypeError('Invalid managed stack storage size');
   return Math.max(slotBytes, Math.ceil(bytes / slotBytes) * slotBytes);
 }

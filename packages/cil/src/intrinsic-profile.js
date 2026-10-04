@@ -1,4 +1,5 @@
 import {builtinSignatureType} from './intrinsic-signature-types.js';
+import {registerObjectIntrinsics} from './object-intrinsic-profile.js';
 import {exceptionIntrinsicDefinitions, syncIntrinsicDefinitions, isSynchronizationIntrinsic, varargsIntrinsicDefinitions} from '@sharpforge/bytecode';
 import {asyncMethodDefinition} from './async-profile.js';
 import {decimalIntrinsicDefinitions} from '@sharpforge/bytecode';
@@ -30,11 +31,7 @@ for(const descriptor of decimalIntrinsicDefinitions)add(descriptor.owner,descrip
 const primitive=['System.Decimal','int','uint','long','ulong','double','float','bool','char','string','object'];
 for(const name of ['Write','WriteLine'])for(const type of primitive)add('System.Console',name,[type],'void',true,'console');
 add('System.Console','WriteLine',[],'void',true,'console');
-add('System.Object','.ctor',[],'void',false,'objectCtor');
-add('System.Object','ToString',[],'string',false,'objectToString');
-add('System.Object','Equals',['object'],'bool',false,'objectEquals');
-add('System.Object','GetHashCode',[],'int',false,'objectHashCode');
-add('System.Object','GetType',[],'System.Type',false,'objectGetType');
+registerObjectIntrinsics(add);
 add('System.Type','GetTypeFromHandle',['System.RuntimeTypeHandle'],'System.Type',true,'typeFromHandle');
 for(const name of ['op_Equality','op_Inequality'])add('System.Type',name,['System.Type','System.Type'],'bool',true,'typeCompare');
 for(const parameter of ['System.Type','object'])add('System.Type','Equals',[parameter],'bool',false,'typeEquals');
@@ -43,7 +40,6 @@ add('System.Type','get_FullName',[],'string',false,'typeName');
 add('System.Type','get_TypeHandle',[],'System.RuntimeTypeHandle',false,'typeHandle');
 add('System.Type','ToString',[],'string',false,'typeString');
 for(const name of ['IsGenericType','IsGenericTypeDefinition','ContainsGenericParameters'])add('System.Type','get_'+name,[],'bool',false,'typeProperty');
-add('System.Object','ReferenceEquals',['object','object'],'bool',true,'objectReferenceEquals');
 add('System.Enum','ToString',[],'string',false,'enumToString');
 add('System.Enum','HasFlag',['System.Enum'],'bool',false,'enumHasFlag');
 for(const parameters of [[],['string']])add('System.Exception','.ctor',parameters,'void',false,'exceptionCtor');

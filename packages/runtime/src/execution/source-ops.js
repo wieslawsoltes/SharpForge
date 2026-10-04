@@ -62,7 +62,7 @@ export function convert(value, type, checked = 0, vm = {}) {
     return scalarConvert(value, source.type, type, source.checked, sourceNumericContext(vm));
   }
   if (type !== 0) return Number(number(value));
-  return cilConvert(checked === 1 ? 'conv.ovf.i4' : 'conv.i4', float(value), {
+  return cilConvert(checked === 1 ? 'conv.ovf.i4' : 'conv.i4', value?.float ? value : float(value), {
     fault: (name, message) => new ManagedFault(name, message)
   });
 }

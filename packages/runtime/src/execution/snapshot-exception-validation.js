@@ -45,10 +45,14 @@ function validateSearch(vm, snapshot, frames, search) {
   }
   if (search.selection !== null) {
     const selection = search.selection, frame = frames.get(selection?.frameId);
-    if (!frame || !['catch', 'initializer', 'filter-failure', 'event-failure'].includes(selection.kind)) fail('exception search selection');
+    if (!frame || !['catch', 'initializer', 'filter-failure', 'event-failure', 'event-failfast'].includes(selection.kind)) {
+      fail('exception search selection');
+    }
     if (selection.kind === 'catch') knownHandler(vm, frame, selection.handler);
     if (selection.kind === 'initializer' && !frame.initializes || selection.kind === 'filter-failure' && !frame.filterSearch ||
         selection.kind === 'event-failure' && frame.exceptionEventContinuation?.phase !== 'unhandled') fail('exception search selection owner');
+    if (selection.kind === 'event-failfast' && (frame.exceptionEventContinuation?.phase !== 'firstChance' ||
+        frame.exceptionEventContinuation.failurePolicy !== 'after-unwind')) fail('exception failfast boundary');
   }
 }
 

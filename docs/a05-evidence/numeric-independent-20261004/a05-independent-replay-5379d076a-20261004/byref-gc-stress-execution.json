@@ -1,0 +1,37 @@
+{
+  "name": "byref-gc-stress",
+  "command": [
+    "/opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin/node",
+    "scripts/limited.js",
+    "/opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin/node",
+    "--expose-gc",
+    "--test",
+    "--test-concurrency=1",
+    "tests/byref-gc-stress.test.js"
+  ],
+  "resourceEnvironment": {
+    "SHARPFORGE_TEST_CONCURRENCY": "1",
+    "SHARPFORGE_MAX_PARALLEL_RUNS": "1",
+    "SHARPFORGE_MAX_OLD_SPACE_MB": "512",
+    "NODE_OPTIONS": null
+  },
+  "startedUTC": "2026-10-04T17:06:50.070024+00:00",
+  "completedUTC": "2026-10-04T17:06:58.214718+00:00",
+  "elapsedSeconds": 8.14470298499873,
+  "exitCode": 0,
+  "startIdentity": {
+    "commit": "5379d076a4b3152966a6680435ea694fbf907de3",
+    "tree": "e801b5c281bb90fc89c848d5dbac833b4df2d915",
+    "status": "",
+    "trackedDirty": false
+  },
+  "endIdentity": {
+    "commit": "5379d076a4b3152966a6680435ea694fbf907de3",
+    "tree": "e801b5c281bb90fc89c848d5dbac833b4df2d915",
+    "status": "",
+    "trackedDirty": false
+  },
+  "reportEnvironment": {
+    "SHARPFORGE_BYREF_STRESS_REPORT": "/workspace/scratch/42f7738360b9/a05-independent-replay-5379d076a-20261004/byref-gc-stress.json"
+  }
+}

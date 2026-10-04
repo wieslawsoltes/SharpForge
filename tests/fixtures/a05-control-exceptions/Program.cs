@@ -83,6 +83,8 @@ static class Program
             finally { throw new ArgumentException("replacement"); }
         }
         catch (ArgumentException error) { Console.WriteLine(error.Message); }
+        // Select an original handler during first-pass search so CLR unwinds the throwing finally.
+        catch (InvalidOperationException) { Console.WriteLine("unreachable original"); }
 
         try { Console.WriteLine(Divide(0)); }
         catch (ArithmeticException) { Console.WriteLine("arithmetic"); }

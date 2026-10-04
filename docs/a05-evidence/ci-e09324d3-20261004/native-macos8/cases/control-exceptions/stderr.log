@@ -1,0 +1,3 @@
+dotnet <temporary-project>/bin/Release/net8.0/Qualification.dll failed: Unhandled exception. System.InvalidOperationException: old
+   at Program.Main()
+

@@ -1,6 +1,7 @@
 from pathlib import Path
 import importlib.util
 import os
+import json
 import tempfile
 import unittest
 from unittest.mock import patch, MagicMock
@@ -30,6 +31,21 @@ class LauncherContracts(unittest.TestCase):
     def test_managed_browser_default_and_empty_override(self):
         self.assertEqual(launch.launch_options({}), {'headless': True})
         self.assertEqual(launch.launch_options({'CHROMIUM_EXECUTABLE': '  '}), {'headless': True})
+
+    def test_headed_is_explicit_and_launch_provenance_is_retained(self):
+        self.assertEqual(launch.launch_options({}, 'firefox', headless=False), {'headless': False})
+        for invalid in (None, 0, 1, 'false'):
+            with self.subTest(invalid=invalid), self.assertRaisesRegex(ValueError, 'boolean'):
+                launch.launch_options({}, headless=invalid)
+        with tempfile.TemporaryDirectory() as directory, patch.dict(os.environ, {'SHARPFORGE_RESULTS_DIR': directory}):
+            playwright = MagicMock()
+            playwright.firefox.launch.return_value.version = 'unit-test-browser'
+            with launch.launch_browser(playwright, 'headed', engine='firefox', headless=False) as session:
+                self.assertFalse(session.launch_config['headless'])
+            playwright.firefox.launch.assert_called_once_with(headless=False)
+            recorded = json.loads((Path(directory) / 'headed/session.json').read_text(encoding='utf8'))
+            self.assertEqual(recorded['launchOptions'], {'headless': False})
+            self.assertEqual(recorded['engine'], 'firefox')
 
     def test_override_validates_file_and_preserves_spaces(self):
         with tempfile.TemporaryDirectory() as directory:

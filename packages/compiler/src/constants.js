@@ -11,8 +11,8 @@
  *   - (int) of a finite out-of-range double is CS0220 when checked (NaN/infinity report CS0221).
  * Unchecked floating constants follow Roslyn's zero result, independently of CoreCLR's saturating runtime casts.
  */
-import {DiagnosticId} from './diagnostics/codes.js';
-import {formatMessage} from './diagnostics/codes.js';
+import {DiagnosticId,formatMessage} from './diagnostics/codes.js';
+import {profileLiteral} from './constants/profile-literal.js';
 import {ConstantValue,foldUnary,foldBinary,foldConversion,isFoldError} from './constants/fold.js';
 export class ConstantError extends Error {
   constructor(node, code, args=[]) { super(formatMessage(code,args)); this.name='ConstantError';this.node=node;this.code=code;this.args=args; }
@@ -45,7 +45,7 @@ export function evaluateConstant(node, {resolve=()=>null, checked=true, maxNodes
   };
   const walk=(n,check)=>{
     if(!n||--remaining<0)return null;
-    if(n.kind==='Literal')return ['int','double','bool','string','null'].includes(n.type)?{type:n.type,value:n.value}:null;
+    if(n.kind==='Literal')return profileLiteral(n);
     if(n.kind==='Name'||n.kind==='Member')return resolve(n);
     if(n.kind==='Checked'||n.kind==='Unchecked')return walk(n.expression,n.kind==='Checked');
     if(n.kind==='Default'&&['int','double','bool','string','object'].includes(n.type))return {type:n.type,value:n.type==='bool'?false:['int','double'].includes(n.type)?0:null};

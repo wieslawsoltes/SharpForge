@@ -1,0 +1,256 @@
+{
+  "format": "a05-root-validation-journal-v1",
+  "cwd": "/workspace/scratch/42f7738360b9/a05-integration",
+  "environment": {
+    "SHARPFORGE_MAX_PARALLEL_RUNS": "1",
+    "SHARPFORGE_TEST_CONCURRENCY": "1",
+    "SHARPFORGE_MAX_OLD_SPACE_MB": "512"
+  },
+  "wrapper": [
+    "node",
+    "scripts/limited.js"
+  ],
+  "evidenceRule": "Overlapping cohorts are not additive. A passing command is not evidence that a nonexistent input file ran.",
+  "runs": [
+    {
+      "log": "/workspace/scratch/42f7738360b9/a05-native-repairs-first-5cd5b1d05.log",
+      "command": [
+        "node",
+        "--expose-gc",
+        "--test",
+        "--test-concurrency=1",
+        "tests/a05-roslyn-async-admission.test.js",
+        "tests/a05-29-async.test.js",
+        "tests/a05-29-iterator-dispatch.test.js",
+        "tests/a05-02-generic-calls.test.js",
+        "tests/a05-type-tables.test.js",
+        "tests/a05-unsafe-unbox.test.js",
+        "tests/a05-unsafe-unbox-native-replay.test.js",
+        "tests/a05-nullable-constrained-object.test.js",
+        "tests/a05-native-outcome.test.js",
+        "tests/a05-native-qualification.test.js",
+        "tests/a05-exception-signature-aliases.test.js"
+      ],
+      "exitCode": 1,
+      "revision": "5cd5b1d05de242a3b760658841de624159153aed",
+      "tree": "d524618ba70b0f910d45857ab8cd36c5300270fa"
+    },
+    {
+      "log": "/workspace/scratch/42f7738360b9/a05-native-browser-adjacent-b9bedea32.log",
+      "command": [
+        "node",
+        "--expose-gc",
+        "--test",
+        "--test-concurrency=1",
+        "tests/a05-browser-qualification.test.js",
+        "tests/a05-unsafe-unbox.test.js",
+        "tests/a05-unsafe-unbox-native-replay.test.js",
+        "tests/a05-value-boxing.test.js",
+        "tests/a05-value-instance-calls.test.js",
+        "tests/a05-enum-unboxing.test.js",
+        "tests/a05-memory-intrinsic-profile.test.js",
+        "tests/a05-nullable-constrained-object.test.js",
+        "tests/a05-nullable-cil.test.js",
+        "tests/a05-nullable-mutable-text.test.js",
+        "tests/a05-nullable-interior-address.test.js",
+        "tests/a05-source-nullable.test.js",
+        "tests/a05-constrained-object-tostring.test.js",
+        "tests/a05-constrained-object-slots.test.js",
+        "tests/a05-object-value-continuations.test.js",
+        "tests/a05-object-string-return.test.js",
+        "tests/a05-source-legacy-floating-conversion.test.js",
+        "tests/a05-integer-literal-profile-boundaries.test.js",
+        "tests/a05-numeric-oracle-source.test.js"
+      ],
+      "exitCode": 0,
+      "revision": "b9bedea324dc4103b10a0f27e57bb4b28b6236e0",
+      "tree": "ead93ec3e4f8d371a7c23494b01081618dc35a58"
+    },
+    {
+      "log": "/workspace/scratch/42f7738360b9/a05-browser-contracts-b9bedea32.log",
+      "command": [
+        "python",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests/fixtures/a05-browser",
+        "-p",
+        "test_contract.py"
+      ],
+      "exitCode": 0,
+      "revision": "b9bedea324dc4103b10a0f27e57bb4b28b6236e0",
+      "tree": "ead93ec3e4f8d371a7c23494b01081618dc35a58"
+    },
+    {
+      "log": "/workspace/scratch/42f7738360b9/a05-browser-launch-matrix-b9bedea32.log",
+      "command": [
+        "env",
+        "PYTHONPATH=tests",
+        "python",
+        "-m",
+        "unittest",
+        "conformance.browser.test_launch",
+        "conformance.browser.test_matrix"
+      ],
+      "exitCode": 1,
+      "note": "The six launch tests passed; matrix module import failed because this invocation omitted the browser script directory from sys.path. The discovery invocation below corrects the command.",
+      "revision": "b9bedea324dc4103b10a0f27e57bb4b28b6236e0",
+      "tree": "ead93ec3e4f8d371a7c23494b01081618dc35a58"
+    },
+    {
+      "log": "/workspace/scratch/42f7738360b9/a05-npm-check-b9bedea32.log",
+      "command": [
+        "npm",
+        "run",
+        "check"
+      ],
+      "exitCode": 1,
+      "note": "Manifests and syntax passed. Static import failures retain real replay/policy gaps and two locally sparse planning files; those tracked planning files were then materialized without content changes.",
+      "revision": "b9bedea324dc4103b10a0f27e57bb4b28b6236e0",
+      "tree": "ead93ec3e4f8d371a7c23494b01081618dc35a58"
+    },
+    {
+      "log": "/workspace/scratch/42f7738360b9/a05-browser-python-discover-b9bedea32.log",
+      "command": [
+        "python",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests/conformance/browser",
+        "-p",
+        "test_*.py"
+      ],
+      "exitCode": 1,
+      "note": "Ten tests passed; two modules failed import because local Python lacks Playwright. They are not passing or skipped. CI now installs its existing pinned test requirements before this gate.",
+      "revision": "b9bedea324dc4103b10a0f27e57bb4b28b6236e0",
+      "tree": "ead93ec3e4f8d371a7c23494b01081618dc35a58"
+    },
+    {
+      "log": "/workspace/scratch/42f7738360b9/a05-browser-python-matrix-b9bedea32.log",
+      "command": [
+        "python",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests/conformance/browser",
+        "-p",
+        "test_matrix.py"
+      ],
+      "exitCode": 0,
+      "revision": "b9bedea324dc4103b10a0f27e57bb4b28b6236e0",
+      "tree": "ead93ec3e4f8d371a7c23494b01081618dc35a58"
+    },
+    {
+      "log": "/workspace/scratch/42f7738360b9/a05-native-nullable-decimal-b9bedea32.json",
+      "command": [
+        "node",
+        "--input-type=module"
+      ],
+      "exitCode": 0,
+      "note": "Ad-hoc stdin replay compared retained SDK8 nullable and decimal DLLs at both native widths to their verified captured native stdout/exit codes. Report retains assembly hashes and revision. Original stdin command remains in root tool history; no standalone runner was retained, so this is supplemental evidence to fresh CI.",
+      "revision": "b9bedea324dc4103b10a0f27e57bb4b28b6236e0",
+      "tree": "ead93ec3e4f8d371a7c23494b01081618dc35a58"
+    },
+    {
+      "log": "/workspace/scratch/42f7738360b9/a05-native-async-layout-25a771ed3.log",
+      "command": [
+        "node",
+        "--expose-gc",
+        "--test",
+        "--test-concurrency=1",
+        "tests/a05-managed-state-machine-layout.test.js",
+        "tests/a05-roslyn-async-admission.test.js",
+        "tests/a05-29-async.test.js",
+        "tests/a05-29-iterator-dispatch.test.js",
+        "tests/a05-value-storage.test.js",
+        "tests/a05-value-layout-sizeof.test.js",
+        "tests/a05-nullable-cil.test.js",
+        "tests/a05-constrained-generic-value.test.js",
+        "tests/a05-native-runtime-probe.test.js"
+      ],
+      "exitCode": 1,
+      "revision": "25a771ed3ef2d91bc09ef4dea48d62eae3ff4f63",
+      "tree": "511d303db8fc4506a5469d7abcf0e1e8a2d37366"
+    },
+    {
+      "log": "/workspace/scratch/42f7738360b9/a05-npm-check-core-repairs-r2.log",
+      "command": [
+        "npm",
+        "run",
+        "check"
+      ],
+      "exitCode": 0,
+      "revision": "e8b04b03a07033c7332b3a3f4a0ad013024ec6ec",
+      "tree": "ee1e92760abe35c460aa9b993c84f34b2a44ff78"
+    },
+    {
+      "log": "/workspace/scratch/42f7738360b9/a05-first-chance-integrated-3fd119f21.log",
+      "command": [
+        "node",
+        "--expose-gc",
+        "--test",
+        "--test-concurrency=1",
+        "tests/a05-first-chance-unwind-policy.test.js",
+        "tests/a05-exception-event-policy.test.js",
+        "tests/a05-source-appdomain-events.test.js",
+        "tests/a05-source-exception-events.test.js",
+        "tests/a05-continuation-root-inventory.test.js",
+        "tests/a05-unsafe-unbox.test.js",
+        "tests/a05-unsafe-unbox-native-replay.test.js",
+        "tests/a05-managed-state-machine-layout.test.js",
+        "tests/a05-roslyn-async-admission.test.js",
+        "tests/a05-native-runtime-probe.test.js",
+        "tests/a05-native-outcome.test.js",
+        "tests/a05-native-qualification.test.js",
+        "tests/fixtures/a05-memory/replay.mjs"
+      ],
+      "revision": "3fd119f21672637fea3c67841f06236eaf33d6f7",
+      "tree": "95ed4faaa867cbe36cc1a292e01047bd52a2d37f",
+      "exitCode": 1,
+      "total": 117,
+      "passed": 107,
+      "failed": 10,
+      "note": "Nine new policy snapshot ownership failures under repair; one standalone memory replay lacked generated native.json. Existing event, async, nullable layout and Unsafe cases passed in this cohort."
+    },
+    {
+      "log": "/workspace/scratch/42f7738360b9/a05-main197-harness-focused-r1.log",
+      "command": [
+        "node",
+        "--test",
+        "--test-concurrency=1",
+        "tests/a05-float-iteration-criterion.test.js",
+        "tests/a05-float-allocation-qualification.test.js",
+        "tests/a05-varargs-unsupported.test.js",
+        "tests/a05-delegate-protocol.test.js",
+        "tests/a05-native-provenance.test.js",
+        "tests/a05-native-plan.test.js",
+        "tests/a05-browser-qualification.test.js"
+      ],
+      "exitCode": 0,
+      "note": "Only four existing files executed (18 tests). Node24 silently ignored the three nonexistent paths a05-varargs-unsupported.test.js, a05-delegate-protocol.test.js and a05-native-plan.test.js. Their intended coverage was supplied by the separate admission cohort, not this passing exit.",
+      "revision": "abc0b1f0ff038e528cd873cb61571dbfeb62622e",
+      "tree": "2883dd5e76c97ee89401801b842fda58f96f11a4"
+    },
+    {
+      "log": "/workspace/scratch/42f7738360b9/a05-main197-admission-focused-r1.log",
+      "command": [
+        "node",
+        "--test",
+        "--test-concurrency=1",
+        "tests/a05-varargs-unsupported-admission.test.js",
+        "tests/a05-managed-delegate-protocol.test.js",
+        "tests/a05-native-qualification.test.js",
+        "tests/a05-29-async.test.js",
+        "tests/compiler-nullable-constraints.test.js",
+        "tests/compiler-reference-assembly.test.js",
+        "tests/a03-22-reference-assemblies.test.js"
+      ],
+      "exitCode": 0,
+      "revision": "abc0b1f0ff038e528cd873cb61571dbfeb62622e",
+      "tree": "2883dd5e76c97ee89401801b842fda58f96f11a4"
+    }
+  ]
+}

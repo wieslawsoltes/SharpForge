@@ -7,6 +7,7 @@ import {
 import {
   prepareException
 } from './exception-object.js';
+export {firstChanceCallbackFailure} from './exception-event-failure.js';
 
 const domainType = 'System.AppDomain';
 const domainKey = 'AppDomain.CurrentDomain';
@@ -124,6 +125,7 @@ export function beginExceptionEvent(vm, fault, phase) {
       });
     return startHandler(vm, {
       phase,
+      ...(phase === 'firstChance' ? {failurePolicy: vm.options.firstChanceFailurePolicy} : {}),
       fault,
       handlers,
       args: [phase === 'unhandled' ? null : domain, args],
@@ -169,17 +171,6 @@ export function* exceptionEventRoots(frame) {
   yield continuation.fault.reference;
   yield* continuation.handlers;
   yield* continuation.args;
-}
-
-/** Pinned CoreCLR 8/10 fails in the first-pass notification filter, before callback cleanup. */
-export function firstChanceCallbackFailure(frame, failure) {
-  if (frame.exceptionEventContinuation?.phase !== 'firstChance') return null;
-  const fatal = new ManagedFault('ExecutionEngineException', 'FirstChanceException handler escaped: ' + failure.message);
-  fatal.fatal = true;
-  fatal.runtimeOrigin = true;
-  fatal.processExitCode = 0x80131506 | 0;
-  fatal.eventFailureName = failure.name;
-  return fatal;
 }
 
 export function clearExceptionEvents(platform) {

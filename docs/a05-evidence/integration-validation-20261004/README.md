@@ -32,3 +32,8 @@ native SDK, actual browser, or Speedscope UI pass is implied by this checkpoint.
 The [main 349 reconciliation continuation](main349/README.md) preserves subsequent
 integration and broad-selection runs, including failed attempts, with their own
 commands and hashes. Its overlapping counts must not be added to this checkpoint.
+
+The [native repair continuation](native-repairs/README.md) preserves 13 further
+validation outputs, including failed Node, Python and static-gate attempts and
+their separately recorded follow-ups. Its journal retains exact commands and
+full tested trees; supplemental ad-hoc replay limitations remain explicit.

@@ -16,6 +16,7 @@ import {releaseVMFrameMemory} from './execution/frame-memory-release.js';
 import {resolveSnapshotTypes} from './execution/snapshot-type-resolution.js';
 import {prepareSynchronizationRestore, restoreSnapshotSynchronization} from './execution/snapshot-synchronization.js';
 import {requireSnapshotBoundary} from './execution/callback-frames.js';
+import {pruneWeakSnapshotStrings} from './execution/snapshot-strings.js';
 
 export {copyExecution, copyFrames} from './execution/execution-copy.js';
 export {snapshotSchemas, assertSnapshotFields} from './execution/snapshot-schema.js';
@@ -43,6 +44,7 @@ export function snapshotVM(vm, engine) {
   // Execution can retain direct backing aliases. Capture these before the heap
   // decides which otherwise-unchanged record payloads are safe to share.
   snapshot.heap = vm.heap.snapshot({memo});
+  pruneWeakSnapshotStrings(vm, snapshot);
   if (engine === 'cil') snapshot.heapRevision = vm.heap.mutationRevision;
   return snapshot;
 }

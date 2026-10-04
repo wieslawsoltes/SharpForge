@@ -5,7 +5,7 @@ import {frameworkType, canonicalType} from '@sharpforge/framework';
 import {exceptionTypeName} from './exception-types.js';
 import {memoryMethodTable} from './memory-method-table.js';
 import {exceptionTypeDefinition} from './exception-layout.js';
-import {asyncTypeDefinition,varargsTypeDefinition} from '@sharpforge/cil';
+import {asyncTypeDefinition,varargsTypeDefinition,genericTypeParts} from '@sharpforge/cil';
 
 const aliases = {object:'System.Object',string:'System.String',bool:'System.Boolean',char:'System.Char',sbyte:'System.SByte',byte:'System.Byte',short:'System.Int16',ushort:'System.UInt16',int:'System.Int32',uint:'System.UInt32',long:'System.Int64',ulong:'System.UInt64',float:'System.Single',double:'System.Double',decimal:'System.Decimal',nint:'System.IntPtr',nuint:'System.UIntPtr',void:'System.Void'};
 const primitiveSizes = {'System.Boolean':1,'System.Char':2,'System.SByte':1,'System.Byte':1,'System.Int16':2,'System.UInt16':2,'System.Int32':4,'System.UInt32':4,'System.Int64':8,'System.UInt64':8,'System.Single':4,'System.Double':8,'System.Decimal':16,'System.IntPtr':4,'System.UIntPtr':4,'System.Void':0};
@@ -35,11 +35,10 @@ export function runtimeTypeName(input) {
   }
   if(name.endsWith('?'))return 'System.Nullable`1<'+runtimeTypeName(name.slice(0,-1))+'>';
   if(name.endsWith('&')||name.endsWith('*'))return runtimeTypeName(name.slice(0,-1))+name.at(-1);
-  const start=name.indexOf('<');
-  if(start>=0) {
-    if(!name.endsWith('>'))throw new TypeError('Unbalanced runtime type name');
-    const arguments_=splitTypeArguments(name.slice(start+1,-1));
-    let definition=name.slice(0,start).trim();
+  const parts=genericTypeParts(name);
+  if(parts.arguments.length) {
+    const arguments_=parts.arguments;
+    let definition=parts.definition.trim();
     if (!/`\d+(?:\+|$)/.test(definition)) {
       const short = definition.replace(/^System\.Collections\.Generic\./, '');
       definition += '`' + (genericNames.has(short) ? short === 'Dictionary' ? 2 : 1 : arguments_.length);
@@ -47,7 +46,8 @@ export function runtimeTypeName(input) {
     return runtimeTypeName(definition)+'<'+arguments_.map(argument=>argument?runtimeTypeName(argument):'').join(', ')+'>';
   }
   const stem=name.replace(/`\d+$/,'');
-  if(/[<>\[\]]/.test(name))throw new TypeError('Unbalanced runtime type name');
+  splitTypeArguments(name);
+  if(/[\[\]]/.test(name))throw new TypeError('Unbalanced runtime type name');
   if(genericNames.has(stem))return genericPrefix+name;
   if(/^(Nullable|Action|Func|IComparable|IEquatable)`\d+$/.test(name))return 'System.'+name;
   return name === 'typedref' ? 'System.TypedReference' : aliases[name]??exceptionTypeName(canonicalType(name));
@@ -137,9 +137,9 @@ export class MethodTableRegistry {
     }
     if(!descriptor&&(name.endsWith('&')||name.endsWith('*')))descriptor={name,base:null,elementType:name.slice(0,-1),flags:{byRef:name.endsWith('&'),pointer:name.endsWith('*')}};
     if(!descriptor&&/^!\d+$/.test(name))descriptor={name,base:null,flags:{genericParameter:true}};
-    const angle=name.indexOf('<');
-    if(!descriptor&&angle>=0) {
-      const definition=this.get(name.slice(0,angle)),typeArguments=splitTypeArguments(name.slice(angle+1,-1));
+    const parts=genericTypeParts(name);
+    if(!descriptor&&parts.arguments.length) {
+      const definition=this.get(parts.definition),typeArguments=parts.arguments;
       if(typeArguments.every(argument=>!argument))return definition;
       if(typeArguments.length!==definition.genericArity||typeArguments.some(argument=>!argument))throw new TypeError('Generic type argument count does not match definition');
       const args=typeArguments.map(argument=>this.get(argument));

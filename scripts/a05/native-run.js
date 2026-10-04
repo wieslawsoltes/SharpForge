@@ -1,6 +1,7 @@
 import {spawnSync} from 'node:child_process';
-import {mkdir, writeFile} from 'node:fs/promises';
+import {mkdir, readFile, writeFile} from 'node:fs/promises';
 import {join, relative} from 'node:path';
+import {nativeTargetCaseOutcome} from '../a05-native-target-policy.js';
 
 const json = value => JSON.stringify(value, null, 2) + '\n';
 const normalize = value => String(value ?? '').replaceAll('\r\n', '\n');
@@ -61,6 +62,16 @@ export async function runNativePlan(plan, options) {
       result.signal = child.signal ?? null;
       result.status = !child.error && child.status === 0 && !child.signal ? 'passed' : 'failed';
       if (child.error) result.error = {name: child.error.name, message: child.error.message, code: child.error.code};
+      if (result.status === 'passed' && item.outcomeReport) {
+        try {
+          result.status = nativeTargetCaseOutcome(JSON.parse(await readFile(item.outcomeReport, 'utf8')));
+          result.outcomeReport = relative(output, item.outcomeReport);
+          if (result.status === 'unsupported') result.reason = 'Observed CLR managed-varargs rejection; VM authored trace passed without native parity.';
+        } catch (error) {
+          result.status = 'failed';
+          result.error = {name: error.name, message: error.message};
+        }
+      }
       result.stdout = join(item.id, 'stdout.log');
       result.stderr = join(item.id, 'stderr.log');
       await writeFile(join(directory, 'stdout.log'), normalize(child.stdout));

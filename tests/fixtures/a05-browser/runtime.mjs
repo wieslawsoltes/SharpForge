@@ -37,6 +37,19 @@ function observeArithmetic(vm) {
   return () => calls;
 }
 
+// The same valid empty module is compiled in the allowed and denied HTTP documents.
+// Native errors are retained independently of SharpForge's generated code and wrappers.
+async function nativeWasmProbe() {
+  const bytes = Uint8Array.of(0, 97, 115, 109, 1, 0, 0, 0), moduleHex = '0061736d01000000';
+  try {
+    const module = await WebAssembly.compile(bytes);
+    return {moduleHex, compiled: true, nativeModule: module instanceof WebAssembly.Module};
+  } catch (error) {
+    return {moduleHex, compiled: false, error: {name: error.name, message: error.message,
+      nativeCompileError: error instanceof WebAssembly.CompileError}};
+  }
+}
+
 export async function wasmExecution() {
   const bytes = loopFixture();
   const reference = new CilVirtualMachine(bytes, {profile: true});
@@ -44,6 +57,8 @@ export async function wasmExecution() {
   let handle;
   try {
     check(typeof WebAssembly?.instantiate === 'function', 'actual browser WebAssembly is required');
+    const nativeProbe = await nativeWasmProbe();
+    check(nativeProbe.compiled && nativeProbe.nativeModule, 'allowed CSP compiles the native control module');
     handle = await prepareWasmMethod(vm);
     check(handle.byteLength > 8 && Object.isFrozen(handle), 'native method was prepared');
     const arithmetic = observeArithmetic(vm);
@@ -54,7 +69,7 @@ export async function wasmExecution() {
     equal(vm.instructions, reference.instructions, 'native and interpreted instruction counts');
     equal(instructionProfile(vm), instructionProfile(reference), 'native and interpreted profiles');
     equal(arithmetic(), 0, 'Wasm arithmetic must not silently call the interpreter');
-    return {passed: true, byteLength: handle.byteLength, instructions: vm.instructions,
+    return {passed: true, nativeProbe, byteLength: handle.byteLength, instructions: vm.instructions,
       referenceInstructions: reference.instructions, hostArithmeticCalls: arithmetic(), result: vm.returnValue};
   } finally {
     if (handle) disposeWasmMethod(handle);
@@ -125,11 +140,15 @@ export async function cspDeniedFallback() {
   const vm = new CilVirtualMachine(loopFixture(), tiering);
   let rejection;
   try {
+    const nativeProbe = await nativeWasmProbe();
+    check(!nativeProbe.compiled && nativeProbe.error?.nativeCompileError, 'denied CSP rejects a valid native module');
+    check(/WebAssembly/i.test(nativeProbe.error.message) && /Content Security Policy|\bCSP\b/i.test(nativeProbe.error.message),
+      'native compilation fails specifically because of CSP');
     try {
       const unexpected = await prepareWasmMethod(vm);
       disposeWasmMethod(unexpected);
     } catch (error) {
-      rejection = {code: error.code, message: error.message, cause: error.cause?.name};
+      rejection = {code: error.code, message: error.message, cause: error.cause?.name, causeMessage: error.cause?.message};
     }
     equal(rejection?.code, 'WASM_COMPILE', 'real CSP rejects native compilation');
     equal(vm.instructions, 0, 'rejected preparation leaves guest execution untouched');
@@ -145,7 +164,7 @@ export async function cspDeniedFallback() {
     const finalStatistics = wasmTieringStatistics(vm);
     equal(finalStatistics.selectedInstructions, 0, 'no selected instructions after fallback completes');
     equal(finalStatistics.osrTransitions, 0, 'denied compilation cannot enter through OSR');
-    return {passed: true, rejection, statistics: finalStatistics, instructions: vm.instructions,
+    return {passed: true, nativeProbe, rejection, statistics: finalStatistics, instructions: vm.instructions,
       hostArithmeticCalls: arithmetic(), result: vm.returnValue};
   } finally { vm.stop(); }
 }
