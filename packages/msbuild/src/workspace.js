@@ -1,13 +1,12 @@
+import { hashBytes, readNativeText, encodeNativeText } from './workspace-io.js';
 import { readFile, readdir, realpath, lstat, writeFile, rename, unlink, mkdir } from 'node:fs/promises';
 import { resolve, relative, dirname, sep, extname } from 'node:path';
-import { createHash, randomBytes } from 'node:crypto';
+import { randomBytes } from 'node:crypto';
 import { parseXml, ProjectSystem } from '@sharpforge/project-system';
 import {inspectWorkspaceItem,mutateWorkspace,undoWorkspaceMutation} from './file-operations.js';
 import { workspacePath } from './contract.js';
-export const hashBytes = bytes => createHash('sha256').update(bytes).digest('hex');
-function decodeText(bytes){const encoding=bytes[0]===255&&bytes[1]===254?'utf-16le':bytes[0]===254&&bytes[1]===255?'utf-16be':'utf-8';const bom=encoding!=='utf-8'||bytes[0]===239&&bytes[1]===187&&bytes[2]===191;const text=new TextDecoder(encoding,{fatal:true}).decode(bytes);if(text.includes('\0'))throw new Error('Binary files are not editable text');return {text,encoding,bom};}
-function encodeText(text,{encoding='utf-8',bom=false}={}){if(encoding==='utf-8')return Buffer.concat([bom?Buffer.from([239,187,191]):Buffer.alloc(0),Buffer.from(text)]);let bytes=Buffer.from(text,'utf16le');if(encoding==='utf-16be')bytes=bytes.swap16();return Buffer.concat([Buffer.from(encoding==='utf-16be'?[254,255]:[255,254]),bytes]);}
-const editable=/(?:\.(?:cs|fs|vb|csproj|fsproj|vbproj|proj|slnx|sln|props|targets|json|config|xml|resx|resw|css|html|js|mjs|ts|svg|yml|yaml|csv|editorconfig|txt|md|ruleset|runsettings|rsp)|(?:^|\/)\.editorconfig)$/i;
+export { hashBytes } from './workspace-io.js';
+const editable=/(?:\.(?:cs|fs|vb|csproj|fsproj|vbproj|proj|slnx|sln|props|targets|pubxml|json|config|xml|resx|resw|css|html|js|mjs|ts|svg|yml|yaml|csv|editorconfig|txt|md|ruleset|runsettings|rsp)|(?:^|\/)\.editorconfig)$/i;
 const projectPattern=/\.(?:[a-z]*proj|slnx|sln)$/i;
 const ignored=new Set(['.git','.vs','node_modules','.sharpforge','.packages','bin','obj']);
 export class NativeWorkspace {
@@ -34,16 +33,16 @@ export class NativeWorkspace {
   let hierarchy=null;try{const system=new ProjectSystem(records,{maxFiles:this.maxFiles}),entry=solutions.find(p=>p.endsWith('.slnx'))??solutions.find(p=>p.endsWith('.sln'))??projects.find(p=>p.endsWith('.csproj'));if(entry){hierarchy=system.load(entry);hierarchy.inspectionOnly=true;}}catch{}
   return {name:this.root.split(sep).at(-1),root:this.root,files,folders,projects,solutions,hierarchy};
  }
- async read(input){const file=await this.path(input);if(!editable.test(input)&&!projectPattern.test(input))throw new Error('File type is not editable');const info=await lstat(file);if(!info.isFile()||info.size>this.maxTextBytes)throw new Error('Text file size limit exceeded');const bytes=await readFile(file);if(bytes.length>this.maxTextBytes)throw new Error('Text file size limit exceeded');const decoded=decodeText(bytes);return {path:workspacePath(input),...decoded,hash:hashBytes(bytes),size:bytes.length};}
+ async read(input){const file=await this.path(input);if(!editable.test(input)&&!projectPattern.test(input))throw new Error('File type is not editable');return readNativeText(this,file,input);}
  async save(changes){
   if(!Array.isArray(changes)||!changes.length||changes.length>256)throw new Error('Save requires 1–256 changes');
   const seen=new Set(),pending=[];let total=0;
   for(const c of changes){const path=workspacePath(c.path);if(seen.has(path))throw new Error('Duplicate save path');seen.add(path);if(!editable.test(path))throw new Error('File type is not editable');if(typeof c.text!=='string'||Buffer.byteLength(c.text)>this.maxTextBytes||(total+=Buffer.byteLength(c.text))>32*1024*1024)throw new Error('Save text limit exceeded');
    if(c.expectedHash!==null&&(typeof c.expectedHash!=='string'||!/^([a-f0-9]{64})$/.test(c.expectedHash)))throw new Error('Save requires the previous SHA-256 hash (or null for new files)');
-   if(/\.(?:[a-z]*proj|slnx|props|targets|xml|resx|ruleset|runsettings)$/i.test(path))parseXml(c.text,{maxLength:this.maxTextBytes,maxNodes:100000});
+   if(/\.(?:[a-z]*proj|slnx|props|targets|pubxml|xml|resx|ruleset|runsettings)$/i.test(path))parseXml(c.text,{maxLength:this.maxTextBytes,maxNodes:100000});
    const file=await this.path(path,{create:c.expectedHash===null});let current=null;try{current=await this.read(path);}catch(e){if(!(e.code==='ENOENT'&&c.expectedHash===null))throw e;}
    if(current?.hash!==(c.expectedHash??undefined))throw Object.assign(new Error(`Disk conflict in '${path}'; no files were written`),{status:409});
-   const bytes=encodeText(c.text,current??{});if(bytes.length>this.maxTextBytes)throw new Error('Encoded text file size limit exceeded');pending.push({path,file,bytes,expectedHash:c.expectedHash,hash:hashBytes(bytes)});
+   const original=current?await readFile(file):undefined;const bytes=encodeNativeText(path,c.text,current,original);if(bytes.length>this.maxTextBytes)throw new Error('Encoded text file size limit exceeded');pending.push({path,file,bytes,expectedHash:c.expectedHash,hash:hashBytes(bytes)});
   }
   // Preflight all buffers, then recheck immediately before each rename. Multi-file saves are not atomic.
   const written=[];
