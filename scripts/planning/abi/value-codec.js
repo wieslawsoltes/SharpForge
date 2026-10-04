@@ -82,7 +82,11 @@ export class HandleLeaseTable {
   constructor(epoch=nextEpoch++){if(!integer(epoch,1,0xffffffff))fail('ABI_HANDLE','Invalid epoch');this.epoch=epoch;this.values=new Map();this.generations=new Map();this.leases=new Map();this.nextLease=1;this.nextIndex=1;this.closed=false;}
   allocate(value){if(this.closed)fail('ABI_DISPOSED','Table disposed');const h=this.nextIndex++;if(h>0xffffffff)fail('ABI_LIMIT','Handle index exhausted');const ref=Object.freeze({epoch:this.epoch,h,g:1});this.values.set(h,value);this.generations.set(h,1);return ref;}
   get(ref){if(this.closed)fail('ABI_DISPOSED','Table disposed');if(ref?.epoch!==this.epoch||!this.values.has(ref.h)||this.generations.get(ref.h)!==ref.g)fail('ABI_STALE_HANDLE','Stale or foreign handle');return this.values.get(ref.h);}
-  retain(ref,{weak=false}={}){this.get(ref);const lease=Object.freeze({owner:this,id:this.nextLease++});this.leases.set(lease.id,{ref,weak});return lease;}
+  retain(ref,{weak=false}={}){
+    // A lease owns one tuple, independent of later caller edits or roots() exposure.
+    const identity=Object.freeze({epoch:ref?.epoch,h:ref?.h,g:ref?.g});this.get(identity);
+    const lease=Object.freeze({owner:this,id:this.nextLease++});this.leases.set(lease.id,{ref:identity,weak});return lease;
+  }
   release(lease){return lease?.owner===this&&this.leases.delete(lease.id);}
   roots(){return [...this.leases.values()].filter(l=>!l.weak).map(l=>l.ref);}
   collect(live=[]){const retained=new Set([...live,...this.roots()].map(r=>{this.get(r);return r.h;}));for(const h of this.values.keys())if(!retained.has(h))this.values.delete(h);}
