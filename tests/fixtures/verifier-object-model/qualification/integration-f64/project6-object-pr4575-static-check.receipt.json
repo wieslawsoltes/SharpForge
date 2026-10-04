@@ -1,0 +1,32 @@
+{
+  "argv": [
+    "node",
+    "scripts/limited.js",
+    "node",
+    "scripts/conformance/static/check-imports.js",
+    "--output",
+    "/workspace/scratch/7e3d2a445c44/project6-object-pr4575-static-imports.json"
+  ],
+  "cwd": "/workspace/scratch/7e3d2a445c44/sf6-objects",
+  "startedUtc": "2026-10-04T16:55:49.515433+00:00",
+  "finishedUtc": "2026-10-04T16:56:01.492558+00:00",
+  "exitCode": 0,
+  "head": "ec8968879f49233b546401fb1f7407853a097454",
+  "outputs": [
+    {
+      "path": "/workspace/scratch/7e3d2a445c44/project6-object-pr4575-static-check.stdout.txt",
+      "bytes": 77,
+      "sha256": "db26e153b0c4d4aff07a79bfa89b35195126740fb6979df713cf0676e47e6931"
+    },
+    {
+      "path": "/workspace/scratch/7e3d2a445c44/project6-object-pr4575-static-check.stderr.txt",
+      "bytes": 94,
+      "sha256": "efa2c0796767ca086f3d032d1bedc4a3002a555df65194f4ae54ff53a1291595"
+    },
+    {
+      "path": "/workspace/scratch/7e3d2a445c44/project6-object-pr4575-static-imports.json",
+      "bytes": 16943,
+      "sha256": "f5f91fe7b0508ba3fdc4452741d1e93688e9dac2bf034139be5f5e047c3bc6a0"
+    }
+  ]
+}

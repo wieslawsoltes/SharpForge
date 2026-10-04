@@ -58,7 +58,7 @@ function relationalRange(operator, value) {
 }
 
 /** Builds pattern spaces for one switch; `usesDeconstruct` and `usesProperties` record which part keys were used. */
-class SpaceBuilder {
+export class SpaceBuilder {
   /** @param {((type: object) => object|null)|null} closedHierarchyOf the closed hierarchy of a type at this use site */
   constructor(closedHierarchyOf = null) {
     this.usesDeconstruct = false;

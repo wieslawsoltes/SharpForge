@@ -1,0 +1,1043 @@
+{
+  "schemaVersion": 1,
+  "harnessCommit": "407ece8a532bdec026fca808097540eff10aefe3",
+  "runnerId": "5b4900aecd33bd39b7e31b24",
+  "commit": "407ece8a532bdec026fca808097540eff10aefe3",
+  "environment": {
+    "node": "v24.19.0",
+    "platform": "linux",
+    "arch": "x64",
+    "cpu": "AMD EPYC 9V74 80-Core Processor",
+    "logicalCpus": 9,
+    "osRelease": "6.18.44",
+    "runnerName": "4a20ccefcfde",
+    "commit": "407ece8a532bdec026fca808097540eff10aefe3"
+  },
+  "benchmarks": [
+    {
+      "id": "A03/typed-verifier/NewClass",
+      "area": "A03",
+      "engine": "node-typed-verifier",
+      "unit": "ms",
+      "samples": [
+        31.345304999999826,
+        31.505239999999958,
+        32.665076,
+        32.08200799999986,
+        33.36704900000018,
+        34.596616999999924,
+        34.366739999999936,
+        37.0386410000001,
+        47.428255000000036,
+        42.07953599999996,
+        32.898370000000114,
+        31.609603000000106,
+        32.09690999999998,
+        31.80164599999989,
+        35.26073500000007,
+        36.96989000000008,
+        36.93382600000018,
+        35.883240000000114,
+        40.145100000000184,
+        42.73475499999995,
+        30.129125000000386,
+        31.58730000000014,
+        35.58331799999996,
+        30.393554000000222,
+        38.04229699999996,
+        31.48016299999972,
+        30.915661999999884,
+        32.16877599999998,
+        34.08513499999981,
+        32.37719300000026,
+        32.80075599999964,
+        32.56444899999997,
+        30.5454279999999,
+        31.66441399999985,
+        31.926648999999998,
+        35.431387000000086,
+        38.70546200000035,
+        37.847479999999905,
+        31.226448999999775,
+        30.158838999999716,
+        30.169664999999895,
+        30.379773999999998,
+        30.60674700000027,
+        31.59713499999998,
+        44.50265099999979,
+        32.22058199999992,
+        34.37592300000006,
+        37.06177399999979,
+        38.97958100000005,
+        33.74503400000003,
+        33.81228300000021,
+        58.247031000000334,
+        56.91310900000008,
+        58.51805999999988,
+        49.0021499999998,
+        40.84686799999963,
+        33.70541600000024,
+        32.16123500000003,
+        34.7598280000002,
+        32.44611399999985,
+        33.30126199999995,
+        34.73047499999984,
+        35.58513099999982,
+        33.91545499999984,
+        33.278048000000126,
+        32.963295000000016,
+        32.12668399999984,
+        32.12957800000004,
+        34.680671000000075,
+        32.53282199999967,
+        33.58833400000003,
+        32.68997300000001,
+        32.397242000000006,
+        33.534043999999994,
+        31.542655000000195,
+        31.699674999999843,
+        51.1700950000004,
+        37.0590000000002,
+        34.64935499999956,
+        33.22077300000001,
+        33.83636899999965,
+        31.828225000000202,
+        32.94979499999954,
+        31.94810200000029,
+        33.24757300000056,
+        32.422098000000005,
+        31.58603900000071,
+        32.407287,
+        31.063489999999547,
+        31.966707999999926,
+        33.32885300000089,
+        30.666927000000214,
+        34.02543700000024,
+        31.7870240000002,
+        32.14991800000007,
+        31.178930000000037,
+        31.709340999999768,
+        33.486175,
+        30.470048000000133,
+        30.26226200000019
+      ],
+      "coldSamples": [
+        85.42214999999999
+      ],
+      "statistics": {
+        "count": 100,
+        "median": 32.92408249999983,
+        "p95": 47.428255000000036,
+        "p99": 58.247031000000334,
+        "min": 30.129125000000386,
+        "max": 58.51805999999988
+      },
+      "correctness": {
+        "passed": true,
+        "checksum": "0cdd0d73c9331f52db47341bc1096dddba30ab0071deab5a073c69013fd592a5"
+      },
+      "metrics": {
+        "identity": {
+          "fixtureSHA256": "c338f8c1ee90833b10661c4e0d2f17b07861dfdef8e111874ad758443b3bd00a",
+          "expected": "verified"
+        },
+        "iterationsPerBatch": 1000,
+        "chronological": [
+          {
+            "sample": 0,
+            "phase": "cold",
+            "ms": 85.42214999999999,
+            "heapDeltaBytes": -6014808,
+            "checkedInvocations": 1000
+          },
+          {
+            "sample": 1,
+            "phase": "warmup",
+            "ms": 54.62208899999996,
+            "heapDeltaBytes": 8225888,
+            "checkedInvocations": 1000
+          },
+          {
+            "sample": 2,
+            "phase": "warmup",
+            "ms": 79.41838300000006,
+            "heapDeltaBytes": 3836328,
+            "checkedInvocations": 1000
+          },
+          {
+            "sample": 3,
+            "phase": "warmup",
+            "ms": 85.55237199999999,
+            "heapDeltaBytes": 2012416,
+            "checkedInvocations": 1000
+          },
+          {
+            "sample": 4,
+            "phase": "warmup",
+            "ms": 78.49709300000006,
+            "heapDeltaBytes": 17353008,
+            "checkedInvocations": 1000
+          },
+          {
+            "sample": 5,
+            "phase": "warmup",
+            "ms": 65.99394900000004,
+            "heapDeltaBytes": 1366304,
+            "checkedInvocations": 1000
+          },
+          {
+            "sample": 6,
+            "phase": "warmup",
+            "ms": 54.66525200000001,
+            "heapDeltaBytes": 953808,
+            "checkedInvocations": 1000
+          },
+          {
+            "sample": 7,
+            "phase": "warmup",
+            "ms": 62.47976900000003,
+            "heapDeltaBytes": 663488,
+            "checkedInvocations": 1000
+          },
+          {
+            "sample": 8,
+            "phase": "warmup",
+            "ms": 38.567645000000084,
+            "heapDeltaBytes": 664152,
+            "checkedInvocations": 1000
+          },
+          {
+            "sample": 9,
+            "phase": "warmup",
+            "ms": 35.16441300000008,
+            "heapDeltaBytes": 677496,
+            "checkedInvocations": 1000
+          },
+          {
+            "sample": 10,
+            "phase": "warmup",
+            "ms": 38.79732800000011,
+            "heapDeltaBytes": 647760,
+            "checkedInvocations": 1000
+          },
+          {
+            "sample": 11,
+            "phase": "warmup",
+            "ms": 45.959284000000025,
+            "heapDeltaBytes": 898240,
+            "checkedInvocations": 1000
+          },
+          {
+            "sample": 12,
+            "phase": "warmup",
+            "ms": 67.69514099999992,
+            "heapDeltaBytes": 795304,
+            "checkedInvocations": 1000
+          },
+          {
+            "sample": 13,
+            "phase": "warmup",
+            "ms": 41.792002999999795,
+            "heapDeltaBytes": 734496,
+            "checkedInvocations": 1000
+          },
+          {
+            "sample": 14,
+            "phase": "warmup",
+            "ms": 35.29873999999995,
+            "heapDeltaBytes": 720440,
+            "checkedInvocations": 1000
+          },
+          {
+            "sample": 15,
+            "phase": "warmup",
+            "ms": 36.859666999999945,
+            "heapDeltaBytes": 755576,
+            "checkedInvocations": 1000
+          },
+          {
+            "sample": 16,
+            "phase": "warmup",
+            "ms": 32.1880349999999,
+            "heapDeltaBytes": 739544,
+            "checkedInvocations": 1000
+          },
+          {
+            "sample": 17,
+            "phase": "warmup",
+            "ms": 31.224265999999943,
+            "heapDeltaBytes": 720296,
+            "checkedInvocations": 1000
+          },
+          {
+            "sample": 18,
+            "phase": "warmup",
+            "ms": 32.79642899999999,
+            "heapDeltaBytes": 33043224,
+            "checkedInvocations": 1000
+          },
+          {
+            "sample": 19,
+            "phase": "warmup",
+            "ms": 43.88919800000008,
+            "heapDeltaBytes": 70528,
+            "checkedInvocations": 1000
+          },
+          {
+            "sample": 20,
+            "phase": "warmup",
+            "ms": 41.57028700000001,
+            "heapDeltaBytes": 701880,
+            "checkedInvocations": 1000
+          },
+          {
+            "sample": 21,
+            "phase": "measured",
+            "ms": 31.345304999999826,
+            "heapDeltaBytes": 666168,
+            "checkedInvocations": 1000
+          },
+          {
+            "sample": 22,
+            "phase": "measured",
+            "ms": 31.505239999999958,
+            "heapDeltaBytes": 676624,
+            "checkedInvocations": 1000
+          },
+          {
+            "sample": 23,
+            "phase": "measured",
+            "ms": 32.665076,
+            "heapDeltaBytes": 648344,
+            "checkedInvocations": 1000
+          },
+          {
+            "sample": 24,
+            "phase": "measured",
+            "ms": 32.08200799999986,
+            "heapDeltaBytes": 659280,
+            "checkedInvocations": 1000
+          },
+          {
+            "sample": 25,
+            "phase": "measured",
+            "ms": 33.36704900000018,
+            "heapDeltaBytes": 641104,
+            "checkedInvocations": 1000
+          },
+          {
+            "sample": 26,
+            "phase": "measured",
+            "ms": 34.596616999999924,
+            "heapDeltaBytes": 695128,
+            "checkedInvocations": 1000
+          },
+          {
+            "sample": 27,
+            "phase": "measured",
+            "ms": 34.366739999999936,
+            "heapDeltaBytes": 691352,
+            "checkedInvocations": 1000
+          },
+          {
+            "sample": 28,
+            "phase": "measured",
+            "ms": 37.0386410000001,
+            "heapDeltaBytes": 638616,
+            "checkedInvocations": 1000
+          },
+          {
+            "sample": 29,
+            "phase": "measured",
+            "ms": 47.428255000000036,
+            "heapDeltaBytes": -75500160,
+            "checkedInvocations": 1000
+          },
+          {
+            "sample": 30,
+            "phase": "measured",
+            "ms": 42.07953599999996,
+            "heapDeltaBytes": 7732192,
+            "checkedInvocations": 1000
+          },
+          {
+            "sample": 31,
+            "phase": "measured",
+            "ms": 32.898370000000114,
+            "heapDeltaBytes": 8327672,
+            "checkedInvocations": 1000
+          },
+          {
+            "sample": 32,
+            "phase": "measured",
+            "ms": 31.609603000000106,
+            "heapDeltaBytes": 1930624,
+            "checkedInvocations": 1000
+          },
+          {
+            "sample": 33,
+            "phase": "measured",
+            "ms": 32.09690999999998,
+            "heapDeltaBytes": 634368,
+            "checkedInvocations": 1000
+          },
+          {
+            "sample": 34,
+            "phase": "measured",
+            "ms": 31.80164599999989,
+            "heapDeltaBytes": 707392,
+            "checkedInvocations": 1000
+          },
+          {
+            "sample": 35,
+            "phase": "measured",
+            "ms": 35.26073500000007,
+            "heapDeltaBytes": 673520,
+            "checkedInvocations": 1000
+          },
+          {
+            "sample": 36,
+            "phase": "measured",
+            "ms": 36.96989000000008,
+            "heapDeltaBytes": 654040,
+            "checkedInvocations": 1000
+          },
+          {
+            "sample": 37,
+            "phase": "measured",
+            "ms": 36.93382600000018,
+            "heapDeltaBytes": 676752,
+            "checkedInvocations": 1000
+          },
+          {
+            "sample": 38,
+            "phase": "measured",
+            "ms": 35.883240000000114,
+            "heapDeltaBytes": 674192,
+            "checkedInvocations": 1000
+          },
+          {
+            "sample": 39,
+            "phase": "measured",
+            "ms": 40.145100000000184,
+            "heapDeltaBytes": 639224,
+            "checkedInvocations": 1000
+          },
+          {
+            "sample": 40,
+            "phase": "measured",
+            "ms": 42.73475499999995,
+            "heapDeltaBytes": 65289768,
+            "checkedInvocations": 1000
+          },
+          {
+            "sample": 41,
+            "phase": "measured",
+            "ms": 30.129125000000386,
+            "heapDeltaBytes": 673968,
+            "checkedInvocations": 1000
+          },
+          {
+            "sample": 42,
+            "phase": "measured",
+            "ms": 31.58730000000014,
+            "heapDeltaBytes": 645392,
+            "checkedInvocations": 1000
+          },
+          {
+            "sample": 43,
+            "phase": "measured",
+            "ms": 35.58331799999996,
+            "heapDeltaBytes": 663288,
+            "checkedInvocations": 1000
+          },
+          {
+            "sample": 44,
+            "phase": "measured",
+            "ms": 30.393554000000222,
+            "heapDeltaBytes": 683192,
+            "checkedInvocations": 1000
+          },
+          {
+            "sample": 45,
+            "phase": "measured",
+            "ms": 38.04229699999996,
+            "heapDeltaBytes": 643144,
+            "checkedInvocations": 1000
+          },
+          {
+            "sample": 46,
+            "phase": "measured",
+            "ms": 31.48016299999972,
+            "heapDeltaBytes": 671256,
+            "checkedInvocations": 1000
+          },
+          {
+            "sample": 47,
+            "phase": "measured",
+            "ms": 30.915661999999884,
+            "heapDeltaBytes": 677432,
+            "checkedInvocations": 1000
+          },
+          {
+            "sample": 48,
+            "phase": "measured",
+            "ms": 32.16877599999998,
+            "heapDeltaBytes": 648520,
+            "checkedInvocations": 1000
+          },
+          {
+            "sample": 49,
+            "phase": "measured",
+            "ms": 34.08513499999981,
+            "heapDeltaBytes": 676856,
+            "checkedInvocations": 1000
+          },
+          {
+            "sample": 50,
+            "phase": "measured",
+            "ms": 32.37719300000026,
+            "heapDeltaBytes": 642648,
+            "checkedInvocations": 1000
+          },
+          {
+            "sample": 51,
+            "phase": "measured",
+            "ms": 32.80075599999964,
+            "heapDeltaBytes": 650072,
+            "checkedInvocations": 1000
+          },
+          {
+            "sample": 52,
+            "phase": "measured",
+            "ms": 32.56444899999997,
+            "heapDeltaBytes": 646104,
+            "checkedInvocations": 1000
+          },
+          {
+            "sample": 53,
+            "phase": "measured",
+            "ms": 30.5454279999999,
+            "heapDeltaBytes": 674560,
+            "checkedInvocations": 1000
+          },
+          {
+            "sample": 54,
+            "phase": "measured",
+            "ms": 31.66441399999985,
+            "heapDeltaBytes": 671432,
+            "checkedInvocations": 1000
+          },
+          {
+            "sample": 55,
+            "phase": "measured",
+            "ms": 31.926648999999998,
+            "heapDeltaBytes": 703240,
+            "checkedInvocations": 1000
+          },
+          {
+            "sample": 56,
+            "phase": "measured",
+            "ms": 35.431387000000086,
+            "heapDeltaBytes": 645272,
+            "checkedInvocations": 1000
+          },
+          {
+            "sample": 57,
+            "phase": "measured",
+            "ms": 38.70546200000035,
+            "heapDeltaBytes": 682160,
+            "checkedInvocations": 1000
+          },
+          {
+            "sample": 58,
+            "phase": "measured",
+            "ms": 37.847479999999905,
+            "heapDeltaBytes": 680672,
+            "checkedInvocations": 1000
+          },
+          {
+            "sample": 59,
+            "phase": "measured",
+            "ms": 31.226448999999775,
+            "heapDeltaBytes": 702920,
+            "checkedInvocations": 1000
+          },
+          {
+            "sample": 60,
+            "phase": "measured",
+            "ms": 30.158838999999716,
+            "heapDeltaBytes": 670960,
+            "checkedInvocations": 1000
+          },
+          {
+            "sample": 61,
+            "phase": "measured",
+            "ms": 30.169664999999895,
+            "heapDeltaBytes": 648112,
+            "checkedInvocations": 1000
+          },
+          {
+            "sample": 62,
+            "phase": "measured",
+            "ms": 30.379773999999998,
+            "heapDeltaBytes": 705464,
+            "checkedInvocations": 1000
+          },
+          {
+            "sample": 63,
+            "phase": "measured",
+            "ms": 30.60674700000027,
+            "heapDeltaBytes": 643456,
+            "checkedInvocations": 1000
+          },
+          {
+            "sample": 64,
+            "phase": "measured",
+            "ms": 31.59713499999998,
+            "heapDeltaBytes": 672992,
+            "checkedInvocations": 1000
+          },
+          {
+            "sample": 65,
+            "phase": "measured",
+            "ms": 44.50265099999979,
+            "heapDeltaBytes": 724048,
+            "checkedInvocations": 1000
+          },
+          {
+            "sample": 66,
+            "phase": "measured",
+            "ms": 32.22058199999992,
+            "heapDeltaBytes": 676984,
+            "checkedInvocations": 1000
+          },
+          {
+            "sample": 67,
+            "phase": "measured",
+            "ms": 34.37592300000006,
+            "heapDeltaBytes": 670632,
+            "checkedInvocations": 1000
+          },
+          {
+            "sample": 68,
+            "phase": "measured",
+            "ms": 37.06177399999979,
+            "heapDeltaBytes": 656024,
+            "checkedInvocations": 1000
+          },
+          {
+            "sample": 69,
+            "phase": "measured",
+            "ms": 38.97958100000005,
+            "heapDeltaBytes": 673176,
+            "checkedInvocations": 1000
+          },
+          {
+            "sample": 70,
+            "phase": "measured",
+            "ms": 33.74503400000003,
+            "heapDeltaBytes": 671800,
+            "checkedInvocations": 1000
+          },
+          {
+            "sample": 71,
+            "phase": "measured",
+            "ms": 33.81228300000021,
+            "heapDeltaBytes": 671608,
+            "checkedInvocations": 1000
+          },
+          {
+            "sample": 72,
+            "phase": "measured",
+            "ms": 58.247031000000334,
+            "heapDeltaBytes": 671344,
+            "checkedInvocations": 1000
+          },
+          {
+            "sample": 73,
+            "phase": "measured",
+            "ms": 56.91310900000008,
+            "heapDeltaBytes": 673384,
+            "checkedInvocations": 1000
+          },
+          {
+            "sample": 74,
+            "phase": "measured",
+            "ms": 58.51805999999988,
+            "heapDeltaBytes": 673120,
+            "checkedInvocations": 1000
+          },
+          {
+            "sample": 75,
+            "phase": "measured",
+            "ms": 49.0021499999998,
+            "heapDeltaBytes": 681632,
+            "checkedInvocations": 1000
+          },
+          {
+            "sample": 76,
+            "phase": "measured",
+            "ms": 40.84686799999963,
+            "heapDeltaBytes": 675008,
+            "checkedInvocations": 1000
+          },
+          {
+            "sample": 77,
+            "phase": "measured",
+            "ms": 33.70541600000024,
+            "heapDeltaBytes": 678080,
+            "checkedInvocations": 1000
+          },
+          {
+            "sample": 78,
+            "phase": "measured",
+            "ms": 32.16123500000003,
+            "heapDeltaBytes": 65290032,
+            "checkedInvocations": 1000
+          },
+          {
+            "sample": 79,
+            "phase": "measured",
+            "ms": 34.7598280000002,
+            "heapDeltaBytes": 644768,
+            "checkedInvocations": 1000
+          },
+          {
+            "sample": 80,
+            "phase": "measured",
+            "ms": 32.44611399999985,
+            "heapDeltaBytes": 648264,
+            "checkedInvocations": 1000
+          },
+          {
+            "sample": 81,
+            "phase": "measured",
+            "ms": 33.30126199999995,
+            "heapDeltaBytes": 715920,
+            "checkedInvocations": 1000
+          },
+          {
+            "sample": 82,
+            "phase": "measured",
+            "ms": 34.73047499999984,
+            "heapDeltaBytes": 705848,
+            "checkedInvocations": 1000
+          },
+          {
+            "sample": 83,
+            "phase": "measured",
+            "ms": 35.58513099999982,
+            "heapDeltaBytes": 672632,
+            "checkedInvocations": 1000
+          },
+          {
+            "sample": 84,
+            "phase": "measured",
+            "ms": 33.91545499999984,
+            "heapDeltaBytes": 674696,
+            "checkedInvocations": 1000
+          },
+          {
+            "sample": 85,
+            "phase": "measured",
+            "ms": 33.278048000000126,
+            "heapDeltaBytes": 674056,
+            "checkedInvocations": 1000
+          },
+          {
+            "sample": 86,
+            "phase": "measured",
+            "ms": 32.963295000000016,
+            "heapDeltaBytes": 653784,
+            "checkedInvocations": 1000
+          },
+          {
+            "sample": 87,
+            "phase": "measured",
+            "ms": 32.12668399999984,
+            "heapDeltaBytes": 639128,
+            "checkedInvocations": 1000
+          },
+          {
+            "sample": 88,
+            "phase": "measured",
+            "ms": 32.12957800000004,
+            "heapDeltaBytes": 715784,
+            "checkedInvocations": 1000
+          },
+          {
+            "sample": 89,
+            "phase": "measured",
+            "ms": 34.680671000000075,
+            "heapDeltaBytes": 677264,
+            "checkedInvocations": 1000
+          },
+          {
+            "sample": 90,
+            "phase": "measured",
+            "ms": 32.53282199999967,
+            "heapDeltaBytes": 676480,
+            "checkedInvocations": 1000
+          },
+          {
+            "sample": 91,
+            "phase": "measured",
+            "ms": 33.58833400000003,
+            "heapDeltaBytes": 667352,
+            "checkedInvocations": 1000
+          },
+          {
+            "sample": 92,
+            "phase": "measured",
+            "ms": 32.68997300000001,
+            "heapDeltaBytes": 674360,
+            "checkedInvocations": 1000
+          },
+          {
+            "sample": 93,
+            "phase": "measured",
+            "ms": 32.397242000000006,
+            "heapDeltaBytes": 673968,
+            "checkedInvocations": 1000
+          },
+          {
+            "sample": 94,
+            "phase": "measured",
+            "ms": 33.534043999999994,
+            "heapDeltaBytes": 665616,
+            "checkedInvocations": 1000
+          },
+          {
+            "sample": 95,
+            "phase": "measured",
+            "ms": 31.542655000000195,
+            "heapDeltaBytes": 677424,
+            "checkedInvocations": 1000
+          },
+          {
+            "sample": 96,
+            "phase": "measured",
+            "ms": 31.699674999999843,
+            "heapDeltaBytes": 703256,
+            "checkedInvocations": 1000
+          },
+          {
+            "sample": 97,
+            "phase": "measured",
+            "ms": 51.1700950000004,
+            "heapDeltaBytes": -168756592,
+            "checkedInvocations": 1000
+          },
+          {
+            "sample": 98,
+            "phase": "measured",
+            "ms": 37.0590000000002,
+            "heapDeltaBytes": 7430616,
+            "checkedInvocations": 1000
+          },
+          {
+            "sample": 99,
+            "phase": "measured",
+            "ms": 34.64935499999956,
+            "heapDeltaBytes": 4096104,
+            "checkedInvocations": 1000
+          },
+          {
+            "sample": 100,
+            "phase": "measured",
+            "ms": 33.22077300000001,
+            "heapDeltaBytes": 584608,
+            "checkedInvocations": 1000
+          },
+          {
+            "sample": 101,
+            "phase": "measured",
+            "ms": 33.83636899999965,
+            "heapDeltaBytes": 694128,
+            "checkedInvocations": 1000
+          },
+          {
+            "sample": 102,
+            "phase": "measured",
+            "ms": 31.828225000000202,
+            "heapDeltaBytes": 681792,
+            "checkedInvocations": 1000
+          },
+          {
+            "sample": 103,
+            "phase": "measured",
+            "ms": 32.94979499999954,
+            "heapDeltaBytes": 667864,
+            "checkedInvocations": 1000
+          },
+          {
+            "sample": 104,
+            "phase": "measured",
+            "ms": 31.94810200000029,
+            "heapDeltaBytes": 705088,
+            "checkedInvocations": 1000
+          },
+          {
+            "sample": 105,
+            "phase": "measured",
+            "ms": 33.24757300000056,
+            "heapDeltaBytes": 663096,
+            "checkedInvocations": 1000
+          },
+          {
+            "sample": 106,
+            "phase": "measured",
+            "ms": 32.422098000000005,
+            "heapDeltaBytes": 638376,
+            "checkedInvocations": 1000
+          },
+          {
+            "sample": 107,
+            "phase": "measured",
+            "ms": 31.58603900000071,
+            "heapDeltaBytes": 717984,
+            "checkedInvocations": 1000
+          },
+          {
+            "sample": 108,
+            "phase": "measured",
+            "ms": 32.407287,
+            "heapDeltaBytes": 674024,
+            "checkedInvocations": 1000
+          },
+          {
+            "sample": 109,
+            "phase": "measured",
+            "ms": 31.063489999999547,
+            "heapDeltaBytes": 677080,
+            "checkedInvocations": 1000
+          },
+          {
+            "sample": 110,
+            "phase": "measured",
+            "ms": 31.966707999999926,
+            "heapDeltaBytes": 644752,
+            "checkedInvocations": 1000
+          },
+          {
+            "sample": 111,
+            "phase": "measured",
+            "ms": 33.32885300000089,
+            "heapDeltaBytes": 642160,
+            "checkedInvocations": 1000
+          },
+          {
+            "sample": 112,
+            "phase": "measured",
+            "ms": 30.666927000000214,
+            "heapDeltaBytes": 674856,
+            "checkedInvocations": 1000
+          },
+          {
+            "sample": 113,
+            "phase": "measured",
+            "ms": 34.02543700000024,
+            "heapDeltaBytes": 643256,
+            "checkedInvocations": 1000
+          },
+          {
+            "sample": 114,
+            "phase": "measured",
+            "ms": 31.7870240000002,
+            "heapDeltaBytes": 641624,
+            "checkedInvocations": 1000
+          },
+          {
+            "sample": 115,
+            "phase": "measured",
+            "ms": 32.14991800000007,
+            "heapDeltaBytes": 704648,
+            "checkedInvocations": 1000
+          },
+          {
+            "sample": 116,
+            "phase": "measured",
+            "ms": 31.178930000000037,
+            "heapDeltaBytes": 641720,
+            "checkedInvocations": 1000
+          },
+          {
+            "sample": 117,
+            "phase": "measured",
+            "ms": 31.709340999999768,
+            "heapDeltaBytes": 669088,
+            "checkedInvocations": 1000
+          },
+          {
+            "sample": 118,
+            "phase": "measured",
+            "ms": 33.486175,
+            "heapDeltaBytes": 65291496,
+            "checkedInvocations": 1000
+          },
+          {
+            "sample": 119,
+            "phase": "measured",
+            "ms": 30.470048000000133,
+            "heapDeltaBytes": 650864,
+            "checkedInvocations": 1000
+          },
+          {
+            "sample": 120,
+            "phase": "measured",
+            "ms": 30.26226200000019,
+            "heapDeltaBytes": 642552,
+            "checkedInvocations": 1000
+          }
+        ],
+        "timing": "Batch duration, including result-array writes; correctness and heap reads are outside the timer.",
+        "latency": "Median/p95/p99 describe batch durations, not individual invocation latency.",
+        "heap": "Raw heapUsed deltas include GC and O(iterations) retained results; not allocation counts.",
+        "provenance": {
+          "sourceInputs": {
+            "packages/cil/src/index.js": "cce0de055677f8ee7e07edcec183c67dc39047d34ff7039b4b275bd3f46a4fc9",
+            "tests/managed-fixtures.js": "53b6e844b4a1dccd707aed5ffa0e0e4840558ed4bb67adc9b9ae04ed7573e7fd",
+            "tests/helpers/object-verifier.js": "09694b1f26248f25e7037c6a74fb270a76fb03407c08a6e9856da5099486d6b4",
+            "tests/fixtures/verifier-object-model/input.js": "f022e3aaca7b8e17ef39fdb89f7b8106026a73bc126f4a5239dfdd1ec2fa8e3a",
+            "tests/fixtures/verifier-object-model/cases.js": "2db578c212492c408ef845b1a6bdaf35d34dcf0c0a022c50ef78d9da2c8fd33c",
+            "tests/fixtures/verifier-fields/input.js": "6a003d7c4ca263d7a29ee0a2e2aa56791e3cdf08377dc3716eedd90e0faa30c8",
+            "tests/fixtures/a03-type-categories/native-input.js": "c7d62efe6a12e7c2a7e2998f73a7814fcc0bca8ba312b00e27d563a96db51a42",
+            "tests/fixtures/a03-type-categories/native.json": "f15a760763f38c0469ba8fd9b343b77ed929620cf8aea56067f775808d049f2a"
+          },
+          "harnessSources": {
+            "packages/cil/tools/benchmark-object-verifier.mjs": "4339bbae562797605691783377d2542976941e5dedf4fb1eff0521f178126cb9",
+            "packages/cil/tools/benchmark-object-cohort.mjs": "b12411f5ded196645c42f5e1e95afe784e16253d09d2dfbbe0ab4a55724fb672",
+            "scripts/conformance/perf/process.js": "38172bf855fa12a68de8051f8ed9a086d9039bf77394019bf6672f36300d0c68",
+            "packages/cil/tools/verifier-benchmark-workloads.mjs": "77d1643689c73a2ffe31c9cda19543c57f75725e6142af7770ae3895520acc55",
+            "packages/cil/tools/verifier-benchmark-measure.mjs": "66b3d395be4baa4ffc64e7b1ab81b484cca6d8bfd1786352e6db5362ee29e158",
+            "scripts/conformance/perf/core.js": "090c25bdb79f97b464b51f1d7bfa55eda9c5104b78ff6d756f684b0f6bfcf1b5",
+            "scripts/planning/schema/validate.js": "5c82f261c4ce311fe563c14ed55b0f5496fed007ef2b8ba25a85cf1ff7853989",
+            "planning/qualification/benchmark.schema.json": "9d530f0769b8322febdcb5cfd2b4c2d4c7fcd6146ddd76cc631a87a084154aa5"
+          },
+          "nodeExecutable": {
+            "path": "/opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin/node",
+            "sha256": "bc17c508ffeed0ec622934f9b7fa72f8e78da65350e63c3eceb56fa688aa5e12"
+          },
+          "protocol": {
+            "samples": 100,
+            "warmups": 20,
+            "coldBatches": 1,
+            "iterationsPerBatch": 1000,
+            "cold": "First batch includes the first invocation and subsequent warm calls; not individual cold latency.",
+            "median": "Even measured count uses mean of two middle sorted batches.",
+            "percentiles": "Nearest-rank p95/p99 over measured batch durations; chronological samples are retained."
+          },
+          "host": "Shared workspace; no isolated-host guarantee or automatic regression sign-off."
+        }
+      }
+    }
+  ],
+  "unsupported": [
+    {
+      "target": "native-runtime-performance",
+      "reason": "This driver measures the Node typed-verification API only."
+    }
+  ],
+  "producer": "typed-verifier-batch-v1"
+}

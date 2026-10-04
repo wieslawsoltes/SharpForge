@@ -34,6 +34,7 @@ export class Scope {
     this.parent = parent;
     Object.assign(this, data);
     this.uri = data.uri ?? parent?.uri ?? null;
+    this.fileLocalTypes = data.fileLocalTypes ?? parent?.fileLocalTypes ?? null;
   }
   child(kind, data) {
     return new Scope(kind, data, this);
@@ -82,11 +83,19 @@ export class TypeBinder {
   }
   /** The bound using directives of a unit or namespace scope (bound on first use): see ./using-directives.js. */
   usingsOf(scope) {
-    const outer = () => new Scope(scope.kind, { namespace: scope.namespace, usings: null, uri: scope.uri }, scope.parent);
+    const outer = () => new Scope(scope.kind, {
+      namespace: scope.namespace, usings: null, uri: scope.uri, fileLocalTypes: scope.fileLocalTypes,
+    }, scope.parent);
     return bindUsingDirectives(this, scope, outer);
   }
   aliasTarget(entry) {
     return bindAliasTarget(this, entry);
+  }
+  /** Same-file declarations take precedence in qualified, imported and lexical namespace type lookup. */
+  namespaceTypes(namespace, name, arity, scope) {
+    const fileTypes = scope.fileLocalTypes;
+    const local = fileTypes && fileTypes.uri === scope.uri ? fileTypes.getTypeMembers(namespace, name, arity) : null;
+    return local ?? namespace.getTypeMembers(name, arity);
   }
   /**
    * Looks a simple name up as a type or namespace through the scope chain.
@@ -125,11 +134,8 @@ export class TypeBinder {
         }
         continue;
       }
-      // unit / namespace: the file-local types of this file come first (C# 11).
-      const fileType = s.fileTypes?.get(name + '`' + arity);
-      if (fileType) return fileType;
       const ns = s.namespace,
-        types = ns.getTypeMembers(name, arity);
+        types = this.namespaceTypes(ns, name, arity, s);
       if (options.aliasConflicts && arity === 0 && (types.length || ns.getNamespace(name)) && this.usingsOf(s)?.aliases.has(name))
         return { aliasConflict: ns };
       if (types.length > 1 && types[0] !== types[1])
@@ -149,13 +155,13 @@ export class TypeBinder {
         }
         const found = [];
         for (const imported of usings.namespaces)
-          for (const t of imported.getTypeMembers(name, arity)) if (!found.some(x => x === t)) found.push(t);
+          for (const t of this.namespaceTypes(imported, name, arity, s)) if (!found.some(x => x === t)) found.push(t);
         for (const st of usings.staticTypes) for (const t of st.getTypeMembers(name, arity)) if (!found.includes(t)) found.push(t);
         if (found.length === 1) return found[0];
         if (found.length > 1) return { ambiguous: found };
       }
       if (options.all) {
-        const wrong = ns.getTypeMembers(name);
+        const wrong = this.namespaceTypes(ns, name, undefined, s);
         if (wrong.length) return { wrongArity: wrong[0] };
       }
     }
@@ -263,7 +269,7 @@ export class TypeBinder {
       arity = args.length;
     if (right.identifier.isMissing) return error('');
     if (container.kind === SymbolKind.Namespace) {
-      const types = container.getTypeMembers(name, arity),
+      const types = this.namespaceTypes(container, name, arity, scope),
         conflict = assemblyConflict(types);
       if (conflict) {
         if (!options.quiet) this.report(scope, right.identifier, DiagnosticId.CS0433, conflict);
@@ -271,7 +277,7 @@ export class TypeBinder {
       }
       let found = types[0] ?? (arity === 0 ? container.getNamespace(name) : null);
       if (!found) {
-        const wrong = container.getTypeMembers(name)[0];
+        const wrong = this.namespaceTypes(container, name, undefined, scope)[0];
         if (wrong) return this.arityError(scope, right, wrong, arity);
         if (this.host.isFrameworkGap?.(container.toDisplayString(), name)) {
           const e = error(name, arity);
@@ -344,7 +350,8 @@ export class TypeBinder {
    */
   bindType(syntax, scope, options = {}) {
     const annotations = this.host.nullableAnnotationsAt?.(scope.uri, syntax.spanStart) ?? false,
-      plain = t => twa(t, t.isReferenceType === true && annotations ? NullableAnnotation.NotAnnotated : NullableAnnotation.Oblivious);
+      plain = t => twa(t, annotations && (t.isReferenceType === true || (t.kind === SymbolKind.TypeParameter && t.isValueType !== true))
+        ? NullableAnnotation.NotAnnotated : NullableAnnotation.Oblivious);
     switch (syntax.kind) {
       case 'PredefinedType': {
         const t = this.core.keyword(syntax.keyword.text);

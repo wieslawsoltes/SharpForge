@@ -140,6 +140,7 @@ export const AsyncEmission = Base =>
         if (il.isReachable) il.emit('leave', this.completed);
       });
       il.mark(handlerStart, 1);
+      this.debug?.asyncCatch(handlerStart);
       il.emit('stloc', exception);
       this.storeState(FINISHED);
       this.pushBuilder();
@@ -230,6 +231,7 @@ export const AsyncEmission = Base =>
       il.emit('ldarg', 0).emit('stloc', this.selfSlot);
       this.pushBuilder();
       il.emit('ldloca', slot).emit('ldloca', this.selfSlot);
+      this.debug?.awaitPoint(resume);
       this.builderMembers.awaitOnCompleted(il, awaiterType, awaiter.isCritical);
       il.emit('leave', this.suspended);
       this.resumeAt(resume);

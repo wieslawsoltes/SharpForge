@@ -1,0 +1,28 @@
+{
+  "startedAt": "2026-10-04T14:38:34.168126+00:00",
+  "cwd": "/workspace/scratch/7e3d2a445c44/sf6-metadata-inventory",
+  "head": "55913c5129f2cfa684b6c647441ebdcf6b61d559",
+  "argv": [
+    "node",
+    "scripts/limited.js",
+    "node",
+    "--expose-gc",
+    "packages/cil/tools/benchmark-decompiler-inventory.mjs",
+    "--baseline",
+    "/workspace/scratch/7e3d2a445c44/sf6-inventory-baseline",
+    "--output",
+    "/workspace/scratch/7e3d2a445c44/inventory-7da-vs-c169-benchmark.json"
+  ],
+  "log": "/workspace/scratch/7e3d2a445c44/inventory-7da-vs-c169-benchmark.log",
+  "output": "/workspace/scratch/7e3d2a445c44/inventory-7da-vs-c169-benchmark.json",
+  "environment": {
+    "SHARPFORGE_MAX_PARALLEL_RUNS": null,
+    "SHARPFORGE_TEST_CONCURRENCY": null,
+    "SHARPFORGE_MAX_OLD_SPACE_MB": null,
+    "CI": null
+  },
+  "exitCode": 0,
+  "finishedAt": "2026-10-04T14:46:25.457565+00:00",
+  "logSha256": "2424277b0daaec594ff1079c921aa0ae87f07b2d45ebc5717e3d564daa211434",
+  "outputSha256": "0aa9ba83ffbcf2ea105e2027ec8eb5ebaa418aa991f7a2d9038f6caa5c656c87"
+}

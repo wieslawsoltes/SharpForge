@@ -1,0 +1,200 @@
+{
+  "schemaVersion": 1,
+  "sourceRevision": "51db5c5ffbf870a3c2efd195477732d3e6861829",
+  "comparisonRevision": "7c73c877c841fa5d4d124edfab980f5896a7e485",
+  "driverSha256": "dccb1da876096c73d3f2424e707402415303fa38921890be62982cd8d9230996",
+  "sourceSha256": "abca70815be7aeb48add620fe02ae268025db1ba4cbdc57321a654d661091e88",
+  "cases": [
+    {
+      "scope": "whole-main-merge-metadata",
+      "beforeRevision": "7c73c877c841fa5d4d124edfab980f5896a7e485",
+      "beforeMode": "metadata",
+      "afterRevision": "51db5c5ffbf870a3c2efd195477732d3e6861829",
+      "afterMode": "metadata",
+      "before": {
+        "medianMs": 15.544988000000103,
+        "p95Ms": 20.191165999999612,
+        "p99Ms": 22.964188999999806,
+        "firstCompileMs": 113.95897400000013,
+        "compilerImportMs": 530.6117549999999,
+        "medianHeapUsedDelta": 3982488,
+        "assemblyBytes": 4096
+      },
+      "after": {
+        "medianMs": 19.001902499999687,
+        "p95Ms": 21.198717000000215,
+        "p99Ms": 21.869242000000213,
+        "firstCompileMs": 133.24449300000003,
+        "compilerImportMs": 404.946498,
+        "medianHeapUsedDelta": 4014220,
+        "assemblyBytes": 4096
+      },
+      "percentChanges": {
+        "medianMs": 22.238129099871685,
+        "p95Ms": 4.990058523616825,
+        "p99Ms": -4.768063004531109,
+        "firstCompileMs": 16.923212207930092,
+        "compilerImportMs": -23.683089531252456,
+        "medianHeapUsedDelta": 0.7967883393496633,
+        "assemblyBytes": 0.0
+      },
+      "latencyIncreasesOverFivePercent": [
+        "medianMs",
+        "firstCompileMs"
+      ],
+      "peSizeIncreaseOverTenPercent": false,
+      "assemblySha256Before": "203d976ebd713b519ee70fca5a3a7ad571413136d304870be3b083ec70be4d5d",
+      "assemblySha256After": "203d976ebd713b519ee70fca5a3a7ad571413136d304870be3b083ec70be4d5d",
+      "sameModeAssemblyBytesUnchanged": true
+    },
+    {
+      "scope": "whole-main-merge-refout",
+      "beforeRevision": "7c73c877c841fa5d4d124edfab980f5896a7e485",
+      "beforeMode": "refout",
+      "afterRevision": "51db5c5ffbf870a3c2efd195477732d3e6861829",
+      "afterMode": "refout",
+      "before": {
+        "medianMs": 15.16668199999981,
+        "p95Ms": 19.360905999999886,
+        "p99Ms": 23.763266999999814,
+        "firstCompileMs": 127.93481800000006,
+        "compilerImportMs": 566.799936,
+        "medianHeapUsedDelta": 3913608,
+        "assemblyBytes": 4096
+      },
+      "after": {
+        "medianMs": 13.762755499999912,
+        "p95Ms": 18.920035000000098,
+        "p99Ms": 20.10275300000012,
+        "firstCompileMs": 108.19893100000002,
+        "compilerImportMs": 328.55652100000003,
+        "medianHeapUsedDelta": 3937796,
+        "assemblyBytes": 4096
+      },
+      "percentChanges": {
+        "medianMs": -9.256648883387387,
+        "p95Ms": -2.2771196761132484,
+        "p99Ms": -15.404085641926768,
+        "firstCompileMs": -15.426517431712794,
+        "compilerImportMs": -42.03307020133467,
+        "medianHeapUsedDelta": 0.6180486139643948,
+        "assemblyBytes": 0.0
+      },
+      "latencyIncreasesOverFivePercent": [],
+      "peSizeIncreaseOverTenPercent": false,
+      "assemblySha256Before": "a8828868ecab9ff103ee59e3f642d419f71111897ac2fec9908c785d58c62c66",
+      "assemblySha256After": "a8828868ecab9ff103ee59e3f642d419f71111897ac2fec9908c785d58c62c66",
+      "sameModeAssemblyBytesUnchanged": true
+    },
+    {
+      "scope": "integrated-output-mode",
+      "beforeRevision": "51db5c5ffbf870a3c2efd195477732d3e6861829",
+      "beforeMode": "metadata",
+      "afterRevision": "51db5c5ffbf870a3c2efd195477732d3e6861829",
+      "afterMode": "refout",
+      "before": {
+        "medianMs": 19.001902499999687,
+        "p95Ms": 21.198717000000215,
+        "p99Ms": 21.869242000000213,
+        "firstCompileMs": 133.24449300000003,
+        "compilerImportMs": 404.946498,
+        "medianHeapUsedDelta": 4014220,
+        "assemblyBytes": 4096
+      },
+      "after": {
+        "medianMs": 13.762755499999912,
+        "p95Ms": 18.920035000000098,
+        "p99Ms": 20.10275300000012,
+        "firstCompileMs": 108.19893100000002,
+        "compilerImportMs": 328.55652100000003,
+        "medianHeapUsedDelta": 3937796,
+        "assemblyBytes": 4096
+      },
+      "percentChanges": {
+        "medianMs": -27.57169709717151,
+        "p95Ms": -10.749150526421458,
+        "p99Ms": -8.077504469519681,
+        "firstCompileMs": -18.79669578539356,
+        "compilerImportMs": -18.864214748685136,
+        "medianHeapUsedDelta": -1.9038318776748664,
+        "assemblyBytes": 0.0
+      },
+      "latencyIncreasesOverFivePercent": [],
+      "peSizeIncreaseOverTenPercent": false,
+      "assemblySha256Before": "203d976ebd713b519ee70fca5a3a7ad571413136d304870be3b083ec70be4d5d",
+      "assemblySha256After": "a8828868ecab9ff103ee59e3f642d419f71111897ac2fec9908c785d58c62c66",
+      "sameModeAssemblyBytesUnchanged": false
+    }
+  ],
+  "captureProtocol": {
+    "runsPerIntegratedMode": 1,
+    "historicalRunsRepeated": false,
+    "retries": 0,
+    "rawChronologicalSamplesPerRun": 120,
+    "settlingSamplesExcluded": 20,
+    "measuredSamplesPerRun": 100,
+    "firstCompileExcludesImport": true,
+    "gcExposed": true,
+    "nodeOptions": "--max-old-space-size=2048"
+  },
+  "environment": {
+    "node": "v24.19.0",
+    "platform": "linux",
+    "architecture": "x64",
+    "operatingSystemRelease": "6.18.44",
+    "cpu": "AMD EPYC 9V74 80-Core Processor",
+    "logicalCpus": 9,
+    "totalMemoryBytes": 10451464192
+  },
+  "nativeByteComparison": {
+    "public-sharpforge.dll": {
+      "beforeSha256": "a8828868ecab9ff103ee59e3f642d419f71111897ac2fec9908c785d58c62c66",
+      "afterSha256": "a8828868ecab9ff103ee59e3f642d419f71111897ac2fec9908c785d58c62c66",
+      "byteEqual": true
+    },
+    "friend-sharpforge.dll": {
+      "beforeSha256": "e3a2877c08724fb74a016ce71ba2114693f32b27703e2e24f5604505b085b405",
+      "afterSha256": "e3a2877c08724fb74a016ce71ba2114693f32b27703e2e24f5604505b085b405",
+      "byteEqual": true
+    },
+    "metadata-control.dll": {
+      "beforeSha256": "708cdfb10ce94e42ae471a12333f26bad2e587ca4a4622e9fb1268b14db1b5dc",
+      "afterSha256": "708cdfb10ce94e42ae471a12333f26bad2e587ca4a4622e9fb1268b14db1b5dc",
+      "byteEqual": true
+    },
+    "public-observed.json": {
+      "beforeSha256": "6f3895fcdd1f6f48ce6fbf7a1e641bc1ab10bc5b777476c4540bbfd378cbc644",
+      "afterSha256": "6f3895fcdd1f6f48ce6fbf7a1e641bc1ab10bc5b777476c4540bbfd378cbc644",
+      "byteEqual": true
+    },
+    "friend-observed.json": {
+      "beforeSha256": "3936916515749961e84212e44cd3feafa01965f95f6832d30059d55d7cecae9f",
+      "afterSha256": "3936916515749961e84212e44cd3feafa01965f95f6832d30059d55d7cecae9f",
+      "byteEqual": true
+    }
+  },
+  "limitations": [
+    "This compares the whole merge from main, including unrelated compiler/package changes. It does not isolate the conflict resolution or refout feature cost.",
+    "The two integrated modes produce different contracts; within-mode output hashes match pre-integration reports exactly. Equal 4096-byte PE sizes include alignment and do not measure metadata payload or browser bundle sizes.",
+    "Imports and first compilations are single observations; driver startup and preloaded candidate CIL make import timing unsuitable for clean process-startup comparisons.",
+    "HeapUsed deltas include temporary allocations, not total allocation or retained heap.",
+    "The team held one heavy slot on a shared hosted host; external workloads were not measured.",
+    "No reruns or optimization were attempted after observing the ordinary metadata median increase."
+  ],
+  "review": {
+    "status": "pending coordinator review",
+    "performanceBudgetPassClaimed": false,
+    "flaggedRepeatedMetric": "Whole-main-merge ordinary metadata median increased 22.238129099871685%.",
+    "flaggedOneShotMetric": "Whole-main-merge ordinary metadata first compilation increased 16.923212207930092%."
+  },
+  "independentReadOnlyReview": {
+    "agent": "/root/emission_remaining/review_refout",
+    "newProductExecution": false,
+    "allSummaryStatisticsRecomputedExactly": true,
+    "verifiedSha256Count": 64,
+    "allOutputByteCountsMatch": true,
+    "executionIntervalsNonoverlapping": true,
+    "sourceHashesMatchFrozenGitObjects": true,
+    "nativeComparison": "25 of40 output files identical, with all15 remaining differences confined to temporary/output paths; no semantic metadata/diagnostic differences."
+  }
+}

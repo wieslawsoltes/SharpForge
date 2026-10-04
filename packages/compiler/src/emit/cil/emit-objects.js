@@ -64,15 +64,18 @@ export const ObjectEmission = Base =>
       return this.implicitBaseCall(type, constructor);
     }
     chainedConstructorCall(call) {
+      const point = this.debug?.beginExpression(call);
       const target = call.method.containingType;
       if (call.method.isImplicitlyDeclared && !isReference(target)) {
         // `: this()` of a struct without a declared parameterless constructor zero-initializes the value.
         this.il.emit('ldarg', 0).emit('initobj', this.tokens.type(target));
+        this.debug?.endExpression(point);
         return;
       }
       this.il.emit('ldarg', 0);
       this.arguments(call, call.method);
       this.il.emit('call', this.tokens.method(call.method), { pops: call.method.parameters.length + 1, pushes: 0 });
+      this.debug?.endExpression(point);
     }
     /**
      * `~C() { body }` is `protected override void Finalize() { try { body } finally { base.Finalize(); } }`: the
@@ -109,16 +112,20 @@ export const ObjectEmission = Base =>
     /** Stores every instance field, auto-property and event initializer of the type, in declaration order. */
     instanceInitializers(type) {
       for (const { field, bound } of this.program.initializersOf(type, false)) {
+        const point = this.debug?.beginExpression(bound.expression);
         this.il.emit('ldarg', 0);
         this.expression(bound.expression);
         this.il.emit('stfld', this.tokens.field(field));
+        this.debug?.endExpression(point);
       }
     }
     /** The body of a type initializer starts with the static initializers, in declaration order. */
     staticInitializers(type) {
       for (const { field, bound } of this.program.initializersOf(type, true)) {
+        const point = this.debug?.beginExpression(bound.expression);
         this.expression(bound.expression);
         this.il.emit('stsfld', this.tokens.field(field));
+        this.debug?.endExpression(point);
       }
     }
   };

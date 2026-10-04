@@ -16,6 +16,7 @@ import { Accessibility, SymbolKind, TypeKind } from '../../symbols/types.js';
 import { MethodSymbol, ParameterSymbol, MethodKind, DeclarationModifiers } from '../../symbols/members.js';
 import { baseRecordOf, isInheritedPositional } from '../../symbols/synthesized/records.js';
 import { RecordContractBody, recordContractMembers } from '../../symbols/synthesized/record-contract-members.js';
+import { recordContractType } from '../../symbols/synthesized/record-nullability.js';
 import { plannedMethod } from './member-plan.js';
 import { memberOn } from './covariant-overrides.js';
 
@@ -106,7 +107,7 @@ export class RecordPlan {
       cloneSlot = base || !type.isSealed ? DeclarationModifiers.Virtual : 0;
     const clone = method(RecordBody.Clone, {
       name: '<Clone>$',
-      returnType: self,
+      returnType: recordContractType(type, self),
       parameters: [],
       declaredAccessibility: Accessibility.Public,
       modifiers: abstract | cloneSlot,
@@ -116,7 +117,7 @@ export class RecordPlan {
       ? method(RecordBody.EqualsBase, {
           name: 'Equals',
           returnType: core.bool,
-          parameters: [new ParameterSymbol({ name: 'other', type: base })],
+          parameters: [new ParameterSymbol({ name: 'other', type: recordContractType(type, base, true) })],
           declaredAccessibility: Accessibility.Public,
           modifiers: DeclarationModifiers.Override | DeclarationModifiers.Sealed,
         })

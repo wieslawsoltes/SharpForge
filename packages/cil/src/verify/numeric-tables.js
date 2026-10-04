@@ -1,4 +1,4 @@
-import { VerificationKind as Kind, verificationType } from './types.js';
+import { VerificationKind as Kind, verificationType, isManagedPointer } from './types.js';
 
 const i4 = verificationType(Kind.Int32);
 const i8 = verificationType(Kind.Int64);
@@ -74,7 +74,7 @@ const referenceComparisons = new Set(['ceq', 'cgt.un', 'beq', 'beq.s', 'bne.un',
 export function numericComparable(name, left, right) {
   if (numericResult(arithmetic, left, right)) return true;
   if (referenceKinds.has(left.kind) && referenceKinds.has(right.kind)) return referenceComparisons.has(name);
-  if (left.kind === Kind.ManagedPointer && right.kind === Kind.ManagedPointer)
+  if (isManagedPointer(left) && isManagedPointer(right))
     return left.type === right.type ? true : null;
   return false;
 }

@@ -39,8 +39,26 @@ function documentHash(source, bytes, algorithm) {
   return codec.compute(bytes);
 }
 
+/** A mapped document may have a declared checksum even when its source bytes are unavailable. */
+function writeDocumentOnly(builder, source) {
+  if (source.text !== undefined || source.bytes !== undefined) fail('Document-only source must not include content');
+  const hasHash = source.hash !== undefined;
+  if (hasHash !== (source.hashAlgorithm !== undefined)) fail('Document-only checksum requires an algorithm and hash');
+  if (hasHash && (typeof source.hashAlgorithm !== 'string' || !source.hashAlgorithm)) fail('Invalid document-only checksum algorithm');
+  if (hasHash && (!(source.hash instanceof Uint8Array) || source.hash.length > 4096))
+    fail('Invalid or oversized document-only checksum');
+  const id = builder.add(48, [
+    documentName(builder, source.uri),
+    hasHash ? builder.guid(source.hashAlgorithm) : 0,
+    hasHash ? builder.blob(source.hash) : 0,
+    builder.guid(source.language ?? PdbGuids.csharp),
+  ]);
+  return { id, bytes: null };
+}
+
 /** Emit one standard Document row and return its id and unchanged checksum input bytes. */
 export function writeDocument(builder, source) {
+  if (source.documentOnly === true) return writeDocumentOnly(builder, source);
   const bytes = source.bytes ?? utf8(source.text ?? '');
   if (!(bytes instanceof Uint8Array)) fail('Document source must be bytes or text');
   const algorithm = (source.hashAlgorithm ?? PdbGuids.sha256).toLowerCase();

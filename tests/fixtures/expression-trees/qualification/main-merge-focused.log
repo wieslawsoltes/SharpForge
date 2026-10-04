@@ -1,0 +1,61 @@
+✔ A02-T30 a lambda converted to an expression tree is built by factory calls, not compiled to a method (91.044324ms)
+✔ A02-T30 members and methods enter a tree through their handles (22.518435ms)
+✔ A02-T30 a variable of the enclosing method is the field of its cell, held by the tree as a constant (7.306946ms)
+✔ A02-T30 string concatenation and user-defined operators name their methods (14.842808ms)
+✔ A02-T30 an extension method, its class and the assembly carry ExtensionAttribute (6.004454ms)
+✔ A02-T30 lifted arithmetic emits the nullable operands and the ordinary binary factory (6.413904ms)
+▶ A02-T07.5 creation, operator and delegate trees have complete factory descriptions
+  ✔ expression-tree-creation/nested-members-lists-and-empty-initializers (129.762359ms)
+  ✔ expression-tree-creation/anonymous-members-and-generic-storage (32.777725ms)
+  ✔ expression-tree-creation/rectangular-bounds-access-and-wide-index (16.53314ms)
+  ✔ expression-tree-operators/nullable-operators-conversions-and-overflow (39.457609ms)
+  ✔ expression-tree-operators/lifted-methods-checked-methods-and-conversion-lambda (39.00461ms)
+  ✔ expression-tree-operators/enum-promotion-and-exact-conditional-types (12.547609ms)
+  ✔ expression-tree-delegates/static-instance-generic-extension-and-delegate-copy (17.535526ms)
+  ✔ expression-tree-delegates/delegate-operators-event-default-typeof-and-ref-calls (20.239219ms)
+✔ A02-T07.5 creation, operator and delegate trees have complete factory descriptions (310.208156ms)
+▶ A02-T07.5 tree text, node walks and compiled behavior match real Roslyn output
+  ✔ expression-tree-creation/nested-members-lists-and-empty-initializers (233.441611ms)
+  ✔ expression-tree-creation/anonymous-members-and-generic-storage (80.634356ms)
+  ✔ expression-tree-creation/rectangular-bounds-access-and-wide-index (128.331199ms)
+  ✔ expression-tree-operators/nullable-operators-conversions-and-overflow (115.793149ms)
+  ✔ expression-tree-operators/lifted-methods-checked-methods-and-conversion-lambda (123.708812ms)
+  ✔ expression-tree-operators/enum-promotion-and-exact-conditional-types (92.026012ms)
+  ✔ expression-tree-delegates/static-instance-generic-extension-and-delegate-copy (100.794336ms)
+  ✔ expression-tree-delegates/delegate-operators-event-default-typeof-and-ref-calls (130.519101ms)
+✔ A02-T07.5 tree text, node walks and compiled behavior match real Roslyn output (1053.192733ms)
+ℹ .NET SDK 10.0.201, reference pack 10.0.5; compared with stored Roslyn output
+✔ A02-T07.5 Expression<T> requires a concrete delegate type before anonymous-method checks (95.277337ms)
+✔ A02-T07.5 only the actual expression-tree type accepts a lambda conversion (9.812087ms)
+✔ A02-T07.5 anonymous objects are rejected in attribute and const-field declaration contexts (10.717046ms)
+✔ A02-T07.5 anonymous objects remain valid in member initializers and expression-tree bodies (8.264154ms)
+✔ A02-T07.5 bare function expressions cannot be operands of is or as (15.660964ms)
+✔ A02-T07.5 rectangular array initializers in trees are rejected even when empty (7.922493ms)
+✔ A02-T07.5 rectangular allocation and access and jagged initialization are valid tree forms (7.227262ms)
+✔ A02-T07.5 calls may pass fields by reference, but tree lambda parameters and returning members follow Roslyn restrictions (16.534237ms)
+✔ A02-T07.5 method-group references to local functions are rejected at the group expression (4.013823ms)
+▶ A02-T07.5 restriction codes, severity and source spans match real Roslyn captures on registry and reference axes
+  ✔ registry: expression-tree-restrictions/invalid-delegate-type-and-anonymous-method-precedence (6.236787ms)
+  ✔ registry: expression-tree-restrictions/anonymous-types-in-attribute-and-constant-contexts (4.749714ms)
+  ✔ registry: expression-tree-restrictions/function-operands-of-is-and-as (3.479309ms)
+  ✔ registry: expression-tree-restrictions/rectangular-initializers-including-empty (3.651481ms)
+  ✔ registry: expression-tree-restrictions/by-reference-lambda-and-returning-members (7.047228ms)
+  ✔ references: expression-tree-restrictions/invalid-delegate-type-and-anonymous-method-precedence (135.193925ms)
+  ✔ references: expression-tree-restrictions/anonymous-types-in-attribute-and-constant-contexts (14.076298ms)
+  ✔ references: expression-tree-restrictions/function-operands-of-is-and-as (3.116896ms)
+  ✔ references: expression-tree-restrictions/rectangular-initializers-including-empty (3.739039ms)
+  ✔ references: expression-tree-restrictions/by-reference-lambda-and-returning-members (49.328239ms)
+✔ A02-T07.5 restriction codes, severity and source spans match real Roslyn captures on registry and reference axes (531.623191ms)
+✔ SF-A02-T07.5 tree shapes equal what .NET prints for the Roslyn-compiled program: ToString and node-type walk (232.366483ms)
+✔ SF-A02-T07.5 what an expression tree may not contain is reported where Roslyn reports it (65.875565ms)
+✔ SF-A02-T07.5 the tree is a tree of factory calls: one parameter node per parameter, typed constants (2.420183ms)
+✔ SF-A02-T07.5 a lambda converted to a delegate is not checked as a tree; a nested lambda in a tree is (65.193204ms)
+✔ SF-A02-T07.5 lifted arithmetic lowers, while the source-image runtime retains its explicit expression-tree boundary (20.102036ms)
+ℹ tests 49
+ℹ suites 0
+ℹ pass 49
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 7147.891841

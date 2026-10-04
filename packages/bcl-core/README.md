@@ -3,7 +3,25 @@
 This package owns BCL family contracts and managed implementations. It has no
 runtime or framework dependency. Hosts supply `bclHost.fault(type, message)`,
 `bclHost.isReference(value)` and `bclHost.frameworkType(name)` on each platform.
+The optional `bclHost.isExecutionStopped(platform)` query distinguishes explicit
+VM shutdown from ordinary completion of Main. Runtime hosts return true while
+the platform is disposed and execution remains terminated; active or restored
+execution and naturally completed programs return false. A BCL operation can
+query this after a synchronous host callback to cancel its pending continuation
+without writing into a stopped VM. The query reads per-platform lifecycle state,
+adds no managed state, and does not change normal post-completion inspection.
 The fault service must throw the host's managed exception.
+
+The optional `bclHost.invokeSynchronousHostCallback(platform, callback, receiver,
+inspectResult)` service invokes a zero-argument callback with the supplied
+receiver. An optional synchronous result observer runs before the boundary ends;
+its return value is ignored. The runtime rejects execution snapshot and restore
+while either callback is active, since the pending JavaScript continuation cannot
+be captured. Each platform owns its depth independently, and all exits release
+the boundary. The callback's result is returned; errors from either callback
+propagate unchanged. Callers apply their own validation and cancellation policy.
+Between-call snapshot and restore remain available. Hosts without this service
+invoke their callback directly.
 
 `createHostStringOrdering({Collator})` creates a synchronous nullable-string
 comparer with immutable host provenance. `Collator` defaults to `Intl.Collator`;

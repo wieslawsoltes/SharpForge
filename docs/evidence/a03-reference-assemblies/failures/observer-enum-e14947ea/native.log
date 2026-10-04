@@ -1,0 +1,94 @@
+Unhandled exception. System.BadImageFormatException: The reference fixture declares no enum-valued custom-attribute arguments: class System.Diagnostics.DebuggerBrowsableState
+   at SignatureNames.GetUnderlyingEnumType(String type)
+   at System.Reflection.Metadata.Ecma335.CustomAttributeDecoder`1.DecodeFixedArgumentType(BlobReader& signatureReader, BlobReader genericContextReader, Boolean isElementType)
+   at System.Reflection.Metadata.Ecma335.CustomAttributeDecoder`1.DecodeFixedArguments(BlobReader& signatureReader, BlobReader& valueReader, Int32 count, BlobReader genericContextReader)
+   at System.Reflection.Metadata.Ecma335.CustomAttributeDecoder`1.DecodeValue(EntityHandle constructor, BlobHandle value)
+   at System.Reflection.Metadata.CustomAttribute.DecodeValue[TType](ICustomAttributeTypeProvider`1 provider)
+   at Program.<>c__DisplayClass0_0.<<Main>$>b__13(CustomAttributeHandle handle)
+   at System.Linq.Enumerable.IEnumerableSelectIterator`2.ToArray()
+   at System.Linq.Enumerable.OrderedIterator`1.ToArray()
+   at Program.<>c__DisplayClass0_0.<<Main>$>g__Attributes|4(CustomAttributeHandleCollection handles)
+   at Program.<>c__DisplayClass0_0.<<Main>$>b__21(FieldDefinitionHandle fieldHandle)
+   at System.Linq.Enumerable.IEnumerableSelectIterator`2.ToArray()
+   at System.Linq.Enumerable.OrderedIterator`1.ToArray()
+   at Program.<>c__DisplayClass0_0.<<Main>$>b__6(TypeDefinitionHandle handle)
+   at System.Linq.Enumerable.IEnumerableSelectIterator`2.ToArray()
+   at System.Linq.Enumerable.OrderedIterator`1.ToArray()
+   at Program.<Main>$(String[] args)
+node:internal/errors:985
+  const err = new Error(message);
+              ^
+
+Error: Command failed: /workspace/scratch/7e3d2a445c44/dotnet-10.0.201/dotnet /tmp/sharpforge-refout-eosr5r/Oracle.dll /tmp/sharpforge-refout-eosr5r/public/roslyn/RefSurface.dll
+Unhandled exception. System.BadImageFormatException: The reference fixture declares no enum-valued custom-attribute arguments: class System.Diagnostics.DebuggerBrowsableState
+   at SignatureNames.GetUnderlyingEnumType(String type)
+   at System.Reflection.Metadata.Ecma335.CustomAttributeDecoder`1.DecodeFixedArgumentType(BlobReader& signatureReader, BlobReader genericContextReader, Boolean isElementType)
+   at System.Reflection.Metadata.Ecma335.CustomAttributeDecoder`1.DecodeFixedArguments(BlobReader& signatureReader, BlobReader& valueReader, Int32 count, BlobReader genericContextReader)
+   at System.Reflection.Metadata.Ecma335.CustomAttributeDecoder`1.DecodeValue(EntityHandle constructor, BlobHandle value)
+   at System.Reflection.Metadata.CustomAttribute.DecodeValue[TType](ICustomAttributeTypeProvider`1 provider)
+   at Program.<>c__DisplayClass0_0.<<Main>$>b__13(CustomAttributeHandle handle)
+   at System.Linq.Enumerable.IEnumerableSelectIterator`2.ToArray()
+   at System.Linq.Enumerable.OrderedIterator`1.ToArray()
+   at Program.<>c__DisplayClass0_0.<<Main>$>g__Attributes|4(CustomAttributeHandleCollection handles)
+   at Program.<>c__DisplayClass0_0.<<Main>$>b__21(FieldDefinitionHandle fieldHandle)
+   at System.Linq.Enumerable.IEnumerableSelectIterator`2.ToArray()
+   at System.Linq.Enumerable.OrderedIterator`1.ToArray()
+   at Program.<>c__DisplayClass0_0.<<Main>$>b__6(TypeDefinitionHandle handle)
+   at System.Linq.Enumerable.IEnumerableSelectIterator`2.ToArray()
+   at System.Linq.Enumerable.OrderedIterator`1.ToArray()
+   at Program.<Main>$(String[] args)
+
+    at genericNodeError (node:internal/errors:985:15)
+    at wrappedFn (node:internal/errors:539:14)
+    at checkExecSyncError (node:child_process:942:11)
+    at execFileSync (node:child_process:978:15)
+    at run (file:///workspace/scratch/7e3d2a445c44/sf6-emission/packages/cil/tools/capture-reference-assemblies.mjs:21:27)
+    at file:///workspace/scratch/7e3d2a445c44/sf6-emission/packages/cil/tools/capture-reference-assemblies.mjs:66:33
+    at ModuleJob.run (node:internal/modules/esm/module_job:439:25)
+    at async node:internal/modules/esm/loader:643:26
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5) {
+  status: null,
+  signal: 'SIGABRT',
+  output: [
+    null,
+    '',
+    'Unhandled exception. System.BadImageFormatException: The reference fixture declares no enum-valued custom-attribute arguments: class System.Diagnostics.DebuggerBrowsableState\n' +
+      '   at SignatureNames.GetUnderlyingEnumType(String type)\n' +
+      '   at System.Reflection.Metadata.Ecma335.CustomAttributeDecoder`1.DecodeFixedArgumentType(BlobReader& signatureReader, BlobReader genericContextReader, Boolean isElementType)\n' +
+      '   at System.Reflection.Metadata.Ecma335.CustomAttributeDecoder`1.DecodeFixedArguments(BlobReader& signatureReader, BlobReader& valueReader, Int32 count, BlobReader genericContextReader)\n' +
+      '   at System.Reflection.Metadata.Ecma335.CustomAttributeDecoder`1.DecodeValue(EntityHandle constructor, BlobHandle value)\n' +
+      '   at System.Reflection.Metadata.CustomAttribute.DecodeValue[TType](ICustomAttributeTypeProvider`1 provider)\n' +
+      '   at Program.<>c__DisplayClass0_0.<<Main>$>b__13(CustomAttributeHandle handle)\n' +
+      '   at System.Linq.Enumerable.IEnumerableSelectIterator`2.ToArray()\n' +
+      '   at System.Linq.Enumerable.OrderedIterator`1.ToArray()\n' +
+      '   at Program.<>c__DisplayClass0_0.<<Main>$>g__Attributes|4(CustomAttributeHandleCollection handles)\n' +
+      '   at Program.<>c__DisplayClass0_0.<<Main>$>b__21(FieldDefinitionHandle fieldHandle)\n' +
+      '   at System.Linq.Enumerable.IEnumerableSelectIterator`2.ToArray()\n' +
+      '   at System.Linq.Enumerable.OrderedIterator`1.ToArray()\n' +
+      '   at Program.<>c__DisplayClass0_0.<<Main>$>b__6(TypeDefinitionHandle handle)\n' +
+      '   at System.Linq.Enumerable.IEnumerableSelectIterator`2.ToArray()\n' +
+      '   at System.Linq.Enumerable.OrderedIterator`1.ToArray()\n' +
+      '   at Program.<Main>$(String[] args)\n'
+  ],
+  pid: 93,
+  stdout: '',
+  stderr: 'Unhandled exception. System.BadImageFormatException: The reference fixture declares no enum-valued custom-attribute arguments: class System.Diagnostics.DebuggerBrowsableState\n' +
+    '   at SignatureNames.GetUnderlyingEnumType(String type)\n' +
+    '   at System.Reflection.Metadata.Ecma335.CustomAttributeDecoder`1.DecodeFixedArgumentType(BlobReader& signatureReader, BlobReader genericContextReader, Boolean isElementType)\n' +
+    '   at System.Reflection.Metadata.Ecma335.CustomAttributeDecoder`1.DecodeFixedArguments(BlobReader& signatureReader, BlobReader& valueReader, Int32 count, BlobReader genericContextReader)\n' +
+    '   at System.Reflection.Metadata.Ecma335.CustomAttributeDecoder`1.DecodeValue(EntityHandle constructor, BlobHandle value)\n' +
+    '   at System.Reflection.Metadata.CustomAttribute.DecodeValue[TType](ICustomAttributeTypeProvider`1 provider)\n' +
+    '   at Program.<>c__DisplayClass0_0.<<Main>$>b__13(CustomAttributeHandle handle)\n' +
+    '   at System.Linq.Enumerable.IEnumerableSelectIterator`2.ToArray()\n' +
+    '   at System.Linq.Enumerable.OrderedIterator`1.ToArray()\n' +
+    '   at Program.<>c__DisplayClass0_0.<<Main>$>g__Attributes|4(CustomAttributeHandleCollection handles)\n' +
+    '   at Program.<>c__DisplayClass0_0.<<Main>$>b__21(FieldDefinitionHandle fieldHandle)\n' +
+    '   at System.Linq.Enumerable.IEnumerableSelectIterator`2.ToArray()\n' +
+    '   at System.Linq.Enumerable.OrderedIterator`1.ToArray()\n' +
+    '   at Program.<>c__DisplayClass0_0.<<Main>$>b__6(TypeDefinitionHandle handle)\n' +
+    '   at System.Linq.Enumerable.IEnumerableSelectIterator`2.ToArray()\n' +
+    '   at System.Linq.Enumerable.OrderedIterator`1.ToArray()\n' +
+    '   at Program.<Main>$(String[] args)\n'
+}
+
+Node.js v24.19.0

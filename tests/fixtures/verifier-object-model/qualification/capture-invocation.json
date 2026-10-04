@@ -1,0 +1,50 @@
+{
+  "schemaVersion": 1,
+  "sourceCommit": "73f9ab77d8b6973324dcc19497b84c1c1eb18010",
+  "cwd": "/workspace/scratch/7e3d2a445c44/sf6-objects",
+  "command": [
+    "node",
+    "scripts/limited.js",
+    "node",
+    "tests/fixtures/verifier-object-model/capture.mjs",
+    "/workspace/scratch/7e3d2a445c44/project6-object-native-j8___au0/native.json"
+  ],
+  "nodeResolvedPath": "/opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin/node",
+  "environmentOverrides": {
+    "SHARPFORGE_ORACLE_DOTNET": "/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/dotnet",
+    "DOTNET_ROOT": "/workspace/scratch/7e3d2a445c44/dotnet-10.0.201",
+    "SHARPFORGE_ILASM": "/workspace/scratch/7e3d2a445c44/dotnet-tools/ilasm",
+    "SHARPFORGE_ILVERIFY": "/workspace/scratch/7e3d2a445c44/dotnet-tools/.store/dotnet-ilverify/10.0.5/dotnet-ilverify/10.0.5/tools/net10.0/any/ILVerify.dll"
+  },
+  "nativeEnvironmentAddedByHelper": {
+    "DOTNET_CLI_TELEMETRY_OPTOUT": "1",
+    "DOTNET_NOLOGO": "1",
+    "DOTNET_CLI_UI_LANGUAGE": "en-US",
+    "VSLANG": "1033",
+    "COMPlus_DbgEnableMiniDump": "0",
+    "DOTNET_ROLL_FORWARD": "Disable",
+    "DOTNET_ROLL_FORWARD_TO_PRERELEASE": "0"
+  },
+  "platform": "Linux-6.18.44-x86_64-with-glibc2.39",
+  "sourceHashes": {
+    "tests/fixtures/verifier-object-model/capture.mjs": "0be9bd03afeff1fea95ae550461d198962dcabfc5a6292145c637f0777894dab",
+    "tests/fixtures/verifier-object-model/input.js": "f022e3aaca7b8e17ef39fdb89f7b8106026a73bc126f4a5239dfdd1ec2fa8e3a",
+    "tests/fixtures/verifier-object-model/cases.js": "2db578c212492c408ef845b1a6bdaf35d34dcf0c0a022c50ef78d9da2c8fd33c",
+    "tests/fixtures/verifier-fields/input.js": "6a003d7c4ca263d7a29ee0a2e2aa56791e3cdf08377dc3716eedd90e0faa30c8",
+    "tests/helpers/verifier-case-capture.mjs": "65853f45a22a5e0f67e1bfb861e9c7e48be186e4e0c7a3b76d095e7715809a52",
+    "scripts/conformance/oracle/process.js": "dd0be49abc7f8e3f79af7103c43017cc882a5327851504e3e8952367fffcf62d",
+    "scripts/conformance/oracle/toolchain.js": "43d734f4899c0484475eb917e58b46161490b4622ace0b0a688488c504c835a6",
+    "scripts/conformance/verifier/catalog.js": "3a40a0230d6680ef035601f12556b1b3cf6d4ef0f22d37730b61f470285f9a6b",
+    "scripts/conformance/verifier/tools.js": "688873d3d8354f1af4fea7c274517c4cd9cce400afc3d186807aff320ca8968d",
+    "planning/qualification/verifier/ilverify-pin.json": "2a1dc90dafd035e5e55eebbb6040d34811837cc2cc3ecba92ead5fdd0fb3cfab",
+    "planning/qualification/oracle-toolchain.json": "58eaf5e63a8edcf47d3ef96635655f1dd89d230a15b5b39f29503576484fe52d",
+    "planning/qualification/suites/ilasm-pins.json": "c49a119810cac2d8119bd253b7bb17d48640b2d1b1570340ba8dc56e1cc2302e",
+    "scripts/limited.js": "d60fa1310cc85ce9426914dd4b79b1b500dcb2eab0928b422d24994d90a650f7",
+    "scripts/planning/lib/resource-limits.js": "f70d0f2862ad4a5e0afce5e47ecf8e055cf82aefc44fefc96a3b4989293ee382"
+  },
+  "stdoutAndStderr": "/workspace/scratch/7e3d2a445c44/project6-object-native-j8___au0/capture.log",
+  "invocationProvenance": "Exact outer argv recorded before launch; native argv is constructed by the hashed capture helper. Raw native processes record stdout/stderr/exit/signal/elapsed time but do not separately record argv.",
+  "startedAt": "2026-10-04T15:03:52.852411+00:00",
+  "endedAt": "2026-10-04T15:04:00.383958+00:00",
+  "exitCode": 0
+}

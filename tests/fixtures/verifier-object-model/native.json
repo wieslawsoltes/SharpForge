@@ -1,0 +1,1058 @@
+{
+  "inputSHA256": "f022e3aaca7b8e17ef39fdb89f7b8106026a73bc126f4a5239dfdd1ec2fa8e3a",
+  "observations": [
+    {
+      "name": "NewClass",
+      "assemblySHA256": "c338f8c1ee90833b10661c4e0d2f17b07861dfdef8e111874ad758443b3bd00a",
+      "policyStatus": "verified",
+      "policyDiagnostic": null,
+      "expectedNative": true,
+      "difference": null,
+      "verify": {
+        "stdout": "All Classes and Methods in <temporary>/NewClass.dll Verified.\nTypes found: 0\nTypes verified: 12\nMethods found: 9\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 0,
+        "signal": null,
+        "elapsedMs": 124.37677199999996
+      },
+      "oracle": {
+        "accepted": true,
+        "errors": []
+      }
+    },
+    {
+      "name": "NewObjectReturn",
+      "assemblySHA256": "6cf4982f05e8475c27498ca793dc458cf483822989480f286fdaf616df9c0318",
+      "policyStatus": "verified",
+      "policyDiagnostic": null,
+      "expectedNative": true,
+      "difference": null,
+      "verify": {
+        "stdout": "All Classes and Methods in <temporary>/NewObjectReturn.dll Verified.\nTypes found: 0\nTypes verified: 12\nMethods found: 9\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 0,
+        "signal": null,
+        "elapsedMs": 103.46148199999993
+      },
+      "oracle": {
+        "accepted": true,
+        "errors": []
+      }
+    },
+    {
+      "name": "NewDerived",
+      "assemblySHA256": "647a250bd1643363aa37f6c09bc8be94187ca8231f5abd5a3f1322a9095fcbde",
+      "policyStatus": "verified",
+      "policyDiagnostic": null,
+      "expectedNative": true,
+      "difference": null,
+      "verify": {
+        "stdout": "All Classes and Methods in <temporary>/NewDerived.dll Verified.\nTypes found: 0\nTypes verified: 12\nMethods found: 10\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 0,
+        "signal": null,
+        "elapsedMs": 125.614281
+      },
+      "oracle": {
+        "accepted": true,
+        "errors": []
+      }
+    },
+    {
+      "name": "NewArguments",
+      "assemblySHA256": "0f58f1bb3526e34daac46a48566431db27be83471962b46d7aebf33dd1964435",
+      "policyStatus": "verified",
+      "policyDiagnostic": null,
+      "expectedNative": true,
+      "difference": null,
+      "verify": {
+        "stdout": "All Classes and Methods in <temporary>/NewArguments.dll Verified.\nTypes found: 0\nTypes verified: 12\nMethods found: 9\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 0,
+        "signal": null,
+        "elapsedMs": 106.61928399999988
+      },
+      "oracle": {
+        "accepted": true,
+        "errors": []
+      }
+    },
+    {
+      "name": "NewValue",
+      "assemblySHA256": "30abcc55c3cfdc3fd07e0eb7ee1b53365c7eca0eea4251bd35dc3106ea292417",
+      "policyStatus": "verified",
+      "policyDiagnostic": null,
+      "expectedNative": true,
+      "difference": null,
+      "verify": {
+        "stdout": "All Classes and Methods in <temporary>/NewValue.dll Verified.\nTypes found: 0\nTypes verified: 12\nMethods found: 9\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 0,
+        "signal": null,
+        "elapsedMs": 129.03003799999988
+      },
+      "oracle": {
+        "accepted": true,
+        "errors": []
+      }
+    },
+    {
+      "name": "NewLocalMemberRef",
+      "assemblySHA256": "8a31fa379f0f0106b546ebc8e81237f056b4af53588e17bb923f0d19ac5630c8",
+      "policyStatus": "verified",
+      "policyDiagnostic": null,
+      "expectedNative": true,
+      "difference": null,
+      "verify": {
+        "stdout": "All Classes and Methods in <temporary>/NewLocalMemberRef.dll Verified.\nTypes found: 0\nTypes verified: 12\nMethods found: 9\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 0,
+        "signal": null,
+        "elapsedMs": 118.15675600000009
+      },
+      "oracle": {
+        "accepted": true,
+        "errors": []
+      }
+    },
+    {
+      "name": "NewWrongArgument",
+      "assemblySHA256": "e6ffff89ae7b668328fb01a48c40444d487a1daa5d6298715a29eb495ffc85e1",
+      "policyStatus": "rejected",
+      "policyDiagnostic": "StackUnexpected",
+      "expectedNative": false,
+      "difference": null,
+      "verify": {
+        "stdout": "[IL]: Error [StackUnexpected]: [<temporary>/NewWrongArgument.dll : Fixture.Host::Test()][offset 0x00000001][found Nullobjref 'NullReference'][expected Int32] Unexpected type on the stack.\n1 Error(s) Verifying <temporary>/NewWrongArgument.dll\nTypes found: 0\nTypes verified: 12\nMethods found: 9\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 2,
+        "signal": null,
+        "elapsedMs": 134.72677299999987
+      },
+      "oracle": {
+        "accepted": false,
+        "errors": [
+          "StackUnexpected"
+        ]
+      }
+    },
+    {
+      "name": "NewMissingArgument",
+      "assemblySHA256": "b160240b90d3ab648c51bce56ee4b49b39b38d0abc4147ec036ae87c7a42c7be",
+      "policyStatus": "rejected",
+      "policyDiagnostic": "StackUnderflow",
+      "expectedNative": false,
+      "difference": null,
+      "verify": {
+        "stdout": "[IL]: Error [StackUnderflow]: [<temporary>/NewMissingArgument.dll : Fixture.Host::Test()][offset 0x00000000] Stack underflow.\n1 Error(s) Verifying <temporary>/NewMissingArgument.dll\nTypes found: 0\nTypes verified: 12\nMethods found: 9\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 2,
+        "signal": null,
+        "elapsedMs": 129.45602900000017
+      },
+      "oracle": {
+        "accepted": false,
+        "errors": [
+          "StackUnderflow"
+        ]
+      }
+    },
+    {
+      "name": "NewReadonlyArgument",
+      "assemblySHA256": "8026b9c18cb5ab9fa2e9cb06754dd49c2a8ac5ef15c870e1a9992b8f9238dafc",
+      "policyStatus": "rejected",
+      "policyDiagnostic": "StackUnexpected",
+      "expectedNative": false,
+      "difference": null,
+      "verify": {
+        "stdout": "[IL]: Error [StackUnexpected]: [<temporary>/NewReadonlyArgument.dll : Fixture.Host::Test(object)][offset 0x00000006][found readonly address of '[Objects_NewReadonlyArgument]Fixture.Value'][expected address of '[Objects_NewReadonlyArgument]Fixture.Value'] Unexpected type on the stack.\n1 Error(s) Verifying <temporary>/NewReadonlyArgument.dll\nTypes found: 0\nTypes verified: 12\nMethods found: 9\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 2,
+        "signal": null,
+        "elapsedMs": 108.10207000000014
+      },
+      "oracle": {
+        "accepted": false,
+        "errors": [
+          "StackUnexpected"
+        ]
+      }
+    },
+    {
+      "name": "NewWrongReturn",
+      "assemblySHA256": "e8920bd686eacbf437e0aaa46c0cfd4afdaee2e1f3137bcc18a661118c7122c2",
+      "policyStatus": "rejected",
+      "policyDiagnostic": "StackUnexpected",
+      "expectedNative": false,
+      "difference": null,
+      "verify": {
+        "stdout": "[IL]: Error [StackUnexpected]: [<temporary>/NewWrongReturn.dll : Fixture.Host::Test()][offset 0x00000005][found ref '[Objects_NewWrongReturn]Fixture.Owner'][expected ref '[Objects_NewWrongReturn]Fixture.Other'] Unexpected type on the stack.\n1 Error(s) Verifying <temporary>/NewWrongReturn.dll\nTypes found: 0\nTypes verified: 12\nMethods found: 9\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 2,
+        "signal": null,
+        "elapsedMs": 126.68345199999999
+      },
+      "oracle": {
+        "accepted": false,
+        "errors": [
+          "StackUnexpected"
+        ]
+      }
+    },
+    {
+      "name": "NewOrdinaryMethod",
+      "assemblySHA256": "69275551ee48fb5b3269f4fc8198ff130edef8b89e1ec7b41bfabb01641e243e",
+      "policyStatus": "rejected",
+      "policyDiagnostic": "CtorExpected",
+      "expectedNative": false,
+      "difference": null,
+      "verify": {
+        "stdout": "[IL]: Error [CtorExpected]: [<temporary>/NewOrdinaryMethod.dll : Fixture.Host::Test()][offset 0x00000000] .ctor expected.\n1 Error(s) Verifying <temporary>/NewOrdinaryMethod.dll\nTypes found: 0\nTypes verified: 12\nMethods found: 9\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 2,
+        "signal": null,
+        "elapsedMs": 109.12987499999986
+      },
+      "oracle": {
+        "accepted": false,
+        "errors": [
+          "CtorExpected"
+        ]
+      }
+    },
+    {
+      "name": "NewAbstract",
+      "assemblySHA256": "33038fb57066c4bed4becb91b3711bdfefe481da096c5d7ea0f489f3d62c9423",
+      "policyStatus": "rejected",
+      "policyDiagnostic": "NewobjAbstractClass",
+      "expectedNative": false,
+      "difference": null,
+      "verify": {
+        "stdout": "[IL]: Error [NewobjAbstractClass]: [<temporary>/NewAbstract.dll : Fixture.Host::Test()][offset 0x00000000] Cannot construct an instance of abstract class.\n1 Error(s) Verifying <temporary>/NewAbstract.dll\nTypes found: 0\nTypes verified: 12\nMethods found: 9\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 2,
+        "signal": null,
+        "elapsedMs": 109.4346529999998
+      },
+      "oracle": {
+        "accepted": false,
+        "errors": [
+          "NewobjAbstractClass"
+        ]
+      }
+    },
+    {
+      "name": "NewPrivateOutside",
+      "assemblySHA256": "f598313e7bdbb4fe82e6533c47fe734b673b8716ae3f738e49b5f762fdd44fce",
+      "policyStatus": "rejected",
+      "policyDiagnostic": "MethodAccess",
+      "expectedNative": false,
+      "difference": null,
+      "verify": {
+        "stdout": "[IL]: Error [MethodAccess]: [<temporary>/NewPrivateOutside.dll : Fixture.Host::Test()][offset 0x00000000] Method is not visible.\n1 Error(s) Verifying <temporary>/NewPrivateOutside.dll\nTypes found: 0\nTypes verified: 12\nMethods found: 9\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 2,
+        "signal": null,
+        "elapsedMs": 114.94909099999995
+      },
+      "oracle": {
+        "accepted": false,
+        "errors": [
+          "MethodAccess"
+        ]
+      }
+    },
+    {
+      "name": "NewPrivateInside",
+      "assemblySHA256": "af42ac896f4d86cf260d0832f88edecc7817168266ca4093f5ca3904ac124642",
+      "policyStatus": "verified",
+      "policyDiagnostic": null,
+      "expectedNative": true,
+      "difference": null,
+      "verify": {
+        "stdout": "All Classes and Methods in <temporary>/NewPrivateInside.dll Verified.\nTypes found: 0\nTypes verified: 12\nMethods found: 9\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 0,
+        "signal": null,
+        "elapsedMs": 113.67306999999983
+      },
+      "oracle": {
+        "accepted": true,
+        "errors": []
+      }
+    },
+    {
+      "name": "NewExternalBase",
+      "assemblySHA256": "c2fb447aee0c2e4b856f976da0b025537c86fcb0a75d3330fcbf1668fdbfa16e",
+      "policyStatus": "unknown",
+      "policyDiagnostic": "ConstructorBaseUnavailable",
+      "expectedNative": true,
+      "difference": null,
+      "verify": {
+        "stdout": "All Classes and Methods in <temporary>/NewExternalBase.dll Verified.\nTypes found: 0\nTypes verified: 12\nMethods found: 9\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 0,
+        "signal": null,
+        "elapsedMs": 124.90185399999973
+      },
+      "oracle": {
+        "accepted": true,
+        "errors": []
+      }
+    },
+    {
+      "name": "NewDelegateNumeric",
+      "assemblySHA256": "b6a1da2bfe92c2085dddee9dac571bb8f776bda595978277fcc1c7252f4dfa34",
+      "policyStatus": "unknown",
+      "policyDiagnostic": "ConstructorBaseUnavailable",
+      "expectedNative": false,
+      "difference": null,
+      "verify": {
+        "stdout": "[IL]: Error [StackMethod]: [<temporary>/NewDelegateNumeric.dll : Fixture.Host::Test()][offset 0x00000003] Expected pointer to function on the stack.\n[IL]: Error [DelegatePattern]: [<temporary>/NewDelegateNumeric.dll : Fixture.Host::Test()][offset 0x00000003] Dup, ldvirtftn, newobj delegate::.ctor() pattern expected (in the same basic block).\n[IL]: Error [DelegateCtor]: [<temporary>/NewDelegateNumeric.dll : Fixture.Host::Test()][offset 0x00000003] Unrecognized arguments for delegate .ctor.\n3 Error(s) Verifying <temporary>/NewDelegateNumeric.dll\nTypes found: 0\nTypes verified: 12\nMethods found: 9\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 2,
+        "signal": null,
+        "elapsedMs": 114.54742499999975
+      },
+      "oracle": {
+        "accepted": false,
+        "errors": [
+          "DelegateCtor",
+          "DelegatePattern",
+          "StackMethod"
+        ]
+      }
+    },
+    {
+      "name": "CastClass",
+      "assemblySHA256": "b8ddf612ea325c5cfee25de2a07e49434dd54a4e1adf7c977431c94a33e189d2",
+      "policyStatus": "verified",
+      "policyDiagnostic": null,
+      "expectedNative": true,
+      "difference": null,
+      "verify": {
+        "stdout": "All Classes and Methods in <temporary>/CastClass.dll Verified.\nTypes found: 0\nTypes verified: 12\nMethods found: 9\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 0,
+        "signal": null,
+        "elapsedMs": 102.69322200000033
+      },
+      "oracle": {
+        "accepted": true,
+        "errors": []
+      }
+    },
+    {
+      "name": "CastUnrelatedReference",
+      "assemblySHA256": "bd89e2a49a2c54a3fdbc5e51d3031db6113bd1bfe8127a2d2e04932c77b16328",
+      "policyStatus": "verified",
+      "policyDiagnostic": null,
+      "expectedNative": true,
+      "difference": null,
+      "verify": {
+        "stdout": "All Classes and Methods in <temporary>/CastUnrelatedReference.dll Verified.\nTypes found: 0\nTypes verified: 12\nMethods found: 9\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 0,
+        "signal": null,
+        "elapsedMs": 101.75232899999992
+      },
+      "oracle": {
+        "accepted": true,
+        "errors": []
+      }
+    },
+    {
+      "name": "CastNull",
+      "assemblySHA256": "8d99f4341353f241a5c084a7c63c9a753c387f1d572292a375a3a123ad0a3330",
+      "policyStatus": "verified",
+      "policyDiagnostic": null,
+      "expectedNative": true,
+      "difference": null,
+      "verify": {
+        "stdout": "All Classes and Methods in <temporary>/CastNull.dll Verified.\nTypes found: 0\nTypes verified: 12\nMethods found: 9\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 0,
+        "signal": null,
+        "elapsedMs": 101.79947800000036
+      },
+      "oracle": {
+        "accepted": true,
+        "errors": []
+      }
+    },
+    {
+      "name": "IsInterface",
+      "assemblySHA256": "086381ed445392f5f07cd0347d9a6ffa556062e7cbf6e9400a8e093ec4554b80",
+      "policyStatus": "verified",
+      "policyDiagnostic": null,
+      "expectedNative": true,
+      "difference": null,
+      "verify": {
+        "stdout": "All Classes and Methods in <temporary>/IsInterface.dll Verified.\nTypes found: 0\nTypes verified: 12\nMethods found: 9\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 0,
+        "signal": null,
+        "elapsedMs": 105.38369699999976
+      },
+      "oracle": {
+        "accepted": true,
+        "errors": []
+      }
+    },
+    {
+      "name": "CastBoxedValue",
+      "assemblySHA256": "3165b0a034b4b5ff94c8f2395bc227f810e9e0d8c012dd5490371128c34a8bc0",
+      "policyStatus": "verified",
+      "policyDiagnostic": null,
+      "expectedNative": true,
+      "difference": null,
+      "verify": {
+        "stdout": "All Classes and Methods in <temporary>/CastBoxedValue.dll Verified.\nTypes found: 0\nTypes verified: 12\nMethods found: 9\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 0,
+        "signal": null,
+        "elapsedMs": 152.5859800000003
+      },
+      "oracle": {
+        "accepted": true,
+        "errors": []
+      }
+    },
+    {
+      "name": "CastTypeSpecification",
+      "assemblySHA256": "516e5d1cacb6c8d022cffceafb59da3fb4b706e365ca2aa03e70a05ed8a89806",
+      "policyStatus": "unknown",
+      "policyDiagnostic": "MetadataUnavailable",
+      "expectedNative": true,
+      "difference": null,
+      "verify": {
+        "stdout": "All Classes and Methods in <temporary>/CastTypeSpecification.dll Verified.\nTypes found: 0\nTypes verified: 12\nMethods found: 9\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 0,
+        "signal": null,
+        "elapsedMs": 112.27555900000016
+      },
+      "oracle": {
+        "accepted": true,
+        "errors": []
+      }
+    },
+    {
+      "name": "CastNumeric",
+      "assemblySHA256": "b948ea2085aae2a0d8972fc57a4e7f70630eb1882af5fcad031f072b3b9178d1",
+      "policyStatus": "rejected",
+      "policyDiagnostic": "StackObjRef",
+      "expectedNative": false,
+      "difference": null,
+      "verify": {
+        "stdout": "[IL]: Error [StackObjRef]: [<temporary>/CastNumeric.dll : Fixture.Host::Test(int32)][offset 0x00000001][found Int32] Expected an ObjRef on the stack.\n1 Error(s) Verifying <temporary>/CastNumeric.dll\nTypes found: 0\nTypes verified: 12\nMethods found: 9\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 2,
+        "signal": null,
+        "elapsedMs": 112.09906000000001
+      },
+      "oracle": {
+        "accepted": false,
+        "errors": [
+          "StackObjRef"
+        ]
+      }
+    },
+    {
+      "name": "CastManagedPointer",
+      "assemblySHA256": "f5aaa98a94198d2aba7260a6a37d13617714f5c856a36a407e9e5bb0ea87cb2e",
+      "policyStatus": "rejected",
+      "policyDiagnostic": "StackObjRef",
+      "expectedNative": false,
+      "difference": null,
+      "verify": {
+        "stdout": "[IL]: Error [StackObjRef]: [<temporary>/CastManagedPointer.dll : Fixture.Host::Test(int32&)][offset 0x00000001][found address of Int32] Expected an ObjRef on the stack.\n1 Error(s) Verifying <temporary>/CastManagedPointer.dll\nTypes found: 0\nTypes verified: 12\nMethods found: 9\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 2,
+        "signal": null,
+        "elapsedMs": 131.361496
+      },
+      "oracle": {
+        "accepted": false,
+        "errors": [
+          "StackObjRef"
+        ]
+      }
+    },
+    {
+      "name": "CastPrivateType",
+      "assemblySHA256": "cb887a530169f11fb5a68a67257a4c422306d288ab740040771f1bcfc92900ae",
+      "policyStatus": "rejected",
+      "policyDiagnostic": "TypeAccess",
+      "expectedNative": false,
+      "difference": null,
+      "verify": {
+        "stdout": "[IL]: Error [TypeAccess]: [<temporary>/CastPrivateType.dll : Fixture.Host::Test(object)][offset 0x00000001] Type is not visible.\n1 Error(s) Verifying <temporary>/CastPrivateType.dll\nTypes found: 0\nTypes verified: 12\nMethods found: 9\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 2,
+        "signal": null,
+        "elapsedMs": 129.47984399999996
+      },
+      "oracle": {
+        "accepted": false,
+        "errors": [
+          "TypeAccess"
+        ]
+      }
+    },
+    {
+      "name": "BoxValue",
+      "assemblySHA256": "8c53e1fbe5287f096e1b4565e54b3dd7f23fb53a544d0e6a5c072593255c7cfc",
+      "policyStatus": "verified",
+      "policyDiagnostic": null,
+      "expectedNative": true,
+      "difference": null,
+      "verify": {
+        "stdout": "All Classes and Methods in <temporary>/BoxValue.dll Verified.\nTypes found: 0\nTypes verified: 12\nMethods found: 9\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 0,
+        "signal": null,
+        "elapsedMs": 115.47099799999978
+      },
+      "oracle": {
+        "accepted": true,
+        "errors": []
+      }
+    },
+    {
+      "name": "BoxInterface",
+      "assemblySHA256": "53dc1e61a518a21f4c751f20862c0aff8becdc93bc1b44efca9d308ae2590c86",
+      "policyStatus": "verified",
+      "policyDiagnostic": null,
+      "expectedNative": true,
+      "difference": null,
+      "verify": {
+        "stdout": "All Classes and Methods in <temporary>/BoxInterface.dll Verified.\nTypes found: 0\nTypes verified: 12\nMethods found: 9\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 0,
+        "signal": null,
+        "elapsedMs": 117.57129600000007
+      },
+      "oracle": {
+        "accepted": true,
+        "errors": []
+      }
+    },
+    {
+      "name": "BoxReference",
+      "assemblySHA256": "c9b26a4065f16a1f860516624229d22e05119f195b529ea88536b49c6d13c306",
+      "policyStatus": "verified",
+      "policyDiagnostic": null,
+      "expectedNative": true,
+      "difference": null,
+      "verify": {
+        "stdout": "All Classes and Methods in <temporary>/BoxReference.dll Verified.\nTypes found: 0\nTypes verified: 12\nMethods found: 9\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 0,
+        "signal": null,
+        "elapsedMs": 119.68887900000027
+      },
+      "oracle": {
+        "accepted": true,
+        "errors": []
+      }
+    },
+    {
+      "name": "BoxNullReference",
+      "assemblySHA256": "989a634af55ee280303b2d7cee5e46b89ef1c6a7eccdc1f5bc82e9d3a1581f45",
+      "policyStatus": "verified",
+      "policyDiagnostic": null,
+      "expectedNative": true,
+      "difference": null,
+      "verify": {
+        "stdout": "All Classes and Methods in <temporary>/BoxNullReference.dll Verified.\nTypes found: 0\nTypes verified: 12\nMethods found: 9\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 0,
+        "signal": null,
+        "elapsedMs": 118.09930299999996
+      },
+      "oracle": {
+        "accepted": true,
+        "errors": []
+      }
+    },
+    {
+      "name": "BoxWrongValue",
+      "assemblySHA256": "f85838c924c27299306c0d21c21a569404ea5455c6cdc53a0867a431d2385c03",
+      "policyStatus": "rejected",
+      "policyDiagnostic": "StackUnexpected",
+      "expectedNative": false,
+      "difference": null,
+      "verify": {
+        "stdout": "[IL]: Error [StackUnexpected]: [<temporary>/BoxWrongValue.dll : Fixture.Host::Test([Objects_BoxWrongValue]Fixture.OtherValue)][offset 0x00000001][found value '[Objects_BoxWrongValue]Fixture.OtherValue'][expected value '[Objects_BoxWrongValue]Fixture.Value'] Unexpected type on the stack.\n1 Error(s) Verifying <temporary>/BoxWrongValue.dll\nTypes found: 0\nTypes verified: 12\nMethods found: 9\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 2,
+        "signal": null,
+        "elapsedMs": 120.95198600000003
+      },
+      "oracle": {
+        "accepted": false,
+        "errors": [
+          "StackUnexpected"
+        ]
+      }
+    },
+    {
+      "name": "BoxWrongReference",
+      "assemblySHA256": "7841e1d36d73766e8f85104855321794b87ec9a8282a76ea6ce1ba1d80fd8186",
+      "policyStatus": "rejected",
+      "policyDiagnostic": "StackUnexpected",
+      "expectedNative": false,
+      "difference": null,
+      "verify": {
+        "stdout": "[IL]: Error [StackUnexpected]: [<temporary>/BoxWrongReference.dll : Fixture.Host::Test([Objects_BoxWrongReference]Fixture.Other)][offset 0x00000001][found ref '[Objects_BoxWrongReference]Fixture.Other'][expected ref '[Objects_BoxWrongReference]Fixture.Owner'] Unexpected type on the stack.\n1 Error(s) Verifying <temporary>/BoxWrongReference.dll\nTypes found: 0\nTypes verified: 12\nMethods found: 9\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 2,
+        "signal": null,
+        "elapsedMs": 152.48749000000043
+      },
+      "oracle": {
+        "accepted": false,
+        "errors": [
+          "StackUnexpected"
+        ]
+      }
+    },
+    {
+      "name": "BoxAsWrongClass",
+      "assemblySHA256": "4ac384878d8612790c4a105cfa0c119c6898180d690a49f2a531ce4335e8a22a",
+      "policyStatus": "rejected",
+      "policyDiagnostic": "StackUnexpected",
+      "expectedNative": false,
+      "difference": null,
+      "verify": {
+        "stdout": "[IL]: Error [StackUnexpected]: [<temporary>/BoxAsWrongClass.dll : Fixture.Host::Test([Objects_BoxAsWrongClass]Fixture.Value)][offset 0x00000006][found ref '[Objects_BoxAsWrongClass]Fixture.Value'][expected ref '[Objects_BoxAsWrongClass]Fixture.Other'] Unexpected type on the stack.\n1 Error(s) Verifying <temporary>/BoxAsWrongClass.dll\nTypes found: 0\nTypes verified: 12\nMethods found: 9\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 2,
+        "signal": null,
+        "elapsedMs": 139.91110500000013
+      },
+      "oracle": {
+        "accepted": false,
+        "errors": [
+          "StackUnexpected"
+        ]
+      }
+    },
+    {
+      "name": "UnboxValue",
+      "assemblySHA256": "3ba4710ac767529fdac204871507ed97d1a7a64ce0058eddb7a4f406b14a378b",
+      "policyStatus": "verified",
+      "policyDiagnostic": null,
+      "expectedNative": true,
+      "difference": null,
+      "verify": {
+        "stdout": "All Classes and Methods in <temporary>/UnboxValue.dll Verified.\nTypes found: 0\nTypes verified: 12\nMethods found: 9\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 0,
+        "signal": null,
+        "elapsedMs": 109.48499600000014
+      },
+      "oracle": {
+        "accepted": true,
+        "errors": []
+      }
+    },
+    {
+      "name": "UnboxReference",
+      "assemblySHA256": "e7c23e8b091c27a457891766053236c6e24435754542004e182b5a185848f743",
+      "policyStatus": "verified",
+      "policyDiagnostic": null,
+      "expectedNative": true,
+      "difference": null,
+      "verify": {
+        "stdout": "All Classes and Methods in <temporary>/UnboxReference.dll Verified.\nTypes found: 0\nTypes verified: 12\nMethods found: 9\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 0,
+        "signal": null,
+        "elapsedMs": 127.04676800000016
+      },
+      "oracle": {
+        "accepted": true,
+        "errors": []
+      }
+    },
+    {
+      "name": "UnboxFieldRead",
+      "assemblySHA256": "94a3be58a6accaf3c52e8852ec9c677a301483a1db0413abb3e2be33cc3118f9",
+      "policyStatus": "verified",
+      "policyDiagnostic": null,
+      "expectedNative": true,
+      "difference": null,
+      "verify": {
+        "stdout": "All Classes and Methods in <temporary>/UnboxFieldRead.dll Verified.\nTypes found: 0\nTypes verified: 12\nMethods found: 9\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 0,
+        "signal": null,
+        "elapsedMs": 109.87629300000026
+      },
+      "oracle": {
+        "accepted": true,
+        "errors": []
+      }
+    },
+    {
+      "name": "UnboxFieldWrite",
+      "assemblySHA256": "039c4c471c61e1ba680f8f63e4d2fefac0a7e76377fe3f0bb41ef009e8b3b1c3",
+      "policyStatus": "rejected",
+      "policyDiagnostic": "StackUnexpected",
+      "expectedNative": false,
+      "difference": null,
+      "verify": {
+        "stdout": "[IL]: Error [StackUnexpected]: [<temporary>/UnboxFieldWrite.dll : Fixture.Host::Test(object)][offset 0x00000007][found readonly address of '[Objects_UnboxFieldWrite]Fixture.Value'][expected address of '[Objects_UnboxFieldWrite]Fixture.Value'] Unexpected type on the stack.\n1 Error(s) Verifying <temporary>/UnboxFieldWrite.dll\nTypes found: 0\nTypes verified: 12\nMethods found: 9\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 2,
+        "signal": null,
+        "elapsedMs": 112.10605000000032
+      },
+      "oracle": {
+        "accepted": false,
+        "errors": [
+          "StackUnexpected"
+        ]
+      }
+    },
+    {
+      "name": "UnboxReferenceOperand",
+      "assemblySHA256": "e9a781ae697d39c46e1203e7a85a15415241f0d2b68cc03dc64316bb2f7cff74",
+      "policyStatus": "rejected",
+      "policyDiagnostic": "ValueTypeExpected",
+      "expectedNative": false,
+      "difference": null,
+      "verify": {
+        "stdout": "[IL]: Error [ValueTypeExpected]: [<temporary>/UnboxReferenceOperand.dll : Fixture.Host::Test(object)][offset 0x00000001] Value type expected.\n1 Error(s) Verifying <temporary>/UnboxReferenceOperand.dll\nTypes found: 0\nTypes verified: 12\nMethods found: 9\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 2,
+        "signal": null,
+        "elapsedMs": 113.48928400000023
+      },
+      "oracle": {
+        "accepted": false,
+        "errors": [
+          "ValueTypeExpected"
+        ]
+      }
+    },
+    {
+      "name": "UnboxNumericInput",
+      "assemblySHA256": "70177f8f8c69b096f18ed37a0586354cdefa1d3fd56e35f6d343c505e5818239",
+      "policyStatus": "rejected",
+      "policyDiagnostic": "StackObjRef",
+      "expectedNative": false,
+      "difference": null,
+      "verify": {
+        "stdout": "[IL]: Error [StackObjRef]: [<temporary>/UnboxNumericInput.dll : Fixture.Host::Test(int32)][offset 0x00000001][found Int32] Expected an ObjRef on the stack.\n1 Error(s) Verifying <temporary>/UnboxNumericInput.dll\nTypes found: 0\nTypes verified: 12\nMethods found: 9\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 2,
+        "signal": null,
+        "elapsedMs": 119.35869500000081
+      },
+      "oracle": {
+        "accepted": false,
+        "errors": [
+          "StackObjRef"
+        ]
+      }
+    },
+    {
+      "name": "BoxThenDifferentUnbox",
+      "assemblySHA256": "e7ec2e0e657e2e4e3d47cf611d51808427fb67d9740de613b97f78bd05575512",
+      "policyStatus": "verified",
+      "policyDiagnostic": null,
+      "expectedNative": true,
+      "difference": null,
+      "verify": {
+        "stdout": "All Classes and Methods in <temporary>/BoxThenDifferentUnbox.dll Verified.\nTypes found: 0\nTypes verified: 12\nMethods found: 9\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 0,
+        "signal": null,
+        "elapsedMs": 117.0319529999997
+      },
+      "oracle": {
+        "accepted": true,
+        "errors": []
+      }
+    },
+    {
+      "name": "BoxedCondition",
+      "assemblySHA256": "96dd3277450db649dc371e8269a8f1c9f9d21a96140c5b3b6c2df740c4b27bd2",
+      "policyStatus": "verified",
+      "policyDiagnostic": null,
+      "expectedNative": true,
+      "difference": null,
+      "verify": {
+        "stdout": "All Classes and Methods in <temporary>/BoxedCondition.dll Verified.\nTypes found: 0\nTypes verified: 12\nMethods found: 9\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 0,
+        "signal": null,
+        "elapsedMs": 115.22284300000047
+      },
+      "oracle": {
+        "accepted": true,
+        "errors": []
+      }
+    },
+    {
+      "name": "UnboxPointerCondition",
+      "assemblySHA256": "d96018da8394e67032cf10805f9ef2426d3528560b21d1476c2cd3d161aaebaf",
+      "policyStatus": "verified",
+      "policyDiagnostic": null,
+      "expectedNative": true,
+      "difference": null,
+      "verify": {
+        "stdout": "All Classes and Methods in <temporary>/UnboxPointerCondition.dll Verified.\nTypes found: 0\nTypes verified: 12\nMethods found: 9\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 0,
+        "signal": null,
+        "elapsedMs": 106.16081000000031
+      },
+      "oracle": {
+        "accepted": true,
+        "errors": []
+      }
+    },
+    {
+      "name": "UnboxPointerComparison",
+      "assemblySHA256": "a02fcb535efc2deeb5f1f71aef503637d35718422fe0111e8044591a0e400ea3",
+      "policyStatus": "verified",
+      "policyDiagnostic": null,
+      "expectedNative": true,
+      "difference": null,
+      "verify": {
+        "stdout": "All Classes and Methods in <temporary>/UnboxPointerComparison.dll Verified.\nTypes found: 0\nTypes verified: 12\nMethods found: 9\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 0,
+        "signal": null,
+        "elapsedMs": 113.01176200000009
+      },
+      "oracle": {
+        "accepted": true,
+        "errors": []
+      }
+    },
+    {
+      "name": "BoxedJoin",
+      "assemblySHA256": "b71083cb3f69dd09b6dd73f98d543be6d74b1e4dd7749890255569ac51bf964c",
+      "policyStatus": "verified",
+      "policyDiagnostic": null,
+      "expectedNative": true,
+      "difference": null,
+      "verify": {
+        "stdout": "All Classes and Methods in <temporary>/BoxedJoin.dll Verified.\nTypes found: 0\nTypes verified: 12\nMethods found: 9\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 0,
+        "signal": null,
+        "elapsedMs": 105.29468600000018
+      },
+      "oracle": {
+        "accepted": true,
+        "errors": []
+      }
+    },
+    {
+      "name": "HarmlessAnnotation",
+      "assemblySHA256": "e8201a342d417c3bed6feb92856c87b51cd803384a26dac687718c97df4095c6",
+      "policyStatus": "verified",
+      "policyDiagnostic": null,
+      "expectedNative": true,
+      "difference": null,
+      "verify": {
+        "stdout": "All Classes and Methods in <temporary>/HarmlessAnnotation.dll Verified.\nTypes found: 0\nTypes verified: 12\nMethods found: 9\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 0,
+        "signal": null,
+        "elapsedMs": 135.34931400000005
+      },
+      "oracle": {
+        "accepted": true,
+        "errors": []
+      }
+    },
+    {
+      "name": "RefLikeBox",
+      "assemblySHA256": "8eb3e69a6222ed2c582f277ccc6773c5598b5c00715f24d351486807a9b36bee",
+      "policyStatus": "rejected",
+      "policyDiagnostic": "BoxByRef",
+      "expectedNative": true,
+      "difference": "ILVerify 10.0.5 checks only ByRef stack kinds in IsByRefLike; this profile also rejects authoritative ref-like value types.",
+      "verify": {
+        "stdout": "All Classes and Methods in <temporary>/RefLikeBox.dll Verified.\nTypes found: 0\nTypes verified: 12\nMethods found: 9\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 0,
+        "signal": null,
+        "elapsedMs": 118.27521100000013
+      },
+      "oracle": {
+        "accepted": true,
+        "errors": []
+      }
+    },
+    {
+      "name": "RefLikeConstruction",
+      "assemblySHA256": "5b651ef670bb10a22cd78f07e482f8c8d7b807307369444c0ff3a1555e1404c2",
+      "policyStatus": "unknown",
+      "policyDiagnostic": "ByRefLikeLifetimeUnavailable",
+      "expectedNative": true,
+      "difference": null,
+      "verify": {
+        "stdout": "All Classes and Methods in <temporary>/RefLikeConstruction.dll Verified.\nTypes found: 0\nTypes verified: 12\nMethods found: 9\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 0,
+        "signal": null,
+        "elapsedMs": 125.72768799999994
+      },
+      "oracle": {
+        "accepted": true,
+        "errors": []
+      }
+    },
+    {
+      "name": "RefLikeReturn",
+      "assemblySHA256": "14b6aa6f98a94332884ee7ec813d58fc6bb39475dd939bf2c9c94c96f5fb348a",
+      "policyStatus": "unknown",
+      "policyDiagnostic": "ByRefLikeLifetimeUnavailable",
+      "expectedNative": false,
+      "difference": null,
+      "verify": {
+        "stdout": "[IL]: Error [ReturnPtrToStack]: [<temporary>/RefLikeReturn.dll : Fixture.Host::Test()][offset 0x00000005] Return type is ByRef, TypedReference, ArgHandle, or ArgIterator.\n1 Error(s) Verifying <temporary>/RefLikeReturn.dll\nTypes found: 0\nTypes verified: 12\nMethods found: 9\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 2,
+        "signal": null,
+        "elapsedMs": 171.578939
+      },
+      "oracle": {
+        "accepted": false,
+        "errors": [
+          "ReturnPtrToStack"
+        ]
+      }
+    },
+    {
+      "name": "MissingAnnotationAuthority",
+      "assemblySHA256": "fc7c0b90ee536b5a0e60e1c79ed6fe48bb22ce6920a325aede95b84857082b3b",
+      "policyStatus": "unknown",
+      "policyDiagnostic": "ObjectAnnotationAuthorityUnavailable",
+      "expectedNative": true,
+      "difference": null,
+      "verify": {
+        "stdout": "All Classes and Methods in <temporary>/MissingAnnotationAuthority.dll Verified.\nTypes found: 0\nTypes verified: 12\nMethods found: 9\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 0,
+        "signal": null,
+        "elapsedMs": 127.30551800000012
+      },
+      "oracle": {
+        "accepted": true,
+        "errors": []
+      }
+    },
+    {
+      "name": "CounterfeitNameWithoutAuthority",
+      "assemblySHA256": "07ef52c30ebb3b701eec7ef2b5af18749024743ee6219a641ccf8c8fa554a75a",
+      "policyStatus": "unknown",
+      "policyDiagnostic": "ObjectAnnotationAuthorityUnavailable",
+      "expectedNative": true,
+      "difference": null,
+      "verify": {
+        "stdout": "All Classes and Methods in <temporary>/CounterfeitNameWithoutAuthority.dll Verified.\nTypes found: 0\nTypes verified: 12\nMethods found: 9\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 0,
+        "signal": null,
+        "elapsedMs": 146.36744700000054
+      },
+      "oracle": {
+        "accepted": true,
+        "errors": []
+      }
+    },
+    {
+      "name": "CounterfeitKnownHarmless",
+      "assemblySHA256": "4e9daaf162167f91aa920ab9c0e6bfecdbf45edd55503fa425b17b1812e753a8",
+      "policyStatus": "verified",
+      "policyDiagnostic": null,
+      "expectedNative": true,
+      "difference": null,
+      "verify": {
+        "stdout": "All Classes and Methods in <temporary>/CounterfeitKnownHarmless.dll Verified.\nTypes found: 0\nTypes verified: 12\nMethods found: 9\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 0,
+        "signal": null,
+        "elapsedMs": 173.97451600000022
+      },
+      "oracle": {
+        "accepted": true,
+        "errors": []
+      }
+    },
+    {
+      "name": "EnumBox",
+      "assemblySHA256": "c7aa0beb6106fda913839e25d23a222fd883e63dab6d56c7020263e01d50ee34",
+      "policyStatus": "unknown",
+      "policyDiagnostic": "EnumStorageUnavailable",
+      "expectedNative": true,
+      "difference": null,
+      "verify": {
+        "stdout": "All Classes and Methods in <temporary>/EnumBox.dll Verified.\nTypes found: 0\nTypes verified: 12\nMethods found: 9\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 0,
+        "signal": null,
+        "elapsedMs": 157.5443949999999
+      },
+      "oracle": {
+        "accepted": true,
+        "errors": []
+      }
+    },
+    {
+      "name": "EnumUnbox",
+      "assemblySHA256": "b42e7c5e6dfadd7c4d0caed9ead5772c45c3da198a9f8f4a228fc07b99c264f2",
+      "policyStatus": "unknown",
+      "policyDiagnostic": "EnumStorageUnavailable",
+      "expectedNative": true,
+      "difference": null,
+      "verify": {
+        "stdout": "All Classes and Methods in <temporary>/EnumUnbox.dll Verified.\nTypes found: 0\nTypes verified: 12\nMethods found: 9\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 0,
+        "signal": null,
+        "elapsedMs": 206.31492900000012
+      },
+      "oracle": {
+        "accepted": true,
+        "errors": []
+      }
+    }
+  ],
+  "methodFilter": "\\.Test$",
+  "inputs": {
+    "input.js": "f022e3aaca7b8e17ef39fdb89f7b8106026a73bc126f4a5239dfdd1ec2fa8e3a",
+    "cases.js": "2db578c212492c408ef845b1a6bdaf35d34dcf0c0a022c50ef78d9da2c8fd33c",
+    "../verifier-fields/input.js": "6a003d7c4ca263d7a29ee0a2e2aa56791e3cdf08377dc3716eedd90e0faa30c8"
+  },
+  "oracle": "ILVerify",
+  "version": "10.0.5",
+  "sdk": "10.0.201",
+  "runtime": "10.0.5",
+  "toolSHA256": "ca75cb4d2299ee5413eaf602a6ba87b7c089f3785d06f6b8ccad013d4e4646be",
+  "environment": {
+    "platform": "linux-x64",
+    "osRelease": "6.18.44",
+    "node": "v24.19.0",
+    "image": {
+      "kind": "local",
+      "pinnedImage": false,
+      "reason": "Local OS is recorded, not an immutable runner image."
+    },
+    "imageOS": null,
+    "imageVersion": null
+  },
+  "references": {
+    "count": 167,
+    "sha256": "a978e7aaf608f22e860328a42319b908a5a084cdb087b28b5c31a1e6726be362"
+  }
+}

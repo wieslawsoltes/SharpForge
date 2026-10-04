@@ -1,0 +1,32 @@
+{
+  "format": "sharpforge.pe-inspection.focused-output-review",
+  "schemaVersion": 1,
+  "status": "passed",
+  "sourceCommit": "135c4c0b151acc92b28b724b410e9db54066b29e",
+  "productRevision": "d72a9fe1684ba28064f83f4307721a1d00b13137",
+  "testProcessExitCode": 0,
+  "commandReceiptSha256": "4fa2f7507cfc21252a8342a8e8325a1f51255a3a7411b21a7cb6426c5c685820",
+  "outputSha256": "8b81f7b690389be7661beedf84391ce043a1bc63a8be492ab88584f55ec1acd0",
+  "summary": {
+    "tests": 130,
+    "suites": 0,
+    "pass": 130,
+    "fail": 0,
+    "cancelled": 0,
+    "skipped": 0,
+    "todo": 0,
+    "durationMs": 11749.540637
+  },
+  "reporter": "Node default spec reporter; the historical .tap file naming is retained",
+  "postRunReceiptParser": {
+    "status": "failed",
+    "name": "KeyError",
+    "message": "tests",
+    "orchestrationExitCode": 1,
+    "cause": "The summary regex expected TAP lines beginning with #, but the unchanged test command emitted default-reporter lines beginning with \u2139.",
+    "resolution": "Read-only inspection and extraction from the original output. Receipt and output remain byte-exact; no source change, test rerun, or command change."
+  },
+  "sourceUnchanged": true,
+  "qualificationRuns": 1,
+  "reruns": 0
+}
