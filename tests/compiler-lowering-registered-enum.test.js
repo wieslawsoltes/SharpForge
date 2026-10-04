@@ -4,6 +4,9 @@ import {compile, compileToIL} from '@sharpforge/compiler';
 import {Op} from '@sharpforge/bytecode';
 import {enumTypes} from '@sharpforge/framework';
 import {VirtualMachine, CilVirtualMachine} from '@sharpforge/runtime';
+import {registeredEnumConstant} from '../packages/compiler/src/constants/registered-enum-constant.js';
+import {RegistryBridge} from '../packages/compiler/src/symbols/registry-bridge.js';
+import {FieldSymbol, DeclarationModifiers} from '../packages/compiler/src/symbols/members.js';
 
 const orientation = 'Microsoft.UI.Xaml.Controls.Orientation';
 const visibility = 'Microsoft.UI.Xaml.Visibility';
@@ -97,5 +100,22 @@ test('source enum constants retain their existing integer lowering', () => {
       assert.equal(execution.state, 'terminated', execution.fault?.stack);
       assert.equal(execution.output, '1\n');
     } finally { vm.stop(); }
+  }
+});
+
+test('registered enum adaptation preserves public field values and rejects unregistered or mismatched constants', () => {
+  const registry = new RegistryBridge();
+  const type = registry.typeFromName(orientation);
+  const field = type.getMembers('Horizontal')[0];
+  const value = registeredEnumConstant(field, registry);
+  assert.equal(value.isEnum, true);
+  assert.equal(value.enumType, type);
+  assert.equal(value.value, 1);
+  assert.equal(field.constantValue, 1, 'public FieldSymbol constants remain primitive numbers');
+  assert.equal(registeredEnumConstant(field, {registryName: () => null}), null);
+  for (const overrides of [{name: 'Missing'}, {modifiers: 0}, {constantValue: {value: 2}}, {constantValue: {value: 2147483648}}]) {
+    const candidate = new FieldSymbol({name: 'Horizontal', type, containingSymbol: type,
+      modifiers: DeclarationModifiers.Const, constantValue: {value: 1}, ...overrides});
+    assert.equal(registeredEnumConstant(candidate, registry), null);
   }
 });
