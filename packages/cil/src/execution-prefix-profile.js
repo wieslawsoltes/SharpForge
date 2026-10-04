@@ -16,15 +16,23 @@ export class ExecutionPrefixProfile {
   constrained(prefix, next, context) {
     if (next?.name !== 'callvirt') return 'constrained. must immediately precede callvirt';
     const type = this.types.get(prefix.operand);
-    if (!type || !type.baseToken || this.inspector.metadata.typeName(type.baseToken) !== 'System.ValueType' ||
-        this.genericOwners.has(type.token)) {
-      return 'constrained. execution requires a nongeneric user-struct TypeDef';
+    const base = type?.baseToken ? this.inspector.metadata.typeName(type.baseToken) : null;
+    if (!type || !base || type.flags & 0x20 || base === 'System.Enum' || this.genericOwners.has(type.token)) {
+      return 'constrained. execution requires a nongeneric class or user-struct TypeDef';
     }
     const declaration = resolveExecutionMethod(this.inspector, next.operand, context);
     const owner = this.types.get(declaration.ownerToken);
-    if (!owner || !(owner.flags & 0x20) || this.genericOwners.has(owner.token) ||
+    if (!owner || this.genericOwners.has(owner.token) ||
         declaration.signature.isStatic || declaration.signature.genericArity || declaration.methodArguments?.length) {
-      return 'constrained. execution requires a nongeneric interface instance method';
+      return base === 'System.ValueType' ? 'constrained. execution requires a nongeneric interface instance method'
+        : 'constrained. execution requires a nongeneric internal class or interface instance method';
+    }
+    if (base === 'System.ValueType' && !(owner.flags & 0x20)) {
+      return 'constrained. user-struct execution requires a nongeneric interface instance method';
+    }
+    const ownerBase = owner.baseToken ? this.inspector.metadata.typeName(owner.baseToken) : null;
+    if (base !== 'System.ValueType' && (ownerBase === 'System.ValueType' || ownerBase === 'System.Enum')) {
+      return 'constrained. class execution requires a reference-type member declaration';
     }
     return null;
   }
