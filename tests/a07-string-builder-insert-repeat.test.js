@@ -224,6 +224,7 @@ test('StringBuilder.Insert repeat: independent CIL executes every native row wit
 test('StringBuilder.Insert repeat: native provenance, safe corpus and stable ordered ABI', () => {
   const source = readFileSync(new URL('string-builder-insert-repeat/Program.cs', directory));
   assert.equal(native.sourceSha256, createHash('sha256').update(source).digest('hex'));
+  assert.equal(native.sourceSha256, 'bae0d6d4f455ffefec2e4b83a899c2147a5b122a4f5122ecf0e323559067b3f5');
   assert.equal(native.sdk, '10.0.201');
   assert.equal(native.runtime, '10.0.5');
   assert.equal(native.rows.length, 206);
