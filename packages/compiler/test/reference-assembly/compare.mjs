@@ -74,6 +74,11 @@ for (const sample of readdirSync(here).filter(name => name.endsWith('.cs') && na
   console.log(`${sample}: ${wanted.length} lines agree with Roslyn${pending.size ? `, ${pending.size} pending` : ''}${sameOrder ? '' : ' - DIFFERENCES'}`);
   for (const line of missing) console.log('  missing:    ' + line);
   for (const line of unexpected) console.log('  unexpected: ' + line);
-  if (!sameOrder) failed = true;
+  if (!sameOrder) {
+    failed = true;
+    // The same lines in another order or number: show where the dumps part.
+    const first = wanted.findIndex((line, index) => line !== actual[index]);
+    if (!missing.length && !unexpected.length) console.log(`  line ${first + 1}: Roslyn '${wanted[first]}', SharpForge '${actual[first] ?? ''}'`);
+  }
 }
 process.exitCode = failed ? 1 : 0;

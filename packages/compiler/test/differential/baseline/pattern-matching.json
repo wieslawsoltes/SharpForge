@@ -2,5 +2,6 @@
   "pattern-matching/cs0165-pattern-variable": ["diagnostics", "warnings"],
   "pattern-matching/cs8121-impossible-pattern": ["diagnostics", "warnings"],
   "pattern-matching/property-and-tuple-patterns": ["diagnostics", "warnings", "bytecode", "cil"],
-  "pattern-matching/relational-and-logical": ["diagnostics", "warnings", "bytecode", "cil"]
+  "pattern-matching/relational-and-logical": ["diagnostics", "warnings", "bytecode", "cil", "directCil"],
+  "pattern-matching/type-and-constant-patterns": ["directCil"]
 }

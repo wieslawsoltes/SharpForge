@@ -5,7 +5,7 @@ import {initializeExecutionProfiler,executionProfiler} from './execution/profile
 import {bindNativeAbi,cilNumericContext,marshalCilValue,cilValue,cilResultValue,cilArrayIndex} from './execution/cil-values.js';
 import {formatCilValue} from './value-formatting.js';
 import {clearRuntimeTypes} from './execution/tokens.js';
-import {dereferenceManagedAddress} from './execution/managed-address.js';
+import {createManagedAddress,dereferenceManagedAddress} from './execution/managed-address.js';
 import {storageDefault,storageValue} from './execution/storage.js';
 import {literalString} from './execution/strings.js';
 import {ManagedPlatform} from './platform.js';
@@ -23,6 +23,7 @@ import {initializeCilMethodEvents,cilRuntimeEvents,restoreCilMethodEvents} from 
 import {invokeIntrinsic} from './execution/intrinsics.js';
 import {normalizeRuntimeLaunchOptions} from './launch-options.js';
 import {cilEntryArguments} from './execution/entry-arguments.js';
+import {initializeWasmTiering} from './execution/wasm/tiering.js';
 /** Direct, cooperative CIL interpreter for a verified managed subset, independent of #SF.
  * No eval, native imports, network, files, threads, dynamic JS plugins or CLR loading. */
 export class CilVirtualMachine {
@@ -38,6 +39,7 @@ export class CilVirtualMachine {
     this.heap=new ManagedHeap(options);installRootProvider(this);this.frames=[];this.statics=new Map();this.strings=new Map();this.initialized=new Map();this._typeSystem=null;this.layoutCache=this.typeSystem.layouts;this.frameId=0;
     this.snapshotOwner=Object.freeze({});this.writeRevision=0;this.onWrite=null;this.state='ready';this.instructions=0;this.elapsedMs=0;this.output=[];this.outputCharacters=0;this.fault=null;this.pendingFault=null;this.onException=null;this.returnValue=null;this.exitCode=0;this.onOutput=options.onOutput??(()=>{});this.loadMs=performance.now()-started;
     initializeExecutionProfiler(this,options.profile);
+    initializeWasmTiering(this,options.wasmTiering);
     for(const f of this.inspector.fields.values())if(f.isStatic)this.statics.set(f.token,storageDefault(this,resolveExecutionField(this.inspector,f.token).signature.type));
     const args=cilEntryArguments(this,entry,options);
     this.platform=new ManagedPlatform(this,options);this.scheduler=new CooperativeScheduler(this,options);this.call(entry.token,args);this.ensureInitialized(entry.ownerToken,'static-method');
@@ -70,7 +72,7 @@ export class CilVirtualMachine {
   matches(ref,typeName){return this.typeSystem.matches(ref,typeName);}
   field(token,ref){return this.typeSystem.field(token,ref);}
   notifyWrite(write){this.writeRevision++;if(write.handle!==undefined)this.heap.mutationRevision++;this.onWrite?.({...write,frameId:write.frameId??this.top?.id});}
-  address(kind,index,owner){return Object.freeze({byref:true,kind,index,owner,frameId:this.top.id});}
+  address(kind,index,owner){return createManagedAddress(this,kind,index,owner);}
   dereference(address,write=false,value){return dereferenceManagedAddress(this,address,write,value);}
   snapshot(){return snapshotVM(this,'cil');}
   restore(snapshot){const result=restoreVM(this,snapshot,'cil');restoreCilMethodEvents(this);return result;}

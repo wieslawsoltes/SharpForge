@@ -56,3 +56,17 @@ and MSTest adapter registry, data evaluation controls and explicit boundaries.
 
 [Portable test sessions](docs/portable-testing.md) execute the managed framework
 profile with isolated fixtures, cancellation, explicit outcomes and replayable progress.
+
+## Cancellable reads
+
+`client.read(path, {signal})` returns the existing file response containing
+`path`, `text`, `encoding`, `bom`, SHA-256 `hash`, and byte `size`.
+`client.binary(path, {signal})` returns a `Uint8Array` through the existing
+managed-assembly endpoint. Both forward an optional AbortSignal to the
+authenticated request; calls without an options object retain their behavior.
+Owners must still reject results from replaced document/workspace/client
+instances. Read cancellation does not start or cancel a native build job.
+
+`tests/a19-native-disk-observer.test.js` covers signal forwarding and actual
+temporary-file native reload/hash/save round trips. Its filesystem cases do
+not invoke or qualify an installed MSBuild SDK.

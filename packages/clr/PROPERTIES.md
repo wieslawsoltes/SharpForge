@@ -11,6 +11,11 @@ that AST describes index parameter types, and `returnType` describes the propert
 type. `isStatic` reads its HasThis bit. Variables, arrays and custom modifiers
 remain unresolved metadata. Lazy `constant` reuses the module's raw Constant
 service, with no enum boxing or custom-attribute default evaluation.
+Lazy [custom modifier token queries](CUSTOM-MODIFIERS.md) read the property type's
+outer modifier prefix.
+
+Lazy [`indexParameters`](PROPERTY-PARAMETERS.md) projects accessor Param metadata
+into canonical ParameterDesc objects whose owning `member` is this property.
 
 `getMethod`, `setMethod` and frozen `otherMethods` lazily link canonical MethodDesc
 objects; missing getter/setter roles are `null`. `module.propertyAccessors(token)`
@@ -59,7 +64,7 @@ node scripts/limited.js node --test --test-concurrency=1 tests/clr-properties-*.
 node scripts/limited.js node packages/clr/tools/benchmark-property-definitions.mjs
 ```
 
-PropertyInfo value access, index ParameterInfo facades, BindingFlags enumeration,
+PropertyInfo value access, BindingFlags enumeration,
 inherited-member hiding, generic substitution, EventInfo and execution remain
 separate increments. Source VM, direct CIL and Rust native/Wasm execution are
 not qualified by this host metadata API.

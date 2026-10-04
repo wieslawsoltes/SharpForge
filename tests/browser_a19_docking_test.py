@@ -8,7 +8,7 @@ with sync_playwright() as playwright, launch_browser(playwright, __file__) as br
         editor_fixture('index', package='docking') as url:
     page = browser.new_page(viewport={'width': 1440, 'height': 1000})
     page.goto(url)
-    wait_condition(page, lambda: page.evaluate('window.dockingDemo !== undefined'))
+    wait_condition(page, 'window.dockingDemo !== undefined')
     for scope, side in [('group', s) for s in ['left', 'right', 'top', 'bottom', 'center']] + [('root', s) for s in ['left', 'right', 'top', 'bottom']]:
         result = page.evaluate('''({scope,side}) => {
           const {layout,host,initial}=dockingDemo;
@@ -52,6 +52,6 @@ with sync_playwright() as playwright, launch_browser(playwright, __file__) as br
     popup.keyboard.press('F5')
     assert 'F5 forwarded' in page.locator('#status').inner_text()
     popup.close()
-    wait_condition(page, lambda: page.evaluate('dockingDemo.host.popouts.size===0'))
+    wait_condition(page, 'dockingDemo.host.popouts.size===0')
     assert page.locator('[data-dock-panel="document-a"] textarea').input_value() == 'edited in popout'
     print('A19 docking browser: nine pointer targets, retained focus/state, floating groups, flyout pin, popout F5 and reattach passed')
