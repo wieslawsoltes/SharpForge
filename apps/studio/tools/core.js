@@ -2,6 +2,7 @@ import {registerCompilerResultTools} from './compiler-result-views.js';
 import {renderDesignerProblems} from '../designer-problems-view.js';
 import {storage,storageKeys} from '../settings/storage.js';
 export function createStudioRenderers(context){
+let resultTools;
 function renderPanel(panel=context.state.panel,element){
 const {$,$$,E,advancedTools,breakOnWrite,debugTools,designerTools,docking,editLocal,empty,formatBytes,hydrate,ilDebugger,inspectObject,nativeBuild,openFile,openMenuAt,refreshWatches,runtimeTools,saveLocal,selectDebugFrame,setPanel,state,toast,workbench}=context;
 if(panel==='solution'||panel==='diagnostics')return;if(panel==='watch')panel='debug';const el=element??docking.content.get(panel);if(!el)return;const oldScroll=el.scrollTop;if(panel==='assembly'){workbench.render(el);return;}if(panel==='disassembly'){ilDebugger.render(el,state.debug?{...state.debug,selectedFrameId:state.frameId}:null);return;}if(runtimeTools?.renderTool(panel,el))return;if(designerTools?.renderTool(panel,el))return;if(advancedTools?.renderTool(panel,el))return;if(debugTools.renderTool(panel,el))return;if(renderAdditionalTool(panel,el))return;let html='';
@@ -79,6 +80,7 @@ const {E,empty,state}=context;
 if(!el)return;const nodes=state.itemSelection;if(!nodes.length){el.innerHTML=empty('Properties','Select an item in Solution Explorer.');return;}const selected=nodes[0],node=!state.nativeMode&&!state.projectSystem&&selected.kind==='source'&&state.files.some(f=>f.uri===selected.path)?{...selected,included:true,itemType:'Compile'}:selected,properties=nodes.length>1?{Selection:`${nodes.length} items`,Paths:nodes.map(n=>n.path??n.label).join('\n')}:{Name:node.label,Kind:node.kind,'Full path':node.path?(state.nativeMode?state.nativeWorkspace.root+'/':'')+node.path:'—','Relative path':node.path??'—',Project:node.project??'—','Build action':node.itemType??(node.kind==='source'&&node.included?'Compile':'Not evaluated'),'Included in build':node.included===undefined?'Not a compile item':node.included?'Yes':'No','Linked file':node.linked?'Yes':'No','Startup project':node.startup?'Yes':'No',...Object.fromEntries(Object.entries(node.metadata??{}).map(([k,v])=>['Metadata · '+k,typeof v==='object'?JSON.stringify(v):v]))};el.innerHTML=`<div class="panel-tools"><b>${E(nodes.length>1?'Multiple selection':node.label)}</b></div><table class="data-table property-grid">${Object.entries(properties).map(([key,value])=>`<tr><th>${E(key)}</th><td>${E(value)}</td></tr>`).join('')}</table>`;}
 return {
   renderPanel, renderAdditionalTool, renderEditorSettings, renderItemProperties,
-  registerTools: (registry, definitions) => registerCompilerResultTools(registry, definitions, context, renderPanel)
+  registerTools: (registry, definitions) => resultTools = registerCompilerResultTools(registry, definitions, context, renderPanel),
+  refreshResultTool: id => resultTools?.refresh(id)
 };
 }

@@ -32,9 +32,15 @@ ResizeObserver refresh them on actual visibility. Other tools keep their
 existing renderer and visibility behavior.
 
 Visible bytecode updates retain the complete native method selector. Unchanged
-images reuse its index, options and instruction rows; build status, format,
+method ID/name values reuse its index and options; build status, format,
 selected method and current instruction continue to update. Changed images
-invalidate instruction data. CIL and decoded VM data still come from their
+invalidate instruction data. The existing public result/getter aliases remain
+mutable: generated-file URI/text and method labels are compared by value, while
+decoded selected-method words and referenced point labels have an owned cache
+of at most 12,288 words. Larger methods use fresh rendering instead of retaining
+an incomplete cache. Explicit tool activation invalidates CIL inspection, so an
+in-place edit of the public assembly bytes appears when the tool is reopened.
+CIL and decoded VM data still come from their
 public package disassemblers, and sequence-point activation reads the current
 source map. Equal generated-source snapshots keep their DOM, scroll and expanded
 state; changed text and removed files are reflected when visible. The cache is
@@ -57,6 +63,8 @@ change does not claim a universal sub-16 ms first opening time.
   2,000-method option identity, hidden/latest/visible transitions, CIL and decoded
   instruction parity, source navigation, live status and selection, generated
   text retention, unrelated-tool behavior, and complete observer/handler cleanup.
+  Direct alias mutation tests cover generated arrays, method names, instruction
+  words, source points, the selected-method cache bound and assembly-byte reopen.
 - `tests/a18-breakpoint-remap-empty.test.js`: empty large-source requests,
   retained invalid-input errors, nonempty anchors, metadata and snapshots.
 - Existing `tests/release08-breakpoints.test.js` remains unchanged.
