@@ -37,8 +37,11 @@ claim lease and lock generation. The claim's issue number selects live Project
 memberships through GitHub GraphQL; there is no default Project4 assumption or
 hard-coded area-to-project map. Only unarchived claim projections owned by the
 repository owner qualify. Issue repository/title and any Work ID must agree with
-the claim, and exactly one managed Project item must remain. Tracking-only boards
-without Work ID/Branch fields are ignored; ambiguity, stale branches, unavailable
+the claim, and exactly one managed Project item must remain. A populated Agent or
+Branch marks a managed projection: both must match the authoritative claim, with a
+nonempty Branch. Tracking-only boards with neither Agent nor Branch are ignored,
+even when they carry a Work ID (as observed for issue483 on Project3 alongside its
+managed Project4 item). Ambiguity, stale agents/branches, unavailable
 membership data and incomplete pagination fail. The report retains the selected
 Project and issue identity. This read-only lookup does not change claims or fields. The pinned base supplies ownership/hot-file
 policy. Both the constituent's own diff and its actual contribution from the

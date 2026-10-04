@@ -10,7 +10,7 @@ import { mergeGroupFixture } from './merge-group-fixture.js';
 
 function claims(value, { leftLocks = [] } = {}) {
   const records = value.requests.map((request, index) => ({ task: `SF-A29-T${13 + index}`, branch: request.head.ref,
-    issue: 483 + index, expires: '2099-01-01T00:00:00Z', generation: `generation-${index}`, locks: index ? [] : leftLocks }));
+    issue: 483 + index, agent: 'codex-fixture', expires: '2099-01-01T00:00:00Z', generation: `generation-${index}`, locks: index ? [] : leftLocks }));
   return {
     owner: 'fixture', repo: 'repository',
     items: async () => assert.fail('Queue claims must not scan default Project4'),
@@ -18,7 +18,7 @@ function claims(value, { leftLocks = [] } = {}) {
       const record = records.find(record => record.issue === variables.issue);
       return { repository: { issue: { number: record.issue, title: `[${record.task}] fixture`, repository: { nameWithOwner: value.repository },
         projectItems: { nodes: [{ id: `item-${record.issue}`, isArchived: false, project: { id: 'project-4', number: 4, owner: { login: 'fixture' } },
-          workId: { text: record.task }, branch: { text: record.branch } }], pageInfo: { hasNextPage: false, endCursor: null } } } } };
+          workId: { text: record.task }, branch: { text: record.branch }, agent: { text: record.agent } }], pageInfo: { hasNextPage: false, endCursor: null } } } } };
     },
     ref: async name => ({ object: { sha: name } }),
     readRecord: async ref => ref.startsWith('agent-locks/')

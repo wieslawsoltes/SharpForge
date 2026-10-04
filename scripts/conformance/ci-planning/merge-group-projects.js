@@ -10,6 +10,7 @@ const query = `query ClaimProjects($owner:String!,$repo:String!,$issue:Int!,$aft
         project { id number url owner { ... on User { login } ... on Organization { login } } }
         workId:fieldValueByName(name:"Work ID") { ... on ProjectV2ItemFieldTextValue { text } }
         branch:fieldValueByName(name:"Branch") { ... on ProjectV2ItemFieldTextValue { text } }
+        agent:fieldValueByName(name:"Agent") { ... on ProjectV2ItemFieldTextValue { text } }
       }
       pageInfo { hasNextPage endCursor }
     }
@@ -36,16 +37,19 @@ export async function claimProjectItems(client, claim) {
       if (!item?.id || seen.has(item.id)) throw new Error('Duplicate or missing Project item identity');
       seen.add(item.id);
       if (item.isArchived || item.project?.owner?.login !== client.owner) continue;
-      // A tracking-only board without task/branch fields is not a claim projection.
-      const workId = item.workId?.text, branch = item.branch?.text;
-      if (!workId && !branch) continue;
+      // Tracking boards may carry a Work ID; only Agent/Branch make a claim projection.
+      const workId = item.workId?.text, branch = item.branch?.text, agent = item.agent?.text;
+      const populated = value => value !== undefined && value !== null && value !== '';
+      if (!populated(agent) && !populated(branch)) continue;
       if (workId && workId !== claim.task) throw new Error('Project Work ID disagrees with the authoritative claim issue');
       if (typeof branch !== 'string' || !branch.trim()) throw new Error('Managed Project item requires a nonempty Branch');
+      if (typeof agent !== 'string' || !agent.trim() || agent !== claim.agent) throw new Error('Managed Project Agent does not match the authoritative claim');
+      if (branch !== claim.branch) throw new Error('Managed Project Branch does not match the authoritative claim');
       if (!item.project.id || !Number.isSafeInteger(item.project.number) || item.project.number <= 0) {
         throw new Error('Missing authoritative Project identity');
       }
       items.push({ id: item.id, content: { number: issue.number, title: issue.title, repository: issue.repository },
-        fields: { 'Work ID': workId, Branch: branch },
+        fields: { 'Work ID': workId, Branch: branch, Agent: agent },
         project: { id: item.project.id, number: item.project.number, url: item.project.url, owner: item.project.owner.login } });
     }
     if (!connection.pageInfo.hasNextPage) return items;
