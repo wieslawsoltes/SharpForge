@@ -129,7 +129,12 @@ method reconstruction/CFG pipeline. Their retained fixture lives under
 public package aliases for CIL, bytecode, framework, bcl-core, bcl-collections,
 symbols and archive; aliases must resolve to that checkout's package sources.
 
-These new tests have not yet run. The authored browser entry point is
+The first four-file gate passed 25/25 tests with no failures or skips at
+`55913c5129f2cfa684b6c647441ebdcf6b61d559`; this includes the new inventory/native
+replay and adjacent CFG/reference tests. See the
+[retained evidence and scope](../../tests/fixtures/decompiler-inventory/README.md).
+This replays prior SRM observations; no fresh native execution occurred.
+The authored browser entry point is
 `tests/fixtures/decompiler-inventory/browser.mjs`; serve the repository package
 import map and call its `run()` in each real Chromium, Firefox and WebKit engine.
 Browser and other OS results remain pending. This is a JavaScript metadata/
@@ -191,5 +196,12 @@ node scripts/limited.js node --expose-gc packages/cil/tools/benchmark-decompiler
 ```
 
 The output must be a new file outside both checkouts; existing reports are never
-overwritten. The driver has not been executed for this candidate. Performance,
-including any default API overhead, remains unmeasured until that scheduled run.
+overwritten. The first prescribed run completed at source/tool head
+`55913c5129f2cfa684b6c647441ebdcf6b61d559`. Its 200 warmup and 1,000 measured
+samples and every timing/heap/ArrayBuffer statistic are retained unchanged in the
+[performance evidence](../../tests/fixtures/decompiler-inventory/README.md).
+Arithmetic byte-input and cached-inspector medians regressed by 113.597357% and
+330.682867%, respectively. Native byte-input median rose 0.775068%, while its
+p95 batch mean rose 9.103720%. These costs require explicit review; no performance
+acceptance is implied. Source review identified repeated table-layout and row-width
+work for a narrow correction, which requires separate qualification.
