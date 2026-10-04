@@ -54,7 +54,7 @@ test('A02-T07.5 tree text, node walks and compiled behavior match real Roslyn ou
         assert.equal(result.ok, true, `${fixture.id}: ${result.detail}`);
       });
     }
-    t.diagnostic(`.NET SDK ${sdk}, reference pack ${pack.version}; compared with stored Roslyn output`);
+    t.diagnostic(`.NET SDK ${sdk}, reference pack ${pack.pack.version}; compared with stored Roslyn output`);
   } finally {
     scratch.close();
   }

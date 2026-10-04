@@ -3,6 +3,9 @@ import assert from 'node:assert/strict';
 import { parse } from '@sharpforge/syntax';
 import { SourceText } from '@sharpforge/text';
 import { analyze } from '../packages/compiler/src/semantic-analysis.js';
+import { loadReferencePack } from '@sharpforge/compiler/node';
+import { loadPinned } from '../packages/compiler/test/differential/corpus-store.js';
+import { fixtures } from '../packages/compiler/test/differential/fixtures/expression-tree-restrictions.js';
 
 const prelude = 'using System; using System.Linq.Expressions;';
 const program = (body, members = '') => `${prelude} class Program { ${members} static void Main() { ${body} } }`;
@@ -62,4 +65,39 @@ test('A02-T07.5 rectangular allocation and access and jagged initialization are 
     Expression<Func<int[][]>> jagged = () => new int[][] { new int[] { 1, 2 } };
     Func<int[,]> ordinary = () => new int[,] { { 1, 2 } };
   `)), []);
+});
+
+test('A02-T07.5 calls may pass fields by reference, but tree lambda parameters and returning members follow Roslyn restrictions', () => {
+  assert.deepEqual(errors(program('Expression<Func<int>> tree = () => Read();',
+    'static int Value; static ref int Read() => ref Value;')), ['CS8153:Read()']);
+  assert.deepEqual(errors(program('Expression<Func<int>> tree = () => Property;',
+    'static int Value; static ref int Property => ref Value;')), ['CS8153:Property']);
+  const source = `${prelude} delegate int D(ref int value);
+    class Program { static void Main() { Expression<D> tree = (ref int value) => value; } }`;
+  assert.deepEqual(errors(source), ['CS1951:value']);
+  assert.deepEqual(errors(program('Expression<Func<int>> tree = () => Bump(ref Value);',
+    'static int Value; static int Bump(ref int value) => ++value;')), []);
+});
+
+test('A02-T07.5 method-group references to local functions are rejected at the group expression', () => {
+  assert.deepEqual(errors(program('int Local() => 1; Expression<Func<Func<int>>> tree = () => Local;')), ['CS8110:Local']);
+});
+
+test('A02-T07.5 restriction codes, severity and source spans match real Roslyn captures on registry and reference axes', async t => {
+  const pins = loadPinned().results,
+    pack = loadReferencePack(),
+    axes = [['registry', {}], ...(pack ? [['references', { references: pack.references }]] : [])],
+    normalize = rows => rows.filter(row => ['error', 'warning'].includes(row[3])).map(row => row.join('@')).sort();
+  for (const [axis, options] of axes) {
+    for (const fixture of fixtures) {
+      await t.test(`${axis}: ${fixture.id}`, () => {
+        const pin = pins.get(fixture.id);
+        assert.ok(pin, `a real Roslyn diagnostic capture is required for ${fixture.id}`);
+        const file = parse(new SourceText(fixture.source, 'Program.cs')),
+          analysis = analyze([file], options),
+          actual = [...file.diagnostics, ...analysis.diagnostics].map(row => [row.code, row.start, row.length, row.severity]);
+        assert.deepEqual(normalize(actual), normalize(pin.diagnostics));
+      });
+    }
+  }
 });
