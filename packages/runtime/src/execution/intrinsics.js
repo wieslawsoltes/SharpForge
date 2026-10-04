@@ -1,4 +1,5 @@
 import {invokeDecimal} from './decimal-intrinsics.js';
+import {valueIntrinsicHandler} from './value-intrinsics.js';
 import {invokeBitConverter} from './bit-converter.js';
 import {nativeSize} from './native-int.js';
 import {invokeLegacyBclBuiltin} from '@sharpforge/bcl-core';
@@ -45,6 +46,7 @@ const implementations={
   nullableHasValue: ({vm, descriptor, self, parameters}) => invokeNullable(vm, descriptor, self, parameters),
   nullableValue: ({vm, descriptor, self, parameters}) => invokeNullable(vm, descriptor, self, parameters),
   nullableDefault: ({vm, descriptor, self, parameters}) => invokeNullable(vm, descriptor, self, parameters),
+  nullableText: ({vm, descriptor, self, parameters}) => invokeNullable(vm, descriptor, self, parameters),
   decimal:({vm,descriptor,self,parameters})=>invokeDecimal(vm,descriptor,descriptor.signature.isStatic?parameters:[self,...parameters]).value,
   bitConverter:({descriptor,parameters})=>invokeBitConverter(descriptor,parameters),
   nativeSize:({vm})=>nativeSize(vm.options),
@@ -142,7 +144,7 @@ export const intrinsicHandlers=new Map(intrinsicDefinitions.map(definition=>{
   }];
 }));
 export function invokeIntrinsic(vm,descriptor,args,isVirtual=false) {
-  const definition=intrinsicDefinition(descriptor),handler=definition&&intrinsicHandlers.get(definition.key);
+  const definition=intrinsicDefinition(descriptor),handler=definition&&(intrinsicHandlers.get(definition.key)??valueIntrinsicHandler(definition));
   if(!handler)throw new ManagedFault('MissingMethodException',`${descriptor.owner}::${descriptor.name}`);
   return handler(vm,descriptor,args,definition,isVirtual);
 }

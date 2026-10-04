@@ -5,7 +5,7 @@ import {isValueRecord, replaceValueField} from './value-types.js';
 
 const invalid = message => { throw new ManagedFault('InvalidProgramException', message); };
 
-function location(vm, address) {
+function location(vm, address, write = false) {
   if (!address?.byref) invalid('A managed address is required');
   let slots;
   let storageType;
@@ -17,7 +17,7 @@ function location(vm, address) {
       : address.kind === 'box' ? record.methodTable.name : record.methodTable.fields[address.index]?.type.name;
   } else if (address.kind === 'static') {
     if (!vm.statics.has(address.index)) invalid('Unknown static slot');
-    storageType = staticStorageType(vm, address.index);
+    storageType = staticStorageType(vm, address.index, write);
   } else {
     if (address.kind !== 'arg' && address.kind !== 'local') invalid('Unknown managed address');
     const frame = vm.allFrames().find(candidate => candidate.id === address.frameId);
@@ -48,6 +48,11 @@ function leaf(vm, address, base) {
   return {value, type, readonly};
 }
 
+/** Inspect owned storage without reading an uninitialized value; constructors still validate its declared type. */
+export function inspectManagedAddress(vm, address) {
+  return leaf(vm, address, location(vm, address));
+}
+
 /** Store a location and immutable field path, never a direct alias to frame or struct storage. */
 export function createManagedAddress(vm, kind, index, owner) {
   if (owner?.byref) {
@@ -69,7 +74,7 @@ function replace(vm, value, path, position, replacement) {
 
 /** Resolve interior paths afresh so replacing an enclosing value never redirects a live field address. */
 export function dereferenceManagedAddress(vm, address, write = false, value) {
-  const base = location(vm, address), current = leaf(vm, address, base);
+  const base = location(vm, address, write), current = leaf(vm, address, base);
   if (!write) {
     if (current.value === undefined) invalid('Uninitialized address');
     return current.value;

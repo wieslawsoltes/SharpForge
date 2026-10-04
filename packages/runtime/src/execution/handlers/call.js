@@ -3,6 +3,7 @@ import {isNativeStorageType} from '../native-int.js';
 import {completeInitialization} from '../static-init.js';
 import {leaveCilMethod} from '../cil-method-events.js';
 import {delegateMethodPointer} from '../delegate-targets.js';
+import {valueCallResult} from '../value-calls.js';
 import {copyFrameworkValue} from '../framework-values.js';
 
 const handlers=new Map();
@@ -15,10 +16,11 @@ handlers.set('ret',(vm,frame)=>{
   let result=type==='void'?null:vm.pop();
   if(isNativeStorageType(type))result=vm.storage(result,type);
   result=copyFrameworkValue(vm,result,type);
-  vm.heap.withRoots([result],()=>{
+  vm.heap.withRoots([result,frame.returnObject],()=>{
+    const value=valueCallResult(vm,frame,result);
     if(frame.initializes)completeInitialization(vm,frame);
     leaveCilMethod(vm, frame);
-    popPooledFrame(vm);const value=frame.returnObject??result;
+    popPooledFrame(vm);
     if(vm.top){if(frame.returnObject||frame.method.signature.returnType!=='void')vm.push(value);}
     else {vm.returnValue=value;vm.exitCode=frame.method.signature.returnType==='int'?Number(value)|0:0;vm.state='terminated';}
   });

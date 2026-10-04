@@ -2,6 +2,6 @@
   "queries/cs1936-no-query-pattern": ["diagnostics", "warnings"],
   "queries/cs1941-join-key-types": ["diagnostics", "warnings"],
   "queries/errors-inside-clause-expressions": ["diagnostics", "warnings"],
-  "queries/method-chains-of-each-clause": ["diagnostics", "warnings", "bytecode", "cil"],
+  "queries/method-chains-of-each-clause": ["diagnostics", "warnings", "bytecode", "cil", "directCil"],
   "queries/transparent-identifiers-decide-result-types": ["diagnostics", "warnings"]
 }

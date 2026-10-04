@@ -1,12 +1,8 @@
 import {executeFieldAccess} from '../value-fields.js';
-import {isDecimal} from '../decimal.js';
+import {boxValue, unboxValue} from '../boxing.js';
 import {loadFieldValue} from '../field-storage.js';
 import {castReference} from '../casting.js';
 import {staticSlot,finishMemoryAccess} from '../statics.js';
-import {frameworkType} from '@sharpforge/framework';
-import {ManagedFault,isReference} from '../../heap.js';
-import {isNumber} from '../numeric-ops.js';
-import {boxNullable, unboxNullable} from '../nullable-boxing.js';
 
 const handlers=new Map();
 handlers.set('volatile.',(vm,frame)=>{frame.volatileAccess=true;});
@@ -18,31 +14,13 @@ for(const name of ['ldsfld','stsfld','ldsflda'])handlers.set(name,(vm,frame,inst
   else vm.push(vm.address('static',slot.key));
   finishMemoryAccess(frame);
 });
-for(const name of ['ldfld','stfld','ldflda'])handlers.set(name,(vm,frame,instruction)=>executeFieldAccess(vm,frame,instruction,name));
-handlers.set('box',(vm,frame,instruction)=>{
-  const value=vm.pop(),table=vm.typeSystem.table(instruction.operand),type=table.name;
-  if(table.nullableType){vm.push(boxNullable(vm,value,type));return;}
-  if(!table.flags.valueType){vm.push(castReference(vm.heap,value,table));return;}
-  if(isReference(value)&&frameworkType(type)?.kind==='value'&&vm.heap.get(value).type===type) {
-    vm.heap.withRoots([value],()=>{const copy=vm.storage(value,type);vm.push(vm.heap.allocate('box',table,[copy],[copy]));});return;
-  }
-  if(isDecimal(value)&&type!=='System.Decimal')throw new ManagedFault('InvalidProgramException','Decimal boxing requires its declared type');
-  if(!isNumber(value)&&!isDecimal(value))throw new ManagedFault('NotSupportedException','Only numeric and registered immutable WinUI value boxing is implemented');
-  vm.push(vm.heap.allocate('box',table,[vm.storage(value,type)]));
-});
-for(const name of ['unbox','unbox.any'])handlers.set(name,(vm,frame,instruction)=>{
-  const table=vm.typeSystem.table(instruction.operand),type=table.name;
-  if (table.nullableType) {
-    if (name !== 'unbox.any') throw new ManagedFault('NotSupportedException', 'Addressable nullable unboxing is outside the UI profile');
-    vm.push(unboxNullable(vm, vm.pop(), type));
-    return;
-  }
-  const ref=vm.pop();
-  if(name==='unbox.any'&&!table.flags.valueType){vm.push(castReference(vm.heap,ref,table));return;}
-  const record=vm.heap.get(ref);
-  if(record.kind!=='box'||record.methodTable!==table)throw new ManagedFault('InvalidCastException','Boxed type mismatch');
-  vm.push(name==='unbox'?vm.address('box',0,ref):vm.storage(record.data[0],type));
-});
+for (const name of ['ldfld', 'stfld', 'ldflda']) {
+  handlers.set(name, (vm, frame, instruction) => executeFieldAccess(vm, frame, instruction, name));
+}
+handlers.set('box', (vm, frame, instruction) => vm.push(boxValue(vm, vm.pop(), instruction.operand)));
+for (const name of ['unbox', 'unbox.any']) {
+  handlers.set(name, (vm, frame, instruction) => vm.push(unboxValue(vm, vm.pop(), instruction.operand, name === 'unbox')));
+}
 for(const name of ['castclass','isinst'])handlers.set(name,(vm,frame,instruction)=>{
   vm.push(castReference(vm.heap,vm.pop(),vm.typeSystem.table(instruction.operand),name==='castclass'));
 });

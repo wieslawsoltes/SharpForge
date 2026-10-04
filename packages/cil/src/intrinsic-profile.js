@@ -1,4 +1,5 @@
 import {decimalIntrinsicDefinitions} from '@sharpforge/bytecode';
+import {nullableMethodDefinition} from './nullable-profile.js';
 import {canonicalType,contracts,types} from '@sharpforge/framework';
 import {nullableElementType, nullableValueTypes, nullableSignatureType} from './nullable-profile.js';
 
@@ -75,6 +76,7 @@ for (const element of nullableValueTypes) {
   add(owner, 'get_Value', [], element, false, 'nullableValue');
   add(owner, 'GetValueOrDefault', [], element, false, 'nullableDefault');
   add(owner, 'GetValueOrDefault', [element], element, false, 'nullableDefault');
+  add(owner, 'ToString', [], 'string', false, 'nullableText');
 }
 
 const builtinDefinitions=new Map(definitions),frameworkDefinitions=new Map();
@@ -117,8 +119,11 @@ export function intrinsicDefinition(descriptor) {
     const closed = {...descriptor, signature: {...signature,
       parameters: signature.parameters.map(type => type === '!0' ? nullable : type),
       returnType: signature.returnType === '!0' ? nullable : signature.returnType}};
-    return builtinDefinitions.get(intrinsicKey(closed)) ?? null;
+    const selected = builtinDefinitions.get(intrinsicKey(closed));
+    if (selected) return selected;
   }
+  const valueContract = nullableMethodDefinition(descriptor);
+  if (valueContract) return valueContract;
   return builtinDefinitions.get(signatureKey(systemType(descriptor.owner),descriptor.name,
     signature.parameters.map(type=>type==='Array'?'System.Array':type.replace(/^decimal(?=&|$)/,'System.Decimal')),
     signature.returnType==='decimal'?'System.Decimal':signature.returnType,signature.isStatic))??null;

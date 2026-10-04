@@ -1,4 +1,5 @@
 import {CilError} from './binary.js';
+import {nullableMethodDefinition} from './nullable-profile.js';
 import {frameworkType} from '@sharpforge/framework';
 import {genericTypeParts} from './field-profile.js';
 import {methodGenericParameters, normalizeCallType} from './call-profile.js';
@@ -67,6 +68,9 @@ export function verifyGenericCall(inspector, descriptor, context) {
   }
   if (arity && !descriptor.genericArguments) throw new CilError('Generic method calls require MethodSpec arguments');
   for (const argument of descriptor.methodArguments ?? []) genericArgument(inspector, argument, context);
-  for (const argument of descriptor.typeArguments ?? []) genericArgument(inspector, argument, context);
+  for (const argument of descriptor.typeArguments ?? []) {
+    if (nullableMethodDefinition(descriptor)) verifyGenericType(inspector, argument, context);
+    else genericArgument(inspector, argument, context);
+  }
   for (const type of [...descriptor.signature.parameters, descriptor.signature.returnType]) verifyGenericType(inspector, type, context);
 }

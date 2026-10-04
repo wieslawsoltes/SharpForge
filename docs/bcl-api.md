@@ -837,8 +837,12 @@ Registered families: <code>string</code>.
 | 524301 | <code>static int System.String::Compare(string, string, System.StringComparison)</code> | implemented |
 | 524302 | <code>bool System.String::StartsWith(string, System.StringComparison)</code> | implemented |
 | 524303 | <code>bool System.String::EndsWith(string, System.StringComparison)</code> | implemented |
+| 524304 | <code>static int System.String::Compare(string, int, string, int, int, System.StringComparison)</code> | implemented |
+| 524305 | <code>bool System.String::Contains(string, System.StringComparison)</code> | implemented |
+| 524306 | <code>int System.String::IndexOf(string, System.StringComparison)</code> | implemented |
+| 524307 | <code>int System.String::LastIndexOf(string, System.StringComparison)</code> | implemented |
 
-Pinned reference: 42 implemented and 144 missing exact metadata rows.
+Pinned reference: 46 implemented and 140 missing exact metadata rows.
 
 | Reference kind | Exact reference signature | Status | Matching ABI IDs |
 | --- | --- | --- | --- |
@@ -859,7 +863,7 @@ Pinned reference: 42 implemented and 144 missing exact metadata rows.
 | method | <code>System.String::Compare``0(System.String,System.Int32,System.String,System.Int32,System.Int32,System.Boolean):System.Int32 static</code> | missing | — |
 | method | <code>System.String::Compare``0(System.String,System.Int32,System.String,System.Int32,System.Int32,System.Boolean,System.Globalization.CultureInfo):System.Int32 static</code> | missing | — |
 | method | <code>System.String::Compare``0(System.String,System.Int32,System.String,System.Int32,System.Int32,System.Globalization.CultureInfo,System.Globalization.CompareOptions):System.Int32 static</code> | missing | — |
-| method | <code>System.String::Compare``0(System.String,System.Int32,System.String,System.Int32,System.Int32,System.StringComparison):System.Int32 static</code> | missing | — |
+| method | <code>System.String::Compare``0(System.String,System.Int32,System.String,System.Int32,System.Int32,System.StringComparison):System.Int32 static</code> | implemented | 524304 |
 | method | <code>System.String::Compare``0(System.String,System.String):System.Int32 static</code> | missing | — |
 | method | <code>System.String::Compare``0(System.String,System.String,System.Boolean):System.Int32 static</code> | missing | — |
 | method | <code>System.String::Compare``0(System.String,System.String,System.Boolean,System.Globalization.CultureInfo):System.Int32 static</code> | missing | — |
@@ -887,7 +891,7 @@ Pinned reference: 42 implemented and 144 missing exact metadata rows.
 | method | <code>System.String::Contains``0(System.Char):System.Boolean instance</code> | missing | — |
 | method | <code>System.String::Contains``0(System.Char,System.StringComparison):System.Boolean instance</code> | missing | — |
 | method | <code>System.String::Contains``0(System.String):System.Boolean instance</code> | implemented | 1258 |
-| method | <code>System.String::Contains``0(System.String,System.StringComparison):System.Boolean instance</code> | missing | — |
+| method | <code>System.String::Contains``0(System.String,System.StringComparison):System.Boolean instance</code> | implemented | 524305 |
 | method | <code>System.String::Copy``0(System.String):System.String static</code> | missing | — |
 | method | <code>System.String::CopyTo``0(System.Int32,System.Char[],System.Int32,System.Int32):System.Void instance</code> | missing | — |
 | method | <code>System.String::CopyTo``0(System.Span`1&lt;System.Char&gt;):System.Void instance</code> | missing | — |
@@ -935,7 +939,7 @@ Pinned reference: 42 implemented and 144 missing exact metadata rows.
 | method | <code>System.String::IndexOf``0(System.String,System.Int32,System.Int32):System.Int32 instance</code> | missing | — |
 | method | <code>System.String::IndexOf``0(System.String,System.Int32,System.Int32,System.StringComparison):System.Int32 instance</code> | missing | — |
 | method | <code>System.String::IndexOf``0(System.String,System.Int32,System.StringComparison):System.Int32 instance</code> | missing | — |
-| method | <code>System.String::IndexOf``0(System.String,System.StringComparison):System.Int32 instance</code> | missing | — |
+| method | <code>System.String::IndexOf``0(System.String,System.StringComparison):System.Int32 instance</code> | implemented | 524306 |
 | method | <code>System.String::IndexOfAny``0(System.Char[]):System.Int32 instance</code> | missing | — |
 | method | <code>System.String::IndexOfAny``0(System.Char[],System.Int32):System.Int32 instance</code> | missing | — |
 | method | <code>System.String::IndexOfAny``0(System.Char[],System.Int32,System.Int32):System.Int32 instance</code> | missing | — |
@@ -967,7 +971,7 @@ Pinned reference: 42 implemented and 144 missing exact metadata rows.
 | method | <code>System.String::LastIndexOf``0(System.String,System.Int32,System.Int32):System.Int32 instance</code> | missing | — |
 | method | <code>System.String::LastIndexOf``0(System.String,System.Int32,System.Int32,System.StringComparison):System.Int32 instance</code> | missing | — |
 | method | <code>System.String::LastIndexOf``0(System.String,System.Int32,System.StringComparison):System.Int32 instance</code> | missing | — |
-| method | <code>System.String::LastIndexOf``0(System.String,System.StringComparison):System.Int32 instance</code> | missing | — |
+| method | <code>System.String::LastIndexOf``0(System.String,System.StringComparison):System.Int32 instance</code> | implemented | 524307 |
 | method | <code>System.String::LastIndexOfAny``0(System.Char[]):System.Int32 instance</code> | missing | — |
 | method | <code>System.String::LastIndexOfAny``0(System.Char[],System.Int32):System.Int32 instance</code> | missing | — |
 | method | <code>System.String::LastIndexOfAny``0(System.Char[],System.Int32,System.Int32):System.Int32 instance</code> | missing | — |

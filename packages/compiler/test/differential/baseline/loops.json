@@ -1,12 +1,12 @@
 {
-  "loops/break-continue": ["diagnostics", "warnings", "bytecode", "cil"],
+  "loops/break-continue": ["diagnostics", "warnings", "bytecode", "cil", "directCil"],
   "loops/cs0029-while-int-condition": ["diagnostics", "warnings"],
   "loops/cs0103-loop-variable-out-of-scope": ["diagnostics", "warnings"],
   "loops/cs0136-loop-variable-shadows": ["diagnostics", "warnings"],
-  "loops/fizzbuzz": ["diagnostics", "warnings", "bytecode", "cil"],
-  "loops/for-sum": ["diagnostics", "warnings", "bytecode", "cil"],
-  "loops/multiple-variables": ["diagnostics", "warnings", "bytecode", "cil"],
-  "loops/nested-loops": ["diagnostics", "warnings", "bytecode", "cil"],
-  "loops/primes": ["diagnostics", "warnings", "bytecode", "cil"],
-  "loops/while-and-do": ["diagnostics", "warnings", "bytecode", "cil"]
+  "loops/fizzbuzz": ["diagnostics", "warnings", "bytecode", "cil", "directCil"],
+  "loops/for-sum": ["diagnostics", "warnings", "bytecode", "cil", "directCil"],
+  "loops/multiple-variables": ["diagnostics", "warnings", "bytecode", "cil", "directCil"],
+  "loops/nested-loops": ["diagnostics", "warnings", "bytecode", "cil", "directCil"],
+  "loops/primes": ["diagnostics", "warnings", "bytecode", "cil", "directCil"],
+  "loops/while-and-do": ["diagnostics", "warnings", "bytecode", "cil", "directCil"]
 }

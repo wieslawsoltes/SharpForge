@@ -1,6 +1,8 @@
 import { ExceptionRegionCursor } from './cursor.js';
 import { checkRegionCancellation } from './contracts.js';
 
+export const containsExceptionRegion = (region, offset) => !region || region.start <= offset && offset < region.end;
+
 /** Index lexical membership once: O(R log R) construction, O(log R) point lookup, O(R) storage. */
 export class ExceptionTransferIndex {
   #offsets;

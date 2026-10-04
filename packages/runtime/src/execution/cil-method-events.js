@@ -1,4 +1,5 @@
 import {RuntimeEventLog, RuntimeEventName} from './runtime-events.js';
+import {observeWasmCall} from './wasm/call-tier-state.js';
 
 // Host observations belong to the VM lifetime, not its rewindable execution graph.
 const observers = new WeakMap();
@@ -18,6 +19,7 @@ export function cilRuntimeEvents(vm) {
 }
 
 export function enterCilMethod(vm, frame, reason = 'call') {
+  if (reason === 'call') observeWasmCall(vm, frame);
   if (reason === 'call') vm.profiler?.enter(frame);
   const observer = observers.get(vm);
   if (!observer) return;
@@ -42,10 +44,19 @@ export function leaveCilMethod(vm, frame, reason = 'return') {
 
 function* liveFrames(vm) {
   const current = vm.scheduler?.currentId ?? 1;
-  yield* vm.frames;
+  const seen = new Set();
+  function* unique(frames) {
+    for (const frame of frames) {
+      if (seen.has(frame.id)) continue;
+      seen.add(frame.id);
+      yield frame;
+    }
+  }
+  yield* unique(vm.frames);
+  for (const scope of vm.scheduler?.callbackScopes ?? []) yield* unique(scope.frames);
   for (const [id, context] of vm.scheduler?.contexts ?? []) {
     if (id === current && !vm.scheduler.parked || terminalContexts.has(context.status)) continue;
-    yield* context.frames;
+    yield* unique(context.frames);
   }
 }
 

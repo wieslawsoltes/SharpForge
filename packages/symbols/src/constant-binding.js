@@ -3,6 +3,7 @@ import { fail } from './contracts.js';
 import { metadataName } from './metadata-facts.js';
 import { generalConstantPayload } from './constant-reader.js';
 import { hex, sha1 } from './hash.js';
+import { constantTypeSpecs, nullableTypeSpec } from './nullable-constant.js';
 
 const frameworkTokens = Object.freeze({
   'System.Runtime': 'b03f5f7f11d50a3a',
@@ -35,7 +36,7 @@ function frameworkAssembly(metadata, scope, state) {
   return matched;
 }
 
-function specialType(metadata, token, state) {
+function namedType(metadata, token, state) {
   const table = token >>> 24;
   if (table !== 1 && table !== 2) return null;
   const row = metadata.row(token);
@@ -47,7 +48,7 @@ function specialType(metadata, token, state) {
   if (scope === 1) scope = 0x20000001;
   if (scope >>> 24 !== 35 && scope !== 0x20000001) return null;
   if (scope === 0x20000001 && metadata.rows[32]?.length !== 1) return null;
-  return frameworkAssembly(metadata, scope, state) ? specialTypes[name] : null;
+  return frameworkAssembly(metadata, scope, state) ? name : null;
 }
 
 function decimalValue(payload) {
@@ -73,20 +74,39 @@ function dateTimeValue(payload) {
 const specialTypes = Object.freeze({
   Decimal: Object.freeze({ name: 'Decimal', type: 'decimal', decode: decimalValue }),
   DateTime: Object.freeze({ name: 'DateTime', type: 'datetime', decode: dateTimeValue }),
+  'Nullable`1': Object.freeze({
+    name: 'Nullable',
+    type: 'nullable',
+    emptyPayload: true,
+    decode: () => ({ value: null }),
+  }),
 });
 
 /** Bind supported special constants to metadata-declared identities; no assembly resolution or PE bytes escape. */
 export function bindConstantTypes(constants, metadata) {
   const types = new Map();
   const state = { assemblies: new Map(), keyBytes: 0 };
+  const specs = constantTypeSpecs(constants, metadata);
+  const resolveNamed = (token) => namedType(metadata, token, state);
   for (const constant of constants) {
     if (!constant.typeToken) continue;
-    if (!types.has(constant.typeToken)) types.set(constant.typeToken, specialType(metadata, constant.typeToken, state));
+    if (!types.has(constant.typeToken)) {
+      const spec = specs?.get(constant.typeToken);
+      const name = spec
+        ? nullableTypeSpec(spec, resolveNamed)
+          ? 'Nullable`1'
+          : null
+        : resolveNamed(constant.typeToken);
+      const type = name === 'Nullable`1' && !spec ? null : specialTypes[name];
+      types.set(constant.typeToken, type);
+    }
     const type = types.get(constant.typeToken);
     if (!type) continue;
     const payload = generalConstantPayload(constant.signature, metadata.counts);
     if (payload.typeToken !== constant.typeToken) fail('Inconsistent local constant type');
     if (payload.kind !== 17) fail(`${type.name} local constant requires a value-type signature`);
+    // The general format does not define an encoding for a present Nullable<T> value.
+    if (type.emptyPayload && payload.bytes.length) continue;
     Object.assign(constant, {
       ...type.decode(payload.bytes),
       type: type.type,

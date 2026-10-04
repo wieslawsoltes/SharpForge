@@ -1,11 +1,26 @@
 import {ManagedFault, isReference} from '../heap.js';
-import {verifyCilAssembly} from '@sharpforge/cil';
+import {verifyCilAssembly, mergeVerifiedStackReports} from '@sharpforge/cil';
 import {managedDelegateTarget} from './delegate-target.js';
 import {retainCallbackFrames} from '../execution/callback-frames.js';
+import {popPooledFrame} from '../execution/frame-retirement.js';
+import {flushFramePool} from '../execution/frame-pool.js';
+import {leaveCilMethod} from '../execution/cil-method-events.js';
 
 const controlFields = [
   'frames', 'stack', 'state', 'sourcePause', 'currentPoint', 'pendingFault', 'fault', 'returnValue', 'exitCode'
 ];
+
+/** Aborted callbacks own their frames even when normal ret/exception unwind did not run. */
+function retireCallbackFrames(vm) {
+  let failure;
+  while (vm.frames.length) {
+    try { if (vm.inspector) leaveCilMethod(vm, vm.top, 'canceled'); }
+    catch (error) { failure ??= error; }
+    finally { popPooledFrame(vm); }
+  }
+  flushFramePool(vm);
+  if (failure) throw failure;
+}
 
 /** Invoke a verified managed callback without leaving a suspended scheduler context. */
 export function invokeManagedCallback(platform, callback, args, {maxInstructions = 20000} = {}) {
@@ -23,7 +38,7 @@ export function invokeManagedMethod(platform, methodId, receiver, args, {maxInst
   if (vm.inspector && !vm.report.methods.includes(methodId)) {
     const report = verifyCilAssembly(vm.inspector, {methodToken: methodId});
     if (!report.success) throw new ManagedFault('InvalidProgramException', report.issues.map(issue => issue.message).join('; '));
-    vm.report.methods = [...new Set([...vm.report.methods, ...report.methods])];
+    vm.report = mergeVerifiedStackReports(vm.inspector, vm.report, report);
   }
   const method = vm.inspector ? vm.inspector.getMethod(methodId) : vm.image.methods[methodId];
   if (!method) throw new ManagedFault('MissingMethodException', 'The UI callback method is unavailable');
@@ -64,13 +79,16 @@ export function invokeManagedMethod(platform, methodId, receiver, args, {maxInst
       }
       return vm.returnValue;
     } finally {
-      for (const name of controlFields) {
-        if (saved[name] === undefined) delete vm[name];
-        else vm[name] = saved[name];
+      try { retireCallbackFrames(vm); }
+      finally {
+        for (const name of controlFields) {
+          if (saved[name] === undefined) delete vm[name];
+          else vm[name] = saved[name];
+        }
+        vm.scheduler.suppressed = oldSuppressed;
+        vm.options.maxInstructions = oldLimit;
+        releaseFrames();
       }
-      vm.scheduler.suppressed = oldSuppressed;
-      vm.options.maxInstructions = oldLimit;
-      releaseFrames();
     }
   });
 }
