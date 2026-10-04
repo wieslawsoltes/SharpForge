@@ -193,6 +193,24 @@
       "source": "integration-owner first feature benchmark run",
       "bytes": 982,
       "sha256": "90f95bc7fd14c5244fe4cb61bb3a3d66b2235ad52bd50c747450b1ff35784c9a"
+    },
+    {
+      "path": "artifacts/project6-resume/forwarders.tap",
+      "source": "earlier retained implementation/capture log",
+      "bytes": 2012,
+      "sha256": "f616f771023aac4c08dc19876910839088f10f8161f2701395c5bebcbc3405ef"
+    },
+    {
+      "path": "artifacts/project6-resume/native-forwarders.log",
+      "source": "earlier retained implementation/capture log",
+      "bytes": 105,
+      "sha256": "9fe797cea48587ac446f99ff543a35bd51a9b24de251d106f3af1f111acb3aa6"
+    },
+    {
+      "path": "artifacts/project6-resume/native-forwarders-final.log",
+      "source": "earlier retained implementation/capture log",
+      "bytes": 105,
+      "sha256": "9fe797cea48587ac446f99ff543a35bd51a9b24de251d106f3af1f111acb3aa6"
     }
   ],
   "cohorts": [
