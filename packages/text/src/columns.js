@@ -13,18 +13,28 @@ function validateTabSize(tabSize) {
   if (!Number.isInteger(tabSize) || tabSize < 1 || tabSize > 256) throw new RangeError('Tab size must be between 1 and 256');
 }
 
+/** Internal packed point metrics: low bits are visible base width, bit 2 requests emoji presentation for a nonempty cluster. */
+export function codePointColumnMetrics(code, ambiguousWidth = 1) {
+  if (code >= 32 && code <= 126) return ambiguousWidth;
+  if (code === 0xfe0f || code === 0x20e3) return 4;
+  const character = String.fromCodePoint(code);
+  if (/[\p{M}\p{Cf}\p{Cc}\p{Zl}\p{Zp}]/u.test(character)) return 0;
+  if (/\p{Emoji_Presentation}|\p{Regional_Indicator}/u.test(character)) return 6;
+  return wide(code) ? 2 : ambiguousWidth;
+}
+
 /** Monospace visual width of one extended cluster; tabs use the incoming zero-based visual column. */
 export function graphemeWidth(segment, column = 0, { tabSize = 4, ambiguousWidth = 1 } = {}) {
   validateTabSize(tabSize);
   if (segment === '\t') return tabSize - column % tabSize;
-  if (!segment || /^[\p{M}\p{Cf}\p{Cc}\p{Zl}\p{Zp}]+$/u.test(segment)) return 0;
-  if (/\p{Emoji_Presentation}|\p{Regional_Indicator}/u.test(segment) || segment.includes('\ufe0f') || segment.includes('\u20e3')) return 2;
   let width = 0;
+  let emoji = false;
   for (const character of segment) {
-    if (/[\p{M}\p{Cf}\p{Cc}]/u.test(character)) continue;
-    width = Math.max(width, wide(character.codePointAt(0)) ? 2 : ambiguousWidth);
+    const metrics = codePointColumnMetrics(character.codePointAt(0), ambiguousWidth);
+    width = Math.max(width, metrics & 3);
+    emoji ||= !!(metrics & 4);
   }
-  return width;
+  return width && emoji ? 2 : width;
 }
 
 /** Map UTF-16 character positions to visual columns without splitting a cluster. */

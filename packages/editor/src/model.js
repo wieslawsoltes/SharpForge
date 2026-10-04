@@ -1,4 +1,4 @@
-import { TextBuffer } from '@sharpforge/text';
+import { TextBuffer, VisualColumnIndex } from '@sharpforge/text';
 import { normalizeSelections, transformSelections } from './selections.js';
 import { UndoStack } from './undo.js';
 
@@ -10,6 +10,8 @@ export class EditorModel {
   #selectionState;
   #disposed = false;
   #readOnly = false;
+  #visualColumns;
+  #visualColumnOptions;
   constructor(text = '', { uri = 'Program.cs', buffer = null, selections = [{ anchor: 0, active: 0 }], ...options } = {}) {
     this.ownsBuffer = buffer === null;
     this.buffer = buffer ?? new TextBuffer(text, { uri, ...options });
@@ -19,6 +21,7 @@ export class EditorModel {
     this.decorations = new Map();
     this.#selectionState = normalizeSelections(selections, this.length);
     this.#readOnly = !!options.readOnly;
+    this.#visualColumnOptions = options.visualColumns;
   }
   get length() { return this.buffer.length; }
   get lineCount() { return this.buffer.lineCount; }
@@ -55,6 +58,15 @@ export class EditorModel {
   positionAt(offset) { return this.buffer.positionAt(offset); }
   offsetAt(position) { return this.buffer.offsetAt(position); }
   snapshot() { return this.buffer.snapshot(); }
+  /** Exact zero-based display column; an uncached prefix is scanned cooperatively and may reject on edits or cancellation. */
+  async visualColumnAtOffset(offset, options) { return this.#columnIndex().get(offset, options); }
+  /** Synchronous exact result, or null while a prefix needs asynchronous indexing. */
+  cachedVisualColumnAtOffset(offset, options) { return this.#columnIndex().getCached(offset, options); }
+  get visualColumnStatistics() { return this.#visualColumns?.statistics ?? null; }
+  #columnIndex() {
+    if (this.#disposed) throw new Error('EditorModel is disposed');
+    return this.#visualColumns ??= new VisualColumnIndex(this.buffer, this.#visualColumnOptions);
+  }
   setSelections(selections, { primaryIndex = 0, notify = true } = {}) {
     this.#selectionState = normalizeSelections(selections, this.length, primaryIndex);
     if (notify) for (const listener of [...this.#selectionListeners]) listener(this.#selectionState);
@@ -150,6 +162,7 @@ export class EditorModel {
     this.#listeners.clear();
     this.#selectionListeners.clear();
     this.#readOnlyListeners.clear();
+    this.#visualColumns?.dispose();
     this.decorations.clear();
     if (this.ownsBuffer) this.buffer.dispose();
   }

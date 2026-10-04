@@ -66,11 +66,19 @@ nextGraphemeOffset('👩‍👩‍👧‍👦x', 0, { segmenter });
 visualColumnAt('a\t界😀', 5, { tabSize: 4 });
 ```
 
-`iterateGraphemes`, `graphemeSegments`, `nextGraphemeOffset`, and `previousGraphemeOffset` use `Intl.Segmenter` by default. The explicit fallback covers CRLF, Hangul, combining/spacing marks, emoji modifiers and ZWJ sequences, regional-indicator flags, and common Indic linkers. The fallback is a declared compatibility profile rather than a complete vendored Unicode property database; full native segmentation follows the host's Unicode data. See [Unicode UAX #29](https://www.unicode.org/reports/tr29/).
+`iterateGraphemes`, `graphemeSegments`, `nextGraphemeOffset`, and `previousGraphemeOffset` use a pinned Unicode 16.0 extended-grapheme profile. The default and legacy `{forceFallback:true}` path share the same complete rule/data implementation. An explicit `new GraphemeSegmenter({segmenter:new Intl.Segmenter("und",{granularity:"grapheme"})})` retains host-tailored behavior. The exported `unicodeGraphemeVersion` identifies the pinned profile; [data, license, regeneration and conformance evidence](reference/unicode-16.0.0/README.md) document the compatibility change.
 
 `wordSegments`/`wordRangeAt` use word segmentation; next/previous word commands consume following/preceding whitespace in the usual editor style. `subwordBoundaries` separates camel/Pascal humps, acronyms, digits, underscores, and CJK characters. Pass `{subword:true}` to next/previous movement.
 
 `graphemeWidth`, `visualColumnAt`, `offsetAtVisualColumn`, and `expandTabs` share a monospace column model. Tabs advance to explicit tab stops, East Asian wide characters and emoji occupy two cells, and combining-only/format/control clusters occupy zero. `offsetAtVisualColumn` returns logical offset, resolved column, virtual spaces, and partial-tab details. Offsets remain UTF-16 while displayed columns count visual cells. Ambiguous-width characters default to one cell. Browser bidi run ordering and pixel geometry belong to the editor's native layout integration; see [Unicode UAX #9](https://www.unicode.org/reports/tr9/).
+
+### Indexed visual columns for large lines
+
+`new VisualColumnIndex(buffer,options)` accepts a source with immutable indexed snapshots and an optional `onDidChange` subscription. `await index.get(offset,{tabSize,ambiguousWidth,signal})` resolves an exact zero-based column. `index.getCached(...)` returns an exact number or `null` when asynchronous indexing is needed. UTF-16 offsets inside a grapheme map to that cluster's starting column; offsets in a line terminator map to the line-end column.
+
+Initial work is linear in the unindexed prefix and uses bounded chunks. Cached requests binary-search sparse checkpoints and read at most one configured chunk synchronously; more distant requests yield while scanning. Checkpoints retain constant-size Unicode state, so even a multi-megabyte combining cluster needs no growing overlap string. The index never requests `snapshot.text`, `lineStarts`, or a complete line. Edits preserve unaffected indexes and rewind affected prefixes before a possible UTF-16 pair seam. Cancellation, stale snapshots, disposal and capacity failures reject explicitly.
+
+Defaults: 4,096-unit chunks, 8,192-unit checkpoints, 32 line/style entries, 32,768 checkpoints in total, 256 recent results per entry and 64 pending requests. Checkpoint spacing coarsens within the fixed cache budget. Scheduling yields after 65,536 units or an 8 ms slice; these are cooperative scheduling targets, not a browser frame-latency guarantee. `statistics` exposes actual work and cache sizes. `dispose()` releases subscriptions, rejects pending requests and clears caches. See the [model integration contract](../editor/docs/model.md#exact-visual-status-columns) and `bench/visual-columns.js` for usage and measured comparisons.
 
 ## Bounded search and replacement
 
