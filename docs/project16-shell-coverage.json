@@ -48,10 +48,10 @@
       ],
       "focusedValidation": {
         "status": "passed",
-        "batch": "44 unique cases; 43/44 integrated batch plus 19/19 targeted canonical-recorder follow-up",
+        "batch": "34/34 completed helper, EOL and status follow-up; 62 unique cases across the shell scope",
         "runtime": "Node.js v24.19.0",
-        "revision": "26d9acca",
-        "command": "node scripts/limited.js node --test tests/a19-shell-settings.test.js tests/a19-shell-boundaries.test.js"
+        "revision": "baa27464",
+        "command": "node scripts/limited.js node --test tests/a19-shell-recents.test.js tests/a19-shell-settings.test.js tests/a19-shell-boundaries.test.js"
       },
       "browserTests": [
         "tests/browser_a19_shell_test.py"
@@ -245,10 +245,10 @@
       ],
       "focusedValidation": {
         "status": "passed",
-        "batch": "44 unique cases; 43/44 integrated batch plus 19/19 targeted canonical-recorder follow-up",
+        "batch": "34/34 completed helper, EOL and status follow-up; 62 unique cases across the shell scope",
         "runtime": "Node.js v24.19.0",
-        "revision": "26d9acca",
-        "command": "node scripts/limited.js node --test tests/a19-shell-settings.test.js tests/a19-shell-boundaries.test.js"
+        "revision": "baa27464",
+        "command": "node scripts/limited.js node --test tests/a19-shell-recents.test.js tests/a19-shell-settings.test.js tests/a19-shell-boundaries.test.js"
       },
       "browserTests": [
         "tests/browser_a19_shell_test.py"
@@ -291,25 +291,28 @@
       "owner": "shell",
       "implementation": "implemented-with-explicit-limits",
       "files": [
-        "apps/studio/workbench/tools/code-definition.js"
+        "apps/studio/workbench/tools/code-definition.js",
+        "apps/studio/workbench/document-size.js"
       ],
       "focusedTests": [
         "tests/a19-shell-search.test.js",
-        "tests/a19-shell-tools.test.js"
+        "tests/a19-shell-tools.test.js",
+        "tests/a19-shell-boundaries.test.js"
       ],
       "focusedValidation": {
         "status": "passed",
-        "batch": "44 unique cases; 43/44 integrated batch plus 19/19 targeted canonical-recorder follow-up",
+        "batch": "34/34 completed helper, EOL and status follow-up; 62 unique cases across the shell scope",
         "runtime": "Node.js v24.19.0",
-        "revision": "26d9acca",
-        "command": "node scripts/limited.js node --test tests/a19-shell-settings.test.js tests/a19-shell-boundaries.test.js"
+        "revision": "baa27464",
+        "command": "node scripts/limited.js node --test tests/a19-shell-recents.test.js tests/a19-shell-settings.test.js tests/a19-shell-boundaries.test.js"
       },
       "browserTests": [
         "tests/browser_a19_shell_test.py"
       ],
       "browserValidation": "pending-integrated-static-and-standalone",
       "remainingAcceptanceGaps": [
-        "The 300 ms definition-update threshold requires integrated browser timing; unresolved metadata definitions remain explicit."
+        "The 300 ms definition-update threshold requires integrated browser timing; unresolved metadata definitions remain explicit.",
+        "Large definitions display bounded 64 KiB excerpts; full-source editing remains available through normal document navigation."
       ]
     },
     {
@@ -327,10 +330,10 @@
       ],
       "focusedValidation": {
         "status": "passed",
-        "batch": "44 unique cases; 43/44 integrated batch plus 19/19 targeted canonical-recorder follow-up",
+        "batch": "34/34 completed helper, EOL and status follow-up; 62 unique cases across the shell scope",
         "runtime": "Node.js v24.19.0",
-        "revision": "26d9acca",
-        "command": "node scripts/limited.js node --test tests/a19-shell-settings.test.js tests/a19-shell-boundaries.test.js"
+        "revision": "baa27464",
+        "command": "node scripts/limited.js node --test tests/a19-shell-recents.test.js tests/a19-shell-settings.test.js tests/a19-shell-boundaries.test.js"
       },
       "browserTests": [
         "tests/browser_a19_shell_test.py"
@@ -355,10 +358,10 @@
       ],
       "focusedValidation": {
         "status": "passed",
-        "batch": "44 unique cases; 43/44 integrated batch plus 19/19 targeted canonical-recorder follow-up",
+        "batch": "34/34 completed helper, EOL and status follow-up; 62 unique cases across the shell scope",
         "runtime": "Node.js v24.19.0",
-        "revision": "26d9acca",
-        "command": "node scripts/limited.js node --test tests/a19-shell-settings.test.js tests/a19-shell-boundaries.test.js"
+        "revision": "baa27464",
+        "command": "node scripts/limited.js node --test tests/a19-shell-recents.test.js tests/a19-shell-settings.test.js tests/a19-shell-boundaries.test.js"
       },
       "browserTests": [
         "tests/browser_a19_shell_test.py"
@@ -429,24 +432,28 @@
       "owner": "shell",
       "implementation": "implemented-with-explicit-limits",
       "files": [
-        "apps/studio/workbench/tools/solution-explorer-views.js"
+        "apps/studio/workbench/tools/solution-explorer-views.js",
+        "apps/studio/workbench/document-size.js",
+        "apps/studio/workbench/search-service.js"
       ],
       "focusedTests": [
-        "tests/a19-shell-tools.test.js"
+        "tests/a19-shell-tools.test.js",
+        "tests/a19-shell-boundaries.test.js"
       ],
       "focusedValidation": {
         "status": "passed",
-        "batch": "44 unique cases; 43/44 integrated batch plus 19/19 targeted canonical-recorder follow-up",
+        "batch": "34/34 completed helper, EOL and status follow-up; 62 unique cases across the shell scope",
         "runtime": "Node.js v24.19.0",
-        "revision": "26d9acca",
-        "command": "node scripts/limited.js node --test tests/a19-shell-settings.test.js tests/a19-shell-boundaries.test.js"
+        "revision": "baa27464",
+        "command": "node scripts/limited.js node --test tests/a19-shell-recents.test.js tests/a19-shell-settings.test.js tests/a19-shell-boundaries.test.js"
       },
       "browserTests": [
         "tests/browser_a19_shell_test.py"
       ],
       "browserValidation": "pending-integrated-static-and-standalone",
       "remainingAcceptanceGaps": [
-        "Independent source views are provided through New Solution Explorer View; the retained legacy primary Explorer remains root-owned."
+        "Independent source views are provided through New Solution Explorer View; the retained legacy primary Explorer remains root-owned.",
+        "Content filtering uses the cancellable search worker with explicit 8-million-unit per-file and 32-million-unit aggregate limits."
       ]
     },
     {
@@ -468,10 +475,10 @@
       ],
       "focusedValidation": {
         "status": "passed",
-        "batch": "44 unique cases; 43/44 integrated batch plus 19/19 targeted canonical-recorder follow-up",
+        "batch": "34/34 completed helper, EOL and status follow-up; 62 unique cases across the shell scope",
         "runtime": "Node.js v24.19.0",
-        "revision": "26d9acca",
-        "command": "node scripts/limited.js node --test tests/a19-shell-settings.test.js tests/a19-shell-boundaries.test.js"
+        "revision": "baa27464",
+        "command": "node scripts/limited.js node --test tests/a19-shell-recents.test.js tests/a19-shell-settings.test.js tests/a19-shell-boundaries.test.js"
       },
       "browserTests": [
         "tests/browser_a19_shell_test.py"
@@ -487,24 +494,28 @@
       "implementation": "implemented",
       "files": [
         "apps/studio/workbench/start-window.js",
-        "apps/studio/workbench/recent-items.js"
+        "apps/studio/workbench/recent-items.js",
+        "apps/studio/workbench/recent-workspaces.js"
       ],
       "focusedTests": [
-        "tests/a19-shell-settings.test.js"
+        "tests/a19-shell-settings.test.js",
+        "tests/a19-shell-recents.test.js"
       ],
       "focusedValidation": {
         "status": "passed",
-        "batch": "44 unique cases; 43/44 integrated batch plus 19/19 targeted canonical-recorder follow-up",
+        "batch": "34/34 completed helper, EOL and status follow-up; 62 unique cases across the shell scope",
         "runtime": "Node.js v24.19.0",
-        "revision": "26d9acca",
-        "command": "node scripts/limited.js node --test tests/a19-shell-settings.test.js tests/a19-shell-boundaries.test.js"
+        "revision": "baa27464",
+        "command": "node scripts/limited.js node --test tests/a19-shell-recents.test.js tests/a19-shell-settings.test.js tests/a19-shell-boundaries.test.js"
       },
       "browserTests": [
         "tests/browser_a19_shell_test.py",
         "tests/browser_vs_workflows_test.py"
       ],
       "browserValidation": "pending-integrated-static-and-standalone",
-      "remainingAcceptanceGaps": []
+      "remainingAcceptanceGaps": [
+        "Root must mount createRecentWorkspaces providers against current/previous recovery and authorized reopen actions. The helper is qualified for encoding/BOM/binary/source metadata, cancelled opens and missing permissions."
+      ]
     },
     {
       "issue": 1467,
@@ -521,10 +532,10 @@
       ],
       "focusedValidation": {
         "status": "passed",
-        "batch": "44 unique cases; 43/44 integrated batch plus 19/19 targeted canonical-recorder follow-up",
+        "batch": "34/34 completed helper, EOL and status follow-up; 62 unique cases across the shell scope",
         "runtime": "Node.js v24.19.0",
-        "revision": "26d9acca",
-        "command": "node scripts/limited.js node --test tests/a19-shell-settings.test.js tests/a19-shell-boundaries.test.js"
+        "revision": "baa27464",
+        "command": "node scripts/limited.js node --test tests/a19-shell-recents.test.js tests/a19-shell-settings.test.js tests/a19-shell-boundaries.test.js"
       },
       "browserTests": [
         "tests/browser_a19_shell_test.py"
@@ -548,10 +559,10 @@
       ],
       "focusedValidation": {
         "status": "passed",
-        "batch": "44 unique cases; 43/44 integrated batch plus 19/19 targeted canonical-recorder follow-up",
+        "batch": "34/34 completed helper, EOL and status follow-up; 62 unique cases across the shell scope",
         "runtime": "Node.js v24.19.0",
-        "revision": "26d9acca",
-        "command": "node scripts/limited.js node --test tests/a19-shell-settings.test.js tests/a19-shell-boundaries.test.js"
+        "revision": "baa27464",
+        "command": "node scripts/limited.js node --test tests/a19-shell-recents.test.js tests/a19-shell-settings.test.js tests/a19-shell-boundaries.test.js"
       },
       "browserTests": [
         "tests/browser_a19_shell_test.py"
@@ -575,10 +586,10 @@
       ],
       "focusedValidation": {
         "status": "passed",
-        "batch": "44 unique cases; 43/44 integrated batch plus 19/19 targeted canonical-recorder follow-up",
+        "batch": "34/34 completed helper, EOL and status follow-up; 62 unique cases across the shell scope",
         "runtime": "Node.js v24.19.0",
-        "revision": "26d9acca",
-        "command": "node scripts/limited.js node --test tests/a19-shell-settings.test.js tests/a19-shell-boundaries.test.js"
+        "revision": "baa27464",
+        "command": "node scripts/limited.js node --test tests/a19-shell-recents.test.js tests/a19-shell-settings.test.js tests/a19-shell-boundaries.test.js"
       },
       "browserTests": [
         "tests/browser_a19_shell_test.py"
@@ -601,10 +612,10 @@
       ],
       "focusedValidation": {
         "status": "passed",
-        "batch": "44 unique cases; 43/44 integrated batch plus 19/19 targeted canonical-recorder follow-up",
+        "batch": "34/34 completed helper, EOL and status follow-up; 62 unique cases across the shell scope",
         "runtime": "Node.js v24.19.0",
-        "revision": "26d9acca",
-        "command": "node scripts/limited.js node --test tests/a19-shell-settings.test.js tests/a19-shell-boundaries.test.js"
+        "revision": "baa27464",
+        "command": "node scripts/limited.js node --test tests/a19-shell-recents.test.js tests/a19-shell-settings.test.js tests/a19-shell-boundaries.test.js"
       },
       "browserTests": [
         "tests/browser_a19_shell_test.py"
@@ -648,23 +659,27 @@
       "owner": "shell",
       "implementation": "implemented",
       "files": [
-        "apps/studio/workbench/status-bar.js"
+        "apps/studio/workbench/status-bar.js",
+        "apps/studio/workbench/status-position.js"
       ],
       "focusedTests": [
-        "tests/a19-shell-commands.test.js"
+        "tests/a19-shell-commands.test.js",
+        "tests/a19-shell-boundaries.test.js"
       ],
       "focusedValidation": {
         "status": "passed",
-        "batch": "44 unique cases; 43/44 integrated batch plus 19/19 targeted canonical-recorder follow-up",
+        "batch": "34/34 completed helper, EOL and status follow-up; 62 unique cases across the shell scope",
         "runtime": "Node.js v24.19.0",
-        "revision": "26d9acca",
-        "command": "node scripts/limited.js node --test tests/a19-shell-settings.test.js tests/a19-shell-boundaries.test.js"
+        "revision": "baa27464",
+        "command": "node scripts/limited.js node --test tests/a19-shell-recents.test.js tests/a19-shell-settings.test.js tests/a19-shell-boundaries.test.js"
       },
       "browserTests": [
         "tests/browser_a19_shell_test.py"
       ],
       "browserValidation": "pending-integrated-static-and-standalone",
-      "remainingAcceptanceGaps": []
+      "remainingAcceptanceGaps": [
+        "Exact long-prefix visual columns consume the text lane model index. This shell adapter is tested for cancellation/staleness and bounded Unicode fallback; actual integrated browser columns await qualification."
+      ]
     },
     {
       "issue": 1475,
@@ -706,10 +721,10 @@
       ],
       "focusedValidation": {
         "status": "passed",
-        "batch": "44 unique cases; 43/44 integrated batch plus 19/19 targeted canonical-recorder follow-up",
+        "batch": "34/34 completed helper, EOL and status follow-up; 62 unique cases across the shell scope",
         "runtime": "Node.js v24.19.0",
-        "revision": "26d9acca",
-        "command": "node scripts/limited.js node --test tests/a19-shell-settings.test.js tests/a19-shell-boundaries.test.js"
+        "revision": "baa27464",
+        "command": "node scripts/limited.js node --test tests/a19-shell-recents.test.js tests/a19-shell-settings.test.js tests/a19-shell-boundaries.test.js"
       },
       "browserTests": [
         "tests/browser_a19_shell_test.py",
@@ -734,10 +749,10 @@
       ],
       "focusedValidation": {
         "status": "passed",
-        "batch": "44 unique cases; 43/44 integrated batch plus 19/19 targeted canonical-recorder follow-up",
+        "batch": "34/34 completed helper, EOL and status follow-up; 62 unique cases across the shell scope",
         "runtime": "Node.js v24.19.0",
-        "revision": "26d9acca",
-        "command": "node scripts/limited.js node --test tests/a19-shell-settings.test.js tests/a19-shell-boundaries.test.js"
+        "revision": "baa27464",
+        "command": "node scripts/limited.js node --test tests/a19-shell-recents.test.js tests/a19-shell-settings.test.js tests/a19-shell-boundaries.test.js"
       },
       "browserTests": [
         "tests/browser_a19_shell_test.py"
@@ -762,10 +777,10 @@
       ],
       "focusedValidation": {
         "status": "passed",
-        "batch": "44 unique cases; 43/44 integrated batch plus 19/19 targeted canonical-recorder follow-up",
+        "batch": "34/34 completed helper, EOL and status follow-up; 62 unique cases across the shell scope",
         "runtime": "Node.js v24.19.0",
-        "revision": "26d9acca",
-        "command": "node scripts/limited.js node --test tests/a19-shell-settings.test.js tests/a19-shell-boundaries.test.js"
+        "revision": "baa27464",
+        "command": "node scripts/limited.js node --test tests/a19-shell-recents.test.js tests/a19-shell-settings.test.js tests/a19-shell-boundaries.test.js"
       },
       "browserTests": [
         "tests/browser_a19_shell_test.py",
@@ -794,10 +809,10 @@
       ],
       "focusedValidation": {
         "status": "passed",
-        "batch": "44 unique cases; 43/44 integrated batch plus 19/19 targeted canonical-recorder follow-up",
+        "batch": "29/29 completed strict-trace and large-source follow-up",
         "runtime": "Node.js v24.19.0",
-        "revision": "26d9acca",
-        "command": "node scripts/limited.js node --test tests/a19-shell-settings.test.js tests/a19-shell-boundaries.test.js"
+        "revision": "2a35c28c",
+        "command": "node scripts/limited.js node --test tests/a19-shell-boundaries.test.js tests/a19-shell-inventory.test.js tests/a19-shell-settings.test.js"
       },
       "browserTests": [
         "tests/browser_a19_shell_test.py"
@@ -820,10 +835,10 @@
       ],
       "focusedValidation": {
         "status": "passed",
-        "batch": "44 unique cases; 43/44 integrated batch plus 19/19 targeted canonical-recorder follow-up",
+        "batch": "29/29 completed strict-trace and large-source follow-up",
         "runtime": "Node.js v24.19.0",
-        "revision": "26d9acca",
-        "command": "node scripts/limited.js node --test tests/a19-shell-settings.test.js tests/a19-shell-boundaries.test.js"
+        "revision": "2a35c28c",
+        "command": "node scripts/limited.js node --test tests/a19-shell-boundaries.test.js tests/a19-shell-inventory.test.js tests/a19-shell-settings.test.js"
       },
       "browserTests": [
         "tests/browser_a19_shell_test.py"
@@ -847,10 +862,10 @@
       ],
       "focusedValidation": {
         "status": "passed",
-        "batch": "44 unique cases; 43/44 integrated batch plus 19/19 targeted canonical-recorder follow-up",
+        "batch": "29/29 completed strict-trace and large-source follow-up",
         "runtime": "Node.js v24.19.0",
-        "revision": "26d9acca",
-        "command": "node scripts/limited.js node --test tests/a19-shell-settings.test.js tests/a19-shell-boundaries.test.js"
+        "revision": "2a35c28c",
+        "command": "node scripts/limited.js node --test tests/a19-shell-boundaries.test.js tests/a19-shell-inventory.test.js tests/a19-shell-settings.test.js"
       },
       "browserTests": [
         "tests/browser_a19_shell_test.py"
@@ -877,10 +892,10 @@
       ],
       "focusedValidation": {
         "status": "passed",
-        "batch": "44 unique cases; 43/44 integrated batch plus 19/19 targeted canonical-recorder follow-up",
+        "batch": "29/29 completed strict-trace and large-source follow-up",
         "runtime": "Node.js v24.19.0",
-        "revision": "26d9acca",
-        "command": "node scripts/limited.js node --test tests/a19-shell-settings.test.js tests/a19-shell-boundaries.test.js"
+        "revision": "2a35c28c",
+        "command": "node scripts/limited.js node --test tests/a19-shell-boundaries.test.js tests/a19-shell-inventory.test.js tests/a19-shell-settings.test.js"
       },
       "browserTests": [
         "tests/browser_a19_shell_test.py"
@@ -904,10 +919,10 @@
       ],
       "focusedValidation": {
         "status": "passed",
-        "batch": "44 unique cases; 43/44 integrated batch plus 19/19 targeted canonical-recorder follow-up",
+        "batch": "29/29 completed strict-trace and large-source follow-up",
         "runtime": "Node.js v24.19.0",
-        "revision": "26d9acca",
-        "command": "node scripts/limited.js node --test tests/a19-shell-settings.test.js tests/a19-shell-boundaries.test.js"
+        "revision": "2a35c28c",
+        "command": "node scripts/limited.js node --test tests/a19-shell-boundaries.test.js tests/a19-shell-inventory.test.js tests/a19-shell-settings.test.js"
       },
       "browserTests": [
         "tests/browser_a19_shell_test.py"
@@ -931,10 +946,10 @@
       ],
       "focusedValidation": {
         "status": "passed",
-        "batch": "44 unique cases; 43/44 integrated batch plus 19/19 targeted canonical-recorder follow-up",
+        "batch": "29/29 completed strict-trace and large-source follow-up",
         "runtime": "Node.js v24.19.0",
-        "revision": "26d9acca",
-        "command": "node scripts/limited.js node --test tests/a19-shell-settings.test.js tests/a19-shell-boundaries.test.js"
+        "revision": "2a35c28c",
+        "command": "node scripts/limited.js node --test tests/a19-shell-boundaries.test.js tests/a19-shell-inventory.test.js tests/a19-shell-settings.test.js"
       },
       "browserTests": [
         "tests/browser_a19_shell_test.py"
@@ -949,17 +964,19 @@
       "owner": "shell",
       "implementation": "implemented",
       "files": [
-        "apps/studio/workbench/settings-store.js"
+        "apps/studio/workbench/settings-store.js",
+        "apps/studio/workbench/options/general-pages.js"
       ],
       "focusedTests": [
-        "tests/a19-shell-settings.test.js"
+        "tests/a19-shell-settings.test.js",
+        "tests/a19-shell-boundaries.test.js"
       ],
       "focusedValidation": {
         "status": "passed",
-        "batch": "44 unique cases; 43/44 integrated batch plus 19/19 targeted canonical-recorder follow-up",
+        "batch": "34/34 completed helper, EOL and status follow-up; 62 unique cases across the shell scope",
         "runtime": "Node.js v24.19.0",
-        "revision": "26d9acca",
-        "command": "node scripts/limited.js node --test tests/a19-shell-settings.test.js tests/a19-shell-boundaries.test.js"
+        "revision": "baa27464",
+        "command": "node scripts/limited.js node --test tests/a19-shell-recents.test.js tests/a19-shell-settings.test.js tests/a19-shell-boundaries.test.js"
       },
       "browserTests": [
         "tests/browser_a19_shell_test.py"
@@ -982,10 +999,10 @@
       ],
       "focusedValidation": {
         "status": "passed",
-        "batch": "44 unique cases; 43/44 integrated batch plus 19/19 targeted canonical-recorder follow-up",
+        "batch": "34/34 completed helper, EOL and status follow-up; 62 unique cases across the shell scope",
         "runtime": "Node.js v24.19.0",
-        "revision": "26d9acca",
-        "command": "node scripts/limited.js node --test tests/a19-shell-settings.test.js tests/a19-shell-boundaries.test.js"
+        "revision": "baa27464",
+        "command": "node scripts/limited.js node --test tests/a19-shell-recents.test.js tests/a19-shell-settings.test.js tests/a19-shell-boundaries.test.js"
       },
       "browserTests": [
         "tests/browser_a19_shell_test.py"
@@ -1009,10 +1026,10 @@
       ],
       "focusedValidation": {
         "status": "passed",
-        "batch": "44 unique cases; 43/44 integrated batch plus 19/19 targeted canonical-recorder follow-up",
+        "batch": "34/34 completed helper, EOL and status follow-up; 62 unique cases across the shell scope",
         "runtime": "Node.js v24.19.0",
-        "revision": "26d9acca",
-        "command": "node scripts/limited.js node --test tests/a19-shell-settings.test.js tests/a19-shell-boundaries.test.js"
+        "revision": "baa27464",
+        "command": "node scripts/limited.js node --test tests/a19-shell-recents.test.js tests/a19-shell-settings.test.js tests/a19-shell-boundaries.test.js"
       },
       "browserTests": [
         "tests/browser_a19_shell_test.py"
@@ -1038,10 +1055,10 @@
       ],
       "focusedValidation": {
         "status": "passed",
-        "batch": "44 unique cases; 43/44 integrated batch plus 19/19 targeted canonical-recorder follow-up",
+        "batch": "34/34 completed helper, EOL and status follow-up; 62 unique cases across the shell scope",
         "runtime": "Node.js v24.19.0",
-        "revision": "26d9acca",
-        "command": "node scripts/limited.js node --test tests/a19-shell-settings.test.js tests/a19-shell-boundaries.test.js"
+        "revision": "baa27464",
+        "command": "node scripts/limited.js node --test tests/a19-shell-recents.test.js tests/a19-shell-settings.test.js tests/a19-shell-boundaries.test.js"
       },
       "browserTests": [
         "tests/browser_a19_shell_test.py"
@@ -1065,10 +1082,10 @@
       ],
       "focusedValidation": {
         "status": "passed",
-        "batch": "44 unique cases; 43/44 integrated batch plus 19/19 targeted canonical-recorder follow-up",
+        "batch": "34/34 completed helper, EOL and status follow-up; 62 unique cases across the shell scope",
         "runtime": "Node.js v24.19.0",
-        "revision": "26d9acca",
-        "command": "node scripts/limited.js node --test tests/a19-shell-settings.test.js tests/a19-shell-boundaries.test.js"
+        "revision": "baa27464",
+        "command": "node scripts/limited.js node --test tests/a19-shell-recents.test.js tests/a19-shell-settings.test.js tests/a19-shell-boundaries.test.js"
       },
       "browserTests": [
         "tests/browser_a19_shell_test.py"
@@ -1094,10 +1111,10 @@
       ],
       "focusedValidation": {
         "status": "passed",
-        "batch": "44 unique cases; 43/44 integrated batch plus 19/19 targeted canonical-recorder follow-up",
+        "batch": "34/34 completed helper, EOL and status follow-up; 62 unique cases across the shell scope",
         "runtime": "Node.js v24.19.0",
-        "revision": "26d9acca",
-        "command": "node scripts/limited.js node --test tests/a19-shell-settings.test.js tests/a19-shell-boundaries.test.js"
+        "revision": "baa27464",
+        "command": "node scripts/limited.js node --test tests/a19-shell-recents.test.js tests/a19-shell-settings.test.js tests/a19-shell-boundaries.test.js"
       },
       "browserTests": [
         "tests/browser_a19_shell_test.py"
@@ -1121,10 +1138,10 @@
       ],
       "focusedValidation": {
         "status": "passed",
-        "batch": "44 unique cases; 43/44 integrated batch plus 19/19 targeted canonical-recorder follow-up",
+        "batch": "34/34 completed helper, EOL and status follow-up; 62 unique cases across the shell scope",
         "runtime": "Node.js v24.19.0",
-        "revision": "26d9acca",
-        "command": "node scripts/limited.js node --test tests/a19-shell-settings.test.js tests/a19-shell-boundaries.test.js"
+        "revision": "baa27464",
+        "command": "node scripts/limited.js node --test tests/a19-shell-recents.test.js tests/a19-shell-settings.test.js tests/a19-shell-boundaries.test.js"
       },
       "browserTests": [
         "tests/browser_a19_shell_test.py"
@@ -1141,25 +1158,27 @@
       "files": [
         "apps/studio/workbench/recent-items.js",
         "apps/studio/workbench/start-window.js",
-        "apps/studio/workbench/shell-events.js"
+        "apps/studio/workbench/shell-events.js",
+        "apps/studio/workbench/recent-workspaces.js"
       ],
       "focusedTests": [
         "tests/a19-shell-search.test.js",
-        "tests/a19-shell-boundaries.test.js"
+        "tests/a19-shell-boundaries.test.js",
+        "tests/a19-shell-recents.test.js"
       ],
       "focusedValidation": {
         "status": "passed",
-        "batch": "44 unique cases; 43/44 integrated batch plus 19/19 targeted canonical-recorder follow-up",
+        "batch": "34/34 completed helper, EOL and status follow-up; 62 unique cases across the shell scope",
         "runtime": "Node.js v24.19.0",
-        "revision": "26d9acca",
-        "command": "node scripts/limited.js node --test tests/a19-shell-settings.test.js tests/a19-shell-boundaries.test.js"
+        "revision": "baa27464",
+        "command": "node scripts/limited.js node --test tests/a19-shell-recents.test.js tests/a19-shell-settings.test.js tests/a19-shell-boundaries.test.js"
       },
       "browserTests": [
         "tests/browser_a19_shell_test.py"
       ],
       "browserValidation": "pending-integrated-static-and-standalone",
       "remainingAcceptanceGaps": [
-        "Recent project permission reacquisition uses the supplied root openRecent adapter; browser handles are never persisted as grants."
+        "Root must mount createRecentWorkspaces providers against current/previous recovery and authorized reopen actions. The helper is qualified for encoding/BOM/binary/source metadata, cancelled opens and missing permissions."
       ]
     },
     {
@@ -1178,10 +1197,10 @@
       ],
       "focusedValidation": {
         "status": "passed",
-        "batch": "44 unique cases; 43/44 integrated batch plus 19/19 targeted canonical-recorder follow-up",
+        "batch": "34/34 completed helper, EOL and status follow-up; 62 unique cases across the shell scope",
         "runtime": "Node.js v24.19.0",
-        "revision": "26d9acca",
-        "command": "node scripts/limited.js node --test tests/a19-shell-settings.test.js tests/a19-shell-boundaries.test.js"
+        "revision": "baa27464",
+        "command": "node scripts/limited.js node --test tests/a19-shell-recents.test.js tests/a19-shell-settings.test.js tests/a19-shell-boundaries.test.js"
       },
       "browserTests": [
         "tests/browser_a19_shell_test.py"
@@ -1249,17 +1268,19 @@
       "files": [
         "apps/studio/workbench/announcer.js",
         "apps/studio/workbench/notifications.js",
-        "apps/studio/workbench/shell-events.js"
+        "apps/studio/workbench/shell-events.js",
+        "apps/studio/workbench/status-position.js"
       ],
       "focusedTests": [
-        "tests/a19-shell-commands.test.js"
+        "tests/a19-shell-commands.test.js",
+        "tests/a19-shell-boundaries.test.js"
       ],
       "focusedValidation": {
         "status": "passed",
-        "batch": "44 unique cases; 43/44 integrated batch plus 19/19 targeted canonical-recorder follow-up",
+        "batch": "34/34 completed helper, EOL and status follow-up; 62 unique cases across the shell scope",
         "runtime": "Node.js v24.19.0",
-        "revision": "26d9acca",
-        "command": "node scripts/limited.js node --test tests/a19-shell-settings.test.js tests/a19-shell-boundaries.test.js"
+        "revision": "baa27464",
+        "command": "node scripts/limited.js node --test tests/a19-shell-recents.test.js tests/a19-shell-settings.test.js tests/a19-shell-boundaries.test.js"
       },
       "browserTests": [
         "tests/browser_a19_shell_test.py"
@@ -1312,10 +1333,10 @@
       ],
       "focusedValidation": {
         "status": "passed",
-        "batch": "44 unique cases; 43/44 integrated batch plus 19/19 targeted canonical-recorder follow-up",
+        "batch": "34/34 completed helper, EOL and status follow-up; 62 unique cases across the shell scope",
         "runtime": "Node.js v24.19.0",
-        "revision": "26d9acca",
-        "command": "node scripts/limited.js node --test tests/a19-shell-settings.test.js tests/a19-shell-boundaries.test.js"
+        "revision": "baa27464",
+        "command": "node scripts/limited.js node --test tests/a19-shell-recents.test.js tests/a19-shell-settings.test.js tests/a19-shell-boundaries.test.js"
       },
       "browserTests": [
         "tests/browser_a19_shell_test.py",
@@ -1345,10 +1366,10 @@
       ],
       "focusedValidation": {
         "status": "passed",
-        "batch": "44 unique cases; 43/44 integrated batch plus 19/19 targeted canonical-recorder follow-up",
+        "batch": "34/34 completed helper, EOL and status follow-up; 62 unique cases across the shell scope",
         "runtime": "Node.js v24.19.0",
-        "revision": "26d9acca",
-        "command": "node scripts/limited.js node --test tests/a19-shell-settings.test.js tests/a19-shell-boundaries.test.js"
+        "revision": "baa27464",
+        "command": "node scripts/limited.js node --test tests/a19-shell-recents.test.js tests/a19-shell-settings.test.js tests/a19-shell-boundaries.test.js"
       },
       "browserTests": [
         "tests/browser_a19_shell_test.py"
@@ -1373,10 +1394,10 @@
       ],
       "focusedValidation": {
         "status": "passed",
-        "batch": "44 unique cases; 43/44 integrated batch plus 19/19 targeted canonical-recorder follow-up",
+        "batch": "34/34 completed helper, EOL and status follow-up; 62 unique cases across the shell scope",
         "runtime": "Node.js v24.19.0",
-        "revision": "26d9acca",
-        "command": "node scripts/limited.js node --test tests/a19-shell-settings.test.js tests/a19-shell-boundaries.test.js"
+        "revision": "baa27464",
+        "command": "node scripts/limited.js node --test tests/a19-shell-recents.test.js tests/a19-shell-settings.test.js tests/a19-shell-boundaries.test.js"
       },
       "browserTests": [
         "tests/browser_a19_shell_test.py"
@@ -1405,10 +1426,10 @@
       ],
       "focusedValidation": {
         "status": "passed",
-        "batch": "44 unique cases; 43/44 integrated batch plus 19/19 targeted canonical-recorder follow-up",
+        "batch": "34/34 completed helper, EOL and status follow-up; 62 unique cases across the shell scope",
         "runtime": "Node.js v24.19.0",
-        "revision": "26d9acca",
-        "command": "node scripts/limited.js node --test tests/a19-shell-settings.test.js tests/a19-shell-boundaries.test.js"
+        "revision": "baa27464",
+        "command": "node scripts/limited.js node --test tests/a19-shell-recents.test.js tests/a19-shell-settings.test.js tests/a19-shell-boundaries.test.js"
       },
       "browserTests": [
         "tests/browser_a19_shell_test.py",
@@ -1416,7 +1437,7 @@
       ],
       "browserValidation": "pending-integrated-static-and-standalone",
       "remainingAcceptanceGaps": [
-        "Large 501-source-file benchmark driver is present. Static/standalone capture and CI baseline publication are pending root integration; relative p95 gate requires an explicit prior trace."
+        "Three independent 501-source captures and strict version2 trace validation are implemented. Actual static/standalone captures and reviewed compatible baseline publication remain pending; capture mode reports no relative regression verdict."
       ]
     },
     {
@@ -1433,10 +1454,10 @@
       ],
       "focusedValidation": {
         "status": "passed",
-        "batch": "44 unique cases; 43/44 integrated batch plus 19/19 targeted canonical-recorder follow-up",
+        "batch": "29/29 completed strict-trace and large-source follow-up",
         "runtime": "Node.js v24.19.0",
-        "revision": "26d9acca",
-        "command": "node scripts/limited.js node --test tests/a19-shell-settings.test.js tests/a19-shell-boundaries.test.js"
+        "revision": "2a35c28c",
+        "command": "node scripts/limited.js node --test tests/a19-shell-boundaries.test.js tests/a19-shell-inventory.test.js tests/a19-shell-settings.test.js"
       },
       "browserTests": [
         "tests/browser_a19_shell_test.py",
@@ -1461,10 +1482,10 @@
       ],
       "focusedValidation": {
         "status": "passed",
-        "batch": "44 unique cases; 43/44 integrated batch plus 19/19 targeted canonical-recorder follow-up",
+        "batch": "29/29 completed strict-trace and large-source follow-up",
         "runtime": "Node.js v24.19.0",
-        "revision": "26d9acca",
-        "command": "node scripts/limited.js node --test tests/a19-shell-settings.test.js tests/a19-shell-boundaries.test.js"
+        "revision": "2a35c28c",
+        "command": "node scripts/limited.js node --test tests/a19-shell-boundaries.test.js tests/a19-shell-inventory.test.js tests/a19-shell-settings.test.js"
       },
       "browserTests": [
         "tests/browser_a19_shell_test.py",
@@ -1492,10 +1513,10 @@
       ],
       "focusedValidation": {
         "status": "passed",
-        "batch": "44 unique cases; 43/44 integrated batch plus 19/19 targeted canonical-recorder follow-up",
+        "batch": "29/29 completed strict-trace and large-source follow-up",
         "runtime": "Node.js v24.19.0",
-        "revision": "26d9acca",
-        "command": "node scripts/limited.js node --test tests/a19-shell-settings.test.js tests/a19-shell-boundaries.test.js"
+        "revision": "2a35c28c",
+        "command": "node scripts/limited.js node --test tests/a19-shell-boundaries.test.js tests/a19-shell-inventory.test.js tests/a19-shell-settings.test.js"
       },
       "browserTests": [
         "tests/browser_a19_shell_test.py",
@@ -1513,5 +1534,30 @@
     "structure": "Exit0;260 pre-existing repository findings; no committed shell-source findings",
     "browser": "Drivers authored against production harness; execution pending integrated root build",
     "native": "No native backend or pixel parity qualification claimed"
+  },
+  "validationSummary": {
+    "sourceRevision": "baa27464",
+    "testCasesPresent": 62,
+    "qualification": "Completed-scope Node runs and focused integration follow-ups; no shell-owned browser, native or Visual Studio oracle run.",
+    "latestBatches": [
+      {
+        "revision": "2a35c28c",
+        "passed": 29,
+        "failed": 0,
+        "command": "node scripts/limited.js node --test tests/a19-shell-boundaries.test.js tests/a19-shell-inventory.test.js tests/a19-shell-settings.test.js"
+      },
+      {
+        "revision": "baa27464",
+        "passed": 34,
+        "failed": 0,
+        "command": "node scripts/limited.js node --test tests/a19-shell-recents.test.js tests/a19-shell-settings.test.js tests/a19-shell-boundaries.test.js"
+      }
+    ],
+    "notes": [
+      "All 62 cases passed in their completed-scope run or focused follow-up; the final combined 62-case cohort is reserved for integration qualification.",
+      "The initial native recorder mismatch was fixed by editor commit7870600d, then its settings and boundary suites passed.",
+      "Browser drivers have parsed successfully but have not run in this lane. Static/standalone timing, visual/DPI and screen-reader claims remain unqualified.",
+      "The status adapter tests cover the exact cancellable model-column protocol; final native large-prefix index integration is owned by the text lane."
+    ]
   }
 }
