@@ -39,6 +39,8 @@ export function nestedReferenceFixture() {
   tokens.OtherLeaf = definition('Leaf', tokens.OtherMiddle);
   tokens.otherLeaf = reference('Leaf', tokens.otherMiddle);
   tokens.TopLevelLeaf = definition('Leaf');
+  builder.rows[2][(tokens.TopLevelLeaf & 0xffffff) - 1][2] = 0;
+  tokens.topLevelLeaf = reference('Leaf', 1, '');
   tokens.Unicode = definition('Żółć', tokens.Outer);
   tokens.unicode = reference('Żółć', tokens.outer);
   tokens.Bom = definition('\ufeffŻółć', tokens.Outer);
@@ -66,6 +68,6 @@ export function nestedReferenceFixture() {
 
 export const nestedReferenceCases = Object.freeze({
   middle: 'Middle', base: 'Base', leaf: 'Leaf', contract: 'Contract', secret: 'Secret',
-  otherMiddle: 'OtherMiddle', otherLeaf: 'OtherLeaf', unicode: 'Unicode', bom: 'Bom',
+  otherMiddle: 'OtherMiddle', otherLeaf: 'OtherLeaf', topLevelLeaf: 'TopLevelLeaf', unicode: 'Unicode', bom: 'Bom',
   leafForward: 'Leaf', middleForward: 'Middle',
 });
