@@ -1,5 +1,6 @@
 import {XAML,CONTROLS,propertiesFor,eventsFor,frameworkType} from '@sharpforge/framework';
 import {RenderSurface,cssColor,parseColor,drawingPrimitives} from './surface.js';
+import {HostGeometryUpdates} from './host-geometry-updates.js';
 const suffix=t=>t.slice(t.lastIndexOf('.')+1);
 const number=(x,fallback=0)=>Number.isFinite(x)?x:fallback;
 const margin=v=>v?`${number(v.Top)}px ${number(v.Right)}px ${number(v.Bottom)}px ${number(v.Left)}px`:'0px';
@@ -13,12 +14,13 @@ export class WinUIHost {
     this.root=root;this.document=root.ownerDocument;this.options={backend,onEvent,onLayout,onMetrics,onError,gpu};
     this.nodes=new Map();this.elements=new Map();this.windows=[];this.surfaces=new Map();this.listeners=[];this.layouts=new Map();this.backend=backend;this.disposed=false;this.frame=0;this.pendingFlyouts=[];this.openFlyouts=new Map();
     root.classList.add('sf-winui');root.setAttribute('data-theme','dark');root.tabIndex=-1;
-    this.resizeObserver=typeof ResizeObserver!=='undefined'?new ResizeObserver(()=>this.schedule()):null;this.resizeObserver?.observe(root);
+    this.geometryUpdates=new HostGeometryUpdates(this);
+    this.resizeObserver=typeof ResizeObserver!=='undefined'?new ResizeObserver(entries=>this.geometryUpdates.resized(entries)):null;this.resizeObserver?.observe(root);
     for(const type of ['click','input','change','contextmenu','toggle','keydown']){const handler=e=>this.handleEvent(type,e);root.addEventListener(type,handler,type==='toggle');this.listeners.push([type,handler]);}
     this.onKey=e=>{if(e.key==='Escape')this.hideFlyouts();};root.addEventListener('keydown',this.onKey);
   }
   setBackend(backend){if(!['auto','webgpu','canvas2d','dom'].includes(backend))throw new TypeError('Unknown renderer');if(this.backend===backend)return;this.backend=backend;for(const s of this.surfaces.values())s.dispose();this.surfaces.clear();this.schedule();}
-  apply(commands){if(!Array.isArray(commands))commands=[commands];if(commands.length>20000)throw new RangeError('UI command batch limit');for(const command of commands){if(!command||typeof command.op!=='string')throw new TypeError('Invalid UI command');
+  apply(commands){if(!Array.isArray(commands))commands=[commands];if(commands.length>20000)throw new RangeError('UI command batch limit');this.geometryUpdates.invalidate();for(const command of commands){if(!command||typeof command.op!=='string')throw new TypeError('Invalid UI command');
     const c=command,n=this.nodes.get(c.id);
     if(c.op==='reset'){this.load(c.snapshot);continue;}
     if(c.op==='create'){if(typeof c.id!=='string'||!frameworkType(c.type))throw new TypeError('Unknown UI object');this.nodes.set(c.id,{id:c.id,type:c.type,properties:{...c.properties},events:[],collections:{}});}
@@ -32,9 +34,12 @@ export class WinUIHost {
     else if(c.op==='flyout')this.pendingFlyouts.push(c);
     if(this.nodes.size>20000)throw new RangeError('WinUI object limit');
   }this.schedule();}
-  merge(scene){if(scene?.version!==1||!Array.isArray(scene.nodes)||!Array.isArray(scene.windows)||scene.nodes.length>10000)throw new TypeError('Invalid WinUI scene');for(const n of scene.nodes){if(typeof n.id!=='string'||!frameworkType(n.type))throw new TypeError('Unknown scene node');this.nodes.set(n.id,{...n,properties:{...n.properties},collections:{...n.collections},events:[...(n.events??[])]});}}
-  load(scene){this.openFlyouts.clear();this.nodes.clear();this.windows=[];if(scene){this.merge(scene);this.windows=[...scene.windows];}this.schedule();}
-  schedule(){if(this.disposed||this.frame)return;const w=this.document.defaultView;this.frame=(w.requestAnimationFrame??(f=>setTimeout(f,16)))(()=>{this.frame=0;try{this.render();}catch(e){this.options.onError(e);}});}
+  merge(scene){if(scene?.version!==1||!Array.isArray(scene.nodes)||!Array.isArray(scene.windows)||scene.nodes.length>10000)throw new TypeError('Invalid WinUI scene');this.geometryUpdates.invalidate();for(const n of scene.nodes){if(typeof n.id!=='string'||!frameworkType(n.type))throw new TypeError('Unknown scene node');this.nodes.set(n.id,{...n,properties:{...n.properties},collections:{...n.collections},events:[...(n.events??[])]});}}
+  load(scene){this.geometryUpdates.invalidate();this.openFlyouts.clear();this.nodes.clear();this.windows=[];if(scene){this.merge(scene);this.windows=[...scene.windows];}this.schedule();}
+  schedule(options) { this.geometryUpdates.schedule(options); }
+  get sceneRevision() { return this.geometryUpdates.revision; }
+  /** Apply geometry property records to independent Canvas leaves; false means no mutation and requires a full scene update. */
+  tryPatchProperties(changes) { return this.geometryUpdates.tryPatch(changes); }
   create(n){const type=suffix(n.type),d=this.document;let e;
     if(n.templateRoot&&!(type==='Button'||type==='ToggleButton')){e=d.createElement('div');e.dataset.template='true';}
     else if(['Button','ToggleButton','AppBarButton','HyperlinkButton','MenuFlyoutItem'].includes(type)){e=d.createElement(type==='HyperlinkButton'?'a':'button');if(e.tagName==='BUTTON')e.type='button';}
@@ -125,15 +130,7 @@ export class WinUIHost {
     return false;
   }
   reachable(){const result=new Set(),queue=[...this.windows,...this.openFlyouts.keys()];while(queue.length){const id=queue.shift();if(result.has(id))continue;const n=this.nodes.get(id);if(!n)continue;result.add(id);if(n.templateRoot)queue.push(n.templateRoot);for(const [key,v]of Object.entries(n.properties))if(!['Style','Template','VisualTree'].includes(key)&&v?.$ref)queue.push(v.$ref);for(const values of Object.values(n.collections))for(const v of values)if(v?.$ref)queue.push(v.$ref);}return result;}
-  render(){if(this.disposed)return;const visible=this.reachable();for(const id of visible)this.ensure(id);for(const id of visible){const n=this.nodes.get(id);this.renderNode(n,this.elements.get(id));}
-    for(const id of visible){const n=this.nodes.get(id);if(['WrapGrid','VariableSizedWrapGrid','ItemsWrapGrid'].includes(suffix(n.type)))this.renderWrapPanel(n,this.elements.get(id));}
-    this.ordered(this.root,[...this.windows,...this.openFlyouts.keys()].map(id=>this.ensure(id)).filter(Boolean));
-    for(const[id,e]of this.elements)if(!visible.has(id)){this.resizeObserver?.unobserve(e);e.remove();this.elements.delete(id);this.surfaces.get(id)?.dispose();this.surfaces.delete(id);this.layouts.delete(id);}
-    for(const id of visible)this.drawNode(this.nodes.get(id));
-    const changes=[];for(const id of visible){const e=this.elements.get(id),box=e.getBoundingClientRect(),size=[Math.round(box.width*100)/100,Math.round(box.height*100)/100],previous=this.layouts.get(id);if(!previous||previous[0]!==size[0]||previous[1]!==size[1]){this.layouts.set(id,size);changes.push({id,width:size[0],height:size[1]});}}
-    if(changes.length)this.options.onLayout(changes);
-    for(const command of this.pendingFlyouts.splice(0))this.flyout(command);
-  }
+  render(){this.geometryUpdates.render();}
   drawNode(n){const t=suffix(n.type);if(t!=='Canvas'&&t!=='DrawingSurface')return;const container=this.elements.get(n.id);let primitives=[];
     if(t==='DrawingSurface')primitives=drawingPrimitives(n.drawing??[]);
     else for(const value of n.collections.Children??[]){const node=this.nodes.get(value.$ref);if(!node||node.properties.Visibility===1||!['Rectangle','Ellipse','Line'].includes(suffix(node.type)))continue;const p=node.properties,kind=suffix(node.type),element=this.elements.get(node.id),w=number(p.Width,element?.clientWidth??0),h=number(p.Height,element?.clientHeight??0),x=number(p.Left),y=number(p.Top),stroke=number(p.StrokeThickness,1);
@@ -166,5 +163,5 @@ export class WinUIHost {
   hideFlyouts(){this.openFlyouts.clear();for(const e of this.elements.values())if(e.classList.contains('sf-winui-flyout'))e.hidden=true;}
   flush(){if(this.frame){(this.document.defaultView.cancelAnimationFrame??clearTimeout)(this.frame);this.frame=0;}this.render();}
   async settled(){this.flush();await Promise.all([...this.surfaces.values()].map(s=>s.ready));this.flush();}
-  dispose(){this.disposed=true;if(this.frame)(this.document.defaultView.cancelAnimationFrame??clearTimeout)(this.frame);this.resizeObserver?.disconnect();for(const [type,listener]of this.listeners)this.root.removeEventListener(type,listener,type==='toggle');this.root.removeEventListener('keydown',this.onKey);for(const s of this.surfaces.values())s.dispose();this.surfaces.clear();this.nodes.clear();this.elements.clear();this.root.replaceChildren();}
+  dispose(){this.disposed=true;if(this.frame)(this.document.defaultView.cancelAnimationFrame??clearTimeout)(this.frame);this.resizeObserver?.disconnect();this.geometryUpdates.dispose();for(const [type,listener]of this.listeners)this.root.removeEventListener(type,listener,type==='toggle');this.root.removeEventListener('keydown',this.onKey);for(const s of this.surfaces.values())s.dispose();this.surfaces.clear();this.nodes.clear();this.elements.clear();this.root.replaceChildren();}
 }
