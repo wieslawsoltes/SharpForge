@@ -20,8 +20,11 @@ import { expressionTreeDelegate } from '../symbols/expression-tree-types.js';
 import { expressionTreeCreationVisitors } from './expression-tree-creation.js';
 import { expressionTreeConversionVisitors } from './expression-tree-conversions.js';
 import { expressionTreeOperatorVisitors } from './expression-tree-operators.js';
+import { expressionTreeDelegateVisitors } from './expression-tree-delegates.js';
 
-const visitors = Object.freeze({ ...expressionTreeCreationVisitors, ...expressionTreeConversionVisitors, ...expressionTreeOperatorVisitors });
+const visitors = Object.freeze({
+  ...expressionTreeCreationVisitors, ...expressionTreeConversionVisitors, ...expressionTreeOperatorVisitors, ...expressionTreeDelegateVisitors,
+});
 
 class Unsupported extends Error {
   constructor(what, syntax) {
@@ -72,6 +75,9 @@ class TreeBuilder {
   visitDefault(node) {
     return this.node('Constant', node.type, { isDefault: true });
   }
+  visitTypeOf(node) {
+    return this.node('Constant', node.type, { typeValue: node.operandType, valueExpression: node });
+  }
   visitParameter(node) {
     return this.parameters.get(node.parameter) ?? this.captured(node.parameter, node);
   }
@@ -104,6 +110,9 @@ class TreeBuilder {
   visitPropertyAccess(node) {
     return this.member('Property', node, node.property);
   }
+  visitEventAccess(node) {
+    return { ...this.member('Field', node, node.event), isEvent: true };
+  }
   member(factory, node, symbol) {
     const expression = symbol.isStatic || !node.receiver ? null : this.visit(node.receiver);
     return this.node(factory, node.type, { expression, member: symbol }, 'MemberAccess');
@@ -118,10 +127,7 @@ class TreeBuilder {
     return this.node('Call', node.type, { object: this.visit(node.receiver), method: getter, arguments: this.arguments(node) });
   }
   arguments(node) {
-    return (node.args ?? []).map(argument => {
-      if (argument.refKind) this.fail('by-reference arguments', node);
-      return this.visit(argument.expression ?? argument);
-    });
+    return (node.args ?? []).map(argument => this.visit(argument.expression ?? argument));
   }
   visitCall(node) {
     const method = node.method;

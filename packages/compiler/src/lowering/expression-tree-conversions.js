@@ -1,6 +1,7 @@
 /** Conversion and coalescing factory shapes, including lifted user conversions (SF-A02-T07.5). */
 import { isNullableType, stripNullable } from '../conversions/nullable.js';
 import { isCheckedOperatorName } from '../overload/checked-operators.js';
+import { methodGroupTree } from './expression-tree-delegates.js';
 
 const sameType = (left, right) => left === right || !!left?.equals(right);
 
@@ -28,7 +29,7 @@ function userConversion(builder, operand, type, conversion, isChecked) {
 function conversion(node) {
   const kind = node.conversion?.kind;
   if (kind === 'AnonymousFunction') return this.nestedLambda(node);
-  if (kind === 'MethodGroup') this.fail('a method group conversion', node);
+  if (kind === 'MethodGroup') return methodGroupTree(this, node);
   if (kind === 'DefaultLiteral') return this.node('Constant', node.type, { isDefault: true });
   if (kind === 'NullLiteral') return this.constant(null, node.type);
   if (kind === 'InterpolatedString') return this.visit(node.operand);

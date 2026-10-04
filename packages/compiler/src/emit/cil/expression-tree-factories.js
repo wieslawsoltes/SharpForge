@@ -154,7 +154,11 @@ export class ExpressionTreeFactories {
   emitConstant(node) {
     const { il, core, emitter } = this,
       constant = this.result('ConstantExpression');
-    if (node.isThis) {
+    if (node.methodValue) this.methodOf(node.methodValue);
+    else if (node.typeValue) {
+      if (node.valueExpression) emitter.exprTypeOf(node.valueExpression);
+      else this.typeOf(node.typeValue);
+    } else if (node.isThis) {
       emitter.exprThis({ syntax: null });
       if (needsBox(node.type)) il.emit('box', this.tokens.type(node.type));
     } else if (node.isDefault) {
@@ -234,8 +238,10 @@ export class ExpressionTreeFactories {
   emitField(node) {
     const member = this.result('MemberExpression');
     if (node.isCapturedVariable) return this.capturedVariable(node, member);
+    const token = node.isEvent ? this.tokens.eventField(node.member) : this.tokens.field(node.member);
+    if (!token) return this.emitter.unsupported(`the field '${node.member.toDisplayString()}' in an expression tree`);
     this.instance(node.expression);
-    this.fieldOf(this.tokens.field(node.member), node.member.containingType);
+    this.fieldOf(token, node.member.containingType);
     return this.factory('Field', [this.expression, this.types.fieldInfo], member);
   }
   /** A variable of the enclosing method lives in a cell; the tree reads the cell's field. */

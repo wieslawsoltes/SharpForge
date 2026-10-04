@@ -135,6 +135,13 @@ export function nodeTypes(tree) {
 
 function constantText(node) {
   if (node.isThis) return `value(${clrFullName(node.type)})`;
+  if (node.methodValue) return methodText(node.methodValue);
+  if (node.typeValue) return clrFullName(node.typeValue);
+  if (node.isDefault) {
+    if (node.type?.isReferenceType || node.type?.isNullableValueType) return 'null';
+    if (node.type?.specialType === 'System_Boolean') return 'False';
+    return clrNames[node.type?.specialType] ? '0' : `value(${clrFullName(node.type)})`;
+  }
   if (node.closure) return 'value(<>c__DisplayClass)';
   const value = node.value;
   if (value === null || value === undefined) return 'null';
@@ -245,6 +252,9 @@ export function factoryCalls(tree) {
       case 'Constant':
         if (node.isThis) return 'Expression.Constant(this)';
         if (node.closure) return 'Expression.Constant(closure)';
+        if (node.isDefault) return `Expression.Constant(default(${node.type.toDisplayString()}), ${typeOf(node.type)})`;
+        if (node.typeValue) return `Expression.Constant(${typeOf(node.typeValue)}, typeof(System.Type))`;
+        if (node.methodValue) return `Expression.Constant(/* ${node.methodValue.toDisplayString()} */, typeof(System.Reflection.MethodInfo))`;
         return `Expression.Constant(${csharpValue(node)}, ${typeOf(node.type)})`;
       case 'Lambda': {
         const parameters = node.parameters.map(call);

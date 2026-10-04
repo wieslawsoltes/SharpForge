@@ -3,6 +3,7 @@ import { TypeKind } from '../symbols/types.js';
 import { isNullableType, stripNullable } from '../conversions/nullable.js';
 import { isCheckedOperatorName } from '../overload/checked-operators.js';
 import { convertTree } from './expression-tree-conversions.js';
+import { expressionTreeMethods } from '../symbols/expression-tree-methods.js';
 
 const binaryFactories = Object.freeze({
   '+': ['Add', 'AddChecked'], '-': ['Subtract', 'SubtractChecked'], '*': ['Multiply', 'MultiplyChecked'],
@@ -16,6 +17,19 @@ const smallIntegral = new Set(['System_Byte', 'System_SByte', 'System_Int16', 'S
 const integral = new Set([...smallIntegral, 'System_Int32', 'System_UInt32', 'System_Int64', 'System_UInt64']);
 const comparisons = new Set(['==', '!=', '<', '<=', '>', '>=']);
 const isEnum = type => stripNullable(type)?.typeKind === TypeKind.Enum;
+
+function delegateOperation(builder, node) {
+  const original = operand => operand.kind === 'Conversion' && !operand.isExplicit ? original(operand.operand) : operand,
+    left = original(node.left), right = original(node.right),
+    combining = node.family === 'delegate',
+    comparing = ['==', '!='].includes(node.operator) && left.type?.typeKind === TypeKind.Delegate && right.type?.typeKind === TypeKind.Delegate;
+  if (!combining && (!comparing || left.constantValue?.isNull || right.constantValue?.isNull)) return null;
+  const methods = expressionTreeMethods(builder.core),
+    key = { '+': 'combine', '-': 'remove', '==': 'equal', '!=': 'notEqual' }[node.operator],
+    method = methods[key], factory = binaryFactories[node.operator][0],
+    result = builder.node(factory, method.returnType, { operands: [builder.visit(left), builder.visit(right)], method, liftToNull: false });
+  return combining ? convertTree(builder, result, node.type) : result;
+}
 
 function factoryFor(builder, node, factories) {
   const [plain, checkedName] = factories[node.operator] ?? [];
@@ -47,6 +61,8 @@ function liftedOperand(builder, operand, parameterType, isChecked) {
 }
 
 function binary(node) {
+  const delegate = !node.method && delegateOperation(this, node);
+  if (delegate) return delegate;
   const factory = factoryFor(this, node, binaryFactories),
     method = node.method ?? null,
     enumOperand = !method && [node.left, node.right].find(operand => isEnum(operand.type));
