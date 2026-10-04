@@ -7,6 +7,7 @@ import {mutateArray} from './array-ops.js';
 import {intrinsicDefinition,intrinsicDefinitions} from '@sharpforge/cil';
 import {ManagedFault} from '../heap.js';
 import {float} from './numeric-ops.js';
+import {floatingMathExtremum} from './float-extrema.js';
 import {internString,isInternedString,referenceEquals,stringChar,stringFromChars} from './strings.js';
 import {enumToString,enumHasFlag} from './enums.js';
 import {objectType,typeFromHandle,typeEquals,typeName,typeHandle,typeProperty,runtimeTypeText} from './tokens.js';
@@ -80,8 +81,11 @@ const implementations={
   stringSubstring:legacyString,
   stringReplace:legacyString,
   stringSearch:legacyString,
-  math:({descriptor,values})=>{
+  math:({descriptor,parameters,values})=>{
     const name=descriptor.name,signature=descriptor.signature;
+    if ((name === 'Min' || name === 'Max') && (signature.returnType === 'float' || signature.returnType === 'double')) {
+      return floatingMathExtremum(name, signature.returnType, parameters[0], parameters[1]);
+    }
     let result;
     if(typeof values[0]==='bigint') {
       if(name==='Abs') {
