@@ -3,7 +3,10 @@
 Source, source reloaded from emitted CLI, and direct CIL calls reuse frame objects
 and their argument, local and evaluation-stack arrays. Source evaluation still
 uses the VM's shared stack. CIL call arguments are copied into owned frame storage;
-managed call scratch buffers never escape into intrinsics or host operations.
+managed call scratch buffers also serve synchronous intrinsics and delegates.
+They never escape into retained frame or scheduler state. Platform contracts keep
+owned arrays for host operations that may outlive the call; see
+[CIL call argument buffers](call-argument-buffers.md).
 Every entry receives a fresh monotonic frame ID, so an address to a returned local
 cannot access a later invocation that reuses its storage.
 
