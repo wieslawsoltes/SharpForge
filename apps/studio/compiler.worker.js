@@ -1,4 +1,6 @@
-import {createWorkerProtocol,readWorkerRequest} from './workers/protocol.js';
+import { registerDesignerWorker } from './designer-worker.js';
+import {createWorkerProtocol} from './workers/protocol.js';
+import {createCompilerWorkerDispatcher} from './designer-worker-dispatcher.js';
 import {emitPortablePdb,attachPortablePdb} from '../../packages/symbols/src/index.js';
 import { ExtensionDriver, BuildInfoGenerator, JsonSchemaGenerator, EmptyCatchAnalyzer, UnreferencedLocalAnalyzer, ConstantConditionAnalyzer, TodoCommentAnalyzer, UnreachableStatementAnalyzer } from '../../packages/extensions/src/index.js';
 import { RefactoringEngine, formatDocument, selectionRanges } from '../../packages/refactoring/src/index.js';
@@ -13,8 +15,8 @@ let cachedArtifact=null;
 let extensionKey='null';
 function configureExtensions(params){const driver=new ExtensionDriver();if(params?.buildInfo)driver.registerGenerator(BuildInfoGenerator);if(params?.schema)driver.registerGenerator(JsonSchemaGenerator);if(params?.analyzers)driver.registerAnalyzer(EmptyCatchAnalyzer).registerAnalyzer(UnreferencedLocalAnalyzer).registerAnalyzer(ConstantConditionAnalyzer).registerAnalyzer(TodoCommentAnalyzer).registerAnalyzer(UnreachableStatementAnalyzer);workspace.extensions=driver;workspace.extensionOptions={version:params?.version??'0.14.0',schemaProperties:!!params?.schemaProperties,severities:params?.severities??{}};workspace.additionalFiles=params?.additionalFiles??[];workspace.result=null;extensionKey=JSON.stringify(params??null);return {generators:[...driver.generators.keys()],analyzers:[...driver.analyzers.keys()]};}
 
-function sync(files){if(!files)return;const names=new Set(files.map(f=>f.uri));for(const uri of workspace.documents.keys())if(!names.has(uri))workspace.remove(uri);for(const file of files)workspace.update(file.uri,file.text,file.version);}
 const handlers=createWorkerProtocol('compiler');
+registerDesignerWorker(handlers, { workspace });
 for(const method of ["analyze","build"])handlers.registerHandler(method,(params,method)=>{let result;{
       const r=workspace.compile();result={...r,image:method==='build'?r.image:undefined,workspaceMetrics:{...workspace.metrics}};
       // Keystroke analysis never emits PE or decodes IL. Only an explicit successful build does.
@@ -42,11 +44,6 @@ for(const method of ["referenceLenses"])handlers.registerHandler(method,(params,
 for(const method of ["selectionRanges"])handlers.registerHandler(method,(params,method)=>{let result;result=selectionRanges(workspace,params.uri,params.offsets);return result;});
 for(const method of ["codeActions"])handlers.registerHandler(method,(params,method)=>{let result;result=refactoring.actions(params.uri,params.offset,params.end??params.offset);return result;});
 for(const method of ["format"])handlers.registerHandler(method,(params,method)=>{let result;result={title:'Format document indentation',edits:formatDocument(workspace,params.uri,params.options)};return result;});
-for(const method of ["validateRefactoring"])handlers.registerHandler(method,(params,method)=>{let result;{const candidate=new Workspace({compilationOptions:workspace.compilationOptions,extensions:workspace.extensions,extensionOptions:workspace.extensionOptions,additionalFiles:workspace.additionalFiles});for(const [uri,d]of workspace.documents)candidate.update(uri,d.source.text,d.source.version);result=new RefactoringEngine(candidate,new LanguageService(candidate)).apply(params.action);return result;}});
-for(const method of ["validateDesigner"])handlers.registerHandler(method,(params,method)=>{let result;{
-      const candidate=new Workspace({compilationOptions:workspace.compilationOptions,extensions:workspace.extensions,extensionOptions:workspace.extensionOptions,additionalFiles:workspace.additionalFiles});for(const [uri,d]of workspace.documents)candidate.update(uri,d.source.text,d.source.version);
-      new RefactoringEngine(candidate,new LanguageService(candidate)).apply(params.action,{validate:false});const compiled=candidate.compile();if(!compiled.success)throw new Error('Designer changes do not compile: '+compiled.diagnostics.filter(d=>d.severity==='error').slice(0,10).map(d=>d.message).join('; '));result={success:true};return result;
-    }});
 for(const method of ["configureExtensions"])handlers.registerHandler(method,(params,method)=>{let result;result=configureExtensions(params.extensions??params);return result;});
 for(const method of ["importAssembly"])handlers.registerHandler(method,(params,method)=>{let result;{
       const image=loadAssembly(params.assembly);result={success:true,image,assembly:params.assembly,format:'cil',diagnostics:[],symbols:[],references:[],metrics:{compileMs:0,files:image.sources.length,methods:image.methods.length,instructions:image.methods.reduce((n,m)=>n+m.code.length/3,0),errors:0,assemblyBytes:params.assembly.length,loadMs:image.il.loadMs}};return result;
@@ -57,7 +54,7 @@ for(const method of ["definition"])handlers.registerHandler(method,(params,metho
 for(const method of ["references"])handlers.registerHandler(method,(params,method)=>{let result;result=language.references(params.uri,params.offset);return result;});
 for(const method of ["rename"])handlers.registerHandler(method,(params,method)=>{let result;result=refactoring.rename(params.uri,params.offset,params.newName).edits;return result;});
 for(const method of ["symbols"])handlers.registerHandler(method,(params,method)=>{let result;result=language.documentSymbols(params.uri);return result;});
-self.onmessage=event=>{const id=event.data?.id;try{const {method,params}=readWorkerRequest(event.data);handlers.assertMethod(method);sync(params.files);const options=params.compilationOptions??(params.outputKind?{outputKind:params.outputKind}:null);if(options&&JSON.stringify(options)!==JSON.stringify(workspace.compilationOptions)){workspace.compilationOptions=options;workspace.result=null;}if(Object.hasOwn(params,'extensions')&&JSON.stringify(params.extensions??null)!==extensionKey)configureExtensions(params.extensions);let result;
-  result=handlers.dispatch(method,params);
-  self.postMessage({id,result,revision:params.revision});
-}catch(error){self.postMessage({id,error:{message:error.message,name:error.name,code:error.code}});}};
+const dispatcher = createCompilerWorkerDispatcher(handlers, {
+  workspace, configureExtensions, extensionKey: () => extensionKey, postMessage: message => self.postMessage(message)
+});
+self.onmessage = event => dispatcher.receive(event.data);
