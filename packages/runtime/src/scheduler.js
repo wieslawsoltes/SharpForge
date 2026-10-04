@@ -1,3 +1,4 @@
+import {executionFrames} from './execution/callback-frames.js';
 import {loadContext,parkContext} from './execution/context-transitions.js';
 import {forgetContextSuspension} from './execution/context-events.js';
 import {finishContext,cancelContexts} from './execution/frame-retirement.js';
@@ -25,11 +26,11 @@ export class CooperativeScheduler {
   now(){return this.virtualTime?this.clock:Math.max(0,performance.now()-this.epoch);}
   capture(){const c={};for(const k of contextFields)if(k in this.vm)c[k]=this.vm[k];return c;}
   ensure(){if(this.enabled)return;this.enabled=true;this.contexts.set(1,{id:1,name:'Main',kind:'main',status:this.vm.state==='terminated'?'completed':'running',frozen:false,parentId:null,task:null,thread:null,wait:null,...this.capture()});}
-  save(){if(!this.enabled||this.parked)return;const c=this.contexts.get(this.currentId);if(c)Object.assign(c,this.capture());}
+  save(){if(!this.enabled||this.parked||this.suppressed)return;const c=this.contexts.get(this.currentId);if(c)Object.assign(c,this.capture());}
   load(c){loadContext(this,c,contextFields);}
   get current(){return this.contexts.get(this.currentId);}
   *roots(){yield* schedulerRootValues(this);}
-  allFrames(){if(!this.enabled)return this.vm.frames;this.save();return [...this.contexts.values()].flatMap(c=>terminal.has(c.status)?[]:c.frames);}
+  allFrames(){return executionFrames(this);}
   taskRecord(ref){this.vm.heap.get(ref);const id=this.vm.platform.get(ref,'Id');let t=this.tasks.get(id);if(!t){const status=this.vm.platform.get(ref,'$status');if(!terminal.has(status))throw new ManagedFault('InvalidOperationException','Task is no longer tracked');t={id,ref,status,result:this.vm.platform.get(ref,'$result'),resultType:taskResult(this.vm.heap.get(ref).type),error:null,waiters:new Set()};}return t;}
   createTask(resultType='void',extra={}){
     this.ensure();this.prune();if(this.tasks.size>=this.maxTasks){this.vm.heap.collect();this.prune();}if(this.tasks.size>=this.maxTasks)throw new ManagedFault('ExecutionLimitException','Managed task limit exceeded');

@@ -1,7 +1,8 @@
 import { AssemblyInspector } from './inspector.js';
-import { compileILBody } from './il-document-body.js';
+import { compileILBodyDetails } from './il-document-body.js';
 import { DocumentUserStrings } from './il-document-strings.js';
 import { appendDocumentMetadata } from './il-document-metadata.js';
+import { sameILBody } from './il-document-preservation.js';
 import { Reader, Writer, CilError, align } from './binary.js';
 
 function invalidateDebugMap(output, metadataOffset) {
@@ -36,7 +37,11 @@ function clearSignatures(output, view, pe, directory, cli) {
   view.setUint32(directory + 4 * 8 + 4, 0, true);
 }
 
-/** Replace all visible bodies; only literal-bearing documents append a new metadata root. */
+function documentResult(bytes, methods, warnings = []) {
+  return { bytes, methods, format: 'ECMA-335 PE/CLI', profile: 'SharpForge.ManagedIL/1', warnings };
+}
+
+/** Compile every visible body; retain unchanged encodings and append only actual edits. */
 export function rebuildILDocument(image, methods, options) {
   const inspector = new AssemblyInspector(image), pe = inspector.pe, metadata = inspector.metadata;
   if (!(pe.flags & 1) || pe.flags & 0x10) throw new CilError('Only IL-only managed images can be rebuilt');
@@ -48,25 +53,31 @@ export function rebuildILDocument(image, methods, options) {
   if (pe.sections.some(value => value !== section && value.rva >= section.rva)) {
     throw new CilError('Unsupported PE section ordering for rewriting');
   }
-  const userStrings = new DocumentUserStrings(metadata, options.maxUserStringBytes);
-  const data = new Writer(image.length + 4096).bytes(image).pad(4), patches = [];
-  const bodyOptions = { relaxBranches: options.relaxBranches, userStrings };
-  for (const method of expected) {
-    const body = methods.get(method.token);
-    body.originalSize = inspector.getMethod(method.token).codeSize;
-    if (body.localSignature && body.localSignature >>> 24 !== 17) throw new CilError('Expected StandAloneSig locals token');
-    if (body.localSignature && inspector.signature(body.localSignature).kind !== 'locals') throw new CilError('Invalid locals signature');
-    data.pad(4);
-    patches.push([metadata.rowOffsets[6][(method.token & 0xffffff) - 1], section.rva + data.length - section.offset]);
-    data.bytes(compileILBody(body, bodyOptions));
-  }
-  const root = appendDocumentMetadata(pe, userStrings.finish(), data);
   const inputView = new DataView(image.buffer, image.byteOffset, image.byteLength);
   const fileAlignment = inputView.getUint32(pe.optionalStart + 36, true);
   const sectionAlignment = inputView.getUint32(pe.optionalStart + 32, true);
   if (!fileAlignment || !sectionAlignment || fileAlignment > 65536 || sectionAlignment > 1048576) {
     throw new CilError('Unsupported PE alignment');
   }
+  const userStrings = new DocumentUserStrings(metadata, options.maxUserStringBytes);
+  const data = new Writer(image.length + 4096).bytes(image).pad(4), patches = [];
+  const bodyOptions = { relaxBranches: options.relaxBranches, userStrings };
+  for (const method of expected) {
+    const body = methods.get(method.token);
+    const originalBody = pe.methodBody(method.token);
+    const originalMethod = inspector.getMethod(method.token);
+    body.originalSize = originalBody.code.length;
+    if (body.localSignature && body.localSignature >>> 24 !== 17) throw new CilError('Expected StandAloneSig locals token');
+    if (body.localSignature && inspector.signature(body.localSignature).kind !== 'locals') throw new CilError('Invalid locals signature');
+    const compiled = compileILBodyDetails(body, { ...bodyOptions, original: { body: originalBody, instructions: originalMethod.instructions } });
+    if (sameILBody(compiled, originalBody)) continue;
+    data.pad(4);
+    patches.push([metadata.rowOffsets[6][(method.token & 0xffffff) - 1], section.rva + data.length - section.offset]);
+    data.bytes(compiled.bytes);
+  }
+  const heap = userStrings.finish();
+  if (!patches.length && heap === null) return documentResult(image.slice(), expected.length);
+  const root = appendDocumentMetadata(pe, heap, data);
   const virtualSize = data.length - section.offset;
   data.pad(fileAlignment);
   const output = data.finish(), view = new DataView(output.buffer);
@@ -85,7 +96,6 @@ export function rebuildILDocument(image, methods, options) {
   clearSignatures(output, view, pe, directory, cli);
   const check = new AssemblyInspector(output);
   for (const method of expected) check.getMethod(method.token);
-  return { bytes: output, methods: expected.length, format: 'ECMA-335 PE/CLI', profile: 'SharpForge.ManagedIL/1',
-    warnings: ['Rewritten assemblies are unsigned. #SF debug maps were invalidated. ' +
-      'Metadata and resources were preserved; method bodies came only from IL text.'] };
+  return documentResult(output, expected.length, ['Rewritten assemblies are unsigned. #SF debug maps were invalidated. ' +
+    'Metadata and resources were preserved; every visible method body was assembled and validated.']);
 }

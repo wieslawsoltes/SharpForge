@@ -44,15 +44,15 @@ export function decodeCoded(kind, value) {
   return token(table, row);
 }
 
-/** Compute a column width in bytes from row counts and the heap-size bit field. */
-export function metadataIndexWidth(kind, counts, heaps) {
+/** Compute a column width; minimal #JTD deltas use wide references, but keep UInt16 scalars. */
+export function metadataIndexWidth(kind, counts, heaps, minimalDelta = false) {
   if (kind === 'u16') return 2;
   if (kind === 'u32') return 4;
-  if (kind === 'str') return heaps & 1 ? 4 : 2;
-  if (kind === 'guid') return heaps & 2 ? 4 : 2;
-  if (kind === 'blob') return heaps & 4 ? 4 : 2;
-  if (/^t\d+$/.test(kind)) return (counts[Number(kind.slice(1))] ?? 0) < 65536 ? 2 : 4;
+  if (kind === 'str') return minimalDelta || heaps & 1 ? 4 : 2;
+  if (kind === 'guid') return minimalDelta || heaps & 2 ? 4 : 2;
+  if (kind === 'blob') return minimalDelta || heaps & 4 ? 4 : 2;
+  if (/^t\d+$/.test(kind)) return minimalDelta || (counts[Number(kind.slice(1))] ?? 0) >= 65536 ? 4 : 2;
   const [bits, references] = metadataCodedIndices[kind];
   const boundary = 2 ** (16 - bits);
-  return references.some(table => table !== null && (counts[table] ?? 0) >= boundary) ? 4 : 2;
+  return minimalDelta || references.some(table => table !== null && (counts[table] ?? 0) >= boundary) ? 4 : 2;
 }

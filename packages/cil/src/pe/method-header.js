@@ -1,4 +1,5 @@
 import { Reader, CilError } from '../binary.js';
+import { methodCodeKind } from './method-code.js';
 
 /** Read owned scalar tiny/fat CIL header facts without decoding IL or exception sections; absent RVA returns null. */
 export function readMethodHeader(pe, methodToken) {
@@ -17,6 +18,8 @@ export function readMethodHeaderCore(pe, methodToken, retainReader = false) {
   const rva = row[0];
   if (!Number.isInteger(rva) || rva < 0 || rva > 0xffffffff) throw new CilError('Invalid method RVA');
   if (!rva) return null;
+  const codeKind = methodCodeKind(row[1]);
+  if (codeKind !== 'CIL') throw new CilError(`${codeKind} method code is not disassembled as CIL`);
   const fileOffset = pe.offsetOf(rva, 1);
   const section = pe.sections.find((item) => fileOffset >= item.offset && fileOffset < item.offset + item.size);
   if (!section) throw new CilError('Method header is outside a section');

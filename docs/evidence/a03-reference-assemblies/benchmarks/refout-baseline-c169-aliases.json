@@ -1,0 +1,170 @@
+[
+  {
+    "name": "@sharpforge/archive",
+    "link": "/workspace/scratch/7e3d2a445c44/sf6-refout-baseline-c1693a9e/node_modules/@sharpforge/archive",
+    "target": "../../packages/archive",
+    "resolved": "/workspace/scratch/7e3d2a445c44/sf6-refout-baseline-c1693a9e/packages/archive"
+  },
+  {
+    "name": "@sharpforge/bcl-collections",
+    "link": "/workspace/scratch/7e3d2a445c44/sf6-refout-baseline-c1693a9e/node_modules/@sharpforge/bcl-collections",
+    "target": "../../packages/bcl-collections",
+    "resolved": "/workspace/scratch/7e3d2a445c44/sf6-refout-baseline-c1693a9e/packages/bcl-collections"
+  },
+  {
+    "name": "@sharpforge/bcl-core",
+    "link": "/workspace/scratch/7e3d2a445c44/sf6-refout-baseline-c1693a9e/node_modules/@sharpforge/bcl-core",
+    "target": "../../packages/bcl-core",
+    "resolved": "/workspace/scratch/7e3d2a445c44/sf6-refout-baseline-c1693a9e/packages/bcl-core"
+  },
+  {
+    "name": "@sharpforge/bytecode",
+    "link": "/workspace/scratch/7e3d2a445c44/sf6-refout-baseline-c1693a9e/node_modules/@sharpforge/bytecode",
+    "target": "../../packages/bytecode",
+    "resolved": "/workspace/scratch/7e3d2a445c44/sf6-refout-baseline-c1693a9e/packages/bytecode"
+  },
+  {
+    "name": "@sharpforge/cil",
+    "link": "/workspace/scratch/7e3d2a445c44/sf6-refout-baseline-c1693a9e/node_modules/@sharpforge/cil",
+    "target": "../../packages/cil",
+    "resolved": "/workspace/scratch/7e3d2a445c44/sf6-refout-baseline-c1693a9e/packages/cil"
+  },
+  {
+    "name": "@sharpforge/clr",
+    "link": "/workspace/scratch/7e3d2a445c44/sf6-refout-baseline-c1693a9e/node_modules/@sharpforge/clr",
+    "target": "../../packages/clr",
+    "resolved": "/workspace/scratch/7e3d2a445c44/sf6-refout-baseline-c1693a9e/packages/clr"
+  },
+  {
+    "name": "@sharpforge/compiler",
+    "link": "/workspace/scratch/7e3d2a445c44/sf6-refout-baseline-c1693a9e/node_modules/@sharpforge/compiler",
+    "target": "../../packages/compiler",
+    "resolved": "/workspace/scratch/7e3d2a445c44/sf6-refout-baseline-c1693a9e/packages/compiler"
+  },
+  {
+    "name": "@sharpforge/compute",
+    "link": "/workspace/scratch/7e3d2a445c44/sf6-refout-baseline-c1693a9e/node_modules/@sharpforge/compute",
+    "target": "../../packages/compute",
+    "resolved": "/workspace/scratch/7e3d2a445c44/sf6-refout-baseline-c1693a9e/packages/compute"
+  },
+  {
+    "name": "@sharpforge/controls",
+    "link": "/workspace/scratch/7e3d2a445c44/sf6-refout-baseline-c1693a9e/node_modules/@sharpforge/controls",
+    "target": "../../packages/controls",
+    "resolved": "/workspace/scratch/7e3d2a445c44/sf6-refout-baseline-c1693a9e/packages/controls"
+  },
+  {
+    "name": "@sharpforge/debugger",
+    "link": "/workspace/scratch/7e3d2a445c44/sf6-refout-baseline-c1693a9e/node_modules/@sharpforge/debugger",
+    "target": "../../packages/debugger",
+    "resolved": "/workspace/scratch/7e3d2a445c44/sf6-refout-baseline-c1693a9e/packages/debugger"
+  },
+  {
+    "name": "@sharpforge/designer",
+    "link": "/workspace/scratch/7e3d2a445c44/sf6-refout-baseline-c1693a9e/node_modules/@sharpforge/designer",
+    "target": "../../packages/designer",
+    "resolved": "/workspace/scratch/7e3d2a445c44/sf6-refout-baseline-c1693a9e/packages/designer"
+  },
+  {
+    "name": "@sharpforge/docking",
+    "link": "/workspace/scratch/7e3d2a445c44/sf6-refout-baseline-c1693a9e/node_modules/@sharpforge/docking",
+    "target": "../../packages/docking",
+    "resolved": "/workspace/scratch/7e3d2a445c44/sf6-refout-baseline-c1693a9e/packages/docking"
+  },
+  {
+    "name": "@sharpforge/editor",
+    "link": "/workspace/scratch/7e3d2a445c44/sf6-refout-baseline-c1693a9e/node_modules/@sharpforge/editor",
+    "target": "../../packages/editor",
+    "resolved": "/workspace/scratch/7e3d2a445c44/sf6-refout-baseline-c1693a9e/packages/editor"
+  },
+  {
+    "name": "@sharpforge/extensions",
+    "link": "/workspace/scratch/7e3d2a445c44/sf6-refout-baseline-c1693a9e/node_modules/@sharpforge/extensions",
+    "target": "../../packages/extensions",
+    "resolved": "/workspace/scratch/7e3d2a445c44/sf6-refout-baseline-c1693a9e/packages/extensions"
+  },
+  {
+    "name": "@sharpforge/framework",
+    "link": "/workspace/scratch/7e3d2a445c44/sf6-refout-baseline-c1693a9e/node_modules/@sharpforge/framework",
+    "target": "../../packages/framework",
+    "resolved": "/workspace/scratch/7e3d2a445c44/sf6-refout-baseline-c1693a9e/packages/framework"
+  },
+  {
+    "name": "@sharpforge/language",
+    "link": "/workspace/scratch/7e3d2a445c44/sf6-refout-baseline-c1693a9e/node_modules/@sharpforge/language",
+    "target": "../../packages/language",
+    "resolved": "/workspace/scratch/7e3d2a445c44/sf6-refout-baseline-c1693a9e/packages/language"
+  },
+  {
+    "name": "@sharpforge/msbuild",
+    "link": "/workspace/scratch/7e3d2a445c44/sf6-refout-baseline-c1693a9e/node_modules/@sharpforge/msbuild",
+    "target": "../../packages/msbuild",
+    "resolved": "/workspace/scratch/7e3d2a445c44/sf6-refout-baseline-c1693a9e/packages/msbuild"
+  },
+  {
+    "name": "@sharpforge/network",
+    "link": "/workspace/scratch/7e3d2a445c44/sf6-refout-baseline-c1693a9e/node_modules/@sharpforge/network",
+    "target": "../../packages/network",
+    "resolved": "/workspace/scratch/7e3d2a445c44/sf6-refout-baseline-c1693a9e/packages/network"
+  },
+  {
+    "name": "@sharpforge/project-system",
+    "link": "/workspace/scratch/7e3d2a445c44/sf6-refout-baseline-c1693a9e/node_modules/@sharpforge/project-system",
+    "target": "../../packages/project-system",
+    "resolved": "/workspace/scratch/7e3d2a445c44/sf6-refout-baseline-c1693a9e/packages/project-system"
+  },
+  {
+    "name": "@sharpforge/protocol",
+    "link": "/workspace/scratch/7e3d2a445c44/sf6-refout-baseline-c1693a9e/node_modules/@sharpforge/protocol",
+    "target": "../../packages/protocol",
+    "resolved": "/workspace/scratch/7e3d2a445c44/sf6-refout-baseline-c1693a9e/packages/protocol"
+  },
+  {
+    "name": "@sharpforge/refactoring",
+    "link": "/workspace/scratch/7e3d2a445c44/sf6-refout-baseline-c1693a9e/node_modules/@sharpforge/refactoring",
+    "target": "../../packages/refactoring",
+    "resolved": "/workspace/scratch/7e3d2a445c44/sf6-refout-baseline-c1693a9e/packages/refactoring"
+  },
+  {
+    "name": "@sharpforge/runtime",
+    "link": "/workspace/scratch/7e3d2a445c44/sf6-refout-baseline-c1693a9e/node_modules/@sharpforge/runtime",
+    "target": "../../packages/runtime",
+    "resolved": "/workspace/scratch/7e3d2a445c44/sf6-refout-baseline-c1693a9e/packages/runtime"
+  },
+  {
+    "name": "@sharpforge/symbols",
+    "link": "/workspace/scratch/7e3d2a445c44/sf6-refout-baseline-c1693a9e/node_modules/@sharpforge/symbols",
+    "target": "../../packages/symbols",
+    "resolved": "/workspace/scratch/7e3d2a445c44/sf6-refout-baseline-c1693a9e/packages/symbols"
+  },
+  {
+    "name": "@sharpforge/syntax",
+    "link": "/workspace/scratch/7e3d2a445c44/sf6-refout-baseline-c1693a9e/node_modules/@sharpforge/syntax",
+    "target": "../../packages/syntax",
+    "resolved": "/workspace/scratch/7e3d2a445c44/sf6-refout-baseline-c1693a9e/packages/syntax"
+  },
+  {
+    "name": "@sharpforge/templates",
+    "link": "/workspace/scratch/7e3d2a445c44/sf6-refout-baseline-c1693a9e/node_modules/@sharpforge/templates",
+    "target": "../../packages/templates",
+    "resolved": "/workspace/scratch/7e3d2a445c44/sf6-refout-baseline-c1693a9e/packages/templates"
+  },
+  {
+    "name": "@sharpforge/text",
+    "link": "/workspace/scratch/7e3d2a445c44/sf6-refout-baseline-c1693a9e/node_modules/@sharpforge/text",
+    "target": "../../packages/text",
+    "resolved": "/workspace/scratch/7e3d2a445c44/sf6-refout-baseline-c1693a9e/packages/text"
+  },
+  {
+    "name": "@sharpforge/winui",
+    "link": "/workspace/scratch/7e3d2a445c44/sf6-refout-baseline-c1693a9e/node_modules/@sharpforge/winui",
+    "target": "../../packages/winui",
+    "resolved": "/workspace/scratch/7e3d2a445c44/sf6-refout-baseline-c1693a9e/packages/winui"
+  },
+  {
+    "name": "@sharpforge/workspace",
+    "link": "/workspace/scratch/7e3d2a445c44/sf6-refout-baseline-c1693a9e/node_modules/@sharpforge/workspace",
+    "target": "../../packages/workspace",
+    "resolved": "/workspace/scratch/7e3d2a445c44/sf6-refout-baseline-c1693a9e/packages/workspace"
+  }
+]

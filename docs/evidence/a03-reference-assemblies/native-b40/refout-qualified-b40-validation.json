@@ -1,0 +1,79 @@
+{
+  "head": "b40e8f7b5b8f5d06ad992da4a0b7446d667a056e",
+  "cwd": "/workspace/scratch/7e3d2a445c44/sf6-emission",
+  "environment": {
+    "DOTNET_ROOT": "/workspace/scratch/7e3d2a445c44/dotnet-10.0.201",
+    "DOTNET": "/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/dotnet"
+  },
+  "tests": {
+    "command": "node scripts/limited.js node --test tests/a03-22-*.test.js tests/compiler-cil-emission-generic-fixed-buffers.test.js tests/compiler-attribute-emission.test.js",
+    "log": "/workspace/scratch/7e3d2a445c44/refout-qualified-b40-tests.tap",
+    "passed": 45,
+    "failed": 0,
+    "skipped": 0
+  },
+  "native": {
+    "command": "node scripts/limited.js node packages/cil/tools/capture-reference-assemblies.mjs --dotnet /workspace/scratch/7e3d2a445c44/dotnet-10.0.201/dotnet --output artifacts/a03-reference-assemblies-qualified-b40",
+    "log": "/workspace/scratch/7e3d2a445c44/refout-qualified-b40-native.log",
+    "output": "/workspace/scratch/7e3d2a445c44/sf6-emission/artifacts/a03-reference-assemblies-qualified-b40",
+    "passed": true
+  },
+  "sourceInputs": {
+    "sdk": "10.0.201",
+    "compiler": "5.3.0-2.26153.122 (4d3023de605a78ba3e59e50c657eed70f125c68a)",
+    "referencePack": "10.0.5",
+    "platform": "linux",
+    "architecture": "x64",
+    "files": {
+      "Program.cs": "2499feb153dc9612e4bd185bafb7c232b3fabcdd91e0f108117cbc3f4506eda9",
+      "SignatureNames.cs": "cd25e6e177724e570b04776628e0a980cb0fd6fc253b0e38acc42686e2223a20",
+      "AttributeTypes.cs": "1f4e8371add1c770cc521da24fb58f31c47c35145a9b25e79661b3c6617a359e",
+      "surface.cs": "abca70815be7aeb48add620fe02ae268025db1ba4cbdc57321a654d661091e88",
+      "consumer.cs": "b946bed9db205d6dd65b7fdcf261c5ddaf3ba92ea9aa5d9130143a4d5e8c2716",
+      "positive-consumer.cs": "a46b46d6419d3af766ef37aaab82372fce83954e792a2f083eb72c24f85ff109",
+      "observer-enums.cs": "51508e5a7462f297a160228152f8fb418460fc3629790a6bcf69dc6622008f1e"
+    }
+  },
+  "artifactSha256": {
+    "capture-inputs.json": "bc5531468d65a9f8e44e0270e9dc7cfafc2887cc843033ea718201b223fc6b77",
+    "friend-expected.json": "3936916515749961e84212e44cd3feafa01965f95f6832d30059d55d7cecae9f",
+    "friend-fixed-buffers-roslyn-diagnostics.json": "59eff84c025bdd41b8511d42e170d8823cd3da87683d51d05ddecbda6d550fc7",
+    "friend-fixed-buffers-roslyn-diagnostics.sarif": "432f11b04a92601c1bd085644fd4aac72a9966c295bc4dca24ef1361334fe865",
+    "friend-fixed-buffers-sharpforge-diagnostics.json": "6f3914f2e0019b2505864b44fd41626dfe1cf5e87866e7e9ed1645a1423f758f",
+    "friend-fixed-buffers-sharpforge-diagnostics.sarif": "432f11b04a92601c1bd085644fd4aac72a9966c295bc4dca24ef1361334fe865",
+    "friend-friend-access-roslyn-diagnostics.json": "cfe3c7669a021c7378fa594c035b18efeac6e29ff8e75406aa293555fd2e32e2",
+    "friend-friend-access-roslyn-diagnostics.sarif": "c6a92a5f148ae6cc5c0e5a2b02bb9b91c10ceb406d42bfd7321058e9c8092116",
+    "friend-friend-access-sharpforge-diagnostics.json": "70d56ca95a8686aec3bcc1d9e80fe5a78b2343c8651705a59b0953b524f5a089",
+    "friend-friend-access-sharpforge-diagnostics.sarif": "c6a92a5f148ae6cc5c0e5a2b02bb9b91c10ceb406d42bfd7321058e9c8092116",
+    "friend-observed.json": "3936916515749961e84212e44cd3feafa01965f95f6832d30059d55d7cecae9f",
+    "friend-positive-roslyn-diagnostics.json": "3cb4d2281244b81719f0463ad2ae613ea0b3dbf929827608b969f1bcd92ed8a0",
+    "friend-positive-roslyn-diagnostics.sarif": "c6a92a5f148ae6cc5c0e5a2b02bb9b91c10ceb406d42bfd7321058e9c8092116",
+    "friend-positive-sharpforge-diagnostics.json": "82178fcffa7eb09acbdc32bf16a1633f7d9c0713833d193c49dd78431b6600b3",
+    "friend-positive-sharpforge-diagnostics.sarif": "c6a92a5f148ae6cc5c0e5a2b02bb9b91c10ceb406d42bfd7321058e9c8092116",
+    "friend-roslyn.dll": "c8edaefecbd87dc584e5159a6ee62b99c5f11b0cfbff9d20654de7179f33527e",
+    "friend-sharpforge.dll": "e3a2877c08724fb74a016ce71ba2114693f32b27703e2e24f5604505b085b405",
+    "friend-source.cs": "8b862890765ad17317881406aace738ed71ab7d5beb5032e17e3e059335d7498",
+    "metadata-control.dll": "708cdfb10ce94e42ae471a12333f26bad2e587ca4a4622e9fb1268b14db1b5dc",
+    "metadata-control.json": "1657b35b272bbc582c85c286dd0d9b6e425f090ba90d0da9f0414f09b7ea0f18",
+    "observer-enums.dll": "f88f092413a2e654459fa84e483d648eafebd55a0803a134a2e7e731be61716b",
+    "observer-enums.json": "5d39c9af7359c9685567596d169579b2ca0c8685199af0199f0b7fc07dae9757",
+    "public-expected.json": "6f3895fcdd1f6f48ce6fbf7a1e641bc1ab10bc5b777476c4540bbfd378cbc644",
+    "public-fixed-buffers-roslyn-diagnostics.json": "46f5b8da070483b3ee5376f7149022b97b2002a356324e5664866367765f9f08",
+    "public-fixed-buffers-roslyn-diagnostics.sarif": "432f11b04a92601c1bd085644fd4aac72a9966c295bc4dca24ef1361334fe865",
+    "public-fixed-buffers-sharpforge-diagnostics.json": "4cc586262ba8baab6cbb6675c8c35d42bdbbe589214afef9dbd27d3e789683d1",
+    "public-fixed-buffers-sharpforge-diagnostics.sarif": "432f11b04a92601c1bd085644fd4aac72a9966c295bc4dca24ef1361334fe865",
+    "public-friend-access-roslyn-diagnostics.json": "8fdf34488787696c656456f9b09dc48114b9fde3cca2d804b66c972c0a8d92ac",
+    "public-friend-access-roslyn-diagnostics.sarif": "0f57dcbb01590fa76699414605a1dec0eba35360182250a7ba8a5cc0059902f3",
+    "public-friend-access-sharpforge-diagnostics.json": "37c79c662f6810e90e44642023d39d50305686959a8726388b143b4384b20b01",
+    "public-friend-access-sharpforge-diagnostics.sarif": "0f57dcbb01590fa76699414605a1dec0eba35360182250a7ba8a5cc0059902f3",
+    "public-observed.json": "6f3895fcdd1f6f48ce6fbf7a1e641bc1ab10bc5b777476c4540bbfd378cbc644",
+    "public-positive-roslyn-diagnostics.json": "ca0fad396ae6c417b7916c45f6a05f66a2732a13096b98907a9a2c39576fe77b",
+    "public-positive-roslyn-diagnostics.sarif": "c6a92a5f148ae6cc5c0e5a2b02bb9b91c10ceb406d42bfd7321058e9c8092116",
+    "public-positive-sharpforge-diagnostics.json": "01b32e7039f1b18db5cd90dcf6c53cf794ee986d80dc0feaa06d13f6a5293f2b",
+    "public-positive-sharpforge-diagnostics.sarif": "c6a92a5f148ae6cc5c0e5a2b02bb9b91c10ceb406d42bfd7321058e9c8092116",
+    "public-roslyn.dll": "b5cacbfe214c0a4d8cb0124dc160ea8fdb4f5ca9f4901255f4bf18b84cbe90a8",
+    "public-sharpforge.dll": "a8828868ecab9ff103ee59e3f642d419f71111897ac2fec9908c785d58c62c66",
+    "public-source.cs": "abca70815be7aeb48add620fe02ae268025db1ba4cbdc57321a654d661091e88",
+    "reference.json": "afbe10d75a3934169edc6b8cc55a6b40ad16ad35fdafb970bcf6b37b24aa06b9"
+  }
+}

@@ -1,0 +1,110 @@
+{
+  "integratedHead": "51db5c5ffbf870a3c2efd195477732d3e6861829",
+  "cwd": "/workspace/scratch/7e3d2a445c44/sf6-emission",
+  "environment": {
+    "DOTNET_ROOT": "/workspace/scratch/7e3d2a445c44/dotnet-10.0.201",
+    "DOTNET": "/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/dotnet"
+  },
+  "executed": false,
+  "status": "Prepared only; root owns heavy slot.",
+  "focusedArgv": [
+    "node",
+    "scripts/limited.js",
+    "node",
+    "--test",
+    "tests/a03-22-*.test.js",
+    "tests/compiler-reference-assembly.test.js",
+    "tests/compiler-attribute-emission.test.js",
+    "tests/compiler-attribute-targets.test.js",
+    "tests/compiler-pseudo-attributes.test.js",
+    "tests/compiler-cil-emission-generic-fixed-buffers.test.js"
+  ],
+  "focusedNote": "Shell expands the a03-22 glob; SDK variables prevent separate reference-pack helper skips.",
+  "focusedLog": "/workspace/scratch/7e3d2a445c44/refout-integrated-51db5c5ff-tests.tap",
+  "nativeArgv": [
+    "node",
+    "scripts/limited.js",
+    "node",
+    "packages/cil/tools/capture-reference-assemblies.mjs",
+    "--dotnet",
+    "/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/dotnet",
+    "--output",
+    "artifacts/a03-reference-assemblies-integrated-51db5c5ff"
+  ],
+  "nativeLog": "/workspace/scratch/7e3d2a445c44/refout-integrated-51db5c5ff-native.log",
+  "mainNativeFixtures": [
+    {
+      "argv": [
+        "node",
+        "scripts/limited.js",
+        "node",
+        "packages/compiler/test/cil-emission/verify-dotnet.mjs",
+        "--references",
+        "--only",
+        "attribute-targets",
+        "--dotnet",
+        "/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/dotnet",
+        "--scratch",
+        "artifacts/a03-reference-integration-51db5c5ff/attribute-targets"
+      ],
+      "log": "/workspace/scratch/7e3d2a445c44/refout-integrated-51db5c5ff-attribute-targets.log",
+      "note": "Uses existing pinned Roslyn .out; no --update and no fixture rewrite. Separate scratch preserves both product images."
+    },
+    {
+      "argv": [
+        "node",
+        "scripts/limited.js",
+        "node",
+        "packages/compiler/test/cil-emission/verify-dotnet.mjs",
+        "--references",
+        "--only",
+        "pseudo-attributes",
+        "--dotnet",
+        "/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/dotnet",
+        "--scratch",
+        "artifacts/a03-reference-integration-51db5c5ff/pseudo-attributes"
+      ],
+      "log": "/workspace/scratch/7e3d2a445c44/refout-integrated-51db5c5ff-pseudo-attributes.log",
+      "note": "Uses existing pinned Roslyn .out; no --update and no fixture rewrite. Separate scratch preserves both product images."
+    }
+  ],
+  "postIntegrationMeasurement": {
+    "reason": "Concrete merge changes the timed shared attribute writer, planned token bookkeeping and extracted attribute value/type-name routines; saved 7c73 timing cannot qualify 51db.",
+    "outputByteStatus": "No integrated compiler execution yet; byte equality is unmeasured. Preserve native SHA observations and compare once-only benchmark image hashes to saved pre-integration hashes.",
+    "scope": "Exactly one integrated metadata run and one integrated refout run after correctness gates pass, if root grants. Compare against saved 7c73 as whole-main-merge observations. No historical baseline rerun or favorable-result selection.",
+    "commands": [
+      {
+        "argv": [
+          "node",
+          "scripts/limited.js",
+          "node",
+          "--expose-gc",
+          "packages/cil/tools/benchmark-reference-assemblies.mjs",
+          "--mode",
+          "metadata",
+          "--compiler",
+          "/workspace/scratch/7e3d2a445c44/sf6-emission/packages/compiler/src/index.js",
+          "--output",
+          "artifacts/refout-integrated-51db5c5ff-metadata.json"
+        ],
+        "log": "/workspace/scratch/7e3d2a445c44/refout-integrated-51db5c5ff-metadata.log"
+      },
+      {
+        "argv": [
+          "node",
+          "scripts/limited.js",
+          "node",
+          "--expose-gc",
+          "packages/cil/tools/benchmark-reference-assemblies.mjs",
+          "--mode",
+          "refout",
+          "--compiler",
+          "/workspace/scratch/7e3d2a445c44/sf6-emission/packages/compiler/src/index.js",
+          "--output",
+          "artifacts/refout-integrated-51db5c5ff-refout.json"
+        ],
+        "log": "/workspace/scratch/7e3d2a445c44/refout-integrated-51db5c5ff-refout.log"
+      }
+    ]
+  }
+}

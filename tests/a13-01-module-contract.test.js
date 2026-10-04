@@ -9,6 +9,7 @@ const publicExports = [
   'sha1', 'sha256', 'sourceLinkUrl', 'sourceSpan', 'verifySource', 'verifySourceAsync', 'resolveSources',
   'writeSequencePoints', 'readCustomDebugInformation', 'writeCustomDebugInformation',
   'portablePdbKey', 'peSymbolKey', 'createSymbolServer',
+  'readPortablePdbDelta', 'emitPortablePdbDelta', 'PortablePdbGenerations', 'PortablePdbRevisionMap',
 ];
 
 test('symbols entry point preserves the published exports after extraction', () => {

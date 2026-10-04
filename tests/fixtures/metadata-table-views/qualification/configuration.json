@@ -1,0 +1,71 @@
+{
+  "schemaVersion": 1,
+  "testedCommit": "1fd0a2f57d0990fd48a7c03aa923c1ceeaff8793",
+  "node": "24.19.0",
+  "platform": "linux",
+  "architecture": "x64",
+  "nativeSdk": "10.0.201",
+  "nativeRuntime": "10.0.5",
+  "command": "node scripts/limited.js node --test --test-concurrency=1 tests/a13-14-metadata-tables.test.js tests/a13-14-metadata-heaps.test.js tests/a13-14-metadata-native.test.js",
+  "result": {
+    "tests": 14,
+    "passed": 14,
+    "failed": 0,
+    "skipped": 0
+  },
+  "sourceSha256": {
+    "packages/cil/src/browser/analyzers-call-graph.js": "224e46b3fb58839df10a179d1269aae75153be07ff5567e726d3899f02995ce2",
+    "packages/cil/src/browser/analyzers-input.js": "1a782edc8df05bde8da563f12fd7c5692ad524cdc0032f361fd9f001459b792e",
+    "packages/cil/src/browser/analyzers-targets.js": "c138b9c9a2cef917b22d75cc5f43387869af9e1c3bd1199c78b043a4257d29a0",
+    "packages/cil/src/browser/analyzers.js": "46ea4608422554a330a469cc31a3c41d183015faea1f13a174d2d0e925869a47",
+    "packages/cil/src/index.js": "c0ae04c324a4cd144da86e515735f44020ffe8372878238ab6120604ac289b61",
+    "packages/cil/src/inspector-tables.js": "73d65e669a72bab822e2b7487f055e60c2ae5c0bdbd320826273ef6efa5af686",
+    "packages/cil/src/inspector-tables/budget.js": "fee67367e82596cc6a0e55797bc769923415113f9a197d3eb90d777caf7ccd45",
+    "packages/cil/src/inspector-tables/heaps.js": "6b4ed81d2cb27077e46920dbd589d21e92413e545b472ec9b07c46c741399cbb",
+    "packages/cil/src/inspector-tables/input.js": "3c16bd054e2d088c4ee2972f892c5226e7868bb344ce621779a72dca8e771ec6",
+    "packages/cil/src/inspector-tables/rows.js": "e0eca5e880f857be1614722a519c1d6355fe89e197e73ad3d57d838e3e2c2386",
+    "packages/cil/src/inspector.js": "f3b739f6659180182f59c5b317050fc3de82b0fa5832a4221797eb0a68be72e3",
+    "packages/cil/src/verify/memory-tables.js": "57f09aa0b7d6d89550b2de2f90d6b157892b0da4869ba7a827e0e05b5d53bd19",
+    "packages/cil/src/verify/ops-memory.js": "7ad11b35f21c1b63913ee531f1f6da68474628e8819722af173ada9805ee8fbb",
+    "packages/cil/src/verify/typed-transfers.js": "4903558f38f762a06634c676a2accec34e39701cd81de4a2052117f5499f7e57",
+    "packages/cil/tools/benchmark-memory-verifier.mjs": "287e9c591a9e3cf1e08b01b0115872856bd020278c9ce189f03b593f10de0916",
+    "tests/a03-indirect-transfers.test.js": "cea61f018c27be28b241c132bf90029d28b99ec9331da7251c1b8bc1dcd6f0a1",
+    "tests/a03-local-initialization.test.js": "baf2792c2f80641cfb7d9c04f23b02e34afd836d2879b2b8e9bf78160697ac67",
+    "tests/a07-char-boxing.test.js": "e19f87da44a3eec99cce0bff30eec64f219f3baa34bcac5bbdfdc2c136734244",
+    "tests/a13-11-usage-relations.test.js": "daedcf7563356961241ee6d083bce908e8b01a4228c369f575945469212353c7",
+    "tests/a13-14-metadata-heaps.test.js": "9be05a5d962a0b405a0a2af9dc9a2966c9766ff58d733ca6324be16f6ba02f69",
+    "tests/a13-14-metadata-native.test.js": "2aa70632e6415335d5a4005ae36f0c0c0810ae0b1e35ab8566a02e0aabfbe3e6",
+    "tests/a13-14-metadata-tables.test.js": "711043d689ef471472775535dc91dfb4095748ba00b0a931f798d2d30af91b03",
+    "tests/fixtures/metadata-table-views/Program.cs": "dc3441f324dd18d01e518083c0dadc66182cd47e60e3e72a8795cb7378b9ce36",
+    "tests/fixtures/metadata-table-views/browser.mjs": "77021f5c1263d152f7fd94be427194347134a88f4b62051f713b0f386d6369a1",
+    "tests/fixtures/metadata-table-views/capture.mjs": "753c5bc4466d3c9d7cc6c2f81a50eea8bb8e24c29622c4a5298e85730f11995b",
+    "tests/fixtures/metadata-table-views/fixture.js": "ae4430f0779b4cea310fb61f453af0f8bae07c65239b5d5969a646f9929fcd50",
+    "tests/fixtures/metadata-table-views/native-compare.js": "6797c6557d65b259c38452134a03765e93a2d08ad76144b1ca5b0eb045ebc59c",
+    "tests/fixtures/usage-relations/Program.cs": "784e51495119fe70a7d3deffd67ee26a57a67512780bb70cd8df47b7c5a22a23",
+    "tests/fixtures/usage-relations/browser.mjs": "fdc8160427b60ca661c81ebebf03260520fecf4c5f22f63ea59ba22775c322f0",
+    "tests/fixtures/usage-relations/capture.mjs": "f10639d21f7f51afb590e1ad203f34b25f34a5a2bb91000db52acf547a05bbb8",
+    "tests/fixtures/usage-relations/input.mjs": "aa4ae988f4256a9a7be9b102e9a34ae9e7b9e150c1174c694e21bb6f2ad18f34",
+    "tests/fixtures/verifier-memory/browser.mjs": "2a0bf8e2c1ba2a10fba8b49ff13a4a17d22edb443f8b8cde8ef9300045587a69",
+    "tests/fixtures/verifier-memory/capture.mjs": "011a1ac415522435e7baaf288699acd9fa6d19ac587b18163bababbfe1a7c115",
+    "tests/fixtures/verifier-memory/input.js": "6d956ad10573303fd34cb02ce298369f3ae938b05a56b528517a8fafa98424e8"
+  },
+  "nativeScope": {
+    "cliTables": 41,
+    "portablePdbTables": 8,
+    "legacyTableRejections": [
+      33,
+      34,
+      36,
+      37
+    ]
+  },
+  "browser": "Not executed; fixture availability is not qualification.",
+  "integratedReplay": {
+    "testedCommit": "03ed7a6e6719e16671dd0f4acd65e63574d27ca3",
+    "testedTree": "6782891be5099011923dbda4bb3ceb2b7bde96ef",
+    "passed": 14,
+    "failed": 0,
+    "skipped": 0
+  },
+  "integrationFinding": "Automatic merge duplicated the existing a13-05 test glob. Removed the exact duplicate without changing coverage."
+}

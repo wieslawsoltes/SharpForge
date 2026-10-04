@@ -1,0 +1,15 @@
+{
+  "testedCommit": "53486b05f79ce63c7d50339fc661655385bdc59c",
+  "tests": 49,
+  "passed": 49,
+  "failed": 0,
+  "skipped": 0,
+  "logSha256": "246bbfc162c0769cd58f338df775cde575bba43726b4b610f6ba3c296399b251",
+  "benchmarkSha256": "8afb37cb2ecc1592c2c4f4b032bcc357532cf5196f3d400dc2c1b07bbdd5ffd7",
+  "harnessSha256": "8ed551f7f2714711b0a7a5155edf2d9cbb0d5877dbfd838b917f9318dc5a0da1",
+  "sdk": "10.0.201",
+  "referencePack": "10.0.5",
+  "roslyn": "5.3.0.0",
+  "platform": "Linux x64",
+  "cleanBeforeAndAfter": true
+}

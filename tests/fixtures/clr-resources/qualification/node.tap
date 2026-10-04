@@ -1,0 +1,19 @@
+✔ resource header, count and section offsets reject truncated and corrupt data (3.852141ms)
+✔ resource name tables require sorted matching hashes, unique names and bounded valid UTF-16 (1.264509ms)
+✔ resource values cannot read into adjacent records or cache failed decodings (0.513535ms)
+✔ reserved codes, invalid user indices, malformed varints, UTF-8 and Decimal/DateTime payloads produce managed diagnostics (1.362032ms)
+✔ resources retain native type codes, Unicode/BOMs, exact scalars and caller-owned byte payloads (3.800336ms)
+✔ resource name hash collisions, shared data offsets, empty files and subarray inputs remain unambiguous (0.463872ms)
+✔ resource lifetime and cancellation apply to warmed caches and active iterators (1.17671ms)
+✔ resource byte, entry, type, name, metadata and value budgets reject before unbounded materialization (1.229928ms)
+✔ 64-bit integers, decimal sign/scale and DateTime binary forms are represented without precision or timezone loss (0.494617ms)
+✔ future ResourceManager headers remain skippable while unsupported data formats and reader types are explicit (0.508287ms)
+✔ all native ResourceWriter primitive types and MSBuild resgen entries match keys, values and raw bytes (4.982884ms)
+ℹ tests 11
+ℹ suites 0
+ℹ pass 11
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 954.167327

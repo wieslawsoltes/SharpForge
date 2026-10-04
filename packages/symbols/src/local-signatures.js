@@ -1,4 +1,4 @@
-import { decodeSignature, readMethodHeader } from '@sharpforge/cil';
+import { decodeSignature, readMethodHeader, methodCodeKind } from '@sharpforge/cil';
 import { fail } from './contracts.js';
 
 export function localSlotLimits(options = {}) {
@@ -48,7 +48,7 @@ export function readLocalSignatures(pe, symbols, limits) {
     let token = 0,
       reason = null;
     if (!rva) reason = 'no-method-body';
-    else if (definition[1] & 3) reason = 'unsupported-method-body';
+    else if (methodCodeKind(definition[1]) !== 'CIL') reason = 'unsupported-method-body';
     else {
       if (!headers.has(rva)) headers.set(rva, readMethodHeader(pe, method).localSignature);
       token = headers.get(rva);
