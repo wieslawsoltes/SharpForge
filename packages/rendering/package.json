@@ -1,7 +1,7 @@
 {
-  "name": "@sharpforge/winui-controls",
+  "name": "@sharpforge/rendering",
   "version": "0.14.0",
-  "description": "Layout, input and WinUI control models with pluggable host renderers.",
+  "description": "Retained drawing, composition and explicit rendering resource lifetimes.",
   "type": "module",
   "main": "./src/index.js",
   "exports": {
@@ -15,8 +15,5 @@
   "license": "MIT",
   "engines": {
     "node": ">=22"
-  },
-  "dependencies": {
-    "@sharpforge/rendering": "0.14.0"
   }
 }

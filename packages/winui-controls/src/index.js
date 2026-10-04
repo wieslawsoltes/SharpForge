@@ -10,5 +10,6 @@ export * from './overlay/index.js';
 export * from './commands/index.js';
 export * from './values/index.js';
 export * from './app/index.js';
+export * from './media/index.js';
 export * from './icons/index.js';
 export * from './policy/default-templates.js';
