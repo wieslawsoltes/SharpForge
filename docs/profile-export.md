@@ -1,0 +1,46 @@
+# Instruction profile export (SF-A05-T10.3, #1404)
+
+`exportSpeedscope(profile, {name})` converts a
+`SharpForge.InstructionProfile/1` object, or a profiler exposing `read()`, into
+owned JSON data for Speedscope. The input clock must be `instructions`.
+The exporter maps each method ID to a shared frame, preserving method names,
+recursive stack occurrences, and capacity-overflow samples. Method IDs need not
+equal array indices. Sample weights must be nonnegative safe integers whose sum
+exactly equals the profile's recorded instruction count. Malformed IDs, duplicate
+IDs, missing methods, unsafe counts, wrong formats/clocks and inconsistent totals
+throw `TypeError` rather than producing a misleading profile.
+
+The output follows the [official Speedscope JSON schema](https://www.speedscope.app/file-format-schema.json):
+one sampled profile with `unit: "none"`, `startValue: 0` and `endValue` equal to
+the recorded instruction total. Samples are aggregated work counts, not a
+chronological execution timeline or CPU/wall-clock duration. Output arrays and
+frame records do not alias the input. Empty profiles are supported. The exporter
+reads a supplied profiler once and installs no observers or VM hooks. Export work
+and output size are linear in methods plus recorded stack entries.
+
+After the instruction-profiler dependency and package entry adapter are integrated:
+
+```sh
+node examples/runtime/profile.mjs cil > profile.speedscope.json
+node examples/runtime/profile.mjs source > source.speedscope.json
+node examples/runtime/profile.mjs reload > reload.speedscope.json
+```
+
+Open the JSON in [Speedscope](https://www.speedscope.app/). Program output is sent
+to stderr; stdout contains only the profile. For allocation and call counters,
+save `vm.profiler.read()` directly. This increment does not associate the separate
+runtime event stream with profiler samples and does not export EventPipe or binary
+`.nettrace` data. That part of #1404 remains open, as do Studio view integration
+and browser qualification.
+
+| Capability | Source / reload | Direct CIL | Qualification |
+| --- | --- | --- | --- |
+| Instruction-weighted Speedscope JSON | Profiler dependency | Profiler dependency | Authored; serial execution pending |
+| Empty, recursive and capacity-overflow profiles | Supported input shapes | Supported input shapes | Focused tests authored |
+| Duration or `.nettrace` output | Not provided | Not provided | Separate work required |
+
+The schema fixture is an unmodified copy retrieved from the official URL on
+2026-10-04. Tests exercise its required JSON shape as well as method/weight
+semantics, invalid inputs, ownership, and real profiles from all three engines.
+No tests, builds, browser runs or benchmarks were executed while preparing this
+batch. Speedscope application loading and performance measurements remain queued.
