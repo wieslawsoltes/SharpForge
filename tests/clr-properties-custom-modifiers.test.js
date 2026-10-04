@@ -63,6 +63,9 @@ test('CLR method return/argument modifiers use method signatures while projected
   assert.deepEqual(projected.requiredCustomModifierTokens, []);
   assert.deepEqual(projected.optionalCustomModifierTokens, [tokens[1]]);
   assert.equal(projected.optionalCustomModifierTokens, projected.optionalCustomModifierTokens);
+  const empty = readCustomModifierTokens(int, module).required;
+  assert.equal(projected.requiredCustomModifierTokens, empty);
+  assert.equal(method.parameters[0].optionalCustomModifierTokens, empty);
 });
 
 test('CLR modifier queries stop before byref/array element modifiers and share immutable empty results', async () => {

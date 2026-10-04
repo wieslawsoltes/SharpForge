@@ -25,5 +25,8 @@ export function readCustomModifierTokens(type, module) {
     if (!type || typeof type !== 'object') throw loadError(LoadErrorCode.InvalidImage, 'Missing custom modifier element');
   }
   // CoreCLR fills each modifier array from the end while scanning the encoded prefix.
-  return Object.freeze({ required: Object.freeze(required.reverse()), optional: Object.freeze(optional.reverse()) });
+  return Object.freeze({
+    required: required.length ? Object.freeze(required.reverse()) : empty,
+    optional: optional.length ? Object.freeze(optional.reverse()) : empty,
+  });
 }
