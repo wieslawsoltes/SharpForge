@@ -82,8 +82,12 @@ host callback retain the ordinary callback error behavior.
 Focused tests cover actual native arithmetic, rooted field/array writes under
 instruction-by-instruction collection, pooled call returns, debugger pause,
 snapshot replay, operand fallback, quotas, faults, reentrancy and stale or
-disposed handles. Tests are authored but await the root's serial validation
-queue. No browser/native matrix or performance improvement is claimed.
+disposed handles. Serial Node 24 validation at `d935c73a` passed 56 of 57 tests
+across the bridge, encoder, eligibility, frame lifecycle and snapshots. The new
+heap-fault fixture initially limited PE input size before execution; `3ac47202`
+lowers the heap after loading and asserts each expected managed fault explicitly.
+All 13 bridge tests then passed. No browser/native matrix or performance
+improvement is claimed.
 
 Automatic hot counters, background compile queues, entry selection, OSR and
 debugger-driven deoptimization remain separate T11 deliverables. Source VM and
