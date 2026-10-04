@@ -6,5 +6,7 @@
   "structs/cs1510-cs0206-ref-arguments": ["diagnostics", "warnings"],
   "structs/cs1612-cs0200-member-of-rvalue": ["diagnostics", "warnings"],
   "structs/cs8340-readonly-struct": ["diagnostics", "warnings"],
-  "structs/struct-in-array": ["directCil"]
+  "structs/operator-overloads": ["directCil"],
+  "structs/struct-in-array": ["directCil"],
+  "structs/value-semantics": ["directCil"]
 }

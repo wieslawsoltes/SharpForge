@@ -90,7 +90,7 @@ export const BranchEmission = Base =>
         body = il.newLabel(),
         end = il.newLabel();
       il.emit('br', test);
-      il.mark(body);
+      il.mark(body, 0);
       this.withJumpTargets({ breakLabel: end, continueLabel: test }, () => this.statement(node.body));
       il.mark(test);
       this.branchOn(node.condition, body, true);
@@ -116,7 +116,7 @@ export const BranchEmission = Base =>
       if (node.declaration) this.stmtLocalDeclaration({ declarations: node.declaration, syntax: node.syntax });
       for (const initializer of node.initializers ?? []) this.effect(initializer);
       il.emit('br', test);
-      il.mark(body);
+      il.mark(body, 0);
       this.withJumpTargets({ breakLabel: end, continueLabel: step }, () => this.statement(node.body));
       il.mark(step);
       for (const incrementor of node.incrementors ?? []) this.effect(incrementor);

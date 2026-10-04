@@ -12,12 +12,14 @@ export const SwitchEmission = Base =>
         end = il.newLabel(),
         sections = node.sections.map(section => ({ section, label: il.newLabel() }));
       let defaultLabel = end;
-      for (const { section, label } of sections) {
-        for (const pattern of section.labels) {
-          if (pattern.kind === 'default') defaultLabel = label;
-          else this.switchLabel(pattern, input, label);
+      this.withSharedReads(() => {
+        for (const { section, label } of sections) {
+          for (const pattern of section.labels) {
+            if (pattern.kind === 'default') defaultLabel = label;
+            else this.switchLabel(pattern, input, label);
+          }
         }
-      }
+      });
       il.emit('br', defaultLabel);
       this.switchSections.set(node.gotoTargets ?? node, sections);
       for (const { section, label } of sections) {
@@ -40,7 +42,12 @@ export const SwitchEmission = Base =>
     exprSwitchExpression(node) {
       const il = this.il,
         input = this.spillValue(node.governing),
-        end = il.newLabel(),
+        end = il.newLabel();
+      this.withSharedReads(() => this.switchArms(node, input, end));
+    }
+    /** The arms of a switch expression in order; every arm leaves its value on the stack and goes to `end`. */
+    switchArms(node, input, end) {
+      const il = this.il,
         takesEverything = pattern => pattern.kind === 'DiscardPattern' || (pattern.kind === 'VarPattern' && !pattern.positional);
       for (const arm of node.arms) {
         if (arm === node.arms.at(-1) && !arm.when && takesEverything(arm.pattern)) {
