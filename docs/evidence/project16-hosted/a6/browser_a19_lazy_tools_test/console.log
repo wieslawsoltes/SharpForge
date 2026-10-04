@@ -1,0 +1,3 @@
+server: SharpForge Studio: http://127.0.0.1:39525
+console.warning: No available adapters.
+console.info: Autofocus processing was blocked because a document already has a focused element.

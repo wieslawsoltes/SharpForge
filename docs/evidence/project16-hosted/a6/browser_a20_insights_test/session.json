@@ -1,0 +1,11 @@
+{
+  "suite": "browser_a20_insights_test",
+  "passed": true,
+  "engine": "chromium",
+  "cspViolations": [],
+  "browser": "153.0.8010.12",
+  "executable": "playwright-managed",
+  "mode": "http",
+  "seconds": 1.5220687780000048,
+  "diagnosticErrors": []
+}

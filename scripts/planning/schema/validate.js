@@ -1,6 +1,7 @@
 /** Deliberately bounded JSON Schema 2020-12 subset used by the contract files. */
 export class SchemaError extends Error {constructor(code,message,path='$'){super(`${path}: ${message}`);this.name='SchemaError';this.code=code;this.path=path;}}
 const fail=(code,message,path)=>{throw new SchemaError(code,message,path);};
+const stringLength=value=>{let length=0;for(let i=0;i<value.length;length++)i+=value.codePointAt(i)>0xffff?2:1;return length;};
 const keywords=new Set(['$schema','$id','$ref','$defs','title','description','type','properties','required','additionalProperties','items','minItems','maxItems','uniqueItems','minimum','maximum','minLength','maxLength','pattern','enum','const','anyOf','oneOf']);
 export function validate(schema,value,{supportedVersion=1,maxDepth=128,maxNodes=2_000_000}={}){
   if(value&&typeof value==='object'&&(Object.hasOwn(value,'schemaVersion')&&value.schemaVersion!==supportedVersion||schema.properties?.formatVersion?.const!==undefined&&Object.hasOwn(value,'formatVersion')&&value.formatVersion!==schema.properties.formatVersion.const))fail('SCHEMA_VERSION','Unsupported schemaVersion','$');
@@ -51,7 +52,10 @@ export function validate(schema,value,{supportedVersion=1,maxDepth=128,maxNodes=
     if(Object.hasOwn(s,'const')&&instanceKey()!==valueKey(s.const,path,depth))fail('SCHEMA_INVALID','Unexpected constant',path);
     if(s.enum&&!s.enum.some(x=>instanceKey()===valueKey(x,path,depth)))fail('SCHEMA_INVALID','Unexpected enum',path);
     if(typeof v==='number'&&(s.minimum!==undefined&&v<s.minimum||s.maximum!==undefined&&v>s.maximum))fail('SCHEMA_INVALID','Number outside bounds',path);
-    if(typeof v==='string'&&(s.minLength!==undefined&&v.length<s.minLength||s.maxLength!==undefined&&v.length>s.maxLength||s.pattern&&!new RegExp(s.pattern,'u').test(v)))fail('SCHEMA_INVALID','Invalid string',path);
+    if(typeof v==='string'){
+      if(s.minLength!==undefined||s.maxLength!==undefined){const length=stringLength(v);if(s.minLength!==undefined&&length<s.minLength||s.maxLength!==undefined&&length>s.maxLength)fail('SCHEMA_INVALID','Invalid string',path);}
+      if(s.pattern&&!new RegExp(s.pattern,'u').test(v))fail('SCHEMA_INVALID','Invalid string',path);
+    }
     if(Array.isArray(v)){
       if(s.minItems!==undefined&&v.length<s.minItems||s.maxItems!==undefined&&v.length>s.maxItems)fail('SCHEMA_INVALID','Invalid array length',path);
       if(s.uniqueItems){

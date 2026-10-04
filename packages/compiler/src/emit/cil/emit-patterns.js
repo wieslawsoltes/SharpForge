@@ -328,7 +328,10 @@ export const PatternEmission = Base =>
     }
     matchAndPattern(pattern, input, fail) {
       this.patternMatch(pattern.left, input, fail);
-      this.patternMatch(pattern.right, input, fail);
+      // After `T and ...` the right pattern sees the value as a T (`o is int and var n` declares an int).
+      const narrowed = pattern.narrowedType,
+        isNarrowed = narrowed && input.type && !narrowed.equals(input.type);
+      this.patternMatch(pattern.right, isNarrowed ? this.narrowedInput(input, narrowed, fail) : input, fail);
     }
     matchOrPattern(pattern, input, fail) {
       const il = this.il,

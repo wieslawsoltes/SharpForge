@@ -6,7 +6,7 @@ on:
       stage:
         description: Completed scope to qualify serially
         type: choice
-        options: [all, node, browser, performance]
+        options: [all, node, browser, performance, standalone]
         default: all
       runner:
         description: Platform for this explicit qualification run
