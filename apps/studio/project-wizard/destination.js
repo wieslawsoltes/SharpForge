@@ -28,7 +28,7 @@ export async function commitWizardDirectory(handle, plan, { signal, confirmOverw
   signal?.throwIfAborted();
   const writeResult = await writeNewDirectory(handle, plan, { signal, overwritePaths, mode: 'merge' });
   try {
-    const disk = await readProviderDirectory(handle, { signal });
+    const disk = await readProviderDirectory(handle, { signal, openedPaths: writeResult.written });
     return { cancelled: false, writeResult, disk, directoryHandle: handle };
   } catch (error) {
     error.writeResult = writeResult;

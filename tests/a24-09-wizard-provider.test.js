@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { ProviderDiskWorkspace } from '@sharpforge/project-system';
+import { ProviderDiskWorkspace, DISK_WORKSPACE_LIMITS } from '@sharpforge/project-system';
 import { encodeWorkspaceFile } from '@sharpforge/archive';
 import { commitWizardDirectory } from '../apps/studio/project-wizard/destination.js';
 import { TestDirectory } from './helpers/a24-directory.js';
@@ -55,4 +55,20 @@ test('An already cancelled wizard attachment performs no directory or file write
   }, { signal: cancellation.signal }), { name: 'AbortError' });
   assert.equal(root.children.size, 0);
   assert.equal(root.state.writes, 0);
+});
+
+test('Generated source is immediately available when a large existing destination stays lazy', async () => {
+  const root = new TestDirectory();
+  const existing = await root.getDirectoryHandle('Existing', { create: true });
+  for (let index = 0; index <= DISK_WORKSPACE_LIMITS.eagerThreshold; index++) {
+    await existing.getFileHandle('Archive' + index + '.txt', { create: true });
+  }
+  const text = 'class Created { static void Main() {} }';
+  const result = await commitWizardDirectory(root, { records: [{ path: 'Created/Program.cs', text }] });
+  assert.equal(result.disk.lazy, true);
+  assert.equal(result.disk.record('Created/Program.cs').lazy, false);
+  assert.equal(result.disk.record('Created/Program.cs').text, text);
+  assert.equal(typeof result.disk.baselineHashes.get('Created/Program.cs'), 'string');
+  assert.equal(result.disk.record('Existing/Archive0.txt').lazy, true);
+  assert.equal(result.disk.record('Existing/Archive0.txt').text, undefined);
 });

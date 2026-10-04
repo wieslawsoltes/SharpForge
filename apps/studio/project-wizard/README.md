@@ -20,6 +20,8 @@ retain the destination writer's rollback and partial-failure receipts.
 `{cancelled, writeResult, disk, directoryHandle}` after a successful write and
 provider-backed reopen. `disk` is a `ProviderDiskWorkspace`, including byte
 baselines, binary files, encoding metadata and lazy records for large folders.
+Newly written paths are materialized even when unrelated existing files stay lazy,
+so the generated project's source is available as soon as it opens.
 If reopening fails, the thrown error retains `writeResult`; committed files must
 not be reported as an untouched destination. A declined overwrite returns only
 `{cancelled: true}` and performs no writes.
