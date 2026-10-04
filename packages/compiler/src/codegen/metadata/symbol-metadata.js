@@ -203,6 +203,11 @@ export class SymbolMetadataWriter {
       if (method.overrides) {
         builder.addRow('MethodImpl', { Class: self, MethodBody: method.token, MethodDeclaration: this.methodReference(method.overrides) });
       }
+      // A synthesized method names the interface slots it fills: `{owner, name, shape}`.
+      for (const slot of method.interfaceSlots ?? []) {
+        const declaration = builder.member(this.tokens.typeToken(slot.owner), slot.name, methodSignature(this.tokens, slot.shape));
+        builder.addRow('MethodImpl', { Class: self, MethodBody: method.token, MethodDeclaration: declaration });
+      }
     }
     this.writeInterfaceImplementations(type, self, plan);
   }

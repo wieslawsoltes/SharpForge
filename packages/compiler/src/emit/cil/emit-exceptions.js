@@ -42,12 +42,15 @@ export const ExceptionEmission = Base =>
     /**
      * @param {() => void} emitBody the protected statements  @param {object[]} catches bound catch clauses
      * @param {(() => void)|null} emitFinally the finally block, or null
+     * @param [outerStart] the label to place at the first instruction of the protected region
      */
-    tryRegions(emitBody, catches, emitFinally) {
+    tryRegions(emitBody, catches, emitFinally, outerStart = this.il.newLabel()) {
       const il = this.il,
         end = il.newLabel(),
-        outerStart = il.newLabel(),
         afterCatches = emitFinally && catches.length ? il.newLabel() : end;
+      // A label before the statement is outside the region: a jump to it from inside leaves the region (and runs its
+      // finally block), so the region must not begin at the instruction the label names.
+      if (il.isJustPastLabel) il.emit('nop');
       il.mark(outerStart);
       this.protect(() => {
         if (catches.length) this.catchRegions(emitBody, catches, afterCatches);

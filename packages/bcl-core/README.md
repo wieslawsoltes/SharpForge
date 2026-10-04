@@ -358,6 +358,21 @@ preserved; exact native capacity transitions and remaining StringBuilder
 overloads stay tracked in #2636 and #2637. Repeat expansion costs O(count) time
 and temporary text, bounded by the host limit, with one chunk append afterward.
 
+The StringBuilder `Chars` indexer reads and writes one UTF-16 unit through native
+`get_Chars(int)` / `set_Chars(int, char)` signatures at IDs 524312–524313. Registered
+`defaultMember: 'Chars'` metadata enables source bracket syntax without aliases.
+Reads scan existing chunks with no managed allocations; writes replace only the
+affected string chunk, preserving backing storage, count, length and capacity.
+The displaced and replacement chunks remain rooted during write notifications.
+Getter bounds throw `IndexOutOfRangeException`; setter bounds throw
+`ArgumentOutOfRangeException` naming `index`, matching 44 pinned .NET 10.0.5 cases.
+The managed observer may see partial progress: a thrown array observer leaves
+the replacement installed and the heap revision updated, before the normal
+builder-version notification. Reentrant Clear/Append changes are retained.
+Reads cost O(chunk count); writes cost O(chunk count + affected chunk length).
+The generated reference inventory still reports indexed-property metadata rows
+separately from the implemented accessor signatures.
+
 StringBuilder reports the .NET default `MaxCapacity` of `Int32.MaxValue`
 (`2147483647`) in both metadata and execution. The host separately limits text
 and requested capacity to 1,000,000 UTF-16 code units. Exceeding that allocation
