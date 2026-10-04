@@ -7,18 +7,18 @@ function arrayIndex(property) {
   return Number.isInteger(index) && index >= 0 && index < 0xffffffff && String(index) === property ? index : -1;
 }
 
-function createHandler(bindings) {
+function createHandler() {
   return Object.freeze({
     get(array, property, receiver) {
       const index = arrayIndex(property);
       if (index >= 0) {
-        const binding = bindings.get(array);
+        const binding = this.binding;
         return index < binding.length ? readStoredSlot(binding, index) : undefined;
       }
       return Reflect.get(array, property, receiver);
     },
     set(array, property, value, receiver) {
-      const binding = bindings.get(array);
+      const binding = this.binding;
       const index = arrayIndex(property);
       if (index >= 0) return writeStoredSlot(binding, index, value);
       if (property === 'length') {
@@ -29,23 +29,23 @@ function createHandler(bindings) {
     },
     has(array, property) {
       const index = arrayIndex(property);
-      return index >= 0 ? index < bindings.get(array).length : Reflect.has(array, property);
+      return index >= 0 ? index < this.binding.length : Reflect.has(array, property);
     },
     ownKeys(array) {
-      const binding = bindings.get(array);
+      const binding = this.binding;
       const keys = Array.from({length: binding.length}, (_, index) => String(index));
       return keys.concat(Reflect.ownKeys(array));
     },
     getOwnPropertyDescriptor(array, property) {
       const index = arrayIndex(property);
-      const binding = bindings.get(array);
+      const binding = this.binding;
       if (index >= 0 && index < binding.length) {
         return {value: readStoredSlot(binding, index), writable: !binding.readOnly, enumerable: true, configurable: true};
       }
       return Reflect.getOwnPropertyDescriptor(array, property);
     },
     defineProperty(array, property, descriptor) {
-      const binding = bindings.get(array);
+      const binding = this.binding;
       const index = arrayIndex(property);
       if (index >= 0) {
         if (!Object.hasOwn(descriptor, 'value') || descriptor.configurable === false || descriptor.writable === false) {
@@ -68,17 +68,18 @@ function createHandler(bindings) {
   });
 }
 
-/** Per-heap owner: every Proxy shares one handler, with no per-allocation closures. */
+/** Per-heap owner: trap methods are shared; each Proxy retains its own binding. */
 export class SpatialArrayViews {
   constructor() {
-    this.bindings = new WeakMap();
-    this.handler = createHandler(this.bindings);
+    this.handler = createHandler();
   }
 
   create(binding) {
     const target = new Array(binding.length);
-    this.bindings.set(target, binding);
-    return new Proxy(target, this.handler);
+    // Proxy invokes inherited traps with the handler as `this`, independently
+    // of the public receiver. No target lookup or per-view closures are needed.
+    const handler = {__proto__: this.handler, binding};
+    return new Proxy(target, handler);
   }
 }
 
