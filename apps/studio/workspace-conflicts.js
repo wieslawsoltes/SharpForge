@@ -73,7 +73,7 @@ export async function applyWorkspaceConflictResolution(host, session, resolution
   const [originalHash, selectedHash] = await Promise.all([
     hashWorkspaceBytes(originalBytes, {signal}), hashWorkspaceBytes(selected.bytes, {signal})
   ]);
-  if (originalHash !== selected.expectedLocalHash) throw failure('Local document changed after the conflict was presented');
+  if (originalHash !== selected.expectedLocalHash) throw failure('Local document hash changed after the conflict was presented');
   if (selectedHash !== selected.hash) throw failure('Selected bytes do not match the reviewed hash');
   const current = unchanged(host, snapshot, source, originalBytes);
   signal?.throwIfAborted();
