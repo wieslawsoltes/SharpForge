@@ -1,0 +1,10 @@
+[
+  {"id":"A15/property-set-source","area":"A15","engine":"source","scope":"set","module":"./a15-property-system.mjs"},
+  {"id":"A15/property-set-cil","area":"A15","engine":"cil","scope":"set","module":"./a15-property-system.mjs"},
+  {"id":"A15/property-clear-source","area":"A15","engine":"source","scope":"clear","module":"./a15-property-system.mjs"},
+  {"id":"A15/property-clear-cil","area":"A15","engine":"cil","scope":"clear","module":"./a15-property-system.mjs"},
+  {"id":"A15/property-style-refresh-source","area":"A15","engine":"source","scope":"style-refresh","module":"./a15-property-system.mjs"},
+  {"id":"A15/property-style-refresh-cil","area":"A15","engine":"cil","scope":"style-refresh","module":"./a15-property-system.mjs"},
+  {"id":"A15/property-binding-update-source","area":"A15","engine":"source","scope":"binding-update","module":"./a15-property-system.mjs"},
+  {"id":"A15/property-binding-update-cil","area":"A15","engine":"cil","scope":"binding-update","module":"./a15-property-system.mjs"}
+]

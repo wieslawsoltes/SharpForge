@@ -54,6 +54,8 @@ jobs:
       - name: Publish median, tails and verdict
         if: always()
         run: node scripts/conformance/perf/summary.js --input artifacts/results/performance/ab/comparison.json
+      - name: Gate A15 property latency and managed allocations at twenty percent
+        run: node scripts/benchmarks/a15-property-gate.mjs --head "$PERF_HEAD" --output artifacts/results/performance/property
       - name: Capture all existing benchmark producers
         run: node scripts/conformance/perf/legacy.js
       - name: Build and qualify every distribution artifact
