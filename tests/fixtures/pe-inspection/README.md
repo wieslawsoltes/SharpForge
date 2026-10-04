@@ -113,10 +113,21 @@ do not execute these inspection fixtures.
 
 ## Validation status
 
-The original source qualification below remains historical evidence. The three
-construction changes at `d72a9fe1684ba28064f83f4307721a1d00b13137` require one
-fresh two-image capture and the same focused gate; both are pending. The strict
-live-source identity assertions remain unchanged. All original native and Node
+The three construction changes at
+`d72a9fe1684ba28064f83f4307721a1d00b13137` passed one fresh two-image native
+capture at `b29dd68de7d0d20eea64ef9b3ce29c80ebefabac`. The current
+[native.json](native.json) has SHA-256
+`8cf9f13a29b3d74f4d6d395a521f130de5abf6d7482d16a8763109a3d0cd80f1`.
+The [new command](qualification/optimized/native-command.json),
+[log](qualification/optimized/native-capture.log), and
+[complete original/fresh comparison](qualification/optimized/native-comparison.json)
+retain exact source and execution provenance. All eight comparison groups passed
+for both images; all independent native facts and parity results equal the
+original exactly. Only the three source hashes and two observer elapsed-time
+observations differ in the complete captures. The focused gate remains pending.
+
+The original qualification below remains historical evidence. The strict
+live-source identity assertions are unchanged. All original native and Node
 artifacts are retained byte-for-byte in
 [qualification/performance-first](qualification/performance-first/independent-review.md).
 
@@ -154,7 +165,7 @@ This was one capture and one focused test run; no fixes or reruns were required.
 
 Retained evidence:
 
-- [native.json](native.json): independent observations and current public-API comparisons;
+- [Original native.json](qualification/performance-first/original-native.json): independent observations and original public-API comparisons;
   SHA-256 `bdb094d3714b593bf70a1bac84bb456def0052c0019dc0ecedf1d4b8b2e298e4`.
 - [qualification/summary.json](qualification/summary.json): source revision, toolchain,
   source/artifact hashes, results, and explicit remaining qualification.

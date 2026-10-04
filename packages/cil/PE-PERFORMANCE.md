@@ -33,15 +33,20 @@ into fresh method destinations. Field order, fresh nested disassembly records,
 classification, cancellation, and bounds remain intact. No performance effect
 has been measured for this candidate.
 
-Its native capture, focused Node gate, and second benchmark cohort are pending.
+One fresh two-image native capture passed with the unchanged pinned observer,
+tools, images, and comparison helper. The [complete comparison of original and
+fresh captures](../../tests/fixtures/pe-inspection/qualification/optimized/native-comparison.json)
+records identical native facts and parity results. The fresh capture differs
+only in the three approved source hashes and two observer timing observations.
 The original `native.json` and qualification receipts remain byte-exact in the
-first cohort's archive. The offline test and benchmark retain strict current
-source-hash checks; the old capture cannot qualify the changed source. Run one
-fresh capture with the unchanged pinned observer/tools/images, review and retain
-its exact output, then run the same ten-file Node gate. Before one new benchmark
-cohort, pin the new native fixture and source revision and update only the exact
-allowlist source hash. Keep all workload definitions, counts, order, guards,
-baseline, and inputs unchanged. Use a new output path for every command.
+first cohort's archive.
+
+The focused Node gate and second benchmark cohort are pending. The offline test
+and benchmark retain strict current source-hash checks. Run the same ten-file
+Node gate against the new capture. Before one new benchmark cohort, pin the new
+native fixture and source revision and update only the exact allowlist source
+hash. Keep all workload definitions, counts, order, guards, baseline, and inputs
+unchanged. Use a new output path for every command.
 
 ## Source review before measurement
 
