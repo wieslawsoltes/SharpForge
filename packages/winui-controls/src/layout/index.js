@@ -13,6 +13,9 @@ import { viewboxLayout } from './border-viewbox.js';
 import { expanderLayout } from './expander.js';
 import { twoPaneLayout } from './twopaneview.js';
 import { parallaxLayout } from './parallaxview.js';
+import { registerNavigationLayouts } from '../navigation/layout.js';
+import { registerCommandLayouts } from '../commands/layout.js';
+import { registerMenuLayouts } from '../commands/menu-layout.js';
 
 export function createLayoutRegistry(options) {
   const registry = new RendererRegistry(options);
@@ -30,6 +33,9 @@ export function createLayoutRegistry(options) {
   registry.register('Expander', expanderLayout);
   registry.register('TwoPaneView', twoPaneLayout);
   registry.register('ParallaxView', parallaxLayout);
+  registerNavigationLayouts(registry);
+  registerCommandLayouts(registry);
+  registerMenuLayouts(registry);
   return registry;
 }
 export * from './geometry.js';
@@ -53,6 +59,7 @@ export * from './scroll-anchoring.js';
 export * from './scroll-host.js';
 export * from './scroll-presenter.js';
 export * from './annotated-scrollbar.js';
+export * from './annotated-adapters.js';
 export * from './template-services.js';
 export * from './expander.js';
 export * from './twopaneview.js';
@@ -62,6 +69,7 @@ export { XamlRootMetrics } from './dpi.js';
 export * from './text-scale.js';
 export * from './parallaxview.js';
 export * from './operations.js';
+export * from './adapters.js';
 export * from './button-layout.js';
 export * from './text-format.js';
 export * from './environment-state.js';
