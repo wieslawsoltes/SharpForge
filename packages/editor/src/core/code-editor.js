@@ -152,7 +152,8 @@ export class CodeEditor {
     this.uri = uri;
     if (!this.endOfLineExplicit) this.options.endOfLine = model.metadata.dominantEol;
     this.models.set(uri, model);
-    const state = this.viewStates.get(uri);
+    let state = this.viewStates.get(uri);
+    if (state?.model !== model) { this.viewStates.delete(uri); state = null; }
     this.pendingFoldingRestore = !state;
     this.selections = state?.selections ?? model.selections.map(selection => ({...selection}));
     this.primaryIndex = state?.primaryIndex ?? 0;
@@ -179,12 +180,16 @@ export class CodeEditor {
   }
 
   saveViewState() {
-    if (!this.uri) return;
+    if (!this.uri || this.disposed) return;
+    // The session owns model registration. An old view cannot reclaim a removed or replaced document.
+    if (this.models.get(this.uri) !== this.model) {
+      if (this.viewStates.get(this.uri)?.model === this.model) this.viewStates.delete(this.uri);
+      return;
+    }
     this.session.foldingState.save(this.uri, this.folding);
-    this.viewStates.set(this.uri, {selections: this.getSelections(), primaryIndex: this.primaryIndex,
+    this.viewStates.set(this.uri, {model: this.model, selections: this.getSelections(), primaryIndex: this.primaryIndex,
       top: this.view.scrollTop, left: this.view.viewport.scrollLeft, folds: this.folding.regions.map(region => ({...region})),
       bookmarks: this.bookmarks, changeTracking: this.changeTracking});
-    this.models.set(this.uri, this.model);
   }
 
   setValue(text) {

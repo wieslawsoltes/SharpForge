@@ -9,6 +9,7 @@
  *   capture()                     evaluates the operands (receiver, index) into temporaries now, once; needed before
  *                                 a location is both read and written
  */
+import { TypeKind } from '../../symbols/types.js';
 import { isReference, primitiveOf } from './type-facts.js';
 
 /** Bound nodes that can be evaluated again without repeating a side effect. */
@@ -74,7 +75,7 @@ export class FieldLocation {
     this.emitter = emitter;
     this.type = type;
     this.token = field.token;
-    this.receiver = field.isStatic ? null : receiverOperand(emitter, receiver);
+    this.receiver = field.isStatic ? null : fieldReceiverOperand(emitter, receiver);
   }
   capture() {
     this.receiver?.capture();
@@ -191,6 +192,19 @@ export class PropertyLocation {
 
 function valueOperand(emitter, node) {
   return new Operand(emitter, () => emitter.expression(node), node.type, { isRepeatable: repeatable.has(node.kind) || !!node.constantValue });
+}
+
+/**
+ * The receiver of a field access. A field is reached through a type parameter only when the parameter is constrained
+ * to the class that declares it: the value is then an object reference once it is boxed.
+ */
+function fieldReceiverOperand(emitter, node) {
+  if (node.type?.typeKind !== TypeKind.TypeParameter) return receiverOperand(emitter, node);
+  const push = () => {
+    emitter.expression(node);
+    emitter.il.emit('box', emitter.tokens.type(node.type));
+  };
+  return new Operand(emitter, push, emitter.core.object, { isRepeatable: repeatable.has(node.kind) });
 }
 
 /** The receiver of an instance member: an object reference, or a managed pointer to a value-type variable. */

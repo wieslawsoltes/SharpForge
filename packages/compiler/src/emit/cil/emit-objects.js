@@ -21,7 +21,8 @@ export const ObjectEmission = Base =>
       if (type.typeKind === TypeKind.Delegate) return this.delegateCreation(node);
       if (type.typeKind === TypeKind.TypeParameter) return this.unsupported('creating an instance of a type parameter', node.syntax);
       const hasInitializers = !!(node.initializers?.length || node.collectionInitializers?.length);
-      if (!constructor || (constructor.isImplicitlyDeclared && !isReference(type))) {
+      if (!constructor && node.args?.length) this.frameworkConstruction(node);
+      else if (!constructor || (constructor.isImplicitlyDeclared && !constructor.parameters.length && !isReference(type))) {
         // A struct without a declared parameterless constructor is created by zero-initialization.
         if (isReference(type)) return this.unsupported(`creating '${type.toDisplayString()}' without a constructor`, node.syntax);
         this.defaultValue(type);
@@ -31,6 +32,17 @@ export const ObjectEmission = Base =>
       }
       if (hasInitializers) this.objectInitializers(node);
       return undefined;
+    }
+    /**
+     * `new T(args)` of a framework type whose constructors the symbol table does not list (`new Index(2, true)`):
+     * the constructor is named by the types of the arguments as they are passed.
+     */
+    frameworkConstruction(node) {
+      const types = node.args.map(argument => argument.expression.type);
+      if (types.some(type => !type)) return this.unsupported(`creating '${node.type.toDisplayString()}' with these arguments`, node.syntax);
+      for (const argument of node.args) this.expression(argument.expression);
+      const shape = { isStatic: false, returnType: this.core.void, parameters: types.map(type => ({ type })) };
+      return this.il.emit('newobj', this.tokens.external(node.type, '.ctor', shape), { pops: types.length, pushes: 1 });
     }
     objectInitializers(node) {
       return this.unsupported('object and collection initializers', node.syntax);
@@ -61,6 +73,21 @@ export const ObjectEmission = Base =>
       this.il.emit('ldarg', 0);
       this.arguments(call, call.method);
       this.il.emit('call', this.tokens.method(call.method), { pops: call.method.parameters.length + 1, pushes: 0 });
+    }
+    /**
+     * `~C() { body }` is `protected override void Finalize() { try { body } finally { base.Finalize(); } }`: the
+     * destructors of the base classes run after this one, whatever the body does.
+     */
+    destructorBody(bound, type) {
+      const shape = { isStatic: false, returnType: this.core.void, parameters: [] },
+        base = type.baseType ?? this.core.object;
+      this.enterBody();
+      this.tryRegions(
+        () => this.bodyStatements(bound),
+        [],
+        () => this.il.emit('ldarg', 0).emit('call', this.tokens.external(base, 'Finalize', shape), { pops: 1, pushes: 0 }),
+      );
+      return this.finish();
     }
     /** `base()`: the accessible parameterless constructor of the base class. */
     implicitBaseCall(type, constructor) {

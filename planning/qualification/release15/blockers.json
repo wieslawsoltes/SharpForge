@@ -23,7 +23,7 @@
         "SF-A19-T07",
         "SF-A18-T10"
       ],
-      "reason": "Studio has one runtime worker and global debug/designer selection; two apps/two instances are unavailable."
+      "reason": "Production Studio launches independent applications, but Hot Reload of one instance leaves its source read-only while another instance of the same project is live: DocumentLocks retains the other session's lock. The browser adapter records this observed blocker without unlocking the editor or stopping the duplicate; the full multi-app conjunction remains unqualified."
     },
     {
       "id": "FAIR-SESSION-IO",

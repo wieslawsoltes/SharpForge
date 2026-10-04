@@ -2,7 +2,7 @@ import {requireVerifiedCil} from './execution/verification-error.js';
 import {admitCilAssemblyStacks,pushStackValue} from './execution/frame-stack.js';
 import {installRootProvider,rootValues} from './execution/frame-roots.js';
 import {stopExecution} from './execution/stop.js';
-import {initializeExecutionProfiler,executionProfiler} from './execution/profiler.js';
+import {executionProfiler} from './execution/profiler.js';
 import {bindNativeAbi,cilNumericContext,marshalCilValue,cilValue,cilResultValue,cilArrayIndex} from './execution/cil-values.js';
 import {formatCilValue} from './value-formatting.js';
 import {clearRuntimeTypes} from './execution/tokens.js';
@@ -24,7 +24,7 @@ import {initializeCilMethodEvents,cilRuntimeEvents,restoreCilMethodEvents} from 
 import {invokeIntrinsic} from './execution/intrinsics.js';
 import {normalizeRuntimeLaunchOptions} from './launch-options.js';
 import {cilEntryArguments} from './execution/entry-arguments.js';
-import {initializeWasmTiering} from './execution/wasm/tiering.js';
+import {initializeCilInstrumentation} from './execution/cil-instrumentation.js';
 /** Direct, cooperative CIL interpreter for a verified managed subset, independent of #SF.
  * No eval, native imports, network, files, threads, dynamic JS plugins or CLR loading. */
 export class CilVirtualMachine {
@@ -39,8 +39,7 @@ export class CilVirtualMachine {
     const entry=this.inspector.getMethod(this.report.entryPoint);this.returnType=entry.signature.returnType;if(!entry.signature.isStatic)throw new CilError('Host invocation requires a static method');
     this.heap=new ManagedHeap(options);installRootProvider(this);this.frames=[];this.statics=new Map();this.strings=new Map();this.initialized=new Map();this._typeSystem=null;this.layoutCache=this.typeSystem.layouts;this.frameId=0;
     this.snapshotOwner=Object.freeze({});this.writeRevision=0;this.onWrite=null;this.state='ready';this.instructions=0;this.elapsedMs=0;this.output=[];this.outputCharacters=0;this.fault=null;this.pendingFault=null;this.onException=null;this.returnValue=null;this.exitCode=0;this.onOutput=options.onOutput??(()=>{});this.loadMs=performance.now()-started;
-    initializeExecutionProfiler(this,options.profile);
-    initializeWasmTiering(this,options.wasmTiering);
+    initializeCilInstrumentation(this,options);
     for(const f of this.inspector.fields.values())if(f.isStatic)this.statics.set(f.token,storageDefault(this,resolveExecutionField(this.inspector,f.token).signature.type));
     const args=cilEntryArguments(this,entry,options);
     this.platform=new ManagedPlatform(this,options);this.scheduler=new CooperativeScheduler(this,options);this.call(entry.token,args);this.ensureInitialized(entry.ownerToken,'static-method');

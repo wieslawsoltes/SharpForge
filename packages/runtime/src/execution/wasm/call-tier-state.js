@@ -1,6 +1,7 @@
 import {executionCodeState} from '../code-version.js';
 import {executedBackedge, countWasmBackedge} from './backedge-counters.js';
 import {RuntimeEventName} from '../runtime-events.js';
+import {wasmFrameSuppressed} from './deopt.js';
 
 // Only this leaf is imported by the call/step envelopes. The compiling driver
 // depends on those envelopes through the manual bridge, never the reverse.
@@ -72,6 +73,7 @@ export function observeWasmCall(vm, frame) {
   }
   record.calls = increment(record.calls);
   if (record.status === 'ready') {
+    if (wasmFrameSuppressed(vm, frame)) return;
     if (!record.prepared.current()) {
       record.prepared.dispose();
       record.prepared = null;
@@ -111,7 +113,7 @@ export function observeWasmBackedge(vm, frame, instruction, index, frameId) {
 export function selectWasmOsr(vm, frame, record, frameId) {
   const owner = owners.get(vm), state = owner?.state;
   if (!owner?.enabled || !owner.options.osr || !state || !current(vm, state) ||
-      vm.top !== frame || frame.id !== frameId || record.status !== 'ready') return;
+      vm.top !== frame || frame.id !== frameId || record.status !== 'ready' || wasmFrameSuppressed(vm, frame)) return;
   const selected = state.frames.get(frame);
   if (selected?.id === frame.id && selected.method === frame.method && selected.record === record) return;
   if (!record.prepared?.canEnter(frame)) {
@@ -133,7 +135,7 @@ export function dispatchWasmCall(vm, frame, instruction, index, handler) {
     return handler(vm, frame, instruction);
   }
   const selected = state.frames.get(frame);
-  if (!selected || selected.id !== frame.id || selected.method !== frame.method || !selected.record.prepared) {
+  if (wasmFrameSuppressed(vm, frame) || !selected || selected.id !== frame.id || selected.method !== frame.method || !selected.record.prepared) {
     return handler(vm, frame, instruction);
   }
   state.selectedInstructions = increment(state.selectedInstructions);
