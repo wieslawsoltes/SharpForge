@@ -242,11 +242,12 @@ test('async and iterator links, await labels and hoisted-local ranges refer to e
   const source = `using System.Threading.Tasks; using System.Collections.Generic;
 class P {
   static async Task<int> Add(Task<int> input) { int alive = 3; await input; return alive; }
+  static async void Fire(Task input) { await input; }
   static IEnumerable<int> Items() { int alive = 1; yield return alive; alive++; yield return alive; }
   static void Main() { }
 }`;
   const { pe, pdb } = compile(source);
-  assert.equal(pdb.stateMachines.length, 2);
+  assert.equal(pdb.stateMachines.length, 3);
   for (const name of ['Add', 'Items']) {
     const kickoff = methodNamed(pe, name).token;
     const info = pdb.asyncInfo(kickoff);
@@ -255,6 +256,8 @@ class P {
     const boundaries = new Set(body.instructions.map(instruction => instruction.offset));
     assert.ok(pointsOf(pdb, info.stateMachine.moveNext).filter(point => !point.hidden).length > 0);
     assert.equal(info.steps.length, name === 'Add' ? 1 : 0);
+    const stepping = pdb.custom.find(record => record.parent === info.stateMachine.moveNext && record.kind === PdbGuids.asyncSteps);
+    if (name === 'Add') assert.equal(stepping.catchHandlerOffset, -1);
     for (const step of info.steps) {
       assert.ok(boundaries.has(step.yieldOffset));
       assert.ok(boundaries.has(step.resumeOffset));
@@ -269,6 +272,11 @@ class P {
     const ordinary = pdb.scopeTree(info.stateMachine.moveNext).flatMap(scope => flattenScopes(scope).flatMap(entry => entry.locals));
     assert.equal(ordinary.some(local => local.name === 'alive'), false);
   }
+  const fire = pdb.asyncInfo(methodNamed(pe, 'Fire').token);
+  const fireSteps = pdb.custom.find(record => record.parent === fire.stateMachine.moveNext && record.kind === PdbGuids.asyncSteps);
+  const fireBody = pe.getMethod(fire.stateMachine.moveNext);
+  assert.ok(fireBody.handlers.some(handler => handler.flags === 0 && handler.target === fireSteps.catchHandlerOffset));
+  assert.equal(fire.steps.length, 1);
 });
 
 function flattenScopes(scope) {

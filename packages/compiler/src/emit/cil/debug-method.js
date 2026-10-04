@@ -1,4 +1,5 @@
 import { CilDebugScopes } from './debug-scopes.js';
+import { isVoid } from './type-facts.js';
 
 const structuralStatements = new Set(['Block', 'Checked', 'Unchecked', 'Unsafe', 'Labeled', 'LocalFunction', 'Empty', 'Try']);
 
@@ -70,7 +71,8 @@ export class CilMethodDebugInformation {
     this.kickoffMachine = machine;
   }
   asyncCatch(label) {
-    this.catchHandler = label;
+    // Only async void routes an unhandled exception through the debugger's async catch entry.
+    if (isVoid(this.frame.returnType)) this.catchHandler = label;
   }
   awaitPoint(resume) {
     this.awaits.push({ yield: this.marker(), resume });

@@ -1,13 +1,14 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { execFileSync } from 'node:child_process';
-import { mkdtempSync, mkdirSync, copyFileSync, writeFileSync, rmSync } from 'node:fs';
+import { mkdtempSync, mkdirSync, copyFileSync, readFileSync, writeFileSync, rmSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { compileToAssembly } from '@sharpforge/compiler';
 import { loadReferencePack } from '@sharpforge/compiler/node';
-import { loadSymbols } from '@sharpforge/symbols';
+import { AssemblyInspector } from '@sharpforge/cil';
+import { loadSymbols, PdbGuids } from '@sharpforge/symbols';
 import { dotnetHost, sdkVersion } from '../packages/compiler/test/differential/tools/dotnet-axis.mjs';
 
 const dotnet = dotnetHost();
@@ -20,6 +21,7 @@ using System.Collections.Generic;
 enum Choice : short { Selected = -1234 }
 class P {
   static async Task<int> Value() { int value = 40; await Task.Yield(); return value + 2; }
+  static async void Fire() { await Task.Yield(); }
   static IEnumerable<int> Items() { yield return 1; yield return 2; }
   static void Constants() {
     const Choice choice = Choice.Selected;
@@ -95,6 +97,16 @@ function mappedSpans(native, name) {
     .map(point => [point.StartLine, point.StartColumn, point.EndLine, point.EndColumn]));
 }
 
+function asyncCatchKinds(native, pe) {
+  const records = new Map(native.custom.filter(record => record.kind === PdbGuids.asyncSteps)
+    .map(record => [record.parent, Buffer.from(record.bytes, 'hex').readUInt32LE(0) !== 0]));
+  const kinds = new Map();
+  for (const method of native.methods) {
+    if (records.has(method.token)) kinds.set(pe.methods.get(method.kickoff).name, records.get(method.token));
+  }
+  return kinds;
+}
+
 test('direct CIL PDBs agree with independent SRM and sidecar/embedded .NET stack traces agree with Roslyn', { skip }, context => {
   const scratch = mkdtempSync(join(tmpdir(), 'sharpforge-cil-pdb-'));
   try {
@@ -111,6 +123,10 @@ test('direct CIL PDBs agree with independent SRM and sidecar/embedded .NET stack
     const nativeReference = JSON.parse(run([reader, 'inspect', join(reference, 'bin', 'Reference.pdb'), join(reference, 'bin', 'Reference.dll')]));
     assert.ok(mappedSpans(nativeReference, 'view.cs').some(span => span[0] === 123));
     assert.deepEqual(mappedSpans(nativeReference, 'component.razor'), [[200, 5, 201, 8]]);
+    const catchKinds = asyncCatchKinds(nativeReference, new AssemblyInspector(readFileSync(join(reference, 'bin', 'Reference.dll'))));
+    assert.equal(catchKinds.get('Fire'), true);
+    assert.equal(catchKinds.get('Value'), false);
+    assert.equal(catchKinds.get('Main'), false);
     for (const embeddedPdb of [false, true]) {
       const directory = join(scratch, embeddedPdb ? 'embedded' : 'sidecar');
       mkdirSync(directory);
@@ -130,6 +146,7 @@ test('direct CIL PDBs agree with independent SRM and sidecar/embedded .NET stack
       const native = JSON.parse(run([reader, 'inspect', pdb, assembly]));
       verifyNative(native, loadSymbols(emitted.assembly, emitted.pdb));
       assert.deepEqual(mappedSpans(native, 'component.razor'), mappedSpans(nativeReference, 'component.razor'));
+      assert.deepEqual(asyncCatchKinds(native, new AssemblyInspector(emitted.assembly)), catchKinds);
       assert.equal(native.directories.some(directory => directory.kind === 17), embeddedPdb);
       if (embeddedPdb) rmSync(pdb);
       assert.equal(run([assembly]), expected, embeddedPdb ? 'embedded symbols' : 'sidecar symbols');
