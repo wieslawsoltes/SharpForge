@@ -1,0 +1,32 @@
+{
+  "sourceCommit": "0858f721e8e737e6bcca1365748409cb6b0b5f35",
+  "sourceTree": "543ac1fd0f99e60bd7be5319ecad1590ba1eeccd",
+  "command": [
+    "node",
+    "scripts/limited.js",
+    "node",
+    "--test",
+    "--test-concurrency=1",
+    "tests/a19-first-run-schemes.test.js",
+    "tests/a19-shell-commands.test.js"
+  ],
+  "testFiles": [
+    "tests/a19-first-run-schemes.test.js",
+    "tests/a19-shell-commands.test.js"
+  ],
+  "reason": "Real tracing instance added to constructor-bypassing first-run test fixture; existing direct performance consumer covered after mark lifecycle change",
+  "startedAt": "2026-10-04T03:45:13.573256+00:00",
+  "exitCode": 0,
+  "elapsedMs": 647.3043940022762,
+  "finishedAt": "2026-10-04T03:45:14.220580+00:00",
+  "summaryLines": [
+    "\u2139 tests 23",
+    "\u2139 suites 0",
+    "\u2139 pass 23",
+    "\u2139 fail 0",
+    "\u2139 cancelled 0",
+    "\u2139 skipped 0",
+    "\u2139 todo 0",
+    "\u2139 duration_ms 518.454379"
+  ]
+}

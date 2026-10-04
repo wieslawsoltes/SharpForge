@@ -110,7 +110,8 @@ function strictOffset(source, position) {
 }
 
 /** Revalidates immediately before commit. The host transaction must publish all documents together. */
-export function commitWorkspaceEdit(workspace, plan) {
+export function commitWorkspaceEdit(workspace, plan, {signal} = {}) {
+  if (signal?.aborted) throw new DOMException('Workspace edit cancelled', 'AbortError');
   for (const change of plan.changes) {
     const document = readWorkspaceDocument(workspace, change.uri);
     if (document.readOnly || document.version !== change.version || document.text !== change.before) {
@@ -126,7 +127,7 @@ export function commitWorkspaceEdit(workspace, plan) {
   }
   if (!plan.changes.length && !plan.resources?.length) return {changes: []};
   if (typeof workspace.applyTransaction !== 'function') fail('SFED1114', 'Workspace requires an atomic applyTransaction adapter');
-  return workspace.applyTransaction(plan);
+  return workspace.applyTransaction(plan, {signal});
 }
 
 /** A single-editor adapter retains the model's undo transaction. Multi-file edits require a host adapter. */
@@ -134,7 +135,7 @@ export function editorWorkspace(editor) {
   return {
     getDocument(uri) {
       if (uri !== editor.uri) return undefined;
-      const source = editor.model?.snapshot?.() ?? editor.sourceSnapshot();
+      const source = editor.model?.publishedSnapshot?.() ?? editor.model?.snapshot?.() ?? editor.sourceSnapshot();
       return {uri, source, model: editor.model, get text() { return source.text; }, length: source.length,
         version: source.version, readOnly: editor.input.readOnly};
     },

@@ -1,6 +1,7 @@
 import {userValueCallType, prepareValueReceiver, constructUserValue} from './value-calls.js';
 import {boxedInterfaceReceiver} from './value-dispatch.js';
-import {constrainedCallType, invokeConstrainedInterface, constrainedReferenceReceiver,
+import {invokeConstrainedReferenceObject} from './constrained-reference-object.js';
+import {constrainedCallType, invokeConstrainedValue, constrainedReferenceReceiver,
   requireConstrainedReferenceTarget} from './constrained-call.js';
 import {instantiatedMethod} from './generics.js';
 import {callDescriptor, selectedCallOwner} from './generic-calls.js';
@@ -44,7 +45,7 @@ export function prepareCall(vm,frame=vm.top) {
 export function invoke(vm,instruction) {
   const caller=vm.top,descriptor=callDescriptor(vm,instruction.operand,caller),target=descriptor.resolvedToken??(descriptor.token>>>24===6?descriptor.token:null);
   const constraint=constrainedCallType(vm,caller,instruction,descriptor);
-  if(constraint?.flags.valueType){invokeConstrainedInterface(vm,caller,descriptor,constraint);return;}
+  if(constraint?.flags.valueType){invokeConstrainedValue(vm,caller,descriptor,constraint);return;}
   const count=descriptor.signature.parameters.length+(instruction.name!=='newobj'&&!descriptor.signature.isStatic?1:0);
   const instance=descriptor.genericIdentity??descriptor.ownerInstance??(caller.method.ownerToken===descriptor.ownerToken?caller.genericIdentity:null)??null;
   const genericIdentity=instance===null?null:vm.typeSystem.table(instance).name;
@@ -60,6 +61,7 @@ export function invoke(vm,instruction) {
   try {
   if(constraint)args[0]=constrainedReferenceReceiver(vm,constraint,args[0]);
   vm.heap.withRoots(args,()=>{
+    if(invokeConstrainedReferenceObject(vm,caller,descriptor,args,constraint))return;
     if(delegate) {
       const value=invokeBoundDelegate(vm,descriptor,args,instruction.name==='newobj');
       if((instruction.name==='newobj'||descriptor.signature.returnType!=='void')&&value!==SUSPENDED)caller.stack.push(value);

@@ -116,10 +116,11 @@ export const NullableEmission = Base =>
         if (isNullOperand(left)) return this.nullTest(right, operator === '==');
       }
       const il = this.il,
-        leftSlot = this.nullableOperand(left),
-        rightSlot = this.nullableOperand(right),
-        value = (slot, type) => this.nullableCall(slot, type, 'GetValueOrDefault'),
-        has = (slot, type) => this.nullableCall(slot, type, 'get_HasValue'),
+        leftSlot = this.liftedOperand(node, 0),
+        rightSlot = this.liftedOperand(node, 1),
+        // An operand that is not nullable (`price + 1` over a `decimal?`) is always present and is its own value.
+        value = (slot, type) => (type?.isNullableValueType ? this.nullableCall(slot, type, 'GetValueOrDefault') : il.emit('ldloc', slot)),
+        has = (slot, type) => (type?.isNullableValueType ? this.nullableCall(slot, type, 'get_HasValue') : il.emit('ldc.i4', 1)),
         operands = () => {
           value(leftSlot, left.type);
           value(rightSlot, right.type);
@@ -152,6 +153,20 @@ export const NullableEmission = Base =>
       this.defaultValue(node.type);
       il.mark(end);
       return undefined;
+    }
+    /**
+     * Evaluates one operand of a lifted binary operator into a local and returns the local: a nullable operand as it
+     * is, any other operand converted to the type the operator takes (the parameter of a user-defined operator).
+     */
+    liftedOperand(node, index) {
+      const operand = index === 0 ? node.left : node.right;
+      if (operand.type?.isNullableValueType || !operand.type) return this.nullableOperand(operand);
+      const wanted = node.method?.parameters[index]?.type ?? operand.type,
+        slot = this.temp(wanted);
+      this.expression(operand);
+      this.implicitStandardConversion(operand.type, wanted, node.syntax);
+      this.il.emit('stloc', slot);
+      return slot;
     }
     withOperator(node, operator, emitOperands) {
       const saved = node.operator;

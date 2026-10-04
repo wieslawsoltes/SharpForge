@@ -50,6 +50,8 @@ export function synthesizedDelegateOf(driver, core, parameters, returnType) {
     isImplicitlyDeclared: true,
   });
   symbol.isSynthesizedDelegate = true;
+  /** The position among the synthesized delegates of the compilation: the `N` of its metadata name. */
+  symbol.synthesizedOrdinal = known.length;
   symbol.toDisplayString = () => '<anonymous delegate>';
   const invoke = new MethodSymbol({
     name: 'Invoke',

@@ -5,6 +5,7 @@ import { AUTOMATIC_DOCUMENT_CHARACTERS } from './document-size.js';
 const COMPARE_CHUNK = 64 * 1024;
 
 function checkOwner(owner, uri, record, model, options) {
+  if (model?.previewActive) throw workbenchError('DOCUMENT_PREVIEW_ACTIVE', 'Finish or cancel the source preview before reloading');
   if (owner.require(uri) !== record || options.expectedRecord !== record || owner.models.get(uri) !== model
       || !Number.isSafeInteger(options.expectedVersion) || options.expectedVersion !== record.version) {
     throw workbenchError('DOCUMENT_STALE', 'The document changed while its external source was being read');
