@@ -1,8 +1,8 @@
 {
   "member-indexers/compound-assignment-and-increment": ["diagnostics", "warnings", "bytecode", "cil"],
   "member-indexers/declaration-errors": ["diagnostics", "warnings"],
-  "member-indexers/index-read-before-right-side": ["diagnostics", "warnings", "bytecode", "cil"],
-  "member-indexers/overloads-named-optional-and-params": ["diagnostics", "warnings", "bytecode", "cil"],
-  "member-indexers/static-and-instance-members-through-indexers": ["diagnostics", "warnings", "bytecode", "cil"],
+  "member-indexers/index-read-before-right-side": ["diagnostics", "warnings", "bytecode", "cil", "directCil"],
+  "member-indexers/overloads-named-optional-and-params": ["diagnostics", "warnings", "bytecode", "cil", "directCil"],
+  "member-indexers/static-and-instance-members-through-indexers": ["diagnostics", "warnings", "bytecode", "cil", "directCil"],
   "member-indexers/use-site-errors": ["diagnostics", "warnings"]
 }

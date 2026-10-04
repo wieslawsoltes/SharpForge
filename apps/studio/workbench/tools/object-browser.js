@@ -1,61 +1,53 @@
 import {createToolTree} from './tree-host.js';
 import {button, runAction} from '../ui.js';
+import {MetadataCatalog} from '../metadata/catalog.js';
+import {createStudioMetadataSources} from '../metadata/source-provider.js';
+import {metadataDefinition} from '../metadata/definition.js';
+import {metadataTree} from '../metadata/tree.js';
 
-/** Browses the actual registered framework contracts and inspected assembly summaries. */
+/** Compatibility entry point for existing hosts that provide inspected summaries. */
 export async function objectBrowserNodes(assemblies = []) {
-  const {types, contracts, propertiesFor, eventsFor} = await import('@sharpforge/framework');
-  const members = new Map();
-  for (const contract of contracts) {
-    const owner = members.get(contract.owner) ?? [];
-    owner.push(contract);
-    members.set(contract.owner, owner);
-  }
-  const namespaces = new Map();
-  for (const type of types.values()) {
-    const namespace = type.name.slice(0, type.name.lastIndexOf('.')) || '(global)';
-    let group = namespaces.get(namespace);
-    if (!group) namespaces.set(namespace, group = {id: 'framework:namespace:' + namespace, label: namespace, children: []});
-    const children = (members.get(type.name) ?? []).map(contract => ({
-      id: 'framework:contract:' + contract.id,
-      label: contract.name, detail: `${contract.isStatic ? 'static ' : ''}${contract.result} ${contract.owner}.${contract.name}` +
-        `(${contract.parameters.join(', ')})\nContract ${contract.id} · ${contract.kind}`, children: []
-    }));
-    for (const [name, property] of Object.entries(propertiesFor(type.name))) children.push({
-      id: 'framework:property:' + type.name + ':' + name, label: name,
-      detail: `${property.type} ${type.name}.${name} { get; ${property.readOnly ? '' : 'set; '}}`, children: []
-    });
-    for (const [name, delegate] of Object.entries(eventsFor(type.name))) children.push({
-      id: 'framework:event:' + type.name + ':' + name, label: name, detail: `event ${delegate} ${type.name}.${name}`, children: []
-    });
-    group.children.push({id: 'framework:type:' + type.name, label: type.name.split('.').at(-1),
-      detail: `${type.kind} ${type.name}${type.base ? ' : ' + type.base : ''}\nSharpForge framework metadata`, children});
-  }
-  const roots = [{id: 'framework', label: 'SharpForge Framework (registered contract metadata)', children: [...namespaces.values()]}];
-  for (const assembly of assemblies) {
-    const summary = assembly.summary ?? assembly;
-    const id = 'assembly:' + summary.name;
-    roots.push({id, label: summary.name, children: (summary.types ?? []).map(type => ({
-      id: id + ':type:' + type.token, label: type.name,
-      detail: JSON.stringify(type, null, 2), children: (summary.methods ?? []).filter(method =>
-        method.owner === type.name || method.owner === type.fullName).map(method => ({
-        id: id + ':method:' + method.token, label: method.name,
-        detail: method.signature ?? JSON.stringify(method, null, 2), metadata: {assembly, method}, children: []
-      }))}))});
-  }
-  return roots;
+  const catalog = new MetadataCatalog({sources: createStudioMetadataSources({additional: () => assemblies})});
+  try {
+    const result = await catalog.load();
+    return await metadataTree(result.assemblies, result);
+  } finally { catalog.dispose(); }
 }
 
-export function mountObjectBrowser(host, {assemblies = () => [], inspect, onError}) {
-  let disposed = false;
-  const tree = createToolTree(host, {label: 'Object Browser', onError, onOpen: node => node.metadata && inspect?.(node.metadata)});
+export function mountObjectBrowser(host, {assemblies = () => [], metadata, context = () => ({}), inspect, onError}) {
+  const catalog = metadata ?? new MetadataCatalog({sources: createStudioMetadataSources({additional: assemblies})});
+  let disposed = false, controller, definitionController, generation = 0;
+  const tree = createToolTree(host, {label: 'Object Browser', onError, onOpen: async node => {
+    if (!node.metadata) return;
+    definitionController?.abort();
+    definitionController = new AbortController();
+    const current = {...context()};
+    const {assembly, type, member} = node.metadata;
+    const document = await metadataDefinition({assembly, type, members: member ? [member] : []}, {signal: definitionController.signal});
+    if (disposed || current.projectId !== context().projectId || current.workspaceEpoch !== context().workspaceEpoch) return;
+    if (inspect) await inspect({...node.metadata, document});
+    else tree.details.textContent = document.text;
+  }});
   const refresh = runAction(async () => {
-    const nodes = await objectBrowserNodes(assemblies());
-    if (!disposed) {
+    controller?.abort();
+    definitionController?.abort();
+    controller = new AbortController();
+    const signal = controller.signal, current = context(), serial = ++generation;
+    const projectId = current.projectId, workspaceEpoch = current.workspaceEpoch;
+    tree.status.textContent = 'Reading referenced assembly metadata…';
+    try {
+      const result = await catalog.load({projectId, signal});
+      const nodes = await metadataTree(result.assemblies, {...result, signal});
+      if (disposed || serial !== generation || context().projectId !== projectId || context().workspaceEpoch !== workspaceEpoch) return;
       tree.setNodes(nodes);
-      tree.status.textContent = 'Registered framework contracts and loaded assembly metadata. Unloaded external assemblies are not indexed.';
-    }
+      tree.status.textContent = result.assemblies.length + ' metadata sources' + (projectId ? ' · project ' + projectId : '') +
+        (result.diagnostics.length ? ' · ' + result.diagnostics.length + ' unavailable references; select their rows for details' : '') +
+        '. PE inspection does not execute referenced code.';
+    } catch (error) { if (error.name !== 'AbortError') throw error; }
   }, onError);
   tree.toolbar.append(button(host.ownerDocument, 'Refresh metadata', refresh));
   refresh();
-  return {refresh, dispose: () => { disposed = true; tree.dispose(); }};
+  return {refresh, dispose: () => {
+    disposed = true; controller?.abort(); definitionController?.abort(); if (!metadata) catalog.dispose(); tree.dispose();
+  }};
 }

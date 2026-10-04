@@ -1,13 +1,14 @@
 {
-  "breaking-changes/extension-type-name-csharp-13": ["diagnostics", "warnings", "bytecode", "cil"],
+  "breaking-changes/extension-type-name-csharp-13": ["diagnostics", "warnings", "bytecode", "cil", "directCil"],
   "breaking-changes/extension-type-name-csharp-14": ["diagnostics", "warnings"],
-  "breaking-changes/field-keyword-csharp-13": ["diagnostics", "warnings", "bytecode", "cil"],
-  "breaking-changes/field-keyword-csharp-14": ["diagnostics", "warnings", "bytecode", "cil"],
+  "breaking-changes/field-keyword-csharp-13": ["diagnostics", "warnings", "bytecode", "cil", "directCil"],
+  "breaking-changes/field-keyword-csharp-14": ["diagnostics", "warnings", "bytecode", "cil", "directCil"],
   "breaking-changes/inferred-tuple-names-csharp-7": ["diagnostics", "warnings"],
   "breaking-changes/inferred-tuple-names-csharp-7-1": ["diagnostics", "warnings", "bytecode", "cil"],
-  "breaking-changes/record-type-name-csharp-8": ["diagnostics", "warnings", "bytecode", "cil"],
-  "breaking-changes/record-type-name-csharp-9": ["diagnostics", "warnings", "bytecode", "cil"],
-  "breaking-changes/required-scoped-file-type-names-csharp-10": ["diagnostics", "warnings", "bytecode", "cil"],
+  "breaking-changes/record-type-name-csharp-8": ["diagnostics", "warnings", "bytecode", "cil", "directCil"],
+  "breaking-changes/record-type-name-csharp-9": ["diagnostics", "warnings", "bytecode", "cil", "directCil"],
+  "breaking-changes/required-scoped-file-type-names-csharp-10": ["diagnostics", "warnings", "bytecode", "cil", "directCil"],
   "breaking-changes/required-scoped-file-type-names-csharp-11": ["diagnostics", "warnings"],
-  "breaking-changes/target-typed-conditional-csharp-8": ["diagnostics", "warnings"]
+  "breaking-changes/target-typed-conditional-csharp-8": ["diagnostics", "warnings"],
+  "breaking-changes/target-typed-conditional-csharp-9": ["directCil"]
 }

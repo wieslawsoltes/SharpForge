@@ -10,6 +10,8 @@ Descriptors expose `name`, `metadataToken`, `declaringType`, `module`, `assembly
 lookup reads no signature blob or executable body. Lazy `signature` exposes a
 deeply frozen CIL field-signature AST, preserving generic variables, arrays and
 custom modifiers. It does not resolve TypeRefs or substitute generic arguments.
+Lazy [custom modifier token queries](CUSTOM-MODIFIERS.md) expose required and
+optional outer modifiers in CoreCLR reflection order.
 
 Lazy `constant` shares the module's raw Constant index with Param metadata.
 `module.constant(token)` accepts Field, Param or Property tokens and returns the
@@ -28,8 +30,8 @@ bounded to 100,000 rows, as is each owner table queried directly through
 `module.constant`. Field names are limited to 4,096 UTF-8 bytes; field
 signature and Constant blobs to 1 MiB, checked before decoding or copying.
 Malformed signatures, ownership or defaults produce `SFCLR005`; limits produce
-`SFCLR007`. Signature nesting uses existing CIL decoder bounds. Public module
-queries honor context disposal; this synchronous service introduces no async
+`SFCLR007`. Signature nesting uses existing CIL decoder bounds. Retained metadata
+remains usable during cooperative unloading; this synchronous service introduces no async
 cancellation operation.
 
 The native fixture covers classes, a generic class, an enum and a struct with

@@ -48,10 +48,4 @@ The orchestrator already obtains the complete options from each launch profile. 
 
 ## Direct debug-state write gate
 
-`scripts/quality/session-state-ownership.js` can scan every Studio JavaScript module using the existing lexical tokenizer. Direct `state.debug` writes are permitted only in its exact application-state/compatibility ownership inventory. There are no legacy Studio exceptions. The guard recognizes dot/computed writes, assignment operators, updates, deletion and destructuring while excluding reads, comparisons, comments and string contents. It is a lexical boundary check, not alias or data-flow analysis.
-
-The sessions/runtime review retains its three independent checker cases in
-`tests/a19-session-state-ownership.test.js`. The final composition layer installs
-`tests/a19-state-ownership.test.js`, whose fourth case scans the actual integrated
-Studio tree. This layer does not claim that the pre-composition Studio root has
-already transferred its state to session ownership.
+`tests/a19-state-ownership.test.js` scans every Studio JavaScript module using the existing lexical tokenizer. Direct `state.debug` writes are permitted only in the exact application-state/compatibility ownership inventory in `scripts/quality/session-state-ownership.js`. There are no legacy Studio exceptions. The guard recognizes dot/computed writes, assignment operators, updates, deletion and destructuring while excluding reads, comparisons, comments and string contents. It is a lexical boundary check, not alias or data-flow analysis.

@@ -25,6 +25,87 @@ scopes remain accepted. Constants accept primitive `type`/`value` pairs, optiona
 BigInt for 64-bit integers. Invalid names, ranges, imports and references throw
 `SymbolError`.
 
+`readPortablePdb` reads complete primitive and enum LocalConstant signatures,
+ordered `customModifiers` (`required`, `typeToken`), object/string null and typed
+class null. Existing character values remain numeric UTF-16 units and 64-bit
+integers remain BigInt. Strings preserve BOMs, embedded NUL and unmatched UTF-16
+surrogates. Enums retain the historical coded `enumType` and additionally expose
+the full `enumTypeToken` and `enumTypeVerified: false`; standalone reading does
+not resolve enum definitions.
+Typed null exposes `type: 'class'`, `typeToken` and `value: null`.
+Malformed Boolean values, fixed-width payloads, trailing data and out-of-range
+handles fail explicitly. Type-dependent general constants (including decimal,
+DateTime and value-type defaults) retain owned `raw` bytes and expose
+`decoded: false`, `reason: 'type-metadata-required'`, `typeKind`, `typeToken` and
+`defaultValue` (whether the payload is absent). Their values are not guessed.
+
+Reader options `maxConstantBytes` (16 MiB default, 64 MiB hard cap) and
+`maxConstantEntries` (100,000 default, 1,000,000 hard cap, counting rows plus
+custom modifiers) bound aggregate allocations before copying any constant.
+`maxConstantModifiers` defaults to 64 per
+constant, capped at 1,024. Constant names are capped at 3,072 UTF-8 bytes before
+decoding and 1,024 UTF-16 units afterward. These options also apply through
+`loadSymbols`. Native C# examples and offline reference data are in
+`interop/LocalConstants` and `tests/fixtures/portable-pdb-local-constants`.
+
+For bound local TypeDef enums, `loadSymbols` verifies the metadata-declared
+framework `System.Enum` base and exactly one special `value__` instance field.
+Its scalar signature must match the constant's encoded kind; mismatches,
+unsupported bases and malformed fields fail explicitly. Successful checks set
+`enumTypeVerified: true`; this verifies base identity and underlying scalar type,
+not every ECMA type-definition rule. TypeRef/TypeSpec enums and unbound symbols
+retain decoded scalar values with `enumTypeVerified: false`; external assemblies
+are not loaded. FieldPtr indirection and field custom modifiers are supported.
+Before list expansion, the binder caps selected enums at 1,024 and fields at
+4,096 per enum / 65,536 total. Inspected instance-field signatures are capped at
+4 KiB each / 1 MiB total, with decoder depth 32 / nodes 256; names use the same
+bounded metadata-name reader. Definitions are checked once per load and no PE
+views or signature ASTs escape. This reuses the captured native C# short enum.
+
+For bound symbols, `loadSymbols` recognizes a top-level `System.Decimal` or
+`System.DateTime` TypeDef/TypeRef only when its declared assembly scope matches an invariant-culture
+framework identity: `System.Runtime` / `b03f5f7f11d50a3a`,
+`System.Private.CoreLib` / `7cec85d7bea7798e`, or `mscorlib` / `b77a5c561934e089`.
+AssemblyRef tokens and full public keys are supported; TypeDef requires its own
+Assembly public key. This checks declared metadata identity without loading
+assemblies or verifying signatures. Custom-assembly lookalikes remain unresolved.
+The binder caps inspected assembly scopes at 1,024, each public key at 16 KiB
+and aggregate key bytes at 1 MiB before hashing. Decimal
+constants expose `type: 'decimal'`, exact decimal text in `value`, and
+`decimal: { coefficient, scale, negative }`; `coefficient` is an unsigned 96-bit
+BigInt. Trailing fractional zeroes and the sign bit of zero are preserved without
+floating-point conversion. Their complete signature, raw bytes and type token
+remain available. Payload length must be 13 bytes and scale must be 0–28.
+Standalone PDBs and explicitly unbound symbols remain unresolved. TypeSpec,
+nested same-name types and other type-dependent payloads remain outside
+this binding increment. The native reference uses SRM `BlobReader.ReadDecimal`;
+constructed boundary cases test the full coefficient, scale and sign encoding.
+
+DateTime constants expose `type: 'datetime'`, exact BigInt ticks in `value`, and
+`dateTime: { ticks, kind: 'unspecified' }`. A tick is 100 nanoseconds from
+0001-01-01 in the Gregorian calendar. The payload must be exactly eight bytes;
+negative ticks and values above 3155378975999999999 fail explicitly. The
+representation preserves all ticks without converting to JavaScript Date or
+inferring UTC/local time. The same declared framework identity checks, owned raw
+signature, modifiers and unbound behavior apply. VB Date literals and SRM
+`BlobReader.ReadDateTime` are captured by
+`scripts/validate-pdb-datetime-constants.mjs`; offline tests read that corpus.
+Calendar formatting, time-zone conversion, DateTimeOffset and general type
+resolution are separate capabilities.
+
+Payload-free `VALUETYPE` constants referencing a TypeSpec for `System.Nullable<T>`
+now bind to `type: 'nullable'`, `value: null`, `decoded: true` and
+`defaultValue: true`. The original TypeSpec token and owned raw signature remain
+available. This represents the boxed default (no value), not a fabricated value
+of `T`. The nullable definition uses the same declared framework identity gate.
+Closed arguments supported here are Boolean, Char, signed/unsigned integer widths,
+Single, Double, IntPtr, UIntPtr and identity-checked Decimal/DateTime. Other
+constructed types, generic variables, modified arguments and nonempty nullable
+payloads remain explicitly unresolved. TypeSpec count (1,024), each blob (4 KiB)
+and aggregate bytes (1 MiB) are checked before decoding; each AST has depth 32
+and node 256 limits. ASTs/PE views do not escape the load. The native reference
+uses SRM-built metadata and CLR boxed defaults, not C# nullable const declarations.
+
 Source documents accept `hashAlgorithm` and `language` GUIDs and a `hash`
 Uint8Array. SHA-1, SHA-256, SHA-384 and SHA-512 are computed synchronously when omitted;
 supplied hashes are checked against the exact source bytes. Hash inputs are exact source
@@ -81,7 +162,7 @@ zero-based #Pdb stream position used to zero the identity while hashing.
 | Capability | Writer and reader coverage |
 | --- | --- |
 | Documents | Deduplicated names; SHA-1/256/384/512; arbitrary language GUIDs |
-| Locals and imports | Lexical scopes, primitive/raw constants, import kinds 1–9 |
+| Locals and imports | Lexical scopes, primitive/enum/modified/typed-null constants, explicit unresolved payloads, import kinds 1–9 |
 | State machines and CDI | Async/iterator links, EnC maps, seven compilation records, raw unknown records |
 | PE binding | CodeView, reproducible, checksums, embedded PDB, existing entries/overlays |
 | Native formats | Windows MSF and legacy CodeView detected with explicit unsupported errors |

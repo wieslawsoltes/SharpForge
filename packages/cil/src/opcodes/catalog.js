@@ -237,3 +237,6 @@ export const CilOpcodes = Object.freeze(Object.fromEntries(rows.map(row => {
   return [name, Object.freeze({ name, value, operand, operandType, tokenKind: tokenKinds[operandType] ?? null,
     stackBehaviourPop, stackBehaviourPush, flowControl, opCodeType, size: value > 255 ? 2 : 1 })];
 })));
+
+// Keep the public catalog's prototype unchanged. Internal lookup cannot observe inherited names.
+export const opcodeByName = Object.freeze(Object.assign(Object.create(null), CilOpcodes));

@@ -1,4 +1,5 @@
 import {invokeLegacyStringMember} from './system/string.js';
+import {objectToString} from './system/object-string.js';
 
 function parseInt32Value(host, input) {
   if (input === null) throw host.fault('ArgumentNullException', 'String cannot be null');
@@ -83,7 +84,7 @@ const handlers = Object.freeze({
   'Convert.ToInt32': convertInt32,
   'Convert.ToDouble': convertDouble,
   'Convert.ToString': convertString,
-  'object.ToString': convertString,
+  'object.ToString': objectToString,
   'string.Concat': invokeLegacyString,
   'string.IsNullOrEmpty': invokeLegacyString,
   'string.Substring': invokeLegacyString,
