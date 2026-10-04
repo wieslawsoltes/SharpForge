@@ -17,3 +17,14 @@ integrated qualification gate.
 
 Project 14 additions are allocated from the existing area contract reservations. Released
 framework contract identifiers and signatures retain their original meanings.
+
+Drag services include routed data and flags, stale-response protection, internal worker
+replies, expiring file tokens, and per-session permission and disposal.
+
+Only modules present in this publication tree are exported. The A16 fixtures are
+authored; validation of this exact publication tree is pending. Browser, native,
+and assistive technology qualification remain separate.
+
+Event transport includes finite data that is safe to clone, bounded coalesced samples,
+and target-relative pointer points hydrated by the host. Functions do not cross
+the transport boundary.
