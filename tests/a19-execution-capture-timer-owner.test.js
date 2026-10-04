@@ -11,13 +11,13 @@ function browserTimers(t) {
   const cancelled = [];
   let nextId = 0;
   t.mock.method(globalThis, 'setTimeout', function(callback, delay) {
-    if (this !== globalThis) throw new TypeError('Illegal invocation: browser timer receiver');
+    if (this !== undefined && this !== globalThis) throw new TypeError('Illegal invocation: browser timer receiver');
     const id = ++nextId;
     pending.set(id, {callback, delay});
     return id;
   });
   t.mock.method(globalThis, 'clearTimeout', function(id) {
-    if (this !== globalThis) throw new TypeError('Illegal invocation: browser timer receiver');
+    if (this !== undefined && this !== globalThis) throw new TypeError('Illegal invocation: browser timer receiver');
     cancelled.push(id);
     pending.delete(id);
   });
