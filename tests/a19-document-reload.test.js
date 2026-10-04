@@ -77,8 +77,9 @@ test('reload commits the shared model, saved baseline and encoding before docume
 test('reload is one undo step, retains an unaffected caret and restores clean state on redo', t => {
   const { documents, model } = fixture(t);
   model.setSelections([{ anchor: 2, active: 2 }]);
+  const selections = model.selections;
   const result = reload(documents, 'head\nBODY\nend\n');
-  assert.deepEqual(model.selections, [{ anchor: 2, active: 2 }]);
+  assert.deepEqual(model.selections, selections);
   assert.equal(model.undoStack.depth, 1);
   assert.equal(model.isDirty, false);
   assert.equal(model.undo(), true);
@@ -96,6 +97,7 @@ test('a metadata rejection restores source, undo, selections, baseline, metadata
   model.applyEdits([{ start: 5, end: 9, text: 'unsaved' }]);
   documents.markSaved(uri, originalSave);
   model.setSelections([{ anchor: 6, active: 9 }]);
+  const selections = model.selections;
   const before = model.snapshot();
   const baseline = documents.baselines.get(uri);
   const revision = documents.revision;
@@ -122,7 +124,7 @@ test('a metadata rejection restores source, undo, selections, baseline, metadata
   assert.equal(model.metadata.encoding, 'utf-8');
   assert.equal(model.metadata.bom, false);
   assert.equal(record.originalSource, undefined);
-  assert.deepEqual(model.selections, [{ anchor: 6, active: 9 }]);
+  assert.deepEqual(model.selections, selections);
   assert.deepEqual(model.undoStack.statistics, undo);
   assert.deepEqual(events, []);
 });
