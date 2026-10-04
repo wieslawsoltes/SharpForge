@@ -8,7 +8,7 @@ import { clean, environment, sha, writeJson } from '../../../scripts/conformance
 import { verifyMetadataGenerationCapture } from '../../../tests/fixtures/metadata-generations/verify.mjs';
 import { replayMetadataGenerations } from '../../../tests/fixtures/metadata-generations/replay.mjs';
 import { benchmarkCheckout, benchmarkTools } from './metadata-generations-benchmark-source.mjs';
-import { features } from './metadata-generations-benchmark-protocol.mjs';
+import { features, nativeReferenceDirectory } from './metadata-generations-benchmark-protocol.mjs';
 import { dataFacts } from './metadata-generations-benchmark-facts.mjs';
 import { measureWorkload } from './metadata-generations-benchmark-measure.mjs';
 
@@ -117,9 +117,9 @@ try {
   report.environment = { ...environment(root), v8: process.versions.v8, execArgv: process.execArgv,
     nodeOptions: process.env.NODE_OPTIONS ?? null, sharedHost: true, forcedGC: false, totalMemoryBytes: totalmem(),
     freeMemoryBytesBefore: freemem(), loadAverageBefore: loadavg(), memoryBefore: process.memoryUsage() };
-  const referenceBytes = readFileSync(resolve(root, 'tests/fixtures/metadata-generations/reference/native.json'));
+  const referenceBytes = readFileSync(resolve(root, nativeReferenceDirectory, 'native.json'));
   assert.equal(sha(referenceBytes), job.nativeSha256, 'Committed native reference pinned before launching the worker');
-  const verified = await verifyMetadataGenerationCapture(undefined, { strictSource: true });
+  const verified = await verifyMetadataGenerationCapture(resolve(root, nativeReferenceDirectory), { strictSource: true });
   const native = verified.record.corpora.mixed, inputs = verified.inputs.mixed;
   const replay = replayMetadataGenerations(native, inputs, assert.deepEqual);
   reader = replay.reader;

@@ -7,7 +7,8 @@ import { clean, distribution, environment, git, sha, writeJson } from '../../../
 import { runProcess } from '../../../scripts/conformance/oracle/process.js';
 import { verifyMetadataGenerationCapture } from '../../../tests/fixtures/metadata-generations/verify.mjs';
 import { benchmarkCheckout, benchmarkTools } from './metadata-generations-benchmark-source.mjs';
-import { baselineCommit, controls, features, measuredBatches, productCommit, warmupBatches } from './metadata-generations-benchmark-protocol.mjs';
+import { baselineCommit, controls, features, measuredBatches, nativeReferenceDirectory,
+  preparationProductCommit, warmupBatches } from './metadata-generations-benchmark-protocol.mjs';
 
 const root = realpathSync(fileURLToPath(new URL('../../../', import.meta.url)));
 assert.equal(process.argv.length, 6, 'Usage: benchmark-metadata-generations.mjs --baseline <checkout> --output <fresh-directory>');
@@ -132,15 +133,15 @@ async function prepare() {
   report.tools = benchmarkTools(root);
   const plan = JSON.parse(readFileSync(resolve(root, 'tests/fixtures/metadata-generations/validation-plan.json')));
   assert.equal(plan.performance.baselineCommit, baselineCommit);
-  assert.equal(plan.performance.productCommit, productCommit);
+  assert.equal(plan.performance.productCommit, preparationProductCommit);
   assert.deepEqual(plan.performance.controls, controls);
   assert.deepEqual(plan.performance.features, features);
   assert.equal(plan.performance.warmupBatches, warmupBatches);
   assert.equal(plan.performance.measuredBatches, measuredBatches);
-  const nativePath = 'tests/fixtures/metadata-generations/reference/native.json';
+  const nativePath = nativeReferenceDirectory + '/native.json';
   git(root, 'ls-files', '--error-unmatch', '--', nativePath);
   const nativeBytes = readFileSync(resolve(root, nativePath));
-  const verified = await verifyMetadataGenerationCapture(undefined, { strictSource: true });
+  const verified = await verifyMetadataGenerationCapture(resolve(root, nativeReferenceDirectory), { strictSource: true });
   report.native = { path: nativePath, sha256: sha(nativeBytes), gitBlob: git(root, 'rev-parse', 'HEAD:' + nativePath),
     retainedAtCommit: report.harnessCommit, captureCommit: verified.record.sourceCommit,
     toolchain: verified.record.toolchain, observerSha256: verified.record.observerSHA256,

@@ -1,5 +1,7 @@
 export const baselineCommit = '31900dce5c1454c1f9c244c9ac14e1798eac3e5f';
-export const productCommit = '02df6354e3152beac511d29b20272050ae03f486';
+export const preparationProductCommit = '02df6354e3152beac511d29b20272050ae03f486';
+export const productCommit = 'edafb8018be5b75916c8655e9ff1147b38035a24';
+export const nativeReferenceDirectory = 'tests/fixtures/metadata-generations/reference-ordinal';
 export const warmupBatches = 20;
 export const measuredBatches = 100;
 export const controls = Object.freeze([
@@ -32,6 +34,10 @@ export const toolPaths = Object.freeze([
   'packages/cil/tools/metadata-generations-benchmark-facts.mjs',
   'packages/cil/tools/metadata-generations-benchmark-measure.mjs',
   'tests/fixtures/metadata-generations/validation-plan.json',
+  'tests/fixtures/metadata-generations/qualification/ordinal-validation-plan.json',
+  'tests/fixtures/metadata-generations/qualification/ordinal-source-revision.json',
+  'tests/fixtures/metadata-generations/qualification/ordinal-benchmark-pin.diff',
+  'tests/fixtures/metadata-generations/qualification/ordinal-run-step.py',
   'tests/fixtures/metadata-generations/verify.mjs',
   'tests/fixtures/metadata-generations/replay.mjs',
   'scripts/conformance/perf/core.js', 'scripts/conformance/perf/alloc.js',
