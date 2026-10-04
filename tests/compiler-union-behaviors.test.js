@@ -1,11 +1,10 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { compileToAssembly } from '@sharpforge/compiler';
 import { parse } from '@sharpforge/syntax';
 import { SourceText } from '@sharpforge/text';
-import { CilVirtualMachine } from '@sharpforge/runtime';
 import { SemanticAnalysis } from '../packages/compiler/src/semantic-analysis.js';
 import { unionInputs, unionPreviewOptions } from './fixtures/compiler-unions/contracts.js';
+import { runUnion as run, unionNativeSkip } from './fixtures/compiler-unions/native-test.js';
 
 const analyze = source => {
   const files = unionInputs(source).map(file => parse(new SourceText(file.text, file.uri), undefined, { languageVersion: 'preview' }));
@@ -14,15 +13,8 @@ const analyze = source => {
   return analysis.diagnostics;
 };
 const relevant = (source, codes) => analyze(source).filter(diagnostic => codes.includes(diagnostic.code));
-const run = source => {
-  const compiled = compileToAssembly(unionInputs(source), unionPreviewOptions);
-  assert.equal(compiled.success, true, compiled.diagnostics.map(diagnostic => diagnostic.code + ': ' + diagnostic.message).join('\n'));
-  const result = new CilVirtualMachine(compiled.assembly, { maxInstructions: 100000 }).run();
-  assert.equal(result.state, 'terminated', result.fault?.stack);
-  return result.output;
-};
 
-test('standard implicit case conversions work and user or union conversions cannot be chained', () => {
+test('standard implicit case conversions work and user or union conversions cannot be chained', { skip: unionNativeSkip }, () => {
   assert.equal(run(`using System;
 union U(long, string);
 class Program { static void Main() { int number = 23; U value = number; Console.WriteLine(value is long result && result == 23); } }`), 'True\n');
@@ -34,7 +26,7 @@ class Program { static void Main() { int number = 23; U value = number; Console.
   for (const source of invalid) assert.ok(relevant(source, ['CS0029', 'CS0030']).length, source);
 });
 
-test('an applicable user-defined conversion operator shadows a union conversion, including explicit casts', () => {
+test('an applicable user-defined conversion operator shadows a union conversion, including explicit casts', { skip: unionNativeSkip }, () => {
   assert.equal(run(`using System;
 [System.Runtime.CompilerServices.Union]
 struct U
@@ -60,7 +52,7 @@ class Program
 }`), 'True\nTrue\nTrue\n');
 });
 
-test('logical patterns preserve or change value sources according to the pinned proposal', () => {
+test('logical patterns preserve or change value sources according to the pinned proposal', { skip: unionNativeSkip }, () => {
   assert.equal(run(`using System;
 union U(int, string);
 class Program
@@ -80,7 +72,7 @@ class Program
 }`), 'True\nTrue\nTrue\nTrue\nTrue\nTrue\nTrue\n');
 });
 
-test('union member providers use their factories and interface getters for real structs', () => {
+test('union member providers use their factories and interface getters for real structs', { skip: unionNativeSkip }, () => {
   assert.equal(run(`using System;
 [System.Runtime.CompilerServices.Union]
 struct Provided : Provided.IUnionMembers
@@ -107,7 +99,7 @@ class Program
 }`), 'True\nTrue\n');
 });
 
-test('union construction uses normal overload selection including in parameters and explicit ambiguity diagnostics', () => {
+test('union construction uses normal overload selection including in parameters and explicit ambiguity diagnostics', { skip: unionNativeSkip }, () => {
   assert.equal(run(`using System;
 [System.Runtime.CompilerServices.Union]
 struct U { public U(in int value) { Value = value; } public object Value { get; } }
@@ -120,7 +112,7 @@ class Program { static void Main() { U value = 3; Console.WriteLine(value is 3);
   assert.equal(relevant(noncreation, ['SF2203']).length, 1);
 });
 
-test('null patterns unwrap both a nullable union and its contained value', () => {
+test('null patterns unwrap both a nullable union and its contained value', { skip: unionNativeSkip }, () => {
   assert.equal(run(`using System;
 union U(int, string);
 class Program
@@ -138,7 +130,7 @@ class Program
 }`), 'True\nTrue\nTrue\nTrue\n');
 });
 
-test('typed recursive patterns use case members and case-incompatible types are errors', () => {
+test('typed recursive patterns use case members and case-incompatible types are errors', { skip: unionNativeSkip }, () => {
   const types = 'class Cat { public string Name => "Fido"; } sealed class Dog { } union Pet(Cat, Dog);';
   assert.equal(run(`using System; ${types}
 class Program { static void Main() { Pet pet = new Cat(); Console.WriteLine(pet is Cat { Name: "Fido" }); } }`), 'True\n');
@@ -159,7 +151,7 @@ test('case coverage, relational partitions, overlap and guarded-arm diagnostics 
   assert.equal(relevant('union U(object); class C { int Match(U value) => value switch { string => 1, string => 2 }; }', ['CS8510']).length, 1);
 });
 
-test('union switch statements and goto case use the same constant-pattern value space', () => {
+test('union switch statements and goto case use the same constant-pattern value space', { skip: unionNativeSkip }, () => {
   assert.equal(run(`using System;
 union U(int, string);
 class Program
@@ -180,7 +172,7 @@ class Program
   assert.deepEqual(relevant(duplicate, ['CS8120']), []);
 });
 
-test('direct non-boxing access is preferred and read only once across switch alternatives', () => {
+test('direct non-boxing access is preferred and read only once across switch alternatives', { skip: unionNativeSkip }, () => {
   assert.equal(run(`using System;
 [System.Runtime.CompilerServices.Union]
 struct U
@@ -245,7 +237,7 @@ class C
   assert.deepEqual(relevant(custom, ['CS8655']), []);
 });
 
-test('obsolete and experimental optional non-boxing accessors are ignored without calling them', () => {
+test('obsolete and experimental optional non-boxing accessors are ignored without calling them', { skip: unionNativeSkip }, () => {
   assert.equal(run(`using System;
 [System.Runtime.CompilerServices.Union]
 struct U

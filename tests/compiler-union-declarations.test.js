@@ -10,6 +10,7 @@ import { importAssembly } from '../packages/compiler/src/metadata-import/pe-symb
 import { unionShapeOf } from '../packages/compiler/src/symbols/union-shape.js';
 import { NullableAnnotation, SymbolKind, TypeKind } from '../packages/compiler/src/symbols/types.js';
 import { unionContracts, unionInputs, unionPreviewOptions } from './fixtures/compiler-unions/contracts.js';
+import { runUnion as run, unionNativeSkip, unionReferences, unionReferenceSkip } from './fixtures/compiler-unions/native-test.js';
 
 // Proposal expectations, not fabricated Roslyn output: the pinned SDK does not parse union declarations.
 const analyze = (source, options = {}) => {
@@ -21,13 +22,6 @@ const analyze = (source, options = {}) => {
 };
 const errors = analysis => analysis.diagnostics.filter(diagnostic => diagnostic.severity === 'error');
 const codes = analysis => errors(analysis).map(diagnostic => diagnostic.code);
-const run = source => {
-  const compiled = compileToAssembly(unionInputs(source), unionPreviewOptions);
-  assert.equal(compiled.success, true, compiled.diagnostics.map(diagnostic => diagnostic.code + ': ' + diagnostic.message).join('\n'));
-  const result = new CilVirtualMachine(compiled.assembly, { maxInstructions: 100000 }).run();
-  assert.equal(result.state, 'terminated', result.fault?.stack);
-  return result.output;
-};
 
 test('SF-A02-T89 proposal stamp is exact and does not claim a Roslyn oracle', () => {
   assert.equal(previewRevisions.Unions.commit, '412dc3023500b69f684c365762e38db6ee7564ea');
@@ -51,11 +45,12 @@ test('union lowering declares a real struct, nullable Value and one constructor 
   assert.equal(emitted.success, true, JSON.stringify(emitted.diagnostics));
   const imported = importAssembly(emitted.assembly).globalNamespace.lookupType('NumberOrText', 0);
   assert.equal(imported.typeKind, TypeKind.Struct);
+  assert.equal(imported.getMembers('.ctor').length, 2);
   assert.equal(imported.getMembers().filter(member => member.kind === SymbolKind.Field && !member.isStatic).length, 1);
   assert.equal(imported.attributes.some(attribute => attribute.attributeClassName === 'System.Runtime.CompilerServices.UnionAttribute'), true);
 });
 
-test('required union contracts come from source or references and are never synthesized', () => {
+test('required union contracts are never synthesized when missing', () => {
   const source = 'public union U(int, string); class Program { static void Main() { } }';
   const emitted = compileToAssembly(source, unionPreviewOptions);
   assert.equal(emitted.success, false);
@@ -63,9 +58,17 @@ test('required union contracts come from source or references and are never synt
     "Predefined type 'System.Runtime.CompilerServices.IUnion' is not defined or imported",
     "Predefined type 'System.Runtime.CompilerServices.UnionAttribute' is not defined or imported",
   ]);
-  const contracts = compileToAssembly(unionContracts, { ...unionPreviewOptions, outputKind: 'library', name: 'UnionContracts' });
+});
+
+test('required union contracts can come from referenced assemblies', { skip: unionReferenceSkip }, () => {
+  const source = 'public union U(int, string); class Program { static void Main() { } }';
+  const contracts = compileToAssembly(unionContracts, {
+    ...unionPreviewOptions, outputKind: 'library', name: 'UnionContracts', references: unionReferences,
+  });
   assert.equal(contracts.success, true, JSON.stringify(contracts.diagnostics));
-  const referenced = compileToAssembly(source, { ...unionPreviewOptions, references: [{ bytes: contracts.assembly, display: 'UnionContracts.dll' }] });
+  const referenced = compileToAssembly(source, {
+    ...unionPreviewOptions, references: [...unionReferences, { bytes: contracts.assembly, display: 'UnionContracts.dll' }],
+  });
   assert.equal(referenced.success, true, JSON.stringify(referenced.diagnostics));
 });
 
@@ -80,7 +83,7 @@ test('semantic conversion and type queries retain the union conversion before it
   assert.equal(model.getTypeInfo(node).convertedType.toDisplayString(), 'U');
 });
 
-test('generated constructor boxing, default null and struct copies execute on direct CIL', () => {
+test('generated constructor boxing, default null and struct copies execute on direct CIL', { skip: unionNativeSkip }, () => {
   assert.equal(run(`
 using System;
 union U(int, string);
@@ -99,19 +102,19 @@ class Program
 }`), 'True\nTrue\nTrue\nTrue\n');
 });
 
-test('union metadata imports retain case conversions and pattern matching', () => {
+test('union metadata imports retain case conversions and pattern matching', { skip: unionReferenceSkip }, () => {
   const library = compileToAssembly(unionInputs('public union Imported(int, string);'), {
-    ...unionPreviewOptions, name: 'ImportedUnions', outputKind: 'library',
+    ...unionPreviewOptions, name: 'ImportedUnions', outputKind: 'library', references: unionReferences,
   });
   assert.equal(library.success, true, JSON.stringify(library.diagnostics));
   const consumer = compileToAssembly(`class Program
     { static void Main() { Imported value = 3; System.Console.WriteLine(value is int number && number == 3); } }`, {
-    ...unionPreviewOptions, references: [{ bytes: library.assembly, display: 'ImportedUnions.dll' }],
+    ...unionPreviewOptions, references: [...unionReferences, { bytes: library.assembly, display: 'ImportedUnions.dll' }],
   });
   assert.equal(consumer.success, true, JSON.stringify(consumer.diagnostics));
 });
 
-test('generic, nullable and nested case types retain their construction signatures', () => {
+test('generic, nullable and nested case types retain their construction signatures', { skip: unionNativeSkip }, () => {
   assert.equal(run(`
 using System;
 union Inner(int, string);
@@ -164,4 +167,15 @@ test('union declarations remain preview-only and the source VM reports its real 
   const sourceVm = compile(unionInputs(source), unionPreviewOptions);
   assert.equal(sourceVm.image, null);
   assert.ok(sourceVm.diagnostics.some(diagnostic => diagnostic.code === 'SF2200'), JSON.stringify(sourceVm.diagnostics));
+});
+
+test('the CIL VM explicitly rejects managed-reference and generic union aggregate storage', () => {
+  for (const declaration of ['union U(int, string);', 'union Generic<T>(T, string);']) {
+    const type = declaration.includes('Generic') ? 'Generic<int>' : 'U';
+    const compiled = compileToAssembly(unionInputs(`${declaration}
+      class Program { static void Main() { ${type} value = 1; System.Console.WriteLine(value.Value); } }`), unionPreviewOptions);
+    assert.equal(compiled.success, true, JSON.stringify(compiled.diagnostics));
+    assert.throws(() => new CilVirtualMachine(compiled.assembly),
+      /managed-reference fields|Generic aggregate owners require T03 value storage/);
+  }
 });

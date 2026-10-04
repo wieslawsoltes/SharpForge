@@ -1,7 +1,7 @@
 /** Real struct construction and cached union access for the pinned C# 15 proposal. */
 import { isReference, needsBox } from './type-facts.js';
 import { unionPatternOutputType } from '../../binder/unions/pattern-binding.js';
-import { TypeKind } from '../../symbols/types.js';
+import { RefKind, TypeKind } from '../../symbols/types.js';
 import { isUnionConversion } from '../../conversions/unions.js';
 
 /** CIL registration; all storage uses the ordinary struct, property and nullable emission machinery. */
@@ -47,6 +47,7 @@ export const UnionEmission = Base => class extends Base {
       const done = this.il.newLabel();
       const receiverType = this.unionReceiver(input, absent);
       this.unionMemberCall(member.getMethod, receiverType);
+      if (member.refKind !== RefKind.None) this.loadIndirect(member.type);
       this.il.emit('br', done).mark(absent);
       this.defaultValue(member.type);
       this.il.mark(done);

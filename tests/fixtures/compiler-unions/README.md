@@ -17,8 +17,9 @@ types are supplied by source or references.
 
 `contracts.js` supplies the required `UnionAttribute` and `IUnion` explicitly. The compiler emits neither contract
 when absent. Generated union structs contain one object field and receive ordinary struct copy/default behavior
-on direct CIL. The source bytecode VM still reports `SF2200` for source structs; native/Wasm qualification is
-recorded by the parent validation batch and is not implied by these tests.
+on CoreCLR through the direct CIL emitter. The CIL VM rejects managed-reference fields and generic aggregate
+owners; focused tests assert those actual boundaries. The source bytecode VM reports `SF2200` for source structs.
+These VM paths remain unsupported, and no browser/Wasm qualification is implied by the native results.
 
 The following open rules remain explicit `SF2202` boundaries: malformed custom basic patterns,
 case-compatibility/exhaustiveness decisions that depend on special treatment of direct `Value` property patterns,
@@ -35,3 +36,15 @@ syntax oracle. At the scheduled validation slot, provide `SHARPFORGE_ORACLE_DOTN
 ```sh
 node scripts/limited.js node tests/fixtures/compiler-unions/capture-native.mjs /absolute/path/union-native.json
 ```
+
+The retained `qualification/native-10.0.201.json` records a passing comparison on SDK 10.0.201 / CoreCLR 10.0.5.
+Both programs produced ten `True` lines, no stderr and exit code 0. The compiler uses the same verified reference
+pack as the ordinary-C# reference build. `qualification/focused.log` records 62 passing focused union and adjacent
+record, pattern, nullable-loop and semantic-model tests, with zero skips. Runtime assertions use actual CoreCLR
+output through `native-test.js`; the expected strings are proposal expectations and are not labelled Roslyn pins.
+
+The initial run exposed a metadata-plan filter that omitted parameterized synthesized struct constructors, and
+the prior runtime tests assumed aggregate storage beyond the CIL VM's actual profile. The constructor filter was
+corrected, all output assertions were preserved on CoreCLR, and explicit VM rejection tests were added. Five
+additional regressions were reproduced before fixing constructor accessibility, ref-returning Value reads,
+direct-Value logical/constant boundaries, same-source `or` narrowing and sequential nullable switch flow.

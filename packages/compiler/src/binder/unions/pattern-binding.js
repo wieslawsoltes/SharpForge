@@ -29,9 +29,15 @@ export function unionPatternCompatible(caseType, testedType, conversions, core) 
 /** Type of the output value; null/not/or preserve the union instance, even when a child unwraps it. */
 export function unionPatternOutputType(pattern, inputType) {
   if (pattern.kind === 'AndPattern') return unionPatternOutputType(pattern.right, unionPatternOutputType(pattern.left, inputType));
+  if (pattern.kind === 'OrPattern') return pattern.narrowedType ?? inputType;
   if (pattern.unionAccess && !pattern.unionAccess.isNull)
     return pattern.testedType ?? pattern.value?.type ?? narrowedTypeOf(pattern, inputType);
   return narrowedTypeOf(pattern, inputType);
+}
+
+function changesUnionContents(pattern) {
+  if (pattern.unionAccess) return !pattern.unionAccess.isNull;
+  return pattern.kind === 'AndPattern' && (changesUnionContents(pattern.left) || changesUnionContents(pattern.right));
 }
 
 function accessPlan(binder, shape, pattern) {
@@ -51,6 +57,15 @@ function accessPlan(binder, shape, pattern) {
 
 /** Body-binder registration for union behaviors. */
 export const UnionBinding = Base => class extends Base {
+  constructor(...args) {
+    super(...args);
+    this.unionConversionContext = this.version.preview ? { within: this.c.containingType, module: this.d.assembly.module } : null;
+  }
+  node(...args) {
+    const result = super.node(...args);
+    if (this.unionConversionContext) result.unionConversionContext = this.unionConversionContext;
+    return result;
+  }
   unionShape(type, syntax) {
     if (!this.version.preview) return null;
     const shape = unionShapeOf(type, this.core);
@@ -102,6 +117,15 @@ export const UnionBinding = Base => class extends Base {
     if (!this.version.preview || !isUnionType(inputType)) return super.pattern(syntax, inputType, input);
     const shape = this.unionShape(inputType, syntax);
     if (!shape) return { kind: syntax.kind, syntax, hasErrors: true };
+    if (syntax.kind === 'OrPattern') {
+      const left = this.pattern(syntax.left, inputType, input);
+      const right = this.pattern(syntax.right, inputType, input);
+      const leftType = changesUnionContents(left) ? inputType : unionPatternOutputType(left, inputType);
+      const rightType = changesUnionContents(right) ? inputType : unionPatternOutputType(right, inputType);
+      const narrowedType = leftType.equals(rightType) || this.conversions.classifyStandardImplicit(rightType, leftType).exists ? leftType
+        : this.conversions.classifyStandardImplicit(leftType, rightType).exists ? rightType : inputType;
+      return { kind: 'OrPattern', syntax, left, right, narrowedType };
+    }
     if (syntax.kind === 'AndPattern') {
       const left = this.pattern(syntax.left, inputType, input);
       const narrowedType = unionPatternOutputType(left, inputType);
@@ -163,9 +187,18 @@ export const UnionBinding = Base => class extends Base {
       // Open question "Should direct Value property matching follow Union rules?", pinned lines 831-861.
       const shape = unionShapeOf(inputType, this.core);
       result.unionValueShape = shape;
-      const tested = result.pattern?.testedType;
-      if (tested && !shape.caseTypes.some(type => unionPatternCompatible(type, tested, this.conversions, this.core)))
-        this.report(syntax, DiagnosticId.SF2202, ['case compatibility for direct Value property matching', previewStampText('Unions')]);
+      const pending = [result.pattern];
+      while (pending.length) {
+        const pattern = pending.pop();
+        if (!pattern) continue;
+        const tested = pattern.testedType ?? (pattern.value?.constantValue?.isNull ? null : pattern.value?.type);
+        if (tested && !shape.caseTypes.some(type => unionPatternCompatible(type, tested, this.conversions, this.core))) {
+          this.report(syntax, DiagnosticId.SF2202, ['case compatibility for direct Value property matching', previewStampText('Unions')]);
+          break;
+        }
+        // Only logical children keep this Value input. Property and positional children have their own member types.
+        for (const child of [pattern.left, pattern.right, pattern.pattern]) if (child) pending.push(child);
+      }
     }
     return result;
   }

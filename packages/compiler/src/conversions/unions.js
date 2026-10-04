@@ -6,6 +6,8 @@ import { Conversion, ConversionKind, Conversions } from './classify.js';
 import { isNullableType } from './nullable.js';
 import { OverloadResolver } from '../overload/resolution.js';
 import { unionShapeOf } from '../symbols/union-shape.js';
+import { Accessibility } from '../symbols/types.js';
+import { checkConstructorAccess, isAccessible } from '../binder/accessibility.js';
 
 /** The argument-to-case stage must contain only standard conversions, including within tuples. */
 class UnionArgumentConversions extends Conversions {
@@ -33,7 +35,13 @@ export class UnionConversions extends Conversions {
     const applicable = shape.creationMembers.filter(member =>
       standardOnly(this.unionArguments.classifyFromExpression(expression, member.parameters[0].type)));
     if (!applicable.length) return Conversions.noConversion;
-    const resolution = this.unionOverloads.resolve(shape.candidates, [expression], { isConstructor: !shape.provider });
+    const context = expression.unionConversionContext;
+    const candidates = shape.candidates.filter(member => {
+      if (!context) return member.declaredAccessibility === Accessibility.Public;
+      const options = { withinModule: context.module };
+      return shape.provider ? isAccessible(member, context.within, options) : !checkConstructorAccess(member, context.within, options);
+    });
+    const resolution = this.unionOverloads.resolve(candidates, [expression], { isConstructor: !shape.provider });
     if (!resolution.succeeded) return new Conversion(ConversionKind.ImplicitUnion, {
       isAmbiguous: true, candidates: applicable, error: resolution.error,
     });

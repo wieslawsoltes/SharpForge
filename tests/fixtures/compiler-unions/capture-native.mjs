@@ -3,6 +3,7 @@ import assert from 'node:assert/strict';
 import { readFile, writeFile } from 'node:fs/promises';
 import { resolve } from 'node:path';
 import { compileToAssembly } from '@sharpforge/compiler';
+import { readReferenceFiles } from '@sharpforge/compiler/node';
 import { previewRevisions } from '@sharpforge/syntax';
 import { resolveToolchain, sha256 } from '../../../scripts/conformance/oracle/toolchain.js';
 import { compileOnce } from '../../../scripts/conformance/oracle/roslyn-compile.js';
@@ -24,7 +25,7 @@ try {
   const toolchain = await resolveToolchain();
   report.toolchain = toolchain.actual;
   report.environment = toolchain.environment;
-  const compiled = compileToAssembly(unionInputs(source), unionPreviewOptions);
+  const compiled = compileToAssembly(unionInputs(source), { ...unionPreviewOptions, references: readReferenceFiles(toolchain.references) });
   report.sharpforge = { success: compiled.success, diagnostics: compiled.diagnostics };
   assert.equal(compiled.success, true, JSON.stringify(compiled.diagnostics));
   report.sharpforge.assemblySHA256 = sha256(compiled.assembly);

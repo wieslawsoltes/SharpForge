@@ -162,7 +162,44 @@ export const NullableUnionFlow = Base => class extends Base {
         ? this.unionInstanceState(receiver, flow, flow.get(variable) ?? this.declaredState(receiver)) : NOT_NULL;
       this.assignVariable(whenTrue, pattern.local, state, source);
     }
-    return { whenTrue, whenFalse };
+    return { whenTrue, whenFalse: ['VarPattern', 'DiscardPattern'].includes(pattern.kind) ? null : whenFalse };
+  }
+  unionArmCondition(pattern, receiver, flow, when) {
+    const branches = this.unionPatternCondition(pattern, receiver, flow);
+    if (!when) return branches;
+    const guard = this.loopCondition(when, branches.whenTrue);
+    return { whenTrue: guard.whenTrue, whenFalse: joinFlow(branches.whenFalse, guard.whenFalse) };
+  }
+  switchStatement(node, flow) {
+    if (!this.unionShape(node.governing.type)?.valid) return super.switchStatement(node, flow);
+    this.expression(node.governing, flow);
+    const entries = node.sections.map(() => null);
+    let remaining = flow;
+    let defaultSection = null;
+    for (const [index, section] of node.sections.entries()) {
+      for (const label of section.labels) {
+        if (label.kind === 'default') {
+          defaultSection = index;
+          continue;
+        }
+        const branches = this.unionArmCondition(label, node.governing, remaining, label.when);
+        entries[index] = joinFlow(entries[index], branches.whenTrue);
+        remaining = branches.whenFalse;
+      }
+    }
+    if (defaultSection !== null) {
+      entries[defaultSection] = joinFlow(entries[defaultSection], remaining);
+      remaining = null;
+    }
+    const frame = { isLoop: false, breaks: null, continues: null };
+    this.jumpTargets.push(frame);
+    let result = remaining;
+    try {
+      for (const [index, section] of node.sections.entries()) result = joinFlow(result, this.statement(section.body, entries[index]));
+    } finally {
+      this.jumpTargets.pop();
+    }
+    return joinFlow(result, frame.breaks);
   }
   expression(node, flow) {
     if (node?.kind !== 'SwitchExpression' || !flow || !this.unionShape(node.governing?.type)) return super.expression(node, flow);
@@ -175,9 +212,11 @@ export const NullableUnionFlow = Base => class extends Base {
       this.warn(node.syntax.switchKeyword ?? node.syntax, DiagnosticId.CS8655, ['null']);
     let result = null;
     let state = NOT_NULL;
+    let remaining = flow;
     for (const arm of node.arms) {
-      const branches = this.unionPatternCondition(arm.pattern, node.governing, flow);
-      const branch = arm.when ? this.condition(arm.when, branches.whenTrue).whenTrue : branches.whenTrue;
+      const branches = this.unionArmCondition(arm.pattern, node.governing, remaining, arm.when);
+      remaining = branches.whenFalse;
+      const branch = branches.whenTrue;
       if (!branch) continue;
       state = joinStates(state, this.expression(arm.value, branch));
       result = joinFlow(result, branch);
