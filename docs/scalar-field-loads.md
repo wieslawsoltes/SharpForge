@@ -19,8 +19,7 @@ are retained across reads or snapshots. Array and aggregate optimizations remain
 outside this increment; the source interpreter is unchanged.
 
 The timing target in #1398 remains **unmeasured**. No speedup or allocation count is
-claimed. Focused regressions are prepared for the parent's serial validation queue;
-tests, builds and benchmarks have not been run for this change.
+claimed. Focused regression evidence follows; broader qualification remains staged.
 
 Serial validation with Node 24.21.0: 80/81 initial field/slot/generic/Decimal
 cases passed at `99906238`. The new host-edit fixture incorrectly expected an
