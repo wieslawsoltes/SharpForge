@@ -1,3 +1,4 @@
+import {decimalConstants} from './decimal-intrinsics.js';
 import {decodeCoded,genericTypeParts} from '@sharpforge/cil';
 import {ManagedFault} from '../heap.js';
 import {storageDefault} from './storage.js';
@@ -29,7 +30,7 @@ export function staticSlot(vm, token, frame = vm.top) {
   const genericIdentity = instance===null?null:vm.typeSystem.table(instance).name;
   const context = threadStaticFields(vm.inspector).has(field.resolvedToken) ? vm.scheduler?.currentId ?? 1 : null;
   const key = genericIdentity !== null || context !== null ? JSON.stringify([field.resolvedToken, genericIdentity, context]) : field.resolvedToken;
-  if (!vm.statics.has(key)) vm.statics.set(key, storageDefault(vm,field.signature.type));
+  if (!vm.statics.has(key)) vm.statics.set(key, field.decimalConstant ? decimalConstants[field.decimalConstant] : storageDefault(vm,field.signature.type));
   return {key, field, typeToken: field.ownerToken, genericIdentity, context};
 }
 

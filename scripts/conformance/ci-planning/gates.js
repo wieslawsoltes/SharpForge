@@ -42,6 +42,24 @@ export async function claimedIdentity(client, pullRequest, now = Date.now()) {
   return { task, area, locks };
 }
 
+/** Evaluate one contribution using policy from the pinned base and only its own claim. */
+export function reviewOwnership({ root, base, head, mergeBase, identity, execute = spawnSync }) {
+  const files = git(['diff', '--no-renames', '--name-only', '-z', mergeBase, head], root).split('\0').filter(Boolean);
+  const lockRegistry = load(root, base, 'planning/contracts/locks.json');
+  for (const lock of identity.locks) if (!lockRegistry[lock.key] && lock.paths.length) lockRegistry[lock.key] = lock.paths;
+  const heldLocks = identity.locks.map(lock => lock.key);
+  const ownership = checkOwnership({ files, area: identity.area, ownership: load(root, base, 'planning/contracts/ownership.json'),
+    exceptions: load(root, base, 'planning/contracts/ownership-exceptions.json'), lockRegistry, heldLocks });
+  const text = (ref, path) => {
+    const result = execute('git', ['show', `${ref}:${path}`], { cwd: root, encoding: 'utf8' });
+    return result.status === 0 ? result.stdout : '';
+  };
+  const changes = Object.fromEntries(files.map(path => [path, { before: text(mergeBase, path), after: text(head, path) }]));
+  const hot = checkHotFiles(changes, lockRegistry, heldLocks);
+  return { passed: !ownership.errors.length && !hot.errors.length,
+    task: identity.task, errors: [...ownership.errors, ...hot.errors], error: [...ownership.errors, ...hot.errors].join('\n') };
+}
+
 export async function runGates({ root = process.cwd(), context, repository, client, execute = spawnSync } = {}) {
   const results = [], errors = [];
   const record = (name, result) => {
@@ -57,21 +75,7 @@ export async function runGates({ root = process.cwd(), context, repository, clie
   }
   try {
     const identity = await claimedIdentity(client, verified.pull_request);
-    const { base, head, mergeBase } = verified;
-    const files = git(['diff', '--no-renames', '--name-only', '-z', mergeBase, head], root).split('\0').filter(Boolean);
-    const lockRegistry = load(root, base, 'planning/contracts/locks.json');
-    for (const lock of identity.locks) if (!lockRegistry[lock.key] && lock.paths.length) lockRegistry[lock.key] = lock.paths;
-    const heldLocks = identity.locks.map(lock => lock.key);
-    const ownership = checkOwnership({ files, area: identity.area, ownership: load(root, base, 'planning/contracts/ownership.json'),
-      exceptions: load(root, base, 'planning/contracts/ownership-exceptions.json'), lockRegistry, heldLocks });
-    const text = (ref, path) => {
-      const result = execute('git', ['show', `${ref}:${path}`], { cwd: root, encoding: 'utf8' });
-      return result.status === 0 ? result.stdout : '';
-    };
-    const changes = Object.fromEntries(files.map(path => [path, { before: text(mergeBase, path), after: text(head, path) }]));
-    const hot = checkHotFiles(changes, lockRegistry, heldLocks);
-    record('ownership and hot-file budget', { passed: !ownership.errors.length && !hot.errors.length,
-      task: identity.task, errors: [...ownership.errors, ...hot.errors], error: [...ownership.errors, ...hot.errors].join('\n') });
+    record('ownership and hot-file budget', reviewOwnership({ root, ...verified, identity, execute }));
   } catch (error) {
     record('ownership and hot-file budget', { passed: false, error: error.message });
   }

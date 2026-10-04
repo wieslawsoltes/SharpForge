@@ -1,2 +1,7 @@
 /* Match the workbench's explicit light setting without recoloring the application preview. */
-html[data-theme=light]{--sf-accent:#176ca4;--sf-subtle:#506376;--sf-line:#c6d0dc;--sf-surface:#f3f6fa}
+html[data-theme=light] {
+  --sf-accent: var(--designer-palette-accent-light);
+  --sf-subtle: var(--designer-palette-subtle-light);
+  --sf-line: var(--designer-palette-line-light);
+  --sf-surface: var(--designer-palette-surface-light);
+}

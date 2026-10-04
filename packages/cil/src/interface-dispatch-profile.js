@@ -20,7 +20,7 @@ export function addInterfaceCandidate(candidates, slot, owner, methodToken) {
 function mostSpecific(dispatch, methods) {
   const superseded = new Set();
   for (const owner of methods.keys()) {
-    for (const ancestor of dispatch.table(owner).ancestors) {
+    for (const ancestor of dispatch.table(owner).instances) {
       if (ancestor !== owner && methods.has(ancestor)) superseded.add(ancestor);
     }
   }

@@ -3,9 +3,11 @@ import {cpus} from 'node:os';
 import {performance} from 'node:perf_hooks';
 import {createClosedCollection} from '../../tests/helpers/closed-collection.js';
 
-// Run this identical file serially in the metadata baseline and the ordinal candidate.
+// Copy this identical runner to each revision; label the selected backend explicitly.
 const count = Number(process.argv[2] ?? 8192);
 assert(Number.isInteger(count) && count >= 32 && count <= 32768, 'Count must be within 32..32768');
+const backend = process.argv[3] ?? 'unspecified';
+assert(['unspecified', 'released-ordinal', 'invariant-host'].includes(backend), 'Unknown backend label');
 const warmupCount = 1;
 const sampleCount = 5;
 const input = Array.from({length: count}, (_, index) => index % 17 === 0 ? null :
@@ -25,6 +27,11 @@ function sample(engine) {
       });
       const array = heap.allocate('array', 'string[]', values);
       heap.pins.push(array);
+      // Initialize the per-platform provider before timing without sorting the measured input.
+      call('Add', values[1]);
+      call('Add', values[2]);
+      call('Sort');
+      call('Clear');
       call('AddRange', array);
       globalThis.gc?.();
       const allocations = heap.stats.allocations;
@@ -66,6 +73,10 @@ for (const engine of ['source', 'cil']) {
 
 console.log(JSON.stringify({
   node: process.version,
+  v8: process.versions.v8,
+  icu: process.versions.icu ?? null,
+  cldr: process.versions.cldr ?? null,
+  unicode: process.versions.unicode ?? null,
   platform: process.platform,
   arch: process.arch,
   cpu: cpus()[0]?.model,
@@ -73,7 +84,9 @@ console.log(JSON.stringify({
   warmupCount,
   sampleCount,
   gcAvailable: typeof globalThis.gc === 'function',
+  backend,
   workload: 'Default List<string>.Sort through each real VM platform on deterministic nullable strings',
-  notes: 'Timing excludes compilation, list construction, input allocation, optional host GC and output checks. Managed allocation counters only.',
+  notes: 'Timing excludes provider setup, compilation, input allocation, host GC and output checks. Managed allocation counters only.',
+  qualification: 'Digit strings have the same order in both profiles; the backends differ on general text semantics.',
   engines
 }, null, 2));

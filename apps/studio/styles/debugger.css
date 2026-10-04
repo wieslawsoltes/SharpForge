@@ -1,1 +1,96 @@
-.debug-stop-banner{display:flex;align-items:center;gap:10px;background:#332d1e;color:var(--text);border-bottom:1px solid #a38739;padding:6px 12px;min-height:48px;font-size:11px;flex-shrink:0}.debug-stop-banner[hidden]{display:none}.debug-stop-banner>div{flex:1;min-width:0}.debug-stop-banner small{display:block;color:var(--muted);margin-top:3px;white-space:normal}.debug-stop-banner b{text-transform:capitalize;color:#e9c25a}.debug-stop-arrow{color:#e9c25a;font-size:20px}.debug-stop-banner button,.debugger-settings button{padding:4px 9px;border:1px solid var(--line);background:var(--surface2);font-size:11px}.debug-bp-hint{padding:6px 10px;color:var(--muted);font-size:10px}.debugger-breakpoints td{vertical-align:top}.debugger-breakpoints small{display:block;font-size:10px;color:var(--muted);max-width:300px;white-space:normal;margin-top:3px}.debugger-breakpoints .breakpoint-hit{background:#af89251d}.debugger-settings{max-width:820px}.debug-check{display:flex;gap:8px;align-items:center;margin:9px 0}.debug-check input{width:auto}.debugger-settings input{max-width:360px}.debugger-settings h3{margin-top:22px}.debugger-settings #exception-rule-form{display:flex;gap:6px;flex-wrap:wrap}.debug-immediate-log{padding:8px 12px;max-height:calc(100% - 110px);overflow:auto;font:12px var(--mono);user-select:text}.debug-immediate-log small{color:var(--muted)}.debug-immediate-log pre{white-space:pre-wrap;margin:4px 0 12px;font:12px/1.5 var(--mono)}#immediate-form{display:flex;gap:8px;padding:8px 12px;align-items:center;border-top:1px solid var(--line)}#immediate-form input{flex:1;min-width:100px;font:12px var(--mono)}#immediate-form button{padding:5px}.debugger-breakpoints td:nth-child(2){min-width:150px}html[data-theme=light] .debug-stop-banner{background:#fff4cf}html[data-theme=light] .debug-stop-banner b{color:#6e5100}
+.debug-stop-banner {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: var(--debugger-debug-stop-banner-background);
+  color: var(--text);
+  border-bottom: 1px solid var(--debugger-debug-stop-banner-border);
+  padding: 6px 12px;
+  min-height: 48px;
+  font-size: 11px;
+  flex-shrink: 0;
+}
+.debug-stop-banner[hidden] { display: none; }
+.debug-stop-banner>div {
+  flex: 1;
+  min-width: 0;
+}
+.debug-stop-banner small {
+  display: block;
+  color: var(--muted);
+  margin-top: 3px;
+  white-space: normal;
+}
+.debug-stop-banner b {
+  text-transform: capitalize;
+  color: var(--debugger-debug-stop-banner-b-foreground);
+}
+.debug-stop-arrow {
+  color: var(--debugger-debug-stop-arrow-foreground);
+  font-size: 20px;
+}
+.debug-stop-banner button,.debugger-settings button {
+  padding: 4px 9px;
+  border: 1px solid var(--line);
+  background: var(--surface2);
+  font-size: 11px;
+}
+.debug-bp-hint {
+  padding: 6px 10px;
+  color: var(--muted);
+  font-size: 10px;
+}
+.debugger-breakpoints td { vertical-align: top; }
+.debugger-breakpoints small {
+  display: block;
+  font-size: 10px;
+  color: var(--muted);
+  max-width: 300px;
+  white-space: normal;
+  margin-top: 3px;
+}
+.debugger-breakpoints .breakpoint-hit { background: var(--debugger-debugger-breakpoints-breakpoint-hit-background); }
+.debugger-settings { max-width: 820px; }
+.debug-check {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  margin: 9px 0;
+}
+.debug-check input { width: auto; }
+.debugger-settings input { max-width: 360px; }
+.debugger-settings h3 { margin-top: 22px; }
+.debugger-settings #exception-rule-form {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+.debug-immediate-log {
+  padding: 8px 12px;
+  max-height: calc(100% - 110px);
+  overflow: auto;
+  font: 12px var(--mono);
+  user-select: text;
+}
+.debug-immediate-log small { color: var(--muted); }
+.debug-immediate-log pre {
+  white-space: pre-wrap;
+  margin: 4px 0 12px;
+  font: 12px/1.5 var(--mono);
+}
+#immediate-form {
+  display: flex;
+  gap: 8px;
+  padding: 8px 12px;
+  align-items: center;
+  border-top: 1px solid var(--line);
+}
+#immediate-form input {
+  flex: 1;
+  min-width: 100px;
+  font: 12px var(--mono);
+}
+#immediate-form button { padding: 5px; }
+.debugger-breakpoints td:nth-child(2) { min-width: 150px; }
+html[data-theme=light] .debug-stop-banner { background: var(--debugger-debug-stop-banner-light-background); }
+html[data-theme=light] .debug-stop-banner b { color: var(--debugger-debug-stop-banner-b-light-foreground); }

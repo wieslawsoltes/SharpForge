@@ -1,0 +1,4 @@
+{
+  "nullable-lambdas/cs8603-cs8602-against-the-delegate-type": ["diagnostics", "warnings"],
+  "nullable-lambdas/delegates-of-annotated-types-run": ["diagnostics", "warnings", "bytecode", "cil"]
+}
