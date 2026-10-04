@@ -59,23 +59,25 @@ function snapshotTypes(pe, symbols) {
     }
     facts.set(method, locals);
   }
-  const annotations = new Map();
-  let context;
+  let annotations, context;
   for (const scope of symbols.scopes)
     for (const local of scope.variables) {
       if (!hasLocalAnnotations(local)) continue;
       const type = facts.get(scope.methodToken)?.get(local.index)?.type;
       if (type)
-        annotations.set(
+        (annotations ??= new Map()).set(
           local.id,
           annotationDisplay(type, local, (context ??= annotationContext(pe.metadata, displays))),
         );
     }
-  const constants = new Map(
-    symbols.constants
-      ?.filter(hasLocalAnnotations)
-      .map((value) => [value.id, { displayTypeName: value.displayTypeName, annotationReason: value.annotationReason }]),
-  );
+  let constants;
+  for (const value of symbols.constants ?? []) {
+    if (hasLocalAnnotations(value))
+      (constants ??= new Map()).set(value.id, {
+        displayTypeName: value.displayTypeName,
+        annotationReason: value.annotationReason,
+      });
+  }
   return { facts, annotations, constants };
 }
 
@@ -88,8 +90,8 @@ export function bindLocalTypes(lookup, pe, symbols) {
     const locals = structuredClone(facts.get(methodToken));
     while (pending.length) {
       const scope = pending.pop();
-      for (const local of scope.locals) Object.assign(local, locals?.get(local.index), annotations.get(local.id));
-      for (const constant of scope.constantAnnotations ?? []) Object.assign(constant, constants.get(constant.id));
+      for (const local of scope.locals) Object.assign(local, locals?.get(local.index), annotations?.get(local.id));
+      for (const constant of scope.constantAnnotations ?? []) Object.assign(constant, constants?.get(constant.id));
       for (const child of scope.children) pending.push(child);
     }
     return roots;

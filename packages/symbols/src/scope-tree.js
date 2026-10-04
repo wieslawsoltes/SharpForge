@@ -28,7 +28,7 @@ function snapshot(scope) {
             .filter(hasLocalAnnotations)
             .map((value) => ({ id: value.id, name: value.name, ...copyLocalAnnotations(value) })),
         }
-      : {}),
+      : null),
     children: [],
   };
 }

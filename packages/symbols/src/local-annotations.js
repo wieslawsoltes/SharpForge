@@ -84,8 +84,8 @@ export function annotationContext(
 
 /** Constants retain their value codec; only their declared-type display is annotated. */
 export function bindConstantAnnotations(constants, metadata = null) {
+  if (!constants.some(hasLocalAnnotations)) return;
   const annotated = constants.filter(hasLocalAnnotations);
-  if (!annotated.length) return;
   const context = annotationContext(metadata);
   const specs = metadata && constantTypeSpecs(annotated, metadata);
   const types = new Map();
