@@ -93,6 +93,33 @@ export class MemberTokens {
   external(owner, name, shape) {
     return this.builder.member(this.type(owner), name, methodSignature(this.types, shape));
   }
+  /** The token of `D::.ctor(object, native int)`, which the runtime implements for every delegate type. */
+  delegateConstructor(type) {
+    const planned = needsTypeSpec(type) ? null : this.writer.plans.get(type.originalDefinition ?? type);
+    if (planned) return planned.methods.find(method => method.name === '.ctor').token;
+    const core = this.writer.core,
+      shape = { isStatic: false, returnType: core.void, parameters: [{ type: core.object }, { type: core.intPtr }] };
+    return this.external(type, '.ctor', shape);
+  }
+  /** The planned event of a source event symbol: `{adder, remover}` and, for a field-like event, its field. */
+  plannedEvent(event) {
+    const definition = event.originalDefinition ?? event,
+      plan = this.writer.plans.get(definition.containingType);
+    return plan?.events.find(entry => entry.symbol === definition) ?? null;
+  }
+  /** The token of the add or remove accessor of a source event, or null for an event the compilation does not define. */
+  eventAccessor(event, isAdd) {
+    const planned = this.plannedEvent(event);
+    if (!planned || needsTypeSpec(event.containingType)) return null;
+    return (isAdd ? planned.adder : planned.remover).token;
+  }
+  /** The token of the delegate field of a field-like source event, or null when the event has none. */
+  eventField(event) {
+    const definition = event.originalDefinition ?? event,
+      plan = this.writer.plans.get(definition.containingType),
+      field = plan?.fields.find(entry => !entry.symbol && entry.name === definition.name);
+    return field && !needsTypeSpec(event.containingType) ? field.token : null;
+  }
   /** The operand of `ldstr`. */
   string(text) {
     return USER_STRING | this.builder.userString(text);
