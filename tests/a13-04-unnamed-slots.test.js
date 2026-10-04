@@ -212,14 +212,14 @@ test('CLI headers are authoritative when in-range PDB signatures disagree or bod
   };
   const pdb = new PortablePdbBuilder();
   document(pdb);
-  pdb.add(49, [1, pdb.blob(new Uint8Array([2, 0, 0, 0]))]);
+  pdb.add(49, [1, pdb.blob(new Uint8Array([2]))]);
   const mismatch = pdb.finish(metadata.counts, 0).bytes;
   assert.throws(() => loadSymbols(attachPortablePdb(input.rawAssembly, mismatch), mismatch), /local signatures differ/);
   const absent = fixture({ noBody: true });
   const noBody = readPE(absent.rawAssembly);
   const missing = new PortablePdbBuilder();
   document(missing);
-  missing.add(49, [1, missing.blob(new Uint8Array([1, 0, 0, 0]))]);
+  missing.add(49, [1, missing.blob(new Uint8Array([1]))]);
   const bytes = missing.finish(noBody.metadata.counts, 0).bytes;
   assert.throws(() => loadSymbols(attachPortablePdb(absent.rawAssembly, bytes), bytes), /requires a CIL method body/);
 });
