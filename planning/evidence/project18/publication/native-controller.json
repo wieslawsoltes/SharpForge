@@ -1,0 +1,29 @@
+{
+  "workIds": [
+    "SF-A23-T28",
+    "SF-A23-T29",
+    "SF-A23-T30",
+    "SF-A23-T11"
+  ],
+  "productSource": "c1a662d18d31e202a6b420bce1e9177b0b1a50ba",
+  "tests": {
+    "tests/a23-studio-native-contexts.test.js": 3,
+    "tests/a23-studio-native-profiles.test.js": 4,
+    "tests/a23-studio-test-explorer.test.js": 4
+  },
+  "extraction": "Original full-controller assertions preserved. Direct metadata/state cases live in their existing published foundations; native-client cases live in #3903 and method-group selection in #3908.",
+  "qualification": {
+    "node22": "Completed native UI scope 106/106 passed",
+    "node26": "Completed native UI scope 106/106 passed",
+    "sourceCaptures": [
+      "planning/evidence/project18/native-studio/node22.log",
+      "planning/evidence/project18/native-studio/node26.log"
+    ]
+  },
+  "composition": "Real dependency join of Test Explorer #3908, native views #3950 and workspace-state #3816. Existing lazy native-settings factory retained. Legacy msbuild-tools.js becomes a one-line compatibility re-export.",
+  "remaining": [
+    "Protected Studio callbacks/tool application",
+    "Native installed xUnit/NUnit/MSTest package qualification",
+    "Native coverage collector and Windows/macOS qualification"
+  ]
+}
