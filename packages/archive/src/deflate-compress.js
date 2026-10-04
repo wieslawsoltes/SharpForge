@@ -60,7 +60,7 @@ function hash(bytes, offset) {
   return ((bytes[offset] * 251 + bytes[offset + 1]) * 251 + bytes[offset + 2]) & 65535;
 }
 
-class MatchWindow {
+export class MatchWindow {
   constructor(bytes, maxChain) {
     this.bytes = bytes;
     this.maxChain = maxChain;
@@ -104,7 +104,7 @@ class MatchWindow {
  * Scratch memory is 384 KiB plus at most ceil(9 * inputBytes / 8) + 6 output bytes.
  * Input is never mutated. Invalid options and oversized input throw RangeError.
  */
-export function deflateRaw(bytes, { maxBytes = 64 * 1024 * 1024, maxChain = 16, signal } = {}) {
+function compressBlock(bytes, { maxBytes = 64 * 1024 * 1024, maxChain = 16, signal, final = true } = {}) {
   if (!(bytes instanceof Uint8Array)) throw new TypeError('DEFLATE input must be Uint8Array');
   if (!Number.isSafeInteger(maxBytes) || maxBytes < 0 || maxBytes > 64 * 1024 * 1024 || bytes.length > maxBytes) {
     throw new RangeError('Invalid or oversized DEFLATE input');
@@ -113,7 +113,7 @@ export function deflateRaw(bytes, { maxBytes = 64 * 1024 * 1024, maxChain = 16, 
   signal?.throwIfAborted();
   const writer = new BitWriter(bytes.length);
   const window = new MatchWindow(bytes, maxChain);
-  writer.write(3, 3); // Final block, fixed Huffman tree.
+  writer.write(final ? 3 : 2, 3); // Fixed Huffman block; streaming callers control the final bit.
   let offset = 0;
   let nextCancellationCheck = 0;
   while (offset < bytes.length) {
@@ -135,5 +135,16 @@ export function deflateRaw(bytes, { maxBytes = 64 * 1024 * 1024, maxChain = 16, 
     }
   }
   writer.literal(256);
-  return writer.finish();
+  const bitLength = writer.offset * 8 + writer.bits;
+  return { bytes: writer.finish(), bitLength };
+}
+
+/** Fixed Huffman RFC 1951 stream, retaining the original public byte-array contract. */
+export function deflateRaw(bytes, options = {}) {
+  return compressBlock(bytes, options).bytes;
+}
+
+/** A bounded fixed block plus exact bit length for concatenating streaming blocks without padding. */
+export function deflateFixedBlock(bytes, options = {}) {
+  return compressBlock(bytes, options);
 }
