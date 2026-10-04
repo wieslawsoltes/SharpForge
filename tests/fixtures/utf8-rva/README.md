@@ -125,6 +125,10 @@ The first runs also found and retained these failures:
 The shared change outside literal modules is the small `compile-assembly.js` diagnostic-location seam:
 a nonempty list produces one diagnostic per location, while an empty or absent list retains the original error.
 Initial failures, the genuine final capture, and successful focused/adjacent logs are in `validation/`.
-The implementation author confirms the qualified correctness scope above. Compiler throughput, p95,
-and output-size comparison remain **pending a separately scheduled benchmark**; no performance pass
-or speedup is claimed here. Bytecode remains explicitly unsupported with `SF2200`.
+The implementation author confirms the qualified correctness scope above. The separately scheduled single paired benchmark is now recorded in
+[benchmark/README.md](benchmark/README.md), with all raw samples, checkout-local resolution verification,
+size and memory data. UTF-8 median compilation time decreased by 56.14% with registry symbols and 43.05%
+with cached actual references, and output size decreased by 74.42%. The cached-reference no-literal control
+regressed by 39.22% median and 26.62% p95; the benchmark documents the explicit implementation-author
+correctness-cost sign-off. No overall performance-budget pass is claimed. Bytecode remains explicitly
+unsupported with `SF2200`.

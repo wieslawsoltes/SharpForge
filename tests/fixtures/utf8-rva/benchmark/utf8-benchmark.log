@@ -1,0 +1,79 @@
+{
+  "output": "/workspace/scratch/1692a10afba9/utf8-benchmark-raw.json",
+  "baseline": "bf85020e6024cdd679a0234d9f050ca7dedddf53",
+  "current": "41972f6bff4704c5e7597387cfda45f89c3670db",
+  "results": [
+    {
+      "revision": "baseline",
+      "commit": "bf85020e6024cdd679a0234d9f050ca7dedddf53",
+      "mode": "registry",
+      "fixture": "utf8",
+      "medianMs": 13.787903999999344,
+      "p95Ms": 19.781114000000343,
+      "assemblyBytes": 22016
+    },
+    {
+      "revision": "baseline",
+      "commit": "bf85020e6024cdd679a0234d9f050ca7dedddf53",
+      "mode": "registry",
+      "fixture": "noUtf8",
+      "medianMs": 4.771741500000644,
+      "p95Ms": 13.65361699999994,
+      "assemblyBytes": 3584
+    },
+    {
+      "revision": "baseline",
+      "commit": "bf85020e6024cdd679a0234d9f050ca7dedddf53",
+      "mode": "cachedReferences",
+      "fixture": "utf8",
+      "medianMs": 12.557235000000219,
+      "p95Ms": 25.00721700000031,
+      "assemblyBytes": 22016
+    },
+    {
+      "revision": "baseline",
+      "commit": "bf85020e6024cdd679a0234d9f050ca7dedddf53",
+      "mode": "cachedReferences",
+      "fixture": "noUtf8",
+      "medianMs": 5.017366499999298,
+      "p95Ms": 9.639994000001025,
+      "assemblyBytes": 3584
+    },
+    {
+      "revision": "current",
+      "commit": "41972f6bff4704c5e7597387cfda45f89c3670db",
+      "mode": "registry",
+      "fixture": "utf8",
+      "medianMs": 6.046963499999947,
+      "p95Ms": 13.261642000000393,
+      "assemblyBytes": 5632
+    },
+    {
+      "revision": "current",
+      "commit": "41972f6bff4704c5e7597387cfda45f89c3670db",
+      "mode": "registry",
+      "fixture": "noUtf8",
+      "medianMs": 4.862329999999929,
+      "p95Ms": 8.441523999999845,
+      "assemblyBytes": 3584
+    },
+    {
+      "revision": "current",
+      "commit": "41972f6bff4704c5e7597387cfda45f89c3670db",
+      "mode": "cachedReferences",
+      "fixture": "utf8",
+      "medianMs": 7.151865499999985,
+      "p95Ms": 12.190279000000373,
+      "assemblyBytes": 5632
+    },
+    {
+      "revision": "current",
+      "commit": "41972f6bff4704c5e7597387cfda45f89c3670db",
+      "mode": "cachedReferences",
+      "fixture": "noUtf8",
+      "medianMs": 6.985406499999499,
+      "p95Ms": 12.205740999999762,
+      "assemblyBytes": 3584
+    }
+  ]
+}
