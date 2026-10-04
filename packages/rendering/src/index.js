@@ -50,3 +50,4 @@ export * from './backends/surface.js';
 export * from './webgpu/device.js';
 export * from './webgpu/pools.js';
 export {vectorShader} from './webgpu/vector-shader.js';
+export {NativeCanvasTextProvider} from './text/native-canvas-provider.js';
