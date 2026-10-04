@@ -1,12 +1,23 @@
 {
   "schemaVersion": 1,
   "sources": {
-    "packages/runtime/src/heap.js": "74021e4ca751982f9f48935239e1d869e6682dd20254a22189cb28f121804d42",
-    "packages/runtime/src/vm.js": "204f71ef42aa817c270ef2ca826823e373b0bdb887e3708736fa59253043ff12",
-    "packages/runtime/src/cil-vm.js": "a61a07e07f1df80d09f23a72ffa66595fc22651643351c8ba997843c40607916",
+    "packages/runtime/src/heap.js": "eecd3fb6a26637b3feb810f233f377c799f05c119e93c71b4a971056529e5d6b",
+    "packages/runtime/src/vm.js": "9889ea83f3d0ee1e24df15057dfd9a43ed000dc52e4371e006cfdfda4e4005da",
+    "packages/runtime/src/cil-vm.js": "35d6cfb8c09251a39157ce1f1bf0124725faa14e0668a248cfc2cb5845528684",
     "packages/runtime/src/execution/delegate-targets.js": "ec19efa480e2d864ba35268cfee220015e7655d84213502d6d2fc4b95094ae5d",
     "packages/runtime/src/execution/source-ops.js": "d281c22b9072dc0151a2b0b3571c02b29bfe3074dbf783cf879269b6e5af9a22",
-    "packages/runtime/src/execution/storage.js": "d07039d0335c64ae69eccc3313e87b954d4b1c601667c61b392b7274699414ac",
+    "packages/runtime/src/execution/source-ops/load-store.js": "7a99bedd6eef6f44a618a9f905181df553fa01bb98ee6d9912be4936d87c8a3e",
+    "packages/runtime/src/execution/source-ops/arithmetic.js": "658d004672bd71fdd1ab7b6a7747daf319d8fcb24217b925f33531336e9a1762",
+    "packages/runtime/src/execution/source-ops/control.js": "103ed7f7ec218785b9cbbe1dc12cfa956ca7302ea135cf90a8fe2a8a293d8aeb",
+    "packages/runtime/src/execution/source-ops/call.js": "9bbfce817cc8962140bccfcc03c290c42471904cb0cc2ef41239c707ac015f30",
+    "packages/runtime/src/execution/source-ops/object.js": "2a7564083417592455ef5753a4ab759c5a59ef54676f2bb6de779260c51ae872",
+    "packages/runtime/src/execution/source-ops/index.js": "893e36bfd952bd80a09dfa248ed9c0b4052bb0a0cea48a4b6aafdebde0f8cca0",
+    "packages/runtime/src/execution/source-builtins.js": "ddbc1a4f62e70cb89e91748af58900d99009c5ed16037decda08840aeb733fad",
+    "packages/runtime/src/execution/source-builtins/objects.js": "1c48decebb5ca2803409afa097f610e201d0b1556d7e46461dd444dfe03a3d3a",
+    "packages/runtime/src/execution/source-builtins/collections.js": "7c29355d5d9e39fd29641ffb9d2bf0e0ee6b406b70d75829f5dfe57dad0508cc",
+    "packages/runtime/src/execution/source-builtins/services.js": "b91d5a6acbd232e5d3e63e7a727e180ec4b7a4baff44ce82a6a51b1f6234cd8e",
+    "packages/runtime/src/execution/source-builtins/index.js": "5f158f73b07154bad9b3a3c2602cdac4ef2203b7984f1ad464a8b22d06f8211e",
+    "packages/runtime/src/execution/storage.js": "90796038ab9b92e0bd29c1e48df58c98655f625b330f6dc8df2e48284ab516ad",
     "packages/runtime/src/execution/numeric-ops.js": "407778ba5fa9b1b97d26e625874dac923b2de5c6e4f9a5a30d42f1b2da7ee2b2",
     "packages/runtime/src/execution/enums.js": "7235807aed0ec81512a186db091608087e4418b38dfbd1cb228cde697a46ff5c",
     "packages/bytecode/src/index.js": "a7415f7b70d7fa8b44674f85278a307e5cc9cbd7df0544953733eda2a3a1b32d",
@@ -57,10 +68,18 @@
     },
     "any": {
       "source": "number | bigint | boolean | null | undefined | {h,g} | enum | float | nativeInt | Decimal",
-      "cil": "number | bigint | null | undefined | {h,g} | float | nativeInt | Decimal | byref | methodPointer"
+      "cil": "number | bigint | null | undefined | {h,g} | float | nativeInt | Decimal | byref | methodPointer | frozen {valueType,fields}"
     }
   },
   "additionalShapes": [
+    {
+      "shape": "{valueType:MethodTable,fields:frozen array}",
+      "meaning": "immutable VM-owned direct-CIL reference-free sequential struct; nested copied values; ordinary same-VM snapshot-safe, not portable wire data"
+    },
+    {
+      "shape": "{byref:true,vmOwner,kind,index,owner,frameId,path:frozen array}",
+      "meaning": "owned CIL address with immutable struct field indices; resolves live storage on access; rejects foreign VM and expired frames"
+    },
     {
       "shape": "{decimal:true, coefficient:bigint, scale:0..28, negative:boolean}",
       "meaning": "immutable System.Decimal value, unsigned 96-bit coefficient; exact source/CIL arithmetic, storage and boxing; not a portable wire value"
@@ -99,6 +118,8 @@
     }
   ],
   "evidence": [
+    "execution/source-builtins.js and source-builtins/ groups preserve rooted intrinsic results and VM-local result/host metadata",
+    "execution/source-ops/ groups preserve source opcode stack values, storage writes, arithmetic, control flow and object construction",
     "ManagedHeap.allocate returns Object.freeze({h,g})",
     "ManagedHeap.array caps length at 1000000",
     "execution/storage.js storageValue and execution/numeric-ops.js storage apply narrow and BigInt integer categories through bytecode/numeric/conversions.js",

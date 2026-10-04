@@ -22,6 +22,9 @@ export { decodeMarshalDescriptor, marshalDiagnosticCatalog } from './metadata/ma
 export { linkAssemblyModules } from './pe/module-linker.js';
 export { readAssemblyModules } from './pe/module-reader.js';
 export { decodeBinaryPermissionSet, securityDiagnosticCatalog } from './metadata/security-declarations.js';
+export { buildExceptionRegionTree, exceptionRegionDiagnosticCatalog } from './eh-regions.js';
+export { validateExceptionInstructionPlacement, exceptionPlacementDiagnosticCatalog } from './eh-control-flow.js';
+export { validateExceptionBranches, exceptionBranchDiagnosticCatalog } from './eh-branches.js';
 export { VerificationKind, verificationType, verificationDiagnosticCatalog } from './verify/types.js';
 export { mergeVerificationTypes, mergeVerificationStacks } from './verify/type-relations.js';
 

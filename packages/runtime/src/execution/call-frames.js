@@ -1,4 +1,5 @@
 import {admitCilStack} from './frame-stack.js';
+import {reserveStackFrame, commitStackFrame, cancelStackFrame} from './stack-budget.js';
 import {ManagedFault} from '../heap.js';
 import {framePool} from './frame-pool.js';
 import {methodOffsets} from './method-offsets.js';
@@ -7,8 +8,11 @@ import {storageDefault} from './storage.js';
 /** Copy normalized arguments into owned storage; call scratch buffers never escape. */
 export function cilCallFrame(vm, method, args, extra) {
   admitCilStack(vm, method);
-  const pool = framePool(vm), frame = pool.acquire(method, args.length);
+  const ticket = reserveStackFrame(vm, method, args.length);
+  let pool, frame;
   try {
+    pool = framePool(vm);
+    frame = pool.acquire(method, args.length);
     frame.id = ++vm.frameId;
     frame.method = method;
     frame.offsets = methodOffsets(method);
@@ -23,9 +27,11 @@ export function cilCallFrame(vm, method, args, extra) {
       frame.locals[index] = method.initLocals ? storageDefault(vm, method.locals[index]) : undefined;
     }
     Object.assign(frame, extra);
+    commitStackFrame(ticket, frame);
     return frame;
   } catch (error) {
-    pool.retire(frame);
+    cancelStackFrame(ticket);
+    if (frame) pool.retire(frame);
     throw error;
   }
 }

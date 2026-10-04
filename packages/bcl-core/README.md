@@ -48,6 +48,75 @@ two-argument control separately from new range cost, using one warmup and five
 samples per real VM platform, median/p95 and managed allocation counters. Setup
 is excluded; the absent range overload is explicitly skipped on the baseline.
 
+`String.Equals(string, string, StringComparison)` and instance
+`String.Equals(string, StringComparison)` occupy A07 slots `524299` and `524300`.
+They support only `Ordinal` and `OrdinalIgnoreCase`, reusing the existing streaming
+ordinal fold. The registered `System.StringComparison` enum exposes all six native
+constants so other values bind correctly, but culture modes 0–3 explicitly raise
+`NotSupportedException`, including identity and null-argument shortcuts. This is a
+deliberate partial profile, not an implementation of native culture equality.
+Values outside 0–5 raise `ArgumentException` naming `comparisonType` before equality
+or null-argument shortcuts. A null instance receiver raises `NullReferenceException`
+before mode validation. The released two-string Equals contract remains unchanged.
+
+The unchanged 220-row .NET 10.0.5/SDK 10.0.201 reference includes both overloads,
+fault precedence, separately allocated equal strings, Unicode casing, embedded NUL,
+malformed UTF-16 and native culture controls. Tests distinguish native ordinal
+parity from explicit culture rejection, using both compiler pipelines/VMs and
+independently assembled CIL. Named enum constants in bound source depend on the
+separate registered-enum compiler lowering prerequisite. Comparison takes O(n)
+time, constant auxiliary space and no managed text allocations. The bounded
+`scripts/benchmarks/a07-string-equals-comparison.mjs` runner measures the unchanged
+two-string control before/after `82ec8ed4` and reports new overload costs separately.
+Setup is excluded; one warmup and five samples report median/p95 and managed
+allocations on both real VM platforms. #2621 remains open for culture modes, other
+comparison overloads, comparer equality/hash and factories.
+
+`String.Compare(string, string, StringComparison)` occupies A07 slot `524301`,
+after the two Equals overloads. It reuses the same mode validation and existing
+Ordinal/OrdinalIgnoreCase comparers. Invalid enum values raise `ArgumentException`
+naming `comparisonType` before null/identity shortcuts; culture modes 0–3 explicitly
+raise `NotSupportedException` in the same position. Nulls precede non-null strings.
+Only the result sign is specified, including supplementary and malformed UTF-16
+ordering; the two-string CompareOrdinal contract and Equals IDs are unchanged.
+
+The [122-row .NET 10.0.5 reference](reference/string-compare-comparison/README.md)
+retains native raw results and signs separately. Tests cover both compiler
+pipelines/VMs, independent CIL, all captured faults, collection of pinned inputs,
+and zero managed text allocation. Comparison takes O(n) time in the inspected
+prefix and constant auxiliary space. Run the identical bounded
+`scripts/benchmarks/a07-string-compare-comparison.mjs` runner serially on baseline
+`9838196d` and the candidate: existing CompareOrdinal and both mode-aware Equals
+controls are separate from the new Compare costs, with one warmup, five samples,
+median/p95 and managed allocation counts. This completes only this three-argument
+overload; #2621 remains open for culture support and the other comparison APIs.
+
+`String.StartsWith(string, StringComparison)` and `String.EndsWith(string,
+StringComparison)` append at `524302` and `524303`, after mode-aware Compare
+`524301`. Both support `Ordinal` and `OrdinalIgnoreCase`. Null receivers fail first;
+a null `value` raises `ArgumentNullException` naming `value` before mode validation.
+Invalid modes raise `ArgumentException` naming `comparisonType` before identity,
+empty-value or length shortcuts. Valid culture modes 0–3 explicitly raise
+`NotSupportedException` after null checks, including otherwise trivial matches.
+The existing one-argument contracts retain their released behavior.
+
+Ordinal-ignore-case affixes reuse the ordinal fold in a bounded UTF-16 loop. A high
+surrogate at a prefix endpoint stays isolated even when the original string has a
+following low surrogate; a suffix beginning at a low surrogate never reads the
+preceding high surrogate. No substrings or folded strings are allocated. Comparison
+takes O(value length) time and constant auxiliary space; the whole-string comparator
+is unchanged. The pinned 264-row native capture retains native culture controls and
+tests their deliberate profile differences separately, across both pipelines/VMs
+and independent CIL. It also covers scan-width boundaries, malformed UTF-16, casing,
+NUL, identity, longer values and fault precedence. See
+[the capture instructions](reference/string-affix-comparison/README.md).
+
+Run `node --expose-gc scripts/benchmarks/a07-string-affix-comparison.mjs` serially
+against Compare-only parent `f9292ef3` and this branch. The identical runner separates
+released one-argument controls from new mode-aware costs, with setup excluded,
+one warmup, five samples, median/p95 and managed allocation counters. No speedup
+is claimed; culture affixes and the rest of #2621 remain open.
+
 `StringComparer.OrdinalIgnoreCase` is a separate managed singleton, shared by
 the registered string/object Compare, IComparer, List.Sort and Array.BinarySearch
 routes. Its streaming fold reuses the pinned simple-uppercase table without
@@ -119,6 +188,28 @@ zero arguments through the compiler's existing params lowering. The new
 overload occupies reserved A07 ID `524288`; released IDs remain unchanged.
 Formatting still uses the supported invariant numeric formats and the host's
 1,000,000-unit output budget, rather than claiming the full .NET formatting API.
+
+`Object.ToString` invokes the existing StringBuilder and Uri overrides when the
+receiver is held as `object`. Their parameterless contracts explicitly opt in
+with `objectToStringOverride: true`; names alone never enable virtual dispatch.
+The runtime supplies the optional `bclHost.invokeObjectToString(platform, value)`
+service and resolves exact managed framework types through existing handlers.
+This keeps core independent of runtime/framework imports and preserves released
+contract IDs 812 and 1542. No managed receiver is retained in the dispatch index.
+
+Source object calls and CIL `callvirt` use this path. CIL `call` retains the base
+type-name result for these framework objects; either opcode faults on null.
+Compiled Object.ToString now emits that instance `callvirt` directly, and profile
+loading keeps it distinct from static Convert.ToString. Existing static Convert
+bodies retain Convert semantics, including when loaded back into the source VM.
+The 22-row [.NET 10.0.5 capture](reference/object-string/README.md) records actual
+native instructions, including hidden methods and primitive controls. Existing
+primitive, Convert and Console formatting profiles remain unchanged; primitive
+nonvirtual calls are not newly qualified as native-compatible. Other framework
+overrides and arbitrary managed callbacks require separate explicit support.
+The static benchmark `scripts/benchmarks/a07-framework-object-string.mjs` reports
+the unchanged primitive control and newly virtual framework cases separately;
+copy it to baseline `82ec8ed4` for a serial comparison with setup excluded.
 
 `StringComparer.Ordinal` is a platform-rooted singleton and implements the
 registered `IComparer<string>` interface. `Compare(string, string)` orders null

@@ -1,4 +1,5 @@
 import {popPooledFrame} from './frame-retirement.js';
+import {continuationRootValues} from './frame-roots.js';
 import {ManagedFault} from '../heap.js';
 import {failInitialization} from './static-init.js';
 import {leaveCilMethod} from './cil-method-events.js';
@@ -9,9 +10,7 @@ const within=(offset,handler)=>offset>=handler.start&&offset<handler.end;
 // Preserve the debugger/snapshot frame shape; this module alone mutates CIL EH state.
 export function createExceptionState(){return {exception:null,pending:null,caught:[],unwinds:[]};}
 export function* exceptionRoots(frame) {
-  if(frame.exception?.reference)yield frame.exception.reference;
-  for(const caught of frame.caught??[])if(caught.fault.reference)yield caught.fault.reference;
-  for(const unwind of frame.unwinds??[])if(unwind.error?.reference)yield unwind.error.reference;
+  yield* continuationRootValues(frame);
 }
 
 /** Enter a leave or resume an exception/finally continuation. */

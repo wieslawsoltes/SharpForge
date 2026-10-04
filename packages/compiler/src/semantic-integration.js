@@ -47,7 +47,8 @@ const pipelineCodes = new Set([
 ]);
 /** What the pipeline's source-level async rewrite reports when it meets `await` or `async` it cannot rewrite. */
 const asyncRewriteCodes = new Set([DiagnosticId.CS4032, DiagnosticId.CS1983]);
-const adapterPseudo = d =>
+/** The syntax adapter's stand-in errors: they mark a construct outside the execution profile and are not C# diagnostics. */
+export const adapterPseudo = d =>
   (d.code === DiagnosticId.CS1014 && /init is not supported/.test(d.message)) || (d.code === DiagnosticId.CS0528 && /Duplicate IDisposable/.test(d.message));
 const constructNames = {
   [DiagnosticId.SF1003]: '64-bit and unsigned integer literals',
