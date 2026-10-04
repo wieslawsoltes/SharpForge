@@ -54,5 +54,21 @@ explicit synchronous commit operation, not the ingress path for large files.
 
 `tests/a19-document-reload.test.js` covers coherent notifications, model identity, undo/redo, precommit rejection and
 checkpoint restoration, committed callback/document/model/view failures, stale/read-only/disposed guards, encoding and
-byte-count rejection, same-text metadata changes and the exact shared size boundary. Source completion precedes execution;
-the final validation result is recorded separately when the completed seam runs through the repository limiter.
+byte-count rejection, newer edits made by callbacks, same-text metadata changes and the exact shared size boundary.
+
+The completed source ran through the repository limiter:
+
+```sh
+node scripts/limited.js node --test tests/a19-document-reload.test.js tests/a19-document-models.test.js tests/a19-document-snapshot-save.test.js
+```
+
+That run passed 26 of 28 cases. Two new assertions incorrectly expected selections to contain only `anchor` and `active`,
+omitting the editor's normalized metadata. The assertions now compare the complete captured selection state. No production
+source changed for this correction. The affected file then passed all 14 cases:
+
+```sh
+node scripts/limited.js node --test tests/a19-document-reload.test.js
+```
+
+The result is 28 distinct passing cases across the completed scope: 14 reload, 8 document-model and 6 captured-save cases.
+The original three-file run was not repeated; disk/native observer composition is qualified separately with its real adapters.
