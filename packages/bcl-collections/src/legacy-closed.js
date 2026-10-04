@@ -1,3 +1,5 @@
+import {registerOrderingExtensions} from './comparers/contracts.js';
+import {sortList} from './list-sort.js';
 import {fail, integer, bclScalar, array, makeArray} from '@sharpforge/bcl-core';
 import {equal} from './object-equality.js';
 import {registerClosedCollections} from './legacy-contracts.js';
@@ -6,6 +8,8 @@ import {hashSet, initializeHashSet} from './hash-set.js';
 import {collectionEnumerator} from './collection-enumerator.js';
 import {listRemoval} from './list-removal.js';
 import {clearList, removeListValue} from './list-value-removal.js';
+import {listInsertion} from './list-insertion.js';
+import {reverseList} from './list-reverse.js';
 import {reserveIndexed} from './indexed-storage.js';
 import {
   count, data, version, change, reserve, commitItems, write, queueItems, queueEnqueue, append
@@ -54,40 +58,13 @@ function peekOrRemove(p, descriptor, context) {
   return value;
 }
 
-function compare(p, left, right) {
-  const first = bclScalar(p, left);
-  const second = bclScalar(p, right);
-  if (first === second) return 0;
-  if (first === null) return -1;
-  if (second === null) return 1;
-  if (typeof first === 'number' && typeof second === 'number') {
-    return Number.isNaN(first) ? -1 : Number.isNaN(second) ? 1 : first - second;
-  }
-  if (typeof first === 'string' && typeof second === 'string' || typeof first === 'boolean' && typeof second === 'boolean') {
-    return first < second ? -1 : 1;
-  }
-  fail(p, 'InvalidOperationException', 'Default comparer is unavailable for this object type');
-}
-
 function mutate(p, descriptor, context) {
   if (descriptor.name === 'RemoveAt' || descriptor.name === 'RemoveRange') return listRemoval(p, descriptor, context);
   if (descriptor.name === 'Remove') return removeListValue(p, context.reference, context.values[0]);
-  const {reference, values, native, size} = context;
-  const items = data(p, reference).slice(0, size);
-  switch (descriptor.name) {
-    case 'AddRange': {
-      const extra = array(p, values[0]);
-      integer(p, items.length + extra.length);
-      for (const value of extra) items.push(value);
-      break;
-    }
-    case 'Insert': items.splice(integer(p, native[0], 0, size), 0, values[1]); break;
-    case 'Reverse': items.reverse(); break;
-    case 'Sort': items.sort((left, right) => compare(p, left, right)); break;
-    default: fail(p, 'MissingMethodException', descriptor.owner + '.' + descriptor.name);
-  }
-  commitItems(p, reference, items);
-  return null;
+  if (descriptor.name === 'Insert' || descriptor.name === 'AddRange') return listInsertion(p, descriptor, context);
+  if (descriptor.name === 'Sort') return sortList(p, context.reference, context.values[0] ?? null);
+  if (descriptor.name === 'Reverse') return reverseList(p, context.reference);
+  fail(p, 'MissingMethodException', descriptor.owner + '.' + descriptor.name);
 }
 
 function invokeMember(p, descriptor, context) {
@@ -151,5 +128,6 @@ function invoke(p, descriptor, args, type = p.bclHost.frameworkType(descriptor.o
 
 /** Released closed collections with heap-owned GC/debugger state and unchanged ABI registration order. */
 export const closedCollectionsModule = Object.freeze({
-  name: 'closed-collections', families, group: 'bcl-collections', contracts: registerClosedCollections, invoke
+  name: 'closed-collections', families, group: 'bcl-collections', contracts: registerClosedCollections,
+  extensionContracts: registerOrderingExtensions, invoke
 });

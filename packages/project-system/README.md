@@ -35,6 +35,21 @@ The portable evaluator adds bounded local imports/ImportGroup/Choose, final-prop
 
 Exports include `buildSolutionTree`, `validateItemPath`, `editProjectMembership`, `addSolutionProject`, `addSolutionFolder`, `removeSolutionProject`, `rewriteProjectPath` and `editNamedProjectItem`. These preserve unrelated XML and operate on supported literal path/item declarations. They do not reproduce native design-time MSBuild, wildcard/property-function path rewriting or arbitrary task semantics. Tree construction is separate from DOM controls in `@sharpforge/controls`.
 
+## Prepared source record utilities
+
+The public `cloneWorkspaceRecord(record, path)` utility copies property descriptors without reading a lazy `text` getter. It sets the record's path (and URI, if present) and keeps `model`, `source` and `originalSource` nonenumerable. It does not transfer model ownership or rebase a model/snapshot URI; callers changing a prepared source path must use their source contribution's rebase operation first.
+
+`recordSource(record)` returns the contributed immutable source or `null` without reading text. `isSourceSnapshot(source)` recognizes a frozen object with a nonnegative safe-integer UTF-16 length and a `getText` method; it does not validate an editor model or its identity. `isTextRecord(record)` recognizes this source shape or a legacy string-valued `text` field. Prepared records take the source branch and leave their compatibility getter unread. Descriptor cloning preserves the input property contracts and throws for invalid descriptor inputs; consumers remain responsible for bounded path, source and ownership validation at their adoption boundary.
+
+The Explorer snapshot tests exercise these exports through the package entry point, including exact immutable source identity, URI rebasing, hidden model metadata and history without full-source reads.
+
+## Portable startup and launch-profile metadata
+
+`validateWorkspaceSettings`, ZIP import/export, `workspaceManifestRecord` and extracted-folder import retain two registered data fields. `startupConfiguration` version 1 contains `mode` (`single`, `multiple`, `currentSelection`) and ordered entries `{projectId, action, order, profile}`. Actions are `none`, `start` or `startWithoutDebugging`. `launchProfiles` version 1 contains project entries `{projectId, selected, profiles}`; each profile retains only `{id, name, stopOnEntry, renderer, compute}`. Arguments, environment values, networking permissions and runtime grants are excluded even if an imported object contains them.
+
+The public `sanitizeStartupConfiguration`, `sanitizeLaunchProfileMetadata` and `sanitizeSessionUserSettings` functions validate and copy these fields. Their optional context accepts `paths: Set<string>` for workspace paths or `projectIds: Set<string>` for loaded project identities. A project ID must be a portable relative path; `$workspace` identifies the loose-source workspace. Archive manifests require other project IDs to name included `.csproj` files. Workbench staging separately validates executable project kinds and profile references before replacing a workspace.
+
+The exported `startupActions`, `startupModes`, `sessionUserSettingsLimits` and immutable `sessionUserSettingsContributions` table define this schema once. Limits are 1,024 projects, 64 profiles per project, 512 characters per profile ID, 200 per profile name and 4 MiB of compact metadata characters. Serialized workspace manifests also enforce the existing 4 MiB UTF-8 byte budget, including their other settings and indentation. Unknown fields are discarded; invalid versions, paths, duplicate IDs, selections or bounds throw before the import returns settings. Compute metadata is a preference, not a grant: the runtime validates whether its selected backend is supported.
 
 ## Metadata-only disk inventory
 

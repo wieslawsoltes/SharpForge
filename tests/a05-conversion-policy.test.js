@@ -42,9 +42,9 @@ test('T01.6 explicit source tags preserve floating saturation and integer wideni
   assert.throws(() => convert('conv.ovf.u8', -1), {name: 'OverflowException'});
 });
 
-test('T01.6 native aliases retain the current 32-bit profile and injectable errors', () => {
-  assert.equal(convert('conv.i', float(Infinity)), 2147483647);
-  assert.equal(convert('conv.u', float(Infinity)), -1);
+test('T01.6 native aliases retain default 32-bit values and injectable errors', () => {
+  assert.equal(number(convert('conv.i', float(Infinity))), 2147483647);
+  assert.equal(number(convert('conv.u', float(Infinity))), -1);
   const diagnostic = new Error('host opcode diagnostic'), managed = new Error('managed overflow');
   assert.throws(() => convert('conv.r', 1, {error: () => diagnostic}), error => error === diagnostic);
   assert.throws(() => convert('conv.ovf.u1', 300, {fault: () => managed}), error => error === managed);
@@ -62,12 +62,12 @@ test('T01.6 every checked integer policy preserves exact endpoints and rejects a
   for (const [target, minimum, maximum, encodedMaximum] of ranges) {
     const opcode = 'conv.ovf.' + target;
     const encodedMinimum = target.endsWith('8') ? minimum : Number(minimum);
-    assert.equal(convert(opcode, minimum), encodedMinimum, opcode);
-    assert.equal(convert(opcode, maximum), encodedMaximum, opcode);
+    assert.equal(number(convert(opcode, minimum)), encodedMinimum, opcode);
+    assert.equal(number(convert(opcode, maximum)), encodedMaximum, opcode);
     assert.throws(() => convert(opcode, minimum - 1n), {name: 'OverflowException'}, opcode);
     assert.throws(() => convert(opcode, maximum + 1n), {name: 'OverflowException'}, opcode);
-    assert.equal(convert(opcode + '.un', 0n), target.endsWith('8') ? 0n : 0, opcode + '.un');
-    assert.equal(convert(opcode + '.un', maximum), encodedMaximum, opcode + '.un');
+    assert.equal(number(convert(opcode + '.un', 0n)), target.endsWith('8') ? 0n : 0, opcode + '.un');
+    assert.equal(number(convert(opcode + '.un', maximum)), encodedMaximum, opcode + '.un');
     if (target !== 'u8') {
       assert.throws(() => convert(opcode + '.un', -1n), {name: 'OverflowException'}, opcode + '.un');
     } else {

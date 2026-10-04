@@ -42,9 +42,11 @@ The source-debugging `VirtualMachine` delegates Int32 casts to the shared conver
 `@sharpforge/bytecode` exports `convert`, `conversionTargets`, `number` and
 `isNumber`. Runtime numeric operations consume this same policy. The target
 catalog is immutable and lists the 13 ECMA opcode suffixes; a native target is
-one suffix, not a separate opcode per host width. This increment retains the
-current 32-bit native profile. Configurable native width and Decimal integration
-remain separate work.
+one suffix, not a separate opcode per host width. The native target metadata describes the default 32-bit ABI; conversion calls
+select precompiled 32-bit or 64-bit policies using `context.nativeIntBits`.
+Native results retain their category in an immutable carrier; `number(value)`
+reads the signed payload. See [native width](cil-native-width.md). Decimal
+integration remains separate work.
 
 Valid opcode policies are compiled once into a private lookup table. Integer
 targets share frozen exact bounds and floating saturation thresholds; conversion

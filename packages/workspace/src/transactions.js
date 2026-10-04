@@ -1,5 +1,7 @@
-import {hashWorkspaceBytes, workspaceRecordBytes, throwIfWorkspaceAborted} from './content-hash.js';
-import {cloneWorkspaceState, validateWorkspaceState, applyWorkspaceOperation, hashWorkspaceState} from './transaction-state.js';
+import {throwIfWorkspaceAborted} from './content-hash.js';
+import {cloneWorkspaceState, validateWorkspaceState, applyWorkspaceOperation, hashWorkspaceState,
+  hashWorkspaceRecord} from './transaction-state.js';
+import {cloneWorkspaceOperation} from './transaction-records.js';
 
 export class WorkspaceTransactionError extends Error {
   constructor(message, receipt, cause) {
@@ -9,6 +11,7 @@ export class WorkspaceTransactionError extends Error {
     this.receipt = receipt;
     this.completedMutations = receipt.completedMutations;
     this.written = receipt.completedMutations.map(operation => operation.destination ?? operation.path);
+    this.committed = receipt.status.startsWith('committed');
   }
 }
 
@@ -62,14 +65,14 @@ export class WorkspaceTransactionJournal {
     const receipt = {version: 1, id, label, status: 'prepared', operations: [], completedMutations: [], before, after};
     for (const operation of transaction.operations) {
       const previous = after.records.find(record => record.path === operation.path);
-      const beforeHash = previous ? await hashWorkspaceBytes(workspaceRecordBytes(previous), {signal}) : null;
+      const beforeHash = previous ? await hashWorkspaceRecord(previous, {signal}) : null;
       if (operation.expectedHash !== undefined && operation.expectedHash !== beforeHash) {
         throw new Error('SFW1113: Content changed before transaction: ' + operation.path);
       }
       if (['create', 'write'].includes(operation.kind)) await this.validateContent?.(operation, {signal});
       applyWorkspaceOperation(after, operation);
       const next = after.records.find(record => record.path === (operation.destination ?? operation.path));
-      const afterHash = next ? await hashWorkspaceBytes(workspaceRecordBytes(next), {signal}) : null;
+      const afterHash = next ? await hashWorkspaceRecord(next, {signal}) : null;
       receipt.operations.push({...operation, beforeHash, afterHash});
     }
     validateWorkspaceState(after, this.limits);
@@ -103,18 +106,14 @@ export class WorkspaceTransactionJournal {
       if (await hashWorkspaceState(this.getState(), {signal}) !== originalHash) {
         throw new Error('SFW1113: Unsaved buffers changed while disk operations were running');
       }
-      await this.commitState(cloneWorkspaceState(after), {transaction: receipt,
-        restore: transaction.targetState ? cloneWorkspaceState(after) : null});
-      receipt.status = 'committed';
-      try { await this.adapter?.finalize?.(receipt); }
-      catch (error) { receipt.status = 'committed-adapter-failure'; throw error; }
+      await this.adopt(receipt, transaction);
       await this.persist(receipt);
       this.receipts.push(receipt);
       while (this.receipts.length > 32) this.receipts.shift();
       return receipt;
     } catch (cause) {
       receipt.status = receipt.status === 'committed' ? 'committed-storage-failure' :
-        receipt.status === 'committed-adapter-failure' ? receipt.status : 'failed';
+        receipt.status.startsWith('committed-') ? receipt.status : 'failed';
       receipt.completedMutations.push(...(cause.completedMutations ?? []));
       receipt.error = {message: cause.message, code: cause.code ?? cause.name};
       try { await this.persist(receipt); }
@@ -122,8 +121,31 @@ export class WorkspaceTransactionJournal {
       this.receipts.push(receipt);
       while (this.receipts.length > 32) this.receipts.shift();
       throw new WorkspaceTransactionError(
-        'Workspace transaction failed; completed disk mutations: ' + receipt.completedMutations.length + '. ' + cause.message,
+        (receipt.status.startsWith('committed') ? 'Workspace transaction committed with an error; ' : 'Workspace transaction failed; ')
+          + 'completed disk mutations: ' + receipt.completedMutations.length + '. ' + cause.message,
         receipt, cause);
+    }
+  }
+
+  async adopt(receipt, transaction) {
+    let observerError = null;
+    try {
+      await this.commitState(cloneWorkspaceState(receipt.after), {transaction: receipt,
+        restore: transaction.targetState ? cloneWorkspaceState(receipt.after) : null});
+    } catch (error) {
+      // The host owns adoption. A later observer failure cannot undo it or cause a second admission.
+      if (!error.committed) throw error;
+      observerError = error;
+    }
+    receipt.status = 'committed';
+    try { await this.adapter?.finalize?.(receipt); }
+    catch (error) {
+      receipt.status = 'committed-adapter-failure';
+      throw error;
+    }
+    if (observerError) {
+      receipt.status = 'committed-observer-failure';
+      throw observerError;
     }
   }
 
@@ -141,7 +163,7 @@ export class WorkspaceTransaction {
   add(operation) {
     if (this.status !== 'open') throw new Error('SFW1114: Transaction is no longer open');
     if (this.operations.length >= 20000) throw new RangeError('SFW1102: Transaction operation limit exceeded');
-    this.operations.push(structuredClone(operation));
+    this.operations.push(cloneWorkspaceOperation(operation));
     return this;
   }
 
@@ -153,7 +175,7 @@ export class WorkspaceTransaction {
       this.status = 'committed';
       return receipt;
     } catch (error) {
-      this.status = 'failed';
+      this.status = error.committed ? 'committed' : 'failed';
       throw error;
     }
   }

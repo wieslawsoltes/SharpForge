@@ -5,7 +5,7 @@
  * of `int` to `double`, so overload resolution over the framework symbols may only use the conversions that back
  * end can perform. `ExecutionProfileConversions` classifies with `Conversions` and keeps a result only when it is
  * one of those: identity, `int` to `double`, the null literal, a reference conversion to a base class, and any
- * conversion to `object`.
+ * conversion to `object`, and registry-proven interface upcasts between registered types.
  *
  * Two rules of the string-typed profile are wider than C# and are kept so that programs it accepted keep
  * compiling to the same image:
@@ -16,6 +16,7 @@
  */
 import { Conversions, Conversion, ConversionKind } from './classify.js';
 import { ErrorTypeSymbol, ArrayTypeSymbol } from '../symbols/types.js';
+import { isRegisteredReferenceUpcast } from './registered-reference.js';
 
 const none = Conversions.noConversion;
 const nullLiteral = new Conversion(ConversionKind.NullLiteral);
@@ -58,7 +59,8 @@ export class ExecutionProfileConversions extends Conversions {
       case ConversionKind.Boxing:
         return to === this.core.object;
       case ConversionKind.ImplicitReference:
-        return to === this.core.object || this.derivesFrom(from, to);
+        return to === this.core.object || this.derivesFrom(from, to) ||
+          isRegisteredReferenceUpcast(this.core.bridge.registryName(from), this.core.bridge.registryName(to));
       default:
         return false;
     }

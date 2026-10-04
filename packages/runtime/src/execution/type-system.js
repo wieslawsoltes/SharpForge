@@ -1,9 +1,11 @@
+import {resolveCallType} from './generic-calls.js';
 import {exceptionMatches} from './exception-types.js';
 import {CilError,decodeCoded} from '@sharpforge/cil';
 import {VirtualDispatch} from './vtable.js';
 import {MethodTableRegistry} from './method-table.js';
 import {castCacheFor} from './casting.js';
 import {FieldResolutionCache} from './field-resolution-cache.js';
+import {cachedTypeName} from './token-cache.js';
 
 /** Assembly-derived metadata indexes. They are rebuilt on load, never snapshotted. */
 export class CilTypeSystem {
@@ -17,7 +19,7 @@ export class CilTypeSystem {
     this.initializers=new Map();
     this.dispatch=new VirtualDispatch(vm.inspector);
     const metadata=vm.inspector.metadata;
-    this.methodTables=new MethodTableRegistry({tokenResolver:token=>metadata.typeName(token)});
+    this.methodTables=new MethodTableRegistry({nativeIntBits:vm.options?.nativeIntBits,tokenResolver:token=>cachedTypeName(vm,token)});
     for(const type of this.types.values()) {
       this.initializers.set(type.token,type.methods.find(method=>method.name==='.cctor')??null);
       const base=type.baseToken?metadata.typeName(type.baseToken):null;
@@ -39,16 +41,17 @@ export class CilTypeSystem {
     for(const record of vm.heap.records)if(record)record.methodTable=this.methodTables.get(record.methodTable?.name??record.type);
     this.castCache=castCacheFor(this.methodTables);
   }
-  table(type){return this.methodTables.get(type);}
+  table(type){return this.methodTables.get(resolveCallType(this.vm,type));}
   layout(typeToken,depth=0) {
-    if(this.layouts.has(typeToken))return this.layouts.get(typeToken);
+    const methodTable=this.table(typeToken);
+    if(this.layouts.has(methodTable))return this.layouts.get(methodTable);
     if(depth>64)throw new CilError('Inheritance depth exceeded');
-    const methodTable=this.table(typeToken),type=this.types.get(methodTable.definitionToken);
+    const type=this.types.get(methodTable.definitionToken);
     if(!type)throw new CilError('External type allocation is not implemented');
     if(type.flags&0x20)throw new CilError('Cannot instantiate an interface');
     const fields=methodTable.fields.map(field=>({...field,type:field.storageType??field.type.name}));
     const layout={name:methodTable.name,token:methodTable.token,methodTable,fields,index:new Map(fields.map((field,index)=>[field.token,index]))};
-    this.layouts.set(typeToken,layout);
+    this.layouts.set(methodTable,layout);
     return layout;
   }
   typeOf(ref) {if(ref===null)return null;const token=this.vm.heap.get(ref).methodTable.definitionToken;return this.types.has(token)?token:null;}
@@ -64,6 +67,6 @@ export class CilTypeSystem {
     return {...this.fieldCache.resolve(token,record.methodTable),record};
   }
   virtualTarget(ref,descriptor,target) {
-    return this.dispatch.resolve(this.typeOf(ref),target);
+    return this.dispatch.resolve(this.vm.heap.get(ref).methodTable.name,target,descriptor.ownerInstance);
   }
 }

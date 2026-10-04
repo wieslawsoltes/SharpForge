@@ -1,0 +1,240 @@
+{
+  "schema": 1,
+  "benchmark": "a19-worker-execution-occupancy",
+  "command": "node scripts/limited.js node tests/bench/a19-execution-occupancy.mjs",
+  "environment": {
+    "node": "v24.19.0",
+    "platform": "linux",
+    "arch": "x64",
+    "cpu": "AMD EPYC 9V74 80-Core Processor",
+    "logicalProcessors": 9,
+    "memoryBytes": 10451464192,
+    "sharedMachine": true
+  },
+  "fixture": {
+    "iterations": 10000,
+    "repetitions": 9,
+    "warmups": 3,
+    "instructionBudget": 15000,
+    "timeBudgetMs": 6
+  },
+  "methodology": "Matched synchronous managed pump workload with/without the clock-pair wrapper; actual source and direct JavaScript CIL backends. Shared-machine samples are observations, not a browser latency or native CPU regression verdict. No allocation profiler was run.",
+  "results": [
+    {
+      "engine": "source",
+      "baseline": {
+        "medianMs": 9.287185999999906,
+        "p95Ms": 14.830005000000028,
+        "samples": [
+          {
+            "elapsedMs": 9.287185999999906,
+            "slices": 15,
+            "measuredBusyMs": null
+          },
+          {
+            "elapsedMs": 8.221719000000007,
+            "slices": 15,
+            "measuredBusyMs": null
+          },
+          {
+            "elapsedMs": 14.830005000000028,
+            "slices": 15,
+            "measuredBusyMs": null
+          },
+          {
+            "elapsedMs": 8.096081000000027,
+            "slices": 15,
+            "measuredBusyMs": null
+          },
+          {
+            "elapsedMs": 9.329060000000027,
+            "slices": 15,
+            "measuredBusyMs": null
+          },
+          {
+            "elapsedMs": 7.708324999999945,
+            "slices": 15,
+            "measuredBusyMs": null
+          },
+          {
+            "elapsedMs": 9.766689000000042,
+            "slices": 15,
+            "measuredBusyMs": null
+          },
+          {
+            "elapsedMs": 7.425718999999958,
+            "slices": 15,
+            "measuredBusyMs": null
+          },
+          {
+            "elapsedMs": 9.378422999999998,
+            "slices": 15,
+            "measuredBusyMs": null
+          }
+        ]
+      },
+      "instrumented": {
+        "medianMs": 8.652439999999956,
+        "p95Ms": 12.556717999999933,
+        "samples": [
+          {
+            "elapsedMs": 8.149519999999939,
+            "slices": 15,
+            "measuredBusyMs": 8.09881299999995
+          },
+          {
+            "elapsedMs": 8.652439999999956,
+            "slices": 15,
+            "measuredBusyMs": 8.636069999999904
+          },
+          {
+            "elapsedMs": 12.556717999999933,
+            "slices": 15,
+            "measuredBusyMs": 12.533722999999895
+          },
+          {
+            "elapsedMs": 11.26228500000002,
+            "slices": 15,
+            "measuredBusyMs": 11.24526000000003
+          },
+          {
+            "elapsedMs": 7.906223999999952,
+            "slices": 15,
+            "measuredBusyMs": 7.893736999999987
+          },
+          {
+            "elapsedMs": 9.445816000000036,
+            "slices": 15,
+            "measuredBusyMs": 9.428398000000016
+          },
+          {
+            "elapsedMs": 8.409271999999987,
+            "slices": 15,
+            "measuredBusyMs": 8.394572000000153
+          },
+          {
+            "elapsedMs": 9.431543999999917,
+            "slices": 15,
+            "measuredBusyMs": 9.414870000000178
+          },
+          {
+            "elapsedMs": 8.12587499999995,
+            "slices": 15,
+            "measuredBusyMs": 8.109972000000084
+          }
+        ]
+      },
+      "medianChangePercent": -6.834642915517753,
+      "p95ChangePercent": -15.328969882343879
+    },
+    {
+      "engine": "direct-cil",
+      "baseline": {
+        "medianMs": 102.83525200000031,
+        "p95Ms": 107.78108999999995,
+        "samples": [
+          {
+            "elapsedMs": 104.2680519999999,
+            "slices": 18,
+            "measuredBusyMs": null
+          },
+          {
+            "elapsedMs": 107.19886300000007,
+            "slices": 19,
+            "measuredBusyMs": null
+          },
+          {
+            "elapsedMs": 107.78108999999995,
+            "slices": 19,
+            "measuredBusyMs": null
+          },
+          {
+            "elapsedMs": 101.06164600000011,
+            "slices": 18,
+            "measuredBusyMs": null
+          },
+          {
+            "elapsedMs": 100.04783800000041,
+            "slices": 18,
+            "measuredBusyMs": null
+          },
+          {
+            "elapsedMs": 100.33467000000019,
+            "slices": 18,
+            "measuredBusyMs": null
+          },
+          {
+            "elapsedMs": 102.83525200000031,
+            "slices": 18,
+            "measuredBusyMs": null
+          },
+          {
+            "elapsedMs": 102.82615299999998,
+            "slices": 18,
+            "measuredBusyMs": null
+          },
+          {
+            "elapsedMs": 104.00472500000024,
+            "slices": 18,
+            "measuredBusyMs": null
+          }
+        ]
+      },
+      "instrumented": {
+        "medianMs": 101.06756599999972,
+        "p95Ms": 109.53707799999984,
+        "samples": [
+          {
+            "elapsedMs": 104.65559199999984,
+            "slices": 18,
+            "measuredBusyMs": 104.5233119999989
+          },
+          {
+            "elapsedMs": 109.49112999999988,
+            "slices": 19,
+            "measuredBusyMs": 109.43692899999951
+          },
+          {
+            "elapsedMs": 101.06756599999972,
+            "slices": 18,
+            "measuredBusyMs": 101.01946500000008
+          },
+          {
+            "elapsedMs": 100.51205700000037,
+            "slices": 18,
+            "measuredBusyMs": 100.46892400000024
+          },
+          {
+            "elapsedMs": 99.89681999999993,
+            "slices": 18,
+            "measuredBusyMs": 99.85335200000009
+          },
+          {
+            "elapsedMs": 100.15849400000025,
+            "slices": 18,
+            "measuredBusyMs": 100.11149099999875
+          },
+          {
+            "elapsedMs": 100.43411000000015,
+            "slices": 18,
+            "measuredBusyMs": 100.3831050000008
+          },
+          {
+            "elapsedMs": 101.46876100000009,
+            "slices": 18,
+            "measuredBusyMs": 101.42347399999971
+          },
+          {
+            "elapsedMs": 109.53707799999984,
+            "slices": 19,
+            "measuredBusyMs": 109.44914900000049
+          }
+        ]
+      },
+      "medianChangePercent": -1.7189494513035197,
+      "p95ChangePercent": 1.62921714746056
+    }
+  ],
+  "sourceRevision": "3b3f6546",
+  "qualification": "Observed on a shared host after the completed source scope. No median regression observed; direct CIL p95 +1.63%. No speedup, allocation, native CPU or browser timing verdict is claimed."
+}

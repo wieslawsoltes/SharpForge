@@ -1,0 +1,5 @@
+{"roslyn":{"version":"5.3.0.0","informationalVersion":"5.3.0-2.26153.122+4d3023de605a78ba3e59e50c657eed70f125c68a","runtime":"10.0.5","references":"Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0","options":"OutputKind.ConsoleApplication, default warning level, nullable disabled, no implicit usings, invariant culture"},"shape":"diagnostics are [code, startOffset, length, severity]; output is stdout with \\n newlines","fixtures":{
+  "string-elements/index-reads-code-units":{"hash":"3f2fdf81d1fc8e2f","kind":"output","langVersion":"14.0","diagnostics":[],"output":"é\nTrue\no\n233\n109\ni\nol\nc\n664\n"},
+  "string-elements/foreach-over-a-string":{"hash":"aa81d492c3700966","kind":"output","langVersion":"14.0","diagnostics":[],"output":"2 cba 1\n98\n99\n65\nx\n120\n121\n3\n"},
+  "string-elements/out-of-range-and-null-throw":{"hash":"3e9ef7a096c5e683","kind":"output","langVersion":"14.0","diagnostics":[],"output":"range\nnegative\nnull element\nnull loop\nb\n"}
+}}

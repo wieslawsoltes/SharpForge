@@ -1,4 +1,6 @@
-import {hashWorkspaceBytes, workspaceRecordBytes, throwIfWorkspaceAborted} from './content-hash.js';
+import {hashWorkspaceBytes, hashWorkspaceRecordContent, workspaceRecordBytes, throwIfWorkspaceAborted} from './content-hash.js';
+import {workspaceRecordSource, cloneWorkspaceRecordSnapshot, cloneWorkspaceDocumentStates,
+  applyWorkspaceRecordWrite} from './transaction-records.js';
 
 export const withinWorkspacePath = (path, root) => path === root || path.startsWith(root + '/');
 
@@ -18,24 +20,39 @@ export function validateWorkspacePath(value) {
 
 export function cloneWorkspaceState(value) {
   const state = {...value};
-  state.records = (value.records ?? []).map(record => ({...record, ...(record.bytes ? {bytes: record.bytes.slice()} : {})}));
+  state.records = (value.records ?? []).map(record => cloneWorkspaceRecordSnapshot(record));
   state.folders = [...(value.folders ?? [])];
   for (const key of ['tabs', 'breakpoints', 'settings', 'openDocuments', 'dirty']) {
     if (value[key] !== undefined) state[key] = structuredClone(value[key]);
   }
+  if (value.documentStates !== undefined) state.documentStates = cloneWorkspaceDocumentStates(value.documentStates);
   return state;
 }
 
 export function workspaceStateSize(state) {
-  return state.records.reduce((size, record) => size + (record.text?.length ?? 0) * 2 + (record.bytes?.length ?? 0), 0);
+  const sources = new Set();
+  let size = 0;
+  for (const record of state.records) {
+    const source = workspaceRecordSource(record);
+    size += (source?.length ?? record.text?.length ?? 0) * 2 + (record.bytes?.length ?? 0);
+    if (source) sources.add(source);
+  }
+  for (const documentState of state.documentStates?.values() ?? []) {
+    for (const source of [documentState.source, documentState.baseline]) {
+      if (source == null || sources.has(source)) continue;
+      size += (typeof source === 'string' ? source.length : workspaceRecordSource({source})?.length ?? 0) * 2;
+      sources.add(source);
+    }
+  }
+  return size;
 }
 
 export function hashWorkspaceRecord(record, options) {
-  if (record.lazy && typeof record.text !== 'string' && !record.bytes) {
+  if (record.lazy && !workspaceRecordSource(record) && typeof record.text !== 'string' && !record.bytes) {
     return hashWorkspaceBytes(new TextEncoder().encode(JSON.stringify(['unloaded', record.size, record.lastModified ?? record.mtime,
       record.hash ?? null])), options);
   }
-  return hashWorkspaceBytes(workspaceRecordBytes(record), options);
+  return hashWorkspaceRecordContent(record, options);
 }
 
 /** Hash paths and exact bytes, including empty folders, independently of display order. */
@@ -82,14 +99,8 @@ export function applyWorkspaceOperation(state, operation) {
   if (operation.kind === 'create' || operation.kind === 'write') {
     if (operation.kind === 'create') requireAbsent(path);
     else if (!file) throw new Error('SFW1104: Missing text file: ' + path);
-    const record = {...file, ...operation.record, path};
-    if (operation.text !== undefined) record.text = operation.text;
-    if (operation.bytes !== undefined) {
-      if (!(operation.bytes instanceof Uint8Array)) throw new TypeError('File bytes must be Uint8Array');
-      record.bytes = operation.bytes.slice();
-      if (operation.text === undefined && operation.record?.text === undefined) delete record.text;
-    }
-    workspaceRecordBytes(record);
+    const record = applyWorkspaceRecordWrite(file, operation, path);
+    if (!workspaceRecordSource(record)) workspaceRecordBytes(record);
     records.set(path, record);
   } else if (operation.kind === 'mkdir') {
     requireAbsent(path);
@@ -104,7 +115,7 @@ export function applyWorkspaceOperation(state, operation) {
       requireAbsent(destination);
       for (const [candidate, record] of children) {
         const target = destination + candidate.slice(path.length);
-        records.set(target, {...record, path: target, ...(record.bytes ? {bytes: record.bytes.slice()} : {})});
+        records.set(target, cloneWorkspaceRecordSnapshot(record, target));
       }
       for (const candidate of directories) folders.add(destination + candidate.slice(path.length));
     }

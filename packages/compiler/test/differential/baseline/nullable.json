@@ -1,8 +1,10 @@
 {
   "nullable/cs0019-int-equals-string": ["diagnostics", "warnings"],
-  "nullable/cs0037-cs0266-nullable-values": ["diagnostics"],
+  "nullable/cs0037-cs0266-nullable-values": ["diagnostics", "warnings"],
   "nullable/cs0037-null-to-int": ["diagnostics", "warnings"],
   "nullable/cs0266-nullable-to-int": ["diagnostics", "warnings"],
   "nullable/cs8600-cs8602-flow": ["diagnostics", "warnings"],
-  "nullable/null-conditional": ["diagnostics", "warnings", "bytecode", "cil"]
+  "nullable/cs8602-nullable-reference-warning": ["diagnostics", "warnings"],
+  "nullable/null-conditional": ["diagnostics", "warnings", "bytecode", "cil", "directCil"],
+  "nullable/nullable-value-types": ["directCil"]
 }

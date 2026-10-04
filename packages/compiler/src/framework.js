@@ -44,7 +44,7 @@ export const FrameworkCompiler=Base=>class FrameworkCompiler extends Base {
       const exactCandidates=candidates.filter(d=>d.parameters.every((t,i)=>frameworkType(t)?.kind!=='delegate'||this.delegateMethod(node.args[i],t)?.method.returnType===frameworkType(t).result));if(exactCandidates.length)candidates=exactCandidates;
       candidates.sort((a,b)=>a.parameters.reduce((n,t,i)=>n+(t===types[i]?0:1),0)-b.parameters.reduce((n,t,i)=>n+(t===types[i]?0:1),0));
       if(candidates.length>1){const rank=c=>c.parameters.reduce((n,t,i)=>n+(t===types[i]?0:1),0);if(rank(candidates[0])===rank(candidates[1])){if(report)this.c.report(node,DiagnosticId.CS0121,[typeText(candidates[0].owner)+'.'+candidates[0].name,typeText(candidates[1].owner)+'.'+candidates[1].name]);return null;}}
-      if(!candidates.length){if(report)this.c.report(node,DiagnosticId.CS1501,[node.target.name,types.length]);return null;}
+      if(!candidates.length){if(report)this.c.report(node.target.nameSpan?{uri:node.uri,...node.target.nameSpan}:node,DiagnosticId.CS1501,[node.target.name,types.length]);return null;}
       return {receiver,contract:candidates[0]};
     }
     emitDelegate(node,type) {

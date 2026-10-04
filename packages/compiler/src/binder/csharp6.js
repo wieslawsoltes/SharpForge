@@ -3,11 +3,13 @@
  * be, which members `using static` brings into scope for a simple name, and the warnings for an exception filter
  * that is a constant. Each function answers with data; the body binder reports and builds the bound nodes.
  */
+import {DiagnosticId} from '../diagnostics/codes.js';
 import { SymbolKind } from '../symbols/types.js';
 import { ConstantValue } from '../constants/constant-value.js';
+import {namedSourceReferences} from './named-references.js';
 
 const nameKinds = new Set(['IdentifierName', 'GenericName']);
-const missingMemberCodes = new Set(['CS0117', 'CS1061']);
+const missingMemberCodes = new Set([DiagnosticId.CS0117, DiagnosticId.CS1061]);
 /** The largest magnitude of an interpolation alignment: beyond it the format item is invalid at run time. */
 const alignmentLimit = 32767;
 /** What may stand to the left of a `.` inside a `nameof` argument, besides a name or another member access. */
@@ -22,11 +24,11 @@ const qualifierKinds = new Set(['PredefinedType', 'ThisExpression', 'BaseExpress
  */
 export function nameofArgumentProblem(expression) {
   if (nameKinds.has(expression.kind)) return null;
-  if (expression.kind === 'AliasQualifiedName') return { code: 'CS8083', node: expression };
-  if (expression.kind !== 'SimpleMemberAccessExpression') return { code: 'CS8081', node: expression };
+  if (expression.kind === 'AliasQualifiedName') return { code: DiagnosticId.CS8083, node: expression };
+  if (expression.kind !== 'SimpleMemberAccessExpression') return { code: DiagnosticId.CS8081, node: expression };
   for (let left = expression.expression; ; left = left.expression) {
     if (nameKinds.has(left.kind) || qualifierKinds.has(left.kind)) return null;
-    if (left.kind !== 'SimpleMemberAccessExpression') return { code: 'CS8082', node: left };
+    if (left.kind !== 'SimpleMemberAccessExpression') return { code: DiagnosticId.CS8082, node: left };
   }
 }
 
@@ -65,8 +67,8 @@ export function interpolatedText(content) {
  * @returns {string} CS7095 (always true), CS8360 (always false, the whole try-catch is redundant) or CS8359
  */
 export function constantFilterWarning(value, isOnlyHandler) {
-  if (value) return 'CS7095';
-  return isOnlyHandler ? 'CS8360' : 'CS8359';
+  if (value) return DiagnosticId.CS7095;
+  return isOnlyHandler ? DiagnosticId.CS8360 : DiagnosticId.CS8359;
 }
 
 /** Class mixin for the body binder: the `nameof` operator, null-conditional statements and constant exception filters. */
@@ -86,7 +88,7 @@ export const CSharp6Binding = Base =>
       const args = syntax.argumentList.arguments;
       if (args.length !== 1) {
         // With any other number of arguments this is a call to a method named nameof, and there is none.
-        this.report(syntax.expression, 'CS0103', ['nameof']);
+        this.report(syntax.expression, DiagnosticId.CS0103, ['nameof']);
         return this.bad(syntax, { args: this.arguments(syntax.argumentList) });
       }
       this.d.gate(this.c.uri, syntax, 'Nameof');
@@ -98,8 +100,9 @@ export const CSharp6Binding = Base =>
       if (errors.length && !errors.every(row => missingMemberCodes.has(row.code))) return node;
       const problem = errors.length ? null : nameofArgumentProblem(argument);
       if (problem) this.report(problem.node, problem.code);
-      else if (operand.kind === 'MethodGroup' && operand.typeArguments) this.report(argument, 'CS8084');
+      else if (operand.kind === 'MethodGroup' && operand.typeArguments) this.report(argument, DiagnosticId.CS8084);
       if (operand.kind === 'Local') operand.local.reads++;
+      if (!errors.length) node.nameOfReferences = namedSourceReferences(operand);
       node.constantValue = ConstantValue.string(nameofValue(argument));
       return node;
     }
@@ -155,7 +158,7 @@ export const CSharp6Binding = Base =>
       const value = this.value(content.expression);
       if (value.hasErrors) return value;
       if (value.type?.specialType === 'System_Void') {
-        this.report(content.expression, 'CS1503', [1, 'void', 'object']);
+        this.report(content.expression, DiagnosticId.CS1503, [1, 'void', 'object']);
         return this.bad(content.expression);
       }
       // A lambda or method group goes into the hole as `object`, through its natural type from C# 10.
@@ -167,11 +170,11 @@ export const CSharp6Binding = Base =>
       if (alignment.hasErrors) return null;
       const constant = alignment.constantValue;
       if (!constant) {
-        this.report(syntax, 'CS0150');
+        this.report(syntax, DiagnosticId.CS0150);
         return null;
       }
       const width = Number(constant.value);
-      if (Math.abs(width) > alignmentLimit) this.report(syntax, 'CS8094', [alignmentLimit]);
+      if (Math.abs(width) > alignmentLimit) this.report(syntax, DiagnosticId.CS8094, [alignmentLimit]);
       return width;
     }
     /** `a?.M();` is a statement; `a?.Name;` is not (CS0201): what follows the last `?.` decides. */
