@@ -30,9 +30,11 @@ events by default; `{replay: true}` includes retained history. The returned
 unsubscribe function is idempotent, and an optional AbortSignal removes the
 subscription. The subscriber limit is 1–4096, default 128.
 
-Callbacks run only during `flush()`. Each flush snapshots the retained events
-and current subscribers. Callback emission or new subscriptions wait until the
-next flush; unsubscription prevents further delivery immediately. Recursive
+Callbacks run only during `flush()`. When delivery is needed, a flush snapshots
+the current subscribers and the retained suffix after their oldest cursor.
+Events already seen by every subscriber remain available to `read()` and replay,
+but are not copied for that flush. Callback emission or new subscriptions wait
+until the next flush; unsubscription prevents further delivery immediately. Recursive
 flushes return without invoking callbacks again. Callback errors propagate to
 the host, and a later flush can continue. Guest execution must invoke flush only
 at a host boundary, outside managed exception dispatch.
@@ -41,9 +43,21 @@ at a host boundary, outside managed exception dispatch.
 instruction timestamps, ordered sequences and a drop count. The provider/name
 vocabulary follows the planned EventPipe-shaped runtime stream; this is not the
 binary EventPipe or `.nettrace` container and includes no measured wall-clock
-time. Emission is O(1) in ring capacity with a bounded payload; flush is bounded
-by retained events times current subscribers. None of these costs has been
-measured in this implementation slice.
+time. Emission is O(1) in ring capacity with a bounded payload. A flush with no
+subscribers or an empty ring returns without copying either collection. A flush
+with caught-up subscribers scans their cursors but creates neither an event
+snapshot nor a subscriber snapshot. For S subscribers and U unread retained
+events, delivery uses O(S + U) temporary references and O(S + S × U) work; U is
+at most the ring capacity. Callback mutations still cannot change the event
+snapshot being delivered. This avoids copying already-consumed history at host
+boundaries; no throughput, latency or allocation-byte improvement is claimed
+without measurement.
+
+`tests/a05-runtime-event-flush.test.js` adds behavioral coverage for idle and
+unread-suffix work, replay after overflow, callback overwrite, reentrancy, abort,
+subscription changes and failure retries. These new cases are authored; serial
+validation remains pending. The earlier validation evidence below predates this
+flush optimization.
 
 Serial validation passed 22 event-log and value-ABI tests at `f3edb587`, including
 a host adapter around real direct-CIL execution, ring overflow, immutable
