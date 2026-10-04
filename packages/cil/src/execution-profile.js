@@ -1,3 +1,4 @@
+import {asyncCallbackTargets} from './async-state-machines.js';
 import {verificationInput} from './verify/verification-input.js';
 export {selectMethod} from './entry-selection.js';
 import {FunctionPointerProfile,indirectCallStackEffect} from './function-pointer-profile.js';
@@ -80,6 +81,7 @@ export function verifyCilAssembly(input,configuration={}){
       }
       if(['call','callvirt','newobj'].includes(i.name)){
         try{const d=resolveExecutionMethod(inspector,i.operand,context);verifyGenericCall(inspector,d,context);if(d.kind!=='method')throw new CilError('Call operand is not a method');const target=d.resolvedToken??(d.token>>>24===6?d.token:null);
+          for (const callback of asyncCallbackTargets(inspector, d)) pending.push(callback);
           if(supportedDelegateCall(inspector,d)) { /* Delegate runtime methods have no IL body. */ }
           else if(target) {
             if(i.name==='callvirt'&&(inspector.methods.get(target)?.flags&0x40)) {

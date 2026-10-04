@@ -1,3 +1,4 @@
+import {asyncStateMachine, isAsyncStructCall} from './async-state-machines.js';
 import {CilError} from './binary.js';
 import {nullableMethodDefinition} from './nullable-profile.js';
 import {frameworkType} from '@sharpforge/framework';
@@ -75,16 +76,18 @@ export function verifyGenericCall(inspector, descriptor, context) {
   const arity = descriptor.signature.genericArity ?? 0;
   const target = descriptor.resolvedToken ?? descriptor.definitionToken ?? descriptor.token;
   const layoutOnly = isSizeOfOnlyMethod(inspector, target);
+  const asyncCall = isAsyncStructCall(inspector, descriptor);
   if (descriptor.resolvedToken && methodGenericParameters(inspector, descriptor.ownerToken).length && !descriptor.ownerInstance) {
     throw new CilError('Generic declaring type requires a TypeSpec context');
   }
   const owner = inspector.types.find(type => type.token === descriptor.ownerToken);
-  if (!layoutOnly && descriptor.ownerInstance && owner?.baseToken && inspector.metadata.typeName(owner.baseToken) === 'System.ValueType') {
+  if (!layoutOnly && descriptor.ownerInstance && owner?.baseToken && inspector.metadata.typeName(owner.baseToken) === 'System.ValueType' &&
+      !asyncStateMachine(inspector, descriptor.ownerInstance)) {
     throw new CilError('Generic aggregate owners require T03 value storage');
   }
   if (arity && !descriptor.genericArguments) throw new CilError('Generic method calls require MethodSpec arguments');
   for (const argument of descriptor.methodArguments ?? []) {
-    genericArgument(inspector, argument, context, target, layoutOnly);
+    genericArgument(inspector, argument, context, target, layoutOnly || asyncCall);
   }
   for (const argument of descriptor.typeArguments ?? []) {
     if (nullableMethodDefinition(descriptor)) verifyGenericType(inspector, argument, context);

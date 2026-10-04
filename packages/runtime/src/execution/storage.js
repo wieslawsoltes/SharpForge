@@ -1,3 +1,4 @@
+import {asyncValue, copyAsyncValue} from './async-values.js';
 import {storeMethodPointer} from './method-pointers.js';
 import {isAggregateType, isValueRecord, createValue} from './value-types.js';
 import {nullableValue, copyNullable} from './nullable-value.js';
@@ -21,6 +22,7 @@ export function storageDefault(vm,type) {
   if(vm.inspector)type=resolveCallType(vm,type);
   if(typeof type==='string'&&type.startsWith('method '))return null;
   const table=vm.inspector?vm.typeSystem.table(type):null;
+  if(table?.flags.asyncValue)return asyncValue(vm,table);
   if(table?.flags.nullable)return nullableValue(vm,table);
   if(table&&isAggregateType(table))return createValue(vm,table);
   const info=enumInfo(vm,type);
@@ -31,6 +33,7 @@ export function storageValue(vm,value,type,numericContext) {
   if(vm.inspector)type=resolveCallType(vm,type);
   if(value?.methodPointer||typeof type==='string'&&type.startsWith('method '))return storeMethodPointer(vm,value,type);
   const table=vm.inspector?vm.typeSystem.table(type):null;
+  if(table?.flags.asyncValue)return copyAsyncValue(vm,table,value);
   if(table?.flags.nullable)return copyNullable(vm,value,table);
   if(value?.nullableType)throw new ManagedFault('InvalidCastException','Nullable storage requires its exact value type');
   if(table&&isAggregateType(table)) {

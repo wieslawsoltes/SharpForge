@@ -1,3 +1,6 @@
+import {enqueueManagedContext, prepareManagedContext} from './execution/managed-contexts.js';
+import {completeAsyncContinuations, copyAsyncTaskState} from './execution/async-continuations.js';
+import {retainTaskFault, taskFailure} from './execution/task-faults.js';
 import {executionFrames} from './execution/callback-frames.js';
 import {loadContext,parkContext} from './execution/context-transitions.js';
 import {forgetContextSuspension} from './execution/context-events.js';
@@ -40,35 +43,26 @@ export class CooperativeScheduler {
   }
   complete(t,result=null,error=null,canceled=false){
     if(terminal.has(t.status))return;t.result=result;t.error=error;t.status=canceled?'canceled':error?'faulted':'completed';t.completed=this.now();
-    this.vm.heap.withRoots([t.ref,result,error?.reference],()=>{this.vm.platform.set(t.ref,'$status',t.status);this.vm.platform.set(t.ref,'$result',result);if(error){const message=this.vm.heap.string(error.name+': '+error.message);this.vm.heap.withRoots([message],()=>this.vm.platform.set(t.ref,'$error',message));}});
-    for(const id of t.waiters){const c=this.contexts.get(id);if(!c||!c.wait||terminal.has(c.status))continue;if(error||canceled)c.resumeFault=error??new ManagedFault('TaskCanceledException','Task was canceled');else if(c.wait.pushResult){const resultValue=c.wait.voidResult?null:result;if(this.vm.inspector)c.frames.at(-1)?.stack.push(resultValue);else c.stack.push(resultValue);}
+    this.vm.heap.withRoots([t.ref,result,error?.reference],()=>{this.vm.platform.set(t.ref,'$status',t.status);this.vm.platform.set(t.ref,'$result',result);if(error){retainTaskFault(this,t,error);const message=this.vm.heap.string(error.name+': '+error.message);this.vm.heap.withRoots([message],()=>this.vm.platform.set(t.ref,'$error',message));}});
+    for(const id of t.waiters){const c=this.contexts.get(id);if(!c||!c.wait||terminal.has(c.status))continue;if(error||canceled)c.resumeFault=this.failure(t,c.wait.failureMode);else if(c.wait.pushResult){const resultValue=c.wait.voidResult?null:result;if(this.vm.inspector)c.frames.at(-1)?.stack.push(resultValue);else c.stack.push(resultValue);}
       c.wait=null;c.status='ready';
     }t.waiters.clear();
+    completeAsyncContinuations(this,t);
   }
-  failure(t){return t.error??new ManagedFault(t.status==='canceled'?'TaskCanceledException':'Exception',this.vm.native?.(this.vm.platform.get(t.ref,'$error'))??this.vm.platform.native(this.vm.platform.get(t.ref,'$error'))??'Task failed');}
+  failure(t,mode=null){return taskFailure(this,t,mode);}
   enqueue(delegate,args=[],{name=null,kind='task',task=null,parentId=this.currentId,eager=false,thread=null}={}){
-    this.ensure();this.prune();const live=[...this.contexts.values()].filter(c=>!terminal.has(c.status));if(live.length>=this.maxContexts)throw new ManagedFault('ExecutionLimitException','Managed context limit exceeded');
-    const {method,arguments:values}=boundDelegateCall(this.vm,delegate,args);
-    this.save();const previous=this.capture(),previousState=this.vm.state;
-    this.vm.frames=[];if(!this.vm.inspector)this.vm.stack=[];this.vm.currentPoint=null;this.vm.pendingFault=null;this.vm.fault=null;this.vm.returnValue=null;this.vm.exitCode=0;
-    try{this.vm.call(method,values);}
-    catch(error){for(const k of contextFields)if(k in previous)this.vm[k]=previous[k];this.vm.state=previousState;throw error;}
-    const id=this.nextId++,c={id,name:name??(this.vm.inspector?(this.vm.inspector.debug?.methods?.find(m=>m.token===method)?.asyncOrigin??this.vm.top.method.name):(this.vm.image.methods[method].asyncOrigin??this.vm.image.methods[method].name)),kind,status:'ready',frozen:false,parentId,task:task?.ref??null,taskId:task?.id??null,thread,delegate,wait:null,eagerParent:eager?parentId:null,...this.capture()};
-    this.contexts.set(id,c);if(task)task.contextId=id;
-    for(const k of contextFields)if(k in previous)this.vm[k]=previous[k];this.vm.state=previousState;
-    if(eager)this.preferred=id;
-    if(['terminated','waiting'].includes(previousState)&&!this.vm.frames.length){this.load(c);}
-    return id;
+    prepareManagedContext(this);
+    return enqueueManagedContext(this,boundDelegateCall(this.vm,delegate,args),{name,kind,task,parentId,eager,thread,delegate},true);
   }
   callDelegate(delegate,args){const {method,arguments:values}=boundDelegateCall(this.vm,delegate,args);
     this.vm.call(method,values);return SUSPENDED; // The callee supplies the result on return, without suspending this context.
   }
-  wait(ref,{pushResult=true,voidResult=false,forceYield=false}={}){
-    const t=this.taskRecord(ref);if(terminal.has(t.status)&&!forceYield){if(t.status!=='completed')throw this.failure(t);return voidResult?null:t.result;}
+  wait(ref,{pushResult=true,voidResult=false,forceYield=false,failureMode=null}={}){
+    const t=this.taskRecord(ref);if(terminal.has(t.status)&&!forceYield){if(t.status!=='completed')throw this.failure(t,failureMode);return voidResult?null:t.result;}
     if(this.suppressed)throw new ManagedFault('InvalidOperationException','A pending task cannot be awaited during synchronous function evaluation');
     this.ensure();const c=this.current;if(c.task&&key(c.task)===key(ref))throw new ManagedFault('InvalidOperationException','A task cannot await itself');
     let next=t;const visited=new Set();while(next?.contextId&&!visited.has(next.id)){visited.add(next.id);const other=this.contexts.get(next.contextId);if(other?.id===c.id)throw new ManagedFault('InvalidOperationException','Cyclic task wait');next=other?.wait?this.taskRecord(other.wait.task):null;}
-    c.wait={task:ref,pushResult,voidResult};c.status='waiting';t.waiters.add(c.id);
+    c.wait={task:ref,pushResult,voidResult,failureMode};c.status='waiting';t.waiters.add(c.id);
     if(forceYield&&terminal.has(t.status)){t.status='waiting';t.deadline=this.now();t.readyTurn=this.turn+1;}
     this.save();return SUSPENDED;
   }
@@ -143,10 +137,10 @@ export class CooperativeScheduler {
   advance(ms){if(!this.virtualTime)throw new ManagedFault('InvalidOperationException','Virtual time is disabled');if(!Number.isFinite(ms)||ms<0)throw new RangeError('Invalid time delta');this.clock+=ms;this.turn++;this.poll();this.beforeSlice();}
   threads(){if(!this.enabled)return [{id:1,name:'Main',kind:'main',status:this.vm.state,frozen:false,parentId:null,taskId:null,frameIds:this.vm.frames.map(f=>f.id)}];this.save();return [...this.contexts.values()].map(c=>({id:c.id,name:c.name,kind:c.kind,status:c.id===this.currentId&&this.vm.state==='paused'?'paused':c.status,frozen:c.frozen,parentId:c.parentId,taskId:c.taskId??null,waitingFor:c.wait?this.vm.platform.get(c.wait.task,'Id'):null,frameIds:c.frames.map(f=>f.id)}));}
   parallelStacks(){this.save();const stack=c=>[...c.frames].reverse().map(f=>this.vm.inspector?{id:f.id,name:f.method.owner+'::'+f.method.name,methodToken:f.method.token,ilOffset:f.method.instructions[f.pc]?.offset??f.lastOffset}:{id:f.id,name:this.vm.image.methods[f.methodId].qualifiedName,methodId:f.methodId,point:f.point});return {kind:'cooperative',contexts:this.enabled?[...this.contexts.values()].filter(c=>!terminal.has(c.status)).map(c=>({...this.threads().find(t=>t.id===c.id),frames:stack(c)})):[{id:1,name:'Main',kind:'main',frames:stack({frames:this.vm.frames})}],tasks:[...this.tasks.values()].map(t=>({id:t.id,status:t.status,contextId:t.contextId??null,waiters:[...t.waiters],dependencies:(t.dependencies??[]).map(r=>this.vm.platform.get(r,'Id')),resultType:t.resultType}))};}
-  snapshot(){if(!this.enabled)return null;this.save();return {parked:this.parked,currentId:this.currentId,nextId:this.nextId,nextTaskId:this.nextTaskId,clock:this.now(),turn:this.turn,steps:this.steps,preferred:this.preferred,contexts:[...this.contexts].map(([id,c])=>[id,cloneContext(c)]),tasks:[...this.tasks].map(([id,t])=>[id,{...t,error:copyExecution(t.error),waiters:[...t.waiters],dependencies:t.dependencies?[...t.dependencies]:null}])};}
+  snapshot(){if(!this.enabled)return null;this.save();return {parked:this.parked,currentId:this.currentId,nextId:this.nextId,nextTaskId:this.nextTaskId,clock:this.now(),turn:this.turn,steps:this.steps,preferred:this.preferred,contexts:[...this.contexts].map(([id,c])=>[id,cloneContext(c)]),tasks:[...this.tasks].map(([id,t])=>[id,{...t,...copyAsyncTaskState(t),error:copyExecution(t.error),waiters:[...t.waiters],dependencies:t.dependencies?[...t.dependencies]:null}])};}
   restore(s){
     forgetContextSuspension(this);
-    if(!s){this.parked=false;this.enabled=false;this.contexts.clear();this.tasks.clear();return;}this.enabled=true;this.nextId=Math.max(this.nextId,s.nextId);this.nextTaskId=Math.max(this.nextTaskId,s.nextTaskId);this.parked=!!s.parked;this.currentId=s.currentId;this.clock=s.clock;this.epoch=performance.now()-s.clock;this.turn=s.turn;this.steps=s.steps;this.preferred=s.preferred;this.contexts=new Map(s.contexts.map(([id,c])=>[id,cloneContext(c)]));this.tasks=new Map(s.tasks.map(([id,t])=>[id,{...t,error:copyExecution(t.error),waiters:new Set(t.waiters),dependencies:t.dependencies?[...t.dependencies]:null}]));this.save();}
+    if(!s){this.parked=false;this.enabled=false;this.contexts.clear();this.tasks.clear();return;}this.enabled=true;this.nextId=Math.max(this.nextId,s.nextId);this.nextTaskId=Math.max(this.nextTaskId,s.nextTaskId);this.parked=!!s.parked;this.currentId=s.currentId;this.clock=s.clock;this.epoch=performance.now()-s.clock;this.turn=s.turn;this.steps=s.steps;this.preferred=s.preferred;this.contexts=new Map(s.contexts.map(([id,c])=>[id,cloneContext(c)]));this.tasks=new Map(s.tasks.map(([id,t])=>[id,{...t,...copyAsyncTaskState(t),error:copyExecution(t.error),waiters:new Set(t.waiters),dependencies:t.dependencies?[...t.dependencies]:null}]));this.save();}
   prune(){if(!this.enabled)return;for(const [id,t]of this.tasks)if(terminal.has(t.status)){let alive=true;try{this.vm.heap.get(t.ref);}catch{alive=false;}if(!alive)this.tasks.delete(id);}if(this.contexts.size>=this.maxContexts)for(const [id,c]of this.contexts)if(id!==1&&terminal.has(c.status))this.contexts.delete(id);}
   cancelAll(){return cancelContexts(this);}
   async runAsync({signal=null,onSlice=null}={}){while(['ready','running','waiting'].includes(this.vm.state)){

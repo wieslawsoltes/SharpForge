@@ -1,3 +1,4 @@
+import {asyncTypeTable} from './async-type-tables.js';
 import {nativeIntegerBits} from '@sharpforge/bytecode';
 import {frameworkMethodTable} from './framework-method-table.js';
 import {frameworkType, canonicalType} from '@sharpforge/framework';
@@ -85,6 +86,8 @@ function builtin(name, nativeIntBits = 32) {
   if(name==='System.Collections.IList')return {flags:{interface:true},interfaces:['System.Collections.ICollection']};
   if(name==='System.Collections.ICollection')return {flags:{interface:true},interfaces:['System.Collections.IEnumerable']};
   if(['System.IComparable','System.IFormattable','System.IConvertible','System.ICloneable','System.IDisposable','System.Collections.IEnumerable','System.Collections.IEnumerator','System.Collections.IStructuralComparable','System.Collections.IStructuralEquatable','System.Runtime.Serialization.ISerializable'].includes(name))return {flags:{interface:true}};
+  const async = asyncTypeTable(name, nativeIntBits);
+  if (async) return async;
   const framework=frameworkType(name);
   if(framework)return frameworkMethodTable(framework);
   return {base:'System.Object',flags:{external:true,dynamic:true}};
