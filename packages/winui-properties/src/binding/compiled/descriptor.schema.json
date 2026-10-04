@@ -1,0 +1,290 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://sharpforge.dev/schemas/compiled-binding-v1.json",
+  "title": "SharpForge compiled binding descriptor version 1",
+  "type": "object",
+  "required": [
+    "version",
+    "kind",
+    "target",
+    "expression"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "version": {
+      "const": 1
+    },
+    "kind": {
+      "enum": [
+        "property",
+        "event",
+        "load"
+      ]
+    },
+    "mode": {
+      "enum": [
+        "OneTime",
+        "OneWay",
+        "TwoWay"
+      ]
+    },
+    "target": {
+      "type": "object",
+      "required": [
+        "id"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 1024
+        },
+        "token": {
+          "$ref": "#/$defs/token"
+        },
+        "name": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 1024
+        }
+      }
+    },
+    "expression": {
+      "$ref": "#/$defs/expression"
+    },
+    "converter": {
+      "$ref": "#/$defs/expression"
+    },
+    "bindBack": {
+      "$ref": "#/$defs/expression"
+    },
+    "phase": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 1024
+    },
+    "sourceType": {
+      "$ref": "#/$defs/token"
+    },
+    "targetType": {
+      "$ref": "#/$defs/token"
+    },
+    "convertBack": {
+      "$ref": "#/$defs/expression"
+    }
+  },
+  "oneOf": [
+    {
+      "properties": {
+        "kind": {
+          "const": "property"
+        },
+        "target": {
+          "required": [
+            "token"
+          ]
+        }
+      }
+    },
+    {
+      "properties": {
+        "kind": {
+          "const": "event"
+        },
+        "target": {
+          "required": [
+            "token"
+          ]
+        },
+        "expression": {
+          "properties": {
+            "kind": {
+              "const": "call"
+            }
+          }
+        }
+      }
+    },
+    {
+      "properties": {
+        "kind": {
+          "const": "load"
+        },
+        "target": {
+          "required": [
+            "name"
+          ]
+        }
+      }
+    }
+  ],
+  "$defs": {
+    "token": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 4294967295
+    },
+    "expression": {
+      "oneOf": [
+        {
+          "type": "object",
+          "required": [
+            "kind",
+            "value"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "kind": {
+              "const": "constant"
+            },
+            "value": {
+              "anyOf": [
+                {
+                  "type": "null"
+                },
+                {
+                  "type": "boolean"
+                },
+                {
+                  "type": "number"
+                },
+                {
+                  "type": "string",
+                  "maxLength": 16384
+                }
+              ]
+            }
+          }
+        },
+        {
+          "type": "object",
+          "required": [
+            "kind",
+            "name"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "kind": {
+              "const": "context"
+            },
+            "name": {
+              "enum": [
+                "value",
+                "sender",
+                "eventArgs",
+                "converter",
+                "parameter",
+                "language",
+                "targetType",
+                "sourceType"
+              ]
+            }
+          }
+        },
+        {
+          "type": "object",
+          "required": [
+            "kind",
+            "steps"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "kind": {
+              "const": "path"
+            },
+            "root": {
+              "$ref": "#/$defs/expression"
+            },
+            "steps": {
+              "type": "array",
+              "maxItems": 128,
+              "items": {
+                "type": "object",
+                "required": [
+                  "token"
+                ],
+                "additionalProperties": false,
+                "properties": {
+                  "token": {
+                    "$ref": "#/$defs/token"
+                  },
+                  "nullConditional": {
+                    "type": "boolean"
+                  },
+                  "typeToken": {
+                    "$ref": "#/$defs/token"
+                  },
+                  "arguments": {
+                    "type": "array",
+                    "maxItems": 32,
+                    "items": {
+                      "$ref": "#/$defs/expression"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "type": "object",
+          "required": [
+            "kind",
+            "token",
+            "arguments"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "kind": {
+              "const": "call"
+            },
+            "token": {
+              "$ref": "#/$defs/token"
+            },
+            "receiver": {
+              "anyOf": [
+                {
+                  "type": "null"
+                },
+                {
+                  "$ref": "#/$defs/expression"
+                }
+              ]
+            },
+            "arguments": {
+              "type": "array",
+              "maxItems": 32,
+              "items": {
+                "$ref": "#/$defs/expression"
+              }
+            },
+            "nullConditional": {
+              "type": "boolean"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "required": [
+            "kind",
+            "token",
+            "value"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "kind": {
+              "const": "cast"
+            },
+            "token": {
+              "$ref": "#/$defs/token"
+            },
+            "value": {
+              "$ref": "#/$defs/expression"
+            }
+          }
+        }
+      ]
+    }
+  }
+}

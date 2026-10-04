@@ -33,3 +33,7 @@ Application-owned UI services for SharpForge. Instances have explicit lifetimes;
 ## Observable bindings
 
 `BindingOperations` installs OneTime, OneWay and TwoWay bindings into PropertyStore source slots. Nested member/indexer paths subscribe only to the affected suffix; DataContext, ElementName, Self and templated parents share that tracker. PropertyChanged, LostFocus and explicit source updates preserve converter/ConvertBack and null/fallback rules. TemplateBinding uses the same engine. Unload/dispose release observers; snapshots restore subscriptions without replaying source getters, converters or diagnostics. SFB001–010 errors are bounded and redact values.
+
+## Combined binding lifetime
+
+Observable and compiled bindings share the same property/observable foundation. This dependency join exposes the checked expression compiler, token tracker, phase scheduler and owner groups alongside BindingOperations. All three rewind fixtures retain their assertions; deferred XAML enters after template construction is available.
