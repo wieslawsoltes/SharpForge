@@ -77,5 +77,8 @@ Flat queries avoid lexical scratch state. New nested queries can visit the
 product of target and caller depths, capped before the next access check.
 Generic enclosing types and interface-family/external relations retain explicit
 unknowns; security demands and whole-method type verification remain separate.
-The [nested reference plan](../../tests/fixtures/a03-nested-access/README.md)
-is implementation-ready, with local validation pending its serial slot.
+The [nested evidence](../../tests/fixtures/a03-nested-access/README.md) records
+24 native cases (22 known agreements and two explicit unknowns), 47 passing
+focused contracts and required static/structure checks. It retains paired
+existing controls, chronological samples and the explicit integration acceptance
+of the family-query p95 increase. Broader qualification remains staged.
