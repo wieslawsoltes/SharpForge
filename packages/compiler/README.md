@@ -52,4 +52,3 @@ revision and must be treated as read-only. The model never emits or changes
 program code. `Workspace.sourceModel()` in `@sharpforge/workspace` handles source
 and option invalidation for callers. See `docs/editor-language-providers.md` in
 the source distribution for the provider/transaction contracts and evidence.
-
