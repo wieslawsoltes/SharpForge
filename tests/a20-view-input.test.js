@@ -95,19 +95,24 @@ test('A20 rename preview refreshes token/layout caches without publishing or rec
   const events = [];
   model.onDidChange(event => events.push(event));
   const highlighted = new SyntaxHighlightIndex(model.snapshot());
+  const bracketSources = [];
   let resets = 0;
   const editor = {model, highlightIndex: highlighted, disposed: false, decorationRevision: 0,
+    bracketColors: {update() { bracketSources.push(highlighted.source.getText()); }},
     view: {layout: {reset() { resets++; }}, scroll: {reset() { resets++; }}, render() { resets++; }}, accessibility: {update() {}}};
   const presentation = new EditorPresentation(editor);
   const prepared = model.prepareEdits([{start: 4, end: 9, text: 'renamed'}]);
   model.commitPrepared(prepared, {notify: false});
   presentation.refreshPreview();
   assert.equal(highlighted.source.getText(), 'int renamed;');
+  assert.deepEqual(bracketSources, ['int renamed;']);
   assert.equal(resets, 3);
   assert.equal(events.length, 0);
   model.restoreCheckpoint(checkpoint);
   presentation.refreshPreview();
   assert.equal(highlighted.source.getText(), 'int value;');
+  assert.deepEqual(bracketSources, ['int renamed;', 'int value;']);
+  assert.equal(events.length, 0);
   assert.equal(model.undoStack.depth, 0);
   highlighted.dispose();
 });

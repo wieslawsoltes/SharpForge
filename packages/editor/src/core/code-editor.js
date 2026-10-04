@@ -24,6 +24,7 @@ import {EditorSelectionCommands} from './selection-commands.js';
 import {GoToLineWidget} from '../view/goto.js';
 import {editorCommandMap} from './command-map.js';
 import {createEditorInsights} from '../features/index.js';
+import {captureViewCheckpoint, restoreViewCheckpoint} from './view-checkpoint.js';
 
 /** Embeddable virtual source editor. The EditorModel is authoritative; views own scroll and selection. */
 export class CodeEditor {
@@ -116,13 +117,15 @@ export class CodeEditor {
   get history() { return {length: this.model.undoStack.depth}; }
   get future() { return {length: this.model.undoStack.redoDepth}; }
   get lexed() { return this.highlightIndex.lexed; }
-  get pairs() { return this.bracketColors?.pairs.size ? this.bracketColors.pairs : this.highlightIndex.pairs; }
+  get pairs() { return this.highlightIndex.brackets; }
   get items() { return this.insights?.completionItems ?? []; }
   get completionIndex() { return this.insights?.completionIndex ?? 0; }
   get lineCount() { return this.model.lineCount; }
   sourceSnapshot() { return this.model.snapshot(); }
   snapshot() { return this.model.snapshot(); }
   getSelections() { return this.selections.map(selection => ({...selection})); }
+  captureViewCheckpoint() { return captureViewCheckpoint(this); }
+  restoreViewCheckpoint(checkpoint) { return restoreViewCheckpoint(this, checkpoint); }
 
   setSelections(selections, options = {}) {
     const normalized = normalizeSelections(selections.map(selection => ({...selection,
@@ -188,11 +191,12 @@ export class CodeEditor {
 
   setValue(text) {
     if (this.readOnly) return false;
+    const wasApplying = this.applying;
     this.applying = true;
     try {
       this.model.setSelections(this.selections, {primaryIndex: this.primaryIndex, notify: false});
       return this.model.setValue(text, {source: 'setValue', command: 'setValue', undoStop: true});
-    } finally { this.applying = false; }
+    } finally { this.applying = wasApplying; }
   }
 
   applyEdits(edits, options = {}) {
@@ -228,11 +232,17 @@ export class CodeEditor {
     this.presentation.transformDecorations(change);
     this.bracketColors.update();
     this.decorationRevision++;
-    if (!this.callbacks.splitChild) this.onEdits?.(change);
-    this.publishChange();
-    this.notifyContributions('changed', change);
-    this.foldingProvider.schedule();
-    this.cursor();
+    try {
+      // Invalidate the previous revision before callbacks can publish diagnostics for this one.
+      this.notifyContributions('changed', change);
+      this.foldingProvider.schedule();
+      if (!this.callbacks.splitChild) this.onEdits?.(change);
+      this.publishChange();
+      this.cursor();
+    } finally {
+      // The model is already committed; a consumer exception must not leave its prepared view stale.
+      this.sync();
+    }
   }
 
   publishChange() {
@@ -248,12 +258,13 @@ export class CodeEditor {
   record() { this.model.pushUndoStop(); }
   undo(redo = false) {
     if (this.readOnly) return false;
+    const wasApplying = this.applying;
     this.applying = true;
     try {
       const result = this.model[redo ? 'redo' : 'undo']();
       this.setSelections(this.model.selections, {primaryIndex: this.model.primaryIndex});
       return result;
-    } finally { this.applying = false; }
+    } finally { this.applying = wasApplying; }
   }
 
   insert(text, start = this.input.selectionStart, end = this.input.selectionEnd, caret = null) {
