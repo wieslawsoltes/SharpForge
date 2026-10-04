@@ -78,10 +78,13 @@ source revision, browser engine/version, OS/architecture, viewport, device scale
 source selections, annotation pixels and pointer checks. Nearest-rank p50/p95/p99/max summaries are separate for every case
 and phase. Every first/warmup/measured observation is gated; a slow first visit cannot disappear behind warm percentiles.
 
-The driver writes partial observations after each sample. A failed Code Definition stage is retained while the independent
-overview stage is attempted in a fresh browser context. Either failure fails the overall job. Browser launch, cancellation,
-page errors and CSP violations remain failures, and the shared launcher retains its diagnostics and failure trace/screenshots.
-Raw evidence is not overwritten with synthetic successes or empty passing groups.
+The driver writes partial observations after each sample. Each stage has its own `launch_browser` session and browser process,
+with distinct `_definition` and `_overview` diagnostic directories. The first session's contexts, workers, timers and process
+are closed before the next launches. A failed Code Definition stage remains recorded while the independent overview stage is
+attempted. Stage exceptions pass through the shared launcher's failure cleanup before the driver catches them, preserving
+trace/screenshots. A numeric budget precheck also retains those diagnostics for slow but complete captures; the strict aggregate
+assessment runs only after both sessions close. Both sessions' CSP observations remain in the aggregate artifact. Browser launch,
+cancellation, page errors and CSP violations remain failures. Raw evidence is not replaced with empty or synthetic passing groups.
 
 `tests/editor-budget-trace.mjs` rejects missing/duplicate observations, altered fixture counts, forged percentile summaries,
 wrong source selections, focus transfers, missing map modes/marks, invalid canvas geometry, wrong pointer destinations,
