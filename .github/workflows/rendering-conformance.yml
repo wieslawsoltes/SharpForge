@@ -1,13 +1,24 @@
 name: Rendering completed-scope qualification
 on:
   workflow_dispatch:
+    inputs:
+      native_winui:
+        description: Capture pinned native WinUI XAML pixels and compare the same inputs on Windows
+        required: false
+        type: boolean
+        default: false
   workflow_call:
+    inputs:
+      native_winui:
+        required: false
+        type: boolean
+        default: false
 permissions:
   contents: read
 jobs:
   software:
     runs-on: ubuntu-latest
-    timeout-minutes: 25
+    timeout-minutes: 35
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
       - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
@@ -19,15 +30,72 @@ jobs:
       - run: npm ci --ignore-scripts --no-audit --no-fund
       - run: python -m pip install --require-hashes --only-binary=:all: -r tests/requirements.txt
       - run: python -m playwright install --with-deps chromium
-      - name: Check bounded image comparison and reference provenance
+        id: browser
+      - name: Check bounded comparisons and independent reference provenance
         run: python -m unittest discover -s tests/rendering -p 'test_*.py'
-      - name: Render software WebGPU adapter and compare committed goldens
-        run: python tests/rendering/gpu-runner.py --engine chromium --tier software --output artifacts/rendering/software
+      - name: Qualify actual software WebGPU against required browser references
+        if: ${{ !cancelled() && steps.browser.outcome == 'success' }}
+        run: python tests/rendering/gpu-runner.py --engine chromium --tier software --backend webgpu --output artifacts/rendering/software/webgpu
+      - name: Qualify Canvas2D against required browser references
+        if: ${{ !cancelled() && steps.browser.outcome == 'success' }}
+        run: python tests/rendering/gpu-runner.py --engine chromium --tier software --backend canvas2d --output artifacts/rendering/software/canvas2d
+      - name: Qualify DOM and SVG against required browser references
+        if: ${{ !cancelled() && steps.browser.outcome == 'success' }}
+        run: python tests/rendering/gpu-runner.py --engine chromium --tier software --backend dom --output artifacts/rendering/software/dom
       - name: Enforce measured CPU draw-call and memory budgets
-        run: node tests/rendering/budgets.bench.js artifacts/rendering/software/report.json
+        if: ${{ !cancelled() }}
+        run: node tests/rendering/budgets.bench.js artifacts/rendering/software/webgpu/report.json
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
         if: always()
         with:
           name: rendering-software-qualification
+          path: artifacts/rendering/
+          if-no-files-found: error
+  native-winui:
+    needs: software
+    if: ${{ always() && !cancelled() && inputs.native_winui }}
+    runs-on: windows-2025
+    timeout-minutes: 45
+    env:
+      DOTNET_CLI_TELEMETRY_OPTOUT: '1'
+      DOTNET_NOLOGO: '1'
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        with:
+          node-version: 24
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
+        with:
+          python-version: '3.12'
+      - uses: actions/setup-dotnet@67a3573c9a986a3f9c594539f4ab511d57bb3ce9 # v4
+        with:
+          dotnet-version: '10.0.201'
+      - run: npm ci --ignore-scripts --no-audit --no-fund
+      - run: python -m pip install --require-hashes --only-binary=:all: -r tests/requirements.txt
+      - run: python -m playwright install chromium
+      - name: Capture exact XAML through the pinned native WinUI producer
+        id: capture
+        run: node tests/rendering/native/capture.js --output artifacts/rendering/native-winui
+      - name: Compare shared XAML through actual software WebGPU
+        run: >-
+          python tests/rendering/gpu-runner.py --engine chromium --tier software --backend webgpu
+          --native-only --require-native --native-references artifacts/rendering/native-winui
+          --output artifacts/rendering/native-comparison/webgpu
+      - name: Compare shared XAML through Canvas2D
+        if: ${{ !cancelled() && steps.capture.outcome == 'success' }}
+        run: >-
+          python tests/rendering/gpu-runner.py --engine chromium --tier software --backend canvas2d
+          --native-only --require-native --native-references artifacts/rendering/native-winui
+          --output artifacts/rendering/native-comparison/canvas2d
+      - name: Compare shared XAML through DOM and SVG
+        if: ${{ !cancelled() && steps.capture.outcome == 'success' }}
+        run: >-
+          python tests/rendering/gpu-runner.py --engine chromium --tier software --backend dom
+          --native-only --require-native --native-references artifacts/rendering/native-winui
+          --output artifacts/rendering/native-comparison/dom
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        if: always()
+        with:
+          name: rendering-native-winui-qualification
           path: artifacts/rendering/
           if-no-files-found: error

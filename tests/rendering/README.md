@@ -15,8 +15,9 @@ python tests/rendering/gpu-runner.py --engine chromium --tier software --output 
 node tests/rendering/budgets.bench.js artifacts/rendering/software/report.json
 ```
 
-`.github/workflows/rendering-conformance.yml` exposes the software tier only through
-`workflow_dispatch` and `workflow_call`. It has no leaf-PR or scheduled trigger.
+`.github/workflows/rendering-conformance.yml` exposes completed-scope qualification only through
+`workflow_dispatch` and `workflow_call`. It runs WebGPU/Canvas2D/DOM serially and optionally runs
+the pinned Windows native capture lane with `native_winui`. It has no leaf-PR or scheduled trigger.
 The software tier requests a fallback adapter and records what was actually selected.
 A failed request, Canvas fallback, unknown adapter tier, validation error, missing reference,
 image difference, or exceeded measurement budget fails the requested WebGPU qualification.
@@ -49,8 +50,10 @@ tracked references:
 python tests/rendering/gpu-runner.py --engine chromium --tier software --update-goldens
 ```
 
-No backend golden images were fabricated during implementation. Until a real capture is
-performed and reviewed, comparisons report `missing-reference` and fail. `--fixtures` accepts
+No backend golden images were fabricated during implementation. Every fixture instead requires
+its declared independent browser oracle or a distinct actual backend pair. Missing required
+oracles fail. Separate backend goldens report `missing-reference` until captured; use
+`--require-goldens` when that reviewed regression baseline must also pass. `--fixtures` accepts
 an explicit subset for diagnosis after the full-scope validation gate has opened.
 
 The native oracle pin is `Microsoft.WindowsAppSDK 1.8.260921001`, matching
@@ -106,3 +109,7 @@ adapter information does not provide a portable driver-version field.
 
 See [scope status](composition-scope-status.md) and [hardware qualification](hardware-qualification.md)
 for the remaining evidence needed before closing acceptance items.
+
+See [browser reference policy](browser-reference-policy.md) for exact comparison scopes, the
+100k/DPR/overlap/retention matrices, trusted Chromium IME, public bitmap capture, and identical
+XAML native pairing. These additions are authored; a complete qualification run is still required.
