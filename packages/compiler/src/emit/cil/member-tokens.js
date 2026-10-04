@@ -168,15 +168,23 @@ export class MemberTokens {
   /** The token of the add or remove accessor of a source event, or null for an event the compilation does not define. */
   eventAccessor(event, isAdd) {
     const planned = this.plannedEvent(event);
-    if (!planned || needsTypeSpec(event.containingType)) return null;
-    return (isAdd ? planned.adder : planned.remover).token;
+    if (!planned) return null;
+    const accessor = isAdd ? planned.adder : planned.remover,
+      owner = event.containingType;
+    if (!isInstantiation(owner)) return accessor.token;
+    // An event of a generic type is reached through the instantiation, like any member of it.
+    const signature = accessor.symbol ? methodSymbolSignature(this.types, accessor.symbol) : methodSignature(this.types, accessor.shape);
+    return this.builder.member(this.type(owner), accessor.name, signature);
   }
   /** The token of the delegate field of a field-like source event, or null when the event has none. */
   eventField(event) {
     const definition = event.originalDefinition ?? event,
       plan = this.writer.plans.get(definition.containingType),
-      field = plan?.fields.find(entry => !entry.symbol && entry.name === definition.name);
-    return field && !needsTypeSpec(event.containingType) ? field.token : null;
+      field = plan?.fields.find(entry => !entry.symbol && entry.name === definition.name),
+      owner = event.containingType;
+    if (!field) return null;
+    if (!isInstantiation(owner)) return field.token;
+    return this.builder.member(this.type(owner), field.name, fieldSignature(this.types, field.type));
   }
   /** The operand of `ldstr`. */
   string(text) {
