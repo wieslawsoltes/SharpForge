@@ -45,3 +45,7 @@ x:Load reserves names without creating controls. FindName and compiled load bind
 ## Binding context services
 
 initializeBindingContext installs setter bindings, XAML bindings, compiled owner groups, phase scheduling and deferred-element ownership on an injected application context. Binding services resolve names and member access through host services and retain subscription ownership for disposal and rewind. No process-global model registry or implicit application startup is introduced.
+
+## Application property adapters
+
+registerPropertyAdapters installs metadata, dependency-property, Binding and observable collection members into an explicit UIExtensionRegistry. Managed hosts can disable dependencyProperties and retain their typed boxing boundary while sharing binding and collection behavior. EffectiveValueEmitter tracks mutable value dependencies per owner and batches changed scene properties; flag validation retains declared bit masks.
