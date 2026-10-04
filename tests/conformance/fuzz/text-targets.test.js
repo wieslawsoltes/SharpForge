@@ -87,9 +87,9 @@ test('protocol: encoded messages respect the output byte budget', () => {
   });
 });
 
-test('IL document: canonical roundtrips preserve visible methods and literals containing comment text', () => {
-  for (const name of ['local-library', 'literal-comment']) {
-    assert.deepEqual(ilDocument.run(seed(ilDocument, name), context), { status: 'accepted', code: 'IL_DOCUMENT_VISIBLE_TEXT' });
+test('IL document: canonical roundtrips preserve the complete image and literals containing comment text', () => {
+  for (const name of ['local-library', 'literal-comment', 'floating-negative-zero', 'floating-nan-payload']) {
+    assert.deepEqual(ilDocument.run(seed(ilDocument, name), context), { status: 'accepted', code: 'IL_DOCUMENT_EXACT_ROUNDTRIP' });
   }
 });
 
