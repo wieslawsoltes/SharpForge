@@ -14,6 +14,8 @@ import { legacyGreenToken, ownText } from '../green.js';
 const nestingLimit = 200,
   empty = Object.freeze([]),
   fixedTokens = new WeakMap();
+// Reserved syntax kinds are immutable metadata; keyword membership remains the public, live Set.
+const reservedTokenKinds = new Map(Object.entries(reservedKeywordKinds));
 /** Per-cache tables for keyword and punctuation tokens with no leading trivia or one leading space, keyed by the (pre-hashed) kind. */
 const fixedFor = cache => {
   let tables = fixedTokens.get(cache);
@@ -111,12 +113,13 @@ export class Scanner {
   }
   identifierToken(raw) {
     const scan = scanIdentifier(this.text, raw.start);
+    const kind = !scan.verbatim && !scan.hasEscapes && keywords.has(scan.value) ? scan.value : 'identifier';
     this.i = scan.end;
     raw.value = ownText(scan.value);
-    raw.kind = !scan.verbatim && !scan.hasEscapes && keywords.has(scan.value) ? scan.value : 'identifier';
-    raw.syntaxKind = reservedKeywordKinds[raw.kind] ?? 'IdentifierToken';
+    raw.kind = kind;
+    raw.syntaxKind = kind === 'identifier' ? 'IdentifierToken' : reservedTokenKinds.get(kind) ?? 'IdentifierToken';
     if (scan.verbatim || scan.hasEscapes) raw.flags = { verbatim: scan.verbatim, escaped: scan.hasEscapes };
-    else if (raw.kind !== 'identifier') raw.fixed = true;
+    else if (kind !== 'identifier') raw.fixed = true;
   }
   /** An operator or punctuation token, or a BadToken (CS1056) for a character that starts no token. */
   operatorToken(raw) {
@@ -148,22 +151,25 @@ export class Scanner {
     this.feature('Utf8StringLiterals', raw.start, this.i);
     if (encoded.error) this.error(raw.start, this.i - raw.start, encoded.error.code, encoded.error.message);
   }
-  /** Lexes tokens until `stop()` holds or the end of file. Returns { raws, tail } where tail is trivia before the stop. */
-  sequence(stop) {
+  /**
+   * Lexes until `stop()` or EOF. With captureTrivia:false, raw leading/trailing fields are omitted and head/tail are empty.
+   * Token values, offsets, directives and lexical diagnostics remain unchanged; run()/lex() retain lossless trivia by default.
+   */
+  sequence(stop, {captureTrivia = true} = {}) {
     const raws = [],
-      first = scanTrivia(this, !!stop),
+      first = scanTrivia(this, !!stop, captureTrivia),
       head = first.trailing;
     let pending = first.leading;
     for (;;) {
       if (stop && stop()) return { raws, tail: pending, head };
       const raw = this.token();
-      raw.leading = pending;
+      if (captureTrivia) raw.leading = pending;
       raws.push(raw);
       if (raw.kind === 'eof') return { raws, tail: empty, head };
       if ((raws.length & 255) === 0 && this.options.cancellationToken) this.options.cancellationToken.throwIfCancellationRequested();
       if (!stop) this.state.seenToken = true;
-      const trivia = scanTrivia(this, true);
-      raw.trailing = trivia.trailing;
+      const trivia = scanTrivia(this, true, captureTrivia);
+      if (captureTrivia) raw.trailing = trivia.trailing;
       pending = trivia.leading;
     }
   }
