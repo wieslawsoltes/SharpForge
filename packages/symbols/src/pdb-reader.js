@@ -10,6 +10,7 @@ import { createAsyncInfoLookup } from './async-info.js';
 import { createImportLookup } from './imports.js';
 import { createScopeTree } from './scope-tree.js';
 import { metadataName } from './metadata-facts.js';
+import { preflightLocalAnnotation, attachLocalAnnotations, bindConstantAnnotations } from './local-annotations.js';
 export function readPortablePdb(
   input,
   {
@@ -107,7 +108,6 @@ export function readPortablePdb(
       constants: constants.slice(r[3] - 1, constantEnd),
     };
   });
-  const scopeTree = createScopeTree(scopes, md.externalCounts[6] ?? 0);
   const stateMachines = (md.rows[54] ?? []).map((r) => ({ moveNext: token(6, r[0]), kickoff: token(6, r[1]) }));
   for (let i = 0; i < stateMachines.length; i++) {
     const s = stateMachines[i];
@@ -122,12 +122,17 @@ export function readPortablePdb(
   }
   if (new Set(stateMachines.map((s) => s.kickoff)).size !== stateMachines.length)
     fail('Duplicate state machine kickoff');
+  const annotationBudget = {};
   const custom = (md.rows[55] ?? []).map((r, i) => {
+    const parent = decodeCoded('HasCustomDebugInformation', r[0]),
+      kind = guid(r[1]),
+      bytes = md.blob(r[2]);
+    preflightLocalAnnotation(kind, parent, bytes, md.counts, annotationBudget);
     const c = {
       id: i + 1,
-      parent: decodeCoded('HasCustomDebugInformation', r[0]),
-      kind: guid(r[1]),
-      bytes: new Uint8Array(md.blob(r[2])),
+      parent,
+      kind,
+      bytes: new Uint8Array(bytes),
     };
     Object.assign(c, readCustomDebugInformation(c.kind, c.bytes, { maxBytes, maxSourceBytes }));
     if (c.kind === PdbGuids.embeddedSource) {
@@ -137,6 +142,9 @@ export function readPortablePdb(
     }
     return c;
   });
+  attachLocalAnnotations(custom, variables, constants);
+  bindConstantAnnotations(constants);
+  const scopeTree = createScopeTree(scopes, md.externalCounts[6] ?? 0);
   const methodMap = new Map(methods.map((m) => [m.token, m]));
   const asyncInfo = createAsyncInfoLookup(stateMachines, custom, {
     maxAsyncEntries,

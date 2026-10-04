@@ -43,6 +43,7 @@ export function bindConstantTypes(constants, metadata) {
   const resolveNamed = createFrameworkTypeResolver(
     metadata,
     (name) => Object.hasOwn(specialTypes, name) || name === 'Enum',
+    constants.length * 2 + 1024,
   );
   bindEnumConstants(constants, metadata, resolveNamed);
   for (const constant of constants) {

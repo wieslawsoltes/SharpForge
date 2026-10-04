@@ -49,12 +49,12 @@ function namedType(metadata, token, state, accepts) {
 }
 
 /** Resolve only declared top-level framework identities; does not load assemblies or verify signatures. */
-export function createFrameworkTypeResolver(metadata, accepts) {
+export function createFrameworkTypeResolver(metadata, accepts, maxTypes = 4096) {
   const state = { assemblies: new Map(), keyBytes: 0 };
   const types = new Map();
   return (token) => {
     if (!types.has(token)) {
-      if (types.size >= 4096) fail('Framework type identity limit exceeded');
+      if (types.size >= maxTypes) fail('Framework type identity limit exceeded');
       types.set(token, namedType(metadata, token, state, accepts));
     }
     return types.get(token);
