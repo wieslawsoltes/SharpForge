@@ -1,5 +1,6 @@
 import {invokeDecimal} from './decimal-intrinsics.js';
 import {unsignedMathExtremum} from './math-extrema.js';
+import {mathSign} from './math-sign.js';
 import {valueIntrinsicHandler} from './value-intrinsics.js';
 import {invokeBitConverter} from './bit-converter.js';
 import {nativeSize} from './native-int.js';
@@ -42,6 +43,7 @@ function stringReceiver(context) {
   return value;
 }
 const implementations={
+  mathSign: ({descriptor, values}) => mathSign(descriptor.signature.parameters[0], values[0]),
   unsignedMathExtremum: ({descriptor, values}) =>
     unsignedMathExtremum(descriptor.name, descriptor.signature.returnType, values[0], values[1]),
   decimal:({vm,descriptor,self,parameters})=>invokeDecimal(vm,descriptor,descriptor.signature.isStatic?parameters:[self,...parameters]).value,
