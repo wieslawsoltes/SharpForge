@@ -2,6 +2,7 @@ import {frameworkType} from '@sharpforge/framework';
 import {resolvedProperties} from './model.js';
 import {designerPropertySchema} from './metadata.js';
 import {samePropertyValue} from './property-diagnostics.js';
+import {designerAttachedPropertyFilter} from './property-parent-context.js';
 
 /** Value-source inspection reports expressions without invoking converters or evaluating bindings. */
 export function designerPropertySource(design, node, name, resolved = resolvedProperties(design, node)) {
@@ -30,13 +31,14 @@ export function formatDesignerProperty(value) {
   return fields ? fields.map(key => value[key]).join(', ') : JSON.stringify(value);
 }
 
-/** O(selected nodes × common properties), resolving inherited values once per node. */
+/** O(document nodes + selected nodes × common properties), resolving inherited values once per node. */
 export function designerPropertyRows(design, ids, {search = '', arrange = 'category', sourceBindings = {}} = {}) {
   const byId = new Map(design.nodes.map(node => [node.id, node]));
   const selected = ids.map(id => byId.get(id)).filter(Boolean);
   if (!selected.length) return [];
   const schemas = selected.map(node => designerPropertySchema(node.type));
   const values = selected.map(node => resolvedProperties(design, node));
+  const relevant = designerAttachedPropertyFilter(design, selected, {search, sourceBindings, resolved: values});
   const needle = search.trim().toLocaleLowerCase('en-US');
   const rows = [];
   for (const [name, schema] of Object.entries(schemas[0])) {
@@ -44,6 +46,7 @@ export function designerPropertyRows(design, ids, {search = '', arrange = 'categ
     if (schema.isStatic || schema.readOnly && !collection ||
       ['Style', 'Template', 'Child', 'Children'].includes(name) || name === 'Content' && selected.some(node => node.children.length)) continue;
     if (!schemas.every(candidate => candidate[name]?.type === schema.type)) continue;
+    if (!relevant(name, schema)) continue;
     const sources = selected.map((node, index) => designerPropertySource(design, node, name, values[index]));
     const current = collection ? selected[0].collections?.[name] ?? [] : sources[0].value;
     const mixed = sources.some(source => !samePropertyValue(source.value, sources[0].value) ||
