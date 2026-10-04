@@ -22,6 +22,9 @@ export function computeWorldLayout(engine, { resolveNode = id => engine.states.g
       bounds: transformBounds(worldTransform, { x: 0, y: 0, ...state.renderSize }),
       worldTransform, localTransform: local, clip: localClip, clips, version: state.version,
       children: [...state.children], node,
+      participatesInLayout: !state.data.layoutSuppressed && properties.Visibility !== 1 && properties.Visibility !== 'Collapsed',
+      isScrollPort: !!state.data.scroll && !!state.data.clip && !state.data.scrollPresenter,
+      scrollPortClip: state.data.scroll && state.data.clip && !state.data.scrollPresenter ? {...state.data.clip} : null,
       scroll: state.data.scroll ? { ...state.data.scroll, extent: { ...state.data.scroll.extent }, viewport: { ...state.data.scroll.viewport },
         currentAnchor: state.data.currentAnchor ?? null } : null
     };

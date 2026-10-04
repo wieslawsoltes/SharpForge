@@ -65,6 +65,8 @@ export * from './expander.js';
 export * from './twopaneview.js';
 export * from './render-properties.js';
 export * from './dom-applier.js';
+export * from './effective-viewport.js';
+export * from './layout-lifecycle.js';
 export { XamlRootMetrics } from './dpi.js';
 export * from './text-scale.js';
 export * from './parallaxview.js';
