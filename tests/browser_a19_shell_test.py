@@ -19,19 +19,58 @@ def run():
         page.on("pageerror", lambda error: errors.append(str(error)))
         load_application(page)
         page.wait_for_function("!!window.sharpforge?.workbenchShell")
-        page.evaluate("window.sharpforge.workbenchShell.dialogs.stack.slice().forEach(d => d.cancel())")
+        page.evaluate("""async () => {
+          for (let turn = 0; turn < 5; turn++) {
+            for (const dialog of [...sharpforge.workbenchShell.dialogs.stack]) dialog.cancel();
+            await Promise.resolve();
+          }
+        }""")
         shell = "window.sharpforge.workbenchShell"
+
+        page.locator('.sf-input').first.focus()
+        page.keyboard.press('Alt+f')
+        require(page.locator('.wb-menu-popup[aria-label="File"]').is_visible(), "Alt mnemonic did not open File")
+        page.keyboard.press('ArrowRight')
+        require(page.locator('.wb-menu-popup[aria-label="Edit"]').is_visible(), "Menu arrow navigation failed")
+        page.keyboard.press('Escape')
+        require(page.evaluate('!!document.activeElement.closest(".sf-editor")'), "Menu Escape failed to restore editor focus")
+        evidence.append({"scenario": "menu-mnemonics-arrows-focus-restore", "passed": True})
 
         page.evaluate(f"{shell}.execute('workbench.options')")
         dialog = page.get_by_role("dialog", name="Options", exact=True)
         require(dialog.is_visible(), "Options dialog did not mount")
         page.get_by_role("textbox", name="Search options", exact=True).fill("keyboard")
-        page.get_by_role("treeitem", name="Keyboard", exact=True).click()
+        page.keyboard.press('ArrowDown')
+        require(page.get_by_role("treeitem", name="Keyboard", exact=True).evaluate('node => node === document.activeElement'),
+                "Filtered Options tree is unreachable by keyboard")
+        page.keyboard.press('Enter')
         require(page.get_by_role("textbox", name="Press shortcut keys").is_visible(), "Keyboard page did not mount")
         before = page.evaluate(f"{shell}.settings.snapshot()")
         page.keyboard.press("Escape")
         require(page.evaluate(f"{shell}.settings.snapshot()") == before, "Cancel mutated settings")
         evidence.append({"scenario": "searchable-options-cancel", "passed": True})
+
+        for theme in ['dark', 'light', 'blue', 'high-contrast']:
+            ratios = page.evaluate("""theme => {
+              sharpforge.workbenchShell.settings.apply({environment: {theme}});
+              const style = getComputedStyle(document.documentElement);
+              const rgb = variable => {
+                const value = style.getPropertyValue(variable).trim();
+                if (!/^#[0-9a-f]{6}$/i.test(value)) throw new Error('Unexpected theme color: ' + value);
+                return [1, 3, 5].map(offset => parseInt(value.slice(offset, offset + 2), 16) / 255);
+              };
+              const luminance = value => {
+                const channels = value.map(channel => channel <= .04045 ? channel / 12.92 : ((channel + .055) / 1.055) ** 2.4);
+                return channels[0] * .2126 + channels[1] * .7152 + channels[2] * .0722;
+              };
+              return [['--wb-fg', '--wb-panel'], ['--wb-fg', '--wb-raised'], ['--wb-fg', '--wb-selected'],
+                ['--wb-muted', '--wb-panel']].map(([foreground, background]) => {
+                const first = luminance(rgb(foreground)), second = luminance(rgb(background));
+                return {foreground, background, ratio: (Math.max(first, second) + .05) / (Math.min(first, second) + .05)};
+              });
+            }""", theme)
+            require(all(pair['ratio'] >= 4.5 for pair in ratios), f"Insufficient shell text contrast for {theme}: {ratios}")
+            evidence.append({"scenario": "theme-text-contrast", "theme": theme, "ratios": ratios, "passed": True})
 
         for tool in ["problems", "output", "task-list", "class-view", "object-browser", "bookmarks",
                      "code-definition", "references", "test-explorer", "command-window"]:
