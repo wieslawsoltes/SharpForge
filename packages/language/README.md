@@ -48,9 +48,19 @@ keyword names, collisions and resource destinations are rejected explicitly.
 with `createTestCodeLensProvider` from its actual test registry; test status is
 owned by that registry rather than inferred from a C# method name.
 
-`signatureHelp(uri, offset)` continues to resolve signatures through the current
-compilation's method symbols. It accepts Unicode method names and whitespace
-before the opening parenthesis. The editor tracks delimiter nesting and supplies
-the active invocation's opening offset to Studio, so the provider can resolve
-an outer call after an inner call has completed. Overload resolution remains
-limited to the language service's supported symbol model.
+`signatureHelp(uri, offset, {callStart, activeParameter} = {})` queries the public
+compiler `SourceSemanticModel.signatureHelp` contract. It retains the actual
+bound receiver, accessibility, containing generic substitutions and overload
+selection for instance (`c.F(...)`), `this`, static and local-function calls.
+Incomplete invocation syntax retains candidate method groups even when the call
+has not yet supplied all required arguments. It does not fall back to unrelated
+methods sharing a textual name. `callStart` optionally chooses an outer call
+after a nested call; offsets use UTF-16 units. Without an explicit argument
+index, syntax separators determine it, so commas in nested calls and strings do
+not count. Named and `params` arguments map to the corresponding formal parameter.
+Invalid offsets throw `RangeError`; unresolved invocation targets return `null`.
+
+Completion method items include `commitCharacters: ['(']`, for source methods
+and registered intrinsic/framework methods. The editor can commit the method
+and invocation opener as one undoable edit. Other completion kinds retain their
+own rules; suggestion mode continues to leave ordinary typing to the editor.
