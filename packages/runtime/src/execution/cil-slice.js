@@ -55,6 +55,7 @@ export function runCilSlice(vm, {instructionBudget = 15000, timeBudgetMs = 8, on
   } finally {
     if (started !== undefined) vm.elapsedMs += performance.now() - started;
     flushFramePool(vm);
+    vm.profiler?.boundary();
     flushCilMethodEvents(vm);
   }
 }

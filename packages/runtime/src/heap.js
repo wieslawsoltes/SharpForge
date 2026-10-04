@@ -1,4 +1,5 @@
 import {MethodTableRegistry} from './execution/method-table.js';
+import {recordAllocation,replaceHeapData} from './execution/heap-allocation.js';
 /** A precise, non-moving tracing heap. Managed references are generation-checked handles, never raw JS object references. */
 export class ManagedFault extends Error {
   constructor(type,message,reference=null){super(message);this.name=type;this.reference=reference;}
@@ -28,10 +29,10 @@ export class ManagedHeap {
     this.reserve(size,allocationRoots);
     const g=this.generationCounter+1;if(!Number.isSafeInteger(g))throw new ManagedFault('OutOfMemoryException','Managed reference identity exhausted');this.generationCounter=g;const h=this.free.length?this.free.pop():this.records.length;
     this.generations[h]=g;this.records[h]={kind,type:typeName,methodTable,data,size};
-    this.mutationRevision++;this.stats.allocatedBytes+=size;this.stats.liveBytes+=size;this.stats.liveObjects++;this.stats.allocations++;this.stats.peakBytes=Math.max(this.stats.peakBytes,this.stats.liveBytes);
+    recordAllocation(this,size);
     return Object.freeze({h,g});
   }
-  replaceData(reference,data){const record=this.get(reference);if(!Array.isArray(data)||record.kind==='string')throw new TypeError('Array-backed record required');const next=32+data.length*8,delta=next-record.size;if(delta>0)this.reserve(delta,[reference,...data]);this.stats.liveBytes+=delta;this.stats.allocatedBytes+=Math.max(0,delta);this.stats.peakBytes=Math.max(this.stats.peakBytes,this.stats.liveBytes);record.data=[...data];record.size=next;this.mutationRevision++;}
+  replaceData(reference,data){return replaceHeapData(this,reference,data);}
   string(value,roots=[]){return this.allocate('string','string',String(value),roots);}
   object(type,fields){return this.allocate('object',type,fields);}
   array(type,length){

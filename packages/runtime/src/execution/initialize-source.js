@@ -6,6 +6,7 @@ import { CooperativeScheduler } from '../scheduler.js';
 import { normalizeRuntimeLaunchOptions } from '../launch-options.js';
 import { createSourceMethodTables } from './method-table.js';
 import { sourceEntryArguments } from './entry-arguments.js';
+import { initializeExecutionProfiler } from './profiler.js';
 import { initializeSourceNumbers, sourceInitialValue } from './source-numbers.js';
 import { installRootProvider } from './frame-roots.js';
 
@@ -45,6 +46,7 @@ export function initializeSourceVM(vm, image, options) {
   vm.onOutput = options.onOutput ?? (() => {});
   vm.onException = null;
   vm.onWrite = null;
+  initializeExecutionProfiler(vm, options.profile);
   vm.platform = new ManagedPlatform(vm, options);
   vm.scheduler = new CooperativeScheduler(vm, options);
   vm.call(image.entryPoint, sourceEntryArguments(vm, options));
