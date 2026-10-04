@@ -1,6 +1,7 @@
 import {Scanner, parse} from '@sharpforge/syntax';
 import {SourceText} from '@sharpforge/text';
 import {frameworkType} from '@sharpforge/framework';
+import {constructorProbeCandidates} from './compatibility-constructors.js';
 
 export const designerCompatibilityCodes = Object.freeze({
   compatible: 'SFDESIGN_COMPATIBLE',
@@ -33,9 +34,11 @@ function pairTokens(tokens) {
   const pairs = new Int32Array(tokens.length).fill(-1);
   const stack = [];
   const methodTokens = [];
+  const classes = [];
   let invalid = false;
   for (let index = 0; index < tokens.length; index++) {
     const {kind, value} = tokens[index];
+    if (kind === 'class') classes.push(index);
     if (value === 'Create' || value === 'InitializeComponent' || value === 'Main') methodTokens.push(index);
     if (kind === '(' || kind === '[' || kind === '{') stack.push(index);
     else if (kind === ')' || kind === ']' || kind === '}') {
@@ -45,7 +48,7 @@ function pairTokens(tokens) {
       else { pairs[start] = index; pairs[index] = start; }
     }
   }
-  return {pairs, methodTokens, invalid: invalid || stack.length !== 0};
+  return {pairs, methodTokens, classes, invalid: invalid || stack.length !== 0};
 }
 
 function signatureStart(tokens, nameIndex) {
@@ -73,23 +76,28 @@ function containsControls(tokens, start, end) {
   return false;
 }
 
-function candidate(tokens, index, pairs, text, uri) {
-  const name = tokens[index].value;
-  if (!preferredMethods.includes(name) || tokens[index + 1]?.kind !== '(') return null;
+function candidate(tokens, index, pairs, text, {uri, owner = null}) {
+  const name = owner ? '.ctor' : tokens[index].value;
+  if (!owner && !preferredMethods.includes(name) || tokens[index + 1]?.kind !== '(') return null;
   const previous = tokens[index - 1];
-  if (!previous || ['.', '?.', 'new', 'return', '=', '{', '}', ';'].includes(previous.kind)) return null;
+  if (!previous || ['.', '?.', 'new', 'return', '='].includes(previous.kind)
+    || !owner && ['{', '}', ';'].includes(previous.kind)) return null;
   const parameterEnd = pairs[index + 1];
   if (parameterEnd < 0) return null;
+  if (owner && parameterEnd !== index + 2) return null;
   const bodyIndex = parameterEnd + 1;
   if (!['{', '=>'].includes(tokens[bodyIndex]?.kind)) return null;
   const startIndex = signatureStart(tokens, index);
   const header = text.slice(tokens[startIndex].start, tokens[parameterEnd].end);
   // Parse just the signature with the shared C# grammar. The body remains a lexical probe, never a design session.
-  const parsed = parse(new SourceText(`class __DesignerProbe { ${header} {} }`, uri));
+  const parsed = parse(new SourceText(`class ${owner ? '@' + owner : '__DesignerProbe'} { ${header} {} }`, uri));
   if (parsed.diagnostics.some(diagnostic => diagnostic.severity === 'error')) return null;
+  const declaration = parsed.root.members[0]?.members[0];
+  if (owner && (declaration?.name !== '.ctor' || declaration.modifiers?.includes('static'))) return null;
   const bodyEnd = pairs[bodyIndex];
   return {
     name,
+    ...(owner ? {ownerName: owner} : {}),
     start: tokens[startIndex].start,
     end: bodyEnd >= 0 ? tokens[bodyEnd].end : tokens[bodyIndex].end,
     nameSpan: {start: tokens[index].start, end: tokens[index].end},
@@ -108,27 +116,32 @@ export function probeDesignSource(text, uri = 'Program.cs', {maxCharacters = 2_0
   if (typeof uri !== 'string' || !/\.cs$/i.test(uri)) return result(uri, codes.fileType, 'The design view requires a C# source document.');
   if (typeof text !== 'string' || text.length > maxCharacters) return result(uri, codes.size, 'C# design source exceeds the size limit.');
   cancellationToken?.throwIfCancellationRequested();
-  if (!preferredMethods.some(name => text.includes(name))) {
-    return result(uri, codes.method, 'No Create, InitializeComponent, or Main construction method was found.');
+  if (!preferredMethods.some(name => text.includes(name)) && !(text.includes('class') && text.includes('new'))) {
+    return result(uri, codes.method, 'No Create, InitializeComponent, Main, or direct constructor construction was found.');
   }
   const scanner = new Scanner(new SourceText(text, uri), undefined, {cancellationToken});
   const {raws: tokens} = scanner.sequence(null, {captureTrivia: false});
-  const {pairs, methodTokens, invalid} = pairTokens(tokens);
+  const {pairs, methodTokens, classes, invalid} = pairTokens(tokens);
   if (invalid || scanner.diagnostics.some(diagnostic => diagnostic.severity === 'error')) {
     return result(uri, codes.syntax, 'Complete the C# tokens and balanced method body before opening the design view.');
   }
   const methods = [];
   for (const index of methodTokens) {
-    const method = candidate(tokens, index, pairs, text, uri);
+    const method = candidate(tokens, index, pairs, text, {uri});
+    if (method) methods.push(method);
+  }
+  for (const {index, owner} of constructorProbeCandidates(tokens, pairs, classes)) {
+    const method = candidate(tokens, index, pairs, text, {uri, owner});
     if (method) methods.push(method);
   }
   if (!methods.length) return result(uri, codes.method, 'No supported construction method declaration was found.');
-  for (const name of preferredMethods) {
+  const order = [...preferredMethods, '.ctor'];
+  for (const name of order) {
     const matching = methods.filter(method => method.name === name && method.blockBodied && method.hasControls);
     if (matching.length > 1) return result(uri, codes.ambiguous, `More than one ${name} method constructs controls; choose one explicitly.`);
     if (matching.length === 1) return result(uri, codes.compatible, null, matching[0]);
   }
-  const preferred = methods.find(method => method.name === preferredMethods.find(name => methods.some(item => item.name === name)));
+  const preferred = methods.find(method => method.name === order.find(name => methods.some(item => item.name === name)));
   if (!methods.some(method => method.blockBodied)) {
     return result(uri, codes.body, 'A block-bodied construction method is required.', preferred);
   }

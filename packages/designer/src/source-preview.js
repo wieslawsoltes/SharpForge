@@ -1,6 +1,7 @@
 import {canonicalType, frameworkType} from '@sharpforge/framework';
 import {childSlot, validateDesign} from './model.js';
 import {failSource} from './source-errors.js';
+import {hasSourceConstructorEvidence} from './source-constructor-preview.js';
 
 const inheritanceErrors = Object.freeze({
   SF1014: 'Only the IDisposable interface is supported by this class profile',
@@ -88,6 +89,9 @@ export function designPreviewCapability(analysis) {
   const document = analysis.document;
   if (!analysis.structuralEditable || !document?.nodes?.length || document.previewOnly) {
     return unavailable('Preview requires a closed construction containing only owned, typed statements.');
+  }
+  if (ownership?.methodName === '.ctor' && !hasSourceConstructorEvidence(analysis)) {
+    return unavailable('A constructor preview requires a parameterless instance body without chained calls or field, property, or static initialization.');
   }
   if (!assignment || assignment.receiver !== 'this' || assignment.owner !== ownership.className
     || assignment.methodName !== ownership.methodName || assignment.childId !== document.root || assignment.uri !== analysis.uri) {
