@@ -1,0 +1,124 @@
+{
+  "schemaVersion": 1,
+  "kind": "source-only-focused-gate-preparation",
+  "issue": 2460,
+  "executed": false,
+  "candidate": "a5150472de399a1abea85db4229ead415522cf7e",
+  "tree": "ad4958c47c23fd5add8e695b4ef4decae6c77e39",
+  "plan": {
+    "path": "/workspace/scratch/7e3d2a445c44/generic-a5150472-focused-validation-plan.json",
+    "bytes": 164940,
+    "sha256": "f405265c1163ea27cdbb748d3193f911b623b33b81af40299f8b1b16cc37e983"
+  },
+  "recorder": {
+    "path": "/workspace/scratch/7e3d2a445c44/generic-a515-focused-run-step.py",
+    "bytes": 13131,
+    "sha256": "fd7dfc0834b719ebfd4f194446510dd1226310b35d45d7058273d64d06d23df6"
+  },
+  "originalPlan": {
+    "path": "/workspace/scratch/7e3d2a445c44/generic-5be28e30-validation-plan.json",
+    "bytes": 66725,
+    "sha256": "29e542b4b7dc2e1199aeb234c859e061d5e216f11db43f7da9e25585efaf8802"
+  },
+  "originalRecorder": {
+    "path": "/workspace/scratch/7e3d2a445c44/generic-5be-run-step.py",
+    "bytes": 12022,
+    "sha256": "afd9b898f08c44f77779071236dd361db17d62d06385a4b57ccaa8786e8ad09c"
+  },
+  "originalNativeExecution": {
+    "path": "/workspace/scratch/7e3d2a445c44/generic-qualification-5be28e30/native-closure-first.execution.json",
+    "bytes": 146137,
+    "sha256": "0c6129d7ef7831ca49f53fbeba217e1caf5e95b13f05d210bf19be3e5574be72"
+  },
+  "originalNativeRetention": {
+    "path": "/workspace/scratch/7e3d2a445c44/generic-qualification-5be28e30/native-retention.json",
+    "bytes": 139752,
+    "sha256": "3a4e9aacc99f3f1cbaabe71121536eeb3999ce65c344a0743f37fab1cc3a775c"
+  },
+  "originalFocusedExecution": {
+    "path": "/workspace/scratch/7e3d2a445c44/generic-qualification-5be28e30/focused-node.execution.json",
+    "bytes": 137643,
+    "sha256": "c268f5eaf11938925f3161e5b7158b725deb230aa71f2e7d1558f2397c3192fa"
+  },
+  "staticChecks": {
+    "pythonAstParsedWithoutExecutingRecorder": true,
+    "sameOriginalFocusedArgv": true,
+    "files": 30,
+    "literalAuthoredTests": 126,
+    "candidateFilePinsVerified": 402,
+    "historicalPinsVerified": 221,
+    "changedPriorPinnedFiles": [
+      "packages/clr/src/type-system/type-specifications.js",
+      "tests/clr-generics-closure-lifetime.test.js",
+      "tests/clr-generics-closure-reference.test.js",
+      "tests/clr-generics-closure.test.js"
+    ],
+    "originalTapFooterParsedAsData": {
+      "tests": 122,
+      "suites": 0,
+      "pass": 119,
+      "fail": 3,
+      "cancelled": 0,
+      "skipped": 0,
+      "todo": 0
+    },
+    "originalTopLevelTapPlan": [
+      122
+    ],
+    "cleanCandidate": true,
+    "qualificationParentAbsent": true
+  },
+  "parentOutput": "/workspace/scratch/7e3d2a445c44/generic-qualification-a5150472-focused",
+  "futureCommand": {
+    "cwd": "/workspace/scratch/7e3d2a445c44",
+    "argv": [
+      "python3",
+      "/workspace/scratch/7e3d2a445c44/generic-a515-focused-run-step.py",
+      "focused-node"
+    ],
+    "childArgv": [
+      "node",
+      "scripts/limited.js",
+      "node",
+      "--test",
+      "--test-reporter=tap",
+      "tests/clr-generics-closure-authority.test.js",
+      "tests/clr-generics-closure-bounds.test.js",
+      "tests/clr-generics-closure-concurrency.test.js",
+      "tests/clr-generics-closure-external.test.js",
+      "tests/clr-generics-closure-gc.test.js",
+      "tests/clr-generics-closure-lifetime.test.js",
+      "tests/clr-generics-closure-reference.test.js",
+      "tests/clr-generics-closure.test.js",
+      "tests/clr-generics-instantiation-bounds.test.js",
+      "tests/clr-generics-instantiation-gc.test.js",
+      "tests/clr-generics-instantiation-graphs.test.js",
+      "tests/clr-generics-instantiation-lifetime.test.js",
+      "tests/clr-generics-instantiation-reference.test.js",
+      "tests/clr-generics-instantiation-scopes.test.js",
+      "tests/clr-generics-instantiation.test.js",
+      "tests/clr-generics-signature-categories.test.js",
+      "tests/clr-generics-substitution-reference.test.js",
+      "tests/clr-generics-substitution.test.js",
+      "tests/clr-types-arrays-reference.test.js",
+      "tests/clr-types-assignability.test.js",
+      "tests/clr-types-constructed.test.js",
+      "tests/clr-types-forwarders-cache.test.js",
+      "tests/clr-types-forwarders-reference.test.js",
+      "tests/clr-types-forwarders.test.js",
+      "tests/clr-types-generic-parameters.test.js",
+      "tests/clr-types-graphs.test.js",
+      "tests/clr-types-identity.test.js",
+      "tests/clr-types-parameter-cache.test.js",
+      "tests/clr-types-verification-core.test.js",
+      "tests/clr-types-warm-loading.test.js"
+    ],
+    "requires": "Root exclusive slot and source review; do not run during this preparation."
+  },
+  "limits": [
+    "This checks source/record consistency only; no product module or recorder was imported or executed.",
+    "No new native capture, Node tests, GC process, benchmark, installation or remote write occurred.",
+    "The original 122-test / 119-pass / 3-fail evidence remains unchanged.",
+    "126 expected tests are authored counts, not an observed pass."
+  ]
+}

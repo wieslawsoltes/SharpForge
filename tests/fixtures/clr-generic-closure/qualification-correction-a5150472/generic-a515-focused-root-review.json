@@ -1,0 +1,38 @@
+{
+  "schemaVersion": 1,
+  "kind": "automated-root-source-review",
+  "reviewedUtc": "2026-10-04T21:12:20.657659+00:00",
+  "plan": {
+    "path": "/workspace/scratch/7e3d2a445c44/generic-a5150472-focused-validation-plan.json",
+    "bytes": 164940,
+    "sha256": "f405265c1163ea27cdbb748d3193f911b623b33b81af40299f8b1b16cc37e983"
+  },
+  "recorder": {
+    "path": "/workspace/scratch/7e3d2a445c44/generic-a515-focused-run-step.py",
+    "bytes": 13131,
+    "sha256": "fd7dfc0834b719ebfd4f194446510dd1226310b35d45d7058273d64d06d23df6"
+  },
+  "head": "a5150472de399a1abea85db4229ead415522cf7e",
+  "tree": "ad4958c47c23fd5add8e695b4ef4decae6c77e39",
+  "status": "",
+  "candidatePinsVerified": 402,
+  "historicalPinsVerified": 221,
+  "mismatches": [],
+  "sameOriginalThirtyFileArgv": true,
+  "expectedTapCounts": {
+    "tests": 126,
+    "suites": 0,
+    "pass": 126,
+    "fail": 0,
+    "cancelled": 0,
+    "skipped": 0,
+    "todo": 0
+  },
+  "destinationAbsent": true,
+  "freeBytes": 371531776,
+  "sourceReview": [
+    "Full focused-only recorder read by root; before/after identities, original native prerequisites, actual TAP footer even after child failure, exclusive output, interruption finalization and primary failure retained.",
+    "Exact 126-test correction gate is authorized after PE merged main core succeeds; no native recapture because unchanged oracle/input/tool authorities remain strict.",
+    "No execution occurred during this source review."
+  ]
+}
