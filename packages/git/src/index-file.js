@@ -2,6 +2,8 @@ import { GitError, checkLimit } from './errors.js';
 import { hashBytes } from './hash.js';
 import { decodeIndexEntries, encodeIndexEntries } from './index-file-entries.js';
 import { decodeTreeCache, decodeResolveUndo, encodeResolveUndo } from './index-file-extensions.js';
+import { TreeView } from './tree-view.js';
+import { IndexEntryMap } from './index-entry-map.js';
 
 const encoder = new TextEncoder();
 const decoder = new TextDecoder();
@@ -18,13 +20,18 @@ function key(path, stage) {
   return `${stage}:${path}`;
 }
 
+function treeEntry(entry) { return entry.stage === 0 && !entry.intentToAdd; }
+
 /** Git index entries indexed by path and conflict stage, with lossless extension payloads. */
 export class GitIndex {
+  #stageZero = new Map();
+  #treeView = new TreeView(this.#stageZero, treeEntry);
+
   constructor({ version = 2, entries = [], extensions = [] } = {}) {
     if (![2, 3, 4].includes(version)) throw new GitError('Unsupported', 'Unsupported Git index version', { version });
     this.version = version;
     this.extensions = extensions.map(extension => ({ ...extension, data: extension.data.slice() }));
-    this.byPath = new Map();
+    this.byPath = new IndexEntryMap(this.#stageZero, () => { this.sorted = null; this.dirty = true; });
     this.sorted = null;
     this.dirty = false;
     for (const entry of entries) this.set(entry);
@@ -46,15 +53,18 @@ export class GitIndex {
   }
 
   get(path, stage = 0) {
-    return this.byPath.get(key(path, stage)) ?? null;
+    return (stage === 0 ? this.#stageZero.get(path) : this.byPath.get(key(path, stage))) ?? null;
   }
+
+  get treeView() { return this.#treeView; }
 
   set(entry) {
     const stage = entry.stage ?? 0;
     if (typeof entry.path !== 'string' || !entry.path || entry.path.includes('\0') || stage < 0 || stage > 3) {
       throw new GitError('Corrupt', 'Invalid index entry', { path: entry.path, stage });
     }
-    this.byPath.set(key(entry.path, stage), { ...entry, nameBytes: encoder.encode(entry.path), stage, stat: { ...entry.stat } });
+    const value = { ...entry, nameBytes: encoder.encode(entry.path), stage, stat: { ...entry.stat } };
+    this.byPath.set(key(entry.path, stage), value);
     this.sorted = null;
     this.dirty = true;
     return this;
