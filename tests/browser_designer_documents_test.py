@@ -155,7 +155,7 @@ try:
             else:
                 page.wait_for_function('''() => {
                     const saved = JSON.parse(localStorage.getItem('sharpforge.workspace.v1') || '{}');
-                    return saved.designerViews?.documents?.some(d => d.uri === 'A.cs' && d.ratio === .63);
+                    return saved.designer?.documents?.some(d => d.uri === 'A.cs' && d.ratio === .63);
                 }''')
                 page.reload()
                 page.wait_for_function('window.sharpforge?.designerDocuments !== undefined')
