@@ -10,11 +10,12 @@ export function subscribeShellServices(shell) {
     if (event.type === 'activated') {
       shell.recent.add({uri: event.uri, kind: 'file', workspaceId: shell.options.workspaceId});
       shell.lastDocumentKind = 'code';
-      invalidate('outline', 'toolbox', 'properties', 'code-definition', 'solution-view');
+      invalidate('outline', 'toolbox', 'properties', 'code-definition', 'solution-view', 'object-browser');
     }
     if (['changed', 'added', 'removed', 'reset'].includes(event.type)) {
       shell.bookmarks.trackChanges(event);
       invalidate('outline', 'class-view', 'bookmarks', 'code-definition', 'solution-view');
+      if (event.type === 'reset') invalidate('object-browser');
       shell.taskListDirty = true;
     }
     shell.updateContext();

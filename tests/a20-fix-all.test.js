@@ -163,6 +163,24 @@ test('pre-cancelled solution action never returns a partial plan', async t => {
     {signal: controller.signal}), {name: 'AbortError'});
 });
 
+test('solution Fix All and rename reject new project membership during the final semantic validation', async t => {
+  for (const operation of ['fixAll', 'rename']) {
+    const context = workspaceActions();
+    t.after(() => context.dispose());
+    context.control.beforeReply = method => {
+      if (method !== 'validateWorkspaceEdit') return;
+      context.control.beforeReply = null;
+      context.owned.set('added', ['C.cs']);
+      context.builds.register({id: 'added', name: 'Added during validation'});
+    };
+    const result = operation === 'fixAll' ? context.actions.codeActions({uri: 'A.cs', version: 1,
+      scope: 'solution', equivalenceKey: explicit}) : context.actions.rename({uri: 'A.cs', version: 1,
+      offset: source('A').indexOf('A'), newName: 'Renamed'});
+    await assert.rejects(result, /Solution.*changed/);
+    assert.equal(context.documents.get('A.cs').text, source('A'));
+  }
+});
+
 test('conflicting shared edits or resources are refused before a preview can be committed', () => {
   const edit = {uri: 'A.cs', version: 1, start: 0, end: 3, newText: 'int'};
   assert.throws(() => mergeWorkspaceEdits([[edit], [{...edit, newText: 'double'}]]), /disagree/);

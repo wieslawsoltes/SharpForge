@@ -1,4 +1,5 @@
 import {SemanticAnalysis} from './semantic-analysis.js';
+import {ConversionKind} from './conversions/classify.js';
 import {forEachChild} from './bound/semantic-walker.js';
 import {originalSymbol, sourceSymbolRecord, symbolNameToken} from './source-symbols.js';
 import {sourceReference} from './source-references.js';
@@ -17,6 +18,7 @@ export class SourceSemanticModel {
     this.symbols = [];
     this.references = [];
     this.hints = [];
+    this.localInitializerTypes = new Map();
     this.metadata = [];
     this.records = new Map();
     this.symbolsById = new Map();
@@ -111,8 +113,18 @@ export class SourceSemanticModel {
         const node = stack.pop();
         if (seen.has(node)) continue;
         seen.add(node);
+        if (node.kind === 'LocalDeclaration') for (const declaration of node.declarations) {
+          let value = declaration.value;
+          while (value?.kind === 'Conversion' && !value.isExplicit) value = value.operand;
+          const local = this.record(declaration.local, uri);
+          if (local) this.localInitializerTypes.set(local.id, value?.type ?? null);
+        }
         const symbol = node.local ?? node.parameter ?? node.field ?? node.property ?? node.event ?? node.referencedType;
         if (symbol) this.addReference(symbol, uri, node.syntax);
+        for (const reference of node.nameOfReferences ?? []) this.addReference(reference.symbol, uri, reference.syntax);
+        if (node.conversion?.kind === ConversionKind.MethodGroup) {
+          this.addReference(node.conversion.method, uri, node.operand.syntax);
+        }
         if (node.kind === 'Call') this.addReference(node.method, uri, node.syntax);
         if (node.kind === 'ObjectCreation') this.addReference(node.type, uri, node.syntax);
         const external = metadataReference(node, uri, source);
