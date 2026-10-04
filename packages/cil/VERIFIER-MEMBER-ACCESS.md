@@ -44,6 +44,7 @@ mutates or releases the source metadata.
 
 Focused tests cover all seven flags for fields/methods, owner/assembly/family
 privileges, protected receivers, owned snapshots, limits, cancellation and
-foreign identities. A bounded eighteen-case ILAsm/ILVerify capture and paired
-context-construction/new-query timing harness are prepared; local qualification
-is pending the serial slot. See the [reference plan](../../tests/fixtures/a03-member-access/README.md).
+foreign identities. The eighteen-case ILAsm/ILVerify capture has sixteen known agreements and two
+explicit unknowns. All 38 focused contracts and required local checks passed.
+Paired context/member controls and new-query timings, raw samples and scope limits
+are recorded in the [reference evidence](../../tests/fixtures/a03-member-access/README.md).
