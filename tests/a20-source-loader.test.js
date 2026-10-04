@@ -3,16 +3,7 @@ import assert from 'node:assert/strict';
 import {readEditorSource, EditorModel, LargeFilePolicy} from '@sharpforge/editor';
 import {encodeWorkspaceFile} from '@sharpforge/archive';
 import {readStudioSource} from '../apps/studio/workbench/studio-source-reader.js';
-
-class SlicedFile extends File {
-  reads = [];
-  async arrayBuffer() { throw new Error('A whole-file arrayBuffer read is forbidden'); }
-  async text() { throw new Error('A whole-file text read is forbidden'); }
-  slice(start, end) {
-    this.reads.push({start, end});
-    return super.slice(start, end);
-  }
-}
+import {SlicedFile} from './fixtures/a20-source-file-fixture.js';
 
 const sourceText = 'class 日本語 { string value = "😀e\u0301"; }\r\n// עברית\n';
 
