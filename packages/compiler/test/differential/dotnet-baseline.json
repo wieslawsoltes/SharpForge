@@ -866,6 +866,7 @@
   "string-elements/foreach-over-a-string",
   "string-elements/index-reads-code-units",
   "string-elements/out-of-range-and-null-throw",
+  "string-members/format-concat-join-parameter-arrays",
   "string-members/registry-members-direct-and-null-conditional",
   "string-operations/concatenation-and-equality",
   "string-operations/switch-on-string",
