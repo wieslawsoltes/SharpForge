@@ -1,10 +1,11 @@
 import { known, unknown } from '../metadata-types/results.js';
 import { rejectMember, requireMemberToken } from './budget.js';
 import { memberSignatures } from './signatures.js';
-import { lookupMember } from './lookup.js';
+import { memberLookup } from './lookup.js';
 
 export function memberQueries(snapshot, types, budget) {
   const decode = memberSignatures(types, budget);
+  const lookup = memberLookup(snapshot, types, budget);
   const cache = new Map();
   function definition(record) {
     if (cache.has(record.token)) return cache.get(record.token);
@@ -33,7 +34,7 @@ export function memberQueries(snapshot, types, budget) {
     if (owner.status === 'unknown') return owner;
     const signature = decode(reference.signature);
     if (signature.status === 'unknown') return signature;
-    const record = lookupMember(snapshot, types, budget, reference, token, owner.value, signature.value.kind);
+    const record = lookup(reference, token, owner.value, signature.value.kind);
     if (record.status === 'unknown') return record;
     // Compiler-controlled definitions cannot be accessed through a MemberRef (ECMA I.8.5.3.2).
     if (!(record.flags & 7)) return unknown('compiler-controlled-reference', token);
