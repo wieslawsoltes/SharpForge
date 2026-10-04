@@ -490,6 +490,13 @@
       "count": 1,
       "sha256": "870f793b642673fb43ba8abe2acc047050c7da7f1cd5b15f5f9346baef4320a9",
       "reason": "Developer-run union benchmark loads only the fixed direct-CIL compiler module from two explicitly selected trusted local checkouts. Exact commits and clean tracked files are checked before and after each sequential worker; checkout paths are executable host input and the benchmark is not shipped in the product."
+    },
+    {
+      "path": "packages/cil/tools/benchmark-method-headers.mjs",
+      "operation": "dynamic-import",
+      "count": 2,
+      "sha256": "572fd15a6c5844abbf94d2a43fd155ee4c03b6fedb94c84919b217ef3a062432",
+      "reason": "Developer-only direct-emission benchmark imports explicitly selected trusted local compiler and CIL public entries. Own-checkout aliases and the exact legacy revision are checked before timed import; no managed, remote or product input chooses host JavaScript."
     }
   ]
 }
