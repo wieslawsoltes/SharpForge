@@ -54,7 +54,8 @@ const binarySymbols = Object.freeze({
 /** `Type.Name`: `Int32`, `String`, `List\`1`, `Int32[]`. */
 export function clrName(type) {
   if (!type) return 'Object';
-  if (type.elementType) return clrName(type.elementType) + '[]';
+  if (type.isAnonymousType) return clrName(type.metadataForm());
+  if (type.elementType) return clrName(type.elementType) + '[' + ','.repeat((type.rank ?? 1) - 1) + ']';
   if (clrNames[type.specialType]) return clrNames[type.specialType];
   const arity = type.typeArguments?.length ?? type.arity ?? 0;
   return arity ? `${type.name}\`${arity}` : type.name;
@@ -62,7 +63,7 @@ export function clrName(type) {
 /** `Type.ToString()`: the namespace-qualified name. */
 export function clrFullName(type) {
   if (!type) return 'System.Object';
-  if (type.elementType) return clrFullName(type.elementType) + '[]';
+  if (type.elementType) return clrFullName(type.elementType) + '[' + ','.repeat((type.rank ?? 1) - 1) + ']';
   if (clrNames[type.specialType]) return 'System.' + clrNames[type.specialType];
   return type.toDisplayString();
 }
@@ -70,6 +71,22 @@ const signatureName = type => (shortInSignatures.has(type?.specialType) ? clrNam
 /** `MethodInfo.ToString()`: `Void Add(Int32)`. */
 const methodText = method => `${signatureName(method.returnType)} ${method.name}(${method.parameters.map(p => signatureName(p.type)).join(', ')})`;
 const isBool = type => type?.specialType === 'System_Boolean';
+
+function bindingChildren(binding) {
+  if (binding.factory === 'MemberBind') return binding.bindings.flatMap(bindingChildren);
+  if (binding.factory === 'ListBind') return binding.initializers.flatMap(initializer => initializer.arguments);
+  return [binding.expression];
+}
+
+function bindingText(binding, text) {
+  const name = binding.member.name;
+  if (binding.factory === 'MemberBind') return `${name} = {${binding.bindings.map(child => bindingText(child, text)).join(', ')}}`;
+  if (binding.factory === 'ListBind') {
+    const values = binding.initializers.map(initializer => `${methodText(initializer.addMethod)}(${initializer.arguments.map(text).join(', ')})`);
+    return `${name} = {${values.join(', ')}}`;
+  }
+  return `${name} = ${text(binding.expression)}`;
+}
 
 /** The child expressions of a node in the order `ExpressionVisitor` visits them. */
 export function childrenOf(node) {
@@ -92,7 +109,7 @@ export function childrenOf(node) {
     case 'New':
       return node.arguments;
     case 'MemberInit':
-      return [node.newExpression, ...node.bindings.map(binding => binding.expression)];
+      return [node.newExpression, ...node.bindings.flatMap(bindingChildren)];
     case 'ListInit':
       return [node.newExpression, ...node.initializers.flatMap(initializer => initializer.arguments)];
     case 'NewArrayInit':
@@ -149,7 +166,7 @@ function operandText(node, text) {
     case 'Quote':
       return operands[0];
     case 'ArrayIndex':
-      return `${operands[0]}[${operands[1]}]`;
+      return operands.length === 2 ? `${operands[0]}[${operands[1]}]` : `${operands[0]}.Get(${operands.slice(1).join(', ')})`;
     case 'Condition':
       return `IIF(${operands.join(', ')})`;
     case 'And':
@@ -190,10 +207,12 @@ export function treeToString(tree) {
         return callText(node, text);
       case 'Invoke':
         return `Invoke(${[node.expression, ...node.arguments].map(text).join(', ')})`;
-      case 'New':
-        return `new ${clrName(node.type)}(${node.arguments.map(text).join(', ')})`;
+      case 'New': {
+        const argumentsText = node.arguments.map((argument, index) => `${node.members?.[index] ? node.members[index].name + ' = ' : ''}${text(argument)}`);
+        return `new ${clrName(node.type)}(${argumentsText.join(', ')})`;
+      }
       case 'MemberInit':
-        return `${text(node.newExpression)} {${node.bindings.map(b => `${b.member.name} = ${text(b.expression)}`).join(', ')}}`;
+        return `${text(node.newExpression)} {${node.bindings.map(binding => bindingText(binding, text)).join(', ')}}`;
       case 'ListInit':
         return `${text(node.newExpression)} {${node.initializers.map(i => `${methodText(i.addMethod)}(${i.arguments.map(text).join(', ')})`).join(', ')}}`;
       case 'NewArrayInit':

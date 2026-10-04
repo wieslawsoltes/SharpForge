@@ -130,6 +130,7 @@ class TreeBuilder {
     if (kind === 'AnonymousFunction') return this.nestedLambda(node);
     if (kind === 'NullLiteral' || kind === 'DefaultLiteral') return this.constant(null, node.type);
     if (transparentConversions.has(kind)) return this.visit(node.operand);
+    if (kind === 'ImplicitReference' && !node.isExplicit) return this.visit(node.operand);
     if (kind === 'MethodGroup') this.fail('a method group conversion', node);
     return this.node('Convert', node.type, { operands: [this.visit(node.operand)], method: node.conversion?.method ?? null });
   }

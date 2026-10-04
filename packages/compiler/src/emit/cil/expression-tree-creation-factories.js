@@ -4,6 +4,12 @@ import { TypeKind } from '../../symbols/types.js';
 function newExpression(node) {
   const { newExpression, constructorInfo } = this.types,
     constructor = node.constructor;
+  if (node.members?.length) {
+    this.anonymousMethodOf(node.type, '.ctor');
+    this.expressions(node.arguments);
+    this.array(this.types.memberInfo, node.members.map(member => () => this.methodOf(member.getMethod)));
+    return this.factory('New', [constructorInfo, this.core.ienumerableT.construct(this.expression), this.arrayOf(this.types.memberInfo)], newExpression);
+  }
   if (!constructor || (constructor.isImplicitlyDeclared && node.type.typeKind === TypeKind.Struct)) {
     this.typeOf(node.type);
     return this.factory('New', [this.core.type], newExpression);
@@ -13,31 +19,52 @@ function newExpression(node) {
   return this.factory('New', [constructorInfo, this.arrayOf(this.expression)], newExpression);
 }
 
+function emitBinding(writer, binding) {
+  const factory = binding.factory ?? 'Bind';
+  const accessor = factory === 'Bind' ? binding.member.setMethod : binding.member.getMethod;
+  if (accessor) writer.methodOf(accessor);
+  else writer.fieldOf(writer.tokens.field(binding.member), binding.member.containingType);
+  const memberType = accessor ? writer.types.methodInfo : writer.types.memberInfo;
+  if (factory === 'MemberBind') {
+    writer.array(writer.types.memberBinding, binding.bindings.map(child => () => emitBinding(writer, child)));
+    return writer.factory(factory, [memberType, writer.arrayOf(writer.types.memberBinding)], writer.result('MemberMemberBinding'));
+  }
+  if (factory === 'ListBind') {
+    writer.array(writer.types.elementInit, binding.initializers.map(initializer => () => emitElementInit(writer, initializer)));
+    return writer.factory(factory, [memberType, writer.arrayOf(writer.types.elementInit)], writer.result('MemberListBinding'));
+  }
+  writer.emit(binding.expression);
+  return writer.factory('Bind', [memberType, writer.expression], writer.result('MemberAssignment'));
+}
+
+function emitElementInit(writer, initializer) {
+  writer.methodOf(initializer.addMethod);
+  writer.expressions(initializer.arguments);
+  return writer.factory('ElementInit', [writer.types.methodInfo, writer.arrayOf(writer.expression)], writer.types.elementInit);
+}
+
 function memberInit(node) {
-  const { memberBinding, memberInfo, methodInfo, newExpression } = this.types,
-    assignment = this.result('MemberAssignment'),
-    bind = binding => () => {
-      const setter = binding.member.setMethod ?? null;
-      if (setter) this.methodOf(setter);
-      else this.fieldOf(this.tokens.field(binding.member), binding.member.containingType);
-      this.emit(binding.expression);
-      this.factory('Bind', [setter ? methodInfo : memberInfo, this.expression], assignment);
-    };
+  const { memberBinding, newExpression } = this.types;
   this.emit(node.newExpression);
-  this.array(memberBinding, node.bindings.map(bind));
+  this.array(memberBinding, node.bindings.map(binding => () => emitBinding(this, binding)));
   return this.factory('MemberInit', [newExpression, this.arrayOf(memberBinding)], this.result('MemberInitExpression'));
 }
 
 function listInit(node) {
-  const { elementInit, methodInfo, newExpression } = this.types,
-    element = initializer => () => {
-      this.methodOf(initializer.addMethod);
-      this.expressions(initializer.arguments);
-      this.factory('ElementInit', [methodInfo, this.arrayOf(this.expression)], elementInit);
-    };
+  const { elementInit, newExpression } = this.types;
   this.emit(node.newExpression);
-  this.array(elementInit, node.initializers.map(element));
+  this.array(elementInit, node.initializers.map(initializer => () => emitElementInit(this, initializer)));
   return this.factory('ListInit', [newExpression, this.arrayOf(elementInit)], this.result('ListInitExpression'));
+}
+
+function arrayIndex(node) {
+  this.emit(node.operands[0]);
+  if (node.operands.length === 2) {
+    this.emit(node.operands[1]);
+    return this.factory('ArrayIndex', [this.expression, this.expression], this.result('BinaryExpression'));
+  }
+  this.expressions(node.operands.slice(1));
+  return this.factory('ArrayIndex', [this.expression, this.arrayOf(this.expression)], this.result('MethodCallExpression'));
 }
 
 function newArray(node) {
@@ -51,6 +78,7 @@ export const expressionTreeCreationFactories = Object.freeze({
   New: newExpression,
   MemberInit: memberInit,
   ListInit: listInit,
+  ArrayIndex: arrayIndex,
   NewArrayInit: newArray,
   NewArrayBounds: newArray,
 });

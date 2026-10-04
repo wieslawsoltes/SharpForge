@@ -15,6 +15,7 @@ import { needsTypeSpec } from '../../codegen/generics.js';
 import { frameworkType, methodTypeParameter } from './framework-types.js';
 import { needsBox, primitiveOf, representationOf } from './type-facts.js';
 import { expressionTreeCreationFactories } from './expression-tree-creation-factories.js';
+import { anonymousMemberToken } from './anonymous-type-members.js';
 
 const EXPRESSIONS = 'System.Linq.Expressions';
 const REFLECTION = 'System.Reflection';
@@ -78,11 +79,19 @@ export class ExpressionTreeFactories {
   }
   /** Pushes the MethodInfo of a method (the ConstructorInfo of a constructor). */
   methodOf(method) {
+    if (method.containingType?.isAnonymousType) return this.anonymousMethodOf(method.containingType, method.name);
     const { methodBase, methodHandle, methodInfo, constructorInfo } = this.types,
       isConstructor = method.methodKind === MethodKind.Constructor;
     this.il.emit('ldtoken', this.tokens.method(method));
     this.fromHandle(methodBase, 'GetMethodFromHandle', methodHandle, methodBase, method.containingType);
     return this.il.emit('castclass', this.tokens.type(isConstructor ? constructorInfo : methodInfo));
+  }
+  /** Anonymous members use their planned generic template, with the constructed type handle. */
+  anonymousMethodOf(type, name) {
+    const { methodBase, methodHandle, methodInfo, constructorInfo } = this.types;
+    this.il.emit('ldtoken', anonymousMemberToken(this.tokens, type, name));
+    this.fromHandle(methodBase, 'GetMethodFromHandle', methodHandle, methodBase, type.metadataForm());
+    return this.il.emit('castclass', this.tokens.type(name === '.ctor' ? constructorInfo : methodInfo));
   }
   fieldOf(token, declaringType) {
     this.il.emit('ldtoken', token);
