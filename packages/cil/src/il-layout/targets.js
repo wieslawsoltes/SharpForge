@@ -2,7 +2,8 @@ import { CilError } from '../binary.js';
 
 /** Resolve both recorded symbolic fixups and existing numeric branch targets before layout. */
 export function resolveLayoutTargets(instructions, labels, fixups) {
-  const starts = new Map(instructions.map((instruction, index) => [instruction.offset, index]));
+  const starts = new Map();
+  for (let index = 0; index < instructions.length; index++) starts.set(instructions[index].offset, index);
   const pending = new Map();
   for (const fixup of fixups) {
     if (!labels.has(fixup.label)) throw new CilError(`Undefined IL label '${fixup.label}'`);
