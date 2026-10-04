@@ -31,8 +31,10 @@ export class CilWriter extends Writer {
   }
 
   op(name, operand) {
+    if (typeof name !== 'string' || !Object.hasOwn(CilOpcodes, name)) {
+      throw new CilError(typeof name === 'string' ? `Unsupported CIL opcode ${name}` : 'Invalid CIL opcode name');
+    }
     const opcode = CilOpcodes[name];
-    if (!opcode) throw new CilError(`Unsupported CIL opcode ${name}`);
     if (opcode.value > 255) this.u8(0xfe).u8(opcode.value & 255);
     else this.u8(opcode.value);
     if (opcode.operand.startsWith('br') && typeof operand === 'string') {
