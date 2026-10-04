@@ -40,6 +40,11 @@ models that it created if its own batch fails; a failed DocumentService adoption
 leaves the caller's prepared models intact. User exports may explicitly read
 `text`; project discovery, view creation and disk baselines retain snapshots.
 
+When a current prepared root has changed from `originalSource`, URI rebasing
+also rebases the original root separately. The old `byteLength` is never
+labelled as the encoded size of the edited source. An absent original byte
+baseline remains unknown; unchanged rebases keep their zero-read identity proof.
+
 The persistent tree avoids repeated whole-document concatenation: decoding and
 leaf indexing are linear in input length, and each append updates a logarithmic
 tree path. This is an implementation bound, not a measured main-thread latency

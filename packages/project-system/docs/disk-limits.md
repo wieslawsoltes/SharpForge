@@ -43,7 +43,7 @@ No native permission-dialog or physical filesystem guarantee is inferred from te
 ## Optional prepared source contribution
 
 `readBrowserFiles` and `readDirectory` accept `readSource(file, {path, signal,
-limits})`. The callback is used only for `.cs` source files, after byte preflight.
+limits, encoding})`. The callback is used only for `.cs` source files, after byte preflight.
 Other assets use the existing archive decoder. Omitting the callback preserves
 the default eager reader, including binary `.cs` assets. The source reader and
 AbortSignal are kept separate from the immutable numeric limit object.
@@ -70,6 +70,18 @@ counts encoded bytes and writes bounded chunks, including a BOM exactly once.
 Surrogate pairs remain intact across UTF-8 chunk boundaries. Conflict checks
 before and after permissions read the disk through the same bounded decoder and
 compare snapshot windows. Legacy `{path, text}` saves remain supported.
+Known-baseline reads carry the record's `encoding` into the contribution, and
+Studio forwards it to the strict source decoder. A BOM-free UTF-16LE/BE source
+therefore retains its encoding across Save As and later Save operations. A
+conflicting BOM or unreadable changed source still rejects the save.
+
+`disk.save(changes, {signal})` checks cancellation before a queued operation starts, during encoded
+preflight/baseline reads, after permission prompts, after stream acquisition
+and between writes. Before `close()` starts, cancellation aborts the acquired
+stream and leaves that file's baseline/version unchanged. Once close has
+started, its completion determines that file's committed result. Later files
+are not started after cancellation; an error retains exact `written` paths for
+those already committed. Rebased workspaces share the same serialized queue.
 
 ## URI rebasing and ownership
 
@@ -89,6 +101,10 @@ disk revisions. It retains metadata files excluded from the document list, and
 shares the save queue with the original workspace. Rejected adoption leaves the
 original workspace usable. The workbench owns disposal after adoption; a
 `DOCUMENT_COMMITTED` error still means its models have transferred ownership.
+If a prepared record's current source differs from its original source,
+rebasing preserves a separately rebased `originalSource`. Its recorded
+`byteLength` still belongs to that old root. Missing byte-baseline identity stays
+unknown, allowing the workbench's current-source budget to remain conservative.
 
 ## Shared streaming output
 
@@ -102,6 +118,15 @@ reuse this exact encoder after obtaining its handle, and an explicit download
 can consume the same iterator into Blob parts.
 `isSourceSnapshot(value)` exposes the same frozen snapshot capability check to
 application save handlers; mutable models and strings are not snapshot objects.
+
+The strict source round trip rejects unpaired UTF-16 surrogates, NUL characters,
+and a leading U+FEFF without a separately requested BOM. These cases would be
+replaced, classified as binary, or consumed as a BOM by a later source read.
+`SFPROJECT_SOURCE_ENCODING_LOSS` includes `path`, UTF-16 `start`, `length` and
+`severity:'error'`. Disk preflight rejects these before opening a stream. Direct
+stream/download consumers receive the same diagnostic; an acquired stream must
+be aborted and never closed. Valid surrogate pairs and literal U+FEFF following
+an explicit BOM remain lossless.
 
 Focused regression command:
 
