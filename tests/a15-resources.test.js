@@ -1,6 +1,9 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {ResourceDictionary, ResourceScope, DeferredResource, staticResource, themeResource} from '@sharpforge/winui-properties';
+import {readFileSync} from 'node:fs';
+import {fileURLToPath} from 'node:url';
+import {ResourceDictionary, ResourceScope, DeferredResource, staticResource, themeResource,
+  FluentResources, createAccentRamp, connectThemeHost} from '@sharpforge/winui-properties';
 
 test('resources: nearest scope/local values and reverse merged precedence are deterministic', () => {
   const first = new ResourceDictionary([['value', 1]]);
@@ -94,3 +97,61 @@ test('resources: deferred values instantiate once, detect recursion, and dispose
   assert.equal(disposed, 1);
 });
 
+test('Fluent: every pinned upstream color/brush key exists in Light Dark and HighContrast', () => {
+  const inventoryPath = fileURLToPath(new URL('../packages/winui-properties/src/resources/fluent-inventory.json', import.meta.url));
+  const inventory = JSON.parse(readFileSync(inventoryPath, 'utf8'));
+  const resources = new FluentResources();
+  assert.equal(inventory.commit, '7b68d3e0b771a57d80098799406234efee479517');
+  for (const [theme, expected] of Object.entries(inventory.themes)) {
+    const dictionary = resources.themes.get(theme);
+    const missing = expected.keys.filter(key => !dictionary.containsKey(key));
+    assert.deepEqual(missing, [], `${theme} missing upstream keys`);
+    assert.equal(expected.count, 184);
+  }
+  assert.equal(resources.get('TextFillColorPrimary', {theme: 'Light'}).toLowerCase(), '#e4000000');
+  assert.equal(resources.get('TextFillColorPrimary', {theme: 'Dark'}).toLowerCase(), '#ffffff');
+  assert.equal(resources.get('SystemColorWindowColor', {theme: 'HighContrast'}), 'Canvas');
+  assert.equal(resources.get('ControlFillColorDefaultBrush', {theme: 'HighContrast'}).color, 'ButtonFace');
+  assert.equal(resources.get('ControlElevationBorderBrush', {theme: 'Light'}).stops.length, 2);
+  resources.dispose();
+});
+
+test('Fluent: accent changes update theme consumers and the configurable ramp is deterministic', () => {
+  const resources = new FluentResources();
+  const scope = new ResourceScope({resources});
+  const values = [];
+  scope.observe(themeResource('AccentFillColorDefaultBrush'), {changed: brush => values.push(brush.color)});
+  resources.setAccent('#804020');
+  assert.equal(values.length, 2);
+  assert.notEqual(values[0], values[1]);
+  assert.equal(createAccentRamp('#804020').SystemAccentColor, '#804020');
+  assert.throws(() => createAccentRamp('#80ffffff'), {code: 'SFRES016'});
+  scope.dispose();
+  resources.dispose();
+});
+
+test('Fluent: host theme and forced colors notifications release browser listeners on disconnect', () => {
+  const queries = new Map();
+  const matchMedia = query => {
+    const listeners = new Set();
+    const value = {matches: false, addEventListener: (_, callback) => listeners.add(callback),
+      removeEventListener: (_, callback) => listeners.delete(callback),
+      set: active => { value.matches = active; for (const listener of listeners) listener(); }, listeners};
+    queries.set(query, value);
+    return value;
+  };
+  const attributes = new Map();
+  const css = new Map();
+  const scope = new ResourceScope({resources: new FluentResources()});
+  const disconnect = connectThemeHost(scope, {matchMedia, element: {
+    setAttribute: (name, value) => attributes.set(name, value), style: {setProperty: (name, value) => css.set(name, value)}
+  }});
+  queries.get('(prefers-color-scheme: dark)').set(true);
+  assert.equal(attributes.get('data-theme'), 'dark');
+  queries.get('(forced-colors: active)').set(true);
+  assert.equal(scope.actualTheme, 'HighContrast');
+  assert.equal(css.get('--sf-app-bg'), 'Canvas');
+  disconnect();
+  for (const query of queries.values()) assert.equal(query.listeners.size, 0);
+  scope.dispose();
+});
