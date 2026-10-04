@@ -1,0 +1,116 @@
+{
+  "schemaVersion": 1,
+  "benchmark": "project16-studio-correction-paths",
+  "baseline": {
+    "revision": "c13aa0fd9d27df28b3708bb83d914a04c20a5c7c",
+    "tree": "29023ed8b962b6d91671bdb0c0359d905ef2659e",
+    "trackedClean": true,
+    "untrackedPaths": [
+      "docs/project16-keymap-timer-receiver.md",
+      "tests/a20-keymap-host-timers.test.js"
+    ]
+  },
+  "candidate": {
+    "revision": "e89257052957f4c736512e9c2b46162bb6f23eae",
+    "tree": "9e33eca9a91361201b2e14fea3cded5cbd584d88",
+    "trackedClean": true,
+    "untrackedPaths": [
+      "packages/clr/src/type-system/metadata-method-definitions.js",
+      "packages/syntax/test/matrix/10/LineSpanDirective/positive.cs",
+      "packages/syntax/test/matrix/10/LineSpanDirective/positive.cs.json",
+      "packages/syntax/test/matrix/10/LineSpanDirective/rejected.cs",
+      "packages/syntax/test/matrix/10/LineSpanDirective/rejected.cs.roslyn.json",
+      "packages/syntax/test/matrix/14/IgnoredDirectives/positive.cs",
+      "packages/syntax/test/matrix/14/IgnoredDirectives/positive.cs.json",
+      "packages/syntax/test/matrix/14/IgnoredDirectives/rejected.cs",
+      "packages/syntax/test/matrix/14/IgnoredDirectives/rejected.cs.roslyn.json"
+    ]
+  },
+  "harnessSha256": "cfd2b13e84cd5fcadccfb242b762875634e19c224a2867413c802565863ca27d",
+  "environment": {
+    "node": "v24.19.0",
+    "v8": "13.6.233.17-node.51",
+    "platform": "linux",
+    "architecture": "x64",
+    "cpu": "AMD EPYC 9V74 80-Core Processor",
+    "logicalCpus": 9,
+    "execArgv": [],
+    "nodeOptions": "--max-old-space-size=2048"
+  },
+  "comparable": true,
+  "reviewRequired": true,
+  "cases": [
+    {
+      "id": "studio.snapshot.1-source",
+      "metrics": {
+        "medianNs": {
+          "baseline": 3989.9609375,
+          "candidate": 4927.5078125,
+          "changePercent": 23.49764545783852,
+          "reviewRequired": true
+        },
+        "p95Ns": {
+          "baseline": 17462.6640625,
+          "candidate": 10220.83984375,
+          "changePercent": -41.47032888470536,
+          "reviewRequired": false
+        }
+      },
+      "reviewRequired": true
+    },
+    {
+      "id": "studio.snapshot.100-source",
+      "metrics": {
+        "medianNs": {
+          "baseline": 184922.921875,
+          "candidate": 225931.46875,
+          "changePercent": 22.17602147921934,
+          "reviewRequired": true
+        },
+        "p95Ns": {
+          "baseline": 345697.390625,
+          "candidate": 438074.09375,
+          "changePercent": 26.721839860575315,
+          "reviewRequired": true
+        }
+      },
+      "reviewRequired": true
+    },
+    {
+      "id": "runtime.activity.start-schedule-stop",
+      "metrics": {
+        "medianNs": {
+          "baseline": 3424.3828125,
+          "candidate": 3507.6328125,
+          "changePercent": 2.431095019403588,
+          "reviewRequired": false
+        },
+        "p95Ns": {
+          "baseline": 7372.484375,
+          "candidate": 7123.125,
+          "changePercent": -3.382297775300473,
+          "reviewRequired": false
+        }
+      },
+      "reviewRequired": false
+    },
+    {
+      "id": "editor.chord-prefix-cancel",
+      "metrics": {
+        "medianNs": {
+          "baseline": 1777.3671875,
+          "candidate": 2450.5703125,
+          "changePercent": 37.87642360760078,
+          "reviewRequired": true
+        },
+        "p95Ns": {
+          "baseline": 2888.10546875,
+          "candidate": 3191.6875,
+          "changePercent": 10.511459312508876,
+          "reviewRequired": true
+        }
+      },
+      "reviewRequired": true
+    }
+  ]
+}
