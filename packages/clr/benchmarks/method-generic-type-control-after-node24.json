@@ -1,0 +1,29 @@
+{
+  "node": "v24.21.0",
+  "cpu": "Apple M3 Pro",
+  "platform": "darwin",
+  "arch": "arm64",
+  "definitions": 6,
+  "allocationCount": "not measured",
+  "previousEquivalentImplementation": true,
+  "results": [
+    {
+      "name": "cold all fixture generic parameters",
+      "unit": "microseconds/operation",
+      "median": 32.29199999999821,
+      "p95": 73.29099999999755,
+      "p99": 450.7080000000059
+    },
+    {
+      "name": "cached generic parameter token lookup",
+      "unit": "microseconds/operation",
+      "median": 0.03148750000000007,
+      "p95": 0.03982499999999902,
+      "p99": 0.11203329999999881
+    }
+  ],
+  "comparisonStage": "after",
+  "sourceCommit": "63bb3aa1",
+  "fixtureImageSHA256": "2734dca29033ea687fac79be98784b37bbacb35ad2305b591d82e29801b0bcc2",
+  "note": "Same expanded native image in both runs. Before uses benchmark-generic-parameters.mjs with only the package import redirected to parent f8552c35; shared host, no speedup claim."
+}

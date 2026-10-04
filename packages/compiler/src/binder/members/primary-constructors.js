@@ -12,6 +12,7 @@
  *   CS1604  assignment in a readonly member of a struct     CS9114  assignment in a readonly struct
  *   CS0229  two parameters of the same name used
  */
+import {DiagnosticId} from '../../diagnostics/codes.js';
 import { SymbolKind, RefKind, TypeKind } from '../../symbols/types.js';
 import { MethodKind } from '../../symbols/members.js';
 import { lookupMembers } from '../inheritance.js';
@@ -46,15 +47,15 @@ export const PrimaryConstructorBinding = Base =>
       // A rejected use is still a use: it does not leave the parameter unread.
       for (const used of parameters) used.usedByMember = true;
       if (parameters.length > 1) {
-        this.report(syntax, 'CS0229', parameters.slice(0, 2).map(p => p.toDisplayString()));
+        this.report(syntax, DiagnosticId.CS0229, parameters.slice(0, 2).map(p => p.toDisplayString()));
         return this.bad(syntax);
       }
       if (!innermost || this.c.isStatic) {
-        this.report(syntax, 'CS9105', [parameter.toDisplayString()]);
+        this.report(syntax, DiagnosticId.CS9105, [parameter.toDisplayString()]);
         return this.bad(syntax);
       }
       if (parameter.refKind !== RefKind.None) {
-        this.report(syntax, 'CS9109', [parameter.toDisplayString()]);
+        this.report(syntax, DiagnosticId.CS9109, [parameter.toDisplayString()]);
         return this.bad(syntax);
       }
       parameter.capturedByType = true;
@@ -64,8 +65,8 @@ export const PrimaryConstructorBinding = Base =>
       if (target.kind === 'Parameter' && target.isPrimaryCapture) {
         const type = this.c.containingType,
           name = target.parameter.toDisplayString();
-        if (type?.typeKind === TypeKind.Struct && type.isReadOnly) this.report(target.syntax, 'CS9114', []);
-        else if (type?.typeKind === TypeKind.Struct && this.c.method?.isReadOnly) this.report(target.syntax, 'CS1604', [name]);
+        if (type?.typeKind === TypeKind.Struct && type.isReadOnly) this.report(target.syntax, DiagnosticId.CS9114, []);
+        else if (type?.typeKind === TypeKind.Struct && this.c.method?.isReadOnly) this.report(target.syntax, DiagnosticId.CS1604, [name]);
       }
       return super.markWrite(target, value);
     }
@@ -78,7 +79,7 @@ export function checkPrimaryConstructorChaining(type) {
   for (const constructor of type.getMembers('.ctor')) {
     if (constructor.methodKind !== MethodKind.Constructor || constructor.isPrimaryConstructor || constructor.isImplicitlyDeclared) continue;
     if (constructor.isCopyConstructor || constructor.initializerSyntax?.kind === 'ThisConstructorInitializer') continue;
-    rows.push({ member: constructor, code: 'CS8862', args: [], at: constructor.initializerSyntax?.thisOrBaseKeyword ?? null });
+    rows.push({ member: constructor, code: DiagnosticId.CS8862, args: [], at: constructor.initializerSyntax?.thisOrBaseKeyword ?? null });
   }
   return rows;
 }
@@ -100,12 +101,12 @@ export function primaryParameterWarnings(type, initializers) {
   const rows = [];
   for (const parameter of constructor.parameters) {
     if (!parameter.usedByMember && !parameter.readByInitializer && parameter.locations?.[0])
-      rows.push({ at: parameter.locations[0], code: 'CS9113', args: [parameter.name] });
+      rows.push({ at: parameter.locations[0], code: DiagnosticId.CS9113, args: [parameter.name] });
   }
   for (const bound of initializers) {
     const value = withoutConversions(bound.expression);
     if (value?.kind === 'Parameter' && isPrimaryParameter(value.parameter) && value.parameter.capturedByType)
-      rows.push({ at: value.syntax, code: 'CS9124', args: [value.parameter.name] });
+      rows.push({ at: value.syntax, code: DiagnosticId.CS9124, args: [value.parameter.name] });
   }
   return rows;
 }

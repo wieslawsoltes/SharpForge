@@ -13,6 +13,7 @@
  * The checks run when the lambda is bound against its final target, so a lambda converted to a delegate is not
  * touched. Nested lambdas are part of the tree and are checked with it.
  */
+import {DiagnosticId} from '../diagnostics/codes.js';
 import { walk } from '../bound/semantic-walker.js';
 import { MethodKind } from '../symbols/members.js';
 import { dynamicOperation } from '../bound/dynamic-operations.js';
@@ -20,12 +21,12 @@ import { expressionTreeDelegate } from '../symbols/expression-tree-types.js';
 
 const assignmentKinds = new Set(['Assignment', 'CompoundAssignment', 'Increment', 'CoalesceAssignment', 'RefAssignment', 'EventAssignment']);
 const codeByKind = Object.freeze({
-  ConditionalAccess: 'CS8072',
-  IsPattern: 'CS8122',
-  SwitchExpression: 'CS8514',
-  Throw: 'CS8188',
-  Tuple: 'CS8143',
-  Base: 'CS0831',
+  ConditionalAccess: DiagnosticId.CS8072,
+  IsPattern: DiagnosticId.CS8122,
+  SwitchExpression: DiagnosticId.CS8514,
+  Throw: DiagnosticId.CS8188,
+  Tuple: DiagnosticId.CS8143,
+  Base: DiagnosticId.CS0831,
 });
 const isAscending = positions => positions.every((position, index) => index === 0 || position >= positions[index - 1]);
 
@@ -38,29 +39,29 @@ const hasNamedArgument = node => (node.syntax?.argumentList?.arguments ?? []).so
  */
 function argumentProblem(node, languageVersion) {
   if (languageVersion >= 14 || !invocationKinds.has(node.kind)) return null;
-  if (node.mapping?.defaults?.length) return 'CS0854';
-  return hasNamedArgument(node) ? 'CS0853' : null;
+  if (node.mapping?.defaults?.length) return DiagnosticId.CS0854;
+  return hasNamedArgument(node) ? DiagnosticId.CS0853 : null;
 }
 
 function nodeProblem(node, languageVersion) {
-  if (dynamicOperation(node)) return 'CS1963';
-  if (assignmentKinds.has(node.kind)) return 'CS0832';
+  if (dynamicOperation(node)) return DiagnosticId.CS1963;
+  if (assignmentKinds.has(node.kind)) return DiagnosticId.CS0832;
   if (codeByKind[node.kind]) return codeByKind[node.kind];
   if (node.kind === 'Call') {
-    if (node.method?.methodKind === MethodKind.LocalFunction) return 'CS8110';
+    if (node.method?.methodKind === MethodKind.LocalFunction) return DiagnosticId.CS8110;
     // A call that is removed: a partial method without an implementing part, or an omitted [Conditional] method.
-    if ((node.method?.originalDefinition ?? node.method)?.isUnimplementedPartial || node.isOmitted) return 'CS0765';
+    if ((node.method?.originalDefinition ?? node.method)?.isUnimplementedPartial || node.isOmitted) return DiagnosticId.CS0765;
     const before14 = argumentProblem(node, languageVersion);
     if (before14) return before14;
-    if (node.mapping?.parameterOf && !isAscending(node.mapping.parameterOf)) return 'CS9307';
+    if (node.mapping?.parameterOf && !isAscending(node.mapping.parameterOf)) return DiagnosticId.CS9307;
   }
   return argumentProblem(node, languageVersion);
 }
 
 /** The lambda's own problems: its body form and modifiers. */
 function lambdaProblem(lambda) {
-  if (lambda.isAsync || lambda.syntax?.asyncKeyword) return 'CS1989';
-  return lambda.syntax?.block ? 'CS0834' : null;
+  if (lambda.isAsync || lambda.syntax?.asyncKeyword) return DiagnosticId.CS1989;
+  return lambda.syntax?.block ? DiagnosticId.CS0834 : null;
 }
 
 /**
@@ -85,7 +86,7 @@ export function expressionTreeProblems(lambda, { languageVersion = 14 } = {}) {
       if (code) rows.push({ code, syntax: node.syntax });
       for (const entry of node.initializers ?? [])
         if (entry.target?.isInitializerTarget && entry.target.kind !== 'FieldAccess' && entry.target.kind !== 'PropertyAccess')
-          rows.push({ code: 'CS8074', syntax: entry.target.syntax });
+          rows.push({ code: DiagnosticId.CS8074, syntax: entry.target.syntax });
       return !code;
     });
   };

@@ -2,7 +2,8 @@
  * Unused-symbol warnings: CS0168 and CS0219 (locals), CS8321 (local functions), CS0164 (labels),
  * CS0169, CS0414 and CS0649 (fields).
  */
-import { SymbolKind, TypeKind, Accessibility } from '../symbols/types.js';
+import {DiagnosticId} from '../diagnostics/codes.js';
+import { SymbolKind, TypeKind, Accessibility, RefKind } from '../symbols/types.js';
 import { effectiveAccessibility } from '../binder/inheritance.js';
 import { accessRank, defaultText } from './analysis-helpers.js';
 
@@ -31,13 +32,13 @@ export const UnusedSymbolWarnings = Base =>
           // A local whose type is an error has no value to speak of: Roslyn reports only the type error.
           const hasValue = !local.type?.isErrorType?.();
           if (earlyUse) {
-            if (hasValue) this.report(binder.c.uri, at, 'CS0219', [local.name]);
-          } else if (!local.writes || local.isCatch) this.report(binder.c.uri, at, 'CS0168', [local.name]);
-          else if (!local.nonConstantWrite && !local.isOutVar && hasValue) this.report(binder.c.uri, at, 'CS0219', [local.name]);
+            if (hasValue) this.report(binder.c.uri, at, DiagnosticId.CS0219, [local.name]);
+          } else if (!local.writes || local.isCatch) this.report(binder.c.uri, at, DiagnosticId.CS0168, [local.name]);
+          else if (!local.nonConstantWrite && !local.isOutVar && hasValue) this.report(binder.c.uri, at, DiagnosticId.CS0219, [local.name]);
         }
         for (const f of binder.allLocalFunctions ?? [])
-          if (!f.method.uses) this.report(f.uri, f.method.locations[0], 'CS8321', [f.method.name]);
-        for (const l of binder.allLabels ?? []) if (!l.label.uses) this.report(l.uri, l.node, 'CS0164');
+          if (!f.method.uses) this.report(f.uri, f.method.locations[0], DiagnosticId.CS8321, [f.method.name]);
+        for (const l of binder.allLabels ?? []) if (!l.label.uses) this.report(l.uri, l.node, DiagnosticId.CS0164);
       }
       // Roslyn reports unused-field warnings only for a compilation without errors.
       if (this.incomplete) return;
@@ -50,11 +51,14 @@ export const UnusedSymbolWarnings = Base =>
             isPrivate = f.declaredAccessibility === Accessibility.Private,
             isInternal = !isPrivate && rank <= accessRank(Accessibility.Internal);
           if (!isPrivate && !isInternal) continue;
+          // A ref field has no default value to warn about: what it refers to is decided where the struct is created.
+          const isRefField = (!!f.refKind && f.refKind !== RefKind.None) || f.typeSyntax?.kind === 'RefType',
+            neverAssigned = !isRefField && !f.isRequired;
           if (!f.reads && !f.writes) {
-            if (isPrivate) this.reportAt(f, 'CS0169', [f.toDisplayString()]);
-            else if (!f.isRequired) this.reportAt(f, 'CS0649', [f.toDisplayString(), defaultText(f.type)]);
-          } else if (!f.writes && !f.isRequired) this.reportAt(f, 'CS0649', [f.toDisplayString(), defaultText(f.type)]);
-          else if (!f.reads && isPrivate && !f.nonConstantWrite) this.reportAt(f, 'CS0414', [f.toDisplayString()]);
+            if (isPrivate) this.reportAt(f, DiagnosticId.CS0169, [f.toDisplayString()]);
+            else if (neverAssigned) this.reportAt(f, DiagnosticId.CS0649, [f.toDisplayString(), defaultText(f.type)]);
+          } else if (!f.writes && neverAssigned) this.reportAt(f, DiagnosticId.CS0649, [f.toDisplayString(), defaultText(f.type)]);
+          else if (!f.reads && isPrivate && !f.nonConstantWrite) this.reportAt(f, DiagnosticId.CS0414, [f.toDisplayString()]);
         }
       }
     }
