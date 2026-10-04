@@ -110,3 +110,17 @@ test('A02-T30 a caller line number converts to the type of its parameter', () =>
   assert.equal(main[main.indexOf('call C::Wide') - 1], 'conv.i8');
   assert.equal(main[main.indexOf('call C::Boxed') - 1], 'box System.Int32');
 });
+
+test('A02-T30 a destructor is Finalize: its body in a try whose finally calls the destructor of the base class', () => {
+  const { lines, type } = emit(`class A { ~A() { System.Console.WriteLine("a"); } }
+    class B : A { ~B() { System.Console.WriteLine("b"); } }
+    class P { static void Main() { new B(); } }`);
+  assert.deepEqual(lines('B', 'Finalize'), ['ldstr', 'call System.Console::WriteLine', 'leave.s', 'ldarg.0', 'call A::Finalize', 'endfinally', 'ret']);
+  assert.ok(lines('A', 'Finalize').includes('call System.Object::Finalize'));
+  const VIRTUAL = 0x40,
+    NEW_SLOT = 0x100,
+    FAMILY = 0x4,
+    flags = type('B').methods.find(method => method.name === 'Finalize').flags;
+  assert.equal(flags & (VIRTUAL | NEW_SLOT), VIRTUAL, 'an override of Object.Finalize, not a new slot');
+  assert.equal(flags & 0x7, FAMILY);
+});
