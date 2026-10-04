@@ -151,6 +151,33 @@ for (const engine of ['source', 'cil']) {
     } finally { heap.maxBytes = budget; builder.stop(); }
   });
 
+  test(`StringBuilder indexer ${engine}: reentrant Append can grow backing storage without losing the replacement`, () => {
+    const builder = segmentedBuilder(engine);
+    const {platform, vm, reference, call} = builder;
+    const storage = platform.get(reference, '$data');
+    const version = platform.get(reference, '$version');
+    let armed = true;
+    try {
+      vm.onWrite = event => {
+        if (armed && event.kind === 'array') {
+          armed = false;
+          call('Append', ['char'], [33]);
+          platform.heap.collect();
+          assert.equal(platform.native(event.oldValue), 'cd\udc00');
+          assert.equal(platform.native(event.value), 'cZ\udc00');
+          assert.equal(platform.heap.get(storage).kind, 'array');
+        }
+      };
+      call('set_Chars', ['int', 'char'], [5, 90]);
+      vm.onWrite = null;
+      assert.equal(armed, false);
+      assert.notDeepEqual(platform.get(reference, '$data'), storage);
+      assert.equal(platform.get(reference, '$version'), version + 2);
+      assert.equal(platform.native(call('ToString')), 'ab\0\ud800cZ\udc00!');
+      assert.equal(platform.heap.pins.length, 0);
+    } finally { vm.onWrite = null; builder.stop(); }
+  });
+
   test(`StringBuilder indexer ${engine}: throwing observers retain the written character and release all temporary roots`, () => {
     const builder = segmentedBuilder(engine);
     const {platform, vm, call} = builder;

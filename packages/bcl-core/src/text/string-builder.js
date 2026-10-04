@@ -1,13 +1,14 @@
 import {MAX, array, bclScalar, bounded, fail, integer, makeArray, string, text} from '../host.js';
 import {appendCompositeFormat} from '../formatting/composite-format.js';
 import {appendBuilderCharacter} from './string-builder-append.js';
+import {accessBuilderCharacter} from './string-builder-indexer.js';
 
 const owner = 'System.Text.StringBuilder';
 const maximumCapacity = 2147483647;
 
 /** Register StringBuilder in its released ABI order with the .NET default MaxCapacity. */
 export function registerStringBuilder({define, member, ctor, prop}) {
-  define(owner, {kind: 'bcl', family: 'builder'});
+  define(owner, {kind: 'bcl', family: 'builder', defaultMember: 'Chars'});
   for (const parameters of [[], ['int'], ['string'], ['string', 'int']]) ctor(owner, parameters);
   prop(owner, 'Length', 'int', 0);
   prop(owner, 'Capacity', 'int', 16);
@@ -179,6 +180,8 @@ function appendFormat(platform, descriptor, reference, values) {
 
 function invokeMember(platform, descriptor, reference, values, scalars) {
   switch (descriptor.name) {
+    case 'get_Chars':
+    case 'set_Chars': return accessBuilderCharacter(platform, reference, scalars);
     case 'get_Length': return platform.get(reference, '$length', 0);
     case 'get_Capacity': return platform.get(reference, '$capacity', 16);
     case 'get_MaxCapacity': return maximumCapacity;
