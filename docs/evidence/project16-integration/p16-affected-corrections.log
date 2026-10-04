@@ -1,0 +1,147 @@
+✔ released runtime builtin identity and sparse registry copies remain stable (8.269602ms)
+✔ copying sparse extension registries preserves holes instead of allocating placeholder entries (2.482154ms)
+✔ environment registration uses the existing A07 reserved block without changing released slots (0.434315ms)
+✔ PE metadata exposes actual generic List members, names, parameter signatures, properties and namespaces (14.840992ms)
+✔ metadata source carries the exact PE identity, source version and matching overload selection (4.662261ms)
+✔ metadata versions never collapse same-name assemblies or infer an ambiguous owner (1.668126ms)
+✔ framework member caret resolves Console.WriteLine rather than treating it as a type name (14.622203ms)
+✔ core intrinsic metadata uses accepted arities, canonical owners, instance parameters and property shape (9.949316ms)
+✔ bound assembly simple identity selects actual PE metadata and rejects multiple matching versions (11.223698ms)
+✔ reference sources use authorized HintPath bytes, transitive project visibility and no source text getters (20.346455ms)
+✔ unavailable, ambiguous and invalid PE references return explicit Object Browser diagnostic rows (8.526709ms)
+✔ metadata inspection rejects byte and declaration limits before returning a partial model (0.998286ms)
+✔ catalog cancellation terminates its dedicated metadata worker and does not cache late replies (7.507092ms)
+✔ Code Definition reads only a bounded caret fragment and prioritizes structured bound owners (3.81919ms)
+✔ Code Definition source definitions bypass metadata and retain exact selection (0.16569ms)
+✔ workbench inventory matches every registered shell window and command (22.57088ms)
+✔ performance budget comparison fails absolute and twenty-percent p95 regressions (1.821428ms)
+✔ performance comparison rejects absent, duplicate and unreported metric obligations (0.837543ms)
+✔ performance comparison rejects invalid or fabricated statistics and mismatched captures (1.007149ms)
+✔ capture-only performance assessment never invents a relative regression verdict (0.376878ms)
+✔ startup toolbar selection changes the explicit compiler project while background work retains it (22.006349ms)
+✔ Studio routes language requests by document membership without selecting background projects (1.887456ms)
+✔ workspace replacement clears former project memberships, sessions and launch profiles (4.235147ms)
+✔ Studio language providers preserve originating versions and resolve the requested target document (2.114428ms)
+✔ workspace record metadata does not read source text and explicit reads retain the captured snapshot (2.240529ms)
+✔ partial disk saves acknowledge only written snapshots and keep edits made during I/O dirty (3.416773ms)
+✔ start new instance keeps existing applications and launches the selected profile (3.570595ms)
+✔ silent Studio builds leave large documents available without sending them to the compiler (42.008275ms)
+✔ Studio source policy admits 501 files and a 200 MiB buffer and rejects bounded overflow (0.75562ms)
+✔ launch fields preserve literal arguments and equals signs and reject invalid or duplicate environment entries (0.514586ms)
+✔ breakpoint remapping applies several ordered source changes against their captured versions (1.889299ms)
+✔ an Explorer host commit retains unchanged models and their saved baselines, including unsaved siblings (44.928846ms)
+✔ dirty Explorer rename and undo preserve source roots, baseline history, active tabs and breakpoints (14.546138ms)
+✔ document reset subscribers observe the same project XML, membership and active source as the Explorer commit (7.128942ms)
+✖ Explorer revalidates source ownership after asynchronous preflight and preserves edits made while preparing (7.528054ms)
+✖ Explorer host rejects a superseding workspace revision before adopting its staged source models (6.489337ms)
+✔ a cancelled late JSON file read cannot acquire a newer ticket or replace the succeeding workspace (17.219669ms)
+✔ bundle import retains source overrides, encoding/BOM, folders and zero-length binary entries (4.011009ms)
+✔ sample reset observers see the matching source, workspace metadata and cleared old artifacts (2.71845ms)
+✔ stale assembly completion cannot replace a workspace opened during compiler import (2.442514ms)
+✔ successful assembly reset never pairs imported documents with previous build artifacts (1.830501ms)
+✔ metadata reads use the captured browser handle or native client and return actual bounded bytes (1.201022ms)
+✔ a browser metadata read rejects after its owning disk changes while getFile is pending (0.866597ms)
+✔ pending native metadata rejects a change to native client (0.879206ms)
+✔ pending native metadata rejects a change to backend mode (0.701268ms)
+✔ pending native metadata rejects a change to workspace epoch (0.710171ms)
+✔ metadata cancellation and advertised byte limits stop before consuming an oversized file (1.101381ms)
+✔ Studio bulk save follows the successful Save As handle and leaves the original file untouched (28.169734ms)
+✔ bulk I/O cannot reconcile a replacement document with the same URI and version (6.731582ms)
+✔ disposing StudioSave cancels an outstanding picker without retaining targets or refreshing documents (1.48563ms)
+✔ native workspaces reject browser Save As before asking for a destination (1.254302ms)
+✔ document save acquires its picker synchronously and commits the exact asynchronously normalized capture (4.0247ms)
+✔ file picker opens synchronously exactly once and passes its original ticket into real workspace adoption (19.829547ms)
+✔ a superseded picker late change cannot invoke import or acquire a newer ticket (4.063448ms)
+✔ an uncancellable late reader keeps the original ticket and cannot replace a newer workspace (5.385743ms)
+✔ cancel removes the abort listener, releases an owned ticket, and permits a new picker (3.783106ms)
+✔ cancelling a borrowed ticket leaves ownership with the caller and creates no duplicate picker ticket (1.085988ms)
+✔ disposal rejects an open picker and removes all input and ticket listeners before late events (1.654986ms)
+✔ a direct nonempty input change begins once without opening a second native picker (2.115901ms)
+✔ an empty unsolicited change cannot supersede an independent pending workspace operation (0.946538ms)
+✔ read-only ownership rejects before opening the browser picker (1.897192ms)
+✔ consumer failure reports the actual error and releases its ticket without changing documents (1.055212ms)
+✔ 08 preview mutation batches preflight before replacing workspace buffers (2.584968ms)
+✔ 08 preview rename/copy/delete undo restores data and editor metadata (1.081291ms)
+✔ 08 preview undo refuses subsequent user edits (0.439152ms)
+✔ 08 pending file command cannot cross a workspace switch (0.205911ms)
+✔ 08 planning a project change detects concurrent project source changes (0.445081ms)
+✔ 08 native planning reads unsaved project buffers, not an old disk snapshot (0.324479ms)
+✔ 08 cross-project source copy explicitly includes files with defaults disabled (3.589473ms)
+✔ 08 readonly explorer rejects file mutations before prompting (0.931906ms)
+✔ 08 overlapping explorer dialogs cannot start a second mutation (0.270838ms)
+✔ 08 solution project removal preserves comment and neighboring configuration (0.562708ms)
+✔ 08 solution removal also removes literal dependency on the removed member (0.23233ms)
+✔ 08 package reference authoring escapes metadata and does not invent relative package IDs (0.39133ms)
+✔ 08 path rewrites leave commented-out references and CDATA byte-identical (0.346132ms)
+✔ 08 adding compile membership removes default match before explicit include (0.425882ms)
+✔ 08 Visual Studio modifier-only keys do not eat an active keyboard chord (11.883572ms)
+✔ 08 editor declares Visual Studio default and six distinct profiles without a DOM (0.839786ms)
+✔ 08 native XML write undo restores original encoding and byte hash (29.263874ms)
+✔ 08 native XML syntax validation precedes every batch mutation (1.305829ms)
+✔ 08 native overlapping parent/child operations fail preflight instead of breaking undo (1.439541ms)
+✔ 08 native XML write followed by undo rejects later disk edits (8.557997ms)
+✔ 08 actual loopback explorer APIs enforce auth/origin and preserve binary bytes (62.803769ms)
+ℹ tests 83
+ℹ suites 0
+ℹ pass 81
+ℹ fail 2
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 3416.566259
+
+✖ failing tests:
+
+test at tests/a19-studio-explorer-host.test.js:157:1
+✖ Explorer revalidates source ownership after asynchronous preflight and preserves edits made while preparing (7.528054ms)
+  AssertionError [ERR_ASSERTION]: The input did not match the regular expression /Source changed while the Explorer workspace was preparing/. Input:
+  
+  'AbortError: Documents changed during workspace opening'
+  
+      at async TestContext.<anonymous> (file:///workspace/scratch/6b99131ca908/p16-qualification/tests/a19-studio-explorer-host.test.js:179:3)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: AbortError: Documents changed during workspace opening
+        at new DOMException (node:internal/per_context/domexception:76:18)
+        at abortError (file:///workspace/scratch/6b99131ca908/p16-qualification/apps/studio/workbench/events.js:36:10)
+        at Object.check (file:///workspace/scratch/6b99131ca908/p16-qualification/apps/studio/workbench/workspace-loads.js:36:21)
+        at loadStudioWorkspace (file:///workspace/scratch/6b99131ca908/p16-qualification/apps/studio/workbench/studio-workspace-loader.js:134:10)
+        at async previewOperation (file:///workspace/scratch/6b99131ca908/p16-qualification/apps/studio/explorer-operations.js:43:22)
+        at async performExplorerOperation (file:///workspace/scratch/6b99131ca908/p16-qualification/apps/studio/explorer-operations.js:66:12)
+        at async waitForActual (node:assert:646:5)
+        at async strict.rejects (node:assert:769:25)
+        at async TestContext.<anonymous> (file:///workspace/scratch/6b99131ca908/p16-qualification/tests/a19-studio-explorer-host.test.js:179:3)
+        at async Test.run (node:internal/test_runner/test:1389:7),
+    expected: /Source changed while the Explorer workspace was preparing/,
+    operator: 'rejects',
+    diff: 'simple'
+  }
+
+test at tests/a19-studio-explorer-host.test.js:197:1
+✖ Explorer host rejects a superseding workspace revision before adopting its staged source models (6.489337ms)
+  AssertionError [ERR_ASSERTION]: The input did not match the regular expression /Workspace changed while preparing the file operation; no changes were applied/. Input:
+  
+  'AbortError: Documents changed during workspace opening'
+  
+      at async TestContext.<anonymous> (file:///workspace/scratch/6b99131ca908/p16-qualification/tests/a19-studio-explorer-host.test.js:207:3)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: AbortError: Documents changed during workspace opening
+        at new DOMException (node:internal/per_context/domexception:76:18)
+        at abortError (file:///workspace/scratch/6b99131ca908/p16-qualification/apps/studio/workbench/events.js:36:10)
+        at Object.check (file:///workspace/scratch/6b99131ca908/p16-qualification/apps/studio/workbench/workspace-loads.js:36:21)
+        at loadStudioWorkspace (file:///workspace/scratch/6b99131ca908/p16-qualification/apps/studio/workbench/studio-workspace-loader.js:134:10)
+        at async previewOperation (file:///workspace/scratch/6b99131ca908/p16-qualification/apps/studio/explorer-operations.js:43:22)
+        at async performExplorerOperation (file:///workspace/scratch/6b99131ca908/p16-qualification/apps/studio/explorer-operations.js:66:12)
+        at async waitForActual (node:assert:646:5)
+        at async strict.rejects (node:assert:769:25)
+        at async TestContext.<anonymous> (file:///workspace/scratch/6b99131ca908/p16-qualification/tests/a19-studio-explorer-host.test.js:207:3)
+        at async Test.run (node:internal/test_runner/test:1389:7),
+    expected: /Workspace changed while preparing the file operation; no changes were applied/,
+    operator: 'rejects',
+    diff: 'simple'
+  }

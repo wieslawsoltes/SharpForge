@@ -1,0 +1,514 @@
+{
+  "schemaVersion": 1,
+  "format": "sharpforge-project16-qualification-history",
+  "capturedAt": "2026-10-04T00:52:32.486108+00:00",
+  "scope": "Completed integration qualification history, preserved separately from later acceptance and host follow-ups.",
+  "archiveSourceSnapshot": {
+    "commit": "01226fb1316569977315fccfe312daf61e5fab07",
+    "treeSha": "96b8cd928fa39c86ca47ddcb0f4ba2884b00864b"
+  },
+  "evidencePolicy": [
+    "Each result applies to its recorded source commit/tree and exact raw log; it does not qualify the current branch or later source changes.",
+    "Initial failures are retained. Affected retries overlap earlier runs and must not be added into a fabricated unique pass total.",
+    "A discovered Python/browser suite is not an executed browser result. Explicit skipped targets are not passed acceptance.",
+    "This archival operation copied evidence and read source objects; it executed no test, build, benchmark, static gate or browser."
+  ],
+  "runs": [
+    {
+      "id": "a19-complete",
+      "kind": "node_tests",
+      "source": {
+        "commit": "96c7bc79552d0f95f089ea80560394c4d0344d10",
+        "treeSha": "5987ccfeba9933afd789016ede601b5a813a73db"
+      },
+      "artifact": {
+        "path": "docs/evidence/project16-integration/p16-complete-node.log",
+        "sha256": "ca067669c9fb8cd3af565af02086f3dafc95074fe24a672f6317814ed974b5b6",
+        "bytes": 82122,
+        "preservation": "exact input bytes"
+      },
+      "sourceAttribution": "Integration owner supplied the revision; repository object IDs and retained log content were read directly.",
+      "result": {
+        "tests": 592,
+        "passed": 579,
+        "failed": 13,
+        "skipped": 0,
+        "cancelled": 0,
+        "durationMs": 28089.671693,
+        "status": "failed"
+      },
+      "failures": [
+        {
+          "file": "tests/a19-builtin-extensions.test.js",
+          "line": 27,
+          "name": "environment registration uses the existing A07 reserved block without changing released slots"
+        },
+        {
+          "file": "tests/a19-shell-inventory.test.js",
+          "line": 13,
+          "name": "workbench inventory matches every registered shell window and command"
+        },
+        {
+          "file": "tests/a19-studio-composition.test.js",
+          "line": 112,
+          "name": "partial disk saves acknowledge only written snapshots and keep edits made during I/O dirty"
+        },
+        {
+          "file": "tests/a19-studio-explorer-host.test.js",
+          "line": 58,
+          "name": "an Explorer host commit retains unchanged models and their saved baselines, including unsaved siblings"
+        },
+        {
+          "file": "tests/a19-studio-explorer-host.test.js",
+          "line": 90,
+          "name": "dirty Explorer rename and undo preserve source roots, baseline history, active tabs and breakpoints"
+        },
+        {
+          "file": "tests/a19-studio-explorer-host.test.js",
+          "line": 129,
+          "name": "document reset subscribers observe the same project XML, membership and active source as the Explorer commit"
+        },
+        {
+          "file": "tests/a19-studio-explorer-host.test.js",
+          "line": 157,
+          "name": "Explorer revalidates source ownership after asynchronous preflight and preserves edits made while preparing"
+        },
+        {
+          "file": "tests/a19-studio-explorer-host.test.js",
+          "line": 197,
+          "name": "Explorer host rejects a superseding workspace revision before adopting its staged source models"
+        },
+        {
+          "file": "tests/a19-studio-import-composition.test.js",
+          "line": 109,
+          "name": "sample reset observers see the matching source, workspace metadata and cleared old artifacts"
+        },
+        {
+          "file": "tests/a19-studio-save-ownership.test.js",
+          "line": 40,
+          "name": "Studio bulk save follows the successful Save As handle and leaves the original file untouched"
+        },
+        {
+          "file": "tests/a19-studio-save-ownership.test.js",
+          "line": 70,
+          "name": "bulk I/O cannot reconcile a replacement document with the same URI and version"
+        },
+        {
+          "file": "tests/a19-studio-workspace-inputs.test.js",
+          "line": 94,
+          "name": "an uncancellable late reader keeps the original ticket and cannot replace a newer workspace"
+        },
+        {
+          "file": "tests/release08-commands.test.js",
+          "line": 22,
+          "name": "08 editor declares Visual Studio default and five distinct profiles without a DOM"
+        }
+      ],
+      "discovery": {
+        "nodeTestFiles": 71,
+        "pythonSuites": 7,
+        "pythonSuitesExecutedInThisRun": 0
+      },
+      "commandEvidence": "Raw output does not contain the complete shell invocation; no command is reconstructed."
+    },
+    {
+      "id": "a20-complete",
+      "kind": "node_tests",
+      "source": {
+        "commit": "96c7bc79552d0f95f089ea80560394c4d0344d10",
+        "treeSha": "5987ccfeba9933afd789016ede601b5a813a73db"
+      },
+      "artifact": {
+        "path": "docs/evidence/project16-integration/p16-complete-a20.log",
+        "sha256": "4ba74d84b9d06eedffd8a44c0c3fdecc70550ae8e7e3580885931b0da5a0224c",
+        "bytes": 52014,
+        "preservation": "exact input bytes"
+      },
+      "sourceAttribution": "Integration owner supplied the revision; repository object IDs and retained log content were read directly.",
+      "result": {
+        "tests": 610,
+        "passed": 601,
+        "failed": 0,
+        "skipped": 9,
+        "cancelled": 0,
+        "durationMs": 31390.416312,
+        "status": "passed_with_explicit_skips"
+      },
+      "skipDetails": [
+        {
+          "name": "Unsupported target: shell commands and external filters",
+          "reason": "The browser editor has no shell or process-execution authority.",
+          "classification": "explicit_unsupported_target"
+        },
+        {
+          "name": "Unsupported target: Vimscript and plugin loading",
+          "reason": "The native modal adapter is not a Vimscript interpreter or plugin runtime.",
+          "classification": "explicit_unsupported_target"
+        },
+        {
+          "name": "Unsupported target: terminal buffers",
+          "reason": "Terminal emulation is outside the editor document and keymap scope.",
+          "classification": "explicit_unsupported_target"
+        },
+        {
+          "name": "Unsupported target: native Vim regex extensions",
+          "reason": "Search uses the documented bounded regex engine rather than Vim magic expressions.",
+          "classification": "explicit_unsupported_target"
+        },
+        {
+          "name": "Unsupported target: operating-system primary selection",
+          "reason": "The injected asynchronous clipboard API exposes ordinary clipboard text.",
+          "classification": "explicit_unsupported_target"
+        },
+        {
+          "name": "Unsupported target: unlimited recursive macros",
+          "reason": "Native macros have explicit recursion, key-count and register-memory budgets.",
+          "classification": "explicit_unsupported_target"
+        },
+        {
+          "name": "Unsupported target: desktop Vim executable parity",
+          "reason": "Node fixtures qualify this native model; no installed desktop Vim is used as an oracle.",
+          "classification": "explicit_unsupported_target"
+        },
+        {
+          "name": "Unsupported target: browser key interception and assistive technology",
+          "reason": "Operating-system/browser key delivery and screen readers need browser/manual qualification.",
+          "classification": "explicit_unsupported_target"
+        },
+        {
+          "name": "default and explicit native segmentation retain Unicode 16.0 host compatibility",
+          "reason": "The native comparison is pinned to a Unicode 16.0 Intl runtime",
+          "classification": "pinned_native_oracle_unavailable"
+        }
+      ],
+      "discovery": {
+        "nodeTestFiles": 47,
+        "pythonSuites": 3,
+        "pythonSuitesExecutedInThisRun": 0
+      },
+      "commandEvidence": "Raw output does not contain the complete shell invocation; no command is reconstructed."
+    },
+    {
+      "id": "a19-affected-corrections",
+      "kind": "node_tests",
+      "source": {
+        "commit": "dacdd6971a06199243e8688fdb6d4a9a8573a05a",
+        "treeSha": "19b1d5190deaaf362356421c15e267d925012073"
+      },
+      "artifact": {
+        "path": "docs/evidence/project16-integration/p16-affected-corrections.log",
+        "sha256": "812fe81c6cc6fa2be0b6c97aeeade16033a8f9cb30483664c9424d98bcfe83c0",
+        "bytes": 12616,
+        "preservation": "exact input bytes"
+      },
+      "sourceAttribution": "Integration owner supplied the revision; repository object IDs and retained log content were read directly.",
+      "result": {
+        "tests": 83,
+        "passed": 81,
+        "failed": 2,
+        "skipped": 0,
+        "cancelled": 0,
+        "durationMs": 3416.566259,
+        "status": "failed"
+      },
+      "failures": [
+        {
+          "file": "tests/a19-studio-explorer-host.test.js",
+          "line": 157,
+          "name": "Explorer revalidates source ownership after asynchronous preflight and preserves edits made while preparing"
+        },
+        {
+          "file": "tests/a19-studio-explorer-host.test.js",
+          "line": 197,
+          "name": "Explorer host rejects a superseding workspace revision before adopting its staged source models"
+        }
+      ],
+      "commandEvidence": "Raw output does not contain the complete shell invocation; no command is reconstructed."
+    },
+    {
+      "id": "a19-explorer-correction",
+      "kind": "node_tests",
+      "source": {
+        "commit": "6d5b033f885e409224726bd3ed4ee3c5bed98942",
+        "treeSha": "bedbe19b17f78385f8978a66fddd8c34926d379e"
+      },
+      "artifact": {
+        "path": "docs/evidence/project16-integration/p16-explorer-correction.log",
+        "sha256": "e6cdd2739a808cf95e87b9ecd173cbcfb6bb7431c6b382673d42c2a6f217a3b5",
+        "bytes": 694,
+        "preservation": "exact input bytes"
+      },
+      "sourceAttribution": "Integration owner supplied the revision; repository object IDs and retained log content were read directly.",
+      "result": {
+        "tests": 5,
+        "passed": 5,
+        "failed": 0,
+        "skipped": 0,
+        "cancelled": 0,
+        "durationMs": 408.472194,
+        "status": "passed"
+      },
+      "commandEvidence": "Raw output does not contain the complete shell invocation; no command is reconstructed."
+    },
+    {
+      "id": "initial-static-check",
+      "kind": "static_check",
+      "source": {
+        "commit": "96c7bc79552d0f95f089ea80560394c4d0344d10",
+        "treeSha": "5987ccfeba9933afd789016ede601b5a813a73db"
+      },
+      "artifact": {
+        "path": "docs/evidence/project16-integration/p16-complete-check.log",
+        "sha256": "7e323f57b3b47fb2e20993e94b8751082b867c8c4fef5072aee3e0e15425ff7e",
+        "bytes": 1320,
+        "preservation": "exact input bytes"
+      },
+      "sourceAttribution": "Integration owner supplied the revision; repository object IDs and retained log content were read directly.",
+      "result": {
+        "status": "failed",
+        "manifest": {
+          "areas": 30,
+          "nodeFiles": 617,
+          "browserScripts": 32,
+          "unassigned": 0,
+          "duplicate": 0
+        },
+        "syntaxModules": 2504,
+        "syntaxErrors": 0,
+        "staticImports": {
+          "passed": false,
+          "inspected": 2500,
+          "modules": 2500,
+          "errors": [
+            {
+              "path": "apps/studio/workbench/comment-tasks.js",
+              "operation": "dynamic-import",
+              "sha256": "516ee05d987fe0e7871fcabfa1c601a080afe626d1ef531b0e9ce404f5416123",
+              "count": 1,
+              "lines": [
+                5
+              ],
+              "message": "Unreviewed dynamic-code use or changed file"
+            },
+            {
+              "path": "packages/editor/smoke.mjs",
+              "operation": "dynamic-import",
+              "sha256": "e7bd01267696b7c96f83784eabf229fa10d6d91ef4be531e033626884fdd38c3",
+              "count": 3,
+              "lines": [
+                9,
+                21,
+                32
+              ],
+              "message": "Unreviewed dynamic-code use or changed file"
+            },
+            {
+              "path": "apps/studio/workbench/comment-tasks.js",
+              "operation": "dynamic-import",
+              "message": "Stale or mismatched allow-list entry"
+            },
+            {
+              "path": "packages/editor/smoke.mjs",
+              "operation": "dynamic-import",
+              "message": "Stale or mismatched allow-list entry"
+            }
+          ]
+        }
+      },
+      "commandEvidence": "npm run check is recorded in the log; any outer resource wrapper is not recorded."
+    },
+    {
+      "id": "static-import-retry",
+      "kind": "static_imports",
+      "source": {
+        "commit": "6d5b033f885e409224726bd3ed4ee3c5bed98942",
+        "treeSha": "bedbe19b17f78385f8978a66fddd8c34926d379e"
+      },
+      "artifact": {
+        "path": "docs/evidence/project16-integration/p16-final-static-imports.log",
+        "sha256": "1e7c02ced399dcd485ee1a274dd64e9b47141417bc6939e19af65d2b62e3c98a",
+        "bytes": 77,
+        "preservation": "exact input bytes"
+      },
+      "sourceAttribution": "Integration owner supplied the revision; repository object IDs and retained log content were read directly.",
+      "result": {
+        "status": "passed",
+        "report": {
+          "passed": true,
+          "inspected": 2500,
+          "modules": 2500,
+          "errors": []
+        }
+      },
+      "commandEvidence": "The raw report does not contain the complete shell invocation; no command is reconstructed."
+    },
+    {
+      "id": "contracts",
+      "kind": "contracts",
+      "source": {
+        "commit": "6d5b033f885e409224726bd3ed4ee3c5bed98942",
+        "treeSha": "bedbe19b17f78385f8978a66fddd8c34926d379e"
+      },
+      "artifact": {
+        "path": "docs/evidence/project16-integration/p16-final-contracts.log",
+        "sha256": "67f7f1cc0dce928fd6fe50a139deba6114bff4d896c7bcf341fcbd0761412e8d",
+        "bytes": 36,
+        "preservation": "exact input bytes"
+      },
+      "sourceAttribution": "Integration owner supplied the revision; repository object IDs and retained log content were read directly.",
+      "result": {
+        "status": "passed",
+        "report": {
+          "changes": [],
+          "errors": []
+        }
+      },
+      "commandEvidence": "The raw report does not contain the complete shell invocation; no command is reconstructed."
+    },
+    {
+      "id": "quarantine",
+      "kind": "quarantine",
+      "source": {
+        "commit": "6d5b033f885e409224726bd3ed4ee3c5bed98942",
+        "treeSha": "bedbe19b17f78385f8978a66fddd8c34926d379e"
+      },
+      "artifact": {
+        "path": "docs/evidence/project16-integration/p16-final-quarantine.log",
+        "sha256": "e9db67ddde45a2aafa58cd5388e9d6d9a091670a5eaf91731ab5dc9d2825cb16",
+        "bytes": 27,
+        "preservation": "exact input bytes"
+      },
+      "sourceAttribution": "Integration owner supplied the revision; repository object IDs and retained log content were read directly.",
+      "result": {
+        "status": "passed",
+        "report": {
+          "passed": true,
+          "active": 0
+        }
+      },
+      "commandEvidence": "The raw report does not contain the complete shell invocation; no command is reconstructed."
+    },
+    {
+      "id": "initial-normal-build",
+      "kind": "normal_build",
+      "source": {
+        "commit": "96c7bc79552d0f95f089ea80560394c4d0344d10",
+        "treeSha": "5987ccfeba9933afd789016ede601b5a813a73db"
+      },
+      "artifact": {
+        "path": "docs/evidence/project16-integration/p16-complete-build.log",
+        "sha256": "de4f3fb768d19f2d36810b6733c9d3a0cda2fb0f315396a4f5dc68a9a761294f",
+        "bytes": 206,
+        "preservation": "exact input bytes"
+      },
+      "sourceAttribution": "Integration owner supplied the revision; repository object IDs and retained log content were read directly.",
+      "result": {
+        "status": "passed",
+        "artifactKind": "normal browser distribution",
+        "standaloneQualified": false,
+        "browserExecuted": false
+      },
+      "commandEvidence": "npm run build is recorded in the log; any outer resource wrapper is not recorded."
+    }
+  ],
+  "resolution": {
+    "a19": {
+      "initial": "a19-complete",
+      "initialFailures": 13,
+      "initialFailingFiles": 8,
+      "affectedRuns": [
+        "a19-affected-corrections",
+        "a19-explorer-correction"
+      ],
+      "allInitialFailuresHaveObservedAffectedPasses": true,
+      "full592CaseRerunPerformed": false,
+      "sequence": [
+        {
+          "run": "a19-complete",
+          "tests": 592,
+          "passed": 579,
+          "failed": 13
+        },
+        {
+          "run": "a19-affected-corrections",
+          "tests": 83,
+          "passed": 81,
+          "failed": 2
+        },
+        {
+          "run": "a19-explorer-correction",
+          "tests": 5,
+          "passed": 5,
+          "failed": 0
+        }
+      ],
+      "note": "The nine-file affected run includes the eight initial failing files and final sparse metadata enumeration. The final five-case Explorer run covers both remaining message expectations; stale source/workspace guards remain enforced. The initial and 83-case runs remain recorded failures."
+    },
+    "a20": {
+      "run": "a20-complete",
+      "passed": 601,
+      "failed": 0,
+      "skipped": 9,
+      "skipClassificationCounts": {
+        "explicit_unsupported_target": 8,
+        "pinned_native_oracle_unavailable": 1
+      },
+      "note": "The eight unsupported Vim/host targets and the unavailable Unicode 16 native Intl oracle are listed verbatim in skipDetails. None is treated as a passing or uniformly environment-only target."
+    },
+    "static": {
+      "initial": "initial-static-check",
+      "correctedBy": "static-import-retry",
+      "sourceInventoryCorrections": [
+        "5deb1074",
+        "fc9d28c8"
+      ],
+      "note": "The initial complete check passed manifest/syntax/link stages and failed four policy messages across two reviewed-byte inventory files. Exact source corrections were reviewed; the final static-import-only retry inspected and linked 2500 modules with zero errors. This is not a rerun of the complete check command."
+    },
+    "build": {
+      "run": "initial-normal-build",
+      "note": "The normal build passed only for its 96c7bc79 source. Later final normal/standalone builds are not represented as passed by this historical artifact."
+    }
+  },
+  "pendingBatches": [
+    {
+      "id": "post-qualification-acceptance-and-host-followups",
+      "status": "source_in_progress_not_qualified",
+      "reportedAcceptanceFollowups": 13,
+      "scopeAuthority": "Root integration owner final acceptance audit",
+      "sourceSnapshotAtArchive": {
+        "commit": "01226fb1316569977315fccfe312daf61e5fab07",
+        "treeSha": "96b8cd928fa39c86ca47ddcb0f4ba2884b00864b"
+      },
+      "knownSourceAfterCompletedRuns": [
+        {
+          "commit": "5d5769d09410422003046b044283c9590ad70f17",
+          "scope": "Bounded ordered Studio workbench composition extraction"
+        },
+        {
+          "commit": "e1586ceae4289cd54a5def94dd2673382bd58feb",
+          "scope": "Lossless contextual Surround With indentation and source endings"
+        },
+        {
+          "commit": "a1c307dd66f66589ec194e68da9f06c82441a9db",
+          "scope": "Tab conversion resets at every supported logical line ending"
+        }
+      ],
+      "additionalOwnerScope": [
+        "Production diagnostic producers and queue cancellation",
+        "Explorer project decorations and accessibility",
+        "Startup/instance/stop-all menus, reveal policy and selected profile routing",
+        "Editor search, whitespace and qualification workflow acceptance corrections"
+      ],
+      "completedRunIds": [],
+      "requiredNextStep": "Finish the complete accepted follow-up source, capture its final source tree, then perform the consolidated affected qualification scheduled by root.",
+      "note": "Known commits are examples of completed source within an unfinished aggregate follow-up batch, not an exhaustive list of all 13 acceptance items. Earlier passes do not qualify these changes."
+    }
+  ],
+  "platformQualification": {
+    "browser": "not established by these logs",
+    "nativeDesktop": "not established by these logs",
+    "visualStudioOracle": "not established by these logs",
+    "standaloneBrowser": "not established by these logs"
+  },
+  "aggregateStatusPolicy": "docs/project16-implementation.json and .md remain at their earlier stated snapshot. This archive does not update their issue statuses before the new complete follow-up scope is qualified."
+}
