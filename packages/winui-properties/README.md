@@ -49,3 +49,7 @@ Application-owned UI services for SharpForge. Instances have explicit lifetimes;
 ## Approved XAML object construction
 
 `XamlObjectWriter` parses and validates a complete tree before invoking registered constructors and members. Its resource/style/template builders preserve deferred resources, private namescopes and positioned failures. Markup extensions implement approved resources, template bindings and ordinary/compiled binding definitions; actual binding execution is provided explicitly by the host. Deferred child slots preserve their insertion position and own their activation lifetimes. File, network, reflection, DTD and entity expansion have no activation path.
+
+## XAML serialization and namespace projection
+
+`XamlWriter` serializes approved object values, resources, styles, templates and supported binding definitions. `createFrameworkXamlSchema` projects declared registry types/members and explicit CLR namespace aliases without reflection. Round trips preserve null/string/resource distinctions and positional diagnostics; inherited JavaScript object properties cannot become constructors, members, enum values or color names.
