@@ -3,6 +3,7 @@ import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import { AssemblyInspector, verifyCilAssembly } from '@sharpforge/cil';
 import { verifiedStackBound } from '../packages/cil/src/verified-stack.js';
+import { validateHandlerEntryHeights } from '../packages/cil/src/verify/handlers-access.js';
 import { entryFixture, nativeCases } from './fixtures/a03-handler-entry/input.js';
 
 test('reachable try entries require an empty stack for catch, finally, fault and branch entry', () => {
@@ -51,4 +52,15 @@ test('ten retained ILVerify cases agree with reachable try-entry admission', () 
     const result = verifyCilAssembly(entryFixture(fixture.options).bytes);
     assert.equal(result.success, native.oracle.accepted, JSON.stringify({ fixture: fixture.name, issues: result.issues }));
   }
+});
+
+test('invalid shared or wide try families have a bounded distinct-entry diagnostic set', () => {
+  const method = { instructions: Array.from({ length: 1000 }, (_, offset) => ({ offset })),
+    handlers: Array.from({ length: 2000 }, (_, index) => ({ start: index >>> 1 })) };
+  const offsets = new Map(method.instructions.map(({ offset }) => [offset, offset]));
+  const heights = new Map(method.instructions.map(({ offset }) => [offset, 1]));
+  const issues = [];
+  validateHandlerEntryHeights(method, offsets, heights, (...args) => issues.push(args));
+  assert.equal(issues.length, 200);
+  assert.equal(new Set(issues.map(args => args[1].offset)).size, 200);
 });
