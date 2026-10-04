@@ -20,9 +20,14 @@ const contentProperties = Object.freeze({
 function permitted(type) {
   if (type.name === 'Microsoft.UI.Xaml.VisualStateManager') return true;
   if (type.xamlLoadable === true) return true;
-  if (!['control', 'abstract', 'object', 'brush', 'value', 'collection', 'enum', 'animation', 'transform', 'easing', 'shape'].includes(type.kind)) return false;
+  if (!['control', 'abstract', 'object', 'brush', 'value', 'collection', 'enum', 'animation',
+    'transform', 'easing', 'shape', 'rendering'].includes(type.kind)) return false;
   return type.name.startsWith('Microsoft.UI.Xaml.') || type.name.startsWith('Windows.Foundation.') ||
     type.name === 'Windows.UI.Color' || type.name.startsWith('SharpForge.UI.');
+}
+
+function isCollection(type) {
+  return type?.kind === 'collection' || type?.xamlCollection === true;
 }
 
 /** Build a closed XAML allowlist from the existing ABI registry without dynamic CLR activation. */
@@ -42,7 +47,7 @@ export function createFrameworkXamlSchema({registry, create, set, get, add, inse
     const properties = {};
     for (const [name, property] of Object.entries(type.properties ?? {})) {
       if (property.isStatic) continue;
-      const collection = registry.types.get(property.type)?.kind === 'collection';
+      const collection = isCollection(registry.types.get(property.type));
       properties[name] = {name, type: property.type, readOnly: property.readOnly, collection,
         property: propertyFor?.(type.name, name),
         get: instance => get(instance, name),
@@ -75,9 +80,9 @@ export function createFrameworkXamlSchema({registry, create, set, get, add, inse
       values: type.values, flags: !!type.flags, properties,
       contentProperty: type.contentProperty ?? contentProperties[type.name] ?? null,
       create: type.kind === 'enum' || type.kind === 'abstract' ? null : () => create(type.name),
-      add: type.kind === 'collection' ? (instance, value) => add(instance, value) : null,
-      insert: type.kind === 'collection' && insert ? (instance, index, value) => insert(instance, index, value) : null,
-      remove: type.kind === 'collection' && remove ? (instance, index) => remove(instance, index) : null});
+      add: isCollection(type) ? (instance, value) => add(instance, value) : null,
+      insert: isCollection(type) && insert ? (instance, index, value) => insert(instance, index, value) : null,
+      remove: isCollection(type) && remove ? (instance, index) => remove(instance, index) : null});
   }
   for (const type of schema.byName.values()) {
     const separator = type.name.lastIndexOf('.');

@@ -69,3 +69,7 @@ Visual-state collections, current-state events, adaptive/custom triggers and tra
 ## XAML writer integration prerequisites
 
 The approved object writer, serializer, markup extensions and registered namespace projection are joined from their reviewed branch. The full resource/XAML fixture replaces its earlier property-only prefix only after all its imports exist. Newer property/binding and construction lifetime files stay in place.
+
+## Typed XAML host boundary
+
+`createContextXamlLoader` connects approved constructors, native collections, registered properties, compiled/deferred bindings, localization and namescopes. Literal conversion reuses the binding converter before allocating typed value records or materializing renderer brushes. The closed schema admits registered Xaml rendering types and explicit xamlCollection metadata without widening external namespace activation. Loader failures retain their registered exception type and source position.
