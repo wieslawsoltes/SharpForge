@@ -1,3 +1,4 @@
+import { runNativeProject } from './launch.js';
 import { DesignTimeBuildService } from './design-time.js';
 import { NativeMetadataReferenceService } from './native-metadata.js';
 
@@ -9,4 +10,5 @@ export function registerNativeProjectServices(registry, { engine }) {
   registry.register('project', 'context', (request, options) => designTime.context(request, options));
   registry.register('project', 'contexts', (request, options) => designTime.contexts(request, options));
   registry.register('project', 'metadata', (request, options) => metadata.read(request, options));
+  registry.register('project', 'run', (request, options) => runNativeProject(engine, request, options));
 }

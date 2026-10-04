@@ -18,3 +18,5 @@ export * from './design-time.js';
 export * from './design-time-cache.js';
 export * from './design-time-generated.js';
 export * from './native-metadata.js';
+export * from './launch.js';
+export * from './publish-profiles.js';
