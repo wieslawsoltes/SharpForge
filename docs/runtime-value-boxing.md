@@ -30,8 +30,14 @@ interior mutation; the independently authored runtime fixture emits `unbox`
 directly. It does not add an `Unsafe` intrinsic to the runtime. Its expected
 output is an unmeasured qualification target.
 
-No tests, builds, checks or native reference commands were run during preparation.
-Root owns the serial queue:
+Serial Node 24 validation at `9f27e8b3` passed 88 of 90 tests. The two failures
+identified a readonly Decimal address-read regression and an unregistered framework
+type in the new fixture. Both were repaired in `100e3e0d`; all 44 affected boxing,
+struct-storage, Decimal and managed-address tests then passed. Existing readonly
+write rejection and copy assertions remain intact. ABI inventory was regenerated.
+Broad native, browser and performance qualification remains deferred.
+
+Initial focused command:
 
 ```sh
 node scripts/limited.js node --test --test-concurrency=1 tests/a05-value-boxing.test.js tests/a05-value-storage.test.js tests/a05-native-width-cil.test.js tests/a05-decimal-cil.test.js tests/a05-enums-strings.test.js tests/a05-cast-integration.test.js tests/a05-scalar-box-formatting.test.js
