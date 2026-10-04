@@ -1,0 +1,151 @@
+{
+  "schemaVersion": 1,
+  "scope": "Authored browser reference extensions. No execution or native WinUI qualification is implied.",
+  "fixtures": [
+    {
+      "id": "glyph-atlas-residency-5000", "scene": "atlas-residency", "width": 2400, "height": 1400, "dpr": 1, "fontSize": 16,
+      "requiresVerification": true, "benchmark": true, "workIds": ["SF-A17-T04.2"],
+      "budgets": {"atlasBytes": 33554432},
+      "tolerance": {"maxChannel": 16, "meanChannel": 1, "differentPixelFraction": 0.02},
+      "reference": {"status": "pending-native", "kind": "pinned-numeric-glyphs"}
+    },
+    {
+      "id": "rounded-matrix-dpr1", "scene": "rounded-matrix", "width": 672, "height": 544, "dpr": 1,
+      "requiresVerification": true, "workIds": ["SF-A17-T03.2", "SF-A17-T03.7"],
+      "tolerance": {"maxChannel": 16, "meanChannel": 1, "differentPixelFraction": 0.04}
+    },
+    {
+      "id": "rounded-matrix-dpr1-5", "scene": "rounded-matrix", "width": 672, "height": 544, "dpr": 1.5,
+      "requiresVerification": true, "workIds": ["SF-A17-T03.2", "SF-A17-T03.7"],
+      "tolerance": {"maxChannel": 16, "meanChannel": 1, "differentPixelFraction": 0.04}
+    },
+    {
+      "id": "rounded-matrix-dpr2", "scene": "rounded-matrix", "width": 672, "height": 544, "dpr": 2,
+      "requiresVerification": true, "workIds": ["SF-A17-T03.2", "SF-A17-T03.7"],
+      "tolerance": {"maxChannel": 16, "meanChannel": 1, "differentPixelFraction": 0.04}
+    },
+    {
+      "id": "ellipse-lines-dpr1", "scene": "ellipse-lines", "width": 640, "height": 248, "dpr": 1,
+      "requiresVerification": true, "workIds": ["SF-A17-T03.3", "SF-A17-T03.7"],
+      "tolerance": {"maxChannel": 16, "meanChannel": 1, "differentPixelFraction": 0.04},
+      "pixelChecks": [
+        {"name": "stroke-only ellipse", "kind": "transparent", "rect": [48, 40, 16, 16]},
+        {"name": "half-pixel line", "kind": "visible", "rect": [30, 111, 40, 2], "minimumAlpha": 1}
+      ]
+    },
+    {
+      "id": "ellipse-lines-dpr1-5", "scene": "ellipse-lines", "width": 640, "height": 248, "dpr": 1.5,
+      "requiresVerification": true, "workIds": ["SF-A17-T03.3", "SF-A17-T03.7"],
+      "tolerance": {"maxChannel": 16, "meanChannel": 1, "differentPixelFraction": 0.04},
+      "pixelChecks": [
+        {"name": "stroke-only ellipse", "kind": "transparent", "rect": [48, 40, 16, 16]},
+        {"name": "half-pixel line", "kind": "visible", "rect": [30, 111, 40, 2], "minimumAlpha": 1}
+      ]
+    },
+    {
+      "id": "ellipse-lines-dpr2", "scene": "ellipse-lines", "width": 640, "height": 248, "dpr": 2,
+      "requiresVerification": true, "workIds": ["SF-A17-T03.3", "SF-A17-T03.7"],
+      "tolerance": {"maxChannel": 16, "meanChannel": 1, "differentPixelFraction": 0.04},
+      "pixelChecks": [
+        {"name": "stroke-only ellipse", "kind": "transparent", "rect": [48, 40, 16, 16]},
+        {"name": "half-pixel line", "kind": "visible", "rect": [30, 111, 40, 2], "minimumAlpha": 1}
+      ]
+    },
+    {
+      "id": "instances-100k", "scene": "instances-100k", "width": 800, "height": 500, "benchmark": true,
+      "requiresVerification": true, "workIds": ["SF-A17-T03.8"],
+      "tolerance": {"maxChannel": 8, "meanChannel": 0.5, "differentPixelFraction": 0.02}
+    },
+    {
+      "id": "alpha-overlap-exact", "scene": "alpha-overlap", "width": 128, "height": 96,
+      "workIds": ["SF-A17-T05.8"],
+      "tolerance": {"maxChannel": 1, "meanChannel": 1, "differentPixelFraction": 0},
+      "overlaps": [
+        {"rect": [0, 0, 128, 96], "color": "#204080", "opacity": 0.2},
+        {"rect": [8, 8, 64, 56], "color": "#ff2030", "opacity": 0.5},
+        {"rect": [48, 28, 64, 56], "color": "#20e080", "opacity": 0.4980392156862745},
+        {"rect": [32, 40, 64, 48], "color": "#3080ff", "opacity": 0.00392156862745098}
+      ]
+    },
+    {
+      "id": "live-replay-canvas", "scene": "live-replay", "width": 240, "height": 128,
+      "requiresVerification": true, "workIds": ["SF-A17-T02.4"],
+      "tolerance": {"maxChannel": 8, "meanChannel": 0.5, "differentPixelFraction": 0.02}
+    },
+    {
+      "id": "dom-lines-wrap", "scene": "dom-text-layout", "width": 208, "height": 168, "textWidth": 184,
+      "fontSize": 16, "lineHeight": 24, "text": "AV office Á and a long unbrokeninteroperabilityword\nLast line",
+      "requiresVerification": true, "workIds": ["SF-A17-T04.4"],
+      "tolerance": {"maxChannel": 16, "meanChannel": 1, "differentPixelFraction": 0.04}
+    },
+    {
+      "id": "dom-lines-wholewords", "scene": "dom-text-layout", "width": 320, "height": 144, "textWidth": 120,
+      "fontSize": 16, "lineHeight": 24, "wrapping": "wholewords", "text": "short extraordinaryinteroperability word\nend",
+      "requiresVerification": true, "workIds": ["SF-A17-T04.4"],
+      "tolerance": {"maxChannel": 16, "meanChannel": 1, "differentPixelFraction": 0.04}
+    },
+    {
+      "id": "dom-lines-cjk-emoji", "scene": "dom-text-layout", "width": 208, "height": 192, "textWidth": 168,
+      "fontSize": 20, "lineHeight": 30, "text": "漢字かな交じり文。次の行に折り返します。👩‍💻 家族👨‍👩‍👧‍👦",
+      "requiresVerification": true, "workIds": ["SF-A17-T04.4"],
+      "tolerance": {"maxChannel": 16, "meanChannel": 1, "differentPixelFraction": 0.04}
+    },
+    {
+      "id": "dom-lines-rtl", "scene": "dom-text-layout", "width": 256, "height": 168, "textWidth": 224,
+      "fontSize": 18, "lineHeight": 28, "direction": "rtl", "text": "مرحبا بالعالم نص طويل للاختبار\nשלום עולם 123",
+      "requiresVerification": true, "workIds": ["SF-A17-T04.4"],
+      "tolerance": {"maxChannel": 16, "meanChannel": 1, "differentPixelFraction": 0.04}
+    },
+    {
+      "id": "dom-ellipsis-character", "scene": "dom-text-layout", "width": 160, "height": 48, "textWidth": 132,
+      "fontSize": 16, "lineHeight": 24, "wrapping": "nowrap", "trimming": "character", "text": "AV office Á grapheme 👩‍💻 text",
+      "requiresVerification": true, "workIds": ["SF-A17-T04.4"],
+      "tolerance": {"maxChannel": 16, "meanChannel": 1, "differentPixelFraction": 0.04}
+    },
+    {
+      "id": "dom-ellipsis-word", "scene": "dom-text-layout", "width": 160, "height": 64, "textWidth": 132,
+      "fontSize": 16, "lineHeight": 24, "maxLines": 2, "trimming": "word", "text": "A paragraph with several words that needs more than two lines",
+      "requiresVerification": true, "workIds": ["SF-A17-T04.4"],
+      "tolerance": {"maxChannel": 16, "meanChannel": 1, "differentPixelFraction": 0.04}
+    },
+    {
+      "id": "dom-ellipsis-alignment", "scene": "dom-text-layout", "width": 192, "height": 48, "textWidth": 168,
+      "fontSize": 20, "lineHeight": 30, "wrapping": "nowrap", "trimming": "character", "alignment": "center",
+      "text": "Centered office ligature text that overflows",
+      "requiresVerification": true, "workIds": ["SF-A17-T04.4"],
+      "tolerance": {"maxChannel": 16, "meanChannel": 1, "differentPixelFraction": 0.04}
+    },
+    {
+      "id": "retained-scroll-10k", "scene": "retained-scroll", "width": 320, "height": 320,
+      "requiresVerification": true, "benchmark": true, "workIds": ["SF-A17-T27"],
+      "tolerance": {"maxChannel": 16, "meanChannel": 1, "differentPixelFraction": 0.04},
+      "budgets": {"unchangedDisplayListRebuilds": 0},
+      "hardwareBudgets": {"frameIntervalP95Ms": 17}
+    },
+    {
+      "id": "mixed-dom-gpu-z-order", "scene": "mixed-z-order", "width": 192, "height": 128,
+      "requiresVerification": true, "workIds": ["SF-A17-T06.3"],
+      "tolerance": {"maxChannel": 1, "meanChannel": 0.1, "differentPixelFraction": 0}
+    },
+    {
+      "id": "canvas-control-public-draw", "scene": "canvas-control", "width": 200, "height": 168,
+      "requiresVerification": true, "workIds": ["SF-A17-T29"],
+      "tolerance": {"maxChannel": 16, "meanChannel": 1, "differentPixelFraction": 0.04}
+    },
+    {
+      "id": "host-bitmap-capture", "scene": "host-bitmap-capture", "width": 176, "height": 120,
+      "requiresVerification": true, "workIds": ["SF-A17-T22"],
+      "tolerance": {"maxChannel": 8, "meanChannel": 0.5, "differentPixelFraction": 0.02}
+    },
+    {
+      "id": "native-ime-editor", "scene": "native-ime", "width": 240, "height": 48, "nativeIME": true,
+      "requiresVerification": true, "workIds": ["SF-A17-T04.6"],
+      "tolerance": {"maxChannel": 16, "meanChannel": 1, "differentPixelFraction": 0.04}
+    },
+    {
+      "id": "dom-lines-empty", "scene": "dom-text-layout", "width": 16, "height": 32, "textWidth": 1,
+      "fontSize": 14, "lineHeight": 20, "text": "", "requiresVerification": true, "workIds": ["SF-A17-T04.4"],
+      "tolerance": {"maxChannel": 0, "meanChannel": 0, "differentPixelFraction": 0}
+    }
+  ]
+}

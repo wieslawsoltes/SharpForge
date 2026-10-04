@@ -9,7 +9,8 @@
     "tests/rendering/test_inline_reference.py",
     "tests/rendering/test_pixel_artifacts.py",
     "tests/rendering/test_native_reference_consumer.py",
-    "tests/rendering/test_native_ime_driver.py"
+    "tests/rendering/test_native_ime_driver.py",
+    "tests/rendering/test_reference_policy.py"
   ],
   "requiredServices": [],
   "timeout": 300000,
