@@ -1,6 +1,7 @@
 import { readPortablePdb } from './pdb-reader.js';
 import { readPortablePdbDelta } from './pdb-delta-reader.js';
 import { generationError, generationRowCounts } from './pdb-delta-format.js';
+import { pdbGenerationId as identity } from './generation-identity.js';
 
 function limit(value, fallback, maximum, name) {
   value ??= fallback;
@@ -8,13 +9,6 @@ function limit(value, fallback, maximum, name) {
     generationError('PDB_GENERATION_LIMIT', `Invalid PDB generation ${name} limit`);
   }
   return value;
-}
-
-function identity(value, name) {
-  if (typeof value !== 'string' || !/^[\da-f]{40}$/i.test(value)) {
-    generationError('PDB_GENERATION_ID', `Invalid PDB generation ${name}`);
-  }
-  return value.toLowerCase();
 }
 
 function group(records, key) {
