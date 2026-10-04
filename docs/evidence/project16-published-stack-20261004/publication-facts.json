@@ -1,0 +1,1521 @@
+{
+  "schemaVersion": 1,
+  "kind": "project16-selected-published-stack-snapshot",
+  "provenance": {
+    "creatorStatePath": "/workspace/scratch/6b99131ca908/p16-publication-state.json",
+    "creatorStateBytes": 608316,
+    "creatorStateSha256": "0f2d68d4e3669f3886c7e301cf2ab38c557edb41352e653d1a4de3b822d45fee",
+    "observedAt": "2026-10-04T06:56:38.780292+00:00",
+    "snapshotBase": "25ef23b0fb86eb3be4151492c2ef6bbc51f0a82e",
+    "method": "Read selected creator-maintained publication state and existing Git commit objects; no remote API, tests, builds or qualification execution.",
+    "metadataCommands": [
+      "git show 25ef23b0fb86eb3be4151492c2ef6bbc51f0a82e:docs/project16-publication-map.json",
+      "git cat-file commit <exact-sha>"
+    ],
+    "additionalObservations": [
+      {
+        "creatorStatePath": "/workspace/scratch/6b99131ca908/p16-publication-state.json",
+        "creatorStateBytes": 615115,
+        "creatorStateSha256": "c3ab0a999d3d9300f1454f907ade3f220aaac6e9debbbbc665962de1135d489b",
+        "observedAt": "2026-10-04T07:22:23.913379+00:00",
+        "scope": "Supplied early core facts and completed A6/W1/M1 outcomes; no remote API query or qualification execution by this archive task."
+      },
+      {
+        "creatorStatePath": "/workspace/scratch/6b99131ca908/p16-publication-state.json",
+        "creatorStateBytes": 627323,
+        "creatorStateSha256": "d16ed42276dfbb1b8641953bbffca93c12ebf54d90457605e95c1b21bc7b5b63",
+        "observedAt": "2026-10-04T07:41:13.898450+00:00",
+        "snapshotBase": "b8d68d417c792156dedb2ac2b98acf33cac3f141",
+        "method": "Read creator-maintained publication state and existing Git objects for all 110 appended mappings; no remote API or qualification execution."
+      },
+      {
+        "creatorStatePath": "/workspace/scratch/6b99131ca908/p16-publication-state.json",
+        "creatorStateBytes": 628138,
+        "creatorStateSha256": "00ba294ef9f89c63bf5cc4bc24747c888f75301e0cad099d74acdb6dce1b48dd",
+        "observedAt": "2026-10-04T07:52:35.315804+00:00",
+        "scope": "Completed A7/M2 records and raw existing source/summary/assessment JSON; no test, build, browser or benchmark execution."
+      },
+      {
+        "creatorStatePath": "/workspace/scratch/6b99131ca908/p16-publication-state.json",
+        "creatorStateBytes": 630160,
+        "creatorStateSha256": "540a615c4f51c320799996a8f3ce6e06b484bd9722a1a28ec23930b4b65258c8",
+        "observedAt": "2026-10-04T08:02:14.197422+00:00",
+        "scope": "Appended available status publication object; root merge object awaits supplied shared-Git fetch."
+      },
+      {
+        "creatorStatePath": "/workspace/scratch/6b99131ca908/p16-publication-state.json",
+        "creatorStateBytes": 632852,
+        "creatorStateSha256": "f6a5a1403ff26fd4521adcbddec6f590bff6438b698a1d7ec927125e39249cb9",
+        "observedAt": "2026-10-04T08:09:42.758321+00:00",
+        "scope": "Final creator snapshot; all 116 appended mappings read from available local/public Git objects. No qualification execution."
+      }
+    ],
+    "earlyCoreApiMethod": "independent shell-agent GitHub GET lookup of exact event/head_sha collections and all jobs; no reruns; exact event/head_sha filters; jobs filter=all&per_page=100 returned total_count with no missing pages, as attested by shell."
+  },
+  "status": "final-at-recorded-publication-cutoff",
+  "pullRequests": [
+    {
+      "number": 3451,
+      "url": "https://github.com/wieslawsoltes/SharpForge/pull/3451",
+      "branch": "codex/project16/01-text-model",
+      "identityEvidence": "Existing fetched Git merge message, tree and ordered parents; final PR head is the second parent.",
+      "merge": {
+        "sha": "5c6d7f55798314b116efa1bcaabd183a291e37d9",
+        "tree": "ec92f4877ff3e3cffcdcfdbef8c94fc09a6ce96b",
+        "orderedParents": [
+          "19fe8a6eeb3c03b2a21fae8cca4faf544900eeab",
+          "d57c385212389cb0b5e826a2f9150f32fb23a578"
+        ],
+        "authorTimestamp": "1791065460 +0200",
+        "committerTimestamp": "1791065460 +0200",
+        "subject": "Merge pull request #3451 from wieslawsoltes/codex/project16/01-text-model",
+        "messageSha256": "dd557d2cad109ecf7c1772f41f41870b04a0f65138432b23531a33240c60af3a"
+      },
+      "head": {
+        "sha": "d57c385212389cb0b5e826a2f9150f32fb23a578",
+        "tree": "5f8f0693cf386990fad0167666a6dd78004abda3",
+        "orderedParents": [
+          "f131ccfc262920597332f4043c405711af853772"
+        ],
+        "authorTimestamp": "1791065076 +0200",
+        "committerTimestamp": "1791065076 +0200",
+        "subject": "SF-A20-T01.7: register complete foundation test scope for review",
+        "messageSha256": "34861c0df457592d156b35d6c6459c10a5cd604b9497e5e6b199a2ca02483f4d"
+      },
+      "mainParent": "19fe8a6eeb3c03b2a21fae8cca4faf544900eeab",
+      "coreFacts": [
+        {
+          "source": "d57c385212389cb0b5e826a2f9150f32fb23a578",
+          "runId": 37157330656,
+          "jobId": 111303332035,
+          "conclusion": "success",
+          "role": "own",
+          "provenance": "shell-agent-api-get-attested",
+          "stateField": "earlyCoreFacts.runs",
+          "status": "completed",
+          "attempt": 1,
+          "unitTests": "skipped",
+          "build": "success",
+          "url": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37157330656/job/111303332035"
+        },
+        {
+          "source": "5c6d7f55798314b116efa1bcaabd183a291e37d9",
+          "runId": 37157556800,
+          "jobId": 111304028301,
+          "conclusion": "success",
+          "role": "main",
+          "provenance": "shell-agent-api-get-attested",
+          "stateField": "earlyCoreFacts.runs",
+          "status": "completed",
+          "attempt": 1,
+          "unitTests": "skipped",
+          "build": "success",
+          "url": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37157556800/job/111304028301"
+        },
+        {
+          "runId": 37157326329,
+          "jobId": 111303309172,
+          "conclusion": "cancelled",
+          "step11CleanCheckout": "failure",
+          "checkout": "cancelled",
+          "build": "skipped",
+          "role": "own-cancelled",
+          "provenance": "shell-agent-api-get-attested",
+          "stateField": "earlyCoreFacts.canceled",
+          "source": "d57c385212389cb0b5e826a2f9150f32fb23a578",
+          "url": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37157326329/job/111303309172"
+        }
+      ],
+      "missingCoreFacts": []
+    },
+    {
+      "number": 3475,
+      "url": "https://github.com/wieslawsoltes/SharpForge/pull/3475",
+      "branch": "codex/project16/02-editor",
+      "identityEvidence": "Existing fetched Git merge message, tree and ordered parents; final PR head is the second parent.",
+      "merge": {
+        "sha": "84bd69b5fafc4ba9d015ad6dbfd3ed3d6106d9aa",
+        "tree": "e117782db51f9acdcfe691e0c1ef1f143c6cd4cf",
+        "orderedParents": [
+          "d8ee29c2ae94c243cbedb5c7a593667563e2eb1a",
+          "d3f0705bc07e35698a89790d36589e0457eef216"
+        ],
+        "authorTimestamp": "1791068852 +0200",
+        "committerTimestamp": "1791068852 +0200",
+        "subject": "Merge pull request #3475 from wieslawsoltes/codex/project16/02-editor",
+        "messageSha256": "1b7c4ccd384b827fedbad1a85dc1831f291aa0a750aacba63519743b4a121649"
+      },
+      "head": {
+        "sha": "d3f0705bc07e35698a89790d36589e0457eef216",
+        "tree": "185c748371687e82354f876cb265361a7fdaac62",
+        "orderedParents": [
+          "8d2ec33c55d4d657b1e286c87ca08253ca5595c3"
+        ],
+        "authorTimestamp": "1791067530 +0200",
+        "committerTimestamp": "1791067530 +0200",
+        "subject": "SF-A20-T07: remove trailing editor context whitespace",
+        "messageSha256": "7c489637fa23d3f00e77ae9fbe0992f19e54c80594ca6ae30874fa648a21df94"
+      },
+      "mainParent": "d8ee29c2ae94c243cbedb5c7a593667563e2eb1a",
+      "coreFacts": [
+        {
+          "source": "d3f0705bc07e35698a89790d36589e0457eef216",
+          "runId": 37159622860,
+          "jobId": 111310983726,
+          "conclusion": "success",
+          "role": "own",
+          "provenance": "shell-agent-api-get-attested",
+          "stateField": "earlyCoreFacts.runs",
+          "status": "completed",
+          "attempt": 1,
+          "unitTests": "skipped",
+          "build": "success",
+          "url": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37159622860/job/111310983726"
+        },
+        {
+          "source": "84bd69b5fafc4ba9d015ad6dbfd3ed3d6106d9aa",
+          "runId": 37160739400,
+          "jobId": 111313463590,
+          "conclusion": "success",
+          "role": "main",
+          "provenance": "shell-agent-api-get-attested",
+          "stateField": "earlyCoreFacts.runs",
+          "status": "completed",
+          "attempt": 1,
+          "unitTests": "skipped",
+          "build": "success",
+          "url": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37160739400/job/111313463590"
+        },
+        {
+          "runId": 37159609690,
+          "jobId": 111310130603,
+          "conclusion": "cancelled",
+          "steps": [],
+          "role": "own-cancelled",
+          "provenance": "shell-agent-api-get-attested",
+          "stateField": "earlyCoreFacts.canceled",
+          "source": "d3f0705bc07e35698a89790d36589e0457eef216",
+          "url": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37159609690/job/111310130603"
+        }
+      ],
+      "missingCoreFacts": []
+    },
+    {
+      "number": 3485,
+      "url": "https://github.com/wieslawsoltes/SharpForge/pull/3485",
+      "branch": "codex/project16/03-sessions-runtime",
+      "identityEvidence": "Existing fetched Git merge message, tree and ordered parents; final PR head is the second parent.",
+      "merge": {
+        "sha": "fec4603186cc48b02d9043d3ba6a6a3f6cc60c0a",
+        "tree": "02e67d5ad7262fa8ca75b9e95fd8e492d7b85f74",
+        "orderedParents": [
+          "cf7d47d064a42b1b4e9d23284b7892cb206c14bc",
+          "ed67803116a546d731211d4630e5300dcdc111ca"
+        ],
+        "authorTimestamp": "1791070268 +0200",
+        "committerTimestamp": "1791070268 +0200",
+        "subject": "Merge pull request #3485 from wieslawsoltes/codex/project16/03-sessions-runtime",
+        "messageSha256": "ccd1138c03422e3a76f852e67dabe4508224dfdd6a9a2de8d04606d522f6faaa"
+      },
+      "head": {
+        "sha": "ed67803116a546d731211d4630e5300dcdc111ca",
+        "tree": "5f67a17a86c1b460b6748af693a93db98baf261f",
+        "orderedParents": [
+          "bdcb1cc6c90cb4e3779026022ce4c79e5168faff",
+          "1645ff4ffeaf18a47206219d8abed8aea8f95bc8"
+        ],
+        "authorTimestamp": "1791070152 +0200",
+        "committerTimestamp": "1791070152 +0200",
+        "subject": "Merge current main into Project 16 sessions review",
+        "messageSha256": "815aa3c8d5a227b231f348a037789c22e4088cb43e9a652a8d48f7b516a5a6bd"
+      },
+      "mainParent": "cf7d47d064a42b1b4e9d23284b7892cb206c14bc",
+      "coreFacts": [
+        {
+          "source": "ed67803116a546d731211d4630e5300dcdc111ca",
+          "runId": 37161927361,
+          "jobId": 111316981256,
+          "conclusion": "success",
+          "role": "own",
+          "provenance": "shell-agent-api-get-attested",
+          "stateField": "earlyCoreFacts.runs",
+          "status": "completed",
+          "attempt": 1,
+          "unitTests": "skipped",
+          "build": "success",
+          "url": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37161927361/job/111316981256"
+        },
+        {
+          "source": "fec4603186cc48b02d9043d3ba6a6a3f6cc60c0a",
+          "runId": 37162035088,
+          "jobId": 111317287825,
+          "conclusion": "success",
+          "role": "main",
+          "provenance": "shell-agent-api-get-attested",
+          "stateField": "earlyCoreFacts.runs",
+          "status": "completed",
+          "attempt": 1,
+          "unitTests": "skipped",
+          "build": "success",
+          "url": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37162035088/job/111317287825"
+        }
+      ],
+      "missingCoreFacts": []
+    },
+    {
+      "number": 3533,
+      "url": "https://github.com/wieslawsoltes/SharpForge/pull/3533",
+      "branch": "codex/project16/04-workbench-shell",
+      "identityEvidence": "Existing fetched Git merge message, tree and ordered parents; final PR head is the second parent.",
+      "merge": {
+        "sha": "32619489d0fb4a06a50e4141c88fdc593cc14c1c",
+        "tree": "5bd06bbbc7d41189bdd55fe57e35edc028ae6edf",
+        "orderedParents": [
+          "79430eccaebfc2c944c3663715ee13f3679e0414",
+          "54fd9beff5436941a2973c37df97f284139fca7d"
+        ],
+        "authorTimestamp": "1791071731 +0200",
+        "committerTimestamp": "1791071731 +0200",
+        "subject": "Merge pull request #3533 from wieslawsoltes/codex/project16/04-workbench-shell",
+        "messageSha256": "b2eec923f1ca0ebb49584991184c53e0aeb86d9f38d49ec925aec3c21f92cead"
+      },
+      "head": {
+        "sha": "54fd9beff5436941a2973c37df97f284139fca7d",
+        "tree": "eeaa72ecede337708b0a4944b22fe65a6a284f62",
+        "orderedParents": [
+          "b3e2a28f3487a1ab219b3af93c09b1189a5fdbd6"
+        ],
+        "authorTimestamp": "1791071669 +0200",
+        "committerTimestamp": "1791071669 +0200",
+        "subject": "SF-A19-T11.3: review fixed workbench lazy import inventory",
+        "messageSha256": "c5ed974e361528d4a6e276f7978bcf97da77a2f9953cee3a0648c3ec39a669f2"
+      },
+      "mainParent": "79430eccaebfc2c944c3663715ee13f3679e0414",
+      "coreFacts": [
+        {
+          "source": "54fd9beff5436941a2973c37df97f284139fca7d",
+          "runId": 37163250311,
+          "jobId": 111320895881,
+          "conclusion": "success",
+          "role": "own",
+          "provenance": "shell-agent-api-get-attested",
+          "stateField": "earlyCoreFacts.runs",
+          "status": "completed",
+          "attempt": 1,
+          "unitTests": "skipped",
+          "build": "success",
+          "url": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37163250311/job/111320895881"
+        },
+        {
+          "source": "32619489d0fb4a06a50e4141c88fdc593cc14c1c",
+          "runId": 37163302329,
+          "jobId": 111321087793,
+          "conclusion": "success",
+          "role": "main",
+          "provenance": "shell-agent-api-get-attested",
+          "stateField": "earlyCoreFacts.runs",
+          "status": "completed",
+          "attempt": 1,
+          "unitTests": "skipped",
+          "build": "success",
+          "url": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37163302329/job/111321087793"
+        }
+      ],
+      "missingCoreFacts": []
+    },
+    {
+      "number": 3843,
+      "url": "https://github.com/wieslawsoltes/SharpForge/pull/3843",
+      "branch": "codex/project16/05-provider-host",
+      "identityEvidence": "Existing fetched Git merge message, tree and ordered parents; final PR head is the second parent.",
+      "merge": {
+        "sha": "f99fc52e12c3a794b352463286dc0c58ae790521",
+        "tree": "8f44869f8f65c8a8072f364e7d1b8fd33dd84e47",
+        "orderedParents": [
+          "f7e6e0884eec566b0c2feeeaa0c967c528ed870d",
+          "43704621cc73129ea95bc155bc610efff322df9d"
+        ],
+        "authorTimestamp": "1791080800 +0200",
+        "committerTimestamp": "1791080800 +0200",
+        "subject": "Merge pull request #3843 from wieslawsoltes/codex/project16/05-provider-host",
+        "messageSha256": "21b9bde7b53fa1e8031c180bc30aa57d3d1efcfe313d71232415fec86758c61e"
+      },
+      "head": {
+        "sha": "43704621cc73129ea95bc155bc610efff322df9d",
+        "tree": "83436c0427f997752c35868b53b3d4c2a2e21d12",
+        "orderedParents": [
+          "2a19543ba43ef16cf73dc2c81834265f74d4ac0c"
+        ],
+        "authorTimestamp": "1791080677 +0200",
+        "committerTimestamp": "1791080677 +0200",
+        "subject": "SF-A20-T51: archive final Project 16 qualification and publication evidence",
+        "messageSha256": "34b7223783f234d9b887f746f943ffd119011123a5e742ff2f38c80b95e5a4a6"
+      },
+      "mainParent": "f7e6e0884eec566b0c2feeeaa0c967c528ed870d",
+      "coreFacts": [
+        {
+          "role": "own",
+          "provenance": "creator-provided-record",
+          "stateField": "finalOwnCore",
+          "runId": 37170995922,
+          "jobId": 111343752758,
+          "conclusion": "success",
+          "checkout": "success",
+          "url": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37170995922/job/111343752758"
+        },
+        {
+          "role": "main",
+          "provenance": "root-provided-prior-verified-api-read",
+          "runId": 37171076483,
+          "jobId": 111343981771,
+          "source": "f99fc52e12c3a794b352463286dc0c58ae790521",
+          "status": "completed",
+          "conclusion": "success",
+          "url": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37171076483/job/111343981771"
+        }
+      ],
+      "missingCoreFacts": []
+    },
+    {
+      "number": 3865,
+      "url": "https://github.com/wieslawsoltes/SharpForge/pull/3865",
+      "branch": "codex/project16/06-qualification-yaml",
+      "identityEvidence": "Existing fetched Git merge message, tree and ordered parents; final PR head is the second parent.",
+      "merge": {
+        "sha": "e990e9342678117090a48516ec736d92104be4b2",
+        "tree": "36c33c1974b2429edc1798637673d548c822124d",
+        "orderedParents": [
+          "23235d9823fcf925545835702321b356fb47faa9",
+          "ba9b8e3ef8b8d3d37cf471756fe926514cf7101d"
+        ],
+        "authorTimestamp": "1791081528 +0200",
+        "committerTimestamp": "1791081528 +0200",
+        "subject": "Merge pull request #3865 from wieslawsoltes/codex/project16/06-qualification-yaml",
+        "messageSha256": "c681af1212071eb17e2edbee1e4166608263db4e42bf1d3b31e5551b1cdf8235"
+      },
+      "head": {
+        "sha": "ba9b8e3ef8b8d3d37cf471756fe926514cf7101d",
+        "tree": "bf2c0330902d364c2e1c1e35a913060ba79c4733",
+        "orderedParents": [
+          "f99fc52e12c3a794b352463286dc0c58ae790521"
+        ],
+        "authorTimestamp": "1791081407 +0200",
+        "committerTimestamp": "1791081407 +0200",
+        "subject": "SF-A20-T51: quote browser dependency command with a YAML block scalar",
+        "messageSha256": "dac29fefe16a16259734600a137d1a40f8393d8ca28ad423107424392f15b7d2"
+      },
+      "mainParent": "23235d9823fcf925545835702321b356fb47faa9",
+      "coreFacts": [
+        {
+          "role": "main",
+          "provenance": "creator-provided-record",
+          "stateField": "workflowFix.mainCore",
+          "jobId": 111345755638,
+          "source": "e990e9342678117090a48516ec736d92104be4b2",
+          "status": "completed",
+          "conclusion": "success",
+          "startedAt": "2026-10-04T02:38:54Z",
+          "completedAt": "2026-10-04T02:39:18Z",
+          "runId": 37171692669,
+          "url": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37171692669/job/111345755638"
+        },
+        {
+          "role": "own",
+          "provenance": "root-provided-prior-verified-api-read",
+          "runId": 37171599041,
+          "jobId": 111345480879,
+          "source": "ba9b8e3ef8b8d3d37cf471756fe926514cf7101d",
+          "status": "completed",
+          "conclusion": "success",
+          "url": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37171599041/job/111345480879"
+        }
+      ],
+      "missingCoreFacts": []
+    },
+    {
+      "number": 3904,
+      "url": "https://github.com/wieslawsoltes/SharpForge/pull/3904",
+      "branch": "codex/project16/07-browser-qualification",
+      "identityEvidence": "Existing fetched Git merge message, tree and ordered parents; final PR head is the second parent.",
+      "merge": {
+        "sha": "e4629f443b59bfc2d7494b731be19afc5974b7b1",
+        "tree": "1733c01dae0e44cea49dd82a574fda7b8286d6be",
+        "orderedParents": [
+          "7ae530c9ac319cfd0fa22ba49210ca65c31af120",
+          "15acd33f3a2ab81797d3a0d341f53dfd13bcbbd5"
+        ],
+        "authorTimestamp": "1791082720 +0200",
+        "committerTimestamp": "1791082720 +0200",
+        "subject": "Merge pull request #3904 from wieslawsoltes/codex/project16/07-browser-qualification",
+        "messageSha256": "59f1d149d97bfd874a245e9a5a07d9426b7d11c135f9ebcca3dba23d0b55b2bf"
+      },
+      "head": {
+        "sha": "15acd33f3a2ab81797d3a0d341f53dfd13bcbbd5",
+        "tree": "ac52aeafc5f7b9186c4d16ad71d749378c5976fb",
+        "orderedParents": [
+          "003be7f2d755f76dfefb890bbd711cfdca3b1bbf",
+          "69554a4b3fc9158059ec40fe871eb6af32abad35"
+        ],
+        "authorTimestamp": "1791082611 +0200",
+        "committerTimestamp": "1791082611 +0200",
+        "subject": "SF-A20-T51: integrate serial qualification outcome collection",
+        "messageSha256": "b8e0d48c175c7ffac118a9b082d5f8a4d1d4d843d28c67969231e2300a3f355f"
+      },
+      "mainParent": "7ae530c9ac319cfd0fa22ba49210ca65c31af120",
+      "coreFacts": [
+        {
+          "role": "own",
+          "provenance": "creator-provided-record",
+          "stateField": "callerCorrection.ownCore",
+          "runId": 37172637371,
+          "jobId": 111348584889,
+          "conclusion": "success",
+          "url": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37172637371/job/111348584889"
+        },
+        {
+          "role": "main",
+          "provenance": "creator-provided-record",
+          "stateField": "callerCorrection.mainCore",
+          "runId": 37172677101,
+          "jobId": 111348698282,
+          "conclusion": "success",
+          "url": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37172677101/job/111348698282"
+        }
+      ],
+      "missingCoreFacts": []
+    },
+    {
+      "number": 4105,
+      "url": "https://github.com/wieslawsoltes/SharpForge/pull/4105",
+      "branch": "codex/project16/08-browser-acceptance",
+      "identityEvidence": "Existing fetched Git merge message, tree and ordered parents; final PR head is the second parent.",
+      "merge": {
+        "sha": "8d1be9cffa04b0fd7390e5cb6fe5f6c03b997557",
+        "tree": "dc9d4e337b91c6e878e7c6c7d65f013667b5ec6b",
+        "orderedParents": [
+          "7a4e4246dcd8adbe365e622cc6566604c84e145d",
+          "cce1aa2ceb6bce8247c4ab62c76a7d56d9518370"
+        ],
+        "authorTimestamp": "1791085882 +0200",
+        "committerTimestamp": "1791085882 +0200",
+        "subject": "Merge pull request #4105 from wieslawsoltes/codex/project16/08-browser-acceptance",
+        "messageSha256": "46fa038baffc7184a323f91db83979f2f6e0c3a18c91928c52e90635173bb024"
+      },
+      "head": {
+        "sha": "cce1aa2ceb6bce8247c4ab62c76a7d56d9518370",
+        "tree": "543ac1fd0f99e60bd7be5319ecad1590ba1eeccd",
+        "orderedParents": [
+          "b2ab94d9f4ffab9102d318269855e6ab3d3a248e"
+        ],
+        "authorTimestamp": "1791085599 +0200",
+        "committerTimestamp": "1791085599 +0200",
+        "subject": "SF-A19-T11.1: provide owned tracing in the first-run shell fixture",
+        "messageSha256": "d0712bfc16de1aa8fefce3b9d995bfc9b29db28e86ee04fc26040ce7c0a2e37c"
+      },
+      "mainParent": "7a4e4246dcd8adbe365e622cc6566604c84e145d",
+      "coreFacts": [
+        {
+          "role": "own",
+          "provenance": "creator-provided-record",
+          "stateField": "acceptance.ownCore",
+          "runId": 37175219507,
+          "jobId": 111356347344,
+          "conclusion": "success",
+          "url": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37175219507/job/111356347344"
+        },
+        {
+          "role": "main",
+          "provenance": "creator-provided-record",
+          "stateField": "acceptance.mainCore",
+          "runId": 37175263470,
+          "jobId": 111356461984,
+          "conclusion": "success",
+          "url": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37175263470/job/111356461984"
+        },
+        {
+          "role": "earlier-cancelled",
+          "provenance": "creator-provided-record",
+          "stateField": "acceptance.earlierAutomaticCancellation",
+          "runId": 37175211209,
+          "conclusion": "cancelled",
+          "url": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37175211209"
+        }
+      ],
+      "missingCoreFacts": []
+    },
+    {
+      "number": 4297,
+      "url": "https://github.com/wieslawsoltes/SharpForge/pull/4297",
+      "branch": "codex/project16/09-hosted-followup",
+      "identityEvidence": "Existing fetched Git merge message, tree and ordered parents; final PR head is the second parent.",
+      "merge": {
+        "sha": "c13aa0fd9d27df28b3708bb83d914a04c20a5c7c",
+        "tree": "29023ed8b962b6d91671bdb0c0359d905ef2659e",
+        "orderedParents": [
+          "8ae8188b0ff6f8fbd431cf49c447c102aebe2bbc",
+          "c391430a44e99f08e1a698361e1161536e0425e5"
+        ],
+        "authorTimestamp": "1791090215 +0200",
+        "committerTimestamp": "1791090215 +0200",
+        "subject": "Merge pull request #4297 from wieslawsoltes/codex/project16/09-hosted-followup",
+        "messageSha256": "7746b30781965404964641bf97e01ef18830942007ffb40f8467a493972eea81"
+      },
+      "head": {
+        "sha": "c391430a44e99f08e1a698361e1161536e0425e5",
+        "tree": "3992444851da294daf5ab3d098b78376444457dc",
+        "orderedParents": [
+          "b791237e0e586f5249ba38e05d49d696c32621cc",
+          "6f0fad569cb3003e31e1accc09aa4e59f187fcbb"
+        ],
+        "authorTimestamp": "1791090110 +0200",
+        "committerTimestamp": "1791090110 +0200",
+        "subject": "Merge completed follow-up qualification archive without combining overlapping counts",
+        "messageSha256": "2a7be87e288ac0f1616deae7ad4ca0fe0e0e73af4b92e4261656cbea290d8cec"
+      },
+      "mainParent": "8ae8188b0ff6f8fbd431cf49c447c102aebe2bbc",
+      "coreFacts": [
+        {
+          "role": "own",
+          "provenance": "creator-provided-record",
+          "stateField": "followup.core",
+          "runId": 37178720477,
+          "jobId": 111366725424,
+          "status": "completed",
+          "conclusion": "success",
+          "url": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37178720477/job/111366725424"
+        },
+        {
+          "role": "main",
+          "provenance": "creator-provided-record",
+          "stateField": "followup.mainCore",
+          "runId": 37178789347,
+          "jobId": 111366905289,
+          "conclusion": "success",
+          "url": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37178789347/job/111366905289"
+        },
+        {
+          "role": "earlier-cancelled",
+          "provenance": "creator-provided-record",
+          "stateField": "followup.cancelledCore",
+          "runId": 37178705406,
+          "jobId": 111366653948,
+          "conclusion": "cancelled",
+          "url": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37178705406/job/111366653948"
+        }
+      ],
+      "missingCoreFacts": []
+    },
+    {
+      "number": 4413,
+      "url": "https://github.com/wieslawsoltes/SharpForge/pull/4413",
+      "branch": "codex/project16/10-runtime-source-qualification",
+      "identityEvidence": "Existing fetched Git merge message, tree and ordered parents; final PR head is the second parent.",
+      "merge": {
+        "sha": "e905566c1933830deb6de7249062113c2b0eeee5",
+        "tree": "1f340cafbdc6c7843e3f1335ff59f2bb1f667f28",
+        "orderedParents": [
+          "8c91f29b2c6e8d7d3f0d90568baf01c37f09b0c4",
+          "4cb2d290c4453192c777786a39ebdb7fa45b9461"
+        ],
+        "authorTimestamp": "1791095783 +0200",
+        "committerTimestamp": "1791095783 +0200",
+        "subject": "Merge pull request #4413 from wieslawsoltes/codex/project16/10-runtime-source-qualification",
+        "messageSha256": "4742cb2b71cbe31479cc6599fdfa7035f62a7cf50993be4764a6389402c39ea4"
+      },
+      "head": {
+        "sha": "4cb2d290c4453192c777786a39ebdb7fa45b9461",
+        "tree": "2a6cf385a1f81114ed980f1463e19fd6c7ce7c72",
+        "orderedParents": [
+          "c034f9923b8dd536379e439748a6f8304b653029"
+        ],
+        "authorTimestamp": "1791095653 +0200",
+        "committerTimestamp": "1791095653 +0200",
+        "subject": "SF-A19-T26: record exact scoped benchmark import audit",
+        "messageSha256": "42b377caec7e30a7281c8c624f47b0f0f39ddf428677dca6c6cdf14fd78c70b9"
+      },
+      "mainParent": "8c91f29b2c6e8d7d3f0d90568baf01c37f09b0c4",
+      "coreFacts": [
+        {
+          "role": "earlier-cancelled",
+          "provenance": "creator-provided-record",
+          "stateField": "a5CorrectionCoreInitial.previousCanceledRunId",
+          "runId": 37182584251,
+          "conclusion": "cancelled",
+          "url": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37182584251"
+        },
+        {
+          "role": "initial-own",
+          "provenance": "creator-provided-record",
+          "stateField": "a5CorrectionCoreInitial",
+          "runId": 37182594704,
+          "jobId": 111378010076,
+          "source": "31b55c988679cf3bc9bfe97928c866f404bb9698",
+          "conclusion": "failure",
+          "mergePreview": "569a829d62f1b1ad6d7f5e88386ffb5ead6c203c",
+          "url": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37182594704/job/111378010076"
+        },
+        {
+          "role": "final-own",
+          "provenance": "creator-provided-record",
+          "stateField": "a5CorrectionCoreFinal",
+          "runId": 37183190894,
+          "jobId": 111379703761,
+          "source": "4cb2d290c4453192c777786a39ebdb7fa45b9461",
+          "conclusion": "success",
+          "unitTests": "skipped-per-core-policy",
+          "build": "success",
+          "url": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37183190894/job/111379703761"
+        },
+        {
+          "role": "main",
+          "provenance": "creator-provided-record",
+          "stateField": "a5CorrectionMainCore",
+          "runId": 37183295751,
+          "jobId": 111380009037,
+          "source": "e905566c1933830deb6de7249062113c2b0eeee5",
+          "tree": "1f340cafbdc6c7843e3f1335ff59f2bb1f667f28",
+          "conclusion": "success",
+          "unitTests": "skipped-per-core-policy",
+          "url": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37183295751/job/111380009037"
+        }
+      ],
+      "initialOwnFailure": {
+        "reason": "Missing exact-hash dynamic-import inventory review for trusted checkout benchmark loader",
+        "path": "scripts/benchmarks/a19-correction-paths.mjs",
+        "operation": "dynamic-import",
+        "count": 1,
+        "line": 61,
+        "sha256": "87827deddeda04d6fdb6b055ff7448c3d8fe221759a5accf87ca6ab301ce5a3c"
+      },
+      "missingCoreFacts": []
+    },
+    {
+      "number": 4426,
+      "url": "https://github.com/wieslawsoltes/SharpForge/pull/4426",
+      "branch": "codex/project16/11-reviewed-performance-baselines",
+      "identityEvidence": "Existing fetched Git merge message, tree and ordered parents; final PR head is the second parent.",
+      "merge": {
+        "sha": "25ef23b0fb86eb3be4151492c2ef6bbc51f0a82e",
+        "tree": "a0922a5f98e4ce38cd377d109a083a1da77df9a1",
+        "orderedParents": [
+          "e905566c1933830deb6de7249062113c2b0eeee5",
+          "aca4d358167c8840a1efce9e39182e1eb5b6f71b"
+        ],
+        "authorTimestamp": "1791096158 +0200",
+        "committerTimestamp": "1791096158 +0200",
+        "subject": "Merge pull request #4426 from wieslawsoltes/codex/project16/11-reviewed-performance-baselines",
+        "messageSha256": "fdf92023e0f22e0075000a19de30d1e46952b056f8af142147f5cab43247e3d9"
+      },
+      "head": {
+        "sha": "aca4d358167c8840a1efce9e39182e1eb5b6f71b",
+        "tree": "fd9dc104ddd4e46ca1dceca8630cfacbaa584686",
+        "orderedParents": [
+          "c6ff3974bdce835f037847c95ed295b641506495"
+        ],
+        "authorTimestamp": "1791096019 +0200",
+        "committerTimestamp": "1791096019 +0200",
+        "subject": "SF-A19-T11.4: clarify exact size units and UI comparison scope",
+        "messageSha256": "8ac09e0785fff5c876b93f33653d53f92e3b684806d644b2bca19f112c9e1e11"
+      },
+      "mainParent": "e905566c1933830deb6de7249062113c2b0eeee5",
+      "coreFacts": [
+        {
+          "role": "earlier-cancelled",
+          "provenance": "creator-provided-record",
+          "stateField": "baselineProfileCore.priorCanceledRunId",
+          "runId": 37183486528,
+          "conclusion": "cancelled",
+          "url": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37183486528"
+        },
+        {
+          "role": "own",
+          "provenance": "creator-provided-record",
+          "stateField": "baselineProfileCore",
+          "runId": 37183489254,
+          "jobId": 111380582948,
+          "source": "aca4d358167c8840a1efce9e39182e1eb5b6f71b",
+          "conclusion": "success",
+          "unitTests": "skipped-per-core-policy",
+          "url": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37183489254/job/111380582948"
+        },
+        {
+          "role": "main",
+          "provenance": "creator-provided-record",
+          "stateField": "baselineProfileMainCore",
+          "runId": 37183596240,
+          "jobId": 111380885340,
+          "source": "25ef23b0fb86eb3be4151492c2ef6bbc51f0a82e",
+          "tree": "a0922a5f98e4ce38cd377d109a083a1da77df9a1",
+          "conclusion": "success",
+          "unitTests": "skipped-per-core-policy",
+          "url": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37183596240/job/111380885340"
+        }
+      ],
+      "missingCoreFacts": []
+    },
+    {
+      "number": 4453,
+      "url": "https://github.com/wieslawsoltes/SharpForge/pull/4453",
+      "branch": "codex/project16/12-final-qualification-followups",
+      "identityEvidence": "Existing fetched Git merge message, tree and ordered parents; final PR head is the second parent.",
+      "merge": {
+        "sha": "b8d68d417c792156dedb2ac2b98acf33cac3f141",
+        "tree": "74021421e044947908f037bf34d00bcb258e25fc",
+        "orderedParents": [
+          "293b7697e4e32bea0f5b281c0e1476046f6afaaa",
+          "353daec76089751f17a49c0319da82ea1bd1a1a9"
+        ],
+        "authorTimestamp": "1791099363 +0200",
+        "committerTimestamp": "1791099363 +0200",
+        "subject": "Merge pull request #4453 from wieslawsoltes/codex/project16/12-final-qualification-followups",
+        "messageSha256": "c003261497ff8931f85f3e9a59e7a971bdf51b98c7f4675c6db49584ef65bd8e"
+      },
+      "head": {
+        "sha": "353daec76089751f17a49c0319da82ea1bd1a1a9",
+        "tree": "eac6e1b6756367581023f7135361a78be932e880",
+        "orderedParents": [
+          "23e51d6e6a7b726ecbfcaf73d735a2bd8b15adfc",
+          "be4d87b60d7ae25f9ee6af8e0724b3a17e7b0d61"
+        ],
+        "authorTimestamp": "1791099147 +0200",
+        "committerTimestamp": "1791099147 +0200",
+        "subject": "SF-A20-T35: preserve failing proof and passing followup cohort",
+        "messageSha256": "12c7c8e9c81552fa543ce4fd70d8b235d9071375d4b17dbccf778463aeb5890b"
+      },
+      "mainParent": "293b7697e4e32bea0f5b281c0e1476046f6afaaa",
+      "coreFacts": [
+        {
+          "role": "earlier-cancelled",
+          "provenance": "root-provided-verified-run-record",
+          "runId": 37186179078,
+          "jobId": 111388449868,
+          "source": "353daec76089751f17a49c0319da82ea1bd1a1a9",
+          "status": "completed",
+          "conclusion": "cancelled",
+          "planStep": "cancelled",
+          "build": "skipped",
+          "url": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37186179078/job/111388449868"
+        },
+        {
+          "role": "own",
+          "provenance": "creator-provided-record",
+          "stateField": "finalFollowupCore",
+          "runId": 37186193332,
+          "jobId": 111388507391,
+          "source": "353daec76089751f17a49c0319da82ea1bd1a1a9",
+          "tree": "eac6e1b6756367581023f7135361a78be932e880",
+          "conclusion": "success",
+          "unitTests": "skipped-per-core-policy",
+          "earlierCanceledRun": 37186179078,
+          "url": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37186193332/job/111388507391"
+        },
+        {
+          "role": "main",
+          "provenance": "creator-provided-record",
+          "stateField": "finalFollowupMainCore",
+          "runId": 37186282226,
+          "jobId": 111388761783,
+          "source": "b8d68d417c792156dedb2ac2b98acf33cac3f141",
+          "tree": "74021421e044947908f037bf34d00bcb258e25fc",
+          "conclusion": "success",
+          "unitTests": "skipped-per-core-policy",
+          "url": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37186282226/job/111388761783"
+        }
+      ],
+      "missingCoreFacts": [],
+      "bodyObservations": [
+        {
+          "provenance": "root-reported-in-place-PR-body-update-and-read-local-body-bytes",
+          "path": "/workspace/scratch/6b99131ca908/p16-pr12-body-final.md",
+          "bytes": 9056,
+          "sha256": "0964f29db2ddf34817852614c9a4490141acbefd4d3e0c8c209a5a25a1ff8272",
+          "observedAt": "2026-10-04T08:02:14.197422+00:00",
+          "sourceIdentityChanged": false,
+          "scope": "Completed A7/M2 outcomes and explicit integration-owner 5% review/signoff table; initial publication pending observation retained."
+        }
+      ]
+    }
+  ],
+  "qualificationA6": {
+    "provenance": "creator-provided-record",
+    "stateField": "qualificationA6",
+    "record": {
+      "status": "completed",
+      "conclusion": "failure",
+      "source": "25ef23b0fb86eb3be4151492c2ef6bbc51f0a82e",
+      "tree": "a0922a5f98e4ce38cd377d109a083a1da77df9a1",
+      "branch": "codex/project16/qualify-ubuntu-chromium-all-compare-a5-20261004-a6",
+      "platform": "ubuntu-latest",
+      "engine": "chromium",
+      "stage": "all",
+      "baselineProfile": "a5",
+      "captureOnly": false,
+      "runId": 37183721322,
+      "jobId": 111381241587,
+      "createdAt": "2026-10-04T06:45:14Z",
+      "updatedAt": "2026-10-04T06:57:34Z",
+      "selected": 16,
+      "passed": 15,
+      "failed": 1,
+      "failedScopes": [
+        "performance"
+      ],
+      "failure": "Editor latency budget failed",
+      "artifactId": 11296302001,
+      "artifactBytes": 1402514,
+      "artifactSha256": "4d18d06390e92f13c47194e89926a85a674c2ed0249405656491571583b2d74f",
+      "artifactPath": "/workspace/scratch/6b99131ca908/attachments/c5c20407-1a63-46f9-b664-d170ac480313/p16-hosted-a6.zip",
+      "extractedPath": "/workspace/scratch/6b99131ca908/p16-hosted-a6",
+      "jobLogPath": "/workspace/scratch/6b99131ca908/p16-hosted-a6-job.log",
+      "jobLogBytes": 315299,
+      "jobLogSha256": "dfd8bcdf4bafa3019d0efb8320ae140a219934072eeef6e60ca73790a7f27645",
+      "node": {
+        "A19": {
+          "tests": 807,
+          "passed": 807,
+          "failed": 0,
+          "skipped": 0,
+          "durationMs": 54424.298391
+        },
+        "A20": {
+          "tests": 722,
+          "passed": 713,
+          "failed": 0,
+          "skipped": 9,
+          "durationMs": 37928.295457
+        }
+      },
+      "editorComparison": {
+        "absolutePassed": true,
+        "typing200MiBP95Ms": 32.29999999998836,
+        "relativePassed": false,
+        "failedRows": [
+          {
+            "operation": "browser.undoToPaint",
+            "sizeMiB": 1,
+            "beforeP95Ms": 36.5,
+            "afterP95Ms": 51.2,
+            "limitMs": 43.8
+          },
+          {
+            "operation": "browser.undoToPaint",
+            "sizeMiB": 10,
+            "beforeP95Ms": 29.3,
+            "afterP95Ms": 53.2,
+            "limitMs": 35.16
+          },
+          {
+            "operation": "browser.undoToPaint",
+            "sizeMiB": 100,
+            "beforeP95Ms": 41.8,
+            "afterP95Ms": 58.7,
+            "limitMs": 50.16
+          }
+        ],
+        "environmentChanges": [],
+        "cause": "not established",
+        "acceptedException": false
+      },
+      "workbenchComparison": {
+        "absolutePassed": true,
+        "relativePassed": true,
+        "rawSamples": 126,
+        "fixtureAndEnvironmentMatched": true
+      }
+    },
+    "interpretation": "Exact recorded scope outcome only; no inference of another platform, scope or source result."
+  },
+  "historicalSnapshotPreserved": "docs/evidence/project16-hosted/publication-facts.json",
+  "interpretation": [
+    "Fetched Git objects independently establish commit trees, ordered parents and commit metadata.",
+    "CI records distinguish creator-provided observations, root-provided prior verified reads and shell-agent API GET attestations; this archive task did not query the API.",
+    "A core pass does not establish Node, browser, standalone, native or performance qualification.",
+    "Canceled and failed runs remain recorded; later successful runs do not rewrite their outcomes.",
+    "A6 failed its editor comparative performance scope; the workbench comparison passed. No exception is recorded.",
+    "W1 qualified all nine Windows Firefox browser scopes at 25ef/a092; M1 qualified eight of nine macOS WebKit scopes at that same source, with standalone navigation failing before product checks.",
+    "A7 at b8/740 passed the editor and workbench absolute/relative a5 comparisons, editor UI budgets, actual Studio 200 MiB scope and instrumentation; the lazy positive-saving scope failed, leaving the performance run at 4/5.",
+    "M2 passed one macOS Chromium standalone scope at b8/740; this does not change M1 WebKit failure or qualify unselected scopes.",
+    "This finalized snapshot stops at the recorded 12-PR and 557-mapping cutoff; later publication objects and the ledger own commit are excluded."
+  ],
+  "priorQualificationObservations": [
+    {
+      "provenance": "creator-provided-record",
+      "record": {
+        "status": "in_progress",
+        "source": "25ef23b0fb86eb3be4151492c2ef6bbc51f0a82e",
+        "tree": "a0922a5f98e4ce38cd377d109a083a1da77df9a1",
+        "branch": "codex/project16/qualify-ubuntu-chromium-all-compare-a5-20261004-a6",
+        "platform": "ubuntu-latest",
+        "engine": "chromium",
+        "stage": "all",
+        "baselineProfile": "a5",
+        "captureOnly": false,
+        "runId": 37183721322,
+        "jobId": 111381241587,
+        "setupAndBuild": "passed",
+        "selectedScopes": "running"
+      },
+      "interpretation": "Recorded in progress at this snapshot; final actual platform outcomes are pending."
+    },
+    {
+      "provenance": "creator-provided-record",
+      "stateField": "qualificationA7",
+      "record": {
+        "status": "in_progress",
+        "source": "b8d68d417c792156dedb2ac2b98acf33cac3f141",
+        "tree": "74021421e044947908f037bf34d00bcb258e25fc",
+        "branch": "codex/project16/qualify-ubuntu-chromium-performance-compare-a5-20261004-a7",
+        "platform": "ubuntu-latest",
+        "engine": "chromium",
+        "stage": "performance",
+        "baselineProfile": "a5",
+        "captureOnly": false,
+        "runId": 37186353254,
+        "jobId": 111388977941
+      },
+      "interpretation": "Performance-only five-scope request. No completed result is inferred while in progress."
+    }
+  ],
+  "qualificationW1": {
+    "provenance": "creator-provided-record",
+    "stateField": "qualificationW1",
+    "record": {
+      "runId": 37184606471,
+      "jobId": 111383814564,
+      "status": "completed",
+      "conclusion": "success",
+      "source": "25ef23b0fb86eb3be4151492c2ef6bbc51f0a82e",
+      "tree": "a0922a5f98e4ce38cd377d109a083a1da77df9a1",
+      "branch": "codex/project16/qualify-windows-firefox-browser-20261004-w1",
+      "platform": "windows-latest",
+      "engine": "firefox",
+      "stage": "browser",
+      "createdAt": "2026-10-04T07:02:40Z",
+      "updatedAt": "2026-10-04T07:07:07Z",
+      "captureOnly": true,
+      "selected": 9,
+      "passed": 9,
+      "failed": 0,
+      "artifactId": 11295819002,
+      "artifactBytes": 15322,
+      "artifactSha256": "b79f4c7f36d8771896d6e35415718ba4f8511335a050c3323587f9a2c8804f2d",
+      "jobLogBytes": 78721,
+      "jobLogSha256": "8e3e5910bd5b5951aa87fcbf1e204aec022d6a4f8b7f9194aefe6573558f002c",
+      "extractedPath": "/workspace/scratch/6b99131ca908/p16-hosted-w1"
+    },
+    "interpretation": "Exact recorded scope outcome only; no inference of another platform, scope or source result."
+  },
+  "qualificationM1": {
+    "provenance": "creator-provided-record",
+    "stateField": "qualificationM1",
+    "record": {
+      "status": "completed",
+      "source": "25ef23b0fb86eb3be4151492c2ef6bbc51f0a82e",
+      "tree": "a0922a5f98e4ce38cd377d109a083a1da77df9a1",
+      "branch": "codex/project16/qualify-macos-webkit-browser-20261004-m1",
+      "platform": "macos-latest",
+      "engine": "webkit",
+      "stage": "browser",
+      "captureOnly": true,
+      "runId": 37184861392,
+      "jobId": 111384572220,
+      "conclusion": "failure",
+      "createdAt": "2026-10-04T07:07:56Z",
+      "updatedAt": "2026-10-04T07:09:44Z",
+      "selected": 9,
+      "passed": 8,
+      "failed": 1,
+      "failedScopes": [
+        "browser:workbench-workflows-standalone"
+      ],
+      "failure": "Page.goto: WebKit encountered an internal error before any product checks",
+      "artifactId": 11296098340,
+      "artifactBytes": 37289,
+      "artifactSha256": "420c7388efaeb54e1079d53b7434171311b67c6b0947fbdac61346781ab4c92d",
+      "artifactPath": "/workspace/scratch/6b99131ca908/attachments/f6b30ad8-8c23-4222-98fe-49accdffdadc/p16-hosted-m1.zip",
+      "extractedPath": "/workspace/scratch/6b99131ca908/p16-hosted-m1",
+      "jobLogBytes": 72779,
+      "jobLogSha256": "42c77b2461e2925cb0467a6aa5530c763a067dba28f77470ac0eb1d0655465f6",
+      "browserVersion": "26.6",
+      "playwrightVersion": "1.63.0",
+      "cause": "under investigation"
+    },
+    "interpretation": "Exact recorded scope outcome only; no inference of another platform, scope or source result.",
+    "sourceBoundary": {
+      "provenance": "shell-agent-source-review-with-archived-run",
+      "documentation": "docs/project16-cross-platform-browser.md",
+      "evidence": "docs/evidence/project16-hosted/m1/",
+      "interpretation": "Pinned Playwright 1.63 WebKit offline guard precedes interception without a file exemption. This source-based automation limitation preserves the M1 failure and does not establish a product defect or native Safari qualification."
+    }
+  },
+  "currentSnapshotBase": "b8d68d417c792156dedb2ac2b98acf33cac3f141",
+  "priorCoreObservations": [
+    {
+      "provenance": "root-provided-earlier-observation",
+      "pr": 4453,
+      "runId": 37186193332,
+      "source": "353daec76089751f17a49c0319da82ea1bd1a1a9",
+      "status": "in_progress",
+      "interpretation": "Initial pending observation retained; exact completed result is recorded on the PR."
+    }
+  ],
+  "qualificationA7": {
+    "provenance": "creator-provided-record-and-read-raw-source-summary",
+    "stateField": "qualificationA7",
+    "record": {
+      "run": 37186353254,
+      "job": 111388977941,
+      "source": "b8d68d417c792156dedb2ac2b98acf33cac3f141",
+      "tree": "74021421e044947908f037bf34d00bcb258e25fc",
+      "status": "completed",
+      "conclusion": "failure",
+      "stage": "performance",
+      "baselineProfile": "a5",
+      "captureOnly": false,
+      "artifact": 11297890150,
+      "zipSha256": "92a4ff4c16e00ac4ab7c02fb06a788ae1d5ded631d4c7554e22f47777ffb3ec0",
+      "selected": 5,
+      "passed": 4,
+      "failed": 1,
+      "failure": "lazy-evaluation: eager1560.778ms versus lazy1569.77ms; strict positive saving gate failed",
+      "editorRelative": true,
+      "editorAbsolute": true,
+      "workbenchRelative": true,
+      "workbenchAbsolute": true
+    },
+    "artifacts": [
+      {
+        "path": "/workspace/scratch/6b99131ca908/p16-hosted-a7/source.json",
+        "bytes": 648,
+        "sha256": "56637af0c526f3bdef46a1e218a076fec05857c9cd4fb0ef50cb94a9ce0e9569"
+      },
+      {
+        "path": "/workspace/scratch/6b99131ca908/p16-hosted-a7/qualification-summary.json",
+        "bytes": 11564,
+        "sha256": "f7dc0b34b6c9b8d210126a321729eb75ccf42b1c8c8cfd351b5ca5bd5a8f49cc"
+      },
+      {
+        "path": "/workspace/scratch/6b99131ca908/p16-hosted-a7/lazy-evaluation.json",
+        "bytes": 6153559,
+        "sha256": "4255f3c7637699ede35afde2108df6ebaa78670f81e16f411316ee4f1c81a7bf"
+      },
+      {
+        "path": "/workspace/scratch/6b99131ca908/p16-hosted-a7/editor-assessment.json",
+        "bytes": 7106,
+        "sha256": "5e5e79a45eb8dbe96ec47ae61ece093dc0a67d0828da7d9937b64da12f04263a"
+      }
+    ],
+    "source": {
+      "sourceSha": "b8d68d417c792156dedb2ac2b98acf33cac3f141",
+      "sourceTree": "74021421e044947908f037bf34d00bcb258e25fc",
+      "trigger": "create",
+      "triggerRef": "refs/heads/codex/project16/qualify-ubuntu-chromium-performance-compare-a5-20261004-a7",
+      "triggerNonce": "compare-a5-20261004-a7",
+      "captureOnly": false,
+      "baselineProfile": "a5",
+      "workflowRunId": "37186353254",
+      "stage": "performance",
+      "engine": "chromium",
+      "runner": "Linux",
+      "runnerLabel": "ubuntu-latest",
+      "editorBaseline": "docs/evidence/project16-hosted/a5/editor-browser.json",
+      "workbenchBaseline": "docs/evidence/project16-hosted/a5/workbench-large-trace.json"
+    },
+    "outcome": {
+      "status": "failed",
+      "exitCode": 1,
+      "counts": {
+        "selected": 5,
+        "passed": 4,
+        "failed": 1
+      },
+      "startedAt": "2026-10-04T07:38:52.098Z",
+      "finishedAt": "2026-10-04T07:47:57.627Z"
+    },
+    "scopes": [
+      {
+        "id": "performance",
+        "status": "passed",
+        "exitCode": 0
+      },
+      {
+        "id": "performance:editor-budgets",
+        "status": "passed",
+        "exitCode": 0
+      },
+      {
+        "id": "performance:studio-large-file",
+        "status": "passed",
+        "exitCode": 0
+      },
+      {
+        "id": "performance:instrumentation",
+        "status": "passed",
+        "exitCode": 0
+      },
+      {
+        "id": "performance:lazy-evaluation",
+        "status": "failed",
+        "exitCode": 1
+      }
+    ],
+    "lazyAssessment": {
+      "passed": false,
+      "gate": "paired aggregate eager ScriptDuration is strictly greater than lazy ScriptDuration",
+      "eagerMs": 1560.7779999999998,
+      "lazyMs": 1569.77,
+      "savedMs": -8.99200000000019,
+      "reductionPercent": -0.5761229335626329,
+      "pairs": 12,
+      "positivePairs": 5,
+      "negativePairs": 7,
+      "zeroPairs": 0,
+      "interpretation": "The unchanged strict positive-saving gate failed. No noise classification, causal explanation, exception or overall pass is inferred."
+    },
+    "editorAssessment": {
+      "absolutePassed": true,
+      "relativePassed": true,
+      "rows": 25,
+      "passedRows": 25,
+      "environmentChanges": [],
+      "largeFile": {
+        "sizeBytes": 209715200,
+        "measuredP95Ms": 32.300000000046566,
+        "budgetMs": 50,
+        "measurement": "input/keydown/scroll event to two requestAnimationFrame callbacks"
+      }
+    },
+    "workbenchAssessment": {
+      "provenance": "root-supplied-completed-outcome",
+      "absolutePassed": true,
+      "relativePassed": true
+    },
+    "interpretation": "Performance only: four of five scopes passed; lazy evaluation failed. No full Node or browser rerun is claimed."
+  },
+  "nonGatePagesObservation": {
+    "provenance": "root-provided-last-read",
+    "source": "b8d68d417c792156dedb2ac2b98acf33cac3f141",
+    "runId": 37186282230,
+    "status": "pending",
+    "gate": false,
+    "interpretation": "Last supplied observation only; no final Pages outcome inferred."
+  },
+  "localFollowupQualification": {
+    "provenance": "creator-provided-record",
+    "stateField": "finalFollowupTargeted",
+    "record": {
+      "source": "20474bfed2c3c442ae50ae46d2dbcff02f155bc5",
+      "tree": "5c5d290f9c190cd4e5c1b5d8e7124f9c0980ec4a",
+      "tests": 69,
+      "passed": 69,
+      "failed": 0,
+      "skipped": 0,
+      "durationMs": 1396.190192,
+      "startedAt": "2026-10-04T07:23:45.467443Z",
+      "finishedAt": "2026-10-04T07:23:46.986351Z"
+    },
+    "publishedSource": "dbbc90a8b0db41858e93be5aa099aa8db1a38dbb",
+    "interpretation": "69/69 in the seven affected files: 16 undo-marker, 5 standalone-stage and 48 existing contracts; no full-area rerun implied."
+  },
+  "qualificationM2": {
+    "provenance": "creator-provided-record-and-read-raw-source-summary",
+    "stateField": "qualificationM2",
+    "record": {
+      "branch": "codex/project16/qualify-macos-chromium-standalone-20261004-m2",
+      "source": "b8d68d417c792156dedb2ac2b98acf33cac3f141",
+      "tree": "74021421e044947908f037bf34d00bcb258e25fc",
+      "status": "completed",
+      "stage": "standalone",
+      "engine": "chromium",
+      "runner": "macos-latest",
+      "separateFromM1": true,
+      "run": 37186932517,
+      "job": 111390739312,
+      "conclusion": "success",
+      "artifact": 11297034626,
+      "zipSha256": "4dac7ada7468eadc27801eb2d145480e021e9830f511771b4261cff1d4660b24"
+    },
+    "artifacts": [
+      {
+        "path": "/workspace/scratch/6b99131ca908/p16-hosted-m2/source.json",
+        "bytes": 512,
+        "sha256": "7466f370b83439011273c987821b36b7a9e4e486fff422e014225fcb51a8a75e"
+      },
+      {
+        "path": "/workspace/scratch/6b99131ca908/p16-hosted-m2/qualification-summary.json",
+        "bytes": 932,
+        "sha256": "412922508b010d4a36275d5b6cd2078cb1fb19e28f808c0a4b28151756ee82ed"
+      }
+    ],
+    "source": {
+      "sourceSha": "b8d68d417c792156dedb2ac2b98acf33cac3f141",
+      "sourceTree": "74021421e044947908f037bf34d00bcb258e25fc",
+      "trigger": "create",
+      "triggerRef": "refs/heads/codex/project16/qualify-macos-chromium-standalone-20261004-m2",
+      "triggerNonce": "20261004-m2",
+      "captureOnly": true,
+      "baselineProfile": null,
+      "workflowRunId": "37186932517",
+      "stage": "standalone",
+      "engine": "chromium",
+      "runner": "macOS",
+      "runnerLabel": "macos-latest",
+      "editorBaseline": null,
+      "workbenchBaseline": null
+    },
+    "outcome": {
+      "status": "passed",
+      "exitCode": 0,
+      "counts": {
+        "selected": 1,
+        "passed": 1,
+        "failed": 0
+      },
+      "startedAt": "2026-10-04T07:49:41.321Z",
+      "finishedAt": "2026-10-04T07:49:47.330Z"
+    },
+    "scopes": [
+      {
+        "id": "browser:workbench-workflows-standalone",
+        "status": "passed",
+        "exitCode": 0
+      }
+    ],
+    "triggerTimestamps": {
+      "provenance": "root-supplied-completed-run-record",
+      "createdAt": "2026-10-04T07:48:54Z",
+      "updatedAt": "2026-10-04T07:49:52Z"
+    },
+    "interpretation": "One macOS Chromium standalone scope passed at b8/740. This is separate from macOS WebKit M1, whose observed failure remains unchanged.",
+    "artifactIdentityClarification": {
+      "provenance": "root-supplied-identity-clarification",
+      "actionsEvidenceZip": {
+        "bytes": 3360,
+        "sha256": "4dac7ada7468eadc27801eb2d145480e021e9830f511771b4261cff1d4660b24",
+        "kind": "Downloaded GitHub Actions evidence ZIP containing six JSON/log members"
+      },
+      "testedStandaloneHtml": {
+        "bytes": 16625302,
+        "sha256": "f8850e1bc7d2fc1bae8153b4337f0bed1f124218bcbefba33288426b8797701a",
+        "kind": "Generated standalone HTML product exercised by M2"
+      },
+      "interpretation": "Evidence download and exercised product are different artifacts; their hashes are not interchangeable."
+    }
+  },
+  "finalizedAt": "2026-10-04T08:09:42.758321+00:00",
+  "publicationCutoff": {
+    "lastMergedPullRequest": 4453,
+    "pullRequestCount": 12,
+    "lastQualifiedMain": "b8d68d417c792156dedb2ac2b98acf33cac3f141",
+    "lastPublishedArchiveIntegration": "9e75738e739ae0f32814c354bc8ad548545456f5",
+    "creatorMappingCount": 557,
+    "ledgerMappingCount": 557,
+    "ownLedgerCommitExcluded": true,
+    "interpretation": "The ledger records published objects through this cutoff; it does not claim a future ledger PR or its own not-yet-created commit."
+  },
+  "resolvedMappingObservations": [
+    {
+      "initialObservation": {
+        "provenance": "creator-provided-record-awaiting-public-Git-object",
+        "localCommit": "f92b7c96ec4fc5f5891e373f1983220812ae267f",
+        "publishedCommit": "5693745cce675135086357f068d98ec5e05d251f",
+        "tree": "f4ce37b1633dc2302e7eedb05ce8cee6348985cb",
+        "publishedOrderedParents": [
+          "b8d68d417c792156dedb2ac2b98acf33cac3f141",
+          "c3cd82d577c65ad7109d15580b9539703e597579"
+        ],
+        "interpretation": "Not yet appended to the verified mapping ledger; public object absent at this observation."
+      },
+      "resolution": {
+        "observedAt": "2026-10-04T08:09:42.758321+00:00",
+        "status": "resolved-git-verified-and-appended",
+        "local": "f92b7c96ec4fc5f5891e373f1983220812ae267f",
+        "published": "5693745cce675135086357f068d98ec5e05d251f",
+        "tree": "f4ce37b1633dc2302e7eedb05ce8cee6348985cb",
+        "mappedParentOrderMatches": true
+      }
+    }
+  ],
+  "finalEvidencePublications": [
+    {
+      "stateField": "finalStatusPublication",
+      "provenance": "creator-record-and-fetched-git-object",
+      "local": {
+        "sha": "86c2488cc925155862e1e8d92504c03cdddaf6b1",
+        "tree": "f4ce37b1633dc2302e7eedb05ce8cee6348985cb",
+        "orderedParents": [
+          "b8d68d417c792156dedb2ac2b98acf33cac3f141"
+        ],
+        "authorTimestamp": "1791100620 +0300",
+        "committerTimestamp": "1791100620 +0300",
+        "subject": "SF-A19-T12: reconcile final source and qualification outcomes",
+        "messageSha256": "a94ff2300ececc35bad949441149a7dc4ffd7a08d19814494f57e6045bfec50a"
+      },
+      "published": {
+        "sha": "c3cd82d577c65ad7109d15580b9539703e597579",
+        "tree": "f4ce37b1633dc2302e7eedb05ce8cee6348985cb",
+        "orderedParents": [
+          "b8d68d417c792156dedb2ac2b98acf33cac3f141"
+        ],
+        "authorTimestamp": "1791100752 +0200",
+        "committerTimestamp": "1791100752 +0200",
+        "subject": "SF-A19-T12: reconcile final source and qualification outcomes",
+        "messageSha256": "a7490281eda91b5ff7251ef773653c4d5f4efaef99b61ba05f96087b2fd1eede"
+      },
+      "treeMatches": true,
+      "mappedParentOrderMatches": true
+    },
+    {
+      "stateField": "finalStatusIntegration",
+      "provenance": "creator-record-and-fetched-git-object",
+      "local": {
+        "sha": "f92b7c96ec4fc5f5891e373f1983220812ae267f",
+        "tree": "f4ce37b1633dc2302e7eedb05ce8cee6348985cb",
+        "orderedParents": [
+          "b8d68d417c792156dedb2ac2b98acf33cac3f141",
+          "86c2488cc925155862e1e8d92504c03cdddaf6b1"
+        ],
+        "authorTimestamp": "1791100773 +0300",
+        "committerTimestamp": "1791100773 +0300",
+        "subject": "SF-A19-T12: integrate final source and qualification reconciliation",
+        "messageSha256": "1284eec4141112ac85a0b0eab0ab492c5d47b08bff8b9496941600758f8e4a5f"
+      },
+      "published": {
+        "sha": "5693745cce675135086357f068d98ec5e05d251f",
+        "tree": "f4ce37b1633dc2302e7eedb05ce8cee6348985cb",
+        "orderedParents": [
+          "b8d68d417c792156dedb2ac2b98acf33cac3f141",
+          "c3cd82d577c65ad7109d15580b9539703e597579"
+        ],
+        "authorTimestamp": "1791100797 +0200",
+        "committerTimestamp": "1791100797 +0200",
+        "subject": "SF-A19-T12: integrate final source and qualification reconciliation",
+        "messageSha256": "42794b510cac4dc0f886257fc339408e8fd4828f64952a9e55047d6b26afa4b5"
+      },
+      "treeMatches": true,
+      "mappedParentOrderMatches": true
+    },
+    {
+      "stateField": "m2ArchivePublication",
+      "provenance": "creator-record-and-fetched-git-object",
+      "local": {
+        "sha": "83842f994b02f48542143288154ef1a624686ff7",
+        "tree": "dc8e5b7f106ab9c39324d2d5d60c2b09e6ecb582",
+        "orderedParents": [
+          "b8d68d417c792156dedb2ac2b98acf33cac3f141"
+        ],
+        "authorTimestamp": "1791100780 +0300",
+        "committerTimestamp": "1791100780 +0300",
+        "subject": "SF-A19-T12.2: retain macOS Chromium standalone qualification",
+        "messageSha256": "3a66d79c73734e0c95d47c691af412f20f367e8bad64e9956d0bbc9576fbb9d8"
+      },
+      "published": {
+        "sha": "1680c995fc47f1a652790c81df7bd4338d959829",
+        "tree": "dc8e5b7f106ab9c39324d2d5d60c2b09e6ecb582",
+        "orderedParents": [
+          "b8d68d417c792156dedb2ac2b98acf33cac3f141"
+        ],
+        "authorTimestamp": "1791100905 +0200",
+        "committerTimestamp": "1791100905 +0200",
+        "subject": "SF-A19-T12.2: retain macOS Chromium standalone qualification",
+        "messageSha256": "e869f799cfa720389fc46d05931c6c38486104d88d7967f532252c8af0dd5e54"
+      },
+      "treeMatches": true,
+      "mappedParentOrderMatches": true
+    },
+    {
+      "stateField": "m2ArchiveIntegration",
+      "provenance": "creator-record-and-fetched-git-object",
+      "local": {
+        "sha": "b1f099092d4ce175270e5437fde056ebfa5a423d",
+        "tree": "3a2bf4144be8044f0a7385b5b462fd41efab3ca0",
+        "orderedParents": [
+          "f92b7c96ec4fc5f5891e373f1983220812ae267f",
+          "83842f994b02f48542143288154ef1a624686ff7"
+        ],
+        "authorTimestamp": "1791100920 +0300",
+        "committerTimestamp": "1791100920 +0300",
+        "subject": "SF-A19-T12: integrate macOS standalone evidence",
+        "messageSha256": "2cb620d298e84a83cf768838d275fbfe59f38562615293c33702a20010490f6f"
+      },
+      "published": {
+        "sha": "c263550a7e015fa0a57e8174c48fdc0db18b4a00",
+        "tree": "3a2bf4144be8044f0a7385b5b462fd41efab3ca0",
+        "orderedParents": [
+          "5693745cce675135086357f068d98ec5e05d251f",
+          "1680c995fc47f1a652790c81df7bd4338d959829"
+        ],
+        "authorTimestamp": "1791100941 +0200",
+        "committerTimestamp": "1791100941 +0200",
+        "subject": "SF-A19-T12: integrate macOS standalone evidence",
+        "messageSha256": "1d609b5930244b235b550da4d36bd6e49257d015e9227025258d24b2f10d222a"
+      },
+      "treeMatches": true,
+      "mappedParentOrderMatches": true
+    },
+    {
+      "stateField": "a7ArchivePublication",
+      "provenance": "creator-record-and-fetched-git-object",
+      "local": {
+        "sha": "3f4f671b46dee99e1ab61437be1942ac17030ea7",
+        "tree": "24d6a27075537f295ad94bec5256446a421d26e0",
+        "orderedParents": [
+          "b8d68d417c792156dedb2ac2b98acf33cac3f141"
+        ],
+        "authorTimestamp": "1791100921 +0300",
+        "committerTimestamp": "1791100921 +0300",
+        "subject": "SF-A20-T12: archive a7 performance outcomes and explicit review",
+        "messageSha256": "32deb24bf82dcbe81e2ea6fe9113aef721cc9ac28e73f1b646eac93c17abe162"
+      },
+      "published": {
+        "sha": "5717d1193ae36c17afb1e27f6e7735354b96839e",
+        "tree": "24d6a27075537f295ad94bec5256446a421d26e0",
+        "orderedParents": [
+          "b8d68d417c792156dedb2ac2b98acf33cac3f141"
+        ],
+        "authorTimestamp": "1791101220 +0200",
+        "committerTimestamp": "1791101220 +0200",
+        "subject": "SF-A20-T12: archive a7 performance outcomes and explicit review",
+        "messageSha256": "904674f74e6eba62ac6947165d476f58c7c36e55d3937953a19bf6d4f91e202b"
+      },
+      "treeMatches": true,
+      "mappedParentOrderMatches": true
+    },
+    {
+      "stateField": "a7ArchiveIntegration",
+      "provenance": "creator-record-and-fetched-git-object",
+      "local": {
+        "sha": "a3ece1158f72abb5616daacb708b89b4315d2de8",
+        "tree": "b860c128b357cdee210169d3ed2d659469369d54",
+        "orderedParents": [
+          "b1f099092d4ce175270e5437fde056ebfa5a423d",
+          "3f4f671b46dee99e1ab61437be1942ac17030ea7"
+        ],
+        "authorTimestamp": "1791101059 +0300",
+        "committerTimestamp": "1791101059 +0300",
+        "subject": "SF-A20-T12: integrate final performance evidence and clarify candidate counts",
+        "messageSha256": "72c18b751d5080c2e5ccecd3506b9e392b0105302f062b76947be59e9d571fcf"
+      },
+      "published": {
+        "sha": "9e75738e739ae0f32814c354bc8ad548545456f5",
+        "tree": "b860c128b357cdee210169d3ed2d659469369d54",
+        "orderedParents": [
+          "c263550a7e015fa0a57e8174c48fdc0db18b4a00",
+          "5717d1193ae36c17afb1e27f6e7735354b96839e"
+        ],
+        "authorTimestamp": "1791101222 +0200",
+        "committerTimestamp": "1791101222 +0200",
+        "subject": "SF-A20-T12: integrate final performance evidence and clarify candidate counts",
+        "messageSha256": "6300a3c589b7516e12c244f0e33a7b5f85243a59b0988a92a7d9290c72668640"
+      },
+      "treeMatches": true,
+      "mappedParentOrderMatches": true
+    }
+  ],
+  "finalEvidenceInterpretation": [
+    "Status and archive publication does not change the source identities measured by A7/M2 (b8/740) or A6/W1/M1 (25ef/a092).",
+    "The root A7 archive integration clarifies the rationale as 2,622 retained candidates instead of one, without labeling every candidate obsolete; archived raw observations are unchanged.",
+    "The source-based M1 Playwright/WebKit offline-file boundary remains separate from the successful M2 macOS Chromium standalone run.",
+    "The PR body records integration-owner review/signoff; no external human approval or waiver of the failed lazy-saving gate is inferred."
+  ]
+}
