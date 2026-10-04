@@ -9,7 +9,8 @@
     "tests/msbuild-native.test.js",
     "tests/msbuild-solution.test.js",
     "tests/msbuild-tools.test.js",
-    "tests/a23-project-reference-bytecode.test.js"
+    "tests/a23-project-reference-bytecode.test.js",
+    "tests/a23-project-runtime-types.test.js"
   ],
   "browserScripts": [
     "tests/browser_msbuild_test.py"
