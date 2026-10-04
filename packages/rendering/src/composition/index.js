@@ -11,6 +11,7 @@ export {CompositionGeometry, CompositionRectangleGeometry, CompositionRoundedRec
 export {InsetClip, RectangleClip, GeometricClip} from './clips.js';
 export {CompositionEffectFactory, CompositionEffectBrush, evaluateEffect, validateEffectGraph} from './effects.js';
 export {compositionLightingPolicy, createCompositionLight} from './lights.js';
+export {ElementCompositionPreview} from './element-preview.js';
 export {KeyFrameAnimation, CompositionEasingFunction, AnimationController} from './keyframe-animations.js';
 export {ExpressionAnimation} from './expression-animation.js';
 export {parseCompositionExpression} from './expression-parser.js';

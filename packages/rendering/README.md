@@ -46,6 +46,10 @@ The framework continues to export `AnimationClock` through its existing entry po
 
 `Compositor` builds retained display lists and layer handles, avoiding geometry re-encoding for placement-only changes. Controllers and expressions run on the injected shared clock. Public stop policies remain distinct from internal transient-base restoration. Collection wrappers retain newly added managed children and release removed items through their existing mutation receiver.
 
+## Element previews and transient transitions
+
+`ElementCompositionPreview` keeps visual state relative to the arranged element and owns explicit hand-in/hand-out leases. Theme and implicit coordinators use stable owner identities, obey reduced motion and restore the underlying base on completion/cancellation. They reuse the compositor clock and do not replace managed local-value slots.
+
 ## Validation
 
 The publication manifest lists authored fixtures and the prior completed-scope evidence separately. Repairs and newly authored cases await the consolidated rerun; required core is pending on this exact branch tree. Browser pixels, native WinUI comparisons and physical GPU qualification remain separate gates.

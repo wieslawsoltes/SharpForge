@@ -2,6 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import {AnimationClock} from '@sharpforge/framework';
 import {Compositor} from '../packages/rendering/src/composition/compositor.js';
+import {ElementCompositionPreview} from '../packages/rendering/src/composition/element-preview.js';
 import {evaluateEffect, validateEffectGraph} from '../packages/rendering/src/composition/effects.js';
 import {createCompositionLight} from '../packages/rendering/src/composition/lights.js';
 
@@ -48,6 +49,26 @@ test('Clip and visual ownership snapshot restores state and reuses original obje
   assert.equal(visual.Properties.get('ScaleFactor'), 2);
   assert.equal(extra.closed, true);
   assert.deepEqual(comp.layers()[0].clip.rect, [1, 2, 46, 44]);
+  await comp.dispose();
+});
+
+test('Element composition preview preserves hand-in visual above XAML and avoids layout mutation', async () => {
+  const comp = compositor();
+  const element = {};
+  const changes = [];
+  const preview = new ElementCompositionPreview(comp, {isElement: value => value === element,
+    getLayout: () => ({width: 100, height: 80}), setComposition: (value, entry) => changes.push(entry)});
+  const visual = preview.GetElementVisual(element);
+  const child = comp.CreateSpriteVisual();
+  preview.SetElementChildVisual(element, child);
+  preview.SetIsTranslationEnabled(element, true);
+  visual.Offset = [10, 20, 0];
+  assert.equal(preview.GetElementVisual(element), visual);
+  assert.equal(preview.GetElementChildVisual(element), child);
+  assert.equal(changes.at(-1).child, child);
+  assert.deepEqual(visual.Properties.get('Translation'), [0, 0, 0]);
+  assert.throws(() => preview.GetElementVisual({}));
+  preview.dispose();
   await comp.dispose();
 });
 
