@@ -1,0 +1,11 @@
+{
+  "review": "project6-pe-bounds-independent-review.json",
+  "reviewSha256": "c01850bc2c11be88fb3dfee887a60a95836ce3095a20c74a7c9b3c7042b88d70",
+  "kind": "Subsequent source-review addendum; no evidence or worktree changed",
+  "observedSource": "4890736f2da1bf2b8bd9c4e40f2f727b4d09f4d1",
+  "file": "tests/fixtures/pe-bounds/run-step.py",
+  "finding": "The finalization block checks interruptions and assigns passed before the final synchronous JSON write while interruption handlers remain installed. A handled SIGTERM during that write can be added after the decision and still leave primary unset; final handler restoration then permits exit zero. This narrow final-save window also appeared in the separately reviewed EH recorder and was not caught in the initial PE source review.",
+  "actualEvidenceImpact": "All six retained PE phase receipts have empty interruptions and successful actual subprocess/status/source/hash records. No interrupted execution is inferred; this finding does not invalidate the independently recomputed observed cohort.",
+  "disposition": "Retain this limitation separately from the actual successful executions. Correct the final-save interruption window in qualification tooling before claiming complete cancellation handling; future corrected tooling must have its own source identity. Root decides publication/integration scheduling.",
+  "execution": "Read-only source/data inspection only; no tests, product imports, native capture, benchmark, refs or worktree edits."
+}

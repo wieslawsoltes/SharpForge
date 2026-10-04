@@ -1,0 +1,279 @@
+"""Independent arithmetic/hash review of retained data; imports no SharpForge code and launches no qualification."""
+from pathlib import Path
+from datetime import datetime, timezone
+from collections import Counter
+import hashlib
+import json
+import math
+import subprocess
+
+BASE = Path('/workspace/scratch/7e3d2a445c44')
+DATA = BASE / 'project6-pe-bounds-performance.cancellation-first'
+EXECUTION = BASE / 'project6-pe-bounds-execution.cancellation-first'
+CANDIDATE = BASE / 'sf6-pe-bounds'
+NATIVE = CANDIDATE / 'tests/fixtures/pe-bounds/reference'
+PRODUCT = '6e3d26f3ec6abe54699fce1caefa57e9a5c569f5'
+QUALIFIED = '17de856493ba42091413e2968ad526efb7a79758'
+HEAD = '4890736f2da1bf2b8bd9c4e40f2f727b4d09f4d1'
+BASELINE = '75f0caad1c3ea096a656feb2989b867781edc82f'
+
+
+def digest(data):
+    return hashlib.sha256(data).hexdigest()
+
+
+def load(path):
+    return json.loads(path.read_text())
+
+
+def identity(path):
+    data = path.read_bytes()
+    return {'path': str(path), 'bytes': len(data), 'sha256': digest(data)}
+
+
+def git(root, *args):
+    return subprocess.check_output(['git', *args], cwd=root, text=True).strip()
+
+
+def milliseconds(value):
+    return datetime.fromisoformat(value.replace('Z', '+00:00')).timestamp() * 1000
+
+
+def distribution(values):
+    ordered = sorted(values)
+    count = len(ordered)
+    assert count == 100
+    return {'count': count, 'median': (ordered[49] + ordered[50]) / 2,
+            'p95': ordered[94], 'p99': ordered[98], 'min': ordered[0], 'max': ordered[-1]}
+
+
+def compare_numbers(actual, expected):
+    assert actual.keys() == expected.keys()
+    for name in actual:
+        assert math.isclose(actual[name], expected[name], rel_tol=1e-12, abs_tol=1e-12), (name, actual[name], expected[name])
+
+
+report = load(DATA / 'report.json')
+receipt = load(EXECUTION / 'performance.execution.json')
+assert report['status'] == 'completed' and report['harnessCommit'] == HEAD
+assert receipt['status'] == 'passed' and receipt['exitCode'] == 0 and receipt['signal'] is None
+assert receipt['interruptions'] == receipt['inspectionErrors'] == [] and receipt['sourcesUnchanged'] is True
+assert receipt['sourceBefore'] == receipt['sourceAfter']
+assert receipt['sourceAfter']['head'] == HEAD and receipt['sourceAfter']['status'] == ''
+assert receipt['sourceAfter']['productChangedPaths'] == []
+assert receipt['sourceAfter']['inspectionErrors'] == []
+for path, expected in receipt['sourceAfter']['files'].items():
+    assert digest((CANDIDATE / path).read_bytes()) == expected, path
+for name, value in receipt['sourceAfter']['aliases'].items():
+    assert value['owned'] and str((CANDIDATE / 'node_modules/@sharpforge' / name).resolve()) == value['target']
+assert git(CANDIDATE, 'status', '--porcelain=v1') == ''
+assert git(CANDIDATE, 'rev-parse', 'HEAD') == HEAD
+assert git(CANDIDATE, 'diff', '--name-only', PRODUCT, HEAD, '--', ':(glob)packages/*/src/**',
+           ':(glob)packages/*/package.json', 'package.json') == ''
+source_file_counts = {}
+for side, source in report['sources'].items():
+    root = Path(source['root'])
+    assert git(root, 'status', '--porcelain=v1') == ''
+    assert git(root, 'rev-parse', 'HEAD') == source['head'] == (HEAD if side == 'candidate' else BASELINE)
+    source_file_counts[side] = 0
+    for package in source['packages']:
+        assert Path(package['entry']) == root / 'packages' / package['name'] / 'src/index.js'
+        assert (root / 'node_modules/@sharpforge' / package['name']).resolve() == root / 'packages' / package['name']
+        tree = git(root, 'rev-parse', source['head'] + ':packages/' + package['name'] + '/src')
+        assert tree == package['sourceTree']
+        for path, expected in package['files'].items():
+            assert digest((root / path).read_bytes()) == expected, path
+        encoded = json.dumps(package['files'], separators=(',', ':'), ensure_ascii=False).encode()
+        assert digest(encoded) == package['sha256']
+        source_file_counts[side] += len(package['files'])
+for path, expected in report['tools'].items():
+    assert digest((CANDIDATE / path).read_bytes()) == expected, path
+for row in report['inputs']:
+    actual = identity(Path(row['path']))
+    assert actual['bytes'] == row['bytes'] and actual['sha256'] == row['sha256']
+
+workloads = [('small', 128), ('dense96', 32), ('il', 64), ('r2r', 25), ('mixed', 25)]
+expected_order = ['prepare-baseline', 'prepare-candidate']
+for index, (name, _) in enumerate(workloads):
+    expected_order += [name + '-' + side for side in (['baseline', 'candidate'] if index % 2 == 0 else ['candidate', 'baseline'])]
+assert [row['label'] for row in report['commands']] == expected_order
+raw_reports = {}
+chronological = []
+computed = {}
+heap = {}
+process_order = []
+prior_finished = None
+for command in report['commands']:
+    label = command['label']
+    job_path = DATA / (label + '.job.json')
+    worker_path = DATA / (label + '.result.json')
+    job = load(job_path)
+    worker = load(worker_path)
+    assert digest(job_path.read_bytes()) == command['jobSha256'] == worker['jobSha256']
+    assert digest(worker_path.read_bytes()) == command['workerSha256']
+    assert worker == command['worker'] and worker['status'] == 'passed'
+    assert command['result']['exitCode'] == 0 and command['result']['signal'] is None
+    assert worker['source'] == job['source'] == report['sources'][job['side']]
+    assert job['harnessCommit'] == HEAD and job['tools'] == report['tools'] and job['inputs'] == report['inputs']
+    assert command['cwd'] == job['root'] == report['sources'][job['side']]['root']
+    assert Path(command['argv'][1]) == CANDIDATE / 'packages/cil/tools/pe-bounds-benchmark-worker.mjs'
+    assert command['argv'][2:] == ['--job', str(job_path)]
+    assert command['startedAt'] <= worker['startedAt'] <= worker['finishedAt'] <= command['finishedAt']
+    if prior_finished is not None:
+        assert prior_finished <= command['startedAt'], 'Overlapping serial children'
+    prior_finished = command['finishedAt']
+    for stream in ['stdout', 'stderr']:
+        data = (DATA / (label + '.' + stream + '.log')).read_bytes()
+        assert digest(data) == command[stream + 'Sha256']
+        assert data.decode() == command['result'][stream]
+        if stream == 'stderr':
+            assert data == b''
+        else:
+            assert json.loads(data) == {'status': 'passed'}
+    process_order.append({'label': label, 'startedAt': command['startedAt'], 'finishedAt': command['finishedAt'],
+                          'exitCode': 0, 'signal': None, 'jobSha256': command['jobSha256'],
+                          'workerSha256': command['workerSha256']})
+    raw_reports[label] = worker
+    assert worker['facts'] == report['commands'][0]['worker']['facts']
+    if job['mode'] == 'prepare':
+        assert worker['samples'] == worker['warmups'] == worker['chronologicalSamples'] == []
+        continue
+    assert job['mode'] == 'measure'
+    operations = dict(workloads)[job['workload']]
+    assert worker['operationsPerBatch'] == operations
+    assert job['expected'] == worker['facts'][job['workload']]
+    assert len(worker['warmups']) == 20 and len(worker['samples']) == 100
+    assert worker['chronologicalSamples'] == worker['warmups'] + worker['samples']
+    prior_sample_end = None
+    for index, sample in enumerate(worker['chronologicalSamples']):
+        assert sample['sequence'] == index
+        assert sample['phase'] == ('warmup' if index < 20 else 'measured')
+        assert sample['batch'] == (index if index < 20 else index - 20)
+        assert sample['operations'] == operations and sample['guard'] == 'passed'
+        assert math.isfinite(sample['elapsedMs']) and sample['elapsedMs'] >= 0
+        assert sample['microsecondsPerOperation'] == sample['elapsedMs'] * 1000 / operations
+        assert isinstance(sample['netHeapBytes'], int)
+        start, end = sample['startedAtMilliseconds'], sample['startedAtMilliseconds'] + sample['elapsedMs']
+        assert milliseconds(command['startedAt']) <= start <= end <= milliseconds(command['finishedAt']) + 1
+        if prior_sample_end is not None:
+            assert start >= prior_sample_end - 0.001
+        prior_sample_end = end
+        chronological.append({**sample, 'child': label, 'childSequence': index, 'sequence': len(chronological)})
+    computed[label] = distribution([row['elapsedMs'] * 1000 / operations for row in worker['samples']])
+    compare_numbers(computed[label], worker['statistics'])
+    signed = sorted(row['netHeapBytes'] for row in worker['samples'])
+    heap[label] = {'medianNetHeapBytes': (signed[49] + signed[50]) / 2, 'minimumNetHeapBytes': signed[0],
+                   'maximumNetHeapBytes': signed[-1], 'negativeSampleCount': sum(value < 0 for value in signed)}
+assert report['chronologicalSamples'] == chronological and len(chronological) == 1200
+assert sum(row['operations'] for row in chronological) == 65760
+assert sum(row['operations'] for row in chronological if row['phase'] == 'measured') == 54800
+assert sum(row['operations'] for row in chronological if row['phase'] == 'warmup') == 10960
+comparisons = []
+adverse = []
+for index, (name, operations) in enumerate(workloads):
+    before, after = computed[name + '-baseline'], computed[name + '-candidate']
+    stored = report['comparisons'][index]
+    assert stored['id'] == name
+    compare_numbers(before, stored['results']['baseline'])
+    compare_numbers(after, stored['results']['candidate'])
+    changes = {}
+    for metric in ['median', 'p95', 'p99', 'min', 'max']:
+        delta = after[metric] - before[metric]
+        percent = (after[metric] / before[metric] - 1) * 100
+        changes[metric] = {'baseline': before[metric], 'candidate': after[metric],
+                           'deltaMicrosecondsPerOperation': delta, 'percent': percent}
+        if delta > 0:
+            adverse.append({'workload': name, 'metric': metric, **changes[metric]})
+        if metric in ['median', 'p95', 'p99']:
+            assert math.isclose(percent, stored['changePercent'][metric], rel_tol=1e-12, abs_tol=1e-12)
+    comparisons.append({'workload': name, 'operationsPerBatch': operations, 'statistics': changes})
+
+native = load(NATIVE / 'native.json')
+assert digest((NATIVE / 'native.json').read_bytes()) == report['native']['sha256']
+assert native['status'] == 'completed' and native['sourceCommit'] == QUALIFIED == report['native']['sourceCommit']
+assert len(native['authored']) == 58 and len(native['references']) == 3
+assert native['toolchain']['sdk'] == '10.0.201' and native['toolchain']['runtime'] == '10.0.5'
+for path, expected in native['sourceSha256'].items():
+    assert digest((CANDIDATE / path).read_bytes()) == expected, path
+assert [row['label'] for row in native['commands']] == [
+    'build-BoundsObserver', 'observe-authored', 'build-PEObserver', 'observe-il', 'observe-r2r', 'observe-mixed']
+for command in native['commands']:
+    assert command['result']['exitCode'] == 0 and command['result']['signal'] is None
+    for stream in ['stdout', 'stderr']:
+        path = NATIVE / (command['label'] + '.' + stream + '.log')
+        assert digest(path.read_bytes()) == command[stream + 'Sha256']
+        assert path.read_text() == command['result'][stream]
+        original = BASE / 'project6-pe-bounds-native.cancellation-first' / path.name
+        assert path.read_bytes() == original.read_bytes()
+assert (NATIVE / 'native.json').read_bytes() == (BASE / 'project6-pe-bounds-native.cancellation-first/native.json').read_bytes()
+observed = load(NATIVE / 'observe-authored.stdout.log')['results']
+assert len(observed) == 58 and len({row['id'] for row in observed}) == 58
+for actual, row in zip(observed, native['authored']):
+    assert actual['id'] == row['id'] and actual['observation'] == row['native']
+for row in native['references']:
+    assert row['native'] == load(NATIVE / ('observe-' + row['id'] + '.stdout.log'))
+    assert row['comparison']['differences'] == []
+    assert row['imageSha256'] == row['native']['image']['sha256']
+    assert row['imageBytes'] == row['native']['image']['bytes']
+
+phase_receipts = []
+for phase in ['native', 'verify-external', 'retain-native', 'verify-retained', 'focused', 'performance']:
+    path = EXECUTION / (phase + '.execution.json')
+    row = load(path)
+    assert row['status'] == 'passed' and row['exitCode'] == 0 and row['signal'] is None
+    assert row['sourcesUnchanged'] and not row['inspectionErrors'] and not row['interruptions']
+    for output in row['outputs']:
+        actual = identity(Path(output['path']))
+        assert actual == output
+    phase_receipts.append({**identity(path), 'startedUtc': row['startedUtc'], 'finishedUtc': row['finishedUtc'],
+                           'sourceHead': row['sourceBefore']['head'], 'status': row['status']})
+focused_text = (EXECUTION / 'focused.stdout.txt').read_text()
+for line in ['ℹ tests 91', 'ℹ pass 91', 'ℹ fail 0', 'ℹ cancelled 0', 'ℹ skipped 0', 'ℹ todo 0']:
+    assert line in focused_text
+stderr = (EXECUTION / 'performance.stderr.txt').read_bytes()
+assert len(stderr) == 94
+assert stderr == b'Waiting for a free run slot: 1 heavy runs are allowed at once (SHARPFORGE_MAX_PARALLEL_RUNS).\n'
+manifest = [identity(path) for path in sorted(DATA.iterdir()) if path.is_file()]
+output = {
+    'schemaVersion': 1, 'reviewedAt': datetime.now(timezone.utc).isoformat(),
+    'scope': 'Independent retained-data arithmetic, hash, source and chronology review; no product imports or qualification execution.',
+    'reviewerSource': identity(Path(__file__)), 'candidate': HEAD, 'baseline': BASELINE, 'product': PRODUCT,
+    'nativeSource': QUALIFIED, 'report': identity(DATA / 'report.json'), 'outerReceipt': identity(EXECUTION / 'performance.execution.json'),
+    'environment': report['environment'], 'processOrder': process_order, 'comparisons': comparisons,
+    'allAdverseStatistics': adverse, 'heapObservations': heap, 'sourceFileCounts': source_file_counts,
+    'counts': {'serialChildren': 12, 'preparationChildren': 2, 'measurementChildren': 10, 'measuredBatches': 1000,
+               'warmupBatches': 200, 'chronologicalRows': 1200, 'timedCallsWithPassingGuards': 65760,
+               'measuredCalls': 54800, 'warmupCalls': 10960, 'untimedWorkerPreflightReads': 60,
+               'nativeAuthoredCases': 58, 'nativeReferenceImages': 3, 'focusedTestsPassed': 91,
+               'outerSourceFilesVerified': len(receipt['sourceAfter']['files']), 'toolHashesVerified': len(report['tools']),
+               'nativeSourceFilesVerified': len(native['sourceSha256'])},
+    'nativeRelations': dict(Counter(row['relation'] for row in native['authored'])),
+    'nativeProductStatus': dict(Counter(row['product']['status'] for row in native['authored'])),
+    'nativeMetadataStatus': dict(Counter('accepted' if row['native']['metadata'] else 'rejected' for row in native['authored'])),
+    'nativeCapture': identity(NATIVE / 'native.json'), 'phaseReceipts': phase_receipts,
+    'stderr': {**identity(EXECUTION / 'performance.stderr.txt'), 'text': stderr.decode(),
+               'explanation': 'Resource wrapper waiting notification, emitted before benchmark startup; all twelve child stderr files are empty.'},
+    'manifest': manifest, 'rawFileCount': len(manifest), 'rawBytes': sum(row['bytes'] for row in manifest),
+    'validation': 'All recomputed distributions, percent changes, chronologies, result/job/log hashes, source/tool/input hashes and retained-native links matched.',
+    'sourceAssessment': [
+        'Timed path is public readPE plus storing references; guards, input construction, imports, source identity and statistics are outside timing.',
+        'Each read adds bounded header range checks and two interval arrays/sorts over at most 96 sections; RVA queries add no arrays or sort.',
+        'No concrete avoidable work specifically explaining the adverse percentile paths was identified; causation is not established.',
+        'Full reader data snapshots, borrowed input identity, metadata module name and section offset queries are guarded; method-body callback execution is not timed or independently covered by this benchmark.',
+    ],
+    'recommendedDisposition': 'Recommend explicit reviewer acceptance of the four >5% percentile regressions as a correctness tradeoff, pending root decision; no automatic performance pass or human approval.',
+    'limitations': [
+        'One fixed cohort on a shared host; favorable values are observations, not an established speedup cause or significance result.',
+        'Percentiles describe batch means in microseconds per operation, not individual-call latency.',
+        'All adverse min/max observations are retained in addition to median/p95/p99; no sample filtering or rerun.',
+        'Signed net heap deltas are neither allocations nor peak memory and cannot establish GC causation.',
+        'Native acceptance differences are retained as product policy distinctions, not rewritten as parity.',
+        'Only read-only Git/data/source inspection and this standalone arithmetic review ran; no tests, imports, capture, benchmark, refs or worktree edits.',
+    ],
+}
+destination = BASE / 'project6-pe-bounds-independent-review.json'
+with destination.open('x') as stream:
+    json.dump(output, stream, indent=2)
+    stream.write('\n')
+print(json.dumps({'review': identity(destination), 'rawFileCount': len(manifest), 'rawBytes': output['rawBytes'],
+                  'counts': output['counts'], 'comparisons': comparisons, 'allAdverseStatistics': adverse}, indent=2))

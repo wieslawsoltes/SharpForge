@@ -1,0 +1,78 @@
+{
+  "startedUtc": "2026-10-04T20:23:42.273493+00:00",
+  "cwd": "/workspace/scratch/7e3d2a445c44/sf6-pe-bounds",
+  "head": "74559c16430dbf50778afe96d3c19a7cc3ade8e4",
+  "tree": "ce57ce0249f44c08e1306e83e0d0ae1f4c5dd64a",
+  "status": "",
+  "planSha256": "1a25e65ee38bef4d6eb98d0002dea0da4855b0a279348b68063f996afae26a6f",
+  "recorderSha256": "c37ff300592461d91768dd8d1088bdbdf63ed24932a5c3cfa19d67c861873def",
+  "availableDiskBytes": 696958976,
+  "requiredDiskBytes": 402653184,
+  "aliases": [
+    {
+      "name": "archive",
+      "resolved": "/workspace/scratch/7e3d2a445c44/sf6-pe-bounds/packages/archive",
+      "expected": "/workspace/scratch/7e3d2a445c44/sf6-pe-bounds/packages/archive",
+      "owned": true
+    },
+    {
+      "name": "bcl-collections",
+      "resolved": "/workspace/scratch/7e3d2a445c44/sf6-pe-bounds/packages/bcl-collections",
+      "expected": "/workspace/scratch/7e3d2a445c44/sf6-pe-bounds/packages/bcl-collections",
+      "owned": true
+    },
+    {
+      "name": "bcl-core",
+      "resolved": "/workspace/scratch/7e3d2a445c44/sf6-pe-bounds/packages/bcl-core",
+      "expected": "/workspace/scratch/7e3d2a445c44/sf6-pe-bounds/packages/bcl-core",
+      "owned": true
+    },
+    {
+      "name": "bytecode",
+      "resolved": "/workspace/scratch/7e3d2a445c44/sf6-pe-bounds/packages/bytecode",
+      "expected": "/workspace/scratch/7e3d2a445c44/sf6-pe-bounds/packages/bytecode",
+      "owned": true
+    },
+    {
+      "name": "cil",
+      "resolved": "/workspace/scratch/7e3d2a445c44/sf6-pe-bounds/packages/cil",
+      "expected": "/workspace/scratch/7e3d2a445c44/sf6-pe-bounds/packages/cil",
+      "owned": true
+    },
+    {
+      "name": "framework",
+      "resolved": "/workspace/scratch/7e3d2a445c44/sf6-pe-bounds/packages/framework",
+      "expected": "/workspace/scratch/7e3d2a445c44/sf6-pe-bounds/packages/framework",
+      "owned": true
+    },
+    {
+      "name": "symbols",
+      "resolved": "/workspace/scratch/7e3d2a445c44/sf6-pe-bounds/packages/symbols",
+      "expected": "/workspace/scratch/7e3d2a445c44/sf6-pe-bounds/packages/symbols",
+      "owned": true
+    }
+  ],
+  "destinations": [
+    {
+      "path": "/workspace/scratch/7e3d2a445c44/project6-pe-bounds-native.integration-f009",
+      "exists": false
+    },
+    {
+      "path": "/workspace/scratch/7e3d2a445c44/project6-pe-bounds-execution.integration-f009",
+      "exists": false
+    },
+    {
+      "path": "/workspace/scratch/7e3d2a445c44/sf6-pe-bounds/tests/fixtures/pe-bounds/reference-integration-f009",
+      "exists": false
+    },
+    {
+      "path": "/workspace/scratch/7e3d2a445c44/sf6-pe-bounds/tests/fixtures/pe-bounds/qualification/execution-integration-f009",
+      "exists": false
+    },
+    {
+      "path": "/workspace/scratch/7e3d2a445c44/project6-pe-bounds-performance.integration-f009",
+      "exists": false
+    }
+  ],
+  "admitted": true
+}

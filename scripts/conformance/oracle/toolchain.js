@@ -34,9 +34,9 @@ export function assertImage(env = process.env, currentPlatform = process.platfor
   throw new Error('Hosted oracle requires the pinned Linux container or exact Windows/macOS image');
 }
 
-export async function resolveToolchain({ checkImage = true } = {}) {
+export async function resolveToolchain({ checkImage = true, processRunner = runProcess } = {}) {
   const dotnet = process.env.SHARPFORGE_ORACLE_DOTNET || 'dotnet';
-  const execute = args => runProcess(dotnet, args, { cwd: oracleRoot });
+  const execute = args => processRunner(dotnet, args, { cwd: oracleRoot });
   const sdkResult = await execute(['--version']);
   if (sdkResult.exitCode !== 0) throw new Error(`Pinned SDK ${pin.sdk} is required: ${sdkResult.stderr}${sdkResult.stdout}`);
   const sdk = sdkResult.stdout.trim();

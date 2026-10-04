@@ -1,0 +1,416 @@
+{
+  "nativeSourceCommit": "17de856493ba42091413e2968ad526efb7a79758",
+  "native": {
+    "path": "/workspace/scratch/7e3d2a445c44/project6-pe-bounds-native.cancellation-first/native.json",
+    "bytes": 664826,
+    "sha256": "aaef0eb12f1a23a4a03658e1049ec2bb860297b9dce6579b43115f6992f35f08"
+  },
+  "authoredCases": 58,
+  "authoredRelations": {
+    "both-accept-header-facts-equal": 20,
+    "product-rejects-native-accepts-headers": 30,
+    "both-reject": 8
+  },
+  "references": [
+    {
+      "id": "il",
+      "bytes": 11776,
+      "sha256": "53af64fc5a8db6df9b64fe46ab8e1518a33015a0aec0f33c2101d84edc750aa3",
+      "differences": []
+    },
+    {
+      "id": "r2r",
+      "bytes": 71432,
+      "sha256": "d34230d85e2dcdd7965812fa9f103e1ea3ebad47a6ec44f60efc5ced0b397c68",
+      "differences": []
+    },
+    {
+      "id": "mixed",
+      "bytes": 34816,
+      "sha256": "1bcc83a9da94aeebf0a57f02f254a15e8aebc9157b3e299cb53d1ebc3ce53667",
+      "differences": []
+    }
+  ],
+  "nativeCommands": 6,
+  "rawProvenance": "All build/observer workload commands; existing resolveToolchain version probes retain identities only.",
+  "testSummary": {
+    "tests": 91,
+    "suites": 0,
+    "pass": 91,
+    "fail": 0,
+    "cancelled": 0,
+    "skipped": 0,
+    "todo": 0
+  },
+  "steps": [
+    {
+      "step": "native",
+      "record": {
+        "path": "/workspace/scratch/7e3d2a445c44/project6-pe-bounds-execution.cancellation-first/native.execution.json",
+        "bytes": 264389,
+        "sha256": "99b4fd664363840263e462ae9a73f8a647597cf1ce0776082a90ea83ac184dd3"
+      },
+      "startedUtc": "2026-10-04T19:16:08.180328+00:00",
+      "finishedUtc": "2026-10-04T19:16:11.924640+00:00"
+    },
+    {
+      "step": "verify-external",
+      "record": {
+        "path": "/workspace/scratch/7e3d2a445c44/project6-pe-bounds-execution.cancellation-first/verify-external.execution.json",
+        "bytes": 264225,
+        "sha256": "42b3cc83aee35250a5d74a7e2beaa6eca7f8e91ef1b48564ca09aef42a6bb1c6"
+      },
+      "startedUtc": "2026-10-04T19:17:26.685898+00:00",
+      "finishedUtc": "2026-10-04T19:17:27.112841+00:00"
+    },
+    {
+      "step": "retain-native",
+      "record": {
+        "path": "/workspace/scratch/7e3d2a445c44/project6-pe-bounds-execution.cancellation-first/retain-native.execution.json",
+        "bytes": 269561,
+        "sha256": "56d2c9abbc4cae14792ad925f5bd79f623b04af984f04a48a69f0c2f5185c641"
+      },
+      "startedUtc": "2026-10-04T19:17:53.030016+00:00",
+      "finishedUtc": "2026-10-04T19:17:53.167184+00:00"
+    },
+    {
+      "step": "verify-retained",
+      "record": {
+        "path": "/workspace/scratch/7e3d2a445c44/project6-pe-bounds-execution.cancellation-first/verify-retained.execution.json",
+        "bytes": 265849,
+        "sha256": "5fb69eda5d92338fb878e2168344117dac918d7d3b84fc71649b506fe2b51c44"
+      },
+      "startedUtc": "2026-10-04T19:17:53.758717+00:00",
+      "finishedUtc": "2026-10-04T19:17:54.095591+00:00"
+    },
+    {
+      "step": "focused",
+      "record": {
+        "path": "/workspace/scratch/7e3d2a445c44/project6-pe-bounds-execution.cancellation-first/focused.execution.json",
+        "bytes": 266063,
+        "sha256": "512b5e401bea8e8ab42294bd9f44874f9bcf1f78a9cc7e87d81270b71d696e2b"
+      },
+      "startedUtc": "2026-10-04T19:17:54.683098+00:00",
+      "finishedUtc": "2026-10-04T19:17:57.350597+00:00"
+    }
+  ],
+  "nativeCopies": [
+    {
+      "source": {
+        "path": "/workspace/scratch/7e3d2a445c44/project6-pe-bounds-native.cancellation-first/native.json",
+        "bytes": 664826,
+        "sha256": "aaef0eb12f1a23a4a03658e1049ec2bb860297b9dce6579b43115f6992f35f08"
+      },
+      "retained": {
+        "path": "/workspace/scratch/7e3d2a445c44/sf6-pe-bounds/tests/fixtures/pe-bounds/reference/native.json",
+        "bytes": 664826,
+        "sha256": "aaef0eb12f1a23a4a03658e1049ec2bb860297b9dce6579b43115f6992f35f08"
+      }
+    },
+    {
+      "source": {
+        "path": "/workspace/scratch/7e3d2a445c44/project6-pe-bounds-native.cancellation-first/build-BoundsObserver.stdout.log",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "retained": {
+        "path": "/workspace/scratch/7e3d2a445c44/sf6-pe-bounds/tests/fixtures/pe-bounds/reference/build-BoundsObserver.stdout.log",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "source": {
+        "path": "/workspace/scratch/7e3d2a445c44/project6-pe-bounds-native.cancellation-first/build-BoundsObserver.stderr.log",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "retained": {
+        "path": "/workspace/scratch/7e3d2a445c44/sf6-pe-bounds/tests/fixtures/pe-bounds/reference/build-BoundsObserver.stderr.log",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "source": {
+        "path": "/workspace/scratch/7e3d2a445c44/project6-pe-bounds-native.cancellation-first/observe-authored.stdout.log",
+        "bytes": 28478,
+        "sha256": "ac2852a63f84209f93e7a6634e5fb12bdb48fb7beb64ddc222808153a01c93bb"
+      },
+      "retained": {
+        "path": "/workspace/scratch/7e3d2a445c44/sf6-pe-bounds/tests/fixtures/pe-bounds/reference/observe-authored.stdout.log",
+        "bytes": 28478,
+        "sha256": "ac2852a63f84209f93e7a6634e5fb12bdb48fb7beb64ddc222808153a01c93bb"
+      }
+    },
+    {
+      "source": {
+        "path": "/workspace/scratch/7e3d2a445c44/project6-pe-bounds-native.cancellation-first/observe-authored.stderr.log",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "retained": {
+        "path": "/workspace/scratch/7e3d2a445c44/sf6-pe-bounds/tests/fixtures/pe-bounds/reference/observe-authored.stderr.log",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "source": {
+        "path": "/workspace/scratch/7e3d2a445c44/project6-pe-bounds-native.cancellation-first/build-PEObserver.stdout.log",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "retained": {
+        "path": "/workspace/scratch/7e3d2a445c44/sf6-pe-bounds/tests/fixtures/pe-bounds/reference/build-PEObserver.stdout.log",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "source": {
+        "path": "/workspace/scratch/7e3d2a445c44/project6-pe-bounds-native.cancellation-first/build-PEObserver.stderr.log",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "retained": {
+        "path": "/workspace/scratch/7e3d2a445c44/sf6-pe-bounds/tests/fixtures/pe-bounds/reference/build-PEObserver.stderr.log",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "source": {
+        "path": "/workspace/scratch/7e3d2a445c44/project6-pe-bounds-native.cancellation-first/observe-il.stdout.log",
+        "bytes": 24243,
+        "sha256": "482c8b3b6ee5ca443ab9538eee18992ce62483420ff8e1c820869068f335bad7"
+      },
+      "retained": {
+        "path": "/workspace/scratch/7e3d2a445c44/sf6-pe-bounds/tests/fixtures/pe-bounds/reference/observe-il.stdout.log",
+        "bytes": 24243,
+        "sha256": "482c8b3b6ee5ca443ab9538eee18992ce62483420ff8e1c820869068f335bad7"
+      }
+    },
+    {
+      "source": {
+        "path": "/workspace/scratch/7e3d2a445c44/project6-pe-bounds-native.cancellation-first/observe-il.stderr.log",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "retained": {
+        "path": "/workspace/scratch/7e3d2a445c44/sf6-pe-bounds/tests/fixtures/pe-bounds/reference/observe-il.stderr.log",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "source": {
+        "path": "/workspace/scratch/7e3d2a445c44/project6-pe-bounds-native.cancellation-first/observe-r2r.stdout.log",
+        "bytes": 111112,
+        "sha256": "4637ff1f1c9c0fe983f3eb1683cf4fe7e81e1d02fcb3702f74f4e8f6d22a596e"
+      },
+      "retained": {
+        "path": "/workspace/scratch/7e3d2a445c44/sf6-pe-bounds/tests/fixtures/pe-bounds/reference/observe-r2r.stdout.log",
+        "bytes": 111112,
+        "sha256": "4637ff1f1c9c0fe983f3eb1683cf4fe7e81e1d02fcb3702f74f4e8f6d22a596e"
+      }
+    },
+    {
+      "source": {
+        "path": "/workspace/scratch/7e3d2a445c44/project6-pe-bounds-native.cancellation-first/observe-r2r.stderr.log",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "retained": {
+        "path": "/workspace/scratch/7e3d2a445c44/sf6-pe-bounds/tests/fixtures/pe-bounds/reference/observe-r2r.stderr.log",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "source": {
+        "path": "/workspace/scratch/7e3d2a445c44/project6-pe-bounds-native.cancellation-first/observe-mixed.stdout.log",
+        "bytes": 51347,
+        "sha256": "384084de88a366b72723a7b4976142240328d7c76c6ac24ee605c35858702e11"
+      },
+      "retained": {
+        "path": "/workspace/scratch/7e3d2a445c44/sf6-pe-bounds/tests/fixtures/pe-bounds/reference/observe-mixed.stdout.log",
+        "bytes": 51347,
+        "sha256": "384084de88a366b72723a7b4976142240328d7c76c6ac24ee605c35858702e11"
+      }
+    },
+    {
+      "source": {
+        "path": "/workspace/scratch/7e3d2a445c44/project6-pe-bounds-native.cancellation-first/observe-mixed.stderr.log",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "retained": {
+        "path": "/workspace/scratch/7e3d2a445c44/sf6-pe-bounds/tests/fixtures/pe-bounds/reference/observe-mixed.stderr.log",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    }
+  ],
+  "executionCopies": [
+    {
+      "source": {
+        "path": "/workspace/scratch/7e3d2a445c44/project6-pe-bounds-execution.cancellation-first/focused.execution.json",
+        "bytes": 266063,
+        "sha256": "512b5e401bea8e8ab42294bd9f44874f9bcf1f78a9cc7e87d81270b71d696e2b"
+      },
+      "retained": {
+        "path": "/workspace/scratch/7e3d2a445c44/sf6-pe-bounds/tests/fixtures/pe-bounds/qualification/execution-cancellation-first/focused.execution.json",
+        "bytes": 266063,
+        "sha256": "512b5e401bea8e8ab42294bd9f44874f9bcf1f78a9cc7e87d81270b71d696e2b"
+      }
+    },
+    {
+      "source": {
+        "path": "/workspace/scratch/7e3d2a445c44/project6-pe-bounds-execution.cancellation-first/focused.stderr.txt",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "retained": {
+        "path": "/workspace/scratch/7e3d2a445c44/sf6-pe-bounds/tests/fixtures/pe-bounds/qualification/execution-cancellation-first/focused.stderr.txt",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "source": {
+        "path": "/workspace/scratch/7e3d2a445c44/project6-pe-bounds-execution.cancellation-first/focused.stdout.txt",
+        "bytes": 6171,
+        "sha256": "e40dd7c30c68ea677c63740eedd9e3011e8ec6f7d23cc01e2910a575b829f324"
+      },
+      "retained": {
+        "path": "/workspace/scratch/7e3d2a445c44/sf6-pe-bounds/tests/fixtures/pe-bounds/qualification/execution-cancellation-first/focused.stdout.txt",
+        "bytes": 6171,
+        "sha256": "e40dd7c30c68ea677c63740eedd9e3011e8ec6f7d23cc01e2910a575b829f324"
+      }
+    },
+    {
+      "source": {
+        "path": "/workspace/scratch/7e3d2a445c44/project6-pe-bounds-execution.cancellation-first/native.execution.json",
+        "bytes": 264389,
+        "sha256": "99b4fd664363840263e462ae9a73f8a647597cf1ce0776082a90ea83ac184dd3"
+      },
+      "retained": {
+        "path": "/workspace/scratch/7e3d2a445c44/sf6-pe-bounds/tests/fixtures/pe-bounds/qualification/execution-cancellation-first/native.execution.json",
+        "bytes": 264389,
+        "sha256": "99b4fd664363840263e462ae9a73f8a647597cf1ce0776082a90ea83ac184dd3"
+      }
+    },
+    {
+      "source": {
+        "path": "/workspace/scratch/7e3d2a445c44/project6-pe-bounds-execution.cancellation-first/native.stderr.txt",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "retained": {
+        "path": "/workspace/scratch/7e3d2a445c44/sf6-pe-bounds/tests/fixtures/pe-bounds/qualification/execution-cancellation-first/native.stderr.txt",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "source": {
+        "path": "/workspace/scratch/7e3d2a445c44/project6-pe-bounds-execution.cancellation-first/native.stdout.txt",
+        "bytes": 111,
+        "sha256": "9236a558451ba9da43ff9887d15a8c77c700a609ddcc2c7a04c760562811e2d9"
+      },
+      "retained": {
+        "path": "/workspace/scratch/7e3d2a445c44/sf6-pe-bounds/tests/fixtures/pe-bounds/qualification/execution-cancellation-first/native.stdout.txt",
+        "bytes": 111,
+        "sha256": "9236a558451ba9da43ff9887d15a8c77c700a609ddcc2c7a04c760562811e2d9"
+      }
+    },
+    {
+      "source": {
+        "path": "/workspace/scratch/7e3d2a445c44/project6-pe-bounds-execution.cancellation-first/retain-native.execution.json",
+        "bytes": 269561,
+        "sha256": "56d2c9abbc4cae14792ad925f5bd79f623b04af984f04a48a69f0c2f5185c641"
+      },
+      "retained": {
+        "path": "/workspace/scratch/7e3d2a445c44/sf6-pe-bounds/tests/fixtures/pe-bounds/qualification/execution-cancellation-first/retain-native.execution.json",
+        "bytes": 269561,
+        "sha256": "56d2c9abbc4cae14792ad925f5bd79f623b04af984f04a48a69f0c2f5185c641"
+      }
+    },
+    {
+      "source": {
+        "path": "/workspace/scratch/7e3d2a445c44/project6-pe-bounds-execution.cancellation-first/verify-external.execution.json",
+        "bytes": 264225,
+        "sha256": "42b3cc83aee35250a5d74a7e2beaa6eca7f8e91ef1b48564ca09aef42a6bb1c6"
+      },
+      "retained": {
+        "path": "/workspace/scratch/7e3d2a445c44/sf6-pe-bounds/tests/fixtures/pe-bounds/qualification/execution-cancellation-first/verify-external.execution.json",
+        "bytes": 264225,
+        "sha256": "42b3cc83aee35250a5d74a7e2beaa6eca7f8e91ef1b48564ca09aef42a6bb1c6"
+      }
+    },
+    {
+      "source": {
+        "path": "/workspace/scratch/7e3d2a445c44/project6-pe-bounds-execution.cancellation-first/verify-external.stderr.txt",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "retained": {
+        "path": "/workspace/scratch/7e3d2a445c44/sf6-pe-bounds/tests/fixtures/pe-bounds/qualification/execution-cancellation-first/verify-external.stderr.txt",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "source": {
+        "path": "/workspace/scratch/7e3d2a445c44/project6-pe-bounds-execution.cancellation-first/verify-external.stdout.txt",
+        "bytes": 51,
+        "sha256": "3f97c01b84a6898e96ab69e5b67dae7d3a5ed0d42ccd553011efe7dd47f42910"
+      },
+      "retained": {
+        "path": "/workspace/scratch/7e3d2a445c44/sf6-pe-bounds/tests/fixtures/pe-bounds/qualification/execution-cancellation-first/verify-external.stdout.txt",
+        "bytes": 51,
+        "sha256": "3f97c01b84a6898e96ab69e5b67dae7d3a5ed0d42ccd553011efe7dd47f42910"
+      }
+    },
+    {
+      "source": {
+        "path": "/workspace/scratch/7e3d2a445c44/project6-pe-bounds-execution.cancellation-first/verify-retained.execution.json",
+        "bytes": 265849,
+        "sha256": "5fb69eda5d92338fb878e2168344117dac918d7d3b84fc71649b506fe2b51c44"
+      },
+      "retained": {
+        "path": "/workspace/scratch/7e3d2a445c44/sf6-pe-bounds/tests/fixtures/pe-bounds/qualification/execution-cancellation-first/verify-retained.execution.json",
+        "bytes": 265849,
+        "sha256": "5fb69eda5d92338fb878e2168344117dac918d7d3b84fc71649b506fe2b51c44"
+      }
+    },
+    {
+      "source": {
+        "path": "/workspace/scratch/7e3d2a445c44/project6-pe-bounds-execution.cancellation-first/verify-retained.stderr.txt",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "retained": {
+        "path": "/workspace/scratch/7e3d2a445c44/sf6-pe-bounds/tests/fixtures/pe-bounds/qualification/execution-cancellation-first/verify-retained.stderr.txt",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "source": {
+        "path": "/workspace/scratch/7e3d2a445c44/project6-pe-bounds-execution.cancellation-first/verify-retained.stdout.txt",
+        "bytes": 51,
+        "sha256": "3f97c01b84a6898e96ab69e5b67dae7d3a5ed0d42ccd553011efe7dd47f42910"
+      },
+      "retained": {
+        "path": "/workspace/scratch/7e3d2a445c44/sf6-pe-bounds/tests/fixtures/pe-bounds/qualification/execution-cancellation-first/verify-retained.stdout.txt",
+        "bytes": 51,
+        "sha256": "3f97c01b84a6898e96ab69e5b67dae7d3a5ed0d42ccd553011efe7dd47f42910"
+      }
+    }
+  ],
+  "inputExecution": "not-run",
+  "nativePolicy": "Observed independently; eager overlap admission is a product policy.",
+  "performanceStatus": "not run; prescribed cohort remains pending"
+}

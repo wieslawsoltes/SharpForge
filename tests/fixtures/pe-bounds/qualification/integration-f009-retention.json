@@ -1,0 +1,337 @@
+{
+  "schemaVersion": 1,
+  "issue": 2417,
+  "status": "Integrated native and focused qualification completed; performance pending separate grant",
+  "sourceCommit": "74559c16430dbf50778afe96d3c19a7cc3ade8e4",
+  "sourceTree": "ce57ce0249f44c08e1306e83e0d0ae1f4c5dd64a",
+  "productCommit": "8f0f0feec8ed8955e6119a346051ec6fdd965760",
+  "baselineCommit": "f009e2949f3311f0ca84a4a6bc694535140d130b",
+  "planSha256": "1a25e65ee38bef4d6eb98d0002dea0da4855b0a279348b68063f996afae26a6f",
+  "recorderSha256": "c37ff300592461d91768dd8d1088bdbdf63ed24932a5c3cfa19d67c861873def",
+  "retentionVerifiedUtc": "2026-10-04T20:34:02.227688+00:00",
+  "verification": "Read-only standard-library checks of every raw native command/log, native output observation, outer receipt/output, 532 native source hashes and each 1120-file before/after snapshot; no product imports, native commands or tests re-executed. All 95 historical evidence/tool files remain byte-exact.",
+  "native": {
+    "authored": 58,
+    "references": 3,
+    "sourceFiles": 532,
+    "commands": 6,
+    "sourceCommit": "74559c16430dbf50778afe96d3c19a7cc3ade8e4",
+    "nativeSha256": "3180681b837454f9cefab3b3a7568517091d5b677d814e06c5b39657e141edd6",
+    "bytes": 681757,
+    "toolchain": {
+      "sdk": "10.0.201",
+      "runtime": "10.0.5",
+      "referencePack": "10.0.5",
+      "roslyn": {
+        "version": "5.3.0-2.26153.122 (4d3023de605a78ba3e59e50c657eed70f125c68a)",
+        "sha256": "4913fa70d10c99901edbb825fdedcc92465be08665016a5d258ea45f953624f0"
+      },
+      "referenceAssemblies": {
+        "count": 167,
+        "sha256": "a978e7aaf608f22e860328a42319b908a5a084cdb087b28b5c31a1e6726be362"
+      }
+    },
+    "environment": {
+      "platform": "linux-x64",
+      "osRelease": "6.18.44",
+      "node": "v24.19.0",
+      "image": {
+        "kind": "local",
+        "pinnedImage": false,
+        "reason": "Local OS is recorded, not an immutable runner image."
+      },
+      "imageOS": null,
+      "imageVersion": null
+    },
+    "relations": {
+      "both-accept-header-facts-equal": 20,
+      "product-rejects-native-accepts-headers": 30,
+      "both-reject": 8
+    },
+    "referenceDifferences": [],
+    "sourceSnapshotScope": "The fresh capture includes historical evidence and new qualification preparation; original historical424-source capture remains unchanged.",
+    "probeBoundary": "All build/observer workload commands; existing resolveToolchain version probes retain identities only."
+  },
+  "focused": {
+    "tests": 91,
+    "passed": 91,
+    "failed": 0,
+    "skipped": 0,
+    "cancelled": 0,
+    "todo": 0,
+    "outputSha256": "e7a505d3b933da255211cc0c74ec1873ec22e5fffafe9b70a7769c0b8f2e07e5",
+    "outputBytes": 6192
+  },
+  "phases": [
+    {
+      "step": "native",
+      "startedUtc": "2026-10-04T20:23:47.888460+00:00",
+      "finishedUtc": "2026-10-04T20:23:52.171996+00:00",
+      "receiptBytes": 272381,
+      "receiptSha256": "55de9a68f97191735b095c5396eda0eec9bdd5766cb1ffb1cf7b04b2e893ad9b",
+      "status": "passed",
+      "exitCode": 0,
+      "signal": null,
+      "sourcesUnchanged": true,
+      "sourceFilesPerSnapshot": 1120,
+      "ownedAliases": 7
+    },
+    {
+      "step": "verify-external",
+      "startedUtc": "2026-10-04T20:24:16.544115+00:00",
+      "finishedUtc": "2026-10-04T20:24:16.930788+00:00",
+      "receiptBytes": 272217,
+      "receiptSha256": "a50ccf7426be8c844fc1055dd584531a65b750b5be963227aa2b2bbd2d059c48",
+      "status": "passed",
+      "exitCode": 0,
+      "signal": null,
+      "sourcesUnchanged": true,
+      "sourceFilesPerSnapshot": 1120,
+      "ownedAliases": 7
+    },
+    {
+      "step": "retain-native",
+      "startedUtc": "2026-10-04T20:24:25.232998+00:00",
+      "finishedUtc": "2026-10-04T20:24:25.394804+00:00",
+      "receiptBytes": 279126,
+      "receiptSha256": "6dd28010c6f832ce72a375f2cd52c60b8fc01f1c23480a46003b0405162e7553",
+      "status": "passed",
+      "exitCode": 0,
+      "signal": null,
+      "sourcesUnchanged": true,
+      "sourceFilesPerSnapshot": 1120,
+      "ownedAliases": 7
+    },
+    {
+      "step": "verify-retained",
+      "startedUtc": "2026-10-04T20:24:30.308674+00:00",
+      "finishedUtc": "2026-10-04T20:24:30.665101+00:00",
+      "receiptBytes": 276552,
+      "receiptSha256": "dd5817a2b4dffd5f486fae23478896f6b61e037d2b7d4655b667f62b4bc3656c",
+      "status": "passed",
+      "exitCode": 0,
+      "signal": null,
+      "sourcesUnchanged": true,
+      "sourceFilesPerSnapshot": 1120,
+      "ownedAliases": 7
+    },
+    {
+      "step": "focused",
+      "startedUtc": "2026-10-04T20:24:36.135462+00:00",
+      "finishedUtc": "2026-10-04T20:24:39.582542+00:00",
+      "receiptBytes": 276749,
+      "receiptSha256": "b71985cfa7198f65bebf284939af23a6165f4a8d1ffcd99eb81d0d44f55f6167",
+      "status": "passed",
+      "exitCode": 0,
+      "signal": null,
+      "sourcesUnchanged": true,
+      "sourceFilesPerSnapshot": 1120,
+      "ownedAliases": 7
+    }
+  ],
+  "retained": {
+    "nativeFiles": 13,
+    "outerAndPreflightFiles": 14,
+    "totalFiles": 27,
+    "totalBytes": 2283215,
+    "files": [
+      {
+        "path": "tests/fixtures/pe-bounds/qualification/execution-integration-f009/focused.execution.json",
+        "origin": "/workspace/scratch/7e3d2a445c44/project6-pe-bounds-execution.integration-f009/focused.execution.json",
+        "bytes": 276749,
+        "sha256": "b71985cfa7198f65bebf284939af23a6165f4a8d1ffcd99eb81d0d44f55f6167"
+      },
+      {
+        "path": "tests/fixtures/pe-bounds/qualification/execution-integration-f009/focused.stderr.txt",
+        "origin": "/workspace/scratch/7e3d2a445c44/project6-pe-bounds-execution.integration-f009/focused.stderr.txt",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "path": "tests/fixtures/pe-bounds/qualification/execution-integration-f009/focused.stdout.txt",
+        "origin": "/workspace/scratch/7e3d2a445c44/project6-pe-bounds-execution.integration-f009/focused.stdout.txt",
+        "bytes": 6192,
+        "sha256": "e7a505d3b933da255211cc0c74ec1873ec22e5fffafe9b70a7769c0b8f2e07e5"
+      },
+      {
+        "path": "tests/fixtures/pe-bounds/qualification/execution-integration-f009/native.execution.json",
+        "origin": "/workspace/scratch/7e3d2a445c44/project6-pe-bounds-execution.integration-f009/native.execution.json",
+        "bytes": 272381,
+        "sha256": "55de9a68f97191735b095c5396eda0eec9bdd5766cb1ffb1cf7b04b2e893ad9b"
+      },
+      {
+        "path": "tests/fixtures/pe-bounds/qualification/execution-integration-f009/native.stderr.txt",
+        "origin": "/workspace/scratch/7e3d2a445c44/project6-pe-bounds-execution.integration-f009/native.stderr.txt",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "path": "tests/fixtures/pe-bounds/qualification/execution-integration-f009/native.stdout.txt",
+        "origin": "/workspace/scratch/7e3d2a445c44/project6-pe-bounds-execution.integration-f009/native.stdout.txt",
+        "bytes": 109,
+        "sha256": "385e65d349352ec9c958fc07352bca376b26e1ba35199450b9e007ce61b33fa1"
+      },
+      {
+        "path": "tests/fixtures/pe-bounds/qualification/execution-integration-f009/retain-native.execution.json",
+        "origin": "/workspace/scratch/7e3d2a445c44/project6-pe-bounds-execution.integration-f009/retain-native.execution.json",
+        "bytes": 279126,
+        "sha256": "6dd28010c6f832ce72a375f2cd52c60b8fc01f1c23480a46003b0405162e7553"
+      },
+      {
+        "path": "tests/fixtures/pe-bounds/qualification/execution-integration-f009/verify-external.execution.json",
+        "origin": "/workspace/scratch/7e3d2a445c44/project6-pe-bounds-execution.integration-f009/verify-external.execution.json",
+        "bytes": 272217,
+        "sha256": "a50ccf7426be8c844fc1055dd584531a65b750b5be963227aa2b2bbd2d059c48"
+      },
+      {
+        "path": "tests/fixtures/pe-bounds/qualification/execution-integration-f009/verify-external.stderr.txt",
+        "origin": "/workspace/scratch/7e3d2a445c44/project6-pe-bounds-execution.integration-f009/verify-external.stderr.txt",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "path": "tests/fixtures/pe-bounds/qualification/execution-integration-f009/verify-external.stdout.txt",
+        "origin": "/workspace/scratch/7e3d2a445c44/project6-pe-bounds-execution.integration-f009/verify-external.stdout.txt",
+        "bytes": 51,
+        "sha256": "3f97c01b84a6898e96ab69e5b67dae7d3a5ed0d42ccd553011efe7dd47f42910"
+      },
+      {
+        "path": "tests/fixtures/pe-bounds/qualification/execution-integration-f009/verify-retained.execution.json",
+        "origin": "/workspace/scratch/7e3d2a445c44/project6-pe-bounds-execution.integration-f009/verify-retained.execution.json",
+        "bytes": 276552,
+        "sha256": "dd5817a2b4dffd5f486fae23478896f6b61e037d2b7d4655b667f62b4bc3656c"
+      },
+      {
+        "path": "tests/fixtures/pe-bounds/qualification/execution-integration-f009/verify-retained.stderr.txt",
+        "origin": "/workspace/scratch/7e3d2a445c44/project6-pe-bounds-execution.integration-f009/verify-retained.stderr.txt",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "path": "tests/fixtures/pe-bounds/qualification/execution-integration-f009/verify-retained.stdout.txt",
+        "origin": "/workspace/scratch/7e3d2a445c44/project6-pe-bounds-execution.integration-f009/verify-retained.stdout.txt",
+        "bytes": 51,
+        "sha256": "3f97c01b84a6898e96ab69e5b67dae7d3a5ed0d42ccd553011efe7dd47f42910"
+      },
+      {
+        "path": "tests/fixtures/pe-bounds/qualification/execution-integration-f009/preflight.json",
+        "origin": "/workspace/scratch/7e3d2a445c44/project6-pe-bounds-integration-74559-preflight.json",
+        "bytes": 2850,
+        "sha256": "82e0ca97300e83239e7c5742c8520e0b132b70a3d7ef7e1b42d5feeb096e64e6"
+      },
+      {
+        "path": "tests/fixtures/pe-bounds/reference-integration-f009/native.json",
+        "origin": "/workspace/scratch/7e3d2a445c44/project6-pe-bounds-native.integration-f009/native.json",
+        "bytes": 681757,
+        "sha256": "3180681b837454f9cefab3b3a7568517091d5b677d814e06c5b39657e141edd6"
+      },
+      {
+        "path": "tests/fixtures/pe-bounds/reference-integration-f009/build-BoundsObserver.stdout.log",
+        "origin": "/workspace/scratch/7e3d2a445c44/project6-pe-bounds-native.integration-f009/build-BoundsObserver.stdout.log",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "path": "tests/fixtures/pe-bounds/reference-integration-f009/build-BoundsObserver.stderr.log",
+        "origin": "/workspace/scratch/7e3d2a445c44/project6-pe-bounds-native.integration-f009/build-BoundsObserver.stderr.log",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "path": "tests/fixtures/pe-bounds/reference-integration-f009/observe-authored.stdout.log",
+        "origin": "/workspace/scratch/7e3d2a445c44/project6-pe-bounds-native.integration-f009/observe-authored.stdout.log",
+        "bytes": 28478,
+        "sha256": "ac2852a63f84209f93e7a6634e5fb12bdb48fb7beb64ddc222808153a01c93bb"
+      },
+      {
+        "path": "tests/fixtures/pe-bounds/reference-integration-f009/observe-authored.stderr.log",
+        "origin": "/workspace/scratch/7e3d2a445c44/project6-pe-bounds-native.integration-f009/observe-authored.stderr.log",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "path": "tests/fixtures/pe-bounds/reference-integration-f009/build-PEObserver.stdout.log",
+        "origin": "/workspace/scratch/7e3d2a445c44/project6-pe-bounds-native.integration-f009/build-PEObserver.stdout.log",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "path": "tests/fixtures/pe-bounds/reference-integration-f009/build-PEObserver.stderr.log",
+        "origin": "/workspace/scratch/7e3d2a445c44/project6-pe-bounds-native.integration-f009/build-PEObserver.stderr.log",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "path": "tests/fixtures/pe-bounds/reference-integration-f009/observe-il.stdout.log",
+        "origin": "/workspace/scratch/7e3d2a445c44/project6-pe-bounds-native.integration-f009/observe-il.stdout.log",
+        "bytes": 24243,
+        "sha256": "482c8b3b6ee5ca443ab9538eee18992ce62483420ff8e1c820869068f335bad7"
+      },
+      {
+        "path": "tests/fixtures/pe-bounds/reference-integration-f009/observe-il.stderr.log",
+        "origin": "/workspace/scratch/7e3d2a445c44/project6-pe-bounds-native.integration-f009/observe-il.stderr.log",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "path": "tests/fixtures/pe-bounds/reference-integration-f009/observe-r2r.stdout.log",
+        "origin": "/workspace/scratch/7e3d2a445c44/project6-pe-bounds-native.integration-f009/observe-r2r.stdout.log",
+        "bytes": 111112,
+        "sha256": "4637ff1f1c9c0fe983f3eb1683cf4fe7e81e1d02fcb3702f74f4e8f6d22a596e"
+      },
+      {
+        "path": "tests/fixtures/pe-bounds/reference-integration-f009/observe-r2r.stderr.log",
+        "origin": "/workspace/scratch/7e3d2a445c44/project6-pe-bounds-native.integration-f009/observe-r2r.stderr.log",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "path": "tests/fixtures/pe-bounds/reference-integration-f009/observe-mixed.stdout.log",
+        "origin": "/workspace/scratch/7e3d2a445c44/project6-pe-bounds-native.integration-f009/observe-mixed.stdout.log",
+        "bytes": 51347,
+        "sha256": "384084de88a366b72723a7b4976142240328d7c76c6ac24ee605c35858702e11"
+      },
+      {
+        "path": "tests/fixtures/pe-bounds/reference-integration-f009/observe-mixed.stderr.log",
+        "origin": "/workspace/scratch/7e3d2a445c44/project6-pe-bounds-native.integration-f009/observe-mixed.stderr.log",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    ]
+  },
+  "performance": {
+    "status": "pending; no integrated cohort executed",
+    "preparedBaseline": "/workspace/scratch/7e3d2a445c44/sf6-pe-bounds-baseline-f009e294",
+    "destination": "/workspace/scratch/7e3d2a445c44/project6-pe-bounds-performance.integration-f009",
+    "nativeReference": "tests/fixtures/pe-bounds/reference-integration-f009",
+    "command": [
+      "node",
+      "scripts/limited.js",
+      "node",
+      "packages/cil/tools/benchmark-pe-bounds.mjs",
+      "--baseline",
+      "/workspace/scratch/7e3d2a445c44/sf6-pe-bounds-baseline-f009e294",
+      "--r2r",
+      "/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/shared/Microsoft.NETCore.App/10.0.5/System.ComponentModel.Primitives.dll",
+      "--mixed",
+      "/workspace/scratch/7e3d2a445c44/pe-MixedNativeCLI.exe",
+      "--output",
+      "/workspace/scratch/7e3d2a445c44/project6-pe-bounds-performance.integration-f009",
+      "--baseline-revision",
+      "f009e2949f3311f0ca84a4a6bc694535140d130b",
+      "--candidate-revision",
+      "8f0f0feec8ed8955e6119a346051ec6fdd965760",
+      "--native-reference",
+      "tests/fixtures/pe-bounds/reference-integration-f009"
+    ],
+    "authorization": "Separate root quiet-window grant required; preserve original cohort and disposition unchanged."
+  },
+  "unrun": [
+    "Integrated performance cohort",
+    "Browser checks",
+    "Other native operating systems",
+    "Input assembly execution",
+    "New cancellation-injection exercise"
+  ],
+  "retentionBoundary": "Only the planned13 native files, all five outer receipts/eight outer streams and preflight are copied. External generated images and native observer/SDK binaries remain outside Git. Original external artifacts remain untouched."
+}

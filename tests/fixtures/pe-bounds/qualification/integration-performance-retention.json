@@ -1,0 +1,575 @@
+{
+  "schemaVersion": 1,
+  "issue": 2417,
+  "status": "Integrated cohort executed once and independently recomputed; coordinator-authored automated correctness-cost exception retained separately",
+  "candidateCommit": "ddf3da105ace61ed61463a5704caf93c0c3dcf6f",
+  "baselineCommit": "f009e2949f3311f0ca84a4a6bc694535140d130b",
+  "productCommit": "8f0f0feec8ed8955e6119a346051ec6fdd965760",
+  "nativeSourceCommit": "74559c16430dbf50778afe96d3c19a7cc3ade8e4",
+  "reportSha256": "cadcd76959b557d2cac79f8a63b3d130dbb26c9793448a53e1a783f973e4af7d",
+  "outerReceiptSha256": "246876416178848199a61224999db662cd6762e581b8b0cb3eec24dbd4af33d4",
+  "preflightSha256": "8229888ace6c1f104ba10f8bf9ca56b34fd5caa52f7d2167467582d4073abfe5",
+  "reviewSha256": "100f231ce5da5859d0017c7e684c2202601f40dd5490249046f33ebe1f24ed18",
+  "reviewSourceSha256": "05022668a2ef49b72f0e0e466644da4bd5e79e92c3e844cb258f7094aa4d45e6",
+  "retainedAtUtc": "2026-10-04T20:52:00.299171+00:00",
+  "counts": {
+    "serialChildren": 12,
+    "preparationChildren": 2,
+    "measurementChildren": 10,
+    "measuredBatches": 1000,
+    "warmupBatches": 200,
+    "chronologicalRows": 1200,
+    "timedCallsWithPassingGuards": 65760,
+    "measuredCalls": 54800,
+    "warmupCalls": 10960,
+    "untimedWorkerPreflightReads": 60,
+    "nativeAuthoredCases": 58,
+    "nativeReferenceImages": 3,
+    "focusedTestsPassed": 91,
+    "outerSourceFilesVerified": 1133,
+    "toolHashesVerified": 10,
+    "nativeSourceFilesVerified": 532
+  },
+  "sourceFileCounts": {
+    "baseline": 372,
+    "candidate": 373
+  },
+  "rawCohortFiles": 52,
+  "rawCohortBytes": 4265710,
+  "rawOuterAndPreflightFiles": 4,
+  "rawOuterAndPreflightBytes": 282634,
+  "rawTotalFiles": 56,
+  "rawTotalBytes": 4548344,
+  "retainedFilesIncludingIndependentReview": 60,
+  "retainedBytesIncludingIndependentReview": 4630788,
+  "files": [
+    {
+      "kind": "raw-cohort",
+      "origin": "/workspace/scratch/7e3d2a445c44/project6-pe-bounds-performance.integration-f009/dense96-baseline.job.json",
+      "path": "tests/fixtures/pe-bounds/qualification/performance-integration-f009/dense96-baseline.job.json",
+      "bytes": 55550,
+      "sha256": "99f51656a6faa31f5e116d2b9cf1e88b8a11c62c9113855f8576c6b68fd2ed1f"
+    },
+    {
+      "kind": "raw-cohort",
+      "origin": "/workspace/scratch/7e3d2a445c44/project6-pe-bounds-performance.integration-f009/dense96-baseline.result.json",
+      "path": "tests/fixtures/pe-bounds/qualification/performance-integration-f009/dense96-baseline.result.json",
+      "bytes": 128460,
+      "sha256": "a2e3a98a925f391c182317d506b8ae76109081d4828338aa4c6f40f135df0e20"
+    },
+    {
+      "kind": "raw-cohort",
+      "origin": "/workspace/scratch/7e3d2a445c44/project6-pe-bounds-performance.integration-f009/dense96-baseline.stderr.log",
+      "path": "tests/fixtures/pe-bounds/qualification/performance-integration-f009/dense96-baseline.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "kind": "raw-cohort",
+      "origin": "/workspace/scratch/7e3d2a445c44/project6-pe-bounds-performance.integration-f009/dense96-baseline.stdout.log",
+      "path": "tests/fixtures/pe-bounds/qualification/performance-integration-f009/dense96-baseline.stdout.log",
+      "bytes": 20,
+      "sha256": "b215ff190a08ad5dcf98fbe6ee599c5a3a2b5b7034c6b526eeeaa887f67ae648"
+    },
+    {
+      "kind": "raw-cohort",
+      "origin": "/workspace/scratch/7e3d2a445c44/project6-pe-bounds-performance.integration-f009/dense96-candidate.job.json",
+      "path": "tests/fixtures/pe-bounds/qualification/performance-integration-f009/dense96-candidate.job.json",
+      "bytes": 55538,
+      "sha256": "67bf3149dd15f2fd37bb4696dd7d80e5be995c38fe0dc5c7bd5993874c35a569"
+    },
+    {
+      "kind": "raw-cohort",
+      "origin": "/workspace/scratch/7e3d2a445c44/project6-pe-bounds-performance.integration-f009/dense96-candidate.result.json",
+      "path": "tests/fixtures/pe-bounds/qualification/performance-integration-f009/dense96-candidate.result.json",
+      "bytes": 128416,
+      "sha256": "42e2cf62f3312b12283af9e40befb37cad7007f171b8d5579ae3290eb5ff4a1a"
+    },
+    {
+      "kind": "raw-cohort",
+      "origin": "/workspace/scratch/7e3d2a445c44/project6-pe-bounds-performance.integration-f009/dense96-candidate.stderr.log",
+      "path": "tests/fixtures/pe-bounds/qualification/performance-integration-f009/dense96-candidate.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "kind": "raw-cohort",
+      "origin": "/workspace/scratch/7e3d2a445c44/project6-pe-bounds-performance.integration-f009/dense96-candidate.stdout.log",
+      "path": "tests/fixtures/pe-bounds/qualification/performance-integration-f009/dense96-candidate.stdout.log",
+      "bytes": 20,
+      "sha256": "b215ff190a08ad5dcf98fbe6ee599c5a3a2b5b7034c6b526eeeaa887f67ae648"
+    },
+    {
+      "kind": "raw-cohort",
+      "origin": "/workspace/scratch/7e3d2a445c44/project6-pe-bounds-performance.integration-f009/dense96.dll",
+      "path": "tests/fixtures/pe-bounds/qualification/performance-integration-f009/dense96.dll",
+      "bytes": 53760,
+      "sha256": "158655fc4906ce13c4dead823987de4b82ca8cbabfa6196f95d77a0429a75ac9"
+    },
+    {
+      "kind": "raw-cohort",
+      "origin": "/workspace/scratch/7e3d2a445c44/project6-pe-bounds-performance.integration-f009/il-baseline.job.json",
+      "path": "tests/fixtures/pe-bounds/qualification/performance-integration-f009/il-baseline.job.json",
+      "bytes": 51271,
+      "sha256": "7d971bde32da63bd53048de07f1a3e61b6c72c40214054235616aa89355440b0"
+    },
+    {
+      "kind": "raw-cohort",
+      "origin": "/workspace/scratch/7e3d2a445c44/project6-pe-bounds-performance.integration-f009/il-baseline.result.json",
+      "path": "tests/fixtures/pe-bounds/qualification/performance-integration-f009/il-baseline.result.json",
+      "bytes": 128429,
+      "sha256": "dcde3b8fd15bf9825c539dd05901084adb6da043171f0b9bccd5b1cbb5e92a81"
+    },
+    {
+      "kind": "raw-cohort",
+      "origin": "/workspace/scratch/7e3d2a445c44/project6-pe-bounds-performance.integration-f009/il-baseline.stderr.log",
+      "path": "tests/fixtures/pe-bounds/qualification/performance-integration-f009/il-baseline.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "kind": "raw-cohort",
+      "origin": "/workspace/scratch/7e3d2a445c44/project6-pe-bounds-performance.integration-f009/il-baseline.stdout.log",
+      "path": "tests/fixtures/pe-bounds/qualification/performance-integration-f009/il-baseline.stdout.log",
+      "bytes": 20,
+      "sha256": "b215ff190a08ad5dcf98fbe6ee599c5a3a2b5b7034c6b526eeeaa887f67ae648"
+    },
+    {
+      "kind": "raw-cohort",
+      "origin": "/workspace/scratch/7e3d2a445c44/project6-pe-bounds-performance.integration-f009/il-candidate.job.json",
+      "path": "tests/fixtures/pe-bounds/qualification/performance-integration-f009/il-candidate.job.json",
+      "bytes": 51259,
+      "sha256": "7fb38ee6134a7b31776cd3f7eb46b92dd52f792afbd52d10284b87c78d167d01"
+    },
+    {
+      "kind": "raw-cohort",
+      "origin": "/workspace/scratch/7e3d2a445c44/project6-pe-bounds-performance.integration-f009/il-candidate.result.json",
+      "path": "tests/fixtures/pe-bounds/qualification/performance-integration-f009/il-candidate.result.json",
+      "bytes": 128452,
+      "sha256": "e0cdd5bf26f2abff73aa6e88a030580b5e284d171e8f201285c0738e33eb8187"
+    },
+    {
+      "kind": "raw-cohort",
+      "origin": "/workspace/scratch/7e3d2a445c44/project6-pe-bounds-performance.integration-f009/il-candidate.stderr.log",
+      "path": "tests/fixtures/pe-bounds/qualification/performance-integration-f009/il-candidate.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "kind": "raw-cohort",
+      "origin": "/workspace/scratch/7e3d2a445c44/project6-pe-bounds-performance.integration-f009/il-candidate.stdout.log",
+      "path": "tests/fixtures/pe-bounds/qualification/performance-integration-f009/il-candidate.stdout.log",
+      "bytes": 20,
+      "sha256": "b215ff190a08ad5dcf98fbe6ee599c5a3a2b5b7034c6b526eeeaa887f67ae648"
+    },
+    {
+      "kind": "raw-cohort",
+      "origin": "/workspace/scratch/7e3d2a445c44/project6-pe-bounds-performance.integration-f009/il.dll",
+      "path": "tests/fixtures/pe-bounds/qualification/performance-integration-f009/il.dll",
+      "bytes": 11776,
+      "sha256": "53af64fc5a8db6df9b64fe46ab8e1518a33015a0aec0f33c2101d84edc750aa3"
+    },
+    {
+      "kind": "raw-cohort",
+      "origin": "/workspace/scratch/7e3d2a445c44/project6-pe-bounds-performance.integration-f009/mixed-baseline.job.json",
+      "path": "tests/fixtures/pe-bounds/qualification/performance-integration-f009/mixed-baseline.job.json",
+      "bytes": 51473,
+      "sha256": "32fafbc85d6d68b9aae1d62298249ed57b140ed62084f7b23dbf4d7360509323"
+    },
+    {
+      "kind": "raw-cohort",
+      "origin": "/workspace/scratch/7e3d2a445c44/project6-pe-bounds-performance.integration-f009/mixed-baseline.result.json",
+      "path": "tests/fixtures/pe-bounds/qualification/performance-integration-f009/mixed-baseline.result.json",
+      "bytes": 128514,
+      "sha256": "9c3580c3b1f4da3f72762725d00d8118b5d357a465e28417f8251ddef0cf6a59"
+    },
+    {
+      "kind": "raw-cohort",
+      "origin": "/workspace/scratch/7e3d2a445c44/project6-pe-bounds-performance.integration-f009/mixed-baseline.stderr.log",
+      "path": "tests/fixtures/pe-bounds/qualification/performance-integration-f009/mixed-baseline.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "kind": "raw-cohort",
+      "origin": "/workspace/scratch/7e3d2a445c44/project6-pe-bounds-performance.integration-f009/mixed-baseline.stdout.log",
+      "path": "tests/fixtures/pe-bounds/qualification/performance-integration-f009/mixed-baseline.stdout.log",
+      "bytes": 20,
+      "sha256": "b215ff190a08ad5dcf98fbe6ee599c5a3a2b5b7034c6b526eeeaa887f67ae648"
+    },
+    {
+      "kind": "raw-cohort",
+      "origin": "/workspace/scratch/7e3d2a445c44/project6-pe-bounds-performance.integration-f009/mixed-candidate.job.json",
+      "path": "tests/fixtures/pe-bounds/qualification/performance-integration-f009/mixed-candidate.job.json",
+      "bytes": 51461,
+      "sha256": "b150a3ce0bfb153fa5a31cc2928c02ed70bda611a561374d591af7d0cdc17213"
+    },
+    {
+      "kind": "raw-cohort",
+      "origin": "/workspace/scratch/7e3d2a445c44/project6-pe-bounds-performance.integration-f009/mixed-candidate.result.json",
+      "path": "tests/fixtures/pe-bounds/qualification/performance-integration-f009/mixed-candidate.result.json",
+      "bytes": 128424,
+      "sha256": "de86cab9e145d6ea9d3d82cd036161fa2424490fa910b8179b40544caf7dbec7"
+    },
+    {
+      "kind": "raw-cohort",
+      "origin": "/workspace/scratch/7e3d2a445c44/project6-pe-bounds-performance.integration-f009/mixed-candidate.stderr.log",
+      "path": "tests/fixtures/pe-bounds/qualification/performance-integration-f009/mixed-candidate.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "kind": "raw-cohort",
+      "origin": "/workspace/scratch/7e3d2a445c44/project6-pe-bounds-performance.integration-f009/mixed-candidate.stdout.log",
+      "path": "tests/fixtures/pe-bounds/qualification/performance-integration-f009/mixed-candidate.stdout.log",
+      "bytes": 20,
+      "sha256": "b215ff190a08ad5dcf98fbe6ee599c5a3a2b5b7034c6b526eeeaa887f67ae648"
+    },
+    {
+      "kind": "raw-cohort",
+      "origin": "/workspace/scratch/7e3d2a445c44/project6-pe-bounds-performance.integration-f009/prepare-baseline.job.json",
+      "path": "tests/fixtures/pe-bounds/qualification/performance-integration-f009/prepare-baseline.job.json",
+      "bytes": 50909,
+      "sha256": "e04acab6965c3d73bcce776850eb19b3a2b7de483bcd4986341cd6cc11f5ffc4"
+    },
+    {
+      "kind": "raw-cohort",
+      "origin": "/workspace/scratch/7e3d2a445c44/project6-pe-bounds-performance.integration-f009/prepare-baseline.result.json",
+      "path": "tests/fixtures/pe-bounds/qualification/performance-integration-f009/prepare-baseline.result.json",
+      "bytes": 55663,
+      "sha256": "1c50ce0dda41460098b90427a1cae9e7279373ac874672abf14f8b739c546b79"
+    },
+    {
+      "kind": "raw-cohort",
+      "origin": "/workspace/scratch/7e3d2a445c44/project6-pe-bounds-performance.integration-f009/prepare-baseline.stderr.log",
+      "path": "tests/fixtures/pe-bounds/qualification/performance-integration-f009/prepare-baseline.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "kind": "raw-cohort",
+      "origin": "/workspace/scratch/7e3d2a445c44/project6-pe-bounds-performance.integration-f009/prepare-baseline.stdout.log",
+      "path": "tests/fixtures/pe-bounds/qualification/performance-integration-f009/prepare-baseline.stdout.log",
+      "bytes": 20,
+      "sha256": "b215ff190a08ad5dcf98fbe6ee599c5a3a2b5b7034c6b526eeeaa887f67ae648"
+    },
+    {
+      "kind": "raw-cohort",
+      "origin": "/workspace/scratch/7e3d2a445c44/project6-pe-bounds-performance.integration-f009/prepare-candidate.job.json",
+      "path": "tests/fixtures/pe-bounds/qualification/performance-integration-f009/prepare-candidate.job.json",
+      "bytes": 50897,
+      "sha256": "933146def51b9857b1ec7f04977b241817cdab592f94e45cc027e17d7bdc8d7b"
+    },
+    {
+      "kind": "raw-cohort",
+      "origin": "/workspace/scratch/7e3d2a445c44/project6-pe-bounds-performance.integration-f009/prepare-candidate.result.json",
+      "path": "tests/fixtures/pe-bounds/qualification/performance-integration-f009/prepare-candidate.result.json",
+      "bytes": 55667,
+      "sha256": "6a2c3f2099e3d20d61a29f7b0f3fd3fbd5a716633d51dad0b25746f0331bf9d9"
+    },
+    {
+      "kind": "raw-cohort",
+      "origin": "/workspace/scratch/7e3d2a445c44/project6-pe-bounds-performance.integration-f009/prepare-candidate.stderr.log",
+      "path": "tests/fixtures/pe-bounds/qualification/performance-integration-f009/prepare-candidate.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "kind": "raw-cohort",
+      "origin": "/workspace/scratch/7e3d2a445c44/project6-pe-bounds-performance.integration-f009/prepare-candidate.stdout.log",
+      "path": "tests/fixtures/pe-bounds/qualification/performance-integration-f009/prepare-candidate.stdout.log",
+      "bytes": 20,
+      "sha256": "b215ff190a08ad5dcf98fbe6ee599c5a3a2b5b7034c6b526eeeaa887f67ae648"
+    },
+    {
+      "kind": "raw-cohort",
+      "origin": "/workspace/scratch/7e3d2a445c44/project6-pe-bounds-performance.integration-f009/r2r-baseline.job.json",
+      "path": "tests/fixtures/pe-bounds/qualification/performance-integration-f009/r2r-baseline.job.json",
+      "bytes": 51305,
+      "sha256": "3433f3fb8b079d5672b4c85850b1f39ed50124a11fc4ca528090f4c82fe12c30"
+    },
+    {
+      "kind": "raw-cohort",
+      "origin": "/workspace/scratch/7e3d2a445c44/project6-pe-bounds-performance.integration-f009/r2r-baseline.result.json",
+      "path": "tests/fixtures/pe-bounds/qualification/performance-integration-f009/r2r-baseline.result.json",
+      "bytes": 128539,
+      "sha256": "05f5256185f5c9e7e6d3f63e3e09c09b217b149adf27deeb7893e7ba208e09c7"
+    },
+    {
+      "kind": "raw-cohort",
+      "origin": "/workspace/scratch/7e3d2a445c44/project6-pe-bounds-performance.integration-f009/r2r-baseline.stderr.log",
+      "path": "tests/fixtures/pe-bounds/qualification/performance-integration-f009/r2r-baseline.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "kind": "raw-cohort",
+      "origin": "/workspace/scratch/7e3d2a445c44/project6-pe-bounds-performance.integration-f009/r2r-baseline.stdout.log",
+      "path": "tests/fixtures/pe-bounds/qualification/performance-integration-f009/r2r-baseline.stdout.log",
+      "bytes": 20,
+      "sha256": "b215ff190a08ad5dcf98fbe6ee599c5a3a2b5b7034c6b526eeeaa887f67ae648"
+    },
+    {
+      "kind": "raw-cohort",
+      "origin": "/workspace/scratch/7e3d2a445c44/project6-pe-bounds-performance.integration-f009/r2r-candidate.job.json",
+      "path": "tests/fixtures/pe-bounds/qualification/performance-integration-f009/r2r-candidate.job.json",
+      "bytes": 51293,
+      "sha256": "4eea2a9eeacca57ea8e4eb2a55e439999511534cc1480f9da2f186a88f189ec1"
+    },
+    {
+      "kind": "raw-cohort",
+      "origin": "/workspace/scratch/7e3d2a445c44/project6-pe-bounds-performance.integration-f009/r2r-candidate.result.json",
+      "path": "tests/fixtures/pe-bounds/qualification/performance-integration-f009/r2r-candidate.result.json",
+      "bytes": 128494,
+      "sha256": "3a2435ac0d5d3498043a87c9a789224e4a431ae19903e6f4d6d9d7c207f9834c"
+    },
+    {
+      "kind": "raw-cohort",
+      "origin": "/workspace/scratch/7e3d2a445c44/project6-pe-bounds-performance.integration-f009/r2r-candidate.stderr.log",
+      "path": "tests/fixtures/pe-bounds/qualification/performance-integration-f009/r2r-candidate.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "kind": "raw-cohort",
+      "origin": "/workspace/scratch/7e3d2a445c44/project6-pe-bounds-performance.integration-f009/r2r-candidate.stdout.log",
+      "path": "tests/fixtures/pe-bounds/qualification/performance-integration-f009/r2r-candidate.stdout.log",
+      "bytes": 20,
+      "sha256": "b215ff190a08ad5dcf98fbe6ee599c5a3a2b5b7034c6b526eeeaa887f67ae648"
+    },
+    {
+      "kind": "raw-cohort",
+      "origin": "/workspace/scratch/7e3d2a445c44/project6-pe-bounds-performance.integration-f009/report.json",
+      "path": "tests/fixtures/pe-bounds/qualification/performance-integration-f009/report.json",
+      "bytes": 2177813,
+      "sha256": "cadcd76959b557d2cac79f8a63b3d130dbb26c9793448a53e1a783f973e4af7d"
+    },
+    {
+      "kind": "raw-cohort",
+      "origin": "/workspace/scratch/7e3d2a445c44/project6-pe-bounds-performance.integration-f009/small-baseline.job.json",
+      "path": "tests/fixtures/pe-bounds/qualification/performance-integration-f009/small-baseline.job.json",
+      "bytes": 51283,
+      "sha256": "c7d16f62cdfa99ff095df8be2e37dcdfb952c8952d473ea577cd4dcf0e09c29b"
+    },
+    {
+      "kind": "raw-cohort",
+      "origin": "/workspace/scratch/7e3d2a445c44/project6-pe-bounds-performance.integration-f009/small-baseline.result.json",
+      "path": "tests/fixtures/pe-bounds/qualification/performance-integration-f009/small-baseline.result.json",
+      "bytes": 128771,
+      "sha256": "be2dc1c72d47be878ffe82e3bc4c3f26b2cdbd9eb3cf105e45a0ec55008a8575"
+    },
+    {
+      "kind": "raw-cohort",
+      "origin": "/workspace/scratch/7e3d2a445c44/project6-pe-bounds-performance.integration-f009/small-baseline.stderr.log",
+      "path": "tests/fixtures/pe-bounds/qualification/performance-integration-f009/small-baseline.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "kind": "raw-cohort",
+      "origin": "/workspace/scratch/7e3d2a445c44/project6-pe-bounds-performance.integration-f009/small-baseline.stdout.log",
+      "path": "tests/fixtures/pe-bounds/qualification/performance-integration-f009/small-baseline.stdout.log",
+      "bytes": 20,
+      "sha256": "b215ff190a08ad5dcf98fbe6ee599c5a3a2b5b7034c6b526eeeaa887f67ae648"
+    },
+    {
+      "kind": "raw-cohort",
+      "origin": "/workspace/scratch/7e3d2a445c44/project6-pe-bounds-performance.integration-f009/small-candidate.job.json",
+      "path": "tests/fixtures/pe-bounds/qualification/performance-integration-f009/small-candidate.job.json",
+      "bytes": 51271,
+      "sha256": "059b9ba1f2a2d9b45191d93d63db1ead84f750a7a5c092011ae7b32e7cffff52"
+    },
+    {
+      "kind": "raw-cohort",
+      "origin": "/workspace/scratch/7e3d2a445c44/project6-pe-bounds-performance.integration-f009/small-candidate.result.json",
+      "path": "tests/fixtures/pe-bounds/qualification/performance-integration-f009/small-candidate.result.json",
+      "bytes": 128734,
+      "sha256": "de3a71fb0aaffed65a6764072609dfa75588a71f61705c3779c12f2cc840e394"
+    },
+    {
+      "kind": "raw-cohort",
+      "origin": "/workspace/scratch/7e3d2a445c44/project6-pe-bounds-performance.integration-f009/small-candidate.stderr.log",
+      "path": "tests/fixtures/pe-bounds/qualification/performance-integration-f009/small-candidate.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "kind": "raw-cohort",
+      "origin": "/workspace/scratch/7e3d2a445c44/project6-pe-bounds-performance.integration-f009/small-candidate.stdout.log",
+      "path": "tests/fixtures/pe-bounds/qualification/performance-integration-f009/small-candidate.stdout.log",
+      "bytes": 20,
+      "sha256": "b215ff190a08ad5dcf98fbe6ee599c5a3a2b5b7034c6b526eeeaa887f67ae648"
+    },
+    {
+      "kind": "raw-cohort",
+      "origin": "/workspace/scratch/7e3d2a445c44/project6-pe-bounds-performance.integration-f009/small.dll",
+      "path": "tests/fixtures/pe-bounds/qualification/performance-integration-f009/small.dll",
+      "bytes": 2048,
+      "sha256": "c5227292f8622ad667eeecb3abcd5ebd6cd92425c4dc97ea7170b72457dafe32"
+    },
+    {
+      "kind": "raw-outer",
+      "origin": "/workspace/scratch/7e3d2a445c44/project6-pe-bounds-execution.integration-f009/performance.execution.json",
+      "path": "tests/fixtures/pe-bounds/qualification/execution-integration-f009/performance.execution.json",
+      "bytes": 276786,
+      "sha256": "246876416178848199a61224999db662cd6762e581b8b0cb3eec24dbd4af33d4"
+    },
+    {
+      "kind": "raw-outer",
+      "origin": "/workspace/scratch/7e3d2a445c44/project6-pe-bounds-execution.integration-f009/performance.stdout.txt",
+      "path": "tests/fixtures/pe-bounds/qualification/execution-integration-f009/performance.stdout.txt",
+      "bytes": 114,
+      "sha256": "edaa251fea8946eb2a259bb33c17fdfcc8e3733cd40440d8afb369f59c5d1425"
+    },
+    {
+      "kind": "raw-outer",
+      "origin": "/workspace/scratch/7e3d2a445c44/project6-pe-bounds-execution.integration-f009/performance.stderr.txt",
+      "path": "tests/fixtures/pe-bounds/qualification/execution-integration-f009/performance.stderr.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "kind": "raw-preflight",
+      "origin": "/workspace/scratch/7e3d2a445c44/project6-pe-bounds-performance-integration-ddf3-preflight.json",
+      "path": "tests/fixtures/pe-bounds/qualification/execution-integration-f009/performance-preflight.json",
+      "bytes": 5734,
+      "sha256": "8229888ace6c1f104ba10f8bf9ca56b34fd5caa52f7d2167467582d4073abfe5"
+    },
+    {
+      "kind": "derived-review",
+      "origin": "/workspace/scratch/7e3d2a445c44/project6-pe-bounds-integration-independent-review.json",
+      "path": "tests/fixtures/pe-bounds/qualification/integration-independent-performance-review.json",
+      "bytes": 42412,
+      "sha256": "100f231ce5da5859d0017c7e684c2202601f40dd5490249046f33ebe1f24ed18"
+    },
+    {
+      "kind": "derived-review-source",
+      "origin": "/workspace/scratch/7e3d2a445c44/project6-pe-bounds-integration-independent-review.py",
+      "path": "tests/fixtures/pe-bounds/qualification/integration-independent-performance-review.py.txt",
+      "bytes": 21304,
+      "sha256": "05022668a2ef49b72f0e0e466644da4bd5e79e92c3e844cb258f7094aa4d45e6"
+    },
+    {
+      "kind": "root-disposition",
+      "origin": "/workspace/scratch/7e3d2a445c44/sf6-pe-bounds/tests/fixtures/pe-bounds/qualification/ROOT-INTEGRATION-F009-PERFORMANCE-DISPOSITION.md",
+      "path": "tests/fixtures/pe-bounds/qualification/ROOT-INTEGRATION-F009-PERFORMANCE-DISPOSITION.md",
+      "bytes": 5601,
+      "sha256": "52cef1e44fd58883b84322d0a5b08d9d8bd09add084eb0a9f979a922ca7533df"
+    },
+    {
+      "kind": "root-disposition",
+      "origin": "/workspace/scratch/7e3d2a445c44/sf6-pe-bounds/tests/fixtures/pe-bounds/qualification/root-integration-f009-performance-review.json",
+      "path": "tests/fixtures/pe-bounds/qualification/root-integration-f009-performance-review.json",
+      "bytes": 13127,
+      "sha256": "c637b972f58a8093ce2c1896865a08344be3e62ea1845aa52c0c20ffac55b69c"
+    }
+  ],
+  "allAdverseLatencyStatistics": [
+    {
+      "workload": "small",
+      "metric": "median",
+      "baseline": 15.867406249999938,
+      "candidate": 21.291738281250083,
+      "deltaMicrosecondsPerOperation": 5.424332031250145,
+      "percent": 34.185373121395735
+    },
+    {
+      "workload": "small",
+      "metric": "min",
+      "baseline": 11.741929687499209,
+      "candidate": 12.594507812501377,
+      "deltaMicrosecondsPerOperation": 0.852578125002168,
+      "percent": 7.260971132452343
+    },
+    {
+      "workload": "dense96",
+      "metric": "median",
+      "baseline": 61.733781250000064,
+      "candidate": 67.72634375000308,
+      "deltaMicrosecondsPerOperation": 5.992562500003018,
+      "percent": 9.70710424449015
+    },
+    {
+      "workload": "dense96",
+      "metric": "p95",
+      "baseline": 119.83943750000137,
+      "candidate": 134.3876562499986,
+      "deltaMicrosecondsPerOperation": 14.548218749997233,
+      "percent": 12.139758875284334
+    },
+    {
+      "workload": "dense96",
+      "metric": "p99",
+      "baseline": 167.29915624999592,
+      "candidate": 178.2959062499998,
+      "deltaMicrosecondsPerOperation": 10.996750000003885,
+      "percent": 6.573105475541907
+    },
+    {
+      "workload": "dense96",
+      "metric": "min",
+      "baseline": 52.112468750003416,
+      "candidate": 53.20406250000076,
+      "deltaMicrosecondsPerOperation": 1.0915937499973438,
+      "percent": 2.094688231398112
+    },
+    {
+      "workload": "il",
+      "metric": "p95",
+      "baseline": 199.25215624999737,
+      "candidate": 220.27128124999962,
+      "deltaMicrosecondsPerOperation": 21.019125000002248,
+      "percent": 10.549007546814204
+    },
+    {
+      "workload": "r2r",
+      "metric": "median",
+      "baseline": 133.9797599999929,
+      "candidate": 140.05928000000495,
+      "deltaMicrosecondsPerOperation": 6.079520000012053,
+      "percent": 4.537640610799998
+    },
+    {
+      "workload": "r2r",
+      "metric": "p95",
+      "baseline": 521.3700399999925,
+      "candidate": 534.0482800000063,
+      "deltaMicrosecondsPerOperation": 12.67824000001383,
+      "percent": 2.431716252819971
+    },
+    {
+      "workload": "r2r",
+      "metric": "p99",
+      "baseline": 631.8803200000002,
+      "candidate": 663.6722400000008,
+      "deltaMicrosecondsPerOperation": 31.791920000000573,
+      "percent": 5.031319855000471
+    },
+    {
+      "workload": "r2r",
+      "metric": "min",
+      "baseline": 118.15508000000591,
+      "candidate": 119.34887999999773,
+      "deltaMicrosecondsPerOperation": 1.1937999999918247,
+      "percent": 1.0103670531912412
+    }
+  ],
+  "statisticsScope": "All latency metrics are microseconds/operation distributions of batch means; net heapUsed deltas per batch are not allocations, retained memory or peak RSS. No samples filtered or cohort rerun.",
+  "qualification": "All12children,1200rows,65760timedcalls and guards, hashes, serial chronology and complete reader facts matched; fresh58+3native capture remains unchanged.",
+  "disposition": {
+    "author": "Task coordinator; separately authored records retained byte-exact",
+    "decision": "Explicit automated correctness-cost exception; not a threshold pass or human approval",
+    "markdown": "tests/fixtures/pe-bounds/qualification/ROOT-INTEGRATION-F009-PERFORMANCE-DISPOSITION.md",
+    "markdownSha256": "52cef1e44fd58883b84322d0a5b08d9d8bd09add084eb0a9f979a922ca7533df",
+    "json": "tests/fixtures/pe-bounds/qualification/root-integration-f009-performance-review.json",
+    "jsonSha256": "c637b972f58a8093ce2c1896865a08344be3e62ea1845aa52c0c20ffac55b69c",
+    "scope": "All11predefined adverse metrics, supplemental adverse arithmetic means and signed heap observations; exact rationale/limits belong to the separate coordinator records."
+  },
+  "historicalBoundary": "All earlier native, performance, admission and qualification evidence remains byte-exact; this integrated cohort is distinct from the original cancellation-first cohort.",
+  "readableReport": {
+    "path": "tests/fixtures/pe-bounds/qualification/INTEGRATION-F009-PERFORMANCE.md",
+    "bytes": 11488,
+    "sha256": "2cde9728a8aa290a8682a2e9800c33f43abcc5a611d475e288eaf7792eb45f96"
+  },
+  "supplementalMeanVerification": "Standard-library arithmetic over retained100measured samples per side matched allfive coordinator means/percent changes; no product import or benchmark execution."
+}
