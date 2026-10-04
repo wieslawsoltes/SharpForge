@@ -10,8 +10,8 @@
  *                                 completes it with true at a `yield return`, false at the end, or the exception
  *     <>2__current, <>w__disposeMode, <>l__initialThreadId, p / <>3__p, <>4__this    as in an iterator
  *
- * `MoveNext` is emitted from the body (emit-async-iterators.js); the other members are fixed and written here. A
- * cancellation token given to `GetAsyncEnumerator` is not observed (no `[EnumeratorCancellation]` support).
+ * `MoveNext` is emitted from the body (emit-async-iterators.js); the other members are fixed and written here. The
+ * cancellation token given to `GetAsyncEnumerator` reaches the parameter marked `[EnumeratorCancellation]`.
  */
 import { MethodAttributes, FieldAttributes } from '@sharpforge/cil';
 import { RefKind } from '../../symbols/types.js';
@@ -131,10 +131,42 @@ function getAsyncEnumeratorBody(program, machine) {
   il.emit('ldc.i4', NOT_STARTED).emit('newobj', machine.instanceConstructor.token, { pops: 1, pushes: 1 }).emit('stloc', result);
   if (fields.receiver) il.emit('ldloc', result).emit('ldarg', 0).emit('ldfld', fields.receiver.token).emit('stfld', fields.receiver.token);
   il.mark(copy);
-  for (const { field, initial } of machine.parameters.values()) {
-    il.emit('ldloc', result).emit('ldarg', 0).emit('ldfld', initial.token).emit('stfld', field.token);
+  for (const [parameter, { field, initial }] of machine.parameters) {
+    if (isEnumeratorCancellation(parameter)) enumeratorToken(program, il, { result, field, initial });
+    else il.emit('ldloc', result).emit('ldarg', 0).emit('ldfld', initial.token).emit('stfld', field.token);
   }
   return returned(il.emit('ldloc', result));
+}
+
+const isEnumeratorCancellation = parameter =>
+  !!(parameter.originalDefinition ?? parameter).boundAttributes?.some(attribute => attribute.attributeClass?.name === 'EnumeratorCancellationAttribute');
+
+/**
+ * The token of a parameter marked `[EnumeratorCancellation]`: the token `GetAsyncEnumerator` receives when the
+ * iterator was called without one (and the other way round), else a token linked to both. (The linked source is not
+ * disposed with the enumerator, as Roslyn's is; it is collected with it.)
+ * @param {{result: number, field: object, initial: object}} target the new machine's local, the parameter's field and its initial value
+ */
+function enumeratorToken(program, il, { result, field, initial }) {
+  const core = program.core,
+    token = asyncStreamTypes(core).cancellationToken,
+    source = frameworkType(core, 'System.Threading', 'CancellationTokenSource'),
+    equals = program.tokens.external(token, 'Equals', instance(core.bool, [token])),
+    link = program.tokens.external(source, 'CreateLinkedTokenSource', { isStatic: true, returnType: source, parameters: [{ type: token }, { type: token }] }),
+    getToken = program.tokens.external(source, 'get_Token', instance(token)),
+    none = il.declareLocal(token),
+    useArgument = il.newLabel(),
+    useInitial = il.newLabel(),
+    stored = il.newLabel();
+  il.emit('ldarg', 0).emit('ldflda', initial.token).emit('ldloc', none).emit('call', equals, { pops: 2, pushes: 1 }).emit('brtrue', useArgument);
+  il.emit('ldarga', 1).emit('ldloc', none).emit('call', equals, { pops: 2, pushes: 1 }).emit('brtrue', useInitial);
+  il.emit('ldloc', result).emit('ldarg', 0).emit('ldfld', initial.token).emit('ldarg', 1);
+  il.emit('call', link, { pops: 2, pushes: 1 }).emit('callvirt', getToken, { pops: 1, pushes: 1 }).emit('stfld', field.token).emit('br', stored);
+  il.mark(useArgument);
+  il.emit('ldloc', result).emit('ldarg', 1).emit('stfld', field.token).emit('br', stored);
+  il.mark(useInitial);
+  il.emit('ldloc', result).emit('ldarg', 0).emit('ldfld', initial.token).emit('stfld', field.token);
+  il.mark(stored);
 }
 
 /**

@@ -77,6 +77,9 @@ export const ConversionBinding = Base =>
       if (e.form === 'tupleLiteral') this.finishTupleLiteralElements(e, type, c);
       if (e.form === 'lambda' && c.kind === ConversionKind.AnonymousFunction) {
         e.boundAs = type;
+        // The body is bound for the delegate type here, whoever converts the lambda (an initializer value, an operand
+        // of `?:`, an element of a tuple or a collection); a speculative conversion leaves it to the final one.
+        if (!this.quiet && !e.hasErrors) this.finishLambda(e, type);
         return this.node('Conversion', node, type, { operand: e, conversion: c, isExplicit });
       }
       e = this.tupleOperandOfUserConversion(e, c, node);

@@ -7,6 +7,7 @@ import { RefKind, ErrorTypeSymbol } from '../../symbols/types.js';
 import { ParameterSymbol } from '../../symbols/members.js';
 import { Conversion, ConversionKind } from '../../conversions/classify.js';
 import { delegateInvoke } from '../../overload/type-inference.js';
+import { asyncResultType } from '../csharp70.js';
 import { anonymousFunctionAnchor, anonymousMethodSignatureErrors } from '../anonymous-methods.js';
 
 const unknown = ErrorTypeSymbol.unknown;
@@ -273,10 +274,9 @@ export const LambdaBinding = Base =>
       const isFunction = body.form === 'lambda' || body.kind === 'MethodGroup';
       return isFunction && this.version.number >= 10 ? this.naturalFunctionType(body) : null;
     }
+    /** What the `return` statements of an async lambda produce for a delegate return type: `T` of any task-like type. */
     unwrapTask(type) {
-      if (type.originalDefinition === this.core.taskT) return type.typeArguments[0].type;
-      if (type.equals(this.core.task)) return this.core.void;
-      return type;
+      return asyncResultType(type, this.core) ?? type;
     }
     /** Binds the body of a lambda for the delegate type it was converted to, reporting its diagnostics once. */
     finishLambda(lambda, delegateType) {

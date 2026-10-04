@@ -87,7 +87,8 @@ export const StringEmission = Base =>
     pushFormatAndArguments(format, holes) {
       const il = this.il;
       il.emit('ldstr', this.tokens.string(format));
-      il.emit('ldc.i4', holes.length).emit('newarr', this.tokens.type(this.core.object));
+      il.emit('ldc.i4', holes.length);
+      this.newArray(this.core.object);
       holes.forEach((hole, position) => {
         il.emit('dup').emit('ldc.i4', position);
         this.concatenationOperand(hole, false);

@@ -213,7 +213,8 @@ export const CallEmission = Base =>
       const il = this.il,
         elementType = arrayType.elementType;
       if (!elementType) return this.unsupported('params collections other than arrays');
-      il.emit('ldc.i4', supplied.length).emit('newarr', this.tokens.type(elementType));
+      il.emit('ldc.i4', supplied.length);
+      this.newArray(elementType);
       supplied.forEach((argument, index) => {
         il.emit('dup').emit('ldc.i4', index);
         push(argument, null);
