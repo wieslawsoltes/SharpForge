@@ -13,6 +13,7 @@
   "files": [
     "src",
     "bin",
+    "docs",
     "README.md",
     "LICENSE"
   ],
