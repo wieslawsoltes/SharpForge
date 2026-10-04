@@ -1,33 +1,57 @@
 # @sharpforge/archive
 
-Dependency-free, bounded standard ZIP reading/writing and byte-preserving workspace file codecs for browsers and Node. MIT. Version 0.11.0.
+Dependency-free ZIP/ZIP64 codecs, bounded streaming, compression, and portable workspace file encoding.
 
 ```js
-import {writeZip, readZip, decodeWorkspaceFile, encodeWorkspaceFile} from '@sharpforge/archive';
-const zip = writeZip([
-  {path: 'Program.cs', text: 'Console.WriteLine(42);\n'},
-  {path: 'Assets/data.bin', bytes: new Uint8Array([0, 255, 128])},
-  {path: 'Empty', directory: true}
-]);
-const entries = readZip(zip); // complete validation and CRC checking before any records return
+import { writeZip, readZip, openZip, writeZipTo } from '@sharpforge/archive';
+
+const bytes = writeZip([{ path: 'Program.cs', text: 'Console.WriteLine(42);\n' }], {
+  compression: 'deflate', level: 'default', forceZip64: true
+});
+const files = readZip(bytes);
+const archive = await openZip(new Blob([bytes]));
+try {
+  await archive.stream('Program.cs').pipeTo(destinationWritableStream);
+} finally {
+  archive.close();
+}
+
+await writeZipTo([{ path: 'large.bin', stream: sourceReadableStream }], destinationWritableStream, {
+  maxFileBytes: 8 * 1024 ** 3,
+  maxTotalBytes: 16 * 1024 ** 3,
+  maxArchiveBytes: 20 * 1024 ** 3,
+  compression: 'deflate',
+  signal
+});
 ```
 
-`readZip(bytes, options)` accepts standard single-disk stored or raw-DEFLATE entries, optional data descriptors, UTF-8, CP437 and validated Unicode path fields. `writeZip(entries, options)` sorts portable paths and writes deterministic UTF-8 **stored** entries; it does not compress output. Directories are explicit records. APIs perform no filesystem writes and no script execution.
+## Capability inventory
 
-Default limits: 20,000 entries, 64 MiB per file, 128 MiB total expanded bytes, 160 MiB archive, 1,024 path characters, 48 path components. Override integer fields in `ZIP_LIMITS` only when the embedding host can afford the corresponding memory. These are input bounds, not a hard JavaScript heap limit.
+| API / capability | Implemented behavior | Qualification boundary |
+| --- | --- | --- |
+| `readZip`, `writeZip` | STORED and DEFLATE; automatic ZIP64 count/size/offset records; optional forced ZIP64 | Entire archive/result resides in memory; allocation limits of the JS engine still apply |
+| `deflateRaw` | Existing fixed Huffman/LZ77 compressor | Portable JS; explicit search budget |
+| `deflateDynamic` | Dynamic Huffman blocks, 32 KiB dictionary and bounded block tokens | Portable JS; fixed fallback for an excessive Huffman depth |
+| `compressDeflate` | Explicit portable or `CompressionStream` backend, returned with output | Platform backend must be available; no implicit network/service |
+| `openZip(Blob)` | Tail and central-directory reads; lazy per-entry payload access | Central directory is bounded by `maxCentralBytes`; metadata retains one descriptor per entry |
+| `ZipArchive.stream` / `chunks` | Incremental DEFLATE with 32 KiB history, CRC on completion and cancellation | Bytes are provisional until the stream completes successfully; use staging for untrusted extraction |
+| `writeZipTo` | Backpressure, incremental CRC, signed data descriptors and ZIP64 | Async iterable order is retained; arrays are sorted; portable streaming compression uses fixed Huffman blocks |
+| Metadata | `preserveMetadata: true` retains UTC `mtime` in milliseconds (whole seconds), regular Unix permission bits | Default timestamps/modes are deterministic; links/special files and multi-disk archives are rejected |
+| File codecs | BOM/encoding/line-ending and binary preservation, explicit `PathPolicy` identity | See public encoding diagnostics; paths are root-relative and portable |
 
-Rejects absolute/traversing/reserved paths, links/special files, ambiguous case or Unicode identities (including implicit parents), CRC mismatch, overlapping entries, inconsistent headers, encryption, ZIP64, unsupported methods and multi-disk files. It is not a general TAR/7z/RAR reader or a security sandbox for subsequent execution of extracted programs.
+`ZIP_LIMITS` defaults to 20,000 entries, 64 MiB per file, 128 MiB decoded total, 160 MiB archive, 32 MiB central directory, depth 48, path length 1024, and per-file/total compression ratios of 1000. Limits accept positive safe integers; streaming callers can raise byte/count limits deliberately. The 64 KiB default chunk can be configured up to 4 MiB. All decoded-size, directory, count, ratio and overlap budgets are checked before large output allocations. CRC failure, mismatched headers, encrypted entries, unsupported methods, traversal, case/Unicode aliases, overlapping ranges and malformed ZIP64 records produce explicit errors (`SFZIP001`–`SFZIP014`). Archives embedded as ordinary file bytes are never recursively extracted.
 
-`decodeWorkspaceFile(path, bytes)` preserves original bytes, detects supported text extensions and UTF-8/UTF-16 BOMs, and otherwise leaves binary data untouched. `encodeWorkspaceFile(record)` retains unedited bytes and re-encodes edited text in the original supported encoding. No newline normalization occurs. Invalid text, including a binary `.cs` file, remains binary rather than being silently discarded.
+An entry reproducing the exact enclosing ZIP bytes is rejected as a direct quine (`SFZIP014`). Streaming comparison
+uses one bounded chunk only when declared sizes match; normal entries need no extra payload reads. By default, ordinary
+nested archive bytes are preserved. `{nestedArchives:'reject'}` also rejects embedded ZIP local/empty/ZIP64 signatures
+before returning their contents; it never opens or inflates the nested archive. This signature policy is deliberately
+not a general polyglot detector. Size/ratio budgets remain the protection for every outer payload, regardless of its name.
 
-`inflateRaw` / `deflateStored` are also exported for Portable PDB embedding. Portable PDBs and workspace ZIPs share the same bounded internal codec.
+`openZip` lists even sparse multi-gigabyte archives without reading the payload. `read(path)` deliberately materializes one entry; use `stream` or `chunks` for large entries. `close()` cancels active readers. Writer cancellation aborts its sink; rollback of external destinations belongs to the destination transaction API.
 
-`deflateRaw(bytes, { maxBytes, maxChain, signal })` emits deterministic raw RFC 1951
-fixed-Huffman DEFLATE with a 32 KiB LZ77 window. The default input cap is 64 MiB
-and the default search cap is 16 candidates per position (allowed range 1–64).
-Scratch tables use 384 KiB; output capacity is at most `ceil(input.length * 9 / 8) + 6`
-bytes, plus the returned output copy. Invalid input/budgets fail before those
-allocations. AbortSignal cancellation is checked before starting and every 4 KiB.
-This synchronous codec is intended for bounded payloads or worker use; it does
-not implement streaming ZIP, dynamic Huffman blocks, or a CompressionStream path.
-Those remain tracked by SF-A24-T06.3. `writeZip` continues using stored entries.
+Once a streaming writer accepts its destination, validation and payload failures abort that destination and release
+any acquired writer. A stream already locked by another writer is rejected without aborting or releasing that owner.
+
+Run `node packages/archive/examples/streaming.mjs` for a complete example. Focused regressions: `tests/a24-06-archives.test.js`, `tests/a24-06-archive-large-metadata.test.js`. Reference fixtures use Node zlib and Python's standard `zipfile`; they do not establish File System Access or native OS qualification.
+
+The monorepo benchmark `node packages/project-system/examples/archive-benchmark.mjs --baseline=<git-revision>` measures warm median/p95 stored read/write times and exports a 500 MiB workspace from 64 KiB producers. It records writer memory separately from the later `readZip` materialization, then checks the result with Python `zipfile`. Run it once per completed archive scope on an otherwise idle machine when collecting performance evidence.

@@ -160,4 +160,4 @@ export {decodeWorkspaceFile,encodeWorkspaceFile} from '@sharpforge/archive';
 
 export {renameSolutionFolder,removeSolutionFolder,moveSolutionProject,addSolutionItem} from './explorer.js';
 
-export {importWorkspaceRecords,workspaceManifestRecord} from './archive.js';
+export * from './archive-stream.js';
