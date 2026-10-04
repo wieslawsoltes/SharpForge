@@ -59,8 +59,14 @@ add('System.String','IndexOf',['string'],'int',false,'stringSearch');
 add('System.String','Replace',['string','string'],'string',false,'stringReplace');
 for(const parameters of [['int'],['int','int']])add('System.String','Substring',parameters,'string',false,'stringSubstring');
 for(const name of ['Abs','Min','Max'])for(const type of ['int','double','long','float'])add('System.Math',name,Array(name==='Abs'?1:2).fill(type),type,true,'math');
+for (const type of ['sbyte', 'short', 'int', 'long', 'float', 'double']) {
+  add('System.Math', 'Sign', [type], 'int', true, 'mathSign');
+}
 for (const name of ['Min', 'Max']) {
   for (const type of ['uint', 'ulong']) add('System.Math', name, [type, type], type, true, 'unsignedMathExtremum');
+  for (const type of ['sbyte', 'byte', 'short', 'ushort']) {
+    add('System.Math', name, [type, type], type, true, 'smallMathExtremum');
+  }
 }
 for(const name of ['Sqrt','Floor','Ceiling','Round','Sin','Cos','Tan','Log','Exp','Pow'])add('System.Math',name,Array(name==='Pow'?2:1).fill('double'),'double',true,'math');
 add('System.GC','Collect',[],'void',true,'gcCollect');

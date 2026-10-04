@@ -35,10 +35,12 @@ span rejection. The earlier Decimal Sign coexistence test now expects exact
 integral IDs for new semantic calls; its double paths keep their old IDs.
 
 This leaf requires the unsigned CIL Min/Max prerequisite. It does not add Decimal
-Min/Max, native-sized overloads or small-width/Single source overloads. Future
-Decimal overload work must also consider previously admitted mixed signed/unsigned
-arguments, rather than assuming same-width overloads settle every mixed call.
+Min/Max, native-sized overloads or small-width/Single source overloads. The later
+[Decimal extrema leaf](source-decimal-extrema.md) completes those two overloads
+and documents why mixed signed-variable/UInt64 calls require an explicit cast
+under the actual .NET API. Legacy wire admission remains unchanged.
 All 76 focused integral-Math, Decimal Sign, unsigned-CIL Math, source numeric-mode
 and ABI checks passed at `8c4b8a3cf`, with Node 24.21.0, one worker and a
 512 MB old-space limit. Native/platform evidence and performance measurements
 remain staged; #1350/#1351 remain open.
+

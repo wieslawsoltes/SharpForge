@@ -72,6 +72,7 @@ separate direct-CIL intrinsic profile. The subsequent
 arguments, Truncate, Ceiling, Floor, Parse(string) and the five static arithmetic
 methods plus static Compare/Equals, Negate/Abs, the eight integral To* conversions
 and ToSingle/ToDouble plus GetBits(decimal) through that same profile. Math.Sign(decimal)
-uses the same closed Decimal profile under its actual System.Math owner. Other
+and [Decimal Math.Min/Max](source-decimal-extrema.md) use the same closed Decimal
+profile under their actual System.Math owner. Other
 source Decimal library APIs remain unsupported. Wider frontend work remains with
 the compiler workstream.

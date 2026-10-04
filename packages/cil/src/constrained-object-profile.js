@@ -1,6 +1,12 @@
 import {CilError} from './binary.js';
 import {decodeCoded} from './metadata.js';
 
+const primitives = new Map([
+  ['System.Int32', Object.freeze({name: 'System.Int32', format: 'int'})],
+  ['System.Int64', Object.freeze({name: 'System.Int64', format: 'long'})],
+  ['System.UInt64', Object.freeze({name: 'System.UInt64', format: 'ulong'})]
+]);
+
 function toStringSignature(signature) {
   return signature && !signature.isStatic && !signature.genericArity && !signature.callingConvention &&
     signature.parameters.length === 0 && (signature.returnType === 'string' || signature.returnType === 'System.String');
@@ -31,6 +37,7 @@ export class ConstrainedObjectProfile {
     }
     this.plans = new Map();
     this.declarations = new Set();
+    this.primitiveTokens = new Map();
   }
 
   ordinaryInstanceSignature(token) {
@@ -46,6 +53,25 @@ export class ConstrainedObjectProfile {
       this.declarations.add(descriptor.token);
     }
     return true;
+  }
+
+  primitiveType(typeToken) {
+    if (typeToken >>> 24 !== 1) return null;
+    if (!this.primitiveTokens.has(typeToken)) {
+      this.primitiveTokens.set(typeToken, primitives.get(this.inspector.metadata.typeName(typeToken)) ?? null);
+    }
+    return this.primitiveTokens.get(typeToken);
+  }
+
+  /** Preserve the original Int32-only boolean query, including its unsupported-type behavior. */
+  int32(typeToken, descriptor) {
+    return this.primitiveType(typeToken)?.name === 'System.Int32' && !!this.declaration(descriptor);
+  }
+
+  /** Select one of the three explicit integer TypeRefs for the exact ordinary Object slot. */
+  primitive(typeToken, descriptor) {
+    const plan = this.primitiveType(typeToken);
+    return plan && this.declaration(descriptor) ? plan : null;
   }
 
   rejectExplicit(typeToken) {

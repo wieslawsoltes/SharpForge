@@ -30,6 +30,15 @@ do not rewind; matching spans across restore uses event order as well as frame I
 Restored entries do not increment profiler call counters. No observer state is
 stored on frames or in the guest snapshot.
 
+Reconciliation reuses a private Boolean on each host span row rather than building
+a temporary set of live frame IDs at every flush. With `A` active spans and `F`
+live active/parked frames, this remains `O(A + F)` work. A temporary closing-ID
+array is allocated only when spans must close, retaining their reverse admission
+order. An empty active index skips frame enumeration and still flushes queued
+events. The marker never appears in event payloads, frames or snapshots; method
+load observations keep their existing weak metadata identity. This removes the
+per-boundary set allocation without claiming a measured throughput improvement.
+
 The active index is bounded by live invocations and frames awaiting the next host
 reconciliation. The shared event log independently enforces its configured ring
 capacity. Dropping an old entry does not keep a completed invocation active.
@@ -47,3 +56,9 @@ now precede each metadata method's first observed admission.
 [Source exception origins](runtime-source-exception-events.md) share the same log.
 [Cooperative scheduler events](runtime-context-events.md) now share this log too.
 Broader platform/performance qualification remains separate #1403 work.
+
+`tests/a05-source-event-reconciliation.test.js` adds source/reload cases for idle
+enumeration and deferred replay, live/parked spans, restore rejection, callback
+failure and retry, reentrant stop and fatal inspection. These additional cases
+are authored; their execution and performance qualification remain queued.
+

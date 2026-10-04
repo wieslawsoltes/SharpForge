@@ -1,6 +1,7 @@
 import {runtimeBuiltinDefinitions} from './runtime-builtins.js';
 import {decimalIntrinsicDefinitions} from './decimal-intrinsic-profile.js';
-import {sourceMathBuiltins} from './source-math-builtins.js';
+import {sourceMathBuiltins, sourceSingleMathBuiltins, sourceSignMathBuiltins,
+  sourceSmallMathBuiltins} from './source-math-builtins.js';
 
 // A closed source-visible subset of the existing CIL profile. Unique wire names
 // distinguish overloads; the descriptor retains the actual CLR member identity.
@@ -20,13 +21,36 @@ const sourceDecimals = [
   ['ToSingle', ['System.Decimal'], ['d'], 'float'], ['ToDouble', ['System.Decimal'], ['d'], 'double'],
   ['GetBits', ['System.Decimal'], ['d'], 'int[]'],
   ['Sign', ['System.Decimal'], ['value'], 'int', 'System.Math']
-].map(([name, parameters, parameterNames, returnType = 'System.Decimal', owner = 'System.Decimal']) => {
+].map(sourceDecimal);
+
+// Appended after the released integral Math entries, not inside sourceDecimals.
+const sourceDecimalExtrema = ['Min', 'Max'].map(name => sourceDecimal([
+  name, ['System.Decimal', 'System.Decimal'], ['val1', 'val2'], 'System.Decimal', 'System.Math'
+]));
+
+const sourceDecimalModes = [
+  ['Round', ['System.Decimal', 'System.MidpointRounding'], ['d', 'mode']],
+  ['Round', ['System.Decimal', 'int', 'System.MidpointRounding'], ['d', 'decimals', 'mode']]
+].map(row => ({...sourceDecimal(row), wireSuffix: ':MidpointRounding'}));
+
+function sourceDecimal([name, parameters, parameterNames, returnType = 'System.Decimal', owner = 'System.Decimal']) {
   const descriptor = decimalIntrinsicDefinitions.find(candidate => candidate.owner === owner &&
     candidate.isStatic && candidate.name === name && candidate.returnType === returnType &&
     candidate.parameters.length === parameters.length && candidate.parameters.every((type, index) => type === parameters[index]));
   if (!descriptor) throw new TypeError('Missing source Decimal contract');
   return {descriptor, parameterNames: Object.freeze(parameterNames)};
-});
+}
+
+function decimalBuiltin(id, {descriptor, parameterNames, wireSuffix = ''}) {
+  const params = Object.freeze(descriptor.parameters.map(type => type === 'System.Decimal' ? 'decimal' : type));
+  const math = descriptor.owner === 'System.Math';
+  return Object.freeze({
+    id, name: (math ? 'Math.' : 'decimal.') + descriptor.name + '#' + params.length + (math ? ':Decimal' : '') + wireSuffix,
+    min: params.length, max: params.length,
+    result: descriptor.returnType === 'System.Decimal' ? 'decimal' : descriptor.returnType, params, decimal: descriptor,
+    parameterNames
+  });
+}
 
 /** Build the frozen dispatch table, retaining contract IDs across reserved sparse ranges. */
 export function createBuiltinTable(definitions, contracts, releasedRanges) {
@@ -48,18 +72,31 @@ export function createBuiltinTable(definitions, contracts, releasedRanges) {
     const id = runtimeId++;
     entries[id] = Object.freeze({id, name, min, max, result, params: Object.freeze(params)});
   }
-  for (const {descriptor, parameterNames} of sourceDecimals) {
+  for (const source of sourceDecimals) {
     const id = runtimeId++;
-    const params = Object.freeze(descriptor.parameters.map(type => type === 'System.Decimal' ? 'decimal' : type));
-    const math = descriptor.owner === 'System.Math';
-    entries[id] = Object.freeze({
-      id, name: (math ? 'Math.' : 'decimal.') + descriptor.name + '#' + params.length + (math ? ':Decimal' : ''),
-      min: params.length, max: params.length,
-      result: descriptor.returnType === 'System.Decimal' ? 'decimal' : descriptor.returnType, params, decimal: descriptor,
-      parameterNames
-    });
+    entries[id] = decimalBuiltin(id, source);
   }
   for (const builtin of sourceMathBuiltins) {
+    const id = runtimeId++;
+    entries[id] = Object.freeze({...builtin, id});
+  }
+  for (const source of sourceDecimalExtrema) {
+    const id = runtimeId++;
+    entries[id] = decimalBuiltin(id, source);
+  }
+  for (const source of sourceDecimalModes) {
+    const id = runtimeId++;
+    entries[id] = decimalBuiltin(id, source);
+  }
+  for (const builtin of sourceSingleMathBuiltins) {
+    const id = runtimeId++;
+    entries[id] = Object.freeze({...builtin, id});
+  }
+  for (const builtin of sourceSignMathBuiltins) {
+    const id = runtimeId++;
+    entries[id] = Object.freeze({...builtin, id});
+  }
+  for (const builtin of sourceSmallMathBuiltins) {
     const id = runtimeId++;
     entries[id] = Object.freeze({...builtin, id});
   }

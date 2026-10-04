@@ -69,7 +69,7 @@ test('Sign returns Int32 through arrays, boxing, arithmetic and single named-arg
     Console.WriteLine(boxed); Console.WriteLine(boxed.GetType().FullName);
     if (result < 0) Console.WriteLine(result + 2);
     Console.WriteLine(System.Math.Sign(0)); Console.WriteLine(Math.Sign(long.MinValue));
-    Console.WriteLine(Math.Sign(uint.MaxValue)); Console.WriteLine(Math.Sign(ulong.MaxValue));`,
+    Console.WriteLine(Math.Sign(uint.MaxValue)); Console.WriteLine(Math.Sign((decimal)ulong.MaxValue));`,
   'R-1\nSystem.Int32\n1\n0\n-1\n1\n1\n',
   'static decimal Read() { Console.Write("R"); return -1.25m; }');
 });
@@ -107,9 +107,9 @@ test('Sign selection checks owner and complete signature rather than sharing a m
   assert.equal(decodeDecimalBuiltin({...decimal, owner: 'System.Math'}), null);
 });
 
-test('Sign source registration rejects floating inputs, unsupported overloads and wrong result conversions', () => {
+test('Decimal Sign source registration rejects unsupported overloads and wrong result conversions', () => {
   for (const body of [
-    'Math.Sign();', 'Math.Sign(1.0);', 'Math.Sign(1f);', 'Math.Sign(null);',
+    'Math.Sign();', 'Math.Sign(null);',
     'Math.Sign(1m, 2m);', 'Math.Sign(d: 1m);', 'decimal.Sign(1m);',
     'bool value = Math.Sign(1m);'
   ]) {

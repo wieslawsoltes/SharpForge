@@ -23,12 +23,13 @@ export class ExecutionPrefixProfile {
     const name = this.inspector.metadata.typeName(prefix.operand);
     const parameter = prefix.operand >>> 24 === 27 && /^!!?\d+$/.test(name);
     if (parameter) verifyGenericType(this.inspector, name, context);
+    const declaration = resolveExecutionMethod(this.inspector, next.operand, context);
+    if (this.objects.primitive(prefix.operand, declaration)) return null;
     const type = this.types.get(prefix.operand);
     const base = type?.baseToken ? this.inspector.metadata.typeName(type.baseToken) : null;
     if (!parameter && (!type || !base || type.flags & 0x20 || base === 'System.Enum' || this.genericOwners.has(type.token))) {
       return 'constrained. execution requires a nongeneric class or user-struct TypeDef';
     }
-    const declaration = resolveExecutionMethod(this.inspector, next.operand, context);
     const object = !parameter && this.objects.select(prefix.operand, declaration);
     if (object) {
       if (object.target) reachable.push(object.target);
