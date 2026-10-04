@@ -19,6 +19,10 @@ on:
         required: false
         type: string
   workflow_call:
+    secrets:
+      PLANNING_PROJECT_READ_TOKEN:
+        description: Read-only Project credential for trusted ownership qualification
+        required: true
     inputs:
       pr_number:
         required: true
