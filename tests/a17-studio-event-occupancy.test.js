@@ -13,6 +13,28 @@ function fixture(context) {
   return {activity, advance: milliseconds => { time += milliseconds; }};
 }
 
+test('acknowledged UI dispatch measures only its synchronous prefix and returns the original pending decision', async context => {
+  const {activity, advance} = fixture(context);
+  let complete;
+  const pending = new Promise(resolve => { complete = resolve; });
+  const actual = activity.dispatch('uiEventRequest', {requestId: 1}, (method, params) => {
+    assert.equal(method, 'uiEventRequest');
+    assert.equal(params.requestId, 1);
+    advance(7);
+    return pending;
+  });
+  assert.equal(actual, pending);
+  advance(493);
+  const sample = activity.execution.sample();
+  assert.equal(sample.uiMs, 7);
+  assert.equal(sample.durationMs, 500);
+  assert.equal(sample.busyMs, 7);
+  complete({Cancel: true});
+  assert.deepEqual(await actual, {Cancel: true});
+  advance(250);
+  assert.equal(activity.execution.sample().busyMs, 0, 'Managed deferral waiting is not synchronous execution');
+});
+
 test('new UI feedback operations retain values and synchronous failure identity in occupancy dispatch', context => {
   const {activity, advance} = fixture(context);
   assert.equal(activity.dispatch('uiPrivateInput', {}, () => { advance(2); return true; }), true);

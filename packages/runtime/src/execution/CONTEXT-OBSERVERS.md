@@ -23,6 +23,12 @@ per-instruction polling or duplicate continuation executor. An independent
 publication stage can include this injected component before activating the
 managed UI request service.
 
+Native callback isolation also preserves a bounded stack of live outer frames
+and source evaluation stacks. Managed addresses can still resolve outer locals,
+and precise collection sees references newly written through those addresses.
+The temporary scopes end in `finally`; they do not survive as scheduler tasks or
+retain completed callback frames.
+
 The authored fixture `tests/a16-context-completions.test.js` covers suspension,
 one-shot resolution, preserved faults, quota and identity errors, abort, rewind,
 and released listeners. Exact-branch validation belongs to the consolidated

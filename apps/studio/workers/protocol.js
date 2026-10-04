@@ -76,6 +76,8 @@ export const workerMethods=Object.freeze({
     "stackTrace",
     "freezeThread",
     "uiEvent",
+    "uiEventRequest",
+    "uiEventCancel",
     "uiPrivateInput",
     "uiCollectionInput",
     "uiRealizeItems",

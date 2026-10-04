@@ -33,6 +33,8 @@ import {emitManagedEvent, managedEventArguments, registerManagedEventAdapters} f
 import {invokeManagedCollectionOperation, managedArrayLength, managedArrayGet, managedArraySet} from './collection-access.js';
 import {createManagedXamlException, managedXamlExceptionInfo} from './xaml-exceptions.js';
 
+import {ManagedEventRequests} from './event-request.js';
+
 /** Application-local context shared by registered UI service adapters. */
 export class ManagedUIContext {
   constructor(platform) {
@@ -105,6 +107,7 @@ export class ManagedUIContext {
     initializeManagedApplicationServices(this);
     this.services.drag ??= createManagedDragServices(this);
     this.services.automation ??= createManagedAutomationServices(this);
+    this.eventRequests = this.state(null, 'managedEventRequests', () => new ManagedEventRequests(this));
     this.removeCollectionObserver = observeHeapCollections(platform.heap, () => this.prune());
   }
 
@@ -359,6 +362,8 @@ export class ManagedUIContext {
       ? this.eventRequests.invoke(callback, args, payload) : this.invokeManaged(callback, args);
   }
 
+
+  requestEvent(receiver, event, payload, options) { return this.eventRequests.request(receiver, event, payload, options); }
 
   invokeVirtual(receiver, slot, args = []) { return this.construction.retain(invokeManagedVirtual(this, receiver, slot, args)); }
   hasVirtual(receiver, slot, count) { return !!resolveManagedUIMethod(this, receiver, slot, count); }
