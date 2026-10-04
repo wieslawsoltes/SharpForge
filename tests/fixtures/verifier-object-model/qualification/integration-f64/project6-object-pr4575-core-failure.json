@@ -1,0 +1,131 @@
+{
+  "schemaVersion": 1,
+  "run": 37217846115,
+  "job": 111481930621,
+  "url": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37217846115/job/111481930621",
+  "publishedHead": "49f02c89f6f726d7e6cc8cb7c3d070d2e7ba7d69",
+  "checkout": "ce8319d4d062950ca2c7e61410f4fa655e4384f0",
+  "failureExcerpt": "2026-10-04T16:44:14.8015734Z {\n2026-10-04T16:44:14.8016009Z   \"passed\": false,\n2026-10-04T16:44:14.8016218Z   \"inspected\": 4128,\n2026-10-04T16:44:14.8016432Z   \"modules\": 4128,\n2026-10-04T16:44:14.8016605Z   \"errors\": [\n2026-10-04T16:44:14.8016768Z     {\n2026-10-04T16:44:14.8017090Z       \"path\": \"packages/cil/tools/verifier-benchmark-workloads.mjs\",\n2026-10-04T16:44:14.8017428Z       \"operation\": \"dynamic-import\",\n2026-10-04T16:44:14.8017669Z       \"sha256\": \"77d1643689c73a2ffe31c9cda19543c57f75725e6142af7770ae3895520acc55\",\n2026-10-04T16:44:14.8017881Z       \"count\": 1,\n2026-10-04T16:44:14.8017993Z       \"lines\": [\n2026-10-04T16:44:14.8018104Z         13\n2026-10-04T16:44:14.8018450Z       ],\n2026-10-04T16:44:14.8018754Z       \"message\": \"Unreviewed dynamic-code use or changed file\"\n2026-10-04T16:44:14.8019016Z     }\n2026-10-04T16:44:14.8019165Z   ]\n2026-10-04T16:44:14.8019312Z }\n2026-10-04T16:44:14.8215161Z ##[error]Process completed with exit code 1.\n2026-10-04T16:44:14.8261572Z ##[group]Run node scripts/conformance/clean-checkout.js\n2026-10-04T16:44:14.8261802Z \u001b[36;1mnode scripts/conformance/clean-checkout.js\u001b[0m\n2026-10-04T16:44:14.8310974Z shell: /usr/bin/bash -e {0}\n2026-10-04T16:44:14.8311107Z env:\n2026-10-04T16:44:14.8311229Z   SHARPFORGE_RESULTS_DIR: artifacts/results\n2026-10-04T16:44:14.8311438Z   SHARPFORGE_STANDALONE_PATH: artifacts/SharpForge-standalone.html",
+  "steps": [
+    {
+      "name": "Set up job",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 1
+    },
+    {
+      "name": "Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 2
+    },
+    {
+      "name": "Run actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 3
+    },
+    {
+      "name": "Review contract changes and seam lock against the PR snapshot",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 4
+    },
+    {
+      "name": "Enforce oracle tool license coverage and committed payload boundaries",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 5
+    },
+    {
+      "name": "Run npm ci --ignore-scripts --no-audit --no-fund",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 6
+    },
+    {
+      "name": "Run npm run check",
+      "status": "completed",
+      "conclusion": "failure",
+      "number": 7
+    },
+    {
+      "name": "Plan affected areas with conservative fallback",
+      "status": "completed",
+      "conclusion": "skipped",
+      "number": 8
+    },
+    {
+      "name": "Reject expired test quarantines",
+      "status": "completed",
+      "conclusion": "skipped",
+      "number": 9
+    },
+    {
+      "name": "Run npm test",
+      "status": "completed",
+      "conclusion": "skipped",
+      "number": 10
+    },
+    {
+      "name": "Run npm run build",
+      "status": "completed",
+      "conclusion": "skipped",
+      "number": 11
+    },
+    {
+      "name": "Require a clean checkout",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 12
+    },
+    {
+      "name": "Run actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97",
+      "status": "completed",
+      "conclusion": "skipped",
+      "number": 13
+    },
+    {
+      "name": "Full qualification Python infrastructure regressions",
+      "status": "completed",
+      "conclusion": "skipped",
+      "number": 14
+    },
+    {
+      "name": "Run ./.github/actions/qualification-evidence",
+      "status": "completed",
+      "conclusion": "skipped",
+      "number": 15
+    },
+    {
+      "name": "Record provenance for the existing PR preview build",
+      "status": "completed",
+      "conclusion": "skipped",
+      "number": 16
+    },
+    {
+      "name": "Upload PR preview without a second build or deployment",
+      "status": "completed",
+      "conclusion": "skipped",
+      "number": 17
+    },
+    {
+      "name": "Post Run actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020",
+      "status": "completed",
+      "conclusion": "skipped",
+      "number": 33
+    },
+    {
+      "name": "Post Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 34
+    },
+    {
+      "name": "Complete job",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 35
+    }
+  ]
+}

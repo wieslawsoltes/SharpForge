@@ -1,0 +1,121 @@
+{
+  "startedUtc": "2026-10-04T18:06:26.535022+00:00",
+  "diskBefore": 675717120,
+  "commands": [
+    {
+      "argv": [
+        "git",
+        "config",
+        "--get",
+        "extensions.worktreeConfig"
+      ],
+      "cwd": "/workspace/scratch/7e3d2a445c44/SharpForge",
+      "exitCode": 0,
+      "stdout": "true\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "git",
+        "-C",
+        "/workspace/scratch/7e3d2a445c44/SharpForge",
+        "worktree",
+        "add",
+        "--detach",
+        "--no-checkout",
+        "/workspace/scratch/7e3d2a445c44/sf6-metadata-generations-baseline-31900dce",
+        "31900dce5c1454c1f9c244c9ac14e1798eac3e5f"
+      ],
+      "cwd": "/workspace/scratch/7e3d2a445c44",
+      "exitCode": 0,
+      "stdout": "",
+      "stderr": "Preparing worktree (detached HEAD 31900dce5)\n"
+    },
+    {
+      "argv": [
+        "git",
+        "config",
+        "--worktree",
+        "core.sparseCheckout",
+        "true"
+      ],
+      "cwd": "/workspace/scratch/7e3d2a445c44/sf6-metadata-generations-baseline-31900dce",
+      "exitCode": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "git",
+        "config",
+        "--worktree",
+        "core.sparseCheckoutCone",
+        "false"
+      ],
+      "cwd": "/workspace/scratch/7e3d2a445c44/sf6-metadata-generations-baseline-31900dce",
+      "exitCode": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "git",
+        "rev-parse",
+        "--git-path",
+        "info/sparse-checkout"
+      ],
+      "cwd": "/workspace/scratch/7e3d2a445c44/sf6-metadata-generations-baseline-31900dce",
+      "exitCode": 0,
+      "stdout": "/workspace/scratch/7e3d2a445c44/SharpForge/.git/worktrees/sf6-metadata-generations-baseline-31900dce/info/sparse-checkout\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "git",
+        "read-tree",
+        "-mu",
+        "HEAD"
+      ],
+      "cwd": "/workspace/scratch/7e3d2a445c44/sf6-metadata-generations-baseline-31900dce",
+      "exitCode": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "git",
+        "rev-parse",
+        "HEAD"
+      ],
+      "cwd": "/workspace/scratch/7e3d2a445c44/sf6-metadata-generations-baseline-31900dce",
+      "exitCode": 0,
+      "stdout": "31900dce5c1454c1f9c244c9ac14e1798eac3e5f\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "git",
+        "status",
+        "--porcelain"
+      ],
+      "cwd": "/workspace/scratch/7e3d2a445c44/sf6-metadata-generations-baseline-31900dce",
+      "exitCode": 0,
+      "stdout": "",
+      "stderr": ""
+    }
+  ],
+  "sparseFile": "/workspace/scratch/7e3d2a445c44/SharpForge/.git/worktrees/sf6-metadata-generations-baseline-31900dce/info/sparse-checkout",
+  "sparseContents": "/package.json\n/packages/cil/\n/packages/bytecode/\n/packages/framework/\n/packages/bcl-core/\n/packages/bcl-collections/\n/tests/fixtures/a03-metadata/fixture.js\n/tests/fixtures/decompiler-cfg/native.json\n!/planning/qualification/inventory/\n!/docs/evidence/\n!/docs/screenshots/\n",
+  "aliases": {
+    "cil": "/workspace/scratch/7e3d2a445c44/sf6-metadata-generations-baseline-31900dce/packages/cil",
+    "bytecode": "/workspace/scratch/7e3d2a445c44/sf6-metadata-generations-baseline-31900dce/packages/bytecode",
+    "framework": "/workspace/scratch/7e3d2a445c44/sf6-metadata-generations-baseline-31900dce/packages/framework",
+    "bcl-core": "/workspace/scratch/7e3d2a445c44/sf6-metadata-generations-baseline-31900dce/packages/bcl-core",
+    "bcl-collections": "/workspace/scratch/7e3d2a445c44/sf6-metadata-generations-baseline-31900dce/packages/bcl-collections"
+  },
+  "head": "31900dce5c1454c1f9c244c9ac14e1798eac3e5f",
+  "status": "",
+  "diskAfter": 663896064,
+  "finishedUtc": "2026-10-04T18:06:26.827576+00:00",
+  "scriptSha256": "014420489c549b148040c24bf4a4cb8a39bb888498b2b4e74d2af3dc0370a21b"
+}

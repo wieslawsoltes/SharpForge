@@ -1,0 +1,1 @@
+{"report":"/workspace/scratch/7e3d2a445c44/project6-metadata-generations-performance.ordinal-first/report.json","status":"completed","performanceAcceptance":"pending independent review; successful execution never approves a regression"}

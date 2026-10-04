@@ -1,0 +1,54 @@
+{
+  "status": "passed",
+  "argv": [
+    "node",
+    "scripts/limited.js",
+    "node",
+    "--test",
+    "--test-concurrency=1",
+    "tests/a03-24-reader-budgets.test.js",
+    "tests/a03-24-minimal-delta.test.js",
+    "tests/a03-24-metadata-generations.test.js",
+    "tests/a03-24-metadata-generation-boundaries.test.js",
+    "tests/a03-24-metadata-generations-native.test.js",
+    "tests/cil-table-widths.test.js",
+    "tests/a03-03-pe-reader.test.js",
+    "tests/a13-14-metadata-tables.test.js",
+    "tests/a13-14-metadata-heaps.test.js",
+    "tests/a13-14-metadata-native.test.js",
+    "tests/a13-05-pdb-generations.test.js"
+  ],
+  "cwd": "/workspace/scratch/7e3d2a445c44/sf6-metadata-generations",
+  "startedUtc": "2026-10-04T18:55:05.042585+00:00",
+  "head": "2639fea0448cdc47aef8b2538e508ab5bfd4aa95",
+  "tree": "a112741a6d3b895a3622db57b9072717d148fb53",
+  "environment": {
+    "CI": null,
+    "NODE_OPTIONS": null,
+    "SHARPFORGE_MAX_PARALLEL_RUNS": "1",
+    "SHARPFORGE_TEST_CONCURRENCY": "1",
+    "SHARPFORGE_MAX_OLD_SPACE_MB": "2048"
+  },
+  "returnCode": 0,
+  "finishedUtc": "2026-10-04T18:55:10.432864+00:00",
+  "elapsedSeconds": 5.3901767080024,
+  "sourcesUnchanged": true,
+  "outputs": {
+    "stdout.log": {
+      "bytes": 5270,
+      "sha256": "9fed62cd5ad2e4e9ddb2b4de69d87dac85c1f87458c832248202e1771bd92612"
+    },
+    "stderr.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "source-before.json": {
+      "bytes": 283450,
+      "sha256": "ad4d4b24fa87d9866a838a409e6986b330cd6713c980a9477ff179cad01eda85"
+    },
+    "source-after.json": {
+      "bytes": 283450,
+      "sha256": "ad4d4b24fa87d9866a838a409e6986b330cd6713c980a9477ff179cad01eda85"
+    }
+  }
+}

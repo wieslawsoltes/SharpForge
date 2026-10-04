@@ -1,0 +1,31 @@
+✔ module initialization baseline: producer emits a module constructor for plain-main (84.249227ms)
+✔ module initialization baseline: producer emits a module constructor for static-field-main (11.820676ms)
+✔ module initialization baseline: producer emits a module constructor for static-constructor-main (8.499459ms)
+✔ module initialization baseline: producer emits a module constructor for initializer-calls-entry-type (9.658872ms)
+✔ module initialization baseline: direct CIL startup for plain-main (17.979649ms)
+✔ module initialization baseline: direct CIL startup for static-field-main (13.037772ms)
+✔ module initialization baseline: direct CIL startup for static-constructor-main (7.854693ms)
+✔ module initialization baseline: direct CIL startup for initializer-calls-entry-type (8.862482ms)
+✔ module initialization baseline: direct CIL startup for declaration-order-once (14.033851ms)
+✔ module initialization baseline: direct CIL startup for pre-entry-fault (13.233921ms)
+✔ module initialization baseline: direct CIL startup for no-initializers (3.674305ms)
+✔ module initialization baseline: a library owns module startup before a selected static method (7.050482ms)
+✔ module initialization baseline: module constructor preserves source declaration order across files (6.349473ms)
+✔ module initialization baseline: no initializer leaves the module empty (5.769942ms)
+✔ module initialization baseline: independent CIL module startup is verified and runs once (entry) (3.469234ms)
+✔ module initialization baseline: independent CIL module startup is verified and runs once (library) (1.72283ms)
+✔ module initialization baseline: an active module initializer survives snapshot restore and collection (5.480016ms)
+✔ module initialization baseline: pre-entry failure bypasses Main catch and stays cached, rooted, and restorable (3.428224ms)
+✔ module initialization baseline: an invalid module body is rejected before entry execution (1.085243ms)
+✔ module initialization baseline: an invalid module body is rejected before selected method execution (0.704815ms)
+✔ module initialization baseline: an unrelated unreachable invalid body is not a module initialization root (1.081017ms)
+✔ module initialization baseline: compile source-image startup remains a separate control (25.571785ms)
+✔ module initialization baseline: compileToIL source-image startup remains a separate control (11.3813ms)
+ℹ tests 23
+ℹ suites 0
+ℹ pass 23
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 2128.679099

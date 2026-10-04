@@ -1,0 +1,56 @@
+{
+  "schemaVersion": 1,
+  "sourceSha256": "f16cdfc69bdfdd275748976c076650a64be93564138e6424a4b9e98489afeee8",
+  "sourceBytes": 1548,
+  "members": 32,
+  "warmupCountPerSide": 80,
+  "profileCompilationsPerSide": 128,
+  "samplingIntervalMicroseconds": 500,
+  "harnessSha256": "b1912b9a0594a0870fa027b90321a56927095e3e0e543fb7ba8a19d0fcf48411",
+  "node": "v24.19.0",
+  "platform": "linux",
+  "arch": "x64",
+  "cpu": "AMD EPYC 9V74 80-Core Processor",
+  "method": "One process; rotate both graphs during warmup, then sample baseline and candidate separately; GC before each profile.",
+  "limitation": "Shared-host CPU sampling locates work; profile wall times are not benchmark samples.",
+  "captures": [
+    {
+      "name": "baseline",
+      "compilerEntry": "/workspace/scratch/1692a10afba9/p5-extension-benchmark-baseline/packages/compiler/src/index.js",
+      "revision": "b19a56a77080e63ba1a216c7944971e5ca00b27f",
+      "file": "baseline.cpuprofile",
+      "sha256": "5e8fdf2963cb4caea6573f3da5d9288ded8d1a0f5a9d2c32e166ee1ac6ab46d5",
+      "elapsedMs": 578.9157660000001,
+      "initialLoad": [
+        1.58,
+        2,
+        2
+      ],
+      "finalLoad": [
+        1.58,
+        2,
+        2
+      ],
+      "samples": 957
+    },
+    {
+      "name": "candidate",
+      "compilerEntry": "/workspace/scratch/1692a10afba9/p5-extension-paired-candidate/packages/compiler/src/index.js",
+      "revision": "ed91058416e8c1bbd40fdf3d778f07f615c410c8",
+      "file": "candidate.cpuprofile",
+      "sha256": "2960b8d700288c9f0826e75776b64762b95688c14a572abff08ecb33598fde5b",
+      "elapsedMs": 640.2661900000003,
+      "initialLoad": [
+        1.58,
+        2,
+        2
+      ],
+      "finalLoad": [
+        1.58,
+        2,
+        2
+      ],
+      "samples": 1054
+    }
+  ]
+}

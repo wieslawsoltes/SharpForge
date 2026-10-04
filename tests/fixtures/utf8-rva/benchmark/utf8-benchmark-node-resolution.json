@@ -1,0 +1,174 @@
+[
+  {
+    "root": "/workspace/scratch/1692a10afba9/utf8-benchmark-baseline",
+    "packageCount": 10,
+    "edges": [
+      {
+        "from": "/workspace/scratch/1692a10afba9/utf8-benchmark-baseline",
+        "name": "compiler",
+        "entry": "/workspace/scratch/1692a10afba9/utf8-benchmark-baseline/packages/compiler/src/index.js"
+      },
+      {
+        "from": "/workspace/scratch/1692a10afba9/utf8-benchmark-baseline/packages/compiler",
+        "name": "text",
+        "entry": "/workspace/scratch/1692a10afba9/utf8-benchmark-baseline/packages/text/src/index.js"
+      },
+      {
+        "from": "/workspace/scratch/1692a10afba9/utf8-benchmark-baseline/packages/compiler",
+        "name": "syntax",
+        "entry": "/workspace/scratch/1692a10afba9/utf8-benchmark-baseline/packages/syntax/src/index.js"
+      },
+      {
+        "from": "/workspace/scratch/1692a10afba9/utf8-benchmark-baseline/packages/syntax",
+        "name": "text",
+        "entry": "/workspace/scratch/1692a10afba9/utf8-benchmark-baseline/packages/text/src/index.js"
+      },
+      {
+        "from": "/workspace/scratch/1692a10afba9/utf8-benchmark-baseline/packages/compiler",
+        "name": "bytecode",
+        "entry": "/workspace/scratch/1692a10afba9/utf8-benchmark-baseline/packages/bytecode/src/index.js"
+      },
+      {
+        "from": "/workspace/scratch/1692a10afba9/utf8-benchmark-baseline/packages/bytecode",
+        "name": "framework",
+        "entry": "/workspace/scratch/1692a10afba9/utf8-benchmark-baseline/packages/framework/src/index.js"
+      },
+      {
+        "from": "/workspace/scratch/1692a10afba9/utf8-benchmark-baseline/packages/framework",
+        "name": "bcl-core",
+        "entry": "/workspace/scratch/1692a10afba9/utf8-benchmark-baseline/packages/bcl-core/src/index.js"
+      },
+      {
+        "from": "/workspace/scratch/1692a10afba9/utf8-benchmark-baseline/packages/framework",
+        "name": "bcl-collections",
+        "entry": "/workspace/scratch/1692a10afba9/utf8-benchmark-baseline/packages/bcl-collections/src/index.js"
+      },
+      {
+        "from": "/workspace/scratch/1692a10afba9/utf8-benchmark-baseline/packages/bcl-collections",
+        "name": "bcl-core",
+        "entry": "/workspace/scratch/1692a10afba9/utf8-benchmark-baseline/packages/bcl-core/src/index.js"
+      },
+      {
+        "from": "/workspace/scratch/1692a10afba9/utf8-benchmark-baseline/packages/compiler",
+        "name": "cil",
+        "entry": "/workspace/scratch/1692a10afba9/utf8-benchmark-baseline/packages/cil/src/index.js"
+      },
+      {
+        "from": "/workspace/scratch/1692a10afba9/utf8-benchmark-baseline/packages/cil",
+        "name": "bytecode",
+        "entry": "/workspace/scratch/1692a10afba9/utf8-benchmark-baseline/packages/bytecode/src/index.js"
+      },
+      {
+        "from": "/workspace/scratch/1692a10afba9/utf8-benchmark-baseline/packages/cil",
+        "name": "framework",
+        "entry": "/workspace/scratch/1692a10afba9/utf8-benchmark-baseline/packages/framework/src/index.js"
+      },
+      {
+        "from": "/workspace/scratch/1692a10afba9/utf8-benchmark-baseline/packages/compiler",
+        "name": "symbols",
+        "entry": "/workspace/scratch/1692a10afba9/utf8-benchmark-baseline/packages/symbols/src/index.js"
+      },
+      {
+        "from": "/workspace/scratch/1692a10afba9/utf8-benchmark-baseline/packages/symbols",
+        "name": "cil",
+        "entry": "/workspace/scratch/1692a10afba9/utf8-benchmark-baseline/packages/cil/src/index.js"
+      },
+      {
+        "from": "/workspace/scratch/1692a10afba9/utf8-benchmark-baseline/packages/symbols",
+        "name": "archive",
+        "entry": "/workspace/scratch/1692a10afba9/utf8-benchmark-baseline/packages/archive/src/index.js"
+      },
+      {
+        "from": "/workspace/scratch/1692a10afba9/utf8-benchmark-baseline/packages/compiler",
+        "name": "framework",
+        "entry": "/workspace/scratch/1692a10afba9/utf8-benchmark-baseline/packages/framework/src/index.js"
+      }
+    ]
+  },
+  {
+    "root": "/workspace/scratch/1692a10afba9/p5-nullable-metadata",
+    "packageCount": 10,
+    "edges": [
+      {
+        "from": "/workspace/scratch/1692a10afba9/p5-nullable-metadata",
+        "name": "compiler",
+        "entry": "/workspace/scratch/1692a10afba9/p5-nullable-metadata/packages/compiler/src/index.js"
+      },
+      {
+        "from": "/workspace/scratch/1692a10afba9/p5-nullable-metadata/packages/compiler",
+        "name": "text",
+        "entry": "/workspace/scratch/1692a10afba9/p5-nullable-metadata/packages/text/src/index.js"
+      },
+      {
+        "from": "/workspace/scratch/1692a10afba9/p5-nullable-metadata/packages/compiler",
+        "name": "syntax",
+        "entry": "/workspace/scratch/1692a10afba9/p5-nullable-metadata/packages/syntax/src/index.js"
+      },
+      {
+        "from": "/workspace/scratch/1692a10afba9/p5-nullable-metadata/packages/syntax",
+        "name": "text",
+        "entry": "/workspace/scratch/1692a10afba9/p5-nullable-metadata/packages/text/src/index.js"
+      },
+      {
+        "from": "/workspace/scratch/1692a10afba9/p5-nullable-metadata/packages/compiler",
+        "name": "bytecode",
+        "entry": "/workspace/scratch/1692a10afba9/p5-nullable-metadata/packages/bytecode/src/index.js"
+      },
+      {
+        "from": "/workspace/scratch/1692a10afba9/p5-nullable-metadata/packages/bytecode",
+        "name": "framework",
+        "entry": "/workspace/scratch/1692a10afba9/p5-nullable-metadata/packages/framework/src/index.js"
+      },
+      {
+        "from": "/workspace/scratch/1692a10afba9/p5-nullable-metadata/packages/framework",
+        "name": "bcl-core",
+        "entry": "/workspace/scratch/1692a10afba9/p5-nullable-metadata/packages/bcl-core/src/index.js"
+      },
+      {
+        "from": "/workspace/scratch/1692a10afba9/p5-nullable-metadata/packages/framework",
+        "name": "bcl-collections",
+        "entry": "/workspace/scratch/1692a10afba9/p5-nullable-metadata/packages/bcl-collections/src/index.js"
+      },
+      {
+        "from": "/workspace/scratch/1692a10afba9/p5-nullable-metadata/packages/bcl-collections",
+        "name": "bcl-core",
+        "entry": "/workspace/scratch/1692a10afba9/p5-nullable-metadata/packages/bcl-core/src/index.js"
+      },
+      {
+        "from": "/workspace/scratch/1692a10afba9/p5-nullable-metadata/packages/compiler",
+        "name": "cil",
+        "entry": "/workspace/scratch/1692a10afba9/p5-nullable-metadata/packages/cil/src/index.js"
+      },
+      {
+        "from": "/workspace/scratch/1692a10afba9/p5-nullable-metadata/packages/cil",
+        "name": "bytecode",
+        "entry": "/workspace/scratch/1692a10afba9/p5-nullable-metadata/packages/bytecode/src/index.js"
+      },
+      {
+        "from": "/workspace/scratch/1692a10afba9/p5-nullable-metadata/packages/cil",
+        "name": "framework",
+        "entry": "/workspace/scratch/1692a10afba9/p5-nullable-metadata/packages/framework/src/index.js"
+      },
+      {
+        "from": "/workspace/scratch/1692a10afba9/p5-nullable-metadata/packages/compiler",
+        "name": "symbols",
+        "entry": "/workspace/scratch/1692a10afba9/p5-nullable-metadata/packages/symbols/src/index.js"
+      },
+      {
+        "from": "/workspace/scratch/1692a10afba9/p5-nullable-metadata/packages/symbols",
+        "name": "cil",
+        "entry": "/workspace/scratch/1692a10afba9/p5-nullable-metadata/packages/cil/src/index.js"
+      },
+      {
+        "from": "/workspace/scratch/1692a10afba9/p5-nullable-metadata/packages/symbols",
+        "name": "archive",
+        "entry": "/workspace/scratch/1692a10afba9/p5-nullable-metadata/packages/archive/src/index.js"
+      },
+      {
+        "from": "/workspace/scratch/1692a10afba9/p5-nullable-metadata/packages/compiler",
+        "name": "framework",
+        "entry": "/workspace/scratch/1692a10afba9/p5-nullable-metadata/packages/framework/src/index.js"
+      }
+    ]
+  }
+]

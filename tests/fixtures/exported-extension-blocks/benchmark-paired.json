@@ -1,0 +1,990 @@
+{
+  "schemaVersion": 3,
+  "implementations": [
+    {
+      "name": "baseline",
+      "compilerEntry": "/workspace/scratch/1692a10afba9/p5-extension-benchmark-baseline/packages/compiler/src/index.js",
+      "revision": "b19a56a77080e63ba1a216c7944971e5ca00b27f",
+      "dirtyWorktree": false
+    },
+    {
+      "name": "candidate",
+      "compilerEntry": "/workspace/scratch/1692a10afba9/p5-extension-paired-candidate/packages/compiler/src/index.js",
+      "revision": "ed91058416e8c1bbd40fdf3d778f07f615c410c8",
+      "dirtyWorktree": false
+    }
+  ],
+  "harnessSha256": "0e29a734fa90447e87e509d44387cff738b8ec30b2014035df72ae6976610476",
+  "node": "v24.19.0",
+  "platform": "linux",
+  "arch": "x64",
+  "cpu": "AMD EPYC 9V74 80-Core Processor",
+  "membersPerCase": 32,
+  "sampleCountPerCase": 20,
+  "warmupCountPerCase": 80,
+  "warmupStrategy": "80 rounds over both independent graphs and all workloads, reversing traversal on odd rounds",
+  "sampleStrategy": "20 rounds over all workloads and both graphs, reversing traversal on odd rounds; one compilation per sample",
+  "gcAvailable": true,
+  "workload": "Complete compileToReferenceAssembly on identical closed-reference source in both compiler graphs",
+  "provenance": "Shared host; one Node process, resource wrapper and serial team slot; no claim of host isolation.",
+  "memoryMetric": "Signed post-compilation heapUsed difference; includes GC during compilation; neither allocation count nor peak heap.",
+  "initialLoad": [
+    2.72,
+    2.22,
+    2.05
+  ],
+  "measurementInitialLoad": [
+    2.83,
+    2.25,
+    2.06
+  ],
+  "finalLoad": [
+    3.1,
+    2.33,
+    2.09
+  ],
+  "cases": [
+    {
+      "name": "ordinary-methods",
+      "implementation": "baseline",
+      "sourceBytes": 1548,
+      "sourceSha256": "f16cdfc69bdfdd275748976c076650a64be93564138e6424a4b9e98489afeee8",
+      "elapsedMs": {
+        "median": 9.795204999999441,
+        "p95": 17.235928000000058
+      },
+      "heapUsedDeltaBytes": {
+        "median": 2860840,
+        "p95": 2919224
+      },
+      "outputBytes": 2048,
+      "samples": [
+        {
+          "round": 0,
+          "position": 0,
+          "elapsedMs": 16.333119000000806,
+          "heapUsedDeltaBytes": 2857392,
+          "outputBytes": 2048
+        },
+        {
+          "round": 1,
+          "position": 5,
+          "elapsedMs": 9.671202999999878,
+          "heapUsedDeltaBytes": 2819808,
+          "outputBytes": 2048
+        },
+        {
+          "round": 2,
+          "position": 0,
+          "elapsedMs": 10.617698999999448,
+          "heapUsedDeltaBytes": 2698976,
+          "outputBytes": 2048
+        },
+        {
+          "round": 3,
+          "position": 5,
+          "elapsedMs": 9.206969999999274,
+          "heapUsedDeltaBytes": 2870672,
+          "outputBytes": 2048
+        },
+        {
+          "round": 4,
+          "position": 0,
+          "elapsedMs": 5.9430799999990995,
+          "heapUsedDeltaBytes": 2682272,
+          "outputBytes": 2048
+        },
+        {
+          "round": 5,
+          "position": 5,
+          "elapsedMs": 17.235928000000058,
+          "heapUsedDeltaBytes": 2887688,
+          "outputBytes": 2048
+        },
+        {
+          "round": 6,
+          "position": 0,
+          "elapsedMs": 10.364832999999635,
+          "heapUsedDeltaBytes": 2700208,
+          "outputBytes": 2048
+        },
+        {
+          "round": 7,
+          "position": 5,
+          "elapsedMs": 9.919206999999005,
+          "heapUsedDeltaBytes": 2905648,
+          "outputBytes": 2048
+        },
+        {
+          "round": 8,
+          "position": 0,
+          "elapsedMs": 6.51887700000043,
+          "heapUsedDeltaBytes": 2696712,
+          "outputBytes": 2048
+        },
+        {
+          "round": 9,
+          "position": 5,
+          "elapsedMs": 10.891679000000295,
+          "heapUsedDeltaBytes": 2885584,
+          "outputBytes": 2048
+        },
+        {
+          "round": 10,
+          "position": 0,
+          "elapsedMs": 10.275653000000602,
+          "heapUsedDeltaBytes": 2747864,
+          "outputBytes": 2048
+        },
+        {
+          "round": 11,
+          "position": 5,
+          "elapsedMs": 9.428265999998985,
+          "heapUsedDeltaBytes": 2919224,
+          "outputBytes": 2048
+        },
+        {
+          "round": 12,
+          "position": 0,
+          "elapsedMs": 7.574130000000878,
+          "heapUsedDeltaBytes": 2753456,
+          "outputBytes": 2048
+        },
+        {
+          "round": 13,
+          "position": 5,
+          "elapsedMs": 8.315228999999817,
+          "heapUsedDeltaBytes": 2878176,
+          "outputBytes": 2048
+        },
+        {
+          "round": 14,
+          "position": 0,
+          "elapsedMs": 7.514321000000564,
+          "heapUsedDeltaBytes": 2757944,
+          "outputBytes": 2048
+        },
+        {
+          "round": 15,
+          "position": 5,
+          "elapsedMs": 17.424725999999282,
+          "heapUsedDeltaBytes": 2944640,
+          "outputBytes": 2048
+        },
+        {
+          "round": 16,
+          "position": 0,
+          "elapsedMs": 9.994959999999992,
+          "heapUsedDeltaBytes": 2864288,
+          "outputBytes": 2048
+        },
+        {
+          "round": 17,
+          "position": 5,
+          "elapsedMs": 9.179260000000795,
+          "heapUsedDeltaBytes": 2876768,
+          "outputBytes": 2048
+        },
+        {
+          "round": 18,
+          "position": 0,
+          "elapsedMs": 7.3891679999996995,
+          "heapUsedDeltaBytes": 2733656,
+          "outputBytes": 2048
+        },
+        {
+          "round": 19,
+          "position": 5,
+          "elapsedMs": 10.641970999999103,
+          "heapUsedDeltaBytes": 2867912,
+          "outputBytes": 2048
+        }
+      ]
+    },
+    {
+      "name": "ordinary-methods",
+      "implementation": "candidate",
+      "sourceBytes": 1548,
+      "sourceSha256": "f16cdfc69bdfdd275748976c076650a64be93564138e6424a4b9e98489afeee8",
+      "elapsedMs": {
+        "median": 11.419178499999362,
+        "p95": 21.295960000001287
+      },
+      "heapUsedDeltaBytes": {
+        "median": 3119852,
+        "p95": 3204664
+      },
+      "outputBytes": 2560,
+      "samples": [
+        {
+          "round": 0,
+          "position": 1,
+          "elapsedMs": 17.68003099999987,
+          "heapUsedDeltaBytes": 3223792,
+          "outputBytes": 2560
+        },
+        {
+          "round": 1,
+          "position": 4,
+          "elapsedMs": 10.306457000000592,
+          "heapUsedDeltaBytes": 3132200,
+          "outputBytes": 2560
+        },
+        {
+          "round": 2,
+          "position": 1,
+          "elapsedMs": 11.43156099999942,
+          "heapUsedDeltaBytes": 3091016,
+          "outputBytes": 2560
+        },
+        {
+          "round": 3,
+          "position": 4,
+          "elapsedMs": 14.45766199999889,
+          "heapUsedDeltaBytes": 3185432,
+          "outputBytes": 2560
+        },
+        {
+          "round": 4,
+          "position": 1,
+          "elapsedMs": 17.279421999999613,
+          "heapUsedDeltaBytes": 3156168,
+          "outputBytes": 2560
+        },
+        {
+          "round": 5,
+          "position": 4,
+          "elapsedMs": 16.639750999998796,
+          "heapUsedDeltaBytes": 3200856,
+          "outputBytes": 2560
+        },
+        {
+          "round": 6,
+          "position": 1,
+          "elapsedMs": 19.985570999999254,
+          "heapUsedDeltaBytes": 3203744,
+          "outputBytes": 2560
+        },
+        {
+          "round": 7,
+          "position": 4,
+          "elapsedMs": 11.406795999999304,
+          "heapUsedDeltaBytes": 3134536,
+          "outputBytes": 2560
+        },
+        {
+          "round": 8,
+          "position": 1,
+          "elapsedMs": 10.34371099999953,
+          "heapUsedDeltaBytes": 3082304,
+          "outputBytes": 2560
+        },
+        {
+          "round": 9,
+          "position": 4,
+          "elapsedMs": 10.370480999999927,
+          "heapUsedDeltaBytes": 3154432,
+          "outputBytes": 2560
+        },
+        {
+          "round": 10,
+          "position": 1,
+          "elapsedMs": 13.497690999998667,
+          "heapUsedDeltaBytes": 3107504,
+          "outputBytes": 2560
+        },
+        {
+          "round": 11,
+          "position": 4,
+          "elapsedMs": 9.00692700000036,
+          "heapUsedDeltaBytes": 3007032,
+          "outputBytes": 2560
+        },
+        {
+          "round": 12,
+          "position": 1,
+          "elapsedMs": 9.097399000000223,
+          "heapUsedDeltaBytes": 3079160,
+          "outputBytes": 2560
+        },
+        {
+          "round": 13,
+          "position": 4,
+          "elapsedMs": 21.295960000001287,
+          "heapUsedDeltaBytes": 3204664,
+          "outputBytes": 2560
+        },
+        {
+          "round": 14,
+          "position": 1,
+          "elapsedMs": 9.533009999999194,
+          "heapUsedDeltaBytes": 3053992,
+          "outputBytes": 2560
+        },
+        {
+          "round": 15,
+          "position": 4,
+          "elapsedMs": 22.404089999999997,
+          "heapUsedDeltaBytes": 3189280,
+          "outputBytes": 2560
+        },
+        {
+          "round": 16,
+          "position": 1,
+          "elapsedMs": 10.55326100000093,
+          "heapUsedDeltaBytes": 3058496,
+          "outputBytes": 2560
+        },
+        {
+          "round": 17,
+          "position": 4,
+          "elapsedMs": 10.86089400000128,
+          "heapUsedDeltaBytes": 3091608,
+          "outputBytes": 2560
+        },
+        {
+          "round": 18,
+          "position": 1,
+          "elapsedMs": 8.89577300000019,
+          "heapUsedDeltaBytes": 3060128,
+          "outputBytes": 2560
+        },
+        {
+          "round": 19,
+          "position": 4,
+          "elapsedMs": 11.615982999999687,
+          "heapUsedDeltaBytes": 3088920,
+          "outputBytes": 2560
+        }
+      ]
+    },
+    {
+      "name": "extension-properties",
+      "implementation": "baseline",
+      "sourceBytes": 3169,
+      "sourceSha256": "8a0d9c579c7ea63232406a47a71c59ce6548a8677ba955acd4d0ef37b075fef8",
+      "elapsedMs": {
+        "median": 19.141320499999892,
+        "p95": 29.43209299999944
+      },
+      "heapUsedDeltaBytes": {
+        "median": 5706396,
+        "p95": 5760600
+      },
+      "outputBytes": 3584,
+      "samples": [
+        {
+          "round": 0,
+          "position": 2,
+          "elapsedMs": 21.644640999999865,
+          "heapUsedDeltaBytes": 5693456,
+          "outputBytes": 3584
+        },
+        {
+          "round": 1,
+          "position": 3,
+          "elapsedMs": 16.305450000000747,
+          "heapUsedDeltaBytes": 5689992,
+          "outputBytes": 3584
+        },
+        {
+          "round": 2,
+          "position": 2,
+          "elapsedMs": 18.122871999999916,
+          "heapUsedDeltaBytes": 5660832,
+          "outputBytes": 3584
+        },
+        {
+          "round": 3,
+          "position": 3,
+          "elapsedMs": 22.404488999998648,
+          "heapUsedDeltaBytes": 5733096,
+          "outputBytes": 3584
+        },
+        {
+          "round": 4,
+          "position": 2,
+          "elapsedMs": 23.92146899999898,
+          "heapUsedDeltaBytes": 5698576,
+          "outputBytes": 3584
+        },
+        {
+          "round": 5,
+          "position": 3,
+          "elapsedMs": 29.460525000000416,
+          "heapUsedDeltaBytes": 5783008,
+          "outputBytes": 3584
+        },
+        {
+          "round": 6,
+          "position": 2,
+          "elapsedMs": 26.397891000000527,
+          "heapUsedDeltaBytes": 5760600,
+          "outputBytes": 3584
+        },
+        {
+          "round": 7,
+          "position": 3,
+          "elapsedMs": 29.43209299999944,
+          "heapUsedDeltaBytes": 5747360,
+          "outputBytes": 3584
+        },
+        {
+          "round": 8,
+          "position": 2,
+          "elapsedMs": 16.01339999999982,
+          "heapUsedDeltaBytes": 5699992,
+          "outputBytes": 3584
+        },
+        {
+          "round": 9,
+          "position": 3,
+          "elapsedMs": 18.70157300000028,
+          "heapUsedDeltaBytes": 5706712,
+          "outputBytes": 3584
+        },
+        {
+          "round": 10,
+          "position": 2,
+          "elapsedMs": 26.46807699999954,
+          "heapUsedDeltaBytes": 5742720,
+          "outputBytes": 3584
+        },
+        {
+          "round": 11,
+          "position": 3,
+          "elapsedMs": 15.562518000000637,
+          "heapUsedDeltaBytes": 5634712,
+          "outputBytes": 3584
+        },
+        {
+          "round": 12,
+          "position": 2,
+          "elapsedMs": 15.219955000000482,
+          "heapUsedDeltaBytes": 5690200,
+          "outputBytes": 3584
+        },
+        {
+          "round": 13,
+          "position": 3,
+          "elapsedMs": 20.49582400000145,
+          "heapUsedDeltaBytes": 5717768,
+          "outputBytes": 3584
+        },
+        {
+          "round": 14,
+          "position": 2,
+          "elapsedMs": 16.117903999998816,
+          "heapUsedDeltaBytes": 5751328,
+          "outputBytes": 3584
+        },
+        {
+          "round": 15,
+          "position": 3,
+          "elapsedMs": 23.01323599999887,
+          "heapUsedDeltaBytes": 5716752,
+          "outputBytes": 3584
+        },
+        {
+          "round": 16,
+          "position": 2,
+          "elapsedMs": 17.083644999998796,
+          "heapUsedDeltaBytes": 5706080,
+          "outputBytes": 3584
+        },
+        {
+          "round": 17,
+          "position": 3,
+          "elapsedMs": 19.271692000000257,
+          "heapUsedDeltaBytes": 5711656,
+          "outputBytes": 3584
+        },
+        {
+          "round": 18,
+          "position": 2,
+          "elapsedMs": 17.38252399999874,
+          "heapUsedDeltaBytes": 5663792,
+          "outputBytes": 3584
+        },
+        {
+          "round": 19,
+          "position": 3,
+          "elapsedMs": 19.010948999999528,
+          "heapUsedDeltaBytes": 5697656,
+          "outputBytes": 3584
+        }
+      ]
+    },
+    {
+      "name": "extension-properties",
+      "implementation": "candidate",
+      "sourceBytes": 3169,
+      "sourceSha256": "8a0d9c579c7ea63232406a47a71c59ce6548a8677ba955acd4d0ef37b075fef8",
+      "elapsedMs": {
+        "median": 24.267283499999394,
+        "p95": 35.76048300000002
+      },
+      "heapUsedDeltaBytes": {
+        "median": 9203096,
+        "p95": 9288944
+      },
+      "outputBytes": 10752,
+      "samples": [
+        {
+          "round": 0,
+          "position": 3,
+          "elapsedMs": 27.006109999999353,
+          "heapUsedDeltaBytes": 9228368,
+          "outputBytes": 10752
+        },
+        {
+          "round": 1,
+          "position": 2,
+          "elapsedMs": 21.498506000000816,
+          "heapUsedDeltaBytes": 9310768,
+          "outputBytes": 10752
+        },
+        {
+          "round": 2,
+          "position": 3,
+          "elapsedMs": 35.85061200000018,
+          "heapUsedDeltaBytes": 9269720,
+          "outputBytes": 10752
+        },
+        {
+          "round": 3,
+          "position": 2,
+          "elapsedMs": 23.58219100000133,
+          "heapUsedDeltaBytes": 9282328,
+          "outputBytes": 10752
+        },
+        {
+          "round": 4,
+          "position": 3,
+          "elapsedMs": 32.65103799999997,
+          "heapUsedDeltaBytes": 9113328,
+          "outputBytes": 10752
+        },
+        {
+          "round": 5,
+          "position": 2,
+          "elapsedMs": 23.240547999999762,
+          "heapUsedDeltaBytes": 9227120,
+          "outputBytes": 10752
+        },
+        {
+          "round": 6,
+          "position": 3,
+          "elapsedMs": 35.71888899999976,
+          "heapUsedDeltaBytes": 9267048,
+          "outputBytes": 10752
+        },
+        {
+          "round": 7,
+          "position": 2,
+          "elapsedMs": 24.370739999998477,
+          "heapUsedDeltaBytes": 9145368,
+          "outputBytes": 10752
+        },
+        {
+          "round": 8,
+          "position": 3,
+          "elapsedMs": 21.02665199999865,
+          "heapUsedDeltaBytes": 9147600,
+          "outputBytes": 10752
+        },
+        {
+          "round": 9,
+          "position": 2,
+          "elapsedMs": 26.136968000000707,
+          "heapUsedDeltaBytes": 9288944,
+          "outputBytes": 10752
+        },
+        {
+          "round": 10,
+          "position": 3,
+          "elapsedMs": 22.208692000000156,
+          "heapUsedDeltaBytes": 9105968,
+          "outputBytes": 10752
+        },
+        {
+          "round": 11,
+          "position": 2,
+          "elapsedMs": 20.46240399999988,
+          "heapUsedDeltaBytes": 9176368,
+          "outputBytes": 10752
+        },
+        {
+          "round": 12,
+          "position": 3,
+          "elapsedMs": 20.775313999998616,
+          "heapUsedDeltaBytes": 9186392,
+          "outputBytes": 10752
+        },
+        {
+          "round": 13,
+          "position": 2,
+          "elapsedMs": 26.08180800000082,
+          "heapUsedDeltaBytes": 9253656,
+          "outputBytes": 10752
+        },
+        {
+          "round": 14,
+          "position": 3,
+          "elapsedMs": 24.02216000000044,
+          "heapUsedDeltaBytes": 9142760,
+          "outputBytes": 10752
+        },
+        {
+          "round": 15,
+          "position": 2,
+          "elapsedMs": 21.312725000001592,
+          "heapUsedDeltaBytes": 9210280,
+          "outputBytes": 10752
+        },
+        {
+          "round": 16,
+          "position": 3,
+          "elapsedMs": 35.76048300000002,
+          "heapUsedDeltaBytes": 9153352,
+          "outputBytes": 10752
+        },
+        {
+          "round": 17,
+          "position": 2,
+          "elapsedMs": 25.107214999999997,
+          "heapUsedDeltaBytes": 9219016,
+          "outputBytes": 10752
+        },
+        {
+          "round": 18,
+          "position": 3,
+          "elapsedMs": 25.803059000001667,
+          "heapUsedDeltaBytes": 9195912,
+          "outputBytes": 10752
+        },
+        {
+          "round": 19,
+          "position": 2,
+          "elapsedMs": 24.16382700000031,
+          "heapUsedDeltaBytes": 9169560,
+          "outputBytes": 10752
+        }
+      ]
+    },
+    {
+      "name": "generic-extension-members",
+      "implementation": "baseline",
+      "sourceBytes": 4258,
+      "sourceSha256": "20ecb9671ae034cdc51defa5f8278754f68e311f3e2f0a7b9b13befe95497c3b",
+      "elapsedMs": {
+        "median": 23.681593500000417,
+        "p95": 38.71236400000089
+      },
+      "heapUsedDeltaBytes": {
+        "median": 7442068,
+        "p95": 7545752
+      },
+      "outputBytes": 4608,
+      "samples": [
+        {
+          "round": 0,
+          "position": 4,
+          "elapsedMs": 19.342396000000008,
+          "heapUsedDeltaBytes": 7425400,
+          "outputBytes": 4608
+        },
+        {
+          "round": 1,
+          "position": 1,
+          "elapsedMs": 21.613635000000613,
+          "heapUsedDeltaBytes": 7442864,
+          "outputBytes": 4608
+        },
+        {
+          "round": 2,
+          "position": 4,
+          "elapsedMs": 20.488710999999967,
+          "heapUsedDeltaBytes": 7413040,
+          "outputBytes": 4608
+        },
+        {
+          "round": 3,
+          "position": 1,
+          "elapsedMs": 20.239574999999604,
+          "heapUsedDeltaBytes": 7424112,
+          "outputBytes": 4608
+        },
+        {
+          "round": 4,
+          "position": 4,
+          "elapsedMs": 32.655994999999166,
+          "heapUsedDeltaBytes": 7547696,
+          "outputBytes": 4608
+        },
+        {
+          "round": 5,
+          "position": 1,
+          "elapsedMs": 32.57771899999898,
+          "heapUsedDeltaBytes": 7530184,
+          "outputBytes": 4608
+        },
+        {
+          "round": 6,
+          "position": 4,
+          "elapsedMs": 34.30093400000078,
+          "heapUsedDeltaBytes": 7502584,
+          "outputBytes": 4608
+        },
+        {
+          "round": 7,
+          "position": 1,
+          "elapsedMs": 61.21675999999934,
+          "heapUsedDeltaBytes": 7545752,
+          "outputBytes": 4608
+        },
+        {
+          "round": 8,
+          "position": 4,
+          "elapsedMs": 25.209994999999253,
+          "heapUsedDeltaBytes": 7478888,
+          "outputBytes": 4608
+        },
+        {
+          "round": 9,
+          "position": 1,
+          "elapsedMs": 21.60507300000063,
+          "heapUsedDeltaBytes": 7476656,
+          "outputBytes": 4608
+        },
+        {
+          "round": 10,
+          "position": 4,
+          "elapsedMs": 18.980654000000868,
+          "heapUsedDeltaBytes": 7489208,
+          "outputBytes": 4608
+        },
+        {
+          "round": 11,
+          "position": 1,
+          "elapsedMs": 19.20107900000039,
+          "heapUsedDeltaBytes": 7456280,
+          "outputBytes": 4608
+        },
+        {
+          "round": 12,
+          "position": 4,
+          "elapsedMs": 21.66766699999971,
+          "heapUsedDeltaBytes": 7450048,
+          "outputBytes": 4608
+        },
+        {
+          "round": 13,
+          "position": 1,
+          "elapsedMs": 31.478876999999557,
+          "heapUsedDeltaBytes": 7429128,
+          "outputBytes": 4608
+        },
+        {
+          "round": 14,
+          "position": 4,
+          "elapsedMs": 24.135285000000295,
+          "heapUsedDeltaBytes": 7407648,
+          "outputBytes": 4608
+        },
+        {
+          "round": 15,
+          "position": 1,
+          "elapsedMs": 27.190278000000035,
+          "heapUsedDeltaBytes": 7410496,
+          "outputBytes": 4608
+        },
+        {
+          "round": 16,
+          "position": 4,
+          "elapsedMs": 38.71236400000089,
+          "heapUsedDeltaBytes": 7430960,
+          "outputBytes": 4608
+        },
+        {
+          "round": 17,
+          "position": 1,
+          "elapsedMs": 23.22790200000054,
+          "heapUsedDeltaBytes": 7407720,
+          "outputBytes": 4608
+        },
+        {
+          "round": 18,
+          "position": 4,
+          "elapsedMs": 22.9250260000008,
+          "heapUsedDeltaBytes": 7414832,
+          "outputBytes": 4608
+        },
+        {
+          "round": 19,
+          "position": 1,
+          "elapsedMs": 26.054308000000674,
+          "heapUsedDeltaBytes": 7441272,
+          "outputBytes": 4608
+        }
+      ]
+    },
+    {
+      "name": "generic-extension-members",
+      "implementation": "candidate",
+      "sourceBytes": 4258,
+      "sourceSha256": "20ecb9671ae034cdc51defa5f8278754f68e311f3e2f0a7b9b13befe95497c3b",
+      "elapsedMs": {
+        "median": 32.12210050000067,
+        "p95": 49.12857900000017
+      },
+      "heapUsedDeltaBytes": {
+        "median": 12043228,
+        "p95": 12248536
+      },
+      "outputBytes": 12288,
+      "samples": [
+        {
+          "round": 0,
+          "position": 5,
+          "elapsedMs": 27.83518600000025,
+          "heapUsedDeltaBytes": 12248536,
+          "outputBytes": 12288
+        },
+        {
+          "round": 1,
+          "position": 0,
+          "elapsedMs": 29.12966899999992,
+          "heapUsedDeltaBytes": 12126064,
+          "outputBytes": 12288
+        },
+        {
+          "round": 2,
+          "position": 5,
+          "elapsedMs": 28.92912399999932,
+          "heapUsedDeltaBytes": 12240336,
+          "outputBytes": 12288
+        },
+        {
+          "round": 3,
+          "position": 0,
+          "elapsedMs": 30.691125999999713,
+          "heapUsedDeltaBytes": 12282016,
+          "outputBytes": 12288
+        },
+        {
+          "round": 4,
+          "position": 5,
+          "elapsedMs": 43.39997399999993,
+          "heapUsedDeltaBytes": 12126920,
+          "outputBytes": 12288
+        },
+        {
+          "round": 5,
+          "position": 0,
+          "elapsedMs": 49.12857900000017,
+          "heapUsedDeltaBytes": 12065864,
+          "outputBytes": 12288
+        },
+        {
+          "round": 6,
+          "position": 5,
+          "elapsedMs": 35.51118400000087,
+          "heapUsedDeltaBytes": 12045552,
+          "outputBytes": 12288
+        },
+        {
+          "round": 7,
+          "position": 0,
+          "elapsedMs": 30.6067409999996,
+          "heapUsedDeltaBytes": 12031928,
+          "outputBytes": 12288
+        },
+        {
+          "round": 8,
+          "position": 5,
+          "elapsedMs": 32.01981900000101,
+          "heapUsedDeltaBytes": 12059816,
+          "outputBytes": 12288
+        },
+        {
+          "round": 9,
+          "position": 0,
+          "elapsedMs": 30.931877999999415,
+          "heapUsedDeltaBytes": 12116456,
+          "outputBytes": 12288
+        },
+        {
+          "round": 10,
+          "position": 5,
+          "elapsedMs": 27.38735799999995,
+          "heapUsedDeltaBytes": 11993912,
+          "outputBytes": 12288
+        },
+        {
+          "round": 11,
+          "position": 0,
+          "elapsedMs": 24.888222999999925,
+          "heapUsedDeltaBytes": 11917728,
+          "outputBytes": 12288
+        },
+        {
+          "round": 12,
+          "position": 5,
+          "elapsedMs": 32.22438200000033,
+          "heapUsedDeltaBytes": 12018200,
+          "outputBytes": 12288
+        },
+        {
+          "round": 13,
+          "position": 0,
+          "elapsedMs": 33.71720800000003,
+          "heapUsedDeltaBytes": 11966896,
+          "outputBytes": 12288
+        },
+        {
+          "round": 14,
+          "position": 5,
+          "elapsedMs": 45.36082299999907,
+          "heapUsedDeltaBytes": 12002160,
+          "outputBytes": 12288
+        },
+        {
+          "round": 15,
+          "position": 0,
+          "elapsedMs": 46.37243999999919,
+          "heapUsedDeltaBytes": 12040136,
+          "outputBytes": 12288
+        },
+        {
+          "round": 16,
+          "position": 5,
+          "elapsedMs": 36.706975000000966,
+          "heapUsedDeltaBytes": 12040904,
+          "outputBytes": 12288
+        },
+        {
+          "round": 17,
+          "position": 0,
+          "elapsedMs": 28.659498999999414,
+          "heapUsedDeltaBytes": 12013904,
+          "outputBytes": 12288
+        },
+        {
+          "round": 18,
+          "position": 5,
+          "elapsedMs": 50.10281700000087,
+          "heapUsedDeltaBytes": 12098792,
+          "outputBytes": 12288
+        },
+        {
+          "round": 19,
+          "position": 0,
+          "elapsedMs": 32.581968000000415,
+          "heapUsedDeltaBytes": 11983624,
+          "outputBytes": 12288
+        }
+      ]
+    }
+  ]
+}

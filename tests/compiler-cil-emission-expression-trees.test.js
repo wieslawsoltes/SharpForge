@@ -32,12 +32,6 @@ function emit(source) {
     },
   };
 }
-const refused = source => {
-  const result = compileToAssembly(source, { name: 'Sample' });
-  assert.equal(result.assembly, null);
-  return result.diagnostics.filter(entry => entry.severity === 'error').map(entry => `${entry.code} ${entry.message}`);
-};
-
 test('A02-T30 a lambda converted to an expression tree is built by factory calls, not compiled to a method', () => {
   const { lines, type } = emit(`using System; using System.Linq.Expressions;
     class C { static Expression<Func<int, int>> Make() { return x => x + 1; } static void Main() { } }`);
@@ -134,10 +128,9 @@ test('A02-T30 an extension method, its class and the assembly carry ExtensionAtt
   assert.equal(owners.filter(owner => owner === 'System.Runtime.CompilerServices.ExtensionAttribute').length, 3);
 });
 
-test('A02-T30 what the lowering has no factory call for is SF2200', () => {
-  assert.match(
-    refused(`using System; using System.Linq.Expressions;
-      class C { static Expression<Func<int?, int?>> Make() { return x => x + 1; } static void Main() { } }`)[0],
-    /^SF2200 .*in an expression tree/,
-  );
+test('A02-T30 lifted arithmetic emits the nullable operands and the ordinary binary factory', () => {
+  const { lines } = emit(`using System; using System.Linq.Expressions;
+    class C { static Expression<Func<int?, int?>> Make() { return x => x + 1; } static void Main() { } }`);
+  assert.ok(lines('C', 'Make').includes(`call ${E}::Add`));
+  assert.ok(lines('C', 'Make').includes(`call ${E}::Convert`));
 });

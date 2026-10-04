@@ -55,6 +55,7 @@ export { AssemblyTypeHierarchy } from './browser/hierarchy.js';
 export { referenceAssemblyMemberIncluded, addReferenceAssemblyAttribute } from './emit/ref-assembly.js';
 export { AssemblyUsageAnalysis } from './browser/analyzers.js';
 export { MetadataTableInspector } from './inspector-tables.js';
+export { MetadataGenerations, metadataGenerationDiagnosticCatalog } from './metadata/delta-reader.js';
 
 export {asyncTypes, asyncValueType, asyncMethodDefinition} from './async-profile.js';
 export {asyncStateMachine, asyncCallbackTargets} from './async-state-machines.js';

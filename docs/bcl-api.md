@@ -1337,4 +1337,27 @@ Registered families: <code>objectComparer</code>.
 
 No pinned reference inventory is included for these families; registered rows alone do not establish API coverage.
 
+### Module <code>stopwatch</code>
+
+Registered families: <code>stopwatch</code>.
+
+| ABI ID | Registered signature | Registry status |
+| --- | --- | --- |
+| 524354 | <code>System.Diagnostics.Stopwatch System.Diagnostics.Stopwatch::.ctor()</code> | implemented |
+| 524355 | <code>static System.Diagnostics.Stopwatch System.Diagnostics.Stopwatch::StartNew()</code> | implemented |
+| 524356 | <code>void System.Diagnostics.Stopwatch::Start()</code> | implemented |
+| 524357 | <code>void System.Diagnostics.Stopwatch::Stop()</code> | implemented |
+| 524358 | <code>void System.Diagnostics.Stopwatch::Reset()</code> | implemented |
+| 524359 | <code>void System.Diagnostics.Stopwatch::Restart()</code> | implemented |
+| 524360 | <code>bool System.Diagnostics.Stopwatch::get_IsRunning()</code> | implemented |
+| 524361 | <code>System.TimeSpan System.Diagnostics.Stopwatch::get_Elapsed()</code> | implemented |
+| 524362 | <code>long System.Diagnostics.Stopwatch::get_ElapsedMilliseconds()</code> | implemented |
+| 524363 | <code>long System.Diagnostics.Stopwatch::get_ElapsedTicks()</code> | implemented |
+| 524364 | <code>static long System.Diagnostics.Stopwatch::GetTimestamp()</code> | implemented |
+| 524365 | <code>static System.TimeSpan System.Diagnostics.Stopwatch::GetElapsedTime(long)</code> | implemented |
+| 524366 | <code>static System.TimeSpan System.Diagnostics.Stopwatch::GetElapsedTime(long, long)</code> | implemented |
+| 524367 | <code>string System.Diagnostics.Stopwatch::ToString()</code> | implemented |
+
+No pinned reference inventory is included for these families; registered rows alone do not establish API coverage.
+
 <!-- bcl-module-inventory:end -->

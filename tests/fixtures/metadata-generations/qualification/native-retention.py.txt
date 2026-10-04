@@ -1,0 +1,52 @@
+import datetime
+import hashlib
+import json
+from pathlib import Path
+import subprocess
+
+root = Path('/workspace/scratch/7e3d2a445c44')
+repo = root / 'sf6-metadata-generations'
+plan_bytes = (repo / 'tests/fixtures/metadata-generations/validation-plan.json').read_bytes()
+assert hashlib.sha256(plan_bytes).hexdigest() == '80a4be087ff4a927967f416bb5ce970c91881b41716dd620c9bb74893e2a0169'
+plan = json.loads(plan_bytes)
+source = Path(plan['native']['destination'])
+destination = repo / plan['native']['retainedDirectory']
+qualification = repo / 'tests/fixtures/metadata-generations/qualification'
+assert not destination.exists()
+native_bytes = (source / 'native.json').read_bytes()
+assert hashlib.sha256(native_bytes).hexdigest() == 'b212069f11b57db48ef2c2d6cd25e87f75fb667f23a2833de7a54df80121aa31'
+native = json.loads(native_bytes)
+assert native['status'] == 'native-and-node-replay-completed'
+assert len(native['commands']) == 4
+assert all(command['result']['exitCode'] == 0 and command['result']['signal'] is None for command in native['commands'])
+external = json.loads((root / 'metadata-qualification-8b9b74f6/verify-external.execution.json').read_bytes())
+assert external['status'] == 'passed' and external['exitCode'] == 0 and external['sourcesUnchanged']
+rows = []
+for relative in plan['native']['retainRelativePaths']:
+    before = (source / relative).read_bytes()
+    target = destination / relative
+    target.parent.mkdir(parents=True, exist_ok=True)
+    with target.open('xb') as output:
+        output.write(before)
+    after = target.read_bytes()
+    assert before == after
+    rows.append({'path': relative, 'bytes': len(before), 'sourceSha256': hashlib.sha256(before).hexdigest(),
+                 'retainedSha256': hashlib.sha256(after).hexdigest()})
+assert len(rows) == 20
+qualification.mkdir(exist_ok=True)
+record = {
+    'schemaVersion': 1, 'status': 'exact-byte-copy-completed',
+    'completedUtc': datetime.datetime.now(datetime.timezone.utc).isoformat(),
+    'sourceDirectory': str(source), 'retainedDirectory': str(destination),
+    'head': subprocess.check_output(['git', 'rev-parse', 'HEAD'], cwd=repo).decode().strip(),
+    'argv': ['python', str(Path(__file__).resolve())], 'cwd': str(Path.cwd()),
+    'toolSha256': hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),
+    'planSha256': hashlib.sha256(plan_bytes).hexdigest(), 'files': rows,
+    'nativeProcessProvenance': 'Raw stdout/stderr and outcomes cover the four workload commands. Version probes inside the existing resolveToolchain helper have recorded resolved identities but no retained raw subprocess output.',
+}
+with (qualification / 'native-retention.json').open('x') as output:
+    output.write(json.dumps(record, indent=2) + '\n')
+for name, source_path in [('native-retention.py.txt', Path(__file__)), ('root-run-step.py.txt', root / 'metadata-root-run-step.py')]:
+    with (qualification / name).open('xb') as output:
+        output.write(source_path.read_bytes())
+print(json.dumps({'status': record['status'], 'files': len(rows), 'bytes': sum(row['bytes'] for row in rows)}))

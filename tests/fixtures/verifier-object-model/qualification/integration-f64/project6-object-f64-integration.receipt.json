@@ -1,0 +1,42 @@
+{
+  "argv": [
+    "node",
+    "scripts/limited.js",
+    "node",
+    "--test",
+    "--test-reporter=tap",
+    "--test-concurrency=1",
+    "tests/a03-object-model.test.js",
+    "tests/a03-object-annotations.test.js",
+    "tests/a03-object-budgets.test.js",
+    "tests/a03-object-model-native.test.js",
+    "tests/a03-verifier-benchmark.test.js",
+    "tests/a03-inspector-method-view.test.js",
+    "tests/a03-typed-preparation.test.js",
+    "tests/a03-numeric-transfers.test.js",
+    "tests/a03-field-transfers.test.js",
+    "tests/a03-indirect-transfers.test.js",
+    "tests/a03-string-transfers.test.js",
+    "tests/a03-string-budgets.test.js",
+    "tests/a03-string-metadata.test.js",
+    "tests/a03-string-native.test.js"
+  ],
+  "cwd": "/workspace/scratch/7e3d2a445c44/sf6-objects",
+  "startedUtc": "2026-10-04T17:04:44.238866+00:00",
+  "headBefore": "f64a9daba4da3700ab8fd010f610a0fbba9dd8f9",
+  "finishedUtc": "2026-10-04T17:04:49.852532+00:00",
+  "exitCode": 0,
+  "headAfter": "f64a9daba4da3700ab8fd010f610a0fbba9dd8f9",
+  "outputs": [
+    {
+      "path": "/workspace/scratch/7e3d2a445c44/project6-object-f64-integration.tap",
+      "bytes": 19958,
+      "sha256": "5846cf3260b62fabbc8c5960117acda010cecea52a2c54eb12a86e7100987c85"
+    },
+    {
+      "path": "/workspace/scratch/7e3d2a445c44/project6-object-f64-integration.stderr.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ]
+}

@@ -1,0 +1,44 @@
+diff --git a/packages/cil/tools/benchmark-metadata-generations.mjs b/packages/cil/tools/benchmark-metadata-generations.mjs
+index 41497e2a2..3d6cb8ba7 100644
+--- a/packages/cil/tools/benchmark-metadata-generations.mjs
++++ b/packages/cil/tools/benchmark-metadata-generations.mjs
+@@ -10 +10,2 @@ import { benchmarkCheckout, benchmarkTools } from './metadata-generations-benchm
+-import { baselineCommit, controls, features, measuredBatches, productCommit, warmupBatches } from './metadata-generations-benchmark-protocol.mjs';
++import { baselineCommit, controls, features, measuredBatches, nativeReferenceDirectory,
++  preparationProductCommit, warmupBatches } from './metadata-generations-benchmark-protocol.mjs';
+@@ -135 +136 @@ async function prepare() {
+-  assert.equal(plan.performance.productCommit, productCommit);
++  assert.equal(plan.performance.productCommit, preparationProductCommit);
+@@ -140 +141 @@ async function prepare() {
+-  const nativePath = 'tests/fixtures/metadata-generations/reference/native.json';
++  const nativePath = nativeReferenceDirectory + '/native.json';
+@@ -143 +144 @@ async function prepare() {
+-  const verified = await verifyMetadataGenerationCapture(undefined, { strictSource: true });
++  const verified = await verifyMetadataGenerationCapture(resolve(root, nativeReferenceDirectory), { strictSource: true });
+diff --git a/packages/cil/tools/metadata-generations-benchmark-features.mjs b/packages/cil/tools/metadata-generations-benchmark-features.mjs
+index 71076ff2b..6743907ac 100644
+--- a/packages/cil/tools/metadata-generations-benchmark-features.mjs
++++ b/packages/cil/tools/metadata-generations-benchmark-features.mjs
+@@ -11 +11 @@ import { benchmarkCheckout, benchmarkTools } from './metadata-generations-benchm
+-import { features } from './metadata-generations-benchmark-protocol.mjs';
++import { features, nativeReferenceDirectory } from './metadata-generations-benchmark-protocol.mjs';
+@@ -120 +120 @@ try {
+-  const referenceBytes = readFileSync(resolve(root, 'tests/fixtures/metadata-generations/reference/native.json'));
++  const referenceBytes = readFileSync(resolve(root, nativeReferenceDirectory, 'native.json'));
+@@ -122 +122 @@ try {
+-  const verified = await verifyMetadataGenerationCapture(undefined, { strictSource: true });
++  const verified = await verifyMetadataGenerationCapture(resolve(root, nativeReferenceDirectory), { strictSource: true });
+diff --git a/packages/cil/tools/metadata-generations-benchmark-protocol.mjs b/packages/cil/tools/metadata-generations-benchmark-protocol.mjs
+index 1f3c372c8..1e383396a 100644
+--- a/packages/cil/tools/metadata-generations-benchmark-protocol.mjs
++++ b/packages/cil/tools/metadata-generations-benchmark-protocol.mjs
+@@ -2 +2,3 @@ export const baselineCommit = '31900dce5c1454c1f9c244c9ac14e1798eac3e5f';
+-export const productCommit = '02df6354e3152beac511d29b20272050ae03f486';
++export const preparationProductCommit = '02df6354e3152beac511d29b20272050ae03f486';
++export const productCommit = 'edafb8018be5b75916c8655e9ff1147b38035a24';
++export const nativeReferenceDirectory = 'tests/fixtures/metadata-generations/reference-ordinal';
+@@ -34,0 +37,4 @@ export const toolPaths = Object.freeze([
++  'tests/fixtures/metadata-generations/qualification/ordinal-validation-plan.json',
++  'tests/fixtures/metadata-generations/qualification/ordinal-source-revision.json',
++  'tests/fixtures/metadata-generations/qualification/ordinal-benchmark-pin.diff',
++  'tests/fixtures/metadata-generations/qualification/ordinal-run-step.py',

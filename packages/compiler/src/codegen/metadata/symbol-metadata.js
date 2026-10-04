@@ -31,6 +31,9 @@ import { writeParameterConstant } from './parameter-metadata.js';
 import { hasReturnAttributes, returnAttributeSource } from './attribute-targets.js';
 import { NullableMetadataPlan } from './nullable-plan.js';
 import { CompilerAttributeRegistry } from './compiler-attribute-registry.js';
+import { ExtensionBlockMetadataPlan } from './extension-block-plan.js';
+import { valueTypeConstraintToken, planUnmanagedAttributes } from './unmanaged-metadata.js';
+import { declarationRefSafetyVersion, hasReadonlyReturn, planRefDeclarationAttributes } from './ref-declaration-metadata.js';
 import { prepareNullableAttributes } from './nullable-attribute-contracts.js';
 
 const TABLE = Object.freeze({ TypeDef: 2, Field: 4, MethodDef: 6, Param: 8 });
@@ -80,15 +83,21 @@ export class SymbolMetadataWriter {
     this.core = analysis.core;
     this.bodyRvaOf = typeof bodyRva === 'function' ? bodyRva : () => bodyRva;
     const declared = sourceTypesInMetadataOrder(analysis.assembly);
-    this.types = [...declared, ...(synthesized?.types ?? [])];
     this.compilerAttributes = new CompilerAttributeRegistry(analysis);
-    this.plans = new Map(this.types.map(type => [type, planMembers(type, this.core, field => analysis.constantOf(field))]));
+    this.extensions = new ExtensionBlockMetadataPlan(analysis, declared, this.compilerAttributes);
+    this.refSafetyRulesVersion = declarationRefSafetyVersion(analysis);
+    this.types = [...declared, ...this.extensions.types, ...(synthesized?.types ?? [])];
+    this.plans = new Map(this.types.map(type => [type,
+      this.extensions.plans.get(type) ?? planMembers(type, this.core, field => analysis.constantOf(field)),
+    ]));
     if (synthesized) for (const type of this.types) synthesized.extend(type, this.plans.get(type));
     this.nullableMetadata = new NullableMetadataPlan(this, analysis);
     prepareNullableAttributes(this);
+    planRefDeclarationAttributes(this.compilerAttributes, this.plans, this.refSafetyRulesVersion);
+    planUnmanagedAttributes(this.compilerAttributes, this.plans);
     const definitions = this.compilerAttributes.definitions;
     // State machines remain last: their field lists may grow while executable bodies are emitted.
-    this.types = [...declared, ...definitions.keys(), ...(synthesized?.types ?? [])];
+    this.types = [...declared, ...this.extensions.types, ...definitions.keys(), ...(synthesized?.types ?? [])];
     for (const [type, contract] of definitions) this.plans.set(type, contract.plan);
     this.tokens = new TypeTokens(builder, this.types, assemblyResolverOf(analysis));
     /** The methods of `<Module>`, the first TypeDef row: they take the first MethodDef rows. */
@@ -154,7 +163,7 @@ export class SymbolMetadataWriter {
         hasStaticConstructor = plan.hasStaticConstructor ?? plan.methods.some(method => method.name === '.cctor' && !method.isInitializerOnly),
         base = type.typeKind === TypeKind.Interface ? null : type.baseType;
       builder.addRow('TypeDef', {
-        Flags: typeFlags(type, { hasStaticConstructor }),
+        Flags: plan.typeFlags ?? typeFlags(type, { hasStaticConstructor }),
         Name: definitionNameOf(type),
         Namespace: namespaceOf(type),
         Extends: base ? this.tokens.typeToken(base) : 0,
@@ -205,7 +214,7 @@ export class SymbolMetadataWriter {
         });
         const returnSource = returnAttributeSource(method), returned = returnSource?.returnType;
         if ((returned && (tupleElementNamesOf(returned) || dynamicTransformFlags(returned)))
-          || hasReturnAttributes(returnSource) || this.nullableMetadata.needsReturn(method)) {
+          || hasReturnAttributes(returnSource) || hasReadonlyReturn(returnSource) || this.nullableMetadata.needsReturn(method)) {
           // The return value has a Param row (sequence 0) only when an attribute is written on it.
           method.returnParameterToken = this.builder.addRow('Param', { Flags: 0, Sequence: 0, Name: '' });
           if (method.symbol) this.returnParameterTokens.set(method.symbol, method.returnParameterToken);
@@ -236,9 +245,11 @@ export class SymbolMetadataWriter {
     if (type.containingType) builder.addRow('NestedClass', { NestedClass: self, EnclosingClass: this.tokens.definitionToken(type.containingType) });
     const hasInstanceField = plan.fields.some(field => !(field.flags & FieldAttributes.Static));
     // `plan.classSize`: the size code generation gives a struct (the buffer struct of a fixed-size buffer).
-    if (plan.classSize) builder.addRow('ClassLayout', { PackingSize: 0, ClassSize: plan.classSize, Parent: self });
+    if (plan.classSize) {
+      builder.addRow('ClassLayout', { PackingSize: plan.classPackingSize ?? 0, ClassSize: plan.classSize, Parent: self });
+    }
     else if (type.typeKind === TypeKind.Struct && !hasInstanceField) builder.addRow('ClassLayout', { PackingSize: 0, ClassSize: 1, Parent: self });
-    this.writeGenericParameters(self, this.allTypeParameters(type), ownTokens);
+    this.writeGenericParameters(self, plan.metadataTypeParameters ?? this.allTypeParameters(type), ownTokens);
     for (const method of plan.methods) {
       if (method.symbol?.typeParameters?.length) this.writeGenericParameters(method.token, method.symbol.typeParameters);
       // A synthesized generic method declares copies of the type parameters it was written over.
@@ -312,6 +323,8 @@ export class SymbolMetadataWriter {
   }
   /** The type parameters a TypeDef declares: those of its enclosing types first, as VAR numbers them. */
   allTypeParameters(type) {
+    const declared = this.plans.get(type)?.metadataTypeParameters;
+    if (declared) return declared;
     const outer = type.containingType ? this.allTypeParameters(type.containingType) : [];
     return [...outer, ...(type.typeParameters ?? [])];
   }
@@ -321,7 +334,7 @@ export class SymbolMetadataWriter {
       this.genericParameterRows.push({ symbol: parameter, token: row, owner });
       // `struct` is also written as a constraint to System.ValueType, as Roslyn writes it.
       if (parameter.hasValueTypeConstraint || parameter.hasUnmanagedTypeConstraint) {
-        const constraintRow = this.builder.addRow('GenericParamConstraint', { Owner: row, Constraint: this.builder.typeRef('System.ValueType') });
+        const constraintRow = this.builder.addRow('GenericParamConstraint', { Owner: row, Constraint: valueTypeConstraintToken(this, parameter) });
         this.genericConstraintRows.push({ symbol: parameter, type: this.core.valueType, token: constraintRow, owner: row });
       }
       for (const constraint of parameter.constraintTypes ?? []) {
