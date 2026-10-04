@@ -83,6 +83,11 @@ export const ConversionBinding = Base =>
         return this.node('Conversion', node, type, { operand: e, conversion: c, isExplicit });
       }
       e = this.tupleOperandOfUserConversion(e, c, node);
+      // `null` through a user-defined operator is first a value of the operator's parameter type.
+      if (e.literal === 'null' && c.isUserDefined && c.method) {
+        const parameterType = c.method.parameters[0].type;
+        e = this.applyConversion(e, parameterType, this.conversions.classifyFromExpression(e, parameterType), node);
+      }
       const result = this.node('Conversion', node, type, {
         operand: e,
         conversion: c,
