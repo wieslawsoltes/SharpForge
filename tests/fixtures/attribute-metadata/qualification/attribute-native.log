@@ -1,0 +1,3 @@
+Waiting for a free run slot: 1 heavy runs are allowed at once (SHARPFORGE_MAX_PARALLEL_RUNS).
+attribute-targets: .NET equal (compiled against the 10.0.5 references)
+1/1 fixtures print on .NET 10.0 what the Roslyn build prints

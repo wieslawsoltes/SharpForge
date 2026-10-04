@@ -1,4 +1,8 @@
 import { createBrowserCsp, NetworkError, NetworkPolicy } from '@sharpforge/network';
+import { httpTransportPlan, httpTransportSeeds } from './http-transport-input.js';
+import { runHttpTransport } from './http-transport.js';
+import { nativeHostPlan, nativeHostSeeds } from './native-host-input.js';
+import { runNativeHost } from './native-host.js';
 import {
   checkTextOutput, decodeText, parseTextJson, runTextTarget, textSeed, TextTargetRejection,
 } from './text-contract.js';
@@ -19,9 +23,8 @@ function createSeeds() {
     seed('allowed-headers', { operation: 'headers', headers: { Accept: 'application/json' } }),
     seed('denied-header', { operation: 'headers', headers: { Origin: 'https://example.test' } }),
     seed('browser-csp', { operation: 'csp', allowedOrigins: ['https://example.test'] }),
-    seed('host-token-profile', { operation: 'host-token' }),
-    seed('host-origin-profile', { operation: 'host-origin' }),
-    seed('host-path-profile', { operation: 'host-path' }),
+    ...nativeHostSeeds(),
+    ...httpTransportSeeds(),
   ];
 }
 
@@ -73,6 +76,8 @@ const operations = {
 function parse(input, limits) {
   const data = parseTextJson(decodeText(input));
   requireInput(record(data) && typeof data.operation === 'string');
+  if (data.operation === 'native-host') return runNativeHost(nativeHostPlan(data), limits);
+  if (data.operation === 'http-transport') return runHttpTransport(httpTransportPlan(data), limits);
   if (unsupportedProfiles.has(data.operation)) {
     return { status: 'unsupported', code: unsupportedProfiles.get(data.operation) };
   }
@@ -88,7 +93,7 @@ function parse(input, limits) {
   operations[data.operation](data, policy, limits);
 }
 
-/** Outbound policy parsing only. Native host token/origin/path seams are not publicly exported. */
+/** Pure policy plus fixed native-host and public HttpTransport cases on disposable owned loopback servers. */
 export const target = {
   id: 'network',
   createSeeds,

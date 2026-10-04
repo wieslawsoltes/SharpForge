@@ -1,0 +1,150 @@
+{
+  "chronology": [
+    {
+      "name": "01-baseline-Add_0_0",
+      "order": 1,
+      "startedAt": "2026-10-04T13:12:06.594Z",
+      "sourceCommit": "8b101c0c7e8ad73675dfe12e68f26329d7ea2d9c",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin/node",
+        "/workspace/scratch/7e3d2a445c44/sf6-integrated/packages/cil/tools/benchmark-literal-steady-numeric.tmp.mjs",
+        "/workspace/scratch/7e3d2a445c44/project6-literal-steady/01-baseline-Add_0_0.json",
+        "Add_0_0"
+      ],
+      "cwd": "/workspace/scratch/7e3d2a445c44/sf6-integrated",
+      "endedAt": "2026-10-04T13:12:09.297Z",
+      "code": 0,
+      "signal": null
+    },
+    {
+      "name": "02-candidate-Add_0_0",
+      "order": 2,
+      "startedAt": "2026-10-04T13:12:09.297Z",
+      "sourceCommit": "6f775dcad0c3e00a7483fc62226b50c8d9f81ef1",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin/node",
+        "/workspace/scratch/7e3d2a445c44/sf6-verify/packages/cil/tools/benchmark-literal-steady-numeric.tmp.mjs",
+        "/workspace/scratch/7e3d2a445c44/project6-literal-steady/02-candidate-Add_0_0.json",
+        "Add_0_0"
+      ],
+      "cwd": "/workspace/scratch/7e3d2a445c44/sf6-verify",
+      "endedAt": "2026-10-04T13:12:11.499Z",
+      "code": 0,
+      "signal": null
+    },
+    {
+      "name": "03-candidate-Diamond",
+      "order": 3,
+      "startedAt": "2026-10-04T13:12:11.500Z",
+      "sourceCommit": "6f775dcad0c3e00a7483fc62226b50c8d9f81ef1",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin/node",
+        "/workspace/scratch/7e3d2a445c44/sf6-verify/packages/cil/tools/benchmark-literal-steady-numeric.tmp.mjs",
+        "/workspace/scratch/7e3d2a445c44/project6-literal-steady/03-candidate-Diamond.json",
+        "Diamond"
+      ],
+      "cwd": "/workspace/scratch/7e3d2a445c44/sf6-verify",
+      "endedAt": "2026-10-04T13:12:14.106Z",
+      "code": 0,
+      "signal": null
+    },
+    {
+      "name": "04-baseline-Diamond",
+      "order": 4,
+      "startedAt": "2026-10-04T13:12:14.107Z",
+      "sourceCommit": "8b101c0c7e8ad73675dfe12e68f26329d7ea2d9c",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin/node",
+        "/workspace/scratch/7e3d2a445c44/sf6-integrated/packages/cil/tools/benchmark-literal-steady-numeric.tmp.mjs",
+        "/workspace/scratch/7e3d2a445c44/project6-literal-steady/04-baseline-Diamond.json",
+        "Diamond"
+      ],
+      "cwd": "/workspace/scratch/7e3d2a445c44/sf6-integrated",
+      "endedAt": "2026-10-04T13:12:16.627Z",
+      "code": 0,
+      "signal": null
+    },
+    {
+      "name": "05-baseline-MixedJoin",
+      "order": 5,
+      "startedAt": "2026-10-04T13:12:16.627Z",
+      "sourceCommit": "8b101c0c7e8ad73675dfe12e68f26329d7ea2d9c",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin/node",
+        "/workspace/scratch/7e3d2a445c44/sf6-integrated/packages/cil/tools/benchmark-literal-steady-numeric.tmp.mjs",
+        "/workspace/scratch/7e3d2a445c44/project6-literal-steady/05-baseline-MixedJoin.json",
+        "MixedJoin"
+      ],
+      "cwd": "/workspace/scratch/7e3d2a445c44/sf6-integrated",
+      "endedAt": "2026-10-04T13:12:27.722Z",
+      "code": 0,
+      "signal": null
+    },
+    {
+      "name": "06-candidate-MixedJoin",
+      "order": 6,
+      "startedAt": "2026-10-04T13:12:27.722Z",
+      "sourceCommit": "6f775dcad0c3e00a7483fc62226b50c8d9f81ef1",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin/node",
+        "/workspace/scratch/7e3d2a445c44/sf6-verify/packages/cil/tools/benchmark-literal-steady-numeric.tmp.mjs",
+        "/workspace/scratch/7e3d2a445c44/project6-literal-steady/06-candidate-MixedJoin.json",
+        "MixedJoin"
+      ],
+      "cwd": "/workspace/scratch/7e3d2a445c44/sf6-verify",
+      "endedAt": "2026-10-04T13:12:38.896Z",
+      "code": 0,
+      "signal": null
+    },
+    {
+      "name": "07-candidate-Authority",
+      "order": 7,
+      "startedAt": "2026-10-04T13:12:38.897Z",
+      "sourceCommit": "6f775dcad0c3e00a7483fc62226b50c8d9f81ef1",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin/node",
+        "/workspace/scratch/7e3d2a445c44/sf6-verify/packages/cil/tools/benchmark-literal-steady-authority.tmp.mjs",
+        "/workspace/scratch/7e3d2a445c44/project6-literal-steady/07-candidate-Authority.json",
+        "baseline"
+      ],
+      "cwd": "/workspace/scratch/7e3d2a445c44/sf6-verify",
+      "endedAt": "2026-10-04T13:12:43.901Z",
+      "code": 0,
+      "signal": null
+    },
+    {
+      "name": "08-baseline-Authority",
+      "order": 8,
+      "startedAt": "2026-10-04T13:12:43.902Z",
+      "sourceCommit": "8b101c0c7e8ad73675dfe12e68f26329d7ea2d9c",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin/node",
+        "/workspace/scratch/7e3d2a445c44/sf6-integrated/packages/cil/tools/benchmark-literal-steady-authority.tmp.mjs",
+        "/workspace/scratch/7e3d2a445c44/project6-literal-steady/08-baseline-Authority.json",
+        "baseline"
+      ],
+      "cwd": "/workspace/scratch/7e3d2a445c44/sf6-integrated",
+      "endedAt": "2026-10-04T13:12:48.662Z",
+      "code": 0,
+      "signal": null
+    }
+  ],
+  "cleanup": [
+    {
+      "path": "/workspace/scratch/7e3d2a445c44/sf6-integrated/packages/cil/tools/benchmark-literal-steady-numeric.tmp.mjs",
+      "removed": true
+    },
+    {
+      "path": "/workspace/scratch/7e3d2a445c44/sf6-verify/packages/cil/tools/benchmark-literal-steady-numeric.tmp.mjs",
+      "removed": true
+    },
+    {
+      "path": "/workspace/scratch/7e3d2a445c44/sf6-integrated/packages/cil/tools/benchmark-literal-steady-authority.tmp.mjs",
+      "removed": true
+    },
+    {
+      "path": "/workspace/scratch/7e3d2a445c44/sf6-verify/packages/cil/tools/benchmark-literal-steady-authority.tmp.mjs",
+      "removed": true
+    }
+  ]
+}

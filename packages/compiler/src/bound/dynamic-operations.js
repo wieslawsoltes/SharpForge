@@ -13,6 +13,7 @@ export const dynamicOperationNames = Object.freeze({
   DynamicInvocation: 'an invocation',
   DynamicElementAccess: 'an element access',
   DynamicObjectCreation: 'a constructor call',
+  DynamicCondition: 'an operator',
   Unary: 'an operator',
   Binary: 'an operator',
   Increment: 'an operator',

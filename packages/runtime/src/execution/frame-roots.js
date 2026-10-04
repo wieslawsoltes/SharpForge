@@ -94,8 +94,16 @@ export function visitFrameRoots(vm, frame, visit, precise = true, parked = false
 
 /** Shared scheduler inventory for collection and its public iterable compatibility wrapper. */
 export function visitSchedulerRoots(scheduler, visit, precise = true) {
-  if (!scheduler?.enabled) return;
+  if (!scheduler) return;
   const vm = scheduler.vm;
+  for (const scope of scheduler.callbackScopes ?? []) {
+    values(scope.stack, visit);
+    for (const frame of scope.frames) visitFrameRoots(vm, frame, visit, precise);
+    offer(scope.returnValue, visit);
+    offer(scope.pendingFault?.reference, visit);
+    offer(scope.fault?.reference, visit);
+  }
+  if (!scheduler.enabled) return;
   for (const context of scheduler.contexts.values()) {
     if (terminal.has(context.status)) continue;
     offer(context.task, visit);

@@ -1,4 +1,4 @@
-import {selectMethod} from './entry-selection.js';
+import {verificationInput} from './verify/verification-input.js';
 export {selectMethod} from './entry-selection.js';
 import {FunctionPointerProfile,indirectCallStackEffect} from './function-pointer-profile.js';
 import {SizeOfProfile} from './sizeof-profile.js';
@@ -9,7 +9,6 @@ import {supportedDelegateCall} from './delegate-profile.js';
 import {resolveExecutionMethod} from './call-profile.js';
 import {genericDefinitionContext, verifyGenericType, verifyGenericCall} from './generic-profile.js';
 import {verifyPrimitiveStorageOperand} from './memory-type-profile.js';
-import { AssemblyInspector } from './inspector.js';
 import { CilError } from './binary.js';
 import {CilDispatchTable} from './dispatch-profile.js';
 import {executionStackHeights} from './verify/stack-heights.js';
@@ -44,8 +43,8 @@ export function stackEffect(inspector,m,i){
   return [1,1];
 }
 /** Bounded reachable stack heights and lexical EH admission; this runtime profile is not the CLR type verifier. */
-export function verifyCilAssembly(input,{methodToken,arguments:args=[],maxMethods=10000,...options}={}){
-  const inspector=input instanceof AssemblyInspector?input:new AssemblyInspector(input,options),issues=[],visited=new Set(),pending=[],stackHeights={},entry=selectMethod(inspector,methodToken,args);
+export function verifyCilAssembly(input,configuration={}){
+  const {inspector,pending,entry,maxMethods,options}=verificationInput(input,configuration),issues=[],visited=new Set(),stackHeights={};
   const dispatch=new CilDispatchTable(inspector),verifiedStacks=new Map(),sizes=new SizeOfProfile(inspector),prefixes=new ExecutionPrefixProfile(inspector,dispatch),pointers=new FunctionPointerProfile(inspector,dispatch);
   const issue=(m,i,code,message,details={})=>{if(issues.length<200)issues.push({methodToken:m?.token,method:m?m.owner+'::'+m.name:undefined,offset:i?.offset,code,message,...details});};
   const stackContext={issue,issues,stackEffect,options};

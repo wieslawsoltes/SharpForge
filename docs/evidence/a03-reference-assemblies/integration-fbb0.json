@@ -1,0 +1,61 @@
+{
+  "candidateParent": "082eea2da4cc486fb3da40fa74b30cdb8b8e4e3e",
+  "mainParent": "fbb0b086e05720eeacb954800a4a690a644313cd",
+  "mergeBase": "a15f7c3dddc34434968489d8ce8eb19f2af90022",
+  "sourceHashes": {
+    "packages/cil/README.md": {
+      "candidateParentSha256": "1591c3a2635c9c92899771e716f2c9f8488b95c7c7a386cc18ed1aee6a2d005c",
+      "mainParentSha256": "1fe2db167c964be0dfa79f7d27209be70c1e434e470f64ef62e845d3c39efd3b",
+      "resolvedSha256": "cbb9af9b1fa4cbf68aa71d8781b0948ec6e552c0790f49a5e171051efc8fe2eb"
+    },
+    "packages/cil/src/index.js": {
+      "candidateParentSha256": "151f2815486ed3e748102d2cb2ef4f7088d598d4814b6d06ff020bcb80d89f21",
+      "mainParentSha256": "c0cccf5e4a31e2535cf4d31838ad420bd7d0e75b0fca17a8b975e348b628f280",
+      "resolvedSha256": "06174d4e0907e986b48baada699bf54970eef27b63ed3e83434aa82582eba868"
+    },
+    "packages/compiler/src/codegen/metadata/custom-attributes.js": {
+      "candidateParentSha256": "2e0782f59759196a87ceb8a3ab475807c44c76f5f09f2caa6abc1bf963dcb35b",
+      "mainParentSha256": "2c4c655ca9c3c969e1ded2ce89944e1caa820e68c2247a13b9a670eca19f5b1f",
+      "resolvedSha256": "1e782b1d0088bf1ad55cfae37f014613d573d5a79fe0bb3991ccbdda3ab22778"
+    },
+    "packages/compiler/src/codegen/metadata/member-plan.js": {
+      "candidateParentSha256": "468561da71606180d6c19e444078872514e7549f30e9e43c3e16c23255dc2a68",
+      "mainParentSha256": "4b48e416bbb1c57027c008d4eaa84afca3a3614ce2ffa7eaf2807718aa716c31",
+      "resolvedSha256": "40f0e094681a143a1356aedbeaa08bcd09aa4c4f4ffa019e352e78855b0e6ac2"
+    },
+    "packages/compiler/src/codegen/metadata/symbol-metadata.js": {
+      "candidateParentSha256": "3b34d207ee4f729129716b23c7f70b7dffb6635f36120ad9d5e5f5d59b012bef",
+      "mainParentSha256": "e26b6e96b4f1602423dd9cbf04813fec1f6a7c1c4ae730c9df3bb10297e20faf",
+      "resolvedSha256": "a3b39046e5d4abf27d200e8cd235031a961cc68f3ecbf8f7b20c0a1de28754ce"
+    },
+    "scripts/conformance/static/allowlist.json": {
+      "candidateParentSha256": "bdc01e22708b4156876827a48bf7a294d23871a244a4d9bf26799034ee85e46c",
+      "mainParentSha256": "25aab615580b46adaf4aa0818cf25505f31b3a7678cf72dc984d52e0a4571a23",
+      "resolvedSha256": "bf02c7cea29bc1879394fd6d91e25f7100e8fbd5606089fcd9258ed4daddb7b9"
+    }
+  },
+  "actualConflicts": [
+    "packages/compiler/src/codegen/metadata/custom-attributes.js",
+    "scripts/conformance/static/allowlist.json"
+  ],
+  "resolutions": [
+    "Retain both fixedBufferTypeName and PseudoAttributeWriter imports.",
+    "For FixedBuffer typeof only, call extracted serializedTypeName(elementType) with no token context, then fixedBufferTypeName supplies the canonical AssemblyRef identity. Preserve main tokens-aware general typeof serialization and all pseudo/target handling.",
+    "Union the three conflicting reviewed benchmark entries; retain every other automatic three-way entry change, including main deletion of obsolete scripts/bench-pdb.js allowance."
+  ],
+  "autoMergedPathsPreserved": [
+    "packages/cil/README.md",
+    "packages/cil/src/index.js",
+    "packages/compiler/src/codegen/metadata/member-plan.js",
+    "packages/compiler/src/codegen/metadata/symbol-metadata.js"
+  ],
+  "checks": [
+    "No unmerged index stages remain.",
+    "Conflict-resolved compiler module passes node --check (syntax only).",
+    "Conflict paths pass staged whitespace check.",
+    "Allowlist matches a per-entry three-way merge of parent/base data; the three conflicting benchmark hashes match source."
+  ],
+  "validationStatus": "Not executed at integrated source; root owns heavy slot. Previous b40 native and c169/7c73 benchmark observations remain pre-integration evidence.",
+  "timedPathAssessment": "Changed: shared custom-attribute writer, per-method parameter tokens, generic row bookkeeping and extracted attribute-value/type-name paths run in compilation. Output hashes at integrated source are not yet measured; source inspection predicts the unchanged rich fixture should retain output contracts.",
+  "proposedPostIntegrationMeasurement": "After focused/native success, run unchanged driver once each in integrated metadata and refout modes into new paths. Compare with saved pre-integration 7c73 runs as a whole-merge observation; do not rerun/select historical baseline or claim isolated feature attribution."
+}

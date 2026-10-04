@@ -1,0 +1,40 @@
+✔ operations on a dynamic value are not checked: member, call, index, operators, conversions (137.0343ms)
+✔ a dynamic argument defers the overload: an ambiguity is not an error and the result is dynamic (51.531488ms)
+✔ the result of a late-bound operation converts like dynamic, then it is static again (12.24134ms)
+✔ arguments of a dynamically dispatched operation (40.037095ms)
+✔ the dynamic type itself: typeof, is, new, deconstruction (19.824593ms)
+✔ code generation names the late-bound operation; statically bound nodes are not dynamic operations (0.225642ms)
+✔ a dynamic operation is SF2200 naming the missing binder; no false C# error, no image (36.560773ms)
+✔ dynamic cannot be a base, an implemented interface argument or a constraint (11.942612ms)
+✔ dynamic and object are one signature: duplicates, overrides, conversions (8.897313ms)
+✔ a call that would be late bound cannot go through base or a constructor initializer (11.660197ms)
+✔ a const of a reference type other than string can only be null (CS0134), dynamic included (5.787361ms)
+✔ an expression tree may not contain a dynamic operation (CS1963); a query needs a static source (CS1979) (17.588353ms)
+✔ A02-T55 direct CIL reports the missing binder as CS0656; declarations do not require it (79.9783ms)
+✔ A02-T55 source-image execution continues to reject dynamic operations explicitly (15.855966ms)
+✔ A02-T55 unsigned right shift remains a C# diagnostic for dynamic operands (7.600427ms)
+✔ A02-T55 runtime binder types name their defining assemblies and sites are static cached fields (41.797034ms)
+✔ A02-T55 ref/out arguments use a synthesized runtime delegate with by-reference slots (10.279957ms)
+✔ A02-T55 ordinary assemblies without dynamic have no new runtime dependencies or synthesized caches (74.785288ms)
+✔ A02-T55 output is deterministic for repeated compilation of the same call sites (25.536011ms)
+✔ A02-T55 an explicit reference set missing Microsoft.CSharp produces a diagnostic and no assembly (294.87206ms)
+✔ A02-T55 a helper with the right name but an incompatible signature is CS0656 (412.765279ms)
+✔ A02-T55 restrictions on dynamic arguments remain binder diagnostics (2.857233ms)
+✔ A02-T55 ref-like receivers cannot be passed through dynamic invocation or indexing (10.440298ms)
+✔ A02-T55 dynamic-callsites: direct CIL matches pinned Roslyn output on real .NET (406.379221ms)
+ℹ .NET SDK 10.0.201, reference pack 10.0.5; image/browser runtime has no dynamic binder
+✔ A02-T55 dynamic-control-flow: direct CIL matches pinned Roslyn output on real .NET (159.375702ms)
+ℹ .NET SDK 10.0.201, reference pack 10.0.5; image/browser runtime has no dynamic binder
+✔ A02-T30 dynamic is object in field, method and local signatures (84.932361ms)
+✔ A02-T30 [Dynamic] is written on fields, parameters, returns and properties, with transform flags (14.42424ms)
+✔ A02-T30 a program without dynamic references no DynamicAttribute (4.833824ms)
+✔ A02-T30 DynamicAttribute is referenced through System.Linq.Expressions, which defines it (3.279463ms)
+✔ A02-T30 dynamic operations without referenced binder members report CS0656, never a wrong assembly (10.298945ms)
+ℹ tests 30
+ℹ suites 0
+ℹ pass 30
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 4951.356862

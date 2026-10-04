@@ -15,6 +15,7 @@ import { isNullableType, stripNullable, acceptsNullLiteral } from './nullable.js
 import { hasImplicitReferenceConversion, hasBoxingConversion, hasExplicitReferenceConversion, hasUnboxingConversion } from './reference.js';
 import { resolveUserDefinedConversion } from './user-defined.js';
 import { hasImplicitSpanConversion, hasExplicitSpanConversion } from './span.js';
+import { hasInlineArrayConversion } from './inline-array.js';
 import { pointerConversionKind, hasImplicitFunctionPointerConversion } from './pointer.js';
 import { isInterpolatedStringHandlerType } from './interpolated-string-handler.js';
 
@@ -40,6 +41,7 @@ export const ConversionKind = Object.freeze(
       'AnonymousFunction',
       'ImplicitThrow',
       'ImplicitSpan',
+      'InlineArray',
       'ImplicitDynamic',
       'ObjectCreation',
       'CollectionExpression',
@@ -83,6 +85,7 @@ const implicitKinds = new Set([
   'AnonymousFunction',
   'ImplicitThrow',
   'ImplicitSpan',
+  'InlineArray',
   'ImplicitDynamic',
   'ObjectCreation',
   'CollectionExpression',
@@ -356,6 +359,7 @@ export class Conversions {
     }
     const from = expression.type;
     if (!from) return NONE;
+    if (hasInlineArrayConversion(from, to, this)) return simple.InlineArray;
     const constant = expression.constantValue;
     // Roslyn classifies an int constant converted to nint as a constant conversion, not as the numeric one.
     if (constant?.isIntegral && !constant.isEnum && this.kindOf(from) === 'int' && this.kindOf(to) === 'nint' && !this.isIdentity(from, to))

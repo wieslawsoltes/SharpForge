@@ -1,6 +1,7 @@
 import { ProtocolMessageReader, encodeProtocolMessage } from '@sharpforge/protocol';
 import { checkTextOutput, runTextTarget, textSeed, TextTargetRejection } from './text-contract.js';
 import { classifyProtocolError } from './text-errors.js';
+import { createProtocolSequenceSeeds, isProtocolSequence, runProtocolSequence } from './protocol-sequence.js';
 
 function createSeeds() {
   const lsp = { jsonrpc: '2.0', id: 1, method: 'initialize', params: { capabilities: {} } };
@@ -19,6 +20,7 @@ function createSeeds() {
     textSeed('truncated-body', 'Content-Length: 2\r\n\r\n{'),
     textSeed('non-object-envelope', 'Content-Length: 2\r\n\r\n[]'),
     textSeed('invalid-json', 'Content-Length: 2\r\n\r\n{x'),
+    ...createProtocolSequenceSeeds(),
   ];
 }
 
@@ -67,11 +69,12 @@ function parse(input, limits) {
   }
 }
 
-/** Offline framing target shared by LSP/DAP; it does not dispatch requests or launch programs. */
+/** Offline framing plus explicitly selected, bounded in-memory LSP/DAP request sequences. */
 export const target = {
   id: 'protocol',
   createSeeds,
   run(input, context) {
+    if (isProtocolSequence(input)) return runProtocolSequence(input, context);
     return runTextTarget(input, context, parse, classifyProtocolError);
   },
 };

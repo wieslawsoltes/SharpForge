@@ -91,13 +91,13 @@ test('A02-T30 DynamicAttribute is referenced through System.Linq.Expressions, wh
   assert.equal(metadata.string(metadata.row(scope)[6]), 'System.Linq.Expressions');
 });
 
-test('A02-T30 an operation on a dynamic value has no emitter: SF2200, never a wrong assembly', () => {
+test('A02-T30 dynamic operations without referenced binder members report CS0656, never a wrong assembly', () => {
   for (const body of ['dynamic d = "x"; System.Console.WriteLine(d.Length);', 'dynamic d = 1; d = d + 1;', 'dynamic d = 1; int i = d;']) {
     const result = compileToAssembly(`class C { static void Main() { ${body} } }`, { name: 'Sample' });
     assert.equal(result.assembly, null, body);
     assert.deepEqual(
       result.diagnostics.filter(entry => entry.severity === 'error').map(entry => entry.code),
-      ['SF2200'],
+      ['CS0656'],
       body,
     );
   }
