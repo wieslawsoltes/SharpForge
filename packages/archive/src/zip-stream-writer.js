@@ -70,24 +70,25 @@ async function* compressedChunks(chunks, limits) {
  * Input arrays are sorted; async iterables preserve producer order. Sink closes only on complete success.
  */
 export async function writeZipTo(files, sink, options = {}) {
-  const limits = zipLimits(options);
-  const budget = new ZipBudget(limits);
-  const method = compressionMethod(options);
-  const writer = sink.getWriter ? sink.getWriter() : sink;
-  if (!writer || typeof writer.write !== 'function') zipError('SFZIP001', 'A writable ZIP destination is required');
-  const entries = [];
-  const input = Array.isArray(files) ? [...files].sort((left, right) => left.path < right.path ? -1 : left.path > right.path ? 1 : 0) : files;
-  if (Array.isArray(input)) verifyZipNames(input.map(file => zipEntry(file, limits)), limits);
-  let offset = 0;
-  let totalInput = 0;
-  async function write(bytes) {
-    limits.signal?.throwIfAborted();
-    offset = checkedAdd(offset, bytes.length, 'ZIP stream offset');
-    if (offset > limits.maxArchiveBytes) zipError('SFZIP004', 'ZIP streaming archive budget exceeded');
-    await writer.write(bytes);
-    limits.signal?.throwIfAborted();
-  }
+  const writer = sink?.getWriter ? sink.getWriter() : sink;
   try {
+    if (!writer || typeof writer.write !== 'function') zipError('SFZIP001', 'A writable ZIP destination is required');
+    const limits = zipLimits(options);
+    const budget = new ZipBudget(limits);
+    const method = compressionMethod(options);
+    const entries = [];
+    const input = Array.isArray(files) ? [...files].sort((left, right) =>
+      left.path < right.path ? -1 : left.path > right.path ? 1 : 0) : files;
+    if (Array.isArray(input)) verifyZipNames(input.map(file => zipEntry(file, limits)), limits);
+    let offset = 0;
+    let totalInput = 0;
+    async function write(bytes) {
+      limits.signal?.throwIfAborted();
+      offset = checkedAdd(offset, bytes.length, 'ZIP stream offset');
+      if (offset > limits.maxArchiveBytes) zipError('SFZIP004', 'ZIP streaming archive budget exceeded');
+      await writer.write(bytes);
+      limits.signal?.throwIfAborted();
+    }
     for await (const file of input) {
       limits.signal?.throwIfAborted();
       if (entries.length === limits.maxEntries) zipError('SFZIP003', 'Archive entry limit exceeded');
@@ -129,9 +130,9 @@ export async function writeZipTo(files, sink, options = {}) {
     await writer.close?.();
     return { entries: entries.length, inputBytes: totalInput, outputBytes: offset, compressionBackend: method === 8 ? 'portable-fixed' : 'stored' };
   } catch (error) {
-    try { await writer.abort?.(error); } catch (abortError) { error.abortError = abortError; }
+    try { await writer?.abort?.(error); } catch (abortError) { error.abortError = abortError; }
     throw error;
   } finally {
-    writer.releaseLock?.();
+    writer?.releaseLock?.();
   }
 }

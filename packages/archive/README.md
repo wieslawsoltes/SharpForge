@@ -47,7 +47,21 @@ nested archive bytes are preserved. `{nestedArchives:'reject'}` also rejects emb
 before returning their contents; it never opens or inflates the nested archive. This signature policy is deliberately
 not a general polyglot detector. Size/ratio budgets remain the protection for every outer payload, regardless of its name.
 
+## Workspace text policy
+
+Use `isWorkspaceTextPath(path)` to share file-type recognition across ZIP imports, folder providers, and native editing.
+Recognition is case-insensitive and includes `.xaml`, `.manifest`, `.appxmanifest`, and `.pubxml` alongside the existing
+code, project, and configuration formats. `decodeWorkspaceFile` still rejects binary contents for recognized suffixes;
+recognition alone never forces a binary file into a text editor. The returned records retain their original bytes,
+encoding, BOM, and line endings. Pass those records to `encodeWorkspaceFile` to preserve unchanged bytes exactly and
+retain the original encoding when editing text.
+
+## Streaming and validation
+
 `openZip` lists even sparse multi-gigabyte archives without reading the payload. `read(path)` deliberately materializes one entry; use `stream` or `chunks` for large entries. `close()` cancels active readers. Writer cancellation aborts its sink; rollback of external destinations belongs to the destination transaction API.
+
+Once a streaming writer accepts its destination, validation and payload failures abort that destination and release
+any acquired writer. A stream already locked by another writer is rejected without aborting or releasing that owner.
 
 Run `node packages/archive/examples/streaming.mjs` for a complete example. Focused regressions: `tests/a24-06-archives.test.js`, `tests/a24-06-archive-large-metadata.test.js`. Reference fixtures use Node zlib and Python's standard `zipfile`; they do not establish File System Access or native OS qualification.
 
