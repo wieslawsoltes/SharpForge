@@ -9,8 +9,9 @@ Switch destinations remain symbolic until layout finishes.
 Each method's existing `.eh` try/handler/filter labels and implicit end-of-method
 label are translated through the returned offset map. Header flags, maxstack and
 local-signature tokens retain the document values. The existing assembler still
-requires every original method body, uses the metadata/resource scaffold, and
-invalidates its existing signatures and custom debug maps as before.
+requires every original method body and uses the metadata/resource scaffold.
+Actual edits invalidate existing signatures and custom debug maps; unchanged
+images retain their bytes as documented in IL-DOCUMENT-PRESERVATION.md.
 
 This is the SharpForge IL dialect, not Microsoft ilasm syntax. Quoted ldstr support
 is documented in IL-DOCUMENT-STRINGS.md. Layout does not add general metadata rows,

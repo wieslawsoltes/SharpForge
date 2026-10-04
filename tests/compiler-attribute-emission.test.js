@@ -95,14 +95,16 @@ test('A02-T41 parameter attributes: declared, params and indexer parameters repe
   ]);
 });
 
-test('A02-T41 an argument metadata cannot express is reported and no image is produced', () => {
+test('A02-T41 constructed generic typeof arguments are emitted as reflection type names', () => {
   const generic = `using System; using System.Collections.Generic;
     class NoteAttribute : Attribute { public NoteAttribute(Type type) { } }
     [Note(typeof(List<int>))] class C { }`;
   const result = compileToReferenceAssembly(generic);
-  assert.equal(result.assembly, null);
-  assert.deepEqual(result.diagnostics.filter(d => d.severity === 'error').map(d => d.code), ['SF3001']);
-  assert.match(result.diagnostics.at(-1).message, /typeof\(.*List<int>\) in an attribute argument cannot be written/);
+  assert.ok(result.assembly instanceof Uint8Array);
+  assert.deepEqual(result.diagnostics.filter(d => d.severity === 'error'), []);
+  const { rows } = attributesOf(generic);
+  const value = rows.find(attribute => attribute.type === 'NoteAttribute').fixed[0];
+  assert.match(value, /^System\.Collections\.Generic\.List`1\[\[System\.Int32\]\], System.Collections$/);
 });
 
 test('A02-T41 a program without attributes has no CustomAttribute rows; pseudo-attributes are not rows', () => {

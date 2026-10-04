@@ -1,0 +1,2332 @@
+{
+  "format": "sharpforge.clr-forwarders-benchmark",
+  "version": 1,
+  "status": "passed",
+  "startedAt": "2026-10-04T14:04:32.051Z",
+  "backend": "host JavaScript CLR loader service",
+  "environment": {
+    "node": "v24.19.0",
+    "v8": "13.6.233.17-node.51",
+    "platform": "linux",
+    "arch": "x64",
+    "osRelease": "6.18.44",
+    "cpu": "AMD EPYC 9V74 80-Core Processor",
+    "logicalCpus": 9,
+    "execArgv": [],
+    "sharedMachine": true,
+    "concurrentActivity": "not measured",
+    "forcedGc": false
+  },
+  "statistics": {
+    "median": "arithmetic mean of the two middle ordered samples",
+    "percentile": "nearest rank: ordered[ceil(n * p) - 1]",
+    "rawOrder": "chronological per operation, warmups excluded from summaries"
+  },
+  "measurement": {
+    "timing": "awaited lookup and retaining each returned result; validation runs after each timed batch",
+    "cold": "new context plus prebuilt image admission and two forwarding hops; fixture generation is outside timing",
+    "canonicalGuard": "fullName, metadataToken, loaded state, defining assembly/module, canonical TypeDef object; warm identity also checked",
+    "allocationCounts": "not measured",
+    "previousEquivalentImplementation": false
+  },
+  "expected": {
+    "fullName": "Fixture.Widget",
+    "metadataToken": 33554435,
+    "assembly": "ForwardTarget"
+  },
+  "results": [
+    {
+      "name": "cold context, image admission and two forwarding hops",
+      "iterations": 5,
+      "unit": "microseconds/operation",
+      "warmupBatches": 20,
+      "measuredBatches": 100,
+      "warmups": [
+        {
+          "batch": 0,
+          "elapsedMilliseconds": 6.395770999999968,
+          "microsecondsPerOperation": 1279.1541999999936,
+          "checksum": 167772175
+        },
+        {
+          "batch": 1,
+          "elapsedMilliseconds": 3.276265999999964,
+          "microsecondsPerOperation": 655.2531999999928,
+          "checksum": 167772175
+        },
+        {
+          "batch": 2,
+          "elapsedMilliseconds": 1.915676000000019,
+          "microsecondsPerOperation": 383.1352000000038,
+          "checksum": 167772175
+        },
+        {
+          "batch": 3,
+          "elapsedMilliseconds": 2.1122550000000047,
+          "microsecondsPerOperation": 422.45100000000093,
+          "checksum": 167772175
+        },
+        {
+          "batch": 4,
+          "elapsedMilliseconds": 2.4526759999999967,
+          "microsecondsPerOperation": 490.53519999999935,
+          "checksum": 167772175
+        },
+        {
+          "batch": 5,
+          "elapsedMilliseconds": 1.9895449999999641,
+          "microsecondsPerOperation": 397.90899999999283,
+          "checksum": 167772175
+        },
+        {
+          "batch": 6,
+          "elapsedMilliseconds": 2.5302690000000325,
+          "microsecondsPerOperation": 506.0538000000065,
+          "checksum": 167772175
+        },
+        {
+          "batch": 7,
+          "elapsedMilliseconds": 2.450191000000018,
+          "microsecondsPerOperation": 490.0382000000036,
+          "checksum": 167772175
+        },
+        {
+          "batch": 8,
+          "elapsedMilliseconds": 2.006159000000025,
+          "microsecondsPerOperation": 401.231800000005,
+          "checksum": 167772175
+        },
+        {
+          "batch": 9,
+          "elapsedMilliseconds": 2.120657000000051,
+          "microsecondsPerOperation": 424.1314000000102,
+          "checksum": 167772175
+        },
+        {
+          "batch": 10,
+          "elapsedMilliseconds": 2.433287000000064,
+          "microsecondsPerOperation": 486.6574000000128,
+          "checksum": 167772175
+        },
+        {
+          "batch": 11,
+          "elapsedMilliseconds": 2.1580920000000106,
+          "microsecondsPerOperation": 431.6184000000021,
+          "checksum": 167772175
+        },
+        {
+          "batch": 12,
+          "elapsedMilliseconds": 5.698117000000025,
+          "microsecondsPerOperation": 1139.623400000005,
+          "checksum": 167772175
+        },
+        {
+          "batch": 13,
+          "elapsedMilliseconds": 1.4307129999999688,
+          "microsecondsPerOperation": 286.14259999999376,
+          "checksum": 167772175
+        },
+        {
+          "batch": 14,
+          "elapsedMilliseconds": 1.1929740000000493,
+          "microsecondsPerOperation": 238.59480000000985,
+          "checksum": 167772175
+        },
+        {
+          "batch": 15,
+          "elapsedMilliseconds": 1.57956200000001,
+          "microsecondsPerOperation": 315.912400000002,
+          "checksum": 167772175
+        },
+        {
+          "batch": 16,
+          "elapsedMilliseconds": 1.7258269999999811,
+          "microsecondsPerOperation": 345.1653999999962,
+          "checksum": 167772175
+        },
+        {
+          "batch": 17,
+          "elapsedMilliseconds": 2.0914140000001,
+          "microsecondsPerOperation": 418.28280000001996,
+          "checksum": 167772175
+        },
+        {
+          "batch": 18,
+          "elapsedMilliseconds": 1.8370610000000624,
+          "microsecondsPerOperation": 367.4122000000125,
+          "checksum": 167772175
+        },
+        {
+          "batch": 19,
+          "elapsedMilliseconds": 5.31549300000006,
+          "microsecondsPerOperation": 1063.098600000012,
+          "checksum": 167772175
+        }
+      ],
+      "samples": [
+        {
+          "batch": 0,
+          "elapsedMilliseconds": 2.1751279999999724,
+          "microsecondsPerOperation": 435.0255999999945,
+          "checksum": 167772175
+        },
+        {
+          "batch": 1,
+          "elapsedMilliseconds": 1.5649499999999534,
+          "microsecondsPerOperation": 312.9899999999907,
+          "checksum": 167772175
+        },
+        {
+          "batch": 2,
+          "elapsedMilliseconds": 1.6249890000000278,
+          "microsecondsPerOperation": 324.99780000000555,
+          "checksum": 167772175
+        },
+        {
+          "batch": 3,
+          "elapsedMilliseconds": 1.6986769999999751,
+          "microsecondsPerOperation": 339.735399999995,
+          "checksum": 167772175
+        },
+        {
+          "batch": 4,
+          "elapsedMilliseconds": 2.1006669999999303,
+          "microsecondsPerOperation": 420.13339999998607,
+          "checksum": 167772175
+        },
+        {
+          "batch": 5,
+          "elapsedMilliseconds": 1.8701089999999567,
+          "microsecondsPerOperation": 374.02179999999134,
+          "checksum": 167772175
+        },
+        {
+          "batch": 6,
+          "elapsedMilliseconds": 1.6477220000000443,
+          "microsecondsPerOperation": 329.54440000000886,
+          "checksum": 167772175
+        },
+        {
+          "batch": 7,
+          "elapsedMilliseconds": 5.121638999999959,
+          "microsecondsPerOperation": 1024.3277999999918,
+          "checksum": 167772175
+        },
+        {
+          "batch": 8,
+          "elapsedMilliseconds": 1.3202909999999974,
+          "microsecondsPerOperation": 264.0581999999995,
+          "checksum": 167772175
+        },
+        {
+          "batch": 9,
+          "elapsedMilliseconds": 1.2033890000000156,
+          "microsecondsPerOperation": 240.67780000000312,
+          "checksum": 167772175
+        },
+        {
+          "batch": 10,
+          "elapsedMilliseconds": 1.0924760000000333,
+          "microsecondsPerOperation": 218.49520000000666,
+          "checksum": 167772175
+        },
+        {
+          "batch": 11,
+          "elapsedMilliseconds": 1.0518460000000687,
+          "microsecondsPerOperation": 210.36920000001373,
+          "checksum": 167772175
+        },
+        {
+          "batch": 12,
+          "elapsedMilliseconds": 1.0970529999999599,
+          "microsecondsPerOperation": 219.41059999999197,
+          "checksum": 167772175
+        },
+        {
+          "batch": 13,
+          "elapsedMilliseconds": 2.200523999999973,
+          "microsecondsPerOperation": 440.1047999999946,
+          "checksum": 167772175
+        },
+        {
+          "batch": 14,
+          "elapsedMilliseconds": 2.655603000000042,
+          "microsecondsPerOperation": 531.1206000000084,
+          "checksum": 167772175
+        },
+        {
+          "batch": 15,
+          "elapsedMilliseconds": 1.139124000000038,
+          "microsecondsPerOperation": 227.8248000000076,
+          "checksum": 167772175
+        },
+        {
+          "batch": 16,
+          "elapsedMilliseconds": 0.8519619999999577,
+          "microsecondsPerOperation": 170.39239999999154,
+          "checksum": 167772175
+        },
+        {
+          "batch": 17,
+          "elapsedMilliseconds": 0.8041319999999814,
+          "microsecondsPerOperation": 160.82639999999628,
+          "checksum": 167772175
+        },
+        {
+          "batch": 18,
+          "elapsedMilliseconds": 0.9268819999999778,
+          "microsecondsPerOperation": 185.37639999999556,
+          "checksum": 167772175
+        },
+        {
+          "batch": 19,
+          "elapsedMilliseconds": 1.1766200000000708,
+          "microsecondsPerOperation": 235.32400000001417,
+          "checksum": 167772175
+        },
+        {
+          "batch": 20,
+          "elapsedMilliseconds": 0.8787519999999631,
+          "microsecondsPerOperation": 175.75039999999262,
+          "checksum": 167772175
+        },
+        {
+          "batch": 21,
+          "elapsedMilliseconds": 6.802759999999921,
+          "microsecondsPerOperation": 1360.5519999999842,
+          "checksum": 167772175
+        },
+        {
+          "batch": 22,
+          "elapsedMilliseconds": 1.0087629999999308,
+          "microsecondsPerOperation": 201.75259999998616,
+          "checksum": 167772175
+        },
+        {
+          "batch": 23,
+          "elapsedMilliseconds": 1.3720570000000407,
+          "microsecondsPerOperation": 274.41140000000814,
+          "checksum": 167772175
+        },
+        {
+          "batch": 24,
+          "elapsedMilliseconds": 0.9195519999999533,
+          "microsecondsPerOperation": 183.91039999999066,
+          "checksum": 167772175
+        },
+        {
+          "batch": 25,
+          "elapsedMilliseconds": 1.0705839999999398,
+          "microsecondsPerOperation": 214.11679999998796,
+          "checksum": 167772175
+        },
+        {
+          "batch": 26,
+          "elapsedMilliseconds": 1.4054859999999962,
+          "microsecondsPerOperation": 281.09719999999925,
+          "checksum": 167772175
+        },
+        {
+          "batch": 27,
+          "elapsedMilliseconds": 1.0277409999999918,
+          "microsecondsPerOperation": 205.54819999999836,
+          "checksum": 167772175
+        },
+        {
+          "batch": 28,
+          "elapsedMilliseconds": 0.825343000000089,
+          "microsecondsPerOperation": 165.0686000000178,
+          "checksum": 167772175
+        },
+        {
+          "batch": 29,
+          "elapsedMilliseconds": 1.0393779999999424,
+          "microsecondsPerOperation": 207.87559999998848,
+          "checksum": 167772175
+        },
+        {
+          "batch": 30,
+          "elapsedMilliseconds": 1.5702189999999518,
+          "microsecondsPerOperation": 314.04379999999037,
+          "checksum": 167772175
+        },
+        {
+          "batch": 31,
+          "elapsedMilliseconds": 1.16905799999995,
+          "microsecondsPerOperation": 233.81159999999,
+          "checksum": 167772175
+        },
+        {
+          "batch": 32,
+          "elapsedMilliseconds": 1.251820000000066,
+          "microsecondsPerOperation": 250.36400000001322,
+          "checksum": 167772175
+        },
+        {
+          "batch": 33,
+          "elapsedMilliseconds": 1.0869069999999965,
+          "microsecondsPerOperation": 217.3813999999993,
+          "checksum": 167772175
+        },
+        {
+          "batch": 34,
+          "elapsedMilliseconds": 1.356424000000061,
+          "microsecondsPerOperation": 271.2848000000122,
+          "checksum": 167772175
+        },
+        {
+          "batch": 35,
+          "elapsedMilliseconds": 2.767549000000031,
+          "microsecondsPerOperation": 553.5098000000062,
+          "checksum": 167772175
+        },
+        {
+          "batch": 36,
+          "elapsedMilliseconds": 1.5166000000000395,
+          "microsecondsPerOperation": 303.3200000000079,
+          "checksum": 167772175
+        },
+        {
+          "batch": 37,
+          "elapsedMilliseconds": 1.575034999999957,
+          "microsecondsPerOperation": 315.0069999999914,
+          "checksum": 167772175
+        },
+        {
+          "batch": 38,
+          "elapsedMilliseconds": 1.288663999999926,
+          "microsecondsPerOperation": 257.7327999999852,
+          "checksum": 167772175
+        },
+        {
+          "batch": 39,
+          "elapsedMilliseconds": 1.545080999999982,
+          "microsecondsPerOperation": 309.0161999999964,
+          "checksum": 167772175
+        },
+        {
+          "batch": 40,
+          "elapsedMilliseconds": 1.7737469999999576,
+          "microsecondsPerOperation": 354.7493999999915,
+          "checksum": 167772175
+        },
+        {
+          "batch": 41,
+          "elapsedMilliseconds": 1.2892349999999624,
+          "microsecondsPerOperation": 257.8469999999925,
+          "checksum": 167772175
+        },
+        {
+          "batch": 42,
+          "elapsedMilliseconds": 1.3146319999999605,
+          "microsecondsPerOperation": 262.9263999999921,
+          "checksum": 167772175
+        },
+        {
+          "batch": 43,
+          "elapsedMilliseconds": 1.5639889999999923,
+          "microsecondsPerOperation": 312.79779999999846,
+          "checksum": 167772175
+        },
+        {
+          "batch": 44,
+          "elapsedMilliseconds": 1.173575000000028,
+          "microsecondsPerOperation": 234.7150000000056,
+          "checksum": 167772175
+        },
+        {
+          "batch": 45,
+          "elapsedMilliseconds": 1.2698959999999033,
+          "microsecondsPerOperation": 253.97919999998066,
+          "checksum": 167772175
+        },
+        {
+          "batch": 46,
+          "elapsedMilliseconds": 1.1465150000000222,
+          "microsecondsPerOperation": 229.30300000000443,
+          "checksum": 167772175
+        },
+        {
+          "batch": 47,
+          "elapsedMilliseconds": 1.3088840000000346,
+          "microsecondsPerOperation": 261.7768000000069,
+          "checksum": 167772175
+        },
+        {
+          "batch": 48,
+          "elapsedMilliseconds": 1.3362640000000283,
+          "microsecondsPerOperation": 267.25280000000566,
+          "checksum": 167772175
+        },
+        {
+          "batch": 49,
+          "elapsedMilliseconds": 1.163530000000037,
+          "microsecondsPerOperation": 232.7060000000074,
+          "checksum": 167772175
+        },
+        {
+          "batch": 50,
+          "elapsedMilliseconds": 1.1046039999999948,
+          "microsecondsPerOperation": 220.92079999999896,
+          "checksum": 167772175
+        },
+        {
+          "batch": 51,
+          "elapsedMilliseconds": 1.0859159999999974,
+          "microsecondsPerOperation": 217.1831999999995,
+          "checksum": 167772175
+        },
+        {
+          "batch": 52,
+          "elapsedMilliseconds": 2.345246999999972,
+          "microsecondsPerOperation": 469.0493999999944,
+          "checksum": 167772175
+        },
+        {
+          "batch": 53,
+          "elapsedMilliseconds": 1.8052840000000288,
+          "microsecondsPerOperation": 361.05680000000575,
+          "checksum": 167772175
+        },
+        {
+          "batch": 54,
+          "elapsedMilliseconds": 1.7301530000000866,
+          "microsecondsPerOperation": 346.03060000001733,
+          "checksum": 167772175
+        },
+        {
+          "batch": 55,
+          "elapsedMilliseconds": 7.156790000000001,
+          "microsecondsPerOperation": 1431.3580000000002,
+          "checksum": 167772175
+        },
+        {
+          "batch": 56,
+          "elapsedMilliseconds": 0.8397940000000972,
+          "microsecondsPerOperation": 167.95880000001944,
+          "checksum": 167772175
+        },
+        {
+          "batch": 57,
+          "elapsedMilliseconds": 0.8109120000000303,
+          "microsecondsPerOperation": 162.18240000000606,
+          "checksum": 167772175
+        },
+        {
+          "batch": 58,
+          "elapsedMilliseconds": 1.004367000000002,
+          "microsecondsPerOperation": 200.8734000000004,
+          "checksum": 167772175
+        },
+        {
+          "batch": 59,
+          "elapsedMilliseconds": 1.34103099999993,
+          "microsecondsPerOperation": 268.206199999986,
+          "checksum": 167772175
+        },
+        {
+          "batch": 60,
+          "elapsedMilliseconds": 0.888035000000059,
+          "microsecondsPerOperation": 177.6070000000118,
+          "checksum": 167772175
+        },
+        {
+          "batch": 61,
+          "elapsedMilliseconds": 0.8236309999999776,
+          "microsecondsPerOperation": 164.72619999999552,
+          "checksum": 167772175
+        },
+        {
+          "batch": 62,
+          "elapsedMilliseconds": 0.8212869999999839,
+          "microsecondsPerOperation": 164.25739999999678,
+          "checksum": 167772175
+        },
+        {
+          "batch": 63,
+          "elapsedMilliseconds": 0.9100879999999734,
+          "microsecondsPerOperation": 182.01759999999467,
+          "checksum": 167772175
+        },
+        {
+          "batch": 64,
+          "elapsedMilliseconds": 0.7811580000000049,
+          "microsecondsPerOperation": 156.23160000000098,
+          "checksum": 167772175
+        },
+        {
+          "batch": 65,
+          "elapsedMilliseconds": 0.9312989999999672,
+          "microsecondsPerOperation": 186.25979999999345,
+          "checksum": 167772175
+        },
+        {
+          "batch": 66,
+          "elapsedMilliseconds": 1.123711999999955,
+          "microsecondsPerOperation": 224.742399999991,
+          "checksum": 167772175
+        },
+        {
+          "batch": 67,
+          "elapsedMilliseconds": 1.2614139999999452,
+          "microsecondsPerOperation": 252.28279999998904,
+          "checksum": 167772175
+        },
+        {
+          "batch": 68,
+          "elapsedMilliseconds": 1.8857019999999238,
+          "microsecondsPerOperation": 377.14039999998477,
+          "checksum": 167772175
+        },
+        {
+          "batch": 69,
+          "elapsedMilliseconds": 4.0864970000000085,
+          "microsecondsPerOperation": 817.2994000000017,
+          "checksum": 167772175
+        },
+        {
+          "batch": 70,
+          "elapsedMilliseconds": 1.952148999999963,
+          "microsecondsPerOperation": 390.4297999999926,
+          "checksum": 167772175
+        },
+        {
+          "batch": 71,
+          "elapsedMilliseconds": 1.6608919999999898,
+          "microsecondsPerOperation": 332.17839999999796,
+          "checksum": 167772175
+        },
+        {
+          "batch": 72,
+          "elapsedMilliseconds": 2.768079000000057,
+          "microsecondsPerOperation": 553.6158000000114,
+          "checksum": 167772175
+        },
+        {
+          "batch": 73,
+          "elapsedMilliseconds": 2.2675329999999576,
+          "microsecondsPerOperation": 453.5065999999915,
+          "checksum": 167772175
+        },
+        {
+          "batch": 74,
+          "elapsedMilliseconds": 2.0080920000000333,
+          "microsecondsPerOperation": 401.61840000000666,
+          "checksum": 167772175
+        },
+        {
+          "batch": 75,
+          "elapsedMilliseconds": 1.5386320000000069,
+          "microsecondsPerOperation": 307.7264000000014,
+          "checksum": 167772175
+        },
+        {
+          "batch": 76,
+          "elapsedMilliseconds": 1.2568170000000691,
+          "microsecondsPerOperation": 251.36340000001383,
+          "checksum": 167772175
+        },
+        {
+          "batch": 77,
+          "elapsedMilliseconds": 1.690484999999967,
+          "microsecondsPerOperation": 338.0969999999934,
+          "checksum": 167772175
+        },
+        {
+          "batch": 78,
+          "elapsedMilliseconds": 1.7266779999999926,
+          "microsecondsPerOperation": 345.3355999999985,
+          "checksum": 167772175
+        },
+        {
+          "batch": 79,
+          "elapsedMilliseconds": 1.3131409999999732,
+          "microsecondsPerOperation": 262.62819999999465,
+          "checksum": 167772175
+        },
+        {
+          "batch": 80,
+          "elapsedMilliseconds": 1.3648459999999432,
+          "microsecondsPerOperation": 272.96919999998863,
+          "checksum": 167772175
+        },
+        {
+          "batch": 81,
+          "elapsedMilliseconds": 2.3468800000000556,
+          "microsecondsPerOperation": 469.3760000000111,
+          "checksum": 167772175
+        },
+        {
+          "batch": 82,
+          "elapsedMilliseconds": 1.6882519999999204,
+          "microsecondsPerOperation": 337.6503999999841,
+          "checksum": 167772175
+        },
+        {
+          "batch": 83,
+          "elapsedMilliseconds": 9.801387999999974,
+          "microsecondsPerOperation": 1960.2775999999947,
+          "checksum": 167772175
+        },
+        {
+          "batch": 84,
+          "elapsedMilliseconds": 1.4830200000000104,
+          "microsecondsPerOperation": 296.6040000000021,
+          "checksum": 167772175
+        },
+        {
+          "batch": 85,
+          "elapsedMilliseconds": 1.0451459999999315,
+          "microsecondsPerOperation": 209.0291999999863,
+          "checksum": 167772175
+        },
+        {
+          "batch": 86,
+          "elapsedMilliseconds": 1.6159149999999727,
+          "microsecondsPerOperation": 323.18299999999454,
+          "checksum": 167772175
+        },
+        {
+          "batch": 87,
+          "elapsedMilliseconds": 1.6695640000000367,
+          "microsecondsPerOperation": 333.91280000000734,
+          "checksum": 167772175
+        },
+        {
+          "batch": 88,
+          "elapsedMilliseconds": 1.5500690000000077,
+          "microsecondsPerOperation": 310.01380000000154,
+          "checksum": 167772175
+        },
+        {
+          "batch": 89,
+          "elapsedMilliseconds": 1.4676869999999553,
+          "microsecondsPerOperation": 293.53739999999107,
+          "checksum": 167772175
+        },
+        {
+          "batch": 90,
+          "elapsedMilliseconds": 0.9579680000000508,
+          "microsecondsPerOperation": 191.59360000001016,
+          "checksum": 167772175
+        },
+        {
+          "batch": 91,
+          "elapsedMilliseconds": 1.0412310000000389,
+          "microsecondsPerOperation": 208.24620000000778,
+          "checksum": 167772175
+        },
+        {
+          "batch": 92,
+          "elapsedMilliseconds": 0.8967680000000655,
+          "microsecondsPerOperation": 179.3536000000131,
+          "checksum": 167772175
+        },
+        {
+          "batch": 93,
+          "elapsedMilliseconds": 0.9612829999999803,
+          "microsecondsPerOperation": 192.25659999999607,
+          "checksum": 167772175
+        },
+        {
+          "batch": 94,
+          "elapsedMilliseconds": 1.168517999999949,
+          "microsecondsPerOperation": 233.70359999998982,
+          "checksum": 167772175
+        },
+        {
+          "batch": 95,
+          "elapsedMilliseconds": 1.044035000000008,
+          "microsecondsPerOperation": 208.8070000000016,
+          "checksum": 167772175
+        },
+        {
+          "batch": 96,
+          "elapsedMilliseconds": 0.8114630000000034,
+          "microsecondsPerOperation": 162.29260000000068,
+          "checksum": 167772175
+        },
+        {
+          "batch": 97,
+          "elapsedMilliseconds": 1.077034000000026,
+          "microsecondsPerOperation": 215.4068000000052,
+          "checksum": 167772175
+        },
+        {
+          "batch": 98,
+          "elapsedMilliseconds": 1.2085469999999532,
+          "microsecondsPerOperation": 241.70939999999064,
+          "checksum": 167772175
+        },
+        {
+          "batch": 99,
+          "elapsedMilliseconds": 0.8340759999999818,
+          "microsecondsPerOperation": 166.81519999999637,
+          "checksum": 167772175
+        }
+      ],
+      "validatedOperations": 600,
+      "checksum": 2952791816,
+      "median": 259.8118999999997,
+      "p95": 553.6158000000114,
+      "p99": 1431.3580000000002
+    },
+    {
+      "name": "warm two-hop forwarded type lookup",
+      "iterations": 100,
+      "unit": "microseconds/operation",
+      "warmupBatches": 20,
+      "measuredBatches": 100,
+      "warmups": [
+        {
+          "batch": 0,
+          "elapsedMilliseconds": 0.5100190000000566,
+          "microsecondsPerOperation": 5.100190000000566,
+          "checksum": 3355443500
+        },
+        {
+          "batch": 1,
+          "elapsedMilliseconds": 0.12033699999994951,
+          "microsecondsPerOperation": 1.2033699999994951,
+          "checksum": 3355443500
+        },
+        {
+          "batch": 2,
+          "elapsedMilliseconds": 0.1402970000000323,
+          "microsecondsPerOperation": 1.4029700000003231,
+          "checksum": 3355443500
+        },
+        {
+          "batch": 3,
+          "elapsedMilliseconds": 0.11208399999998164,
+          "microsecondsPerOperation": 1.1208399999998164,
+          "checksum": 3355443500
+        },
+        {
+          "batch": 4,
+          "elapsedMilliseconds": 0.11349700000005214,
+          "microsecondsPerOperation": 1.1349700000005214,
+          "checksum": 3355443500
+        },
+        {
+          "batch": 5,
+          "elapsedMilliseconds": 0.1592439999999442,
+          "microsecondsPerOperation": 1.592439999999442,
+          "checksum": 3355443500
+        },
+        {
+          "batch": 6,
+          "elapsedMilliseconds": 0.14750600000002123,
+          "microsecondsPerOperation": 1.4750600000002123,
+          "checksum": 3355443500
+        },
+        {
+          "batch": 7,
+          "elapsedMilliseconds": 0.10866999999996096,
+          "microsecondsPerOperation": 1.0866999999996096,
+          "checksum": 3355443500
+        },
+        {
+          "batch": 8,
+          "elapsedMilliseconds": 0.13126299999998992,
+          "microsecondsPerOperation": 1.3126299999998992,
+          "checksum": 3355443500
+        },
+        {
+          "batch": 9,
+          "elapsedMilliseconds": 0.10688700000002882,
+          "microsecondsPerOperation": 1.0688700000002882,
+          "checksum": 3355443500
+        },
+        {
+          "batch": 10,
+          "elapsedMilliseconds": 0.11256600000001526,
+          "microsecondsPerOperation": 1.1256600000001526,
+          "checksum": 3355443500
+        },
+        {
+          "batch": 11,
+          "elapsedMilliseconds": 0.1069479999999885,
+          "microsecondsPerOperation": 1.069479999999885,
+          "checksum": 3355443500
+        },
+        {
+          "batch": 12,
+          "elapsedMilliseconds": 0.10977100000002338,
+          "microsecondsPerOperation": 1.0977100000002338,
+          "checksum": 3355443500
+        },
+        {
+          "batch": 13,
+          "elapsedMilliseconds": 0.12540400000000318,
+          "microsecondsPerOperation": 1.2540400000000318,
+          "checksum": 3355443500
+        },
+        {
+          "batch": 14,
+          "elapsedMilliseconds": 0.1424090000000433,
+          "microsecondsPerOperation": 1.424090000000433,
+          "checksum": 3355443500
+        },
+        {
+          "batch": 15,
+          "elapsedMilliseconds": 0.20757500000001983,
+          "microsecondsPerOperation": 2.0757500000001983,
+          "checksum": 3355443500
+        },
+        {
+          "batch": 16,
+          "elapsedMilliseconds": 0.3054090000000542,
+          "microsecondsPerOperation": 3.054090000000542,
+          "checksum": 3355443500
+        },
+        {
+          "batch": 17,
+          "elapsedMilliseconds": 0.12578500000006443,
+          "microsecondsPerOperation": 1.2578500000006443,
+          "checksum": 3355443500
+        },
+        {
+          "batch": 18,
+          "elapsedMilliseconds": 0.14147800000000643,
+          "microsecondsPerOperation": 1.4147800000000643,
+          "checksum": 3355443500
+        },
+        {
+          "batch": 19,
+          "elapsedMilliseconds": 0.08714799999995648,
+          "microsecondsPerOperation": 0.8714799999995648,
+          "checksum": 3355443500
+        }
+      ],
+      "samples": [
+        {
+          "batch": 0,
+          "elapsedMilliseconds": 0.08689800000001924,
+          "microsecondsPerOperation": 0.8689800000001924,
+          "checksum": 3355443500
+        },
+        {
+          "batch": 1,
+          "elapsedMilliseconds": 0.1379029999999375,
+          "microsecondsPerOperation": 1.379029999999375,
+          "checksum": 3355443500
+        },
+        {
+          "batch": 2,
+          "elapsedMilliseconds": 0.07452999999998156,
+          "microsecondsPerOperation": 0.7452999999998156,
+          "checksum": 3355443500
+        },
+        {
+          "batch": 3,
+          "elapsedMilliseconds": 0.07407899999998335,
+          "microsecondsPerOperation": 0.7407899999998335,
+          "checksum": 3355443500
+        },
+        {
+          "batch": 4,
+          "elapsedMilliseconds": 0.068911000000071,
+          "microsecondsPerOperation": 0.68911000000071,
+          "checksum": 3355443500
+        },
+        {
+          "batch": 5,
+          "elapsedMilliseconds": 0.07079399999997804,
+          "microsecondsPerOperation": 0.7079399999997804,
+          "checksum": 3355443500
+        },
+        {
+          "batch": 6,
+          "elapsedMilliseconds": 0.06963199999995595,
+          "microsecondsPerOperation": 0.6963199999995595,
+          "checksum": 3355443500
+        },
+        {
+          "batch": 7,
+          "elapsedMilliseconds": 0.10001699999997982,
+          "microsecondsPerOperation": 1.0001699999997982,
+          "checksum": 3355443500
+        },
+        {
+          "batch": 8,
+          "elapsedMilliseconds": 0.08094900000003236,
+          "microsecondsPerOperation": 0.8094900000003236,
+          "checksum": 3355443500
+        },
+        {
+          "batch": 9,
+          "elapsedMilliseconds": 0.07173599999998714,
+          "microsecondsPerOperation": 0.7173599999998714,
+          "checksum": 3355443500
+        },
+        {
+          "batch": 10,
+          "elapsedMilliseconds": 0.07024300000000494,
+          "microsecondsPerOperation": 0.7024300000000494,
+          "checksum": 3355443500
+        },
+        {
+          "batch": 11,
+          "elapsedMilliseconds": 0.06886100000008355,
+          "microsecondsPerOperation": 0.6886100000008355,
+          "checksum": 3355443500
+        },
+        {
+          "batch": 12,
+          "elapsedMilliseconds": 0.07184600000005048,
+          "microsecondsPerOperation": 0.7184600000005048,
+          "checksum": 3355443500
+        },
+        {
+          "batch": 13,
+          "elapsedMilliseconds": 0.07080400000006648,
+          "microsecondsPerOperation": 0.7080400000006648,
+          "checksum": 3355443500
+        },
+        {
+          "batch": 14,
+          "elapsedMilliseconds": 0.07115399999997862,
+          "microsecondsPerOperation": 0.7115399999997862,
+          "checksum": 3355443500
+        },
+        {
+          "batch": 15,
+          "elapsedMilliseconds": 8.622535999999968,
+          "microsecondsPerOperation": 86.22535999999967,
+          "checksum": 3355443500
+        },
+        {
+          "batch": 16,
+          "elapsedMilliseconds": 0.06977299999994102,
+          "microsecondsPerOperation": 0.6977299999994102,
+          "checksum": 3355443500
+        },
+        {
+          "batch": 17,
+          "elapsedMilliseconds": 0.07838500000002568,
+          "microsecondsPerOperation": 0.7838500000002568,
+          "checksum": 3355443500
+        },
+        {
+          "batch": 18,
+          "elapsedMilliseconds": 0.07346800000004805,
+          "microsecondsPerOperation": 0.7346800000004805,
+          "checksum": 3355443500
+        },
+        {
+          "batch": 19,
+          "elapsedMilliseconds": 0.07628199999999197,
+          "microsecondsPerOperation": 0.7628199999999197,
+          "checksum": 3355443500
+        },
+        {
+          "batch": 20,
+          "elapsedMilliseconds": 0.07618200000001707,
+          "microsecondsPerOperation": 0.7618200000001707,
+          "checksum": 3355443500
+        },
+        {
+          "batch": 21,
+          "elapsedMilliseconds": 0.07788399999992635,
+          "microsecondsPerOperation": 0.7788399999992635,
+          "checksum": 3355443500
+        },
+        {
+          "batch": 22,
+          "elapsedMilliseconds": 0.14090699999997014,
+          "microsecondsPerOperation": 1.4090699999997014,
+          "checksum": 3355443500
+        },
+        {
+          "batch": 23,
+          "elapsedMilliseconds": 0.09936600000003182,
+          "microsecondsPerOperation": 0.9936600000003182,
+          "checksum": 3355443500
+        },
+        {
+          "batch": 24,
+          "elapsedMilliseconds": 0.16877799999997478,
+          "microsecondsPerOperation": 1.6877799999997478,
+          "checksum": 3355443500
+        },
+        {
+          "batch": 25,
+          "elapsedMilliseconds": 0.07559099999991759,
+          "microsecondsPerOperation": 0.7559099999991759,
+          "checksum": 3355443500
+        },
+        {
+          "batch": 26,
+          "elapsedMilliseconds": 0.07456899999999678,
+          "microsecondsPerOperation": 0.7456899999999678,
+          "checksum": 3355443500
+        },
+        {
+          "batch": 27,
+          "elapsedMilliseconds": 0.07238600000005135,
+          "microsecondsPerOperation": 0.7238600000005135,
+          "checksum": 3355443500
+        },
+        {
+          "batch": 28,
+          "elapsedMilliseconds": 0.07238599999993767,
+          "microsecondsPerOperation": 0.7238599999993767,
+          "checksum": 3355443500
+        },
+        {
+          "batch": 29,
+          "elapsedMilliseconds": 0.1057859999999664,
+          "microsecondsPerOperation": 1.057859999999664,
+          "checksum": 3355443500
+        },
+        {
+          "batch": 30,
+          "elapsedMilliseconds": 0.07263699999998607,
+          "microsecondsPerOperation": 0.7263699999998607,
+          "checksum": 3355443500
+        },
+        {
+          "batch": 31,
+          "elapsedMilliseconds": 0.07229599999993752,
+          "microsecondsPerOperation": 0.7229599999993752,
+          "checksum": 3355443500
+        },
+        {
+          "batch": 32,
+          "elapsedMilliseconds": 0.09093399999994745,
+          "microsecondsPerOperation": 0.9093399999994745,
+          "checksum": 3355443500
+        },
+        {
+          "batch": 33,
+          "elapsedMilliseconds": 0.0864369999999326,
+          "microsecondsPerOperation": 0.864369999999326,
+          "checksum": 3355443500
+        },
+        {
+          "batch": 34,
+          "elapsedMilliseconds": 0.0689310000000205,
+          "microsecondsPerOperation": 0.689310000000205,
+          "checksum": 3355443500
+        },
+        {
+          "batch": 35,
+          "elapsedMilliseconds": 0.06996199999991859,
+          "microsecondsPerOperation": 0.6996199999991859,
+          "checksum": 3355443500
+        },
+        {
+          "batch": 36,
+          "elapsedMilliseconds": 0.07058400000005349,
+          "microsecondsPerOperation": 0.7058400000005349,
+          "checksum": 3355443500
+        },
+        {
+          "batch": 37,
+          "elapsedMilliseconds": 0.07038299999999253,
+          "microsecondsPerOperation": 0.7038299999999253,
+          "checksum": 3355443500
+        },
+        {
+          "batch": 38,
+          "elapsedMilliseconds": 0.07075399999996534,
+          "microsecondsPerOperation": 0.7075399999996534,
+          "checksum": 3355443500
+        },
+        {
+          "batch": 39,
+          "elapsedMilliseconds": 0.08981199999993805,
+          "microsecondsPerOperation": 0.8981199999993805,
+          "checksum": 3355443500
+        },
+        {
+          "batch": 40,
+          "elapsedMilliseconds": 0.07022400000005291,
+          "microsecondsPerOperation": 0.7022400000005291,
+          "checksum": 3355443500
+        },
+        {
+          "batch": 41,
+          "elapsedMilliseconds": 0.13337599999999838,
+          "microsecondsPerOperation": 1.3337599999999838,
+          "checksum": 3355443500
+        },
+        {
+          "batch": 42,
+          "elapsedMilliseconds": 0.07352800000001025,
+          "microsecondsPerOperation": 0.7352800000001025,
+          "checksum": 3355443500
+        },
+        {
+          "batch": 43,
+          "elapsedMilliseconds": 0.15442699999994147,
+          "microsecondsPerOperation": 1.5442699999994147,
+          "checksum": 3355443500
+        },
+        {
+          "batch": 44,
+          "elapsedMilliseconds": 0.06895099999997001,
+          "microsecondsPerOperation": 0.6895099999997001,
+          "checksum": 3355443500
+        },
+        {
+          "batch": 45,
+          "elapsedMilliseconds": 0.07248599999991256,
+          "microsecondsPerOperation": 0.7248599999991256,
+          "checksum": 3355443500
+        },
+        {
+          "batch": 46,
+          "elapsedMilliseconds": 0.06790000000000873,
+          "microsecondsPerOperation": 0.6790000000000873,
+          "checksum": 3355443500
+        },
+        {
+          "batch": 47,
+          "elapsedMilliseconds": 0.07355899999993198,
+          "microsecondsPerOperation": 0.7355899999993198,
+          "checksum": 3355443500
+        },
+        {
+          "batch": 48,
+          "elapsedMilliseconds": 0.07542000000000826,
+          "microsecondsPerOperation": 0.7542000000000826,
+          "checksum": 3355443500
+        },
+        {
+          "batch": 49,
+          "elapsedMilliseconds": 0.16413099999999758,
+          "microsecondsPerOperation": 1.6413099999999758,
+          "checksum": 3355443500
+        },
+        {
+          "batch": 50,
+          "elapsedMilliseconds": 0.07466899999997167,
+          "microsecondsPerOperation": 0.7466899999997167,
+          "checksum": 3355443500
+        },
+        {
+          "batch": 51,
+          "elapsedMilliseconds": 0.0705040000000281,
+          "microsecondsPerOperation": 0.705040000000281,
+          "checksum": 3355443500
+        },
+        {
+          "batch": 52,
+          "elapsedMilliseconds": 0.1426089999999931,
+          "microsecondsPerOperation": 1.426089999999931,
+          "checksum": 3355443500
+        },
+        {
+          "batch": 53,
+          "elapsedMilliseconds": 0.14801699999998164,
+          "microsecondsPerOperation": 1.4801699999998164,
+          "checksum": 3355443500
+        },
+        {
+          "batch": 54,
+          "elapsedMilliseconds": 0.12243999999998323,
+          "microsecondsPerOperation": 1.2243999999998323,
+          "checksum": 3355443500
+        },
+        {
+          "batch": 55,
+          "elapsedMilliseconds": 0.12158899999997175,
+          "microsecondsPerOperation": 1.2158899999997175,
+          "checksum": 3355443500
+        },
+        {
+          "batch": 56,
+          "elapsedMilliseconds": 0.123470999999995,
+          "microsecondsPerOperation": 1.23470999999995,
+          "checksum": 3355443500
+        },
+        {
+          "batch": 57,
+          "elapsedMilliseconds": 0.11933599999997568,
+          "microsecondsPerOperation": 1.1933599999997568,
+          "checksum": 3355443500
+        },
+        {
+          "batch": 58,
+          "elapsedMilliseconds": 0.11888499999997748,
+          "microsecondsPerOperation": 1.1888499999997748,
+          "checksum": 3355443500
+        },
+        {
+          "batch": 59,
+          "elapsedMilliseconds": 0.12458299999991596,
+          "microsecondsPerOperation": 1.2458299999991596,
+          "checksum": 3355443500
+        },
+        {
+          "batch": 60,
+          "elapsedMilliseconds": 0.1922230000000127,
+          "microsecondsPerOperation": 1.922230000000127,
+          "checksum": 3355443500
+        },
+        {
+          "batch": 61,
+          "elapsedMilliseconds": 0.0695220000000063,
+          "microsecondsPerOperation": 0.695220000000063,
+          "checksum": 3355443500
+        },
+        {
+          "batch": 62,
+          "elapsedMilliseconds": 0.06986300000005485,
+          "microsecondsPerOperation": 0.6986300000005485,
+          "checksum": 3355443500
+        },
+        {
+          "batch": 63,
+          "elapsedMilliseconds": 0.07776400000000194,
+          "microsecondsPerOperation": 0.7776400000000194,
+          "checksum": 3355443500
+        },
+        {
+          "batch": 64,
+          "elapsedMilliseconds": 0.07616199999995388,
+          "microsecondsPerOperation": 0.7616199999995388,
+          "checksum": 3355443500
+        },
+        {
+          "batch": 65,
+          "elapsedMilliseconds": 0.07335799999998471,
+          "microsecondsPerOperation": 0.7335799999998471,
+          "checksum": 3355443500
+        },
+        {
+          "batch": 66,
+          "elapsedMilliseconds": 0.07102400000007947,
+          "microsecondsPerOperation": 0.7102400000007947,
+          "checksum": 3355443500
+        },
+        {
+          "batch": 67,
+          "elapsedMilliseconds": 0.07040300000005573,
+          "microsecondsPerOperation": 0.7040300000005573,
+          "checksum": 3355443500
+        },
+        {
+          "batch": 68,
+          "elapsedMilliseconds": 0.07582100000001901,
+          "microsecondsPerOperation": 0.7582100000001901,
+          "checksum": 3355443500
+        },
+        {
+          "batch": 69,
+          "elapsedMilliseconds": 0.07766400000002704,
+          "microsecondsPerOperation": 0.7766400000002704,
+          "checksum": 3355443500
+        },
+        {
+          "batch": 70,
+          "elapsedMilliseconds": 0.10899000000006254,
+          "microsecondsPerOperation": 1.0899000000006254,
+          "checksum": 3355443500
+        },
+        {
+          "batch": 71,
+          "elapsedMilliseconds": 0.7170039999999744,
+          "microsecondsPerOperation": 7.170039999999744,
+          "checksum": 3355443500
+        },
+        {
+          "batch": 72,
+          "elapsedMilliseconds": 0.11084300000004532,
+          "microsecondsPerOperation": 1.1084300000004532,
+          "checksum": 3355443500
+        },
+        {
+          "batch": 73,
+          "elapsedMilliseconds": 0.12562500000001364,
+          "microsecondsPerOperation": 1.2562500000001364,
+          "checksum": 3355443500
+        },
+        {
+          "batch": 74,
+          "elapsedMilliseconds": 0.0944089999999278,
+          "microsecondsPerOperation": 0.944089999999278,
+          "checksum": 3355443500
+        },
+        {
+          "batch": 75,
+          "elapsedMilliseconds": 0.4548379999999952,
+          "microsecondsPerOperation": 4.548379999999952,
+          "checksum": 3355443500
+        },
+        {
+          "batch": 76,
+          "elapsedMilliseconds": 0.07081400000004123,
+          "microsecondsPerOperation": 0.7081400000004123,
+          "checksum": 3355443500
+        },
+        {
+          "batch": 77,
+          "elapsedMilliseconds": 0.07441000000005715,
+          "microsecondsPerOperation": 0.7441000000005715,
+          "checksum": 3355443500
+        },
+        {
+          "batch": 78,
+          "elapsedMilliseconds": 0.07344799999998486,
+          "microsecondsPerOperation": 0.7344799999998486,
+          "checksum": 3355443500
+        },
+        {
+          "batch": 79,
+          "elapsedMilliseconds": 0.09919600000000628,
+          "microsecondsPerOperation": 0.9919600000000628,
+          "checksum": 3355443500
+        },
+        {
+          "batch": 80,
+          "elapsedMilliseconds": 0.07417900000007194,
+          "microsecondsPerOperation": 0.7417900000007194,
+          "checksum": 3355443500
+        },
+        {
+          "batch": 81,
+          "elapsedMilliseconds": 0.10883000000001175,
+          "microsecondsPerOperation": 1.0883000000001175,
+          "checksum": 3355443500
+        },
+        {
+          "batch": 82,
+          "elapsedMilliseconds": 0.09547999999995227,
+          "microsecondsPerOperation": 0.9547999999995227,
+          "checksum": 3355443500
+        },
+        {
+          "batch": 83,
+          "elapsedMilliseconds": 0.0740690000000086,
+          "microsecondsPerOperation": 0.740690000000086,
+          "checksum": 3355443500
+        },
+        {
+          "batch": 84,
+          "elapsedMilliseconds": 0.06963299999995343,
+          "microsecondsPerOperation": 0.6963299999995343,
+          "checksum": 3355443500
+        },
+        {
+          "batch": 85,
+          "elapsedMilliseconds": 0.07260700000006182,
+          "microsecondsPerOperation": 0.7260700000006182,
+          "checksum": 3355443500
+        },
+        {
+          "batch": 86,
+          "elapsedMilliseconds": 0.07161499999995158,
+          "microsecondsPerOperation": 0.7161499999995158,
+          "checksum": 3355443500
+        },
+        {
+          "batch": 87,
+          "elapsedMilliseconds": 0.07258699999999862,
+          "microsecondsPerOperation": 0.7258699999999862,
+          "checksum": 3355443500
+        },
+        {
+          "batch": 88,
+          "elapsedMilliseconds": 0.1801150000000007,
+          "microsecondsPerOperation": 1.801150000000007,
+          "checksum": 3355443500
+        },
+        {
+          "batch": 89,
+          "elapsedMilliseconds": 0.10747800000001462,
+          "microsecondsPerOperation": 1.0747800000001462,
+          "checksum": 3355443500
+        },
+        {
+          "batch": 90,
+          "elapsedMilliseconds": 0.07234599999992497,
+          "microsecondsPerOperation": 0.7234599999992497,
+          "checksum": 3355443500
+        },
+        {
+          "batch": 91,
+          "elapsedMilliseconds": 0.07269700000006196,
+          "microsecondsPerOperation": 0.7269700000006196,
+          "checksum": 3355443500
+        },
+        {
+          "batch": 92,
+          "elapsedMilliseconds": 0.10873000000003685,
+          "microsecondsPerOperation": 1.0873000000003685,
+          "checksum": 3355443500
+        },
+        {
+          "batch": 93,
+          "elapsedMilliseconds": 0.07972699999993438,
+          "microsecondsPerOperation": 0.7972699999993438,
+          "checksum": 3355443500
+        },
+        {
+          "batch": 94,
+          "elapsedMilliseconds": 0.07596200000000408,
+          "microsecondsPerOperation": 0.7596200000000408,
+          "checksum": 3355443500
+        },
+        {
+          "batch": 95,
+          "elapsedMilliseconds": 0.07323699999994915,
+          "microsecondsPerOperation": 0.7323699999994915,
+          "checksum": 3355443500
+        },
+        {
+          "batch": 96,
+          "elapsedMilliseconds": 0.06916100000000824,
+          "microsecondsPerOperation": 0.6916100000000824,
+          "checksum": 3355443500
+        },
+        {
+          "batch": 97,
+          "elapsedMilliseconds": 0.0694620000000441,
+          "microsecondsPerOperation": 0.694620000000441,
+          "checksum": 3355443500
+        },
+        {
+          "batch": 98,
+          "elapsedMilliseconds": 0.06949200000008204,
+          "microsecondsPerOperation": 0.6949200000008204,
+          "checksum": 3355443500
+        },
+        {
+          "batch": 99,
+          "elapsedMilliseconds": 0.06851100000005772,
+          "microsecondsPerOperation": 0.6851100000005772,
+          "checksum": 3355443500
+        }
+      ],
+      "validatedOperations": 12000,
+      "checksum": 3221261472,
+      "median": 0.7454949999998917,
+      "p95": 1.6877799999997478,
+      "p99": 7.170039999999744
+    },
+    {
+      "name": "warm direct definition name lookup",
+      "iterations": 100,
+      "unit": "microseconds/operation",
+      "warmupBatches": 20,
+      "measuredBatches": 100,
+      "warmups": [
+        {
+          "batch": 0,
+          "elapsedMilliseconds": 0.3070109999999886,
+          "microsecondsPerOperation": 3.070109999999886,
+          "checksum": 3355443500
+        },
+        {
+          "batch": 1,
+          "elapsedMilliseconds": 0.17179199999998218,
+          "microsecondsPerOperation": 1.7179199999998218,
+          "checksum": 3355443500
+        },
+        {
+          "batch": 2,
+          "elapsedMilliseconds": 0.21822100000008504,
+          "microsecondsPerOperation": 2.1822100000008504,
+          "checksum": 3355443500
+        },
+        {
+          "batch": 3,
+          "elapsedMilliseconds": 0.36694999999997435,
+          "microsecondsPerOperation": 3.6694999999997435,
+          "checksum": 3355443500
+        },
+        {
+          "batch": 4,
+          "elapsedMilliseconds": 0.11401699999998982,
+          "microsecondsPerOperation": 1.1401699999998982,
+          "checksum": 3355443500
+        },
+        {
+          "batch": 5,
+          "elapsedMilliseconds": 0.145383000000038,
+          "microsecondsPerOperation": 1.45383000000038,
+          "checksum": 3355443500
+        },
+        {
+          "batch": 6,
+          "elapsedMilliseconds": 0.195116999999982,
+          "microsecondsPerOperation": 1.95116999999982,
+          "checksum": 3355443500
+        },
+        {
+          "batch": 7,
+          "elapsedMilliseconds": 0.138533999999936,
+          "microsecondsPerOperation": 1.3853399999993599,
+          "checksum": 3355443500
+        },
+        {
+          "batch": 8,
+          "elapsedMilliseconds": 0.10975199999995766,
+          "microsecondsPerOperation": 1.0975199999995766,
+          "checksum": 3355443500
+        },
+        {
+          "batch": 9,
+          "elapsedMilliseconds": 0.1343779999999697,
+          "microsecondsPerOperation": 1.3437799999996969,
+          "checksum": 3355443500
+        },
+        {
+          "batch": 10,
+          "elapsedMilliseconds": 0.24528000000009342,
+          "microsecondsPerOperation": 2.4528000000009342,
+          "checksum": 3355443500
+        },
+        {
+          "batch": 11,
+          "elapsedMilliseconds": 0.19236300000000028,
+          "microsecondsPerOperation": 1.9236300000000028,
+          "checksum": 3355443500
+        },
+        {
+          "batch": 12,
+          "elapsedMilliseconds": 0.09895600000004379,
+          "microsecondsPerOperation": 0.9895600000004379,
+          "checksum": 3355443500
+        },
+        {
+          "batch": 13,
+          "elapsedMilliseconds": 0.094820000000027,
+          "microsecondsPerOperation": 0.9482000000002699,
+          "checksum": 3355443500
+        },
+        {
+          "batch": 14,
+          "elapsedMilliseconds": 0.13387699999998404,
+          "microsecondsPerOperation": 1.3387699999998404,
+          "checksum": 3355443500
+        },
+        {
+          "batch": 15,
+          "elapsedMilliseconds": 0.11601099999995768,
+          "microsecondsPerOperation": 1.1601099999995768,
+          "checksum": 3355443500
+        },
+        {
+          "batch": 16,
+          "elapsedMilliseconds": 0.07180600000003778,
+          "microsecondsPerOperation": 0.7180600000003778,
+          "checksum": 3355443500
+        },
+        {
+          "batch": 17,
+          "elapsedMilliseconds": 0.08764899999994213,
+          "microsecondsPerOperation": 0.8764899999994213,
+          "checksum": 3355443500
+        },
+        {
+          "batch": 18,
+          "elapsedMilliseconds": 0.2041700000000901,
+          "microsecondsPerOperation": 2.041700000000901,
+          "checksum": 3355443500
+        },
+        {
+          "batch": 19,
+          "elapsedMilliseconds": 0.16009600000006685,
+          "microsecondsPerOperation": 1.6009600000006685,
+          "checksum": 3355443500
+        }
+      ],
+      "samples": [
+        {
+          "batch": 0,
+          "elapsedMilliseconds": 0.17385600000000068,
+          "microsecondsPerOperation": 1.7385600000000068,
+          "checksum": 3355443500
+        },
+        {
+          "batch": 1,
+          "elapsedMilliseconds": 0.13874399999997422,
+          "microsecondsPerOperation": 1.3874399999997422,
+          "checksum": 3355443500
+        },
+        {
+          "batch": 2,
+          "elapsedMilliseconds": 0.14984000000004016,
+          "microsecondsPerOperation": 1.4984000000004016,
+          "checksum": 3355443500
+        },
+        {
+          "batch": 3,
+          "elapsedMilliseconds": 1.7287319999999227,
+          "microsecondsPerOperation": 17.287319999999227,
+          "checksum": 3355443500
+        },
+        {
+          "batch": 4,
+          "elapsedMilliseconds": 0.21473500000001877,
+          "microsecondsPerOperation": 2.1473500000001877,
+          "checksum": 3355443500
+        },
+        {
+          "batch": 5,
+          "elapsedMilliseconds": 0.10736799999995128,
+          "microsecondsPerOperation": 1.0736799999995128,
+          "checksum": 3355443500
+        },
+        {
+          "batch": 6,
+          "elapsedMilliseconds": 0.1586330000000089,
+          "microsecondsPerOperation": 1.586330000000089,
+          "checksum": 3355443500
+        },
+        {
+          "batch": 7,
+          "elapsedMilliseconds": 0.11563999999998487,
+          "microsecondsPerOperation": 1.1563999999998487,
+          "checksum": 3355443500
+        },
+        {
+          "batch": 8,
+          "elapsedMilliseconds": 0.23122999999998228,
+          "microsecondsPerOperation": 2.312299999999823,
+          "checksum": 3355443500
+        },
+        {
+          "batch": 9,
+          "elapsedMilliseconds": 0.09037299999999959,
+          "microsecondsPerOperation": 0.9037299999999959,
+          "checksum": 3355443500
+        },
+        {
+          "batch": 10,
+          "elapsedMilliseconds": 0.1879869999999073,
+          "microsecondsPerOperation": 1.8798699999990731,
+          "checksum": 3355443500
+        },
+        {
+          "batch": 11,
+          "elapsedMilliseconds": 0.08822000000009211,
+          "microsecondsPerOperation": 0.8822000000009211,
+          "checksum": 3355443500
+        },
+        {
+          "batch": 12,
+          "elapsedMilliseconds": 0.09130500000003394,
+          "microsecondsPerOperation": 0.9130500000003394,
+          "checksum": 3355443500
+        },
+        {
+          "batch": 13,
+          "elapsedMilliseconds": 0.08539599999994607,
+          "microsecondsPerOperation": 0.8539599999994607,
+          "checksum": 3355443500
+        },
+        {
+          "batch": 14,
+          "elapsedMilliseconds": 0.093778000000043,
+          "microsecondsPerOperation": 0.9377800000004299,
+          "checksum": 3355443500
+        },
+        {
+          "batch": 15,
+          "elapsedMilliseconds": 0.10187000000007629,
+          "microsecondsPerOperation": 1.0187000000007629,
+          "checksum": 3355443500
+        },
+        {
+          "batch": 16,
+          "elapsedMilliseconds": 0.08439399999997477,
+          "microsecondsPerOperation": 0.8439399999997477,
+          "checksum": 3355443500
+        },
+        {
+          "batch": 17,
+          "elapsedMilliseconds": 0.155467999999928,
+          "microsecondsPerOperation": 1.55467999999928,
+          "checksum": 3355443500
+        },
+        {
+          "batch": 18,
+          "elapsedMilliseconds": 0.11973599999998896,
+          "microsecondsPerOperation": 1.1973599999998896,
+          "checksum": 3355443500
+        },
+        {
+          "batch": 19,
+          "elapsedMilliseconds": 0.07975700000008601,
+          "microsecondsPerOperation": 0.7975700000008601,
+          "checksum": 3355443500
+        },
+        {
+          "batch": 20,
+          "elapsedMilliseconds": 0.31879799999990155,
+          "microsecondsPerOperation": 3.1879799999990155,
+          "checksum": 3355443500
+        },
+        {
+          "batch": 21,
+          "elapsedMilliseconds": 0.08719800000005762,
+          "microsecondsPerOperation": 0.8719800000005762,
+          "checksum": 3355443500
+        },
+        {
+          "batch": 22,
+          "elapsedMilliseconds": 0.16579400000000533,
+          "microsecondsPerOperation": 1.6579400000000533,
+          "checksum": 3355443500
+        },
+        {
+          "batch": 23,
+          "elapsedMilliseconds": 0.08031800000003386,
+          "microsecondsPerOperation": 0.8031800000003386,
+          "checksum": 3355443500
+        },
+        {
+          "batch": 24,
+          "elapsedMilliseconds": 0.077865000000088,
+          "microsecondsPerOperation": 0.77865000000088,
+          "checksum": 3355443500
+        },
+        {
+          "batch": 25,
+          "elapsedMilliseconds": 0.11013099999991027,
+          "microsecondsPerOperation": 1.1013099999991027,
+          "checksum": 3355443500
+        },
+        {
+          "batch": 26,
+          "elapsedMilliseconds": 0.0792669999999589,
+          "microsecondsPerOperation": 0.792669999999589,
+          "checksum": 3355443500
+        },
+        {
+          "batch": 27,
+          "elapsedMilliseconds": 0.07689299999992727,
+          "microsecondsPerOperation": 0.7689299999992727,
+          "checksum": 3355443500
+        },
+        {
+          "batch": 28,
+          "elapsedMilliseconds": 0.08055799999999635,
+          "microsecondsPerOperation": 0.8055799999999635,
+          "checksum": 3355443500
+        },
+        {
+          "batch": 29,
+          "elapsedMilliseconds": 0.07399899999995796,
+          "microsecondsPerOperation": 0.7399899999995796,
+          "checksum": 3355443500
+        },
+        {
+          "batch": 30,
+          "elapsedMilliseconds": 0.14684599999998227,
+          "microsecondsPerOperation": 1.4684599999998227,
+          "checksum": 3355443500
+        },
+        {
+          "batch": 31,
+          "elapsedMilliseconds": 0.10619599999995444,
+          "microsecondsPerOperation": 1.0619599999995444,
+          "checksum": 3355443500
+        },
+        {
+          "batch": 32,
+          "elapsedMilliseconds": 0.07835499999998774,
+          "microsecondsPerOperation": 0.7835499999998774,
+          "checksum": 3355443500
+        },
+        {
+          "batch": 33,
+          "elapsedMilliseconds": 0.07335799999998471,
+          "microsecondsPerOperation": 0.7335799999998471,
+          "checksum": 3355443500
+        },
+        {
+          "batch": 34,
+          "elapsedMilliseconds": 0.07512099999996735,
+          "microsecondsPerOperation": 0.7512099999996735,
+          "checksum": 3355443500
+        },
+        {
+          "batch": 35,
+          "elapsedMilliseconds": 0.07132500000000164,
+          "microsecondsPerOperation": 0.7132500000000164,
+          "checksum": 3355443500
+        },
+        {
+          "batch": 36,
+          "elapsedMilliseconds": 0.07108400000004167,
+          "microsecondsPerOperation": 0.7108400000004167,
+          "checksum": 3355443500
+        },
+        {
+          "batch": 37,
+          "elapsedMilliseconds": 0.14655500000003485,
+          "microsecondsPerOperation": 1.4655500000003485,
+          "checksum": 3355443500
+        },
+        {
+          "batch": 38,
+          "elapsedMilliseconds": 0.07603200000005472,
+          "microsecondsPerOperation": 0.7603200000005472,
+          "checksum": 3355443500
+        },
+        {
+          "batch": 39,
+          "elapsedMilliseconds": 0.11372800000003735,
+          "microsecondsPerOperation": 1.1372800000003735,
+          "checksum": 3355443500
+        },
+        {
+          "batch": 40,
+          "elapsedMilliseconds": 0.11134399999991729,
+          "microsecondsPerOperation": 1.1134399999991729,
+          "checksum": 3355443500
+        },
+        {
+          "batch": 41,
+          "elapsedMilliseconds": 0.09134399999993548,
+          "microsecondsPerOperation": 0.9134399999993548,
+          "checksum": 3355443500
+        },
+        {
+          "batch": 42,
+          "elapsedMilliseconds": 0.07577100000003156,
+          "microsecondsPerOperation": 0.7577100000003156,
+          "checksum": 3355443500
+        },
+        {
+          "batch": 43,
+          "elapsedMilliseconds": 0.07063300000004347,
+          "microsecondsPerOperation": 0.7063300000004347,
+          "checksum": 3355443500
+        },
+        {
+          "batch": 44,
+          "elapsedMilliseconds": 0.07232599999997547,
+          "microsecondsPerOperation": 0.7232599999997547,
+          "checksum": 3355443500
+        },
+        {
+          "batch": 45,
+          "elapsedMilliseconds": 0.07360899999991943,
+          "microsecondsPerOperation": 0.7360899999991943,
+          "checksum": 3355443500
+        },
+        {
+          "batch": 46,
+          "elapsedMilliseconds": 0.21304300000008425,
+          "microsecondsPerOperation": 2.1304300000008425,
+          "checksum": 3355443500
+        },
+        {
+          "batch": 47,
+          "elapsedMilliseconds": 0.07506999999998243,
+          "microsecondsPerOperation": 0.7506999999998243,
+          "checksum": 3355443500
+        },
+        {
+          "batch": 48,
+          "elapsedMilliseconds": 0.07721300000002884,
+          "microsecondsPerOperation": 0.7721300000002884,
+          "checksum": 3355443500
+        },
+        {
+          "batch": 49,
+          "elapsedMilliseconds": 0.1175429999999551,
+          "microsecondsPerOperation": 1.175429999999551,
+          "checksum": 3355443500
+        },
+        {
+          "batch": 50,
+          "elapsedMilliseconds": 0.07890600000007453,
+          "microsecondsPerOperation": 0.7890600000007453,
+          "checksum": 3355443500
+        },
+        {
+          "batch": 51,
+          "elapsedMilliseconds": 0.07903599999997368,
+          "microsecondsPerOperation": 0.7903599999997368,
+          "checksum": 3355443500
+        },
+        {
+          "batch": 52,
+          "elapsedMilliseconds": 0.17851199999995515,
+          "microsecondsPerOperation": 1.7851199999995515,
+          "checksum": 3355443500
+        },
+        {
+          "batch": 53,
+          "elapsedMilliseconds": 0.07563100000004397,
+          "microsecondsPerOperation": 0.7563100000004397,
+          "checksum": 3355443500
+        },
+        {
+          "batch": 54,
+          "elapsedMilliseconds": 0.07897600000001148,
+          "microsecondsPerOperation": 0.7897600000001148,
+          "checksum": 3355443500
+        },
+        {
+          "batch": 55,
+          "elapsedMilliseconds": 0.1267769999999473,
+          "microsecondsPerOperation": 1.267769999999473,
+          "checksum": 3355443500
+        },
+        {
+          "batch": 56,
+          "elapsedMilliseconds": 0.07340799999997216,
+          "microsecondsPerOperation": 0.7340799999997216,
+          "checksum": 3355443500
+        },
+        {
+          "batch": 57,
+          "elapsedMilliseconds": 0.13546899999994366,
+          "microsecondsPerOperation": 1.3546899999994366,
+          "checksum": 3355443500
+        },
+        {
+          "batch": 58,
+          "elapsedMilliseconds": 0.08168000000000575,
+          "microsecondsPerOperation": 0.8168000000000575,
+          "checksum": 3355443500
+        },
+        {
+          "batch": 59,
+          "elapsedMilliseconds": 0.08197000000006938,
+          "microsecondsPerOperation": 0.8197000000006938,
+          "checksum": 3355443500
+        },
+        {
+          "batch": 60,
+          "elapsedMilliseconds": 0.07501099999990402,
+          "microsecondsPerOperation": 0.7501099999990402,
+          "checksum": 3355443500
+        },
+        {
+          "batch": 61,
+          "elapsedMilliseconds": 0.07246599999996306,
+          "microsecondsPerOperation": 0.7246599999996306,
+          "checksum": 3355443500
+        },
+        {
+          "batch": 62,
+          "elapsedMilliseconds": 0.08200999999996839,
+          "microsecondsPerOperation": 0.8200999999996839,
+          "checksum": 3355443500
+        },
+        {
+          "batch": 63,
+          "elapsedMilliseconds": 0.07592200000010507,
+          "microsecondsPerOperation": 0.7592200000010507,
+          "checksum": 3355443500
+        },
+        {
+          "batch": 64,
+          "elapsedMilliseconds": 0.07283700000004956,
+          "microsecondsPerOperation": 0.7283700000004956,
+          "checksum": 3355443500
+        },
+        {
+          "batch": 65,
+          "elapsedMilliseconds": 0.07300699999996141,
+          "microsecondsPerOperation": 0.7300699999996141,
+          "checksum": 3355443500
+        },
+        {
+          "batch": 66,
+          "elapsedMilliseconds": 0.12068699999997534,
+          "microsecondsPerOperation": 1.2068699999997534,
+          "checksum": 3355443500
+        },
+        {
+          "batch": 67,
+          "elapsedMilliseconds": 0.08850999999992837,
+          "microsecondsPerOperation": 0.8850999999992837,
+          "checksum": 3355443500
+        },
+        {
+          "batch": 68,
+          "elapsedMilliseconds": 0.07291700000007495,
+          "microsecondsPerOperation": 0.7291700000007495,
+          "checksum": 3355443500
+        },
+        {
+          "batch": 69,
+          "elapsedMilliseconds": 0.07524100000000544,
+          "microsecondsPerOperation": 0.7524100000000544,
+          "checksum": 3355443500
+        },
+        {
+          "batch": 70,
+          "elapsedMilliseconds": 0.07438899999999649,
+          "microsecondsPerOperation": 0.7438899999999649,
+          "checksum": 3355443500
+        },
+        {
+          "batch": 71,
+          "elapsedMilliseconds": 0.08306200000004083,
+          "microsecondsPerOperation": 0.8306200000004083,
+          "checksum": 3355443500
+        },
+        {
+          "batch": 72,
+          "elapsedMilliseconds": 4.302253999999948,
+          "microsecondsPerOperation": 43.02253999999948,
+          "checksum": 3355443500
+        },
+        {
+          "batch": 73,
+          "elapsedMilliseconds": 0.20312799999999243,
+          "microsecondsPerOperation": 2.0312799999999243,
+          "checksum": 3355443500
+        },
+        {
+          "batch": 74,
+          "elapsedMilliseconds": 0.08945199999993747,
+          "microsecondsPerOperation": 0.8945199999993747,
+          "checksum": 3355443500
+        },
+        {
+          "batch": 75,
+          "elapsedMilliseconds": 0.15030100000001312,
+          "microsecondsPerOperation": 1.5030100000001312,
+          "checksum": 3355443500
+        },
+        {
+          "batch": 76,
+          "elapsedMilliseconds": 0.08435399999996207,
+          "microsecondsPerOperation": 0.8435399999996207,
+          "checksum": 3355443500
+        },
+        {
+          "batch": 77,
+          "elapsedMilliseconds": 0.08416399999998703,
+          "microsecondsPerOperation": 0.8416399999998703,
+          "checksum": 3355443500
+        },
+        {
+          "batch": 78,
+          "elapsedMilliseconds": 0.08459399999992456,
+          "microsecondsPerOperation": 0.8459399999992456,
+          "checksum": 3355443500
+        },
+        {
+          "batch": 79,
+          "elapsedMilliseconds": 0.0978139999999712,
+          "microsecondsPerOperation": 0.978139999999712,
+          "checksum": 3355443500
+        },
+        {
+          "batch": 80,
+          "elapsedMilliseconds": 0.10290199999997185,
+          "microsecondsPerOperation": 1.0290199999997185,
+          "checksum": 3355443500
+        },
+        {
+          "batch": 81,
+          "elapsedMilliseconds": 0.07999799999993229,
+          "microsecondsPerOperation": 0.7999799999993229,
+          "checksum": 3355443500
+        },
+        {
+          "batch": 82,
+          "elapsedMilliseconds": 0.08473400000002584,
+          "microsecondsPerOperation": 0.8473400000002584,
+          "checksum": 3355443500
+        },
+        {
+          "batch": 83,
+          "elapsedMilliseconds": 0.10649599999999282,
+          "microsecondsPerOperation": 1.0649599999999282,
+          "checksum": 3355443500
+        },
+        {
+          "batch": 84,
+          "elapsedMilliseconds": 0.10102900000003956,
+          "microsecondsPerOperation": 1.0102900000003956,
+          "checksum": 3355443500
+        },
+        {
+          "batch": 85,
+          "elapsedMilliseconds": 0.5958249999999907,
+          "microsecondsPerOperation": 5.958249999999907,
+          "checksum": 3355443500
+        },
+        {
+          "batch": 86,
+          "elapsedMilliseconds": 0.8078879999999344,
+          "microsecondsPerOperation": 8.078879999999344,
+          "checksum": 3355443500
+        },
+        {
+          "batch": 87,
+          "elapsedMilliseconds": 0.45424800000000687,
+          "microsecondsPerOperation": 4.542480000000069,
+          "checksum": 3355443500
+        },
+        {
+          "batch": 88,
+          "elapsedMilliseconds": 0.19938300000001163,
+          "microsecondsPerOperation": 1.9938300000001163,
+          "checksum": 3355443500
+        },
+        {
+          "batch": 89,
+          "elapsedMilliseconds": 0.43200500000000375,
+          "microsecondsPerOperation": 4.3200500000000375,
+          "checksum": 3355443500
+        },
+        {
+          "batch": 90,
+          "elapsedMilliseconds": 0.08259099999997943,
+          "microsecondsPerOperation": 0.8259099999997943,
+          "checksum": 3355443500
+        },
+        {
+          "batch": 91,
+          "elapsedMilliseconds": 0.08711800000003223,
+          "microsecondsPerOperation": 0.8711800000003223,
+          "checksum": 3355443500
+        },
+        {
+          "batch": 92,
+          "elapsedMilliseconds": 0.09943699999996625,
+          "microsecondsPerOperation": 0.9943699999996625,
+          "checksum": 3355443500
+        },
+        {
+          "batch": 93,
+          "elapsedMilliseconds": 0.14470300000004954,
+          "microsecondsPerOperation": 1.4470300000004954,
+          "checksum": 3355443500
+        },
+        {
+          "batch": 94,
+          "elapsedMilliseconds": 0.0959219999999732,
+          "microsecondsPerOperation": 0.959219999999732,
+          "checksum": 3355443500
+        },
+        {
+          "batch": 95,
+          "elapsedMilliseconds": 0.12800800000002255,
+          "microsecondsPerOperation": 1.2800800000002255,
+          "checksum": 3355443500
+        },
+        {
+          "batch": 96,
+          "elapsedMilliseconds": 0.17391599999996288,
+          "microsecondsPerOperation": 1.7391599999996288,
+          "checksum": 3355443500
+        },
+        {
+          "batch": 97,
+          "elapsedMilliseconds": 0.16004499999996824,
+          "microsecondsPerOperation": 1.6004499999996824,
+          "checksum": 3355443500
+        },
+        {
+          "batch": 98,
+          "elapsedMilliseconds": 0.13444800000002033,
+          "microsecondsPerOperation": 1.3444800000002033,
+          "checksum": 3355443500
+        },
+        {
+          "batch": 99,
+          "elapsedMilliseconds": 0.15318500000000768,
+          "microsecondsPerOperation": 1.5318500000000768,
+          "checksum": 3355443500
+        }
+      ],
+      "validatedOperations": 12000,
+      "checksum": 3221261472,
+      "median": 0.9083900000001677,
+      "p95": 4.3200500000000375,
+      "p99": 17.287319999999227
+    }
+  ],
+  "source": {
+    "commit": "ae5ee23b785269928577425576e17e520928d06c",
+    "clean": true,
+    "packages": [
+      {
+        "directory": "packages/clr/src",
+        "files": 54,
+        "sha256": "346de255c3127b97f31070739fa1c8e2416bb02441a44fd4cae14a4441d50c36",
+        "gitTree": "093857d538a72e3dcfc264fd374fb4ab3a9d03b2"
+      },
+      {
+        "directory": "packages/cil/src",
+        "files": 212,
+        "sha256": "cf337b0523b64226cf020e7376efa4cbc69a31dc85c70b925bfb9594a1d8fc82",
+        "gitTree": "7b5c7e838eb08c916b9d652fdce7a897995b2c84"
+      }
+    ],
+    "files": [
+      {
+        "path": "packages/clr/tools/benchmark-forwarders.mjs",
+        "sha256": "654f65720d32fbba252dca2dd0d88b7e2005e8ecd0b75c8ee7664f65e9098413"
+      },
+      {
+        "path": "tests/clr-forwarders-fixtures.js",
+        "sha256": "98a7fe1cec2363030dc6a3e1cd63ea08bff63d5bdba71ad45af64c70a43b1964"
+      },
+      {
+        "path": "tests/clr-types-graph-fixtures.js",
+        "sha256": "ca722224ce31e00047c9e358a07af82147abc6b503a37f4b6e3a9870cefcbd41"
+      },
+      {
+        "path": "tests/managed-fixtures.js",
+        "sha256": "53b6e844b4a1dccd707aed5ffa0e0e4840558ed4bb67adc9b9ae04ed7573e7fd"
+      },
+      {
+        "path": "tests/fixtures/clr-forwarders/native-forwarders.json",
+        "sha256": "63d0da17f1b105f27c5cd89e113b241fe9e3238dd40a40cf930e9e93faf82146"
+      }
+    ],
+    "packageHashFormat": "Git ls-files -z order; UTF-8 path, NUL, decimal byte length, NUL, then raw file bytes"
+  },
+  "fixtures": [
+    {
+      "name": "ForwardTarget",
+      "bytes": 1024,
+      "sha256": "bb20146a3ebe8124a927dca889a5a3940392cbfd9575fd845362a66efe4f3cdc"
+    },
+    {
+      "name": "ForwardBridge",
+      "bytes": 1536,
+      "sha256": "33b25c1a5362b51414fa6b40bcbe1b6fe509e250ca90fbe2ca5d046347d38345"
+    },
+    {
+      "name": "ForwardFacade",
+      "bytes": 1536,
+      "sha256": "b6889cdfdb2d5054dccc9118d6d3d53be7be7b77d9dbc38cf6608d9136863cfe"
+    },
+    {
+      "name": "OuterOnly",
+      "bytes": 1024,
+      "sha256": "51f5272520486a02d3a65eab231ec65a9270355dd2d3f6190b6aa11f71b97fab"
+    },
+    {
+      "name": "ForwardConsumer",
+      "bytes": 1024,
+      "sha256": "e8e6323c3525b8bccfd5b474cd8559ff3d019bdc5e1ff8391a84ca1042d5b7b8"
+    },
+    {
+      "name": "CycleA",
+      "bytes": 1024,
+      "sha256": "fc45006db7840c5cdc1efa0cdf6a69213e7f38fc881ce9ebaec4d14c6f75bc61"
+    },
+    {
+      "name": "CycleB",
+      "bytes": 1024,
+      "sha256": "327189ef49e283f6205ad9f339316822fb98f6b4534f098d057a2080b3fb892c"
+    }
+  ],
+  "usedImages": [
+    "ForwardFacade",
+    "ForwardBridge",
+    "ForwardTarget"
+  ],
+  "imageBytes": 4096,
+  "finishedAt": "2026-10-04T14:04:32.466Z"
+}

@@ -1,0 +1,12 @@
+✔ public-only method inspection retains original display shape/order and cache identity (12.364436ms)
+✔ typed-first decoding defers display work and public promotion evicts the interim raw entry (2.199684ms)
+✔ raw decoding never resolves token display and public formatting failures do not poison its cache (1.143551ms)
+✔ no-body methods retain complete public shape and invalid MethodDefs retain their diagnostic (0.839294ms)
+ℹ tests 4
+ℹ suites 0
+ℹ pass 4
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 360.043495

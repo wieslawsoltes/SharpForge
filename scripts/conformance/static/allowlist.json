@@ -86,6 +86,20 @@
       "reason": "Developer-run Constant benchmark loads the metadata importer from an explicitly selected trusted local baseline or its fixed workspace path; the tool is not shipped in the product."
     },
     {
+      "path": "packages/compiler/bench/attribute-metadata.bench.js",
+      "operation": "dynamic-import",
+      "count": 1,
+      "sha256": "b56cd207e62823b5640d40d47203659356a3e7bc50227043e72a0366c6d6ca5b",
+      "reason": "Developer-run attribute benchmark loads the fixed compiler public entry from an explicitly selected trusted local baseline checkout for the paired comparison. The benchmark is not shipped in the product; the operator-selected checkout is executable host input."
+    },
+    {
+      "path": "packages/cil/tools/benchmark-decompiler-cfg.mjs",
+      "operation": "dynamic-import",
+      "count": 2,
+      "sha256": "991308fe80164c4fd7efd012a4dded700a8d73c47044d7678936a3b6249bfe53",
+      "reason": "Reviewed developer-only CFG benchmark imports fixed CIL package entry points from operator-selected trusted local baseline/current checkouts. Before import it verifies exact baseline commit, candidate source identity and local workspace aliases; paths never come from CIL, metadata or product input. No generated JavaScript or product dynamic-code surface is added."
+    },
+    {
       "path": "packages/compiler/smoke.mjs",
       "operation": "dynamic-import",
       "count": 3,
@@ -275,13 +289,6 @@
       "reason": "Qualification adapter loads fixed compiler/build package entry points from the explicitly selected trusted checkout."
     },
     {
-      "path": "scripts/bench-pdb.js",
-      "operation": "dynamic-import",
-      "count": 1,
-      "sha256": "b2bbde05d24b6b3348409d97635fce6bc19989844e2ae0bf84918f7bae8c6b80",
-      "reason": "PDB benchmark imports the symbols package from an explicitly selected trusted baseline checkout."
-    },
-    {
       "path": "scripts/bench/a03-metadata.js",
       "operation": "dynamic-import",
       "count": 1,
@@ -301,6 +308,13 @@
       "count": 1,
       "sha256": "87827deddeda04d6fdb6b055ff7448c3d8fe221759a5accf87ca6ab301ce5a3c",
       "reason": "Trusted operator-selected checkout loads five fixed local modules via tracked package/host paths; no source-data or remote module selectors."
+    },
+    {
+      "path": "scripts/benchmarks/pdb-context.mjs",
+      "operation": "dynamic-import",
+      "count": 3,
+      "sha256": "f8c9fb4c148a4df39dad17922e5dde2e31800e315242fd5204e14d1b80013265",
+      "reason": "PDB benchmarks import fixed public symbols, CIL and compiler entries from trusted operator-selected local checkouts. Realpath, exact baseline commit, clean tracked source and dependency-closure alias guards precede imports; no product, metadata or remote code selectors."
     },
     {
       "path": "scripts/build-managed-examples.js",
@@ -455,6 +469,13 @@
       "count": 3,
       "sha256": "62dca80988a0899c6e2c93143435f7da4a1644d49db94ce1c7225a172d93e979",
       "reason": "Test imports fixed checked-in workspace or Node modules; no managed or remote source is evaluated as host JavaScript."
+    },
+    {
+      "path": "packages/compiler/bench/unions-paired.bench.mjs",
+      "operation": "dynamic-import",
+      "count": 1,
+      "sha256": "870f793b642673fb43ba8abe2acc047050c7da7f1cd5b15f5f9346baef4320a9",
+      "reason": "Developer-run union benchmark loads only the fixed direct-CIL compiler module from two explicitly selected trusted local checkouts. Exact commits and clean tracked files are checked before and after each sequential worker; checkout paths are executable host input and the benchmark is not shipped in the product."
     }
   ]
 }

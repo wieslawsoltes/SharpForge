@@ -21,6 +21,7 @@ import { SymbolKind, TypeKind, ArrayTypeSymbol, NamedTypeSymbol } from '../symbo
 import { MethodKind, LocalDeclarationKind } from '../symbols/members.js';
 import { Conversion, ConversionKind } from '../conversions/classify.js';
 import { implementsInterface, findConstruction } from '../symbols/substitution.js';
+import { inlineArrayShape } from '../symbols/inline-arrays.js';
 import { attributesNamed } from './bound-attributes.js';
 import { lookupMembers } from './inheritance.js';
 import { isSourceSymbol } from '../semantic/analysis-helpers.js';
@@ -35,15 +36,22 @@ export const CollectionExpressionBinding = Base =>
       const elements = [];
       let withArguments = null;
       for (const [index, element] of syntax.elements.entries()) {
-        if (element.kind === 'ExpressionElement') elements.push({ value: this.value(element.expression), syntax: element });
-        else if (element.kind === 'SpreadElement') elements.push({ spread: this.value(element.expression), syntax: element });
+        // A value element has an argument's expression shape; argument binding retains method-group inference.
+        if (element.kind === 'ExpressionElement') elements.push({ value: this.argument(element), syntax: element });
+        else if (element.kind === 'SpreadElement') {
+          const spread = this.value(element.expression);
+          elements.push({ spread, syntax: element, iterationType: this.spreadElementType(spread) });
+        }
         // `with(...)` arguments (C# 15 preview): ./collection-arguments.js.
         else if (element.kind === 'WithElement' && this.collectionArguments) withArguments = this.collectionArguments(element, index) ?? withArguments;
         else return this.lenient(syntax);
       }
-      const node = this.node('CollectionExpression', syntax, null, { elements, form: 'collection', withArguments });
+      const node = this.node('CollectionExpression', syntax, null, {
+        elements, form: 'collection', withArguments, collectionLanguageVersion: this.version.number,
+      });
+      node.collectionTarget = to => this.collectionTarget(to);
       node.convert = to => {
-        const target = this.collectionTarget(to);
+        const target = node.collectionTarget(to);
         return target && elements.every(element => this.elementConverts(element, target.elementType))
           ? new Conversion(ConversionKind.CollectionExpression)
           : null;
@@ -88,6 +96,9 @@ export const CollectionExpressionBinding = Base =>
       if (!type || type.isErrorType()) return null;
       if (type instanceof ArrayTypeSymbol) return type.elementType;
       if (type.specialType === 'System_String') return this.core.char;
+      // Inline arrays use their storage element even when the struct also declares an enumeration pattern.
+      const inlineArray = inlineArrayShape(type);
+      if (inlineArray) return inlineArray.elementType;
       const generic = findConstruction(type, this.core.ienumerableT, this.core);
       if (generic) return generic.typeArguments[0].type;
       if (implementsInterface(type, this.core.ienumerable, this.core)) return this.core.object;

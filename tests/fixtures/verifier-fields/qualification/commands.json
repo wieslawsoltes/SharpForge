@@ -1,0 +1,153 @@
+[
+  {
+    "label": "candidate-head",
+    "command": "git",
+    "args": [
+      "rev-parse",
+      "HEAD"
+    ],
+    "cwd": "/tmp/sharpforge-a03-normal-instance-fields",
+    "started": "2026-10-04T10:27:33.338Z",
+    "completed": "2026-10-04T10:27:33.385Z",
+    "exitCode": 0,
+    "signal": null
+  },
+  {
+    "label": "candidate-clean",
+    "command": "git",
+    "args": [
+      "status",
+      "--porcelain"
+    ],
+    "cwd": "/tmp/sharpforge-a03-normal-instance-fields",
+    "started": "2026-10-04T10:27:33.386Z",
+    "completed": "2026-10-04T10:27:33.535Z",
+    "exitCode": 0,
+    "signal": null
+  },
+  {
+    "label": "baseline-create",
+    "command": "git",
+    "args": [
+      "worktree",
+      "add",
+      "--detach",
+      "/tmp/sharpforge-a03-fields-baseline",
+      "594085da988a5b9439625f0577b958a166121666"
+    ],
+    "cwd": "/tmp/sharpforge-a03-normal-instance-fields",
+    "started": "2026-10-04T10:27:33.535Z",
+    "completed": "2026-10-04T10:27:35.596Z",
+    "exitCode": 0,
+    "signal": null
+  },
+  {
+    "label": "baseline-head",
+    "command": "git",
+    "args": [
+      "rev-parse",
+      "HEAD"
+    ],
+    "cwd": "/tmp/sharpforge-a03-fields-baseline",
+    "started": "2026-10-04T10:27:35.596Z",
+    "completed": "2026-10-04T10:27:35.635Z",
+    "exitCode": 0,
+    "signal": null
+  },
+  {
+    "label": "baseline-clean",
+    "command": "git",
+    "args": [
+      "status",
+      "--porcelain"
+    ],
+    "cwd": "/tmp/sharpforge-a03-fields-baseline",
+    "started": "2026-10-04T10:27:35.635Z",
+    "completed": "2026-10-04T10:27:36.001Z",
+    "exitCode": 0,
+    "signal": null
+  },
+  {
+    "label": "source-files",
+    "command": "git",
+    "args": [
+      "ls-files",
+      "packages/cil/src"
+    ],
+    "cwd": "/tmp/sharpforge-a03-normal-instance-fields",
+    "started": "2026-10-04T10:27:36.002Z",
+    "completed": "2026-10-04T10:27:36.044Z",
+    "exitCode": 0,
+    "signal": null
+  },
+  {
+    "label": "baseline-source-files",
+    "command": "git",
+    "args": [
+      "ls-files",
+      "packages/cil/src"
+    ],
+    "cwd": "/tmp/sharpforge-a03-fields-baseline",
+    "started": "2026-10-04T10:27:36.044Z",
+    "completed": "2026-10-04T10:27:36.085Z",
+    "exitCode": 0,
+    "signal": null
+  },
+  {
+    "label": "manifest-files",
+    "command": "git",
+    "args": [
+      "ls-files",
+      "package.json",
+      "package-lock.json",
+      "packages/*/package.json"
+    ],
+    "cwd": "/tmp/sharpforge-a03-normal-instance-fields",
+    "started": "2026-10-04T10:27:36.085Z",
+    "completed": "2026-10-04T10:27:36.127Z",
+    "exitCode": 0,
+    "signal": null
+  },
+  {
+    "label": "install",
+    "command": "npm",
+    "args": [
+      "ci",
+      "--ignore-scripts",
+      "--no-audit",
+      "--no-fund"
+    ],
+    "cwd": "/tmp/sharpforge-a03-normal-instance-fields",
+    "started": "2026-10-04T10:27:36.154Z",
+    "completed": "2026-10-04T10:27:36.542Z",
+    "exitCode": 0,
+    "signal": null
+  },
+  {
+    "label": "baseline-install",
+    "command": "npm",
+    "args": [
+      "ci",
+      "--ignore-scripts",
+      "--no-audit",
+      "--no-fund"
+    ],
+    "cwd": "/tmp/sharpforge-a03-fields-baseline",
+    "started": "2026-10-04T10:27:36.542Z",
+    "completed": "2026-10-04T10:27:36.744Z",
+    "exitCode": 0,
+    "signal": null
+  },
+  {
+    "label": "baseline-red",
+    "command": "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+    "args": [
+      "tests/fixtures/verifier-fields/baseline.mjs"
+    ],
+    "cwd": "/tmp/sharpforge-a03-fields-baseline",
+    "started": "2026-10-04T10:27:36.745Z",
+    "completed": "2026-10-04T10:27:36.877Z",
+    "exitCode": 1,
+    "signal": null
+  }
+]

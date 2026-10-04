@@ -1,0 +1,51 @@
+{
+  "testedCommit": "ac8fc5bdfd5b41322317a365baeba234ed8ed8c2",
+  "node": "v24.19.0",
+  "platform": "Linux x64",
+  "sdk": "10.0.201",
+  "runtime": "10.0.5",
+  "tests": {
+    "passed": 44,
+    "failed": 0,
+    "skipped": 0
+  },
+  "checks": [
+    "npm run check",
+    "npm run check:structure",
+    "npm run build"
+  ],
+  "native": "Roslyn EmitDifference and SRM: baseline plus two deltas",
+  "browser": "Not qualified in this batch",
+  "managedApplyUpdate": false,
+  "sourceSha256": {
+    "packages/cil/src/metadata/indices.js": "c2477fc2ab045faf065871a84be6bda58b1bb4871c7571e3dcbb3c3c789d3703",
+    "packages/cil/src/metadata/table-stream.js": "6afdc8d70a7fb2fa3b917497224ca92208eb81663f3915c132760d8248c3336c",
+    "packages/symbols/README.md": "31544da6878c9c21e1a60908d74c1f96714b3af4ad175cecde72f477d690b065",
+    "packages/symbols/interop/PdbGenerations/PdbGenerations.csproj": "7ffbcac943d7c2098eb5afaf6e390c3e1474bd2d46eb0c6782e5ff8d46b7de10",
+    "packages/symbols/interop/PdbGenerations/Program.cs": "46c486e44e445d5e47739f73b7036cd78b16ec0de4cd9dc31f1a354455723498",
+    "packages/symbols/interop/PdbGenerations/README.md": "1e325eaa41251e8552e8e84dcca54d0a6b9fab9f3a206d62d17c228503cdbc53",
+    "packages/symbols/src/index.js": "a38640902e2c93a6062d80bb90d9283509f91fb7c0d608249da9abede1ab6d5d",
+    "packages/symbols/src/pdb-delta-format.js": "82470cf68c38ddd7f23f353cb823f25b5ab5bcac44f273d3feebbd41d36aad5c",
+    "packages/symbols/src/pdb-delta-reader.js": "c45cb0943de257aa68eebeac9b911a689d3f91cf64dcdc965de1b8a34f1c299a",
+    "packages/symbols/src/pdb-generations.js": "ef650c5beb04fc5d56df2aeee58976c163c7b8c8e8bc373c504b8decfb0215a4",
+    "packages/symbols/src/pdb-reader.js": "da0d9242e7799a1bf9b6748d9f1cd693da1a7c43c9ffe8358ee4ace84f896c1d",
+    "scripts/validate-pdb-generations.mjs": "5e16be8247a970c017edcaaa88a9e586347787e33347f6c27f2e5dab0e84fc1b",
+    "tests/a03-24-minimal-delta.test.js": "40741dd2d4bd0115363976f7b66ffdf9a281cfe5d02d7677ca04a0eb80c4162c",
+    "tests/a13-05-native-generations.test.js": "1e9d7a738b44f26ea2b900584d0996312744f14dbde7ffb93b611c9cdb24ac19",
+    "tests/a13-05-pdb-generations.test.js": "b28fc7573faa3152ea89d98f63103fe273f7ed509bc87b8fe433843591803f07",
+    "tests/fixtures/portable-pdb-generations/baseline.cs": "9e75caf0dd99bff57a3461b1e123d8e21beabbbd8d0483e26b2f13e4419b586a",
+    "tests/fixtures/portable-pdb-generations/baseline.dll": "3ee1f7ecac5b03a334bf7f03f8adaf2c423bdb1de938d0feb664bdeb1a80dc9b",
+    "tests/fixtures/portable-pdb-generations/baseline.pdb": "bab3c90a4642d5aacddf22da352fd6b5b002ac075d4ff302c4cdffea129d2909",
+    "tests/fixtures/portable-pdb-generations/delta1.cs": "adc37377d68483f88d4869daed0ec8232aebd9c61f6f1b8218354a40799e60eb",
+    "tests/fixtures/portable-pdb-generations/delta1.dil": "e05701f490a0115fa77187b0ef5ccc0cbb79a1b8dac33e06097bfdeef58a7152",
+    "tests/fixtures/portable-pdb-generations/delta1.dmeta": "eb0e6bde4e41af126871204193acaa4e8c5f92b58cd0638b8644e3c12539065b",
+    "tests/fixtures/portable-pdb-generations/delta1.pdb": "e2c4fe2ac3463ac294d39067914a1d082ce67e26840f07330fee43737064de1c",
+    "tests/fixtures/portable-pdb-generations/delta2.cs": "ac0fd309fe727083e4534ed2443162f42c3ee20bb6aca2a65020cf4c39185a2d",
+    "tests/fixtures/portable-pdb-generations/delta2.dil": "34ab1b0b676e4b609772a0ccc1af6053869a8cef71259ac498f9f5f6d3e3d588",
+    "tests/fixtures/portable-pdb-generations/delta2.dmeta": "055f242824d42ab30849525848f495ebb77602028378b5fa063ea22acfc07fec",
+    "tests/fixtures/portable-pdb-generations/delta2.pdb": "d1175cd7119c6a4f084585957a87f813f67bddd1ffc1a2b0e97df1d0b2c7ddc4",
+    "tests/fixtures/portable-pdb-generations/reference.json": "22e8ad452e64a73c1eea722a9c3e4dcc366d946175241c68d081cc922bbd6f52",
+    "tests/manifests/A13.json": "9bae599ba150d92dbba3ec37f96d73be3adfe01cf88da028ec971943546d9df9",
+    "tests/support/pdb-delta.js": "849a06a550570707c85000fad9829889ff32d7135f3ef112f6b0f2cead7b84be"
+  }
+}

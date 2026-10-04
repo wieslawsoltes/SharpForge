@@ -18,6 +18,7 @@ import {
   TypeWithAnnotations,
   typeOf,
 } from './types.js';
+import { EQUALITY_CONTRACT, PRINT_MEMBERS, recordContractMember } from './synthesized/record-contract-members.js';
 
 /** The substitution a constructed type applies to its definition's members (enclosing types included). */
 export function typeMapOf(type) {
@@ -144,7 +145,13 @@ export function membersInHierarchy(type, name, core) {
     result.push(...core.object.getMembers(name));
     return result;
   }
-  for (const t of baseTypeChain(type, core)) result.push(...t.getMembers(name));
+  // `PrintMembers` and `EqualityContract` of a record are synthesized members that are not in its member list.
+  const isContractName = name === PRINT_MEMBERS || name === EQUALITY_CONTRACT;
+  for (const t of baseTypeChain(type, core)) {
+    result.push(...t.getMembers(name));
+    const contract = isContractName ? recordContractMember(t, name, core) : null;
+    if (contract) result.push(contract);
+  }
   return result;
 }
 /** True when `type` is `baseType` or derives from it (classes), comparing constructed types structurally. */
@@ -174,6 +181,11 @@ export function containsTypeParameter(type, parameters = null) {
   if (!type) return false;
   if (type.kind === SymbolKind.TypeParameter) return !parameters || parameters.includes(type);
   if (type instanceof ArrayTypeSymbol) return containsTypeParameter(type.elementType, parameters);
+  if (type.typeKind === TypeKind.Pointer) return containsTypeParameter(type.pointedAtType, parameters);
+  if (type.typeKind === TypeKind.FunctionPointer) {
+    return containsTypeParameter(type.signature.returnType, parameters) ||
+      type.signature.parameters.some(parameter => containsTypeParameter(parameter.type, parameters));
+  }
   if (type instanceof NamedTypeSymbol)
     return (
       type.typeArguments.some(a => a.type !== type && containsTypeParameter(a, parameters)) ||

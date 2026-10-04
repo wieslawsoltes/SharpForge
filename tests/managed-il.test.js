@@ -21,7 +21,12 @@ test('Direct CIL: native pointer instructions remain inspectable, not executable
 test('Direct CIL: invalid local slot and stack underflow rejected',()=>{for(const body of [w=>w.op('ldloc.3').op('pop').op('ret'),w=>w.op('pop').op('ret')]){const b=managedFixture({methods:[{name:'Main',body}]});assert(!verifyCilAssembly(b).success);}});
 test('Direct CIL: host arguments use strict declared types and arity',()=>{const b=arithmeticLibrary();for(const args of [[1],['1',2],[2147483648,1],[{},1]])assert.throws(()=>new CilVirtualMachine(b,{methodToken:token(6,1),arguments:args}));});
 test('IL text: every method rebuilt; changed constants actually execute',()=>{const b=managedFixture(),text=formatILDocument(b);const a=assembleILDocument(text.replace('ldc.i4 42','ldc.i4 77'));assert.equal(run(a.bytes).returnValue,77);assert.equal(a.methods,1);assert(!new AssemblyInspector(a.bytes).metadata.streams.has('#SF'));});
-test('IL text: IL from a debug-profile binary loses stale profile metadata',()=>{const bytes=compileToIL('Console.WriteLine(42);').assembly,a=assembleILDocument(formatILDocument(bytes));assert.equal(run(a.bytes).output,'42\n');assert.throws(()=>loadAssembly(a.bytes),/arbitrary .NET assembly/);});
+test('IL text: changed bodies invalidate stale debug-profile metadata', () => {
+  const bytes = compileToIL('Console.WriteLine(42);').assembly;
+  const rebuilt = assembleILDocument(formatILDocument(bytes).replace('ldc.i4 42', 'ldc.i4 43'));
+  assert.equal(run(rebuilt.bytes).output, '43\n');
+  assert.throws(() => loadAssembly(rebuilt.bytes), /arbitrary .NET assembly/);
+});
 test('IL text: long, branch and switch round trips',()=>{const b=managedFixture({methods:[{name:'Main',result:'long',body:w=>w.op('ldc.i8',-9223372036854775807n).op('ret')}]});const a=assembleILDocument(formatILDocument(b));assert.equal(run(a.bytes).returnValue,-9223372036854775807n);});
 test('IL text: catches round trip',()=>{const b=compiled('try{throw new Exception("x");}catch(Exception e){Console.WriteLine(e.Message);}');assert.equal(run(assembleILDocument(formatILDocument(b)).bytes).output,'x\n');});
 test('IL text: omitted or duplicate methods are never read from image fallback',()=>{const text=formatILDocument(managedFixture());const start=text.indexOf('.method');assert.throws(()=>assembleILDocument(text.slice(0,start)),/method|body/i);assert.throws(()=>assembleILDocument(text+'\n'+text.slice(start)),/duplicate/i);});
