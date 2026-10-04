@@ -13,6 +13,14 @@ export class StatusPosition {
     const current = this.work;
     const same = current?.source === source && current?.version === source?.version && current?.offset === offset && current?.tabSize === tabSize;
     if (!same) { current?.controller.abort(); this.work = null; }
+    // Document notifications can precede a view's caret transform after a shrinking edit.
+    // Leave this transient display unavailable; the view's next cursor event supplies a valid offset.
+    const length = source?.length ?? source?.buffer?.length;
+    if (Number.isSafeInteger(length) && Number.isSafeInteger(offset) && offset > length) {
+      current?.controller.abort();
+      this.work = null;
+      return null;
+    }
     if (Number.isFinite(visualColumn) && visualColumn >= 0) return visualColumn;
     if (!source || !Number.isSafeInteger(offset) || offset < position.character) return null;
     if (same) return current.column;

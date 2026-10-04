@@ -1,5 +1,5 @@
 .git-repository-layout { display: flex; flex: 1; min-height: 0; gap: 8px; }
-.git-repository-main { display: flex; flex-direction: column; flex: 1; min-width: 0; min-height: 0; gap: 6px; }
+.git-repository-main { display: flex; flex-direction: column; flex: 1; min-width: 0; min-height: 0; gap: 6px; overflow: auto; }
 .git-repository-references {
   flex: 0 1 200px;
   min-width: 125px;

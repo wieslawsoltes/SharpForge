@@ -6,6 +6,7 @@
     "tests/a20-09-profiles.test.js",
     "tests/a20-editor-cooperative-search.test.js",
     "tests/a20-editor-formatting.test.js",
+    "tests/a20-editor-model-ownership.test.js",
     "tests/a20-editor-package-corrections.test.js",
     "tests/a20-editor-search-diff.test.js",
     "tests/a20-editor-services.test.js",
