@@ -15,11 +15,11 @@
  *   RequiredMemberAttribute          on a `required` member and its type; Obsolete + CompilerFeatureRequired on the
  *                                    constructors of such a type that are not marked [SetsRequiredMembers]
  *
- * Pseudo-custom attributes are not rows: the runtime reads them from flags and other tables. `[Serializable]` sets
- * the TypeDef flag; the others (StructLayout, DllImport, MethodImpl, ...) are skipped and listed as a limit.
+ * Pseudo-custom attributes are written through `PseudoAttributeWriter`: CLI flags and layout, import and marshal
+ * tables carry the contract the runtime reads.
  */
-import { encodeCustomAttribute, TypeAttributes, token } from '@sharpforge/cil';
-import { SymbolKind, RefKind } from '../../symbols/types.js';
+import { encodeCustomAttribute, token } from '@sharpforge/cil';
+import { SymbolKind, RefKind, ArrayTypeSymbol } from '../../symbols/types.js';
 import { MethodKind } from '../../symbols/members.js';
 import { needsTypeSpec } from '../generics.js';
 import { fullNameOf, serializedTypeName } from './serialized-type-names.js';
@@ -30,26 +30,9 @@ import { tupleElementNamesOf } from '../../binder/tuples.js';
 import { dynamicTransformFlags } from './dynamic-flags.js';
 import { contractAssemblyOf } from './reference-contracts.js';
 import { writeParameterAttributes } from './parameter-metadata.js';
+import { PseudoAttributeWriter } from './pseudo-attributes.js';
 
 const ASSEMBLY_TOKEN = token(0x20, 1);
-const TYPE_DEF_TABLE = 2;
-const SERIALIZABLE = 'System.SerializableAttribute';
-/** Attributes that are flags or rows of other tables, never CustomAttribute rows. */
-const pseudoAttributes = new Set([
-  SERIALIZABLE,
-  'System.NonSerializedAttribute',
-  'System.Runtime.InteropServices.StructLayoutAttribute',
-  'System.Runtime.InteropServices.FieldOffsetAttribute',
-  'System.Runtime.InteropServices.DllImportAttribute',
-  'System.Runtime.InteropServices.MarshalAsAttribute',
-  'System.Runtime.InteropServices.InAttribute',
-  'System.Runtime.InteropServices.OutAttribute',
-  'System.Runtime.InteropServices.OptionalAttribute',
-  'System.Runtime.InteropServices.ComImportAttribute',
-  'System.Runtime.InteropServices.PreserveSigAttribute',
-  'System.Runtime.CompilerServices.MethodImplAttribute',
-  'System.Runtime.CompilerServices.SpecialNameAttribute',
-]);
 const REQUIRED_MEMBER = 'System.Runtime.CompilerServices.RequiredMemberAttribute';
 const IS_BY_REF_LIKE = 'System.Runtime.CompilerServices.IsByRefLikeAttribute';
 const EXTENSION = 'System.Runtime.CompilerServices.ExtensionAttribute';
@@ -89,6 +72,7 @@ export class CustomAttributeWriter {
     this.types = writer.tokens;
     this.assembly = analysis.assembly;
     this.core = analysis.core;
+    this.pseudo = new PseudoAttributeWriter(this);
   }
   write() {
     this.applied(ASSEMBLY_TOKEN, this.assembly, 'assembly');
@@ -177,11 +161,7 @@ export class CustomAttributeWriter {
   applied(parent, symbol, location = DEFAULT_LOCATIONS[symbol.kind]) {
     for (const attribute of symbol.boundAttributes ?? []) {
       if (attribute.location !== location) continue;
-      const name = fullNameOf(attribute.attributeClass);
-      if (name === SERIALIZABLE && parent >>> 24 === TYPE_DEF_TABLE) {
-        this.builder.rows[TYPE_DEF_TABLE][(parent & 0xffffff) - 1][0] |= TypeAttributes.Serializable;
-      }
-      if (pseudoAttributes.has(name)) continue;
+      if (this.pseudo.apply(parent, attribute)) continue;
       this.one(parent, attribute);
     }
   }
