@@ -1,4 +1,4 @@
-import { Reader, Writer, readPE, text } from '@sharpforge/cil';
+import { Reader, Writer, CilError, readPE, readPEDebugDirectory, text } from '@sharpforge/cil';
 import { fail } from './contracts.js';
 import { inflateRaw } from './deflate.js';
 import { rejectUnsupportedSymbolFormat } from './symbol-format.js';
@@ -51,36 +51,13 @@ const decoders = new Map([
 export function readDebugDirectory(assembly, { maxBytes = 64 * 1024 * 1024 } = {}) {
   if (!Number.isSafeInteger(maxBytes) || maxBytes < 0) fail('Invalid Portable PDB byte budget');
   const pe = readPE(assembly, { inspection: true });
-  const view = new DataView(pe.bytes.buffer, pe.bytes.byteOffset, pe.bytes.byteLength);
-  const directory = pe.optionalStart + (pe.magic === 0x10b ? 96 : 112) + 6 * 8;
-  const rva = view.getUint32(directory, true);
-  const size = view.getUint32(directory + 4, true);
-  if (!size) return [];
-  if (size % 28 || size > 28 * 1024) fail('Invalid debug directory size');
-  const reader = new Reader(pe.bytes, pe.offsetOf(rva, size), size);
-  const entries = [];
-  while (reader.position < reader.end) {
-    const characteristics = reader.u32();
-    const stamp = reader.u32();
-    const major = reader.u16();
-    const minor = reader.u16();
-    const kind = reader.u32();
-    const length = reader.u32();
-    const dataRva = reader.u32();
-    const offset = reader.u32();
-    if (offset + length > pe.bytes.length) fail('Truncated debug entry');
-    const entry = {
-      kind,
-      stamp,
-      major,
-      minor,
-      bytes: pe.bytes.subarray(offset, offset + length),
-      offset,
-      characteristics,
-      dataRva,
-    };
-    decoders.get(kind)?.(entry, maxBytes);
-    entries.push(entry);
+  let entries;
+  try {
+    entries = readPEDebugDirectory(pe);
+  } catch (error) {
+    if (!(error instanceof CilError)) throw error;
+    fail(error.message);
   }
+  for (const entry of entries) decoders.get(entry.kind)?.(entry, maxBytes);
   return entries;
 }

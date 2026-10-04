@@ -1,7 +1,7 @@
 import { CilError } from '../binary.js';
 
 export const PEMachine = Object.freeze({ I386: 0x14c, AMD64: 0x8664, ARM64: 0xaa64 });
-export const CorFlags = Object.freeze({ ILOnly: 1, Requires32Bit: 2, StrongNameSigned: 8,
+export const CorFlags = Object.freeze({ ILOnly: 1, Requires32Bit: 2, ILLibrary: 4, StrongNameSigned: 8,
   NativeEntryPoint: 16, TrackDebugData: 65536, Prefers32Bit: 131072 });
 export const PEPlatforms = Object.freeze({
   anycpu: Object.freeze({ machine: PEMachine.I386, pe32Plus: false, flags: CorFlags.ILOnly }),
