@@ -40,4 +40,7 @@ qualification remain separate #1403 work.
 `tests/a05-source-exception-events.test.js` authors source/reload cases for catch,
 finally, valid/invalid/explicit rethrow, pending and caught snapshots, original
 instruction replay, instruction/stack quotas, retired-frame location, host callback
-failure and low-level delivery. Execution awaits root's serial validation queue.
+failure and low-level delivery. All 76 focused source-exception, source-method,
+source-load, CIL-exception and ABI checks passed at `d1a51c97b`, with Node
+24.21.0, one worker and a 512 MB old-space limit. Broad qualification remains
+deferred.
