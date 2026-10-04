@@ -32,6 +32,7 @@ export * from './checkout.js';
 export * from './sign.js';
 export * from './policy.js';
 export * from './path-safety.js';
+export * from './origins.js';
 export * from './protocol/pktline.js';
 export * from './protocol/advertisement.js';
 export * from './protocol/v1.js';
