@@ -95,8 +95,55 @@ regressions above 20%; editor typing and workbench absolute budgets also remain
 in force. This profile does not change the separate contribution-guideline 5%
 review policy or the previously recorded performance exceptions.
 
-Focused source tests cover allowed/rejected routing, pinned bytes and missing
-files, source-envelope integrity, no silent fallback, delayed host rejection and
-the unchanged strict comparators. They are owned by the existing A19 glob.
-This source change has not run tests, builds, captures or hosted qualification;
-the parent integration owns the next serial targeted validation.
+## Completed local validation
+
+The complete targeted four-file cohort passed **35/35 tests**, with zero failed,
+canceled, skipped or todo cases. The parent integration ran it at exact source
+`876baeb099c9697f20fd09e7ffa39ebda284770e`, tree
+`bb8661834ea08234b6cbf499dbdd7b8c53322cb9`, using Node **v24.19.0**. The retained
+timestamps are **2026-10-04 06:28:50.308925–06:28:50.964269 UTC**; the Node test
+runner reported **510.205138 ms**. Tracked source was clean, the untracked-file
+inventory was empty, and the recorded source remained unchanged.
+
+```sh
+node scripts/limited.js node --test --test-reporter=tap \
+  tests/a19-qualification-profiles.test.js \
+  tests/a19-qualification-trigger.test.js \
+  tests/a19-qualification-preflight.test.js \
+  tests/a19-qualification-outcomes.test.js
+```
+
+This cohort covers allowed/rejected routing, pinned bytes and missing files,
+source-envelope integrity, no silent fallback, delayed host rejection and the
+unchanged strict comparators. The ten new profile cases are included in the
+35-test total and are not added again. All four files use the existing A19
+manifest ownership.
+
+Independent reviewer `/root/text_engine` inspected the completed profile,
+trigger/workflow wiring, ten new fixtures and documentation without executing
+tests, builds or measurements. The review found no concrete blocker and confirmed
+that exact pins precede environment output while live compatibility remains in
+the performance stage.
+
+A read-only dimension inspection covered the four changed JavaScript source/test
+files. No introduced line exceeds 160 characters, and every file is below the
+500-line/40 KiB limits:
+
+| File | Lines | Bytes | Longest line |
+|---|---:|---:|---:|
+| `scripts/project16-baseline-profiles.js` | 78 | 4,661 | 145 |
+| `scripts/project16-trigger.js` | 154 | 7,760 | 146 |
+| `tests/a19-qualification-profiles.test.js` | 147 | 9,147 | 141 |
+| `tests/a19-qualification-trigger.test.js` | 154 | 8,374 | 131 |
+
+The [unaltered test log](evidence/project16-a5-baseline-profile/tests.log) and
+[source/timing summary](evidence/project16-a5-baseline-profile/summary.json)
+are archived with a [SHA-256 manifest](evidence/project16-a5-baseline-profile/manifest.json):
+two raw files, **9,219 bytes**. The test-log SHA-256 is
+`fc285ea68ecf380504b050be8cb7310e539a098a2e5db9a3c0c0c7579e5effec`.
+Copies were read back and compared byte for byte; no test, build or capture was
+rerun for this evidence update.
+
+**Hosted comparative execution remains pending.** These local tests qualify the
+profile and orchestration behavior; they do not establish a hosted environment
+match, a new browser capture or a relative performance verdict.
