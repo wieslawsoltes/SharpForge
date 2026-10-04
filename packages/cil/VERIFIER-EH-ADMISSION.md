@@ -20,6 +20,8 @@ point and are not an unchecked public option. The boundary bitmap is shared
 between tree construction and transfer validation, then released with the
 temporary region/index state. No tree or EH index is allocated for methods
 without handlers; those methods retain their existing admission behavior.
+In particular, this batch does not newly reject `rethrow` or `endfinally` in a
+method without handlers. That remaining placement gap is a separate increment.
 
 The existing region defaults bound code to 16 MiB, instructions to one million,
 clauses to 100,000 and lexical depth to 1,024. `maxCodeBytes`, `maxInstructions`,
