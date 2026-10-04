@@ -52,7 +52,9 @@ function importedAttributes(definition) {
   if (!attributes?.length) return [];
   const asBound = attribute => ({ arguments: attribute.constructorArguments.map(argument => ({ constantValue: { value: argument.value } })) });
   return kinds.flatMap(row =>
-    attributes.filter(attribute => attribute.attributeClassName === namespaceName + row.className).map(attribute => ({ ...row, attribute: asBound(attribute) })),
+    attributes
+      .filter(attribute => attribute.attributeClassName === namespaceName + row.className)
+      .map(attribute => ({ ...row, attribute: asBound(attribute) })),
   );
 }
 
