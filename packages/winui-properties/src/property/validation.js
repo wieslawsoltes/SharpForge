@@ -59,7 +59,7 @@ export function validatePropertyValue(property, value, services = {}) {
   if (primitive && !primitive(value)) reject(property, 'ArgumentException', `requires ${type}`);
   const definition = services.typeDefinition?.(type);
   const enumValues = metadata.enumValues ?? definition?.values;
-  if (enumValues && !Object.values(enumValues).includes(value)) {
+  if (enumValues && !validEnumValue(value, enumValues, metadata.flags || definition?.flags)) {
     reject(property, 'ArgumentOutOfRangeException', 'invalid enumeration value');
   }
   if (!primitive && !enumValues && value !== null) {
@@ -75,6 +75,15 @@ export function validatePropertyValue(property, value, services = {}) {
   if (typeof value === 'number') validateRange(property, value);
   if (value !== null && metadata.structFields) validateStruct(property, value, metadata.structFields);
   return value;
+}
+
+function validEnumValue(value, values, flags) {
+  const allowed = Object.values(values);
+  if (allowed.includes(value)) return true;
+  if (!flags || !Number.isInteger(value) || value < 0 || value > 0xffffffff) return false;
+  if (!allowed.every(item => Number.isInteger(item) && item >= 0 && item <= 0xffffffff)) return false;
+  const mask = allowed.reduce((bits, item) => (bits | item) >>> 0, 0);
+  return (value & ~mask) === 0;
 }
 
 function validateNumber(property, value) {
