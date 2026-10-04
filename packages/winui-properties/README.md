@@ -61,3 +61,7 @@ Resource dictionaries, collection views, typed/legacy style definitions and sele
 ## Item generator prerequisites
 
 The reviewed item source, collection-view and recycling models now share typed styles and resource adapters. The eight item-only modules/tests are copied unchanged from the secondary branch. This is an explicit integration commit with both branch heads as parents; it does not construct containers or change source mutation behavior.
+
+## Realized item and content services
+
+`initializeItemsContext` realizes actual managed container references, recycles them with phased lifecycle callbacks, and publishes a bounded sparse scene descriptor. Group headers and ItemsPanelTemplate instances share the same style/template/property services. `initializeContentPresentation` owns content-template selection, data context and replaced instance lifetimes. Managed Count/indexer/INCC projections are supplied by the binding service; hosts supply scene parenting, scheduling, realized-index requests and retained owner roots.
