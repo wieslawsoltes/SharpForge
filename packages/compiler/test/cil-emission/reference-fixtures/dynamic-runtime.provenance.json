@@ -1,0 +1,39 @@
+{
+  "schemaVersion": 1,
+  "sdkVersion": "10.0.201",
+  "referencePackVersion": "10.0.5",
+  "targetFramework": "net10.0",
+  "compilerFiles": [
+    {
+      "path": "sdk/10.0.201/Roslyn/bincore/csc.dll",
+      "sha256": "4913fa70d10c99901edbb825fdedcc92465be08665016a5d258ea45f953624f0"
+    },
+    {
+      "path": "sdk/10.0.201/Roslyn/bincore/Microsoft.CodeAnalysis.CSharp.dll",
+      "sha256": "2e29a995bcee2351d2cc1bb1d3187b1a5d9170e300ef1c15a47a5e4d64c1bb1d"
+    }
+  ],
+  "captureTool": "packages/compiler/test/cil-emission/verify-dotnet.mjs",
+  "captureArguments": [
+    "--references",
+    "--only",
+    "<fixture-name>",
+    "--update"
+  ],
+  "fixtures": [
+    {
+      "name": "dynamic-callsites",
+      "sourceSha256": "906b64bd076eb2fbdbfc099b023c114d6a2194daebebb964b38a36b7dc553b2a",
+      "outputSha256": "e88d38fefff73b9c37edfe8550d55714b97a5fd0d0267eb19945ae77a28ea30f",
+      "outputLines": 89,
+      "directDotnet": "equal"
+    },
+    {
+      "name": "dynamic-control-flow",
+      "sourceSha256": "d1387cd24872eb618190476851c0a683beeda15a844f9541cfbfd43f054927b6",
+      "outputSha256": "aef617339edff9d429e7e312b4a1637c96e4594954a64ee8888e3e6bacdc789b",
+      "outputLines": 25,
+      "directDotnet": "equal"
+    }
+  ]
+}
