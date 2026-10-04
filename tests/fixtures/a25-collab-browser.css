@@ -1,0 +1,3 @@
+body { margin: 24px; font: 14px system-ui, sans-serif; background: #181a20; color: #e9ecf4; }
+#source-editor { width: min(900px, 100%); height: 360px; border: 1px solid #7d869d; }
+#presence { max-width: 900px; margin-top: 16px; }
