@@ -683,8 +683,13 @@ Registered families: <code>builder</code>.
 | 524320 | <code>System.Text.StringBuilder System.Text.StringBuilder::Append(char[])</code> | implemented |
 | 524321 | <code>System.Text.StringBuilder System.Text.StringBuilder::Append(char[], int, int)</code> | implemented |
 | 524323 | <code>System.Text.StringBuilder System.Text.StringBuilder::Append(System.Text.StringBuilder)</code> | implemented |
+| 524324 | <code>System.Text.StringBuilder System.Text.StringBuilder::Append(sbyte)</code> | implemented |
+| 524325 | <code>System.Text.StringBuilder System.Text.StringBuilder::Append(byte)</code> | implemented |
+| 524326 | <code>System.Text.StringBuilder System.Text.StringBuilder::Append(short)</code> | implemented |
+| 524327 | <code>System.Text.StringBuilder System.Text.StringBuilder::Append(ushort)</code> | implemented |
+| 524328 | <code>System.Text.StringBuilder System.Text.StringBuilder::Append(uint)</code> | implemented |
 
-Pinned reference: 42 implemented and 66 missing exact metadata rows.
+Pinned reference: 47 implemented and 61 missing exact metadata rows.
 
 | Reference kind | Exact reference signature | Status | Matching ABI IDs |
 | --- | --- | --- | --- |
@@ -703,7 +708,7 @@ Pinned reference: 42 implemented and 66 missing exact metadata rows.
 | method | <code>System.Text.StringBuilder::set_Length``0(System.Int32):System.Void instance</code> | implemented | 800 |
 | method | <code>System.Text.StringBuilder::get_MaxCapacity``0():System.Int32 instance</code> | implemented | 803 |
 | method | <code>System.Text.StringBuilder::Append``0(System.Boolean):System.Text.StringBuilder instance</code> | implemented | 806 |
-| method | <code>System.Text.StringBuilder::Append``0(System.Byte):System.Text.StringBuilder instance</code> | missing | — |
+| method | <code>System.Text.StringBuilder::Append``0(System.Byte):System.Text.StringBuilder instance</code> | implemented | 524325 |
 | method | <code>System.Text.StringBuilder::Append``0(System.Char):System.Text.StringBuilder instance</code> | implemented | 524309 |
 | method | <code>System.Text.StringBuilder::Append``0(System.Char*,System.Int32):System.Text.StringBuilder instance</code> | missing | — |
 | method | <code>System.Text.StringBuilder::Append``0(System.Char,System.Int32):System.Text.StringBuilder instance</code> | implemented | 524310 |
@@ -712,21 +717,21 @@ Pinned reference: 42 implemented and 66 missing exact metadata rows.
 | method | <code>System.Text.StringBuilder::Append``0(System.Decimal):System.Text.StringBuilder instance</code> | missing | — |
 | method | <code>System.Text.StringBuilder::Append``0(System.Double):System.Text.StringBuilder instance</code> | implemented | 805 |
 | method | <code>System.Text.StringBuilder::Append``0(System.IFormatProvider,System.Text.StringBuilder+AppendInterpolatedStringHandler&amp;):System.Text.StringBuilder instance</code> | missing | — |
-| method | <code>System.Text.StringBuilder::Append``0(System.Int16):System.Text.StringBuilder instance</code> | missing | — |
+| method | <code>System.Text.StringBuilder::Append``0(System.Int16):System.Text.StringBuilder instance</code> | implemented | 524326 |
 | method | <code>System.Text.StringBuilder::Append``0(System.Int32):System.Text.StringBuilder instance</code> | implemented | 804 |
 | method | <code>System.Text.StringBuilder::Append``0(System.Int64):System.Text.StringBuilder instance</code> | implemented | 524316 |
 | method | <code>System.Text.StringBuilder::Append``0(System.Object):System.Text.StringBuilder instance</code> | implemented | 808 |
 | method | <code>System.Text.StringBuilder::Append``0(System.ReadOnlyMemory`1&lt;System.Char&gt;):System.Text.StringBuilder instance</code> | missing | — |
 | method | <code>System.Text.StringBuilder::Append``0(System.ReadOnlySpan`1&lt;System.Char&gt;):System.Text.StringBuilder instance</code> | missing | — |
-| method | <code>System.Text.StringBuilder::Append``0(System.SByte):System.Text.StringBuilder instance</code> | missing | — |
+| method | <code>System.Text.StringBuilder::Append``0(System.SByte):System.Text.StringBuilder instance</code> | implemented | 524324 |
 | method | <code>System.Text.StringBuilder::Append``0(System.Single):System.Text.StringBuilder instance</code> | missing | — |
 | method | <code>System.Text.StringBuilder::Append``0(System.String):System.Text.StringBuilder instance</code> | implemented | 807 |
 | method | <code>System.Text.StringBuilder::Append``0(System.String,System.Int32,System.Int32):System.Text.StringBuilder instance</code> | implemented | 524319 |
 | method | <code>System.Text.StringBuilder::Append``0(System.Text.StringBuilder):System.Text.StringBuilder instance</code> | implemented | 524323 |
 | method | <code>System.Text.StringBuilder::Append``0(System.Text.StringBuilder,System.Int32,System.Int32):System.Text.StringBuilder instance</code> | missing | — |
 | method | <code>System.Text.StringBuilder::Append``0(System.Text.StringBuilder+AppendInterpolatedStringHandler&amp;):System.Text.StringBuilder instance</code> | missing | — |
-| method | <code>System.Text.StringBuilder::Append``0(System.UInt16):System.Text.StringBuilder instance</code> | missing | — |
-| method | <code>System.Text.StringBuilder::Append``0(System.UInt32):System.Text.StringBuilder instance</code> | missing | — |
+| method | <code>System.Text.StringBuilder::Append``0(System.UInt16):System.Text.StringBuilder instance</code> | implemented | 524327 |
+| method | <code>System.Text.StringBuilder::Append``0(System.UInt32):System.Text.StringBuilder instance</code> | implemented | 524328 |
 | method | <code>System.Text.StringBuilder::Append``0(System.UInt64):System.Text.StringBuilder instance</code> | implemented | 524317 |
 | method | <code>System.Text.StringBuilder::AppendFormat``0(System.IFormatProvider,System.String,System.Object):System.Text.StringBuilder instance</code> | missing | — |
 | method | <code>System.Text.StringBuilder::AppendFormat``0(System.IFormatProvider,System.String,System.Object,System.Object):System.Text.StringBuilder instance</code> | missing | — |
@@ -1294,6 +1299,7 @@ Registered families: <code>stringComparer</code>, <code>orderingComparer</code>.
 | 524295 | <code>int System.StringComparer::Compare(object, object)</code> | implemented |
 | 524297 | <code>static System.StringComparer System.StringComparer::get_OrdinalIgnoreCase()</code> | implemented |
 | 524322 | <code>static System.StringComparer System.StringComparer::FromComparison(System.StringComparison)</code> | implemented |
+| 524329 | <code>bool System.StringComparer::Equals(string, string)</code> | implemented |
 
 No pinned reference inventory is included for these families; registered rows alone do not establish API coverage.
 
