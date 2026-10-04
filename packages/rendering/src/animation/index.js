@@ -3,3 +3,5 @@ export {prepareValueAnimation, sampleValueAnimation, interpolateValue, validateA
 export {parseAnimationPropertyPath, resolveAnimationTarget} from './property-path.js';
 export {buildTimelineDefinition, readEasing} from './timeline-definition.js';
 export {CompositionAnimationEngine} from './composition-engine.js';
+export {ThemeTransition, ThemeTransitionCoordinator, themeTransitionKinds} from './theme-transitions.js';
+export {ImplicitTransition, ImplicitTransitionCoordinator} from './implicit-transitions.js';
