@@ -40,5 +40,20 @@ validate actual output and measured capture. Two-application cases execute the e
 arguments/environment, then check targeted stop, background restart and composite capture identity.
 
 The tests do not replace runtime responses or relax the hosted assertions. They do not execute a browser renderer or
-claim native/platform acceptance. These new tests and the corrected hosted workflows are **pending execution** in the
-parent's completed correction cohort. No test, build or browser run was performed while preparing this source batch.
+claim native/platform acceptance. No test, build or browser run was performed while preparing the original source batch.
+
+## Initial local cohort and selection fixture correction
+
+The completed A19 cohort at `cae69484b1ece1991e99b39a61a77303d96fca39` ran 790 cases: 787 passed and three failed.
+The retained `artifacts/results/p16-a5-corrections-local/A19.log` records two failures in this fixture, one per execution
+engine, at the assertion that stopping Alpha should select Beta. The third failure belongs to a separate compiler-limit
+fixture. These results do not establish a hosted browser pass.
+
+The two-application fixture created Beta with `activate: false` and never selected it. `SessionManager` preserves explicit
+selection; its fallback for an ended active application considers previously selected live applications. Beta was absent
+from that history, so the fixture's expectation did not match its setup. The corrected fixture first verifies that launching
+Beta preserves Alpha, then explicitly selects Beta before stopping and restarting background Alpha. It retains the selection,
+debugger identity, output, live-window and capture assertions. No product selection behavior changed.
+
+The affected retry and corrected hosted workflows remain **pending execution**. No tests, builds or browser runs were
+performed while preparing this fixture correction.
