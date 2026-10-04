@@ -1,0 +1,8 @@
+{
+  "authority": "root Project 6 owner",
+  "product": "892822c33016ad7502821e245716efbbf552a16d",
+  "accepted": true,
+  "message": "Explicit sign-off: accept fresh inherited-query p95 .577292→.633291ms per1000 (+.055999µs/query,+9.7003%) for validated canonical flags and bounded category authority. Required default-path optimization removed extra scans/category fields; root accepts remaining quantified small tail cost. Retain all192raw + original failure, no unchanged retry/no noise/causality/speed/peakmemory claims.",
+  "retainedRawSamples": 192,
+  "newCapability": "Authority/category unknown-to-known workload reported at full cost, not an existing-operation comparison."
+}

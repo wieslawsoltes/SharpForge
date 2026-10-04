@@ -1,24 +1,12 @@
-/** Package the built IDE, its two real workers, and dependencies into one HTML file. */
-import { readFile,writeFile,mkdir } from 'node:fs/promises';
-import { bundleWorker } from './bundle-worker.js';
+/** Package the built IDE and its closed module/worker graph into one HTML file. */
+import { writeFile,mkdir } from 'node:fs/promises';
+import { createStandalone } from './bundling/standalone.js';
 import { resolve,dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { connectOrigins, installCsp } from './conformance/security/csp.js';
+import { connectOrigins } from './conformance/security/csp.js';
 const root=resolve(dirname(fileURLToPath(import.meta.url)),'..'),dist=resolve(root,'dist');
-let html=await readFile(resolve(dist,'index.html'),'utf8');
-const css=await readFile(resolve(dist,'studio.css'),'utf8');
-const compiler=await readFile(resolve(dist,'compiler.worker.js'),'utf8');
-const runtime=await readFile(resolve(dist,'runtime.worker.js'),'utf8');
-let script=await bundleWorker(resolve(dist,'studio.js'));
-script=script.replaceAll("new URL('./compiler.worker.js',import.meta.url)",'__workerCompiler').replaceAll("new URL('./runtime.worker.js',import.meta.url)",'__workerRuntime');
-if(script.includes('import.meta'))throw new Error('Unresolved module URL in standalone bundle');
-script=`const __workerCompiler=URL.createObjectURL(new Blob([${JSON.stringify(compiler)}],{type:'text/javascript'}));\nconst __workerRuntime=URL.createObjectURL(new Blob([${JSON.stringify(runtime)}],{type:'text/javascript'}));\n`+script;
-html=html.replace('<link rel="stylesheet" href="./studio.css">',()=>'<style>'+css+'</style>').replace('<link rel="icon" href="./favicon.svg" type="image/svg+xml">','');
-const inlineScript=script.replace(/<\/script/gi,'<\\/script');
-html=html.replace('<script type="module" src="./studio.js"></script>',()=>'<script>'+inlineScript+'</script>');
-html=installCsp(html,{allowedOrigins:connectOrigins(process.env.SHARPFORGE_CONNECT_ORIGINS),inlineScript});
-html=html.replace('<title>','<!-- Self-contained SharpForge release: exact entry-script hash, trusted Blob workers and configured origins. -->\n<title>');
+const {html,workers}=await createStandalone(dist,{allowedOrigins:connectOrigins(process.env.SHARPFORGE_CONNECT_ORIGINS)});
 const target=resolve(root,process.env.SHARPFORGE_STANDALONE_PATH || 'artifacts/SharpForge-standalone.html');
 await mkdir(dirname(target),{recursive:true});
 await writeFile(target,html);
-console.log(`Built ${target} (${Buffer.byteLength(html).toLocaleString()} bytes)`);
+console.log(`Built ${target} (${Buffer.byteLength(html).toLocaleString()} bytes; ${workers} embedded worker graphs)`);

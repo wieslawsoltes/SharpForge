@@ -1,0 +1,9 @@
+[7,2]L(a )I(3)L( b )T(x)L( c)
+[0,0][9,0]L(only text)[0,2]I(3)T(x)
+[35,4]L(aligned )I(3,5,-)L( formatted )I(3,0,X2)L( both )I(3,-4,D3)L( braces {)I(3)L(})
+made: [5,1]L(made )I(7) cast: [5,1]L(cast )T(x)
+3 3 2 22
+(off) value 1 calls=1
+(none) p<5>q<50> <1>-<2> calls=1
+[15,2]L(in lambda )I(9)L( and )I(3)
+[0,1]I(0);[0,1]I(1);[0,1]I(2);

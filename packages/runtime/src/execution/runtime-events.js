@@ -81,12 +81,18 @@ export class RuntimeEventLog {
 
   /** Callback failures propagate to the host; they are never turned into managed exceptions. */
   flush() {
-    if (this.flushing) return;
+    if (this.flushing || this.subscribers.size === 0 || this.count === 0) return;
+    let after = this.sequence;
+    for (const subscriber of this.subscribers) {
+      after = Math.min(after, subscriber.cursor);
+    }
+    if (after === this.sequence) return;
     this.flushing = true;
     try {
-      // Snapshot both collections: callbacks may overwrite the ring or replace
-      // subscriptions. Their new work belongs to the next bounded host flush.
-      const events = this.read();
+      // Keep only the unread retained suffix alive across callbacks. Copy it
+      // before delivery so ring overwrites cannot change this flush boundary.
+      // New subscriptions and callback emissions belong to the next flush.
+      const events = this.read({after});
       const subscribers = [...this.subscribers];
       for (const subscriber of subscribers) {
         for (const event of events) {
@@ -101,8 +107,9 @@ export class RuntimeEventLog {
     }
   }
 
-  export() {
+  /** One retained event window; sequence and dropped remain whole-log counters. */
+  export(options) {
     return {format: 'SharpForge.RuntimeEvents/1', clock: 'instructions', sequence: this.sequence,
-      dropped: this.dropped, events: this.read()};
+      dropped: this.dropped, events: this.read(options)};
   }
 }

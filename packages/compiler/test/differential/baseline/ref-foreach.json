@@ -1,0 +1,4 @@
+{
+  "ref-foreach/ref-foreach-in-7-2": ["diagnostics", "warnings"],
+  "ref-foreach/ref-needs-a-current-that-returns-by-reference": ["diagnostics", "warnings"]
+}

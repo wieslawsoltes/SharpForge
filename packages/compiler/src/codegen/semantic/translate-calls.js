@@ -5,6 +5,7 @@
 import { BuiltinMap } from '@sharpforge/bytecode';
 import { TypeKind } from '../../symbols/types.js';
 import { MethodKind } from '../../symbols/members.js';
+import { defaultSourceOf } from '../../overload/override-parameters.js';
 import { n } from './node-factory.js';
 
 const primitiveToString = new Set(['int', 'double', 'bool', 'string']);
@@ -44,7 +45,7 @@ export const CallTranslation = Base =>
         if (mapping.expanded && positions[i] === last) rest.push(this.objectArgument(value, elementType));
         else slots[positions[i]] = value;
       });
-      const lowered = slots.map((value, i) => value ?? this.defaultArgument(parameters[i], node, i));
+      const lowered = slots.map((value, i) => value ?? this.defaultArgument(defaultSourceOf(node, parameters[i], i), node, i));
       if (mapping.expanded) {
         lowered.push(n.newArray(elementType, n.literal(rest.length, 'int'), rest));
       }

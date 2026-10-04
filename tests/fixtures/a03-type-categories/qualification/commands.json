@@ -1,0 +1,225 @@
+[
+  {
+    "label": "candidate-head",
+    "command": "git",
+    "args": [
+      "rev-parse",
+      "HEAD"
+    ],
+    "cwd": "/tmp/sharpforge-a03-object-field-transfers",
+    "started": "2026-10-04T09:29:05.271Z",
+    "completed": "2026-10-04T09:29:05.307Z",
+    "exitCode": 0,
+    "signal": null
+  },
+  {
+    "label": "candidate-clean",
+    "command": "git",
+    "args": [
+      "status",
+      "--porcelain"
+    ],
+    "cwd": "/tmp/sharpforge-a03-object-field-transfers",
+    "started": "2026-10-04T09:29:05.307Z",
+    "completed": "2026-10-04T09:29:05.499Z",
+    "exitCode": 0,
+    "signal": null
+  },
+  {
+    "label": "baseline-create",
+    "command": "git",
+    "args": [
+      "worktree",
+      "add",
+      "--detach",
+      "/tmp/sharpforge-a03-type-categories-baseline",
+      "b79fbbb9e9b54cb77d2376765e290e9b0922b2d6"
+    ],
+    "cwd": "/tmp/sharpforge-a03-object-field-transfers",
+    "started": "2026-10-04T09:29:05.500Z",
+    "completed": "2026-10-04T09:29:07.519Z",
+    "exitCode": 0,
+    "signal": null
+  },
+  {
+    "label": "baseline-head",
+    "command": "git",
+    "args": [
+      "rev-parse",
+      "HEAD"
+    ],
+    "cwd": "/tmp/sharpforge-a03-type-categories-baseline",
+    "started": "2026-10-04T09:29:07.519Z",
+    "completed": "2026-10-04T09:29:07.554Z",
+    "exitCode": 0,
+    "signal": null
+  },
+  {
+    "label": "baseline-clean",
+    "command": "git",
+    "args": [
+      "status",
+      "--porcelain"
+    ],
+    "cwd": "/tmp/sharpforge-a03-type-categories-baseline",
+    "started": "2026-10-04T09:29:07.554Z",
+    "completed": "2026-10-04T09:29:07.848Z",
+    "exitCode": 0,
+    "signal": null
+  },
+  {
+    "label": "source-files",
+    "command": "git",
+    "args": [
+      "ls-files",
+      "packages/cil/src"
+    ],
+    "cwd": "/tmp/sharpforge-a03-object-field-transfers",
+    "started": "2026-10-04T09:29:07.849Z",
+    "completed": "2026-10-04T09:29:07.894Z",
+    "exitCode": 0,
+    "signal": null
+  },
+  {
+    "label": "manifest-files",
+    "command": "git",
+    "args": [
+      "ls-files",
+      "package.json",
+      "package-lock.json",
+      "packages/*/package.json"
+    ],
+    "cwd": "/tmp/sharpforge-a03-object-field-transfers",
+    "started": "2026-10-04T09:29:07.894Z",
+    "completed": "2026-10-04T09:29:07.933Z",
+    "exitCode": 0,
+    "signal": null
+  },
+  {
+    "label": "install",
+    "command": "npm",
+    "args": [
+      "ci",
+      "--ignore-scripts",
+      "--no-audit",
+      "--no-fund"
+    ],
+    "cwd": "/tmp/sharpforge-a03-object-field-transfers",
+    "started": "2026-10-04T09:29:07.961Z",
+    "completed": "2026-10-04T09:29:08.290Z",
+    "exitCode": 0,
+    "signal": null
+  },
+  {
+    "label": "baseline-install",
+    "command": "npm",
+    "args": [
+      "ci",
+      "--ignore-scripts",
+      "--no-audit",
+      "--no-fund"
+    ],
+    "cwd": "/tmp/sharpforge-a03-type-categories-baseline",
+    "started": "2026-10-04T09:29:08.290Z",
+    "completed": "2026-10-04T09:29:08.480Z",
+    "exitCode": 0,
+    "signal": null
+  },
+  {
+    "label": "baseline-red",
+    "command": "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+    "args": [
+      "--test",
+      "--test-concurrency=1",
+      "--test-name-pattern=explicit fundamental identity",
+      "tests/a03-type-categories.test.js"
+    ],
+    "cwd": "/tmp/sharpforge-a03-type-categories-baseline",
+    "started": "2026-10-04T09:29:08.481Z",
+    "completed": "2026-10-04T09:29:08.650Z",
+    "exitCode": 1,
+    "signal": null
+  },
+  {
+    "label": "baseline-categories-performance",
+    "command": "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+    "args": [
+      "--expose-gc",
+      "packages/cil/tools/benchmark-type-categories.mjs",
+      "/tmp/a03-type-categories-validation/baseline-categories-performance.json"
+    ],
+    "cwd": "/tmp/sharpforge-a03-type-categories-baseline",
+    "started": "2026-10-04T09:29:08.650Z",
+    "completed": "2026-10-04T09:29:08.886Z",
+    "exitCode": 0,
+    "signal": null
+  },
+  {
+    "label": "baseline-existing-performance",
+    "command": "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+    "args": [
+      "--expose-gc",
+      "packages/cil/tools/benchmark-verifier-types.mjs",
+      "/tmp/a03-type-categories-validation/baseline-existing-performance.json"
+    ],
+    "cwd": "/tmp/sharpforge-a03-type-categories-baseline",
+    "started": "2026-10-04T09:29:08.886Z",
+    "completed": "2026-10-04T09:29:09.129Z",
+    "exitCode": 0,
+    "signal": null
+  },
+  {
+    "label": "baseline-local-alias-performance",
+    "command": "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+    "args": [
+      "--expose-gc",
+      "packages/cil/tools/benchmark-local-type-references.mjs",
+      "/tmp/a03-type-categories-validation/baseline-local-alias-performance.json"
+    ],
+    "cwd": "/tmp/sharpforge-a03-type-categories-baseline",
+    "started": "2026-10-04T09:29:09.130Z",
+    "completed": "2026-10-04T09:29:09.455Z",
+    "exitCode": 0,
+    "signal": null
+  },
+  {
+    "label": "native",
+    "command": "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+    "args": [
+      "tests/fixtures/a03-type-categories/capture.mjs",
+      "/tmp/a03-type-categories-validation/native.json"
+    ],
+    "cwd": "/tmp/sharpforge-a03-object-field-transfers",
+    "started": "2026-10-04T09:29:09.455Z",
+    "completed": "2026-10-04T09:29:10.454Z",
+    "exitCode": 0,
+    "signal": null
+  },
+  {
+    "label": "focused-tests",
+    "command": "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+    "args": [
+      "--test",
+      "--test-concurrency=1",
+      "tests/a03-type-categories.test.js",
+      "tests/a03-type-categories-native.test.js",
+      "tests/a03-07-nested-type-references.test.js",
+      "tests/a03-07-local-type-references.test.js",
+      "tests/a03-07-local-type-references-native.test.js",
+      "tests/a03-07-type-system.test.js",
+      "tests/a03-07-type-system-native.test.js",
+      "tests/a03-verification-types.test.js",
+      "tests/a03-07-members.test.js",
+      "tests/a03-07-members-inherited.test.js",
+      "tests/a03-07-type-access.test.js",
+      "tests/a03-07-nested-access.test.js",
+      "tests/a03-07-member-access.test.js",
+      "tests/a03-coded-index-bounds.test.js"
+    ],
+    "cwd": "/tmp/sharpforge-a03-object-field-transfers",
+    "started": "2026-10-04T09:29:10.455Z",
+    "completed": "2026-10-04T09:29:12.553Z",
+    "exitCode": 1,
+    "signal": null
+  }
+]

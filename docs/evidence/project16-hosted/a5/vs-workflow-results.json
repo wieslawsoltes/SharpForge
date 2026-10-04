@@ -1,0 +1,33 @@
+{
+  "suite": "browser_vs_workflows_test",
+  "mode": "http",
+  "engine": "chromium",
+  "passed": false,
+  "sourceSha": "c13aa0fd9d27df28b3708bb83d914a04c20a5c7c",
+  "sourceTree": "29023ed8b962b6d91671bdb0c0359d905ef2659e",
+  "checks": [
+    {
+      "scenario": "create-console-project",
+      "passed": true,
+      "emptyNameRejected": true
+    },
+    {
+      "scenario": "edit-and-build-shared-document",
+      "passed": true
+    }
+  ],
+  "navigation": {
+    "mode": "http",
+    "url": "http://127.0.0.1:37837/",
+    "offline": false
+  },
+  "httpAttempts": [],
+  "pageErrors": [
+    "Workbench event listeners failed"
+  ],
+  "browser": "153.0.8010.12",
+  "failure": {
+    "type": "TimeoutError",
+    "message": "Browser predicate remained false: sharpforge.getState().debug?.state === \"paused\""
+  }
+}

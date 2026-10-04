@@ -1,0 +1,1995 @@
+{
+  "sdk": "10.0.201",
+  "runtime": "10.0.5",
+  "sourceSha256": "8ec53a7c3b74c3809c4c5b245d76f26f511a9932ea48192a2e6a955b63ab4dab",
+  "rows": [
+    {
+      "id": "range-0",
+      "sourceIndex": 0,
+      "destinationLength": 9,
+      "destinationIndex": 1,
+      "count": 7,
+      "nullReceiver": false,
+      "segments": [
+        [
+          97,
+          98
+        ],
+        [
+          0
+        ],
+        [
+          55296
+        ],
+        [
+          99,
+          100,
+          56320
+        ]
+      ],
+      "output": [
+        46,
+        97,
+        98,
+        0,
+        55296,
+        99,
+        100,
+        56320,
+        46
+      ],
+      "builder": [
+        97,
+        98,
+        0,
+        55296,
+        99,
+        100,
+        56320
+      ],
+      "length": 7,
+      "capacity": 16,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "range-1",
+      "sourceIndex": 2,
+      "destinationLength": 9,
+      "destinationIndex": 3,
+      "count": 4,
+      "nullReceiver": false,
+      "segments": [
+        [
+          97,
+          98
+        ],
+        [
+          0
+        ],
+        [
+          55296
+        ],
+        [
+          99,
+          100,
+          56320
+        ]
+      ],
+      "output": [
+        46,
+        46,
+        46,
+        0,
+        55296,
+        99,
+        100,
+        46,
+        46
+      ],
+      "builder": [
+        97,
+        98,
+        0,
+        55296,
+        99,
+        100,
+        56320
+      ],
+      "length": 7,
+      "capacity": 16,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "range-2",
+      "sourceIndex": 3,
+      "destinationLength": 9,
+      "destinationIndex": 1,
+      "count": 1,
+      "nullReceiver": false,
+      "segments": [
+        [
+          97,
+          98
+        ],
+        [
+          0
+        ],
+        [
+          55296
+        ],
+        [
+          99,
+          100,
+          56320
+        ]
+      ],
+      "output": [
+        46,
+        55296,
+        46,
+        46,
+        46,
+        46,
+        46,
+        46,
+        46
+      ],
+      "builder": [
+        97,
+        98,
+        0,
+        55296,
+        99,
+        100,
+        56320
+      ],
+      "length": 7,
+      "capacity": 16,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "range-3",
+      "sourceIndex": 6,
+      "destinationLength": 9,
+      "destinationIndex": 0,
+      "count": 1,
+      "nullReceiver": false,
+      "segments": [
+        [
+          97,
+          98
+        ],
+        [
+          0
+        ],
+        [
+          55296
+        ],
+        [
+          99,
+          100,
+          56320
+        ]
+      ],
+      "output": [
+        56320,
+        46,
+        46,
+        46,
+        46,
+        46,
+        46,
+        46,
+        46
+      ],
+      "builder": [
+        97,
+        98,
+        0,
+        55296,
+        99,
+        100,
+        56320
+      ],
+      "length": 7,
+      "capacity": 16,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "range-4",
+      "sourceIndex": 7,
+      "destinationLength": 9,
+      "destinationIndex": 9,
+      "count": 0,
+      "nullReceiver": false,
+      "segments": [
+        [
+          97,
+          98
+        ],
+        [
+          0
+        ],
+        [
+          55296
+        ],
+        [
+          99,
+          100,
+          56320
+        ]
+      ],
+      "output": [
+        46,
+        46,
+        46,
+        46,
+        46,
+        46,
+        46,
+        46,
+        46
+      ],
+      "builder": [
+        97,
+        98,
+        0,
+        55296,
+        99,
+        100,
+        56320
+      ],
+      "length": 7,
+      "capacity": 16,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "range-5",
+      "sourceIndex": 7,
+      "destinationLength": 9,
+      "destinationIndex": 0,
+      "count": 0,
+      "nullReceiver": false,
+      "segments": [
+        [
+          97,
+          98
+        ],
+        [
+          0
+        ],
+        [
+          55296
+        ],
+        [
+          99,
+          100,
+          56320
+        ]
+      ],
+      "output": [
+        46,
+        46,
+        46,
+        46,
+        46,
+        46,
+        46,
+        46,
+        46
+      ],
+      "builder": [
+        97,
+        98,
+        0,
+        55296,
+        99,
+        100,
+        56320
+      ],
+      "length": 7,
+      "capacity": 16,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "range-6",
+      "sourceIndex": 0,
+      "destinationLength": 9,
+      "destinationIndex": 9,
+      "count": 0,
+      "nullReceiver": false,
+      "segments": [
+        [
+          97,
+          98
+        ],
+        [
+          0
+        ],
+        [
+          55296
+        ],
+        [
+          99,
+          100,
+          56320
+        ]
+      ],
+      "output": [
+        46,
+        46,
+        46,
+        46,
+        46,
+        46,
+        46,
+        46,
+        46
+      ],
+      "builder": [
+        97,
+        98,
+        0,
+        55296,
+        99,
+        100,
+        56320
+      ],
+      "length": 7,
+      "capacity": 16,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "range-7",
+      "sourceIndex": 0,
+      "destinationLength": 0,
+      "destinationIndex": 0,
+      "count": 0,
+      "nullReceiver": false,
+      "segments": [
+        [
+          97,
+          98
+        ],
+        [
+          0
+        ],
+        [
+          55296
+        ],
+        [
+          99,
+          100,
+          56320
+        ]
+      ],
+      "output": [],
+      "builder": [
+        97,
+        98,
+        0,
+        55296,
+        99,
+        100,
+        56320
+      ],
+      "length": 7,
+      "capacity": 16,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "range-8",
+      "sourceIndex": -1,
+      "destinationLength": 9,
+      "destinationIndex": 0,
+      "count": 0,
+      "nullReceiver": false,
+      "segments": [
+        [
+          97,
+          98
+        ],
+        [
+          0
+        ],
+        [
+          55296
+        ],
+        [
+          99,
+          100,
+          56320
+        ]
+      ],
+      "output": [
+        46,
+        46,
+        46,
+        46,
+        46,
+        46,
+        46,
+        46,
+        46
+      ],
+      "builder": [
+        97,
+        98,
+        0,
+        55296,
+        99,
+        100,
+        56320
+      ],
+      "length": 7,
+      "capacity": 16,
+      "fault": "ArgumentOutOfRangeException",
+      "parameter": "sourceIndex"
+    },
+    {
+      "id": "range-9",
+      "sourceIndex": 0,
+      "destinationLength": 9,
+      "destinationIndex": -1,
+      "count": 0,
+      "nullReceiver": false,
+      "segments": [
+        [
+          97,
+          98
+        ],
+        [
+          0
+        ],
+        [
+          55296
+        ],
+        [
+          99,
+          100,
+          56320
+        ]
+      ],
+      "output": [
+        46,
+        46,
+        46,
+        46,
+        46,
+        46,
+        46,
+        46,
+        46
+      ],
+      "builder": [
+        97,
+        98,
+        0,
+        55296,
+        99,
+        100,
+        56320
+      ],
+      "length": 7,
+      "capacity": 16,
+      "fault": "ArgumentOutOfRangeException",
+      "parameter": "destinationIndex"
+    },
+    {
+      "id": "range-10",
+      "sourceIndex": 0,
+      "destinationLength": 9,
+      "destinationIndex": 0,
+      "count": -1,
+      "nullReceiver": false,
+      "segments": [
+        [
+          97,
+          98
+        ],
+        [
+          0
+        ],
+        [
+          55296
+        ],
+        [
+          99,
+          100,
+          56320
+        ]
+      ],
+      "output": [
+        46,
+        46,
+        46,
+        46,
+        46,
+        46,
+        46,
+        46,
+        46
+      ],
+      "builder": [
+        97,
+        98,
+        0,
+        55296,
+        99,
+        100,
+        56320
+      ],
+      "length": 7,
+      "capacity": 16,
+      "fault": "ArgumentOutOfRangeException",
+      "parameter": "count"
+    },
+    {
+      "id": "range-11",
+      "sourceIndex": -2147483648,
+      "destinationLength": 9,
+      "destinationIndex": 0,
+      "count": 0,
+      "nullReceiver": false,
+      "segments": [
+        [
+          97,
+          98
+        ],
+        [
+          0
+        ],
+        [
+          55296
+        ],
+        [
+          99,
+          100,
+          56320
+        ]
+      ],
+      "output": [
+        46,
+        46,
+        46,
+        46,
+        46,
+        46,
+        46,
+        46,
+        46
+      ],
+      "builder": [
+        97,
+        98,
+        0,
+        55296,
+        99,
+        100,
+        56320
+      ],
+      "length": 7,
+      "capacity": 16,
+      "fault": "ArgumentOutOfRangeException",
+      "parameter": "sourceIndex"
+    },
+    {
+      "id": "range-12",
+      "sourceIndex": 0,
+      "destinationLength": 9,
+      "destinationIndex": -2147483648,
+      "count": 0,
+      "nullReceiver": false,
+      "segments": [
+        [
+          97,
+          98
+        ],
+        [
+          0
+        ],
+        [
+          55296
+        ],
+        [
+          99,
+          100,
+          56320
+        ]
+      ],
+      "output": [
+        46,
+        46,
+        46,
+        46,
+        46,
+        46,
+        46,
+        46,
+        46
+      ],
+      "builder": [
+        97,
+        98,
+        0,
+        55296,
+        99,
+        100,
+        56320
+      ],
+      "length": 7,
+      "capacity": 16,
+      "fault": "ArgumentOutOfRangeException",
+      "parameter": "destinationIndex"
+    },
+    {
+      "id": "range-13",
+      "sourceIndex": 0,
+      "destinationLength": 9,
+      "destinationIndex": 0,
+      "count": -2147483648,
+      "nullReceiver": false,
+      "segments": [
+        [
+          97,
+          98
+        ],
+        [
+          0
+        ],
+        [
+          55296
+        ],
+        [
+          99,
+          100,
+          56320
+        ]
+      ],
+      "output": [
+        46,
+        46,
+        46,
+        46,
+        46,
+        46,
+        46,
+        46,
+        46
+      ],
+      "builder": [
+        97,
+        98,
+        0,
+        55296,
+        99,
+        100,
+        56320
+      ],
+      "length": 7,
+      "capacity": 16,
+      "fault": "ArgumentException",
+      "parameter": null
+    },
+    {
+      "id": "range-14",
+      "sourceIndex": 2147483647,
+      "destinationLength": 9,
+      "destinationIndex": 0,
+      "count": 0,
+      "nullReceiver": false,
+      "segments": [
+        [
+          97,
+          98
+        ],
+        [
+          0
+        ],
+        [
+          55296
+        ],
+        [
+          99,
+          100,
+          56320
+        ]
+      ],
+      "output": [
+        46,
+        46,
+        46,
+        46,
+        46,
+        46,
+        46,
+        46,
+        46
+      ],
+      "builder": [
+        97,
+        98,
+        0,
+        55296,
+        99,
+        100,
+        56320
+      ],
+      "length": 7,
+      "capacity": 16,
+      "fault": "ArgumentOutOfRangeException",
+      "parameter": "sourceIndex"
+    },
+    {
+      "id": "range-15",
+      "sourceIndex": 0,
+      "destinationLength": 9,
+      "destinationIndex": 2147483647,
+      "count": 0,
+      "nullReceiver": false,
+      "segments": [
+        [
+          97,
+          98
+        ],
+        [
+          0
+        ],
+        [
+          55296
+        ],
+        [
+          99,
+          100,
+          56320
+        ]
+      ],
+      "output": [
+        46,
+        46,
+        46,
+        46,
+        46,
+        46,
+        46,
+        46,
+        46
+      ],
+      "builder": [
+        97,
+        98,
+        0,
+        55296,
+        99,
+        100,
+        56320
+      ],
+      "length": 7,
+      "capacity": 16,
+      "fault": "ArgumentException",
+      "parameter": null
+    },
+    {
+      "id": "range-16",
+      "sourceIndex": 0,
+      "destinationLength": 9,
+      "destinationIndex": 0,
+      "count": 2147483647,
+      "nullReceiver": false,
+      "segments": [
+        [
+          97,
+          98
+        ],
+        [
+          0
+        ],
+        [
+          55296
+        ],
+        [
+          99,
+          100,
+          56320
+        ]
+      ],
+      "output": [
+        46,
+        46,
+        46,
+        46,
+        46,
+        46,
+        46,
+        46,
+        46
+      ],
+      "builder": [
+        97,
+        98,
+        0,
+        55296,
+        99,
+        100,
+        56320
+      ],
+      "length": 7,
+      "capacity": 16,
+      "fault": "ArgumentException",
+      "parameter": null
+    },
+    {
+      "id": "range-17",
+      "sourceIndex": 8,
+      "destinationLength": 9,
+      "destinationIndex": 0,
+      "count": 0,
+      "nullReceiver": false,
+      "segments": [
+        [
+          97,
+          98
+        ],
+        [
+          0
+        ],
+        [
+          55296
+        ],
+        [
+          99,
+          100,
+          56320
+        ]
+      ],
+      "output": [
+        46,
+        46,
+        46,
+        46,
+        46,
+        46,
+        46,
+        46,
+        46
+      ],
+      "builder": [
+        97,
+        98,
+        0,
+        55296,
+        99,
+        100,
+        56320
+      ],
+      "length": 7,
+      "capacity": 16,
+      "fault": "ArgumentOutOfRangeException",
+      "parameter": "sourceIndex"
+    },
+    {
+      "id": "range-18",
+      "sourceIndex": 6,
+      "destinationLength": 9,
+      "destinationIndex": 0,
+      "count": 2,
+      "nullReceiver": false,
+      "segments": [
+        [
+          97,
+          98
+        ],
+        [
+          0
+        ],
+        [
+          55296
+        ],
+        [
+          99,
+          100,
+          56320
+        ]
+      ],
+      "output": [
+        46,
+        46,
+        46,
+        46,
+        46,
+        46,
+        46,
+        46,
+        46
+      ],
+      "builder": [
+        97,
+        98,
+        0,
+        55296,
+        99,
+        100,
+        56320
+      ],
+      "length": 7,
+      "capacity": 16,
+      "fault": "ArgumentException",
+      "parameter": null
+    },
+    {
+      "id": "range-19",
+      "sourceIndex": 0,
+      "destinationLength": 9,
+      "destinationIndex": 8,
+      "count": 2,
+      "nullReceiver": false,
+      "segments": [
+        [
+          97,
+          98
+        ],
+        [
+          0
+        ],
+        [
+          55296
+        ],
+        [
+          99,
+          100,
+          56320
+        ]
+      ],
+      "output": [
+        46,
+        46,
+        46,
+        46,
+        46,
+        46,
+        46,
+        46,
+        46
+      ],
+      "builder": [
+        97,
+        98,
+        0,
+        55296,
+        99,
+        100,
+        56320
+      ],
+      "length": 7,
+      "capacity": 16,
+      "fault": "ArgumentException",
+      "parameter": null
+    },
+    {
+      "id": "range-20",
+      "sourceIndex": 0,
+      "destinationLength": 0,
+      "destinationIndex": 0,
+      "count": 1,
+      "nullReceiver": false,
+      "segments": [
+        [
+          97,
+          98
+        ],
+        [
+          0
+        ],
+        [
+          55296
+        ],
+        [
+          99,
+          100,
+          56320
+        ]
+      ],
+      "output": [],
+      "builder": [
+        97,
+        98,
+        0,
+        55296,
+        99,
+        100,
+        56320
+      ],
+      "length": 7,
+      "capacity": 16,
+      "fault": "ArgumentException",
+      "parameter": null
+    },
+    {
+      "id": "range-21",
+      "sourceIndex": -1,
+      "destinationLength": 9,
+      "destinationIndex": -1,
+      "count": -1,
+      "nullReceiver": false,
+      "segments": [
+        [
+          97,
+          98
+        ],
+        [
+          0
+        ],
+        [
+          55296
+        ],
+        [
+          99,
+          100,
+          56320
+        ]
+      ],
+      "output": [
+        46,
+        46,
+        46,
+        46,
+        46,
+        46,
+        46,
+        46,
+        46
+      ],
+      "builder": [
+        97,
+        98,
+        0,
+        55296,
+        99,
+        100,
+        56320
+      ],
+      "length": 7,
+      "capacity": 16,
+      "fault": "ArgumentOutOfRangeException",
+      "parameter": "destinationIndex"
+    },
+    {
+      "id": "range-22",
+      "sourceIndex": -1,
+      "destinationLength": 9,
+      "destinationIndex": 0,
+      "count": -1,
+      "nullReceiver": false,
+      "segments": [
+        [
+          97,
+          98
+        ],
+        [
+          0
+        ],
+        [
+          55296
+        ],
+        [
+          99,
+          100,
+          56320
+        ]
+      ],
+      "output": [
+        46,
+        46,
+        46,
+        46,
+        46,
+        46,
+        46,
+        46,
+        46
+      ],
+      "builder": [
+        97,
+        98,
+        0,
+        55296,
+        99,
+        100,
+        56320
+      ],
+      "length": 7,
+      "capacity": 16,
+      "fault": "ArgumentOutOfRangeException",
+      "parameter": "count"
+    },
+    {
+      "id": "range-23",
+      "sourceIndex": 0,
+      "destinationLength": 9,
+      "destinationIndex": -1,
+      "count": -1,
+      "nullReceiver": false,
+      "segments": [
+        [
+          97,
+          98
+        ],
+        [
+          0
+        ],
+        [
+          55296
+        ],
+        [
+          99,
+          100,
+          56320
+        ]
+      ],
+      "output": [
+        46,
+        46,
+        46,
+        46,
+        46,
+        46,
+        46,
+        46,
+        46
+      ],
+      "builder": [
+        97,
+        98,
+        0,
+        55296,
+        99,
+        100,
+        56320
+      ],
+      "length": 7,
+      "capacity": 16,
+      "fault": "ArgumentOutOfRangeException",
+      "parameter": "destinationIndex"
+    },
+    {
+      "id": "range-24",
+      "sourceIndex": 8,
+      "destinationLength": 9,
+      "destinationIndex": -1,
+      "count": 1,
+      "nullReceiver": false,
+      "segments": [
+        [
+          97,
+          98
+        ],
+        [
+          0
+        ],
+        [
+          55296
+        ],
+        [
+          99,
+          100,
+          56320
+        ]
+      ],
+      "output": [
+        46,
+        46,
+        46,
+        46,
+        46,
+        46,
+        46,
+        46,
+        46
+      ],
+      "builder": [
+        97,
+        98,
+        0,
+        55296,
+        99,
+        100,
+        56320
+      ],
+      "length": 7,
+      "capacity": 16,
+      "fault": "ArgumentOutOfRangeException",
+      "parameter": "destinationIndex"
+    },
+    {
+      "id": "range-25",
+      "sourceIndex": -1,
+      "destinationLength": 9,
+      "destinationIndex": 10,
+      "count": 1,
+      "nullReceiver": false,
+      "segments": [
+        [
+          97,
+          98
+        ],
+        [
+          0
+        ],
+        [
+          55296
+        ],
+        [
+          99,
+          100,
+          56320
+        ]
+      ],
+      "output": [
+        46,
+        46,
+        46,
+        46,
+        46,
+        46,
+        46,
+        46,
+        46
+      ],
+      "builder": [
+        97,
+        98,
+        0,
+        55296,
+        99,
+        100,
+        56320
+      ],
+      "length": 7,
+      "capacity": 16,
+      "fault": "ArgumentException",
+      "parameter": null
+    },
+    {
+      "id": "range-26",
+      "sourceIndex": 6,
+      "destinationLength": 9,
+      "destinationIndex": 8,
+      "count": 2,
+      "nullReceiver": false,
+      "segments": [
+        [
+          97,
+          98
+        ],
+        [
+          0
+        ],
+        [
+          55296
+        ],
+        [
+          99,
+          100,
+          56320
+        ]
+      ],
+      "output": [
+        46,
+        46,
+        46,
+        46,
+        46,
+        46,
+        46,
+        46,
+        46
+      ],
+      "builder": [
+        97,
+        98,
+        0,
+        55296,
+        99,
+        100,
+        56320
+      ],
+      "length": 7,
+      "capacity": 16,
+      "fault": "ArgumentException",
+      "parameter": null
+    },
+    {
+      "id": "range-27",
+      "sourceIndex": -1,
+      "destinationLength": 0,
+      "destinationIndex": 0,
+      "count": 1,
+      "nullReceiver": false,
+      "segments": [
+        [
+          97,
+          98
+        ],
+        [
+          0
+        ],
+        [
+          55296
+        ],
+        [
+          99,
+          100,
+          56320
+        ]
+      ],
+      "output": [],
+      "builder": [
+        97,
+        98,
+        0,
+        55296,
+        99,
+        100,
+        56320
+      ],
+      "length": 7,
+      "capacity": 16,
+      "fault": "ArgumentException",
+      "parameter": null
+    },
+    {
+      "id": "range-28",
+      "sourceIndex": 8,
+      "destinationLength": 9,
+      "destinationIndex": 10,
+      "count": 0,
+      "nullReceiver": false,
+      "segments": [
+        [
+          97,
+          98
+        ],
+        [
+          0
+        ],
+        [
+          55296
+        ],
+        [
+          99,
+          100,
+          56320
+        ]
+      ],
+      "output": [
+        46,
+        46,
+        46,
+        46,
+        46,
+        46,
+        46,
+        46,
+        46
+      ],
+      "builder": [
+        97,
+        98,
+        0,
+        55296,
+        99,
+        100,
+        56320
+      ],
+      "length": 7,
+      "capacity": 16,
+      "fault": "ArgumentException",
+      "parameter": null
+    },
+    {
+      "id": "range-29",
+      "sourceIndex": 8,
+      "destinationLength": 9,
+      "destinationIndex": 0,
+      "count": 2147483647,
+      "nullReceiver": false,
+      "segments": [
+        [
+          97,
+          98
+        ],
+        [
+          0
+        ],
+        [
+          55296
+        ],
+        [
+          99,
+          100,
+          56320
+        ]
+      ],
+      "output": [
+        46,
+        46,
+        46,
+        46,
+        46,
+        46,
+        46,
+        46,
+        46
+      ],
+      "builder": [
+        97,
+        98,
+        0,
+        55296,
+        99,
+        100,
+        56320
+      ],
+      "length": 7,
+      "capacity": 16,
+      "fault": "ArgumentException",
+      "parameter": null
+    },
+    {
+      "id": "range-30",
+      "sourceIndex": 0,
+      "destinationLength": 9,
+      "destinationIndex": 10,
+      "count": -1,
+      "nullReceiver": false,
+      "segments": [
+        [
+          97,
+          98
+        ],
+        [
+          0
+        ],
+        [
+          55296
+        ],
+        [
+          99,
+          100,
+          56320
+        ]
+      ],
+      "output": [
+        46,
+        46,
+        46,
+        46,
+        46,
+        46,
+        46,
+        46,
+        46
+      ],
+      "builder": [
+        97,
+        98,
+        0,
+        55296,
+        99,
+        100,
+        56320
+      ],
+      "length": 7,
+      "capacity": 16,
+      "fault": "ArgumentOutOfRangeException",
+      "parameter": null
+    },
+    {
+      "id": "range-31",
+      "sourceIndex": -1,
+      "destinationLength": 9,
+      "destinationIndex": 10,
+      "count": -1,
+      "nullReceiver": false,
+      "segments": [
+        [
+          97,
+          98
+        ],
+        [
+          0
+        ],
+        [
+          55296
+        ],
+        [
+          99,
+          100,
+          56320
+        ]
+      ],
+      "output": [
+        46,
+        46,
+        46,
+        46,
+        46,
+        46,
+        46,
+        46,
+        46
+      ],
+      "builder": [
+        97,
+        98,
+        0,
+        55296,
+        99,
+        100,
+        56320
+      ],
+      "length": 7,
+      "capacity": 16,
+      "fault": "ArgumentOutOfRangeException",
+      "parameter": null
+    },
+    {
+      "id": "range-32",
+      "sourceIndex": 0,
+      "destinationLength": 0,
+      "destinationIndex": 1,
+      "count": -1,
+      "nullReceiver": false,
+      "segments": [
+        [
+          97,
+          98
+        ],
+        [
+          0
+        ],
+        [
+          55296
+        ],
+        [
+          99,
+          100,
+          56320
+        ]
+      ],
+      "output": [],
+      "builder": [
+        97,
+        98,
+        0,
+        55296,
+        99,
+        100,
+        56320
+      ],
+      "length": 7,
+      "capacity": 16,
+      "fault": "ArgumentOutOfRangeException",
+      "parameter": null
+    },
+    {
+      "id": "range-33",
+      "sourceIndex": 0,
+      "destinationLength": null,
+      "destinationIndex": 0,
+      "count": 0,
+      "nullReceiver": false,
+      "segments": [
+        [
+          97,
+          98
+        ],
+        [
+          0
+        ],
+        [
+          55296
+        ],
+        [
+          99,
+          100,
+          56320
+        ]
+      ],
+      "output": null,
+      "builder": [
+        97,
+        98,
+        0,
+        55296,
+        99,
+        100,
+        56320
+      ],
+      "length": 7,
+      "capacity": 16,
+      "fault": "ArgumentNullException",
+      "parameter": "destination"
+    },
+    {
+      "id": "range-34",
+      "sourceIndex": -1,
+      "destinationLength": null,
+      "destinationIndex": -1,
+      "count": -1,
+      "nullReceiver": false,
+      "segments": [
+        [
+          97,
+          98
+        ],
+        [
+          0
+        ],
+        [
+          55296
+        ],
+        [
+          99,
+          100,
+          56320
+        ]
+      ],
+      "output": null,
+      "builder": [
+        97,
+        98,
+        0,
+        55296,
+        99,
+        100,
+        56320
+      ],
+      "length": 7,
+      "capacity": 16,
+      "fault": "ArgumentNullException",
+      "parameter": "destination"
+    },
+    {
+      "id": "range-35",
+      "sourceIndex": 2147483647,
+      "destinationLength": null,
+      "destinationIndex": 2147483647,
+      "count": 2147483647,
+      "nullReceiver": false,
+      "segments": [
+        [
+          97,
+          98
+        ],
+        [
+          0
+        ],
+        [
+          55296
+        ],
+        [
+          99,
+          100,
+          56320
+        ]
+      ],
+      "output": null,
+      "builder": [
+        97,
+        98,
+        0,
+        55296,
+        99,
+        100,
+        56320
+      ],
+      "length": 7,
+      "capacity": 16,
+      "fault": "ArgumentNullException",
+      "parameter": "destination"
+    },
+    {
+      "id": "empty--1--1",
+      "sourceIndex": -1,
+      "destinationLength": 0,
+      "destinationIndex": 0,
+      "count": -1,
+      "nullReceiver": false,
+      "segments": [],
+      "output": [],
+      "builder": [],
+      "length": 0,
+      "capacity": 16,
+      "fault": "ArgumentOutOfRangeException",
+      "parameter": "count"
+    },
+    {
+      "id": "empty--1-0",
+      "sourceIndex": -1,
+      "destinationLength": 0,
+      "destinationIndex": 0,
+      "count": 0,
+      "nullReceiver": false,
+      "segments": [],
+      "output": [],
+      "builder": [],
+      "length": 0,
+      "capacity": 16,
+      "fault": "ArgumentOutOfRangeException",
+      "parameter": "sourceIndex"
+    },
+    {
+      "id": "empty--1-1",
+      "sourceIndex": -1,
+      "destinationLength": 0,
+      "destinationIndex": 0,
+      "count": 1,
+      "nullReceiver": false,
+      "segments": [],
+      "output": [],
+      "builder": [],
+      "length": 0,
+      "capacity": 16,
+      "fault": "ArgumentException",
+      "parameter": null
+    },
+    {
+      "id": "empty-0--1",
+      "sourceIndex": 0,
+      "destinationLength": 0,
+      "destinationIndex": 0,
+      "count": -1,
+      "nullReceiver": false,
+      "segments": [],
+      "output": [],
+      "builder": [],
+      "length": 0,
+      "capacity": 16,
+      "fault": "ArgumentOutOfRangeException",
+      "parameter": "count"
+    },
+    {
+      "id": "empty-0-0",
+      "sourceIndex": 0,
+      "destinationLength": 0,
+      "destinationIndex": 0,
+      "count": 0,
+      "nullReceiver": false,
+      "segments": [],
+      "output": [],
+      "builder": [],
+      "length": 0,
+      "capacity": 16,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "empty-0-1",
+      "sourceIndex": 0,
+      "destinationLength": 0,
+      "destinationIndex": 0,
+      "count": 1,
+      "nullReceiver": false,
+      "segments": [],
+      "output": [],
+      "builder": [],
+      "length": 0,
+      "capacity": 16,
+      "fault": "ArgumentException",
+      "parameter": null
+    },
+    {
+      "id": "empty-1--1",
+      "sourceIndex": 1,
+      "destinationLength": 0,
+      "destinationIndex": 0,
+      "count": -1,
+      "nullReceiver": false,
+      "segments": [],
+      "output": [],
+      "builder": [],
+      "length": 0,
+      "capacity": 16,
+      "fault": "ArgumentOutOfRangeException",
+      "parameter": "count"
+    },
+    {
+      "id": "empty-1-0",
+      "sourceIndex": 1,
+      "destinationLength": 0,
+      "destinationIndex": 0,
+      "count": 0,
+      "nullReceiver": false,
+      "segments": [],
+      "output": [],
+      "builder": [],
+      "length": 0,
+      "capacity": 16,
+      "fault": "ArgumentOutOfRangeException",
+      "parameter": "sourceIndex"
+    },
+    {
+      "id": "empty-1-1",
+      "sourceIndex": 1,
+      "destinationLength": 0,
+      "destinationIndex": 0,
+      "count": 1,
+      "nullReceiver": false,
+      "segments": [],
+      "output": [],
+      "builder": [],
+      "length": 0,
+      "capacity": 16,
+      "fault": "ArgumentException",
+      "parameter": null
+    },
+    {
+      "id": "empty-destination-space",
+      "sourceIndex": 0,
+      "destinationLength": 9,
+      "destinationIndex": 9,
+      "count": 0,
+      "nullReceiver": false,
+      "segments": [],
+      "output": [
+        46,
+        46,
+        46,
+        46,
+        46,
+        46,
+        46,
+        46,
+        46
+      ],
+      "builder": [],
+      "length": 0,
+      "capacity": 16,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "null-receiver-valid-range",
+      "sourceIndex": 0,
+      "destinationLength": 9,
+      "destinationIndex": 0,
+      "count": 1,
+      "nullReceiver": true,
+      "segments": [
+        [
+          97,
+          98
+        ],
+        [
+          0
+        ],
+        [
+          55296
+        ],
+        [
+          99,
+          100,
+          56320
+        ]
+      ],
+      "output": [
+        46,
+        46,
+        46,
+        46,
+        46,
+        46,
+        46,
+        46,
+        46
+      ],
+      "builder": null,
+      "length": null,
+      "capacity": null,
+      "fault": "NullReferenceException",
+      "parameter": null
+    },
+    {
+      "id": "null-receiver-null-destination",
+      "sourceIndex": 0,
+      "destinationLength": null,
+      "destinationIndex": 0,
+      "count": 0,
+      "nullReceiver": true,
+      "segments": [
+        [
+          97,
+          98
+        ],
+        [
+          0
+        ],
+        [
+          55296
+        ],
+        [
+          99,
+          100,
+          56320
+        ]
+      ],
+      "output": null,
+      "builder": null,
+      "length": null,
+      "capacity": null,
+      "fault": "NullReferenceException",
+      "parameter": null
+    },
+    {
+      "id": "null-receiver-negative-ranges",
+      "sourceIndex": -1,
+      "destinationLength": null,
+      "destinationIndex": -1,
+      "count": -1,
+      "nullReceiver": true,
+      "segments": [
+        [
+          97,
+          98
+        ],
+        [
+          0
+        ],
+        [
+          55296
+        ],
+        [
+          99,
+          100,
+          56320
+        ]
+      ],
+      "output": null,
+      "builder": null,
+      "length": null,
+      "capacity": null,
+      "fault": "NullReferenceException",
+      "parameter": null
+    },
+    {
+      "id": "null-receiver-large-ranges",
+      "sourceIndex": 2147483647,
+      "destinationLength": 0,
+      "destinationIndex": 2147483647,
+      "count": 2147483647,
+      "nullReceiver": true,
+      "segments": [
+        [
+          97,
+          98
+        ],
+        [
+          0
+        ],
+        [
+          55296
+        ],
+        [
+          99,
+          100,
+          56320
+        ]
+      ],
+      "output": [],
+      "builder": null,
+      "length": null,
+      "capacity": null,
+      "fault": "NullReferenceException",
+      "parameter": null
+    }
+  ]
+}

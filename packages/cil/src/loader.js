@@ -1,6 +1,7 @@
 import {decodeScalarSpan,profileOpcodes} from './scalar-loading.js';
 import { canonicalEmissionOptions } from './pe/canonical-options.js';
 import { decodeObjectBuiltin } from './object-builtin-mapping.js';
+import {decodeProfileBuiltin} from './builtin-emission.js';
 import { canonicalWithSymbols } from './pe/canonical-symbols.js';
 import {contractForMember,frameworkType,enumTypes} from '@sharpforge/framework';
 import { Op, Binary, Unary, BuiltinMap, frameworkBuiltin, numericAliases, EnumConvertBase, FORMAT_VERSION, verifyImage } from '@sharpforge/bytecode';
@@ -66,6 +67,7 @@ function decodeSpan(span,c) {
   const emit=(op,a=0,b=0)=>[op,a,b],names=span.map(i=>i.name),call=span.find(i=>['call','callvirt','newobj'].includes(i.name));
   if(names.includes('ldftn')){const functionToken=span.find(i=>i.name==='ldftn').operand,method=c.methodByToken.get(functionToken),constructor=c.resolveCall(call.operand);if(!method||frameworkType(constructor.owner)?.kind!=='delegate')throw new CilError('Invalid delegate construction');return emit(Op.DELEGATE,method.id,c.intern(constructor.owner));}
   if(call){const target=c.resolveCall(call.operand),owner=shortTypes[target.owner]??target.owner,sig=target.sig,count=sig.parameters.length+(sig.isStatic?0:1);
+    const entry=decodeProfileBuiltin(target,span);if(entry)return emit(Op.BUILTIN,entry.id,count);
     const contract=contractForMember({owner:target.owner,name:target.name,signature:sig});if(contract){const builtin=frameworkBuiltin(contract);return emit(Op.BUILTIN,builtin.id,builtin.min);}
     if(call.name==='newobj'&&sig.parameters[0]==='SharpForge.<>AllocationToken'){const type=c.typeByToken.get(c.typeOwners.get(call.operand));if(!type)throw new CilError('Unknown allocation constructor');return emit(Op.NEWOBJ,type.id);}
     if(c.methodByToken.has(call.operand)){const method=c.methodByToken.get(call.operand);return emit(Op.CALL,method.id,count);}

@@ -20,7 +20,10 @@ export class KeybindingService {
     this.onStatus = onStatus;
     this.onError = onError ?? (error => onStatus(error.message));
     this.platform = platform;
-    this.clock = clock ?? { setTimeout, clearTimeout };
+    this.clock = clock ?? {
+      setTimeout: (callback, delay) => globalThis.setTimeout(callback, delay),
+      clearTimeout: timer => globalThis.clearTimeout(timer)
+    };
     this.timeout = timeout;
     this.bindings = new Map();
     this.prefixes = new Map();

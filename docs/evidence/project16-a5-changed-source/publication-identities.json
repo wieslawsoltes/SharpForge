@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 1,
+  "kind": "parent-reported-publication-identities",
+  "inspectedSource": {
+    "sha": "a5977d0e0713997766e2d16101f44bc2a776a114",
+    "tree": "cf7a61b6964b794d1b0128cbaffafd180b643ef0"
+  },
+  "rootIntegration": {
+    "sha": "ba279d9742a6c5c83f85d7e90ed3307a6eaf1cc8",
+    "tree": "cf7a61b6964b794d1b0128cbaffafd180b643ef0"
+  },
+  "publicIntegrationSha": "c586a63517efb7c19a60ead0c54fb128dd566d03",
+  "publicCorrectionSha": "ec9397f0f0c57eef408f65f24f5e6f82a036fff5",
+  "provenance": "Supplied by the root publication owner after the local reinspection; no remote fetch or hosted execution performed here."
+}

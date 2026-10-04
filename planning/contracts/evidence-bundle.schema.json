@@ -18,8 +18,16 @@
       "const": 2
     },
     "task": {
-      "type": "string",
-      "pattern": "^SF-A\\d{2}-[TB]\\d+(?:\\.\\d+)?$"
+      "anyOf": [
+        {
+          "type": "string",
+          "pattern": "^SF-A\\d{2}-[TB]\\d+(?:\\.\\d+)?$"
+        },
+        {
+          "type": "string",
+          "pattern": "^SF-R\\d{3}-[TB]\\d{2}(?:\\.\\d+)?$"
+        }
+      ]
     },
     "headCommit": {
       "type": "string",

@@ -1,0 +1,237 @@
+{
+  "schemaVersion": 1,
+  "kind": "sharpforge-project16-a5-correction-local-qualification",
+  "scope": "Completed full-area A19/A20 correction runs and the separate affected-file retry; evidence archiving only.",
+  "archiveBase": {
+    "sourceSha": "da51eb7ddb96a5e6aa5c1a05b2158a71791340d5",
+    "sourceTree": "1bfd356682fb507e0f4ac365b3a4e16794a1e140"
+  },
+  "sourceIdentityKind": "Exact local commit/tree identities recorded by root. The full-area public commit is taken from p16-publication-state.json; retry source was not yet published at this archive cutoff.",
+  "closeIssues": [],
+  "evidenceRules": [
+    "Original failed full-area executions retain failed status after the separate affected-file retry.",
+    "Retry, area and earlier-ledger counts are not summed into a synthetic distinct-test total.",
+    "All nine A20 skips are retained as skips, not passes.",
+    "Raw logs and summary JSON are copied byte-for-byte with byte counts and SHA-256 hashes.",
+    "Archiving reads, parses, copies and hashes existing evidence; it executes no test, build, capture or static gate."
+  ],
+  "attempts": [
+    {
+      "sourceSha": "cae69484b1ece1991e99b39a61a77303d96fca39",
+      "sourceTree": "bbad9762d256d60d74e5b4cadbc6344d2e969cad",
+      "startedAt": "2026-10-04T05:44:36.570029+00:00",
+      "finishedAt": "2026-10-04T05:46:09.720958+00:00",
+      "node": "v24.19.0",
+      "sourceUnchanged": true,
+      "id": "a5-correction-full-areas",
+      "status": "failed",
+      "publicSourceShaAtArchive": "c0308e3cb3a4715da63dfcaa61aaa509a9459cac",
+      "evidence": "docs/evidence/project16-a5-corrections-local/full-areas/node-summary.json",
+      "runs": [
+        {
+          "area": "A19",
+          "command": [
+            "node",
+            "scripts/planning/run-tests.js",
+            "--area",
+            "A19"
+          ],
+          "startedAt": "2026-10-04T05:44:36.577583+00:00",
+          "finishedAt": "2026-10-04T05:45:29.480796+00:00",
+          "exitCode": 1,
+          "status": "failed",
+          "testExecutionStarted": true,
+          "counts": {
+            "tests": 790,
+            "suites": 0,
+            "pass": 787,
+            "fail": 3,
+            "cancelled": 0,
+            "skipped": 0,
+            "todo": 0
+          },
+          "runnerDurationMs": 52500.854497,
+          "log": "docs/evidence/project16-a5-corrections-local/full-areas/A19.log"
+        },
+        {
+          "area": "A20",
+          "command": [
+            "node",
+            "scripts/planning/run-tests.js",
+            "--area",
+            "A20"
+          ],
+          "startedAt": "2026-10-04T05:45:29.482757+00:00",
+          "finishedAt": "2026-10-04T05:46:09.719251+00:00",
+          "exitCode": 1,
+          "status": "failed",
+          "testExecutionStarted": true,
+          "counts": {
+            "tests": 722,
+            "suites": 0,
+            "pass": 712,
+            "fail": 1,
+            "cancelled": 0,
+            "skipped": 9,
+            "todo": 0
+          },
+          "runnerDurationMs": 39960.53517,
+          "log": "docs/evidence/project16-a5-corrections-local/full-areas/A20.log"
+        }
+      ]
+    },
+    {
+      "sourceSha": "da51eb7ddb96a5e6aa5c1a05b2158a71791340d5",
+      "sourceTree": "1bfd356682fb507e0f4ac365b3a4e16794a1e140",
+      "command": [
+        "node",
+        "scripts/limited.js",
+        "node",
+        "--test",
+        "tests/a19-studio-composition.test.js",
+        "tests/a19-studio-runtime-timers.test.js",
+        "tests/a20-studio-streamed-workspace.test.js"
+      ],
+      "startedAt": "2026-10-04T05:50:14.329655+00:00",
+      "finishedAt": "2026-10-04T05:50:21.736814+00:00",
+      "exitCode": 0,
+      "sourceUnchanged": true,
+      "id": "a5-correction-affected-retry",
+      "status": "passed",
+      "publicSourceShaAtArchive": null,
+      "evidence": "docs/evidence/project16-a5-corrections-local/affected-retry/node-summary.json",
+      "log": "docs/evidence/project16-a5-corrections-local/affected-retry/affected.log",
+      "counts": {
+        "tests": 21,
+        "suites": 0,
+        "pass": 21,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "runnerDurationMs": 7228.429758,
+      "files": [
+        "tests/a19-studio-composition.test.js",
+        "tests/a19-studio-runtime-timers.test.js",
+        "tests/a20-studio-streamed-workspace.test.js"
+      ],
+      "overlap": "These complete files already ran in the full-area attempts; the 21 retry cases are not additional distinct tests.",
+      "doesNotEstablish": "A new full-area A19 or A20 pass at the retry source."
+    }
+  ],
+  "originalFailureCases": [
+    {
+      "area": "A19",
+      "file": "tests/a19-studio-composition.test.js",
+      "test": "silent Studio builds leave large documents available without sending them to the compiler",
+      "assertion": "Legacy /automatic build disabled/ status expectation mismatched the explicit STUDIO_COMPILER_SOURCE_LIMIT diagnostic.",
+      "correctionSha": "3389ec15557e4049735e615b300786700414adf0",
+      "retryResult": "passed"
+    },
+    {
+      "area": "A19",
+      "file": "tests/a19-studio-runtime-timers.test.js",
+      "test": "Studio source VM timers preserve two live applications across targeted stop and restart",
+      "assertion": "Expected selected Beta after stopping Alpha, although Beta was created with activate:false and never selected.",
+      "correctionSha": "dab4d0e7127467708ad2b6203c8099b78f4e00ad",
+      "retryResult": "passed"
+    },
+    {
+      "area": "A19",
+      "file": "tests/a19-studio-runtime-timers.test.js",
+      "test": "Studio direct CIL timers preserve two live applications across targeted stop and restart",
+      "assertion": "Expected selected Beta after stopping Alpha, although Beta was created with activate:false and never selected.",
+      "correctionSha": "dab4d0e7127467708ad2b6203c8099b78f4e00ad",
+      "retryResult": "passed"
+    },
+    {
+      "area": "A20",
+      "file": "tests/a20-studio-streamed-workspace.test.js",
+      "test": "200 MiB File reaches the actual Studio workspace model through chunked ingress with automatic work bounded",
+      "assertion": "Legacy Large file mode status expectation mismatched the explicit STUDIO_COMPILER_SOURCE_LIMIT diagnostic.",
+      "correctionSha": "3389ec15557e4049735e615b300786700414adf0",
+      "retryResult": "passed"
+    }
+  ],
+  "allFourOriginalFailuresCoveredByRetry": true,
+  "fixtureCorrections": {
+    "comparisonBase": "cae69484b1ece1991e99b39a61a77303d96fca39",
+    "comparisonHead": "da51eb7ddb96a5e6aa5c1a05b2158a71791340d5",
+    "productFilesChanged": false,
+    "changedFiles": [
+      "docs/a20-studio-compiler-source-policy.md",
+      "docs/project16-browser-runtime-timers.md",
+      "tests/a19-studio-composition.test.js",
+      "tests/a19-studio-runtime-timers.test.js",
+      "tests/a20-studio-streamed-workspace.test.js"
+    ],
+    "changes": [
+      "Use exact compiler eligibility diagnostics and assert the owning project; retain no-worker-request checks.",
+      "Explicitly select Beta before background Alpha stop/restart; retain session, debugger identity, output and live-window isolation checks."
+    ],
+    "integratedCommits": [
+      "3f3916249d53953f04830aacd4919213a6295825",
+      "da51eb7ddb96a5e6aa5c1a05b2158a71791340d5"
+    ]
+  },
+  "a20Skips": [
+    {
+      "test": "Unsupported target: shell commands and external filters",
+      "reason": "The browser editor has no shell or process-execution authority.",
+      "status": "skipped"
+    },
+    {
+      "test": "Unsupported target: Vimscript and plugin loading",
+      "reason": "The native modal adapter is not a Vimscript interpreter or plugin runtime.",
+      "status": "skipped"
+    },
+    {
+      "test": "Unsupported target: terminal buffers",
+      "reason": "Terminal emulation is outside the editor document and keymap scope.",
+      "status": "skipped"
+    },
+    {
+      "test": "Unsupported target: native Vim regex extensions",
+      "reason": "Search uses the documented bounded regex engine rather than Vim magic expressions.",
+      "status": "skipped"
+    },
+    {
+      "test": "Unsupported target: operating-system primary selection",
+      "reason": "The injected asynchronous clipboard API exposes ordinary clipboard text.",
+      "status": "skipped"
+    },
+    {
+      "test": "Unsupported target: unlimited recursive macros",
+      "reason": "Native macros have explicit recursion, key-count and register-memory budgets.",
+      "status": "skipped"
+    },
+    {
+      "test": "Unsupported target: desktop Vim executable parity",
+      "reason": "Node fixtures qualify this native model; no installed desktop Vim is used as an oracle.",
+      "status": "skipped"
+    },
+    {
+      "test": "Unsupported target: browser key interception and assistive technology",
+      "reason": "Operating-system/browser key delivery and screen readers need browser/manual qualification.",
+      "status": "skipped"
+    },
+    {
+      "test": "default and explicit native segmentation retain Unicode 16.0 host compatibility",
+      "reason": "The native comparison is pinned to a Unicode 16.0 Intl runtime",
+      "status": "skipped"
+    }
+  ],
+  "pendingAtCutoff": [
+    "No whole-area A19 or A20 rerun at da51eb7d is recorded.",
+    "Local structure inspection, Python contracts and performance qualification for this correction cohort remain separate and pending.",
+    "Corrected real-browser/standalone workflows, application builds and native/platform qualification are not established by these Node results."
+  ],
+  "archive": {
+    "manifest": "docs/evidence/project16-a5-corrections-local/manifest.json",
+    "rawFileCount": 5,
+    "rawBytes": 165461,
+    "hashAlgorithm": "SHA-256",
+    "byteCopiesCompared": true
+  }
+}

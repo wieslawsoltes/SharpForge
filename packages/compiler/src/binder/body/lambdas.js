@@ -7,6 +7,7 @@ import { RefKind, ErrorTypeSymbol } from '../../symbols/types.js';
 import { ParameterSymbol } from '../../symbols/members.js';
 import { Conversion, ConversionKind } from '../../conversions/classify.js';
 import { delegateInvoke } from '../../overload/type-inference.js';
+import { asyncResultType } from '../csharp70.js';
 import { anonymousFunctionAnchor, anonymousMethodSignatureErrors } from '../anonymous-methods.js';
 
 const unknown = ErrorTypeSymbol.unknown;
@@ -273,10 +274,9 @@ export const LambdaBinding = Base =>
       const isFunction = body.form === 'lambda' || body.kind === 'MethodGroup';
       return isFunction && this.version.number >= 10 ? this.naturalFunctionType(body) : null;
     }
+    /** What the `return` statements of an async lambda produce for a delegate return type: `T` of any task-like type. */
     unwrapTask(type) {
-      if (type.originalDefinition === this.core.taskT) return type.typeArguments[0].type;
-      if (type.equals(this.core.task)) return this.core.void;
-      return type;
+      return asyncResultType(type, this.core) ?? type;
     }
     /** Binds the body of a lambda for the delegate type it was converted to, reporting its diagnostics once. */
     finishLambda(lambda, delegateType) {
@@ -307,7 +307,14 @@ export const LambdaBinding = Base =>
         arms.map(a => ({ pattern: a.pattern, when: a.when, node: a.syntax.pattern })),
         { isExpression: true, node: syntax.switchKeyword },
       );
-      const type = this.bestCommonType(arms.map(a => a.value));
+      // The natural type is the best common type of the arms, provided every arm converts to it: in
+      // `x switch { 1 => State.On, _ => null }` the `null` does not, and the type comes from the target (`State?`).
+      const common = this.bestCommonType(arms.map(a => a.value)),
+        converts = value => {
+          const conversion = this.conversions.classifyFromExpression(value, common);
+          return conversion.exists && conversion.isImplicit;
+        },
+        type = common && arms.every(a => converts(a.value)) ? common : null;
       if (!type) return this.targetTypedSwitch(syntax, governing, arms);
       return this.node('SwitchExpression', syntax, type, {
         governing,

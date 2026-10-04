@@ -38,6 +38,17 @@ const add = (list, type) => {
   if (type && !type.isErrorType() && type.specialType !== 'System_Void' && !list.some(t => t.equals(type))) list.push(type);
 };
 
+/**
+ * The inferred return type of an async lambda is `Task<X>`; when the delegate returns another generic task type
+ * (`ValueTask<TOut>`) the result `X` is what `TOut` is inferred from (C# spec: inferred return type of an async
+ * function against a task-like return type).
+ */
+function asyncResultFor(inferred, output) {
+  const isGenericTask = type => type?.typeArguments?.length === 1 && type.containingNamespace?.name === 'Tasks';
+  if (!isGenericTask(inferred) || inferred.name !== 'Task' || !isGenericTask(output) || output.name !== 'ValueTask') return inferred;
+  return (output.originalDefinition ?? output).construct([inferred.typeArguments[0]]);
+}
+
 export class TypeInferrer {
   /**
    * @param {TypeParameterSymbol[]} typeParameters the method's type parameters
@@ -283,7 +294,7 @@ export class TypeInferrer {
       arg.outputDone = true;
       if (!result) return;
       const before = this.boundCount();
-      this.lower(result, io.output);
+      this.lower(asyncResultFor(result, io.output), io.output);
       if (this.boundCount() !== before) progress = true;
     });
     for (const arg of args) delete arg.outputDone;

@@ -10,6 +10,7 @@ import {DiagnosticId} from '../diagnostics/codes.js';
 import { SymbolKind } from '../symbols/types.js';
 import { tupleElements } from '../symbols/tuple-elements.js';
 import { extensionScopes, isValidReceiverConversion } from '../overload/extension-methods.js';
+import { inferMethodTypeArguments } from '../overload/type-inference.js';
 import { lookupMembers } from './inheritance.js';
 
 const isVoid = type => type?.specialType === 'System_Void';
@@ -36,17 +37,26 @@ export function findDeconstruct(binder, type, count, receiver) {
     usings: level.scope.usings ? binder.d.typeBinder.usingsOf(level.scope) : null,
   }));
   for (const scope of extensionScopes(chain, 'Deconstruct')) {
-    const method = scope.methods.find(
-      candidate =>
-        !candidate.typeParameters?.length &&
-        candidate.parameters.length === count + 1 &&
-        allOut(candidate.parameters.slice(1)) &&
-        isVoid(candidate.returnType) &&
-        isValidReceiverConversion(binder.conversions, receiver, candidate.parameters[0].type),
-    );
-    if (method) return { method, isExtension: true, partTypes: method.parameters.slice(1).map(parameter => parameter.type) };
+    for (const candidate of scope.methods) {
+      if (candidate.parameters.length !== count + 1 || !allOut(candidate.parameters.slice(1)) || !isVoid(candidate.returnType)) continue;
+      const method = constructedOverReceiver(binder, candidate, receiver);
+      if (!method || !isValidReceiverConversion(binder.conversions, receiver, method.parameters[0].type)) continue;
+      return { method, isExtension: true, partTypes: method.parameters.slice(1).map(parameter => parameter.type) };
+    }
   }
   return null;
+}
+
+/**
+ * A generic extension `Deconstruct<TKey, TValue>(this KeyValuePair<TKey, List<TValue>> pair, out TKey key, ...)`
+ * constructed for a receiver: the `out` parts have no type of their own, so every type argument comes from the
+ * receiver. @returns the constructed method, the method itself when it is not generic, or null when inference fails
+ */
+function constructedOverReceiver(binder, method, receiver) {
+  if (!method.typeParameters?.length) return method;
+  if (!receiver?.type) return null;
+  const inferred = inferMethodTypeArguments(method, [method.parameters[0].type], [receiver], binder.conversions, binder.core);
+  return inferred.error ? null : method.construct(inferred.typeArguments);
 }
 
 /**

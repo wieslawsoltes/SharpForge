@@ -24,6 +24,7 @@ import {EditorSelectionCommands} from './selection-commands.js';
 import {GoToLineWidget} from '../view/goto.js';
 import {editorCommandMap} from './command-map.js';
 import {createEditorInsights} from '../features/index.js';
+import {applyEditorEdits, commitEditorPrepared} from './edit-transaction.js';
 
 /** Embeddable virtual source editor. The EditorModel is authoritative; views own scroll and selection. */
 export class CodeEditor {
@@ -151,7 +152,8 @@ export class CodeEditor {
     this.uri = uri;
     if (!this.endOfLineExplicit) this.options.endOfLine = model.metadata.dominantEol;
     this.models.set(uri, model);
-    const state = this.viewStates.get(uri);
+    let state = this.viewStates.get(uri);
+    if (state?.model !== model) { this.viewStates.delete(uri); state = null; }
     this.pendingFoldingRestore = !state;
     this.selections = state?.selections ?? model.selections.map(selection => ({...selection}));
     this.primaryIndex = state?.primaryIndex ?? 0;
@@ -177,13 +179,20 @@ export class CodeEditor {
     this.cursor();
   }
 
+  prepareViewState() { this.insights?.cancelRename?.(); }
+
   saveViewState() {
-    if (!this.uri) return;
+    if (!this.uri || this.disposed) return;
+    this.prepareViewState();
+    // The session owns model registration. An old view cannot reclaim a removed or replaced document.
+    if (this.models.get(this.uri) !== this.model) {
+      if (this.viewStates.get(this.uri)?.model === this.model) this.viewStates.delete(this.uri);
+      return;
+    }
     this.session.foldingState.save(this.uri, this.folding);
-    this.viewStates.set(this.uri, {selections: this.getSelections(), primaryIndex: this.primaryIndex,
+    this.viewStates.set(this.uri, {model: this.model, selections: this.getSelections(), primaryIndex: this.primaryIndex,
       top: this.view.scrollTop, left: this.view.viewport.scrollLeft, folds: this.folding.regions.map(region => ({...region})),
       bookmarks: this.bookmarks, changeTracking: this.changeTracking});
-    this.models.set(this.uri, this.model);
   }
 
   setValue(text) {
@@ -195,23 +204,8 @@ export class CodeEditor {
     } finally { this.applying = false; }
   }
 
-  applyEdits(edits, options = {}) {
-    if (this.readOnly || !edits.length || this.disposed) return false;
-    const normalized = edits.map(edit => ({start: edit.start, end: edit.end ?? edit.start + (edit.deleteCount ?? 0),
-      text: edit.text ?? edit.newText ?? edit.insertText ?? ''}));
-    const selections = options.selections?.map(selection => ({...selection, active: selection.active ?? selection.head ?? selection.end}));
-    const event = {edits: normalized, options};
-    this.notifyContributions('beforeEdit', event);
-    const wasApplying = this.applying;
-    this.applying = true;
-    try {
-      this.model.setSelections(this.selections, {primaryIndex: this.primaryIndex, notify: false});
-      return this.model.applyEdits(normalized, {...options, command: options.command ?? options.source ?? 'edit', selections});
-    } finally {
-      this.applying = wasApplying;
-      this.notifyContributions('afterEdit', event);
-    }
-  }
+  applyEdits(edits, options) { return applyEditorEdits(this, edits, options); }
+  commitPrepared(prepared) { return commitEditorPrepared(this, prepared); }
 
   modelChanged(change) {
     if (this.disposed) return;
@@ -282,7 +276,7 @@ export class CodeEditor {
   setSelectedFrameLine(line) { this.selectedFrameLine = line; if (line) this.folding.reveal(line - 1); this.sync(); }
   setBreakpoints(items) { this.breakpoints = items; this.sync(); }
   applyEditorConfig(files, languages) { return this.presentation.applyEditorConfig(files, languages); }
-  prepareSave() { return this.presentation.prepareSave(); }
+  prepareSave(options) { return this.presentation.prepareSave(options); }
   markSaved() { this.presentation.markSaved(); }
   loadFile(blob, options) { return this.largeFile.load(blob, options); }
   setZoom(zoom) {

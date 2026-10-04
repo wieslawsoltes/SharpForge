@@ -47,3 +47,99 @@ test('A00 external Portable PDB and UTF-16 source spans share schema',()=>{const
 test('A00 actual PE #SF stream follows includeDebug contract',()=>{for(const includeDebug of [false,true]){const c=compileToIL('Console.WriteLine("metadata");',{includeDebug});assert(c.success);const inspector=new AssemblyInspector(c.assembly);assert.equal(inspector.metadata.streams.has('#SF'),includeDebug);if(includeDebug){const record=JSON.parse(new TextDecoder('utf-8',{fatal:true}).decode(inspector.metadata.streams.get('#SF')));assert.equal(record.format,'SharpForge.CIL');assert.equal(record.version,1);assert.deepEqual(Object.keys(record).sort(),['entry','format','framework','methods','name','sequencePoints','sources','statics','types','version'].sort());}}});
 test('A00 schema malformed/version/unknown-keyword errors remain distinct',()=>{const s=schema('type-identity'),valid=fixtures('type-identities')[0];assert.throws(()=>validate(s,{...valid,schemaVersion:2}),{code:'SCHEMA_VERSION'});assert.throws(()=>validate(s,{schemaVersion:1,identity:{kind:'unknown'}}),{code:'SCHEMA_INVALID'});assert.throws(()=>validate({unsupportedKeyword:1},{}),{code:'SCHEMA_DEFINITION'});assert.throws(()=>validate({$ref:'#/missing'},{}),{code:'SCHEMA_DEFINITION'});assert.throws(()=>validate({type:'array',items:{type:'integer'}},[1,2],{maxNodes:1}),{code:'SCHEMA_LIMIT'});});
 test('A00 examples corpus produced images satisfy schema; flow errors remain verifier-only',()=>{const report=coverageText();assert.equal(report,readFileSync(new URL('example-schema-coverage.json',base),'utf8'));assert(JSON.parse(report).emitted>20);const c=compileToIL('Console.WriteLine(1);');c.image.methods[0].code[0]=999;assert(verifyImage(c.image).length);validate(schema('bytecode-image.v2'),JSON.parse(serializeImage(c.image)));});
+test('A00 schema const and enum compare unordered JSON objects and ordered arrays',()=>{
+  const expected={left:{a:1,b:2},right:[true,null,'x']};
+  const reordered={right:[true,null,'x'],left:{b:2,a:1}};
+  for(const contract of [{const:expected},{enum:[false,expected]}]){
+    assert.equal(validate(contract,reordered),reordered);
+    for(const different of [{...reordered,right:[null,true,'x']},{...reordered,left:{a:1,b:'2'}},
+      {...reordered,left:{a:1}},{...reordered,extra:0}])assert.throws(()=>validate(contract,different),{code:'SCHEMA_INVALID'});
+  }
+  const special=JSON.parse('{"__proto__":{"z":0,"a":1},"a,b":2}');
+  validate({const:special},JSON.parse('{"a,b":2,"__proto__":{"a":1,"z":0}}'));
+});
+test('A00 schema uniqueItems uses JSON equality without serialization collisions',()=>{
+  const contract={type:'array',uniqueItems:true};
+  assert.throws(()=>validate(contract,[{a:1,b:{c:2,d:3}},{b:{d:3,c:2},a:1}]),{code:'SCHEMA_INVALID'});
+  assert.throws(()=>validate(contract,[0,-0]),{code:'SCHEMA_INVALID'});
+  validate(contract,[0,'0',false,null,{},[],{a:1},{a:'1'},[1,2],[2,1]]);
+  for(const value of [undefined,NaN,Infinity,-Infinity,1n,Symbol('value'),()=>0]){
+    assert.throws(()=>validate(contract,[value]),{code:'SCHEMA_INVALID'});
+    assert.throws(()=>validate({const:[null]},[value]),{code:'SCHEMA_INVALID'});
+  }
+  let invoked=false;const custom={toJSON(){invoked=true;return null;}};
+  assert.throws(()=>validate({const:null},custom),{code:'SCHEMA_INVALID'});assert.equal(invoked,false);
+});
+test('A00 schema composition supports object-valued discriminator constants and enums',()=>{
+  for(const keyword of ['anyOf','oneOf'])for(const tag of [{const:{a:1,b:2}},{enum:[{a:1,b:2}]}]){
+    const contract={[keyword]:[{type:'object',properties:{kind:tag},required:['kind']},
+      {type:'object',properties:{kind:{const:'text'}},required:['kind']}]};
+    validate(contract,{kind:{b:2,a:1}});validate(contract,{kind:'text'});
+    assert.throws(()=>validate(contract,{kind:{a:1,b:3}}),{code:'SCHEMA_INVALID'});
+  }
+});
+test('A00 schema equality traversal consumes the depth and node budgets',()=>{
+  assert.throws(()=>validate({const:{a:1,b:2}},{b:2,a:1},{maxNodes:5}),{code:'SCHEMA_LIMIT'});
+  const deep={a:{b:{c:1}}};assert.throws(()=>validate({enum:[deep]},deep,{maxDepth:2}),{code:'SCHEMA_LIMIT'});
+  const cycle={};cycle.self=cycle;
+  assert.throws(()=>validate({uniqueItems:true},[cycle]),error=>error instanceof SchemaError&&error.code==='SCHEMA_LIMIT');
+});
+test('A00 schema input rejects array holes even without an item constraint',()=>{
+  for(const contract of [true,{}, {type:'array'}, {type:'array',items:true}, {type:'array',items:{type:'number'}}]){
+    validate(contract,[]);validate(contract,[1,2,3]);
+    for(const index of [0,1,2]){
+      const sparse=[1,2,3];delete sparse[index];
+      assert.throws(()=>validate(contract,sparse),{code:'SCHEMA_INVALID',path:`$[${index}]`});
+    }
+  }
+  const inherited=Object.assign(Object.create(Array.prototype),{1:2});
+  const sparse=[1,,3];Object.setPrototypeOf(sparse,inherited);
+  assert.throws(()=>validate(true,sparse),{code:'SCHEMA_INVALID',path:'$[1]'});
+  for(const contract of [true,{}, {type:'object',properties:{known:{type:'string'}}}]){
+    assert.throws(()=>validate(contract,{known:'ok',unconstrained:{values:[1,,3]}}),
+      {code:'SCHEMA_INVALID',path:'$.unconstrained.values[1]'});
+  }
+  assert.throws(()=>validate({items:{}},[[,]]),{code:'SCHEMA_INVALID',path:'$[0][0]'});
+});
+test('A00 schema input rejects non-JSON values throughout unconstrained documents',()=>{
+  const invalid=[undefined,NaN,Infinity,-Infinity,1n,Symbol('value'),()=>0,new Date(0),new Map(),new Set(),new Uint8Array([1])];
+  for(const value of invalid)for(const contract of [true,{}]){
+    assert.throws(()=>validate(contract,value),{code:'SCHEMA_INVALID',path:'$'});
+    assert.throws(()=>validate(contract,{values:[value]}),{code:'SCHEMA_INVALID',path:'$.values[0]'});
+  }
+  const plain=Object.assign(Object.create(null),{values:[null,true,false,0,-0,'text',{a:1}]});
+  assert.equal(validate(true,plain),plain);
+});
+test('A00 schema items false forbids every nonempty array',()=>{
+  for(const contract of [{items:false},{type:'array',items:false}]){
+    validate(contract,[]);
+    for(const values of [[null],[0],[{}]])assert.throws(()=>validate(contract,values),{code:'SCHEMA_INVALID',path:'$[0]'});
+  }
+  assert.throws(()=>validate({properties:{values:{items:false}}},{values:[1]}),{code:'SCHEMA_INVALID',path:'$.values[0]'});
+  validate({items:true},[null,1,{},[]]);
+});
+test('A00 schema input walk is bounded and retains newer-version error precedence',()=>{
+  for(const contract of [true,{}]){
+    assert.throws(()=>validate(contract,{nested:[1]},{maxDepth:1}),{code:'SCHEMA_LIMIT',path:'$.nested[0]'});
+    assert.throws(()=>validate(contract,[1,2,3],{maxNodes:3}),{code:'SCHEMA_LIMIT',path:'$[2]'});
+    const cycle={};cycle.self=cycle;
+    assert.throws(()=>validate(contract,cycle),error=>error instanceof SchemaError&&error.code==='SCHEMA_LIMIT');
+  }
+  assert.throws(()=>validate({}, {schemaVersion:2,values:[,]}),{code:'SCHEMA_VERSION'});
+  assert.throws(()=>validate({unsupportedKeyword:true},{}),{code:'SCHEMA_DEFINITION'});
+  assert.throws(()=>validate({$ref:'#/missing'},{}),{code:'SCHEMA_DEFINITION'});
+});
+test('A00 schema string bounds count Unicode characters across inclusive boundaries',()=>{
+  for(const [value,length] of [['',0],['abc',3],['𝄞',1],['A😀B',3],['e\u0301',2],['👩‍💻',3],['\0',1]]){
+    validate({type:'string',minLength:length,maxLength:length},value);
+    assert.throws(()=>validate({minLength:length+1},value),{code:'SCHEMA_INVALID'});
+    if(length)assert.throws(()=>validate({maxLength:length-1},value),{code:'SCHEMA_INVALID'});
+  }
+});
+test('A00 schema Unicode string bounds compose with patterns and nested paths',()=>{
+  const contract={properties:{names:{items:{type:'string',minLength:1,maxLength:1,pattern:'^.$'}}}};
+  validate(contract,{names:['a','𝄞','😀']});
+  assert.throws(()=>validate(contract,{names:['a','😀😀']}),{code:'SCHEMA_INVALID',path:'$.names[1]'});
+  assert.throws(()=>validate({minLength:1,maxLength:1,pattern:'^[a-z]$'},'😀'),{code:'SCHEMA_INVALID'});
+  for(const value of [null,0,true,[],{}])validate({minLength:2,maxLength:3},value);
+});

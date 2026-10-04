@@ -1,4 +1,4 @@
-import { Reader, readMetadata, token, text, decodeCoded } from '@sharpforge/cil';
+import { Reader, CilError, readMetadata, token, text, decodeCoded } from '@sharpforge/cil';
 import { PdbGuids, fail, guidString } from './contracts.js';
 import { hex } from './hash.js';
 import { readCustomDebugInformation } from './custom-debug.js';
@@ -7,7 +7,25 @@ import { readLocalConstants } from './constant-rows.js';
 import { rejectUnsupportedSymbolFormat } from './symbol-format.js';
 import { readImports } from './import-reader.js';
 import { createAsyncInfoLookup } from './async-info.js';
-export function readPortablePdb(
+import { createImportLookup } from './imports.js';
+import { createScopeTree } from './scope-tree.js';
+import { unavailableLocalSlots } from './unnamed-slots.js';
+import { metadataName } from './metadata-facts.js';
+import { preflightLocalAnnotation, attachLocalAnnotations, bindConstantAnnotations } from './local-annotations.js';
+import { validatePdbReferences, validateLocalSignatureRows } from './pdb-validate.js';
+import { SymbolParseBudget, defaultParseBudgets } from './budgets.js';
+
+/** Read standalone debug metadata; malformed CLI binary references surface as SymbolError. */
+export function readPortablePdb(input, options) {
+  try {
+    return parsePortablePdb(input, options);
+  } catch (error) {
+    if (error instanceof CilError) fail(`Invalid Portable PDB: ${error.message}`);
+    throw error;
+  }
+}
+
+function parsePortablePdb(
   input,
   {
     maxBytes = 64 * 1024 * 1024,
@@ -16,8 +34,12 @@ export function readPortablePdb(
     maxConstantBytes,
     maxConstantEntries,
     maxConstantModifiers,
+    budgets,
+    signal,
   } = {},
 ) {
+  const budget = new SymbolParseBudget(budgets, signal);
+  if (!Number.isSafeInteger(maxBytes) || maxBytes < 0) fail('Invalid Portable PDB byte limit');
   const bytes = input instanceof ArrayBuffer ? new Uint8Array(input) : input;
   if (!(bytes instanceof Uint8Array) || bytes.length > maxBytes) fail('Invalid or oversized Portable PDB');
   rejectUnsupportedSymbolFormat(bytes);
@@ -25,11 +47,14 @@ export function readPortablePdb(
     pdb = md.streams.get('#Pdb');
   if (!pdb || pdb.length < 32) fail('Not a standalone Portable PDB');
   if (Object.keys(md.rows).some((t) => +t < 48 || +t > 55)) fail('Portable PDB contains non-debug tables');
+  budget.rows(md);
   const pr = new Reader(pdb),
     id = new Uint8Array(pr.take(20)),
     entryPoint = pr.u32(),
     guids = md.streams.get('#GUID') ?? new Uint8Array();
   if (guids.length % 16) fail('Invalid GUID heap');
+  validatePdbReferences(md, entryPoint);
+  budget.custom(md, maxSourceBytes);
   const guid = (i) =>
     i === 0
       ? null
@@ -56,31 +81,25 @@ export function readPortablePdb(
     document: row[0],
     ...readSequencePoints(md.blob(row[1]), row[0], { documents: documents.length }),
   }));
+  validateLocalSignatureRows(methods, md.externalCounts);
   if (methods.length && methods.length !== (md.externalCounts[6] ?? 0))
     fail('PDB method row count does not match MethodDef count');
-  const variables = (md.rows[51] ?? []).map((r, i) => ({
-    id: i + 1,
-    attributes: r[0],
-    index: r[1],
-    name: md.string(r[2]),
-    hidden: !!(r[0] & 1),
-  }));
+  if ((md.rows[50]?.length ?? 0) + (md.rows[51]?.length ?? 0) > defaultParseBudgets.scopes)
+    fail('Scope tree entry limit exceeded');
+  let localNameCharacters = 0;
+  const variables = (md.rows[51] ?? []).map((r, i) => {
+    const name = metadataName(md, r[2], 'Scope local');
+    if ((localNameCharacters += name.length) > 1024 * 1024) fail('Scope tree name limit exceeded');
+    return { id: i + 1, attributes: r[0], index: r[1], name, hidden: !!(r[0] & 1) };
+  });
   const constants = readLocalConstants(md, { maxConstantBytes, maxConstantEntries, maxConstantModifiers });
+  const importBudget = budget.imports();
   const imports = (md.rows[53] ?? []).map((r, i) => ({
     id: i + 1,
     parent: r[0],
-    definitions: readImports(md.blob(r[1]), md),
+    definitions: readImports(md.blob(r[1]), md, importBudget),
   }));
-  for (const scope of imports) {
-    let cur = scope,
-      seen = new Set();
-    while (cur) {
-      if (seen.has(cur.id)) fail('Import scope cycle');
-      seen.add(cur.id);
-      if (cur.parent > imports.length) fail('Invalid parent import scope');
-      cur = imports[cur.parent - 1];
-    }
-  }
+  const effectiveImports = createImportLookup(imports);
   const scopes = (md.rows[50] ?? []).map((r, i, all) => {
     const next = all[i + 1];
     if (
@@ -111,20 +130,6 @@ export function readPortablePdb(
       constants: constants.slice(r[3] - 1, constantEnd),
     };
   });
-  for (let i = 0; i < scopes.length; i++) {
-    const s = scopes[i],
-      prev = scopes[i - 1];
-    if (
-      prev &&
-      (s.methodToken < prev.methodToken ||
-        (s.methodToken === prev.methodToken && (s.start < prev.start || (s.start === prev.start && s.end > prev.end))))
-    )
-      fail('Unsorted local scopes');
-    for (let j = i - 1; j >= 0 && scopes[j].methodToken === s.methodToken; j--) {
-      const o = scopes[j];
-      if (s.start < o.end && s.end > o.end) fail('Partially overlapping local scopes');
-    }
-  }
   const stateMachines = (md.rows[54] ?? []).map((r) => ({ moveNext: token(6, r[0]), kickoff: token(6, r[1]) }));
   for (let i = 0; i < stateMachines.length; i++) {
     const s = stateMachines[i];
@@ -139,12 +144,17 @@ export function readPortablePdb(
   }
   if (new Set(stateMachines.map((s) => s.kickoff)).size !== stateMachines.length)
     fail('Duplicate state machine kickoff');
+  const annotationBudget = {};
   const custom = (md.rows[55] ?? []).map((r, i) => {
+    const parent = decodeCoded('HasCustomDebugInformation', r[0]),
+      kind = guid(r[1]),
+      bytes = md.blob(r[2]);
+    preflightLocalAnnotation(kind, parent, bytes, md.counts, annotationBudget);
     const c = {
       id: i + 1,
-      parent: decodeCoded('HasCustomDebugInformation', r[0]),
-      kind: guid(r[1]),
-      bytes: new Uint8Array(md.blob(r[2])),
+      parent,
+      kind,
+      bytes: new Uint8Array(bytes),
     };
     Object.assign(c, readCustomDebugInformation(c.kind, c.bytes, { maxBytes, maxSourceBytes }));
     if (c.kind === PdbGuids.embeddedSource) {
@@ -154,6 +164,9 @@ export function readPortablePdb(
     }
     return c;
   });
+  attachLocalAnnotations(custom, variables, constants);
+  bindConstantAnnotations(constants);
+  const scopeTree = createScopeTree(scopes, md.externalCounts[6] ?? 0);
   const methodMap = new Map(methods.map((m) => [m.token, m]));
   const asyncInfo = createAsyncInfoLookup(stateMachines, custom, {
     maxAsyncEntries,
@@ -172,7 +185,10 @@ export function readPortablePdb(
     variables,
     constants,
     scopes,
+    scopeTree,
+    localSlots: unavailableLocalSlots(md.externalCounts[6] ?? 0),
     imports,
+    effectiveImports,
     stateMachines,
     custom,
     sourceLink: custom.find((c) => c.sourceLink)?.sourceLink ?? null,

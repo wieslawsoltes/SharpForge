@@ -1,4 +1,5 @@
 import {findTextMatches} from '@sharpforge/text';
+import {workerOptions} from '../worker-options.js';
 
 const word = /[\p{L}\p{N}\p{M}_]/u;
 
@@ -110,10 +111,13 @@ export async function cooperativeLiteralSearch(documents, query, options = {}) {
   } finally { timing.dispose(); }
 }
 
-/** Large regular expressions run in a terminable same-origin module worker with hard instruction/time limits. */
+/** Large regular expressions run in a terminable worker with hard instruction/time limits. */
 export function workerRegexSearch(documents, query, options = {}) {
-  const createWorker = options.workerFactory ?? (() => new Worker(new URL('./search-worker.js', import.meta.url), {type: 'module'}));
-  if (!options.workerFactory && typeof Worker !== 'function') throw new Error('Large regular-expression search requires a module-worker host');
+  const createWorker = options.workerFactory ?? (() => {
+    const asset = new URL('./search-worker.js', import.meta.url);
+    return new Worker(asset, workerOptions(asset));
+  });
+  if (!options.workerFactory && typeof Worker !== 'function') throw new Error('Large regular-expression search requires a worker host');
   return new Promise((resolve, reject) => {
     const worker = createWorker();
     let settled = false;

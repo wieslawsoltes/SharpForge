@@ -30,7 +30,8 @@ ordered `customModifiers` (`required`, `typeToken`), object/string null and type
 class null. Existing character values remain numeric UTF-16 units and 64-bit
 integers remain BigInt. Strings preserve BOMs, embedded NUL and unmatched UTF-16
 surrogates. Enums retain the historical coded `enumType` and additionally expose
-the full `enumTypeToken`; this is a handle, not a resolved enum definition.
+the full `enumTypeToken` and `enumTypeVerified: false`; standalone reading does
+not resolve enum definitions.
 Typed null exposes `type: 'class'`, `typeToken` and `value: null`.
 Malformed Boolean values, fixed-width payloads, trailing data and out-of-range
 handles fail explicitly. Type-dependent general constants (including decimal,
@@ -46,6 +47,143 @@ constant, capped at 1,024. Constant names are capped at 3,072 UTF-8 bytes before
 decoding and 1,024 UTF-16 units afterward. These options also apply through
 `loadSymbols`. Native C# examples and offline reference data are in
 `interop/LocalConstants` and `tests/fixtures/portable-pdb-local-constants`.
+
+`symbols.effectiveImports(importScopeId)` returns fresh import records for a
+LocalScope's `importScope`, ordered from the outermost parent to the selected
+scope, retaining each blob's recorded order. Zero returns an empty list; invalid
+ids fail explicitly. All nine Portable PDB import kinds retain their original
+fields and gain `scopeId`, `resolved` and `reason`. Bound `loadSymbols` results
+also add `assemblyName` for AssemblyRef row ids and `typeName` for TypeDef,
+TypeRef and TypeSpec handles (including nested and constructed types). Names
+describe declared metadata; referenced assemblies are not loaded. Standalone
+and explicitly unbound PDBs leave handle-bearing entries `resolved: false` with
+`reason: 'type-metadata-required'`; namespace/XML/alias-only records need no PE.
+
+The list preserves alias declarations/references and duplicates so the expression
+language can apply its own lookup and shadowing rules. It does not reconstruct
+source ordering discarded by a compiler. Import scopes are capped at 100,000,
+parent depth at 256 and aggregate definitions at 100,000; graph validation is
+linear and queries take O(depth + returned entries), without caching flattened
+copies of every ancestor list. Names are bounded before UTF-8 decoding (4 KiB
+each / 4 MiB aggregate). Bound name resolution caps distinct type/assembly
+handles at 4,096, TypeSpec blobs at 4 KiB each / 1 MiB aggregate, ASTs at depth
+32 / 256 nodes, and resulting type names at 4,096 characters / 1 MiB aggregate.
+Existing metadata-name bounds apply; a referenced local type permits at most
+65,536 NestedClass rows. Public import arrays, metadata and returned records
+cannot mutate later queries. The native nested C# namespace fixture and SRM
+reference are captured by `scripts/validate-pdb-effective-imports.mjs`.
+
+`symbols.scopeTree(methodToken)` returns fresh lexical root nodes in table order.
+Nodes contain `id`, IL-byte `start`/exclusive `end`, `importScope`, `locals`,
+`constantIds` (rows in `symbols.constants`) and nested `children`. Each local
+retains `id`, slot `index`, `name`, `attributes`, and exposes `compilerGenerated`
+from Portable PDB's DebuggerHidden flag. Equal ranges nest in table order;
+disjoint ranges form siblings. No lexical scope is invented for methods with no
+LocalScope rows. Invalid MethodDef tokens fail; valid methods without scopes
+return `[]`.
+
+Bound `loadSymbols` joins slots to the PDB's StandAloneSig handle, falling back
+to the PE method header when sequence-point data is absent. Locals expose a
+lossless CIL signature AST `type`, declared `typeName`, and `typeReason: null`.
+Generic parameters, custom modifiers, pinned locals and byrefs remain in the
+AST; no generic substitution, referenced-assembly loading or runtime-value
+inference occurs. Standalone/unbound locals have null type/name with
+`typeReason: 'type-metadata-required'`; a missing signature yields
+`'missing-local-signature'`. Invalid signatures and out-of-range slots fail.
+Public PDB records and returned trees/ASTs cannot mutate later queries.
+
+Scope construction is linear; queries cost the returned tree and distinct local
+signature ASTs. Bounds are 100,000 combined scopes/local declarations/constant
+references, depth 256, local names 3,072 UTF-8 bytes/1,024 UTF-16 units each and
+1 MiB aggregate UTF-16 units. Unique local signatures are preflighted at 4 KiB
+each / 128 KiB aggregate before decoding, with depth 32 / 4,096 AST nodes;
+each displayed type uses the existing 256-node and metadata-name limits above.
+Types are snapshotted once per load, and a query clones each used slot's AST
+once even when the slot is declared in multiple scopes. Native nesting and
+local types are compared with SRM by `scripts/validate-pdb-scope-tree.mjs`.
+
+`symbols.localSlots(methodToken)` enumerates declared CLI storage slots, including
+slots with no LocalVariable row. Bound results are `{available: true, reason:
+null, slots}`; each slot has `index`, owned signature AST `type`, `typeName`,
+`unnamed`, `name` and `declarations`. A name is present only for one exact PDB
+declaration; no-row and reused-slot names are null. `unnamed` means no row,
+not an inference about source code or optimization. Declarations retain exact
+`id`, `scopeId`, IL `start`/exclusive `end`, name, attributes and hidden flag.
+No `V_0`-style identifier, lexical scope, runtime value or eliminated variable
+is invented. Existing scope/offset APIs still return only recorded declarations.
+
+Without a bound PE the result is `{available: false, reason:
+'type-metadata-required', slots: []}`. Missing bodies yield `no-method-body`;
+non-CIL bodies without a PDB local signature yield `unsupported-method-body`.
+An actual tiny body without a signature has an available empty slot list.
+The CLI header is authoritative: nonzero PDB local-signature handles must agree
+with it and cannot assign storage to a method without a CIL body.
+Invalid MethodDef/query/signature tokens, malformed signatures and out-of-range
+recorded slots reject. Distinct names for reused storage remain separate in
+`declarations`. Returned ASTs/declarations and public PDB rows cannot alter later
+queries. Source annotations remain on the existing scope-tree declaration API.
+
+Bound loads snapshot all declared local signatures using the shared CIL
+header-only reader, without allocating IL/EH views for slot discovery. Unique
+signature bytes are limited to 4 KiB each / 128 KiB total before AST decoding,
+with depth 32, 4,096 nodes per signature and 65,536 nodes total. Before slot
+projection, `maxLocalSlotMethods` caps method count at 65,536 and `maxLocalSlots`
+caps aggregate method-slot occurrences at 100,000; options may lower these
+limits. Existing per-type name/output limits apply. `signal` cancellation is
+checked during bound snapshots and slot queries. Construction is linear in
+method/header/signature/declaration data; queries copy only one method's slots.
+No PE, borrowed signature bytes or mutable metadata escape the load phase.
+
+LocalVariable/LocalConstant dynamic and tuple CDI is joined by its exact parent
+row. Annotated scope locals retain `dynamicFlags` and `tupleElementNames`, with
+`displayTypeName` such as `dynamic[]` or `(int a, string b)`; `type`/`typeName`
+remain the declared CLI signature. Annotated constants expose the same fields
+on `symbols.constants`; scopes additionally expose `constantAnnotations` with
+owned `{id, name, ...annotationFields}` views alongside `constantIds`. Values
+and constant decoding status are unchanged.
+
+Dynamic flags follow type occurrences, including generic arguments, arrays,
+byrefs and function pointers, with omitted trailing zero bits accepted.
+Custom modifiers and pinning do not consume dynamic flags. Tuple names follow
+Roslyn's reverse nested decoding, including long ValueTuple rest chains.
+Tuple shorthand requires a metadata-declared framework ValueTuple identity;
+same-named custom-assembly types do not qualify. This reuses the bounded
+framework identity checks below, without loading or authenticating assemblies.
+
+Unbound locals and type-dependent constants keep `displayTypeName: null` and
+`annotationReason: 'type-metadata-required'`. Primitive constants can be
+annotated without a PE. Mismatched annotations keep their raw fields and expose
+`dynamic-type-mismatch`, `tuple-name-count-mismatch` or `tuple-type-mismatch`;
+no source spelling is guessed. Referenced TypeSpec constants are decoded for
+display only, not interpreted as runtime values. Enum TypeSpec annotations remain
+`unsupported-enum-type-specification`, preserving their unverified enum identity
+and scalar value. Tuple labels preserve PDB text;
+this display is not a C# source serializer.
+
+Before CDI decoding, annotation parents and duplicate kinds are checked; limits
+are 4,096 records, 1 MiB aggregate bytes, 1,024 flags/names per record and 65,536
+aggregate flags/names. Tuple labels are limited to 3,072 UTF-8 bytes before
+allocation, then 1,024 UTF-16 units each / 4,096 per record. Annotation traversal
+is bounded at depth 32 / 256 nodes; occurrence copies avoid conflating shared
+primitive AST nodes. Existing metadata-name/output and constant TypeSpec budgets
+also apply. Display facts are computed once at load and queries copy owned data.
+The existing two-version Roslyn CDI capture is reused by
+`tests/a13-04-local-annotations.test.js`; new native end-to-end qualification is
+not claimed by this increment.
+
+For bound local TypeDef enums, `loadSymbols` verifies the metadata-declared
+framework `System.Enum` base and exactly one special `value__` instance field.
+Its scalar signature must match the constant's encoded kind; mismatches,
+unsupported bases and malformed fields fail explicitly. Successful checks set
+`enumTypeVerified: true`; this verifies base identity and underlying scalar type,
+not every ECMA type-definition rule. TypeRef/TypeSpec enums and unbound symbols
+retain decoded scalar values with `enumTypeVerified: false`; external assemblies
+are not loaded. FieldPtr indirection and field custom modifiers are supported.
+Before list expansion, the binder caps selected enums at 1,024 and fields at
+4,096 per enum / 65,536 total. Inspected instance-field signatures are capped at
+4 KiB each / 1 MiB total, with decoder depth 32 / nodes 256; names use the same
+bounded metadata-name reader. Definitions are checked once per load and no PE
+views or signature ASTs escape. This reuses the captured native C# short enum.
 
 For bound symbols, `loadSymbols` recognizes a top-level `System.Decimal` or
 `System.DateTime` TypeDef/TypeRef only when its declared assembly scope matches an invariant-culture
@@ -77,6 +215,19 @@ signature, modifiers and unbound behavior apply. VB Date literals and SRM
 `scripts/validate-pdb-datetime-constants.mjs`; offline tests read that corpus.
 Calendar formatting, time-zone conversion, DateTimeOffset and general type
 resolution are separate capabilities.
+
+Payload-free `VALUETYPE` constants referencing a TypeSpec for `System.Nullable<T>`
+now bind to `type: 'nullable'`, `value: null`, `decoded: true` and
+`defaultValue: true`. The original TypeSpec token and owned raw signature remain
+available. This represents the boxed default (no value), not a fabricated value
+of `T`. The nullable definition uses the same declared framework identity gate.
+Closed arguments supported here are Boolean, Char, signed/unsigned integer widths,
+Single, Double, IntPtr, UIntPtr and identity-checked Decimal/DateTime. Other
+constructed types, generic variables, modified arguments and nonempty nullable
+payloads remain explicitly unresolved. TypeSpec count (1,024), each blob (4 KiB)
+and aggregate bytes (1 MiB) are checked before decoding; each AST has depth 32
+and node 256 limits. ASTs/PE views do not escape the load. The native reference
+uses SRM-built metadata and CLR boxed defaults, not C# nullable const declarations.
 
 Source documents accept `hashAlgorithm` and `language` GUIDs and a `hash`
 Uint8Array. SHA-1, SHA-256, SHA-384 and SHA-512 are computed synchronously when omitted;
@@ -336,3 +487,43 @@ the bounded 3,072-byte/1,024-UTF-16-unit metadata scan used by hoisted locals.
 Relevant facts are owned at load, the query index is lazy, and results are fresh;
 input-byte and returned-record mutations cannot alter subsequent queries.
 Naming follows Roslyn's [GeneratedNames](https://github.com/dotnet/roslyn/blob/main/src/Compilers/CSharp/Portable/Symbols/Synthesized/GeneratedNames.cs).
+
+`readPortablePdb` preflights all debug-table row/heap handles before projecting
+names, scopes or custom records. MethodDebugInformation documents are checked
+even for empty sequence blobs; local-signature prefixes reference declared
+external StandAloneSig rows. CDI parents must select an existing declared
+external/local row, including unknown CDI kinds whose payloads stay opaque.
+Import and constant payload references continue through their existing decoders.
+Malformed CLI binary extents/coded indexes are reported as `SymbolError` by the
+PDB reader, including invalid heap handles and truncated constant signatures.
+This validates declared metadata extents without resolving external assemblies
+or claiming every semantic rule, delta generation or execution backend.
+
+`readPortablePdb(input, { budgets, signal })` and `loadSymbols` accept a
+`budgets` object of nonnegative integer limits. Each limit may be lowered from
+its hard default; unknown keys, fractional values and increases reject with
+`SymbolError`. Zero allows an empty category. Existing `maxBytes` (64 MiB file)
+and `maxSourceBytes` (16 MiB per embedded source) remain independent options.
+
+| Budget | Default/hard maximum | Charged work |
+| --- | ---: | --- |
+| `documents` | 100,000 | Document rows |
+| `methods` | 100,000 | Referenced MethodDef count and MethodDebugInformation rows, independently |
+| `scopes` | 100,000 | LocalScope rows |
+| `imports` | 100,000 | ImportScope rows and aggregate import definitions, independently |
+| `customRecords` | 100,000 | CDI rows, including empty payloads |
+| `cdiBytes` | 64 MiB | Sum of CDI payload bytes across row occurrences |
+| `embeddedSourceBytes` | 64 MiB | Sum of decoded embedded-source sizes across row occurrences |
+
+Counts are checked before symbol projection. All CDI and embedded-source sizes
+are checked before the first CDI copy or inflation, including repeated handles
+and repeated document parents. Compressed records charge their declared decoded
+size, subsequently checked by the existing bounded inflater; stored records
+charge their content length. Cancellation is checked before raw parsing and at
+bounded CDI/import intervals. No caller budget object is retained.
+
+The CIL metadata parser's independent one-million raw-row cap still precedes
+these symbol budgets; this API does not introduce a per-table limit on that
+raw metadata allocation. Existing fixed name, nesting, signature and combined
+scope-entry caps also remain active. Budget values count logical work/bytes,
+not measured process memory.

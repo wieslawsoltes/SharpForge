@@ -8,6 +8,7 @@ export {resolveStringComparer} from './system/string-comparer.js';
 export {createHostStringOrdering, defaultStringOrdering} from './globalization/string-ordering.js';
 export {formatBclValue} from './formatting/index.js';
 export {formatDoubleDefault} from './formatting/index.js';
+export {formatSingleDefault} from './formatting/index.js';
 export {compositeFormat} from './formatting/index.js';
 export {invokeLegacyBclBuiltin, hasLegacyBclBuiltin, legacyBclBuiltinNames} from './legacy-builtins.js';
 

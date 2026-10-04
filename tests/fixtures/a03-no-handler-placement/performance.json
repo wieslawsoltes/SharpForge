@@ -1,0 +1,203 @@
+{
+  "baselineCommit": "d5eafbc6027fd83c2875670b8c83e24a55a11d0b",
+  "candidateProductCommit": "094e8bcde011db96eae358156bf136f0e8da51ae",
+  "harness": "packages/cil/tools/benchmark-handler-entry.mjs",
+  "harnessSHA256": "5dc5e33f125cacaaea56af8cbcb35c8870891de05715a0a6f04a91524a2f32de",
+  "schedule": [
+    "baseline",
+    "parent",
+    "child"
+  ],
+  "comparison": [
+    "parent",
+    "child"
+  ],
+  "measurement": "Fixed serial processes on shared M3 Pro host; 12 chronological samples of 1000 admissions, first 3 warmup; median/p95 of remaining 9. No significance, causal attribution, noise or general speed claim.",
+  "runs": {
+    "parent": {
+      "node": "v24.21.0",
+      "platform": "darwin",
+      "arch": "arm64",
+      "warmupSamples": 3,
+      "results": {
+        "noHandlers": {
+          "iterations": 1000,
+          "medianMs": 3.3384169999999926,
+          "p95Ms": 4.031499999999994,
+          "samples": [
+            11.402957999999984,
+            5.206083000000007,
+            3.971584000000007,
+            3.389375000000001,
+            3.292375000000021,
+            3.5582919999999945,
+            3.3384169999999926,
+            3.1971249999999998,
+            3.319500000000005,
+            3.217624999999998,
+            4.031499999999994,
+            3.851083999999986
+          ],
+          "fixtureSHA256": "23079e90e09408bcb5c6f3ff13c71fb504679136aa754c34498dcaa87230a071"
+        },
+        "catch": {
+          "iterations": 1000,
+          "medianMs": 7.86050000000003,
+          "p95Ms": 10.441417000000001,
+          "samples": [
+            14.620584000000008,
+            9.379165999999998,
+            10.369916999999987,
+            10.441417000000001,
+            9.077042000000006,
+            8.006166000000007,
+            7.396249999999981,
+            7.86050000000003,
+            8.720708000000002,
+            7.0761249999999905,
+            7.845708000000002,
+            7.8115830000000415
+          ],
+          "fixtureSHA256": "02a488b7ffb2eb456db82ba37b73a0e21c76995ccf07342cdfdcd43150706424"
+        },
+        "finally": {
+          "iterations": 1000,
+          "medianMs": 6.866958000000011,
+          "p95Ms": 8.8245,
+          "samples": [
+            13.053957999999966,
+            6.609499999999969,
+            6.499166000000002,
+            8.253125000000011,
+            5.605209000000002,
+            6.213333000000034,
+            8.446750000000009,
+            5.821292000000028,
+            7.626125000000002,
+            8.8245,
+            6.866958000000011,
+            6.739625000000046
+          ],
+          "fixtureSHA256": "00959e0cc9503d2e3fee67e466141c52150fbebf6bcaf6be2bb55125423b04f8"
+        }
+      }
+    },
+    "child": {
+      "node": "v24.21.0",
+      "platform": "darwin",
+      "arch": "arm64",
+      "warmupSamples": 3,
+      "results": {
+        "noHandlers": {
+          "iterations": 1000,
+          "medianMs": 3.2892089999999996,
+          "p95Ms": 3.6086249999999893,
+          "samples": [
+            10.958958999999993,
+            4.5127080000000035,
+            4.16225,
+            3.2644580000000047,
+            3.232541999999995,
+            3.1145839999999936,
+            3.2892089999999996,
+            3.213792000000012,
+            3.501499999999993,
+            3.6086249999999893,
+            3.474084000000005,
+            3.5784169999999733
+          ],
+          "fixtureSHA256": "23079e90e09408bcb5c6f3ff13c71fb504679136aa754c34498dcaa87230a071"
+        },
+        "catch": {
+          "iterations": 1000,
+          "medianMs": 8.402625,
+          "p95Ms": 8.907457999999991,
+          "samples": [
+            13.969374999999985,
+            8.782292000000012,
+            9.379708999999991,
+            8.907457999999991,
+            8.599084000000005,
+            8.402625,
+            8.733291000000008,
+            8.632583000000011,
+            7.932000000000016,
+            7.008417000000009,
+            7.421249999999986,
+            7.291249999999991
+          ],
+          "fixtureSHA256": "02a488b7ffb2eb456db82ba37b73a0e21c76995ccf07342cdfdcd43150706424"
+        },
+        "finally": {
+          "iterations": 1000,
+          "medianMs": 5.855542000000014,
+          "p95Ms": 6.822666999999967,
+          "samples": [
+            8.15662500000002,
+            6.459458999999981,
+            6.460583999999983,
+            6.822666999999967,
+            5.640709000000015,
+            6.191291999999976,
+            5.7350830000000315,
+            5.855542000000014,
+            5.296457999999973,
+            6.019041000000016,
+            5.961374999999975,
+            5.7229580000000055
+          ],
+          "fixtureSHA256": "00959e0cc9503d2e3fee67e466141c52150fbebf6bcaf6be2bb55125423b04f8"
+        }
+      }
+    }
+  },
+  "deltas": {
+    "noHandlers": {
+      "medianMs": {
+        "before": 3.3384169999999926,
+        "after": 3.2892089999999996,
+        "delta": -0.049207999999993035,
+        "percent": -1.4739920147780583
+      },
+      "p95Ms": {
+        "before": 4.031499999999994,
+        "after": 3.6086249999999893,
+        "delta": -0.4228750000000048,
+        "percent": -10.489271983132964
+      }
+    },
+    "catch": {
+      "medianMs": {
+        "before": 7.86050000000003,
+        "after": 8.402625,
+        "delta": 0.5421249999999702,
+        "percent": 6.896825901659787
+      },
+      "p95Ms": {
+        "before": 10.441417000000001,
+        "after": 8.907457999999991,
+        "delta": -1.53395900000001,
+        "percent": -14.69109987657815
+      }
+    },
+    "finally": {
+      "medianMs": {
+        "before": 6.866958000000011,
+        "after": 5.855542000000014,
+        "delta": -1.011415999999997,
+        "percent": -14.728734324572768
+      },
+      "p95Ms": {
+        "before": 8.8245,
+        "after": 6.822666999999967,
+        "delta": -2.0018330000000333,
+        "percent": -22.68494532268155
+      }
+    }
+  },
+  "integrationReview": {
+    "reviewer": "root",
+    "accepted": true,
+    "statement": "Root integration review accepts catch median +0.542125 ms/+6.90% per 1000 admissions for completing shared placement admission. Handler-bearing semantics remain unchanged, the no-handler path constructs no EH tree, and temporary offset pairs are removed. All chronological samples retained; no causal attribution, noise, speedup or peak-memory claim."
+  }
+}

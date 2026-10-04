@@ -1,10 +1,10 @@
 {
   "schemaVersion": 1,
   "sources": {
-    "packages/runtime/src/heap.js": "eecd3fb6a26637b3feb810f233f377c799f05c119e93c71b4a971056529e5d6b",
-    "packages/runtime/src/vm.js": "9889ea83f3d0ee1e24df15057dfd9a43ed000dc52e4371e006cfdfda4e4005da",
-    "packages/runtime/src/cil-vm.js": "35d6cfb8c09251a39157ce1f1bf0124725faa14e0668a248cfc2cb5845528684",
-    "packages/runtime/src/execution/delegate-targets.js": "ec19efa480e2d864ba35268cfee220015e7655d84213502d6d2fc4b95094ae5d",
+    "packages/runtime/src/heap.js": "01e841268240a757b9213744cf64d6b6c814baa1a76113adacd3c601f0708cb5",
+    "packages/runtime/src/vm.js": "754934d348b4633eb91748707e41c9a174806007d0530d7559400a79ea2145a2",
+    "packages/runtime/src/cil-vm.js": "99aa08b03322c37d0ac94328a9dd961a135a75044ca21887691e3e9ccca1d7b1",
+    "packages/runtime/src/execution/delegate-targets.js": "4580a64b46678535791363c9a8e593134b6c264daf6960017c88c23ea988893e",
     "packages/runtime/src/execution/source-ops.js": "d281c22b9072dc0151a2b0b3571c02b29bfe3074dbf783cf879269b6e5af9a22",
     "packages/runtime/src/execution/source-ops/load-store.js": "7a99bedd6eef6f44a618a9f905181df553fa01bb98ee6d9912be4936d87c8a3e",
     "packages/runtime/src/execution/source-ops/arithmetic.js": "658d004672bd71fdd1ab7b6a7747daf319d8fcb24217b925f33531336e9a1762",
@@ -12,15 +12,15 @@
     "packages/runtime/src/execution/source-ops/call.js": "9bbfce817cc8962140bccfcc03c290c42471904cb0cc2ef41239c707ac015f30",
     "packages/runtime/src/execution/source-ops/object.js": "2a7564083417592455ef5753a4ab759c5a59ef54676f2bb6de779260c51ae872",
     "packages/runtime/src/execution/source-ops/index.js": "893e36bfd952bd80a09dfa248ed9c0b4052bb0a0cea48a4b6aafdebde0f8cca0",
-    "packages/runtime/src/execution/source-builtins.js": "ddbc1a4f62e70cb89e91748af58900d99009c5ed16037decda08840aeb733fad",
+    "packages/runtime/src/execution/source-builtins.js": "2066eda1d6ad7a048d19a94b67fa7bb6abf9cc031034cffeacb1245208c571cf",
     "packages/runtime/src/execution/source-builtins/objects.js": "1c48decebb5ca2803409afa097f610e201d0b1556d7e46461dd444dfe03a3d3a",
     "packages/runtime/src/execution/source-builtins/collections.js": "7c29355d5d9e39fd29641ffb9d2bf0e0ee6b406b70d75829f5dfe57dad0508cc",
     "packages/runtime/src/execution/source-builtins/services.js": "b91d5a6acbd232e5d3e63e7a727e180ec4b7a4baff44ce82a6a51b1f6234cd8e",
     "packages/runtime/src/execution/source-builtins/index.js": "5f158f73b07154bad9b3a3c2602cdac4ef2203b7984f1ad464a8b22d06f8211e",
-    "packages/runtime/src/execution/storage.js": "90796038ab9b92e0bd29c1e48df58c98655f625b330f6dc8df2e48284ab516ad",
+    "packages/runtime/src/execution/storage.js": "b8f507a4dbbeaec8e12a9779bfafd1bfa53aeaabbf7b5a78d9517e5dfc582d39",
     "packages/runtime/src/execution/numeric-ops.js": "407778ba5fa9b1b97d26e625874dac923b2de5c6e4f9a5a30d42f1b2da7ee2b2",
     "packages/runtime/src/execution/enums.js": "7235807aed0ec81512a186db091608087e4418b38dfbd1cb228cde697a46ff5c",
-    "packages/bytecode/src/index.js": "a7415f7b70d7fa8b44674f85278a307e5cc9cbd7df0544953733eda2a3a1b32d",
+    "packages/bytecode/src/index.js": "0a4906fc6b51585ed9f8a9060f10d9de5cc5699e642ba91a71baa4188181b963",
     "packages/bytecode/src/builtins.js": "52bdae4e1dc6b2e0c418d6fa38cbb980e616891a03415143a656e6def8060d2b",
     "packages/bytecode/src/numeric/conversions.js": "8ba60ff562911c7c11adb942a0d8b2793bd935cddadf5bc71bb52817b0f16b60",
     "packages/bytecode/src/numeric/float.js": "aa8fe24bf6c9f0967934f377e1553244aa49a6521fb2c41a9e1e996e25a6ebc0",
@@ -68,13 +68,21 @@
     },
     "any": {
       "source": "number | bigint | boolean | null | undefined | {h,g} | enum | float | nativeInt | Decimal",
-      "cil": "number | bigint | null | undefined | {h,g} | float | nativeInt | Decimal | byref | methodPointer | frozen {valueType,fields}"
+      "cil": "number | bigint | null | undefined | {h,g} | float | nativeInt | Decimal | byref | methodPointer | frozen {valueType,fields} | frozen Nullable"
     }
   },
   "additionalShapes": [
     {
+      "shape": "{nullableType:MethodTable,hasValue:boolean,value}",
+      "meaning": "immutable direct-CIL Nullable with an admitted reference-free copied payload or null; boxes as null or underlying T; ordinary same-VM snapshot-safe"
+    },
+    {
       "shape": "{valueType:MethodTable,fields:frozen array}",
-      "meaning": "immutable VM-owned direct-CIL reference-free sequential struct; nested copied values; ordinary same-VM snapshot-safe, not portable wire data"
+      "meaning": "immutable VM-owned direct-CIL reference-free struct; nested copied values; ordinary same-VM snapshot-safe, not portable wire data"
+    },
+    {
+      "shape": "{valueType:MethodTable,fields:frozen array,explicitBytes:frozen byte array}",
+      "meaning": "reference-free explicit-layout value or nested view with immutable little-endian storage; overlapping fields alias within a value; copies preserve padding and scalar bits; not a portable snapshot or raw-memory API"
     },
     {
       "shape": "{byref:true,vmOwner,kind,index,owner,frameId,path:frozen array}",

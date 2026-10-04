@@ -32,7 +32,7 @@ browser fixtures. Read the versioned capability inventory and test/benchmark evi
 ## Standalone examples
 
 The [example instructions](examples/README.md) explain how to serve the built distribution with the
-production CSP. The examples cover shared views, a 500,000-line document and all five keyboard profiles.
+production CSP. The examples cover shared views, a 500,000-line document and all six keyboard profiles.
 The distribution includes the module worker needed for large regular-expression searches; the repository
 build resolves its package imports as well as the main editor imports.
 

@@ -1,0 +1,10 @@
+{
+  "/tmp/sharpforge-project6-a03-local-initialization": {
+    "actual": "/private/tmp/sharpforge-project6-a03-local-initialization/packages/cil",
+    "indexSHA256": "9e630a90be6b4328b3604919d2a90623f8d2beaedafd8045c46f433e55bc97f0"
+  },
+  "/tmp/sharpforge-project6-a03-local-initialization-baseline": {
+    "actual": "/private/tmp/sharpforge-project6-a03-local-initialization-baseline/packages/cil",
+    "indexSHA256": "9e630a90be6b4328b3604919d2a90623f8d2beaedafd8045c46f433e55bc97f0"
+  }
+}

@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {readFile} from 'node:fs/promises';
-import {createRegistry,contracts,contributionManifest,idReservations} from '@sharpforge/framework';
+import {createRegistry,contracts,contributionManifest,areaReservations,idReservations} from '@sharpforge/framework';
 import {createBuiltinRegistry,Builtins,frameworkBuiltin} from '@sharpforge/bytecode';
 import {snapshotContractIds,checkContractIds} from '../scripts/planning/snapshot-contract-ids.js';
 import {implementationStatus,checkImplementationRegression,inspectContractImplementations} from '../scripts/planning/check-contract-implementations.js';
@@ -10,6 +10,39 @@ const contribution=(name,type)=>({name,register:r=>{r.define(type);r.ctor(type);
 test('released framework and bytecode IDs are unchanged',async()=>{const framework=JSON.parse(await readFile(new URL('../planning/contracts/framework-ids.lock.json',import.meta.url))),bytecode=JSON.parse(await readFile(new URL('../planning/contracts/bytecode-ids.lock.json',import.meta.url)));assert(checkContractIds({framework,bytecode},snapshotContractIds()));for(const d of contracts)assert.equal(frameworkBuiltin(d).contract,d);});
 test('golden checker reports the first changed id and accepts appends',()=>{const expected=snapshotContractIds(),changed=structuredClone(expected);changed.framework[3].name+='Changed';assert.throws(()=>checkContractIds(expected,changed),/id 3/);const op=structuredClone(expected);op.bytecode.Op.SEQ++;assert.throws(()=>checkContractIds(expected,op),/Op numbering/);const offset=structuredClone(expected);offset.bytecode.contractOffset++;assert.throws(()=>checkContractIds(expected,offset),/offset/);const appended=structuredClone(expected);appended.framework.push({id:99999});appended.bytecode.Op.APPENDED=999;assert(checkContractIds(expected,appended));});
 test('reserved contributions have the same IDs in either load order',()=>{const a=make(),b=make();a.registerAll([contribution('one','First'),contribution('two','Second')]);b.registerAll([contribution('two','Second'),contribution('one','First')]);assert.deepEqual(a.contracts,b.contracts);assert.equal(a.contracts[3].id,200);assert.equal(a.types.size,2);});
+test('every catalog area has a stable public reservation in either load order', async () => {
+  const catalog = JSON.parse(await readFile(new URL('../planning/catalog.json', import.meta.url)));
+  const names = catalog.areas.map(area => area.id);
+  assert.deepEqual(areaReservations.map(area => area.name), names);
+  assert(Object.isFrozen(areaReservations));
+  for (const area of areaReservations) {
+    assert(Object.isFrozen(area));
+    assert.deepEqual(area, {name: area.name, start: 65536 * (Number(area.name.slice(1)) + 1), size: 65536});
+  }
+  const contributions = names.map(name => contribution(name, `Example.${name}`));
+  const forward = createRegistry({reservations: idReservations});
+  const reverse = createRegistry({reservations: idReservations});
+  forward.registerAll(contributions);
+  reverse.registerAll([...contributions].reverse());
+  assert.deepEqual(forward.contracts, reverse.contracts);
+  assert.equal(forward.types.size, names.length);
+  assert.equal(forward.contracts.length, names.length * 3);
+  for (const {name, start} of areaReservations) {
+    const members = forward.contracts.filter(contract => contract.owner === `Example.${name}`);
+    assert.deepEqual(members.map(contract => contract.id), [start, start + 1, start + 2], name);
+    for (const member of members) assert.equal(forward.origins.get(member.id), name);
+  }
+});
+test('an unreserved area rolls back contributions at the final reserved boundary', () => {
+  const registry = createRegistry({reservations: idReservations});
+  assert.throws(() => registry.registerAll([
+    contribution('A29', 'LastArea'), contribution('A30', 'UnreservedArea')
+  ]), /\[A30\] Unknown reservation/);
+  assert.equal(registry.contracts.length, 0);
+  assert.equal(registry.types.size, 0);
+  registry.register(contribution('A29', 'LastArea'));
+  assert.deepEqual(registry.contracts.map(contract => contract.id), [1966080, 1966081, 1966082]);
+});
 test('legacy contribution modules validate as a single transaction', () => {
   const registry = createRegistry({reservations: idReservations});
   registry.registerAll(contributionManifest);

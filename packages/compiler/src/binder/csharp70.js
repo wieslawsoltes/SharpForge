@@ -3,7 +3,8 @@ import {DiagnosticId} from '../diagnostics/codes.js';
  * C# 7.0 rules of throw expressions and generalized async return types (SF-A02-T64).
  *
  * A throw expression has no type and is allowed only where control can leave an expression: as the second or
- * third operand of `?:`, as the right operand of `??`, and as the body of an expression-bodied member or lambda.
+ * third operand of `?:`, as the right operand of `??`, as the body of an expression-bodied member or lambda, and
+ * (C# 8) as the result of a switch expression arm.
  * Anywhere else it is CS8115 on the `throw` keyword, and what contains it is not checked further. As an expression
  * body it stands for a statement, so a void member or an `Action` lambda may be `=> throw e`.
  *
@@ -24,6 +25,9 @@ export function isThrowExpressionAllowed(syntax) {
       return parent.right === syntax;
     case 'ArrowExpressionClause':
       return true;
+    case 'SwitchExpressionArm':
+      // C# 8: an arm of a switch expression may throw instead of producing a value.
+      return parent.expression === syntax;
     default:
       return lambdaKinds.has(parent?.kind) && parent.expressionBody === syntax;
   }

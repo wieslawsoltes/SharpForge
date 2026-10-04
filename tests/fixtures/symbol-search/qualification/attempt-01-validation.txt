@@ -1,0 +1,163 @@
+=== install ===
+
+added 28 packages in 295ms
+
+=== baseline-proof ===
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: Symbol search is absent before this feature
++ actual - expected
+
++ 'undefined'
+- 'function'
+
+    at file:///private/tmp/sharpforge-a13-search-qualification/baseline/[eval1]:1:89
+    at ModuleJob.run (node:internal/modules/esm/module_job:561:25)
+    at async node:internal/modules/esm/loader:223:26
+    at async ModuleLoader.executeModuleJob (node:internal/modules/esm/loader:220:20)
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5) {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: 'undefined',
+  expected: 'function',
+  operator: 'strictEqual',
+  diff: 'simple'
+}
+
+Node.js v24.21.0
+
+=== focused ===
+✔ assembly index bounds 20 loaded assemblies and keeps IDs stable across reloads (75.371375ms)
+✔ assembly index covers type, field, method, property and event definitions with owned scalar records (0.496708ms)
+✔ assembly index retains pointer-table ownership without reading method signatures or bodies (0.390542ms)
+✔ assembly index preflights every aggregate limit and rejects invalid limits before projection (0.680667ms)
+✔ assembly index rejects duplicate MVIDs, corrupt ownership, raw token aliases and oversized names (1.497167ms)
+✔ assembly index paging, unknown IDs, empty input and cancellation have bounded outcomes (1.424583ms)
+✔ assembly index matches retained native method tokens and names without native execution (1.627125ms)
+✔ 20k-method pages decode exactly requested physical tokens and return owned results (30.200083ms)
+✔ definition-only and empty pages decode no methods, including the exact end boundary (0.65975ms)
+✔ pages use physical MethodDef order while legacy summaries retain MethodPtr owner order (0.403333ms)
+✔ pagination rejects malformed limits, offsets, aggregate body bytes and cancellation before decoding (0.665583ms)
+✔ legacy summary retains complete inventory, definition-only mode and per-method diagnostics (0.821917ms)
+✔ metadata URIs cover every declared row and user strings, surviving an inspector reload (0.609667ms)
+✔ URI parsing rejects raw token coercion, bad heap extents, other modules and noncanonical components (0.348375ms)
+✔ retained native Roslyn PE resolves method URIs after reload and preserves page/default descriptors (7.351ms)
+✔ search over 50,000 types supports all modes, deterministic pages and total result caps (203.509083ms)
+✔ search defines qualified/simple prefix, literal substring and Unicode camel-initial matching (3.245542ms)
+✔ search returns owned records from all indexed definition kinds without body decoding (0.865625ms)
+✔ search cache has an independent exact budget and is lazy for zero pages and empty queries (1.228125ms)
+✔ search checks query/options/page boundaries and reports only actual continuation or cap overflow (0.367334ms)
+✔ cancelled search preflight/build publishes no partial cache and cached scans remain cancellable (7.675416ms)
+✔ search preserves retained native method identities and reload results (1.929541ms)
+ℹ tests 22
+ℹ suites 0
+ℹ pass 22
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 755.739291
+
+=== comparison ===
+{
+  "output": "/tmp/sharpforge-a13-search-qualification/performance.json",
+  "summaries": {
+    "existingIndex": {
+      "before": {
+        "medianMs": 6.045756833333295,
+        "p95Ms": 6.220916666666653,
+        "maxMs": 6.357638666666655
+      },
+      "after": {
+        "medianMs": 6.0944098333333345,
+        "p95Ms": 6.507333333333311,
+        "maxMs": 7.457819333333343
+      }
+    },
+    "search50k": {
+      "prefix-late": {
+        "cold": {
+          "medianMs": 28.040603999999803,
+          "p95Ms": 30.037083000000166,
+          "maxMs": 30.037083000000166
+        },
+        "warm": {
+          "medianMs": 2.5858954999998787,
+          "p95Ms": 2.7382920000000013,
+          "maxMs": 2.7382920000000013
+        }
+      },
+      "prefix-miss": {
+        "cold": {
+          "medianMs": 26.885999999999967,
+          "p95Ms": 28.5404580000004,
+          "maxMs": 28.5404580000004
+        },
+        "warm": {
+          "medianMs": 1.5953960000001643,
+          "p95Ms": 2.0189579999996567,
+          "maxMs": 2.0189579999996567
+        }
+      },
+      "substring-late": {
+        "cold": {
+          "medianMs": 27.75687549999998,
+          "p95Ms": 29.236291000000165,
+          "maxMs": 29.236291000000165
+        },
+        "warm": {
+          "medianMs": 2.209500000000162,
+          "p95Ms": 3.04754099999991,
+          "maxMs": 3.04754099999991
+        }
+      },
+      "substring-miss": {
+        "cold": {
+          "medianMs": 27.209500500000104,
+          "p95Ms": 28.75762500000019,
+          "maxMs": 28.75762500000019
+        },
+        "warm": {
+          "medianMs": 1.9975420000000668,
+          "p95Ms": 3.127042000000074,
+          "maxMs": 3.127042000000074
+        }
+      },
+      "camel-late": {
+        "cold": {
+          "medianMs": 27.697458000000097,
+          "p95Ms": 29.073957999999948,
+          "maxMs": 29.073957999999948
+        },
+        "warm": {
+          "medianMs": 2.5157500000000255,
+          "p95Ms": 3.0224170000001322,
+          "maxMs": 3.0224170000001322
+        }
+      },
+      "camel-miss": {
+        "cold": {
+          "medianMs": 27.53197949999958,
+          "p95Ms": 53.434208000000126,
+          "maxMs": 53.434208000000126
+        },
+        "warm": {
+          "medianMs": 1.695062499999949,
+          "p95Ms": 2.3709170000001905,
+          "maxMs": 2.3709170000001905
+        }
+      }
+    }
+  },
+  "thresholdFailures": 1
+}
+file:///private/tmp/sharpforge-a13-search-qualification/comparison.mjs:88
+if (!report.passed) throw Error('50 ms search criterion failed; fixed raw schedule retained without repeats');
+                          ^
+
+Error: 50 ms search criterion failed; fixed raw schedule retained without repeats
+    at file:///private/tmp/sharpforge-a13-search-qualification/comparison.mjs:88:27
+
+Node.js v24.21.0

@@ -5,7 +5,7 @@ The baseline is the repository commit recorded in the validation evidence. The l
 | API | Capability | Limit / target |
 | --- | --- | --- |
 | `createRegistry().registerAll()` | Validated, transactional framework contributions with fixed ID blocks | Synchronous ESM; cross-contribution forward references require one batch |
-| `contributionManifest` / `idReservations` | Frozen legacy order and stable A00–A21 reserved blocks | New members cannot extend a released block; reserve a new area |
+| `contributionManifest` / `idReservations` | Frozen legacy order and stable A00–A29 reserved blocks | New members cannot extend a released block; reserve a new area |
 | `createBuiltinRegistry().register()` | Atomic append-only intrinsic contributions | Does not change released framework offset or install a VM implementation |
 | `createServiceRegistry()` | Isolated service factories with reverse rollback/disposal | Synchronous factories; service/document state remains in its current owner |
 | `createCommandRegistry()` | Command metadata, duplicate rejection, async execution | Browser actions use existing Studio handlers |

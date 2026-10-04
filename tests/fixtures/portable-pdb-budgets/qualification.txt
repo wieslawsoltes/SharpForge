@@ -1,0 +1,439 @@
+Serial scheduled driver, Node24, concurrency=1/runlimit=1/heap=1024MiB. All stages terminal.
+
+PHASE install
+
+added 28 packages in 340ms
+
+PHASE budget-proof
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: Missing expected exception.
+    at file:///private/tmp/sharpforge-a13-pdb-combined/budget-red.mjs:5:8
+    at ModuleJob.run (node:internal/modules/esm/module_job:561:25)
+    at async node:internal/modules/esm/loader:647:26
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5) {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: undefined,
+  expected: /budget/,
+  operator: 'throws',
+  diff: 'simple'
+}
+
+Node.js v24.21.0
+
+PHASE combined-focused
+✔ embedded source shrinks and independent platform decompression preserves bytes (5.125791ms)
+✔ embedded PDB compresses and remains bound to its assembly identity (3.093291ms)
+✔ short embedded sources remain raw and byte limits reject decompression early (1.16025ms)
+✔ pinned native corpus spans two Roslyn versions and both source languages (0.689875ms)
+✔ native CDI bytes: 5.3.0-2.26153.122 (4d3023de605a78ba3e59e50c657eed70f125c68a) cs (3.601583ms)
+✔ native CDI bytes: 5.3.0-2.26153.122 (4d3023de605a78ba3e59e50c657eed70f125c68a) vb (1.4245ms)
+✔ native CDI bytes: 4.8.0-7.23558.1 (e0917286) cs (1.581917ms)
+✔ native CDI bytes: 4.8.0-7.23558.1 (e0917286) vb (1.175667ms)
+✔ native nested namespace import context preserves the SRM parent chain and recorded order (9.551333ms)
+✔ all nine import kinds survive projection with assembly and type names (2.8165ms)
+✔ standalone handles stay unresolved; returned lists and public metadata cannot mutate owned context (3.988666ms)
+✔ existing public AST formatter resolves constructed and nested import type names (1.121166ms)
+✔ parent cycles, references, aggregate counts and maximum chain depth are bounded (0.293916ms)
+✔ import handles, name bytes and aggregate decode budgets fail before expansion (0.258792ms)
+✔ TypeSpec and metadata-name limits precede type expansion (0.681375ms)
+✔ public signature display hook overrides selected nodes and preserves default formatting (0.849375ms)
+✔ public display children share depth, node and cancellation budgets (0.271625ms)
+✔ two captured Roslyn versions annotate bound locals through native CDI payloads (8.341791ms)
+✔ dynamic flags address occurrences, with generic containers, arrays, byrefs and padding (1.085208ms)
+✔ tuple names follow reverse nested decoding and flatten long ValueTuple rest chains (1.031041ms)
+✔ constant CDI joins preserve values and expose owned scope annotations (0.866458ms)
+✔ type-dependent constant annotations support authored TypeSpec null without claiming a C# tuple const (0.865333ms)
+✔ unresolved enum TypeSpec annotations keep the scalar value and an explicit reason (0.906792ms)
+✔ lookalike tuples and mismatched flags/counts stay explicit without changing declared types (1.475333ms)
+✔ annotation parents, duplicates, per-record and aggregate limits precede expansion (0.354292ms)
+✔ native local constants pin compiler/source/blob provenance and scalar values (6.094709ms)
+✔ custom modifiers preserve order and enum handles expose tokens without changing scalar shape (0.509541ms)
+✔ UTF-16 strings preserve BOM, unmatched surrogates and embedded NUL; null remains distinct (0.314792ms)
+✔ malformed constants reject truncation, trailing bytes and invalid type handles (0.235ms)
+✔ general signatures retain owned raw bytes and explicit unresolved type payloads (0.127459ms)
+✔ modifier, row and aggregate byte limits apply before expansion and copying (3.279666ms)
+✔ constant names are bounded before metadata string decoding (0.117458ms)
+✔ native lexical tree and local signatures match SRM children and DecodeLocalSignature (12.497792ms)
+✔ hidden locals, constant row ids, equal ranges, disjoint roots and slot reuse are preserved (0.296292ms)
+✔ local binding owns exact byref/pinned/generic-parameter ASTs and fresh results (1.055958ms)
+✔ absent sequence-point rows use the PE local signature; nil signatures are explicit (0.266875ms)
+✔ bad slot, nonlocal signature, invalid token and signature limits fail before expansion (0.915708ms)
+✔ linear scope construction rejects ordering/overlap and bounds maximum nesting and entries (0.636541ms)
+✔ PDB local names are bounded before tree snapshots, including overlapping heap offsets (5.656792ms)
+✔ oversized PDB local-signature RIDs cannot alias valid StandAloneSig tokens (0.278375ms)
+✔ public header-only reader returns owned tiny/fat facts without decoding exception sections (7.242625ms)
+✔ header reader rejects raw token, RVA, short header and code extent boundaries (3.933291ms)
+✔ bound slots without LocalVariable rows expose null names and declared types without invented scopes (2.480917ms)
+✔ recorded declarations and hidden flags are preserved while reused slots never choose an invented name (1.044125ms)
+✔ an empty tiny-method signature differs from missing method metadata and invalid query tokens (1.486666ms)
+✔ slot method/aggregate bounds and cancellation precede slot materialization (1.668875ms)
+✔ unnamed-slot inspection validates method-header signature tokens before dereferencing rows (0.725625ms)
+✔ Release CLR slot types and SRM declarations match without reconstructing eliminated variables (4.886125ms)
+✔ CLI headers are authoritative when in-range PDB signatures disagree or bodies are absent (1.257458ms)
+✔ all declared CDI parent tables retain opaque bytes and permit empty import payloads (7.034666ms)
+✔ MethodDebugInformation documents are checked even when the sequence-point blob is empty (1.777917ms)
+✔ opaque CDI parents must belong to declared external or local rows, including zero and invalid coded tags (4.044125ms)
+✔ scope, import and state-machine row references reject out-of-range targets and retain legal list sentinels (1.420041ms)
+✔ all debug blob, string and GUID handles fail at the public SymbolError boundary (1.570583ms)
+✔ nested import blob handles and type/assembly references retain semantic validation (0.92225ms)
+✔ constant signatures reject truncated scalars and out-of-range type/modifier references as SymbolError (0.647ms)
+✔ sequence-point local signatures and nested document blobs are validated without PE binding (0.7295ms)
+✔ PDB entry points are optional bounded MethodDef tokens (0.575417ms)
+✔ retained native Roslyn Debug and Release corpora remain readable without rebuilding fixtures (4.96725ms)
+✔ Portable PDB documents count accepts the boundary and fails at limit+1 (3.377708ms)
+✔ Portable PDB methods count accepts the boundary and fails at limit+1 (0.4175ms)
+✔ Portable PDB scopes count accepts the boundary and fails at limit+1 (0.426541ms)
+✔ Portable PDB imports count accepts the boundary and fails at limit+1 (0.343584ms)
+✔ import budget caps definitions across scopes as well as scope rows (0.295458ms)
+✔ custom record budget also bounds zero-byte opaque records (0.507792ms)
+✔ aggregate CDI bytes charge overlapping payload handles for every copied row (0.279083ms)
+✔ aggregate embedded source budget charges decoded bytes for compressed and stored records (1.049166ms)
+✔ all source sizes are preflighted before the first compressed payload is inflated (0.170875ms)
+✔ zero budgets allow an empty PDB and reject a nonempty method category (0.246292ms)
+✔ invalid, unknown and excessive budget options fail with SymbolError before parsing (0.525666ms)
+✔ legacy file/per-source caps remain active alongside the new aggregate budget (0.2095ms)
+✔ cancellation is checked before metadata parsing and during import projection (0.186375ms)
+✔ retained Roslyn source and Release fixtures remain within default budgets (2.231666ms)
+✔ symbols: SHA-1/SHA-256 independent crypto comparison (0 bytes) (0.954125ms)
+✔ symbols: SHA-1/SHA-256 independent crypto comparison (1 bytes) (0.133958ms)
+✔ symbols: SHA-1/SHA-256 independent crypto comparison (55 bytes) (0.079375ms)
+✔ symbols: SHA-1/SHA-256 independent crypto comparison (56 bytes) (0.087041ms)
+✔ symbols: SHA-1/SHA-256 independent crypto comparison (63 bytes) (0.107208ms)
+✔ symbols: SHA-1/SHA-256 independent crypto comparison (64 bytes) (0.093291ms)
+✔ symbols: SHA-1/SHA-256 independent crypto comparison (65 bytes) (0.091417ms)
+✔ symbols: SHA-1/SHA-256 independent crypto comparison (127 bytes) (0.117958ms)
+✔ symbols: SHA-1/SHA-256 independent crypto comparison (128 bytes) (0.1165ms)
+✔ symbols: SHA-1/SHA-256 independent crypto comparison (100000 bytes) (8.392875ms)
+✔ symbols: platform DEFLATE interoperability 0/0 (2.366583ms)
+✔ symbols: platform DEFLATE interoperability 0/37 (0.3485ms)
+✔ symbols: platform DEFLATE interoperability 0/70000 (3.1545ms)
+✔ symbols: platform DEFLATE interoperability 4/0 (0.201416ms)
+✔ symbols: platform DEFLATE interoperability 4/37 (0.218209ms)
+✔ symbols: platform DEFLATE interoperability 4/70000 (5.416ms)
+✔ symbols: platform DEFLATE interoperability 2/0 (0.177875ms)
+✔ symbols: platform DEFLATE interoperability 2/37 (0.119875ms)
+✔ symbols: platform DEFLATE interoperability 2/70000 (10.697459ms)
+✔ symbols: decompression size, trailing data and reserved blocks are rejected (0.333625ms)
+✔ symbols: Microsoft fixture decodes thirteen case-sensitive documents and hidden points (5.602042ms)
+✔ symbols: GUID mixed-endian layout agrees with standard C# GUID (0.166041ms)
+✔ symbols: hidden, multi-document, negative and large sequence deltas round trip (0.230791ms)
+✔ symbols: deterministic sidecar matches exact PE and canonical IL loader (46.707084ms)
+✔ symbols: embedded PDB executes and debugs without any #SF stream (12.753166ms)
+✔ symbols: explicit sidecar load and ArrayBuffer offsets validate source identities (5.307416ms)
+✔ symbols: PDB tampering is rejected by checksum independently of identity (1.556958ms)
+✔ symbols: missing symbols do not silently become trusted source (2.212291ms)
+✔ symbols: imported SDK text checksum supports SHA-384/SHA-512 asynchronously (6.020542ms)
+✔ symbols: scoped locals disappear after lexical scope and distinct names bind reused slots (5.068083ms)
+✔ symbols: Source Link is explicit, escaped and credential-free HTTPS only (2.207834ms)
+✔ symbols: all eight standard debug tables and unknown CDI are retained (0.5265ms)
+✔ symbols: large external row indices and string/blob heaps are encoded with wide indices (3.702166ms)
+ℹ tests 106
+ℹ suites 0
+ℹ pass 106
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 2127.696583
+
+PHASE budget-check
+
+> sharpforge@0.14.0 check
+> node scripts/run.js check
+
+{
+  "areas": 30,
+  "nodeFiles": 896,
+  "browserScripts": 37,
+  "unassigned": 0,
+  "duplicate": 0
+}
+Checked 3410 JavaScript modules; 0 syntax errors.
+{
+  "passed": true,
+  "inspected": 3406,
+  "modules": 3406,
+  "errors": []
+}
+
+PHASE budget-structure
+
+> sharpforge@0.14.0 check:structure
+> node scripts/quality/check-structure.js
+
+Structure gate: 271 problem(s)
+packages/bytecode/src/builtins.js: new file exceeds lineLength 292 > 160
+packages/bytecode/src/runtime-builtins.js: new file exceeds lineLength 510 > 160
+packages/cil/src/execution-profile.js: lineLength grew 335 -> 466 (legacy file may only shrink)
+packages/cil/src/field-profile.js: new file exceeds lineLength 220 > 160
+packages/cil/src/intrinsic-profile.js: new file exceeds lineLength 299 > 160
+packages/compiler/scripts/generate-bound-nodes.js: new file exceeds lineLength 345 > 160
+packages/compiler/scripts/generate-diagnostic-codes.js: new file exceeds lineLength 379 > 160
+packages/compiler/smoke.mjs: new file exceeds lineLength 230 > 160
+packages/compiler/src/binder/accessibility.js: new file exceeds lineLength 235 > 160
+packages/compiler/src/binder/anonymous-methods.js: new file exceeds lineLength 163 > 160
+packages/compiler/src/binder/binder.js: new file exceeds lineLength 305 > 160
+packages/compiler/src/binder/body/lambdas.js: new file exceeds lineLength 183 > 160
+packages/compiler/src/binder/csharp11.js: new file exceeds lineLength 168 > 160
+packages/compiler/src/binder/entry-point.js: new file exceeds lineLength 293 > 160
+packages/compiler/src/binder/expressions.js: new file exceeds lineLength 796 > 160
+packages/compiler/src/binder/extension-indexers.js: new file exceeds lineLength 162 > 160
+packages/compiler/src/binder/field-keyword.js: new file exceeds lineLength 164 > 160
+packages/compiler/src/binder/function-pointers.js: new file exceeds lineLength 171 > 160
+packages/compiler/src/binder/lookup.js: new file exceeds lineLength 361 > 160
+packages/compiler/src/binder/members/initializers.js: new file exceeds lineLength 161 > 160
+packages/compiler/src/binder/method-context.js: new file exceeds lineLength 481 > 160
+packages/compiler/src/binder/operators.js: new file exceeds lineLength 345 > 160
+packages/compiler/src/binder/preview-features.js: new file exceeds lineLength 170 > 160
+packages/compiler/src/binder/ref-kinds.js: new file exceeds lineLength 175 > 160
+packages/compiler/src/binder/ref-locals.js: new file exceeds lineLength 180 > 160
+packages/compiler/src/binder/special-members.js: new file exceeds lineLength 167 > 160
+packages/compiler/src/binder/statements.js: new file exceeds lineLength 546 > 160
+packages/compiler/src/binder/type-binder.js: new file exceeds lineLength 162 > 160
+packages/compiler/src/binder/type-modifiers.js: new file exceeds lineLength 162 > 160
+packages/compiler/src/binder/using-check.js: new file exceeds lineLength 264 > 160
+packages/compiler/src/binder/usings.js: new file exceeds lineLength 246 > 160
+packages/compiler/src/bound/dump.js: new file exceeds lineLength 200 > 160
+packages/compiler/src/bound/nodes.js: new file exceeds bytes 57860 > 40000, lineLength 5294 > 160
+packages/compiler/src/bound/rewriter.js: new file exceeds lineLength 253 > 160
+packages/compiler/src/codegen/ir-emitter.js: new file exceeds lineLength 380 > 160
+packages/compiler/src/compilation.js: new file exceeds lineLength 684 > 160
+packages/compiler/src/compile.js: new file exceeds lineLength 446 > 160
+packages/compiler/src/constants/constant-value.js: new file exceeds lineLength 247 > 160
+packages/compiler/src/constants/fold.js: new file exceeds lineLength 233 > 160
+packages/compiler/src/conversions.js: new file exceeds lineLength 236 > 160
+packages/compiler/src/declarations.js: new file exceeds lineLength 460 > 160
+packages/compiler/src/diagnostics/codes.js: new file exceeds lineLength 238 > 160
+packages/compiler/src/diagnostics/roslyn-codes.js: new file exceeds lines 895 > 500, bytes 120908 > 40000, lineLength 312 > 160
+packages/compiler/src/diagnostics/suppression.js: new file exceeds lineLength 319 > 160
+packages/compiler/src/flow/cfg.js: new file exceeds lineLength 380 > 160
+packages/compiler/src/flow/definite-assignment.js: new file exceeds lineLength 284 > 160
+packages/compiler/src/flow/escape/checks.js: new file exceeds lineLength 178 > 160
+packages/compiler/src/flow/method-flow.js: new file exceeds lineLength 236 > 160
+packages/compiler/src/flow/reachability.js: new file exceeds lineLength 263 > 160
+packages/compiler/src/flow/region-analysis.js: new file exceeds lineLength 343 > 160
+packages/compiler/src/lowering/generated-names.js: new file exceeds lineLength 652 > 160
+packages/compiler/src/lowering/local-rewriter.js: new file exceeds lineLength 280 > 160
+packages/compiler/src/metadata-import/assembly-identity.js: new file exceeds lineLength 319 > 160
+packages/compiler/src/metadata-import/attributes.js: new file exceeds lineLength 415 > 160
+packages/compiler/src/metadata-import/compilation-references.js: new file exceeds lineLength 169 > 160
+packages/compiler/src/metadata-import/pe-metadata.js: new file exceeds lineLength 417 > 160
+packages/compiler/src/metadata-import/pe-symbols.js: new file exceeds lineLength 1036 > 160
+packages/compiler/src/metadata-import/reference-manager.js: new file exceeds lineLength 471 > 160
+packages/compiler/src/method-compiler.js: new file exceeds lineLength 969 > 160
+packages/compiler/src/method-pipeline.js: new file exceeds lineLength 261 > 160
+packages/compiler/src/options.js: new file exceeds lineLength 419 > 160
+packages/compiler/src/overload/operators.js: new file exceeds lineLength 163 > 160
+packages/compiler/src/semantic/constants.js: new file exceeds lineLength 166 > 160
+packages/compiler/src/semantic/execution-model.js: new file exceeds lineLength 334 > 160
+packages/compiler/src/symbols/awaiter-types.js: new file exceeds lineLength 161 > 160
+packages/compiler/src/symbols/compilation-symbols.js: new file exceeds lineLength 391 > 160
+packages/compiler/src/symbols/legacy-types.js: new file exceeds lineLength 212 > 160
+packages/compiler/src/symbols/members.js: new file exceeds lineLength 692 > 160
+packages/compiler/src/symbols/namespaces.js: new file exceeds lineLength 297 > 160
+packages/compiler/src/symbols/registry-bridge.js: new file exceeds lineLength 520 > 160
+packages/compiler/src/symbols/source/declaration-table.js: new file exceeds lineLength 348 > 160
+packages/compiler/src/symbols/source/extension-block-checks.js: new file exceeds lineLength 164 > 160
+packages/compiler/src/symbols/source/partial-constructors-events.js: new file exceeds lineLength 169 > 160
+packages/compiler/src/symbols/special-types.js: new file exceeds lineLength 548 > 160
+packages/compiler/src/symbols/types.js: new file exceeds lineLength 623 > 160
+packages/compiler/src/symbols/well-known-members.js: new file exceeds lineLength 360 > 160
+packages/compiler/src/type-utils.js: new file exceeds lineLength 507 > 160
+packages/compiler/test/accessibility/generate-roslyn-accessibility.js: new file exceeds lineLength 373 > 160
+packages/compiler/test/bound/fixtures.js: new file exceeds lineLength 277 > 160
+packages/compiler/test/bound/update-snapshots.js: new file exceeds lineLength 229 > 160
+packages/compiler/test/constants/expressions.js: new file exceeds lineLength 1756 > 160
+packages/compiler/test/constants/generate.js: new file exceeds lineLength 209 > 160
+packages/compiler/test/differential/harness.js: new file exceeds lineLength 211 > 160
+packages/compiler/test/differential/run.test.js: new file exceeds lineLength 235 > 160
+packages/compiler/test/differential/tools/pin.mjs: new file exceeds lineLength 307 > 160
+packages/compiler/test/suppression/fixtures.js: new file exceeds lineLength 570 > 160
+packages/compute/smoke.mjs: new file exceeds lineLength 277 > 160
+packages/debugger/smoke.mjs: new file exceeds lineLength 537 > 160
+packages/designer/smoke.mjs: new file exceeds lineLength 509 > 160
+packages/extensions/smoke.mjs: new file exceeds lineLength 282 > 160
+packages/framework/src/contributions/core-controls-12.js: new file exceeds lineLength 295 > 160
+packages/framework/src/contributions/core-controls.js: new file exceeds lineLength 407 > 160
+packages/framework/src/contributions/core-system.js: new file exceeds lineLength 413 > 160
+packages/framework/src/contributions/core-xaml.js: new file exceeds lineLength 436 > 160
+packages/framework/src/registry-validation.js: new file exceeds lineLength 246 > 160
+packages/framework/src/registry.js: new file exceeds lineLength 319 > 160
+packages/network/smoke.mjs: new file exceeds lineLength 695 > 160
+packages/protocol/smoke.mjs: new file exceeds lineLength 258 > 160
+packages/runtime/smoke.mjs: new file exceeds lineLength 216 > 160
+packages/runtime/src/execution/calls.js: new file exceeds lineLength 181 > 160
+packages/runtime/src/execution/casting.js: new file exceeds lineLength 259 > 160
+packages/runtime/src/execution/eh.js: new file exceeds lineLength 227 > 160
+packages/runtime/src/execution/enums.js: new file exceeds lineLength 208 > 160
+packages/runtime/src/execution/handlers/array.js: new file exceeds lineLength 384 > 160
+packages/runtime/src/execution/handlers/branch.js: new file exceeds lineLength 195 > 160
+packages/runtime/src/execution/handlers/indirect.js: new file exceeds lineLength 212 > 160
+packages/runtime/src/execution/intrinsics.js: new file exceeds lineLength 193 > 160
+packages/runtime/src/execution/method-table.js: new file exceeds lineLength 404 > 160
+packages/runtime/src/execution/numeric-ops.js: new file exceeds lineLength 438 > 160
+packages/runtime/src/execution/source-eh.js: new file exceeds lineLength 164 > 160
+packages/runtime/src/execution/static-init.js: new file exceeds lineLength 231 > 160
+packages/runtime/src/execution/tokens.js: new file exceeds lineLength 222 > 160
+packages/runtime/src/execution/type-system.js: new file exceeds lineLength 220 > 160
+packages/winui/smoke.mjs: new file exceeds lineLength 445 > 160
+apps/studio/automation-api.js: new file exceeds lineLength 341 > 160
+apps/studio/commands/core.js: new file exceeds lineLength 2081 > 160
+apps/studio/dialogs/about.js: new file exceeds lineLength 4588 > 160
+apps/studio/icons.js: new file exceeds lineLength 1917 > 160
+apps/studio/menus/context.js: new file exceeds lineLength 2461 > 160
+apps/studio/menus/registry.js: new file exceeds lineLength 426 > 160
+apps/studio/samples-designer.js: lineLength grew 5116 -> 5182 (legacy file may only shrink)
+apps/studio/services/registry.js: new file exceeds lineLength 596 > 160
+apps/studio/settings/storage.js: new file exceeds lineLength 302 > 160
+apps/studio/styles/debugger-advanced.css: new file exceeds lineLength 888 > 160
+apps/studio/styles/debugger-parallel.css: new file exceeds lineLength 883 > 160
+apps/studio/styles/debugger-responsive.css: new file exceeds lineLength 184 > 160
+apps/studio/styles/docking.css: new file exceeds lineLength 481 > 160
+apps/studio/styles/editor-overlays.css: new file exceeds lineLength 273 > 160
+apps/studio/styles/explorer-dialogs.css: new file exceeds lineLength 236 > 160
+apps/studio/styles/workbench-responsive.css: new file exceeds lineLength 173 > 160
+apps/studio/tools/core.js: new file exceeds lineLength 1952 > 160
+apps/studio/tools/debugger-automation.js: new file exceeds lineLength 187 > 160
+apps/studio/tools/definitions.js: new file exceeds lineLength 1161 > 160
+apps/studio/tools/docking-automation.js: new file exceeds lineLength 593 > 160
+apps/studio/tools/msbuild-automation.js: new file exceeds lineLength 425 > 160
+apps/studio/tools/registry.js: new file exceeds lineLength 682 > 160
+apps/studio/tools/workspace-automation.js: new file exceeds lineLength 324 > 160
+scripts/benchmark-compute14.js: lineLength grew 364 -> 570 (legacy file may only shrink)
+scripts/benchmark-release14.js: lineLength grew 295 -> 460 (legacy file may only shrink)
+scripts/benchmark.js: lineLength grew 453 -> 479 (legacy file may only shrink)
+scripts/benchmarks/a05-call-offsets.mjs: new file exceeds lineLength 237 > 160
+scripts/conformance/browser-report.js: new file exceeds lineLength 272 > 160
+scripts/conformance/ci-planning/impact.js: new file exceeds lineLength 171 > 160
+scripts/conformance/ci-stats.js: new file exceeds lineLength 223 > 160
+scripts/conformance/coverage.js: new file exceeds lineLength 213 > 160
+scripts/conformance/diff/benchmark.js: new file exceeds lineLength 772 > 160
+scripts/conformance/diff/classify.js: new file exceeds lineLength 350 > 160
+scripts/conformance/diff/engines/clr.js: new file exceeds lineLength 613 > 160
+scripts/conformance/diff/engines/rust.js: new file exceeds lineLength 736 > 160
+scripts/conformance/diff/engines/vm.js: new file exceeds lineLength 607 > 160
+scripts/conformance/diff/fixtures.js: new file exceeds lineLength 275 > 160
+scripts/conformance/diff/gc/compare.js: new file exceeds lineLength 186 > 160
+scripts/conformance/diff/gc/js-collector.js: new file exceeds lineLength 207 > 160
+scripts/conformance/diff/gc-trace.js: new file exceeds lineLength 213 > 160
+scripts/conformance/diff/host/console.js: new file exceeds lineLength 280 > 160
+scripts/conformance/diff/process.js: new file exceeds lineLength 507 > 160
+scripts/conformance/diff/reduce.js: new file exceeds lineLength 765 > 160
+scripts/conformance/diff/result.js: new file exceeds lineLength 201 > 160
+scripts/conformance/diff/run.js: new file exceeds lineLength 1135 > 160
+scripts/conformance/env-report.js: new file exceeds lineLength 307 > 160
+scripts/conformance/gc/stress.js: new file exceeds lineLength 169 > 160
+scripts/conformance/inventory/baseline.js: new file exceeds lineLength 284 > 160
+scripts/conformance/inventory/bcl-api-diff.js: new file exceeds lineLength 207 > 160
+scripts/conformance/inventory/benchmark.js: new file exceeds lineLength 248 > 160
+scripts/conformance/inventory/common.js: new file exceeds lineLength 450 > 160
+scripts/conformance/inventory/csharp.js: new file exceeds lineLength 384 > 160
+scripts/conformance/inventory/denominator.js: new file exceeds lineLength 328 > 160
+scripts/conformance/inventory/diagnostics.js: new file exceeds lineLength 181 > 160
+scripts/conformance/inventory/ecma335.js: new file exceeds lineLength 318 > 160
+scripts/conformance/inventory/gap-ids.js: new file exceeds lineLength 342 > 160
+scripts/conformance/inventory/generate.js: new file exceeds lineLength 782 > 160
+scripts/conformance/inventory/ide.js: new file exceeds lineLength 582 > 160
+scripts/conformance/inventory/native-metadata.js: new file exceeds lineLength 229 > 160
+scripts/conformance/inventory/reference-language.js: new file exceeds lineLength 191 > 160
+scripts/conformance/inventory/runtime-gc.js: new file exceeds lineLength 206 > 160
+scripts/conformance/inventory/runtime-runner.js: new file exceeds lineLength 202 > 160
+scripts/conformance/oracle/bcl-run.js: new file exceeds lineLength 179 > 160
+scripts/conformance/oracle/clr-run.js: new file exceeds lineLength 229 > 160
+scripts/conformance/oracle/fixtures.js: new file exceeds lineLength 268 > 160
+scripts/conformance/oracle/license-policy.js: new file exceeds lineLength 201 > 160
+scripts/conformance/oracle/process.js: new file exceeds lineLength 245 > 160
+scripts/conformance/oracle/qualify.js: new file exceeds lineLength 274 > 160
+scripts/conformance/oracle/roslyn-compile.js: new file exceeds lineLength 631 > 160
+scripts/conformance/oracle/store.js: new file exceeds lineLength 240 > 160
+scripts/conformance/oracle/toolchain.js: new file exceeds lineLength 335 > 160
+scripts/conformance/oracle/winui-expected-fixtures.js: new file exceeds lineLength 194 > 160
+scripts/conformance/oracle/winui-expected.js: new file exceeds lineLength 206 > 160
+scripts/conformance/oracle/winui-measure/run.js: new file exceeds lineLength 184 > 160
+scripts/conformance/oracle/winui-run.js: new file exceeds lineLength 281 > 160
+scripts/conformance/perf/ab.js: new file exceeds lineLength 858 > 160
+scripts/conformance/perf/alloc.js: new file exceeds lineLength 441 > 160
+scripts/conformance/perf/compare.js: new file exceeds lineLength 465 > 160
+scripts/conformance/perf/controls.js: new file exceeds lineLength 400 > 160
+scripts/conformance/perf/core.js: new file exceeds lineLength 375 > 160
+scripts/conformance/perf/legacy.js: new file exceeds lineLength 198 > 160
+scripts/conformance/perf/measure.js: new file exceeds lineLength 297 > 160
+scripts/conformance/perf/normalize-browser.js: new file exceeds lineLength 281 > 160
+scripts/conformance/perf/normalize.js: new file exceeds lineLength 298 > 160
+scripts/conformance/perf/process.js: new file exceeds lineLength 284 > 160
+scripts/conformance/perf/registry.js: new file exceeds lineLength 325 > 160
+scripts/conformance/perf/size-budget.js: new file exceeds lineLength 366 > 160
+scripts/conformance/perf/summary.js: new file exceeds lineLength 187 > 160
+scripts/conformance/perf/update-baseline.js: new file exceeds lineLength 257 > 160
+scripts/conformance/perf/workloads.js: new file exceeds lineLength 372 > 160
+scripts/conformance/protocol/messages.js: new file exceeds lineLength 207 > 160
+scripts/conformance/protocol/probe.js: new file exceeds lineLength 170 > 160
+scripts/conformance/protocol/record.js: new file exceeds lineLength 210 > 160
+scripts/conformance/protocol/replay.js: new file exceeds lineLength 184 > 160
+scripts/conformance/protocol/schema.js: new file exceeds lineLength 281 > 160
+scripts/conformance/protocol/session.js: new file exceeds lineLength 189 > 160
+scripts/conformance/record-skips.js: new file exceeds lineLength 176 > 160
+scripts/conformance/serve-modes.js: new file exceeds lineLength 242 > 160
+scripts/planning/abi/benchmark.js: new file exceeds lineLength 1095 > 160
+scripts/planning/abi/check-versions.js: new file exceeds lineLength 375 > 160
+scripts/planning/abi/example.js: new file exceeds lineLength 209 > 160
+scripts/planning/abi/gen-value-fixtures.js: new file exceeds lineLength 650 > 160
+scripts/planning/abi/value-codec.js: new file exceeds lineLength 407 > 160
+scripts/planning/audit.js: new file exceeds lineLength 285 > 160
+scripts/planning/benchmark-registries.js: new file exceeds lineLength 600 > 160
+scripts/planning/bootstrap-project.js: new file exceeds lineLength 292 > 160
+scripts/planning/capture-evidence.js: new file exceeds lineLength 206 > 160
+scripts/planning/check-contract-change.js: new file exceeds lineLength 272 > 160
+scripts/planning/check-contract-implementations.js: new file exceeds lineLength 521 > 160
+scripts/planning/check-ownership.js: new file exceeds lineLength 397 > 160
+scripts/planning/check-path-collisions.js: new file exceeds lineLength 253 > 160
+scripts/planning/check-root-providers.js: new file exceeds lineLength 642 > 160
+scripts/planning/check-test-manifests.js: new file exceeds lineLength 206 > 160
+scripts/planning/css-rules.js: new file exceeds lineLength 185 > 160
+scripts/planning/dag.js: new file exceeds lineLength 200 > 160
+scripts/planning/gen-codeowners.js: new file exceeds lineLength 383 > 160
+scripts/planning/gen-ownership.js: new file exceeds lineLength 216 > 160
+scripts/planning/gen-schema-fixtures.js: new file exceeds lineLength 1232 > 160
+scripts/planning/golden-output.js: new file exceeds lineLength 192 > 160
+scripts/planning/handoff.js: new file exceeds lineLength 325 > 160
+scripts/planning/impacted-tests.js: new file exceeds lineLength 175 > 160
+scripts/planning/inventory-values.js: new file exceeds lineLength 4641 > 160
+scripts/planning/lib/claim-cli.js: new file exceeds lineLength 368 > 160
+scripts/planning/lib/claims.js: new file exceeds lineLength 291 > 160
+scripts/planning/lib/deps-parse.js: new file exceeds lineLength 172 > 160
+scripts/planning/lib/evidence.js: new file exceeds lineLength 229 > 160
+scripts/planning/lib/gh-retry.js: new file exceeds lineLength 212 > 160
+scripts/planning/lib/github-project.js: new file exceeds lineLength 643 > 160
+scripts/planning/lib/io.js: new file exceeds lineLength 211 > 160
+scripts/planning/lib/paths.js: new file exceeds lineLength 223 > 160
+scripts/planning/lint-backlog.js: new file exceeds lineLength 207 > 160
+scripts/planning/readiness.js: new file exceeds lineLength 193 > 160
+scripts/planning/ready.js: new file exceeds lineLength 299 > 160
+scripts/planning/resume.js: new file exceeds lineLength 259 > 160
+scripts/planning/rollup-invalidation.js: new file exceeds lineLength 171 > 160
+scripts/planning/rollup-publish.js: new file exceeds lineLength 464 > 160
+scripts/planning/rollup.js: new file exceeds lineLength 417 > 160
+scripts/planning/run-safepoint-fixtures.js: new file exceeds lineLength 337 > 160
+scripts/planning/run-tests.js: new file exceeds lineLength 226 > 160
+scripts/planning/schema/adapters.js: new file exceeds lineLength 855 > 160
+scripts/planning/schema/benchmark-lowering.js: new file exceeds lineLength 389 > 160
+scripts/planning/schema/example-coverage.js: new file exceeds lineLength 1101 > 160
+scripts/planning/schema/lower-method-body.js: new file exceeds lineLength 855 > 160
+scripts/planning/schema/qualify-rust.js: new file exceeds lineLength 1965 > 160
+scripts/planning/schema/rust/src/main.rs: new file exceeds lineLength 764 > 160
+scripts/planning/schema/validate.js: new file exceeds lineLength 506 > 160
+scripts/planning/snapshot-backlog.js: new file exceeds lineLength 787 > 160
+scripts/planning/snapshot-contract-ids.js: new file exceeds lineLength 510 > 160
+scripts/planning/sync-ready.js: new file exceeds lineLength 286 > 160
+scripts/planning/testing/fake-github.js: new file exceeds lineLength 388 > 160
+scripts/planning/validate-dag.js: new file exceeds lineLength 204 > 160
+scripts/run.js: new file exceeds lineLength 232 > 160
+scripts/validate-a05-dispatch.js: new file exceeds lineLength 344 > 160
+scripts/validate-a05-faults.mjs: new file exceeds lineLength 211 > 160
+scripts/validate-a05-numeric-dotnet.js: new file exceeds lineLength 192 > 160
+scripts/validate-a05-static-init.js: new file exceeds lineLength 349 > 160
+scripts/validate-a05-type-system.js: new file exceeds lineLength 449 > 160

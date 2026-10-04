@@ -1,0 +1,83 @@
+import assert from 'node:assert/strict';
+import { readFileSync, writeFileSync } from 'node:fs';
+import { pathToFileURL } from 'node:url';
+import { join } from 'node:path';
+import os from 'node:os';
+const config = JSON.parse(readFileSync(process.argv[2], 'utf8')), output = process.argv[3];
+const modules = {};
+for (const [name, variant] of Object.entries(config.variants)) modules[name] = {
+  cil: await import(pathToFileURL(join(variant.directory, 'packages/cil/src/index.js'))),
+  symbols: await import(pathToFileURL(join(variant.directory, 'packages/symbols/src/index.js')))
+};
+const root = config.variants.after.directory;
+const { localReferenceFixture } = await import(pathToFileURL(join(root, 'tests/fixtures/a03-local-type-references/input.js')));
+const { nestedReferenceFixture } = await import(pathToFileURL(join(root, 'tests/fixtures/a03-nested-type-references/input.js')));
+const { builder, type, assemblyReference, reference, inspector } = await import(pathToFileURL(join(root, 'tests/fixtures/type-hierarchy/input.mjs')));
+const local = localReferenceFixture(), nested = nestedReferenceFixture();
+const inputs = { local: { bytes: local.bytes(), token: local.tokens.parent }, nested: { bytes: nested.bytes(), token: nested.tokens.leaf } };
+const operations = {};
+let consumed = 0;
+const hashBytes = Uint8Array.from({ length: 16384 }, (_, index) => index * 73 + 17);
+for (const [name, { cil, symbols }] of Object.entries(modules)) {
+  operations[name] = { sha1: () => { consumed += symbols.sha1(hashBytes)[0]; } };
+  for (const [kind, input] of Object.entries(inputs)) {
+    const value = new cil.AssemblyInspector(input.bytes);
+    operations[name][kind] = () => {
+      const result = cil.createMetadataVerificationTypeSystem(value).resolveType(input.token);
+      assert.equal(result.status, 'known'); consumed += result.value.token;
+    };
+  }
+}
+const cil = modules.after.cil;
+const assemblies = [], base = builder('Measure.0', 80), baseToken = type(base, 'Base');
+assemblies.push(inspector(base));
+for (let module = 1; module < 20; module++) {
+  const metadata = builder('Measure.' + module, 80 + module);
+  const parent = reference(metadata, assemblyReference(metadata, 'Measure.0'), 'Base');
+  for (let row = 0; row < 50; row++) type(metadata, 'Derived' + module + '_' + row, parent);
+  assemblies.push(inspector(metadata));
+}
+const index = new cil.AssemblySymbolIndex(assemblies), graph = new cil.AssemblyTypeHierarchy(index, assemblies);
+const id = assemblies[0].tokenUri(baseToken), count = 951;
+operations.after.construct = () => { consumed += new cil.AssemblyTypeHierarchy(index, assemblies).storage.types; };
+operations.after.tree = () => {
+  const tree = graph.tree(id, { direction: 'derived' });
+  assert.equal(tree.children.length + 1, count); consumed += tree.children.length;
+};
+const iterations = { sha1: 100, local: 100, nested: 100, construct: 1, tree: 1 };
+const report = { configuration: config, host: { platform: process.platform, arch: process.arch, release: os.release(),
+  cpu: os.cpus()[0].model, node: process.version }, sharedHost: true,
+  protocol: { pairs: 20, warmupsPerVariantAndCase: 3, iterations, order: 'before/after reversed on odd rounds; fixed cases',
+    existing: 'SHA-1 on 16KiB; existing local/nested adapter construction plus one resolution; same immutable input images',
+    new: '20 modules, 971 TypeDefs including Module types; 950 derived classes. Prebuilt inspectors/index excluded.',
+    limits: 'Logical counters are not retained heap, peak memory or allocation measurements. No significance or causal claim.' },
+  logicalStorage: graph.storage, samples: [], summary: {} };
+const cases = ['sha1', 'local', 'nested', 'construct', 'tree'];
+for (const kind of cases) for (const name of ['before', 'after']) {
+  if (!operations[name][kind]) continue;
+  for (let warm = 0; warm < 3; warm++) for (let iteration = 0; iteration < iterations[kind]; iteration++) operations[name][kind]();
+}
+const start = performance.now();
+for (let round = 0; round < 20; round++) for (const kind of cases) {
+  for (const name of round % 2 ? ['after', 'before'] : ['before', 'after']) {
+    const operation = operations[name][kind];
+    if (!operation) continue;
+    global.gc?.();
+    const began = performance.now();
+    for (let iteration = 0; iteration < iterations[kind]; iteration++) operation();
+    const elapsedMs = performance.now() - began;
+    report.samples.push({ round, kind, variant: name, iterations: iterations[kind], elapsedMs,
+      perOperationMs: elapsedMs / iterations[kind], startOffsetMs: began - start });
+  }
+}
+for (const kind of cases) {
+  report.summary[kind] = {};
+  for (const variant of ['before', 'after']) {
+    const values = report.samples.filter(sample => sample.kind === kind && sample.variant === variant)
+      .map(sample => sample.perOperationMs).sort((a, b) => a - b);
+    if (values.length) report.summary[kind][variant] = { medianMs: (values[9] + values[10]) / 2, p95Ms: values[18] };
+  }
+}
+report.consumed = consumed;
+writeFileSync(output, JSON.stringify(report, null, 2) + '\n');
+console.log(JSON.stringify(report.summary, null, 2));

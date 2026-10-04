@@ -1,0 +1,10 @@
+{
+  "/tmp/sharpforge-project6-a03-numeric-transfers": {
+    "actual": "/private/tmp/sharpforge-project6-a03-numeric-transfers/packages/cil",
+    "indexSHA256": "6da1c4bcdf1b0f6f2baec789f02aef29193c0f3d430d298b8a8146ded0d7804a"
+  },
+  "/tmp/sharpforge-project6-a03-numeric-transfers-baseline": {
+    "actual": "/private/tmp/sharpforge-project6-a03-numeric-transfers-baseline/packages/cil",
+    "indexSHA256": "ac40d0365a60f672ce7b477c9cc7fa2944c5c4e0f2692df2319cda88a84e2a4b"
+  }
+}

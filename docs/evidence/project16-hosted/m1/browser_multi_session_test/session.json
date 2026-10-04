@@ -1,0 +1,11 @@
+{
+  "suite": "browser_multi_session_test",
+  "passed": true,
+  "engine": "webkit",
+  "cspViolations": [],
+  "browser": "26.6",
+  "executable": "playwright-managed",
+  "mode": "http",
+  "seconds": 8.479312875000005,
+  "diagnosticErrors": []
+}

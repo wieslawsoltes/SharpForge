@@ -1,0 +1,11 @@
+{
+  "suite": "browser_multi_session_test",
+  "passed": true,
+  "engine": "firefox",
+  "cspViolations": [],
+  "browser": "155.0",
+  "executable": "playwright-managed",
+  "mode": "http",
+  "seconds": 12.922000000000025,
+  "diagnosticErrors": []
+}

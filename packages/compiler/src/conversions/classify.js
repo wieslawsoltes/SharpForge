@@ -6,7 +6,7 @@
  * literals, constant narrowing, the 0-to-enum conversion, method groups, anonymous functions, interpolated strings,
  * tuple literals, throw). The result is an immutable `Conversion` whose `kind` follows Roslyn's ConversionKind.
  */
-import { TypeKind, NamedTypeSymbol, TypeParameterSymbol, TypeCompareKind } from '../symbols/types.js';
+import { SymbolKind, TypeKind, NamedTypeSymbol, TypeParameterSymbol, TypeCompareKind } from '../symbols/types.js';
 import { tupleElements } from '../symbols/tuple-elements.js';
 import { numericKind, implicitNumericConversion, explicitNumericConversion } from './numeric.js';
 import { implicitConstantConversion } from './constant-narrowing.js';
@@ -256,11 +256,17 @@ export class Conversions {
     if (standard.exists) return standard;
     return this.userDefined(from, to, true);
   }
-  userDefined(from, to, explicit) {
+  /**
+   * @param {object|null} [constant] the value of the converted expression when it is an integral constant: the standard
+   *   conversion to the parameter type of an operator is then that of the expression (`Natural n = 1` through
+   *   `implicit operator Natural(ulong)`: the constant 1 converts to `ulong`, the type `int` does not).
+   */
+  userDefined(from, to, explicit, constant = null) {
     if (from.typeKind === TypeKind.Interface && to.typeKind === TypeKind.Interface) return NONE;
     // Where a span conversion exists (here: only explicitly), the operators of the span types are not considered.
     if (this.firstClassSpans && hasExplicitSpanConversion(from, to, this.core)) return NONE;
-    const found = resolveUserDefinedConversion(from, to, { explicit }, this.standard, this.core);
+    const standard = constant ? this.standardFromConstant(from, constant) : this.standard,
+      found = resolveUserDefinedConversion(from, to, { explicit }, standard, this.core);
     if (!found) return NONE;
     if (found.ambiguous)
       return explicit
@@ -271,6 +277,33 @@ export class Conversions {
       method: found.method,
       isLifted: found.isLifted,
     });
+  }
+  /**
+   * An expression whose conversion depends on its form (`null`, a tuple literal) converted through an implicit
+   * operator of the target type: `Tri t = null` with `implicit operator Tri(bool? b)`, `Vec2 v = (1, 2)` with
+   * `implicit operator Vec2((double X, double Y) t)`. The operators of the target type are the candidates, and the
+   * expression must convert to the parameter type by a standard conversion (C# spec 10.5.4).
+   */
+  userDefinedFromExpression(expression, to) {
+    const target = stripNullable(to);
+    if ((target.typeKind !== TypeKind.Struct && target.typeKind !== TypeKind.Class) || !target.getMembers) return NONE;
+    const isConversion = method => method.kind === SymbolKind.Method && method.parameters.length === 1 && !!method.returnType?.equals(target),
+      takes = type => {
+        if (expression.literal === 'null') return isNullableType(type) || acceptsNullLiteral(type);
+        const standard = type.isTupleType ? this.classifyFromExpression(expression, type) : NONE;
+        return standard.exists && standard.isImplicit && !standard.isUserDefined;
+      },
+      operators = target.getMembers('op_Implicit').filter(method => isConversion(method) && takes(method.parameters[0].type));
+    return operators.length === 1 ? new Conversion(K.ImplicitUserDefined, { method: operators[0], isLifted: false }) : NONE;
+  }
+  /** The standard conversion tests with the implicit constant expression conversions of one constant of type `from`. */
+  standardFromConstant(from, constant) {
+    const sourceKind = this.kindOf(from),
+      fits = to => {
+        const targetKind = this.kindOf(to);
+        return !!sourceKind && !!targetKind && implicitConstantConversion(sourceKind, constant.bigint, targetKind);
+      };
+    return { ...this.standard, implicit: (a, b) => this.standard.implicit(a, b) || (a === from && fits(b)) };
   }
   /**
    * Implicit conversion of an expression to a type.
@@ -284,7 +317,8 @@ export class Conversions {
       case 'null':
         // As in Roslyn, null to a reference type is an implicit reference conversion; only T? takes the null literal conversion.
         if (isNullableType(to)) return simple.NullLiteral;
-        return acceptsNullLiteral(to) || (to instanceof TypeParameterSymbol && to.isReferenceType === true) ? simple.ImplicitReference : NONE;
+        if (acceptsNullLiteral(to) || (to instanceof TypeParameterSymbol && to.isReferenceType === true)) return simple.ImplicitReference;
+        return to.typeKind === TypeKind.Struct ? this.userDefinedFromExpression(expression, to) : NONE;
       case 'default':
         return simple.DefaultLiteral;
     }
@@ -303,6 +337,10 @@ export class Conversions {
         if (expression.type && this.isIdentity(expression.type, to)) return IDENTITY;
         const literal = this.tupleLiteralConversion(expression, stripNullable(to), false);
         if (literal) return isNullableType(to) ? new Conversion(K.ImplicitNullable, { underlying: literal, steps: ['wrap'] }) : literal;
+        if (!stripNullable(to).isTupleType) {
+          const viaOperator = this.userDefinedFromExpression(expression, to);
+          if (viaOperator.exists) return viaOperator;
+        }
         if (!expression.type) return NONE;
         break;
       }
@@ -337,7 +375,8 @@ export class Conversions {
       )
         return wrap(simple.ImplicitConstant);
     }
-    return this.userDefined(from, to, false);
+    const integral = constant && !constant.isNull && constant.isIntegral && !constant.isEnum && constant.type !== 'char' ? constant : null;
+    return this.userDefined(from, to, false, integral);
   }
   /** Explicit conversion of an expression (a cast): the expression-based implicit conversions, then `classifyExplicit`. */
   classifyCastFromExpression(expression, to) {

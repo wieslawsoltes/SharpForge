@@ -36,12 +36,14 @@ export {BookmarkModel} from './bookmarks.js';
 export {ChangeTracking} from './change-tracking.js';
 export {ClipboardRing, dragTextEdits} from './clipboard-ring.js';
 export {defaultEditorOptions, editorOptions, EditorOptionScope} from './options.js';
-export {parseEditorConfig, resolveEditorConfig, editorConfigGlob, saveTextEdits} from './editorconfig.js';
+export {parseEditorConfig, resolveEditorConfig, editorConfigGlob, saveTextEdits, saveTextEditsAsync} from './editorconfig.js';
 export {createEditorOptionsPage} from './options-page.js';
 export {LargeFilePolicy} from './large-file.js';
+export {readEditorSource, rebaseEditorSource} from './source-loader.js';
 export {EditorAccessibility} from './a11y/aria.js';
 export {describeDiagnostic, navigateDiagnostic, announceLineState} from './a11y/diagnostics.js';
 export {accessibleWidget} from './a11y/widgets.js';
 export {commandAliases} from './core/command-map.js';
 export const escapeHtml = value => String(value).replaceAll('&', '&amp;').replaceAll('<', '&lt;')
   .replaceAll('>', '&gt;').replaceAll('"', '&quot;').replaceAll("'", '&#39;');
+export {workerOptions} from './worker-options.js';

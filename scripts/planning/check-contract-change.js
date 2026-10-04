@@ -20,6 +20,22 @@ export function additive(before, after, key = '') {
   return true;
 }
 
+function additiveStringPatternUnion(before, after, annotations) {
+  const stringPattern = schema => {
+    if (!schema || typeof schema !== 'object' || Array.isArray(schema) ||
+      schema.type !== 'string' || typeof schema.pattern !== 'string' ||
+      !Object.keys(schema).every(key => key === 'type' || key === 'pattern' || annotations.has(key))) return false;
+    try { new RegExp(schema.pattern, 'u'); } catch { return false; }
+    return true;
+  };
+  // Preserve the complete predicate as one union branch. Restrict every branch
+  // to string patterns: relocating references or adding constraints is not a proof.
+  return stringPattern(before) &&
+    Object.keys(after).every(key => key === 'anyOf' || annotations.has(key)) &&
+    Array.isArray(after.anyOf) && after.anyOf.every(stringPattern) &&
+    after.anyOf.some(branch => isDeepStrictEqual(before, branch));
+}
+
 // A deliberately conservative schema proof: unknown validation keywords and
 // conjunction/exclusive-union extensions may narrow acceptance and need a bump.
 export function additiveSchema(before,after) {
@@ -27,6 +43,7 @@ export function additiveSchema(before,after) {
   if(before===false)return true;
   if(!before||!after||typeof before!=='object'||typeof after!=='object'||Array.isArray(before)||Array.isArray(after))return false;
   const annotation=new Set(['title','description','$comment','examples']);
+  if(additiveStringPatternUnion(before,after,annotation))return true;
   for(const [name,value] of Object.entries(before)){
     if(annotation.has(name))continue;
     if(!Object.hasOwn(after,name))return false;

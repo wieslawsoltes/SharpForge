@@ -298,7 +298,7 @@ export class BinderCore {
       }
       case 'SizeOfExpression': {
         const type = this.bindType(syntax.type).type;
-        const n = this.node('SizeOf', syntax, this.core.int);
+        const n = this.node('SizeOf', syntax, this.core.int, { operandType: type });
         const size = {
           sbyte: 1,
           byte: 1,
@@ -313,7 +313,8 @@ export class BinderCore {
           ulong: 8,
           double: 8,
           decimal: 16,
-        }[keywordOf(type)];
+          // An enum has the size of its underlying type; `sizeof(E)` is a constant like `sizeof(int)`.
+        }[keywordOf(type.typeKind === TypeKind.Enum ? (type.enumUnderlyingType ?? this.core.int) : type)];
         if (size) n.constantValue = ConstantValue.int(size);
         return n;
       }

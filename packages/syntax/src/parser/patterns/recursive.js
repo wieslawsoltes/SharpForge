@@ -1,3 +1,4 @@
+import { Precedence } from '../../lexer/operators.js';
 /** C# 8 recursive patterns: positional `T(a, b)`, property `{ P: p }`, a trailing designation, and C# 10 extended property names `{ A.B: p }`. */
 export const recursivePatternMethods = {
   /** Parses the positional and/or property clauses (cursor at `(` or `{`) and an optional designation. */
@@ -40,7 +41,7 @@ export const recursivePatternMethods = {
           this.feature('ExtendedPropertyPatterns', this.current);
           name = this.n('ExpressionColon', expression, this.take());
         }
-        list.push(this.n('Subpattern', name, this.pattern(false)));
+        list.push(this.n('Subpattern', name, this.pattern(false, Precedence.Conditional)));
         if (this.at(',')) list.push(this.take());
         else break;
         if (before === this.i) break;

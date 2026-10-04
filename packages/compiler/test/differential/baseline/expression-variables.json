@@ -2,11 +2,11 @@
   "expression-variables/definite-assignment-of-out-variables": ["diagnostics", "warnings"],
   "expression-variables/initializer-variables-are-scoped-to-their-initializer": ["diagnostics", "warnings"],
   "expression-variables/member-initializers-in-7-2": ["diagnostics", "warnings"],
-  "expression-variables/out-variables-are-typed-by-the-chosen-overload": ["diagnostics", "warnings", "bytecode", "cil"],
+  "expression-variables/out-variables-are-typed-by-the-chosen-overload": ["diagnostics", "warnings", "bytecode", "cil", "directCil"],
   "expression-variables/query-clauses-in-7-2": ["diagnostics", "warnings"],
   "expression-variables/query-clauses-scope-their-variables": ["diagnostics", "warnings"],
   "expression-variables/scope-of-conditions-and-embedded-statements": ["diagnostics", "warnings"],
-  "expression-variables/scopes-in-statements-and-initializers": ["diagnostics", "warnings", "bytecode", "cil"],
+  "expression-variables/scopes-in-statements-and-initializers": ["diagnostics", "warnings", "bytecode", "cil", "directCil"],
   "expression-variables/switch-sections-share-one-declaration-space": ["diagnostics", "warnings"],
   "expression-variables/typed-out-variables-need-the-parameter-type": ["diagnostics", "warnings"],
   "expression-variables/use-before-declaration-and-conflicts": ["diagnostics", "warnings"]

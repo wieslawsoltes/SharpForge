@@ -145,7 +145,8 @@ class SpaceBuilder {
     }
     if (pattern.hasPositional) {
       const positional = pattern.positional;
-      if (!positional) return null;
+      // An ITuple test over an `object` also fails on the number of elements: it covers nothing that can be named.
+      if (!positional || positional.kind === 'ituple') return null;
       const isTuple = positional.kind === 'tuple';
       if (!isTuple) this.usesDeconstruct = true;
       const keyOf = index => (isTuple ? 'Item' + (index + 1) : `Deconstruct/${positional.parts.length}:${index}`);

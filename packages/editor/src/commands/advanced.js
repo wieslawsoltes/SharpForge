@@ -1,4 +1,4 @@
-import {graphemeSegments, graphemeWidth} from '@sharpforge/text';
+import {expandTabs, graphemeSegments, visualColumnAt} from '@sharpforge/text';
 
 /** Every edit is prepared against one snapshot and committed as one multi-caret transaction. */
 export function advancedCommands(editor) {
@@ -100,28 +100,15 @@ function transposeWords(editor) {
 }
 
 export function untabify(text, tabSize) {
-  return text.split('\n').map(line => {
-    let column = 0;
-    let result = '';
-    for (const segment of graphemeSegments(line)) {
-      if (segment.segment === '\t') {
-        const count = tabSize - column % tabSize;
-        result += ' '.repeat(count);
-        column += count;
-      } else {
-        result += segment.segment;
-        column += graphemeWidth(segment.segment, column, {tabSize});
-      }
-    }
-    return result;
-  }).join('\n');
+  return text.replace(/[^\r\n]+/g, line => expandTabs(line, {tabSize}));
 }
 
 export function tabify(text, tabSize) {
-  return text.split('\n').map(line => {
-    const count = line.match(/^ */)[0].length;
-    return '\t'.repeat(Math.floor(count / tabSize)) + ' '.repeat(count % tabSize) + line.slice(count);
-  }).join('\n');
+  return text.replace(/[^\r\n]+/g, line => {
+    const indentation = line.match(/^[\t ]*/)[0];
+    const columns = visualColumnAt(indentation, indentation.length, {tabSize});
+    return '\t'.repeat(Math.floor(columns / tabSize)) + ' '.repeat(columns % tabSize) + line.slice(indentation.length);
+  });
 }
 
 function selectWord(editor) {
