@@ -53,8 +53,15 @@ export function checkModuleInitializer(method) {
 }
 
 /**
+ * An override that states another return type than the method it overrides. (The return type of any other override
+ * is the declared one - and of a generic method it is written over the override's own type parameters, which are
+ * not those of the call.)
+ */
+const isCovariantOverride = candidate => !!candidate.hasCovariantReturn && !candidate.typeParameters?.length;
+
+/**
  * The return type of a call to the virtual method `method` through a receiver of type `receiverType`: the return type
- * of the most derived override the receiver type has, which C# 9 allows to be more derived than the declared one.
+ * of the most derived covariant override the receiver type has (C# 9), else the declared one.
  */
 export function covariantReturnType(method, receiverType) {
   const declared = method.returnType ?? null,
@@ -67,7 +74,7 @@ export function covariantReturnType(method, receiverType) {
     for (const candidate of type.getMembers(method.name)) {
       if (candidate.kind !== SymbolKind.Method || !candidate.isOverride) continue;
       for (let base = candidate.overriddenMethod, steps = 0; base && steps < 64; base = base.overriddenMethod, steps++)
-        if (definitionOf(base) === target) return candidate.returnType ?? declared;
+        if (definitionOf(base) === target && isCovariantOverride(candidate)) return candidate.returnType ?? declared;
     }
   }
   return declared;
