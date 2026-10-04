@@ -86,6 +86,13 @@
       "reason": "Developer-run Constant benchmark loads the metadata importer from an explicitly selected trusted local baseline or its fixed workspace path; the tool is not shipped in the product."
     },
     {
+      "path": "packages/cil/tools/benchmark-reference-assemblies.mjs",
+      "operation": "dynamic-import",
+      "count": 1,
+      "sha256": "dccb1da876096c73d3f2424e707402415303fa38921890be62982cd8d9230996",
+      "reason": "Developer-only reference-output benchmark imports an explicitly selected trusted local compiler checkout; own-checkout package aliases are validated before import, and managed or remote input is never evaluated as host JavaScript."
+    },
+    {
       "path": "packages/compiler/smoke.mjs",
       "operation": "dynamic-import",
       "count": 3,
