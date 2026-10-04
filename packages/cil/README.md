@@ -240,10 +240,63 @@ are not a measured heap or process-memory ceiling. Storage is O(definitions+name
 payload), construction is linear in those inputs, lookup is a Map lookup and pages
 visit only requested entries. Cancellation is checked at module/type boundaries and
 at most 256 member/page records apart. The index is a fixed owned snapshot; recreate it
-when the loaded module set changes. Search, reference binding and usage analysis are
-separate capabilities.
+when the loaded module set changes. Reference binding and usage analysis remain
+separate capabilities; bounded name search is described below.
 
 The 20-assembly/reload, ownership, count/storage boundary and retained native PE
 tests pass with the focused Chromium/Firefox/WebKit checks on macOS. Exact scope,
 logical storage counters, timings and raw evidence are recorded in
 `tests/fixtures/assembly-index/README.md`; broader platform qualification is separate.
+
+
+### Paged symbol-name search
+
+`index.search(query, { mode, offset, limit, resultLimit, cacheBytes, signal })` searches
+an `AssemblySymbolIndex` without metadata/signature/body reads. It returns owned
+`{ entries, nextOffset, capped }`; entries retain the existing stable IDs and input
+module/type/member ordering. Paging counts matching records, not source rows.
+`nextOffset` is present only when another match exists within `resultLimit`; `capped`
+is true only when an additional match was observed beyond that total-result cap.
+Zero-limit pages return no records and `nextOffset: null`. No full candidate/result
+array is built; only returned records are copied, once per returned occurrence.
+
+Modes use JavaScript Unicode `toLowerCase()` with no locale or normalization:
+
+- `prefix` matches the full name or simple name after the last `.`, `+` or `/`.
+- `substring` (default) matches a literal substring of the full name.
+- `camel` matches an abbreviation as an ordered subsequence of name initials.
+  Initials include word starts, every uppercase letter (including acronym letters),
+  and the first digit of each digit run. Namespace/nested-name separators and
+  underscores start words. Unicode letters/digits/combining marks belong to words;
+  uncased scripts contribute their first character after a separator. For example,
+  `NRE` matches `NullReferenceException`, `XR` matches `XMLReader`, and `éf` matches
+  `ÉclairFactory`. This is initials matching, not fuzzy edit-distance matching.
+
+Query whitespace and punctuation are literal; no regular expression, glob, NFC or
+locale-specific/full Unicode case folding is implied. Empty queries match every
+record in index order and require no name cache. Queries are limited to 256 UTF-16
+code units; modes other than the three above reject. `limit` defaults to 100 and is
+an integer 0..1000; `resultLimit` defaults to 10000 and is an integer 1..10000;
+`offset` is an integer 0..resultLimit. Invalid input raises `CilError`. Cancellation
+is checked before work, at most 256 records apart and before publishing results.
+
+The first nonempty query with a nonzero page lazily builds parallel normalized-name,
+initials and simple-name-position arrays over the index's existing private records.
+The independent `cacheBytes` budget defaults to/hard-caps at 64 MiB and can be lowered
+to zero. A complete first pass charges the exact UTF-16 name/initial payload plus
+one Uint16 position per record before allocating retained arrays/strings; individual
+scratch names remain bounded by the index's 4096-unit limit. A cancelled/over-budget
+build publishes no partial cache. Reusing a cache with a smaller budget than its
+recorded cost rejects when the query requires it. `index.searchStorage` returns
+owned `{ entries, bytes }` counters, initially zero. Empty queries/zero pages use no
+cache and do not evict an existing cache. These are logical payload bounds, excluding
+engine array/string/object overhead and the existing index; no process-heap ceiling
+is claimed.
+
+Cache construction and queries scan bounded names/records linearly; queries create
+no full candidate array. A query can stop after locating its page plus one following
+match, or the result cap plus one match. The fixed 50,000-type cold/warm timing
+criterion passed on Node and Chromium/Firefox/WebKit on macOS after the retained
+initial failure prompted an ASCII preflight optimization. Exact samples, host,
+reference checks and qualification limits are in `tests/fixtures/symbol-search/README.md`;
+these measurements do not imply an untested-platform or universal latency guarantee.

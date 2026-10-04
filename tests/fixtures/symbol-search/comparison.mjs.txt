@@ -1,0 +1,88 @@
+// Fixed scheduled protocol; execute only inside the root-granted outer limiter.
+import assert from 'node:assert/strict';
+import { cpus, platform, arch } from 'node:os';
+import { readFileSync, writeFileSync } from 'node:fs';
+import { createHash } from 'node:crypto';
+import { pathToFileURL } from 'node:url';
+const [configuration, output] = process.argv.slice(2);
+const config = JSON.parse(readFileSync(configuration, 'utf8'));
+const modules = {};
+for (const [label, variant] of Object.entries(config.variants))
+  modules[label] = await import(pathToFileURL(variant.directory + '/packages/cil/src/index.js'));
+const root = config.variants.after.directory;
+const { assemblyFixture } = await import(pathToFileURL(root + '/tests/fixtures/assembly-index/fixture.mjs'));
+const { typeFixture } = await import(pathToFileURL(root + '/tests/fixtures/symbol-search/fixture.mjs'));
+const { queries, checkResult } = await import(pathToFileURL(root + '/tests/fixtures/symbol-search/queries.mjs'));
+const hash = value => createHash('sha256').update(value).digest('hex');
+const images = Array.from({ length: 20 }, (_, index) => assemblyFixture(index + 1, 1000));
+const loaded = Object.fromEntries(Object.entries(modules).map(([label, { AssemblyInspector }]) =>
+  [label, images.map(bytes => new AssemblyInspector(bytes))]));
+const types = typeFixture();
+const large = new modules.after.AssemblyInspector(types);
+const samples = [], summaries = {};
+const report = { config, host: `${platform()} ${arch()} ${cpus()[0].model}`, node: process.version,
+  startedAt: new Date().toISOString(),
+  protocol: { existingControlPairs: 20, controlWarmups: 5, controlIterations: 3, order: 'AB/BA alternating',
+    searchRounds: 10, queryOrder: 'six cases in forward/reverse order on alternating rounds',
+    queryStates: ['cold cache, including all normalization/preflight', 'warm cache immediately after cold'],
+    timedQueryIterations: 1, queryWarmups: 0, gcBeforeEachCell: true, thresholdMs: 50,
+    qualification: 'One fixed shared-host schedule; retain every sample, no retries/exclusions or noise/speed/heap causality claim.' },
+  fixture: { authoredTypes: 50000, indexedTypesIncludingGlobal: 50001, bytes: types.length, sha256: hash(types),
+    fixtureSourceSha256: hash(readFileSync(root + '/tests/fixtures/symbol-search/fixture.mjs')),
+    queryCasesSha256: hash(readFileSync(root + '/tests/fixtures/symbol-search/queries.mjs')),
+    harnessSha256: hash(readFileSync(new URL(import.meta.url))) },
+  queries, summaries, chronologicalSamples: samples };
+const start = performance.now();
+
+function summarize(values) {
+  const sorted = [...values].sort((left, right) => left - right);
+  return { medianMs: (sorted[Math.floor((sorted.length - 1) / 2)] + sorted[Math.floor(sorted.length / 2)]) / 2,
+    p95Ms: sorted[Math.ceil(sorted.length * 0.95) - 1], maxMs: sorted.at(-1) };
+}
+
+try {
+  const controls = Object.fromEntries(Object.entries(modules).map(([label, { AssemblySymbolIndex }]) =>
+    [label, () => new AssemblySymbolIndex(loaded[label])]));
+  assert.deepEqual(controls.before().storage, controls.after().storage);
+  for (let warmup = 0; warmup < 5; warmup++) { controls.before(); controls.after(); }
+  for (let pair = 0; pair < 20; pair++) for (const label of pair % 2 === 0 ? ['before', 'after'] : ['after', 'before']) {
+    globalThis.gc?.();
+    const sampleStart = performance.now();
+    let index;
+    for (let iteration = 0; iteration < 3; iteration++) index = controls[label]();
+    const elapsedMs = performance.now() - sampleStart;
+    assert.equal(index.size, 20120);
+    samples.push({ control: 'existingIndex', label, pair, elapsedMs, perOperationMs: elapsedMs / 3,
+      startOffsetMs: sampleStart - start });
+  }
+  summaries.existingIndex = Object.fromEntries(['before', 'after'].map(label => [label,
+    summarize(samples.filter(item => item.control === 'existingIndex' && item.label === label).map(item => item.perOperationMs))]));
+  for (let round = 0; round < 10; round++) for (const item of round % 2 ? [...queries].reverse() : queries) {
+    const index = new modules.after.AssemblySymbolIndex([large]);
+    assert.deepEqual(index.searchStorage, { entries: 0, bytes: 0 });
+    for (const state of ['cold', 'warm']) {
+      globalThis.gc?.();
+      const sampleStart = performance.now();
+      const result = index.search(item.query, { mode: item.mode, offset: item.offset ?? 0, limit: 37 });
+      const elapsedMs = performance.now() - sampleStart;
+      samples.push({ control: 'search50k', name: item.name, round, state, elapsedMs, startOffsetMs: sampleStart - start,
+        resultCount: result.entries.length, logicalCache: index.searchStorage });
+      checkResult(result, item);
+    }
+  }
+  summaries.search50k = Object.fromEntries(queries.map(item => [item.name,
+    Object.fromEntries(['cold', 'warm'].map(state => [state,
+      summarize(samples.filter(sample => sample.control === 'search50k' && sample.name === item.name && sample.state === state)
+        .map(sample => sample.elapsedMs))]))]));
+  report.thresholdFailures = samples.filter(sample => sample.control === 'search50k' && sample.elapsedMs > 50);
+  assert.equal(large.cache.size, 0);
+  report.passed = report.thresholdFailures.length === 0;
+} catch (error) {
+  report.passed = false;
+  report.error = { name: error.name, message: error.message };
+  throw error;
+} finally {
+  writeFileSync(output, JSON.stringify(report, null, 2) + '\n');
+}
+console.log(JSON.stringify({ output, summaries, thresholdFailures: report.thresholdFailures?.length }, null, 2));
+if (!report.passed) throw Error('50 ms search criterion failed; fixed raw schedule retained without repeats');

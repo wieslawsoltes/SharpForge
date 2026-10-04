@@ -19,6 +19,7 @@
     "tests/a13-04-unnamed-slots.test.js",
     "tests/a13-11-inspector-navigation.test.js",
     "tests/a13-11-assembly-index.test.js",
+    "tests/a13-11-symbol-search.test.js",
     "tests/a13-02-encoding.test.js",
     "tests/a13-02-fetch.test.js",
     "tests/a13-02-source-link.test.js",

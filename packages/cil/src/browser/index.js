@@ -1,6 +1,7 @@
 import { CilError } from '../binary.js';
 import { AssemblyInspector } from '../inspector.js';
 import { metadataTokenUri } from './navigation.js';
+import { SymbolSearch } from './search.js';
 
 const maximum = Object.freeze({ assemblies: 256, entries: 100000, nameBytes: 16 * 1024 * 1024, bytes: 32 * 1024 * 1024 });
 const members = Object.freeze([['fields', 'field', 4], ['methods', 'method', 6], ['properties', 'property', 23], ['events', 'event', 20]]);
@@ -79,6 +80,7 @@ export class AssemblySymbolIndex {
   #byId = new Map();
   #modules = [];
   #usage;
+  #search;
 
   /** Lowerable count/string-payload budgets exclude pre-existing inspectors and engine object overhead. */
   constructor(assemblies, { signal, ...options } = {}) {
@@ -128,6 +130,15 @@ export class AssemblySymbolIndex {
     const entry = this.#byId.get(id);
     return entry ? { ...entry } : null;
   }
+
+  /** Search names with owned pages, bounded result counts and a separately budgeted lazy name cache. */
+  search(query, options = {}) {
+    this.#search ??= new SymbolSearch(this.#entries);
+    return this.#search.query(query, options);
+  }
+
+  /** Logical retained search-cache payload; zero before the first nonempty query needing a page. */
+  get searchStorage() { return this.#search?.storage ?? { entries: 0, bytes: 0 }; }
 
   /** An owned page in input-module/type/member order, with a hard maximum of 1,000 records. */
   page({ offset = 0, limit = 100, signal } = {}) {
