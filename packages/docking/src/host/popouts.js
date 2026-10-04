@@ -58,7 +58,7 @@ function stopWatchIfEmpty(host) {
   host.windowWatch = null;
 }
 
-export function reattachPopout(host, id, { close = false, reopen = true } = {}) {
+export function reattachPopout(host, id, { close = false, reopen = true, render = true } = {}) {
   const entry = host.popouts.get(id);
   if (!entry) return false;
   host.popouts.delete(id);
@@ -69,7 +69,7 @@ export function reattachPopout(host, id, { close = false, reopen = true } = {}) 
   }
   if (close && !entry.window.closed) entry.window.close();
   stopWatchIfEmpty(host);
-  if (!host.disposed) host.render();
+  if (render && !host.disposed) host.render();
   host.onWindowFocus({ id: 'main', panelId: id, window: host.element.ownerDocument.defaultView });
   return true;
 }

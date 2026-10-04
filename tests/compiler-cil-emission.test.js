@@ -2,7 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { AssemblyInspector } from '@sharpforge/cil';
 import { compileToAssembly } from '@sharpforge/compiler';
-import { loadFixtures, emitFixture, inspectImage, runOnDirectCil } from '../packages/compiler/test/cil-emission/harness.js';
+import { loadFixtures, emitFixture, inspectImage, runOnDirectCil, limitKinds } from '../packages/compiler/test/cil-emission/harness.js';
 
 // SF-A02-T30: CIL method bodies emitted from bound trees (`compileToAssembly`), without the bytecode image.
 // Reference: every fixture's `.out` is what the Roslyn build of the same program prints on .NET, and
@@ -37,10 +37,14 @@ for (const fixture of fixtures) {
     assert.deepEqual(inspectImage(assembly), fixture.imageLimit ? fixture.imageLimit.trimEnd().split('\n') : []);
     const run = runOnDirectCil(assembly),
       observed = run.limit ?? (run.output === fixture.expected ? null : 'output differs\n');
-    // Either the runtime prints what .NET prints, or it stops for exactly the reason the `.vm` file records (the
-    // assembly is valid - .NET runs it - and the fixture is not counted as running). A limit the runtime has since
-    // removed needs no change here: the output is then compared like any other.
-    if (observed !== null) assert.equal(observed, fixture.runtimeLimit ?? '(none recorded)\n', `${fixture.name}: ${run.output ?? ''}`);
+    // Either the runtime prints what .NET prints, or it stops for the kinds of reason the `.vm` file records (the
+    // assembly is valid - .NET runs it - and the fixture is not counted as running). The kinds are the verifier's
+    // codes: its messages are the runtime's wording and may change without this test noticing. A limit the runtime
+    // has since removed needs no change here: the output is then compared like any other.
+    if (observed !== null) {
+      const recorded = limitKinds(fixture.runtimeLimit ?? '(none recorded)\n');
+      assert.deepEqual(limitKinds(observed), recorded, `${fixture.name}: ${observed}${run.output ?? ''}`);
+    }
   });
 }
 
@@ -114,7 +118,8 @@ test('A02-T30 a typed catch clause names its exception type and try regions nest
 });
 
 test('A02-T30 a construct without an emitter is SF2200 naming it, never a wrong assembly', () => {
-  const pointer = emit('class C { static unsafe void Main() { int x = 1; int* p = &x; *p = 2; } }', { allowUnsafe: true });
+  // Function pointers have no emitter (data pointers have one since the unsafe-code batch).
+  const pointer = emit('class C { static int M(int x) { return x; } static unsafe void Main() { delegate*<int, int> f = &M; } }', { allowUnsafe: true });
   assert.equal(pointer.success, false);
   assert.equal(pointer.assembly, null);
   assert.deepEqual(
@@ -155,4 +160,14 @@ test('A02-T30 top-level statements become Program.<Main>$ and return the exit co
   assert.equal(body.signature.returnType, 'int');
   assert.deepEqual(body.signature.parameters, ['string[]']);
   assert.equal(inspector.pe.entryPoint, body.token);
+});
+
+test('A02-T30 a recorded runtime limit is compared by its kinds, not by the wording of the runtime', () => {
+  const recorded = 'IL_PREFIX: constrained. execution requires a nongeneric user-struct TypeDef\nIL_REFERENCE: External member X is not implemented\n',
+    reworded = 'IL_REFERENCE: External member Y is not implemented\nIL_PREFIX: Constrained prefix requires callvirt at 0x0\nIL_PREFIX: again\n';
+  assert.deepEqual(limitKinds(recorded), ['IL_PREFIX', 'IL_REFERENCE']);
+  assert.deepEqual(limitKinds(reworded), limitKinds(recorded));
+  assert.notDeepEqual(limitKinds('fault: Value is incompatible with the array element type\n'), limitKinds(recorded));
+  assert.deepEqual(limitKinds('output differs\n'), ['output differs']);
+  assert.deepEqual(limitKinds('(none recorded)\n'), ['(none recorded)']);
 });

@@ -19,8 +19,8 @@ types participate in matching. A closer nonvirtual match or final virtual match
 is rejected. Static methods cannot match instance signatures. Type graphs and
 signatures remain lazy; no executable body is read.
 
-This is an explicit partial GetBaseDefinition contract. Types with MethodImpl
-rows (including explicit interface or covariant overrides), strict access checks,
+This is an explicit partial GetBaseDefinition contract. Class/covariant MethodImpl
+slot mappings, strict access checks,
 generic base instantiation, constrained generic methods, type generic variables,
 generic-instance/modifier/function-pointer signature types, array sizes and nonzero
 lower bounds require later services and fail with `SFCLR012` when traversal needs them.
@@ -28,6 +28,25 @@ Opaque host intrinsics have no method metadata: reaching one before locating a
 slot introduction also fails, so an Object override cannot silently become its
 own root. A complete metadata chain with no matching ancestor introduces the
 reuse-slot method itself. This is not a full MethodDef validity or visibility pass.
+
+Interface-only MethodImpl rows are now isolated from class virtual slots. The
+service validates owner/token extents, local MethodDef body ownership and duplicate
+declaration tokens. MethodDef declarations use canonical declaring types;
+MemberRef declarations resolve TypeDef/TypeRef parents through the existing type
+loader and reject field signatures. This permits ordinary class overrides through
+a base type that also explicitly implements local or external interfaces, and
+explicit interface bodies retain their own class slot root. CoreCLR stores these
+interface mappings separately in its dispatch map ([WriteMethodImplData](https://github.com/dotnet/runtime/blob/v10.0.5/src/coreclr/vm/methodtablebuilder.cpp)).
+
+This classification does not resolve the interface declaration method by name,
+certify body/declaration signature compatibility or build interface dispatch maps.
+MemberRef bodies and TypeSpec/ModuleRef/MethodDef declaration parents remain
+explicitly unsupported. Class declarations still fail even when mixed with valid
+interface rows. Each uncached mapped type scans its own rows once; completed
+classification is cached per context. Before constructing body MethodDescs, the
+combined TypeDef/MethodPtr/MethodDef count must fit the context row budget.
+MemberRef signatures have a pre-copy 4 KiB limit, 128 KiB combined per type,
+32 levels and 4,096 AST nodes. Aborted classifications publish no success cache.
 
 Per-context weak caches hold completed roots, name indexes and signature keys;
 immutable modules make invalidation unnecessary. Context type limits bound
@@ -68,3 +87,29 @@ node scripts/limited.js node packages/clr/tools/benchmark-method-base-definition
 
 Invocation, vtable execution, full reflected-member views and source VM/direct
 CIL/Rust native/Wasm execution qualification remain separate. #2475 stays open.
+
+
+Interface-only MethodImpl qualification: SDK 10.0.201/CoreCLR 10.0.5 captured six
+independent method records; all 16 focused interface/base-definition tests pass
+without skips. The shared coded-index RID correction is merged; a malformed
+MemberRef signature regression rejects oversized type RIDs before local aliases.
+Syntax/static checks pass (3,259/3,255 modules); structure reports 269 existing
+findings, none in changed files. Native capture, tests, benchmarks and checks ran
+serially under one limiter with concurrency 1 and a 1 GiB Node heap cap.
+
+On shared Apple M3 Pro/darwin-arm64 with Node 24.21.0, existing-path parent/head
+cold median was 141.542 → 143.583 µs (+1.442%) and p95 324.916 → 327.042 µs
+(+0.654%). Cached median was 0.121750 → 0.116292 µs and p95 0.164750 → 0.152333 µs.
+The new six-method fixture measured cold median 79.458 µs / p95 203.083 µs and
+cached median 0.125583 µs / p95 0.159416 µs. All 600 raw samples, p99 values,
+exact sources, fixture hashes and commands are retained in
+[benchmark evidence](benchmarks/method-interface-impl-node24.json). This single
+shared-host pair establishes no causality, statistical significance or general
+speed claim; allocations and added cache footprint are unmeasured.
+
+```sh
+node scripts/limited.js node packages/clr/tools/capture-method-base-definition.mjs tests/fixtures/clr-method-interface-impl tests/fixtures/clr-method-interface-impl/Program.cs
+node scripts/limited.js node --test --test-concurrency=1 tests/clr-methods-interface-impl*.test.js tests/clr-methods-base*.test.js
+node scripts/limited.js node packages/clr/tools/benchmark-method-base-definition.mjs
+node scripts/limited.js node packages/clr/tools/benchmark-method-interface-impl.mjs
+```

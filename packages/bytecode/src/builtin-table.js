@@ -3,14 +3,28 @@ import {decimalIntrinsicDefinitions} from './decimal-intrinsic-profile.js';
 
 // A closed source-visible subset of the existing CIL profile. Unique wire names
 // distinguish overloads; the descriptor retains the actual CLR member identity.
-const decimalRounding = [
-  ['Truncate', ['System.Decimal']], ['Round', ['System.Decimal']], ['Round', ['System.Decimal', 'int']]
-].map(([name, parameters]) => {
-  const descriptor = decimalIntrinsicDefinitions.find(candidate => candidate.owner === 'System.Decimal' &&
-    candidate.isStatic && candidate.name === name && candidate.returnType === 'System.Decimal' &&
+const sourceDecimals = [
+  ['Truncate', ['System.Decimal'], ['d']], ['Round', ['System.Decimal'], ['d']],
+  ['Round', ['System.Decimal', 'int'], ['d', 'decimals']], ['Parse', ['string'], ['s']],
+  ['Ceiling', ['System.Decimal'], ['d']], ['Floor', ['System.Decimal'], ['d']],
+  ...['Add', 'Subtract', 'Multiply', 'Divide', 'Remainder'].map(name =>
+    [name, ['System.Decimal', 'System.Decimal'], ['d1', 'd2']]),
+  ['Compare', ['System.Decimal', 'System.Decimal'], ['d1', 'd2'], 'int'],
+  ['Equals', ['System.Decimal', 'System.Decimal'], ['d1', 'd2'], 'bool'],
+  ['Negate', ['System.Decimal'], ['d']], ['Abs', ['System.Decimal'], ['value']],
+  ['ToSByte', ['System.Decimal'], ['value'], 'sbyte'], ['ToByte', ['System.Decimal'], ['value'], 'byte'],
+  ['ToInt16', ['System.Decimal'], ['value'], 'short'], ['ToUInt16', ['System.Decimal'], ['value'], 'ushort'],
+  ['ToInt32', ['System.Decimal'], ['d'], 'int'], ['ToUInt32', ['System.Decimal'], ['d'], 'uint'],
+  ['ToInt64', ['System.Decimal'], ['d'], 'long'], ['ToUInt64', ['System.Decimal'], ['d'], 'ulong'],
+  ['ToSingle', ['System.Decimal'], ['d'], 'float'], ['ToDouble', ['System.Decimal'], ['d'], 'double'],
+  ['GetBits', ['System.Decimal'], ['d'], 'int[]'],
+  ['Sign', ['System.Decimal'], ['value'], 'int', 'System.Math']
+].map(([name, parameters, parameterNames, returnType = 'System.Decimal', owner = 'System.Decimal']) => {
+  const descriptor = decimalIntrinsicDefinitions.find(candidate => candidate.owner === owner &&
+    candidate.isStatic && candidate.name === name && candidate.returnType === returnType &&
     candidate.parameters.length === parameters.length && candidate.parameters.every((type, index) => type === parameters[index]));
-  if (!descriptor) throw new TypeError('Missing Decimal rounding contract');
-  return descriptor;
+  if (!descriptor) throw new TypeError('Missing source Decimal contract');
+  return {descriptor, parameterNames: Object.freeze(parameterNames)};
 });
 
 /** Build the frozen dispatch table, retaining contract IDs across reserved sparse ranges. */
@@ -33,13 +47,15 @@ export function createBuiltinTable(definitions, contracts, releasedRanges) {
     const id = runtimeId++;
     entries[id] = Object.freeze({id, name, min, max, result, params: Object.freeze(params)});
   }
-  for (const descriptor of decimalRounding) {
+  for (const {descriptor, parameterNames} of sourceDecimals) {
     const id = runtimeId++;
     const params = Object.freeze(descriptor.parameters.map(type => type === 'System.Decimal' ? 'decimal' : type));
+    const math = descriptor.owner === 'System.Math';
     entries[id] = Object.freeze({
-      id, name: 'decimal.' + descriptor.name + '#' + params.length,
-      min: params.length, max: params.length, result: 'decimal', params, decimal: descriptor,
-      parameterNames: Object.freeze(params.length === 2 ? ['d', 'decimals'] : ['d'])
+      id, name: (math ? 'Math.' : 'decimal.') + descriptor.name + '#' + params.length + (math ? ':Decimal' : ''),
+      min: params.length, max: params.length,
+      result: descriptor.returnType === 'System.Decimal' ? 'decimal' : descriptor.returnType, params, decimal: descriptor,
+      parameterNames
     });
   }
   return Object.freeze(entries);

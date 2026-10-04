@@ -9,8 +9,13 @@
  * `Equals`, `GetHashCode` and `ToString` are the overrides of `object` on .NET. They are not declared as members
  * here: calls bind to the members of `object` and lowering selects the member-wise implementation from the static
  * type (lowering/anonymous-types.js).
+ *
+ * In metadata an anonymous type is what Roslyn declares: one generic class per list of member names, with a type
+ * parameter per member (`<>f__AnonymousType0<<Name>j__TPar, <Age>j__TPar>`), constructed over the member types.
+ * `metadataForm()` of the symbol is that construction; direct CIL emission declares the class and names its members
+ * (emit/cil/anonymous-type-members.js).
  */
-import { TypeKind, NamedTypeSymbol, Accessibility } from '../types.js';
+import { TypeKind, NamedTypeSymbol, TypeParameterSymbol, Accessibility, substituteType } from '../types.js';
 import { MethodSymbol, PropertySymbol, MethodKind } from '../members.js';
 
 const publicMember = { declaredAccessibility: Accessibility.Public, isImplicitlyDeclared: true };
@@ -19,6 +24,30 @@ const publicMember = { declaredAccessibility: Accessibility.Public, isImplicitly
 function displayOf(members) {
   if (!members.length) return '<empty anonymous type>';
   return `<anonymous type: ${members.map(member => `${member.type.toDisplayString()} ${member.name}`).join(', ')}>`;
+}
+
+/**
+ * The generic class that declares every anonymous type with these member names, in this order.
+ * @returns a type definition: `isAnonymousTemplate`, `anonymousMemberNames`; it has no member symbols
+ */
+function templateOf(driver, core, names) {
+  const known = (driver.anonymousTemplates ??= []),
+    key = names.join('\u0000'),
+    existing = known.find(entry => entry.key === key);
+  if (existing) return existing.symbol;
+  const symbol = new NamedTypeSymbol({
+    name: `<>f__AnonymousType${known.length}`,
+    typeKind: TypeKind.Class,
+    declaredAccessibility: Accessibility.Internal,
+    baseType: () => core.object,
+    isSealed: true,
+    isImplicitlyDeclared: true,
+    typeParameters: names.map(name => new TypeParameterSymbol({ name: `<${name}>j__TPar` })),
+  });
+  symbol.isAnonymousTemplate = true;
+  symbol.anonymousMemberNames = names;
+  known.push({ key, symbol });
+  return symbol;
 }
 
 /**
@@ -45,6 +74,19 @@ export function anonymousTypeOf(driver, core, members) {
   });
   symbol.isAnonymousType = true;
   symbol.anonymousMembers = members.map(member => ({ name: member.name, type: member.type }));
+  const template = templateOf(
+    driver,
+    core,
+    members.map(member => member.name),
+  );
+  let metadataForm = null;
+  symbol.metadataForm = () => (metadataForm ??= template.construct(members.map(member => member.type)));
+  // A member type that mentions a type parameter follows a substitution: the result is the anonymous type of the
+  // substituted member types (the same symbol when nothing changes).
+  symbol.substitute = map => {
+    const substituted = members.map(member => ({ ...member, type: substituteType(member.type, map) }));
+    return substituted.every((member, index) => member.type === members[index].type) ? symbol : anonymousTypeOf(driver, core, substituted);
+  };
   const display = displayOf(members);
   symbol.toDisplayString = () => display;
   for (const { name, type } of members) {

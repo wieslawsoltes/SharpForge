@@ -37,14 +37,33 @@ export class NamespaceSymbol extends SymbolBase {
   toDisplayString(format=SymbolDisplayFormat.ErrorMessage){return this.isGlobalNamespace?'<global namespace>':(format===SymbolDisplayFormat.FullyQualified?'global::':'')+(format===SymbolDisplayFormat.MinimallyQualified?this.name:this.qualifiedName);}
 }
 /** A read-only union of same-named namespaces from several modules. */
+/** A merged metadata namespace remembers at most this many lookups by name (misses included) before it starts over. */
+const MAX_REMEMBERED_LOOKUPS=8192;
 export class MergedNamespaceSymbol extends NamespaceSymbol {
-  constructor(constituents,container=null){super(constituents[0]?.name??'',container,NamespaceExtent.Compilation);this._constituents=constituents;this._merged=new Map();}
+  constructor(constituents,container=null){
+    super(constituents[0]?.name??'',container,NamespaceExtent.Compilation);this._constituents=constituents;this._merged=new Map();
+    this._typesByKey=new Map();this._immutable=null;
+  }
   get constituentNamespaces(){return this._constituents;}
   getNamespace(name){
     if(this._merged.has(name))return this._merged.get(name);const parts=this._constituents.map(c=>c.getNamespace(name)).filter(Boolean),result=parts.length?new MergedNamespaceSymbol(parts,this):null;this._merged.set(name,result);return result;
   }
   getNamespaceMembers(){const names=new Set(this._constituents.flatMap(c=>c.getNamespaceMembers().map(n=>n.name)));return [...names].map(n=>this.getNamespace(n));}
-  getTypeMembers(name,arity){return this._constituents.flatMap(c=>c.getTypeMembers(name,arity));}
+  /**
+   * The union of the constituents' types. A merge of metadata namespaces only (the references of a compilation: one
+   * namespace per assembly) never changes, so a lookup by name is remembered instead of asking every assembly again.
+   */
+  getTypeMembers(name,arity){
+    if(name===undefined||!this.isImmutable)return this._constituents.flatMap(c=>c.getTypeMembers(name,arity));
+    const key=arity===undefined?name:name+'`'+arity;let found=this._typesByKey.get(key);
+    if(!found){
+      if(this._typesByKey.size>=MAX_REMEMBERED_LOOKUPS)this._typesByKey.clear();
+      found=this._constituents.flatMap(c=>c.getTypeMembers(name,arity));this._typesByKey.set(key,found);
+    }
+    return found.slice();
+  }
+  /** True when every constituent was read from metadata. */
+  get isImmutable(){return this._immutable??=this._constituents.every(c=>c.extent===NamespaceExtent.Metadata||c.isImmutable===true);}
   addType(){throw new TypeError('Types are declared in a module namespace, not in the merged namespace');}
   getOrAddNamespace(){throw new TypeError('Namespaces are declared in a module namespace, not in the merged namespace');}
 }

@@ -1,5 +1,66 @@
 # Project 16 implementation and qualification map
 
+## Current publication and qualification
+
+**The implementation stack through PR4105 is merged; full acceptance qualification is still incomplete.**
+The eight merged PRs are
+[#3451](https://github.com/wieslawsoltes/SharpForge/pull/3451),
+[#3475](https://github.com/wieslawsoltes/SharpForge/pull/3475),
+[#3485](https://github.com/wieslawsoltes/SharpForge/pull/3485),
+[#3533](https://github.com/wieslawsoltes/SharpForge/pull/3533),
+[#3843](https://github.com/wieslawsoltes/SharpForge/pull/3843),
+[#3865](https://github.com/wieslawsoltes/SharpForge/pull/3865),
+[#3904](https://github.com/wieslawsoltes/SharpForge/pull/3904) and
+[#4105](https://github.com/wieslawsoltes/SharpForge/pull/4105).
+PR4105 merged as `8d1be9cffa04b0fd7390e5cb6fe5f6c03b997557`, tree
+`dc9d4e337b91c6e878e7c6c7d65f013667b5ec6b`.
+Its [own core](https://github.com/wieslawsoltes/SharpForge/actions/runs/37175219507/job/111356347344)
+and [main core](https://github.com/wieslawsoltes/SharpForge/actions/runs/37175263470/job/111356461984)
+succeeded; the earlier same-head run 37175211209 was automatically cancelled.
+
+The latest complete hosted observation,
+[a4 / run 37175293552](https://github.com/wieslawsoltes/SharpForge/actions/runs/37175293552),
+ran on that merged source with Ubuntu/Chromium: **15 outcomes, nine passed and six failed**.
+A19 passed **710/710**; A20 reported **686 tests, 677 passed, nine skipped, zero failed**.
+Sessions, HTTP workflows, standalone workflows, editor insights, editor UI budgets
+and actual Studio 200 MiB ingress remained failed. The
+[hosted ledger](project16-hosted-qualification.md) retains the original reports,
+exact source identities and each passing or failing scope. No overlapping run
+counts are added and no issue is closed by this update.
+
+A4's generated-model 200 MiB event-to-paint p95 was approximately **32.3 ms**
+against 50 ms; actual Studio File-input ingress is a separate failed outcome.
+The 12-pair instrumentation observation passed its specified aggregate gate at
+approximately **0.1964165%** overhead. Neither observation establishes a relative
+baseline verdict or qualification on another OS/browser.
+
+The complete follow-up source is now implemented on
+`codex/project16/09-hosted-followup`; its completed-scope checks and corrected
+hosted/browser qualification are **pending at this documentation cutoff**.
+The owning records describe:
+
+- [Workspace document/layout reconciliation](project16-workspace-layout.md).
+- [Production Watch storage registration](project16-watch-storage-correction.md).
+- [Native Find history fixture and independent budget evidence](project16-editor-a4-corrections.md).
+- [Standalone worker startup and diagnostics](../planning/qualification/project16-standalone-worker-startup.md).
+- [Rename preview source, save and transaction ownership](project16-preview-publication.md)
+  and [committed diagnostic presentation](project16-preview-diagnostics.md).
+- [Same-source lazy-evaluation measurement](workbench-lazy-evaluation.md) and its
+  [independent serial registration](project16-qualification-outcomes.md).
+
+The new registration selects 16 outcomes for future `all` runs; a4 remains its
+original 15-outcome execution. No moving branch HEAD or unobserved follow-up
+result is embedded here. Later publication, a5 and platform results must append
+their own exact identities and observations.
+
+## Historical source audit and leaf mapping
+
+The following audit remains pinned to `40bbdea7`; its older pending/unrun notes
+retain that historical cutoff. The JSON's latest publication/qualification layer
+supplements it without replacing the per-leaf audit, source bounds, evidence or
+`closeIssue: false` values. Browser fixture passes do not certify native IME,
+physical clipboard/keyboard, screen-reader speech or external desktop oracles.
+
 **The supplied Project 16 snapshot contains 226 open issues: 194 distinct implementation leaves, 24 parent tasks and eight epics.** Every issue is mapped in [project16-implementation.json](project16-implementation.json). The map records source, its owning evidence and remaining qualification; it does not declare 226 completed capabilities or recommend closing an issue.
 
 Source is pinned to committed root integration revision `40bbdea7b45ab64b24c9741046b897a35118814e` at `2026-10-04T01:26:55.971234+00:00` after the final acceptance corrections and affected retry. The JSON retains the earlier source snapshot and the SHA-256 of the supplied issue inventory. It reads every supplied issue body, including the original deliverable and task-specific acceptance. There is no #1545 in that inventory. Parent and epic entries roll up their leaves.

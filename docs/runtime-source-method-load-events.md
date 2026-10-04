@@ -29,5 +29,7 @@ This small #1403 leaf extends [source method lifecycle events](runtime-source-me
 without VM, heap, frame or snapshot fields. `tests/a05-source-method-load-events.test.js`
 authors source/reload coverage for first admission, repeated calls, unused and
 rejected methods, snapshot/subscriber replay, metadata replacement, name bounds,
-disabled observation and ring overflow. Tests are pending root's serial validation;
-no performance or platform qualification is claimed here.
+disabled observation and ring overflow. All 55 focused source-load, source-method,
+source-heap and CIL-method checks passed at `feb9c79d` with Node 24.21.0,
+one worker and a 512 MB old-space limit. Platform/performance qualification
+remains deferred.
