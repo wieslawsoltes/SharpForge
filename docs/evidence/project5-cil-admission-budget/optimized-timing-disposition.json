@@ -1,0 +1,63 @@
+{
+  "testedSource": "6f8da343a3df1105e7789e5a7201dd3ae4983855",
+  "baseline": "41ebd76987aa912659310d4015607f46110358ab",
+  "decision": "explicit author/reviewer correctness exception accepted",
+  "decisionSource": "Coordinating parent /root message in the work session after reviewing the complete comparisons and guards.",
+  "externalGitHubReviewClaimed": false,
+  "timingBudgetPercent": 5,
+  "timingBudgetPassed": false,
+  "acceptedBreaches": [
+    {
+      "workload": "ordinary-no-async",
+      "metric": "admissionMs",
+      "statistic": "median",
+      "percentChange": 27.56144991685998,
+      "baselineMs": 0.4581779999999753,
+      "candidateMs": 0.5844585000000393
+    },
+    {
+      "workload": "ordinary-no-async",
+      "metric": "executionMs",
+      "statistic": "median",
+      "percentChange": 41.47960708970524,
+      "baselineMs": 1.8196520000000191,
+      "candidateMs": 2.5744364999999902
+    },
+    {
+      "workload": "ordinary-no-async",
+      "metric": "totalMs",
+      "statistic": "median",
+      "percentChange": 36.267103149955005,
+      "baselineMs": 2.290732999999989,
+      "candidateMs": 3.1215155000000436
+    },
+    {
+      "workload": "late-callback-finally",
+      "metric": "callbackMs",
+      "statistic": "median",
+      "percentChange": 9.595755425325848,
+      "baselineMs": 0.37723450000004277,
+      "candidateMs": 0.4134329999999977
+    }
+  ],
+  "acceptedAbsoluteMedianIncreasesMs": {
+    "ordinaryAdmission": 0.1262805,
+    "ordinaryExecution": 0.7547845,
+    "ordinaryTotal": 0.8307825,
+    "freshCallback": 0.0361985
+  },
+  "ordinaryWorkloadIterations": 128,
+  "justification": "Restores independent runtime execution and static EH limits, admitting legitimate programs at the requested budget while retaining direct verifier contracts.",
+  "originalTenBreachesPreserved": true,
+  "optimizedFourBreachesPreserved": true,
+  "allP95OutcomesPreserved": true,
+  "managedAllocationCountsAndBytes": 0,
+  "identicalPeHashes": true,
+  "boundedFreshVerificationAndProofStateChecksPreserved": true,
+  "sharedHostCausalAttributionClaimed": false,
+  "thirdRunRequested": false,
+  "furtherOptimizationRequested": false,
+  "optimizedReportSha256": "3921e4b58e11e2c2f2d629f3d57361e1a75e65a3fd87be32588a5351b699c954",
+  "originalReportSha256": "7e7a32902de801c6fa743c161d28479b6fd740739755581d507411c7c0014ba3",
+  "requiredCoreCheck": "pending"
+}

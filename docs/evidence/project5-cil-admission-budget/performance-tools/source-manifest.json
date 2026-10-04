@@ -1,0 +1,23 @@
+{
+  "status": "source-only; not executed",
+  "files": [
+    {
+      "path": "README.md",
+      "bytes": 3883,
+      "lines": 68,
+      "sha256": "40db5af8734286ab6f2d4addc788e3c0b846492c51661e9bf2bd0959c9f24e7d"
+    },
+    {
+      "path": "callback.mjs",
+      "bytes": 3696,
+      "lines": 67,
+      "sha256": "cc4cd3c6db7e87b02c3c44e4b0c432a69088d50c568bf0cd22a332fbdef26b31"
+    },
+    {
+      "path": "paired.py",
+      "bytes": 8813,
+      "lines": 185,
+      "sha256": "e285ef1159e7420fd840a6091d4ca9a1f8da366c0d8deb2d51ff94669f3bbd19"
+    }
+  ]
+}

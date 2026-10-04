@@ -1,4 +1,4 @@
-import {requireVerifiedCil} from './execution/verification-error.js';
+import {initializeCilAdmission} from './execution/cil-admission.js';
 import {admitCilAssemblyStacks,pushStackValue} from './execution/frame-stack.js';
 import {installRootProvider,rootValues} from './execution/frame-roots.js';
 import {stopExecution} from './execution/stop.js';
@@ -12,7 +12,7 @@ import {literalString} from './execution/strings.js';
 import {ManagedPlatform} from './platform.js';
 import {CooperativeScheduler} from './scheduler.js';
 import {snapshotVM,restoreVM} from './snapshot.js';
-import { AssemblyInspector, verifyCilAssembly, resolveExecutionField, CilError } from '@sharpforge/cil';
+import { resolveExecutionField, CilError } from '@sharpforge/cil';
 import { ManagedHeap, ManagedFault, isReference } from './heap.js';
 import {compare as numericCompare,binary as numericBinary,convert as numericConvert,unary as numericUnary,indirect as numericIndirect} from './execution/numeric-ops.js';
 import {executeCilStep} from './execution/cil-step.js';
@@ -34,8 +34,7 @@ export class CilVirtualMachine {
     const started=performance.now();this.options={maxInstructions:20_000_000,maxFrames:512,maxStackValues:65536,maxOutputCharacters:1_000_000,...options};
     bindNativeAbi(this.options);
     initializeCilMethodEvents(this, options.runtimeEvents);
-    this.inspector=bytes instanceof AssemblyInspector?bytes:new AssemblyInspector(bytes,options);this.report=verifyCilAssembly(this.inspector,options);
-    requireVerifiedCil(this.report);
+    initializeCilAdmission(this,bytes,options);
     admitCilAssemblyStacks(this);
     const entry=this.inspector.getMethod(this.report.entryPoint);this.returnType=entry.signature.returnType;if(!entry.signature.isStatic)throw new CilError('Host invocation requires a static method');
     this.heap=new ManagedHeap(options);installRootProvider(this);this.frames=[];this.statics=new Map();this.strings=new Map();this.initialized=new Map();this._typeSystem=null;this.layoutCache=this.typeSystem.layouts;this.frameId=0;

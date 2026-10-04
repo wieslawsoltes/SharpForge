@@ -1,0 +1,77 @@
+{
+  "sourceCheckpoint": "6f8da343a3df1105e7789e5a7201dd3ae4983855",
+  "files": [
+    {
+      "path": "optimized-capture.py",
+      "retainedBytes": 6315,
+      "retainedSha256": "d1312e116b870f5a40e1123458ef5e648476090873985cc64e04d74384c0afee",
+      "sourceBytes": 6315,
+      "sourceSha256": "d1312e116b870f5a40e1123458ef5e648476090873985cc64e04d74384c0afee",
+      "losslessGzip": false
+    },
+    {
+      "path": "optimized-performance-capture.py",
+      "retainedBytes": 3236,
+      "retainedSha256": "03894c56200f187ef1748e7888b0e13b86bb768765df7c239641d06f477cbbda",
+      "sourceBytes": 3236,
+      "sourceSha256": "03894c56200f187ef1748e7888b0e13b86bb768765df7c239641d06f477cbbda",
+      "losslessGzip": false
+    },
+    {
+      "path": "optimized-focused.log.gz",
+      "retainedBytes": 1319,
+      "retainedSha256": "b405596a891b2c1b91b23a82113467117dbdd96248ef9e1755e2e4756e39c72c",
+      "sourceBytes": 3246,
+      "sourceSha256": "42225f99722c7bdfd39d12aaab8f260ddf4137e3fcadb69f216edd2c49c3b016",
+      "losslessGzip": true
+    },
+    {
+      "path": "optimized-focused-run.json",
+      "retainedBytes": 1257,
+      "retainedSha256": "c33ede90990ca8c0f3889b8d4fcd334ec7daa680b85520982098f544fec88fc9",
+      "sourceBytes": 1257,
+      "sourceSha256": "c33ede90990ca8c0f3889b8d4fcd334ec7daa680b85520982098f544fec88fc9",
+      "losslessGzip": false
+    },
+    {
+      "path": "optimized-focused-before-source.json.gz",
+      "retainedBytes": 206039,
+      "retainedSha256": "3eddf6b73e985742acf8b10467321ff50d1f5570d36f4bca11d8249212da843e",
+      "sourceBytes": 206039,
+      "sourceSha256": "3eddf6b73e985742acf8b10467321ff50d1f5570d36f4bca11d8249212da843e",
+      "losslessGzip": false
+    },
+    {
+      "path": "optimized-focused-after-source.json.gz",
+      "retainedBytes": 206039,
+      "retainedSha256": "3eddf6b73e985742acf8b10467321ff50d1f5570d36f4bca11d8249212da843e",
+      "sourceBytes": 206039,
+      "sourceSha256": "3eddf6b73e985742acf8b10467321ff50d1f5570d36f4bca11d8249212da843e",
+      "losslessGzip": false
+    },
+    {
+      "path": "optimized-performance.json.gz",
+      "retainedBytes": 89793,
+      "retainedSha256": "dc664dd8cd28938b76a26c7c1f326e466516d1374814b3bf8faf9bc7905fd04a",
+      "sourceBytes": 413376,
+      "sourceSha256": "3921e4b58e11e2c2f2d629f3d57361e1a75e65a3fd87be32588a5351b699c954",
+      "losslessGzip": true
+    },
+    {
+      "path": "optimized-performance-launcher.json",
+      "retainedBytes": 2523,
+      "retainedSha256": "9414c1eaa718f55fbef6520535a37b0a368659253a54a5dbf35ae58174ab9638",
+      "sourceBytes": 2523,
+      "sourceSha256": "9414c1eaa718f55fbef6520535a37b0a368659253a54a5dbf35ae58174ab9638",
+      "losslessGzip": false
+    },
+    {
+      "path": "optimized-performance-launcher.log",
+      "retainedBytes": 130,
+      "retainedSha256": "1d3edd1739fad13a950117144a1ae14f48c345e7e6f8ff1bb8ba50b78fa3ff16",
+      "sourceBytes": 130,
+      "sourceSha256": "1d3edd1739fad13a950117144a1ae14f48c345e7e6f8ff1bb8ba50b78fa3ff16",
+      "losslessGzip": false
+    }
+  ]
+}

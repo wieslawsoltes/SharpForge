@@ -7,6 +7,7 @@ import {leaveCilMethod} from './cil-method-events.js';
 import {leaveSourceMethod} from './source-runtime-events.js';
 import {abandonInitialization} from './static-init.js';
 import {verifiedMethod} from './token-cache.js';
+import {cilAdmissionOptions} from './cil-admission.js';
 
 const controlFields = ['frames', 'stack', 'state', 'sourcePause', 'currentPoint', 'pendingFault',
   'fault', 'returnValue', 'exitCode', 'onException'];
@@ -21,9 +22,8 @@ function requireMethod(vm, methodId, args) {
   }
   if (vm.inspector && !verifiedMethod(vm, methodId)) {
     const roots = [...new Set([...vm.report.methods, methodId])];
-    // Scheduler options retain the original verification configuration. Runtime
-    // maxInstructions is an execution budget, not the verifier's method-size cap.
-    const report = verifyCilAssembly(vm.inspector, {...vm.scheduler.options,
+    // Preserve the original admission settings when a callback adds a reachable method.
+    const report = verifyCilAssembly(vm.inspector, {...cilAdmissionOptions(vm.scheduler.options),
       methodToken: vm.report.entryPoint, additionalMethodTokens: roots});
     if (!report.success) throw new ManagedFault('InvalidProgramException', report.issues.map(issue => issue.message).join('; '));
     vm.report = report;
