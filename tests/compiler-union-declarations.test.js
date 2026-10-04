@@ -5,6 +5,7 @@ import { parse, previewRevisions } from '@sharpforge/syntax';
 import { SourceText } from '@sharpforge/text';
 import { CilVirtualMachine } from '@sharpforge/runtime';
 import { SemanticAnalysis } from '../packages/compiler/src/semantic-analysis.js';
+import { AnalysisModel } from '../packages/compiler/src/semantic/analysis-model.js';
 import { importAssembly } from '../packages/compiler/src/metadata-import/pe-symbols.js';
 import { unionShapeOf } from '../packages/compiler/src/symbols/union-shape.js';
 import { NullableAnnotation, SymbolKind, TypeKind } from '../packages/compiler/src/symbols/types.js';
@@ -66,6 +67,17 @@ test('required union contracts come from source or references and are never synt
   assert.equal(contracts.success, true, JSON.stringify(contracts.diagnostics));
   const referenced = compileToAssembly(source, { ...unionPreviewOptions, references: [{ bytes: contracts.assembly, display: 'UnionContracts.dll' }] });
   assert.equal(referenced.success, true, JSON.stringify(referenced.diagnostics));
+});
+
+test('semantic conversion and type queries retain the union conversion before its creation plan', () => {
+  const source = 'union U(long, string); class C { U Make() => 42; }';
+  const files = unionInputs(source).map(file => parse(new SourceText(file.text, file.uri), undefined, { languageVersion: 'preview' }));
+  const model = new AnalysisModel(files, unionPreviewOptions);
+  const start = source.indexOf('42');
+  const node = { uri: 'Program.cs', start, end: start + 2 };
+  assert.equal(model.getConversion(node).kind, 'ImplicitUnion');
+  assert.equal(model.getTypeInfo(node).type.toDisplayString(), 'int');
+  assert.equal(model.getTypeInfo(node).convertedType.toDisplayString(), 'U');
 });
 
 test('generated constructor boxing, default null and struct copies execute on direct CIL', () => {

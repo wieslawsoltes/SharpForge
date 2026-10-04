@@ -5,6 +5,7 @@ import { NullableAnnotation, RefKind } from '../symbols/types.js';
 import { unionShapeOf } from '../symbols/union-shape.js';
 import { unionPatternOutputType } from '../binder/unions/pattern-binding.js';
 import { NOT_NULL, MAYBE_NULL, joinFlow, joinStates } from './flow-state.js';
+import { isUnionConversion } from '../conversions/unions.js';
 
 function nullContentsMatch(pattern, outerNull = false) {
   if (pattern.unionAccess) return !!pattern.unionAccess.isNull;
@@ -50,6 +51,7 @@ export const NullableUnionFlow = Base => class extends Base {
   unionInstanceState(value, flow, fallback = NOT_NULL) {
     if (!value?.type?.isNullableValueType) return fallback;
     if (value.kind === 'Default' || value.literal === 'default' || value.literal === 'null') return MAYBE_NULL;
+    if (isUnionConversion(value.conversion)) return NOT_NULL;
     if (value.kind === 'Conversion' && value.conversion?.steps?.includes('wrap')) return NOT_NULL;
     const variable = this.variableOf(value);
     return variable ? flow.get(variable) ?? MAYBE_NULL : MAYBE_NULL;
@@ -67,6 +69,12 @@ export const NullableUnionFlow = Base => class extends Base {
       this.unionCreationStates.set(node, capture.state);
       return state;
     } finally { this.unionArgumentCapture = saved; }
+  }
+  conversion(node, flow) {
+    if (!isUnionConversion(node.conversion)) return super.conversion(node, flow);
+    const state = this.expression(node.operation, flow);
+    this.unionCreationStates.set(node, this.unionValueState(node.operation, flow));
+    return node.type.isNullableValueType ? NOT_NULL : state;
   }
   argument(argument, method, flow) {
     const state = super.argument(argument, method, flow);

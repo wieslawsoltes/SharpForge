@@ -2,9 +2,15 @@
 import { isReference, needsBox } from './type-facts.js';
 import { unionPatternOutputType } from '../../binder/unions/pattern-binding.js';
 import { TypeKind } from '../../symbols/types.js';
+import { isUnionConversion } from '../../conversions/unions.js';
 
 /** CIL registration; all storage uses the ordinary struct, property and nullable emission machinery. */
 export const UnionEmission = Base => class extends Base {
+  exprConversion(node) {
+    if (!isUnionConversion(node.conversion)) return super.exprConversion(node);
+    this.expression(node.operation);
+    if (node.type.isNullableValueType) this.wrapNullable(node.type);
+  }
   constructorPrologue(method) {
     const property = method.unionConstructor;
     if (!property) return super.constructorPrologue(method);

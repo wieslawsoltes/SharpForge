@@ -1,9 +1,9 @@
 /** Union conversion materialization and pattern value sources, from the pinned unions.md revision 1. */
 import { previewStampText } from '@sharpforge/syntax';
 import { DiagnosticId } from '../../diagnostics/codes.js';
-import { Conversion, ConversionKind } from '../../conversions/classify.js';
+import { ConversionKind } from '../../conversions/classify.js';
 import { isUnionConversion } from '../../conversions/unions.js';
-import { isNullableType, stripNullable } from '../../conversions/nullable.js';
+import { stripNullable } from '../../conversions/nullable.js';
 import { typeTestOutcome } from '../../conversions/reference.js';
 import { RefKind, TypeKind } from '../../symbols/types.js';
 import { MethodKind } from '../../symbols/members.js';
@@ -81,15 +81,13 @@ export const UnionBinding = Base => class extends Base {
     const argument = this.applyConversion(expression, parameter.type, conversion.underlying, syntax);
     const args = [{ expression: argument, type: parameter.type, parameter, refKind: RefKind.None }];
     const target = stripNullable(type);
-    const result = member.methodKind === MethodKind.Constructor
+    const operation = member.methodKind === MethodKind.Constructor
       ? this.node('ObjectCreation', syntax, target, { constructor: member, args, unionCreation: true })
       : this.node('Call', syntax, target, { method: member, receiver: null, args, constrainedTo: target, unionCreation: true });
     if (!this.quiet) this.d.noteUse?.(member, this.c.uri, syntax);
-    return isNullableType(type)
-      ? super.applyConversion(result, type, new Conversion(ConversionKind.ImplicitNullable, {
-        underlying: this.conversions.classifyStandardImplicit(target, target), steps: ['wrap'],
-      }), syntax, isExplicit)
-      : result;
+    // Keep the source conversion visible to semantic queries. As for a compound assignment, `operation` is the
+    // separately bound execution plan; generic walks visit the original operand once instead of duplicating it.
+    return this.node('Conversion', syntax, type, { operand: expression, conversion, operation, isExplicit });
   }
   reportConversionFailure(expression, type, syntax, conversion) {
     if (!isUnionConversion(conversion)) return super.reportConversionFailure(expression, type, syntax, conversion);
