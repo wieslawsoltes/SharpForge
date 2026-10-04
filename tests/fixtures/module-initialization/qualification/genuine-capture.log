@@ -1,0 +1,14 @@
+
+Build succeeded.
+    0 Warning(s)
+    0 Error(s)
+
+Time Elapsed 00:00:04.00
+module-initialization/plain-main                           625f09315547306c "module\nmain\n" 
+module-initialization/static-field-main                    df104a795fdcb67a "module\nfield\n42\n" 
+module-initialization/static-constructor-main              c0795dccdffca021 "module\ntype\nmain\n" 
+module-initialization/initializer-calls-entry-type         1333e71729d7593c "module-start\ntype\n42\nmodule-end\n42\n" 
+module-initialization/declaration-order-once               c0815df4c4174950 "1\n2\n3\n3\n3\n" 
+module-initialization/pre-entry-fault                      be6062b020c3a636 "module\n" !System.TypeInitializationException 
+module-initialization/no-initializers                      99ed604be73237cf "main\n" 
+Pinned 7 of 1591 fixtures against Roslyn 5.3.0.0 (5.3.0-2.26153.122+4d3023de605a78ba3e59e50c657eed70f125c68a).
