@@ -98,17 +98,29 @@ test('A02-T80 readonly and temporary receivers reject writable span conversions 
   assert.deepEqual(codes(program('', 'static void Read(in Quad value) { Span<int> span = value; }')), ['CS9164']);
   assert.deepEqual(codes(program('Span<int> span = new Quad();')), ['CS9164']);
   assert.deepEqual(codes(program('ReadOnlySpan<int> span = new Quad();')), ['CS9165']);
-  assert.deepEqual(codes(program('var slice = new Quad()[..];')), ['CS9165']);
+  assert.deepEqual(codes(program('var slice = new Quad()[..];')), ['CS8156']);
   assert.deepEqual(codes(program('', 'static void Read(in Quad value) { ReadOnlySpan<int> span = value[..]; }')), []);
 });
 
 test('A02-T80 compile-time integer and from-end bounds include zero-from-end and the lower edge', () => {
-  for (const index of ['-1', '4', '^0', '^5']) {
+  for (const index of ['-1', '4', '^0', '^5', '(Index)4', 'new Index(4)', 'new Index(5, true)']) {
     assert.deepEqual(codes(program(`Quad value = default; Console.WriteLine(value[${index}]);`)), ['CS9166'], index);
   }
   assert.deepEqual(codes(program('Quad value = default; Console.WriteLine(value[^4] + value[^1]);')), []);
   assert.deepEqual(codes(program('Quad value = default; Console.WriteLine(value[1L]);')), ['CS9172']);
   assert.deepEqual(codes(program('Quad value = default; Console.WriteLine(value[index: 0]);')), ['CS9173']);
+  for (const keyword of ['ref', 'in', 'out']) {
+    assert.deepEqual(codes(program(`Quad value = default; int i = 0; Console.WriteLine(value[${keyword} i]);`)), ['CS1615']);
+  }
+});
+
+test('A02-T80 literal range endpoints include the end but cannot extend outside either boundary', () => {
+  for (const range of ['-1..', '..5', '^5..', '..^5', '0..new Index(5)']) {
+    assert.deepEqual(codes(program(`Quad value = default; Console.WriteLine(value[${range}].Length);`)), ['CS9166'], range);
+  }
+  assert.deepEqual(codes(program('Quad value = default; Console.WriteLine(value[-1..5].Length);')), ['CS9166', 'CS9166']);
+  assert.deepEqual(codes(program('Quad value = default; Console.WriteLine(value[^0..].Length + value[..4].Length);')), []);
+  assert.deepEqual(codes(program('Quad value = default; Console.WriteLine(value[3..1].Length);')), []);
 });
 
 test('A02-T80 readonly element writes and ref aliases fail; foreach references preserve readonly storage', () => {

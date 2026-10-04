@@ -6,19 +6,29 @@
 import { DiagnosticId } from '../diagnostics/codes.js';
 import { ConversionKind } from '../conversions/classify.js';
 import { inlineArrayShape } from '../symbols/inline-arrays.js';
+import { RefKind } from '../symbols/types.js';
 import { classifyVariable } from './ref-kinds.js';
 
 export { inlineArrayShape } from '../symbols/inline-arrays.js';
 
-/** The constant offset of an int or Index expression in an inline array, null when it requires runtime evaluation. */
-function constantOffset(index, length) {
+/** A constant offset and its diagnostic location; null means that the index needs runtime evaluation. */
+function constantIndex(index, length, core) {
+  const result = (offset, syntax) => ({ offset, syntax });
   if (index.kind === 'FromEndIndex') {
     const value = index.operand.constantValue?.value;
-    return typeof value === 'number' ? length - value : null;
+    return typeof value === 'number' ? result(length - value, index.syntax) : null;
   }
-  if (index.kind === 'Conversion' && index.type?.specialType === 'System_Index') return constantOffset(index.operand, length);
+  if (index.kind === 'Conversion' && index.type?.equals(core.index)) return constantIndex(index.operand, length, core);
+  if (index.kind === 'ObjectCreation' && index.type?.equals(core.index) && !index.initializer &&
+    index.args.length >= 1 && index.args.length <= 2 &&
+    (!index.mapping?.parameterOf || index.mapping.parameterOf.every((value, i) => value === i))) {
+    const argument = index.args[0].expression;
+    const value = argument.constantValue?.value;
+    const fromEnd = index.args[1]?.expression.constantValue?.value ?? index.constructor?.parameters[1]?.explicitDefaultValue;
+    if (typeof value === 'number' && typeof fromEnd === 'boolean') return result(fromEnd ? length - value : value, argument.syntax);
+  }
   const value = index.constantValue?.value;
-  return typeof value === 'number' ? value : null;
+  return typeof value === 'number' ? result(value, index.syntax) : null;
 }
 
 /** Class mixin of the body binder; all inline-array use sites share the existing language gate. */
@@ -32,7 +42,12 @@ export const InlineArrayBinding = Base =>
       if (target.kind === 'FieldAccess') this.markWrite(target, null);
       const named = syntax.argumentList?.arguments?.find(argument => argument.nameColon);
       if (named) {
-        this.report(named.nameColon, DiagnosticId.CS9173);
+        this.report(syntax, DiagnosticId.CS9173);
+        return this.bad(syntax);
+      }
+      const byReference = args.findIndex(argument => argument.refKind && argument.refKind !== RefKind.None);
+      if (byReference !== -1) {
+        this.report(args[byReference].syntax, DiagnosticId.CS1615, [byReference + 1, args[byReference].refKind]);
         return this.bad(syntax);
       }
       const selected = args.length === 1 ? this.inlineArrayIndex(args[0]) : null;
@@ -42,13 +57,13 @@ export const InlineArrayBinding = Base =>
       }
       const { index, indexKind } = selected;
       if (indexKind === 'range') return this.inlineArraySlice(target, index, shape, syntax);
-      const offset = constantOffset(index, shape.length);
-      if (offset !== null && (offset < 0 || offset >= shape.length)) {
-        this.report(args[0].syntax, DiagnosticId.CS9166);
+      const constant = constantIndex(index, shape.length, this.core);
+      if (constant && (constant.offset < 0 || constant.offset >= shape.length)) {
+        this.report(constant.syntax, DiagnosticId.CS9166);
         return this.bad(syntax);
       }
       return this.node('InlineArrayAccess', syntax, shape.elementType, {
-        receiver: target, index, indexKind, length: shape.length, constantOffset: offset,
+        receiver: target, index, indexKind, length: shape.length, constantOffset: constant?.offset ?? null,
       });
     }
     /** The language tries implicit conversion to int, Index and Range, in that order. */
@@ -65,8 +80,18 @@ export const InlineArrayBinding = Base =>
       const variable = classifyVariable(receiver, this.variableContext);
       const type = (variable.isWritable ? this.core.span : this.core.readOnlySpan).construct(shape.elementType);
       if (!variable.isVariable) {
-        this.report(receiver.syntax, DiagnosticId.CS9165, [this.display(type)]);
+        this.report(receiver.syntax, DiagnosticId.CS8156);
         return this.bad(syntax, { receiver, range });
+      }
+      if (range.kind === 'Range') {
+        let invalid = false;
+        for (const endpoint of [range.left, range.right]) {
+          const constant = endpoint && constantIndex(endpoint, shape.length, this.core);
+          if (!constant || (constant.offset >= 0 && constant.offset <= shape.length)) continue;
+          this.report(constant.syntax, DiagnosticId.CS9166);
+          invalid = true;
+        }
+        if (invalid) return this.bad(syntax, { receiver, range });
       }
       return this.node('InlineArraySlice', syntax, type, { receiver, range, length: shape.length });
     }

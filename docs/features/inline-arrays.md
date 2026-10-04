@@ -54,6 +54,12 @@ An integer or `Index` access denotes an element of the original storage. An
 element of a readonly receiver is readonly. A value receiver can be read, but its
 element cannot be used as a writable location or returned by reference.
 
+Constant integer and `Index` operands are checked at compile time, including
+explicit `Index` conversions and constructors. Literal range endpoints permit
+the position immediately after the last element for empty slices, but reject
+positions outside the buffer. Dynamic bounds and reversed ranges are checked
+by the span operations at run time.
+
 A range produces `Span<T>` over a writable receiver and `ReadOnlySpan<T>` over a
 readonly receiver. Conversion to either span type requires a variable;
 conversion to writable `Span<T>` also requires writable storage. An implicit or
