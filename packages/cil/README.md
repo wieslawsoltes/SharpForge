@@ -169,6 +169,8 @@ malformed individual methods retain existing per-method diagnostics. `signal`
 supports cancellation. Returned page methods own their nested data. Existing
 metadata/body limits and inspector caches remain active; the byte budget is
 logical declared code size, not a measured process-memory ceiling.
+Construction still reads metadata and indexes member names/ownership; paging
+defers method signature/body projection and the unrequested full inventories.
 
 `inspector.tokenUri(token)` returns
 `sf-metadata://<module-mvid>/0x<eight-hex-token>`. `inspector.resolveUri(uri)`

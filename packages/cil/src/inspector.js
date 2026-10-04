@@ -71,10 +71,16 @@ export class AssemblyInspector {
     this.cache.set(t,method);return method;
   }
   /** Stable module/token URI without decoding the referenced member. */
-  tokenUri(token){return metadataTokenUri(this.metadata,token);}
+  tokenUri(token) {
+    return metadataTokenUri(this.metadata, token);
+  }
   /** Resolve a URI against this module, returning owned scalar identity facts. */
-  resolveUri(uri){return resolveMetadataUri(this.metadata,uri);}
-  summary(options={}){return assemblySummary(this,options);}
+  resolveUri(uri) {
+    return resolveMetadataUri(this.metadata, uri);
+  }
+  summary(options = {}) {
+    return assemblySummary(this, options);
+  }
   callGraph(){const edges=[];for(const m of this.methods.values()){try{for(const i of this.getMethod(m.token).instructions)if(['call','callvirt','newobj','ldftn','ldvirtftn','jmp'].includes(i.name))edges.push({caller:m.token,callee:i.operand,offset:i.offset,kind:i.name});}catch(error){edges.push({caller:m.token,error:error.message});}}return edges;}
 }
 export function inspectAssembly(bytes,options={}){return new AssemblyInspector(bytes,options).summary(options);}
