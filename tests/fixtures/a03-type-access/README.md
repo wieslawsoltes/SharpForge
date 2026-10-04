@@ -24,7 +24,7 @@ node scripts/limited.js node --test --test-concurrency=1 tests/a03-07-type-acces
 ```
 
 At the granted slot, run native capture and focused/affected member contracts
-serially, then compare exact parent99ae5455 against the candidate with the
+serially, then compare exact dependency 4d269c80 (same product as 99ae5455) against the candidate with the
 unchanged benchmark-member-access.mjs and benchmark-nested-access.mjs controls.
 Measure new type queries with benchmark-type-access.mjs. Retain chronological
 samples, medians/p95 and sampled heap deltas without allocation or significance
