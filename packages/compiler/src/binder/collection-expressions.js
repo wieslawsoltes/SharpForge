@@ -186,7 +186,8 @@ export const CollectionExpressionBinding = Base =>
         if (element.spread) {
           const spread = element.spread,
             array = spread.type instanceof ArrayTypeSymbol ? spread : this.receiverCall(spread.type, 'ToArray', [], at, spread);
-          call = array && this.receiverCall(type, 'AddRange', [argument(array)], at, receiver);
+          // A spread without `ToArray()` (an iterator, an interface) is appended as the sequence it is.
+          call = this.receiverCall(type, 'AddRange', [argument(array ?? spread)], at, receiver);
           if (!call) return null;
         } else {
           // A collection of a source type takes the element as written: `Add` decides the conversion.

@@ -3,7 +3,7 @@
  * pattern - `GetEnumerator`, `MoveNext`, `Current`, and `Dispose` in a finally block when the enumerator is disposable.
  */
 import { SymbolKind, TypeKind, RefKind } from '../../symbols/types.js';
-import { implementsInterface } from '../../symbols/substitution.js';
+import { implementsInterface, membersInHierarchy } from '../../symbols/substitution.js';
 import { isReference, primitiveOf, needsBox } from './type-facts.js';
 import { enumerationPattern } from './foreach-pattern.js';
 
@@ -110,6 +110,19 @@ export const LoopEmission = Base =>
       };
       if (implementsInterface(enumeratorType, this.core.idisposable, this.core)) {
         return this.tryRegions(loop, [], () => this.disposeCall({ slot: enumerator, type: enumeratorType }, node.syntax));
+      }
+      // C# 8: a ref struct enumerator cannot implement IDisposable; its accessible `Dispose()` is called by pattern.
+      const patternDispose = enumeratorType.isRefLikeType
+        ? membersInHierarchy(enumeratorType, 'Dispose', this.core).find(
+            member => member.kind === SymbolKind.Method && !member.isStatic && !member.parameters.length && !member.typeParameters?.length,
+          )
+        : null;
+      if (patternDispose) {
+        return this.tryRegions(loop, [], () => {
+          pushEnumerator();
+          this.callMethod(patternDispose, { receiver });
+          if (patternDispose.returnType?.specialType !== 'System_Void') il.emit('pop');
+        });
       }
       // An enumerator known only as an interface (`IEnumerator`) may be disposable at run time.
       if (enumeratorType.typeKind !== TypeKind.Interface) return loop();

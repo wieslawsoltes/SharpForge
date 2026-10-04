@@ -275,8 +275,10 @@ export const CallEmission = Base =>
           constrainedTo: node.constrainedTo ?? null,
         };
       // A property of a C# 14 extension block: its accessors are static methods that take the receiver first.
+      // (A block with type parameters is constructed for the receiver: the block is known to the definition.)
       const accessor = property.getMethod ?? property.setMethod,
-        receiverParameter = accessor?.extensionBlock && accessor.extensionReceiver && node.receiver ? accessor.parameters[0] : null;
+        declared = accessor?.originalDefinition ?? accessor,
+        receiverParameter = declared?.extensionBlock && declared.extensionReceiver && node.receiver ? accessor.parameters[0] : null;
       if (receiverParameter) {
         access.receiver = null;
         access.args = [() => this.argument({ expression: node.receiver }, receiverParameter), ...access.args];

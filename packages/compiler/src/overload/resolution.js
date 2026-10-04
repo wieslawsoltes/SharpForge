@@ -122,11 +122,14 @@ export class OverloadResolver {
         (wanted === RefKind.RefReadOnlyParameter && [RefKind.None, RefKind.In, RefKind.Ref].includes(given));
       // COM interop: `ref` may be omitted on a call to a COM interface method; the argument is then passed by value.
       // An argument that does not convert to the parameter type is still reported as a missing `ref`.
-      const mayOmit = !refOk && wanted === RefKind.Ref && given === RefKind.None && !!this.allowsRefOmission?.(method),
+      // C# 10: an interpolated string is passed to a `ref` handler parameter without `ref` (the handler is a temporary).
+      const missingRef = !refOk && wanted === RefKind.Ref && given === RefKind.None,
+        comOmit = missingRef && !!this.allowsRefOmission?.(method),
+        mayOmit = comOmit || (missingRef && args[i].form === 'interpolatedString'),
         byValue = mayOmit ? this.conversions.classifyFromExpression(args[i], c.parameterTypes[i]) : null,
-        omitsRef = !!byValue?.exists && byValue.isImplicit;
-      if (omitsRef) c.omitsRef = true;
-      else if (!refOk) {
+        omitsRef = !!byValue?.exists && byValue.isImplicit && (comOmit || byValue.kind === ConversionKind.InterpolatedStringHandler);
+      if (omitsRef && comOmit) c.omitsRef = true;
+      if (!omitsRef && !refOk) {
         c.failure ??= { kind: 'refKind', argument: i, expected: wanted, given };
         c.conversions.push(null);
         continue;

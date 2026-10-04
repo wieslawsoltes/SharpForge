@@ -14,6 +14,9 @@ import { checkWritable } from '../ref-kinds.js';
 const unknown = ErrorTypeSymbol.unknown;
 
 /** Class mixin: Casts, unary and binary operators (with constant folding), assignment in all its forms, increment, */
+/** A `default` or `null` operand gets its type from the operator's parameter. */
+const isTypelessValue = operand => operand.literal === 'default' || operand.literal === 'null';
+
 export const OperatorBinding = Base =>
   class extends Base {
     cast(syntax) {
@@ -147,7 +150,7 @@ export const OperatorBinding = Base =>
       }
       if (r.kind === 'user') {
         const args = r.conversions
-          ? [left, right].map((e, i) => (e.type ? this.applyConversion(e, r.method.parameters[i].type, r.conversions[i]) : e))
+          ? [left, right].map((e, i) => (e.type || isTypelessValue(e) ? this.applyConversion(e, r.method.parameters[i].type, r.conversions[i]) : e))
           : [left, right];
         return this.node('Binary', syntax, r.isLogical ? r.method.returnType : r.resultType, {
           operator,
