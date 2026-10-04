@@ -1,10 +1,27 @@
 # Paged symbol-name search
 
 Implementation-ready #2572 on main base
-`42962e3fb67c1236242e89046627a0723f295bc2`. No install, tests, benchmark, native or
-browser run/check has occurred for this branch. Root schedules the sole serial slot.
+`42962e3fb67c1236242e89046627a0723f295bc2`.
 
-Seven prepared tests cover prefix/full/simple names, literal substring and documented
+The first scheduled attempt at product `52803832f6a8dd29e287182a37eb4a59c7d16a56`
+passed all 22 focused tests, but **failed the 50 ms acceptance criterion**: one cold
+camel-miss cell took 53.434208 ms. All 160 chronological observations are retained in
+[the first performance capture](qualification/attempt-01-performance.json), with
+[phase logs](qualification/attempt-01-validation.txt). The fixed schedule completed
+before rejecting; browser/static/structure stages did not run. Other cold cells
+were at most 30.037083 ms, and warm cells at most 3.127042 ms. Existing-index control
+median/p95 was 6.045757/6.220917 ms before versus 6.094410/6.507333 ms after
+(+0.80%/+4.60%). This failed attempt is not a passing performance claim.
+
+Product `b8b23fa61d3376be0144552ccf9166c601a29afc` removes ASCII preflight scratch
+normalization strings by counting exact lengths and scanning character codes.
+The non-ASCII normalization path is unchanged. A new semantic/budget test covers
+ASCII separators/acronyms/digit runs, the 0x7f/0x80 boundary, Unicode expansions,
+contextual sigma, astral letters, combining marks and uncased scripts. This changed
+product is unvalidated and queued for the same fixed schedule, then browsers/checks;
+there is no unchanged retry, deadline waiver or sample exclusion.
+
+Eight prepared tests cover prefix/full/simple names, literal substring and documented
 camel initials, Unicode/normalization boundaries, empty queries, stable IDs, paging,
 total result caps, cancellation, owned returns, no method decoding and a separate
 exact/minus-one cache budget. The scale fixture contains 50,000 authored type names
@@ -19,19 +36,19 @@ exercise this same scale fixture and matching/bounds/ownership contracts. Native
 execution, Studio/full matrix and untested cross-platform behavior are separate.
 
 The lazy cache performs a full logical-byte preflight before retained arrays are
-allocated, with only bounded per-name scratch strings. It stores normalized names,
+allocated, with allocation-free ASCII length counting and bounded per-name Unicode scratch strings. It stores normalized names,
 initials and two-byte simple-name positions; it shares the index's private owned
 records and copies only selected output records. Counters exclude engine object/
-array/string overhead, pre-existing index and output pages. No process-heap or
-performance claim is made before evidence exists. Source mode matching is deliberately
+array/string overhead, pre-existing index and output pages. No process-heap improvement or passing timing claim is made. Source mode matching is deliberately
 explicit: Unicode lowercase, no canonical normalization, literal prefix/substring,
 and ordered initials-subsequence camel abbreviations.
 
 
-Prepared serial qualification, not run: `/tmp/sharpforge-a13-search-driver.mjs`
-will await install, expected missing-search API proof, the seven new plus 15 existing
-index/navigation tests, one fixed comparison, shared focused browsers, check and
-structure under one outer limiter (concurrency 1/maxruns 1/heap 1024 MiB). Baseline and
+The first serial qualification driver was `/tmp/sharpforge-a13-search-driver.mjs`.
+Install and expected missing-search API proof succeeded. Changed-product validation
+will reuse those immutable baseline inputs, run eight new plus 15 existing
+index/navigation tests, the same fixed comparison, shared focused browsers, check
+and structure under one outer limiter (concurrency 1/maxruns 1/heap 1024 MiB). Baseline and
 candidate resolve their own CIL sources; unchanged transitive trees/manifests must
 have identical Git hashes before sharing. No unrelated suite or native rebuild.
 
