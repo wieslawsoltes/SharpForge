@@ -1,0 +1,4 @@
+{
+  "com-interop/cs0596-cs0423-cs0424-cs0669-cs0591-comimport-declarations": ["diagnostics", "warnings"],
+  "com-interop/cs1620-cs0144-ref-omission-and-coclass-creation": ["diagnostics", "warnings"]
+}

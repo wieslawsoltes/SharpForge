@@ -9,6 +9,48 @@
       "reason": "Trusted CLI lazily loads the fixed MSBuild and workspace command modules; no user-selected JavaScript."
     },
     {
+      "path": "apps/studio/workbench/comment-tasks.js",
+      "operation": "dynamic-import",
+      "count": 1,
+      "sha256": "516ee05d987fe0e7871fcabfa1c601a080afe626d1ef531b0e9ce404f5416123",
+      "reason": "Task List lazily imports the literal @sharpforge/syntax public entry to lex comment trivia; document text and configured tokens never select a module or become JavaScript. This hash binds the final reviewed source bytes after main synchronization."
+    },
+    {
+      "path": "apps/studio/workbench/lazy-tools.js",
+      "operation": "dynamic-import",
+      "count": 5,
+      "sha256": "307530012cf9d14d1bac88718704279bbeb46eb4faa522cb66de052fc961ebd3",
+      "reason": "The closed Studio loader table imports five literal adjacent designer, assembly, disassembly, MSBuild and wizard modules on activation; tool IDs select trusted callbacks, never module paths supplied by workspace data."
+    },
+    {
+      "path": "apps/studio/workbench/metadata/framework-model.js",
+      "operation": "dynamic-import",
+      "count": 1,
+      "sha256": "b6cfc1a3d9b4a4c56a898ce1e7ddb19624fe00d27a05583484c23f9811cce8fd",
+      "reason": "The shared metadata adapter lazily imports the literal @sharpforge/framework public entry to build registered framework type and member records; symbol names only query that registry and never select executable module paths."
+    },
+    {
+      "path": "apps/studio/workbench/metadata/intrinsic-model.js",
+      "operation": "dynamic-import",
+      "count": 1,
+      "sha256": "8877a98405a923ec7ca6840c97d95f3fb933545fe0155eed2c730419e87e15e9",
+      "reason": "The shared intrinsic metadata adapter lazily imports the literal @sharpforge/bytecode public entry and projects only actual registered descriptors from BuiltinMap.values() through the pure builtinMemberShape, builtinOwners and builtinParameterType contract; source identifiers and assembly data never select or execute JavaScript modules."
+    },
+    {
+      "path": "apps/studio/workbench/shell-models.js",
+      "operation": "dynamic-import",
+      "count": 2,
+      "sha256": "74722e894e5e1dd1c79675a85c860c7cb7437da286f1c98294dede42ab9653e3",
+      "reason": "Toolbox providers lazily import the literal @sharpforge/editor and @sharpforge/designer public entries for bundled snippets and design-control metadata; user snippet text is editor data, never a module specifier."
+    },
+    {
+      "path": "apps/studio/workbench/shell-tools.js",
+      "operation": "dynamic-import",
+      "count": 20,
+      "sha256": "817a847519f65cef47f98cefdef4b8a1d676f5daf3871c3c198127edf2d26f78",
+      "reason": "The reviewed tool-ID map contains twenty literal imports confined to the adjacent tools directory; instance IDs select fixed loaders and never form a module specifier. Built assets resolve from the same origin under the shipped CSP."
+    },
+    {
       "path": "packages/bcl-core/scripts/benchmark.js",
       "operation": "dynamic-import",
       "count": 2,
@@ -110,8 +152,8 @@
       "path": "packages/editor/smoke.mjs",
       "operation": "dynamic-import",
       "count": 3,
-      "sha256": "20b3a66c4097d7b1e6362d590e2f8d8f75503f5a5611dab4c0d82bce70586569",
-      "reason": "Package smoke test imports fixed workspace or Node modules in its bounded test phases."
+      "sha256": "e7bd01267696b7c96f83784eabf229fa10d6d91ef4be531e033626884fdd38c3",
+      "reason": "The isolated package smoke test imports only literal node:fs and @sharpforge/editor entries in three ordered phases. Modular CSS is read as package data and the six-profile assertion checks the bundled ReSharper-like profile; no source, CSS import text or operator input selects executable JavaScript modules."
     },
     {
       "path": "packages/extensions/smoke.mjs",
@@ -214,7 +256,7 @@
     {
       "path": "planning/contracts/tests/governance.test.js",
       "operation": "dynamic-import",
-      "sha256": "058761c95196b3a676a1aff0dbe519953136eb66944650a6377d759a274cd08b",
+      "sha256": "a74692d8f66368aa5e07f60d374b93d60b65987b8cc9bfcf6b361637bbbc9c41",
       "count": 8,
       "reason": "Planning contract tests import fixed Node, workspace and checked-in planning modules in isolated test phases."
     },
@@ -275,6 +317,13 @@
       "reason": "Benchmark loads explicit package entry points from the selected trusted source checkout."
     },
     {
+      "path": "scripts/planning/compiler-dispatch-corpus.js",
+      "operation": "dynamic-import",
+      "count": 2,
+      "sha256": "d36ed8f7e5c694dc38777d5db733587aa179a2d7a2fb945b9788a6cbb447be1f",
+      "reason": "Corpus comparator loads only fixed compiler and bytecode entry points from explicitly selected trusted before/after checkouts in isolated capture processes."
+    },
+    {
       "path": "scripts/planning/golden-output.js",
       "operation": "dynamic-import",
       "count": 1,
@@ -313,7 +362,7 @@
       "path": "tests/a00-03-studio-registries.test.js",
       "operation": "dynamic-import",
       "count": 2,
-      "sha256": "8c06f5de014f18b14d1e99e819b0c95ba2d497bef474620188f4bff8fbb5d724",
+      "sha256": "283ec426fd4bf434a1da40ad0675cf21166837c4db36e27582f8caa283f0af5d",
       "reason": "Registry test enumerates trusted checked-in Studio automation modules and imports the fixed Node worker module."
     },
     {

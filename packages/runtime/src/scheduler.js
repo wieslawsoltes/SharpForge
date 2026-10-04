@@ -1,5 +1,8 @@
-import {TASK,THREAD,frameworkType,taskResult} from '@sharpforge/framework';
-import {ManagedFault,isReference} from './heap.js';
+import {finishContext,cancelContexts} from './execution/frame-retirement.js';
+import {schedulerRootValues} from './execution/frame-roots.js';
+import {TASK,THREAD,taskResult} from '@sharpforge/framework';
+import {boundDelegateCall} from './execution/delegate-targets.js';
+import {ManagedFault} from './heap.js';
 import {SUSPENDED} from './platform.js';
 import {copyExecution} from './snapshot.js';
 const key = r => r && `${r.h}:${r.g}`;
@@ -23,17 +26,7 @@ export class CooperativeScheduler {
   save(){if(!this.enabled||this.parked)return;const c=this.contexts.get(this.currentId);if(c)Object.assign(c,this.capture());}
   load(c){this.parked=false;this.currentId=c.id;for(const k of contextFields)if(k in c)this.vm[k]=c[k];this.vm.state='running';c.status='running';this.steps=0;}
   get current(){return this.contexts.get(this.currentId);}
-  *roots(){if(!this.enabled)return;for(const c of this.contexts.values()){
-      if(terminal.has(c.status))continue;yield c.task;yield c.thread;yield c.delegate;yield c.returnValue;yield c.wait?.task;
-      // Resumed faults remain on the context until beforeInstruction dispatches them,
-      // including while that context is active and its stacks are rooted by the VM.
-      yield c.resumeFault?.reference;
-      if(c.id===this.currentId&&!this.parked)continue;
-      yield* c.stack??[];for(const f of c.frames){yield* f.locals??[];yield* f.args??[];for(const v of f.stack??[]){if(v?.byref)yield v.owner;else yield v;}yield f.returnObject;if(this.vm.exceptionRoots)yield* this.vm.exceptionRoots(f);else{yield f.exception?.reference;for(const x of f.caught??[])yield x.fault?.reference;for(const x of f.unwinds??[]){yield x.value;yield x.error?.reference;}}}
-      yield c.pendingFault?.reference;yield c.fault?.reference;
-    }
-    for(const t of this.tasks.values())if(!terminal.has(t.status)){yield t.ref;yield* t.dependencies??[];yield t.error?.reference;}
-  }
+  *roots(){yield* schedulerRootValues(this);}
   allFrames(){if(!this.enabled)return this.vm.frames;this.save();return [...this.contexts.values()].flatMap(c=>terminal.has(c.status)?[]:c.frames);}
   taskRecord(ref){this.vm.heap.get(ref);const id=this.vm.platform.get(ref,'Id');let t=this.tasks.get(id);if(!t){const status=this.vm.platform.get(ref,'$status');if(!terminal.has(status))throw new ManagedFault('InvalidOperationException','Task is no longer tracked');t={id,ref,status,result:this.vm.platform.get(ref,'$result'),resultType:taskResult(this.vm.heap.get(ref).type),error:null,waiters:new Set()};}return t;}
   createTask(resultType='void',extra={}){
@@ -52,11 +45,10 @@ export class CooperativeScheduler {
   failure(t){return t.error??new ManagedFault(t.status==='canceled'?'TaskCanceledException':'Exception',this.vm.native?.(this.vm.platform.get(t.ref,'$error'))??this.vm.platform.native(this.vm.platform.get(t.ref,'$error'))??'Task failed');}
   enqueue(delegate,args=[],{name=null,kind='task',task=null,parentId=this.currentId,eager=false,thread=null}={}){
     this.ensure();this.prune();const live=[...this.contexts.values()].filter(c=>!terminal.has(c.status));if(live.length>=this.maxContexts)throw new ManagedFault('ExecutionLimitException','Managed context limit exceeded');
-    const p=this.vm.platform,r=p.record(delegate);if(r.kind!=='delegate')throw new ManagedFault('InvalidCastException','A managed delegate is required');
-    const method=p.get(delegate,'method'),receiver=p.get(delegate,'receiver'),signature=frameworkType(r.type);if(args.length!==signature.parameters.length)throw new ManagedFault('ArgumentException','Delegate argument count mismatch');
+    const {method,arguments:values}=boundDelegateCall(this.vm,delegate,args);
     this.save();const previous=this.capture(),previousState=this.vm.state;
     this.vm.frames=[];if(!this.vm.inspector)this.vm.stack=[];this.vm.currentPoint=null;this.vm.pendingFault=null;this.vm.fault=null;this.vm.returnValue=null;this.vm.exitCode=0;
-    try{const target=this.vm.inspector?this.vm.inspector.getMethod(method):this.vm.image.methods[method];const stat=this.vm.inspector?target.signature.isStatic:target.isStatic;this.vm.call(method,stat?args:[receiver,...args]);}
+    try{this.vm.call(method,values);}
     catch(error){for(const k of contextFields)if(k in previous)this.vm[k]=previous[k];this.vm.state=previousState;throw error;}
     const id=this.nextId++,c={id,name:name??(this.vm.inspector?(this.vm.inspector.debug?.methods?.find(m=>m.token===method)?.asyncOrigin??this.vm.top.method.name):(this.vm.image.methods[method].asyncOrigin??this.vm.image.methods[method].name)),kind,status:'ready',frozen:false,parentId,task:task?.ref??null,taskId:task?.id??null,thread,delegate,wait:null,eagerParent:eager?parentId:null,...this.capture()};
     this.contexts.set(id,c);if(task)task.contextId=id;
@@ -65,8 +57,8 @@ export class CooperativeScheduler {
     if(['terminated','waiting'].includes(previousState)&&!this.vm.frames.length){this.load(c);}
     return id;
   }
-  callDelegate(delegate,args){const p=this.vm.platform,r=p.record(delegate),method=p.get(delegate,'method'),receiver=p.get(delegate,'receiver'),m=this.vm.inspector?this.vm.inspector.getMethod(method):this.vm.image.methods[method],isStatic=this.vm.inspector?m.signature.isStatic:m.isStatic;
-    this.vm.call(method,isStatic?args:[receiver,...args]);return SUSPENDED; // The callee supplies the result on return, without suspending this context.
+  callDelegate(delegate,args){const {method,arguments:values}=boundDelegateCall(this.vm,delegate,args);
+    this.vm.call(method,values);return SUSPENDED; // The callee supplies the result on return, without suspending this context.
   }
   wait(ref,{pushResult=true,voidResult=false,forceYield=false}={}){
     const t=this.taskRecord(ref);if(terminal.has(t.status)&&!forceYield){if(t.status!=='completed')throw this.failure(t);return voidResult?null:t.result;}
@@ -120,7 +112,7 @@ export class CooperativeScheduler {
       else if(t.dependencies){const ds=t.dependencies.map(r=>this.taskRecord(r)),done=ds.filter(x=>terminal.has(x.status));if(t.any&&done.length)this.complete(t,done[0].ref);else if(!t.any&&done.length===ds.length){const fault=ds.find(x=>x.status!=='completed');this.complete(t,null,fault?this.failure(fault):null);}}
     }
   }
-  finish(c){if(terminal.has(c.status))return;c.status=this.vm.state==='faulted'?'faulted':'completed';Object.assign(c,this.capture());if(c.task){const t=this.taskRecord(c.task);this.complete(t,c.returnValue,c.fault);}c.frames=[];c.stack=[];c.delegate=null;if(c.eagerParent){this.preferred=c.eagerParent;c.eagerParent=null;}}
+  finish(c){return finishContext(this,c);}
   choose(){
     const preferred=this.contexts.get(this.preferred);this.preferred=null;
     if(preferred&&preferred.status==='ready'&&!preferred.frozen)return preferred;
@@ -151,7 +143,7 @@ export class CooperativeScheduler {
   snapshot(){if(!this.enabled)return null;this.save();return {parked:this.parked,currentId:this.currentId,nextId:this.nextId,nextTaskId:this.nextTaskId,clock:this.now(),turn:this.turn,steps:this.steps,preferred:this.preferred,contexts:[...this.contexts].map(([id,c])=>[id,cloneContext(c)]),tasks:[...this.tasks].map(([id,t])=>[id,{...t,error:copyExecution(t.error),waiters:[...t.waiters],dependencies:t.dependencies?[...t.dependencies]:null}])};}
   restore(s){if(!s){this.parked=false;this.enabled=false;this.contexts.clear();this.tasks.clear();return;}this.enabled=true;this.nextId=Math.max(this.nextId,s.nextId);this.nextTaskId=Math.max(this.nextTaskId,s.nextTaskId);this.parked=!!s.parked;this.currentId=s.currentId;this.clock=s.clock;this.epoch=performance.now()-s.clock;this.turn=s.turn;this.steps=s.steps;this.preferred=s.preferred;this.contexts=new Map(s.contexts.map(([id,c])=>[id,cloneContext(c)]));this.tasks=new Map(s.tasks.map(([id,t])=>[id,{...t,error:copyExecution(t.error),waiters:new Set(t.waiters),dependencies:t.dependencies?[...t.dependencies]:null}]));this.save();}
   prune(){if(!this.enabled)return;for(const [id,t]of this.tasks)if(terminal.has(t.status)){let alive=true;try{this.vm.heap.get(t.ref);}catch{alive=false;}if(!alive)this.tasks.delete(id);}if(this.contexts.size>=this.maxContexts)for(const [id,c]of this.contexts)if(id!==1&&terminal.has(c.status))this.contexts.delete(id);}
-  cancelAll(){if(!this.enabled)return;for(const c of this.contexts.values())if(!terminal.has(c.status)){c.status='canceled';c.frames=[];c.stack=[];c.wait=null;}for(const t of this.tasks.values())if(!terminal.has(t.status))this.complete(t,null,null,true);}
+  cancelAll(){return cancelContexts(this);}
   async runAsync({signal=null,onSlice=null}={}){while(['ready','running','waiting'].includes(this.vm.state)){
       if(signal?.aborted){this.vm.stop();throw new ManagedFault('OperationCanceledException','Execution canceled');}
       this.vm.runSlice({instructionBudget:10000,timeBudgetMs:8});onSlice?.(this.vm);

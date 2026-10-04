@@ -2,6 +2,7 @@
  * The state of one semantic analysis: files, options, core types, resolvers, the diagnostics sink and the
  * policies for the parts of the framework the closed registry does not model.
  */
+import {DiagnosticId} from '../diagnostics/codes.js';
 import { diagnostic } from '@sharpforge/text';
 import { languageVersion as parseVersion } from '@sharpforge/syntax';
 import { TypeKind } from '../symbols/types.js';
@@ -24,11 +25,13 @@ import { definedSymbols } from '../binder/csharp2-misc.js';
 import { isBclNamespace } from '../symbols/bcl-namespaces.js';
 import { bindAllUsings } from '../binder/using-directives.js';
 import { checkGlobalUsingPlacement } from '../binder/global-usings.js';
+import { builtinOwners } from '../symbols/registry-builtins.js';
 
 export class AnalysisCore {
   /**
    * @param {object[]} files parsed files (`parse()` results with `syntax`, `source`, `directives`)
    * @param {object} [options] compilation options: langVersion, langVersionByUri, nullableContext, name, references (imported global namespaces)
+   * `captureInvocations` additionally retains editor method-group candidates; diagnostics/emission leave it disabled.
    */
   constructor(files, options = {}) {
     this.files = files.filter(f => f.syntax);
@@ -45,6 +48,7 @@ export class AnalysisCore {
     this.constructions = [];
     this.nullableMaps = new Map();
     this.bound = new Map();
+    this.invocations = options.captureInvocations === true ? new Map() : null;
     this.constantState = new Map();
     this.unexecutable = new Map();
     this.typeBinder = new TypeBinder({
@@ -54,6 +58,8 @@ export class AnalysisCore {
       tolerateNamespace: (name, options) => this.tolerateNamespace(name, options),
       isFrameworkGap: (namespaceName, name) => this.isFrameworkGap(namespaceName, name),
       useFeature: (uri, node, feature) => this.gate(uri, node, feature),
+      languageVersionAt: uri => this.versionOf(uri).number,
+      allowUnsafe: !!options.allowUnsafe,
       unknownUsing: () => {
         this.hasUnknownUsings = true;
       },
@@ -100,6 +106,14 @@ export class AnalysisCore {
       if (this.references.isUnification(d.code)) this.report(this.files[0]?.source.uri, { start: 0, end: 0 }, d.code, d.args);
       else this.report(uri, node, d.code, d.args);
     }
+  }
+
+  /** Retain method groups per document; syntax keys also preserve incomplete-call nesting boundaries. */
+  recordInvocation(context, syntax, target, result) {
+    let invocations = this.invocations.get(context.uri);
+    if (!invocations) this.invocations.set(context.uri, invocations = new Map());
+    invocations.set(syntax, {target, result,
+      isStatic: context.isStatic, instanceInitializer: context.isFieldInitializer && !context.isStaticInitializer});
   }
   /** The reason (`{code,args}`) the nearest unresolved base type of an imported type is missing, or null. */
   missingBaseReason(type) {
@@ -159,6 +173,11 @@ export class AnalysisCore {
     }
     return false;
   }
+  /** Profile-only receiver aliases, consulted after lexical names and using-static members. */
+  executionBuiltin(name) {
+    if (!this.options.executionBuiltinAliases || this.references.hasCoreLibrary || !Object.hasOwn(builtinOwners, name)) return null;
+    return this.references.coreLibrary.bridge.typeFromName(builtinOwners[name]);
+  }
   /** True when every base class of `type` is declared in source (or is one of the fully modelled roots), so a missing member really is missing. */
   closedHierarchy(type) {
     if (this.hasUnknownUsings) return false;
@@ -192,8 +211,9 @@ export class AnalysisCore {
     if (!source || this.diagnostics.length >= 400) return;
     const s = spanOf(node),
       start = s.start ?? 0,
-      length = Math.max(code === 'CS0162' || s.end > start ? (s.end ?? start) - start : 1, s.end === start ? 0 : 1);
-    if (this.diagnostics.some(d => d.code === code && d.uri === source.uri && d.start === start && d.message === message)) return;
+      length = Math.max(code === DiagnosticId.CS0162 || s.end > start ? (s.end ?? start) - start : 1, s.end === start ? 0 : 1);
+    const sameSpan = d => d.start === start && d.length === (length || 1);
+    if (this.diagnostics.some(d => d.code === code && d.uri === source.uri && sameSpan(d) && d.message === message)) return;
     this.diagnostics.push(diagnostic(source, start, length || 1, code, message, severity));
   }
   /**

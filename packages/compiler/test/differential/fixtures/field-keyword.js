@@ -74,4 +74,32 @@ export const fixtures = feature('field-keyword', [
       class Program { static void Main() { } }
     `,
   ),
+  // Below C# 14 `field` is an ordinary name: it binds to a member named `field`, or to nothing.
+  out(
+    'csharp13-member-named-field',
+    cs`
+      using System;
+      class C
+      {
+          int field = 5;
+          public int P { get { return field; } set { field = value * 2; } }
+          public int Q { get => field + 1; }
+      }
+      class Program { static void Main() { var c = new C(); Console.WriteLine(c.P); c.P = 7; Console.WriteLine(c.P + " " + c.Q); } }
+    `,
+    { langVersion: '13' },
+  ),
+  diag(
+    'csharp13-no-member-named-field',
+    cs`
+      class C
+      {
+          public int P { get { return field; } set { field = value; } }
+          public int Mixed { get; set => field = value; }
+          public int Local { get { int field = 1; return field; } }
+      }
+      class Program { static void Main() { } }
+    `,
+    { langVersion: '13' },
+  ),
 ]);

@@ -11,17 +11,34 @@ export function modernAttributes(T) {
     codeAnalysis = 'System.Diagnostics.CodeAnalysis',
     types = T.Class | T.Struct | T.Enum | T.Interface | T.Delegate,
     members = T.Constructor | T.Method | T.Property | T.Field | T.Event,
+    storage = T.Field | T.Parameter | T.Property,
+    results = storage | T.ReturnValue,
+    memberNames = [1, 2, 3, 4].map(count => Array.from({ length: count }, (_, index) => [index ? 'member' + (index + 1) : 'member', 's'])),
     skipLocalsInit = T.Module | T.Class | T.Struct | T.Interface | T.Constructor | T.Method | T.Property | T.Event;
   return [
+    // C# 8: the nullable analysis attributes (interpreted by nullable/attributes.js)
+    [codeAnalysis, 'AllowNullAttribute', storage, false, [[]], []],
+    [codeAnalysis, 'DisallowNullAttribute', storage, false, [[]], []],
+    [codeAnalysis, 'MaybeNullAttribute', results, false, [[]], []],
+    [codeAnalysis, 'NotNullAttribute', results, false, [[]], []],
+    [codeAnalysis, 'MaybeNullWhenAttribute', T.Parameter, false, [[['returnValue', 'b']]], []],
+    [codeAnalysis, 'NotNullWhenAttribute', T.Parameter, false, [[['returnValue', 'b']]], []],
+    [codeAnalysis, 'NotNullIfNotNullAttribute', T.Parameter | T.Property | T.ReturnValue, true, [[['parameterName', 's']]], []],
+    [codeAnalysis, 'DoesNotReturnAttribute', T.Method, false, [[]], []],
+    [codeAnalysis, 'DoesNotReturnIfAttribute', T.Parameter, false, [[['parameterValue', 'b']]], []],
     // C# 9
+    ['System.Runtime.InteropServices', 'UnmanagedCallersOnlyAttribute', T.Method, false, [[]], [['EntryPoint', 's', 'field']]],
     [compilerServices, 'ModuleInitializerAttribute', T.Method, false, [[]], []],
     [compilerServices, 'SkipLocalsInitAttribute', skipLocalsInit, false, [[]], []],
-    // The `params string[]` constructors are not declared: one member name per attribute, and the attributes may repeat.
-    [codeAnalysis, 'MemberNotNullAttribute', T.Method | T.Property, true, [[['member', 's']]], []],
-    [codeAnalysis, 'MemberNotNullWhenAttribute', T.Method | T.Property, true, [[['returnValue', 'b'], ['member', 's']]], []],
+    // The table has no `params` constructors: `params string[] members` is declared as the overloads with one to four names.
+    [codeAnalysis, 'MemberNotNullAttribute', T.Method | T.Property, true, memberNames, []],
+    [codeAnalysis, 'MemberNotNullWhenAttribute', T.Method | T.Property, true, memberNames.map(names => [['returnValue', 'b'], ...names]), []],
     // C# 10
     [compilerServices, 'AsyncMethodBuilderAttribute', types | T.Method, false, [[['builderType', 't']]], []],
     [compilerServices, 'InterpolatedStringHandlerAttribute', T.Class | T.Struct, false, [[]], []],
+    // `params string[]` is not declared: one to three argument names.
+    [compilerServices, 'InterpolatedStringHandlerArgumentAttribute', T.Parameter, false,
+      [[['argument', 's']], [['first', 's'], ['second', 's']], [['first', 's'], ['second', 's'], ['third', 's']]], []],
     // C# 11
     [codeAnalysis, 'SetsRequiredMembersAttribute', T.Constructor, false, [[]], []],
     [codeAnalysis, 'UnscopedRefAttribute', T.Method | T.Property | T.Parameter, false, [[]], []],

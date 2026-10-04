@@ -3,5 +3,7 @@
   "caller-info/argument-expression-and-file-path":{"hash":"06a1cb4b7298690c","kind":"output","langVersion":"14.0","diagnostics":[],"output":"a > 0 = True\na   ==  2 = False\na < 0 = False\ngiven = True\nTrue\n"},
   "caller-info/constructors-indexers-and-operators":{"hash":"049f114a3a3129f6","kind":"output","langVersion":"14.0","diagnostics":[],"output":"field\nMain\nProp\ngiven\nMain1\nop_Addition\n"},
   "caller-info/cs4017-cs4022-cs7081-cs8963-declaration-rules":{"hash":"ef52c353772a780e","kind":"diagnostics","langVersion":"14.0","diagnostics":[["CS4017",88,16,"error"],["CS4019",147,16,"error"],["CS4018",202,14,"error"],["CS4022",255,16,"error"],["CS4020",309,16,"error"],["CS7081",486,16,"warning"],["CS4017",504,16,"error"],["CS8963",650,24,"warning"],["CS8965",729,24,"warning"]]},
-  "caller-info/foreach-variable-is-fresh-per-iteration":{"hash":"32bd3e62f6087ebd","kind":"output","langVersion":"14.0","diagnostics":[],"output":"1 2 3\n3 3 3\n0 1 2\n"}
+  "caller-info/foreach-variable-is-fresh-per-iteration":{"hash":"32bd3e62f6087ebd","kind":"output","langVersion":"14.0","diagnostics":[],"output":"1 2 3\n3 3 3\n0 1 2\n"},
+  "caller-info/line-directives-remap-line-and-path-and-the-line-converts-to-double":{"hash":"82278eba28c6a35e","kind":"output","langVersion":"14.0","diagnostics":[],"output":"13\n13.5\n13\nMain\nMain\n100\nother.cs\n101.5\n103\n20\n7\n"},
+  "caller-info/cs4017-cs4018-cs4019-which-parameter-types-take-caller-info":{"hash":"50dc7e431e6536d1","kind":"diagnostics","langVersion":"14.0","diagnostics":[["CS4017",88,16,"error"],["CS4019",147,16,"error"],["CS4017",202,16,"error"],["CS4017",259,16,"error"],["CS4018",315,14,"error"]]}
 }}

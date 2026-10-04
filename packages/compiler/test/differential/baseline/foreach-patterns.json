@@ -2,5 +2,5 @@
   "foreach-patterns/extension-get-enumerator": ["diagnostics", "warnings", "bytecode", "cil"],
   "foreach-patterns/extension-get-enumerator-at-8": ["diagnostics", "warnings"],
   "foreach-patterns/iterator-local-functions": ["diagnostics", "warnings", "bytecode", "cil"],
-  "foreach-patterns/only-idisposable-enumerators-are-disposed": ["diagnostics", "warnings", "bytecode", "cil"]
+  "foreach-patterns/only-idisposable-enumerators-are-disposed": ["diagnostics", "warnings", "bytecode", "cil", "directCil"]
 }

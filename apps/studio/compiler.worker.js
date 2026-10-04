@@ -1,7 +1,8 @@
+import {registerEditorLanguageHandlers} from './workers/editor-language.js';
 import {createWorkerProtocol,readWorkerRequest} from './workers/protocol.js';
 import {emitPortablePdb,attachPortablePdb} from '../../packages/symbols/src/index.js';
 import { ExtensionDriver, BuildInfoGenerator, JsonSchemaGenerator, EmptyCatchAnalyzer, UnreferencedLocalAnalyzer, ConstantConditionAnalyzer, TodoCommentAnalyzer, UnreachableStatementAnalyzer } from '../../packages/extensions/src/index.js';
-import { RefactoringEngine, formatDocument, selectionRanges } from '../../packages/refactoring/src/index.js';
+import { RefactoringEngine } from '../../packages/refactoring/src/index.js';
 import { Workspace } from '../../packages/workspace/src/index.js';
 import { LanguageService } from '../../packages/language/src/index.js';
 import { emitAssemblyDetailed, loadAssembly, CilError, AssemblyInspector, decompileMethod, formatAssembly, formatILDocument, assembleILDocument, verifyCilAssembly } from '../../packages/cil/src/index.js';
@@ -15,6 +16,7 @@ function configureExtensions(params){const driver=new ExtensionDriver();if(param
 
 function sync(files){if(!files)return;const names=new Set(files.map(f=>f.uri));for(const uri of workspace.documents.keys())if(!names.has(uri))workspace.remove(uri);for(const file of files)workspace.update(file.uri,file.text,file.version);}
 const handlers=createWorkerProtocol('compiler');
+registerEditorLanguageHandlers(handlers,{workspace,language,refactoring});
 for(const method of ["analyze","build"])handlers.registerHandler(method,(params,method)=>{let result;{
       const r=workspace.compile();result={...r,image:method==='build'?r.image:undefined,workspaceMetrics:{...workspace.metrics}};
       // Keystroke analysis never emits PE or decodes IL. Only an explicit successful build does.
@@ -35,13 +37,6 @@ for(const method of ["assembleIL"])handlers.registerHandler(method,(params,metho
 for(const method of ["verifyIL"])handlers.registerHandler(method,(params,method)=>{let result;result=verifyCilAssembly(inspection(params),{methodToken:params.token,arguments:params.arguments??[]});return result;});
 for(const method of ["findInFiles"])handlers.registerHandler(method,(params,method)=>{let result;result=language.findInFiles(params.query,params.options);return result;});
 for(const method of ["replaceAll"])handlers.registerHandler(method,(params,method)=>{let result;result=refactoring.replaceAll(params.query,params.replacement,params.options);return result;});
-for(const method of ["callHierarchy"])handlers.registerHandler(method,(params,method)=>{let result;result=language.callHierarchy(params.uri,params.offset);return result;});
-for(const method of ["incomingCalls"])handlers.registerHandler(method,(params,method)=>{let result;result=language.calls(params.item,'incoming');return result;});
-for(const method of ["outgoingCalls"])handlers.registerHandler(method,(params,method)=>{let result;result=language.calls(params.item,'outgoing');return result;});
-for(const method of ["referenceLenses"])handlers.registerHandler(method,(params,method)=>{let result;result=language.referenceLenses(params.uri);return result;});
-for(const method of ["selectionRanges"])handlers.registerHandler(method,(params,method)=>{let result;result=selectionRanges(workspace,params.uri,params.offsets);return result;});
-for(const method of ["codeActions"])handlers.registerHandler(method,(params,method)=>{let result;result=refactoring.actions(params.uri,params.offset,params.end??params.offset);return result;});
-for(const method of ["format"])handlers.registerHandler(method,(params,method)=>{let result;result={title:'Format document indentation',edits:formatDocument(workspace,params.uri,params.options)};return result;});
 for(const method of ["validateRefactoring"])handlers.registerHandler(method,(params,method)=>{let result;{const candidate=new Workspace({compilationOptions:workspace.compilationOptions,extensions:workspace.extensions,extensionOptions:workspace.extensionOptions,additionalFiles:workspace.additionalFiles});for(const [uri,d]of workspace.documents)candidate.update(uri,d.source.text,d.source.version);result=new RefactoringEngine(candidate,new LanguageService(candidate)).apply(params.action);return result;}});
 for(const method of ["validateDesigner"])handlers.registerHandler(method,(params,method)=>{let result;{
       const candidate=new Workspace({compilationOptions:workspace.compilationOptions,extensions:workspace.extensions,extensionOptions:workspace.extensionOptions,additionalFiles:workspace.additionalFiles});for(const [uri,d]of workspace.documents)candidate.update(uri,d.source.text,d.source.version);
@@ -51,12 +46,6 @@ for(const method of ["configureExtensions"])handlers.registerHandler(method,(par
 for(const method of ["importAssembly"])handlers.registerHandler(method,(params,method)=>{let result;{
       const image=loadAssembly(params.assembly);result={success:true,image,assembly:params.assembly,format:'cil',diagnostics:[],symbols:[],references:[],metrics:{compileMs:0,files:image.sources.length,methods:image.methods.length,instructions:image.methods.reduce((n,m)=>n+m.code.length/3,0),errors:0,assemblyBytes:params.assembly.length,loadMs:image.il.loadMs}};return result;
     }});
-for(const method of ["completion"])handlers.registerHandler(method,(params,method)=>{let result;result=language.completions(params.uri,params.offset);return result;});
-for(const method of ["hover"])handlers.registerHandler(method,(params,method)=>{let result;result=language.hover(params.uri,params.offset);return result;});
-for(const method of ["definition"])handlers.registerHandler(method,(params,method)=>{let result;result=language.definition(params.uri,params.offset);return result;});
-for(const method of ["references"])handlers.registerHandler(method,(params,method)=>{let result;result=language.references(params.uri,params.offset);return result;});
-for(const method of ["rename"])handlers.registerHandler(method,(params,method)=>{let result;result=refactoring.rename(params.uri,params.offset,params.newName).edits;return result;});
-for(const method of ["symbols"])handlers.registerHandler(method,(params,method)=>{let result;result=language.documentSymbols(params.uri);return result;});
 self.onmessage=event=>{const id=event.data?.id;try{const {method,params}=readWorkerRequest(event.data);handlers.assertMethod(method);sync(params.files);const options=params.compilationOptions??(params.outputKind?{outputKind:params.outputKind}:null);if(options&&JSON.stringify(options)!==JSON.stringify(workspace.compilationOptions)){workspace.compilationOptions=options;workspace.result=null;}if(Object.hasOwn(params,'extensions')&&JSON.stringify(params.extensions??null)!==extensionKey)configureExtensions(params.extensions);let result;
   result=handlers.dispatch(method,params);
   self.postMessage({id,result,revision:params.revision});

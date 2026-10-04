@@ -1,0 +1,253 @@
+{
+  "sdk": "10.0.201",
+  "runtime": ".NET 10.0.5",
+  "coreLibrary": "System.Private.CoreLib, Version=10.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e",
+  "names": {
+    "33557042": "System.Collections.Generic.Dictionary`2+Entry",
+    "33557043": "System.Collections.Generic.Dictionary`2+Enumerator",
+    "33557044": "System.Collections.Generic.Dictionary`2+KeyCollection",
+    "33557046": "System.Collections.Generic.Dictionary`2+ValueCollection",
+    "33557068": "System.Collections.Generic.IEqualityComparer`1"
+  },
+  "cases": [
+    {
+      "name": "Dictionary._buckets",
+      "signature": "Bh0I",
+      "typeArguments": [
+        "string",
+        "int"
+      ],
+      "expected": {
+        "kind": "field",
+        "type": "int[]"
+      }
+    },
+    {
+      "name": "Dictionary._entries",
+      "signature": "Bh0VEajIAhMAEwE=",
+      "typeArguments": [
+        "string",
+        "int"
+      ],
+      "expected": {
+        "kind": "field",
+        "type": "System.Collections.Generic.Dictionary`2+Entry<string, int>[]"
+      }
+    },
+    {
+      "name": "Dictionary._fastModMultiplier",
+      "signature": "Bgs=",
+      "typeArguments": [
+        "string",
+        "int"
+      ],
+      "expected": {
+        "kind": "field",
+        "type": "ulong"
+      }
+    },
+    {
+      "name": "Dictionary._count",
+      "signature": "Bgg=",
+      "typeArguments": [
+        "string",
+        "int"
+      ],
+      "expected": {
+        "kind": "field",
+        "type": "int"
+      }
+    },
+    {
+      "name": "Dictionary._freeList",
+      "signature": "Bgg=",
+      "typeArguments": [
+        "string",
+        "int"
+      ],
+      "expected": {
+        "kind": "field",
+        "type": "int"
+      }
+    },
+    {
+      "name": "Dictionary._freeCount",
+      "signature": "Bgg=",
+      "typeArguments": [
+        "string",
+        "int"
+      ],
+      "expected": {
+        "kind": "field",
+        "type": "int"
+      }
+    },
+    {
+      "name": "Dictionary._version",
+      "signature": "Bgg=",
+      "typeArguments": [
+        "string",
+        "int"
+      ],
+      "expected": {
+        "kind": "field",
+        "type": "int"
+      }
+    },
+    {
+      "name": "Dictionary._comparer",
+      "signature": "BhUSqTABEwA=",
+      "typeArguments": [
+        "string",
+        "int"
+      ],
+      "expected": {
+        "kind": "field",
+        "type": "System.Collections.Generic.IEqualityComparer`1<string>"
+      }
+    },
+    {
+      "name": "Dictionary._keys",
+      "signature": "BhUSqNACEwATAQ==",
+      "typeArguments": [
+        "string",
+        "int"
+      ],
+      "expected": {
+        "kind": "field",
+        "type": "System.Collections.Generic.Dictionary`2+KeyCollection<string, int>"
+      }
+    },
+    {
+      "name": "Dictionary._values",
+      "signature": "BhUSqNgCEwATAQ==",
+      "typeArguments": [
+        "string",
+        "int"
+      ],
+      "expected": {
+        "kind": "field",
+        "type": "System.Collections.Generic.Dictionary`2+ValueCollection<string, int>"
+      }
+    },
+    {
+      "name": "Dictionary.Add",
+      "signature": "IAIBEwATAQ==",
+      "typeArguments": [
+        "string",
+        "int"
+      ],
+      "expected": {
+        "kind": "method",
+        "isStatic": false,
+        "returnType": "void",
+        "parameters": [
+          "string",
+          "int"
+        ]
+      }
+    },
+    {
+      "name": "Dictionary.ContainsKey",
+      "signature": "IAECEwA=",
+      "typeArguments": [
+        "string",
+        "int"
+      ],
+      "expected": {
+        "kind": "method",
+        "isStatic": false,
+        "returnType": "bool",
+        "parameters": [
+          "string"
+        ]
+      }
+    },
+    {
+      "name": "Dictionary.GetEnumerator",
+      "signature": "IAAVEajMAhMAEwE=",
+      "typeArguments": [
+        "string",
+        "int"
+      ],
+      "expected": {
+        "kind": "method",
+        "isStatic": false,
+        "returnType": "System.Collections.Generic.Dictionary`2+Enumerator<string, int>",
+        "parameters": []
+      }
+    },
+    {
+      "name": "Dictionary.TryGetValue",
+      "signature": "IAICEwAQEwE=",
+      "typeArguments": [
+        "string",
+        "int"
+      ],
+      "expected": {
+        "kind": "method",
+        "isStatic": false,
+        "returnType": "bool",
+        "parameters": [
+          "string",
+          "int&"
+        ]
+      }
+    },
+    {
+      "name": "Dictionary.TryAdd",
+      "signature": "IAICEwATAQ==",
+      "typeArguments": [
+        "string",
+        "int"
+      ],
+      "expected": {
+        "kind": "method",
+        "isStatic": false,
+        "returnType": "bool",
+        "parameters": [
+          "string",
+          "int"
+        ]
+      }
+    },
+    {
+      "name": "Dictionary.Item",
+      "signature": "KAETARMA",
+      "typeArguments": [
+        "string",
+        "int"
+      ],
+      "expected": {
+        "kind": "property",
+        "isStatic": false,
+        "returnType": "int",
+        "parameters": [
+          "string"
+        ],
+        "callingConvention": 8
+      }
+    },
+    {
+      "name": "Pair.Generic",
+      "signature": "MAECHgATABAeAA==",
+      "typeArguments": [
+        "string",
+        "int"
+      ],
+      "methodArguments": [
+        "long"
+      ],
+      "expected": {
+        "kind": "method",
+        "isStatic": false,
+        "returnType": "long",
+        "parameters": [
+          "string",
+          "long&"
+        ],
+        "genericArity": 1
+      }
+    }
+  ]
+}

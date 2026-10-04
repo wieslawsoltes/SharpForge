@@ -10,27 +10,39 @@ const roundConstants = Uint32Array.from([
 ]);
 const rotateRight = (value, bits) => (value >>> bits) | (value << (32 - bits));
 
-/** Synchronous SHA-256 for at most 128 MiB of Uint8Array input; returns an independent 32-byte digest. */
+/** Synchronous SHA-256 with fixed scratch space; accepts up to 128 MiB and returns an owned 32-byte digest. */
 export function sha256(input) {
   if (!(input instanceof Uint8Array)) throw new TypeError('SHA-256 input must be Uint8Array');
   if (input.length > 128 * 1024 * 1024) throw new RangeError('SHA-256 input exceeds size limit');
   const length = input.length;
-  const padded = new Uint8Array(Math.ceil((length + 9) / 64) * 64);
-  padded.set(input);
-  padded[length] = 128;
-  const view = new DataView(padded.buffer);
-  view.setUint32(padded.length - 8, Math.floor(length / 0x20000000));
-  view.setUint32(padded.length - 4, length * 8);
+  const completeBytes = length - length % 64;
+  const remaining = length - completeBytes;
+  const tail = new Uint8Array(remaining < 56 ? 64 : 128);
+  tail.set(input.subarray(completeBytes));
+  tail[remaining] = 128;
+  const tailView = new DataView(tail.buffer);
+  tailView.setUint32(tail.length - 8, Math.floor(length / 0x20000000));
+  tailView.setUint32(tail.length - 4, length * 8);
+  const inputView = new DataView(input.buffer, input.byteOffset, input.byteLength);
   const state = Uint32Array.from([0x6a09e667, 0xbb67ae85, 0x3c6ef372, 0xa54ff53a, 0x510e527f, 0x9b05688c, 0x1f83d9ab, 0x5be0cd19]);
   const schedule = new Uint32Array(64);
-  for (let offset = 0; offset < padded.length; offset += 64) {
-    for (let index = 0; index < 16; index++) schedule[index] = view.getUint32(offset + index * 4);
+  for (let offset = 0; offset < completeBytes + tail.length; offset += 64) {
+    const view = offset < completeBytes ? inputView : tailView;
+    const blockOffset = offset < completeBytes ? offset : offset - completeBytes;
+    for (let index = 0; index < 16; index++) schedule[index] = view.getUint32(blockOffset + index * 4);
     for (let index = 16; index < 64; index++) {
       const left = schedule[index - 15], right = schedule[index - 2];
       schedule[index] = schedule[index - 16] + (rotateRight(left, 7) ^ rotateRight(left, 18) ^ (left >>> 3))
         + schedule[index - 7] + (rotateRight(right, 17) ^ rotateRight(right, 19) ^ (right >>> 10));
     }
-    let [word0, word1, word2, word3, word4, word5, word6, word7] = state;
+    let word0 = state[0];
+    let word1 = state[1];
+    let word2 = state[2];
+    let word3 = state[3];
+    let word4 = state[4];
+    let word5 = state[5];
+    let word6 = state[6];
+    let word7 = state[7];
     for (let index = 0; index < 64; index++) {
       const first = (word7 + (rotateRight(word4, 6) ^ rotateRight(word4, 11) ^ rotateRight(word4, 25))
         + ((word4 & word5) ^ (~word4 & word6)) + roundConstants[index] + schedule[index]) | 0;
@@ -45,7 +57,14 @@ export function sha256(input) {
       word1 = word0;
       word0 = (first + second) | 0;
     }
-    [word0, word1, word2, word3, word4, word5, word6, word7].forEach((value, index) => { state[index] += value; });
+    state[0] += word0;
+    state[1] += word1;
+    state[2] += word2;
+    state[3] += word3;
+    state[4] += word4;
+    state[5] += word5;
+    state[6] += word6;
+    state[7] += word7;
   }
   const digest = new Uint8Array(32), output = new DataView(digest.buffer);
   state.forEach((value, index) => output.setUint32(index * 4, value));

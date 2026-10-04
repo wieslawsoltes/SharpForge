@@ -1,0 +1,138 @@
+{
+  "runtime": "10.0.5",
+  "sourceSha256": "3d8a09a7aed3bc0f44e5a51e09e8b1e5f41dde99ef7dee5b95a6b5d3b3ae2778",
+  "rows": [
+    {
+      "name": "empty-builder",
+      "kind": "call",
+      "value": "System.Text.StringBuilder",
+      "fault": null
+    },
+    {
+      "name": "empty-builder",
+      "kind": "callvirt",
+      "value": "",
+      "fault": null
+    },
+    {
+      "name": "builder",
+      "kind": "call",
+      "value": "System.Text.StringBuilder",
+      "fault": null
+    },
+    {
+      "name": "builder",
+      "kind": "callvirt",
+      "value": "value",
+      "fault": null
+    },
+    {
+      "name": "mutated-builder",
+      "kind": "call",
+      "value": "System.Text.StringBuilder",
+      "fault": null
+    },
+    {
+      "name": "mutated-builder",
+      "kind": "callvirt",
+      "value": "value!",
+      "fault": null
+    },
+    {
+      "name": "uri",
+      "kind": "call",
+      "value": "System.Uri",
+      "fault": null
+    },
+    {
+      "name": "uri",
+      "kind": "callvirt",
+      "value": "https://example.com/path?q=1",
+      "fault": null
+    },
+    {
+      "name": "relative-uri",
+      "kind": "call",
+      "value": "System.Uri",
+      "fault": null
+    },
+    {
+      "name": "relative-uri",
+      "kind": "callvirt",
+      "value": "relative/path",
+      "fault": null
+    },
+    {
+      "name": "null",
+      "kind": "call",
+      "value": null,
+      "fault": "NullReferenceException"
+    },
+    {
+      "name": "null",
+      "kind": "callvirt",
+      "value": null,
+      "fault": "NullReferenceException"
+    },
+    {
+      "name": "object",
+      "kind": "call",
+      "value": "System.Object",
+      "fault": null
+    },
+    {
+      "name": "object",
+      "kind": "callvirt",
+      "value": "System.Object",
+      "fault": null
+    },
+    {
+      "name": "hidden",
+      "kind": "call",
+      "value": "HiddenString",
+      "fault": null
+    },
+    {
+      "name": "hidden",
+      "kind": "callvirt",
+      "value": "HiddenString",
+      "fault": null
+    },
+    {
+      "name": "int",
+      "kind": "call",
+      "value": "System.Int32",
+      "fault": null
+    },
+    {
+      "name": "int",
+      "kind": "callvirt",
+      "value": "42",
+      "fault": null
+    },
+    {
+      "name": "bool",
+      "kind": "call",
+      "value": "System.Boolean",
+      "fault": null
+    },
+    {
+      "name": "bool",
+      "kind": "callvirt",
+      "value": "True",
+      "fault": null
+    },
+    {
+      "name": "string",
+      "kind": "call",
+      "value": "System.String",
+      "fault": null
+    },
+    {
+      "name": "string",
+      "kind": "callvirt",
+      "value": "text",
+      "fault": null
+    }
+  ]
+}

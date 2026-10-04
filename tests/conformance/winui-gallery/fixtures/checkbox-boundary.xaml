@@ -1,0 +1,1 @@
+<CheckBox xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" Name="fixture" Content="" IsChecked="false" Width="0" />

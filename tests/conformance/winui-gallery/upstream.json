@@ -1,0 +1,741 @@
+{
+  "schemaVersion": 1,
+  "repository": "https://github.com/microsoft/WinUI-Gallery",
+  "commit": "535ce178dbd6ebe24fe63e444b66344d007bdabe",
+  "license": "MIT",
+  "licenseFile": "upstream/LICENSE",
+  "files": [
+    {
+      "path": "LICENSE",
+      "sha256": "27ebda9d51f0a56b7e281ccd8230a27236dcb51c05f64b07869ecf6e965d68b0",
+      "bytes": 1162
+    },
+    {
+      "path": "WinUIGallery/Samples/Button/ButtonPage.xaml",
+      "sha256": "8e7c98b2a6a862ada2fc4cdf109c4df3c6899f94d22670cd7b57445131f321db",
+      "bytes": 5897
+    },
+    {
+      "path": "WinUIGallery/Samples/Button/ButtonPage.xaml.cs",
+      "sha256": "ad6ac974f6f9eba139069ce8e6dc272c2de0cc55e9829b8aeb5420a01502b185",
+      "bytes": 786
+    },
+    {
+      "path": "WinUIGallery/Samples/CheckBox/CheckBoxPage.xaml",
+      "sha256": "18f8d1becf4bf01af1070e9d68204f33abb49aca2b849fbeca0baeba324ee36c",
+      "bytes": 4186
+    },
+    {
+      "path": "WinUIGallery/Samples/CheckBox/CheckBoxPage.xaml.cs",
+      "sha256": "6d9422e276dc73d5f6a20505ed22ce5dbbceec91b433f68414dff405f672ab78",
+      "bytes": 3467
+    },
+    {
+      "path": "WinUIGallery/Samples/ToggleSwitch/ToggleSwitchPage.xaml",
+      "sha256": "af61b9327b20d2d1682b87042c4d97d82751c43bb8e31c0303d823bcfb372c6c",
+      "bytes": 2130
+    },
+    {
+      "path": "WinUIGallery/Samples/ToggleSwitch/ToggleSwitchPage.xaml.cs",
+      "sha256": "1a818bbec891055da925b913c9fb5962df6be9550c34a542779aa6832363228c",
+      "bytes": 304
+    },
+    {
+      "path": "WinUIGallery/Samples/Slider/SliderPage.xaml",
+      "sha256": "772eed4307d877180dc9f279bdf39c6a5e3321aef8f12cc4ddb338aa062c1dd1",
+      "bytes": 8997
+    },
+    {
+      "path": "WinUIGallery/Samples/Slider/SliderPage.xaml.cs",
+      "sha256": "aaa8f35d4116f988f8079919b71518eb9bf1fb76ec1196bd7ac9f4dcaf860139",
+      "bytes": 731
+    },
+    {
+      "path": "WinUIGallery/Samples/ProgressBar/ProgressBarPage.xaml",
+      "sha256": "0b3a5fbc9ec0b2a549bd4014836bfff12220ed6daf3b2fcd7284b28915af39b9",
+      "bytes": 3685
+    },
+    {
+      "path": "WinUIGallery/Samples/ProgressBar/ProgressBarPage.xaml.cs",
+      "sha256": "5ee4b4877a96f5a26cb8ed24b4f574b857826260f68ec097d8ecc3456ffe189f",
+      "bytes": 741
+    },
+    {
+      "path": "WinUIGallery/Samples/TextBox/TextBoxPage.xaml",
+      "sha256": "c1812055eb73d22ae8eed6848ee417c79ebcef7bb5ec2984ebfcc13c078d07db",
+      "bytes": 2298
+    },
+    {
+      "path": "WinUIGallery/Samples/TextBox/TextBoxPage.xaml.cs",
+      "sha256": "89693d65e8121d1dc443e0787f2ea5dfe85c553069003523f06689eb47c61e5c",
+      "bytes": 294
+    },
+    {
+      "path": "WinUIGallery/Samples/TextBlock/TextBlockPage.xaml",
+      "sha256": "a2d1f5b91363fd29c2b6f6e66d2063ebfe4df9fa0398f1a75761b5423c7cc032",
+      "bytes": 3922
+    },
+    {
+      "path": "WinUIGallery/Samples/TextBlock/TextBlockPage.xaml.cs",
+      "sha256": "d5bf11f3c91861c65715029276d44a84905d471a67e40501a0ee3521a06dc00a",
+      "bytes": 298
+    },
+    {
+      "path": "WinUIGallery/Samples/PasswordBox/PasswordBoxPage.xaml",
+      "sha256": "227f88fa7c8c5fca6b0aa6db4c05b56e9261ff6ab690c2215fcc56f933b62ce2",
+      "bytes": 2577
+    },
+    {
+      "path": "WinUIGallery/Samples/PasswordBox/PasswordBoxPage.xaml.cs",
+      "sha256": "7854bc2628b496dd6a2b94091680679af70af71d8e6d709d649209a449c0caa0",
+      "bytes": 1289
+    },
+    {
+      "path": "WinUIGallery/Samples/RadioButton/RadioButtonPage.xaml",
+      "sha256": "6dfe131ad4d7f7f14fab378f984de881ccf8bbd7dc3b1a9b2e256ae4ac2d3457",
+      "bytes": 3834
+    },
+    {
+      "path": "WinUIGallery/Samples/RadioButton/RadioButtonPage.xaml.cs",
+      "sha256": "8204c5eca1c1fae340b05cb9e7a4aa96d3a7ac695c10f293b90e59344c163b55",
+      "bytes": 2029
+    },
+    {
+      "path": "WinUIGallery/Samples/ToggleButton/ToggleButtonPage.xaml",
+      "sha256": "5fc247cef8469f01cd3fb038798c3874d583d58c64080aab01d58f2a1f54bccd",
+      "bytes": 2141
+    },
+    {
+      "path": "WinUIGallery/Samples/ToggleButton/ToggleButtonPage.xaml.cs",
+      "sha256": "3aac9e88f31c495a42af0e552ec206178dd4c5c583a22e38d58119a9d166614b",
+      "bytes": 684
+    }
+  ],
+  "pages": [
+    {
+      "control": "AccessibilityColorContrast",
+      "path": "WinUIGallery/Samples/AccessibilityColorContrast/AccessibilityColorContrastPage.xaml",
+      "gitBlob": "04eade6829017fe0d519b27094be89eb18982049"
+    },
+    {
+      "control": "AccessibilityKeyboard",
+      "path": "WinUIGallery/Samples/AccessibilityKeyboard/AccessibilityKeyboardPage.xaml",
+      "gitBlob": "08d4a1b755dc847d0342662ab77392f14a3c81ef"
+    },
+    {
+      "control": "AccessibilityScreenReader",
+      "path": "WinUIGallery/Samples/AccessibilityScreenReader/AccessibilityScreenReaderPage.xaml",
+      "gitBlob": "0b839ffb5355feadee65982ef34753795f4b5792"
+    },
+    {
+      "control": "Acrylic",
+      "path": "WinUIGallery/Samples/Acrylic/AcrylicPage.xaml",
+      "gitBlob": "cc0b2df528ce4d107128c9a06d9c61d8e9cb3733"
+    },
+    {
+      "control": "AnimatedIcon",
+      "path": "WinUIGallery/Samples/AnimatedIcon/AnimatedIconPage.xaml",
+      "gitBlob": "79129a33b52502ed59baee7bab31753e76b7f73d"
+    },
+    {
+      "control": "AnimatedVisualPlayer",
+      "path": "WinUIGallery/Samples/AnimatedVisualPlayer/AnimatedVisualPlayerPage.xaml",
+      "gitBlob": "cfaff7a4353fe07a56f16448d7d644acd95d27d3"
+    },
+    {
+      "control": "AnnotatedScrollBar",
+      "path": "WinUIGallery/Samples/AnnotatedScrollBar/AnnotatedScrollBarPage.xaml",
+      "gitBlob": "ac83f7bc2a60aa693075fa8349589fd55044f48d"
+    },
+    {
+      "control": "AppBarButton",
+      "path": "WinUIGallery/Samples/AppBarButton/AppBarButtonPage.xaml",
+      "gitBlob": "3c36376c903d2ca6ba296204a5f4ac0a0420ece6"
+    },
+    {
+      "control": "AppBarSeparator",
+      "path": "WinUIGallery/Samples/AppBarSeparator/AppBarSeparatorPage.xaml",
+      "gitBlob": "2e38ea78229ad501ca38a2493e9bdeca06b8ccbe"
+    },
+    {
+      "control": "AppBarToggleButton",
+      "path": "WinUIGallery/Samples/AppBarToggleButton/AppBarToggleButtonPage.xaml",
+      "gitBlob": "4bf2045e47bc89b5158ad5b69d284ad2a040b9dd"
+    },
+    {
+      "control": "AppNotification",
+      "path": "WinUIGallery/Samples/AppNotification/AppNotificationPage.xaml",
+      "gitBlob": "ae7f7fd9a0804b5bfb45e7bd8957c7c21d57316f"
+    },
+    {
+      "control": "AppWindow",
+      "path": "WinUIGallery/Samples/AppWindow/AppWindowPage.xaml",
+      "gitBlob": "51e052303fe1908418147fa83d811beb87fe3abb"
+    },
+    {
+      "control": "AppWindowTitleBar",
+      "path": "WinUIGallery/Samples/AppWindowTitleBar/AppWindowTitleBarPage.xaml",
+      "gitBlob": "c8f88803151f02d1526e057bcc3a8218867a6789"
+    },
+    {
+      "control": "AutoSuggestBox",
+      "path": "WinUIGallery/Samples/AutoSuggestBox/AutoSuggestBoxPage.xaml",
+      "gitBlob": "0302c81d8dacc625f2cf88549f11149eaa65e5c6"
+    },
+    {
+      "control": "BadgeNotificationManager",
+      "path": "WinUIGallery/Samples/BadgeNotificationManager/BadgeNotificationManagerPage.xaml",
+      "gitBlob": "1f3bba7d9dcdcd8de1a556dcb4da2b1291f731e3"
+    },
+    {
+      "control": "Binding",
+      "path": "WinUIGallery/Samples/Binding/BindingPage.xaml",
+      "gitBlob": "4bd60c2dc6b77a8b8bde7afc492f50b7284297fb"
+    },
+    {
+      "control": "Border",
+      "path": "WinUIGallery/Samples/Border/BorderPage.xaml",
+      "gitBlob": "a8d04cd33e7d4e1a7134bddaa26e3c600e2b1cc1"
+    },
+    {
+      "control": "BreadcrumbBar",
+      "path": "WinUIGallery/Samples/BreadcrumbBar/BreadcrumbBarPage.xaml",
+      "gitBlob": "ac1587dfbe112353cedef00f96b42b994390b836"
+    },
+    {
+      "control": "Button",
+      "path": "WinUIGallery/Samples/Button/ButtonPage.xaml",
+      "gitBlob": "f199961ad12e8ba1373c9982758d2d40aeb7ec6b"
+    },
+    {
+      "control": "CalendarDatePicker",
+      "path": "WinUIGallery/Samples/CalendarDatePicker/CalendarDatePickerPage.xaml",
+      "gitBlob": "c7743d2d3609bf7e551617fdb43da0d56493ff86"
+    },
+    {
+      "control": "CalendarView",
+      "path": "WinUIGallery/Samples/CalendarView/CalendarViewPage.xaml",
+      "gitBlob": "e835a4dc123365d8ecbcad5a7493e8735a483e86"
+    },
+    {
+      "control": "Canvas",
+      "path": "WinUIGallery/Samples/Canvas/CanvasPage.xaml",
+      "gitBlob": "89ee08a0400c94d5a781048f1588124e7cac50e6"
+    },
+    {
+      "control": "CaptureElementPreview",
+      "path": "WinUIGallery/Samples/CaptureElementPreview/CaptureElementPreviewPage.xaml",
+      "gitBlob": "e9141550c87944d9df9a2c202c5334a037c9278f"
+    },
+    {
+      "control": "CheckBox",
+      "path": "WinUIGallery/Samples/CheckBox/CheckBoxPage.xaml",
+      "gitBlob": "e55576b40414faa12da98424689345d86ff4f8a7"
+    },
+    {
+      "control": "Clipboard",
+      "path": "WinUIGallery/Samples/Clipboard/ClipboardPage.xaml",
+      "gitBlob": "752aabb78d19aba23b75da5be829d590316f8f02"
+    },
+    {
+      "control": "Color",
+      "path": "WinUIGallery/Samples/Color/ColorPage.xaml",
+      "gitBlob": "a17c1de41615f523d6a44c0bb0c765ce35750151"
+    },
+    {
+      "control": "ColorPicker",
+      "path": "WinUIGallery/Samples/ColorPicker/ColorPickerPage.xaml",
+      "gitBlob": "3d0e3397373b6238bf3c28bb3fda8c1a572f76a6"
+    },
+    {
+      "control": "ComboBox",
+      "path": "WinUIGallery/Samples/ComboBox/ComboBoxPage.xaml",
+      "gitBlob": "18b844e790d27495aa99e774359beb3d074a3e8f"
+    },
+    {
+      "control": "CommandBar",
+      "path": "WinUIGallery/Samples/CommandBar/CommandBarPage.xaml",
+      "gitBlob": "e2c92a5672467c5184198379f8b4b438bfeba8f3"
+    },
+    {
+      "control": "CommandBarFlyout",
+      "path": "WinUIGallery/Samples/CommandBarFlyout/CommandBarFlyoutPage.xaml",
+      "gitBlob": "e6bf03057f7ad1e661c179a98899368e02208b6b"
+    },
+    {
+      "control": "CompactSizing",
+      "path": "WinUIGallery/Samples/CompactSizing/CompactSizingPage.xaml",
+      "gitBlob": "3aace462876a40c9a2dc21e50f103b259bb9abd8"
+    },
+    {
+      "control": "ConnectedAnimation",
+      "path": "WinUIGallery/Samples/ConnectedAnimation/ConnectedAnimationPage.xaml",
+      "gitBlob": "4aaf07f355cc930d455733afae393c5ecca874e0"
+    },
+    {
+      "control": "ContentDialog",
+      "path": "WinUIGallery/Samples/ContentDialog/ContentDialogPage.xaml",
+      "gitBlob": "512809224f3525d410ee2f6363bb3a89354562f7"
+    },
+    {
+      "control": "ContentIsland",
+      "path": "WinUIGallery/Samples/ContentIsland/ContentIslandPage.xaml",
+      "gitBlob": "47372fbdba8799e9e2d8dbfba2525b799ac3e870"
+    },
+    {
+      "control": "CustomUserControls",
+      "path": "WinUIGallery/Samples/CustomUserControls/CustomUserControlsPage.xaml",
+      "gitBlob": "ace5d3fd8f471a718d2c35d1f663eabbed59d657"
+    },
+    {
+      "control": "CustomXamlConditionals",
+      "path": "WinUIGallery/Samples/CustomXamlConditionals/CustomXamlConditionalsPage.xaml",
+      "gitBlob": "52cddbea9a7aff60a5bffc3a7b152b8194f3c210"
+    },
+    {
+      "control": "DatePicker",
+      "path": "WinUIGallery/Samples/DatePicker/DatePickerPage.xaml",
+      "gitBlob": "afc5614deeb740739fdb09d1f8dcaeb65cedef31"
+    },
+    {
+      "control": "DropDownButton",
+      "path": "WinUIGallery/Samples/DropDownButton/DropDownButtonPage.xaml",
+      "gitBlob": "376c922b56e8d4be1679c2683ba64cfa7b8da432"
+    },
+    {
+      "control": "EasingFunction",
+      "path": "WinUIGallery/Samples/EasingFunction/EasingFunctionPage.xaml",
+      "gitBlob": "fb47c23e3e0c7d42401811240b8ae0a8e04e94c2"
+    },
+    {
+      "control": "Expander",
+      "path": "WinUIGallery/Samples/Expander/ExpanderPage.xaml",
+      "gitBlob": "e01a6a6535a1363b80cafb50e3d78d52b2be071c"
+    },
+    {
+      "control": "FlipView",
+      "path": "WinUIGallery/Samples/FlipView/FlipViewPage.xaml",
+      "gitBlob": "c9948fc6c50266980f633d3d4c98b1d8bb9f542d"
+    },
+    {
+      "control": "Flyout",
+      "path": "WinUIGallery/Samples/Flyout/FlyoutPage.xaml",
+      "gitBlob": "901a26130976d541f5e1a9144cf737d8a26e5289"
+    },
+    {
+      "control": "Geometry",
+      "path": "WinUIGallery/Samples/Geometry/GeometryPage.xaml",
+      "gitBlob": "3c51643ae59fbb506af284483f4cb09cc93387c3"
+    },
+    {
+      "control": "Grid",
+      "path": "WinUIGallery/Samples/Grid/GridPage.xaml",
+      "gitBlob": "29f69a25aa14e9b6838970113413c7616d9f39db"
+    },
+    {
+      "control": "GridView",
+      "path": "WinUIGallery/Samples/GridView/GridViewPage.xaml",
+      "gitBlob": "248a2341c9c876a398715723ac6b7924d1271e3d"
+    },
+    {
+      "control": "HyperlinkButton",
+      "path": "WinUIGallery/Samples/HyperlinkButton/HyperlinkButtonPage.xaml",
+      "gitBlob": "89d2864e4545f894f6c80b0e2d41017112f348af"
+    },
+    {
+      "control": "IconElement",
+      "path": "WinUIGallery/Samples/IconElement/IconElementPage.xaml",
+      "gitBlob": "9f9e42eb762032186daf4781ec3a67db514517e9"
+    },
+    {
+      "control": "Iconography",
+      "path": "WinUIGallery/Samples/Iconography/IconographyPage.xaml",
+      "gitBlob": "e6051356c9166d0f20f8e911dd796010430bc6ee"
+    },
+    {
+      "control": "Image",
+      "path": "WinUIGallery/Samples/Image/ImagePage.xaml",
+      "gitBlob": "a0e8d615d739d5dfd44ebc8201bb410dccbb93b9"
+    },
+    {
+      "control": "ImplicitTransition",
+      "path": "WinUIGallery/Samples/ImplicitTransition/ImplicitTransitionPage.xaml",
+      "gitBlob": "6e4e5dbb31e18b08a7a1b880401e69d0d14c129b"
+    },
+    {
+      "control": "InfoBadge",
+      "path": "WinUIGallery/Samples/InfoBadge/InfoBadgePage.xaml",
+      "gitBlob": "0615fb945616d35d6fb5082c2e9029cfca167d74"
+    },
+    {
+      "control": "InfoBar",
+      "path": "WinUIGallery/Samples/InfoBar/InfoBarPage.xaml",
+      "gitBlob": "be47e83aaa7456db470130bd5154276534cc40f7"
+    },
+    {
+      "control": "InkCanvas",
+      "path": "WinUIGallery/Samples/InkCanvas/InkCanvasPage.xaml",
+      "gitBlob": "5f1bdb01e0e310afe83169920c2f964b5de0d40b"
+    },
+    {
+      "control": "ItemsRepeater",
+      "path": "WinUIGallery/Samples/ItemsRepeater/ItemsRepeaterPage.xaml",
+      "gitBlob": "6e3b0b9ff5330d96358b1806c9f81d7250e1bc12"
+    },
+    {
+      "control": "ItemsView",
+      "path": "WinUIGallery/Samples/ItemsView/ItemsViewPage.xaml",
+      "gitBlob": "38713c91755203d44c3ff0feca9f15dc12502169"
+    },
+    {
+      "control": "JumpList",
+      "path": "WinUIGallery/Samples/JumpList/JumpListPage.xaml",
+      "gitBlob": "52375bd6eb162b5ee3b86dba1a04c1e8a8f84533"
+    },
+    {
+      "control": "LayoutPanel",
+      "path": "WinUIGallery/Samples/LayoutPanel/LayoutPanelPage.xaml",
+      "gitBlob": "f1a4bd198835fcd0028e940230340d42c4b02916"
+    },
+    {
+      "control": "Line",
+      "path": "WinUIGallery/Samples/Line/LinePage.xaml",
+      "gitBlob": "1470fd45eaa74263d3f7b2f4e28f9201f5b8b116"
+    },
+    {
+      "control": "ListView",
+      "path": "WinUIGallery/Samples/ListView/ListViewPage.xaml",
+      "gitBlob": "6629e847a2d35d156ed0c461ba59de74b3820afb"
+    },
+    {
+      "control": "MapControl",
+      "path": "WinUIGallery/Samples/MapControl/MapControlPage.xaml",
+      "gitBlob": "dcdc3e0cb7bc4c42a1c1679c1d850678ac6360de"
+    },
+    {
+      "control": "MediaPlayerElement",
+      "path": "WinUIGallery/Samples/MediaPlayerElement/MediaPlayerElementPage.xaml",
+      "gitBlob": "cde1668af8eade3612a6f0633b90bad4171f1e8f"
+    },
+    {
+      "control": "MenuBar",
+      "path": "WinUIGallery/Samples/MenuBar/MenuBarPage.xaml",
+      "gitBlob": "e59e706022dabe27d01b05dbedb8bc86a286f343"
+    },
+    {
+      "control": "MenuFlyout",
+      "path": "WinUIGallery/Samples/MenuFlyout/MenuFlyoutPage.xaml",
+      "gitBlob": "834f7da9d1a314fa30c7a92e8814f2bc4aa889c0"
+    },
+    {
+      "control": "NavigationView",
+      "path": "WinUIGallery/Samples/NavigationView/NavigationViewPage.xaml",
+      "gitBlob": "8f2f281cc611df619019772162d9acdb068cbe62"
+    },
+    {
+      "control": "NumberBox",
+      "path": "WinUIGallery/Samples/NumberBox/NumberBoxPage.xaml",
+      "gitBlob": "101a73a394586a997e5211486b6b4c78ccc7c0fb"
+    },
+    {
+      "control": "PageTransition",
+      "path": "WinUIGallery/Samples/PageTransition/PageTransitionPage.xaml",
+      "gitBlob": "c3900b432134bebd482a45cb1f298875356fb236"
+    },
+    {
+      "control": "PagerControl",
+      "path": "WinUIGallery/Samples/PagerControl/PagerControlPage.xaml",
+      "gitBlob": "336013c0168556eb2f544baf7bb412fe40217af9"
+    },
+    {
+      "control": "ParallaxView",
+      "path": "WinUIGallery/Samples/ParallaxView/ParallaxViewPage.xaml",
+      "gitBlob": "7df664d5031dbcad6ef6b9e2589c6e5e796813f8"
+    },
+    {
+      "control": "PasswordBox",
+      "path": "WinUIGallery/Samples/PasswordBox/PasswordBoxPage.xaml",
+      "gitBlob": "add5cf04501321a6d8ee34fe16cdc82554f9b966"
+    },
+    {
+      "control": "PersonPicture",
+      "path": "WinUIGallery/Samples/PersonPicture/PersonPicturePage.xaml",
+      "gitBlob": "d705d1c283d05cdf38ee710795924431706f91f6"
+    },
+    {
+      "control": "PipsPager",
+      "path": "WinUIGallery/Samples/PipsPager/PipsPagerPage.xaml",
+      "gitBlob": "9f817bb16e4069c3136b9e24ac3e643fb00d7e7c"
+    },
+    {
+      "control": "Pivot",
+      "path": "WinUIGallery/Samples/Pivot/PivotPage.xaml",
+      "gitBlob": "6e3cf880d2aa39bdca21ca88b14b638361252563"
+    },
+    {
+      "control": "Popup",
+      "path": "WinUIGallery/Samples/Popup/PopupPage.xaml",
+      "gitBlob": "6a5d35d9acf43067bb7cb9317e2d1ad863dbade2"
+    },
+    {
+      "control": "ProgressBar",
+      "path": "WinUIGallery/Samples/ProgressBar/ProgressBarPage.xaml",
+      "gitBlob": "8f6abaf6cf8b7cc21d96e4c278b02c71af684230"
+    },
+    {
+      "control": "ProgressRing",
+      "path": "WinUIGallery/Samples/ProgressRing/ProgressRingPage.xaml",
+      "gitBlob": "ec4263532cd9e028df8be2ca922d313b4a1d72d0"
+    },
+    {
+      "control": "PullToRefresh",
+      "path": "WinUIGallery/Samples/PullToRefresh/PullToRefreshPage.xaml",
+      "gitBlob": "f2407943e134fb93af146298d7c0fd463c063d13"
+    },
+    {
+      "control": "RadialGradientBrush",
+      "path": "WinUIGallery/Samples/RadialGradientBrush/RadialGradientBrushPage.xaml",
+      "gitBlob": "7dbe788725abffe6fee3a239a09907524049a54a"
+    },
+    {
+      "control": "RadioButton",
+      "path": "WinUIGallery/Samples/RadioButton/RadioButtonPage.xaml",
+      "gitBlob": "97fa85d8d71de7a624f04a4bd3017ee283f3225a"
+    },
+    {
+      "control": "RatingControl",
+      "path": "WinUIGallery/Samples/RatingControl/RatingControlPage.xaml",
+      "gitBlob": "7c4a293639c43105aa8d9526ce97beadc34ea8c1"
+    },
+    {
+      "control": "RelativePanel",
+      "path": "WinUIGallery/Samples/RelativePanel/RelativePanelPage.xaml",
+      "gitBlob": "cf66ccb81a72b32cedaf18410566483e5b129a81"
+    },
+    {
+      "control": "RepeatButton",
+      "path": "WinUIGallery/Samples/RepeatButton/RepeatButtonPage.xaml",
+      "gitBlob": "3486a0dee5c340a341b506e8689f4a8156a7707f"
+    },
+    {
+      "control": "RichEditBox",
+      "path": "WinUIGallery/Samples/RichEditBox/RichEditBoxPage.xaml",
+      "gitBlob": "42a62578a17f8dccee38ec523d3ab811380e033b"
+    },
+    {
+      "control": "RichTextBlock",
+      "path": "WinUIGallery/Samples/RichTextBlock/RichTextBlockPage.xaml",
+      "gitBlob": "758e87b24ea4ff9c5c197346f3ee57af877a3a0a"
+    },
+    {
+      "control": "ScratchPad",
+      "path": "WinUIGallery/Samples/ScratchPad/ScratchPadPage.xaml",
+      "gitBlob": "4b33eeef514c6d5bd83c1574c75eae091ba656c4"
+    },
+    {
+      "control": "ScrollView",
+      "path": "WinUIGallery/Samples/ScrollView/ScrollViewPage.xaml",
+      "gitBlob": "f9af3f26e1bc2e91aad6afb502c05a3a43e68e27"
+    },
+    {
+      "control": "ScrollViewer",
+      "path": "WinUIGallery/Samples/ScrollViewer/ScrollViewerPage.xaml",
+      "gitBlob": "45aca1bf09a4a0fe51b644ecdc49375931811287"
+    },
+    {
+      "control": "SelectorBar",
+      "path": "WinUIGallery/Samples/SelectorBar/SelectorBarPage.xaml",
+      "gitBlob": "08c77fd4eb5e3105e210166a00e0f0082cf8d873"
+    },
+    {
+      "control": "SemanticZoom",
+      "path": "WinUIGallery/Samples/SemanticZoom/SemanticZoomPage.xaml",
+      "gitBlob": "87a91f45a9795c8c4af34deda267528d6632505d"
+    },
+    {
+      "control": "Shape",
+      "path": "WinUIGallery/Samples/Shape/ShapePage.xaml",
+      "gitBlob": "37eef4462b9998346e6be6b54934ca768c64e95c"
+    },
+    {
+      "control": "Slider",
+      "path": "WinUIGallery/Samples/Slider/SliderPage.xaml",
+      "gitBlob": "cb6baea008bd321b8bcb27aa6c3cf27d5cbdb0c8"
+    },
+    {
+      "control": "Sound",
+      "path": "WinUIGallery/Samples/Sound/SoundPage.xaml",
+      "gitBlob": "99ea1723faaa054b09325e9d3d1657e9aebdb4df"
+    },
+    {
+      "control": "Spacing",
+      "path": "WinUIGallery/Samples/Spacing/SpacingPage.xaml",
+      "gitBlob": "883651efb2fb93022b82e0a26989226c6a9b72b3"
+    },
+    {
+      "control": "SplitButton",
+      "path": "WinUIGallery/Samples/SplitButton/SplitButtonPage.xaml",
+      "gitBlob": "8ae8e1f4998170efc977ee0b4af6a9064d9fc135"
+    },
+    {
+      "control": "SplitView",
+      "path": "WinUIGallery/Samples/SplitView/SplitViewPage.xaml",
+      "gitBlob": "cf10f87348f1791055abf3bce11bdcc6c9b3fdfc"
+    },
+    {
+      "control": "StackPanel",
+      "path": "WinUIGallery/Samples/StackPanel/StackPanelPage.xaml",
+      "gitBlob": "97c55125411851214821ec211a5c36778e2644c3"
+    },
+    {
+      "control": "StandardUICommand",
+      "path": "WinUIGallery/Samples/StandardUICommand/StandardUICommandPage.xaml",
+      "gitBlob": "5f3205261e40b9f09163f8b5bf63eaa16102425c"
+    },
+    {
+      "control": "StoragePickers",
+      "path": "WinUIGallery/Samples/StoragePickers/StoragePickersPage.xaml",
+      "gitBlob": "3f24d9c6d57752355d5b85bfc67476f56df044fc"
+    },
+    {
+      "control": "SwipeControl",
+      "path": "WinUIGallery/Samples/SwipeControl/SwipeControlPage.xaml",
+      "gitBlob": "93ba7d1631a89e26e82f4833f3028a7a8f786be0"
+    },
+    {
+      "control": "SystemBackdropElement",
+      "path": "WinUIGallery/Samples/SystemBackdropElement/SystemBackdropElementPage.xaml",
+      "gitBlob": "2c9f8f618b21fb619de770974a906e69d72cc07d"
+    },
+    {
+      "control": "SystemBackdrops",
+      "path": "WinUIGallery/Samples/SystemBackdrops/SystemBackdropsPage.xaml",
+      "gitBlob": "c57430a66683f0604b6c197a48d65d3d12e3985c"
+    },
+    {
+      "control": "TabView",
+      "path": "WinUIGallery/Samples/TabView/TabViewPage.xaml",
+      "gitBlob": "ae4e756dababfb5d41adb387fffbef76eb4c185f"
+    },
+    {
+      "control": "TableView",
+      "path": "WinUIGallery/Samples/TableView/TableViewPage.xaml",
+      "gitBlob": "21382f009ad99b356a5a20e480d1720cbdddf873"
+    },
+    {
+      "control": "TeachingTip",
+      "path": "WinUIGallery/Samples/TeachingTip/TeachingTipPage.xaml",
+      "gitBlob": "56892e5dae09065dc0409e5d980c79e851335012"
+    },
+    {
+      "control": "Templates",
+      "path": "WinUIGallery/Samples/Templates/TemplatesPage.xaml",
+      "gitBlob": "fba466ab2db885db72aff9067438b9271b1f712f"
+    },
+    {
+      "control": "TextBlock",
+      "path": "WinUIGallery/Samples/TextBlock/TextBlockPage.xaml",
+      "gitBlob": "7bf6084e2b172a8208064185f97839bf24ceefd8"
+    },
+    {
+      "control": "TextBox",
+      "path": "WinUIGallery/Samples/TextBox/TextBoxPage.xaml",
+      "gitBlob": "2776bada0b7ee7bfa21b1b74cf46171020b14bfe"
+    },
+    {
+      "control": "ThemeShadow",
+      "path": "WinUIGallery/Samples/ThemeShadow/ThemeShadowPage.xaml",
+      "gitBlob": "b734f335f88dd2a3ee071c64973cce7b83487e1b"
+    },
+    {
+      "control": "ThemeTransition",
+      "path": "WinUIGallery/Samples/ThemeTransition/ThemeTransitionPage.xaml",
+      "gitBlob": "b1015f29989bfe3d46eddfa2fbca286b6abdfc5f"
+    },
+    {
+      "control": "TimePicker",
+      "path": "WinUIGallery/Samples/TimePicker/TimePickerPage.xaml",
+      "gitBlob": "f3d49b7ec76a7d826867db5d9f1c2e6d814e3866"
+    },
+    {
+      "control": "TitleBar",
+      "path": "WinUIGallery/Samples/TitleBar/TitleBarPage.xaml",
+      "gitBlob": "25714311aaf20f8450eb6aa0f116d8ec6ac556e9"
+    },
+    {
+      "control": "ToggleButton",
+      "path": "WinUIGallery/Samples/ToggleButton/ToggleButtonPage.xaml",
+      "gitBlob": "2658a1b873f73f05f0bc55ba74ba6093f328ae67"
+    },
+    {
+      "control": "ToggleSplitButton",
+      "path": "WinUIGallery/Samples/ToggleSplitButton/ToggleSplitButtonPage.xaml",
+      "gitBlob": "99f1cd62ff09071bf55444d9a68c0bd287e51ae9"
+    },
+    {
+      "control": "ToggleSwitch",
+      "path": "WinUIGallery/Samples/ToggleSwitch/ToggleSwitchPage.xaml",
+      "gitBlob": "929eeb0566891197877a9684d5a2a97ced390868"
+    },
+    {
+      "control": "ToolTip",
+      "path": "WinUIGallery/Samples/ToolTip/ToolTipPage.xaml",
+      "gitBlob": "3436a5882b0b9d6fd14114444f95bcea4c8adbec"
+    },
+    {
+      "control": "TreeView",
+      "path": "WinUIGallery/Samples/TreeView/TreeViewPage.xaml",
+      "gitBlob": "424f1d0c6413a2e2da652a7e906914e9c70e36b3"
+    },
+    {
+      "control": "Typography",
+      "path": "WinUIGallery/Samples/Typography/TypographyPage.xaml",
+      "gitBlob": "2498ec368872bc7dd18953ff306e5c48d8a999c2"
+    },
+    {
+      "control": "VariableSizedWrapGrid",
+      "path": "WinUIGallery/Samples/VariableSizedWrapGrid/VariableSizedWrapGridPage.xaml",
+      "gitBlob": "a89d2c8b66552b4bbc1ce3b30998232e1ca20709"
+    },
+    {
+      "control": "Viewbox",
+      "path": "WinUIGallery/Samples/Viewbox/ViewboxPage.xaml",
+      "gitBlob": "e771e63944e16d2943861eced0bf59f44aaf8f5f"
+    },
+    {
+      "control": "WebView2",
+      "path": "WinUIGallery/Samples/WebView2/WebView2Page.xaml",
+      "gitBlob": "8bf3104c9a285ecdcfd7f3baba54710bfc032cd0"
+    },
+    {
+      "control": "Windowing",
+      "path": "WinUIGallery/Samples/Windowing/WindowingPage.xaml",
+      "gitBlob": "c9df9898cd815e4d35c868036bf88822d7edf19c"
+    },
+    {
+      "control": "WrapPanel",
+      "path": "WinUIGallery/Samples/WrapPanel/WrapPanelPage.xaml",
+      "gitBlob": "e13102e46cc216a666ab120bb070cc2275cc7753"
+    },
+    {
+      "control": "XamlCompInterop",
+      "path": "WinUIGallery/Samples/XamlCompInterop/XamlCompInteropPage.xaml",
+      "gitBlob": "53cd00ae7b7ea22b23bec113b3a6dcbd699a6e83"
+    },
+    {
+      "control": "XamlResources",
+      "path": "WinUIGallery/Samples/XamlResources/XamlResourcesPage.xaml",
+      "gitBlob": "1d8ab08580aad997053db1d4481df751f1b20737"
+    },
+    {
+      "control": "XamlStyles",
+      "path": "WinUIGallery/Samples/XamlStyles/XamlStylesPage.xaml",
+      "gitBlob": "da90cbca19a7f5651ba5343adf150fdfc79cfda0"
+    },
+    {
+      "control": "XamlUICommand",
+      "path": "WinUIGallery/Samples/XamlUICommand/XamlUICommandPage.xaml",
+      "gitBlob": "cd8a0d77b6bc118b8f69978ce21b70fb8dae33e7"
+    }
+  ]
+}

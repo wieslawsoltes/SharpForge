@@ -1,0 +1,18 @@
+.tok-keyword { color: #bd9ede; }
+.tok-string { color: #d9b893; }
+.tok-number { color: #b2d3a1; }
+.tok-comment { color: #86979d; font-style: normal; }
+.tok-type { color: #6dc8c2; }
+.tok-method { color: #dfd0a2; }
+.tok-punctuation { color: #bcb9c5; }
+.sf-squiggle { text-decoration: underline wavy var(--red); text-underline-offset: 4px; text-decoration-thickness: 1px; }
+.sf-squiggle-warning { text-decoration-color: var(--yellow); }
+.sf-bracket-match { outline: 1px solid var(--accent); background: var(--accent-bg); }
+.sf-bracket-bold { font-weight: bold; text-decoration: underline; }
+html[data-theme=light] .tok-keyword { color: #8053b9; }
+html[data-theme=light] .tok-string { color: #a0563e; }
+html[data-theme=light] .tok-number { color: #3e7a4a; }
+html[data-theme=light] .tok-comment { color: #647086; }
+html[data-theme=light] .tok-type { color: #147e86; }
+html[data-theme=light] .tok-method { color: #806625; }
+html[data-theme=light] .tok-punctuation { color: #6d657e; }

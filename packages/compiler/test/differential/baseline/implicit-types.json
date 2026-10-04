@@ -1,5 +1,6 @@
 {
-  "implicit-types/best-common-type-of-array-elements": ["diagnostics", "warnings", "bytecode", "cil"],
+  "implicit-types/best-common-type-of-array-elements": ["diagnostics", "warnings", "bytecode", "cil", "directCil"],
+  "implicit-types/cs0029-a-type-named-var-wins": ["diagnostics", "warnings"],
   "implicit-types/cs0815-cs0818-cs0819-cs0820-initializer-forms": ["diagnostics", "warnings"],
   "implicit-types/cs0822-cs8716-const-var-and-default": ["diagnostics", "warnings"],
   "implicit-types/cs0825-var-outside-a-local-declaration": ["diagnostics", "warnings"],
@@ -9,6 +10,6 @@
   "implicit-types/cs8023-var-and-implicit-array-in-csharp-2": ["diagnostics", "warnings"],
   "implicit-types/cs8773-inferred-delegate-type-in-csharp-9": ["diagnostics", "warnings"],
   "implicit-types/cs8917-no-natural-delegate-type": ["diagnostics", "warnings"],
-  "implicit-types/natural-delegate-type-of-var-initializer": ["diagnostics", "warnings", "bytecode", "cil"],
-  "implicit-types/var-locals-loops-and-arrays": ["diagnostics", "warnings", "bytecode", "cil"]
+  "implicit-types/natural-delegate-type-of-var-initializer": ["diagnostics", "warnings", "bytecode", "cil", "directCil"],
+  "implicit-types/var-locals-loops-and-arrays": ["diagnostics", "warnings", "bytecode", "cil", "directCil"]
 }

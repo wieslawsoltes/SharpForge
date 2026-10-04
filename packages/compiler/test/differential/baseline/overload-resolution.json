@@ -1,17 +1,20 @@
 {
-  "overload-resolution/arity-and-params": ["diagnostics", "warnings", "bytecode", "cil"],
+  "overload-resolution/arity-and-params": ["diagnostics", "warnings", "bytecode", "cil", "directCil"],
   "overload-resolution/cs0019-user-operators": ["diagnostics", "warnings"],
   "overload-resolution/cs0121-ambiguous-call": ["diagnostics", "warnings"],
   "overload-resolution/cs0121-better-conversion": ["diagnostics", "warnings"],
   "overload-resolution/cs0123-cs0407-method-groups": ["diagnostics", "warnings"],
   "overload-resolution/cs0457-cs0029-user-conversions": ["diagnostics", "warnings"],
   "overload-resolution/cs1061-extension-scope": ["diagnostics", "warnings"],
-  "overload-resolution/cs1501-library-method": ["warnings"],
+  "overload-resolution/cs1501-library-method": ["diagnostics", "warnings"],
   "overload-resolution/cs1501-no-overload-takes": ["diagnostics", "warnings"],
   "overload-resolution/cs1503-argument-type": ["diagnostics", "warnings"],
   "overload-resolution/cs1503-second-argument": ["diagnostics", "warnings"],
   "overload-resolution/cs1739-cs1744-named-arguments": ["diagnostics", "warnings"],
   "overload-resolution/cs1739-no-parameter-named": ["diagnostics", "warnings"],
   "overload-resolution/cs7036-constructor": ["diagnostics", "warnings"],
-  "overload-resolution/cs7036-missing-required-argument": ["diagnostics", "warnings"]
+  "overload-resolution/cs7036-missing-required-argument": ["diagnostics", "warnings"],
+  "overload-resolution/derived-preferred": ["directCil"],
+  "overload-resolution/int-double-string-object": ["diagnostics", "warnings", "bytecode", "cil", "directCil"],
+  "overload-resolution/optional-vs-exact": ["diagnostics", "warnings", "bytecode", "cil", "directCil"]
 }

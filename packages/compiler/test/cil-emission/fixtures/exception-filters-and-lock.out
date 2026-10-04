@@ -1,0 +1,28 @@
+inner finally 1
+one
+filter even -> True
+inner finally 4
+even 4
+filter even -> False
+filter no variable -> True
+inner finally 5
+five
+filter even -> False
+filter no variable -> False
+inner finally 7
+other coded 7
+filter general -> True
+general after 1
+completed
+filter refuses -> False
+finally of the refusing try
+outer caught argument
+filters ran 7
+2
+5
+failed while locked
+10
+3
+nested
+inner released
+released

@@ -1,0 +1,30 @@
+{
+  "runtime": ".NET 10.0.5",
+  "cases": [
+    {
+      "name": "Default",
+      "version": "0.2.0.0",
+      "culture": ""
+    },
+    {
+      "name": "English",
+      "version": "1.2.345.65535",
+      "culture": "en-US"
+    },
+    {
+      "name": "Japanese",
+      "version": "3.2.1.0",
+      "culture": "ja-JP"
+    },
+    {
+      "name": "Maximum",
+      "version": "65535.65535.65535.65535",
+      "culture": ""
+    },
+    {
+      "name": "Zero",
+      "version": "0.0.0.0",
+      "culture": ""
+    }
+  ]
+}

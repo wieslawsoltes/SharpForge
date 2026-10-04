@@ -3,10 +3,21 @@ import { PdbGuids, fail, guidString } from './contracts.js';
 import { hex } from './hash.js';
 import { readCustomDebugInformation } from './custom-debug.js';
 import { readSequencePoints } from './sequence-points.js';
-import { decodeConstant } from './constant-reader.js';
+import { readLocalConstants } from './constant-rows.js';
 import { rejectUnsupportedSymbolFormat } from './symbol-format.js';
 import { readImports } from './import-reader.js';
-export function readPortablePdb(input, { maxBytes = 64 * 1024 * 1024, maxSourceBytes = 16 * 1024 * 1024 } = {}) {
+import { createAsyncInfoLookup } from './async-info.js';
+export function readPortablePdb(
+  input,
+  {
+    maxBytes = 64 * 1024 * 1024,
+    maxSourceBytes = 16 * 1024 * 1024,
+    maxAsyncEntries,
+    maxConstantBytes,
+    maxConstantEntries,
+    maxConstantModifiers,
+  } = {},
+) {
   const bytes = input instanceof ArrayBuffer ? new Uint8Array(input) : input;
   if (!(bytes instanceof Uint8Array) || bytes.length > maxBytes) fail('Invalid or oversized Portable PDB');
   rejectUnsupportedSymbolFormat(bytes);
@@ -54,12 +65,7 @@ export function readPortablePdb(input, { maxBytes = 64 * 1024 * 1024, maxSourceB
     name: md.string(r[2]),
     hidden: !!(r[0] & 1),
   }));
-  const constants = (md.rows[52] ?? []).map((r, i) => ({
-    id: i + 1,
-    name: md.string(r[0]),
-    signature: new Uint8Array(md.blob(r[1])),
-    ...decodeConstant(md.blob(r[1])),
-  }));
+  const constants = readLocalConstants(md, { maxConstantBytes, maxConstantEntries, maxConstantModifiers });
   const imports = (md.rows[53] ?? []).map((r, i) => ({
     id: i + 1,
     parent: r[0],
@@ -149,6 +155,10 @@ export function readPortablePdb(input, { maxBytes = 64 * 1024 * 1024, maxSourceB
     return c;
   });
   const methodMap = new Map(methods.map((m) => [m.token, m]));
+  const asyncInfo = createAsyncInfoLookup(stateMachines, custom, {
+    maxAsyncEntries,
+    methodCount: md.externalCounts[6] ?? 0,
+  });
   return {
     format: 'Portable PDB',
     pdbOffset: pdb.byteOffset - bytes.byteOffset,
@@ -182,11 +192,6 @@ export function readPortablePdb(input, { maxBytes = 64 * 1024 * 1024, maxSourceB
       const active = scopes.filter((s) => s.methodToken === methodToken && offset >= s.start && offset < s.end);
       return active.flatMap((s) => s.variables).filter((v) => !v.hidden);
     },
-    asyncInfo(methodToken) {
-      return {
-        stateMachine: stateMachines.find((s) => s.moveNext === methodToken || s.kickoff === methodToken) ?? null,
-        steps: custom.find((c) => c.parent === methodToken && c.kind === PdbGuids.asyncSteps)?.awaits ?? [],
-      };
-    },
+    asyncInfo,
   };
 }

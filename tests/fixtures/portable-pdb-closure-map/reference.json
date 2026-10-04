@@ -1,0 +1,120 @@
+{
+  "schemaVersion": 1,
+  "reference": {
+    "sdk": "10.0.201",
+    "compilerVersion": "5.3.0-2.26153.122 (4d3023de605a78ba3e59e50c657eed70f125c68a)",
+    "compilerSha256": "3ec75447e847f97b2cb3d861463f6de7ea421f2092aaacc7458579adccf8fc16",
+    "runtime": "10.0.5",
+    "mode": "Debug",
+    "sourceSha256": "e8774743a5885759325d8abf62885716b343b87183694a1b65783bedc3b2d01c",
+    "assemblySha256": "49844779f41e2e345179675635e57bf1073e9c55f6caa3dbffbe0202890becf2",
+    "pdbSha256": "a1279f399c862041225853cfd35dfa1aaaa3340c696b1605828f4d913b3e917a"
+  },
+  "native": {
+    "runtime": "10.0.5",
+    "maps": [
+      {
+        "containingMethod": 100663346,
+        "containingType": 33554441,
+        "typeName": "Fixture",
+        "methodOrdinal": 0,
+        "closures": [
+          {
+            "syntaxOffset": 0
+          }
+        ],
+        "lambdas": [
+          {
+            "syntaxOffset": 50,
+            "closureOrdinal": 0
+          },
+          {
+            "syntaxOffset": 56,
+            "closureOrdinal": 0
+          }
+        ]
+      },
+      {
+        "containingMethod": 100663347,
+        "containingType": 33554442,
+        "typeName": "OtherFixture",
+        "methodOrdinal": 0,
+        "closures": [
+          {
+            "syntaxOffset": 0
+          }
+        ],
+        "lambdas": [
+          {
+            "syntaxOffset": 47,
+            "closureOrdinal": 0
+          },
+          {
+            "syntaxOffset": 53,
+            "closureOrdinal": 0
+          }
+        ]
+      }
+    ],
+    "types": [
+      {
+        "typeToken": 33554444,
+        "name": "<>c__DisplayClass0_0",
+        "enclosingType": 33554441,
+        "fields": [
+          {
+            "fieldToken": 67108887,
+            "name": "captured"
+          },
+          {
+            "fieldToken": 67108888,
+            "name": "<>9__1"
+          }
+        ],
+        "methods": [
+          {
+            "methodToken": 100663350,
+            "name": ".ctor"
+          },
+          {
+            "methodToken": 100663351,
+            "name": "<Nested>b__0"
+          },
+          {
+            "methodToken": 100663352,
+            "name": "<Nested>b__1"
+          }
+        ]
+      },
+      {
+        "typeToken": 33554445,
+        "name": "<>c__DisplayClass0_0",
+        "enclosingType": 33554442,
+        "fields": [
+          {
+            "fieldToken": 67108889,
+            "name": "other"
+          },
+          {
+            "fieldToken": 67108890,
+            "name": "<>9__1"
+          }
+        ],
+        "methods": [
+          {
+            "methodToken": 100663353,
+            "name": ".ctor"
+          },
+          {
+            "methodToken": 100663354,
+            "name": "<Nested>b__0"
+          },
+          {
+            "methodToken": 100663355,
+            "name": "<Nested>b__1"
+          }
+        ]
+      }
+    ]
+  }
+}

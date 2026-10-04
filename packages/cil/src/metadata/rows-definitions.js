@@ -1,4 +1,5 @@
 import { rowWriterGroup } from './row-writer.js';
+import { constantValueWriter } from './constant-rows.js';
 
 export const TypeAttributes = Object.freeze({
   NotPublic: 0, Public: 1, NestedPublic: 2, NestedPrivate: 3, NestedFamily: 4, NestedAssembly: 5,
@@ -30,6 +31,6 @@ export function definitionRowWriters(builder) {
   return rowWriterGroup(builder, {
     typeDef: 'TypeDef', field: 'Field', method: 'MethodDef', parameter: 'Param',
     nestedClass: 'NestedClass', classLayout: 'ClassLayout', fieldLayout: 'FieldLayout',
-    fieldRVA: 'FieldRVA', constant: 'Constant', methodImpl: 'MethodImpl',
+    fieldRVA: 'FieldRVA', constant: 'Constant', methodImpl: 'MethodImpl', constantValue: constantValueWriter,
   });
 }

@@ -1,25 +1,42 @@
 # @sharpforge/editor
 
-Embeddable browser source editor. Consumers must include or adapt the .sf-* Studio CSS rules.
+A dependency-free browser source editor with an authoritative persistent text buffer, virtual lines,
+multiple carets, native IME input, shared split views and composable language-service widgets.
 
-Version 0.9.0 · MIT · ES modules.
-
-This package is part of SharpForge, an executable C# subset toolchain. It is not full C#/CLR/Visual Studio conformance. The source release includes architecture, API examples, compatibility boundaries and tests.
+Include `@sharpforge/editor/editor.css` and import `CodeEditor` and `EditorModel` from the package entry point.
 
 ```js
-import * as api from '@sharpforge/editor';
+import {CodeEditor, EditorModel} from '@sharpforge/editor';
+
+const model = new EditorModel('Console.WriteLine(42);\n', {uri: 'Program.cs'});
+const editor = new CodeEditor(element, {model, onEdits: change => workspace.apply(change)});
+editor.setKeymap('visual-studio');
 ```
 
-Install its declared sibling packages together. npm publication is not part of this release. See the root project README and docs/embedding.md for integration.
+See [VIEW.md](VIEW.md) for complete view contracts, option and decoration APIs, large-file resource policy,
+performance boundaries, accessibility behavior and a runnable 500,000-line example.
 
-## 0.5 editor surface
+Keyboard profiles are `visual-studio`, `vscode`, `vim`, `emacs` and `sublime`. Every profile operates on the
+same model and undo stack. The bundled classic engine remains in the distribution for compatibility;
+the default editor and modal profiles no longer create a second document inside it. Native command
+coverage and browser-reserved shortcuts are introduced in [keymaps.md](docs/keymaps.md).
 
-Include `@sharpforge/editor/editor.css` when embedding independently. Ctrl+F/H opens literal find/replace with case/whole-word options; Ctrl+G accepts line:column. F3/Shift+F3 navigate matches. Ctrl+Shift+\\ matches brackets; Shift+Alt+Up/Down duplicates lines. String/comment delimiters are ignored. Read-only state blocks writes/undo/replace; updates preserve per-document history. `SyntaxHighlightIndex` lexes supported input up to a configurable 2,000,000 UTF-16 characters and returns source-faithful viewport runs, with a plain viewport fallback beyond the limit or a per-window token budget. This remains a textarea/overlay editor, not a virtualized Monaco/Visual Studio text engine.
+Press **Escape, then Tab** or **Escape, then Shift+Tab** to leave text input through native browser focus
+traversal. Ordinary Tab retains editor indentation or snippet navigation. Every view owns and disposes
+its listeners, asynchronous requests, layout caches, IME overlay and accessibility buffer.
 
-0.6 exports `NavigationHistory` for bounded immutable cross-file locations. `CodeEditor.expandSelection()` / `shrinkSelection()` use the supplied selectionRanges service. Ctrl+Alt+Right/Left invoke them. Duplicate native input events with unchanged text do not publish redundant source versions. Highlight DOM/gutters are virtualized; native textarea storage and lexical scans are not.
+Language services and workspace transactions are injected through explicit providers. Full Visual Studio,
+Vimscript, native Emacs/plugin compatibility and real screen-reader/IME qualification are not implied by
+browser fixtures. Read the versioned capability inventory and test/benchmark evidence for exact coverage.
 
-## 0.8 keyboard profiles
+## Standalone examples
 
-`EDITOR_KEYMAPS` lists `visual-studio` (default), `vscode`, `vim`, `emacs` and `sublime`. Pass `keymap` to `CodeEditor` or call `setKeymap(id)`; use `onKeymapState` for a status display. The same source, readonly flag, language-service request callbacks and breakpoint decorations are preserved. Alternative modes require both `@sharpforge/editor/classic.css` and `@sharpforge/editor/editor.css`. The bundled CodeMirror 5.58.3 MIT snapshot is legacy, not latest; its notice/hashes are in `src/vendor/`. Visual Studio and VS Code are shortcut profiles, not those products' editor engines. The other modes implement browser keymaps, not native Vim/Emacs, Vimscript or plugins. Popout hosts are scoped to their actual owner document. See the source distribution's docs/explorer-keymaps.md for supported bindings and limits.
+The [example instructions](examples/README.md) explain how to serve the built distribution with the
+production CSP. The examples cover shared views, a 500,000-line document and all six keyboard profiles.
+The distribution includes the module worker needed for large regular-expression searches; the repository
+build resolves its package imports as well as the main editor imports.
 
-All keyboard profiles support **Escape, then Tab** to leave the editor text input, or **Escape, then Shift+Tab** to move backward. Option+Tab after Escape is also supported for Safari/macOS full-control traversal. This uses native browser focus traversal and does not insert indentation. Ordinary Tab retains the profile's editing behavior. Any intervening edit, pointer input or blur cancels the one-use escape. The hint is exposed through the editor's accessible description and Studio's keyboard settings. Composition events do not arm it. Disposing or replacing an editor profile removes the handler.
+Package contracts are documented in [model.md](docs/model.md), [insights.md](docs/insights.md) and
+[keymaps.md](docs/keymaps.md). Workspace/compiler providers are supplied by the embedding application.
+
+MIT · ES modules · install the declared sibling packages together.

@@ -3,10 +3,17 @@
   "area": "A19",
   "nodeGlobs": [
     "tests/docking.test.js",
-    "tests/release08-commands.test.js"
+    "tests/release08-commands.test.js",
+    "tests/a19-*.test.js"
   ],
   "browserScripts": [
-    "tests/browser_test.py"
+    "tests/browser_test.py",
+    "tests/browser_a19_docking_test.py",
+    "tests/browser_a19_shell_test.py",
+    "tests/browser_multi_session_test.py",
+    "tests/browser_a19_lazy_tools_test.py",
+    "tests/browser_vs_workflows_test.py",
+    "tests/browser_workbench_perf_test.py"
   ],
   "requiredServices": [
     "studio-http",
@@ -14,6 +21,14 @@
   ],
   "timeout": 1200000,
   "tags": [
-    "legacy"
+    "workbench",
+    "scope-qualification",
+    "sessions",
+    "runtime",
+    "completed-scope",
+    "staged-validation",
+    "docking",
+    "shell",
+    "themes"
   ]
 }

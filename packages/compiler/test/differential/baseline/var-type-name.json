@@ -1,0 +1,4 @@
+{
+  "var-type-name/a-class-named-var-is-the-type-of-the-declaration": ["diagnostics", "warnings", "bytecode", "cil", "directCil"],
+  "var-type-name/cs0029-var-is-not-inferred-when-a-type-has-the-name": ["diagnostics", "warnings"]
+}
