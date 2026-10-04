@@ -82,13 +82,34 @@ function planEdit(analysis, edit) {
 }
 
 function playback(files, widths, expected) {
-  const body = `var window = AdaptiveSyntax.Create();
-    var root = (Microsoft.UI.Xaml.Controls.Canvas)window.Content;
-    var action = (Microsoft.UI.Xaml.Controls.Button)root.Children[0];
-    Console.WriteLine(action.Width);
-    ${widths.map(width => `AdaptiveSyntax.ApplyAdaptive(${width}, action); Console.WriteLine(action.Width);`).join('\n')}`;
-  run(files, body, (_machine, result) => {
-    assert.equal(result.output.replace(/\r/g, ''), expected.join('\n') + '\n');
+  // Invoke the compiled helper on the control Create attached, keeping candidate C# unchanged.
+  run(files, 'AdaptiveSyntax.Create();', machine => {
+    const methods = machine.inspector ? [...machine.inspector.methods.values()] : machine.image.methods;
+    const helpers = methods.filter(method => method.owner === 'AdaptiveSyntax' && method.name === 'ApplyAdaptive');
+    assert.equal(helpers.length, 1);
+    const helper = helpers[0];
+    const parameters = machine.inspector ? helper.signature.parameters : helper.parameters.map(parameter => parameter.type);
+    assert.deepEqual(parameters, ['double', 'Microsoft.UI.Xaml.Controls.Button']);
+    const action = () => {
+      const nodes = machine.platform.scene().nodes.filter(node => node.properties.Name === 'Action');
+      assert.equal(nodes.length, 1);
+      return nodes[0];
+    };
+    const initial = action();
+    const [h, g] = initial.id.split(':').map(Number);
+    const reference = Object.freeze({h, g});
+    assert.equal(machine.heap.get(reference).type, 'Microsoft.UI.Xaml.Controls.Button');
+    const observed = [initial.properties.Width];
+    for (const width of widths) {
+      machine.call(helper.token ?? helper.id, [machine.platform.managed(width, 'double'), reference]);
+      machine.state = 'ready';
+      const result = machine.run();
+      assert.equal(result.state, 'terminated', machine.constructor.name + ': ' + JSON.stringify(result.fault));
+      const node = action();
+      assert.equal(node.id, initial.id);
+      observed.push(node.properties.Width);
+    }
+    assert.deepEqual(observed, expected, machine.constructor.name);
   });
 }
 

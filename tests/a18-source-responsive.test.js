@@ -125,10 +125,36 @@ function localSources(partial = false, extra = '') {
 }
 
 function localPlayback(sources, widths, expected) {
-  const print = printGeometry('action');
-  execute(sources, `var window = LocalView.Create();
-    var action = (Microsoft.UI.Xaml.Controls.Button)window.Content; ${print}
-    ${widths.map(width => `LocalView.ApplyAdaptive(${width}, action); ${print}`).join('\n')}`, expected);
+  // Invoke the compiled helper on the control Create attached, keeping candidate C# unchanged.
+  execute(sources, 'LocalView.Create();', [], machine => {
+    const methods = machine.inspector ? [...machine.inspector.methods.values()] : machine.image.methods;
+    const helpers = methods.filter(method => method.owner === 'LocalView' && method.name === 'ApplyAdaptive');
+    assert.equal(helpers.length, 1);
+    const helper = helpers[0];
+    const parameters = machine.inspector ? helper.signature.parameters : helper.parameters.map(parameter => parameter.type);
+    assert.deepEqual(parameters, ['double', 'Microsoft.UI.Xaml.Controls.Button']);
+    const action = () => {
+      const nodes = machine.platform.scene().nodes.filter(node => node.properties.Name === 'Action');
+      assert.equal(nodes.length, 1);
+      return nodes[0];
+    };
+    const initial = action();
+    const [h, g] = initial.id.split(':').map(Number);
+    const reference = Object.freeze({h, g});
+    assert.equal(machine.heap.get(reference).type, 'Microsoft.UI.Xaml.Controls.Button');
+    const geometry = node => [node.properties.Width, node.properties.Left, node.properties.Top];
+    const observed = [geometry(initial)];
+    for (const width of widths) {
+      machine.call(helper.token ?? helper.id, [machine.platform.managed(width, 'double'), reference]);
+      machine.state = 'ready';
+      const result = machine.run();
+      assert.equal(result.state, 'terminated', machine.constructor.name + ': ' + JSON.stringify(result.fault));
+      const node = action();
+      assert.equal(node.id, initial.id);
+      observed.push(geometry(node));
+    }
+    assert.deepEqual(observed, expected, machine.constructor.name);
+  });
 }
 
 test('A18 generated adaptive source reopens normalized states and preserves the construction baseline', () => {
