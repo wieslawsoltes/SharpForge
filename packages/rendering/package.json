@@ -11,6 +11,7 @@
     "src",
     "vendor",
     "docs",
+    "examples",
     "README.md",
     "LICENSE"
   ],
