@@ -16,10 +16,12 @@ test('CLR modified override roots match independently emitted native signatures'
     return context.types.intrinsic(`${namespace}.${name}`);
   } } });
   const module = (await context.loadFromStream(image)).manifestModule;
-  assert.equal(native.records.length, 10);
-  assert.equal(new Set(native.records.map(record => record.name)).size, 10);
+  assert.equal(native.records.length, 15);
+  assert.equal(new Set(native.records.map(record => record.name)).size, 15);
+  const mismatches = new Set(['Kind', 'Identity', 'Order', 'Omission', 'Placement']);
   for (const record of native.records) {
-    assert.equal(record.baseType, 'Fixture.Root');
+    assert.equal(record.error, undefined, `${record.declaringType}: ${record.error}`);
+    assert.equal(record.baseType, mismatches.has(record.name) ? `Fixture.${record.name}Root` : 'Fixture.Root');
     const method = module.methodDefinition(record.token);
     assert.equal(method.name, record.name);
     assert.equal(await method.getBaseDefinition(), module.methodDefinition(record.baseToken), record.name);

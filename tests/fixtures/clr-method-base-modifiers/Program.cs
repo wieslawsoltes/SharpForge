@@ -31,15 +31,34 @@ foreach (var shape in cases)
 }
 root.CreateType();
 child.CreateType();
+var observedTypes = new List<string> { "Fixture.Child" };
+var required = new Shape("", [first], none, none, none, typeof(int));
+var optional = required with { Required = none, Optional = [first] };
+observedTypes.Add(Mismatch(module, "Kind", required, optional));
+observedTypes.Add(Mismatch(module, "Identity", required, required with { Required = [second] }));
+observedTypes.Add(Mismatch(module, "Order", optional with { Optional = [first, second] }, optional with { Optional = [second, first] }));
+observedTypes.Add(Mismatch(module, "Omission", optional, optional with { Optional = none }));
+observedTypes.Add(Mismatch(module, "Placement", required with { Required = none, ReturnRequired = [first] }, required));
 using var stream = new MemoryStream();
 builder.Save(stream);
 var bytes = stream.ToArray();
 var assembly = Assembly.Load(bytes);
 const BindingFlags flags = BindingFlags.DeclaredOnly | BindingFlags.Instance | BindingFlags.Public;
-var records = assembly.GetType("Fixture.Child", true)!.GetMethods(flags).OrderBy(method => method.MetadataToken)
-    .Select(method => new { token = method.MetadataToken, name = method.Name,
-        declaringType = method.DeclaringType!.FullName, baseToken = method.GetBaseDefinition().MetadataToken,
-        baseType = method.GetBaseDefinition().DeclaringType!.FullName });
+var records = new List<object>();
+foreach (var typeName in observedTypes)
+{
+    try
+    {
+        foreach (var method in assembly.GetType(typeName, true)!.GetMethods(flags).OrderBy(method => method.MetadataToken))
+            records.Add(new { token = method.MetadataToken, name = method.Name,
+                declaringType = method.DeclaringType!.FullName, baseToken = method.GetBaseDefinition().MetadataToken,
+                baseType = method.GetBaseDefinition().DeclaringType!.FullName });
+    }
+    catch (TypeLoadException error)
+    {
+        records.Add(new { declaringType = typeName, error = error.GetType().Name });
+    }
+}
 Console.WriteLine(JsonSerializer.Serialize(new { runtime = RuntimeInformation.FrameworkDescription,
     image = Convert.ToBase64String(bytes), records }));
 
@@ -49,5 +68,19 @@ static void Define(TypeBuilder owner, Shape shape, bool newSlot)
     if (newSlot) flags |= MethodAttributes.NewSlot;
     owner.DefineMethod(shape.Name, flags, CallingConventions.Standard | CallingConventions.HasThis,
         typeof(int), shape.ReturnRequired, shape.ReturnOptional, [shape.Parameter], [shape.Required], [shape.Optional]);
+}
+static string Mismatch(ModuleBuilder module, string name, Shape baseline, Shape different)
+{
+    const TypeAttributes attributes = TypeAttributes.Public | TypeAttributes.Abstract;
+    var root = module.DefineType($"Fixture.{name}Root", attributes, typeof(object));
+    var middle = module.DefineType($"Fixture.{name}Middle", attributes, root);
+    var child = module.DefineType($"Fixture.{name}Child", attributes, middle);
+    Define(root, baseline with { Name = name }, true);
+    Define(middle, different with { Name = name }, true);
+    Define(child, baseline with { Name = name }, false);
+    root.CreateType();
+    middle.CreateType();
+    child.CreateType();
+    return $"Fixture.{name}Child";
 }
 record Shape(string Name, Type[] Required, Type[] Optional, Type[] ReturnRequired, Type[] ReturnOptional, Type Parameter);
