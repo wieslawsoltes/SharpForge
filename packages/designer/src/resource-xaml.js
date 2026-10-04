@@ -38,7 +38,8 @@ function valueElement(value, type, key = '') {
   if (value?.Color) return `<SolidColorBrush${keyText} Color="${designerColorHex(value.Color)}" Opacity="${value.Opacity ?? 1}"/>`;
   const primitive = {string: 'x:String', bool: 'x:Boolean', int: 'x:Int32', double: 'x:Double'}[type];
   const name = primitive ?? short(type);
-  const text = valueText(value, type);
+  // Markup-extension escaping applies to attributes, not the literal text of an x:String element.
+  const text = type === 'string' ? value : valueText(value, type);
   if (text === null || text === undefined) authoringError('SFD1874', `Cannot serialize ${type} to WinUI XAML.`);
   return `<${name}${keyText}>${xml(text)}</${name}>`;
 }
