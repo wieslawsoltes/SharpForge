@@ -32,7 +32,14 @@ export const AsyncTryEmission = Base =>
         awaitsInFinally = this.isAsyncBody && !!node.finallyBlock && containsAwait(node.finallyBlock),
         awaitsInCatch = this.isAsyncBody && catches.some(clause => containsAwait(clause.block));
       if (!awaitsInFinally && !awaitsInCatch) return super.stmtTry(node);
-      if (awaitsInFinally) return this.tryWithMovedFinally(node, awaitsInCatch);
+      if (awaitsInFinally) {
+        const body = () => {
+          if (awaitsInCatch) return this.tryWithMovedCatches(node);
+          if (catches.length) return this.tryRegions(() => this.statement(node.body), catches, null);
+          return this.statement(node.body);
+        };
+        return this.movedFinally(body, () => this.statement(node.finallyBlock));
+      }
       if (!node.finallyBlock) return this.tryWithMovedCatches(node);
       return this.tryRegions(
         () => this.tryWithMovedCatches(node),
@@ -101,19 +108,17 @@ export const AsyncTryEmission = Base =>
       this.localLocation(this.rethrowSource).load();
       return this.rethrowCaptured();
     }
-    /** The finally block runs after the try statement, whichever way the body was left. */
-    tryWithMovedFinally(node, awaitsInCatch) {
+    /**
+     * A try-finally whose finally block awaits: the block runs after the body, whichever way the body was left.
+     * @param {() => void} body emits the protected statements  @param {() => void} finallyBlock emits the block
+     */
+    movedFinally(body, finallyBlock) {
       const il = this.il,
         core = this.core,
         pending = this.synthesizedLocal('<>s__pending', core.object),
         frame = { depthOutside: this.protectedDepth, branchSlot: this.temp(core.int), branches: [], after: il.newLabel() },
         proceed = il.newLabel(),
-        isException = il.newLabel(),
-        body = () => {
-          if (awaitsInCatch) return this.tryWithMovedCatches(node);
-          if (node.catches?.length) return this.tryRegions(() => this.statement(node.body), node.catches, null);
-          return this.statement(node.body);
-        };
+        isException = il.newLabel();
       il.emit('ldnull').emit('stloc', this.slotOf(pending)).emit('ldc.i4', 0).emit('stloc', frame.branchSlot);
       this.movedFinallyFrames ??= [];
       this.movedFinallyFrames.push(frame);
@@ -123,7 +128,7 @@ export const AsyncTryEmission = Base =>
         this.movedFinallyFrames.pop();
       }
       il.mark(frame.after);
-      this.statement(node.finallyBlock);
+      finallyBlock();
       if (!il.isReachable) return;
       il.emit('ldloc', this.slotOf(pending)).emit('brfalse', proceed);
       il.emit('ldloc', this.slotOf(pending)).emit('isinst', this.tokens.type(core.exception)).emit('dup').emit('brtrue', isException);

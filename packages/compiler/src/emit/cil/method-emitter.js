@@ -34,10 +34,13 @@ import { RecordEmission } from './records/emit-records.js';
 import { MultiDimensionalArrayEmission } from './emit-multidim-arrays.js';
 import { IndexValueEmission } from './emit-index-values.js';
 import { ListPatternEmission } from './emit-list-patterns.js';
+import { UserOperatorEmission } from './emit-user-operators.js';
 import { StateMachineEmission } from './emit-state-machine.js';
 import { IteratorEmission } from './emit-iterators.js';
 import { AsyncEmission } from './emit-async.js';
 import { AsyncTryEmission } from './emit-async-try.js';
+import { AsyncIteratorEmission } from './emit-async-iterators.js';
+import { ExpressionTreeEmission } from './emit-expression-trees.js';
 
 const families = [
   ConstantEmission,
@@ -71,10 +74,13 @@ const families = [
   MultiDimensionalArrayEmission,
   IndexValueEmission,
   ListPatternEmission,
+  UserOperatorEmission,
   StateMachineEmission,
   IteratorEmission,
   AsyncEmission,
   AsyncTryEmission,
+  AsyncIteratorEmission,
+  ExpressionTreeEmission,
 ];
 
 export class MethodEmitter extends families.reduce((composed, family) => family(composed), EmitterCore) {}

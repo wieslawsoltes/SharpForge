@@ -6,7 +6,7 @@
   "member-operators/equality-with-null-and-reference-comparison": ["diagnostics", "warnings", "bytecode", "cil", "directCil"],
   "member-operators/equality-without-equals-and-hash-code": ["diagnostics", "warnings"],
   "member-operators/short-circuit-requirements": ["diagnostics", "warnings"],
-  "member-operators/true-false-and-short-circuit": ["diagnostics", "warnings", "bytecode", "cil"],
+  "member-operators/true-false-and-short-circuit": ["diagnostics", "warnings", "bytecode", "cil", "directCil"],
   "member-operators/use-site-errors": ["diagnostics", "warnings"],
   "member-operators/user-defined-conversions": ["diagnostics", "warnings", "bytecode", "cil", "directCil"]
 }
