@@ -1,5 +1,5 @@
 /** Check reachable try starts without confusing catch exception injection with ordinary entry. */
-export function validateHandlerEntryHeights(method, offsets, heights, issue) {
+export function validateHandlerEntryHeights(method, offsets, heights, issue, options = {}) {
   let entries;
   for (const handler of method.handlers) {
     const index = offsets.get(handler.start);
@@ -9,7 +9,8 @@ export function validateHandlerEntryHeights(method, offsets, heights, issue) {
   }
   if (!entries) return;
   for (const handler of method.handlers) {
-    const entry = handler.flags === 0 && entries.get(offsets.get(handler.target));
+    const injectsException = handler.flags === 0 || (options.filteredHandlers === true && handler.flags === 1);
+    const entry = injectsException && entries.get(offsets.get(handler.target));
     if (entry?.height === 1) entry.exceptional = true;
   }
   let count = 0;
