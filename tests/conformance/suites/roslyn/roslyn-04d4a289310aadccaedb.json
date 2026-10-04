@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-04d4a289310aadccaedb",
+  "kind": "diagnostics",
+  "sourceText": "\nusing System;\nusing System.Threading.Tasks;\n\npublic interface I {}\npublic class C : I\n{\n    public static async Task Main()\n    {\n        await foreach (var i in new C())\n        {\n            Console.Write(i);\n        }\n    }\n    public sealed class Enumerator\n    {\n        public int Current { get; private set; }\n        public Task<bool> MoveNextAsync() => Task.FromResult(Current++ != 3);\n    }\n}\npublic static class Extensions1\n{\n    public static C.Enumerator GetAsyncEnumerator(this I self) => throw null;\n}\npublic static class Extensions2\n{ \n    public static int GetAsyncEnumerator(this C self) => 42;\n}",
+  "sourceSHA256": "357cb809efd28e44ee4056e748ce4235fcf1e44e81aa45f12ddfbe43bbf4500f",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenAwaitForeachTests.cs",
+    "sha256": "3c72028a71b56ed2c5aef9987e6e3104cd6d4d2bfe0a3ef090960b2314c59cf3",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenAwaitForeachTests.cs",
+    "license": "MIT",
+    "method": "TestGetAsyncEnumeratorPatternViaAmbiguousExtensionsWithMostSpecificReceiverWhenMostSpecificReceiverDoesntImplementPattern",
+    "offset": 550057
+  },
+  "langVersion": "9",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source, parseOptions: TestOptions.Regular9)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0117",
+        "severity": "error"
+      },
+      {
+        "code": "CS8412",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                    // (10,33): error CS0117: 'int' does not contain a definition for 'Current'\n                    //         await foreach (var i in new C())\n                    Diagnostic(ErrorCode.ERR_NoSuchMember, \"new C()\").WithArguments(\"int\", \"Current\").WithLocation(10, 33),\n                    // (10,33): error CS8412: Asynchronous foreach requires that the return type 'int' of 'Extensions2.GetAsyncEnumerator(C)' must have a suitable public 'MoveNextAsync' method and public 'Current' property\n                    //         await foreach (var i in new C())\n                    Diagnostic(ErrorCode.ERR_BadGetAsyncEnumerator, \"new C()\").WithArguments(\"int\", \"Extensions2.GetAsyncEnumerator(C)\").WithLocation(10, 33)\n                    ",
+  "unsupported": []
+}

@@ -19,6 +19,10 @@ function powerOfTwo(value) {
 
 /** Normalize PE target options and reject combinations that cannot be represented faithfully. */
 export function peOptions(options = {}) {
+  if (options.deterministic !== undefined && typeof options.deterministic !== 'boolean') throw new CilError('Deterministic must be boolean');
+  if (options.deterministic && (options.timestamp !== undefined || options.checksum !== undefined)) {
+    throw new CilError('Deterministic PE computes its own timestamp and checksum');
+  }
   const platform = options.platform ?? 'anycpu';
   const target = PEPlatforms[platform];
   if (!target) throw new CilError(`Unsupported PE platform: ${platform}`);

@@ -1,0 +1,35 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "standard-48eea8a8536d86bdc102",
+  "kind": "spec",
+  "sourceText": "using System;\nusing System.Collections.Generic;\nclass Test\n{\n    static double x = Math.Sqrt(2.0);\n    int i = 100;\n    string s = \"Hello\";\n\n    static void Main()\n    {\n        Test a = new Test();\n        Console.WriteLine($\"x = {x}, i = {a.i}, s = {a.s}\");\n    }\n}",
+  "unsupported": [
+    "Runtime expectation requires upstream output/exception/argument extraction"
+  ],
+  "target": "exe",
+  "expected": {
+    "diagnostics": [],
+    "ignoredWarnings": []
+  },
+  "sourceSHA256": "1876a2395ad56e9b81432a2f46d54864ae8feb6d4bf21ba569dd3818c7c37cd1",
+  "originalSource": "class Test\n{\n    static double x = Math.Sqrt(2.0);\n    int i = 100;\n    string s = \"Hello\";\n\n    static void Main()\n    {\n        Test a = new Test();\n        Console.WriteLine($\"x = {x}, i = {a.i}, s = {a.s}\");\n    }\n}",
+  "metadata": {
+    "template": "standalone-console",
+    "name": "VariableInitializers1",
+    "inferOutput": true
+  },
+  "langVersion": "8.0",
+  "featureId": "csharp-1-0-classes",
+  "mappingScope": "Standard chapter to inventory feature; language level is pinned draft-v8, not feature introduction version",
+  "provenance": {
+    "repository": "dotnet/csharpstandard",
+    "commit": "107068a0fee88b13e9c46ff64f98343ff29ff8ee",
+    "path": "standard/classes.md",
+    "sha256": "590768cdc57083dae7d03ff027e638333a6d8da8662bebc30e4efab661d13ecf",
+    "url": "https://github.com/dotnet/csharpstandard/blob/107068a0fee88b13e9c46ff64f98343ff29ff8ee/standard/classes.md",
+    "license": "MIT",
+    "example": "VariableInitializers1",
+    "offsetInUnquotedMarkdown": 94602
+  }
+}

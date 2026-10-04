@@ -1,0 +1,45 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-abe05f550911f4d47695",
+  "kind": "diagnostics",
+  "sourceText": "using System;\n\nvar c = new C();\nAction a = c.E;\nc.E();\n\npartial class C\n{\n    public partial event Action E;\n    public partial event Action E { add { } remove { } }\n\n    void M()\n    {\n        Action a = this.E;\n        this.E();\n    }\n}",
+  "sourceSHA256": "b38d7a508cfa9a822395405cfd8e4599410cc2f47988db93ca8e53e596668ba6",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/PartialEventsAndConstructorsTests.cs",
+    "sha256": "22775d4d8cac0a450357a9198c2dea11242fe08f897622abc12ce3bd5b713537",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/PartialEventsAndConstructorsTests.cs",
+    "license": "MIT",
+    "method": "Use_EventAsValue",
+    "offset": 117732
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0079",
+        "severity": "error"
+      },
+      {
+        "code": "CS0079",
+        "severity": "error"
+      },
+      {
+        "code": "CS0079",
+        "severity": "error"
+      },
+      {
+        "code": "CS0079",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n            // (4,14): error CS0079: The event 'C.E' can only appear on the left hand side of += or -=\n            // Action a = c.E;\n            Diagnostic(ErrorCode.ERR_BadEventUsageNoField, \"E\").WithArguments(\"C.E\").WithLocation(4, 14),\n            // (5,3): error CS0079: The event 'C.E' can only appear on the left hand side of += or -=\n            // c.E();\n            Diagnostic(ErrorCode.ERR_BadEventUsageNoField, \"E\").WithArguments(\"C.E\").WithLocation(5, 3),\n            // (14,25): error CS0079: The event 'C.E' can only appear on the left hand side of += or -=\n            //         Action a = this.E;\n            Diagnostic(ErrorCode.ERR_BadEventUsageNoField, \"E\").WithArguments(\"C.E\").WithLocation(14, 25),\n            // (15,14): error CS0079: The event 'C.E' can only appear on the left hand side of += or -=\n            //         this.E();\n            Diagnostic(ErrorCode.ERR_BadEventUsageNoField, \"E\").WithArguments(\"C.E\").WithLocation(15, 14)",
+  "unsupported": []
+}

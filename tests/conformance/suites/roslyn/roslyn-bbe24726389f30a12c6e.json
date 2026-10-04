@@ -1,0 +1,53 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-bbe24726389f30a12c6e",
+  "kind": "diagnostics",
+  "sourceText": "using System;\nclass C\n{\n    static void Main()\n    {\n        Console.WriteLine(0E1M);\n        Console.WriteLine(0E10M);\n        Console.WriteLine(-0E10M);\n        Console.WriteLine(0.00E10M);\n        Console.WriteLine(-0.00E10M);\n        Console.WriteLine(0E100M);\n    }\n}",
+  "sourceSHA256": "089032f50bb7efba86bfbf7ec32eb64bb8bea393b7c10e3f8290f8633716e023",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenTests.cs",
+    "sha256": "dae53259abfabce8d6076c19e32fbeece50934d98a2aa892d9416a8e94b054d4",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenTests.cs",
+    "license": "MIT",
+    "method": "DecimalZero_BreakingChange",
+    "offset": 265081
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0594",
+        "severity": "error"
+      },
+      {
+        "code": "CS0594",
+        "severity": "error"
+      },
+      {
+        "code": "CS0594",
+        "severity": "error"
+      },
+      {
+        "code": "CS0594",
+        "severity": "error"
+      },
+      {
+        "code": "CS0594",
+        "severity": "error"
+      },
+      {
+        "code": "CS0594",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                    // (6,27): error CS0594: Floating-point constant is outside the range of type 'decimal'\n                    Diagnostic(ErrorCode.ERR_FloatOverflow, \"0E1M\").WithArguments(\"decimal\").WithLocation(6, 27),\n                    // (7,27): error CS0594: Floating-point constant is outside the range of type 'decimal'\n                    Diagnostic(ErrorCode.ERR_FloatOverflow, \"0E10M\").WithArguments(\"decimal\").WithLocation(7, 27),\n                    // (8,28): error CS0594: Floating-point constant is outside the range of type 'decimal'\n                    Diagnostic(ErrorCode.ERR_FloatOverflow, \"0E10M\").WithArguments(\"decimal\").WithLocation(8, 28),\n                    // (9,27): error CS0594: Floating-point constant is outside the range of type 'decimal'\n                    Diagnostic(ErrorCode.ERR_FloatOverflow, \"0.00E10M\").WithArguments(\"decimal\").WithLocation(9, 27),\n                    // (10,28): error CS0594: Floating-point constant is outside the range of type 'decimal'\n                    Diagnostic(ErrorCode.ERR_FloatOverflow, \"0.00E10M\").WithArguments(\"decimal\").WithLocation(10, 28),\n                    // (11,27): error CS0594: Floating-point constant is outside the range of type 'decimal'\n                    Diagnostic(ErrorCode.ERR_FloatOverflow, \"0E100M\").WithArguments(\"decimal\").WithLocation(11, 27)",
+  "unsupported": []
+}

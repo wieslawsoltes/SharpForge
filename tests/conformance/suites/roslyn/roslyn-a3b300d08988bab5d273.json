@@ -1,0 +1,56 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-a3b300d08988bab5d273",
+  "kind": "diagnostics",
+  "sourceText": "\nusing System;\nstatic class @m\n{\n    public static int NotAConstant()\n    {\n        return 9;\n    }\n}\n\npublic enum @e1\n{\n    a\n}\n\n[AttributeUsage(AttributeTargets.All, AllowMultiple = true)]\nclass XAttribute : Attribute\n{\n    public XAttribute()\n    {\n    }\n    public XAttribute(decimal d)\n    {\n    }\n    public XAttribute(ref int i)\n    {\n    }\n    public XAttribute(e1 e)\n    {\n    }\n}\n\n[XDoesNotExist()]\n[X(1m)]\n[X(1)]\n[X(e1.a)]\n[X(A.dyn)]\n[X(m.NotAConstant() + 2)]\nclass A\n{\n  public const dynamic dyn = null;\n}\n",
+  "sourceSHA256": "9db99923084d8006dfb737fe6cf274a33888a9f54246bcc63f85539aa17ffef4",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests.cs",
+    "sha256": "0071ca5e138cfceb6e147b3532046d29be4802f815d77ab3deaf17081480ec2e",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests.cs",
+    "license": "MIT",
+    "method": "AttributeConstructorErrors1",
+    "offset": 232545
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(@\"\nusing System;\nstatic class @m\n{\n    public static int NotAConstant()\n    {\n        return 9;\n    }\n}\n\npublic enum @e1\n{\n    a\n}\n\n[AttributeUsage(AttributeTargets.All, AllowMultiple = true)]\nclass XAttribute : Attribute\n{\n    public XAttribute()\n    {\n    }\n    public XAttribute(decimal d)\n    {\n    }\n    public XAttribute(ref int i)\n    {\n    }\n    public XAttribute(e1 e)\n    {\n    }\n}\n\n[XDoesNotExist()]\n[X(1m)]\n[X(1)]\n[X(e1.a)]\n[X(A.dyn)]\n[X(m.NotAConstant() + 2)]\nclass A\n{\n  public const dynamic dyn = null;\n}\n\", options: TestOptions.ReleaseDll)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0246",
+        "severity": "error"
+      },
+      {
+        "code": "CS0246",
+        "severity": "error"
+      },
+      {
+        "code": "CS0181",
+        "severity": "error"
+      },
+      {
+        "code": "CS0181",
+        "severity": "error"
+      },
+      {
+        "code": "CS0121",
+        "severity": "error"
+      },
+      {
+        "code": "CS0181",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (33,2): error CS0246: The type or namespace name 'XDoesNotExistAttribute' could not be found (are you missing a using directive or an assembly reference?)\n                // [XDoesNotExist()]\n                Diagnostic(ErrorCode.ERR_SingleTypeNameNotFound, \"XDoesNotExist\").WithArguments(\"XDoesNotExistAttribute\").WithLocation(33, 2),\n                // (33,2): error CS0246: The type or namespace name 'XDoesNotExist' could not be found (are you missing a using directive or an assembly reference?)\n                // [XDoesNotExist()]\n                Diagnostic(ErrorCode.ERR_SingleTypeNameNotFound, \"XDoesNotExist\").WithArguments(\"XDoesNotExist\").WithLocation(33, 2),\n                // (34,2): error CS0181: Attribute constructor parameter 'd' has type 'decimal', which is not a valid attribute parameter type\n                // [X(1m)]\n                Diagnostic(ErrorCode.ERR_BadAttributeParamType, \"X\").WithArguments(\"d\", \"decimal\").WithLocation(34, 2),\n                // (35,2): error CS0181: Attribute constructor parameter 'd' has type 'decimal', which is not a valid attribute parameter type\n                // [X(1)]\n                Diagnostic(ErrorCode.ERR_BadAttributeParamType, \"X\").WithArguments(\"d\", \"decimal\").WithLocation(35, 2),\n                // (37,2): error CS0121: The call is ambiguous between the following methods or properties: 'XAttribute.XAttribute(decimal)' and 'XAttribute.XAttribute(e1)'\n                // [X(A.dyn)]\n                Diagnostic(ErrorCode.ERR_AmbigCall, \"X(A.dyn)\").WithArguments(\"XAttribute.XAttribute(decimal)\", \"XAttribute.XAttribute(e1)\").WithLocation(37, 2),\n                // (38,2): error CS0181: Attribute constructor parameter 'd' has type 'decimal', which is not a valid attribute parameter type\n                // [X(m.NotAConstant() + 2)]\n                Diagnostic(ErrorCode.ERR_BadAttributeParamType, \"X\").WithArguments(\"d\", \"decimal\").WithLocation(38, 2)",
+  "unsupported": [
+    "Upstream reference profile differs from SharpForge closed framework; references retained for reference-qualified adaptation",
+    "Custom upstream compilation/parse options require an adapter"
+  ]
+}

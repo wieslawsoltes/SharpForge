@@ -1,0 +1,32 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "runtime-63748ae68b9ceb73e4b0",
+  "kind": "runtime",
+  "sourceText": "// Licensed to the .NET Foundation under one or more agreements.\n// The .NET Foundation licenses this file to you under the MIT license.\n\n\nusing System;\n\n\n\nnamespace BoxTest_instance_cs\n{\n    public abstract class BaseTest\n    {\n        protected abstract object Fibonacci2(object num, object flag);\n    }\n\n    public class Test : BaseTest\n    {\n        private object _num;\n\n        protected object Fibonacci(object num, object flag)\n        {\n            if (num.GetType() != typeof(float) ||\n                flag.GetType() != typeof(bool))\n                throw new Exception();\n\n            return Fibonacci2(num, flag);\n        }\n\n        protected override object Fibonacci2(object num, object flag)\n        {\n            object N;\n            if ((float)num < 1.1)\n                N = num;\n            else\n                N = (float)Fibonacci((float)num - 2.0f, false) + (float)Fibonacci((float)num - 1.0f, flag);\n            if ((bool)flag)\n                Console.Write(N.ToString() + \" \");\n            return N;\n        }\n\n        private Test(object num)\n        {\n            _num = (float)(double)num;\n        }\n\n        public object Print()\n        {\n            Fibonacci(_num, true);\n            Console.WriteLine();\n            return _num;\n        }\n\n        \n        \n        public static void Main()\n        {\n            Test test = new Test(20.0d);\n            test.Print();\n            Console.WriteLine(\"*** PASSED ***\");\n        }\n    }\n}\n",
+  "language": "csharp",
+  "unsupported": [
+    "Requires exactly one static int test entry point"
+  ],
+  "opcodeFamilies": [],
+  "sourceSHA256": "3071185586438565ef35998c9b6d9dca57a8f3abea6280c3ec0136463121db36",
+  "originalSource": "// Licensed to the .NET Foundation under one or more agreements.\n// The .NET Foundation licenses this file to you under the MIT license.\n\n\nusing System;\nusing Xunit;\n\n\nnamespace BoxTest_instance_cs\n{\n    public abstract class BaseTest\n    {\n        protected abstract object Fibonacci2(object num, object flag);\n    }\n\n    public class Test : BaseTest\n    {\n        private object _num;\n\n        protected object Fibonacci(object num, object flag)\n        {\n            if (num.GetType() != typeof(float) ||\n                flag.GetType() != typeof(bool))\n                throw new Exception();\n\n            return Fibonacci2(num, flag);\n        }\n\n        protected override object Fibonacci2(object num, object flag)\n        {\n            object N;\n            if ((float)num < 1.1)\n                N = num;\n            else\n                N = (float)Fibonacci((float)num - 2.0f, false) + (float)Fibonacci((float)num - 1.0f, flag);\n            if ((bool)flag)\n                Console.Write(N.ToString() + \" \");\n            return N;\n        }\n\n        private Test(object num)\n        {\n            _num = (float)(double)num;\n        }\n\n        public object Print()\n        {\n            Fibonacci(_num, true);\n            Console.WriteLine();\n            return _num;\n        }\n\n        [Fact]\n        [OuterLoop]\n        public static void TestEntryPoint()\n        {\n            Test test = new Test(20.0d);\n            test.Print();\n            Console.WriteLine(\"*** PASSED ***\");\n        }\n    }\n}\n",
+  "provenance": {
+    "repository": "dotnet/runtime",
+    "commit": "081d220c0a773ffb7c6bea6b48727833576a65ef",
+    "path": "src/tests/JIT/Methodical/Boxing/callconv/instance.cs",
+    "sha256": "fa1991188b9fde06927081232487d5fccfc797a8417311ba124dbb3cadcf9a2c",
+    "url": "https://github.com/dotnet/runtime/blob/081d220c0a773ffb7c6bea6b48727833576a65ef/src/tests/JIT/Methodical/Boxing/callconv/instance.cs",
+    "license": "MIT"
+  },
+  "namespace": "JIT",
+  "langVersion": "preview",
+  "target": "exe",
+  "references": [
+    "pinned net10.0 reference pack"
+  ],
+  "expected": {
+    "exitCode": 100
+  },
+  "adaptation": "Remove Fact/OuterLoop discovery attributes and Xunit using; rename TestEntryPoint to Main. Test body unchanged."
+}

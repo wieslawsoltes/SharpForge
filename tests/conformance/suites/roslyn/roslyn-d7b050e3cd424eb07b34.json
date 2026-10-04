@@ -1,0 +1,39 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-d7b050e3cd424eb07b34",
+  "kind": "diagnostics",
+  "sourceText": "\nclass Program\n{\n    public static ref int Main(string[] args) { throw new System.Exception(); }\n}",
+  "sourceSHA256": "af898999b21a6a4db4f9e48d16253370bede8c0900058b4e85d1a3bdeee03e7c",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/Emit/EntryPointTests.cs",
+    "sha256": "84a49b5872a45de355d4ac196b7221b2d05e37d0f4411cf7fa7566336209d2bb",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/Emit/EntryPointTests.cs",
+    "license": "MIT",
+    "method": "RefIntReturnMainWithParams",
+    "offset": 57968
+  },
+  "langVersion": "preview",
+  "target": "exe",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source, options: TestOptions.DebugExe)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0028",
+        "severity": "warning"
+      },
+      {
+        "code": "CS5001",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (4,27): warning CS0028: 'Program.Main(string[])' has the wrong signature to be an entry point\n                //     public static ref int Main(string[] args) { throw new System.Exception(); }\n                Diagnostic(ErrorCode.WRN_InvalidMainSig, \"Main\").WithArguments(\"Program.Main(string[])\"),\n                // error CS5001: Program does not contain a static 'Main' method suitable for an entry point\n                Diagnostic(ErrorCode.ERR_NoEntryPoint)",
+  "unsupported": [
+    "Custom upstream compilation/parse options require an adapter"
+  ]
+}

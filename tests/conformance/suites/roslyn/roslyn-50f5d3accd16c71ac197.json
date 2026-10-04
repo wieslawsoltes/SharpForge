@@ -1,0 +1,28 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-50f5d3accd16c71ac197",
+  "kind": "diagnostics",
+  "sourceText": "assert(null, \"default\");\nassert(\"\", \"default\");\nassert(\"DotnetDebugger.setDebuggerProperty\", \"19\");\nassert(\"other\", \"default\");\nSystem.Console.Write(\"RAN\");\n\nvoid assert(string input, string expected = null)\n{\n    if (C.M(input) != (expected ?? input))\n    {\n        throw new System.Exception($\"{input} produced {C.M(input)}\");\n    }\n}\n\npublic class C\n{\n    public static string M(string value)\n    {\n        switch (value)\n        {\n            case \"Target.attachToTarget\":\n                return \"1\";\n\n            case \"Debugger.enable\":\n                return \"2\";\n\n            case \"Debugger.getScriptSource\":\n                return \"3\";\n\n            case \"Runtime.compileScript\":\n                return \"4\";\n\n            case \"Debugger.getPossibleBreakpoints\":\n                return \"5\";\n\n            case \"Debugger.setBreakpoint\":\n                return \"6\";\n\n            case \"Debugger.setBreakpointByUrl\":\n                return \"7\";\n\n            case \"Debugger.removeBreakpoint\":\n                return \"8\";\n\n            case \"Debugger.resume\":\n                return \"9\";\n\n            case \"Debugger.stepInto\":\n                return \"10\";\n\n            case \"Debugger.setVariableValue\":\n                return \"11\";\n\n            case \"Debugger.stepOut\":\n                return \"12\";\n\n            case \"Debugger.stepOver\":\n                return \"13\";\n\n            case \"Runtime.evaluate\":\n                return \"14\";\n\n            case \"Debugger.evaluateOnCallFrame\":\n                return \"15\";\n\n            case \"Runtime.getProperties\":\n                return \"16\";\n\n            case \"Runtime.releaseObject\":\n                return \"17\";\n\n            case \"Debugger.setPauseOnExceptions\":\n                return \"18\";\n\n            case \"DotnetDebugger.setDebuggerProperty\":\n                return \"19\";\n\n            case \"DotnetDebugger.setNextIP\":\n                return \"20\";\n\n            case \"DotnetDebugger.applyUpdates\":\n                return \"21\";\n\n            case \"DotnetDebugger.addSymbolServerUrl\":\n                return \"22\";\n\n            case \"DotnetDebugger.getMethodLocation\":\n                return \"23\";\n\n            case \"Runtime.callFunctionOn\":\n                return \"24\";\n\n            default:\n                return \"default\";\n        }\n    }\n}",
+  "sourceSHA256": "c1f9886575651ba317aecd8fe36004e6b0ff753811ce6cacd26fe0d5fc6975fd",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit2/CodeGen/CodeGenLengthBasedSwitchTests.cs",
+    "sha256": "f4ddec53df1ec1373a003dd48fa22fbb4d028d7926ae9037faed2b953df6ab4d",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit2/CodeGen/CodeGenLengthBasedSwitchTests.cs",
+    "license": "MIT",
+    "method": "AcceptCommand",
+    "offset": 361701
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source)",
+  "expected": {
+    "diagnostics": [],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "",
+  "unsupported": []
+}

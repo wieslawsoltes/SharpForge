@@ -16,6 +16,7 @@ function add(owner,name,parameters,returnType,isStatic,implementation,contract=n
   const key=intrinsicKey(descriptor);
   definitions.set(key,Object.freeze({key,descriptor,implementation,contract}));
 }
+for(const owner of ['System.IntPtr','System.UIntPtr'])add(owner,'get_Size',[],'int',true,'nativeSize');
 const primitive=['int','uint','long','ulong','double','float','bool','char','string','object'];
 for(const name of ['Write','WriteLine'])for(const type of primitive)add('System.Console',name,[type],'void',true,'console');
 add('System.Console','WriteLine',[],'void',true,'console');

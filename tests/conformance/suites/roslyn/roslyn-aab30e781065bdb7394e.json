@@ -1,0 +1,31 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-aab30e781065bdb7394e",
+  "kind": "diagnostics",
+  "sourceText": "#nullable enable\nextern alias A2;\nclass B\n{\n    static void F(A2::A? a) { }\n}\n",
+  "sourceSHA256": "38fbca2004cb0db123ff5f5b66fd3144c5ed58993636d6cf4e1e372672c40b3b",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit2/PDB/PDBUsingTests.cs",
+    "sha256": "3d32b8748a2018c59c39c0b4c163de7666786e1a93099cc9dd77a552f8c8f8fc",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit2/PDB/PDBUsingTests.cs",
+    "license": "MIT",
+    "method": "ExternAliases5",
+    "offset": 31373
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "references: new[] { refA }, options: TestOptions.DebugDll)",
+  "options": "(sourceB, references: new[] { refA }, options: TestOptions.DebugDll)",
+  "expected": {
+    "diagnostics": [],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "",
+  "unsupported": [
+    "Upstream reference profile differs from SharpForge closed framework; references retained for reference-qualified adaptation",
+    "Custom upstream compilation/parse options require an adapter"
+  ]
+}

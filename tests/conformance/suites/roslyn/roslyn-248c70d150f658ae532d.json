@@ -1,0 +1,80 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-248c70d150f658ae532d",
+  "kind": "diagnostics",
+  "sourceText": "\nusing System;\nclass Program\n{\n    unsafe void M0((int, int, int, int, int, int, int, int*) p)\n    {\n        (int, int, int, int, int, int, int, int*) t1 = p;\n        var t2 = (1, 2, 3, 4, 5, 6, 7, (int*)null);\n        var t3 = new ValueTuple<int, int, int, int, int, int, int, ValueTuple<int, int*>> ();\n        var t4 = new ValueTuple<int, int, int, int, int, int, int, (int, int*)> ();\n        ValueTuple<int, int, int, int, int, int, int, ValueTuple<int, int*>> t5 = t3;\n        ValueTuple<int, int, int, int, int, int, int, (int, int*)> t6 = t4;\n    }\n\n    unsafe void M1((int, int, int, int, int, int, int, int, int, int, int, int, int, int, int, int*) q)\n    {\n        (int, int, int, int, int, int, int, int, int, int, int, int, int, int, int, int*) v1 = q;\n        var v2 = (1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, (int*)null);\n    }\n}",
+  "sourceSHA256": "bf2a2dbabfc7360eefcc04c02241bac0ff57a6c3518a810dd00de043a46c637a",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenTupleTest.cs",
+    "sha256": "30eaaa406ddf4fd551ad7581f8ad130bc9dbefa8a64ff2b824d8b5236be03c9a",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenTupleTest.cs",
+    "license": "MIT",
+    "method": "LongTupleConstraints",
+    "offset": 415859
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "references: s_valueTupleRefs,\n               options: TestOptions.UnsafeDebugDll)",
+  "options": "(source, references: s_valueTupleRefs,\n               options: TestOptions.UnsafeDebugDll)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0306",
+        "severity": "error"
+      },
+      {
+        "code": "CS0306",
+        "severity": "error"
+      },
+      {
+        "code": "CS0306",
+        "severity": "error"
+      },
+      {
+        "code": "CS0306",
+        "severity": "error"
+      },
+      {
+        "code": "CS0306",
+        "severity": "error"
+      },
+      {
+        "code": "CS0306",
+        "severity": "error"
+      },
+      {
+        "code": "CS0306",
+        "severity": "error"
+      },
+      {
+        "code": "CS0306",
+        "severity": "error"
+      },
+      {
+        "code": "CS0219",
+        "severity": "warning"
+      },
+      {
+        "code": "CS0306",
+        "severity": "error"
+      },
+      {
+        "code": "CS0306",
+        "severity": "error"
+      },
+      {
+        "code": "CS0219",
+        "severity": "warning"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (15,102): error CS0306: The type 'int*' may not be used as a type argument\n                //     unsafe void M1((int, int, int, int, int, int, int, int, int, int, int, int, int, int, int, int*) q)\n                Diagnostic(ErrorCode.ERR_BadTypeArgument, \"q\").WithArguments(\"int*\").WithLocation(15, 102),\n                // (5,62): error CS0306: The type 'int*' may not be used as a type argument\n                //     unsafe void M0((int, int, int, int, int, int, int, int*) p)\n                Diagnostic(ErrorCode.ERR_BadTypeArgument, \"p\").WithArguments(\"int*\").WithLocation(5, 62),\n                // (7,45): error CS0306: The type 'int*' may not be used as a type argument\n                //         (int, int, int, int, int, int, int, int*) t1 = p;\n                Diagnostic(ErrorCode.ERR_BadTypeArgument, \"int*\").WithArguments(\"int*\").WithLocation(7, 45),\n                // (8,40): error CS0306: The type 'int*' may not be used as a type argument\n                //         var t2 = (1, 2, 3, 4, 5, 6, 7, (int*)null);\n                Diagnostic(ErrorCode.ERR_BadTypeArgument, \"(int*)null\").WithArguments(\"int*\").WithLocation(8, 40),\n                // (9,84): error CS0306: The type 'int*' may not be used as a type argument\n                //         var t3 = new ValueTuple<int, int, int, int, int, int, int, ValueTuple<int, int*>> ();\n                Diagnostic(ErrorCode.ERR_BadTypeArgument, \"int*\").WithArguments(\"int*\").WithLocation(9, 84),\n                // (10,74): error CS0306: The type 'int*' may not be used as a type argument\n                //         var t4 = new ValueTuple<int, int, int, int, int, int, int, (int, int*)> ();\n                Diagnostic(ErrorCode.ERR_BadTypeArgument, \"int*\").WithArguments(\"int*\").WithLocation(10, 74),\n                // (11,71): error CS0306: The type 'int*' may not be used as a type argument\n                //         ValueTuple<int, int, int, int, int, int, int, ValueTuple<int, int*>> t5 = t3;\n                Diagnostic(ErrorCode.ERR_BadTypeArgument, \"int*\").WithArguments(\"int*\").WithLocation(11, 71),\n                // (12,61): error CS0306: The type 'int*' may not be used as a type argument\n                //         ValueTuple<int, int, int, int, int, int, int, (int, int*)> t6 = t4;\n                Diagnostic(ErrorCode.ERR_BadTypeArgument, \"int*\").WithArguments(\"int*\").WithLocation(12, 61),\n                // (8,13): warning CS0219: The variable 't2' is assigned but its value is never used\n                //         var t2 = (1, 2, 3, 4, 5, 6, 7, (int*)null);\n                Diagnostic(ErrorCode.WRN_UnreferencedVarAssg, \"t2\").WithArguments(\"t2\").WithLocation(8, 13),\n                // (17,85): error CS0306: The type 'int*' may not be used as a type argument\n                //         (int, int, int, int, int, int, int, int, int, int, int, int, int, int, int, int*) v1 = q;\n                Diagnostic(ErrorCode.ERR_BadTypeArgument, \"int*\").WithArguments(\"int*\").WithLocation(17, 85),\n                // (18,70): error CS0306: The type 'int*' may not be used as a type argument\n                //         var v2 = (1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, (int*)null);\n                Diagnostic(ErrorCode.ERR_BadTypeArgument, \"(int*)null\").WithArguments(\"int*\").WithLocation(18, 70),\n                // (18,13): warning CS0219: The variable 'v2' is assigned but its value is never used\n                //         var v2 = (1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, (int*)null);\n                Diagnostic(ErrorCode.WRN_UnreferencedVarAssg, \"v2\").WithArguments(\"v2\").WithLocation(18, 13)\n            ",
+  "unsupported": [
+    "Upstream reference profile differs from SharpForge closed framework; references retained for reference-qualified adaptation",
+    "Custom upstream compilation/parse options require an adapter"
+  ]
+}

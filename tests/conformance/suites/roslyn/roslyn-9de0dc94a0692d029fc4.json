@@ -1,0 +1,60 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-9de0dc94a0692d029fc4",
+  "kind": "diagnostics",
+  "sourceText": "\nclass C\n{\n    (string, string) M()\n    {\n        var x = (\"Alice\", \"Bob\");\n        System.Console.WriteLine($\"{x.Item1}\");\n        return x;\n    }\n\n    void M2((int a, int b) y)\n    {\n        System.Console.WriteLine($\"{y.Item1}\");\n        System.Console.WriteLine($\"{y.a}\");\n        System.Console.WriteLine($\"{y.Item2}\");\n        System.Console.WriteLine($\"{y.b}\");\n    }\n}\n\nnamespace System\n{\n    public struct ValueTuple<T1, T2>\n    {\n        public int Item2;\n\n        public ValueTuple(T1 item1, T2 item2)\n        {\n            this.Item2 = 2;\n        }\n    }\n}\n",
+  "sourceSHA256": "66d67368c669d9bbc25b70ff68a2e7f8207c70ab6fd843dcba40f6d9411f3913",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenTupleTest.cs",
+    "sha256": "30eaaa406ddf4fd551ad7581f8ad130bc9dbefa8a64ff2b824d8b5236be03c9a",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenTupleTest.cs",
+    "license": "MIT",
+    "method": "UnderlyingTypeMemberWithWrongSignature_2",
+    "offset": 161405
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source, assemblyName: \"comp\")",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS8137",
+        "severity": "error"
+      },
+      {
+        "code": "CS0229",
+        "severity": "error"
+      },
+      {
+        "code": "CS8128",
+        "severity": "error"
+      },
+      {
+        "code": "CS8128",
+        "severity": "error"
+      },
+      {
+        "code": "CS8128",
+        "severity": "error"
+      },
+      {
+        "code": "CS0229",
+        "severity": "error"
+      },
+      {
+        "code": "CS8128",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (11,13): error CS8137: Cannot define a class or member that utilizes tuples because the compiler required type 'System.Runtime.CompilerServices.TupleElementNamesAttribute' cannot be found. Are you missing a reference?\n                //     void M2((int a, int b) y)\n                Diagnostic(ErrorCode.ERR_TupleElementNamesAttributeMissing, \"(int a, int b)\").WithArguments(\"System.Runtime.CompilerServices.TupleElementNamesAttribute\").WithLocation(11, 13),\n                // (28,18): error CS0229: Ambiguity between '(T1, T2).Item2' and '(T1, T2).Item2'\n                //             this.Item2 = 2;\n                Diagnostic(ErrorCode.ERR_AmbigMember, \"Item2\").WithArguments(\"(T1, T2).Item2\", \"(T1, T2).Item2\").WithLocation(28, 18),\n                // (7,39): error CS8128: Member 'Item1' was not found on type '(T1, T2)' from assembly 'comp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null'.\n                //         System.Console.WriteLine($\"{x.Item1}\");\n                Diagnostic(ErrorCode.ERR_PredefinedTypeMemberNotFoundInAssembly, \"Item1\").WithArguments(\"Item1\", \"(T1, T2)\", \"comp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null\").WithLocation(7, 39),\n                // (13,39): error CS8128: Member 'Item1' was not found on type '(T1, T2)' from assembly 'comp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null'.\n                //         System.Console.WriteLine($\"{y.Item1}\");\n                Diagnostic(ErrorCode.ERR_PredefinedTypeMemberNotFoundInAssembly, \"Item1\").WithArguments(\"Item1\", \"(T1, T2)\", \"comp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null\").WithLocation(13, 39),\n                // (14,39): error CS8128: Member 'Item1' was not found on type '(T1, T2)' from assembly 'comp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null'.\n                //         System.Console.WriteLine($\"{y.a}\");\n                Diagnostic(ErrorCode.ERR_PredefinedTypeMemberNotFoundInAssembly, \"a\").WithArguments(\"Item1\", \"(T1, T2)\", \"comp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null\").WithLocation(14, 39),\n                // (15,39): error CS0229: Ambiguity between '(int a, int b).Item2' and '(int a, int b).Item2'\n                //         System.Console.WriteLine($\"{y.Item2}\");\n                Diagnostic(ErrorCode.ERR_AmbigMember, \"Item2\").WithArguments(\"(int a, int b).Item2\", \"(int a, int b).Item2\").WithLocation(15, 39),\n                // (16,39): error CS8128: Member 'Item2' was not found on type '(T1, T2)' from assembly 'comp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null'.\n                //         System.Console.WriteLine($\"{y.b}\");\n                Diagnostic(ErrorCode.ERR_PredefinedTypeMemberNotFoundInAssembly, \"b\").WithArguments(\"Item2\", \"(T1, T2)\", \"comp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null\").WithLocation(16, 39)\n                ",
+  "unsupported": [
+    "Upstream reference profile differs from SharpForge closed framework; references retained for reference-qualified adaptation",
+    "Custom upstream compilation/parse options require an adapter"
+  ]
+}

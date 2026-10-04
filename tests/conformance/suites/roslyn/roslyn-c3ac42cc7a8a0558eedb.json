@@ -1,0 +1,49 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-c3ac42cc7a8a0558eedb",
+  "kind": "diagnostics",
+  "sourceText": "\npublic class C\n{\n    int? WriteOnlyProperty { set {} }\n    int? ReadOnlyProperty { get; }\n\n    public static void Main()\n    {\n        var c = new C();\n        c.WriteOnlyProperty ??= 1; // Non rvalue write only\n        c.ReadOnlyProperty ??= 1; // Non lvalue readonly\n        GetInt() ??= 1; // Non lvalue method invocation\n        GetInt ??= null; // Non lvalue method group\n        () => {} ??= null; // Non lvalue lambda\n    }\n\n    static int? GetInt() => null;\n}\n",
+  "sourceSHA256": "febecf86fca384107ad09a1c1b79083670e41a65e0d7bff7096b371cd4eb4cc6",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenNullCoalescingAssignmentTests.cs",
+    "sha256": "14d37a1c90475a8d190ab227c55d1f41260459c0a6f80d570d1736b34d3ab914",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenNullCoalescingAssignmentTests.cs",
+    "license": "MIT",
+    "method": "InvalidLHS",
+    "offset": 15413
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(@\"\npublic class C\n{\n    int? WriteOnlyProperty { set {} }\n    int? ReadOnlyProperty { get; }\n\n    public static void Main()\n    {\n        var c = new C();\n        c.WriteOnlyProperty ??= 1; // Non rvalue write only\n        c.ReadOnlyProperty ??= 1; // Non lvalue readonly\n        GetInt() ??= 1; // Non lvalue method invocation\n        GetInt ??= null; // Non lvalue method group\n        () => {} ??= null; // Non lvalue lambda\n    }\n\n    static int? GetInt() => null;\n}\n\")",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0154",
+        "severity": "error"
+      },
+      {
+        "code": "CS0200",
+        "severity": "error"
+      },
+      {
+        "code": "CS0131",
+        "severity": "error"
+      },
+      {
+        "code": "CS1656",
+        "severity": "error"
+      },
+      {
+        "code": "CS0131",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (10,9): error CS0154: The property or indexer 'C.WriteOnlyProperty' cannot be used in this context because it lacks the get accessor\n                //         c.WriteOnlyProperty ??= 1; // Non rvalue write only\n                Diagnostic(ErrorCode.ERR_PropertyLacksGet, \"c.WriteOnlyProperty\").WithArguments(\"C.WriteOnlyProperty\").WithLocation(10, 9),\n                // (11,9): error CS0200: Property or indexer 'C.ReadOnlyProperty' cannot be assigned to -- it is read only\n                //         c.ReadOnlyProperty ??= 1; // Non lvalue readonly\n                Diagnostic(ErrorCode.ERR_AssgReadonlyProp, \"c.ReadOnlyProperty\").WithArguments(\"C.ReadOnlyProperty\").WithLocation(11, 9),\n                // (12,9): error CS0131: The left-hand side of an assignment must be a variable, property or indexer\n                //         GetInt() ??= 1; // Non lvalue method invocation\n                Diagnostic(ErrorCode.ERR_AssgLvalueExpected, \"GetInt()\").WithLocation(12, 9),\n                // (13,9): error CS1656: Cannot assign to 'GetInt' because it is a 'method group'\n                //         GetInt ??= null; // Non lvalue method group\n                Diagnostic(ErrorCode.ERR_AssgReadonlyLocalCause, \"GetInt\").WithArguments(\"GetInt\", \"method group\").WithLocation(13, 9),\n                // (14,9): error CS0131: The left-hand side of an assignment must be a variable, property or indexer\n                //         () => {} ??= null; // Non lvalue lambda\n                Diagnostic(ErrorCode.ERR_AssgLvalueExpected, \"() => {}\").WithLocation(14, 9)\n            ",
+  "unsupported": []
+}

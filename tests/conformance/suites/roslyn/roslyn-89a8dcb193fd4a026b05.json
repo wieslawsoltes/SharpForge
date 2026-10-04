@@ -1,0 +1,40 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-89a8dcb193fd4a026b05",
+  "kind": "diagnostics",
+  "sourceText": "class D\n{\n    public unsafe object M(delegate*<ref readonly int, void> p)\n    {\n        var attr = new System.Runtime.CompilerServices.RequiresLocationAttribute();\n        return attr;\n    }\n}",
+  "sourceSHA256": "194d6f2e817be6c114be3eacff4e01818a7c0a99cdefa3ca766d4ee9ca55bfe6",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/RefReadonlyParameterTests.cs",
+    "sha256": "94a0c620b0975febab4af5bf7a1536fee292cd72862f8126c0e8c35cfbf49495",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/RefReadonlyParameterTests.cs",
+    "license": "MIT",
+    "method": "FunctionPointer_InternalAttribute",
+    "offset": 66834
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source3, new[] { comp1bRef }, assemblyName: \"Assembly3\", options: TestOptions.UnsafeDebugDll)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0518",
+        "severity": "error"
+      },
+      {
+        "code": "CS0122",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n            // (3,38): error CS0518: Predefined type 'System.Runtime.CompilerServices.RequiresLocationAttribute' is not defined or imported\n            //     public unsafe object M(delegate*<ref readonly int, void> p)\n            Diagnostic(ErrorCode.ERR_PredefinedTypeNotFound, \"ref readonly int\").WithArguments(\"System.Runtime.CompilerServices.RequiresLocationAttribute\").WithLocation(3, 38),\n            // (5,56): error CS0122: 'RequiresLocationAttribute' is inaccessible due to its protection level\n            //         var attr = new System.Runtime.CompilerServices.RequiresLocationAttribute();\n            Diagnostic(ErrorCode.ERR_BadAccess, \"RequiresLocationAttribute\").WithArguments(\"System.Runtime.CompilerServices.RequiresLocationAttribute\").WithLocation(5, 56)",
+  "unsupported": [
+    "Positional reference/options arguments require explicit adaptation",
+    "Custom upstream compilation/parse options require an adapter"
+  ]
+}

@@ -1,0 +1,55 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "standard-aec62c70f787de02c683",
+  "kind": "spec",
+  "sourceText": "#nullable enable\npublic class C { }\npublic class A<T> where T : notnull { }\npublic class B1<T> where T : C { }\npublic class B2<T> where T : C? { }\nclass Test\n{\n    static void M()\n    {\n        // nonnull constraint allows nonnullable struct type argument\n        A<int> x1;\n        // possible warning: nonnull constraint prohibits nullable struct type argument\n        A<int?> x2;\n        // nonnull constraint allows nonnullable class type argument\n        A<C> x3;\n        // possible warning: nonnull constraint prohibits nullable class type argument\n        A<C?> x4;\n        // nonnullable base class requirement allows nonnullable class type argument\n        B1<C> x5;\n        // possible warning: nonnullable base class requirement prohibits nullable\n        // class type argument\n        B1<C?> x6;\n        // nullable base class requirement allows nonnullable class type argument\n        B2<C> x7;\n        // nullable base class requirement allows nullable class type argument\n        B2<C?> x8;\n    }\n}",
+  "unsupported": [],
+  "target": "library",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS8714",
+        "severity": "warning"
+      },
+      {
+        "code": "CS8714",
+        "severity": "warning"
+      },
+      {
+        "code": "CS8631",
+        "severity": "warning"
+      }
+    ],
+    "ignoredWarnings": [
+      "CS0168"
+    ]
+  },
+  "sourceSHA256": "71ea60f1dc66486c12c9bbcd071b6aebe734aab6297e41b532b3a019f0822645",
+  "originalSource": "#nullable enable\npublic class C { }\npublic class A<T> where T : notnull { }\npublic class B1<T> where T : C { }\npublic class B2<T> where T : C? { }\nclass Test\n{\n    static void M()\n    {\n        // nonnull constraint allows nonnullable struct type argument\n        A<int> x1;\n        // possible warning: nonnull constraint prohibits nullable struct type argument\n        A<int?> x2;\n        // nonnull constraint allows nonnullable class type argument\n        A<C> x3;\n        // possible warning: nonnull constraint prohibits nullable class type argument\n        A<C?> x4;\n        // nonnullable base class requirement allows nonnullable class type argument\n        B1<C> x5;\n        // possible warning: nonnullable base class requirement prohibits nullable\n        // class type argument\n        B1<C?> x6;\n        // nullable base class requirement allows nonnullable class type argument\n        B2<C> x7;\n        // nullable base class requirement allows nullable class type argument\n        B2<C?> x8;\n    }\n}",
+  "metadata": {
+    "template": "standalone-lib-without-using",
+    "name": "TypeParameterConstraints0",
+    "expectedWarnings": [
+      "CS8714",
+      "CS8714",
+      "CS8631"
+    ],
+    "ignoredWarnings": [
+      "CS0168"
+    ]
+  },
+  "langVersion": "8.0",
+  "featureId": "csharp-1-0-classes",
+  "mappingScope": "Standard chapter to inventory feature; language level is pinned draft-v8, not feature introduction version",
+  "provenance": {
+    "repository": "dotnet/csharpstandard",
+    "commit": "107068a0fee88b13e9c46ff64f98343ff29ff8ee",
+    "path": "standard/classes.md",
+    "sha256": "590768cdc57083dae7d03ff027e638333a6d8da8662bebc30e4efab661d13ecf",
+    "url": "https://github.com/dotnet/csharpstandard/blob/107068a0fee88b13e9c46ff64f98343ff29ff8ee/standard/classes.md",
+    "license": "MIT",
+    "example": "TypeParameterConstraints0",
+    "offsetInUnquotedMarkdown": 26851
+  }
+}

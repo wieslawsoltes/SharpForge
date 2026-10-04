@@ -1,4 +1,5 @@
 import {initializeBclHost,invokeBclPlatform} from './bcl-adapter.js';
+import {boundDelegatesEqual,constructBoundDelegate} from './execution/delegate-targets.js';
 import {HostOperations} from './host-operations.js';
 import {invokeAnimation,createManagedAnimationClock,advanceManagedAnimations} from './animation.js';
 import {refreshStyle,refreshStyles,applyTemplate,updateBindings,invokeStyling} from './styling.js';
@@ -40,10 +41,10 @@ export class ManagedPlatform {
   styleMutation(callback){if(this.styleDepth)return callback();const heap=this.heap.snapshot(),platform=this.snapshot(),pending=this.vm.pendingWrite,existing=this.transaction,offset=existing?.length??0,t=existing??this.beginTransaction();this.styleDepth++;
     try{const result=callback();if(!existing)this.commitTransaction(t);return result;}catch(error){this.heap.restore(heap);this.restore(platform);this.vm.pendingWrite=pending;if(existing)existing.length=offset;else this.rollbackTransaction(t);throw error;}finally{this.styleDepth--;}}
   delegate(type,method,receiver){return this.make(type,{method,receiver},'delegate');}
-  delegateEquals(a,b){if(equal(a,b))return true;if(!isReference(a)||!isReference(b))return false;const x=this.heap.get(a),y=this.heap.get(b);return x.kind==='delegate'&&y.kind==='delegate'&&x.type===y.type&&this.get(a,'method')===this.get(b,'method')&&equal(this.get(a,'receiver'),this.get(b,'receiver'));}
+  delegateEquals(a,b){return boundDelegatesEqual(this.vm,a,b);}
   construct(type,args){
     const t=frameworkType(type);if(!t)throw new ManagedFault('TypeLoadException',`Unknown framework type ${type}`);
-    if(t.kind==='delegate'){if(!args[1]?.methodPointer)throw new ManagedFault('InvalidProgramException','Delegate construction requires a verified method pointer');return this.delegate(type,args[1].token,args[0]);}
+    if(t.kind==='delegate')return constructBoundDelegate(this.vm,type,args[0],args[1]);
     if(type===THREAD)return this.vm.scheduler.createThread(args[0]);
     const values={};const ps=propertiesFor(type);for(const [key,p]of Object.entries(ps))if(!p.isStatic&&p.value!==null){values[key]=this.managed(p.value,p.type);if(isReference(values[key]))this.heap.pins.push(values[key]);}
     const n=args.map(v=>this.native(v));

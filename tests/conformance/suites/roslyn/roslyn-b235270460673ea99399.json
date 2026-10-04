@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-b235270460673ea99399",
+  "kind": "diagnostics",
+  "sourceText": "partial interface I\n{\n    partial event System.Action E;\n}",
+  "sourceSHA256": "3c53a2f5068510dc9d537b6ec23d140c87557a74bb5c1c67046799165b18bfea",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/PartialEventsAndConstructorsTests.cs",
+    "sha256": "22775d4d8cac0a450357a9198c2dea11242fe08f897622abc12ce3bd5b713537",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/PartialEventsAndConstructorsTests.cs",
+    "license": "MIT",
+    "method": "InInterface_DefinitionOnly",
+    "offset": 53463
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS9275",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n            // (3,33): error CS9275: Partial member 'I.E' must have an implementation part.\n            //     partial event System.Action E;\n            Diagnostic(ErrorCode.ERR_PartialMemberMissingImplementation, \"E\").WithArguments(\"I.E\").WithLocation(3, 33)",
+  "unsupported": []
+}

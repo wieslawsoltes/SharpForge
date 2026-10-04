@@ -1,0 +1,36 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-e65b4628a4a7dec70af9",
+  "kind": "diagnostics",
+  "sourceText": "\n\n[assembly: C()]\n[assembly: System.Reflection.AssemblyKeyName(\"roslynTestContainer\")]\npublic class A\n{\n}",
+  "sourceSHA256": "8584d5f28b2146786b3b177041ce9686906f2b09b9e170289ebb395f1eeacc48",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/Attributes/InternalsVisibleToAndStrongNameTests.cs",
+    "sha256": "9e10a51f7f673a0e4ecef9e74c9a16fba06fbe3b89f9e5f5374503377b2b2a09",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/Attributes/InternalsVisibleToAndStrongNameTests.cs",
+    "license": "MIT",
+    "method": "IVTDeferredFailKeyMismatchIAssembly",
+    "offset": 64547
+  },
+  "langVersion": "default",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(\n    @\"\n\n[assembly: C()]\n[assembly: System.Reflection.AssemblyKeyName(\"\"roslynTestContainer\"\")]\npublic class A\n{\n}\",\n                new MetadataReference[] { new CSharpCompilationReference(other) },\n                TestOptions.SigningReleaseDll,\n                assemblyName: \"John\",\n                parseOptions: parseOptions)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0122",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (3,12): error CS0122: 'CAttribute' is inaccessible due to its protection level\n                // [assembly: C()]\n                Diagnostic(ErrorCode.ERR_BadAccess, \"C\").WithArguments(\"CAttribute\").WithLocation(3, 12)\n                ",
+  "unsupported": [
+    "Positional reference/options arguments require explicit adaptation",
+    "Dynamic or customized parse options require adaptation"
+  ]
+}
