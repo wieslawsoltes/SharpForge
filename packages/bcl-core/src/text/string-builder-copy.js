@@ -34,8 +34,11 @@ function validateCopy(platform, length, values, scalars) {
 function writeCharacter(platform, destination, record, index, value) {
   const oldValue = record.data[index];
   record.data[index] = value;
-  platform.heap.mutationRevision++;
-  platform.vm.notifyWrite?.({kind: 'array', handle: destination.h, generation: destination.g, index, oldValue, value});
+  if (platform.vm.notifyWrite) {
+    platform.vm.notifyWrite({kind: 'array', handle: destination.h, generation: destination.g, index, oldValue, value});
+  } else {
+    platform.heap.mutationRevision++;
+  }
 }
 
 function copyChunks(platform, roots, range) {
