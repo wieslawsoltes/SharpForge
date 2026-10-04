@@ -40,3 +40,7 @@ one worker, and a 512 MB old-space limit. Validation command:
 ```sh
 node scripts/limited.js node --test --test-concurrency=1 tests/a05-constrained-object-tostring.test.js tests/a05-constrained-interface-calls.test.js tests/a05-constrained-generic-reference.test.js tests/a05-constrained-generic-value.test.js tests/a05-value-instance-calls.test.js tests/a05-boxed-interface-calls.test.js
 ```
+
+After integrating current main and preserving both new public exports, all 37
+struct Object cases also passed at `a45e90be`. The original 123-check integration
+result remains recorded above; broad qualification is still deferred.
