@@ -3,6 +3,7 @@ import {nullableMethodDefinition} from './nullable-profile.js';
 import {frameworkType} from '@sharpforge/framework';
 import {genericTypeParts} from './field-profile.js';
 import {methodGenericParameters, normalizeCallType} from './call-profile.js';
+import {parseFunctionPointerType} from './function-pointer-signature.js';
 
 /** Symbolic context used to qualify one canonical body shared by its instantiations. */
 export function genericDefinitionContext(inspector, method) {
@@ -32,6 +33,14 @@ function genericArgument(inspector, type, context) {
 export function verifyGenericType(inspector, input, context, depth = 0) {
   if (depth > 64) throw new CilError('Generic signature nesting limit exceeded');
   const type = normalizeCallType(input);
+  if (type.startsWith('method ')) {
+    const signature = parseFunctionPointerType(type);
+    if (!signature || !signature.isStatic || signature.callingConvention || /!\d/.test(type)) {
+      throw new CilError('Only closed managed static function-pointer storage is executable');
+    }
+    for (const item of signature.parameters.concat(signature.returnType)) verifyGenericType(inspector, item, context, depth + 1);
+    return;
+  }
   if (/\bpinned\b|\bmod(req|opt)\b|\*/.test(type)) throw new CilError('Native-pointer and modified signatures are inspection-only');
   const variable = /^(!!?)(\d+)$/.exec(type);
   if (variable) {

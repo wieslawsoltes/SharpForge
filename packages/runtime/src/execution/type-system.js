@@ -26,7 +26,7 @@ export class CilTypeSystem {
       const parameters=(metadata.rows?.[42]??[]).filter(row=>decodeCoded('TypeOrMethodDef',row[2])===type.token).sort((a,b)=>a[0]-b[0]);
       const fields=type.fields.filter(field=>!field.isStatic).map(field=>{
         const storageType=vm.inspector.signature(field.token).type.replace(/\s+mod(?:req|opt)\([^)]*\)/g,'').replace(/\s+pinned$/,'');
-        return {...field,type:storageType,storageType};
+        return {...field,type:storageType.startsWith('method ')?'nint':storageType,storageType};
       });
       const underlying=base==='System.Enum'?fields.find(field=>field.name==='value__')?.type??'int':null;
       const dispatch=this.dispatch.table(type.token);

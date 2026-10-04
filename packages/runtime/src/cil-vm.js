@@ -1,3 +1,4 @@
+import {requireVerifiedCil} from './execution/verification-error.js';
 import {admitCilAssemblyStacks,pushStackValue} from './execution/frame-stack.js';
 import {installRootProvider,rootValues} from './execution/frame-roots.js';
 import {stopExecution} from './execution/stop.js';
@@ -33,7 +34,7 @@ export class CilVirtualMachine {
     bindNativeAbi(this.options);
     initializeCilMethodEvents(this, options.runtimeEvents);
     this.inspector=bytes instanceof AssemblyInspector?bytes:new AssemblyInspector(bytes,options);this.report=verifyCilAssembly(this.inspector,options);
-    if(!this.report.success){const error=new CilError('Managed IL verification failed: '+this.report.issues.map(i=>`${i.method??''}${i.offset===undefined?'':` IL_${i.offset.toString(16)}`}: ${i.message}`).join('; '));error.issues=this.report.issues;throw error;}
+    requireVerifiedCil(this.report);
     admitCilAssemblyStacks(this);
     const entry=this.inspector.getMethod(this.report.entryPoint);this.returnType=entry.signature.returnType;if(!entry.signature.isStatic)throw new CilError('Host invocation requires a static method');
     this.heap=new ManagedHeap(options);installRootProvider(this);this.frames=[];this.statics=new Map();this.strings=new Map();this.initialized=new Map();this._typeSystem=null;this.layoutCache=this.typeSystem.layouts;this.frameId=0;
