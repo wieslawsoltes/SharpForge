@@ -1,0 +1,40 @@
+{
+  "name": "harfbuzzjs",
+  "version": "0.8.0",
+  "commit": "ec5b439a1c2737be9c00b9e838abe8d782b83a83",
+  "license": "MIT",
+  "source": "https://github.com/harfbuzz/harfbuzzjs/tree/ec5b439a1c2737be9c00b9e838abe8d782b83a83",
+  "archive": "https://registry.npmjs.org/harfbuzzjs/-/harfbuzzjs-0.8.0.tgz",
+  "archiveSha256": "d881f79fae0fb7a192fe3233bf7dccc8995a289619dff6661f37615105df6a78",
+  "agreement": "https://github.com/wieslawsoltes/SharpForge/issues/1946",
+  "files": [
+    {
+      "path": "hb.wasm",
+      "sourceSha256": "3b802d1782b72fa5eeb0d7a108b561beb788248ecc1134845e20ba84e4642ca9",
+      "sha256": "3b802d1782b72fa5eeb0d7a108b561beb788248ecc1134845e20ba84e4642ca9",
+      "bytes": 381876,
+      "transformation": null
+    },
+    {
+      "path": "LICENSE",
+      "sourceSha256": "c85596583d1b7e4cfb4f21165ce0988aabd72e80a8c3a2ab6aaeedc1965e8288",
+      "sha256": "c85596583d1b7e4cfb4f21165ce0988aabd72e80a8c3a2ab6aaeedc1965e8288",
+      "bytes": 1197,
+      "transformation": null
+    },
+    {
+      "path": "hb.js",
+      "sourceSha256": "5a43aa6c7a4005fac9f4444523c15ed577c5790c72c4202f80ade9111f7c57a8",
+      "sha256": "3a13a3829a436be380532d33b971f891f14cd9b9eaf563d27feeb0937046b0f7",
+      "bytes": 24453,
+      "transformation": "Add named ESM export, require caller-supplied wasmBinary, and disable the unused Node filesystem environment branch. The same explicit byte-only factory runs in Node, browser and classic worker without dynamic imports; Wasm ABI unchanged."
+    },
+    {
+      "path": "hbjs.js",
+      "sourceSha256": "6b64c0e94e14ec3f339eb286659eda6c3cfd058888fb943a1162dcdcfee4c5de",
+      "sha256": "a799acbeff2a4924526e04675995455e879dfae9078711c1353218f0fac0fbc2",
+      "bytes": 51897,
+      "transformation": "Replace CommonJS export footer with a named ESM export; factory implementation unchanged."
+    }
+  ]
+}
