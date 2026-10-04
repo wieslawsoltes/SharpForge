@@ -40,6 +40,6 @@ retain their meanings.
 This is a lexical pre-execution validator, not stack/type verification or a CFG
 interpreter. Empty-stack requirements, prefix/opcode compatibility and metadata
 resolution are separate. Automatic compiler/runtime activation and broad
-browser/Rust/ILVerify qualification remain separate integration scopes. Local
-validation is pending the serial slot; no new native build is needed for the
-retained reference corpus.
+browser/Rust/ILVerify qualification remain separate integration scopes. The scheduled local run passed all 51 focused EH tests, including the retained
+reference corpus. No new native build was performed. Benchmark evidence and
+reproduction instructions are in [benchmarks/EH-LEAVE.md](benchmarks/EH-LEAVE.md).

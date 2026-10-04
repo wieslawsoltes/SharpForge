@@ -1,11 +1,12 @@
 import { performance } from 'node:perf_hooks';
 import { cpus } from 'node:os';
-import { pathToFileURL } from 'node:url';
+import * as cil from '../src/index.js';
 
-const modulePath = process.argv[2] ?? new URL('../src/eh-leave.js', import.meta.url).href;
-const moduleUrl = modulePath.startsWith('file:') ? modulePath : pathToFileURL(modulePath).href;
-const operation = process.argv[3] ?? 'validateExceptionControlFlow';
-const validate = (await import(moduleUrl))[operation];
+const operation = process.argv[2] ?? 'validateExceptionControlFlow';
+if (!['validateExceptionBranches', 'validateExceptionControlFlow'].includes(operation)) {
+  throw Error('Expected an exception-control-flow validation operation');
+}
+const validate = cil[operation];
 if (typeof validate !== 'function') throw Error('Expected a validation function export');
 
 function fixture(count) {
@@ -42,5 +43,5 @@ for (const count of [1000, 10000]) {
   const sorted = samples.map(sample => sample.milliseconds).sort((left, right) => left - right);
   cases.push({ clauses: count, leaves: count, codeBytes: code.length, medianMs: sorted[7], p95Ms: sorted[14], samples });
 }
-console.log(JSON.stringify({ source: process.env.SF_BENCH_REVISION ?? null, modulePath, operation,
+console.log(JSON.stringify({ source: process.env.SF_BENCH_REVISION ?? null, operation,
   node: process.version, platform: process.platform, arch: process.arch, cpu: cpus()[0].model, cases }, null, 2));
