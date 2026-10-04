@@ -35,6 +35,7 @@ export * from './clone.js';
 export * from './push.js';
 export * from './push-policy.js';
 export * from './remotes.js';
+export * from './remote-refs.js';
 export * from './refspec.js';
 export * from './shallow.js';
 export * from './promisor.js';
