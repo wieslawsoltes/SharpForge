@@ -1,6 +1,7 @@
 import { hierarchyIndex, checkedToken } from './tokens.js';
 import { known, unknown, rejectTypeSystem } from './results.js';
 import { localTypeReferences } from './local-references.js';
+import { snapshotTypeCategories } from './categories.js';
 
 function checkCycles(records, budget) {
   const colors = new Map();
@@ -24,7 +25,7 @@ function checkCycles(records, budget) {
 }
 
 /** Own only bounded hierarchy facts; never retain inspector descriptors, PE bytes or signature ASTs. */
-export function snapshotTypes(inspector, budget) {
+export function snapshotTypes(inspector, budget, coreTypes) {
   budget.check();
   const rows = inspector?.metadata?.rows;
   if (!rows) rejectTypeSystem('CILVT0001', 'AssemblyInspector metadata is required');
@@ -41,8 +42,11 @@ export function snapshotTypes(inspector, budget) {
     const token = 0x02000001 + index;
     const baseToken = hierarchyIndex('TypeDefOrRef', row[3]);
     if (baseToken) checkedToken(baseToken, counts);
-    const type = Object.freeze({ kind: 'definition', token, isInterface: !!(row[0] & 0x20) });
-    const record = { type, result: known(type), baseToken, interfaces: [], edges: baseToken ? [baseToken] : [], generic: false };
+    const flags = row[0];
+    if (!Number.isInteger(flags) || flags < 0 || flags > 0xffffffff) rejectTypeSystem('CILVT0001', 'type flags');
+    const type = Object.freeze({ kind: 'definition', token, isInterface: !!(flags & 0x20), flags });
+    const record = { type, result: known(type), baseToken, interfaces: [], edges: baseToken ? [baseToken] : [],
+      generic: false, category: null, categoryDepth: 0 };
     records.set(token, record);
     identities.set(type, record);
   }
@@ -76,9 +80,10 @@ export function snapshotTypes(inspector, budget) {
     if (base?.type.isInterface) rejectTypeSystem('CILVT0001', 'class base is an interface');
     Object.freeze(record.interfaces);
     Object.freeze(record.edges);
-    Object.freeze(record);
   }
   checkCycles(records, budget);
+  snapshotTypeCategories(records, coreTypes, budget);
+  for (const record of records.values()) { budget.check(); Object.freeze(record); }
   return { lexical, snapshot: { records, identities, resolve(token) {
     budget.check();
     checkedToken(token, counts);

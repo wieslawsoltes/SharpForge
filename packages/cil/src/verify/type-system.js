@@ -22,7 +22,7 @@ export function createMetadataVerificationTypeSystem(inspector, options = {}) {
 /** Internal composition seam: share any validated lexical forest without exposing it in public identities. */
 export function metadataTypeSystemState(inspector, options = {}) {
   const budget = typeSystemBudget(options);
-  const { snapshot, lexical } = snapshotTypes(inspector, budget);
+  const { snapshot, lexical } = snapshotTypes(inspector, budget, options.coreTypes);
   const hierarchy = metadataHierarchy(snapshot, budget);
   function reference(value) {
     requireVerificationType(value);
@@ -50,6 +50,9 @@ export function metadataTypeSystemState(inspector, options = {}) {
     interfaces: hierarchy.interfaces,
     isAssignable: hierarchy.isAssignable,
     commonBaseType: hierarchy.commonBaseType,
+    typeCategory(type) {
+      return hierarchy.requireType(type).category ?? unknown('unbound-type-category', type.token);
+    },
     relations,
   });
   return { types, lexical };
