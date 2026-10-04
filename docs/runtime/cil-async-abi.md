@@ -7,8 +7,10 @@ CIL interpreter passed 16 focused tests, including genuine Roslyn/CoreCLR compar
 and 67 adjacent source-scheduler, intrinsic, delegate and storage tests, with zero skips.
 The separate dispatch regression batch passed 33 of 34 tests. Its remaining assertion
 expects an older generic-storage diagnostic string; that expectation and the current
-rejection text are both present in the frozen baseline source. A baseline-only replay
-has not confirmed the mismatch, so it remains unresolved and is not counted as passing.
+rejection text are both present in the frozen baseline source. An isolated replay of
+that assertion on exact baseline `eadd85149b0740f337f7b8f3e92d259353892fdb` reproduced
+the failure (zero passed, one failed, zero skipped). It is a confirmed pre-existing
+assertion failure and is not counted as passing.
 Commands, timings, source identity and all failed/successful raw logs are recorded in
 `tests/fixtures/cil-async/qualification/post-fix.json`.
 The frozen baseline is recorded in `tests/fixtures/cil-async/qualification/pre-fix.json`:
@@ -71,8 +73,8 @@ The focused adjacent tests cover the shared source scheduler and ordinary storag
 ValueTask, custom notification awaiters, async void and async iterators remain separate
 runtime extensions. Browser and Rust/Wasm execution have not been qualified for this
 contribution; further generic state-machine boundary qualification also remains queued.
-No performance pass is claimed; the verifier, scheduler and GC changes
-require paired ordinary-control and async measurements in the serial validation slot.
+The first paired measurement exceeded the ordinary-control regression budget. No
+performance pass or signoff is claimed; the concrete result is recorded below.
 
 The prepared benchmark uses 80 warmups and 24 samples, reporting median/p95 admission,
 execution and total time plus managed allocations. It includes an ordinary arithmetic
@@ -112,7 +114,7 @@ node scripts/limited.js python3 packages/runtime/bench/cil-async-paired.py bench
 The same exporter can replay only the unresolved diagnostic assertion against the
 frozen baseline test and runtime sources. This command preserves the assertion and
 its real exit status; it does not import candidate runtime code or translate failures
-into passes. Its execution remains queued.
+into passes. Its recorded execution reproduced the existing failure.
 
 ```sh
 node scripts/limited.js python3 packages/runtime/bench/cil-async-paired.py dispatch-baseline --output <report.json>
@@ -121,3 +123,23 @@ node scripts/limited.js python3 packages/runtime/bench/cil-async-paired.py dispa
 The exported dependency sources occupy about 2.7 MB per revision. The paired report
 is expected to remain below 1 MB; the baseline-only report below 250 KB. These are
 preparation estimates, not measured execution or output-size results.
+
+The completed ABBA run compared baseline `eadd85149b0740f337f7b8f3e92d259353892fdb`
+with candidate `4c72e6199f021c09365253188c055689d357802a` on Node 24.19.0, Linux x86-64,
+through the normal machine-wide single-slot limiter. The source exports and fixture
+hashes matched their pinned records. The ordinary control's pooled measurements were:
+
+| Metric | Baseline median / p95 | Candidate median / p95 | Median change |
+|---|---:|---:|---:|
+| Admission | 0.565 / 0.772 ms | 0.667 / 1.547 ms | +18.10% |
+| Execution | 2.402 / 3.739 ms | 2.958 / 4.779 ms | +23.13% |
+| Total | 2.957 / 4.310 ms | 3.771 / 5.571 ms | +27.54% |
+| Managed allocations / bytes | 0 / 0 | 0 / 0 | No change |
+
+The fresh-process ordinary total medians were A1 3.028 ms, B1 2.807 ms, B2 4.286 ms,
+and A2 2.299 ms. This substantial variation is part of the evidence; the pooled
+over-budget result does not establish a causal source attribution. The four async
+images were rejected by the baseline and successfully measured on the candidate, so
+there is no async baseline execution-time comparison. Full raw reports and hashes are
+in `tests/fixtures/cil-async/qualification/performance-review.json` and its referenced
+artifacts. The paired report is 468,110 bytes; the baseline replay report is 137,037 bytes.

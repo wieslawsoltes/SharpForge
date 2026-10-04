@@ -21,9 +21,12 @@ struct state machines, and recorded CIL admission rejection for every image. See
 and actual diagnostics. At executable commit `974a5621bc59088b20b63034306e35b3af2a2122`,
 16 focused tests passed, including six native inputs in both Roslyn optimization modes
 and six independently emitted SharpForge executions. The 67 adjacent checks passed;
-33 of 34 separate dispatch checks passed, with one unresolved existing wording expectation.
+33 of 34 separate dispatch checks passed. A subsequent exact-baseline-only replay
+confirmed that the remaining wording assertion also fails before this contribution.
 See [qualification/post-fix.json](qualification/post-fix.json) for exact commands, times,
-source identity and failed/successful raw logs. Performance measurements remain pending.
+source identity and failed/successful raw logs. The first paired performance run is
+recorded in `qualification/performance-review.json`: its ordinary pooled total median
+was 27.54% slower, with substantial fresh-process variation. No performance pass is claimed.
 
 Run only
 in the allocated serial validation slot:

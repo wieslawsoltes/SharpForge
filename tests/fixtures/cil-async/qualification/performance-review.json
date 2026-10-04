@@ -1,0 +1,268 @@
+{
+  "schemaVersion": 1,
+  "baseline": "eadd85149b0740f337f7b8f3e92d259353892fdb",
+  "candidate": "4c72e6199f021c09365253188c055689d357802a",
+  "commands": [
+    "node scripts/limited.js python3 packages/runtime/bench/cil-async-paired.py dispatch-baseline --output /workspace/scratch/1692a10afba9/cil-async-dispatch-baseline.json",
+    "node scripts/limited.js python3 packages/runtime/bench/cil-async-paired.py benchmark --candidate 4c72e6199f021c09365253188c055689d357802a --capture /workspace/scratch/1692a10afba9/cil-async-pre-fix-reference --output /workspace/scratch/1692a10afba9/cil-async-paired.json"
+  ],
+  "engine": "JavaScript direct CIL interpreter",
+  "node": "v24.19.0",
+  "environment": {
+    "platform": "Linux-6.18.44-x86_64-with-glibc2.39",
+    "machine": "x86_64",
+    "cpus": 9,
+    "loadAverage": [
+      1.75390625,
+      1.44580078125,
+      1.94677734375
+    ]
+  },
+  "machineIsolation": "Normal machine-wide single-slot limiter queued behind another job, then admitted this sequential run. Other background activity was not independently ruled out.",
+  "protocol": {
+    "order": [
+      "A",
+      "B",
+      "B",
+      "A"
+    ],
+    "warmupsPerProcessCase": 80,
+    "samplesPerProcessCase": 24,
+    "pooledSamplesPerMeasuredRevisionCase": 48,
+    "sameRunnerAndFixtureHashes": true,
+    "sameAssemblyHashes": true,
+    "sourceHashesCheckedBeforeAndAfterEachRun": true,
+    "cleanupOutsideMeasuredRegions": true
+  },
+  "dispatchReplay": {
+    "result": "Confirmed pre-existing assertion failure on exact baseline; not a candidate pass.",
+    "passed": 0,
+    "failed": 1,
+    "skipped": 0,
+    "nodeDurationMs": 585.609809,
+    "subprocessSeconds": 0.6756466940059909,
+    "assertion": "/T03 value storage/"
+  },
+  "ordinaryComparison": {
+    "name": "ordinary-no-async",
+    "metrics": {
+      "admissionMs": {
+        "baseline": {
+          "median": 0.5649849999999788,
+          "p95": 0.7721240000000762
+        },
+        "candidate": {
+          "median": 0.6672249999999735,
+          "p95": 1.5466120000000956
+        },
+        "medianPercentChange": 18.096055647494815
+      },
+      "executionMs": {
+        "baseline": {
+          "median": 2.402089500000045,
+          "p95": 3.7393130000000383
+        },
+        "candidate": {
+          "median": 2.9577299999999696,
+          "p95": 4.7791599999999335
+        },
+        "medianPercentChange": 23.131548595500462
+      },
+      "totalMs": {
+        "baseline": {
+          "median": 2.95694450000002,
+          "p95": 4.309731000000056
+        },
+        "candidate": {
+          "median": 3.77123499999999,
+          "p95": 5.570803999999953
+        },
+        "medianPercentChange": 27.53824091050625
+      },
+      "allocatedBytes": {
+        "baseline": {
+          "median": 0.0,
+          "p95": 0
+        },
+        "candidate": {
+          "median": 0.0,
+          "p95": 0
+        },
+        "medianPercentChange": null
+      },
+      "allocations": {
+        "baseline": {
+          "median": 0.0,
+          "p95": 0
+        },
+        "candidate": {
+          "median": 0.0,
+          "p95": 0
+        },
+        "medianPercentChange": null
+      }
+    }
+  },
+  "perProcessOrdinaryTotalMedianMs": [
+    {
+      "revision": "A",
+      "milliseconds": 3.0275684999999726
+    },
+    {
+      "revision": "B",
+      "milliseconds": 2.806628499999988
+    },
+    {
+      "revision": "B",
+      "milliseconds": 4.285705500000006
+    },
+    {
+      "revision": "A",
+      "milliseconds": 2.2986870000000295
+    }
+  ],
+  "budgetStatus": "Over the 5% regression budget: ordinary pooled total median is +27.53824091050625%. No performance pass or signoff claimed.",
+  "interpretation": "Between-process variation is substantial (A1 3.028, B1 2.807, B2 4.286, A2 2.299 ms). Preserve the measured over-budget result; source attribution requires profiling or a separately allocated repeat.",
+  "asyncBaseline": "The four identical native async DLLs were rejected by the baseline and have zero timed baseline samples. Candidate executed all four and matched captured native output.",
+  "asyncMeasurements": [
+    {
+      "name": "Completed-Debug",
+      "revision": "B",
+      "status": "measured",
+      "assemblySha256": "dfb903d6327f6e44c1e9c52e87fef1edb468c6b1fd02115df1f285670385cdef",
+      "sampleCount": 48,
+      "metrics": {
+        "admissionMs": {
+          "median": 5.607938500000046,
+          "p95": 14.934128999999984
+        },
+        "executionMs": {
+          "median": 3.279107499999782,
+          "p95": 5.920867999999928
+        },
+        "totalMs": {
+          "median": 9.273173499999984,
+          "p95": 19.478304999999864
+        },
+        "allocatedBytes": {
+          "median": 902.0,
+          "p95": 902
+        },
+        "allocations": {
+          "median": 13.0,
+          "p95": 13
+        }
+      }
+    },
+    {
+      "name": "Completed-Release",
+      "revision": "B",
+      "status": "measured",
+      "assemblySha256": "076875b4d147896811db27283c447032eaebb376118a735b2cd17aaa5730f53e",
+      "sampleCount": 48,
+      "metrics": {
+        "admissionMs": {
+          "median": 4.57516099999998,
+          "p95": 7.465368000000126
+        },
+        "executionMs": {
+          "median": 2.595252999999957,
+          "p95": 4.36033499999985
+        },
+        "totalMs": {
+          "median": 7.185230499999989,
+          "p95": 11.684554999999818
+        },
+        "allocatedBytes": {
+          "median": 630.0,
+          "p95": 630
+        },
+        "allocations": {
+          "median": 9.0,
+          "p95": 9
+        }
+      }
+    },
+    {
+      "name": "Suspended-Debug",
+      "revision": "B",
+      "status": "measured",
+      "assemblySha256": "30d90096b766ba7631a5e2ba55c21fec4294039234801390d1ae41d2eb0fa3cd",
+      "sampleCount": 48,
+      "metrics": {
+        "admissionMs": {
+          "median": 2.92959350000001,
+          "p95": 4.717399999999998
+        },
+        "executionMs": {
+          "median": 2.558317999999872,
+          "p95": 3.8972749999998086
+        },
+        "totalMs": {
+          "median": 5.631358000000091,
+          "p95": 10.129831000000195
+        },
+        "allocatedBytes": {
+          "median": 560.0,
+          "p95": 560
+        },
+        "allocations": {
+          "median": 9.0,
+          "p95": 9
+        }
+      }
+    },
+    {
+      "name": "Suspended-Release",
+      "revision": "B",
+      "status": "measured",
+      "assemblySha256": "21c107a1883185878d721643f7ad3e9ed5054678d90d24eea500aef30ad6547f",
+      "sampleCount": 48,
+      "metrics": {
+        "admissionMs": {
+          "median": 2.828871000000163,
+          "p95": 6.066031999999723
+        },
+        "executionMs": {
+          "median": 3.0373319999998785,
+          "p95": 5.617331999999806
+        },
+        "totalMs": {
+          "median": 6.0292624999997315,
+          "p95": 12.04215000000022
+        },
+        "allocatedBytes": {
+          "median": 504.0,
+          "p95": 504
+        },
+        "allocations": {
+          "median": 9.0,
+          "p95": 9
+        }
+      }
+    }
+  ],
+  "rawArtifacts": {
+    "dispatch-baseline.json": {
+      "sha256": "4022cb37d067d303cec2fd6cce5848a23d395cd28b43178e8fc38c8631460c3d",
+      "bytes": 137037
+    },
+    "paired-performance.json": {
+      "sha256": "923314a5ca0ba04caa6f60441345452601c975a4ee2318a4fe34d7bc920e9bad",
+      "bytes": 468110
+    },
+    "logs/dispatch-baseline-launcher.txt": {
+      "sha256": "c04b177953c491fa0314d277f154508f6d6bf9f1bbffdd0a2fbb5e5923e1d01a",
+      "bytes": 143
+    },
+    "logs/paired-performance-launcher.txt": {
+      "sha256": "ab1d051eaa737b0f9a4a8c1d361b779c42ef0ce0c8cb580d3636f1ff38c2475f",
+      "bytes": 247
+    }
+  },
+  "remaining": [
+    "Investigate ordinary-control performance cost and obtain required justification/signoff if still over budget.",
+    "Generic native addenda were not run in this slot."
+  ],
+  "processStatus": "Both commands finished; all temporary source exports removed; serial validation slot released."
+}
