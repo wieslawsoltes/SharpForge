@@ -1,7 +1,17 @@
-/** Bounded per-session traces; disabled instruments take one branch and allocate nothing. */
+/** Resolve an instance's tracing preference before startup; embedding options take precedence. */
+export function performanceTracingEnabled(settings, options = {}) {
+  const enabled = options.enabled ?? settings?.environment?.performanceTracing ?? true;
+  if (typeof enabled !== 'boolean' || (options.enabled !== undefined && typeof options.enabled !== 'boolean')) {
+    throw new TypeError('Performance tracing enabled must be a boolean');
+  }
+  return enabled;
+}
+
+/** Bounded per-session traces; disabled instrumentation does not create marks or samples. */
 export class WorkbenchPerformance {
   constructor({clock = () => performance.now(), limit = 4096, enabled = true} = {}) {
     if (!Number.isSafeInteger(limit) || limit < 1 || limit > 100000) throw new RangeError('Invalid performance trace limit');
+    if (typeof enabled !== 'boolean') throw new TypeError('Performance tracing enabled must be a boolean');
     this.clock = clock;
     this.limit = limit;
     this.enabled = enabled;

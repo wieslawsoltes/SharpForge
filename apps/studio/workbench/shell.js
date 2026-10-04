@@ -2,7 +2,7 @@ import {ContextKeys} from './context-keys.js';
 import {contributeCommands, installCommandContext} from './commands.js';
 import {DialogHost} from './dialog-host.js';
 import {Announcer} from './announcer.js';
-import {WorkbenchPerformance} from './perf.js';
+import {WorkbenchPerformance, performanceTracingEnabled} from './perf.js';
 import {ToolRenderScheduler} from './render-scheduler.js';
 import {createShellModels} from './shell-models.js';
 import {workbenchToolDefinitions, shellToolId, mountShellTool} from './shell-tools.js';
@@ -40,7 +40,6 @@ export class WorkbenchShell {
       throw new Error('Reopen this project through Open Project to restore its file permissions');
     };
     this.contextKeys = new ContextKeys();
-    this.metrics = new WorkbenchPerformance(options.performance);
     this.dialogs = options.dialogs ?? new DialogHost({document: this.document, root: this.root, onError: error => this.onError(error)});
     this.scheduler = new ToolRenderScheduler(options.scheduler);
     this.toolDefinitions = workbenchToolDefinitions;
@@ -52,6 +51,8 @@ export class WorkbenchShell {
     this.disposed = false;
     this.taskListDirty = true;
     createShellModels(this);
+    this.metrics = new WorkbenchPerformance({...options.performance,
+      enabled: performanceTracingEnabled(this.settings.snapshot(), options.performance)});
     this.updateContext();
     this.disposers.push(installCommandContext(this.commands, this.contextKeys));
     this.disposers.push(registerShellCommands(this));
@@ -252,6 +253,7 @@ export class WorkbenchShell {
   }
 
   applySettings(settings) {
+    this.metrics.enabled = performanceTracingEnabled(settings, this.options.performance);
     this.restoreEnvironment?.();
     this.restoreEnvironment = applyEnvironment(this.document.documentElement, settings);
     if (this.options.applySettings) this.options.applySettings(settings);
