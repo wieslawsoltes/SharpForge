@@ -1292,6 +1292,7 @@ Registered families: <code>stringComparer</code>, <code>orderingComparer</code>.
 | 524293 | <code>int System.StringComparer::Compare(string, string)</code> | implemented |
 | 524295 | <code>int System.StringComparer::Compare(object, object)</code> | implemented |
 | 524297 | <code>static System.StringComparer System.StringComparer::get_OrdinalIgnoreCase()</code> | implemented |
+| 524322 | <code>static System.StringComparer System.StringComparer::FromComparison(System.StringComparison)</code> | implemented |
 
 No pinned reference inventory is included for these families; registered rows alone do not establish API coverage.
 
