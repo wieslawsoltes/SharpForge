@@ -6,8 +6,9 @@ import { nullableConstraintType, nullableMethodSignature, nullableTypeParameterF
 const compact = type => type ? compactNullableFlags(encodeNullableFlags(type)) : [];
 const scope = (owner, kind) => ({ owner, kind, children: [], entries: [], context: null, contextAttribute: null, emitsContext: true });
 const entry = (scope, target, flags) => {
+  if (!flags.length) return null;
   const result = { ...target, flags };
-  if (flags.length) scope.entries.push(result);
+  scope.entries.push(result);
   return result;
 };
 
@@ -77,13 +78,15 @@ export class NullableMetadataPlan {
   }
   methodEntries(type, method, parent, events) {
     const current = scope(method, 'method');
-    this.scopes.set(method, current);
-    parent.children.push(current);
     const signature = nullableMethodSignature(type, method, events, this.writer.core);
     const returned = entry(current, { kind: 'return', method }, compact(signature.returned));
-    this.returns.set(method, returned);
     signature.parameters.forEach((parameter, index) => entry(current, { kind: 'parameter', method, index }, compact(parameter)));
     this.typeParameters(current, method.symbol?.typeParameters ?? method.typeParameters ?? []);
+    // Empty scopes cannot vote for a context or emit attributes; retain all nonempty vectors, including [0].
+    if (!current.entries.length) return;
+    this.scopes.set(method, current);
+    parent.children.push(current);
+    if (returned) this.returns.set(method, returned);
   }
   typeParameters(current, parameters) {
     for (const parameter of parameters) {
