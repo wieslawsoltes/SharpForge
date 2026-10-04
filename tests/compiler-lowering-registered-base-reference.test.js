@@ -3,6 +3,7 @@ import assert from 'node:assert/strict';
 import {compileToIL} from '@sharpforge/compiler';
 import {VirtualMachine, CilVirtualMachine} from '@sharpforge/runtime';
 import {FrameworkMembers} from '../packages/compiler/src/binder/framework-members.js';
+import {isRegisteredReferenceUpcast} from '../packages/compiler/src/conversions/registered-reference.js';
 
 const prefix = 'using System; using Microsoft.UI.Xaml; using Microsoft.UI.Xaml.Controls; using Microsoft.UI.Xaml.Media;';
 const engines = {source: result => new VirtualMachine(result.image), cil: result => new CilVirtualMachine(result.assembly)};
@@ -117,4 +118,29 @@ test('registered base reference: explicit downcasts still require an unsupported
   assert.equal(result.success, false);
   assert.equal(result.image, null);
   assert(result.diagnostics.some(item => item.code === 'SF2200'), JSON.stringify(result.diagnostics));
+});
+
+test('registered base reference: the shared predicate preserves interface, value and unregistered-type boundaries', () => {
+  const button = 'Microsoft.UI.Xaml.Controls.Button';
+  const content = 'Microsoft.UI.Xaml.Controls.ContentControl';
+  assert.equal(isRegisteredReferenceUpcast(button, content), true);
+  assert.equal(isRegisteredReferenceUpcast(button, 'Microsoft.UI.Xaml.DependencyObject'), true);
+  assert.equal(isRegisteredReferenceUpcast('System.StringComparer', 'System.Collections.Generic.IComparer`1<string>'), true);
+  for (const [source, target] of [
+    [content, button],
+    ['Microsoft.UI.Xaml.Controls.TextBox', button],
+    ['Microsoft.UI.Xaml.Thickness', 'System.ValueType'],
+    ['Microsoft.UI.Xaml.Controls.Orientation', 'System.Enum'],
+    ['int', content],
+    ['object', content],
+    ['Microsoft.UI.Colors', content],
+    ['User.Derived', 'User.Base'],
+    [button, 'User.Base'],
+    ['User.Derived', content],
+    ['System.StringComparer', 'System.Collections.Generic.IComparer`1<object>'],
+    [null, content],
+    [button, undefined]
+  ]) {
+    assert.equal(isRegisteredReferenceUpcast(source, target), false, `${source} -> ${target}`);
+  }
 });
