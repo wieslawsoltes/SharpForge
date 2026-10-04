@@ -47,3 +47,32 @@ throw `CILVM0004`.
 Type-token/hierarchy errors retain their existing `CILVT` diagnostics. This is an
 opt-in JavaScript metadata service; execution engines and broad platform
 qualification are not activated or claimed by it.
+
+## Retained validation
+
+Product commit `f42169ae685c5df7fd13cc1c0e34981ff54d17aa` includes the shared
+coded-index bounds fix (#4198). The new member scope and affected type/signature
+contracts pass 34/34 focused tests, with no skips. The captured .NET 10.0.5
+`Module.ResolveMember` oracle agrees on twelve definition/reference resolutions,
+including overloads, an instance method, a private method and a local type in a
+signature. SDK 10.0.201 / Roslyn 5.3.0 compiled the reference harness; exact tool
+versions, source/fixture hashes and raw output are in
+`tests/fixtures/a03-verifier-members/native.json`.
+
+The sequential validation reservation ran installation, native capture, focused
+tests, benchmark, static checks and structure checks, with test concurrency 1 and
+a 1 GiB Node heap cap. Static checks inspected 3,263 syntax and 3,259 import modules
+with zero errors; test manifests covered 842 Node and 36 browser files without
+unassigned/duplicate entries. Structure reported 269 existing findings, none in
+this change. Full engine/platform qualification remains staged.
+
+Benchmark command: `node --expose-gc packages/cil/tools/benchmark-verifier-members.mjs OUTPUT.json`,
+under the same `scripts/limited.js` reservation. Shared Apple M3 Pro/macOS 26.6,
+Node 24.21.0; no quiet-machine claim. Each mode records twelve chronological
+samples of 1,000 operations, excluding the first three warmups from statistics.
+Construction median/p95: 9.134958/10.902416 ms per 1,000 contexts. Cached-reference
+query median/p95: 0.023542/0.060667 ms per 1,000 queries. All samples and heap
+changes are retained in `tests/fixtures/a03-verifier-members/performance.json`.
+Heap deltas are not allocation counts or peak memory. This is a new opt-in API;
+there is no previous implementation or speedup comparison. The existing lighter
+hierarchy factory and query paths are unchanged.
