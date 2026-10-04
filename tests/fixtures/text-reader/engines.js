@@ -56,3 +56,13 @@ export function readerBaseAssembly() {
     writer.op('ldloc.0').op('callvirt', context.member(parentType, 'Read', 'int', [], false)).op('ret');
   }}]});
 }
+
+/** Preserve the explicit CIL guard for the separate external IDisposable dispatch prerequisite. */
+export function readerInterfaceDisposeAssembly() {
+  return managedFixture({methods: [{name: 'Main', result: 'void', body(writer, context) {
+    writer.op('ldstr', 0x70000000 + context.md.userString(''));
+    writer.op('newobj', context.member(readerType, '.ctor', 'void', ['string'], false));
+    writer.op('castclass', context.resolve('System.IDisposable'));
+    writer.op('callvirt', context.member('System.IDisposable', 'Dispose', 'void', [], false)).op('ret');
+  }}]});
+}

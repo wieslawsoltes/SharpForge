@@ -28,6 +28,11 @@
       "maxBytes": 10240
     },
     {
+      "id": "package:@sharpforge/bcl-io",
+      "maxBytes": 8192,
+      "reason": "Reviewed unmeasured cap for the initial synchronous StringReader package; capture actual size during qualification."
+    },
+    {
       "id": "package:@sharpforge/bytecode",
       "observedBytes": 4904,
       "maxBytes": 6144

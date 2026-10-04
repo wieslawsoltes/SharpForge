@@ -5,7 +5,10 @@ import {compileToIL} from '@sharpforge/compiler';
 import {findContracts, frameworkAssignable, frameworkType} from '@sharpforge/framework';
 import {VirtualMachine, CilVirtualMachine, ManagedFault} from '@sharpforge/runtime';
 import {RegistryBridge} from '../packages/compiler/src/symbols/registry-bridge.js';
-import {readerPlatform, readerContract, readerAssembly, readerBaseAssembly, readerType, parentType} from './fixtures/text-reader/engines.js';
+import {ioModules, stringReaderModule, registerIoModules} from '@sharpforge/bcl-io';
+import {
+  readerPlatform, readerContract, readerAssembly, readerBaseAssembly, readerInterfaceDisposeAssembly, readerType, parentType
+} from './fixtures/text-reader/engines.js';
 
 const reference = new URL('../packages/bcl-io/reference/', import.meta.url);
 const source = readFileSync(new URL('string-reader/Program.cs', reference), 'utf8');
@@ -117,6 +120,16 @@ for (const [engine, create] of Object.entries(engines)) {
       assert.equal(platform.native(call('ReadToEnd')), 'irst\r\nlast');
     } finally { platform.heap.allocate = allocate; reader.stop(); }
   });
+
+  test(`SF-A09-T03.1 ${engine}: invalid constructor values and unknown TextReader implementations fail explicitly`, () => {
+    const reader = readerPlatform(engine);
+    const {platform} = reader;
+    try {
+      assert.throws(() => platform.invoke(readerContract('.ctor'), [42]), error => error.name === 'ArgumentException');
+      const unsupported = platform.make(parentType);
+      assert.throws(() => platform.invoke(readerContract('Read'), [unsupported]), error => error.name === 'NotSupportedException');
+    } finally { reader.stop(); }
+  });
 }
 
 test('SF-A09-T03.1 ordinary CIL base dispatch and interface assignability match native observations', () => {
@@ -158,4 +171,21 @@ test('SF-A09-T03.1 deferred buffer/async APIs and abstract construction remain c
     assert.equal(result.success, false, expression);
     assert(result.diagnostics.some(item => item.severity === 'error'), expression);
   }
+});
+
+test('SF-A09-T03.1 public IO registration uses the shared module protocol', () => {
+  const members = [];
+  registerIoModules({
+    define() {},
+    member(owner, name) { members.push(owner + '.' + name); },
+    ctor(owner) { members.push(owner + '..ctor'); }
+  });
+  assert.equal(members.length, 7);
+  assert.equal(ioModules[0], stringReaderModule);
+  assert(Object.isFrozen(ioModules));
+  assert.deepEqual(stringReaderModule.invoke({bclHost: {frameworkType: () => null}}, {owner: 'unknown'}, []), {handled: false});
+});
+
+test('SF-A09-T03.1 external IDisposable.Dispose invocation remains outside the verified CIL profile', () => {
+  assert.throws(() => new CilVirtualMachine(readerInterfaceDisposeAssembly()), /Managed IL verification failed/);
 });

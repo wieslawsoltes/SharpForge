@@ -1,5 +1,6 @@
 import {createBclRegistry, bclModules} from '@sharpforge/bcl-core';
 import {closedCollectionsModule} from '@sharpforge/bcl-collections';
+import {ioModules} from '@sharpforge/bcl-io';
 import {frameworkType} from '@sharpforge/framework';
 import {ManagedFault, isReference} from './heap.js';
 import {invokeBcl} from './bcl.js';
@@ -7,7 +8,7 @@ import {invokeJson} from './json.js';
 import {invokeNetwork} from './network.js';
 import {invokeNumeric} from './numeric.js';
 
-const modules = createBclRegistry([...bclModules, closedCollectionsModule]);
+const modules = createBclRegistry([...bclModules, closedCollectionsModule, ...ioModules]);
 
 const services = Object.freeze({
   frameworkType,
