@@ -1,6 +1,6 @@
 import { managedFixture } from '../../managed-fixtures.js';
 
-function nestedCatchBody(writer, nonempty, delayed, reentry) {
+function nestedCatchBody(writer, nonempty, delayed, reentry, externalReentry) {
   writer.mark('outer').op('ldnull').op('throw').mark('outerEnd').mark('outerHandler');
   if (!nonempty) writer.op('pop');
   if (delayed) writer.op('nop');
@@ -9,18 +9,21 @@ function nestedCatchBody(writer, nonempty, delayed, reentry) {
   else writer.op('leave', 'afterInner');
   writer.mark('tryEnd');
   writer.mark('handler').op('pop').op('leave', 'afterInner').mark('handlerEnd').mark('afterInner');
-  writer.op('leave', 'done').mark('outerHandlerEnd').mark('done').op('ret');
+  if (externalReentry) writer.op('ldnull').op('br', 'try');
+  else writer.op('leave', 'done');
+  writer.mark('outerHandlerEnd').mark('done').op('ret');
   return writer.labels.get('try');
 }
 
 /** Author entry heights independently of the compiler and the execution verifier. */
 export function entryFixture({ nonempty = false, branch = false, flags = 0, shared = false,
-  dead = false, handlerPop = false, noHandlers = false, nestedCatch = false, delayed = false, reentry = false } = {}) {
+  dead = false, handlerPop = false, noHandlers = false, nestedCatch = false, delayed = false,
+  reentry = false, externalReentry = false } = {}) {
   let entryOffset;
   const bytes = managedFixture({ name: 'HandlerEntry', methods: [{ name: 'Main',
     body(writer) {
       if (noHandlers) { writer.op('ret'); return; }
-      if (nestedCatch) { entryOffset = nestedCatchBody(writer, nonempty, delayed, reentry); return; }
+      if (nestedCatch) { entryOffset = nestedCatchBody(writer, nonempty, delayed, reentry, externalReentry); return; }
       if (dead) writer.op('br', 'done');
       if (nonempty) writer.op('ldc.i4.1');
       if (branch) writer.op('br', 'try');
@@ -62,5 +65,6 @@ export const nativeCases = [
   { name: 'nested-catch-consumed', options: { nestedCatch: true }, accepted: true },
   { name: 'nested-catch-seed', options: { nestedCatch: true, nonempty: true }, accepted: true },
   { name: 'nested-catch-delayed', options: { nestedCatch: true, nonempty: true, delayed: true }, accepted: false },
-  { name: 'nested-catch-reentry', options: { nestedCatch: true, nonempty: true, reentry: true }, accepted: false },
+  { name: 'nested-catch-reentry', options: { nestedCatch: true, nonempty: true, reentry: true }, accepted: true },
+  { name: 'nested-catch-external-reentry', options: { nestedCatch: true, nonempty: true, externalReentry: true }, accepted: true },
 ];

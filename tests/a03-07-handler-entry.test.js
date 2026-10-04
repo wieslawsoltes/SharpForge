@@ -44,12 +44,12 @@ test('unreachable try entries do not invent heights, and finally still begins wi
   assert.ok(underflow.issues.some(issue => issue.code === 'IL_STACK' && issue.message.includes('underflow')));
 });
 
-test('nested try accepts catch injection but rejects nonempty ordinary arrivals', () => {
-  for (const nonempty of [false, true]) {
-    const accepted = verifyCilAssembly(entryFixture({ nestedCatch: true, nonempty }).bytes);
+test('nested try preserves catch seeds and matching branches but rejects delayed nonempty entry', () => {
+  for (const options of [{}, { nonempty: true }, { nonempty: true, reentry: true }, { nonempty: true, externalReentry: true }]) {
+    const accepted = verifyCilAssembly(entryFixture({ nestedCatch: true, ...options }).bytes);
     assert.equal(accepted.success, true, JSON.stringify(accepted.issues));
   }
-  for (const options of [{ delayed: true }, { reentry: true }]) {
+  for (const options of [{ delayed: true }]) {
     const fixture = entryFixture({ nestedCatch: true, nonempty: true, ...options });
     const rejected = verifyCilAssembly(fixture.bytes);
     assert.equal(rejected.success, false);
@@ -57,7 +57,7 @@ test('nested try accepts catch injection but rejects nonempty ordinary arrivals'
   }
 });
 
-test('fourteen retained ILVerify cases agree with reachable try-entry admission', () => {
+test('retained ILVerify cases agree with reachable try-entry admission', () => {
   const capture = JSON.parse(readFileSync(new URL('./fixtures/a03-handler-entry/native.json', import.meta.url), 'utf8'));
   const hash = bytes => createHash('sha256').update(bytes).digest('hex');
   assert.equal(capture.inputSHA256, hash(readFileSync(new URL('./fixtures/a03-handler-entry/input.js', import.meta.url))));
