@@ -1,3 +1,4 @@
+import { validateOutputProperties, validateBuildArguments } from './argument-policy.js';
 /** Pure browser/Node contracts. These validate transport, not the safety of a trusted build. */
 export const MSBUILD_PROTOCOL_VERSION = 1;
 export const BUILD_ACTIONS = Object.freeze(['build','rebuild','clean','restore','pack','publish','test','target','evaluate','preprocess','targets']);
@@ -34,8 +35,9 @@ export function normalizeBuildRequest(input){
  // Advanced switches run with the same explicit local trust as custom tasks. They are not a sandbox.
  const extraArguments=args.map(a=>text(a,'MSBuild argument',8192));
  for(const a of extraArguments){if(a.startsWith('@')){workspacePath(a.slice(1));if(!/\.rsp$/i.test(a))throw new Error('Response file must have .rsp extension');}else if(!a.startsWith('-')&&!a.startsWith('/'))throw new Error('Additional arguments must be individual MSBuild switches or @workspace.rsp');}
- for(const key of ['trusted','restore','binaryLog','graphBuild'])if(own(input,key)&&typeof input[key]!=='boolean')throw new Error(`Invalid ${key}`);
- return {action,project,properties,targets,propertyNames,itemNames,resultTargets,verbosity,maxNodes,arguments:extraArguments,trusted:input.trusted===true,restore:input.restore===true,binaryLog:input.binaryLog===true,graphBuild:input.graphBuild===true};
+ validateOutputProperties(properties);validateBuildArguments(extraArguments,{elevated:input.elevated===true});
+ for(const key of ['trusted','restore','binaryLog','graphBuild','designTime','nodeReuse','compilerServer','sarif','elevated'])if(own(input,key)&&typeof input[key]!=='boolean')throw new Error(`Invalid ${key}`);
+ return {action,project,properties,targets,propertyNames,itemNames,resultTargets,verbosity,maxNodes,arguments:extraArguments,trusted:input.trusted===true,restore:input.restore===true,binaryLog:input.binaryLog===true,graphBuild:input.graphBuild===true,designTime:input.designTime===true,nodeReuse:input.nodeReuse===true,compilerServer:input.compilerServer===true,sarif:input.sarif===true,elevated:input.elevated===true};
 }
 export { parseDiagnosticLine } from './diagnostics.js';
 /** MSBuild can prefix JSON with SDK banners/build output; parse a complete terminal JSON object. */
