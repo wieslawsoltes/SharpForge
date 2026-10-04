@@ -3,6 +3,8 @@ import {NativeCanvasTextProvider, TextLayoutService} from '@sharpforge/rendering
 import {assertUIHostData} from './ui-data.js';
 import {RuntimeUIEventRequests, registerRuntimeEventRequests} from './ui-event-runtime.js';
 import {registerControlStateHandler} from './control-state.js';
+import {RuntimeBindingDiagnostics} from './binding-diagnostics.js';
+import {RuntimeUIFrames} from './ui-frames.js';
 
 const failure = (name, message) => Object.assign(new Error(message), {name});
 
@@ -30,12 +32,22 @@ export class RuntimeUIBridge {
     this.scheduled = false;
     this.closed = false;
     this.ownedTextService = null;
+    this.bindingDiagnostics = new RuntimeBindingDiagnostics({schedule: () => this.scheduleFlush()});
+    this.frames = new RuntimeUIFrames(this);
     this.eventRequests = new RuntimeUIEventRequests(this, {timeout: Math.min(requestTimeout, 30000), ...eventRequestOptions});
   }
 
   runtimeOptions({bindingAssembly, uiServices = {}} = {}) {
     const bridge = this;
     const services = {...uiServices};
+    services.bindingDiagnostics = diagnostic => {
+      this.bindingDiagnostics.report(diagnostic);
+      try { uiServices.bindingDiagnostics?.(diagnostic); } catch { /* Diagnostic observers cannot fault managed bindings. */ }
+    };
+    if (!services.requestFrame && !services.scheduler?.requestFrame) {
+      services.requestFrame = callback => this.frames.requestFrame(callback);
+      services.cancelFrame = token => this.frames.cancelFrame(token);
+    }
     if (!services.text && typeof globalThis.OffscreenCanvas === 'function') {
       this.ownedTextService ??= new TextLayoutService(new NativeCanvasTextProvider());
       services.text = this.ownedTextService;
@@ -92,6 +104,7 @@ export class RuntimeUIBridge {
   flush() {
     if (this.closed || !this.vm) return;
     this.eventRequests.observe();
+    this.frames.observe();
     const sessionId = this.sessionId;
     if (this.commands.length) this.post({event: 'ui', sessionId, commands: this.commands.splice(0)});
     if (this.privateValues.size) {
@@ -100,6 +113,7 @@ export class RuntimeUIBridge {
       this.post({event: 'uiPrivateValues', sessionId, values});
     }
     if (this.packets.length) this.post({event: 'uiComposition', sessionId, packets: this.packets.splice(0)});
+    this.bindingDiagnostics.flush(this.post, sessionId);
     for (const request of this.requests.splice(0)) {
       const pending = this.pending.get(request.requestId);
       if (!pending) continue;
@@ -166,6 +180,8 @@ export class RuntimeUIBridge {
     if (this.closed) return;
     this.closed = true;
     this.eventRequests.dispose();
+    this.bindingDiagnostics.dispose();
+    this.frames.dispose();
     for (const pending of this.pending.values()) {
       this.releaseRequest(pending);
       pending.reject(failure('AbortError', 'UI session ended'));

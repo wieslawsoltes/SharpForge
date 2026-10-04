@@ -40,7 +40,7 @@ function launch(params) {
   let candidate;
   try {
     candidate = sessions.create(params, {onOutput: text => candidateOutput.push(text),
-      ...candidateBridge.runtimeOptions({bindingAssembly: params.assembly})});
+      ...candidateBridge.runtimeOptions({bindingAssembly: params.bindingAssembly ?? params.assembly})});
   } catch (error) { candidateBridge.dispose(); throw error; }
   activity.stop();
   uiBridge?.dispose();
