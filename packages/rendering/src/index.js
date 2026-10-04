@@ -33,3 +33,7 @@ export * from './media/materializer.js';
 export * from './composition/index.js';
 export * from './animation/index.js';
 export {ensureNumericsContracts, registerCompositionContracts} from './contracts/composition.js';
+export * from './frame-scheduler.js';
+export * from './frame-metrics.js';
+export * from './dirty-regions.js';
+export * from './layer-cache.js';
