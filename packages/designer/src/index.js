@@ -33,4 +33,5 @@ export * from './resource-xaml.js';
 export * from './design-data.js';
 export * from './assets.js';
 export * from './designer-options.js';
+export {DesignerResourceSourceError} from './resource-source-errors.js';
 export {LiveDesignCapabilityError} from './live-capabilities.js';
