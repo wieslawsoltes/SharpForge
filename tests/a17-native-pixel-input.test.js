@@ -9,7 +9,8 @@ import { validateCatalog } from './rendering/native/contract.js';
 test('native capture input hashes its producer and locked project sources', async () => {
   const input = await loadInput();
   assert.equal(input.fixtures.length, 39);
-  for (const name of ['Program.cs', 'NativeCapture.cs', 'capture.js', 'native/packages.lock.json', 'native/Oracle.WinUI.csproj']) {
+  for (const name of ['Program.cs', 'NativeCapture.cs', 'ShapeDefaults.cs', 'capture.js',
+    'native/packages.lock.json', 'native/Oracle.WinUI.csproj']) {
     assert(input.materials.some(row => row.name === name));
   }
   assert.match(input.inputHash, /^[a-f0-9]{64}$/);

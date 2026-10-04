@@ -107,7 +107,8 @@ internal sealed class CaptureApplication : Application
                     accentRgba = new[] { (int)accent.R, (int)accent.G, (int)accent.B, (int)accent.A },
                     fontObservation = "Requested Segoe UI and installed file hashes; resolved fallback glyph faces are not inspected",
                     backendObservation = "Native WinUI RenderTargetBitmap; physical adapter is not inspected" },
-                stabilityPolicy = new { consecutiveCaptures = 3, maximumRenderingTurns = 120 }, observations
+                stabilityPolicy = new { consecutiveCaptures = 3, maximumRenderingTurns = 120 },
+                shapeDefaults = ShapeDefaults.Observe(), observations
             };
             File.WriteAllText(Path.Combine(output, "native.json"), JsonSerializer.Serialize(result));
             window.Close();
