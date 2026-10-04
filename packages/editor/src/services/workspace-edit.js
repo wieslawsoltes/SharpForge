@@ -20,7 +20,8 @@ function flattenEdits(edit) {
   if (Array.isArray(edit?.edits)) return edit.edits;
   if (edit?.changes) return Object.entries(edit.changes).flatMap(([uri, edits]) => edits.map(item => ({...item, uri})));
   if (edit?.documentChanges) return edit.documentChanges.flatMap(change => {
-    if (!change.textDocument || !Array.isArray(change.edits)) fail('SFED1103', 'Resource file operations require a workspace resource provider');
+    if (change.kind === 'rename') return [];
+    if (!change.textDocument || !Array.isArray(change.edits)) fail('SFED1103', 'Unsupported workspace resource operation');
     return change.edits.map(item => ({...item, uri: change.textDocument.uri, version: change.textDocument.version}));
   });
   fail('SFED1104', 'Expected a WorkspaceEdit or an array of versioned text edits');
@@ -61,7 +62,30 @@ export function prepareWorkspaceEdit(workspace, workspaceEdit, options = {}) {
     if (text.length > (options.maxDocumentLength ?? 32_000_000)) fail('SFED1109', `Edited document exceeds its size limit: ${uri}`);
     changes.push(Object.freeze({uri, version: before.version, before: before.text, text, edits: Object.freeze(normalized)}));
   }
-  return Object.freeze({changes: Object.freeze(changes), label: options.label ?? workspaceEdit.title ?? 'Workspace edit'});
+  const resources = prepareResources(workspace, workspaceEdit, options);
+  return Object.freeze({changes: Object.freeze(changes), resources: Object.freeze(resources),
+    label: options.label ?? workspaceEdit.title ?? 'Workspace edit'});
+}
+
+function prepareResources(workspace, edit, options) {
+  const operations = edit?.resources ?? edit?.documentChanges?.filter(change => change.kind) ?? [];
+  if (!operations.length) return [];
+  if (workspace.supportsResourceRename !== true) fail('SFED1103', 'This workspace does not support atomic resource rename');
+  if (operations.length > (options.maxEdits ?? 100_000)) fail('SFED1105', 'Resource edit budget exceeded');
+  const sources = new Set();
+  const destinations = new Set();
+  return operations.map(operation => {
+    const {oldUri, newUri} = operation;
+    if (operation.kind !== 'rename' || typeof oldUri !== 'string' || typeof newUri !== 'string' || !oldUri || !newUri ||
+      oldUri === newUri || sources.has(oldUri) || destinations.has(newUri)) fail('SFED1103', 'Invalid or overlapping resource rename');
+    if (workspace.getDocument?.(newUri) ?? workspace.documents?.get(newUri)) fail('SFED1103', `Rename destination exists: ${newUri}`);
+    const source = readWorkspaceDocument(workspace, oldUri);
+    const version = operation.version ?? options.versions?.get(oldUri) ?? options.versions?.[oldUri];
+    if (source.readOnly || source.version !== version) fail('SFED1110', `Stale or read-only resource rename: ${oldUri}`);
+    sources.add(oldUri);
+    destinations.add(newUri);
+    return Object.freeze({kind: 'rename', oldUri, newUri, version, before: source.text});
+  });
 }
 
 function normalizeEdit(edit, source, options) {
@@ -93,7 +117,14 @@ export function commitWorkspaceEdit(workspace, plan) {
       fail('SFED1113', `Workspace changed before commit: ${change.uri}`);
     }
   }
-  if (!plan.changes.length) return {changes: []};
+  for (const resource of plan.resources ?? []) {
+    const document = readWorkspaceDocument(workspace, resource.oldUri);
+    if (document.readOnly || document.version !== resource.version || document.text !== resource.before ||
+      (workspace.getDocument?.(resource.newUri) ?? workspace.documents?.get(resource.newUri))) {
+      fail('SFED1113', `Workspace changed before resource rename: ${resource.oldUri}`);
+    }
+  }
+  if (!plan.changes.length && !plan.resources?.length) return {changes: []};
   if (typeof workspace.applyTransaction !== 'function') fail('SFED1114', 'Workspace requires an atomic applyTransaction adapter');
   return workspace.applyTransaction(plan);
 }
@@ -109,6 +140,7 @@ export function editorWorkspace(editor) {
     },
     listDocuments() { return [this.getDocument(editor.uri)]; },
     applyTransaction(plan) {
+      if (plan.resources?.length) fail('SFED1103', 'A resource transaction adapter is required');
       if (plan.changes.some(change => change.uri !== editor.uri)) fail('SFED1115', 'A multi-document workspace adapter is required');
       const change = plan.changes[0];
       editor.applyEdits(change.edits, {source: plan.label, undoStop: true});

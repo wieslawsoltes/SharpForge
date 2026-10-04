@@ -181,6 +181,14 @@
       "qualification": "Registered handler; see workflow matrix for behavior and platform qualification"
     },
     {
+      "id": "keymap:resharper",
+      "title": "Keyboard: ReSharper-like (IntelliJ)",
+      "category": "Keyboard",
+      "shortcut": "",
+      "status": "implemented",
+      "qualification": "Registered handler; see workflow matrix for behavior and platform qualification"
+    },
+    {
       "id": "keymap:sublime",
       "title": "Keyboard: Sublime Text",
       "category": "Keyboard",
@@ -208,6 +216,14 @@
       "id": "keymap:vscode",
       "title": "Keyboard: Visual Studio Code",
       "category": "Keyboard",
+      "shortcut": "",
+      "status": "implemented",
+      "qualification": "Registered handler; see workflow matrix for behavior and platform qualification"
+    },
+    {
+      "id": "launch-profiles",
+      "title": "Launch Profiles",
+      "category": "Project",
       "shortcut": "",
       "status": "implemented",
       "qualification": "Registered handler; see workflow matrix for behavior and platform qualification"
@@ -349,9 +365,25 @@
       "qualification": "Registered handler; see workflow matrix for behavior and platform qualification"
     },
     {
+      "id": "processes",
+      "title": "Processes",
+      "category": "Debug",
+      "shortcut": "",
+      "status": "implemented",
+      "qualification": "Registered handler; see workflow matrix for behavior and platform qualification"
+    },
+    {
       "id": "profile",
       "title": "View compatibility profile",
       "category": "View compatibility profile",
+      "shortcut": "",
+      "status": "implemented",
+      "qualification": "Registered handler; see workflow matrix for behavior and platform qualification"
+    },
+    {
+      "id": "projectDebugStartNewInstance",
+      "title": "Start New Instance",
+      "category": "Debug",
       "shortcut": "",
       "status": "implemented",
       "qualification": "Registered handler; see workflow matrix for behavior and platform qualification"
@@ -453,9 +485,33 @@
       "qualification": "Registered handler; see workflow matrix for behavior and platform qualification"
     },
     {
+      "id": "solutionSetStartupProjects",
+      "title": "Set Startup Projects…",
+      "category": "Project",
+      "shortcut": "",
+      "status": "implemented",
+      "qualification": "Registered handler; see workflow matrix for behavior and platform qualification"
+    },
+    {
       "id": "stack",
       "title": "Open Call Stack",
       "category": "Open Call Stack",
+      "shortcut": "",
+      "status": "implemented",
+      "qualification": "Registered handler; see workflow matrix for behavior and platform qualification"
+    },
+    {
+      "id": "start-new-instance",
+      "title": "Start New Instance",
+      "category": "Debug",
+      "shortcut": "",
+      "status": "implemented",
+      "qualification": "Registered handler; see workflow matrix for behavior and platform qualification"
+    },
+    {
+      "id": "startup-projects",
+      "title": "Set Startup Projects…",
+      "category": "Project",
       "shortcut": "",
       "status": "implemented",
       "qualification": "Registered handler; see workflow matrix for behavior and platform qualification"
@@ -489,6 +545,14 @@
       "title": "Stop debugging",
       "category": "Stop debugging",
       "shortcut": "Shift+F5",
+      "status": "implemented",
+      "qualification": "Registered handler; see workflow matrix for behavior and platform qualification"
+    },
+    {
+      "id": "stop-all",
+      "title": "Stop All Applications",
+      "category": "Debug",
+      "shortcut": "",
       "status": "implemented",
       "qualification": "Registered handler; see workflow matrix for behavior and platform qualification"
     },
@@ -1381,6 +1445,7 @@
       "title": "Project",
       "mnemonic": "p",
       "commands": [
+        "solutionSetStartupProjects",
         "projectProperties",
         "workbench.configuration"
       ]
@@ -1403,7 +1468,9 @@
       "commands": [
         "debug",
         "run",
+        "start-new-instance",
         "stop",
+        "stop-all",
         "pause",
         "next",
         "stepIn",

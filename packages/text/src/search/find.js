@@ -3,20 +3,7 @@ import { RegexParser } from './parser.js';
 import { compileRegex } from './compiler.js';
 import { regexMatches } from './interpreter.js';
 import { literalMatches } from './literal.js';
-
-
-const WORD = /[\p{L}\p{N}\p{M}_]/u;
-
-function previousCharacter(text, offset) {
-  let start = offset - 1;
-  if (start > 0 && text.charCodeAt(start) >= 0xdc00 && text.charCodeAt(start) <= 0xdfff) start--;
-  return text.slice(Math.max(0, start), offset);
-}
-
-function wholeWord(text, match) {
-  const next = match.end < text.length ? String.fromCodePoint(text.codePointAt(match.end)) : '';
-  return !WORD.test(previousCharacter(text, match.start)) && !WORD.test(next);
-}
+import { wholeWord } from './whole-word.js';
 
 function positionScanner(text, budget) {
   let scanned = 0;

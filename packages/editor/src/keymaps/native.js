@@ -4,6 +4,7 @@ import { visualStudioBindings } from './visual-studio.js';
 import { vscodeBindings } from './vscode.js';
 import { sublimeBindings } from './sublime.js';
 import { emacsBindings } from './emacs.js';
+import { resharperBindings } from './resharper.js';
 import { commonBindings } from './common.js';
 import { EmacsState } from './kill-ring.js';
 import { VimKeymap } from './vim.js';
@@ -11,7 +12,8 @@ import { NativeCodeMirrorDocument } from './native-document.js';
 import { transformOffset } from '../selections.js';
 
 const profiles = Object.freeze({
-  'visual-studio': visualStudioBindings, vscode: vscodeBindings, sublime: sublimeBindings, emacs: emacsBindings,
+  'visual-studio': visualStudioBindings, vscode: vscodeBindings, resharper: resharperBindings,
+  sublime: sublimeBindings, emacs: emacsBindings,
   vim: commonBindings.filter(binding => binding.keys.includes('Mod+') || /^F\d/.test(binding.keys))
 });
 

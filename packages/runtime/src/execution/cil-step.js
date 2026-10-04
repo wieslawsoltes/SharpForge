@@ -4,6 +4,7 @@ import {ManagedFault} from '../heap.js';
 import {prepareCall} from './calls.js';
 import {getDecodePlan} from './decode-plan.js';
 import {cilHandlers} from './handlers/index.js';
+import {dispatchWasmCall} from './wasm/call-tier-state.js';
 
 const dispatching = new WeakSet();
 export const cilStepActive = vm => dispatching.has(vm);
@@ -33,7 +34,7 @@ export function executeCilStep(vm, dispatcher = null) {
     try {
       profiler?.instruction(frame);
       if (dispatcher) dispatcher(vm, frame, instruction, index, handler);
-      else handler(vm, frame, instruction);
+      else dispatchWasmCall(vm, frame, instruction, index, handler);
       succeeded = true;
     } finally {
       flushFramePool(vm);

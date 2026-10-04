@@ -72,6 +72,7 @@ function dispatch(record, frame, instruction, index, handler) {
   } finally {
     // Clear before the shared step envelope flushes retired frame storage.
     clearContext(context);
+    if (record.releasePending) release(record);
   }
 }
 
@@ -124,4 +125,25 @@ export function disposeWasmMethod(handle) {
   }
   release(record);
   return true;
+}
+
+/** Internal tier-owned lease. Stale selections fall back before consuming any operands. */
+export function preparedWasmDispatch(vm, handle) {
+  const record = handles.get(handle);
+  if (!record || record.vm !== vm) throw failure('WASM_OWNER', 'Compiled method belongs to another VM');
+  requireCurrent(record);
+  return Object.freeze({
+    current: () => current(record),
+    dispatch: (machine, frame, instruction, index, handler) => {
+      if (machine !== vm || !current(record)) return handler(machine, frame, instruction);
+      return dispatch(record, frame, instruction, index, handler);
+    },
+    dispose: () => {
+      if (record.disposed) return;
+      // A host callback can invalidate code inside a canonical imported helper.
+      // Finish that instruction before releasing its active import context.
+      if (record.context.active) record.releasePending = true;
+      else release(record);
+    }
+  });
 }
