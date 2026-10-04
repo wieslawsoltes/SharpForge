@@ -1,3 +1,5 @@
+import {instantiatedMethod} from './generics.js';
+import {callDescriptor, selectedCallOwner} from './generic-calls.js';
 import {invokeDecimal} from './decimal-intrinsics.js';
 import {stringFromChars} from './strings.js';
 import {cilCallFrame} from './call-frames.js';
@@ -9,12 +11,12 @@ import {SUSPENDED} from '../platform.js';
 import {storageDefault} from './storage.js';
 import {ensureTypeInitialized} from './static-init.js';
 import {enterCilMethod} from './cil-method-events.js';
-import {cachedMetadataToken,verifiedMethod} from './token-cache.js';
+import {verifiedMethod} from './token-cache.js';
 import {resolveVirtualTarget} from './inline-cache.js';
 
 export function call(vm,token,args,extra={}) {
   if(vm.frames.length>=vm.options.maxFrames)throw new ManagedFault('StackOverflowException','Managed call depth exceeded');
-  const method=vm.inspector.getMethod(token);
+  const method=instantiatedMethod(vm,token,extra.genericIdentity??null,extra.methodArguments??[]);
   if(!method.signature.isStatic&&args[0]===null)throw new ManagedFault('NullReferenceException','Instance method receiver is null');
   vm.frames.push(cilCallFrame(vm,method,args,extra));
   enterCilMethod(vm, vm.top);
@@ -34,7 +36,7 @@ export function prepareCall(vm,frame=vm.top) {
   frame.needsInitialization=false;return true;
 }
 export function invoke(vm,instruction) {
-  const caller=vm.top,descriptor=cachedMetadataToken(vm,instruction.operand),target=descriptor.resolvedToken??(descriptor.token>>>24===6?descriptor.token:null);
+  const caller=vm.top,descriptor=callDescriptor(vm,instruction.operand,caller),target=descriptor.resolvedToken??(descriptor.token>>>24===6?descriptor.token:null);
   const count=descriptor.signature.parameters.length+(instruction.name!=='newobj'&&!descriptor.signature.isStatic?1:0);
   const instance=descriptor.genericIdentity??descriptor.ownerInstance??(caller.method.ownerToken===descriptor.ownerToken?caller.genericIdentity:null)??null;
   const genericIdentity=instance===null?null:vm.typeSystem.table(instance).name;
@@ -63,14 +65,15 @@ export function invoke(vm,instruction) {
       else if(systemType(descriptor.owner)==='System.Exception')ref=vm.heap.allocate('exception','System.Exception',[args[0]??null]);
       else throw new ManagedFault('NotSupportedException','External object construction is unavailable');
       args.unshift(ref);vm.heap.pins.push(ref);
-      if(target)vm.call(target,args,{returnObject:ref,genericIdentity});else {vm.intrinsic(descriptor,args);caller.stack.push(ref);}
+      if(target)vm.call(target,args,{returnObject:ref,genericIdentity,methodArguments:descriptor.methodArguments});else {vm.intrinsic(descriptor,args);caller.stack.push(ref);}
       return;
     }
     if(instruction.name==='callvirt'&&args[0]===null)throw new ManagedFault('NullReferenceException','Null virtual receiver');
     const dispatch=target&&instruction.name==='callvirt'&&(vm.inspector.methods.get(target)?.flags&0x40)?resolveVirtualTarget(vm,caller,instruction,descriptor,args[0]):target;
     if(dispatch) {
       if(!verifiedMethod(vm,dispatch))throw new ManagedFault('NotSupportedException','Unverified virtual override; select its method directly');
-      vm.call(dispatch,args,{genericIdentity});
+      const owner=descriptor.signature.isStatic?genericIdentity:selectedCallOwner(vm,dispatch,args[0],genericIdentity);
+      vm.call(dispatch,args,{genericIdentity:owner,methodArguments:descriptor.methodArguments});
     } else {
       const value=vm.intrinsic(descriptor,args);
       if(descriptor.signature.returnType!=='void'&&value!==SUSPENDED)caller.stack.push(value);

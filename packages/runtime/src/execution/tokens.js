@@ -6,7 +6,7 @@ import {cachedMetadataToken} from './token-cache.js';
 function tableFor(vm,type) {
   const registry=vm.heap.methodTables;
   if(!registry)throw new ManagedFault('InvalidProgramException','Runtime method tables are not initialized');
-  return registry.get(type);
+  return vm.inspector?vm.typeSystem.table(type):registry.get(type);
 }
 function validHandle(vm,handle,kind) {
   if(!handle||!Object.isFrozen(handle)||handle.runtimeHandle!==kind||handle.owner!==vm.snapshotOwner)
