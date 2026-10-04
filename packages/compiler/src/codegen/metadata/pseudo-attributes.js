@@ -41,7 +41,7 @@ export class PseudoAttributeWriter {
       case INTEROP + 'FieldOffsetAttribute':
         this.builder.addRow('FieldLayout', { Offset: Number(fixed[0]), Field: parent });
         break;
-      case INTEROP + 'DllImportAttribute': this.import(parent, row, fixed[0], named, symbol.metadataName ?? symbol.name); break;
+      case INTEROP + 'DllImportAttribute': this.writeImport(parent, row, fixed[0], named, symbol.metadataName ?? symbol.name); break;
       case INTEROP + 'MarshalAsAttribute':
         row[0] |= parent >>> 24 === TABLE.Field ? 0x1000 : 0x2000;
         this.builder.addRow('FieldMarshal', { Parent: parent, NativeType: marshalDescriptor(fixed[0], named) });
@@ -73,7 +73,7 @@ export class PseudoAttributeWriter {
     if (!this.modules.has(handle)) this.modules.set(handle, this.builder.addRow('ModuleRef', { Name: handle }));
     return this.modules.get(handle);
   }
-  import(parent, row, library, named, defaultName) {
+  writeImport(parent, row, library, named, defaultName) {
     row[2] |= 0x2000; // MethodAttributes.PinvokeImpl
     if (named.PreserveSig === false) row[1] &= ~0x80;
     else row[1] |= 0x80;

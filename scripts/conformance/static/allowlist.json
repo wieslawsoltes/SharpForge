@@ -86,6 +86,13 @@
       "reason": "Developer-run Constant benchmark loads the metadata importer from an explicitly selected trusted local baseline or its fixed workspace path; the tool is not shipped in the product."
     },
     {
+      "path": "packages/compiler/bench/attribute-metadata.bench.js",
+      "operation": "dynamic-import",
+      "count": 1,
+      "sha256": "b56cd207e62823b5640d40d47203659356a3e7bc50227043e72a0366c6d6ca5b",
+      "reason": "Developer-run attribute benchmark loads the fixed compiler public entry from an explicitly selected trusted local baseline checkout for the paired comparison. The benchmark is not shipped in the product; the operator-selected checkout is executable host input."
+    },
+    {
       "path": "packages/compiler/smoke.mjs",
       "operation": "dynamic-import",
       "count": 3,
