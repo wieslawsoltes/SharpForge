@@ -4,6 +4,7 @@ import {readFileSync} from 'node:fs';
 import {createHash} from 'node:crypto';
 import {compileToIL} from '@sharpforge/compiler';
 import {float, int32BitsToSingle} from '@sharpforge/bytecode';
+import {formatSingleDefault} from '@sharpforge/bcl-core';
 import {VirtualMachine, CilVirtualMachine} from '@sharpforge/runtime';
 import {builderPlatform} from './fixtures/string-builder/append-char.js';
 
@@ -11,12 +12,22 @@ const directory = new URL('../packages/bcl-core/reference/', import.meta.url);
 const native = JSON.parse(readFileSync(new URL('string-builder-append-single-net10.json', directory), 'utf8'));
 const rows = native.rows.filter(row => !row.nullReceiver);
 
+test('Single default public formatter accepts raw binary32 numbers without changing their storage value', () => {
+  for (const row of rows) {
+    const carrier = int32BitsToSingle(Number.parseInt(row.bits, 16) | 0);
+    const value = carrier.value;
+    assert.equal(formatSingleDefault(value), row.text, row.bits);
+    assert(Object.is(carrier.value, value), row.bits);
+  }
+});
+
 for (const engine of ['source', 'cil']) {
   test(`Single append prerequisite ${engine}: existing typed default formatter matches exact native Single bits`, () => {
     const builder = builderPlatform(engine);
     try {
       const actual = rows.map(row => {
         const value = int32BitsToSingle(Number.parseInt(row.bits, 16) | 0);
+        assert.equal(builder.vm.format(value.value, 'float'), builder.vm.format(value, 'float'), row.bits);
         return {bits: row.bits, text: builder.vm.format(value, 'float')};
       });
       assert.deepEqual(actual, rows.map(row => ({bits: row.bits, text: row.text})));
