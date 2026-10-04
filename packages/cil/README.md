@@ -1,5 +1,15 @@
 # @sharpforge/cil
 
+Reference-assembly member policy and marker emission are available through `referenceAssemblyMemberIncluded` and
+`addReferenceAssemblyAttribute`. The compiler's `{ refout: true }` adapter, example and qualification commands are in
+[Reference assembly output](../../docs/reference-assembly-refout.md).
+
+`assemblyReferenceIdentity(builder, name)` returns the exact configured or framework fallback identity used by
+`builder.assemblyRef(name)`: `{ name, version, culture, flags, publicKeyOrToken }`. It does not add a metadata row,
+and each result owns copies of its four-part version and key bytes. Invalid names and missing required `net9`/`net10`
+reference identities raise `CilError`, as emission does. This lets consumers serialize assembly-qualified attribute
+type names without duplicating framework identity defaults.
+
 Genuine ECMA-335 PE/CLI emission, typed CIL lowering, bounded metadata/IL loading, canonical-profile verification and disassembly. JavaScript ESM. Version 0.6.0. MIT. Sibling dependencies: `@sharpforge/bytecode` and `@sharpforge/framework`.
 
 ```js

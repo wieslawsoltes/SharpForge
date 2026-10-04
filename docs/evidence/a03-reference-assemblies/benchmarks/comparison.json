@@ -1,0 +1,148 @@
+{
+  "schemaVersion": 1,
+  "measurementDate": "2026-10-04",
+  "captureOrder": [
+    "baseline-c1693a9e-metadata",
+    "candidate-7c73c877-metadata",
+    "candidate-7c73c877-refout"
+  ],
+  "runsPerCase": 1,
+  "reruns": 0,
+  "allExitCodes": 0,
+  "rawSamplesPerRun": 120,
+  "settlingSamplesExcluded": 20,
+  "summarySamplesPerRun": 100,
+  "environment": {
+    "node": "v24.19.0",
+    "platform": "linux",
+    "architecture": "x64",
+    "operatingSystemRelease": "6.18.44",
+    "cpu": "AMD EPYC 9V74 80-Core Processor",
+    "logicalCpus": 9,
+    "totalMemoryBytes": 10451464192,
+    "gcExposed": true
+  },
+  "limitedChildNodeOptions": "--max-old-space-size=2048",
+  "scheduling": "Exclusive team heavy slot; shared hosted machine, unrelated external workloads not measured.",
+  "runs": [
+    {
+      "mode": "metadata",
+      "compilerRevision": "c1693a9e322295a43d90c3335885b5b5b3cf8daa",
+      "driverRevision": "7c73c877c841fa5d4d124edfab980f5896a7e485",
+      "sourceSha256": "abca70815be7aeb48add620fe02ae268025db1ba4cbdc57321a654d661091e88",
+      "assemblySha256": "5de374c77409caaff45316a4432e245cd48f76bff3e0d7f078e0e74a1ea50d2c",
+      "markerCount": 0,
+      "medianMs": 15.54025700000011,
+      "p95Ms": 23.672052000000804,
+      "p99Ms": 31.66812200000004,
+      "firstCompileMs": 102.27075300000001,
+      "compilerImportMs": 643.469601,
+      "medianHeapUsedDelta": 3983120,
+      "assemblyBytes": 4096
+    },
+    {
+      "mode": "metadata",
+      "compilerRevision": "7c73c877c841fa5d4d124edfab980f5896a7e485",
+      "driverRevision": "7c73c877c841fa5d4d124edfab980f5896a7e485",
+      "sourceSha256": "abca70815be7aeb48add620fe02ae268025db1ba4cbdc57321a654d661091e88",
+      "assemblySha256": "203d976ebd713b519ee70fca5a3a7ad571413136d304870be3b083ec70be4d5d",
+      "markerCount": 0,
+      "medianMs": 15.544988000000103,
+      "p95Ms": 20.191165999999612,
+      "p99Ms": 22.964188999999806,
+      "firstCompileMs": 113.95897400000013,
+      "compilerImportMs": 530.6117549999999,
+      "medianHeapUsedDelta": 3982488,
+      "assemblyBytes": 4096
+    },
+    {
+      "mode": "refout",
+      "compilerRevision": "7c73c877c841fa5d4d124edfab980f5896a7e485",
+      "driverRevision": "7c73c877c841fa5d4d124edfab980f5896a7e485",
+      "sourceSha256": "abca70815be7aeb48add620fe02ae268025db1ba4cbdc57321a654d661091e88",
+      "assemblySha256": "a8828868ecab9ff103ee59e3f642d419f71111897ac2fec9908c785d58c62c66",
+      "markerCount": 1,
+      "medianMs": 15.16668199999981,
+      "p95Ms": 19.360905999999886,
+      "p99Ms": 23.763266999999814,
+      "firstCompileMs": 127.93481800000006,
+      "compilerImportMs": 566.799936,
+      "medianHeapUsedDelta": 3913608,
+      "assemblyBytes": 4096
+    }
+  ],
+  "comparisons": [
+    {
+      "scope": "whole-checkout-metadata",
+      "percentChanges": {
+        "medianMs": 0.030443511970190684,
+        "p95Ms": -14.704622987483607,
+        "p99Ms": -27.48484106509449,
+        "firstCompileMs": 11.428703375245618,
+        "compilerImportMs": -17.53895534841282,
+        "medianHeapUsedDelta": -0.015866958565147193,
+        "assemblyBytes": 0.0
+      },
+      "latencyIncreasesOverFivePercent": [
+        "firstCompileMs"
+      ],
+      "assemblySizeIncreaseOverTenPercent": false
+    },
+    {
+      "scope": "candidate-output-mode",
+      "percentChanges": {
+        "medianMs": -2.4336204054984822,
+        "p95Ms": -4.111996305709842,
+        "p99Ms": 3.479670020134451,
+        "firstCompileMs": 12.263925787889175,
+        "compilerImportMs": 6.82008656216071,
+        "medianHeapUsedDelta": -1.7295720665071679,
+        "assemblyBytes": 0.0
+      },
+      "latencyIncreasesOverFivePercent": [
+        "firstCompileMs",
+        "compilerImportMs"
+      ],
+      "assemblySizeIncreaseOverTenPercent": false
+    }
+  ],
+  "interpretation": [
+    "Whole-checkout metadata comparison includes unrelated compiler and package changes; no per-feature causal attribution.",
+    "Candidate output modes have different contract semantics and contents, despite matching PE-aligned file lengths.",
+    "Compiler import and first compilation each have one observation per process; increases are disclosed without claiming a statistically established startup regression or a performance-budget pass.",
+    "HeapUsed deltas include temporaries and do not measure total allocations or retained heap.",
+    "No repeated measurement was selected or discarded for favorable timing.",
+    "Driver statically preloads candidate CIL for AssemblyInspector before compiler import timing; baseline compiler import loads a separate CIL dependency copy. Import delta is not an equivalent clean-startup comparison.",
+    "PE file sizes include alignment padding; no separate metadata payload or browser bundle size measurement was taken."
+  ],
+  "review": {
+    "status": "pending coordinator review",
+    "reason": "First compilation increased by more than 5% in both comparisons; candidate mode import increased by more than 5% as one observation.",
+    "performanceBudgetPassClaimed": false
+  },
+  "derivedImportPlusFirstCompile": {
+    "separateMeasurement": false,
+    "otherDriverStartupExcluded": true,
+    "valuesMs": [
+      745.740354,
+      644.570729,
+      694.7347540000001
+    ],
+    "percentChanges": [
+      -13.566333705470901,
+      7.7825477861561465
+    ]
+  },
+  "independentReadOnlyReview": {
+    "agent": "/root/emission_remaining/review_refout",
+    "noProductExecution": true,
+    "findings": [
+      "All three raw arrays contain 120 timing and 120 heap samples; final-100 true median and nearest-rank p95/p99 recompute exactly.",
+      "Actual output/log hashes match execution records and each log parses to its corresponding result JSON.",
+      "Driver, fixture and compiler entry hashes match frozen provenance; preparation manifests match.",
+      "Execution intervals do not overlap; frozen runner refuses reused destinations.",
+      "Own-checkout dependency, mode, success and exact output determinism guards support captured results.",
+      "Compiler import comparison is affected by preloaded candidate CIL; no clean-startup or per-feature attribution claim."
+    ]
+  }
+}
