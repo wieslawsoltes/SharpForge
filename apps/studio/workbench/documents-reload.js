@@ -90,7 +90,9 @@ function prepareModel(model, text, version) {
 }
 
 function publish(owner, uri, record, model, prepared, previous, result, failure) {
-  const current = () => !owner.disposed && owner.records.get(uri) === record && owner.models.get(uri) === model;
+  const legacyText = model ? null : record.text;
+  const current = () => !owner.disposed && owner.records.get(uri) === record && owner.models.get(uri) === model
+    && record.version === result.version && (model ? model.snapshot() === result.source : record.text === legacyText);
   const effects = failure ? [() => { throw failure; }] : [];
   if (model) owner.reloadChanges.add(prepared.bufferEdit);
   if (prepared?.changes.length || !model && previous !== record.text) {

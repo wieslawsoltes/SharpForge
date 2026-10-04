@@ -170,6 +170,35 @@ test('an explicitly committed metadata error retains the accepted disk and docum
   assert.deepEqual(events, ['changed', 'saved', 'dirty']);
 });
 
+for (const layer of ['document', 'model']) {
+  test(`a newer edit from a ${layer} notification remains dirty and cannot receive a stale saved marker`, t => {
+    const { documents, record, model } = fixture(t);
+    let edited = false;
+    const versions = [];
+    const events = [];
+    const edit = () => {
+      if (edited) return;
+      edited = true;
+      model.applyEdits([{ start: 0, end: 0, text: 'newer ' }]);
+    };
+    const offEdit = layer === 'document' ? documents.subscribe(event => { if (event.type === 'changed') edit(); })
+      : model.onDidChange(edit);
+    const offEvents = documents.subscribe(event => events.push(event.type));
+    const offModel = model.onDidChange(event => versions.push(event.version));
+    t.after(offEdit);
+    t.after(offEvents);
+    t.after(offModel);
+    const result = reload(documents, 'external\n');
+
+    assert.equal(model.getText(), 'newer external\n');
+    assert.equal(record.version, result.version + 1);
+    assert.equal(record.dirty, true);
+    assert.equal(documents.baselines.get(uri), result.source);
+    assert.equal(events.includes('saved'), false);
+    if (layer === 'document') assert.deepEqual(versions, [record.version]);
+  });
+}
+
 test('reload guards reject stale ownership, versions, read-only state and invalid encoding before metadata acceptance', t => {
   const { documents, record, model } = fixture(t);
   const before = model.snapshot();
