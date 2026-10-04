@@ -2,7 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import {SourceText} from '@sharpforge/text';
 import {EditorModel} from '../packages/editor/src/model.js';
-import {AsyncRequestGuard, EDITOR_SERVICE_METHODS, EditorLanguageServices, createRequestServices,
+import {AsyncRequestGuard, editorRevision, sameRevision, EDITOR_SERVICE_METHODS, EditorLanguageServices, createRequestServices,
   prepareWorkspaceEdit, commitWorkspaceEdit, EditorModelWorkspace, diagnosticDecorations,
   mergeSemanticTokens, semanticDecorations} from '../packages/editor/src/services/index.js';
 import {RenamePreview} from '../packages/editor/src/features/rename-preview.js';
@@ -75,6 +75,22 @@ test('guard propagates errors, isolates feature channels and cancels on dispose'
   completion.resolve(['never delivered']);
   assert.equal(await second, undefined);
   assert.equal(await guard.run('hover', () => { throw new Error('must not run'); }), undefined);
+});
+
+test('guard retains persistent snapshot identities and compares target document versions independently', async () => {
+  let model = new EditorModel('origin', {uri: 'a'});
+  const editor = {uri: 'a', get model() { return model; }, get value() { throw new Error('Guard must not flatten a model'); }};
+  const first = editorRevision(editor);
+  assert(sameRevision(first, editorRevision(editor)));
+  const guard = new AsyncRequestGuard(() => editorRevision(editor));
+  const result = await guard.run('peek', () => ({uri: 'b', version: 9, text: 'target'}), {}, {validateResponseVersion: false});
+  assert.equal(result.value.version, 9);
+  const pending = deferred();
+  const waiting = guard.run('peek', () => pending.promise, {}, {validateResponseVersion: false});
+  model = new EditorModel('origin', {uri: 'a'});
+  assert(!sameRevision(first, editorRevision(editor)));
+  pending.resolve({uri: 'b', version: 9, text: 'target'});
+  assert.equal(await waiting, undefined);
 });
 
 function workspace() {

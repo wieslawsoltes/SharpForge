@@ -2,7 +2,7 @@
 export const EDITOR_SERVICE_METHODS = Object.freeze([
   'completion', 'resolveCompletion', 'hover', 'signatureHelp', 'diagnostics', 'codeActions', 'resolveCodeAction',
   'rename', 'prepareRename', 'folding', 'semanticTokens', 'inlayHints', 'codeLens', 'resolveCodeLens',
-  'documentHighlights', 'documentSymbols', 'definition', 'references', 'format', 'formatRange', 'formatOnType',
+  'selectionRanges', 'documentHighlights', 'documentSymbols', 'definition', 'references', 'format', 'formatRange', 'formatOnType',
   'executeCommand', 'readDocument', 'projects', 'documentationComment'
 ]);
 

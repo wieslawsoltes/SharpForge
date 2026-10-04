@@ -56,7 +56,7 @@ export class CompletionWidget {
     const offset = editor.offset;
     const result = await this.context.request('completion', {offset, triggerCharacter, triggerKind: triggerCharacter ? 2 : 1});
     if (!result || editor.offset !== offset) return;
-    this.items = serviceItems(result.value).slice(0, 2000);
+    this.items = serviceItems(result.value).slice(0, 2000).map(item => ({...item}));
     for (const snippet of this.context.snippets?.catalog ?? []) {
       this.items.push({label: snippet.prefix, kind: 'snippet', detail: snippet.label,
         insertText: snippet.body, insertTextFormat: 2});
@@ -121,7 +121,7 @@ export class CompletionWidget {
     this.list.replaceChildren(...entries);
     this.context.editor.input.setAttribute('aria-activedescendant', `${this.list.id}-${this.index}`);
     entries[this.index]?.scrollIntoView?.({block: 'nearest'});
-    this.showDocumentation();
+    this.context.safe(() => this.showDocumentation());
   }
 
   async showDocumentation() {
