@@ -31,19 +31,24 @@ function execute(bytes, expected) {
   const before = performance.now();
   const vm = new CilVirtualMachine(bytes, {virtualTime: true});
   const ready = performance.now();
-  let result = vm.run();
-  for (let count = 0; count < 100 && result.state === 'waiting'; count++) {
-    const delay = vm.scheduler.nextDelay();
-    if (delay === null) throw new Error('Benchmark has no runnable continuation');
-    vm.scheduler.advance(delay);
-    result = vm.run();
+  try {
+    let result = vm.run();
+    for (let count = 0; count < 100 && result.state === 'waiting'; count++) {
+      const delay = vm.scheduler.nextDelay();
+      if (delay === null) throw new Error('Benchmark has no runnable continuation');
+      vm.scheduler.advance(delay);
+      result = vm.run();
+    }
+    if (result.state !== 'terminated') throw new Error(result.fault?.message ?? result.state);
+    if (result.output !== expected.output || 'returnValue' in expected && result.returnValue !== expected.returnValue) {
+      throw new Error('Benchmark execution did not match its captured output or ordinary control result');
+    }
+    const finished = performance.now();
+    return {admissionMs: ready - before, executionMs: finished - ready,
+      totalMs: finished - before, allocatedBytes: vm.heap.stats.allocatedBytes, allocations: vm.heap.stats.allocations};
+  } finally {
+    vm.stop();
   }
-  if (result.state !== 'terminated') throw new Error(result.fault?.message ?? result.state);
-  if (result.output !== expected.output || 'returnValue' in expected && result.returnValue !== expected.returnValue) {
-    throw new Error('Benchmark execution did not match its captured output or ordinary control result');
-  }
-  return {admissionMs: ready - before, executionMs: performance.now() - ready,
-    totalMs: performance.now() - before, allocatedBytes: vm.heap.stats.allocatedBytes, allocations: vm.heap.stats.allocations};
 }
 
 function summarize(values) {

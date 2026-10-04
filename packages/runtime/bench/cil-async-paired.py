@@ -8,6 +8,7 @@ import math
 import os
 from pathlib import Path
 import platform
+import signal
 import statistics
 import subprocess
 import tarfile
@@ -86,10 +87,37 @@ def verify_export(directory, inventory):
 def run(directory, args, commit, timeout=180):
     environment = dict(os.environ, SHARPFORGE_BENCH_REVISION=commit)
     started = time.monotonic()
-    process = subprocess.run(["node", *args], cwd=directory, env=environment,
-                             capture_output=True, text=True, timeout=timeout)
-    return {"command": ["node", *args], "exitCode": process.returncode, "elapsedSeconds": time.monotonic() - started,
-            "stdout": process.stdout, "stderr": process.stderr}
+    failure = None
+    with subprocess.Popen(["node", *args], cwd=directory, env=environment, stdout=subprocess.PIPE,
+                          stderr=subprocess.PIPE, text=True, start_new_session=os.name == "posix") as process:
+        try:
+            stdout, stderr = process.communicate(timeout=timeout)
+        except subprocess.TimeoutExpired:
+            # The Node test runner can own a child worker; terminate the isolated process group too.
+            try:
+                if os.name == "posix":
+                    os.killpg(process.pid, signal.SIGKILL)
+                else:
+                    process.kill()
+            except ProcessLookupError:
+                pass
+            stdout, stderr = process.communicate()
+            failure = {"kind": "timeout", "timeoutSeconds": timeout}
+        result = {"command": ["node", *args], "exitCode": process.returncode, "elapsedSeconds": time.monotonic() - started,
+                  "stdout": stdout, "stderr": stderr}
+        if failure:
+            result["failure"] = failure
+        elif process.returncode:
+            result["failure"] = {"kind": "subprocess-exit", "exitCode": process.returncode}
+        return result
+
+
+def save_report(options, report):
+    target = options.output.resolve()
+    target.parent.mkdir(parents=True, exist_ok=True)
+    pending = target.with_suffix(target.suffix + ".tmp")
+    pending.write_text(json.dumps(report, indent=2) + "\n")
+    pending.replace(target)
 
 
 def summaries(rounds):
@@ -134,6 +162,67 @@ def comparisons(summary):
     return result
 
 
+def replay_baseline(options, root, report):
+    directory = root / "baseline"
+    report["stage"] = "export baseline"
+    inventory = export_sources(options.repository, BASELINE, directory, [DISPATCH, DISPATCH_SUPPORT])
+    report["source"] = inventory
+    save_report(options, report)
+    report["stage"] = "verify baseline export"
+    verify_export(directory, inventory)
+    report["stage"] = "run baseline diagnostic assertion"
+    report["runs"].append(run(directory, ["--test", "--test-name-pattern",
+        "aggregate generic values and external generic methods keep explicit unsupported diagnostics", DISPATCH], BASELINE))
+    save_report(options, report)
+    report["stage"] = "verify baseline export after execution"
+    verify_export(directory, inventory)
+
+
+def paired_benchmark(options, root, report):
+    candidate = revision(options.repository, options.candidate)
+    runner, fixture = (git(options.repository, "show", candidate + ":" + path) for path in [RUNNER, FIXTURE])
+    report.update(candidate=candidate, runnerSha256=digest(runner), fixtureSha256=digest(fixture), order=["A", "B", "B", "A"])
+    exports = {}
+    report["sources"] = {}
+    for label, commit in [("A", BASELINE), ("B", candidate)]:
+        report["stage"] = "export " + label
+        directory = root / label
+        inventory = export_sources(options.repository, commit, directory, [])
+        for path, content in [(RUNNER, runner), (FIXTURE, fixture)]:
+            (directory / path).parent.mkdir(parents=True, exist_ok=True)
+            (directory / path).write_bytes(content)
+            inventory["files"].append({"path": path, "sha256": digest(content), "bytes": len(content)})
+        exports[label] = (directory, inventory)
+        report["sources"][label] = inventory
+        save_report(options, report)
+    for label in report["order"]:
+        directory, inventory = exports[label]
+        report["stage"] = "verify " + label + " export"
+        verify_export(directory, inventory)
+        report["stage"] = "run " + label
+        measured = run(directory, [RUNNER, str(options.capture.resolve())], inventory["commit"])
+        measured["revision"] = label
+        report["runs"].append(measured)
+        save_report(options, report)
+        if measured["exitCode"] == 0:
+            report["stage"] = "parse " + label + " output"
+            measured["result"] = json.loads(measured["stdout"])
+        report["stage"] = "verify " + label + " export after execution"
+        verify_export(directory, inventory)
+        if measured["exitCode"]:
+            return
+    report["stage"] = "compare paired observations"
+    report["summary"] = summaries(report["runs"])
+    identities = {}
+    for item in report["summary"]:
+        previous = identities.setdefault(item["name"], item["assemblySha256"])
+        if previous != item["assemblySha256"]:
+            raise ValueError("Baseline and candidate did not measure identical fixture bytes")
+    report["comparisons"] = comparisons(report["summary"])
+    if any(item["revision"] == "B" and item["status"] != "measured" for item in report["summary"]):
+        report["qualificationError"] = "Candidate rejected an ABI fixture; performance qualification is incomplete"
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("mode", choices=["benchmark", "dispatch-baseline"])
@@ -142,62 +231,29 @@ def main():
     parser.add_argument("--capture", type=Path)
     parser.add_argument("--output", type=Path, required=True)
     options = parser.parse_args()
-    repository = options.repository.resolve()
-    baseline = revision(repository, BASELINE)
-    report = {"mode": options.mode, "baseline": baseline, "startedUtc": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
+    if options.mode == "benchmark" and (not options.candidate or not options.capture):
+        parser.error("benchmark requires --candidate and --capture")
+    options.repository = options.repository.resolve()
+    report = {"mode": options.mode, "baseline": BASELINE, "startedUtc": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
               "environment": {"platform": platform.platform(), "machine": platform.machine(), "cpus": os.cpu_count(),
-                              "loadAverage": os.getloadavg() if hasattr(os, "getloadavg") else None}, "runs": []}
-    with tempfile.TemporaryDirectory(prefix="sharpforge-async-pair-", dir=options.output.resolve().parent) as temporary:
-        root = Path(temporary)
-        if options.mode == "dispatch-baseline":
-            directory = root / "baseline"
-            inventory = export_sources(repository, baseline, directory, [DISPATCH, DISPATCH_SUPPORT])
-            verify_export(directory, inventory)
-            report["source"] = inventory
-            report["runs"].append(run(directory, ["--test", "--test-name-pattern",
-                "aggregate generic values and external generic methods keep explicit unsupported diagnostics", DISPATCH], baseline))
-            verify_export(directory, inventory)
-        else:
-            if not options.candidate or not options.capture:
-                parser.error("benchmark requires --candidate and --capture")
-            candidate = revision(repository, options.candidate)
-            runner, fixture = (git(repository, "show", candidate + ":" + path) for path in [RUNNER, FIXTURE])
-            report.update(candidate=candidate, runnerSha256=digest(runner), fixtureSha256=digest(fixture), order=["A", "B", "B", "A"])
-            exports = {}
-            for label, commit in [("A", baseline), ("B", candidate)]:
-                directory = root / label
-                inventory = export_sources(repository, commit, directory, [])
-                for path, content in [(RUNNER, runner), (FIXTURE, fixture)]:
-                    (directory / path).parent.mkdir(parents=True, exist_ok=True)
-                    (directory / path).write_bytes(content)
-                    inventory["files"].append({"path": path, "sha256": digest(content), "bytes": len(content)})
-                exports[label] = (directory, inventory)
-            report["sources"] = {label: data[1] for label, data in exports.items()}
-            for label in report["order"]:
-                directory, inventory = exports[label]
-                verify_export(directory, inventory)
-                measured = run(directory, [RUNNER, str(options.capture.resolve())], inventory["commit"])
-                measured["revision"] = label
-                if measured["exitCode"] == 0:
-                    measured["result"] = json.loads(measured["stdout"])
-                report["runs"].append(measured)
-                verify_export(directory, inventory)
-                if measured["exitCode"]:
-                    break
-            if all("result" in item for item in report["runs"]):
-                report["summary"] = summaries(report["runs"])
-                identities = {}
-                for item in report["summary"]:
-                    previous = identities.setdefault(item["name"], item["assemblySha256"])
-                    if previous != item["assemblySha256"]:
-                        raise ValueError("Baseline and candidate did not measure identical fixture bytes")
-                report["comparisons"] = comparisons(report["summary"])
-                if any(item["revision"] == "B" and item["status"] != "measured" for item in report["summary"]):
-                    report["qualificationError"] = "Candidate rejected an ABI fixture; performance qualification is incomplete"
-    options.output.write_text(json.dumps(report, indent=2) + "\n")
-    print(json.dumps({"output": str(options.output), "runs": len(report["runs"]),
+                              "loadAverage": os.getloadavg() if hasattr(os, "getloadavg") else None}, "runs": [],
+              "stage": "validate baseline revision"}
+    save_report(options, report)
+    try:
+        revision(options.repository, BASELINE)
+        with tempfile.TemporaryDirectory(prefix="sharpforge-async-pair-", dir=options.output.resolve().parent) as temporary:
+            if options.mode == "dispatch-baseline":
+                replay_baseline(options, Path(temporary), report)
+            else:
+                paired_benchmark(options, Path(temporary), report)
+        report["stage"] = "finished"
+    except Exception as error:
+        report["failure"] = {"kind": type(error).__name__, "message": str(error), "stage": report["stage"]}
+    finally:
+        save_report(options, report)
+    print(json.dumps({"output": str(options.output), "runs": len(report["runs"]), "failure": report.get("failure"),
                       "exitCodes": [item["exitCode"] for item in report["runs"]]}, indent=2))
-    return 1 if report.get("qualificationError") or any(item["exitCode"] for item in report["runs"]) else 0
+    return 1 if report.get("failure") or report.get("qualificationError") or any(item["exitCode"] for item in report["runs"]) else 0
 
 
 if __name__ == "__main__":

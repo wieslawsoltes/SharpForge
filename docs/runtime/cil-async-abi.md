@@ -97,6 +97,12 @@ per-process case receives 80 warmups and 24 samples, retaining the individual sa
 and per-process results. The combined report also provides pooled median/p95 values
 and percentage changes for cases supported by both revisions. Unsupported baseline
 async images remain explicit rejected entries and receive no invented timing.
+Every successfully constructed VM is stopped in `finally`, after elapsed times and
+allocation counters have been captured. Cleanup is outside the measured regions.
+The driver checkpoints its report after completed runs and preserves them if later
+verification, output parsing or export preparation fails. A timeout records stdout,
+stderr and an explicit failure, and terminates the isolated Node process group before
+temporary exports are removed.
 
 ```sh
 node scripts/limited.js python3 packages/runtime/bench/cil-async-paired.py benchmark \
