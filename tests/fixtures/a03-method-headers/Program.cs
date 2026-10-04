@@ -52,7 +52,9 @@ var methods = metadata.MethodDefinitions.Select(handle => {
         token = MetadataTokens.GetToken(handle), name = metadata.GetString(method.Name),
         headerSize, headerHex = Convert.ToHexStringLower(raw.AsSpan(0, headerSize)),
         maxStack = body.MaxStack, codeHex = Convert.ToHexStringLower(body.GetILBytes()!),
-        localSignature = MetadataTokens.GetToken(body.LocalSignature), initLocals = body.LocalVariablesInitialized,
+        localSignature = body.LocalSignature.IsNil ? 0 : MetadataTokens.GetToken(body.LocalSignature),
+        localSignatureRawToken = MetadataTokens.GetToken(body.LocalSignature),
+        initLocals = body.LocalVariablesInitialized,
         handlers = body.ExceptionRegions.Select(region => new {
             flags = (int)region.Kind, start = region.TryOffset, end = region.TryOffset + region.TryLength,
             target = region.HandlerOffset, handlerEnd = region.HandlerOffset + region.HandlerLength,
