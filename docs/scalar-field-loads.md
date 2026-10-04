@@ -21,3 +21,10 @@ outside this increment; the source interpreter is unchanged.
 The timing target in #1398 remains **unmeasured**. No speedup or allocation count is
 claimed. Focused regressions are prepared for the parent's serial validation queue;
 tests, builds and benchmarks have not been run for this change.
+
+Serial validation with Node 24.21.0: 80/81 initial field/slot/generic/Decimal
+cases passed at `99906238`. The new host-edit fixture incorrectly expected an
+out-of-Int32 JS Number to wrap; the established floating conversion clamps it.
+After correcting that expectation and covering fractional host values, all 18
+field cases passed at `ef163821`. No production assertion or conversion policy
+was weakened. Browser/native and latency qualification remains staged.
