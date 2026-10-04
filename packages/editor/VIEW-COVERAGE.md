@@ -277,3 +277,21 @@ session versions preflight every write. `packages/project-system/docs/disk-limit
 that file, `project-system.test.js`, `workspace-io.test.js`, `release04.test.js` and `a20-view-input.test.js`
 passed **172 tests, 0 failed**, in approximately 4.53 seconds. File System Access handles are explicit test
 doubles, so native browser permission prompts and physical 100 MB disk latency are not qualified by this result.
+
+## Acceptance audit follow-up (implementation complete, focused validation pending)
+
+`tests/a20-editor-integration-corrections.test.js` covers the complete follow-up batch before qualification:
+
+- SF-A20-T02 / SF-A20-T34 (#276, #1503): shared-model read-only state, all-pane input/ARIA updates,
+  prepared-commit rejection, unchanged version/history, and rollback under a lock.
+- SF-A20-T31 (#1500): offscreen wrap invalidation updates row and view-zone geometry without scrolling;
+  large ranges remain chunked, and disposal clears queued work.
+- SF-A20-T05.2 (#1610): deleting a brace or region marker on one line refreshes actual folding ranges.
+- SF-A20-T45 (#1514): a bounded workbench helper reads actual ancestor `.editorconfig` records through
+  shared models, applies per-language overlays, resets earlier path settings, rejects malformed/oversized
+  input atomically, and preserves existing EOLs until explicit normalization is requested.
+- SF-A20-T06 / SF-A20-T41 (#280, #1510): deletion retains a caret blocked at the document boundary,
+  overlapping word deletions merge, and overlapping whole-line expansions transform every selected line once.
+- SF-A20-T44 (#1513): invalid chunk sizes reject before any read or model replacement.
+
+This follow-up does not claim browser, native IME, physical-disk or 200 MB p95 qualification.

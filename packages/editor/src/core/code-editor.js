@@ -30,7 +30,8 @@ export class CodeEditor {
   constructor(element, options = {}) {
     if (!element?.ownerDocument) throw new TypeError('CodeEditor requires a DOM element');
     this.element = element;
-    this.options = editorOptions(options.options);
+    this.optionDefaults = {...options.options};
+    this.endOfLineExplicit = Object.hasOwn(this.optionDefaults, 'endOfLine');
     this.optionsRevision = 0;
     this.callbacks = options;
     this.onChange = options.onChange ?? null;
@@ -45,6 +46,7 @@ export class CodeEditor {
     this.session.views.add(this);
     this.models = this.session.models;
     this.model = options.model ?? new EditorModel('', {uri: ''});
+    this.options = editorOptions({endOfLine: this.model.metadata.dominantEol, ...this.optionDefaults});
     this.uri = this.model.uri;
     this.pendingFoldingRestore = !!this.uri;
     if (this.uri) this.models.set(this.uri, this.model);
@@ -97,6 +99,8 @@ export class CodeEditor {
     this.keymapAdapter = new NativeKeymapAdapter(this, {mode: options.keymap ?? 'visual-studio',
       onState: state => { this.modalMode = state.mode; this.onKeymapState(state); }, clipboard: options.clipboard});
     this.modelSubscription = this.model.onDidChange(change => this.modelChanged(change));
+    this.readOnlySubscription = this.model.onDidChangeReadOnly(() => this.presentation.syncReadOnly());
+    this.presentation.syncReadOnly();
     this.zoomControl.update();
     this.bracketColors.update();
     this.cursor();
@@ -108,7 +112,7 @@ export class CodeEditor {
   get offset() { const selection = this.selections[this.primaryIndex] ?? this.selections[0]; return Math.min(selection.anchor, selection.active); }
   get caretOffset() { return this.selections[this.primaryIndex]?.active ?? 0; }
   get buffer() { return this.model.buffer; }
-  get readOnly() { return !!this.input?.readOnly; }
+  get readOnly() { return !!this.model.readOnly || !!this.input?.readOnly; }
   get history() { return {length: this.model.undoStack.depth}; }
   get future() { return {length: this.model.undoStack.redoDepth}; }
   get lexed() { return this.highlightIndex.lexed; }
@@ -135,6 +139,7 @@ export class CodeEditor {
     this.keymapAdapter.beforeModelChange?.();
     this.saveViewState();
     this.modelSubscription?.();
+    this.readOnlySubscription?.();
     let model;
     if (text instanceof EditorModel) model = text;
     else {
@@ -144,6 +149,7 @@ export class CodeEditor {
     }
     this.model = model;
     this.uri = uri;
+    if (!this.endOfLineExplicit) this.options.endOfLine = model.metadata.dominantEol;
     this.models.set(uri, model);
     const state = this.viewStates.get(uri);
     this.pendingFoldingRestore = !state;
@@ -161,6 +167,8 @@ export class CodeEditor {
     this.view.scroll.reset();
     this.view.scroll.update([]);
     this.modelSubscription = model.onDidChange(change => this.modelChanged(change));
+    this.readOnlySubscription = model.onDidChangeReadOnly(() => this.presentation.syncReadOnly());
+    this.presentation.syncReadOnly();
     this.view.scrollTo({top: state?.top ?? 0, left: state?.left ?? 0});
     this.keymapAdapter.setModel();
     this.bracketColors.update();
@@ -223,10 +231,7 @@ export class CodeEditor {
     if (!this.callbacks.splitChild) this.onEdits?.(change);
     this.publishChange();
     this.notifyContributions('changed', change);
-    if (change.changes.some(edit => /[{}\r\n#]/.test(edit.text) || edit.range.start.line !== edit.range.end.line)) {
-      clearTimeout(this.foldingTimer);
-      this.foldingTimer = setTimeout(() => this.foldingProvider.refresh(), 180);
-    }
+    this.foldingProvider.schedule();
     this.cursor();
   }
 
@@ -384,8 +389,9 @@ export class CodeEditor {
     if (this.disposed) return;
     this.saveViewState();
     this.disposed = true;
-    for (const timer of [this.hoverTimer, this.changeTimer, this.foldingTimer]) clearTimeout(timer);
+    for (const timer of [this.hoverTimer, this.changeTimer]) clearTimeout(timer);
     this.modelSubscription?.();
+    this.readOnlySubscription?.();
     this.foldSubscription?.();
     this.splitController.dispose();
     for (const contribution of this.contributions) contribution.dispose?.();

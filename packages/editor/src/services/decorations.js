@@ -1,5 +1,6 @@
-const severities = Object.freeze({1: 'error', 2: 'warning', 3: 'suggestion', 4: 'hidden'});
-const semanticKinds = new Set(['class', 'type', 'struct', 'interface', 'enum', 'method', 'property', 'parameter', 'local', 'variable']);
+const severities = Object.freeze({1: 'error', 2: 'warning', 3: 'suggestion', 4: 'hidden', info: 'suggestion', hint: 'hidden'});
+const semanticKinds = new Set(['class', 'type', 'struct', 'interface', 'enum', 'namespace', 'method', 'property', 'field',
+  'event', 'parameter', 'local', 'variable']);
 
 /** Converts diagnostics into rendering data; a mismatched version produces no decorations. */
 export function diagnosticDecorations(diagnostics, source, options = {}) {

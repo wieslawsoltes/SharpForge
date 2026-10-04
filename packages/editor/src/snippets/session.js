@@ -97,6 +97,23 @@ export class SnippetSession {
     } finally { this.updating = false; }
   }
 
+  beforeEdit() {
+    this.editDepth = (this.editDepth ?? 0) + 1;
+    const model = this.context.editor.model;
+    if (this.active && !this.groupModel && model?.beginUndoGroup) {
+      this.groupModel = model;
+      model.beginUndoGroup('snippet-input');
+    }
+  }
+
+  afterEdit() {
+    this.editDepth = Math.max(0, (this.editDepth ?? 0) - 1);
+    if (!this.editDepth && this.groupModel) {
+      this.groupModel.endUndoGroup();
+      this.groupModel = null;
+    }
+  }
+
   mapRanges(edits) {
     for (const [key, ranges] of this.active.stops) {
       let mapped = ranges;

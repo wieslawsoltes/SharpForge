@@ -26,11 +26,11 @@ export function resolveEditorConfig(path, files = [], languageOptions = {}) {
   path = path.replaceAll('\\', '/').replace(/^\//, '');
   const properties = {};
   for (const file of files) {
+    const directory = (file.directory ?? '').replaceAll('\\', '/').replace(/^\//, '').replace(/\/$/, '');
+    if (directory && !path.startsWith(`${directory}/`)) continue;
     const config = typeof file.text === 'string' ? parseEditorConfig(file.text) : file.config;
     if (!config) continue;
     if (config.root) for (const key of Object.keys(properties)) delete properties[key];
-    const directory = (file.directory ?? '').replaceAll('\\', '/').replace(/^\//, '').replace(/\/$/, '');
-    if (directory && !path.startsWith(`${directory}/`)) continue;
     const relative = directory ? path.slice(directory.length + 1) : path;
     for (const section of config.sections) {
       if (editorConfigGlob(section.pattern).test(relative)) Object.assign(properties, section.properties);
@@ -80,7 +80,8 @@ export function saveTextEdits(model, options) {
     const contentEnd = start + text.length;
     const next = line + 1 < model.lineCount ? model.offsetAt({line: line + 1, character: 0}) : contentEnd;
     const trimmed = options.trimTrailingWhitespace ? text.replace(/[\t ]+$/, '') : text;
-    const ending = next > contentEnd ? options.endOfLine : '';
+    const ending = next > contentEnd
+      ? options.normalizeLineEndings === false ? model.getText(contentEnd, next) : options.endOfLine : '';
     const replacement = trimmed + ending;
     if (replacement !== model.getText(start, next)) edits.push({start, end: next, text: replacement});
   }

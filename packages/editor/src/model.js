@@ -6,8 +6,10 @@ import { UndoStack } from './undo.js';
 export class EditorModel {
   #listeners = new Set();
   #selectionListeners = new Set();
+  #readOnlyListeners = new Set();
   #selectionState;
   #disposed = false;
+  #readOnly = false;
   constructor(text = '', { uri = 'Program.cs', buffer = null, selections = [{ anchor: 0, active: 0 }], ...options } = {}) {
     this.ownsBuffer = buffer === null;
     this.buffer = buffer ?? new TextBuffer(text, { uri, ...options });
@@ -16,6 +18,7 @@ export class EditorModel {
     this.scroll = { top: 0, left: 0 };
     this.decorations = new Map();
     this.#selectionState = normalizeSelections(selections, this.length);
+    this.#readOnly = !!options.readOnly;
   }
   get length() { return this.buffer.length; }
   get lineCount() { return this.buffer.lineCount; }
@@ -23,12 +26,25 @@ export class EditorModel {
   get value() { return this.buffer.text; }
   get text() { return this.value; }
   get metadata() { return this.buffer.metadata; }
+  get preferredEol() { return this.buffer.preferredEol; }
   get selections() { return this.#selectionState.selections; }
   get primaryIndex() { return this.#selectionState.primaryIndex; }
   get primarySelection() { return this.selections[this.primaryIndex]; }
   get canUndo() { return this.undoStack.canUndo; }
   get canRedo() { return this.undoStack.canRedo; }
   get isDirty() { return this.undoStack.isDirty; }
+  get readOnly() { return this.#readOnly; }
+  set readOnly(value) { this.setReadOnly(value); }
+  /** Read-only is document state shared by all views; toggling it does not change text, version or history. */
+  setReadOnly(value) {
+    if (this.#disposed) throw new Error('EditorModel is disposed');
+    const readOnly = !!value;
+    if (readOnly === this.#readOnly) return false;
+    this.#readOnly = readOnly;
+    for (const listener of [...this.#readOnlyListeners]) listener(readOnly);
+    return true;
+  }
+  onDidChangeReadOnly(listener) { this.#readOnlyListeners.add(listener); return () => this.#readOnlyListeners.delete(listener); }
   getText(start = 0, end = this.length) { return this.buffer.getText(start, end); }
   substring(start = 0, end = this.length) { return this.buffer.substring(start, end); }
   getLineEnd(line, includeEol = false) { return this.lineEnd(line, includeEol); }
@@ -48,7 +64,7 @@ export class EditorModel {
   onDidChange(listener) { this.#listeners.add(listener); return () => this.#listeners.delete(listener); }
   onDidChangeSelection(listener) { this.#selectionListeners.add(listener); return () => this.#selectionListeners.delete(listener); }
   prepareEdits(edits, options = {}) {
-    if (this.#disposed) throw new Error('EditorModel is disposed');
+    this.#assertWritable();
     const prepared = this.buffer.prepareEdits(edits, options);
     const nextSelections = options.selections
       ? normalizeSelections(options.selections, prepared.after.length, options.primaryIndex ?? Math.min(this.primaryIndex, options.selections.length - 1))
@@ -60,6 +76,7 @@ export class EditorModel {
   }
   commitPrepared(prepared, { notify = true } = {}) {
     if (prepared.owner !== this) throw new TypeError('Prepared edit belongs to another model');
+    this.#assertWritable();
     this.buffer.commitPrepared(prepared.bufferEdit, { notify: false });
     this.#selectionState = prepared.nextSelections;
     this.undoStack.record(prepared, {
@@ -89,6 +106,7 @@ export class EditorModel {
     return this.applyEdits([{ start, end: oldEnd, text: text.slice(start, newEnd) }], options);
   }
   #restoreHistory(redo) {
+    if (this.#readOnly || this.#disposed) return false;
     const before = this.snapshot();
     const events = [];
     const buffer = {
@@ -120,10 +138,18 @@ export class EditorModel {
     this.scroll = { ...checkpoint.scroll };
     if (notify) for (const listener of [...this.#selectionListeners]) listener(this.#selectionState);
   }
+  #assertWritable() {
+    if (this.#disposed) throw new Error('EditorModel is disposed');
+    if (!this.#readOnly) return;
+    const error = new Error('The document is read-only');
+    error.code = 'SFEDITOR_READ_ONLY';
+    throw error;
+  }
   dispose() {
     this.#disposed = true;
     this.#listeners.clear();
     this.#selectionListeners.clear();
+    this.#readOnlyListeners.clear();
     this.decorations.clear();
     if (this.ownsBuffer) this.buffer.dispose();
   }
