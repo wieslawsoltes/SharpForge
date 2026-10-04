@@ -5,3 +5,5 @@ export {evaluateConstant,ConstantError} from './constants.js';
 export {languageVersion} from './modern.js';
 export {SemanticModel} from './semantic-model.js';
 export {inspectMetadataReference} from './metadata-reference.js';
+export {sourceTypeDefinitions} from './source-type-definitions.js';
+export {sourceMemberDefinitions} from './source-member-definitions.js';

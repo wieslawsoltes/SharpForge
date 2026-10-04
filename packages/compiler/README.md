@@ -26,3 +26,9 @@ needed for that summary; it does not claim to verify method bodies or establish 
 Invalid input types and oversized arrays throw `RangeError`; malformed images preserve the metadata reader's explicit error. The function
 reads only the supplied byte view and does not modify it. The native SDK metadata service uses this public seam after its own trust,
 workspace, file-count and byte-budget checks.
+
+## Source emission metadata
+
+`sourceTypeDefinitions(parsedFiles, image)` and `sourceMemberDefinitions(parsedFiles, image)` expose the bounded source-to-CLI
+metadata projections used by `compileToIL`. They preserve namespaces, visibility, constructor access, properties and readonly flags.
+See [the source emission contract](docs/source-emission.md) for shapes, limits and explicit-option behavior.
