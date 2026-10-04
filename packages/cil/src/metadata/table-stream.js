@@ -3,9 +3,12 @@ import { tableDefinitions } from './tables.js';
 import { metadataIndexWidth } from './indices.js';
 import { metadataColumnKind } from './pointer-tables.js';
 
-function columnWidths(table, counts, flags, uncompressed) {
-  return tableDefinitions[table].types.map((_, column) =>
-    metadataIndexWidth(metadataColumnKind(table, column, counts, uncompressed), counts, flags));
+function columnWidths(table, counts, flags, uncompressed, minimalDelta = false) {
+  return tableDefinitions[table].types.map((_, column) => {
+    const kind = metadataColumnKind(table, column, counts, uncompressed);
+    // #JTD uses four-byte references even when this generation has only a few rows.
+    return minimalDelta ? (kind === 'u16' ? 2 : 4) : metadataIndexWidth(kind, counts, flags);
+  });
 }
 
 /** Serialize table rows without truncating values that exceed their physical column width. */
@@ -61,6 +64,10 @@ function externalPdbCounts(stream) {
 /** Precheck the entire table payload before creating any row arrays. */
 export function readMetadataTables(streams, bytes) {
   const uncompressed = !streams.has('#~') && streams.has('#-');
+  const minimalDelta = streams.has('#JTD');
+  if (minimalDelta && (!uncompressed || streams.get('#JTD').length !== 0)) {
+    throw new CilError('Invalid minimal metadata delta marker');
+  }
   const tableBytes = streams.get('#~') ?? streams.get('#-');
   if (!tableBytes) throw new CilError('Missing metadata tables');
   const reader = new Reader(tableBytes);
@@ -86,7 +93,7 @@ export function readMetadataTables(streams, bytes) {
   const indexCounts = { ...externalCounts, ...counts };
   let requiredBytes = 0;
   for (const table of Object.keys(counts)) {
-    widths[table] = columnWidths(table, indexCounts, heapFlags, uncompressed);
+    widths[table] = columnWidths(table, indexCounts, heapFlags, uncompressed, minimalDelta);
     requiredBytes += counts[table] * widths[table].reduce((sum, width) => sum + width, 0);
   }
   if (requiredBytes > reader.end - reader.position) throw new CilError('Truncated metadata table payload', reader.position);
@@ -98,6 +105,6 @@ export function readMetadataTables(streams, bytes) {
       rows[table].push(widths[table].map(width => width === 2 ? reader.u16() : reader.u32()));
     }
   }
-  return { rows, counts, rowOffsets, externalCounts, heapFlags, uncompressed, extraData,
+  return { rows, counts, rowOffsets, externalCounts, heapFlags, uncompressed, minimalDelta, extraData,
     sortedMask: BigInt(sortedLow) | (BigInt(sortedHigh) << 32n), tableOffset: tableBytes.byteOffset - bytes.byteOffset };
 }
