@@ -80,11 +80,3 @@ export function replaceValueField(vm, value, index, replacement) {
   fields[index] = replacement;
   return createValue(vm, table, Object.freeze({valueType: table, fields: Object.freeze(fields)}));
 }
-
-/** Until value receivers are implemented, neither newobj nor instance calls may class-allocate a user struct. */
-export function rejectValueInstance(vm, owner) {
-  const table = vm.typeSystem.table(owner);
-  if (table.flags.valueType && vm.typeSystem.types.has(table.definitionToken)) {
-    unsupported('user value-type instance constructors and methods');
-  }
-}
