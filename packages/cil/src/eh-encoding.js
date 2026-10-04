@@ -5,6 +5,7 @@ export const exceptionEncodingDiagnosticCatalog = Object.freeze({
   CILEH0002: 'Method body or exception section limit exceeded',
   CILEH0003: 'Exception clause does not fit the small encoding',
   CILEH0004: 'Method body encoding cancelled',
+  CILEH0005: 'Chained EH sections are unsupported by the native execution profile',
 });
 
 function fail(code, message = exceptionEncodingDiagnosticCatalog[code]) {
@@ -42,38 +43,31 @@ function validateClause(clause, codeSize) {
 }
 
 function sectionPlan(handlers, codeSize, options) {
-  const { exceptionFormat = 'fat', clausesPerSection = handlers.length || 1, maxClauses = 100000, signal } = options;
+  const { exceptionFormat = 'fat', maxClauses = 100000, signal } = options;
   if (!['fat', 'small', 'auto'].includes(exceptionFormat)) fail('CILEH0001', 'Invalid exception section format');
   if (!unsigned(maxClauses, 1000000) || handlers.length > maxClauses) fail('CILEH0002');
-  if (!unsigned(clausesPerSection, 1000000) || clausesPerSection === 0) fail('CILEH0002');
-  if (Math.ceil(handlers.length / clausesPerSection) > 32) fail('CILEH0002', 'At most 32 EH sections are supported');
-  const sections = [];
-  for (let start = 0; start < handlers.length; start += clausesPerSection) {
-    const end = Math.min(start + clausesPerSection, handlers.length);
-    let small = end - start <= 20;
-    for (let index = start; index < end; index++) {
-      cancelled(signal);
-      const clause = handlers[index];
-      validateClause(clause, codeSize);
-      small &&= clause.start <= 65535 && clause.target <= 65535 &&
-        clause.end - clause.start <= 255 && clause.handlerEnd - clause.target <= 255;
-    }
-    if (exceptionFormat === 'small' && !small) fail('CILEH0003');
-    small &&= exceptionFormat !== 'fat';
-    const bytes = 4 + (end - start) * (small ? 12 : 24);
-    if (bytes > 0xffffff) fail('CILEH0002');
-    sections.push({ start, end, small, bytes });
+  if (options.clausesPerSection !== undefined) fail('CILEH0005');
+  if (!handlers.length) return null;
+  let small = handlers.length <= 20;
+  for (const clause of handlers) {
+    cancelled(signal);
+    validateClause(clause, codeSize);
+    small &&= clause.start <= 65535 && clause.target <= 65535 &&
+      clause.end - clause.start <= 255 && clause.handlerEnd - clause.target <= 255;
   }
-  return sections;
+  if (exceptionFormat === 'small' && !small) fail('CILEH0003');
+  small &&= exceptionFormat !== 'fat';
+  const bytes = 4 + handlers.length * (small ? 12 : 24);
+  if (bytes > 0xffffff) fail('CILEH0002');
+  return { small, bytes };
 }
 
-function writeSection(writer, section, handlers, more, signal) {
-  writer.u8(1 | (section.small ? 0 : 0x40) | (more ? 0x80 : 0));
+function writeSection(writer, section, handlers, signal) {
+  writer.u8(section.small ? 1 : 0x41);
   if (section.small) writer.u8(section.bytes).u16(0);
   else writer.u8(section.bytes).u8(section.bytes >>> 8).u8(section.bytes >>> 16);
-  for (let index = section.start; index < section.end; index++) {
+  for (const clause of handlers) {
     cancelled(signal);
-    const clause = handlers[index];
     if (section.small) {
       writer.u16(clause.flags ?? 0).u16(clause.start).u8(clause.end - clause.start)
         .u16(clause.target).u8(clause.handlerEnd - clause.target);
@@ -93,15 +87,12 @@ export function writeMethodBody(code, localToken, maxStack, handlers = [], optio
     fail('CILEH0001');
   }
   if (code.length > 64 * 1024 * 1024) fail('CILEH0002');
-  const sections = sectionPlan(handlers, code.length, options);
+  const section = sectionPlan(handlers, code.length, options);
   const headerBytes = 12 + code.length;
-  const capacity = sections.length ? align(headerBytes) + sections.reduce((size, section) => size + section.bytes, 0) : headerBytes;
+  const capacity = section ? align(headerBytes) + section.bytes : headerBytes;
   const writer = new Writer(capacity).u16(0x3013 | (handlers.length ? 8 : 0)).u16(Math.max(1, maxStack))
     .u32(code.length).u32(localToken).bytes(code);
-  if (sections.length) writer.pad();
-  for (let index = 0; index < sections.length; index++) {
-    writeSection(writer, sections[index], handlers, index + 1 < sections.length, options.signal);
-  }
+  if (section) writeSection(writer.pad(), section, handlers, options.signal);
   cancelled(options.signal);
   return writer.finish();
 }

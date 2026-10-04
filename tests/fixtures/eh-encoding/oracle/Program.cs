@@ -23,9 +23,12 @@ foreach (var path in Directory.GetFiles(args[0], "*.dll").Order())
     }).ToArray();
     var context = new AssemblyLoadContext(Path.GetFileNameWithoutExtension(path), isCollectible: true);
     var assembly = context.LoadFromAssemblyPath(Path.GetFullPath(path));
-    var result = (int)assembly.GetType("Cases")!.GetMethod("Run")!.Invoke(null, null)!;
+    int? result = null;
+    string? error = null;
+    try { result = (int)assembly.GetType("Cases")!.GetMethod("Run")!.Invoke(null, null)!; }
+    catch (System.Reflection.TargetInvocationException exception) { error = exception.InnerException?.GetType().FullName; }
     context.Unload();
-    cases.Add(new { id = Path.GetFileNameWithoutExtension(path), sha256 = Convert.ToHexStringLower(SHA256.HashData(bytes)), result, regions });
+    cases.Add(new { id = Path.GetFileNameWithoutExtension(path), sha256 = Convert.ToHexStringLower(SHA256.HashData(bytes)), result, error, regions });
 }
 Console.WriteLine(JsonSerializer.Serialize(new { runtime = RuntimeInformation.FrameworkDescription, cases },
     new JsonSerializerOptions { WriteIndented = true }));

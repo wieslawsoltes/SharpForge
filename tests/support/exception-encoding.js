@@ -1,7 +1,7 @@
 import { MetadataBuilder, CilWriter, Writer, methodSignature, localSignature, writeMethodBody, writePE } from '@sharpforge/cil';
 
 /** Hand-authored executable CIL; offsets come from the existing label writer, not the EH encoder. */
-export function exceptionFixture({ kind = 'filter', exceptionFormat = 'fat', clausesPerSection, name = 'ExceptionFixture' } = {}) {
+export function exceptionFixture({ kind = 'filter', exceptionFormat = 'fat', nativeChained = false, name = 'ExceptionFixture' } = {}) {
   const metadata = new MetadataBuilder(name);
   const object = metadata.typeRef('System.Object');
   const exception = metadata.typeRef('System.Exception');
@@ -23,7 +23,13 @@ export function exceptionFixture({ kind = 'filter', exceptionFormat = 'fat', cla
     : [{ flags: 4, start: at('try'), end: at('tryEnd'), target: at('fault'), handlerEnd: at('faultEnd') },
       { flags: 0, start: at('try'), end: at('handler'), target: at('handler'), handlerEnd: at('done'), catchType: exception }];
   const code = writer.finish();
-  const body = writeMethodBody(code, localToken, 1, handlers, { exceptionFormat, clausesPerSection });
+  let body = writeMethodBody(code, localToken, 1, handlers, { exceptionFormat });
+  if (nativeChained) {
+    // Negative interoperability fixture only: native SRM/CoreCLR consume just the first EH section.
+    const offset = (12 + code.length + 3) & ~3;
+    body = new Writer().bytes(body.subarray(0, offset)).u8(0x81).u8(16).u16(0)
+      .bytes(body.subarray(offset + 4, offset + 16)).u8(1).u8(16).u16(0).bytes(body.subarray(offset + 16)).finish();
+  }
   const section = new Writer().zero(72).bytes(body).pad();
   const methodToken = metadata.definitions.method({ RVA: 0x2048, ImplFlags: 0, Flags: 0x96,
     Name: 'Run', Signature: methodSignature('int', [], true), ParamList: 1 });

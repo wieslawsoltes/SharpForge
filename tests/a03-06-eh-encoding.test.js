@@ -9,10 +9,10 @@ const errorCode = code => error => error.name === 'CilError' && error.code === c
 const clause = { flags: 0, start: 0, end: 1, target: 1, handlerEnd: 2, catchType: 0x01000001 };
 const sectionOffset = code => (12 + code.length + 3) & ~3;
 
-test('filter and fault payloads round trip through small, fat and chained sections', () => {
+test('filter and fault payloads round trip through small, fat and automatic sections', () => {
   for (const kind of ['filter', 'fault']) {
     for (const exceptionFormat of ['fat', 'small', 'auto']) {
-      const fixture = exceptionFixture({ kind, exceptionFormat, clausesPerSection: 1 });
+      const fixture = exceptionFixture({ kind, exceptionFormat });
       const body = readPE(fixture.assembly, { inspection: true }).methodBody(fixture.methodToken);
       assert.deepEqual(body.code, fixture.code);
       assert.equal(body.handlers.length, fixture.handlers.length);
@@ -24,7 +24,7 @@ test('filter and fault payloads round trip through small, fat and chained sectio
       }
       const first = fixture.body[sectionOffset(fixture.code)];
       assert.equal(Boolean(first & 0x40), exceptionFormat === 'fat');
-      assert.equal(Boolean(first & 0x80), kind === 'fault');
+      assert.equal(Boolean(first & 0x80), false);
     }
   }
 });
@@ -54,8 +54,7 @@ test('small section boundaries include UInt16 offsets, byte lengths and twenty c
     const body = writeMethodBody(code, 0, 1, Array(count).fill(clause), { exceptionFormat: 'auto' });
     assert.equal(body[sectionOffset(code)], count === 20 ? 1 : 0x41);
   }
-  const chained = writeMethodBody(code, 0, 1, Array(32).fill(clause), { exceptionFormat: 'small', clausesPerSection: 1 });
-  for (let index = 0; index < 32; index++) assert.equal(chained[16 + index * 16], index === 31 ? 1 : 0x81);
+  assert.throws(() => writeMethodBody(code, 0, 1, [clause, clause], { clausesPerSection: 1 }), errorCode('CILEH0005'));
 });
 
 test('malformed flags, payloads, ranges, headers and section limits fail before encoding', () => {
@@ -67,12 +66,11 @@ test('malformed flags, payloads, ranges, headers and section limits fail before 
   }
   for (const maxStack of [-1, 65536, 1.5, NaN]) assert.throws(() => writeMethodBody(code, 0, maxStack), errorCode('CILEH0001'));
   for (const token of [1, 0x11000000, 0x10000001, 0x100000000]) assert.throws(() => writeMethodBody(code, token, 1), errorCode('CILEH0001'));
-  for (const options of [{ maxClauses: 0 }, { maxClauses: 1000001 }, { clausesPerSection: 0 }, { clausesPerSection: -1 }]) {
+  for (const options of [{ maxClauses: 0 }, { maxClauses: 1000001 }]) {
     assert.throws(() => writeMethodBody(code, 0, 1, [clause], options), errorCode('CILEH0002'));
   }
-  assert.throws(() => writeMethodBody(code, 0, 1, Array(33).fill(clause), { clausesPerSection: 1 }), errorCode('CILEH0002'));
   assert.throws(() => writeMethodBody(code, 0, 1, [], { exceptionFormat: 'tiny' }), errorCode('CILEH0001'));
-  assert.deepEqual(Object.keys(exceptionEncodingDiagnosticCatalog), ['CILEH0001', 'CILEH0002', 'CILEH0003', 'CILEH0004']);
+  assert.deepEqual(Object.keys(exceptionEncodingDiagnosticCatalog), ['CILEH0001', 'CILEH0002', 'CILEH0003', 'CILEH0004', 'CILEH0005']);
 });
 
 test('caller byte ownership and cancellation are preserved', () => {
@@ -84,14 +82,30 @@ test('caller byte ownership and cancellation are preserved', () => {
   body.fill(0);
   assert.deepEqual([...backing], [99, 1, 1, 98]);
   assert.throws(() => writeMethodBody(input, 0, 1, [], { signal: AbortSignal.abort() }), errorCode('CILEH0004'));
+  let checks = 0;
+  const signal = { get aborted() { return ++checks === 3; } };
+  assert.throws(() => writeMethodBody(input, 0, 1, [clause, clause], { signal }), errorCode('CILEH0004'));
 });
 
 test('native CoreCLR executes filter and fault fixtures and SRM reads every encoded region', () => {
   const reference = JSON.parse(readFileSync(new URL('./fixtures/eh-encoding/native.json', import.meta.url), 'utf8'));
+  assert.match(reference.runtime, /^\.NET /);
+  for (const [name, hash] of Object.entries(reference.sourceSha256)) {
+    const bytes = readFileSync(new URL(`./fixtures/eh-encoding/oracle/${name}`, import.meta.url));
+    assert.equal(createHash('sha256').update(bytes).digest('hex'), hash, name);
+  }
   assert.equal(reference.cases.length, 6);
   for (const item of reference.cases) {
     const fixture = exceptionFixture(item.options);
     assert.equal(createHash('sha256').update(fixture.assembly).digest('hex'), item.sha256);
+    if (item.options.nativeChained) {
+      assert.equal(item.result, null);
+      assert.equal(item.error, 'System.NullReferenceException');
+      assert.equal(item.regions.length, 1, 'Native SRM observes only the first section');
+      assert.equal(readPE(fixture.assembly, { inspection: true }).methodBody(fixture.methodToken).handlers.length, 2);
+      continue;
+    }
+    assert.equal(item.error, null);
     assert.equal(item.result, fixture.expected);
     assert.deepEqual(item.regions, fixture.handlers.map(handler => ({
       kind: { 0: 'Catch', 1: 'Filter', 4: 'Fault' }[handler.flags], tryOffset: handler.start,
