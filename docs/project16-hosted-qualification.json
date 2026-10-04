@@ -1,0 +1,607 @@
+{
+  "schemaVersion": 1,
+  "kind": "sharpforge-project16-hosted-qualification",
+  "recordedAt": "2026-10-04T03:23:40.533200+00:00",
+  "scope": "Initial hosted attempts a1–a3; immutable failed outcomes plus source-known correction status. No later qualification is inferred.",
+  "closeIssues": [],
+  "evidenceRules": [
+    "A YAML parse failure with zero jobs is not a test execution.",
+    "A passing core or package build does not establish Node, browser, standalone-runtime, native, assistive or performance qualification.",
+    "a2 Node counts and a3 browser suite counts are different scopes and are not added into a synthetic aggregate pass.",
+    "Partial scenario checks in a failed browser suite remain partial checks; the suite remains failed.",
+    "All nine Node skips remain skipped, with original names and reasons.",
+    "Original ZIPs/job logs/JSON files are copied byte-for-byte; traces and screenshots remain inside their original ZIP, without duplicate extraction.",
+    "Source commits after a3 are corrections pending qualification, not retroactive passes.",
+    "Archiving and hashing evidence executes no test, build, static gate, benchmark or browser."
+  ],
+  "publication": {
+    "evidence": "docs/evidence/project16-hosted/publication-facts.json",
+    "pullRequests": [
+      {
+        "number": 3843,
+        "url": "https://github.com/wieslawsoltes/SharpForge/pull/3843",
+        "status": "merged",
+        "headSha": "43704621cc73129ea95bc155bc610efff322df9d",
+        "mergeSha": "f99fc52e12c3a794b352463286dc0c58ae790521",
+        "ownCore": {
+          "runId": 37170995922,
+          "jobId": 111343752758,
+          "conclusion": "success",
+          "url": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37170995922/job/111343752758"
+        },
+        "checkout": "success"
+      },
+      {
+        "number": 3865,
+        "url": "https://github.com/wieslawsoltes/SharpForge/pull/3865",
+        "status": "merged",
+        "localCommit": "fdad2b1516e21f1ba4df7f529540bd1f31b20c61",
+        "publishedCommit": "ba9b8e3ef8b8d3d37cf471756fe926514cf7101d",
+        "mergeSha": "e990e9342678117090a48516ec736d92104be4b2",
+        "mainCore": {
+          "runId": 37171692669,
+          "jobId": 111345755638,
+          "conclusion": "success",
+          "url": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37171692669/job/111345755638"
+        }
+      },
+      {
+        "number": 3904,
+        "url": "https://github.com/wieslawsoltes/SharpForge/pull/3904",
+        "status": "merged",
+        "localCommit": "9dd318e9faaf245ec0cb92d40ed8f411cb9e347b",
+        "publishedCommit": "15acd33f3a2ab81797d3a0d341f53dfd13bcbbd5",
+        "sourceTree": "ac52aeafc5f7b9186c4d16ad71d749378c5976fb",
+        "mergeSha": "e4629f443b59bfc2d7494b731be19afc5974b7b1",
+        "ownCore": {
+          "runId": 37172637371,
+          "jobId": 111348584889,
+          "conclusion": "success",
+          "url": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37172637371/job/111348584889"
+        },
+        "mainCore": {
+          "runId": 37172677101,
+          "jobId": 111348698282,
+          "conclusion": "success",
+          "url": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37172677101/job/111348698282"
+        }
+      }
+    ],
+    "qualificationSnapshotNote": "The publication-state record still says a3 in_progress; the completed a3 summary supersedes that stale status only in this derived ledger."
+  },
+  "attempts": [
+    {
+      "id": "a1",
+      "runId": 37171181813,
+      "runUrl": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37171181813",
+      "sourceSha": "f99fc52e12c3a794b352463286dc0c58ae790521",
+      "sourceTree": "8f44869f8f65c8a8072f364e7d1b8fd33dd84e47",
+      "triggerBranch": "codex/project16/qualify-ubuntu-chromium-all-20261004-a1",
+      "observedEvent": "push",
+      "status": "failed_before_jobs",
+      "jobs": 0,
+      "qualificationExecuted": false,
+      "failure": {
+        "method": "PyYAML BaseLoader syntax parse",
+        "line": 69,
+        "column": 71,
+        "error": "mapping values are not allowed here",
+        "cause": "The pip run plain scalar contained --only-binary=:all: followed by whitespace."
+      },
+      "evidence": "docs/evidence/project16-hosted/a1/workflow-parse-failure.json",
+      "correctionPR": 3865
+    },
+    {
+      "id": "a2",
+      "runId": 37171747249,
+      "runUrl": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37171747249",
+      "source": {
+        "sourceSha": "e990e9342678117090a48516ec736d92104be4b2",
+        "sourceTree": "36c33c1974b2429edc1798637673d548c822124d",
+        "trigger": "create",
+        "triggerRef": "refs/heads/codex/project16/qualify-ubuntu-chromium-all-20261004-a2",
+        "triggerNonce": "20261004-a2",
+        "captureOnly": true,
+        "workflowRunId": "37171747249",
+        "stage": "all",
+        "engine": "chromium",
+        "runner": "Linux",
+        "runnerLabel": "ubuntu-latest",
+        "editorBaseline": null,
+        "workbenchBaseline": null
+      },
+      "status": "failed",
+      "artifact": {
+        "id": 11290869652,
+        "url": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37171747249/artifacts/11290869652",
+        "path": "docs/evidence/project16-hosted/a2/p16-hosted-a2.zip",
+        "bytes": 74410,
+        "sha256": "08dfddfe17b2d4a02bd03aff172699ad972b6d6f8d371d4cc452e86ff19ac61f"
+      },
+      "prerequisites": {
+        "static": "passed",
+        "normalBuild": "passed",
+        "standalonePackaging": "passed",
+        "standaloneBytes": 15146002,
+        "standaloneRuntime": "not_executed",
+        "evidence": "docs/evidence/project16-hosted/a2/job.log",
+        "logLines": [
+          237,
+          260
+        ]
+      },
+      "node": [
+        {
+          "area": "A19",
+          "tests": 662,
+          "passed": 662,
+          "failed": 0,
+          "skipped": 0,
+          "cancelled": 0,
+          "durationMs": 36501.413317,
+          "logLine": 1285
+        },
+        {
+          "area": "A20",
+          "tests": 678,
+          "passed": 669,
+          "failed": 0,
+          "skipped": 9,
+          "cancelled": 0,
+          "durationMs": 35192.636134,
+          "logLine": 1982,
+          "skipDetails": [
+            {
+              "name": "Unsupported target: shell commands and external filters",
+              "reason": "The browser editor has no shell or process-execution authority.",
+              "logLine": 1857
+            },
+            {
+              "name": "Unsupported target: Vimscript and plugin loading",
+              "reason": "The native modal adapter is not a Vimscript interpreter or plugin runtime.",
+              "logLine": 1858
+            },
+            {
+              "name": "Unsupported target: terminal buffers",
+              "reason": "Terminal emulation is outside the editor document and keymap scope.",
+              "logLine": 1859
+            },
+            {
+              "name": "Unsupported target: native Vim regex extensions",
+              "reason": "Search uses the documented bounded regex engine rather than Vim magic expressions.",
+              "logLine": 1860
+            },
+            {
+              "name": "Unsupported target: operating-system primary selection",
+              "reason": "The injected asynchronous clipboard API exposes ordinary clipboard text.",
+              "logLine": 1861
+            },
+            {
+              "name": "Unsupported target: unlimited recursive macros",
+              "reason": "Native macros have explicit recursion, key-count and register-memory budgets.",
+              "logLine": 1862
+            },
+            {
+              "name": "Unsupported target: desktop Vim executable parity",
+              "reason": "Node fixtures qualify this native model; no installed desktop Vim is used as an oracle.",
+              "logLine": 1863
+            },
+            {
+              "name": "Unsupported target: browser key interception and assistive technology",
+              "reason": "Operating-system/browser key delivery and screen readers need browser/manual qualification.",
+              "logLine": 1864
+            },
+            {
+              "name": "default and explicit native segmentation retain Unicode 16.0 host compatibility",
+              "reason": "The native comparison is pinned to a Unicode 16.0 Intl runtime",
+              "logLine": 1972
+            }
+          ]
+        }
+      ],
+      "nodeEvidence": "docs/evidence/project16-hosted/a2/job.log",
+      "browser": {
+        "engine": "chromium",
+        "version": "153.0.8010.12",
+        "servingMode": "http",
+        "attemptedSuites": 1,
+        "passedSuites": 0,
+        "failedSuites": 1,
+        "failure": "AttributeError: 'function' object has no attribute 'lstrip'",
+        "detail": "First docking driver passed a Python callable to the JavaScript-string predicate helper; it failed before its scenario assertions. Later suites and performance were not reached.",
+        "suiteEvidence": "docs/evidence/project16-hosted/a2/suite-workbench-docking.json",
+        "sessionEvidence": "docs/evidence/project16-hosted/a2/browser_a19_docking_test/session.json",
+        "logLine": 1990
+      },
+      "performance": "not_reached",
+      "correctionPR": 3904
+    },
+    {
+      "id": "a3",
+      "runId": 37172716850,
+      "runUrl": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37172716850",
+      "source": {
+        "sourceSha": "e4629f443b59bfc2d7494b731be19afc5974b7b1",
+        "sourceTree": "1733c01dae0e44cea49dd82a574fda7b8286d6be",
+        "trigger": "create",
+        "triggerRef": "refs/heads/codex/project16/qualify-ubuntu-chromium-browser-20261004-a3",
+        "triggerNonce": "20261004-a3",
+        "captureOnly": true,
+        "workflowRunId": "37172716850",
+        "stage": "browser",
+        "engine": "chromium",
+        "runner": "Linux",
+        "runnerLabel": "ubuntu-latest",
+        "editorBaseline": null,
+        "workbenchBaseline": null
+      },
+      "status": "failed",
+      "artifact": {
+        "id": 11292460593,
+        "url": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37172716850/artifacts/11292460593",
+        "path": "docs/evidence/project16-hosted/a3/p16-hosted-a3.zip",
+        "bytes": 3754687,
+        "sha256": "7fe07d3374bdb1bb1c9c17dc36e730dfa36b39381e40c7b905d40452aeb550ba"
+      },
+      "prerequisites": {
+        "static": "passed",
+        "normalBuild": "passed",
+        "standalonePackaging": "passed",
+        "standaloneBytes": 15215611,
+        "standaloneRuntime": "not_executed",
+        "evidence": "docs/evidence/project16-hosted/a3/job.log",
+        "logLines": [
+          237,
+          260
+        ]
+      },
+      "node": "not_selected",
+      "browser": {
+        "engine": "chromium",
+        "version": "153.0.8010.12",
+        "servingMode": "http",
+        "counts": {
+          "selected": 8,
+          "passed": 3,
+          "failed": 5
+        },
+        "summaryEvidence": "docs/evidence/project16-hosted/a3/qualification-summary.json",
+        "suites": [
+          {
+            "suite": "workbench-docking",
+            "status": "passed",
+            "exitCode": 0,
+            "startedAt": "2026-10-04T03:00:16.724Z",
+            "finishedAt": "2026-10-04T03:00:19.694Z",
+            "evidence": "docs/evidence/project16-hosted/a3/suite-workbench-docking.json"
+          },
+          {
+            "suite": "workbench-shell",
+            "status": "passed",
+            "exitCode": 0,
+            "startedAt": "2026-10-04T03:00:19.694Z",
+            "finishedAt": "2026-10-04T03:00:24.872Z",
+            "evidence": "docs/evidence/project16-hosted/a3/suite-workbench-shell.json"
+          },
+          {
+            "suite": "workbench-sessions",
+            "status": "failed",
+            "exitCode": 1,
+            "startedAt": "2026-10-04T03:00:24.873Z",
+            "finishedAt": "2026-10-04T03:00:28.305Z",
+            "evidence": "docs/evidence/project16-hosted/a3/suite-workbench-sessions.json",
+            "failure": {
+              "observed": "Page.evaluate: AggregateError: Workbench event listeners failed",
+              "detail": "DocumentService.setProjectMembership → StudioProjects.removeMembership/sync → renderWorkspace → finishWorkspace.",
+              "evidence": "docs/evidence/project16-hosted/a3/a19-multi-session-results.json"
+            }
+          },
+          {
+            "suite": "workbench-lazy",
+            "status": "passed",
+            "exitCode": 0,
+            "startedAt": "2026-10-04T03:00:28.306Z",
+            "finishedAt": "2026-10-04T03:00:32.991Z",
+            "evidence": "docs/evidence/project16-hosted/a3/suite-workbench-lazy.json"
+          },
+          {
+            "suite": "workbench-workflows",
+            "status": "failed",
+            "exitCode": 1,
+            "startedAt": "2026-10-04T03:00:32.992Z",
+            "finishedAt": "2026-10-04T03:01:06.932Z",
+            "evidence": "docs/evidence/project16-hosted/a3/suite-workbench-workflows.json",
+            "failure": {
+              "observed": "TimeoutError: Browser predicate remained false: document.querySelector(\"#modal-backdrop\").classList.contains(\"hidden\")",
+              "detail": "Project-creation modal did not close; later workflow assertions were not reached.",
+              "evidence": "docs/evidence/project16-hosted/a3/job.log",
+              "logLine": 802
+            }
+          },
+          {
+            "suite": "editor-insights",
+            "status": "failed",
+            "exitCode": 1,
+            "startedAt": "2026-10-04T03:01:06.933Z",
+            "finishedAt": "2026-10-04T03:01:09.201Z",
+            "evidence": "docs/evidence/project16-hosted/a3/suite-editor-insights.json",
+            "failure": {
+              "observed": "AssertionError: Show potential fixes button count was not exactly one",
+              "detail": "Five earlier scenario checks passed within this failed suite; they do not make the suite pass.",
+              "evidence": "docs/evidence/project16-hosted/a3/a20-editor-insights.json",
+              "jobLogLine": 816
+            }
+          },
+          {
+            "suite": "editor-providers",
+            "status": "failed",
+            "exitCode": 1,
+            "startedAt": "2026-10-04T03:01:09.201Z",
+            "finishedAt": "2026-10-04T03:01:42.486Z",
+            "evidence": "docs/evidence/project16-hosted/a3/suite-editor-providers.json",
+            "failure": {
+              "observed": "Browser predicate timed out waiting for Gadget in both comment and string rename preview",
+              "detail": "The earlier Fix All scenario passed within this failed suite.",
+              "evidence": "docs/evidence/project16-hosted/a3/a20-language-providers.json"
+            }
+          },
+          {
+            "suite": "editor-view",
+            "status": "failed",
+            "exitCode": 1,
+            "startedAt": "2026-10-04T03:01:42.487Z",
+            "finishedAt": "2026-10-04T03:01:44.152Z",
+            "evidence": "docs/evidence/project16-hosted/a3/suite-editor-view.json",
+            "failure": {
+              "observed": "Page.evaluate: TypeError: window.editor?.dispose is not a function",
+              "detail": "No view scenario check passed before fixture setup failed.",
+              "evidence": "docs/evidence/project16-hosted/a3/a20-editor-view.json"
+            }
+          }
+        ],
+        "sessionCsp": "All eight retained sessions record empty cspViolations arrays; this does not turn failed behavior into passes."
+      },
+      "performance": "not_selected"
+    }
+  ],
+  "sourceKnownCorrections": [
+    {
+      "id": "workflow-syntax",
+      "status": "merged_and_later_job_observed",
+      "pr": 3865,
+      "detail": "Quote the pip run scalar. a1 remains a zero-job failure; a2 actually executed jobs."
+    },
+    {
+      "id": "browser-helper-callers",
+      "status": "merged_with_affected_docking_pass_observed_in_a3",
+      "pr": 3904,
+      "detail": "Current caller/API and suite-outcome fixes. a3 docking, shell and lazy suites pass; the full browser batch still fails."
+    },
+    {
+      "id": "editor-widgets-and-fixture",
+      "status": "source_committed_qualification_pending",
+      "localCommit": "7c2eecc34e1629ac05e8f5896845d2e8d2bed54a",
+      "sourceEvidence": "docs/project16-editor-browser-corrections.md",
+      "detail": "Scope exact Quick Info locator and exercise its action; suspend background provider requests during temporary rename previews; explicitly own editor/model/services rather than the id=editor named window global. No passing corrected browser run is recorded."
+    },
+    {
+      "id": "disposed-editor-model-reinsertion",
+      "status": "source_committed_qualification_pending",
+      "detail": "The owner diagnosed old CodeEditor.saveViewState disposal reinserting a removed model into the shared DocumentService map. Correction guards view/model cache ownership and uses active editor selection in WorkbenchShell.context. Two focused test files contain seven cases, not executed after correction. No corrected runtime/browser pass is recorded.",
+      "relatesTo": [
+        "workbench-sessions",
+        "workbench-workflows"
+      ],
+      "localCommit": "24a5ea2ee89cc26cb20425c3137870a2ba264fff",
+      "sourceEvidence": "docs/project16-workspace-model-ownership.md"
+    },
+    {
+      "id": "actual-studio-200mib-file-ingress",
+      "status": "driver_source_committed_execution_pending",
+      "localCommit": "66fe0cd3c9f00a8a40bf42532936b10fd1f4569e",
+      "sourceEvidence": "docs/a20-studio-large-file-qualification.md",
+      "detail": "One synthetic File-input lifecycle driver, separate from the existing five-size latency benchmark. No source-ingress, latency or OS permission pass is inferred."
+    }
+  ],
+  "remainingQualification": [
+    "Completed corrected browser cohort and later actual runtime results; a3 remains 3 passed suites and 5 failed suites.",
+    "Windows/macOS and Firefox/WebKit coverage; these initial hosted attempts are Ubuntu/Chromium only.",
+    "Actual standalone workflow execution and offline lazy first use; packaging is not runtime execution.",
+    "Actual Studio 200 MiB File ingress and browser latency/performance measurements, including compatible reviewed baseline comparisons.",
+    "Native file permissions, physical input/clipboard, CJK IMEs, assistive speech/high-contrast and desktop-editor/native oracles remain explicit separate evidence."
+  ],
+  "archivedFiles": [
+    {
+      "path": "docs/evidence/project16-hosted/a1/workflow-parse-failure.json",
+      "kind": "original failure record",
+      "bytes": 969,
+      "sha256": "6ee0e701daa72e6e2c367034c91703ce99e88f174614cab68453e78231cf55ec"
+    },
+    {
+      "path": "docs/evidence/project16-hosted/a2/p16-hosted-a2.zip",
+      "kind": "exact downloaded artifact ZIP",
+      "bytes": 74410,
+      "sha256": "08dfddfe17b2d4a02bd03aff172699ad972b6d6f8d371d4cc452e86ff19ac61f"
+    },
+    {
+      "path": "docs/evidence/project16-hosted/a2/job.log",
+      "kind": "original hosted job log",
+      "bytes": 236156,
+      "sha256": "6cc0edbd99cf69fd62162d8eb7158a411b3aaa3c0b2974531f9be6be33291324"
+    },
+    {
+      "path": "docs/evidence/project16-hosted/a2/browser_a19_docking_test/session.json",
+      "kind": "original artifact JSON",
+      "bytes": 253,
+      "sha256": "ab70ff85ceebc22a7bb0961996aee700e14da6e16dec120eee378e942d4f49d3"
+    },
+    {
+      "path": "docs/evidence/project16-hosted/a2/source.json",
+      "kind": "original artifact JSON",
+      "bytes": 473,
+      "sha256": "c5ba09e72b2826f0a157af97362ab162780201ddc09c70e35538f3a7922370f3"
+    },
+    {
+      "path": "docs/evidence/project16-hosted/a2/suite-workbench-docking.json",
+      "kind": "original artifact JSON",
+      "bytes": 223,
+      "sha256": "f5e031671be0c34eccf88caddc48da652e0c292f85a4ce13fe96e19b2964df5a"
+    },
+    {
+      "path": "docs/evidence/project16-hosted/a3/p16-hosted-a3.zip",
+      "kind": "exact downloaded artifact ZIP",
+      "bytes": 3754687,
+      "sha256": "7fe07d3374bdb1bb1c9c17dc36e730dfa36b39381e40c7b905d40452aeb550ba"
+    },
+    {
+      "path": "docs/evidence/project16-hosted/a3/job.log",
+      "kind": "original hosted job log",
+      "bytes": 87527,
+      "sha256": "0cda61ef71e5f7b0a0df54bcefb91a0819af3e531a5227600d557c32e537c367"
+    },
+    {
+      "path": "docs/evidence/project16-hosted/a3/a19-multi-session-results.json",
+      "kind": "original artifact JSON",
+      "bytes": 1016,
+      "sha256": "915f4f87ce0bc0187752ca634f36cd9a94cfe7dd853d375d55616aa93eab3190"
+    },
+    {
+      "path": "docs/evidence/project16-hosted/a3/a19-shell-results.json",
+      "kind": "original artifact JSON",
+      "bytes": 3053,
+      "sha256": "d59f6db9c5aa08179176b75f0da1a1ed97427f29e694a385f8a126d7ec705aa4"
+    },
+    {
+      "path": "docs/evidence/project16-hosted/a3/a20-editor-insights.json",
+      "kind": "original artifact JSON",
+      "bytes": 497,
+      "sha256": "1c6fb62325397d777d71521743e022390d518aaae2e7464964a9d714cd67812d"
+    },
+    {
+      "path": "docs/evidence/project16-hosted/a3/a20-editor-view.json",
+      "kind": "original artifact JSON",
+      "bytes": 516,
+      "sha256": "14a85dc8b7cc2a2a66933b7f8f85668aa50ac8c329cf2434b86a5009998aa784"
+    },
+    {
+      "path": "docs/evidence/project16-hosted/a3/a20-language-providers.json",
+      "kind": "original artifact JSON",
+      "bytes": 359,
+      "sha256": "100f307c6f6727a8e56ec7cd308deaf11fbd550ab486d75bafdcfbe8b2c39240"
+    },
+    {
+      "path": "docs/evidence/project16-hosted/a3/browser_a19_docking_test/session.json",
+      "kind": "original artifact JSON",
+      "bytes": 252,
+      "sha256": "1c3e61f62d3b19ba38df05a2850a9b932451d85cb571529a543e3ab5aee48fd3"
+    },
+    {
+      "path": "docs/evidence/project16-hosted/a3/browser_a19_lazy_tools_test/session.json",
+      "kind": "original artifact JSON",
+      "bytes": 255,
+      "sha256": "b229042b1dbba4c0b115af1c5f4a71c4dd8e9782d92a2bd51c271487432a2f8b"
+    },
+    {
+      "path": "docs/evidence/project16-hosted/a3/browser_a19_shell_test/session.json",
+      "kind": "original artifact JSON",
+      "bytes": 249,
+      "sha256": "d42fb36055476505b442105107048f49cd5f7f6d771f59f0cd94fa542ae58f9c"
+    },
+    {
+      "path": "docs/evidence/project16-hosted/a3/browser_a20_insights_test/session.json",
+      "kind": "original artifact JSON",
+      "bytes": 253,
+      "sha256": "d0d733df06be65942cfce3d72a8ea7bc0b1c8354d8808481c5ebe719dc50f924"
+    },
+    {
+      "path": "docs/evidence/project16-hosted/a3/browser_a20_language_providers_test/session.json",
+      "kind": "original artifact JSON",
+      "bytes": 263,
+      "sha256": "f116a5d7be4ec1759bea70bd95d3af3108782adfaa07cdacf97bc5c3fcbbae92"
+    },
+    {
+      "path": "docs/evidence/project16-hosted/a3/browser_a20_view_test/session.json",
+      "kind": "original artifact JSON",
+      "bytes": 250,
+      "sha256": "bdafe7dc4f25a263ef53b7f923160e82872b805332ff1d1e05d5e2725236ce9b"
+    },
+    {
+      "path": "docs/evidence/project16-hosted/a3/browser_multi_session_test/session.json",
+      "kind": "original artifact JSON",
+      "bytes": 255,
+      "sha256": "2fc57c45b9f9c5ede05cdc0f07eafd2729c4db924e3025717adb980416971e79"
+    },
+    {
+      "path": "docs/evidence/project16-hosted/a3/browser_vs_workflows_test/session.json",
+      "kind": "original artifact JSON",
+      "bytes": 253,
+      "sha256": "51fdae6042e0d8438174f6066a195caf6b3e8b2415717c798ce5a6ad849bd0e9"
+    },
+    {
+      "path": "docs/evidence/project16-hosted/a3/qualification-summary.json",
+      "kind": "original artifact JSON",
+      "bytes": 4782,
+      "sha256": "588320b12971275f30f72fc8ce4fb8b9621f03831875605314e08bafe4c3c3c4"
+    },
+    {
+      "path": "docs/evidence/project16-hosted/a3/source.json",
+      "kind": "original artifact JSON",
+      "bytes": 481,
+      "sha256": "8dc4e94f11cb20971e753991478189613a9f845391bd7828efefd99ed49d712f"
+    },
+    {
+      "path": "docs/evidence/project16-hosted/a3/suite-editor-insights.json",
+      "kind": "original artifact JSON",
+      "bytes": 223,
+      "sha256": "a31ba5e76b1e9095262284f7d2f30155560417be265bb7f6b4c62eebc43a818c"
+    },
+    {
+      "path": "docs/evidence/project16-hosted/a3/suite-editor-providers.json",
+      "kind": "original artifact JSON",
+      "bytes": 233,
+      "sha256": "ccdef581efffa4fd683fa3ed4cb1841819c53ce86b763229f06a316e6c723090"
+    },
+    {
+      "path": "docs/evidence/project16-hosted/a3/suite-editor-view.json",
+      "kind": "original artifact JSON",
+      "bytes": 213,
+      "sha256": "02f2078739ac9027cc0cb04b2c1355c35f39025665762e5cd6983a0e815068e2"
+    },
+    {
+      "path": "docs/evidence/project16-hosted/a3/suite-workbench-docking.json",
+      "kind": "original artifact JSON",
+      "bytes": 224,
+      "sha256": "0a0873789f871ac49e2b12856feb1f2d47768372b7219f2052af33d6ee2ddbfc"
+    },
+    {
+      "path": "docs/evidence/project16-hosted/a3/suite-workbench-lazy.json",
+      "kind": "original artifact JSON",
+      "bytes": 223,
+      "sha256": "1caf5538a1ba6efcfcb9b2f6db63bd7668915bb6e510cf939fcebc83db4be05c"
+    },
+    {
+      "path": "docs/evidence/project16-hosted/a3/suite-workbench-sessions.json",
+      "kind": "original artifact JSON",
+      "bytes": 227,
+      "sha256": "f1e85f2ed385def168f8193e72dbd279c6c3c00156b555df3bb8c5dbe8bbeaeb"
+    },
+    {
+      "path": "docs/evidence/project16-hosted/a3/suite-workbench-shell.json",
+      "kind": "original artifact JSON",
+      "bytes": 220,
+      "sha256": "38fe559eb82dc44e024f0269f370a7141d621877cee508789ae89cec4f29e243"
+    },
+    {
+      "path": "docs/evidence/project16-hosted/a3/suite-workbench-workflows.json",
+      "kind": "original artifact JSON",
+      "bytes": 226,
+      "sha256": "c6c57eb27faf8cc7badf003bcd19373daef562ec34d1d7c840ad77fea7527af1"
+    },
+    {
+      "path": "docs/evidence/project16-hosted/publication-facts.json",
+      "kind": "derived bounded publication projection",
+      "bytes": 6671,
+      "sha256": "f0500aec8c5b980bf94738454cb86fdb664a7596f70edb4300994e44a72f0d83"
+    }
+  ]
+}

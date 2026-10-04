@@ -4,6 +4,7 @@ import { metadataName } from './metadata-facts.js';
 import { generalConstantPayload } from './constant-reader.js';
 import { hex, sha1 } from './hash.js';
 import { constantTypeSpecs, nullableTypeSpec } from './nullable-constant.js';
+import { bindEnumConstants } from './enum-constant.js';
 
 const frameworkTokens = Object.freeze({
   'System.Runtime': 'b03f5f7f11d50a3a',
@@ -42,7 +43,10 @@ function namedType(metadata, token, state) {
   const row = metadata.row(token);
   if (table === 1 ? (row[0] & 3) === 3 : (row[0] & 7) > 1) return null;
   const name = metadataName(metadata, row[1], 'Constant type');
-  if (!Object.hasOwn(specialTypes, name) || metadataName(metadata, row[2], 'Constant namespace') !== 'System')
+  if (
+    (!Object.hasOwn(specialTypes, name) && name !== 'Enum') ||
+    metadataName(metadata, row[2], 'Constant namespace') !== 'System'
+  )
     return null;
   let scope = table === 1 ? decodeCoded('ResolutionScope', row[0]) : 0x20000001;
   if (scope === 1) scope = 0x20000001;
@@ -88,6 +92,7 @@ export function bindConstantTypes(constants, metadata) {
   const state = { assemblies: new Map(), keyBytes: 0 };
   const specs = constantTypeSpecs(constants, metadata);
   const resolveNamed = (token) => namedType(metadata, token, state);
+  bindEnumConstants(constants, metadata, resolveNamed);
   for (const constant of constants) {
     if (!constant.typeToken) continue;
     if (!types.has(constant.typeToken)) {

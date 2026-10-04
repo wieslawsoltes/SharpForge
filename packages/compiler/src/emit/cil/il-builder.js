@@ -24,6 +24,15 @@ const fixedEffects = new Map(
       : { pops: countOf(opcode.stackBehaviourPop), pushes: countOf(opcode.stackBehaviourPush) },
   ]),
 );
+/**
+ * How many values an instruction pops and pushes.
+ * @param {{pops: number, pushes: number}} [effect] required for an instruction whose effect depends on its operand
+ * @returns {{pops?: number, pushes?: number}} empty when the effect is needed and was not given
+ */
+export function stackEffectOf(name, effect) {
+  return effect ?? fixedEffects.get(name) ?? {};
+}
+
 const leavesStackEmpty = new Set(['leave', 'throw', 'rethrow', 'endfinally', 'endfilter']);
 const endsFlow = new Set(['Branch', 'Return', 'Throw']);
 
@@ -78,6 +87,10 @@ export class IlBuilder {
     this.instructions.splice(position, 0, ...instructions);
     this.maxDepth += 1;
   }
+  /** True when a label was placed here: a branch to it lands on the next instruction. */
+  get isJustPastLabel() {
+    return this.instructions.at(-1)?.label !== undefined;
+  }
   /** True when the next instruction can be reached by falling through. */
   get isReachable() {
     return this.depth !== null;
@@ -91,7 +104,7 @@ export class IlBuilder {
   emit(name, operand, effect) {
     const opcode = CilOpcodes[name];
     if (!opcode) throw new IlBuilderError(`Unknown CIL opcode '${name}'`);
-    const { pops, pushes } = effect ?? fixedEffects.get(name) ?? {};
+    const { pops, pushes } = stackEffectOf(name, effect);
     if (pops === undefined) throw new IlBuilderError(`'${name}' needs its stack effect`);
     if (this.depth === null) return this;
     if (this.depth < pops) throw new IlBuilderError(`'${name}' pops ${pops} from a stack of ${this.depth}`);

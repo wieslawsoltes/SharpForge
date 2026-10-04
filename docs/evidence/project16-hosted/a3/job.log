@@ -1,0 +1,1015 @@
+﻿2026-10-04T02:59:34.6977391Z Current runner version: '2.337.0'
+2026-10-04T02:59:34.7012902Z ##[group]Runner Image Provisioner
+2026-10-04T02:59:34.7015167Z Hosted Compute Agent
+2026-10-04T02:59:34.7016331Z Version: 20260901.588
+2026-10-04T02:59:34.7017614Z Commit: f88ec8081b781fac6c440065ac7ff9e710ce3d0b
+2026-10-04T02:59:34.7019042Z Build Date: 2026-09-01T19:56:44Z
+2026-10-04T02:59:34.7020280Z Worker ID: {44a43fc8-a74c-4b57-8f5a-077a39775d0c}
+2026-10-04T02:59:34.7021863Z Azure Region: eastus
+2026-10-04T02:59:34.7022909Z ##[endgroup]
+2026-10-04T02:59:34.7026133Z ##[group]Operating System
+2026-10-04T02:59:34.7027327Z Ubuntu
+2026-10-04T02:59:34.7028338Z 24.04.5
+2026-10-04T02:59:34.7029456Z LTS
+2026-10-04T02:59:34.7030376Z ##[endgroup]
+2026-10-04T02:59:34.7031462Z ##[group]Runner Image
+2026-10-04T02:59:34.7032731Z Image: ubuntu-24.04
+2026-10-04T02:59:34.7033735Z Version: 20260927.320.1
+2026-10-04T02:59:34.7036323Z Included Software: https://github.com/actions/runner-images/blob/ubuntu24/20260927.320/images/ubuntu/Ubuntu2404-Readme.md
+2026-10-04T02:59:34.7039204Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu24%2F20260927.320
+2026-10-04T02:59:34.7041111Z ##[endgroup]
+2026-10-04T02:59:34.7043255Z ##[group]GITHUB_TOKEN Permissions
+2026-10-04T02:59:34.7046477Z Contents: read
+2026-10-04T02:59:34.7047631Z Metadata: read
+2026-10-04T02:59:34.7048695Z ##[endgroup]
+2026-10-04T02:59:34.7051964Z Secret source: Actions
+2026-10-04T02:59:34.7053524Z Cache mode: write
+2026-10-04T02:59:34.7055054Z Prepare workflow directory
+2026-10-04T02:59:34.7637682Z Prepare all required actions
+2026-10-04T02:59:34.7711336Z Getting action download info
+2026-10-04T02:59:34.9426351Z Download action repository 'actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1' (SHA:3d3c42e5aac5ba805825da76410c181273ba90b1)
+2026-10-04T02:59:35.0528683Z Download action repository 'actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020' (SHA:49933ea5288caeca8642d1e84afbd3f7d6820020)
+2026-10-04T02:59:35.1392115Z Download action repository 'actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97' (SHA:5fda3b95a4ea91299a34e894583c3862153e4b97)
+2026-10-04T02:59:35.2195009Z Download action repository 'actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02' (SHA:ea165f8d65b6e75b540449e92b4886f43607fa02)
+2026-10-04T02:59:35.4339461Z Complete job name: qualify
+2026-10-04T02:59:35.5136561Z ##[group]Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+2026-10-04T02:59:35.5137637Z with:
+2026-10-04T02:59:35.5138206Z   ref: e4629f443b59bfc2d7494b731be19afc5974b7b1
+2026-10-04T02:59:35.5138986Z   repository: wieslawsoltes/SharpForge
+2026-10-04T02:59:35.5142868Z   token: ***
+2026-10-04T02:59:35.5143298Z   ssh-strict: true
+2026-10-04T02:59:35.5143722Z   ssh-user: git
+2026-10-04T02:59:35.5144339Z   persist-credentials: true
+2026-10-04T02:59:35.5144822Z   clean: true
+2026-10-04T02:59:35.5145280Z   sparse-checkout-cone-mode: true
+2026-10-04T02:59:35.5145795Z   fetch-depth: 1
+2026-10-04T02:59:35.5146218Z   fetch-tags: false
+2026-10-04T02:59:35.5146646Z   show-progress: true
+2026-10-04T02:59:35.5147104Z   lfs: false
+2026-10-04T02:59:35.5147509Z   submodules: false
+2026-10-04T02:59:35.5148012Z   set-safe-directory: true
+2026-10-04T02:59:35.5148571Z   allow-unsafe-pr-checkout: false
+2026-10-04T02:59:35.5149360Z env:
+2026-10-04T02:59:35.5149898Z   SHARPFORGE_RESULTS_DIR: artifacts/results/project16
+2026-10-04T02:59:35.5150508Z ##[endgroup]
+2026-10-04T02:59:35.6117601Z Syncing repository: wieslawsoltes/SharpForge
+2026-10-04T02:59:35.6119701Z ##[group]Getting Git version info
+2026-10-04T02:59:35.6120564Z Working directory is '/home/runner/work/SharpForge/SharpForge'
+2026-10-04T02:59:35.6121598Z [command]/usr/bin/git version
+2026-10-04T02:59:35.6186388Z git version 2.55.0
+2026-10-04T02:59:35.6208510Z ##[endgroup]
+2026-10-04T02:59:35.6219357Z Temporarily overriding HOME='/home/runner/work/_temp/1ba7ab43-36c3-4f21-9c1a-f09b0c9ef8c3' before making global git config changes
+2026-10-04T02:59:35.6225404Z Adding repository directory to the temporary git global config as a safe directory
+2026-10-04T02:59:35.6226942Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/SharpForge/SharpForge
+2026-10-04T02:59:35.6272786Z Deleting the contents of '/home/runner/work/SharpForge/SharpForge'
+2026-10-04T02:59:35.6276643Z ##[group]Determining repository object format
+2026-10-04T02:59:35.6277987Z ##[endgroup]
+2026-10-04T02:59:35.6279063Z ##[group]Initializing the repository
+2026-10-04T02:59:35.6282249Z [command]/usr/bin/git init /home/runner/work/SharpForge/SharpForge
+2026-10-04T02:59:35.6385088Z hint: Using 'master' as the name for the initial branch. This default branch name
+2026-10-04T02:59:35.6386695Z hint: will change to "main" in Git 3.0. To configure the initial branch name
+2026-10-04T02:59:35.6387923Z hint: to use in all of your new repositories, which will suppress this warning,
+2026-10-04T02:59:35.6389180Z hint: call:
+2026-10-04T02:59:35.6389596Z hint:
+2026-10-04T02:59:35.6390480Z hint: 	git config --global init.defaultBranch <name>
+2026-10-04T02:59:35.6391312Z hint:
+2026-10-04T02:59:35.6391897Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+2026-10-04T02:59:35.6392886Z hint: 'development'. The just-created branch can be renamed via this command:
+2026-10-04T02:59:35.6394343Z hint:
+2026-10-04T02:59:35.6394838Z hint: 	git branch -m <name>
+2026-10-04T02:59:35.6395347Z hint:
+2026-10-04T02:59:35.6395973Z hint: Disable this message with "git config set advice.defaultBranchName false"
+2026-10-04T02:59:35.6397004Z Initialized empty Git repository in /home/runner/work/SharpForge/SharpForge/.git/
+2026-10-04T02:59:35.6399312Z [command]/usr/bin/git remote add origin https://github.com/wieslawsoltes/SharpForge
+2026-10-04T02:59:35.6442477Z ##[endgroup]
+2026-10-04T02:59:35.6443240Z ##[group]Disabling automatic garbage collection
+2026-10-04T02:59:35.6446268Z [command]/usr/bin/git config --local gc.auto 0
+2026-10-04T02:59:35.6477850Z ##[endgroup]
+2026-10-04T02:59:35.6479314Z ##[group]Setting up auth
+2026-10-04T02:59:35.6480228Z Removing SSH command configuration
+2026-10-04T02:59:35.6484708Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-10-04T02:59:35.6517809Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-10-04T02:59:35.6866314Z Removing HTTP extra header
+2026-10-04T02:59:35.6872734Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-10-04T02:59:35.6906337Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-10-04T02:59:35.7142832Z Removing includeIf entries pointing to credentials config files
+2026-10-04T02:59:35.7149274Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-10-04T02:59:35.7189465Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-10-04T02:59:35.7439583Z [command]/usr/bin/git config --file /home/runner/work/_temp/git-credentials-6ec3de73-d7b4-41fc-b746-523250d7737a.config http.https://github.com/.extraheader AUTHORIZATION: basic ***
+2026-10-04T02:59:35.7476660Z [command]/usr/bin/git config --local includeIf.gitdir:/home/runner/work/SharpForge/SharpForge/.git.path /home/runner/work/_temp/git-credentials-6ec3de73-d7b4-41fc-b746-523250d7737a.config
+2026-10-04T02:59:35.7506337Z [command]/usr/bin/git config --local includeIf.gitdir:/home/runner/work/SharpForge/SharpForge/.git/worktrees/*.path /home/runner/work/_temp/git-credentials-6ec3de73-d7b4-41fc-b746-523250d7737a.config
+2026-10-04T02:59:35.7541645Z [command]/usr/bin/git config --local includeIf.gitdir:/github/workspace/.git.path /github/runner_temp/git-credentials-6ec3de73-d7b4-41fc-b746-523250d7737a.config
+2026-10-04T02:59:35.7573817Z [command]/usr/bin/git config --local includeIf.gitdir:/github/workspace/.git/worktrees/*.path /github/runner_temp/git-credentials-6ec3de73-d7b4-41fc-b746-523250d7737a.config
+2026-10-04T02:59:35.7602810Z ##[endgroup]
+2026-10-04T02:59:35.7604688Z ##[group]Fetching the repository
+2026-10-04T02:59:35.7609101Z [command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin e4629f443b59bfc2d7494b731be19afc5974b7b1
+2026-10-04T02:59:37.5521165Z From https://github.com/wieslawsoltes/SharpForge
+2026-10-04T02:59:37.5523328Z  * branch            e4629f443b59bfc2d7494b731be19afc5974b7b1 -> FETCH_HEAD
+2026-10-04T02:59:37.5531490Z [command]/usr/bin/git rev-parse --verify --quiet e4629f443b59bfc2d7494b731be19afc5974b7b1^{object}
+2026-10-04T02:59:37.5557183Z e4629f443b59bfc2d7494b731be19afc5974b7b1
+2026-10-04T02:59:37.5562888Z ##[endgroup]
+2026-10-04T02:59:37.5564345Z ##[group]Determining the checkout info
+2026-10-04T02:59:37.5565423Z ##[endgroup]
+2026-10-04T02:59:37.5567719Z [command]/usr/bin/git sparse-checkout disable
+2026-10-04T02:59:37.5616509Z [command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+2026-10-04T02:59:37.5645594Z ##[group]Checking out the ref
+2026-10-04T02:59:37.5649727Z [command]/usr/bin/git checkout --progress --force e4629f443b59bfc2d7494b731be19afc5974b7b1
+2026-10-04T02:59:38.3499531Z Note: switching to 'e4629f443b59bfc2d7494b731be19afc5974b7b1'.
+2026-10-04T02:59:38.3501366Z 
+2026-10-04T02:59:38.3502617Z You are in 'detached HEAD' state. You can look around, make experimental
+2026-10-04T02:59:38.3504805Z changes and commit them, and you can discard any commits you make in this
+2026-10-04T02:59:38.3506430Z state without impacting any branches by switching back to a branch.
+2026-10-04T02:59:38.3507226Z 
+2026-10-04T02:59:38.3507782Z If you want to create a new branch to retain commits you create, you may
+2026-10-04T02:59:38.3509070Z do so (now or later) by using -c with the switch command. Example:
+2026-10-04T02:59:38.3509922Z 
+2026-10-04T02:59:38.3510284Z   git switch -c <new-branch-name>
+2026-10-04T02:59:38.3510902Z 
+2026-10-04T02:59:38.3511280Z Or undo this operation with:
+2026-10-04T02:59:38.3511810Z 
+2026-10-04T02:59:38.3512320Z   git switch -
+2026-10-04T02:59:38.3513082Z 
+2026-10-04T02:59:38.3514456Z Turn off this advice by setting config variable advice.detachedHead to false
+2026-10-04T02:59:38.3516575Z 
+2026-10-04T02:59:38.3518256Z HEAD is now at e4629f4 Merge pull request #3904 from wieslawsoltes/codex/project16/07-browser-qualification
+2026-10-04T02:59:38.3523998Z ##[endgroup]
+2026-10-04T02:59:38.3565365Z [command]/usr/bin/git log -1 --format=%H
+2026-10-04T02:59:38.3590014Z e4629f443b59bfc2d7494b731be19afc5974b7b1
+2026-10-04T02:59:38.3980140Z ##[group]Run actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
+2026-10-04T02:59:38.3981946Z with:
+2026-10-04T02:59:38.3982838Z   node-version: 24
+2026-10-04T02:59:38.3983827Z   always-auth: false
+2026-10-04T02:59:38.3985046Z   check-latest: false
+2026-10-04T02:59:38.3996176Z   token: ***
+2026-10-04T02:59:38.3997117Z env:
+2026-10-04T02:59:38.3998231Z   SHARPFORGE_RESULTS_DIR: artifacts/results/project16
+2026-10-04T02:59:38.3999656Z ##[endgroup]
+2026-10-04T02:59:38.5465805Z Found in cache @ /opt/hostedtoolcache/node/24.21.0/x64
+2026-10-04T02:59:38.5471259Z (node:2312) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-10-04T02:59:38.5476482Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-10-04T02:59:38.5480546Z ##[group]Environment details
+2026-10-04T02:59:38.9411046Z node: v24.21.0
+2026-10-04T02:59:38.9411343Z npm: 11.19.0
+2026-10-04T02:59:38.9411572Z yarn: 1.22.22
+2026-10-04T02:59:38.9416033Z ##[endgroup]
+2026-10-04T02:59:38.9545054Z ##[group]Run node scripts/project16-trigger.js
+2026-10-04T02:59:38.9545520Z [36;1mnode scripts/project16-trigger.js[0m
+2026-10-04T02:59:38.9805280Z shell: /usr/bin/bash -e {0}
+2026-10-04T02:59:38.9805586Z env:
+2026-10-04T02:59:38.9805876Z   SHARPFORGE_RESULTS_DIR: artifacts/results/project16
+2026-10-04T02:59:38.9806542Z ##[endgroup]
+2026-10-04T02:59:39.0293842Z Resolved create: ubuntu-latest/chromium/browser at e4629f443b59bfc2d7494b731be19afc5974b7b1
+2026-10-04T02:59:39.0436269Z ##[group]Run actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97
+2026-10-04T02:59:39.0436964Z with:
+2026-10-04T02:59:39.0437277Z   python-version: 3.12
+2026-10-04T02:59:39.0437656Z   check-latest: false
+2026-10-04T02:59:39.0440333Z   token: ***
+2026-10-04T02:59:39.0440678Z   update-environment: true
+2026-10-04T02:59:39.0441264Z   allow-prereleases: false
+2026-10-04T02:59:39.0441601Z   freethreaded: false
+2026-10-04T02:59:39.0441938Z env:
+2026-10-04T02:59:39.0442298Z   SHARPFORGE_RESULTS_DIR: artifacts/results/project16
+2026-10-04T02:59:39.0442783Z   QUALIFICATION_TRIGGER_EVENT: create
+2026-10-04T02:59:39.0443468Z   QUALIFICATION_TRIGGER_REF: refs/heads/codex/project16/qualify-ubuntu-chromium-browser-20261004-a3
+2026-10-04T02:59:39.0444351Z   QUALIFICATION_TRIGGER_NONCE: 20261004-a3
+2026-10-04T02:59:39.0444895Z   QUALIFICATION_SOURCE_SHA: e4629f443b59bfc2d7494b731be19afc5974b7b1
+2026-10-04T02:59:39.0445602Z   QUALIFICATION_SOURCE_TREE: 1733c01dae0e44cea49dd82a574fda7b8286d6be
+2026-10-04T02:59:39.0446153Z   QUALIFICATION_RUNNER: ubuntu-latest
+2026-10-04T02:59:39.0446552Z   QUALIFICATION_STAGE: browser
+2026-10-04T02:59:39.0446914Z   QUALIFICATION_CAPTURE_ONLY: true
+2026-10-04T02:59:39.0447364Z   SHARPFORGE_BROWSER_ENGINE: chromium
+2026-10-04T02:59:39.0447773Z   SHARPFORGE_EDITOR_BASELINE: 
+2026-10-04T02:59:39.0448143Z   SHARPFORGE_WORKBENCH_BASELINE: 
+2026-10-04T02:59:39.0448592Z ##[endgroup]
+2026-10-04T02:59:39.1608667Z ##[group]Installed versions
+2026-10-04T02:59:39.1683753Z Successfully set up CPython (3.12.14)
+2026-10-04T02:59:39.1684862Z ##[endgroup]
+2026-10-04T02:59:39.1797531Z ##[group]Run npm ci --ignore-scripts --no-audit --no-fund
+2026-10-04T02:59:39.1798236Z [36;1mnpm ci --ignore-scripts --no-audit --no-fund[0m
+2026-10-04T02:59:39.1880675Z shell: /usr/bin/bash -e {0}
+2026-10-04T02:59:39.1881061Z env:
+2026-10-04T02:59:39.1881506Z   SHARPFORGE_RESULTS_DIR: artifacts/results/project16
+2026-10-04T02:59:39.1881985Z   QUALIFICATION_TRIGGER_EVENT: create
+2026-10-04T02:59:39.1882618Z   QUALIFICATION_TRIGGER_REF: refs/heads/codex/project16/qualify-ubuntu-chromium-browser-20261004-a3
+2026-10-04T02:59:39.1883287Z   QUALIFICATION_TRIGGER_NONCE: 20261004-a3
+2026-10-04T02:59:39.1883816Z   QUALIFICATION_SOURCE_SHA: e4629f443b59bfc2d7494b731be19afc5974b7b1
+2026-10-04T02:59:39.1884777Z   QUALIFICATION_SOURCE_TREE: 1733c01dae0e44cea49dd82a574fda7b8286d6be
+2026-10-04T02:59:39.1885309Z   QUALIFICATION_RUNNER: ubuntu-latest
+2026-10-04T02:59:39.1885756Z   QUALIFICATION_STAGE: browser
+2026-10-04T02:59:39.1886157Z   QUALIFICATION_CAPTURE_ONLY: true
+2026-10-04T02:59:39.1886869Z   SHARPFORGE_BROWSER_ENGINE: chromium
+2026-10-04T02:59:39.1887292Z   SHARPFORGE_EDITOR_BASELINE: 
+2026-10-04T02:59:39.1887645Z   SHARPFORGE_WORKBENCH_BASELINE: 
+2026-10-04T02:59:39.1888084Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.14/x64
+2026-10-04T02:59:39.1888727Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.14/x64/lib/pkgconfig
+2026-10-04T02:59:39.1889323Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.14/x64
+2026-10-04T02:59:39.1889869Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.14/x64
+2026-10-04T02:59:39.1890398Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.14/x64
+2026-10-04T02:59:39.1890893Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.14/x64/lib
+2026-10-04T02:59:39.1891389Z ##[endgroup]
+2026-10-04T02:59:39.8947244Z 
+2026-10-04T02:59:39.8948086Z added 28 packages in 645ms
+2026-10-04T02:59:39.9359909Z ##[group]Run npm run check
+2026-10-04T02:59:39.9360200Z [36;1mnpm run check[0m
+2026-10-04T02:59:39.9360423Z [36;1mnpm run build[0m
+2026-10-04T02:59:39.9360654Z [36;1mnode scripts/standalone.js[0m
+2026-10-04T02:59:39.9428210Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+2026-10-04T02:59:39.9428551Z env:
+2026-10-04T02:59:39.9428801Z   SHARPFORGE_RESULTS_DIR: artifacts/results/project16
+2026-10-04T02:59:39.9429305Z   QUALIFICATION_TRIGGER_EVENT: create
+2026-10-04T02:59:39.9429782Z   QUALIFICATION_TRIGGER_REF: refs/heads/codex/project16/qualify-ubuntu-chromium-browser-20261004-a3
+2026-10-04T02:59:39.9430305Z   QUALIFICATION_TRIGGER_NONCE: 20261004-a3
+2026-10-04T02:59:39.9430684Z   QUALIFICATION_SOURCE_SHA: e4629f443b59bfc2d7494b731be19afc5974b7b1
+2026-10-04T02:59:39.9431147Z   QUALIFICATION_SOURCE_TREE: 1733c01dae0e44cea49dd82a574fda7b8286d6be
+2026-10-04T02:59:39.9431535Z   QUALIFICATION_RUNNER: ubuntu-latest
+2026-10-04T02:59:39.9431847Z   QUALIFICATION_STAGE: browser
+2026-10-04T02:59:39.9432102Z   QUALIFICATION_CAPTURE_ONLY: true
+2026-10-04T02:59:39.9432373Z   SHARPFORGE_BROWSER_ENGINE: chromium
+2026-10-04T02:59:39.9432640Z   SHARPFORGE_EDITOR_BASELINE: 
+2026-10-04T02:59:39.9432886Z   SHARPFORGE_WORKBENCH_BASELINE: 
+2026-10-04T02:59:39.9433198Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.14/x64
+2026-10-04T02:59:39.9433620Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.14/x64/lib/pkgconfig
+2026-10-04T02:59:39.9434306Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.14/x64
+2026-10-04T02:59:39.9434805Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.14/x64
+2026-10-04T02:59:39.9435188Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.14/x64
+2026-10-04T02:59:39.9435572Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.14/x64/lib
+2026-10-04T02:59:39.9435890Z ##[endgroup]
+2026-10-04T02:59:40.0494901Z 
+2026-10-04T02:59:40.0495590Z > sharpforge@0.14.0 check
+2026-10-04T02:59:40.0496156Z > node scripts/run.js check
+2026-10-04T02:59:40.0496454Z 
+2026-10-04T02:59:40.3156887Z {
+2026-10-04T02:59:40.3157219Z   "areas": 30,
+2026-10-04T02:59:40.3157471Z   "nodeFiles": 775,
+2026-10-04T02:59:40.3157727Z   "browserScripts": 32,
+2026-10-04T02:59:40.3157980Z   "unassigned": 0,
+2026-10-04T02:59:40.3158200Z   "duplicate": 0
+2026-10-04T02:59:40.3158411Z }
+2026-10-04T02:59:41.7296517Z Checked 3053 JavaScript modules; 0 syntax errors.
+2026-10-04T02:59:44.6084635Z {
+2026-10-04T02:59:44.6085167Z   "passed": true,
+2026-10-04T02:59:44.6085646Z   "inspected": 3049,
+2026-10-04T02:59:44.6086205Z   "modules": 3049,
+2026-10-04T02:59:44.6086593Z   "errors": []
+2026-10-04T02:59:44.6086959Z }
+2026-10-04T02:59:44.7348858Z 
+2026-10-04T02:59:44.7349454Z > sharpforge@0.14.0 build
+2026-10-04T02:59:44.7349940Z > node scripts/run.js build
+2026-10-04T02:59:44.7350134Z 
+2026-10-04T02:59:49.8723714Z Built dependency-free browser application in dist/
+2026-10-04T02:59:51.5539716Z Built /home/runner/work/SharpForge/SharpForge/artifacts/SharpForge-standalone.html (15,215,611 bytes; 5 embedded worker graphs)
+2026-10-04T02:59:51.5744718Z ##[group]Run python -m pip install --require-hashes --only-binary=:all: -r tests/requirements.txt
+2026-10-04T02:59:51.5745470Z [36;1mpython -m pip install --require-hashes --only-binary=:all: -r tests/requirements.txt[0m
+2026-10-04T02:59:51.5808250Z shell: /usr/bin/bash -e {0}
+2026-10-04T02:59:51.5808496Z env:
+2026-10-04T02:59:51.5808747Z   SHARPFORGE_RESULTS_DIR: artifacts/results/project16
+2026-10-04T02:59:51.5809107Z   QUALIFICATION_TRIGGER_EVENT: create
+2026-10-04T02:59:51.5809600Z   QUALIFICATION_TRIGGER_REF: refs/heads/codex/project16/qualify-ubuntu-chromium-browser-20261004-a3
+2026-10-04T02:59:51.5810112Z   QUALIFICATION_TRIGGER_NONCE: 20261004-a3
+2026-10-04T02:59:51.5810482Z   QUALIFICATION_SOURCE_SHA: e4629f443b59bfc2d7494b731be19afc5974b7b1
+2026-10-04T02:59:51.5810936Z   QUALIFICATION_SOURCE_TREE: 1733c01dae0e44cea49dd82a574fda7b8286d6be
+2026-10-04T02:59:51.5811304Z   QUALIFICATION_RUNNER: ubuntu-latest
+2026-10-04T02:59:51.5811568Z   QUALIFICATION_STAGE: browser
+2026-10-04T02:59:51.5811846Z   QUALIFICATION_CAPTURE_ONLY: true
+2026-10-04T02:59:51.5812109Z   SHARPFORGE_BROWSER_ENGINE: chromium
+2026-10-04T02:59:51.5812370Z   SHARPFORGE_EDITOR_BASELINE: 
+2026-10-04T02:59:51.5812618Z   SHARPFORGE_WORKBENCH_BASELINE: 
+2026-10-04T02:59:51.5812926Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.14/x64
+2026-10-04T02:59:51.5813349Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.14/x64/lib/pkgconfig
+2026-10-04T02:59:51.5813939Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.14/x64
+2026-10-04T02:59:51.5814600Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.14/x64
+2026-10-04T02:59:51.5814977Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.14/x64
+2026-10-04T02:59:51.5815356Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.14/x64/lib
+2026-10-04T02:59:51.5815675Z ##[endgroup]
+2026-10-04T02:59:52.4331675Z Collecting attrs==26.1.0 (from -r tests/requirements.txt (line 3))
+2026-10-04T02:59:52.4818888Z   Downloading attrs-26.1.0-py3-none-any.whl (67 kB)
+2026-10-04T02:59:52.6645975Z Collecting greenlet==3.5.6 (from -r tests/requirements.txt (line 5))
+2026-10-04T02:59:52.6702353Z   Downloading greenlet-3.5.6-cp312-cp312-manylinux_2_24_x86_64.manylinux_2_28_x86_64.whl (621 kB)
+2026-10-04T02:59:52.6823856Z      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 621.4/621.4 kB 62.4 MB/s  0:00:00
+2026-10-04T02:59:52.7009079Z Collecting jsonschema==4.26.0 (from -r tests/requirements.txt (line 84))
+2026-10-04T02:59:52.7072435Z   Downloading jsonschema-4.26.0-py3-none-any.whl (90 kB)
+2026-10-04T02:59:52.7219088Z Collecting jsonschema-specifications==2025.9.1 (from -r tests/requirements.txt (line 86))
+2026-10-04T02:59:52.7258756Z   Downloading jsonschema_specifications-2025.9.1-py3-none-any.whl (18 kB)
+2026-10-04T02:59:52.7594073Z Collecting playwright==1.63.0 (from -r tests/requirements.txt (line 88))
+2026-10-04T02:59:52.7630515Z   Downloading playwright-1.63.0-py3-none-manylinux1_x86_64.whl (48.2 MB)
+2026-10-04T02:59:52.9306907Z      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 48.2/48.2 MB 290.8 MB/s  0:00:00
+2026-10-04T02:59:52.9808268Z Collecting pyee==13.0.1 (from -r tests/requirements.txt (line 97))
+2026-10-04T02:59:52.9898738Z   Downloading pyee-13.0.1-py3-none-any.whl (15 kB)
+2026-10-04T02:59:53.0261981Z Collecting PyYAML==6.0.3 (from -r tests/requirements.txt (line 99))
+2026-10-04T02:59:53.0312348Z   Downloading pyyaml-6.0.3-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl (807 kB)
+2026-10-04T02:59:53.0377689Z      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 807.9/807.9 kB 150.4 MB/s  0:00:00
+2026-10-04T02:59:53.0551139Z Collecting referencing==0.37.0 (from -r tests/requirements.txt (line 172))
+2026-10-04T02:59:53.0593423Z   Downloading referencing-0.37.0-py3-none-any.whl (26 kB)
+2026-10-04T02:59:53.3016969Z Collecting rpds-py==2026.6.3 (from -r tests/requirements.txt (line 174))
+2026-10-04T02:59:53.3061894Z   Downloading rpds_py-2026.6.3-cp312-cp312-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (366 kB)
+2026-10-04T02:59:53.3222418Z Collecting typing_extensions==4.16.0 (from -r tests/requirements.txt (line 290))
+2026-10-04T02:59:53.3257337Z   Downloading typing_extensions-4.16.0-py3-none-any.whl (45 kB)
+2026-10-04T02:59:53.3788127Z Installing collected packages: typing_extensions, rpds-py, PyYAML, greenlet, attrs, referencing, pyee, playwright, jsonschema-specifications, jsonschema
+2026-10-04T02:59:54.4457096Z 
+2026-10-04T02:59:54.4474328Z Successfully installed PyYAML-6.0.3 attrs-26.1.0 greenlet-3.5.6 jsonschema-4.26.0 jsonschema-specifications-2025.9.1 playwright-1.63.0 pyee-13.0.1 referencing-0.37.0 rpds-py-2026.6.3 typing_extensions-4.16.0
+2026-10-04T02:59:54.5035385Z ##[group]Run python -m playwright install --with-deps "$SHARPFORGE_BROWSER_ENGINE"
+2026-10-04T02:59:54.5035996Z [36;1mpython -m playwright install --with-deps "$SHARPFORGE_BROWSER_ENGINE"[0m
+2026-10-04T02:59:54.5097128Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+2026-10-04T02:59:54.5097464Z env:
+2026-10-04T02:59:54.5097708Z   SHARPFORGE_RESULTS_DIR: artifacts/results/project16
+2026-10-04T02:59:54.5098039Z   QUALIFICATION_TRIGGER_EVENT: create
+2026-10-04T02:59:54.5098535Z   QUALIFICATION_TRIGGER_REF: refs/heads/codex/project16/qualify-ubuntu-chromium-browser-20261004-a3
+2026-10-04T02:59:54.5099058Z   QUALIFICATION_TRIGGER_NONCE: 20261004-a3
+2026-10-04T02:59:54.5099423Z   QUALIFICATION_SOURCE_SHA: e4629f443b59bfc2d7494b731be19afc5974b7b1
+2026-10-04T02:59:54.5099880Z   QUALIFICATION_SOURCE_TREE: 1733c01dae0e44cea49dd82a574fda7b8286d6be
+2026-10-04T02:59:54.5100438Z   QUALIFICATION_RUNNER: ubuntu-latest
+2026-10-04T02:59:54.5100704Z   QUALIFICATION_STAGE: browser
+2026-10-04T02:59:54.5100986Z   QUALIFICATION_CAPTURE_ONLY: true
+2026-10-04T02:59:54.5101250Z   SHARPFORGE_BROWSER_ENGINE: chromium
+2026-10-04T02:59:54.5101515Z   SHARPFORGE_EDITOR_BASELINE: 
+2026-10-04T02:59:54.5101760Z   SHARPFORGE_WORKBENCH_BASELINE: 
+2026-10-04T02:59:54.5102072Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.14/x64
+2026-10-04T02:59:54.5102498Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.14/x64/lib/pkgconfig
+2026-10-04T02:59:54.5102926Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.14/x64
+2026-10-04T02:59:54.5103318Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.14/x64
+2026-10-04T02:59:54.5103708Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.14/x64
+2026-10-04T02:59:54.5104250Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.14/x64/lib
+2026-10-04T02:59:54.5104603Z ##[endgroup]
+2026-10-04T02:59:54.8593772Z Installing dependencies...
+2026-10-04T02:59:54.8688322Z Switching to root user to install dependencies...
+2026-10-04T02:59:54.9431450Z Get:1 file:/etc/apt/apt-mirrors.txt Mirrorlist [144 B]
+2026-10-04T02:59:54.9699631Z Get:6 https://packages.microsoft.com/ubuntu/24.04/prod noble InRelease [3600 B]
+2026-10-04T02:59:55.0465788Z Get:7 https://packages.microsoft.com/ubuntu/24.04/prod noble/main amd64 Packages [511 kB]
+2026-10-04T02:59:55.0503522Z Hit:2 http://azure.archive.ubuntu.com/ubuntu noble InRelease
+2026-10-04T02:59:55.0581374Z Get:3 http://azure.archive.ubuntu.com/ubuntu noble-updates InRelease [126 kB]
+2026-10-04T02:59:55.0611579Z Get:4 http://azure.archive.ubuntu.com/ubuntu noble-backports InRelease [126 kB]
+2026-10-04T02:59:55.0624354Z Get:5 http://azure.archive.ubuntu.com/ubuntu noble-security InRelease [126 kB]
+2026-10-04T02:59:55.0672056Z Get:8 https://packages.microsoft.com/ubuntu/24.04/prod noble/main arm64 Packages [458 kB]
+2026-10-04T02:59:55.0714016Z Get:9 https://packages.microsoft.com/ubuntu/24.04/prod noble/main armhf Packages [12.6 kB]
+2026-10-04T02:59:55.1667998Z Get:10 http://azure.archive.ubuntu.com/ubuntu noble-updates/main amd64 Packages [1364 kB]
+2026-10-04T02:59:55.1785537Z Get:11 http://azure.archive.ubuntu.com/ubuntu noble-updates/main Translation-en [304 kB]
+2026-10-04T02:59:55.1816865Z Get:12 http://azure.archive.ubuntu.com/ubuntu noble-updates/main amd64 Components [181 kB]
+2026-10-04T02:59:55.1845281Z Get:13 http://azure.archive.ubuntu.com/ubuntu noble-updates/universe amd64 Packages [1699 kB]
+2026-10-04T02:59:55.1935243Z Get:14 http://azure.archive.ubuntu.com/ubuntu noble-updates/universe Translation-en [341 kB]
+2026-10-04T02:59:55.1985504Z Get:15 http://azure.archive.ubuntu.com/ubuntu noble-updates/universe amd64 Components [388 kB]
+2026-10-04T02:59:55.2005946Z Get:16 http://azure.archive.ubuntu.com/ubuntu noble-updates/restricted amd64 Packages [1720 kB]
+2026-10-04T02:59:55.2086055Z Get:17 http://azure.archive.ubuntu.com/ubuntu noble-updates/restricted Translation-en [394 kB]
+2026-10-04T02:59:55.2118956Z Get:18 http://azure.archive.ubuntu.com/ubuntu noble-updates/multiverse amd64 Components [940 B]
+2026-10-04T02:59:55.2347191Z Get:19 http://azure.archive.ubuntu.com/ubuntu noble-backports/main amd64 Components [5736 B]
+2026-10-04T02:59:55.2845105Z Get:20 http://azure.archive.ubuntu.com/ubuntu noble-backports/universe amd64 Components [12.6 kB]
+2026-10-04T02:59:55.2860786Z Get:21 http://azure.archive.ubuntu.com/ubuntu noble-security/main amd64 Packages [1069 kB]
+2026-10-04T02:59:55.2918632Z Get:22 http://azure.archive.ubuntu.com/ubuntu noble-security/main Translation-en [221 kB]
+2026-10-04T02:59:55.2938696Z Get:23 http://azure.archive.ubuntu.com/ubuntu noble-security/main amd64 Components [46.5 kB]
+2026-10-04T02:59:55.2952900Z Get:24 http://azure.archive.ubuntu.com/ubuntu noble-security/universe amd64 Packages [1216 kB]
+2026-10-04T02:59:55.3011992Z Get:25 http://azure.archive.ubuntu.com/ubuntu noble-security/universe Translation-en [244 kB]
+2026-10-04T02:59:55.3033604Z Get:26 http://azure.archive.ubuntu.com/ubuntu noble-security/universe amd64 Components [76.3 kB]
+2026-10-04T02:59:55.3049988Z Get:27 http://azure.archive.ubuntu.com/ubuntu noble-security/restricted amd64 Packages [1566 kB]
+2026-10-04T02:59:55.3127295Z Get:28 http://azure.archive.ubuntu.com/ubuntu noble-security/restricted Translation-en [361 kB]
+2026-10-04T02:59:59.4818257Z Fetched 12.6 MB in 1s (9171 kB/s)
+2026-10-04T03:00:00.3065063Z Reading package lists...
+2026-10-04T03:00:00.3296602Z Reading package lists...
+2026-10-04T03:00:00.5198005Z Building dependency tree...
+2026-10-04T03:00:00.5205321Z Reading state information...
+2026-10-04T03:00:00.6592137Z libasound2t64 is already the newest version (1.2.11-1ubuntu0.3).
+2026-10-04T03:00:00.6592998Z libasound2t64 set to manually installed.
+2026-10-04T03:00:00.6593888Z libatk-bridge2.0-0t64 is already the newest version (2.52.0-1build1).
+2026-10-04T03:00:00.6595051Z libatk-bridge2.0-0t64 set to manually installed.
+2026-10-04T03:00:00.6595873Z libatk1.0-0t64 is already the newest version (2.52.0-1build1).
+2026-10-04T03:00:00.6596673Z libatk1.0-0t64 set to manually installed.
+2026-10-04T03:00:00.6597490Z libatspi2.0-0t64 is already the newest version (2.52.0-1build1).
+2026-10-04T03:00:00.6598335Z libatspi2.0-0t64 set to manually installed.
+2026-10-04T03:00:00.6599055Z libcairo2 is already the newest version (1.18.0-3build1).
+2026-10-04T03:00:00.6599884Z libcairo2 set to manually installed.
+2026-10-04T03:00:00.6600722Z libcups2t64 is already the newest version (2.4.7-1.2ubuntu7.14).
+2026-10-04T03:00:00.6601590Z libcups2t64 set to manually installed.
+2026-10-04T03:00:00.6602338Z libdbus-1-3 is already the newest version (1.14.10-4ubuntu4.1).
+2026-10-04T03:00:00.6603057Z libdbus-1-3 set to manually installed.
+2026-10-04T03:00:00.6603792Z libdrm2 is already the newest version (2.4.125-1ubuntu0.1~24.04.2).
+2026-10-04T03:00:00.6604693Z libdrm2 set to manually installed.
+2026-10-04T03:00:00.6605227Z libglib2.0-0t64 is already the newest version (2.80.0-6ubuntu3.9).
+2026-10-04T03:00:00.6605685Z libglib2.0-0t64 set to manually installed.
+2026-10-04T03:00:00.6606155Z libnspr4 is already the newest version (2:4.35-1.1build1).
+2026-10-04T03:00:00.6606548Z libnspr4 set to manually installed.
+2026-10-04T03:00:00.6606942Z libnss3 is already the newest version (2:3.98-1ubuntu0.2).
+2026-10-04T03:00:00.6607312Z libnss3 set to manually installed.
+2026-10-04T03:00:00.6607903Z libpango-1.0-0 is already the newest version (1.52.1+ds-1build1).
+2026-10-04T03:00:00.6608385Z libpango-1.0-0 set to manually installed.
+2026-10-04T03:00:00.6608806Z libx11-6 is already the newest version (2:1.8.7-1build1).
+2026-10-04T03:00:00.6609186Z libx11-6 set to manually installed.
+2026-10-04T03:00:00.6609550Z libxcb1 is already the newest version (1.15-1ubuntu2).
+2026-10-04T03:00:00.6609916Z libxcb1 set to manually installed.
+2026-10-04T03:00:00.6610326Z libxcomposite1 is already the newest version (1:0.4.5-1build3).
+2026-10-04T03:00:00.6610926Z libxcomposite1 set to manually installed.
+2026-10-04T03:00:00.6611352Z libxdamage1 is already the newest version (1:1.1.6-1build1).
+2026-10-04T03:00:00.6611750Z libxdamage1 set to manually installed.
+2026-10-04T03:00:00.6612458Z libxext6 is already the newest version (2:1.3.4-1build2).
+2026-10-04T03:00:00.6612889Z libxext6 set to manually installed.
+2026-10-04T03:00:00.6613560Z libxfixes3 is already the newest version (1:6.0.0-2build1).
+2026-10-04T03:00:00.6614466Z libxfixes3 set to manually installed.
+2026-10-04T03:00:00.6615209Z libxkbcommon0 is already the newest version (1.6.0-1build1).
+2026-10-04T03:00:00.6615922Z libxkbcommon0 set to manually installed.
+2026-10-04T03:00:00.6616463Z libxrandr2 is already the newest version (2:1.5.2-2build1).
+2026-10-04T03:00:00.6616855Z libxrandr2 set to manually installed.
+2026-10-04T03:00:00.6617256Z xvfb is already the newest version (2:21.1.12-1ubuntu1.8).
+2026-10-04T03:00:00.6617797Z fonts-noto-color-emoji is already the newest version (2.047-0ubuntu0.24.04.1).
+2026-10-04T03:00:00.6618714Z libfontconfig1 is already the newest version (2.15.0-1.1ubuntu2).
+2026-10-04T03:00:00.6619761Z libfontconfig1 set to manually installed.
+2026-10-04T03:00:00.6620416Z libfreetype6 is already the newest version (2.13.2+dfsg-1ubuntu0.1).
+2026-10-04T03:00:00.6620861Z libfreetype6 set to manually installed.
+2026-10-04T03:00:00.6621287Z fonts-liberation is already the newest version (1:2.1.5-3).
+2026-10-04T03:00:00.6621697Z fonts-liberation set to manually installed.
+2026-10-04T03:00:00.6622276Z The following additional packages will be installed:
+2026-10-04T03:00:00.6623161Z   libgl1-mesa-dri libglx-mesa0 mesa-libgallium xfonts-encodings xfonts-utils
+2026-10-04T03:00:00.6623976Z Recommended packages:
+2026-10-04T03:00:00.6624726Z   fonts-ipafont-mincho fonts-tlwg-loma
+2026-10-04T03:00:00.6800770Z The following NEW packages will be installed:
+2026-10-04T03:00:00.6801619Z   fonts-freefont-ttf fonts-ipafont-gothic fonts-tlwg-loma-otf fonts-unifont
+2026-10-04T03:00:00.6809181Z   fonts-wqy-zenhei xfonts-cyrillic xfonts-encodings xfonts-scalable
+2026-10-04T03:00:00.6835042Z   xfonts-utils
+2026-10-04T03:00:00.6835887Z The following packages will be upgraded:
+2026-10-04T03:00:00.6836567Z   libgbm1 libgl1-mesa-dri libglx-mesa0 mesa-libgallium
+2026-10-04T03:00:00.6988092Z 4 upgraded, 9 newly installed, 0 to remove and 21 not upgraded.
+2026-10-04T03:00:00.6988830Z Need to get 32.1 MB of archives.
+2026-10-04T03:00:00.6989626Z After this operation, 79.5 MB of additional disk space will be used.
+2026-10-04T03:00:00.6990511Z Get:1 file:/etc/apt/apt-mirrors.txt Mirrorlist [144 B]
+2026-10-04T03:00:00.8746951Z Get:2 http://azure.archive.ubuntu.com/ubuntu noble/universe amd64 fonts-ipafont-gothic all 00303-21ubuntu1 [3513 kB]
+2026-10-04T03:00:01.5803242Z Get:3 http://azure.archive.ubuntu.com/ubuntu noble/main amd64 fonts-freefont-ttf all 20211204+svn4273-2 [5641 kB]
+2026-10-04T03:00:01.7768857Z Get:4 http://azure.archive.ubuntu.com/ubuntu noble/universe amd64 fonts-tlwg-loma-otf all 1:0.7.3-1 [107 kB]
+2026-10-04T03:00:01.8541521Z Get:5 http://azure.archive.ubuntu.com/ubuntu noble/universe amd64 fonts-unifont all 1:15.1.01-1build1 [2993 kB]
+2026-10-04T03:00:01.9552379Z Get:6 http://azure.archive.ubuntu.com/ubuntu noble/universe amd64 fonts-wqy-zenhei all 0.9.45-8 [7472 kB]
+2026-10-04T03:00:02.1990941Z Get:7 http://azure.archive.ubuntu.com/ubuntu noble-updates/main amd64 libgl1-mesa-dri amd64 25.2.8-0ubuntu0.24.04.4 [38.0 kB]
+2026-10-04T03:00:02.2761647Z Get:8 http://azure.archive.ubuntu.com/ubuntu noble-updates/main amd64 libglx-mesa0 amd64 25.2.8-0ubuntu0.24.04.4 [110 kB]
+2026-10-04T03:00:02.3535411Z Get:9 http://azure.archive.ubuntu.com/ubuntu noble-updates/main amd64 libgbm1 amd64 25.2.8-0ubuntu0.24.04.4 [34.2 kB]
+2026-10-04T03:00:02.4303368Z Get:10 http://azure.archive.ubuntu.com/ubuntu noble-updates/main amd64 mesa-libgallium amd64 25.2.8-0ubuntu0.24.04.4 [10.8 MB]
+2026-10-04T03:00:02.7738664Z Get:11 http://azure.archive.ubuntu.com/ubuntu noble/main amd64 xfonts-encodings all 1:1.0.5-0ubuntu2 [578 kB]
+2026-10-04T03:00:02.8702851Z Get:12 http://azure.archive.ubuntu.com/ubuntu noble/main amd64 xfonts-utils amd64 1:7.7+6build3 [94.4 kB]
+2026-10-04T03:00:02.9536789Z Get:13 http://azure.archive.ubuntu.com/ubuntu noble/universe amd64 xfonts-cyrillic all 1:1.0.5+nmu1 [384 kB]
+2026-10-04T03:00:03.0444351Z Get:14 http://azure.archive.ubuntu.com/ubuntu noble/main amd64 xfonts-scalable all 1:1.0.3-1.3 [304 kB]
+2026-10-04T03:00:03.3005384Z Fetched 32.1 MB in 2s (13.6 MB/s)
+2026-10-04T03:00:03.3232897Z Selecting previously unselected package fonts-ipafont-gothic.
+2026-10-04T03:00:03.3512473Z (Reading database ... 
+2026-10-04T03:00:03.3512874Z (Reading database ... 5%
+2026-10-04T03:00:03.3513253Z (Reading database ... 10%
+2026-10-04T03:00:03.3513605Z (Reading database ... 15%
+2026-10-04T03:00:03.3513946Z (Reading database ... 20%
+2026-10-04T03:00:03.3514784Z (Reading database ... 25%
+2026-10-04T03:00:03.3515364Z (Reading database ... 30%
+2026-10-04T03:00:03.3515836Z (Reading database ... 35%
+2026-10-04T03:00:03.3516147Z (Reading database ... 40%
+2026-10-04T03:00:03.3516425Z (Reading database ... 45%
+2026-10-04T03:00:03.3516962Z (Reading database ... 50%
+2026-10-04T03:00:03.3557826Z (Reading database ... 55%
+2026-10-04T03:00:03.4936362Z (Reading database ... 60%
+2026-10-04T03:00:03.6993767Z (Reading database ... 65%
+2026-10-04T03:00:03.8872234Z (Reading database ... 70%
+2026-10-04T03:00:04.0553865Z (Reading database ... 75%
+2026-10-04T03:00:04.2343643Z (Reading database ... 80%
+2026-10-04T03:00:04.4389311Z (Reading database ... 85%
+2026-10-04T03:00:04.6435191Z (Reading database ... 90%
+2026-10-04T03:00:04.7545641Z (Reading database ... 95%
+2026-10-04T03:00:04.7546294Z (Reading database ... 100%
+2026-10-04T03:00:04.7546991Z (Reading database ... 202296 files and directories currently installed.)
+2026-10-04T03:00:04.7588330Z Preparing to unpack .../00-fonts-ipafont-gothic_00303-21ubuntu1_all.deb ...
+2026-10-04T03:00:04.7675136Z Unpacking fonts-ipafont-gothic (00303-21ubuntu1) ...
+2026-10-04T03:00:04.9907505Z Selecting previously unselected package fonts-freefont-ttf.
+2026-10-04T03:00:05.0030297Z Preparing to unpack .../01-fonts-freefont-ttf_20211204+svn4273-2_all.deb ...
+2026-10-04T03:00:05.0037151Z Unpacking fonts-freefont-ttf (20211204+svn4273-2) ...
+2026-10-04T03:00:05.0815443Z Selecting previously unselected package fonts-tlwg-loma-otf.
+2026-10-04T03:00:05.0938266Z Preparing to unpack .../02-fonts-tlwg-loma-otf_1%3a0.7.3-1_all.deb ...
+2026-10-04T03:00:05.0944118Z Unpacking fonts-tlwg-loma-otf (1:0.7.3-1) ...
+2026-10-04T03:00:05.1141498Z Selecting previously unselected package fonts-unifont.
+2026-10-04T03:00:05.1266215Z Preparing to unpack .../03-fonts-unifont_1%3a15.1.01-1build1_all.deb ...
+2026-10-04T03:00:05.1273295Z Unpacking fonts-unifont (1:15.1.01-1build1) ...
+2026-10-04T03:00:05.2280255Z Selecting previously unselected package fonts-wqy-zenhei.
+2026-10-04T03:00:05.2402751Z Preparing to unpack .../04-fonts-wqy-zenhei_0.9.45-8_all.deb ...
+2026-10-04T03:00:05.2502156Z Unpacking fonts-wqy-zenhei (0.9.45-8) ...
+2026-10-04T03:00:05.7198337Z Preparing to unpack .../05-libgl1-mesa-dri_25.2.8-0ubuntu0.24.04.4_amd64.deb ...
+2026-10-04T03:00:05.7341516Z Unpacking libgl1-mesa-dri:amd64 (25.2.8-0ubuntu0.24.04.4) over (25.2.8-0ubuntu0.24.04.2) ...
+2026-10-04T03:00:05.7814405Z Preparing to unpack .../06-libglx-mesa0_25.2.8-0ubuntu0.24.04.4_amd64.deb ...
+2026-10-04T03:00:05.7851303Z Unpacking libglx-mesa0:amd64 (25.2.8-0ubuntu0.24.04.4) over (25.2.8-0ubuntu0.24.04.2) ...
+2026-10-04T03:00:05.8210512Z Preparing to unpack .../07-libgbm1_25.2.8-0ubuntu0.24.04.4_amd64.deb ...
+2026-10-04T03:00:05.8232095Z Unpacking libgbm1:amd64 (25.2.8-0ubuntu0.24.04.4) over (25.2.8-0ubuntu0.24.04.2) ...
+2026-10-04T03:00:05.8583155Z Preparing to unpack .../08-mesa-libgallium_25.2.8-0ubuntu0.24.04.4_amd64.deb ...
+2026-10-04T03:00:05.8605757Z Unpacking mesa-libgallium:amd64 (25.2.8-0ubuntu0.24.04.4) over (25.2.8-0ubuntu0.24.04.2) ...
+2026-10-04T03:00:06.0320233Z Selecting previously unselected package xfonts-encodings.
+2026-10-04T03:00:06.0443302Z Preparing to unpack .../09-xfonts-encodings_1%3a1.0.5-0ubuntu2_all.deb ...
+2026-10-04T03:00:06.0449617Z Unpacking xfonts-encodings (1:1.0.5-0ubuntu2) ...
+2026-10-04T03:00:06.0735247Z Selecting previously unselected package xfonts-utils.
+2026-10-04T03:00:06.0857381Z Preparing to unpack .../10-xfonts-utils_1%3a7.7+6build3_amd64.deb ...
+2026-10-04T03:00:06.0863326Z Unpacking xfonts-utils (1:7.7+6build3) ...
+2026-10-04T03:00:06.1216559Z Selecting previously unselected package xfonts-cyrillic.
+2026-10-04T03:00:06.1337627Z Preparing to unpack .../11-xfonts-cyrillic_1%3a1.0.5+nmu1_all.deb ...
+2026-10-04T03:00:06.1345768Z Unpacking xfonts-cyrillic (1:1.0.5+nmu1) ...
+2026-10-04T03:00:06.1678385Z Selecting previously unselected package xfonts-scalable.
+2026-10-04T03:00:06.1800013Z Preparing to unpack .../12-xfonts-scalable_1%3a1.0.3-1.3_all.deb ...
+2026-10-04T03:00:06.1806991Z Unpacking xfonts-scalable (1:1.0.3-1.3) ...
+2026-10-04T03:00:06.2245223Z Setting up mesa-libgallium:amd64 (25.2.8-0ubuntu0.24.04.4) ...
+2026-10-04T03:00:06.2266813Z Setting up libgbm1:amd64 (25.2.8-0ubuntu0.24.04.4) ...
+2026-10-04T03:00:06.2282158Z Setting up libgl1-mesa-dri:amd64 (25.2.8-0ubuntu0.24.04.4) ...
+2026-10-04T03:00:06.2352906Z Setting up fonts-wqy-zenhei (0.9.45-8) ...
+2026-10-04T03:00:06.2461149Z Setting up fonts-freefont-ttf (20211204+svn4273-2) ...
+2026-10-04T03:00:06.2477021Z Setting up fonts-tlwg-loma-otf (1:0.7.3-1) ...
+2026-10-04T03:00:06.2493909Z Setting up xfonts-encodings (1:1.0.5-0ubuntu2) ...
+2026-10-04T03:00:06.2510242Z Setting up fonts-ipafont-gothic (00303-21ubuntu1) ...
+2026-10-04T03:00:06.2574431Z update-alternatives: using /usr/share/fonts/opentype/ipafont-gothic/ipag.ttf to provide /usr/share/fonts/truetype/fonts-japanese-gothic.ttf (fonts-japanese-gothic.ttf) in auto mode
+2026-10-04T03:00:06.2588849Z Setting up fonts-unifont (1:15.1.01-1build1) ...
+2026-10-04T03:00:06.2605725Z Setting up libglx-mesa0:amd64 (25.2.8-0ubuntu0.24.04.4) ...
+2026-10-04T03:00:06.2623143Z Setting up xfonts-utils (1:7.7+6build3) ...
+2026-10-04T03:00:06.2659826Z Setting up xfonts-cyrillic (1:1.0.5+nmu1) ...
+2026-10-04T03:00:06.2941380Z Setting up xfonts-scalable (1:1.0.3-1.3) ...
+2026-10-04T03:00:06.3228309Z Processing triggers for libc-bin (2.39-0ubuntu8.9) ...
+2026-10-04T03:00:06.3576578Z Processing triggers for man-db (2.12.0-4build2) ...
+2026-10-04T03:00:06.3595976Z Not building database; man-db/auto-update is not 'true'.
+2026-10-04T03:00:06.3607739Z Processing triggers for fontconfig (2.15.0-1.1ubuntu2) ...
+2026-10-04T03:00:07.0601444Z 
+2026-10-04T03:00:07.0602058Z Running kernel seems to be up-to-date.
+2026-10-04T03:00:07.0602359Z 
+2026-10-04T03:00:07.0602543Z No services need to be restarted.
+2026-10-04T03:00:07.0602749Z 
+2026-10-04T03:00:07.0602923Z No containers need to be restarted.
+2026-10-04T03:00:07.0603131Z 
+2026-10-04T03:00:07.0603337Z No user sessions are running outdated binaries.
+2026-10-04T03:00:07.0603584Z 
+2026-10-04T03:00:07.0603925Z No VM guests are running outdated hypervisor (qemu) binaries on this host.
+2026-10-04T03:00:07.9264753Z Downloading Chrome for Testing 153.0.8010.12 (playwright chromium v1243) from https://cdn.playwright.dev/builds/cft/153.0.8010.12/linux64/chrome-linux64.zip
+2026-10-04T03:00:08.3123188Z |                                                                                |   0% of 186.8 MiB
+2026-10-04T03:00:08.5027885Z |■■■■■■■■                                                                        |  10% of 186.8 MiB
+2026-10-04T03:00:08.6027852Z |■■■■■■■■■■■■■■■■                                                                |  20% of 186.8 MiB
+2026-10-04T03:00:08.7176312Z |■■■■■■■■■■■■■■■■■■■■■■■■                                                        |  30% of 186.8 MiB
+2026-10-04T03:00:08.7840356Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■                                                |  40% of 186.8 MiB
+2026-10-04T03:00:08.8773485Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■                                        |  50% of 186.8 MiB
+2026-10-04T03:00:08.9505862Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■                                |  60% of 186.8 MiB
+2026-10-04T03:00:09.0468829Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■                        |  70% of 186.8 MiB
+2026-10-04T03:00:09.1583642Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■                |  80% of 186.8 MiB
+2026-10-04T03:00:09.2301747Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■        |  90% of 186.8 MiB
+2026-10-04T03:00:09.3137678Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■| 100% of 186.8 MiB
+2026-10-04T03:00:12.6616799Z Chrome for Testing 153.0.8010.12 (playwright chromium v1243) downloaded to /home/runner/.cache/ms-playwright/chromium-1243
+2026-10-04T03:00:12.6620979Z Downloading FFmpeg (playwright ffmpeg v1011) from https://cdn.playwright.dev/dbazure/download/playwright/builds/ffmpeg/1011/ffmpeg-linux.zip
+2026-10-04T03:00:13.0266106Z |                                                                                |   0% of 2.3 MiB
+2026-10-04T03:00:13.0318088Z |■■■■■■■■                                                                        |  10% of 2.3 MiB
+2026-10-04T03:00:13.0345794Z |■■■■■■■■■■■■■■■■                                                                |  20% of 2.3 MiB
+2026-10-04T03:00:13.0370059Z |■■■■■■■■■■■■■■■■■■■■■■■■                                                        |  30% of 2.3 MiB
+2026-10-04T03:00:13.0390233Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■                                                |  40% of 2.3 MiB
+2026-10-04T03:00:13.0403428Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■                                        |  50% of 2.3 MiB
+2026-10-04T03:00:13.0422713Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■                                |  60% of 2.3 MiB
+2026-10-04T03:00:13.0442150Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■                        |  70% of 2.3 MiB
+2026-10-04T03:00:13.0458776Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■                |  80% of 2.3 MiB
+2026-10-04T03:00:13.0480228Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■        |  90% of 2.3 MiB
+2026-10-04T03:00:13.0493934Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■| 100% of 2.3 MiB
+2026-10-04T03:00:13.1184970Z FFmpeg (playwright ffmpeg v1011) downloaded to /home/runner/.cache/ms-playwright/ffmpeg-1011
+2026-10-04T03:00:13.1188776Z Downloading Chrome Headless Shell 153.0.8010.12 (playwright chromium-headless-shell v1243) from https://cdn.playwright.dev/builds/cft/153.0.8010.12/linux64/chrome-headless-shell-linux64.zip
+2026-10-04T03:00:13.5018211Z |                                                                                |   0% of 114.3 MiB
+2026-10-04T03:00:13.6893153Z |■■■■■■■■                                                                        |  10% of 114.3 MiB
+2026-10-04T03:00:13.8045989Z |■■■■■■■■■■■■■■■■                                                                |  20% of 114.3 MiB
+2026-10-04T03:00:13.8668418Z |■■■■■■■■■■■■■■■■■■■■■■■■                                                        |  30% of 114.3 MiB
+2026-10-04T03:00:13.9240211Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■                                                |  40% of 114.3 MiB
+2026-10-04T03:00:13.9999244Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■                                        |  50% of 114.3 MiB
+2026-10-04T03:00:14.0631402Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■                                |  60% of 114.3 MiB
+2026-10-04T03:00:14.1302785Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■                        |  70% of 114.3 MiB
+2026-10-04T03:00:14.1815599Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■                |  80% of 114.3 MiB
+2026-10-04T03:00:14.2272567Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■        |  90% of 114.3 MiB
+2026-10-04T03:00:14.2903818Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■| 100% of 114.3 MiB
+2026-10-04T03:00:16.6147248Z Chrome Headless Shell 153.0.8010.12 (playwright chromium-headless-shell v1243) downloaded to /home/runner/.cache/ms-playwright/chromium_headless_shell-1243
+2026-10-04T03:00:16.6396852Z ##[group]Run import os
+2026-10-04T03:00:16.6397148Z [36;1mimport os[0m
+2026-10-04T03:00:16.6397377Z [36;1mfrom pathlib import Path[0m
+2026-10-04T03:00:16.6397649Z [36;1mimport playwright[0m
+2026-10-04T03:00:16.6398005Z [36;1mdriver = Path(playwright.__file__).parent / 'driver' / 'package'[0m
+2026-10-04T03:00:16.6398453Z [36;1mif not (driver / 'package.json').is_file():[0m
+2026-10-04T03:00:16.6398853Z [36;1m    raise RuntimeError('Pinned Playwright driver is missing')[0m
+2026-10-04T03:00:16.6399329Z [36;1mwith open(os.environ['GITHUB_ENV'], 'a', encoding='utf8') as output:[0m
+2026-10-04T03:00:16.6399827Z [36;1m    output.write('SHARPFORGE_PLAYWRIGHT_MODULE=' + str(driver) + '\n')[0m
+2026-10-04T03:00:16.6401763Z shell: /opt/hostedtoolcache/Python/3.12.14/x64/bin/python {0}
+2026-10-04T03:00:16.6402101Z env:
+2026-10-04T03:00:16.6402341Z   SHARPFORGE_RESULTS_DIR: artifacts/results/project16
+2026-10-04T03:00:16.6402667Z   QUALIFICATION_TRIGGER_EVENT: create
+2026-10-04T03:00:16.6403190Z   QUALIFICATION_TRIGGER_REF: refs/heads/codex/project16/qualify-ubuntu-chromium-browser-20261004-a3
+2026-10-04T03:00:16.6403697Z   QUALIFICATION_TRIGGER_NONCE: 20261004-a3
+2026-10-04T03:00:16.6404053Z   QUALIFICATION_SOURCE_SHA: e4629f443b59bfc2d7494b731be19afc5974b7b1
+2026-10-04T03:00:16.6405130Z   QUALIFICATION_SOURCE_TREE: 1733c01dae0e44cea49dd82a574fda7b8286d6be
+2026-10-04T03:00:16.6405511Z   QUALIFICATION_RUNNER: ubuntu-latest
+2026-10-04T03:00:16.6405775Z   QUALIFICATION_STAGE: browser
+2026-10-04T03:00:16.6406021Z   QUALIFICATION_CAPTURE_ONLY: true
+2026-10-04T03:00:16.6406284Z   SHARPFORGE_BROWSER_ENGINE: chromium
+2026-10-04T03:00:16.6406544Z   SHARPFORGE_EDITOR_BASELINE: 
+2026-10-04T03:00:16.6406787Z   SHARPFORGE_WORKBENCH_BASELINE: 
+2026-10-04T03:00:16.6407095Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.14/x64
+2026-10-04T03:00:16.6407510Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.14/x64/lib/pkgconfig
+2026-10-04T03:00:16.6407945Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.14/x64
+2026-10-04T03:00:16.6408323Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.14/x64
+2026-10-04T03:00:16.6408703Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.14/x64
+2026-10-04T03:00:16.6409090Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.14/x64/lib
+2026-10-04T03:00:16.6409411Z ##[endgroup]
+2026-10-04T03:00:16.6700272Z ##[group]Run node scripts/project16-qualification.js "$QUALIFICATION_STAGE"
+2026-10-04T03:00:16.6700831Z [36;1mnode scripts/project16-qualification.js "$QUALIFICATION_STAGE"[0m
+2026-10-04T03:00:16.6761570Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+2026-10-04T03:00:16.6761900Z env:
+2026-10-04T03:00:16.6762165Z   SHARPFORGE_RESULTS_DIR: artifacts/results/project16
+2026-10-04T03:00:16.6762488Z   QUALIFICATION_TRIGGER_EVENT: create
+2026-10-04T03:00:16.6762979Z   QUALIFICATION_TRIGGER_REF: refs/heads/codex/project16/qualify-ubuntu-chromium-browser-20261004-a3
+2026-10-04T03:00:16.6763489Z   QUALIFICATION_TRIGGER_NONCE: 20261004-a3
+2026-10-04T03:00:16.6764027Z   QUALIFICATION_SOURCE_SHA: e4629f443b59bfc2d7494b731be19afc5974b7b1
+2026-10-04T03:00:16.6764740Z   QUALIFICATION_SOURCE_TREE: 1733c01dae0e44cea49dd82a574fda7b8286d6be
+2026-10-04T03:00:16.6765110Z   QUALIFICATION_RUNNER: ubuntu-latest
+2026-10-04T03:00:16.6765373Z   QUALIFICATION_STAGE: browser
+2026-10-04T03:00:16.6765669Z   QUALIFICATION_CAPTURE_ONLY: true
+2026-10-04T03:00:16.6765939Z   SHARPFORGE_BROWSER_ENGINE: chromium
+2026-10-04T03:00:16.6766197Z   SHARPFORGE_EDITOR_BASELINE: 
+2026-10-04T03:00:16.6766438Z   SHARPFORGE_WORKBENCH_BASELINE: 
+2026-10-04T03:00:16.6766747Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.14/x64
+2026-10-04T03:00:16.6767167Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.14/x64/lib/pkgconfig
+2026-10-04T03:00:16.6767586Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.14/x64
+2026-10-04T03:00:16.6767956Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.14/x64
+2026-10-04T03:00:16.6768320Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.14/x64
+2026-10-04T03:00:16.6768698Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.14/x64/lib
+2026-10-04T03:00:16.6769319Z   SHARPFORGE_PLAYWRIGHT_MODULE: /opt/hostedtoolcache/Python/3.12.14/x64/lib/python3.12/site-packages/playwright/driver/package
+2026-10-04T03:00:16.6769866Z ##[endgroup]
+2026-10-04T03:00:19.6243118Z A19 docking browser: nine pointer targets, retained focus/state, floating groups, flyout pin, popout F5 and reattach passed
+2026-10-04T03:00:24.8176453Z [
+2026-10-04T03:00:24.8176808Z   {
+2026-10-04T03:00:24.8177296Z     "scenario": "menu-mnemonics-arrows-focus-restore",
+2026-10-04T03:00:24.8177821Z     "passed": true
+2026-10-04T03:00:24.8178139Z   },
+2026-10-04T03:00:24.8178418Z   {
+2026-10-04T03:00:24.8178793Z     "scenario": "searchable-options-cancel",
+2026-10-04T03:00:24.8179254Z     "passed": true
+2026-10-04T03:00:24.8179562Z   },
+2026-10-04T03:00:24.8179826Z   {
+2026-10-04T03:00:24.8180190Z     "scenario": "theme-text-contrast",
+2026-10-04T03:00:24.8180661Z     "theme": "dark",
+2026-10-04T03:00:24.8180987Z     "ratios": [
+2026-10-04T03:00:24.8181276Z       {
+2026-10-04T03:00:24.8181650Z         "foreground": "--wb-fg",
+2026-10-04T03:00:24.8182080Z         "background": "--wb-panel",
+2026-10-04T03:00:24.8182524Z         "ratio": 13.128242551287334
+2026-10-04T03:00:24.8182903Z       },
+2026-10-04T03:00:24.8183192Z       {
+2026-10-04T03:00:24.8183529Z         "foreground": "--wb-fg",
+2026-10-04T03:00:24.8183963Z         "background": "--wb-raised",
+2026-10-04T03:00:24.8184648Z         "ratio": 11.05341484495638
+2026-10-04T03:00:24.8185013Z       },
+2026-10-04T03:00:24.8185287Z       {
+2026-10-04T03:00:24.8185617Z         "foreground": "--wb-fg",
+2026-10-04T03:00:24.8186040Z         "background": "--wb-selected",
+2026-10-04T03:00:24.8186516Z         "ratio": 7.625848352516812
+2026-10-04T03:00:24.8186959Z       },
+2026-10-04T03:00:24.8187272Z       {
+2026-10-04T03:00:24.8187657Z         "foreground": "--wb-muted",
+2026-10-04T03:00:24.8188137Z         "background": "--wb-panel",
+2026-10-04T03:00:24.8188585Z         "ratio": 7.60217856912121
+2026-10-04T03:00:24.8188943Z       }
+2026-10-04T03:00:24.8189202Z     ],
+2026-10-04T03:00:24.8189535Z     "passed": true
+2026-10-04T03:00:24.8189840Z   },
+2026-10-04T03:00:24.8190099Z   {
+2026-10-04T03:00:24.8190448Z     "scenario": "theme-text-contrast",
+2026-10-04T03:00:24.8191229Z     "theme": "light",
+2026-10-04T03:00:24.8191584Z     "ratios": [
+2026-10-04T03:00:24.8191878Z       {
+2026-10-04T03:00:24.8192209Z         "foreground": "--wb-fg",
+2026-10-04T03:00:24.8192636Z         "background": "--wb-panel",
+2026-10-04T03:00:24.8193090Z         "ratio": 17.64189221851225
+2026-10-04T03:00:24.8193438Z       },
+2026-10-04T03:00:24.8193698Z       {
+2026-10-04T03:00:24.8194019Z         "foreground": "--wb-fg",
+2026-10-04T03:00:24.8194655Z         "background": "--wb-raised",
+2026-10-04T03:00:24.8195106Z         "ratio": 15.129008503189796
+2026-10-04T03:00:24.8195483Z       },
+2026-10-04T03:00:24.8195749Z       {
+2026-10-04T03:00:24.8196307Z         "foreground": "--wb-fg",
+2026-10-04T03:00:24.8196739Z         "background": "--wb-selected",
+2026-10-04T03:00:24.8197255Z         "ratio": 14.367676325434495
+2026-10-04T03:00:24.8197621Z       },
+2026-10-04T03:00:24.8197885Z       {
+2026-10-04T03:00:24.8198218Z         "foreground": "--wb-muted",
+2026-10-04T03:00:24.8198704Z         "background": "--wb-panel",
+2026-10-04T03:00:24.8199134Z         "ratio": 7.847154678273723
+2026-10-04T03:00:24.8199498Z       }
+2026-10-04T03:00:24.8199762Z     ],
+2026-10-04T03:00:24.8200047Z     "passed": true
+2026-10-04T03:00:24.8200341Z   },
+2026-10-04T03:00:24.8200598Z   {
+2026-10-04T03:00:24.8200946Z     "scenario": "theme-text-contrast",
+2026-10-04T03:00:24.8201425Z     "theme": "blue",
+2026-10-04T03:00:24.8201774Z     "ratios": [
+2026-10-04T03:00:24.8202057Z       {
+2026-10-04T03:00:24.8202388Z         "foreground": "--wb-fg",
+2026-10-04T03:00:24.8202808Z         "background": "--wb-panel",
+2026-10-04T03:00:24.8203247Z         "ratio": 11.892856924816419
+2026-10-04T03:00:24.8203621Z       },
+2026-10-04T03:00:24.8203889Z       {
+2026-10-04T03:00:24.8204419Z         "foreground": "--wb-fg",
+2026-10-04T03:00:24.8204858Z         "background": "--wb-raised",
+2026-10-04T03:00:24.8205294Z         "ratio": 8.875891841560621
+2026-10-04T03:00:24.8205654Z       },
+2026-10-04T03:00:24.8205924Z       {
+2026-10-04T03:00:24.8206259Z         "foreground": "--wb-fg",
+2026-10-04T03:00:24.8206696Z         "background": "--wb-selected",
+2026-10-04T03:00:24.8207180Z         "ratio": 6.225007303392024
+2026-10-04T03:00:24.8207538Z       },
+2026-10-04T03:00:24.8207802Z       {
+2026-10-04T03:00:24.8208125Z         "foreground": "--wb-muted",
+2026-10-04T03:00:24.8208560Z         "background": "--wb-panel",
+2026-10-04T03:00:24.8208992Z         "ratio": 8.39700165630076
+2026-10-04T03:00:24.8209352Z       }
+2026-10-04T03:00:24.8209630Z     ],
+2026-10-04T03:00:24.8209903Z     "passed": true
+2026-10-04T03:00:24.8210214Z   },
+2026-10-04T03:00:24.8210464Z   {
+2026-10-04T03:00:24.8210808Z     "scenario": "theme-text-contrast",
+2026-10-04T03:00:24.8211252Z     "theme": "high-contrast",
+2026-10-04T03:00:24.8211628Z     "ratios": [
+2026-10-04T03:00:24.8211911Z       {
+2026-10-04T03:00:24.8212248Z         "foreground": "--wb-fg",
+2026-10-04T03:00:24.8212675Z         "background": "--wb-panel",
+2026-10-04T03:00:24.8213054Z         "ratio": 21
+2026-10-04T03:00:24.8213371Z       },
+2026-10-04T03:00:24.8213645Z       {
+2026-10-04T03:00:24.8213963Z         "foreground": "--wb-fg",
+2026-10-04T03:00:24.8214636Z         "background": "--wb-raised",
+2026-10-04T03:00:24.8215024Z         "ratio": 21
+2026-10-04T03:00:24.8215313Z       },
+2026-10-04T03:00:24.8215575Z       {
+2026-10-04T03:00:24.8215899Z         "foreground": "--wb-fg",
+2026-10-04T03:00:24.8216319Z         "background": "--wb-selected",
+2026-10-04T03:00:24.8216748Z         "ratio": 12.853635274157462
+2026-10-04T03:00:24.8217121Z       },
+2026-10-04T03:00:24.8217404Z       {
+2026-10-04T03:00:24.8217738Z         "foreground": "--wb-muted",
+2026-10-04T03:00:24.8218206Z         "background": "--wb-panel",
+2026-10-04T03:00:24.8218585Z         "ratio": 21
+2026-10-04T03:00:24.8218888Z       }
+2026-10-04T03:00:24.8219150Z     ],
+2026-10-04T03:00:24.8219429Z     "passed": true
+2026-10-04T03:00:24.8219732Z   },
+2026-10-04T03:00:24.8219999Z   {
+2026-10-04T03:00:24.8220343Z     "scenario": "tool-window-mounts",
+2026-10-04T03:00:24.8220966Z     "passed": true
+2026-10-04T03:00:24.8221287Z   },
+2026-10-04T03:00:24.8221542Z   {
+2026-10-04T03:00:24.8221953Z     "scenario": "narrow-dialog-focus-forced-colors",
+2026-10-04T03:00:24.8222439Z     "passed": true
+2026-10-04T03:00:24.8222737Z   },
+2026-10-04T03:00:24.8222993Z   {
+2026-10-04T03:00:24.8223378Z     "scenario": "named-controls-and-bounded-grid",
+2026-10-04T03:00:24.8223850Z     "passed": true
+2026-10-04T03:00:24.8224403Z   }
+2026-10-04T03:00:24.8224679Z ]
+2026-10-04T03:00:28.2500024Z Traceback (most recent call last):
+2026-10-04T03:00:28.2500614Z {
+2026-10-04T03:00:28.2501737Z   File "/home/runner/work/SharpForge/SharpForge/tests/browser_multi_session_test.py", line 291, in <module>
+2026-10-04T03:00:28.2503079Z     run()
+2026-10-04T03:00:28.2503613Z   "target": "production-studio-real-workers",
+2026-10-04T03:00:28.2504472Z   "status": "failed",
+2026-10-04T03:00:28.2504927Z   "engine": "chromium",
+2026-10-04T03:00:28.2505339Z   "checks": [],
+2026-10-04T03:00:28.2505733Z   "failure": {
+2026-10-04T03:00:28.2506111Z     "type": "Error",
+2026-10-04T03:00:28.2512068Z     "message": "Page.evaluate: AggregateError: Workbench event listeners failed\n    at WorkbenchEvents.emit (http://127.0.0.1:51371/workbench/state-events.js:46:32)\n    at DocumentService.setProjectMembership (http://127.0.0.1:51371/workbench/documents.js:259:17)\n    at StudioProjects.removeMembership (http://127.0.0.1:51371/workbench/studio-projects.js:103:29)\n    at StudioProjects.sync (http://127.0.0.1:51371/workbench/studio-projects.js:62:79)\n    at Object.renderWorkspace (http://127.0.0.1:51371/studio.js:277:18)\n    at finishWorkspace (http://127.0.0.1:51371/workbench/studio-workspace-loader.js:88:11)\n    at loadStudioWorkspace (http://127.0.0.1:51371/workbench/studio-workspace-loader.js:151:26)\n    at async eval (eval at evaluate (:311:30), <anonymous>:2:24)\n    at async <anonymous>:337:30"
+2026-10-04T03:00:28.2517464Z   },
+2026-10-04T03:00:28.2517802Z   "pageErrors": [],
+2026-10-04T03:00:28.2518779Z   File "/home/runner/work/SharpForge/SharpForge/tests/browser_multi_session_test.py", line 271, in run
+2026-10-04T03:00:28.2519760Z     prepare_studio(page, checks)
+2026-10-04T03:00:28.2520852Z   File "/home/runner/work/SharpForge/SharpForge/tests/browser_multi_session_test.py", line 51, in prepare_studio
+2026-10-04T03:00:28.2521930Z     loaded = page.evaluate("""async records => {
+2026-10-04T03:00:28.2522525Z              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2026-10-04T03:00:28.2523581Z   File "/home/runner/work/SharpForge/SharpForge/tests/conformance/browser/launch.py", line 166, in checked
+2026-10-04T03:00:28.2524801Z     result = value(*args, **kwargs)
+2026-10-04T03:00:28.2525314Z              ^^^^^^^^^^^^^^^^^^^^^^
+2026-10-04T03:00:28.2526547Z   File "/opt/hostedtoolcache/Python/3.12.14/x64/lib/python3.12/site-packages/playwright/sync_api/_generated.py", line 9413, in evaluate
+2026-10-04T03:00:28.2527667Z   "milliseconds": 3227.73
+2026-10-04T03:00:28.2528097Z }
+2026-10-04T03:00:28.2528441Z     self._sync(
+2026-10-04T03:00:28.2529668Z   File "/opt/hostedtoolcache/Python/3.12.14/x64/lib/python3.12/site-packages/playwright/_impl/_sync_base.py", line 115, in _sync
+2026-10-04T03:00:28.2530764Z     return task.result()
+2026-10-04T03:00:28.2531188Z            ^^^^^^^^^^^^^
+2026-10-04T03:00:28.2532332Z   File "/opt/hostedtoolcache/Python/3.12.14/x64/lib/python3.12/site-packages/playwright/_impl/_page.py", line 474, in evaluate
+2026-10-04T03:00:28.2533625Z     return await self._main_frame.evaluate(expression, arg)
+2026-10-04T03:00:28.2539449Z            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2026-10-04T03:00:28.2540572Z   File "/opt/hostedtoolcache/Python/3.12.14/x64/lib/python3.12/site-packages/playwright/_impl/_frame.py", line 346, in evaluate
+2026-10-04T03:00:28.2541564Z     await self._channel.send(
+2026-10-04T03:00:28.2542580Z   File "/opt/hostedtoolcache/Python/3.12.14/x64/lib/python3.12/site-packages/playwright/_impl/_connection.py", line 76, in send
+2026-10-04T03:00:28.2543916Z     return await self._connection.wrap_api_call(
+2026-10-04T03:00:28.2544707Z            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2026-10-04T03:00:28.2545854Z   File "/opt/hostedtoolcache/Python/3.12.14/x64/lib/python3.12/site-packages/playwright/_impl/_connection.py", line 632, in wrap_api_call
+2026-10-04T03:00:28.2547124Z     raise rewrite_error(error, f"{parsed_st['apiName']}: {error}") from None
+2026-10-04T03:00:28.2548251Z playwright._impl._errors.Error: Page.evaluate: AggregateError: Workbench event listeners failed
+2026-10-04T03:00:28.2549323Z     at WorkbenchEvents.emit (http://127.0.0.1:51371/workbench/state-events.js:46:32)
+2026-10-04T03:00:28.2550395Z     at DocumentService.setProjectMembership (http://127.0.0.1:51371/workbench/documents.js:259:17)
+2026-10-04T03:00:28.2551745Z     at StudioProjects.removeMembership (http://127.0.0.1:51371/workbench/studio-projects.js:103:29)
+2026-10-04T03:00:28.2552800Z     at StudioProjects.sync (http://127.0.0.1:51371/workbench/studio-projects.js:62:79)
+2026-10-04T03:00:28.2553676Z     at Object.renderWorkspace (http://127.0.0.1:51371/studio.js:277:18)
+2026-10-04T03:00:28.2554781Z     at finishWorkspace (http://127.0.0.1:51371/workbench/studio-workspace-loader.js:88:11)
+2026-10-04T03:00:28.2555833Z     at loadStudioWorkspace (http://127.0.0.1:51371/workbench/studio-workspace-loader.js:151:26)
+2026-10-04T03:00:28.2556701Z     at async eval (eval at evaluate (:311:30), <anonymous>:2:24)
+2026-10-04T03:00:28.2557258Z     at async <anonymous>:337:30
+2026-10-04T03:00:32.9105646Z A19 lazy tools: cold graph excludes all five controllers; first activation succeeds using local built assets
+2026-10-04T03:01:06.8817566Z Traceback (most recent call last):
+2026-10-04T03:01:06.8818749Z   File "/home/runner/work/SharpForge/SharpForge/tests/browser_vs_workflows_test.py", line 85, in <module>
+2026-10-04T03:01:06.8819646Z     run()
+2026-10-04T03:01:06.8820467Z   File "/home/runner/work/SharpForge/SharpForge/tests/browser_vs_workflows_test.py", line 35, in run
+2026-10-04T03:01:06.8821926Z     wait_condition(page, 'document.querySelector("#modal-backdrop").classList.contains("hidden")')
+2026-10-04T03:01:06.8823331Z   File "/home/runner/work/SharpForge/SharpForge/tests/browser_harness.py", line 97, in wait_condition
+2026-10-04T03:01:06.8824038Z     return page.wait_for_function(predicate, timeout=timeout)
+2026-10-04T03:01:06.8824930Z            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2026-10-04T03:01:06.8826021Z   File "/home/runner/work/SharpForge/SharpForge/tests/conformance/browser/launch.py", line 166, in checked
+2026-10-04T03:01:06.8826595Z     result = value(*args, **kwargs)
+2026-10-04T03:01:06.8845093Z              ^^^^^^^^^^^^^^^^^^^^^^
+2026-10-04T03:01:06.8846103Z   File "/home/runner/work/SharpForge/SharpForge/tests/browser_harness.py", line 32, in _wait_for_function
+2026-10-04T03:01:06.8847366Z     raise TimeoutError('Browser predicate remained false: ' + expression)
+2026-10-04T03:01:06.8848722Z TimeoutError: Browser predicate remained false: document.querySelector("#modal-backdrop").classList.contains("hidden")
+2026-10-04T03:01:09.1597790Z Traceback (most recent call last):
+2026-10-04T03:01:09.1598331Z {
+2026-10-04T03:01:09.1599860Z   File "/home/runner/work/SharpForge/SharpForge/tests/browser_a20_insights_test.py", line 89, in <module>
+2026-10-04T03:01:09.1600556Z   "status": "failed",
+2026-10-04T03:01:09.1601153Z     assert page.get_by_role("button", name="Show potential fixes").count() == 1
+2026-10-04T03:01:09.1601659Z   "engine": "chromium",
+2026-10-04T03:01:09.1601991Z   "passed": 5,
+2026-10-04T03:01:09.1602246Z   "checks": [
+2026-10-04T03:01:09.1602661Z     "completion renders kind/filter/docs and applies selected text",
+2026-10-04T03:01:09.1603203Z     "completion Escape preserves typed text",
+2026-10-04T03:01:09.1603831Z     "snippet fields mirror while typing and Tab advances without losing source",
+2026-10-04T03:01:09.1605061Z            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2026-10-04T03:01:09.1605465Z AssertionError
+2026-10-04T03:01:09.1606421Z     "inline rename previews/cancels exactly and commits across three real models",
+2026-10-04T03:01:09.1607715Z     "code action preview is exact and does not mutate until Apply"
+2026-10-04T03:01:09.1608508Z   ],
+2026-10-04T03:01:09.1608847Z   "failure": {
+2026-10-04T03:01:09.1609221Z     "type": "AssertionError",
+2026-10-04T03:01:09.1609561Z     "message": ""
+2026-10-04T03:01:09.1609755Z   }
+2026-10-04T03:01:09.1609925Z }
+2026-10-04T03:01:42.4466554Z Traceback (most recent call last):
+2026-10-04T03:01:42.4467144Z {
+2026-10-04T03:01:42.4468298Z   File "/home/runner/work/SharpForge/SharpForge/tests/browser_a20_language_providers_test.py", line 38, in <module>
+2026-10-04T03:01:42.4469650Z   "status": "failed",
+2026-10-04T03:01:42.4470742Z     wait(page, "editor.value.includes('//😀 Gadget') && editor.value.includes('name=\"Gadget\"')")
+2026-10-04T03:01:42.4472036Z   File "/home/runner/work/SharpForge/SharpForge/tests/conformance/browser/matrix_common.py", line 22, in wait
+2026-10-04T03:01:42.4473274Z     raise AssertionError('Browser predicate timed out: ' + expression)
+2026-10-04T03:01:42.4475020Z AssertionError: Browser predicate timed out: editor.value.includes('//😀 Gadget') && editor.value.includes('name="Gadget"')
+2026-10-04T03:01:42.4475928Z   "engine": "chromium",
+2026-10-04T03:01:42.4476268Z   "passed": 1,
+2026-10-04T03:01:42.4476575Z   "checks": [
+2026-10-04T03:01:42.4477221Z     "selected Fix All family previews the complete batch and applies exact source edits"
+2026-10-04T03:01:42.4477883Z   ],
+2026-10-04T03:01:42.4478151Z   "failure": {
+2026-10-04T03:01:42.4478470Z     "type": "AssertionError",
+2026-10-04T03:01:42.4479486Z     "message": "Browser predicate timed out: editor.value.includes('//\ud83d\ude00 Gadget') && editor.value.includes('name=\"Gadget\"')"
+2026-10-04T03:01:42.4480418Z   }
+2026-10-04T03:01:42.4480681Z }
+2026-10-04T03:01:44.1025367Z Traceback (most recent call last):
+2026-10-04T03:01:44.1025957Z {
+2026-10-04T03:01:44.1026961Z   File "/home/runner/work/SharpForge/SharpForge/tests/browser_a20_view_test.py", line 31, in <module>
+2026-10-04T03:01:44.1028644Z     setup("a😀b\n中\tx")
+2026-10-04T03:01:44.1029612Z   File "/home/runner/work/SharpForge/SharpForge/tests/browser_a20_view_test.py", line 28, in setup
+2026-10-04T03:01:44.1030496Z   "status": "failed",
+2026-10-04T03:01:44.1030891Z   "engine": "chromium",
+2026-10-04T03:01:44.1031275Z   "passed": 0,
+2026-10-04T03:01:44.1031613Z   "checks": [],
+2026-10-04T03:01:44.1031951Z   "failure": {
+2026-10-04T03:01:44.1032293Z     "type": "Error",
+2026-10-04T03:01:44.1034981Z     "message": "Page.evaluate: TypeError: window.editor?.dispose is not a function\n    at window.setupView (http://127.0.0.1:34491/a20-editor-view-fixture.js:4:18)\n    at eval (eval at evaluate (:311:30), <anonymous>:1:9)\n    at UtilityScript.evaluate (<anonymous>:318:18)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)"
+2026-10-04T03:01:44.1037183Z   },
+2026-10-04T03:01:44.1037573Z   "nativeImeCertified": false,
+2026-10-04T03:01:44.1038081Z   "screenReaderCertified": false
+2026-10-04T03:01:44.1038526Z }
+2026-10-04T03:01:44.1039222Z     page.evaluate("args => setupView(args)", {"text": text, "options": options or {}})
+2026-10-04T03:01:44.1040563Z   File "/home/runner/work/SharpForge/SharpForge/tests/conformance/browser/launch.py", line 166, in checked
+2026-10-04T03:01:44.1041548Z     result = value(*args, **kwargs)
+2026-10-04T03:01:44.1042034Z              ^^^^^^^^^^^^^^^^^^^^^^
+2026-10-04T03:01:44.1043261Z   File "/opt/hostedtoolcache/Python/3.12.14/x64/lib/python3.12/site-packages/playwright/sync_api/_generated.py", line 9413, in evaluate
+2026-10-04T03:01:44.1048861Z     self._sync(
+2026-10-04T03:01:44.1050028Z   File "/opt/hostedtoolcache/Python/3.12.14/x64/lib/python3.12/site-packages/playwright/_impl/_sync_base.py", line 115, in _sync
+2026-10-04T03:01:44.1051144Z     return task.result()
+2026-10-04T03:01:44.1051569Z            ^^^^^^^^^^^^^
+2026-10-04T03:01:44.1053059Z   File "/opt/hostedtoolcache/Python/3.12.14/x64/lib/python3.12/site-packages/playwright/_impl/_page.py", line 474, in evaluate
+2026-10-04T03:01:44.1054591Z     return await self._main_frame.evaluate(expression, arg)
+2026-10-04T03:01:44.1055280Z            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2026-10-04T03:01:44.1056492Z   File "/opt/hostedtoolcache/Python/3.12.14/x64/lib/python3.12/site-packages/playwright/_impl/_frame.py", line 346, in evaluate
+2026-10-04T03:01:44.1057595Z     await self._channel.send(
+2026-10-04T03:01:44.1058772Z   File "/opt/hostedtoolcache/Python/3.12.14/x64/lib/python3.12/site-packages/playwright/_impl/_connection.py", line 76, in send
+2026-10-04T03:01:44.1059934Z     return await self._connection.wrap_api_call(
+2026-10-04T03:01:44.1060835Z            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2026-10-04T03:01:44.1061993Z   File "/opt/hostedtoolcache/Python/3.12.14/x64/lib/python3.12/site-packages/playwright/_impl/_connection.py", line 632, in wrap_api_call
+2026-10-04T03:01:44.1063299Z     raise rewrite_error(error, f"{parsed_st['apiName']}: {error}") from None
+2026-10-04T03:01:44.1064710Z playwright._impl._errors.Error: Page.evaluate: TypeError: window.editor?.dispose is not a function
+2026-10-04T03:01:44.1065791Z     at window.setupView (http://127.0.0.1:34491/a20-editor-view-fixture.js:4:18)
+2026-10-04T03:01:44.1066559Z     at eval (eval at evaluate (:311:30), <anonymous>:1:9)
+2026-10-04T03:01:44.1067139Z     at UtilityScript.evaluate (<anonymous>:318:18)
+2026-10-04T03:01:44.1067723Z     at UtilityScript.<anonymous> (<anonymous>:1:44)
+2026-10-04T03:01:44.1592612Z ##[error]Process completed with exit code 1.
+2026-10-04T03:01:44.1642991Z ##[group]Run import json
+2026-10-04T03:01:44.1643287Z [36;1mimport json[0m
+2026-10-04T03:01:44.1643513Z [36;1mimport os[0m
+2026-10-04T03:01:44.1643731Z [36;1mfrom pathlib import Path[0m
+2026-10-04T03:01:44.1644292Z [36;1moutput = Path(os.environ['SHARPFORGE_RESULTS_DIR'])[0m
+2026-10-04T03:01:44.1644770Z [36;1moutput.mkdir(parents=True, exist_ok=True)[0m
+2026-10-04T03:01:44.1645139Z [36;1m(output / 'source.json').write_text(json.dumps({[0m
+2026-10-04T03:01:44.1645536Z [36;1m    'sourceSha': os.environ['QUALIFICATION_SOURCE_SHA'],[0m
+2026-10-04T03:01:44.1645952Z [36;1m    'sourceTree': os.environ['QUALIFICATION_SOURCE_TREE'],[0m
+2026-10-04T03:01:44.1646361Z [36;1m    'trigger': os.environ['QUALIFICATION_TRIGGER_EVENT'],[0m
+2026-10-04T03:01:44.1646755Z [36;1m    'triggerRef': os.environ['QUALIFICATION_TRIGGER_REF'],[0m
+2026-10-04T03:01:44.1647192Z [36;1m    'triggerNonce': os.environ['QUALIFICATION_TRIGGER_NONCE'] or None,[0m
+2026-10-04T03:01:44.1647698Z [36;1m    'captureOnly': os.environ['QUALIFICATION_CAPTURE_ONLY'] == 'true',[0m
+2026-10-04T03:01:44.1648125Z [36;1m    'workflowRunId': os.environ['GITHUB_RUN_ID'],[0m
+2026-10-04T03:01:44.1648476Z [36;1m    'stage': os.environ['QUALIFICATION_STAGE'],[0m
+2026-10-04T03:01:44.1648830Z [36;1m    'engine': os.environ['SHARPFORGE_BROWSER_ENGINE'],[0m
+2026-10-04T03:01:44.1649168Z [36;1m    'runner': os.environ['RUNNER_OS'],[0m
+2026-10-04T03:01:44.1649499Z [36;1m    'runnerLabel': os.environ['QUALIFICATION_RUNNER'],[0m
+2026-10-04T03:01:44.1649930Z [36;1m    'editorBaseline': os.environ['SHARPFORGE_EDITOR_BASELINE'] or None,[0m
+2026-10-04T03:01:44.1650436Z [36;1m    'workbenchBaseline': os.environ['SHARPFORGE_WORKBENCH_BASELINE'] or None,[0m
+2026-10-04T03:01:44.1650861Z [36;1m}, indent=2) + '\n', encoding='utf8')[0m
+2026-10-04T03:01:44.1652570Z shell: /opt/hostedtoolcache/Python/3.12.14/x64/bin/python {0}
+2026-10-04T03:01:44.1652904Z env:
+2026-10-04T03:01:44.1653149Z   SHARPFORGE_RESULTS_DIR: artifacts/results/project16
+2026-10-04T03:01:44.1653467Z   QUALIFICATION_TRIGGER_EVENT: create
+2026-10-04T03:01:44.1653959Z   QUALIFICATION_TRIGGER_REF: refs/heads/codex/project16/qualify-ubuntu-chromium-browser-20261004-a3
+2026-10-04T03:01:44.1654771Z   QUALIFICATION_TRIGGER_NONCE: 20261004-a3
+2026-10-04T03:01:44.1655130Z   QUALIFICATION_SOURCE_SHA: e4629f443b59bfc2d7494b731be19afc5974b7b1
+2026-10-04T03:01:44.1655582Z   QUALIFICATION_SOURCE_TREE: 1733c01dae0e44cea49dd82a574fda7b8286d6be
+2026-10-04T03:01:44.1655954Z   QUALIFICATION_RUNNER: ubuntu-latest
+2026-10-04T03:01:44.1656217Z   QUALIFICATION_STAGE: browser
+2026-10-04T03:01:44.1656470Z   QUALIFICATION_CAPTURE_ONLY: true
+2026-10-04T03:01:44.1656728Z   SHARPFORGE_BROWSER_ENGINE: chromium
+2026-10-04T03:01:44.1656984Z   SHARPFORGE_EDITOR_BASELINE: 
+2026-10-04T03:01:44.1657225Z   SHARPFORGE_WORKBENCH_BASELINE: 
+2026-10-04T03:01:44.1657535Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.14/x64
+2026-10-04T03:01:44.1657976Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.14/x64/lib/pkgconfig
+2026-10-04T03:01:44.1658435Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.14/x64
+2026-10-04T03:01:44.1658992Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.14/x64
+2026-10-04T03:01:44.1659373Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.14/x64
+2026-10-04T03:01:44.1659758Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.14/x64/lib
+2026-10-04T03:01:44.1660380Z   SHARPFORGE_PLAYWRIGHT_MODULE: /opt/hostedtoolcache/Python/3.12.14/x64/lib/python3.12/site-packages/playwright/driver/package
+2026-10-04T03:01:44.1660944Z ##[endgroup]
+2026-10-04T03:01:44.1998283Z ##[group]Run actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+2026-10-04T03:01:44.1998705Z with:
+2026-10-04T03:01:44.1998948Z   name: project16-ubuntu-latest-chromium-browser
+2026-10-04T03:01:44.1999266Z   path: artifacts/results/project16/
+2026-10-04T03:01:44.1999530Z   if-no-files-found: error
+2026-10-04T03:01:44.1999759Z   compression-level: 6
+2026-10-04T03:01:44.1999969Z   overwrite: false
+2026-10-04T03:01:44.2000180Z   include-hidden-files: false
+2026-10-04T03:01:44.2000406Z env:
+2026-10-04T03:01:44.2000632Z   SHARPFORGE_RESULTS_DIR: artifacts/results/project16
+2026-10-04T03:01:44.2000967Z   QUALIFICATION_TRIGGER_EVENT: create
+2026-10-04T03:01:44.2001440Z   QUALIFICATION_TRIGGER_REF: refs/heads/codex/project16/qualify-ubuntu-chromium-browser-20261004-a3
+2026-10-04T03:01:44.2001939Z   QUALIFICATION_TRIGGER_NONCE: 20261004-a3
+2026-10-04T03:01:44.2002304Z   QUALIFICATION_SOURCE_SHA: e4629f443b59bfc2d7494b731be19afc5974b7b1
+2026-10-04T03:01:44.2002778Z   QUALIFICATION_SOURCE_TREE: 1733c01dae0e44cea49dd82a574fda7b8286d6be
+2026-10-04T03:01:44.2003150Z   QUALIFICATION_RUNNER: ubuntu-latest
+2026-10-04T03:01:44.2003413Z   QUALIFICATION_STAGE: browser
+2026-10-04T03:01:44.2003660Z   QUALIFICATION_CAPTURE_ONLY: true
+2026-10-04T03:01:44.2003915Z   SHARPFORGE_BROWSER_ENGINE: chromium
+2026-10-04T03:01:44.2004426Z   SHARPFORGE_EDITOR_BASELINE: 
+2026-10-04T03:01:44.2004676Z   SHARPFORGE_WORKBENCH_BASELINE: 
+2026-10-04T03:01:44.2004992Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.14/x64
+2026-10-04T03:01:44.2005413Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.14/x64/lib/pkgconfig
+2026-10-04T03:01:44.2005833Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.14/x64
+2026-10-04T03:01:44.2006208Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.14/x64
+2026-10-04T03:01:44.2006584Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.14/x64
+2026-10-04T03:01:44.2006962Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.14/x64/lib
+2026-10-04T03:01:44.2007589Z   SHARPFORGE_PLAYWRIGHT_MODULE: /opt/hostedtoolcache/Python/3.12.14/x64/lib/python3.12/site-packages/playwright/driver/package
+2026-10-04T03:01:44.2008148Z ##[endgroup]
+2026-10-04T03:01:44.3681682Z (node:3974) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-10-04T03:01:44.3682519Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-10-04T03:01:44.3817093Z With the provided path, there will be 41 files uploaded
+2026-10-04T03:01:44.3821203Z Artifact name is valid!
+2026-10-04T03:01:44.3821928Z Root directory input is valid!
+2026-10-04T03:01:44.5745237Z Beginning upload of artifact content to blob storage
+2026-10-04T03:01:44.7487491Z (node:3974) [DEP0169] DeprecationWarning: `url.parse()` behavior is not standardized and prone to errors that have security implications. Use the WHATWG URL API instead. CVEs are not issued for `url.parse()` vulnerabilities.
+2026-10-04T03:01:44.9128350Z Uploaded bytes 3754687
+2026-10-04T03:01:44.9337798Z Finished uploading artifact content to blob storage!
+2026-10-04T03:01:44.9339074Z SHA256 digest of uploaded artifact zip is 7fe07d3374bdb1bb1c9c17dc36e730dfa36b39381e40c7b905d40452aeb550ba
+2026-10-04T03:01:44.9340496Z Finalizing artifact upload
+2026-10-04T03:01:45.1604807Z Artifact project16-ubuntu-latest-chromium-browser.zip successfully finalized. Artifact ID 11292460593
+2026-10-04T03:01:45.1606873Z Artifact project16-ubuntu-latest-chromium-browser has been successfully uploaded! Final size is 3754687 bytes. Artifact ID is 11292460593
+2026-10-04T03:01:45.1612402Z Artifact download URL: https://github.com/wieslawsoltes/SharpForge/actions/runs/37172716850/artifacts/11292460593
+2026-10-04T03:01:45.1805906Z Post job cleanup.
+2026-10-04T03:01:45.2643786Z [command]/usr/bin/git version
+2026-10-04T03:01:45.2681058Z git version 2.55.0
+2026-10-04T03:01:45.2723868Z Temporarily overriding HOME='/home/runner/work/_temp/f38ee0a7-c0ee-4ae4-b41c-f0f8a0321354' before making global git config changes
+2026-10-04T03:01:45.2725063Z Adding repository directory to the temporary git global config as a safe directory
+2026-10-04T03:01:45.2729972Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/SharpForge/SharpForge
+2026-10-04T03:01:45.2759961Z Removing SSH command configuration
+2026-10-04T03:01:45.2766552Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-10-04T03:01:45.2799762Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-10-04T03:01:45.3035196Z Removing HTTP extra header
+2026-10-04T03:01:45.3040832Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-10-04T03:01:45.3076159Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-10-04T03:01:45.3306759Z Removing includeIf entries pointing to credentials config files
+2026-10-04T03:01:45.3312714Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-10-04T03:01:45.3341838Z includeif.gitdir:/home/runner/work/SharpForge/SharpForge/.git.path
+2026-10-04T03:01:45.3343084Z includeif.gitdir:/home/runner/work/SharpForge/SharpForge/.git/worktrees/*.path
+2026-10-04T03:01:45.3344362Z includeif.gitdir:/github/workspace/.git.path
+2026-10-04T03:01:45.3345236Z includeif.gitdir:/github/workspace/.git/worktrees/*.path
+2026-10-04T03:01:45.3351734Z [command]/usr/bin/git config --local --get-all includeif.gitdir:/home/runner/work/SharpForge/SharpForge/.git.path
+2026-10-04T03:01:45.3373998Z /home/runner/work/_temp/git-credentials-6ec3de73-d7b4-41fc-b746-523250d7737a.config
+2026-10-04T03:01:45.3383597Z [command]/usr/bin/git config --local --unset includeif.gitdir:/home/runner/work/SharpForge/SharpForge/.git.path \/home\/runner\/work\/_temp\/git\-credentials\-6ec3de73\-d7b4\-41fc\-b746\-523250d7737a\.config
+2026-10-04T03:01:45.3418797Z [command]/usr/bin/git config --local --get-all includeif.gitdir:/home/runner/work/SharpForge/SharpForge/.git/worktrees/*.path
+2026-10-04T03:01:45.3470882Z /home/runner/work/_temp/git-credentials-6ec3de73-d7b4-41fc-b746-523250d7737a.config
+2026-10-04T03:01:45.3480556Z [command]/usr/bin/git config --local --unset includeif.gitdir:/home/runner/work/SharpForge/SharpForge/.git/worktrees/*.path \/home\/runner\/work\/_temp\/git\-credentials\-6ec3de73\-d7b4\-41fc\-b746\-523250d7737a\.config
+2026-10-04T03:01:45.3521637Z [command]/usr/bin/git config --local --get-all includeif.gitdir:/github/workspace/.git.path
+2026-10-04T03:01:45.3543495Z /github/runner_temp/git-credentials-6ec3de73-d7b4-41fc-b746-523250d7737a.config
+2026-10-04T03:01:45.3551507Z [command]/usr/bin/git config --local --unset includeif.gitdir:/github/workspace/.git.path \/github\/runner_temp\/git\-credentials\-6ec3de73\-d7b4\-41fc\-b746\-523250d7737a\.config
+2026-10-04T03:01:45.3582376Z [command]/usr/bin/git config --local --get-all includeif.gitdir:/github/workspace/.git/worktrees/*.path
+2026-10-04T03:01:45.3603283Z /github/runner_temp/git-credentials-6ec3de73-d7b4-41fc-b746-523250d7737a.config
+2026-10-04T03:01:45.3612419Z [command]/usr/bin/git config --local --unset includeif.gitdir:/github/workspace/.git/worktrees/*.path \/github\/runner_temp\/git\-credentials\-6ec3de73\-d7b4\-41fc\-b746\-523250d7737a\.config
+2026-10-04T03:01:45.3643945Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-10-04T03:01:45.3892199Z Removing credentials config '/home/runner/work/_temp/git-credentials-6ec3de73-d7b4-41fc-b746-523250d7737a.config'
+2026-10-04T03:01:45.4073311Z Cleaning up orphan processes
+2026-10-04T03:01:45.4380754Z ##[warning]Node.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020, actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/

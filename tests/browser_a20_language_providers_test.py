@@ -16,7 +16,7 @@ try:
         response = page.goto(address)
         assert response and response.status == 200
         policy(response.headers)
-        wait(page, 'window.editor !== undefined')
+        wait(page, "typeof window.setupLanguageEditor === 'function' && window.editor?.model !== undefined")
 
         page.evaluate("editor.goto(editor.value.indexOf('first')); editor.insights.codeActions()")
         page.get_by_role('button', name="Use explicit type 'int'", exact=False).click()

@@ -38,10 +38,17 @@ Tests in `tests/a05-source-decimal-rounding.test.js` exercise source, reloaded
 source and direct CIL, named arguments, scale, extremes, storage, invalid digit
 counts and signature rejection. One Round case consumes the existing hash-checked
 .NET 10.0.5 / SDK 10.0.201 macOS-arm64 capture; no native output was regenerated
-or inferred for this slice. New tests and platform/performance qualification have
-not been run and remain in the serial validation queue.
+or inferred for this slice. The initial run passed 83 of 85 tests. Reload exposed
+two existing emitter inconsistencies: `decimal` and `System.Decimal` caused
+redundant argument spills and separate scratch slots. Scalar aliases are now
+normalized before deciding conversions and allocating scratch storage; canonical
+byte verification remains unchanged.
 
-Scheduled focused validation:
+All 85 focused tests below passed after the repair at `6da2ec81`, using Node 24,
+one worker and a 512 MB old-space limit. Broad platform/performance qualification
+remains deferred.
+
+Completed focused validation:
 
 ```sh
 node scripts/limited.js node --test --test-concurrency=1 tests/a05-source-decimal-rounding.test.js tests/a05-decimal-adapters.test.js tests/a05-decimal-cil.test.js tests/a05-source-numeric-modes.test.js tests/a00-01-value-abi.test.js

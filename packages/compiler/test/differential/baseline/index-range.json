@@ -1,6 +1,6 @@
 {
   "index-range/array-elements-from-the-end-and-slices": ["diagnostics", "warnings", "bytecode", "cil"],
-  "index-range/implicit-support-through-length-count-indexer-and-slice": ["diagnostics", "warnings", "bytecode", "cil"],
+  "index-range/implicit-support-through-length-count-indexer-and-slice": ["diagnostics", "warnings", "bytecode", "cil", "directCil"],
   "index-range/index-and-range-in-7-3": ["diagnostics", "warnings"],
   "index-range/ranges-that-do-not-fit-throw": ["diagnostics", "warnings", "bytecode", "cil"],
   "index-range/string-elements-from-the-end": ["diagnostics", "warnings", "bytecode", "cil", "directCil"],

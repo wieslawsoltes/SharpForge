@@ -6,14 +6,17 @@
  * of its containing type, with the signature of the member's original definition (so a member of `List<int>` is named
  * with `!0`, as ECMA-335 II.22.25 requires). A constructed generic method is a MethodSpec over either.
  */
-import { compressUnsigned, methodSpecBlob, needsMethodSpec, needsTypeSpec } from '../../codegen/generics.js';
+import { compressUnsigned, needsMethodSpec, needsTypeSpec } from '../../codegen/generics.js';
 import { SymbolKind, NamedTypeSymbol, substituteType } from '../../symbols/types.js';
+import { declaringInterfaceOf, genericFrameworkMethod } from './framework-declarations.js';
+import { methodTypeParameter } from './framework-types.js';
 import { fieldSignature, methodSignature, methodSymbolSignature } from '../../codegen/metadata/member-signatures.js';
 
 const LOCAL_SIGNATURE = 0x07;
 const BY_REFERENCE = 0x10;
 const PINNED = 0x45;
 const USER_STRING = 0x70000000;
+const GENERIC_METHOD_INSTANCE = 0x0a;
 
 /**
  * The declaration a member of a constructed framework type stands for. The framework registry lists closed
@@ -49,9 +52,49 @@ export class MemberTokens {
     this.writer = writer;
     this.builder = writer.builder;
     this.types = writer.tokens;
+    /** The tokens that encode a declaration's own signature: never under the substitution of the code that names it. */
+    this.definitionTypes = writer.tokens;
     this.typeSpecs = new Map();
     this.methodSpecs = new Map();
     this.localSignatures = new Map();
+  }
+  /**
+   * A view of these tokens for the code of a synthesized generic class or method: every type it names is read under
+   * the substitution first (generic-context.js). The rows and caches are shared.
+   */
+  within(substitution) {
+    if (!substitution) return this;
+    const view = Object.create(this);
+    view.types = this.definitionTypes.within(substitution);
+    return view;
+  }
+  /** `GENERICINST` blob of a MethodSpec over the given type arguments, and its token over `parent`. */
+  methodSpec(parent, typeArguments) {
+    const encoded = typeArguments.flatMap(argument => this.types.signature(argument)),
+      instantiation = [GENERIC_METHOD_INSTANCE, ...compressUnsigned(typeArguments.length), ...encoded],
+      key = parent + ':' + instantiation.join(',');
+    let token = this.methodSpecs.get(key);
+    if (!token) {
+      token = this.builder.addRow('MethodSpec', { Method: parent, Instantiation: Uint8Array.from(instantiation) });
+      this.methodSpecs.set(key, token);
+    }
+    return token;
+  }
+  /**
+   * The token that names a synthesized field or method from the body being emitted: its definition token, or - for
+   * a member of a generic type - a MemberRef on the type as this code sees it; a generic method is instantiated over
+   * `typeArguments`.
+   * @param member a planned field or method  @param type the type definition that declares it
+   */
+  planned(member, type, typeArguments = []) {
+    const self = type.selfType ?? type;
+    let parent = member.token;
+    if (isInstantiation(self)) {
+      const definitionTypes = this.definitionTypes.within(member.substitution ?? type.typeSubstitution ?? null),
+        signature = member.shape ? methodSignature(definitionTypes, member.shape) : fieldSignature(definitionTypes, member.type);
+      parent = this.builder.member(this.type(self), member.name, signature);
+    }
+    return typeArguments.length ? this.methodSpec(parent, typeArguments) : parent;
   }
   /** TypeDef, TypeRef or TypeSpec token of a type (the operand of `newarr`, `box`, `isinst`, a catch clause, ...). */
   type(type) {
@@ -69,21 +112,20 @@ export class MemberTokens {
   method(method) {
     const definition = method.originalDefinition ?? method,
       owner = method.containingType,
-      defined = this.writer.methodTokens.get(definition);
+      defined = this.writer.methodTokens.get(definition),
+      generic = defined ? null : genericFrameworkMethod(this.writer.core, method, methodTypeParameter);
+    if (generic) return this.externalGeneric(owner, generic.name, generic.shape, generic.typeArguments);
     const parent = defined && !isInstantiation(owner) ? defined : this.memberReference(owner, definition);
     if (!needsMethodSpec(method)) return parent;
-    const instantiation = methodSpecBlob(method, this.types.tokenOf),
-      key = parent + ':' + instantiation.join(',');
-    let token = this.methodSpecs.get(key);
-    if (!token) {
-      token = this.builder.addRow('MethodSpec', { Method: parent, Instantiation: Uint8Array.from(instantiation) });
-      this.methodSpecs.set(key, token);
-    }
-    return token;
+    return this.methodSpec(
+      parent,
+      method.typeArguments.map(argument => argument.type),
+    );
   }
   memberReference(owner, definition) {
-    const declaration = openDeclarationOf(owner, definition);
-    return this.builder.member(this.type(owner), declaration.metadataName, methodSymbolSignature(this.types, declaration));
+    const declaringType = declaringInterfaceOf(this.writer.core, owner, definition.name),
+      declaration = openDeclarationOf(declaringType, definition);
+    return this.builder.member(this.type(declaringType), declaration.metadataName, methodSymbolSignature(this.definitionTypes, declaration));
   }
   /** Field or MemberRef token of a field. */
   field(field) {
@@ -91,7 +133,7 @@ export class MemberTokens {
       owner = field.containingType,
       defined = this.writer.fieldTokens.get(definition);
     if (defined && !isInstantiation(owner)) return defined;
-    return this.builder.member(this.type(owner), definition.name, fieldSignature(this.types, definition.type));
+    return this.builder.member(this.type(owner), definition.name, fieldSignature(this.definitionTypes, definition.type));
   }
   /**
    * MemberRef token of a framework method named by its signature rather than by a symbol (the members lowering needs
@@ -100,7 +142,14 @@ export class MemberTokens {
    * @param {{isStatic: boolean, returnType: object, parameters: {type: object, refKind?: string}[]}} shape
    */
   external(owner, name, shape) {
-    return this.builder.member(this.type(owner), name, methodSignature(this.types, shape));
+    return this.builder.member(this.type(owner), name, methodSignature(this.definitionTypes, shape));
+  }
+  /**
+   * MethodSpec token of a generic framework method named by its signature (`shape.arity` type parameters, written
+   * `methodTypeParameter(n)` in the shape) and instantiated over `typeArguments`.
+   */
+  externalGeneric(owner, name, shape, typeArguments) {
+    return this.methodSpec(this.external(owner, name, shape), typeArguments);
   }
   /** The token of `D::.ctor(object, native int)`, which the runtime implements for every delegate type. */
   delegateConstructor(type) {

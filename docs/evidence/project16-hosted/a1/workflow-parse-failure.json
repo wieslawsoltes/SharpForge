@@ -1,0 +1,25 @@
+{
+  "sourceSha": "f99fc52e12c3a794b352463286dc0c58ae790521",
+  "sourceTree": "8f44869f8f65c8a8072f364e7d1b8fd33dd84e47",
+  "submissionBranch": "codex/project16/qualify-ubuntu-chromium-all-20261004-a1",
+  "runId": 37171181813,
+  "runUrl": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37171181813",
+  "workflowStatus": "failure",
+  "event": "push",
+  "jobs": 0,
+  "qualificationExecuted": false,
+  "diagnosis": {
+    "method": "PyYAML BaseLoader syntax parse",
+    "line": 69,
+    "column": 71,
+    "error": "mapping values are not allowed here",
+    "cause": "The pip run plain scalar contained --only-binary=:all: followed by whitespace."
+  },
+  "correction": {
+    "localCommit": "fdad2b1516e21f1ba4df7f529540bd1f31b20c61",
+    "publishedCommit": "ba9b8e3ef8b8d3d37cf471756fe926514cf7101d",
+    "tree": "bf2c0330902d364c2e1c1e35a913060ba79c4733",
+    "pr": 3865,
+    "validation": "One post-fix YAML syntax parse passed; no Node/build/browser run."
+  }
+}
