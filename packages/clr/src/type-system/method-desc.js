@@ -27,7 +27,7 @@ export class MethodDesc {
   get signature() {
     if (this.#signature) return this.#signature;
     try {
-      const signature = decodeSignature(this.module.blob(this.#state.signatureIndex));
+      const signature = decodeSignature(this.module.blob(this.#state.signatureIndex, { maxBytes: 1024 * 1024 }));
       if (signature.kind !== 'method' || signature.hasThis === this.isStatic) {
         throw loadError(LoadErrorCode.InvalidImage, 'MethodDef signature kind or receiver does not match its flags');
       }

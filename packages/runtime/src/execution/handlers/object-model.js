@@ -1,4 +1,5 @@
 import {isDecimal} from '../decimal.js';
+import {loadFieldValue} from '../field-storage.js';
 import {castReference} from '../casting.js';
 import {staticSlot,finishMemoryAccess} from '../statics.js';
 import {frameworkType} from '@sharpforge/framework';
@@ -10,7 +11,7 @@ handlers.set('volatile.',(vm,frame)=>{frame.volatileAccess=true;});
 for(const name of ['ldsfld','stsfld','ldsflda'])handlers.set(name,(vm,frame,instruction)=>{
   const slot=staticSlot(vm,instruction.operand,frame);
   if(vm.ensureInitialized(slot.typeToken,'field',slot.genericIdentity)){frame.pc--;return;}
-  if(name==='ldsfld')vm.push(vm.storage(vm.statics.get(slot.key),slot.field.signature.type));
+  if(name==='ldsfld')vm.push(loadFieldValue(vm,slot.field,vm.statics.get(slot.key)));
   else if(name==='stsfld')vm.dereference(vm.address('static',slot.key),true,vm.storage(vm.pop(),slot.field.signature.type));
   else vm.push(vm.address('static',slot.key));
   finishMemoryAccess(frame);
@@ -18,7 +19,7 @@ for(const name of ['ldsfld','stsfld','ldsflda'])handlers.set(name,(vm,frame,inst
 for(const name of ['ldfld','stfld','ldflda'])handlers.set(name,(vm,frame,instruction)=>{
   const value=name==='stfld'?vm.pop():undefined,ref=vm.pop(),field=vm.field(instruction.operand,ref);
   if(name==='stfld')vm.dereference(vm.address('field',field.index,ref),true,vm.storage(value,field.field.signature.type));
-  else if(name==='ldfld')vm.push(vm.storage(field.record.data[field.index],field.field.signature.type));
+  else if(name==='ldfld')vm.push(loadFieldValue(vm,field.field,field.record.data[field.index]));
   else vm.push(vm.address('field',field.index,ref));
   finishMemoryAccess(frame);
 });

@@ -1,8 +1,11 @@
 import {compareObjects} from './object-comparison.js';
+import {compareOrdinalIgnoreCase} from './string-compare.js';
 import {fail, string} from '../host.js';
 
 const comparerType = 'System.StringComparer';
 const stringInterface = 'System.Collections.Generic.IComparer`1<string>';
+const comparisons = Object.freeze({ordinal: compareOrdinal, ordinalIgnoreCase: compareOrdinalIgnoreCase});
+const getters = Object.freeze({get_Ordinal: 'ordinal', get_OrdinalIgnoreCase: 'ordinalIgnoreCase'});
 
 /** Compare nullable native strings by UTF-16 code units; only the sign is specified. */
 export function compareOrdinal(first, second) {
@@ -16,8 +19,14 @@ export function compareOrdinal(first, second) {
 export function resolveStringComparer(platform, reference) {
   if (reference === null) fail(platform, 'NullReferenceException', 'A comparer instance is required');
   const record = platform.heap.get(reference);
-  if (record.type === comparerType && platform.get(reference, '$comparison') === 'ordinal') return compareOrdinal;
-  fail(platform, 'NotSupportedException', 'This profile supports StringComparer.Ordinal; custom comparers are tracked by #2655');
+  const mode = record.type === comparerType ? platform.get(reference, '$comparison') : null;
+  if (Object.hasOwn(comparisons, mode)) return comparisons[mode];
+  fail(platform, 'NotSupportedException', 'This profile supports ordinal StringComparers; custom comparers are tracked by #2655');
+}
+
+/** Register the new getter only at the current A07 tail; released comparer IDs must not move. */
+export function registerStringComparerExtensions(registry) {
+  registry.prop(comparerType, 'OrdinalIgnoreCase', comparerType, null, true, true);
 }
 
 /** Invoke Compare through either StringComparer or its IComparer<string> contract. */
@@ -43,8 +52,9 @@ function registerStringComparer(registry) {
 }
 
 function invokeStringComparer(platform, descriptor, args) {
-  if (descriptor.name === 'get_Ordinal') {
-    const value = platform.singleton(comparerType + '.Ordinal', () => platform.make(comparerType, {'$comparison': 'ordinal'}));
+  if (Object.hasOwn(getters, descriptor.name)) {
+    const key = comparerType + '.' + descriptor.name.slice(4);
+    const value = platform.singleton(key, () => platform.make(comparerType, {'$comparison': getters[descriptor.name]}));
     return {handled: true, value};
   }
   if (descriptor.name === 'Compare') {

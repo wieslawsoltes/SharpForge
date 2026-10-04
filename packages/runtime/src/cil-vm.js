@@ -1,4 +1,6 @@
+import {admitCilAssemblyStacks,pushStackValue} from './execution/frame-stack.js';
 import {stopExecution} from './execution/stop.js';
+import {initializeExecutionProfiler,executionProfiler} from './execution/profiler.js';
 import {bindNativeAbi,cilNumericContext,marshalCilValue,cilValue,cilResultValue,cilArrayIndex} from './execution/cil-values.js';
 import {formatCilValue} from './value-formatting.js';
 import {runtimeTypeRoots,clearRuntimeTypes} from './execution/tokens.js';
@@ -31,9 +33,11 @@ export class CilVirtualMachine {
     initializeCilMethodEvents(this, options.runtimeEvents);
     this.inspector=bytes instanceof AssemblyInspector?bytes:new AssemblyInspector(bytes,options);this.report=verifyCilAssembly(this.inspector,options);
     if(!this.report.success){const error=new CilError('Managed IL verification failed: '+this.report.issues.map(i=>`${i.method??''}${i.offset===undefined?'':` IL_${i.offset.toString(16)}`}: ${i.message}`).join('; '));error.issues=this.report.issues;throw error;}
+    admitCilAssemblyStacks(this);
     const entry=this.inspector.getMethod(this.report.entryPoint);this.returnType=entry.signature.returnType;if(!entry.signature.isStatic)throw new CilError('Host invocation requires a static method');
     this.heap=new ManagedHeap(options);this.heap.rootProvider=()=>this.roots();this.frames=[];this.statics=new Map();this.strings=new Map();this.initialized=new Map();this._typeSystem=null;this.layoutCache=this.typeSystem.layouts;this.frameId=0;
     this.snapshotOwner=Object.freeze({});this.writeRevision=0;this.onWrite=null;this.state='ready';this.instructions=0;this.elapsedMs=0;this.output=[];this.outputCharacters=0;this.fault=null;this.pendingFault=null;this.onException=null;this.returnValue=null;this.exitCode=0;this.onOutput=options.onOutput??(()=>{});this.loadMs=performance.now()-started;
+    initializeExecutionProfiler(this,options.profile);
     for(const f of this.inspector.fields.values())if(f.isStatic)this.statics.set(f.token,storageDefault(this,resolveExecutionField(this.inspector,f.token).signature.type));
     const args=cilEntryArguments(this,entry,options);
     this.platform=new ManagedPlatform(this,options);this.scheduler=new CooperativeScheduler(this,options);this.call(entry.token,args);this.ensureInitialized(entry.ownerToken,'static-method');
@@ -47,6 +51,7 @@ export class CilVirtualMachine {
   }
   get top(){return this.frames.at(-1);}
   get runtimeEvents(){return cilRuntimeEvents(this);}
+  get profiler(){return executionProfiler(this);}
   get typeSystem(){
     if(this._typeSystem?.inspector!==this.inspector){clearRuntimeTypes(this);this._typeSystem=new CilTypeSystem(this);this.layoutCache=this._typeSystem.layouts;}
     return this._typeSystem;
@@ -62,7 +67,7 @@ export class CilVirtualMachine {
   format(v,type){return formatCilValue(this,v,type);}
   display(v){return v===null?'null':isReference(v)&&this.heap.get(v).kind==='string'?JSON.stringify(this.value(v)):this.format(v);}
   string(s){return literalString(this,s);}
-  push(v){if(this.top.stack.length>=this.options.maxStackValues)throw new ManagedFault('ExecutionLimitException','Evaluation stack budget exceeded');this.top.stack.push(v);}
+  push(v){pushStackValue(this,v);}
   pop(){if(!this.top.stack.length)throw new ManagedFault('InvalidProgramException','Evaluation stack underflow');return this.top.stack.pop();}
   call(token,args,extra={}){return call(this,token,args,extra);}
   ensureInitialized(typeToken,trigger='field',genericIdentity=null){return ensureInitialized(this,typeToken,trigger,genericIdentity);}

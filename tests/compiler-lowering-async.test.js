@@ -117,13 +117,13 @@ test('SF-A02-T09.2 top-level statements with await run as an async entry point',
   assert.deepEqual(lines, ['10']);
 });
 
-test('SF-A02-T09.2 a task of a result type the runtime does not have is named', () => {
+test('SF-A02-T09.2 a task without a registered numeric construction is named', () => {
   const longResult = notExecutable(
     program(`
       static async Task<long> Make() { await Task.Yield(); return 1; }
       static async Task Main() { await Make(); }`),
   );
-  assert.match(longResult.message, /64-bit integers/);
+  assert.match(longResult.message, /framework registry has no.*Task<long>/);
 });
 
 test('SF-A02-T02.6 a task of a user class shares the runtime task over object', () => {

@@ -20,6 +20,7 @@ import { NullableConditionalAccess } from './walker-conditional-access.js';
 import { NullableMemberSlots } from './walker-member-slots.js';
 import { NullableAttributeRules } from './walker-attributes.js';
 import { NullableTypeArgumentChecks } from './walker-type-arguments.js';
+import { NullableLambdas } from './walker-lambdas.js';
 import { NullableLoops } from './walker-loops.js';
 import { NullableRules } from './walker-rules.js';
 import { NOT_NULL, MAYBE_NULL, joinStates, FlowState, joinFlow } from './flow-state.js';
@@ -137,9 +138,6 @@ class NullableWalkerCore {
         this.replace(flow, joinFlow(branches.whenTrue, branches.whenFalse));
         return joinStates(whenTrue, whenFalse);
       }
-      case 'Lambda':
-        if (node.body) this.lambdaBody(node.body, flow.clone());
-        return NOT_NULL;
       case 'Binary':
         if (node.operator === '&&' || node.operator === '||') {
           const branches = this.condition(node, flow);
@@ -155,17 +153,6 @@ class NullableWalkerCore {
   replace(flow, other) {
     if (!other) return;
     flow.entries = other.entries;
-  }
-
-  lambdaBody(body, flow) {
-    const saved = this.method;
-    const savedTargets = this.jumpTargets;
-    this.method = null;
-    this.jumpTargets = [];
-    if ('completes' in body) this.statement(body, flow);
-    else this.expression(body, flow);
-    this.method = saved;
-    this.jumpTargets = savedTargets;
   }
 
   /** Reports a dereference of a possibly null receiver and marks the variable not-null afterwards. */
@@ -432,4 +419,4 @@ class NullableWalkerCore {
 
 /** The nullable flow walker: statements and expressions (above) composed with the condition and loop rules. */
 const NullableConditionRules = Base => NullableConditionalAccess(NullableAttributeRules(NullableConditions(NullableTypeArgumentChecks(Base))));
-export class NullableWalker extends NullableRules(NullableLoops(NullableConditionRules(NullableMemberSlots(NullableWalkerCore)))) {}
+export class NullableWalker extends NullableRules(NullableLoops(NullableConditionRules(NullableMemberSlots(NullableLambdas(NullableWalkerCore))))) {}

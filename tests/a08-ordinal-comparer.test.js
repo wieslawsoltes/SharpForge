@@ -126,11 +126,9 @@ test('ordinal CIL: interface Compare, List.Sort, castclass and isinst use the re
   } finally { vm.stop(); }
 });
 
-test('ordinal source: interface declarations, conversions and custom implementations retain explicit profile diagnostics', () => {
+test('ordinal source: interface type tests and custom implementations retain explicit profile diagnostics', () => {
   const cases = [
-    ['IComparer<string> comparer = StringComparer.Ordinal;', ['SF1012', 'SF2200']],
     ['object comparer = StringComparer.Ordinal; Console.WriteLine(comparer is IComparer<string>);', ['SF2098']],
-    ['new List<string>().Sort(StringComparer.Ordinal);', ['SF2200']],
     ['Console.WriteLine(0); class Custom : IComparer<string> { public int Compare(string a, string b) { return 0; } }', ['SF1014', 'SF2200']]
   ];
   for (const [source, expected] of cases) {
