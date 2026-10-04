@@ -118,7 +118,12 @@ export class EditorModel {
     const selections = redo ? this.undoStack.redo(buffer) : this.undoStack.undo(buffer);
     if (!selections) return false;
     this.setSelections(selections, { notify: false, primaryIndex: this.undoStack.restoredPrimaryIndex ?? 0 });
-    for (const event of events) this.emitChange({ ...event, bufferEdit: event, owner: this, undoBefore: before });
+    // Views must reach the final history snapshot before the first owner notification.
+    const historyEvents = Object.freeze(events);
+    for (const event of historyEvents) {
+      const bufferEdit = Object.freeze({ ...event, historyEvents });
+      this.emitChange({ ...bufferEdit, bufferEdit, owner: this, undoBefore: before });
+    }
     return true;
   }
   undo() { return this.#restoreHistory(false); }

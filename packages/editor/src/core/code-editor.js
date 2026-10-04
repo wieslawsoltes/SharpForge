@@ -1,5 +1,6 @@
 import {EditorModel} from '../model.js';
-import {normalizeSelections, transformSelections} from '../selections.js';
+import {normalizeSelections} from '../selections.js';
+import {subscribeViewSelections, updateViewSelections} from './view-selections.js';
 import {NativeKeymapAdapter} from '../keymaps/native.js';
 import {EDITOR_KEYMAPS} from '../keymaps.js';
 import {SyntaxHighlightIndex} from '../highlight.js';
@@ -98,6 +99,7 @@ export class CodeEditor {
     this.registerContribution(this.insights);
     this.keymapAdapter = new NativeKeymapAdapter(this, {mode: options.keymap ?? 'visual-studio',
       onState: state => { this.modalMode = state.mode; this.onKeymapState(state); }, clipboard: options.clipboard});
+    this.selectionSubscription = subscribeViewSelections(this);
     this.modelSubscription = this.model.onDidChange(change => this.modelChanged(change));
     this.readOnlySubscription = this.model.onDidChangeReadOnly(() => this.presentation.syncReadOnly());
     this.presentation.syncReadOnly();
@@ -138,6 +140,7 @@ export class CodeEditor {
     this.inputController.composition.cancel();
     this.keymapAdapter.beforeModelChange?.();
     this.saveViewState();
+    this.selectionSubscription?.();
     this.modelSubscription?.();
     this.readOnlySubscription?.();
     let model;
@@ -166,6 +169,7 @@ export class CodeEditor {
     this.view.layout.reset();
     this.view.scroll.reset();
     this.view.scroll.update([]);
+    this.selectionSubscription = subscribeViewSelections(this);
     this.modelSubscription = model.onDidChange(change => this.modelChanged(change));
     this.readOnlySubscription = model.onDidChangeReadOnly(() => this.presentation.syncReadOnly());
     this.presentation.syncReadOnly();
@@ -214,10 +218,8 @@ export class CodeEditor {
   }
 
   modelChanged(change) {
-    if (this.disposed) return;
-    this.selections = this.applying ? this.model.selections.map(selection => ({...selection}))
-      : transformSelections(this.selections, change.changes, change.after.length, this.primaryIndex).selections;
-    this.primaryIndex = Math.min(this.primaryIndex, this.selections.length - 1);
+    if (this.disposed || change.model && change.model !== this.model) return;
+    updateViewSelections(this, change);
     this.largeFile.update();
     this.highlightIndex.update(change.after, change);
     this.folding.applyChange(change);
@@ -251,7 +253,8 @@ export class CodeEditor {
     this.applying = true;
     try {
       const result = this.model[redo ? 'redo' : 'undo']();
-      this.setSelections(this.model.selections, {primaryIndex: this.model.primaryIndex});
+      this.setSelections(result ? this.selections : this.model.selections,
+        {primaryIndex: result ? this.primaryIndex : this.model.primaryIndex});
       return result;
     } finally { this.applying = false; }
   }
@@ -390,6 +393,7 @@ export class CodeEditor {
     this.saveViewState();
     this.disposed = true;
     for (const timer of [this.hoverTimer, this.changeTimer]) clearTimeout(timer);
+    this.selectionSubscription?.();
     this.modelSubscription?.();
     this.readOnlySubscription?.();
     this.foldSubscription?.();
