@@ -32,3 +32,11 @@ workspace, file-count and byte-budget checks.
 `sourceTypeDefinitions(parsedFiles, image)` and `sourceMemberDefinitions(parsedFiles, image)` expose the bounded source-to-CLI
 metadata projections used by `compileToIL`. They preserve namespaces, visibility, constructor access, properties and readonly flags.
 See [the source emission contract](docs/source-emission.md) for shapes, limits and explicit-option behavior.
+
+## Closed project assembly references
+
+A supplied PE reference may select `runtimeProfile: 'sharpforge'` to share the consuming compilation's closed framework identities.
+Executable use additionally requires canonical verification of real SharpForge PE method bodies. The compiler retains the complete
+assembly identity, exact SHA-256 and original metadata tokens in bounded external descriptors; dependency types are never redefined
+inside the consumer. Ordinary references keep strict assembly resolution and unsupported execution diagnostics.
+See [the project-reference contract](docs/project-references.md) for supported operations, bounds and the separate graph loader boundary.

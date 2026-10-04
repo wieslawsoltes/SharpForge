@@ -17,7 +17,9 @@
     "tests/a23-member-definitions.test.js",
     "tests/a23-cil-project-profile.test.js",
     "tests/a23-metadata-inspection.test.js",
-    "tests/a23-source-emission-model.test.js"
+    "tests/a23-source-emission-model.test.js",
+    "tests/a23-project-reference-emission.test.js",
+    "tests/a23-project-reference-binding.test.js"
   ],
   "browserScripts": [
     "tests/browser_msbuild_test.py"

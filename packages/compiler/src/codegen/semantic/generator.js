@@ -40,6 +40,7 @@ import { UnsupportedConstruct } from './unsupported.js';
 import { n } from './node-factory.js';
 import { memberGenerators } from '../../lowering/members/index.js';
 import { MultiDimensionalArrays } from '../../lowering/arrays.js';
+import { ProjectReferences } from './project-references.js';
 
 class GeneratorCore {
   /**
@@ -50,6 +51,8 @@ class GeneratorCore {
     this.analysis = analysis;
     this.files = files;
     this.program = new ProgramModel(new Map(files.map(f => [f.source.uri, f.source])), options.name ?? 'Application');
+    this.projectReferences = new ProjectReferences(this, options.references);
+    this.isLibrary = options.outputKind === 'library';
     this.bridge = frameworkBridge();
     this.types = new TypeMapper(this);
     this.delegates = new DelegateClasses(this);
@@ -315,14 +318,18 @@ export class SemanticGenerator extends GeneratorBase {
    */
   generate() {
     try {
+      this.projectReferences.validateInput();
       this.declareTypes();
       this.declareInitializers();
-      const entry = this.entryPoint();
+      const entry = this.isLibrary ? null : this.entryPoint();
       this.translateMembers();
-      const startup = this.startup(entry);
+      const startup = entry ? this.startup(entry) : null;
       for (const { method, body } of [...this.iterators.finish(), ...this.delegates.finish()]) this.bodies.push({ method, body });
       for (const { method, body } of this.bodies) new JumpIrEmitter(this.program, method).build(body);
-      return { image: this.program.toImage(this.files, startup.id) };
+      const image = this.program.toImage(this.files, startup?.id ?? null);
+      if (this.isLibrary) image.outputKind = 'library';
+      const externalReferences = this.projectReferences.snapshot();
+      return { image: externalReferences ? { ...image, externalReferences } : image };
     } catch (error) {
       if (!(error instanceof UnsupportedConstruct)) throw error;
       return { unsupported: { construct: error.construct, syntax: error.syntax, uri: error.uri } };
