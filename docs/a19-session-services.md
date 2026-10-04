@@ -154,6 +154,31 @@ handling and continues the selected managed browser process; it is not OS proces
 detachment. Renderer metrics identify the actual backend rather than claiming that
 a fallback rendered through WebGPU.
 
+### Active application inspection
+
+`DebuggerExtensions` accepts `sessions` and
+`getApplicationWindows: () => applicationWindows` from the Studio composition.
+The getter may return `null` before application windows are mounted. With these
+services, renderer selection, metrics and `uiSettled()` use the selected session's
+existing `ApplicationWindows` host; the debugger does not construct another host
+or apply the runtime's command stream twice. Opening the legacy WinUI tool brings
+the selected application's document window forward. Background tool refreshes
+preserve the focused document.
+
+Live Visual Tree requests capture both the application object and its complete
+worker/runtime identity. Selection, restart, stop and disposal invalidate pending
+requests and clear the old snapshot, including selected object IDs that may be
+reused by another application. `DebuggerExtensions.dispose()` releases inspection
+subscriptions and requests without disposing application-owned windows. The
+composition must call it when releasing the debugger. An embedding that supplies
+no SessionManager retains the existing standalone, single-host behavior.
+
+`tests/a19-application-inspector.test.js` exercises the actual debugger automation,
+session manager and worker-client contracts with controlled protocol replies and
+renderer boundaries. It covers late scenes, equal runtime serials, restart,
+disposal, background focus preservation and the standalone host. These focused
+unit boundaries do not claim browser layout, rendering or CSP qualification.
+
 ## Validation
 
 The focused Node files are `a19-worker-client.test.js`,
