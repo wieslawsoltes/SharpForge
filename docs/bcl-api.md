@@ -692,8 +692,10 @@ Registered families: <code>builder</code>.
 | 524331 | <code>bool System.Text.StringBuilder::Equals(System.Text.StringBuilder)</code> | implemented |
 | 524332 | <code>System.Text.StringBuilder System.Text.StringBuilder::Append(decimal)</code> | implemented |
 | 524333 | <code>System.Text.StringBuilder System.Text.StringBuilder::Append(System.Text.StringBuilder, int, int)</code> | implemented |
+| 524334 | <code>System.Text.StringBuilder System.Text.StringBuilder::Replace(char, char)</code> | implemented |
+| 524335 | <code>System.Text.StringBuilder System.Text.StringBuilder::Replace(char, char, int, int)</code> | implemented |
 
-Pinned reference: 50 implemented and 58 missing exact metadata rows.
+Pinned reference: 52 implemented and 56 missing exact metadata rows.
 
 | Reference kind | Exact reference signature | Status | Matching ABI IDs |
 | --- | --- | --- | --- |
@@ -793,8 +795,8 @@ Pinned reference: 50 implemented and 58 missing exact metadata rows.
 | method | <code>System.Text.StringBuilder::Insert``0(System.Int32,System.UInt32):System.Text.StringBuilder instance</code> | missing | — |
 | method | <code>System.Text.StringBuilder::Insert``0(System.Int32,System.UInt64):System.Text.StringBuilder instance</code> | missing | — |
 | method | <code>System.Text.StringBuilder::Remove``0(System.Int32,System.Int32):System.Text.StringBuilder instance</code> | implemented | 815 |
-| method | <code>System.Text.StringBuilder::Replace``0(System.Char,System.Char):System.Text.StringBuilder instance</code> | missing | — |
-| method | <code>System.Text.StringBuilder::Replace``0(System.Char,System.Char,System.Int32,System.Int32):System.Text.StringBuilder instance</code> | missing | — |
+| method | <code>System.Text.StringBuilder::Replace``0(System.Char,System.Char):System.Text.StringBuilder instance</code> | implemented | 524334 |
+| method | <code>System.Text.StringBuilder::Replace``0(System.Char,System.Char,System.Int32,System.Int32):System.Text.StringBuilder instance</code> | implemented | 524335 |
 | method | <code>System.Text.StringBuilder::Replace``0(System.ReadOnlySpan`1&lt;System.Char&gt;,System.ReadOnlySpan`1&lt;System.Char&gt;):System.Text.StringBuilder instance</code> | missing | — |
 | method | <code>System.Text.StringBuilder::Replace``0(System.ReadOnlySpan`1&lt;System.Char&gt;,System.ReadOnlySpan`1&lt;System.Char&gt;,System.Int32,System.Int32):System.Text.StringBuilder instance</code> | missing | — |
 | method | <code>System.Text.StringBuilder::Replace``0(System.String,System.String):System.Text.StringBuilder instance</code> | implemented | 816 |

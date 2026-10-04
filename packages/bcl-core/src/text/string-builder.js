@@ -8,6 +8,7 @@ import {appendBuilderArray} from './string-builder-append-array.js';
 import {appendBuilderValue} from './string-builder-append-builder.js';
 import {appendBuilderValueRange} from './string-builder-append-builder-range.js';
 import {builderEquals} from './string-builder-equality.js';
+import {replaceBuilderCharacters} from './string-builder-edit.js';
 
 const owner = 'System.Text.StringBuilder';
 const maximumCapacity = 2147483647;
@@ -218,6 +219,9 @@ function invokeMember(platform, descriptor, reference, values, scalars) {
       return platform.heap.string(value.slice(start, start + length));
     }
     case 'Equals': return builderEquals(platform, reference, values[0]);
+    case 'Replace':
+      if (descriptor.parameters[0] === 'char') return replaceBuilderCharacters(platform, reference, scalars);
+      return mutateBuffer(platform, reference, descriptor.name, values, scalars);
     default: return mutateBuffer(platform, reference, descriptor.name, values, scalars);
   }
 }
