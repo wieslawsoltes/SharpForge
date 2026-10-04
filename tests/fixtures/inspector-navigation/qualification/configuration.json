@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "before": {
+      "directory": "/tmp/sharpforge-a13-navigation-qualification/baseline",
+      "sourceRevision": "e905566c1933830deb6de7249062113c2b0eeee5"
+    },
+    "after": {
+      "directory": "/Users/wieslawsoltes/GitHub/SharpForge-a13-inspector-navigation",
+      "sourceRevision": "75ebc1606454b0f44230a31f9d2ce5138a944893",
+      "qualificationHead": "8ee7dfc696f5787a8b477d0a05ac0a9aa8b9b150"
+    }
+  },
+  "dependencies": "Own CIL source per variant; only hash-identical transitive package trees/manifests shared.",
+  "sharedHashes": {
+    "package.json": "118c0a9af4dc292d5df8f7c5e02121f8309957fe",
+    "package-lock.json": "61aa0aad42fe8ccb71ab679100a14237544c5f7f",
+    "unchangedPackageTrees": "040000 tree 6451aced45878f841bb3343d46f19abb6ade87fb\tarchive\n040000 tree 71e38278536a6e9cbf19f12ac991cef100f7c82d\tbcl-collections\n040000 tree a60436110fed5effbcd23d43b7d79b04105cffaa\tbcl-core\n040000 tree 61a3bff3f38a3d942ec91f2c12620752f7e651d8\tbytecode\n040000 tree 4602fc068eb0be47675bcd901fd452f0810005bc\tclr\n040000 tree 5f1ff7af001322bc7df7677f02b5a524c7ee49e1\tcompiler\n040000 tree 0ba385b2754947d34e884b975fee619d6d2b71ec\tcompute\n040000 tree fe83d527755ba36794b73e0d34a90f94187055ba\tcontrols\n040000 tree fd17779feebc4ae7c9c202bdfad3e213a2c74d00\tdebugger\n040000 tree 0d1086a83afd08708b0537a1483ce2e17774a24d\tdesigner\n040000 tree aa39592ceb5254769301fe24a0ed64b48b221513\tdocking\n040000 tree d46aedab942a4c9546042c4de3f696ed31f0418b\teditor\n040000 tree 427b86e3d081c0895f4e7664111f21b4986df541\textensions\n040000 tree 50d30190855892cd750a7df16a30323e0e850214\tframework\n040000 tree 51eba0f53f80cf915307e84578a00e0f6632eea4\tlanguage\n040000 tree 3fb5a1ebc086c121907f2c6b2c76353630619783\tmsbuild\n040000 tree a0ff0f968d8fd9a04ede276e5a7c90f6317c22e5\tnetwork\n040000 tree bdfc9583047902789d8bedf0717e0e638582f3c0\tproject-system\n040000 tree 32463189d2d45a832d614d8e81b5924cac073965\tprotocol\n040000 tree 1ae684c57dba0709a30e4dcdbf78bf2815785f34\trefactoring\n040000 tree 5c6e1015de19c89df38d0fc0612a7eee05d39472\truntime\n040000 tree d07a1381aa773f8bffa39eba8ea8471c322ce820\tsymbols\n040000 tree 3462eee3ed62ed6e49dd819f54349a92e7042e80\tsyntax\n040000 tree cd2c191bfb65843ea99448059521d44343b23552\ttemplates\n040000 tree e68012e1423ba4c7dcb5fcab453f22fa87ffda05\ttext\n040000 tree 6158f4499d0ed48e6780605ea05736a97ade3b29\twinui\n040000 tree 2ef61c563232e8ed2966421936e621d4d6466e82\tworkspace"
+  }
+}

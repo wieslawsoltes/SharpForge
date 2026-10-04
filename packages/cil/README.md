@@ -149,3 +149,36 @@ or exception sections. Invalid input throws `CilError`. `pe.methodBody` shares
 the same header parser and retains its existing result shape.
 
 Runtime admission checks [reachable try-entry stack heights](VERIFIER-HANDLER-ENTRY.md) before granting stack-capacity proofs.
+
+`AssemblyInspector.summary()` retains the full existing metadata inventory and
+method decoding behavior. Opt into bounded method pages with
+`summary({ methodOffset: 0, methodLimit: 100 })`: the result contains assembly
+header facts, `methods`, `diagnostics` and
+`methodPage: { offset, limit, total, nextOffset }`. It omits full type/reference/
+resource inventories. Page offsets follow physical MethodDef token order,
+including images whose MethodPtr owner order differs; `nextOffset: null` means
+there is no next nonempty page. Offset may equal the row count, and a zero limit
+returns an empty page. Limit defaults to 100 and cannot exceed 1,000.
+
+Only selected method definitions are looked up. With `includeMethods: false`,
+pages return definitions without reading bodies. Otherwise the shared public
+header reader preflights every requested body before decoding, charging each
+occurrence even when RVAs alias. `maxPageCodeBytes` defaults to 1 MiB and may be
+lowered to zero. Invalid pagination or an over-budget page throws `CilError`;
+malformed individual methods retain existing per-method diagnostics. `signal`
+supports cancellation. Returned page methods own their nested data. Existing
+metadata/body limits and inspector caches remain active; the byte budget is
+logical declared code size, not a measured process-memory ceiling.
+Construction still reads metadata and indexes member names/ownership; paging
+defers method signature/body projection and the unrequested full inventories.
+
+`inspector.tokenUri(token)` returns
+`sf-metadata://<module-mvid>/0x<eight-hex-token>`. `inspector.resolveUri(uri)`
+returns `{ mvid, token }` for a valid identity in the same module, including after
+reloading its PE bytes. These methods never decode bodies or load assemblies.
+Every existing metadata-row token and bounded user-string token is supported;
+nil, non-integer, overflow, missing-row/heap, malformed URI and foreign-MVID
+inputs throw `CilError`. URI parsing accepts hex/scheme case variations and
+rejects additional query/fragment/escaped components. Modules without a nonzero
+MVID have no stable URI. An MVID is a metadata identity, not a content hash or
+signature verification; changed-module versions require their own URI.
