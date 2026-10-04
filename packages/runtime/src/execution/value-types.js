@@ -32,7 +32,8 @@ function cacheFor(vm) {
   return cache;
 }
 
-function supported(vm, table) {
+/** Validate the existing storage profile without allocating a default value. */
+export function requireValueStorage(vm, table) {
   const cache = cacheFor(vm);
   if (cache.types.has(table)) return;
   const definition = vm.typeSystem.types.get(table.definitionToken);
@@ -43,7 +44,7 @@ function supported(vm, table) {
 }
 
 function record(vm, table, source, budget) {
-  supported(vm, table);
+  requireValueStorage(vm, table);
   if (source !== null && (!isValueRecord(source) || source.valueType !== table || !Object.isFrozen(source) ||
       !Object.isFrozen(source.fields) || source.fields.length !== table.fields.length)) {
     invalid('Struct payload or type identity does not match its declared storage');
