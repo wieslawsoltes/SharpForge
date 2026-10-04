@@ -2,7 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { basename } from 'node:path';
 import { AssemblyInspector, decodeCoded, FieldAttributes } from '@sharpforge/cil';
-import { compile, compileToAssembly, createReferenceSet } from '@sharpforge/compiler';
+import { compile, compileToAssembly, compileToReferenceAssembly, createReferenceSet } from '@sharpforge/compiler';
 import { loadReferencePack, readReferenceFiles } from '@sharpforge/compiler/node';
 import { loadFixtures, referenceFixtureDirectory } from '../packages/compiler/test/cil-emission/harness.js';
 import { dotnetHost, sdkVersion, openDotnetScratch, runFixtureOnDotnet } from '../packages/compiler/test/differential/tools/dotnet-axis.mjs';
@@ -76,6 +76,21 @@ test('A02-T55 an explicit reference set missing Microsoft.CSharp produces a diag
   const result = compileToAssembly(sourceOf('dynamic value = 4; object answer = value + 1;'), { references });
   assert.equal(result.assembly, null);
   assert.deepEqual(errors(result).map(entry => entry.code), ['CS0656']);
+});
+
+test('A02-T55 a helper with the right name but an incompatible signature is CS0656', { skip }, () => {
+  const paths = pack.pack.files.filter(path => basename(path) !== 'Microsoft.CSharp.dll');
+  const library = compileToReferenceAssembly(`namespace Microsoft.CSharp.RuntimeBinder {
+    public sealed class CSharpArgumentInfo {
+      public static CSharpArgumentInfo Create(int flags, string name) { return null; }
+    }
+  }`, { name: 'IncompleteDynamicRuntime', references: createReferenceSet(readReferenceFiles(paths)) });
+  assert.ok(library.assembly, errors(library).map(entry => entry.message).join('; '));
+  const references = createReferenceSet([...readReferenceFiles(paths), { bytes: library.assembly, display: 'IncompleteDynamicRuntime.dll' }]);
+  const result = compileToAssembly(sourceOf('dynamic value = 4; object answer = value + 1;'), { references });
+  assert.equal(result.assembly, null);
+  assert.deepEqual(errors(result).map(entry => entry.code), ['CS0656']);
+  assert.match(errors(result)[0].message, /CSharpArgumentInfo\.Create/);
 });
 
 test('A02-T55 restrictions on dynamic arguments remain binder diagnostics', { skip }, () => {

@@ -52,6 +52,12 @@ class Program
     static int Right() { Console.WriteLine("right"); return 3; }
     static string Overload(int value) { return "static-int"; }
     static string Overload(object value) { return "static-object"; }
+    static ref Counter CounterAt(Counter[] values) { return ref values[0]; }
+    static void ReadonlyCounter(in Counter counter, dynamic amount)
+    {
+        counter.Add(amount);
+        Console.WriteLine(counter.Value);
+    }
     static object Generic<T>(T value)
     {
         dynamic box = new Box(1);
@@ -102,6 +108,10 @@ class Program
         Console.WriteLine(counter.Value);
         Console.WriteLine((object)(counter[index] += Right()));
         Console.WriteLine(counter.Value);
+        Counter[] counters = new Counter[] { counter };
+        CounterAt(counters).Add(runtime);
+        Console.WriteLine(counters[0].Value);
+        ReadonlyCounter(in counter, runtime);
         dynamic callable = (Func<int, int>)(value => value * 2);
         Console.WriteLine((object)callable(6));
         new Program().PrivateCall();
@@ -116,6 +126,8 @@ class Program
         Console.WriteLine((object)box.Value);
         box.Small = 1;
         Console.WriteLine((object)box.Small);
+        Console.WriteLine((object)(box.Small += 2));
+        Console.WriteLine((box.Small += 1) is byte);
         object boxed = 1;
         try { box.Small = boxed; } catch (RuntimeBinderException) { Console.WriteLine("static-object"); }
         Console.WriteLine((object)(box.Value++));

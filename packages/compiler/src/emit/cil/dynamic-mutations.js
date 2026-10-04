@@ -52,6 +52,9 @@ export const DynamicMutationEmission = Base =>
         this.il.emit('stloc', result);
         this.dynamicSite(node, 'convert', [() => this.il.emit('ldloc', result)]);
       }
+      // A dynamic setter may narrow the operator result (for example int to a byte property); its returned value
+      // is the compound expression's result, including that conversion and its runtime type.
+      if (location instanceof DynamicLocation) return location.endStore(isUsed);
       return this.finishStore(location, isUsed);
     }
     /** `d.Member += handler`: distinguish an event from a delegate-valued property before reading the member. */
@@ -82,6 +85,7 @@ export const DynamicMutationEmission = Base =>
         this.il.emit('ldloc', before);
         return undefined;
       }
+      if (location instanceof DynamicLocation) return location.endStore(isUsed);
       return this.finishStore(location, isUsed);
     }
   };

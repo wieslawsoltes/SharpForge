@@ -38,12 +38,13 @@ export class DynamicLocation {
   beginStore() {
     this.capture();
   }
-  endStore() {
+  endStore(keepResult = false) {
     const emitter = this.emitter;
     const value = emitter.temp(emitter.core.object);
     emitter.il.emit('stloc', value);
     emitDynamicSite(emitter, this.setter, [...this.storeOperands, () => emitter.il.emit('ldloc', value)]);
-    emitter.il.emit('pop');
+    if (!keepResult) emitter.il.emit('pop');
+    return keepResult ? undefined : false;
   }
   address() {
     return this.emitter.unsupported('taking the address of a dynamically bound member or indexer', this.node.syntax);
