@@ -18,6 +18,10 @@ Unicode17 property tables drive bounded extended-grapheme segmentation and scrip
 
 The pinned bidi-js implementation supplies Unicode13 paragraph levels and visual ordering. The adapter expands scalar levels to UTF-16 and resets whitespace at each actual line boundary. Shaped RTL glyph arrays retain their original order within a visual item.
 
+## Line opportunities
+
+Pinned Unicode17 UAX14 rules preserve nonbreaking spaces, word joiners, explicit opportunities, CJK behavior and mandatory breaks. A caller-selected finite work budget bounds adversarial lookahead; cancellation is observed before even a short input is processed.
+
 ## Validation
 
 Focused cases were authored and included in the completed A17 scope gate. The publication manifest records its exact prior evidence and any subsequent repair. Required core is pending on this exact branch tree. Browser pixels, native WinUI comparisons and physical GPU qualification are separate gates.
