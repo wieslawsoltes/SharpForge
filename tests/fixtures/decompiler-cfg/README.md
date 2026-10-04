@@ -48,22 +48,83 @@ explicit diagnostic; an otherwise valid CFG stays accessible when C# lowering
 falls back. Limits and cancellation propagate instead of being reported as source
 reconstruction failures.
 
-## Validation commands
+## Retained validation and replay
 
-Only the root agent runs capture and tests in the granted serial validation slot:
+The focused Node run at implementation commit `b86dc790` passed **78 of 78 tests**,
+with no failures, skips or cancellations. [node-results.txt](node-results.txt)
+retains the exact output, including the existing managed-IL and shared dataflow
+regressions. [evidence.json](evidence.json) records implementation/tree identity,
+source/configuration hashes and the retained log/reference hashes.
+
+The native capture succeeded for **five Roslyn-built methods** on .NET SDK
+10.0.201, CoreCLR/reference pack 10.0.5 and Roslyn 5.3.0-2.26153.122, linux-x64.
+The retained [native.json](native.json) includes source/image/compiler/reference
+hashes, compiler arguments and raw execution results. The local OS environment is
+recorded; it is not an immutable runner image. [native-capture.txt](native-capture.txt)
+retains the compact capture output. The comparison does not claim a CoreCLR/JIT CFG
+oracle; its independently observed IL/EH facts are described above.
+
+Replay the focused gate through the resource wrapper:
+
+```sh
+node scripts/limited.js node --test \
+  tests/a13-07-cfg.test.js \
+  tests/a13-07-cfg-reference.test.js \
+  tests/managed-il.test.js \
+  tests/a03-verifier-dataflow.test.js
+```
+
+The committed native reference is sufficient for offline tests. Regenerate it only
+when needed, with the pinned toolchain available; this command compiles/executes the
+reference and writes the named file:
 
 ```sh
 node scripts/limited.js node tests/fixtures/decompiler-cfg/capture.mjs tests/fixtures/decompiler-cfg/native.json
-node scripts/limited.js node --test tests/a13-07-cfg.test.js tests/a13-07-cfg-reference.test.js tests/managed-il.test.js tests/a03-verifier-dataflow.test.js
 ```
 
 `browser.mjs` exports `run()` for the existing browser module harness. It exercises
 the graph corpus, diagnostics/limits/cancellation/ownership, pipeline behavior and
 native reference replay through the browser JavaScript API. It does not execute
-managed IL. Node/browser validation and new native capture are pending when this
-implementation is handed off; the implementation agent ran no tests/builds or
-benchmarks. Source VM/direct CIL/Rust native/Wasm execution coverage is not implied
-by successful metadata analysis.
+managed IL. No passing browser result is retained for this batch; browser
+qualification remains pending. These graph/pipeline APIs are host JavaScript
+analysis. The existing managed-IL regressions in the focused gate do not establish
+new source-VM, direct-CIL, Rust-native or Rust-Wasm graph execution targets or broader
+platform coverage.
+
+## CFG feature-cost benchmark
+
+`packages/cil/tools/benchmark-decompiler-cfg.mjs` compares the pre-CFG
+`decompileMethod` implementation at `8b101c0c` with candidate CFG source at
+`b86dc790`. Run the driver from the candidate checkout; it imports the baseline
+library directly, so the baseline needs no copied driver or source change. Both
+checkouts need their ordinary workspace package aliases. The driver verifies and
+records that the fixture's CIL import and CIL's direct sibling dependencies resolve
+inside their respective checkouts.
+
+```sh
+node scripts/limited.js node packages/cil/tools/benchmark-decompiler-cfg.mjs \
+  --baseline /path/to/pre-cfg-checkout \
+  --output /existing/directory/decompiler-cfg-benchmark.json
+```
+
+It uses the independently authored arithmetic `Add` assembly plus the captured
+native `Loop` and `Finally` methods. Each library constructs its own inspector and
+prewarms the method lookup. Before and after timing, the driver requires identical
+legacy token/name, diagnostics, source text, language and `complete` output. The candidate's additional graph
+dimensions are recorded separately. `Finally` must remain a full-IL source fallback.
+
+For each case and variant it performs 20 warm batches, then 100 measured batches of
+200 calls. Variant order alternates and case order rotates. The output retains every
+measured sample chronologically, the median and nearest-rank p95 in nanoseconds per
+call, source/image/driver hashes, revisions and host configuration. Inspector setup,
+equality checks and summarization are outside timing. Existing IL-formatting work
+inside the fallback remains part of the operation.
+
+The comparison reports the cost of adding CFG output to an existing API. It is not
+a same-result speedup comparison. The shared-host caveat is recorded; there is no
+allocation counter, forced GC or isolated opcode measurement. The driver is prepared,
+but no benchmark measurements are retained yet. Node test durations are not
+performance evidence.
 
 Graph splitting/projection uses O(I + E + C) time and storage; existing EH geometry
 validation additionally sorts O(C log C) intervals and uses a bounded instruction

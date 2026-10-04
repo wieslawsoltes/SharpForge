@@ -117,3 +117,8 @@ leaves #2548, #2549 and #2550.
 See the [focused corpus and reference protocol](../../tests/fixtures/decompiler-cfg/README.md)
 for reviewed graph tuples, .NET IL/EH observations, browser replay and validation
 commands.
+
+The fixture retains 78 passing focused Node tests and five native method observations
+from SDK 10.0.201/CoreCLR 10.0.5. Browser qualification remains pending. Its bounded
+benchmark driver compares cached legacy decompilation with the additional CFG work;
+measurement results are pending, and no speedup or allocation claim is made.

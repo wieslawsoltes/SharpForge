@@ -1,0 +1,137 @@
+{
+  "format": "sharpforge.decompiler-cfg.evidence",
+  "version": 1,
+  "workItem": "SF-A13-T07.1",
+  "issue": 2547,
+  "baseCommit": "8b101c0c7e8ad73675dfe12e68f26329d7ea2d9c",
+  "implementationCommit": "b86dc79001c68d8d7558487f35984e2682c8f1d3",
+  "implementationTree": "6bbcb1487319d84d4b2f691d38b413c138fb1e70",
+  "provenance": "Existing serial validation output and native capture retained without rerunning qualification.",
+  "node": {
+    "file": "node-results.txt",
+    "originalFile": "cfg-tests.tap",
+    "sha256": "4b02d815f6b0260440ed56213ad43188be11e3b7f0ddaa2ea749cd22988541ca",
+    "reporter": "Node spec output; original filename used a .tap suffix",
+    "result": {
+      "tests": 78,
+      "suites": 0,
+      "pass": 78,
+      "fail": 0,
+      "cancelled": 0,
+      "skipped": 0,
+      "todo": 0,
+      "duration_ms": 8128.834617
+    },
+    "testFiles": [
+      "tests/a13-07-cfg.test.js",
+      "tests/a13-07-cfg-reference.test.js",
+      "tests/managed-il.test.js",
+      "tests/a03-verifier-dataflow.test.js"
+    ],
+    "replayCommand": [
+      "node",
+      "scripts/limited.js",
+      "node",
+      "--test",
+      "tests/a13-07-cfg.test.js",
+      "tests/a13-07-cfg-reference.test.js",
+      "tests/managed-il.test.js",
+      "tests/a03-verifier-dataflow.test.js"
+    ],
+    "commandProvenance": "Replay invocation for these suites; retained output has no original command preamble.",
+    "recordedEnvironment": null,
+    "configurationNote": "The retained Node output records wrapper slot waiting, but no complete environment or override set.",
+    "durationNote": "Test-run duration is diagnostic output, not benchmark evidence."
+  },
+  "native": {
+    "file": "native.json",
+    "sha256": "bfcaf0f930c76cdfd133565ffd5779f5e85258034f1fd2f21051a868d6a3cfc1",
+    "captureOutput": "native-capture.txt",
+    "captureOutputSha256": "bbf41a577627bae1000bd96ce88abeb264e93de1bda608d6bfa726c7a61cc68d",
+    "originalCaptureOutput": "cfg-native.log",
+    "sourceSha256": "6f36cad059d7ca9a4ef6263887a6310a1bf98ffbd2a0d5e6e627f0ebede90fdc",
+    "imageSha256": "53af64fc5a8db6df9b64fe46ab8e1518a33015a0aec0f33c2101d84edc750aa3",
+    "methods": [
+      "Diamond",
+      "Loop",
+      "Switch",
+      "Finally",
+      "FilterFinally"
+    ],
+    "sdk": "10.0.201",
+    "runtime": ".NET 10.0.5",
+    "environment": {
+      "platform": "linux-x64",
+      "osRelease": "6.18.44",
+      "node": "v24.19.0",
+      "image": {
+        "kind": "local",
+        "pinnedImage": false,
+        "reason": "Local OS is recorded, not an immutable runner image."
+      },
+      "imageOS": null,
+      "imageVersion": null
+    },
+    "observations": {
+      "filterResult": 44,
+      "finallyResult": 4,
+      "finalizers": 1
+    },
+    "scope": "Independent CoreCLR IL bytes and EH clauses; manually reviewed graphs remain the exact topology oracle.",
+    "configurationNote": "Full compiler/reference hashes, arguments, raw process results and assembly image are retained once in native.json."
+  },
+  "browser": {
+    "entryPoint": "tests/fixtures/decompiler-cfg/browser.mjs",
+    "export": "run",
+    "status": "prepared; no passing browser result retained"
+  },
+  "performance": {
+    "status": "driver prepared; measurement pending",
+    "driver": "packages/cil/tools/benchmark-decompiler-cfg.mjs",
+    "driverSha256": "991308fe80164c4fd7efd012a4dded700a8d73c47044d7678936a3b6249bfe53",
+    "baselineCommit": "8b101c0c7e8ad73675dfe12e68f26329d7ea2d9c",
+    "candidateSourceRevision": "b86dc79001c68d8d7558487f35984e2682c8f1d3",
+    "warmupBatches": 20,
+    "measuredSamplesPerCaseAndVariant": 100,
+    "iterationsPerBatch": 200,
+    "cases": [
+      "ArithmeticAdd",
+      "NativeLoop",
+      "NativeFinally"
+    ],
+    "scope": "Cached decompileMethod feature cost for added CFG output, with untimed exact legacy-output equality guards.",
+    "allocationCounter": null,
+    "speedupClaim": false
+  },
+  "hashScope": "Changed implementation/tests plus focused dependencies and capture configuration; implementationTree identifies remaining repository sources.",
+  "sourceSha256": {
+    "packages/cil/src/decompiler.js": "c43489120e1cff8df74d08cda91d9d09ce1c1bcfb31825571845c8ec387d1b0b",
+    "packages/cil/src/decompiler/cfg-contracts.js": "508c193e6e110b011fae41f3cb560d38adff76da694fdc1ebed7d9343d21228b",
+    "packages/cil/src/decompiler/cfg-input.js": "1a81846bc8af48fbac237009cbf20c46f45c6973deb55972202c8d015dd0ccd0",
+    "packages/cil/src/decompiler/cfg.js": "42b45f2f4e29cbbd6744bc3c3dd834c79c6ae6da2bd93a119b39d670cf00d633",
+    "packages/cil/src/decompiler/control-instructions.js": "d96186994f804601f6962b886358c6cdace7c137a7062d867513d5d025821513",
+    "packages/cil/src/decompiler/csharp.js": "73e4d3b68047cd1b9d91c55c4c37dad397c1f2dc612a990d62ae789227fd40fd",
+    "packages/cil/src/decompiler/expressions.js": "2f1a018ecb61a3c21671f9ec615b018e36f43a42b83a39420d63e8befba164d7",
+    "packages/cil/src/decompiler/member-instructions.js": "6d557a59d7e9825e189fd824086e02d53c7e81ecbbe59cd0058ef4d7a06b447a",
+    "packages/cil/src/decompiler/pipeline.js": "dc458e9b4f6574a74b8e2d36fa9dc53f3bf61afedba20bfc1bed6e185dd7aa99",
+    "packages/cil/src/decompiler/value-instructions.js": "7a2301e59884405d5e709d3c60d82bc3aeb5936905c9f267673c410d6f007b0f",
+    "packages/cil/src/index.js": "cce0de055677f8ee7e07edcec183c67dc39047d34ff7039b4b275bd3f46a4fc9",
+    "packages/cil/src/verify/dataflow-blocks.js": "e69b1f30307a0b4ed97ecdab15b1c6d5edb666c00c8ab5f63100ed4502c92e8b",
+    "planning/qualification/oracle-toolchain.json": "58eaf5e63a8edcf47d3ef96635655f1dd89d230a15b5b39f29503576484fe52d",
+    "scripts/conformance/oracle/clr-run.js": "edb7175a12ffaec9f7aa837b3d3c717514c4d7c1d761c91c8cac5b39f714f2c8",
+    "scripts/conformance/oracle/roslyn-compile.js": "0f7dafdc3a61dcc70e5c354d0277babba10411b744c7921ee141ce42c48898e3",
+    "scripts/conformance/oracle/toolchain.js": "43d734f4899c0484475eb917e58b46161490b4622ace0b0a688488c504c835a6",
+    "scripts/limited.js": "d60fa1310cc85ce9426914dd4b79b1b500dcb2eab0928b422d24994d90a650f7",
+    "scripts/planning/lib/resource-limits.js": "f70d0f2862ad4a5e0afce5e47ecf8e055cf82aefc44fefc96a3b4989293ee382",
+    "tests/a03-verifier-dataflow.test.js": "da1dad44403ddff7900a9d1f812790c98fb288c345ce907e1fbc1f37f12db94c",
+    "tests/a13-07-cfg-reference.test.js": "7b91e0cf4d54c9cacbb56941ce5893aded73e84ccbb032e5798e390dbb6bc745",
+    "tests/a13-07-cfg.test.js": "3978ee71cdbed903a8799af97598c1633f2c801cd06c4fa10d6c7e0b6518a6d9",
+    "tests/fixtures/decompiler-cfg/Program.cs": "6f36cad059d7ca9a4ef6263887a6310a1bf98ffbd2a0d5e6e627f0ebede90fdc",
+    "tests/fixtures/decompiler-cfg/browser.mjs": "b0b59746f790df943c9d52e4a8370742b85e11d02418827a5a2ec8ac89393b85",
+    "tests/fixtures/decompiler-cfg/capture.mjs": "82cbe8bd7eb17b75b466b0c4532aaa89951230fd6a9d9f883a38251e967f1b92",
+    "tests/fixtures/decompiler-cfg/input.mjs": "5390e0e3819340c554ec0c377894a12a2fc349a44ac98765c37b362de81e5517",
+    "tests/managed-fixtures.js": "53b6e844b4a1dccd707aed5ffa0e0e4840558ed4bb67adc9b9ae04ed7573e7fd",
+    "tests/managed-il.test.js": "8065065e712022b91fc0948eb700b53f01a99a82f6591c278f2573ec6ee4962d",
+    "tests/manifests/A13.json": "dd2583f13f208567f0aa2688e415256dcb479b765ee7cdce5b285140ea78b4b3"
+  }
+}
