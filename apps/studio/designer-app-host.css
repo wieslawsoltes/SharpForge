@@ -58,7 +58,7 @@
   border-radius: 3px;
 }
 .designer-app-host-button[aria-pressed="true"] {
-  background: var(--design-accent);
+  background: var(--design-primary);
   color: var(--design-on-primary);
 }
 .designer-app-host :focus-visible {

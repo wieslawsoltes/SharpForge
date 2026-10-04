@@ -44,6 +44,10 @@ test('designer text remains readable and follows Dark, Light, Blue and High Cont
       const second = luminance(resolveThemeToken(palette, '--design-panel'));
       assert((Math.max(first, second) + 0.05) / (Math.min(first, second) + 0.05) >= 4.5, `${theme}: ${foreground}`);
     }
+    const primary = luminance(resolveThemeToken(palette, '--design-primary'));
+    const selectedText = luminance(resolveThemeToken(palette, '--design-on-primary'));
+    assert((Math.max(primary, selectedText) + 0.05) / (Math.min(primary, selectedText) + 0.05) >= 4.5,
+      `${theme}: selected command text`);
     if (theme === 'blue' || theme === 'high-contrast') {
       assert.equal(resolveThemeToken(palette, '--design-panel'), resolveThemeToken(palette, '--wb-panel'));
       assert.equal(resolveThemeToken(palette, '--design-foreground'), resolveThemeToken(palette, '--wb-fg'));
@@ -51,6 +55,8 @@ test('designer text remains readable and follows Dark, Light, Blue and High Cont
     }
   }
   assert.equal(resolveThemeToken(activeThemePalette(tokens, 'light'), '--design-background'), '#dfe5ed');
+  assert.match(read('apps/studio/designer-app-host.css'),
+    /\.designer-app-host-button\[aria-pressed="true"\]\s*\{\s*background:\s*var\(--design-primary\);\s*color:\s*var\(--design-on-primary\)/);
 });
 
 test('forced colors replace every designer palette paint with a system color', () => {
