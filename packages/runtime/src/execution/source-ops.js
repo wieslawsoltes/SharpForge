@@ -4,13 +4,15 @@ import {checkArrayStore} from './casting.js';
 import {binary as cilBinary,convert as cilConvert,float} from './numeric-ops.js';
 import {ManagedFault, isReference} from '../heap.js';
 import {enumInfo,enumValue} from './enums.js';
+import {primitiveDefault} from '../gc/allocation.js';
 export {sourceEnum,enumToString} from './enums.js';
 export {runtimeTypeRoots,clearRuntimeTypes,runtimeTypeText} from './tokens.js';
 const numericContext = Object.freeze({fault: (name, message) => new ManagedFault(name, message)});
 
 export function defaultValue(type,vm={}) {
   if(enumInfo(vm,type))return enumValue(vm,type,0);
-  return type === 'int' || type === 'double' ? 0 : type === 'bool' ? false : null;
+  if(vm.heap)return primitiveDefault(vm.heap.methodTables.get(type));
+  return type === 'long' ? 0n : ['int', 'double', 'nint'].includes(type) ? 0 : type === 'bool' ? false : null;
 }
 
 /** Source numeric modes: 0 floating, 1 Int32, 2 string, 3 Boolean, 5 checked Int32. */

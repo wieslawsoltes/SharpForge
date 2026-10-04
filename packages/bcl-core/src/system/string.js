@@ -68,7 +68,7 @@ function splitString(platform, receiver, values, scalars) {
     for (const value of parts) {
       const reference = platform.heap.string(value);
       references.push(reference);
-      platform.heap.pins.push(reference);
+      platform.heap.pinRoot(reference);
     }
     return makeArray(platform, 'string', references);
   });

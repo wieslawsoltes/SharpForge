@@ -44,6 +44,14 @@ backward after restore; event sequence numbers stay strictly increasing. This
 is an event log, not a cumulative instruction profiler. Failed restore does
 not change the event observer.
 
+Suspended managed finalizers keep their own live frames and retain the same
+method and offset-map identities across snapshots. Replaying a finalizer opens
+a new observed span without repeating its `MethodLoad`. Nested finalizer and
+synchronous managed-callback slices defer host delivery until the interrupted
+VM execution has been restored. If a later heap service rejects restoration,
+rollback detaches the abandoned finalizer before restoring the previous
+context; its frames do not remain in the observer's live-frame inventory.
+
 | Surface | Status |
 | --- | --- |
 | Direct-CIL MethodLoad/Enter/Leave | Implemented, opt-in |
@@ -73,3 +81,8 @@ structure report completed with 264 repository warnings. Final main integration
 at `f4696f74` resolves the stacked merge ancestry; it changes no runtime, bytecode,
 CIL or focused test files. No native/browser qualification or performance
 measurement was performed.
+
+The A06 finalizer integration adds `a06-finalizer-restore-rollback.test.js` and
+the suspended-finalizer cases in `a06-upstream-runtime-integration.test.js`.
+Their combined validation is pending; the upstream results above predate this
+integration and do not qualify those new cases.

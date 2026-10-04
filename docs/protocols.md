@@ -52,7 +52,21 @@ Supported requests: initialize, launch/restart, configurationDone, source/functi
 
 Instruction references are opaque `il:06000001:00000002` strings (MethodDef token and IL offset). The disassembler returns actual bytes/labels and bounded instruction windows. Source paths are absent when no source mapping exists. Ordinary DLLs do not gain reconstructed-source debugging. The debugger skips the resumed stop once, respects managed frame depth for next/out, and pauses exceptions before unwinding. Resume handles the saved fault exactly once.
 
-No CLR/native process attach, restartFrame, memory read/write, async stacks, multiple execution threads, function evaluation, hot reload, Portable PDB debugging or full DAP conformance. Initialize negotiates linesStartAt1 and columnsStartAt1, including stopped frame and breakpoint range conversion. Reverse snapshots restore source-profile or opted-in direct-IL managed state only. Neither transport nor guest interpreter is an independently audited security sandbox.
+No CLR/native process attach, restartFrame, async stacks, multiple execution threads, function evaluation, hot reload, Portable PDB debugging or full DAP conformance. Initialize negotiates linesStartAt1 and columnsStartAt1, including stopped frame and breakpoint range conversion. Reverse snapshots restore source-profile or opted-in direct-IL managed state only. Neither transport nor guest interpreter is an independently audited security sandbox.
+
+### Pinned payload memory
+
+`readMemory` and `writeMemory` support bounded primitive/enum array bytes and
+read-only UTF-16 strings in source and direct-CIL sessions. Initialization exposes
+both request capabilities. Clients declaring `supportsMemoryReferences: true`
+receive opaque per-stop references on eligible variables and evaluations; clients
+declaring `supportsMemoryEvent: true` receive successful write notifications.
+`sharpforge/pinMemory` creates a restricted window from a current heap variable or
+side-effect-free expression, and `sharpforge/releaseMemory` releases it. Transfer
+data is canonical base64; bounds, exact counted pins, allocation generations,
+permissions, and scope ownership are checked. See the
+[memory API and lifecycle](gc-debugger-memory.md) for limits, snapshot behavior,
+unsupported storage, and prepared validation fixtures.
 
 ## Evidence and references
 

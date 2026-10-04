@@ -27,7 +27,7 @@ export function enterCatch(vm, frame, handler, fault) {
   const end = siblings[0]?.target ?? after;
   frame.caught = (frame.caught ?? []).filter(c => handler.target >= c.start && handler.target < c.end && c.start !== handler.target);
   frame.caught.push({start: handler.target, end, fault});
-  frame.exception = fault;
+  vm.heap.writeRoot(frame, 'exception', fault);
 }
 
 export function finalizers(vm, frame, source, target = Infinity) {
@@ -39,9 +39,9 @@ export function finalizers(vm, frame, source, target = Infinity) {
 export function finishReturn(vm, frame, value) {
   vm.stack.length = frame.base;
   vm.frames.pop();
-  if (vm.frames.length) vm.stack.push(value);
+  if (vm.frames.length) vm.heap.writeRoot(vm.stack, vm.stack.length, value);
   else {
-    vm.returnValue = value;
+    vm.heap.writeRoot(vm, 'returnValue', value);
     vm.state = 'terminated';
     vm.exitCode = typeof value === 'number' ? value | 0 : 0;
   }
@@ -72,7 +72,7 @@ export function resumeUnwind(vm, frame) {
   if (unwind.kind === 'return') { vm.finishReturn(frame, unwind.value); return; }
   if (unwind.kind === 'jump') { frame.pc = unwind.target; return; }
   if (unwind.catch) {
-    frame.locals[unwind.catch.slot] = unwind.error.reference;
+    vm.heap.writeRoot(frame.locals, unwind.catch.slot, unwind.error.reference);
     vm.enterCatch(frame, unwind.catch, unwind.error);
     frame.pc = unwind.catch.target;
     vm.fault = null;
@@ -100,7 +100,7 @@ function matches(vm, fault, type = 'Exception') {
 
 export function handleFault(vm, error) {
   const fault = vm.makeFault(error);
-  vm.fault = fault;
+  vm.heap.writeRoot(vm, 'fault', fault);
   if (!fault.reference) {
     try {
       const message = vm.heap.string(fault.message);
@@ -124,7 +124,7 @@ export function handleFault(vm, error) {
       return;
     }
     if (handler) {
-      frame.locals[handler.slot] = fault.reference;
+      vm.heap.writeRoot(frame.locals, handler.slot, fault.reference);
       vm.enterCatch(frame, handler, fault);
       frame.pc = handler.target;
       vm.fault = null;

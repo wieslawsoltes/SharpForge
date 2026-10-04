@@ -36,7 +36,7 @@ export function runtimeTypeObject(vm,type) {
   if(cache.has(table))return cache.get(table);
   const handle=Object.freeze({runtimeHandle:'type',owner:vm.snapshotOwner,table,token:table.token});
   const reference=vm.heap.allocate('runtime-type',tableFor(vm,'System.RuntimeType'),[handle]);
-  cache.set(table,reference);
+  vm.heap.writeRoot(cache,table,reference);
   return reference;
 }
 export function typeFromHandle(vm,handle) {

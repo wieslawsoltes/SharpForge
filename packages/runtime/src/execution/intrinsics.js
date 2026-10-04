@@ -6,6 +6,7 @@ import {float} from './numeric-ops.js';
 import {internString,isInternedString,referenceEquals,stringChar,stringFromChars} from './strings.js';
 import {enumToString,enumHasFlag} from './enums.js';
 import {objectType,typeFromHandle,typeEquals,typeName,typeHandle,typeProperty,runtimeTypeText} from './tokens.js';
+import {gcIntrinsicImplementations} from '../gc/api.js';
 
 function legacyHost(vm, formatType = null) {
   const cache = vm.platform;
@@ -52,7 +53,7 @@ const implementations={
   objectReferenceEquals:({parameters})=>referenceEquals(parameters[0],parameters[1])?1:0,
   enumToString:({vm,self})=>{const text=enumToString(vm,self);if(text===null)throw new ManagedFault('ArgumentException','Enum receiver required');return vm.heap.string(text);},
   enumHasFlag:({vm,self,parameters})=>enumHasFlag(vm,self,parameters[0])?1:0,
-  exceptionCtor:({vm,self,parameters})=>{vm.heap.get(self).data[0]=parameters[0]??vm.heap.string('Exception');return null;},
+  exceptionCtor:({vm,self,parameters})=>{vm.heap.writeField(self,0,parameters[0]??vm.heap.string('Exception'));return null;},
   exceptionMessage:({vm,self})=>vm.heap.get(self).data[0],
   exceptionInner:({vm,self})=>vm.heap.get(self).data[1]??null,
   stringCtor:({vm,parameters})=>stringFromChars(vm,parameters[0]),
@@ -90,12 +91,7 @@ const implementations={
     }
     return signature.returnType==='double'||signature.returnType==='float'?float(result,signature.returnType==='float'?'r4':'r8'):result;
   },
-  gcCollect:({vm})=>{vm.heap.collect();return null;},
-  gcMemory:({vm,values})=>{if(values[0])vm.heap.collect();return BigInt(vm.heap.stats.liveBytes);},
-  gcCount:({vm,values})=>{
-    if(!Number.isInteger(values[0])||values[0]<0||values[0]>2)throw new ManagedFault('ArgumentOutOfRangeException','Generation must be between 0 and 2');
-    return vm.heap.stats.collections;
-  },
+  ...gcIntrinsicImplementations,
   parse: ({vm, descriptor, parameters, values}) => {
     const type = descriptor.signature.returnType;
     if (type === 'double') return float(invokeLegacyBclBuiltin(legacyHost(vm), 'double.Parse', parameters));

@@ -1,122 +1,770 @@
 [
   {
+    "id": "cil-vm.js:rootVisitor:1",
+    "file": "packages/runtime/src/cil-vm.js",
+    "line": 33,
+    "api": "rootVisitor",
+    "kind": "provider",
+    "provider": "heap=new ManagedHeap(options);this.heap.rootVisitor=visitor=>this.visitRoots(vis"
+  },
+  {
+    "id": "cil-vm.js:visitRoots:1",
+    "file": "packages/runtime/src/cil-vm.js",
+    "line": 33,
+    "api": "visitRoots",
+    "kind": "visitor",
+    "provider": "ns);this.heap.rootVisitor=visitor=>this.visitRoots(visitor);this.frames=[];this."
+  },
+  {
+    "id": "cil-vm.js:visitRoots:2",
+    "file": "packages/runtime/src/cil-vm.js",
+    "line": 42,
+    "api": "visitRoots",
+    "kind": "visitor",
+    "provider": "ntry.ownerToken,'static-method'); } visitRoots(visitor){visitVMRoots(this,vi"
+  },
+  {
+    "id": "cil-vm.js:visitVMRoots:1",
+    "file": "packages/runtime/src/cil-vm.js",
+    "line": 42,
+    "api": "visitVMRoots",
+    "kind": "visitor",
+    "provider": "tic-method'); } visitRoots(visitor){visitVMRoots(this,visitor);} *roots(){"
+  },
+  {
     "id": "cil-vm.js:roots:1",
     "file": "packages/runtime/src/cil-vm.js",
-    "line": 31,
-    "provider": "ptions);this.heap.rootProvider=()=>this.roots();this.frames=[];this.statics=new "
+    "line": 43,
+    "api": "roots",
+    "kind": "root-entry",
+    "provider": "isitor){visitVMRoots(this,visitor);} *roots(){yield* rootValues(this);} get "
   },
   {
-    "id": "cil-vm.js:roots:2",
+    "id": "cil-vm.js:rootValues:1",
     "file": "packages/runtime/src/cil-vm.js",
-    "line": 39,
-    "provider": "try.ownerToken,'static-method'); } *roots(){yield* this.platform?.roots()??["
-  },
-  {
-    "id": "cil-vm.js:roots:3",
-    "file": "packages/runtime/src/cil-vm.js",
-    "line": 39,
-    "provider": "); } *roots(){yield* this.platform?.roots()??[];yield* this.scheduler?.roots"
-  },
-  {
-    "id": "cil-vm.js:roots:4",
-    "file": "packages/runtime/src/cil-vm.js",
-    "line": 39,
-    "provider": "orm?.roots()??[];yield* this.scheduler?.roots()??[]; const root=function*(v)"
+    "line": 43,
+    "api": "rootValues",
+    "kind": "compatibility",
+    "provider": "Roots(this,visitor);} *roots(){yield* rootValues(this);} get top(){return th"
   },
   {
     "id": "execution/source-eh.js:roots:1",
     "file": "packages/runtime/src/execution/source-eh.js",
     "line": 7,
+    "api": "roots",
+    "kind": "root-entry",
     "provider": "urn value or fault. */ export function* roots(vm) { for (const frame of vm.fra"
   },
   {
     "id": "execution/strings.js:roots:1",
     "file": "packages/runtime/src/execution/strings.js",
-    "line": 23,
+    "line": 24,
+    "api": "roots",
+    "kind": "root-entry",
     "provider": "(stringData(this.heap,reference)); } *roots() { if(!this.weak)yield* this.entr"
   },
   {
     "id": "execution/strings.js:roots:2",
     "file": "packages/runtime/src/execution/strings.js",
-    "line": 37,
+    "line": 38,
+    "api": "roots",
+    "kind": "root-entry",
     "provider": "tion* stringRoots(vm) { yield* pool(vm).roots(); } export function clearStrings("
+  },
+  {
+    "id": "gc/background-graph.js:visitRoots:1",
+    "file": "packages/runtime/src/gc/background-graph.js",
+    "line": 53,
+    "api": "visitRoots",
+    "kind": "visitor",
+    "provider": "roots = []; let rootSlots = 0; heap.visitRoots(value => { if (++rootSlot"
+  },
+  {
+    "id": "gc/barrier-fuzzer.js:rootVisitor:1",
+    "file": "packages/runtime/src/gc/barrier-fuzzer.js",
+    "line": 28,
+    "api": "rootVisitor",
+    "kind": "provider",
+    "provider": "t', 1); const holder = [null]; heap.rootVisitor = visitor => { visitor(o"
   },
   {
     "id": "gc/collector.js:roots:1",
     "file": "packages/runtime/src/gc/collector.js",
     "line": 188,
+    "api": "roots",
+    "kind": "root-entry",
     "provider": "rker.begin(generation); this.marker.roots(this.cycle.extraRoots); this.c"
   },
   {
     "id": "gc/collector.js:roots:2",
     "file": "packages/runtime/src/gc/collector.js",
     "line": 199,
+    "api": "roots",
+    "kind": "root-entry",
     "provider": "ed = performance.now(); this.marker.roots(this.cycle.extraRoots); this.m"
+  },
+  {
+    "id": "gc/context-roots.js:RootRegistry.register:1",
+    "file": "packages/runtime/src/gc/context-roots.js",
+    "line": 16,
+    "api": "RootRegistry.register",
+    "kind": "registry",
+    "provider": "his.registration = runtime.rootRegistry.register(RootCategory.Interop, visitor ="
+  },
+  {
+    "id": "gc/context-roots.js:visitRoots:1",
+    "file": "packages/runtime/src/gc/context-roots.js",
+    "line": 16,
+    "api": "visitRoots",
+    "kind": "visitor",
+    "provider": "r(RootCategory.Interop, visitor => this.visitRoots(visitor), registry); try "
+  },
+  {
+    "id": "gc/context-roots.js:visitRoots:2",
+    "file": "packages/runtime/src/gc/context-roots.js",
+    "line": 18,
+    "api": "visitRoots",
+    "kind": "visitor",
+    "provider": "sitor), registry); try { this.visitRoots(this.publish); runtime."
+  },
+  {
+    "id": "gc/context-roots.js:visitRoots:3",
+    "file": "packages/runtime/src/gc/context-roots.js",
+    "line": 27,
+    "api": "visitRoots",
+    "kind": "visitor",
+    "provider": "pose(); throw error; } } visitRoots(visitor) { for (const ent"
+  },
+  {
+    "id": "gc/finalization.js:visitRoots:1",
+    "file": "packages/runtime/src/gc/finalization.js",
+    "line": 127,
+    "api": "visitRoots",
+    "kind": "visitor",
+    "provider": " = 0; this.criticalHead = 0; } visitRoots(visitor) { for (const ent"
+  },
+  {
+    "id": "gc/finalization.js:visitRoots:2",
+    "file": "packages/runtime/src/gc/finalization.js",
+    "line": 131,
+    "api": "visitRoots",
+    "kind": "visitor",
+    "provider": "achable queue'); } this.context.visitRoots(visitor); } drain(option"
+  },
+  {
+    "id": "gc/finalizer-context.js:visitRoots:1",
+    "file": "packages/runtime/src/gc/finalizer-context.js",
+    "line": 124,
+    "api": "visitRoots",
+    "kind": "visitor",
+    "provider": "n active.runner.step(allowance); } visitRoots(visitor) { if (this.activ"
+  },
+  {
+    "id": "gc/finalizer-context.js:visitRoots:2",
+    "file": "packages/runtime/src/gc/finalizer-context.js",
+    "line": 127,
+    "api": "visitRoots",
+    "kind": "visitor",
+    "provider": " finalizer'); this.active.runner?.visitRoots?.(visitor); } } stop"
   },
   {
     "id": "gc/finish-mark.js:roots:1",
     "file": "packages/runtime/src/gc/finish-mark.js",
     "line": 3,
+    "api": "roots",
+    "kind": "root-entry",
     "provider": "n = true } = {}) { if (rescan) marker.roots(extraRoots); const rescanWork = "
+  },
+  {
+    "id": "gc/heap-dump.js:visitRoots:1",
+    "file": "packages/runtime/src/gc/heap-dump.js",
+    "line": 63,
+    "api": "visitRoots",
+    "kind": "visitor",
+    "provider": "ner)} : {})}); } }); heap.visitRoots((value, category, detail) => "
+  },
+  {
+    "id": "gc/heap-state.js:rootProvider:1",
+    "file": "packages/runtime/src/gc/heap-state.js",
+    "line": 51,
+    "api": "rootProvider",
+    "kind": "provider",
+    "provider": "erations = []; heap.free = []; heap.rootProvider = noRoots; heap.rootVisit"
+  },
+  {
+    "id": "gc/heap-state.js:rootVisitor:1",
+    "file": "packages/runtime/src/gc/heap-state.js",
+    "line": 52,
+    "api": "rootVisitor",
+    "kind": "provider",
+    "provider": "; heap.rootProvider = noRoots; heap.rootVisitor = null; heap.rootRegistry "
+  },
+  {
+    "id": "gc/heap-state.js:RootRegistry:1",
+    "file": "packages/runtime/src/gc/heap-state.js",
+    "line": 53,
+    "api": "RootRegistry",
+    "kind": "registry",
+    "provider": "sitor = null; heap.rootRegistry = new RootRegistry(); heap.pins = []; heap"
+  },
+  {
+    "id": "gc/heap.js:visitRoots:1",
+    "file": "packages/runtime/src/gc/heap.js",
+    "line": 56,
+    "api": "visitRoots",
+    "kind": "visitor",
+    "provider": "managed references affect tracing. */ visitRoots(visitor, extraRoots = noRoots"
+  },
+  {
+    "id": "gc/heap.js:rootVisitor:1",
+    "file": "packages/runtime/src/gc/heap.js",
+    "line": 60,
+    "api": "rootVisitor",
+    "kind": "provider",
+    "provider": "; }; if (this.rootVisitor) this.rootVisitor(publish); else for (cons"
+  },
+  {
+    "id": "gc/heap.js:rootProvider:1",
+    "file": "packages/runtime/src/gc/heap.js",
+    "line": 61,
+    "api": "rootProvider",
+    "kind": "provider",
+    "provider": "ish); else for (const value of this.rootProvider()) publish(value, 'stack', "
+  },
+  {
+    "id": "gc/heap.js:visitRoots:2",
+    "file": "packages/runtime/src/gc/heap.js",
+    "line": 62,
+    "api": "visitRoots",
+    "kind": "visitor",
+    "provider": "egacy-provider'); this.rootRegistry.visitRoots(publish); for (const valu"
+  },
+  {
+    "id": "gc/heap.js:visitStrongRoots:1",
+    "file": "packages/runtime/src/gc/heap.js",
+    "line": 65,
+    "api": "visitStrongRoots",
+    "kind": "visitor",
+    "provider": "k', 'explicit-root'); this.lifetime.visitStrongRoots(publish); } collec"
+  },
+  {
+    "id": "gc/heap.js:RootRegistry.register:1",
+    "file": "packages/runtime/src/gc/heap.js",
+    "line": 81,
+    "api": "RootRegistry.register",
+    "kind": "registry",
+    "provider": "rn; const lease = this.rootRegistry.register('stack', (visitor, category) =>"
+  },
+  {
+    "id": "gc/heap.js:rootVisitor:2",
+    "file": "packages/runtime/src/gc/heap.js",
+    "line": 148,
+    "api": "rootVisitor",
+    "kind": "provider",
+    "provider": "r(); this.pins.length = 0; this.rootVisitor = null; this.rootProvide"
+  },
+  {
+    "id": "gc/heap.js:rootProvider:2",
+    "file": "packages/runtime/src/gc/heap.js",
+    "line": 149,
+    "api": "rootProvider",
+    "kind": "provider",
+    "provider": "; this.rootVisitor = null; this.rootProvider = () => noRoots; for (l"
+  },
+  {
+    "id": "gc/host-handles.js:visitStrongRoots:1",
+    "file": "packages/runtime/src/gc/host-handles.js",
+    "line": 152,
+    "api": "visitStrongRoots",
+    "kind": "visitor",
+    "provider": "ence)) this.releaseId(id); } } visitStrongRoots(visitor) { for (con"
+  },
+  {
+    "id": "gc/host-payload-roots.js:visitPayloadRoots:1",
+    "file": "packages/runtime/src/gc/host-payload-roots.js",
+    "line": 4,
+    "api": "visitPayloadRoots",
+    "kind": "visitor",
+    "provider": "tCategory} from './roots.js'; function visitPayloadRoots(visitor, category, sco"
+  },
+  {
+    "id": "gc/host-payload-roots.js:RootRegistry.register:1",
+    "file": "packages/runtime/src/gc/host-payload-roots.js",
+    "line": 21,
+    "api": "RootRegistry.register",
+    "kind": "registry",
+    "provider": "lse; this.lease = heap.rootRegistry.register(RootCategory.HostOperation, vis"
   },
   {
     "id": "gc/incremental-mark.js:roots:1",
     "file": "packages/runtime/src/gc/incremental-mark.js",
     "line": 164,
+    "api": "roots",
+    "kind": "root-entry",
     "provider": " this.statistics.barrierMarks++; } roots(extraRoots) { this.heap.visitR"
+  },
+  {
+    "id": "gc/incremental-mark.js:visitRoots:1",
+    "file": "packages/runtime/src/gc/incremental-mark.js",
+    "line": 165,
+    "api": "visitRoots",
+    "kind": "visitor",
+    "provider": " } roots(extraRoots) { this.heap.visitRoots(this.rootVisit, extraRoots); "
+  },
+  {
+    "id": "gc/lifetime.js:visitStrongRoots:1",
+    "file": "packages/runtime/src/gc/lifetime.js",
+    "line": 134,
+    "api": "visitStrongRoots",
+    "kind": "visitor",
+    "provider": "is.resources.close(entry.token); } visitStrongRoots(visitor) { this.hos"
+  },
+  {
+    "id": "gc/lifetime.js:visitStrongRoots:2",
+    "file": "packages/runtime/src/gc/lifetime.js",
+    "line": 135,
+    "api": "visitStrongRoots",
+    "kind": "visitor",
+    "provider": "ngRoots(visitor) { this.hostHandles.visitStrongRoots(visitor); this.pinn"
+  },
+  {
+    "id": "gc/lifetime.js:visitRoots:1",
+    "file": "packages/runtime/src/gc/lifetime.js",
+    "line": 136,
+    "api": "visitRoots",
+    "kind": "visitor",
+    "provider": "tStrongRoots(visitor); this.pinning.visitRoots(visitor); this.finalizers"
+  },
+  {
+    "id": "gc/lifetime.js:visitRoots:2",
+    "file": "packages/runtime/src/gc/lifetime.js",
+    "line": 137,
+    "api": "visitRoots",
+    "kind": "visitor",
+    "provider": "isitRoots(visitor); this.finalizers.visitRoots(visitor); } beginMark() "
+  },
+  {
+    "id": "gc/managed-callback.js:visitVMRoots:1",
+    "file": "packages/runtime/src/gc/managed-callback.js",
+    "line": 53,
+    "api": "visitVMRoots",
+    "kind": "visitor",
+    "provider": " const roots = [...target.arguments]; visitVMRoots(vm, value => roots.push(val"
+  },
+  {
+    "id": "gc/managed-finalizer.js:visitRoots:1",
+    "file": "packages/runtime/src/gc/managed-finalizer.js",
+    "line": 110,
+    "api": "visitRoots",
+    "kind": "visitor",
+    "provider": "lizerRunners.delete(this); } } visitRoots(visitor) { if (this.inter"
+  },
+  {
+    "id": "gc/managed-finalizer.js:visitExecutionRoots:1",
+    "file": "packages/runtime/src/gc/managed-finalizer.js",
+    "line": 111,
+    "api": "visitExecutionRoots",
+    "kind": "visitor",
+    "provider": "ts(visitor) { if (this.interrupted) visitExecutionRoots(this.interrupted, vi"
+  },
+  {
+    "id": "gc/managed-finalizer.js:visitExecutionRoots:2",
+    "file": "packages/runtime/src/gc/managed-finalizer.js",
+    "line": 112,
+    "api": "visitExecutionRoots",
+    "kind": "visitor",
+    "provider": "; if (this.execution && !this.done) visitExecutionRoots(this.execution, visi"
+  },
+  {
+    "id": "gc/pinning.js:visitRoots:1",
+    "file": "packages/runtime/src/gc/pinning.js",
+    "line": 68,
+    "api": "visitRoots",
+    "kind": "visitor",
+    "provider": " reference) && object.count > 0; } visitRoots(visitor) { for (const ent"
+  },
+  {
+    "id": "gc/provider-visitors.js:visitSchedulerRoots:1",
+    "file": "packages/runtime/src/gc/provider-visitors.js",
+    "line": 5,
+    "api": "visitSchedulerRoots",
+    "kind": "visitor",
+    "provider": "aulted', 'canceled']); export function visitSchedulerRoots(scheduler, visitor) "
+  },
+  {
+    "id": "gc/provider-visitors.js:visitExecutionRoots:1",
+    "file": "packages/runtime/src/gc/provider-visitors.js",
+    "line": 16,
+    "api": "visitExecutionRoots",
+    "kind": "visitor",
+    "provider": "cheduler.currentId || scheduler.parked) visitExecutionRoots(context, visitor, ca"
+  },
+  {
+    "id": "gc/provider-visitors.js:visitPlatformRoots:1",
+    "file": "packages/runtime/src/gc/provider-visitors.js",
+    "line": 33,
+    "api": "visitPlatformRoots",
+    "kind": "visitor",
+    "provider": "ion(child, visitor); } export function visitPlatformRoots(platform, visitor) { "
+  },
+  {
+    "id": "gc/provider-visitors.js:visitRoots:1",
+    "file": "packages/runtime/src/gc/provider-visitors.js",
+    "line": 34,
+    "api": "visitRoots",
+    "kind": "visitor",
+    "provider": "m, visitor) { platform.hostOperations.visitRoots(visitor); visitRootValue(pl"
+  },
+  {
+    "id": "gc/provider-visitors.js:visitHostOperationRoots:1",
+    "file": "packages/runtime/src/gc/provider-visitors.js",
+    "line": 43,
+    "api": "visitHostOperationRoots",
+    "kind": "visitor",
+    "provider": ", 'animation-base'); } export function visitHostOperationRoots(host, visitor) {"
+  },
+  {
+    "id": "gc/retention.js:visitRoots:1",
+    "file": "packages/runtime/src/gc/retention.js",
+    "line": 66,
+    "api": "visitRoots",
+    "kind": "visitor",
+    "provider": "es.push(edge); } }); heap.visitRoots((value, category, detail) => "
+  },
+  {
+    "id": "gc/root-audit.js:visitRoots:1",
+    "file": "packages/runtime/src/gc/root-audit.js",
+    "line": 19,
+    "api": "visitRoots",
+    "kind": "visitor",
+    "provider": "); pending.push(value); }; heap.visitRoots(add, extraRoots); for(let i"
+  },
+  {
+    "id": "gc/roots.js:RootRegistry:1",
+    "file": "packages/runtime/src/gc/roots.js",
+    "line": 18,
+    "api": "RootRegistry",
+    "kind": "registry",
+    "provider": "e provider immediately. */ export class RootRegistry { constructor() { thi"
+  },
+  {
+    "id": "gc/roots.js:visitRoots:1",
+    "file": "packages/runtime/src/gc/roots.js",
+    "line": 31,
+    "api": "visitRoots",
+    "kind": "visitor",
+    "provider": " => this.providers.delete(id)}); } visitRoots(visitor) { for (const ite"
+  },
+  {
+    "id": "gc/roots.js:rootValues:1",
+    "file": "packages/runtime/src/gc/roots.js",
+    "line": 50,
+    "api": "rootValues",
+    "kind": "compatibility",
+    "provider": "ocate no generator. */ export function* rootValues(provider) { const values = "
+  },
+  {
+    "id": "gc/roots.js:visitRoots:2",
+    "file": "packages/runtime/src/gc/roots.js",
+    "line": 52,
+    "api": "visitRoots",
+    "kind": "visitor",
+    "provider": "ider) { const values = []; provider.visitRoots(value => values.push(value));"
+  },
+  {
+    "id": "gc/roots.js:visitFrameRoots:1",
+    "file": "packages/runtime/src/gc/roots.js",
+    "line": 66,
+    "api": "visitFrameRoots",
+    "kind": "visitor",
+    "provider": "the same frame scan. */ export function visitFrameRoots(frame, visitor, category"
+  },
+  {
+    "id": "gc/roots.js:visitExecutionRoots:1",
+    "file": "packages/runtime/src/gc/roots.js",
+    "line": 81,
+    "api": "visitExecutionRoots",
+    "kind": "visitor",
+    "provider": "itor, category); } } export function visitExecutionRoots(context, visitor, ca"
+  },
+  {
+    "id": "gc/roots.js:visitFrameRoots:2",
+    "file": "packages/runtime/src/gc/roots.js",
+    "line": 87,
+    "api": "visitFrameRoots",
+    "kind": "visitor",
+    "provider": "r (const frame of context.frames ?? []) visitFrameRoots(frame, visitor, category"
+  },
+  {
+    "id": "gc/roots.js:visitVMRoots:1",
+    "file": "packages/runtime/src/gc/roots.js",
+    "line": 90,
+    "api": "visitVMRoots",
+    "kind": "visitor",
+    "provider": " visitor, category); } export function visitVMRoots(vm, visitor) { visitExecu"
+  },
+  {
+    "id": "gc/roots.js:visitExecutionRoots:2",
+    "file": "packages/runtime/src/gc/roots.js",
+    "line": 91,
+    "api": "visitExecutionRoots",
+    "kind": "visitor",
+    "provider": " function visitVMRoots(vm, visitor) { visitExecutionRoots(vm, visitor); cons"
+  },
+  {
+    "id": "gc/roots.js:visitRoots:3",
+    "file": "packages/runtime/src/gc/roots.js",
+    "line": 101,
+    "api": "visitRoots",
+    "kind": "visitor",
+    "provider": "'initializer-wait'); } vm.platform?.visitRoots(visitor); vm.scheduler?.vis"
+  },
+  {
+    "id": "gc/roots.js:visitRoots:4",
+    "file": "packages/runtime/src/gc/roots.js",
+    "line": 102,
+    "api": "visitRoots",
+    "kind": "visitor",
+    "provider": "m?.visitRoots(visitor); vm.scheduler?.visitRoots(visitor); vm.gcRuntime?.vis"
+  },
+  {
+    "id": "gc/roots.js:visitRoots:5",
+    "file": "packages/runtime/src/gc/roots.js",
+    "line": 103,
+    "api": "visitRoots",
+    "kind": "visitor",
+    "provider": "r?.visitRoots(visitor); vm.gcRuntime?.visitRoots(visitor); } "
+  },
+  {
+    "id": "gc/runtime-integration.js:RootRegistry:1",
+    "file": "packages/runtime/src/gc/runtime-integration.js",
+    "line": 19,
+    "api": "RootRegistry",
+    "kind": "registry",
+    "provider": "t?.id ?? 0; this.rootRegistry = new RootRegistry(); this.contextRoots = "
+  },
+  {
+    "id": "gc/runtime-integration.js:registerContextRoots:1",
+    "file": "packages/runtime/src/gc/runtime-integration.js",
+    "line": 30,
+    "api": "registerContextRoots",
+    "kind": "registry",
+    "provider": "; if (vm.options.contextRoots) this.registerContextRoots(vm.options.contextR"
+  },
+  {
+    "id": "gc/runtime-integration.js:publishRoots:1",
+    "file": "packages/runtime/src/gc/runtime-integration.js",
+    "line": 33,
+    "api": "publishRoots",
+    "kind": "publication",
+    "provider": " kind: 'slice-boundary', parked: true, publishRoots: () => {} }); if (v"
+  },
+  {
+    "id": "gc/runtime-integration.js:visitRoots:1",
+    "file": "packages/runtime/src/gc/runtime-integration.js",
+    "line": 49,
+    "api": "visitRoots",
+    "kind": "visitor",
+    "provider": "llocationSiteResolver.capture(); } visitRoots(visitor) { this.rootRegis"
+  },
+  {
+    "id": "gc/runtime-integration.js:visitRoots:2",
+    "file": "packages/runtime/src/gc/runtime-integration.js",
+    "line": 50,
+    "api": "visitRoots",
+    "kind": "visitor",
+    "provider": "tRoots(visitor) { this.rootRegistry.visitRoots(visitor); for (const task"
+  },
+  {
+    "id": "gc/runtime-integration.js:registerContextRoots:2",
+    "file": "packages/runtime/src/gc/runtime-integration.js",
+    "line": 55,
+    "api": "registerContextRoots",
+    "kind": "registry",
+    "provider": "ries remain outside managed roots. */ registerContextRoots(registry) { ret"
+  },
+  {
+    "id": "gc/safepoints.js:publishRoots:1",
+    "file": "packages/runtime/src/gc/safepoints.js",
+    "line": 30,
+    "api": "publishRoots",
+    "kind": "publication",
+    "provider": "eBoundary, parked = true, deopt = null, publishRoots = null} = {}) { validat"
+  },
+  {
+    "id": "gc/safepoints.js:publishRoots:2",
+    "file": "packages/runtime/src/gc/safepoints.js",
+    "line": 38,
+    "api": "publishRoots",
+    "kind": "publication",
+    "provider": "ack(deopt, 'Tier deoptimization hook'), publishRoots: callback(publishRoots, 'Ro"
+  },
+  {
+    "id": "gc/safepoints.js:publishRoots:3",
+    "file": "packages/runtime/src/gc/safepoints.js",
+    "line": 63,
+    "api": "publishRoots",
+    "kind": "publication",
+    "provider": "pt?.(context.kind, ticket); context.publishRoots?.(context.kind, ticket); "
+  },
+  {
+    "id": "gc/verify.js:visitRoots:1",
+    "file": "packages/runtime/src/gc/verify.js",
+    "line": 65,
+    "api": "visitRoots",
+    "kind": "visitor",
+    "provider": "{ truncated = true; break; } } heap.visitRoots((value, category) => { if"
+  },
+  {
+    "id": "host-operations.js:visitRoots:1",
+    "file": "packages/runtime/src/host-operations.js",
+    "line": 8,
+    "api": "visitRoots",
+    "kind": "visitor",
+    "provider": "1;this.revision=0;this.closed=false;} visitRoots(visitor){visitHostOperationRo"
+  },
+  {
+    "id": "host-operations.js:visitHostOperationRoots:1",
+    "file": "packages/runtime/src/host-operations.js",
+    "line": 8,
+    "api": "visitHostOperationRoots",
+    "kind": "visitor",
+    "provider": "is.closed=false;} visitRoots(visitor){visitHostOperationRoots(this,visitor);} "
   },
   {
     "id": "host-operations.js:roots:1",
     "file": "packages/runtime/src/host-operations.js",
-    "line": 5,
-    "provider": ";this.revision=0;this.closed=false;} *roots(){for(const op of this.active.valu"
+    "line": 9,
+    "api": "roots",
+    "kind": "root-entry",
+    "provider": "itHostOperationRoots(this,visitor);} *roots(){yield* rootValues(this);} star"
+  },
+  {
+    "id": "host-operations.js:rootValues:1",
+    "file": "packages/runtime/src/host-operations.js",
+    "line": 9,
+    "api": "rootValues",
+    "kind": "compatibility",
+    "provider": "Roots(this,visitor);} *roots(){yield* rootValues(this);} start(resultType,be"
+  },
+  {
+    "id": "platform.js:visitRoots:1",
+    "file": "packages/runtime/src/platform.js",
+    "line": 18,
+    "api": "visitRoots",
+    "kind": "visitor",
+    "provider": "Operations=new HostOperations(this);} visitRoots(visitor){visitPlatformRoots(t"
+  },
+  {
+    "id": "platform.js:visitPlatformRoots:1",
+    "file": "packages/runtime/src/platform.js",
+    "line": 18,
+    "api": "visitPlatformRoots",
+    "kind": "visitor",
+    "provider": "perations(this);} visitRoots(visitor){visitPlatformRoots(this,visitor);} *ro"
   },
   {
     "id": "platform.js:roots:1",
     "file": "packages/runtime/src/platform.js",
-    "line": 14,
-    "provider": "perations=new HostOperations(this);} *roots(){yield* this.hostOperations.roots"
+    "line": 19,
+    "api": "roots",
+    "kind": "root-entry",
+    "provider": "){visitPlatformRoots(this,visitor);} *roots(){yield* rootValues(this);} reco"
   },
   {
-    "id": "platform.js:roots:2",
+    "id": "platform.js:rootValues:1",
     "file": "packages/runtime/src/platform.js",
-    "line": 14,
-    "provider": "} *roots(){yield* this.hostOperations.roots();yield* this.animations.roots();y"
+    "line": 19,
+    "api": "rootValues",
+    "kind": "compatibility",
+    "provider": "Roots(this,visitor);} *roots(){yield* rootValues(this);} record(ref){const r"
   },
   {
-    "id": "platform.js:roots:3",
-    "file": "packages/runtime/src/platform.js",
-    "line": 14,
-    "provider": "erations.roots();yield* this.animations.roots();yield this.application;yield* th"
+    "id": "scheduler.js:visitRoots:1",
+    "file": "packages/runtime/src/scheduler.js",
+    "line": 30,
+    "api": "visitRoots",
+    "kind": "visitor",
+    "provider": "n this.contexts.get(this.currentId);} visitRoots(visitor){visitSchedulerRoots("
+  },
+  {
+    "id": "scheduler.js:visitSchedulerRoots:1",
+    "file": "packages/runtime/src/scheduler.js",
+    "line": 30,
+    "api": "visitSchedulerRoots",
+    "kind": "visitor",
+    "provider": "this.currentId);} visitRoots(visitor){visitSchedulerRoots(this,visitor);} *r"
   },
   {
     "id": "scheduler.js:roots:1",
     "file": "packages/runtime/src/scheduler.js",
+    "line": 31,
+    "api": "roots",
+    "kind": "root-entry",
+    "provider": "{visitSchedulerRoots(this,visitor);} *roots(){yield* rootValues(this);} allF"
+  },
+  {
+    "id": "scheduler.js:rootValues:1",
+    "file": "packages/runtime/src/scheduler.js",
+    "line": 31,
+    "api": "rootValues",
+    "kind": "compatibility",
+    "provider": "Roots(this,visitor);} *roots(){yield* rootValues(this);} allFrames(){if(!thi"
+  },
+  {
+    "id": "vm.js:rootVisitor:1",
+    "file": "packages/runtime/src/vm.js",
+    "line": 23,
+    "api": "rootVisitor",
+    "kind": "provider",
+    "provider": "teSourceMethodTables(image)});this.heap.rootVisitor=visitor=>this.visitRoots(vis"
+  },
+  {
+    "id": "vm.js:visitRoots:1",
+    "file": "packages/runtime/src/vm.js",
+    "line": 23,
+    "api": "visitRoots",
+    "kind": "visitor",
+    "provider": ")});this.heap.rootVisitor=visitor=>this.visitRoots(visitor);this.stack=[];this.f"
+  },
+  {
+    "id": "vm.js:visitRoots:2",
+    "file": "packages/runtime/src/vm.js",
     "line": 27,
-    "provider": " this.contexts.get(this.currentId);} *roots(){if(!this.enabled)return;for(cons"
+    "api": "visitRoots",
+    "kind": "visitor",
+    "provider": ");this.call(image.entryPoint,[]); } visitRoots(visitor){visitVMRoots(this,vi"
+  },
+  {
+    "id": "vm.js:visitVMRoots:1",
+    "file": "packages/runtime/src/vm.js",
+    "line": 27,
+    "api": "visitVMRoots",
+    "kind": "visitor",
+    "provider": "tryPoint,[]); } visitRoots(visitor){visitVMRoots(this,visitor);} *roots(){"
   },
   {
     "id": "vm.js:roots:1",
     "file": "packages/runtime/src/vm.js",
-    "line": 20,
-    "provider": "mage)});this.heap.rootProvider=()=>this.roots();this.stack=[];this.frames=[];thi"
+    "line": 28,
+    "api": "roots",
+    "kind": "root-entry",
+    "provider": "isitor){visitVMRoots(this,visitor);} *roots(){yield* rootValues(this);} call"
   },
   {
-    "id": "vm.js:roots:2",
+    "id": "vm.js:rootValues:1",
     "file": "packages/runtime/src/vm.js",
-    "line": 24,
-    "provider": ";this.call(image.entryPoint,[]); } *roots(){yield* this.platform?.roots()??["
+    "line": 28,
+    "api": "rootValues",
+    "kind": "compatibility",
+    "provider": "Roots(this,visitor);} *roots(){yield* rootValues(this);} call(methodId, args"
   },
   {
-    "id": "vm.js:roots:3",
-    "file": "packages/runtime/src/vm.js",
-    "line": 24,
-    "provider": "); } *roots(){yield* this.platform?.roots()??[];yield* this.scheduler?.roots"
-  },
-  {
-    "id": "vm.js:roots:4",
-    "file": "packages/runtime/src/vm.js",
-    "line": 24,
-    "provider": "orm?.roots()??[];yield* this.scheduler?.roots()??[];yield this.returnValue;yield"
+    "id": "debugger/evaluation.js:roots:1",
+    "file": "packages/debugger/src/evaluation.js",
+    "line": 192,
+    "api": "roots",
+    "kind": "root-entry",
+    "provider": "Id),snapshot=vm.snapshot(),roots=[...vm.roots()],state=vm.state; const oldSupp"
   }
 ]

@@ -31,7 +31,7 @@ export function continueUnwind(vm,frame,leave=null) {
   if(pending.catch) {
     frame.caught=(frame.caught??[]).filter(caught=>pending.catch.target>=caught.start&&pending.catch.target<caught.end&&caught.start!==pending.catch.target);
     frame.caught.push({start:pending.catch.target,end:pending.catch.handlerEnd,fault:pending.error});
-    frame.exception=pending.error;frame.stack=[pending.error.reference];frame.pc=frame.offsets.get(pending.catch.target);return;
+    vm.heap.writeRoot(frame,'exception',pending.error);frame.stack=[];vm.heap.writeRoot(frame.stack,0,pending.error.reference);frame.pc=frame.offsets.get(pending.catch.target);return;
   }
   const error=frame.initializes?failInitialization(vm,frame,pending.error):pending.error;
   leaveCilMethod(vm, frame, 'exception');
@@ -48,7 +48,7 @@ export function throwFault(vm,error,instruction=null) {
     if(record.kind!=='exception'&&!vm.matches(ref,'System.Exception'))throw new ManagedFault('InvalidProgramException','Thrown value is not an exception');
     throw new ManagedFault(record.type,vm.format(record.data[0]),ref);
   }
-  const fault=error instanceof ManagedFault?error:new ManagedFault('InvalidProgramException',error.message??String(error));vm.fault=fault;
+  const fault=error instanceof ManagedFault?error:new ManagedFault('InvalidProgramException',error.message??String(error));vm.heap.writeRoot(vm,'fault',fault);
   if(fatalFaults.has(fault.name)){vm.state='faulted';return;}
   if(!fault.reference) {
     try{const message=vm.heap.string(fault.message);fault.reference=vm.heap.allocate('exception',fault.name,[message],[message]);}

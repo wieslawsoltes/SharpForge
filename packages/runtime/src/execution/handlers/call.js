@@ -13,6 +13,6 @@ handlers.set('ret',(vm,frame)=>{
   leaveCilMethod(vm, frame);
   vm.frames.pop();const value=frame.returnObject??result;
   if(vm.top){if(frame.returnObject||frame.method.signature.returnType!=='void')vm.push(value);}
-  else {vm.returnValue=value;vm.exitCode=frame.method.signature.returnType==='int'?Number(value)|0:0;vm.state='terminated';}
+  else {vm.heap.writeRoot(vm,'returnValue',value);vm.exitCode=frame.method.signature.returnType==='int'?Number(value)|0:0;vm.state='terminated';}
 });
 export {handlers};

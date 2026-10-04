@@ -1,6 +1,7 @@
 import {HttpTransport,NetworkPolicy} from '@sharpforge/network';
 import {frameworkType,taskResult} from '@sharpforge/framework';
 import {ManagedFault,isReference} from './heap.js';
+import {invokeUri} from './uri.js';
 const H='System.Net.Http.',CT='System.Threading.CancellationToken',CTS=CT+'Source';
 const ok=value=>({handled:true,value});
 const bad=(type,message)=>{throw new ManagedFault(type,message);};
@@ -12,11 +13,10 @@ function headerObject(p,owner,key='Headers',type=H+'Headers.HttpRequestHeaders')
 }
 function headerEntries(p,ref){return ref?Object.fromEntries(p.propertyEntries(ref).filter(([k,v])=>k.startsWith('$h:')&&v!==null).map(([k,v])=>[k.slice(3),p.native(v)])):{};}
 function setHeader(p,ref,name,value){const h=new Headers();try{h.set(name,value);}catch(e){bad('ArgumentException',e.message);}for(const[k,v]of h)p.set(ref,'$h:'+k,p.managed(v,'string'));}
-function newUri(p,text,base){try{const url=new URL(text,base);return p.make('System.Uri',{'$original':p.managed(text,'string'),'$absolute':p.managed(url.href,'string')});}catch{bad('UriFormatException','Invalid absolute URI');}}
 function done(p,type,value,canceled=false){const task=p.vm.scheduler.createTask(type);p.vm.scheduler.complete(task,value,null,canceled);return task.ref;}
 function response(p,r){
- const content=p.make(H+'HttpContent',{'$text':p.managed(r.text,'string')} );p.heap.pins.push(content);
- const headers=p.make(H+'Headers.HttpResponseHeaders');p.heap.pins.push(headers);
+ const content=p.make(H+'HttpContent',{'$text':p.managed(r.text,'string')} );p.heap.pinRoot(content);
+ const headers=p.make(H+'Headers.HttpResponseHeaders');p.heap.pinRoot(headers);
  const contentHeaders=headerObject(p,content,'Headers',H+'Headers.HttpContentHeaders');
  for(const[k,v]of Object.entries(r.headers)){setHeader(p,k.toLowerCase().startsWith('content-')?contentHeaders:headers,k,v);}
  return p.make(H+'HttpResponseMessage',{StatusCode:r.status,ReasonPhrase:p.managed(r.statusText,'string'),IsSuccessStatusCode:p.managed(r.status>=200&&r.status<300,'bool'),Content:content,Headers:headers});
@@ -26,12 +26,7 @@ export function invokeNetwork(p,d,args){
  const type=frameworkType(d.owner);if(type?.kind!=='network')return {handled:false};
  let ref=d.isStatic||d.kind==='constructor'?null:args[0],values=ref?args.slice(1):args;
  const n=values.map(v=>p.native(v));
- if(type.family==='uri'){
-  if(d.kind==='constructor')return ok(values.length===1?newUri(p,n[0]):newUri(p,n[1],p.native(p.get(values[0],'$absolute'))));
-  if(d.isStatic){try{return ok(p.managed(d.name==='EscapeDataString'?encodeURIComponent(n[0]).replace(/[!'()*]/g,c=>'%'+c.charCodeAt(0).toString(16).toUpperCase()):decodeURIComponent(n[0]),'string'));}catch(e){bad('UriFormatException',e.message);}}
-  const original=p.get(ref,'$original'),absolute=p.get(ref,'$absolute');if(d.name==='ToString'||d.property==='OriginalString')return ok(d.name==='ToString'?(absolute??original):original);if(d.property==='IsAbsoluteUri')return ok(p.managed(absolute!==null,'bool'));if(!absolute)bad('InvalidOperationException','This operation requires an absolute URI');const url=new URL(p.native(absolute));
-  const result={OriginalString:original,AbsoluteUri:absolute,AbsolutePath:p.managed(url.pathname,'string'),Host:p.managed(url.hostname,'string'),Scheme:p.managed(url.protocol.slice(0,-1),'string'),Port:url.port?Number(url.port):url.protocol==='https:'?443:url.protocol==='http:'?80:-1,IsAbsoluteUri:p.managed(true,'bool')};return ok(d.name==='ToString'?absolute:result[d.property]);
- }
+ if(type.family==='uri')return ok(invokeUri(p,d,ref,values,n));
  if(type.family==='cancellation'){
   if(d.kind==='constructor')return ok(p.make(CTS,{'$canceled':false}));
   if(d.isStatic)return ok(p.singleton('CancellationToken.None',()=>p.make(CT)));
@@ -60,7 +55,7 @@ export function invokeNetwork(p,d,args){
  if(d.kind==='constructor'){
   if(type.family==='httpContent')return ok(p.make(d.owner,{'$text':values[0]}));
   if(type.family==='httpClient'){const timeout=p.make('System.TimeSpan',{TotalMilliseconds:p.managed(100000,'double')});return ok(p.heap.withRoots([timeout],()=>p.make(d.owner,{Timeout:timeout})));}
-  if(type.family==='httpRequest'){const method=values[0]??p.singleton('HttpMethod.Get',()=>p.make(H+'HttpMethod',{Method:p.managed('GET','string')}));p.heap.pins.push(method);const uri=values.length>1?p.make('System.Uri',{'$original':values[1]}):null;return ok(p.heap.withRoots([uri],()=>p.make(d.owner,{Method:method,RequestUri:uri})));}
+  if(type.family==='httpRequest'){const method=values[0]??p.singleton('HttpMethod.Get',()=>p.make(H+'HttpMethod',{Method:p.managed('GET','string')}));p.heap.pinRoot(method);const uri=values.length>1?p.make('System.Uri',{'$original':values[1]}):null;return ok(p.heap.withRoots([uri],()=>p.make(d.owner,{Method:method,RequestUri:uri})));}
  }
  live(p,ref);
  if(d.name==='EnsureSuccessStatusCode'){const status=p.get(ref,'StatusCode');if(status<200||status>=300)bad('HttpRequestException',`HTTP response status ${status}`);return ok(ref);}

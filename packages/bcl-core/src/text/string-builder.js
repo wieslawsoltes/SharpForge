@@ -72,7 +72,7 @@ function appendChunk(platform, reference, value) {
   const storage = platform.get(reference, '$data');
   const record = platform.heap.get(storage);
   const oldValue = record.data[count];
-  record.data[count] = value;
+  platform.heap.writeElement(storage, count, value);
   platform.vm.notifyWrite?.({kind: 'array', handle: storage.h, generation: storage.g, index: count, oldValue, value});
   platform.set(reference, '$count', count + 1);
   platform.set(reference, '$version', platform.get(reference, '$version', 0) + 1);
@@ -108,7 +108,7 @@ function construct(platform, descriptor, scalars) {
   if (scalars.length === 1 && typeof scalars[0] === 'number') capacity(platform, scalars[0]);
   if (scalars.length === 2) capacity(platform, scalars[1]);
   const reference = platform.make(descriptor.owner, {'$count': 0, '$version': 0});
-  platform.heap.pins.push(reference);
+  platform.heap.pinRoot(reference);
   const initialCapacity = scalars.length === 1 && typeof scalars[0] === 'number' ? scalars[0] : scalars[1] ?? 16;
   platform.set(reference, '$capacity', initialCapacity || 16);
   platform.set(reference, '$length', 0);

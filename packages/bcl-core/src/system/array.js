@@ -22,11 +22,6 @@ function contracts({define, member}) {
   }
 }
 
-function write(p, reference, record, index, value) {
-  const oldValue = record.data[index];
-  record.data[index] = value;
-  p.vm.notifyWrite({kind: 'array', handle: reference.h, generation: reference.g, index, value, oldValue});
-}
 
 function copy(p, source, args, native) {
   const indexed = args.length === 5;
@@ -42,11 +37,7 @@ function copy(p, source, args, native) {
   integer(p, sourceIndex, 0, source.data.length);
   integer(p, destinationIndex, 0, destination.data.length);
   integer(p, count, 0, Math.min(source.data.length - sourceIndex, destination.data.length - destinationIndex));
-  // Preserve overlapping copies in either direction and validate before the first write.
-  const values = source.data.slice(sourceIndex, sourceIndex + count);
-  for (let index = 0; index < count; index++) {
-    write(p, destinationReference, destination, destinationIndex + index, values[index]);
-  }
+  p.heap.bulkCopy(destinationReference, destinationIndex, args[0], sourceIndex, count);
   return null;
 }
 
@@ -55,9 +46,7 @@ function fill(p, source, args, native) {
   const count = args.length === 4 ? native[3] : source.data.length;
   integer(p, start, 0, source.data.length);
   integer(p, count, 0, source.data.length - start);
-  for (let index = start; index < start + count; index++) {
-    write(p, args[0], source, index, args[1]);
-  }
+  p.heap.fillArray(args[0], start, count, args[1]);
   return null;
 }
 
@@ -68,9 +57,7 @@ function clear(p, source, args, native) {
   const value = ['int', 'double'].includes(element)
     ? p.managed(0, element)
     : element === 'bool' ? p.managed(false, 'bool') : null;
-  for (let index = start; index < start + count; index++) {
-    write(p, args[0], source, index, value);
-  }
+  p.heap.fillArray(args[0], start, count, value);
   return null;
 }
 
