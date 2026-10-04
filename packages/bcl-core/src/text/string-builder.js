@@ -8,7 +8,7 @@ import {appendBuilderArray} from './string-builder-append-array.js';
 import {appendBuilderValue} from './string-builder-append-builder.js';
 import {appendBuilderValueRange} from './string-builder-append-builder-range.js';
 import {builderEquals} from './string-builder-equality.js';
-import {replaceBuilderCharacters, insertBuilderCharacter} from './string-builder-edit.js';
+import {replaceBuilderCharacters, insertBuilderCharacter, insertBuilderBoolean} from './string-builder-edit.js';
 import {removeBuilderRange} from './string-builder-remove.js';
 import {replaceBuilderStringRange} from './string-builder-replace-range.js';
 
@@ -216,9 +216,10 @@ function invokeMember(platform, descriptor, reference, values, scalars) {
       return platform.heap.string(value.slice(start, start + length));
     }
     case 'Equals': return builderEquals(platform, reference, values[0]);
-    case 'Insert': return descriptor.parameters[1] === 'char'
-      ? insertBuilderCharacter(platform, reference, scalars, insertText)
-      : insertText(platform, reference, scalars[0], scalars[1]);
+    case 'Insert':
+      if (descriptor.parameters[1] === 'char') return insertBuilderCharacter(platform, reference, scalars, insertText);
+      if (descriptor.parameters[1] === 'bool') return insertBuilderBoolean(platform, reference, scalars, insertText);
+      return insertText(platform, reference, scalars[0], scalars[1]);
     case 'Replace':
       if (descriptor.parameters[0] === 'char') return replaceBuilderCharacters(platform, reference, scalars);
       if (descriptor.parameters.length === 4) return replaceBuilderStringRange(platform, reference, scalars, bufferText, setBuffer);

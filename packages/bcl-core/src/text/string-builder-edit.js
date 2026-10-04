@@ -1,4 +1,4 @@
-import {fail, integer, string} from '../host.js';
+import {fail, integer, string, text} from '../host.js';
 
 const owner = 'System.Text.StringBuilder';
 
@@ -13,17 +13,32 @@ export function registerStringBuilderCharacterInsertExtensions({member}) {
   member(owner, 'Insert', ['int', 'char'], owner);
 }
 
+/** Append Boolean insertion after the established ranged replacement contract. */
+export function registerStringBuilderBooleanInsertExtensions({member}) {
+  member(owner, 'Insert', ['int', 'bool'], owner);
+}
+
 function rangeError(platform, parameter) {
   fail(platform, 'ArgumentOutOfRangeException', "Value is outside the builder range. (Parameter '" + parameter + "')");
 }
 
-/** Convert one Char after native index validation, then reuse the released bounded text insertion. */
-export function insertBuilderCharacter(platform, reference, values, insertText) {
-  const index = values[0];
+function insertionIndex(platform, reference, index) {
   const length = platform.get(reference, '$length', 0);
   if (!Number.isInteger(index) || index < 0 || index > length) rangeError(platform, 'index');
+  return index;
+}
+
+/** Convert one Char after native index validation, then reuse the released bounded text insertion. */
+export function insertBuilderCharacter(platform, reference, values, insertText) {
+  const index = insertionIndex(platform, reference, values[0]);
   const unit = integer(platform, values[1], 0, 65535);
   return insertText(platform, reference, index, String.fromCharCode(unit));
+}
+
+/** Format Boolean carriers as invariant True/False after validation, using the existing insertion storage path. */
+export function insertBuilderBoolean(platform, reference, values, insertText) {
+  const index = insertionIndex(platform, reference, values[0]);
+  return insertText(platform, reference, index, text(platform, values[1], 'bool'));
 }
 
 function stageChunks(platform, storage, count, range) {
