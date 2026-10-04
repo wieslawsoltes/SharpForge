@@ -59,6 +59,7 @@ jobs:
         id: plan
         env:
           GH_TOKEN: ${{ github.token }}
+          PROJECT_READ_TOKEN: ${{ secrets.PLANNING_PROJECT_READ_TOKEN }}
         run: >-
           node planning-tools/scripts/conformance/ci-planning/merge-group-gates.js
           --root qualified-group --context "$RUNNER_TEMP/merge-group.json"

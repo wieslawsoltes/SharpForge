@@ -47,7 +47,12 @@ Only a passing gate emits the full manifest-derived area matrix. Every area job
 checks out the same resolved group SHA and runs Node/browser consumers, one cell
 at a time. Browser prerequisites and the final all-area gate are retained.
 The context, gate outcomes and full consumer plan are saved as workflow artifacts.
-No broader Project secret is added; missing Project access remains a failure.
+The trusted gate step receives the existing `PLANNING_PROJECT_READ_TOKEN` secret
+as `PROJECT_READ_TOKEN` for read-only Project GraphQL queries. Repository reads
+continue to use the read-only `github.token`; both transports reject mutations.
+Missing either credential fails explicitly before transport. The Project token is
+absent from resolver/install/area steps and stripped from candidate subprocesses.
+This wiring does not create or configure the secret; missing access remains a failure.
 
 The central `ci.yml` merge-group trigger and ordinary minimal core are unchanged.
 This explicit lane is not automatically required by branch protection, and its

@@ -41,8 +41,9 @@ lookup; missing context cannot silently skip ownership. Ownership and hot-file p
 so the PR cannot change its own policy to authorize its diff. The PR diff starts at the unique merge base. Context,
 including exact commits and labels, is retained with the qualification report and artifact.
 
-Repository/Project API tokens are removed from subprocess environments. No broader Project secret or permission is added;
-insufficient Project metadata access remains an explicit failure. The separate [merge-group lane](merge-groups.md) resolves and gates constituent PRs on the actual combined checkout;
+Repository/Project API tokens are removed from subprocess environments. The PR lane adds no broader Project credential;
+the trusted manual group gate uses the existing read-only Project secret as documented in the merge-group lane.
+Insufficient Project metadata access remains an explicit failure. The separate [merge-group lane](merge-groups.md) resolves and gates constituent PRs on the actual combined checkout;
 a context-free run does not qualify ownership or a combined queue tree.
 
 ## Credentials and trust
@@ -50,7 +51,8 @@ a context-free run does not qualify ownership or a combined queue tree.
 PR/queue workflows have read-only repository tokens and never use `pull_request_target`. Event text passes through environment
 variables or JSON, never interpolated into shell code. PR planning gates require access to the user Project's metadata;
 if the ordinary read-only workflow token cannot read it, the gate fails rather than accepting self-declared PR locks.
-No broader Project secret is exposed to PR code by this workflow. Missing access is an explicit configuration limit.
+No Project secret is exposed to candidate commands. The manual group gate uses the existing read-only Project secret only
+for trusted GraphQL reads, with repository reads authenticated separately. Missing access is an explicit configuration limit.
 
 The lease workflow runs only on the default branch, hourly or by manual dispatch. Configure `PLANNING_PROJECT_READ_TOKEN`
 with read access to this Project and repository issue metadata. It is used only for read-only GraphQL requests.

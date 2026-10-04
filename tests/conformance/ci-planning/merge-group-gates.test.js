@@ -2,9 +2,10 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import { spawnSync } from 'node:child_process';
+import { EventEmitter } from 'node:events';
 import { checkContractChange, contractsAt, versionsAt } from '../../../scripts/planning/check-contract-change.js';
 import { resolveMergeGroupContext } from '../../../scripts/conformance/ci-planning/merge-group-context.js';
-import { runMergeGroupGates } from '../../../scripts/conformance/ci-planning/merge-group-gates.js';
+import { mergeGroupClient, runMergeGroupGates } from '../../../scripts/conformance/ci-planning/merge-group-gates.js';
 import { mergeGroupFixture } from './merge-group-fixture.js';
 
 function claims(value, { leftLocks = [] } = {}) {
@@ -142,5 +143,41 @@ test('manual queue workflow binds harness, all serial area jobs and artifacts to
   assert.match(workflow, /max-parallel: 1/);
   assert.match(workflow, /merge-group-gates.json/);
   assert.equal((workflow.match(/persist-credentials: false/g) ?? []).length, 3);
-  assert.doesNotMatch(workflow, /pull_request_target|secrets\.|: write|^  merge_group:/m);
+  assert.doesNotMatch(workflow, /pull_request_target|: write|^  merge_group:/m);
+  assert.equal((workflow.match(/PROJECT_READ_TOKEN:/g) ?? []).length, 1);
+  assert.match(workflow, /id: plan\n        env:\n          GH_TOKEN: \$\{\{ github.token \}\}\n          PROJECT_READ_TOKEN: \$\{\{ secrets.PLANNING_PROJECT_READ_TOKEN \}\}/);
+  assert.doesNotMatch(workflow.slice(workflow.indexOf('  areas:')), /PROJECT_READ_TOKEN|secrets\./);
+});
+
+
+test('trusted queue planning rejects absent Project or repository credentials before transport', () => {
+  for (const environment of [{}, { GH_TOKEN: 'repository' }, { PROJECT_READ_TOKEN: 'project' }]) {
+    assert.throws(() => mergeGroupClient(environment, { spawnProcess: () => assert.fail('No transport without credentials') }), /requires GH_TOKEN and read-only PROJECT_READ_TOKEN/);
+  }
+});
+
+test('trusted queue planning isolates read-only Project GraphQL from repository API credentials', async () => {
+  const calls = [];
+  const client = mergeGroupClient({ GITHUB_REPOSITORY: 'fixture/repository', GH_TOKEN: 'repository',
+    PROJECT_READ_TOKEN: 'project', GITHUB_TOKEN: 'other-repository', GH_ENTERPRISE_TOKEN: 'enterprise', PATH: 'fixture-path' },
+  { spawnProcess: (command, args, options) => {
+    calls.push({ command, args, options });
+    const child = new EventEmitter();
+    child.stdout = new EventEmitter(); child.stderr = new EventEmitter();
+    child.stdin = { end: () => queueMicrotask(() => {
+      child.stdout.emit('data', 'HTTP/2 200 OK\r\n\r\n{"data":{"fixture":true}}');
+      child.emit('close', 0);
+    }) };
+    return child;
+  } });
+  assert.deepEqual(await client.graphql('query Fixture { viewer { login } }'), { fixture: true });
+  await client.api('GET', 'git/ref/heads/agent/SF-A29-T14');
+  assert.deepEqual(calls.map(call => call.options.env.GH_TOKEN), ['project', 'repository']);
+  for (const call of calls) {
+    assert.equal(call.options.env.PATH, 'fixture-path');
+    for (const name of ['PROJECT_READ_TOKEN', 'GITHUB_TOKEN', 'GH_ENTERPRISE_TOKEN']) assert.equal(Object.hasOwn(call.options.env, name), false);
+  }
+  await assert.rejects(client.graphql('mutation Bad { deleteProjectV2(input: {}) { clientMutationId } }'), /read-only/);
+  assert.throws(() => client.api('POST', 'issues/1/comments', { body: 'must not be sent' }), /read-only/);
+  assert.equal(calls.length, 2);
 });
