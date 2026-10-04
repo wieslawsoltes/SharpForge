@@ -120,6 +120,10 @@ view to an outer span, and the attribute-name diagnostic on an inline record
 struct. Native execution also matched Roslyn's output for custom-enumerator
 precedence and generic auto-property backing storage.
 
+The 23 focused cases, 50 diagnostic comparisons, and two Roslyn-output native
+checks were repeated successfully on the isolated publication branch at
+`84f47139`, after merging the published parameter-metadata and unsafe prerequisites.
+
 The 20 existing Index/Range, source ref-safety, and C# 12 rule regression cases
 also passed with no skips.
 
