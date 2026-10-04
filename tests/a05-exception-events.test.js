@@ -13,15 +13,15 @@ function rethrowFixture(explicit = false) {
       writer.mark('try').op('call', context.methods.Inner).op('leave.s', 'done')
         .mark('catch').op('pop').op('ldc.i4.7').op('stloc.0').op('leave.s', 'done')
         .mark('done').op('ldloc.0').op('ret');
-    }, handlers: (labels, context) => [{start: labels.try, end: labels.catch,
-      target: labels.catch, handlerEnd: labels.done, catchType: context.resolve('System.Exception')}]},
+    }, handlers: (labels, context) => [{start: labels.get('try'), end: labels.get('catch'),
+      target: labels.get('catch'), handlerEnd: labels.get('done'), catchType: context.resolve('System.Exception')}]},
     {name: 'Inner', body(writer) {
       writer.mark('try').op('ldnull').op('throw').mark('catch');
       if (explicit) writer.op('throw');
       else writer.op('pop').op('rethrow');
       writer.mark('end');
-    }, handlers: (labels, context) => [{start: labels.try, end: labels.catch,
-      target: labels.catch, handlerEnd: labels.end, catchType: context.resolve('System.Exception')}]}
+    }, handlers: (labels, context) => [{start: labels.get('try'), end: labels.get('catch'),
+      target: labels.get('catch'), handlerEnd: labels.get('end'), catchType: context.resolve('System.Exception')}]}
   ]});
 }
 
@@ -111,8 +111,8 @@ test('finally continuation propagates a fault without emitting another origin', 
     {name: 'Main', body: (writer, context) => writer.op('call', context.methods.Fail).op('ret')},
     {name: 'Fail', body: writer => writer.mark('try').op('ldnull').op('throw')
       .mark('finally').op('nop').op('endfinally').mark('end'),
-    handlers: labels => [{flags: 2, start: labels.try, end: labels.finally,
-      target: labels.finally, handlerEnd: labels.end}]}
+    handlers: labels => [{flags: 2, start: labels.get('try'), end: labels.get('finally'),
+      target: labels.get('finally'), handlerEnd: labels.get('end')}]}
   ]});
   const vm = new CilVirtualMachine(bytes, {runtimeEvents: true});
   try {
@@ -124,7 +124,7 @@ test('finally continuation propagates a fault without emitting another origin', 
 
 test('instruction admission limits are observed without changing raw diagnostic names', () => {
   const bytes = managedFixture({methods: [{name: 'Main', body: writer => writer.mark('loop').op('br.s', 'loop')}]});
-  const vm = new CilVirtualMachine(bytes, {runtimeEvents: true, maxInstructions: 0});
+  const vm = new CilVirtualMachine(bytes, {runtimeEvents: true, maxInstructions: 1});
   try {
     assert.equal(vm.run().fault.name, 'InstructionLimitException');
     assert.deepEqual(events(vm).map(event => [event.payload.name, event.payload.exceptionType, event.payload.fatal]),
