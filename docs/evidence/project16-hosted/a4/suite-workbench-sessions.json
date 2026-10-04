@@ -1,0 +1,10 @@
+{
+  "suite": "workbench-sessions",
+  "command": [
+    "/opt/hostedtoolcache/Python/3.12.14/x64/bin/python",
+    "tests/browser_multi_session_test.py"
+  ],
+  "exitCode": 1,
+  "timedOut": false,
+  "seconds": 4.2414042160000065
+}
