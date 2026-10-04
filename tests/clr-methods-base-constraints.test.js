@@ -98,6 +98,16 @@ test('CLR unsupported constraint expressions, variant flags and malformed rows f
     const module = await load(baseContext(), constrainedFixture(md => { md.rows[42][2][1] = flags; }));
     await assert.rejects(module.methodDefinition(0x06000007).getBaseDefinition(), fails(LoadErrorCode.TypeLoad));
   }
+  for (const reference of [false, true]) {
+    const module = await load(baseContext(), constrainedFixture((md, first) => {
+      md.add(42, [0, 0, codedIndex('TypeOrMethodDef', first), md.string('OpenT')]);
+      if (reference) {
+        const token = md.add(1, [codedIndex('ResolutionScope', 1), md.string('IFirst'), md.string('Fixture')]);
+        md.rows[44][2][1] = codedIndex('TypeDefOrRef', token);
+      }
+    }));
+    await assert.rejects(module.methodDefinition(0x06000007).getBaseDefinition(), fails(LoadErrorCode.TypeLoad));
+  }
   for (const decorate of [
     md => { const token = md.add(27, [md.blob(encodeTypeSignature(variable))]);
       md.rows[44][2][1] = codedIndex('TypeDefOrRef', token); },

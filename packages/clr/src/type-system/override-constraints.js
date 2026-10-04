@@ -31,7 +31,12 @@ export class OverrideConstraints {
         if (![1, 2].includes(token >>> 24)) {
           throw unsupported('Generic constraint expressions require a later substitution service');
         }
-        types.add(await this.#loader.load(module, token, { signal }));
+        const type = await this.#loader.load(module, token, { signal });
+        if (type.module && type.module.rowCount(42) + type.module.rowCount(44) > this.#maxRows) {
+          throw loadError(LoadErrorCode.LimitExceeded, 'Override constraint definition row limit exceeded');
+        }
+        if (type.genericParameters.length) throw unsupported('Open generic constraint definitions require type arguments');
+        types.add(type);
       }
       result.push({ flags, types });
     }

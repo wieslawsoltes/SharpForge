@@ -41,7 +41,8 @@ and ValueType constraints under the struct flag are vacuous. Different explicit
 constraints fail instead of silently selecting another slot.
 
 This is constraint compatibility for open method definitions, not generic type
-instantiation or argument satisfaction. TypeSpec constraint expressions, method
+instantiation or argument satisfaction. Bare open generic definitions, TypeSpec
+constraint expressions, method
 variance, allow-byref-like flags and contradictory special flags report SFCLR012.
 Generic declaring/base types and class MethodImpl remain separate. The existing
 GenericParam reader validates owner, position, arity and token extents. Context
