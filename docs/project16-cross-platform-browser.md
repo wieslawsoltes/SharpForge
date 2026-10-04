@@ -1,11 +1,14 @@
 # Project 16 Windows and macOS browser qualification
 
+The later **m2 macOS/Chromium standalone-only attempt passed its one selected scope** at source `b8d68d41`.
+It is recorded separately below with its new artifact identity. The original w1/m1 results remain unchanged.
+
 Windows/Firefox attempt **w1 passed all nine selected browser scopes**. macOS/WebKit attempt **m1 passed eight of nine**;
 its standalone workflow failed during the initial `file://` navigation. The failed m1 run is retained with its trace,
 screenshot and exact error. Pinned upstream source strongly explains the failure as a WebKit automation offline-mode
 limitation. This record makes no blanket platform acceptance claim.
 
-Both attempts ran the same published source commit `25ef23b0fb86eb3be4151492c2ef6bbc51f0a82e`, tree
+The original w1/m1 attempts ran published source commit `25ef23b0fb86eb3be4151492c2ef6bbc51f0a82e`, tree
 `a0922a5f98e4ce38cd377d109a083a1da77df9a1`. The records support **SF-A19-T12.2 / #1583** and the exercised A19/A20
 browser behavior. They do not close issues. The [machine-readable ledger](project16-cross-platform-browser.json)
 keeps each attempt's identities, scope outcomes, environment, command and evidence paths separate.
@@ -109,7 +112,8 @@ performance capture or a regression verdict when the selected stage is browser.
 
 The separate [a6 Linux/Chromium record](project16-hosted-a6.md) reports nine browser scopes passed on the same source
 with Chromium 153.0.8010.12. Its overall run failed at the editor undo p95 relative regression gate; that result is
-retained in its own ledger. These are **three selected OS/engine combinations**, not a three-by-three matrix.
+retained in its own ledger. Those initial attempts are **three selected OS/engine combinations** at `25ef23b0`.
+The later m2 attempt adds only macOS/Chromium standalone coverage at a different source; this is not a three-by-three matrix.
 No a6 Node, browser or performance totals are added to the w1/m1 counts above.
 
 Playwright WebKit is not real Safari certification. Browser keyboard, DOM, ARIA, synthetic composition, contrast and
@@ -121,33 +125,78 @@ The successful workflow's `ECMA-335` artifact-format label does not provide a na
 Later fixes or qualification attempts must retain their own source identities and outcomes. They cannot turn this
 m1 failure into a pass or qualify every platform for a newer source revision.
 
+## M2: separate macOS/Chromium standalone success
+
+[Run 37186932517 / job 111390739312][m2-job] completed successfully with **one selected scope, one pass, zero failures**.
+It tested source **`b8d68d417c792156dedb2ac2b98acf33cac3f141`**, tree
+**`74021421e044947908f037bf34d00bcb258e25fc`**. The workflow was created at **2026-10-04 07:48:54 UTC** and last updated
+at **07:49:52 UTC**. Its qualification window was **07:49:41.321–07:49:47.330 UTC**. These execution timestamps are not
+a performance comparison with w1 or m1.
+
+The [m2 job log](evidence/project16-hosted/m2/job.log) records macOS **26.6.2**, build **25G83**, arm64; runner image
+`macos-26-arm64` version `20260907.0351.1`; Node **24.20.0**, CPython **3.12.10** and Playwright **1.63.0**.
+The managed Chromium browser was **153.0.8010.12**, Playwright build **1243**. Setup, application build, the selected
+scope and evidence upload all succeeded.
+
+The explicit create trigger selected `standalone`, with `captureOnly: true`, a null baseline profile and null baseline
+paths. It invoked `node scripts/project16-qualification.js standalone`; the existing serial runner selected only
+`workbench-workflows-standalone`. The [summary](evidence/project16-hosted/m2/qualification-summary.json) and
+[suite record](evidence/project16-hosted/m2/suite-workbench-workflows-standalone.json) retain the exact commands,
+1,200-second suite timeout, 1,320,000 ms outer deadline and successful exit codes. The other eight browser scopes,
+Node areas and performance phases were not selected.
+
+The [standalone result](evidence/project16-hosted/m2/vs-workflow-standalone-results.json) records:
+
+- The real `file:///Users/runner/work/SharpForge/SharpForge/artifacts/SharpForge-standalone.html` URL with `offline: true`.
+- All five workflow scenarios passed: project creation and invalid-name rejection, edit/build, breakpoint/step/continue,
+  designer edit/undo/redo/save, and export.
+- All five lazy tools—assembly, disassembly, MSBuild, project wizard and designer—passed and reopened;
+  the designer retained its document.
+- A standalone CSP delivered through its meta element, including the generated entry-script SHA256 directive.
+- No HTTP attempts or page errors; the [session record](evidence/project16-hosted/m2/browser_vs_workflows_standalone_test/session.json)
+  also reports no CSP violations or diagnostic errors.
+
+This m2 artifact is **16,625,302 bytes**, SHA256
+`f8850e1bc7d2fc1bae8153b4337f0bed1f124218bcbefba33288426b8797701a`.
+It is a different artifact from the **16,419,776-byte** w1/m1 artifact with SHA256
+`da60ffe742f3b723d4b1286fc279c6510067570a7cc54b6550d68e2fcfb855a9` at source `25ef23b0`.
+
+**M2 demonstrates the recorded macOS/Chromium offline standalone workflow at its own source.** It does not change
+the earlier **m1 WebKit failure**, certify Safari, qualify all browser scopes at `b8d68d41`, or supply a performance
+verdict. Construction counts and script-evaluation reduction remain explicitly unmeasured in this correctness result.
+
 ## Byte-exact archive
 
 | Attempt | Original artifact ZIP | Extracted members | Preserved raw files including ZIP, log and API snapshots | Raw bytes |
 |---|---:|---:|---:|---:|
 | w1 | 15,322 bytes | 36 files / 23,644 bytes | 41 | 136,438 |
 | m1 | 37,289 bytes | 38 files / 72,079 bytes | 43 | 200,889 |
+| m2 | 3,360 bytes | 6 files / 5,287 bytes | 11 | 87,831 |
 
 The original ZIP digests are:
 
 - w1: `b79f4c7f36d8771896d6e35415718ba4f8511335a050c3323587f9a2c8804f2d`
 - m1: `420c7388efaeb54e1079d53b7434171311b67c6b0947fbdac61346781ab4c92d`
+- m2: `4dac7ada7468eadc27801eb2d145480e021e9830f511771b4261cff1d4660b24`
 
-The [w1 manifest](evidence/project16-hosted/w1/manifest.json) and
-[m1 manifest](evidence/project16-hosted/m1/manifest.json) list source paths, byte counts and SHA256 for all **84 raw
-files / 337,327 bytes**. This is an archive-size total, not a combined qualification count. Every ZIP member was
+The [w1 manifest](evidence/project16-hosted/w1/manifest.json),
+[m1 manifest](evidence/project16-hosted/m1/manifest.json) and
+[m2 manifest](evidence/project16-hosted/m2/manifest.json) list source paths, byte counts and SHA256 for all **95 raw
+files / 425,158 bytes**. This is an archive-size total, not a combined qualification count. Every ZIP member was
 compared with the extracted original, every copy was read back, and all bytes—including line endings, encoding,
 empty console logs, the nested trace ZIP and screenshot—were retained. Supplied connector API snapshots were
 copied verbatim; omitted fields in a connector response were not reconstructed.
 
-Archive-scoped Git attributes disable text normalization. All 84 staged raw Git blobs were also compared against
-their original byte counts and SHA256 values, preserving the Windows CRLF records in the committed evidence.
+Archive-scoped Git attributes disable text normalization. The original 84 w1/m1 raw Git blobs and all 11 additional
+m2 raw Git blobs were compared against their original byte counts and SHA256 values. The original w1/m1 archives and
+their raw ledger objects remain unchanged, including the committed Windows CRLF records.
 
 Only file reads, archive inspection, byte comparisons and hashing were used to assemble this documentation.
 No test, build, browser, benchmark or workflow was executed for the archive. Earlier ledgers remain unchanged.
 
 [w1-job]: https://github.com/wieslawsoltes/SharpForge/actions/runs/37184606471/job/111383814564
 [m1-job]: https://github.com/wieslawsoltes/SharpForge/actions/runs/37184861392/job/111384572220
+[m2-job]: https://github.com/wieslawsoltes/SharpForge/actions/runs/37186932517/job/111390739312
 [file-driver]: https://github.com/wieslawsoltes/SharpForge/blob/25ef23b0fb86eb3be4151492c2ef6bbc51f0a82e/tests/browser_vs_workflows_test.py#L126
 [webkit-config]: https://github.com/microsoft/playwright/blob/v1.63.0/browser_patches/webkit/UPSTREAM_CONFIG.sh#L1-L3
 [webkit-patch]: https://github.com/microsoft/playwright/blob/v1.63.0/browser_patches/webkit/patches/bootstrap.diff#L18234-L18268
