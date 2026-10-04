@@ -8,6 +8,7 @@ import {createExplorerToolbar} from './toolbar.js';
 import {explorerViewPolicy} from './view-policy.js';
 import {ExplorerChildLoader} from './child-loader.js';
 import {revealExplorerPath} from './reveal.js';
+import {beginLazyExplorerRestore, restoreLazyExplorerState, cacheLazyExplorerRoots} from './lazy-state.js';
 
 /** Keyed view state survives rebuilds and transaction renames; lazy children are admitted only through expansion. */
 export class SolutionExplorer {
@@ -32,7 +33,7 @@ export class SolutionExplorer {
     this.tree.before(this.caption);
     this.model = new TreeModel();
     this.childLoader = new ExplorerChildLoader({model: this.model, signal: this.abort.signal, onUpdate: ({reveal}) => {
-      if (this.lazyTree) this.lazyTree.roots = this.model.roots;
+      cacheLazyExplorerRoots(this);
       if (reveal) this.control.ensureVisible();
     }});
     this.unsubscribe = this.model.subscribe(() => this.saveState());
@@ -108,7 +109,7 @@ export class SolutionExplorer {
   }
 
   saveState() {
-    if (!this.key || this.restoring) return;
+    if (!this.key || this.restoring || this.lazyStateRestore) return;
     try {
       storage.setItem(storageKeys.explorer + this.key, JSON.stringify({version: 1, tree: this.model.snapshot(),
         view: this.view, showAll: this.showAll, track: this.track, nesting: this.nesting}));
@@ -118,6 +119,7 @@ export class SolutionExplorer {
   loadState(data, key) {
     this.key = key;
     this.scope = null;
+    this.lazyStateRestore = null;
     this.search.value = '';
     let saved;
     try { saved = JSON.parse(storage.getItem(storageKeys.explorer + key)); }
@@ -137,18 +139,22 @@ export class SolutionExplorer {
     const key = data.identity ?? data.name;
     this.restoring = true;
     const saved = key !== this.key ? this.loadState(data, key) : null;
-    const oldNodes = this.model.nodes;
+    const pending = this.lazyStateRestore;
+    const retained = pending?.revision === this.model.revision && pending.scope === this.scope && pending.disk === data.disk ? pending : null;
+    const oldNodes = retained?.nodes ?? this.model.nodes;
     const previousLazyTree = this.lazyTree?.model;
-    const previous = this.model.snapshot();
-    const scrollTop = this.tree.scrollTop;
+    const previous = retained?.snapshot ?? this.model.snapshot();
+    const scrollTop = retained?.scrollTop ?? this.tree.scrollTop;
+    const mappingGroups = [...(retained?.mappingGroups ?? []), this.pendingMappings ?? []];
     const files = data.records ?? data.files ?? [];
     this.viewPolicy = explorerViewPolicy(data, this.view);
     let roots;
     if (this.viewPolicy.lazy) {
       const identity = [key, data.revision, this.viewPolicy.view, this.showAll].join(':');
-      if (force || identity !== this.lazyIdentity) {
+      if (force || identity !== this.lazyIdentity || data.disk !== this.lazyDisk) {
         this.lazyTree?.model.dispose();
         this.lazyIdentity = identity;
+        this.lazyDisk = data.disk;
         this.lazyTree = buildLazyFolderTree({files, folders: data.folders, name: data.name, pageSize: 100, deferIndex: true,
           caseSensitive: data.provider?.capabilities?.caseSensitive ?? true});
       }
@@ -159,18 +165,21 @@ export class SolutionExplorer {
       roots = buildSolutionTree({...data, files, showAll: this.showAll, view: this.viewPolicy.view,
         nesting: this.nesting, expanded: this.model.expanded});
     }
+    const restoreLazy = this.lazyTree && (previousLazyTree !== this.lazyTree.model || retained);
+    if (!restoreLazy) this.lazyStateRestore = null;
     if (this.scope) {
       const find = node => node.id === this.scope ? node : (node.children ?? []).map(find).find(Boolean);
       const scoped = roots.map(find).find(Boolean);
       if (scoped) roots = [scoped];
-      else this.scope = null;
+      else if (!restoreLazy) this.scope = null;
     }
     this.tree.setAttribute('aria-busy', String(!!data.fileBusy));
     this.toolbar.querySelector('[data-explorer-action="add"]').disabled = !!data.fileBusy || !!data.readOnly;
     this.model.setNodes(roots);
     this.model.setFilter(this.search.value);
-    if (this.pendingMappings?.length) this.model.restore(remapExplorerState(previous, oldNodes, this.model.nodes, this.pendingMappings));
-    else if (saved?.tree) {
+    if (!restoreLazy && this.pendingMappings?.length) {
+      this.model.restore(remapExplorerState(previous, oldNodes, this.model.nodes, this.pendingMappings));
+    } else if (!restoreLazy && saved?.tree) {
       try { this.model.restore(saved.tree); }
       catch (error) { this.recoveryWarning = 'Explorer state was invalid: ' + error.message; }
     }
@@ -182,11 +191,15 @@ export class SolutionExplorer {
     this.viewButton.disabled = this.viewPolicy.large;
     this.viewButton.title = this.viewPolicy.reason ?? 'Switch Solution / Folder View';
     this.viewButton.setAttribute('aria-label', this.viewButton.title);
-    if (this.track && (data.active !== this.lastActive || previousLazyTree !== this.lazyTree?.model)) {
+    const activeChanged = data.active !== this.lastActive || (retained?.trackActive && retained.active === data.active);
+    if (restoreLazy) {
+      this.restoreLazyView({snapshot: saved?.tree ?? previous, nodes: oldNodes, saved: !!saved?.tree,
+        mappingGroups, scrollTop, active: data.active, trackActive: activeChanged});
+    } else if (this.track && activeChanged) {
       this.safe(() => this.reveal(data.active, false));
     }
     this.lastActive = data.active;
-    for (const id of this.model.expanded) {
+    for (const id of restoreLazy ? [] : this.model.expanded) {
       const node = this.model.nodes.get(id);
       if (node?.loadChildren && !node.children.length) this.safe(() => this.expand(node));
     }
@@ -194,6 +207,18 @@ export class SolutionExplorer {
     this.saveState();
     this.persistence.observe(data);
     this.diskServices.observe(data);
+  }
+
+  restoreLazyView(options) {
+    const rootId = this.lazyTree.model.root.id;
+    let snapshot = options.snapshot;
+    if (!options.saved && !options.nodes.has(rootId)) snapshot = {...snapshot, expanded: [...snapshot.expanded, rootId]};
+    const plan = beginLazyExplorerRestore(this, {...options, snapshot, scope: this.scope, query: this.search.value});
+    this.lazyRestoreTask = this.safe(async () => {
+      if (await restoreLazyExplorerState(this, plan) && this.track && plan.trackActive && this.getData().active === plan.active) {
+        await this.reveal(plan.active, false);
+      }
+    });
   }
 
   expand(node) { return this.childLoader.expand(node); }
@@ -223,7 +248,14 @@ export class SolutionExplorer {
 
   reveal(path, focus = false) { return revealExplorerPath(this, path, focus); }
 
-  scopeTo(node) { this.scope = node.id; this.render(true); this.tree.focus(); }
+  scopeTo(node) {
+    this.lazyStateRestore = null;
+    this.scope = node.id;
+    this.render();
+    this.model.expand(node.id);
+    this.safe(() => this.expand(this.model.nodes.get(node.id)));
+    this.tree.focus();
+  }
 
   snapshot() {
     return {...this.model.snapshot(), view: this.viewPolicy?.view ?? this.view, requestedView: this.view,
