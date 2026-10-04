@@ -1,6 +1,11 @@
 {
   "schemaVersion": 1,
-  "styles": [],
+  "styles": [
+    {
+      "source": "apps/studio/styles/explorer-disk-services.css",
+      "order": 4020
+    }
+  ],
   "workers": [],
   "assets": [
     {
