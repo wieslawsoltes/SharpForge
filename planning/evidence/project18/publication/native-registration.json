@@ -1,0 +1,71 @@
+{
+  "workIds": [
+    "SF-A23-T11",
+    "SF-A23-T28",
+    "SF-A23-T29",
+    "SF-A23-T30"
+  ],
+  "productSource": "c1a662d18d31e202a6b420bce1e9177b0b1a50ba",
+  "test": "tests/a23-studio-tools-registration.test.js",
+  "caseCount": 3,
+  "qualification": {
+    "node22": "106/106 native UI scope passed",
+    "node26": "106/106 native UI scope passed"
+  },
+  "dependencies": [
+    "#3973 native controller",
+    "#3880 native renderer"
+  ],
+  "scope": "Exact tool definitions, stable automation contract, build layout helper and narrow workbench docking subclass. tools/core.js is delegated to root/evaluator; protected Studio entry is not modified.",
+  "forwardSync": {
+    "previousPublishedHead": "ca15377b4d6668d8b79382466dd444c250fdc581",
+    "actualDependencyHead": "7b7a54f6d7e6bc95c6a561975daf10a57240ae24",
+    "dependencyParents": [
+      "a15d1557c0a71b373c07b8248daff8cc3be07424",
+      "87af20b3951ee05be79357190e1babb74dff3e87",
+      "d49d58ed476dee5f0427528de00ebb260a29a2a8"
+    ],
+    "pinnedMain": "1db2e1d540a78403b7aaddcf472311fcde1a81ef",
+    "policy": "Preserve the previous published feature head as first parent and merge its actual updated dependency; no new main refresh, force update or local validation.",
+    "productChanges": "None. The four tool/layout/automation modules and all three original assertions remain byte-identical to the qualified source and prepared final composition.",
+    "sourceProof": [
+      {
+        "path": "apps/studio/dock-layouts.js",
+        "matchesPreparedRoot": true,
+        "sha256": "ac78db6e7e3089362e0fe7feb708ede26e916de9d202b635ff41a77184636f3b",
+        "bytes": 1911,
+        "lines": 26
+      },
+      {
+        "path": "apps/studio/docking-workspace.js",
+        "matchesPreparedRoot": true,
+        "sha256": "fd999dbab9dd01ba504cd5a69c44d08dddb51fab484bb3565317c3d245d31e4f",
+        "bytes": 903,
+        "lines": 23
+      },
+      {
+        "path": "apps/studio/tools/definitions.js",
+        "matchesPreparedRoot": true,
+        "sha256": "8f3d10b4839c5d88b4e1490cd60e511e56642b67c62634d2cbc6fc89c0e5170e",
+        "bytes": 1651,
+        "lines": 47
+      },
+      {
+        "path": "apps/studio/tools/msbuild-automation.js",
+        "matchesPreparedRoot": true,
+        "sha256": "f8abce70dd8c0995bba09dd09ac798b4d1bcb6654cdd148b7bfc0acb0eab3c64",
+        "bytes": 1603,
+        "lines": 38
+      },
+      {
+        "path": "tests/a23-studio-tools-registration.test.js",
+        "matchesPreparedRoot": true,
+        "sha256": "a0ff5e1c9a78b5a5225a2c474a83f5c4e46ab28fc66913a7534a715906205ce9",
+        "bytes": 3004,
+        "lines": 49
+      }
+    ],
+    "validation": "Historical completed Node22/Node26 functional results above remain unchanged. Required remote core is recorded separately; root owns the final complete pinned-main integration qualification.",
+    "upstreamComposition": "The actual controller dependency includes captured native operation ownership, cancellation and disposal, while tool automation retains the same public context/profile/testing delegates."
+  }
+}
