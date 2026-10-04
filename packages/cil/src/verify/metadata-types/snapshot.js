@@ -58,7 +58,7 @@ export function snapshotTypes(inspector, budget) {
     const owner = hierarchyIndex('TypeOrMethodDef', row[2]);
     if (owner >>> 24 === 2) records.get(checkedToken(owner, counts, [2])).generic = true;
   }
-  const aliases = localTypeReferences(inspector.metadata, records, budget);
+  const { aliases, lexical } = localTypeReferences(inspector.metadata, records, budget);
   for (const record of records.values()) {
     budget.check();
     record.baseToken = aliases?.get(record.baseToken) ?? record.baseToken;
@@ -79,12 +79,12 @@ export function snapshotTypes(inspector, budget) {
     Object.freeze(record);
   }
   checkCycles(records, budget);
-  return { records, identities, resolve(token) {
+  return { lexical, snapshot: { records, identities, resolve(token) {
     budget.check();
     checkedToken(token, counts);
     const record = records.get(aliases?.get(token) ?? token);
     if (record?.generic) return unknown('generic-definition', token);
     if (record) return record.result;
     return unknown(token >>> 24 === 1 ? 'unresolved-type-reference' : 'type-specification', token);
-  } };
+  } } };
 }

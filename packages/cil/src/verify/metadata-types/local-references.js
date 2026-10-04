@@ -1,75 +1,72 @@
 import { hierarchyIndex, checkedToken } from './tokens.js';
 import { rejectTypeSystem } from './results.js';
+import { localDefinitionNames } from './definition-names.js';
+import { maxNestingDepth } from '../metadata-nesting.js';
 
-function nameKeys(metadata, budget) {
-  const heap = metadata.streams.get('#Strings');
-  const cache = new Map();
-  let copiedBytes = 0;
-  return index => {
-    if (cache.has(index)) return cache.get(index);
-    if (!Number.isInteger(index) || index < 0 || !heap || index >= heap.length)
-      rejectTypeSystem('CILVT0001', 'type name heap index');
-    let end = index;
-    while (end < heap.length && heap[end]) {
-      if (end - index >= 1024) rejectTypeSystem('CILVT0002', 'type name bytes');
-      end++;
-    }
-    if (end === heap.length) rejectTypeSystem('CILVT0001', 'unterminated type name');
-    copiedBytes += end - index;
-    if (copiedBytes > budget.maxTypeNameBytes) rejectTypeSystem('CILVT0002', 'type name bytes');
-    // Exact UTF-8 byte keys avoid display-decoder BOM or Unicode normalization changing identity.
-    // The 1 KiB bound precedes argument expansion; no borrowed heap view escapes construction.
-    const key = String.fromCharCode(...heap.subarray(index, end));
-    cache.set(index, key);
-    return key;
-  };
-}
-
-function definitionNames(metadata, records, key, budget) {
-  const namespaces = new Map();
-  for (const record of records.values()) {
+function resolveNested(references, aliases, context) {
+  const { metadata, records, budget, names } = context;
+  const colors = new Uint8Array((metadata.rows[1]?.length ?? 0) + 1);
+  const depths = new Uint8Array(colors.length);
+  const maximum = Math.min(budget.maxDepth, maxNestingDepth);
+  const path = [];
+  for (const token of references.keys()) {
     budget.check();
-    const rowIndex = (record.type.token & 0xffffff) - 1;
-    const row = metadata.rows[2][rowIndex];
-    if (!Number.isInteger(row[0]) || row[0] < 0 || row[0] > 0xffffffff)
-      rejectTypeSystem('CILVT0001', 'type visibility flags');
-    // The global module type and nested definitions cannot be explicit Module-scoped aliases.
-    if (!rowIndex || (row[0] & 7) > 1) continue;
-    const name = key(row[1]);
-    if (!name) rejectTypeSystem('CILVT0001', 'empty type name');
-    const namespace = key(row[2]);
-    let names = namespaces.get(namespace);
-    if (!names) namespaces.set(namespace, names = new Map());
-    names.set(name, names.has(name) ? null : record.type.token);
+    let current = token;
+    while (references.has(current) && colors[current & 0xffffff] !== 2) {
+      budget.check();
+      const rid = current & 0xffffff;
+      if (colors[rid] === 1) rejectTypeSystem('CILVT0001', 'cyclic TypeRef scopes');
+      if (path.length >= maximum) rejectTypeSystem('CILVT0002', 'TypeRef scope depth');
+      colors[rid] = 1;
+      path.push(current);
+      current = references.get(current);
+    }
+    let target = aliases.get(current) ?? 0;
+    let depth = depths[current & 0xffffff];
+    while (path.length) {
+      budget.check();
+      const reference = path.pop();
+      const rid = reference & 0xffffff;
+      if (++depth > maximum) rejectTypeSystem('CILVT0002', 'TypeRef scope depth');
+      // An open enclosing definition cannot establish a closed nested identity.
+      target = target && !records.get(target).generic ? names.nested(target, metadata.rows[1][rid - 1]) : 0;
+      if (target) aliases.set(reference, target);
+      depths[rid] = depth;
+      colors[rid] = 2;
+    }
   }
-  return namespaces;
 }
 
-/** Own numeric aliases to existing definitions; all other scopes remain unresolved. */
+/** Own numeric aliases to existing definitions; unresolved scopes never bind by spelling. */
 export function localTypeReferences(metadata, records, budget) {
   const rows = metadata.rows[1] ?? [];
   if (rows.length > budget.maxTypeReferences) rejectTypeSystem('CILVT0002', 'TypeRef rows');
   const counts = Object.fromEntries([0, 1, 26, 35].map(table => [table, metadata.rows[table]?.length ?? 0]));
   let aliases = null;
   let names = null;
-  let key = null;
+  let nested = null;
   for (let index = 0; index < rows.length; index++) {
     budget.check();
     const row = rows[index];
     const scope = hierarchyIndex('ResolutionScope', row[0]);
     if (scope) checkedToken(scope, counts, [0, 1, 26, 35]);
-    // Nil scope denotes ExportedType resolution, not a same-module name lookup (ECMA II.22.38).
+    const token = 0x01000001 + index;
+    if (scope >>> 24 === 1) {
+      nested ??= new Map();
+      nested.set(token, scope);
+      continue;
+    }
+    // Nil scope can require assembly-wide ExportedType resolution, not a current-module lookup.
     if (!scope || scope >>> 24 !== 0) continue;
     if (scope !== 1 || metadata.rows[0]?.length !== 1) rejectTypeSystem('CILVT0001', 'local Module scope');
-    if (!aliases) {
-      aliases = new Map();
-      key = nameKeys(metadata, budget);
-      names = definitionNames(metadata, records, key, budget);
-    }
-    const name = key(row[1]);
-    if (!name) rejectTypeSystem('CILVT0001', 'empty TypeRef name');
-    const target = names.get(key(row[2]))?.get(name);
-    if (target) aliases.set(0x01000001 + index, target);
+    aliases ??= new Map();
+    names ??= localDefinitionNames(metadata, records, budget);
+    const target = names.top(row);
+    if (target) aliases.set(token, target);
   }
-  return aliases;
+  if (nested) {
+    aliases ??= new Map();
+    resolveNested(nested, aliases, { metadata, records, budget, names });
+  }
+  return { aliases, lexical: names?.lexical ?? null };
 }

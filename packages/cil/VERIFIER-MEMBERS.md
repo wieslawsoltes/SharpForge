@@ -13,7 +13,8 @@ identity), `kind`, `owner` (context-issued type identity), `name`, `flags`,
 resolved reference to it share the same record. AST tokens remain scoped to this
 context and are not normalized verification-stack types.
 
-Supported references have a local, non-generic TypeDef parent and exactly match
+Supported references have a local, non-generic TypeDef parent or a TypeRef
+parent resolved to that same canonical identity by the type adapter, and exactly match
 a field name/signature declared directly, or the nearest exact method declaration
 along a local class base chain. Constructors and type initializers must also be declared directly.
 Interface inheritance and unresolved/generic ancestry remain explicit unknowns. Overloads are indexed by
@@ -25,7 +26,7 @@ MemberRefs to them remain unknown, following ECMA-335 I.8.5.3.2.
 Unresolved owners/signature types, unmatched/ambiguous declarations, MethodSpec,
 generic signatures, function pointers, varargs and non-default method conventions
 produce explicit unknown results. Same-named externals never bind locally. This
-increment does not perform TypeRef alias unification,
+increment unifies supported TypeRef owners but does not normalize signature-token aliases,
 custom-modifier equivalence or whole-method verification. The separate
 [local member-access query](VERIFIER-MEMBER-ACCESS.md) handles local same-assembly
 rules, including bounded nested accessibility. The [local type-access query](VERIFIER-TYPE-ACCESS.md)
@@ -135,3 +136,10 @@ MemberRef tokens as ArgumentOutOfRangeException. This is a semantic correction,
 not unavailable oracle evidence. Product lookup now keeps fields direct-only;
 tests require all three derived-owner field references to remain unknown.
 No accessibility, receiver typing or dispatch support is implied.
+
+The local TypeRef-owner extension is covered by the [nested-reference qualification](../../tests/fixtures/a03-nested-type-references/README.md):
+85/85 focused/affected tests and eight pinned CoreCLR ResolveMember observations,
+with five canonical declaration agreements and three native errors/adapter
+unknowns. TypeRef aliases preserve the same inherited-method and declaration-only
+field/constructor policy. Original failed fixture evidence and corrected hashes
+are retained; no generated fixture methods were executed.

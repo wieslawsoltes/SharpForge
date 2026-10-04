@@ -34,7 +34,10 @@ test('local TypeRef aliases agree with retained independent CoreCLR Module.Resol
       assert.equal(adapter.isAssignable(resolved.value, adapter.resolveType(type).value).value, true);
     }
   }
-  for (const name of ['object', 'open', 'nested']) {
+  const nested = native.types.find(type => type.token === input.tokens.nested);
+  assert.equal(nested.success, true);
+  assert.equal(adapter.resolveType(input.tokens.nested), adapter.resolveType(nested.definition));
+  for (const name of ['object', 'open']) {
     assert.equal(native.types.find(type => type.token === input.tokens[name]).success, true, name);
     assert.equal(adapter.resolveType(input.tokens[name]).status, 'unknown', name);
   }

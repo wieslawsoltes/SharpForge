@@ -12,9 +12,11 @@ Queries return frozen `{status: 'known', value}` or
 
 - `resolveType(token)` resolves local non-generic TypeDefs and explicit
   Module-scoped TypeRefs whose namespace/name uniquely names a top-level local
-  definition. Both tokens return the same canonical result and identity. Nil,
-  ModuleRef, AssemblyRef and nested TypeRef scopes remain unknown, as do
-  TypeSpecs and open generic definitions.
+  definition. Nested TypeRef scopes also resolve when their enclosing chain
+  is anchored in that explicit local Module and every enclosing definition
+  is non-generic. All aliases share the existing canonical TypeDef result
+  and identity. Nil, ModuleRef and AssemblyRef scopes remain unknown, as do
+  TypeSpecs, generic definitions and nested references through generic scopes.
 - `baseType(type)` resolves the declared direct base; a missing base is known
   `null`. `interfaces(type)` returns a frozen array of results for the direct
   InterfaceImpl edges, preserving unknown entries.
@@ -39,20 +41,28 @@ by this opt-in metadata API; browser/native/Wasm qualification remains staged.
 
 Local-reference lookup indexes exact namespace/name UTF-8 bytes during
 construction; it never joins display names or uses Unicode normalization.
-The index excludes the global module type and nested definitions. Ambiguous
-and missing names remain `unresolved-type-reference`; generic targets remain
+The top-level index excludes the global module type and nested definitions.
+Nested names use a separate enclosing-TypeDef key and the validated existing
+NestedClass forest; no display-name concatenation determines ownership.
+Ambiguous and missing names remain `unresolved-type-reference`; generic targets remain
 `generic-definition`. Alias edges are normalized before local cycle and
 class/interface-kind validation. Only numeric aliases survive construction,
-so the temporary name index does not become another identity registry.
+so the temporary name index does not become another identity registry. The
+combined member context reuses the same validated lexical forest for access
+checks through an internal composition seam; no new package export is added.
 
 Construction snapshots and cycle-checks O(types + references + edges + generic
-parameters + indexed name bytes) facts. Each hierarchy
+parameters + nested rows + indexed name bytes) facts. Each hierarchy
 query is O(reachable types + edges), with no persistent pair cache. Defaults and
 hard maxima are 65,535 TypeDefs, 65,535 TypeRefs, 65,535 total type/InterfaceImpl
 rows, 65,535 GenericParam rows, 1 MiB of unique indexed heap-name bytes, 4,096
 visited query nodes and depth 256. Each indexed name/namespace is limited to
 1 KiB. The name index is constructed only when an explicit local Module scope
-is present. Options `maxTypes`, `maxTypeReferences`, `maxTypeNameBytes`,
+is present. Nested indexes are built only when a local nested reference needs
+them. TypeRef scope chains use iterative memoization, reject cycles, and are
+bounded by `min(maxDepth, 64)` nested edges; NestedClass forests retain their
+64-level ceiling and cannot contain more rows than TypeDefs.
+Options `maxTypes`, `maxTypeReferences`, `maxTypeNameBytes`,
 `maxEdges`, `maxQueryNodes`, `maxDepth` may lower these limits; `signal` cancels
 construction and queries. These limits cover the adapter, not earlier inspector
 construction. Malformed local hierarchy/token data throws `CILVT0001`, budget
@@ -90,3 +100,9 @@ concurrency 1 and a 1,024 MiB Node heap cap. Static checks passed 3,091 syntax /
 files. Structure reported 268 existing findings and none in changed files.
 Browser, source/direct-CIL execution and native/Wasm engine qualification remain
 staged; this feature does not execute methods in those engines.
+
+The nested local-reference batch adds 85/85 focused/affected tests and pinned
+CoreCLR observations for 25 TypeRefs, including 12 supported nested/top-level
+aliases with canonical identity agreement. Its [retained qualification](../../tests/fixtures/a03-nested-type-references/README.md)
+records the isolated baseline, original fixture/test failures, all 96 timing
+samples and explicit acceptance of the existing local-alias construction cost.

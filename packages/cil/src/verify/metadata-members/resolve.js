@@ -29,9 +29,10 @@ export function memberQueries(snapshot, types, budget) {
     if (token >>> 24 === 43) return unknown('method-instantiation', token);
     if (snapshot.definitions.has(token)) return definition(snapshot.definitions.get(token));
     const reference = snapshot.references.get(token);
-    if (reference.ownerToken >>> 24 !== 2) return unknown('unresolved-member-owner', reference.ownerToken);
+    const ownerTable = reference.ownerToken >>> 24;
+    if (ownerTable !== 1 && ownerTable !== 2) return unknown('unresolved-member-owner', reference.ownerToken);
     const owner = types.resolveType(reference.ownerToken);
-    if (owner.status === 'unknown') return owner;
+    if (owner.status === 'unknown') return ownerTable === 1 ? unknown('unresolved-member-owner', reference.ownerToken) : owner;
     const signature = decode(reference.signature);
     if (signature.status === 'unknown') return signature;
     const record = lookup(reference, token, owner.value, signature.value.kind);

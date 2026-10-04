@@ -1,0 +1,9 @@
+{
+  "productUnchanged": true,
+  "beforeSHA256": "7fd73c3b5aef6a4f94f01aa4d1ff090b24f007218d87ababf2463922d31d2e64",
+  "afterSHA256": "ce1c8fab081f10cfce21cd459512c36c0495dec65ebe0492758c48e45118a3b2",
+  "reason": "Inspector display-name depth rejects65 first. Test adapter TypeRef and lexical depth independently by extending already parsed64-level rows, and retain inspector rejection assertion.",
+  "initialFocusedLog": "focused-tests.log",
+  "initialPasses": 84,
+  "initialTotal": 85
+}

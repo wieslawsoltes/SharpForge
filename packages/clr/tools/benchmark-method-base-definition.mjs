@@ -6,6 +6,7 @@ import { functionPointerContext } from '../../../tests/clr-methods-base-function
 
 const fixture = process.argv[2] ?? new URL('../../../tests/fixtures/clr-method-base-definition/native-method-bases.json', import.meta.url);
 const native = JSON.parse(readFileSync(fixture));
+const records = process.argv.includes('--accepted-records') ? native.records.filter(record => !record.error) : native.records;
 const image = Buffer.from(native.image, 'base64');
 const load = async () => {
   if (process.argv[3] === '--function-pointers') return (await functionPointerContext().loadFromStream(image)).manifestModule;
@@ -23,11 +24,11 @@ const cold = [];
 for (let sample = 0; sample < 100; sample++) {
   const module = await load();
   const start = performance.now();
-  for (const record of native.records) await module.methodDefinition(record.token).getBaseDefinition();
+  for (const record of records) await module.methodDefinition(record.token).getBaseDefinition();
   cold.push((performance.now() - start) * 1000);
 }
 const module = await load();
-const record = native.records.find(record => record.token !== record.baseToken);
+const record = records.find(record => record.token !== record.baseToken);
 const method = module.methodDefinition(record.token);
 const root = await method.getBaseDefinition();
 const warm = [];
@@ -39,5 +40,5 @@ for (let sample = 0; sample < 110; sample++) {
   if (sample >= 10) warm.push((performance.now() - start) * 1000 / 1000);
 }
 console.log(JSON.stringify({ node: process.version, cpu: cpus()[0]?.model, platform: process.platform, arch: process.arch,
-  records: native.records.length, allocationCount: 'not measured', previousEquivalentImplementation: false,
+  records: records.length, allocationCount: 'not measured', previousEquivalentImplementation: false,
   results: [summary('cold fixture base definitions', cold), summary('cached asynchronous base definition', warm)] }, null, 2));

@@ -20,7 +20,7 @@ is rejected. Static methods cannot match instance signatures. Type graphs and
 signatures remain lazy; no executable body is read.
 
 This is an explicit partial GetBaseDefinition contract. Class/covariant MethodImpl
-slot mappings, strict access checks,
+slot mappings, strict access outside the bounded same-assembly policy below,
 generic base instantiation, type generic variables,
 TypeSpec/open-generic modifier definitions, unsupported function-pointer headers, array sizes and nonzero
 lower bounds require later services and fail with `SFCLR012` when traversal needs them.
@@ -110,6 +110,44 @@ median 300.750 µs / p95 1,009.250 µs and cached median 190.750 ns / p95 1,209.
 All [600 raw samples and source-resolution evidence](benchmarks/function-pointer-overrides-node24.json)
 are retained. No reruns, causal/noise attribution or general speedup claim;
 allocation totals and peak memory remain unmeasured.
+
+Strict (`CheckAccessOnOverride`) matches between top-level, nongeneric methods and
+types in the same canonical assembly now validate both base accessibility and the
+child/base access widening relation. The existing ancestor walk supplies each
+matched edge: family-and-assembly, assembly, family, family-or-assembly and public
+base methods are accessible; private/private-scope bases reject. Narrowing or
+incompatible access changes reject, including family-or-assembly to family within
+one assembly. Reserved member-access masks report SFCLR005; inaccessible or
+unsupported strict edges report SFCLR012. New-slot boundaries still stop the walk.
+
+This follows [CoreCLR's access and widening checks](https://github.com/dotnet/runtime/blob/v10.0.5/src/coreclr/vm/methodtablebuilder.cpp#L4333).
+Cross-assembly/friend access, nested types and generic owners/methods remain
+explicitly unsupported for strict edges. Generic metadata row counts are bounded
+before owner-parameter expansion; existing traversal/cancellation limits still
+apply. No access registry or persistent cache is added, and non-strict paths retain
+their previous behavior. This does not certify full type loading or virtual dispatch.
+
+Six authored tests cover the complete 7×7 same-assembly mask matrix, canonical
+queries, cancellation/unload, intermediate edges, new slots, malformed masks,
+limits and unsupported boundaries. SDK 10.0.201/CoreCLR 10.0.5 captured twelve
+pairs: eight canonical roots and four TypeLoadException observations agree with
+the loader. Source/image provenance is mandatory. All 48 affected tests in twelve
+files pass without skips; syntax/static checks pass (3,600/3,596 modules), with
+980 Node files and 37 browser scripts assigned. Structure reports 272 existing
+findings, none in changed files. All jobs ran serially under one limiter.
+
+Existing 23-method controls on shared Apple M3 Pro/darwin-arm64, Node 24.21.0,
+measured cold median 159.625 → 149.625 µs and p95 329.541 → 348.166 µs
+(+18.625 µs/+5.652%). Cached median was 151.875 → 132.834 ns and p95
+209.542 → 163.583 ns. The integration reviewer explicitly accepted the cold p95
+increase for bounded correct strict override access. The unchanged non-strict
+guard and cached lookup code are source facts, without causal attribution.
+The new eight-successful-record workload measured cold median 151.209 µs / p95
+338.291 µs and cached median 127.875 ns / p95 178.625 ns. The four failure records
+remain in the capture and mandatory tests; selection occurs outside timing.
+All [600 raw samples and own-checkout source proof](benchmarks/strict-method-overrides-node24.json)
+are retained. No retries, noise or general speedup claim; allocation totals,
+build size and peak memory remain unmeasured.
 
 Constrained generic methods now follow the same implicit class-slot walk. Each
 matched override edge compares method GenericParam constraints separately from

@@ -33,7 +33,7 @@ test('local aliases normalize base and interface edges before hierarchy queries'
 test('unsupported scopes, missing names and generic definitions remain explicitly unknown', () => {
   const input = localReferenceFixture();
   const adapter = create(input.inspect());
-  for (const name of ['nil', 'module', 'assembly', 'nested', 'nestedAsTopLevel', 'object', 'missing',
+  for (const name of ['nil', 'module', 'assembly', 'nestedAsTopLevel', 'object', 'missing',
     'wrongCase', 'wrongNamespace', 'moduleType']) {
     assert.deepEqual(adapter.resolveType(input.tokens[name]), {
       status: 'unknown', reason: 'unresolved-type-reference', token: input.tokens[name],

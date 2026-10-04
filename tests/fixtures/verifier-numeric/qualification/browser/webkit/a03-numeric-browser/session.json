@@ -1,0 +1,11 @@
+{
+  "suite": "a03-numeric-browser",
+  "passed": true,
+  "engine": "webkit",
+  "cspViolations": [],
+  "browser": "26.6",
+  "executable": "playwright-managed",
+  "mode": "A03 numeric verifier source modules",
+  "seconds": 0.8953897079991293,
+  "diagnosticErrors": []
+}
