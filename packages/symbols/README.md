@@ -267,8 +267,8 @@ Bound `loadSymbols` results expose `closureInfo(lambdaMethodToken)`. For support
 Roslyn C# generation-zero, nongeneric display classes, it returns `available: true`,
 the `containingMethod`, `methodOrdinal`, `lambdaOrdinal`, lambda `syntaxOffset`,
 `closureType`, `closureOrdinal`, `closureSyntaxOffset` and `captures` containing
-`{ name, fieldToken }`. The syntax offsets are the EnC values relative to the
-containing method body, not source line/column positions. Method identity uses the
+`{ name, fieldToken }`. Syntax offsets retain their raw EnC values; this API does
+not convert them to source line/column positions. Method identity uses the
 enclosing type plus EnC method ordinal and exact generated lambda/closure ordinals.
 It never selects an overloaded method by name alone.
 
