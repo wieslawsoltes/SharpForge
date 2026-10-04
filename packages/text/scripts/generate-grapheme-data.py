@@ -14,6 +14,7 @@ ROOT = pathlib.Path(__file__).resolve().parents[1]
 if len(sys.argv) != 4:
     raise SystemExit('Expected GraphemeBreakProperty.txt, DerivedCoreProperties.txt and emoji-data.txt')
 expected = json.loads((ROOT / 'reference/unicode-16.0.0/sources.json').read_text())['sources']
+license_text = (ROOT / 'reference/unicode-16.0.0/LICENSE.txt').read_text().strip()
 CLASSES = dict(Other=0, CR=1, LF=2, Control=3, Extend=4, ZWJ=5,
                Regional_Indicator=6, Prepend=7, SpacingMark=8, L=9, V=10, T=11, LV=12, LVT=13)
 SOURCES = ['auxiliary/GraphemeBreakProperty.txt', 'DerivedCoreProperties.txt', 'emoji/emoji-data.txt']
@@ -55,7 +56,8 @@ for end in range(1, len(values) + 1):
         start = end
 for page in range((len(ranges) + 399) // 400):
     rows = ranges[page * 400:(page + 1) * 400]
-    lines = ['// Generated Unicode 16.0.0 data. See reference/unicode-16.0.0 and scripts/generate-grapheme-data.py.',
+    lines = ['/*!', license_text, '*/',
+             '// Generated Unicode 16.0.0 data. See reference/unicode-16.0.0 and scripts/generate-grapheme-data.py.',
              '// Inclusive start, inclusive end, packed GCB/Extended_Pictographic/InCB properties.',
              'export const ranges = new Uint32Array([']
     lines.extend(f'  0x{start:X}, 0x{end:X}, 0x{flag:X},' for start, end, flag in rows)

@@ -5,8 +5,10 @@ qualification delegated to it. It describes implemented source and observed
 checks; it does not close issues or substitute Node fixtures for browser,
 desktop-editor, operating-system, or assistive-technology qualification.
 
-The latest source and focused-test revision is **`de8eeff3`**, with earlier text
-foundation evidence at **`e87dedf4`**. Both use the production JavaScript
+The latest runtime-source revision is **`e43c811e`**, following the completed
+visual-column scope at **`e688ce9c`** and Surround With regression **`5d4b79f2`**.
+Native/block evidence remains at **`de8eeff3`**, with original text foundation
+evidence at **`e87dedf4`**. Both use the production JavaScript
 `TextBuffer`, `EditorModel`, selection and undo implementations. The headless
 editor fixture supplies view, host-provider, and clipboard seams, and retains no
 second copy of document text. Root integration owns final package/build gates,
@@ -87,6 +89,45 @@ screen-reader pass is claimed by this branch. Source was completed before each
 focused validation batch. The measured host was shared with other agents; local
 latencies do not establish fixed CI hardware guarantees.
 
+## Exact columns and Surround With follow-up
+
+After complete source at `5d4b79f2`, one limited invocation ran
+`text-visual-columns`, `text-unicode`, `editor-model-selections`,
+`a20-surround-with-shortcut`, `a20-07-keybindings`, `a20-09-profiles`,
+`editor-vim`, `a20-vim-blocks`, `a20-view-layout` and
+`a20-view-editing-options` (all paths under `tests/`, suffix `.test.js`).
+Result: **261 tests, 252 passed, zero failed, nine explicit skips**, 4.586 seconds.
+The ninth skip is the full native Unicode16 Intl oracle: this Node host supplies
+Unicode17. It is separate from the eight documented Vim targets below.
+
+At `e43c811e`, a specific existing-fixture comparison against the actual Intl17
+host was added and disposed-model lookup errors were made explicit. The complete
+`tests/text-visual-columns.test.js` file was rerun through `scripts/limited.js`:
+**11 tests, ten passed, zero failed, one explicit Unicode16-host skip**, 2.428
+seconds. No browser/OS matrix or unrelated native behavior was rerun in this
+correction invocation.
+
+The official fixture has **1,093** Unicode16 extended-grapheme rows; all pass.
+The exact-column tests enforce a **209,715,200 UTF-16-unit single line**, bounded
+reads of at most 4,097 units, cooperative yielding, exact nearby/cached answers
+and no lazy whole-text materialization. A multi-megabyte unfinished combining
+cluster verifies constant-size cluster state. Changed lines reuse prefix
+checkpoints; earlier-line edits relocate unaffected indexes; silent checkpoint
+rollback, undo/redo, stale work, cancellation and disposal preserve correctness.
+
+The [visual-column benchmark](../packages/text/bench/visual-columns-results.md)
+records thirty 1Mi-unit samples: full-prefix median **61.508594 ms** and p95
+**68.025205 ms**, versus sparse-index lookup median **0.129756 ms** and p95
+**0.265230 ms**. Initial async indexing took **25.040206 ms** across 15 yields.
+These are shared-host model measurements, with no browser frame-latency claim.
+
+`git diff --check` passes. `npm run check:structure` still reports the same 257
+other-scope findings and no modified column/grapheme/model path. `npm run check`
+stops only at **38 unassigned aggregate test paths** in this implementation
+worktree; root owns final registration. The separate foundation review worktree
+at `a780a30f` has its five present foundation test files registered and passes
+repository-wide manifest discovery; no full core/build pass is claimed there.
+
 ## Text storage, model and history
 
 Paths below are repository-relative. “Qualified” means the named implementation
@@ -121,16 +162,18 @@ use `EditorModel` or the view's transaction facade.
 | SF-A20-T03.3 / [#1601](https://github.com/wieslawsoltes/SharpForge/issues/1601) | `commands/box-selection.js`; `68885522`, `de8eeff3` | Rectangular typing, partial tabs, wide clusters, virtual space and bounded insertion are model-tested. `a20-vim-blocks` exercises the same geometry through modal commands. Pointer drag and browser arrow delivery are view-owned. |
 | SF-A20-T03.4 / [#1602](https://github.com/wieslawsoltes/SharpForge/issues/1602) | `commands/multi-clipboard.js`; `68885522`, `de8eeff3` | Versioned fragment MIME data, distributed paste, line copy, rectangular rows and beyond-EOF growth round-trip. Permission, stale selection and disposal cases are covered by profile/Vim suites; actual OS clipboard integration remains browser qualification. |
 | SF-A20-T03.5 / [#1603](https://github.com/wieslawsoltes/SharpForge/issues/1603) | Shared `EditorModel.applyEdits`, `undo.js`, multi-caret/box commands | Five-carets typing restores exact selections in one undo; block change/insert/paste and native macro groups use the same history. |
-| SF-A20-T04.1 / [#1604](https://github.com/wieslawsoltes/SharpForge/issues/1604) | `packages/text/src/graphemes.js`, native `commands/movement.js`, `keymaps/vim-motions.js`; `65da4467`, `db9add16`, `77ec3ffc`, `de8eeff3` | Unicode and native suites cover combining marks, ZWJ families, emoji modifiers, flags, Hangul, common Indic clusters, CRLF, and non-BMP moves/deletes without surrogate splitting. |
+| SF-A20-T04.1 / [#1604](https://github.com/wieslawsoltes/SharpForge/issues/1604) | `packages/text/src/graphemes.js`, `grapheme/*`, native movement/Vim modules; `65da4467`, `de8eeff3`, `e688ce9c`, `e43c811e` | All 1,093 official Unicode16 extended-grapheme rows pass. Existing editor fixtures also agree with actual Intl17. Native suites preserve combining/ZWJ/flag/Hangul/Indic/CRLF and non-BMP movement/deletion behavior. |
 | SF-A20-T04.2 / [#1605](https://github.com/wieslawsoltes/SharpForge/issues/1605) | `packages/text/src/words.js`; `65da4467` | Word/subword tests cover CJK, acronym/camel humps, digits and underscores. Word services are explicit/injectable. No desktop Visual Studio word-navigation oracle was executed. |
 | SF-A20-T04.3 / [#1606](https://github.com/wieslawsoltes/SharpForge/issues/1606) | View owner: `view/composition.js`, `view/input.js` | Outside this branch's DOM implementation assignment. Native shortcut tests verify composition is not intercepted, which is not an IME rendering or OS-input qualification. |
 | SF-A20-T04.4 / [#1607](https://github.com/wieslawsoltes/SharpForge/issues/1607) | View owner: `view/bidi.js`, browser caret/range geometry | Outside this branch's DOM assignment. Logical Unicode boundaries are covered here; actual bidi visual movement must use the view/browser evidence. |
-| SF-A20-T04.5 / [#1608](https://github.com/wieslawsoltes/SharpForge/issues/1608) | `packages/text/src/columns.js`; `65da4467`; Vim integration `de8eeff3` | Tabs, wide graphemes, zero-width marks and virtual space share one column model. Native block and vertical motions prove display-column behavior. Status-bar Col/Ch presentation remains view/workbench owned. |
+| SF-A20-T04.5 / [#1608](https://github.com/wieslawsoltes/SharpForge/issues/1608) | `packages/text/src/columns.js`, `visual-column-index.js`, `visual-columns/*`, `EditorModel`; `65da4467`, `de8eeff3`, `e688ce9c`, `e43c811e` | Exact async and cached columns cover every UTF-16 seam, tabs/widths, a 200MiB line, multi-MiB combining clusters, edit-prefix reuse, undo/rollback, cancellation/disposal and cache bounds. Shell StatusPosition consumes this model seam; rendered Col/Ch remains shell/browser evidence. |
 
-The default grapheme service uses `Intl.Segmenter`, whose Unicode version comes
-from the host runtime. Its explicit fallback covers the documented cluster
-families above; it is not advertised as a complete independently versioned
-Unicode property database. Rectangular edits keep wide graphemes indivisible if
+The default grapheme service now uses complete pinned Unicode 16.0 extended
+grapheme data and a constant-space streaming state. The earlier approximate
+fallback limitation is superseded by all 1,093 official conformance rows. An
+explicitly injected Intl segmenter remains supported; existing editor fixtures
+match the actual Unicode17 host. The full native Unicode16 oracle is skipped
+on this host because its ICU data has a different version. Rectangular edits keep wide graphemes indivisible if
 only part of their display width intersects the rectangle. Box insertion is
 bounded before allocation/mutation, including padding on newly pasted rows.
 
@@ -163,6 +206,7 @@ separate costs; a diff deadline is not an end-to-end merge-view latency promise.
 
 | Work ID / issue | Implementation | Evidence and acceptance boundary |
 | --- | --- | --- |
+| SF-A20-B01 / [#1479](https://github.com/wieslawsoltes/SharpForge/issues/1479) | Visual Studio binding and named feature route; `5d4b79f2` regression | `tests/a20-surround-with-shortcut.test.js`: Ctrl+K waits; Ctrl+S calls Surround With once; production SnippetSession edits the actual model with one undo. Code actions and host requests stay at zero. Missing provider reports a clear message and leaves text/history unchanged. Picker rendering and real browser delivery remain separate qualification. |
 | SF-A20-T07.1 / [#1619](https://github.com/wieslawsoltes/SharpForge/issues/1619) | `packages/editor/src/commands/{context,index,editing,movement,extended,outlining}.js`; root `69dd1751`, qualification `db9add16` | `a20-07-keybindings`: registered vocabulary, actual movement/edit/selection/fold results, read-only gates, aliases and no whole-document mirror. Feature-provider calls are tested at their explicit host seam. |
 | SF-A20-T07.2 / [#1620](https://github.com/wieslawsoltes/SharpForge/issues/1620) | `keymaps/visual-studio.js`, `docs/vs-inventory.json`; root `c4a4e52a` | Binding inventory, known unbound/compatibility choices and named-command coverage. Inventory is pinned; desktop Visual Studio key delivery was not run. |
 | SF-A20-T07.3 / [#1621](https://github.com/wieslawsoltes/SharpForge/issues/1621) | `keymaps/platform.js`; `8002b6fa`, `db9add16`, `7870600d` | macOS Meta versus physical Ctrl; browser alternatives; IME/AltGraph/dead-key exclusions; observed shifted brackets/slashes/digits and preservation of other-layout logical keys. Synthetic events are not OS interception evidence. |
@@ -236,12 +280,14 @@ a key-to-paint benchmark.
 | `2b835790`, `056b2147` | Public shortcut recording/filter seam and atomic Studio keyboard routing. |
 | `7870600d` | Observed shifted digit normalization with other-layout preservation. |
 | `de8eeff3` | Complete visual-block geometry/edit/register follow-up, bounded box payloads and resumed insert groups. |
+| `e688ce9c`, `e43c811e` | Exact sparse visual-column index, Unicode16 data/state, stable model cancellation/disposal, official and host compatibility cases. |
+| `5d4b79f2` | Exact B01 Surround With shortcut, one-undo snippet result and absent-provider regressions. |
 
 Root-provided initial native source ends at `909796e3`. This branch also merged
 the view facade correction `ccdd6894`, root dependency merge `447a2325`, and the
-explicit `EditorViewModel`/disk boundary tip `4b27d69e` where needed. Subsequent
-shared-model read-only enforcement is owned by the view integration follow-up;
-it is not silently included in the observed `de8eeff3` result.
+explicit `EditorViewModel`/disk boundary tip `4b27d69e` where needed. Shared-model read-only enforcement
+`ca0a52fc` was merged before the visual-column follow-up and is exercised by its
+model cases. It remains absent from the earlier observed `de8eeff3` result.
 
 No remote branch was pushed, rebased, force-updated, or published by this agent.
 The unexpected untracked compiler differential `baseline.json` was left alone.

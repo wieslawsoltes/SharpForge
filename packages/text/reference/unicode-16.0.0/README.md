@@ -2,7 +2,7 @@
 
 The default grapheme segmenter and the streaming visual-column index implement extended grapheme boundaries from [UAX #29 revision 45](https://www.unicode.org/reports/tr29/tr29-45.html). Pinning one profile keeps keyboard navigation, box editing, layout and asynchronous status columns consistent when browsers ship different ICU versions. Callers that explicitly need host-tailored segmentation can still inject an `Intl.Segmenter` into `GraphemeSegmenter`.
 
-The data is covered by the accompanying [Unicode license](LICENSE.txt). `sources.json` records the unmodified source URLs, byte sizes and SHA-256 hashes. The complete official conformance fixture is retained at `tests/fixtures/unicode-16.0.0/GraphemeBreakTest.txt`, with its original copyright and provenance headers.
+The data is covered by the accompanying [Unicode license](LICENSE.txt). Each generated source page also retains the complete license in a `/*! ... */` header so package and bundled copies carry the notice. `sources.json` records the unmodified source URLs, byte sizes and SHA-256 hashes. The complete official conformance fixture is retained at `tests/fixtures/unicode-16.0.0/GraphemeBreakTest.txt`, with its original copyright and provenance headers.
 
 ## Generated format
 
