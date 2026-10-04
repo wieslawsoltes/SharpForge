@@ -26,8 +26,12 @@ The host passes `preserveEditors: true` when retained views should be rebound to
 
 A successful save marks only the exact captured current model revision clean. When the model changed during I/O, the written source becomes the saved baseline and the document stays dirty; neither the captured nor current source needs flattening. If the workspace replaced that document while I/O was pending, the old completion cannot mark its replacement clean. Failed writes leave the prior baseline unchanged.
 
+## File-operation state
+
+`documents.captureState(uri)` captures `{uri, version, source, baseline, dirty, staleSave}` for a same-workspace Explorer transaction. The record retains no live model. `replace` accepts an explicit `documentStates` Map and validates every entry against the staged record/source before the ownership commit. A clean state must save its exact source; a dirty state may retain a matching immutable saved baseline or `null` for a new unsaved file. This lets rename and file-operation undo preserve unsaved changes without flattening their source or mutating document-owner fields from Studio. The separate Explorer scope qualifies this extension; see `a19-explorer-snapshot-operations.md`.
+
 ## Focused qualification
 
 `tests/a19-prepared-documents.test.js` covers actual chunked File-to-model-to-document adoption, shared model/map identity, hidden source roots, read-only and dirty append behavior, mismatched/stale records, staged rollback, cancellation and postcommit cleanup errors. `tests/a19-document-snapshot-save.test.js` covers lazy captured saves, streaming-compatible payloads, async save races, failed I/O, replacement and foreign snapshot rejection. `tests/a19-removed-project-profiles.test.js` covers deleting a project without changing the workspace epoch and exporting consistent startup/profile metadata.
 
-These tests are authored for the completed ingress/save scope. Execution results are recorded in `a19-session-evidence.md` after the coordinated validation slot. Browser ingress, actual writable file handles and Save As integration are qualified by the integration/editor agents. No speedup or native provider pass is claimed here.
+The completed ingress/save/recovery dependency batch passed **67/67 tests with no skips** in 2.3094 s through the repository's bounded wrapper; the exact command is recorded in `a19-session-evidence.md`. Browser ingress, actual writable file handles and Save As integration are qualified by the integration/editor agents. No speedup or native provider pass is claimed here.

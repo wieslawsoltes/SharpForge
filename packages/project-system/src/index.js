@@ -1,6 +1,6 @@
 import {readLegacySolution} from './legacy-solution.js';
 import {projectFileMap, isTextRecord, recordText, compilationRecords} from './workspace-records.js';
-export {isSourceSnapshot} from './workspace-records.js';
+export {isSourceSnapshot, cloneWorkspaceRecord, recordSource, isTextRecord} from './workspace-records.js';
 export * from './legacy-solution.js';
 import { parseXml, xmlEscape } from './xml.js';
 export * from './xml.js';

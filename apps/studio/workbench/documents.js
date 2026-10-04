@@ -1,6 +1,7 @@
 import { WorkbenchEvents, requireIdentifier, workbenchError } from './state-events.js';
 import { DocumentIngress, validateDocumentModel } from './documents-ingress.js';
 import { captureDocumentSave, savedModelBaseline } from './documents-save.js';
+import { captureDocumentState } from './documents-state.js';
 
 /** Workspace documents own text and editors; prompt/tab placement policies belong to the host. */
 export class DocumentService {
@@ -47,13 +48,14 @@ export class DocumentService {
     return record;
   }
 
-  replace(records, { tabs = [], active = '', discard = false, preserveEditors = false, preserveDirty = false, signal } = {}) {
+  replace(records, { tabs = [], active = '', discard = false, preserveEditors = false,
+    preserveDirty = false, documentStates = null, signal } = {}) {
     if (this.disposed) throw workbenchError('DOCUMENTS_DISPOSED', 'Document service is disposed');
     if (!Array.isArray(records) || records.length > this.maxDocuments) throw new RangeError('Document limit exceeded');
     if (this.dirtyFiles.size && !discard && !preserveDirty) {
       throw workbenchError('DOCUMENT_DIRTY', 'Save or discard changed documents before replacing the workspace');
     }
-    const staged = new DocumentIngress(this, { signal, preserveEditors, preserveDirty }).prepare(records);
+    const staged = new DocumentIngress(this, { signal, preserveEditors, preserveDirty, documentStates }).prepare(records);
     try {
       if (!discard && [...this.dirtyFiles].some(uri => !staged.preserved.has(uri))) {
         throw workbenchError('DOCUMENT_DIRTY', 'Save or discard changed documents before replacing them');
@@ -181,6 +183,8 @@ export class DocumentService {
 
   /** Capture immutable source/version for disk streaming; legacy providers may read the lazy text property. */
   captureSave(uri) { return captureDocumentSave(this.require(uri), this.models.get(uri)); }
+
+  captureState(uri) { return captureDocumentState(this, uri); }
 
   async save(uri) {
     const record = this.require(uri);
