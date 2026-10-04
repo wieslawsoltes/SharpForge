@@ -83,8 +83,9 @@ test('resolved inheritance cycles, malformed ownership, coded overflows and wron
   const fixture = hierarchyFixture(), source = inspector(fixture.b);
   source.metadata.rows[1][0][0] = 0x400000007;
   assert.throws(() => loaded([inspector(fixture.a), source]), CilError);
-  const duplicate = hierarchyFixture(); duplicate.a.add(41, [...duplicate.a.rows[41][0]]);
-  assert.throws(() => loaded([duplicate.a]), /duplicate nested type owner/);
+  const duplicate = inspector(hierarchyFixture().a);
+  duplicate.metadata.rows[41].push([...duplicate.metadata.rows[41][0]]);
+  assert.throws(() => loaded([duplicate]), /duplicate nested type owner/);
   const a = builder('Cycle.A', 63), b = builder('Cycle.B', 64);
   type(a, 'A', reference(a, assemblyReference(a, 'Cycle.B'), 'B'));
   type(b, 'B', reference(b, assemblyReference(b, 'Cycle.A'), 'A'));
