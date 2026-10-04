@@ -4,7 +4,7 @@
  */
 import { findContracts } from '@sharpforge/framework';
 import { TypeKind } from '../../symbols/types.js';
-import { isRegisteredInterfaceReference } from '../../conversions/registered-reference.js';
+import { isRegisteredReferenceUpcast } from '../../conversions/registered-reference.js';
 import { needsPrimitiveBox, primitiveBoxContract } from '../../primitive-boxing.js';
 import { n } from './node-factory.js';
 import { interpolatedText } from '../../binder/csharp6.js';
@@ -244,9 +244,9 @@ export const ExpressionTranslation = Base =>
     /** A reference conversion changes only the static type: the value is the same object. */
     retyped(value, node) {
       const type = this.imageType(node.type, node.syntax);
-      // Registered interface contracts can dispatch the same reference; arbitrary source hierarchies remain unsupported.
+      // Registered upcasts preserve the reference; arbitrary source hierarchies remain unsupported.
       if (value.legacyType !== type && type !== 'object' && value.kind !== 'Literal' && node.conversion?.kind === 'ImplicitReference' &&
-          (this.g.isSource(node.operand.type) || !isRegisteredInterfaceReference(value.legacyType, type)))
+          (this.g.isSource(node.operand.type) || !isRegisteredReferenceUpcast(value.legacyType, type)))
         return this.unsupported(`converting '${node.operand.type?.toDisplayString()}' to '${node.type.toDisplayString()}'`, node.syntax);
       return value.legacyType === type || value.kind !== 'Literal' ? value : { ...value, legacyType: type };
     }

@@ -1,4 +1,5 @@
 import {validateCilStackSnapshot} from './execution/frame-stack.js';
+import {validateSourceStackSnapshot} from './execution/source-stack-admission.js';
 import {clearFramePool} from './execution/frame-pool.js';
 import {clearStackBudget} from './execution/stack-budget.js';
 import {ManagedFault} from './heap.js';
@@ -137,6 +138,7 @@ export function restoreVM(vm, snapshot, engine) {
   }
   if (!Array.isArray(snapshot.frames) || !Array.isArray(snapshot.output)) throw new TypeError('Invalid snapshot execution state');
   if (engine === 'cil') validateCilStackSnapshot(vm, snapshot);
+  else validateSourceStackSnapshot(vm, snapshot);
   vm.platform.hostOperations.checkRestore(snapshot.hostRevision);
   vm.profiler?.boundary();
   // Copy before changing the VM; the same memo preserves frame/fault aliases.
