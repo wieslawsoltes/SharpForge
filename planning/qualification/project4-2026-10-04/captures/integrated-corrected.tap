@@ -1,0 +1,1343 @@
+Waiting for a free run slot: 1 heavy runs are allowed at once (SHARPFORGE_MAX_PARALLEL_RUNS).
+TAP version 13
+# Subtest: comment IDs order releases and reclaims sharing one timestamp without comparing generation sequences
+ok 1 - comment IDs order releases and reclaims sharing one timestamp without comparing generation sequences
+  ---
+  duration_ms: 3.416082
+  type: 'test'
+  ...
+# Subtest: actual fake API release/reclaim comments preserve their owner at a fixed clock
+ok 2 - actual fake API release/reclaim comments preserve their owner at a fixed clock
+  ---
+  duration_ms: 8.705678
+  type: 'test'
+  ...
+# Subtest: same-generation histories without IDs retain sequence ordering and quiet-heartbeat gaps
+ok 3 - same-generation histories without IDs retain sequence ordering and quiet-heartbeat gaps
+  ---
+  duration_ms: 0.54445
+  type: 'test'
+  ...
+# Subtest: different generations with distinct timestamps can be ordered without comment IDs
+ok 4 - different generations with distinct timestamps can be ordered without comment IDs
+  ---
+  duration_ms: 0.334942
+  type: 'test'
+  ...
+# Subtest: mixed-generation ties without complete IDs preserve input order and report ambiguity
+ok 5 - mixed-generation ties without complete IDs preserve input order and report ambiguity
+  ---
+  duration_ms: 0.513796
+  type: 'test'
+  ...
+# Subtest: chronological string IDs retain integer precision and invalid or duplicate IDs stay incomplete
+ok 6 - chronological string IDs retain integer precision and invalid or duplicate IDs stay incomplete
+  ---
+  duration_ms: 0.850861
+  type: 'test'
+  ...
+# Subtest: malformed structured records remain visible and never clear established ownership
+ok 7 - malformed structured records remain visible and never clear established ownership
+  ---
+  duration_ms: 2.46945
+  type: 'test'
+  ...
+# Subtest: malformed JSON and unsupported markers are recorded while ordinary discussion is ignored
+ok 8 - malformed JSON and unsupported markers are recorded while ordinary discussion is ignored
+  ---
+  duration_ms: 0.388491
+  type: 'test'
+  ...
+# Subtest: mismatched generation and agent events cannot change current owner or locks
+ok 9 - mismatched generation and agent events cannot change current owner or locks
+  ---
+  duration_ms: 0.561306
+  type: 'test'
+  ...
+# Subtest: overlapping and reused claims are rejected without adopting their owner or dropping locks
+ok 10 - overlapping and reused claims are rejected without adopting their owner or dropping locks
+  ---
+  duration_ms: 0.317487
+  type: 'test'
+  ...
+# Subtest: duplicate or backwards sequences and unrecorded unlocks preserve the established lock set
+ok 11 - duplicate or backwards sequences and unrecorded unlocks preserve the established lock set
+  ---
+  duration_ms: 0.324066
+  type: 'test'
+  ...
+# Subtest: a copied event from another task or issue cannot release the current claim
+ok 12 - a copied event from another task or issue cannot release the current claim
+  ---
+  duration_ms: 0.261855
+  type: 'test'
+  ...
+# Subtest: field history remains informational even when its data resembles claim or release events
+ok 13 - field history remains informational even when its data resembles claim or release events
+  ---
+  duration_ms: 0.283207
+  type: 'test'
+  ...
+# Subtest: malformed field history and comment containers fail visibly without throwing or inventing owners
+ok 14 - malformed field history and comment containers fail visibly without throwing or inventing owners
+  ---
+  duration_ms: 0.391475
+  type: 'test'
+  ...
+# Subtest: a stale explicit reconciler cannot release a replacement agent or its locks
+ok 15 - a stale explicit reconciler cannot release a replacement agent or its locks
+  ---
+  duration_ms: 10.364846
+  type: 'test'
+  ...
+# Subtest: a stale heartbeat cannot mutate a new generation reusing the same agent ID
+ok 16 - a stale heartbeat cannot mutate a new generation reusing the same agent ID
+  ---
+  duration_ms: 3.477252
+  type: 'test'
+  ...
+# Subtest: a stale lock cannot mutate a new generation reusing the same agent ID
+ok 17 - a stale lock cannot mutate a new generation reusing the same agent ID
+  ---
+  duration_ms: 3.059457
+  type: 'test'
+  ...
+# Subtest: a stale unlock cannot mutate a new generation reusing the same agent ID
+ok 18 - a stale unlock cannot mutate a new generation reusing the same agent ID
+  ---
+  duration_ms: 1.941875
+  type: 'test'
+  ...
+# Subtest: a stale release cannot mutate a new generation reusing the same agent ID
+ok 19 - a stale release cannot mutate a new generation reusing the same agent ID
+  ---
+  duration_ms: 2.167266
+  type: 'test'
+  ...
+# Subtest: a disappeared claim reports stale ownership and removes only the temporary operation mutex
+ok 20 - a disappeared claim reports stale ownership and removes only the temporary operation mutex
+  ---
+  duration_ms: 1.200014
+  type: 'test'
+  ...
+# Subtest: an expired-lease reaper cannot label or report a replacement generation
+ok 21 - an expired-lease reaper cannot label or report a replacement generation
+  ---
+  duration_ms: 1.834997
+  type: 'test'
+  ...
+# Subtest: a same-generation heartbeat between inspection and mutex acquisition remains valid
+ok 22 - a same-generation heartbeat between inspection and mutex acquisition remains valid
+  ---
+  duration_ms: 1.421149
+  type: 'test'
+  ...
+# Subtest: a task identity change cannot redirect an operation to an unrelated mutex namespace
+ok 23 - a task identity change cannot redirect an operation to an unrelated mutex namespace
+  ---
+  duration_ms: 0.769801
+  type: 'test'
+  ...
+# Subtest: missing claim generation fails before acquiring a mutex or invoking the action
+ok 24 - missing claim generation fails before acquiring a mutex or invoking the action
+  ---
+  duration_ms: 1.219052
+  type: 'test'
+  ...
+# Subtest: public CIL text preserves Unicode, exact BufferSource views, initial BOM handling and empty input
+ok 25 - public CIL text preserves Unicode, exact BufferSource views, initial BOM handling and empty input
+  ---
+  duration_ms: 1.268376
+  type: 'test'
+  ...
+# Subtest: public CIL text reports only native invalid-encoding failures as CilError
+ok 26 - public CIL text reports only native invalid-encoding failures as CilError
+  ---
+  duration_ms: 1.012099
+  type: 'test'
+  ...
+# Subtest: public CIL text preserves native detached-buffer behavior without relabeling argument errors
+ok 27 - public CIL text preserves native detached-buffer behavior without relabeling argument errors
+  ---
+  duration_ms: 0.24504
+  type: 'test'
+  ...
+# Subtest: public metadata reading rejects both retained malformed version fields before table decoding
+ok 28 - public metadata reading rejects both retained malformed version fields before table decoding
+  ---
+  duration_ms: 2.783906
+  type: 'test'
+  ...
+# Subtest: public PE reader, inspector and loader reject invalid metadata UTF-8 through the same CilError contract
+ok 29 - public PE reader, inspector and loader reject invalid metadata UTF-8 through the same CilError contract
+  ---
+  duration_ms: 65.130119
+  type: 'test'
+  ...
+# Subtest: public metadata string access rejects invalid UTF-8 without caching replacement characters
+ok 30 - public metadata string access rejects invalid UTF-8 without caching replacement characters
+  ---
+  duration_ms: 0.468109
+  type: 'test'
+  ...
+# Subtest: optional SharpForge debug metadata keeps inspector diagnostics and loader validation behavior
+ok 31 - optional SharpForge debug metadata keeps inspector diagnostics and loader validation behavior
+  ---
+  duration_ms: 4.579147
+  type: 'test'
+  ...
+# Subtest: public Portable PDB reader reports malformed embedded DEFLATE through SymbolError
+ok 32 - public Portable PDB reader reports malformed embedded DEFLATE through SymbolError
+  ---
+  duration_ms: 7.566697
+  type: 'test'
+  ...
+# Subtest: public symbol DEFLATE retains positive output, offset views and existing byte limits
+ok 33 - public symbol DEFLATE retains positive output, offset views and existing byte limits
+  ---
+  duration_ms: 1.331528
+  type: 'test'
+  ...
+# Subtest: public symbol decoder preserves unknown errors and unexpected classes even with familiar messages
+ok 34 - public symbol decoder preserves unknown errors and unexpected classes even with familiar messages
+  ---
+  duration_ms: 0.297287
+  type: 'test'
+  ...
+# Subtest: embedded source shrinks and independent platform decompression preserves bytes
+ok 35 - embedded source shrinks and independent platform decompression preserves bytes
+  ---
+  duration_ms: 7.833985
+  type: 'test'
+  ...
+# Subtest: embedded PDB compresses and remains bound to its assembly identity
+ok 36 - embedded PDB compresses and remains bound to its assembly identity
+  ---
+  duration_ms: 5.543746
+  type: 'test'
+  ...
+# Subtest: short embedded sources remain raw and byte limits reject decompression early
+ok 37 - short embedded sources remain raw and byte limits reject decompression early
+  ---
+  duration_ms: 2.567638
+  type: 'test'
+  ...
+# Subtest: LSP initialize explicitly rejects malformed parameter containers
+ok 38 - LSP initialize explicitly rejects malformed parameter containers
+  ---
+  duration_ms: 2.166495
+  type: 'test'
+  ...
+# Subtest: LSP workspace/symbol explicitly rejects malformed parameter containers
+ok 39 - LSP workspace/symbol explicitly rejects malformed parameter containers
+  ---
+  duration_ms: 0.217219
+  type: 'test'
+  ...
+# Subtest: LSP textDocument/hover explicitly rejects malformed parameter containers
+ok 40 - LSP textDocument/hover explicitly rejects malformed parameter containers
+  ---
+  duration_ms: 0.274954
+  type: 'test'
+  ...
+# Subtest: LSP callHierarchy/incomingCalls explicitly rejects malformed parameter containers
+ok 41 - LSP callHierarchy/incomingCalls explicitly rejects malformed parameter containers
+  ---
+  duration_ms: 0.155658
+  type: 'test'
+  ...
+# Subtest: LSP textDocument/hover explicitly requires the textDocument container
+ok 42 - LSP textDocument/hover explicitly requires the textDocument container
+  ---
+  duration_ms: 0.350245
+  type: 'test'
+  ...
+# Subtest: LSP textDocument/formatting explicitly requires the textDocument container
+ok 43 - LSP textDocument/formatting explicitly requires the textDocument container
+  ---
+  duration_ms: 0.288835
+  type: 'test'
+  ...
+# Subtest: LSP textDocument/semanticTokens/full explicitly requires the textDocument container
+ok 44 - LSP textDocument/semanticTokens/full explicitly requires the textDocument container
+  ---
+  duration_ms: 0.19705
+  type: 'test'
+  ...
+# Subtest: LSP requires a non-empty string document URI before document lookup
+ok 45 - LSP requires a non-empty string document URI before document lookup
+  ---
+  duration_ms: 0.752096
+  type: 'test'
+  ...
+# Subtest: LSP malformed document notifications produce no response or document mutation
+ok 46 - LSP malformed document notifications produce no response or document mutation
+  ---
+  duration_ms: 54.573767
+  type: 'test'
+  ...
+# Subtest: LSP optional params and unknown methods preserve their existing public behavior
+ok 47 - LSP optional params and unknown methods preserve their existing public behavior
+  ---
+  duration_ms: 0.597698
+  type: 'test'
+  ...
+# Subtest: LSP shutdown and notification handling take precedence over parameter validation
+ok 48 - LSP shutdown and notification handling take precedence over parameter validation
+  ---
+  duration_ms: 0.227745
+  type: 'test'
+  ...
+# Subtest: pe-loader: self-authored seeds are deterministic, owned and accepted
+ok 49 - pe-loader: self-authored seeds are deterministic, owned and accepted
+  ---
+  duration_ms: 85.233669
+  type: 'test'
+  ...
+# Subtest: pe-loader: input boundary and pre-cancellation are controlled
+ok 50 - pe-loader: input boundary and pre-cancellation are controlled
+  ---
+  duration_ms: 6.468029
+  type: 'test'
+  ...
+# Subtest: pe-loader: malformed bytes are controlled; harness contract misuse throws
+ok 51 - pe-loader: malformed bytes are controlled; harness contract misuse throws
+  ---
+  duration_ms: 0.730975
+  type: 'test'
+  ...
+# Subtest: bytecode-image: self-authored seeds are deterministic, owned and accepted
+ok 52 - bytecode-image: self-authored seeds are deterministic, owned and accepted
+  ---
+  duration_ms: 3.817151
+  type: 'test'
+  ...
+# Subtest: bytecode-image: input boundary and pre-cancellation are controlled
+ok 53 - bytecode-image: input boundary and pre-cancellation are controlled
+  ---
+  duration_ms: 0.452094
+  type: 'test'
+  ...
+# Subtest: bytecode-image: malformed bytes are controlled; harness contract misuse throws
+ok 54 - bytecode-image: malformed bytes are controlled; harness contract misuse throws
+  ---
+  duration_ms: 0.206153
+  type: 'test'
+  ...
+# Subtest: portable-pdb: self-authored seeds are deterministic, owned and accepted
+ok 55 - portable-pdb: self-authored seeds are deterministic, owned and accepted
+  ---
+  duration_ms: 6.819505
+  type: 'test'
+  ...
+# Subtest: portable-pdb: input boundary and pre-cancellation are controlled
+ok 56 - portable-pdb: input boundary and pre-cancellation are controlled
+  ---
+  duration_ms: 0.907815
+  type: 'test'
+  ...
+# Subtest: portable-pdb: malformed bytes are controlled; harness contract misuse throws
+ok 57 - portable-pdb: malformed bytes are controlled; harness contract misuse throws
+  ---
+  duration_ms: 0.332949
+  type: 'test'
+  ...
+# Subtest: zip-archive: self-authored seeds are deterministic, owned and accepted
+ok 58 - zip-archive: self-authored seeds are deterministic, owned and accepted
+  ---
+  duration_ms: 7.699939
+  type: 'test'
+  ...
+# Subtest: zip-archive: input boundary and pre-cancellation are controlled
+ok 59 - zip-archive: input boundary and pre-cancellation are controlled
+  ---
+  duration_ms: 0.541746
+  type: 'test'
+  ...
+# Subtest: zip-archive: malformed bytes are controlled; harness contract misuse throws
+ok 60 - zip-archive: malformed bytes are controlled; harness contract misuse throws
+  ---
+  duration_ms: 0.190951
+  type: 'test'
+  ...
+# Subtest: PE: malformed magic and truncated extents reach the loader error boundary
+ok 61 - PE: malformed magic and truncated extents reach the loader error boundary
+  ---
+  duration_ms: 4.38114
+  type: 'test'
+  ...
+# Subtest: PE: invalid metadata list ranges reject before loader list expansion
+ok 62 - PE: invalid metadata list ranges reject before loader list expansion
+  ---
+  duration_ms: 4.442851
+  type: 'test'
+  ...
+# Subtest: PE: invalid optional debug UTF-8 is a controlled metadata rejection
+ok 63 - PE: invalid optional debug UTF-8 is a controlled metadata rejection
+  ---
+  duration_ms: 3.491692
+  type: 'test'
+  ...
+# Subtest: bytecode: serialization errors and verifier diagnostics stay separate
+ok 64 - bytecode: serialization errors and verifier diagnostics stay separate
+  ---
+  duration_ms: 0.402111
+  type: 'test'
+  ...
+# Subtest: bytecode: typed-array expansion and recursive reviver work are bounded before deserialization
+ok 65 - bytecode: typed-array expansion and recursive reviver work are bounded before deserialization
+  ---
+  duration_ms: 0.296085
+  type: 'test'
+  ...
+# Subtest: bytecode: a verified scalar loop reaches the fixed instruction budget
+ok 66 - bytecode: a verified scalar loop reaches the fixed instruction budget
+  ---
+  duration_ms: 2.294713
+  type: 'test'
+  ...
+# Subtest: bytecode: verified host-call and library profiles are explicit unsupported cases
+ok 67 - bytecode: verified host-call and library profiles are explicit unsupported cases
+  ---
+  duration_ms: 0.341382
+  type: 'test'
+  ...
+# Subtest: Portable PDB: out-of-range document references retain SymbolError validation
+ok 68 - Portable PDB: out-of-range document references retain SymbolError validation
+  ---
+  duration_ms: 1.595615
+  type: 'test'
+  ...
+# Subtest: Portable PDB: compressed sources respect small decode budgets and unsupported formats stay explicit
+ok 69 - Portable PDB: compressed sources respect small decode budgets and unsupported formats stay explicit
+  ---
+  duration_ms: 0.961012
+  type: 'test'
+  ...
+# Subtest: ZIP: traversal is rejected without filesystem extraction
+ok 70 - ZIP: traversal is rejected without filesystem extraction
+  ---
+  duration_ms: 0.937798
+  type: 'test'
+  ...
+# Subtest: ZIP: duplicate paths and symlink records are rejected as data
+ok 71 - ZIP: duplicate paths and symlink records are rejected as data
+  ---
+  duration_ms: 0.568215
+  type: 'test'
+  ...
+# Subtest: ZIP: stored and deflated payloads enforce actual small output budgets
+ok 72 - ZIP: stored and deflated payloads enforce actual small output budgets
+  ---
+  duration_ms: 1.280512
+  type: 'test'
+  ...
+# Subtest: ZIP: bad checksums and malformed compression are controlled validations
+ok 73 - ZIP: bad checksums and malformed compression are controlled validations
+  ---
+  duration_ms: 0.97953
+  type: 'test'
+  ...
+# Subtest: binary parser errors preserve unknown exceptions as findings
+ok 74 - binary parser errors preserve unknown exceptions as findings
+  ---
+  duration_ms: 0.288704
+  type: 'test'
+  ...
+# Subtest: campaign CLI resolves only reviewed targets and bounded exact integer budgets
+ok 75 - campaign CLI resolves only reviewed targets and bounded exact integer budgets
+  ---
+  duration_ms: 1.922886
+  type: 'test'
+  ...
+# Subtest: campaign CLI rejects unknown execution targets, missing output and unbounded budgets before effects
+ok 76 - campaign CLI rejects unknown execution targets, missing output and unbounded budgets before effects
+  ---
+  duration_ms: 1.0886
+  type: 'test'
+  ...
+# Subtest: reproduction argv retains seed, effective CLI budgets, reviewed target and literal paths
+ok 77 - reproduction argv retains seed, effective CLI budgets, reviewed target and literal paths
+  ---
+  duration_ms: 1.514036
+  type: 'test'
+  ...
+# Subtest: passing adapter evidence requires stable clean source and complete unique target membership
+ok 78 - passing adapter evidence requires stable clean source and complete unique target membership
+  ---
+  duration_ms: 0.783912
+  type: 'test'
+  ...
+# Subtest: failed, cancelled, incomplete and unsupported reports retain distinct nonpassing exit status
+ok 79 - failed, cancelled, incomplete and unsupported reports retain distinct nonpassing exit status
+  ---
+  duration_ms: 0.263147
+  type: 'test'
+  ...
+# Subtest: campaign evidence is byte-hashed and refuses overwrite and path traversal
+ok 80 - campaign evidence is byte-hashed and refuses overwrite and path traversal
+  ---
+  duration_ms: 9.102702
+  type: 'test'
+  ...
+# Subtest: corpus deduplicates exact records and retains original limits and literal bytes
+ok 81 - corpus deduplicates exact records and retains original limits and literal bytes
+  ---
+  duration_ms: 11.743583
+  type: 'test'
+  ...
+# Subtest: finding attribution cannot be switched to another input or source revision
+ok 82 - finding attribution cannot be switched to another input or source revision
+  ---
+  duration_ms: 1.232332
+  type: 'test'
+  ...
+# Subtest: finding persistence retains observed budgets and rejects explicit widening or narrowing
+ok 83 - finding persistence retains observed budgets and rejects explicit widening or narrowing
+  ---
+  duration_ms: 5.691496
+  type: 'test'
+  ...
+# Subtest: corrupted record content and unexpected filenames fail before parser replay
+ok 84 - corrupted record content and unexpected filenames fail before parser replay
+  ---
+  duration_ms: 5.495498
+  type: 'test'
+  ...
+# Subtest: recomputed record checksums cannot bless a different input digest or findings as expected outcomes
+ok 85 - recomputed record checksums cannot bless a different input digest or findings as expected outcomes
+  ---
+  duration_ms: 8.3127
+  type: 'test'
+  ...
+# Subtest: concurrent writers cannot exceed a one-record corpus quota
+ok 86 - concurrent writers cannot exceed a one-record corpus quota
+  ---
+  duration_ms: 2.871851
+  type: 'test'
+  ...
+# Subtest: empty corpus is incomplete and ignored entries cannot evade the directory scan budget
+ok 87 - empty corpus is incomplete and ignored entries cannot evade the directory scan budget
+  ---
+  duration_ms: 5.004157
+  type: 'test'
+  ...
+# Subtest: corpus symlinks are rejected rather than followed
+ok 88 - corpus symlinks are rejected rather than followed
+  ---
+  duration_ms: 2.490041
+  type: 'test'
+  ...
+# Subtest: HTTP target rejects caller-provided authority and open-ended request configuration before effects
+ok 89 - HTTP target rejects caller-provided authority and open-ended request configuration before effects
+  ---
+  duration_ms: 2.1493
+  type: 'test'
+  ...
+# Subtest: HTTP seeds own their small deterministic inputs and only select the closed request profiles
+ok 90 - HTTP seeds own their small deterministic inputs and only select the closed request profiles
+  ---
+  duration_ms: 0.402281
+  type: 'test'
+  ...
+# Subtest: HTTP fixture limits can narrow but cannot exceed its tiny hard ceilings
+ok 91 - HTTP fixture limits can narrow but cannot exceed its tiny hard ceilings
+  ---
+  duration_ms: 0.567294
+  type: 'test'
+  ...
+# Subtest: public HttpTransport preserves the exact response byte boundary and disposes actual owned connections
+ok 92 - public HttpTransport preserves the exact response byte boundary and disposes actual owned connections
+  ---
+  duration_ms: 33.725008
+  type: 'test'
+  ...
+# Subtest: public HttpTransport reconstructs streamed text across an actual split UTF-8 scalar
+ok 93 - public HttpTransport reconstructs streamed text across an actual split UTF-8 scalar
+  ---
+  duration_ms: 21.729934
+  type: 'test'
+  ...
+# Subtest: public HttpTransport retains success and failure HTTP status while filtering the fixture Set-Cookie header
+ok 94 - public HttpTransport retains success and failure HTTP status while filtering the fixture Set-Cookie header
+  ---
+  duration_ms: 9.227114
+  type: 'test'
+  ...
+# Subtest: announced overflow is refused after headers before the fixture writes or returns any body bytes
+ok 95 - announced overflow is refused after headers before the fixture writes or returns any body bytes
+  ---
+  duration_ms: 5.166895
+  type: 'test'
+  ...
+# Subtest: chunked overflow crosses a tiny response boundary without returning a partial result
+ok 96 - chunked overflow crosses a tiny response boundary without returning a partial result
+  ---
+  duration_ms: 8.284339
+  type: 'test'
+  ...
+# Subtest: exact request bytes arrive unchanged and one extra byte is refused before any challenge request is sent
+ok 97 - exact request bytes arrive unchanged and one extra byte is refused before any challenge request is sent
+  ---
+  duration_ms: 6.180115
+  type: 'test'
+  ...
+# Subtest: real in-flight HTTP cancellation retains its exact reason and disposes sockets and response timers
+ok 98 - real in-flight HTTP cancellation retains its exact reason and disposes sockets and response timers
+  ---
+  duration_ms: 6.587664
+  type: 'test'
+  ...
+# Subtest: real HTTP deadline remains distinct from cancellation and closes the delayed fixture response
+ok 99 - real HTTP deadline remains distinct from cancellation and closes the delayed fixture response
+  ---
+  duration_ms: 32.487388
+  type: 'test'
+  ...
+# Subtest: outer cancellation is never counted as the fixture cancellation or a permitted parser error
+ok 100 - outer cancellation is never counted as the fixture cancellation or a permitted parser error
+  ---
+  duration_ms: 0.967823
+  type: 'test'
+  ...
+# Subtest: the expected-error boundary preserves unknown, wrong-profile and programmer failures as findings
+ok 101 - the expected-error boundary preserves unknown, wrong-profile and programmer failures as findings
+  ---
+  duration_ms: 0.374581
+  type: 'test'
+  ...
+# Subtest: fixed self-checks distinguish acceptance, controlled rejection and unexpected exceptions
+ok 102 - fixed self-checks distinguish acceptance, controlled rejection and unexpected exceptions
+  ---
+  duration_ms: 101.376405
+  type: 'test'
+  ...
+# Subtest: finite deadline and 4 MiB allocation probes are detected and saved with their exact input
+ok 103 - finite deadline and 4 MiB allocation probes are detected and saved with their exact input
+  ---
+  duration_ms: 100.618466
+  type: 'test'
+  ...
+# Subtest: output overflow and an undisposed finite timer remain findings
+ok 104 - output overflow and an undisposed finite timer remain findings
+  ---
+  duration_ms: 86.71761
+  type: 'test'
+  ...
+# Subtest: pre-launch and active cancellation remain cancellation rather than acceptance
+ok 105 - pre-launch and active cancellation remain cancellation rather than acceptance
+  ---
+  duration_ms: 51.377498
+  type: 'test'
+  ...
+# Subtest: ambient Node options cannot inject arguments into the fixed child
+ok 106 - ambient Node options cannot inject arguments into the fixed child
+  ---
+  duration_ms: 31.795552
+  type: 'test'
+  ...
+# Subtest: normal campaigns cannot select self-checks, arbitrary modules, or bypass low-level caps
+ok 107 - normal campaigns cannot select self-checks, arbitrary modules, or bypass low-level caps
+  ---
+  duration_ms: 1.103893
+  type: 'test'
+  ...
+# Subtest: native host target rejects transport and filesystem authority in input before effects
+ok 108 - native host target rejects transport and filesystem authority in input before effects
+  ---
+  duration_ms: 2.308824
+  type: 'test'
+  ...
+# Subtest: native host target retains actual allowed-read status, closed resources and effective response cap
+ok 109 - native host target retains actual allowed-read status, closed resources and effective response cap
+  ---
+  duration_ms: 23.276579
+  type: 'test'
+  ...
+# Subtest: native host rejects missing, same-length wrong and short tokens over actual loopback HTTP
+ok 110 - native host rejects missing, same-length wrong and short tokens over actual loopback HTTP
+  ---
+  duration_ms: 14.289296
+  type: 'test'
+  ...
+# Subtest: native host rejects foreign or opaque Origin, raw Host and both cross-site metadata values
+ok 111 - native host rejects foreign or opaque Origin, raw Host and both cross-site metadata values
+  ---
+  duration_ms: 19.23097
+  type: 'test'
+  ...
+# Subtest: native host refuses relative, absolute, encoded and reserved paths without returning its owned sibling sentinel
+ok 112 - native host refuses relative, absolute, encoded and reserved paths without returning its owned sibling sentinel
+  ---
+  duration_ms: 24.623087
+  type: 'test'
+  ...
+# Subtest: native response overflow propagates as a finding candidate rather than controlled policy rejection
+ok 113 - native response overflow propagates as a finding candidate rather than controlled policy rejection
+  ---
+  duration_ms: 4.030195
+  type: 'test'
+  ...
+# Subtest: native denial proof detects JSON-escaped leaked bytes even inside an error envelope
+ok 114 - native denial proof detects JSON-escaped leaked bytes even inside an error envelope
+  ---
+  duration_ms: 0.457682
+  type: 'test'
+  ...
+# Subtest: active native HTTP cancellation preserves its reason and closes the request before returning
+ok 115 - active native HTTP cancellation preserves its reason and closes the request before returning
+  ---
+  duration_ms: 4.27196
+  type: 'test'
+  ...
+# Subtest: native client refuses a third HTTP request even when every earlier request completed
+ok 116 - native client refuses a third HTTP request even when every earlier request completed
+  ---
+  duration_ms: 3.792946
+  type: 'test'
+  ...
+# Subtest: Portable PDB target includes the unchanged licensed .NET runtime document fixture
+ok 117 - Portable PDB target includes the unchanged licensed .NET runtime document fixture
+  ---
+  duration_ms: 8.23771
+  type: 'test'
+  ...
+# Subtest: Portable PDB pin rejects changed size/content and supports offset views without sharing writable data
+ok 118 - Portable PDB pin rejects changed size/content and supports offset views without sharing writable data
+  ---
+  duration_ms: 4.536519
+  type: 'test'
+  ...
+# Subtest: Portable PDB boundary cases are deterministic independent copies below one KiB
+ok 119 - Portable PDB boundary cases are deterministic independent copies below one KiB
+  ---
+  duration_ms: 5.782641
+  type: 'test'
+  ...
+# Subtest: Portable PDB row-index and compression-size failures are controlled under existing process budgets
+ok 120 - Portable PDB row-index and compression-size failures are controlled under existing process budgets
+  ---
+  duration_ms: 1340.012202
+  type: 'test'
+  ...
+# Subtest: Portable PDB reserved DEFLATE errors are controlled rejections after the symbol contract fix
+ok 121 - Portable PDB reserved DEFLATE errors are controlled rejections after the symbol contract fix
+  ---
+  duration_ms: 667.957898
+  type: 'test'
+  ...
+# Subtest: offline budgets reject unknown, fractional, nonfinite and widened limits
+ok 122 - offline budgets reject unknown, fractional, nonfinite and widened limits
+  ---
+  duration_ms: 2.598921
+  type: 'test'
+  ...
+# Subtest: fixture PRNG preserves its documented sequence and rejects invalid seeds
+ok 123 - fixture PRNG preserves its documented sequence and rejects invalid seeds
+  ---
+  duration_ms: 0.274894
+  type: 'test'
+  ...
+# Subtest: seeded byte variations are repeatable, isolated and always honor the input ceiling
+ok 124 - seeded byte variations are repeatable, isolated and always honor the input ceiling
+  ---
+  duration_ms: 1.745255
+  type: 'test'
+  ...
+# Subtest: protocol sequences: seeds are deterministic and the byte prefix preserves existing framing mode
+ok 125 - protocol sequences: seeds are deterministic and the byte prefix preserves existing framing mode
+  ---
+  duration_ms: 1.822919
+  type: 'test'
+  ...
+# Subtest: protocol sequences: shipped cases exercise actual handlers and controlled negative responses
+ok 126 - protocol sequences: shipped cases exercise actual handlers and controlled negative responses
+  ---
+  duration_ms: 103.865588
+  type: 'test'
+  ...
+# Subtest: LSP sequences: edits, queries, close and shutdown preserve protocol state and correlation
+ok 127 - LSP sequences: edits, queries, close and shutdown preserve protocol state and correlation
+  ---
+  duration_ms: 20.074411
+  type: 'test'
+  ...
+# Subtest: LSP sequences: owned source variants include diagnostic-producing text without growing document state
+ok 128 - LSP sequences: owned source variants include diagnostic-producing text without growing document state
+  ---
+  duration_ms: 6.93826
+  type: 'test'
+  ...
+# Subtest: DAP sequences: fixed IL launch, stepping, bounded inspection, restart and disposal work in memory
+ok 129 - DAP sequences: fixed IL launch, stepping, bounded inspection, restart and disposal work in memory
+  ---
+  duration_ms: 10.59115
+  type: 'test'
+  ...
+# Subtest: DAP sequences: missing state and malformed owned argument shapes produce explicit error responses
+ok 130 - DAP sequences: missing state and malformed owned argument shapes produce explicit error responses
+  ---
+  duration_ms: 0.559412
+  type: 'test'
+  ...
+# Subtest: DAP sequences: the current null-envelope product defect is surfaced as a finding, never a rejected input
+ok 131 - DAP sequences: the current null-envelope product defect is surfaced as a finding, never a rejected input
+  ---
+  duration_ms: 0.909357
+  type: 'test'
+  ...
+# Subtest: LSP sequences: malformed parameters require explicit validation diagnostics
+ok 132 - LSP sequences: malformed parameters require explicit validation diagnostics
+  ---
+  duration_ms: 0.398296
+  type: 'test'
+  ...
+# Subtest: LSP sequences: missing methods require the precise correlated Invalid Request diagnostic
+ok 133 - LSP sequences: missing methods require the precise correlated Invalid Request diagnostic
+  ---
+  duration_ms: 0.478534
+  type: 'test'
+  ...
+# Subtest: DAP sequences: caught native exceptions from malformed parameters remain findings
+ok 134 - DAP sequences: caught native exceptions from malformed parameters remain findings
+  ---
+  duration_ms: 0.699758
+  type: 'test'
+  ...
+# Subtest: protocol sequences: only precise owned diagnostics qualify as expected negative responses
+ok 135 - protocol sequences: only precise owned diagnostics qualify as expected negative responses
+  ---
+  duration_ms: 0.688942
+  type: 'test'
+  ...
+# Subtest: protocol sequences: unknown profiles, empty programs and excessive operation counts remain bounded
+ok 136 - protocol sequences: unknown profiles, empty programs and excessive operation counts remain bounded
+  ---
+  duration_ms: 0.625941
+  type: 'test'
+  ...
+# Subtest: protocol sequences: byte and output caps are enforced before growing a transcript
+ok 137 - protocol sequences: byte and output caps are enforced before growing a transcript
+  ---
+  duration_ms: 0.314552
+  type: 'test'
+  ...
+# Subtest: protocol sequences: cancellation propagates before and between awaited handlers
+ok 138 - protocol sequences: cancellation propagates before and between awaited handlers
+  ---
+  duration_ms: 0.392087
+  type: 'test'
+  ...
+# Subtest: protocol sequences: malformed server responses and unexpected internal error responses become findings
+ok 139 - protocol sequences: malformed server responses and unexpected internal error responses become findings
+  ---
+  duration_ms: 0.286972
+  type: 'test'
+  ...
+# Subtest: protocol sequences: output callback failures are rethrown after the server error boundary
+ok 140 - protocol sequences: output callback failures are rethrown after the server error boundary
+  ---
+  duration_ms: 0.176019
+  type: 'test'
+  ...
+# Subtest: protocol sequences: event count is capped even when every individual event is small
+ok 141 - protocol sequences: event count is capped even when every individual event is small
+  ---
+  duration_ms: 0.445155
+  type: 'test'
+  ...
+# Subtest: every reviewed retained input is replayed by the normal A29 Node manifest
+ok 142 - every reviewed retained input is replayed by the normal A29 Node manifest
+  ---
+  duration_ms: 1875.231802
+  type: 'test'
+  ...
+# Subtest: protocol: local seeds are bounded, deterministic and independently owned
+ok 143 - protocol: local seeds are bounded, deterministic and independently owned
+  ---
+  duration_ms: 2.092715
+  type: 'test'
+  ...
+# Subtest: protocol: rejects an input over the configured or hard byte ceiling
+ok 144 - protocol: rejects an input over the configured or hard byte ceiling
+  ---
+  duration_ms: 0.432816
+  type: 'test'
+  ...
+# Subtest: protocol: cancellation and invalid caller contracts propagate
+ok 145 - protocol: cancellation and invalid caller contracts propagate
+  ---
+  duration_ms: 0.413178
+  type: 'test'
+  ...
+# Subtest: il-document: local seeds are bounded, deterministic and independently owned
+ok 146 - il-document: local seeds are bounded, deterministic and independently owned
+  ---
+  duration_ms: 10.224306
+  type: 'test'
+  ...
+# Subtest: il-document: rejects an input over the configured or hard byte ceiling
+ok 147 - il-document: rejects an input over the configured or hard byte ceiling
+  ---
+  duration_ms: 0.273101
+  type: 'test'
+  ...
+# Subtest: il-document: cancellation and invalid caller contracts propagate
+ok 148 - il-document: cancellation and invalid caller contracts propagate
+  ---
+  duration_ms: 0.118975
+  type: 'test'
+  ...
+# Subtest: msbuild-xml: local seeds are bounded, deterministic and independently owned
+ok 149 - msbuild-xml: local seeds are bounded, deterministic and independently owned
+  ---
+  duration_ms: 0.188117
+  type: 'test'
+  ...
+# Subtest: msbuild-xml: rejects an input over the configured or hard byte ceiling
+ok 150 - msbuild-xml: rejects an input over the configured or hard byte ceiling
+  ---
+  duration_ms: 0.13626
+  type: 'test'
+  ...
+# Subtest: msbuild-xml: cancellation and invalid caller contracts propagate
+ok 151 - msbuild-xml: cancellation and invalid caller contracts propagate
+  ---
+  duration_ms: 0.149289
+  type: 'test'
+  ...
+# Subtest: network: local seeds are bounded, deterministic and independently owned
+ok 152 - network: local seeds are bounded, deterministic and independently owned
+  ---
+  duration_ms: 0.595706
+  type: 'test'
+  ...
+# Subtest: network: rejects an input over the configured or hard byte ceiling
+ok 153 - network: rejects an input over the configured or hard byte ceiling
+  ---
+  duration_ms: 0.365818
+  type: 'test'
+  ...
+# Subtest: network: cancellation and invalid caller contracts propagate
+ok 154 - network: cancellation and invalid caller contracts propagate
+  ---
+  duration_ms: 0.120487
+  type: 'test'
+  ...
+# Subtest: protocol: accepts LSP, DAP, Unicode and coalesced frames under incremental parsing
+ok 155 - protocol: accepts LSP, DAP, Unicode and coalesced frames under incremental parsing
+  ---
+  duration_ms: 1.235115
+  type: 'test'
+  ...
+# Subtest: protocol: diagnoses malformed framing, JSON, UTF-8 and incomplete bodies
+ok 156 - protocol: diagnoses malformed framing, JSON, UTF-8 and incomplete bodies
+  ---
+  duration_ms: 0.619801
+  type: 'test'
+  ...
+# Subtest: protocol: encoded messages respect the output byte budget
+ok 157 - protocol: encoded messages respect the output byte budget
+  ---
+  duration_ms: 0.206574
+  type: 'test'
+  ...
+# Subtest: IL document: canonical roundtrips preserve visible methods and literals containing comment text
+ok 158 - IL document: canonical roundtrips preserve visible methods and literals containing comment text
+  ---
+  duration_ms: 7.828194
+  type: 'test'
+  ...
+# Subtest: IL document: generated-input failures propagate outside the first assembly validation boundary
+ok 159 - IL document: generated-input failures propagate outside the first assembly validation boundary
+  ---
+  duration_ms: 0.169689
+  type: 'test'
+  ...
+# Subtest: IL document: reports syntax/scaffold failures and constrains rebuilt output
+ok 160 - IL document: reports syntax/scaffold failures and constrains rebuilt output
+  ---
+  duration_ms: 3.719387
+  type: 'test'
+  ...
+# Subtest: MSBuild XML: parses data and evaluates attributes or standalone conditions without filesystem access
+ok 161 - MSBuild XML: parses data and evaluates attributes or standalone conditions without filesystem access
+  ---
+  duration_ms: 1.826014
+  type: 'test'
+  ...
+# Subtest: MSBuild XML: rejects malformed XML and unsupported data grammar
+ok 162 - MSBuild XML: rejects malformed XML and unsupported data grammar
+  ---
+  duration_ms: 0.578591
+  type: 'test'
+  ...
+# Subtest: network: exact grants, URL normalization and request headers use pure policy APIs
+ok 163 - network: exact grants, URL normalization and request headers use pure policy APIs
+  ---
+  duration_ms: 1.970476
+  type: 'test'
+  ...
+# Subtest: network: malformed local input and output limits remain controlled failures
+ok 164 - network: malformed local input and output limits remain controlled failures
+  ---
+  duration_ms: 0.592911
+  type: 'test'
+  ...
+# Subtest: network: unavailable native host policy surfaces are explicitly unsupported
+ok 165 - network: unavailable native host policy surfaces are explicitly unsupported
+  ---
+  duration_ms: 0.139615
+  type: 'test'
+  ...
+# Subtest: text targets: error classifiers preserve unexpected failures instead of counting them as rejected inputs
+ok 166 - text targets: error classifiers preserve unexpected failures instead of counting them as rejected inputs
+  ---
+  duration_ms: 0.228676
+  type: 'test'
+  ...
+# Subtest: text targets: cancellation observed during a parse is not an input rejection
+ok 167 - text targets: cancellation observed during a parse is not an input rejection
+  ---
+  duration_ms: 0.130021
+  type: 'test'
+  ...
+# Subtest: worker completion rejects swallowed local cancellation independently of the parent watchdog
+ok 168 - worker completion rejects swallowed local cancellation independently of the parent watchdog
+  ---
+  duration_ms: 0.756192
+  type: 'test'
+  ...
+# Subtest: measured synchronous overrun wins even when the local abort callback could not run
+ok 169 - measured synchronous overrun wins even when the local abort callback could not run
+  ---
+  duration_ms: 0.165223
+  type: 'test'
+  ...
+# Subtest: seed collection observes the same deadline and ordinary bounded outcomes remain unchanged
+ok 170 - seed collection observes the same deadline and ordinary bounded outcomes remain unchanged
+  ---
+  duration_ms: 0.743353
+  type: 'test'
+  ...
+# Subtest: the fixed finite cancellation-rejection fixture remains a finding through process isolation
+ok 171 - the fixed finite cancellation-rejection fixture remains a finding through process isolation
+  ---
+  duration_ms: 60.956696
+  type: 'test'
+  ...
+# Subtest: workspace ZIP import and actual destination writer preserve source, binary, UTF-16 and manifest root
+ok 172 - workspace ZIP import and actual destination writer preserve source, binary, UTF-16 and manifest root
+  ---
+  duration_ms: 10.644453
+  type: 'test'
+  ...
+# Subtest: workspace ZIP target awaits actual import/write completion and preserves cancellation
+ok 173 - workspace ZIP target awaits actual import/write completion and preserves cancellation
+  ---
+  duration_ms: 1.970215
+  type: 'test'
+  ...
+# Subtest: workspace ZIP rejects ambiguous manifests and files outside the selected manifest root
+ok 174 - workspace ZIP rejects ambiguous manifests and files outside the selected manifest root
+  ---
+  duration_ms: 0.614293
+  type: 'test'
+  ...
+# Subtest: workspace manifest parsing distinguishes malformed JSON, UTF-8 and settings validation
+ok 175 - workspace manifest parsing distinguishes malformed JSON, UTF-8 and settings validation
+  ---
+  duration_ms: 1.17069
+  type: 'test'
+  ...
+# Subtest: workspace manifest traversal is bounded before recursive settings projection
+ok 176 - workspace manifest traversal is bounded before recursive settings projection
+  ---
+  duration_ms: 0.285299
+  type: 'test'
+  ...
+# Subtest: tiny compressed input with an oversized declaration rejects before destination creation
+ok 177 - tiny compressed input with an oversized declaration rejects before destination creation
+  ---
+  duration_ms: 0.859583
+  type: 'test'
+  ...
+# Subtest: workspace ZIP enforces aggregate decode bytes, entry count and path depth
+ok 178 - workspace ZIP enforces aggregate decode bytes, entry count and path depth
+  ---
+  duration_ms: 0.507495
+  type: 'test'
+  ...
+# Subtest: actual destination writer rejects traversal and colliding plans before mutating its memory root
+ok 179 - actual destination writer rejects traversal and colliding plans before mutating its memory root
+  ---
+  duration_ms: 0.665368
+  type: 'test'
+  ...
+# Subtest: memory destination exposes only child handles and independently bounds actual writer output
+ok 180 - memory destination exposes only child handles and independently bounds actual writer output
+  ---
+  duration_ms: 0.709844
+  type: 'test'
+  ...
+# Subtest: memory destination verifies non-atomic writer failure and owns committed bytes
+ok 181 - memory destination verifies non-atomic writer failure and owns committed bytes
+  ---
+  duration_ms: 0.432595
+  type: 'test'
+  ...
+# Subtest: workspace import preserves unknown parser and destination exceptions as findings
+ok 182 - workspace import preserves unknown parser and destination exceptions as findings
+  ---
+  duration_ms: 0.308924
+  type: 'test'
+  ...
+# Subtest: session I/O evidence keeps broader release obligations blocked after complete component records
+ok 183 - session I/O evidence keeps broader release obligations blocked after complete component records
+  ---
+  duration_ms: 2.101969
+  type: 'test'
+  ...
+# Subtest: session I/O rejects incomplete, reordered, duplicated and failed product phases
+ok 184 - session I/O rejects incomplete, reordered, duplicated and failed product phases
+  ---
+  duration_ms: 0.868066
+  type: 'test'
+  ...
+# Subtest: session I/O rejects absent worker provenance, stale builds and changed fixture bytes
+ok 185 - session I/O rejects absent worker provenance, stale builds and changed fixture bytes
+  ---
+  duration_ms: 0.581244
+  type: 'test'
+  ...
+# Subtest: session I/O rejects credential leakage, sequential HTTP, wrong targets and incomplete cancellation
+ok 186 - session I/O rejects credential leakage, sequential HTTP, wrong targets and incomplete cancellation
+  ---
+  duration_ms: 1.152333
+  type: 'test'
+  ...
+# Subtest: production build qualification requires an unchanged clean source revision
+ok 187 - production build qualification requires an unchanged clean source revision
+  ---
+  duration_ms: 0.269306
+  type: 'test'
+  ...
+# Subtest: session I/O waits for browser teardown after the close acknowledgement
+ok 188 - session I/O waits for browser teardown after the close acknowledgement
+  ---
+  duration_ms: 0.386038
+  type: 'test'
+  ...
+# Subtest: session I/O preserves missing-browser, teardown-exit and timeout failures
+ok 189 - session I/O preserves missing-browser, teardown-exit and timeout failures
+  ---
+  duration_ms: 6.256575
+  type: 'test'
+  ...
+# Subtest: session I/O requires the retained final browser identity and clean CSP/teardown record
+ok 190 - session I/O requires the retained final browser identity and clean CSP/teardown record
+  ---
+  duration_ms: 0.331707
+  type: 'test'
+  ...
+# Subtest: LSP rejects the null envelope with a stable Invalid Request response
+ok 191 - LSP rejects the null envelope with a stable Invalid Request response
+  ---
+  duration_ms: 2.199652
+  type: 'test'
+  ...
+# Subtest: LSP rejects the undefined envelope with a stable Invalid Request response
+ok 192 - LSP rejects the undefined envelope with a stable Invalid Request response
+  ---
+  duration_ms: 0.155209
+  type: 'test'
+  ...
+# Subtest: LSP rejects the string envelope with a stable Invalid Request response
+ok 193 - LSP rejects the string envelope with a stable Invalid Request response
+  ---
+  duration_ms: 0.135259
+  type: 'test'
+  ...
+# Subtest: LSP rejects the empty string envelope with a stable Invalid Request response
+ok 194 - LSP rejects the empty string envelope with a stable Invalid Request response
+  ---
+  duration_ms: 0.113667
+  type: 'test'
+  ...
+# Subtest: LSP rejects the number envelope with a stable Invalid Request response
+ok 195 - LSP rejects the number envelope with a stable Invalid Request response
+  ---
+  duration_ms: 0.195397
+  type: 'test'
+  ...
+# Subtest: LSP rejects the zero envelope with a stable Invalid Request response
+ok 196 - LSP rejects the zero envelope with a stable Invalid Request response
+  ---
+  duration_ms: 0.12969
+  type: 'test'
+  ...
+# Subtest: LSP rejects the NaN envelope with a stable Invalid Request response
+ok 197 - LSP rejects the NaN envelope with a stable Invalid Request response
+  ---
+  duration_ms: 0.106837
+  type: 'test'
+  ...
+# Subtest: LSP rejects the true envelope with a stable Invalid Request response
+ok 198 - LSP rejects the true envelope with a stable Invalid Request response
+  ---
+  duration_ms: 0.083773
+  type: 'test'
+  ...
+# Subtest: LSP rejects the false envelope with a stable Invalid Request response
+ok 199 - LSP rejects the false envelope with a stable Invalid Request response
+  ---
+  duration_ms: 0.147757
+  type: 'test'
+  ...
+# Subtest: LSP rejects the bigint envelope with a stable Invalid Request response
+ok 200 - LSP rejects the bigint envelope with a stable Invalid Request response
+  ---
+  duration_ms: 0.176209
+  type: 'test'
+  ...
+# Subtest: LSP rejects the symbol envelope with a stable Invalid Request response
+ok 201 - LSP rejects the symbol envelope with a stable Invalid Request response
+  ---
+  duration_ms: 0.227084
+  type: 'test'
+  ...
+# Subtest: LSP rejects the function envelope with a stable Invalid Request response
+ok 202 - LSP rejects the function envelope with a stable Invalid Request response
+  ---
+  duration_ms: 0.153045
+  type: 'test'
+  ...
+# Subtest: LSP rejects the empty array envelope with a stable Invalid Request response
+ok 203 - LSP rejects the empty array envelope with a stable Invalid Request response
+  ---
+  duration_ms: 0.101989
+  type: 'test'
+  ...
+# Subtest: LSP rejects the batch array envelope with a stable Invalid Request response
+ok 204 - LSP rejects the batch array envelope with a stable Invalid Request response
+  ---
+  duration_ms: 0.05495
+  type: 'test'
+  ...
+# Subtest: LSP rejects arrays carrying request properties before any dispatch side effect
+ok 205 - LSP rejects arrays carrying request properties before any dispatch side effect
+  ---
+  duration_ms: 0.165664
+  type: 'test'
+  ...
+# Subtest: LSP preserves request IDs and the optional jsonrpc field at the public adapter boundary
+ok 206 - LSP preserves request IDs and the optional jsonrpc field at the public adapter boundary
+  ---
+  duration_ms: 0.282345
+  type: 'test'
+  ...
+# Subtest: LSP rejects missing, non-string and empty method names while preserving request correlation
+ok 207 - LSP rejects missing, non-string and empty method names while preserving request correlation
+  ---
+  duration_ms: 0.592912
+  type: 'test'
+  ...
+# Subtest: LSP malformed methods are invalid requests even without an ID or after shutdown
+ok 208 - LSP malformed methods are invalid requests even without an ID or after shutdown
+  ---
+  duration_ms: 0.167796
+  type: 'test'
+  ...
+# Subtest: LSP retains initialization capabilities and the semantic token wire legend
+ok 209 - LSP retains initialization capabilities and the semantic token wire legend
+  ---
+  duration_ms: 0.134859
+  type: 'test'
+  ...
+# Subtest: LSP still dispatches document notifications and publishes diagnostics after a rejected envelope
+ok 210 - LSP still dispatches document notifications and publishes diagnostics after a rejected envelope
+  ---
+  duration_ms: 60.938503
+  type: 'test'
+  ...
+# Subtest: LSP still omits responses to notifications and preserves lifecycle errors
+ok 211 - LSP still omits responses to notifications and preserves lifecycle errors
+  ---
+  duration_ms: 0.31952
+  type: 'test'
+  ...
+# Subtest: LSP: initialization advertises implemented UTF-16 capabilities
+ok 212 - LSP: initialization advertises implemented UTF-16 capabilities
+  ---
+  duration_ms: 1.642033
+  type: 'test'
+  ...
+# Subtest: LSP: versioned diagnostics publish on open and edit
+ok 213 - LSP: versioned diagnostics publish on open and edit
+  ---
+  duration_ms: 67.407315
+  type: 'test'
+  ...
+# Subtest: LSP: completion, rename and semantic tokens return protocol shapes
+ok 214 - LSP: completion, rename and semantic tokens return protocol shapes
+  ---
+  duration_ms: 18.211575
+  type: 'test'
+  ...
+# Subtest: LSP: unknown methods return method-not-found
+ok 215 - LSP: unknown methods return method-not-found
+  ---
+  duration_ms: 0.177231
+  type: 'test'
+  ...
+# Subtest: DAP: launch, stepping, inspection and repeated stopped events
+ok 216 - DAP: launch, stepping, inspection and repeated stopped events
+  ---
+  duration_ms: 13.986765
+  type: 'test'
+  ...
+# Subtest: DAP: unsupported requests fail explicitly
+ok 217 - DAP: unsupported requests fail explicitly
+  ---
+  duration_ms: 0.267373
+  type: 'test'
+  ...
+# Subtest: DAP: breakpoints can be configured before launch
+ok 218 - DAP: breakpoints can be configured before launch
+  ---
+  duration_ms: 4.723152
+  type: 'test'
+  ...
+# Subtest: DAP: IL launch from Uint8Array retains source stepping and IL frame coordinates
+ok 219 - DAP: IL launch from Uint8Array retains source stepping and IL frame coordinates
+  ---
+  duration_ms: 34.585519
+  type: 'test'
+  ...
+# Subtest: DAP: IL launch from ArrayBuffer retains source stepping and IL frame coordinates
+ok 220 - DAP: IL launch from ArrayBuffer retains source stepping and IL frame coordinates
+  ---
+  duration_ms: 11.419543
+  type: 'test'
+  ...
+# Subtest: DAP: IL launch from JSON byte array retains source stepping and IL frame coordinates
+ok 221 - DAP: IL launch from JSON byte array retains source stepping and IL frame coordinates
+  ---
+  duration_ms: 16.722126
+  type: 'test'
+  ...
+# Subtest: DAP: malformed assembly transport bytes are rejected rather than coerced
+ok 222 - DAP: malformed assembly transport bytes are rejected rather than coerced
+  ---
+  duration_ms: 0.556268
+  type: 'test'
+  ...
+1..222
+# tests 222
+# suites 0
+# pass 222
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 12889.248572

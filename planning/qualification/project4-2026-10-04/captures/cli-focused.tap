@@ -1,0 +1,15 @@
+✔ campaign CLI resolves only reviewed targets and bounded exact integer budgets (2.117273ms)
+✔ campaign CLI rejects unknown execution targets, missing output and unbounded budgets before effects (2.217991ms)
+✔ reproduction argv retains seed, effective CLI budgets, reviewed target and literal paths (0.712648ms)
+✔ passing adapter evidence requires stable clean source and complete unique target membership (0.832494ms)
+✔ failed, cancelled, incomplete and unsupported reports retain distinct nonpassing exit status (0.230709ms)
+✔ campaign evidence is byte-hashed and refuses overwrite and path traversal (8.186976ms)
+﹣ every reviewed retained input is replayed by the normal A29 Node manifest (4.082122ms) # No reviewed production crash inputs have been promoted; this is not target qualification.
+ℹ tests 7
+ℹ suites 0
+ℹ pass 6
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 1
+ℹ todo 0
+ℹ duration_ms 242.692786

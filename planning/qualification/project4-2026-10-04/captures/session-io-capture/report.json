@@ -1,0 +1,55 @@
+{
+  "schemaVersion": 1,
+  "task": "SF-R015-T04",
+  "scenario": "release15-session-io",
+  "status": "failed",
+  "componentStatus": "unexecuted",
+  "node": "v24.19.0",
+  "platform": "linux-x64",
+  "scenarioSha256": "de06d712e5a9b63f1b9cd94b5468fe6cdf54d9518832c29672cc37e2de0d9202",
+  "limits": [
+    "Host-wide numerical admission and scheduler fairness remain unqualified.",
+    "Managed WebSocket integration is absent; the separate JavaScript transport is outside this fixture.",
+    "No provider authentication, application HTML export, native runtime or physical GPU qualification is implied."
+  ],
+  "artifacts": [
+    {
+      "path": "browser/report.json",
+      "bytes": 6497,
+      "sha256": "e1ae09f32aaa91568145b002c70cc7189d90b3156400162b7f7a87cc2e47a517"
+    },
+    {
+      "path": "browser/session-io-driver-failure.json",
+      "bytes": 1636,
+      "sha256": "6f38318f45420d489d74e77aab5050ae38b8eacfb0a460c6b9a015567b19cdd8"
+    },
+    {
+      "path": "browser-adapter-stderr.txt",
+      "bytes": 3007,
+      "sha256": "c466fec172c2693d27f80e2efa717003076ed74b27b01185b9e50efcdae0951e"
+    },
+    {
+      "path": "build-identity.json",
+      "bytes": 947390,
+      "sha256": "cba609d7700d5b14e0fffb945a9369eeca6b7a4fb59eb0c5292428451f01a34f"
+    }
+  ],
+  "commit": "c519eb7f961a6e4f912c33524168febb4c10fab2",
+  "buildIdentitySha256": "cba609d7700d5b14e0fffb945a9369eeca6b7a4fb59eb0c5292428451f01a34f",
+  "execution": {
+    "status": "failed",
+    "report": "browser/report.json"
+  },
+  "driverFailure": {
+    "schemaVersion": 1,
+    "kind": "session-io-driver-failure",
+    "status": "unavailable",
+    "stage": "browser-setup",
+    "engine": "chromium",
+    "playwright": "1.63.0",
+    "configuredExecutable": "playwright-managed",
+    "componentExecuted": false,
+    "message": "BrowserType.launch: Executable doesn't exist at /workspace/scratch/18022b90e5ec/playwright-headless/chromium_headless_shell-1243/chrome-headless-shell-linux64/chrome-headless-shell\n╔════════════════════════════════════════════════════════════╗\n║ Looks like Playwright was just installed or updated.       ║\n║ Please run the following command to download new browsers: ║\n║                                                            ║\n║     playwright install                                     ║\n║                                                            ║\n║ <3 Playwright Team                                         ║\n╚════════════════════════════════════════════════════════════╝"
+  },
+  "error": "Browser capability unavailable: BrowserType.launch: Executable doesn't exist at /workspace/scratch/18022b90e5ec/playwright-headless/chromium_headless_shell-1243/chrome-headless-shell-linux64/chrome-headless-shell\n╔════════════════════════════════════════════════════════════╗\n║ Looks like Playwright was just installed or updated.       ║\n║ Please run the following command to download new browsers: ║\n║                                                            ║\n║     playwright install                                     ║\n║                                                            ║\n║ <3 Playwright Team                                         ║\n╚════════════════════════════════════════════════════════════╝"
+}

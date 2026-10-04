@@ -1,0 +1,203 @@
+Waiting for a free run slot: 1 heavy runs are allowed at once (SHARPFORGE_MAX_PARALLEL_RUNS).
+TAP version 13
+# Subtest: comment IDs order releases and reclaims sharing one timestamp without comparing generation sequences
+ok 1 - comment IDs order releases and reclaims sharing one timestamp without comparing generation sequences
+  ---
+  duration_ms: 4.063835
+  type: 'test'
+  ...
+# Subtest: actual fake API release/reclaim comments preserve their owner at a fixed clock
+ok 2 - actual fake API release/reclaim comments preserve their owner at a fixed clock
+  ---
+  duration_ms: 10.367501
+  type: 'test'
+  ...
+# Subtest: same-generation histories without IDs retain sequence ordering and quiet-heartbeat gaps
+ok 3 - same-generation histories without IDs retain sequence ordering and quiet-heartbeat gaps
+  ---
+  duration_ms: 0.620322
+  type: 'test'
+  ...
+# Subtest: different generations with distinct timestamps can be ordered without comment IDs
+ok 4 - different generations with distinct timestamps can be ordered without comment IDs
+  ---
+  duration_ms: 0.355973
+  type: 'test'
+  ...
+# Subtest: mixed-generation ties without complete IDs preserve input order and report ambiguity
+ok 5 - mixed-generation ties without complete IDs preserve input order and report ambiguity
+  ---
+  duration_ms: 0.644367
+  type: 'test'
+  ...
+# Subtest: chronological string IDs retain integer precision and invalid or duplicate IDs stay incomplete
+ok 6 - chronological string IDs retain integer precision and invalid or duplicate IDs stay incomplete
+  ---
+  duration_ms: 0.927444
+  type: 'test'
+  ...
+# Subtest: malformed structured records remain visible and never clear established ownership
+ok 7 - malformed structured records remain visible and never clear established ownership
+  ---
+  duration_ms: 2.619341
+  type: 'test'
+  ...
+# Subtest: malformed JSON and unsupported markers are recorded while ordinary discussion is ignored
+ok 8 - malformed JSON and unsupported markers are recorded while ordinary discussion is ignored
+  ---
+  duration_ms: 0.540725
+  type: 'test'
+  ...
+# Subtest: mismatched generation and agent events cannot change current owner or locks
+ok 9 - mismatched generation and agent events cannot change current owner or locks
+  ---
+  duration_ms: 0.779576
+  type: 'test'
+  ...
+# Subtest: overlapping and reused claims are rejected without adopting their owner or dropping locks
+ok 10 - overlapping and reused claims are rejected without adopting their owner or dropping locks
+  ---
+  duration_ms: 0.406017
+  type: 'test'
+  ...
+# Subtest: duplicate or backwards sequences and unrecorded unlocks preserve the established lock set
+ok 11 - duplicate or backwards sequences and unrecorded unlocks preserve the established lock set
+  ---
+  duration_ms: 0.48282
+  type: 'test'
+  ...
+# Subtest: a copied event from another task or issue cannot release the current claim
+ok 12 - a copied event from another task or issue cannot release the current claim
+  ---
+  duration_ms: 0.253092
+  type: 'test'
+  ...
+# Subtest: field history remains informational even when its data resembles claim or release events
+ok 13 - field history remains informational even when its data resembles claim or release events
+  ---
+  duration_ms: 0.370926
+  type: 'test'
+  ...
+# Subtest: malformed field history and comment containers fail visibly without throwing or inventing owners
+ok 14 - malformed field history and comment containers fail visibly without throwing or inventing owners
+  ---
+  duration_ms: 0.582577
+  type: 'test'
+  ...
+# Subtest: 50 seeded concurrent claim races have exactly one owner and no loser field writes
+ok 15 - 50 seeded concurrent claim races have exactly one owner and no loser field writes
+  ---
+  duration_ms: 1175.631204
+  type: 'test'
+  ...
+# Subtest: project pagination reads/writes items beyond 100 and clears all lease fields
+ok 16 - project pagination reads/writes items beyond 100 and clears all lease fields
+  ---
+  duration_ms: 7.125876
+  type: 'test'
+  ...
+# Subtest: unknown project fields, choices and invalid lease inputs fail without acquiring ownership
+ok 17 - unknown project fields, choices and invalid lease inputs fail without acquiring ownership
+  ---
+  duration_ms: 0.821829
+  type: 'test'
+  ...
+# Subtest: parents, closed tasks, and tasks not Ready cannot be claimed
+ok 18 - parents, closed tasks, and tasks not Ready cannot be claimed
+  ---
+  duration_ms: 0.64631
+  type: 'test'
+  ...
+# Subtest: owner-only heartbeat extends exact expiry; comments are throttled per hour
+ok 19 - owner-only heartbeat extends exact expiry; comments are throttled per hour
+  ---
+  duration_ms: 2.154508
+  type: 'test'
+  ...
+# Subtest: shared lock races name holder, release frees locks and branch remains untouched
+ok 20 - shared lock races name holder, release frees locks and branch remains untouched
+  ---
+  duration_ms: 125.587112
+  type: 'test'
+  ...
+# Subtest: expired lease remains owned; reaper is idempotent; reconciler must provide audit reason
+ok 21 - expired lease remains owned; reaper is idempotent; reconciler must provide audit reason
+  ---
+  duration_ms: 5.307688
+  type: 'test'
+  ...
+# Subtest: partial project update keeps claim reserved and explicit release recovers
+ok 22 - partial project update keeps claim reserved and explicit release recovers
+  ---
+  duration_ms: 2.975835
+  type: 'test'
+  ...
+# Subtest: failed lock field update is recovered by scanning lock refs on release
+ok 23 - failed lock field update is recovered by scanning lock refs on release
+  ---
+  duration_ms: 2.281774
+  type: 'test'
+  ...
+# Subtest: secondary rate limit retry is bounded and hard failures preserve distinct exit code
+ok 24 - secondary rate limit retry is bounded and hard failures preserve distinct exit code
+  ---
+  duration_ms: 0.832964
+  type: 'test'
+  ...
+# Subtest: audit reconstructs complete claim-heartbeat-lock-unlock-release and flags missing claim
+ok 25 - audit reconstructs complete claim-heartbeat-lock-unlock-release and flags missing claim
+  ---
+  duration_ms: 3.740709
+  type: 'test'
+  ...
+# Subtest: fake REST/GraphQL transport also exposes an actual HTTP server
+ok 26 - fake REST/GraphQL transport also exposes an actual HTTP server
+  ---
+  duration_ms: 24.891712
+  type: 'test'
+  ...
+# Subtest: GraphQL resource limits shrink page size and surface permanent node overflow
+ok 27 - GraphQL resource limits shrink page size and surface permanent node overflow
+  ---
+  duration_ms: 0.785295
+  type: 'test'
+  ...
+# Subtest: recorded live Project 4 fields support text, date and single-select projections
+ok 28 - recorded live Project 4 fields support text, date and single-select projections
+  ---
+  duration_ms: 2.657617
+  type: 'test'
+  ...
+# Subtest: reaper discovers an expired authoritative claim after the first Agent field write failed
+ok 29 - reaper discovers an expired authoritative claim after the first Agent field write failed
+  ---
+  duration_ms: 1.307252
+  type: 'test'
+  ...
+# Subtest: ambiguous DELETE response never deletes a replacement mutex owner
+ok 30 - ambiguous DELETE response never deletes a replacement mutex owner
+  ---
+  duration_ms: 1.230008
+  type: 'test'
+  ...
+# Subtest: transport owns a total five-attempt read budget; mutation 5xx/network failures fail closed
+ok 31 - transport owns a total five-attempt read budget; mutation 5xx/network failures fail closed
+  ---
+  duration_ms: 0.921905
+  type: 'test'
+  ...
+# Subtest: partial GraphQL mutation data with rate-limit errors is never replayed
+ok 32 - partial GraphQL mutation data with rate-limit errors is never replayed
+  ---
+  duration_ms: 0.461358
+  type: 'test'
+  ...
+1..32
+# tests 32
+# suites 0
+# pass 32
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 1557.98333

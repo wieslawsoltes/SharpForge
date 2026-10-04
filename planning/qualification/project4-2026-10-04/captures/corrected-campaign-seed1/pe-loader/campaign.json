@@ -1,0 +1,1595 @@
+{
+  "schemaVersion": 1,
+  "status": "passed",
+  "requestedCases": 32,
+  "completedCases": 32,
+  "counts": {
+    "accepted": 2,
+    "rejected": 30,
+    "unsupported": 0,
+    "findings": 0,
+    "cancelled": 0
+  },
+  "cases": [
+    {
+      "targetId": "pe-loader",
+      "seed": 1,
+      "caseIndex": 0,
+      "inputBytes": 2048,
+      "inputSHA256": "b5349107c925349a0242e09e0d2561700172a63b7877d62bc81c7f96d47383be",
+      "sourceIdentity": {
+        "commit": "8019f2f9b22e26d7c221454f3b751b0b0e0c67df",
+        "tree": "c6bb80d3c37cf5053398af8056670badcfa71e76",
+        "clean": true
+      },
+      "budgets": {
+        "maxCases": 32,
+        "caseTimeoutMs": 1000,
+        "startupTimeoutMs": 5000,
+        "campaignTimeoutMs": 30000,
+        "maxInputBytes": 65536,
+        "maxOutputBytes": 65536,
+        "heapGrowthBytes": 16777216,
+        "v8HeapMb": 128,
+        "rssBytes": 268435456,
+        "maxCorpusCases": 128,
+        "maxCorpusBytes": 8388608
+      },
+      "qualification": "node-offline-parser",
+      "status": "accepted",
+      "code": "PE_INSPECTED_AND_LOADED",
+      "metrics": {
+        "processElapsedMs": 709.2270330000001,
+        "sampledRssBytes": 0,
+        "elapsedMs": 19.930439000000092,
+        "baselineHeapBytes": 40757208,
+        "heapUsedBytes": 39235760,
+        "heapGrowthBytes": 0,
+        "externalGrowthBytes": 91264,
+        "arrayBufferGrowthBytes": 91224,
+        "observedGrowthBytes": 91264,
+        "peakRssBytes": 93741056
+      },
+      "isolation": {
+        "v8OldSpaceMb": 128,
+        "rssGuard": "not-observed",
+        "osMemorySandbox": false
+      },
+      "seedName": "return-int",
+      "mutation": "seed"
+    },
+    {
+      "targetId": "pe-loader",
+      "seed": 1,
+      "caseIndex": 1,
+      "inputBytes": 3072,
+      "inputSHA256": "1306e54e49e6bf40ac195589816cb662d5b4f4eb4b1a7d97187dc8f92e66ddfa",
+      "sourceIdentity": {
+        "commit": "8019f2f9b22e26d7c221454f3b751b0b0e0c67df",
+        "tree": "c6bb80d3c37cf5053398af8056670badcfa71e76",
+        "clean": true
+      },
+      "budgets": {
+        "maxCases": 32,
+        "caseTimeoutMs": 1000,
+        "startupTimeoutMs": 5000,
+        "campaignTimeoutMs": 30000,
+        "maxInputBytes": 65536,
+        "maxOutputBytes": 65536,
+        "heapGrowthBytes": 16777216,
+        "v8HeapMb": 128,
+        "rssBytes": 268435456,
+        "maxCorpusCases": 128,
+        "maxCorpusBytes": 8388608
+      },
+      "qualification": "node-offline-parser",
+      "status": "accepted",
+      "code": "PE_INSPECTED_AND_LOADED",
+      "metrics": {
+        "processElapsedMs": 799.0927629999999,
+        "sampledRssBytes": 0,
+        "elapsedMs": 32.840147,
+        "baselineHeapBytes": 40801472,
+        "heapUsedBytes": 39879760,
+        "heapGrowthBytes": 0,
+        "externalGrowthBytes": 99595,
+        "arrayBufferGrowthBytes": 99555,
+        "observedGrowthBytes": 99595,
+        "peakRssBytes": 95465472
+      },
+      "isolation": {
+        "v8OldSpaceMb": 128,
+        "rssGuard": "not-observed",
+        "osMemorySandbox": false
+      },
+      "seedName": "branch-and-local",
+      "mutation": "seed"
+    },
+    {
+      "targetId": "pe-loader",
+      "seed": 1,
+      "caseIndex": 2,
+      "inputBytes": 2035,
+      "inputSHA256": "efaa686674b27c8592de59716aa9007c72e4b9731cd39bb1dbe059ff60fdefbe",
+      "sourceIdentity": {
+        "commit": "8019f2f9b22e26d7c221454f3b751b0b0e0c67df",
+        "tree": "c6bb80d3c37cf5053398af8056670badcfa71e76",
+        "clean": true
+      },
+      "budgets": {
+        "maxCases": 32,
+        "caseTimeoutMs": 1000,
+        "startupTimeoutMs": 5000,
+        "campaignTimeoutMs": 30000,
+        "maxInputBytes": 65536,
+        "maxOutputBytes": 65536,
+        "heapGrowthBytes": 16777216,
+        "v8HeapMb": 128,
+        "rssBytes": 268435456,
+        "maxCorpusCases": 128,
+        "maxCorpusBytes": 8388608
+      },
+      "qualification": "node-offline-parser",
+      "status": "rejected",
+      "code": "PE_VALIDATION",
+      "detail": "Truncated PE section",
+      "metrics": {
+        "processElapsedMs": 682.725003,
+        "sampledRssBytes": 0,
+        "elapsedMs": 1.0809289999999692,
+        "baselineHeapBytes": 40774080,
+        "heapUsedBytes": 40812912,
+        "heapGrowthBytes": 38832,
+        "externalGrowthBytes": 67611,
+        "arrayBufferGrowthBytes": 67571,
+        "observedGrowthBytes": 106443,
+        "peakRssBytes": 93126656
+      },
+      "isolation": {
+        "v8OldSpaceMb": 128,
+        "rssGuard": "not-observed",
+        "osMemorySandbox": false
+      },
+      "seedName": "return-int",
+      "mutation": "delete"
+    },
+    {
+      "targetId": "pe-loader",
+      "seed": 1,
+      "caseIndex": 3,
+      "inputBytes": 3073,
+      "inputSHA256": "6d31645f8f04eaebd5c09e7a30ae0bb73c82e056221c4e0eb9273a839e526016",
+      "sourceIdentity": {
+        "commit": "8019f2f9b22e26d7c221454f3b751b0b0e0c67df",
+        "tree": "c6bb80d3c37cf5053398af8056670badcfa71e76",
+        "clean": true
+      },
+      "budgets": {
+        "maxCases": 32,
+        "caseTimeoutMs": 1000,
+        "startupTimeoutMs": 5000,
+        "campaignTimeoutMs": 30000,
+        "maxInputBytes": 65536,
+        "maxOutputBytes": 65536,
+        "heapGrowthBytes": 16777216,
+        "v8HeapMb": 128,
+        "rssBytes": 268435456,
+        "maxCorpusCases": 128,
+        "maxCorpusBytes": 8388608
+      },
+      "qualification": "node-offline-parser",
+      "status": "rejected",
+      "code": "PE_VALIDATION",
+      "detail": "Assembly is not canonical for the supported CIL profile; modified scaffolding, signatures, references or instructions are rejected",
+      "metrics": {
+        "processElapsedMs": 658.0153179999998,
+        "sampledRssBytes": 0,
+        "elapsedMs": 24.957910000000084,
+        "baselineHeapBytes": 40530064,
+        "heapUsedBytes": 39679504,
+        "heapGrowthBytes": 0,
+        "externalGrowthBytes": 99596,
+        "arrayBufferGrowthBytes": 99556,
+        "observedGrowthBytes": 99596,
+        "peakRssBytes": 95195136
+      },
+      "isolation": {
+        "v8OldSpaceMb": 128,
+        "rssGuard": "not-observed",
+        "osMemorySandbox": false
+      },
+      "seedName": "branch-and-local",
+      "mutation": "insert"
+    },
+    {
+      "targetId": "pe-loader",
+      "seed": 1,
+      "caseIndex": 4,
+      "inputBytes": 2060,
+      "inputSHA256": "d1602a33696731530c65f897ba856499031ecf7ff4b53d09f1ced791bc3d796a",
+      "sourceIdentity": {
+        "commit": "8019f2f9b22e26d7c221454f3b751b0b0e0c67df",
+        "tree": "c6bb80d3c37cf5053398af8056670badcfa71e76",
+        "clean": true
+      },
+      "budgets": {
+        "maxCases": 32,
+        "caseTimeoutMs": 1000,
+        "startupTimeoutMs": 5000,
+        "campaignTimeoutMs": 30000,
+        "maxInputBytes": 65536,
+        "maxOutputBytes": 65536,
+        "heapGrowthBytes": 16777216,
+        "v8HeapMb": 128,
+        "rssBytes": 268435456,
+        "maxCorpusCases": 128,
+        "maxCorpusBytes": 8388608
+      },
+      "qualification": "node-offline-parser",
+      "status": "rejected",
+      "code": "PE_VALIDATION",
+      "detail": "Too many PE data directories",
+      "metrics": {
+        "processElapsedMs": 1090.331628,
+        "sampledRssBytes": 73027584,
+        "elapsedMs": 0.6509570000000622,
+        "baselineHeapBytes": 40589128,
+        "heapUsedBytes": 40622232,
+        "heapGrowthBytes": 33104,
+        "externalGrowthBytes": 67636,
+        "arrayBufferGrowthBytes": 67596,
+        "observedGrowthBytes": 100740,
+        "peakRssBytes": 94253056
+      },
+      "isolation": {
+        "v8OldSpaceMb": 128,
+        "rssGuard": "sampled-linux",
+        "osMemorySandbox": false
+      },
+      "seedName": "return-int",
+      "mutation": "duplicate"
+    },
+    {
+      "targetId": "pe-loader",
+      "seed": 1,
+      "caseIndex": 5,
+      "inputBytes": 3072,
+      "inputSHA256": "070826d0b213d1bf76c0bccfe40d2d8db68f1e318da6123528f3c71338f08158",
+      "sourceIdentity": {
+        "commit": "8019f2f9b22e26d7c221454f3b751b0b0e0c67df",
+        "tree": "c6bb80d3c37cf5053398af8056670badcfa71e76",
+        "clean": true
+      },
+      "budgets": {
+        "maxCases": 32,
+        "caseTimeoutMs": 1000,
+        "startupTimeoutMs": 5000,
+        "campaignTimeoutMs": 30000,
+        "maxInputBytes": 65536,
+        "maxOutputBytes": 65536,
+        "heapGrowthBytes": 16777216,
+        "v8HeapMb": 128,
+        "rssBytes": 268435456,
+        "maxCorpusCases": 128,
+        "maxCorpusBytes": 8388608
+      },
+      "qualification": "node-offline-parser",
+      "status": "rejected",
+      "code": "PE_VALIDATION",
+      "detail": "Assembly is not canonical for the supported CIL profile; modified scaffolding, signatures, references or instructions are rejected",
+      "metrics": {
+        "processElapsedMs": 773.0942810000006,
+        "sampledRssBytes": 0,
+        "elapsedMs": 24.83292000000006,
+        "baselineHeapBytes": 40739760,
+        "heapUsedBytes": 39554760,
+        "heapGrowthBytes": 0,
+        "externalGrowthBytes": 99595,
+        "arrayBufferGrowthBytes": 34019,
+        "observedGrowthBytes": 99595,
+        "peakRssBytes": 95756288
+      },
+      "isolation": {
+        "v8OldSpaceMb": 128,
+        "rssGuard": "not-observed",
+        "osMemorySandbox": false
+      },
+      "seedName": "branch-and-local",
+      "mutation": "replace"
+    },
+    {
+      "targetId": "pe-loader",
+      "seed": 1,
+      "caseIndex": 6,
+      "inputBytes": 1376,
+      "inputSHA256": "6bd109420f190d776de4ddf501db6ee921ab4180d15c9417d19a30799482f4e5",
+      "sourceIdentity": {
+        "commit": "8019f2f9b22e26d7c221454f3b751b0b0e0c67df",
+        "tree": "c6bb80d3c37cf5053398af8056670badcfa71e76",
+        "clean": true
+      },
+      "budgets": {
+        "maxCases": 32,
+        "caseTimeoutMs": 1000,
+        "startupTimeoutMs": 5000,
+        "campaignTimeoutMs": 30000,
+        "maxInputBytes": 65536,
+        "maxOutputBytes": 65536,
+        "heapGrowthBytes": 16777216,
+        "v8HeapMb": 128,
+        "rssBytes": 268435456,
+        "maxCorpusCases": 128,
+        "maxCorpusBytes": 8388608
+      },
+      "qualification": "node-offline-parser",
+      "status": "rejected",
+      "code": "PE_VALIDATION",
+      "detail": "Truncated PE section",
+      "metrics": {
+        "processElapsedMs": 696.9609520000004,
+        "sampledRssBytes": 0,
+        "elapsedMs": 0.8275780000000168,
+        "baselineHeapBytes": 43133216,
+        "heapUsedBytes": 43177192,
+        "heapGrowthBytes": 43976,
+        "externalGrowthBytes": 1416,
+        "arrayBufferGrowthBytes": 1376,
+        "observedGrowthBytes": 45392,
+        "peakRssBytes": 94568448
+      },
+      "isolation": {
+        "v8OldSpaceMb": 128,
+        "rssGuard": "not-observed",
+        "osMemorySandbox": false
+      },
+      "seedName": "return-int",
+      "mutation": "truncate"
+    },
+    {
+      "targetId": "pe-loader",
+      "seed": 1,
+      "caseIndex": 7,
+      "inputBytes": 3068,
+      "inputSHA256": "03194a2cec5979ce08e19b973cdfbb29221b86e5202d57d3d267864a4434925d",
+      "sourceIdentity": {
+        "commit": "8019f2f9b22e26d7c221454f3b751b0b0e0c67df",
+        "tree": "c6bb80d3c37cf5053398af8056670badcfa71e76",
+        "clean": true
+      },
+      "budgets": {
+        "maxCases": 32,
+        "caseTimeoutMs": 1000,
+        "startupTimeoutMs": 5000,
+        "campaignTimeoutMs": 30000,
+        "maxInputBytes": 65536,
+        "maxOutputBytes": 65536,
+        "heapGrowthBytes": 16777216,
+        "v8HeapMb": 128,
+        "rssBytes": 268435456,
+        "maxCorpusCases": 128,
+        "maxCorpusBytes": 8388608
+      },
+      "qualification": "node-offline-parser",
+      "status": "rejected",
+      "code": "PE_VALIDATION",
+      "detail": "Truncated PE section",
+      "metrics": {
+        "processElapsedMs": 827.908117,
+        "sampledRssBytes": 0,
+        "elapsedMs": 1.165345000000002,
+        "baselineHeapBytes": 40568544,
+        "heapUsedBytes": 40608936,
+        "heapGrowthBytes": 40392,
+        "externalGrowthBytes": 68644,
+        "arrayBufferGrowthBytes": 68604,
+        "observedGrowthBytes": 109036,
+        "peakRssBytes": 94900224
+      },
+      "isolation": {
+        "v8OldSpaceMb": 128,
+        "rssGuard": "not-observed",
+        "osMemorySandbox": false
+      },
+      "seedName": "branch-and-local",
+      "mutation": "delete"
+    },
+    {
+      "targetId": "pe-loader",
+      "seed": 1,
+      "caseIndex": 8,
+      "inputBytes": 2064,
+      "inputSHA256": "605e4bc5032f3bb0f06db925863031bbfa9bd173b566f698834c69095f414a3d",
+      "sourceIdentity": {
+        "commit": "8019f2f9b22e26d7c221454f3b751b0b0e0c67df",
+        "tree": "c6bb80d3c37cf5053398af8056670badcfa71e76",
+        "clean": true
+      },
+      "budgets": {
+        "maxCases": 32,
+        "caseTimeoutMs": 1000,
+        "startupTimeoutMs": 5000,
+        "campaignTimeoutMs": 30000,
+        "maxInputBytes": 65536,
+        "maxOutputBytes": 65536,
+        "heapGrowthBytes": 16777216,
+        "v8HeapMb": 128,
+        "rssBytes": 268435456,
+        "maxCorpusCases": 128,
+        "maxCorpusBytes": 8388608
+      },
+      "qualification": "node-offline-parser",
+      "status": "rejected",
+      "code": "MD0008",
+      "detail": "A string heap index is invalid",
+      "metrics": {
+        "processElapsedMs": 777.6964129999997,
+        "sampledRssBytes": 0,
+        "elapsedMs": 3.480854000000022,
+        "baselineHeapBytes": 40849968,
+        "heapUsedBytes": 41025872,
+        "heapGrowthBytes": 175904,
+        "externalGrowthBytes": 67640,
+        "arrayBufferGrowthBytes": 67600,
+        "observedGrowthBytes": 243544,
+        "peakRssBytes": 94232576
+      },
+      "isolation": {
+        "v8OldSpaceMb": 128,
+        "rssGuard": "not-observed",
+        "osMemorySandbox": false
+      },
+      "seedName": "return-int",
+      "mutation": "insert"
+    },
+    {
+      "targetId": "pe-loader",
+      "seed": 1,
+      "caseIndex": 9,
+      "inputBytes": 3087,
+      "inputSHA256": "c40136b48a65200451bcd892c80f9014d7f409cdae3219e514d26c0e2c0ea2ee",
+      "sourceIdentity": {
+        "commit": "8019f2f9b22e26d7c221454f3b751b0b0e0c67df",
+        "tree": "c6bb80d3c37cf5053398af8056670badcfa71e76",
+        "clean": true
+      },
+      "budgets": {
+        "maxCases": 32,
+        "caseTimeoutMs": 1000,
+        "startupTimeoutMs": 5000,
+        "campaignTimeoutMs": 30000,
+        "maxInputBytes": 65536,
+        "maxOutputBytes": 65536,
+        "heapGrowthBytes": 16777216,
+        "v8HeapMb": 128,
+        "rssBytes": 268435456,
+        "maxCorpusCases": 128,
+        "maxCorpusBytes": 8388608
+      },
+      "qualification": "node-offline-parser",
+      "status": "rejected",
+      "code": "MD0002",
+      "detail": "The first TypeDef must be the global <Module> type",
+      "metrics": {
+        "processElapsedMs": 708.0238159999999,
+        "sampledRssBytes": 73027584,
+        "elapsedMs": 3.6559310000000096,
+        "baselineHeapBytes": 40607416,
+        "heapUsedBytes": 40790496,
+        "heapGrowthBytes": 183080,
+        "externalGrowthBytes": 68663,
+        "arrayBufferGrowthBytes": 68623,
+        "observedGrowthBytes": 251743,
+        "peakRssBytes": 93270016
+      },
+      "isolation": {
+        "v8OldSpaceMb": 128,
+        "rssGuard": "sampled-linux",
+        "osMemorySandbox": false
+      },
+      "seedName": "branch-and-local",
+      "mutation": "duplicate"
+    },
+    {
+      "targetId": "pe-loader",
+      "seed": 1,
+      "caseIndex": 10,
+      "inputBytes": 2048,
+      "inputSHA256": "fb766e2dc6b5bf56b5d3ed56c786dbf8c916f669f7c5ae68be96bda2eba53d5d",
+      "sourceIdentity": {
+        "commit": "8019f2f9b22e26d7c221454f3b751b0b0e0c67df",
+        "tree": "c6bb80d3c37cf5053398af8056670badcfa71e76",
+        "clean": true
+      },
+      "budgets": {
+        "maxCases": 32,
+        "caseTimeoutMs": 1000,
+        "startupTimeoutMs": 5000,
+        "campaignTimeoutMs": 30000,
+        "maxInputBytes": 65536,
+        "maxOutputBytes": 65536,
+        "heapGrowthBytes": 16777216,
+        "v8HeapMb": 128,
+        "rssBytes": 268435456,
+        "maxCorpusCases": 128,
+        "maxCorpusBytes": 8388608
+      },
+      "qualification": "node-offline-parser",
+      "status": "rejected",
+      "code": "PE_VALIDATION",
+      "detail": "Invalid SharpForge CIL metadata",
+      "metrics": {
+        "processElapsedMs": 658.1515309999995,
+        "sampledRssBytes": 0,
+        "elapsedMs": 3.290153000000032,
+        "baselineHeapBytes": 43142992,
+        "heapUsedBytes": 43360720,
+        "heapGrowthBytes": 217728,
+        "externalGrowthBytes": 67624,
+        "arrayBufferGrowthBytes": 67584,
+        "observedGrowthBytes": 285352,
+        "peakRssBytes": 94351360
+      },
+      "isolation": {
+        "v8OldSpaceMb": 128,
+        "rssGuard": "not-observed",
+        "osMemorySandbox": false
+      },
+      "seedName": "return-int",
+      "mutation": "replace"
+    },
+    {
+      "targetId": "pe-loader",
+      "seed": 1,
+      "caseIndex": 11,
+      "inputBytes": 1499,
+      "inputSHA256": "a73838456c99aac2a665706f5ce585eb1490074cfe6ec8ceb62f06c5a6367f29",
+      "sourceIdentity": {
+        "commit": "8019f2f9b22e26d7c221454f3b751b0b0e0c67df",
+        "tree": "c6bb80d3c37cf5053398af8056670badcfa71e76",
+        "clean": true
+      },
+      "budgets": {
+        "maxCases": 32,
+        "caseTimeoutMs": 1000,
+        "startupTimeoutMs": 5000,
+        "campaignTimeoutMs": 30000,
+        "maxInputBytes": 65536,
+        "maxOutputBytes": 65536,
+        "heapGrowthBytes": 16777216,
+        "v8HeapMb": 128,
+        "rssBytes": 268435456,
+        "maxCorpusCases": 128,
+        "maxCorpusBytes": 8388608
+      },
+      "qualification": "node-offline-parser",
+      "status": "rejected",
+      "code": "PE_VALIDATION",
+      "detail": "Truncated PE section",
+      "metrics": {
+        "processElapsedMs": 712.7061369999992,
+        "sampledRssBytes": 0,
+        "elapsedMs": 0.7906619999999975,
+        "baselineHeapBytes": 43152104,
+        "heapUsedBytes": 43189976,
+        "heapGrowthBytes": 37872,
+        "externalGrowthBytes": 1539,
+        "arrayBufferGrowthBytes": 1499,
+        "observedGrowthBytes": 39411,
+        "peakRssBytes": 94814208
+      },
+      "isolation": {
+        "v8OldSpaceMb": 128,
+        "rssGuard": "not-observed",
+        "osMemorySandbox": false
+      },
+      "seedName": "branch-and-local",
+      "mutation": "truncate"
+    },
+    {
+      "targetId": "pe-loader",
+      "seed": 1,
+      "caseIndex": 12,
+      "inputBytes": 2041,
+      "inputSHA256": "02bbacf6a7ef72bafc5bf6a1d9656714df115f2008df46cface3ac38fb402ba2",
+      "sourceIdentity": {
+        "commit": "8019f2f9b22e26d7c221454f3b751b0b0e0c67df",
+        "tree": "c6bb80d3c37cf5053398af8056670badcfa71e76",
+        "clean": true
+      },
+      "budgets": {
+        "maxCases": 32,
+        "caseTimeoutMs": 1000,
+        "startupTimeoutMs": 5000,
+        "campaignTimeoutMs": 30000,
+        "maxInputBytes": 65536,
+        "maxOutputBytes": 65536,
+        "heapGrowthBytes": 16777216,
+        "v8HeapMb": 128,
+        "rssBytes": 268435456,
+        "maxCorpusCases": 128,
+        "maxCorpusBytes": 8388608
+      },
+      "qualification": "node-offline-parser",
+      "status": "rejected",
+      "code": "PE_VALIDATION",
+      "detail": "Truncated PE section",
+      "metrics": {
+        "processElapsedMs": 774.3358169999992,
+        "sampledRssBytes": 0,
+        "elapsedMs": 1.0589459999999917,
+        "baselineHeapBytes": 43175792,
+        "heapUsedBytes": 43220896,
+        "heapGrowthBytes": 45104,
+        "externalGrowthBytes": 67617,
+        "arrayBufferGrowthBytes": 67577,
+        "observedGrowthBytes": 112721,
+        "peakRssBytes": 94949376
+      },
+      "isolation": {
+        "v8OldSpaceMb": 128,
+        "rssGuard": "not-observed",
+        "osMemorySandbox": false
+      },
+      "seedName": "return-int",
+      "mutation": "delete"
+    },
+    {
+      "targetId": "pe-loader",
+      "seed": 1,
+      "caseIndex": 13,
+      "inputBytes": 3075,
+      "inputSHA256": "1be206e88bdb3cf2b756258e3f41408715920e2862095f9c66209b026c2b6b34",
+      "sourceIdentity": {
+        "commit": "8019f2f9b22e26d7c221454f3b751b0b0e0c67df",
+        "tree": "c6bb80d3c37cf5053398af8056670badcfa71e76",
+        "clean": true
+      },
+      "budgets": {
+        "maxCases": 32,
+        "caseTimeoutMs": 1000,
+        "startupTimeoutMs": 5000,
+        "campaignTimeoutMs": 30000,
+        "maxInputBytes": 65536,
+        "maxOutputBytes": 65536,
+        "heapGrowthBytes": 16777216,
+        "v8HeapMb": 128,
+        "rssBytes": 268435456,
+        "maxCorpusCases": 128,
+        "maxCorpusBytes": 8388608
+      },
+      "qualification": "node-offline-parser",
+      "status": "rejected",
+      "code": "PE_VALIDATION",
+      "detail": "Invalid CLI metadata signature",
+      "metrics": {
+        "processElapsedMs": 703.9638529999993,
+        "sampledRssBytes": 0,
+        "elapsedMs": 1.3623229999999467,
+        "baselineHeapBytes": 41366400,
+        "heapUsedBytes": 41439880,
+        "heapGrowthBytes": 73480,
+        "externalGrowthBytes": 68651,
+        "arrayBufferGrowthBytes": 68611,
+        "observedGrowthBytes": 142131,
+        "peakRssBytes": 95891456
+      },
+      "isolation": {
+        "v8OldSpaceMb": 128,
+        "rssGuard": "not-observed",
+        "osMemorySandbox": false
+      },
+      "seedName": "branch-and-local",
+      "mutation": "insert"
+    },
+    {
+      "targetId": "pe-loader",
+      "seed": 1,
+      "caseIndex": 14,
+      "inputBytes": 2062,
+      "inputSHA256": "74330c506df3f60077b41a5062069f5369c492c502a728cf1a2b092fb89782c0",
+      "sourceIdentity": {
+        "commit": "8019f2f9b22e26d7c221454f3b751b0b0e0c67df",
+        "tree": "c6bb80d3c37cf5053398af8056670badcfa71e76",
+        "clean": true
+      },
+      "budgets": {
+        "maxCases": 32,
+        "caseTimeoutMs": 1000,
+        "startupTimeoutMs": 5000,
+        "campaignTimeoutMs": 30000,
+        "maxInputBytes": 65536,
+        "maxOutputBytes": 65536,
+        "heapGrowthBytes": 16777216,
+        "v8HeapMb": 128,
+        "rssBytes": 268435456,
+        "maxCorpusCases": 128,
+        "maxCorpusBytes": 8388608
+      },
+      "qualification": "node-offline-parser",
+      "status": "rejected",
+      "code": "PE_VALIDATION",
+      "detail": "Invalid SharpForge CIL metadata",
+      "metrics": {
+        "processElapsedMs": 679.9683410000016,
+        "sampledRssBytes": 0,
+        "elapsedMs": 3.175758000000087,
+        "baselineHeapBytes": 41303360,
+        "heapUsedBytes": 41525440,
+        "heapGrowthBytes": 222080,
+        "externalGrowthBytes": 67638,
+        "arrayBufferGrowthBytes": 67598,
+        "observedGrowthBytes": 289718,
+        "peakRssBytes": 93057024
+      },
+      "isolation": {
+        "v8OldSpaceMb": 128,
+        "rssGuard": "not-observed",
+        "osMemorySandbox": false
+      },
+      "seedName": "return-int",
+      "mutation": "duplicate"
+    },
+    {
+      "targetId": "pe-loader",
+      "seed": 1,
+      "caseIndex": 15,
+      "inputBytes": 3072,
+      "inputSHA256": "74232951fcb1f47522a117dbbe904765277cad6cbb950d29bc1c15121a2ce487",
+      "sourceIdentity": {
+        "commit": "8019f2f9b22e26d7c221454f3b751b0b0e0c67df",
+        "tree": "c6bb80d3c37cf5053398af8056670badcfa71e76",
+        "clean": true
+      },
+      "budgets": {
+        "maxCases": 32,
+        "caseTimeoutMs": 1000,
+        "startupTimeoutMs": 5000,
+        "campaignTimeoutMs": 30000,
+        "maxInputBytes": 65536,
+        "maxOutputBytes": 65536,
+        "heapGrowthBytes": 16777216,
+        "v8HeapMb": 128,
+        "rssBytes": 268435456,
+        "maxCorpusCases": 128,
+        "maxCorpusBytes": 8388608
+      },
+      "qualification": "node-offline-parser",
+      "status": "rejected",
+      "code": "PE_VALIDATION",
+      "detail": "Invalid SharpForge CIL metadata",
+      "metrics": {
+        "processElapsedMs": 672.5732310000003,
+        "sampledRssBytes": 0,
+        "elapsedMs": 2.956305000000043,
+        "baselineHeapBytes": 40615936,
+        "heapUsedBytes": 40890696,
+        "heapGrowthBytes": 274760,
+        "externalGrowthBytes": 68648,
+        "arrayBufferGrowthBytes": 68608,
+        "observedGrowthBytes": 343408,
+        "peakRssBytes": 93323264
+      },
+      "isolation": {
+        "v8OldSpaceMb": 128,
+        "rssGuard": "not-observed",
+        "osMemorySandbox": false
+      },
+      "seedName": "branch-and-local",
+      "mutation": "replace"
+    },
+    {
+      "targetId": "pe-loader",
+      "seed": 1,
+      "caseIndex": 16,
+      "inputBytes": 2036,
+      "inputSHA256": "22b77485e94153b46d5c983f7b67f21f53c0eb7e10d1c225b98e5e52cdbbcbc8",
+      "sourceIdentity": {
+        "commit": "8019f2f9b22e26d7c221454f3b751b0b0e0c67df",
+        "tree": "c6bb80d3c37cf5053398af8056670badcfa71e76",
+        "clean": true
+      },
+      "budgets": {
+        "maxCases": 32,
+        "caseTimeoutMs": 1000,
+        "startupTimeoutMs": 5000,
+        "campaignTimeoutMs": 30000,
+        "maxInputBytes": 65536,
+        "maxOutputBytes": 65536,
+        "heapGrowthBytes": 16777216,
+        "v8HeapMb": 128,
+        "rssBytes": 268435456,
+        "maxCorpusCases": 128,
+        "maxCorpusBytes": 8388608
+      },
+      "qualification": "node-offline-parser",
+      "status": "rejected",
+      "code": "PE_VALIDATION",
+      "detail": "Truncated PE section",
+      "metrics": {
+        "processElapsedMs": 660.579525000001,
+        "sampledRssBytes": 76648448,
+        "elapsedMs": 0.8170029999999997,
+        "baselineHeapBytes": 40432992,
+        "heapUsedBytes": 40479120,
+        "heapGrowthBytes": 46128,
+        "externalGrowthBytes": 67612,
+        "arrayBufferGrowthBytes": 67572,
+        "observedGrowthBytes": 113740,
+        "peakRssBytes": 92770304
+      },
+      "isolation": {
+        "v8OldSpaceMb": 128,
+        "rssGuard": "sampled-linux",
+        "osMemorySandbox": false
+      },
+      "seedName": "return-int",
+      "mutation": "truncate"
+    },
+    {
+      "targetId": "pe-loader",
+      "seed": 1,
+      "caseIndex": 17,
+      "inputBytes": 3058,
+      "inputSHA256": "665ae384b74b96b29712bc29d1f4231afe1de2955509e3284cd536986cecd738",
+      "sourceIdentity": {
+        "commit": "8019f2f9b22e26d7c221454f3b751b0b0e0c67df",
+        "tree": "c6bb80d3c37cf5053398af8056670badcfa71e76",
+        "clean": true
+      },
+      "budgets": {
+        "maxCases": 32,
+        "caseTimeoutMs": 1000,
+        "startupTimeoutMs": 5000,
+        "campaignTimeoutMs": 30000,
+        "maxInputBytes": 65536,
+        "maxOutputBytes": 65536,
+        "heapGrowthBytes": 16777216,
+        "v8HeapMb": 128,
+        "rssBytes": 268435456,
+        "maxCorpusCases": 128,
+        "maxCorpusBytes": 8388608
+      },
+      "qualification": "node-offline-parser",
+      "status": "rejected",
+      "code": "PE_VALIDATION",
+      "detail": "Truncated PE section",
+      "metrics": {
+        "processElapsedMs": 684.3002620000007,
+        "sampledRssBytes": 76746752,
+        "elapsedMs": 0.8337470000000167,
+        "baselineHeapBytes": 43064624,
+        "heapUsedBytes": 43111080,
+        "heapGrowthBytes": 46456,
+        "externalGrowthBytes": 68634,
+        "arrayBufferGrowthBytes": 68594,
+        "observedGrowthBytes": 115090,
+        "peakRssBytes": 95096832
+      },
+      "isolation": {
+        "v8OldSpaceMb": 128,
+        "rssGuard": "sampled-linux",
+        "osMemorySandbox": false
+      },
+      "seedName": "branch-and-local",
+      "mutation": "delete"
+    },
+    {
+      "targetId": "pe-loader",
+      "seed": 1,
+      "caseIndex": 18,
+      "inputBytes": 2050,
+      "inputSHA256": "5d54f4239384ac8ef7e8814919b1b2afe3ed4ac026d95b46f2c4a27d2b433be5",
+      "sourceIdentity": {
+        "commit": "8019f2f9b22e26d7c221454f3b751b0b0e0c67df",
+        "tree": "c6bb80d3c37cf5053398af8056670badcfa71e76",
+        "clean": true
+      },
+      "budgets": {
+        "maxCases": 32,
+        "caseTimeoutMs": 1000,
+        "startupTimeoutMs": 5000,
+        "campaignTimeoutMs": 30000,
+        "maxInputBytes": 65536,
+        "maxOutputBytes": 65536,
+        "heapGrowthBytes": 16777216,
+        "v8HeapMb": 128,
+        "rssBytes": 268435456,
+        "maxCorpusCases": 128,
+        "maxCorpusBytes": 8388608
+      },
+      "qualification": "node-offline-parser",
+      "status": "rejected",
+      "code": "PE_VALIDATION",
+      "detail": "Invalid SharpForge CIL metadata",
+      "metrics": {
+        "processElapsedMs": 707.2683669999988,
+        "sampledRssBytes": 0,
+        "elapsedMs": 3.062917999999968,
+        "baselineHeapBytes": 43222736,
+        "heapUsedBytes": 43438904,
+        "heapGrowthBytes": 216168,
+        "externalGrowthBytes": 67626,
+        "arrayBufferGrowthBytes": 67586,
+        "observedGrowthBytes": 283794,
+        "peakRssBytes": 95281152
+      },
+      "isolation": {
+        "v8OldSpaceMb": 128,
+        "rssGuard": "not-observed",
+        "osMemorySandbox": false
+      },
+      "seedName": "return-int",
+      "mutation": "insert"
+    },
+    {
+      "targetId": "pe-loader",
+      "seed": 1,
+      "caseIndex": 19,
+      "inputBytes": 3073,
+      "inputSHA256": "2efe455d7f09127a548ac33742c7dd8f22de7cf894d2940f48bb799e8a4d8262",
+      "sourceIdentity": {
+        "commit": "8019f2f9b22e26d7c221454f3b751b0b0e0c67df",
+        "tree": "c6bb80d3c37cf5053398af8056670badcfa71e76",
+        "clean": true
+      },
+      "budgets": {
+        "maxCases": 32,
+        "caseTimeoutMs": 1000,
+        "startupTimeoutMs": 5000,
+        "campaignTimeoutMs": 30000,
+        "maxInputBytes": 65536,
+        "maxOutputBytes": 65536,
+        "heapGrowthBytes": 16777216,
+        "v8HeapMb": 128,
+        "rssBytes": 268435456,
+        "maxCorpusCases": 128,
+        "maxCorpusBytes": 8388608
+      },
+      "qualification": "node-offline-parser",
+      "status": "rejected",
+      "code": "PE_VALIDATION",
+      "detail": "Invalid SharpForge CIL metadata",
+      "metrics": {
+        "processElapsedMs": 691.7717520000006,
+        "sampledRssBytes": 0,
+        "elapsedMs": 3.2654850000000124,
+        "baselineHeapBytes": 41445424,
+        "heapUsedBytes": 41676048,
+        "heapGrowthBytes": 230624,
+        "externalGrowthBytes": 68649,
+        "arrayBufferGrowthBytes": 68609,
+        "observedGrowthBytes": 299273,
+        "peakRssBytes": 93609984
+      },
+      "isolation": {
+        "v8OldSpaceMb": 128,
+        "rssGuard": "not-observed",
+        "osMemorySandbox": false
+      },
+      "seedName": "branch-and-local",
+      "mutation": "duplicate"
+    },
+    {
+      "targetId": "pe-loader",
+      "seed": 1,
+      "caseIndex": 20,
+      "inputBytes": 2048,
+      "inputSHA256": "3839635a4e387c9d3a2a74f2743f8e49dac580fccb617d7c88da790564f65d7d",
+      "sourceIdentity": {
+        "commit": "8019f2f9b22e26d7c221454f3b751b0b0e0c67df",
+        "tree": "c6bb80d3c37cf5053398af8056670badcfa71e76",
+        "clean": true
+      },
+      "budgets": {
+        "maxCases": 32,
+        "caseTimeoutMs": 1000,
+        "startupTimeoutMs": 5000,
+        "campaignTimeoutMs": 30000,
+        "maxInputBytes": 65536,
+        "maxOutputBytes": 65536,
+        "heapGrowthBytes": 16777216,
+        "v8HeapMb": 128,
+        "rssBytes": 268435456,
+        "maxCorpusCases": 128,
+        "maxCorpusBytes": 8388608
+      },
+      "qualification": "node-offline-parser",
+      "status": "rejected",
+      "code": "PE_VALIDATION",
+      "detail": "Assembly is not canonical for the supported CIL profile; modified scaffolding, signatures, references or instructions are rejected",
+      "metrics": {
+        "processElapsedMs": 703.0385609999994,
+        "sampledRssBytes": 0,
+        "elapsedMs": 20.100138000000015,
+        "baselineHeapBytes": 40500632,
+        "heapUsedBytes": 39346552,
+        "heapGrowthBytes": 0,
+        "externalGrowthBytes": 91264,
+        "arrayBufferGrowthBytes": 91224,
+        "observedGrowthBytes": 91264,
+        "peakRssBytes": 95064064
+      },
+      "isolation": {
+        "v8OldSpaceMb": 128,
+        "rssGuard": "not-observed",
+        "osMemorySandbox": false
+      },
+      "seedName": "return-int",
+      "mutation": "replace"
+    },
+    {
+      "targetId": "pe-loader",
+      "seed": 1,
+      "caseIndex": 21,
+      "inputBytes": 2219,
+      "inputSHA256": "1b0ff4d3a76fbb54b9332e3888bc4ab32888d6e9a7b3b02b7851f854e323af5e",
+      "sourceIdentity": {
+        "commit": "8019f2f9b22e26d7c221454f3b751b0b0e0c67df",
+        "tree": "c6bb80d3c37cf5053398af8056670badcfa71e76",
+        "clean": true
+      },
+      "budgets": {
+        "maxCases": 32,
+        "caseTimeoutMs": 1000,
+        "startupTimeoutMs": 5000,
+        "campaignTimeoutMs": 30000,
+        "maxInputBytes": 65536,
+        "maxOutputBytes": 65536,
+        "heapGrowthBytes": 16777216,
+        "v8HeapMb": 128,
+        "rssBytes": 268435456,
+        "maxCorpusCases": 128,
+        "maxCorpusBytes": 8388608
+      },
+      "qualification": "node-offline-parser",
+      "status": "rejected",
+      "code": "PE_VALIDATION",
+      "detail": "Truncated PE section",
+      "metrics": {
+        "processElapsedMs": 657.5992149999984,
+        "sampledRssBytes": 0,
+        "elapsedMs": 0.7462080000000242,
+        "baselineHeapBytes": 40802744,
+        "heapUsedBytes": 40841816,
+        "heapGrowthBytes": 39072,
+        "externalGrowthBytes": 67795,
+        "arrayBufferGrowthBytes": 67755,
+        "observedGrowthBytes": 106867,
+        "peakRssBytes": 93372416
+      },
+      "isolation": {
+        "v8OldSpaceMb": 128,
+        "rssGuard": "not-observed",
+        "osMemorySandbox": false
+      },
+      "seedName": "branch-and-local",
+      "mutation": "truncate"
+    },
+    {
+      "targetId": "pe-loader",
+      "seed": 1,
+      "caseIndex": 22,
+      "inputBytes": 2047,
+      "inputSHA256": "fb7dd8bcf51cadd6c3dd498e772b435fa772fc5ec91e614e89e35efea79ca482",
+      "sourceIdentity": {
+        "commit": "8019f2f9b22e26d7c221454f3b751b0b0e0c67df",
+        "tree": "c6bb80d3c37cf5053398af8056670badcfa71e76",
+        "clean": true
+      },
+      "budgets": {
+        "maxCases": 32,
+        "caseTimeoutMs": 1000,
+        "startupTimeoutMs": 5000,
+        "campaignTimeoutMs": 30000,
+        "maxInputBytes": 65536,
+        "maxOutputBytes": 65536,
+        "heapGrowthBytes": 16777216,
+        "v8HeapMb": 128,
+        "rssBytes": 268435456,
+        "maxCorpusCases": 128,
+        "maxCorpusBytes": 8388608
+      },
+      "qualification": "node-offline-parser",
+      "status": "rejected",
+      "code": "PE_VALIDATION",
+      "detail": "Truncated PE section",
+      "metrics": {
+        "processElapsedMs": 674.8982109999997,
+        "sampledRssBytes": 0,
+        "elapsedMs": 0.9918880000000172,
+        "baselineHeapBytes": 41356832,
+        "heapUsedBytes": 41398480,
+        "heapGrowthBytes": 41648,
+        "externalGrowthBytes": 67623,
+        "arrayBufferGrowthBytes": 67583,
+        "observedGrowthBytes": 109271,
+        "peakRssBytes": 92913664
+      },
+      "isolation": {
+        "v8OldSpaceMb": 128,
+        "rssGuard": "not-observed",
+        "osMemorySandbox": false
+      },
+      "seedName": "return-int",
+      "mutation": "delete"
+    },
+    {
+      "targetId": "pe-loader",
+      "seed": 1,
+      "caseIndex": 23,
+      "inputBytes": 3077,
+      "inputSHA256": "90a2cbcd0df4802888949155c8e2da13df71db859a66fd3b909dd71c760b7bbc",
+      "sourceIdentity": {
+        "commit": "8019f2f9b22e26d7c221454f3b751b0b0e0c67df",
+        "tree": "c6bb80d3c37cf5053398af8056670badcfa71e76",
+        "clean": true
+      },
+      "budgets": {
+        "maxCases": 32,
+        "caseTimeoutMs": 1000,
+        "startupTimeoutMs": 5000,
+        "campaignTimeoutMs": 30000,
+        "maxInputBytes": 65536,
+        "maxOutputBytes": 65536,
+        "heapGrowthBytes": 16777216,
+        "v8HeapMb": 128,
+        "rssBytes": 268435456,
+        "maxCorpusCases": 128,
+        "maxCorpusBytes": 8388608
+      },
+      "qualification": "node-offline-parser",
+      "status": "rejected",
+      "code": "PE_VALIDATION",
+      "detail": "Invalid SharpForge CIL metadata",
+      "metrics": {
+        "processElapsedMs": 749.9639060000009,
+        "sampledRssBytes": 0,
+        "elapsedMs": 4.375440000000026,
+        "baselineHeapBytes": 40567560,
+        "heapUsedBytes": 40790048,
+        "heapGrowthBytes": 222488,
+        "externalGrowthBytes": 68653,
+        "arrayBufferGrowthBytes": 68613,
+        "observedGrowthBytes": 291141,
+        "peakRssBytes": 93831168
+      },
+      "isolation": {
+        "v8OldSpaceMb": 128,
+        "rssGuard": "not-observed",
+        "osMemorySandbox": false
+      },
+      "seedName": "branch-and-local",
+      "mutation": "insert"
+    },
+    {
+      "targetId": "pe-loader",
+      "seed": 1,
+      "caseIndex": 24,
+      "inputBytes": 2064,
+      "inputSHA256": "0fe96ac4d7bab862b929b50c108cd26289a79a236ad850f099da78e073c8ef5c",
+      "sourceIdentity": {
+        "commit": "8019f2f9b22e26d7c221454f3b751b0b0e0c67df",
+        "tree": "c6bb80d3c37cf5053398af8056670badcfa71e76",
+        "clean": true
+      },
+      "budgets": {
+        "maxCases": 32,
+        "caseTimeoutMs": 1000,
+        "startupTimeoutMs": 5000,
+        "campaignTimeoutMs": 30000,
+        "maxInputBytes": 65536,
+        "maxOutputBytes": 65536,
+        "heapGrowthBytes": 16777216,
+        "v8HeapMb": 128,
+        "rssBytes": 268435456,
+        "maxCorpusCases": 128,
+        "maxCorpusBytes": 8388608
+      },
+      "qualification": "node-offline-parser",
+      "status": "rejected",
+      "code": "MD0002",
+      "detail": "The first TypeDef must be the global <Module> type",
+      "metrics": {
+        "processElapsedMs": 710.8858179999988,
+        "sampledRssBytes": 0,
+        "elapsedMs": 2.396863000000053,
+        "baselineHeapBytes": 40823232,
+        "heapUsedBytes": 40978744,
+        "heapGrowthBytes": 155512,
+        "externalGrowthBytes": 67640,
+        "arrayBufferGrowthBytes": 67600,
+        "observedGrowthBytes": 223152,
+        "peakRssBytes": 92954624
+      },
+      "isolation": {
+        "v8OldSpaceMb": 128,
+        "rssGuard": "not-observed",
+        "osMemorySandbox": false
+      },
+      "seedName": "return-int",
+      "mutation": "duplicate"
+    },
+    {
+      "targetId": "pe-loader",
+      "seed": 1,
+      "caseIndex": 25,
+      "inputBytes": 3072,
+      "inputSHA256": "6f5fa3d87531320d716b26bf999c6604e825cfe3077364ea2af06ecfdc4ec3e4",
+      "sourceIdentity": {
+        "commit": "8019f2f9b22e26d7c221454f3b751b0b0e0c67df",
+        "tree": "c6bb80d3c37cf5053398af8056670badcfa71e76",
+        "clean": true
+      },
+      "budgets": {
+        "maxCases": 32,
+        "caseTimeoutMs": 1000,
+        "startupTimeoutMs": 5000,
+        "campaignTimeoutMs": 30000,
+        "maxInputBytes": 65536,
+        "maxOutputBytes": 65536,
+        "heapGrowthBytes": 16777216,
+        "v8HeapMb": 128,
+        "rssBytes": 268435456,
+        "maxCorpusCases": 128,
+        "maxCorpusBytes": 8388608
+      },
+      "qualification": "node-offline-parser",
+      "status": "rejected",
+      "code": "PE_VALIDATION",
+      "detail": "Assembly is not canonical for the supported CIL profile; modified scaffolding, signatures, references or instructions are rejected",
+      "metrics": {
+        "processElapsedMs": 715.1696190000002,
+        "sampledRssBytes": 0,
+        "elapsedMs": 17.199615999999992,
+        "baselineHeapBytes": 40610000,
+        "heapUsedBytes": 42468512,
+        "heapGrowthBytes": 1858512,
+        "externalGrowthBytes": 99595,
+        "arrayBufferGrowthBytes": 99555,
+        "observedGrowthBytes": 1958107,
+        "peakRssBytes": 95084544
+      },
+      "isolation": {
+        "v8OldSpaceMb": 128,
+        "rssGuard": "not-observed",
+        "osMemorySandbox": false
+      },
+      "seedName": "branch-and-local",
+      "mutation": "replace"
+    },
+    {
+      "targetId": "pe-loader",
+      "seed": 1,
+      "caseIndex": 26,
+      "inputBytes": 647,
+      "inputSHA256": "f1d77cdb04d0927922295d8fbb158691fc83b975cbd1e31a18de2ea4bf977f3d",
+      "sourceIdentity": {
+        "commit": "8019f2f9b22e26d7c221454f3b751b0b0e0c67df",
+        "tree": "c6bb80d3c37cf5053398af8056670badcfa71e76",
+        "clean": true
+      },
+      "budgets": {
+        "maxCases": 32,
+        "caseTimeoutMs": 1000,
+        "startupTimeoutMs": 5000,
+        "campaignTimeoutMs": 30000,
+        "maxInputBytes": 65536,
+        "maxOutputBytes": 65536,
+        "heapGrowthBytes": 16777216,
+        "v8HeapMb": 128,
+        "rssBytes": 268435456,
+        "maxCorpusCases": 128,
+        "maxCorpusBytes": 8388608
+      },
+      "qualification": "node-offline-parser",
+      "status": "rejected",
+      "code": "PE_VALIDATION",
+      "detail": "Truncated PE section",
+      "metrics": {
+        "processElapsedMs": 639.0273820000002,
+        "sampledRssBytes": 0,
+        "elapsedMs": 1.0146630000000414,
+        "baselineHeapBytes": 40853776,
+        "heapUsedBytes": 40890512,
+        "heapGrowthBytes": 36736,
+        "externalGrowthBytes": 687,
+        "arrayBufferGrowthBytes": 647,
+        "observedGrowthBytes": 37423,
+        "peakRssBytes": 93032448
+      },
+      "isolation": {
+        "v8OldSpaceMb": 128,
+        "rssGuard": "not-observed",
+        "osMemorySandbox": false
+      },
+      "seedName": "return-int",
+      "mutation": "truncate"
+    },
+    {
+      "targetId": "pe-loader",
+      "seed": 1,
+      "caseIndex": 27,
+      "inputBytes": 3064,
+      "inputSHA256": "cc7bedde4dc6369431dfb78cf47bc11c3e88fceb7e4955552d27ced26bdb03e6",
+      "sourceIdentity": {
+        "commit": "8019f2f9b22e26d7c221454f3b751b0b0e0c67df",
+        "tree": "c6bb80d3c37cf5053398af8056670badcfa71e76",
+        "clean": true
+      },
+      "budgets": {
+        "maxCases": 32,
+        "caseTimeoutMs": 1000,
+        "startupTimeoutMs": 5000,
+        "campaignTimeoutMs": 30000,
+        "maxInputBytes": 65536,
+        "maxOutputBytes": 65536,
+        "heapGrowthBytes": 16777216,
+        "v8HeapMb": 128,
+        "rssBytes": 268435456,
+        "maxCorpusCases": 128,
+        "maxCorpusBytes": 8388608
+      },
+      "qualification": "node-offline-parser",
+      "status": "rejected",
+      "code": "PE_VALIDATION",
+      "detail": "Invalid PE signature",
+      "metrics": {
+        "processElapsedMs": 673.0506790000036,
+        "sampledRssBytes": 0,
+        "elapsedMs": 0.6567770000000337,
+        "baselineHeapBytes": 40841656,
+        "heapUsedBytes": 40872304,
+        "heapGrowthBytes": 30648,
+        "externalGrowthBytes": 68640,
+        "arrayBufferGrowthBytes": 68600,
+        "observedGrowthBytes": 99288,
+        "peakRssBytes": 93585408
+      },
+      "isolation": {
+        "v8OldSpaceMb": 128,
+        "rssGuard": "not-observed",
+        "osMemorySandbox": false
+      },
+      "seedName": "branch-and-local",
+      "mutation": "delete"
+    },
+    {
+      "targetId": "pe-loader",
+      "seed": 1,
+      "caseIndex": 28,
+      "inputBytes": 2052,
+      "inputSHA256": "7eaf7b2692a6fceb782adb37ecbf568f0d5a35f762f622f82d2cfc9f1f5fb3d4",
+      "sourceIdentity": {
+        "commit": "8019f2f9b22e26d7c221454f3b751b0b0e0c67df",
+        "tree": "c6bb80d3c37cf5053398af8056670badcfa71e76",
+        "clean": true
+      },
+      "budgets": {
+        "maxCases": 32,
+        "caseTimeoutMs": 1000,
+        "startupTimeoutMs": 5000,
+        "campaignTimeoutMs": 30000,
+        "maxInputBytes": 65536,
+        "maxOutputBytes": 65536,
+        "heapGrowthBytes": 16777216,
+        "v8HeapMb": 128,
+        "rssBytes": 268435456,
+        "maxCorpusCases": 128,
+        "maxCorpusBytes": 8388608
+      },
+      "qualification": "node-offline-parser",
+      "status": "rejected",
+      "code": "PE_VALIDATION",
+      "detail": "Invalid or duplicate metadata stream",
+      "metrics": {
+        "processElapsedMs": 683.449607999999,
+        "sampledRssBytes": 0,
+        "elapsedMs": 1.2257240000000138,
+        "baselineHeapBytes": 43156480,
+        "heapUsedBytes": 43227144,
+        "heapGrowthBytes": 70664,
+        "externalGrowthBytes": 67628,
+        "arrayBufferGrowthBytes": 67588,
+        "observedGrowthBytes": 138292,
+        "peakRssBytes": 94593024
+      },
+      "isolation": {
+        "v8OldSpaceMb": 128,
+        "rssGuard": "not-observed",
+        "osMemorySandbox": false
+      },
+      "seedName": "return-int",
+      "mutation": "insert"
+    },
+    {
+      "targetId": "pe-loader",
+      "seed": 1,
+      "caseIndex": 29,
+      "inputBytes": 3075,
+      "inputSHA256": "b6517ceb1f4fd7a15824c9afef38fca40028339bd57cb5d6284d80846981ad30",
+      "sourceIdentity": {
+        "commit": "8019f2f9b22e26d7c221454f3b751b0b0e0c67df",
+        "tree": "c6bb80d3c37cf5053398af8056670badcfa71e76",
+        "clean": true
+      },
+      "budgets": {
+        "maxCases": 32,
+        "caseTimeoutMs": 1000,
+        "startupTimeoutMs": 5000,
+        "campaignTimeoutMs": 30000,
+        "maxInputBytes": 65536,
+        "maxOutputBytes": 65536,
+        "heapGrowthBytes": 16777216,
+        "v8HeapMb": 128,
+        "rssBytes": 268435456,
+        "maxCorpusCases": 128,
+        "maxCorpusBytes": 8388608
+      },
+      "qualification": "node-offline-parser",
+      "status": "rejected",
+      "code": "PE_VALIDATION",
+      "detail": "Invalid CLI metadata signature",
+      "metrics": {
+        "processElapsedMs": 750.7391150000003,
+        "sampledRssBytes": 0,
+        "elapsedMs": 1.2757969999998977,
+        "baselineHeapBytes": 41104600,
+        "heapUsedBytes": 41174944,
+        "heapGrowthBytes": 70344,
+        "externalGrowthBytes": 68651,
+        "arrayBufferGrowthBytes": 68611,
+        "observedGrowthBytes": 138995,
+        "peakRssBytes": 94838784
+      },
+      "isolation": {
+        "v8OldSpaceMb": 128,
+        "rssGuard": "not-observed",
+        "osMemorySandbox": false
+      },
+      "seedName": "branch-and-local",
+      "mutation": "duplicate"
+    },
+    {
+      "targetId": "pe-loader",
+      "seed": 1,
+      "caseIndex": 30,
+      "inputBytes": 2048,
+      "inputSHA256": "dc596b8076b616a022e2f59fc319256460c33b238a0755e7497c045e14ce0495",
+      "sourceIdentity": {
+        "commit": "8019f2f9b22e26d7c221454f3b751b0b0e0c67df",
+        "tree": "c6bb80d3c37cf5053398af8056670badcfa71e76",
+        "clean": true
+      },
+      "budgets": {
+        "maxCases": 32,
+        "caseTimeoutMs": 1000,
+        "startupTimeoutMs": 5000,
+        "campaignTimeoutMs": 30000,
+        "maxInputBytes": 65536,
+        "maxOutputBytes": 65536,
+        "heapGrowthBytes": 16777216,
+        "v8HeapMb": 128,
+        "rssBytes": 268435456,
+        "maxCorpusCases": 128,
+        "maxCorpusBytes": 8388608
+      },
+      "qualification": "node-offline-parser",
+      "status": "rejected",
+      "code": "PE_VALIDATION",
+      "detail": "Assembly is not canonical for the supported CIL profile; modified scaffolding, signatures, references or instructions are rejected",
+      "metrics": {
+        "processElapsedMs": 782.792426,
+        "sampledRssBytes": 0,
+        "elapsedMs": 22.674060999999938,
+        "baselineHeapBytes": 43106632,
+        "heapUsedBytes": 39216544,
+        "heapGrowthBytes": 0,
+        "externalGrowthBytes": 25728,
+        "arrayBufferGrowthBytes": 25688,
+        "observedGrowthBytes": 25728,
+        "peakRssBytes": 95838208
+      },
+      "isolation": {
+        "v8OldSpaceMb": 128,
+        "rssGuard": "not-observed",
+        "osMemorySandbox": false
+      },
+      "seedName": "return-int",
+      "mutation": "replace"
+    },
+    {
+      "targetId": "pe-loader",
+      "seed": 1,
+      "caseIndex": 31,
+      "inputBytes": 1801,
+      "inputSHA256": "b2b378c5970c462ca5ae2038234430fd871231424aa8481bb4bcb7671d9cde19",
+      "sourceIdentity": {
+        "commit": "8019f2f9b22e26d7c221454f3b751b0b0e0c67df",
+        "tree": "c6bb80d3c37cf5053398af8056670badcfa71e76",
+        "clean": true
+      },
+      "budgets": {
+        "maxCases": 32,
+        "caseTimeoutMs": 1000,
+        "startupTimeoutMs": 5000,
+        "campaignTimeoutMs": 30000,
+        "maxInputBytes": 65536,
+        "maxOutputBytes": 65536,
+        "heapGrowthBytes": 16777216,
+        "v8HeapMb": 128,
+        "rssBytes": 268435456,
+        "maxCorpusCases": 128,
+        "maxCorpusBytes": 8388608
+      },
+      "qualification": "node-offline-parser",
+      "status": "rejected",
+      "code": "PE_VALIDATION",
+      "detail": "Truncated PE section",
+      "metrics": {
+        "processElapsedMs": 743.4844709999998,
+        "sampledRssBytes": 0,
+        "elapsedMs": 1.0288539999999102,
+        "baselineHeapBytes": 40868728,
+        "heapUsedBytes": 40908072,
+        "heapGrowthBytes": 39344,
+        "externalGrowthBytes": 1841,
+        "arrayBufferGrowthBytes": 1801,
+        "observedGrowthBytes": 41185,
+        "peakRssBytes": 93274112
+      },
+      "isolation": {
+        "v8OldSpaceMb": 128,
+        "rssGuard": "not-observed",
+        "osMemorySandbox": false
+      },
+      "seedName": "branch-and-local",
+      "mutation": "truncate"
+    }
+  ],
+  "artifacts": [],
+  "budgets": {
+    "maxCases": 32,
+    "caseTimeoutMs": 1000,
+    "startupTimeoutMs": 5000,
+    "campaignTimeoutMs": 30000,
+    "maxInputBytes": 65536,
+    "maxOutputBytes": 65536,
+    "heapGrowthBytes": 16777216,
+    "v8HeapMb": 128,
+    "rssBytes": 268435456,
+    "maxCorpusCases": 128,
+    "maxCorpusBytes": 8388608
+  },
+  "environment": {
+    "node": "v24.19.0",
+    "platform": "linux",
+    "arch": "x64"
+  },
+  "targetId": "pe-loader",
+  "seed": 1,
+  "sourceIdentity": {
+    "commit": "8019f2f9b22e26d7c221454f3b751b0b0e0c67df",
+    "tree": "c6bb80d3c37cf5053398af8056670badcfa71e76",
+    "clean": true
+  },
+  "seedAcquisition": {
+    "status": "accepted",
+    "metrics": {
+      "processElapsedMs": 868.517606,
+      "sampledRssBytes": 0,
+      "elapsedMs": 77.82858400000009,
+      "baselineHeapBytes": 43179072,
+      "heapUsedBytes": 44153800,
+      "heapGrowthBytes": 974728,
+      "externalGrowthBytes": 54627,
+      "arrayBufferGrowthBytes": 54587,
+      "observedGrowthBytes": 1029355,
+      "peakRssBytes": 97067008
+    },
+    "isolation": {
+      "v8OldSpaceMb": 128,
+      "rssGuard": "not-observed",
+      "osMemorySandbox": false
+    }
+  }
+}

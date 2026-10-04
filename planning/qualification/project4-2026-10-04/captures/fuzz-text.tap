@@ -1,0 +1,160 @@
+TAP version 13
+# Subtest: protocol: local seeds are bounded, deterministic and independently owned
+ok 1 - protocol: local seeds are bounded, deterministic and independently owned
+  ---
+  duration_ms: 1.981242
+  type: 'test'
+  ...
+# Subtest: protocol: rejects an input over the configured or hard byte ceiling
+ok 2 - protocol: rejects an input over the configured or hard byte ceiling
+  ---
+  duration_ms: 0.229467
+  type: 'test'
+  ...
+# Subtest: protocol: cancellation and invalid caller contracts propagate
+ok 3 - protocol: cancellation and invalid caller contracts propagate
+  ---
+  duration_ms: 0.518572
+  type: 'test'
+  ...
+# Subtest: il-document: local seeds are bounded, deterministic and independently owned
+ok 4 - il-document: local seeds are bounded, deterministic and independently owned
+  ---
+  duration_ms: 12.19209
+  type: 'test'
+  ...
+# Subtest: il-document: rejects an input over the configured or hard byte ceiling
+ok 5 - il-document: rejects an input over the configured or hard byte ceiling
+  ---
+  duration_ms: 0.262656
+  type: 'test'
+  ...
+# Subtest: il-document: cancellation and invalid caller contracts propagate
+ok 6 - il-document: cancellation and invalid caller contracts propagate
+  ---
+  duration_ms: 0.123501
+  type: 'test'
+  ...
+# Subtest: msbuild-xml: local seeds are bounded, deterministic and independently owned
+ok 7 - msbuild-xml: local seeds are bounded, deterministic and independently owned
+  ---
+  duration_ms: 0.358857
+  type: 'test'
+  ...
+# Subtest: msbuild-xml: rejects an input over the configured or hard byte ceiling
+ok 8 - msbuild-xml: rejects an input over the configured or hard byte ceiling
+  ---
+  duration_ms: 0.202968
+  type: 'test'
+  ...
+# Subtest: msbuild-xml: cancellation and invalid caller contracts propagate
+ok 9 - msbuild-xml: cancellation and invalid caller contracts propagate
+  ---
+  duration_ms: 0.211091
+  type: 'test'
+  ...
+# Subtest: network: local seeds are bounded, deterministic and independently owned
+ok 10 - network: local seeds are bounded, deterministic and independently owned
+  ---
+  duration_ms: 0.441459
+  type: 'test'
+  ...
+# Subtest: network: rejects an input over the configured or hard byte ceiling
+ok 11 - network: rejects an input over the configured or hard byte ceiling
+  ---
+  duration_ms: 0.12904
+  type: 'test'
+  ...
+# Subtest: network: cancellation and invalid caller contracts propagate
+ok 12 - network: cancellation and invalid caller contracts propagate
+  ---
+  duration_ms: 0.167165
+  type: 'test'
+  ...
+# Subtest: protocol: accepts LSP, DAP, Unicode and coalesced frames under incremental parsing
+ok 13 - protocol: accepts LSP, DAP, Unicode and coalesced frames under incremental parsing
+  ---
+  duration_ms: 1.321833
+  type: 'test'
+  ...
+# Subtest: protocol: diagnoses malformed framing, JSON, UTF-8 and incomplete bodies
+ok 14 - protocol: diagnoses malformed framing, JSON, UTF-8 and incomplete bodies
+  ---
+  duration_ms: 0.758594
+  type: 'test'
+  ...
+# Subtest: protocol: encoded messages respect the output byte budget
+ok 15 - protocol: encoded messages respect the output byte budget
+  ---
+  duration_ms: 0.239752
+  type: 'test'
+  ...
+# Subtest: IL document: canonical roundtrips preserve visible methods and literals containing comment text
+ok 16 - IL document: canonical roundtrips preserve visible methods and literals containing comment text
+  ---
+  duration_ms: 8.23236
+  type: 'test'
+  ...
+# Subtest: IL document: generated-input failures propagate outside the first assembly validation boundary
+ok 17 - IL document: generated-input failures propagate outside the first assembly validation boundary
+  ---
+  duration_ms: 0.183259
+  type: 'test'
+  ...
+# Subtest: IL document: reports syntax/scaffold failures and constrains rebuilt output
+ok 18 - IL document: reports syntax/scaffold failures and constrains rebuilt output
+  ---
+  duration_ms: 3.697444
+  type: 'test'
+  ...
+# Subtest: MSBuild XML: parses data and evaluates attributes or standalone conditions without filesystem access
+ok 19 - MSBuild XML: parses data and evaluates attributes or standalone conditions without filesystem access
+  ---
+  duration_ms: 1.872823
+  type: 'test'
+  ...
+# Subtest: MSBuild XML: rejects malformed XML and unsupported data grammar
+ok 20 - MSBuild XML: rejects malformed XML and unsupported data grammar
+  ---
+  duration_ms: 0.553243
+  type: 'test'
+  ...
+# Subtest: network: exact grants, URL normalization and request headers use pure policy APIs
+ok 21 - network: exact grants, URL normalization and request headers use pure policy APIs
+  ---
+  duration_ms: 1.909918
+  type: 'test'
+  ...
+# Subtest: network: malformed local input and output limits remain controlled failures
+ok 22 - network: malformed local input and output limits remain controlled failures
+  ---
+  duration_ms: 0.574154
+  type: 'test'
+  ...
+# Subtest: network: unavailable native host policy surfaces are explicitly unsupported
+ok 23 - network: unavailable native host policy surfaces are explicitly unsupported
+  ---
+  duration_ms: 0.139976
+  type: 'test'
+  ...
+# Subtest: text targets: error classifiers preserve unexpected failures instead of counting them as rejected inputs
+ok 24 - text targets: error classifiers preserve unexpected failures instead of counting them as rejected inputs
+  ---
+  duration_ms: 0.230119
+  type: 'test'
+  ...
+# Subtest: text targets: cancellation observed during a parse is not an input rejection
+ok 25 - text targets: cancellation observed during a parse is not an input rejection
+  ---
+  duration_ms: 0.127417
+  type: 'test'
+  ...
+1..25
+# tests 25
+# suites 0
+# pass 25
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 757.323626

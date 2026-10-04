@@ -1,0 +1,1565 @@
+{
+  "schemaVersion": 1,
+  "status": "passed",
+  "requestedCases": 32,
+  "completedCases": 32,
+  "counts": {
+    "accepted": 7,
+    "rejected": 25,
+    "unsupported": 0,
+    "findings": 0,
+    "cancelled": 0
+  },
+  "cases": [
+    {
+      "targetId": "il-document",
+      "seed": 1,
+      "caseIndex": 0,
+      "inputBytes": 1826,
+      "inputSHA256": "8cae70b262371e5feb470aa2aae6a058aa1eb1677e90feb334a7bc8700db4183",
+      "sourceIdentity": {
+        "commit": "9e6235635fdfb92939e8d7cbf1985db774d1fa31",
+        "tree": "3b4b42b335f088d800610ad4af19dafde9fa07a3",
+        "clean": true
+      },
+      "budgets": {
+        "maxCases": 32,
+        "caseTimeoutMs": 1000,
+        "startupTimeoutMs": 5000,
+        "campaignTimeoutMs": 30000,
+        "maxInputBytes": 65536,
+        "maxOutputBytes": 65536,
+        "heapGrowthBytes": 16777216,
+        "v8HeapMb": 128,
+        "rssBytes": 268435456,
+        "maxCorpusCases": 128,
+        "maxCorpusBytes": 8388608
+      },
+      "qualification": "node-offline-parser",
+      "status": "accepted",
+      "code": "IL_DOCUMENT_EXACT_ROUNDTRIP",
+      "metrics": {
+        "processElapsedMs": 820.28115,
+        "sampledRssBytes": 0,
+        "elapsedMs": 20.94412299999999,
+        "baselineHeapBytes": 41294968,
+        "heapUsedBytes": 38610128,
+        "heapGrowthBytes": 0,
+        "externalGrowthBytes": 20896,
+        "arrayBufferGrowthBytes": 20856,
+        "observedGrowthBytes": 20896,
+        "peakRssBytes": 97083392
+      },
+      "isolation": {
+        "v8OldSpaceMb": 128,
+        "rssGuard": "not-observed",
+        "osMemorySandbox": false
+      },
+      "seedName": "local-library",
+      "mutation": "seed"
+    },
+    {
+      "targetId": "il-document",
+      "seed": 1,
+      "caseIndex": 1,
+      "inputBytes": 1824,
+      "inputSHA256": "2a26ab51aa43d431b3597b6b6ed0246e27b0935c413c4aa136103171007288e7",
+      "sourceIdentity": {
+        "commit": "9e6235635fdfb92939e8d7cbf1985db774d1fa31",
+        "tree": "3b4b42b335f088d800610ad4af19dafde9fa07a3",
+        "clean": true
+      },
+      "budgets": {
+        "maxCases": 32,
+        "caseTimeoutMs": 1000,
+        "startupTimeoutMs": 5000,
+        "campaignTimeoutMs": 30000,
+        "maxInputBytes": 65536,
+        "maxOutputBytes": 65536,
+        "heapGrowthBytes": 16777216,
+        "v8HeapMb": 128,
+        "rssBytes": 268435456,
+        "maxCorpusCases": 128,
+        "maxCorpusBytes": 8388608
+      },
+      "qualification": "node-offline-parser",
+      "status": "accepted",
+      "code": "IL_DOCUMENT_EXACT_ROUNDTRIP",
+      "metrics": {
+        "processElapsedMs": 896.7660639999999,
+        "sampledRssBytes": 0,
+        "elapsedMs": 12.155115000000023,
+        "baselineHeapBytes": 43176512,
+        "heapUsedBytes": 43995840,
+        "heapGrowthBytes": 819328,
+        "externalGrowthBytes": 25584,
+        "arrayBufferGrowthBytes": 25544,
+        "observedGrowthBytes": 844912,
+        "peakRssBytes": 95031296
+      },
+      "isolation": {
+        "v8OldSpaceMb": 128,
+        "rssGuard": "not-observed",
+        "osMemorySandbox": false
+      },
+      "seedName": "literal-comment",
+      "mutation": "seed"
+    },
+    {
+      "targetId": "il-document",
+      "seed": 1,
+      "caseIndex": 2,
+      "inputBytes": 1768,
+      "inputSHA256": "ce3b4182ec21641d8a72b8fdbe028858af696c5e61aff49cf7c558b1564a3e22",
+      "sourceIdentity": {
+        "commit": "9e6235635fdfb92939e8d7cbf1985db774d1fa31",
+        "tree": "3b4b42b335f088d800610ad4af19dafde9fa07a3",
+        "clean": true
+      },
+      "budgets": {
+        "maxCases": 32,
+        "caseTimeoutMs": 1000,
+        "startupTimeoutMs": 5000,
+        "campaignTimeoutMs": 30000,
+        "maxInputBytes": 65536,
+        "maxOutputBytes": 65536,
+        "heapGrowthBytes": 16777216,
+        "v8HeapMb": 128,
+        "rssBytes": 268435456,
+        "maxCorpusCases": 128,
+        "maxCorpusBytes": 8388608
+      },
+      "qualification": "node-offline-parser",
+      "status": "accepted",
+      "code": "IL_DOCUMENT_EXACT_ROUNDTRIP",
+      "metrics": {
+        "processElapsedMs": 877.036638,
+        "sampledRssBytes": 0,
+        "elapsedMs": 12.206501000000003,
+        "baselineHeapBytes": 40859272,
+        "heapUsedBytes": 41593256,
+        "heapGrowthBytes": 733984,
+        "externalGrowthBytes": 20724,
+        "arrayBufferGrowthBytes": 20684,
+        "observedGrowthBytes": 754708,
+        "peakRssBytes": 95531008
+      },
+      "isolation": {
+        "v8OldSpaceMb": 128,
+        "rssGuard": "not-observed",
+        "osMemorySandbox": false
+      },
+      "seedName": "floating-negative-zero",
+      "mutation": "seed"
+    },
+    {
+      "targetId": "il-document",
+      "seed": 1,
+      "caseIndex": 3,
+      "inputBytes": 1767,
+      "inputSHA256": "55d4fadf8ea17f9745aecc24a7933e034592902b8deb7dce26c2453afa2c871b",
+      "sourceIdentity": {
+        "commit": "9e6235635fdfb92939e8d7cbf1985db774d1fa31",
+        "tree": "3b4b42b335f088d800610ad4af19dafde9fa07a3",
+        "clean": true
+      },
+      "budgets": {
+        "maxCases": 32,
+        "caseTimeoutMs": 1000,
+        "startupTimeoutMs": 5000,
+        "campaignTimeoutMs": 30000,
+        "maxInputBytes": 65536,
+        "maxOutputBytes": 65536,
+        "heapGrowthBytes": 16777216,
+        "v8HeapMb": 128,
+        "rssBytes": 268435456,
+        "maxCorpusCases": 128,
+        "maxCorpusBytes": 8388608
+      },
+      "qualification": "node-offline-parser",
+      "status": "accepted",
+      "code": "IL_DOCUMENT_EXACT_ROUNDTRIP",
+      "metrics": {
+        "processElapsedMs": 877.2081929999999,
+        "sampledRssBytes": 0,
+        "elapsedMs": 10.874777999999992,
+        "baselineHeapBytes": 41065488,
+        "heapUsedBytes": 41697464,
+        "heapGrowthBytes": 631976,
+        "externalGrowthBytes": 20721,
+        "arrayBufferGrowthBytes": 20681,
+        "observedGrowthBytes": 652697,
+        "peakRssBytes": 94314496
+      },
+      "isolation": {
+        "v8OldSpaceMb": 128,
+        "rssGuard": "not-observed",
+        "osMemorySandbox": false
+      },
+      "seedName": "floating-nan-payload",
+      "mutation": "seed"
+    },
+    {
+      "targetId": "il-document",
+      "seed": 1,
+      "caseIndex": 4,
+      "inputBytes": 1828,
+      "inputSHA256": "01284479bb1006e7fc6dba85bcdcff7ddf5a841e255edaf057b48c50517bfb7e",
+      "sourceIdentity": {
+        "commit": "9e6235635fdfb92939e8d7cbf1985db774d1fa31",
+        "tree": "3b4b42b335f088d800610ad4af19dafde9fa07a3",
+        "clean": true
+      },
+      "budgets": {
+        "maxCases": 32,
+        "caseTimeoutMs": 1000,
+        "startupTimeoutMs": 5000,
+        "campaignTimeoutMs": 30000,
+        "maxInputBytes": 65536,
+        "maxOutputBytes": 65536,
+        "heapGrowthBytes": 16777216,
+        "v8HeapMb": 128,
+        "rssBytes": 268435456,
+        "maxCorpusCases": 128,
+        "maxCorpusBytes": 8388608
+      },
+      "qualification": "node-offline-parser",
+      "status": "rejected",
+      "code": "IL_DOCUMENT",
+      "metrics": {
+        "processElapsedMs": 800.5961790000001,
+        "sampledRssBytes": 72990720,
+        "elapsedMs": 6.670663999999988,
+        "baselineHeapBytes": 40638648,
+        "heapUsedBytes": 40933256,
+        "heapGrowthBytes": 294608,
+        "externalGrowthBytes": 8012,
+        "arrayBufferGrowthBytes": 7972,
+        "observedGrowthBytes": 302620,
+        "peakRssBytes": 93683712
+      },
+      "isolation": {
+        "v8OldSpaceMb": 128,
+        "rssGuard": "sampled-linux",
+        "osMemorySandbox": false
+      },
+      "seedName": "unknown-opcode",
+      "mutation": "seed"
+    },
+    {
+      "targetId": "il-document",
+      "seed": 1,
+      "caseIndex": 5,
+      "inputBytes": 25,
+      "inputSHA256": "fb4b7874064f8bd619e2d28ac4f058c7a0b6892815e9a4a4201be895ed27d014",
+      "sourceIdentity": {
+        "commit": "9e6235635fdfb92939e8d7cbf1985db774d1fa31",
+        "tree": "3b4b42b335f088d800610ad4af19dafde9fa07a3",
+        "clean": true
+      },
+      "budgets": {
+        "maxCases": 32,
+        "caseTimeoutMs": 1000,
+        "startupTimeoutMs": 5000,
+        "campaignTimeoutMs": 30000,
+        "maxInputBytes": 65536,
+        "maxOutputBytes": 65536,
+        "heapGrowthBytes": 16777216,
+        "v8HeapMb": 128,
+        "rssBytes": 268435456,
+        "maxCorpusCases": 128,
+        "maxCorpusBytes": 8388608
+      },
+      "qualification": "node-offline-parser",
+      "status": "rejected",
+      "code": "IL_DOCUMENT",
+      "metrics": {
+        "processElapsedMs": 847.6298140000008,
+        "sampledRssBytes": 0,
+        "elapsedMs": 3.2891650000000254,
+        "baselineHeapBytes": 40485880,
+        "heapUsedBytes": 40514960,
+        "heapGrowthBytes": 29080,
+        "externalGrowthBytes": 65,
+        "arrayBufferGrowthBytes": 25,
+        "observedGrowthBytes": 29145,
+        "peakRssBytes": 93536256
+      },
+      "isolation": {
+        "v8OldSpaceMb": 128,
+        "rssGuard": "not-observed",
+        "osMemorySandbox": false
+      },
+      "seedName": "missing-image",
+      "mutation": "seed"
+    },
+    {
+      "targetId": "il-document",
+      "seed": 1,
+      "caseIndex": 6,
+      "inputBytes": 1824,
+      "inputSHA256": "d5e5966874ad17a9f2e8b798e8dc90519004812b8fa8c73f66209fffbf10c635",
+      "sourceIdentity": {
+        "commit": "9e6235635fdfb92939e8d7cbf1985db774d1fa31",
+        "tree": "3b4b42b335f088d800610ad4af19dafde9fa07a3",
+        "clean": true
+      },
+      "budgets": {
+        "maxCases": 32,
+        "caseTimeoutMs": 1000,
+        "startupTimeoutMs": 5000,
+        "campaignTimeoutMs": 30000,
+        "maxInputBytes": 65536,
+        "maxOutputBytes": 65536,
+        "heapGrowthBytes": 16777216,
+        "v8HeapMb": 128,
+        "rssBytes": 268435456,
+        "maxCorpusCases": 128,
+        "maxCorpusBytes": 8388608
+      },
+      "qualification": "node-offline-parser",
+      "status": "rejected",
+      "code": "IL_DOCUMENT",
+      "metrics": {
+        "processElapsedMs": 862.0454479999999,
+        "sampledRssBytes": 0,
+        "elapsedMs": 1.2421759999999722,
+        "baselineHeapBytes": 40866784,
+        "heapUsedBytes": 40932224,
+        "heapGrowthBytes": 65440,
+        "externalGrowthBytes": 2888,
+        "arrayBufferGrowthBytes": 2848,
+        "observedGrowthBytes": 68328,
+        "peakRssBytes": 94920704
+      },
+      "isolation": {
+        "v8OldSpaceMb": 128,
+        "rssGuard": "not-observed",
+        "osMemorySandbox": false
+      },
+      "seedName": "incomplete-method",
+      "mutation": "seed"
+    },
+    {
+      "targetId": "il-document",
+      "seed": 1,
+      "caseIndex": 7,
+      "inputBytes": 1822,
+      "inputSHA256": "622b93022e381d076d9e45e8b0fc873e96d193bc9bf449a79860123897b60b64",
+      "sourceIdentity": {
+        "commit": "9e6235635fdfb92939e8d7cbf1985db774d1fa31",
+        "tree": "3b4b42b335f088d800610ad4af19dafde9fa07a3",
+        "clean": true
+      },
+      "budgets": {
+        "maxCases": 32,
+        "caseTimeoutMs": 1000,
+        "startupTimeoutMs": 5000,
+        "campaignTimeoutMs": 30000,
+        "maxInputBytes": 65536,
+        "maxOutputBytes": 65536,
+        "heapGrowthBytes": 16777216,
+        "v8HeapMb": 128,
+        "rssBytes": 268435456,
+        "maxCorpusCases": 128,
+        "maxCorpusBytes": 8388608
+      },
+      "qualification": "node-offline-parser",
+      "status": "rejected",
+      "code": "IL_DOCUMENT",
+      "metrics": {
+        "processElapsedMs": 742.3333910000001,
+        "sampledRssBytes": 0,
+        "elapsedMs": 2.4634110000000646,
+        "baselineHeapBytes": 40516224,
+        "heapUsedBytes": 40604240,
+        "heapGrowthBytes": 88016,
+        "externalGrowthBytes": 2883,
+        "arrayBufferGrowthBytes": 2843,
+        "observedGrowthBytes": 90899,
+        "peakRssBytes": 94318592
+      },
+      "isolation": {
+        "v8OldSpaceMb": 128,
+        "rssGuard": "not-observed",
+        "osMemorySandbox": false
+      },
+      "seedName": "local-library",
+      "mutation": "delete"
+    },
+    {
+      "targetId": "il-document",
+      "seed": 1,
+      "caseIndex": 8,
+      "inputBytes": 1840,
+      "inputSHA256": "97823bcb099392c7249eb5d75f98209c039381677d6a192c20525c2e68366722",
+      "sourceIdentity": {
+        "commit": "9e6235635fdfb92939e8d7cbf1985db774d1fa31",
+        "tree": "3b4b42b335f088d800610ad4af19dafde9fa07a3",
+        "clean": true
+      },
+      "budgets": {
+        "maxCases": 32,
+        "caseTimeoutMs": 1000,
+        "startupTimeoutMs": 5000,
+        "campaignTimeoutMs": 30000,
+        "maxInputBytes": 65536,
+        "maxOutputBytes": 65536,
+        "heapGrowthBytes": 16777216,
+        "v8HeapMb": 128,
+        "rssBytes": 268435456,
+        "maxCorpusCases": 128,
+        "maxCorpusBytes": 8388608
+      },
+      "qualification": "node-offline-parser",
+      "status": "rejected",
+      "code": "FUZZ_UTF8",
+      "metrics": {
+        "processElapsedMs": 684.9450460000007,
+        "sampledRssBytes": 0,
+        "elapsedMs": 0.3638740000000098,
+        "baselineHeapBytes": 40623384,
+        "heapUsedBytes": 40643952,
+        "heapGrowthBytes": 20568,
+        "externalGrowthBytes": 1880,
+        "arrayBufferGrowthBytes": 1840,
+        "observedGrowthBytes": 22448,
+        "peakRssBytes": 93351936
+      },
+      "isolation": {
+        "v8OldSpaceMb": 128,
+        "rssGuard": "not-observed",
+        "osMemorySandbox": false
+      },
+      "seedName": "literal-comment",
+      "mutation": "insert"
+    },
+    {
+      "targetId": "il-document",
+      "seed": 1,
+      "caseIndex": 9,
+      "inputBytes": 1783,
+      "inputSHA256": "031fca09ae63979f7be32fb0fe0f0ccd299e54a7ecc934d73cdeb3f33c959bdc",
+      "sourceIdentity": {
+        "commit": "9e6235635fdfb92939e8d7cbf1985db774d1fa31",
+        "tree": "3b4b42b335f088d800610ad4af19dafde9fa07a3",
+        "clean": true
+      },
+      "budgets": {
+        "maxCases": 32,
+        "caseTimeoutMs": 1000,
+        "startupTimeoutMs": 5000,
+        "campaignTimeoutMs": 30000,
+        "maxInputBytes": 65536,
+        "maxOutputBytes": 65536,
+        "heapGrowthBytes": 16777216,
+        "v8HeapMb": 128,
+        "rssBytes": 268435456,
+        "maxCorpusCases": 128,
+        "maxCorpusBytes": 8388608
+      },
+      "qualification": "node-offline-parser",
+      "status": "rejected",
+      "code": "IL_DOCUMENT",
+      "metrics": {
+        "processElapsedMs": 610.4582449999998,
+        "sampledRssBytes": 72986624,
+        "elapsedMs": 0.9567859999999655,
+        "baselineHeapBytes": 43209048,
+        "heapUsedBytes": 43253024,
+        "heapGrowthBytes": 43976,
+        "externalGrowthBytes": 2847,
+        "arrayBufferGrowthBytes": 2807,
+        "observedGrowthBytes": 46823,
+        "peakRssBytes": 95178752
+      },
+      "isolation": {
+        "v8OldSpaceMb": 128,
+        "rssGuard": "sampled-linux",
+        "osMemorySandbox": false
+      },
+      "seedName": "floating-negative-zero",
+      "mutation": "duplicate"
+    },
+    {
+      "targetId": "il-document",
+      "seed": 1,
+      "caseIndex": 10,
+      "inputBytes": 1767,
+      "inputSHA256": "7d0ca893a6f659ca98a3dbbc5e0561e25ceb3753bba23f6e321e471a9da9d441",
+      "sourceIdentity": {
+        "commit": "9e6235635fdfb92939e8d7cbf1985db774d1fa31",
+        "tree": "3b4b42b335f088d800610ad4af19dafde9fa07a3",
+        "clean": true
+      },
+      "budgets": {
+        "maxCases": 32,
+        "caseTimeoutMs": 1000,
+        "startupTimeoutMs": 5000,
+        "campaignTimeoutMs": 30000,
+        "maxInputBytes": 65536,
+        "maxOutputBytes": 65536,
+        "heapGrowthBytes": 16777216,
+        "v8HeapMb": 128,
+        "rssBytes": 268435456,
+        "maxCorpusCases": 128,
+        "maxCorpusBytes": 8388608
+      },
+      "qualification": "node-offline-parser",
+      "status": "accepted",
+      "code": "IL_DOCUMENT_EXACT_ROUNDTRIP",
+      "metrics": {
+        "processElapsedMs": 687.4287530000001,
+        "sampledRssBytes": 0,
+        "elapsedMs": 8.896525999999994,
+        "baselineHeapBytes": 41456160,
+        "heapUsedBytes": 42083864,
+        "heapGrowthBytes": 627704,
+        "externalGrowthBytes": 20721,
+        "arrayBufferGrowthBytes": 20681,
+        "observedGrowthBytes": 648425,
+        "peakRssBytes": 93466624
+      },
+      "isolation": {
+        "v8OldSpaceMb": 128,
+        "rssGuard": "not-observed",
+        "osMemorySandbox": false
+      },
+      "seedName": "floating-nan-payload",
+      "mutation": "replace"
+    },
+    {
+      "targetId": "il-document",
+      "seed": 1,
+      "caseIndex": 11,
+      "inputBytes": 1290,
+      "inputSHA256": "af8a244b17177fd2bb576b7722baab54c0c28ea4d19876eaa209a19f8880097c",
+      "sourceIdentity": {
+        "commit": "9e6235635fdfb92939e8d7cbf1985db774d1fa31",
+        "tree": "3b4b42b335f088d800610ad4af19dafde9fa07a3",
+        "clean": true
+      },
+      "budgets": {
+        "maxCases": 32,
+        "caseTimeoutMs": 1000,
+        "startupTimeoutMs": 5000,
+        "campaignTimeoutMs": 30000,
+        "maxInputBytes": 65536,
+        "maxOutputBytes": 65536,
+        "heapGrowthBytes": 16777216,
+        "v8HeapMb": 128,
+        "rssBytes": 268435456,
+        "maxCorpusCases": 128,
+        "maxCorpusBytes": 8388608
+      },
+      "qualification": "node-offline-parser",
+      "status": "rejected",
+      "code": "IL_DOCUMENT",
+      "metrics": {
+        "processElapsedMs": 741.655992,
+        "sampledRssBytes": 0,
+        "elapsedMs": 0.8594229999999925,
+        "baselineHeapBytes": 40836528,
+        "heapUsedBytes": 40872312,
+        "heapGrowthBytes": 35784,
+        "externalGrowthBytes": 1330,
+        "arrayBufferGrowthBytes": 1290,
+        "observedGrowthBytes": 37114,
+        "peakRssBytes": 93736960
+      },
+      "isolation": {
+        "v8OldSpaceMb": 128,
+        "rssGuard": "not-observed",
+        "osMemorySandbox": false
+      },
+      "seedName": "unknown-opcode",
+      "mutation": "truncate"
+    },
+    {
+      "targetId": "il-document",
+      "seed": 1,
+      "caseIndex": 12,
+      "inputBytes": 24,
+      "inputSHA256": "4692e2721cb9f060a805a901bc98c87574971f3818a26d4a029c60d924f54052",
+      "sourceIdentity": {
+        "commit": "9e6235635fdfb92939e8d7cbf1985db774d1fa31",
+        "tree": "3b4b42b335f088d800610ad4af19dafde9fa07a3",
+        "clean": true
+      },
+      "budgets": {
+        "maxCases": 32,
+        "caseTimeoutMs": 1000,
+        "startupTimeoutMs": 5000,
+        "campaignTimeoutMs": 30000,
+        "maxInputBytes": 65536,
+        "maxOutputBytes": 65536,
+        "heapGrowthBytes": 16777216,
+        "v8HeapMb": 128,
+        "rssBytes": 268435456,
+        "maxCorpusCases": 128,
+        "maxCorpusBytes": 8388608
+      },
+      "qualification": "node-offline-parser",
+      "status": "rejected",
+      "code": "IL_DOCUMENT",
+      "metrics": {
+        "processElapsedMs": 723.8201499999996,
+        "sampledRssBytes": 0,
+        "elapsedMs": 0.6784370000000308,
+        "baselineHeapBytes": 43285256,
+        "heapUsedBytes": 43314312,
+        "heapGrowthBytes": 29056,
+        "externalGrowthBytes": 64,
+        "arrayBufferGrowthBytes": 24,
+        "observedGrowthBytes": 29120,
+        "peakRssBytes": 95186944
+      },
+      "isolation": {
+        "v8OldSpaceMb": 128,
+        "rssGuard": "not-observed",
+        "osMemorySandbox": false
+      },
+      "seedName": "missing-image",
+      "mutation": "delete"
+    },
+    {
+      "targetId": "il-document",
+      "seed": 1,
+      "caseIndex": 13,
+      "inputBytes": 1827,
+      "inputSHA256": "49a33a60ddc2eb22daa79c42e02f0339f205b52bce7e989a2c78ed36366c0204",
+      "sourceIdentity": {
+        "commit": "9e6235635fdfb92939e8d7cbf1985db774d1fa31",
+        "tree": "3b4b42b335f088d800610ad4af19dafde9fa07a3",
+        "clean": true
+      },
+      "budgets": {
+        "maxCases": 32,
+        "caseTimeoutMs": 1000,
+        "startupTimeoutMs": 5000,
+        "campaignTimeoutMs": 30000,
+        "maxInputBytes": 65536,
+        "maxOutputBytes": 65536,
+        "heapGrowthBytes": 16777216,
+        "v8HeapMb": 128,
+        "rssBytes": 268435456,
+        "maxCorpusCases": 128,
+        "maxCorpusBytes": 8388608
+      },
+      "qualification": "node-offline-parser",
+      "status": "rejected",
+      "code": "FUZZ_UTF8",
+      "metrics": {
+        "processElapsedMs": 650.9033130000007,
+        "sampledRssBytes": 0,
+        "elapsedMs": 0.6255889999999908,
+        "baselineHeapBytes": 40838728,
+        "heapUsedBytes": 40859280,
+        "heapGrowthBytes": 20552,
+        "externalGrowthBytes": 1867,
+        "arrayBufferGrowthBytes": 1827,
+        "observedGrowthBytes": 22419,
+        "peakRssBytes": 93622272
+      },
+      "isolation": {
+        "v8OldSpaceMb": 128,
+        "rssGuard": "not-observed",
+        "osMemorySandbox": false
+      },
+      "seedName": "incomplete-method",
+      "mutation": "insert"
+    },
+    {
+      "targetId": "il-document",
+      "seed": 1,
+      "caseIndex": 14,
+      "inputBytes": 1840,
+      "inputSHA256": "a32582bdbfa7bf77d8173069aa79bba8a2c404097a68af003cc0c5e9e0e06c25",
+      "sourceIdentity": {
+        "commit": "9e6235635fdfb92939e8d7cbf1985db774d1fa31",
+        "tree": "3b4b42b335f088d800610ad4af19dafde9fa07a3",
+        "clean": true
+      },
+      "budgets": {
+        "maxCases": 32,
+        "caseTimeoutMs": 1000,
+        "startupTimeoutMs": 5000,
+        "campaignTimeoutMs": 30000,
+        "maxInputBytes": 65536,
+        "maxOutputBytes": 65536,
+        "heapGrowthBytes": 16777216,
+        "v8HeapMb": 128,
+        "rssBytes": 268435456,
+        "maxCorpusCases": 128,
+        "maxCorpusBytes": 8388608
+      },
+      "qualification": "node-offline-parser",
+      "status": "rejected",
+      "code": "IL_DOCUMENT",
+      "metrics": {
+        "processElapsedMs": 715.0033719999992,
+        "sampledRssBytes": 0,
+        "elapsedMs": 0.8258240000000114,
+        "baselineHeapBytes": 40813768,
+        "heapUsedBytes": 40852880,
+        "heapGrowthBytes": 39112,
+        "externalGrowthBytes": 1880,
+        "arrayBufferGrowthBytes": 1840,
+        "observedGrowthBytes": 40992,
+        "peakRssBytes": 93061120
+      },
+      "isolation": {
+        "v8OldSpaceMb": 128,
+        "rssGuard": "not-observed",
+        "osMemorySandbox": false
+      },
+      "seedName": "local-library",
+      "mutation": "duplicate"
+    },
+    {
+      "targetId": "il-document",
+      "seed": 1,
+      "caseIndex": 15,
+      "inputBytes": 1824,
+      "inputSHA256": "eca6d083d897107a5a8a5b03d82faebaff8bf7465c0e2884a2af587595547284",
+      "sourceIdentity": {
+        "commit": "9e6235635fdfb92939e8d7cbf1985db774d1fa31",
+        "tree": "3b4b42b335f088d800610ad4af19dafde9fa07a3",
+        "clean": true
+      },
+      "budgets": {
+        "maxCases": 32,
+        "caseTimeoutMs": 1000,
+        "startupTimeoutMs": 5000,
+        "campaignTimeoutMs": 30000,
+        "maxInputBytes": 65536,
+        "maxOutputBytes": 65536,
+        "heapGrowthBytes": 16777216,
+        "v8HeapMb": 128,
+        "rssBytes": 268435456,
+        "maxCorpusCases": 128,
+        "maxCorpusBytes": 8388608
+      },
+      "qualification": "node-offline-parser",
+      "status": "accepted",
+      "code": "IL_DOCUMENT_EXACT_ROUNDTRIP",
+      "metrics": {
+        "processElapsedMs": 645.3799249999993,
+        "sampledRssBytes": 0,
+        "elapsedMs": 18.684321999999952,
+        "baselineHeapBytes": 41415800,
+        "heapUsedBytes": 38876072,
+        "heapGrowthBytes": 0,
+        "externalGrowthBytes": 25584,
+        "arrayBufferGrowthBytes": 25544,
+        "observedGrowthBytes": 25584,
+        "peakRssBytes": 94162944
+      },
+      "isolation": {
+        "v8OldSpaceMb": 128,
+        "rssGuard": "not-observed",
+        "osMemorySandbox": false
+      },
+      "seedName": "literal-comment",
+      "mutation": "replace"
+    },
+    {
+      "targetId": "il-document",
+      "seed": 1,
+      "caseIndex": 16,
+      "inputBytes": 928,
+      "inputSHA256": "421b36e2782b6987a2027b08610c3ed401c300493b0bc2c94d8569c9b0ce1e46",
+      "sourceIdentity": {
+        "commit": "9e6235635fdfb92939e8d7cbf1985db774d1fa31",
+        "tree": "3b4b42b335f088d800610ad4af19dafde9fa07a3",
+        "clean": true
+      },
+      "budgets": {
+        "maxCases": 32,
+        "caseTimeoutMs": 1000,
+        "startupTimeoutMs": 5000,
+        "campaignTimeoutMs": 30000,
+        "maxInputBytes": 65536,
+        "maxOutputBytes": 65536,
+        "heapGrowthBytes": 16777216,
+        "v8HeapMb": 128,
+        "rssBytes": 268435456,
+        "maxCorpusCases": 128,
+        "maxCorpusBytes": 8388608
+      },
+      "qualification": "node-offline-parser",
+      "status": "rejected",
+      "code": "IL_DOCUMENT",
+      "metrics": {
+        "processElapsedMs": 701.6662240000005,
+        "sampledRssBytes": 74051584,
+        "elapsedMs": 0.6643859999999222,
+        "baselineHeapBytes": 40646128,
+        "heapUsedBytes": 40681080,
+        "heapGrowthBytes": 34952,
+        "externalGrowthBytes": 968,
+        "arrayBufferGrowthBytes": 928,
+        "observedGrowthBytes": 35920,
+        "peakRssBytes": 94322688
+      },
+      "isolation": {
+        "v8OldSpaceMb": 128,
+        "rssGuard": "sampled-linux",
+        "osMemorySandbox": false
+      },
+      "seedName": "floating-negative-zero",
+      "mutation": "truncate"
+    },
+    {
+      "targetId": "il-document",
+      "seed": 1,
+      "caseIndex": 17,
+      "inputBytes": 1753,
+      "inputSHA256": "1e271b489c71039a86f549465e7dba035245a2eda96073062278386caaf6e478",
+      "sourceIdentity": {
+        "commit": "9e6235635fdfb92939e8d7cbf1985db774d1fa31",
+        "tree": "3b4b42b335f088d800610ad4af19dafde9fa07a3",
+        "clean": true
+      },
+      "budgets": {
+        "maxCases": 32,
+        "caseTimeoutMs": 1000,
+        "startupTimeoutMs": 5000,
+        "campaignTimeoutMs": 30000,
+        "maxInputBytes": 65536,
+        "maxOutputBytes": 65536,
+        "heapGrowthBytes": 16777216,
+        "v8HeapMb": 128,
+        "rssBytes": 268435456,
+        "maxCorpusCases": 128,
+        "maxCorpusBytes": 8388608
+      },
+      "qualification": "node-offline-parser",
+      "status": "accepted",
+      "code": "IL_DOCUMENT_EXACT_ROUNDTRIP",
+      "metrics": {
+        "processElapsedMs": 644.6463920000006,
+        "sampledRssBytes": 74256384,
+        "elapsedMs": 7.386823000000049,
+        "baselineHeapBytes": 43109592,
+        "heapUsedBytes": 43737400,
+        "heapGrowthBytes": 627808,
+        "externalGrowthBytes": 20707,
+        "arrayBufferGrowthBytes": 20667,
+        "observedGrowthBytes": 648515,
+        "peakRssBytes": 94683136
+      },
+      "isolation": {
+        "v8OldSpaceMb": 128,
+        "rssGuard": "sampled-linux",
+        "osMemorySandbox": false
+      },
+      "seedName": "floating-nan-payload",
+      "mutation": "delete"
+    },
+    {
+      "targetId": "il-document",
+      "seed": 1,
+      "caseIndex": 18,
+      "inputBytes": 1830,
+      "inputSHA256": "16667648c09479e5241eb5a3f08c27bd7b7ce9cb8f44cf913e408943b25c4997",
+      "sourceIdentity": {
+        "commit": "9e6235635fdfb92939e8d7cbf1985db774d1fa31",
+        "tree": "3b4b42b335f088d800610ad4af19dafde9fa07a3",
+        "clean": true
+      },
+      "budgets": {
+        "maxCases": 32,
+        "caseTimeoutMs": 1000,
+        "startupTimeoutMs": 5000,
+        "campaignTimeoutMs": 30000,
+        "maxInputBytes": 65536,
+        "maxOutputBytes": 65536,
+        "heapGrowthBytes": 16777216,
+        "v8HeapMb": 128,
+        "rssBytes": 268435456,
+        "maxCorpusCases": 128,
+        "maxCorpusBytes": 8388608
+      },
+      "qualification": "node-offline-parser",
+      "status": "rejected",
+      "code": "FUZZ_UTF8",
+      "metrics": {
+        "processElapsedMs": 680.1583740000005,
+        "sampledRssBytes": 0,
+        "elapsedMs": 0.3454380000000583,
+        "baselineHeapBytes": 43134856,
+        "heapUsedBytes": 43155408,
+        "heapGrowthBytes": 20552,
+        "externalGrowthBytes": 1870,
+        "arrayBufferGrowthBytes": 1830,
+        "observedGrowthBytes": 22422,
+        "peakRssBytes": 95678464
+      },
+      "isolation": {
+        "v8OldSpaceMb": 128,
+        "rssGuard": "not-observed",
+        "osMemorySandbox": false
+      },
+      "seedName": "unknown-opcode",
+      "mutation": "insert"
+    },
+    {
+      "targetId": "il-document",
+      "seed": 1,
+      "caseIndex": 19,
+      "inputBytes": 26,
+      "inputSHA256": "12d9574a97d326578e73ca6ec2acd652bdd1fff1ba27a00afba5e4fe5c1bd6d6",
+      "sourceIdentity": {
+        "commit": "9e6235635fdfb92939e8d7cbf1985db774d1fa31",
+        "tree": "3b4b42b335f088d800610ad4af19dafde9fa07a3",
+        "clean": true
+      },
+      "budgets": {
+        "maxCases": 32,
+        "caseTimeoutMs": 1000,
+        "startupTimeoutMs": 5000,
+        "campaignTimeoutMs": 30000,
+        "maxInputBytes": 65536,
+        "maxOutputBytes": 65536,
+        "heapGrowthBytes": 16777216,
+        "v8HeapMb": 128,
+        "rssBytes": 268435456,
+        "maxCorpusCases": 128,
+        "maxCorpusBytes": 8388608
+      },
+      "qualification": "node-offline-parser",
+      "status": "rejected",
+      "code": "IL_DOCUMENT",
+      "metrics": {
+        "processElapsedMs": 743.7443789999998,
+        "sampledRssBytes": 0,
+        "elapsedMs": 0.8740049999998973,
+        "baselineHeapBytes": 40768560,
+        "heapUsedBytes": 40797640,
+        "heapGrowthBytes": 29080,
+        "externalGrowthBytes": 66,
+        "arrayBufferGrowthBytes": 26,
+        "observedGrowthBytes": 29146,
+        "peakRssBytes": 93319168
+      },
+      "isolation": {
+        "v8OldSpaceMb": 128,
+        "rssGuard": "not-observed",
+        "osMemorySandbox": false
+      },
+      "seedName": "missing-image",
+      "mutation": "duplicate"
+    },
+    {
+      "targetId": "il-document",
+      "seed": 1,
+      "caseIndex": 20,
+      "inputBytes": 1824,
+      "inputSHA256": "e0d2cef4b0e2279b78d1f1059ba5e7f69523e651bd38992fef424d799fb256cd",
+      "sourceIdentity": {
+        "commit": "9e6235635fdfb92939e8d7cbf1985db774d1fa31",
+        "tree": "3b4b42b335f088d800610ad4af19dafde9fa07a3",
+        "clean": true
+      },
+      "budgets": {
+        "maxCases": 32,
+        "caseTimeoutMs": 1000,
+        "startupTimeoutMs": 5000,
+        "campaignTimeoutMs": 30000,
+        "maxInputBytes": 65536,
+        "maxOutputBytes": 65536,
+        "heapGrowthBytes": 16777216,
+        "v8HeapMb": 128,
+        "rssBytes": 268435456,
+        "maxCorpusCases": 128,
+        "maxCorpusBytes": 8388608
+      },
+      "qualification": "node-offline-parser",
+      "status": "rejected",
+      "code": "IL_DOCUMENT",
+      "metrics": {
+        "processElapsedMs": 863.4974229999989,
+        "sampledRssBytes": 0,
+        "elapsedMs": 0.9448690000000397,
+        "baselineHeapBytes": 43175208,
+        "heapUsedBytes": 43215840,
+        "heapGrowthBytes": 40632,
+        "externalGrowthBytes": 1864,
+        "arrayBufferGrowthBytes": 1824,
+        "observedGrowthBytes": 42496,
+        "peakRssBytes": 95170560
+      },
+      "isolation": {
+        "v8OldSpaceMb": 128,
+        "rssGuard": "not-observed",
+        "osMemorySandbox": false
+      },
+      "seedName": "incomplete-method",
+      "mutation": "replace"
+    },
+    {
+      "targetId": "il-document",
+      "seed": 1,
+      "caseIndex": 21,
+      "inputBytes": 420,
+      "inputSHA256": "f82b2c7859b6a077385aac6f79dd48051517172b57ec09f51b9ed3369cd53da9",
+      "sourceIdentity": {
+        "commit": "9e6235635fdfb92939e8d7cbf1985db774d1fa31",
+        "tree": "3b4b42b335f088d800610ad4af19dafde9fa07a3",
+        "clean": true
+      },
+      "budgets": {
+        "maxCases": 32,
+        "caseTimeoutMs": 1000,
+        "startupTimeoutMs": 5000,
+        "campaignTimeoutMs": 30000,
+        "maxInputBytes": 65536,
+        "maxOutputBytes": 65536,
+        "heapGrowthBytes": 16777216,
+        "v8HeapMb": 128,
+        "rssBytes": 268435456,
+        "maxCorpusCases": 128,
+        "maxCorpusBytes": 8388608
+      },
+      "qualification": "node-offline-parser",
+      "status": "rejected",
+      "code": "IL_DOCUMENT",
+      "metrics": {
+        "processElapsedMs": 769.8087290000003,
+        "sampledRssBytes": 0,
+        "elapsedMs": 0.822879999999941,
+        "baselineHeapBytes": 41433040,
+        "heapUsedBytes": 41466296,
+        "heapGrowthBytes": 33256,
+        "externalGrowthBytes": 460,
+        "arrayBufferGrowthBytes": 420,
+        "observedGrowthBytes": 33716,
+        "peakRssBytes": 93745152
+      },
+      "isolation": {
+        "v8OldSpaceMb": 128,
+        "rssGuard": "not-observed",
+        "osMemorySandbox": false
+      },
+      "seedName": "local-library",
+      "mutation": "truncate"
+    },
+    {
+      "targetId": "il-document",
+      "seed": 1,
+      "caseIndex": 22,
+      "inputBytes": 1823,
+      "inputSHA256": "97b13850a9ec1e3befef7cd6c9ed8b6caf272b8fdf7d44813607ec75944f628d",
+      "sourceIdentity": {
+        "commit": "9e6235635fdfb92939e8d7cbf1985db774d1fa31",
+        "tree": "3b4b42b335f088d800610ad4af19dafde9fa07a3",
+        "clean": true
+      },
+      "budgets": {
+        "maxCases": 32,
+        "caseTimeoutMs": 1000,
+        "startupTimeoutMs": 5000,
+        "campaignTimeoutMs": 30000,
+        "maxInputBytes": 65536,
+        "maxOutputBytes": 65536,
+        "heapGrowthBytes": 16777216,
+        "v8HeapMb": 128,
+        "rssBytes": 268435456,
+        "maxCorpusCases": 128,
+        "maxCorpusBytes": 8388608
+      },
+      "qualification": "node-offline-parser",
+      "status": "rejected",
+      "code": "IL_DOCUMENT",
+      "metrics": {
+        "processElapsedMs": 778.939489999997,
+        "sampledRssBytes": 0,
+        "elapsedMs": 0.8716809999999668,
+        "baselineHeapBytes": 40483128,
+        "heapUsedBytes": 40522160,
+        "heapGrowthBytes": 39032,
+        "externalGrowthBytes": 1863,
+        "arrayBufferGrowthBytes": 1823,
+        "observedGrowthBytes": 40895,
+        "peakRssBytes": 93900800
+      },
+      "isolation": {
+        "v8OldSpaceMb": 128,
+        "rssGuard": "not-observed",
+        "osMemorySandbox": false
+      },
+      "seedName": "literal-comment",
+      "mutation": "delete"
+    },
+    {
+      "targetId": "il-document",
+      "seed": 1,
+      "caseIndex": 23,
+      "inputBytes": 1773,
+      "inputSHA256": "3c7507af99f8bbf99259699e571459dffdbf8758939a40e67417a6f249f89e2c",
+      "sourceIdentity": {
+        "commit": "9e6235635fdfb92939e8d7cbf1985db774d1fa31",
+        "tree": "3b4b42b335f088d800610ad4af19dafde9fa07a3",
+        "clean": true
+      },
+      "budgets": {
+        "maxCases": 32,
+        "caseTimeoutMs": 1000,
+        "startupTimeoutMs": 5000,
+        "campaignTimeoutMs": 30000,
+        "maxInputBytes": 65536,
+        "maxOutputBytes": 65536,
+        "heapGrowthBytes": 16777216,
+        "v8HeapMb": 128,
+        "rssBytes": 268435456,
+        "maxCorpusCases": 128,
+        "maxCorpusBytes": 8388608
+      },
+      "qualification": "node-offline-parser",
+      "status": "rejected",
+      "code": "FUZZ_UTF8",
+      "metrics": {
+        "processElapsedMs": 691.3787139999986,
+        "sampledRssBytes": 0,
+        "elapsedMs": 0.3795679999999493,
+        "baselineHeapBytes": 41504808,
+        "heapUsedBytes": 41525288,
+        "heapGrowthBytes": 20480,
+        "externalGrowthBytes": 1813,
+        "arrayBufferGrowthBytes": 1773,
+        "observedGrowthBytes": 22293,
+        "peakRssBytes": 94072832
+      },
+      "isolation": {
+        "v8OldSpaceMb": 128,
+        "rssGuard": "not-observed",
+        "osMemorySandbox": false
+      },
+      "seedName": "floating-negative-zero",
+      "mutation": "insert"
+    },
+    {
+      "targetId": "il-document",
+      "seed": 1,
+      "caseIndex": 24,
+      "inputBytes": 1783,
+      "inputSHA256": "003e370acb2293469b80a6ab1c910f2f2a45be42595d4bd6c0aa6bdb5e034df3",
+      "sourceIdentity": {
+        "commit": "9e6235635fdfb92939e8d7cbf1985db774d1fa31",
+        "tree": "3b4b42b335f088d800610ad4af19dafde9fa07a3",
+        "clean": true
+      },
+      "budgets": {
+        "maxCases": 32,
+        "caseTimeoutMs": 1000,
+        "startupTimeoutMs": 5000,
+        "campaignTimeoutMs": 30000,
+        "maxInputBytes": 65536,
+        "maxOutputBytes": 65536,
+        "heapGrowthBytes": 16777216,
+        "v8HeapMb": 128,
+        "rssBytes": 268435456,
+        "maxCorpusCases": 128,
+        "maxCorpusBytes": 8388608
+      },
+      "qualification": "node-offline-parser",
+      "status": "rejected",
+      "code": "IL_DOCUMENT",
+      "metrics": {
+        "processElapsedMs": 722.0347840000031,
+        "sampledRssBytes": 0,
+        "elapsedMs": 5.082721000000106,
+        "baselineHeapBytes": 40826304,
+        "heapUsedBytes": 41028384,
+        "heapGrowthBytes": 202080,
+        "externalGrowthBytes": 7991,
+        "arrayBufferGrowthBytes": 7951,
+        "observedGrowthBytes": 210071,
+        "peakRssBytes": 93700096
+      },
+      "isolation": {
+        "v8OldSpaceMb": 128,
+        "rssGuard": "not-observed",
+        "osMemorySandbox": false
+      },
+      "seedName": "floating-nan-payload",
+      "mutation": "duplicate"
+    },
+    {
+      "targetId": "il-document",
+      "seed": 1,
+      "caseIndex": 25,
+      "inputBytes": 1828,
+      "inputSHA256": "3be8d7c5cdd256f51982e1b67d738a93912b0444d43b1498e484657fa5add66c",
+      "sourceIdentity": {
+        "commit": "9e6235635fdfb92939e8d7cbf1985db774d1fa31",
+        "tree": "3b4b42b335f088d800610ad4af19dafde9fa07a3",
+        "clean": true
+      },
+      "budgets": {
+        "maxCases": 32,
+        "caseTimeoutMs": 1000,
+        "startupTimeoutMs": 5000,
+        "campaignTimeoutMs": 30000,
+        "maxInputBytes": 65536,
+        "maxOutputBytes": 65536,
+        "heapGrowthBytes": 16777216,
+        "v8HeapMb": 128,
+        "rssBytes": 268435456,
+        "maxCorpusCases": 128,
+        "maxCorpusBytes": 8388608
+      },
+      "qualification": "node-offline-parser",
+      "status": "rejected",
+      "code": "IL_DOCUMENT",
+      "metrics": {
+        "processElapsedMs": 779.3258129999995,
+        "sampledRssBytes": 0,
+        "elapsedMs": 0.8003069999999752,
+        "baselineHeapBytes": 40824648,
+        "heapUsedBytes": 40863016,
+        "heapGrowthBytes": 38368,
+        "externalGrowthBytes": 1868,
+        "arrayBufferGrowthBytes": 1828,
+        "observedGrowthBytes": 40236,
+        "peakRssBytes": 93839360
+      },
+      "isolation": {
+        "v8OldSpaceMb": 128,
+        "rssGuard": "not-observed",
+        "osMemorySandbox": false
+      },
+      "seedName": "unknown-opcode",
+      "mutation": "replace"
+    },
+    {
+      "targetId": "il-document",
+      "seed": 1,
+      "caseIndex": 26,
+      "inputBytes": 21,
+      "inputSHA256": "58d8d3dab2de33e17c49fe0146ca932d801253d4e19336f13653e0d4b05846b4",
+      "sourceIdentity": {
+        "commit": "9e6235635fdfb92939e8d7cbf1985db774d1fa31",
+        "tree": "3b4b42b335f088d800610ad4af19dafde9fa07a3",
+        "clean": true
+      },
+      "budgets": {
+        "maxCases": 32,
+        "caseTimeoutMs": 1000,
+        "startupTimeoutMs": 5000,
+        "campaignTimeoutMs": 30000,
+        "maxInputBytes": 65536,
+        "maxOutputBytes": 65536,
+        "heapGrowthBytes": 16777216,
+        "v8HeapMb": 128,
+        "rssBytes": 268435456,
+        "maxCorpusCases": 128,
+        "maxCorpusBytes": 8388608
+      },
+      "qualification": "node-offline-parser",
+      "status": "rejected",
+      "code": "IL_DOCUMENT",
+      "metrics": {
+        "processElapsedMs": 770.8412219999991,
+        "sampledRssBytes": 0,
+        "elapsedMs": 0.8072060000000647,
+        "baselineHeapBytes": 41021560,
+        "heapUsedBytes": 41052664,
+        "heapGrowthBytes": 31104,
+        "externalGrowthBytes": 61,
+        "arrayBufferGrowthBytes": 21,
+        "observedGrowthBytes": 31165,
+        "peakRssBytes": 94146560
+      },
+      "isolation": {
+        "v8OldSpaceMb": 128,
+        "rssGuard": "not-observed",
+        "osMemorySandbox": false
+      },
+      "seedName": "missing-image",
+      "mutation": "truncate"
+    },
+    {
+      "targetId": "il-document",
+      "seed": 1,
+      "caseIndex": 27,
+      "inputBytes": 1816,
+      "inputSHA256": "a46a82a581e7b9a2c86a0cfd4980229f2b5ce77c8ad20a34eaa46b98097f6544",
+      "sourceIdentity": {
+        "commit": "9e6235635fdfb92939e8d7cbf1985db774d1fa31",
+        "tree": "3b4b42b335f088d800610ad4af19dafde9fa07a3",
+        "clean": true
+      },
+      "budgets": {
+        "maxCases": 32,
+        "caseTimeoutMs": 1000,
+        "startupTimeoutMs": 5000,
+        "campaignTimeoutMs": 30000,
+        "maxInputBytes": 65536,
+        "maxOutputBytes": 65536,
+        "heapGrowthBytes": 16777216,
+        "v8HeapMb": 128,
+        "rssBytes": 268435456,
+        "maxCorpusCases": 128,
+        "maxCorpusBytes": 8388608
+      },
+      "qualification": "node-offline-parser",
+      "status": "rejected",
+      "code": "IL_DOCUMENT",
+      "metrics": {
+        "processElapsedMs": 777.0240010000016,
+        "sampledRssBytes": 0,
+        "elapsedMs": 1.5370589999999993,
+        "baselineHeapBytes": 40858640,
+        "heapUsedBytes": 40916240,
+        "heapGrowthBytes": 57600,
+        "externalGrowthBytes": 2880,
+        "arrayBufferGrowthBytes": 2840,
+        "observedGrowthBytes": 60480,
+        "peakRssBytes": 93720576
+      },
+      "isolation": {
+        "v8OldSpaceMb": 128,
+        "rssGuard": "not-observed",
+        "osMemorySandbox": false
+      },
+      "seedName": "incomplete-method",
+      "mutation": "delete"
+    },
+    {
+      "targetId": "il-document",
+      "seed": 1,
+      "caseIndex": 28,
+      "inputBytes": 1830,
+      "inputSHA256": "204726ec63992869ef14c49d445d592a82a9d01509ef400592071012293970a4",
+      "sourceIdentity": {
+        "commit": "9e6235635fdfb92939e8d7cbf1985db774d1fa31",
+        "tree": "3b4b42b335f088d800610ad4af19dafde9fa07a3",
+        "clean": true
+      },
+      "budgets": {
+        "maxCases": 32,
+        "caseTimeoutMs": 1000,
+        "startupTimeoutMs": 5000,
+        "campaignTimeoutMs": 30000,
+        "maxInputBytes": 65536,
+        "maxOutputBytes": 65536,
+        "heapGrowthBytes": 16777216,
+        "v8HeapMb": 128,
+        "rssBytes": 268435456,
+        "maxCorpusCases": 128,
+        "maxCorpusBytes": 8388608
+      },
+      "qualification": "node-offline-parser",
+      "status": "rejected",
+      "code": "FUZZ_UTF8",
+      "metrics": {
+        "processElapsedMs": 952.8370309999991,
+        "sampledRssBytes": 0,
+        "elapsedMs": 0.35825599999998303,
+        "baselineHeapBytes": 40733008,
+        "heapUsedBytes": 40753560,
+        "heapGrowthBytes": 20552,
+        "externalGrowthBytes": 1870,
+        "arrayBufferGrowthBytes": 1830,
+        "observedGrowthBytes": 22422,
+        "peakRssBytes": 94621696
+      },
+      "isolation": {
+        "v8OldSpaceMb": 128,
+        "rssGuard": "not-observed",
+        "osMemorySandbox": false
+      },
+      "seedName": "local-library",
+      "mutation": "insert"
+    },
+    {
+      "targetId": "il-document",
+      "seed": 1,
+      "caseIndex": 29,
+      "inputBytes": 1827,
+      "inputSHA256": "da3cb156cffe17ccec09ae556b3b6f62d0b2b63f78147e2e5e4ef36156732d9a",
+      "sourceIdentity": {
+        "commit": "9e6235635fdfb92939e8d7cbf1985db774d1fa31",
+        "tree": "3b4b42b335f088d800610ad4af19dafde9fa07a3",
+        "clean": true
+      },
+      "budgets": {
+        "maxCases": 32,
+        "caseTimeoutMs": 1000,
+        "startupTimeoutMs": 5000,
+        "campaignTimeoutMs": 30000,
+        "maxInputBytes": 65536,
+        "maxOutputBytes": 65536,
+        "heapGrowthBytes": 16777216,
+        "v8HeapMb": 128,
+        "rssBytes": 268435456,
+        "maxCorpusCases": 128,
+        "maxCorpusBytes": 8388608
+      },
+      "qualification": "node-offline-parser",
+      "status": "rejected",
+      "code": "IL_DOCUMENT",
+      "metrics": {
+        "processElapsedMs": 800.7747449999988,
+        "sampledRssBytes": 0,
+        "elapsedMs": 0.625028000000043,
+        "baselineHeapBytes": 43158944,
+        "heapUsedBytes": 43198000,
+        "heapGrowthBytes": 39056,
+        "externalGrowthBytes": 1867,
+        "arrayBufferGrowthBytes": 1827,
+        "observedGrowthBytes": 40923,
+        "peakRssBytes": 94834688
+      },
+      "isolation": {
+        "v8OldSpaceMb": 128,
+        "rssGuard": "not-observed",
+        "osMemorySandbox": false
+      },
+      "seedName": "literal-comment",
+      "mutation": "duplicate"
+    },
+    {
+      "targetId": "il-document",
+      "seed": 1,
+      "caseIndex": 30,
+      "inputBytes": 1768,
+      "inputSHA256": "5cdc6b4ea5887115742de098d74b2aa451f7ddb402bc8d2dc0898325711f6ca0",
+      "sourceIdentity": {
+        "commit": "9e6235635fdfb92939e8d7cbf1985db774d1fa31",
+        "tree": "3b4b42b335f088d800610ad4af19dafde9fa07a3",
+        "clean": true
+      },
+      "budgets": {
+        "maxCases": 32,
+        "caseTimeoutMs": 1000,
+        "startupTimeoutMs": 5000,
+        "campaignTimeoutMs": 30000,
+        "maxInputBytes": 65536,
+        "maxOutputBytes": 65536,
+        "heapGrowthBytes": 16777216,
+        "v8HeapMb": 128,
+        "rssBytes": 268435456,
+        "maxCorpusCases": 128,
+        "maxCorpusBytes": 8388608
+      },
+      "qualification": "node-offline-parser",
+      "status": "rejected",
+      "code": "IL_DOCUMENT",
+      "metrics": {
+        "processElapsedMs": 822.8821659999994,
+        "sampledRssBytes": 0,
+        "elapsedMs": 0.9290660000000344,
+        "baselineHeapBytes": 40563248,
+        "heapUsedBytes": 40603144,
+        "heapGrowthBytes": 39896,
+        "externalGrowthBytes": 1808,
+        "arrayBufferGrowthBytes": 1768,
+        "observedGrowthBytes": 41704,
+        "peakRssBytes": 93167616
+      },
+      "isolation": {
+        "v8OldSpaceMb": 128,
+        "rssGuard": "not-observed",
+        "osMemorySandbox": false
+      },
+      "seedName": "floating-negative-zero",
+      "mutation": "replace"
+    },
+    {
+      "targetId": "il-document",
+      "seed": 1,
+      "caseIndex": 31,
+      "inputBytes": 1092,
+      "inputSHA256": "1c2fdca7cc96bf01ca0a5b023417b7c4477a923a4775637690bfd188b711c58d",
+      "sourceIdentity": {
+        "commit": "9e6235635fdfb92939e8d7cbf1985db774d1fa31",
+        "tree": "3b4b42b335f088d800610ad4af19dafde9fa07a3",
+        "clean": true
+      },
+      "budgets": {
+        "maxCases": 32,
+        "caseTimeoutMs": 1000,
+        "startupTimeoutMs": 5000,
+        "campaignTimeoutMs": 30000,
+        "maxInputBytes": 65536,
+        "maxOutputBytes": 65536,
+        "heapGrowthBytes": 16777216,
+        "v8HeapMb": 128,
+        "rssBytes": 268435456,
+        "maxCorpusCases": 128,
+        "maxCorpusBytes": 8388608
+      },
+      "qualification": "node-offline-parser",
+      "status": "rejected",
+      "code": "IL_DOCUMENT",
+      "metrics": {
+        "processElapsedMs": 719.9625169999999,
+        "sampledRssBytes": 0,
+        "elapsedMs": 0.8372900000000527,
+        "baselineHeapBytes": 41550736,
+        "heapUsedBytes": 41588480,
+        "heapGrowthBytes": 37744,
+        "externalGrowthBytes": 1132,
+        "arrayBufferGrowthBytes": 1092,
+        "observedGrowthBytes": 38876,
+        "peakRssBytes": 92987392
+      },
+      "isolation": {
+        "v8OldSpaceMb": 128,
+        "rssGuard": "not-observed",
+        "osMemorySandbox": false
+      },
+      "seedName": "floating-nan-payload",
+      "mutation": "truncate"
+    }
+  ],
+  "artifacts": [],
+  "budgets": {
+    "maxCases": 32,
+    "caseTimeoutMs": 1000,
+    "startupTimeoutMs": 5000,
+    "campaignTimeoutMs": 30000,
+    "maxInputBytes": 65536,
+    "maxOutputBytes": 65536,
+    "heapGrowthBytes": 16777216,
+    "v8HeapMb": 128,
+    "rssBytes": 268435456,
+    "maxCorpusCases": 128,
+    "maxCorpusBytes": 8388608
+  },
+  "environment": {
+    "node": "v24.19.0",
+    "platform": "linux",
+    "arch": "x64"
+  },
+  "targetId": "il-document",
+  "seed": 1,
+  "sourceIdentity": {
+    "commit": "9e6235635fdfb92939e8d7cbf1985db774d1fa31",
+    "tree": "3b4b42b335f088d800610ad4af19dafde9fa07a3",
+    "clean": true
+  },
+  "seedAcquisition": {
+    "status": "accepted",
+    "metrics": {
+      "processElapsedMs": 789.640668,
+      "sampledRssBytes": 0,
+      "elapsedMs": 25.229501000000027,
+      "baselineHeapBytes": 41407360,
+      "heapUsedBytes": 39261008,
+      "heapGrowthBytes": 0,
+      "externalGrowthBytes": 37584,
+      "arrayBufferGrowthBytes": 37544,
+      "observedGrowthBytes": 37584,
+      "peakRssBytes": 95842304
+    },
+    "isolation": {
+      "v8OldSpaceMb": 128,
+      "rssGuard": "not-observed",
+      "osMemorySandbox": false
+    }
+  }
+}

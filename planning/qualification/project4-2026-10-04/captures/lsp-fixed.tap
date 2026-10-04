@@ -1,0 +1,190 @@
+TAP version 13
+# Subtest: LSP rejects the null envelope with a stable Invalid Request response
+ok 1 - LSP rejects the null envelope with a stable Invalid Request response
+  ---
+  duration_ms: 2.178393
+  type: 'test'
+  ...
+# Subtest: LSP rejects the undefined envelope with a stable Invalid Request response
+ok 2 - LSP rejects the undefined envelope with a stable Invalid Request response
+  ---
+  duration_ms: 0.171091
+  type: 'test'
+  ...
+# Subtest: LSP rejects the string envelope with a stable Invalid Request response
+ok 3 - LSP rejects the string envelope with a stable Invalid Request response
+  ---
+  duration_ms: 0.132885
+  type: 'test'
+  ...
+# Subtest: LSP rejects the empty string envelope with a stable Invalid Request response
+ok 4 - LSP rejects the empty string envelope with a stable Invalid Request response
+  ---
+  duration_ms: 0.113837
+  type: 'test'
+  ...
+# Subtest: LSP rejects the number envelope with a stable Invalid Request response
+ok 5 - LSP rejects the number envelope with a stable Invalid Request response
+  ---
+  duration_ms: 0.260804
+  type: 'test'
+  ...
+# Subtest: LSP rejects the zero envelope with a stable Invalid Request response
+ok 6 - LSP rejects the zero envelope with a stable Invalid Request response
+  ---
+  duration_ms: 0.144933
+  type: 'test'
+  ...
+# Subtest: LSP rejects the NaN envelope with a stable Invalid Request response
+ok 7 - LSP rejects the NaN envelope with a stable Invalid Request response
+  ---
+  duration_ms: 0.098675
+  type: 'test'
+  ...
+# Subtest: LSP rejects the true envelope with a stable Invalid Request response
+ok 8 - LSP rejects the true envelope with a stable Invalid Request response
+  ---
+  duration_ms: 0.120497
+  type: 'test'
+  ...
+# Subtest: LSP rejects the false envelope with a stable Invalid Request response
+ok 9 - LSP rejects the false envelope with a stable Invalid Request response
+  ---
+  duration_ms: 0.134638
+  type: 'test'
+  ...
+# Subtest: LSP rejects the bigint envelope with a stable Invalid Request response
+ok 10 - LSP rejects the bigint envelope with a stable Invalid Request response
+  ---
+  duration_ms: 0.212333
+  type: 'test'
+  ...
+# Subtest: LSP rejects the symbol envelope with a stable Invalid Request response
+ok 11 - LSP rejects the symbol envelope with a stable Invalid Request response
+  ---
+  duration_ms: 0.613763
+  type: 'test'
+  ...
+# Subtest: LSP rejects the function envelope with a stable Invalid Request response
+ok 12 - LSP rejects the function envelope with a stable Invalid Request response
+  ---
+  duration_ms: 0.179004
+  type: 'test'
+  ...
+# Subtest: LSP rejects the empty array envelope with a stable Invalid Request response
+ok 13 - LSP rejects the empty array envelope with a stable Invalid Request response
+  ---
+  duration_ms: 0.131143
+  type: 'test'
+  ...
+# Subtest: LSP rejects the batch array envelope with a stable Invalid Request response
+ok 14 - LSP rejects the batch array envelope with a stable Invalid Request response
+  ---
+  duration_ms: 0.113847
+  type: 'test'
+  ...
+# Subtest: LSP rejects arrays carrying request properties before any dispatch side effect
+ok 15 - LSP rejects arrays carrying request properties before any dispatch side effect
+  ---
+  duration_ms: 0.201316
+  type: 'test'
+  ...
+# Subtest: LSP preserves request IDs and the optional jsonrpc field at the public adapter boundary
+ok 16 - LSP preserves request IDs and the optional jsonrpc field at the public adapter boundary
+  ---
+  duration_ms: 0.408591
+  type: 'test'
+  ...
+# Subtest: LSP retains initialization capabilities and the semantic token wire legend
+ok 17 - LSP retains initialization capabilities and the semantic token wire legend
+  ---
+  duration_ms: 0.167826
+  type: 'test'
+  ...
+# Subtest: LSP still dispatches document notifications and publishes diagnostics after a rejected envelope
+ok 18 - LSP still dispatches document notifications and publishes diagnostics after a rejected envelope
+  ---
+  duration_ms: 58.30838
+  type: 'test'
+  ...
+# Subtest: LSP still omits responses to notifications and preserves lifecycle errors
+ok 19 - LSP still omits responses to notifications and preserves lifecycle errors
+  ---
+  duration_ms: 0.288835
+  type: 'test'
+  ...
+# Subtest: LSP: initialization advertises implemented UTF-16 capabilities
+ok 20 - LSP: initialization advertises implemented UTF-16 capabilities
+  ---
+  duration_ms: 1.301674
+  type: 'test'
+  ...
+# Subtest: LSP: versioned diagnostics publish on open and edit
+ok 21 - LSP: versioned diagnostics publish on open and edit
+  ---
+  duration_ms: 66.141304
+  type: 'test'
+  ...
+# Subtest: LSP: completion, rename and semantic tokens return protocol shapes
+ok 22 - LSP: completion, rename and semantic tokens return protocol shapes
+  ---
+  duration_ms: 18.406357
+  type: 'test'
+  ...
+# Subtest: LSP: unknown methods return method-not-found
+ok 23 - LSP: unknown methods return method-not-found
+  ---
+  duration_ms: 0.173586
+  type: 'test'
+  ...
+# Subtest: DAP: launch, stepping, inspection and repeated stopped events
+ok 24 - DAP: launch, stepping, inspection and repeated stopped events
+  ---
+  duration_ms: 15.950766
+  type: 'test'
+  ...
+# Subtest: DAP: unsupported requests fail explicitly
+ok 25 - DAP: unsupported requests fail explicitly
+  ---
+  duration_ms: 0.219964
+  type: 'test'
+  ...
+# Subtest: DAP: breakpoints can be configured before launch
+ok 26 - DAP: breakpoints can be configured before launch
+  ---
+  duration_ms: 4.599234
+  type: 'test'
+  ...
+# Subtest: DAP: IL launch from Uint8Array retains source stepping and IL frame coordinates
+ok 27 - DAP: IL launch from Uint8Array retains source stepping and IL frame coordinates
+  ---
+  duration_ms: 36.481678
+  type: 'test'
+  ...
+# Subtest: DAP: IL launch from ArrayBuffer retains source stepping and IL frame coordinates
+ok 28 - DAP: IL launch from ArrayBuffer retains source stepping and IL frame coordinates
+  ---
+  duration_ms: 9.775426
+  type: 'test'
+  ...
+# Subtest: DAP: IL launch from JSON byte array retains source stepping and IL frame coordinates
+ok 29 - DAP: IL launch from JSON byte array retains source stepping and IL frame coordinates
+  ---
+  duration_ms: 12.69626
+  type: 'test'
+  ...
+# Subtest: DAP: malformed assembly transport bytes are rejected rather than coerced
+ok 30 - DAP: malformed assembly transport bytes are rejected rather than coerced
+  ---
+  duration_ms: 0.777012
+  type: 'test'
+  ...
+1..30
+# tests 30
+# suites 0
+# pass 30
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 1565.341047

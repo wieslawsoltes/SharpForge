@@ -1,0 +1,88 @@
+{
+  "schemaVersion": 1,
+  "kind": "sharpforge-offline-fuzz-campaign",
+  "status": "passed",
+  "qualified": true,
+  "qualification": "bounded-node-offline-adapters",
+  "sourceBefore": {
+    "commit": "f0362e5e187409daf5766c70157280fe580afeae",
+    "tree": "ad548d9c4946465692845da0da15cae373463a2f",
+    "clean": true
+  },
+  "sourceAfter": {
+    "commit": "f0362e5e187409daf5766c70157280fe580afeae",
+    "tree": "ad548d9c4946465692845da0da15cae373463a2f",
+    "clean": true
+  },
+  "environment": {
+    "node": "v24.19.0",
+    "platform": "linux",
+    "arch": "x64"
+  },
+  "started": "2026-10-04T13:12:06.672Z",
+  "finished": "2026-10-04T13:12:09.205Z",
+  "seed": 1,
+  "budgets": {
+    "maxCases": 512,
+    "caseTimeoutMs": 1000,
+    "startupTimeoutMs": 5000,
+    "campaignTimeoutMs": 600000,
+    "maxInputBytes": 65536,
+    "maxOutputBytes": 65536,
+    "heapGrowthBytes": 16777216,
+    "v8HeapMb": 128,
+    "rssBytes": 268435456,
+    "maxCorpusCases": 128,
+    "maxCorpusBytes": 8388608
+  },
+  "targets": [
+    {
+      "targetId": "corpus-replay",
+      "status": "passed",
+      "requestedCases": 3,
+      "completedCases": 3,
+      "counts": {
+        "accepted": 0,
+        "rejected": 3,
+        "unsupported": 0,
+        "findings": 0,
+        "cancelled": 0
+      }
+    }
+  ],
+  "reports": [
+    {
+      "path": "replay.json",
+      "bytes": 5952,
+      "sha256": "4b91c562acbd1e92e6892e8f5af035f5905a5dc0a92d207844cdfafcae0615ec"
+    }
+  ],
+  "reproduction": {
+    "workingDirectory": "repository-root",
+    "note": "Use the recorded source commit and environment. Each output directory must be new.",
+    "campaign": [
+      "node",
+      "scripts/limited.js",
+      "node",
+      "scripts/conformance/fuzz/run.js",
+      "--replay",
+      "tests/conformance/fuzz-corpus",
+      "--seed",
+      "1",
+      "--cases",
+      "512",
+      "--case-ms",
+      "1000",
+      "--campaign-ms",
+      "600000",
+      "--output",
+      "artifacts/fuzz/pe-utf8-final-corpus-replay/reproduction"
+    ],
+    "findings": []
+  },
+  "limitations": [
+    "Only the recorded cases and Node adapter profiles were exercised; mutation campaigns cannot prove parser safety.",
+    "V8 heap limits and sampled RSS guards are not an operating-system memory or network sandbox.",
+    "Provider authentication, archive extraction, physical devices, CLR and Rust/Wasm were not exercised."
+  ]
+}

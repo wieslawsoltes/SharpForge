@@ -1,0 +1,110 @@
+{
+  "schemaVersion": 1,
+  "kind": "sharpforge-offline-fuzz-campaign",
+  "status": "failed",
+  "qualified": false,
+  "qualification": "bounded-node-offline-adapters",
+  "sourceBefore": {
+    "commit": "bf85020e6024cdd679a0234d9f050ca7dedddf53",
+    "tree": "6ba4a9db61e97d5f201fa9211389de6b0695daa6",
+    "clean": true
+  },
+  "sourceAfter": {
+    "commit": "bf85020e6024cdd679a0234d9f050ca7dedddf53",
+    "tree": "6ba4a9db61e97d5f201fa9211389de6b0695daa6",
+    "clean": true
+  },
+  "environment": {
+    "node": "v24.19.0",
+    "platform": "linux",
+    "arch": "x64"
+  },
+  "started": "2026-10-04T12:49:35.156Z",
+  "finished": "2026-10-04T12:55:26.577Z",
+  "seed": 1,
+  "budgets": {
+    "maxCases": 512,
+    "caseTimeoutMs": 1000,
+    "startupTimeoutMs": 5000,
+    "campaignTimeoutMs": 600000,
+    "maxInputBytes": 65536,
+    "maxOutputBytes": 65536,
+    "heapGrowthBytes": 16777216,
+    "v8HeapMb": 128,
+    "rssBytes": 268435456,
+    "maxCorpusCases": 128,
+    "maxCorpusBytes": 8388608
+  },
+  "targets": [
+    {
+      "targetId": "pe-loader",
+      "status": "failed",
+      "requestedCases": 512,
+      "completedCases": 512,
+      "counts": {
+        "accepted": 2,
+        "rejected": 508,
+        "unsupported": 0,
+        "findings": 2,
+        "cancelled": 0
+      }
+    }
+  ],
+  "reports": [
+    {
+      "path": "pe-loader/campaign.json",
+      "bytes": 778309,
+      "sha256": "7816d0a30d8d21f43674ebbdb88d5a8f6fc3ef0a3633743812bad384a34b93bc"
+    }
+  ],
+  "reproduction": {
+    "workingDirectory": "repository-root",
+    "note": "Use the recorded source commit and environment. Each output directory must be new.",
+    "campaign": [
+      "node",
+      "scripts/limited.js",
+      "node",
+      "scripts/conformance/fuzz/run.js",
+      "--target",
+      "pe-loader",
+      "--seed",
+      "1",
+      "--cases",
+      "512",
+      "--case-ms",
+      "1000",
+      "--campaign-ms",
+      "600000",
+      "--output",
+      "artifacts/fuzz/project4-pe-seed1/reproduction"
+    ],
+    "findings": [
+      {
+        "targetId": "pe-loader",
+        "argv": [
+          "node",
+          "scripts/limited.js",
+          "node",
+          "scripts/conformance/fuzz/run.js",
+          "--replay",
+          "artifacts/fuzz/project4-pe-seed1/pe-loader/findings",
+          "--seed",
+          "1",
+          "--cases",
+          "512",
+          "--case-ms",
+          "1000",
+          "--campaign-ms",
+          "600000",
+          "--output",
+          "artifacts/fuzz/project4-pe-seed1/pe-loader/replay"
+        ]
+      }
+    ]
+  },
+  "limitations": [
+    "Only the recorded cases and Node adapter profiles were exercised; mutation campaigns cannot prove parser safety.",
+    "V8 heap limits and sampled RSS guards are not an operating-system memory or network sandbox.",
+    "Provider authentication, archive extraction, physical devices, CLR and Rust/Wasm were not exercised."
+  ]
+}

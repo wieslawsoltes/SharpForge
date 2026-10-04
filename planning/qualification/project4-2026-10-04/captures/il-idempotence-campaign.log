@@ -1,0 +1,22 @@
+Waiting for a free run slot: 1 heavy runs are allowed at once (SHARPFORGE_MAX_PARALLEL_RUNS).
+{
+  "status": "passed",
+  "qualified": true,
+  "source": "9e6235635fdfb92939e8d7cbf1985db774d1fa31",
+  "targets": [
+    {
+      "targetId": "il-document",
+      "status": "passed",
+      "requestedCases": 32,
+      "completedCases": 32,
+      "counts": {
+        "accepted": 7,
+        "rejected": 25,
+        "unsupported": 0,
+        "findings": 0,
+        "cancelled": 0
+      }
+    }
+  ],
+  "output": "/dev/shm/p4-il-idempotence/artifacts/fuzz/il-exact-seed1"
+}

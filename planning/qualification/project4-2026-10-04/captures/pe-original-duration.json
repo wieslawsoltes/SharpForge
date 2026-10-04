@@ -1,0 +1,72 @@
+{
+  "schemaVersion": 1,
+  "kind": "sharpforge-pe-duration-qualification",
+  "status": "failed",
+  "qualified": false,
+  "scope": "bounded-node-linux-x64-pe-loader",
+  "requiredDurationMs": 600000,
+  "recordedCampaignDurationMs": 351421,
+  "sourceIdentity": {
+    "commit": "bf85020e6024cdd679a0234d9f050ca7dedddf53",
+    "tree": "6ba4a9db61e97d5f201fa9211389de6b0695daa6",
+    "clean": true
+  },
+  "counts": {
+    "accepted": 2,
+    "rejected": 508,
+    "unsupported": 0,
+    "findings": 2,
+    "cancelled": 0
+  },
+  "campaigns": [
+    {
+      "sequence": 1,
+      "argv": [
+        "node",
+        "scripts/conformance/fuzz/run.js",
+        "--target",
+        "pe-loader",
+        "--seed",
+        "1",
+        "--cases",
+        "512",
+        "--case-ms",
+        "1000",
+        "--campaign-ms",
+        "600000",
+        "--output",
+        "artifacts/fuzz/project4-pe-seed1"
+      ],
+      "exitCode": 1,
+      "output": "artifacts/fuzz/project4-pe-seed1",
+      "started": "2026-10-04T12:49:35.156Z",
+      "finished": "2026-10-04T12:55:26.577Z",
+      "durationMs": 351421,
+      "status": "failed",
+      "counts": {
+        "accepted": 2,
+        "rejected": 508,
+        "unsupported": 0,
+        "findings": 2,
+        "cancelled": 0
+      },
+      "requestedCases": 512,
+      "completedCases": 512,
+      "sourceBefore": {
+        "commit": "bf85020e6024cdd679a0234d9f050ca7dedddf53",
+        "tree": "6ba4a9db61e97d5f201fa9211389de6b0695daa6",
+        "clean": true
+      },
+      "sourceAfter": {
+        "commit": "bf85020e6024cdd679a0234d9f050ca7dedddf53",
+        "tree": "6ba4a9db61e97d5f201fa9211389de6b0695daa6",
+        "clean": true
+      }
+    }
+  ],
+  "limitations": [
+    "Duration sums completed CLI campaign windows and excludes gaps between campaigns.",
+    "Recorded accepted and controlled-rejected inputs do not prove universal parser safety.",
+    "No other engine/platform or operating-system sandbox qualification is implied."
+  ]
+}

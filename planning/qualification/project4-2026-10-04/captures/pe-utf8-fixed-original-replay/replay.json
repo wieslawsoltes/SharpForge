@@ -1,0 +1,143 @@
+{
+  "schemaVersion": 1,
+  "status": "passed",
+  "requestedCases": 2,
+  "completedCases": 2,
+  "counts": {
+    "accepted": 0,
+    "rejected": 2,
+    "unsupported": 0,
+    "findings": 0,
+    "cancelled": 0
+  },
+  "cases": [
+    {
+      "targetId": "pe-loader",
+      "seed": 1,
+      "caseIndex": 88,
+      "inputBytes": 2064,
+      "inputSHA256": "37c3803c6af8fa0b0a548e995b6aea3f407d5925388ba312bbcbcc9e55103ce2",
+      "sourceIdentity": {
+        "commit": "33f754dcac94080842042020719ea6b8a4289e3f",
+        "tree": "7e98dec2629b370ff7aaa6a998e9facc2c629be8",
+        "clean": true
+      },
+      "budgets": {
+        "maxCases": 512,
+        "caseTimeoutMs": 1000,
+        "startupTimeoutMs": 5000,
+        "campaignTimeoutMs": 600000,
+        "maxInputBytes": 65536,
+        "maxOutputBytes": 65536,
+        "heapGrowthBytes": 16777216,
+        "v8HeapMb": 128,
+        "rssBytes": 268435456,
+        "maxCorpusCases": 128,
+        "maxCorpusBytes": 8388608
+      },
+      "qualification": "node-offline-parser",
+      "status": "rejected",
+      "code": "PE_VALIDATION",
+      "detail": "Invalid UTF-8 text",
+      "metrics": {
+        "processElapsedMs": 687.5712980000001,
+        "sampledRssBytes": 0,
+        "elapsedMs": 1.260232999999971,
+        "baselineHeapBytes": 43035944,
+        "heapUsedBytes": 43108800,
+        "heapGrowthBytes": 72856,
+        "externalGrowthBytes": 67640,
+        "arrayBufferGrowthBytes": 67600,
+        "observedGrowthBytes": 140496,
+        "peakRssBytes": 94724096
+      },
+      "isolation": {
+        "v8OldSpaceMb": 128,
+        "rssGuard": "not-observed",
+        "osMemorySandbox": false
+      },
+      "corpusRecord": "785e0a86d8b92af35934d30f4702dbd46f594a62351748346c5b91da4030b8a9",
+      "originalSourceIdentity": {
+        "commit": "bf85020e6024cdd679a0234d9f050ca7dedddf53",
+        "tree": "6ba4a9db61e97d5f201fa9211389de6b0695daa6",
+        "clean": true
+      }
+    },
+    {
+      "targetId": "pe-loader",
+      "seed": 1,
+      "caseIndex": 463,
+      "inputBytes": 3085,
+      "inputSHA256": "e89203e3697e1c64700da8baddfd0bfd3cbdd7d500daafd56429782e6057d3ec",
+      "sourceIdentity": {
+        "commit": "33f754dcac94080842042020719ea6b8a4289e3f",
+        "tree": "7e98dec2629b370ff7aaa6a998e9facc2c629be8",
+        "clean": true
+      },
+      "budgets": {
+        "maxCases": 512,
+        "caseTimeoutMs": 1000,
+        "startupTimeoutMs": 5000,
+        "campaignTimeoutMs": 600000,
+        "maxInputBytes": 65536,
+        "maxOutputBytes": 65536,
+        "heapGrowthBytes": 16777216,
+        "v8HeapMb": 128,
+        "rssBytes": 268435456,
+        "maxCorpusCases": 128,
+        "maxCorpusBytes": 8388608
+      },
+      "qualification": "node-offline-parser",
+      "status": "rejected",
+      "code": "PE_VALIDATION",
+      "detail": "Invalid UTF-8 text",
+      "metrics": {
+        "processElapsedMs": 694.620009,
+        "sampledRssBytes": 0,
+        "elapsedMs": 1.3330510000000686,
+        "baselineHeapBytes": 42877072,
+        "heapUsedBytes": 42947672,
+        "heapGrowthBytes": 70600,
+        "externalGrowthBytes": 68661,
+        "arrayBufferGrowthBytes": 68621,
+        "observedGrowthBytes": 139261,
+        "peakRssBytes": 94457856
+      },
+      "isolation": {
+        "v8OldSpaceMb": 128,
+        "rssGuard": "not-observed",
+        "osMemorySandbox": false
+      },
+      "corpusRecord": "7bc4a304622007af30517506a2a37fad3dbe213ec27fc4e31504df833b00a39b",
+      "originalSourceIdentity": {
+        "commit": "bf85020e6024cdd679a0234d9f050ca7dedddf53",
+        "tree": "6ba4a9db61e97d5f201fa9211389de6b0695daa6",
+        "clean": true
+      }
+    }
+  ],
+  "artifacts": [],
+  "budgets": {
+    "maxCases": 512,
+    "caseTimeoutMs": 1000,
+    "startupTimeoutMs": 5000,
+    "campaignTimeoutMs": 600000,
+    "maxInputBytes": 65536,
+    "maxOutputBytes": 65536,
+    "heapGrowthBytes": 16777216,
+    "v8HeapMb": 128,
+    "rssBytes": 268435456,
+    "maxCorpusCases": 128,
+    "maxCorpusBytes": 8388608
+  },
+  "environment": {
+    "node": "v24.19.0",
+    "platform": "linux",
+    "arch": "x64"
+  },
+  "sourceIdentity": {
+    "commit": "33f754dcac94080842042020719ea6b8a4289e3f",
+    "tree": "7e98dec2629b370ff7aaa6a998e9facc2c629be8",
+    "clean": true
+  }
+}

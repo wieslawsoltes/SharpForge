@@ -1,0 +1,144 @@
+TAP version 13
+# Subtest: public CIL text preserves Unicode, exact BufferSource views, initial BOM handling and empty input
+ok 1 - public CIL text preserves Unicode, exact BufferSource views, initial BOM handling and empty input
+  ---
+  duration_ms: 1.481348
+  type: 'test'
+  ...
+# Subtest: public CIL text reports only native invalid-encoding failures as CilError
+not ok 2 - public CIL text reports only native invalid-encoding failures as CilError
+  ---
+  duration_ms: 5.538722
+  type: 'test'
+  location: '/dev/shm/p4-parent/tests/a03-utf8-validation.test.js:48:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    The expression evaluated to a falsy value:
+    
+      assert(error instanceof CilError)
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: '=='
+  stack: |-
+    Object.invalidUtf8 (file:///dev/shm/p4-parent/tests/a03-utf8-validation.test.js:14:3)
+    expectedException (node:assert:578:17)
+    expectsError (node:assert:703:21)
+    strict.throws (node:assert:759:3)
+    TestContext.<anonymous> (file:///dev/shm/p4-parent/tests/a03-utf8-validation.test.js:55:12)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1382:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+    Test.postRun (node:internal/test_runner/test:1522:19)
+    Test.run (node:internal/test_runner/test:1447:12)
+  ...
+# Subtest: public CIL text preserves native detached-buffer behavior without relabeling argument errors
+ok 3 - public CIL text preserves native detached-buffer behavior without relabeling argument errors
+  ---
+  duration_ms: 0.30574
+  type: 'test'
+  ...
+# Subtest: public metadata reading rejects both retained malformed version fields before table decoding
+not ok 4 - public metadata reading rejects both retained malformed version fields before table decoding
+  ---
+  duration_ms: 3.736803
+  type: 'test'
+  location: '/dev/shm/p4-parent/tests/a03-utf8-validation.test.js:79:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    The expression evaluated to a falsy value:
+    
+      assert(error instanceof CilError)
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: '=='
+  stack: |-
+    Object.invalidUtf8 (file:///dev/shm/p4-parent/tests/a03-utf8-validation.test.js:14:3)
+    expectedException (node:assert:578:17)
+    expectsError (node:assert:703:21)
+    strict.throws (node:assert:759:3)
+    TestContext.<anonymous> (file:///dev/shm/p4-parent/tests/a03-utf8-validation.test.js:87:12)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1382:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+    Test.postRun (node:internal/test_runner/test:1522:19)
+    Test.run (node:internal/test_runner/test:1447:12)
+  ...
+# Subtest: public PE reader, inspector and loader reject invalid metadata UTF-8 through the same CilError contract
+not ok 5 - public PE reader, inspector and loader reject invalid metadata UTF-8 through the same CilError contract
+  ---
+  duration_ms: 78.440609
+  type: 'test'
+  location: '/dev/shm/p4-parent/tests/a03-utf8-validation.test.js:92:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    The expression evaluated to a falsy value:
+    
+      assert(error instanceof CilError)
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: '=='
+  stack: |-
+    Object.invalidUtf8 (file:///dev/shm/p4-parent/tests/a03-utf8-validation.test.js:14:3)
+    expectedException (node:assert:578:17)
+    expectsError (node:assert:703:21)
+    strict.throws (node:assert:759:3)
+    TestContext.<anonymous> (file:///dev/shm/p4-parent/tests/a03-utf8-validation.test.js:100:12)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1382:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+    Test.postRun (node:internal/test_runner/test:1522:19)
+    Test.run (node:internal/test_runner/test:1447:12)
+  ...
+# Subtest: public metadata string access rejects invalid UTF-8 without caching replacement characters
+not ok 6 - public metadata string access rejects invalid UTF-8 without caching replacement characters
+  ---
+  duration_ms: 0.604629
+  type: 'test'
+  location: '/dev/shm/p4-parent/tests/a03-utf8-validation.test.js:107:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    The expression evaluated to a falsy value:
+    
+      assert(error instanceof CilError)
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: '=='
+  stack: |-
+    Object.invalidUtf8 (file:///dev/shm/p4-parent/tests/a03-utf8-validation.test.js:14:3)
+    expectedException (node:assert:578:17)
+    expectsError (node:assert:703:21)
+    strict.throws (node:assert:759:3)
+    TestContext.<anonymous> (file:///dev/shm/p4-parent/tests/a03-utf8-validation.test.js:114:10)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1382:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+    Test.postRun (node:internal/test_runner/test:1522:19)
+    Test.run (node:internal/test_runner/test:1447:12)
+  ...
+# Subtest: optional SharpForge debug metadata keeps inspector diagnostics and loader validation behavior
+ok 7 - optional SharpForge debug metadata keeps inspector diagnostics and loader validation behavior
+  ---
+  duration_ms: 4.625309
+  type: 'test'
+  ...
+1..7
+# tests 7
+# suites 0
+# pass 3
+# fail 4
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 900.035829

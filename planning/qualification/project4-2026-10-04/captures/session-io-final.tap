@@ -1,0 +1,16 @@
+✔ session I/O evidence keeps broader release obligations blocked after complete component records (2.162218ms)
+✔ session I/O rejects incomplete, reordered, duplicated and failed product phases (1.007011ms)
+✔ session I/O rejects absent worker provenance, stale builds and changed fixture bytes (0.689383ms)
+✔ session I/O rejects credential leakage, sequential HTTP, wrong targets and incomplete cancellation (1.156009ms)
+✔ production build qualification requires an unchanged clean source revision (0.283157ms)
+✔ session I/O waits for browser teardown after the close acknowledgement (0.415641ms)
+✔ session I/O preserves missing-browser, teardown-exit and timeout failures (6.248856ms)
+✔ session I/O requires the retained final browser identity and clean CSP/teardown record (0.347821ms)
+ℹ tests 8
+ℹ suites 0
+ℹ pass 8
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 838.344479

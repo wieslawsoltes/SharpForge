@@ -1,0 +1,310 @@
+TAP version 13
+# Subtest: evidence task contracts retain legacy area IDs and accept release task and bug IDs
+ok 1 - evidence task contracts retain legacy area IDs and accept release task and bug IDs
+  ---
+  duration_ms: 3.376431
+  type: 'test'
+  ...
+# Subtest: release default capture requires an explicit area before running a command
+ok 2 - release default capture requires an explicit area before running a command
+  ---
+  duration_ms: 82.509037
+  type: 'test'
+  ...
+# Subtest: release capture CLI records the explicitly selected area and verifies its real TAP evidence
+ok 3 - release capture CLI records the explicitly selected area and verifies its real TAP evidence
+  ---
+  duration_ms: 328.47676
+  type: 'test'
+  ...
+# Subtest: release task handoff recaptures explicit commands and replays from a clean clone
+ok 4 - release task handoff recaptures explicit commands and replays from a clean clone
+  ---
+  duration_ms: 569.501874
+  type: 'test'
+  ...
+# Subtest: digest binds TAP bytes, commit, command and exact target/status proof
+ok 5 - digest binds TAP bytes, commit, command and exact target/status proof
+  ---
+  duration_ms: 0.568125
+  type: 'test'
+  ...
+# Subtest: capture refuses dirty passing changes over a failing committed tree before running any command
+ok 6 - capture refuses dirty passing changes over a failing committed tree before running any command
+  ---
+  duration_ms: 21.483001
+  type: 'test'
+  ...
+# Subtest: capture rejects tracked/untracked mutations and even a clean changed HEAD after execution
+ok 7 - capture rejects tracked/untracked mutations and even a clean changed HEAD after execution
+  ---
+  duration_ms: 223.132359
+  type: 'test'
+  ...
+# Subtest: only command-emitted proof for the exact target/status verifies; generic TAP is not parity
+ok 8 - only command-emitted proof for the exact target/status verifies; generic TAP is not parity
+  ---
+  duration_ms: 332.167059
+  type: 'test'
+  ...
+# Subtest: skipped/TODO/ambiguous or absent TAP results cannot qualify a pass, and stderr cannot spoof TAP
+ok 9 - skipped/TODO/ambiguous or absent TAP results cannot qualify a pass, and stderr cannot spoof TAP
+  ---
+  duration_ms: 673.616638
+  type: 'test'
+  ...
+# Subtest: unknown and unsupported proofs retain their reasons and never verify as pass
+ok 10 - unknown and unsupported proofs retain their reasons and never verify as pass
+  ---
+  duration_ms: 313.783899
+  type: 'test'
+  ...
+# Subtest: fake HTTP handoff plus fresh real clone reproduces results; WIP commands are retested at the new commit
+ok 11 - fake HTTP handoff plus fresh real clone reproduces results; WIP commands are retested at the new commit
+  ---
+  duration_ms: 1177.259313
+  type: 'test'
+  ...
+# Subtest: resume detects command mutations and stops before later commands
+ok 12 - resume detects command mutations and stops before later commands
+  ---
+  duration_ms: 513.676524
+  type: 'test'
+  ...
+# Subtest: a real failed target remains verified failure and cannot be relabeled pass
+ok 13 - a real failed target remains verified failure and cannot be relabeled pass
+  ---
+  duration_ms: 210.503642
+  type: 'test'
+  ...
+# Subtest: incomplete or contradictory TAP statistics never qualify a passing target
+ok 14 - incomplete or contradictory TAP statistics never qualify a passing target
+  ---
+  duration_ms: 0.714621
+  type: 'test'
+  ...
+# Subtest: a complete Node TAP report remains qualifying evidence with the unchanged summary shape
+ok 15 - a complete Node TAP report remains qualifying evidence with the unchanged summary shape
+  ---
+  duration_ms: 6.381797
+  type: 'test'
+  ...
+# Subtest: malformed evidence cannot qualify a pass: root plan exceeds results
+ok 16 - malformed evidence cannot qualify a pass: root plan exceeds results
+  ---
+  duration_ms: 0.606362
+  type: 'test'
+  ...
+# Subtest: malformed evidence cannot qualify a pass: root plan precedes too few results
+ok 17 - malformed evidence cannot qualify a pass: root plan precedes too few results
+  ---
+  duration_ms: 0.383734
+  type: 'test'
+  ...
+# Subtest: malformed evidence cannot qualify a pass: duplicate root plans
+ok 18 - malformed evidence cannot qualify a pass: duplicate root plans
+  ---
+  duration_ms: 0.403384
+  type: 'test'
+  ...
+# Subtest: malformed evidence cannot qualify a pass: a middle plan is not a second valid stream
+ok 19 - malformed evidence cannot qualify a pass: a middle plan is not a second valid stream
+  ---
+  duration_ms: 0.277318
+  type: 'test'
+  ...
+# Subtest: malformed evidence cannot qualify a pass: result numbering starts at zero
+ok 20 - malformed evidence cannot qualify a pass: result numbering starts at zero
+  ---
+  duration_ms: 0.260684
+  type: 'test'
+  ...
+# Subtest: malformed evidence cannot qualify a pass: result numbering exceeds the plan
+ok 21 - malformed evidence cannot qualify a pass: result numbering exceeds the plan
+  ---
+  duration_ms: 0.2789
+  type: 'test'
+  ...
+# Subtest: malformed evidence cannot qualify a pass: unsafe result number
+ok 22 - malformed evidence cannot qualify a pass: unsafe result number
+  ---
+  duration_ms: 0.300592
+  type: 'test'
+  ...
+# Subtest: malformed evidence cannot qualify a pass: unsafe plan number
+ok 23 - malformed evidence cannot qualify a pass: unsafe plan number
+  ---
+  duration_ms: 0.373419
+  type: 'test'
+  ...
+# Subtest: malformed evidence cannot qualify a pass: duplicate TAP headers
+ok 24 - malformed evidence cannot qualify a pass: duplicate TAP headers
+  ---
+  duration_ms: 0.317747
+  type: 'test'
+  ...
+# Subtest: malformed evidence cannot qualify a pass: misplaced TAP header
+ok 25 - malformed evidence cannot qualify a pass: misplaced TAP header
+  ---
+  duration_ms: 0.244419
+  type: 'test'
+  ...
+# Subtest: malformed evidence cannot qualify a pass: root bailout after counters
+ok 26 - malformed evidence cannot qualify a pass: root bailout after counters
+  ---
+  duration_ms: 0.235196
+  type: 'test'
+  ...
+# Subtest: malformed evidence cannot qualify a pass: case insensitive bailout
+ok 27 - malformed evidence cannot qualify a pass: case insensitive bailout
+  ---
+  duration_ms: 0.250659
+  type: 'test'
+  ...
+# Subtest: malformed evidence cannot qualify a pass: duplicate root suite counter
+ok 28 - malformed evidence cannot qualify a pass: duplicate root suite counter
+  ---
+  duration_ms: 0.208567
+  type: 'test'
+  ...
+# Subtest: malformed evidence cannot qualify a pass: duplicate root test counter
+ok 29 - malformed evidence cannot qualify a pass: duplicate root test counter
+  ---
+  duration_ms: 0.2044
+  type: 'test'
+  ...
+# Subtest: malformed evidence cannot qualify a pass: negative root counter
+ok 30 - malformed evidence cannot qualify a pass: negative root counter
+  ---
+  duration_ms: 0.224491
+  type: 'test'
+  ...
+# Subtest: malformed evidence cannot qualify a pass: extra passed counter contradicts observed points
+ok 31 - malformed evidence cannot qualify a pass: extra passed counter contradicts observed points
+  ---
+  duration_ms: 0.962155
+  type: 'test'
+  ...
+# Subtest: malformed evidence cannot qualify a pass: summary counters precede the results
+ok 32 - malformed evidence cannot qualify a pass: summary counters precede the results
+  ---
+  duration_ms: 0.196749
+  type: 'test'
+  ...
+# Subtest: malformed evidence cannot qualify a pass: unterminated diagnostic
+ok 33 - malformed evidence cannot qualify a pass: unterminated diagnostic
+  ---
+  duration_ms: 0.309826
+  type: 'test'
+  ...
+# Subtest: a correctly hashed retained artifact cannot bypass malformed TAP refusal
+ok 34 - a correctly hashed retained artifact cannot bypass malformed TAP refusal
+  ---
+  duration_ms: 0.932351
+  type: 'test'
+  ...
+# Subtest: each scope permits a leading plan and checks unique in-range result numbers
+ok 35 - each scope permits a leading plan and checks unique in-range result numbers
+  ---
+  duration_ms: 0.388371
+  type: 'test'
+  ...
+# Subtest: Node nested suites retain their own plans and exclude suite wrappers from test counters
+ok 36 - Node nested suites retain their own plans and exclude suite wrappers from test counters
+  ---
+  duration_ms: 1.630638
+  type: 'test'
+  ...
+# Subtest: Node nested test wrappers are counted as tests instead of suites
+ok 37 - Node nested test wrappers are counted as tests instead of suites
+  ---
+  duration_ms: 0.371706
+  type: 'test'
+  ...
+# Subtest: missing, duplicate, mismatched, or abandoned nested plans refuse qualification
+ok 38 - missing, duplicate, mismatched, or abandoned nested plans refuse qualification
+  ---
+  duration_ms: 0.935856
+  type: 'test'
+  ...
+# Subtest: diagnostic YAML cannot impersonate test points, proofs, plans, or bailouts
+ok 39 - diagnostic YAML cannot impersonate test points, proofs, plans, or bailouts
+  ---
+  duration_ms: 0.215467
+  type: 'test'
+  ...
+# Subtest: failure and cancellation counters retain honest outcomes without becoming passes
+ok 40 - failure and cancellation counters retain honest outcomes without becoming passes
+  ---
+  duration_ms: 1.641734
+  type: 'test'
+  ...
+# Subtest: unknown and unsupported skipped probes remain explicit and cannot be relabeled as passes
+ok 41 - unknown and unsupported skipped probes remain explicit and cannot be relabeled as passes
+  ---
+  duration_ms: 4.169974
+  type: 'test'
+  ...
+# Subtest: TODO directives and suite skips cannot qualify a nested passing target
+ok 42 - TODO directives and suite skips cannot qualify a nested passing target
+  ---
+  duration_ms: 0.425045
+  type: 'test'
+  ...
+# Subtest: a failed suite cannot be hidden behind passing test counters and a forged zero exit code
+ok 43 - a failed suite cannot be hidden behind passing test counters and a forged zero exit code
+  ---
+  duration_ms: 2.226024
+  type: 'test'
+  ...
+# Subtest: a named suite with an executed passing descendant retains its target proof
+ok 44 - a named suite with an executed passing descendant retains its target proof
+  ---
+  duration_ms: 1.865444
+  type: 'test'
+  ...
+# Subtest: an empty named suite cannot borrow passing evidence from an unrelated test
+ok 45 - an empty named suite cannot borrow passing evidence from an unrelated test
+  ---
+  duration_ms: 1.049113
+  type: 'test'
+  ...
+# Subtest: an all-skipped named suite cannot borrow passing evidence from an unrelated test
+ok 46 - an all-skipped named suite cannot borrow passing evidence from an unrelated test
+  ---
+  duration_ms: 0.968764
+  type: 'test'
+  ...
+# Subtest: a nested suite cannot count passing descendants under an inherited skip or TODO directive
+ok 47 - a nested suite cannot count passing descendants under an inherited skip or TODO directive
+  ---
+  duration_ms: 0.442821
+  type: 'test'
+  ...
+# Subtest: escaped TAP hashes in names are literal text rather than skip directives
+ok 48 - escaped TAP hashes in names are literal text rather than skip directives
+  ---
+  duration_ms: 0.176519
+  type: 'test'
+  ...
+# Subtest: an empty Node run is complete but supplies no passing target
+ok 49 - an empty Node run is complete but supplies no passing target
+  ---
+  duration_ms: 0.166415
+  type: 'test'
+  ...
+# Subtest: nested evidence accepts the depth limit and refuses deeper streams without qualification
+ok 50 - nested evidence accepts the depth limit and refuses deeper streams without qualification
+  ---
+  duration_ms: 5.573147
+  type: 'test'
+  ...
+1..50
+# tests 50
+# suites 0
+# pass 50
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 4684.466238

@@ -1,0 +1,250 @@
+TAP version 13
+# Subtest: protocol sequences: seeds are deterministic and the byte prefix preserves existing framing mode
+ok 1 - protocol sequences: seeds are deterministic and the byte prefix preserves existing framing mode
+  ---
+  duration_ms: 1.710886
+  type: 'test'
+  ...
+# Subtest: protocol sequences: shipped cases exercise actual handlers and controlled negative responses
+ok 2 - protocol sequences: shipped cases exercise actual handlers and controlled negative responses
+  ---
+  duration_ms: 99.384533
+  type: 'test'
+  ...
+# Subtest: LSP sequences: edits, queries, close and shutdown preserve protocol state and correlation
+ok 3 - LSP sequences: edits, queries, close and shutdown preserve protocol state and correlation
+  ---
+  duration_ms: 16.58383
+  type: 'test'
+  ...
+# Subtest: LSP sequences: owned source variants include diagnostic-producing text without growing document state
+ok 4 - LSP sequences: owned source variants include diagnostic-producing text without growing document state
+  ---
+  duration_ms: 5.863333
+  type: 'test'
+  ...
+# Subtest: DAP sequences: fixed IL launch, stepping, bounded inspection, restart and disposal work in memory
+ok 5 - DAP sequences: fixed IL launch, stepping, bounded inspection, restart and disposal work in memory
+  ---
+  duration_ms: 9.060525
+  type: 'test'
+  ...
+# Subtest: DAP sequences: missing state and malformed owned argument shapes produce explicit error responses
+ok 6 - DAP sequences: missing state and malformed owned argument shapes produce explicit error responses
+  ---
+  duration_ms: 0.439757
+  type: 'test'
+  ...
+# Subtest: DAP sequences: the current null-envelope product defect is surfaced as a finding, never a rejected input
+ok 7 - DAP sequences: the current null-envelope product defect is surfaced as a finding, never a rejected input
+  ---
+  duration_ms: 0.892272
+  type: 'test'
+  ...
+# Subtest: protocol sequences: caught native exceptions from malformed parameters remain findings
+ok 8 - protocol sequences: caught native exceptions from malformed parameters remain findings
+  ---
+  duration_ms: 1.21701
+  type: 'test'
+  ...
+# Subtest: protocol sequences: only precise owned diagnostics qualify as expected negative responses
+ok 9 - protocol sequences: only precise owned diagnostics qualify as expected negative responses
+  ---
+  duration_ms: 0.347041
+  type: 'test'
+  ...
+# Subtest: protocol sequences: unknown profiles, empty programs and excessive operation counts remain bounded
+ok 10 - protocol sequences: unknown profiles, empty programs and excessive operation counts remain bounded
+  ---
+  duration_ms: 0.708963
+  type: 'test'
+  ...
+# Subtest: protocol sequences: byte and output caps are enforced before growing a transcript
+ok 11 - protocol sequences: byte and output caps are enforced before growing a transcript
+  ---
+  duration_ms: 0.315734
+  type: 'test'
+  ...
+# Subtest: protocol sequences: cancellation propagates before and between awaited handlers
+ok 12 - protocol sequences: cancellation propagates before and between awaited handlers
+  ---
+  duration_ms: 0.345018
+  type: 'test'
+  ...
+# Subtest: protocol sequences: malformed server responses and unexpected internal error responses become findings
+ok 13 - protocol sequences: malformed server responses and unexpected internal error responses become findings
+  ---
+  duration_ms: 0.259442
+  type: 'test'
+  ...
+# Subtest: protocol sequences: output callback failures are rethrown after the server error boundary
+ok 14 - protocol sequences: output callback failures are rethrown after the server error boundary
+  ---
+  duration_ms: 0.181748
+  type: 'test'
+  ...
+# Subtest: protocol sequences: event count is capped even when every individual event is small
+ok 15 - protocol sequences: event count is capped even when every individual event is small
+  ---
+  duration_ms: 0.418476
+  type: 'test'
+  ...
+# Subtest: protocol: local seeds are bounded, deterministic and independently owned
+ok 16 - protocol: local seeds are bounded, deterministic and independently owned
+  ---
+  duration_ms: 1.976466
+  type: 'test'
+  ...
+# Subtest: protocol: rejects an input over the configured or hard byte ceiling
+ok 17 - protocol: rejects an input over the configured or hard byte ceiling
+  ---
+  duration_ms: 0.256478
+  type: 'test'
+  ...
+# Subtest: protocol: cancellation and invalid caller contracts propagate
+ok 18 - protocol: cancellation and invalid caller contracts propagate
+  ---
+  duration_ms: 0.408701
+  type: 'test'
+  ...
+# Subtest: il-document: local seeds are bounded, deterministic and independently owned
+ok 19 - il-document: local seeds are bounded, deterministic and independently owned
+  ---
+  duration_ms: 10.700016
+  type: 'test'
+  ...
+# Subtest: il-document: rejects an input over the configured or hard byte ceiling
+ok 20 - il-document: rejects an input over the configured or hard byte ceiling
+  ---
+  duration_ms: 0.18987
+  type: 'test'
+  ...
+# Subtest: il-document: cancellation and invalid caller contracts propagate
+ok 21 - il-document: cancellation and invalid caller contracts propagate
+  ---
+  duration_ms: 0.107337
+  type: 'test'
+  ...
+# Subtest: msbuild-xml: local seeds are bounded, deterministic and independently owned
+ok 22 - msbuild-xml: local seeds are bounded, deterministic and independently owned
+  ---
+  duration_ms: 0.188317
+  type: 'test'
+  ...
+# Subtest: msbuild-xml: rejects an input over the configured or hard byte ceiling
+ok 23 - msbuild-xml: rejects an input over the configured or hard byte ceiling
+  ---
+  duration_ms: 0.168478
+  type: 'test'
+  ...
+# Subtest: msbuild-xml: cancellation and invalid caller contracts propagate
+ok 24 - msbuild-xml: cancellation and invalid caller contracts propagate
+  ---
+  duration_ms: 0.150781
+  type: 'test'
+  ...
+# Subtest: network: local seeds are bounded, deterministic and independently owned
+ok 25 - network: local seeds are bounded, deterministic and independently owned
+  ---
+  duration_ms: 0.351958
+  type: 'test'
+  ...
+# Subtest: network: rejects an input over the configured or hard byte ceiling
+ok 26 - network: rejects an input over the configured or hard byte ceiling
+  ---
+  duration_ms: 0.146535
+  type: 'test'
+  ...
+# Subtest: network: cancellation and invalid caller contracts propagate
+ok 27 - network: cancellation and invalid caller contracts propagate
+  ---
+  duration_ms: 0.153996
+  type: 'test'
+  ...
+# Subtest: protocol: accepts LSP, DAP, Unicode and coalesced frames under incremental parsing
+ok 28 - protocol: accepts LSP, DAP, Unicode and coalesced frames under incremental parsing
+  ---
+  duration_ms: 1.261455
+  type: 'test'
+  ...
+# Subtest: protocol: diagnoses malformed framing, JSON, UTF-8 and incomplete bodies
+ok 29 - protocol: diagnoses malformed framing, JSON, UTF-8 and incomplete bodies
+  ---
+  duration_ms: 0.60495
+  type: 'test'
+  ...
+# Subtest: protocol: encoded messages respect the output byte budget
+ok 30 - protocol: encoded messages respect the output byte budget
+  ---
+  duration_ms: 0.23093
+  type: 'test'
+  ...
+# Subtest: IL document: canonical roundtrips preserve visible methods and literals containing comment text
+ok 31 - IL document: canonical roundtrips preserve visible methods and literals containing comment text
+  ---
+  duration_ms: 7.64984
+  type: 'test'
+  ...
+# Subtest: IL document: generated-input failures propagate outside the first assembly validation boundary
+ok 32 - IL document: generated-input failures propagate outside the first assembly validation boundary
+  ---
+  duration_ms: 0.171172
+  type: 'test'
+  ...
+# Subtest: IL document: reports syntax/scaffold failures and constrains rebuilt output
+ok 33 - IL document: reports syntax/scaffold failures and constrains rebuilt output
+  ---
+  duration_ms: 3.486397
+  type: 'test'
+  ...
+# Subtest: MSBuild XML: parses data and evaluates attributes or standalone conditions without filesystem access
+ok 34 - MSBuild XML: parses data and evaluates attributes or standalone conditions without filesystem access
+  ---
+  duration_ms: 1.73381
+  type: 'test'
+  ...
+# Subtest: MSBuild XML: rejects malformed XML and unsupported data grammar
+ok 35 - MSBuild XML: rejects malformed XML and unsupported data grammar
+  ---
+  duration_ms: 0.515458
+  type: 'test'
+  ...
+# Subtest: network: exact grants, URL normalization and request headers use pure policy APIs
+ok 36 - network: exact grants, URL normalization and request headers use pure policy APIs
+  ---
+  duration_ms: 2.050836
+  type: 'test'
+  ...
+# Subtest: network: malformed local input and output limits remain controlled failures
+ok 37 - network: malformed local input and output limits remain controlled failures
+  ---
+  duration_ms: 0.63227
+  type: 'test'
+  ...
+# Subtest: network: unavailable native host policy surfaces are explicitly unsupported
+ok 38 - network: unavailable native host policy surfaces are explicitly unsupported
+  ---
+  duration_ms: 0.140397
+  type: 'test'
+  ...
+# Subtest: text targets: error classifiers preserve unexpected failures instead of counting them as rejected inputs
+ok 39 - text targets: error classifiers preserve unexpected failures instead of counting them as rejected inputs
+  ---
+  duration_ms: 0.440608
+  type: 'test'
+  ...
+# Subtest: text targets: cancellation observed during a parse is not an input rejection
+ok 40 - text targets: cancellation observed during a parse is not an input rejection
+  ---
+  duration_ms: 0.132976
+  type: 'test'
+  ...
+1..40
+# tests 40
+# suites 0
+# pass 40
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 1495.070771

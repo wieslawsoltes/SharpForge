@@ -1,0 +1,195 @@
+{
+  "schemaVersion": 1,
+  "status": "passed",
+  "requestedCases": 3,
+  "completedCases": 3,
+  "counts": {
+    "accepted": 0,
+    "rejected": 3,
+    "unsupported": 0,
+    "findings": 0,
+    "cancelled": 0
+  },
+  "cases": [
+    {
+      "targetId": "portable-pdb",
+      "seed": 1146,
+      "caseIndex": 0,
+      "inputBytes": 365,
+      "inputSHA256": "47aa8600a3eb7b339ac25d68ca91eecfabb45271d943899d875f84c05ffeb29f",
+      "sourceIdentity": {
+        "commit": "f0362e5e187409daf5766c70157280fe580afeae",
+        "tree": "ad548d9c4946465692845da0da15cae373463a2f",
+        "clean": true
+      },
+      "budgets": {
+        "maxCases": 32,
+        "caseTimeoutMs": 1000,
+        "startupTimeoutMs": 5000,
+        "campaignTimeoutMs": 30000,
+        "maxInputBytes": 65536,
+        "maxOutputBytes": 65536,
+        "heapGrowthBytes": 16777216,
+        "v8HeapMb": 128,
+        "rssBytes": 268435456,
+        "maxCorpusCases": 128,
+        "maxCorpusBytes": 8388608
+      },
+      "qualification": "node-offline-parser",
+      "status": "rejected",
+      "code": "PORTABLE_PDB_VALIDATION",
+      "detail": "Reserved DEFLATE block",
+      "metrics": {
+        "processElapsedMs": 900.1179930000001,
+        "sampledRssBytes": 0,
+        "elapsedMs": 3.669375999999943,
+        "baselineHeapBytes": 43149200,
+        "heapUsedBytes": 43354264,
+        "heapGrowthBytes": 205064,
+        "externalGrowthBytes": 429,
+        "arrayBufferGrowthBytes": 389,
+        "observedGrowthBytes": 205493,
+        "peakRssBytes": 95760384
+      },
+      "isolation": {
+        "v8OldSpaceMb": 128,
+        "rssGuard": "not-observed",
+        "osMemorySandbox": false
+      },
+      "corpusRecord": "3c86512192511f3ccac53a2a3524116a48c0db0347131bad5b81b86705213514",
+      "originalSourceIdentity": {
+        "commit": "ad0ea92f16bddcbcfecce884b93579fe94617c04",
+        "tree": "896f9233762f4d93de762b1325a4de9ca81c64d3",
+        "clean": true
+      }
+    },
+    {
+      "targetId": "pe-loader",
+      "seed": 1,
+      "caseIndex": 88,
+      "inputBytes": 2064,
+      "inputSHA256": "37c3803c6af8fa0b0a548e995b6aea3f407d5925388ba312bbcbcc9e55103ce2",
+      "sourceIdentity": {
+        "commit": "f0362e5e187409daf5766c70157280fe580afeae",
+        "tree": "ad548d9c4946465692845da0da15cae373463a2f",
+        "clean": true
+      },
+      "budgets": {
+        "maxCases": 512,
+        "caseTimeoutMs": 1000,
+        "startupTimeoutMs": 5000,
+        "campaignTimeoutMs": 600000,
+        "maxInputBytes": 65536,
+        "maxOutputBytes": 65536,
+        "heapGrowthBytes": 16777216,
+        "v8HeapMb": 128,
+        "rssBytes": 268435456,
+        "maxCorpusCases": 128,
+        "maxCorpusBytes": 8388608
+      },
+      "qualification": "node-offline-parser",
+      "status": "rejected",
+      "code": "PE_VALIDATION",
+      "detail": "Invalid UTF-8 text",
+      "metrics": {
+        "processElapsedMs": 788.663659,
+        "sampledRssBytes": 0,
+        "elapsedMs": 1.8199769999999944,
+        "baselineHeapBytes": 41725880,
+        "heapUsedBytes": 41801512,
+        "heapGrowthBytes": 75632,
+        "externalGrowthBytes": 67640,
+        "arrayBufferGrowthBytes": 67600,
+        "observedGrowthBytes": 143272,
+        "peakRssBytes": 93540352
+      },
+      "isolation": {
+        "v8OldSpaceMb": 128,
+        "rssGuard": "not-observed",
+        "osMemorySandbox": false
+      },
+      "corpusRecord": "785e0a86d8b92af35934d30f4702dbd46f594a62351748346c5b91da4030b8a9",
+      "originalSourceIdentity": {
+        "commit": "bf85020e6024cdd679a0234d9f050ca7dedddf53",
+        "tree": "6ba4a9db61e97d5f201fa9211389de6b0695daa6",
+        "clean": true
+      }
+    },
+    {
+      "targetId": "pe-loader",
+      "seed": 1,
+      "caseIndex": 463,
+      "inputBytes": 3085,
+      "inputSHA256": "e89203e3697e1c64700da8baddfd0bfd3cbdd7d500daafd56429782e6057d3ec",
+      "sourceIdentity": {
+        "commit": "f0362e5e187409daf5766c70157280fe580afeae",
+        "tree": "ad548d9c4946465692845da0da15cae373463a2f",
+        "clean": true
+      },
+      "budgets": {
+        "maxCases": 512,
+        "caseTimeoutMs": 1000,
+        "startupTimeoutMs": 5000,
+        "campaignTimeoutMs": 600000,
+        "maxInputBytes": 65536,
+        "maxOutputBytes": 65536,
+        "heapGrowthBytes": 16777216,
+        "v8HeapMb": 128,
+        "rssBytes": 268435456,
+        "maxCorpusCases": 128,
+        "maxCorpusBytes": 8388608
+      },
+      "qualification": "node-offline-parser",
+      "status": "rejected",
+      "code": "PE_VALIDATION",
+      "detail": "Invalid UTF-8 text",
+      "metrics": {
+        "processElapsedMs": 806.3828029999997,
+        "sampledRssBytes": 0,
+        "elapsedMs": 1.6820640000000822,
+        "baselineHeapBytes": 40573984,
+        "heapUsedBytes": 40647360,
+        "heapGrowthBytes": 73376,
+        "externalGrowthBytes": 68661,
+        "arrayBufferGrowthBytes": 68621,
+        "observedGrowthBytes": 142037,
+        "peakRssBytes": 93483008
+      },
+      "isolation": {
+        "v8OldSpaceMb": 128,
+        "rssGuard": "not-observed",
+        "osMemorySandbox": false
+      },
+      "corpusRecord": "7bc4a304622007af30517506a2a37fad3dbe213ec27fc4e31504df833b00a39b",
+      "originalSourceIdentity": {
+        "commit": "bf85020e6024cdd679a0234d9f050ca7dedddf53",
+        "tree": "6ba4a9db61e97d5f201fa9211389de6b0695daa6",
+        "clean": true
+      }
+    }
+  ],
+  "artifacts": [],
+  "budgets": {
+    "maxCases": 512,
+    "caseTimeoutMs": 1000,
+    "startupTimeoutMs": 5000,
+    "campaignTimeoutMs": 600000,
+    "maxInputBytes": 65536,
+    "maxOutputBytes": 65536,
+    "heapGrowthBytes": 16777216,
+    "v8HeapMb": 128,
+    "rssBytes": 268435456,
+    "maxCorpusCases": 128,
+    "maxCorpusBytes": 8388608
+  },
+  "environment": {
+    "node": "v24.19.0",
+    "platform": "linux",
+    "arch": "x64"
+  },
+  "sourceIdentity": {
+    "commit": "f0362e5e187409daf5766c70157280fe580afeae",
+    "tree": "ad548d9c4946465692845da0da15cae373463a2f",
+    "clean": true
+  }
+}
