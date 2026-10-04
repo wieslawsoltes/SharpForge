@@ -3,6 +3,7 @@ import {clearStrings} from './strings.js';
 import {clearRuntimeTypes} from './tokens.js';
 import {stopCilMethodEvents} from './cil-method-events.js';
 import {stopFramePool} from './frame-retirement.js';
+import {flushSourceRuntimeEvents} from './source-runtime-events.js';
 
 /** Dispose live and parked storage before dropping the VM's execution roots. */
 export function stopExecution(vm) {
@@ -21,6 +22,7 @@ export function stopExecution(vm) {
   else {
     vm.stack = [];
     vm.currentPoint = null;
+    flushSourceRuntimeEvents(vm);
   }
   if (!hadGuestFault) vm.profiler?.reportClockFailure();
 }

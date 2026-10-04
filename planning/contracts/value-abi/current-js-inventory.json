@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "sources": {
     "packages/runtime/src/heap.js": "bdf6775f3a34d1f9ec14c1f839b6233df2b12b6033e057651d738e49f83e2703",
-    "packages/runtime/src/vm.js": "e698585e110a9d30335ee2ea4f86f4f041239a0a99f8a97becd783976f87c629",
+    "packages/runtime/src/vm.js": "b38d841628ecc1d508470f3c1ba1eb23b1639bb137b4be9ee3c7c0e40f312667",
     "packages/runtime/src/cil-vm.js": "99aa08b03322c37d0ac94328a9dd961a135a75044ca21887691e3e9ccca1d7b1",
     "packages/runtime/src/execution/delegate-targets.js": "4580a64b46678535791363c9a8e593134b6c264daf6960017c88c23ea988893e",
     "packages/runtime/src/execution/source-ops.js": "d281c22b9072dc0151a2b0b3571c02b29bfe3074dbf783cf879269b6e5af9a22",
