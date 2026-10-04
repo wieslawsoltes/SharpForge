@@ -29,8 +29,9 @@ export const CallEmission = Base =>
   class extends Base {
     exprCall(node) {
       // An omitted call to a [Conditional] method evaluates nothing, not even its arguments.
-      if (node.isOmitted) return false;
+      // So does a call of a partial method that no part implements (C# 3): the method does not exist.
       const method = node.method;
+      if (node.isOmitted || (method.originalDefinition ?? method).isUnimplementedPartial) return false;
       if (method.methodKind === MethodKind.LocalFunction) return this.localFunctionCall(node);
       if (method.isStatic) {
         this.arguments(node, method);
@@ -214,7 +215,8 @@ export const CallEmission = Base =>
       if (callerInfo !== undefined) {
         if (typeof callerInfo === 'number') {
           this.il.emit('ldc.i4', callerInfo);
-          return this.numericConversion(this.core.int, parameter.type, { syntax: node.syntax });
+          // [CallerLineNumber] on a parameter of another type that an `int` converts to (`long`, `double`, `object`).
+          return this.implicitStandardConversion(this.core.int, parameter.type, node.syntax);
         }
         return this.il.emit('ldstr', this.tokens.string(callerInfo));
       }
