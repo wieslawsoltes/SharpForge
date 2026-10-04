@@ -75,6 +75,7 @@ function synthesizedEventAccessor(type, event, prefix, core) {
   const slot = event.isStatic ? MethodAttributes.Static : implementedBy(type, event) ? IMPLEMENTATION_FLAGS : 0;
   return {
     symbol: null,
+    associatedSymbol: event,
     name: prefix + event.name,
     flags: memberAccessFlags(event) | ACCESSOR_FLAGS | slot,
     implFlags: MethodImplAttributes.IL,
@@ -97,7 +98,10 @@ function fieldLikeEvent(type, event, core, plan) {
       accessor.flags |= DELEGATE_INVOKE_FLAGS | MethodAttributes.Abstract;
       accessor.hasBody = false;
     }
-  } else plan.fields.push({ symbol: null, name: event.name, flags: privateField(event), type: event.type, constant: null, isCompilerGenerated: true });
+  } else plan.fields.push({
+    symbol: null, associatedSymbol: event, name: event.name, flags: privateField(event), type: event.type,
+    constant: null, isCompilerGenerated: true,
+  });
   plan.methods.push(adder, remover);
   return { adder, remover };
 }
