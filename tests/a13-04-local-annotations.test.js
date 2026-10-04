@@ -175,7 +175,7 @@ test('unresolved enum TypeSpec annotations keep the scalar value and an explicit
     [
       {
         name: 'ExternalEnum',
-        signature: new Writer().u8(8).i32(7).compressed(codedIndex('TypeDefOrRef', 0x1b000001)).finish(),
+        signature: new Writer().u8(8).u32(7).compressed(codedIndex('TypeDefOrRef', 0x1b000001)).finish(),
       },
     ],
   );
