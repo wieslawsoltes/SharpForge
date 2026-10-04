@@ -130,7 +130,7 @@ function localPlayback(sources, widths, expected) {
     const methods = machine.inspector ? [...machine.inspector.methods.values()] : machine.image.methods;
     const helpers = methods.filter(method => method.owner === 'LocalView' && method.name === 'ApplyAdaptive');
     assert.equal(helpers.length, 1);
-    const helper = helpers[0];
+    const helper = machine.inspector ? machine.inspector.getMethod(helpers[0].token) : helpers[0];
     const parameters = machine.inspector ? helper.signature.parameters : helper.parameters.map(parameter => parameter.type);
     assert.deepEqual(parameters, ['double', 'Microsoft.UI.Xaml.Controls.Button']);
     const action = () => {
