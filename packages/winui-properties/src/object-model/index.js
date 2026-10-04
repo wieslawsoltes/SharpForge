@@ -9,3 +9,5 @@ export {ResourceModelCollection, dictionaryModel, nameScopeModel, resourceScopeM
 export {selectorModel} from './selector-model.js';
 export {registerObjectModelAdapters, getDispatcherQueue, routedEventRegistry} from './object-model-adapters.js';
 export {visualStateGroups, visualStateManagerModel} from './visual-state-resource-adapters.js';
+export {getResourceServices} from './resource-services.js';
+export {DefaultTemplateCatalog, installDefaultTemplateCatalog} from './default-template-catalog.js';

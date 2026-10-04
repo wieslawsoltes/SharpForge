@@ -61,3 +61,7 @@ Resource dictionaries, collection views, typed/legacy style definitions and sele
 ## Registered visual state ownership
 
 Visual-state collections, current-state events, adaptive/custom triggers and transition values share the registered property store and template namescope. Model wrappers retain their managed event delegates and expose explicit snapshots. Actual pointer/keyboard state and animation scheduling are supplied by the host.
+
+## Template application and default recipes
+
+`getResourceServices` applies styles and templates through the host transaction and reconciles owner roots after mutation. Initial template construction belongs to explicit ApplyTemplate or layout; live invalidations refresh an initialized template. `installDefaultTemplateCatalog` consumes the controls package's injected real-part recipes. Failed factories disconnect bindings/resources before destroying target stores and preserve the original validation error.
