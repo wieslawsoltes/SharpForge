@@ -102,6 +102,75 @@ Types are snapshotted once per load, and a query clones each used slot's AST
 once even when the slot is declared in multiple scopes. Native nesting and
 local types are compared with SRM by `scripts/validate-pdb-scope-tree.mjs`.
 
+`symbols.localSlots(methodToken)` enumerates declared CLI storage slots, including
+slots with no LocalVariable row. Bound results are `{available: true, reason:
+null, slots}`; each slot has `index`, owned signature AST `type`, `typeName`,
+`unnamed`, `name` and `declarations`. A name is present only for one exact PDB
+declaration; no-row and reused-slot names are null. `unnamed` means no row,
+not an inference about source code or optimization. Declarations retain exact
+`id`, `scopeId`, IL `start`/exclusive `end`, name, attributes and hidden flag.
+No `V_0`-style identifier, lexical scope, runtime value or eliminated variable
+is invented. Existing scope/offset APIs still return only recorded declarations.
+
+Without a bound PE the result is `{available: false, reason:
+'type-metadata-required', slots: []}`. Missing bodies yield `no-method-body`;
+non-CIL bodies without a PDB local signature yield `unsupported-method-body`.
+An actual tiny body without a signature has an available empty slot list.
+The CLI header is authoritative: nonzero PDB local-signature handles must agree
+with it and cannot assign storage to a method without a CIL body.
+Invalid MethodDef/query/signature tokens, malformed signatures and out-of-range
+recorded slots reject. Distinct names for reused storage remain separate in
+`declarations`. Returned ASTs/declarations and public PDB rows cannot alter later
+queries. Source annotations remain on the existing scope-tree declaration API.
+
+Bound loads snapshot all declared local signatures using the shared CIL
+header-only reader, without allocating IL/EH views for slot discovery. Unique
+signature bytes are limited to 4 KiB each / 128 KiB total before AST decoding,
+with depth 32, 4,096 nodes per signature and 65,536 nodes total. Before slot
+projection, `maxLocalSlotMethods` caps method count at 65,536 and `maxLocalSlots`
+caps aggregate method-slot occurrences at 100,000; options may lower these
+limits. Existing per-type name/output limits apply. `signal` cancellation is
+checked during bound snapshots and slot queries. Construction is linear in
+method/header/signature/declaration data; queries copy only one method's slots.
+No PE, borrowed signature bytes or mutable metadata escape the load phase.
+
+LocalVariable/LocalConstant dynamic and tuple CDI is joined by its exact parent
+row. Annotated scope locals retain `dynamicFlags` and `tupleElementNames`, with
+`displayTypeName` such as `dynamic[]` or `(int a, string b)`; `type`/`typeName`
+remain the declared CLI signature. Annotated constants expose the same fields
+on `symbols.constants`; scopes additionally expose `constantAnnotations` with
+owned `{id, name, ...annotationFields}` views alongside `constantIds`. Values
+and constant decoding status are unchanged.
+
+Dynamic flags follow type occurrences, including generic arguments, arrays,
+byrefs and function pointers, with omitted trailing zero bits accepted.
+Custom modifiers and pinning do not consume dynamic flags. Tuple names follow
+Roslyn's reverse nested decoding, including long ValueTuple rest chains.
+Tuple shorthand requires a metadata-declared framework ValueTuple identity;
+same-named custom-assembly types do not qualify. This reuses the bounded
+framework identity checks below, without loading or authenticating assemblies.
+
+Unbound locals and type-dependent constants keep `displayTypeName: null` and
+`annotationReason: 'type-metadata-required'`. Primitive constants can be
+annotated without a PE. Mismatched annotations keep their raw fields and expose
+`dynamic-type-mismatch`, `tuple-name-count-mismatch` or `tuple-type-mismatch`;
+no source spelling is guessed. Referenced TypeSpec constants are decoded for
+display only, not interpreted as runtime values. Enum TypeSpec annotations remain
+`unsupported-enum-type-specification`, preserving their unverified enum identity
+and scalar value. Tuple labels preserve PDB text;
+this display is not a C# source serializer.
+
+Before CDI decoding, annotation parents and duplicate kinds are checked; limits
+are 4,096 records, 1 MiB aggregate bytes, 1,024 flags/names per record and 65,536
+aggregate flags/names. Tuple labels are limited to 3,072 UTF-8 bytes before
+allocation, then 1,024 UTF-16 units each / 4,096 per record. Annotation traversal
+is bounded at depth 32 / 256 nodes; occurrence copies avoid conflating shared
+primitive AST nodes. Existing metadata-name/output and constant TypeSpec budgets
+also apply. Display facts are computed once at load and queries copy owned data.
+The existing two-version Roslyn CDI capture is reused by
+`tests/a13-04-local-annotations.test.js`; new native end-to-end qualification is
+not claimed by this increment.
+
 For bound local TypeDef enums, `loadSymbols` verifies the metadata-declared
 framework `System.Enum` base and exactly one special `value__` instance field.
 Its scalar signature must match the constant's encoded kind; mismatches,

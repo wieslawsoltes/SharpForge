@@ -133,4 +133,19 @@ Opt-in [type-prefix validation](PREFIX-CONSTRAINED.md) checks constrained/readon
 The source-image emitter uses [nested exception-region layout](EMITTER-EXCEPTION-REGIONS.md) for catch/finally clause ordering and indexed transfers.
 The opt-in [verifier type-system adapter](VERIFIER-TYPE-SYSTEM.md) resolves bounded local hierarchy relations and reports missing metadata as unknown.
 
+`formatSignatureType(node, metadata, options)` optionally accepts
+`formatType(node, formatChild)`, returning a display string or `undefined` to
+use the default formatter. `formatChild` shares the original depth/node budget
+and cancellation signal. This display hook does not change the signature AST
+or its binary encoding; the callback-absent formatting contract is unchanged.
+
 The opt-in [verifier member context](VERIFIER-MEMBERS.md) adds bounded, canonical local field/method declaration resolution to type relations.
+
+`readMethodHeader(pe, methodToken)` reads owned scalar tiny/fat CIL header facts
+(`fileOffset`, `headerSize`, `codeOffset`, `codeSize`, `sectionEnd`, `maxStack`,
+`localSignature`, `moreSections`, `initLocals`) or null for an absent RVA.
+It validates raw MethodDef tokens, RVA/header/code extents and never decodes IL
+or exception sections. Invalid input throws `CilError`. `pe.methodBody` shares
+the same header parser and retains its existing result shape.
+
+Runtime admission checks [reachable try-entry stack heights](VERIFIER-HANDLER-ENTRY.md) before granting stack-capacity proofs.

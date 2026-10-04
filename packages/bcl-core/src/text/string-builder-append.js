@@ -15,6 +15,21 @@ export function registerStringBuilderInt64Extensions({member}) {
   member(owner, 'Append', ['ulong'], owner);
 }
 
+/** Register the remaining 8/16/32-bit integer overloads at the ordered tail; reuse existing typed scalar formatting. */
+export function registerStringBuilderIntegerExtensions({member}) {
+  for (const type of ['sbyte', 'byte', 'short', 'ushort', 'uint']) member(owner, 'Append', [type], owner);
+}
+
+/** Register Single at the ordered A07 tail; reuse the existing typed default formatter. */
+export function registerStringBuilderSingleExtensions({member}) {
+  member(owner, 'Append', ['float'], owner);
+}
+
+/** Register Decimal at the ordered A07 tail; reuse exact scale-preserving scalar formatting. */
+export function registerStringBuilderDecimalExtensions({member}) {
+  member(owner, 'Append', ['decimal'], owner);
+}
+
 /** Expand one bounded UTF-16 unit into one existing builder append, preserving zero-count no-op behavior. */
 export function appendBuilderCharacter(platform, reference, values, appendText) {
   const unit = integer(platform, values[0], 0, 65535);

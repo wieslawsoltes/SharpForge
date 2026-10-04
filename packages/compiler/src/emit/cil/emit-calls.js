@@ -47,6 +47,15 @@ export const CallEmission = Base =>
         return this.callMethod(structOverride, { receiver, syntax: node.syntax });
       }
       const boxedTarget = this.boxedCallTarget(method, receiver.type);
+      if (boxedTarget && receiver.type.isRefLikeType) {
+        // A ref struct cannot be boxed: the virtual method is called on its address (`constrained.`), which
+        // reaches the override the struct declares.
+        this.address(receiver);
+        this.arguments(node, method);
+        this.il.emit('constrained.', this.tokens.type(receiver.type));
+        const effect = { pops: method.parameters.length + 1, pushes: isVoid(method.returnType) ? 0 : 1 };
+        return this.il.emit('callvirt', this.tokens.method(boxedTarget), effect);
+      }
       if (boxedTarget) {
         this.expression(receiver);
         this.il.emit('box', this.tokens.type(receiver.type));

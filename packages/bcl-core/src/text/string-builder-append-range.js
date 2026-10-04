@@ -7,7 +7,8 @@ export function registerStringBuilderRangeExtensions({member}) {
   member(owner, 'Append', ['string', 'int', 'int'], owner);
 }
 
-function nonnegativeIndex(platform, value, parameter) {
+/** Validate a builder range operand as a nonnegative Int32, retaining its native parameter name. */
+export function nonnegativeIndex(platform, value, parameter) {
   if (!Number.isInteger(value) || value < 0 || value > 2147483647) {
     fail(platform, 'ArgumentOutOfRangeException', "Value is outside the supported range. (Parameter '" + parameter + "')");
   }

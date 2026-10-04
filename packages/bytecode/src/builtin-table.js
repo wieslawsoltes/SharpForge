@@ -10,9 +10,17 @@ const sourceDecimals = [
   ...['Add', 'Subtract', 'Multiply', 'Divide', 'Remainder'].map(name =>
     [name, ['System.Decimal', 'System.Decimal'], ['d1', 'd2']]),
   ['Compare', ['System.Decimal', 'System.Decimal'], ['d1', 'd2'], 'int'],
-  ['Equals', ['System.Decimal', 'System.Decimal'], ['d1', 'd2'], 'bool']
-].map(([name, parameters, parameterNames, returnType = 'System.Decimal']) => {
-  const descriptor = decimalIntrinsicDefinitions.find(candidate => candidate.owner === 'System.Decimal' &&
+  ['Equals', ['System.Decimal', 'System.Decimal'], ['d1', 'd2'], 'bool'],
+  ['Negate', ['System.Decimal'], ['d']], ['Abs', ['System.Decimal'], ['value']],
+  ['ToSByte', ['System.Decimal'], ['value'], 'sbyte'], ['ToByte', ['System.Decimal'], ['value'], 'byte'],
+  ['ToInt16', ['System.Decimal'], ['value'], 'short'], ['ToUInt16', ['System.Decimal'], ['value'], 'ushort'],
+  ['ToInt32', ['System.Decimal'], ['d'], 'int'], ['ToUInt32', ['System.Decimal'], ['d'], 'uint'],
+  ['ToInt64', ['System.Decimal'], ['d'], 'long'], ['ToUInt64', ['System.Decimal'], ['d'], 'ulong'],
+  ['ToSingle', ['System.Decimal'], ['d'], 'float'], ['ToDouble', ['System.Decimal'], ['d'], 'double'],
+  ['GetBits', ['System.Decimal'], ['d'], 'int[]'],
+  ['Sign', ['System.Decimal'], ['value'], 'int', 'System.Math']
+].map(([name, parameters, parameterNames, returnType = 'System.Decimal', owner = 'System.Decimal']) => {
+  const descriptor = decimalIntrinsicDefinitions.find(candidate => candidate.owner === owner &&
     candidate.isStatic && candidate.name === name && candidate.returnType === returnType &&
     candidate.parameters.length === parameters.length && candidate.parameters.every((type, index) => type === parameters[index]));
   if (!descriptor) throw new TypeError('Missing source Decimal contract');
@@ -42,8 +50,9 @@ export function createBuiltinTable(definitions, contracts, releasedRanges) {
   for (const {descriptor, parameterNames} of sourceDecimals) {
     const id = runtimeId++;
     const params = Object.freeze(descriptor.parameters.map(type => type === 'System.Decimal' ? 'decimal' : type));
+    const math = descriptor.owner === 'System.Math';
     entries[id] = Object.freeze({
-      id, name: 'decimal.' + descriptor.name + '#' + params.length,
+      id, name: (math ? 'Math.' : 'decimal.') + descriptor.name + '#' + params.length + (math ? ':Decimal' : ''),
       min: params.length, max: params.length,
       result: descriptor.returnType === 'System.Decimal' ? 'decimal' : descriptor.returnType, params, decimal: descriptor,
       parameterNames

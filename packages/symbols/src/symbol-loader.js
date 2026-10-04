@@ -8,6 +8,7 @@ import { createClosureLookup } from './closure-map.js';
 import { bindConstantTypes } from './constant-binding.js';
 import { bindImportNames } from './import-type-names.js';
 import { bindLocalTypes } from './local-types.js';
+import { bindConstantAnnotations } from './local-annotations.js';
 export function loadSymbols(assembly, pdbBytes = null, options = {}) {
   if (pdbBytes instanceof ArrayBuffer) pdbBytes = new Uint8Array(pdbBytes);
   const entries = readDebugDirectory(assembly, options),
@@ -36,8 +37,9 @@ export function loadSymbols(assembly, pdbBytes = null, options = {}) {
   symbols.bound = codeViews.length > 0;
   if (symbols.bound) {
     bindConstantTypes(symbols.constants, pe.metadata);
+    bindConstantAnnotations(symbols.constants, pe.metadata);
     symbols.effectiveImports = bindImportNames(symbols.effectiveImports, symbols.imports, pe.metadata);
-    symbols.scopeTree = bindLocalTypes(symbols.scopeTree, pe, symbols);
+    Object.assign(symbols, bindLocalTypes(symbols.scopeTree, pe, symbols, options));
   }
   symbols.hoistedLocals = createHoistedLocalLookup(pe, symbols, options);
   symbols.closureInfo = createClosureLookup(pe, symbols, options);

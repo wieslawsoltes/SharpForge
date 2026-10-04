@@ -23,7 +23,9 @@ state from the verified instruction pair, with no new frame or snapshot fields.
 
 Generic parameter operands that resolve to these admitted reference classes are
 covered by the [generic substitution leaf](runtime-constrained-generic-reference.md).
-This is a partial increment of #1357. External Object members, generic receiver
+The [concrete Object.ToString leaf](runtime-constrained-reference-tostring.md) adds
+that one external declaration for concrete class constraints using the same reference path.
+This is a partial increment of #1357. Other external Object members, generic receiver
 classes and member declarations, default-interface bodies, Object/value boxing fallback,
 and source frontend lowering remain unsupported. Full native, browser and other
 platform qualification remains pending; no performance improvement is claimed.

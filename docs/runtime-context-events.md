@@ -42,9 +42,14 @@ with `{runtimeEvents: true, virtualTime: true}`. `vm.run()` parks it and queues
 `runSlice()` delivers the resume notification. Filter the log for
 `RuntimeEventName.Suspend` and `RuntimeEventName.Resume`.
 
-Direct-CIL regression cases are in `tests/a05-context-events.test.js`; source and
-reloaded-source cases are in `tests/a05-source-context-events.test.js`. The source
-extension covers actual wait/wake, round-robin switch, freeze, cancellation,
-restore, disabled instrumentation and host callback failures. Source test execution
-and broader #1403 platform/performance qualification remain in the serial queue;
-no performance result is claimed.
+Direct-CIL regression cases are in `tests/a05-context-events.test.js`. Initial
+validation passed 21 of 22 focused checks; after moving a snapshot-schema
+assertion to the actual restore boundary, all eight context-event cases passed
+at `8910aabb`. Product behavior was unchanged. Checks used Node 24, one worker,
+and a 512 MB old-space limit.
+
+Source and reloaded-source cases are in `tests/a05-source-context-events.test.js`.
+The source extension covers actual wait/wake, round-robin switch, freeze,
+cancellation, restore, disabled instrumentation and host callback failures.
+Source test execution and broader #1403 platform/performance qualification remain
+in the serial queue; no performance result is claimed.

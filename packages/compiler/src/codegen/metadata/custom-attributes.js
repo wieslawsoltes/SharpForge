@@ -19,11 +19,14 @@
  * the TypeDef flag; the others (StructLayout, DllImport, MethodImpl, ...) are skipped and listed as a limit.
  */
 import { encodeCustomAttribute, TypeAttributes, token } from '@sharpforge/cil';
-import { SymbolKind, TypeKind, ArrayTypeSymbol } from '../../symbols/types.js';
+import { SymbolKind, TypeKind, ArrayTypeSymbol, RefKind } from '../../symbols/types.js';
 import { MethodKind } from '../../symbols/members.js';
+import { needsTypeSpec } from '../generics.js';
 import { MetadataEmitError, namespaceOf, definitionNameOf } from './type-tokens.js';
 import { methodSignature, methodSymbolSignature } from './member-signatures.js';
 import { tupleElementNamesOf } from '../../binder/tuples.js';
+import { dynamicTransformFlags } from './dynamic-flags.js';
+import { contractAssemblyOf } from './reference-contracts.js';
 
 const ASSEMBLY_TOKEN = token(0x20, 1);
 const TYPE_DEF_TABLE = 2;
@@ -45,7 +48,12 @@ const pseudoAttributes = new Set([
   'System.Runtime.CompilerServices.SpecialNameAttribute',
 ]);
 const REQUIRED_MEMBER = 'System.Runtime.CompilerServices.RequiredMemberAttribute';
+const IS_BY_REF_LIKE = 'System.Runtime.CompilerServices.IsByRefLikeAttribute';
 const EXTENSION = 'System.Runtime.CompilerServices.ExtensionAttribute';
+const UNSAFE_VALUE_TYPE = 'System.Runtime.CompilerServices.UnsafeValueTypeAttribute';
+const FIXED_BUFFER = 'System.Runtime.CompilerServices.FixedBufferAttribute';
+const DYNAMIC = 'System.Runtime.CompilerServices.DynamicAttribute';
+const isByReference = refKind => !!refKind && refKind !== RefKind.None;
 const SETS_REQUIRED_MEMBERS = 'System.Diagnostics.CodeAnalysis.SetsRequiredMembersAttribute';
 const REQUIRED_MEMBERS_MESSAGE = 'Constructors of types with required members are not supported in this version of your compiler.';
 const DEFAULT_LOCATIONS = Object.freeze({
@@ -155,13 +163,21 @@ export class CustomAttributeWriter {
       }
       // Roslyn writes the attributes it synthesizes for a type before the ones the program applies.
       if (plan.properties.some(property => property.symbol.parameters.length)) this.defaultMember(typeToken, plan);
+      // The runtime refuses a by-reference-like field (a `Span<T>`) in a struct that is not marked as a ref struct.
+      if (type.isRefLikeType) this.wellKnown(typeToken, IS_BY_REF_LIKE);
+      if (type.isFixedBufferType) {
+        this.compilerGenerated(typeToken);
+        this.wellKnown(typeToken, UNSAFE_VALUE_TYPE);
+      }
       this.applied(typeToken, type);
       const requiresMembers = declaresRequiredMember(type);
       if (requiresMembers) this.wellKnown(typeToken, REQUIRED_MEMBER);
       for (const field of plan.fields) {
         if (field.symbol) this.applied(field.token, field.symbol);
         if (field.symbol?.isRequired) this.wellKnown(field.token, REQUIRED_MEMBER);
+        if (field.fixedBuffer) this.fixedBuffer(field.token, field.fixedBuffer);
         this.tupleElementNames(field.token, field.type);
+        if (field.symbol) this.dynamic(field.token, field.symbol.type);
         const isBackingField = field.symbol?.associatedSymbol?.kind === SymbolKind.Property;
         if (isBackingField || field.isCompilerGenerated) this.compilerGenerated(field.token);
       }
@@ -174,6 +190,7 @@ export class CustomAttributeWriter {
         if (symbol.isRequired) this.wellKnown(this.writer.propertyTokens.get(symbol), REQUIRED_MEMBER);
         if (symbol.isSynthesizedRecordMember) this.compilerGenerated(this.writer.propertyTokens.get(symbol));
         this.tupleElementNames(this.writer.propertyTokens.get(symbol), symbol.type);
+        this.dynamic(this.writer.propertyTokens.get(symbol), symbol.type);
       }
       for (const { symbol } of plan.events) this.applied(this.writer.eventTokens.get(symbol), symbol);
     }
@@ -194,12 +211,16 @@ export class CustomAttributeWriter {
     // The members a record synthesizes, its copy constructor included.
     if (symbol.recordMember || (symbol.isCopyConstructor && symbol.isImplicitlyDeclared)) this.compilerGenerated(planned.token);
     const returnToken = this.writer.returnParameterTokens.get(symbol);
-    if (returnToken) this.tupleElementNames(returnToken, symbol.returnType);
+    if (returnToken) {
+      this.tupleElementNames(returnToken, symbol.returnType);
+      this.dynamic(returnToken, symbol.returnType, isByReference(symbol.refKind));
+    }
     for (const [index, parameter] of symbol.parameters.entries()) {
       const parameterToken = this.writer.parameterTokens.get(parameter);
       if (!parameterToken) continue;
       if (parameter.isParams) this.wellKnown(parameterToken, 'System.ParamArrayAttribute');
       this.tupleElementNames(parameterToken, parameter.type);
+      this.dynamic(parameterToken, parameter.type, isByReference(parameter.refKind));
       this.applied(parameterToken, parameter);
       // The parameters of an indexer are declared once and repeated on each accessor.
       const declared = owner?.kind === SymbolKind.Property ? owner.parameters[index] : null;
@@ -223,9 +244,13 @@ export class CustomAttributeWriter {
       owner = this.types.typeToken(attribute.attributeClass);
     let parameterTypes, constructorToken;
     if (constructor) {
-      const definition = constructor.originalDefinition ?? constructor;
-      parameterTypes = definition.parameters.map(parameter => parameter.type);
-      constructorToken = this.writer.methodTokens.get(definition) ?? this.builder.member(owner, '.ctor', methodSymbolSignature(this.types, definition));
+      const definition = constructor.originalDefinition ?? constructor,
+        // A constructed attribute class (C# 11 `[My<int>]`): the constructor is named on the TypeSpec with the
+        // signature of its definition (`!0`), and the argument is encoded as the type the construction gives it.
+        isConstructed = needsTypeSpec(attribute.attributeClass),
+        defined = isConstructed ? undefined : this.writer.methodTokens.get(definition);
+      parameterTypes = (isConstructed ? constructor : definition).parameters.map(parameter => parameter.type);
+      constructorToken = defined ?? this.builder.member(owner, '.ctor', methodSymbolSignature(this.types, definition));
     } else {
       // The registry lists no constructor for this framework attribute: the one that takes the arguments as written.
       parameterTypes = attribute.arguments.map(argument => argument.type);
@@ -266,6 +291,31 @@ export class CustomAttributeWriter {
       owner = this.builder.typeRef('System.Runtime.CompilerServices.TupleElementNamesAttribute'),
       constructor = this.builder.member(owner, '.ctor', methodSignature(this.types, shape));
     this.add(parent, constructor, encodeCustomAttribute([{ kind: 'szarray', element: 'string' }], [names]));
+  }
+  /** `[FixedBuffer(typeof(T), length)]` on a fixed-size buffer field. */
+  fixedBuffer(parent, { elementType, length }) {
+    const shape = { isStatic: false, returnType: this.core.void, parameters: [{ type: this.core.type }, { type: this.core.int }] },
+      constructor = this.builder.member(this.builder.typeRef(FIXED_BUFFER), '.ctor', methodSignature(this.types, shape));
+    this.add(parent, constructor, encodeCustomAttribute(['System.Type', 'int'], [serializedTypeName(elementType), length]));
+  }
+  /**
+   * The TypeRef of a framework attribute that is not in the core library's contract: through the reference that
+   * defines it, else through its contract assembly (reference-contracts.js).
+   */
+  frameworkAttribute(fullName) {
+    const split = fullName.lastIndexOf('.'),
+      assembly = this.types.assemblyOf({}, fullName) ?? contractAssemblyOf(fullName.slice(0, split), fullName.slice(split + 1));
+    return this.builder.typeRef(fullName, assembly);
+  }
+  /** `[Dynamic]` on a declaration whose type mentions `dynamic`; nothing for any other type (dynamic-flags.js). */
+  dynamic(parent, type, isByReferenceSlot = false) {
+    const flags = dynamicTransformFlags(type, isByReferenceSlot);
+    if (!flags) return;
+    const isPlain = flags.length === 1,
+      shape = { isStatic: false, returnType: this.core.void, parameters: isPlain ? [] : [{ type: new ArrayTypeSymbol(this.core.bool) }] },
+      constructor = this.builder.member(this.frameworkAttribute(DYNAMIC), '.ctor', methodSignature(this.types, shape));
+    if (isPlain) return void this.add(parent, constructor, encodeCustomAttribute([], []));
+    this.add(parent, constructor, encodeCustomAttribute([{ kind: 'szarray', element: 'bool' }], [flags]));
   }
   compilerGenerated(parent) {
     this.wellKnown(parent, 'System.Runtime.CompilerServices.CompilerGeneratedAttribute');

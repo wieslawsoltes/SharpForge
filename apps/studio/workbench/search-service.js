@@ -2,6 +2,7 @@ import {WorkbenchEvents, abortError, cancellable} from './events.js';
 import {compileFileGlobs, searchDocuments} from './search-engine.js';
 import {boundedDocuments} from './document-size.js';
 import {workerRequest} from './worker-request.js';
+import {workerOptions} from '@sharpforge/editor';
 
 export class SearchService extends WorkbenchEvents {
   constructor({documents, context = () => ({}), applyEdits, createWorker, sessionProject, timeoutMs = 5000} = {}) {
@@ -10,8 +11,10 @@ export class SearchService extends WorkbenchEvents {
     this.context = context;
     this.applyEdits = applyEdits;
     this.sessionProject = sessionProject;
-    this.createWorker = createWorker ?? (globalThis.Worker ? () => new Worker(
-      new URL('./search.worker.js', import.meta.url), {type: 'module'}) : null);
+    this.createWorker = createWorker ?? (globalThis.Worker ? () => {
+      const asset = new URL('./search.worker.js', import.meta.url);
+      return new Worker(asset, workerOptions(asset));
+    } : null);
     this.timeoutMs = timeoutMs;
     this.results = new Map();
     this.queries = new Map();

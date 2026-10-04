@@ -1,7 +1,12 @@
 import {compareObjects} from './object-comparison.js';
-import {resolveStringComparer, registerStringComparerExtensions, registerStringComparerFactoryExtensions} from './string-comparer.js';
+import {
+  resolveStringComparer, registerStringComparerExtensions, registerStringComparerFactoryExtensions, registerStringComparerEqualityExtensions
+} from './string-comparer.js';
 import {registerStringComparisonExtensions} from './string.js';
-import {registerStringBuilderCharacterExtensions, registerStringBuilderInt64Extensions} from '../text/string-builder-append.js';
+import {
+  registerStringBuilderCharacterExtensions, registerStringBuilderInt64Extensions,
+  registerStringBuilderIntegerExtensions, registerStringBuilderSingleExtensions, registerStringBuilderDecimalExtensions
+} from '../text/string-builder-append.js';
 import {
   registerStringSearchWindowExtensions, registerStringLastSearchStartExtensions, registerStringLastSearchWindowExtensions
 } from './string-search.js';
@@ -10,6 +15,8 @@ import {registerStringBuilderCopyExtensions} from '../text/string-builder-copy.j
 import {registerStringBuilderRangeExtensions} from '../text/string-builder-append-range.js';
 import {registerStringBuilderArrayExtensions} from '../text/string-builder-append-array.js';
 import {registerStringBuilderValueExtensions} from '../text/string-builder-append-builder.js';
+import {registerStringBuilderEqualityExtensions} from '../text/string-builder-equality.js';
+import {registerStringBuilderValueRangeExtensions} from '../text/string-builder-append-builder-range.js';
 
 const comparerType = 'System.Collections.IComparer';
 
@@ -32,6 +39,12 @@ function contracts(registry) {
   registerStringBuilderArrayExtensions(registry);
   registerStringComparerFactoryExtensions(registry);
   registerStringBuilderValueExtensions(registry);
+  registerStringBuilderIntegerExtensions(registry);
+  registerStringComparerEqualityExtensions(registry);
+  registerStringBuilderSingleExtensions(registry);
+  registerStringBuilderEqualityExtensions(registry);
+  registerStringBuilderDecimalExtensions(registry);
+  registerStringBuilderValueRangeExtensions(registry);
 }
 
 function invoke(platform, descriptor, args) {
