@@ -61,6 +61,32 @@ The Layout panel exposes **Convert to Grid** for a selected Canvas. The operatio
 
 Minimum width is inclusive; maximum width is exclusive. Generation emits a real managed `ApplyAdaptive(double width)` method. It restores overridden properties to their base local values (or clears their local values), then applies one matching state. Generated initialization applies the design width. Application hosts must call `ApplyAdaptive` when their viewport changes. Automatic native `SizeChanged`/`AdaptiveTrigger` execution is unavailable in the current framework contract and emits `SFD_RESPONSIVE_HOST_RESIZE`; it is not presented as native WinUI qualification.
 
+### C# adaptive source ownership
+
+The ordinary C# source reader and planner recognize the generated helper and its initial-width call. Each helper contains the
+versioned `responsiveSourceMarker` comment (`// SharpForge adaptive states v1: `), followed by a JSON array of state identifiers
+in execution order. The comment records identities only: ownership also requires the same containing class, one static helper,
+one construction initializer, closed numeric thresholds, exact baseline resets, registered property statements and one final
+return per state. User code is never executed to infer states. Up to 64 states and 20,000 helper statements are accepted.
+
+State values, thresholds and initialization width use literal-span edits, preserving numeric spelling and surrounding comments.
+Baseline property changes update the helper's matching reset in the same transaction. Control renames use bound references;
+control deletion removes only proven adaptive references. Changes to state shape rebuild the owned body and retain every ordinary
+comment. The source planner leaves unrelated methods, source trivia and partial files untouched, and its existing stale-version,
+read-only-file and candidate-compilation gates apply to every affected file. Empty override bags produce no executable statements.
+
+Static fields keep the existing `ApplyAdaptive(double width)` API. Named construction-local or instance-field controls can be passed
+as additional typed parameters. The source planner allocates collision-free helper/parameter names; changing those parameters or
+removing the helper requires all references to belong to its owned initializer. The emitter's optional `methodName`, `widthName`
+and `parameters: [{type, name, argument}]` options support this source profile alongside its required `symbol` and `csharpValue`
+callbacks. These are explicit source-generation inputs; the planner supplies them from validated types and bound symbols.
+
+An unmarked helper stays handwritten. An edited marker, unknown helper statement, mismatched baseline, conditional directive,
+protected value source or inline anonymous target reports `SFSYNC_OWNERSHIP`; it cannot silently drop states or overwrite user
+logic. External helper references prevent signature changes/removal with `SFSYNC_REFERENCE`. Reopening a malformed helper retains
+Studio's last valid preview and reports the source error. These capabilities concern managed source round trips and initial-width
+execution; automatic native viewport dispatch remains outside the current framework contract.
+
 Canvas, Grid and VariableSizedWrapGrid dependency property identifiers occupy nine entries in the reserved A18 ABI block. Both managed engines resolve attached storage by declaring owner and public member, so Grid.ColumnSpan and VariableSizedWrapGrid.ColumnSpan remain separate. Clearing an adaptive override restores the runtime default and makes `ReadLocalValue` return `UnsetValue`; it does not turn the default into an authored local value. Existing local values are restored through their original attached setter.
 
 High-contrast preview applies an explicit black/white/yellow preview palette. It does not emulate an operating system's complete forced-colors policy. Browser input preview also does not execute managed event handlers; those execute in the application runtime.

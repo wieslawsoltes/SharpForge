@@ -1,7 +1,7 @@
 import {CONTROLS} from '@sharpforge/framework';
 import {childSlot} from './model.js';
 import {propertyStatement} from './source-edit-properties.js';
-import {sameSourceValue, removeSourceInitializer, removeSourceStatement, sourceInsertion} from './source-text.js';
+import {sameSourceValue, removeSourceInitializer, removeSourceStatement, sourceInsertion, sourceConstructionBoundary} from './source-text.js';
 import {failSource} from './source-errors.js';
 import {sourceCollectionStatements} from './source-edit-collections.js';
 
@@ -52,7 +52,9 @@ function deleteNode(base, binding, edits, external) {
     for (const edge of owner.edges) if (edge.child === binding.id || owner.id === binding.id) statements.push(edge.statement);
   }
   const unique = [...new Map(statements.map(statement => [statement.uri + ':' + statement.start, statement])).values()];
-  const references = referencedOutside(base, binding, unique);
+  const adaptive = base.responsiveSource;
+  const allowed = adaptive ? [...unique, adaptive.method, adaptive.initializer] : unique;
+  const references = referencedOutside(base, binding, allowed);
   if (references.length) failSource('Control is referenced by handwritten C# and cannot be deleted', binding.creation,
     'SFSYNC_REFERENCE', {references});
   for (const statement of unique) edits.push(removeSourceStatement(base, statement));
@@ -96,9 +98,7 @@ export function sourceTreeEdits(base, next, names, edits, external) {
   const inserted = next.nodes.filter(node => !before.has(node.id));
   const removed = new Set(base.document.nodes.filter(node => !after.has(node.id)).map(node => node.id));
   for (const id of removed) deleteNode(base, base.bindings[id], edits, external);
-  const terminal = base.method.body.statements.find(statement => statement.kind === 'Return'
-    || statement.expression?.kind === 'Call' && statement.expression.target?.name === 'Activate');
-  const end = terminal?.start ?? base.method.body.end - 1;
+  const end = sourceConstructionBoundary(base);
   const groups = new Map();
   for (const parent of next.nodes) {
     const old = before.get(parent.id);

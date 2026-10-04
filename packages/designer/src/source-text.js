@@ -45,14 +45,20 @@ export function inferSourceStyle(text, method) {
   return {newline, indent, methodIndent, unit, usesVar, braceOnNewLine: /\r?\n[ \t]*\{$/.test(text.slice(method.start, method.body.start + 1))};
 }
 
+/** Construction edits precede the proved adaptive initializer and the method's terminal action. */
+export function sourceConstructionBoundary(analysis) {
+  const terminal = analysis.method.body.statements.find(statement => statement.kind === 'Return'
+    || statement.expression?.kind === 'Call' && statement.expression.target?.name === 'Activate');
+  return Math.min(analysis.responsiveSource?.initializer.start ?? Infinity,
+    terminal?.start ?? analysis.method.body.end - 1);
+}
+
 /** Insertion preserves existing indentation, including same-line construction methods. */
 export function sourceInsertion(analysis, statements, offset = null) {
   if (!statements.length) return null;
   const {text, method} = analysis;
   const style = analysis.style ?? inferSourceStyle(text, method);
-  const terminal = method.body.statements.find(statement => statement.kind === 'Return'
-    || statement.expression?.kind === 'Call' && statement.expression.target?.name === 'Activate');
-  const at = offset ?? terminal?.start ?? method.body.end - 1;
+  const at = offset ?? sourceConstructionBoundary(analysis);
   const prefix = text.slice(text.lastIndexOf('\n', at - 1) + 1, at);
   const padding = /^[ \t]*$/.test(prefix) ? '' : style.newline + style.indent;
   const continuation = /^[ \t]*$/.test(prefix) ? prefix : style.indent;

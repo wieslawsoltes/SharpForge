@@ -12,8 +12,8 @@ export function responsiveMethodTrivia(candidate, signal) {
   const first = method.body.statements[0]?.start ?? method.body.end - 1;
   const text = parsed.source.text;
   if (!text.slice(start, first).includes(responsiveSourceMarker)) return null;
-  const body = text.slice(method.body.start, method.body.end);
-  const scanner = new Scanner(new SourceText(body, parsed.source.uri), undefined,
+  const source = text.slice(method.start, method.end);
+  const scanner = new Scanner(new SourceText(source, parsed.source.uri), undefined,
     {cancellationToken: sourceSyntaxCancellationToken(signal)});
   const {raws} = scanner.sequence(null);
   if (scanner.diagnostics.some(diagnostic => diagnostic.severity === 'error') || scanner.directives.length) {
@@ -23,12 +23,12 @@ export function responsiveMethodTrivia(candidate, signal) {
   for (const token of raws) {
     for (const trivia of [...(token.leading ?? []), ...(token.trailing ?? [])]) {
       if (!trivia.kind.includes('Comment')) continue;
-      comments.push({start: method.body.start + trivia.start, end: method.body.start + trivia.end,
-        text: body.slice(trivia.start, trivia.end), kind: trivia.kind});
+      comments.push({start: method.start + trivia.start, end: method.start + trivia.end,
+        text: source.slice(trivia.start, trivia.end), kind: trivia.kind});
     }
   }
   const markers = comments.filter(comment => comment.kind === 'SingleLineCommentTrivia'
-    && comment.start < first && comment.text.startsWith(responsiveSourceMarker));
+    && comment.start > method.body.start && comment.start < first && comment.text.startsWith(responsiveSourceMarker));
   if (markers.length !== 1 || markers[0].text.length > 8192) {
     failSource('Adaptive helpers require one bounded versioned state-identity marker', method, 'SFSYNC_OWNERSHIP');
   }
@@ -41,5 +41,5 @@ export function responsiveMethodTrivia(candidate, signal) {
   if (new Set(ids).size !== ids.length || ids.some(id => typeof id !== 'string' || !/^[A-Za-z_]\w{0,63}$/.test(id))) {
     failSource('Adaptive state identities must be unique C# identifiers', method, 'SFSYNC_OWNERSHIP');
   }
-  return {ids, marker: markers[0], comments: comments.filter(comment => comment !== markers[0])};
+  return {ids, marker: markers[0], comments: comments.filter(comment => comment !== markers[0] && comment.start > method.body.start)};
 }

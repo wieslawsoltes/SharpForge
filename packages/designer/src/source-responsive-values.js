@@ -1,10 +1,28 @@
 import {canonicalType} from '@sharpforge/framework';
 import {normalizeProperty, propertySchema} from './model.js';
 import {sourcePath, sameSourceValue} from './source-text.js';
-import {failSource} from './source-errors.js';
+import {DesignSyncError, failSource} from './source-errors.js';
 
 function fail(node, message = 'Adaptive helpers contain an unowned or edited statement') {
   failSource(message, node, 'SFSYNC_OWNERSHIP');
+}
+
+export function readResponsiveValue(readValue, expression) {
+  try { return readValue(expression); }
+  catch (error) {
+    if (!(error instanceof DesignSyncError) || ['SFSYNC_LIMIT', 'SFSYNC_CANCELLED'].includes(error.code)) throw error;
+    fail(expression, 'Adaptive values must be closed supported constants: ' + error.message);
+  }
+}
+
+export function responsiveSourceProperty(target, property, location) {
+  const schema = target && propertySchema(target.type)[property];
+  if (!target || !schema || schema.readOnly || schema.isStatic || property === 'Name') fail(location);
+  if (target.children.length && property === 'Content') fail(location, 'Adaptive source cannot replace an existing visual child');
+  if (target.bindings?.[property] || target.resourceReferences?.[property] || target.templatePropertyBindings?.[property]) {
+    fail(location, 'Adaptive resets cannot replace a protected local value source');
+  }
+  return schema;
 }
 
 /** Decode only the emitted property assignment, registered attached setter, or matching ClearValue form. */
@@ -24,7 +42,7 @@ export function readResponsiveAssignment(statement, resolve, readValue) {
     const call = expression.target;
     if (call.name === 'ClearValue' && expression.args.length === 1) {
       target = resolve(call.target);
-      const dependency = readValue(expression.args[0]);
+      const dependency = readResponsiveValue(readValue, expression.args[0]);
       property = target && Object.entries(propertySchema(target.type)).find(([name, schema]) =>
         (schema.member ?? name) === dependency?.dependencyProperty
         && canonicalType(schema.owner ?? target.type) === dependency.owner)?.[0];
@@ -37,20 +55,24 @@ export function readResponsiveAssignment(statement, resolve, readValue) {
       valueExpression = expression.args[1];
     }
   }
-  const schema = target && propertySchema(target.type)[property];
-  if (!target || !schema || schema.readOnly || schema.isStatic || property === 'Name') fail(statement);
-  if (target.children.length && property === 'Content') fail(statement, 'Adaptive source cannot replace an existing visual child');
-  if (target.bindings?.[property] || target.resourceReferences?.[property] || target.templatePropertyBindings?.[property]) {
-    fail(statement, 'Adaptive resets cannot replace a protected local value source');
+  const schema = responsiveSourceProperty(target, property, statement);
+  let value;
+  if (present) {
+    const literal = readResponsiveValue(readValue, valueExpression);
+    try { value = normalizeProperty(target.type, property, literal); }
+    catch (error) {
+      if (!(error instanceof TypeError)) throw error;
+      fail(valueExpression, 'Adaptive property value is invalid: ' + error.message);
+    }
   }
-  return {id: target.id, property, present, ...(present ? {value: normalizeProperty(target.type, property, readValue(valueExpression))} : {}),
+  return {id: target.id, property, present, ...(present ? {value} : {}),
     expression: valueExpression, statement, type: schema.type};
 }
 
 function widthComparison(expression, operator, width, readValue) {
   if (expression?.kind !== 'Binary' || expression.operator !== operator
     || expression.left.kind !== 'Name' || expression.left.name !== width) fail(expression);
-  const value = readValue(expression.right);
+  const value = readResponsiveValue(readValue, expression.right);
   if (typeof value !== 'number' || !Number.isFinite(value)) fail(expression, 'Adaptive thresholds require finite closed constants');
   return {value, expression: expression.right};
 }

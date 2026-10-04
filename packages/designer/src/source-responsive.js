@@ -3,7 +3,7 @@ import {validateResponsiveDesign} from './layout-authoring-responsive.js';
 import {ownerName} from './source-symbols.js';
 import {sourcePath, sameSourceValue} from './source-text.js';
 import {responsiveMethodTrivia} from './source-responsive-trivia.js';
-import {readResponsiveAssignment, readResponsiveCondition, responsiveAssignmentMap,
+import {readResponsiveAssignment, readResponsiveCondition, readResponsiveValue, responsiveAssignmentMap,
   assertResponsiveResets} from './source-responsive-values.js';
 import {checkSourceCancellation, failSource} from './source-errors.js';
 
@@ -131,7 +131,7 @@ export function readSourceResponsive(reader) {
     method, 'Adaptive helper overloads are not designer-owned');
   const initializer = helperInitializer(reader, candidate);
   const {resolve, targets, widthName} = parameterBindings(reader, method, initializer);
-  const width = reader.readValue(initializer.expression.args[0]);
+  const width = readResponsiveValue(expression => reader.readValue(expression), initializer.expression.args[0]);
   ownedCheck(typeof width === 'number' && Number.isFinite(width) && width >= 100 && width <= 10000, initializer,
     'Adaptive initialization width must be a closed 100–10000 pixel value');
   const result = readStates(reader, candidate, trivia, resolve, widthName);
