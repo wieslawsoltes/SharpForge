@@ -34,7 +34,8 @@ accessibility and instruction/whole-method verification remain outside this
 partial #2400 increment. An accessible type does not prove that a member or
 instruction using it is valid.
 
-Eight authored focused tests and fourteen ILAsm/ILVerify cases are described in
-the [reference plan](../../tests/fixtures/a03-type-access/README.md).
-Validation and performance measurements are pending the serial slot; no native
-agreement or passing check is claimed yet.
+Fourteen ILAsm/ILVerify cases passed: twelve known agreements and two explicit
+unknowns. All 55 new/affected focused contracts and required static checks passed,
+with no new structure finding. The [evidence](../../tests/fixtures/a03-type-access/README.md)
+retains paired controls, chronological samples and explicit integration acceptance
+of all measured >5% existing-control regressions. Broader qualification remains staged.
