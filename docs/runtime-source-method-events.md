@@ -42,6 +42,7 @@ snapshot rejection/restart, parked cancellation/wake, disposal and overflow.
 The existing heap tests now filter their event family while preserving payload
 and ordering assertions. Tests have not been run here; serial validation is
 pending. [Source method-load events](runtime-source-method-load-events.md) now
-precede each metadata method's first observed admission. Source exception and
-scheduler event families and broader platform/performance qualification remain
+precede each metadata method's first observed admission.
+[Source exception origins](runtime-source-exception-events.md) share the same log.
+Source scheduler events and broader platform/performance qualification remain
 separate #1403 work.
