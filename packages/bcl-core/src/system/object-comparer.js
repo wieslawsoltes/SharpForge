@@ -18,6 +18,7 @@ import {registerStringBuilderValueExtensions} from '../text/string-builder-appen
 import {registerStringBuilderEqualityExtensions} from '../text/string-builder-equality.js';
 import {registerStringBuilderValueRangeExtensions} from '../text/string-builder-append-builder-range.js';
 import {registerStringBuilderCharacterEditExtensions, registerStringBuilderCharacterInsertExtensions} from '../text/string-builder-edit.js';
+import {registerStringBuilderStringReplaceRangeExtensions} from '../text/string-builder-replace-range.js';
 
 const comparerType = 'System.Collections.IComparer';
 
@@ -48,6 +49,7 @@ function contracts(registry) {
   registerStringBuilderValueRangeExtensions(registry);
   registerStringBuilderCharacterEditExtensions(registry);
   registerStringBuilderCharacterInsertExtensions(registry);
+  registerStringBuilderStringReplaceRangeExtensions(registry);
 }
 
 function invoke(platform, descriptor, args) {

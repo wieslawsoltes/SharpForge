@@ -10,6 +10,7 @@ import {appendBuilderValueRange} from './string-builder-append-builder-range.js'
 import {builderEquals} from './string-builder-equality.js';
 import {replaceBuilderCharacters, insertBuilderCharacter} from './string-builder-edit.js';
 import {removeBuilderRange} from './string-builder-remove.js';
+import {replaceBuilderStringRange} from './string-builder-replace-range.js';
 
 const owner = 'System.Text.StringBuilder';
 const maximumCapacity = 2147483647;
@@ -220,6 +221,7 @@ function invokeMember(platform, descriptor, reference, values, scalars) {
       : insertText(platform, reference, scalars[0], scalars[1]);
     case 'Replace':
       if (descriptor.parameters[0] === 'char') return replaceBuilderCharacters(platform, reference, scalars);
+      if (descriptor.parameters.length === 4) return replaceBuilderStringRange(platform, reference, scalars, bufferText, setBuffer);
       return mutateBuffer(platform, reference, descriptor.name, values, scalars);
     default: return mutateBuffer(platform, reference, descriptor.name, values, scalars);
   }
