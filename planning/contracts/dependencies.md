@@ -6,6 +6,17 @@ The legacy `## Dependencies` section's work-ID links are also parsed. Malformed
 IDs and conflicting contract versions fail. Parent dependencies apply to each leaf;
 parent completion is not itself a dependency of its own children.
 
+Work IDs use `SF-Axx-Enn`, `SF-Axx-Tnn`, `SF-Axx-Bnn` (or `Rxxx` in place of
+`Axx`), optionally followed by one numeric child suffix such as `.2`.
+Whitespace, commas, semicolons, colons, parentheses, brackets, backticks,
+asterisks, angle brackets, quotes, and exclamation/question marks delimit IDs.
+A single sentence-ending period after a complete ID is allowed. Other attached
+characters remain part of the candidate and must fail validation: for example,
+`SF-A00-T01_2` and `SF-A00-T01/2` must never become `SF-A00-T01`. This applies to
+both explicit lists and work-ID links or prose in the legacy Dependencies section.
+Inline Markdown links contribute their label only; their URL is not a dependency
+declaration, even when its path or query contains a work ID.
+
 A task is ready only when it is an open leaf, the dependency graph has no cycles or
 missing IDs, all transitive requirements are CLOSED with a merged PR targeting the
 repository default branch and a recorded merge commit, and each required contract

@@ -1,0 +1,13 @@
+{
+  "format": "SharpForge.DecimalReference/1",
+  "referenceCommit": "4fa8e838",
+  "sdk": "10.0.201",
+  "runtime": "10.0.5",
+  "platform": "darwin",
+  "architecture": "arm64",
+  "globalization": "invariant",
+  "source": "using System;class Program{static void Main(){decimal a=0.1M;decimal b=0.2M;Console.WriteLine(a+b);Console.WriteLine(1M/3M);decimal c=1.10M;object boxed=c;c=2M;Console.WriteLine(boxed);Console.WriteLine(decimal.Round(1.245M,2));Console.WriteLine(decimal.Round(-1.245M,2,MidpointRounding.AwayFromZero));decimal maximum=decimal.MaxValue;try{Console.WriteLine(maximum+1M);}catch(Exception error){Console.WriteLine(error.GetType().Name);}}}",
+  "stdout": "0.3\n0.3333333333333333333333333333\n1.10\n1.24\n-1.25\nOverflowException\n",
+  "sourceSha256": "8ca6671628d355127d6ae12cdeb6f60c75b7f7cb6a173ca2833265d77a04e754",
+  "outputSha256": "c55e157d56aee6ef6881df1fde896953078dcb2aab09241ecf6fc8e5388dc4c8"
+}

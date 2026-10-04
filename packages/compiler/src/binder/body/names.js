@@ -2,14 +2,16 @@
  * Simple names and member access: locals, parameters, members of enclosing types, types, namespaces,
  * using-static members, `Color Color`, and member lookup on values with extension-method fallback.
  */
+import {DiagnosticId} from '../../diagnostics/codes.js';
 import { SymbolKind, TypeKind, ErrorTypeSymbol, ArrayTypeSymbol } from '../../symbols/types.js';
 import { isKnownMissingMember } from '../../symbols/predefined-member-names.js';
+import { spanElementType } from '../../conversions/span.js';
 import { ConstantValue } from '../../constants/constant-value.js';
 import { extensionScopes, isValidReceiverConversion } from '../../overload/extension-methods.js';
 import { lookupMembers } from '../inheritance.js';
 import { tupleElement, tupleElementProblem } from '../tuples.js';
 import { checkConstructedType } from '../constraints.js';
-import { staticMembersOfTypeParameter } from '../interface-members.js';
+import { staticMembersOfTypeParameter, staticVirtualAccess } from '../interface-members.js';
 import { accessorNamed, isOperatorMethod } from '../special-methods.js';
 import { staticImportsNamed } from '../csharp6.js';
 
@@ -31,16 +33,20 @@ export const NameBinding = Base =>
       {
         const local = this.lookupLocal(name);
         if (local && (!arity || local.kind === SymbolKind.Method)) {
-          if (local.kind === SymbolKind.Local) return this.localNode(local, syntax);
+          if (local.kind === SymbolKind.Local) {
+            this.reportCapturedRefLike(local, syntax);
+            return this.localNode(local, syntax);
+          }
           if (local.kind === SymbolKind.Parameter) {
-            if (this.isOuterByRefParameter(local)) this.report(syntax, 'CS1628', [name]);
+            if (this.isOuterByRefParameter(local)) this.report(syntax, DiagnosticId.CS1628, [name]);
+            else this.reportCapturedRefLike(local, syntax);
             return this.node('Parameter', syntax, local.type, { parameter: local });
           }
           if (local.kind === SymbolKind.Method)
             return this.node('MethodGroup', syntax, null, { methods: [local], receiver: null, name, form: 'methodGroup', typeArguments });
         }
         if (!arity && this.isPending(name)) {
-          this.report(syntax, 'CS0841', [name]);
+          this.report(syntax, DiagnosticId.CS0841, [name]);
           // The use still counts for the unused-variable warnings: an assignment as a write, anything else as a read.
           const isWrite = syntax.parent?.kind === 'SimpleAssignmentExpression' && syntax.parent.left === syntax;
           (this.rootBinder.usedBeforeDeclaration ??= new Map()).set(name, isWrite && !this.rootBinder.usedBeforeDeclaration.has(name));
@@ -55,7 +61,7 @@ export const NameBinding = Base =>
           const r = this.memberResult(found.members, syntax, null, type, name, typeArguments, options, !first);
           if (r) return r;
         } else if (found.inaccessible.length && !this.d.typeBinder.lookup(name, arity, this.typeScope)) {
-          this.report(syntax, 'CS0122', [found.inaccessible[0].toDisplayString()]);
+          this.report(syntax, DiagnosticId.CS0122, [found.inaccessible[0].toDisplayString()]);
           return this.bad(syntax);
         }
       }
@@ -67,7 +73,7 @@ export const NameBinding = Base =>
         return this.node('TypeExpression', syntax, null, { referencedType: type });
       }
       if (symbol?.ambiguous) {
-        this.report(syntax, 'CS0104', [name, symbol.ambiguous[0].toDisplayString(), symbol.ambiguous[1].toDisplayString()]);
+        this.report(syntax, DiagnosticId.CS0104, [name, symbol.ambiguous[0].toDisplayString(), symbol.ambiguous[1].toDisplayString()]);
         return this.bad(syntax);
       }
       // using static members
@@ -76,11 +82,15 @@ export const NameBinding = Base =>
         if (!usings) continue;
         const { members, ambiguous } = staticImportsNamed(usings.staticTypes, name);
         if (ambiguous) {
-          this.report(syntax, 'CS0229', ambiguous.map(member => member.toDisplayString()));
+          this.report(syntax, DiagnosticId.CS0229, ambiguous.map(member => member.toDisplayString()));
           return this.bad(syntax);
         }
         if (members.length)
           return this.memberResult(members, syntax, null, members[0].containingType, name, typeArguments, options, false) ?? this.bad(syntax);
+      }
+      if (!symbol && !arity) {
+        const builtin = this.d.executionBuiltin?.(name);
+        if (builtin) return this.node('TypeExpression', syntax, null, { referencedType: builtin });
       }
       if (name === 'nameof' && options.invoked) return this.node('NameOfMarker', syntax, null, {});
       if (name === 'var' || name === 'dynamic') return this.lenient(syntax);
@@ -89,7 +99,7 @@ export const NameBinding = Base =>
         if (this.reportAccessorByName(type, name, syntax.identifier)) return this.bad(syntax);
       // A local of the file's top-level statements is in scope inside its types, where it cannot be used (CS8801).
       const isTopLevelName = !this.rootBinder.c.isTopLevel && this.d.topLevelNames?.(this.c.uri).has(name);
-      this.report(syntax.kind === 'GenericName' ? syntax : syntax.identifier, isTopLevelName ? 'CS8801' : 'CS0103', [name]);
+      this.report(syntax.kind === 'GenericName' ? syntax : syntax.identifier, isTopLevelName ? DiagnosticId.CS8801 : DiagnosticId.CS0103, [name]);
       return this.bad(syntax);
     }
     /** `alias::Name` in an expression: a namespace or type reached through a using alias, an extern alias or `global`. */
@@ -104,7 +114,7 @@ export const NameBinding = Base =>
     reportAccessorByName(type, name, node) {
       const membersNamed = (owner, memberName) => lookupMembers(owner, memberName, this.core, { within: this.c.containingType }).members,
         accessor = accessorNamed(type, name, membersNamed);
-      if (accessor) this.report(node, 'CS0571', [accessor]);
+      if (accessor) this.report(node, DiagnosticId.CS0571, [accessor]);
       return !!accessor;
     }
     localNode(local, syntax) {
@@ -123,7 +133,10 @@ export const NameBinding = Base =>
         return this.node('TypeExpression', syntax, null, { referencedType: t });
       }
       const viaType = receiver?.kind === 'TypeExpression',
-        implicit = !receiver;
+        implicit = !receiver,
+        // C# 11: a static abstract or virtual interface member is reached through a type parameter only.
+        virtualAccess = viaType && !options.nameofOperand ? staticVirtualAccess(first, receiver.referencedType) : null;
+      if (virtualAccess?.code) this.report(syntax, virtualAccess.code);
       const instanceReceiver = () => {
         if (!implicit) return receiver;
         if (this.c.isStatic || (this.c.isFieldInitializer && !this.c.isStaticInitializer) || outer) {
@@ -134,7 +147,7 @@ export const NameBinding = Base =>
       if (first.kind === SymbolKind.Method) {
         const methods = members.filter(m => m.kind === SymbolKind.Method);
         if (methods.every(isOperatorMethod)) {
-          this.report(nameNode, 'CS0571', [first.toDisplayString()]);
+          this.report(nameNode, DiagnosticId.CS0571, [first.toDisplayString()]);
           return this.bad(syntax);
         }
         return this.node('MethodGroup', syntax, null, {
@@ -158,7 +171,7 @@ export const NameBinding = Base =>
         }
       };
       if (typeArguments) {
-        this.report(nameNode, 'CS0307', [
+        this.report(nameNode, DiagnosticId.CS0307, [
           first.kind === SymbolKind.Field ? 'field' : first.kind === SymbolKind.Property ? 'property' : 'event',
           name,
         ]);
@@ -179,7 +192,7 @@ export const NameBinding = Base =>
             receiver.syntax.identifier.valueText === receiver.type.name
           )) {
             used();
-            this.report(syntax, 'CS0176', [first.toDisplayString()]);
+            this.report(syntax, DiagnosticId.CS0176, [first.toDisplayString()]);
             return this.bad(syntax);
           }
         }
@@ -188,7 +201,7 @@ export const NameBinding = Base =>
           if (receiver.syntax?.kind === 'IdentifierName' && receiver.colorColor) r = receiver.colorColor;
           else if (!options.nameofOperand) {
             used();
-            this.report(syntax, 'CS0120', [first.toDisplayString()]);
+            this.report(syntax, DiagnosticId.CS0120, [first.toDisplayString()]);
             return this.bad(syntax);
           }
         } else {
@@ -198,7 +211,7 @@ export const NameBinding = Base =>
             if (options.memberAccessLeft) this.d.gate(this.c.uri, syntax, 'InstanceMemberInNameof');
           } else if (!r) {
             used();
-            this.report(syntax, this.c.isFieldInitializer && !this.c.isStatic && !outer ? 'CS0236' : 'CS0120', [first.toDisplayString()]);
+            this.report(syntax, this.c.isFieldInitializer && !this.c.isStatic && !outer ? DiagnosticId.CS0236 : DiagnosticId.CS0120, [first.toDisplayString()]);
             return this.bad(syntax);
           }
         }
@@ -222,6 +235,7 @@ export const NameBinding = Base =>
         }
         case SymbolKind.Property: {
           const n = this.node('PropertyAccess', syntax, first.type, { property: first, receiver: r });
+          if (virtualAccess?.constrainedTo) n.constrainedTo = virtualAccess.constrainedTo;
           if (first.type?.isErrorType?.()) n.hasErrors = true;
           return n;
         }
@@ -234,7 +248,7 @@ export const NameBinding = Base =>
       if (definition.arity !== typeArguments.length) {
         this.report(
           node,
-          definition.arity ? 'CS0305' : 'CS0308',
+          definition.arity ? DiagnosticId.CS0305 : DiagnosticId.CS0308,
           definition.arity ? [definition.toDisplayString(), 'type', definition.arity] : [definition.toDisplayString(), 'type'],
         );
         return unknown;
@@ -282,7 +296,7 @@ export const NameBinding = Base =>
         const child = arity ? null : ns.getNamespace(name);
         if (child) return this.node('NamespaceExpression', syntax, null, { namespace: child });
         if (this.d.isFrameworkGap(ns.toDisplayString(), name)) return this.lenient(syntax);
-        this.report(nameSyntax, 'CS0234', [name, ns.toDisplayString()]);
+        this.report(nameSyntax, DiagnosticId.CS0234, [name, ns.toDisplayString()]);
         return this.bad(syntax);
       }
       if (left.kind === 'TypeExpression') {
@@ -291,21 +305,21 @@ export const NameBinding = Base =>
         if (type.typeKind === TypeKind.TypeParameter) {
           const statics = staticMembersOfTypeParameter(type, name, this.core);
           if (statics.length) return this.memberResult(statics, syntax, left, type, name, typeArguments, options);
-          this.report(syntax.expression, 'CS0119', [type.name, 'type parameter']);
+          this.report(syntax.expression, DiagnosticId.CS0119, [type.name, 'type parameter']);
           return this.bad(syntax);
         }
         const found = lookupMembers(type, name, this.core, { within: this.c.containingType });
         if (!found.members.length) {
           if (found.inaccessible.length) {
-            this.report(nameSyntax, 'CS0122', [found.inaccessible[0].toDisplayString()]);
+            this.report(nameSyntax, DiagnosticId.CS0122, [found.inaccessible[0].toDisplayString()]);
             return this.bad(syntax);
           }
           if (this.reportAccessorByName(type, name, nameSyntax)) return this.bad(syntax);
           const extension = this.staticExtensionMember(left, type, name, syntax, typeArguments, options);
           if (extension) return extension;
           if (!isSource(type) && type.typeKind !== TypeKind.Enum)
-            return this.reportMissingFrameworkMember(type, name, nameSyntax, syntax, 'CS0117');
-          this.report(nameSyntax, 'CS0117', [this.display(type), name]);
+            return this.reportMissingFrameworkMember(type, name, nameSyntax, syntax, DiagnosticId.CS0117);
+          this.report(nameSyntax, DiagnosticId.CS0117, [this.display(type), name]);
           return this.bad(syntax);
         }
         return this.memberResult(found.members, syntax, left, type, name, typeArguments, options) ?? this.bad(syntax);
@@ -313,21 +327,21 @@ export const NameBinding = Base =>
       left = this.asValue(left);
       if (left.hasErrors) return this.bad(syntax);
       if (left.kind === 'MethodGroup' && left.methods.length) {
-        this.report(syntax.expression, 'CS0119', [left.methods[0].toDisplayString(), 'method']);
+        this.report(syntax.expression, DiagnosticId.CS0119, [left.methods[0].toDisplayString(), 'method']);
         return this.bad(syntax);
       }
       if (left.literal === 'default') {
-        this.report(syntax.expression, 'CS8716');
+        this.report(syntax.expression, DiagnosticId.CS8716);
         return this.bad(syntax);
       }
       if (left.kind === 'MethodGroup' || left.form === 'lambda' || left.literal) {
-        this.report(syntax, 'CS0023', ['.', left.literal === 'null' ? '<null>' : left.form === 'lambda' ? 'lambda expression' : 'method group']);
+        this.report(syntax, DiagnosticId.CS0023, ['.', left.literal === 'null' ? '<null>' : left.form === 'lambda' ? 'lambda expression' : 'method group']);
         return this.bad(syntax);
       }
       const type = left.type;
       if (!type) return this.bad(syntax);
       if (type.specialType === 'System_Void') {
-        this.report(syntax.operatorToken ?? syntax, 'CS0023', ['.', 'void']);
+        this.report(syntax.operatorToken ?? syntax, DiagnosticId.CS0023, ['.', 'void']);
         return this.bad(syntax);
       }
       return this.instanceMember(left, type, name, nameSyntax, syntax, typeArguments, options);
@@ -342,8 +356,10 @@ export const NameBinding = Base =>
       const element = tupleElement(type, name);
       if (element) {
         // A named tuple element is the field at its position; a name the literal inferred needs C# 7.1 (CS8306).
-        if (element.isInferred && this.version.number < 7.1) this.report(nameSyntax, 'CS8306', [name, '7.1']);
+        if (element.isInferred && this.version.number < 7.1) this.report(nameSyntax, DiagnosticId.CS8306, [name, '7.1']);
         name = element.field;
+        // An element a long tuple holds in `Rest` is a field of the tuple type itself.
+        if (element.symbol) return this.memberResult([element.symbol], syntax, left, type, name, typeArguments, options) ?? this.bad(syntax);
       }
       const lookupType = type instanceof ArrayTypeSymbol ? this.core.array : type;
       const found = lookupMembers(lookupType, name, this.core, {
@@ -365,7 +381,7 @@ export const NameBinding = Base =>
       const missingBase = this.d.missingBaseReason(lookupType);
       if (missingBase) {
         this.report(nameSyntax, missingBase.code, missingBase.args);
-        this.report(nameSyntax, 'CS1061', [this.display(type), name]);
+        this.report(nameSyntax, DiagnosticId.CS1061, [this.display(type), name]);
         return this.bad(syntax);
       }
       const extension = this.instanceExtensionMember(left, type, name, syntax, typeArguments, options);
@@ -374,8 +390,10 @@ export const NameBinding = Base =>
       const isKnownGap = isKnownMissingMember(type, name) && !this.importsUnknownNamespaces();
       // On a type that is not fully known a missing member proves nothing. An array is the exception when an
       // extension method in scope takes it as its receiver: an array has no instance method that could be meant.
-      const isOpen = !isKnownGap && (type.hasUnknownConstraint || !this.d.closedHierarchy(type));
-      if (isOpen && !(type instanceof ArrayTypeSymbol)) return this.lenient(syntax);
+      // So are Span<T> and ReadOnlySpan<T>, the receivers the C# 14 span conversions are for.
+      const isOpen = !isKnownGap && (type.hasUnknownConstraint || !this.d.closedHierarchy(type)),
+        isSpan = !!(spanElementType(type, 'Span') ?? spanElementType(type, 'ReadOnlySpan'));
+      if (isOpen && !(type instanceof ArrayTypeSymbol) && !isSpan) return this.lenient(syntax);
       // Extension methods (only meaningful when the name is invoked, but a method group conversion may also use them).
       const scopes = extensionScopes(
         this.typeScope.namespaceChain.map(l => ({
@@ -385,7 +403,8 @@ export const NameBinding = Base =>
         name,
       );
       const takesReceiver = method => method.name === name && isValidReceiverConversion(this.conversions, left, method.parameters[0].type);
-      if (isOpen && !scopes.some(scope => scope.methods.some(takesReceiver))) return this.lenient(syntax);
+      // For a span receiver any extension method of that name is a candidate: its type arguments are inferred later.
+      if (isOpen && !isSpan && !scopes.some(scope => scope.methods.some(takesReceiver))) return this.lenient(syntax);
       if (scopes.length)
         return this.node('MethodGroup', syntax, null, {
           methods: [],
@@ -399,8 +418,8 @@ export const NameBinding = Base =>
           isExtensionOnly: true,
         });
       if (!isKnownGap && !isSource(type) && type.typeKind !== TypeKind.TypeParameter)
-        return this.reportMissingFrameworkMember(type, name, nameSyntax, syntax, 'CS1061');
-      this.report(nameSyntax, 'CS1061', [this.display(type), name]);
+        return this.reportMissingFrameworkMember(type, name, nameSyntax, syntax, DiagnosticId.CS1061);
+      this.report(nameSyntax, DiagnosticId.CS1061, [this.display(type), name]);
       return this.bad(syntax);
     }
     /** Seams of binder/extension-members.js: a member the type lacks, found among the extension members in scope (or null). */

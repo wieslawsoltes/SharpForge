@@ -1,0 +1,7 @@
+{"roslyn":{"version":"5.3.0.0","informationalVersion":"5.3.0-2.26153.122+4d3023de605a78ba3e59e50c657eed70f125c68a","runtime":"10.0.5","references":"Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0","options":"OutputKind.ConsoleApplication, default warning level, nullable disabled, no implicit usings, invariant culture"},"shape":"diagnostics are [code, startOffset, length, severity]; output is stdout with \\n newlines","fixtures":{
+  "first-class-spans/conversions-receivers-and-betterness":{"hash":"9aa7a66af3ca2508","kind":"output","langVersion":"14.0","diagnostics":[],"output":"3 3\n3 103 3\nReadOnlySpan\n2 4\n"},
+  "first-class-spans/conversions-receivers-and-betterness-csharp-13":{"hash":"33a3fe1aece959f7","kind":"diagnostics","langVersion":"13.0","diagnostics":[["CS0411",775,5,"error"],["CS0411",799,8,"error"],["CS0411",823,5,"error"]]},
+  "first-class-spans/invalid-span-conversions":{"hash":"e1a135e2401e0be2","kind":"diagnostics","langVersion":"14.0","diagnostics":[["CS0266",260,5,"error"],["CS0266",362,7,"error"],["CS0029",400,7,"error"],["CS0029",438,8,"error"],["CS0219",475,5,"warning"],["CS0029",526,6,"error"]]},
+  "first-class-spans/invalid-span-conversions-csharp-13":{"hash":"1bf287f95466938b","kind":"diagnostics","langVersion":"13.0","diagnostics":[["CS0266",362,7,"error"],["CS0029",400,7,"error"],["CS0029",438,8,"error"],["CS0029",526,6,"error"]]},
+  "first-class-spans/method-group-receiver-has-no-span-conversion":{"hash":"d98f42557a6e5831","kind":"diagnostics","langVersion":"14.0","diagnostics":[["CS0123",376,6,"error"]]}
+}}

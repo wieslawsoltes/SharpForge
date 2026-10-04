@@ -1,0 +1,18 @@
+{
+  "node": "v24.21.0",
+  "cpu": "Apple M3 Pro",
+  "platform": "darwin",
+  "arch": "arm64",
+  "cases": 17,
+  "allocationCount": "not measured",
+  "previousEquivalentImplementation": false,
+  "results": [
+    {
+      "name": "bounded member signature substitution",
+      "unit": "microseconds/operation",
+      "median": 3.330955882352936,
+      "p95": 5.379534705882366,
+      "p99": 28.239681176470544
+    }
+  ]
+}

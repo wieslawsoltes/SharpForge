@@ -1,0 +1,142 @@
+{
+  "parentCommit": "232fd1447b907f89e6cef7bcbc12bfec547f4356",
+  "sourceCommit": "d991068088159ce86f1bbe27f11f09943b279601",
+  "environment": "Shared Apple M3 Pro/darwin-arm64; runs serialized; no significance or general speedup claim.",
+  "allocationCount": "not measured",
+  "review": "Root reviewer accepted bounded cold MethodDef median and FieldDef p95 costs for the shared Property ownership/accessor capability.",
+  "controls": [
+    {
+      "kind": "method",
+      "fixtureSha256": "6c3b00fa31af1ca66753fa64cc042f50b6dcd0a939c913a8d3fcffbea2d05fa4",
+      "parent": {
+        "node": "v24.21.0",
+        "cpu": "Apple M3 Pro",
+        "platform": "darwin",
+        "arch": "arm64",
+        "definitions": 5,
+        "allocationCount": "not measured",
+        "previousEquivalentImplementation": false,
+        "results": [
+          {
+            "name": "cold all fixture method identities",
+            "unit": "microseconds/operation",
+            "median": 18.084000000001765,
+            "p95": 56.540999999995734,
+            "p99": 451.666000000003
+          },
+          {
+            "name": "cached method and signature lookup",
+            "unit": "microseconds/operation",
+            "median": 0.006258399999998688,
+            "p95": 0.02780000000000058,
+            "p99": 0.09764160000000004
+          }
+        ]
+      },
+      "head": {
+        "node": "v24.21.0",
+        "cpu": "Apple M3 Pro",
+        "platform": "darwin",
+        "arch": "arm64",
+        "definitions": 5,
+        "allocationCount": "not measured",
+        "previousEquivalentImplementation": false,
+        "results": [
+          {
+            "name": "cold all fixture method identities",
+            "unit": "microseconds/operation",
+            "median": 19.79199999999537,
+            "p95": 51.87499999999545,
+            "p99": 427.8750000000002
+          },
+          {
+            "name": "cached method and signature lookup",
+            "unit": "microseconds/operation",
+            "median": 0.005904200000000514,
+            "p95": 0.028154200000000174,
+            "p99": 0.09582499999999924
+          }
+        ]
+      }
+    },
+    {
+      "kind": "field",
+      "fixtureSha256": "6a770c1b430f6c75c6585e35b4dbe8a7ea034c0db5a8b8e6b90c778b33992268",
+      "parent": {
+        "node": "v24.21.0",
+        "cpu": "Apple M3 Pro",
+        "platform": "darwin",
+        "arch": "arm64",
+        "fields": 16,
+        "allocationCount": "not measured",
+        "previousEquivalentImplementation": false,
+        "results": [
+          {
+            "name": "cold fixture fields, signatures and constants",
+            "unit": "microseconds/operation",
+            "median": 46.08299999999588,
+            "p95": 132.54099999998914,
+            "p99": 955.2500000000066
+          },
+          {
+            "name": "cached field identity and signature",
+            "unit": "microseconds/operation",
+            "median": 0.01272909999999996,
+            "p95": 0.03234580000000022,
+            "p99": 0.07496249999999946
+          }
+        ]
+      },
+      "head": {
+        "node": "v24.21.0",
+        "cpu": "Apple M3 Pro",
+        "platform": "darwin",
+        "arch": "arm64",
+        "fields": 16,
+        "allocationCount": "not measured",
+        "previousEquivalentImplementation": false,
+        "results": [
+          {
+            "name": "cold fixture fields, signatures and constants",
+            "unit": "microseconds/operation",
+            "median": 48.00000000000182,
+            "p95": 141.83300000000543,
+            "p99": 1813.1670000000072
+          },
+          {
+            "name": "cached field identity and signature",
+            "unit": "microseconds/operation",
+            "median": 0.007662499999999284,
+            "p95": 0.03746249999999947,
+            "p99": 0.10282909999999959
+          }
+        ]
+      }
+    }
+  ],
+  "property": {
+    "node": "v24.21.0",
+    "cpu": "Apple M3 Pro",
+    "platform": "darwin",
+    "arch": "arm64",
+    "properties": 9,
+    "allocationCount": "not measured",
+    "previousEquivalentImplementation": false,
+    "results": [
+      {
+        "name": "cold fixture properties, signatures and accessors",
+        "unit": "microseconds/operation",
+        "median": 51.29199999998946,
+        "p95": 147.5420000000014,
+        "p99": 1034.000000000006
+      },
+      {
+        "name": "cached property identity and signature",
+        "unit": "microseconds/operation",
+        "median": 0.008070800000000133,
+        "p95": 0.0368542000000005,
+        "p99": 0.1122957999999997
+      }
+    ]
+  }
+}
