@@ -2,7 +2,8 @@
   "schemaVersion": 1,
   "area": "A15",
   "nodeGlobs": [
-    "tests/styles-templates.test.js"
+    "tests/styles-templates.test.js",
+    "tests/a15-*.test.js"
   ],
   "browserScripts": [],
   "requiredServices": [],
