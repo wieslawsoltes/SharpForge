@@ -6,6 +6,11 @@ and a positive element count. The field's type is the element type. The compiler
 recognizes the same layout in source and imported assemblies, including generic
 inline arrays whose element type is substituted at the use site.
 
+Explicit layout, record structs, and required, readonly, volatile, or fixed-size
+element fields are rejected. Types or elements that cannot participate in the
+generic span operations receive the unsupported-inline-array-language warning;
+they are not assigned a span-compatible element shape.
+
 ```csharp
 using System;
 using System.Runtime.CompilerServices;

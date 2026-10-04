@@ -49,6 +49,30 @@ test('A02-T80 generic inline-array shapes substitute their element type', () => 
   assert.equal(inlineArrayShape(quad).length, 4);
 });
 
+test('A02-T80 declarations reject explicit layout, readonly/volatile/required storage and record structs', () => {
+  const entry = 'class Program { static void Main() { } }';
+  for (const modifier of ['readonly', 'volatile', 'required']) {
+    const source = `using System.Runtime.CompilerServices;
+      [InlineArray(4)] public struct Invalid { public ${modifier} int first; } ${entry}`;
+    assert.ok(codes(source).includes('CS9180'), modifier);
+  }
+  const explicit = `using System.Runtime.CompilerServices; using System.Runtime.InteropServices;
+    [InlineArray(4), StructLayout(LayoutKind.Explicit)] public struct Invalid { [FieldOffset(0)] public int first; } ${entry}`;
+  assert.ok(codes(explicit).includes('CS9168'));
+  const record = `using System.Runtime.CompilerServices;
+    [InlineArray(4)] public record struct Invalid { public int first; } ${entry}`;
+  assert.ok(codes(record).includes('CS9259'));
+});
+
+test('A02-T80 ref-struct inline arrays produce the unsupported-language warning instead of a span shape', () => {
+  const source = `using System.Runtime.CompilerServices;
+    [InlineArray(2)] public ref struct Invalid { private int first; }
+    class Program { static void Main() { } }`;
+  const result = bind(source);
+  assert.ok(result.diagnostics.some(row => row.code === 'CS9184' && row.severity === 'warning'));
+  assert.equal(inlineArrayShape(result.assembly.types.find(type => type.name === 'Invalid')), null);
+});
+
 test('A02-T80 no element covariance or numeric conversion is part of an inline-array conversion', () => {
   assert.deepEqual(codes(program('Row<string> row = default; ReadOnlySpan<object> span = row;')), ['CS0029']);
   assert.deepEqual(codes(program('Quad value = default; Span<long> span = value;')), ['CS0029']);

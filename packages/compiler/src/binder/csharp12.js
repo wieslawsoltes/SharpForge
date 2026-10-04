@@ -16,6 +16,7 @@ import { SymbolKind, TypeKind } from '../symbols/types.js';
 import { formatMessage } from '../diagnostics/codes.js';
 import { attributesNamed } from './bound-attributes.js';
 import { checkInterceptor } from './interceptors.js';
+import { inlineArrayLanguageSupported } from '../symbols/inline-arrays.js';
 
 const inlineArrayAttribute = 'System.Runtime.CompilerServices.InlineArrayAttribute';
 const experimentalAttribute = 'System.Diagnostics.CodeAnalysis.ExperimentalAttribute';
@@ -36,6 +37,17 @@ export function checkInlineArray(type) {
   const badLength = length !== undefined && Number(length) <= 0;
   if (badLength) rows.push({ at: attribute.arguments[0].syntax, code: DiagnosticId.CS9167, args: [] });
   if (fields.length !== 1) rows.push({ at: null, code: DiagnosticId.CS9169, args: [] });
+  if (type.isRecord) rows.push({ at: attribute.syntax, code: DiagnosticId.CS9259, args: [] });
+  const layout = attributesNamed(type, 'System.Runtime.InteropServices.StructLayoutAttribute')[0];
+  if (Number(constantOf(layout?.arguments[0])) === 2) rows.push({ at: null, code: DiagnosticId.CS9168, args: [] });
+  for (const field of fields) {
+    if (field.isRequired || field.isReadOnly || field.isVolatile || field.isFixedSizeBuffer) {
+      rows.push({ at: field.syntax ?? null, code: DiagnosticId.CS9180, args: [] });
+    }
+  }
+  if (fields.length === 1 && !inlineArrayLanguageSupported(type, fields[0])) {
+    rows.push({ at: null, code: DiagnosticId.CS9184, args: [] });
+  }
   // The fields of an inline array are its storage: they are not "never used" or "never assigned" (as in Roslyn).
   if (!badLength)
     for (const field of fields) {

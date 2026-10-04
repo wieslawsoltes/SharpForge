@@ -1,7 +1,15 @@
 /** Inline-array layout shared by binding, conversion classification and CIL emission (C# 12, SF-A02-T80). */
-import { SymbolKind, TypeKind } from './types.js';
+import { RefKind, SymbolKind, TypeKind } from './types.js';
 
 const attributeName = 'System.Runtime.CompilerServices.InlineArrayAttribute';
+const invalidTypeArguments = new Set([TypeKind.Pointer, TypeKind.FunctionPointer]);
+
+/** Whether the inline-array type and element can participate in the generic span operations the language uses. */
+export function inlineArrayLanguageSupported(type, field) {
+  const element = field?.type;
+  if (!element || type.isRefLikeType || element.isRefLikeType || element.allowsRefLikeType) return false;
+  return !invalidTypeArguments.has(element.typeKind) && (!field.refKind || field.refKind === RefKind.None);
+}
 
 function sourceLength(type) {
   for (const attribute of type.boundAttributes ?? []) {
@@ -32,5 +40,5 @@ export function inlineArrayShape(type) {
     if (field) return null;
     field = member;
   }
-  return field ? { field, elementType: field.type, length } : null;
+  return field && inlineArrayLanguageSupported(definition, field) ? { field, elementType: field.type, length } : null;
 }
