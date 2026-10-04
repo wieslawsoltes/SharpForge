@@ -209,8 +209,14 @@ test('CPU graph uses actual time, bounded percent and weighted intervals with ac
   const canvas = {getContext: () => context, clientWidth: 600, setAttribute: (name, value) => { attributes[name] = value; }};
   const samples = batch({sequence: 3}).samples.filter(sample => sample.sequence !== 2).map(sample => ({...sample, timestamp: sample.endMs}));
   assert.equal(drawDiagnosticGraph(canvas, samples, 'occupancyPercent'), true);
-  assert.equal(commands.filter(command => command[0] === 'lineTo').length, 0, 'lost sequence intervals must not be connected');
+  assert.equal(commands.filter(command => command[0] === 'moveTo').length, 2, 'lost sequence intervals must not be connected');
+  assert.equal(commands.filter(command => command[0] === 'lineTo').length, 2, 'each actual measured interval is visible');
   assert.match(attributes['aria-label'], /Worker execution occupancy: 2 samples/);
+  assert.match(attributes['aria-label'], /0\.00 to 0\.75 seconds/u);
+  commands.length = 0;
+  assert.equal(drawDiagnosticGraph(canvas, [samples[0]], 'occupancyPercent'), true);
+  assert.deepEqual(commands.filter(command => ['moveTo', 'lineTo'].includes(command[0])).map(command => command.slice(0, 2)),
+    [['moveTo', 44], ['lineTo', 592]], 'a short-lived app still draws its single final interval');
   assert.equal(drawEventTimeline(canvas, [{timestamp: 1}, {timestamp: 5}]), true);
   assert.match(attributes['aria-label'], /event table provides each time and description/);
 });
