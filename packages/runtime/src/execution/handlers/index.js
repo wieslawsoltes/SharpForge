@@ -6,10 +6,11 @@ import {handlers as array} from './array.js';
 import {handlers as indirect} from './indirect.js';
 import {handlers as call} from './call.js';
 import {handlers as tokens} from './tokens.js';
+import {handlers as constrained} from './constrained.js';
 
 /** Each group registers its exact opcode names. Instruction dispatch performs one lookup. */
 export const cilHandlers=new Map();
-for(const group of [loadStore,branch,arith,objectModel,array,indirect,call,tokens]) {
+for(const group of [loadStore,branch,arith,objectModel,array,indirect,call,tokens,constrained]) {
   for(const [opcode,handler] of group) {
     if(cilHandlers.has(opcode))throw new Error(`Duplicate CIL handler '${opcode}'`);
     cilHandlers.set(opcode,handler);

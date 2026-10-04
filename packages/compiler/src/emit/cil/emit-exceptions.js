@@ -81,20 +81,53 @@ export const ExceptionEmission = Base =>
       if (il.isReachable) il.emit('leave', exit);
       let handlerStart = tryEnd;
       for (const clause of catches) {
-        if (clause.filter) return this.unsupported('exception filters', clause.syntax);
         const handlerEnd = il.newLabel(),
-          type = clause.type ?? this.core.object;
-        il.mark(handlerStart, 1);
-        if (clause.local) this.initializeLocal(clause.local);
-        else il.emit('pop');
+          type = clause.type ?? this.core.object,
+          region = { tryStart, tryEnd, handlerStart, handlerEnd };
+        if (clause.filter) {
+          region.kind = 'filter';
+          region.filterStart = handlerStart;
+          region.handlerStart = il.newLabel();
+          this.filterBlock(clause, type, region.filterStart);
+          // The filter has stored the exception in the clause's variable; the handler receives it once more.
+          il.mark(region.handlerStart, 1);
+          il.emit('pop');
+        } else {
+          region.kind = 'catch';
+          region.catchType = this.tokens.type(type);
+          il.mark(handlerStart, 1);
+          if (clause.local) this.initializeLocal(clause.local);
+          else il.emit('pop');
+        }
         this.statement(clause.block);
         if (il.isReachable) il.emit('leave', exit);
-        il.addRegion({ kind: 'catch', tryStart, tryEnd, handlerStart, handlerEnd, catchType: this.tokens.type(type) });
+        il.addRegion(region);
         handlerStart = handlerEnd;
       }
       // The end of the last handler: a boundary only, nothing falls into it.
       il.mark(handlerStart);
       return undefined;
+    }
+    /**
+     * The filter block of `catch (T e) when (condition)` (ECMA-335 II.19.4): it runs during the first pass of exception
+     * handling with the thrown object on the stack and ends in `endfilter` with 1 to take the handler, 0 to continue
+     * the search. An object that is not a `T` is refused before the condition is evaluated.
+     */
+    filterBlock(clause, type, start) {
+      const il = this.il,
+        matched = il.newLabel(),
+        end = il.newLabel();
+      il.mark(start, 1);
+      il.emit('isinst', this.tokens.type(type)).emit('dup').emit('brtrue', matched);
+      il.emit('pop').emit('ldc.i4', 0).emit('br', end);
+      il.mark(matched);
+      if (type.typeKind === TypeKind.TypeParameter) il.emit('unbox.any', this.tokens.type(type));
+      if (clause.local) this.initializeLocal(clause.local);
+      else il.emit('pop');
+      this.expression(clause.filter);
+      il.emit('ldc.i4', 0).emit('cgt.un');
+      il.mark(end);
+      il.emit('endfilter');
     }
     /** `using (R r = e) body` is `{ R r = e; try body finally { if (r != null) r.Dispose(); } }`. */
     stmtUsing(node) {
