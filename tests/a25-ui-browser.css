@@ -1,0 +1,8 @@
+html { color-scheme: dark; }
+body { margin: 0; padding: 24px; font-family: system-ui, sans-serif; color: var(--text, #ddd); background: var(--bg, #181818); }
+main { max-width: 1250px; margin: auto; }
+h1 { margin: 0 0 8px; font-size: 24px; }
+main > p, #status { color: var(--muted, #aaa); }
+#status { display: block; margin: 12px 0; }
+#history { height: 620px; min-height: 0; display: flex; flex-direction: column; overflow: hidden; }
+#comparison { min-height: 200px; margin-top: 18px; }
