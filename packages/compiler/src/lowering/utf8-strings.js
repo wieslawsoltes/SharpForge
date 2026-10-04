@@ -33,7 +33,8 @@ export function lowerUtf8Literals(analysis) {
   const roots = [];
   let totalBytes = 0;
   for (const [key, body] of analysis.bound) {
-    const uri = key?.uri ?? key?.source?.uri ?? key?.locations?.[0]?.uri ?? body?.binder?.c?.uri ?? null;
+    const owner = key?.ctor ?? key;
+    const uri = owner?.uri ?? owner?.source?.uri ?? owner?.locations?.[0]?.uri ?? body?.binder?.c?.uri ?? null;
     roots.push({ body, uri });
     if (key?.initializerCall) roots.push({ body: key.initializerCall, uri });
   }

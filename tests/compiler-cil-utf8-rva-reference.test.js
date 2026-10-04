@@ -44,7 +44,7 @@ test('A02-T77 a missing optional pointer constructor uses the real array/start/l
 test('A02-T77 a missing required array constructor reports Roslyn CS0656 even when pointer ctor exists', settings, () => {
   const references = projectedReferences('array');
   const probe = requiredConstructorProbes.single;
-  const result = compileToAssembly({ uri: 'Missing.cs', text: probe }, { ...options, references });
+  const result = compileToAssembly([{ uri: 'Missing.cs', text: probe }], { ...options, references });
   const expected = JSON.parse(readFileSync(new URL('./fixtures/utf8-rva/missing-constructor.json', import.meta.url), 'utf8'));
   assert.equal(result.assembly, null);
   assert.deepEqual(errors(result).map(item => [item.code, item.message]), expected);
@@ -57,9 +57,22 @@ test('A02-T77 a missing required array constructor reports Roslyn CS0656 even wh
 test('A02-T77 repeated literal sites preserve the actual missing-constructor diagnostic count', settings, () => {
   const references = projectedReferences('array');
   const probe = requiredConstructorProbes.repeated;
-  const result = compileToAssembly({ uri: 'Repeated.cs', text: probe }, { ...options, references });
+  const result = compileToAssembly([{ uri: 'Repeated.cs', text: probe }], { ...options, references });
   const expected = JSON.parse(readFileSync(new URL('./fixtures/utf8-rva/repeated-missing-constructor.json', import.meta.url), 'utf8'));
   assert.equal(result.assembly, null);
   assert.deepEqual(errors(result).map(item => [item.code, item.message]), expected);
   for (const item of errors(result)) assert.equal(probe.slice(item.start, item.start + item.length), '"x"u8');
+});
+
+test('A02-T77 a constructor initializer retains its literal file in required-member diagnostics', settings, () => {
+  const references = projectedReferences('array');
+  const base = 'using System; public class B { protected B(ReadOnlySpan<byte> value) { } }';
+  const derived = 'public class D : B { public D() : base("x"u8) { } }';
+  const result = compileToAssembly([{ uri: 'Base.cs', text: base }, { uri: 'Derived.cs', text: derived }], { ...options, references });
+  assert.equal(result.assembly, null);
+  const diagnostics = errors(result);
+  assert.equal(diagnostics.length, 1);
+  assert.equal(diagnostics[0].code, 'CS0656');
+  assert.equal(diagnostics[0].uri, 'Derived.cs');
+  assert.equal(derived.slice(diagnostics[0].start, diagnostics[0].start + diagnostics[0].length), '"x"u8');
 });
