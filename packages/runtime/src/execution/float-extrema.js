@@ -8,16 +8,21 @@ function operand(value, kind) {
   return value?.float === kind && Object.isFrozen(value) && canonical ? value : float(raw, kind);
 }
 
+function selectFirst(name, a, b) {
+  if (name !== 'Min' && name !== 'Max') throw new TypeError('Floating extremum requires Min or Max');
+  if (a !== b) return Number.isNaN(a) || (name === 'Min' ? a < b : b < a);
+  return name === 'Min' ? negative(a) : negative(b);
+}
+
+/** Select raw Numbers for legacy source wires without allocating or changing their carrier. */
+export function floatingNumberExtremum(name, left, right) {
+  return selectFirst(name, left, right) ? left : right;
+}
+
 /** Select the CoreLib floating operand, preserving its width, NaN payload and zero sign. */
 export function floatingMathExtremum(name, type, left, right) {
-  if (name !== 'Min' && name !== 'Max') throw new TypeError('Floating extremum requires Min or Max');
   if (type !== 'float' && type !== 'double') throw new TypeError('Floating extremum requires Single or Double');
   const kind = type === 'float' ? 'r4' : 'r8';
   const first = operand(left, kind), second = operand(right, kind);
-  const a = first.value, b = second.value;
-  if (a !== b) {
-    if (Number.isNaN(a)) return first;
-    return (name === 'Min' ? a < b : b < a) ? first : second;
-  }
-  return (name === 'Min' ? negative(a) : negative(b)) ? first : second;
+  return selectFirst(name, first.value, second.value) ? first : second;
 }
