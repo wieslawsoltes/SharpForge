@@ -98,10 +98,12 @@ export class StudioDocking {
     let selectedView = this.tabs?.metadata(selected);
     const restoring = Boolean(this.pendingRestore);
     const ids = new Set(files.map(file => `source:${file.uri}`));
-    for (const id of [...this.layout.panels.keys()]) {
+    const retired = [];
+    for (const id of this.layout.panels.keys()) {
       const view = this.tabs?.metadata(id);
-      if ((id.startsWith('source:') || view) && !ids.has(`source:${view?.uri ?? id.slice(7)}`)) this.unregisterPanel(id);
+      if ((id.startsWith('source:') || view) && !ids.has(`source:${view?.uri ?? id.slice(7)}`)) retired.push(id);
     }
+    this.unregisterPanels(retired);
     for (const file of files) {
       const id = `source:${file.uri}`;
       if (this.tabs) this.tabs.ensure(file.uri);
@@ -172,14 +174,32 @@ export class StudioDocking {
     return () => this.unregisterPanel(id);
   }
 
-  unregisterPanel(id) {
-    if (!this.layout.panels.has(id)) return;
-    if (this.host.popouts.has(id)) this.host.returnPopout(id);
-    this.host.contents.get(id)?.remove();
-    this.host.contents.delete(id);
-    this.content.delete(id);
-    this.tabs?.views.delete(id);
-    this.layout.unregister(id);
+  unregisterPanel(id) { this.unregisterPanels([id]); }
+
+  /** Retire a complete panel set before render listeners can resolve documents from the previous workspace. */
+  unregisterPanels(ids) {
+    const retired = [...new Set(ids)].filter(id => this.layout.panels.has(id));
+    if (!retired.length) return;
+    const failures = [];
+    try {
+      this.layout.transaction('retirePanels', () => {
+        for (const id of retired) {
+          this.host.contents.get(id)?.remove();
+          this.host.contents.delete(id);
+          this.content.delete(id);
+          this.tabs?.views.delete(id);
+          this.layout.unregister(id);
+        }
+      }, { history: false });
+    } catch (error) { failures.push(error); }
+    // Returning a popout renders directly. Its panel must already be absent, so it cannot reopen a retired document.
+    for (const id of retired) {
+      if (!this.host.popouts.has(id)) continue;
+      try { this.host.returnPopout(id, { reopen: false }); }
+      catch (error) { failures.push(error); }
+    }
+    if (failures.length === 1) throw failures[0];
+    if (failures.length) throw new AggregateError(failures, 'Docking panels retired, but view cleanup failed');
   }
 
   registerToolKind(kind, factory, options) { return this.factories.register(kind, factory, options); }

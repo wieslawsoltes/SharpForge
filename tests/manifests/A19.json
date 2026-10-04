@@ -30,6 +30,7 @@
     "tests/a19-shell-tools.test.js",
     "tests/a19-startup-orchestration.test.js",
     "tests/a19-status-position-transactions.test.js",
+    "tests/a19-studio-docking-replacement.test.js",
     "tests/a19-studio-docking-sync.test.js",
     "tests/a19-studio-keyboard.test.js",
     "tests/a19-studio-lazy-features.test.js",
