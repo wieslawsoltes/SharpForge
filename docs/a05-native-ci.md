@@ -37,6 +37,10 @@ enums, strings, tokens, assignability, exceptions, two-await async replay, synch
 memory. First-chance handler failure uses the versioned .NET 8/10 fail-fast contract; unhandled callback failures use a separate
 expected-abnormal-exit mode. These outcomes do not count as successful normal process termination.
 
+The current plan contains 32 independent cases, including the actual managed virtual-delegate and multicast protocol.
+SDK 10 can qualify all 32; SDK 8 has 29 eligible cases and three explicit numeric-policy exclusions. These are plan counts,
+not recorded execution results. Earlier retained reports describing a 31-case plan keep their original revision and counts.
+
 The conversion policy and large numeric oracle pin the .NET 10 JIT. Their .NET 8 cells are explicitly `unsupported` and never
 count as passes; a cell with only passes and declared unsupported cases is `partial`, not a full pass. On .NET 10 the native
 generator writes fresh source/output/hash provenance under artifacts, then `SHARPFORGE_NUMERIC_ORACLE_DIR` directs all three

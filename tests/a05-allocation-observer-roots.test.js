@@ -103,7 +103,11 @@ for (const [engine, create] of machines) {
         const reference = pending.allocate();
         const record = heap.get(reference);
         assert.equal(record.kind, kind);
-        assert.deepEqual(record.data, pending.data);
+        if (kind === 'array') {
+          assert.ok(record.data instanceof Int32Array);
+          assert.equal(record.size, 40);
+          assert.deepEqual(Array.from(record.data), pending.data);
+        } else assert.deepEqual(record.data, pending.data);
         if (pending.child) assert.equal(heap.get(pending.child).data, 'owned child');
         assert.equal(notifications, 1);
         assert.deepEqual(heap.pins, pins);

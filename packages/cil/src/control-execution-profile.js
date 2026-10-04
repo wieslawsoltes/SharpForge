@@ -29,10 +29,12 @@ export function verifyControlCall(inspector, descriptor) {
   const convention = descriptor.signature.callingConvention ?? 0;
   if (!convention) return;
   const name = descriptor.owner + '::' + descriptor.name;
-  if (convention !== 5 || !descriptor.resolvedToken) {
+  const target = inspector.methods.get(descriptor.resolvedToken);
+  if (convention !== 5 || !target || target.flags & 0x2000 || target.implFlags & 7) {
     throw Object.assign(new CilError('Unmanaged vararg call is unavailable: ' + name), {
       code: 'IL_UNMANAGED',
       exceptionType: 'NotSupportedException',
+      callingConvention: convention,
       member: name
     });
   }

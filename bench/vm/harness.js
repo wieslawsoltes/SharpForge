@@ -1,5 +1,5 @@
 import {microbenchmarks, startupApps, snapshotCase, engines} from './fixtures.js';
-import {compileFixture, abortIfNeeded} from './operations.js';
+import {compileFixture, artifactForEngine, abortIfNeeded} from './operations.js';
 import {measureMicro} from './micro.js';
 import {measureStartup} from './startup.js';
 import {measureSnapshot, portableSnapshotsAvailable} from './snapshot.js';
@@ -61,7 +61,7 @@ export async function runHarness(options, signal) {
           abortIfNeeded(signal);
           const row = await measure(fixture, engine, artifact, protocol, signal, onRow);
           row.compilationMs = compilationMs;
-          row.assemblyHash = hash(artifact.assembly);
+          row.assemblyHash = hash(artifactForEngine(engine, artifact).assembly);
           writeReport(report, options.out);
         }
       }

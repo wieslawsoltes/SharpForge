@@ -6,6 +6,7 @@ const fixtureCases = [
   ['value-boxing', 'a05/value-boxing'],
   ['value-instance-calls', 'a05/value-instance-calls'],
   ['virtual-slots', 'a05/virtual-slots'],
+  ['delegates', 'a05/delegates'],
   ['default-interfaces', 'a05/default-interfaces'],
   ['generic-calls', 'a05/generic-calls'],
   ['source-generic-values', 'a05/source-generic-values'],

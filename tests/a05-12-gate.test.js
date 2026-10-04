@@ -113,7 +113,7 @@ test('T12 optional phases remain unavailable rather than pretending to be zero-d
     sourcePreparation: {status: 'not-required', reason: 'No separate source preparation phase in the fixture runtime'}};
   const result = comparePerformance(baseline(options), reportFixture({...options, day: 3}), syntheticOptions);
   assert.equal(result.status, 'passed');
-  assert.equal(result.unsupported.length, 1);
+  assert.equal(result.unsupported.length, 0);
   assert.equal(result.unavailablePhases.length, 4);
   const malformed = reportFixture({...options, day: 3});
   malformed.rows.find(row => row.kind === 'snapshot').samples[0].exportMs = 0;

@@ -7,6 +7,7 @@ They require a real SDK/runtime; authored fixtures and JavaScript tests do not e
 | Requirement | Native command | Independent coverage |
 | --- | --- | --- |
 | #1355 interface implicit/explicit/default/most-specific selection | `node scripts/validate-a05-type-system.js --fixture tests/fixtures/a05/default-interfaces --output artifacts/a05-interfaces` | `a05-02-interface-dispatch` checks ambiguous and malformed metadata; `a05-source-interface-dispatch` checks all three routes. |
+| #1358 virtual delegates and managed multicast operations | `node scripts/validate-a05-type-system.js --fixture tests/fixtures/a05/delegates --output artifacts/a05-delegates` | `a05-managed-delegate-protocol` independently assembles the full `ldvirtftn` → delegate constructor → `Invoke` path and managed Combine/Remove/GetInvocationList calls. The source compiler's generated delegate dispatcher has separate coverage. |
 | #1362 variable arguments and typed references | `node scripts/validate-a05-type-system.js --fixture tests/fixtures/a05-source-varargs --output artifacts/a05-varargs` | `a05-02-varargs`, `a05-02-source-varargs`, `a05-source-varargs-snapshot`; unsupported unmanaged vararg P/Invoke remains an explicit named-member failure. |
 | #1371, #1374–1378 filter ordering, nested cleanup, hierarchy, typed catches, exception objects | `node scripts/validate-a05-type-system.js --fixture tests/fixtures/a05-control-exceptions --output artifacts/a05-control-exceptions` | The native fixture observes pre-finally state in an outer filter, treats a throwing filter as false, exercises three cleanup levels and replacement exceptions, and checks preserved/reset/EDI traces by method presence. |
 | #725 Roslyn async state machine and iterator | `node scripts/validate-a05-type-system.js --async --fixture tests/fixtures/a05-async --output artifacts/a05-async` | Captures the first two distinct awaits of one machine, checks local and fresh-VM portable replay, and includes full/early iterator disposal. See `a05-async-qualification.md`. |
@@ -22,3 +23,11 @@ with stdout event ordering compared separately from platform-specific process si
 
 The vararg run must record a runtime/platform refusal honestly if that .NET host does not implement managed varargs. An unsupported native
 execution is not equivalent to a VM conformance pass. Source and direct-CIL variable-argument tests remain deterministic and independent.
+
+`tests/a05-varargs-unsupported-admission.test.js` independently assembles external,
+P/Invoke and native-body vararg targets. Admission preserves `IL_UNMANAGED`,
+`NotSupportedException`, the target member and the call-site convention, rather
+than discarding those details into a generic CIL verification error. These targets
+are rejected before any native library is loaded. Managed calls with zero or
+nonzero optional arguments stay executable; malformed managed fixed signatures
+retain their invalid-program diagnostics.

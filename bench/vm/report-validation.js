@@ -2,6 +2,7 @@ import {microbenchmarks, startupApps, snapshotCase} from './fixtures.js';
 import {hash, stable} from './evidence.js';
 import {requireSamples, distribution} from './statistics.js';
 import {metricPlan} from './metric-contracts.js';
+import {validateResourceEnvironment} from './resource-environment.js';
 
 function expectedRows(protocol) {
   const groups = {micro: microbenchmarks, startup: startupApps, snapshot: [snapshotCase]};
@@ -9,7 +10,8 @@ function expectedRows(protocol) {
   for (const [kind, fixtures] of Object.entries(groups)) {
     if (protocol.suite !== 'all' && protocol.suite !== kind) continue;
     for (const fixture of fixtures) for (const engine of protocol.engines) {
-      rows.set(`${kind}/${fixture.id}/${engine}`, {kind, engine, fixture: fixture.id, reason: fixture.unsupported?.[engine]});
+      rows.set(`${kind}/${fixture.id}/${engine}`, {kind, engine, fixture: fixture.id,
+        reason: fixture.unsupported?.[engine], dispatch: fixture.dispatchByEngine?.[engine]});
     }
   }
   return rows;
@@ -35,6 +37,7 @@ function validateProvenance(report, options) {
   if (!Number.isFinite(Date.parse(report.startedAt)) || !Number.isFinite(Date.parse(report.completedAt)) ||
       Date.parse(report.startedAt) > Date.parse(report.completedAt)) throw new TypeError('Invalid measurement interval');
   const environment = report.environment;
+  if (environment) validateResourceEnvironment(environment);
   if (!environment?.node || !environment.v8 || !environment.platform || !environment.arch || !environment.os ||
       !environment.executable || !/^[a-f0-9]{64}$/.test(environment.host ?? '') ||
       !Array.isArray(environment.cpuModels) || !environment.cpuModels.length ||
@@ -158,6 +161,7 @@ export function validateReport(report, options = {}) {
     if (!definition || rows.has(row.id) || row.kind !== definition.kind || row.engine !== definition.engine ||
         row.fixture !== definition.fixture) throw new TypeError('Unknown or duplicate benchmark case: ' + row.id);
     rows.set(row.id, row);
+    if (row.dispatch !== definition.dispatch) throw new TypeError('Incorrect virtual dispatch mechanism: ' + row.id);
     if (!Number.isFinite(row.compilationMs) || row.compilationMs < 0 || !/^[a-f0-9]{64}$/.test(row.assemblyHash ?? '')) {
       throw new TypeError('Missing compiled artifact provenance: ' + row.id);
     }

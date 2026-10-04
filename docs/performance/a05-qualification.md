@@ -19,6 +19,7 @@ A requirement is complete only when its actual report meets the specified target
 | [#1400: roots](https://github.com/wieslawsoltes/SharpForge/issues/1400) | Source/CIL scans of 500 actual VM frames with 32 canonical Int32 locals and one reference per frame. Visitor scanning requires at least 3× speedup versus `preciseRoots:false`. Both inventories and subsequent collections are checked. |
 | [#1402: profiler](https://github.com/wieslawsoltes/SharpForge/issues/1402) | Profiling-off overhead must be strictly below 1% against the recorded hook-free reference on arithmetic, calls and allocation in source/CIL. Enabled overhead is reported separately, with equal output and exact instruction counts. |
 | Managed-array fairness | Sort 1,000,000 descending elements on each source/CIL engine. Retain every actual sort-phase `runSlice` duration and its median/p95/p99/maximum. Verify every sorted element afterward. The observed maximum must be at most 16 ms with an 8 ms requested slice budget. |
+| [#727: tiered fairness](https://github.com/wieslawsoltes/SharpForge/issues/727) | Separately run a 1,000,000-iteration CIL counter loop with actual Wasm OSR. Verify the return value and all 7,000,004 guest instructions against the interpreter, require a real OSR transition and selected Wasm instructions, and retain every candidate slice. The same 8 ms requested / 16 ms observed maximum applies. |
 
 The root workload uses `vm.call` to create verified runtime frames outside the timer. Root liveness pruning is disabled so the managed-reference inventory stays identical; dedicated liveness tests cover dead-reference collection. Frame-pool qualification uses guest recursion and repeated entry invocation. Snapshot restore deliberately invalidates caches/pools, so this warm comparison performs no restore between observations.
 
@@ -36,12 +37,34 @@ The target decision uses a deterministic paired percentile bootstrap of the rati
 
 Array fairness records all continuation slices within one real sort. Initialization and complete result verification occur outside the sort timer. Its percentiles describe those slices, rather than independent complete-sort repetitions. Reduced arrays remain partial. Browser responsiveness requires separate browser evidence.
 
+The fairness suite also records a separate `tiered-loop-fairness-cil` row. This is
+the direct-CIL engine with Wasm tiering enabled, not a third source engine or a
+claim that array sorting executes in Wasm. The counter loop first executes two
+backedges (16 instructions) and waits for asynchronous compilation without
+executing guest instructions. It then enters the actual Wasm tier at the next hot
+backedge. Every candidate `runSlice`, including the initial 16-instruction slice,
+OSR entry and final return, retains duration, guest count, selected-Wasm count,
+OSR-transition count and host-memory gauges. Timed instruction totals must equal
+the complete interpreter reference; compilation readiness alone cannot qualify
+the row. The interpreter reference, VM construction, compilation wait, memory
+probes and between-slice host yields are outside the individual slice timers.
+Compilation wait duration is retained separately. Failed or unavailable Wasm is
+a failed observation, and cancellation disposes the VM and tier selections.
+
+The tiered loop has a fixed full size independent of `--array-elements`; reduced
+unit-test loops are explicitly partial. It bounds evidence at 10,000 candidate
+slices and retains the observed maximum without trimming outliers. This Node
+workload does not qualify browser responsiveness, native CLR throughput or all
+Wasm methods. Canonical source-image reload is not a distinct tier and is not
+claimed by this row.
+
 ## Serial commands
 
 Use the repository's single validation slot, a clean committed integrated tree and the same otherwise idle runner. Replace `dedicated-node24-01` with the actual stable runner identifier. Run commands sequentially. The driver enforces its total configured deadline and stops VMs on interruption. The focused tests use reduced workloads and do not satisfy full numeric/performance requirements.
 
 ```sh
 SHARPFORGE_TEST_CONCURRENCY=1 SHARPFORGE_MAX_PARALLEL_RUNS=1 SHARPFORGE_MAX_OLD_SPACE_MB=512 node scripts/limited.js node --test --test-concurrency=1 tests/a05-qualification-numeric.test.js tests/a05-qualification-targets.test.js tests/a05-profiler-reference.test.js tests/a05-qualification-options.test.js tests/a05-qualification-fairness.test.js
+SHARPFORGE_TEST_CONCURRENCY=1 SHARPFORGE_MAX_PARALLEL_RUNS=1 SHARPFORGE_MAX_OLD_SPACE_MB=512 node scripts/limited.js node --test --test-concurrency=1 tests/preemption.test.js tests/a05-11-wasm-osr.test.js
 node --max-old-space-size=512 --expose-gc bench/vm/qualification.js --runner dedicated-node24-01 --suite differential --width 32 --out artifacts/a05-int32-million.json
 node --max-old-space-size=512 --expose-gc bench/vm/qualification.js --runner dedicated-node24-01 --suite differential --width 64 --out artifacts/a05-int64-ten-million.json
 node --max-old-space-size=512 --expose-gc bench/vm/qualification.js --runner dedicated-node24-01 --suite targets --out artifacts/a05-targets.json
@@ -59,9 +82,28 @@ After optimization qualification, run the T12 first/repeat protocol from [a05-vm
 
 ## Profiler reference provenance
 
-The generator creates a detached Git worktree at exactly the product revision, removes only enumerated profiling consumer hooks/initializers, and commits those removals locally. It preserves dispatch, cleanup, events, pools, public exports and getter shape; the profiler getter returns `null`. The profiler module remains loadable. This reference isolates execution hook overhead and supports profiling off only.
+The generator creates a detached Git worktree at exactly the product revision,
+removes only enumerated profiling consumers/initializers, and commits those
+removals locally. Dispatch, cleanup, events, pools, and public exports remain.
+Both VM classes are byte-identical, including their private profiler slot and
+constructor callback; initializers supply `null` through that same callback.
+The allocation-notification module also remains byte-identical because its
+callbacks serve arbitrary host observers, including synchronous GC and throwing
+callbacks. Removing profiler initialization prevents attachment to that shared
+hook. The profiler module remains loadable. This reference isolates execution
+hook overhead and supports profiling off only.
 
 The manifest retains the complete patch, patch SHA-256, transformation SHA-256, source/reference revisions, each changed file's before/after hash, command and creation time. It copies and records the product's sparse-checkout patterns before populating the reference, preserving source while avoiding excluded evidence directories. The loader recomputes the transformation and verifies clean worktrees, exact parent, complete changed-path set, transformed files, sparse patterns and patch. Unknown or moved hooks require review and cause failure. The reference never merges into the product.
+
+Dependencies use a real reference `node_modules` directory containing links to
+the immutable product's top-level dependency directories and copies of metadata
+files. A whole-directory symlink would be untracked under the repository's
+directory-only ignore rule. The manifest records and verifies this layout; clean
+checks are unchanged. The runtime itself always loads from the explicit reference
+`packages/runtime/src/index.js`, with an isolation regression exercising actual
+source/CIL execution through that distinct API. Source-input proof records the
+product parent, both runtime tree hashes and changed benchmark paths, identifying
+whether a harness-only revision preserved all runtime/workload/threshold files.
 
 The integrated-path audit is `tests/a05-profiler-reference-integration.test.js`. It
 checks that prepared calls, pool capabilities and scrubbing, logical source type
@@ -78,4 +120,4 @@ Create a new reference after any product/harness commit; stale references are re
 
 Typed-float tests inspect actual adapter materialization counters before return and compare exact numeric results. Managed allocation counts and RSS cannot establish zero JavaScript float-carrier creation; retain focused counter/differential assertions and applicable allocation/GC evidence for [#1395](https://github.com/wieslawsoltes/SharpForge/issues/1395).
 
-Copy-on-write retention, 128-snapshot memory bounds and full-copy equivalence require the snapshot qualification workload. T12 separately measures capture/restore/export/import and validates replay. Wasm native execution, tiering/bridge statistics, native CLR results, browser timing and architecture coverage retain their own qualification. Reports label the actual JavaScript backend and leave unmeasured targets explicit.
+Copy-on-write retention, 128-snapshot memory bounds and full-copy equivalence require the snapshot qualification workload. T12 separately measures capture/restore/export/import and validates replay. The fairness suite measures the one explicitly selected Node Wasm workload above; broader Wasm behavior, native CLR results, browser timing and architecture coverage retain their own qualification. Reports label the actual backend and leave unmeasured targets explicit.

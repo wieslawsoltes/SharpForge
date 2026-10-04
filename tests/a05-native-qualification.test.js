@@ -9,6 +9,7 @@ import {runNativePlan} from '../scripts/a05/native-run.js';
 test('A05 native plan keeps SDK policy, unsafe compilation and replay evidence explicit', () => {
   const output = join(tmpdir(), 'native artifacts');
   const plan = nativeQualificationPlan({output, framework: 'net8.0'});
+  assert.equal(plan.length, 32, 'every authored protocol has an independently recorded native case');
   assert.equal(new Set(plan.map(item => item.id)).size, plan.length);
   const byId = new Map(plan.map(item => [item.id, item]));
   assert(byId.get('memory').args.includes('--unsafe'));
@@ -18,6 +19,10 @@ test('A05 native plan keeps SDK policy, unsafe compilation and replay evidence e
   assert(byId.get('synchronization').args.includes('--scheduled'));
   assert(byId.get('async-replay').args.includes('--async'));
   assert(byId.get('source-generic-values').args.includes('tests/fixtures/a05/source-generic-values'));
+  assert(byId.get('delegates').args.includes('tests/fixtures/a05/delegates'));
+  assert.equal(byId.get('delegates').evidence, join(output, 'delegates', 'evidence'));
+  assert.equal(plan.filter(item => item.sdkMajor === 10).length, 3,
+    'SDK 8 records 29 eligible cases and three explicit numeric-policy exclusions');
   assert.equal(byId.get('numeric-capture').sdkMajor, 10);
   assert.equal(byId.get('numeric-replay').dependsOn, 'numeric-capture');
   assert.equal(byId.get('numeric-replay').env.SHARPFORGE_NUMERIC_ORACLE_DIR, byId.get('numeric-capture').evidence);

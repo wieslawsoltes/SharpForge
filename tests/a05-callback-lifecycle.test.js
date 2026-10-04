@@ -43,7 +43,10 @@ for (const [engine, create] of Object.entries(factories)) {
       assert.throws(() => vm.run(), error => error === failure);
       assert.equal(vm.output.join(''), 'callback\nreturned\nafter\n');
       assert.equal(vm.fault, null);
-      assert.equal(vm.scheduler.callbackScopes.length, 0);
+      // Ordinary virtual dispatch need not create the synchronous BCL callback-scope list.
+      assert.deepEqual(vm.scheduler.callbackScopes ?? [], []);
+      assert.equal(vm.heap.pins.length, 0);
+      assert.equal(vm.allFrames().length, 0);
     } finally { unsubscribe(); vm.stop(); }
   });
 
@@ -66,7 +69,8 @@ for (const [engine, create] of Object.entries(factories)) {
       if (!vm.inspector) assert.equal(vm.stack.length, 0);
       assert.equal(vm.allFrames().length, 0);
       assert.equal(vm.pendingFault, null);
-      assert.equal(vm.scheduler.callbackScopes.length, 0);
+      assert.deepEqual(vm.scheduler.callbackScopes ?? [], []);
+      assert.equal(vm.heap.pins.length, 0);
       assert.equal(writesAfterStop, 0);
       assert.equal(vm.heap.stats.allocations, allocationsAtStop);
       assert.equal(vm.run().output, 'callback\n');

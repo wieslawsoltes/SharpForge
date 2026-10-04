@@ -26,7 +26,7 @@ test('zero-peak frames fit sixteen bytes, a single evaluation slot requires twen
   assert.equal(new CilVirtualMachine(empty(), {maxStackBytes: 16}).run().state, 'terminated');
   assert.throws(() => new CilVirtualMachine(literal(), {maxStackBytes: 23}), fault);
   assert.equal(new CilVirtualMachine(literal(), {maxStackBytes: 24}).run().returnValue, 42);
-  assert.equal(new CilVirtualMachine(literal()).run().returnValue, 42, 'the default remains unrestricted by bytes');
+  assert.equal(new CilVirtualMachine(literal()).run().returnValue, 42, 'the frame fits the default byte budget');
 });
 
 test('byte accounting follows reserved verified capacity, including inflated CLI headers', () => {

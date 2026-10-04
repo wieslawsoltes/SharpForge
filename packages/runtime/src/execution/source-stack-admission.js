@@ -18,14 +18,15 @@ function admit(vm, frame) {
   if (!method) throw new ManagedFault('InvalidProgramException', 'Source frame has no verified method body');
   if (previous?.epoch === epoch && previous.limit === limit && previous.id === frame.id && previous.method === method &&
       previous.code === method.code && previous.handlers === method.handlers && previous.locals === method.locals &&
-      previous.localCount === frame.locals.length && previous.methods === vm.image.methods && hasStackBudget(vm)) return;
+      previous.localCount === frame.locals.length && previous.metadataLocalCount === method.locals.length &&
+      previous.methods === vm.image.methods && hasStackBudget(vm)) return;
   const capacity = sourceStackSlots(vm, method);
   if (!Number.isSafeInteger(frame.base) || frame.base < 0 || vm.stack.length < frame.base || vm.stack.length - frame.base > capacity) {
     throw new ManagedFault('InvalidProgramException', 'Frame exceeds its verified source stack bound');
   }
   admitStackBytes(vm, frame);
   admissions.set(frame, {epoch, limit, id: frame.id, method, code: method.code, handlers: method.handlers,
-    locals: method.locals, localCount: frame.locals.length, methods: vm.image.methods});
+    locals: method.locals, localCount: frame.locals.length, metadataLocalCount: method.locals.length, methods: vm.image.methods});
 }
 
 /** Quota rejection precedes pc/counter/profiler changes; ordinary managed faults keep their existing path. */

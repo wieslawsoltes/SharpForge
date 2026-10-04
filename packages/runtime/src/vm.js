@@ -2,7 +2,6 @@ import {registerSourceAdapters} from './execution/source-adapter-guard.js';
 import {sourceAddress, sourceDereference, sourceStorage} from './execution/source-addresses.js';
 import {callSourceFrame} from './execution/call-frames.js';
 import {rootValues} from './execution/frame-roots.js';
-import {executionProfiler} from './execution/profiler.js';
 import {sourceRuntimeEvents, restoreSourceMethodEvents} from './execution/source-runtime-events.js';
 import {runSourceSlice} from './execution/source-slice.js';
 import {stopExecution} from './execution/stop.js';
@@ -16,9 +15,10 @@ import {initializeSourceVM} from './execution/initialize-source.js';
 import {binary} from './execution/source-ops.js';
 import {makeFault,enterCatch,finalizers,finishReturn,transfer,resumeUnwind,handleFault} from './execution/source-eh.js';
 export class VirtualMachine {
+  #profiler = null;
   constructor(image,options={}){
     registerSourceAdapters(this, canonicalSourceAdapters);
-    initializeSourceVM(this,image,options);
+    initializeSourceVM(this,image,options, profiler => { this.#profiler = profiler; });
   }
   *roots(){yield* rootValues(this);}
   call(methodId,args,extra){return callSourceFrame(this,methodId,args,extra);}
@@ -27,7 +27,7 @@ export class VirtualMachine {
   storage(value,type){return sourceStorage(this,value,type);}
   notifyWrite(write){this.writeRevision++;if(['field','array'].includes(write.kind))this.heap.mutationRevision++;this.onWrite?.(write);}
   get top(){return this.frames.at(-1);}
-  get profiler(){return executionProfiler(this);}
+  get profiler(){return this.#profiler;}
   get runtimeEvents() { return sourceRuntimeEvents(this); }
   value(ref){return sourceValue(this.heap,ref);}
   format(value,type){return formatSourceValue(this,value,type);}

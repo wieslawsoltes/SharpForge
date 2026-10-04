@@ -1,7 +1,7 @@
-const requiredConsumers = new Set(['vm.js', 'cil-vm.js', 'snapshot.js', 'execution/call-frames.js', 'execution/cil-method-events.js',
+const requiredConsumers = new Set(['snapshot.js', 'execution/call-frames.js', 'execution/cil-method-events.js',
   'execution/cil-step.js', 'execution/cil-slice.js', 'execution/source-slice.js', 'execution/source-fusion.js',
   'execution/initialize-source.js', 'execution/cil-instrumentation.js', 'execution/context-events.js',
-  'execution/stop.js', 'execution/heap-allocation.js']);
+  'execution/stop.js']);
 const consumers = new Set([...requiredConsumers, 'execution/cil-array-continuations.js', 'execution/source-array-continuations.js',
   'execution/numeric-blocks.js', 'execution/object-value-slice.js']);
 const cilArrayProfilerBody = `  const profiler = vm.profiler;
@@ -22,6 +22,8 @@ const hook = /\b(?:executionProfiler|initializeExecutionProfiler|allocationObser
 const unreviewedHook = /\b(?:vm|this)\.options\.profile\b|\bprofiler\.[A-Za-z_$][\w$]*\s*\(/;
 const standalone = new Set(['instruction(frame);', 'endInstruction(succeeded);', 'enter(frame);', 'suspend();',
   'beginSlice();', 'closeSlice();', 'reportClockFailure();', 'boundary();']);
+const sharedAllocationObserver = `    if (growth) heap.allocationObserver?.allocation(size, true);
+    else heap.allocationObserver?.allocation(size);`;
 
 function hasHook(source) {
   return source.split('\n').some(line => !line.trim().startsWith('//') && (hook.test(line) || unreviewedHook.test(line)));
@@ -30,6 +32,12 @@ function hasHook(source) {
 /** Reviewed textual deletions only. An unrecognized executable profiling hook makes the reference fail closed. */
 export function stripProfilerConsumer(path, source) {
   if (path === 'execution/profiler.js' || path === 'execution/profiler-clock.js') return {source, changes: 0};
+  if (path === 'execution/heap-allocation.js') {
+    // These callbacks also serve arbitrary host observers, including synchronous GC and faults.
+    const reviewed = source.replace(sharedAllocationObserver, '');
+    if (reviewed === source || hasHook(reviewed)) throw new Error('Unreviewed shared allocation observer in ' + path);
+    return {source, changes: 0};
+  }
   if (!consumers.has(path)) {
     if (hasHook(source)) throw new Error('Unreviewed profiler consumer: ' + path);
     return {source, changes: 0};
@@ -47,11 +55,12 @@ export function stripProfilerConsumer(path, source) {
   }
   if (path === 'execution/object-value-slice.js') rewrite(cilObjectProfilerBody, '  resumeObjectValueWork(vm, frame);');
   rewrite(/^import\s+\{\s*(?:executionProfiler|initializeExecutionProfiler)\s*\}\s+from\s+'[^']*\/profiler\.js';\r?\n/gm);
-  rewrite(/get profiler\(\)\{return executionProfiler\(this\);\}/g, 'get profiler(){return null;}');
   rewrite(/^[ \t]*initializeExecutionProfiler\(vm, options\.profile\);\r?\n/gm);
+  if (path === 'execution/initialize-source.js' || path === 'execution/cil-instrumentation.js') {
+    rewrite(/profilerReady\?\.\(executionProfiler\(vm\)\);/g, 'profilerReady?.(null);');
+  }
   rewrite(/^[ \t]*const profiler = (?:vm\.profiler|executionProfiler\(vm\));\r?\n/gm);
   rewrite(/^[ \t]*if \(reason === 'call'\) vm\.profiler\?\.enter\(frame\);\r?\n/gm);
-  rewrite(/^[ \t]*heap\.allocationObserver\?\.allocation\((?:size|delta, true)\);\r?\n/gm);
   rewrite(/^[ \t]*(?:vm\.)?profiler\?\.[^\n]+;\r?\n/gm, line => {
     // Keep exact known calls; a new argument or method requires explicit review.
     if (!standalone.has(line.trim().replace(/^(?:vm\.)?profiler\?\./, ''))) {

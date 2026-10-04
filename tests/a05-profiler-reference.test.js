@@ -28,7 +28,9 @@ test('reference transformation deletes only reviewed consumers and preserves run
   const source = changes.find(change => change.path === 'execution/source-slice.js');
   assert.match(source.after, /flushSourceRuntimeEvents\(vm\)/);
   assert.doesNotMatch(source.after, /\bprofiler\b/);
-  assert.match(changes.find(change => change.path === 'vm.js').after, /get profiler\(\)\{return null;\}/);
+  for (const path of ['vm.js', 'cil-vm.js', 'execution/heap-allocation.js']) {
+    assert.equal(changes.some(change => change.path === path), false, path + ' must remain byte-identical');
+  }
 });
 
 test('reference creation refuses unknown hook sites and newly introduced profiler behavior', () => {

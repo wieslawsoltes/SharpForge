@@ -7,15 +7,17 @@ import { normalizeRuntimeLaunchOptions } from '../launch-options.js';
 import { createSourceMethodTables } from './method-table.js';
 import { sourceEntryArguments } from './entry-arguments.js';
 import { initializeExecutionProfiler } from './profiler.js';
+import {executionProfiler} from './profiler.js';
 import { initializeSourceNumbers, sourceInitialValue } from './source-numbers.js';
 import { installRootProvider } from './frame-roots.js';
 import { stackByteLimit } from './stack-budget.js';
 import { initializeSourceRuntimeEvents } from './source-runtime-events.js';
 import { initializeHeapEvents } from './heap-events.js';
+import { executionOptions } from './execution-options.js';
 
 /** Initialize each source runtime's heap, state and entry frame from independent host options. */
-export function initializeSourceVM(vm, image, options) {
-  options = normalizeRuntimeLaunchOptions(options);
+export function initializeSourceVM(vm, image, options, profilerReady) {
+  options = executionOptions(normalizeRuntimeLaunchOptions(options));
   if (image instanceof Uint8Array || image instanceof ArrayBuffer) image = loadAssembly(image, options.assemblyLimits);
   if (image?.outputKind === 'library') {
     throw new Error('Library has no entry point. Invoke a static method with CilVirtualMachine instead.');
@@ -23,7 +25,7 @@ export function initializeSourceVM(vm, image, options) {
   const errors = verifyImage(image, {stackBounds: stackByteLimit(options) !== undefined});
   if (errors.length) throw new Error('Bytecode verification failed: ' + errors.join('; '));
   vm.image = image;
-  vm.options = { maxInstructions: 20_000_000, maxFrames: 512, maxOutputCharacters: 1_000_000, ...options };
+  vm.options = options;
   initializeSourceNumbers(vm);
   vm.heap = new ManagedHeap({ ...options, methodTables: createSourceMethodTables(image, vm.options) });
   installRootProvider(vm);
@@ -50,6 +52,7 @@ export function initializeSourceVM(vm, image, options) {
   vm.onException = null;
   vm.onWrite = null;
   initializeExecutionProfiler(vm, options.profile);
+  profilerReady?.(executionProfiler(vm));
   initializeSourceRuntimeEvents(vm, options.runtimeEvents);
   initializeHeapEvents(vm);
   vm.platform = new ManagedPlatform(vm, options);

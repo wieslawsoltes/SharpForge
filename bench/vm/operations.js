@@ -4,13 +4,20 @@ import {VirtualMachine, CilVirtualMachine, prepareExecution} from '@sharpforge/r
 import {virtualAssembly} from './virtual.js';
 
 export function compileFixture(fixture) {
-  if (fixture.virtual) return {assembly: virtualAssembly(fixture.iterations), image: null};
   const result = compileToIL(fixture.source, {name: 'Bench_' + fixture.id});
   if (!result.success) throw new Error(`${fixture.id}: compilation failed: ${JSON.stringify(result.diagnostics)}`);
-  return {assembly: result.assembly, image: result.image};
+  const source = {assembly: result.assembly, image: result.image};
+  return fixture.virtual ? {assembly: virtualAssembly(fixture.iterations), image: null,
+    engineArtifacts: {source, reloaded: source}} : source;
+}
+
+/** A route-specific fixture remains explicit; direct CIL retains its original class-override assembly. */
+export function artifactForEngine(engine, artifact) {
+  return artifact.engineArtifacts?.[engine] ?? artifact;
 }
 
 export function createVM(engine, artifact, options) {
+  artifact = artifactForEngine(engine, artifact);
   if (engine === 'cil') return new CilVirtualMachine(artifact.assembly, options);
   if (!['source', 'reloaded'].includes(engine)) throw new TypeError('Unknown execution engine: ' + engine);
   return new VirtualMachine(engine === 'source' ? artifact.image : loadAssembly(artifact.assembly), options);

@@ -1,6 +1,5 @@
-import {verifyControlInstructions, verifyControlCall} from './control-execution-profile.js';
-import {reachableAsyncMethods} from './async-profile.js';
-import {frameworkInterfaceDefinition} from './framework-interface-profile.js';
+import {verifyControlInstructions} from './control-execution-profile.js';
+import {verifyExecutionCall} from './verify/execution-calls.js';
 import {verificationInput} from './verify/verification-input.js';
 export {selectMethod} from './entry-selection.js';
 import {FunctionPointerProfile} from './function-pointer-profile.js';
@@ -12,9 +11,8 @@ import {ExecutionPrefixProfile} from './execution-prefix-profile.js';
 import {recordVerifiedStacks, verifiedStackEntry} from './verified-stack.js';
 import {verifyExecutionToken} from './token-profile.js';
 import {resolveExecutionField} from './field-profile.js';
-import {supportedDelegateCall} from './delegate-profile.js';
 import {resolveExecutionMethod} from './call-profile.js';
-import {genericDefinitionContext, verifyGenericType, verifyGenericCall} from './generic-profile.js';
+import {genericDefinitionContext, verifyGenericType} from './generic-profile.js';
 import {verifyPrimitiveStorageOperand} from './memory-type-profile.js';
 import { CilError } from './binary.js';
 import {CilDispatchTable} from './dispatch-profile.js';
@@ -63,28 +61,7 @@ export function verifyCilAssembly(input,configuration={}){
         const index=i.operand??Number(i.name.split('.').at(-1)),limit=i.name.includes('arg')?m.signature.parameters.length+(m.signature.isStatic?0:1):m.locals.length;
         if(!Number.isInteger(index)||index<0||index>=limit)issue(m,i,'IL_SLOT','Invalid argument/local slot');
       }
-      if(['call','callvirt','newobj'].includes(i.name)){
-        try{
-          const d=resolveExecutionMethod(inspector,i.operand,context);
-          verifyGenericCall(inspector,d,context);
-          verifyControlCall(inspector,d);
-          for(const target of reachableAsyncMethods(inspector,d))pending.push(target);
-          if(d.kind!=='method')throw new CilError('Call operand is not a method');
-          const target=d.resolvedToken??(d.token>>>24===6?d.token:null);
-          if(supportedDelegateCall(inspector,d)) { /* Delegate runtime methods have no IL body. */ }
-          else if(target) {
-            if(i.name==='callvirt'&&(inspector.methods.get(target)?.flags&0x40)) {
-              const targets=dispatch.targets(target);
-              if(!targets.size)issue(m,i,'IL_DISPATCH','Virtual method has no executable implementation');
-              for(const implementation of targets)pending.push(implementation);
-            } else pending.push(target);
-          }else if(frameworkInterfaceDefinition(d)) {
-            const targets=dispatch.externalTargets(d);for(const implementation of targets)pending.push(implementation);
-            if(!targets.size&&!supportedIntrinsic(d))issue(m,i,'IL_REFERENCE',`External interface '${d.owner}::${d.name}' has no executable implementation`);
-          }else if(!supportedIntrinsic(d))issue(m,i,'IL_REFERENCE',`External member '${d.owner}::${d.name}' is not implemented`);
-          if(i.name==='newobj'&&(d.name!=='.ctor'||d.signature.isStatic))issue(m,i,'IL_CTOR','newobj requires an instance constructor');
-        }catch(error){issue(m,i,'IL_TOKEN',error.message);}
-      }
+      if(['call','callvirt','newobj'].includes(i.name))verifyExecutionCall(inspector,m,i,context,{pending,dispatch,issue});
       if(['ldsfld','stsfld','ldsflda','newobj'].includes(i.name)){try{enqueueType((i.name==='newobj'?resolveExecutionMethod(inspector,i.operand,context):resolveExecutionField(inspector,i.operand,context.typeArguments,context.methodArguments)).ownerToken);}catch{/* Reported by token validation. */}}
       if(['ldfld','stfld','ldsfld','stsfld','ldflda','ldsflda'].includes(i.name))verifyExecutionField(inspector,m,i,context,issue);
     }

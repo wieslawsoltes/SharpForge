@@ -6,6 +6,30 @@ import {stripProfilerConsumer} from '../bench/vm/profiler-reference-transform.js
 
 const read = path => readFileSync(new URL('../packages/runtime/src/' + path, import.meta.url), 'utf8');
 
+test('private construction handles and shared host allocation observers remain byte-identical', () => {
+  for (const path of ['vm.js', 'cil-vm.js', 'execution/heap-allocation.js']) {
+    const source = read(path);
+    assert.deepEqual(stripProfilerConsumer(path, source), {source, changes: 0}, path);
+  }
+  const allocation = read('execution/heap-allocation.js');
+  for (const source of [allocation.replace('allocation(size, true)', 'allocation(size, false)'),
+    allocation + '\nvm.profiler?.instruction(frame);\n']) {
+    assert.throws(() => stripProfilerConsumer('execution/heap-allocation.js', source), /Unreviewed shared allocation/);
+  }
+});
+
+test('profiler-free construction retains the exact callback with a null handle before guest entry', () => {
+  for (const path of ['execution/initialize-source.js', 'execution/cil-instrumentation.js']) {
+    const source = read(path);
+    const expected = source.split('\n').filter(line => !line.startsWith('import ') || !line.includes("from './profiler.js'"))
+      .filter(line => line.trim() !== 'initializeExecutionProfiler(vm, options.profile);').join('\n')
+      .replace('profilerReady?.(executionProfiler(vm));', 'profilerReady?.(null);');
+    assert.equal(stripProfilerConsumer(path, source).source, expected, path);
+    assert.throws(() => stripProfilerConsumer(path, source.replace('profilerReady?.(executionProfiler(vm));',
+      'profilerReady?.(executionProfiler(other));')), /Unrecognized profiling hook/);
+  }
+});
+
 test('prepared pool capabilities, source identities, calls and callbacks remain byte-identical in the reference', () => {
   const unchanged = ['source-prepared-calls', 'prepared-cil-frame', 'prepared-virtual-call', 'source-fusion-batch', 'callback-frames',
     'frame-pool', 'source-frame-capability', 'cil-frame-capability', 'prepared-frame-scrub', 'method-table', 'source-type-display',

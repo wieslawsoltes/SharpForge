@@ -6,6 +6,7 @@ import {withVM, createVM, prepareWarmVM, restoreForReplay, executionSample, samp
 export async function measureMicro(fixture, engine, artifact, protocol, signal, onRow = () => {}) {
   const row = {id: `micro/${fixture.id}/${engine}`, kind: 'micro', engine, fixture: fixture.id,
     ...metricPlan('micro', engine, protocol), samples: []};
+  if (fixture.dispatchByEngine) row.dispatch = fixture.dispatchByEngine[engine];
   if (fixture.unsupported?.[engine]) {
     Object.assign(row, {status: 'unsupported', reason: fixture.unsupported[engine], metrics: {}, unavailableMetrics: {}});
     onRow(row);

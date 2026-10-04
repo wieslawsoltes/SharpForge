@@ -33,6 +33,8 @@ export function reportFixture({day = 1, factor = 1, suite = 'micro', engine = 'c
   const environment = {runner: 'unit-test-only', host: hash('unit-host'), node: 'unit-node', v8: 'unit-v8', platform: 'test', arch: 'test',
     os: 'unit-os', executable: '/unit-node', cpuModels: ['unit-cpu'], logicalCpus: 1, memoryBytes: 512,
     execArgv: [], gcExposed: false, versions: {node: 'unit-node'}, locale: {}};
+  Object.assign(environment, {nodeOptions: null, heapSizeLimit: 512 * 1024 * 1024,
+    resourceControls: {SHARPFORGE_TEST_CONCURRENCY: '1', SHARPFORGE_MAX_PARALLEL_RUNS: '1', SHARPFORGE_MAX_OLD_SPACE_MB: '512'}});
   const report = {schemaVersion: 2, suite: 'SF-A05-T12', status: 'measured', syntheticUnitTestData: true,
     measurementKind: 'runtime-benchmark', nativeQualification: false, command: ['node', 'unit-fixture-only'],
     commit: 'a'.repeat(40), completedCommit: 'a'.repeat(40), harnessHash: hash('unit-harness'),
@@ -53,6 +55,7 @@ export function reportFixture({day = 1, factor = 1, suite = 'micro', engine = 'c
     for (const fixture of fixtures) {
       const row = {id: `${kind}/${fixture.id}/${engine}`, kind, engine, fixture: fixture.id, samples: [],
         compilationMs: 1, assemblyHash: hash(fixture.id), ...metricPlan(kind, engine, report.protocol)};
+      if (fixture.dispatchByEngine) row.dispatch = fixture.dispatchByEngine[engine];
       if (fixture.unsupported?.[engine]) {
         Object.assign(row, {status: 'unsupported', reason: fixture.unsupported[engine], metrics: {}, unavailableMetrics: {}});
       } else {

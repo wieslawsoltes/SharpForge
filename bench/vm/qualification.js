@@ -3,6 +3,7 @@ import {numericDifferential} from './numeric-differential.js';
 import {measureExecutionPair, qualificationVmOptions} from './qualification-execution.js';
 import {measureRootQualification} from './root-qualification.js';
 import {measureArrayFairness} from './array-fairness.js';
+import {measureTieredFairness} from './tiered-fairness.js';
 import {loadProfilerReference} from './profiler-reference.js';
 import {microbenchmarks} from './fixtures.js';
 import {abortIfNeeded} from './operations.js';
@@ -92,6 +93,9 @@ async function runSuites(context) {
       await recordMeasurement(context, 'array-sort-fairness-' + engine, () => measureArrayFairness(engine, options, signal));
     }
   }
+  if (includes(options, 'fairness')) {
+    await recordMeasurement(context, 'tiered-loop-fairness-cil', () => measureTieredFairness(options, signal));
+  }
   if (includes(options, 'profiler')) await runProfiler(context);
 }
 
@@ -112,6 +116,10 @@ export async function runQualification(options, externalSignal) {
   report.format = 'SharpForge.A05Qualification/1';
   report.measurementKind = 'runtime-qualification';
   report.targetScope = options.target ? {kind: 'selected-target', id: options.target} : {kind: 'suite', suite: options.suite};
+  if (includes(options, 'fairness')) {
+    report.unsupportedTargets = report.unsupportedTargets.filter(target => !target.startsWith('Wasm tier:'));
+    report.protocol.tieredFairness = 'Separate CIL loop enables actual Node Wasm OSR; other rows retain their recorded tiering options.';
+  }
   const controller = new AbortController();
   const forward = () => controller.abort(externalSignal.reason);
   if (externalSignal?.aborted) forward();

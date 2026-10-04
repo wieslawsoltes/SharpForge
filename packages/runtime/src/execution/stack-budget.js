@@ -11,7 +11,7 @@ const slotBytes = 8;
 const frameHeaderBytes = 16;
 const terminal = new Set(['completed', 'faulted', 'canceled']);
 
-/** Optional VM-wide logical managed stack bytes; omitted preserves the existing policy. */
+/** VM-wide logical managed stack bytes; a host may remove the live option to disable this quota. */
 export function stackByteLimit(options) {
   const limit = options.maxStackBytes;
   if (limit === undefined) return undefined;
@@ -49,7 +49,8 @@ function methodSize(vm, budget, method) {
   const cil = !!vm.inspector, code = cil ? method.instructions : method.code, signature = method.signature;
   let entry = budget.methods.get(method);
   if (entry && entry.code === code && entry.handlers === method.handlers && entry.capacity === method.maxStack &&
-      entry.signature === signature && entry.parameters === signature?.parameters && entry.locals === method.locals) return entry;
+      entry.signature === signature && entry.parameters === signature?.parameters && entry.locals === method.locals &&
+      entry.localCount === method.locals.length && entry.parameterCount === signature?.parameters.length) return entry;
   let capacity;
   if (cil) {
     const bound = verifiedStackBound(vm.inspector, vm.report, method);
@@ -66,7 +67,8 @@ function methodSize(vm, budget, method) {
   for (const local of method.locals) bytes += storageBytes(vm, cil ? local : local.type);
   if (!Number.isSafeInteger(bytes) || bytes < frameHeaderBytes) throw new TypeError('Invalid managed frame size');
   entry = {code, handlers: method.handlers, capacity: method.maxStack, signature,
-    parameters: signature?.parameters, locals: method.locals, arguments: arguments_, bytes};
+    parameters: signature?.parameters, parameterCount: signature?.parameters.length,
+    locals: method.locals, localCount: method.locals.length, arguments: arguments_, bytes};
   budget.methods.set(method, entry);
   return entry;
 }

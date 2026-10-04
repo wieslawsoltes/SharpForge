@@ -5,8 +5,11 @@ export const microbenchmarks = Object.freeze([
   {id: 'calls', source: `using System;class P {static int Add(int a){return a+3;}
     static void Main(){int sum=0;for(int i=0;i<${iterations};i++){sum=Add(sum);}Console.WriteLine(sum);}}`, expected: '60000\n'},
   {id: 'virtual', virtual: true, expectedReturn: iterations * 7, iterations,
-    unsupported: {source: 'Source IR has no virtual call opcode; a plain call is not a substitute',
-      reloaded: 'Canonical source IR cannot retain this polymorphic callvirt fixture'}},
+    dispatchByEngine: {source: 'interface-callvirt', reloaded: 'interface-callvirt', cil: 'class-override-callvirt'},
+    source: `interface IValue { int Value() { return 0; } }
+      class Derived : IValue { public int Value() { return 7; } }
+      class Program { static int Main() { IValue value=new Derived(); int sum=0;
+        for(int i=0;i<${iterations};i++){sum+=value.Value();} return sum; } }`},
   {id: 'fields', source: `using System;class Box {public int Value;}class P {static void Main(){Box b=new Box();
     for(int i=0;i<${iterations};i++){b.Value+=1;}Console.WriteLine(b.Value);}}`, expected: '20000\n'},
   {id: 'arrays', source: program(`int[] a=new int[256];for(int i=0;i<256;i++){a[i]=i;}

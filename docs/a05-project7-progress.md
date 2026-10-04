@@ -53,7 +53,7 @@ all host allocation is zero.
 
 ## Platform qualification
 
-Focused PR workflows now define 31 independent native cases across SDK8 and SDK10
+Focused PR workflows now define 32 independent native cases across SDK8 and SDK10
 on Linux, Windows and macOS, and actual Chromium/Firefox/WebKit Wasm, CSP, debugger
 and official Speedscope UI checks on Ubuntu. Reports retain exact checkout/tree,
 SDK selection, workflow provenance and per-case outcomes. Their local runner and

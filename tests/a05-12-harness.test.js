@@ -35,8 +35,8 @@ for (const engine of ['source', 'cil']) test(`T12 ${engine} preparation is idemp
   });
 });
 
-test('T12 actual CIL virtual calls execute an override; source fixture is explicitly unsupported', async () => {
-  assert.match(microbenchmarks.find(item => item.virtual).unsupported.source, /virtual call opcode/);
+test('T12 actual CIL virtual calls execute the original class override', async () => {
+  assert.equal(microbenchmarks.find(item => item.virtual).dispatchByEngine.cil, 'class-override-callvirt');
   await withVM(() => new CilVirtualMachine(virtualAssembly(20)), vm => {
     const count = vm.instructions;
     assert.equal(prepareExecution(vm).methods, vm.report.methods.length);

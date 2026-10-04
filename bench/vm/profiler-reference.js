@@ -1,8 +1,9 @@
 import {execFileSync} from 'node:child_process';
-import {readFileSync, writeFileSync, existsSync, symlinkSync, mkdirSync, statSync} from 'node:fs';
+import {readFileSync, writeFileSync, existsSync, mkdirSync, statSync} from 'node:fs';
 import {resolve, join, relative, sep, dirname} from 'node:path';
 import {pathToFileURL} from 'node:url';
 import {profilerReferenceChanges} from './profiler-reference-transform.js';
+import {linkReferenceDependencies, verifyReferenceDependencies} from './profiler-reference-dependencies.js';
 import {root, hash, stable, writeReport, isMain} from './evidence.js';
 
 const runtimeDirectory = 'packages/runtime/src/';
@@ -22,6 +23,16 @@ function recordedChanges(changes) {
 
 function diff(directory, source, reference) {
   return git(directory, 'diff', '--no-ext-diff', '--binary', source, reference, '--', 'packages/runtime/src');
+}
+
+function sourceInputProof(directory, commit) {
+  const parent = git(directory, 'rev-parse', commit + '^').trim();
+  const changedPaths = git(directory, 'diff', '--name-only', parent, commit, '--', 'packages/runtime/src', 'bench/vm')
+    .trim().split('\n').filter(Boolean).sort();
+  const workloadChanges = changedPaths.filter(path => !/^bench\/vm\/profiler-reference(?:-[a-z-]+)?\.js$/.test(path));
+  return {parent, runtimeTree: git(directory, 'rev-parse', commit + ':packages/runtime/src').trim(),
+    parentRuntimeTree: git(directory, 'rev-parse', parent + ':packages/runtime/src').trim(),
+    changedRuntimeOrBenchmarkPaths: changedPaths, unchangedRuntimeAndQualificationFromParent: workloadChanges.length === 0};
 }
 
 function sparsePatterns(directory) {
@@ -58,13 +69,12 @@ export function createProfilerReference({directory, out}) {
     for (const change of changes) writeFileSync(join(target, runtimeDirectory, change.path), change.after);
     git(target, 'add', '--', ...changes.map(change => runtimeDirectory + change.path));
     git(target, '-c', 'commit.gpgsign=false', 'commit', '-m', 'SF-A05-T10.1: isolate a recorded profiler-hook-free measurement reference');
-    if (existsSync(join(root, 'node_modules')) && !existsSync(join(target, 'node_modules'))) {
-      symlinkSync(join(root, 'node_modules'), join(target, 'node_modules'), process.platform === 'win32' ? 'junction' : 'dir');
-    }
+    const dependencies = linkReferenceDependencies(root, target);
     const referenceCommit = revision(target), patch = diff(target, sourceCommit, referenceCommit);
     if (!clean(target) || !clean(root) || revision(root) !== sourceCommit) throw new Error('Reference creation changed during recording');
     const manifest = {format: 'SharpForge.ProfilerReference/1', status: 'created', sourceCommit, referenceCommit,
       referenceDirectory: target, publicEntryPoint: 'packages/runtime/src/index.js', createdAt: new Date().toISOString(),
+      dependencies, sourceInputProof: sourceInputProof(root, sourceCommit),
       command: [process.execPath, ...process.execArgv, ...process.argv.slice(1)], changes: recordedChanges(changes),
       sparseCheckout: patterns === null ? null : {patterns, sha256: hash(patterns)},
       patch, patchSha256: hash(patch), transformSha256: hash(readFileSync(new URL('./profiler-reference-transform.js', import.meta.url))),
@@ -91,6 +101,10 @@ export async function loadProfilerReference(manifestPath) {
   const directory = resolve(manifest.referenceDirectory);
   if (directory === root || !clean(directory) || revision(directory) !== manifest.referenceCommit ||
       git(directory, 'rev-parse', 'HEAD^').trim() !== manifest.sourceCommit) throw new Error('Profiler reference revision or parent changed');
+  verifyReferenceDependencies(root, directory, manifest.dependencies);
+  if (stable(manifest.sourceInputProof) !== stable(sourceInputProof(root, manifest.sourceCommit))) {
+    throw new Error('Profiler reference source input provenance changed');
+  }
   if (manifest.sparseCheckout && (sparsePatterns(directory).patterns !== manifest.sparseCheckout.patterns ||
       hash(manifest.sparseCheckout.patterns) !== manifest.sparseCheckout.sha256)) throw new Error('Reference sparse patterns changed');
   const changes = changesAt(root), paths = changes.map(change => runtimeDirectory + change.path).sort();

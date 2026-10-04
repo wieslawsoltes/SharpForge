@@ -24,9 +24,9 @@ For the current boundary/test inventory and private disclosure route, see the [t
 | Workspace token interning cache | 32,768 entries |
 | Parser nesting | 200 |
 | Parser diagnostics | 200 per parse, with compiler diagnostic cap |
-| Managed logical heap | 32 MiB |
-| Array length | 1,000,000 elements |
-| Managed call depth | 512 frames |
+| Managed logical heap | 32 MiB, including each array's 32-byte record header and exact-width primitive payload |
+| Array length | Derived from heap bytes and element width; an otherwise empty default heap admits 8,388,600 `int` elements |
+| Managed stack | 4 MiB logical bytes; optional independent `maxFrames` ceiling |
 | Execution | 20,000,000 instructions |
 | Console output | 1,000,000 characters |
 | Debugger history | 64 snapshots and approximately 8 MiB |
@@ -34,7 +34,34 @@ For the current boundary/test inventory and private disclosure route, see the [t
 
 Several limits can be lowered through constructor options. They do not account for all JavaScript allocations, retained source text, compiler metadata, editor histories or browser process memory. Direct low-level compiler consumers must supply their own source limits; the Workspace wraps these limits for normal IDE use.
 
-The global instruction budget is deliberately uncatchable. Other faults may be caught by a managed catch clause, but the instruction limit still bounds repeated fault handling. Time budgets are cooperative, not hard real-time deadlines. A builtin or collection can exceed a slice duration. A production host should add a worker watchdog and terminate/recreate a worker that becomes unresponsive. The preview's request timeout reports failure but does not automatically repair a hung compiler worker.
+Primitive arrays use typed backing: `int[n]` reserves `32 + 4*n` logical bytes,
+while `byte[n]` reserves `32 + n`. Reference and aggregate array slots currently
+use the logical eight-byte slot estimate plus the same header. A vector's length
+ceiling is the minimum of `floor(max(0, maxBytes - 32) / elementBytes)`, the optional
+`maxArrayLength` setting and the host addressing cap of `0xffffffff` elements.
+Admission also checks the combined bytes of all reachable heap records after
+collection; a length that fits an otherwise empty heap can still exhaust a
+populated heap. Oversized lengths or exhausted heap bytes produce managed
+`OutOfMemoryException`; negative or non-integral lengths produce
+`OverflowException`. There is no separate default one-million-element ceiling.
+
+The [security limit tests](../tests/conformance/security/limits.test.js) cover the
+exact default Int32-array byte boundary and one element over, a ninth
+million-element Int32 array exhausting the heap while the first eight remain
+reachable, and smaller
+explicit byte/length limits in source and direct CIL execution. They also check
+typed storage, admission before allocation and rooted survival after rejected
+requests. These are executable policy checks; their presence does not claim a
+passing run on an unmeasured revision or platform.
+
+Instruction and stack-budget exhaustion are deliberately uncatchable runtime faults.
+The [managed stack policy](default-managed-stack-budget.md) accounts active, parked
+and callback frames while preserving explicit host depth limits. Other managed
+faults may be caught, but the instruction limit still bounds repeated fault handling.
+Time budgets are cooperative, not hard real-time deadlines. A builtin or collection
+can exceed a slice duration. A production host should add a worker watchdog and
+terminate/recreate a worker that becomes unresponsive. The preview's request timeout
+reports failure but does not automatically repair a hung compiler worker.
 
 ## Persistence and deployment
 

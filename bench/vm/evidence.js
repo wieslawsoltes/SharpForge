@@ -5,6 +5,7 @@ import {readFileSync, readdirSync, writeFileSync, mkdirSync, renameSync, rmSync}
 import {dirname, resolve} from 'node:path';
 import {fileURLToPath} from 'node:url';
 import {distribution} from './statistics.js';
+import {resourceEnvironment} from './resource-environment.js';
 
 export const root = fileURLToPath(new URL('../../', import.meta.url));
 export const hash = value => createHash('sha256').update(value).digest('hex');
@@ -27,6 +28,7 @@ export function createReport(protocol, runner) {
     cpuModels: [...new Set(processors.map(cpu => cpu.model))].sort(), logicalCpus: processors.length, memoryBytes: totalmem(),
     node: process.version, v8: process.versions.v8, versions: process.versions, executable: process.execPath,
     execArgv: process.execArgv, gcExposed: typeof globalThis.gc === 'function',
+    ...resourceEnvironment(),
     locale: {LANG: process.env.LANG ?? '', LC_ALL: process.env.LC_ALL ?? '', TZ: process.env.TZ ?? ''}};
   const sources = readdirSync(new URL('./', import.meta.url)).filter(name => name.endsWith('.js')).sort();
   const harnessHash = hash(sources.map(name => name + '\n' + readFileSync(new URL(name, import.meta.url))).join('\n'));

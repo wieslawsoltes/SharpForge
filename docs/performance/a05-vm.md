@@ -34,7 +34,7 @@ The capability object reports phase availability independently of a particular V
 The queue owner runs the focused tests on the final integrated revision, using the repository's limited runner and one test worker:
 
 ```sh
-SHARPFORGE_TEST_CONCURRENCY=1 SHARPFORGE_MAX_PARALLEL_RUNS=1 SHARPFORGE_MAX_OLD_SPACE_MB=512 node scripts/limited.js node --test --test-concurrency=1 tests/a05-12-gate.test.js tests/a05-12-harness.test.js tests/a05-12-startup.test.js tests/a05-12-snapshot.test.js
+SHARPFORGE_TEST_CONCURRENCY=1 SHARPFORGE_MAX_PARALLEL_RUNS=1 SHARPFORGE_MAX_OLD_SPACE_MB=512 node scripts/limited.js node --test --test-concurrency=1 tests/a05-12-gate.test.js tests/a05-12-harness.test.js tests/a05-12-startup.test.js tests/a05-12-snapshot.test.js tests/a05-12-provenance.test.js tests/a05-12-virtual-routes.test.js
 ```
 
 Correctness runs include all three startup applications on all three engines, local and available portable snapshot replay after a heap write, invalid evidence, cancellation, disposal and an actually delayed interpreter arithmetic handler. Statistical unit tests use explicitly synthetic reports; production qualification refuses those reports. The measured-handler test uses the same `compareMetric` decision function as the report gate. No synthetic report is native or benchmark qualification evidence.
@@ -44,18 +44,25 @@ Commit corrections before measurement. Use the same otherwise idle runner, Node 
 Run these commands sequentially:
 
 ```sh
-node --max-old-space-size=512 --expose-gc bench/vm/harness.js --runner dedicated-node24-01 --samples 100 --warmup 10 --out artifacts/a05-vm-first.json
-node --max-old-space-size=512 --expose-gc bench/vm/harness.js --runner dedicated-node24-01 --samples 100 --warmup 10 --out artifacts/a05-vm-repeat.json
-node scripts/perf-gate.js --qualify artifacts/a05-vm-first.json --repeat artifacts/a05-vm-repeat.json --out artifacts/a05-vm-baseline.json
-node --max-old-space-size=512 --expose-gc bench/vm/harness.js --runner dedicated-node24-01 --samples 100 --warmup 10 --out artifacts/a05-vm-candidate.json
-node scripts/perf-gate.js --baseline artifacts/a05-vm-baseline.json --candidate artifacts/a05-vm-candidate.json --out artifacts/a05-vm-gate.json
+export SHARPFORGE_TEST_CONCURRENCY=1
+export SHARPFORGE_MAX_PARALLEL_RUNS=1
+export SHARPFORGE_MAX_OLD_SPACE_MB=512
+node scripts/limited.js node --max-old-space-size=512 --expose-gc bench/vm/harness.js --runner dedicated-node24-01 --samples 100 --warmup 10 --out artifacts/a05-vm-first.json
+node scripts/limited.js node --max-old-space-size=512 --expose-gc bench/vm/harness.js --runner dedicated-node24-01 --samples 100 --warmup 10 --out artifacts/a05-vm-repeat.json
+node scripts/limited.js node scripts/perf-gate.js --qualify artifacts/a05-vm-first.json --repeat artifacts/a05-vm-repeat.json --out artifacts/a05-vm-baseline.json
+node scripts/limited.js node --max-old-space-size=512 --expose-gc bench/vm/harness.js --runner dedicated-node24-01 --samples 100 --warmup 10 --out artifacts/a05-vm-candidate.json
+node scripts/limited.js node scripts/perf-gate.js --baseline artifacts/a05-vm-baseline.json --candidate artifacts/a05-vm-candidate.json --out artifacts/a05-vm-gate.json
 ```
 
 Keep provisional reports under ignored `artifacts/` while measuring. After review, copy the qualified baseline to `docs/performance/a05-baseline.json` and commit it. Writing a tracked baseline between measurement commands would dirty the tree and correctly fail provenance validation. A candidate optimization must be committed before its run; comparing the same revision is only a gate sanity check, not evidence that a code change improved performance.
 
+The initial qualified baseline may describe the final A05 implementation itself. T12 requires a repeatable baseline, startup phases and regression detection; it does not require the audited pre-A05 product revision to serve as that baseline. The first and repeat reports therefore establish current behavior. Keep measured before/after optimization claims in their independent qualification reports. A later documentation commit that installs the baseline does not change the measured commit recorded inside it.
+
 Qualification requires every corresponding median to differ by no more than 5% across two distinct serial runs of the same commit. Both complete reports are retained: the qualified baseline embeds the first run. Median absolute deviation, interquartile range, p95 and p99 are retained alongside each median, so stable medians do not conceal broad sample noise. Failed qualification reports retain the failing stability comparisons. Do not discard inconvenient observations or select the faster repeat.
 
-Reports record the exact command, beginning and ending commit, clean-tree status at both boundaries, timestamps, Node/V8 versions, executable, operating system, CPU models/count, host identity hash, memory capacity, GC mode, locale, compiled-assembly hashes, fixture hash, all harness-file hashes and VM options. A changed revision during the run fails the report. Output writes replace the destination atomically. Gate comparisons never overwrite either input file.
+Reports record the exact child command, beginning and ending commit, clean-tree status at both boundaries, timestamps, Node/V8 versions, executable, operating system, CPU models/count, host identity hash, memory capacity, GC mode, locale, compiled-assembly hashes, fixture hash, an aggregate hash of the harness JavaScript files and VM options. Inherited `NODE_OPTIONS`, the effective V8 `heap_size_limit` in bytes, and all three `SHARPFORGE_*` resource controls are part of the runner fingerprint. `process.execArgv` alone does not show inherited Node flags. Keep the wrapper command and environment alongside the reports as well. A changed revision during the run fails the report. Output writes replace the destination atomically. Gate comparisons never overwrite either input file.
+
+The complete default catalog has 36 measured rows: eight microbenchmarks on three routes, three startup applications on three routes, and snapshot replay on three routes. At 100 samples, each run launches 900 fresh startup children serially; every startup row retains load, verification, preparation and first-output timing. A micro-only or single-engine qualification is useful for its declared subset but does not complete the full T12 baseline. Keep failed and cancelled attempts with their logs; do not remove outliers, splice runs together or select individual faster rows. If a full pair fails the 5% rule, investigate the environment or protocol and run a fresh complete pair without altering the rule.
 
 `--suite micro|startup|snapshot`, `--engine source|reloaded|cil` and `--native-bits 32|64` create independent qualification sets. Defaults are all cases/engines and ABI32. Samples accept 20–10000; warmups accept 1–1000. The default 100 observations provides more tail information than the minimum, but it is not a guarantee of narrow p99 uncertainty. The stable `--runner` identifier is required. A different runner fingerprint, harness, fixture catalog, engine set, phase availability, ABI or protocol requires a new baseline.
 
@@ -64,7 +71,7 @@ Reports record the exact command, beginning and ending commit, clean-tree status
 | Case or phase | What is timed and checked |
 |---|---|
 | Seven ordinary microbenchmarks | One prepared VM per case; the initial snapshot is restored and plans are prepared outside each execution timer. First execution, warmups and measured observations are retained separately. |
-| Virtual calls | Real direct-CIL `callvirt` to a derived override, built through public metadata/IL APIs; the expected override result is asserted. Source and reloaded-source fixture entries remain explicitly unsupported. |
+| Virtual calls | Direct CIL retains its original class `callvirt` to a derived override, built through public metadata/IL APIs. Source and reloaded-source use a real interface `CALLVIRT` to a class implementation whose result differs from the interface default. Each route executes 20000 calls returning seven and checks a total of 140000. Reports label the distinct dispatch mechanisms and hash the assembly used by that route; these are separate regression series, not a cross-route speedup comparison. |
 | Invoice, grid, text-report startup | A fresh Node process for every observation, with no cache carried between observations. Parent compilation is separately recorded. |
 | Load | CIL inspector parsing, canonical source reload, or an independent compiler-image clone. |
 | Verify | Explicit `verifyCilAssembly` or `verifyImage`; constructor verification is additionally included in construction time. No verification cost is subtracted. |
