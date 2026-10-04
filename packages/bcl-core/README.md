@@ -115,8 +115,8 @@ Unsupported custom comparers on nonempty arrays raise `NotSupportedException`.
 One-dimensional arrays with explicit lower bounds remain unsupported by this
 execution profile; multidimensional arrays raise `RankException`.
 
-A null comparer retains the released ordinal default string profile. Default
-invariant ordering is still outstanding in #829. The pinned 33-case .NET capture
+A null comparer uses the shared host-backed string profile described above.
+Exact native invariant ordering is still outstanding in #829. The pinned 33-case .NET capture
 under `reference/array-comparer` covers this actual non-generic overload and its
 object comparisons/faults. Ordinary tests also consume the prior 97-string
 ordinal search corpus. NaN comparisons and rank rejection are covered through
