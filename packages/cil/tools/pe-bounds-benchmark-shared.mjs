@@ -22,9 +22,12 @@ export function toolHashes(root) {
   return Object.fromEntries(toolPaths.map(path => [path, sha(readFileSync(resolve(root, path)))]));
 }
 
-export function sourceIdentity(root, side) {
+export function sourceIdentity(root, side, revisions = { baselineCommit, productCommit }) {
+  assert.ok(side === 'baseline' || side === 'candidate', 'Measured checkout side');
+  assert.deepEqual(Object.keys(revisions).sort(), ['baselineCommit', 'productCommit']);
+  for (const value of Object.values(revisions)) assert.match(value, /^[a-f0-9]{40}$/, 'Exact source revision');
   root = realpathSync(root);
-  const head = clean(root), expected = side === 'baseline' ? baselineCommit : productCommit;
+  const head = clean(root), expected = side === 'baseline' ? revisions.baselineCommit : revisions.productCommit;
   if (side === 'baseline') assert.equal(head, expected);
   else git(root, 'merge-base', '--is-ancestor', expected, head);
   git(root, 'diff', '--exit-code', expected, '--', ':(glob)packages/*/src/**', ':(glob)packages/*/package.json', 'package.json');

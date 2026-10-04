@@ -558,7 +558,7 @@
       "path": "packages/cil/tools/pe-bounds-benchmark-worker.mjs",
       "operation": "dynamic-import",
       "count": 1,
-      "sha256": "5300ed97d89bf47a14ded3288785008e5bd9fc48e67cb82fe3baa64f71d3fc69",
+      "sha256": "29e53dea4739c957476866d4a8b9ac9333c3b61ff499842c13f161e8d70474ce",
       "reason": "Developer benchmark imports only the fixed public CIL entry of the operator-selected, clean, source-pinned checkout after verifying its own package aliases and complete source inventory. Input images never select executable source. This exact worker source/count requires review before qualification."
     }
   ]

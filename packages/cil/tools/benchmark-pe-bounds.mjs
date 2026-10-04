@@ -11,9 +11,19 @@ import { verifyBoundsCapture } from '../../../tests/fixtures/pe-bounds/verify.mj
 import { sourceIdentity, toolHashes, workloads } from './pe-bounds-benchmark-shared.mjs';
 
 const root = fileURLToPath(new URL('../../../', import.meta.url));
-assert.equal(process.argv.length, 10, 'Required: --baseline <checkout> --r2r <image> --mixed <image> --output <fresh-directory>');
+assert.ok([10, 16].includes(process.argv.length),
+  'Required: --baseline <checkout> --r2r <image> --mixed <image> --output <fresh-directory>; optional revision trio');
 assert.deepEqual([process.argv[2], process.argv[4], process.argv[6], process.argv[8]], ['--baseline', '--r2r', '--mixed', '--output']);
 const [baseline, r2r, mixed, output] = [3, 5, 7, 9].map(index => resolve(process.argv[index]));
+let revisions;
+let nativePath = resolve(root, 'tests/fixtures/pe-bounds/reference');
+if (process.argv.length === 16) {
+  assert.deepEqual([process.argv[10], process.argv[12], process.argv[14]],
+    ['--baseline-revision', '--candidate-revision', '--native-reference']);
+  revisions = { baselineCommit: process.argv[11], productCommit: process.argv[13] };
+  for (const value of Object.values(revisions)) assert.match(value, /^[a-f0-9]{40}$/, 'Exact source revision');
+  nativePath = resolve(process.argv[15]);
+}
 assert.ok(!existsSync(output));
 assert.ok(!output.startsWith(resolve(root) + '/') && !output.startsWith(baseline + '/'));
 mkdirSync(output);
@@ -60,7 +70,8 @@ function inputs() {
 async function child(label, side, mode, workload, expected) {
   const resultPath = resolve(output, label + '.result.json'), jobPath = resolve(output, label + '.job.json');
   const job = { harnessCommit: report.harnessCommit, root: report.sources[side].root, source: report.sources[side],
-    side, mode, workload, expected, inputs: report.inputs, tools: report.tools, output: resultPath };
+    side, mode, workload, expected, inputs: report.inputs, tools: report.tools, output: resultPath,
+    ...(revisions ? { revisions } : {}) };
   writeJson(jobPath, job);
   const command = { label, jobSha256: sha(readFileSync(jobPath)), startedAt: new Date().toISOString(),
     argv: [process.execPath, resolve(root, 'packages/cil/tools/pe-bounds-benchmark-worker.mjs'), '--job', jobPath], cwd: job.root };
@@ -100,9 +111,9 @@ async function child(label, side, mode, workload, expected) {
 
 try {
   report.harnessCommit = clean(root);
-  report.sources = { baseline: sourceIdentity(baseline, 'baseline'), candidate: sourceIdentity(root, 'candidate') };
+  report.sources = { baseline: sourceIdentity(baseline, 'baseline', revisions), candidate: sourceIdentity(root, 'candidate', revisions) };
+  if (revisions) report.revisions = { ...revisions, nativeReference: nativePath };
   report.tools = toolHashes(root);
-  const nativePath = resolve(root, 'tests/fixtures/pe-bounds/reference');
   const native = verifyBoundsCapture(nativePath);
   report.native = { sha256: sha(readFileSync(resolve(nativePath, 'native.json'))), sourceCommit: native.sourceCommit };
   report.inputs = inputs();
@@ -126,8 +137,8 @@ try {
   }
   assert.equal(report.commands.length, 12);
   assert.equal(report.chronologicalSamples.length, 1200);
-  assert.deepEqual(sourceIdentity(root, 'candidate'), report.sources.candidate);
-  assert.deepEqual(sourceIdentity(baseline, 'baseline'), report.sources.baseline);
+  assert.deepEqual(sourceIdentity(root, 'candidate', revisions), report.sources.candidate);
+  assert.deepEqual(sourceIdentity(baseline, 'baseline', revisions), report.sources.baseline);
   assert.deepEqual(toolHashes(root), report.tools);
   for (const input of report.inputs) assert.equal(sha(readFileSync(input.path)), input.sha256, 'Unchanged input: ' + input.id);
   assert.equal(sha(readFileSync(resolve(nativePath, 'native.json'))), report.native.sha256);

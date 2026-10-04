@@ -22,7 +22,7 @@ try {
   assert.equal(entries.length, 1);
   assert.equal(entries[0].count, 1);
   assert.equal(entries[0].sha256, job.tools[path]);
-  report.source = sourceIdentity(job.root, job.side);
+  report.source = sourceIdentity(job.root, job.side, job.revisions);
   assert.deepEqual(report.source, job.source);
   report.environment = environment(job.root);
   // The operator-selected checkout, full source inventory and exact public entry are verified before this fixed import.
@@ -61,7 +61,7 @@ try {
     }
     report.statistics = distribution(report.samples.map(row => row.microsecondsPerOperation));
   } else assert.equal(job.mode, 'prepare');
-  assert.deepEqual(sourceIdentity(job.root, job.side), report.source);
+  assert.deepEqual(sourceIdentity(job.root, job.side, job.revisions), report.source);
   assert.deepEqual(toolHashes(root), job.tools);
   assert.equal(clean(root), job.harnessCommit);
   report.status = 'passed';
