@@ -25,10 +25,11 @@ generic signatures, function pointers, varargs and non-default method convention
 produce explicit unknown results. Same-named externals never bind locally. This
 increment does not perform inherited-member search, TypeRef alias unification,
 custom-modifier equivalence or whole-method verification. The separate
-[local member-access query](VERIFIER-MEMBER-ACCESS.md) handles flat same-assembly
-access rules with explicit unknowns for unsupported ancestry/nesting. Those
-remaining #2400/#2407 services stay open; a missing or unsupported result must
-never be treated as an accepted call or field access.
+[local member-access query](VERIFIER-MEMBER-ACCESS.md) handles local same-assembly
+rules, including bounded nested accessibility. The [local type-access query](VERIFIER-TYPE-ACCESS.md)
+reuses those nested visibility and enclosing-caller privileges without a member
+or receiver. External/generic access and whole-method #2400/#2407 services remain
+open; a missing or unsupported result must never grant access.
 
 Construction is O(type rows + member rows + copied heap bytes). Definition and
 exact declaration lookup are indexed; a signature is decoded once per unique
@@ -76,6 +77,3 @@ changes are retained in `tests/fixtures/a03-verifier-members/performance.json`.
 Heap deltas are not allocation counts or peak memory. This is a new opt-in API;
 there is no previous implementation or speedup comparison. The existing lighter
 hierarchy factory and query paths are unchanged.
-
-The same context also exposes the [local type-access query](VERIFIER-TYPE-ACCESS.md),
-reusing nested visibility and enclosing-caller privileges without a member or receiver.
