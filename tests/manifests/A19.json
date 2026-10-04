@@ -9,6 +9,7 @@
     "tests/a19-builtin-extensions.test.js",
     "tests/a19-document-models.test.js",
     "tests/a19-documents-state.test.js",
+    "tests/a19-menu-contributions.test.js",
     "tests/a19-multi-session-fixture.test.js",
     "tests/a19-profile-selection.test.js",
     "tests/a19-runtime-arguments.test.js",

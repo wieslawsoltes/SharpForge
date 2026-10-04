@@ -76,6 +76,9 @@ export function registerGitStudio(host) {
   ];
   const windowItems = definitions.map(definition => [definition[1], panelCommandId(definition)]);
   disposables.push(menus.registerMenu('git', items), menus.registerMenu('window', windowItems));
+  disposables.push(menus.registerTopMenu({
+    id: 'git', title: 'Git', mnemonic: 'g', before: 'build', commands: items.filter(Boolean).map(([, command]) => command)
+  }));
   const menu = document.createElement('button');
   menu.dataset.menu = 'git';
   menu.textContent = 'Git';
