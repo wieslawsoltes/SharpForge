@@ -93,3 +93,30 @@ from the pinned contract; no new native capture or execution is claimed. All
 tests passed at `fc5592bf`, after integrating the merged rounding parent. The
 run used Node 24, one worker and a 512 MB old-space limit. Broad platform and
 performance qualification remains deferred.
+
+## Directed integral rounding
+
+The next family appends `decimal.Ceiling(decimal d)` and `decimal.Floor(decimal d)`
+after Parse. Their wire names are `decimal.Ceiling#1` and `decimal.Floor#1`.
+Ceiling rounds toward positive infinity; Floor rounds toward negative infinity.
+They retain the existing Decimal descriptor, carrier and directed-rounding
+implementation. No parser or numeric semantics change in this increment.
+
+Aliases, named argument `d`, ordinary integral-to-Decimal argument conversions,
+array storage and boxing use the same source adapters. CIL emission and reload
+match the exact static Decimal signature. System.Math overloads remain outside
+this source family; incompatible arguments and extra parameters are rejected.
+
+```csharp
+using System;
+Console.WriteLine(decimal.Ceiling(d: -1.25m)); // -1
+Console.WriteLine(decimal.Floor(d: -1.25m));   // -2
+```
+
+`tests/a05-source-decimal-integral-rounding.test.js` adds source/reloaded/direct-CIL
+cases for both signs, values near zero, scale, maximum/minimum values, precision
+beyond Number's exact integer range, storage, and rejected signatures. All 47
+focused integral-rounding, Round/Truncate, Parse and Decimal-operation tests
+passed at `3772537a`, using Node 24, one worker and a 512 MB old-space limit.
+Native/platform/performance qualification remains deferred. This family does
+not close #1350 or #1351.
