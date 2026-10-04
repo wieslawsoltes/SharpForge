@@ -69,6 +69,7 @@ export class FileWatch {
         if (!this.canReadAutomatically(document)) continue;
         const version = document.version;
         const disk = await this.readDisk(document.uri, {signal});
+        signal?.throwIfAborted();
         if (disk === null || disk === undefined || !this.current(document, version)) continue;
         const text = typeof disk === 'string' ? disk : disk.text;
         if (typeof text !== 'string') continue;

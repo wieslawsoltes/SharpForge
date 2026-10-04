@@ -75,6 +75,20 @@ test('A19 native bytes changed after the observation are not marked as the reloa
   assert.equal(documents.get(uri).nativeHash, original.hash);
 });
 
+test('A19 rejecting immutable native metadata restores the document and retains both previous native baseline fields', async t => {
+  const context = await nativeContext(t);
+  const {uri, file, observer, documents, original} = context;
+  await writeFile(file, 'external');
+  const observed = await observer.read(uri);
+  const record = documents.get(uri);
+  Object.defineProperty(record, 'nativeBaseline', {value: original.text, configurable: false, writable: false});
+  await assert.rejects(context.reload(observed), /baseline metadata is immutable/);
+  assert.equal(record.text, original.text);
+  assert.equal(record.nativeHash, original.hash);
+  assert.equal(record.nativeBaseline, original.text);
+  assert.equal(record.dirty, false);
+});
+
 test('A19 native read cancellation and disposal reach the actual client request signal', async t => {
   const context = await nativeContext(t);
   const entered = deferred();
