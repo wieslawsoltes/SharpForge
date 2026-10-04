@@ -116,12 +116,15 @@ export class HostComposition {
   }
   begin() { this.cache.clear(); }
   remove(id) {
-    if (this.elements.has(id)) this.host.options.renderComposition?.(this.host.context, id, null, null);
-    this.overrides.delete(id);
-    this.brushes.delete(id);
-    this.brushPaint.delete(id);
-    this.elements.delete(id);
-    this.cache.delete(id);
+    try {
+      if (this.elements.has(id)) this.host.options.renderComposition?.(this.host.context, id, null, null);
+    } finally {
+      this.overrides.delete(id);
+      this.brushes.delete(id);
+      this.brushPaint.delete(id);
+      this.elements.delete(id);
+      this.cache.delete(id);
+    }
   }
   clear() {
     for (const id of this.elements.keys()) this.remove(id);

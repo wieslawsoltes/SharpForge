@@ -9,6 +9,7 @@ import { reachableNodes, overlayRoots, updateHostLayout } from './root-ownership
 import { initializeHostEnvironment, refreshHostEnvironment, disposeHostEnvironment } from './environment.js';
 import { handleNativeEvent } from './native-events.js';
 import { HostEventRequests } from './event-requests.js';
+import { applyTemplateCommand, removeHostElement, removeHostNode } from './scene-lifetime.js';
 
 const number = (value, fallback = 0) => Number.isFinite(value) ? value : fallback;
 const suffix = type => type.slice(type.lastIndexOf('.') + 1);
@@ -141,17 +142,8 @@ export class RetainedWinUIHost {
       else if (command.op === 'focus') queueMicrotask(() => this.focusManager.focus(command.id));
       else if (command.op === 'flyout') this.pendingFlyouts.push(command);
       else if (command.op === 'layout') this.layoutCommands.enqueue(command);
-      else if (command.op === 'template' && node) { node.templateRoot = command.root; this.invalidate(node.id); }
-      else if (command.op === 'templateOwner' && node) node.templateOwner = command.owner;
-      else if (command.op === 'remove') {
-        this.removeElement(command.id);
-        this.eventRouter.removeNode(command.id);
-        this.input.dragDrop.removeNode(command.id);
-        this.automation?.remove(command.id);
-        this.composition.remove(command.id);
-        this.nodes.delete(command.id);
-        this.services.objectTree?.remove(command.id);
-      }
+      else if (command.op === 'template' || command.op === 'templateOwner') applyTemplateCommand(this, command);
+      else if (command.op === 'remove') removeHostNode(this, command.id);
       if (this.nodes.size > 20000) throw new RangeError('WinUI object limit');
     }
     this.modelDirty = true;
@@ -442,24 +434,7 @@ export class RetainedWinUIHost {
     for (const element of this.elements.values()) if (element.classList.contains('sf-winui-flyout')) element.hidden = true;
     if (last) this.focusManager?.focus(last);
   }
-  removeElement(id) {
-    this.eventRequests.cancelTarget(id);
-    const node = this.nodes.get(id);
-    const element = this.elements.get(id);
-    this.input?.removeNode(id, { removeHandlers: false });
-    if (node && element) this.registry.resolve(node.type)?.dispose?.(this.context, node, element);
-    this.states.get(id)?.dispose?.();
-    this.states.get(id)?.scrollModel?.dispose();
-    this.states.delete(id);
-    element?.remove();
-    this.elements.delete(id);
-    this.surfaces.get(id)?.dispose();
-    this.surfaces.delete(id);
-    this.layouts.delete(id);
-    this.privateValues.delete(id);
-    this.automation?.bridge.remove(element);
-    this.options.onElementRemoved?.(id, element);
-  }
+  removeElement(id) { removeHostElement(this, id); }
   flush() {
     if (this.frame) { (this.document.defaultView.cancelAnimationFrame?.bind(this.document.defaultView) ?? clearTimeout)(this.frame); this.frame = 0; }
     this.render();
