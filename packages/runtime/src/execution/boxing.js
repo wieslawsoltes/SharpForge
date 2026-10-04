@@ -30,12 +30,22 @@ export function boxValue(vm, value, type) {
   return vm.heap.allocate('box', table, [vm.storage(value, table.name)]);
 }
 
+function unboxCompatible(boxed, requested) {
+  if (boxed === requested) return true;
+  if (!boxed.flags.enum && !requested.flags.enum) return false;
+  // CLR unboxing compares exact underlying primitive types, not reduced array element types.
+  // Distinct enums with the same underlying type are compatible; signed/unsigned pairs are not.
+  const actual = boxed.flags.enum ? boxed.enumUnderlyingType : boxed;
+  const expected = requested.flags.enum ? requested.enumUnderlyingType : requested;
+  return !!actual?.flags.primitive && actual === expected;
+}
+
 /** unbox retains a live owned location; unbox.any copies through the declared storage adapter. */
 export function unboxValue(vm, reference, type, byReference = false) {
   const table = vm.typeSystem.table(type);
   if (!byReference && !table.flags.valueType) return castReference(vm.heap, reference, table);
   const record = vm.heap.get(reference);
-  if (record.kind !== 'box' || record.methodTable !== table) {
+  if (record.kind !== 'box' || !unboxCompatible(record.methodTable, table)) {
     throw new ManagedFault('InvalidCastException', 'Boxed type mismatch');
   }
   return byReference ? vm.address('box', 0, reference) : vm.storage(record.data[0], table.name);
