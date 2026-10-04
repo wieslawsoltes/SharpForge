@@ -8,6 +8,7 @@ export * from './zlib.js';
 export * from './memory-odb.js';
 export * from './refs.js';
 export * from './config.js';
+export * from './storage/browser.js';
 export * from './index-file.js';
 export * from './worktree.js';
 export * from './ignore.js';
