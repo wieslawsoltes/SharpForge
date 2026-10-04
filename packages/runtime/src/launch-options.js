@@ -71,7 +71,8 @@ export function normalizeRuntimeLaunchOptions(options = {}) {
   if (argv && (options.methodToken !== undefined && options.methodToken !== null || options.arguments !== undefined) && argv.length) {
     throw new RuntimeLaunchError('PROGRAM_ARGUMENTS_METHOD', 'Program arguments cannot accompany an explicit method invocation');
   }
-  return { ...options, programArguments: argv, environment: validateLaunchEnvironment(options.environment) };
+  const environment = options.environment === undefined ? options.environmentVariables : options.environment;
+  return { ...options, programArguments: argv, environment: validateLaunchEnvironment(environment) };
 }
 
 /** Resolve the supported Main signatures without changing explicit method invocation arguments. */
