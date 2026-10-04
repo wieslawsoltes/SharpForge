@@ -22,8 +22,8 @@ canonical declared primitive identities. Local loads/addresses require InitLocal
 Generic/instance/vararg method signatures, nonprimitive storage, byref returns,
 exception handlers and opcodes without a registered policy return `unknown`.
 Byref element compatibility beyond identical primitive identities stays unknown.
-Every branch/switch target must be an instruction boundary, even in unreachable
-code. Floating input to `conv.r.un` follows the general conversion table III.8;
+The existing decoder checks every branch/switch target, including unreachable
+code, before typed propagation. Floating input to `conv.r.un` follows the general conversion table III.8;
 this does not claim the integer-focused instruction prose is unambiguous.
 
 The existing `verifyCilAssembly` managed execution admission still verifies stack

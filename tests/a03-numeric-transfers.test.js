@@ -96,7 +96,9 @@ test('bytecode after a reachable terminator remains unsupported when its policy 
 test('unreachable branches still require an instruction-boundary target', () => {
   const report = verify({ name: 'InvalidUnreachableBranch', body: writer => writer.op('ret').op('br', 100) });
   assert.equal(report.status, 'rejected');
-  assert.equal(report.diagnostics[0].diagnostic, 'BadJumpTarget');
+  assert.equal(report.diagnostics[0].diagnostic, 'InvalidMetadata');
+  assert.match(report.diagnostics[0].message, /Branch target is not an instruction boundary/);
+  assert.equal(report.diagnostics[0].offset, 1);
 });
 
 test('primitive storage addresses retain declared element identity and reject double addresses', () => {
