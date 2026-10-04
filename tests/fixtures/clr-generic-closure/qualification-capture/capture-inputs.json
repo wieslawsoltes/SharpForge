@@ -1,0 +1,589 @@
+{
+  "schemaVersion": 1,
+  "status": "started",
+  "startedUtc": "2026-10-04T20:14:26.238Z",
+  "argv": [
+    "/opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin/node",
+    "/workspace/scratch/7e3d2a445c44/sf6-generic-instantiation/packages/clr/tools/capture-generic-closure.mjs",
+    "--dotnet",
+    "/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/dotnet",
+    "--output",
+    "/workspace/scratch/7e3d2a445c44/generic-qualification-5be28e30/native-output",
+    "--evidence",
+    "/workspace/scratch/7e3d2a445c44/generic-qualification-5be28e30/native-evidence"
+  ],
+  "cwd": "/workspace/scratch/7e3d2a445c44/sf6-generic-instantiation",
+  "workspace": "/workspace/scratch/7e3d2a445c44/generic-qualification-5be28e30/native-evidence/workspace",
+  "output": "/workspace/scratch/7e3d2a445c44/generic-qualification-5be28e30/native-output",
+  "evidence": "/workspace/scratch/7e3d2a445c44/generic-qualification-5be28e30/native-evidence",
+  "node": "v24.19.0",
+  "nodeArguments": [],
+  "nodeExecutable": {
+    "path": "/opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin/node",
+    "bytes": 125989464,
+    "sha256": "bc17c508ffeed0ec622934f9b7fa72f8e78da65350e63c3eceb56fa688aa5e12"
+  },
+  "platform": "linux",
+  "architecture": "x64",
+  "hostKind": "local-process",
+  "steps": [],
+  "sources": [
+    {
+      "path": "packages/clr/interop/GenericClosure/CaseObservations.cs",
+      "bytes": 6865,
+      "sha256": "18ee2ae6d35eacd275ea7538b20ab1e597dfb5da51dfe7e5e2681ca2eb1dd418"
+    },
+    {
+      "path": "packages/clr/interop/GenericClosure/MetadataImage.cs",
+      "bytes": 9497,
+      "sha256": "23bf64a5bd41679b9c983912547e55577f555546b0c9089fb939fdebd3853150"
+    },
+    {
+      "path": "packages/clr/interop/GenericClosure/MetadataInventory.cs",
+      "bytes": 3634,
+      "sha256": "16a571f9f22f66c512d0f0f2d480e4a2fb2b069d8618b49b379f9a6698f2608f"
+    },
+    {
+      "path": "packages/clr/interop/GenericClosure/NativeTypes.cs",
+      "bytes": 4122,
+      "sha256": "e875b613ad75e5db9300cf362cb909dfcd625d996e068372ab30b3886e9a2367"
+    },
+    {
+      "path": "packages/clr/interop/GenericClosure/Program.cs",
+      "bytes": 2693,
+      "sha256": "5d0e33b219f05e24a15b5a158acdc3f0d1072ddb3aa3c8074b514ca1387c4358"
+    },
+    {
+      "path": "packages/clr/interop/GenericClosure/RequestBindings.cs",
+      "bytes": 5754,
+      "sha256": "deecd3bde7f856ece2e9ca692e28e0ed4e36defe476ccd04e3671b468b696bd8"
+    },
+    {
+      "path": "packages/clr/interop/GenericClosure/images.json",
+      "bytes": 13860,
+      "sha256": "f403ce160edb1ed9ffbf4763566c8d093540c4cd6345d96e5e168bb79a0123ac"
+    },
+    {
+      "path": "packages/clr/interop/GenericClosure/matrix.json",
+      "bytes": 12247,
+      "sha256": "5250d0489ad5be390d8cc703770d450c314e5d6c606b48049e2883fe477ee8e1"
+    },
+    {
+      "path": "packages/clr/interop/GenericClosure/oracle-toolchain.json",
+      "bytes": 3600,
+      "sha256": "58eaf5e63a8edcf47d3ef96635655f1dd89d230a15b5b39f29503576484fe52d"
+    },
+    {
+      "path": "packages/clr/interop/GenericInstantiation/SignatureObservations.cs",
+      "bytes": 3949,
+      "sha256": "c20bd14a890d45c24e83ec8b33faad1dcb266a08c9d613a00f52430296b9ea51"
+    },
+    {
+      "path": "packages/clr/interop/GenericInstantiation/TypeObservations.cs",
+      "bytes": 8356,
+      "sha256": "89d2942aeec005786a2853dc2e4cbfa585ebf8039ffa47b567208fd1a7570bd9"
+    },
+    {
+      "path": "packages/clr/tools/capture-generic-closure.mjs",
+      "bytes": 23106,
+      "sha256": "28eafbcb18bf59940e87dea8a9db0e3c54376be61623d59fd40f06d7db89eb20"
+    }
+  ],
+  "productSources": [
+    {
+      "path": "packages/clr/src/app-domain.js",
+      "bytes": 1999,
+      "sha256": "666bdb3c801d9c9f6ed3ef8721ca8a062de1544aa335748999609dc97855cde2"
+    },
+    {
+      "path": "packages/clr/src/assembly-name.js",
+      "bytes": 5638,
+      "sha256": "e53c1cdedd91d189319515173fdd28e583964c818643100812443f7a749e4044"
+    },
+    {
+      "path": "packages/clr/src/assembly.js",
+      "bytes": 15445,
+      "sha256": "3ab701d91a38cac6abb3fb05138a79a91148edd966d44dd807b076ff9875e81b"
+    },
+    {
+      "path": "packages/clr/src/binding-wait.js",
+      "bytes": 846,
+      "sha256": "8053dd2601d7ce927e850876c0a466251df4f0746360f0ef4deb1ae446b3b54f"
+    },
+    {
+      "path": "packages/clr/src/context-events.js",
+      "bytes": 973,
+      "sha256": "09324de1c7717fcfa67e2e1e617c4a7d52ad5ee68a1531792cffd8c7a677278f"
+    },
+    {
+      "path": "packages/clr/src/dependency-graph.js",
+      "bytes": 2039,
+      "sha256": "de19d1c5a5b6a7868d835204355eef1cd59a725ce435be40e774d45f2e2bd01b"
+    },
+    {
+      "path": "packages/clr/src/deps-json.js",
+      "bytes": 4249,
+      "sha256": "0abbfeea8b808317106e4db8f72d7be78999f0a064c0288ec9ae91cac15925e6"
+    },
+    {
+      "path": "packages/clr/src/display-name-tokens.js",
+      "bytes": 2152,
+      "sha256": "a0ba987d54d4e092887c12b1fb643c2053f9187744a5b2f23d27b0d984a7e10d"
+    },
+    {
+      "path": "packages/clr/src/generics/closure-graph.js",
+      "bytes": 2665,
+      "sha256": "bf8d4e1dfbf115cfd6be7d7124804d74e2eb090fd763e84b51c6c3cd2550ab23"
+    },
+    {
+      "path": "packages/clr/src/generics/context-lifetime.js",
+      "bytes": 1378,
+      "sha256": "178937234438145cb63537f91662adf8f8f74dfcc351aa77fc94c76b1474dd69"
+    },
+    {
+      "path": "packages/clr/src/generics/definition-bindings.js",
+      "bytes": 3014,
+      "sha256": "88a6ca59dbe1af2e2e63eee6553936e39f71c9d5659337b52b76b005400caff5"
+    },
+    {
+      "path": "packages/clr/src/generics/instantiation-closure.js",
+      "bytes": 8516,
+      "sha256": "fa079563976d3a3ed06543946662aafaa1b4728f48d7b5ce98d8b0e3e3482cd7"
+    },
+    {
+      "path": "packages/clr/src/generics/instantiation.js",
+      "bytes": 5387,
+      "sha256": "29b4e05bff0f8a97cb3b24bd035e9e7134b48db91bf30326045fea1c8c440311"
+    },
+    {
+      "path": "packages/clr/src/generics/resolution-context.js",
+      "bytes": 5803,
+      "sha256": "12b2d43284cda494f94b1692af80ae133d714b8beff4ed70f8d1c5376a442e8f"
+    },
+    {
+      "path": "packages/clr/src/generics/signature-categories.js",
+      "bytes": 2078,
+      "sha256": "4e3ef2a43953461c498e1e0f9c25e5630cfa7b6ac57944730b7b351f7db968c6"
+    },
+    {
+      "path": "packages/clr/src/generics/signature-types.js",
+      "bytes": 1238,
+      "sha256": "bd64afae88dfe9430cf732d553eefff8a0437edaae1841b16d507a24160cb450"
+    },
+    {
+      "path": "packages/clr/src/generics/substitution.js",
+      "bytes": 4682,
+      "sha256": "9edc56eb75e7cc43cd81c9cc22c23b75354d5deac41e87d2581171a1b5c991ac"
+    },
+    {
+      "path": "packages/clr/src/generics/type-completion.js",
+      "bytes": 2250,
+      "sha256": "f3423227b7496e6f5205547eba315d86e094e4ad1b1c064896a575ce05f59bd7"
+    },
+    {
+      "path": "packages/clr/src/generics/type-shapes.js",
+      "bytes": 1556,
+      "sha256": "a7a7dd059aea4dad30ed5ab48759aed144c1666fef13ba8d7012b7f8f3db4fc9"
+    },
+    {
+      "path": "packages/clr/src/generics/type-substitution.js",
+      "bytes": 2298,
+      "sha256": "1a0cce20d5133d1152f0b0098d98d419ae3196d84be6a2cbb907e8af0e35f560"
+    },
+    {
+      "path": "packages/clr/src/identity.js",
+      "bytes": 4949,
+      "sha256": "f3858cdf990774e5bb3ace749b0c8843373c6141249df3d724f4c4b62f6d5fd1"
+    },
+    {
+      "path": "packages/clr/src/index.js",
+      "bytes": 1736,
+      "sha256": "c394f45b9ac41acec81e8ffe0227648450f6e3de4f5df15a04e904f8ca016684"
+    },
+    {
+      "path": "packages/clr/src/load-context.js",
+      "bytes": 9981,
+      "sha256": "687a9112bd6d4b3ee9cb23502c3f974f8e7bb8309d7c3eb9f56dba39947b1129"
+    },
+    {
+      "path": "packages/clr/src/load-errors.js",
+      "bytes": 1973,
+      "sha256": "3753a0e3270274bf07feb9c976ffedb12bc485890775d50f013f1041ba6ffc1d"
+    },
+    {
+      "path": "packages/clr/src/nuget-assets.js",
+      "bytes": 5724,
+      "sha256": "f5e98880606d8e928a03c5014d417ac61c9a3ac083c75e18466d001df03ff66b"
+    },
+    {
+      "path": "packages/clr/src/nuget-package.js",
+      "bytes": 906,
+      "sha256": "07f070729e4773ca77786baa57e943d347d27faec2457c12fdb3fdeec48e6ba1"
+    },
+    {
+      "path": "packages/clr/src/probing-paths.js",
+      "bytes": 2425,
+      "sha256": "c39e6e1e464aef20f85d2d99d1066235d67d6fc36c5c8d91fb55aa8f8a15453f"
+    },
+    {
+      "path": "packages/clr/src/reflection/usage-budget.js",
+      "bytes": 3078,
+      "sha256": "f0b7263b1618ca3493c505af4197c1dffd3c7fd214428a61365ef2aa291e4478"
+    },
+    {
+      "path": "packages/clr/src/reflection/usage-interface-maps.js",
+      "bytes": 4271,
+      "sha256": "0bbc8f0fcc175eb452b7d7431d9530b275da378a68fa71f231bad9b18c1afae5"
+    },
+    {
+      "path": "packages/clr/src/reflection/usage-metadata.js",
+      "bytes": 10290,
+      "sha256": "d555ef6aec0cacec70c16e0431aedeb8a23af7efa2f03393e0ce12323341c13f"
+    },
+    {
+      "path": "packages/clr/src/reflection/usage-relations.js",
+      "bytes": 4769,
+      "sha256": "e37670ca34fa3669ddc8a40411108cfe296c04e04449756c8e8c9a3786b3e51d"
+    },
+    {
+      "path": "packages/clr/src/resolve/forwarders.js",
+      "bytes": 7005,
+      "sha256": "bfc178c64680098b6915878293b10c6a8b21147a609873fe5486ab412219f496"
+    },
+    {
+      "path": "packages/clr/src/resolver.js",
+      "bytes": 4956,
+      "sha256": "6dabceef92566a3aa15a51f74191a51be2225b5b0e4ce8e2344729236e889d5b"
+    },
+    {
+      "path": "packages/clr/src/resources/resource-codec.js",
+      "bytes": 3427,
+      "sha256": "8787fb7e27c4fe9cf33509528136c5db72c813215bb1dbf0e1dc4fa873ee3c7b"
+    },
+    {
+      "path": "packages/clr/src/resources/resource-index.js",
+      "bytes": 5027,
+      "sha256": "ee5e9ce8cd831d95beea619752e4c233a544d2d033a373b0530482cbb6bd25bc"
+    },
+    {
+      "path": "packages/clr/src/resources/resource-reader.js",
+      "bytes": 4031,
+      "sha256": "70cc45239a57a2849aea7d357bd4d51650d343360485ab7cadb222c457d36eb0"
+    },
+    {
+      "path": "packages/clr/src/resources/resource-values.js",
+      "bytes": 4226,
+      "sha256": "1f95f1767bd548a38cde344d7684e3b6762da515db90c242d8c9e46ebeeea33b"
+    },
+    {
+      "path": "packages/clr/src/type-system/casting.js",
+      "bytes": 5525,
+      "sha256": "20a4dc6b2183dbf4dbf1acf0882a7e2b90e03f01816aac8f363d556d3e5163f6"
+    },
+    {
+      "path": "packages/clr/src/type-system/constructed-type-cache.js",
+      "bytes": 1980,
+      "sha256": "3836d8830d7155d115df344dc0c3d4c17b27f1c445c234cd292574527910251d"
+    },
+    {
+      "path": "packages/clr/src/type-system/constructed-types.js",
+      "bytes": 7241,
+      "sha256": "d51738fee01ccef5ebc8429a269e150906784547e6128c80fbb584eeb1e18676"
+    },
+    {
+      "path": "packages/clr/src/type-system/custom-modifiers.js",
+      "bytes": 1689,
+      "sha256": "bbd396507ef10f7791095f50cb570bc532111f1cab9011bb5b2fb1317cb17eb5"
+    },
+    {
+      "path": "packages/clr/src/type-system/event-desc.js",
+      "bytes": 1766,
+      "sha256": "9608dd246cc3149b90bd25add34f9d7fcae8f275763fe3bc25540a1058e3f76c"
+    },
+    {
+      "path": "packages/clr/src/type-system/field-desc.js",
+      "bytes": 1704,
+      "sha256": "833783b707e95a0e7c808b3d5dd28bd5000ad41b8ffdce55b01577c574634940"
+    },
+    {
+      "path": "packages/clr/src/type-system/frozen-signature.js",
+      "bytes": 969,
+      "sha256": "855083074fb9cd4e9acd58dbbecbde9bc57f153e6dd96ee72d58a549016501c6"
+    },
+    {
+      "path": "packages/clr/src/type-system/generic-override-definitions.js",
+      "bytes": 2231,
+      "sha256": "6678c0941341d42097f70730f66bb266a339e1bbb16f4b89b39d55a353aef383"
+    },
+    {
+      "path": "packages/clr/src/type-system/interface-method-impl.js",
+      "bytes": 3544,
+      "sha256": "eaad05af6b484cda8b93a97e1d6817740487d94eb6aad1998e84d7a3bcbdbb36"
+    },
+    {
+      "path": "packages/clr/src/type-system/metadata-accessors.js",
+      "bytes": 4016,
+      "sha256": "d8b120257e7b8b0f7519a7e2cfd00e9336a6402bd0610cfd81fe8bc8cd7558a1"
+    },
+    {
+      "path": "packages/clr/src/type-system/metadata-constants.js",
+      "bytes": 2928,
+      "sha256": "731ad5055302bc3441b5fb63235a594a4fdec712fa7d171152838a1b3ee0f735"
+    },
+    {
+      "path": "packages/clr/src/type-system/metadata-generic-parameters.js",
+      "bytes": 5245,
+      "sha256": "8071d5e8ca288112b008eabe9669dfcb1a6c8f014c92ed4b5bfd4b5eed18a3e3"
+    },
+    {
+      "path": "packages/clr/src/type-system/metadata-member-definitions.js",
+      "bytes": 5423,
+      "sha256": "288d3601a4167174d4be9790fbe7ea798fcb63737c261c3c45cf642489c85b74"
+    },
+    {
+      "path": "packages/clr/src/type-system/metadata-parameters.js",
+      "bytes": 3145,
+      "sha256": "f74023ddcc3f5970b850db94801251fd50950ef7ff425ee7fb7c7108d5774d96"
+    },
+    {
+      "path": "packages/clr/src/type-system/metadata-property-parameters.js",
+      "bytes": 1690,
+      "sha256": "931c1bd3b0d413e06a8282fefc89d2f4b071e4ac93a39cf3d6aebe7f7852bcb0"
+    },
+    {
+      "path": "packages/clr/src/type-system/metadata-type-definitions.js",
+      "bytes": 2489,
+      "sha256": "028160c89f3cdac13be833e4e8c3d9a13ba71b28de4933910d6e19c81f80925d"
+    },
+    {
+      "path": "packages/clr/src/type-system/method-base-definition.js",
+      "bytes": 4031,
+      "sha256": "1a6778aa9df9a151b771396b46e373cc4303c1ffe5dbf0950b5d165ba5d191fa"
+    },
+    {
+      "path": "packages/clr/src/type-system/method-desc.js",
+      "bytes": 3738,
+      "sha256": "3b74ccdf4515deb210324d826b57ebb69f2b463fe38ce7825b90f2b47d0d1ad6"
+    },
+    {
+      "path": "packages/clr/src/type-system/method-display.js",
+      "bytes": 7147,
+      "sha256": "de74f7fbefc2a2486bc0ef13b3fc109a3d1abbe671a1ec39e30e18af960ea906"
+    },
+    {
+      "path": "packages/clr/src/type-system/method-impl-rows.js",
+      "bytes": 1918,
+      "sha256": "c8ee9e319898301c03af35556f1c75b3a3b8dd580b6d5aa81be5e0a91df45aa5"
+    },
+    {
+      "path": "packages/clr/src/type-system/override-constraints.js",
+      "bytes": 3126,
+      "sha256": "093a3db1e090c10845306629afbcb57264135d3a516bb9c234d0aa0bb47af11e"
+    },
+    {
+      "path": "packages/clr/src/type-system/override-signature.js",
+      "bytes": 5958,
+      "sha256": "c0e90858ddda33e82d3b33953b6553ec21c2f3fc7c320a7733e07d1b7d7be13d"
+    },
+    {
+      "path": "packages/clr/src/type-system/parameter-desc.js",
+      "bytes": 2488,
+      "sha256": "0145390df2281f16c978086ffd6010a15c6d2f7ae1a0f9eb0d16b98e0cb1660e"
+    },
+    {
+      "path": "packages/clr/src/type-system/parameter-display.js",
+      "bytes": 791,
+      "sha256": "e3e554de715ee559e0af8bfde7cc504d8f8f8391ec23a6da8bb58c9c4526e6b0"
+    },
+    {
+      "path": "packages/clr/src/type-system/property-desc.js",
+      "bytes": 2012,
+      "sha256": "75fa5f1dbbe89dd4897415f35699bce03d5f7a2cf6d10fb3b4a71d4422cf1cb9"
+    },
+    {
+      "path": "packages/clr/src/type-system/signature-types.js",
+      "bytes": 2544,
+      "sha256": "5b948f49ef31ac9a52ee0280e03c195ced20486d297645f1ba262bd6c7044eeb"
+    },
+    {
+      "path": "packages/clr/src/type-system/strict-override-access.js",
+      "bytes": 3601,
+      "sha256": "fb9b8299f5eca65c130719cbe515716d53ca1965118965bf2b1f7b66a442397f"
+    },
+    {
+      "path": "packages/clr/src/type-system/type-definition-completion.js",
+      "bytes": 3757,
+      "sha256": "92044d0b4a3197e70d2c55c521a91be04e08947699a8ee1176d841cc3fc34c82"
+    },
+    {
+      "path": "packages/clr/src/type-system/type-desc.js",
+      "bytes": 3368,
+      "sha256": "8014b578fbfc78c38ad8328d0a2b2a4e282eaeb130e7b459fdb81b74d5694e44"
+    },
+    {
+      "path": "packages/clr/src/type-system/type-loader.js",
+      "bytes": 25584,
+      "sha256": "c2a45122c999b6279b36719994892c4c0fb935a93145c9c4f06609390744b8a8"
+    },
+    {
+      "path": "packages/clr/src/type-system/type-specifications.js",
+      "bytes": 2775,
+      "sha256": "cb9fc24e1beb78975d68bc2eefbef1015669609f9559675638f777b4f5f06ead"
+    },
+    {
+      "path": "packages/clr/src/unload.js",
+      "bytes": 2129,
+      "sha256": "b73eac179efa5ca5c8a8ba579f66764e0ae1d726040f8336687b74a92f9911e0"
+    },
+    {
+      "path": "packages/clr/src/verification/core-types.js",
+      "bytes": 4032,
+      "sha256": "25ff147963b2536f214baf04ee890985fa20b4c4ea16ae2118f3c7b6eff337c2"
+    }
+  ],
+  "pin": {
+    "schemaVersion": 1,
+    "sdk": "10.0.201",
+    "runtime": "10.0.5",
+    "targetFramework": "net10.0",
+    "referencePack": "10.0.5",
+    "roslyn": {
+      "version": "5.3.0-2.26153.122 (4d3023de605a78ba3e59e50c657eed70f125c68a)",
+      "sha256": "3ec75447e847f97b2cb3d861463f6de7ea421f2092aaacc7458579adccf8fc16",
+      "platformHashes": {
+        "darwin-arm64": "3ec75447e847f97b2cb3d861463f6de7ea421f2092aaacc7458579adccf8fc16",
+        "linux-x64": "4913fa70d10c99901edbb825fdedcc92465be08665016a5d258ea45f953624f0",
+        "win32-x64": "149fd48d7ad64c5ba9658572c8c59ab27a1b40e0834f764ab54f4584b7e8ac1a"
+      }
+    },
+    "referenceAssemblies": {
+      "algorithm": "sha256(JSON.stringify(sorted [{name,sha256}]))",
+      "sha256": "a978e7aaf608f22e860328a42319b908a5a084cdb087b28b5c31a1e6726be362",
+      "count": 167
+    },
+    "nugetSource": "https://api.nuget.org/v3/index.json",
+    "windowsAppSDK": "1.8.260921001",
+    "platforms": {
+      "coreclr": [
+        "darwin-arm64",
+        "linux-x64",
+        "win32-x64"
+      ],
+      "winui": [
+        "win32-x64"
+      ]
+    },
+    "images": {
+      "linux": {
+        "runner": "ubuntu-24.04",
+        "container": "mcr.microsoft.com/dotnet/sdk:10.0.201-noble@sha256:127d7d4d601ae26b8e04c54efb37e9ce8766931bded0ee59fcd799afd21d6850",
+        "architectureDigests": {
+          "linux-x64": "sha256:c804b88aaca8d6b76f65998427adec3101dcbbf2e52e705e2509eb81263aab0c",
+          "linux-arm64": "sha256:ba9a05e2c5ce6eec597c6e8fe23815b1f11180d8588cf6877ad329bd8597921d"
+        }
+      },
+      "windows": {
+        "runner": "windows-2025",
+        "imageOS": "win25-vs2026",
+        "imageVersion": "20260925.250.1",
+        "minimumBuild": 19041
+      },
+      "macos": {
+        "runner": "macos-26",
+        "imageOS": "macos26",
+        "imageVersion": "20260907.0351.1"
+      }
+    },
+    "licenses": {
+      "dotnet": "https://github.com/dotnet/sdk/blob/v10.0.201/LICENSE.TXT",
+      "roslyn": "https://github.com/dotnet/roslyn/blob/main/License.txt",
+      "windowsAppSDK": "https://www.nuget.org/packages/Microsoft.WindowsAppSDK/1.8.260921001/License"
+    },
+    "provenance": {
+      "containerManifest": "https://mcr.microsoft.com/v2/dotnet/sdk/manifests/10.0.201-noble",
+      "retrievedUTC": "2026-10-03T13:10:35Z",
+      "windowsImageEvidence": "GitHub Actions run 37124380717, env.json ImageOS/ImageVersion; exact version is enforced on hosted runners and drift fails closed.",
+      "macosImageEvidence": "GitHub Actions run 37125167557, artifact 11275065779 env.json; image version drift fails closed.",
+      "sdkArchives": [
+        {
+          "rid": "linux-x64",
+          "url": "https://builds.dotnet.microsoft.com/dotnet/Sdk/10.0.201/dotnet-sdk-10.0.201-linux-x64.tar.gz",
+          "sha512": "a33354e3291aa21ea5e1983733f001d45264c31ee3c0dc4a85509d4cb6d4896cfec57fd2143a7b54c93bc42b328e059b16802b4085257a367ef2652f1c8fa424",
+          "compilerSHA256": "4913fa70d10c99901edbb825fdedcc92465be08665016a5d258ea45f953624f0",
+          "referenceAssemblySHA256": "a978e7aaf608f22e860328a42319b908a5a084cdb087b28b5c31a1e6726be362"
+        },
+        {
+          "rid": "win-x64",
+          "url": "https://builds.dotnet.microsoft.com/dotnet/Sdk/10.0.201/dotnet-sdk-10.0.201-win-x64.zip",
+          "sha512": "15f511296c0ea28a61bafcc2efbc66cd4d22d15a2db44597b9b2254a9eafb57047bbe2feca8106a17ba7ae8af19a3a6847a375b6740e0bf6ab0874ade8af0bca",
+          "compilerSHA256": "149fd48d7ad64c5ba9658572c8c59ab27a1b40e0834f764ab54f4584b7e8ac1a",
+          "referenceAssemblySHA256": "a978e7aaf608f22e860328a42319b908a5a084cdb087b28b5c31a1e6726be362"
+        }
+      ],
+      "sdkReleaseMetadata": "https://builds.dotnet.microsoft.com/dotnet/release-metadata/10.0/releases.json"
+    }
+  },
+  "dotnet": {
+    "path": "/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/dotnet",
+    "bytes": 71808,
+    "sha256": "54e50ea9704dfe67c11176d2ed0665f4477843e626c314ada55e40b0a25e48f3"
+  },
+  "caseIds": [
+    "resolve-simple-self-base",
+    "instantiate-simple-self-base",
+    "resolve-expanding-self-base",
+    "instantiate-expanding-self-base",
+    "resolve-permuted-mutual",
+    "instantiate-permuted-mutual",
+    "resolve-indirect-expanding",
+    "instantiate-indirect-expanding",
+    "resolve-acyclic-expansion",
+    "instantiate-acyclic-expansion",
+    "resolve-array-expanding",
+    "instantiate-array-expanding",
+    "resolve-array-acyclic-expansion",
+    "instantiate-array-acyclic-expansion",
+    "resolve-erased-constant-cycle",
+    "instantiate-erased-constant-cycle",
+    "resolve-hidden-invalid-argument",
+    "instantiate-hidden-invalid-argument",
+    "resolve-unrelated-invalid",
+    "instantiate-unrelated-invalid",
+    "resolve-cross-module-permuted",
+    "instantiate-cross-module-permuted",
+    "resolve-cross-module-expanding",
+    "instantiate-cross-module-expanding",
+    "resolve-non-generic-self-interface",
+    "instantiate-partial-permuted-mutual",
+    "instantiate-partial-cross-module-permuted",
+    "instantiate-own-parameters-permuted-mutual",
+    "resolve-cross-module-owner-identity",
+    "instantiate-cross-module-formal-identity",
+    "resolve-typespec-simple-self-base",
+    "resolve-typespec-expanding-self-base",
+    "resolve-typespec-cross-permuted-left",
+    "resolve-hidden-invalid-control"
+  ],
+  "imageIds": [
+    "simple-self-base",
+    "expanding-self-base",
+    "permuted-mutual",
+    "indirect-expanding",
+    "acyclic-expansion",
+    "array-expanding",
+    "array-acyclic-expansion",
+    "erased-constant-cycle",
+    "nested-invalid",
+    "cross-permuted-left",
+    "cross-permuted-right",
+    "cross-expanding-left",
+    "cross-expanding-right",
+    "non-generic-self-interface"
+  ],
+  "counts": {
+    "cases": 34,
+    "operations": 71,
+    "identities": 38,
+    "images": 14
+  }
+}

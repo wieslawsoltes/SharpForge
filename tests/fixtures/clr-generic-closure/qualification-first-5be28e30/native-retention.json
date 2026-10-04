@@ -1,0 +1,2470 @@
+{
+  "schemaVersion": 1,
+  "status": "retained-and-verified",
+  "startedUtc": "2026-10-04T20:19:33.759187+00:00",
+  "sourceHead": "5be28e30fa9130bff147b0699f47da0f33d674f0",
+  "native": {
+    "path": "/workspace/scratch/7e3d2a445c44/generic-qualification-5be28e30/native-output/native-closure.json",
+    "bytes": 353615,
+    "sha256": "6c3fc6ba84f52052679b72075d25a1e854798930e344270319683f96f0967c3f"
+  },
+  "counts": {
+    "cases": 34,
+    "operations": 71,
+    "identities": 38,
+    "images": 14
+  },
+  "commands": 40,
+  "rawCommandLogs": 80,
+  "sourcePins": 12,
+  "productSourcePins": 70,
+  "referenceAssemblyPins": 167,
+  "operationOutcomes": {
+    "returned": 43,
+    "System.TypeLoadException": 28
+  },
+  "recorderSha256": "1337ed4ef31484058028561ac9514692178d53786174697e1bb207580d485e07",
+  "files": [
+    {
+      "path": "Closure_acyclic_expansion.dll",
+      "bytes": 2048,
+      "sha256": "6c8a65fc091d29f95f79c31568d62fa4f0a924e5e1a2b7b2562085a5e3bd4525"
+    },
+    {
+      "path": "Closure_array_acyclic_expansion.dll",
+      "bytes": 2048,
+      "sha256": "b1ac6a2ab8d62948a3b83384861b599058f2979f171e3f521a313302ab3b0d5b"
+    },
+    {
+      "path": "Closure_array_expanding.dll",
+      "bytes": 2048,
+      "sha256": "25a01d097f8307564e3e51f8bdc8d0ca84ca5146863160c6af70d01fb47c9fdc"
+    },
+    {
+      "path": "Closure_cross_expanding_left.dll",
+      "bytes": 2048,
+      "sha256": "1d0dabd1004f43a00221353f231895737cf2076345fed833348c4a8142fbe1b6"
+    },
+    {
+      "path": "Closure_cross_expanding_right.dll",
+      "bytes": 2048,
+      "sha256": "0d63944bb8e9922cab8095cadd40801709bdb5c0d3b0b620a25ac4e55530426a"
+    },
+    {
+      "path": "Closure_cross_permuted_left.dll",
+      "bytes": 2048,
+      "sha256": "1e71e6885764ed59daec92ea235d60fd627caab81307127bf4fe5e28294722b4"
+    },
+    {
+      "path": "Closure_cross_permuted_right.dll",
+      "bytes": 2048,
+      "sha256": "44576399d53166661528b4a1d2eda49dfb3bdcd7c2d1a85e06a579179b1d4692"
+    },
+    {
+      "path": "Closure_erased_constant_cycle.dll",
+      "bytes": 2048,
+      "sha256": "5cf946b2d07571d0d558788dc19a65bfc99b8c36da0635951f4671669b94d7c4"
+    },
+    {
+      "path": "Closure_expanding_self_base.dll",
+      "bytes": 2048,
+      "sha256": "360319412647dda461159a820d711d9db335626a5b2888f6bcbb9f326179bcac"
+    },
+    {
+      "path": "Closure_indirect_expanding.dll",
+      "bytes": 2048,
+      "sha256": "ad6ff2ac32307f72807caee6be5c32518f8142227189bad683e45fe061eb2552"
+    },
+    {
+      "path": "Closure_nested_invalid.dll",
+      "bytes": 2048,
+      "sha256": "609e78346c5031eeafd14ef4ae2a681c5eb2c81c4da8faecf33e6bd34f1e9921"
+    },
+    {
+      "path": "Closure_non_generic_self_interface.dll",
+      "bytes": 2048,
+      "sha256": "eb48f84ebf9b07dfb3db6846e5e0a66ee78211bd32ec00a6f28cb89caeac942c"
+    },
+    {
+      "path": "Closure_permuted_mutual.dll",
+      "bytes": 2048,
+      "sha256": "08f18d68521d52c520d3bda4a4050b6fd8f539fa7b78934a76cf666463b18438"
+    },
+    {
+      "path": "Closure_simple_self_base.dll",
+      "bytes": 2048,
+      "sha256": "3e9b7b31ab77ef23ced93aea139801f97f9986372f28a82aaa2ea66bc70b0e85"
+    },
+    {
+      "path": "native-closure.json",
+      "bytes": 353615,
+      "sha256": "6c3fc6ba84f52052679b72075d25a1e854798930e344270319683f96f0967c3f"
+    }
+  ],
+  "evidenceFiles": [
+    {
+      "path": "01-sdk-version-execution.json",
+      "bytes": 1803,
+      "sha256": "b0bf22be4641c5f908544c25aa8ab95fe225a009bd9c45d77b20758b2b2057cb"
+    },
+    {
+      "path": "01-sdk-version.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "01-sdk-version.stdout",
+      "bytes": 9,
+      "sha256": "38c8354f0a1a3a4e913e03fe6396aa12c2ef1d427921d44b19123e42dcb74e92"
+    },
+    {
+      "path": "02-sdk-inventory-execution.json",
+      "bytes": 1812,
+      "sha256": "bc2d51866c1ba05f8745caecd40a7b2fa4c3580f2899d5b86decf089ec50d6fd"
+    },
+    {
+      "path": "02-sdk-inventory.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "02-sdk-inventory.stdout",
+      "bytes": 63,
+      "sha256": "4d0c9a4904503f1705fefa87cf647485beb84f2ab0e692c446b4abdd615db85f"
+    },
+    {
+      "path": "03-runtime-inventory-execution.json",
+      "bytes": 1829,
+      "sha256": "eabc15ea64dc65b4e363f146d9b93318bf84dad05f32a78f82e3dab5c5795493"
+    },
+    {
+      "path": "03-runtime-inventory.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "03-runtime-inventory.stdout",
+      "bytes": 222,
+      "sha256": "0f888c5dfd832ce30d94fff56d4bdaeeb327567b09d34f328f2cb80e7e9c3633"
+    },
+    {
+      "path": "04-compiler-version-execution.json",
+      "bytes": 2066,
+      "sha256": "aef623c2bc8d10cbfaeac3e5489fa48b683d44c7092a8c0364e247970c369833"
+    },
+    {
+      "path": "04-compiler-version.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "04-compiler-version.stdout",
+      "bytes": 61,
+      "sha256": "335ee5c8674ef201012063d1afcf0c093316d04c0c357f69b6322dea86a5529d"
+    },
+    {
+      "path": "05-compile-observer-execution.json",
+      "bytes": 26910,
+      "sha256": "aa08ff54c4b53c2f331a5040c4cef7e1477f2d929266ea279439423c1afa7d56"
+    },
+    {
+      "path": "05-compile-observer.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "05-compile-observer.stdout",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "06-prepare-images-execution.json",
+      "bytes": 2341,
+      "sha256": "0d31ef318713d41d925538e2a4ee8cf1d3b87e85846ed69e0ad99c4bbeae93f9"
+    },
+    {
+      "path": "06-prepare-images.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "06-prepare-images.stdout",
+      "bytes": 38715,
+      "sha256": "7dc6a79e585df41c15f9bba2c81cabf0ee9650f727efd696caa3c961ba8eaf4d"
+    },
+    {
+      "path": "07-resolve-simple-self-base-execution.json",
+      "bytes": 2538,
+      "sha256": "ea46d1be8d77a903cf96672a81793ea1d177345ca92063a84c3b0f4bf3e3f2d3"
+    },
+    {
+      "path": "07-resolve-simple-self-base.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "07-resolve-simple-self-base.stdout",
+      "bytes": 3107,
+      "sha256": "176f8e97edfb3867e9d82676e387d36d9e441cb4aa0899541b341c9f40080e84"
+    },
+    {
+      "path": "08-instantiate-simple-self-base-execution.json",
+      "bytes": 2558,
+      "sha256": "fe9953600729ef2beac39336930a7264eba98a23a3e58b769343fd9032a5d231"
+    },
+    {
+      "path": "08-instantiate-simple-self-base.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "08-instantiate-simple-self-base.stdout",
+      "bytes": 4039,
+      "sha256": "596adcd333879081f5e5cd808d7931ded00abf8a16dd40e118aaf6c382fe799f"
+    },
+    {
+      "path": "09-resolve-expanding-self-base-execution.json",
+      "bytes": 2553,
+      "sha256": "b5aeadbb162d743477e6a48c8eb84a948c4fe895b8ad41296d3d20c8e95a394f"
+    },
+    {
+      "path": "09-resolve-expanding-self-base.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "09-resolve-expanding-self-base.stdout",
+      "bytes": 2989,
+      "sha256": "6e79d56b0f3304efa82fe954f80f366eb91646cc63fe4ee8914520f8c8138896"
+    },
+    {
+      "path": "10-instantiate-expanding-self-base-execution.json",
+      "bytes": 2573,
+      "sha256": "4d60ed59b6cbe69eee168ce0ee0b08edf297004389d8eafc47ab9e9b08189ced"
+    },
+    {
+      "path": "10-instantiate-expanding-self-base.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "10-instantiate-expanding-self-base.stdout",
+      "bytes": 3331,
+      "sha256": "20922f0bc5f1403fb72f6477e155b02567b2cc4cd5b83b4893a061a1585af8db"
+    },
+    {
+      "path": "11-resolve-permuted-mutual-execution.json",
+      "bytes": 2533,
+      "sha256": "453d4589616322d0ca58def8e1f4f56830c643597c6c552977d22353855ac6f3"
+    },
+    {
+      "path": "11-resolve-permuted-mutual.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "11-resolve-permuted-mutual.stdout",
+      "bytes": 3867,
+      "sha256": "dfb1449c598da3de6d21ea7cd0d504f99cc749708047d1cec25d86081bc042c2"
+    },
+    {
+      "path": "12-instantiate-permuted-mutual-execution.json",
+      "bytes": 2553,
+      "sha256": "15581a74f4d546d43ef6e05b640be338532581ac60bc783c05aa1f4061a70c04"
+    },
+    {
+      "path": "12-instantiate-permuted-mutual.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "12-instantiate-permuted-mutual.stdout",
+      "bytes": 4675,
+      "sha256": "c88ea40d051b887e43f9086ec5beb8d6e5cd85fb841bcdfff4343bd59277ccc2"
+    },
+    {
+      "path": "13-resolve-indirect-expanding-execution.json",
+      "bytes": 2548,
+      "sha256": "d36dadd615aae3226964825d0db900f8b196b9543da46ac31f3d38893ebfb6e0"
+    },
+    {
+      "path": "13-resolve-indirect-expanding.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "13-resolve-indirect-expanding.stdout",
+      "bytes": 2983,
+      "sha256": "ffcbbd3b3d9c938833e880393c93a499199fb8320ba2e050dfdf3981d78e7540"
+    },
+    {
+      "path": "14-instantiate-indirect-expanding-execution.json",
+      "bytes": 2568,
+      "sha256": "12deeee9a6dabcba09dcdf7d6a36094c3942c6ee4e221e21a92b115580107bf6"
+    },
+    {
+      "path": "14-instantiate-indirect-expanding.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "14-instantiate-indirect-expanding.stdout",
+      "bytes": 3323,
+      "sha256": "ea0ffce9b5318767d4db1e3853638cc8db535d2b2c8a4c093d8513c4e97c9619"
+    },
+    {
+      "path": "15-resolve-acyclic-expansion-execution.json",
+      "bytes": 2543,
+      "sha256": "e17627d658094bb6d0d9ab31dd83d276210c4ad454caf2ed22ae89aad10c8ae8"
+    },
+    {
+      "path": "15-resolve-acyclic-expansion.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "15-resolve-acyclic-expansion.stdout",
+      "bytes": 3717,
+      "sha256": "1137ca9e6467cf743dd0ad40c30f2177bdecfac72129cdb8dbbd8751e668c454"
+    },
+    {
+      "path": "16-instantiate-acyclic-expansion-execution.json",
+      "bytes": 2563,
+      "sha256": "52081b3abcfd35a5f08d22b84cd582436641b3995fd67ec10329924f660fe10d"
+    },
+    {
+      "path": "16-instantiate-acyclic-expansion.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "16-instantiate-acyclic-expansion.stdout",
+      "bytes": 4325,
+      "sha256": "bf5456364f37f376d96179c42926d191712e300221239a34915711cf0ab39b32"
+    },
+    {
+      "path": "17-resolve-array-expanding-execution.json",
+      "bytes": 2533,
+      "sha256": "3841ebb9190701ded356db50f217de05f97318d1ac0cdbf290f0dec8036681da"
+    },
+    {
+      "path": "17-resolve-array-expanding.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "17-resolve-array-expanding.stdout",
+      "bytes": 2965,
+      "sha256": "95cb59df793fdea2ec6c236be7eccbe7c140b070e1f5acad2651f14d2b143abe"
+    },
+    {
+      "path": "18-instantiate-array-expanding-execution.json",
+      "bytes": 2553,
+      "sha256": "56c5f06660af5e7ca52a6dde44c45aee4ac49dd1ec8b2267b374e1cc5d882efa"
+    },
+    {
+      "path": "18-instantiate-array-expanding.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "18-instantiate-array-expanding.stdout",
+      "bytes": 3299,
+      "sha256": "218c19efbbad0ace8aae635b76eb2517c2fe299034396a43270a353d2cc44dfe"
+    },
+    {
+      "path": "19-resolve-array-acyclic-expansion-execution.json",
+      "bytes": 2573,
+      "sha256": "944fe1b7653d449833c300aa513aa3a33ca201b561d4f441d9f77d0ddc9b2b20"
+    },
+    {
+      "path": "19-resolve-array-acyclic-expansion.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "19-resolve-array-acyclic-expansion.stdout",
+      "bytes": 3659,
+      "sha256": "60cdc2358a9fac79835bc495591ec723d4ab4813ea4fac5cea11d68dfe870e6d"
+    },
+    {
+      "path": "20-instantiate-array-acyclic-expansion-execution.json",
+      "bytes": 2593,
+      "sha256": "500a77c65e96a58a7b29e781a4e2a7573cb61255cdb840f41d38230dc7217a10"
+    },
+    {
+      "path": "20-instantiate-array-acyclic-expansion.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "20-instantiate-array-acyclic-expansion.stdout",
+      "bytes": 4255,
+      "sha256": "661b181b6681d27906fe724e4979c773ab5dc23f7542cf17131a04eec47fdb99"
+    },
+    {
+      "path": "21-resolve-erased-constant-cycle-execution.json",
+      "bytes": 2563,
+      "sha256": "c08ad6723af56f4a94a2e215fe4723534fd15e45ba09ae7d76649e61f288ff5c"
+    },
+    {
+      "path": "21-resolve-erased-constant-cycle.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "21-resolve-erased-constant-cycle.stdout",
+      "bytes": 2913,
+      "sha256": "190bbc2fda5704a0369b17f374e1cc86053766f18c18ee2a7c8987b493ac96bd"
+    },
+    {
+      "path": "22-instantiate-erased-constant-cycle-execution.json",
+      "bytes": 2583,
+      "sha256": "66af202eead04c6b615efe7de268253870b0b4c0d796b91e16888f1f592c5914"
+    },
+    {
+      "path": "22-instantiate-erased-constant-cycle.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "22-instantiate-erased-constant-cycle.stdout",
+      "bytes": 3259,
+      "sha256": "a95834025a37c468153b867546a8b66fa5ed096be605b3dcedbf31a91c310f4f"
+    },
+    {
+      "path": "23-resolve-hidden-invalid-argument-execution.json",
+      "bytes": 2573,
+      "sha256": "c5ab6400383fd7a9a74b60c6548c25d1ea27f22e0c3502d39eb316858ed22662"
+    },
+    {
+      "path": "23-resolve-hidden-invalid-argument.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "23-resolve-hidden-invalid-argument.stdout",
+      "bytes": 2981,
+      "sha256": "f8cd730da6cabaeb4a3a4fec1acfeebba8a1d5a17a4a25d5515d4e1e8222302f"
+    },
+    {
+      "path": "24-instantiate-hidden-invalid-argument-execution.json",
+      "bytes": 2593,
+      "sha256": "34cfa9ff3bb0692a0c19ad82f894c5ea31c21cc64e4aa5a474e47f1cb963408f"
+    },
+    {
+      "path": "24-instantiate-hidden-invalid-argument.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "24-instantiate-hidden-invalid-argument.stdout",
+      "bytes": 3313,
+      "sha256": "4e64e7971e2b80ae42780255db23e66a79033d1dcab69e7ea169e937513f0548"
+    },
+    {
+      "path": "25-resolve-unrelated-invalid-execution.json",
+      "bytes": 2543,
+      "sha256": "f02b1767760d6a5edb9122c5e48ed0f3e52669a44b8aaa6dddfb95c3ce7c8ae0"
+    },
+    {
+      "path": "25-resolve-unrelated-invalid.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "25-resolve-unrelated-invalid.stdout",
+      "bytes": 3143,
+      "sha256": "8d5279151df0d865be2eb96a159c4e8aba663647c4d6adc79a9b34d6921ac647"
+    },
+    {
+      "path": "26-instantiate-unrelated-invalid-execution.json",
+      "bytes": 2563,
+      "sha256": "9418ccdbd5221ee6b60f89d41225a802f211c3d748ae987293d239e6789f8d36"
+    },
+    {
+      "path": "26-instantiate-unrelated-invalid.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "26-instantiate-unrelated-invalid.stdout",
+      "bytes": 3757,
+      "sha256": "cd3ca707a0ef664b5a14939ed1de059cebe9d051290e73c1f067586ae3f65bb5"
+    },
+    {
+      "path": "27-resolve-cross-module-permuted-execution.json",
+      "bytes": 2563,
+      "sha256": "410185d7a55f95170398b5078f46950393acd76eef4459f266b7a1d6e0d298bb"
+    },
+    {
+      "path": "27-resolve-cross-module-permuted.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "27-resolve-cross-module-permuted.stdout",
+      "bytes": 3989,
+      "sha256": "240c3b8efe0c0b819ad00e8ca9c4c4897409dbfea55199c5679a61631334182d"
+    },
+    {
+      "path": "28-instantiate-cross-module-permuted-execution.json",
+      "bytes": 2583,
+      "sha256": "228f789a324526b8b1d7b31013c72b7675651527ebc61c7c7309e7631600fce7"
+    },
+    {
+      "path": "28-instantiate-cross-module-permuted.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "28-instantiate-cross-module-permuted.stdout",
+      "bytes": 4773,
+      "sha256": "8f07124e453461866ca09049046d8a93942f24d3e790d9576d83cbbc5ed9e72e"
+    },
+    {
+      "path": "29-resolve-cross-module-expanding-execution.json",
+      "bytes": 2568,
+      "sha256": "a563a1ee6cb4977412eb6f1508f40efe89de23a958b0aa5cdcd33fa7905ef80e"
+    },
+    {
+      "path": "29-resolve-cross-module-expanding.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "29-resolve-cross-module-expanding.stdout",
+      "bytes": 3007,
+      "sha256": "e077d206a106dab9747e76771c481029487b3c4f4f2ee8ac7ef1ab57d29da3a2"
+    },
+    {
+      "path": "30-instantiate-cross-module-expanding-execution.json",
+      "bytes": 2588,
+      "sha256": "de10214448506a6d0b66ca29446ae0cdd80786997dbcd59539299354db1cf5fc"
+    },
+    {
+      "path": "30-instantiate-cross-module-expanding.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "30-instantiate-cross-module-expanding.stdout",
+      "bytes": 3439,
+      "sha256": "e92ab9e4190e06885679262a614856c2fd4e57ac07812c35348fb5612c7e262d"
+    },
+    {
+      "path": "31-resolve-non-generic-self-interface-execution.json",
+      "bytes": 2588,
+      "sha256": "a0a5ad783233752b81b7636d63cde556f92adb0107d7003f20529eaaa61d8ec1"
+    },
+    {
+      "path": "31-resolve-non-generic-self-interface.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "31-resolve-non-generic-self-interface.stdout",
+      "bytes": 2939,
+      "sha256": "550e6a8758931f28e241ffaf9e91474fb5dce8a808ab59e4d9200804b76ecbb2"
+    },
+    {
+      "path": "32-instantiate-partial-permuted-mutual-execution.json",
+      "bytes": 2593,
+      "sha256": "abecdc9108cbb14db2a922b579952bf79ec97803e689b617d692073960d506b6"
+    },
+    {
+      "path": "32-instantiate-partial-permuted-mutual.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "32-instantiate-partial-permuted-mutual.stdout",
+      "bytes": 4917,
+      "sha256": "c01367def50c8b0368fa89a9f29094b9866e2726a2da538c634a0d91c687af55"
+    },
+    {
+      "path": "33-instantiate-partial-cross-module-permuted-execution.json",
+      "bytes": 2623,
+      "sha256": "a65901cbefc55b4ed2b6b3b23c881dee2a7496f7ceb9e0d00a506decd6f69e26"
+    },
+    {
+      "path": "33-instantiate-partial-cross-module-permuted.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "33-instantiate-partial-cross-module-permuted.stdout",
+      "bytes": 5049,
+      "sha256": "b27348296ed2f5a064a2b811e58df99809474d6498dda2e15107b8d94aa0df59"
+    },
+    {
+      "path": "34-instantiate-own-parameters-permuted-mutual-execution.json",
+      "bytes": 2628,
+      "sha256": "2d103070a24caba42c070f0b104c5886349360f936ef59b6c5d3ac1afa720f86"
+    },
+    {
+      "path": "34-instantiate-own-parameters-permuted-mutual.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "34-instantiate-own-parameters-permuted-mutual.stdout",
+      "bytes": 6631,
+      "sha256": "9fc792f11822dfdbc87fb64ddc96ca48624804facc43b868a3965c0dd002dd3f"
+    },
+    {
+      "path": "35-resolve-cross-module-owner-identity-execution.json",
+      "bytes": 2593,
+      "sha256": "95f6e0f31823c254f6b58f46fafe03cacc13ca65cf3e41af2b09a60a8f41c897"
+    },
+    {
+      "path": "35-resolve-cross-module-owner-identity.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "35-resolve-cross-module-owner-identity.stdout",
+      "bytes": 6690,
+      "sha256": "35cbbadd2e6734ea674db06c8e8278e0bf5c99cf3e9d219d151f309662c77c24"
+    },
+    {
+      "path": "36-instantiate-cross-module-formal-identity-execution.json",
+      "bytes": 2618,
+      "sha256": "e474e5049d9e11ce0c627a80c48fec3e874698bef7bbf8c15e66e0d3b391d664"
+    },
+    {
+      "path": "36-instantiate-cross-module-formal-identity.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "36-instantiate-cross-module-formal-identity.stdout",
+      "bytes": 7908,
+      "sha256": "372e6aae61cab5e53785a9433a01d6823d946aa6ca78d469b4321cbabd237686"
+    },
+    {
+      "path": "37-resolve-typespec-simple-self-base-execution.json",
+      "bytes": 2583,
+      "sha256": "c275c58933bcb15aee14c4df82df937885f6031b8cd11d2fa863a9338b5d8d78"
+    },
+    {
+      "path": "37-resolve-typespec-simple-self-base.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "37-resolve-typespec-simple-self-base.stdout",
+      "bytes": 3726,
+      "sha256": "53213bd789e5b210725c7eb0cc8a6f5b8a3c041b2541ba86febb8e96842e9409"
+    },
+    {
+      "path": "38-resolve-typespec-expanding-self-base-execution.json",
+      "bytes": 2598,
+      "sha256": "3cba74a838b3d2b41a10967d0895a60251e6b05090782e53b7d673caa4b43f96"
+    },
+    {
+      "path": "38-resolve-typespec-expanding-self-base.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "38-resolve-typespec-expanding-self-base.stdout",
+      "bytes": 3000,
+      "sha256": "0b9d6e14ce521d51bdf2e1648a3a1802778d5ceacc1964dda0fd7f6307221579"
+    },
+    {
+      "path": "39-resolve-typespec-cross-permuted-left-execution.json",
+      "bytes": 2598,
+      "sha256": "91d6918bcce59bc17c2306d89dccec329e4e4faa7b3a3e3ba559c12663a06f77"
+    },
+    {
+      "path": "39-resolve-typespec-cross-permuted-left.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "39-resolve-typespec-cross-permuted-left.stdout",
+      "bytes": 4362,
+      "sha256": "f79a4028b78ba01d0abbfa13a42fafbfc53dd28d2852fa2677ed76b6c86dc692"
+    },
+    {
+      "path": "40-resolve-hidden-invalid-control-execution.json",
+      "bytes": 2568,
+      "sha256": "b315ae1a3ced540d0f9aa04bb0362214317393996025b2a3c1774acf8b1acb5f"
+    },
+    {
+      "path": "40-resolve-hidden-invalid-control.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "40-resolve-hidden-invalid-control.stdout",
+      "bytes": 2980,
+      "sha256": "cc9c516e8512e84137e875184fa5fa257b644f6684586f9a7493a7459e9b8109"
+    },
+    {
+      "path": "capture-inputs.json",
+      "bytes": 21912,
+      "sha256": "edfd9ed1e683f4b51997e89a9bdb45e271119c805348ec9223f39915597ba29b"
+    },
+    {
+      "path": "capture-status.json",
+      "bytes": 204630,
+      "sha256": "df31e642bf6f8dfa61d536592c4f6ded3d01d102e7d59d64e38c4ca53feaf24b"
+    },
+    {
+      "path": "retained-files.json",
+      "bytes": 16845,
+      "sha256": "f0dd74aea990e32f7109b976abf9daae936d093f66ba6f26be41ba9bcdc05104"
+    },
+    {
+      "path": "workspace/NuGet.Config",
+      "bytes": 73,
+      "sha256": "e497501960554d323eef45860c14474958accd1ae7f3ae6f95b10e4c1d340401"
+    },
+    {
+      "path": "workspace/global.json",
+      "bytes": 105,
+      "sha256": "8ede13416e0155ae327d8816fce07b9ba21cb4e2c1e0b17ae2f052fb89cccbd4"
+    },
+    {
+      "path": "workspace/images/Closure_acyclic_expansion.dll",
+      "bytes": 2048,
+      "sha256": "6c8a65fc091d29f95f79c31568d62fa4f0a924e5e1a2b7b2562085a5e3bd4525"
+    },
+    {
+      "path": "workspace/images/Closure_array_acyclic_expansion.dll",
+      "bytes": 2048,
+      "sha256": "b1ac6a2ab8d62948a3b83384861b599058f2979f171e3f521a313302ab3b0d5b"
+    },
+    {
+      "path": "workspace/images/Closure_array_expanding.dll",
+      "bytes": 2048,
+      "sha256": "25a01d097f8307564e3e51f8bdc8d0ca84ca5146863160c6af70d01fb47c9fdc"
+    },
+    {
+      "path": "workspace/images/Closure_cross_expanding_left.dll",
+      "bytes": 2048,
+      "sha256": "1d0dabd1004f43a00221353f231895737cf2076345fed833348c4a8142fbe1b6"
+    },
+    {
+      "path": "workspace/images/Closure_cross_expanding_right.dll",
+      "bytes": 2048,
+      "sha256": "0d63944bb8e9922cab8095cadd40801709bdb5c0d3b0b620a25ac4e55530426a"
+    },
+    {
+      "path": "workspace/images/Closure_cross_permuted_left.dll",
+      "bytes": 2048,
+      "sha256": "1e71e6885764ed59daec92ea235d60fd627caab81307127bf4fe5e28294722b4"
+    },
+    {
+      "path": "workspace/images/Closure_cross_permuted_right.dll",
+      "bytes": 2048,
+      "sha256": "44576399d53166661528b4a1d2eda49dfb3bdcd7c2d1a85e06a579179b1d4692"
+    },
+    {
+      "path": "workspace/images/Closure_erased_constant_cycle.dll",
+      "bytes": 2048,
+      "sha256": "5cf946b2d07571d0d558788dc19a65bfc99b8c36da0635951f4671669b94d7c4"
+    },
+    {
+      "path": "workspace/images/Closure_expanding_self_base.dll",
+      "bytes": 2048,
+      "sha256": "360319412647dda461159a820d711d9db335626a5b2888f6bcbb9f326179bcac"
+    },
+    {
+      "path": "workspace/images/Closure_indirect_expanding.dll",
+      "bytes": 2048,
+      "sha256": "ad6ff2ac32307f72807caee6be5c32518f8142227189bad683e45fe061eb2552"
+    },
+    {
+      "path": "workspace/images/Closure_nested_invalid.dll",
+      "bytes": 2048,
+      "sha256": "609e78346c5031eeafd14ef4ae2a681c5eb2c81c4da8faecf33e6bd34f1e9921"
+    },
+    {
+      "path": "workspace/images/Closure_non_generic_self_interface.dll",
+      "bytes": 2048,
+      "sha256": "eb48f84ebf9b07dfb3db6846e5e0a66ee78211bd32ec00a6f28cb89caeac942c"
+    },
+    {
+      "path": "workspace/images/Closure_permuted_mutual.dll",
+      "bytes": 2048,
+      "sha256": "08f18d68521d52c520d3bda4a4050b6fd8f539fa7b78934a76cf666463b18438"
+    },
+    {
+      "path": "workspace/images/Closure_simple_self_base.dll",
+      "bytes": 2048,
+      "sha256": "3e9b7b31ab77ef23ced93aea139801f97f9986372f28a82aaa2ea66bc70b0e85"
+    },
+    {
+      "path": "workspace/images/GenericClosureOracle.dll",
+      "bytes": 112128,
+      "sha256": "7a72f59c3af3302756123cdfd3d4795fbe89e0e6fe534b3992ccb50bf99a4d67"
+    },
+    {
+      "path": "workspace/images/images.json",
+      "bytes": 38613,
+      "sha256": "812bb255063f49db98d354d0b3ce59f563747da73ed615f06e0c130f3677493b"
+    },
+    {
+      "path": "workspace/pinned.runtimeconfig.json",
+      "bytes": 172,
+      "sha256": "6242cc4e8692c65a90f1402fa643754d516ccb7e93c1d34f9dedf00db0b532ec"
+    },
+    {
+      "path": "workspace/progress/instantiate-acyclic-expansion.jsonl",
+      "bytes": 13489,
+      "sha256": "32e4ad79fdbcf69ab710092a37b0eeac29d6e93e4eb3a96e149e133075a1854c"
+    },
+    {
+      "path": "workspace/progress/instantiate-array-acyclic-expansion.jsonl",
+      "bytes": 13547,
+      "sha256": "268e30df2571041d39cd3d98fd7ceb0f640f2b2c86ccee029e52e38f917681e7"
+    },
+    {
+      "path": "workspace/progress/instantiate-array-expanding.jsonl",
+      "bytes": 9545,
+      "sha256": "1211ff816be7f2100b43ffa5447641f783920a513fe022b84cae1a36a43a78a1"
+    },
+    {
+      "path": "workspace/progress/instantiate-cross-module-expanding.jsonl",
+      "bytes": 10212,
+      "sha256": "c50169a13a0c37fc4170158cb078105dba8b73ed242a02c4e928f3786a7cf32c"
+    },
+    {
+      "path": "workspace/progress/instantiate-cross-module-formal-identity.jsonl",
+      "bytes": 30876,
+      "sha256": "c1b48707620186d6366deaf8e001331d5ac93ccd9596c3e5ffad67be620ae26b"
+    },
+    {
+      "path": "workspace/progress/instantiate-cross-module-permuted.jsonl",
+      "bytes": 14917,
+      "sha256": "b9a6e3691849efd5895325b26159786fded688808dcdfbbf13f3f9b745be43f0"
+    },
+    {
+      "path": "workspace/progress/instantiate-erased-constant-cycle.jsonl",
+      "bytes": 9591,
+      "sha256": "605f2432ca9548fccb063e4a82aef19af4b5801fd4f2234b3a8a1cf6211686ab"
+    },
+    {
+      "path": "workspace/progress/instantiate-expanding-self-base.jsonl",
+      "bytes": 9693,
+      "sha256": "870950dd1e49143cf1c0436c68a1c436f913d6712207c75f74255aff5bd91482"
+    },
+    {
+      "path": "workspace/progress/instantiate-hidden-invalid-argument.jsonl",
+      "bytes": 9633,
+      "sha256": "31e65f754ef009b0021fd8f3df3a482a492c7c77f15da39851117040b4f008ea"
+    },
+    {
+      "path": "workspace/progress/instantiate-indirect-expanding.jsonl",
+      "bytes": 9656,
+      "sha256": "318ccedb33a9eb6c67160e58e5e5644b827f409015bd5ac510c9f94c631d464d"
+    },
+    {
+      "path": "workspace/progress/instantiate-own-parameters-permuted-mutual.jsonl",
+      "bytes": 29677,
+      "sha256": "2622d7fc3402ca10636c88f81c99890c9ab6e7800597274f1b8aaecda9748c15"
+    },
+    {
+      "path": "workspace/progress/instantiate-partial-cross-module-permuted.jsonl",
+      "bytes": 19928,
+      "sha256": "53d3fb520030f8298582e7cf22373108077f466ff86898ca3d38042fb1e0fb57"
+    },
+    {
+      "path": "workspace/progress/instantiate-partial-permuted-mutual.jsonl",
+      "bytes": 19358,
+      "sha256": "f3858ba1c2fa501d5dad58d09ede080f602561dcdc9a1c0eb5253e9c63447382"
+    },
+    {
+      "path": "workspace/progress/instantiate-permuted-mutual.jsonl",
+      "bytes": 14563,
+      "sha256": "f18cc2f7e2d82f9c3cee1678a4ad434e9fe3d6520fe64fb5f1c4e4b4bbc6304c"
+    },
+    {
+      "path": "workspace/progress/instantiate-simple-self-base.jsonl",
+      "bytes": 12884,
+      "sha256": "3a30f97f4bbe7bc62fb45e029d5438cf6d78bcebe23054728739f87c69f8aac9"
+    },
+    {
+      "path": "workspace/progress/instantiate-unrelated-invalid.jsonl",
+      "bytes": 12293,
+      "sha256": "1688c1dd549f9257a8cdbc65b1c1053745524b62a24d8a69cc186152abb8b882"
+    },
+    {
+      "path": "workspace/progress/resolve-acyclic-expansion.jsonl",
+      "bytes": 9996,
+      "sha256": "22c77db45cd115e3ac2c46a04c2b5327b0c65edb574856a65d092fe769d17f62"
+    },
+    {
+      "path": "workspace/progress/resolve-array-acyclic-expansion.jsonl",
+      "bytes": 9994,
+      "sha256": "0472064d4624d30008605aa60b74bebf4607ff8b01e9590c350e2d4b7f0e5256"
+    },
+    {
+      "path": "workspace/progress/resolve-array-expanding.jsonl",
+      "bytes": 7871,
+      "sha256": "5a98e6f5a907a5c69a3965d22d15d13e7a61e3d3585ac09b17fcdf188dc371e2"
+    },
+    {
+      "path": "workspace/progress/resolve-cross-module-expanding.jsonl",
+      "bytes": 8048,
+      "sha256": "e26146d96e869748ba7e083377e6c1128fffac13358370e1a83e5472a3f3a4d4"
+    },
+    {
+      "path": "workspace/progress/resolve-cross-module-owner-identity.jsonl",
+      "bytes": 18089,
+      "sha256": "a788fe6a4ce537705afaa7801f16bf3ccf482d2dcb6f1a0dd05da78fb75e8077"
+    },
+    {
+      "path": "workspace/progress/resolve-cross-module-permuted.jsonl",
+      "bytes": 10600,
+      "sha256": "31d9ab65bd658e9a2e190b31a73527e2d7405ff989e1c2eaa44c011f33d28e27"
+    },
+    {
+      "path": "workspace/progress/resolve-erased-constant-cycle.jsonl",
+      "bytes": 7857,
+      "sha256": "c6eb31807d823a785dde8f78e1ccf34501bdbd2f326d40af414906c5c8b205e7"
+    },
+    {
+      "path": "workspace/progress/resolve-expanding-self-base.jsonl",
+      "bytes": 7979,
+      "sha256": "7358734d81201fa20c4568a182679659429d0bdc9f68b6795f9403043e5ec53f"
+    },
+    {
+      "path": "workspace/progress/resolve-hidden-invalid-argument.jsonl",
+      "bytes": 7969,
+      "sha256": "8a093be7f82927d760f34fc623b7bc6a95ee22d30c062a5dad93ea4f90b5fdf4"
+    },
+    {
+      "path": "workspace/progress/resolve-hidden-invalid-control.jsonl",
+      "bytes": 7957,
+      "sha256": "5bcf25574966f7bf930553afa6046b7a9eeba8f8e5a4b71050e97149a5fdafa6"
+    },
+    {
+      "path": "workspace/progress/resolve-indirect-expanding.jsonl",
+      "bytes": 7952,
+      "sha256": "13fce0c1d9c00df63d49d6f54b360acabb6616967b7003a95582bd9958067342"
+    },
+    {
+      "path": "workspace/progress/resolve-non-generic-self-interface.jsonl",
+      "bytes": 8611,
+      "sha256": "6490d6676bdf1f7558aa6a141a8503d6e563cd7795a50bcc66fb477c6133a418"
+    },
+    {
+      "path": "workspace/progress/resolve-permuted-mutual.jsonl",
+      "bytes": 10258,
+      "sha256": "424eafd7d60c262e23bfaeb049fa10124dcbe0a028b241140b292a077eae2cd1"
+    },
+    {
+      "path": "workspace/progress/resolve-simple-self-base.jsonl",
+      "bytes": 8757,
+      "sha256": "a9f163f8b4ba1fb406d5a1d1fb4087d827972d185a73ae5af6816ac8dc0a15f4"
+    },
+    {
+      "path": "workspace/progress/resolve-typespec-cross-permuted-left.jsonl",
+      "bytes": 11440,
+      "sha256": "cd97e4a023c932737b90820d890b7dd0e57a943199e4b42577f58c2547c2a1fd"
+    },
+    {
+      "path": "workspace/progress/resolve-typespec-expanding-self-base.jsonl",
+      "bytes": 8097,
+      "sha256": "fd50a39a56f094e2a4e4abb9b44a4ae0cd6ce8f339f7a6342953068e74094352"
+    },
+    {
+      "path": "workspace/progress/resolve-typespec-simple-self-base.jsonl",
+      "bytes": 10111,
+      "sha256": "92a0b0151486e1549712181de5b6e3b62f447105f3818da1641abf7bc10b454f"
+    },
+    {
+      "path": "workspace/progress/resolve-unrelated-invalid.jsonl",
+      "bytes": 8824,
+      "sha256": "0853c6949635ad60917b7b2df259ba43d0f9b3db2c4d83d671bf6ec05de436cf"
+    },
+    {
+      "path": "workspace/source/packages/clr/interop/GenericClosure/CaseObservations.cs",
+      "bytes": 6865,
+      "sha256": "18ee2ae6d35eacd275ea7538b20ab1e597dfb5da51dfe7e5e2681ca2eb1dd418"
+    },
+    {
+      "path": "workspace/source/packages/clr/interop/GenericClosure/MetadataImage.cs",
+      "bytes": 9497,
+      "sha256": "23bf64a5bd41679b9c983912547e55577f555546b0c9089fb939fdebd3853150"
+    },
+    {
+      "path": "workspace/source/packages/clr/interop/GenericClosure/MetadataInventory.cs",
+      "bytes": 3634,
+      "sha256": "16a571f9f22f66c512d0f0f2d480e4a2fb2b069d8618b49b379f9a6698f2608f"
+    },
+    {
+      "path": "workspace/source/packages/clr/interop/GenericClosure/NativeTypes.cs",
+      "bytes": 4122,
+      "sha256": "e875b613ad75e5db9300cf362cb909dfcd625d996e068372ab30b3886e9a2367"
+    },
+    {
+      "path": "workspace/source/packages/clr/interop/GenericClosure/Program.cs",
+      "bytes": 2693,
+      "sha256": "5d0e33b219f05e24a15b5a158acdc3f0d1072ddb3aa3c8074b514ca1387c4358"
+    },
+    {
+      "path": "workspace/source/packages/clr/interop/GenericClosure/RequestBindings.cs",
+      "bytes": 5754,
+      "sha256": "deecd3bde7f856ece2e9ca692e28e0ed4e36defe476ccd04e3671b468b696bd8"
+    },
+    {
+      "path": "workspace/source/packages/clr/interop/GenericClosure/images.json",
+      "bytes": 13860,
+      "sha256": "f403ce160edb1ed9ffbf4763566c8d093540c4cd6345d96e5e168bb79a0123ac"
+    },
+    {
+      "path": "workspace/source/packages/clr/interop/GenericClosure/matrix.json",
+      "bytes": 12247,
+      "sha256": "5250d0489ad5be390d8cc703770d450c314e5d6c606b48049e2883fe477ee8e1"
+    },
+    {
+      "path": "workspace/source/packages/clr/interop/GenericClosure/oracle-toolchain.json",
+      "bytes": 3600,
+      "sha256": "58eaf5e63a8edcf47d3ef96635655f1dd89d230a15b5b39f29503576484fe52d"
+    },
+    {
+      "path": "workspace/source/packages/clr/interop/GenericInstantiation/SignatureObservations.cs",
+      "bytes": 3949,
+      "sha256": "c20bd14a890d45c24e83ec8b33faad1dcb266a08c9d613a00f52430296b9ea51"
+    },
+    {
+      "path": "workspace/source/packages/clr/interop/GenericInstantiation/TypeObservations.cs",
+      "bytes": 8356,
+      "sha256": "89d2942aeec005786a2853dc2e4cbfa585ebf8039ffa47b567208fd1a7570bd9"
+    },
+    {
+      "path": "workspace/source/packages/clr/tools/capture-generic-closure.mjs",
+      "bytes": 23106,
+      "sha256": "28eafbcb18bf59940e87dea8a9db0e3c54376be61623d59fd40f06d7db89eb20"
+    }
+  ],
+  "copies": [
+    {
+      "source": "/workspace/scratch/7e3d2a445c44/generic-qualification-5be28e30/native-output/Closure_acyclic_expansion.dll",
+      "destination": "/workspace/scratch/7e3d2a445c44/sf6-generic-instantiation/tests/fixtures/clr-generic-closure/Closure_acyclic_expansion.dll",
+      "path": "Closure_acyclic_expansion.dll",
+      "bytes": 2048,
+      "sha256": "6c8a65fc091d29f95f79c31568d62fa4f0a924e5e1a2b7b2562085a5e3bd4525"
+    },
+    {
+      "source": "/workspace/scratch/7e3d2a445c44/generic-qualification-5be28e30/native-output/Closure_array_acyclic_expansion.dll",
+      "destination": "/workspace/scratch/7e3d2a445c44/sf6-generic-instantiation/tests/fixtures/clr-generic-closure/Closure_array_acyclic_expansion.dll",
+      "path": "Closure_array_acyclic_expansion.dll",
+      "bytes": 2048,
+      "sha256": "b1ac6a2ab8d62948a3b83384861b599058f2979f171e3f521a313302ab3b0d5b"
+    },
+    {
+      "source": "/workspace/scratch/7e3d2a445c44/generic-qualification-5be28e30/native-output/Closure_array_expanding.dll",
+      "destination": "/workspace/scratch/7e3d2a445c44/sf6-generic-instantiation/tests/fixtures/clr-generic-closure/Closure_array_expanding.dll",
+      "path": "Closure_array_expanding.dll",
+      "bytes": 2048,
+      "sha256": "25a01d097f8307564e3e51f8bdc8d0ca84ca5146863160c6af70d01fb47c9fdc"
+    },
+    {
+      "source": "/workspace/scratch/7e3d2a445c44/generic-qualification-5be28e30/native-output/Closure_cross_expanding_left.dll",
+      "destination": "/workspace/scratch/7e3d2a445c44/sf6-generic-instantiation/tests/fixtures/clr-generic-closure/Closure_cross_expanding_left.dll",
+      "path": "Closure_cross_expanding_left.dll",
+      "bytes": 2048,
+      "sha256": "1d0dabd1004f43a00221353f231895737cf2076345fed833348c4a8142fbe1b6"
+    },
+    {
+      "source": "/workspace/scratch/7e3d2a445c44/generic-qualification-5be28e30/native-output/Closure_cross_expanding_right.dll",
+      "destination": "/workspace/scratch/7e3d2a445c44/sf6-generic-instantiation/tests/fixtures/clr-generic-closure/Closure_cross_expanding_right.dll",
+      "path": "Closure_cross_expanding_right.dll",
+      "bytes": 2048,
+      "sha256": "0d63944bb8e9922cab8095cadd40801709bdb5c0d3b0b620a25ac4e55530426a"
+    },
+    {
+      "source": "/workspace/scratch/7e3d2a445c44/generic-qualification-5be28e30/native-output/Closure_cross_permuted_left.dll",
+      "destination": "/workspace/scratch/7e3d2a445c44/sf6-generic-instantiation/tests/fixtures/clr-generic-closure/Closure_cross_permuted_left.dll",
+      "path": "Closure_cross_permuted_left.dll",
+      "bytes": 2048,
+      "sha256": "1e71e6885764ed59daec92ea235d60fd627caab81307127bf4fe5e28294722b4"
+    },
+    {
+      "source": "/workspace/scratch/7e3d2a445c44/generic-qualification-5be28e30/native-output/Closure_cross_permuted_right.dll",
+      "destination": "/workspace/scratch/7e3d2a445c44/sf6-generic-instantiation/tests/fixtures/clr-generic-closure/Closure_cross_permuted_right.dll",
+      "path": "Closure_cross_permuted_right.dll",
+      "bytes": 2048,
+      "sha256": "44576399d53166661528b4a1d2eda49dfb3bdcd7c2d1a85e06a579179b1d4692"
+    },
+    {
+      "source": "/workspace/scratch/7e3d2a445c44/generic-qualification-5be28e30/native-output/Closure_erased_constant_cycle.dll",
+      "destination": "/workspace/scratch/7e3d2a445c44/sf6-generic-instantiation/tests/fixtures/clr-generic-closure/Closure_erased_constant_cycle.dll",
+      "path": "Closure_erased_constant_cycle.dll",
+      "bytes": 2048,
+      "sha256": "5cf946b2d07571d0d558788dc19a65bfc99b8c36da0635951f4671669b94d7c4"
+    },
+    {
+      "source": "/workspace/scratch/7e3d2a445c44/generic-qualification-5be28e30/native-output/Closure_expanding_self_base.dll",
+      "destination": "/workspace/scratch/7e3d2a445c44/sf6-generic-instantiation/tests/fixtures/clr-generic-closure/Closure_expanding_self_base.dll",
+      "path": "Closure_expanding_self_base.dll",
+      "bytes": 2048,
+      "sha256": "360319412647dda461159a820d711d9db335626a5b2888f6bcbb9f326179bcac"
+    },
+    {
+      "source": "/workspace/scratch/7e3d2a445c44/generic-qualification-5be28e30/native-output/Closure_indirect_expanding.dll",
+      "destination": "/workspace/scratch/7e3d2a445c44/sf6-generic-instantiation/tests/fixtures/clr-generic-closure/Closure_indirect_expanding.dll",
+      "path": "Closure_indirect_expanding.dll",
+      "bytes": 2048,
+      "sha256": "ad6ff2ac32307f72807caee6be5c32518f8142227189bad683e45fe061eb2552"
+    },
+    {
+      "source": "/workspace/scratch/7e3d2a445c44/generic-qualification-5be28e30/native-output/Closure_nested_invalid.dll",
+      "destination": "/workspace/scratch/7e3d2a445c44/sf6-generic-instantiation/tests/fixtures/clr-generic-closure/Closure_nested_invalid.dll",
+      "path": "Closure_nested_invalid.dll",
+      "bytes": 2048,
+      "sha256": "609e78346c5031eeafd14ef4ae2a681c5eb2c81c4da8faecf33e6bd34f1e9921"
+    },
+    {
+      "source": "/workspace/scratch/7e3d2a445c44/generic-qualification-5be28e30/native-output/Closure_non_generic_self_interface.dll",
+      "destination": "/workspace/scratch/7e3d2a445c44/sf6-generic-instantiation/tests/fixtures/clr-generic-closure/Closure_non_generic_self_interface.dll",
+      "path": "Closure_non_generic_self_interface.dll",
+      "bytes": 2048,
+      "sha256": "eb48f84ebf9b07dfb3db6846e5e0a66ee78211bd32ec00a6f28cb89caeac942c"
+    },
+    {
+      "source": "/workspace/scratch/7e3d2a445c44/generic-qualification-5be28e30/native-output/Closure_permuted_mutual.dll",
+      "destination": "/workspace/scratch/7e3d2a445c44/sf6-generic-instantiation/tests/fixtures/clr-generic-closure/Closure_permuted_mutual.dll",
+      "path": "Closure_permuted_mutual.dll",
+      "bytes": 2048,
+      "sha256": "08f18d68521d52c520d3bda4a4050b6fd8f539fa7b78934a76cf666463b18438"
+    },
+    {
+      "source": "/workspace/scratch/7e3d2a445c44/generic-qualification-5be28e30/native-output/Closure_simple_self_base.dll",
+      "destination": "/workspace/scratch/7e3d2a445c44/sf6-generic-instantiation/tests/fixtures/clr-generic-closure/Closure_simple_self_base.dll",
+      "path": "Closure_simple_self_base.dll",
+      "bytes": 2048,
+      "sha256": "3e9b7b31ab77ef23ced93aea139801f97f9986372f28a82aaa2ea66bc70b0e85"
+    },
+    {
+      "source": "/workspace/scratch/7e3d2a445c44/generic-qualification-5be28e30/native-output/native-closure.json",
+      "destination": "/workspace/scratch/7e3d2a445c44/sf6-generic-instantiation/tests/fixtures/clr-generic-closure/native-closure.json",
+      "path": "native-closure.json",
+      "bytes": 353615,
+      "sha256": "6c3fc6ba84f52052679b72075d25a1e854798930e344270319683f96f0967c3f"
+    },
+    {
+      "source": "/workspace/scratch/7e3d2a445c44/generic-qualification-5be28e30/native-evidence/01-sdk-version-execution.json",
+      "destination": "/workspace/scratch/7e3d2a445c44/sf6-generic-instantiation/tests/fixtures/clr-generic-closure/qualification-capture/01-sdk-version-execution.json",
+      "path": "01-sdk-version-execution.json",
+      "bytes": 1803,
+      "sha256": "b0bf22be4641c5f908544c25aa8ab95fe225a009bd9c45d77b20758b2b2057cb"
+    },
+    {
+      "source": "/workspace/scratch/7e3d2a445c44/generic-qualification-5be28e30/native-evidence/01-sdk-version.stderr",
+      "destination": "/workspace/scratch/7e3d2a445c44/sf6-generic-instantiation/tests/fixtures/clr-generic-closure/qualification-capture/01-sdk-version.stderr",
+      "path": "01-sdk-version.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "source": "/workspace/scratch/7e3d2a445c44/generic-qualification-5be28e30/native-evidence/01-sdk-version.stdout",
+      "destination": "/workspace/scratch/7e3d2a445c44/sf6-generic-instantiation/tests/fixtures/clr-generic-closure/qualification-capture/01-sdk-version.stdout",
+      "path": "01-sdk-version.stdout",
+      "bytes": 9,
+      "sha256": "38c8354f0a1a3a4e913e03fe6396aa12c2ef1d427921d44b19123e42dcb74e92"
+    },
+    {
+      "source": "/workspace/scratch/7e3d2a445c44/generic-qualification-5be28e30/native-evidence/02-sdk-inventory-execution.json",
+      "destination": "/workspace/scratch/7e3d2a445c44/sf6-generic-instantiation/tests/fixtures/clr-generic-closure/qualification-capture/02-sdk-inventory-execution.json",
+      "path": "02-sdk-inventory-execution.json",
+      "bytes": 1812,
+      "sha256": "bc2d51866c1ba05f8745caecd40a7b2fa4c3580f2899d5b86decf089ec50d6fd"
+    },
+    {
+      "source": "/workspace/scratch/7e3d2a445c44/generic-qualification-5be28e30/native-evidence/02-sdk-inventory.stderr",
+      "destination": "/workspace/scratch/7e3d2a445c44/sf6-generic-instantiation/tests/fixtures/clr-generic-closure/qualification-capture/02-sdk-inventory.stderr",
+      "path": "02-sdk-inventory.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "source": "/workspace/scratch/7e3d2a445c44/generic-qualification-5be28e30/native-evidence/02-sdk-inventory.stdout",
+      "destination": "/workspace/scratch/7e3d2a445c44/sf6-generic-instantiation/tests/fixtures/clr-generic-closure/qualification-capture/02-sdk-inventory.stdout",
+      "path": "02-sdk-inventory.stdout",
+      "bytes": 63,
+      "sha256": "4d0c9a4904503f1705fefa87cf647485beb84f2ab0e692c446b4abdd615db85f"
+    },
+    {
+      "source": "/workspace/scratch/7e3d2a445c44/generic-qualification-5be28e30/native-evidence/03-runtime-inventory-execution.json",
+      "destination": "/workspace/scratch/7e3d2a445c44/sf6-generic-instantiation/tests/fixtures/clr-generic-closure/qualification-capture/03-runtime-inventory-execution.json",
+      "path": "03-runtime-inventory-execution.json",
+      "bytes": 1829,
+      "sha256": "eabc15ea64dc65b4e363f146d9b93318bf84dad05f32a78f82e3dab5c5795493"
+    },
+    {
+      "source": "/workspace/scratch/7e3d2a445c44/generic-qualification-5be28e30/native-evidence/03-runtime-inventory.stderr",
+      "destination": "/workspace/scratch/7e3d2a445c44/sf6-generic-instantiation/tests/fixtures/clr-generic-closure/qualification-capture/03-runtime-inventory.stderr",
+      "path": "03-runtime-inventory.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "source": "/workspace/scratch/7e3d2a445c44/generic-qualification-5be28e30/native-evidence/03-runtime-inventory.stdout",
+      "destination": "/workspace/scratch/7e3d2a445c44/sf6-generic-instantiation/tests/fixtures/clr-generic-closure/qualification-capture/03-runtime-inventory.stdout",
+      "path": "03-runtime-inventory.stdout",
+      "bytes": 222,
+      "sha256": "0f888c5dfd832ce30d94fff56d4bdaeeb327567b09d34f328f2cb80e7e9c3633"
+    },
+    {
+      "source": "/workspace/scratch/7e3d2a445c44/generic-qualification-5be28e30/native-evidence/04-compiler-version-execution.json",
+      "destination": "/workspace/scratch/7e3d2a445c44/sf6-generic-instantiation/tests/fixtures/clr-generic-closure/qualification-capture/04-compiler-version-execution.json",
+      "path": "04-compiler-version-execution.json",
+      "bytes": 2066,
+      "sha256": "aef623c2bc8d10cbfaeac3e5489fa48b683d44c7092a8c0364e247970c369833"
+    },
+    {
+      "source": "/workspace/scratch/7e3d2a445c44/generic-qualification-5be28e30/native-evidence/04-compiler-version.stderr",
+      "destination": "/workspace/scratch/7e3d2a445c44/sf6-generic-instantiation/tests/fixtures/clr-generic-closure/qualification-capture/04-compiler-version.stderr",
+      "path": "04-compiler-version.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "source": "/workspace/scratch/7e3d2a445c44/generic-qualification-5be28e30/native-evidence/04-compiler-version.stdout",
+      "destination": "/workspace/scratch/7e3d2a445c44/sf6-generic-instantiation/tests/fixtures/clr-generic-closure/qualification-capture/04-compiler-version.stdout",
+      "path": "04-compiler-version.stdout",
+      "bytes": 61,
+      "sha256": "335ee5c8674ef201012063d1afcf0c093316d04c0c357f69b6322dea86a5529d"
+    },
+    {
+      "source": "/workspace/scratch/7e3d2a445c44/generic-qualification-5be28e30/native-evidence/05-compile-observer-execution.json",
+      "destination": "/workspace/scratch/7e3d2a445c44/sf6-generic-instantiation/tests/fixtures/clr-generic-closure/qualification-capture/05-compile-observer-execution.json",
+      "path": "05-compile-observer-execution.json",
+      "bytes": 26910,
+      "sha256": "aa08ff54c4b53c2f331a5040c4cef7e1477f2d929266ea279439423c1afa7d56"
+    },
+    {
+      "source": "/workspace/scratch/7e3d2a445c44/generic-qualification-5be28e30/native-evidence/05-compile-observer.stderr",
+      "destination": "/workspace/scratch/7e3d2a445c44/sf6-generic-instantiation/tests/fixtures/clr-generic-closure/qualification-capture/05-compile-observer.stderr",
+      "path": "05-compile-observer.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "source": "/workspace/scratch/7e3d2a445c44/generic-qualification-5be28e30/native-evidence/05-compile-observer.stdout",
+      "destination": "/workspace/scratch/7e3d2a445c44/sf6-generic-instantiation/tests/fixtures/clr-generic-closure/qualification-capture/05-compile-observer.stdout",
+      "path": "05-compile-observer.stdout",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "source": "/workspace/scratch/7e3d2a445c44/generic-qualification-5be28e30/native-evidence/06-prepare-images-execution.json",
+      "destination": "/workspace/scratch/7e3d2a445c44/sf6-generic-instantiation/tests/fixtures/clr-generic-closure/qualification-capture/06-prepare-images-execution.json",
+      "path": "06-prepare-images-execution.json",
+      "bytes": 2341,
+      "sha256": "0d31ef318713d41d925538e2a4ee8cf1d3b87e85846ed69e0ad99c4bbeae93f9"
+    },
+    {
+      "source": "/workspace/scratch/7e3d2a445c44/generic-qualification-5be28e30/native-evidence/06-prepare-images.stderr",
+      "destination": "/workspace/scratch/7e3d2a445c44/sf6-generic-instantiation/tests/fixtures/clr-generic-closure/qualification-capture/06-prepare-images.stderr",
+      "path": "06-prepare-images.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "source": "/workspace/scratch/7e3d2a445c44/generic-qualification-5be28e30/native-evidence/06-prepare-images.stdout",
+      "destination": "/workspace/scratch/7e3d2a445c44/sf6-generic-instantiation/tests/fixtures/clr-generic-closure/qualification-capture/06-prepare-images.stdout",
+      "path": "06-prepare-images.stdout",
+      "bytes": 38715,
+      "sha256": "7dc6a79e585df41c15f9bba2c81cabf0ee9650f727efd696caa3c961ba8eaf4d"
+    },
+    {
+      "source": "/workspace/scratch/7e3d2a445c44/generic-qualification-5be28e30/native-evidence/07-resolve-simple-self-base-execution.json",
+      "destination": "/workspace/scratch/7e3d2a445c44/sf6-generic-instantiation/tests/fixtures/clr-generic-closure/qualification-capture/07-resolve-simple-self-base-execution.json",
+      "path": "07-resolve-simple-self-base-execution.json",
+      "bytes": 2538,
+      "sha256": "ea46d1be8d77a903cf96672a81793ea1d177345ca92063a84c3b0f4bf3e3f2d3"
+    },
+    {
+      "source": "/workspace/scratch/7e3d2a445c44/generic-qualification-5be28e30/native-evidence/07-resolve-simple-self-base.stderr",
+      "destination": "/workspace/scratch/7e3d2a445c44/sf6-generic-instantiation/tests/fixtures/clr-generic-closure/qualification-capture/07-resolve-simple-self-base.stderr",
+      "path": "07-resolve-simple-self-base.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "source": "/workspace/scratch/7e3d2a445c44/generic-qualification-5be28e30/native-evidence/07-resolve-simple-self-base.stdout",
+      "destination": "/workspace/scratch/7e3d2a445c44/sf6-generic-instantiation/tests/fixtures/clr-generic-closure/qualification-capture/07-resolve-simple-self-base.stdout",
+      "path": "07-resolve-simple-self-base.stdout",
+      "bytes": 3107,
+      "sha256": "176f8e97edfb3867e9d82676e387d36d9e441cb4aa0899541b341c9f40080e84"
+    },
+    {
+      "source": "/workspace/scratch/7e3d2a445c44/generic-qualification-5be28e30/native-evidence/08-instantiate-simple-self-base-execution.json",
+      "destination": "/workspace/scratch/7e3d2a445c44/sf6-generic-instantiation/tests/fixtures/clr-generic-closure/qualification-capture/08-instantiate-simple-self-base-execution.json",
+      "path": "08-instantiate-simple-self-base-execution.json",
+      "bytes": 2558,
+      "sha256": "fe9953600729ef2beac39336930a7264eba98a23a3e58b769343fd9032a5d231"
+    },
+    {
+      "source": "/workspace/scratch/7e3d2a445c44/generic-qualification-5be28e30/native-evidence/08-instantiate-simple-self-base.stderr",
+      "destination": "/workspace/scratch/7e3d2a445c44/sf6-generic-instantiation/tests/fixtures/clr-generic-closure/qualification-capture/08-instantiate-simple-self-base.stderr",
+      "path": "08-instantiate-simple-self-base.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "source": "/workspace/scratch/7e3d2a445c44/generic-qualification-5be28e30/native-evidence/08-instantiate-simple-self-base.stdout",
+      "destination": "/workspace/scratch/7e3d2a445c44/sf6-generic-instantiation/tests/fixtures/clr-generic-closure/qualification-capture/08-instantiate-simple-self-base.stdout",
+      "path": "08-instantiate-simple-self-base.stdout",
+      "bytes": 4039,
+      "sha256": "596adcd333879081f5e5cd808d7931ded00abf8a16dd40e118aaf6c382fe799f"
+    },
+    {
+      "source": "/workspace/scratch/7e3d2a445c44/generic-qualification-5be28e30/native-evidence/09-resolve-expanding-self-base-execution.json",
+      "destination": "/workspace/scratch/7e3d2a445c44/sf6-generic-instantiation/tests/fixtures/clr-generic-closure/qualification-capture/09-resolve-expanding-self-base-execution.json",
+      "path": "09-resolve-expanding-self-base-execution.json",
+      "bytes": 2553,
+      "sha256": "b5aeadbb162d743477e6a48c8eb84a948c4fe895b8ad41296d3d20c8e95a394f"
+    },
+    {
+      "source": "/workspace/scratch/7e3d2a445c44/generic-qualification-5be28e30/native-evidence/09-resolve-expanding-self-base.stderr",
+      "destination": "/workspace/scratch/7e3d2a445c44/sf6-generic-instantiation/tests/fixtures/clr-generic-closure/qualification-capture/09-resolve-expanding-self-base.stderr",
+      "path": "09-resolve-expanding-self-base.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "source": "/workspace/scratch/7e3d2a445c44/generic-qualification-5be28e30/native-evidence/09-resolve-expanding-self-base.stdout",
+      "destination": "/workspace/scratch/7e3d2a445c44/sf6-generic-instantiation/tests/fixtures/clr-generic-closure/qualification-capture/09-resolve-expanding-self-base.stdout",
+      "path": "09-resolve-expanding-self-base.stdout",
+      "bytes": 2989,
+      "sha256": "6e79d56b0f3304efa82fe954f80f366eb91646cc63fe4ee8914520f8c8138896"
+    },
+    {
+      "source": "/workspace/scratch/7e3d2a445c44/generic-qualification-5be28e30/native-evidence/10-instantiate-expanding-self-base-execution.json",
+      "destination": "/workspace/scratch/7e3d2a445c44/sf6-generic-instantiation/tests/fixtures/clr-generic-closure/qualification-capture/10-instantiate-expanding-self-base-execution.json",
+      "path": "10-instantiate-expanding-self-base-execution.json",
+      "bytes": 2573,
+      "sha256": "4d60ed59b6cbe69eee168ce0ee0b08edf297004389d8eafc47ab9e9b08189ced"
+    },
+    {
+      "source": "/workspace/scratch/7e3d2a445c44/generic-qualification-5be28e30/native-evidence/10-instantiate-expanding-self-base.stderr",
+      "destination": "/workspace/scratch/7e3d2a445c44/sf6-generic-instantiation/tests/fixtures/clr-generic-closure/qualification-capture/10-instantiate-expanding-self-base.stderr",
+      "path": "10-instantiate-expanding-self-base.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "source": "/workspace/scratch/7e3d2a445c44/generic-qualification-5be28e30/native-evidence/10-instantiate-expanding-self-base.stdout",
+      "destination": "/workspace/scratch/7e3d2a445c44/sf6-generic-instantiation/tests/fixtures/clr-generic-closure/qualification-capture/10-instantiate-expanding-self-base.stdout",
+      "path": "10-instantiate-expanding-self-base.stdout",
+      "bytes": 3331,
+      "sha256": "20922f0bc5f1403fb72f6477e155b02567b2cc4cd5b83b4893a061a1585af8db"
+    },
+    {
+      "source": "/workspace/scratch/7e3d2a445c44/generic-qualification-5be28e30/native-evidence/11-resolve-permuted-mutual-execution.json",
+      "destination": "/workspace/scratch/7e3d2a445c44/sf6-generic-instantiation/tests/fixtures/clr-generic-closure/qualification-capture/11-resolve-permuted-mutual-execution.json",
+      "path": "11-resolve-permuted-mutual-execution.json",
+      "bytes": 2533,
+      "sha256": "453d4589616322d0ca58def8e1f4f56830c643597c6c552977d22353855ac6f3"
+    },
+    {
+      "source": "/workspace/scratch/7e3d2a445c44/generic-qualification-5be28e30/native-evidence/11-resolve-permuted-mutual.stderr",
+      "destination": "/workspace/scratch/7e3d2a445c44/sf6-generic-instantiation/tests/fixtures/clr-generic-closure/qualification-capture/11-resolve-permuted-mutual.stderr",
+      "path": "11-resolve-permuted-mutual.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "source": "/workspace/scratch/7e3d2a445c44/generic-qualification-5be28e30/native-evidence/11-resolve-permuted-mutual.stdout",
+      "destination": "/workspace/scratch/7e3d2a445c44/sf6-generic-instantiation/tests/fixtures/clr-generic-closure/qualification-capture/11-resolve-permuted-mutual.stdout",
+      "path": "11-resolve-permuted-mutual.stdout",
+      "bytes": 3867,
+      "sha256": "dfb1449c598da3de6d21ea7cd0d504f99cc749708047d1cec25d86081bc042c2"
+    },
+    {
+      "source": "/workspace/scratch/7e3d2a445c44/generic-qualification-5be28e30/native-evidence/12-instantiate-permuted-mutual-execution.json",
+      "destination": "/workspace/scratch/7e3d2a445c44/sf6-generic-instantiation/tests/fixtures/clr-generic-closure/qualification-capture/12-instantiate-permuted-mutual-execution.json",
+      "path": "12-instantiate-permuted-mutual-execution.json",
+      "bytes": 2553,
+      "sha256": "15581a74f4d546d43ef6e05b640be338532581ac60bc783c05aa1f4061a70c04"
+    },
+    {
+      "source": "/workspace/scratch/7e3d2a445c44/generic-qualification-5be28e30/native-evidence/12-instantiate-permuted-mutual.stderr",
+      "destination": "/workspace/scratch/7e3d2a445c44/sf6-generic-instantiation/tests/fixtures/clr-generic-closure/qualification-capture/12-instantiate-permuted-mutual.stderr",
+      "path": "12-instantiate-permuted-mutual.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "source": "/workspace/scratch/7e3d2a445c44/generic-qualification-5be28e30/native-evidence/12-instantiate-permuted-mutual.stdout",
+      "destination": "/workspace/scratch/7e3d2a445c44/sf6-generic-instantiation/tests/fixtures/clr-generic-closure/qualification-capture/12-instantiate-permuted-mutual.stdout",
+      "path": "12-instantiate-permuted-mutual.stdout",
+      "bytes": 4675,
+      "sha256": "c88ea40d051b887e43f9086ec5beb8d6e5cd85fb841bcdfff4343bd59277ccc2"
+    },
+    {
+      "source": "/workspace/scratch/7e3d2a445c44/generic-qualification-5be28e30/native-evidence/13-resolve-indirect-expanding-execution.json",
+      "destination": "/workspace/scratch/7e3d2a445c44/sf6-generic-instantiation/tests/fixtures/clr-generic-closure/qualification-capture/13-resolve-indirect-expanding-execution.json",
+      "path": "13-resolve-indirect-expanding-execution.json",
+      "bytes": 2548,
+      "sha256": "d36dadd615aae3226964825d0db900f8b196b9543da46ac31f3d38893ebfb6e0"
+    },
+    {
+      "source": "/workspace/scratch/7e3d2a445c44/generic-qualification-5be28e30/native-evidence/13-resolve-indirect-expanding.stderr",
+      "destination": "/workspace/scratch/7e3d2a445c44/sf6-generic-instantiation/tests/fixtures/clr-generic-closure/qualification-capture/13-resolve-indirect-expanding.stderr",
+      "path": "13-resolve-indirect-expanding.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "source": "/workspace/scratch/7e3d2a445c44/generic-qualification-5be28e30/native-evidence/13-resolve-indirect-expanding.stdout",
+      "destination": "/workspace/scratch/7e3d2a445c44/sf6-generic-instantiation/tests/fixtures/clr-generic-closure/qualification-capture/13-resolve-indirect-expanding.stdout",
+      "path": "13-resolve-indirect-expanding.stdout",
+      "bytes": 2983,
+      "sha256": "ffcbbd3b3d9c938833e880393c93a499199fb8320ba2e050dfdf3981d78e7540"
+    },
+    {
+      "source": "/workspace/scratch/7e3d2a445c44/generic-qualification-5be28e30/native-evidence/14-instantiate-indirect-expanding-execution.json",
+      "destination": "/workspace/scratch/7e3d2a445c44/sf6-generic-instantiation/tests/fixtures/clr-generic-closure/qualification-capture/14-instantiate-indirect-expanding-execution.json",
+      "path": "14-instantiate-indirect-expanding-execution.json",
+      "bytes": 2568,
+      "sha256": "12deeee9a6dabcba09dcdf7d6a36094c3942c6ee4e221e21a92b115580107bf6"
+    },
+    {
+      "source": "/workspace/scratch/7e3d2a445c44/generic-qualification-5be28e30/native-evidence/14-instantiate-indirect-expanding.stderr",
+      "destination": "/workspace/scratch/7e3d2a445c44/sf6-generic-instantiation/tests/fixtures/clr-generic-closure/qualification-capture/14-instantiate-indirect-expanding.stderr",
+      "path": "14-instantiate-indirect-expanding.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "source": "/workspace/scratch/7e3d2a445c44/generic-qualification-5be28e30/native-evidence/14-instantiate-indirect-expanding.stdout",
+      "destination": "/workspace/scratch/7e3d2a445c44/sf6-generic-instantiation/tests/fixtures/clr-generic-closure/qualification-capture/14-instantiate-indirect-expanding.stdout",
+      "path": "14-instantiate-indirect-expanding.stdout",
+      "bytes": 3323,
+      "sha256": "ea0ffce9b5318767d4db1e3853638cc8db535d2b2c8a4c093d8513c4e97c9619"
+    },
+    {
+      "source": "/workspace/scratch/7e3d2a445c44/generic-qualification-5be28e30/native-evidence/15-resolve-acyclic-expansion-execution.json",
+      "destination": "/workspace/scratch/7e3d2a445c44/sf6-generic-instantiation/tests/fixtures/clr-generic-closure/qualification-capture/15-resolve-acyclic-expansion-execution.json",
+      "path": "15-resolve-acyclic-expansion-execution.json",
+      "bytes": 2543,
+      "sha256": "e17627d658094bb6d0d9ab31dd83d276210c4ad454caf2ed22ae89aad10c8ae8"
+    },
+    {
+      "source": "/workspace/scratch/7e3d2a445c44/generic-qualification-5be28e30/native-evidence/15-resolve-acyclic-expansion.stderr",
+      "destination": "/workspace/scratch/7e3d2a445c44/sf6-generic-instantiation/tests/fixtures/clr-generic-closure/qualification-capture/15-resolve-acyclic-expansion.stderr",
+      "path": "15-resolve-acyclic-expansion.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "source": "/workspace/scratch/7e3d2a445c44/generic-qualification-5be28e30/native-evidence/15-resolve-acyclic-expansion.stdout",
+      "destination": "/workspace/scratch/7e3d2a445c44/sf6-generic-instantiation/tests/fixtures/clr-generic-closure/qualification-capture/15-resolve-acyclic-expansion.stdout",
+      "path": "15-resolve-acyclic-expansion.stdout",
+      "bytes": 3717,
+      "sha256": "1137ca9e6467cf743dd0ad40c30f2177bdecfac72129cdb8dbbd8751e668c454"
+    },
+    {
+      "source": "/workspace/scratch/7e3d2a445c44/generic-qualification-5be28e30/native-evidence/16-instantiate-acyclic-expansion-execution.json",
+      "destination": "/workspace/scratch/7e3d2a445c44/sf6-generic-instantiation/tests/fixtures/clr-generic-closure/qualification-capture/16-instantiate-acyclic-expansion-execution.json",
+      "path": "16-instantiate-acyclic-expansion-execution.json",
+      "bytes": 2563,
+      "sha256": "52081b3abcfd35a5f08d22b84cd582436641b3995fd67ec10329924f660fe10d"
+    },
+    {
+      "source": "/workspace/scratch/7e3d2a445c44/generic-qualification-5be28e30/native-evidence/16-instantiate-acyclic-expansion.stderr",
+      "destination": "/workspace/scratch/7e3d2a445c44/sf6-generic-instantiation/tests/fixtures/clr-generic-closure/qualification-capture/16-instantiate-acyclic-expansion.stderr",
+      "path": "16-instantiate-acyclic-expansion.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "source": "/workspace/scratch/7e3d2a445c44/generic-qualification-5be28e30/native-evidence/16-instantiate-acyclic-expansion.stdout",
+      "destination": "/workspace/scratch/7e3d2a445c44/sf6-generic-instantiation/tests/fixtures/clr-generic-closure/qualification-capture/16-instantiate-acyclic-expansion.stdout",
+      "path": "16-instantiate-acyclic-expansion.stdout",
+      "bytes": 4325,
+      "sha256": "bf5456364f37f376d96179c42926d191712e300221239a34915711cf0ab39b32"
+    },
+    {
+      "source": "/workspace/scratch/7e3d2a445c44/generic-qualification-5be28e30/native-evidence/17-resolve-array-expanding-execution.json",
+      "destination": "/workspace/scratch/7e3d2a445c44/sf6-generic-instantiation/tests/fixtures/clr-generic-closure/qualification-capture/17-resolve-array-expanding-execution.json",
+      "path": "17-resolve-array-expanding-execution.json",
+      "bytes": 2533,
+      "sha256": "3841ebb9190701ded356db50f217de05f97318d1ac0cdbf290f0dec8036681da"
+    },
+    {
+      "source": "/workspace/scratch/7e3d2a445c44/generic-qualification-5be28e30/native-evidence/17-resolve-array-expanding.stderr",
+      "destination": "/workspace/scratch/7e3d2a445c44/sf6-generic-instantiation/tests/fixtures/clr-generic-closure/qualification-capture/17-resolve-array-expanding.stderr",
+      "path": "17-resolve-array-expanding.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "source": "/workspace/scratch/7e3d2a445c44/generic-qualification-5be28e30/native-evidence/17-resolve-array-expanding.stdout",
+      "destination": "/workspace/scratch/7e3d2a445c44/sf6-generic-instantiation/tests/fixtures/clr-generic-closure/qualification-capture/17-resolve-array-expanding.stdout",
+      "path": "17-resolve-array-expanding.stdout",
+      "bytes": 2965,
+      "sha256": "95cb59df793fdea2ec6c236be7eccbe7c140b070e1f5acad2651f14d2b143abe"
+    },
+    {
+      "source": "/workspace/scratch/7e3d2a445c44/generic-qualification-5be28e30/native-evidence/18-instantiate-array-expanding-execution.json",
+      "destination": "/workspace/scratch/7e3d2a445c44/sf6-generic-instantiation/tests/fixtures/clr-generic-closure/qualification-capture/18-instantiate-array-expanding-execution.json",
+      "path": "18-instantiate-array-expanding-execution.json",
+      "bytes": 2553,
+      "sha256": "56c5f06660af5e7ca52a6dde44c45aee4ac49dd1ec8b2267b374e1cc5d882efa"
+    },
+    {
+      "source": "/workspace/scratch/7e3d2a445c44/generic-qualification-5be28e30/native-evidence/18-instantiate-array-expanding.stderr",
+      "destination": "/workspace/scratch/7e3d2a445c44/sf6-generic-instantiation/tests/fixtures/clr-generic-closure/qualification-capture/18-instantiate-array-expanding.stderr",
+      "path": "18-instantiate-array-expanding.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "source": "/workspace/scratch/7e3d2a445c44/generic-qualification-5be28e30/native-evidence/18-instantiate-array-expanding.stdout",
+      "destination": "/workspace/scratch/7e3d2a445c44/sf6-generic-instantiation/tests/fixtures/clr-generic-closure/qualification-capture/18-instantiate-array-expanding.stdout",
+      "path": "18-instantiate-array-expanding.stdout",
+      "bytes": 3299,
+      "sha256": "218c19efbbad0ace8aae635b76eb2517c2fe299034396a43270a353d2cc44dfe"
+    },
+    {
+      "source": "/workspace/scratch/7e3d2a445c44/generic-qualification-5be28e30/native-evidence/19-resolve-array-acyclic-expansion-execution.json",
+      "destination": "/workspace/scratch/7e3d2a445c44/sf6-generic-instantiation/tests/fixtures/clr-generic-closure/qualification-capture/19-resolve-array-acyclic-expansion-execution.json",
+      "path": "19-resolve-array-acyclic-expansion-execution.json",
+      "bytes": 2573,
+      "sha256": "944fe1b7653d449833c300aa513aa3a33ca201b561d4f441d9f77d0ddc9b2b20"
+    },
+    {
+      "source": "/workspace/scratch/7e3d2a445c44/generic-qualification-5be28e30/native-evidence/19-resolve-array-acyclic-expansion.stderr",
+      "destination": "/workspace/scratch/7e3d2a445c44/sf6-generic-instantiation/tests/fixtures/clr-generic-closure/qualification-capture/19-resolve-array-acyclic-expansion.stderr",
+      "path": "19-resolve-array-acyclic-expansion.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "source": "/workspace/scratch/7e3d2a445c44/generic-qualification-5be28e30/native-evidence/19-resolve-array-acyclic-expansion.stdout",
+      "destination": "/workspace/scratch/7e3d2a445c44/sf6-generic-instantiation/tests/fixtures/clr-generic-closure/qualification-capture/19-resolve-array-acyclic-expansion.stdout",
+      "path": "19-resolve-array-acyclic-expansion.stdout",
+      "bytes": 3659,
+      "sha256": "60cdc2358a9fac79835bc495591ec723d4ab4813ea4fac5cea11d68dfe870e6d"
+    },
+    {
+      "source": "/workspace/scratch/7e3d2a445c44/generic-qualification-5be28e30/native-evidence/20-instantiate-array-acyclic-expansion-execution.json",
+      "destination": "/workspace/scratch/7e3d2a445c44/sf6-generic-instantiation/tests/fixtures/clr-generic-closure/qualification-capture/20-instantiate-array-acyclic-expansion-execution.json",
+      "path": "20-instantiate-array-acyclic-expansion-execution.json",
+      "bytes": 2593,
+      "sha256": "500a77c65e96a58a7b29e781a4e2a7573cb61255cdb840f41d38230dc7217a10"
+    },
+    {
+      "source": "/workspace/scratch/7e3d2a445c44/generic-qualification-5be28e30/native-evidence/20-instantiate-array-acyclic-expansion.stderr",
+      "destination": "/workspace/scratch/7e3d2a445c44/sf6-generic-instantiation/tests/fixtures/clr-generic-closure/qualification-capture/20-instantiate-array-acyclic-expansion.stderr",
+      "path": "20-instantiate-array-acyclic-expansion.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "source": "/workspace/scratch/7e3d2a445c44/generic-qualification-5be28e30/native-evidence/20-instantiate-array-acyclic-expansion.stdout",
+      "destination": "/workspace/scratch/7e3d2a445c44/sf6-generic-instantiation/tests/fixtures/clr-generic-closure/qualification-capture/20-instantiate-array-acyclic-expansion.stdout",
+      "path": "20-instantiate-array-acyclic-expansion.stdout",
+      "bytes": 4255,
+      "sha256": "661b181b6681d27906fe724e4979c773ab5dc23f7542cf17131a04eec47fdb99"
+    },
+    {
+      "source": "/workspace/scratch/7e3d2a445c44/generic-qualification-5be28e30/native-evidence/21-resolve-erased-constant-cycle-execution.json",
+      "destination": "/workspace/scratch/7e3d2a445c44/sf6-generic-instantiation/tests/fixtures/clr-generic-closure/qualification-capture/21-resolve-erased-constant-cycle-execution.json",
+      "path": "21-resolve-erased-constant-cycle-execution.json",
+      "bytes": 2563,
+      "sha256": "c08ad6723af56f4a94a2e215fe4723534fd15e45ba09ae7d76649e61f288ff5c"
+    },
+    {
+      "source": "/workspace/scratch/7e3d2a445c44/generic-qualification-5be28e30/native-evidence/21-resolve-erased-constant-cycle.stderr",
+      "destination": "/workspace/scratch/7e3d2a445c44/sf6-generic-instantiation/tests/fixtures/clr-generic-closure/qualification-capture/21-resolve-erased-constant-cycle.stderr",
+      "path": "21-resolve-erased-constant-cycle.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "source": "/workspace/scratch/7e3d2a445c44/generic-qualification-5be28e30/native-evidence/21-resolve-erased-constant-cycle.stdout",
+      "destination": "/workspace/scratch/7e3d2a445c44/sf6-generic-instantiation/tests/fixtures/clr-generic-closure/qualification-capture/21-resolve-erased-constant-cycle.stdout",
+      "path": "21-resolve-erased-constant-cycle.stdout",
+      "bytes": 2913,
+      "sha256": "190bbc2fda5704a0369b17f374e1cc86053766f18c18ee2a7c8987b493ac96bd"
+    },
+    {
+      "source": "/workspace/scratch/7e3d2a445c44/generic-qualification-5be28e30/native-evidence/22-instantiate-erased-constant-cycle-execution.json",
+      "destination": "/workspace/scratch/7e3d2a445c44/sf6-generic-instantiation/tests/fixtures/clr-generic-closure/qualification-capture/22-instantiate-erased-constant-cycle-execution.json",
+      "path": "22-instantiate-erased-constant-cycle-execution.json",
+      "bytes": 2583,
+      "sha256": "66af202eead04c6b615efe7de268253870b0b4c0d796b91e16888f1f592c5914"
+    },
+    {
+      "source": "/workspace/scratch/7e3d2a445c44/generic-qualification-5be28e30/native-evidence/22-instantiate-erased-constant-cycle.stderr",
+      "destination": "/workspace/scratch/7e3d2a445c44/sf6-generic-instantiation/tests/fixtures/clr-generic-closure/qualification-capture/22-instantiate-erased-constant-cycle.stderr",
+      "path": "22-instantiate-erased-constant-cycle.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "source": "/workspace/scratch/7e3d2a445c44/generic-qualification-5be28e30/native-evidence/22-instantiate-erased-constant-cycle.stdout",
+      "destination": "/workspace/scratch/7e3d2a445c44/sf6-generic-instantiation/tests/fixtures/clr-generic-closure/qualification-capture/22-instantiate-erased-constant-cycle.stdout",
+      "path": "22-instantiate-erased-constant-cycle.stdout",
+      "bytes": 3259,
+      "sha256": "a95834025a37c468153b867546a8b66fa5ed096be605b3dcedbf31a91c310f4f"
+    },
+    {
+      "source": "/workspace/scratch/7e3d2a445c44/generic-qualification-5be28e30/native-evidence/23-resolve-hidden-invalid-argument-execution.json",
+      "destination": "/workspace/scratch/7e3d2a445c44/sf6-generic-instantiation/tests/fixtures/clr-generic-closure/qualification-capture/23-resolve-hidden-invalid-argument-execution.json",
+      "path": "23-resolve-hidden-invalid-argument-execution.json",
+      "bytes": 2573,
+      "sha256": "c5ab6400383fd7a9a74b60c6548c25d1ea27f22e0c3502d39eb316858ed22662"
+    },
+    {
+      "source": "/workspace/scratch/7e3d2a445c44/generic-qualification-5be28e30/native-evidence/23-resolve-hidden-invalid-argument.stderr",
+      "destination": "/workspace/scratch/7e3d2a445c44/sf6-generic-instantiation/tests/fixtures/clr-generic-closure/qualification-capture/23-resolve-hidden-invalid-argument.stderr",
+      "path": "23-resolve-hidden-invalid-argument.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "source": "/workspace/scratch/7e3d2a445c44/generic-qualification-5be28e30/native-evidence/23-resolve-hidden-invalid-argument.stdout",
+      "destination": "/workspace/scratch/7e3d2a445c44/sf6-generic-instantiation/tests/fixtures/clr-generic-closure/qualification-capture/23-resolve-hidden-invalid-argument.stdout",
+      "path": "23-resolve-hidden-invalid-argument.stdout",
+      "bytes": 2981,
+      "sha256": "f8cd730da6cabaeb4a3a4fec1acfeebba8a1d5a17a4a25d5515d4e1e8222302f"
+    },
+    {
+      "source": "/workspace/scratch/7e3d2a445c44/generic-qualification-5be28e30/native-evidence/24-instantiate-hidden-invalid-argument-execution.json",
+      "destination": "/workspace/scratch/7e3d2a445c44/sf6-generic-instantiation/tests/fixtures/clr-generic-closure/qualification-capture/24-instantiate-hidden-invalid-argument-execution.json",
+      "path": "24-instantiate-hidden-invalid-argument-execution.json",
+      "bytes": 2593,
+      "sha256": "34cfa9ff3bb0692a0c19ad82f894c5ea31c21cc64e4aa5a474e47f1cb963408f"
+    },
+    {
+      "source": "/workspace/scratch/7e3d2a445c44/generic-qualification-5be28e30/native-evidence/24-instantiate-hidden-invalid-argument.stderr",
+      "destination": "/workspace/scratch/7e3d2a445c44/sf6-generic-instantiation/tests/fixtures/clr-generic-closure/qualification-capture/24-instantiate-hidden-invalid-argument.stderr",
+      "path": "24-instantiate-hidden-invalid-argument.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "source": "/workspace/scratch/7e3d2a445c44/generic-qualification-5be28e30/native-evidence/24-instantiate-hidden-invalid-argument.stdout",
+      "destination": "/workspace/scratch/7e3d2a445c44/sf6-generic-instantiation/tests/fixtures/clr-generic-closure/qualification-capture/24-instantiate-hidden-invalid-argument.stdout",
+      "path": "24-instantiate-hidden-invalid-argument.stdout",
+      "bytes": 3313,
+      "sha256": "4e64e7971e2b80ae42780255db23e66a79033d1dcab69e7ea169e937513f0548"
+    },
+    {
+      "source": "/workspace/scratch/7e3d2a445c44/generic-qualification-5be28e30/native-evidence/25-resolve-unrelated-invalid-execution.json",
+      "destination": "/workspace/scratch/7e3d2a445c44/sf6-generic-instantiation/tests/fixtures/clr-generic-closure/qualification-capture/25-resolve-unrelated-invalid-execution.json",
+      "path": "25-resolve-unrelated-invalid-execution.json",
+      "bytes": 2543,
+      "sha256": "f02b1767760d6a5edb9122c5e48ed0f3e52669a44b8aaa6dddfb95c3ce7c8ae0"
+    },
+    {
+      "source": "/workspace/scratch/7e3d2a445c44/generic-qualification-5be28e30/native-evidence/25-resolve-unrelated-invalid.stderr",
+      "destination": "/workspace/scratch/7e3d2a445c44/sf6-generic-instantiation/tests/fixtures/clr-generic-closure/qualification-capture/25-resolve-unrelated-invalid.stderr",
+      "path": "25-resolve-unrelated-invalid.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "source": "/workspace/scratch/7e3d2a445c44/generic-qualification-5be28e30/native-evidence/25-resolve-unrelated-invalid.stdout",
+      "destination": "/workspace/scratch/7e3d2a445c44/sf6-generic-instantiation/tests/fixtures/clr-generic-closure/qualification-capture/25-resolve-unrelated-invalid.stdout",
+      "path": "25-resolve-unrelated-invalid.stdout",
+      "bytes": 3143,
+      "sha256": "8d5279151df0d865be2eb96a159c4e8aba663647c4d6adc79a9b34d6921ac647"
+    },
+    {
+      "source": "/workspace/scratch/7e3d2a445c44/generic-qualification-5be28e30/native-evidence/26-instantiate-unrelated-invalid-execution.json",
+      "destination": "/workspace/scratch/7e3d2a445c44/sf6-generic-instantiation/tests/fixtures/clr-generic-closure/qualification-capture/26-instantiate-unrelated-invalid-execution.json",
+      "path": "26-instantiate-unrelated-invalid-execution.json",
+      "bytes": 2563,
+      "sha256": "9418ccdbd5221ee6b60f89d41225a802f211c3d748ae987293d239e6789f8d36"
+    },
+    {
+      "source": "/workspace/scratch/7e3d2a445c44/generic-qualification-5be28e30/native-evidence/26-instantiate-unrelated-invalid.stderr",
+      "destination": "/workspace/scratch/7e3d2a445c44/sf6-generic-instantiation/tests/fixtures/clr-generic-closure/qualification-capture/26-instantiate-unrelated-invalid.stderr",
+      "path": "26-instantiate-unrelated-invalid.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "source": "/workspace/scratch/7e3d2a445c44/generic-qualification-5be28e30/native-evidence/26-instantiate-unrelated-invalid.stdout",
+      "destination": "/workspace/scratch/7e3d2a445c44/sf6-generic-instantiation/tests/fixtures/clr-generic-closure/qualification-capture/26-instantiate-unrelated-invalid.stdout",
+      "path": "26-instantiate-unrelated-invalid.stdout",
+      "bytes": 3757,
+      "sha256": "cd3ca707a0ef664b5a14939ed1de059cebe9d051290e73c1f067586ae3f65bb5"
+    },
+    {
+      "source": "/workspace/scratch/7e3d2a445c44/generic-qualification-5be28e30/native-evidence/27-resolve-cross-module-permuted-execution.json",
+      "destination": "/workspace/scratch/7e3d2a445c44/sf6-generic-instantiation/tests/fixtures/clr-generic-closure/qualification-capture/27-resolve-cross-module-permuted-execution.json",
+      "path": "27-resolve-cross-module-permuted-execution.json",
+      "bytes": 2563,
+      "sha256": "410185d7a55f95170398b5078f46950393acd76eef4459f266b7a1d6e0d298bb"
+    },
+    {
+      "source": "/workspace/scratch/7e3d2a445c44/generic-qualification-5be28e30/native-evidence/27-resolve-cross-module-permuted.stderr",
+      "destination": "/workspace/scratch/7e3d2a445c44/sf6-generic-instantiation/tests/fixtures/clr-generic-closure/qualification-capture/27-resolve-cross-module-permuted.stderr",
+      "path": "27-resolve-cross-module-permuted.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "source": "/workspace/scratch/7e3d2a445c44/generic-qualification-5be28e30/native-evidence/27-resolve-cross-module-permuted.stdout",
+      "destination": "/workspace/scratch/7e3d2a445c44/sf6-generic-instantiation/tests/fixtures/clr-generic-closure/qualification-capture/27-resolve-cross-module-permuted.stdout",
+      "path": "27-resolve-cross-module-permuted.stdout",
+      "bytes": 3989,
+      "sha256": "240c3b8efe0c0b819ad00e8ca9c4c4897409dbfea55199c5679a61631334182d"
+    },
+    {
+      "source": "/workspace/scratch/7e3d2a445c44/generic-qualification-5be28e30/native-evidence/28-instantiate-cross-module-permuted-execution.json",
+      "destination": "/workspace/scratch/7e3d2a445c44/sf6-generic-instantiation/tests/fixtures/clr-generic-closure/qualification-capture/28-instantiate-cross-module-permuted-execution.json",
+      "path": "28-instantiate-cross-module-permuted-execution.json",
+      "bytes": 2583,
+      "sha256": "228f789a324526b8b1d7b31013c72b7675651527ebc61c7c7309e7631600fce7"
+    },
+    {
+      "source": "/workspace/scratch/7e3d2a445c44/generic-qualification-5be28e30/native-evidence/28-instantiate-cross-module-permuted.stderr",
+      "destination": "/workspace/scratch/7e3d2a445c44/sf6-generic-instantiation/tests/fixtures/clr-generic-closure/qualification-capture/28-instantiate-cross-module-permuted.stderr",
+      "path": "28-instantiate-cross-module-permuted.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "source": "/workspace/scratch/7e3d2a445c44/generic-qualification-5be28e30/native-evidence/28-instantiate-cross-module-permuted.stdout",
+      "destination": "/workspace/scratch/7e3d2a445c44/sf6-generic-instantiation/tests/fixtures/clr-generic-closure/qualification-capture/28-instantiate-cross-module-permuted.stdout",
+      "path": "28-instantiate-cross-module-permuted.stdout",
+      "bytes": 4773,
+      "sha256": "8f07124e453461866ca09049046d8a93942f24d3e790d9576d83cbbc5ed9e72e"
+    },
+    {
+      "source": "/workspace/scratch/7e3d2a445c44/generic-qualification-5be28e30/native-evidence/29-resolve-cross-module-expanding-execution.json",
+      "destination": "/workspace/scratch/7e3d2a445c44/sf6-generic-instantiation/tests/fixtures/clr-generic-closure/qualification-capture/29-resolve-cross-module-expanding-execution.json",
+      "path": "29-resolve-cross-module-expanding-execution.json",
+      "bytes": 2568,
+      "sha256": "a563a1ee6cb4977412eb6f1508f40efe89de23a958b0aa5cdcd33fa7905ef80e"
+    },
+    {
+      "source": "/workspace/scratch/7e3d2a445c44/generic-qualification-5be28e30/native-evidence/29-resolve-cross-module-expanding.stderr",
+      "destination": "/workspace/scratch/7e3d2a445c44/sf6-generic-instantiation/tests/fixtures/clr-generic-closure/qualification-capture/29-resolve-cross-module-expanding.stderr",
+      "path": "29-resolve-cross-module-expanding.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "source": "/workspace/scratch/7e3d2a445c44/generic-qualification-5be28e30/native-evidence/29-resolve-cross-module-expanding.stdout",
+      "destination": "/workspace/scratch/7e3d2a445c44/sf6-generic-instantiation/tests/fixtures/clr-generic-closure/qualification-capture/29-resolve-cross-module-expanding.stdout",
+      "path": "29-resolve-cross-module-expanding.stdout",
+      "bytes": 3007,
+      "sha256": "e077d206a106dab9747e76771c481029487b3c4f4f2ee8ac7ef1ab57d29da3a2"
+    },
+    {
+      "source": "/workspace/scratch/7e3d2a445c44/generic-qualification-5be28e30/native-evidence/30-instantiate-cross-module-expanding-execution.json",
+      "destination": "/workspace/scratch/7e3d2a445c44/sf6-generic-instantiation/tests/fixtures/clr-generic-closure/qualification-capture/30-instantiate-cross-module-expanding-execution.json",
+      "path": "30-instantiate-cross-module-expanding-execution.json",
+      "bytes": 2588,
+      "sha256": "de10214448506a6d0b66ca29446ae0cdd80786997dbcd59539299354db1cf5fc"
+    },
+    {
+      "source": "/workspace/scratch/7e3d2a445c44/generic-qualification-5be28e30/native-evidence/30-instantiate-cross-module-expanding.stderr",
+      "destination": "/workspace/scratch/7e3d2a445c44/sf6-generic-instantiation/tests/fixtures/clr-generic-closure/qualification-capture/30-instantiate-cross-module-expanding.stderr",
+      "path": "30-instantiate-cross-module-expanding.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "source": "/workspace/scratch/7e3d2a445c44/generic-qualification-5be28e30/native-evidence/30-instantiate-cross-module-expanding.stdout",
+      "destination": "/workspace/scratch/7e3d2a445c44/sf6-generic-instantiation/tests/fixtures/clr-generic-closure/qualification-capture/30-instantiate-cross-module-expanding.stdout",
+      "path": "30-instantiate-cross-module-expanding.stdout",
+      "bytes": 3439,
+      "sha256": "e92ab9e4190e06885679262a614856c2fd4e57ac07812c35348fb5612c7e262d"
+    },
+    {
+      "source": "/workspace/scratch/7e3d2a445c44/generic-qualification-5be28e30/native-evidence/31-resolve-non-generic-self-interface-execution.json",
+      "destination": "/workspace/scratch/7e3d2a445c44/sf6-generic-instantiation/tests/fixtures/clr-generic-closure/qualification-capture/31-resolve-non-generic-self-interface-execution.json",
+      "path": "31-resolve-non-generic-self-interface-execution.json",
+      "bytes": 2588,
+      "sha256": "a0a5ad783233752b81b7636d63cde556f92adb0107d7003f20529eaaa61d8ec1"
+    },
+    {
+      "source": "/workspace/scratch/7e3d2a445c44/generic-qualification-5be28e30/native-evidence/31-resolve-non-generic-self-interface.stderr",
+      "destination": "/workspace/scratch/7e3d2a445c44/sf6-generic-instantiation/tests/fixtures/clr-generic-closure/qualification-capture/31-resolve-non-generic-self-interface.stderr",
+      "path": "31-resolve-non-generic-self-interface.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "source": "/workspace/scratch/7e3d2a445c44/generic-qualification-5be28e30/native-evidence/31-resolve-non-generic-self-interface.stdout",
+      "destination": "/workspace/scratch/7e3d2a445c44/sf6-generic-instantiation/tests/fixtures/clr-generic-closure/qualification-capture/31-resolve-non-generic-self-interface.stdout",
+      "path": "31-resolve-non-generic-self-interface.stdout",
+      "bytes": 2939,
+      "sha256": "550e6a8758931f28e241ffaf9e91474fb5dce8a808ab59e4d9200804b76ecbb2"
+    },
+    {
+      "source": "/workspace/scratch/7e3d2a445c44/generic-qualification-5be28e30/native-evidence/32-instantiate-partial-permuted-mutual-execution.json",
+      "destination": "/workspace/scratch/7e3d2a445c44/sf6-generic-instantiation/tests/fixtures/clr-generic-closure/qualification-capture/32-instantiate-partial-permuted-mutual-execution.json",
+      "path": "32-instantiate-partial-permuted-mutual-execution.json",
+      "bytes": 2593,
+      "sha256": "abecdc9108cbb14db2a922b579952bf79ec97803e689b617d692073960d506b6"
+    },
+    {
+      "source": "/workspace/scratch/7e3d2a445c44/generic-qualification-5be28e30/native-evidence/32-instantiate-partial-permuted-mutual.stderr",
+      "destination": "/workspace/scratch/7e3d2a445c44/sf6-generic-instantiation/tests/fixtures/clr-generic-closure/qualification-capture/32-instantiate-partial-permuted-mutual.stderr",
+      "path": "32-instantiate-partial-permuted-mutual.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "source": "/workspace/scratch/7e3d2a445c44/generic-qualification-5be28e30/native-evidence/32-instantiate-partial-permuted-mutual.stdout",
+      "destination": "/workspace/scratch/7e3d2a445c44/sf6-generic-instantiation/tests/fixtures/clr-generic-closure/qualification-capture/32-instantiate-partial-permuted-mutual.stdout",
+      "path": "32-instantiate-partial-permuted-mutual.stdout",
+      "bytes": 4917,
+      "sha256": "c01367def50c8b0368fa89a9f29094b9866e2726a2da538c634a0d91c687af55"
+    },
+    {
+      "source": "/workspace/scratch/7e3d2a445c44/generic-qualification-5be28e30/native-evidence/33-instantiate-partial-cross-module-permuted-execution.json",
+      "destination": "/workspace/scratch/7e3d2a445c44/sf6-generic-instantiation/tests/fixtures/clr-generic-closure/qualification-capture/33-instantiate-partial-cross-module-permuted-execution.json",
+      "path": "33-instantiate-partial-cross-module-permuted-execution.json",
+      "bytes": 2623,
+      "sha256": "a65901cbefc55b4ed2b6b3b23c881dee2a7496f7ceb9e0d00a506decd6f69e26"
+    },
+    {
+      "source": "/workspace/scratch/7e3d2a445c44/generic-qualification-5be28e30/native-evidence/33-instantiate-partial-cross-module-permuted.stderr",
+      "destination": "/workspace/scratch/7e3d2a445c44/sf6-generic-instantiation/tests/fixtures/clr-generic-closure/qualification-capture/33-instantiate-partial-cross-module-permuted.stderr",
+      "path": "33-instantiate-partial-cross-module-permuted.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "source": "/workspace/scratch/7e3d2a445c44/generic-qualification-5be28e30/native-evidence/33-instantiate-partial-cross-module-permuted.stdout",
+      "destination": "/workspace/scratch/7e3d2a445c44/sf6-generic-instantiation/tests/fixtures/clr-generic-closure/qualification-capture/33-instantiate-partial-cross-module-permuted.stdout",
+      "path": "33-instantiate-partial-cross-module-permuted.stdout",
+      "bytes": 5049,
+      "sha256": "b27348296ed2f5a064a2b811e58df99809474d6498dda2e15107b8d94aa0df59"
+    },
+    {
+      "source": "/workspace/scratch/7e3d2a445c44/generic-qualification-5be28e30/native-evidence/34-instantiate-own-parameters-permuted-mutual-execution.json",
+      "destination": "/workspace/scratch/7e3d2a445c44/sf6-generic-instantiation/tests/fixtures/clr-generic-closure/qualification-capture/34-instantiate-own-parameters-permuted-mutual-execution.json",
+      "path": "34-instantiate-own-parameters-permuted-mutual-execution.json",
+      "bytes": 2628,
+      "sha256": "2d103070a24caba42c070f0b104c5886349360f936ef59b6c5d3ac1afa720f86"
+    },
+    {
+      "source": "/workspace/scratch/7e3d2a445c44/generic-qualification-5be28e30/native-evidence/34-instantiate-own-parameters-permuted-mutual.stderr",
+      "destination": "/workspace/scratch/7e3d2a445c44/sf6-generic-instantiation/tests/fixtures/clr-generic-closure/qualification-capture/34-instantiate-own-parameters-permuted-mutual.stderr",
+      "path": "34-instantiate-own-parameters-permuted-mutual.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "source": "/workspace/scratch/7e3d2a445c44/generic-qualification-5be28e30/native-evidence/34-instantiate-own-parameters-permuted-mutual.stdout",
+      "destination": "/workspace/scratch/7e3d2a445c44/sf6-generic-instantiation/tests/fixtures/clr-generic-closure/qualification-capture/34-instantiate-own-parameters-permuted-mutual.stdout",
+      "path": "34-instantiate-own-parameters-permuted-mutual.stdout",
+      "bytes": 6631,
+      "sha256": "9fc792f11822dfdbc87fb64ddc96ca48624804facc43b868a3965c0dd002dd3f"
+    },
+    {
+      "source": "/workspace/scratch/7e3d2a445c44/generic-qualification-5be28e30/native-evidence/35-resolve-cross-module-owner-identity-execution.json",
+      "destination": "/workspace/scratch/7e3d2a445c44/sf6-generic-instantiation/tests/fixtures/clr-generic-closure/qualification-capture/35-resolve-cross-module-owner-identity-execution.json",
+      "path": "35-resolve-cross-module-owner-identity-execution.json",
+      "bytes": 2593,
+      "sha256": "95f6e0f31823c254f6b58f46fafe03cacc13ca65cf3e41af2b09a60a8f41c897"
+    },
+    {
+      "source": "/workspace/scratch/7e3d2a445c44/generic-qualification-5be28e30/native-evidence/35-resolve-cross-module-owner-identity.stderr",
+      "destination": "/workspace/scratch/7e3d2a445c44/sf6-generic-instantiation/tests/fixtures/clr-generic-closure/qualification-capture/35-resolve-cross-module-owner-identity.stderr",
+      "path": "35-resolve-cross-module-owner-identity.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "source": "/workspace/scratch/7e3d2a445c44/generic-qualification-5be28e30/native-evidence/35-resolve-cross-module-owner-identity.stdout",
+      "destination": "/workspace/scratch/7e3d2a445c44/sf6-generic-instantiation/tests/fixtures/clr-generic-closure/qualification-capture/35-resolve-cross-module-owner-identity.stdout",
+      "path": "35-resolve-cross-module-owner-identity.stdout",
+      "bytes": 6690,
+      "sha256": "35cbbadd2e6734ea674db06c8e8278e0bf5c99cf3e9d219d151f309662c77c24"
+    },
+    {
+      "source": "/workspace/scratch/7e3d2a445c44/generic-qualification-5be28e30/native-evidence/36-instantiate-cross-module-formal-identity-execution.json",
+      "destination": "/workspace/scratch/7e3d2a445c44/sf6-generic-instantiation/tests/fixtures/clr-generic-closure/qualification-capture/36-instantiate-cross-module-formal-identity-execution.json",
+      "path": "36-instantiate-cross-module-formal-identity-execution.json",
+      "bytes": 2618,
+      "sha256": "e474e5049d9e11ce0c627a80c48fec3e874698bef7bbf8c15e66e0d3b391d664"
+    },
+    {
+      "source": "/workspace/scratch/7e3d2a445c44/generic-qualification-5be28e30/native-evidence/36-instantiate-cross-module-formal-identity.stderr",
+      "destination": "/workspace/scratch/7e3d2a445c44/sf6-generic-instantiation/tests/fixtures/clr-generic-closure/qualification-capture/36-instantiate-cross-module-formal-identity.stderr",
+      "path": "36-instantiate-cross-module-formal-identity.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "source": "/workspace/scratch/7e3d2a445c44/generic-qualification-5be28e30/native-evidence/36-instantiate-cross-module-formal-identity.stdout",
+      "destination": "/workspace/scratch/7e3d2a445c44/sf6-generic-instantiation/tests/fixtures/clr-generic-closure/qualification-capture/36-instantiate-cross-module-formal-identity.stdout",
+      "path": "36-instantiate-cross-module-formal-identity.stdout",
+      "bytes": 7908,
+      "sha256": "372e6aae61cab5e53785a9433a01d6823d946aa6ca78d469b4321cbabd237686"
+    },
+    {
+      "source": "/workspace/scratch/7e3d2a445c44/generic-qualification-5be28e30/native-evidence/37-resolve-typespec-simple-self-base-execution.json",
+      "destination": "/workspace/scratch/7e3d2a445c44/sf6-generic-instantiation/tests/fixtures/clr-generic-closure/qualification-capture/37-resolve-typespec-simple-self-base-execution.json",
+      "path": "37-resolve-typespec-simple-self-base-execution.json",
+      "bytes": 2583,
+      "sha256": "c275c58933bcb15aee14c4df82df937885f6031b8cd11d2fa863a9338b5d8d78"
+    },
+    {
+      "source": "/workspace/scratch/7e3d2a445c44/generic-qualification-5be28e30/native-evidence/37-resolve-typespec-simple-self-base.stderr",
+      "destination": "/workspace/scratch/7e3d2a445c44/sf6-generic-instantiation/tests/fixtures/clr-generic-closure/qualification-capture/37-resolve-typespec-simple-self-base.stderr",
+      "path": "37-resolve-typespec-simple-self-base.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "source": "/workspace/scratch/7e3d2a445c44/generic-qualification-5be28e30/native-evidence/37-resolve-typespec-simple-self-base.stdout",
+      "destination": "/workspace/scratch/7e3d2a445c44/sf6-generic-instantiation/tests/fixtures/clr-generic-closure/qualification-capture/37-resolve-typespec-simple-self-base.stdout",
+      "path": "37-resolve-typespec-simple-self-base.stdout",
+      "bytes": 3726,
+      "sha256": "53213bd789e5b210725c7eb0cc8a6f5b8a3c041b2541ba86febb8e96842e9409"
+    },
+    {
+      "source": "/workspace/scratch/7e3d2a445c44/generic-qualification-5be28e30/native-evidence/38-resolve-typespec-expanding-self-base-execution.json",
+      "destination": "/workspace/scratch/7e3d2a445c44/sf6-generic-instantiation/tests/fixtures/clr-generic-closure/qualification-capture/38-resolve-typespec-expanding-self-base-execution.json",
+      "path": "38-resolve-typespec-expanding-self-base-execution.json",
+      "bytes": 2598,
+      "sha256": "3cba74a838b3d2b41a10967d0895a60251e6b05090782e53b7d673caa4b43f96"
+    },
+    {
+      "source": "/workspace/scratch/7e3d2a445c44/generic-qualification-5be28e30/native-evidence/38-resolve-typespec-expanding-self-base.stderr",
+      "destination": "/workspace/scratch/7e3d2a445c44/sf6-generic-instantiation/tests/fixtures/clr-generic-closure/qualification-capture/38-resolve-typespec-expanding-self-base.stderr",
+      "path": "38-resolve-typespec-expanding-self-base.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "source": "/workspace/scratch/7e3d2a445c44/generic-qualification-5be28e30/native-evidence/38-resolve-typespec-expanding-self-base.stdout",
+      "destination": "/workspace/scratch/7e3d2a445c44/sf6-generic-instantiation/tests/fixtures/clr-generic-closure/qualification-capture/38-resolve-typespec-expanding-self-base.stdout",
+      "path": "38-resolve-typespec-expanding-self-base.stdout",
+      "bytes": 3000,
+      "sha256": "0b9d6e14ce521d51bdf2e1648a3a1802778d5ceacc1964dda0fd7f6307221579"
+    },
+    {
+      "source": "/workspace/scratch/7e3d2a445c44/generic-qualification-5be28e30/native-evidence/39-resolve-typespec-cross-permuted-left-execution.json",
+      "destination": "/workspace/scratch/7e3d2a445c44/sf6-generic-instantiation/tests/fixtures/clr-generic-closure/qualification-capture/39-resolve-typespec-cross-permuted-left-execution.json",
+      "path": "39-resolve-typespec-cross-permuted-left-execution.json",
+      "bytes": 2598,
+      "sha256": "91d6918bcce59bc17c2306d89dccec329e4e4faa7b3a3e3ba559c12663a06f77"
+    },
+    {
+      "source": "/workspace/scratch/7e3d2a445c44/generic-qualification-5be28e30/native-evidence/39-resolve-typespec-cross-permuted-left.stderr",
+      "destination": "/workspace/scratch/7e3d2a445c44/sf6-generic-instantiation/tests/fixtures/clr-generic-closure/qualification-capture/39-resolve-typespec-cross-permuted-left.stderr",
+      "path": "39-resolve-typespec-cross-permuted-left.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "source": "/workspace/scratch/7e3d2a445c44/generic-qualification-5be28e30/native-evidence/39-resolve-typespec-cross-permuted-left.stdout",
+      "destination": "/workspace/scratch/7e3d2a445c44/sf6-generic-instantiation/tests/fixtures/clr-generic-closure/qualification-capture/39-resolve-typespec-cross-permuted-left.stdout",
+      "path": "39-resolve-typespec-cross-permuted-left.stdout",
+      "bytes": 4362,
+      "sha256": "f79a4028b78ba01d0abbfa13a42fafbfc53dd28d2852fa2677ed76b6c86dc692"
+    },
+    {
+      "source": "/workspace/scratch/7e3d2a445c44/generic-qualification-5be28e30/native-evidence/40-resolve-hidden-invalid-control-execution.json",
+      "destination": "/workspace/scratch/7e3d2a445c44/sf6-generic-instantiation/tests/fixtures/clr-generic-closure/qualification-capture/40-resolve-hidden-invalid-control-execution.json",
+      "path": "40-resolve-hidden-invalid-control-execution.json",
+      "bytes": 2568,
+      "sha256": "b315ae1a3ced540d0f9aa04bb0362214317393996025b2a3c1774acf8b1acb5f"
+    },
+    {
+      "source": "/workspace/scratch/7e3d2a445c44/generic-qualification-5be28e30/native-evidence/40-resolve-hidden-invalid-control.stderr",
+      "destination": "/workspace/scratch/7e3d2a445c44/sf6-generic-instantiation/tests/fixtures/clr-generic-closure/qualification-capture/40-resolve-hidden-invalid-control.stderr",
+      "path": "40-resolve-hidden-invalid-control.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "source": "/workspace/scratch/7e3d2a445c44/generic-qualification-5be28e30/native-evidence/40-resolve-hidden-invalid-control.stdout",
+      "destination": "/workspace/scratch/7e3d2a445c44/sf6-generic-instantiation/tests/fixtures/clr-generic-closure/qualification-capture/40-resolve-hidden-invalid-control.stdout",
+      "path": "40-resolve-hidden-invalid-control.stdout",
+      "bytes": 2980,
+      "sha256": "cc9c516e8512e84137e875184fa5fa257b644f6684586f9a7493a7459e9b8109"
+    },
+    {
+      "source": "/workspace/scratch/7e3d2a445c44/generic-qualification-5be28e30/native-evidence/capture-inputs.json",
+      "destination": "/workspace/scratch/7e3d2a445c44/sf6-generic-instantiation/tests/fixtures/clr-generic-closure/qualification-capture/capture-inputs.json",
+      "path": "capture-inputs.json",
+      "bytes": 21912,
+      "sha256": "edfd9ed1e683f4b51997e89a9bdb45e271119c805348ec9223f39915597ba29b"
+    },
+    {
+      "source": "/workspace/scratch/7e3d2a445c44/generic-qualification-5be28e30/native-evidence/capture-status.json",
+      "destination": "/workspace/scratch/7e3d2a445c44/sf6-generic-instantiation/tests/fixtures/clr-generic-closure/qualification-capture/capture-status.json",
+      "path": "capture-status.json",
+      "bytes": 204630,
+      "sha256": "df31e642bf6f8dfa61d536592c4f6ded3d01d102e7d59d64e38c4ca53feaf24b"
+    },
+    {
+      "source": "/workspace/scratch/7e3d2a445c44/generic-qualification-5be28e30/native-evidence/retained-files.json",
+      "destination": "/workspace/scratch/7e3d2a445c44/sf6-generic-instantiation/tests/fixtures/clr-generic-closure/qualification-capture/retained-files.json",
+      "path": "retained-files.json",
+      "bytes": 16845,
+      "sha256": "f0dd74aea990e32f7109b976abf9daae936d093f66ba6f26be41ba9bcdc05104"
+    },
+    {
+      "source": "/workspace/scratch/7e3d2a445c44/generic-qualification-5be28e30/native-evidence/workspace/NuGet.Config",
+      "destination": "/workspace/scratch/7e3d2a445c44/sf6-generic-instantiation/tests/fixtures/clr-generic-closure/qualification-capture/workspace/NuGet.Config",
+      "path": "workspace/NuGet.Config",
+      "bytes": 73,
+      "sha256": "e497501960554d323eef45860c14474958accd1ae7f3ae6f95b10e4c1d340401"
+    },
+    {
+      "source": "/workspace/scratch/7e3d2a445c44/generic-qualification-5be28e30/native-evidence/workspace/global.json",
+      "destination": "/workspace/scratch/7e3d2a445c44/sf6-generic-instantiation/tests/fixtures/clr-generic-closure/qualification-capture/workspace/global.json",
+      "path": "workspace/global.json",
+      "bytes": 105,
+      "sha256": "8ede13416e0155ae327d8816fce07b9ba21cb4e2c1e0b17ae2f052fb89cccbd4"
+    },
+    {
+      "source": "/workspace/scratch/7e3d2a445c44/generic-qualification-5be28e30/native-evidence/workspace/images/Closure_acyclic_expansion.dll",
+      "destination": "/workspace/scratch/7e3d2a445c44/sf6-generic-instantiation/tests/fixtures/clr-generic-closure/qualification-capture/workspace/images/Closure_acyclic_expansion.dll",
+      "path": "workspace/images/Closure_acyclic_expansion.dll",
+      "bytes": 2048,
+      "sha256": "6c8a65fc091d29f95f79c31568d62fa4f0a924e5e1a2b7b2562085a5e3bd4525"
+    },
+    {
+      "source": "/workspace/scratch/7e3d2a445c44/generic-qualification-5be28e30/native-evidence/workspace/images/Closure_array_acyclic_expansion.dll",
+      "destination": "/workspace/scratch/7e3d2a445c44/sf6-generic-instantiation/tests/fixtures/clr-generic-closure/qualification-capture/workspace/images/Closure_array_acyclic_expansion.dll",
+      "path": "workspace/images/Closure_array_acyclic_expansion.dll",
+      "bytes": 2048,
+      "sha256": "b1ac6a2ab8d62948a3b83384861b599058f2979f171e3f521a313302ab3b0d5b"
+    },
+    {
+      "source": "/workspace/scratch/7e3d2a445c44/generic-qualification-5be28e30/native-evidence/workspace/images/Closure_array_expanding.dll",
+      "destination": "/workspace/scratch/7e3d2a445c44/sf6-generic-instantiation/tests/fixtures/clr-generic-closure/qualification-capture/workspace/images/Closure_array_expanding.dll",
+      "path": "workspace/images/Closure_array_expanding.dll",
+      "bytes": 2048,
+      "sha256": "25a01d097f8307564e3e51f8bdc8d0ca84ca5146863160c6af70d01fb47c9fdc"
+    },
+    {
+      "source": "/workspace/scratch/7e3d2a445c44/generic-qualification-5be28e30/native-evidence/workspace/images/Closure_cross_expanding_left.dll",
+      "destination": "/workspace/scratch/7e3d2a445c44/sf6-generic-instantiation/tests/fixtures/clr-generic-closure/qualification-capture/workspace/images/Closure_cross_expanding_left.dll",
+      "path": "workspace/images/Closure_cross_expanding_left.dll",
+      "bytes": 2048,
+      "sha256": "1d0dabd1004f43a00221353f231895737cf2076345fed833348c4a8142fbe1b6"
+    },
+    {
+      "source": "/workspace/scratch/7e3d2a445c44/generic-qualification-5be28e30/native-evidence/workspace/images/Closure_cross_expanding_right.dll",
+      "destination": "/workspace/scratch/7e3d2a445c44/sf6-generic-instantiation/tests/fixtures/clr-generic-closure/qualification-capture/workspace/images/Closure_cross_expanding_right.dll",
+      "path": "workspace/images/Closure_cross_expanding_right.dll",
+      "bytes": 2048,
+      "sha256": "0d63944bb8e9922cab8095cadd40801709bdb5c0d3b0b620a25ac4e55530426a"
+    },
+    {
+      "source": "/workspace/scratch/7e3d2a445c44/generic-qualification-5be28e30/native-evidence/workspace/images/Closure_cross_permuted_left.dll",
+      "destination": "/workspace/scratch/7e3d2a445c44/sf6-generic-instantiation/tests/fixtures/clr-generic-closure/qualification-capture/workspace/images/Closure_cross_permuted_left.dll",
+      "path": "workspace/images/Closure_cross_permuted_left.dll",
+      "bytes": 2048,
+      "sha256": "1e71e6885764ed59daec92ea235d60fd627caab81307127bf4fe5e28294722b4"
+    },
+    {
+      "source": "/workspace/scratch/7e3d2a445c44/generic-qualification-5be28e30/native-evidence/workspace/images/Closure_cross_permuted_right.dll",
+      "destination": "/workspace/scratch/7e3d2a445c44/sf6-generic-instantiation/tests/fixtures/clr-generic-closure/qualification-capture/workspace/images/Closure_cross_permuted_right.dll",
+      "path": "workspace/images/Closure_cross_permuted_right.dll",
+      "bytes": 2048,
+      "sha256": "44576399d53166661528b4a1d2eda49dfb3bdcd7c2d1a85e06a579179b1d4692"
+    },
+    {
+      "source": "/workspace/scratch/7e3d2a445c44/generic-qualification-5be28e30/native-evidence/workspace/images/Closure_erased_constant_cycle.dll",
+      "destination": "/workspace/scratch/7e3d2a445c44/sf6-generic-instantiation/tests/fixtures/clr-generic-closure/qualification-capture/workspace/images/Closure_erased_constant_cycle.dll",
+      "path": "workspace/images/Closure_erased_constant_cycle.dll",
+      "bytes": 2048,
+      "sha256": "5cf946b2d07571d0d558788dc19a65bfc99b8c36da0635951f4671669b94d7c4"
+    },
+    {
+      "source": "/workspace/scratch/7e3d2a445c44/generic-qualification-5be28e30/native-evidence/workspace/images/Closure_expanding_self_base.dll",
+      "destination": "/workspace/scratch/7e3d2a445c44/sf6-generic-instantiation/tests/fixtures/clr-generic-closure/qualification-capture/workspace/images/Closure_expanding_self_base.dll",
+      "path": "workspace/images/Closure_expanding_self_base.dll",
+      "bytes": 2048,
+      "sha256": "360319412647dda461159a820d711d9db335626a5b2888f6bcbb9f326179bcac"
+    },
+    {
+      "source": "/workspace/scratch/7e3d2a445c44/generic-qualification-5be28e30/native-evidence/workspace/images/Closure_indirect_expanding.dll",
+      "destination": "/workspace/scratch/7e3d2a445c44/sf6-generic-instantiation/tests/fixtures/clr-generic-closure/qualification-capture/workspace/images/Closure_indirect_expanding.dll",
+      "path": "workspace/images/Closure_indirect_expanding.dll",
+      "bytes": 2048,
+      "sha256": "ad6ff2ac32307f72807caee6be5c32518f8142227189bad683e45fe061eb2552"
+    },
+    {
+      "source": "/workspace/scratch/7e3d2a445c44/generic-qualification-5be28e30/native-evidence/workspace/images/Closure_nested_invalid.dll",
+      "destination": "/workspace/scratch/7e3d2a445c44/sf6-generic-instantiation/tests/fixtures/clr-generic-closure/qualification-capture/workspace/images/Closure_nested_invalid.dll",
+      "path": "workspace/images/Closure_nested_invalid.dll",
+      "bytes": 2048,
+      "sha256": "609e78346c5031eeafd14ef4ae2a681c5eb2c81c4da8faecf33e6bd34f1e9921"
+    },
+    {
+      "source": "/workspace/scratch/7e3d2a445c44/generic-qualification-5be28e30/native-evidence/workspace/images/Closure_non_generic_self_interface.dll",
+      "destination": "/workspace/scratch/7e3d2a445c44/sf6-generic-instantiation/tests/fixtures/clr-generic-closure/qualification-capture/workspace/images/Closure_non_generic_self_interface.dll",
+      "path": "workspace/images/Closure_non_generic_self_interface.dll",
+      "bytes": 2048,
+      "sha256": "eb48f84ebf9b07dfb3db6846e5e0a66ee78211bd32ec00a6f28cb89caeac942c"
+    },
+    {
+      "source": "/workspace/scratch/7e3d2a445c44/generic-qualification-5be28e30/native-evidence/workspace/images/Closure_permuted_mutual.dll",
+      "destination": "/workspace/scratch/7e3d2a445c44/sf6-generic-instantiation/tests/fixtures/clr-generic-closure/qualification-capture/workspace/images/Closure_permuted_mutual.dll",
+      "path": "workspace/images/Closure_permuted_mutual.dll",
+      "bytes": 2048,
+      "sha256": "08f18d68521d52c520d3bda4a4050b6fd8f539fa7b78934a76cf666463b18438"
+    },
+    {
+      "source": "/workspace/scratch/7e3d2a445c44/generic-qualification-5be28e30/native-evidence/workspace/images/Closure_simple_self_base.dll",
+      "destination": "/workspace/scratch/7e3d2a445c44/sf6-generic-instantiation/tests/fixtures/clr-generic-closure/qualification-capture/workspace/images/Closure_simple_self_base.dll",
+      "path": "workspace/images/Closure_simple_self_base.dll",
+      "bytes": 2048,
+      "sha256": "3e9b7b31ab77ef23ced93aea139801f97f9986372f28a82aaa2ea66bc70b0e85"
+    },
+    {
+      "source": "/workspace/scratch/7e3d2a445c44/generic-qualification-5be28e30/native-evidence/workspace/images/GenericClosureOracle.dll",
+      "destination": "/workspace/scratch/7e3d2a445c44/sf6-generic-instantiation/tests/fixtures/clr-generic-closure/qualification-capture/workspace/images/GenericClosureOracle.dll",
+      "path": "workspace/images/GenericClosureOracle.dll",
+      "bytes": 112128,
+      "sha256": "7a72f59c3af3302756123cdfd3d4795fbe89e0e6fe534b3992ccb50bf99a4d67"
+    },
+    {
+      "source": "/workspace/scratch/7e3d2a445c44/generic-qualification-5be28e30/native-evidence/workspace/images/images.json",
+      "destination": "/workspace/scratch/7e3d2a445c44/sf6-generic-instantiation/tests/fixtures/clr-generic-closure/qualification-capture/workspace/images/images.json",
+      "path": "workspace/images/images.json",
+      "bytes": 38613,
+      "sha256": "812bb255063f49db98d354d0b3ce59f563747da73ed615f06e0c130f3677493b"
+    },
+    {
+      "source": "/workspace/scratch/7e3d2a445c44/generic-qualification-5be28e30/native-evidence/workspace/pinned.runtimeconfig.json",
+      "destination": "/workspace/scratch/7e3d2a445c44/sf6-generic-instantiation/tests/fixtures/clr-generic-closure/qualification-capture/workspace/pinned.runtimeconfig.json",
+      "path": "workspace/pinned.runtimeconfig.json",
+      "bytes": 172,
+      "sha256": "6242cc4e8692c65a90f1402fa643754d516ccb7e93c1d34f9dedf00db0b532ec"
+    },
+    {
+      "source": "/workspace/scratch/7e3d2a445c44/generic-qualification-5be28e30/native-evidence/workspace/progress/instantiate-acyclic-expansion.jsonl",
+      "destination": "/workspace/scratch/7e3d2a445c44/sf6-generic-instantiation/tests/fixtures/clr-generic-closure/qualification-capture/workspace/progress/instantiate-acyclic-expansion.jsonl",
+      "path": "workspace/progress/instantiate-acyclic-expansion.jsonl",
+      "bytes": 13489,
+      "sha256": "32e4ad79fdbcf69ab710092a37b0eeac29d6e93e4eb3a96e149e133075a1854c"
+    },
+    {
+      "source": "/workspace/scratch/7e3d2a445c44/generic-qualification-5be28e30/native-evidence/workspace/progress/instantiate-array-acyclic-expansion.jsonl",
+      "destination": "/workspace/scratch/7e3d2a445c44/sf6-generic-instantiation/tests/fixtures/clr-generic-closure/qualification-capture/workspace/progress/instantiate-array-acyclic-expansion.jsonl",
+      "path": "workspace/progress/instantiate-array-acyclic-expansion.jsonl",
+      "bytes": 13547,
+      "sha256": "268e30df2571041d39cd3d98fd7ceb0f640f2b2c86ccee029e52e38f917681e7"
+    },
+    {
+      "source": "/workspace/scratch/7e3d2a445c44/generic-qualification-5be28e30/native-evidence/workspace/progress/instantiate-array-expanding.jsonl",
+      "destination": "/workspace/scratch/7e3d2a445c44/sf6-generic-instantiation/tests/fixtures/clr-generic-closure/qualification-capture/workspace/progress/instantiate-array-expanding.jsonl",
+      "path": "workspace/progress/instantiate-array-expanding.jsonl",
+      "bytes": 9545,
+      "sha256": "1211ff816be7f2100b43ffa5447641f783920a513fe022b84cae1a36a43a78a1"
+    },
+    {
+      "source": "/workspace/scratch/7e3d2a445c44/generic-qualification-5be28e30/native-evidence/workspace/progress/instantiate-cross-module-expanding.jsonl",
+      "destination": "/workspace/scratch/7e3d2a445c44/sf6-generic-instantiation/tests/fixtures/clr-generic-closure/qualification-capture/workspace/progress/instantiate-cross-module-expanding.jsonl",
+      "path": "workspace/progress/instantiate-cross-module-expanding.jsonl",
+      "bytes": 10212,
+      "sha256": "c50169a13a0c37fc4170158cb078105dba8b73ed242a02c4e928f3786a7cf32c"
+    },
+    {
+      "source": "/workspace/scratch/7e3d2a445c44/generic-qualification-5be28e30/native-evidence/workspace/progress/instantiate-cross-module-formal-identity.jsonl",
+      "destination": "/workspace/scratch/7e3d2a445c44/sf6-generic-instantiation/tests/fixtures/clr-generic-closure/qualification-capture/workspace/progress/instantiate-cross-module-formal-identity.jsonl",
+      "path": "workspace/progress/instantiate-cross-module-formal-identity.jsonl",
+      "bytes": 30876,
+      "sha256": "c1b48707620186d6366deaf8e001331d5ac93ccd9596c3e5ffad67be620ae26b"
+    },
+    {
+      "source": "/workspace/scratch/7e3d2a445c44/generic-qualification-5be28e30/native-evidence/workspace/progress/instantiate-cross-module-permuted.jsonl",
+      "destination": "/workspace/scratch/7e3d2a445c44/sf6-generic-instantiation/tests/fixtures/clr-generic-closure/qualification-capture/workspace/progress/instantiate-cross-module-permuted.jsonl",
+      "path": "workspace/progress/instantiate-cross-module-permuted.jsonl",
+      "bytes": 14917,
+      "sha256": "b9a6e3691849efd5895325b26159786fded688808dcdfbbf13f3f9b745be43f0"
+    },
+    {
+      "source": "/workspace/scratch/7e3d2a445c44/generic-qualification-5be28e30/native-evidence/workspace/progress/instantiate-erased-constant-cycle.jsonl",
+      "destination": "/workspace/scratch/7e3d2a445c44/sf6-generic-instantiation/tests/fixtures/clr-generic-closure/qualification-capture/workspace/progress/instantiate-erased-constant-cycle.jsonl",
+      "path": "workspace/progress/instantiate-erased-constant-cycle.jsonl",
+      "bytes": 9591,
+      "sha256": "605f2432ca9548fccb063e4a82aef19af4b5801fd4f2234b3a8a1cf6211686ab"
+    },
+    {
+      "source": "/workspace/scratch/7e3d2a445c44/generic-qualification-5be28e30/native-evidence/workspace/progress/instantiate-expanding-self-base.jsonl",
+      "destination": "/workspace/scratch/7e3d2a445c44/sf6-generic-instantiation/tests/fixtures/clr-generic-closure/qualification-capture/workspace/progress/instantiate-expanding-self-base.jsonl",
+      "path": "workspace/progress/instantiate-expanding-self-base.jsonl",
+      "bytes": 9693,
+      "sha256": "870950dd1e49143cf1c0436c68a1c436f913d6712207c75f74255aff5bd91482"
+    },
+    {
+      "source": "/workspace/scratch/7e3d2a445c44/generic-qualification-5be28e30/native-evidence/workspace/progress/instantiate-hidden-invalid-argument.jsonl",
+      "destination": "/workspace/scratch/7e3d2a445c44/sf6-generic-instantiation/tests/fixtures/clr-generic-closure/qualification-capture/workspace/progress/instantiate-hidden-invalid-argument.jsonl",
+      "path": "workspace/progress/instantiate-hidden-invalid-argument.jsonl",
+      "bytes": 9633,
+      "sha256": "31e65f754ef009b0021fd8f3df3a482a492c7c77f15da39851117040b4f008ea"
+    },
+    {
+      "source": "/workspace/scratch/7e3d2a445c44/generic-qualification-5be28e30/native-evidence/workspace/progress/instantiate-indirect-expanding.jsonl",
+      "destination": "/workspace/scratch/7e3d2a445c44/sf6-generic-instantiation/tests/fixtures/clr-generic-closure/qualification-capture/workspace/progress/instantiate-indirect-expanding.jsonl",
+      "path": "workspace/progress/instantiate-indirect-expanding.jsonl",
+      "bytes": 9656,
+      "sha256": "318ccedb33a9eb6c67160e58e5e5644b827f409015bd5ac510c9f94c631d464d"
+    },
+    {
+      "source": "/workspace/scratch/7e3d2a445c44/generic-qualification-5be28e30/native-evidence/workspace/progress/instantiate-own-parameters-permuted-mutual.jsonl",
+      "destination": "/workspace/scratch/7e3d2a445c44/sf6-generic-instantiation/tests/fixtures/clr-generic-closure/qualification-capture/workspace/progress/instantiate-own-parameters-permuted-mutual.jsonl",
+      "path": "workspace/progress/instantiate-own-parameters-permuted-mutual.jsonl",
+      "bytes": 29677,
+      "sha256": "2622d7fc3402ca10636c88f81c99890c9ab6e7800597274f1b8aaecda9748c15"
+    },
+    {
+      "source": "/workspace/scratch/7e3d2a445c44/generic-qualification-5be28e30/native-evidence/workspace/progress/instantiate-partial-cross-module-permuted.jsonl",
+      "destination": "/workspace/scratch/7e3d2a445c44/sf6-generic-instantiation/tests/fixtures/clr-generic-closure/qualification-capture/workspace/progress/instantiate-partial-cross-module-permuted.jsonl",
+      "path": "workspace/progress/instantiate-partial-cross-module-permuted.jsonl",
+      "bytes": 19928,
+      "sha256": "53d3fb520030f8298582e7cf22373108077f466ff86898ca3d38042fb1e0fb57"
+    },
+    {
+      "source": "/workspace/scratch/7e3d2a445c44/generic-qualification-5be28e30/native-evidence/workspace/progress/instantiate-partial-permuted-mutual.jsonl",
+      "destination": "/workspace/scratch/7e3d2a445c44/sf6-generic-instantiation/tests/fixtures/clr-generic-closure/qualification-capture/workspace/progress/instantiate-partial-permuted-mutual.jsonl",
+      "path": "workspace/progress/instantiate-partial-permuted-mutual.jsonl",
+      "bytes": 19358,
+      "sha256": "f3858ba1c2fa501d5dad58d09ede080f602561dcdc9a1c0eb5253e9c63447382"
+    },
+    {
+      "source": "/workspace/scratch/7e3d2a445c44/generic-qualification-5be28e30/native-evidence/workspace/progress/instantiate-permuted-mutual.jsonl",
+      "destination": "/workspace/scratch/7e3d2a445c44/sf6-generic-instantiation/tests/fixtures/clr-generic-closure/qualification-capture/workspace/progress/instantiate-permuted-mutual.jsonl",
+      "path": "workspace/progress/instantiate-permuted-mutual.jsonl",
+      "bytes": 14563,
+      "sha256": "f18cc2f7e2d82f9c3cee1678a4ad434e9fe3d6520fe64fb5f1c4e4b4bbc6304c"
+    },
+    {
+      "source": "/workspace/scratch/7e3d2a445c44/generic-qualification-5be28e30/native-evidence/workspace/progress/instantiate-simple-self-base.jsonl",
+      "destination": "/workspace/scratch/7e3d2a445c44/sf6-generic-instantiation/tests/fixtures/clr-generic-closure/qualification-capture/workspace/progress/instantiate-simple-self-base.jsonl",
+      "path": "workspace/progress/instantiate-simple-self-base.jsonl",
+      "bytes": 12884,
+      "sha256": "3a30f97f4bbe7bc62fb45e029d5438cf6d78bcebe23054728739f87c69f8aac9"
+    },
+    {
+      "source": "/workspace/scratch/7e3d2a445c44/generic-qualification-5be28e30/native-evidence/workspace/progress/instantiate-unrelated-invalid.jsonl",
+      "destination": "/workspace/scratch/7e3d2a445c44/sf6-generic-instantiation/tests/fixtures/clr-generic-closure/qualification-capture/workspace/progress/instantiate-unrelated-invalid.jsonl",
+      "path": "workspace/progress/instantiate-unrelated-invalid.jsonl",
+      "bytes": 12293,
+      "sha256": "1688c1dd549f9257a8cdbc65b1c1053745524b62a24d8a69cc186152abb8b882"
+    },
+    {
+      "source": "/workspace/scratch/7e3d2a445c44/generic-qualification-5be28e30/native-evidence/workspace/progress/resolve-acyclic-expansion.jsonl",
+      "destination": "/workspace/scratch/7e3d2a445c44/sf6-generic-instantiation/tests/fixtures/clr-generic-closure/qualification-capture/workspace/progress/resolve-acyclic-expansion.jsonl",
+      "path": "workspace/progress/resolve-acyclic-expansion.jsonl",
+      "bytes": 9996,
+      "sha256": "22c77db45cd115e3ac2c46a04c2b5327b0c65edb574856a65d092fe769d17f62"
+    },
+    {
+      "source": "/workspace/scratch/7e3d2a445c44/generic-qualification-5be28e30/native-evidence/workspace/progress/resolve-array-acyclic-expansion.jsonl",
+      "destination": "/workspace/scratch/7e3d2a445c44/sf6-generic-instantiation/tests/fixtures/clr-generic-closure/qualification-capture/workspace/progress/resolve-array-acyclic-expansion.jsonl",
+      "path": "workspace/progress/resolve-array-acyclic-expansion.jsonl",
+      "bytes": 9994,
+      "sha256": "0472064d4624d30008605aa60b74bebf4607ff8b01e9590c350e2d4b7f0e5256"
+    },
+    {
+      "source": "/workspace/scratch/7e3d2a445c44/generic-qualification-5be28e30/native-evidence/workspace/progress/resolve-array-expanding.jsonl",
+      "destination": "/workspace/scratch/7e3d2a445c44/sf6-generic-instantiation/tests/fixtures/clr-generic-closure/qualification-capture/workspace/progress/resolve-array-expanding.jsonl",
+      "path": "workspace/progress/resolve-array-expanding.jsonl",
+      "bytes": 7871,
+      "sha256": "5a98e6f5a907a5c69a3965d22d15d13e7a61e3d3585ac09b17fcdf188dc371e2"
+    },
+    {
+      "source": "/workspace/scratch/7e3d2a445c44/generic-qualification-5be28e30/native-evidence/workspace/progress/resolve-cross-module-expanding.jsonl",
+      "destination": "/workspace/scratch/7e3d2a445c44/sf6-generic-instantiation/tests/fixtures/clr-generic-closure/qualification-capture/workspace/progress/resolve-cross-module-expanding.jsonl",
+      "path": "workspace/progress/resolve-cross-module-expanding.jsonl",
+      "bytes": 8048,
+      "sha256": "e26146d96e869748ba7e083377e6c1128fffac13358370e1a83e5472a3f3a4d4"
+    },
+    {
+      "source": "/workspace/scratch/7e3d2a445c44/generic-qualification-5be28e30/native-evidence/workspace/progress/resolve-cross-module-owner-identity.jsonl",
+      "destination": "/workspace/scratch/7e3d2a445c44/sf6-generic-instantiation/tests/fixtures/clr-generic-closure/qualification-capture/workspace/progress/resolve-cross-module-owner-identity.jsonl",
+      "path": "workspace/progress/resolve-cross-module-owner-identity.jsonl",
+      "bytes": 18089,
+      "sha256": "a788fe6a4ce537705afaa7801f16bf3ccf482d2dcb6f1a0dd05da78fb75e8077"
+    },
+    {
+      "source": "/workspace/scratch/7e3d2a445c44/generic-qualification-5be28e30/native-evidence/workspace/progress/resolve-cross-module-permuted.jsonl",
+      "destination": "/workspace/scratch/7e3d2a445c44/sf6-generic-instantiation/tests/fixtures/clr-generic-closure/qualification-capture/workspace/progress/resolve-cross-module-permuted.jsonl",
+      "path": "workspace/progress/resolve-cross-module-permuted.jsonl",
+      "bytes": 10600,
+      "sha256": "31d9ab65bd658e9a2e190b31a73527e2d7405ff989e1c2eaa44c011f33d28e27"
+    },
+    {
+      "source": "/workspace/scratch/7e3d2a445c44/generic-qualification-5be28e30/native-evidence/workspace/progress/resolve-erased-constant-cycle.jsonl",
+      "destination": "/workspace/scratch/7e3d2a445c44/sf6-generic-instantiation/tests/fixtures/clr-generic-closure/qualification-capture/workspace/progress/resolve-erased-constant-cycle.jsonl",
+      "path": "workspace/progress/resolve-erased-constant-cycle.jsonl",
+      "bytes": 7857,
+      "sha256": "c6eb31807d823a785dde8f78e1ccf34501bdbd2f326d40af414906c5c8b205e7"
+    },
+    {
+      "source": "/workspace/scratch/7e3d2a445c44/generic-qualification-5be28e30/native-evidence/workspace/progress/resolve-expanding-self-base.jsonl",
+      "destination": "/workspace/scratch/7e3d2a445c44/sf6-generic-instantiation/tests/fixtures/clr-generic-closure/qualification-capture/workspace/progress/resolve-expanding-self-base.jsonl",
+      "path": "workspace/progress/resolve-expanding-self-base.jsonl",
+      "bytes": 7979,
+      "sha256": "7358734d81201fa20c4568a182679659429d0bdc9f68b6795f9403043e5ec53f"
+    },
+    {
+      "source": "/workspace/scratch/7e3d2a445c44/generic-qualification-5be28e30/native-evidence/workspace/progress/resolve-hidden-invalid-argument.jsonl",
+      "destination": "/workspace/scratch/7e3d2a445c44/sf6-generic-instantiation/tests/fixtures/clr-generic-closure/qualification-capture/workspace/progress/resolve-hidden-invalid-argument.jsonl",
+      "path": "workspace/progress/resolve-hidden-invalid-argument.jsonl",
+      "bytes": 7969,
+      "sha256": "8a093be7f82927d760f34fc623b7bc6a95ee22d30c062a5dad93ea4f90b5fdf4"
+    },
+    {
+      "source": "/workspace/scratch/7e3d2a445c44/generic-qualification-5be28e30/native-evidence/workspace/progress/resolve-hidden-invalid-control.jsonl",
+      "destination": "/workspace/scratch/7e3d2a445c44/sf6-generic-instantiation/tests/fixtures/clr-generic-closure/qualification-capture/workspace/progress/resolve-hidden-invalid-control.jsonl",
+      "path": "workspace/progress/resolve-hidden-invalid-control.jsonl",
+      "bytes": 7957,
+      "sha256": "5bcf25574966f7bf930553afa6046b7a9eeba8f8e5a4b71050e97149a5fdafa6"
+    },
+    {
+      "source": "/workspace/scratch/7e3d2a445c44/generic-qualification-5be28e30/native-evidence/workspace/progress/resolve-indirect-expanding.jsonl",
+      "destination": "/workspace/scratch/7e3d2a445c44/sf6-generic-instantiation/tests/fixtures/clr-generic-closure/qualification-capture/workspace/progress/resolve-indirect-expanding.jsonl",
+      "path": "workspace/progress/resolve-indirect-expanding.jsonl",
+      "bytes": 7952,
+      "sha256": "13fce0c1d9c00df63d49d6f54b360acabb6616967b7003a95582bd9958067342"
+    },
+    {
+      "source": "/workspace/scratch/7e3d2a445c44/generic-qualification-5be28e30/native-evidence/workspace/progress/resolve-non-generic-self-interface.jsonl",
+      "destination": "/workspace/scratch/7e3d2a445c44/sf6-generic-instantiation/tests/fixtures/clr-generic-closure/qualification-capture/workspace/progress/resolve-non-generic-self-interface.jsonl",
+      "path": "workspace/progress/resolve-non-generic-self-interface.jsonl",
+      "bytes": 8611,
+      "sha256": "6490d6676bdf1f7558aa6a141a8503d6e563cd7795a50bcc66fb477c6133a418"
+    },
+    {
+      "source": "/workspace/scratch/7e3d2a445c44/generic-qualification-5be28e30/native-evidence/workspace/progress/resolve-permuted-mutual.jsonl",
+      "destination": "/workspace/scratch/7e3d2a445c44/sf6-generic-instantiation/tests/fixtures/clr-generic-closure/qualification-capture/workspace/progress/resolve-permuted-mutual.jsonl",
+      "path": "workspace/progress/resolve-permuted-mutual.jsonl",
+      "bytes": 10258,
+      "sha256": "424eafd7d60c262e23bfaeb049fa10124dcbe0a028b241140b292a077eae2cd1"
+    },
+    {
+      "source": "/workspace/scratch/7e3d2a445c44/generic-qualification-5be28e30/native-evidence/workspace/progress/resolve-simple-self-base.jsonl",
+      "destination": "/workspace/scratch/7e3d2a445c44/sf6-generic-instantiation/tests/fixtures/clr-generic-closure/qualification-capture/workspace/progress/resolve-simple-self-base.jsonl",
+      "path": "workspace/progress/resolve-simple-self-base.jsonl",
+      "bytes": 8757,
+      "sha256": "a9f163f8b4ba1fb406d5a1d1fb4087d827972d185a73ae5af6816ac8dc0a15f4"
+    },
+    {
+      "source": "/workspace/scratch/7e3d2a445c44/generic-qualification-5be28e30/native-evidence/workspace/progress/resolve-typespec-cross-permuted-left.jsonl",
+      "destination": "/workspace/scratch/7e3d2a445c44/sf6-generic-instantiation/tests/fixtures/clr-generic-closure/qualification-capture/workspace/progress/resolve-typespec-cross-permuted-left.jsonl",
+      "path": "workspace/progress/resolve-typespec-cross-permuted-left.jsonl",
+      "bytes": 11440,
+      "sha256": "cd97e4a023c932737b90820d890b7dd0e57a943199e4b42577f58c2547c2a1fd"
+    },
+    {
+      "source": "/workspace/scratch/7e3d2a445c44/generic-qualification-5be28e30/native-evidence/workspace/progress/resolve-typespec-expanding-self-base.jsonl",
+      "destination": "/workspace/scratch/7e3d2a445c44/sf6-generic-instantiation/tests/fixtures/clr-generic-closure/qualification-capture/workspace/progress/resolve-typespec-expanding-self-base.jsonl",
+      "path": "workspace/progress/resolve-typespec-expanding-self-base.jsonl",
+      "bytes": 8097,
+      "sha256": "fd50a39a56f094e2a4e4abb9b44a4ae0cd6ce8f339f7a6342953068e74094352"
+    },
+    {
+      "source": "/workspace/scratch/7e3d2a445c44/generic-qualification-5be28e30/native-evidence/workspace/progress/resolve-typespec-simple-self-base.jsonl",
+      "destination": "/workspace/scratch/7e3d2a445c44/sf6-generic-instantiation/tests/fixtures/clr-generic-closure/qualification-capture/workspace/progress/resolve-typespec-simple-self-base.jsonl",
+      "path": "workspace/progress/resolve-typespec-simple-self-base.jsonl",
+      "bytes": 10111,
+      "sha256": "92a0b0151486e1549712181de5b6e3b62f447105f3818da1641abf7bc10b454f"
+    },
+    {
+      "source": "/workspace/scratch/7e3d2a445c44/generic-qualification-5be28e30/native-evidence/workspace/progress/resolve-unrelated-invalid.jsonl",
+      "destination": "/workspace/scratch/7e3d2a445c44/sf6-generic-instantiation/tests/fixtures/clr-generic-closure/qualification-capture/workspace/progress/resolve-unrelated-invalid.jsonl",
+      "path": "workspace/progress/resolve-unrelated-invalid.jsonl",
+      "bytes": 8824,
+      "sha256": "0853c6949635ad60917b7b2df259ba43d0f9b3db2c4d83d671bf6ec05de436cf"
+    },
+    {
+      "source": "/workspace/scratch/7e3d2a445c44/generic-qualification-5be28e30/native-evidence/workspace/source/packages/clr/interop/GenericClosure/CaseObservations.cs",
+      "destination": "/workspace/scratch/7e3d2a445c44/sf6-generic-instantiation/tests/fixtures/clr-generic-closure/qualification-capture/workspace/source/packages/clr/interop/GenericClosure/CaseObservations.cs",
+      "path": "workspace/source/packages/clr/interop/GenericClosure/CaseObservations.cs",
+      "bytes": 6865,
+      "sha256": "18ee2ae6d35eacd275ea7538b20ab1e597dfb5da51dfe7e5e2681ca2eb1dd418"
+    },
+    {
+      "source": "/workspace/scratch/7e3d2a445c44/generic-qualification-5be28e30/native-evidence/workspace/source/packages/clr/interop/GenericClosure/MetadataImage.cs",
+      "destination": "/workspace/scratch/7e3d2a445c44/sf6-generic-instantiation/tests/fixtures/clr-generic-closure/qualification-capture/workspace/source/packages/clr/interop/GenericClosure/MetadataImage.cs",
+      "path": "workspace/source/packages/clr/interop/GenericClosure/MetadataImage.cs",
+      "bytes": 9497,
+      "sha256": "23bf64a5bd41679b9c983912547e55577f555546b0c9089fb939fdebd3853150"
+    },
+    {
+      "source": "/workspace/scratch/7e3d2a445c44/generic-qualification-5be28e30/native-evidence/workspace/source/packages/clr/interop/GenericClosure/MetadataInventory.cs",
+      "destination": "/workspace/scratch/7e3d2a445c44/sf6-generic-instantiation/tests/fixtures/clr-generic-closure/qualification-capture/workspace/source/packages/clr/interop/GenericClosure/MetadataInventory.cs",
+      "path": "workspace/source/packages/clr/interop/GenericClosure/MetadataInventory.cs",
+      "bytes": 3634,
+      "sha256": "16a571f9f22f66c512d0f0f2d480e4a2fb2b069d8618b49b379f9a6698f2608f"
+    },
+    {
+      "source": "/workspace/scratch/7e3d2a445c44/generic-qualification-5be28e30/native-evidence/workspace/source/packages/clr/interop/GenericClosure/NativeTypes.cs",
+      "destination": "/workspace/scratch/7e3d2a445c44/sf6-generic-instantiation/tests/fixtures/clr-generic-closure/qualification-capture/workspace/source/packages/clr/interop/GenericClosure/NativeTypes.cs",
+      "path": "workspace/source/packages/clr/interop/GenericClosure/NativeTypes.cs",
+      "bytes": 4122,
+      "sha256": "e875b613ad75e5db9300cf362cb909dfcd625d996e068372ab30b3886e9a2367"
+    },
+    {
+      "source": "/workspace/scratch/7e3d2a445c44/generic-qualification-5be28e30/native-evidence/workspace/source/packages/clr/interop/GenericClosure/Program.cs",
+      "destination": "/workspace/scratch/7e3d2a445c44/sf6-generic-instantiation/tests/fixtures/clr-generic-closure/qualification-capture/workspace/source/packages/clr/interop/GenericClosure/Program.cs",
+      "path": "workspace/source/packages/clr/interop/GenericClosure/Program.cs",
+      "bytes": 2693,
+      "sha256": "5d0e33b219f05e24a15b5a158acdc3f0d1072ddb3aa3c8074b514ca1387c4358"
+    },
+    {
+      "source": "/workspace/scratch/7e3d2a445c44/generic-qualification-5be28e30/native-evidence/workspace/source/packages/clr/interop/GenericClosure/RequestBindings.cs",
+      "destination": "/workspace/scratch/7e3d2a445c44/sf6-generic-instantiation/tests/fixtures/clr-generic-closure/qualification-capture/workspace/source/packages/clr/interop/GenericClosure/RequestBindings.cs",
+      "path": "workspace/source/packages/clr/interop/GenericClosure/RequestBindings.cs",
+      "bytes": 5754,
+      "sha256": "deecd3bde7f856ece2e9ca692e28e0ed4e36defe476ccd04e3671b468b696bd8"
+    },
+    {
+      "source": "/workspace/scratch/7e3d2a445c44/generic-qualification-5be28e30/native-evidence/workspace/source/packages/clr/interop/GenericClosure/images.json",
+      "destination": "/workspace/scratch/7e3d2a445c44/sf6-generic-instantiation/tests/fixtures/clr-generic-closure/qualification-capture/workspace/source/packages/clr/interop/GenericClosure/images.json",
+      "path": "workspace/source/packages/clr/interop/GenericClosure/images.json",
+      "bytes": 13860,
+      "sha256": "f403ce160edb1ed9ffbf4763566c8d093540c4cd6345d96e5e168bb79a0123ac"
+    },
+    {
+      "source": "/workspace/scratch/7e3d2a445c44/generic-qualification-5be28e30/native-evidence/workspace/source/packages/clr/interop/GenericClosure/matrix.json",
+      "destination": "/workspace/scratch/7e3d2a445c44/sf6-generic-instantiation/tests/fixtures/clr-generic-closure/qualification-capture/workspace/source/packages/clr/interop/GenericClosure/matrix.json",
+      "path": "workspace/source/packages/clr/interop/GenericClosure/matrix.json",
+      "bytes": 12247,
+      "sha256": "5250d0489ad5be390d8cc703770d450c314e5d6c606b48049e2883fe477ee8e1"
+    },
+    {
+      "source": "/workspace/scratch/7e3d2a445c44/generic-qualification-5be28e30/native-evidence/workspace/source/packages/clr/interop/GenericClosure/oracle-toolchain.json",
+      "destination": "/workspace/scratch/7e3d2a445c44/sf6-generic-instantiation/tests/fixtures/clr-generic-closure/qualification-capture/workspace/source/packages/clr/interop/GenericClosure/oracle-toolchain.json",
+      "path": "workspace/source/packages/clr/interop/GenericClosure/oracle-toolchain.json",
+      "bytes": 3600,
+      "sha256": "58eaf5e63a8edcf47d3ef96635655f1dd89d230a15b5b39f29503576484fe52d"
+    },
+    {
+      "source": "/workspace/scratch/7e3d2a445c44/generic-qualification-5be28e30/native-evidence/workspace/source/packages/clr/interop/GenericInstantiation/SignatureObservations.cs",
+      "destination": "/workspace/scratch/7e3d2a445c44/sf6-generic-instantiation/tests/fixtures/clr-generic-closure/qualification-capture/workspace/source/packages/clr/interop/GenericInstantiation/SignatureObservations.cs",
+      "path": "workspace/source/packages/clr/interop/GenericInstantiation/SignatureObservations.cs",
+      "bytes": 3949,
+      "sha256": "c20bd14a890d45c24e83ec8b33faad1dcb266a08c9d613a00f52430296b9ea51"
+    },
+    {
+      "source": "/workspace/scratch/7e3d2a445c44/generic-qualification-5be28e30/native-evidence/workspace/source/packages/clr/interop/GenericInstantiation/TypeObservations.cs",
+      "destination": "/workspace/scratch/7e3d2a445c44/sf6-generic-instantiation/tests/fixtures/clr-generic-closure/qualification-capture/workspace/source/packages/clr/interop/GenericInstantiation/TypeObservations.cs",
+      "path": "workspace/source/packages/clr/interop/GenericInstantiation/TypeObservations.cs",
+      "bytes": 8356,
+      "sha256": "89d2942aeec005786a2853dc2e4cbfa585ebf8039ffa47b567208fd1a7570bd9"
+    },
+    {
+      "source": "/workspace/scratch/7e3d2a445c44/generic-qualification-5be28e30/native-evidence/workspace/source/packages/clr/tools/capture-generic-closure.mjs",
+      "destination": "/workspace/scratch/7e3d2a445c44/sf6-generic-instantiation/tests/fixtures/clr-generic-closure/qualification-capture/workspace/source/packages/clr/tools/capture-generic-closure.mjs",
+      "path": "workspace/source/packages/clr/tools/capture-generic-closure.mjs",
+      "bytes": 23106,
+      "sha256": "28eafbcb18bf59940e87dea8a9db0e3c54376be61623d59fd40f06d7db89eb20"
+    }
+  ],
+  "finishedUtc": "2026-10-04T20:19:33.810260+00:00"
+}

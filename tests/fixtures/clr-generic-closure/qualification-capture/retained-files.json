@@ -1,0 +1,327 @@
+[
+  {
+    "path": "/workspace/scratch/7e3d2a445c44/generic-qualification-5be28e30/native-evidence/workspace/NuGet.Config",
+    "bytes": 73,
+    "sha256": "e497501960554d323eef45860c14474958accd1ae7f3ae6f95b10e4c1d340401"
+  },
+  {
+    "path": "/workspace/scratch/7e3d2a445c44/generic-qualification-5be28e30/native-evidence/workspace/global.json",
+    "bytes": 105,
+    "sha256": "8ede13416e0155ae327d8816fce07b9ba21cb4e2c1e0b17ae2f052fb89cccbd4"
+  },
+  {
+    "path": "/workspace/scratch/7e3d2a445c44/generic-qualification-5be28e30/native-evidence/workspace/images/Closure_acyclic_expansion.dll",
+    "bytes": 2048,
+    "sha256": "6c8a65fc091d29f95f79c31568d62fa4f0a924e5e1a2b7b2562085a5e3bd4525"
+  },
+  {
+    "path": "/workspace/scratch/7e3d2a445c44/generic-qualification-5be28e30/native-evidence/workspace/images/Closure_array_acyclic_expansion.dll",
+    "bytes": 2048,
+    "sha256": "b1ac6a2ab8d62948a3b83384861b599058f2979f171e3f521a313302ab3b0d5b"
+  },
+  {
+    "path": "/workspace/scratch/7e3d2a445c44/generic-qualification-5be28e30/native-evidence/workspace/images/Closure_array_expanding.dll",
+    "bytes": 2048,
+    "sha256": "25a01d097f8307564e3e51f8bdc8d0ca84ca5146863160c6af70d01fb47c9fdc"
+  },
+  {
+    "path": "/workspace/scratch/7e3d2a445c44/generic-qualification-5be28e30/native-evidence/workspace/images/Closure_cross_expanding_left.dll",
+    "bytes": 2048,
+    "sha256": "1d0dabd1004f43a00221353f231895737cf2076345fed833348c4a8142fbe1b6"
+  },
+  {
+    "path": "/workspace/scratch/7e3d2a445c44/generic-qualification-5be28e30/native-evidence/workspace/images/Closure_cross_expanding_right.dll",
+    "bytes": 2048,
+    "sha256": "0d63944bb8e9922cab8095cadd40801709bdb5c0d3b0b620a25ac4e55530426a"
+  },
+  {
+    "path": "/workspace/scratch/7e3d2a445c44/generic-qualification-5be28e30/native-evidence/workspace/images/Closure_cross_permuted_left.dll",
+    "bytes": 2048,
+    "sha256": "1e71e6885764ed59daec92ea235d60fd627caab81307127bf4fe5e28294722b4"
+  },
+  {
+    "path": "/workspace/scratch/7e3d2a445c44/generic-qualification-5be28e30/native-evidence/workspace/images/Closure_cross_permuted_right.dll",
+    "bytes": 2048,
+    "sha256": "44576399d53166661528b4a1d2eda49dfb3bdcd7c2d1a85e06a579179b1d4692"
+  },
+  {
+    "path": "/workspace/scratch/7e3d2a445c44/generic-qualification-5be28e30/native-evidence/workspace/images/Closure_erased_constant_cycle.dll",
+    "bytes": 2048,
+    "sha256": "5cf946b2d07571d0d558788dc19a65bfc99b8c36da0635951f4671669b94d7c4"
+  },
+  {
+    "path": "/workspace/scratch/7e3d2a445c44/generic-qualification-5be28e30/native-evidence/workspace/images/Closure_expanding_self_base.dll",
+    "bytes": 2048,
+    "sha256": "360319412647dda461159a820d711d9db335626a5b2888f6bcbb9f326179bcac"
+  },
+  {
+    "path": "/workspace/scratch/7e3d2a445c44/generic-qualification-5be28e30/native-evidence/workspace/images/Closure_indirect_expanding.dll",
+    "bytes": 2048,
+    "sha256": "ad6ff2ac32307f72807caee6be5c32518f8142227189bad683e45fe061eb2552"
+  },
+  {
+    "path": "/workspace/scratch/7e3d2a445c44/generic-qualification-5be28e30/native-evidence/workspace/images/Closure_nested_invalid.dll",
+    "bytes": 2048,
+    "sha256": "609e78346c5031eeafd14ef4ae2a681c5eb2c81c4da8faecf33e6bd34f1e9921"
+  },
+  {
+    "path": "/workspace/scratch/7e3d2a445c44/generic-qualification-5be28e30/native-evidence/workspace/images/Closure_non_generic_self_interface.dll",
+    "bytes": 2048,
+    "sha256": "eb48f84ebf9b07dfb3db6846e5e0a66ee78211bd32ec00a6f28cb89caeac942c"
+  },
+  {
+    "path": "/workspace/scratch/7e3d2a445c44/generic-qualification-5be28e30/native-evidence/workspace/images/Closure_permuted_mutual.dll",
+    "bytes": 2048,
+    "sha256": "08f18d68521d52c520d3bda4a4050b6fd8f539fa7b78934a76cf666463b18438"
+  },
+  {
+    "path": "/workspace/scratch/7e3d2a445c44/generic-qualification-5be28e30/native-evidence/workspace/images/Closure_simple_self_base.dll",
+    "bytes": 2048,
+    "sha256": "3e9b7b31ab77ef23ced93aea139801f97f9986372f28a82aaa2ea66bc70b0e85"
+  },
+  {
+    "path": "/workspace/scratch/7e3d2a445c44/generic-qualification-5be28e30/native-evidence/workspace/images/GenericClosureOracle.dll",
+    "bytes": 112128,
+    "sha256": "7a72f59c3af3302756123cdfd3d4795fbe89e0e6fe534b3992ccb50bf99a4d67"
+  },
+  {
+    "path": "/workspace/scratch/7e3d2a445c44/generic-qualification-5be28e30/native-evidence/workspace/images/images.json",
+    "bytes": 38613,
+    "sha256": "812bb255063f49db98d354d0b3ce59f563747da73ed615f06e0c130f3677493b"
+  },
+  {
+    "path": "/workspace/scratch/7e3d2a445c44/generic-qualification-5be28e30/native-evidence/workspace/pinned.runtimeconfig.json",
+    "bytes": 172,
+    "sha256": "6242cc4e8692c65a90f1402fa643754d516ccb7e93c1d34f9dedf00db0b532ec"
+  },
+  {
+    "path": "/workspace/scratch/7e3d2a445c44/generic-qualification-5be28e30/native-evidence/workspace/progress/instantiate-acyclic-expansion.jsonl",
+    "bytes": 13489,
+    "sha256": "32e4ad79fdbcf69ab710092a37b0eeac29d6e93e4eb3a96e149e133075a1854c"
+  },
+  {
+    "path": "/workspace/scratch/7e3d2a445c44/generic-qualification-5be28e30/native-evidence/workspace/progress/instantiate-array-acyclic-expansion.jsonl",
+    "bytes": 13547,
+    "sha256": "268e30df2571041d39cd3d98fd7ceb0f640f2b2c86ccee029e52e38f917681e7"
+  },
+  {
+    "path": "/workspace/scratch/7e3d2a445c44/generic-qualification-5be28e30/native-evidence/workspace/progress/instantiate-array-expanding.jsonl",
+    "bytes": 9545,
+    "sha256": "1211ff816be7f2100b43ffa5447641f783920a513fe022b84cae1a36a43a78a1"
+  },
+  {
+    "path": "/workspace/scratch/7e3d2a445c44/generic-qualification-5be28e30/native-evidence/workspace/progress/instantiate-cross-module-expanding.jsonl",
+    "bytes": 10212,
+    "sha256": "c50169a13a0c37fc4170158cb078105dba8b73ed242a02c4e928f3786a7cf32c"
+  },
+  {
+    "path": "/workspace/scratch/7e3d2a445c44/generic-qualification-5be28e30/native-evidence/workspace/progress/instantiate-cross-module-formal-identity.jsonl",
+    "bytes": 30876,
+    "sha256": "c1b48707620186d6366deaf8e001331d5ac93ccd9596c3e5ffad67be620ae26b"
+  },
+  {
+    "path": "/workspace/scratch/7e3d2a445c44/generic-qualification-5be28e30/native-evidence/workspace/progress/instantiate-cross-module-permuted.jsonl",
+    "bytes": 14917,
+    "sha256": "b9a6e3691849efd5895325b26159786fded688808dcdfbbf13f3f9b745be43f0"
+  },
+  {
+    "path": "/workspace/scratch/7e3d2a445c44/generic-qualification-5be28e30/native-evidence/workspace/progress/instantiate-erased-constant-cycle.jsonl",
+    "bytes": 9591,
+    "sha256": "605f2432ca9548fccb063e4a82aef19af4b5801fd4f2234b3a8a1cf6211686ab"
+  },
+  {
+    "path": "/workspace/scratch/7e3d2a445c44/generic-qualification-5be28e30/native-evidence/workspace/progress/instantiate-expanding-self-base.jsonl",
+    "bytes": 9693,
+    "sha256": "870950dd1e49143cf1c0436c68a1c436f913d6712207c75f74255aff5bd91482"
+  },
+  {
+    "path": "/workspace/scratch/7e3d2a445c44/generic-qualification-5be28e30/native-evidence/workspace/progress/instantiate-hidden-invalid-argument.jsonl",
+    "bytes": 9633,
+    "sha256": "31e65f754ef009b0021fd8f3df3a482a492c7c77f15da39851117040b4f008ea"
+  },
+  {
+    "path": "/workspace/scratch/7e3d2a445c44/generic-qualification-5be28e30/native-evidence/workspace/progress/instantiate-indirect-expanding.jsonl",
+    "bytes": 9656,
+    "sha256": "318ccedb33a9eb6c67160e58e5e5644b827f409015bd5ac510c9f94c631d464d"
+  },
+  {
+    "path": "/workspace/scratch/7e3d2a445c44/generic-qualification-5be28e30/native-evidence/workspace/progress/instantiate-own-parameters-permuted-mutual.jsonl",
+    "bytes": 29677,
+    "sha256": "2622d7fc3402ca10636c88f81c99890c9ab6e7800597274f1b8aaecda9748c15"
+  },
+  {
+    "path": "/workspace/scratch/7e3d2a445c44/generic-qualification-5be28e30/native-evidence/workspace/progress/instantiate-partial-cross-module-permuted.jsonl",
+    "bytes": 19928,
+    "sha256": "53d3fb520030f8298582e7cf22373108077f466ff86898ca3d38042fb1e0fb57"
+  },
+  {
+    "path": "/workspace/scratch/7e3d2a445c44/generic-qualification-5be28e30/native-evidence/workspace/progress/instantiate-partial-permuted-mutual.jsonl",
+    "bytes": 19358,
+    "sha256": "f3858ba1c2fa501d5dad58d09ede080f602561dcdc9a1c0eb5253e9c63447382"
+  },
+  {
+    "path": "/workspace/scratch/7e3d2a445c44/generic-qualification-5be28e30/native-evidence/workspace/progress/instantiate-permuted-mutual.jsonl",
+    "bytes": 14563,
+    "sha256": "f18cc2f7e2d82f9c3cee1678a4ad434e9fe3d6520fe64fb5f1c4e4b4bbc6304c"
+  },
+  {
+    "path": "/workspace/scratch/7e3d2a445c44/generic-qualification-5be28e30/native-evidence/workspace/progress/instantiate-simple-self-base.jsonl",
+    "bytes": 12884,
+    "sha256": "3a30f97f4bbe7bc62fb45e029d5438cf6d78bcebe23054728739f87c69f8aac9"
+  },
+  {
+    "path": "/workspace/scratch/7e3d2a445c44/generic-qualification-5be28e30/native-evidence/workspace/progress/instantiate-unrelated-invalid.jsonl",
+    "bytes": 12293,
+    "sha256": "1688c1dd549f9257a8cdbc65b1c1053745524b62a24d8a69cc186152abb8b882"
+  },
+  {
+    "path": "/workspace/scratch/7e3d2a445c44/generic-qualification-5be28e30/native-evidence/workspace/progress/resolve-acyclic-expansion.jsonl",
+    "bytes": 9996,
+    "sha256": "22c77db45cd115e3ac2c46a04c2b5327b0c65edb574856a65d092fe769d17f62"
+  },
+  {
+    "path": "/workspace/scratch/7e3d2a445c44/generic-qualification-5be28e30/native-evidence/workspace/progress/resolve-array-acyclic-expansion.jsonl",
+    "bytes": 9994,
+    "sha256": "0472064d4624d30008605aa60b74bebf4607ff8b01e9590c350e2d4b7f0e5256"
+  },
+  {
+    "path": "/workspace/scratch/7e3d2a445c44/generic-qualification-5be28e30/native-evidence/workspace/progress/resolve-array-expanding.jsonl",
+    "bytes": 7871,
+    "sha256": "5a98e6f5a907a5c69a3965d22d15d13e7a61e3d3585ac09b17fcdf188dc371e2"
+  },
+  {
+    "path": "/workspace/scratch/7e3d2a445c44/generic-qualification-5be28e30/native-evidence/workspace/progress/resolve-cross-module-expanding.jsonl",
+    "bytes": 8048,
+    "sha256": "e26146d96e869748ba7e083377e6c1128fffac13358370e1a83e5472a3f3a4d4"
+  },
+  {
+    "path": "/workspace/scratch/7e3d2a445c44/generic-qualification-5be28e30/native-evidence/workspace/progress/resolve-cross-module-owner-identity.jsonl",
+    "bytes": 18089,
+    "sha256": "a788fe6a4ce537705afaa7801f16bf3ccf482d2dcb6f1a0dd05da78fb75e8077"
+  },
+  {
+    "path": "/workspace/scratch/7e3d2a445c44/generic-qualification-5be28e30/native-evidence/workspace/progress/resolve-cross-module-permuted.jsonl",
+    "bytes": 10600,
+    "sha256": "31d9ab65bd658e9a2e190b31a73527e2d7405ff989e1c2eaa44c011f33d28e27"
+  },
+  {
+    "path": "/workspace/scratch/7e3d2a445c44/generic-qualification-5be28e30/native-evidence/workspace/progress/resolve-erased-constant-cycle.jsonl",
+    "bytes": 7857,
+    "sha256": "c6eb31807d823a785dde8f78e1ccf34501bdbd2f326d40af414906c5c8b205e7"
+  },
+  {
+    "path": "/workspace/scratch/7e3d2a445c44/generic-qualification-5be28e30/native-evidence/workspace/progress/resolve-expanding-self-base.jsonl",
+    "bytes": 7979,
+    "sha256": "7358734d81201fa20c4568a182679659429d0bdc9f68b6795f9403043e5ec53f"
+  },
+  {
+    "path": "/workspace/scratch/7e3d2a445c44/generic-qualification-5be28e30/native-evidence/workspace/progress/resolve-hidden-invalid-argument.jsonl",
+    "bytes": 7969,
+    "sha256": "8a093be7f82927d760f34fc623b7bc6a95ee22d30c062a5dad93ea4f90b5fdf4"
+  },
+  {
+    "path": "/workspace/scratch/7e3d2a445c44/generic-qualification-5be28e30/native-evidence/workspace/progress/resolve-hidden-invalid-control.jsonl",
+    "bytes": 7957,
+    "sha256": "5bcf25574966f7bf930553afa6046b7a9eeba8f8e5a4b71050e97149a5fdafa6"
+  },
+  {
+    "path": "/workspace/scratch/7e3d2a445c44/generic-qualification-5be28e30/native-evidence/workspace/progress/resolve-indirect-expanding.jsonl",
+    "bytes": 7952,
+    "sha256": "13fce0c1d9c00df63d49d6f54b360acabb6616967b7003a95582bd9958067342"
+  },
+  {
+    "path": "/workspace/scratch/7e3d2a445c44/generic-qualification-5be28e30/native-evidence/workspace/progress/resolve-non-generic-self-interface.jsonl",
+    "bytes": 8611,
+    "sha256": "6490d6676bdf1f7558aa6a141a8503d6e563cd7795a50bcc66fb477c6133a418"
+  },
+  {
+    "path": "/workspace/scratch/7e3d2a445c44/generic-qualification-5be28e30/native-evidence/workspace/progress/resolve-permuted-mutual.jsonl",
+    "bytes": 10258,
+    "sha256": "424eafd7d60c262e23bfaeb049fa10124dcbe0a028b241140b292a077eae2cd1"
+  },
+  {
+    "path": "/workspace/scratch/7e3d2a445c44/generic-qualification-5be28e30/native-evidence/workspace/progress/resolve-simple-self-base.jsonl",
+    "bytes": 8757,
+    "sha256": "a9f163f8b4ba1fb406d5a1d1fb4087d827972d185a73ae5af6816ac8dc0a15f4"
+  },
+  {
+    "path": "/workspace/scratch/7e3d2a445c44/generic-qualification-5be28e30/native-evidence/workspace/progress/resolve-typespec-cross-permuted-left.jsonl",
+    "bytes": 11440,
+    "sha256": "cd97e4a023c932737b90820d890b7dd0e57a943199e4b42577f58c2547c2a1fd"
+  },
+  {
+    "path": "/workspace/scratch/7e3d2a445c44/generic-qualification-5be28e30/native-evidence/workspace/progress/resolve-typespec-expanding-self-base.jsonl",
+    "bytes": 8097,
+    "sha256": "fd50a39a56f094e2a4e4abb9b44a4ae0cd6ce8f339f7a6342953068e74094352"
+  },
+  {
+    "path": "/workspace/scratch/7e3d2a445c44/generic-qualification-5be28e30/native-evidence/workspace/progress/resolve-typespec-simple-self-base.jsonl",
+    "bytes": 10111,
+    "sha256": "92a0b0151486e1549712181de5b6e3b62f447105f3818da1641abf7bc10b454f"
+  },
+  {
+    "path": "/workspace/scratch/7e3d2a445c44/generic-qualification-5be28e30/native-evidence/workspace/progress/resolve-unrelated-invalid.jsonl",
+    "bytes": 8824,
+    "sha256": "0853c6949635ad60917b7b2df259ba43d0f9b3db2c4d83d671bf6ec05de436cf"
+  },
+  {
+    "path": "/workspace/scratch/7e3d2a445c44/generic-qualification-5be28e30/native-evidence/workspace/source/packages/clr/interop/GenericClosure/CaseObservations.cs",
+    "bytes": 6865,
+    "sha256": "18ee2ae6d35eacd275ea7538b20ab1e597dfb5da51dfe7e5e2681ca2eb1dd418"
+  },
+  {
+    "path": "/workspace/scratch/7e3d2a445c44/generic-qualification-5be28e30/native-evidence/workspace/source/packages/clr/interop/GenericClosure/MetadataImage.cs",
+    "bytes": 9497,
+    "sha256": "23bf64a5bd41679b9c983912547e55577f555546b0c9089fb939fdebd3853150"
+  },
+  {
+    "path": "/workspace/scratch/7e3d2a445c44/generic-qualification-5be28e30/native-evidence/workspace/source/packages/clr/interop/GenericClosure/MetadataInventory.cs",
+    "bytes": 3634,
+    "sha256": "16a571f9f22f66c512d0f0f2d480e4a2fb2b069d8618b49b379f9a6698f2608f"
+  },
+  {
+    "path": "/workspace/scratch/7e3d2a445c44/generic-qualification-5be28e30/native-evidence/workspace/source/packages/clr/interop/GenericClosure/NativeTypes.cs",
+    "bytes": 4122,
+    "sha256": "e875b613ad75e5db9300cf362cb909dfcd625d996e068372ab30b3886e9a2367"
+  },
+  {
+    "path": "/workspace/scratch/7e3d2a445c44/generic-qualification-5be28e30/native-evidence/workspace/source/packages/clr/interop/GenericClosure/Program.cs",
+    "bytes": 2693,
+    "sha256": "5d0e33b219f05e24a15b5a158acdc3f0d1072ddb3aa3c8074b514ca1387c4358"
+  },
+  {
+    "path": "/workspace/scratch/7e3d2a445c44/generic-qualification-5be28e30/native-evidence/workspace/source/packages/clr/interop/GenericClosure/RequestBindings.cs",
+    "bytes": 5754,
+    "sha256": "deecd3bde7f856ece2e9ca692e28e0ed4e36defe476ccd04e3671b468b696bd8"
+  },
+  {
+    "path": "/workspace/scratch/7e3d2a445c44/generic-qualification-5be28e30/native-evidence/workspace/source/packages/clr/interop/GenericClosure/images.json",
+    "bytes": 13860,
+    "sha256": "f403ce160edb1ed9ffbf4763566c8d093540c4cd6345d96e5e168bb79a0123ac"
+  },
+  {
+    "path": "/workspace/scratch/7e3d2a445c44/generic-qualification-5be28e30/native-evidence/workspace/source/packages/clr/interop/GenericClosure/matrix.json",
+    "bytes": 12247,
+    "sha256": "5250d0489ad5be390d8cc703770d450c314e5d6c606b48049e2883fe477ee8e1"
+  },
+  {
+    "path": "/workspace/scratch/7e3d2a445c44/generic-qualification-5be28e30/native-evidence/workspace/source/packages/clr/interop/GenericClosure/oracle-toolchain.json",
+    "bytes": 3600,
+    "sha256": "58eaf5e63a8edcf47d3ef96635655f1dd89d230a15b5b39f29503576484fe52d"
+  },
+  {
+    "path": "/workspace/scratch/7e3d2a445c44/generic-qualification-5be28e30/native-evidence/workspace/source/packages/clr/interop/GenericInstantiation/SignatureObservations.cs",
+    "bytes": 3949,
+    "sha256": "c20bd14a890d45c24e83ec8b33faad1dcb266a08c9d613a00f52430296b9ea51"
+  },
+  {
+    "path": "/workspace/scratch/7e3d2a445c44/generic-qualification-5be28e30/native-evidence/workspace/source/packages/clr/interop/GenericInstantiation/TypeObservations.cs",
+    "bytes": 8356,
+    "sha256": "89d2942aeec005786a2853dc2e4cbfa585ebf8039ffa47b567208fd1a7570bd9"
+  },
+  {
+    "path": "/workspace/scratch/7e3d2a445c44/generic-qualification-5be28e30/native-evidence/workspace/source/packages/clr/tools/capture-generic-closure.mjs",
+    "bytes": 23106,
+    "sha256": "28eafbcb18bf59940e87dea8a9db0e3c54376be61623d59fd40f06d7db89eb20"
+  }
+]
