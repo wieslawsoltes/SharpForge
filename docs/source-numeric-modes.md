@@ -10,6 +10,12 @@ Predefined numeric bounds and IEEE constants are represented as typed constants
 in the semantic core registry. Decimal lexer coefficient/scale data is converted
 directly into the compiler's exact constant representation. Neither change
 suppresses a parser error or admits an unregistered framework method.
+When semantic lowering replaces the execution profile, existing builtin receiver
+shorthands such as `Console` remain available after normal lexical lookup. This
+fallback does not import a namespace, override an alias/local, or apply with
+explicit metadata references or an explicit `implicitUsings` policy. Ordinary
+semantic analysis retains C# name resolution. Synthesized delegate return
+temporaries use the same typed scalar defaults as user locals.
 
 `NumericType` preserves Int32 and Double IDs 0 and 1 and appends the other
 types. `numericMode(type, checked)` encodes typed operations starting at 16;
@@ -37,8 +43,9 @@ uses a shortest round-trip decimal representation.
 The focused fixtures compile C# once and run source IR, reloaded source IR, and
 direct CIL. They cover narrow wrapping, checked faults, UInt64 limits, shifts,
 Single rounding, exact Decimal arithmetic/scale, both native widths, boxing,
-capture, array storage, JSON image round trips and snapshot replay. The new tests
-have **not been executed**. Root owns the serial validation queue; the prepared
+capture, array storage, JSON image round trips and snapshot replay. Serial
+qualification is in progress; the new top-level/delegate follow-up regressions
+have **not been executed**. Root owns the validation queue; the prepared
 command is:
 
 ```sh

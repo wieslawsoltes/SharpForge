@@ -17,6 +17,42 @@ function engines(result, options = {}) {
     new CilVirtualMachine(result.assembly, options)];
 }
 
+for (const [type, literal, expected] of [
+  ['long', '2147483648L', '2147483648\n'],
+  ['float', '1.25f', '1.25\n'],
+  ['decimal', '1.20m', '1.20\n'],
+]) test(`top-level ${type} retains the profile Console receiver shorthand`, () => {
+  const result = compileToIL(`${type} value = ${literal}; Console.WriteLine(value);`);
+  assert.equal(result.success, true, JSON.stringify(result.diagnostics));
+  assert.equal(result.semantic?.complete, true);
+  for (const vm of engines(result)) assert.equal(vm.run().output, expected);
+});
+
+test('profile receiver fallback respects explicit aliases and using policy', () => {
+  const result = compileToIL(`using Console = UserConsole;
+    long value = 2L; Console.WriteLine(value);
+    class UserConsole { public static void WriteLine(long value) { System.Console.WriteLine(value + 1); } }`);
+  assert.equal(result.success, true, JSON.stringify(result.diagnostics));
+  for (const vm of engines(result)) assert.equal(vm.run().output, '3\n');
+  for (const implicitUsings of [false, []]) {
+    assert.equal(compile('long value = 2L; Console.WriteLine(value);', {implicitUsings}).success, false);
+  }
+  const invalid = compile('long Console = 2L; Console.WriteLine(1);');
+  assert.equal(invalid.success, false);
+});
+
+for (const [type, literal] of [
+  ['byte', '255'], ['uint', '4294967295U'], ['long', '2147483648L'], ['ulong', '18446744073709551615UL'],
+  ['nint', '(nint)17'], ['float', '1.25f'], ['decimal', '1.20m'],
+]) test(`captured ${type} delegate returns use typed synthesized defaults`, () => {
+  const result = artifact(`${type} value = ${literal}; Func<${type}> read = () => value; Console.WriteLine(read() == value);`);
+  for (const vm of engines(result)) {
+    const actual = vm.run();
+    assert.equal(actual.state, 'terminated', actual.fault?.stack);
+    assert.equal(actual.output, 'True\n');
+  }
+});
+
 test('predefined numeric bounds complete semantic admission instead of retaining legacy profile errors', () => {
   const result = artifact(`
     long signed = int.MaxValue; ulong unsigned = ulong.MaxValue; uint small = uint.MaxValue;
