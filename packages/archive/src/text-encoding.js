@@ -1,7 +1,8 @@
 import {portablePath} from './path-policy.js';
 
 const encoder = new TextEncoder();
-const textPath = new RegExp('(?:\\.(?:cs|fs|vb|csproj|fsproj|vbproj|slnx|sln|props|targets|proj|json|xml|config|resx|resw|txt|md|il'
+const textPath = new RegExp('(?:\\.(?:cs|fs|vb|csproj|fsproj|vbproj|slnx|sln|props|targets|proj|json|xml|xaml|manifest|appxmanifest'
+  + '|pubxml|config|resx|resw|txt|md|il'
   + '|css|html?|js|mjs|ts|svg|yml|yaml|editorconfig|gitignore|gitattributes|ruleset|runsettings|rsp|csv)'
   + '|(?:^|/)(?:LICENSE|NOTICE|README|\\.editorconfig|\\.gitignore|\\.gitattributes|NuGet.Config))$', 'i');
 const windows1252 = '\u20ac\u0081\u201a\u0192\u201e\u2026\u2020\u2021\u02c6\u2030\u0160\u2039\u0152\u008d\u017d\u008f'
