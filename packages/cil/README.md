@@ -200,7 +200,7 @@ offset, limit, signal })` returns `{ entries, total, nextOffset }`, with default
 limit 100 and maximum 1000. Order is input module, TypeDef, then each type's fields,
 methods, properties and events in inspector ownership order (including MethodPtr).
 `size`, `modules()` and `storage` expose owned scalar counts/module facts. Zero-length
-pages are allowed; `nextOffset` remains the supplied offset unless already at the end.
+pages return `nextOffset: null`, matching the inspector's method-page convention.
 Duplicate module MVIDs and duplicate/incomplete definition ownership reject with
 `CilError`; constructing a new index after reload produces the same IDs.
 

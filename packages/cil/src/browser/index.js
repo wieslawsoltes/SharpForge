@@ -140,6 +140,6 @@ export class AssemblySymbolIndex {
       if (!(index & 255)) cancelled(signal);
       entries.push({ ...this.#entries[index] });
     }
-    return { entries, total: this.size, nextOffset: end < this.size ? end : null };
+    return { entries, total: this.size, nextOffset: end < this.size && limit ? end : null };
   }
 }

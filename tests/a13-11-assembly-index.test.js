@@ -95,7 +95,7 @@ test('assembly index paging, unknown IDs, empty input and cancellation have boun
   assert.deepEqual(empty.page(), { entries: [], total: 0, nextOffset: null });
   const index = new AssemblySymbolIndex([inspect()]);
   assert.deepEqual(index.page({ offset: index.size }), { entries: [], total: index.size, nextOffset: null });
-  assert.deepEqual(index.page({ limit: 0 }), { entries: [], total: index.size, nextOffset: 0 });
+  assert.deepEqual(index.page({ limit: 0 }), { entries: [], total: index.size, nextOffset: null });
   assert.equal(index.get('unknown'), null);
   assert.throws(() => index.get('x'.repeat(62)), CilError);
   for (const options of [{ offset: -1 }, { offset: index.size + 1 }, { limit: 1001 }, { limit: 0.5 }])
