@@ -104,13 +104,46 @@ node scripts/limited.js node --test tests/a13-05-revision-map.test.js tests/a13-
 node scripts/limited.js node --expose-gc packages/symbols/benchmarks/pdb-generations.mjs
 ```
 
-The benchmark reports cold, warm median/p95/p99, and observed heap/ArrayBuffer
-deltas for parsing and appending the native generations, initial capture,
-repeated capture, history lookup, and retained snapshot lookup. Its allocation
-figures include garbage collection and are not total allocator counts. This
-adds a reproducible measurement surface; results must be recorded from an actual
-scheduled run before making a performance claim. Existing baseline PDB lookup
-performance is compared separately using `scripts/bench-pdb.js --baseline`.
+Both benchmark drivers use 20 warmup rounds followed by 100 measured rounds for
+each operation, alternating forward/reverse workload order. A separate first
+timed call follows untimed correctness checks; it is **not process-cold**.
+Reports retain every first, warmup and measured sample in chronological order.
+Median averages the middle two measured values; p95 and p99 use nearest rank.
+Only the named operation is timed. Every returned result is consumed and checked
+after timing; disposal and memory observation also occur outside the interval.
+Observed heap/ArrayBuffer changes include garbage collection and are not total
+allocator counts. Reports include an environment snapshot, Git commit/tree,
+package manifest/source hashes, benchmark source hashes and fixture hashes.
+
+The generation driver checks all retained native artifact hashes, method maps,
+local signatures, scope names, documents, historical snapshot isolation and
+disposal before timing. It separately labels read/append, first capture with a
+new empty cache, repeated capture with a held cache lease, history lookup and
+snapshot lookup. These are new API costs, without a baseline speedup claim.
+
+The existing emit/read/load comparison keeps its original compiler input,
+200-line document fixture and API arguments. Outside timing it requires
+byte-for-byte equality of baseline/current emitted PDBs and attached images,
+checks the embedded source checksum and bytes, method tokens and empty point
+maps, and compares read/load facts and assembly binding. Each checkout resolves
+its own public packages and declared workspace dependency closure; mixed-source
+aliases, modified tracked files and an unexpected baseline commit fail before
+measurement. The baseline path is trusted local operator input, not data read
+from an assembly. Install dependencies separately in both selected checkouts.
+
+Run the comparison from the clean candidate checkout, retaining stdout as JSON
+outside either checkout; substitute the path to the pinned baseline checkout:
+
+```sh
+node scripts/limited.js node --expose-gc scripts/bench-pdb.js \
+  --baseline /path/to/sharpforge-baseline \
+  --baseline-revision 8b101c0c7e8ad73675dfe12e68f26329d7ea2d9c
+node scripts/limited.js node --expose-gc packages/symbols/benchmarks/pdb-generations.mjs
+```
+
+Neither driver has been run for this integrated candidate. Preserve the raw JSON
+from the coordinated run before reporting results. The generation benchmark
+compares a retained native corpus; it does not launch CoreCLR or apply an update.
 
 The source-module browser entry point is
 `tests/fixtures/portable-pdb-generations/browser.mjs`. Serve the repository with
