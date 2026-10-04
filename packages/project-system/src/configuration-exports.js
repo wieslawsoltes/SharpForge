@@ -9,3 +9,4 @@ export * from './launch-settings.js';
 export { expandExpression } from './evaluation/expander.js';
 export { matchesGlob, WorkspacePathIndex } from './evaluation/path-index.js';
 export * from './resources.js';
+export { classifyTask, createTargetGraph } from './evaluation/targets.js';

@@ -16,7 +16,12 @@
     "tests/a23-09-project-edits.test.js",
     "tests/project-edits-roundtrip.test.js",
     "tests/project-resource-contract.test.js",
-    "tests/project-solution-reader.test.js"
+    "tests/project-solution-reader.test.js",
+    "tests/project-evaluation-sdk.test.js",
+    "tests/project-evaluation-items.test.js",
+    "tests/project-evaluation-central-packages.test.js",
+    "tests/project-evaluation-expressions.test.js",
+    "tests/project-core-contract.test.js"
   ],
   "browserScripts": [
     "tests/browser_msbuild_test.py"
