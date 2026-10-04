@@ -1,8 +1,11 @@
-import {pathToFileURL} from 'node:url';
-import {join} from 'node:path';
+import {realpathSync} from 'node:fs';
+import {fileURLToPath} from 'node:url';
 import assert from 'node:assert/strict';
+import {compileToIL} from '@sharpforge/compiler';
+import {VirtualMachine, CilVirtualMachine} from '@sharpforge/runtime';
 import {beginAllocation, finishAllocation} from '../conformance/perf/alloc.js';
 
+const checkoutRoot = realpathSync(fileURLToPath(new URL('../../', import.meta.url)));
 const count = 1000;
 const prefix = 'using System; using Microsoft.UI.Xaml; using Microsoft.UI.Xaml.Controls; using Microsoft.UI.Xaml.Data;';
 const sources = Object.freeze({
@@ -35,8 +38,7 @@ const sources = Object.freeze({
 export async function create({root, adapter}) {
   const fixture = sources[adapter.scope];
   if (!fixture || !['source', 'cil'].includes(adapter.engine)) throw new Error('Unsupported A15 property benchmark');
-  const from = name => import(pathToFileURL(join(root, 'packages', name, 'src/index.js')).href);
-  const [{compileToIL}, {VirtualMachine, CilVirtualMachine}] = await Promise.all([from('compiler'), from('runtime')]);
+  assert.equal(realpathSync(root), checkoutRoot, 'A15 adapter must be loaded from the measured checkout');
   const built = compileToIL(prefix + fixture.source);
   assert.equal(built.success, true, JSON.stringify(built.diagnostics));
   return () => {
