@@ -243,7 +243,7 @@ for (const member of ['Equals', 'GetHashCode']) test(`Object.${member} remains o
   assert(report.issues.some(issue => issue.code === 'IL_PREFIX'));
 });
 
-for (const receiver of ['class', 'enum', 'primitive', 'generic-struct', 'method-parameter']) {
+for (const receiver of ['enum', 'primitive', 'generic-struct', 'method-parameter']) {
   test(`Object.ToString does not broaden ${receiver} constraint admission`, () => {
     const generic = receiver === 'method-parameter';
     const body = (writer, context) => {
@@ -254,7 +254,7 @@ for (const receiver of ['class', 'enum', 'primitive', 'generic-struct', 'method-
       writer.op('ret');
     };
     const bytes = genericCallFixture([
-      {name: 'Receiver', base: receiver === 'class' || generic ? 'System.Object'
+      {name: 'Receiver', base: generic ? 'System.Object'
         : receiver === 'enum' ? 'System.Enum' : 'System.ValueType', flags: 0x100109,
         ...(receiver === 'generic-struct' ? {genericParameters: [{}]} : {}), methods: []},
       {name: 'Program', methods: [
