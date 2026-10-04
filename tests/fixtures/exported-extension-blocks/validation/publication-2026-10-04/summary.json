@@ -1,0 +1,60 @@
+{
+  "testedHead": "bdd1bc322574821a9d8dfbb7ce32b21952bb0f2b",
+  "testedTree": "b908d530d4f8c9079eb8e4f51f6c87d6bb71bb28",
+  "qualifiedCheckpoint": "45c77c9b2410e3afe9949431c73d8a0144f90acf",
+  "mainParent": "75f0caad1c3ea096a656feb2989b867781edc82f",
+  "mergeCommit": "de04bd38b490436940fb5aa9349b3f897b24a374",
+  "command": [
+    "node",
+    "scripts/limited.js",
+    "node",
+    "--test",
+    "--test-concurrency=1",
+    "tests/compiler-exported-extension-blocks.test.js",
+    "tests/compiler-exported-extension-native.test.js",
+    "tests/compiler-declaration-ref-metadata.test.js",
+    "tests/compiler-declaration-ref-native.test.js",
+    "tests/compiler-extension-attributes.test.js",
+    "tests/compiler-extension-marker-identities.test.js",
+    "tests/compiler-extension-constraint-normalization.test.js",
+    "tests/compiler-nullable-empty-method-scopes.test.js",
+    "tests/compiler-attribute-targets.test.js"
+  ],
+  "environment": {
+    "DOTNET_ROOT": "/workspace/scratch/1692a10afba9/toolchain/dotnet",
+    "DOTNET": "/workspace/scratch/1692a10afba9/toolchain/dotnet/dotnet",
+    "SHARPFORGE_ORACLE_DOTNET": "/workspace/scratch/1692a10afba9/toolchain/dotnet/dotnet"
+  },
+  "result": {
+    "tests": 44,
+    "pass": 44,
+    "fail": 0,
+    "skipped": 0,
+    "cancelled": 0,
+    "exitCode": 0,
+    "durationMs": 25483.453921
+  },
+  "nativeScope": "Independent Roslyn clients consume implementation/reference exports and execute real implementations; metadata/reflection/constraint and entry-point controls.",
+  "sourceVerification": {
+    "trackedTestedPathsMatchHeadBeforeAndAfter": true,
+    "packageAliases": 10,
+    "manifestDependencyEdges": 15,
+    "literalImportReachableModules": 1213,
+    "literalImportEdges": 4029,
+    "untrackedImportTargets": 0,
+    "wholeWorktreeStayedClean": false,
+    "statusCountBefore": 201,
+    "statusCountAfter": 201,
+    "reason": "Workspace synchronization repopulated unrelated excluded tracked files and unused untracked helpers. Their bytes were preserved; tested tracked paths stayed exact."
+  },
+  "oracleRecaptured": false,
+  "benchmarkRerun": false,
+  "files": {
+    "node-resolution.json": "78e5429422bff2b57dbb55dad561e18ae10877cd87e129394ea34296d8037596",
+    "aliases-before.json": "47732e6b0324cf0c6a7464c889e567000eca3d0fa06bd5dd98e8c64aaf56e6a8",
+    "aliases-after.json": "7175c33fbf2d61354ed519c6ccf8bca54058e7c81aec9f724000ac9320936a2d",
+    "preparation-notes.txt": "4153dc501a420bf97cd713912d76e94a8d04abce8184c7b90f4da0e57234834c",
+    "toolchain.json": "0483baa4c7098d5c0fa0cabd862535a462d12e6366a5c746e37a1da052e1d1eb",
+    "replay.log": "2f495cf3555238e5b684a5c00750274c05ca720238158a0247518c81e40b88ac"
+  }
+}
