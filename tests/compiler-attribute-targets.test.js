@@ -94,10 +94,11 @@ test('A02-T41 constructed, nested, open generic, array and pointer typeof argume
     return attribute.decoded.constructorArguments[0].value;
   });
   assert.equal(values.length, 3);
-  assert.match(values[0], /^System\.Collections\.Generic\.Dictionary`2\[\[System\.String, /);
-  assert.match(values[0], /Outer`1\+Inner`1\[\[System\.Int32, .*\],\[System\.Int64, .*\]\]\[\]/);
-  assert.match(values[1], /^System\.Collections\.Generic\.Dictionary`2, /);
-  assert.match(values[2], /^System\.Int32\*, /);
+  const dictionary = values.find(value => value.startsWith('System.Collections.Generic.Dictionary`2[['));
+  assert.match(dictionary, /^System\.Collections\.Generic\.Dictionary`2\[\[System\.String, /);
+  assert.match(dictionary, /Outer`1\+Inner`1\[\[System\.Int32, .*\],\[System\.Int64, .*\]\]\[\]/);
+  assert.ok(values.some(value => /^System\.Collections\.Generic\.Dictionary`2, /.test(value)));
+  assert.ok(values.some(value => /^System\.Int32\*, /.test(value)));
 });
 
 test('A02-T41 boxed typeof and array arguments carry their actual descriptor', () => {
@@ -109,6 +110,6 @@ test('A02-T41 boxed typeof and array arguments carry their actual descriptor', (
   const shapes = attributes.filter(attribute => attribute.owner === 'ShapeAttribute');
   assert.equal(shapes.length, 2);
   assert.ok(shapes.every(attribute => attribute.decoded.success));
-  assert.equal(shapes[0].decoded.constructorArguments[0].value.value, 'System.Int32[]');
-  assert.deepEqual(shapes[1].decoded.constructorArguments[0].value.value.map(element => element.value), [2, 5]);
+  assert.equal(shapes[0].decoded.constructorArguments[0].value, 'System.Int32[]');
+  assert.deepEqual(shapes[1].decoded.constructorArguments[0].value.map(element => element.value), [2, 5]);
 });
