@@ -100,6 +100,13 @@
       "reason": "Reviewed developer-only CFG benchmark imports fixed CIL package entry points from operator-selected trusted local baseline/current checkouts. Before import it verifies exact baseline commit, candidate source identity and local workspace aliases; paths never come from CIL, metadata or product input. No generated JavaScript or product dynamic-code surface is added."
     },
     {
+      "path": "packages/cil/tools/benchmark-decompiler-inventory.mjs",
+      "operation": "dynamic-import",
+      "count": 5,
+      "sha256": "d73e88f1e701b0dfbc65b0c4e4c02a09724224bddedf0734bb3a5d48b2f1ad34",
+      "reason": "Reviewed developer-only inventory benchmark loads fixed public CIL entries from trusted operator-selected local baseline/current checkouts and three fixed candidate fixture/inventory modules. Exact source revisions, clean tracked files, dependency-closure alias guards and source hashes precede imports. No path is selected by product, CIL, metadata or remote input."
+    },
+    {
       "path": "packages/compiler/smoke.mjs",
       "operation": "dynamic-import",
       "count": 3,

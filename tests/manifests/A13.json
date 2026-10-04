@@ -21,6 +21,7 @@
     "tests/a13-04-local-annotations.test.js",
     "tests/a13-04-unnamed-slots.test.js",
     "tests/a13-05-*.test.js",
+    "tests/a13-10-metadata-inventory*.test.js",
     "tests/a13-11-inspector-navigation.test.js",
     "tests/a13-11-assembly-index.test.js",
     "tests/a13-11-symbol-search.test.js",

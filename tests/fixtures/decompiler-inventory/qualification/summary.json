@@ -1,0 +1,747 @@
+{
+  "format": "sharpforge.decompiler-inventory.qualification",
+  "schemaVersion": 1,
+  "recordedAt": "2026-10-04T14:56:05.781541+00:00",
+  "scope": "First qualified source and unchanged first controlled cohort; later optimization qualification is separate.",
+  "executionRevision": "55913c5129f2cfa684b6c647441ebdcf6b61d559",
+  "productRevision": "7da8bdc75f834c1ebaa2c4b2585461fca80d7c97",
+  "baselineRevision": "c1693a9e322295a43d90c3335885b5b5b3cf8daa",
+  "tests": {
+    "status": "pass",
+    "counts": {
+      "tests": 25,
+      "pass": 25,
+      "fail": 0,
+      "cancelled": 0,
+      "skipped": 0,
+      "todo": 0
+    },
+    "durationMilliseconds": 1395.823535,
+    "execution": "inventory-55913c51-tests-execution.json",
+    "output": "inventory-55913c51-tests.tap",
+    "outputFormat": "Node test spec output; original .tap filename retained",
+    "liveNativeExecution": "not-run",
+    "browserReplay": "not-run",
+    "build": "not-run"
+  },
+  "nativeReplay": {
+    "status": "pass",
+    "reference": "tests/fixtures/metadata-table-views/native.json",
+    "referenceSha256": "b9fe9c749515f4d14ab4da150b00a7f4bd33037d7bb903c40e03c67d865f05b7",
+    "toolchain": {
+      "sdk": "10.0.201",
+      "runtime": "10.0.5",
+      "referencePack": "10.0.5",
+      "roslyn": {
+        "version": "5.3.0-2.26153.122 (4d3023de605a78ba3e59e50c657eed70f125c68a)",
+        "sha256": "4913fa70d10c99901edbb825fdedcc92465be08665016a5d258ea45f953624f0"
+      },
+      "referenceAssemblies": {
+        "count": 167,
+        "sha256": "a978e7aaf608f22e860328a42319b908a5a084cdb087b28b5c31a1e6726be362"
+      }
+    },
+    "images": [
+      {
+        "label": "srm-cli-tables-pe",
+        "sha256": "0d84d137ace5e63931e1f69a2163f9287f2bd565b2fa2621793dd033946f6453"
+      },
+      {
+        "label": "srm-cli-tables-root",
+        "sha256": "4b9a9fe245401051d240b8f57bd918e137de7938ac2a352088d1f96e28153e96"
+      },
+      {
+        "label": "portable-pdb",
+        "sha256": "8274b613acbf7e589ae8b6e26bcd3ac7a2c046b9eb0269eb79143b5baa868288"
+      }
+    ],
+    "rejectedLegacyTables": [
+      33,
+      34,
+      36,
+      37
+    ],
+    "scope": "Reuses retained SRM row counts, tokens, byte extents/scalars and available typed string columns; no new oracle execution."
+  },
+  "benchmark": {
+    "status": "completed-with-regressions",
+    "execution": "inventory-7da-vs-c169-benchmark-execution.json",
+    "report": "inventory-7da-vs-c169-benchmark.json",
+    "log": "inventory-7da-vs-c169-benchmark.log",
+    "protocol": {
+      "warmup": 20,
+      "samples": 100,
+      "iterations": 20,
+      "clock": "performance.now",
+      "variantOrder": "alternates each round",
+      "caseOrder": "rotates each round",
+      "median": "mean of the two central measured samples",
+      "p95AndP99": "nearest rank",
+      "rawWarmupsRetained": true,
+      "sampleStatistic": "20-call batch mean in ns/call; p95/p99 are percentiles of batch means, not individual-call tail latency",
+      "timing": "Only API calls and storing returned references; all comparisons, consumption and memory observations are outside timing"
+    },
+    "environment": {
+      "capturedAt": "2026-10-04T14:38:35.224Z",
+      "node": "v24.19.0",
+      "v8": "13.6.233.17-node.51",
+      "platform": "linux",
+      "architecture": "x64",
+      "osRelease": "6.18.44",
+      "cpu": "AMD EPYC 9V74 80-Core Processor",
+      "logicalCpus": 9,
+      "totalMemoryBytes": 10451464192,
+      "freeMemoryBytes": 6256226304,
+      "loadAverage": [
+        1.65,
+        1.48,
+        1.76
+      ],
+      "execArgv": [
+        "--expose-gc"
+      ],
+      "gcExposed": true,
+      "sharedHost": true
+    },
+    "revisions": {
+      "baseline": {
+        "root": "/workspace/scratch/7e3d2a445c44/sf6-inventory-baseline",
+        "commit": "c1693a9e322295a43d90c3335885b5b5b3cf8daa",
+        "tree": "fd328758475878259be80b29433e6f62591442f2",
+        "sourceRevision": "c1693a9e322295a43d90c3335885b5b5b3cf8daa",
+        "packages": [
+          {
+            "name": "@sharpforge/cil",
+            "entry": "/workspace/scratch/7e3d2a445c44/sf6-inventory-baseline/packages/cil/src/index.js",
+            "manifestSha256": "6285282a5ce21823ef4a2e93e0e8173160503f857152bd546f638fa28f353429",
+            "source": {
+              "files": 221,
+              "sha256": "d9757aad07deb2d8f4f54eb61bc2cca3b0fe30fa238074d00583c918af641b71",
+              "algorithm": "SHA-256 of JSON array of sorted relative path/content-SHA-256 records"
+            }
+          },
+          {
+            "name": "@sharpforge/bytecode",
+            "entry": "/workspace/scratch/7e3d2a445c44/sf6-inventory-baseline/packages/bytecode/src/index.js",
+            "manifestSha256": "3a4815e50844cb30c392ba0e58266a8dc27ab39ce8897972a4cbf4354a65b27a",
+            "source": {
+              "files": 31,
+              "sha256": "fee4f57c27fca0547cc6a72b8a18d47b25e1c1458225e13899be114a72b4a6c5",
+              "algorithm": "SHA-256 of JSON array of sorted relative path/content-SHA-256 records"
+            }
+          },
+          {
+            "name": "@sharpforge/framework",
+            "entry": "/workspace/scratch/7e3d2a445c44/sf6-inventory-baseline/packages/framework/src/index.js",
+            "manifestSha256": "ee9eb72f27365f10d83bc1e3ac096ff939c125a5c0a01643c6e90637f57c21a3",
+            "source": {
+              "files": 18,
+              "sha256": "279635957c083c7d1638a8758924f80e1437e0f22741748c5228ec937d7e9189",
+              "algorithm": "SHA-256 of JSON array of sorted relative path/content-SHA-256 records"
+            }
+          },
+          {
+            "name": "@sharpforge/bcl-collections",
+            "entry": "/workspace/scratch/7e3d2a445c44/sf6-inventory-baseline/packages/bcl-collections/src/index.js",
+            "manifestSha256": "225ea8f0758022cd3c8c3217d224cdbea98602b7258de9f4c7d16387fc55041e",
+            "source": {
+              "files": 18,
+              "sha256": "294be3174e333cdc2402598bd10fb29646a63428e195f6df0ccbeaf15e4ec371",
+              "algorithm": "SHA-256 of JSON array of sorted relative path/content-SHA-256 records"
+            }
+          },
+          {
+            "name": "@sharpforge/bcl-core",
+            "entry": "/workspace/scratch/7e3d2a445c44/sf6-inventory-baseline/packages/bcl-core/src/index.js",
+            "manifestSha256": "b5c0b3309973d0258ca62e584c34d98b0bbbd9e55802a368bc36388ca70ac253",
+            "source": {
+              "files": 45,
+              "sha256": "e3c04a2251c3517f1cdb00746e82b75cb83601ff342dbf74480e260aad116c01",
+              "algorithm": "SHA-256 of JSON array of sorted relative path/content-SHA-256 records"
+            }
+          }
+        ]
+      },
+      "candidate": {
+        "root": "/workspace/scratch/7e3d2a445c44/sf6-metadata-inventory",
+        "commit": "55913c5129f2cfa684b6c647441ebdcf6b61d559",
+        "tree": "0ba907d3a6a433eda7ee7813b09fb561fbd6e2b0",
+        "sourceRevision": "7da8bdc75f834c1ebaa2c4b2585461fca80d7c97",
+        "packages": [
+          {
+            "name": "@sharpforge/cil",
+            "entry": "/workspace/scratch/7e3d2a445c44/sf6-metadata-inventory/packages/cil/src/index.js",
+            "manifestSha256": "6285282a5ce21823ef4a2e93e0e8173160503f857152bd546f638fa28f353429",
+            "source": {
+              "files": 223,
+              "sha256": "7e81105dc35b19e709f8992a16b1c316f9a8be641caed742564f4cb6cad4f793",
+              "algorithm": "SHA-256 of JSON array of sorted relative path/content-SHA-256 records"
+            }
+          },
+          {
+            "name": "@sharpforge/bytecode",
+            "entry": "/workspace/scratch/7e3d2a445c44/sf6-metadata-inventory/packages/bytecode/src/index.js",
+            "manifestSha256": "3a4815e50844cb30c392ba0e58266a8dc27ab39ce8897972a4cbf4354a65b27a",
+            "source": {
+              "files": 31,
+              "sha256": "fee4f57c27fca0547cc6a72b8a18d47b25e1c1458225e13899be114a72b4a6c5",
+              "algorithm": "SHA-256 of JSON array of sorted relative path/content-SHA-256 records"
+            }
+          },
+          {
+            "name": "@sharpforge/framework",
+            "entry": "/workspace/scratch/7e3d2a445c44/sf6-metadata-inventory/packages/framework/src/index.js",
+            "manifestSha256": "ee9eb72f27365f10d83bc1e3ac096ff939c125a5c0a01643c6e90637f57c21a3",
+            "source": {
+              "files": 18,
+              "sha256": "279635957c083c7d1638a8758924f80e1437e0f22741748c5228ec937d7e9189",
+              "algorithm": "SHA-256 of JSON array of sorted relative path/content-SHA-256 records"
+            }
+          },
+          {
+            "name": "@sharpforge/bcl-collections",
+            "entry": "/workspace/scratch/7e3d2a445c44/sf6-metadata-inventory/packages/bcl-collections/src/index.js",
+            "manifestSha256": "225ea8f0758022cd3c8c3217d224cdbea98602b7258de9f4c7d16387fc55041e",
+            "source": {
+              "files": 18,
+              "sha256": "294be3174e333cdc2402598bd10fb29646a63428e195f6df0ccbeaf15e4ec371",
+              "algorithm": "SHA-256 of JSON array of sorted relative path/content-SHA-256 records"
+            }
+          },
+          {
+            "name": "@sharpforge/bcl-core",
+            "entry": "/workspace/scratch/7e3d2a445c44/sf6-metadata-inventory/packages/bcl-core/src/index.js",
+            "manifestSha256": "b5c0b3309973d0258ca62e584c34d98b0bbbd9e55802a368bc36388ca70ac253",
+            "source": {
+              "files": 45,
+              "sha256": "e3c04a2251c3517f1cdb00746e82b75cb83601ff342dbf74480e260aad116c01",
+              "algorithm": "SHA-256 of JSON array of sorted relative path/content-SHA-256 records"
+            }
+          }
+        ]
+      }
+    },
+    "fixtures": [
+      {
+        "name": "ArithmeticAssembly",
+        "imageSha256": "8d17b75da73afa2031fb40903cbdbe88e7d9cf42df65c6aab5a8f3d7c8506c15",
+        "imageBytes": 1536,
+        "methods": 3,
+        "rows": 15,
+        "priorOutputSha256": "7e88bdec18cd37ac86a3453b85e541b88d932515e5a2c8eb370de04ef10a1105",
+        "inventorySha256": "de303fc6b5ccaf0e16fa6d213a74c0483b80cc71d78e9ccbaca9cf769145029a"
+      },
+      {
+        "name": "NativeCfgAssembly",
+        "imageSha256": "53af64fc5a8db6df9b64fe46ab8e1518a33015a0aec0f33c2101d84edc750aa3",
+        "imageBytes": 11776,
+        "methods": 38,
+        "rows": 341,
+        "priorOutputSha256": "cc5a22c26817193675bb0a955e89985f7b807e5d1558011cf5151aa524e18c96",
+        "inventorySha256": "c28db407e61e40afb630012b1bb7ffd6c460331a6297e71ad7737f4ec171a37c"
+      }
+    ],
+    "driverSha256": "1784bac50545f62446dffdc372e43a6969fd0eab3d387f82e3f2b20248dfdef2",
+    "independentRecomputation": {
+      "chronologyRecords": 1200,
+      "warmupSamples": 200,
+      "measuredSamples": 1000,
+      "groups": 10,
+      "statisticsMatchedExactly": 90,
+      "checksum": 483708000,
+      "method": "Sort each 100-value measured group; median is (ordered[49]+ordered[50])/2, p95 ordered[94], p99 ordered[98]."
+    },
+    "recomputedResults": [
+      {
+        "case": "ArithmeticAssembly",
+        "workload": "decompileAssembly.bytes",
+        "variant": "baseline",
+        "warmupSamples": 20,
+        "measuredSamples": 100,
+        "metrics": {
+          "batchMeanNanosecondsPerCall": {
+            "median": 72283.90000018408,
+            "p95": 152632.50000134576,
+            "p99": 303862.9000016954,
+            "min": 58233.600002131425,
+            "max": 4556006.900002831
+          },
+          "batchHeapDeltaBytes": {
+            "median": 2088356.0,
+            "p95": 2110240,
+            "p99": 2113544,
+            "min": -61804200,
+            "max": 2141184
+          },
+          "batchArrayBufferDeltaBytes": {
+            "median": 0.0,
+            "p95": 0,
+            "p99": 0,
+            "min": -2432,
+            "max": 0
+          }
+        }
+      },
+      {
+        "case": "ArithmeticAssembly",
+        "workload": "decompileAssembly.bytes",
+        "variant": "candidate",
+        "warmupSamples": 20,
+        "measuredSamples": 100,
+        "metrics": {
+          "batchMeanNanosecondsPerCall": {
+            "median": 154396.50000043912,
+            "p95": 379386.0000005225,
+            "p99": 730412.6500006532,
+            "min": 123368.45000099856,
+            "max": 1480079.8000011127
+          },
+          "batchHeapDeltaBytes": {
+            "median": 4223192.0,
+            "p95": 4308184,
+            "p99": 4322016,
+            "min": -59443080,
+            "max": 4335632
+          },
+          "batchArrayBufferDeltaBytes": {
+            "median": 0.0,
+            "p95": 0,
+            "p99": 0,
+            "min": -2987,
+            "max": 0
+          }
+        }
+      },
+      {
+        "case": "ArithmeticAssembly",
+        "workload": "decompileAssembly.cachedInspector",
+        "variant": "baseline",
+        "warmupSamples": 20,
+        "measuredSamples": 100,
+        "metrics": {
+          "batchMeanNanosecondsPerCall": {
+            "median": 21719.450000091456,
+            "p95": 37924.80000120122,
+            "p99": 77101.90000070725,
+            "min": 18996.449999394827,
+            "max": 82824.80000052601
+          },
+          "batchHeapDeltaBytes": {
+            "median": 780312.0,
+            "p95": 802256,
+            "p99": 802616,
+            "min": 780184,
+            "max": 805448
+          },
+          "batchArrayBufferDeltaBytes": {
+            "median": 0.0,
+            "p95": 0,
+            "p99": 0,
+            "min": 0,
+            "max": 0
+          }
+        }
+      },
+      {
+        "case": "ArithmeticAssembly",
+        "workload": "decompileAssembly.cachedInspector",
+        "variant": "candidate",
+        "warmupSamples": 20,
+        "measuredSamples": 100,
+        "metrics": {
+          "batchMeanNanosecondsPerCall": {
+            "median": 93541.95000050822,
+            "p95": 207597.54999889992,
+            "p99": 217010.4500008165,
+            "min": 79093.25000073295,
+            "max": 415398.59999975306
+          },
+          "batchHeapDeltaBytes": {
+            "median": 2872332.0,
+            "p95": 2926712,
+            "p99": 2934552,
+            "min": -196400336,
+            "max": 2951120
+          },
+          "batchArrayBufferDeltaBytes": {
+            "median": 0.0,
+            "p95": 0,
+            "p99": 0,
+            "min": -2516,
+            "max": 0
+          }
+        }
+      },
+      {
+        "case": "ArithmeticAssembly",
+        "workload": "inventoryOnly.cachedInspector",
+        "variant": "candidate",
+        "warmupSamples": 20,
+        "measuredSamples": 100,
+        "metrics": {
+          "batchMeanNanosecondsPerCall": {
+            "median": 60259.4499992847,
+            "p95": 108693.30000132322,
+            "p99": 243599.24999880604,
+            "min": 54989.44999999367,
+            "max": 272644.1999999224
+          },
+          "batchHeapDeltaBytes": {
+            "median": 2190400.0,
+            "p95": 2221112,
+            "p99": 2261776,
+            "min": -61381760,
+            "max": 2281424
+          },
+          "batchArrayBufferDeltaBytes": {
+            "median": 0.0,
+            "p95": 0,
+            "p99": 0,
+            "min": -2516,
+            "max": 0
+          }
+        }
+      },
+      {
+        "case": "NativeCfgAssembly",
+        "workload": "decompileAssembly.bytes",
+        "variant": "baseline",
+        "warmupSamples": 20,
+        "measuredSamples": 100,
+        "metrics": {
+          "batchMeanNanosecondsPerCall": {
+            "median": 47506043.19999984,
+            "p95": 57829114.54999994,
+            "p99": 62784909.000000335,
+            "min": 41354856.60000122,
+            "max": 62972297.89999838
+          },
+          "batchHeapDeltaBytes": {
+            "median": 4359464.0,
+            "p95": 67428248,
+            "p99": 68071152,
+            "min": -231482240,
+            "max": 68467968
+          },
+          "batchArrayBufferDeltaBytes": {
+            "median": 1603.0,
+            "p95": 2987,
+            "p99": 3063,
+            "min": -925,
+            "max": 3209
+          }
+        }
+      },
+      {
+        "case": "NativeCfgAssembly",
+        "workload": "decompileAssembly.bytes",
+        "variant": "candidate",
+        "warmupSamples": 20,
+        "measuredSamples": 100,
+        "metrics": {
+          "batchMeanNanosecondsPerCall": {
+            "median": 47874247.4249997,
+            "p95": 63093715.30000062,
+            "p99": 66887640.79999819,
+            "min": 41796464.150000244,
+            "max": 71094990.1999993
+          },
+          "batchHeapDeltaBytes": {
+            "median": 16103716.0,
+            "p95": 79988864,
+            "p99": 80682088,
+            "min": -221578856,
+            "max": 80903512
+          },
+          "batchArrayBufferDeltaBytes": {
+            "median": 1032.0,
+            "p95": 2796,
+            "p99": 3203,
+            "min": -2108,
+            "max": 3303
+          }
+        }
+      },
+      {
+        "case": "NativeCfgAssembly",
+        "workload": "decompileAssembly.cachedInspector",
+        "variant": "baseline",
+        "warmupSamples": 20,
+        "measuredSamples": 100,
+        "metrics": {
+          "batchMeanNanosecondsPerCall": {
+            "median": 44725464.24999891,
+            "p95": 57957661.15000006,
+            "p99": 64637759.44999943,
+            "min": 39755232.750001594,
+            "max": 65279616.100000575
+          },
+          "batchHeapDeltaBytes": {
+            "median": 19943628.0,
+            "p95": 84361728,
+            "p99": 84491352,
+            "min": -213655160,
+            "max": 84795592
+          },
+          "batchArrayBufferDeltaBytes": {
+            "median": -435.0,
+            "p95": 2516,
+            "p99": 2543,
+            "min": -3187,
+            "max": 2663
+          }
+        }
+      },
+      {
+        "case": "NativeCfgAssembly",
+        "workload": "decompileAssembly.cachedInspector",
+        "variant": "candidate",
+        "warmupSamples": 20,
+        "measuredSamples": 100,
+        "metrics": {
+          "batchMeanNanosecondsPerCall": {
+            "median": 46256903.92500037,
+            "p95": 57384879.89999994,
+            "p99": 64418553.999997675,
+            "min": 40643901.24999918,
+            "max": 67472962.64999968
+          },
+          "batchHeapDeltaBytes": {
+            "median": 32715748.0,
+            "p95": 96766632,
+            "p99": 97247360,
+            "min": -198930200,
+            "max": 97452312
+          },
+          "batchArrayBufferDeltaBytes": {
+            "median": 300.0,
+            "p95": 3003,
+            "p99": 3147,
+            "min": -1361,
+            "max": 3182
+          }
+        }
+      },
+      {
+        "case": "NativeCfgAssembly",
+        "workload": "inventoryOnly.cachedInspector",
+        "variant": "candidate",
+        "warmupSamples": 20,
+        "measuredSamples": 100,
+        "metrics": {
+          "batchMeanNanosecondsPerCall": {
+            "median": 428098.02500050864,
+            "p95": 685741.5000005858,
+            "p99": 821404.0000006207,
+            "min": 394080.90000069933,
+            "max": 933160.4000006337
+          },
+          "batchHeapDeltaBytes": {
+            "median": 11919052.0,
+            "p95": 11949696,
+            "p99": 11972800,
+            "min": -214730592,
+            "max": 11992512
+          },
+          "batchArrayBufferDeltaBytes": {
+            "median": 0.0,
+            "p95": 0,
+            "p99": 0,
+            "min": -3063,
+            "max": 0
+          }
+        }
+      }
+    ],
+    "comparisons": [
+      {
+        "case": "ArithmeticAssembly",
+        "workload": "decompileAssembly.bytes",
+        "batchMeanChanges": {
+          "median": {
+            "baselineNanosecondsPerCall": 72283.90000018408,
+            "candidateNanosecondsPerCall": 154396.50000043912,
+            "absoluteChangeNanosecondsPerCall": 82112.60000025504,
+            "changePercent": 113.59735708787979,
+            "aboveFivePercent": true
+          },
+          "p95": {
+            "baselineNanosecondsPerCall": 152632.50000134576,
+            "candidateNanosecondsPerCall": 379386.0000005225,
+            "absoluteChangeNanosecondsPerCall": 226753.4999991767,
+            "changePercent": 148.56174143591795,
+            "aboveFivePercent": true
+          },
+          "p99": {
+            "baselineNanosecondsPerCall": 303862.9000016954,
+            "candidateNanosecondsPerCall": 730412.6500006532,
+            "absoluteChangeNanosecondsPerCall": 426549.74999895785,
+            "changePercent": 140.3757253671238,
+            "aboveFivePercent": true
+          }
+        }
+      },
+      {
+        "case": "ArithmeticAssembly",
+        "workload": "decompileAssembly.cachedInspector",
+        "batchMeanChanges": {
+          "median": {
+            "baselineNanosecondsPerCall": 21719.450000091456,
+            "candidateNanosecondsPerCall": 93541.95000050822,
+            "absoluteChangeNanosecondsPerCall": 71822.50000041677,
+            "changePercent": 330.68286720020234,
+            "aboveFivePercent": true
+          },
+          "p95": {
+            "baselineNanosecondsPerCall": 37924.80000120122,
+            "candidateNanosecondsPerCall": 207597.54999889992,
+            "absoluteChangeNanosecondsPerCall": 169672.7499976987,
+            "changePercent": 447.39260323673307,
+            "aboveFivePercent": true
+          },
+          "p99": {
+            "baselineNanosecondsPerCall": 77101.90000070725,
+            "candidateNanosecondsPerCall": 217010.4500008165,
+            "absoluteChangeNanosecondsPerCall": 139908.55000010924,
+            "changePercent": 181.4592766181195,
+            "aboveFivePercent": true
+          }
+        }
+      },
+      {
+        "case": "NativeCfgAssembly",
+        "workload": "decompileAssembly.bytes",
+        "batchMeanChanges": {
+          "median": {
+            "baselineNanosecondsPerCall": 47506043.19999984,
+            "candidateNanosecondsPerCall": 47874247.4249997,
+            "absoluteChangeNanosecondsPerCall": 368204.2249998599,
+            "changePercent": 0.7750681812200622,
+            "aboveFivePercent": false
+          },
+          "p95": {
+            "baselineNanosecondsPerCall": 57829114.54999994,
+            "candidateNanosecondsPerCall": 63093715.30000062,
+            "absoluteChangeNanosecondsPerCall": 5264600.750000685,
+            "changePercent": 9.103720143335114,
+            "aboveFivePercent": true
+          },
+          "p99": {
+            "baselineNanosecondsPerCall": 62784909.000000335,
+            "candidateNanosecondsPerCall": 66887640.79999819,
+            "absoluteChangeNanosecondsPerCall": 4102731.7999978513,
+            "changePercent": 6.534582697249469,
+            "aboveFivePercent": true
+          }
+        }
+      },
+      {
+        "case": "NativeCfgAssembly",
+        "workload": "decompileAssembly.cachedInspector",
+        "batchMeanChanges": {
+          "median": {
+            "baselineNanosecondsPerCall": 44725464.24999891,
+            "candidateNanosecondsPerCall": 46256903.92500037,
+            "absoluteChangeNanosecondsPerCall": 1531439.6750014573,
+            "changePercent": 3.4240889405669828,
+            "aboveFivePercent": false
+          },
+          "p95": {
+            "baselineNanosecondsPerCall": 57957661.15000006,
+            "candidateNanosecondsPerCall": 57384879.89999994,
+            "absoluteChangeNanosecondsPerCall": -572781.2500001192,
+            "changePercent": -0.9882753006849376,
+            "aboveFivePercent": false
+          },
+          "p99": {
+            "baselineNanosecondsPerCall": 64637759.44999943,
+            "candidateNanosecondsPerCall": 64418553.999997675,
+            "absoluteChangeNanosecondsPerCall": -219205.45000175387,
+            "changePercent": -0.339129097089641,
+            "aboveFivePercent": false
+          }
+        }
+      }
+    ],
+    "performanceAcceptance": "pending-root-decision; existing-operation regressions remain explicit"
+  },
+  "sourceReview": {
+    "correctnessAssessment": "No semantic defect identified in the reviewed inventory, budget, ownership and pipeline flow.",
+    "requiredWork": [
+      "Fresh owned table/column/row/summary records are required by the output contract.",
+      "Per-call mutation visibility and per-call budgets prevent returning a shared previously computed inventory.",
+      "Rows and scalar widths must still be validated; declared-name scans retain their existing shared-reader bounds."
+    ],
+    "avoidableWork": [
+      {
+        "location": "inventory.js census and createMetadataInventory",
+        "finding": "Present-table column layouts are allocated during census and recomputed for the returned inventory.",
+        "resolution": "Reuse each per-table owned layout within the same call; no cross-call cache."
+      },
+      {
+        "location": "inventory.js rawRecord",
+        "finding": "The same table column widths are reduced for each physical row.",
+        "resolution": "Derive the row width once from the existing final-column offset and width and reuse it per table."
+      }
+    ],
+    "optimizationStatus": "Narrow product correction requested after this first cohort; no optimized result is recorded here.",
+    "attribution": "The measured total cost is not all proved necessary; savings from the identified computations are unmeasured."
+  },
+  "sourceSha256AtMeasuredRevision": {
+    "packages/cil/src/decompiler/inventory-contracts.js": "3f72073e8e08dcb192bd88ad1ee1178779da756622c030246fe30b425a7f2e4e",
+    "packages/cil/src/decompiler/inventory.js": "53f3922b54d53bdd616a2eb32a3b150f4ddc23cb96475ae194dfa9355005b4e3",
+    "packages/cil/src/decompiler/pipeline.js": "d6efc28cd94c694ff1101abf5b15c25bbf54ed298f31bafd22c3def717aa16db",
+    "packages/cil/src/inspector-tables/heaps.js": "6b4ed81d2cb27077e46920dbd589d21e92413e545b472ec9b07c46c741399cbb",
+    "packages/cil/src/inspector-tables/input.js": "3c16bd054e2d088c4ee2972f892c5226e7868bb344ce621779a72dca8e771ec6",
+    "packages/cil/src/metadata/table-stream.js": "6afdc8d70a7fb2fa3b917497224ca92208eb81663f3915c132760d8248c3336c",
+    "packages/cil/tools/benchmark-decompiler-inventory.mjs": "1784bac50545f62446dffdc372e43a6969fd0eab3d387f82e3f2b20248dfdef2",
+    "scripts/conformance/static/allowlist.json": "2ecf5ba4601fb7e89198b1740c43aaa03267850e09974bedf858215fef592f2a",
+    "scripts/limited.js": "d60fa1310cc85ce9426914dd4b79b1b500dcb2eab0928b422d24994d90a650f7",
+    "tests/a13-07-cfg-reference.test.js": "7b91e0cf4d54c9cacbb56941ce5893aded73e84ccbb032e5798e390dbb6bc745",
+    "tests/a13-07-cfg.test.js": "3978ee71cdbed903a8799af97598c1633f2c801cd06c4fa10d6c7e0b6518a6d9",
+    "tests/a13-10-metadata-inventory-native.test.js": "0892f3fb2d1d00f20b11b5a1c4859dab2d8bd2c2cdfa86d64c1a33de76811a3f",
+    "tests/a13-10-metadata-inventory.test.js": "3b74e33139a5d3255ab3d380ded1c3985c6f6d378d250e340a92473bcadc5e92",
+    "tests/fixtures/decompiler-cfg/native.json": "bfcaf0f930c76cdfd133565ffd5779f5e85258034f1fd2f21051a868d6a3cfc1",
+    "tests/fixtures/decompiler-inventory/browser.mjs": "6312ee8eb47b6bcc5727c36fba25358cae11db5d82697363e20f9c6a20b0a99a",
+    "tests/fixtures/metadata-table-views/native.json": "b9fe9c749515f4d14ab4da150b00a7f4bd33037d7bb903c40e03c67d865f05b7",
+    "tests/managed-fixtures.js": "53b6e844b4a1dccd707aed5ffa0e0e4840558ed4bb67adc9b9ae04ed7573e7fd"
+  },
+  "artifacts": [
+    {
+      "path": "inventory-55913c51-tests.tap",
+      "bytes": 3007,
+      "sha256": "40df50dc946e4d0857de3db9f6d08cd02710705e14cdbe32a2f36f416140798e",
+      "originalPath": "/workspace/scratch/7e3d2a445c44/inventory-55913c51-tests.tap"
+    },
+    {
+      "path": "inventory-55913c51-tests-execution.json",
+      "bytes": 1433,
+      "sha256": "e9974c74398896d633140352b88862e4861b1bee12c717bea6e00c6004441cf5",
+      "originalPath": "/workspace/scratch/7e3d2a445c44/inventory-55913c51-tests-execution.json"
+    },
+    {
+      "path": "inventory-7da-vs-c169-benchmark.json",
+      "bytes": 489005,
+      "sha256": "0aa9ba83ffbcf2ea105e2027ec8eb5ebaa418aa991f7a2d9038f6caa5c656c87",
+      "originalPath": "/workspace/scratch/7e3d2a445c44/inventory-7da-vs-c169-benchmark.json"
+    },
+    {
+      "path": "inventory-7da-vs-c169-benchmark.log",
+      "bytes": 6063,
+      "sha256": "2424277b0daaec594ff1079c921aa0ae87f07b2d45ebc5717e3d564daa211434",
+      "originalPath": "/workspace/scratch/7e3d2a445c44/inventory-7da-vs-c169-benchmark.log"
+    },
+    {
+      "path": "inventory-7da-vs-c169-benchmark-execution.json",
+      "bytes": 1058,
+      "sha256": "30bb541edc8da6993bc51842e258c77b8de4a299fd220c31193fd53ff2692753",
+      "originalPath": "/workspace/scratch/7e3d2a445c44/inventory-7da-vs-c169-benchmark-execution.json"
+    },
+    {
+      "path": "benchmark-decompiler-inventory.mjs.txt",
+      "bytes": 17321,
+      "sha256": "1784bac50545f62446dffdc372e43a6969fd0eab3d387f82e3f2b20248dfdef2",
+      "sourcePath": "packages/cil/tools/benchmark-decompiler-inventory.mjs"
+    }
+  ]
+}
