@@ -32,6 +32,8 @@ export function normalizeStroke(value, platform = 'windows') {
 
 // Normalize Shift+punctuation against its observed physical key only; other keyboard layouts retain their logical key.
 const punctuationKeys = Object.freeze({
+  Digit0: ['0', ')'], Digit1: ['1', '!'], Digit2: ['2', '@'], Digit3: ['3', '#'], Digit4: ['4', '$'],
+  Digit5: ['5', '%'], Digit6: ['6', '^'], Digit7: ['7', '&'], Digit8: ['8', '*'], Digit9: ['9', '('],
   BracketLeft: ['[', '{'], BracketRight: [']', '}'], Backslash: ['\\', '|'],
   Comma: [',', '<'], Period: ['.', '>'], Slash: ['/', '?'], Semicolon: [';', ':'],
   Quote: ["'", '"'], Minus: ['-', '_'], Equal: ['=', '+'], Backquote: ['`', '~']
