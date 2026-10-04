@@ -10,7 +10,8 @@ function newExpression(node) {
     this.array(this.types.memberInfo, node.members.map(member => () => this.methodOf(member.getMethod)));
     return this.factory('New', [constructorInfo, this.core.ienumerableT.construct(this.expression), this.arrayOf(this.types.memberInfo)], newExpression);
   }
-  if (!constructor || (constructor.isImplicitlyDeclared && node.type.typeKind === TypeKind.Struct)) {
+  // A synthesized constructor with parameters still constructs a value; only the implicit zero-argument struct case is default(T).
+  if (!constructor || (constructor.isImplicitlyDeclared && !constructor.parameters.length && node.type.typeKind === TypeKind.Struct)) {
     this.typeOf(node.type);
     return this.factory('New', [this.core.type], newExpression);
   }
