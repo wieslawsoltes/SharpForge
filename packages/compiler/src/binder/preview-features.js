@@ -17,7 +17,7 @@
  * safety rules themselves (requires-unsafe members, the modifiers required on extern members and explicit-layout
  * fields) apply only to a compilation that opts in to them; there is no such option yet, so they are not applied.
  *
- * Not bound, reported instead of guessed (SF2202 names the feature and its proposal): unions (SF-A02-T89).
+ * Unions (SF-A02-T89) are bound by ./unions.js, with explicit diagnostics for the proposal's open questions.
  * Extension indexers (SF-A02-T91) are bound by ./extension-indexers.js.
  *
  * The proposals name no diagnostic ids, so the rules use two SharpForge codes: SF2202 "preview feature is not
@@ -38,7 +38,6 @@ export function unboundPreviewConstructs(root) {
     stack = [root];
   while (stack.length) {
     const node = stack.pop();
-    if (node.kind === 'UnionDeclaration') rows.push(['Unions', 'unions', node.identifier ?? node]);
     for (const child of node.childNodes()) stack.push(child);
   }
   return rows.sort((a, b) => a[2].span.start - b[2].span.start);
