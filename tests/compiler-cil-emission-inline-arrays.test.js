@@ -73,6 +73,18 @@ test('A02-T80 readonly ranges call CreateReadOnlySpan and Slice', () => {
   assert.ok(body.some(line => line.includes('ReadOnlySpan') && line.endsWith('::Slice')));
 });
 
+test('A02-T80 foreach bypasses custom enumerators and reads inline storage directly', () => {
+  const { lines } = emit(`using System; using System.Runtime.CompilerServices;
+    [InlineArray(2)] struct Buffer { private int first; public Enumerator GetEnumerator() => new Enumerator(); }
+    struct Enumerator { public string Current => "custom"; public bool MoveNext() => false; }
+    class Program { static void Main() { Buffer value = default; foreach (int item in value) Console.WriteLine(item); } }
+  `);
+  const main = lines('Main');
+  assert.ok(main.some(line => line.endsWith('MemoryMarshal::CreateSpan')));
+  assert.ok(!main.some(line => line.endsWith('::GetEnumerator')));
+  assert.ok(main.includes('ldind.i4'));
+});
+
 const pack = loadReferencePack();
 const dotnet = dotnetHost();
 const sdk = pack ? sdkVersion(dotnet) : null;

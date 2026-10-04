@@ -60,7 +60,10 @@ Views and references borrow the receiver's lifetime. Returning a view over a
 local, escaping a value parameter's storage, or storing a shorter-lived view in
 an outer span produces the existing ref-safety diagnostics. Views over an
 appropriate `ref`/`in` parameter or heap field may be returned. `foreach` by value,
-`ref`, and `ref readonly` follows the receiver's mutability and lifetime.
+`ref`, and `ref readonly` follows the receiver's mutability and lifetime. Reference
+iteration requires an original variable, even for `ref readonly`; an inline-array
+temporary supports only iteration by value. Inline-array enumeration uses the
+backing elements before any user-declared `GetEnumerator` or enumeration interface.
 
 Inline-array accesses and conversions are rejected in expression trees. The
 language operations require C# 12 or later. List patterns and using a collection

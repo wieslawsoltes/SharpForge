@@ -101,6 +101,17 @@ test('A02-T80 readonly element writes and ref aliases fail; foreach references p
   assert.deepEqual(codes(program('Quad value = default; foreach (ref int item in value) item++;')), []);
   assert.deepEqual(codes(program('', 'static void Read(in Quad value) { foreach (ref readonly int item in value) Console.WriteLine(item); }')), []);
   assert.deepEqual(codes(program('', 'static void Read(in Quad value) { foreach (ref int item in value) item++; }')), ['CS8331']);
+  assert.deepEqual(codes(program('foreach (ref int item in new Quad()) { }')), ['CS1510']);
+  assert.deepEqual(codes(program('foreach (ref readonly int item in new Quad()) { }')), ['CS1510']);
+  assert.deepEqual(codes(program('foreach (int item in new Quad()) Console.WriteLine(item);')), []);
+});
+
+test('A02-T80 foreach uses inline elements before a custom GetEnumerator pattern', () => {
+  const source = `using System; using System.Runtime.CompilerServices;
+    [InlineArray(2)] struct Buffer { private int first; public Enumerator GetEnumerator() => new Enumerator(); }
+    struct Enumerator { public string Current => "custom"; public bool MoveNext() => false; }
+    class Program { static void Main() { Buffer value = default; int sum = 0; foreach (var item in value) sum += item; } }`;
+  assert.deepEqual(codes(source), []);
 });
 
 test('A02-T80 ref returns and span returns follow local, value-parameter and ref-parameter lifetimes', () => {

@@ -52,6 +52,13 @@ export const FlowStatementBinding = Base =>
             element = enumeration?.elementType ?? unknown;
           } else if (type instanceof ArrayTypeSymbol) element = type.elementType;
           else if (type.specialType === 'System_String') element = this.core.char;
+          else if (inlineArrayShape(type)) {
+            // C# 12 inline-array enumeration takes precedence over a declared GetEnumerator or interface.
+            this.d.gate(this.c.uri, syntax.expression, 'InlineArrays');
+            element = inlineArrayShape(type).elementType;
+            const variable = classifyVariable(collection, this.variableContext);
+            currentRefKind = !variable.isVariable ? RefKind.None : variable.isWritable ? RefKind.Ref : RefKind.RefReadOnly;
+          }
           else if (isSpanType(type, this.core)) {
             element = type.typeArguments[0].type;
             currentRefKind = type.originalDefinition === this.core.span ? RefKind.Ref : RefKind.RefReadOnly;
@@ -79,12 +86,7 @@ export const FlowStatementBinding = Base =>
               const generic = findConstruction(type, this.core.ienumerableT, this.core);
               if (generic) element = generic.typeArguments[0].type;
               else if (implementsInterface(type, this.core.ienumerable, this.core)) element = this.core.object;
-              else if (inlineArrayShape(type)) {
-                // C# 12: the elements of an inline array.
-                this.d.gate(this.c.uri, syntax.expression, 'InlineArrays');
-                element = inlineArrayShape(type).elementType;
-                currentRefKind = classifyVariable(collection, this.variableContext).isWritable ? RefKind.Ref : RefKind.RefReadOnly;
-              } else if ((extension = extensionEnumeratorMethod(this, collection, 'GetEnumerator'))) {
+              else if ((extension = extensionEnumeratorMethod(this, collection, 'GetEnumerator'))) {
                 // C# 9: the enumerator comes from an extension method; its result supplies MoveNext and Current.
                 this.d.gate(this.c.uri, syntax.expression, 'ExtensionGetEnumerator');
                 const current = lookupMembers(extension.returnType, 'Current', this.core, { within: this.c.containingType }).members.find(
