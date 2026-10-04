@@ -18,6 +18,7 @@ try {
   writeFileSync(join(temporary, 'NuGet.Config'), '<configuration><packageSources><clear /></packageSources></configuration>');
   writeFileSync(join(temporary, 'oracle.csproj'), `<Project Sdk="Microsoft.NET.Sdk"><PropertyGroup>
     <TargetFramework>net10.0</TargetFramework><ImplicitUsings>enable</ImplicitUsings><Nullable>enable</Nullable>
+    ${process.argv[4] === '--unsafe' ? '<AllowUnsafeBlocks>true</AllowUnsafeBlocks>' : ''}
     <OutputType>Exe</OutputType></PropertyGroup></Project>`);
   copyFileSync(source, join(temporary, 'Program.cs'));
   const sdk = run(['--version']).trim();
