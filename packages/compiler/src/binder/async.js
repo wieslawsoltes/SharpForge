@@ -7,6 +7,7 @@
  * `await` outside an async function (CS4032, CS4033, CS4034) and the return type of an async method (CS1983) are
  * reported where the expression and the method are bound.
  */
+import {DiagnosticId} from '../diagnostics/codes.js';
 import { RefKind } from '../symbols/types.js';
 import { forEachChild, isBoundNode } from '../bound/semantic-walker.js';
 
@@ -33,11 +34,11 @@ function forEachAwaitInLock(node, inLock, found) {
  * @param report `(node, code, args)` reports a diagnostic in the method's file
  */
 export function checkAsyncBody(method, body, report) {
-  forEachAwaitInLock(body, false, node => report(node.syntax, 'CS1996', []));
+  forEachAwaitInLock(body, false, node => report(node.syntax, DiagnosticId.CS1996, []));
   if (!method.isAsync) return;
   for (const parameter of method.parameters ?? []) {
     if (parameter.refKind && parameter.refKind !== RefKind.None) {
-      report(parameter.syntax?.identifier ?? parameter.locations?.[0] ?? parameter.syntax, 'CS1988', []);
+      report(parameter.syntax?.identifier ?? parameter.locations?.[0] ?? parameter.syntax, DiagnosticId.CS1988, []);
     }
   }
 }
@@ -56,11 +57,11 @@ export function reportAwaitOutsideAsync(binder, node) {
   const context = binder.c;
   if (context.isAsync || context.isTopLevel) return false;
   if (context.isLambda) {
-    binder.report(node, 'CS4034', ['lambda expression']);
+    binder.report(node, DiagnosticId.CS4034, ['lambda expression']);
     return true;
   }
   const method = context.method,
     returnsVoid = method?.returnsVoid !== false && method?.returnType?.specialType === 'System_Void';
-  binder.report(node, returnsVoid ? 'CS4033' : 'CS4032', method?.returnsVoid ? [] : [binder.display(method?.returnType)]);
+  binder.report(node, returnsVoid ? DiagnosticId.CS4033 : DiagnosticId.CS4032, method?.returnsVoid ? [] : [binder.display(method?.returnType)]);
   return true;
 }

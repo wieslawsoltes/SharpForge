@@ -2,6 +2,7 @@
  * Patterns: constant, type, declaration, var, discard, relational, not/and/or and property patterns;
  * other forms are bound leniently so their variables enter scope.
  */
+import {DiagnosticId} from '../../diagnostics/codes.js';
 import { TypeKind, ErrorTypeSymbol } from '../../symbols/types.js';
 import { LocalDeclarationKind } from '../../symbols/members.js';
 import { ConversionKind } from '../../conversions/classify.js';
@@ -54,7 +55,7 @@ export const PatternBinding = Base =>
           const e = this.value(syntax.expression);
           if (e.hasErrors) return { kind: 'ConstantPattern', syntax, hasErrors: true };
           if (!e.constantValue && e.literal !== 'null') {
-            this.report(syntax.expression, 'CS9135', [inputType ? this.display(inputType) : '?']);
+            this.report(syntax.expression, DiagnosticId.CS9135, [inputType ? this.display(inputType) : '?']);
             return { kind: 'ConstantPattern', syntax, hasErrors: true };
           }
           if (inputType && !inputType.isErrorType()) {
@@ -66,6 +67,10 @@ export const PatternBinding = Base =>
             }
             const c = this.conversions.classifyFromExpression(e, inputType);
             if (c.exists && c.isImplicit) return { kind: 'ConstantPattern', syntax, value: this.applyConversion(e, inputType, c) };
+            // A value of a type parameter that is not known to be a value type can be tested for null.
+            if (e.literal === 'null' && inputType.typeKind === TypeKind.TypeParameter && !inputType.isValueType) {
+              return { kind: 'ConstantPattern', syntax, value: e };
+            }
             const explicit = e.type ? this.conversions.classifyExplicit(inputType, e.type) : null;
             if (
               explicit?.exists &&
@@ -102,7 +107,7 @@ export const PatternBinding = Base =>
         }
         case 'RelationalPattern': {
           const e = this.value(syntax.expression);
-          if (!e.hasErrors && !e.constantValue) this.report(syntax.expression, 'CS0150');
+          if (!e.hasErrors && !e.constantValue) this.report(syntax.expression, DiagnosticId.CS0150);
           return {
             kind: 'RelationalPattern',
             syntax,
@@ -152,7 +157,7 @@ export const PatternBinding = Base =>
       if (this.version.number < 7.1 && (containsTypeParameter(inputType) || containsTypeParameter(type))) {
         const c = this.conversions.classifyExplicit(inputType, type);
         if (!c.exists || c.isUserDefined) {
-          this.report(syntax.type ?? syntax, 'CS8314', [this.display(inputType), this.display(type), '7.0', '7.1']);
+          this.report(syntax.type ?? syntax, DiagnosticId.CS8314, [this.display(inputType), this.display(type), '7.0', '7.1']);
           return { kind: 'TypePattern', syntax, testedType: type, hasErrors: true };
         }
       }
@@ -160,7 +165,7 @@ export const PatternBinding = Base =>
       if (outcome === 'never' && !(inputType.typeKind === TypeKind.TypeParameter || type.typeKind === TypeKind.TypeParameter)) {
         const c = this.conversions.classifyExplicit(inputType, type);
         if (!c.exists || c.isNumeric || c.isUserDefined || c.kind === ConversionKind.ExplicitEnumeration)
-          this.report(syntax.type ?? syntax, 'CS8121', [this.display(inputType), this.display(type)]);
+          this.report(syntax.type ?? syntax, DiagnosticId.CS8121, [this.display(inputType), this.display(type)]);
       }
       return { kind: 'TypePattern', syntax, testedType: type, outcome };
     }

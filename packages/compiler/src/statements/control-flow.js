@@ -1,3 +1,4 @@
+import {DiagnosticId} from '../diagnostics/codes.js';
 import { Op } from '@sharpforge/bytecode';
 import { typeText } from '../type-utils.js';
 
@@ -74,9 +75,9 @@ export function compileLoopJump(node) {
     ? [...this.loops].reverse().find(l => l.labels?.includes(node.label) && (node.kind !== 'Continue' || !l.switch))
     : node.kind === 'Continue' ? [...this.loops].reverse().find(l => !l.switch) : this.loops.at(-1);
   if (loop && this.finallyScopes.length && !this.loops.slice(this.finallyScopes.at(-1)).includes(loop))
-    this.c.report(node, 'CS0157');
+    this.c.report(node, DiagnosticId.CS0157);
   if (!loop)
-    this.c.report(node, 'CS0139');
+    this.c.report(node, DiagnosticId.CS0139);
   else
     loop[node.kind === 'Break' ? 'breaks' : 'continues'].push(this.emit(Op.JUMP));
   return;
@@ -89,7 +90,7 @@ export function compileSwitch(node) {
 
 export function compileReturn(node) {
   if (this.finallyScopes.length)
-    this.c.report(node, 'CS0157');
+    this.c.report(node, DiagnosticId.CS0157);
   this.seq(node);
   if (node.expression) {
     const type = this.typedExpr(node.expression, this.m.returnType);
@@ -97,7 +98,7 @@ export function compileReturn(node) {
   }
   else {
     if (this.m.returnType !== 'void')
-      this.c.report(node, 'CS0126', [typeText(this.m.returnType)]);
+      this.c.report(node, DiagnosticId.CS0126, [typeText(this.m.returnType)]);
     this.emitConstant(null);
   }
   this.emit(Op.RET);
