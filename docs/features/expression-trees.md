@@ -213,3 +213,13 @@ The temporary baseline worktree was reused after measurement. The exact Git
 commit and local package links are sufficient to recreate it. Interpolated
 expression-tree lowering is a separate follow-up and is not included in this
 publication's tests or timings.
+
+## Main merge replay
+
+The merge with main `eadd85149b0740f337f7b8f3e92d259353892fdb` was tested at
+`cb976795faf73dce5f88b72d696c39071e874f47`: **49/49 passed, zero failures and zero skips**, in 7.148 seconds.
+The same four focused files include the eight native programs and registry/reference diagnostic comparisons.
+The clean checkout retained the extracted creation factories, including the synthesized-struct constructor check
+already present on main, and both revisions’ exact manifest entries. Raw output, hashes and the command are in
+`tests/fixtures/expression-trees/qualification/main-merge-{focused.log,results.json}`.
+The prior paired performance observation remains scoped to its recorded revisions; it was not rerun on this merge.
