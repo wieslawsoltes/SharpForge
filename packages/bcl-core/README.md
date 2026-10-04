@@ -400,6 +400,41 @@ existing invariant host profile; configurable culture and the remaining builder
 overloads remain separate work under #2637. Each value needs at most 20 decimal
 units, with the existing amortized chunk-storage growth and host text budget.
 
+`StringBuilder.Append(string, int, int)` appends at ID 524319. Its 52-case pinned
+.NET 10.0.5 reference records negative `startIndex`, then negative `count`, then
+null validation. A null string is accepted only for `(0, 0)`. For non-null strings,
+zero count returns without checking the start against the string length, even
+at `Int32.MaxValue`; the helper preserves this native no-op with no writes or
+managed allocations. Nonempty invalid windows name `startIndex`. Valid windows
+copy the selected UTF-16 units into one existing chunk append, preserving NUL
+and isolated surrogates without flattening the builder or creating per-unit
+managed strings. The host output budget is checked before slicing; unselected
+input text does not count toward it. Work and temporary text are O(count), with
+existing amortized chunk growth. Observer faults retain the released partial
+chunk behavior and release roots; this host policy makes no rollback guarantee.
+
+`StringBuilder.Append(char[])` and `Append(char[], int, int)` append at IDs
+524320–524321. The pinned .NET 10.0.5 reference contains 61 cases covering
+null receivers/arrays, fluent identity, competing range faults and UTF-16
+surrogate cuts. Slice validation checks negative `startIndex`, negative
+`charCount`, null, then array bounds. Unlike string slices, array slices check
+the upper bound even for zero count; invalid windows name `charCount`.
+Full null arrays and valid empty slices return the original builder without
+conversion, writes or managed allocations. Host callers must supply an actual
+single-dimensional zero-based character array.
+
+Nonempty input is checked against the remaining host text budget before any
+unit conversion. Bounded 4096-unit host blocks preserve NUL and isolated
+surrogates, followed by one existing managed chunk append. The builder is
+never flattened, and no per-unit managed strings are created. Conversion takes
+O(charCount) work and temporary host text; those host buffers are distinct from
+the managed chunk allocation and existing amortized backing-array growth.
+Existing argument roots, snapshot behavior and append observer partial progress
+are retained. The array source is fully converted before write callbacks run.
+The unchanged native oracle runs through source-platform and independent CIL
+calls; compiled typed arrays cover both pipelines and both VMs. Other builder
+overloads remain separate work under #2637.
+
 StringBuilder reports the .NET default `MaxCapacity` of `Int32.MaxValue`
 (`2147483647`) in both metadata and execution. The host separately limits text
 and requested capacity to 1,000,000 UTF-16 code units. Exceeding that allocation
