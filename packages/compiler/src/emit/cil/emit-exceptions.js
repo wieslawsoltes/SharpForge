@@ -92,8 +92,8 @@ export const ExceptionEmission = Base =>
         il.addRegion({ kind: 'catch', tryStart, tryEnd, handlerStart, handlerEnd, catchType: this.tokens.type(type) });
         handlerStart = handlerEnd;
       }
-      // The end of the last handler: nothing falls into it, the next instruction starts with an empty stack.
-      il.mark(handlerStart, 0);
+      // The end of the last handler: a boundary only, nothing falls into it.
+      il.mark(handlerStart);
       return undefined;
     }
     /** `using (R r = e) body` is `{ R r = e; try body finally { if (r != null) r.Dispose(); } }`. */

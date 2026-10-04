@@ -97,6 +97,12 @@ export function allTypeArguments(type) {
   return [...outer, ...type.typeArguments.map(argument => argument.type)];
 }
 
+/** The type parameters a definition stands over in its own code: those of its enclosing types, then its own. */
+export function allTypeParameters(type) {
+  const outer = type.containingType ? allTypeParameters(type.containingType.originalDefinition) : [];
+  return [...outer, ...type.typeParameters];
+}
+
 /**
  * Encodes a type as a signature blob (without the leading calling convention).
  * @param type a TypeSymbol
@@ -119,10 +125,8 @@ export function encodeTypeSignature(type, tokenOf) {
   const definition = type.originalDefinition;
   const classOrValueType = type.isValueType ? ElementType.ValueType : ElementType.Class;
   const reference = [classOrValueType, ...typeDefOrRefEncoded(tokenOf(definition))];
-  const isOpenDefinition = type.isDefinition && !type.arity && !(type.containingType && !type.containingType.isDefinition);
-  if (isOpenDefinition) return reference;
-
-  const typeArguments = type.isDefinition ? type.typeArguments.map(argument => argument.type) : allTypeArguments(type);
+  // A definition named in its own code is the instantiation over its type parameters, enclosing ones included.
+  const typeArguments = type.isDefinition ? allTypeParameters(type) : allTypeArguments(type);
   if (!typeArguments.length) return reference;
   const encodedArguments = typeArguments.flatMap(argument => encodeTypeSignature(argument, tokenOf));
   return [ElementType.GenericInst, ...reference, ...compressUnsigned(typeArguments.length), ...encodedArguments];

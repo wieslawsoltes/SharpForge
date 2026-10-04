@@ -7,9 +7,26 @@
  *   effect(node)       evaluates the node and leaves the stack as it was
  *   statement(node)    starts and ends with an empty evaluation stack
  */
+import { walk } from '../../bound/semantic-walker.js';
 import { IlBuilder } from './il-builder.js';
 import { UnsupportedInCil, describeKind } from './unsupported.js';
 import { isVoid } from './type-facts.js';
+
+const labelPresence = new WeakMap();
+
+/** True when a statement is, or contains, a labeled statement (functions nested in it have labels of their own). */
+function containsLabel(statement) {
+  let found = labelPresence.get(statement);
+  if (found === undefined) {
+    found = false;
+    walk(statement, node => {
+      if (node.kind === 'Labeled') found = true;
+      return !found && node.kind !== 'Lambda' && node.kind !== 'LocalFunction';
+    });
+    labelPresence.set(statement, found);
+  }
+  return found;
+}
 
 export class EmitterCore {
   /**
@@ -68,6 +85,8 @@ export class EmitterCore {
     return undefined;
   }
   statement(node) {
+    // A statement that cannot be reached emits nothing, unless a label inside it can be the target of a `goto`.
+    if (!this.il.isReachable && !containsLabel(node)) return undefined;
     const handler = this['stmt' + node.kind];
     if (!handler) return this.unsupported(`${describeKind(node.kind)} statements`, node.syntax);
     return handler.call(this, node);

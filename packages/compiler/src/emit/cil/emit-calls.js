@@ -32,11 +32,19 @@ export const CallEmission = Base =>
       }
       const receiver = node.receiver;
       if (!receiver) return this.unsupported('an instance call without a receiver', node.syntax);
-      if (this.callsThroughBox(method, receiver.type)) {
+      // A struct is sealed: a virtual method it overrides is called on the value itself, without a box.
+      const structOverride = receiver.type?.typeKind === TypeKind.Struct ? this.sourceOverride(method, receiver.type) : null;
+      if (structOverride) {
+        this.receiver(receiver);
+        this.arguments(node, method);
+        return this.callMethod(structOverride, { receiver, syntax: node.syntax });
+      }
+      const boxedTarget = this.boxedCallTarget(method, receiver.type);
+      if (boxedTarget) {
         this.expression(receiver);
         this.il.emit('box', this.tokens.type(receiver.type));
         this.arguments(node, method);
-        return this.callMethod(this.objectSlotOf(method), { receiver: { type: this.core.object }, syntax: node.syntax });
+        return this.callMethod(boxedTarget, { receiver: { type: this.core.object }, syntax: node.syntax });
       }
       this.receiver(receiver);
       this.arguments(node, method);
@@ -48,8 +56,13 @@ export const CallEmission = Base =>
      * method keeps the call inside the assembly.
      */
     nearestOverride(method, receiverType) {
-      if (!method.isVirtual && !method.isAbstract && !method.isOverride) return method;
-      if (method.containingType?.isSource || receiverType?.typeKind !== TypeKind.Class) return method;
+      if (receiverType?.typeKind !== TypeKind.Class) return method;
+      return this.sourceOverride(method, receiverType) ?? method;
+    }
+    /** The override of a framework virtual method that the source type `receiverType` (or a source base of it) declares, or null. */
+    sourceOverride(method, receiverType) {
+      if (!method.isVirtual && !method.isAbstract && !method.isOverride) return null;
+      if (method.containingType?.isSource) return null;
       const sameSignature = candidate =>
         candidate.kind === SymbolKind.Method &&
         candidate.isOverride &&
@@ -59,16 +72,22 @@ export const CallEmission = Base =>
         const override = type.getMembers(method.name).find(sameSignature);
         if (override) return override;
       }
-      return method;
+      return null;
     }
-    /** True for a member of `object` called on a value: `5.ToString()`, `color.Equals(x)`, a struct that does not override it. */
-    callsThroughBox(method, receiverType) {
-      if (!receiverType || (isReference(receiverType) && !primitiveOf(receiverType))) return false;
-      if (receiverType.typeKind === TypeKind.TypeParameter) return false;
-      if (!objectMembers.has(method.name)) return false;
-      const declaredOnReceiver = (method.containingType?.originalDefinition ?? method.containingType) === (receiverType.originalDefinition ?? receiverType);
-      // A primitive's own override takes the same arguments as the slot it overrides; the boxed call reaches it.
-      return !declaredOnReceiver || !!primitiveOf(receiverType) ? this.objectSlotOf(method) !== null : false;
+    /**
+     * The method to call on a boxed copy of a value receiver, or null when the method is called on the value's
+     * address. A value is boxed for a method it inherits from a class (`Enum.HasFlag`, `ValueType.Equals`, a struct
+     * that does not override `ToString`), and for a member of `object` on a primitive (`5.ToString()`), whose own
+     * override the boxed call reaches.
+     */
+    boxedCallTarget(method, receiverType) {
+      if (!receiverType || (isReference(receiverType) && !primitiveOf(receiverType))) return null;
+      if (receiverType.typeKind === TypeKind.TypeParameter) return null;
+      const owner = method.containingType?.originalDefinition ?? method.containingType,
+        declaredOnReceiver = owner === (receiverType.originalDefinition ?? receiverType),
+        objectSlot = objectMembers.has(method.name) ? this.objectSlotOf(method) : null;
+      if (!declaredOnReceiver) return objectSlot ?? (owner?.typeKind === TypeKind.Class ? method : null);
+      return primitiveOf(receiverType) ? objectSlot : null;
     }
     /** The method of `System.Object` with the name and parameter types of `method`, or null. */
     objectSlotOf(method) {
