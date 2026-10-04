@@ -15,11 +15,11 @@ export function sourceReaderOptions(options) {
   return {readSource: options.readSource, signal: options.signal};
 }
 
-export async function readWorkspaceFile(file, path, limits, {readSource, signal, encoding} = {}) {
+export async function readWorkspaceFile(file, path, limits, {readSource, signal, encoding, maxCharacters} = {}) {
   checkReadCancellation(signal);
   if (/\.cs$/i.test(path) && readSource) {
     if (file.size > limits.maxFileBytes) throw new Error('Source file limit exceeded by ' + path);
-    return readPreparedSource(file, path, limits, {readSource, signal, encoding});
+    return readPreparedSource(file, path, limits, {readSource, signal, encoding, maxCharacters});
   }
   const bytes = new Uint8Array(await file.arrayBuffer());
   checkReadCancellation(signal);
@@ -34,7 +34,8 @@ export async function readWorkspaceFile(file, path, limits, {readSource, signal,
 async function readPreparedSource(file, path, limits, options) {
   let prepared;
   try {
-    prepared = await options.readSource(file, {path, signal: options.signal, limits, encoding: options.encoding});
+    prepared = await options.readSource(file, {path, signal: options.signal, limits,
+      encoding: options.encoding, maxCharacters: options.maxCharacters});
     checkReadCancellation(options.signal);
     validatePreparedRecord(prepared, path, {byteLength: file.size, maximum: limits.maxFileBytes});
     return cloneWorkspaceRecord(prepared, path);
