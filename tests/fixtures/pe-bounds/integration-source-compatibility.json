@@ -1,0 +1,562 @@
+{
+  "schemaVersion": 1,
+  "status": "Source inspection only; no execution",
+  "productCommit": "8f0f0feec8ed8955e6119a346051ec6fdd965760",
+  "sourceRoster": {
+    "historicalCommit": "17de856493ba42091413e2968ad526efb7a79758",
+    "count": 424,
+    "unchangedCount": 420,
+    "inheritedMainChanges": [
+      {
+        "path": "packages/cil/src/index.js",
+        "captured": "8383307f079a8c2c5c4b8a57eb6b84dd869b81ddd73b82103654af6b374bf500",
+        "integrated": "9dbcac474709584c8a6245b8a47b9d267f6266b9fb0570dcafa260ffa1f6f473"
+      },
+      {
+        "path": "packages/cil/src/metadata.js",
+        "captured": "a4c1cf7ba2e9d1f6e6c150f8adfc08d548f56dac25d61d752208467b59a5587c",
+        "integrated": "e5e1100b627e96f582c13ffedbaad2cb35ebcb89b2c27da9ff78456e9471ff7f"
+      },
+      {
+        "path": "packages/cil/src/metadata/table-stream.js",
+        "captured": "6afdc8d70a7fb2fa3b917497224ca92208eb81663f3915c132760d8248c3336c",
+        "integrated": "179a55dd305a7ac8ff347ffcd044bd8a867b3741e3b597d145fce1dd7b028140"
+      },
+      {
+        "path": "packages/cil/src/pe/reader.js",
+        "captured": "9f727f824da827fbe543ff01eb74e78445d14890f775d6b781c132fb16f44a3d",
+        "integrated": "3251b33865ed4d942ce523415267a84e48d247ef9c51d22d3de110271d5db7e6"
+      }
+    ],
+    "newPreparationChanges": []
+  },
+  "retainedHistoricalFiles": [
+    {
+      "path": "tests/fixtures/pe-bounds/verify.mjs",
+      "bytes": 2611,
+      "sha256": "7d6dee2bb163f009a085ebb8078026daccf99488f0304c2a911b9147b25b2b52"
+    },
+    {
+      "path": "tests/fixtures/pe-bounds/run-step.py",
+      "bytes": 10352,
+      "sha256": "d3d32dbd59cc74601d5148b79f71b8e9de84205918af2252f12a0675f805bc4e"
+    },
+    {
+      "path": "tests/fixtures/pe-bounds/validation-plan.json",
+      "bytes": 7651,
+      "sha256": "ad2a019e274bd63f5d0ba0ae6605bf6ebebf8a4c31eb0c44b02bd92ac6520909"
+    },
+    {
+      "path": "tests/fixtures/pe-bounds/run-step-v3.py",
+      "bytes": 10895,
+      "sha256": "b00e3ed3c73c5586c85173470b8a9510637f118bbc35d4972f99ce26f4821373"
+    },
+    {
+      "path": "tests/fixtures/pe-bounds/validation-plan-v3.json",
+      "bytes": 9255,
+      "sha256": "cecce5a6aacd287897b52fe2d34d7e65cd5099e801fbc17a53a3e6282a0d38f7"
+    },
+    {
+      "path": "tests/fixtures/pe-bounds/qualification/ROOT-PERFORMANCE-DISPOSITION.md",
+      "bytes": 11932,
+      "sha256": "f29922c1a5e43a1281e8330770278201673347ca6c18e5b5b243366e34ac4c29"
+    },
+    {
+      "path": "tests/fixtures/pe-bounds/qualification/execution-cancellation-first/focused.execution.json",
+      "bytes": 266063,
+      "sha256": "512b5e401bea8e8ab42294bd9f44874f9bcf1f78a9cc7e87d81270b71d696e2b"
+    },
+    {
+      "path": "tests/fixtures/pe-bounds/qualification/execution-cancellation-first/focused.stderr.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "tests/fixtures/pe-bounds/qualification/execution-cancellation-first/focused.stdout.txt",
+      "bytes": 6171,
+      "sha256": "e40dd7c30c68ea677c63740eedd9e3011e8ec6f7d23cc01e2910a575b829f324"
+    },
+    {
+      "path": "tests/fixtures/pe-bounds/qualification/execution-cancellation-first/native.execution.json",
+      "bytes": 264389,
+      "sha256": "99b4fd664363840263e462ae9a73f8a647597cf1ce0776082a90ea83ac184dd3"
+    },
+    {
+      "path": "tests/fixtures/pe-bounds/qualification/execution-cancellation-first/native.stderr.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "tests/fixtures/pe-bounds/qualification/execution-cancellation-first/native.stdout.txt",
+      "bytes": 111,
+      "sha256": "9236a558451ba9da43ff9887d15a8c77c700a609ddcc2c7a04c760562811e2d9"
+    },
+    {
+      "path": "tests/fixtures/pe-bounds/qualification/execution-cancellation-first/performance.execution.json",
+      "bytes": 264549,
+      "sha256": "fffd15b90c0741bd2bf1ccecbcf2818e3821796971b6bb286eae1b2c03e6917f"
+    },
+    {
+      "path": "tests/fixtures/pe-bounds/qualification/execution-cancellation-first/performance.stderr.txt",
+      "bytes": 94,
+      "sha256": "efa2c0796767ca086f3d032d1bedc4a3002a555df65194f4ae54ff53a1291595"
+    },
+    {
+      "path": "tests/fixtures/pe-bounds/qualification/execution-cancellation-first/performance.stdout.txt",
+      "bytes": 116,
+      "sha256": "1cdb67b32e7fd4f4ace13e5f84243dc434daf39fd3b7c8cefdf6f24047cfc8c6"
+    },
+    {
+      "path": "tests/fixtures/pe-bounds/qualification/execution-cancellation-first/retain-native.execution.json",
+      "bytes": 269561,
+      "sha256": "56d2c9abbc4cae14792ad925f5bd79f623b04af984f04a48a69f0c2f5185c641"
+    },
+    {
+      "path": "tests/fixtures/pe-bounds/qualification/execution-cancellation-first/retention.json",
+      "bytes": 17797,
+      "sha256": "53919a5ba0c8e31fcd590f4534501d8f7cb3574401e10ea435bbb56393bad9e6"
+    },
+    {
+      "path": "tests/fixtures/pe-bounds/qualification/execution-cancellation-first/verify-external.execution.json",
+      "bytes": 264225,
+      "sha256": "42b3cc83aee35250a5d74a7e2beaa6eca7f8e91ef1b48564ca09aef42a6bb1c6"
+    },
+    {
+      "path": "tests/fixtures/pe-bounds/qualification/execution-cancellation-first/verify-external.stderr.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "tests/fixtures/pe-bounds/qualification/execution-cancellation-first/verify-external.stdout.txt",
+      "bytes": 51,
+      "sha256": "3f97c01b84a6898e96ab69e5b67dae7d3a5ed0d42ccd553011efe7dd47f42910"
+    },
+    {
+      "path": "tests/fixtures/pe-bounds/qualification/execution-cancellation-first/verify-retained.execution.json",
+      "bytes": 265849,
+      "sha256": "5fb69eda5d92338fb878e2168344117dac918d7d3b84fc71649b506fe2b51c44"
+    },
+    {
+      "path": "tests/fixtures/pe-bounds/qualification/execution-cancellation-first/verify-retained.stderr.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "tests/fixtures/pe-bounds/qualification/execution-cancellation-first/verify-retained.stdout.txt",
+      "bytes": 51,
+      "sha256": "3f97c01b84a6898e96ab69e5b67dae7d3a5ed0d42ccd553011efe7dd47f42910"
+    },
+    {
+      "path": "tests/fixtures/pe-bounds/qualification/independent-performance-review-addendum.json",
+      "bytes": 1510,
+      "sha256": "87acc50f897cc42433ec89b4b866cce05f907a21e6c55a3b0f53e572c608187f"
+    },
+    {
+      "path": "tests/fixtures/pe-bounds/qualification/independent-performance-review.json",
+      "bytes": 35232,
+      "sha256": "c01850bc2c11be88fb3dfee887a60a95836ce3095a20c74a7c9b3c7042b88d70"
+    },
+    {
+      "path": "tests/fixtures/pe-bounds/qualification/independent-performance-review.py.txt",
+      "bytes": 17458,
+      "sha256": "e2ffd6b624a4a24738e32e95690e94a9fa27d041b84092d62d73959cea29785b"
+    },
+    {
+      "path": "tests/fixtures/pe-bounds/qualification/performance-cancellation-first/dense96-baseline.job.json",
+      "bytes": 54431,
+      "sha256": "e7f88a02d18154ef6129b5204b75d81c0d34facc09011e46491239eb88c64229"
+    },
+    {
+      "path": "tests/fixtures/pe-bounds/qualification/performance-cancellation-first/dense96-baseline.result.json",
+      "bytes": 127466,
+      "sha256": "b2b55d9374e6129489b583d47798a695dfa522e346df7cb63c3d8d1bdf4a026b"
+    },
+    {
+      "path": "tests/fixtures/pe-bounds/qualification/performance-cancellation-first/dense96-baseline.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "tests/fixtures/pe-bounds/qualification/performance-cancellation-first/dense96-baseline.stdout.log",
+      "bytes": 20,
+      "sha256": "b215ff190a08ad5dcf98fbe6ee599c5a3a2b5b7034c6b526eeeaa887f67ae648"
+    },
+    {
+      "path": "tests/fixtures/pe-bounds/qualification/performance-cancellation-first/dense96-candidate.job.json",
+      "bytes": 54419,
+      "sha256": "efc470806dbbc9e765537b3191fb12fede35b32a354d58a8d16b12e25b066968"
+    },
+    {
+      "path": "tests/fixtures/pe-bounds/qualification/performance-cancellation-first/dense96-candidate.result.json",
+      "bytes": 127475,
+      "sha256": "f7a2e93b3c0c2fb682218aa754763d82c459f1b5079c25166dc961a0295ee109"
+    },
+    {
+      "path": "tests/fixtures/pe-bounds/qualification/performance-cancellation-first/dense96-candidate.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "tests/fixtures/pe-bounds/qualification/performance-cancellation-first/dense96-candidate.stdout.log",
+      "bytes": 20,
+      "sha256": "b215ff190a08ad5dcf98fbe6ee599c5a3a2b5b7034c6b526eeeaa887f67ae648"
+    },
+    {
+      "path": "tests/fixtures/pe-bounds/qualification/performance-cancellation-first/dense96.dll",
+      "bytes": 53760,
+      "sha256": "158655fc4906ce13c4dead823987de4b82ca8cbabfa6196f95d77a0429a75ac9"
+    },
+    {
+      "path": "tests/fixtures/pe-bounds/qualification/performance-cancellation-first/il-baseline.job.json",
+      "bytes": 50152,
+      "sha256": "430e96ad0493b93ecde39155eabf69adda0c1c41ba6da3ef96ee69506df71e94"
+    },
+    {
+      "path": "tests/fixtures/pe-bounds/qualification/performance-cancellation-first/il-baseline.result.json",
+      "bytes": 127407,
+      "sha256": "1a55d9e8e2df2d618ebc4442b7f8ba935e042e9a4e501e9b1ded13e4969bd6d8"
+    },
+    {
+      "path": "tests/fixtures/pe-bounds/qualification/performance-cancellation-first/il-baseline.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "tests/fixtures/pe-bounds/qualification/performance-cancellation-first/il-baseline.stdout.log",
+      "bytes": 20,
+      "sha256": "b215ff190a08ad5dcf98fbe6ee599c5a3a2b5b7034c6b526eeeaa887f67ae648"
+    },
+    {
+      "path": "tests/fixtures/pe-bounds/qualification/performance-cancellation-first/il-candidate.job.json",
+      "bytes": 50140,
+      "sha256": "7789f2de61b1da92f68c158a382d7fcfa0717353f0903cfd7c7152b4beb90846"
+    },
+    {
+      "path": "tests/fixtures/pe-bounds/qualification/performance-cancellation-first/il-candidate.result.json",
+      "bytes": 127417,
+      "sha256": "e4c9ea04adb73d9b2c7ab7f947a40c12d8e480e6f54d7dd92f3f15d50755b3c1"
+    },
+    {
+      "path": "tests/fixtures/pe-bounds/qualification/performance-cancellation-first/il-candidate.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "tests/fixtures/pe-bounds/qualification/performance-cancellation-first/il-candidate.stdout.log",
+      "bytes": 20,
+      "sha256": "b215ff190a08ad5dcf98fbe6ee599c5a3a2b5b7034c6b526eeeaa887f67ae648"
+    },
+    {
+      "path": "tests/fixtures/pe-bounds/qualification/performance-cancellation-first/il.dll",
+      "bytes": 11776,
+      "sha256": "53af64fc5a8db6df9b64fe46ab8e1518a33015a0aec0f33c2101d84edc750aa3"
+    },
+    {
+      "path": "tests/fixtures/pe-bounds/qualification/performance-cancellation-first/mixed-baseline.job.json",
+      "bytes": 50354,
+      "sha256": "3fe253849910b6ea2ea7ff68ff81c99610ccc393ed47f209b3481d721a76a9e3"
+    },
+    {
+      "path": "tests/fixtures/pe-bounds/qualification/performance-cancellation-first/mixed-baseline.result.json",
+      "bytes": 127376,
+      "sha256": "d8b218ecca2f3c7f07b6919732a205e13a55aad8d682af187e18a2996e5d3a61"
+    },
+    {
+      "path": "tests/fixtures/pe-bounds/qualification/performance-cancellation-first/mixed-baseline.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "tests/fixtures/pe-bounds/qualification/performance-cancellation-first/mixed-baseline.stdout.log",
+      "bytes": 20,
+      "sha256": "b215ff190a08ad5dcf98fbe6ee599c5a3a2b5b7034c6b526eeeaa887f67ae648"
+    },
+    {
+      "path": "tests/fixtures/pe-bounds/qualification/performance-cancellation-first/mixed-candidate.job.json",
+      "bytes": 50342,
+      "sha256": "d109f332d5396e5f201664850964bb77855b9e4d60b0a945959eaeab4bdf8f65"
+    },
+    {
+      "path": "tests/fixtures/pe-bounds/qualification/performance-cancellation-first/mixed-candidate.result.json",
+      "bytes": 127403,
+      "sha256": "a455510d8cb00bc726c63833d166740886f59e84e176f41cc963b700f6766e19"
+    },
+    {
+      "path": "tests/fixtures/pe-bounds/qualification/performance-cancellation-first/mixed-candidate.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "tests/fixtures/pe-bounds/qualification/performance-cancellation-first/mixed-candidate.stdout.log",
+      "bytes": 20,
+      "sha256": "b215ff190a08ad5dcf98fbe6ee599c5a3a2b5b7034c6b526eeeaa887f67ae648"
+    },
+    {
+      "path": "tests/fixtures/pe-bounds/qualification/performance-cancellation-first/prepare-baseline.job.json",
+      "bytes": 49790,
+      "sha256": "2c24668f0069fc359c5ed780a6151a5e4aa364efb27c712b746f4cb79b3d7bfc"
+    },
+    {
+      "path": "tests/fixtures/pe-bounds/qualification/performance-cancellation-first/prepare-baseline.result.json",
+      "bytes": 54688,
+      "sha256": "a02ba28a8189a5b060523e04b89d3e1834e4f7c9c7b714ee5da6484340d38327"
+    },
+    {
+      "path": "tests/fixtures/pe-bounds/qualification/performance-cancellation-first/prepare-baseline.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "tests/fixtures/pe-bounds/qualification/performance-cancellation-first/prepare-baseline.stdout.log",
+      "bytes": 20,
+      "sha256": "b215ff190a08ad5dcf98fbe6ee599c5a3a2b5b7034c6b526eeeaa887f67ae648"
+    },
+    {
+      "path": "tests/fixtures/pe-bounds/qualification/performance-cancellation-first/prepare-candidate.job.json",
+      "bytes": 49778,
+      "sha256": "77178b435da13efb4d2de2ce8638e4256175f8d6c71ea0f2b118b34dfab673e5"
+    },
+    {
+      "path": "tests/fixtures/pe-bounds/qualification/performance-cancellation-first/prepare-candidate.result.json",
+      "bytes": 54692,
+      "sha256": "79c2538fec2ff201e0ce04a35213e16e243313ec9168d80fded154ba1142581b"
+    },
+    {
+      "path": "tests/fixtures/pe-bounds/qualification/performance-cancellation-first/prepare-candidate.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "tests/fixtures/pe-bounds/qualification/performance-cancellation-first/prepare-candidate.stdout.log",
+      "bytes": 20,
+      "sha256": "b215ff190a08ad5dcf98fbe6ee599c5a3a2b5b7034c6b526eeeaa887f67ae648"
+    },
+    {
+      "path": "tests/fixtures/pe-bounds/qualification/performance-cancellation-first/r2r-baseline.job.json",
+      "bytes": 50186,
+      "sha256": "b7c7eb6630fcd9a75946a80a48457d302a63924ec1d1362036e77094060a013f"
+    },
+    {
+      "path": "tests/fixtures/pe-bounds/qualification/performance-cancellation-first/r2r-baseline.result.json",
+      "bytes": 127552,
+      "sha256": "c7bd20369c4eb1e66af44851571bcacc07d942267aecb52aa1cf5b11744e771b"
+    },
+    {
+      "path": "tests/fixtures/pe-bounds/qualification/performance-cancellation-first/r2r-baseline.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "tests/fixtures/pe-bounds/qualification/performance-cancellation-first/r2r-baseline.stdout.log",
+      "bytes": 20,
+      "sha256": "b215ff190a08ad5dcf98fbe6ee599c5a3a2b5b7034c6b526eeeaa887f67ae648"
+    },
+    {
+      "path": "tests/fixtures/pe-bounds/qualification/performance-cancellation-first/r2r-candidate.job.json",
+      "bytes": 50174,
+      "sha256": "932b935e7349026cd150910953f7b2ea74c0a716bd04da99ce1f957a48a14306"
+    },
+    {
+      "path": "tests/fixtures/pe-bounds/qualification/performance-cancellation-first/r2r-candidate.result.json",
+      "bytes": 127555,
+      "sha256": "dbaa5367b627a44095e3136422830a5f76d58863eabaecb2a826abd2558dc7d9"
+    },
+    {
+      "path": "tests/fixtures/pe-bounds/qualification/performance-cancellation-first/r2r-candidate.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "tests/fixtures/pe-bounds/qualification/performance-cancellation-first/r2r-candidate.stdout.log",
+      "bytes": 20,
+      "sha256": "b215ff190a08ad5dcf98fbe6ee599c5a3a2b5b7034c6b526eeeaa887f67ae648"
+    },
+    {
+      "path": "tests/fixtures/pe-bounds/qualification/performance-cancellation-first/report.json",
+      "bytes": 2162872,
+      "sha256": "920c854e84f33abf8f9a58f54dc85811812e744a736487831e4df09e8f28491c"
+    },
+    {
+      "path": "tests/fixtures/pe-bounds/qualification/performance-cancellation-first/small-baseline.job.json",
+      "bytes": 50164,
+      "sha256": "7d0a586a1afcd6654095504fb9bbe00ff0fd7295c01c44a5713b944289422ee6"
+    },
+    {
+      "path": "tests/fixtures/pe-bounds/qualification/performance-cancellation-first/small-baseline.result.json",
+      "bytes": 127757,
+      "sha256": "5e34718ff5edbff532a7dd3ca3d70651d13f160112fe2d2b127f6411319c9ee4"
+    },
+    {
+      "path": "tests/fixtures/pe-bounds/qualification/performance-cancellation-first/small-baseline.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "tests/fixtures/pe-bounds/qualification/performance-cancellation-first/small-baseline.stdout.log",
+      "bytes": 20,
+      "sha256": "b215ff190a08ad5dcf98fbe6ee599c5a3a2b5b7034c6b526eeeaa887f67ae648"
+    },
+    {
+      "path": "tests/fixtures/pe-bounds/qualification/performance-cancellation-first/small-candidate.job.json",
+      "bytes": 50152,
+      "sha256": "68c331aecd896ad614466ad3aec9e3d79f3f25bc5a284d1b0845e7a161e32eef"
+    },
+    {
+      "path": "tests/fixtures/pe-bounds/qualification/performance-cancellation-first/small-candidate.result.json",
+      "bytes": 127785,
+      "sha256": "efd1ab0ef8fca59339380efc3eb04af59dd7de459bd51a57fb408e87aa6e1982"
+    },
+    {
+      "path": "tests/fixtures/pe-bounds/qualification/performance-cancellation-first/small-candidate.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "tests/fixtures/pe-bounds/qualification/performance-cancellation-first/small-candidate.stdout.log",
+      "bytes": 20,
+      "sha256": "b215ff190a08ad5dcf98fbe6ee599c5a3a2b5b7034c6b526eeeaa887f67ae648"
+    },
+    {
+      "path": "tests/fixtures/pe-bounds/qualification/performance-cancellation-first/small.dll",
+      "bytes": 2048,
+      "sha256": "c5227292f8622ad667eeecb3abcd5ebd6cd92425c4dc97ea7170b72457dafe32"
+    },
+    {
+      "path": "tests/fixtures/pe-bounds/qualification/performance-retention.json",
+      "bytes": 25117,
+      "sha256": "a8324b5ecef90be4a4c6769006a79284fb24eb34f541638b7de7a96a28349166"
+    },
+    {
+      "path": "tests/fixtures/pe-bounds/qualification/preparation-86b9a550/receipt.json",
+      "bytes": 693,
+      "sha256": "84f61e47c556be8ed478108e502433bbebd4d3a31f9ba7cd96130450f8ba7091"
+    },
+    {
+      "path": "tests/fixtures/pe-bounds/qualification/preparation-86b9a550/run-step.py.txt",
+      "bytes": 4975,
+      "sha256": "1d39f2b4ac846a16aa1b229ee4dd0984d4b411ec800a43db8ef71227bea76a92"
+    },
+    {
+      "path": "tests/fixtures/pe-bounds/qualification/preparation-86b9a550/validation-plan.json.txt",
+      "bytes": 5734,
+      "sha256": "25fd4e6aeeda00a17ab8d2388bd88b1de5e3663b86b8d31a4ad7f3a7311d2f04"
+    },
+    {
+      "path": "tests/fixtures/pe-bounds/reference/build-BoundsObserver.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "tests/fixtures/pe-bounds/reference/build-BoundsObserver.stdout.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "tests/fixtures/pe-bounds/reference/build-PEObserver.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "tests/fixtures/pe-bounds/reference/build-PEObserver.stdout.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "tests/fixtures/pe-bounds/reference/native.json",
+      "bytes": 664826,
+      "sha256": "aaef0eb12f1a23a4a03658e1049ec2bb860297b9dce6579b43115f6992f35f08"
+    },
+    {
+      "path": "tests/fixtures/pe-bounds/reference/observe-authored.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "tests/fixtures/pe-bounds/reference/observe-authored.stdout.log",
+      "bytes": 28478,
+      "sha256": "ac2852a63f84209f93e7a6634e5fb12bdb48fb7beb64ddc222808153a01c93bb"
+    },
+    {
+      "path": "tests/fixtures/pe-bounds/reference/observe-il.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "tests/fixtures/pe-bounds/reference/observe-il.stdout.log",
+      "bytes": 24243,
+      "sha256": "482c8b3b6ee5ca443ab9538eee18992ce62483420ff8e1c820869068f335bad7"
+    },
+    {
+      "path": "tests/fixtures/pe-bounds/reference/observe-mixed.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "tests/fixtures/pe-bounds/reference/observe-mixed.stdout.log",
+      "bytes": 51347,
+      "sha256": "384084de88a366b72723a7b4976142240328d7c76c6ac24ee605c35858702e11"
+    },
+    {
+      "path": "tests/fixtures/pe-bounds/reference/observe-r2r.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "tests/fixtures/pe-bounds/reference/observe-r2r.stdout.log",
+      "bytes": 111112,
+      "sha256": "4637ff1f1c9c0fe983f3eb1683cf4fe7e81e1d02fcb3702f74f4e8f6d22a596e"
+    }
+  ],
+  "preparedFiles": [
+    {
+      "path": "packages/cil/tools/benchmark-pe-bounds.mjs",
+      "bytes": 9354,
+      "sha256": "8fe30df51f43b09f6b4ac515c23ba03dbb0f90dc19edd493dcf430b74bef7566"
+    },
+    {
+      "path": "packages/cil/tools/pe-bounds-benchmark-shared.mjs",
+      "bytes": 3844,
+      "sha256": "8a966edff65afe91347ceb673054b22f064c55baa2a75cd8b3dd0846b6774d43"
+    },
+    {
+      "path": "packages/cil/tools/pe-bounds-benchmark-worker.mjs",
+      "bytes": 4259,
+      "sha256": "29e53dea4739c957476866d4a8b9ac9333c3b61ff499842c13f161e8d70474ce"
+    },
+    {
+      "path": "scripts/conformance/static/allowlist.json",
+      "bytes": 30926,
+      "sha256": "b291d577b119ab240372a3f39ec979fe0ed7511d33a3d058c90c6eea64fe9a9b"
+    },
+    {
+      "path": "tests/fixtures/pe-bounds/replay.mjs",
+      "bytes": 2038,
+      "sha256": "d31b7a955aa4928fb1ed52fe0a305734990c1bf6f29945f8328be6936db3db40"
+    },
+    {
+      "path": "tests/a03-09-pe-bounds-native.test.js",
+      "bytes": 1635,
+      "sha256": "14e59c138f2ffcd25835fc14203f72097f8ae0615376a26441fff2c46a8c2e0a"
+    },
+    {
+      "path": "tests/fixtures/pe-bounds/run-integration-f009.py",
+      "bytes": 11284,
+      "sha256": "d7f098445f954f55e92893721f4c42dc5772a5b64df365f875b6ef64a4d8486d"
+    },
+    {
+      "path": "tests/fixtures/pe-bounds/validation-plan-integration-f009.json",
+      "bytes": 8976,
+      "sha256": "d30837f01164755b05ac5feb7c413237e2179b43bd28adede7a477af55b5017b"
+    }
+  ],
+  "benchmarkSeam": {
+    "originalDefaults": {
+      "baselineCommit": "75f0caad1c3ea096a656feb2989b867781edc82f",
+      "productCommit": "6e3d26f3ec6abe54699fce1caefa57e9a5c569f5",
+      "nativeReference": "tests/fixtures/pe-bounds/reference"
+    },
+    "unchanged": "Workload construction, readerFacts, worker timer/loop/guards, 20 warmup and 100 measured batches, 12-child order, distribution and memory semantics",
+    "new": "Optional full-SHA baseline/candidate revisions plus native-reference directory, propagated in jobs and recorded only when explicit; strict native verification remains mandatory",
+    "policy": "One existing worker authority hash updated; count, reason and other 79 authorities unchanged"
+  }
+}

@@ -1,0 +1,191 @@
+{
+  "schemaVersion": 1,
+  "issue": 2417,
+  "status": "Integrated source preparation only; no integration native, focused gate or cohort executed",
+  "candidate": "/workspace/scratch/7e3d2a445c44/sf6-pe-bounds",
+  "baselineCommit": "f009e2949f3311f0ca84a4a6bc694535140d130b",
+  "productCommit": "8f0f0feec8ed8955e6119a346051ec6fdd965760",
+  "environment": {
+    "CI": null,
+    "SHARPFORGE_MAX_PARALLEL_RUNS": "1",
+    "SHARPFORGE_TEST_CONCURRENCY": "1",
+    "SHARPFORGE_MAX_OLD_SPACE_MB": "2048",
+    "SHARPFORGE_ORACLE_DOTNET": "/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/dotnet"
+  },
+  "nativeDirectory": "/workspace/scratch/7e3d2a445c44/project6-pe-bounds-native.integration-f009",
+  "executionDirectory": "/workspace/scratch/7e3d2a445c44/project6-pe-bounds-execution.integration-f009",
+  "retainedNative": "tests/fixtures/pe-bounds/reference-integration-f009",
+  "retainedExecution": "tests/fixtures/pe-bounds/qualification/execution-integration-f009",
+  "native": [
+    "node",
+    "scripts/limited.js",
+    "node",
+    "tests/fixtures/pe-bounds/capture.mjs",
+    "/workspace/scratch/7e3d2a445c44/project6-pe-bounds-native.integration-f009",
+    "/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/shared/Microsoft.NETCore.App/10.0.5/System.ComponentModel.Primitives.dll",
+    "/workspace/scratch/7e3d2a445c44/pe-MixedNativeCLI.exe"
+  ],
+  "verifyExternal": [
+    "node",
+    "scripts/limited.js",
+    "node",
+    "tests/fixtures/pe-bounds/verify.mjs",
+    "/workspace/scratch/7e3d2a445c44/project6-pe-bounds-native.integration-f009"
+  ],
+  "retainNative": {
+    "mode": "exclusive byte copies, hash and length equality required",
+    "files": [
+      "native.json",
+      "build-BoundsObserver.stdout.log",
+      "build-BoundsObserver.stderr.log",
+      "observe-authored.stdout.log",
+      "observe-authored.stderr.log",
+      "build-PEObserver.stdout.log",
+      "build-PEObserver.stderr.log",
+      "observe-il.stdout.log",
+      "observe-il.stderr.log",
+      "observe-r2r.stdout.log",
+      "observe-r2r.stderr.log",
+      "observe-mixed.stdout.log",
+      "observe-mixed.stderr.log"
+    ],
+    "excluded": "Supplied images, generated image copies, observer executables, temporary paths and SDK binaries; retain hashes/scalar facts instead."
+  },
+  "verifyRetained": [
+    "node",
+    "scripts/limited.js",
+    "node",
+    "tests/fixtures/pe-bounds/verify.mjs",
+    "tests/fixtures/pe-bounds/reference-integration-f009"
+  ],
+  "focused": [
+    "node",
+    "scripts/limited.js",
+    "node",
+    "--test",
+    "--test-concurrency=1",
+    "tests/a03-09-pe-bounds.test.js",
+    "tests/a03-09-pe-bounds-native.test.js",
+    "tests/a03-03-pe-reader.test.js",
+    "tests/a03-03-layout.test.js",
+    "tests/a13-16-pe-headers.test.js",
+    "tests/a13-16-method-code.test.js",
+    "tests/a13-16-debug-directory.test.js"
+  ],
+  "adjacencyBoundary": "The committed native test replays all 58 authored cases against current product and validates historical real-image facts. Explicit fresh native capture and strict external/retained verification qualify all three real images against integrated current source; no historical result is relabeled.",
+  "baselinePreparation": {
+    "path": "/workspace/scratch/7e3d2a445c44/sf6-pe-bounds-baseline-f009e294",
+    "mode": "Fresh detached --no-checkout worktree; worktree-local noncone sparse config; read-tree -mu HEAD once only in this fresh tree; no install.",
+    "patterns": [
+      "/package.json",
+      "/.gitignore",
+      "/packages/cil/",
+      "/packages/bytecode/",
+      "/packages/framework/",
+      "/packages/bcl-core/",
+      "/packages/bcl-collections/",
+      "!/planning/qualification/inventory/",
+      "!/docs/evidence/",
+      "!/docs/screenshots/"
+    ],
+    "publicAliases": [
+      "cil",
+      "bytecode",
+      "framework",
+      "bcl-core",
+      "bcl-collections"
+    ],
+    "aliasRule": "Each local node_modules/@sharpforge entry resolves to its own checkout's packages/<name>/src/index.js.",
+    "receipt": "/workspace/scratch/7e3d2a445c44/pe-bounds-baseline-f009e294-preparation.json",
+    "receiptSha256": "e83f5e1f411deb537ab6cf6fc43a47629ff60e882ab7587b957e5e63a140f4f6",
+    "status": "Prepared clean by root, own five aliases, no imports or execution"
+  },
+  "performance": [
+    "node",
+    "scripts/limited.js",
+    "node",
+    "packages/cil/tools/benchmark-pe-bounds.mjs",
+    "--baseline",
+    "/workspace/scratch/7e3d2a445c44/sf6-pe-bounds-baseline-f009e294",
+    "--r2r",
+    "/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/shared/Microsoft.NETCore.App/10.0.5/System.ComponentModel.Primitives.dll",
+    "--mixed",
+    "/workspace/scratch/7e3d2a445c44/pe-MixedNativeCLI.exe",
+    "--output",
+    "/workspace/scratch/7e3d2a445c44/project6-pe-bounds-performance.integration-f009",
+    "--baseline-revision",
+    "f009e2949f3311f0ca84a4a6bc694535140d130b",
+    "--candidate-revision",
+    "8f0f0feec8ed8955e6119a346051ec6fdd965760",
+    "--native-reference",
+    "tests/fixtures/pe-bounds/reference-integration-f009"
+  ],
+  "performanceProtocol": {
+    "warmupBatchesPerSide": 20,
+    "measuredBatchesPerSide": 100,
+    "workloads": [
+      {
+        "id": "small",
+        "operations": 128
+      },
+      {
+        "id": "dense96",
+        "operations": 32
+      },
+      {
+        "id": "il",
+        "operations": 64
+      },
+      {
+        "id": "r2r",
+        "operations": 25
+      },
+      {
+        "id": "mixed",
+        "operations": 25
+      }
+    ],
+    "serialChildren": 12,
+    "chronologicalBatches": 1200,
+    "retention": "Every job/result/log/input/report plus outer command/environment/status receipt; no filtering or rerun.",
+    "approval": "No automatic exception or 5% pass; independent review of all favorable and adverse median/p95/p99 costs."
+  },
+  "diskBudgetMiB": {
+    "newBaseline": 20,
+    "nativeTemporaryAndEvidence": 15,
+    "performanceEvidence": 20,
+    "sdkInstall": 0
+  },
+  "schedule": [
+    "Root source review and explicit sole heavy-slot grant; every phase is a separate invocation at the reviewed exact HEAD",
+    "Native once; inspect result; strict external verify; exclusive thirteen-file retention; strict retained verify",
+    "Original exact seven-file gate once; stop on any failure and retain it",
+    "PAUSE after focused gate; release heavy slot, retain truthful evidence and freeze clean source",
+    "Only after a separate root performance grant: fixed twelve-child cohort against prepared f009 baseline, using fresh strict native capture",
+    "Preserve every raw sample, adverse result and failure; no rerun or automatic threshold exception"
+  ],
+  "unsupportedOrUnrun": [
+    "No browser execution yet; browser.mjs is prepared only",
+    "Other native operating systems not observed; Windows mixed-mode execution on Linux unsupported",
+    "No input assembly execution, source VM/direct CIL/Rust/Wasm parser execution or cryptographic signing verification",
+    "Build/core checks remain a separate gate"
+  ],
+  "integration": {
+    "mergeCommit": "8f0f0feec8ed8955e6119a346051ec6fdd965760",
+    "mainCommit": "f009e2949f3311f0ca84a4a6bc694535140d130b",
+    "historicalNativeCommit": "17de856493ba42091413e2968ad526efb7a79758",
+    "historicalPerformanceCommit": "4890736f2da1bf2b8bd9c4e40f2f727b4d09f4d1",
+    "historicalTools": "tests/fixtures/pe-bounds/qualification/integration-preparation-8f0f0fee/receipt.json",
+    "historicalVerifierSha256": "7d6dee2bb163f009a085ebb8078026daccf99488f0304c2a911b9147b25b2b52",
+    "historicalCaptureSha256": "aaef0eb12f1a23a4a03658e1049ec2bb860297b9dce6579b43115f6992f35f08",
+    "recorder": "tests/fixtures/pe-bounds/run-integration-f009.py",
+    "recorderSha256": "d7f098445f954f55e92893721f4c42dc5772a5b64df365f875b6ef64a4d8486d",
+    "recorderBase": "tests/fixtures/pe-bounds/run-step-v3.py",
+    "recorderDelta": "Plan filename, exact reviewed HEAD argument/check, explicit tree receipt and complete seven-file gate source roster; v3 final-write cancellation and primary-failure behavior preserved.",
+    "requiredArgument": "Every phase requires the exact reviewed HEAD, supplied explicitly after the step. Native/gate source is the final clean preparation commit; performance may use a later evidence-only descendant.",
+    "historicalReplay": "Nine captured fixture authorities are checked; historical source path/hash inventory and native raw assertions remain. The exact 58 ID roster and current authored byte/product comparisons are required.",
+    "strictBoundary": "verify.mjs remains byte-exact with strictSource=true by default. New capture is strictly checked both externally and after thirteen-file retention; benchmark uses that same strict capture.",
+    "completionBoundary": "Restore prior handlers, then recheck all interruptions handled through the final receipt write. Later signals follow restored Python/OS behavior; caller must inspect actual exit.",
+    "execution": "No integration phase or new test has run. Existing historical evidence is unchanged."
+  }
+}
