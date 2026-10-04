@@ -16,6 +16,11 @@ export function registerStringSearchWindowExtensions({member}) {
   member('System.String', 'IndexOf', ['string', 'int', 'int', 'System.StringComparison'], 'int');
 }
 
+/** Append after the StringBuilder indexer contracts without shifting the earlier search registrations. */
+export function registerStringLastSearchStartExtensions({member}) {
+  member('System.String', 'LastIndexOf', ['string', 'int', 'System.StringComparison'], 'int');
+}
+
 /** Preserve Contains validation and diagnostics while sharing the first-match search. */
 export function containsWithComparison(platform, receiver, value, mode) {
   return indexOfWithComparison(platform, receiver, value, mode, 'Contains') >= 0;
@@ -71,11 +76,27 @@ function indexOfValidated(receiver, value, mode, startIndex, endIndex) {
 /** Return the last UTF-16 offset or -1; empty values match at receiver.length after validation. */
 export function lastIndexOfWithComparison(platform, receiver, value, mode) {
   validateSearch(platform, value, mode, 'LastIndexOf');
-  if (value.length > receiver.length) return -1;
-  if (value.length === 0) return receiver.length;
+  return lastIndexOfValidated(receiver, value, mode, receiver.length);
+}
+
+/** Search the prefix through an inclusive UTF-16 start; Length aliases the end, and empty receivers also accept -1. */
+export function lastIndexOfFromWithComparison(platform, receiver, value, startIndex, mode) {
+  validateSearchValue(platform, value);
+  validateStringComparisonMode(platform, mode);
+  const minimum = receiver.length === 0 ? -1 : 0;
+  if (!Number.isInteger(startIndex) || startIndex < minimum || startIndex > receiver.length) {
+    fail(platform, 'ArgumentOutOfRangeException', "Start index is outside the string. (Parameter 'startIndex')");
+  }
+  requireOrdinalStringComparison(platform, mode, 'LastIndexOf');
+  return lastIndexOfValidated(receiver, value, mode, Math.min(startIndex + 1, receiver.length));
+}
+
+function lastIndexOfValidated(receiver, value, mode, endIndex) {
+  if (value.length > endIndex) return -1;
+  if (value.length === 0) return endIndex;
   if (receiver === value) return 0;
-  if (mode === 4) return receiver.lastIndexOf(value);
-  return lastIndexOfOrdinalIgnoreCase(receiver, value);
+  if (mode === 4) return receiver.lastIndexOf(value, endIndex - value.length);
+  return lastIndexOfOrdinalIgnoreCase(receiver, value, endIndex);
 }
 
 function validateSearch(platform, value, mode, member) {
