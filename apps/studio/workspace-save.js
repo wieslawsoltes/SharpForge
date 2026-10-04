@@ -1,5 +1,8 @@
-import {decodeWorkspaceFile, encodeWorkspaceFile} from '@sharpforge/project-system';
-import {hashFileBytes, reconcileWorkspaceFile} from '@sharpforge/workspace';
+import {decodeWorkspaceFile, recordSource} from '@sharpforge/project-system';
+import {hashFileBytes, hashWorkspaceRecord, reconcileWorkspaceFile, workspaceRecordBytes} from '@sharpforge/workspace';
+import {
+  workspaceSaveScope, workspaceSaveInputs, sameSaveRecord, saveRecordChange, replaceSaveRecord, savedWorkspaceCaptures
+} from './workspace-save-scope.js';
 
 async function diskSnapshot(disk, path, signal) {
   try {
@@ -11,7 +14,10 @@ async function diskSnapshot(disk, path, signal) {
   }
 }
 
-function content(record) { return record ? typeof record.text === 'string' ? record.text : record.bytes : null; }
+function content(record) {
+  const source = recordSource(record);
+  return source ? source.getText(0, source.length) : record ? typeof record.text === 'string' ? record.text : record.bytes : null;
+}
 
 function conflict(path, message) {
   const error = new Error('SFW1411: ' + message + ': ' + path);
@@ -20,7 +26,8 @@ function conflict(path, message) {
 }
 
 function currentSnapshot(host, context) {
-  if (host.state.disk !== context.disk || host.state.readOnly) {
+  host.checkSave?.();
+  if ((host.saveDisk ?? host.state.disk) !== context.disk || host.state.readOnly) {
     throw new Error('Workspace changed while saving; current buffers were preserved');
   }
   const current = host.context();
@@ -31,6 +38,7 @@ function currentSnapshot(host, context) {
 }
 
 function assertSnapshot(host, snapshot) {
+  host.checkSave?.();
   const current = host.context();
   if (current.identity !== snapshot.context.identity || current.disk !== snapshot.context.disk ||
       current.revision !== snapshot.context.revision || current.readOnly) {
@@ -39,38 +47,18 @@ function assertSnapshot(host, snapshot) {
   const records = new Map(current.records.map(record => [record.path, record]));
   if (records.size !== snapshot.context.records.length || snapshot.context.records.some(previous => {
     const record = records.get(previous.path);
-    return !record || record.version !== previous.version || record.text !== previous.text || record.bytes !== previous.bytes;
+    return !sameSaveRecord(record, previous);
   })) throw new Error('Workspace buffers changed while saving; current edits were preserved');
 }
 
 async function matchesInput(snapshot, input, signal) {
   const record = snapshot.records.get(input.path);
   if (!record || input.version !== undefined && input.version !== record.version) return false;
-  return await hashFileBytes(encodeWorkspaceFile(record), {signal}) === input.hash;
-}
-
-async function saveInputs(context, signal) {
-  const inputs = [];
-  for (const record of context.records) {
-    signal?.throwIfAborted();
-    if (record.lazy && typeof record.text !== 'string') continue;
-    const bytes = encodeWorkspaceFile(record).slice();
-    const hash = await hashFileBytes(bytes, {signal});
-    const baseline = context.disk.baselineHashes.get(record.path);
-    if (baseline === hash) continue;
-    const physical = context.disk.record(record.path);
-    let base;
-    if (physical && !physical.lazy && await hashFileBytes(encodeWorkspaceFile(physical), {signal}) === baseline) {
-      base = content(physical);
-    }
-    inputs.push({path: record.path, bytes, hash, expectedHash: baseline ?? null, base,
-      version: record.version, mine: decodeWorkspaceFile(record.path, bytes)});
-  }
-  return inputs;
+  return await hashWorkspaceRecord(record, {signal}) === input.hash;
 }
 
 /** Resolve every pre-existing conflict before the first effect; selected remote hashes remain save preconditions. */
-async function prepareSave(host, context, inputs, {signal, maxConflicts}) {
+async function prepareSave(host, context, inputs, {signal, maxConflicts, captures}) {
   const pending = [];
   const resolutions = [];
   let prompts = 0;
@@ -78,12 +66,14 @@ async function prepareSave(host, context, inputs, {signal, maxConflicts}) {
     signal?.throwIfAborted();
     const remote = await diskSnapshot(context.disk, input.path, signal);
     if (remote.hash === input.expectedHash) {
-      pending.push({path: input.path, bytes: input.bytes, expectedHash: input.expectedHash});
+      pending.push(saveRecordChange(input.record, input.expectedHash));
       continue;
     }
     if (!host.chooseSaveConflict) throw conflict(input.path, 'Disk conflict requires an explicit keep-mine, take-theirs or merge choice');
     if (++prompts > maxConflicts) throw new RangeError('Too many save conflicts; resolve at most ' + maxConflicts + ' at once');
-    const choice = await host.chooseSaveConflict({path: input.path, base: input.base, mine: content(input.mine),
+    const physical = context.disk.record(input.path);
+    const base = physical && !physical.lazy && await hashWorkspaceRecord(physical, {signal}) === input.expectedHash ? content(physical) : undefined;
+    const choice = await host.chooseSaveConflict({path: input.path, base, mine: content(input.record), signal,
       theirs: content(remote.record), expectedHash: input.expectedHash, actualHash: remote.hash,
       choices: ['keep-mine', 'take-theirs', 'merge']});
     if (!choice) return {cancelled: true, pending: [], resolutions: []};
@@ -91,18 +81,21 @@ async function prepareSave(host, context, inputs, {signal, maxConflicts}) {
     if (!await matchesInput(currentSnapshot(host, context), input, signal)) {
       throw conflict(input.path, 'Editor changed while choosing a save resolution');
     }
-    const result = reconcileWorkspaceFile({path: input.path, base: input.base, mine: content(input.mine),
+    signal?.throwIfAborted();
+    const result = reconcileWorkspaceFile({path: input.path, base, mine: content(input.record),
       theirs: content(remote.record), choice}, {signal});
     if (result.status === 'conflict') throw conflict(input.path, result.message ?? 'Text edits overlap; choose one version or merge manually');
-    const record = choice === 'take-theirs' ? remote.record : typeof result.content === 'string'
-      ? {...input.mine, text: result.content} : {...input.mine, bytes: result.content, text: undefined};
-    const bytes = record ? encodeWorkspaceFile(record).slice() : null;
+    const replacement = typeof result.content === 'string' ? {path: input.path, text: result.content}
+      : {path: input.path, bytes: result.content};
+    const record = choice === 'take-theirs' ? remote.record : replaceSaveRecord(input.record, replacement, (input.version ?? 0) + 1);
+    const bytes = record ? workspaceRecordBytes(record).slice() : null;
     const hash = bytes === null ? null : await hashFileBytes(bytes, {signal});
     resolutions.push({input, choice, record, bytes, hash, observedHash: remote.hash});
     if (choice !== 'take-theirs') pending.push({path: input.path, bytes, expectedHash: remote.hash});
   }
   const latest = currentSnapshot(host, context);
   for (const input of inputs) {
+    if (captures && !resolutions.some(resolution => resolution.input === input)) continue;
     if (!await matchesInput(latest, input, signal)) throw conflict(input.path, 'Editor changed before saving');
   }
   assertSnapshot(host, latest);
@@ -110,7 +103,7 @@ async function prepareSave(host, context, inputs, {signal, maxConflicts}) {
     const current = await diskSnapshot(context.disk, resolution.input.path, signal);
     if (current.hash !== resolution.observedHash) throw conflict(resolution.input.path, 'Disk changed after the save choice');
   }
-  return {pending, resolutions, cancelled: false};
+  return {pending, inputs, resolutions, cancelled: false};
 }
 
 async function finishSave(host, commit, {context, plan, report, signal}) {
@@ -134,32 +127,48 @@ async function finishSave(host, commit, {context, plan, report, signal}) {
       continue;
     }
     if (choice === 'take-theirs' || choice === 'merge') {
-      if (record) records.set(input.path, {...records.get(input.path), ...record, lazy: false, version: (input.version ?? 0) + 1});
+      if (record) records.set(input.path, replaceSaveRecord(records.get(input.path), record, (input.version ?? 0) + 1));
       else records.delete(input.path);
       applied.push(resolution);
     }
     dirty.delete(input.path);
   }
-  const planned = new Map(plan.pending.map(change => [change.path, change.bytes]));
+  const planned = new Map();
+  for (const change of plan.pending) planned.set(change.path, await hashWorkspaceRecord(change, {signal}));
   const hashes = new Map();
   for (const path of report.written) {
     const record = records.get(path);
-    const hash = record && await hashFileBytes(encodeWorkspaceFile(record), {signal});
+    const hash = record && await hashWorkspaceRecord(record, {signal});
     hashes.set(path, hash);
-    if (record && hash === await hashFileBytes(planned.get(path), {signal}) && !retained.has(path)) dirty.delete(path);
+    if (record && hash === planned.get(path) && !retained.has(path)) dirty.delete(path);
     else if (record) { dirty.add(path); retained.add(path); }
   }
   for (const path of dirty) {
     const record = records.get(path);
-    if (!record || retained.has(path) || record.lazy && typeof record.text !== 'string') continue;
-    const hash = hashes.get(path) ?? await hashFileBytes(encodeWorkspaceFile(record), {signal});
+    if (!record || retained.has(path) || record.lazy && !recordSource(record)) continue;
+    const hash = hashes.get(path) ?? await hashWorkspaceRecord(record, {signal});
     if (hash === disk.baselineHashes.get(path)) dirty.delete(path);
   }
   assertSnapshot(host, latest);
+  return completeSave(host, commit, {context, latest, plan, report, signal, applied, physical, dirty, retained, retryBaselines});
+}
+
+async function completeSave(host, commit, {context, latest, plan, report, signal, applied, physical, dirty, retained, retryBaselines}) {
+  const {disk} = context;
+  const {records} = latest;
+  let committedFailure;
   if (applied.length) {
-    await commit({records: [...records.values()], folders: latest.context.folders, dirty: [...dirty],
-      entry: records.has(latest.context.entry) ? latest.context.entry : null,
-      diskCommitted: true, persistedPaths: report.written, preserveMembership: true});
+    const changedPaths = new Set(applied.map(item => item.input.path));
+    const documentStates = latest.context.documentStates && new Map([...latest.context.documentStates]
+      .filter(([path]) => records.has(path) && !changedPaths.has(path)));
+    try {
+      await commit({records: [...records.values()], folders: latest.context.folders, dirty: [...dirty], documentStates,
+        entry: records.has(latest.context.entry) ? latest.context.entry : null,
+        diskCommitted: true, persistedPaths: report.written, preserveMembership: true, signal});
+    } catch (error) {
+      if (!error.committed) throw error;
+      committedFailure = error;
+    }
     for (const resolution of applied.filter(item => item.choice === 'take-theirs')) {
       const path = resolution.input.path;
       if (resolution.record) physical.set(path, resolution.record);
@@ -170,18 +179,53 @@ async function finishSave(host, commit, {context, plan, report, signal}) {
       if (resolution.record) disk.baselineHashes.set(resolution.input.path, resolution.hash);
       else disk.baselineHashes.delete(resolution.input.path);
     }
-  } else host.state.dirtyFiles = dirty;
+  } else {
+    reconcileSavedDocuments(host, latest, plan, report, dirty, retained);
+    host.state.dirtyFiles = dirty;
+  }
   for (const input of retryBaselines) disk.baselineHashes.set(input.path, input.expectedHash);
-  host.saveLocal();
-  host.renderWorkspace();
-  host.renderProject();
-  return {...report, adopted: applied.filter(item => item.choice === 'take-theirs').map(item => item.input.path), retained: [...retained]};
+  try {
+    host.saveLocal();
+    host.renderWorkspace();
+    host.renderProject();
+  } catch (error) {
+    error.committed = true;
+    if (committedFailure) {
+      const combined = new AggregateError([committedFailure, error], 'Saved workspace notifications failed');
+      combined.committed = true;
+      throw combined;
+    }
+    throw error;
+  }
+  if (committedFailure) throw committedFailure;
+  return {...report, committed: applied.length > 0, acknowledged: host.acknowledged ?? report.written,
+    adopted: applied.filter(item => item.choice === 'take-theirs').map(item => item.input.path), retained: [...retained]};
+}
+
+function reconcileSavedDocuments(host, latest, plan, report, dirty, retained) {
+  if (!host.documents || host.reconcileDocuments === false) return;
+  const inputs = new Map((plan.inputs ?? []).map(input => [input.path, input.record]));
+  const resolved = new Set(plan.resolutions.map(item => item.input.path));
+  const candidates = new Set([...report.written, ...(latest.context.dirty ?? []).filter(path => !dirty.has(path))]);
+  for (const path of candidates) {
+    if (!host.documents.get(path) || retained.has(path) && resolved.has(path)) continue;
+    host.checkSave?.();
+    const saved = inputs.get(path) ?? latest.records.get(path);
+    const source = recordSource(saved);
+    try {
+      host.documents.markSaved(path, source ? {source, version: source.version} : {text: saved.text, version: saved.version});
+    } catch (error) {
+      error.committed = true;
+      throw error;
+    }
+  }
 }
 
 /** Save text/XML/binary snapshots with explicit reconciliation and exact hash admission. Partial receipts preserve dirty buffers. */
 export function createWorkspaceSave(host, commit) {
   let saving = false;
-  return async function save({signal, maxConflicts = 32} = {}) {
+  return async function save(options = {}) {
+    const {signal, maxConflicts = 32} = options;
     signal?.throwIfAborted();
     if (!Number.isSafeInteger(maxConflicts) || maxConflicts < 1 || maxConflicts > 256) {
       throw new RangeError('Save conflict limit must be an integer between 1 and 256');
@@ -189,27 +233,28 @@ export function createWorkspaceSave(host, commit) {
     if (saving) throw new Error('A workspace save is already in progress');
     if (host.state.nativeMode) return host.nativeBuild.save();
     if (host.state.readOnly) throw new Error('This workspace is read-only');
-    const disk = host.state.disk;
+    const scoped = workspaceSaveScope(host, options);
+    const disk = scoped.saveDisk;
     if (!disk || !disk.rootHandle && !disk.handles.size) throw new Error('Open a writable folder or save the workspace to a new folder');
-    const starting = host.context();
+    const starting = scoped.context();
     saving = host.state.saveBusy = true;
     let report = {written: [], hashes: [], atomic: false};
     let plan;
     try {
       await host.persistenceReady();
       signal?.throwIfAborted();
-      const context = currentSnapshot(host, starting).context;
-      const inputs = await saveInputs(context, signal);
+      const context = currentSnapshot(scoped, starting).context;
+      const inputs = await workspaceSaveInputs(context, options);
       if (!inputs.length) {
-        const result = await finishSave(host, commit, {context, plan: {pending: [], resolutions: []}, report, signal});
+        const result = await finishSave(scoped, commit, {context, plan: {pending: [], inputs, resolutions: []}, report, signal});
         host.toast('No modified files to save.');
         return result;
       }
-      plan = await prepareSave(host, context, inputs, {signal, maxConflicts});
+      plan = await prepareSave(scoped, context, inputs, {...options, maxConflicts});
       if (plan.cancelled) return {...report, cancelled: true};
-      currentSnapshot(host, context);
-      report = await disk.save(plan.pending, {signal});
-      const finish = () => finishSave(host, commit, {context, plan, report, signal});
+      currentSnapshot(scoped, context);
+      report = await disk.save(plan.pending, {signal, check: scoped.checkSave});
+      const finish = () => finishSave(scoped, commit, {context, plan, report, signal});
       const result = plan.resolutions.length && disk.saveLocks ? await disk.saveLocks.run('', finish, {signal, workspace: true}) : await finish();
       host.log(`Saved ${result.written.length} file(s); adopted ${result.adopted.length} disk version(s).`, 'success');
       host.toast(result.retained.length ? 'Saved the reviewed versions. Newer editor changes remain unsaved: ' + result.retained.join(', ')
@@ -218,8 +263,9 @@ export function createWorkspaceSave(host, commit) {
     } catch (error) {
       error.written ??= report.written;
       error.hashes ??= report.hashes;
+      error.savedSnapshots = savedWorkspaceCaptures(plan, error.written);
       const written = new Set(error.written);
-      for (const resolution of plan?.resolutions ?? []) {
+      for (const resolution of error.committed ? [] : plan?.resolutions ?? []) {
         if (written.has(resolution.input.path)) disk.baselineHashes.set(resolution.input.path, resolution.input.expectedHash);
       }
       if (error.written.length) host.toast('Save stopped after writing: ' + error.written.join(', ') + '. Unsaved buffers were retained.');

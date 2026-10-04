@@ -1,11 +1,14 @@
 import {
   ProviderDiskWorkspace as DiskWorkspace, importWorkspaceRecords,
-  validateWorkspaceSettings, decodeWorkspaceFile, readProviderDirectory as readDirectory
+  validateWorkspaceSettings, decodeWorkspaceFile, readProviderDirectory as readDirectory, sanitizeSessionUserSettings, recordSource
 } from '@sharpforge/project-system';
 import {hydrateWorkspaceRecords} from './workspace-hydration.js';
 import {prepareWorkspaceRecords, sourceBuffers, mapWorkspacePath} from './workspace-records.js';
 import {createWorkspaceSave} from './workspace-save.js';
 import {createWorkspaceEditorLifecycle} from './workspace-editor-lifecycle.js';
+import {workspaceSourceRecords, workspaceDocumentStates} from './workspace-source-records.js';
+import {loadStudioWorkspace} from './workbench/studio-workspace-loader.js';
+import {commitStudioExplorerWorkspace} from './workbench/studio-explorer-workspace.js';
 
 function retireBuild(state) {
   state.revision++;
@@ -24,17 +27,6 @@ function sameBytes(left, right) {
     left.length === right.length && left.every((value, index) => value === right[index]);
 }
 
-function folderRecords(state) {
-  const records = new Map(state.extraFiles.map(record => [record.path, record]));
-  for (const file of state.files) records.set(file.uri, {...state.disk?.record(file.uri), path: file.uri, text: file.text});
-  const ordered = [];
-  for (const original of state.disk?.records ?? []) {
-    const record = records.get(original.path);
-    if (record) { ordered.push(record); records.delete(original.path); }
-  }
-  return [...ordered, ...records.values()];
-}
-
 /** Workspace replacement, editor remapping and disk I/O share one application state transition boundary. */
 export function createWorkspaceSession(host) {
   const {state} = host;
@@ -42,6 +34,10 @@ export function createWorkspaceSession(host) {
   let loadEpoch = 0;
 
   async function load(input, options = {}) {
+    if (host.workbench) {
+      if (!options.preserveDocumentState) documents.dispose();
+      return loadStudioWorkspace(input, options, host.workbench());
+    }
     if (state.readOnly && !state.recoveryReadOnly) throw new Error('Stop execution before replacing a workspace');
     const epoch = ++loadEpoch, revision = state.revision;
     let {entry = null, startup = null, disk = null, extensionConfig = null, configuration = state.configuration,
@@ -124,8 +120,10 @@ export function createWorkspaceSession(host) {
     return next.snapshot ?? {solution: {name: state.name, path: null, projectPaths: []}, projects: [], diagnostics: [], mode: 'folder'};
   }
 
-  async function commit({records, folders = [], mappings = [], restore = null, entry, dirty, diskSnapshot,
-    diskCommitted = false, persistedPaths = [], preserveMembership = false}) {
+  async function commit(payload) {
+    if (host.workbench) return commitStudioExplorerWorkspace(payload, host.workbench());
+    const {records, folders = [], mappings = [], restore = null, entry, dirty, diskSnapshot,
+      diskCommitted = false, persistedPaths = [], preserveMembership = false} = payload;
     if (state.readOnly) throw new Error('Stop debugging before applying file changes');
     const old = host.context();
     const next = await prepareWorkspaceRecords(records, {folders, disk: diskSnapshot ?? state.disk, configuration: state.configuration,
@@ -182,23 +180,35 @@ export function createWorkspaceSession(host) {
 
   const save = createWorkspaceSave(host, commit);
 
-  async function snapshot() {
+  async function snapshot({signal} = {}) {
     const context = host.context();
     if (!context.native) {
-      const records = await hydrateWorkspaceRecords(context);
-      if (host.context().identity !== context.identity || state.revision !== context.revision) {
+      const records = await hydrateWorkspaceRecords(context, {signal});
+      if (host.context().identity !== context.identity || state.revision !== context.revision || host.context().disk !== context.disk) {
         throw new Error('Workspace changed during export; retry');
       }
-      return {records, folders: context.folders, settings: host.settings()};
+      const settings = host.settings();
+      return {records, folders: context.folders, settings: {...settings,
+        ...sanitizeSessionUserSettings(settings, {paths: new Set(records.map(record => record.path))})},
+      documentStates: workspaceDocumentStates(host.documents)};
     }
     if (host.nativeBuild.busy) throw new Error('Finish or cancel the native build before exporting');
     const records = [];
     let bytesRead = 0;
     for (const record of context.records) {
-      const bytes = await context.client.binary(record.path);
+      signal?.throwIfAborted();
+      const bytes = await context.client.binary(record.path, {signal});
+      signal?.throwIfAborted();
+      if (host.context().identity !== context.identity || state.revision !== context.revision || host.context().client !== context.client) {
+        throw new Error('Workspace changed during export; retry');
+      }
       if ((bytesRead += bytes.length) > 128 * 1024 * 1024) throw new Error('Workspace exceeds the 128 MiB ZIP budget');
       const decoded = decodeWorkspaceFile(record.path, bytes);
-      if (typeof record.text === 'string') decoded.text = record.text;
+      const source = recordSource(record);
+      if (source) {
+        Object.defineProperty(decoded, 'source', {value: source});
+        Object.defineProperty(decoded, 'version', {value: source.version, enumerable: true});
+      } else if (typeof record.text === 'string') decoded.text = record.text;
       records.push(decoded);
     }
     if (host.context().identity !== context.identity || state.revision !== context.revision) {
@@ -209,36 +219,33 @@ export function createWorkspaceSession(host) {
       startup: context.startup && records.some(record => record.path === context.startup) ? context.startup : undefined}};
   }
 
-  async function reopenRecent(recent) {
-    if (recent.handle && recent.permission === 'granted' && !recent.readOnly) {
-      const disk = await readDirectory(recent.handle, {openedPaths: recent.openDocuments?.map(document => document.path)});
-      return load(disk.records, {disk, folders: disk.folders, settings: {...recent.record?.settings,
-        tabs: recent.openDocuments?.map(document => document.path ?? document) ?? recent.record?.openDocuments?.map(document => document.path)},
-        entry: recent.record?.settings?.entry, startup: recent.record?.settings?.startup});
-    }
-    if (!recent.record) throw new Error('Grant folder access before reopening this workspace');
-    return load(recent.record.records, {folders: recent.record.folders, settings: {...recent.record.settings,
-      tabs: recent.record.openDocuments?.map(document => document.path)}, readOnly: true, name: recent.record.name,
-      dirty: recent.record.dirty ?? [], persist: false, recoveryMetadata: {settings: recent.record.settings,
-        appDescriptors: recent.record.appDescriptors, explorer: recent.record.explorer, recentTemplates: recent.record.recentTemplates}});
+  async function reopenRecent(recent, {signal} = {}) {
+    const context = host.workbench?.();
+    const ticket = context?.workspaceLoads.begin({state, documents: host.documents, signal});
+    const options = ticket ? {load: ticket, signal: ticket.signal} : {signal};
+    try {
+      if (recent.handle && recent.permission === 'granted' && !recent.readOnly) {
+        const disk = await readDirectory(recent.handle, {...options, openedPaths: recent.openDocuments?.map(document => document.path)});
+        ticket?.check();
+        return await load(disk.records, {...options, disk, folders: disk.folders, settings: {...recent.record?.settings,
+          tabs: recent.openDocuments?.map(document => document.path ?? document) ?? recent.record?.openDocuments?.map(document => document.path)},
+          entry: recent.record?.settings?.entry, startup: recent.record?.settings?.startup});
+      }
+      if (!recent.record) throw new Error('Grant folder access before reopening this workspace');
+      return await load(recent.record.records, {...options, folders: recent.record.folders, settings: {...recent.record.settings,
+        tabs: recent.record.openDocuments?.map(document => document.path)}, readOnly: true, name: recent.record.name,
+        dirty: recent.record.dirty ?? [], documentStates: recent.record.documentStates, persist: false,
+        recoveryMetadata: {settings: recent.record.settings, appDescriptors: recent.record.appDescriptors,
+          explorer: recent.record.explorer, recentTemplates: recent.record.recentTemplates}});
+    } finally { ticket?.finish(); }
   }
 
   return {load, commit, save, snapshot, reopenRecent, ...documents};
 }
 
 /** Produce a versioned snapshot in linear time even when the directory contains many unloaded files. */
-export function workspaceContext(state, {nativeBuild, explorerActions, settings}) {
-  const sources = new Map(state.files.map(file => [file.uri, file]));
-  const raw = state.nativeMode ? state.nativeWorkspace?.files ?? [] : state.projectSystem
-    ? [...state.projectSystem.files.values()] : folderRecords(state);
-  const records = raw.map(file => {
-    const path = file.path ?? file.uri;
-    const buffer = sources.get(path) ?? (state.nativeMode ? nativeBuild.buffers.get(path) : null);
-    const record = {...file, path, ...(buffer ? {text: buffer.text, version: buffer.version ?? file.version ?? 1} : {})};
-    if (buffer?.readOnly !== undefined) record.readOnly = buffer.readOnly;
-    if (buffer?.generated !== undefined) record.generated = buffer.generated;
-    return record;
-  });
+export function workspaceContext(state, {nativeBuild, explorerActions, settings, documents}) {
+  const records = workspaceSourceRecords(state, {nativeBuild, documents});
   const snapshot = state.nativeMode ? state.nativeWorkspace?.hierarchy : state.projectSnapshot;
   const identity = (state.nativeMode ? 'native:' : 'preview:') + (state.nativeMode && state.nativeWorkspace?.root
     ? state.nativeWorkspace.root : (state.projectSystem?.solution?.path ?? state.name) + ':' + (state.workspaceEpoch ?? 0));
@@ -248,7 +255,8 @@ export function workspaceContext(state, {nativeBuild, explorerActions, settings}
     platform: nativeBuild.capabilities?.toolchains?.platform,
     nativeAvailable: nativeBuild.capabilities?.available, trusted: nativeBuild.settings.trusted && nativeBuild.capabilities?.trusted,
     buildBusy: nativeBuild.busy, fileBusy: !!(state.saveBusy || explorerActions.busy || explorerActions.runningMutation), readOnly: state.readOnly,
-    records, files: records, snapshot, startup: state.nativeMode ? state.nativeStartup ?? nativeBuild.settings.project : state.startupProject,
+    records, files: records, documentStates: workspaceDocumentStates(documents), snapshot,
+    startup: state.nativeMode ? state.nativeStartup ?? nativeBuild.settings.project : state.startupProject,
     solutionPath: /\.(slnx|sln)$/i.test(snapshot?.solution?.path ?? '') ? snapshot.solution.path : null,
     entry: state.projectSystem?.solution?.path ?? state.recoveryEntry,
     folders: state.nativeMode ? state.nativeWorkspace?.folders ?? [] : state.folders,

@@ -38,8 +38,14 @@ export function isStudioTextRecord(record) {
   return Boolean(record?.model) || isSourceSnapshot(record?.source) || typeof record?.text === 'string';
 }
 
+/** Metadata-only entries are admitted only by callers that can load the original bytes or recover without I/O. */
+export function isStudioLazyRecord(record) {
+  return record?.lazy === true && Number.isSafeInteger(record.size) && record.size >= 0
+    && !record.source && !record.model && !record.bytes && Object.getOwnPropertyDescriptor(record, 'text') === undefined;
+}
+
 /** Count the whole workspace, including encoded source bytes and binary assets, before an ownership transaction commits. */
-export async function validateStudioWorkspaceRecords(records, { signal, limits = studioDiskLimits } = {}) {
+export async function validateStudioWorkspaceRecords(records, { signal, limits = studioDiskLimits, allowLazy = false } = {}) {
   if (!Array.isArray(records) || records.length > limits.maxFiles) {
     throw new RangeError('Studio supports at most 20,000 files in one workspace');
   }
@@ -48,18 +54,23 @@ export async function validateStudioWorkspaceRecords(records, { signal, limits =
   let total = 0;
   for (const record of records) {
     if (signal?.aborted) throw new DOMException('Workspace validation cancelled', 'AbortError');
+    if (record.lazy && (!allowLazy || !isStudioLazyRecord(record))) {
+      throw new TypeError('Unloaded workspace files require explicit metadata and an authorized source provider');
+    }
     const bytes = await studioRecordByteLength(record, signal, limits.maxFileBytes);
     byteLengths.set(record, bytes);
     if (bytes > limits.maxFileBytes) throw new RangeError('A workspace file exceeds the encoded file byte limit');
-    total += bytes;
+    if (!record.lazy) total += bytes;
     if (total > limits.maxTotalBytes) throw new RangeError('The workspace exceeds the total encoded byte limit');
   }
   return { records, byteLengths };
 }
 
 async function studioRecordByteLength(record, signal, maxBytes) {
-  if (record.bytes instanceof Uint8Array) return record.bytes.byteLength;
-  const source = record.source ?? record.model?.snapshot() ?? record.text;
+  if (isStudioLazyRecord(record)) return record.size;
+  const prepared = record.source ?? record.model?.snapshot();
+  if (!isSourceSnapshot(prepared) && record.bytes instanceof Uint8Array) return record.bytes.byteLength;
+  const source = prepared ?? record.text;
   // Raw ingress metadata belongs only to its original source root; edits require a fresh bounded encoding count.
   if (isSourceSnapshot(source) && source === record.originalSource
       && Number.isSafeInteger(record.byteLength) && record.byteLength >= 0) return record.byteLength;
