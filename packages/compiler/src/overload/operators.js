@@ -78,6 +78,16 @@ const builtin = (family, leftType, rightType, resultType, isLifted = false, extr
 const isNullLiteral = e => e.literal === 'null';
 const isEnum = t => !!t && t.typeKind === TypeKind.Enum;
 
+/**
+ * True for one operator reached through both operands: the same symbol, or the same definition seen as a member of
+ * two equal constructions (`Box<int>` written twice is two type symbols, each with members of its own).
+ */
+function isSameOperator(first, second) {
+  if (first === second) return true;
+  const definition = first.originalDefinition ?? first;
+  return definition !== first && definition === (second.originalDefinition ?? second) && !!first.containingType?.equals(second.containingType);
+}
+
 export class OperatorResolver {
   /** @param conversions Conversions  @param core CoreTypes  @param overloads OverloadResolver */
   constructor(conversions, core, overloads) {
@@ -111,7 +121,7 @@ export class OperatorResolver {
       const declared = isChecked
         ? withCheckedOperators(this.declared(o.type, name), this.declared(o.type, checkedOperatorName(name)))
         : this.declared(o.type, name);
-      for (const m of declared) if (m.parameters.length === parameterCount && !candidates.includes(m)) candidates.push(m);
+      for (const m of declared) if (m.parameters.length === parameterCount && !candidates.some(known => isSameOperator(known, m))) candidates.push(m);
     }
     if (!candidates.length) return null;
     const applies = m => this.overloads.resolve([m], operands, { keepBaseCandidates: true }).succeeded,
@@ -296,6 +306,9 @@ export class OperatorResolver {
       return builtin('delegate', rt, rt, rt);
     // reference equality
     if (equality.has(operator)) {
+      // `string == string` is the predefined string equality (by value), not reference equality (C# 12.12.8).
+      const bothStrings = lt.specialType === 'System_String' && rt.specialType === 'System_String';
+      if (bothStrings) return builtin('string', core.string, core.string, core.bool);
       const refLike = t => t.isReferenceType === true || (t.typeKind === TypeKind.TypeParameter && t.isValueType !== true);
       if (
         refLike(lt) &&

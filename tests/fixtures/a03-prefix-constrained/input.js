@@ -30,7 +30,7 @@ export const cases = [
     name: 'MissingType', parameters: ['int'], result: 'string', body: (writer, context) => writer.op('ldarga.s', 0)
       .group('callvirt', stringify(context), [{ name: 'constrained.', operand: 0x0100ffff }]).op('ret'),
   }, diagnostic: 'CILPC0004' },
-  // These are deliberate partial-scope cases: preserve their actual native decisions, including disagreement.
+  // Preserve the typed-store gap and the historical ArrayAddress case as recognition expands.
   { method: arrayRead('ReadonlyStore', false, true), diagnostic: null },
   { method: {
     name: 'ArrayAddress', parameters: ['int[,]'], result: 'int', body(writer, context) {
@@ -39,7 +39,7 @@ export const cases = [
       const address = context.md.member(array, 'Address', methodSignature('int&', ['int', 'int'], false, context.resolve));
       writer.op('ldarg.0').op('ldc.i4.0').op('ldc.i4.0').group('call', address, [readonly]).op('ldind.i4').op('ret');
     },
-  }, diagnostic: 'CILPC0006' },
+  }, diagnostic: null },
 ];
 
 export function prefixTypeFixture() {

@@ -1,4 +1,4 @@
-// Copy this identical runner to IndexOf parent 40cf1975; run baseline and candidate serially.
+// Copy this identical runner to start-index parent 72547446; run baseline and candidate serially.
 import assert from 'node:assert/strict';
 import {cpus} from 'node:os';
 import {performance} from 'node:perf_hooks';
@@ -23,7 +23,7 @@ const ordinary = [
   {body: 'xßz', value: 'SS', ordinal: -1, ignoreCase: -1},
   {body: 'x\uD801\uDC28az', value: '\uDC28A', ordinal: -1, ignoreCase: 2},
   {body: 'xa\uD801\uDC28z', value: 'A\uD801', ordinal: -1, ignoreCase: 1},
-  {body: '\uD83D\uDE00AbCabc', value: 'abc', ordinal: 5, ignoreCase: 2}
+  {body: '\uD83D\uDE00AbCabc', value: 'abc', ordinal: 5, ignoreCase: 2, lastIgnoreCase: 5}
 ];
 const repeatedUnits = Number(process.argv[4] ?? 1024);
 assert(Number.isInteger(repeatedUnits) && repeatedUnits >= 128 && repeatedUnits <= 4096 && repeatedUnits % 32 === 0,
@@ -44,7 +44,11 @@ adversarial.push(
   {name: 'periodic-both-endpoint-miss', body: '\uDC28é'.repeat(repeatedUnits / 2),
     value: '\uDC28' + 'É\uDC28'.repeat(needleUnits / 2 - 1) + 'É\uD801', ordinal: -1, ignoreCase: -1},
   {name: 'periodic-endpoint-late-hit', body: 'é'.repeat(repeatedUnits) + '\uDC28' + 'é'.repeat(needleUnits) + '\uD801',
-    value: '\uDC28' + 'É'.repeat(needleUnits) + '\uD801', ordinal: -1, ignoreCase: repeatedUnits}
+    value: '\uDC28' + 'É'.repeat(needleUnits) + '\uD801', ordinal: -1, ignoreCase: repeatedUnits},
+  {name: 'periodic-prefix-present-trailing-miss', body: '\uDC28' + 'é'.repeat(repeatedUnits),
+    value: '\uDC28' + 'É'.repeat(needleUnits) + '\uD801', ordinal: -1, ignoreCase: -1},
+  {name: 'periodic-prefix-after-final-window', body: 'é'.repeat(repeatedUnits) + '\uDC28',
+    value: '\uDC28' + 'É'.repeat(needleUnits), ordinal: -1, ignoreCase: -1}
 );
 
 function summary(values) {
@@ -91,19 +95,26 @@ function run(engine) {
       const legacy = descriptors.find(row => row.parameters.length === 1);
       const startIndex = descriptors.find(row => row.parameters.join(',') === 'string,int');
       const withMode = descriptors.find(row => row.parameters.join(',') === 'string,System.StringComparison');
+      const fromWithMode = descriptors.find(row => row.parameters.join(',') === 'string,int,System.StringComparison');
+      const lastWithMode = findContracts('System.String', 'LastIndexOf', false)
+        .find(row => row.parameters.join(',') === 'string,System.StringComparison');
       const contains = findContracts('System.String', 'Contains', false).find(row => row.parameters.length === 2);
       const evaluate = (rows, count) => {
-        const cases = rows.map(row => ({...row, args: [managed(row.body), managed(row.value)]}));
+        const cases = rows.map(row => ({...row, lastIgnoreCase: row.lastIgnoreCase ?? row.ignoreCase,
+          args: [managed(row.body), managed(row.value)]}));
         const zeroStart = cases.map(row => ({...row, args: [...row.args, 0]}));
         const ordinal = cases.map(row => ({...row, args: [...row.args, 4]}));
         const ignoreCase = cases.map(row => ({...row, args: [...row.args, 5]}));
+        const fromIgnoreCase = cases.map(row => ({...row, args: [...row.args, 0, 5]}));
         return {
           oneArgumentControl: measure(platform, legacy, cases, 'ordinal', count),
           intStartIndexControl: measure(platform, startIndex, zeroStart, 'ordinal', count),
           containsOrdinalControl: measure(platform, contains, ordinal, 'ordinal', count),
           containsIgnoreCaseControl: measure(platform, contains, ignoreCase, 'ignoreCase', count),
           indexOfOrdinal: measure(platform, withMode, ordinal, 'ordinal', count),
-          indexOfIgnoreCase: measure(platform, withMode, ignoreCase, 'ignoreCase', count)
+          indexOfIgnoreCase: measure(platform, withMode, ignoreCase, 'ignoreCase', count),
+          indexOfFromIgnoreCase: measure(platform, fromWithMode, fromIgnoreCase, 'ignoreCase', count),
+          lastIndexOfIgnoreCase: measure(platform, lastWithMode, ignoreCase, 'lastIgnoreCase', count)
         };
       };
       const stress = {};
@@ -117,7 +128,7 @@ const engines = {};
 for (const engine of ['source', 'cil']) engines[engine] = run(engine);
 console.log(JSON.stringify({node: process.version, platform: process.platform, arch: process.arch, cpu: cpus()[0]?.model,
   calls, stressCalls, repeatedUnits, needleUnits, warmups: 1, samples: 5, gcAvailable: typeof globalThis.gc === 'function',
-  workload: 'Real source/CIL IndexOf/Contains: unchanged ordinary and repeated-prefix inputs plus periodic raw endpoint rejection',
+  workload: 'Real source/CIL IndexOf/Contains/LastIndexOf: retained ordinary and repeated-prefix inputs plus raw prefix controls',
   notes: 'Setup, managed strings, optional host GC and assertions excluded. ' +
-    'Candidate uses constant space with two small host factor records; no host allocation count claim.',
+    'Factorization uses two small host records; a missing raw prefix skips it. No host allocation count claim.',
   engines}, null, 2));

@@ -172,9 +172,7 @@ export const PatternEmission = Base =>
     positionalParts(pattern, narrowed, pushValue, fail) {
       const positional = pattern.positional,
         method = positional?.method;
-      if (!positional || positional.kind !== 'method' || !method || positional.isExtension) {
-        return this.unsupported('positional patterns over tuples and extension Deconstruct methods', pattern.syntax);
-      }
+      if (!positional || positional.kind !== 'method' || !method) return this.unsupported('this positional pattern', pattern.syntax);
       const parts = this.deconstructedParts(positional, narrowed, pushValue);
       positional.parts.forEach((part, index) => this.patternMatch(part.pattern, parts[index], fail));
       return undefined;
@@ -259,9 +257,11 @@ export const PatternEmission = Base =>
         method = positional.method,
         newParts = () => positional.parts.map(part => ({ slot: this.temp(part.type), type: part.type })),
         call = parts => {
-          pushValue();
+          // An extension `Deconstruct` takes the value itself as its first argument.
+          if (positional.isExtension) il.emit('ldloc', narrowed.slot);
+          else pushValue();
           for (const part of parts) il.emit('ldloca', part.slot);
-          this.callMethod(method, { receiver: { type: narrowed.type } });
+          this.callMethod(method, { receiver: positional.isExtension ? null : { type: narrowed.type } });
         },
         entry = this.sharedEntry(narrowed.slot, method, flag => ({ flag, parts: newParts() }));
       if (!entry) {

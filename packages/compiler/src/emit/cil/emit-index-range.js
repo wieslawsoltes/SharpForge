@@ -62,8 +62,16 @@ export const IndexRangeEmission = Base =>
         return whenAbsent();
       }
       if (!operand.fromEnd) return this.expression(operand.value);
-      this.expression(node.length);
+      if (operand.value.constantValue) {
+        this.expression(node.length);
+        this.expression(operand.value);
+        return this.il.emit('sub');
+      }
+      // The operand is evaluated before the length is read, as C# orders them.
+      const value = this.temp(this.core.int);
       this.expression(operand.value);
-      return this.il.emit('sub');
+      this.il.emit('stloc', value);
+      this.expression(node.length);
+      return this.il.emit('ldloc', value).emit('sub');
     }
   };

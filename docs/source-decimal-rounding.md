@@ -38,10 +38,17 @@ Tests in `tests/a05-source-decimal-rounding.test.js` exercise source, reloaded
 source and direct CIL, named arguments, scale, extremes, storage, invalid digit
 counts and signature rejection. One Round case consumes the existing hash-checked
 .NET 10.0.5 / SDK 10.0.201 macOS-arm64 capture; no native output was regenerated
-or inferred for this slice. New tests and platform/performance qualification have
-not been run and remain in the serial validation queue.
+or inferred for this slice. The initial run passed 83 of 85 tests. Reload exposed
+two existing emitter inconsistencies: `decimal` and `System.Decimal` caused
+redundant argument spills and separate scratch slots. Scalar aliases are now
+normalized before deciding conversions and allocating scratch storage; canonical
+byte verification remains unchanged.
 
-Scheduled focused validation:
+All 85 focused tests below passed after the repair at `6da2ec81`, using Node 24,
+one worker and a 512 MB old-space limit. Broad platform/performance qualification
+remains deferred.
+
+Completed focused validation:
 
 ```sh
 node scripts/limited.js node --test --test-concurrency=1 tests/a05-source-decimal-rounding.test.js tests/a05-decimal-adapters.test.js tests/a05-decimal-cil.test.js tests/a05-source-numeric-modes.test.js tests/a00-01-value-abi.test.js
@@ -81,9 +88,11 @@ Console.WriteLine(amount); // 1234.5000
 `tests/a05-source-decimal-parse.test.js` covers scale, rounding, extrema, signed
 zero, string/value storage, null/format/overflow faults, precise whitespace/NUL
 boundaries, the length cap and rejected overloads. These expectations derive
-from the pinned contract; no new native capture or execution is claimed. The
-test file and existing Decimal helper/adapter/CIL tests are queued for serial
-validation. All broader platform and performance qualification remains open.
+from the pinned contract; no new native capture or execution is claimed. All
+102 focused Parse, rounding, Decimal operation/adapter/CIL and source numeric
+tests passed at `fc5592bf`, after integrating the merged rounding parent. The
+run used Node 24, one worker and a 512 MB old-space limit. Broad platform and
+performance qualification remains deferred.
 
 ## Directed integral rounding
 
@@ -106,9 +115,11 @@ Console.WriteLine(decimal.Floor(d: -1.25m));   // -2
 
 `tests/a05-source-decimal-integral-rounding.test.js` adds source/reloaded/direct-CIL
 cases for both signs, values near zero, scale, maximum/minimum values, precision
-beyond Number's exact integer range, storage, and rejected signatures. Tests have
-not run; native/platform/performance qualification remains deferred. This family
-does not close #1350 or #1351.
+beyond Number's exact integer range, storage, and rejected signatures. All 47
+focused integral-rounding, Round/Truncate, Parse and Decimal-operation tests
+passed at `3772537a`, using Node 24, one worker and a 512 MB old-space limit.
+Native/platform/performance qualification remains deferred. This family does
+not close #1350 or #1351.
 
 ## Static arithmetic methods
 
@@ -136,9 +147,11 @@ only their two static Decimal signatures.
 
 `tests/a05-source-decimal-arithmetic.test.js` compares static methods and operators
 across source, reloaded source and direct CIL, including exact scale, large values,
-named-argument side effects, value storage and fault boundaries. This is authored
-coverage only: no new native execution, platform or performance evidence is
-claimed, and #1350/#1351 remain open.
+named-argument side effects, value storage and fault boundaries. All 38 focused
+arithmetic, integral-rounding, Round/Truncate and Decimal-operation tests passed
+at `352d3ce1`, using Node 24, one worker and a 512 MB old-space limit. No fresh
+native execution, platform or performance evidence is claimed; #1350/#1351
+remain open.
 
 ## Static comparison methods
 
