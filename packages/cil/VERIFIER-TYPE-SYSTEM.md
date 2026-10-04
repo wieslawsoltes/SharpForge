@@ -6,6 +6,8 @@ in existing inspection, execution or merge callers until explicitly requested.
 Its frozen canonical identities are scoped to that adapter, never matched by
 names or raw tokens across assemblies. The inspector can be released after
 construction; retained facts contain no PE views, descriptors or signature ASTs.
+Each definition handle is frozen `{kind: 'definition', token, isInterface, flags}`;
+`flags` is the validated unsigned 32-bit TypeDef attribute word.
 
 Queries return frozen `{status: 'known', value}` or
 `{status: 'unknown', reason, token}` results:
@@ -26,18 +28,72 @@ Queries return frozen `{status: 'known', value}` or
   requires the unresolved core-library Object identity and is unknown.
 - `commonBaseType(left, right)` finds the closest shared local class ancestor.
   Interface joins and absent/unresolved common ancestors are unknown.
+- `typeCategory(type)` returns known `'reference'`, `'value'` or `'enum'` when
+  the optional authority below proves the representation. Interfaces are known
+  references without an authority; other definitions default to unknown.
 - `relations` implements the existing `mergeVerificationTypes` relation seam;
   unknown results throw `CILV0003`. Distinct managed-pointer elements need
   normalization and are unknown; reference covariance is never used for them.
 
 Only adapter-issued identities are valid inputs; cloned or foreign identities
-throw `CILVT0004`. Nominal verification categories remain the caller's explicit
-responsibility. Never wrap an unknown result in `verificationType` as though it
+throw `CILVT0004`. Never wrap an unknown result in `verificationType` as though it
 were an identity. This service reports metadata hierarchy facts, not whole-type
-validity or whole-method verification. Value/enum normalization, arrays, generic
+validity or whole-method verification. Enum storage normalization, arrays, generic
 substitution, external assembly loading, member resolution and access queries
 remain open on #2400 and subsequent verifier tasks. No runtime engine is enabled
 by this opt-in metadata API; browser/native/Wasm qualification remains staged.
+
+## Explicit fundamental type authority
+
+Both type and combined member factories accept `options.coreTypes`:
+
+```js
+const coreTypes = {
+  context: coreContext,
+  object: coreContext.resolveType(objectDefinitionToken).value,
+  valueType: coreContext.resolveType(valueTypeDefinitionToken).value,
+  enum: coreContext.resolveType(enumDefinitionToken).value,
+  resolveType: token => preparedBindings.get(token)
+    ?? { status: 'unknown', reason: 'unprepared-core-binding' },
+};
+const types = createMetadataVerificationTypeSystem(inputInspector, { coreTypes });
+const category = types.typeCategory(types.resolveType(localDefinitionToken).value);
+```
+
+The trusted caller establishes the real input-module/core-module pairing and
+assembly resolution before construction. `context` is that core module's existing
+CIL type adapter; the three roots and every known binding must be its canonical
+non-generic definition handles. The synchronous callback accepts input-module
+TypeDef/TypeRef tokens and returns the same known/unknown result convention.
+Unknown reasons are strings of at most 256 UTF-16 code units. Promises and malformed
+results are rejected; thrown binding errors propagate. A runtime loader may prepare
+this map asynchronously, but the CIL layer performs no assembly loading and imports
+no CLR implementation. Names, signature AST tags and matching numeric tokens across
+modules provide no authority.
+
+Construction asks for non-generic TypeDefs to recognize fundamental roots when
+the input is itself the core module, and for unresolved TypeRef base edges.
+Unprepared bindings remain unknown. Roots must be distinct non-interface,
+non-sealed definitions with exactly Object → null, ValueType → Object and
+Enum → ValueType direct bases. Local root aliases/attribute inconsistencies,
+sealed/interface bases, unsealed concrete values and value-type inheritance are
+rejected. The fundamental roots themselves are reference classes; their concrete
+ValueType and Enum descendants are respectively value and enum categories.
+Unresolved and generic bases cannot establish a category.
+
+Only category results are added to existing local definition records. The
+construction-only authority snapshots, token bindings and traversal state are
+released; no second persistent identity registry is introduced. Foreign handles
+never become local `resolveType`, member-owner or hierarchy results. Assignment
+and joins across modules remain unknown even when a category is known. Category
+traversal is iterative and memoized, with at most `maxQueryNodes` distinct foreign
+handles and `maxDepth` cumulative local/foreign base edges; cancellation is checked
+around callbacks and traversal. With the authority, construction adds O(types +
+visited foreign types + base edges), and category queries are O(1).
+
+This is a prerequisite for #2403. Field transfers, field type-confusion/initonly
+checks, construction/instance state, casts, boxing/unboxing and the remaining
+object opcodes are still open; this API alone does not verify those instructions.
 
 Local-reference lookup indexes exact namespace/name UTF-8 bytes during
 construction; it never joins display names or uses Unicode normalization.
