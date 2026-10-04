@@ -1,9 +1,30 @@
 # Bounded runtime events
 
 `@sharpforge/runtime` exports `RuntimeEventLog` and the frozen `RuntimeEventName`
-catalog. This independent T10.2 prerequisite supplies event storage and host
-subscription. Automatic VM call, exception, allocation, GC and tiering hooks are
-separate integration work; creating a log does not enable profiling on a VM.
+catalog. Construct a source, reloaded-source or direct-CIL VM with
+`runtimeEvents: true` (or event-log options) to attach its automatic producers
+and access the bounded log through `vm.runtimeEvents`. Creating a standalone
+log provides manual storage/subscription only. Instruction profiling is a
+separate option.
+
+| Automatic event family | Source / reloaded source | Direct CIL |
+| --- | --- | --- |
+| MethodLoad, MethodEnter, MethodLeave | Implemented | Implemented |
+| ExceptionThrown | Implemented | Implemented |
+| AllocationTick, GCStart, GCEnd | Implemented | Implemented |
+| Suspend, Resume | Implemented | Implemented |
+| TierUp | No source tier producer | Implemented for actual Wasm tier entry / OSR |
+
+The engine adapters preserve their documented admission and fault boundaries.
+See [source method events](runtime-source-method-events.md),
+[source method loads](runtime-source-method-load-events.md),
+[CIL method events](runtime-cil-method-events.md),
+[source exceptions](runtime-source-exception-events.md),
+[CIL exceptions](runtime-exception-events.md),
+[source heap events](runtime-source-heap-events.md),
+[GC events](runtime-gc-events.md), [allocation events](runtime-allocation-events.md)
+and [scheduler transitions](runtime-context-events.md).
+Host observers remain outside guest snapshots and flush at host boundaries.
 
 ```js
 import {RuntimeEventLog, RuntimeEventName} from '@sharpforge/runtime';
@@ -65,7 +86,7 @@ the full retained window. The named
 same bounded operation without flushing subscribers. Whole-log sequence/drop
 metadata is preserved even when only a smaller event window is returned.
 
-Serial validation passed 22 event-log and value-ABI tests at `f3edb587`, including
+The original event-log prerequisite passed 22 event-log and value-ABI tests at `f3edb587`, including
 a host adapter around real direct-CIL execution, ring overflow, immutable
 payloads, cancellation/disposal, reentrant callbacks and malformed inputs:
 
@@ -77,5 +98,9 @@ SHARPFORGE_MAX_PARALLEL_RUNS=1 SHARPFORGE_TEST_CONCURRENCY=1 SHARPFORGE_MAX_OLD_
 
 `npm run check` passed with 1,729 syntax-checked modules and no import errors.
 The non-strict structure report completed with 264 repository warnings. Browser
-runs and benchmarks remain staged. Automatic hooks, profile totals, speedscope
-export and profiler overhead remain in the original E02 acceptance scope.
+runs and benchmarks remain staged. Automatic producers, the
+[instruction profiler](instruction-profiler.md) and [Speedscope export](profile-export.md)
+now have separate implementations and focused evidence in their linked docs.
+Full E02 browser/platform, export-application and profiler-overhead qualification
+remains open. The event ring is bounded history; cumulative suspension totals
+come from the independent profiler counter.
