@@ -19,7 +19,14 @@ declined operation uses its original operands in the existing BigInt handler,
 before the raw handler consumes anything. A later exact safe result can re-enter
 the lane through the ordinary Array write adapter.
 
-Division, remainder, bitwise operations, shifts, conversions, wide operands and
+Canonical Int32 operands can also widen directly into the lane through `conv.i8`,
+`conv.u8` and their four checked forms. Signed forms preserve the input value;
+`conv.u8` and `.un` forms use its unsigned 32-bit interpretation. Negative inputs
+to `conv.ovf.u8` retain the shared managed overflow path before consuming the
+operand. Actual float/native/Int64 tags and noncanonical host-edited Numbers keep
+their original conversion handler, even when the verifier fact says Int32.
+
+Division, remainder, bitwise operations, shifts, other conversions, wide operands and
 unknown verifier categories retain the existing handlers. Host-edited tags, Array
 replacement, custom descriptors and frozen/sealed arrays also preserve fallback.
 Write observers keep the regular BigInt notification path. The existing reference
@@ -37,3 +44,7 @@ No zero-allocation or throughput claim is made. Plan/plane/proxy setup allocates
 BigInt is materialized at public boundaries and generic fallback. The focused loop
 regression inspects private lane use as a functional storage invariant, not as an
 allocation measurement or benchmark result.
+
+The Int32-widening increment passed all 42 focused conversion, small-long, Int64
+and typed-float tests at `a2904830`. Required PR checks follow serial local validation;
+this does not replace the deferred differential or performance qualification.
