@@ -1,6 +1,7 @@
 /** Ordered, bounded announcements with an injectable scheduler for deterministic hosts and tests. */
 export class DesignerAnnouncements {
-  constructor({announce, schedule = callback => setTimeout(callback, 50), cancel = clearTimeout, limit = 128} = {}) {
+  constructor({announce, schedule = callback => globalThis.setTimeout(callback, 50),
+    cancel = timer => globalThis.clearTimeout(timer), limit = 128} = {}) {
     if (typeof announce !== 'function') throw new TypeError('An announcement sink is required');
     if (!Number.isInteger(limit) || limit < 1 || limit > 1000) throw new RangeError('Invalid announcement queue limit');
     Object.assign(this, {announce, schedule, cancel, limit});
@@ -33,10 +34,13 @@ export class DesignerAnnouncements {
     if (this.pending.length) this.timer = this.schedule(() => this.flush());
   }
 
+  /** Makes queued callbacks inert before canceling; an injected cancellation error remains observable. */
   dispose() {
+    if (this.disposed) return;
     this.disposed = true;
-    if (this.timer !== null) this.cancel(this.timer);
+    const timer = this.timer;
     this.timer = null;
     this.pending = [];
+    if (timer !== null) this.cancel(timer);
   }
 }
