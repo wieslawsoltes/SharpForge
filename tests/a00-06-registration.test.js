@@ -12,6 +12,7 @@ import {taskPlan, loadTasks} from '../scripts/run.js';
 import {loadBuildContributions, concatenateStyles} from '../scripts/build-contributions.js';
 import {discoverPackages, validatePacked} from '../scripts/verify-packages.js';
 import {serialTestArgs} from '../scripts/planning/run-tests.js';
+import {globPattern} from '../scripts/planning/lib/paths.js';
 const root=repositoryRoot;
 const json=async path=>JSON.parse(await readFile(path,'utf8'));
 async function write(root,path,value){const target=join(root,path);await mkdir(resolve(target,'..'),{recursive:true});await writeFile(target,typeof value==='string'?value:JSON.stringify(value));}
@@ -28,7 +29,12 @@ test('A00 T06 strict schema validates all thirty manifests and rejects unknown f
 test('A00 T06 discovery assigns files once and includes nested contract/conformance suites',async()=>{
  const manifests=await discoverManifests(),files=manifests.flatMap(m=>[...m.nodeFiles,...m.browserScripts]);
  assert.equal(new Set(files).size,files.length);assert(files.includes('planning/contracts/tests/value-abi.test.js'));assert(files.includes('tests/conformance/qualification.test.js'));assert(files.includes('tests/conformance/browser/test_launch.py'));
- const editor=selectManifests(manifests,'A20');assert.equal(editor.length,1);assert(editor[0].nodeFiles.every(path=>path.includes('editor')));assert.throws(()=>selectManifests(manifests,'A99'),/Unknown area/);
+ const editor=selectManifests(manifests,'A20'),declared=await json(join(root,'tests/manifests/A20.json'));
+ assert.deepEqual(editor.map(manifest=>manifest.area),['A20']);
+ assert.deepEqual(editor[0].nodeGlobs,declared.nodeGlobs);assert.deepEqual(editor[0].browserScripts,declared.browserScripts);
+ const patterns=declared.nodeGlobs.map(globPattern);
+ assert.deepEqual([...editor[0].nodeFiles].sort(),files.filter(path=>patterns.some(pattern=>pattern.test(path))).sort());
+ assert.throws(()=>selectManifests(manifests,'A99'),/Unknown area/);
 });
 test('A00 T06 missing, duplicate, stale, unsafe and mismatched manifest entries fail with offending paths',async t=>{
  const dir=await fixture(t);await write(dir,'tests/editor.test.js','');
