@@ -1,0 +1,211 @@
+{
+  "checkedAt": "2026-10-04 18:05:27 UTC",
+  "mergedPRs": [
+    {
+      "pr": 4518,
+      "url": "https://github.com/wieslawsoltes/SharpForge/pull/4518",
+      "title": "SF-A09-B02: preserve Char boxing identity at object boundaries",
+      "merged": true,
+      "mergedAt": "2026-10-04T11:13:46Z",
+      "mergeCommit": "1f16d3d3c8703509b1dcf80cc97ab045d76b53a3",
+      "head": "2f5c7c62cb3210fcf1cea9529f21e478a7830eb4",
+      "base": "ca3c083b61d637f98d53d0e55d9c2e564b11bf5d",
+      "changedFiles": 1,
+      "additions": 60,
+      "deletions": 0
+    },
+    {
+      "pr": 4520,
+      "url": "https://github.com/wieslawsoltes/SharpForge/pull/4520",
+      "title": "SF-A07-T10.3: add repeated StringBuilder insertion",
+      "merged": true,
+      "mergedAt": "2026-10-04T11:28:55Z",
+      "mergeCommit": "066995d2e7fe02fb87a566180c662e9c6e727aa1",
+      "head": "4597da5c30c0ab35bbaf44605ae2ca26fc122210",
+      "base": "8b101c0c7e8ad73675dfe12e68f26329d7ea2d9c",
+      "changedFiles": 15,
+      "additions": 8340,
+      "deletions": 420
+    },
+    {
+      "pr": 4535,
+      "url": "https://github.com/wieslawsoltes/SharpForge/pull/4535",
+      "title": "SF-A07-T34: Add genuine external readonly field profiles",
+      "merged": true,
+      "mergedAt": "2026-10-04T12:26:01Z",
+      "mergeCommit": "6e7fd2cc0113b0f9397cebfc78ea8642ba3208b2",
+      "head": "3616049cb37167bcfa6673567880a1d815388f80",
+      "base": "7b7ed128017b4b966dfa389ab6eedef46e863985",
+      "changedFiles": 29,
+      "additions": 977,
+      "deletions": 35
+    },
+    {
+      "pr": 4548,
+      "url": "https://github.com/wieslawsoltes/SharpForge/pull/4548",
+      "title": "SF-A07-T21: Invoke managed Object.ToString with bounded callbacks",
+      "merged": true,
+      "mergedAt": "2026-10-04T13:03:46Z",
+      "mergeCommit": "8eef035cab09053f66c2cea50e210be7e4662447",
+      "head": "7dad6dc651c844eb73eb249f8a21a179ade2000f",
+      "base": "3d8d1daaa0f1f6de1bb25ea2e6aa3b49692490d9",
+      "changedFiles": 38,
+      "additions": 1569,
+      "deletions": 53
+    },
+    {
+      "pr": 4555,
+      "url": "https://github.com/wieslawsoltes/SharpForge/pull/4555",
+      "title": "SF-A07-T10.3: complete non-span StringBuilder edits and Object construction",
+      "merged": true,
+      "mergedAt": "2026-10-04T13:58:01Z",
+      "mergeCommit": "5fc1286d7957c6e855e584c04eabbf8a2ba942b2",
+      "head": "9b04d3bbf87952c83d9494aea89fb77e8df83c57",
+      "base": "b519b371d10b35299004aa142b73696bd482d4cc",
+      "changedFiles": 36,
+      "additions": 39595,
+      "deletions": 118
+    },
+    {
+      "pr": 4562,
+      "url": "https://github.com/wieslawsoltes/SharpForge/pull/4562",
+      "title": "SF-A08-T13: add HashSet capacity operations and safe observer publication",
+      "merged": true,
+      "mergedAt": "2026-10-04T14:35:43Z",
+      "mergeCommit": "fbb0b086e05720eeacb954800a4a690a644313cd",
+      "head": "24a3aa75e39ec28086497db8af2cec09ec842237",
+      "base": "df5bbff9c9affa45808e9f737ef4751b55c9337a",
+      "changedFiles": 26,
+      "additions": 6288,
+      "deletions": 35
+    },
+    {
+      "pr": 4567,
+      "url": "https://github.com/wieslawsoltes/SharpForge/pull/4567",
+      "title": "Implement Stopwatch with exact durations and safe synchronous clocks",
+      "merged": true,
+      "mergedAt": "2026-10-04T15:26:26Z",
+      "mergeCommit": "00c2489e659cbeaa29e9c5dfa4a3137fae4bd4ad",
+      "head": "5481399d42a5c8934a218b9ce6ee2202ca33fa7a",
+      "base": "fedb9a894608693d2250fd5be04f3c0fc51682f6",
+      "changedFiles": 40,
+      "additions": 3174,
+      "deletions": 4
+    },
+    {
+      "pr": 4574,
+      "url": "https://github.com/wieslawsoltes/SharpForge/pull/4574",
+      "title": "[SF-A07-T34] Refresh Stopwatch registry and generated inventory integration",
+      "merged": true,
+      "mergedAt": "2026-10-04T16:40:46Z",
+      "mergeCommit": "af5450dacbdc2734432b13dffa63efb10eb93145",
+      "head": "c9648b62371247fde3a4d5b58c9ee1179a4ccede",
+      "base": "eadd85149b0740f337f7b8f3e92d259353892fdb",
+      "changedFiles": 2,
+      "additions": 26,
+      "deletions": 2
+    }
+  ],
+  "closedIssue": {
+    "number": 2638,
+    "title": "[SF-A07-T10.3] Add StringBuilder Insert/Remove/Replace overload families",
+    "state": "closed",
+    "closedAt": "2026-10-04T13:58:03Z",
+    "url": "https://github.com/wieslawsoltes/SharpForge/issues/2638"
+  },
+  "project": {
+    "open": {
+      "count": 300,
+      "incompleteResults": false,
+      "checkedAt": "2026-10-04 18:05:27 UTC"
+    },
+    "closed": {
+      "count": 11,
+      "incompleteResults": false,
+      "checkedAt": "2026-10-04 18:05:27 UTC"
+    },
+    "readyQueueObservation": "blocked-prerequisites/red-black-readiness/project9-readiness-ui-observation.json"
+  },
+  "boolean": {
+    "pr": 4578,
+    "url": "https://github.com/wieslawsoltes/SharpForge/pull/4578",
+    "head": "d6c6eb24eae3a7116b4bb5497c68b40b90aa3d2c",
+    "tree": "d934a12e448fc825ad49a535ced67a801e98e57c",
+    "draft": true,
+    "core": "success",
+    "coreRun": 37222761967,
+    "coreUrl": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37222761967",
+    "targetedTests": 316,
+    "failed": 0,
+    "cancelled": 0,
+    "skipped": 0,
+    "todo": 0
+  },
+  "io": {
+    "draftPRs": [
+      4509,
+      4510,
+      4513,
+      4514,
+      4515,
+      4516,
+      4517,
+      4542
+    ],
+    "targetedTests": 278,
+    "core": "failed at npm ci on all eight published heads",
+    "immutableEvidenceCommit": "c890bec08d53bf08295a36d67874a49f26672c8b",
+    "blockingOwnerIssue": 2072
+  },
+  "qualificationEvidenceCommit": "89b799336f5a1af8b79d463783aa2932478cd78c",
+  "preparedMessageIssues": [
+    1043,
+    1062,
+    1066,
+    1093,
+    1094,
+    1101,
+    2072
+  ],
+  "messageStatus": "prepared, not posted",
+  "projectCompletion": false,
+  "fullScopeSnapshot": {
+    "file": "remaining-project-items.json",
+    "capture": {
+      "startedAt": "2026-10-04 18:07:47 UTC",
+      "completedAt": "2026-10-04 18:08:08 UTC",
+      "method": "Read-only GitHub connector GET /search/issues; sorted created ascending; per_page=100; all required pages retrieved.",
+      "atomic": false
+    },
+    "counts": {
+      "open": 300,
+      "closed": 11,
+      "total": 311,
+      "byArea": {
+        "open": {
+          "A07": 121,
+          "A08": 87,
+          "A09": 92
+        },
+        "closed": {
+          "A07": 7,
+          "A08": 2,
+          "A09": 2
+        }
+      },
+      "byKind": {
+        "open": {
+          "epic": 12,
+          "task": 91,
+          "subtask": 197
+        },
+        "closed": {
+          "task": 10,
+          "subtask": 1
+        }
+      }
+    },
+    "sha256": "ae4b2e76602e8344ea29e6e2112d3cf94706925c771f38375ce2a976d5fb1e89"
+  },
+  "assembledAt": "2026-10-04T18:14:51.316724+00:00"
+}

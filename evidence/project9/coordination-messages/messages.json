@@ -1,0 +1,72 @@
+{
+  "preparedAt": "2026-10-04T18:03:18.486474+00:00",
+  "evidenceCommit": "89b799336f5a1af8b79d463783aa2932478cd78c",
+  "frozenBundleManifestSha256": "74323902270e99f10d28fa69af5a914465ab0ba5fe7062440bb166ab58a706c9",
+  "frozenBundleDirectoryDigest": "56f86ced3d3f379ef79bb4f09a7896da75a73d1d53214ff512d75bdb53d9121d",
+  "messages": [
+    {
+      "issue": 1043,
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/1043",
+      "file": "issue-1043-boolean-public-facade.md",
+      "status": "prepared_not_sent",
+      "originalTemplateSha256": "3f6f875d5e50a1d5bac21ba9602cf0db1ed5407fd9feb6ad158d5ce270f2d417",
+      "sha256": "f4f4bcbb6a17c3ee5c26e8b2e1c89ba58e2d1978ad68535d36c2251777b93731",
+      "bytes": 2859
+    },
+    {
+      "issue": 1062,
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/1062",
+      "file": "issue-1062-boolean-schema.md",
+      "status": "prepared_not_sent",
+      "originalTemplateSha256": "fbe7460dc4e9dbda693077d15faab14787542f168544a925542b49263c6c76bf",
+      "sha256": "cb4a13d6cc230fc6b84ef705032fb4d43f6fc54efaae84d6cf69618129ac1267",
+      "bytes": 2894
+    },
+    {
+      "issue": 1066,
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/1066",
+      "file": "issue-1066-boolean-typed-body.md",
+      "status": "prepared_not_sent",
+      "originalTemplateSha256": "82c43098109dbcc5537c8f02110a83ac6b3b93b77a3b854abf7e518127b17492",
+      "sha256": "176906e392e1f8b14d6bebe386a24a397c489e05303930ef82bca2bc1ec0b1fa",
+      "bytes": 2794
+    },
+    {
+      "issue": 1093,
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/1093",
+      "file": "issue-1093-red-black-snapshot.md",
+      "status": "prepared_not_sent",
+      "originalTemplateSha256": "cc89e9f7fc235e0f31b4f16e8f500b86fbc891cde48d5865a75ace231ec7dc8a",
+      "sha256": "18f5cd1bc30643321e22d3e01d20440b40ffc2450ede74c496f401db1c0bc3c2",
+      "bytes": 2912
+    },
+    {
+      "issue": 1094,
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/1094",
+      "file": "issue-1094-red-black-dependency-scope.md",
+      "status": "prepared_not_sent",
+      "originalTemplateSha256": "6aa3d10e33f61606d2202360fcffa20f05174c46710c1d4d47eefd8f89539083",
+      "sha256": "da4afc714e3ca79b3c439c67d33772a8080af0878c43b9ea48d627cc63f3f528",
+      "bytes": 3112
+    },
+    {
+      "issue": 1101,
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/1101",
+      "file": "issue-1101-boolean-gate.md",
+      "status": "prepared_not_sent",
+      "originalTemplateSha256": "37c38d5c6562b95952f03dcddca92234c0a5731c9b7d89e0e29ac4e33138aeaf",
+      "sha256": "554b5d19b74709fceec40912d7bebe7f937cc9b84d27585bc9bb2743c9e65816",
+      "bytes": 2695
+    },
+    {
+      "issue": 2072,
+      "url": "https://github.com/wieslawsoltes/SharpForge/issues/2072",
+      "file": "issue-2072-package-lock.md",
+      "status": "prepared_not_sent",
+      "originalTemplateSha256": "c9bf2792bc87e9328616c455df0e2e54432b4450e65f28666f14b1d23cfcddac",
+      "sha256": "b90d783ae60e8851444cbc2efb7b56660ffdb9de0d485487763c3325ff6f464e",
+      "bytes": 2954
+    }
+  ],
+  "preparationNote": "Immutable evidence URL substituted and editorial draft/destination wrappers removed; these files contain the complete outgoing comment bodies. No message was sent. Original templates remain frozen separately."
+}
