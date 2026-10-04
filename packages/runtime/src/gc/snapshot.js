@@ -79,7 +79,14 @@ function retainServiceIdentities(state, memo) {
   }
   for (const [, entry] of lifetime.handles?.entries ?? []) retain(entry.ownerTag);
   for (const [, entry] of lifetime.pins?.leases ?? []) retain(entry.ownerTag);
-  retain(lifetime.finalizers?.context?.active?.runner);
+  const active = lifetime.finalizers?.context?.active;
+  retain(active?.runner);
+  // Like VM copyFrames, suspended finalizers retain their immutable code generation and derived offset map.
+  const frames = active?.runnerState?.execution?.frames;
+  for (const frame of Array.isArray(frames) ? frames : []) {
+    retain(frame?.method);
+    retain(frame?.offsets);
+  }
   return memo;
 }
 
@@ -129,7 +136,8 @@ function validateRecords(heap, state) {
     const record = state.records[index];
     if (record === null) continue;
     if (!record || typeof record.kind !== 'string' || typeof record.type !== 'string') throw new TypeError('Invalid heap snapshot record');
-    if (record.kind === 'string' ? typeof record.data !== 'string' : !Array.isArray(record.data)) {
+    const indexed = Array.isArray(record.data) || ArrayBuffer.isView(record.data) && Number.isSafeInteger(record.data.length);
+    if (record.kind === 'string' ? typeof record.data !== 'string' : !indexed) {
       throw new TypeError('Invalid heap snapshot record data');
     }
     unsigned(record.size, 'record size');
