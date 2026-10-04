@@ -33,3 +33,4 @@ export { validateTailPrefixes, tailPrefixDiagnosticCatalog } from './verify/pref
 export {verifiedStackBound} from './verified-stack.js';
 export { validateMemoryPrefixes, memoryPrefixDiagnosticCatalog } from './verify/prefix-memory.js';
 export { validateTypePrefixes, typePrefixDiagnosticCatalog } from './verify/prefix-constrained.js';
+export { createMetadataVerificationTypeSystem, verificationTypeSystemDiagnosticCatalog } from './verify/type-system.js';
