@@ -44,7 +44,7 @@ test('CLR base matching resolves equivalent TypeDef/TypeRef signatures across as
       returnType: { kind: 'class', token: 0x02000002 }, parameters: [] })); } });
   const derived = managedFixture({ name: 'OverrideDerived', methods: [{ name: 'M', flags: 0xc6, static: false, noBody: true }],
     decorate({ md }) {
-      md.referenceIdentities.set('overridebase', { name: 'OverrideBase', version: [1, 0, 0, 0],
+      md.referenceIdentities.set('overridebase', { name: 'OverrideBase', version: [0, 2, 0, 0],
         culture: '', flags: 0, publicKeyOrToken: new Uint8Array() });
       const reference = md.typeRef('Fixture.Program', 'OverrideBase');
       md.rows[2][1][3] = codedIndex('TypeDefOrRef', reference);
