@@ -5,7 +5,7 @@ import { spawnSync } from 'node:child_process';
 import { tmpdir } from 'node:os';
 import { dirname, join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { loadSymbols } from '@sharpforge/symbols';
+import { loadSymbols, readPortablePdb } from '@sharpforge/symbols';
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const dotnet = process.env.DOTNET_PATH ?? 'dotnet';
@@ -53,7 +53,8 @@ try {
   const assembly = await readFile(assemblyPath);
   const reference = JSON.parse(run([assemblyPath]));
   const pdb = await readFile(join(output, 'LocalConstants.pdb'));
-  const symbols = loadSymbols(assembly, pdb);
+  assert.equal(loadSymbols(assembly, pdb).bound, true);
+  const symbols = readPortablePdb(pdb);
   assert.equal(reference.constants.length, 18);
   for (const native of reference.constants) {
     const result = symbols.constants.find((constant) => constant.name === native.name);
