@@ -1,5 +1,5 @@
 {
-  "overload-resolution/arity-and-params": ["diagnostics", "warnings", "bytecode", "cil"],
+  "overload-resolution/arity-and-params": ["diagnostics", "warnings", "bytecode", "cil", "directCil"],
   "overload-resolution/cs0019-user-operators": ["diagnostics", "warnings"],
   "overload-resolution/cs0121-ambiguous-call": ["diagnostics", "warnings"],
   "overload-resolution/cs0121-better-conversion": ["diagnostics", "warnings"],
@@ -14,6 +14,7 @@
   "overload-resolution/cs1739-no-parameter-named": ["diagnostics", "warnings"],
   "overload-resolution/cs7036-constructor": ["diagnostics", "warnings"],
   "overload-resolution/cs7036-missing-required-argument": ["diagnostics", "warnings"],
-  "overload-resolution/int-double-string-object": ["diagnostics", "warnings", "bytecode", "cil"],
-  "overload-resolution/optional-vs-exact": ["diagnostics", "warnings", "bytecode", "cil"]
+  "overload-resolution/derived-preferred": ["directCil"],
+  "overload-resolution/int-double-string-object": ["diagnostics", "warnings", "bytecode", "cil", "directCil"],
+  "overload-resolution/optional-vs-exact": ["diagnostics", "warnings", "bytecode", "cil", "directCil"]
 }

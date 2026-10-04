@@ -1,4 +1,5 @@
 import {finishContext,cancelContexts} from './execution/frame-retirement.js';
+import {schedulerRootValues} from './execution/frame-roots.js';
 import {TASK,THREAD,taskResult} from '@sharpforge/framework';
 import {boundDelegateCall} from './execution/delegate-targets.js';
 import {ManagedFault} from './heap.js';
@@ -25,17 +26,7 @@ export class CooperativeScheduler {
   save(){if(!this.enabled||this.parked)return;const c=this.contexts.get(this.currentId);if(c)Object.assign(c,this.capture());}
   load(c){this.parked=false;this.currentId=c.id;for(const k of contextFields)if(k in c)this.vm[k]=c[k];this.vm.state='running';c.status='running';this.steps=0;}
   get current(){return this.contexts.get(this.currentId);}
-  *roots(){if(!this.enabled)return;for(const c of this.contexts.values()){
-      if(terminal.has(c.status))continue;yield c.task;yield c.thread;yield c.delegate;yield c.returnValue;yield c.wait?.task;
-      // Resumed faults remain on the context until beforeInstruction dispatches them,
-      // including while that context is active and its stacks are rooted by the VM.
-      yield c.resumeFault?.reference;
-      if(c.id===this.currentId&&!this.parked)continue;
-      yield* c.stack??[];for(const f of c.frames){yield* f.locals??[];yield* f.args??[];for(const v of f.stack??[]){if(v?.byref)yield v.owner;else yield v;}yield f.returnObject;if(this.vm.exceptionRoots)yield* this.vm.exceptionRoots(f);else{yield f.exception?.reference;for(const x of f.caught??[])yield x.fault?.reference;for(const x of f.unwinds??[]){yield x.value;yield x.error?.reference;}}}
-      yield c.pendingFault?.reference;yield c.fault?.reference;
-    }
-    for(const t of this.tasks.values())if(!terminal.has(t.status)){yield t.ref;yield* t.dependencies??[];yield t.error?.reference;}
-  }
+  *roots(){yield* schedulerRootValues(this);}
   allFrames(){if(!this.enabled)return this.vm.frames;this.save();return [...this.contexts.values()].flatMap(c=>terminal.has(c.status)?[]:c.frames);}
   taskRecord(ref){this.vm.heap.get(ref);const id=this.vm.platform.get(ref,'Id');let t=this.tasks.get(id);if(!t){const status=this.vm.platform.get(ref,'$status');if(!terminal.has(status))throw new ManagedFault('InvalidOperationException','Task is no longer tracked');t={id,ref,status,result:this.vm.platform.get(ref,'$result'),resultType:taskResult(this.vm.heap.get(ref).type),error:null,waiters:new Set()};}return t;}
   createTask(resultType='void',extra={}){

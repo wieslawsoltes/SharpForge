@@ -1,8 +1,8 @@
 {
   "field-keyword/accessors-initializers-static-and-generic": ["diagnostics", "warnings", "bytecode", "cil"],
   "field-keyword/cs0103-cs8050-outside-property-accessors": ["diagnostics", "warnings"],
-  "field-keyword/cs9258-member-named-field": ["diagnostics", "warnings", "bytecode", "cil"],
+  "field-keyword/cs9258-member-named-field": ["diagnostics", "warnings", "bytecode", "cil", "directCil"],
   "field-keyword/cs9258-warnings": ["diagnostics", "warnings"],
-  "field-keyword/csharp13-member-named-field": ["diagnostics", "warnings", "bytecode", "cil"],
+  "field-keyword/csharp13-member-named-field": ["diagnostics", "warnings", "bytecode", "cil", "directCil"],
   "field-keyword/csharp13-no-member-named-field": ["diagnostics", "warnings"]
 }

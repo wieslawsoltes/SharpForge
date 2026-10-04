@@ -1,6 +1,6 @@
 {
   "static-functions/static-anonymous-function-captures": ["diagnostics", "warnings"],
   "static-functions/static-function-references-a-local-function": ["diagnostics", "warnings"],
-  "static-functions/static-functions-use-constants-statics-and-each-other": ["diagnostics", "warnings", "bytecode", "cil"],
+  "static-functions/static-functions-use-constants-statics-and-each-other": ["diagnostics", "warnings", "bytecode", "cil", "directCil"],
   "static-functions/static-local-function-captures": ["diagnostics", "warnings"]
 }

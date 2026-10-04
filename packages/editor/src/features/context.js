@@ -37,20 +37,23 @@ export function createInsightContext(editor, options) {
       const result = await guard.run(requestOptions.key ?? method, value => services.invoke(method, value), parameters, validation);
       return result ? {...result, versions} : undefined;
     },
-    navigate(location, navigationOptions = {}) {
+    async navigate(location, navigationOptions = {}) {
       const uri = location.uri ?? location.targetUri;
+      let destination = { ...location, uri };
       if (uri === editor.uri) {
         const source = editor.sourceSnapshot();
         const range = location.range ?? location.targetSelectionRange;
         const start = location.start ?? (range ? source.offsetAt(range.start) : 0);
         const end = location.end ?? (range ? source.offsetAt(range.end) : start);
-        const focused = document.activeElement;
-        editor.goto(start, end);
-        if (navigationOptions.preserveFocus) focused?.focus?.({preventScroll: true});
-        return;
+        destination = { ...destination, start, end };
       }
-      if (options.openDocument) return options.openDocument(location, navigationOptions);
-      return editor.request('openDocument', {...location, uri});
+      if (options.openDocument) {
+        const focused = document.activeElement;
+        try { return await options.openDocument(destination, navigationOptions); }
+        finally { if (navigationOptions.preserveFocus) focused?.focus?.({preventScroll: true}); }
+      }
+      if (uri === editor.uri) return editor.goto(destination.start, destination.end);
+      return editor.request('openDocument', destination);
     },
     command(command) {
       if (services.supports('executeCommand')) return services.invoke('executeCommand', {

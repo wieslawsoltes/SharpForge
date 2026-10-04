@@ -23,7 +23,7 @@ export class ReferenceResults extends WorkbenchEvents {
     if (!result) return [];
     const groups = new Map();
     for (const row of result.rows) {
-      if (kind !== 'all' && row.kind !== kind) continue;
+      if (kind !== 'all' && row.kind !== kind && !(kind === 'read' && row.read) && !(kind === 'write' && row.write)) continue;
       if (filter && !`${row.uri} ${row.preview ?? ''}`.toLowerCase().includes(filter.toLowerCase())) continue;
       const group = groupBy === 'project' ? row.projectId ?? '(workspace)' : groupBy === 'definition' ?
         row.definition ?? result.definition ?? '(symbol)' : row.uri;

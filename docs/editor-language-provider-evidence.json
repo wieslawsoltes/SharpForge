@@ -1,0 +1,239 @@
+{
+  "schemaVersion": 1,
+  "sourceRevision": "ee32eebc846325b44b29716a9a28a179563a6c3e",
+  "initialSourceRevision": "3f1d57b81dc95f45dd507f25fbd589af8c122cec",
+  "worktreeBranch": "codex/p16-language-providers",
+  "nodeRuns": [
+    {
+      "stage": "initial-complete-provider-scope",
+      "sourceRevision": "3f1d57b81dc95f45dd507f25fbd589af8c122cec",
+      "command": "node scripts/limited.js node --test tests/a20-semantic-providers.test.js tests/a20-fix-all.test.js tests/a20-provider-transactions.test.js tests/a20-editor-services.test.js tests/a20-editor-language-worker.test.js tests/a19-outline-reorder.test.js tests/language.test.js tests/language-ide-extensions.test.js tests/protocol.test.js tests/a19-shell-search.test.js tests/a19-shell-tools.test.js",
+      "tests": 141,
+      "passed": 138,
+      "failed": 3,
+      "failures": [
+        "Outline did not reject a recovered missing semicolon",
+        "Implicit Fix All removed a nonexact numeric conversion",
+        "Rename preview fixture omitted the actual editor value facade"
+      ]
+    },
+    {
+      "stage": "first-affected-corrections",
+      "sourceNote": "Intermediate correction state retained in ee32eebc846325b44b29716a9a28a179563a6c3e",
+      "command": "node scripts/limited.js node --test tests/a20-fix-all.test.js tests/a20-provider-transactions.test.js tests/a20-editor-services.test.js",
+      "tests": 26,
+      "passed": 26,
+      "failed": 0
+    },
+    {
+      "stage": "final-corrective-scope",
+      "sourceRevision": "ee32eebc846325b44b29716a9a28a179563a6c3e",
+      "command": "node scripts/limited.js node --test tests/a20-semantic-providers.test.js tests/a20-fix-all.test.js tests/a20-provider-transactions.test.js tests/a19-outline-reorder.test.js tests/compiler-binder-csharp6.test.js tests/compiler-binder-csharp6-members.test.js",
+      "tests": 63,
+      "passed": 63,
+      "failed": 0,
+      "files": {
+        "tests/a20-semantic-providers.test.js": 15,
+        "tests/a20-fix-all.test.js": 10,
+        "tests/a20-provider-transactions.test.js": 8,
+        "tests/a19-outline-reorder.test.js": 14,
+        "tests/compiler-binder-csharp6.test.js": 9,
+        "tests/compiler-binder-csharp6-members.test.js": 7
+      }
+    }
+  ],
+  "allKnownInitialFailuresCoveredByPassingAffectedCases": true,
+  "broadBuildRerun": false,
+  "browser": {
+    "status": "not-run",
+    "fixture": "tests/browser_a20_language_providers_test.py",
+    "javascript": "tests/fixtures/a20-language-insights-fixture.js",
+    "checks": [
+      "Python AST parse passed",
+      "JavaScript syntax check passed"
+    ],
+    "setup": "Shared launch_browser, selected engine, built packages, production HTTP server and CSP.",
+    "note": "Authored real CodeEditor/Workspace/LanguageService/RefactoringEngine UI flows; no browser execution or end-to-end Studio pass inferred."
+  },
+  "nativeStatus": "not-run",
+  "visualStudioOracleStatus": "not-run",
+  "dependenciesAdded": [],
+  "items": [
+    {
+      "issue": 1452,
+      "workId": "SF-A19-T16",
+      "behavior": "Bound namespace, qualified type/member ownership, base/interface metadata and refreshed Class View hierarchy.",
+      "files": [
+        "packages/compiler/src/source-symbols.js",
+        "packages/compiler/src/source-model.js",
+        "packages/language/src/source-queries.js",
+        "apps/studio/workbench/search-service.js",
+        "apps/studio/workbench/tools/class-view.js",
+        "apps/studio/workbench/tools/tree-host.js"
+      ],
+      "tests": [
+        "tests/a20-semantic-providers.test.js",
+        "tests/a19-shell-tools.test.js",
+        "tests/a19-shell-search.test.js"
+      ],
+      "implementation": "implemented",
+      "qualification": "Focused Node source/contract evidence passed; browser/native/Visual Studio acceptance remains unrun in this lane.",
+      "closeIssue": false
+    },
+    {
+      "issue": 1456,
+      "workId": "SF-A19-T20",
+      "behavior": "Versioned Outline reorder uses the pure same-container planner, rejects recovered syntax, directives and storage-sensitive ordering.",
+      "files": [
+        "packages/refactoring/src/outline-reorder.js",
+        "packages/refactoring/src/index.js",
+        "apps/studio/workers/editor-language.js",
+        "apps/studio/workers/protocol.js",
+        "apps/studio/workbench/tools/outline-reorder.js"
+      ],
+      "tests": [
+        "tests/a19-outline-reorder.test.js",
+        "tests/a20-semantic-providers.test.js"
+      ],
+      "ownership": "Pure planner and Outline host source are shell-owned. This lane qualifies the pure planner and compiler wire; shell owns complete host qualification.",
+      "implementation": "implemented",
+      "qualification": "Focused Node source/contract evidence passed; browser/native/Visual Studio acceptance remains unrun in this lane.",
+      "closeIssue": false
+    },
+    {
+      "issue": 1460,
+      "workId": "SF-A19-T24",
+      "behavior": "Bound source references retain declaration/read/write flags through worker and result filtering, including ref/out/in, compound writes, tuple targets, nameof and selected method groups.",
+      "files": [
+        "packages/compiler/src/source-references.js",
+        "packages/compiler/src/source-model.js",
+        "packages/compiler/src/binder/named-references.js",
+        "packages/language/src/source-queries.js",
+        "apps/studio/workers/editor-language.js",
+        "apps/studio/workbench/tools/references.js",
+        "packages/protocol/src/lsp-source.js"
+      ],
+      "tests": [
+        "tests/a20-semantic-providers.test.js",
+        "tests/a20-editor-language-worker.test.js",
+        "tests/compiler-binder-csharp6.test.js"
+      ],
+      "implementation": "implemented",
+      "qualification": "Focused Node source/contract evidence passed; browser/native/Visual Studio acceptance remains unrun in this lane.",
+      "closeIssue": false
+    },
+    {
+      "issue": 1485,
+      "workId": "SF-A20-T16",
+      "behavior": "Selected explicit/implicit local-type action families implement document, project and solution Fix All through isolated compiler contexts, shared-edit reconciliation, preview and all-target validation.",
+      "files": [
+        "packages/refactoring/src/fix-all.js",
+        "packages/refactoring/src/validate-plan.js",
+        "apps/studio/workbench/language-actions.js",
+        "apps/studio/workers/editor-language.js",
+        "packages/editor/src/widgets/code-actions.js"
+      ],
+      "tests": [
+        "tests/a20-fix-all.test.js",
+        "tests/a20-editor-services.test.js"
+      ],
+      "limits": [
+        "Fix All is advertised only for families with a real implementation; arbitrary structural refactorings are not repeated automatically."
+      ],
+      "implementation": "implemented",
+      "qualification": "Focused Node source/contract evidence passed; browser/native/Visual Studio acceptance remains unrun in this lane.",
+      "closeIssue": false,
+      "browserFixture": "tests/browser_a20_language_providers_test.py"
+    },
+    {
+      "issue": 1487,
+      "workId": "SF-A20-T18",
+      "behavior": "Actual TestProviders supplies versioned test-status lenses; widget resolves visible lenses, routes explicit commands and refreshes labels without changing member-line layout.",
+      "files": [
+        "packages/editor/src/features/analysis-decorations.js",
+        "packages/editor/src/services/providers.js"
+      ],
+      "tests": [
+        "tests/a20-provider-transactions.test.js",
+        "tests/a20-editor-language-worker.test.js"
+      ],
+      "externalEvidence": {
+        "sourceRevision": "6bbb1dca",
+        "source": "apps/studio/workbench/test-code-lens.js",
+        "tests": "tests/a20-test-code-lens.test.js",
+        "documentation": "docs/a20-test-code-lens.md",
+        "ownerReportedCompletedScope": {
+          "tests": 29,
+          "passed": 29,
+          "newCases": 14
+        },
+        "note": "The owning agent qualified the real registry adapter. Root composes reference/test providers and execution/invalidation."
+      },
+      "implementation": "implemented",
+      "qualification": "Focused Node source/contract evidence passed; browser/native/Visual Studio acceptance remains unrun in this lane.",
+      "closeIssue": false,
+      "browserFixture": "tests/browser_a20_language_providers_test.py"
+    },
+    {
+      "issue": 1488,
+      "workId": "SF-A20-T19",
+      "behavior": "Bound type/member/local/parameter rename, comment/string options, exact cancel, guarded file-rename intent and one complete host transaction across edited files/resources/project XML.",
+      "files": [
+        "packages/language/src/rename.js",
+        "packages/refactoring/src/validate-plan.js",
+        "apps/studio/workbench/language-actions.js",
+        "packages/editor/src/widgets/rename.js",
+        "packages/editor/src/features/rename-preview.js",
+        "packages/editor/src/services/workspace-edit.js",
+        "packages/editor/src/services/model-workspace.js"
+      ],
+      "tests": [
+        "tests/a20-semantic-providers.test.js",
+        "tests/a20-fix-all.test.js",
+        "tests/a20-provider-transactions.test.js"
+      ],
+      "limits": [
+        "Generated/metadata source remains read-only. File rename requires a matching declaring type filename and an atomic resource host. Native atomic resource rename is not advertised."
+      ],
+      "externalEvidence": {
+        "sourceRevision": "c4fe63eb",
+        "evidenceRevision": "14d5d1cd",
+        "source": "apps/studio/explorer-resource-transaction.js",
+        "tests": "tests/a19-explorer-resource-transaction.test.js",
+        "documentation": "docs/a19-resource-rename.md",
+        "ownerReportedNewCases": {
+          "tests": 9,
+          "passed": 9
+        },
+        "note": "Explorer owner qualified complete staging/adoption and stale/cancelled plans. Root owns composed Studio wiring."
+      },
+      "implementation": "implemented",
+      "qualification": "Focused Node source/contract evidence passed; browser/native/Visual Studio acceptance remains unrun in this lane.",
+      "closeIssue": false,
+      "browserFixture": "tests/browser_a20_language_providers_test.py"
+    },
+    {
+      "issue": 1489,
+      "workId": "SF-A20-T20",
+      "behavior": "Parameter-name labels come from actual selected call, constructor and indexer argument mappings; type hints stay separate and neither changes text offsets.",
+      "files": [
+        "packages/compiler/src/source-arguments.js",
+        "packages/compiler/src/source-model.js",
+        "packages/language/src/inlay-hints.js",
+        "apps/studio/workers/editor-language.js",
+        "packages/editor/src/features/analysis-decorations.js"
+      ],
+      "tests": [
+        "tests/a20-semantic-providers.test.js",
+        "tests/a20-editor-language-worker.test.js"
+      ],
+      "limits": [
+        "Failed overloads, explicit named arguments, synthetic extension receivers and omitted arguments receive no misleading parameter label."
+      ],
+      "implementation": "implemented",
+      "qualification": "Focused Node source/contract evidence passed; browser/native/Visual Studio acceptance remains unrun in this lane.",
+      "closeIssue": false,
+      "browserFixture": "tests/browser_a20_language_providers_test.py"
+    }
+  ]
+}
