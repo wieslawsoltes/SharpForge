@@ -1,5 +1,7 @@
 import {compareObjects} from './object-comparison.js';
-import {resolveStringComparer, registerStringComparerExtensions, registerStringComparerFactoryExtensions} from './string-comparer.js';
+import {
+  resolveStringComparer, registerStringComparerExtensions, registerStringComparerFactoryExtensions, registerStringComparerEqualityExtensions
+} from './string-comparer.js';
 import {registerStringComparisonExtensions} from './string.js';
 import {
   registerStringBuilderCharacterExtensions, registerStringBuilderInt64Extensions, registerStringBuilderIntegerExtensions
@@ -35,6 +37,7 @@ function contracts(registry) {
   registerStringComparerFactoryExtensions(registry);
   registerStringBuilderValueExtensions(registry);
   registerStringBuilderIntegerExtensions(registry);
+  registerStringComparerEqualityExtensions(registry);
 }
 
 function invoke(platform, descriptor, args) {
