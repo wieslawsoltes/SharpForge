@@ -27,10 +27,17 @@ the assembly declares `InternalsVisibleTo`. The following semantic exceptions al
 
 - Virtual methods and explicit interface implementations, with their MethodImpl rows.
 - All struct fields, including private, static and auto-property backing fields.
-- Fixed-buffer nested types and layout, including generic owners and their inherited type parameters, through the executable emitter's planner.
+- Fixed-buffer field signatures and attributes, including generic and nested generic owners, through the executable emitter's planner.
 - Captured primary-constructor fields through the executable emitter's existing planner.
 - Constructors of attribute classes, including internal constructors needed by applied attributes.
 - Properties and events with retained accessors. A removed private setter has no dangling MethodSemantics row.
+
+Roslyn reference output omits the generated fixed-buffer storage TypeDefs. Their field signatures retain nested
+TypeRefs scoped to the current module, with inherited generic arguments; `FixedBufferAttribute` supplies the element
+type and length used by a consuming compiler. Executable output retains its storage TypeDefs and layout rows.
+Retained auto-property and primary-constructor backing fields carry `DebuggerBrowsable(Never)`, and instance struct
+auto-property getters carry `IsReadOnlyAttribute`. These reference-contract attributes leave the historical
+metadata-only profile unchanged.
 
 Attributes on retained declarations use the existing custom-attribute writer. An explicitly applied reference-assembly
 marker is preserved once. Both `ReferenceAssemblyAttribute` and `InternalsVisibleToAttribute` can be written in source
@@ -78,8 +85,9 @@ uncached base links; the cache is released with the compilation. There are no pr
 
 ## Verification
 
-Focused tests are `tests/a03-22-reference-assemblies.test.js`, `tests/a03-22-reference-interface-members.test.js` and
-`tests/a03-22-reference-policy.test.js`. The source and native observer are in `tests/fixtures/a03-reference-assemblies/`.
+Focused tests are `tests/a03-22-reference-assemblies.test.js`, `tests/a03-22-reference-interface-members.test.js`,
+`tests/a03-22-reference-synthesized-metadata.test.js` and `tests/a03-22-reference-policy.test.js`.
+The source and native observer are in `tests/fixtures/a03-reference-assemblies/`.
 
 ```sh
 node scripts/limited.js node --test tests/a03-22-*.test.js
@@ -105,7 +113,9 @@ and `/langversion:latest`, the installed reference-pack assemblies and the obser
 compiler, observer and reference-image hashes, canonical interface names and the file-local attribute exception above.
 The source was named `Source.cs` during capture; file-local name hashes are compiler-specific. The focused Node gate
 passed 40 tests at `e14947ea`; four separate parameter-default reference-pack tests skipped because their SDK path was
-not configured. The main native comparison and performance remain pending while the native observer is qualified.
+not configured. The native observer probe passed at `b939cb00`; the first complete public comparison identified
+missing synthesized attributes, virtual/event flag differences and unnecessary fixed-buffer storage TypeDefs.
+Those captured differences drive the focused regressions; the corrected native comparison and performance are pending.
 Browser, Rust-native and Wasm execution are not qualified by these checks: the output is a compile-time reference
 assembly and its marker deliberately prevents execution loading.
 
@@ -117,4 +127,6 @@ metadata modules. Existing fixed-buffer and primary-capture planners supply requ
 type lookup now uses the planner's `byType` index rather than a scan per generated buffer. The source assembly and
 type/attribute binders share a per-file namespace index so qualified well-known attributes retain their bound identity.
 Canonical explicit interface names and precise accessor flags apply to the shared metadata writer. No compiler entry
-point, parser, executable instruction lowering or runtime dispatcher changes.
+point, parser, executable instruction lowering or runtime dispatcher changes. Type references to omitted synthesized
+nested declarations now form a valid local TypeRef chain, and method flags preserve internal virtual override access
+checks while static interface event accessors do not allocate instance virtual slots.

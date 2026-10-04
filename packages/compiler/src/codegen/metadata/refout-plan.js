@@ -39,7 +39,8 @@ export class RefoutPlan {
     const declared = sourceTypesInMetadataOrder(analysis.assembly);
     this.fixedBuffers = planFixedBuffers(declared, analysis.core);
     this.primaryCaptures = planPrimaryCaptures(analysis);
-    this.types = this.fixedBuffers.types;
+    // Roslyn /refonly retains fixed-buffer field signatures and attributes but omits synthesized storage TypeDefs.
+    this.types = [];
   }
 
   isAttributeType(type) {
@@ -61,7 +62,10 @@ export class RefoutPlan {
 
   filter(type, plan) {
     extendWithFixedBuffers(this.fixedBuffers, type, plan);
-    plan.fields.push(...(this.primaryCaptures.byType.get(type) ?? []));
+    for (const field of this.primaryCaptures.byType.get(type) ?? []) {
+      field.isDebuggerHidden = true;
+      plan.fields.push(field);
+    }
     const context = { includesInternals: this.includesInternals, isStruct: type.typeKind === TypeKind.Struct };
     const isAttribute = this.isAttributeType(type);
     // Removing a private .cctor must not change the declaration's BeforeFieldInit bit.

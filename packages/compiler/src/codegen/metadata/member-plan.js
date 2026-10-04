@@ -96,6 +96,7 @@ function fieldLikeEvent(type, event, core, plan) {
   if (type.typeKind === TypeKind.Interface) {
     for (const accessor of [adder, remover]) {
       accessor.flags |= DELEGATE_INVOKE_FLAGS | MethodAttributes.Abstract;
+      if (event.isStatic) accessor.flags &= ~MethodAttributes.NewSlot;
       accessor.hasBody = false;
     }
   } else plan.fields.push({ symbol: null, name: event.name, flags: privateField(event), type: event.type, constant: null, isCompilerGenerated: true });

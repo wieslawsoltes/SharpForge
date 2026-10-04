@@ -2,7 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import { compileToReferenceAssembly } from '@sharpforge/compiler';
-import { AssemblyInspector, decodeCoded, TypeAttributes, MethodAttributes } from '@sharpforge/cil';
+import { AssemblyInspector, decodeCoded, decodeSignature, TypeAttributes, MethodAttributes } from '@sharpforge/cil';
 
 const source = readFileSync(new URL('./fixtures/a03-reference-assemblies/surface.cs', import.meta.url), 'utf8');
 const markerName = 'System.Runtime.CompilerServices.ReferenceAssemblyAttribute';
@@ -132,32 +132,43 @@ test('A03-T22 explicit static interface methods and accessors survive without a 
   assert.equal(metadata.rows[25].filter(([owner]) => owner === (factory.token & 0xffffff)).length, 4);
 });
 
-test('A03-T22 fixed buffers and captured primary-constructor parameters retain struct layout metadata', () => {
-  const { inspector, metadata } = emit();
+test('A03-T22 fixed buffers retain storage references while synthesized implementation types are omitted', () => {
+  const { inspector } = emit();
   const packet = declared(inspector, 'RefSurface.Packet');
   assert.equal(inspector.signature(packet.fields[0].token).type, 'RefSurface.Packet+<Data>e__FixedBuffer');
-  const buffer = declared(inspector, 'RefSurface.Packet+<Data>e__FixedBuffer');
-  assert.deepEqual(names(buffer, 'fields'), ['FixedElementField']);
-  assert.ok(metadata.rows[15].some(([, size, parent]) => size === 16 && parent === (buffer.token & 0xffffff)));
+  assert.equal(inspector.types.some(type => type.name.includes('e__FixedBuffer')), false,
+    'captured Roslyn /refonly omits storage TypeDefs while retaining their field signatures and FixedBuffer attributes');
   const captured = declared(inspector, 'RefSurface.Captured');
   assert.deepEqual(names(captured, 'fields'), ['<value>P']);
 });
 
-test('A03-T22 fixed buffers in generic and nested generic structs preserve inherited parameters and storage signatures', () => {
+test('A03-T22 fixed buffers preserve generic field signatures and local TypeRef resolution scopes', () => {
   const { inspector, metadata } = emit();
   const cases = [
-    ['RefSurface.GenericPacket`1', ['T'], 12],
-    ['RefSurface.Envelope`1+Packet`1', ['T', 'U'], 4],
+    ['RefSurface.Packet', []],
+    ['RefSurface.GenericPacket`1', ['T']],
+    ['RefSurface.Envelope`1+Packet`1', ['T', 'U']],
   ];
-  for (const [ownerName, parameterNames, size] of cases) {
+  for (const [ownerName, parameterNames] of cases) {
     const owner = declared(inspector, ownerName);
-    const buffer = declared(inspector, ownerName + '+<Data>e__FixedBuffer');
-    const parameters = metadata.rows[42].filter(row => decodeCoded('TypeOrMethodDef', row[2]) === buffer.token);
+    const parameters = metadata.rows[42].filter(row => decodeCoded('TypeOrMethodDef', row[2]) === owner.token);
     assert.deepEqual(parameters.map(row => [row[0], metadata.string(row[3])]), parameterNames.map((name, index) => [index, name]));
-    assert.equal(metadata.rows[15].find(([, , parent]) => parent === (buffer.token & 0xffffff))[1], size);
     const storage = owner.fields.find(field => field.name === 'Data');
-    assert.deepEqual([...metadata.blob(storage.signatureToken)].slice(0, 3), [0x06, 0x15, 0x11], 'FieldSig GENERICINST VALUETYPE');
-    assert.deepEqual(names(buffer, 'fields'), ['FixedElementField']);
+    const signature = decodeSignature(metadata.blob(storage.signatureToken)).type;
+    const reference = parameterNames.length ? signature.type : signature;
+    assert.equal(reference.kind, 'valuetype');
+    assert.equal(reference.token >>> 24, 1, 'omitted storage uses a TypeRef');
+    assert.equal(metadata.typeName(reference.token), ownerName + '+<Data>e__FixedBuffer');
+    if (parameterNames.length) {
+      assert.equal(signature.kind, 'genericInstance');
+      assert.deepEqual(signature.arguments, parameterNames.map((_, index) => ({ kind: 'genericParameter', scope: 'type', index })));
+    }
+    const chain = [];
+    for (let current = reference.token; current; current = decodeCoded('ResolutionScope', metadata.row(current)[0])) {
+      assert.equal(current >>> 24, 1, 'every non-nil ResolutionScope is an enclosing TypeRef');
+      chain.unshift(metadata.string(metadata.row(current)[1]));
+    }
+    assert.deepEqual(chain, [...ownerName.replace('RefSurface.', '').split('+'), '<Data>e__FixedBuffer']);
   }
 });
 

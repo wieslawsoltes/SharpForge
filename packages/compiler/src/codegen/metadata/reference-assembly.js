@@ -21,6 +21,7 @@ import { referenceIdentitiesOf } from './reference-identities.js';
 
 import { RecordPlan } from './record-plan.js';
 import { refoutEnabled, RefoutPlan } from './refout-plan.js';
+import { writeRefoutAttributes } from './refout-attributes.js';
 
 const CLI_HEADER_SIZE = 72;
 /** `ldnull; throw`. */
@@ -47,7 +48,9 @@ export function emitReferenceAssembly(analysis, options = {}) {
       refout?.filter(type, plan);
     } },
     writer = new SymbolMetadataWriter(builder, analysis, { bodyRva, synthesized }).write();
-  new CustomAttributeWriter(writer, analysis).write();
+  const attributes = new CustomAttributeWriter(writer, analysis);
+  attributes.write();
+  if (refout) writeRefoutAttributes(attributes);
   if (refout && !refout.hasMarker) {
     const marker = 'System.Runtime.CompilerServices.ReferenceAssemblyAttribute';
     addReferenceAssemblyAttribute(builder, writer.tokens.assemblyOf({}, marker));
