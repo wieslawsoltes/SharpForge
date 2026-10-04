@@ -78,10 +78,24 @@ or raw TypeRef scopes, up to 64 nesting edges; reserved ancestor identifiers rej
 instead of being confused with metadata nesting separators. Validated names are
 cached only for the current format query. No referenced assembly, base/interface
 graph or method body is loaded. Outermost simple nested names do not expose their
-ancestors and keep their existing behavior. This extension's three authored tests
-and eight-method native C# source are prepared, with capture, focused tests,
-paired/new-capability measurements and checks pending the serial slot. The earlier
-18-record/200-sample evidence above qualifies the initial display API only.
+ancestors and keep their existing behavior. The extension captured eight independent native records on SDK 10.0.201/CoreCLR
+10.0.5. All 12 display tests pass with zero skips, including mandatory source/image
+provenance. Syntax/static checks pass (3,363/3,359 modules), manifests pass, and
+structure reports 271 existing findings, none in changed files.
+
+Exact-parent control (`1889caf1` → `aa06fb11`) cold 18-method median was
+115.792 → 114.833 µs and p95 306.042 → 276.375 µs. Cached median was
+2.9292 → 2.8542 ns, p95 14.325 → 16.375 ns (+14.31%, +2.050 ns).
+The eight nested methods measured cold median 99.417 µs / p95 204.667 µs and
+cached median 2.8917 ns / p95 14.4333 ns. [All 600 raw samples, p99, exact heads,
+commands and methodology](benchmarks/nested-method-display-node24.json) are retained.
+Each control imports its own CLR directly; only byte-identical transitive CIL/archive
+dependencies are shared. Runs were serial on shared Apple M3 Pro/darwin-arm64,
+Node 24.21.0, with a 1 GiB heap cap. No causal, significance or general speed claim
+is made; allocation and display-string footprint are unmeasured. The cached
+`toString()` path is unchanged; new ancestor validation is confined to uncached
+formatting of nested generic arguments. The root integration reviewer explicitly accepts this measured cached p95 delta
+for the bounded nested-name capability; no repeat or retuning was required.
 
 ```sh
 node scripts/limited.js node packages/clr/tools/capture-method-display.mjs tests/fixtures/clr-method-display/native.json
