@@ -5,6 +5,8 @@ from playwright.sync_api import sync_playwright
 from conformance.browser.launch import launch_browser, results_dir
 RESULTS = results_dir()
 from browser_harness import load_application,wait_condition
+from browser_designer_release_controls import ReleaseDesignerControls
+from browser_designer_source_input import replace_source
 ROOT=Path(__file__).resolve().parents[1];checks=[]
 def truth(v,msg='assertion failed'):
  if not v:raise AssertionError(msg)
@@ -40,27 +42,30 @@ with sync_playwright() as p, launch_browser(p, __file__) as browser:
  def ds():return ev('sharpforge.designer.get()')
  def text():return ev('sharpforge.getState().files.find(f=>f.uri==="Program.cs").text')
  def node(id):return next(n for n in ds()['document']['nodes'] if n['id']==id)
- def edit(s):ev('sharpforge.openFile("Program.cs")');page.locator('[data-source-uri="Program.cs"] .sf-input').fill(s)
+ def edit(s):
+  replace_source(page,"Program.cs",s)
  def load(s):cmd('stop');ev('sharpforge.designer.disconnect()');ev('text=>sharpforge.loadDiskRecords([{path:"Program.cs",text}],{name:"SourceSyncWorkshop"})',s);ev('sharpforge.build()');truth(not ev('sharpforge.getState().diagnostics.filter(d=>d.severity==="error")'),str(ev('sharpforge.getState().diagnostics')));ev('sharpforge.designer.open()')
+ ui=ReleaseDesignerControls(page,ds,lambda a:ev("a=>sharpforge.designer.action(a)",a),
+  lambda i:ev("id=>sharpforge.designer.select(id)",i),lambda n:ev("n=>sharpforge.openTool(n)",n),ev,None)
  try:
   load_application(page)
   def connect():
-   load(SOURCE);ev('sharpforge.designer.connect("Program.cs")');truth(ds()['sourceSync']['state']=='synced',str(ds()));truth(node('button')['properties']['Width']==180);truth(page.locator('.design-preview [data-sf-id="button"]').count()==1);truth('OnClick' in text());truth(len(workers)==2)
+   load(SOURCE);ev('sharpforge.designer.connect("Program.cs")');truth(ds()['sourceSync']['state']=='synced',str(ds()));truth(node('button')['properties']['Width']==180);truth(ui.host.locator('.design-preview [data-sf-id="button"]').count()==1);truth('OnClick' in text());truth(len(workers)==2)
   check('connect an existing hand-written construction method without replacing source or workers',connect)
   def chrome():
-   truth(page.locator('[data-design-view="split"]').get_attribute('aria-selected')=='true');ev('sharpforge.openTool("designer-properties");sharpforge.designer.select("button")');truth(page.locator('.design-property-category summary').count()>=4);truth(page.locator('.design-breadcrumbs').inner_text().find('Action')>=0);truth(page.locator('[data-property="Width"]').get_attribute('aria-label')=='Width');truth(page.locator('[data-property=ColumnSpan]').count()==0);truth(page.locator('[data-property=Left]').count()==1);truth(page.locator('[data-design-goto-source]').count()==1);truth(page.locator('.design-mode-tabs').is_visible());truth(page.locator('.design-mode-bar').evaluate('e=>getComputedStyle(e).display')=='flex');truth(page.locator('.design-toolbox-category svg').first.evaluate('e=>getComputedStyle(e).fill')=='none')
+   truth(ui.host.locator('[data-design-view="split"]').get_attribute('aria-selected')=='true');ev('sharpforge.openTool("designer-properties");sharpforge.designer.select("button")');truth(ui.side('properties').locator('.design-property-category summary').count()>=4);truth(ui.host.locator('.design-breadcrumbs').inner_text().find('Action')>=0);truth(ui.side('properties').locator('[data-property="Width"]').get_attribute('aria-label')=='Width');truth(ui.side('properties').locator('[data-property=ColumnSpan]').count()==0);truth(ui.side('properties').locator('[data-property=Left]').count()==1);truth(ui.host.locator('[data-design-goto-source]').count()==1);truth(ui.host.locator('.design-mode-tabs').is_visible());truth(ui.host.locator('.design-mode-bar').evaluate('e=>getComputedStyle(e).display')=='flex');truth(ui.side('toolbox').locator('.design-toolbox-category svg').first.evaluate('e=>getComputedStyle(e).fill')=='none')
   check('designer modes, grouped property grid, breadcrumb selection and compact chrome initialize',chrome)
   def property_write():
-   before=text();ev('sharpforge.designer.set("Width",248,["button"])');wait('sharpforge.designer.get().sourceSync.state==="synced"');after=text();truth('Width = 248' in after,after);truth(after==before.replace('Width = 180','Width = 248.0'),'write was not a minimal source span edit');truth(not ev('sharpforge.getState().diagnostics.filter(d=>d.severity==="error")'),str(ev('sharpforge.getState().diagnostics')))
+   before=text();ev('sharpforge.designer.set("Width",248,["button"])');wait('sharpforge.designer.get().sourceSync.state==="synced"');after=text();truth('Width = 248' in after,after);truth(after==before.replace('Width = 180','Width = 248'),'write was not a minimal source span edit');truth(not ev('sharpforge.getState().diagnostics.filter(d=>d.severity==="error")'),str(ev('sharpforge.getState().diagnostics')))
   check('designer property changes compile-check a minimal C# edit and preserve every other byte',property_write)
   def editor_read():
-   edit(text().replace('"Keep my code"','"Edited in C#"'));wait('sharpforge.designer.get().document.nodes.some(n=>n.id==="label"&&n.properties.Text==="Edited in C#")');truth(page.locator('.design-preview [data-sf-id="label"]').inner_text()=='Edited in C#');truth(ds()['sourceSync']['state']=='synced')
+   edit(text().replace('"Keep my code"','"Edited in C#"'));wait('sharpforge.designer.get().document.nodes.some(n=>n.id==="label"&&n.properties.Text==="Edited in C#")');truth(ui.host.locator('.design-preview [data-sf-id="label"]').inner_text()=='Edited in C#');truth(ds()['sourceSync']['state']=='synced')
   check('real source editor input updates the design preview automatically',editor_read)
   def source_undo():
    ev('sharpforge.openFile("Program.cs")');cmd('undo');wait('sharpforge.designer.get().document.nodes.find(n=>n.id==="label").properties.Text==="Keep my code"');cmd('redo');wait('sharpforge.designer.get().document.nodes.find(n=>n.id==="label").properties.Text==="Edited in C#"')
   check('source undo and redo resynchronize the preview without replacing the editor',source_undo)
   def incomplete():
-   before=text();edit(before.replace('Width = 248.0','Width ='));wait('sharpforge.designer.get().sourceSync.state==="blocked"');truth(node('button')['properties']['Width']==248);edit(before);wait('sharpforge.designer.get().sourceSync.state==="synced"')
+   before=text();edit(before.replace('Width = 248','Width ='));wait('sharpforge.designer.get().sourceSync.state==="blocked"');truth(node('button')['properties']['Width']==248);edit(before);wait('sharpforge.designer.get().sourceSync.state==="synced"')
   check('incomplete C# keeps the last valid preview and recovers when corrected',incomplete)
   def structural():
    ev('sharpforge.designer.setAutoSync(false)');id_=ev('sharpforge.designer.add("TextBox","root")');ev('id=>sharpforge.designer.set("Text","New input",[id])',id_);ev('sharpforge.designer.writeSource()');truth('New input' in text());truth('// Keep this hand-written handler exactly, including Unicode: λ.' in text());truth('clicks++; label.Text = $"Clicks: {clicks:D2}";' in text());truth(not ev('sharpforge.getState().diagnostics.filter(d=>d.severity==="error")'),str(ev('sharpforge.getState().diagnostics')))
@@ -69,10 +74,10 @@ with sync_playwright() as p, launch_browser(p, __file__) as browser:
    ev('sharpforge.designer.set("Width",260,["button"])');staged=text();edit(staged.replace('"Click"','"From source"'));wait('sharpforge.designer.get().sourceSync.state==="conflict"');message=ev('async()=>{try{await sharpforge.designer.writeSource();return ""}catch(e){return e.message}}');truth(message);truth(text()==staged.replace('"Click"','"From source"'));ev('sharpforge.designer.readSource({discardDesign:true})');truth(node('button')['properties']['Content']=='From source');truth(node('button')['properties']['Width']==248)
   check('concurrent source and designer edits are rejected without overwriting either side',conflict)
   def dynamic():
-   s=SOURCE.replace('Width = 180','Width = CalculateWidth()').replace('static int clicks;','static int clicks; static int CalculateWidth(){return 215;}');load(s);ev('sharpforge.designer.connect("Program.cs");sharpforge.designer.select("button");sharpforge.openTool("designer-properties")');truth(page.locator('[data-property="Width"]').is_disabled());ev('sharpforge.designer.setAutoSync(false);sharpforge.designer.set("Height",52,["button"])');ev('sharpforge.designer.writeSource()');truth('Width = CalculateWidth()' in text());truth('Height = 52' in text())
+   s=SOURCE.replace('Width = 180','Width = CalculateWidth()').replace('static int clicks;','static int clicks; static int CalculateWidth(){return 215;}');load(s);ev('sharpforge.designer.connect("Program.cs");sharpforge.designer.select("button");sharpforge.openTool("designer-properties")');truth(ui.side('properties').locator('[data-property="Width"]').is_disabled());ev('sharpforge.designer.setAutoSync(false);sharpforge.designer.set("Height",52,["button"])');ev('sharpforge.designer.writeSource()');truth('Width = CalculateWidth()' in text());truth('Height = 52' in text())
   check('dynamic C# expressions stay code-owned while independent scalar properties remain editable',dynamic)
   def device():
-   load(SOURCE);ev('sharpforge.designer.connect("Program.cs");sharpforge.designer.setAutoSync(false)');page.locator('[data-device-preset]').select_option('390x844');truth(ds()['document']['width']==390);ev('sharpforge.designer.setView("preview")');truth(ds()['viewMode']=='preview');ev('sharpforge.designer.setView("design")');truth(ds()['viewMode']=='design');ev('sharpforge.designer.setView("split")');truth(ds()['viewMode']=='split');page.screenshot(path=str(RESULTS/'screenshots/release13-designer-sync.png'))
+   load(SOURCE);ev('sharpforge.designer.connect("Program.cs");sharpforge.designer.setAutoSync(false)');ui.device();ev('sharpforge.designer.setView("preview")');truth(ds()['viewMode']=='preview');ev('sharpforge.designer.setView("design")');truth(ds()['viewMode']=='design');ev('sharpforge.designer.setView("split")');truth(ds()['viewMode']=='split');page.screenshot(path=str(RESULTS/'screenshots/release13-designer-sync.png'))
   check('device presets and Design/Split/C#/Preview views use the original editor and artboard',device)
   def run_handlers():
    ev('sharpforge.designer.writeSource()');cmd('winuiLayout');ev('sharpforge.run()');wait('sharpforge.getState().debug?.uiActive');ev('sharpforge.uiSettled()');ev('async()=>{const scene=await sharpforge.getUIScene();await sharpforge.dispatchUIEvent(scene.nodes.find(n=>n.properties.Name==="Action").id,"Click",{});}');wait('async()=> (await sharpforge.getUIScene()).nodes.some(n=>n.properties.Text==="Clicks: 01")');cmd('stop')
@@ -86,10 +91,44 @@ with sync_playwright() as p, launch_browser(p, __file__) as browser:
   anim='''using System;using Microsoft.UI.Xaml;using Microsoft.UI.Xaml.Controls;using Microsoft.UI.Xaml.Media;using Microsoft.UI.Xaml.Media.Animation;class Program {static Storyboard storyboard;static TextBlock label;static void Finished(object s,RoutedEventArgs e){label.Text="Complete";}static void Main(){var w=new Window();var p=new StackPanel();label=new TextBlock(){Name="Status",Text="Waiting"};var b=new Button(){Name="Animated",Content="Motion",Opacity=0.1};b.RenderTransform=new TranslateTransform();var a=new DoubleAnimation(){From=0,To=100,Duration=new Duration(TimeSpan.FromMilliseconds(200))};Storyboard.SetTarget(a,b);Storyboard.SetTargetProperty(a,"RenderTransform.X");storyboard=new Storyboard();storyboard.Children.Add(a);storyboard.Completed+=Finished;p.Children.Add(label);p.Children.Add(b);w.Content=p;w.Activate();storyboard.Begin();}}'''
   for direct in [False,True]:
    def auto_clock(direct=direct):
-    load(anim);cmd('winuiLayout');ev('sharpforge.invokeAssembly(sharpforge.getAssembly(),null,[],{debug:false})' if direct else 'sharpforge.run()');wait('async()=> (await sharpforge.getUIScene()).nodes.some(n=>n.properties.Text==="Complete")');ev('sharpforge.uiSettled()');actual=page.locator('.sf-winui [data-name="Animated"]').evaluate('e=>e.style.transform');truth(actual=='translate(100px, 0px)',actual+str(ev('sharpforge.getUIScene()')));cmd('stop')
+    load(anim);cmd('winuiLayout');ev('sharpforge.invokeAssembly(sharpforge.getAssembly(),null,[],{debug:false})' if direct else 'sharpforge.run()');wait('async()=> (await sharpforge.getUIScene()).nodes.some(n=>n.properties.Text==="Complete")');ev('sharpforge.uiSettled()');actual=page.locator('.winui-app-root [data-name="Animated"]').evaluate('e=>e.style.transform');truth(actual=='translate(100px, 0px)',actual+str(ev('sharpforge.getUIScene()')));cmd('stop')
    check(('direct CIL' if direct else 'source VM')+' real worker clock animates after Main and runs managed Completed handler',auto_clock)
+  # Symbol-backed navigation selects the declared control identifier.
   def final():
-   cmd('stop');ev('sharpforge.designer.disconnect()');ev('sharpforge.loadSample("designer-csharp-sync",true)');ev('sharpforge.designer.open();sharpforge.designer.connect("Program.cs");sharpforge.designer.select("action");sharpforge.openTool("designer-properties");sharpforge.designer.action("fit")');page.locator('[data-design-goto-source]').click();truth(ev('sharpforge.getEditorState("Program.cs").start')==text().index('var action ='));page.wait_for_timeout(300);page.screenshot(path=str(RESULTS/'screenshots/release13-designer-sync.png'));cmd('theme');page.wait_for_timeout(100);truth(ev('getComputedStyle(document.querySelector(".design-mode-bar")).backgroundColor')=='rgb(237, 242, 247)');page.screenshot(path=str(RESULTS/'screenshots/release13-designer-light.png'));cmd('theme');truth(not errors,json.dumps(errors));truth(len(workers)==2,str(workers))
+   cmd('stop')
+   ev('sharpforge.designer.disconnect()')
+   ev('sharpforge.loadSample("designer-csharp-sync",true)')
+   ev('''async()=>{
+    await sharpforge.designer.open();
+    await sharpforge.designer.connect("Program.cs");
+    sharpforge.designer.select("action");
+    sharpforge.openTool("designer-properties");
+    await sharpforge.designer.action("fit");
+   }''')
+   ui.host.locator('[data-design-goto-source]').click()
+   truth(ev('sharpforge.getEditorState("Program.cs").start')==text().index('var action =')+len('var '),
+    'Go to C# must select the declared control identifier')
+   page.wait_for_timeout(300)
+   command_bar=ui.host.locator('.design-command-bar')
+   dark=command_bar.evaluate('e=>getComputedStyle(e).backgroundColor')
+   page.screenshot(path=str(RESULTS/'screenshots/release13-designer-sync.png'))
+   cmd('theme')
+   page.wait_for_timeout(100)
+   light=command_bar.evaluate('''element=>{
+    const style=getComputedStyle(element);
+    return {theme:document.documentElement.dataset.theme,
+     panel:style.getPropertyValue('--design-panel').trim(),
+     foreground:style.getPropertyValue('--design-foreground').trim(),
+     background:style.backgroundColor,color:style.color};
+   }''')
+   # The registered workbench palette owns these designer tokens and their actual paint.
+   truth(light=={'theme':'light','panel':'#f4f7fb','foreground':'#213a52',
+    'background':'rgb(244, 247, 251)','color':'rgb(33, 58, 82)'},str(light))
+   truth(dark!=light['background'],'Changing theme must repaint the designer command bar.')
+   page.screenshot(path=str(RESULTS/'screenshots/release13-designer-light.png'))
+   cmd('theme')
+   truth(not errors,json.dumps(errors))
+   truth(len(workers)==2,str(workers))
   check('all integration workflows finish without page errors and retain two real workers',final)
   (RESULTS/'browser-release13-validation.json').write_text(json.dumps({'checks':checks,'errors':errors,'workers':len(workers),'harness':'in-memory production modules and real workers' if os.getenv('SHARPFORGE_IN_MEMORY') == '1' else 'CSP HTTP and real workers'},indent=2), encoding='utf-8');print(json.dumps({'passed':len(checks),'errors':errors}),flush=True)
  except Exception:
