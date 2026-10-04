@@ -10,7 +10,7 @@ export class GenericOverrideDefinitions {
   constructor(loader, limit) { this.#loader = loader; this.#limit = limit; }
   async resolve(module, node, signal) {
     if (![1, 2].includes(node.type.token >>> 24)) throw unsupported('Generic override definition requires a TypeDef or TypeRef');
-    if (node.arguments.some(argument => ['byref', 'pointer', 'functionPointer'].includes(argument.kind) ||
+    if (node.arguments.some(argument => ['byref', 'pointer', 'functionPointer', 'modreq', 'modopt'].includes(argument.kind) ||
       (argument.kind === 'primitive' && ['void', 'typedref'].includes(argument.name)))) {
       throw unsupported('Generic override arguments require ordinary managed signature types');
     }

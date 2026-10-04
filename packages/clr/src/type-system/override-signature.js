@@ -60,6 +60,10 @@ export class OverrideSignatures {
       if (node.index >= arity) throw fail('Override signature method parameter exceeds its generic arity');
       return `m${node.index}`;
     }
+    if (node.kind === 'modreq' || node.kind === 'modopt') {
+      const modifier = await this.#modifier(module, node.token, signal);
+      return `${node.kind}:${this.#identity(modifier)}(${await this.#type(node.element, module, arity, signal)})`;
+    }
     if (node.kind === 'genericInstance') {
       this.#genericDefinitions ??= new GenericOverrideDefinitions(this.#loader, this.#limit);
       const definition = await this.#genericDefinitions.resolve(module, node, signal);
@@ -73,6 +77,17 @@ export class OverrideSignatures {
       }
       return `${node.kind}:${node.rank ?? 0}(${await this.#type(node.element, module, arity, signal)})`;
     }
-    throw fail(`Override signature ${node.kind} requires a later generic/modifier binding service`);
+    throw fail(`Override signature ${node.kind} requires a later binding service`);
+  }
+  async #modifier(module, token, signal) {
+    if (![1, 2].includes(token >>> 24)) throw fail('Override modifiers require a TypeDef or TypeRef definition');
+    const type = await this.#loader.load(module, token, { signal });
+    checkCancellation(signal);
+    const metadata = type.module;
+    if (metadata && metadata.rowCount(42) + metadata.rowCount(44) > this.#limit) {
+      throw loadError(LoadErrorCode.LimitExceeded, 'Override modifier metadata row limit exceeded');
+    }
+    if (type.genericParameters.length) throw fail('Open generic override modifiers require generic binding');
+    return type;
   }
 }

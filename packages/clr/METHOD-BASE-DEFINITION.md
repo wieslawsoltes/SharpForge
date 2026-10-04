@@ -22,12 +22,33 @@ signatures remain lazy; no executable body is read.
 This is an explicit partial GetBaseDefinition contract. Class/covariant MethodImpl
 slot mappings, strict access checks,
 generic base instantiation, type generic variables,
-modifier/function-pointer signature types, array sizes and nonzero
+TypeSpec/open-generic modifier definitions, function-pointer signature types, array sizes and nonzero
 lower bounds require later services and fail with `SFCLR012` when traversal needs them.
 Opaque host intrinsics have no method metadata: reaching one before locating a
 slot introduction also fails, so an Object override cannot silently become its
 own root. A complete metadata chain with no matching ancestor introduces the
 reuse-slot method itself. This is not a full MethodDef validity or visibility pass.
+
+Required and optional custom modifiers participate in signature identity at their
+encoded position, including beneath supported array/pointer/byref constructors.
+Modifier kind, order and canonical TypeDef/TypeRef identity must all match;
+optional modifiers are not discarded during implicit slot matching. This follows
+[CoreCLR's element comparison](https://github.com/dotnet/runtime/blob/v10.0.5/src/coreclr/vm/siginfo.cpp#L3770)
+as used by its virtual-slot signature comparison. Equivalent references across
+modules resolve through the existing loader. This does not interpret modifier
+semantics or implement type equivalence, generic modifier expressions or class
+MethodImpl mappings. Modified outer generic arguments remain unsupported; the
+existing generic argument restrictions are preserved.
+
+Modifier matching extends the existing cached signature keys; it introduces no
+persistent cache or descriptor fields. Signature depth/node limits apply before
+binding; generic metadata row limits apply before querying a resolved modifier's
+generic parameters, and modifier identities share the context's signature-identity
+budget. Cancellation is checked after asynchronous binding and before publishing
+a complete signature key. Qualification of this increment is pending: six
+authored tests and one mandatory ten-record native oracle are prepared. Scheduled
+validation will retain parent/candidate base-definition controls and raw samples;
+no native, test, benchmark or static result is claimed yet.
 
 Constrained generic methods now follow the same implicit class-slot walk. Each
 matched override edge compares method GenericParam constraints separately from
