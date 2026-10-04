@@ -2,10 +2,16 @@ import {Builtins, numericTypeId, numericTypeName} from '@sharpforge/bytecode';
 import {frameworkType} from '@sharpforge/framework';
 import {CilError} from './binary.js';
 import {emitObjectBuiltin} from './object-builtin-mapping.js';
+import {decodeMathBuiltin, emitMathBuiltin} from './math-builtin-mapping.js';
 
 const isValue = type => numericTypeId(type) !== undefined || type === 'bool' ||
   ['enum', 'value'].includes(frameworkType(type)?.kind);
 const decimalBuiltins = Object.values(Builtins).filter(builtin => builtin.decimal);
+
+/** Keep exact typed families ahead of the released name-based source mappings. */
+export function decodeProfileBuiltin(target, span) {
+  return decodeMathBuiltin(target, span) ?? decodeDecimalBuiltin(target);
+}
 
 /** Recognize only the source-visible Decimal overload with its complete CLI signature. */
 export function decodeDecimalBuiltin(target) {
@@ -80,6 +86,7 @@ function stringTarget(member, count) {
 export function emitBuiltin(context, writer, id, types, adapt) {
   const count = types.length;
   const builtin = Builtins[id], name = builtin.name;
+  if (emitMathBuiltin(context, writer, builtin, types, adapt)) return;
   if (builtin.decimal) {
     const descriptor = builtin.decimal;
     adapt(types, builtin.params);
