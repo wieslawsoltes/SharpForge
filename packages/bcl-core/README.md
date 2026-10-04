@@ -143,6 +143,32 @@ samples per VM, median/p95 and managed allocation counters. #2621 remains open f
 culture support and remaining APIs; Boolean/culture overloads are outside this
 batch.
 
+`String.Contains(string, StringComparison)` appends at A07 slot `524305` after
+range Compare. It supports `Ordinal` and `OrdinalIgnoreCase`. The released
+one-argument Contains contract `1258` is unchanged. A null receiver faults first;
+a null value precedes comparison-mode validation. Invalid enum values raise
+`ArgumentException`, and culture modes 0–3 explicitly raise `NotSupportedException`
+before empty, identity or length shortcuts. Native culture results remain intact
+in the [194-row reference](reference/string-contains-comparison/README.md).
+
+Ordinal delegates to the existing UTF-16 string search. Ignore-case search checks
+each candidate UTF-16 start with the shared bounded affix matcher. It does not
+allocate substrings, folded copies or a search table, and can match a needle whose
+start or end splits a surrogate pair. The scan uses constant auxiliary space with
+worst-case O((n − m + 1) × m) time for receiver length n and needle length m.
+Repeated prefixes can therefore be expensive; this batch deliberately keeps the
+small scan rather than introducing an unmeasured search framework.
+
+Tests cover both compiler pipelines/source+CIL VMs, independently assembled CIL,
+the unchanged .NET 10.0.5 / SDK 10.0.201 oracle, surrogate boundaries, input
+preservation and managed allocation counters. The static benchmark
+`scripts/benchmarks/a07-string-contains-comparison.mjs` runs unchanged on baseline
+`1a9105df` and the candidate, separating released one-argument controls from new
+mode costs. It reports ordinary paths and bounded ASCII/Unicode repeated-prefix
+misses/late hits, with one warmup, five samples, median/p95 and managed allocations.
+No speedup is claimed. IndexOf, range searches and culture modes remain outside
+this slice; #2621 remains open.
+
 `StringComparer.OrdinalIgnoreCase` is a separate managed singleton, shared by
 the registered string/object Compare, IComparer, List.Sort and Array.BinarySearch
 routes. Its streaming fold reuses the pinned simple-uppercase table without
