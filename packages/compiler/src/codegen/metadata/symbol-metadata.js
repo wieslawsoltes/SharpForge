@@ -25,25 +25,12 @@ import { dynamicTransformFlags } from './dynamic-flags.js';
 import { staticVirtualImplementations } from './static-interface-implementations.js';
 import { interfaceReimplementations } from './interface-reimplementations.js';
 import { fieldSignature, methodSignature, methodSymbolSignature, propertySignature } from './member-signatures.js';
+import { constantTypeOf, constantRowValue, NULL_REFERENCE_CONSTANT } from './constant-metadata.js';
+import { writeParameterConstant } from './parameter-metadata.js';
 
 const TABLE = Object.freeze({ TypeDef: 2, Field: 4, MethodDef: 6, Param: 8 });
 const SEMANTICS = Object.freeze({ Setter: 1, Getter: 2, AddOn: 8, RemoveOn: 16 });
-/** Constant.Type element types by the type discriminator of a compiler constant. */
-const constantElementTypes = Object.freeze({
-  bool: 2, char: 3, sbyte: 4, byte: 5, short: 6, ushort: 7, int: 8, uint: 9, long: 10, ulong: 11, float: 12, double: 13, string: 14,
-});
-const NULL_REFERENCE_CONSTANT = 28;
 const LITERAL_FLAGS = FieldAttributes.Literal | FieldAttributes.HasDefault;
-
-/** The value the Constant table takes: a `char` constant is a code unit in the compiler and one character there. */
-function constantRowValue(constant) {
-  return constant.type === 'char' && typeof constant.value !== 'string' ? String.fromCharCode(Number(constant.value)) : constant.value;
-}
-/** The Constant.Type of a compiler constant, or undefined when the table has no encoding for it. */
-function constantTypeOf(constant) {
-  if (constant.value === null || constant.isNull) return NULL_REFERENCE_CONSTANT;
-  return constantElementTypes[constant.type];
-}
 
 /** Source type definitions in TypeDef order: declaration order, each enclosing type before its nested types. */
 export function sourceTypesInMetadataOrder(assembly) {
@@ -209,6 +196,7 @@ export class SymbolMetadataWriter {
         method.parameters.forEach((parameter, index) => {
           const row = this.builder.addRow('Param', { Flags: parameter.flags, Sequence: index + 1, Name: parameter.name ?? '' });
           if (method.symbol) this.parameterTokens.set(method.symbol.parameters[index], row);
+          writeParameterConstant(this.builder, row, method.symbol?.parameters[index]);
           nextParameter++;
         });
       }
