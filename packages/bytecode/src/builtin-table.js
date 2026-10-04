@@ -1,6 +1,6 @@
 import {runtimeBuiltinDefinitions} from './runtime-builtins.js';
 import {decimalIntrinsicDefinitions} from './decimal-intrinsic-profile.js';
-import {sourceMathBuiltins} from './source-math-builtins.js';
+import {sourceMathBuiltins, sourceSingleMathBuiltins} from './source-math-builtins.js';
 
 // A closed source-visible subset of the existing CIL profile. Unique wire names
 // distinguish overloads; the descriptor retains the actual CLR member identity.
@@ -86,6 +86,10 @@ export function createBuiltinTable(definitions, contracts, releasedRanges) {
   for (const source of sourceDecimalModes) {
     const id = runtimeId++;
     entries[id] = decimalBuiltin(id, source);
+  }
+  for (const builtin of sourceSingleMathBuiltins) {
+    const id = runtimeId++;
+    entries[id] = Object.freeze({...builtin, id});
   }
   return Object.freeze(entries);
 }
