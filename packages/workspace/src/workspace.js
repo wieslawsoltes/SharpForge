@@ -75,7 +75,7 @@ export class Workspace {
 
   compile(options = {}) { return compileWorkspace(this, options); }
 
-  /** Semantic source queries share the current compilation and its options. */
+  /** Semantic source queries share compilation and invalidate with document or option changes. */
   sourceModel(options = {}) {
     this.compile(options);
     return this.documents.size ? this.compilation.getSourceModel() : null;
