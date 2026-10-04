@@ -6,7 +6,7 @@ import { EmitterSignatures } from './emitter-signatures.js';
 import {emitBuiltin} from './builtin-emission.js';
 import { emitPropertyMetadata } from './emitter-properties.js';
 import {frameworkType,enumTypes} from '@sharpforge/framework';
-import { EnumConvertBase, Op, BinaryName, UnaryName, Builtins, numericTypeId } from '@sharpforge/bytecode';
+import { EnumConvertBase, Op, BinaryName, UnaryName, Builtins, numericTypeId, numericTypeName } from '@sharpforge/bytecode';
 import { Writer, CilError, align, utf8 } from './binary.js';
 import { token, codedIndex, cliSystemName } from './metadata.js';
 import { CilWriter } from './opcodes.js';
@@ -58,9 +58,9 @@ function emitHelper(c,d) {
 function handlerLayout(method) {return method.handlers.map(h=>{if(h.kind==='finally')return {...h,handlerEndPc:h.handlerEnd};const after=method.code[h.end*3]===Op.JUMP?method.code[h.end*3+1]:null;if(after===null)throw new CilError('Unsupported exception region layout');const siblings=method.handlers.filter(other=>other.start===h.start&&other.end===h.end&&other.target>h.target).sort((a,b)=>a.target-b.target);return {...h,handlerEndPc:siblings[0]?.target??after};});}
 function emitMethod(c,d) {
   const m=d.original,analysis=analyzeMethod(c.image,m),w=new CilWriter(),locals=m.locals.map(l=>l.type),scratch=new Map(),spans=[],starts=[],patches=[],prefixes=new Map(),handlers=handlerLayout(m),n=m.code.length/3;
-  const getScratch=(type,index=0)=>{type=type==='null'?'object':type;const key=type+':'+index;if(scratch.has(key))return scratch.get(key);const slot=locals.length;if(slot>=65535)throw new CilError('Scratch locals exceed CLI limit');locals.push(type);scratch.set(key,slot);return slot;};
+  const getScratch=(type,index=0)=>{type=type==='null'?'object':numericTypeName(type);const key=type+':'+index;if(scratch.has(key))return scratch.get(key);const slot=locals.length;if(slot>=65535)throw new CilError('Scratch locals exceed CLI limit');locals.push(type);scratch.set(key,slot);return slot;};
   const args=m.parameters.length+(m.isStatic?0:1);for(let i=0;i<args;i++)w.local('ldarg',i).local('stloc',i);
-  const needs=(from,to)=>from!==to&&((numericTypeId(to)!==undefined&&numericTypeId(from)!==undefined)||(to==='object'&&isValue(from)));
+  const needs=(from,to)=>numericTypeName(from)!==numericTypeName(to)&&((numericTypeId(to)!==undefined&&numericTypeId(from)!==undefined)||(to==='object'&&isValue(from)));
   function convert(from,to){if(from===to||from==='null')return;if(numericTypeId(to)!==undefined&&numericTypeId(from)!==undefined)emitScalarConversion(w,c,from,to);else if(to==='object'&&isValue(from))w.op('box',c.resolveType(from));}
   function adapt(from,to){if(from.length!==to.length)throw new CilError('Invalid conversion stack shape');if(!from.some((t,i)=>needs(t,to[i])))return;let lowest=from.findIndex((t,i)=>needs(t,to[i]));const slots=new Map();for(let i=from.length-1;i>lowest;i--){const slot=getScratch(from[i],i);slots.set(i,slot);w.local('stloc',slot);}convert(from[lowest],to[lowest]);for(let i=lowest+1;i<from.length;i++){w.local('ldloc',slots.get(i));convert(from[i],to[i]);}}
   function relative(name,target){const at=w.length;w.op(name,0);patches.push({at:at+1,end:at+5,target});}
