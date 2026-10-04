@@ -3,6 +3,7 @@ import { MetadataBuilder, Writer, writePE } from '@sharpforge/cil';
 export function assemblyFixture(module = 1, methods = 10, pointerOrder = null) {
   const metadata = new MetadataBuilder('Indexed' + module, { uncompressed: !!pointerOrder });
   metadata.rows[0][0][2] = metadata.guid(Uint8Array.from({ length: 16 }, (_, index) => index === 15 ? module : index + 1));
+  metadata.add(2, [0, metadata.string('<Module>'), 0, 0, 1, 1]);
   metadata.add(2, [1, metadata.string('Fixture'), metadata.string('Index'), 0, 1, 1]);
   metadata.add(4, [6, metadata.string('Value'), metadata.blob(new Uint8Array([6, 8]))]);
   const signature = metadata.blob(new Uint8Array([0, 0, 1]));
