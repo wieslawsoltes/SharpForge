@@ -1,4 +1,5 @@
 import {ResourceFault} from '../resources/errors.js';
+import {copyViewportPayload, sameViewportPayload} from './layout-event-values.js';
 
 /** One application owns separate logical and visual trees, with stable IDs and explicit lifecycle notifications. */
 export class UIObjectTree {
@@ -62,30 +63,35 @@ export class UIObjectTree {
     }
   }
 
-  setBounds(id, bounds) {
+  setBounds(id, bounds, {renderSize = bounds, notify = true} = {}) {
     if (!['x', 'y', 'width', 'height'].every(name => Number.isFinite(bounds[name])) || bounds.width < 0 || bounds.height < 0) {
       throw new ResourceFault('SFTREE004', 'Layout bounds must be finite with non-negative size.');
     }
     const node = this.require(id);
-    const previous = node.bounds;
+    if (!['width', 'height'].every(name => Number.isFinite(renderSize[name]) && renderSize[name] >= 0)) {
+      throw new ResourceFault('SFTREE004', 'Layout sizes must be finite and non-negative.');
+    }
+    const previous = node.layoutSize ?? node.bounds;
     node.bounds = {...bounds};
-    if (previous.width !== bounds.width || previous.height !== bounds.height) {
+    node.layoutSize = {width: renderSize.width, height: renderSize.height};
+    if (notify && (previous.width !== renderSize.width || previous.height !== renderSize.height)) {
       this.onEvent?.(node.value, 'SizeChanged', {PreviousSize: {width: previous.width, height: previous.height},
-        NewSize: {width: bounds.width, height: bounds.height}});
+        NewSize: {...node.layoutSize}});
     }
   }
 
-  setEffectiveViewport(id, viewport) {
+  setEffectiveViewport(id, viewport, {notify = true} = {}) {
     const node = this.require(id);
-    if (node.viewport && ['x', 'y', 'width', 'height'].every(name => node.viewport[name] === viewport[name])) return;
-    node.viewport = {...viewport};
-    this.onEvent?.(node.value, 'EffectiveViewportChanged', {EffectiveViewport: {...viewport}});
+    const value = copyViewportPayload(viewport);
+    if (sameViewportPayload(node.viewport, value)) return;
+    node.viewport = value;
+    if (notify && node.connected && node.visible) this.onEvent?.(node.value, 'EffectiveViewportChanged', copyViewportPayload(value));
   }
 
   layoutUpdated(ids = this.nodes.keys()) {
     for (const id of ids) {
-      const node = this.require(id);
-      if (node.connected) this.onEvent?.(node.value, 'LayoutUpdated', {});
+      const node = this.nodes.get(id);
+      if (node?.connected && node.visible) this.onEvent?.(node.value, 'LayoutUpdated', {});
     }
   }
 
@@ -158,13 +164,16 @@ export class UIObjectTree {
 
   snapshot() {
     return {version: 1, roots: [...this.roots], nodes: [...this.nodes.values()].map(node => ({...node,
-      bounds: {...node.bounds}, visualChildren: [...node.visualChildren], logicalChildren: [...node.logicalChildren]}))};
+      bounds: {...node.bounds}, layoutSize: node.layoutSize && {...node.layoutSize},
+      viewport: node.viewport && copyViewportPayload(node.viewport),
+      visualChildren: [...node.visualChildren], logicalChildren: [...node.logicalChildren]}))};
   }
 
   restore(snapshot) {
     if (snapshot?.version !== 1 || snapshot.nodes.length > this.maxNodes) throw new TypeError('Invalid UI tree snapshot.');
     this.roots = new Set(snapshot.roots);
     this.nodes = new Map(snapshot.nodes.map(node => [node.id, {...node, bounds: {...node.bounds},
+      layoutSize: node.layoutSize && {...node.layoutSize}, viewport: node.viewport && copyViewportPayload(node.viewport),
       visualChildren: new Set(node.visualChildren), logicalChildren: new Set(node.logicalChildren)}]));
   }
 
