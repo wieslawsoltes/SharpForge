@@ -31,7 +31,8 @@ test('constant conversion integration emits identical images through both compil
 });
 
 for(const pipeline of ['bound','legacy'])test(`constant folding retains invalid conversion and checked overflow diagnostics: ${pipeline}`,()=>{
-  for(const [text,code] of [['Console.WriteLine((int)true);','CS0030'],['Console.WriteLine((int)"bad");','CS0030'],['Console.WriteLine(checked((int)2147483648.0));','CS0220'],['Console.WriteLine(checked((int)(0.0/0.0)));','CS0221']]){
-    const result=compile(text,{pipeline});assert.equal(result.success,false,text);assert(result.diagnostics.some(d=>d.code===code),JSON.stringify(result.diagnostics));
+  // Codes and spans are Roslyn 5.3.0's: a constant cast that does not fit is CS0221 (CS0220 is for an operation that overflows).
+  for(const [text,code,start,length] of [['Console.WriteLine((int)true);','CS0030',18,9],['Console.WriteLine((int)"bad");','CS0030',18,10],['Console.WriteLine(checked((int)2147483648.0));','CS0221',26,17],['Console.WriteLine(checked((int)(0.0/0.0)));','CS0221',26,14],['Console.WriteLine(checked(2147483647+1));','CS0220',26,12]]){
+    const result=compile(text,{pipeline});assert.equal(result.success,false,text);assert.deepEqual(result.diagnostics.map(d=>[d.code,d.start,d.length]),[[code,start,length]],text);
   }
 });
