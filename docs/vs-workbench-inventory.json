@@ -181,6 +181,14 @@
       "qualification": "Registered handler; see workflow matrix for behavior and platform qualification"
     },
     {
+      "id": "keymap:resharper",
+      "title": "Keyboard: ReSharper-like (IntelliJ)",
+      "category": "Keyboard",
+      "shortcut": "",
+      "status": "implemented",
+      "qualification": "Registered handler; see workflow matrix for behavior and platform qualification"
+    },
+    {
       "id": "keymap:sublime",
       "title": "Keyboard: Sublime Text",
       "category": "Keyboard",
