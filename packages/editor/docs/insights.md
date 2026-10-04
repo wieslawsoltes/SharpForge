@@ -48,6 +48,11 @@ unknown methods fail with stable `SFED100x` errors. A registry belongs to its
 embedding host and can be shared by multiple editor views. Disposing a view
 cancels its requests without disposing a registry supplied by the host.
 
+`subscribe(listener)` returns an unsubscribe callback. A host can call
+`invalidate('codeLens', {uri})` or `invalidate('inlayHints', {uri})` after provider
+state changes without fabricating a source edit. Unchanged CodeLens member lines
+retain their existing view zones, so a test-status label update preserves layout.
+
 For compatibility, an editor receiving only the historical `request` callback
 advertises `completion` and `hover`. Mutating host commands such as rename and
 format must be supplied as explicitly registered, data-only providers; the
@@ -70,9 +75,9 @@ interface are absolute spans rather than LSP delta-encoded integer arrays.
 | `signatureHelp` | `offset`, `callStart`, `activeParameter`, trigger character | Signatures, parameter labels/docs, active overload |
 | `diagnostics` | — | URI/version, span or range, severity, code, message, tags, optional quick-fix availability |
 | `semanticTokens` | — | Nonoverlapping `{start, end, kind, modifiers?}` spans |
-| `codeActions` | `offset`, `end`, optional fix-all `scope` | Actions with title, kind, children, edit(s), optional command and supported fix-all scopes |
+| `codeActions` | `offset`, `end`, optional fix-all `scope`, selected `equivalenceKey` and `action` | Actions with title, kind, children, edit(s), optional command and supported fix-all scopes |
 | `resolveCodeAction` | `action` | Resolved action |
-| `prepareRename` | `offset` | Rename span/range and placeholder, or null |
+| `prepareRename` | `offset` | Rename span/range, placeholder, declaration, version and comment/string/file capabilities, or null |
 | `rename` | `offset`, new name, explicit comment/string/file flags | Versioned WorkspaceEdit or flat edits |
 | `definition` | `offset`, optional `peek` | Location, array of locations, or `{locations}` |
 | `readDocument` | `targetUri` | Target `{uri, text, version, readOnly}`; origin URI/version remain request metadata |
@@ -86,6 +91,7 @@ interface are absolute spans rather than LSP delta-encoded integer arrays.
 | `format`, `formatRange`, `formatOnType` | Selection range, character, indentation options | Versioned text edits |
 | `executeCommand` | Command ID and arguments | Host-defined command result |
 | `documentationComment` | Provider-defined documentation context | Optional host extension |
+| `outlineReorder` | `sourceStart`, `targetStart`, `position: 'before'` or `'after'` | Versioned safe member-move plan; the provider never mutates source |
 
 The active invocation is computed from lexical delimiters, ignoring commas in
 comments, strings, nested calls, and collection delimiters. Studio resolves the
@@ -139,10 +145,14 @@ A subscriber failure after commit is reported as an `AggregateError`; the source
 is already committed and the error message states that fact.
 
 Each affected model receives one undo transaction. An editor without a shared
-workspace can use the built-in single-document adapter. File creation, deletion,
-or rename operations in an LSP WorkspaceEdit fail with `SFED1103` unless a
-separate workspace resource-operation provider is supplied by the host; this
-text adapter never silently executes part of such an edit.
+workspace can use the built-in single-document adapter. An `EditorModelWorkspace`
+can accept `{applyResourceTransaction, supportsResourceRename}`. The latter may
+be a boolean or a function; it is evaluated before both display and commit.
+Versioned LSP rename operations then delegate the entire immutable text/resource
+plan to that host, which stages all work before adoption and owns resource undo.
+Studio's Explorer adapter does this for browser workspace resources and project
+XML; native mode does not advertise atomic resource rename. Creation/deletion
+remain unsupported here. The text adapter never applies half of a resource plan.
 
 Default preflight bounds are 100,000 edits and 32,000,000 UTF-16 units per edited
 document. Hosts can pass `maxEdits` and `maxDocumentLength` explicitly to
@@ -245,7 +255,7 @@ manual edits do not silently mark conflicts resolved.
 
 ## Qualification and capability boundaries
 
-The complete focused Node batch currently contains 43 passing tests across
+The original widget-focused Node batch contains 43 passing tests across
 `tests/a20-editor-{services,snippets-intelligence,search-diff,cooperative-search,language-worker,formatting}.test.js`.
 It covers real model transactions/undo, fake-provider cancellation, actual
 language/refactoring endpoints, LSP hint parity, generated read-only sources,
@@ -261,14 +271,30 @@ workspace has no usable supported browser installation, so these browser
 fixtures are authored and syntax-checked, not reported as passing. Native IME,
 screen-reader and browser/platform parity remain unverified.
 
-The default bound rename provider rejects type rename and does not support
-comment/string/file rename options. The UI exposes those options only when the
-host advertises `renameCapabilities`. The current refactoring engine supplies
-individual actions and no Fix All scopes; a provider offering `fixAllScopes`
-enables those controls. Default hints show inferred `var` types; parameter-name
-hints and test-status lenses require providers supplying those values.
+The bound provider now supports source type/member/local/parameter rename,
+lexically confined comment/string options and versioned file-rename intent.
+Controls use the preparation result's capabilities and the host's resource
+capability. Local explicit/implicit type action families supply document,
+project and solution Fix All; the Studio coordinator preserves each project's
+compiler context and validates the merged plan. Parameter hints use the selected
+overload. Actual test-status lenses come from Studio's TestProviders adapter.
+These behaviors are qualified by the provider correction scope in
+`docs/editor-language-provider-evidence.json`: the initial 141-case run had
+three failures, an affected correction run passed 26/26, and the final corrective
+run passed 63/63. Every initial failure is covered by a passing affected case.
+
+`tests/browser_a20_language_providers_test.py` adds real CodeEditor, Workspace,
+LanguageService and RefactoringEngine UI scenarios for Fix All, exact rename
+cancellation, parameter hints and provider invalidation. Its syntax was checked;
+it was not executed. The shared production browser setup and engine selection
+match the other editor fixtures. No browser, native or Visual Studio oracle pass
+is inferred from the Node results.
+
+Fix All is advertised only by action families which implement it. Generated
+source stays read-only, unresolved bindings receive no invented hint/reference,
+and resource rename requires the host's actual atomic capability.
 Documentation-comment generation supplies a generic summary template; symbol-
-specific parameter/return documentation is a language-provider extension.
+specific parameter/return documentation remains a language-provider extension.
 
 The issue-by-issue implementation and qualification mapping is recorded in
 `docs/a20-insight-coverage.json`. These capability and browser qualifications must
