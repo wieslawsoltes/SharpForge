@@ -14,11 +14,16 @@ Missing native captures remain `pending-native`; a backend update can never crea
 Independent Canvas references declare their actual provider and glyph-access contract. Missing required references,
 invalid profiles, wrong dimensions, malformed buffers and failed differences cannot qualify a fixture.
 
+
+## Measurement budgets
+
+`budgets.bench.js` accepts actual finite WebGPU measurements and an identified hardware/software tier. Mock results,
+backend fallback, missing metrics and incomplete captures fail. Initial absolute thresholds in `budgets.json` are
+not measured speedup claims. The additional 5% regression rule requires matching fixture, resolution, capture mode,
+adapter, driver and browser; an absent or incompatible baseline fails rather than silently changing the comparison.
+
 ## Validation
 
-The Python unit fixtures use bounded in-memory pixels and temporary reference directories. Their presence does not
-claim real renderer, GPU, native WinUI or exact-draft execution. Run their group only after the complete scope opens:
-
-```sh
-python -m unittest discover -s tests/rendering -p 'test_*.py'
-```
+`tests/a17-rendering-budget.test.js` covers finite measurements, thresholds, environment mismatch, missing values,
+non-finite/negative readings, mocks and incomplete baselines. Exact-draft core and real measurement qualification
+remain pending; the earlier completed A17 gate is recorded separately in the publication manifest.
