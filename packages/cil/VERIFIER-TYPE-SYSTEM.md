@@ -90,6 +90,8 @@ traversal is iterative and memoized, with at most `maxQueryNodes` distinct forei
 handles and `maxDepth` cumulative local/foreign base edges; cancellation is checked
 around callbacks and traversal. With the authority, construction adds O(types +
 visited foreign types + base edges), and category queries are O(1).
+Without an authority, records have no category fields or extra construction
+passes; interface queries derive their shared frozen result from `isInterface`.
 
 This is a prerequisite for #2403. Field transfers, field type-confusion/initonly
 checks, construction/instance state, casts, boxing/unboxing and the remaining

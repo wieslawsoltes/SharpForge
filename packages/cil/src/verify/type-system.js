@@ -1,9 +1,11 @@
 import { VerificationKind, verificationType, verificationError, requireVerificationType, isReference } from './types.js';
-import { typeSystemBudget, unknown, yes } from './metadata-types/results.js';
+import { typeSystemBudget, known, unknown, yes } from './metadata-types/results.js';
 import { snapshotTypes } from './metadata-types/snapshot.js';
 import { metadataHierarchy } from './metadata-types/hierarchy.js';
 
 export { verificationTypeSystemDiagnosticCatalog } from './metadata-types/results.js';
+
+const referenceCategory = known('reference');
 
 function requireKnown(result) {
   if (result.status === 'unknown') throw verificationError('CILV0003', `Unavailable verification relation: ${result.reason}`);
@@ -51,7 +53,8 @@ export function metadataTypeSystemState(inspector, options = {}) {
     isAssignable: hierarchy.isAssignable,
     commonBaseType: hierarchy.commonBaseType,
     typeCategory(type) {
-      return hierarchy.requireType(type).category ?? unknown('unbound-type-category', type.token);
+      const record = hierarchy.requireType(type);
+      return record.category ?? (type.isInterface ? referenceCategory : unknown('unbound-type-category', type.token));
     },
     relations,
   });
