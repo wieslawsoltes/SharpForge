@@ -1,0 +1,19 @@
+<StackPanel xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+            xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+            x:Name="Subject" AutomationProperties.Name="Visibility and layout boundaries"
+            Spacing="4" HorizontalAlignment="Left">
+  <Border x:Name="VisibleBefore" Width="120" Height="24" Background="LightBlue">
+    <TextBlock Text="Visible before" />
+  </Border>
+  <Border x:Name="CollapsedChild" Width="120" Height="40"
+          Background="LightGreen" Visibility="Collapsed">
+    <TextBlock Text="Collapsed content" />
+  </Border>
+  <Border x:Name="TransparentChild" Width="120" Height="32"
+          Background="LightGray" Opacity="0">
+    <TextBlock Text="Transparent content" />
+  </Border>
+  <Border x:Name="VisibleAfter" Width="120" Height="24" Background="LightBlue">
+    <TextBlock Text="Visible after" />
+  </Border>
+</StackPanel>

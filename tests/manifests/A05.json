@@ -5,8 +5,7 @@
     "tests/runtime.test.js",
     "tests/runtime14.test.js",
     "tests/engine-parity.test.js",
-    "tests/a05-*.test.js",
-    "tests/a05-type-handle-admission.test.js"
+    "tests/a05-*.test.js"
   ],
   "browserScripts": [
     "tests/browser_release14_test.py"

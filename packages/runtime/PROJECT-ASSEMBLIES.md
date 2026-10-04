@@ -95,3 +95,19 @@ type initializer and caches the original managed fault without replaying its
 effects. Direct CIL retains its existing `TypeInitializationException` wrapper.
 The two engines agree on once-only initialization effects and failure propagation;
 this profile does not claim identical exception object types between them.
+
+
+## Worker activity lifecycle
+
+The browser worker composes the verified project loader with the existing
+`RuntimeActivity` lifecycle. Activity owns cooperative scheduling, animation clocks
+and execution metrics. Constructing and binding a new candidate succeeds before
+replacing the active session. Stopping a session also stops its scheduled activity.
+The same graph/source helpers serve load replies, launch results and the permitted
+single-assembly symbol/update paths, preserving document and assembly provenance.
+
+The shared worker protocol retains the named compiler and runtime operations,
+including `executionMetrics`. Closed graph hot reload and independent replacement
+symbols still require an explicit complete graph update contract and are rejected.
+The source/worker regression scope and upstream activity/occupancy regressions are
+qualified together by the integration coordinator.

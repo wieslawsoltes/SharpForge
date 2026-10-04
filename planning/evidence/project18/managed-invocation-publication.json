@@ -1,0 +1,61 @@
+{
+  "format": "SharpForge.PublicationProjection/1",
+  "unit": "managed-invocation",
+  "issues": [
+    3095
+  ],
+  "baseCommit": "b34fa27b7812a62f8c10cf81c83d2cbfdd0b347a",
+  "productSource": "4a49a23b773b62088057d83e3e6ac6e573390578",
+  "files": [
+    {
+      "path": "packages/runtime/src/invocation-session.js",
+      "sourceBlob": "5f20e61223426035b5b45273eb7f375047618765",
+      "sha256": "678500da0bd8795ddb3d66a918c03b7381f952d3f0c5a63edd08d891f4660be3"
+    },
+    {
+      "path": "tests/a23-39-managed-invocation.test.js",
+      "sourceBlob": "f5320451b5eb9301a7b94aad8b1d04d6c590270f",
+      "sha256": "0bf04b121d40f5e7961dece262479923dd46d7a7b96d8af66acad5974f17364e"
+    }
+  ],
+  "derivedComposition": [
+    "Append ManagedInvocationSession to the public runtime entry; preserve every upstream export.",
+    "Document the isolated invocation API and bootstrap/ownership/conversion limits in the runtime README.",
+    "Register A23 test files with the scheduled area manifest."
+  ],
+  "qualification": {
+    "kind": "selected tests in one completed integration cohort",
+    "source": "4a49a23b773b62088057d83e3e6ac6e573390578",
+    "node": "22.23.3",
+    "testFiles": [
+      "tests/a23-39-managed-invocation.test.js"
+    ],
+    "passed": 6,
+    "failed": 0,
+    "skipped": 0,
+    "selectedTapRecords": [
+      "ok 516 - A23 T39 source invocation sessions preserve in-session state and isolate independent heaps",
+      "ok 517 - A23 T39 source rejects invalid arguments and enforces instruction limits",
+      "ok 518 - A23 T39 cil invocation sessions preserve in-session state and isolate independent heaps",
+      "ok 519 - A23 T39 cil rejects invalid arguments and enforces instruction limits",
+      "ok 520 - A23 T39 source accepts only the compiler startup's implicit string-array bootstrap",
+      "ok 521 - A23 T39 cil accepts only the compiler startup's implicit string-array bootstrap"
+    ],
+    "rawCapture": "planning/evidence/project18/integration/upstream-qualification/node22-runtime-initial.tap",
+    "rawCaptureSha256": "0542e0eb3da4b9cee8057f74d45dbbf59322e6fbdb4f345293ef2583b5409a7b",
+    "cohort": {
+      "files": 79,
+      "tests": 794,
+      "passed": 788,
+      "failed": 6,
+      "skipped": 0
+    },
+    "projectionExecution": "No duplicate projection test run; exact implementation and public-test blobs above were exercised in the integration cohort.",
+    "pending": "The ordinary required core check runs on this draft. Six retained integration failures outside this isolated invocation API are tracked separately."
+  },
+  "boundaries": [
+    "Only JavaScript SourceVM and direct-CIL execution are covered; no native CLR/Rust/Wasm claim.",
+    "No test-framework package adapter or arbitrary managed object/reflection conversion is included.",
+    "No VM dispatcher, static ABI allocation, compiler metadata producer or project-graph module changes are copied into this foundation."
+  ]
+}

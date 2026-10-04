@@ -3,3 +3,4 @@ export * from './workspace.js';
 export * from './engine.js';
 export * from './server.js';
 export * from './cli.js';
+export * from './project-edits/index.js';

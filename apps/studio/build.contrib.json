@@ -160,6 +160,14 @@
     {
       "entry": "runtime.worker.js",
       "order": 1
+    },
+    {
+      "entry": "workbench/search.worker.js",
+      "order": 2
+    },
+    {
+      "entry": "workbench/metadata/metadata.worker.js",
+      "order": 3
     }
   ],
   "assets": [

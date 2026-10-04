@@ -1,0 +1,16 @@
+export {renameSolutionFolder, removeSolutionFolder, moveSolutionProject, addSolutionItem} from './explorer.js';
+export {parseConfigurationJson} from './configuration-json.js';
+export {getCaseInsensitive} from './evaluation/errors.js';
+export * from './tfm.js';
+export * from './rid.js';
+export * from './context-selection.js';
+export {projectCompilationOptions} from './evaluation/compiler-options.js';
+export * from './launch-settings.js';
+export { expandExpression } from './evaluation/expander.js';
+export { matchesGlob, WorkspacePathIndex } from './evaluation/path-index.js';
+export * from './resources.js';
+export { classifyTask, createTargetGraph } from './evaluation/targets.js';
+export { runPortableTargets } from './evaluation/target-runner.js';
+export * from './build-plan.js';
+export * from './build-contexts.js';
+export * from './output-layout.js';

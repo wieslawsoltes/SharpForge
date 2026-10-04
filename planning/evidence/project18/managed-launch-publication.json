@@ -65,14 +65,40 @@
   "abi": {
     "GetEnvironmentVariable": 524289,
     "releasedComparers": "524290-524297",
-    "GetEnvironmentVariables": 524298,
-    "CurrentDirectory": 524299,
-    "policy": "Append environment dictionary APIs after released comparers; do not renumber any existing slot."
+    "GetEnvironmentVariables": 524311,
+    "CurrentDirectory": 524312,
+    "policy": "Append draft environment dictionary APIs after every released pinned-main contract; retain all released main slots."
   },
   "remaining": [
     "No OS environment access/mutation is enabled or claimed.",
     "Browser/native profile controls and runtime-worker application belong to dependent integration batches.",
     "Rust native/Wasm engines are not qualified for these APIs.",
     "No duplicate projection run or performance improvement is claimed; ordinary core pending."
-  ]
+  ],
+  "originalQualifiedAbi": {
+    "GetEnvironmentVariable": 524289,
+    "releasedComparers": "524290-524297",
+    "GetEnvironmentVariables": 524298,
+    "CurrentDirectory": 524299,
+    "policy": "Append environment dictionary APIs after released comparers; do not renumber any existing slot."
+  },
+  "pinnedMainSync": {
+    "main": "1db2e1d540a78403b7aaddcf472311fcde1a81ef",
+    "priorPublishedHead": "6b387cb817e39d9647c8ff497f3c76e630cdc90d",
+    "releasedAppendOnlyAdditions": "String comparisons 524298\u2013524308; StringBuilder Append(char) 524309 and Append(char,int) 524310",
+    "resolution": "Keep new upstream IDs, move only the still-unmerged environment dictionary additions to the next two slots, and retain both sets of exact registry assertions.",
+    "validation": "No local test or build run during this merge. Original source qualification above remains historical; required core checks and any selected post-merge registry qualification are separate."
+  },
+  "invocationDependency": {
+    "pr": 3680,
+    "head": "d4f4df7a485a877c78dc0b27fa1080d6fc473a33",
+    "reason": "The preserved public environment isolation test invokes ManagedInvocationSession. The launch stack now joins its actual published prerequisite instead of leaving a missing public import.",
+    "previousCore": {
+      "run": 37174309971,
+      "job": 111353623246,
+      "conclusion": "failure",
+      "error": "tests/a23-29-managed-environment.test.js: @sharpforge/runtime does not provide ManagedInvocationSession"
+    },
+    "localValidation": "Not rerun; completed parent scopes remain retained and final combined qualification is owned by the integration coordinator."
+  }
 }
