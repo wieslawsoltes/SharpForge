@@ -10,11 +10,11 @@
  *
  * A member of a generic type needs the handle of its declaring type as well (the two-argument `GetMethodFromHandle`).
  */
-import { TypeKind } from '../../symbols/types.js';
 import { MethodKind } from '../../symbols/members.js';
 import { needsTypeSpec } from '../../codegen/generics.js';
 import { frameworkType, methodTypeParameter } from './framework-types.js';
 import { needsBox, primitiveOf, representationOf } from './type-facts.js';
+import { expressionTreeCreationFactories } from './expression-tree-creation-factories.js';
 
 const EXPRESSIONS = 'System.Linq.Expressions';
 const REFLECTION = 'System.Reflection';
@@ -106,7 +106,7 @@ export class ExpressionTreeFactories {
   }
   /** Emits the factory calls of one node of the tree; its expression object is left on the stack. */
   emit(node) {
-    const handler = this['emit' + node.factory];
+    const handler = expressionTreeCreationFactories[node.factory] ?? this['emit' + node.factory];
     if (handler) return handler.call(this, node);
     if (node.operands?.length === 2) return this.binary(node);
     if (node.operands?.length === 1) return this.unary(node);
@@ -249,52 +249,5 @@ export class ExpressionTreeFactories {
     this.emit(node.expression);
     this.expressions(node.arguments);
     return this.factory('Invoke', [expression, this.arrayOf(expression)], this.result('InvocationExpression'));
-  }
-  emitNew(node) {
-    const { newExpression, constructorInfo } = this.types,
-      constructor = node.constructor;
-    if (!constructor || (constructor.isImplicitlyDeclared && node.type.typeKind === TypeKind.Struct)) {
-      this.typeOf(node.type);
-      return this.factory('New', [this.core.type], newExpression);
-    }
-    this.methodOf(constructor);
-    this.expressions(node.arguments);
-    return this.factory('New', [constructorInfo, this.arrayOf(this.expression)], newExpression);
-  }
-  emitMemberInit(node) {
-    const { memberBinding, memberInfo, methodInfo, newExpression } = this.types,
-      assignment = this.result('MemberAssignment'),
-      bind = binding => () => {
-        const setter = binding.member.setMethod ?? null;
-        if (setter) this.methodOf(setter);
-        else this.fieldOf(this.tokens.field(binding.member), binding.member.containingType);
-        this.emit(binding.expression);
-        this.factory('Bind', [setter ? methodInfo : memberInfo, this.expression], assignment);
-      };
-    this.emit(node.newExpression);
-    this.array(memberBinding, node.bindings.map(bind));
-    return this.factory('MemberInit', [newExpression, this.arrayOf(memberBinding)], this.result('MemberInitExpression'));
-  }
-  emitListInit(node) {
-    const { elementInit, methodInfo, newExpression } = this.types,
-      element = initializer => () => {
-        this.methodOf(initializer.addMethod);
-        this.expressions(initializer.arguments);
-        this.factory('ElementInit', [methodInfo, this.arrayOf(this.expression)], elementInit);
-      };
-    this.emit(node.newExpression);
-    this.array(elementInit, node.initializers.map(element));
-    return this.factory('ListInit', [newExpression, this.arrayOf(elementInit)], this.result('ListInitExpression'));
-  }
-  newArray(node) {
-    this.typeOf(node.elementType);
-    this.expressions(node.expressions);
-    return this.factory(node.factory, [this.core.type, this.arrayOf(this.expression)], this.result('NewArrayExpression'));
-  }
-  emitNewArrayInit(node) {
-    return this.newArray(node);
-  }
-  emitNewArrayBounds(node) {
-    return this.newArray(node);
   }
 }

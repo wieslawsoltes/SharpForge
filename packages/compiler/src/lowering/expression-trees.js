@@ -15,9 +15,9 @@
  *
  * A construct with no factory call makes the lowering return `{ unsupported: <what>, syntax }` instead of guessing.
  */
-import { TypeKind, ArrayTypeSymbol } from '../symbols/types.js';
 import { MethodKind } from '../symbols/members.js';
 import { expressionTreeDelegate } from '../symbols/expression-tree-types.js';
+import { expressionTreeCreationVisitors } from './expression-tree-creation.js';
 
 const binaryFactories = Object.freeze({
   '+': ['Add', 'AddChecked'],
@@ -81,7 +81,7 @@ class TreeBuilder {
   visit(node) {
     if (node.hasErrors) this.fail('an expression with errors', node);
     if (node.constantValue && node.kind !== 'Lambda') return this.constant(node.constantValue.isNull ? null : node.constantValue.value, node.type);
-    const handler = this['visit' + node.kind];
+    const handler = expressionTreeCreationVisitors[node.kind] ?? this['visit' + node.kind];
     if (!handler) this.fail(`'${node.kind}' in an expression tree`, node);
     return handler.call(this, node);
   }
@@ -172,10 +172,6 @@ class TreeBuilder {
     if (node.member !== 'Length') this.fail(`'${node.member}' of an array`, node);
     return this.node('ArrayLength', node.type, { operands: [this.visit(node.array)] });
   }
-  visitArrayAccess(node) {
-    if (node.indices.length !== 1) this.fail('a multi-dimensional array access', node);
-    return this.node('ArrayIndex', node.type, { operands: [this.visit(node.array), this.visit(node.indices[0])] });
-  }
   visitIndexerAccess(node) {
     const getter = node.property.getMethod;
     if (!getter?.name) this.fail('this indexer', node);
@@ -194,33 +190,6 @@ class TreeBuilder {
     if (method.methodKind === MethodKind.LocalFunction) this.fail('a reference to a local function', node);
     const object = method.isStatic || node.isExtension || !node.receiver ? null : this.visit(node.receiver);
     return this.node('Call', node.type, { object, method, arguments: this.arguments(node), isExtension: !!node.isExtension });
-  }
-  visitObjectCreation(node) {
-    if (node.type?.typeKind === TypeKind.Delegate) this.fail('a delegate creation', node);
-    const creation = this.node('New', node.type, { constructor: node.constructor ?? null, arguments: this.arguments(node) });
-    if (node.initializers?.length) {
-      const bindings = node.initializers.map(entry => this.binding(entry));
-      return this.node('MemberInit', node.type, { newExpression: creation, bindings });
-    }
-    if (node.collectionInitializers?.length)
-      return this.node('ListInit', node.type, { newExpression: creation, initializers: node.collectionInitializers.map(call => this.elementInit(call)) });
-    return creation;
-  }
-  binding(entry) {
-    const member = entry.target.field ?? (entry.target.kind === 'PropertyAccess' ? entry.target.property : null);
-    if (!member) this.fail('an index initializer', entry.target);
-    if (entry.value.kind === 'ObjectInitializer') this.fail('a nested initializer', entry.value);
-    return { member, expression: this.visit(entry.value) };
-  }
-  elementInit(call) {
-    if (call.isExtension) this.fail('an extension Add method', call);
-    return { addMethod: call.method, arguments: this.arguments(call) };
-  }
-  visitArrayCreation(node) {
-    if (!(node.type instanceof ArrayTypeSymbol) || node.type.rank !== 1) this.fail('a multi-dimensional array creation', node);
-    const elementType = node.type.elementType;
-    if (node.elements) return this.node('NewArrayInit', node.type, { elementType, expressions: node.elements.map(element => this.visit(element)) });
-    return this.node('NewArrayBounds', node.type, { elementType, expressions: node.sizes.map(size => this.visit(size)) });
   }
 }
 
