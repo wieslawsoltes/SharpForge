@@ -53,8 +53,8 @@ export class OverrideConstraints {
         throw unsupported('Override introduces a stronger special generic constraint');
       }
       for (const type of derived.types) {
-        if (type === this.#loader.intrinsic('System.Object')) continue;
-        if ((derived.flags & 8) && type === this.#loader.intrinsic('System.ValueType')) continue;
+        if (this.#loader.isIntrinsic(type, 'System.Object')) continue;
+        if ((derived.flags & 8) && this.#loader.isIntrinsic(type, 'System.ValueType')) continue;
         if (!base.types.has(type)) throw unsupported('Override introduces a different explicit generic constraint');
       }
     }

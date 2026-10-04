@@ -21,13 +21,43 @@ signatures remain lazy; no executable body is read.
 
 This is an explicit partial GetBaseDefinition contract. Class/covariant MethodImpl
 slot mappings, strict access checks,
-generic base instantiation, constrained generic methods, type generic variables,
+generic base instantiation, type generic variables,
 modifier/function-pointer signature types, array sizes and nonzero
 lower bounds require later services and fail with `SFCLR012` when traversal needs them.
 Opaque host intrinsics have no method metadata: reaching one before locating a
 slot introduction also fails, so an Object override cannot silently become its
 own root. A complete metadata chain with no matching ancestor introduces the
 reuse-slot method itself. This is not a full MethodDef validity or visibility pass.
+
+Constrained generic methods now follow the same implicit class-slot walk. Each
+matched override edge compares method GenericParam constraints separately from
+signature identity, following [ECMA-335 II.9.9](https://ecma-international.org/wp-content/uploads/ECMA-335_6th_edition_june_2012.pdf)
+and [CoreCLR constraint comparison](https://github.com/dotnet/runtime/blob/v10.0.5/src/coreclr/vm/siginfo.cpp#L4630).
+Reference-type, value-type and default-constructor requirements may be removed
+but cannot be strengthened; a value-type requirement implies a constructor for
+this comparison. Explicit TypeDef/TypeRef constraints compare by canonical type
+identity, including equivalent references across assemblies. Object constraints
+and ValueType constraints under the struct flag are vacuous. Different explicit
+constraints fail instead of silently selecting another slot.
+
+This is constraint compatibility for open method definitions, not generic type
+instantiation or argument satisfaction. TypeSpec constraint expressions, method
+variance, allow-byref-like flags and contradictory special flags report SFCLR012.
+Generic declaring/base types and class MethodImpl remain separate. The existing
+GenericParam reader validates owner, position, arity and token extents. Context
+row limits are checked before expanding generic descriptors; successful per-method
+constraint snapshots use a lazy context-local weak cache. Unconstrained matches
+allocate no constraint service or snapshots. Cancellation precedes cache access
+and publication; a cancelled resolution can be retried. Per-edge comparison is
+linear in explicit constraint count using canonical identity sets, after bounded
+metadata/type loading. No method body is inspected.
+
+Seven authored tests and a mandatory native-oracle test are prepared. The native
+source covers 12 C# method roots and three independently persisted IL cases for
+weakened constraints, constructor implication and stronger-constraint rejection.
+Source/image provenance is required. Capture, focused tests, paired existing-path
+and new-fixture measurements, syntax/static/manifests and structure are pending
+the serial validation slot; no passing result is claimed for this extension.
 
 Generic-instance signature types now match by canonical open definition identity
 and recursively compared argument keys. This supports ordinary overrides whose
