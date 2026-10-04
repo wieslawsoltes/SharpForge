@@ -5,10 +5,10 @@ with the installed .NET 10 `PersistedAssemblyBuilder`. It records CoreCLR
 `GetBaseDefinition` identities for return, parameter, ordered, mixed, byref and
 array forms without executing an emitted method body.
 
-Capture is pending the exclusive validation slot. The mandatory reference test
-requires the resulting image/source hashes and all ten observations; there is no
-availability skip. The capture tool retains the generated image separately from
-the compiled harness hash:
+Captured with SDK 10.0.201/CoreCLR 10.0.5 in the exclusive validation slot. All
+ten observations agree with the loader. The mandatory reference test verifies
+source/image provenance without an availability skip. The capture tool retains
+the generated image separately from the compiled harness hash:
 
 ```
 node packages/clr/tools/capture-method-base-definition.mjs tests/fixtures/clr-method-base-modifiers tests/fixtures/clr-method-base-modifiers/Program.cs

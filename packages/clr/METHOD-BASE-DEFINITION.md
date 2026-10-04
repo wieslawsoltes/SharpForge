@@ -47,10 +47,26 @@ persistent cache or descriptor fields. Signature depth/node limits apply before
 binding; generic metadata row limits apply before querying a resolved modifier's
 generic parameters, and modifier identities share the context's signature-identity
 budget. Cancellation is checked after asynchronous binding and before publishing
-a complete signature key. Qualification of this increment is pending: seven
-authored tests and one mandatory ten-record native oracle are prepared. Scheduled
-validation will retain parent/candidate base-definition controls and raw samples;
-no native, test, benchmark or static result is claimed yet.
+a complete signature key.
+
+The modifier increment passed 32/32 focused tests across eight files, with no
+skips, and ten independently emitted native roots on SDK 10.0.201/CoreCLR 10.0.5.
+Syntax/static checks passed 3,556/3,552 modules; manifests covered 961 Node and 37
+browser files with no errors. Structure reported 271 existing findings, none in
+changed files. One limiter ran all phases sequentially with concurrency 1 and a
+1 GiB Node heap; no failures or reruns occurred. Broader platform qualification
+remains staged.
+
+On the shared Apple M3 Pro/macOS 26.6/Node 24.21.0 host, existing 23-method cold
+median/p95 moved 145.167/302.875 → 149.666/347.917 µs. The +45.042 µs (+14.871%)
+p95 and +4.499 µs (+3.099%) median were explicitly accepted by the root integration
+reviewer for correct bounded modifier matching. Cached median/p95 moved
+124.084/162.917 → 124.375/164.500 ns, both within budget. The new ten-method fixture
+measured cold median/p95 159.417/435.875 µs and cached 122.750/173.375 ns.
+[All 600 raw samples, exact source heads, commands and import provenance](benchmarks/modified-method-overrides-node24.json)
+are retained. The existing cached result path is unchanged. These measurements
+establish no cause, noise, significance or general speedup claim; allocation
+counts and peak memory were not measured. No repeat or retuning was requested.
 
 Constrained generic methods now follow the same implicit class-slot walk. Each
 matched override edge compares method GenericParam constraints separately from
