@@ -42,6 +42,74 @@ These public models and injectable renderer contributions are imported through `
 
 `registerCommandLayouts` and `registerMenuLayouts` arrange the same partitioned commands used by native renderers. `TextCommandController` and `textCommandLabels` provide selection/history-aware actions. Paste first waits for its cancellable event, then applies the approved edit; unsupported clipboard capabilities produce an explicit result.
 
+## TreeView model
+
+`TreeViewModel` traverses iteratively, rejects cyclic or multiply owned children, computes mixed ancestors and preserves graph state across snapshots. Collapsing or disposing a node invalidates pending expansion work. Renderer registration is explicit; virtualization and automation qualification remain staged.
+
+## Virtual item families
+
+Virtual list/grid/item views consume stable occurrence keys and at most 2,048 realized sparse records. Shared layouts own extent/realization and generated managed containers own item templates/styles. Group headers, empty groups and ItemsPanelTemplate roots are retained references. `getSelectionModel` and `scrollItemIntoView` expose the renderer state to input/automation services.
+
+## Selector contributions
+
+`registerItemsRenderers` registers the complete item family over shared selection/realization models. Editable ComboBox keeps its edit field and selected item distinct; paging and breadcrumb/selector controls use bounded source navigation and emit structured selection/item notifications.
+
+## Managed selection and tree state
+
+Managed adapters use context-owned `SelectionModel`/`TreeViewModel`, authoritative source collections and ICollectionView current-position updates. Selected items, graph contents and deferred source references are traced through retainedValues; snapshot restoration does not replay input events.
+
+## Inline display and rich overflow
+
+`getRichTextDocument`, `applyTypography` and `renderRichDocument` consume immutable formatting spans and shared text metrics. Linked overflow fragments preserve UTF-16 ranges, selection and source-document identity. Typography and bidi geometry follow the injected renderer/font provider.
+
+## Editor and document contributions
+
+`registerTextRenderers` and managed text adapters share TextBuffer/RichTextDocument. BeforeTextChanging and Paste decisions finish before editing; stale completions and disposal cannot mutate a newer editor. Secret text is absent from scene properties, ordinary events and password automation. Rich document contracts expose the bounded Microsoft.UI.Text profile, including explicit out-string writes.
+
+## Numeric, calendar and color values
+
+`NumericRange`, `CultureNumberFormatter` and `evaluateNumericExpression` validate bounded input and share clamping/NaN policy. `CalendarModel`, `dateValue`, `dateText`, `timeValue`, `dateFieldOrder` and `dateFromFields` use Gregorian UTC arithmetic. RGB/HSV and ARGB helpers preserve channel values and explicit alpha.
+
+## Value and status renderers
+
+`registerValueRenderers`, `getRangeModel` and `getCalendarModel` share clamping, snapping, calendar bounds and selected state with managed input. Nullable selection displays a placeholder even when a non-nullable DateValue/TimeValue companion retains its last typed value; midnight remains present zero.
+
+## Typed picker and range adapters
+
+Clearing SelectedDate/SelectedTime changes the nullable selection and event payload; non-nullable DateValue/TimeValue keep their last/default typed value. Explicit null in a host event wins over stale companion data. Range input preserves NaN policy, clamping and indeterminate state.
+
+## Navigation control contributions
+
+`registerNavigationRenderers` mounts TabView/Pivot, NavigationView/SplitView and Frame/Page behavior. Tab reorder mutates the authoritative collection; pane transitions preserve the acknowledged cancellation decision and named template ownership. History commits only after successful page navigation.
+
+## Menus and interaction routing
+
+`registerCommandsRenderers` registers nested menus, command bars, text flyouts and gesture controls. `RefreshController` deduplicates outstanding requests and propagates rejected handlers. Context and access key bindings share owner-scoped teardown and wait for Handled before the native default action.
+
+## Button behavior
+
+`RepeatController` accepts a manual clock and disposes outstanding timers. Button/toggle/check/radio, repeat, split/dropdown and hyperlink renderers share enabled/command policy, selected/indeterminate states and root-scoped radio ownership. Native behavior receives the existing managed template/content parts.
+
+## Managed command and checked-state ABI
+
+Synchronous command adapters invoke managed overrides through the supplied virtual-call seam. Checked state distinguishes true/false/null, preserves the released bool IsChecked property via the explicit indeterminate flag and boxes the object-valued GetChecked result.
+
+## Media and platform policy
+
+`MediaPlayerSession`, `WebViewSession`, `PlatformControlSession` and `InkStrokeModel` own playback/navigation epochs and release late device attachments. Playback uses an actual media element; WebView2 is a sandboxed iframe profile. Map/capture/animated visuals require explicit adapters and grants.
+
+## Image sources and bitmap identity
+
+`BitmapImage`, `resolveImageSource`, `drawNineGrid` and `personInitials` share image intent and decoding policy. `WriteableBitmap` is the rendering package class itself. Its dimension range diagnostic is SFRENDER001, while invalid pixel budgets or byte lengths use SFRENDER063; managed SetPixels retains its own SFUI16B2 boundary.
+
+## Managed media adapters
+
+Managed media properties and methods reuse the same player/web/platform model state as host rendering. SetPixels writes the rendering-owned RGBA buffer and updates an existing managed PixelBuffer view without replacing its identity. Unsupported native platform operations fail through the declared capability policy.
+
+## Complete portable family registration
+
+`registerControlFamilies`, `registerControlFamilyContracts` and `registerControlFamilyAdapters` expose the complete family contribution. `applyControlFamilyInput` updates text/composition, private passwords, selection/tree, panes, nullable pickers, ranges and toggle state before managed event handlers. `getControlFamilyModel` shares the same authoritative state with managed automation. The public host and default framework startup are activated by their later explicit integration stages.
+
 ## Qualification
 
 The complete A16 scope gate ran at d91e0817: 373 tests, 339 passed and 34 failed. Each publication manifest identifies its recorded cases and subsequent repairs; failures remain visible. Required core is pending on each exact publication tree. Native WinUI oracle, browser IME, codec, OS permission and performance evidence are separate qualifications. No speedup or native parity is claimed without a recorded measurement.
