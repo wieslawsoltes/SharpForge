@@ -1266,6 +1266,8 @@ Registered families: <code>environment</code>.
 | ABI ID | Registered signature | Registry status |
 | --- | --- | --- |
 | 524289 | <code>static string System.Environment::GetEnvironmentVariable(string)</code> | implemented |
+| 524311 | <code>static System.Collections.IDictionary System.Environment::GetEnvironmentVariables()</code> | implemented |
+| 524312 | <code>static string System.Environment::get_CurrentDirectory()</code> | implemented |
 
 No pinned reference inventory is included for these families; registered rows alone do not establish API coverage.
 
@@ -1291,6 +1293,37 @@ Registered families: <code>objectComparer</code>.
 | ABI ID | Registered signature | Registry status |
 | --- | --- | --- |
 | 524294 | <code>int System.Collections.IComparer::Compare(object, object)</code> | implemented |
+
+No pinned reference inventory is included for these families; registered rows alone do not establish API coverage.
+
+### Module <code>environmentDictionary</code>
+
+Registered families: <code>environment-dictionary</code>, <code>environment-collection</code>, <code>environment-enumerator</code>.
+
+| ABI ID | Registered signature | Registry status |
+| --- | --- | --- |
+| 524313 | <code>System.Collections.IEnumerator System.Collections.IEnumerable::GetEnumerator()</code> | implemented |
+| 524314 | <code>System.Collections.IDictionaryEnumerator System.Collections.IDictionary::GetEnumerator()</code> | implemented |
+| 524315 | <code>bool System.Collections.IEnumerator::MoveNext()</code> | implemented |
+| 524316 | <code>void System.Collections.IEnumerator::Reset()</code> | implemented |
+| 524317 | <code>object System.Collections.IEnumerator::get_Current()</code> | implemented |
+| 524318 | <code>System.Collections.DictionaryEntry System.Collections.IDictionaryEnumerator::get_Entry()</code> | implemented |
+| 524319 | <code>object System.Collections.IDictionaryEnumerator::get_Key()</code> | implemented |
+| 524320 | <code>object System.Collections.IDictionaryEnumerator::get_Value()</code> | implemented |
+| 524323 | <code>int System.Collections.ICollection::get_Count()</code> | implemented |
+| 524324 | <code>bool System.Collections.ICollection::get_IsSynchronized()</code> | implemented |
+| 524325 | <code>object System.Collections.ICollection::get_SyncRoot()</code> | implemented |
+| 524326 | <code>void System.Collections.ICollection::CopyTo(System.Array, int)</code> | implemented |
+| 524327 | <code>bool System.Collections.IDictionary::get_IsReadOnly()</code> | implemented |
+| 524328 | <code>bool System.Collections.IDictionary::get_IsFixedSize()</code> | implemented |
+| 524329 | <code>System.Collections.ICollection System.Collections.IDictionary::get_Keys()</code> | implemented |
+| 524330 | <code>System.Collections.ICollection System.Collections.IDictionary::get_Values()</code> | implemented |
+| 524331 | <code>object System.Collections.IDictionary::get_Item(object)</code> | implemented |
+| 524332 | <code>void System.Collections.IDictionary::set_Item(object, object)</code> | implemented |
+| 524333 | <code>bool System.Collections.IDictionary::Contains(object)</code> | implemented |
+| 524334 | <code>void System.Collections.IDictionary::Add(object, object)</code> | implemented |
+| 524335 | <code>void System.Collections.IDictionary::Remove(object)</code> | implemented |
+| 524336 | <code>void System.Collections.IDictionary::Clear()</code> | implemented |
 
 No pinned reference inventory is included for these families; registered rows alone do not establish API coverage.
 

@@ -1,0 +1,104 @@
+{
+  "schemaVersion": 1,
+  "scope": "A23 T29/T30 explicit managed launch arguments and environment",
+  "sourceCommit": "d1c791a7ad83773738b2d725a0891065c52ae2cd",
+  "baseCommit": "b34fa27b7812a62f8c10cf81c83d2cbfdd0b347a",
+  "sourceFiles": {
+    "packages/runtime/src/launch-arguments.js": "6f4f87633dbfb0fa6f7197080f757330c2cfbc83",
+    "packages/runtime/src/launch-options.js": "ef13e8a96ce4060d7f6d08cda9d88db198af1d5f",
+    "packages/bytecode/src/builtin-table.js": "62af5b2168baf8145654a64bdc9759a6a169d00d",
+    "packages/bcl-core/src/modules.js": "18a10f36afc16c84a07f9321cb30dad42d4c042a",
+    "packages/bcl-core/src/system/environment.js": "5a6965e2328650588979004c985c889eb352cc8a",
+    "packages/bcl-core/src/system/environment-dictionary.js": "052500a442b04506fe5ff3623f4fd7e2359a481f",
+    "packages/bcl-core/src/system/environment-dictionary-module.js": "3bb0cc2c9bfabdd490c44f030bdc8810e1679727",
+    "packages/bcl-core/README.md": "99aa2e718baf86852f75070fe79f869f2d056fbf",
+    "tests/a23-29-managed-environment.test.js": "94a96b9b08263a3c13a17ab26b33eeb2e11ab197",
+    "tests/a23-29-abi-extensions.test.js": "c2a9eb651d94fd95e5e61c31d242fd7917a8424c",
+    "tests/a23-30-launch-arguments.test.js": "120bf913ed69b64bbba19d10963c8411e868c745",
+    "tests/a07-13-registry.test.js": "ba6b6ab954b0e7e6a192d5d27483fe998e5cdc9e"
+  },
+  "derivedFacades": [
+    "Only withSourceLaunchArguments is added to the released runtime entry. All new/upstream exports remain intact.",
+    "A23 wildcard schedules new focused tests."
+  ],
+  "qualification": {
+    "node": "22.23.3",
+    "source": "4a49a23b773b62088057d83e3e6ac6e573390578",
+    "path": "planning/evidence/project18/integration/upstream-qualification/node22-runtime-initial.tap",
+    "sha256": "0542e0eb3da4b9cee8057f74d45dbbf59322e6fbdb4f345293ef2583b5409a7b",
+    "selectedRecords": [
+      "ok 399 - released BCL groups keep module order and independent registries cannot leak",
+      "ok 491 - A23 T29 extension contracts retain released runtime builtin identities independent of contribution order",
+      "ok 492 - A23 T29 builtin registry snapshots preserve reserved holes without materializing undefined entries",
+      "ok 493 - A23 T29 source reads explicit environment and isolated dictionary snapshots",
+      "ok 494 - A23 T29 source snapshots once per session and never inherits host environment",
+      "ok 495 - A23 T29 source rejects malformed canonical and alias environments before execution",
+      "ok 496 - A23 T29 source keeps null-name and working-directory failures as managed faults",
+      "ok 497 - A23 T29 source canonical launch settings take precedence over legacy aliases",
+      "ok 498 - A23 T29 cil reads explicit environment and isolated dictionary snapshots",
+      "ok 499 - A23 T29 cil snapshots once per session and never inherits host environment",
+      "ok 500 - A23 T29 cil rejects malformed canonical and alias environments before execution",
+      "ok 501 - A23 T29 cil keeps null-name and working-directory failures as managed faults",
+      "ok 502 - A23 T29 cil canonical launch settings take precedence over legacy aliases",
+      "ok 503 - A23 T29 environment contracts use the A07 extension block without renumbering released contracts",
+      "ok 504 - A23 T30 source launch args preserve static initialization and async Main completion",
+      "ok 505 - A23 T30 cil launch args preserve static initialization and async Main completion",
+      "ok 506 - A23 T30 source-from-cil launch args preserve static initialization and async Main completion",
+      "ok 507 - A23 T30 rejects malformed argv and preserves parameterless Main",
+      "ok 508 - A23 T30 keeps the legacy empty-array startup overlay compatible with current runtime admission"
+    ],
+    "selectedPassed": 19,
+    "selectedFailed": 0,
+    "selectedSkipped": 0,
+    "parentSummary": {
+      "tests": 794,
+      "passed": 788,
+      "failed": 6,
+      "skipped": 0
+    }
+  },
+  "followup": {
+    "source": "d1c791a7ad83773738b2d725a0891065c52ae2cd",
+    "path": "integration/upstream-qualification/node22-runtime-corrections.tap",
+    "result": "77/77 affected cases passed; initial six failures retained. No launch/environment implementation or assertion changed after the 794-case capture."
+  },
+  "abi": {
+    "GetEnvironmentVariable": 524289,
+    "releasedComparers": "524290-524297",
+    "GetEnvironmentVariables": 524311,
+    "CurrentDirectory": 524312,
+    "policy": "Append draft environment dictionary APIs after every released pinned-main contract; retain all released main slots."
+  },
+  "remaining": [
+    "No OS environment access/mutation is enabled or claimed.",
+    "Browser/native profile controls and runtime-worker application belong to dependent integration batches.",
+    "Rust native/Wasm engines are not qualified for these APIs.",
+    "No duplicate projection run or performance improvement is claimed; ordinary core pending."
+  ],
+  "originalQualifiedAbi": {
+    "GetEnvironmentVariable": 524289,
+    "releasedComparers": "524290-524297",
+    "GetEnvironmentVariables": 524298,
+    "CurrentDirectory": 524299,
+    "policy": "Append environment dictionary APIs after released comparers; do not renumber any existing slot."
+  },
+  "pinnedMainSync": {
+    "main": "1db2e1d540a78403b7aaddcf472311fcde1a81ef",
+    "priorPublishedHead": "6b387cb817e39d9647c8ff497f3c76e630cdc90d",
+    "releasedAppendOnlyAdditions": "String comparisons 524298\u2013524308; StringBuilder Append(char) 524309 and Append(char,int) 524310",
+    "resolution": "Keep new upstream IDs, move only the still-unmerged environment dictionary additions to the next two slots, and retain both sets of exact registry assertions.",
+    "validation": "No local test or build run during this merge. Original source qualification above remains historical; required core checks and any selected post-merge registry qualification are separate."
+  },
+  "invocationDependency": {
+    "pr": 3680,
+    "head": "d4f4df7a485a877c78dc0b27fa1080d6fc473a33",
+    "reason": "The preserved public environment isolation test invokes ManagedInvocationSession. The launch stack now joins its actual published prerequisite instead of leaving a missing public import.",
+    "previousCore": {
+      "run": 37174309971,
+      "job": 111353623246,
+      "conclusion": "failure",
+      "error": "tests/a23-29-managed-environment.test.js: @sharpforge/runtime does not provide ManagedInvocationSession"
+    },
+    "localValidation": "Not rerun; completed parent scopes remain retained and final combined qualification is owned by the integration coordinator."
+  }
+}

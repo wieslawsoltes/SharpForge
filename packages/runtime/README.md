@@ -1,5 +1,39 @@
 # @sharpforge/runtime
 
+## Managed launch context compatibility
+
+The released `programArguments` option remains the normal VM launch interface.
+`withSourceLaunchArguments(image, args)` additionally creates an immutable source
+image overlay for compiler-owned startup methods. It accepts the current forwarded
+string-array bootstrap and the older empty-array bootstrap, preserving source/IL
+offset mappings, static initialization and async Main. Empty arguments or a Main
+without parameters return the existing image; unsupported/custom startup shapes
+fail explicitly. It also works on a canonical image decoded from an emitted PE.
+
+The overlay's compatibility limit is 4096 strings and 131072 total UTF-16 units,
+with NUL rejected. This is distinct from the released VM `programArguments`
+limits (1024 arguments and 1048576 total units). The helper does not mutate shared
+image arrays or alter the VM dispatcher. Custom direct-CIL method invocation keeps
+its separate `arguments` option.
+
+`environment` remains canonical; legacy `environmentVariables` is validated and
+accepted only when `environment` is absent. Explicit malformed canonical values
+still fail before execution with `RuntimeLaunchError`, including when a valid
+alias is present. The same released launch bounds apply to both forms. Environments
+are copied per VM, use ordinal case-sensitive lookup and never inherit host state.
+
+`System.Environment.GetEnvironmentVariables()` returns a separate mutable managed
+`IDictionary` snapshot. `CurrentDirectory` reads `workingDirectory`, with
+`currentDirectory` as an alias and `/` as the deterministic default. Dictionary
+mutation changes only that returned dictionary. No operating-system environment or
+current-directory mutation is enabled. The BCL core README documents exact bounds,
+faults and collection behavior for both source and direct-CIL platforms.
+
+New environment contracts append after the released comparer slots: existing
+`GetEnvironmentVariable` remains 524289; `GetEnvironmentVariables` and
+`CurrentDirectory` use 524311 and 524312. Existing runtime builtin reservations
+remain fixed, and duplicate/overlapping reservations now fail explicitly.
+
 Two standalone interpreters: `VirtualMachine` for the original source-debugging profile and `CilVirtualMachine` for bounded direct managed CIL without #SF. Both share the explicit non-moving mark-and-sweep heap. The direct engine is a constrained allowlisted subset, not a complete CLR loader/type verifier or full BCL.
 
 Version 0.9.0 · MIT · ES modules.

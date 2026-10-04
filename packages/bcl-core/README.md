@@ -335,6 +335,47 @@ Array and Random metadata is pinned to .NET 10.0.5 and SDK 10.0.201, with native
 extractor and source hashes. Exact signature presence is reported separately
 from behavioral qualification; this extraction does not claim complete BCL parity.
 
+## Session environment extension
+
+The released `GetEnvironmentVariable` contract retains ABI ID `524289`. New
+`GetEnvironmentVariables` and `CurrentDirectory` contracts append at `524311` and
+`524312`, after the released comparer, string comparison and StringBuilder contracts. The separate environment
+dictionary registration keeps every earlier contract identity unchanged.
+
+The A07 extension group adds `System.Environment.GetEnvironmentVariable(string)`,
+`GetEnvironmentVariables()` and the read-only `CurrentDirectory` property. These
+read explicit `platform.options.environment` and `workingDirectory`
+values; `environmentVariables` and `currentDirectory` are aliases. Canonical options
+take precedence when both forms are present. The runtime copies environment values
+when the session is constructed; the first BCL call retains its snapshot and working
+directory. Missing variables return null, empty values remain
+empty strings, and lookup is ordinal and case-sensitive. Defaults are `{}` and
+`/`, with no host environment access. Null names raise `ArgumentNullException`.
+
+VM launches use the public runtime launch limits: 256 variables, names matching
+`[A-Za-z_][A-Za-z0-9_]*` up to 256 characters, string values up to 65536 UTF-16
+units, and 1048576 total name/value units. Invalid launch environment options raise
+`RuntimeLaunchError` before execution, including when supplied through the alias.
+The BCL host boundary independently guards direct platform embeddings at 4096
+variables and 1048576 total units, with nonempty names excluding `=` and NUL and
+string values excluding NUL. Its invalid inputs raise managed `ArgumentException`.
+The working directory is a nonempty path up to 32768 units without NUL and uses the
+same managed fault for invalid values. No current-directory setter or process,
+user, or machine environment mutation is exposed.
+
+`GetEnvironmentVariables` returns a distinct mutable `System.Collections.IDictionary`
+snapshot with indexed lookup, Count, Contains, Add, Remove, Clear, Keys, Values,
+and explicit enumerators. Mutation never changes the environment snapshot.
+Enumerator access before/after positioning and mutation during enumeration raise
+`InvalidOperationException`. Scalar and managed reference keys are supported;
+other host representations produce `NotSupportedException`. Dictionary storage
+uses the shared managed heap and its one-million-item bound. Initial creation is
+linear, repeated lookups use a versioned index, and mutations replace bounded
+storage. `foreach` over non-generic interfaces remains subject to the compiler's
+existing enumerator/disposal profile; explicit MoveNext/Current/Key/Value calls
+are available. These APIs are qualified on source and direct CIL in focused tests;
+they do not claim operating-system or full CLR environment equivalence.
+
 `formatDoubleDefault(value)` formats a JavaScript binary64 number as invariant
 .NET default text, including signed zero, shortest round-trip digits, uppercase
 exponents padded to two digits, and the `NaN`/`Infinity` spellings. It is pure and
