@@ -159,6 +159,15 @@ above; this is not a claim of identical MetadataLoadContext behavior on those
 cases. ECMA II.22.24's later informative all-File-zero rule conflicts with the
 normative module-offset description; the normative text takes precedence.
 
+The malformed embedded-length case also has distinct observed outcomes. Both
+native readers still enumerate its name. CoreCLR's stream throws
+`System.BadImageFormatException` (`-2147024885`), while its info query returns
+manifest-embedded location flags `5` with null filename and referenced assembly.
+MetadataLoadContext's stream and info queries instead throw
+`System.OverflowException` (`-2146233066`). SharpForge eagerly validates the
+resource index, so enumeration, reading and info all reject that malformed image
+with `SFCLR005`. These differences are retained and asserted separately.
+
 Regenerate during a scheduled native validation slot:
 
 ```sh

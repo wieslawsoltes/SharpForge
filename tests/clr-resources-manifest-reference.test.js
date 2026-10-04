@@ -16,6 +16,11 @@ function physicalInfo(info) {
     resourceLocation: info.resourceLocation };
 }
 
+function nativeFailure(operation, type, hresult) {
+  assert.equal(operation.error.type, type);
+  assert.equal(operation.error.hresult, hresult);
+}
+
 test('manifest resource reference inputs, generator sources and tool versions are pinned', () => {
   assert.equal(native.format, 1);
   assert.match(native.sdk, /^10\./);
@@ -49,8 +54,15 @@ test('resource bytes and names match their native readers, with explicit linked-
       if (fixture.classification === 'malformed-embedded') {
         assert.throws(() => reader.names, error => error.code === LoadErrorCode.InvalidImage);
         await assert.rejects(reader.read(fixture.resource), error => error.code === LoadErrorCode.InvalidImage);
-        assert.match(fixture.coreClr.stream.error.type, /BadImageFormatException$/);
-        assert.match(fixture.metadataLoadContext.stream.error.type, /BadImageFormatException$/);
+        await assert.rejects(reader.getInfo(fixture.resource), error => error.code === LoadErrorCode.InvalidImage);
+        assert.deepEqual(fixture.coreClr.names, { value: ['payload'] });
+        assert.deepEqual(fixture.metadataLoadContext.names, { value: ['payload'] });
+        nativeFailure(fixture.coreClr.stream, 'System.BadImageFormatException', -2147024885);
+        nativeFailure(fixture.metadataLoadContext.stream, 'System.OverflowException', -2146233066);
+        nativeFailure(fixture.metadataLoadContext.info, 'System.OverflowException', -2146233066);
+        assert.deepEqual(fixture.coreClr.info, { value: {
+          fileName: null, referencedAssembly: null, resourceLocation: 5,
+        } });
         continue;
       }
       const bytes = await reader.read(fixture.resource);
