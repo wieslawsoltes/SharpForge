@@ -51,7 +51,9 @@ do not become fresh calls. Stop retains readable history and closes pending
 intervals before cleaning live and parked execution state.
 
 Clock exceptions, non-finite values, negative values, regressions and total
-overflow latch a host observer failure. Instrumentation does not throw it into
+overflow latch a host observer failure. Recursive inclusive totals are checked
+separately because one elapsed interval contributes to every active invocation.
+Instrumentation does not throw it into
 managed dispatch: guest execution reaches its current slice boundary first.
 An explicit profile read always reports the latched error. An automatic host
 boundary reports it only when there is no existing guest fault or debugger
