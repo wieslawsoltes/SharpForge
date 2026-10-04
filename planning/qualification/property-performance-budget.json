@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 1,
+  "workId": "SF-A15-T12.3",
+  "baselineCommit": null,
+  "baselineStatus": "pending-full-scope-qualification",
+  "registry": "scripts/benchmarks/a15-property-registry.json",
+  "minimumSamples": 20,
+  "maximumRegression": 0.2,
+  "metrics": ["medianMs", "p95Ms", "managedAllocationsPerOperation", "managedBytesPerOperation"],
+  "unsupported": [
+    {"target":"native-rust/clr/wasm-runtime","reason":"The workloads execute the JavaScript source and CIL engines, not native runtime property adapters."},
+    {"target":"native-allocator","reason":"Managed heap counters and Node retained-heap deltas do not measure native allocations."},
+    {"target":"browser-rendering","reason":"These workloads measure the property/scene command path without DOM layout or paint."}
+  ]
+}
