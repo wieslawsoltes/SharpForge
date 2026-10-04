@@ -44,13 +44,14 @@ export function prepareExplorerRecord(record, path = record.path ?? record.uri, 
   return preparedExplorerModel(captured, model);
 }
 
+/** A replacement model cannot relabel inherited file bytes as its own original source. */
 export function preparedExplorerModel(record, model) {
   const path = model.uri;
   const source = model.snapshot();
   const descriptors = Object.getOwnPropertyDescriptors(cloneWorkspaceRecord(record, path));
   Object.assign(descriptors, {
     source: { value: source, configurable: true }, model: { value: model, configurable: true },
-    originalSource: { value: source, configurable: true }, length: { value: source.length, configurable: true },
+    originalSource: { value: record.originalSource, configurable: true }, length: { value: source.length, configurable: true },
     version: { value: source.version, configurable: true, enumerable: true },
     text: { configurable: true, enumerable: true, get: () => model.text, set: text => model.setValue(text) }
   });

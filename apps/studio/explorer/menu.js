@@ -1,3 +1,5 @@
+import {projectContextMenu} from '../workbench/startup-commands.js';
+
 /** Compose context menus from current selection; commands recheck all guards when invoked. */
 export function buildExplorerMenu(commands, node, selection = []) {
   const nodes = commands.nodes(node, selection);
@@ -13,17 +15,12 @@ export function buildExplorerMenu(commands, node, selection = []) {
     items.push(action(node.kind === 'assembly' ? 'Open in Decompiler' : 'Open', 'open', 'Enter'));
   }
   if (node?.kind === 'source') items.push(action('Open in New Vertical Tab Group', 'split'), action('Open in Separate Window', 'popout'));
-  if (node?.kind === 'project' || node?.kind === 'solution') {
-    const nativeReady = () => !context.native || context.nativeAvailable && context.trusted && !context.buildBusy ? true :
-      'Connect an available MSBuild engine and explicitly trust this workspace';
-    items.push(action('Build', 'build', 'Ctrl+Shift+B', nativeReady), action('Rebuild', 'rebuild', '', nativeReady),
-      action('Clean', 'clean', '', nativeReady));
-    if (context.native) items.push(action('Restore Packages', 'restore', '', nativeReady), action('Evaluate Project', 'evaluate', '', nativeReady));
-    if (node.kind === 'project') items.push(action('Set as Startup Project', 'startup', '', canChange),
-      action('Edit Project File', 'edit-project', '', !!node.path), action('Rename Project…', 'rename', 'F2', canChange));
-    else if (node.path) items.push(action('Edit Solution File', 'open'));
-    items.push(null);
+  const projectItems = projectContextMenu({node, context: () => commands.context(), action, canChange,
+    commandState: commands.host.projectCommandState});
+  if (node?.kind === 'project') {
+    projectItems.splice(projectItems.length - 1, 0, action('Rename Project…', 'rename', 'F2', canChange));
   }
+  items.push(...projectItems);
   if (['solution', 'project', 'workspace', 'folder', 'solution-folder'].includes(node?.kind)) {
     const canSolution = () => commands.context().solutionPath ? canChange() : 'Open a .slnx solution first';
     items.push({label: 'Add', enabled: canChange, children: [

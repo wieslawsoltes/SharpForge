@@ -1,3 +1,4 @@
+import {projectContextActions} from '../workbench/startup-commands.js';
 import {registerClipboardCommands} from './clipboard.js';
 import {registerCreateCommands} from './create.js';
 import {registerDeleteCommands} from './delete.js';
@@ -30,7 +31,7 @@ export function createExplorerCommandTable() {
     await commands.host.open(node);
     return commands.host.document(action, node.path);
   }});
-  for (const action of ['build', 'rebuild', 'clean', 'restore', 'evaluate', 'startup', 'edit-project']) {
+  for (const action of projectContextActions) {
     registry.set(action, {mutates: false, execute: ({commands, node}) => commands.host.project(action, node)});
   }
   for (const action of ['save-zip', 'save-folder', 'open-workspace-entry', 'convert-sln']) {

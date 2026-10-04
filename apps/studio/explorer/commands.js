@@ -21,8 +21,10 @@ export class ExplorerCommands {
   }
 
   context() {
+    if (this.disposed) throw new Error('Explorer commands are disposed');
     const context = this.host.context();
     if (this.identity !== context.identity) {
+      if (this.identity !== null) this.operationController?.abort();
       this.identity = context.identity;
       this.history = [];
       this.clipboard = null;
@@ -65,6 +67,7 @@ export class ExplorerCommands {
         ownsOperation = true;
         this.operationIdentity = context.identity;
         this.readSet = new Map();
+        this.operationController = new AbortController();
       }
       return await command.execute({commands: this, context, node, nodes, event, action});
     } catch (error) {
@@ -75,6 +78,7 @@ export class ExplorerCommands {
         this.runningMutation = false;
         this.operationIdentity = null;
         this.readSet = null;
+        this.operationController = null;
         this.host.render();
       }
     }
@@ -94,11 +98,15 @@ export class ExplorerCommands {
     return moveExplorerItems(this, mappings, copy, destinationProject, options);
   }
 
-  perform(operations, mappings = []) { return performExplorerOperations(this, operations, mappings); }
+  perform(operations, mappings = [], options = {}) { return performExplorerOperations(this, operations, mappings, options); }
   undo() { return undoExplorerOperation(this); }
   redo() { return undoExplorerOperation(this, true); }
 
   dispose() {
+    this.disposed = true;
+    this.operationController?.abort();
+    this.history = [];
+    this.clipboard = null;
     this.fileHistory.journal.dispose();
     this.fileHistory.clear();
     this.registry.clear();
