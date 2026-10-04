@@ -6,11 +6,15 @@ levels, private override chains, inherited private methods, ordinary public/fami
 overrides and a new slot. Expected negatives cover sibling/external intermediate
 bases, an outside child, narrowing and PrivateScope. SRM supplies the nested names
 and tokens independently; reflection records GetBaseDefinition or type-load failure.
-No fixture method is invoked. These expectations remain unqualified until capture.
+No fixture method is invoked. SDK 10.0.201/CoreCLR 10.0.5 captured all thirteen
+expectations: eight roots and five TypeLoadException failures agree with the loader.
 
 The native test requires the captured source/image hashes from its first scheduled
-run; there is no availability skip. Capture, affected tests, fixed controls and
-static checks are pending the root's serial slot. Source VM/direct CIL/Rust/Wasm
+run; there is no availability skip. Both initial and corrected-source runs passed
+21 focused tests and static/structure checks. The corrected run replays the unchanged
+capture; original and final 600-sample benchmark sets are retained. The root reviewer explicitly accepted the remaining cold strict-path p95
+increase of 2,083.958 µs (+460.755%); complete before/after values and both raw sets
+are in `packages/clr/benchmarks/nested-strict-overrides-node24.json`. Source VM/direct CIL/Rust/Wasm
 execution and cross-platform qualification are not implied by host reflection.
 
 ```sh

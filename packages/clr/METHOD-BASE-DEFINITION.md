@@ -146,12 +146,35 @@ limits bound traversal; generic enclosing owners remain explicitly unsupported.
 Inconsistent NestedClass ownership/visibility reports SFCLR005. Cancellation is
 checked by the existing query before caching a root. Method bodies remain unread.
 
-The nested increment prepares six authored test groups and thirteen independent
-native outcomes (positive roots and rejected type loads). Native capture, focused
-tests, one fixed existing strict-path control and the new workload benchmark,
-static/manifests/structure checks are pending a scheduled serial slot. The native
-test requires source/image provenance without a skip. No platform or performance
-result is claimed before that qualification; invocation remains outside this API.
+The nested increment captured thirteen independent outcomes on SDK 10.0.201 and
+CoreCLR 10.0.5: eight accepted roots and five TypeLoadException failures match.
+Both initial and corrected-source qualification passed 21 focused tests with zero
+skips, including mandatory source/image provenance; the corrected run reused the
+unchanged native capture. Static/manifests passed (3,660 syntax/3,656 import modules,
+999 Node/37 browser files, zero errors); structure had 272 existing findings and
+none in changed files. All local jobs ran serially under one limiter, concurrency
+1 and a 1 GiB Node heap. Invocation and broader platform qualification stay open.
+
+The first eight-root strict control (`b0edfec2` → `2cb713df`) measured cold
+median/p95 230.542/889.458 → 389.959/1,408.792 µs and cached
+132.084/232.750 → 205.875/921.542 ns. The reviewer did not accept that comparison
+and requested a concrete fast path restoring ordinary top-level owner checks.
+After that source change (`5b3fd9fd`), one justified fresh pair measured cold
+189.416/452.292 → 185.292/2,536.250 µs and cached
+129.250/198.500 → 117.292/204.458 ns. The remaining cold p95 increase is
+2,083.958 µs (+460.755%). The root integration reviewer explicitly accepted this
+large cold strict-override tail tradeoff for bounded nested/enclosing correctness
+after reviewing the restored top-level fast path. Ordinary non-strict queries
+are unchanged and make no new performance claim. No further repeat ran.
+
+The final eight-root nested workload measured cold median/p95 178.084/501.917 µs
+and cached 123.917/190.583 ns. [All 1,200 raw samples, exact source heads, hashes,
+commands and both comparisons](benchmarks/nested-strict-overrides-node24.json)
+are retained. Each control imports its own CLR implementation; only byte-identical
+CIL/archive dependencies share workspace links. Measurements used Node 24.21.0 on
+a shared Apple M3 Pro/darwin-arm64 host. The cached root lookup code is unchanged;
+this fact does not establish a cause for the measurements. No noise, causality,
+significance, speedup or peak-memory claim is made; allocation totals are unmeasured.
 
 Six authored tests cover the complete 7×7 same-assembly mask matrix, canonical
 queries, cancellation/unload, intermediate edges, new slots, malformed masks,
