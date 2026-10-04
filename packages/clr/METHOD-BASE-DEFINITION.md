@@ -22,12 +22,56 @@ signatures remain lazy; no executable body is read.
 This is an explicit partial GetBaseDefinition contract. Class/covariant MethodImpl
 slot mappings, strict access checks,
 generic base instantiation, type generic variables,
-modifier/function-pointer signature types, array sizes and nonzero
+TypeSpec/open-generic modifier definitions, function-pointer signature types, array sizes and nonzero
 lower bounds require later services and fail with `SFCLR012` when traversal needs them.
 Opaque host intrinsics have no method metadata: reaching one before locating a
 slot introduction also fails, so an Object override cannot silently become its
 own root. A complete metadata chain with no matching ancestor introduces the
 reuse-slot method itself. This is not a full MethodDef validity or visibility pass.
+
+Required and optional custom modifiers participate in signature identity at their
+encoded position, including beneath supported array/pointer/byref constructors.
+Modifier kind, order and canonical TypeDef/TypeRef identity must all match;
+optional modifiers are not discarded during implicit slot matching. This follows
+[CoreCLR's element comparison](https://github.com/dotnet/runtime/blob/v10.0.5/src/coreclr/vm/siginfo.cpp#L3770)
+as used by its virtual-slot signature comparison. Equivalent references across
+modules resolve through the existing loader. This does not interpret modifier
+semantics or implement type equivalence, generic modifier expressions or class
+MethodImpl mappings. Modifier-bearing generic argument subtrees remain unsupported,
+including beneath arrays and nested generic instances. A scalar context flag in
+the existing recursive key walk preserves this limit without an extra tree walk
+or per-node data allocation; existing generic argument restrictions are preserved.
+
+Modifier matching extends the existing cached signature keys; it introduces no
+persistent cache or descriptor fields. Signature depth/node limits apply before
+binding; generic metadata row limits apply before querying a resolved modifier's
+generic parameters, and modifier identities share the context's signature-identity
+budget. Cancellation is checked after asynchronous binding and before publishing
+a complete signature key.
+
+The modifier increment passed 32/32 focused tests across eight files, with no
+skips, and ten independently emitted matching native roots on SDK 10.0.201/CoreCLR 10.0.5.
+Syntax/static checks passed 3,556/3,552 modules; manifests covered 961 Node and 37
+browser files with no errors. Structure reported 271 existing findings, none in
+changed files. One limiter ran all phases sequentially with concurrency 1 and a
+1 GiB Node heap; the initial sequence had no failures or reruns. Review then added
+five independent native mismatch chains for kind, identity, order, omission and
+return/parameter placement. Each Child(A) skips a Middle(B,new-slot) and resolves
+the Root(A) introduction, agreeing with the loader. That extension passed native
+15 plus 8/8 tests in the two affected files. Product code and benchmarks did not
+change; the initial measured ten-method capture is retained separately. Broader
+platform qualification remains staged.
+
+On the shared Apple M3 Pro/macOS 26.6/Node 24.21.0 host, existing 23-method cold
+median/p95 moved 145.167/302.875 → 149.666/347.917 µs. The +45.042 µs (+14.871%)
+p95 and +4.499 µs (+3.099%) median were explicitly accepted by the root integration
+reviewer for correct bounded modifier matching. Cached median/p95 moved
+124.084/162.917 → 124.375/164.500 ns, both within budget. The new ten-method fixture
+measured cold median/p95 159.417/435.875 µs and cached 122.750/173.375 ns.
+[All 600 raw samples, exact source heads, commands and import provenance](benchmarks/modified-method-overrides-node24.json)
+are retained. The existing cached result path is unchanged. These measurements
+establish no cause, noise, significance or general speedup claim; allocation
+counts and peak memory were not measured. No repeat or retuning was requested.
 
 Constrained generic methods now follow the same implicit class-slot walk. Each
 matched override edge compares method GenericParam constraints separately from
