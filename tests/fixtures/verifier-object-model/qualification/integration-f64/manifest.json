@@ -1,0 +1,110 @@
+{
+  "schemaVersion": 1,
+  "source": "f64a9daba4da3700ab8fd010f610a0fbba9dd8f9",
+  "tree": "7065a3d19e7bbb26f1cc2694344dc1fa6815da47",
+  "mainParent": "19755847de71941a96ff4888d3b16402c966c401",
+  "ownParent": "ec8968879f49233b546401fb1f7407853a097454",
+  "copyPolicy": "Byte-exact originals; preserve embedded absolute paths and both zero-byte and warning stderr files.",
+  "originalFileCount": 9,
+  "originalBytes": 156664,
+  "files": [
+    {
+      "path": "project6-object-f64-integration.tap",
+      "originalPath": "/workspace/scratch/7e3d2a445c44/project6-object-f64-integration.tap",
+      "bytes": 19958,
+      "sha256": "5846cf3260b62fabbc8c5960117acda010cecea52a2c54eb12a86e7100987c85"
+    },
+    {
+      "path": "project6-object-f64-integration.stderr.txt",
+      "originalPath": "/workspace/scratch/7e3d2a445c44/project6-object-f64-integration.stderr.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "project6-object-f64-integration.receipt.json",
+      "originalPath": "/workspace/scratch/7e3d2a445c44/project6-object-f64-integration.receipt.json",
+      "bytes": 1454,
+      "sha256": "1024b110c954e0afdd941420e2546e261b4fee118c442d90722e840012345557"
+    },
+    {
+      "path": "project6-object-main-integration.json",
+      "originalPath": "/workspace/scratch/7e3d2a445c44/project6-object-main-integration.json",
+      "bytes": 112189,
+      "sha256": "9693185fefeb8420f301d52c80545a108aa2f86bc23b42176b8eb8355389957e"
+    },
+    {
+      "path": "project6-object-pr4575-core-failure.json",
+      "originalPath": "/workspace/scratch/7e3d2a445c44/project6-object-pr4575-core-failure.json",
+      "bytes": 4848,
+      "sha256": "5ab05775ce937a3e01adf7ca3de7204493f9bef2db74322939f20c457d4a60fd"
+    },
+    {
+      "path": "project6-object-pr4575-static-check.stdout.txt",
+      "originalPath": "/workspace/scratch/7e3d2a445c44/project6-object-pr4575-static-check.stdout.txt",
+      "bytes": 77,
+      "sha256": "db26e153b0c4d4aff07a79bfa89b35195126740fb6979df713cf0676e47e6931"
+    },
+    {
+      "path": "project6-object-pr4575-static-check.stderr.txt",
+      "originalPath": "/workspace/scratch/7e3d2a445c44/project6-object-pr4575-static-check.stderr.txt",
+      "bytes": 94,
+      "sha256": "efa2c0796767ca086f3d032d1bedc4a3002a555df65194f4ae54ff53a1291595"
+    },
+    {
+      "path": "project6-object-pr4575-static-check.receipt.json",
+      "originalPath": "/workspace/scratch/7e3d2a445c44/project6-object-pr4575-static-check.receipt.json",
+      "bytes": 1101,
+      "sha256": "177db7659e24ed6179d5634553f4574f3014d1df696201a568d8146b74a901ef"
+    },
+    {
+      "path": "project6-object-pr4575-static-imports.json",
+      "originalPath": "/workspace/scratch/7e3d2a445c44/project6-object-pr4575-static-imports.json",
+      "bytes": 16943,
+      "sha256": "f5f91fe7b0508ba3fdc4452741d1e93688e9dac2bf034139be5f5e047c3bc6a0"
+    }
+  ],
+  "results": {
+    "integration": {
+      "source": "f64a9daba4da3700ab8fd010f610a0fbba9dd8f9",
+      "testFiles": 14,
+      "tests": 80,
+      "passed": 80,
+      "failed": 0,
+      "skipped": 0,
+      "cancelled": 0,
+      "startedUtc": "2026-10-04T17:04:44.238866+00:00",
+      "finishedUtc": "2026-10-04T17:04:49.852532+00:00"
+    },
+    "staticHistorical": {
+      "source": "ec8968879f49233b546401fb1f7407853a097454",
+      "modules": 3740,
+      "errors": 0,
+      "finalMergedRegistryLocallyRechecked": false
+    },
+    "historicalScopes": "Initial79/1 at73f9ab77 and correction8/8 at31b18645 remain separate; no reinterpretation.",
+    "native": {
+      "source": "73f9ab77d8b6973324dcc19497b84c1c1eb18010",
+      "observations": 52,
+      "sha256": "038da3f3ca12b21f39c367f726b972b0b89ded606ed66f9157ebeab495996dbb",
+      "recaptured": false
+    },
+    "performance": {
+      "source": "407ece8a532bdec026fca808097540eff10aefe3",
+      "baseline": "88c861e3a294a249e7a8cdd7319e032d7c29fb35",
+      "remeasured": false,
+      "integrationPerformanceClaimed": false
+    },
+    "browserRun": false
+  },
+  "preservation": {
+    "ownProductFilesByteExact": 8,
+    "ownPathsByteExactBeforeEvidenceRetention": 91,
+    "ownPathsChangedBeforeEvidenceRetention": [
+      "scripts/conformance/static/allowlist.json"
+    ],
+    "mainDynamicPolicyEntriesRetained": 73,
+    "ownDynamicPolicyEntriesRetained": 1,
+    "inheritedCilSourceDeltaPaths": 57,
+    "productAndToolsChangedByThisEvidenceCommit": false
+  }
+}

@@ -121,6 +121,13 @@
       "reason": "Reviewed developer-only inventory benchmark loads fixed public CIL entries from trusted operator-selected local baseline/current checkouts and three fixed candidate fixture/inventory modules. Exact source revisions, clean tracked files, dependency-closure alias guards and source hashes precede imports. No path is selected by product, CIL, metadata or remote input."
     },
     {
+      "path": "packages/cil/tools/verifier-benchmark-workloads.mjs",
+      "operation": "dynamic-import",
+      "count": 1,
+      "sha256": "77d1643689c73a2ffe31c9cda19543c57f75725e6142af7770ae3895520acc55",
+      "reason": "Developer-only benchmark imports fixed API and fixture paths from an operator-selected trusted checkout; managed data never selects modules."
+    },
+    {
       "path": "packages/compiler/smoke.mjs",
       "operation": "dynamic-import",
       "count": 3,

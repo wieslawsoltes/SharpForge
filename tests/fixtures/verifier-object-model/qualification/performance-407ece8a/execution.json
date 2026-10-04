@@ -1,0 +1,70 @@
+{
+  "schemaVersion": 1,
+  "command": [
+    "/opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin/node",
+    "scripts/limited.js",
+    "/opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin/node",
+    "packages/cil/tools/benchmark-object-cohort.mjs",
+    "/workspace/scratch/7e3d2a445c44/project6-object-performance-407ece8a/cohort",
+    "--baseline",
+    "/workspace/scratch/7e3d2a445c44/sf6-object-baseline-88c861e3",
+    "--candidate",
+    "/workspace/scratch/7e3d2a445c44/sf6-objects",
+    "--iterations",
+    "1000",
+    "--samples",
+    "100",
+    "--warmups",
+    "20"
+  ],
+  "cwd": "/workspace/scratch/7e3d2a445c44/sf6-objects",
+  "sourceBefore": {
+    "candidate": {
+      "commit": "407ece8a532bdec026fca808097540eff10aefe3",
+      "status": ""
+    },
+    "baseline": {
+      "commit": "88c861e3a294a249e7a8cdd7319e032d7c29fb35",
+      "status": ""
+    }
+  },
+  "sourceHashesBefore": {
+    "scripts/limited.js": "d60fa1310cc85ce9426914dd4b79b1b500dcb2eab0928b422d24994d90a650f7",
+    "packages/cil/tools/benchmark-object-cohort.mjs": "b12411f5ded196645c42f5e1e95afe784e16253d09d2dfbbe0ab4a55724fb672",
+    "packages/cil/tools/benchmark-object-verifier.mjs": "4339bbae562797605691783377d2542976941e5dedf4fb1eff0521f178126cb9",
+    "packages/cil/tools/verifier-benchmark-measure.mjs": "66b3d395be4baa4ffc64e7b1ab81b484cca6d8bfd1786352e6db5362ee29e158",
+    "packages/cil/tools/verifier-benchmark-workloads.mjs": "77d1643689c73a2ffe31c9cda19543c57f75725e6142af7770ae3895520acc55"
+  },
+  "startedAt": "2026-10-04T16:17:30.919735+00:00",
+  "environment": {
+    "CI": null,
+    "NODE_OPTIONS": null,
+    "SHARPFORGE_TEST_CONCURRENCY": null,
+    "SHARPFORGE_MAX_PARALLEL_RUNS": null,
+    "SHARPFORGE_MAX_OLD_SPACE_MB": null
+  },
+  "nodeExecutable": "/opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin/node",
+  "nodeSha256": "bc17c508ffeed0ec622934f9b7fa72f8e78da65350e63c3eceb56fa688aa5e12",
+  "complete": true,
+  "endedAt": "2026-10-04T16:18:53.748539+00:00",
+  "exitCode": 0,
+  "sourceAfter": {
+    "candidate": {
+      "commit": "407ece8a532bdec026fca808097540eff10aefe3",
+      "status": ""
+    },
+    "baseline": {
+      "commit": "88c861e3a294a249e7a8cdd7319e032d7c29fb35",
+      "status": ""
+    }
+  },
+  "sourceHashesAfter": {
+    "scripts/limited.js": "d60fa1310cc85ce9426914dd4b79b1b500dcb2eab0928b422d24994d90a650f7",
+    "packages/cil/tools/benchmark-object-cohort.mjs": "b12411f5ded196645c42f5e1e95afe784e16253d09d2dfbbe0ab4a55724fb672",
+    "packages/cil/tools/benchmark-object-verifier.mjs": "4339bbae562797605691783377d2542976941e5dedf4fb1eff0521f178126cb9",
+    "packages/cil/tools/verifier-benchmark-measure.mjs": "66b3d395be4baa4ffc64e7b1ab81b484cca6d8bfd1786352e6db5362ee29e158",
+    "packages/cil/tools/verifier-benchmark-workloads.mjs": "77d1643689c73a2ffe31c9cda19543c57f75725e6142af7770ae3895520acc55"
+  },
+  "logSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "logBytes": 0
+}

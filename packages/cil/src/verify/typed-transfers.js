@@ -4,6 +4,7 @@ import { objectTransfers, transferObjectInstruction } from './ops-objects.js';
 import { literalTransfers, transferLiteralInstruction } from './ops-literals.js';
 import { memoryTransfers } from './memory-tables.js';
 import { transferMemoryInstruction } from './ops-memory.js';
+import { objectModelTransfers, transferObjectModelInstruction } from './ops-object-model.js';
 
 function registerTransfers(contributions) {
   const entries = {};
@@ -21,6 +22,7 @@ export const typedTransfers = registerTransfers([
   [numericTransfers, transferNumericInstruction], [objectTransfers, transferObjectInstruction],
   [memoryTransfers, transferMemoryInstruction],
   [literalTransfers, transferLiteralInstruction],
+  [objectModelTransfers, transferObjectModelInstruction],
 ]);
 
 export function transferTypedInstruction(instruction, state) {
