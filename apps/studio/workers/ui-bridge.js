@@ -1,13 +1,14 @@
 import {createCanvasMeasureProvider, validateEnvironmentSnapshot} from '@sharpforge/winui-controls';
 import {NativeCanvasTextProvider, TextLayoutService} from '@sharpforge/rendering';
 import {assertUIHostData} from './ui-data.js';
+import {RuntimeUIEventRequests, registerRuntimeEventRequests} from './ui-event-runtime.js';
 import {registerControlStateHandler} from './control-state.js';
 
 const failure = (name, message) => Object.assign(new Error(message), {name});
 
 /** Each launch buffers its own UI output before it becomes the active session. */
 export class RuntimeUIBridge {
-  constructor({post, wake, onError = () => {}, requestTimeout = 30000, maximumQueued = 20000} = {}) {
+  constructor({post, wake, onError = () => {}, requestTimeout = 30000, maximumQueued = 20000, eventRequestOptions = {}} = {}) {
     if (typeof post !== 'function' || typeof wake !== 'function') throw new TypeError('Runtime UI bridge requires post and wake callbacks');
     if (!Number.isSafeInteger(requestTimeout) || requestTimeout < 1 || requestTimeout > 300000
       || !Number.isSafeInteger(maximumQueued) || maximumQueued < 1 || maximumQueued > 100000) {
@@ -29,6 +30,7 @@ export class RuntimeUIBridge {
     this.scheduled = false;
     this.closed = false;
     this.ownedTextService = null;
+    this.eventRequests = new RuntimeUIEventRequests(this, {timeout: Math.min(requestTimeout, 30000), ...eventRequestOptions});
   }
 
   runtimeOptions({bindingAssembly, uiServices = {}} = {}) {
@@ -89,6 +91,7 @@ export class RuntimeUIBridge {
 
   flush() {
     if (this.closed || !this.vm) return;
+    this.eventRequests.observe();
     const sessionId = this.sessionId;
     if (this.commands.length) this.post({event: 'ui', sessionId, commands: this.commands.splice(0)});
     if (this.privateValues.size) {
@@ -162,6 +165,7 @@ export class RuntimeUIBridge {
   dispose() {
     if (this.closed) return;
     this.closed = true;
+    this.eventRequests.dispose();
     for (const pending of this.pending.values()) {
       this.releaseRequest(pending);
       pending.reject(failure('AbortError', 'UI session ended'));
@@ -177,6 +181,7 @@ export class RuntimeUIBridge {
 
 /** Worker request handlers resolve only managed identities in the active application. */
 export function registerRuntimeUIHandlers(handlers, {current, interactive, flush, schedule}) {
+  registerRuntimeEventRequests(handlers, {current, interactive, flush, schedule});
   registerControlStateHandler(handlers, {current, flush, schedule});
   const context = () => current().vm.platform.ui;
   const action = operation => params => {

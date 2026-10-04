@@ -1,4 +1,5 @@
 import {assertUIHostData} from './workers/ui-data.js';
+import {StudioUIEventClient} from './ui-event-client.js';
 import {WinUIHost} from '@sharpforge/winui';
 import {AnimationClock} from '@sharpforge/framework';
 import {FrameScheduler, CompositionTransportHost} from '@sharpforge/rendering';
@@ -49,7 +50,7 @@ async function clipboardRequest(service, payload, signal) {
 /** One debug session owns its retained host, scheduler, compositor and in-flight browser operations. */
 export class StudioUIHostBridge {
   constructor(root, {request, onError = () => {}, hostOptions = {}, hostCapabilities = {}, sessionId = null, requestTimeout = 30000,
-    createHost = (element, options) => new WinUIHost(element, options), schedulerOptions = {}, paused = false} = {}) {
+    createHost = (element, options) => new WinUIHost(element, options), schedulerOptions = {}, eventRequestOptions = {}, paused = false} = {}) {
     if (typeof request !== 'function') throw new TypeError('Studio UI bridge requires a worker request function');
     if (!Number.isFinite(requestTimeout) || requestTimeout < 1 || requestTimeout > 60000) throw new RangeError('Invalid UI host request timeout');
     this.root = root;
@@ -60,6 +61,8 @@ export class StudioUIHostBridge {
     this.createHost = createHost;
     this.schedulerOptions = schedulerOptions;
     this.requestTimeout = requestTimeout;
+    this.eventRequestOptions = {timeout: Math.min(requestTimeout, 30000), ...eventRequestOptions};
+    this.nextEventRequest = 1;
     this.sessionId = sessionId;
     this.pending = new Map();
     this.closed = false;
@@ -67,6 +70,7 @@ export class StudioUIHostBridge {
     this.install();
   }
   install() {
+    this.eventRequests = new StudioUIEventClient(this, this.eventRequestOptions);
     const view = this.root.ownerDocument?.defaultView;
     this.scheduler = new FrameScheduler({requestFrame: view?.requestAnimationFrame?.bind(view),
       cancelFrame: view?.cancelAnimationFrame?.bind(view), ...this.schedulerOptions, onError: this.onError});
@@ -76,6 +80,7 @@ export class StudioUIHostBridge {
     this.host = this.createHost(this.root, {...this.hostOptions,
       services: {...controlServices, resourceLoader: resources, ...this.hostOptions.services, scheduler: this.scheduler}, scheduler: this.scheduler,
       onEvent: (id, event, payload) => input('uiEvent', {id, event, payload}),
+      onEventRequest: (id, event, payload, options) => this.requestEvent(id, event, payload, options),
       onControlStateChanged: changes => input('uiControlStateChanges', {changes}),
       onRoutedEvent: (id, event, payload) => { input('uiEvent', {id, event, payload: serializeRoutedEvent(payload)}); },
       onPrivateInput: (id, property, value) => input('uiPrivateInput', {id, property, value}),
@@ -111,12 +116,15 @@ export class StudioUIHostBridge {
     } catch (error) { this.onError(error); return false; }
   }
   input(method, payload) { return !this.paused && this.send(method, payload); }
+  requestEvent(id, event, payload, options) { return this.eventRequests.request(id, event, payload, options); }
   setPaused(paused) {
     this.paused = !!paused;
+    if (this.paused) this.eventRequests.cancelAll('The managed UI session paused');
     this.scheduler.setPaused(this.paused);
     this.root.classList?.toggle('debug-paused', this.paused);
   }
   cancelPending() {
+    this.eventRequests?.cancelAll('The UI scene or session changed');
     for (const entry of this.pending.values()) {
       clearTimeout(entry.timer);
       entry.cancel?.();
@@ -138,6 +146,7 @@ export class StudioUIHostBridge {
     if (!validSession(sessionId)) throw new TypeError('Invalid Studio UI session identity');
     if (this.sessionId === sessionId && !this.closed) return;
     this.cancelPending();
+    this.eventRequests.dispose();
     this.composition.dispose();
     this.host.dispose();
     this.controlServices.dispose();
@@ -246,6 +255,7 @@ export class StudioUIHostBridge {
     if (this.closed) return;
     this.closed = true;
     this.cancelPending();
+    this.eventRequests.dispose();
     this.composition.dispose();
     this.host.dispose();
     this.controlServices.dispose();

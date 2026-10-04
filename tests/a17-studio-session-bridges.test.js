@@ -91,6 +91,79 @@ test('application windows route private values and compositor graphs to their ow
   assert.deepEqual(f.errors, []);
 });
 
+test('acknowledged and ordinary inputs capture the owning background app without duplicate dispatch', async context => {
+  const f = await fixture(context, (message, worker) => message.method === 'uiEventRequest'
+    ? {Cancel: true, Reason: message.params.payload.Reason} : fakeRuntime(message, worker));
+  const options = f.windows.panels.get(f.beta.id).host.options;
+  assert.deepEqual(await options.onEventRequest('shared', 'PaneClosing', {Cancel: false, Reason: 'back'}), {Cancel: true, Reason: 'back'});
+  options.onPrivateInput('shared', 'Password', 'changed');
+  options.onRealizeItems({id: 'shared', indices: [0, 2]});
+  await settle();
+  assert.equal(f.alpha.worker.worker.requests.filter(request => request.method.startsWith('ui')).length, 0);
+  const requests = f.beta.worker.worker.requests.filter(request => request.method.startsWith('ui'));
+  assert.deepEqual(requests.map(request => request.method), ['uiEventRequest', 'uiPrivateInput', 'uiRealizeItems']);
+  assert.ok(requests.every(request => request.params.sessionId === 1));
+  assert.ok(requests.every(request => request.params.identity === undefined), 'The facade resolves identity before worker transport');
+  assert.equal(f.sessions.active, f.alpha);
+  assert.deepEqual(f.errors, []);
+});
+
+test('worker restart disposes pending browser and managed requests even when its numeric runtime serial repeats', async context => {
+  const decision = deferred();
+  const f = await fixture(context, (message, worker) => message.method === 'uiEventRequest' ? decision.promise : fakeRuntime(message, worker));
+  const panel = f.windows.panels.get(f.alpha.id), oldBridge = panel.bridge, oldHost = panel.host;
+  const oldWorker = f.alpha.worker.worker, identity = f.alpha.identity;
+  const pendingDecision = oldHost.options.onEventRequest('shared', 'PaneClosing', {Cancel: false});
+  const cancelled = assert.rejects(pendingDecision, {name: 'AbortError'});
+  const capture = deferred();
+  let signal;
+  oldHost.capture = (id, options) => { signal = options.signal; return capture.promise; };
+  f.emit(f.alpha, {event: 'uiHostRequest', requestId: 'old-capture', kind: 'renderToBitmap', payload: {id: 'shared'}});
+  assert.equal(oldBridge.pending.size, 1);
+  await f.alpha.restart();
+  await cancelled;
+  f.scene(f.alpha);
+  assert.equal(f.alpha.runtimeSession, 1);
+  assert.notEqual(f.alpha.identity, identity);
+  assert.notEqual(panel.bridge, oldBridge);
+  assert.equal(oldBridge.closed, true);
+  assert.equal(oldHost.disposeCount, 1);
+  assert.equal(signal.aborted, true);
+  assert.equal(oldBridge.pending.size, 0);
+  assert.equal(oldHost.options.onPrivateInput('shared', 'Password', 'stale'), false);
+  oldWorker.emit({event: 'uiPrivateValues', sessionId: 99, values: [{id: 'shared', property: 'Password', value: 'late'}]});
+  oldBridge.receive({event: 'ui', sessionId: 99, commands: []});
+  decision.resolve({Cancel: true});
+  capture.resolve({width: 1, height: 1, pixels: new Uint8Array(4)});
+  await settle();
+  assert.equal(oldBridge.closed, true, 'A late packet cannot reopen a disposed bridge');
+  assert.equal(panel.host.privateValues.size, 0);
+  assert.equal(f.alpha.worker.worker.requests.filter(request => request.method === 'uiHostResponse').length, 0);
+  assert.equal(f.windows.panels.get(f.beta.id).host.disposed, false);
+  assert.deepEqual(f.errors, []);
+});
+
+test('pause cancels only the owning event request and resume restores input on the same retained host', async context => {
+  const decision = deferred();
+  const f = await fixture(context, (message, worker) => message.method === 'uiEventRequest' ? decision.promise : fakeRuntime(message, worker));
+  const panel = f.windows.panels.get(f.beta.id), host = panel.host;
+  const pending = host.options.onEventRequest('shared', 'BeforeTextChanging', {NewText: 'next', Cancel: false});
+  const cancelled = assert.rejects(pending, {name: 'AbortError'});
+  f.emit(f.beta, {event: 'state', state: 'paused', output: '', frames: [], stats: {}});
+  await cancelled;
+  assert.equal(panel.bridge.paused, true);
+  assert.equal(f.windows.panels.get(f.alpha.id).bridge.paused, false);
+  assert.equal(host.options.onPrivateInput('shared', 'Password', 'paused'), false);
+  await assert.rejects(host.options.onEventRequest('shared', 'PaneClosing', {Cancel: false}), {name: 'InvalidStateError'});
+  f.emit(f.beta, {event: 'state', state: 'running', output: '', frames: [], stats: {}});
+  assert.equal(panel.host, host);
+  assert.equal(panel.bridge.paused, false);
+  assert.equal(host.options.onPrivateInput('shared', 'Password', 'resumed'), true);
+  decision.resolve({Cancel: true});
+  await settle();
+  assert.deepEqual(f.errors, []);
+});
+
 test('browser host operations return through the owning session and session removal releases its host', async context => {
   const f = await fixture(context);
   const panel = f.windows.panels.get(f.beta.id), host = panel.host;
