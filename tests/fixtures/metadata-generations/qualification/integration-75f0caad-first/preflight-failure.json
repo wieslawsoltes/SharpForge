@@ -1,0 +1,10 @@
+{
+  "phase": "preflight",
+  "productExecutionStarted": false,
+  "cause": "Recorder assumed text/syntax aliases instead of the actual CIL closure: cil, bytecode, framework, bcl-collections, bcl-core.",
+  "scriptSha256": "486df004e9c0d2770349b315d97afa42c198add75d43a4c56863a0c81b0cdf7c",
+  "errorType": "FileNotFoundError",
+  "missingPath": "/workspace/scratch/7e3d2a445c44/sf6-metadata-generations/node_modules/@sharpforge/text",
+  "head": "2639fea0448cdc47aef8b2538e508ab5bfd4aa95",
+  "reconstruction": "Description of observed tool error; no raw-output claim."
+}

@@ -1,0 +1,179 @@
+import datetime
+import hashlib
+import json
+import math
+from pathlib import Path
+import subprocess
+
+WORK = Path('/workspace/scratch/7e3d2a445c44')
+ROOT = WORK / 'sf6-metadata-generations'
+RAW = ROOT / 'tests/fixtures/metadata-generations/qualification/performance-ordinal-first'
+EXPECTED_REPORT = '5f515a1c11a767535a52e1bb652fe71adddf0853a1255f1ab40a4fc19dad9b19'
+
+
+def sha(data):
+    return hashlib.sha256(data).hexdigest()
+
+
+def read(path):
+    return json.loads(Path(path).read_bytes())
+
+
+def git(root, *args):
+    return subprocess.check_output(['git', '-C', str(root), *args]).decode().strip()
+
+
+def near(left, right):
+    assert math.isclose(left, right, rel_tol=1e-12, abs_tol=1e-10), (left, right)
+
+
+def statistics(values):
+    ordered = sorted(values)
+    assert len(ordered) == 100
+    return {'count': 100, 'median': (ordered[49] + ordered[50]) / 2,
+            'p95': ordered[94], 'p99': ordered[98], 'min': ordered[0], 'max': ordered[-1]}
+
+
+def confirm_statistics(actual, expected):
+    assert actual.keys() == expected.keys()
+    for key in actual:
+        near(actual[key], expected[key])
+
+
+report_bytes = (RAW / 'report.json').read_bytes()
+assert sha(report_bytes) == EXPECTED_REPORT
+report = json.loads(report_bytes)
+assert len(report['commands']) == 15
+assert len(report['chronologicalSamples']) == 2400
+raw_files = []
+original = WORK / 'project6-metadata-generations-performance.ordinal-first'
+for path in sorted(RAW.iterdir()):
+    assert path.is_file() and not path.is_symlink()
+    content = path.read_bytes()
+    assert content == (original / path.name).read_bytes(), path
+    raw_files.append({'path': path.name, 'bytes': len(content), 'sha256': sha(content)})
+assert len(raw_files) == 62
+assert sum(item['bytes'] for item in raw_files) == 9941493
+
+source_reviews = []
+for side, source in report['sources'].items():
+    root = Path(source['root'])
+    assert source['side'] == side
+    assert git(root, 'rev-parse', source['head'] + '^{tree}') == source['tree']
+    packages = []
+    for package in source['packages']:
+        short = package['name'].removeprefix('@sharpforge/')
+        directory = root / 'packages' / short
+        assert sha((directory / 'package.json').read_bytes()) == package['manifestSha256']
+        assert sha(Path(package['entry']).read_bytes()) == package['entrySha256']
+        rows = []
+        for path in sorted((directory / 'src').rglob('*')):
+            assert not path.is_symlink()
+            if path.is_file():
+                rows.append({'path': path.relative_to(directory / 'src').as_posix(),
+                             'sha256': sha(path.read_bytes())})
+        rows.sort(key=lambda row: row['path'])
+        assert rows == package['files']
+        encoded = json.dumps(rows, ensure_ascii=False, separators=(',', ':')).encode()
+        assert sha(encoded) == package['sourceSha256']
+        tree_spec = ':packages/' + short + '/src'
+        assert git(root, 'rev-parse', source['head'] + tree_spec) == package['sourceTree']
+        assert git(root, 'rev-parse', source['productCommit'] + tree_spec) == package['sourceTree']
+        packages.append({'name': package['name'], 'files': len(rows),
+                         'sourceTree': package['sourceTree'], 'sourceSha256': package['sourceSha256']})
+    source_reviews.append({'side': side, 'head': source['head'],
+                           'productCommit': source['productCommit'], 'packages': packages})
+for path, digest in report['tools'].items():
+    assert sha((ROOT / path).read_bytes()) == digest, path
+assert sha((RAW / 'inputs.json').read_bytes()) == report['inputs']['sha256']
+assert sha((ROOT / report['native']['path']).read_bytes()) == report['native']['sha256']
+
+workloads = []
+all_samples = []
+previous_finish = ''
+measured_calls = warm_calls = 0
+by_key = {}
+for index, command in enumerate(report['commands']):
+    assert command['sequence'] == index
+    assert command['startedAt'] >= previous_finish
+    assert command['finishedAt'] >= command['startedAt']
+    previous_finish = command['finishedAt']
+    process = command['process']
+    assert process['exitCode'] == 0 and process['signal'] is None
+    for field, digest_field in [('jobFile', 'jobSha256'), ('resultFile', 'resultSha256'),
+                                ('stdoutFile', 'stdoutSha256'), ('stderrFile', 'stderrSha256')]:
+        content = (RAW / Path(command[field]).name).read_bytes()
+        assert sha(content) == command[digest_field]
+        if field in ('stdoutFile', 'stderrFile'):
+            assert content == process[field.removesuffix('File')].encode()
+    result = read(RAW / Path(command['resultFile']).name)
+    assert result == command['result']
+    assert result['jobSha256'] == command['jobSha256']
+    assert result['source'] == report['sources'][result['side']]
+    assert result['tools'] == report['tools']
+    assert result['status'] == ('prepared' if index < 2 else 'passed')
+    child_samples = []
+    bounded = bool(result['control']['bounded']) if 'control' in result else None
+    for workload in result['results']:
+        assert workload['warmupBatches'] == 20 and workload['measuredBatches'] == 100
+        assert len(workload['warmups']) == 20 and len(workload['samples']) == 100
+        for phase, rows in [('warmup', workload['warmups']), ('measured', workload['samples'])]:
+            for batch, sample in enumerate(rows):
+                assert sample['workload'] == workload['id'] and sample['phase'] == phase
+                assert sample['batch'] == batch and sample['guard'] == 'passed'
+                assert sample['operations'] == workload['operationsPerBatch']
+                assert isinstance(sample['nodeHeapDeltaBytes'], int)
+                near(sample['microsecondsPerOperation'], sample['elapsedMs'] * 1000 / sample['operations'])
+                if phase == 'measured':
+                    measured_calls += sample['operations']
+                else:
+                    warm_calls += sample['operations']
+                child_samples.append(sample)
+        stats = statistics([s['microsecondsPerOperation'] for s in workload['samples']])
+        confirm_statistics(stats, workload['statistics'])
+        confirm_statistics(statistics([s['elapsedMs'] for s in workload['samples']]), workload['batchMilliseconds'])
+        row = {'child': command['label'], 'id': workload['id'], 'side': result['side'],
+               'bounded': bounded, 'operationsPerBatch': workload['operationsPerBatch'], 'statistics': stats}
+        workloads.append(row)
+        by_key[(workload['id'], result['side'], bounded)] = row
+    child_samples.sort(key=lambda value: value['sequence'])
+    assert child_samples == result['chronologicalSamples']
+    assert [s['sequence'] for s in child_samples] == list(range(len(child_samples)))
+    for sample in child_samples:
+        row = {**sample, 'sequence': len(all_samples), 'childSequence': sample['sequence'],
+               'child': command['label'], 'side': result['side'], 'bounded': bounded}
+        all_samples.append(row)
+assert all_samples == report['chronologicalSamples']
+assert len(workloads) == 20 and warm_calls == 112540 and measured_calls == 562700
+
+for kind in ['defaultComparisons', 'explicitBudgetComparisons']:
+    for comparison in report[kind]:
+        budget = kind == 'explicitBudgetComparisons'
+        before = by_key[(comparison['id'], 'candidate' if budget else 'baseline', False)]
+        after = by_key[(comparison['id'] + ('-bounded' if budget else ''), 'candidate', budget)]
+        for metric, recorded in comparison['metrics'].items():
+            left, right = before['statistics'][metric], after['statistics'][metric]
+            confirm_statistics({'baseline': left, 'candidate': right, 'delta': right - left,
+                                'percent': (right / left - 1) * 100}, recorded)
+
+review = {'schemaVersion': 1, 'reviewer': 'ChatGPT root automated reviewer',
+          'recordedUtc': datetime.datetime.now(datetime.timezone.utc).isoformat(),
+          'status': 'raw-statistics-provenance-and-source-independently-confirmed',
+          'reportSha256': EXPECTED_REPORT, 'scriptSha256': sha(Path(__file__).read_bytes()),
+          'processes': 15, 'workloads': workloads, 'warmupBatches': 400,
+          'measuredBatches': 2000, 'warmupCalls': warm_calls, 'measuredCalls': measured_calls,
+          'rawFiles': raw_files, 'rawBytes': sum(row['bytes'] for row in raw_files),
+          'sources': source_reviews, 'toolFilesConfirmed': len(report['tools']),
+          'defaultComparisons': report['defaultComparisons'],
+          'explicitBudgetComparisons': report['explicitBudgetComparisons'],
+          'limits': ['One cohort on a shared host; no causal timing attribution.',
+                     'Percentiles describe batch means, not individual-call tails.',
+                     'Signed heapUsed deltas are not allocation counts or peak memory.',
+                     'No product code, tests, native capture or benchmark executed during this review.']}
+destination = WORK / 'metadata-root-performance-review.json'
+with destination.open('x') as stream:
+    json.dump(review, stream, indent=2)
+    stream.write('\n')
+print(json.dumps({'path': str(destination), 'sha256': sha(destination.read_bytes()),
+                  'workloads': len(workloads), 'rawFiles': len(raw_files),
+                  'measuredCalls': measured_calls, 'warmupCalls': warm_calls}))

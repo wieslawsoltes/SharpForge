@@ -1,7 +1,9 @@
 import { Reader, CilError } from '../binary.js';
 import { readMetadata } from '../metadata.js';
-import { CorFlags, PEDirectoryNames } from './headers.js';
+import { CorFlags } from './headers.js';
+import { readOptionalHeader } from './optional-header.js';
 import { readMethodBody } from './method-body.js';
+import { peRangeEnd, validatePEHeaderExtent, validatePESections } from './bounds.js';
 
 function readSections(reader, sectionCount) {
   const sections = [];
@@ -10,10 +12,11 @@ function readSections(reader, sectionCount) {
     const headerOffset = reader.position;
     const name = String.fromCharCode(...reader.take(8)).replace(/\0.*$/, '');
     const virtualSize = reader.u32(), rva = reader.u32(), size = reader.u32(), offset = reader.u32();
-    reader.take(12);
+    const pointerToRelocations = reader.u32(), pointerToLineNumbers = reader.u32();
+    const numberOfRelocations = reader.u16(), numberOfLineNumbers = reader.u16();
     const characteristics = reader.u32();
-    if (offset + size > reader.end || rva + Math.max(size, virtualSize) > 0x100000000) throw new CilError('Truncated PE section');
-    sections.push({ name, rva, virtualSize, size, offset, headerOffset, characteristics });
+    sections.push({ name, rva, virtualSize, size, offset, headerOffset, characteristics,
+      pointerToRelocations, pointerToLineNumbers, numberOfRelocations, numberOfLineNumbers });
   }
   return sections;
 }
@@ -22,52 +25,34 @@ function readHeaders(bytes) {
   const reader = new Reader(bytes);
   if (reader.u16() !== 0x5a4d) throw new CilError('Not a PE assembly (missing MZ header)');
   reader.position = 0x3c;
-  reader.position = reader.u32();
+  const peHeaderOffset = reader.u32();
+  if (peHeaderOffset < 0x40) throw new CilError('PE header overlaps DOS header', 0x3c);
+  peRangeEnd(peHeaderOffset, 24, bytes.length, 'Invalid PE header range', 0x3c);
+  reader.position = peHeaderOffset;
   if (reader.u32() !== 0x4550) throw new CilError('Invalid PE signature');
   const machine = reader.u16(), sectionCount = reader.u16(), timestamp = reader.u32();
-  reader.u32();
-  reader.u32();
+  const pointerToSymbolTable = reader.u32(), numberOfSymbols = reader.u32();
   const optionalSize = reader.u16(), characteristics = reader.u16(), optionalStart = reader.position;
-  const optional = new Reader(bytes, optionalStart, optionalSize);
-  const magic = optional.u16();
-  if (magic !== 0x10b && magic !== 0x20b) throw new CilError('Invalid optional PE header');
   if (sectionCount < 1 || sectionCount > 96) throw new CilError('Invalid PE section count');
-  const pe32Plus = magic === 0x20b;
-  optional.position = optionalStart + 16;
-  const addressOfEntryPoint = optional.u32();
-  optional.position = optionalStart + (pe32Plus ? 24 : 28);
-  const imageBaseLow = optional.u32();
-  const imageBase = BigInt(imageBaseLow) | (pe32Plus ? BigInt(optional.u32()) << 32n : 0n);
-  const sectionAlignment = optional.u32(), fileAlignment = optional.u32();
-  optional.position = optionalStart + 56;
-  const sizeOfImage = optional.u32(), sizeOfHeaders = optional.u32(), checksum = optional.u32(), subsystem = optional.u16();
-  const dllCharacteristics = optional.u16();
-  optional.position = optionalStart + (pe32Plus ? 108 : 92);
-  const directoryCount = optional.u32();
-  if (directoryCount < 15) throw new CilError('Missing CLI data directory');
-  if (directoryCount > 64) throw new CilError('Too many PE data directories');
-  optional.need(directoryCount * 8);
-  const dataDirectories = PEDirectoryNames.map(name => ({ name, rva: 0, size: 0 }));
-  for (let index = 0; index < directoryCount; index++) {
-    const rva = optional.u32(), size = optional.u32();
-    if (index < 16) dataDirectories[index] = { name: PEDirectoryNames[index], rva, size };
-  }
-  reader.position = optionalStart + optionalSize;
+  const sectionTableStart = peRangeEnd(optionalStart, optionalSize, bytes.length,
+    'Invalid optional PE header range', peHeaderOffset + 20);
+  const sectionTableEnd = peRangeEnd(sectionTableStart, sectionCount * 40, bytes.length,
+    'Truncated PE section table', sectionTableStart);
+  const optional = readOptionalHeader(bytes, optionalStart, optionalSize);
+  validatePEHeaderExtent(optional.sizeOfHeaders, sectionTableEnd, bytes.length, optionalStart + 60);
+  reader.position = sectionTableStart;
   const sections = readSections(reader, sectionCount);
-  const directories = Object.fromEntries(dataDirectories.map(directory => [directory.name, directory]));
-  return { machine, timestamp, characteristics, optionalStart, magic, pe32Plus, addressOfEntryPoint, imageBase,
-    sectionAlignment, fileAlignment, sizeOfImage, sizeOfHeaders, checksum, subsystem, dllCharacteristics,
-    directoryCount, dataDirectories, directories, sections };
+  validatePESections(sections, bytes.length, optional.sizeOfHeaders);
+  return { peHeaderOffset, machine, sectionCount, timestamp, pointerToSymbolTable, numberOfSymbols, characteristics,
+    ...optional, sections };
 }
 
 function createOffsetResolver(sections) {
   return (rva, length = 1) => {
-    if (!Number.isInteger(rva) || rva < 0 || !Number.isInteger(length) || length < 0 || rva + length > 0x100000000) {
-      throw new CilError('Invalid RVA range', rva);
-    }
+    peRangeEnd(rva, length, 0x100000000, 'Invalid RVA range', rva);
     let result = -1;
     for (const section of sections) {
-      if (rva < section.rva || rva - section.rva + length > section.size) continue;
+      if (!section.size || rva < section.rva || rva - section.rva + length > section.size) continue;
       if (result !== -1) throw new CilError('Invalid or ambiguous RVA', rva);
       result = section.offset + rva - section.rva;
     }
@@ -84,7 +69,8 @@ function readCliHeader(bytes, headers, offsetOf) {
   const cli = headers.directories.cliHeader;
   if (cli.size < 72) throw new CilError('Not a managed CLI image');
   const reader = new Reader(bytes, offsetOf(cli.rva, 72), 72);
-  if (reader.u32() < 72) throw new CilError('Invalid CLI header');
+  const cliHeaderSize = reader.u32();
+  if (cliHeaderSize < 72) throw new CilError('Invalid CLI header');
   const cliVersion = [reader.u16(), reader.u16()];
   const metadataDirectory = cliDirectory(reader);
   const flags = reader.u32(), entryPoint = reader.u32();
@@ -96,12 +82,14 @@ function readCliHeader(bytes, headers, offsetOf) {
     const signature = new Reader(bytes, at, managedNativeHeader.size).u32();
     imageKind = signature === 0x00525452 ? 'ReadyToRun' : 'ManagedNative';
   }
-  return { cliVersion, metadataDirectory, flags, corFlags: flags, entryPoint, resources, strongNameSignature, codeManagerTable,
+  return { cliHeaderSize, cliVersion, metadataDirectory, flags, corFlags: flags, entryPoint, resources, strongNameSignature, codeManagerTable,
     vtableFixups, exportAddressTableJumps, managedNativeHeader, imageKind, nativeEntryPoint: !!(flags & CorFlags.NativeEntryPoint) };
 }
 
 /** Read PE/CLI binary structure; inspection never executes managed or native code. */
-export function readPortableExecutable(input, { maxBytes = 64 * 1024 * 1024, inspection = false } = {}) {
+export function readPortableExecutable(input, {
+  maxBytes = 64 * 1024 * 1024, inspection = false, metadataOptions,
+} = {}) {
   const bytes = input instanceof ArrayBuffer ? new Uint8Array(input) : input;
   if (!(bytes instanceof Uint8Array) || bytes.length > maxBytes) throw new CilError('Invalid PE input or assembly exceeds size limit');
   const headers = readHeaders(bytes);
@@ -111,7 +99,7 @@ export function readPortableExecutable(input, { maxBytes = 64 * 1024 * 1024, ins
     throw new CilError('Only IL-only managed entry points are supported');
   }
   const metadataOffset = offsetOf(cli.metadataDirectory.rva, cli.metadataDirectory.size);
-  const metadata = readMetadata(bytes.subarray(metadataOffset, metadataOffset + cli.metadataDirectory.size));
+  const metadata = readMetadata(bytes.subarray(metadataOffset, metadataOffset + cli.metadataDirectory.size), metadataOptions);
   const result = { bytes, ...headers, ...cli, metadataOffset, metadata, offsetOf,
     isLibrary: !!(headers.characteristics & 0x2000) };
   result.methodBody = methodToken => readMethodBody(result, methodToken, inspection);

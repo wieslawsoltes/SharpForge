@@ -1,0 +1,27 @@
+✖ fault completion retains a managed delegate through every allocation and delivers it once (36.31735ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 0
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 792.103001
+
+✖ failing tests:
+
+test at tests/a05-cil-async-continuation-roots.test.js:9:1
+✖ fault completion retains a managed delegate through every allocation and delivers it once (36.31735ms)
+  InvalidReferenceException: Stale or invalid managed reference
+      at ManagedHeap.get (file:///workspace/scratch/1692a10afba9/p5-inline-arrays/packages/runtime/src/heap.js:49:87)
+      at delegateRecord (file:///workspace/scratch/1692a10afba9/p5-inline-arrays/packages/runtime/src/execution/delegate-targets.js:65:26)
+      at boundDelegateCall (file:///workspace/scratch/1692a10afba9/p5-inline-arrays/packages/runtime/src/execution/delegate-targets.js:92:18)
+      at invokeContinuation (file:///workspace/scratch/1692a10afba9/p5-inline-arrays/packages/runtime/src/execution/async-continuations.js:12:18)
+      at file:///workspace/scratch/1692a10afba9/p5-inline-arrays/packages/runtime/src/execution/async-continuations.js:44:41
+      at ManagedHeap.withRoots (file:///workspace/scratch/1692a10afba9/p5-inline-arrays/packages/runtime/src/heap.js:16:116)
+      at completeAsyncContinuations (file:///workspace/scratch/1692a10afba9/p5-inline-arrays/packages/runtime/src/execution/async-continuations.js:43:21)
+      at CooperativeScheduler.complete (file:///workspace/scratch/1692a10afba9/p5-inline-arrays/packages/runtime/src/scheduler.js:50:5)
+      at TestContext.<anonymous> (file:///workspace/scratch/1692a10afba9/p5-inline-arrays/tests/a05-cil-async-continuation-roots.test.js:23:16)
+      at Test.runInAsyncScope (node:async_hooks:227:14) {
+    reference: null
+  }

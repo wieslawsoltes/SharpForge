@@ -1,0 +1,899 @@
+{
+  "cohortSHA256": "cfe4158b5ae9e5588d5fb09e670c9ea1fa60ca309249511fd3ecbeab3b4b689f",
+  "source": {
+    "baseline": "88c861e3a294a249e7a8cdd7319e032d7c29fb35",
+    "candidate": "407ece8a532bdec026fca808097540eff10aefe3"
+  },
+  "harnessCommit": "407ece8a532bdec026fca808097540eff10aefe3",
+  "files": [
+    {
+      "path": "cohort/01-baseline-Add_0_0-process.json",
+      "bytes": 244,
+      "sha256": "901dd2083dc8ee61aa7559afb83ad115cc52346d9c37a027d473ca9242edd46a"
+    },
+    {
+      "path": "cohort/01-baseline-Add_0_0.json",
+      "bytes": 31066,
+      "sha256": "ceaaffc70514fdacea762c19c5114dcf8e867dc2b866c72ebd8125b261ce5402"
+    },
+    {
+      "path": "cohort/02-candidate-Add_0_0-process.json",
+      "bytes": 244,
+      "sha256": "f5971ecc8e613c29155a4212397a5bb8c8d24fda18abf53f182df868f2570482"
+    },
+    {
+      "path": "cohort/02-candidate-Add_0_0.json",
+      "bytes": 31079,
+      "sha256": "921ad009655bf3e39fc283adedc2d1243b3a295003ceedde232086b068d31e60"
+    },
+    {
+      "path": "cohort/03-candidate-Diamond-process.json",
+      "bytes": 243,
+      "sha256": "a7f2331b2ffd9a8123cd4537edefed1d50172a920695df990ac7a35c0d82ebed"
+    },
+    {
+      "path": "cohort/03-candidate-Diamond.json",
+      "bytes": 31006,
+      "sha256": "d9a90713706f7c186989270d2bd1c25946461a6321e6a1ce69af110649cb8c0d"
+    },
+    {
+      "path": "cohort/04-baseline-Diamond-process.json",
+      "bytes": 245,
+      "sha256": "01e5909fabeaa72b52cbdcaac273a43493a8ae2001d781a89c1fbeb69f9b2d12"
+    },
+    {
+      "path": "cohort/04-baseline-Diamond.json",
+      "bytes": 31030,
+      "sha256": "edeeedcd6f43073eec08fb096e23683f98095147627a89d33cdeeef4a598b73b"
+    },
+    {
+      "path": "cohort/05-baseline-MixedJoin-process.json",
+      "bytes": 248,
+      "sha256": "305b7ebfeecb79a8ae3b07414985b874e65d86ba2d99f1f63c09aac414fc7471"
+    },
+    {
+      "path": "cohort/05-baseline-MixedJoin.json",
+      "bytes": 31060,
+      "sha256": "0fc2d0d339c1ebdba136333405873fe93da0ceadcaeb90852956f19e4979a946"
+    },
+    {
+      "path": "cohort/06-candidate-MixedJoin-process.json",
+      "bytes": 248,
+      "sha256": "91df7f8338550eb355e452c5ebf06f4eec6a903460592f9d56cdce4f8abe8eba"
+    },
+    {
+      "path": "cohort/06-candidate-MixedJoin.json",
+      "bytes": 31057,
+      "sha256": "6b8bedfdab645adea0df001051b50501b37311ef26c3854a623e59ff455740f5"
+    },
+    {
+      "path": "cohort/07-candidate-ExistingAuthority-process.json",
+      "bytes": 255,
+      "sha256": "f17d51cbd6dddbff87daab57fff829ed03baaee29f930158ddbcdd1335f6af7f"
+    },
+    {
+      "path": "cohort/07-candidate-ExistingAuthority.json",
+      "bytes": 30931,
+      "sha256": "930a528c85124218a13583d1ecc463f3f0bbc693f68ef183c368683ce79d369f"
+    },
+    {
+      "path": "cohort/08-baseline-ExistingAuthority-process.json",
+      "bytes": 254,
+      "sha256": "c4189e031e2730b2cc7f819f212162a9aaed8d5a4b03e95f8056767e85bf36fd"
+    },
+    {
+      "path": "cohort/08-baseline-ExistingAuthority.json",
+      "bytes": 30958,
+      "sha256": "478e1146c5345c87696567430d9055efa941102f78f0278b86ca253cc94550c1"
+    },
+    {
+      "path": "cohort/09-baseline-LoadOwner-process.json",
+      "bytes": 246,
+      "sha256": "aa8a92dac4cf2c2cc8c93e4f642690691dea7b4a3de210dc2dbf2818cc5222db"
+    },
+    {
+      "path": "cohort/09-baseline-LoadOwner.json",
+      "bytes": 31548,
+      "sha256": "697eaec1aa9bbf384df3f0d5163bb3d5273ae81e19a836a9fc06c137b12bc616"
+    },
+    {
+      "path": "cohort/10-candidate-LoadOwner-process.json",
+      "bytes": 246,
+      "sha256": "167f0a774195de9ab42d30957fbf8dfcb5888c528bebde5b5e69e0e60f821f61"
+    },
+    {
+      "path": "cohort/10-candidate-LoadOwner.json",
+      "bytes": 31542,
+      "sha256": "8b6e23ee2befa0836ac99fc23251136e8fb13264e4805441c4419f13470e5ec0"
+    },
+    {
+      "path": "cohort/11-candidate-StoreReferenceDerived-process.json",
+      "bytes": 257,
+      "sha256": "12976b5a500984fb3aeedd479f23eaee414068d9ce9cff2d07b3e6479047a8cb"
+    },
+    {
+      "path": "cohort/11-candidate-StoreReferenceDerived.json",
+      "bytes": 31579,
+      "sha256": "0384802eed94d790b44c2f59c3b61ab7fcd90b1cbedac378c9360bb4afd09b63"
+    },
+    {
+      "path": "cohort/12-baseline-StoreReferenceDerived-process.json",
+      "bytes": 257,
+      "sha256": "8ffde4991bd233e3177101d38292bb364ed092359a0ded9dc71e31395f27a334"
+    },
+    {
+      "path": "cohort/12-baseline-StoreReferenceDerived.json",
+      "bytes": 31497,
+      "sha256": "16b850790f57969c2c23ad63eacfdc31c84dc92c36aec10e0325b990b2932bb6"
+    },
+    {
+      "path": "cohort/13-baseline-StringReturn-process.json",
+      "bytes": 245,
+      "sha256": "b7bc312bcc263e967e13f1bed0e00955bc417b17034bdb30772d8f25713de563"
+    },
+    {
+      "path": "cohort/13-baseline-StringReturn.json",
+      "bytes": 31279,
+      "sha256": "0e367c1684998a45023a2d7a3e0d558ca99352d11a3b213c5a868ae5216985d8"
+    },
+    {
+      "path": "cohort/14-candidate-StringReturn-process.json",
+      "bytes": 248,
+      "sha256": "50f91e162990c014f84f1e4c3bb13a8b6d132afaf995081a3267c625c4048532"
+    },
+    {
+      "path": "cohort/14-candidate-StringReturn.json",
+      "bytes": 31293,
+      "sha256": "92da5d6a4fe12327457c572012cdbb35b7bed6fa21b69a4c5718e79cb39d91b1"
+    },
+    {
+      "path": "cohort/15-candidate-LocalAddressRoundtrip-process.json",
+      "bytes": 258,
+      "sha256": "3c8eda2fd29f706dd66dc9a11575f4a6731e3e0ef228f4e5e35aca85b646c0a0"
+    },
+    {
+      "path": "cohort/15-candidate-LocalAddressRoundtrip.json",
+      "bytes": 30980,
+      "sha256": "8580dfbac8263a32bac2c43b7907f8aae57ec8ff3839be3fca33fba0821e3100"
+    },
+    {
+      "path": "cohort/16-baseline-LocalAddressRoundtrip-process.json",
+      "bytes": 256,
+      "sha256": "ff7a3149c78fdf48265bd020079e07c934110feab95f6801b6f930fc60f8a40b"
+    },
+    {
+      "path": "cohort/16-baseline-LocalAddressRoundtrip.json",
+      "bytes": 31002,
+      "sha256": "e09576d7d267ed32322d672d209827a32f4c63f0fa4e3d027c64d4247462101e"
+    },
+    {
+      "path": "cohort/17-baseline-LoadWideInteger-process.json",
+      "bytes": 252,
+      "sha256": "d23c0d773d1eb766f762ca5f622cf19837f6d3bc71c5c010c81ad316ab1a644c"
+    },
+    {
+      "path": "cohort/17-baseline-LoadWideInteger.json",
+      "bytes": 30965,
+      "sha256": "77db88cae435743a598b53ff92fec083929ef5d102546ed7ca9f96e9805bd1db"
+    },
+    {
+      "path": "cohort/18-candidate-LoadWideInteger-process.json",
+      "bytes": 251,
+      "sha256": "8959d4a2ca3154c33dc6c47e355c64ddbcdd1f412967e201fd99ecbf194667d6"
+    },
+    {
+      "path": "cohort/18-candidate-LoadWideInteger.json",
+      "bytes": 30948,
+      "sha256": "13fc59f649ccec4d18323951cced6c803799bc07807173e9b4f061fd0bb30dca"
+    },
+    {
+      "path": "cohort/19-candidate-NewClass-process.json",
+      "bytes": 246,
+      "sha256": "b51d97161e41a253adc547a9c053b4608d011c61318b1ef687d0317d180573c2"
+    },
+    {
+      "path": "cohort/19-candidate-NewClass.json",
+      "bytes": 31444,
+      "sha256": "fedcc03ef5dfb5afc9b6af82bbc795708ae282233026da25e9475098be8efb57"
+    },
+    {
+      "path": "cohort/20-candidate-NewArguments-process.json",
+      "bytes": 239,
+      "sha256": "fb5dcb7bb80fd84eced5c38c4247ea373bec1a7d921d4d43ff27be03f4b739e6"
+    },
+    {
+      "path": "cohort/20-candidate-NewArguments.json",
+      "bytes": 31553,
+      "sha256": "e425627ba1e7102a569946452c4e5f58ddbd463cec7d83c8421586364f8586b4"
+    },
+    {
+      "path": "cohort/21-candidate-BoxValue-process.json",
+      "bytes": 245,
+      "sha256": "94013365123c04cff4311adf93d151a7811501d3aae077a823e85e5407a256e5"
+    },
+    {
+      "path": "cohort/21-candidate-BoxValue.json",
+      "bytes": 31714,
+      "sha256": "d5893032e8a0edc1394f2a303c74a4ed0d391a95b01c7866b008aaccfd06eaff"
+    },
+    {
+      "path": "cohort/22-candidate-HarmlessAnnotation-process.json",
+      "bytes": 255,
+      "sha256": "9c15bbcac0f8e523092a917d53a13fc65517958078aacd41ce081f1b794d5a12"
+    },
+    {
+      "path": "cohort/22-candidate-HarmlessAnnotation.json",
+      "bytes": 31699,
+      "sha256": "7a85e47370fc58e7ec6a452a604917bc566b4e6c7435908e146012ad12889a0f"
+    },
+    {
+      "path": "cohort/23-candidate-UnboxFieldRead-process.json",
+      "bytes": 249,
+      "sha256": "6c1bf77fd160344c4c4de0e488d9c8735355c2a1e8ba105bdef358405daada36"
+    },
+    {
+      "path": "cohort/23-candidate-UnboxFieldRead.json",
+      "bytes": 31696,
+      "sha256": "de971aaea85e77454c62a620f778b5b4f3d42e54912f5ee12df3e7c8857e74ad"
+    },
+    {
+      "path": "cohort/24-candidate-RepeatedConstructor-process.json",
+      "bytes": 247,
+      "sha256": "046493536160be70649197ef1b0751756c986d7a95d65b5de3d3182c7995f6a2"
+    },
+    {
+      "path": "cohort/24-candidate-RepeatedConstructor.json",
+      "bytes": 31740,
+      "sha256": "dc54ee0a8f6ba582cef7abfa06ceba1fc1195eed37908864a16961be942f046b"
+    },
+    {
+      "path": "cohort/cohort.json",
+      "bytes": 27132,
+      "sha256": "cfe4158b5ae9e5588d5fb09e670c9ea1fa60ca309249511fd3ecbeab3b4b689f"
+    },
+    {
+      "path": "cohort.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "execution.json",
+      "bytes": 2968,
+      "sha256": "ebeaa4a8c0abe173891d3571d9f0c0da9457f4822d1698786e59ec2189461b81"
+    }
+  ],
+  "reports": [
+    {
+      "side": "baseline",
+      "name": "Add_0_0",
+      "statistics": {
+        "count": 100,
+        "median": 3.093774499999995,
+        "p95": 4.701564000000076,
+        "p99": 5.0404720000000225,
+        "min": 2.7302250000000186,
+        "max": 5.388022999999976
+      },
+      "chronologicalRows": 121,
+      "guardedInvocations": 121000,
+      "sourceIdentity": "88c861e3a294a249e7a8cdd7319e032d7c29fb35",
+      "reportSHA256": "ceaaffc70514fdacea762c19c5114dcf8e867dc2b866c72ebd8125b261ce5402"
+    },
+    {
+      "side": "candidate",
+      "name": "Add_0_0",
+      "statistics": {
+        "count": 100,
+        "median": 3.0184984999999642,
+        "p95": 3.483292000000006,
+        "p99": 4.858685000000037,
+        "min": 2.7027349999999615,
+        "max": 4.982146000000057
+      },
+      "chronologicalRows": 121,
+      "guardedInvocations": 121000,
+      "sourceIdentity": "407ece8a532bdec026fca808097540eff10aefe3",
+      "reportSHA256": "921ad009655bf3e39fc283adedc2d1243b3a295003ceedde232086b068d31e60"
+    },
+    {
+      "side": "candidate",
+      "name": "Diamond",
+      "statistics": {
+        "count": 100,
+        "median": 3.6690609999999992,
+        "p95": 5.766666999999984,
+        "p99": 6.932706000000053,
+        "min": 3.1077300000000605,
+        "max": 7.05488600000001
+      },
+      "chronologicalRows": 121,
+      "guardedInvocations": 121000,
+      "sourceIdentity": "407ece8a532bdec026fca808097540eff10aefe3",
+      "reportSHA256": "d9a90713706f7c186989270d2bd1c25946461a6321e6a1ce69af110649cb8c0d"
+    },
+    {
+      "side": "baseline",
+      "name": "Diamond",
+      "statistics": {
+        "count": 100,
+        "median": 3.4533929999999486,
+        "p95": 3.9703630000000203,
+        "p99": 4.307039000000032,
+        "min": 3.1221140000000105,
+        "max": 13.14559300000002
+      },
+      "chronologicalRows": 121,
+      "guardedInvocations": 121000,
+      "sourceIdentity": "88c861e3a294a249e7a8cdd7319e032d7c29fb35",
+      "reportSHA256": "edeeedcd6f43073eec08fb096e23683f98095147627a89d33cdeeef4a598b73b"
+    },
+    {
+      "side": "baseline",
+      "name": "MixedJoin",
+      "statistics": {
+        "count": 100,
+        "median": 17.301330500000006,
+        "p95": 24.12100200000009,
+        "p99": 24.300987000000077,
+        "min": 15.441848000000164,
+        "max": 31.701219000000037
+      },
+      "chronologicalRows": 121,
+      "guardedInvocations": 121000,
+      "sourceIdentity": "88c861e3a294a249e7a8cdd7319e032d7c29fb35",
+      "reportSHA256": "0fc2d0d339c1ebdba136333405873fe93da0ceadcaeb90852956f19e4979a946"
+    },
+    {
+      "side": "candidate",
+      "name": "MixedJoin",
+      "statistics": {
+        "count": 100,
+        "median": 18.924580500000047,
+        "p95": 32.910649999999805,
+        "p99": 54.54257000000007,
+        "min": 15.834397999999965,
+        "max": 57.706616000000054
+      },
+      "chronologicalRows": 121,
+      "guardedInvocations": 121000,
+      "sourceIdentity": "407ece8a532bdec026fca808097540eff10aefe3",
+      "reportSHA256": "6b8bedfdab645adea0df001051b50501b37311ef26c3854a623e59ff455740f5"
+    },
+    {
+      "side": "candidate",
+      "name": "ExistingAuthority",
+      "statistics": {
+        "count": 100,
+        "median": 8.500994499999933,
+        "p95": 13.985661000000164,
+        "p99": 14.643809999999803,
+        "min": 7.468671000000086,
+        "max": 17.280700000000024
+      },
+      "chronologicalRows": 121,
+      "guardedInvocations": 121000,
+      "sourceIdentity": "407ece8a532bdec026fca808097540eff10aefe3",
+      "reportSHA256": "930a528c85124218a13583d1ecc463f3f0bbc693f68ef183c368683ce79d369f"
+    },
+    {
+      "side": "baseline",
+      "name": "ExistingAuthority",
+      "statistics": {
+        "count": 100,
+        "median": 9.336504500000046,
+        "p95": 14.436864999999898,
+        "p99": 17.688413000000082,
+        "min": 7.261516000000029,
+        "max": 27.68330200000014
+      },
+      "chronologicalRows": 121,
+      "guardedInvocations": 121000,
+      "sourceIdentity": "88c861e3a294a249e7a8cdd7319e032d7c29fb35",
+      "reportSHA256": "478e1146c5345c87696567430d9055efa941102f78f0278b86ca253cc94550c1"
+    },
+    {
+      "side": "baseline",
+      "name": "LoadOwner",
+      "statistics": {
+        "count": 100,
+        "median": 26.824984000000086,
+        "p95": 40.80483000000004,
+        "p99": 71.69273799999996,
+        "min": 22.103931999999986,
+        "max": 91.03248400000007
+      },
+      "chronologicalRows": 121,
+      "guardedInvocations": 121000,
+      "sourceIdentity": "88c861e3a294a249e7a8cdd7319e032d7c29fb35",
+      "reportSHA256": "697eaec1aa9bbf384df3f0d5163bb3d5273ae81e19a836a9fc06c137b12bc616"
+    },
+    {
+      "side": "candidate",
+      "name": "LoadOwner",
+      "statistics": {
+        "count": 100,
+        "median": 31.50943149999989,
+        "p95": 44.34427599999981,
+        "p99": 45.322103999999854,
+        "min": 22.315013999999792,
+        "max": 46.06604000000016
+      },
+      "chronologicalRows": 121,
+      "guardedInvocations": 121000,
+      "sourceIdentity": "407ece8a532bdec026fca808097540eff10aefe3",
+      "reportSHA256": "8b6e23ee2befa0836ac99fc23251136e8fb13264e4805441c4419f13470e5ec0"
+    },
+    {
+      "side": "candidate",
+      "name": "StoreReferenceDerived",
+      "statistics": {
+        "count": 100,
+        "median": 27.223575499999697,
+        "p95": 49.08897900000011,
+        "p99": 85.71473199999991,
+        "min": 23.55412299999989,
+        "max": 91.07268500000009
+      },
+      "chronologicalRows": 121,
+      "guardedInvocations": 121000,
+      "sourceIdentity": "407ece8a532bdec026fca808097540eff10aefe3",
+      "reportSHA256": "0384802eed94d790b44c2f59c3b61ab7fcd90b1cbedac378c9360bb4afd09b63"
+    },
+    {
+      "side": "baseline",
+      "name": "StoreReferenceDerived",
+      "statistics": {
+        "count": 100,
+        "median": 27.753390500000023,
+        "p95": 40.00862600000005,
+        "p99": 43.73220300000003,
+        "min": 22.63882799999965,
+        "max": 46.50155700000005
+      },
+      "chronologicalRows": 121,
+      "guardedInvocations": 121000,
+      "sourceIdentity": "88c861e3a294a249e7a8cdd7319e032d7c29fb35",
+      "reportSHA256": "16b850790f57969c2c23ad63eacfdc31c84dc92c36aec10e0325b990b2932bb6"
+    },
+    {
+      "side": "baseline",
+      "name": "StringReturn",
+      "statistics": {
+        "count": 100,
+        "median": 2.218203000000017,
+        "p95": 2.546124999999961,
+        "p99": 2.65142000000003,
+        "min": 2.13125500000001,
+        "max": 4.341715000000022
+      },
+      "chronologicalRows": 121,
+      "guardedInvocations": 121000,
+      "sourceIdentity": "88c861e3a294a249e7a8cdd7319e032d7c29fb35",
+      "reportSHA256": "0e367c1684998a45023a2d7a3e0d558ca99352d11a3b213c5a868ae5216985d8"
+    },
+    {
+      "side": "candidate",
+      "name": "StringReturn",
+      "statistics": {
+        "count": 100,
+        "median": 3.938983500000006,
+        "p95": 4.514460999999983,
+        "p99": 7.0009469999999965,
+        "min": 2.229278000000022,
+        "max": 7.811720000000037
+      },
+      "chronologicalRows": 121,
+      "guardedInvocations": 121000,
+      "sourceIdentity": "407ece8a532bdec026fca808097540eff10aefe3",
+      "reportSHA256": "92da5d6a4fe12327457c572012cdbb35b7bed6fa21b69a4c5718e79cb39d91b1"
+    },
+    {
+      "side": "candidate",
+      "name": "LocalAddressRoundtrip",
+      "statistics": {
+        "count": 100,
+        "median": 4.162798500000008,
+        "p95": 7.2507759999999735,
+        "p99": 7.630255000000034,
+        "min": 3.7939509999999927,
+        "max": 7.673348000000033
+      },
+      "chronologicalRows": 121,
+      "guardedInvocations": 121000,
+      "sourceIdentity": "407ece8a532bdec026fca808097540eff10aefe3",
+      "reportSHA256": "8580dfbac8263a32bac2c43b7907f8aae57ec8ff3839be3fca33fba0821e3100"
+    },
+    {
+      "side": "baseline",
+      "name": "LocalAddressRoundtrip",
+      "statistics": {
+        "count": 100,
+        "median": 3.890794000000028,
+        "p95": 4.5581549999999424,
+        "p99": 5.00158799999997,
+        "min": 3.634627000000023,
+        "max": 5.707015999999953
+      },
+      "chronologicalRows": 121,
+      "guardedInvocations": 121000,
+      "sourceIdentity": "88c861e3a294a249e7a8cdd7319e032d7c29fb35",
+      "reportSHA256": "e09576d7d267ed32322d672d209827a32f4c63f0fa4e3d027c64d4247462101e"
+    },
+    {
+      "side": "baseline",
+      "name": "LoadWideInteger",
+      "statistics": {
+        "count": 100,
+        "median": 9.468860500000005,
+        "p95": 10.72131300000001,
+        "p99": 12.433430999999928,
+        "min": 8.687389999999937,
+        "max": 12.644983000000138
+      },
+      "chronologicalRows": 121,
+      "guardedInvocations": 121000,
+      "sourceIdentity": "88c861e3a294a249e7a8cdd7319e032d7c29fb35",
+      "reportSHA256": "77db88cae435743a598b53ff92fec083929ef5d102546ed7ca9f96e9805bd1db"
+    },
+    {
+      "side": "candidate",
+      "name": "LoadWideInteger",
+      "statistics": {
+        "count": 100,
+        "median": 9.51999099999989,
+        "p95": 15.383210999999847,
+        "p99": 19.50849500000004,
+        "min": 8.569968000000017,
+        "max": 22.549097999999958
+      },
+      "chronologicalRows": 121,
+      "guardedInvocations": 121000,
+      "sourceIdentity": "407ece8a532bdec026fca808097540eff10aefe3",
+      "reportSHA256": "13fc59f649ccec4d18323951cced6c803799bc07807173e9b4f061fd0bb30dca"
+    },
+    {
+      "side": "candidate",
+      "name": "NewClass",
+      "statistics": {
+        "count": 100,
+        "median": 32.92408249999983,
+        "p95": 47.428255000000036,
+        "p99": 58.247031000000334,
+        "min": 30.129125000000386,
+        "max": 58.51805999999988
+      },
+      "chronologicalRows": 121,
+      "guardedInvocations": 121000,
+      "sourceIdentity": "407ece8a532bdec026fca808097540eff10aefe3",
+      "reportSHA256": "fedcc03ef5dfb5afc9b6af82bbc795708ae282233026da25e9475098be8efb57"
+    },
+    {
+      "side": "candidate",
+      "name": "NewArguments",
+      "statistics": {
+        "count": 100,
+        "median": 35.67897100000005,
+        "p95": 42.62509,
+        "p99": 52.89415799999961,
+        "min": 32.65752599999996,
+        "max": 59.588527000000795
+      },
+      "chronologicalRows": 121,
+      "guardedInvocations": 121000,
+      "sourceIdentity": "407ece8a532bdec026fca808097540eff10aefe3",
+      "reportSHA256": "e425627ba1e7102a569946452c4e5f58ddbd463cec7d83c8421586364f8586b4"
+    },
+    {
+      "side": "candidate",
+      "name": "BoxValue",
+      "statistics": {
+        "count": 100,
+        "median": 31.847035000000005,
+        "p95": 49.62756300000001,
+        "p99": 53.54825000000005,
+        "min": 26.281602999999905,
+        "max": 79.21115999999984
+      },
+      "chronologicalRows": 121,
+      "guardedInvocations": 121000,
+      "sourceIdentity": "407ece8a532bdec026fca808097540eff10aefe3",
+      "reportSHA256": "d5893032e8a0edc1394f2a303c74a4ed0d391a95b01c7866b008aaccfd06eaff"
+    },
+    {
+      "side": "candidate",
+      "name": "HarmlessAnnotation",
+      "statistics": {
+        "count": 100,
+        "median": 36.34022099999993,
+        "p95": 56.268027000000075,
+        "p99": 61.87556300000006,
+        "min": 29.757286999999906,
+        "max": 64.32252700000026
+      },
+      "chronologicalRows": 121,
+      "guardedInvocations": 121000,
+      "sourceIdentity": "407ece8a532bdec026fca808097540eff10aefe3",
+      "reportSHA256": "7a85e47370fc58e7ec6a452a604917bc566b4e6c7435908e146012ad12889a0f"
+    },
+    {
+      "side": "candidate",
+      "name": "UnboxFieldRead",
+      "statistics": {
+        "count": 100,
+        "median": 33.30049400000007,
+        "p95": 52.8318720000002,
+        "p99": 58.92845500000021,
+        "min": 28.928727999999865,
+        "max": 59.10183099999995
+      },
+      "chronologicalRows": 121,
+      "guardedInvocations": 121000,
+      "sourceIdentity": "407ece8a532bdec026fca808097540eff10aefe3",
+      "reportSHA256": "de971aaea85e77454c62a620f778b5b4f3d42e54912f5ee12df3e7c8857e74ad"
+    },
+    {
+      "side": "candidate",
+      "name": "RepeatedConstructor",
+      "statistics": {
+        "count": 100,
+        "median": 94.8355855000002,
+        "p95": 119.16184900000007,
+        "p99": 126.172728,
+        "min": 68.2548370000004,
+        "max": 126.73040899999978
+      },
+      "chronologicalRows": 121,
+      "guardedInvocations": 121000,
+      "sourceIdentity": "407ece8a532bdec026fca808097540eff10aefe3",
+      "reportSHA256": "dc54ee0a8f6ba582cef7abfa06ceba1fc1195eed37908864a16961be942f046b"
+    }
+  ],
+  "comparisons": [
+    {
+      "name": "Add_0_0",
+      "baseline": {
+        "count": 100,
+        "median": 3.093774499999995,
+        "p95": 4.701564000000076,
+        "p99": 5.0404720000000225,
+        "min": 2.7302250000000186,
+        "max": 5.388022999999976
+      },
+      "candidate": {
+        "count": 100,
+        "median": 3.0184984999999642,
+        "p95": 3.483292000000006,
+        "p99": 4.858685000000037,
+        "min": 2.7027349999999615,
+        "max": 4.982146000000057
+      },
+      "changePercent": {
+        "median": -2.4331443678274223,
+        "p95": -25.912058200208488,
+        "p99": -3.6065471646303138
+      }
+    },
+    {
+      "name": "Diamond",
+      "baseline": {
+        "count": 100,
+        "median": 3.4533929999999486,
+        "p95": 3.9703630000000203,
+        "p99": 4.307039000000032,
+        "min": 3.1221140000000105,
+        "max": 13.14559300000002
+      },
+      "candidate": {
+        "count": 100,
+        "median": 3.6690609999999992,
+        "p95": 5.766666999999984,
+        "p99": 6.932706000000053,
+        "min": 3.1077300000000605,
+        "max": 7.05488600000001
+      },
+      "changePercent": {
+        "median": 6.245104452347405,
+        "p95": 45.2428153294788,
+        "p99": 60.962229503842465
+      }
+    },
+    {
+      "name": "MixedJoin",
+      "baseline": {
+        "count": 100,
+        "median": 17.301330500000006,
+        "p95": 24.12100200000009,
+        "p99": 24.300987000000077,
+        "min": 15.441848000000164,
+        "max": 31.701219000000037
+      },
+      "candidate": {
+        "count": 100,
+        "median": 18.924580500000047,
+        "p95": 32.910649999999805,
+        "p99": 54.54257000000007,
+        "min": 15.834397999999965,
+        "max": 57.706616000000054
+      },
+      "changePercent": {
+        "median": 9.382226413165395,
+        "p95": 36.439812906610115,
+        "p99": 124.4459041931091
+      }
+    },
+    {
+      "name": "ExistingAuthority",
+      "baseline": {
+        "count": 100,
+        "median": 9.336504500000046,
+        "p95": 14.436864999999898,
+        "p99": 17.688413000000082,
+        "min": 7.261516000000029,
+        "max": 27.68330200000014
+      },
+      "candidate": {
+        "count": 100,
+        "median": 8.500994499999933,
+        "p95": 13.985661000000164,
+        "p99": 14.643809999999803,
+        "min": 7.468671000000086,
+        "max": 17.280700000000024
+      },
+      "changePercent": {
+        "median": -8.948852324765754,
+        "p95": -3.1253599725406978,
+        "p99": -17.212414703344304
+      }
+    },
+    {
+      "name": "LoadOwner",
+      "baseline": {
+        "count": 100,
+        "median": 26.824984000000086,
+        "p95": 40.80483000000004,
+        "p99": 71.69273799999996,
+        "min": 22.103931999999986,
+        "max": 91.03248400000007
+      },
+      "candidate": {
+        "count": 100,
+        "median": 31.50943149999989,
+        "p95": 44.34427599999981,
+        "p99": 45.322103999999854,
+        "min": 22.315013999999792,
+        "max": 46.06604000000016
+      },
+      "changePercent": {
+        "median": 17.463002028257655,
+        "p95": 8.674085886400619,
+        "p99": -36.782852399918276
+      }
+    },
+    {
+      "name": "StoreReferenceDerived",
+      "baseline": {
+        "count": 100,
+        "median": 27.753390500000023,
+        "p95": 40.00862600000005,
+        "p99": 43.73220300000003,
+        "min": 22.63882799999965,
+        "max": 46.50155700000005
+      },
+      "candidate": {
+        "count": 100,
+        "median": 27.223575499999697,
+        "p95": 49.08897900000011,
+        "p99": 85.71473199999991,
+        "min": 23.55412299999989,
+        "max": 91.07268500000009
+      },
+      "changePercent": {
+        "median": -1.9090100000586419,
+        "p95": 22.695988110164155,
+        "p99": 95.99911762963293
+      }
+    },
+    {
+      "name": "StringReturn",
+      "baseline": {
+        "count": 100,
+        "median": 2.218203000000017,
+        "p95": 2.546124999999961,
+        "p99": 2.65142000000003,
+        "min": 2.13125500000001,
+        "max": 4.341715000000022
+      },
+      "candidate": {
+        "count": 100,
+        "median": 3.938983500000006,
+        "p95": 4.514460999999983,
+        "p99": 7.0009469999999965,
+        "min": 2.229278000000022,
+        "max": 7.811720000000037
+      },
+      "changePercent": {
+        "median": 77.57542930020276,
+        "p95": 77.30712357013314,
+        "p99": 164.04519087884668
+      }
+    },
+    {
+      "name": "LocalAddressRoundtrip",
+      "baseline": {
+        "count": 100,
+        "median": 3.890794000000028,
+        "p95": 4.5581549999999424,
+        "p99": 5.00158799999997,
+        "min": 3.634627000000023,
+        "max": 5.707015999999953
+      },
+      "candidate": {
+        "count": 100,
+        "median": 4.162798500000008,
+        "p95": 7.2507759999999735,
+        "p99": 7.630255000000034,
+        "min": 3.7939509999999927,
+        "max": 7.673348000000033
+      },
+      "changePercent": {
+        "median": 6.990976648981628,
+        "p95": 59.072607228145266,
+        "p99": 52.556648008594074
+      }
+    },
+    {
+      "name": "LoadWideInteger",
+      "baseline": {
+        "count": 100,
+        "median": 9.468860500000005,
+        "p95": 10.72131300000001,
+        "p99": 12.433430999999928,
+        "min": 8.687389999999937,
+        "max": 12.644983000000138
+      },
+      "candidate": {
+        "count": 100,
+        "median": 9.51999099999989,
+        "p95": 15.383210999999847,
+        "p99": 19.50849500000004,
+        "min": 8.569968000000017,
+        "max": 22.549097999999958
+      },
+      "changePercent": {
+        "median": 0.5399857775905126,
+        "p95": 43.4825286790884,
+        "p99": 56.90355300962504
+      }
+    }
+  ],
+  "guards": {
+    "reports": 24,
+    "chronologicalRowsPerReport": 121,
+    "measuredRowsPerReport": 100,
+    "checkedInvocationsPerReport": 121000,
+    "checkedInvocationsTotal": 2904000,
+    "sourceInputsAndHarnessHashesRecomputed": true,
+    "pairedFixtureCaptureAndChecksumEquality": true,
+    "processExits": 24,
+    "serialTimestampOrder": true,
+    "predefinedOrder": true,
+    "native52SHA256": "038da3f3ca12b21f39c367f726b972b0b89ded606ed66f9157ebeab495996dbb",
+    "nativeOriginal52Unchanged": true,
+    "newExecutions": 0
+  },
+  "validation": "Read-only recomputation of retained files; no product, tests, native tools or benchmark runs.",
+  "sourceReview": {
+    "changedProductFiles": 8,
+    "changedCommonPaths": [
+      "typed-transfers registration adds six object policies",
+      "ops-numeric expands non-integer condition kind set",
+      "numeric-tables broadens managed pointer comparisons to readonly pointers",
+      "typed-relations adds boxed-target exact-identity guard"
+    ],
+    "noNewWorkOnStringReturn": "Literal metadata preparation, decoded cache, primitive signature/ret assignment, stack/worklist and existing descriptors are unchanged. New object factories are invoked only from new object descriptors. No added per-invocation object preparation, metadata scan, allocation or duplicate pass is reachable for StringReturn. The registry has more entries, but these data cannot attribute the timing difference to that change.",
+    "loadOwner": "Exact receiver and int result short-circuit assignment before the new boxed-target relation guard. Field resolver/preparation unchanged.",
+    "numericAndMemory": "Diamond/MixedJoin branch on Int32, so integerValue short-circuits the expanded nonnumeric condition set; numeric merge/error paths are unchanged. LocalAddressRoundtrip and LoadWideInteger do not use changed pointer comparisons.",
+    "storeReferenceDerived": "One required boxed-target guard is added on a nonexact reference assignment; no new loop/allocation. Its median improved while tails regressed.",
+    "recommendation": "No concrete avoidable source work explains the adverse controls; do not make a speculative optimization or waive the gate automatically. Retain all measurements and require explicit reviewer disposition. Profiling or any further cohort needs separate authorization; no noise/GC causal claim is established."
+  }
+}

@@ -1,0 +1,63 @@
+{
+  "format": "sharpforge.pe-inspection.qualification-command",
+  "version": 1,
+  "phase": "native-capture",
+  "attempt": 1,
+  "preparedAt": "2026-10-04T14:12:55.224830+00:00",
+  "cwd": "/workspace/scratch/7e3d2a445c44/sf6-pe-inspection",
+  "command": [
+    "node",
+    "scripts/limited.js",
+    "node",
+    "tests/fixtures/pe-inspection/capture.mjs",
+    "/workspace/scratch/7e3d2a445c44/project6-pe-native.la6vv2ef/native.json",
+    "/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/shared/Microsoft.NETCore.App/10.0.5/System.ComponentModel.Primitives.dll",
+    "/workspace/scratch/7e3d2a445c44/pe-MixedNativeCLI.exe"
+  ],
+  "environment": {
+    "SHARPFORGE_ORACLE_DOTNET": "/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/dotnet",
+    "node": "v24.19.0",
+    "platform": "Linux",
+    "architecture": "x86_64",
+    "osRelease": "6.18.44",
+    "sharedMachine": true,
+    "teamHeavySlot": "exclusive for this capture and focused tests"
+  },
+  "sourceCommit": "bf0d9470e4dc50cfdcafb0a6532cea0892b753d6",
+  "sourceStatus": "",
+  "captureToolSha256": "642d3426023b355e8aa3c9ff7849120ef2358281611f48eb6b67e327b4c43b0a",
+  "observerSourceSha256": "88e65e09949ed19e188f43d984f8cad3ba5b9d3fe75bdfa947d8cfe3b6f9c5d7",
+  "manifestSha256": "9e56632f1210f44eedf55b9652b719932511c82fddf519cda615ae3386b18760",
+  "inputs": [
+    {
+      "id": "r2r",
+      "path": "/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/shared/Microsoft.NETCore.App/10.0.5/System.ComponentModel.Primitives.dll",
+      "bytes": 71432,
+      "sha256": "d34230d85e2dcdd7965812fa9f103e1ea3ebad47a6ec44f60efc5ced0b397c68",
+      "expectedSha256": "d34230d85e2dcdd7965812fa9f103e1ea3ebad47a6ec44f60efc5ced0b397c68"
+    },
+    {
+      "id": "mixed",
+      "path": "/workspace/scratch/7e3d2a445c44/pe-MixedNativeCLI.exe",
+      "bytes": 34816,
+      "sha256": "1bcc83a9da94aeebf0a57f02f254a15e8aebc9157b3e299cb53d1ebc3ce53667",
+      "expectedSha256": "1bcc83a9da94aeebf0a57f02f254a15e8aebc9157b3e299cb53d1ebc3ce53667"
+    }
+  ],
+  "status": "passed",
+  "startedAt": "2026-10-04T14:13:12.554065+00:00",
+  "exitCode": 0,
+  "finishedAt": "2026-10-04T14:13:14.945335+00:00",
+  "artifacts": [
+    {
+      "path": "native.json",
+      "bytes": 231303,
+      "sha256": "bdb094d3714b593bf70a1bac84bb456def0052c0019dc0ecedf1d4b8b2e298e4"
+    },
+    {
+      "path": "capture.log",
+      "bytes": 255,
+      "sha256": "8f174b4f07d2e498d6746c06b61dfada898b578fa62507c6bd0ca030cdac1526"
+    }
+  ]
+}

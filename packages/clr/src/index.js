@@ -8,6 +8,7 @@ export { runtimeFallbacks } from './probing-paths.js';
 export { nearestTargetFramework, selectNugetAssets, assetsFromProject } from './nuget-assets.js';
 export { selectNugetPackage } from './nuget-package.js';
 export { RuntimeAssembly, RuntimeModule } from './assembly.js';
+export { ManifestResourceLocation } from './resources/manifest-index.js';
 export { AssemblyLoadContext, AssemblyLoadSession } from './load-context.js';
 export { AssemblyDependencyGraph } from './dependency-graph.js';
 export { ContextRoots } from './unload.js';

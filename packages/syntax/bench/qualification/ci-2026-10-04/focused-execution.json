@@ -1,0 +1,15 @@
+{
+  "command": [
+    "node",
+    "scripts/limited.js",
+    "node",
+    "--test",
+    "--test-concurrency=1",
+    "tests/syntax-parse-qualification.test.js",
+    "tests/syntax-parse-bench.test.js"
+  ],
+  "cwd": "/workspace/scratch/1692a10afba9/p5-syntax-ci",
+  "startedAtUtc": "2026-10-04T20:20:25.412563+00:00",
+  "finishedAtUtc": "2026-10-04T20:20:30.780395+00:00",
+  "exitCode": 0
+}

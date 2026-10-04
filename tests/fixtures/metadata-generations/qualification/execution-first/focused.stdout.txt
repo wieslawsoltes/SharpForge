@@ -1,0 +1,96 @@
+✔ A03 PE reader exposes all data and CLI directories without executing input (6.862926ms)
+✔ A03 PE header sizes, directory counts and RVA arithmetic are bounded (1.043432ms)
+✔ malformed EncMap rejection leaves every prior generation fact intact (29.639706ms)
+✔ raw delta admission rejects format, identity and unavailable aggregate references (15.349506ms)
+✖ generation order, prior IDs and baseline admission are explicit (3.278303ms)
+✔ retention limits reject before exposing partial generations (1.998034ms)
+✔ cancellation before copying and after physical parsing preserves the previous history (2.321688ms)
+✔ query bounds, nil entities, unsupported handles and control identities stay distinct (1.800995ms)
+✔ signal callbacks cannot publish a reentrant append or revive a disposed history (1.735328ms)
+✔ a generation getter cannot publish a nested append before the outer commit (1.438502ms)
+✔ input extents and copying ignore Uint8Array subclass getters and species (1.643553ms)
+✔ detached input rejection is transactional before and during copying (1.959638ms)
+✔ logical strings ignore added alignment bytes and skip a generation with no string payload (3.383798ms)
+✔ retained native SRM generations agree on rows, introduction mappings, heaps and history (39.662894ms)
+✔ the mixed native corpus includes inserts, updates, a new field and non-ASCII user strings (16.267004ms)
+✔ CLI history separates original definitions, local rows and latest updates (10.570069ms)
+✔ CLI generation heap values span generations without retaining caller-visible backing buffers (2.26104ms)
+✔ CLI reader owns inputs, projections and historical results across append and disposal (1.810288ms)
+✔ CLI delta supports the optional explicit Module EncMap entry (1.32801ms)
+✔ compressed and ordinary uncompressed baselines share the same generation contract (1.813382ms)
+✔ A03 #JTD forces wide table, heap and coded references while preserving UInt16 scalars (2.953567ms)
+✔ A03 #JTD rejects compressed tables, nonempty markers and truncated wide rows (0.920411ms)
+✔ A03 ordinary compressed and uncompressed metadata keep their existing reference widths (1.965365ms)
+✔ optional physical metadata reader bounds retain default decoded facts (7.177979ms)
+✔ optional physical metadata reader rejects invalid bounds (8.530445ms)
+✔ physical metadata parsing checks cancellation before and during row decoding (0.979428ms)
+✔ PE envelope forwards the optional bounds to its existing single metadata decode (5.914684ms)
+✔ PDB delta uses EncMap for methods, scopes and CDI while aggregate signature/resume/kickoff refs stay aggregate (6.004606ms)
+✔ generation/version lookups preserve baseline maps and retain unchanged methods across later updates (2.992044ms)
+✔ foreign baseline, skipped generation, wrong previous identity and content-id mismatches are explicit and atomic (2.443367ms)
+✔ malformed maps cannot fall back to dense interpretation (2.234981ms)
+✔ delta-local method refs and authoritative aggregate row-count boundaries are independently checked (1.992776ms)
+✔ cancellation and byte/row/generation limits leave the previous generation usable (2.154253ms)
+✔ new methods require an EncMap entry and old generations reject methods which did not yet exist (1.101707ms)
+✔ all heap handles retain owned decoded values and precise prefix/payload coordinates (6.283926ms)
+✔ physical heap paging follows byte cursors, includes nil records and distinguishes user-string padding (2.032134ms)
+✔ byte limits preflight before existing decoders; repeated returned heap occurrences consume the page budget (5.214616ms)
+✔ missing heaps, malformed UTF-8/compressed records, nil indexes and invalid options remain distinct (2.786276ms)
+✔ every retained native SRM table row, typed column and heap probe equals the inspector dump (21.167689ms)
+✔ retained native evidence rejects each unsupported legacy table without dropping inspector coverage (21.4202ms)
+✔ all 45 CLI tables have named columns and exact physical scalar/row offsets (11.412726ms)
+✔ heap values, declared reference names, pointer lists and EnC tokens preserve physical identity (1.722965ms)
+✔ paging visits requested rows only and never requests a method body or decorated display (9.020203ms)
+✔ Portable PDB views expose eight schemas and wide external references without invented local rows (144.551975ms)
+✔ raw roots, ArrayBuffers, parsed PEs and subarray images share source-relative file coordinates (23.423661ms)
+✔ minimal delta widths reuse the reader seam while aggregate handles never alias local records (0.822398ms)
+✔ invalid and nil row references stay explicit; reserved tags and overflow never wrap to valid tokens (29.975791ms)
+✔ invalid pages, budgets, cancellation and disposal reject without publishing partial results (8.635659ms)
+✔ A03 all coded indexes change width exactly at their tag-bit boundary and round-trip (499.488029ms)
+✔ A03 all simple indexes round-trip the 65535 and 65536 boundaries (833.611562ms)
+✔ A03 table reader prechecks declared bytes and writer rejects truncating values (1.204679ms)
+ℹ tests 51
+ℹ suites 0
+ℹ pass 50
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 5521.673295
+
+✖ failing tests:
+
+test at tests/a03-24-metadata-generation-boundaries.test.js:57:1
+✖ generation order, prior IDs and baseline admission are explicit (3.278303ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  
+    Comparison {
+  +   code: 'MD_GEN_MAP'
+  -   code: 'MD_GEN_IDENTITY'
+    }
+  
+      at TestContext.<anonymous> (file:///workspace/scratch/7e3d2a445c44/sf6-metadata-generations/tests/a03-24-metadata-generation-boundaries.test.js:60:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: CilError: EncMap inserts must be contiguous
+        at generationError (file:///workspace/scratch/7e3d2a445c44/sf6-metadata-generations/packages/cil/src/metadata/delta-contracts.js:27:17)
+        at generationMap (file:///workspace/scratch/7e3d2a445c44/sf6-metadata-generations/packages/cil/src/metadata/delta-map.js:29:45)
+        at prepareMetadataGeneration (file:///workspace/scratch/7e3d2a445c44/sf6-metadata-generations/packages/cil/src/metadata/delta-input.js:154:30)
+        at MetadataGenerations.append (file:///workspace/scratch/7e3d2a445c44/sf6-metadata-generations/packages/cil/src/metadata/delta-reader.js:51:21)
+        at assert.throws.code (file:///workspace/scratch/7e3d2a445c44/sf6-metadata-generations/tests/a03-24-metadata-generation-boundaries.test.js:60:30)
+        at getActual (node:assert:611:5)
+        at strict.throws (node:assert:759:24)
+        at TestContext.<anonymous> (file:///workspace/scratch/7e3d2a445c44/sf6-metadata-generations/tests/a03-24-metadata-generation-boundaries.test.js:60:10)
+        at Test.runInAsyncScope (node:async_hooks:227:14)
+        at Test.run (node:internal/test_runner/test:1382:25),
+    expected: { code: 'MD_GEN_IDENTITY' },
+    operator: 'throws',
+    diff: 'simple'
+  }

@@ -41,6 +41,25 @@ with exact row accounting and explicit limits on source reconstruction.
 
 0.6 emits actual checked arithmetic/conversion instructions and InterfaceImpl metadata for concrete IDisposable resources, alongside finally cleanup. The canonical loader reconstructs and verifies these supported forms.
 
+## PE inspection
+
+`inspectPE(bytes, options)` returns an owned, versioned, JSON-safe PE/CLI snapshot:
+COFF/optional headers, sections and data directories, CorFlags, raw debug records,
+strong-name facts, and ReadyToRun/mixed-mode classification. UInt64 header values
+are hexadecimal strings. Native code is explicitly not disassembled, and signing
+flags are separate from cryptographic verification. Input, debug-record/payload,
+and strong-name byte budgets support bounded inspection with cancellation.
+
+`AssemblyInspector.summary({ includePE: true, peOptions })` includes the same
+snapshot on full or paged summaries. Available CIL remains inspectable in
+ReadyToRun images even with ILOnly unset. Native, OPTIL, Runtime, and unmanaged IL
+method implementations retain metadata and explicit disassembly status without
+parsing their RVAs as CIL. `methodCodeKind(implFlags)` exposes the shared admission
+classification. `readPEDebugDirectory(parsedPE, options)` returns owned raw debug
+entries; the symbols package reuses it for existing semantic PDB decoding.
+See [PE-INSPECTION.md](PE-INSPECTION.md) for exact fields, limits, ownership,
+cancellation, and reference-evidence boundaries.
+
 ## Parameterless Object construction
 
 `compile` and `compileToIL` support `new object()` and `new System.Object()` through
@@ -221,6 +240,24 @@ Embedded data emission and bounded inspection are documented in [RESOURCES.md](.
 
 Paged named metadata rows, token references, physical file offsets and standard
 heap records are available through [MetadataTableInspector](./METADATA-TABLES.md).
+
+`readMetadata(bytes, { maxRows, signal })` optionally lowers the existing
+one-million-row limit before row allocation. `maxRows` is an integer from zero
+through one million. Cancellation is checked before reading, at stream and row
+boundaries, and before return; it throws `CilError` with code `MD_READ_CANCELED`.
+Parsing remains synchronous. Omitting options preserves the existing physical
+reader and borrowed input/heap views.
+Signals may be null/omitted or objects exposing a boolean `aborted` property,
+including browser and worker signals from another realm. Invalid shapes throw
+`CilError`. `metadataReaderDiagnosticCatalog` documents `MD_READ_CANCELED` and
+`MD_READ_ROW_LIMIT` (the latter applies only when read options were supplied).
+`readPE(bytes, { metadataOptions: { maxRows, signal } })` forwards those same
+bounds to its single metadata decode; other PE options retain their behavior.
+
+[MetadataGenerations](./METADATA-GENERATIONS.md) provides owned CLI baseline/delta
+table and heap views, separate handle-introduction/current-row queries, and
+bounded transactional history. It retains raw delta records and does not apply
+runtime updates or reconstruct metadata list ownership.
 
 Win32 version, manifest and ICO emission is documented in [WIN32-RESOURCES.md](./WIN32-RESOURCES.md).
 

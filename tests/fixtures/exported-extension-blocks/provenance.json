@@ -1,0 +1,34 @@
+{
+  "compiler": "Roslyn C# compiler",
+  "compilerVersion": "5.3.0-2.26153.122 (4d3023de605a78ba3e59e50c657eed70f125c68a)",
+  "sdkVersion": "10.0.201",
+  "targetFramework": "net10.0",
+  "referencePackVersion": "10.0.5",
+  "options": [
+    "-nologo",
+    "-noconfig",
+    "-nostdlib+",
+    "-target:library",
+    "-langversion:14.0",
+    "-nullable:enable",
+    "-deterministic+",
+    "-optimize+",
+    "-debug-"
+  ],
+  "source": {
+    "file": "DeclarationMetadata.cs",
+    "sha256": "e83b549aa22f9166577fa5f8efb03eb9d6d7e9692bf3418b4c9c54260caf4e5f"
+  },
+  "assembly": {
+    "file": "DeclarationMetadata.dll",
+    "sha256": "ab56685a4211891d8c8d4485583503ed64de3adc20d56d48b77f616904465f50"
+  },
+  "reference": {
+    "file": "System.Runtime.dll",
+    "sha256": "05f3d5bd170a583b2a61e21d30e200c567e9c2d46452a8684a686a510cb359e3"
+  },
+  "compilerBinary": {
+    "file": "csc.dll",
+    "sha256": "4913fa70d10c99901edbb825fdedcc92465be08665016a5d258ea45f953624f0"
+  }
+}

@@ -1,0 +1,73 @@
+{
+  "schemaVersion": 1,
+  "sourceHead": "8d1388a1d98238a88ee9c3737cf9d1887fd60aed",
+  "sourceTree": "b4e68b6e0611741f1ae06317201b9a2ef7928b6b",
+  "command": [
+    "node",
+    "scripts/limited.js",
+    "node",
+    "--test",
+    "tests/a05-cil-async-profile.test.js",
+    "tests/a05-cil-async-native.test.js",
+    "tests/a05-cil-async-continuation-roots.test.js",
+    "tests/compiler-module-initialization.test.js"
+  ],
+  "environment": {
+    "DOTNET_ROOT": "/workspace/scratch/1692a10afba9/toolchain/dotnet",
+    "DOTNET": "/workspace/scratch/1692a10afba9/toolchain/dotnet/dotnet",
+    "SHARPFORGE_ORACLE_DOTNET": "/workspace/scratch/1692a10afba9/toolchain/dotnet/dotnet"
+  },
+  "startedAt": "2026-10-04T19:53:06.052700+00:00",
+  "exitCode": 0,
+  "wallSeconds": 24.40664433100028,
+  "finishedAt": "2026-10-04T19:53:30.459524+00:00",
+  "logSha256": "65ee868c8e2ce2551273ee78530d303750a510ff60638a52b722a7f3ea09d598",
+  "parents": [
+    "0b55a29f9ad4af210b36ee9716841792faf7962e",
+    "f009e2949f3311f0ca84a4a6bc694535140d130b"
+  ],
+  "mergeResolution": "Preserve independent async and MetadataGenerations exports in packages/cil/src/index.js. Auto-merged execution-profile.js preserves main module-constructor root and async callback reachability.",
+  "result": {
+    "passed": 42,
+    "failed": 0,
+    "skipped": 0,
+    "cancelled": 0,
+    "nodeDurationMs": 24201.129978,
+    "asyncTests": 16,
+    "moduleInitializationTests": 26,
+    "sdk": "10.0.201",
+    "referencePack": "10.0.5"
+  },
+  "sourceIdentity": {
+    "method": "Static ESM imports and literal dynamic import inventory, resolved from the four test entrypoints; each JS module compared with its HEAD blob. All tracked paths had empty diff before and after execution.",
+    "moduleCount": 1417,
+    "changedModules": [],
+    "untrackedModules": [],
+    "unresolvedImports": [],
+    "beforeAndAfterEqual": true,
+    "rawInventorySha256": "9a12c6442a6edfb21d95f804e134eaab1a1aaf0dd7e75cd539ba45f4d076d918",
+    "rawInventoryBytes": 597122,
+    "trackedDiffBefore": "",
+    "trackedDiffAfter": "",
+    "preservedUntracked": "Unrelated restored files remain outside the tested import graph; no whole-worktree-clean claim."
+  },
+  "preservation": {
+    "directory": "/workspace/scratch/1692a10afba9/p5-cil-async-merge-preserved-f009",
+    "manifestSha256": "98a240b9bdfa4f8470e532541f61698e47a77a42ea4c55e1012f1f275ea49d35",
+    "overlappingFiles": 18,
+    "bytes": 77313,
+    "differentFromMergedMain": 4
+  },
+  "artifacts": {
+    "logs/main-integration-focused.txt": {
+      "bytes": 5080,
+      "sha256": "65ee868c8e2ce2551273ee78530d303750a510ff60638a52b722a7f3ea09d598"
+    },
+    "main-integration-source.json.gz": {
+      "bytes": 87375,
+      "sha256": "70cdf6453d37ab6dba1c7b22c11baf4e3f21b74f2c0812a223c9fcdec8bef7a0"
+    }
+  },
+  "scope": "Same 16 async tests plus compiler-module-initialization.test.js only. No performance recapture, generic addenda, broad tests, browser or Rust/Wasm matrix. Prior performance and adjacent results retain their original source heads.",
+  "processStatus": "The targeted limiter invocation and its children completed; serialized slot released before evidence-only edits."
+}

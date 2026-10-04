@@ -1,3 +1,4 @@
+import {invokeAsync} from './async-intrinsics.js';
 import {invokeDecimal} from './decimal-intrinsics.js';
 import {invokeNullable} from './nullable-intrinsics.js';
 
@@ -6,6 +7,7 @@ const constructors = new Map([
   ['nullable', (vm, definition, descriptor, args) => invokeNullable(vm, definition, args, true)]
 ]);
 const dynamicHandlers = new Map([
+  ['async', invokeAsync],
   ['nullable', (vm, descriptor, args, definition) => invokeNullable(vm, definition, args).value]
 ]);
 const unhandled = Object.freeze({handled: false});

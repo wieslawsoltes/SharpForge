@@ -61,7 +61,8 @@ function externalPdbCounts(stream) {
 }
 
 /** Precheck the entire table payload before creating any row arrays. */
-export function readMetadataTables(streams, bytes) {
+export function readMetadataTables(streams, bytes, budget) {
+  budget?.check();
   const uncompressed = !streams.has('#~') && streams.has('#-');
   const minimalDelta = streams.has('#JTD');
   if (minimalDelta && (!uncompressed || streams.get('#JTD').length !== 0)) {
@@ -85,7 +86,11 @@ export function readMetadataTables(streams, bytes) {
     if (!tableDefinitions[table]) throw new CilError(`Unsupported metadata table ${table}`);
     counts[table] = reader.u32();
     total += counts[table];
-    if (total > 1_000_000) throw new CilError('Metadata row limit exceeded');
+    if (total > (budget?.maxRows ?? 1_000_000)) {
+      const error = new CilError('Metadata row limit exceeded');
+      if (budget) error.code = 'MD_READ_ROW_LIMIT';
+      throw error;
+    }
   }
   const extraData = heapFlags & 0x40 ? reader.u32() : undefined;
   const externalCounts = externalPdbCounts(streams.get('#Pdb'));
@@ -100,6 +105,7 @@ export function readMetadataTables(streams, bytes) {
     rows[table] = [];
     rowOffsets[table] = [];
     for (let index = 0; index < counts[table]; index++) {
+      if (budget && (index & 255) === 0) budget.check();
       rowOffsets[table].push(reader.position);
       rows[table].push(widths[table].map(width => width === 2 ? reader.u16() : reader.u32()));
     }

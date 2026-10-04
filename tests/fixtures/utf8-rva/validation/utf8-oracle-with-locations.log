@@ -1,0 +1,101 @@
+{
+  "modern": {
+    "assemblySha256": "c42e6f38a27e74c8e98c6ef8eb4c865642c078b523b2be59689fc5befd92d120",
+    "assemblyBytes": 7680,
+    "outputSha256": "49e0d179b5b70eb92400970c18714fc3116f366ad86aa096567dd4277fc47155",
+    "fieldRvaCount": 16,
+    "projection": null
+  },
+  "fallback": {
+    "assemblySha256": "f1ef7a311ce826e888906b561521fd54cff058048cd1ac45d4e7d9723073d6c9",
+    "assemblyBytes": 8192,
+    "outputSha256": "d6fbe07d8423b00c7a3426c9f769fcf51b8c049b407b88c874c4cf5d670c88c8",
+    "fieldRvaCount": 14,
+    "projection": {
+      "methodToken": 100667076,
+      "offset": 135716,
+      "originalFlags": 6278,
+      "projectedFlags": 6273,
+      "originalSha256": "05f3d5bd170a583b2a61e21d30e200c567e9c2d46452a8684a686a510cb359e3",
+      "projectedSha256": "6d6bc6d576bfb78bb024093b0b7e84717346113065dc2e643953c344608ed962"
+    }
+  },
+  "missingRequired": {
+    "sourceSha256": "5f2ff972a69cf048abd48bf886879d6d2b30e33015fb6822c4270f7b68765e43",
+    "diagnostics": [
+      [
+        "CS0656",
+        "Missing compiler required member 'System.ReadOnlySpan`1..ctor'"
+      ]
+    ],
+    "locations": [
+      {
+        "code": "CS0656",
+        "message": "Missing compiler required member 'System.ReadOnlySpan`1..ctor'",
+        "file": "Missing.cs",
+        "range": {
+          "start": {
+            "line": 0,
+            "character": 74
+          },
+          "end": {
+            "line": 0,
+            "character": 79
+          }
+        }
+      }
+    ],
+    "methodToken": 100667079,
+    "offset": 135770,
+    "originalFlags": 6278,
+    "projectedFlags": 6273,
+    "originalSha256": "05f3d5bd170a583b2a61e21d30e200c567e9c2d46452a8684a686a510cb359e3",
+    "projectedSha256": "865e7024540bfc89832b085e5a9b5d70c5aa347441e5faba79e38af140909535",
+    "referenceOnly": "succeeded",
+    "repeated": {
+      "sourceSha256": "f9aa8c1fa5eb83d2b0770e6afdf4b03092cb7d568a214dbc55ac7b146604eb44",
+      "diagnostics": [
+        [
+          "CS0656",
+          "Missing compiler required member 'System.ReadOnlySpan`1..ctor'"
+        ],
+        [
+          "CS0656",
+          "Missing compiler required member 'System.ReadOnlySpan`1..ctor'"
+        ]
+      ],
+      "locations": [
+        {
+          "code": "CS0656",
+          "message": "Missing compiler required member 'System.ReadOnlySpan`1..ctor'",
+          "file": "Repeated.cs",
+          "range": {
+            "start": {
+              "line": 2,
+              "character": 46
+            },
+            "end": {
+              "line": 2,
+              "character": 51
+            }
+          }
+        },
+        {
+          "code": "CS0656",
+          "message": "Missing compiler required member 'System.ReadOnlySpan`1..ctor'",
+          "file": "Repeated.cs",
+          "range": {
+            "start": {
+              "line": 3,
+              "character": 47
+            },
+            "end": {
+              "line": 3,
+              "character": 52
+            }
+          }
+        }
+      ]
+    }
+  }
+}

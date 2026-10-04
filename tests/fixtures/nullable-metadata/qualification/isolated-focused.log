@@ -1,0 +1,35 @@
+✔ A02-T05.3 compileToAssembly resolves synthesized delegate framework signatures with registry references (74.421969ms)
+✔ A02-T05.3 compileToAssembly resolves synthesized delegate framework signatures with PE references (80.31431ms)
+✔ A02-T05.3 compileToReferenceAssembly resolves synthesized delegate framework signatures with registry references (4.419315ms)
+✔ A02-T05.3 compileToReferenceAssembly resolves synthesized delegate framework signatures with PE references (3.121877ms)
+✔ A02-T05.3 local nullable constructors, reflection annotations and native consumers match Roslyn (4284.011539ms)
+✔ A02-T05.3 embedded attribute oracle has genuine Roslyn and reference-projection provenance (14.66437ms)
+✔ A02-T05.3 the temporary reference projection changes only two identifiers in a fresh copy (39.654271ms)
+✔ A02-T05.3 both assembly APIs embed complete nullable attributes matching Roslyn (296.214145ms)
+✔ A02-T05.3 existing source constructors are reused independently for Nullable and NullableContext (20.861459ms)
+✔ A02-T05.3 malformed declared nullable contracts fail before an invalid custom attribute can be emitted (12.043218ms)
+✔ A02-T05.3 nullable value wrappers contribute no transform slot of their own (2.274582ms)
+✔ A02-T05.3 nested containing generic types preserve all arguments and custom modifiers (0.447197ms)
+✔ A02-T05.3 pointers and function pointers consume zero slots without changing the ABI (0.495618ms)
+✔ A02-T05.3 a scalar broadcasts but malformed metadata vectors do not partially change the type (0.208366ms)
+✔ A02-T05.3 value-constrained type parameters retain their zero placeholder in composite transforms (0.247944ms)
+✔ A02-T05.3 unresolved generic arguments retain their annotations and original use-site diagnostic (0.301704ms)
+✔ A02-T05.3 the source decoder retains a registry delegate's closed Invoke signature and identity (1.2788ms)
+✔ A02-T05.3 unconstrained and interface-constrained type uses retain the source annotation context (36.749657ms)
+✔ A02-T05.3 emitted annotations match Roslyn under real .NET NullabilityInfoContext (3063.050808ms)
+✔ A02-T05.3 oblivious ordinary declarations do not introduce nullable metadata (90.739476ms)
+✔ A02-T05.3 both assembly APIs preserve return and parameter annotations under a nullable context (41.593641ms)
+✔ A02-T05.3 nullable compilation options keep annotations independent from warnings (48.232077ms)
+✔ A02-T05.3 nullable metadata fixture has genuine pinned Roslyn provenance (1.499734ms)
+✔ A02-T05.3 nullable metadata round-trips like Roslyn on every public signature and constraint target (212.582381ms)
+✔ A02-T08.4 tuple relation fixture records genuine Roslyn provenance (11.155544ms)
+✔ A02-T08.4 tuple names are emitted on bases, interfaces, constraints, events, and synthesized accessors (180.281442ms)
+✔ A02-T08.4 imported tuple names match Roslyn across declaration relations (33.197146ms)
+ℹ tests 27
+ℹ suites 0
+ℹ pass 27
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 16079.121781

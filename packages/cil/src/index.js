@@ -6,6 +6,7 @@ export * from './emitter.js';
 export * from './loader.js';
 export * from './disassembler.js';
 export * from './inspector.js';
+export { inspectPE } from './inspector-pe.js';
 export * from './execution-profile.js';
 export {intrinsicKey,intrinsicDefinitions,intrinsicDefinition} from './intrinsic-profile.js';
 export * from './il-document.js';
@@ -56,3 +57,7 @@ export { AssemblyUsageAnalysis } from './browser/analyzers.js';
 export { MetadataTableInspector } from './inspector-tables.js';
 export { analyzeMaxStack, maxStackDiagnosticCatalog } from './maxstack.js';
 export { fixedStackEffect } from './stack-effects.js';
+export { MetadataGenerations, metadataGenerationDiagnosticCatalog } from './metadata/delta-reader.js';
+
+export {asyncTypes, asyncValueType, asyncMethodDefinition} from './async-profile.js';
+export {asyncStateMachine, asyncCallbackTargets} from './async-state-machines.js';

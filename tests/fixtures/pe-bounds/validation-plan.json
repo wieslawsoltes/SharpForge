@@ -1,0 +1,194 @@
+{
+  "schemaVersion": 1,
+  "issue": 2417,
+  "status": "source-only preparation; nothing executed",
+  "candidate": "/workspace/scratch/7e3d2a445c44/sf6-pe-bounds",
+  "baselineCommit": "75f0caad1c3ea096a656feb2989b867781edc82f",
+  "productCommit": "6e3d26f3ec6abe54699fce1caefa57e9a5c569f5",
+  "environment": {
+    "CI": null,
+    "SHARPFORGE_MAX_PARALLEL_RUNS": "1",
+    "SHARPFORGE_TEST_CONCURRENCY": "1",
+    "SHARPFORGE_MAX_OLD_SPACE_MB": "2048",
+    "SHARPFORGE_ORACLE_DOTNET": "/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/dotnet"
+  },
+  "nativeDirectory": "/workspace/scratch/7e3d2a445c44/project6-pe-bounds-native.cancellation-first",
+  "executionDirectory": "/workspace/scratch/7e3d2a445c44/project6-pe-bounds-execution.cancellation-first",
+  "retainedNative": "tests/fixtures/pe-bounds/reference",
+  "retainedExecution": "tests/fixtures/pe-bounds/qualification/execution-cancellation-first",
+  "native": [
+    "node",
+    "scripts/limited.js",
+    "node",
+    "tests/fixtures/pe-bounds/capture.mjs",
+    "/workspace/scratch/7e3d2a445c44/project6-pe-bounds-native.cancellation-first",
+    "/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/shared/Microsoft.NETCore.App/10.0.5/System.ComponentModel.Primitives.dll",
+    "/workspace/scratch/7e3d2a445c44/pe-MixedNativeCLI.exe"
+  ],
+  "verifyExternal": [
+    "node",
+    "scripts/limited.js",
+    "node",
+    "tests/fixtures/pe-bounds/verify.mjs",
+    "/workspace/scratch/7e3d2a445c44/project6-pe-bounds-native.cancellation-first"
+  ],
+  "retainNative": {
+    "mode": "exclusive byte copies, hash and length equality required",
+    "files": [
+      "native.json",
+      "build-BoundsObserver.stdout.log",
+      "build-BoundsObserver.stderr.log",
+      "observe-authored.stdout.log",
+      "observe-authored.stderr.log",
+      "build-PEObserver.stdout.log",
+      "build-PEObserver.stderr.log",
+      "observe-il.stdout.log",
+      "observe-il.stderr.log",
+      "observe-r2r.stdout.log",
+      "observe-r2r.stderr.log",
+      "observe-mixed.stdout.log",
+      "observe-mixed.stderr.log"
+    ],
+    "excluded": "Supplied images, generated image copies, observer executables, temporary paths and SDK binaries; retain hashes/scalar facts instead."
+  },
+  "verifyRetained": [
+    "node",
+    "scripts/limited.js",
+    "node",
+    "tests/fixtures/pe-bounds/verify.mjs",
+    "tests/fixtures/pe-bounds/reference"
+  ],
+  "focused": [
+    "node",
+    "scripts/limited.js",
+    "node",
+    "--test",
+    "--test-concurrency=1",
+    "tests/a03-09-pe-bounds.test.js",
+    "tests/a03-09-pe-bounds-native.test.js",
+    "tests/a03-03-pe-reader.test.js",
+    "tests/a03-03-layout.test.js",
+    "tests/a13-16-pe-headers.test.js",
+    "tests/a13-16-method-code.test.js",
+    "tests/a13-16-debug-directory.test.js"
+  ],
+  "adjacencyBoundary": "The old a13-16 native-source receipt is preserved; this gate's new strict native test binds current bounds source and reruns its complete real-image comparison. No old assertion is edited or reported passing without execution.",
+  "baselinePreparation": {
+    "path": "/workspace/scratch/7e3d2a445c44/sf6-pe-bounds-baseline-75f0caad",
+    "mode": "Fresh detached --no-checkout worktree; worktree-local noncone sparse config; read-tree -mu HEAD once only in this fresh tree; no install.",
+    "patterns": [
+      "/package.json",
+      "/.gitignore",
+      "/packages/cil/",
+      "/packages/bytecode/",
+      "/packages/framework/",
+      "/packages/bcl-core/",
+      "/packages/bcl-collections/",
+      "!/planning/qualification/inventory/",
+      "!/docs/evidence/",
+      "!/docs/screenshots/"
+    ],
+    "publicAliases": [
+      "cil",
+      "bytecode",
+      "framework",
+      "bcl-core",
+      "bcl-collections"
+    ],
+    "aliasRule": "Each local node_modules/@sharpforge entry resolves to its own checkout's packages/<name>/src/index.js."
+  },
+  "performance": [
+    "node",
+    "scripts/limited.js",
+    "node",
+    "packages/cil/tools/benchmark-pe-bounds.mjs",
+    "--baseline",
+    "/workspace/scratch/7e3d2a445c44/sf6-pe-bounds-baseline-75f0caad",
+    "--r2r",
+    "/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/shared/Microsoft.NETCore.App/10.0.5/System.ComponentModel.Primitives.dll",
+    "--mixed",
+    "/workspace/scratch/7e3d2a445c44/pe-MixedNativeCLI.exe",
+    "--output",
+    "/workspace/scratch/7e3d2a445c44/project6-pe-bounds-performance.cancellation-first"
+  ],
+  "performanceProtocol": {
+    "warmupBatchesPerSide": 20,
+    "measuredBatchesPerSide": 100,
+    "workloads": [
+      {
+        "id": "small",
+        "operations": 128
+      },
+      {
+        "id": "dense96",
+        "operations": 32
+      },
+      {
+        "id": "il",
+        "operations": 64
+      },
+      {
+        "id": "r2r",
+        "operations": 25
+      },
+      {
+        "id": "mixed",
+        "operations": 25
+      }
+    ],
+    "serialChildren": 12,
+    "chronologicalBatches": 1200,
+    "retention": "Every job/result/log/input/report plus outer command/environment/status receipt; no filtering or rerun.",
+    "approval": "No automatic exception or 5% pass; independent review of all favorable and adverse median/p95/p99 costs."
+  },
+  "diskBudgetMiB": {
+    "newBaseline": 20,
+    "nativeTemporaryAndEvidence": 15,
+    "performanceEvidence": 20,
+    "sdkInstall": 0
+  },
+  "schedule": [
+    "Root source review, including exact one-import worker allowance; explicit sole heavy-slot grant",
+    "Native once; inspect; external strict verify; exclusive thirteen-file copy; retained strict verify",
+    "Exact seven-file focused gate once; stop and release on any failure before edits or retry",
+    "Retain actual native/gate/raw command evidence and commit clean source",
+    "Prepare only the fresh sparse exact baseline and run the one fixed twelve-child cohort",
+    "Release slot promptly; preserve every raw result and independently recompute all statistics"
+  ],
+  "unsupportedOrUnrun": [
+    "No browser execution yet; browser.mjs is prepared only",
+    "Other native operating systems not observed; Windows mixed-mode execution on Linux unsupported",
+    "No input assembly execution, source VM/direct CIL/Rust/Wasm parser execution or cryptographic signing verification",
+    "Build/core checks remain a separate gate"
+  ],
+  "qualificationCorrection": {
+    "toolingCommit": "ba67f0b5fd1392b07020b7eb9402088b1e6a5382",
+    "historicalPreparation": "86b9a5509c069ee2bd25e06a62bac4b36a9060e4",
+    "historicalReceipt": "tests/fixtures/pe-bounds/qualification/preparation-86b9a550/receipt.json",
+    "files": [
+      {
+        "path": "scripts/conformance/oracle/toolchain.js",
+        "bytes": 5467,
+        "sha256": "9c3fc59aac8d487f855cc9d2df9d94845dbb529eb918a6f871d66f9006dd5708"
+      },
+      {
+        "path": "tests/fixtures/pe-bounds/capture.mjs",
+        "bytes": 8068,
+        "sha256": "5cc7713aedcf9ae2b85debd1bc380aaa91c70c51cc56f5ee4c866e70af8b1cf3"
+      },
+      {
+        "path": "packages/cil/tools/benchmark-pe-bounds.mjs",
+        "bytes": 8711,
+        "sha256": "ce75e3fb7f3b5d3a343df296b30d182886d2f4ae8b1ff3419be76cfa888f2970"
+      },
+      {
+        "path": "tests/fixtures/pe-bounds/run-step.py",
+        "bytes": 10352,
+        "sha256": "d3d32dbd59cc74601d5148b79f71b8e9de84205918af2252f12a0675f805bc4e"
+      }
+    ],
+    "scope": "Cancellation forwarding, child reaping, partial-output and before/after evidence retention only; product, cases, native expectations, workload/timing/sample protocol unchanged.",
+    "execution": "Source-only; no imports, syntax checks, tests, captures, benchmarks or browser runs.",
+    "review": "Independent source re-review pending; explicit root heavy-slot grant remains required."
+  }
+}

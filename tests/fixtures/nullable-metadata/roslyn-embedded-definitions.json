@@ -1,0 +1,236 @@
+[
+  {
+    "name": "Microsoft.CodeAnalysis.EmbeddedAttribute",
+    "flags": 1048832,
+    "base": "System.Attribute",
+    "fields": [],
+    "methods": [
+      {
+        "name": ".ctor",
+        "flags": 6278,
+        "signature": {
+          "kind": "method",
+          "isStatic": false,
+          "returnType": "void",
+          "parameters": []
+        }
+      }
+    ],
+    "attributes": [
+      {
+        "name": "Microsoft.CodeAnalysis.EmbeddedAttribute",
+        "blob": [
+          1,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "name": "System.Runtime.CompilerServices.CompilerGeneratedAttribute",
+        "blob": [
+          1,
+          0,
+          0,
+          0
+        ]
+      }
+    ]
+  },
+  {
+    "name": "System.Runtime.CompilerServices.NullableAttribute",
+    "flags": 1048832,
+    "base": "System.Attribute",
+    "fields": [
+      {
+        "name": "NullableFlags",
+        "flags": 38,
+        "signature": {
+          "kind": "field",
+          "type": "byte[]"
+        }
+      }
+    ],
+    "methods": [
+      {
+        "name": ".ctor",
+        "flags": 6278,
+        "signature": {
+          "kind": "method",
+          "isStatic": false,
+          "returnType": "void",
+          "parameters": [
+            "byte"
+          ]
+        }
+      },
+      {
+        "name": ".ctor",
+        "flags": 6278,
+        "signature": {
+          "kind": "method",
+          "isStatic": false,
+          "returnType": "void",
+          "parameters": [
+            "byte[]"
+          ]
+        }
+      }
+    ],
+    "attributes": [
+      {
+        "name": "Microsoft.CodeAnalysis.EmbeddedAttribute",
+        "blob": [
+          1,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "name": "System.AttributeUsageAttribute",
+        "blob": [
+          1,
+          0,
+          132,
+          107,
+          0,
+          0,
+          2,
+          0,
+          84,
+          2,
+          13,
+          65,
+          108,
+          108,
+          111,
+          119,
+          77,
+          117,
+          108,
+          116,
+          105,
+          112,
+          108,
+          101,
+          0,
+          84,
+          2,
+          9,
+          73,
+          110,
+          104,
+          101,
+          114,
+          105,
+          116,
+          101,
+          100,
+          0
+        ]
+      },
+      {
+        "name": "System.Runtime.CompilerServices.CompilerGeneratedAttribute",
+        "blob": [
+          1,
+          0,
+          0,
+          0
+        ]
+      }
+    ]
+  },
+  {
+    "name": "System.Runtime.CompilerServices.NullableContextAttribute",
+    "flags": 1048832,
+    "base": "System.Attribute",
+    "fields": [
+      {
+        "name": "Flag",
+        "flags": 38,
+        "signature": {
+          "kind": "field",
+          "type": "byte"
+        }
+      }
+    ],
+    "methods": [
+      {
+        "name": ".ctor",
+        "flags": 6278,
+        "signature": {
+          "kind": "method",
+          "isStatic": false,
+          "returnType": "void",
+          "parameters": [
+            "byte"
+          ]
+        }
+      }
+    ],
+    "attributes": [
+      {
+        "name": "Microsoft.CodeAnalysis.EmbeddedAttribute",
+        "blob": [
+          1,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "name": "System.AttributeUsageAttribute",
+        "blob": [
+          1,
+          0,
+          76,
+          20,
+          0,
+          0,
+          2,
+          0,
+          84,
+          2,
+          13,
+          65,
+          108,
+          108,
+          111,
+          119,
+          77,
+          117,
+          108,
+          116,
+          105,
+          112,
+          108,
+          101,
+          0,
+          84,
+          2,
+          9,
+          73,
+          110,
+          104,
+          101,
+          114,
+          105,
+          116,
+          101,
+          100,
+          0
+        ]
+      },
+      {
+        "name": "System.Runtime.CompilerServices.CompilerGeneratedAttribute",
+        "blob": [
+          1,
+          0,
+          0,
+          0
+        ]
+      }
+    ]
+  }
+]

@@ -233,7 +233,7 @@ export class SourceAssemblyCore {
         bindConstraintClauses(
           [...type.typeParameters],
           syntax.constraintClauses,
-          t => this.bindType(t, scope).type,
+          t => this.bindType(t, scope),
           (n, c, a) => this.report(uri, n, c, a),
           { ownerDisplay: type.toDisplayString(), useFeature: (node, feature) => this.host.useFeature?.(uri, node, feature) },
         );

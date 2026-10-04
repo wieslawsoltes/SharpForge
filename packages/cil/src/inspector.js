@@ -3,7 +3,7 @@ import { assemblySummary } from './browser/summary.js';
 import { inspectorCallGraph } from './browser/analyzers-call-graph.js';
 import { metadataTokenUri, resolveMetadataUri } from './browser/navigation.js';
 import { readSignature, token, decodeCoded } from './metadata.js';
-import { describedInspectorMethod } from './inspector-method.js';
+import { describedInspectorMethod, inspectorMethodDefinition } from './inspector-method.js';
 import { CilError, Reader, text } from './binary.js';
 export { ilLabel } from './inspector-method.js';
 export const tokenHex = value=>'0x'+value.toString(16).padStart(8,'0');
@@ -21,7 +21,7 @@ export class AssemblyInspector {
         this.owners.set(ft,type);this.fields.set(ft,field);type.fields.push(field);
       }
       for(const mt of md.list(t,'MethodList')){
-        const mr=md.row(mt),method={token:mt,owner:type.name,ownerToken:t,name:md.string(mr[3]),flags:mr[2],implFlags:mr[1],rva:mr[0],hasBody:mr[0]!==0,isEntryPoint:mt===this.pe.entryPoint};
+        const method=inspectorMethodDefinition(md,mt,type,this.pe);
         this.owners.set(mt,type);this.methods.set(mt,method);type.methods.push(method);
       }
     }

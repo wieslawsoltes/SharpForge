@@ -1,3 +1,4 @@
+import {visitInlineValueReferences} from './value-reference-inventory.js';
 import {beginHeapCollection, endHeapCollection} from './heap-events.js';
 
 /** Existing non-moving mark/sweep policy, shared by standalone and VM heaps. */
@@ -20,7 +21,7 @@ export function collectHeap(heap, extraRoots, isReference) {
       marked[value.h] = epoch;
       markedObjects++;
       work.push(value.h);
-    }
+    } else visitInlineValueReferences(heap, value, add);
   };
   const visit = value => {
     rootsScanned++;

@@ -2,9 +2,9 @@
  * Differential fixtures for SF-A02-T07.5: lambdas converted to `Expression<TDelegate>`.
  *
  * The output fixtures print, for each tree, what `Expression.ToString()` gives on .NET and the node types an
- * `ExpressionVisitor` meets, in visiting order: the shape Roslyn built. SharpForge cannot run them (the runtime has
- * no System.Linq.Expressions), so they are compared with the shape the lowering produces, not with program output
- * (tests/compiler-expression-trees.test.js). The diagnostics fixtures pin what may not appear in a tree.
+ * `ExpressionVisitor` meets, in visiting order: the shape Roslyn built. The older shape test compares the lowering's
+ * description with these pins (tests/compiler-expression-trees.test.js); direct CIL also runs on .NET, while the
+ * source-image runtime has no System.Linq.Expressions. The diagnostics fixtures pin what may not appear in a tree.
  */
 import { cs, out, diag, feature } from './kit.js';
 

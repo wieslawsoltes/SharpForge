@@ -12,6 +12,7 @@ import { resolveAwaitable, untypedAwaitOperand } from '../await.js';
 import { lookupMembers } from '../inheritance.js';
 
 const unknown = ErrorTypeSymbol.unknown;
+const isFunctionOperand = operand => operand.kind === 'MethodGroup' || operand.form === 'lambda';
 const isSource = symbol => {
   for (let s = symbol?.originalDefinition ?? symbol; s; s = s.containingSymbol) if (s.isSource || s.containingAssembly) return true;
   return false;
@@ -37,6 +38,10 @@ export const TypeTestBinding = Base =>
   class extends Base {
     isExpression(syntax) {
       const operand = this.value(syntax.expression ?? syntax.left);
+      if (isFunctionOperand(operand)) {
+        this.report(syntax, DiagnosticId.CS0837);
+        return this.bad(syntax, { operand });
+      }
       if (syntax.kind === 'IsPatternExpression') {
         const pattern = this.pattern(syntax.pattern, operand.type, operand);
         return this.node('IsPattern', syntax, this.core.bool, { operand, pattern });
@@ -93,6 +98,10 @@ export const TypeTestBinding = Base =>
       const operand = this.value(syntax.left ?? syntax.expression),
         type = this.bindType(syntax.right ?? syntax.type).type;
       if (operand.hasErrors || type.isErrorType()) return this.bad(syntax);
+      if (isFunctionOperand(operand)) {
+        this.report(syntax, DiagnosticId.CS0837);
+        return this.bad(syntax, { operand });
+      }
       if (!asOperatorTargetValid(type)) {
         this.report(
           syntax,
@@ -122,9 +131,6 @@ export const TypeTestBinding = Base =>
           this.report(syntax, DiagnosticId.CS0039, [this.display(operand.type), this.display(type)]);
           return this.bad(syntax);
         }
-      } else if (operand.kind === 'MethodGroup' || operand.form === 'lambda') {
-        this.report(syntax, DiagnosticId.CS0837);
-        return this.bad(syntax);
       }
       return this.node('As', syntax, type, { operand, targetType: type });
     }

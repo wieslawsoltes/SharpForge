@@ -1,0 +1,281 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-10-04 16:28:57 UTC",
+  "baseline": "88c861e3a294a249e7a8cdd7319e032d7c29fb35",
+  "candidateAndHarness": "407ece8a532bdec026fca808097540eff10aefe3",
+  "originalBytes": 786744,
+  "originalFiles": 51,
+  "copyPolicy": "Byte-exact copies, including original absolute path strings; no output filtering, normalization or data deletion. Independent review copied separately unchanged.",
+  "files": [
+    {
+      "path": "performance-407ece8a/cohort/01-baseline-Add_0_0-process.json",
+      "bytes": 244,
+      "sha256": "901dd2083dc8ee61aa7559afb83ad115cc52346d9c37a027d473ca9242edd46a"
+    },
+    {
+      "path": "performance-407ece8a/cohort/01-baseline-Add_0_0.json",
+      "bytes": 31066,
+      "sha256": "ceaaffc70514fdacea762c19c5114dcf8e867dc2b866c72ebd8125b261ce5402"
+    },
+    {
+      "path": "performance-407ece8a/cohort/02-candidate-Add_0_0-process.json",
+      "bytes": 244,
+      "sha256": "f5971ecc8e613c29155a4212397a5bb8c8d24fda18abf53f182df868f2570482"
+    },
+    {
+      "path": "performance-407ece8a/cohort/02-candidate-Add_0_0.json",
+      "bytes": 31079,
+      "sha256": "921ad009655bf3e39fc283adedc2d1243b3a295003ceedde232086b068d31e60"
+    },
+    {
+      "path": "performance-407ece8a/cohort/03-candidate-Diamond-process.json",
+      "bytes": 243,
+      "sha256": "a7f2331b2ffd9a8123cd4537edefed1d50172a920695df990ac7a35c0d82ebed"
+    },
+    {
+      "path": "performance-407ece8a/cohort/03-candidate-Diamond.json",
+      "bytes": 31006,
+      "sha256": "d9a90713706f7c186989270d2bd1c25946461a6321e6a1ce69af110649cb8c0d"
+    },
+    {
+      "path": "performance-407ece8a/cohort/04-baseline-Diamond-process.json",
+      "bytes": 245,
+      "sha256": "01e5909fabeaa72b52cbdcaac273a43493a8ae2001d781a89c1fbeb69f9b2d12"
+    },
+    {
+      "path": "performance-407ece8a/cohort/04-baseline-Diamond.json",
+      "bytes": 31030,
+      "sha256": "edeeedcd6f43073eec08fb096e23683f98095147627a89d33cdeeef4a598b73b"
+    },
+    {
+      "path": "performance-407ece8a/cohort/05-baseline-MixedJoin-process.json",
+      "bytes": 248,
+      "sha256": "305b7ebfeecb79a8ae3b07414985b874e65d86ba2d99f1f63c09aac414fc7471"
+    },
+    {
+      "path": "performance-407ece8a/cohort/05-baseline-MixedJoin.json",
+      "bytes": 31060,
+      "sha256": "0fc2d0d339c1ebdba136333405873fe93da0ceadcaeb90852956f19e4979a946"
+    },
+    {
+      "path": "performance-407ece8a/cohort/06-candidate-MixedJoin-process.json",
+      "bytes": 248,
+      "sha256": "91df7f8338550eb355e452c5ebf06f4eec6a903460592f9d56cdce4f8abe8eba"
+    },
+    {
+      "path": "performance-407ece8a/cohort/06-candidate-MixedJoin.json",
+      "bytes": 31057,
+      "sha256": "6b8bedfdab645adea0df001051b50501b37311ef26c3854a623e59ff455740f5"
+    },
+    {
+      "path": "performance-407ece8a/cohort/07-candidate-ExistingAuthority-process.json",
+      "bytes": 255,
+      "sha256": "f17d51cbd6dddbff87daab57fff829ed03baaee29f930158ddbcdd1335f6af7f"
+    },
+    {
+      "path": "performance-407ece8a/cohort/07-candidate-ExistingAuthority.json",
+      "bytes": 30931,
+      "sha256": "930a528c85124218a13583d1ecc463f3f0bbc693f68ef183c368683ce79d369f"
+    },
+    {
+      "path": "performance-407ece8a/cohort/08-baseline-ExistingAuthority-process.json",
+      "bytes": 254,
+      "sha256": "c4189e031e2730b2cc7f819f212162a9aaed8d5a4b03e95f8056767e85bf36fd"
+    },
+    {
+      "path": "performance-407ece8a/cohort/08-baseline-ExistingAuthority.json",
+      "bytes": 30958,
+      "sha256": "478e1146c5345c87696567430d9055efa941102f78f0278b86ca253cc94550c1"
+    },
+    {
+      "path": "performance-407ece8a/cohort/09-baseline-LoadOwner-process.json",
+      "bytes": 246,
+      "sha256": "aa8a92dac4cf2c2cc8c93e4f642690691dea7b4a3de210dc2dbf2818cc5222db"
+    },
+    {
+      "path": "performance-407ece8a/cohort/09-baseline-LoadOwner.json",
+      "bytes": 31548,
+      "sha256": "697eaec1aa9bbf384df3f0d5163bb3d5273ae81e19a836a9fc06c137b12bc616"
+    },
+    {
+      "path": "performance-407ece8a/cohort/10-candidate-LoadOwner-process.json",
+      "bytes": 246,
+      "sha256": "167f0a774195de9ab42d30957fbf8dfcb5888c528bebde5b5e69e0e60f821f61"
+    },
+    {
+      "path": "performance-407ece8a/cohort/10-candidate-LoadOwner.json",
+      "bytes": 31542,
+      "sha256": "8b6e23ee2befa0836ac99fc23251136e8fb13264e4805441c4419f13470e5ec0"
+    },
+    {
+      "path": "performance-407ece8a/cohort/11-candidate-StoreReferenceDerived-process.json",
+      "bytes": 257,
+      "sha256": "12976b5a500984fb3aeedd479f23eaee414068d9ce9cff2d07b3e6479047a8cb"
+    },
+    {
+      "path": "performance-407ece8a/cohort/11-candidate-StoreReferenceDerived.json",
+      "bytes": 31579,
+      "sha256": "0384802eed94d790b44c2f59c3b61ab7fcd90b1cbedac378c9360bb4afd09b63"
+    },
+    {
+      "path": "performance-407ece8a/cohort/12-baseline-StoreReferenceDerived-process.json",
+      "bytes": 257,
+      "sha256": "8ffde4991bd233e3177101d38292bb364ed092359a0ded9dc71e31395f27a334"
+    },
+    {
+      "path": "performance-407ece8a/cohort/12-baseline-StoreReferenceDerived.json",
+      "bytes": 31497,
+      "sha256": "16b850790f57969c2c23ad63eacfdc31c84dc92c36aec10e0325b990b2932bb6"
+    },
+    {
+      "path": "performance-407ece8a/cohort/13-baseline-StringReturn-process.json",
+      "bytes": 245,
+      "sha256": "b7bc312bcc263e967e13f1bed0e00955bc417b17034bdb30772d8f25713de563"
+    },
+    {
+      "path": "performance-407ece8a/cohort/13-baseline-StringReturn.json",
+      "bytes": 31279,
+      "sha256": "0e367c1684998a45023a2d7a3e0d558ca99352d11a3b213c5a868ae5216985d8"
+    },
+    {
+      "path": "performance-407ece8a/cohort/14-candidate-StringReturn-process.json",
+      "bytes": 248,
+      "sha256": "50f91e162990c014f84f1e4c3bb13a8b6d132afaf995081a3267c625c4048532"
+    },
+    {
+      "path": "performance-407ece8a/cohort/14-candidate-StringReturn.json",
+      "bytes": 31293,
+      "sha256": "92da5d6a4fe12327457c572012cdbb35b7bed6fa21b69a4c5718e79cb39d91b1"
+    },
+    {
+      "path": "performance-407ece8a/cohort/15-candidate-LocalAddressRoundtrip-process.json",
+      "bytes": 258,
+      "sha256": "3c8eda2fd29f706dd66dc9a11575f4a6731e3e0ef228f4e5e35aca85b646c0a0"
+    },
+    {
+      "path": "performance-407ece8a/cohort/15-candidate-LocalAddressRoundtrip.json",
+      "bytes": 30980,
+      "sha256": "8580dfbac8263a32bac2c43b7907f8aae57ec8ff3839be3fca33fba0821e3100"
+    },
+    {
+      "path": "performance-407ece8a/cohort/16-baseline-LocalAddressRoundtrip-process.json",
+      "bytes": 256,
+      "sha256": "ff7a3149c78fdf48265bd020079e07c934110feab95f6801b6f930fc60f8a40b"
+    },
+    {
+      "path": "performance-407ece8a/cohort/16-baseline-LocalAddressRoundtrip.json",
+      "bytes": 31002,
+      "sha256": "e09576d7d267ed32322d672d209827a32f4c63f0fa4e3d027c64d4247462101e"
+    },
+    {
+      "path": "performance-407ece8a/cohort/17-baseline-LoadWideInteger-process.json",
+      "bytes": 252,
+      "sha256": "d23c0d773d1eb766f762ca5f622cf19837f6d3bc71c5c010c81ad316ab1a644c"
+    },
+    {
+      "path": "performance-407ece8a/cohort/17-baseline-LoadWideInteger.json",
+      "bytes": 30965,
+      "sha256": "77db88cae435743a598b53ff92fec083929ef5d102546ed7ca9f96e9805bd1db"
+    },
+    {
+      "path": "performance-407ece8a/cohort/18-candidate-LoadWideInteger-process.json",
+      "bytes": 251,
+      "sha256": "8959d4a2ca3154c33dc6c47e355c64ddbcdd1f412967e201fd99ecbf194667d6"
+    },
+    {
+      "path": "performance-407ece8a/cohort/18-candidate-LoadWideInteger.json",
+      "bytes": 30948,
+      "sha256": "13fc59f649ccec4d18323951cced6c803799bc07807173e9b4f061fd0bb30dca"
+    },
+    {
+      "path": "performance-407ece8a/cohort/19-candidate-NewClass-process.json",
+      "bytes": 246,
+      "sha256": "b51d97161e41a253adc547a9c053b4608d011c61318b1ef687d0317d180573c2"
+    },
+    {
+      "path": "performance-407ece8a/cohort/19-candidate-NewClass.json",
+      "bytes": 31444,
+      "sha256": "fedcc03ef5dfb5afc9b6af82bbc795708ae282233026da25e9475098be8efb57"
+    },
+    {
+      "path": "performance-407ece8a/cohort/20-candidate-NewArguments-process.json",
+      "bytes": 239,
+      "sha256": "fb5dcb7bb80fd84eced5c38c4247ea373bec1a7d921d4d43ff27be03f4b739e6"
+    },
+    {
+      "path": "performance-407ece8a/cohort/20-candidate-NewArguments.json",
+      "bytes": 31553,
+      "sha256": "e425627ba1e7102a569946452c4e5f58ddbd463cec7d83c8421586364f8586b4"
+    },
+    {
+      "path": "performance-407ece8a/cohort/21-candidate-BoxValue-process.json",
+      "bytes": 245,
+      "sha256": "94013365123c04cff4311adf93d151a7811501d3aae077a823e85e5407a256e5"
+    },
+    {
+      "path": "performance-407ece8a/cohort/21-candidate-BoxValue.json",
+      "bytes": 31714,
+      "sha256": "d5893032e8a0edc1394f2a303c74a4ed0d391a95b01c7866b008aaccfd06eaff"
+    },
+    {
+      "path": "performance-407ece8a/cohort/22-candidate-HarmlessAnnotation-process.json",
+      "bytes": 255,
+      "sha256": "9c15bbcac0f8e523092a917d53a13fc65517958078aacd41ce081f1b794d5a12"
+    },
+    {
+      "path": "performance-407ece8a/cohort/22-candidate-HarmlessAnnotation.json",
+      "bytes": 31699,
+      "sha256": "7a85e47370fc58e7ec6a452a604917bc566b4e6c7435908e146012ad12889a0f"
+    },
+    {
+      "path": "performance-407ece8a/cohort/23-candidate-UnboxFieldRead-process.json",
+      "bytes": 249,
+      "sha256": "6c1bf77fd160344c4c4de0e488d9c8735355c2a1e8ba105bdef358405daada36"
+    },
+    {
+      "path": "performance-407ece8a/cohort/23-candidate-UnboxFieldRead.json",
+      "bytes": 31696,
+      "sha256": "de971aaea85e77454c62a620f778b5b4f3d42e54912f5ee12df3e7c8857e74ad"
+    },
+    {
+      "path": "performance-407ece8a/cohort/24-candidate-RepeatedConstructor-process.json",
+      "bytes": 247,
+      "sha256": "046493536160be70649197ef1b0751756c986d7a95d65b5de3d3182c7995f6a2"
+    },
+    {
+      "path": "performance-407ece8a/cohort/24-candidate-RepeatedConstructor.json",
+      "bytes": 31740,
+      "sha256": "dc54ee0a8f6ba582cef7abfa06ceba1fc1195eed37908864a16961be942f046b"
+    },
+    {
+      "path": "performance-407ece8a/cohort/cohort.json",
+      "bytes": 27132,
+      "sha256": "cfe4158b5ae9e5588d5fb09e670c9ea1fa60ca309249511fd3ecbeab3b4b689f"
+    },
+    {
+      "path": "performance-407ece8a/cohort.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "performance-407ece8a/execution.json",
+      "bytes": 2968,
+      "sha256": "ebeaa4a8c0abe173891d3571d9f0c0da9457f4822d1698786e59ec2189461b81"
+    },
+    {
+      "path": "performance-independent-review.json",
+      "bytes": 29890,
+      "sha256": "f44bfe729e8aff788a3dd70c983329afab758e3d18153d8d5a2bb936650b1a78"
+    }
+  ],
+  "disposition": {
+    "kind": "specific automated-review performance exception",
+    "reviewer": "coordinating /root agent",
+    "authorization": "Parent instruction explicitly accepts measured >5% costs for this frozen cohort.",
+    "thresholdPass": false,
+    "humanApprovalClaimed": false,
+    "policyChanged": false,
+    "scope": "All nine existing controls including adverse median/p95/p99 observations in the retained cohort; six new capability costs remain absolute measurements.",
+    "rationale": "Correct six-operation support, retained 52-case native evidence and scoped focused correction, modest absolute per-invocation costs, and source review finding no concrete avoidable work on regressing paths. Causation remains unestablished; data are not dismissed as noise."
+  }
+}

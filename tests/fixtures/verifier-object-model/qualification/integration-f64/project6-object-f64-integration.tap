@@ -1,0 +1,490 @@
+TAP version 13
+# Subtest: real field receivers, stores, accessibility and nominal flow use pinned CoreLib canonical authority
+ok 1 - real field receivers, stores, accessibility and nominal flow use pinned CoreLib canonical authority
+  ---
+  duration_ms: 65.9079
+  type: 'test'
+  ...
+# Subtest: field type confusion, visibility and init-only stores have precise rejected diagnostics
+ok 2 - field type confusion, visibility and init-only stores have precise rejected diagnostics
+  ---
+  duration_ms: 11.969866
+  type: 'test'
+  ...
+# Subtest: missing authority, same-module and absent module facts never turn unknown ancestry into rejection
+ok 3 - missing authority, same-module and absent module facts never turn unknown ancestry into rejection
+  ---
+  duration_ms: 1.92609
+  type: 'test'
+  ...
+# Subtest: normal instances are verified but instance constructors and malformed constructor lookalikes are not
+ok 4 - normal instances are verified but instance constructors and malformed constructor lookalikes are not
+  ---
+  duration_ms: 4.387155
+  type: 'test'
+  ...
+# Subtest: nominal signatures require actual class/value categories and preserve unsupported normalization
+ok 5 - nominal signatures require actual class/value categories and preserve unsupported normalization
+  ---
+  duration_ms: 2.993198
+  type: 'test'
+  ...
+# Subtest: malformed field operands reject and unsupported storage/layout never qualifies
+ok 6 - malformed field operands reject and unsupported storage/layout never qualifies
+  ---
+  duration_ms: 3.805261
+  type: 'test'
+  ...
+# Subtest: nominal local stores compose existing definite assignment without constructor or alias shortcuts
+ok 7 - nominal local stores compose existing definite assignment without constructor or alias shortcuts
+  ---
+  duration_ms: 3.117199
+  type: 'test'
+  ...
+# Subtest: metadata, graph, stack and cancellation budgets remain explicit unknowns through field verification
+ok 8 - metadata, graph, stack and cancellation budgets remain explicit unknowns through field verification
+  ---
+  duration_ms: 7.571534
+  type: 'test'
+  ...
+# Subtest: indirect opcodes check primitive storage, loaded results and stored values through the public verifier
+ok 9 - indirect opcodes check primitive storage, loaded results and stored values through the public verifier
+  ---
+  duration_ms: 37.157145
+  type: 'test'
+  ...
+# Subtest: unresolved storage shapes are distinct from impossible stack or reference kinds
+ok 10 - unresolved storage shapes are distinct from impossible stack or reference kinds
+  ---
+  duration_ms: 3.711743
+  type: 'test'
+  ...
+# Subtest: indirect addresses must be managed pointers and underflow retains precise instruction offsets
+ok 11 - indirect addresses must be managed pointers and underflow retains precise instruction offsets
+  ---
+  duration_ms: 1.894042
+  type: 'test'
+  ...
+# Subtest: registered memory policy accepts readonly loads and rejects readonly stores without forging stack values
+ok 12 - registered memory policy accepts readonly loads and rejects readonly stores without forging stack values
+  ---
+  duration_ms: 1.155207
+  type: 'test'
+  ...
+# Subtest: canonical slot reuse excludes lookalike primitive nodes and unresolved nominal pointees
+ok 13 - canonical slot reuse excludes lookalike primitive nodes and unresolved nominal pointees
+  ---
+  duration_ms: 0.238961
+  type: 'test'
+  ...
+# Subtest: indirect operations compose with definite assignment without inventing initialization through aliases
+ok 14 - indirect operations compose with definite assignment without inventing initialization through aliases
+  ---
+  duration_ms: 1.205221
+  type: 'test'
+  ...
+# Subtest: unsupported pointer lifetimes and prefixes remain unknown and existing cancellation/budgets apply
+ok 15 - unsupported pointer lifetimes and prefixes remain unknown and existing cancellation/budgets apply
+  ---
+  duration_ms: 2.01461
+  type: 'test'
+  ...
+# Subtest: native observations retain exact inputs and declared policy differences without qualifying unknown shapes
+ok 16 - native observations retain exact inputs and declared policy differences without qualifying unknown shapes
+  ---
+  duration_ms: 28.276383
+  type: 'test'
+  ...
+# Subtest: public-only method inspection retains original display shape/order and cache identity
+ok 17 - public-only method inspection retains original display shape/order and cache identity
+  ---
+  duration_ms: 8.78701
+  type: 'test'
+  ...
+# Subtest: typed-first decoding defers display work and public promotion evicts the interim raw entry
+ok 18 - typed-first decoding defers display work and public promotion evicts the interim raw entry
+  ---
+  duration_ms: 2.298126
+  type: 'test'
+  ...
+# Subtest: raw decoding never resolves token display and public formatting failures do not poison its cache
+ok 19 - raw decoding never resolves token display and public formatting failures do not poison its cache
+  ---
+  duration_ms: 1.222697
+  type: 'test'
+  ...
+# Subtest: no-body methods retain complete public shape and invalid MethodDefs retain their diagnostic
+ok 20 - no-body methods retain complete public shape and invalid MethodDefs retain their diagnostic
+  ---
+  duration_ms: 0.903818
+  type: 'test'
+  ...
+# Subtest: typed numeric corpus follows ECMA operand, storage and branch tables
+ok 21 - typed numeric corpus follows ECMA operand, storage and branch tables
+  ---
+  duration_ms: 49.486034
+  type: 'test'
+  ...
+# Subtest: type confusion is rejected independently of the existing height-only admission
+ok 22 - type confusion is rejected independently of the existing height-only admission
+  ---
+  duration_ms: 3.160354
+  type: 'test'
+  ...
+# Subtest: slot, underflow, maxstack and return diagnostics are explicit
+ok 23 - slot, underflow, maxstack and return diagnostics are explicit
+  ---
+  duration_ms: 2.846552
+  type: 'test'
+  ...
+# Subtest: unsupported metadata, bodies and opcodes cannot produce a typed proof
+ok 24 - unsupported metadata, bodies and opcodes cannot produce a typed proof
+  ---
+  duration_ms: 4.222804
+  type: 'test'
+  ...
+# Subtest: a local signature token cannot name a method StandAloneSig
+ok 25 - a local signature token cannot name a method StandAloneSig
+  ---
+  duration_ms: 0.588845
+  type: 'test'
+  ...
+# Subtest: bounded typed propagation checks cancellation, state-copy work and all dataflow limits
+ok 26 - bounded typed propagation checks cancellation, state-copy work and all dataflow limits
+  ---
+  duration_ms: 4.613588
+  type: 'test'
+  ...
+# Subtest: bytecode after a reachable terminator remains unsupported when its policy is missing
+ok 27 - bytecode after a reachable terminator remains unsupported when its policy is missing
+  ---
+  duration_ms: 0.621773
+  type: 'test'
+  ...
+# Subtest: unreachable branches still require an instruction-boundary target
+ok 28 - unreachable branches still require an instruction-boundary target
+  ---
+  duration_ms: 0.55181
+  type: 'test'
+  ...
+# Subtest: primitive storage addresses retain declared element identity and reject double addresses
+ok 29 - primitive storage addresses retain declared element identity and reject double addresses
+  ---
+  duration_ms: 4.953328
+  type: 'test'
+  ...
+# Subtest: all native observations retain exact bytes and explicit predeclared ILVerify differences
+ok 30 - all native observations retain exact bytes and explicit predeclared ILVerify differences
+  ---
+  duration_ms: 32.020243
+  type: 'test'
+  ...
+# Subtest: known harmless and byref-like constructor identities produce distinct policies; names convey no authority
+ok 31 - known harmless and byref-like constructor identities produce distinct policies; names convey no authority
+  ---
+  duration_ms: 38.385696
+  type: 'test'
+  ...
+# Subtest: missing, throwing, async and malformed annotation providers retain stable unknown diagnostics
+ok 32 - missing, throwing, async and malformed annotation providers retain stable unknown diagnostics
+  ---
+  duration_ms: 37.016804
+  type: 'test'
+  ...
+# Subtest: each distinct annotation constructor is classified once across tokens, aliases and duplicate rows
+ok 33 - each distinct annotation constructor is classified once across tokens, aliases and duplicate rows
+  ---
+  duration_ms: 6.738701
+  type: 'test'
+  ...
+# Subtest: classification snapshots scalar facts and reads one provider result per constructor
+ok 34 - classification snapshots scalar facts and reads one provider result per constructor
+  ---
+  duration_ms: 3.106324
+  type: 'test'
+  ...
+# Subtest: nonboxing ref-like conversions stay unknown until the missing lifetime authority is implemented
+ok 35 - nonboxing ref-like conversions stay unknown until the missing lifetime authority is implemented
+  ---
+  duration_ms: 6.851556
+  type: 'test'
+  ...
+# Subtest: attribute constructor metadata is checked before any host classification can grant boxing
+ok 36 - attribute constructor metadata is checked before any host classification can grant boxing
+  ---
+  duration_ms: 11.647933
+  type: 'test'
+  ...
+# Subtest: annotation row and signature-byte limits include zero, exact boundaries and validated hard ceilings
+ok 37 - annotation row and signature-byte limits include zero, exact boundaries and validated hard ceilings
+  ---
+  duration_ms: 47.948575
+  type: 'test'
+  ...
+# Subtest: row scans charge all custom-attribute rows while duplicate signature blobs consume bytes once
+ok 38 - row scans charge all custom-attribute rows while duplicate signature blobs consume bytes once
+  ---
+  duration_ms: 2.649773
+  type: 'test'
+  ...
+# Subtest: newobj uses existing metadata, signature, hierarchy and transfer budgets without weakening their unknown results
+ok 39 - newobj uses existing metadata, signature, hierarchy and transfer budgets without weakening their unknown results
+  ---
+  duration_ms: 7.829453
+  type: 'test'
+  ...
+# Subtest: cancellation before verification, during attribute indexing and after authority invocation never returns proof
+ok 40 - cancellation before verification, during attribute indexing and after authority invocation never returns proof
+  ---
+  duration_ms: 2.807685
+  type: 'test'
+  ...
+# Subtest: unreachable value operands still consume annotation preparation work
+ok 41 - unreachable value operands still consume annotation preparation work
+  ---
+  duration_ms: 1.336444
+  type: 'test'
+  ...
+# Subtest: pinned object observations retain exact CLI bytes, tool identity and one selected caller
+ok 42 - pinned object observations retain exact CLI bytes, tool identity and one selected caller
+  ---
+  duration_ms: 57.458887
+  type: 'test'
+  ...
+# Subtest: an unmatched or ambiguous method filter and process errors cannot become native rejection observations
+ok 43 - an unmatched or ambiguous method filter and process errors cannot become native rejection observations
+  ---
+  duration_ms: 0.59237
+  type: 'test'
+  ...
+# Subtest: nominal construction, casts and boxing use canonical metadata and retain exact rejected or unknown reasons
+ok 44 - nominal construction, casts and boxing use canonical metadata and retain exact rejected or unknown reasons
+  ---
+  duration_ms: 80.744056
+  type: 'test'
+  ...
+# Subtest: constructor contract validates name, staticness, metadata flags, return and implementation before transfers
+ok 45 - constructor contract validates name, staticness, metadata flags, return and implementation before transfers
+  ---
+  duration_ms: 9.473939
+  type: 'test'
+  ...
+# Subtest: object operands validate token kinds and extents including unreachable instructions
+ok 46 - object operands validate token kinds and extents including unreachable instructions
+  ---
+  duration_ms: 5.232397
+  type: 'test'
+  ...
+# Subtest: local TypeRef aliases reuse the same nominal operand identity and retain private-type access checks
+ok 47 - local TypeRef aliases reuse the same nominal operand identity and retain private-type access checks
+  ---
+  duration_ms: 1.83789
+  type: 'test'
+  ...
+# Subtest: repeated local constructors share a proved ordinary base path without losing their declared result type
+ok 48 - repeated local constructors share a proved ordinary base path without losing their declared result type
+  ---
+  duration_ms: 2.162908
+  type: 'test'
+  ...
+# Subtest: constructor caller checks preserve missing authority, generic, byref-return and constructor-body boundaries
+ok 49 - constructor caller checks preserve missing authority, generic, byref-return and constructor-body boundaries
+  ---
+  duration_ms: 3.871498
+  type: 'test'
+  ...
+# Subtest: new object results compose local initialization, stack limits and exact failing IL offsets
+ok 50 - new object results compose local initialization, stack limits and exact failing IL offsets
+  ---
+  duration_ms: 5.301509
+  type: 'test'
+  ...
+# Subtest: unboxed addresses remain readonly while unsupported nominal indirect storage remains unknown
+ok 51 - unboxed addresses remain readonly while unsupported nominal indirect storage remains unknown
+  ---
+  duration_ms: 1.88548
+  type: 'test'
+  ...
+# Subtest: literal and field preparation compose in both instruction orders without changing the object profile
+ok 52 - literal and field preparation compose in both instruction orders without changing the object profile
+  ---
+  duration_ms: 2.58669
+  type: 'test'
+  ...
+# Subtest: object preparation uses raw operands and rejects newly missing annotations on a cached inspector
+ok 53 - object preparation uses raw operands and rejects newly missing annotations on a cached inspector
+  ---
+  duration_ms: 1.055621
+  type: 'test'
+  ...
+# Subtest: literal count and byte limits have explicit defaults, zero boundaries and hard ceilings
+ok 54 - literal count and byte limits have explicit defaults, zero boundaries and hard ceilings
+  ---
+  duration_ms: 18.450317
+  type: 'test'
+  ...
+# Subtest: repeated loads of one token consume one record while distinct tokens consume distinct work
+ok 55 - repeated loads of one token consume one record while distinct tokens consume distinct work
+  ---
+  duration_ms: 4.466242
+  type: 'test'
+  ...
+# Subtest: per-invocation literal budgets apply again after a successful cached-inspector verification
+ok 56 - per-invocation literal budgets apply again after a successful cached-inspector verification
+  ---
+  duration_ms: 0.769711
+  type: 'test'
+  ...
+# Subtest: byte-work limits stop before scanning oversized text and before block propagation
+ok 57 - byte-work limits stop before scanning oversized text and before block propagation
+  ---
+  duration_ms: 56.38883
+  type: 'test'
+  ...
+# Subtest: pre-cancellation and cancellation during a long terminal-marker scan never qualify a method
+ok 58 - pre-cancellation and cancellation during a long terminal-marker scan never qualify a method
+  ---
+  duration_ms: 2.059406
+  type: 'test'
+  ...
+# Subtest: ldstr requires a nonzero \#US token and an in-range record start
+ok 59 - ldstr requires a nonzero \#US token and an in-range record start
+  ---
+  duration_ms: 13.729641
+  type: 'test'
+  ...
+# Subtest: empty, even-length, truncated and reserved compressed \#US records reject
+ok 60 - empty, even-length, truncated and reserved compressed \#US records reject
+  ---
+  duration_ms: 6.782109
+  type: 'test'
+  ...
+# Subtest: missing \#US rejects only when a String literal actually needs the heap
+ok 61 - missing \#US rejects only when a String literal actually needs the heap
+  ---
+  duration_ms: 3.078265
+  type: 'test'
+  ...
+# Subtest: every single-byte character follows the ECMA terminal-marker categories
+ok 62 - every single-byte character follows the ECMA terminal-marker categories
+  ---
+  duration_ms: 221.141028
+  type: 'test'
+  ...
+# Subtest: high bytes and paired or lone surrogates preserve exact UTF-16 units
+ok 63 - high bytes and paired or lone surrogates preserve exact UTF-16 units
+  ---
+  duration_ms: 1.468629
+  type: 'test'
+  ...
+# Subtest: compressed length boundaries charge the complete one-, two- and four-byte record
+ok 64 - compressed length boundaries charge the complete one-, two- and four-byte record
+  ---
+  duration_ms: 2.446876
+  type: 'test'
+  ...
+# Subtest: only addressed records are inspected, including unreachable literal operands
+ok 65 - only addressed records are inspected, including unreachable literal operands
+  ---
+  duration_ms: 0.63937
+  type: 'test'
+  ...
+# Subtest: pinned ILVerify String observations retain exact bytes, tool versions and policy boundaries
+ok 66 - pinned ILVerify String observations retain exact bytes, tool versions and policy boundaries
+  ---
+  duration_ms: 21.739895
+  type: 'test'
+  ...
+# Subtest: string transfers compose primitive storage, reference branches and field policies
+ok 67 - string transfers compose primitive storage, reference branches and field policies
+  ---
+  duration_ms: 37.944065
+  type: 'test'
+  ...
+# Subtest: literal preparation requires no nominal type authority or unrelated metadata budget
+ok 68 - literal preparation requires no nominal type authority or unrelated metadata budget
+  ---
+  duration_ms: 1.736162
+  type: 'test'
+  ...
+# Subtest: mixed field preparation keeps literal errors, offsets and limits independent of metadata authority
+ok 69 - mixed field preparation keeps literal errors, offsets and limits independent of metadata authority
+  ---
+  duration_ms: 3.116101
+  type: 'test'
+  ...
+# Subtest: String stores retain definite-assignment rules and diagnose incompatible storage
+ok 70 - String stores retain definite-assignment rules and diagnose incompatible storage
+  ---
+  duration_ms: 2.451444
+  type: 'test'
+  ...
+# Subtest: literal peak stack and rejected IL offsets follow the actual transfer
+ok 71 - literal peak stack and rejected IL offsets follow the actual transfer
+  ---
+  duration_ms: 1.577498
+  type: 'test'
+  ...
+# Subtest: raw verification avoids String display decoding and preserves later public cache identity
+ok 72 - raw verification avoids String display decoding and preserves later public cache identity
+  ---
+  duration_ms: 4.584438
+  type: 'test'
+  ...
+# Subtest: preexisting display decoding does not bypass later heap validation or literal budgets
+ok 73 - preexisting display decoding does not bypass later heap validation or literal budgets
+  ---
+  duration_ms: 0.947493
+  type: 'test'
+  ...
+# Subtest: unsupported object operations remain explicit even when preceded by a valid literal
+ok 74 - unsupported object operations remain explicit even when preceded by a valid literal
+  ---
+  duration_ms: 0.611028
+  type: 'test'
+  ...
+# Subtest: numeric typed verification skips operand display and needs no resource preparation context
+ok 75 - numeric typed verification skips operand display and needs no resource preparation context
+  ---
+  duration_ms: 12.702692
+  type: 'test'
+  ...
+# Subtest: unreachable field operands retain strict canonical token checks after display decoding is omitted
+ok 76 - unreachable field operands retain strict canonical token checks after display decoding is omitted
+  ---
+  duration_ms: 7.963235
+  type: 'test'
+  ...
+# Subtest: missing policies stop before inspector-backed preparation is requested
+ok 77 - missing policies stop before inspector-backed preparation is requested
+  ---
+  duration_ms: 1.034751
+  type: 'test'
+  ...
+# Subtest: benchmark batch bounds reject invalid work before invoking a workload
+ok 78 - benchmark batch bounds reject invalid work before invoking a workload
+  ---
+  duration_ms: 0.948914
+  type: 'test'
+  ...
+# Subtest: benchmark guards reject a wrong intermediate result even when the final result is correct
+ok 79 - benchmark guards reject a wrong intermediate result even when the final result is correct
+  ---
+  duration_ms: 0.321893
+  type: 'test'
+  ...
+# Subtest: benchmark checks every retained result after the timed operation loop completes
+ok 80 - benchmark checks every retained result after the timed operation loop completes
+  ---
+  duration_ms: 0.2517
+  type: 'test'
+  ...
+1..80
+# tests 80
+# suites 0
+# pass 80
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 5436.173986

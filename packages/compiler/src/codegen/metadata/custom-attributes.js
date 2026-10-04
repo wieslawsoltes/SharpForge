@@ -25,12 +25,18 @@ import { needsTypeSpec } from '../generics.js';
 import { fullNameOf, serializedTypeName } from './serialized-type-names.js';
 import { descriptorOf, valueOf, fixedValues } from './attribute-values.js';
 import { returnAttributeSymbols, returnAttributeSource } from './attribute-targets.js';
+import { writeNullableAttributes } from './nullable-attributes.js';
+import { writeTupleRelationAttributes } from './tuple-relation-attributes.js';
+import { writeCompilerAttributeDefinitions } from './compiler-attribute-definitions.js';
 import { methodSignature, methodSymbolSignature } from './member-signatures.js';
 import { tupleElementNamesOf } from '../../binder/tuples.js';
 import { dynamicTransformFlags } from './dynamic-flags.js';
 import { contractAssemblyOf } from './reference-contracts.js';
 import { explicitInterfaceOf, metadataPropertyName } from './explicit-interface-names.js';
 import { writeParameterAttributes } from './parameter-metadata.js';
+import { writeExtensionBlockAttributes } from './extension-block-attributes.js';
+import { writeUnmanagedAttributes } from './unmanaged-metadata.js';
+import { writeRefSafetyRulesAttribute, writeReadonlyReturnAttribute } from './ref-declaration-metadata.js';
 import { fixedBufferTypeName } from './fixed-buffer-type-name.js';
 import { applyPseudoAttribute } from './pseudo-attributes.js';
 
@@ -124,6 +130,12 @@ export class CustomAttributeWriter {
       for (const { symbol } of plan.events) this.applied(this.writer.eventTokens.get(symbol), symbol);
     }
     if (declaresExtensions) this.wellKnown(ASSEMBLY_TOKEN, EXTENSION);
+    writeExtensionBlockAttributes(this, declaresExtensions);
+    writeUnmanagedAttributes(this);
+    writeRefSafetyRulesAttribute(this);
+    writeNullableAttributes(this);
+    writeTupleRelationAttributes(this);
+    writeCompilerAttributeDefinitions(this);
   }
   method(planned) {
     const symbol = planned.symbol,
@@ -131,6 +143,7 @@ export class CustomAttributeWriter {
     if (planned.associatedSymbol) this.applied(planned.token, planned.associatedSymbol, 'method');
     const returnToken = planned.returnParameterToken, returnSource = returnAttributeSource(planned);
     if (returnToken && returnSource) {
+      writeReadonlyReturnAttribute(this, returnToken, returnSource);
       for (const declaration of returnAttributeSymbols(returnSource)) this.applied(returnToken, declaration, 'return');
       this.tupleElementNames(returnToken, returnSource.returnType);
       this.dynamic(returnToken, returnSource.returnType, isByReference(returnSource.refKind));
@@ -224,7 +237,7 @@ export class CustomAttributeWriter {
   fixedBuffer(parent, { elementType, length }) {
     const shape = { isStatic: false, returnType: this.core.void, parameters: [{ type: this.core.type }, { type: this.core.int }] },
       constructor = this.builder.member(this.builder.typeRef(FIXED_BUFFER), '.ctor', methodSignature(this.types, shape));
-    const name = fixedBufferTypeName(this.types, elementType, serializedTypeName(elementType));
+    const name = fixedBufferTypeName(this.types, elementType, serializedTypeName(elementType, this.types));
     this.add(parent, constructor, encodeCustomAttribute(['System.Type', 'int'], [name, length]));
   }
   /**

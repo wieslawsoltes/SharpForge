@@ -350,7 +350,8 @@ export class TypeBinder {
    */
   bindType(syntax, scope, options = {}) {
     const annotations = this.host.nullableAnnotationsAt?.(scope.uri, syntax.spanStart) ?? false,
-      plain = t => twa(t, t.isReferenceType === true && annotations ? NullableAnnotation.NotAnnotated : NullableAnnotation.Oblivious);
+      plain = t => twa(t, annotations && (t.isReferenceType === true || (t.kind === SymbolKind.TypeParameter && t.isValueType !== true))
+        ? NullableAnnotation.NotAnnotated : NullableAnnotation.Oblivious);
     switch (syntax.kind) {
       case 'PredefinedType': {
         const t = this.core.keyword(syntax.keyword.text);

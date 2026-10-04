@@ -2,7 +2,7 @@ import { VerificationKind as Kind } from './types.js';
 import { isVerificationAssignable } from './type-relations.js';
 import { numericIndex, integerValue, numericResult, numericComparable } from './numeric-tables.js';
 
-const conditionKinds = new Set([Kind.Null, Kind.Object, Kind.ManagedPointer]);
+const conditionKinds = new Set([Kind.Null, Kind.Object, Kind.Boxed, Kind.ManagedPointer, Kind.ReadonlyPointer]);
 
 function assignable(source, target, state) {
   return isVerificationAssignable(source, target, state.relations);

@@ -1,0 +1,23 @@
+{
+  "head": "03bc06bff6d2fef444ceb6f9be56b5a12d65c509",
+  "method": "Read-only traversal of literal ESM import/export specifiers; no compiler execution.",
+  "entries": [
+    "packages/archive/src/index.js",
+    "packages/bcl-collections/src/index.js",
+    "packages/bcl-core/src/index.js",
+    "packages/bytecode/src/index.js",
+    "packages/cil/src/index.js",
+    "packages/compiler/src/index.js",
+    "packages/framework/src/index.js",
+    "packages/symbols/src/index.js",
+    "packages/syntax/src/index.js",
+    "packages/text/src/index.js",
+    "packages/compiler/src/node.js",
+    "tests/compiler-cil-utf8-rva.test.js",
+    "tests/compiler-cil-utf8-rva-reference.test.js",
+    "tests/compiler-cil-utf8-rva-native.test.js"
+  ],
+  "reachableModules": 1198,
+  "edges": 3955,
+  "unknownTargets": []
+}

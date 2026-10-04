@@ -1,3 +1,4 @@
+import {asyncStateMachine} from '@sharpforge/cil';
 import {ManagedFault} from '../heap.js';
 import {createValue, isAggregateType} from './value-types.js';
 import {inspectManagedAddress} from './managed-address.js';
@@ -12,7 +13,8 @@ export function userValueCallType(vm, method, opcode = 'call') {
   if (method.signature.isStatic) return null;
   const table = vm.typeSystem.table(method.genericIdentity ?? method.ownerInstance ?? method.ownerToken);
   if (!table.flags.valueType || !vm.typeSystem.types.has(table.definitionToken)) return null;
-  if (!isAggregateType(table) || table.genericArity || table.typeArguments.length || table.containsGenericParameters ||
+  const machine = asyncStateMachine(vm.inspector, table.name);
+  if (!isAggregateType(table) || !machine && (table.genericArity || table.typeArguments.length) || table.containsGenericParameters ||
       method.signature.genericArity || method.methodArguments?.length ||
       method.signature.returnType.endsWith('&') || !['call', 'newobj'].includes(opcode)) unsupported();
   return table;

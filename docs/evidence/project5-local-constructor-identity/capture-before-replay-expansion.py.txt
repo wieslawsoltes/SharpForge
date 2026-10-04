@@ -1,0 +1,69 @@
+import hashlib
+import json
+import os
+from pathlib import Path
+import re
+import subprocess
+import sys
+import time
+
+root = Path(__file__).resolve().parent
+candidate = Path('/workspace/scratch/1692a10afba9/p5-canonical-object-identity')
+kind = sys.argv[1]
+if kind not in {'baseline', 'baseline-complete', 'candidate', 'original-replays'}:
+    raise SystemExit('Unknown capture selection')
+is_baseline = kind.startswith('baseline')
+directory = root / 'baseline-bd91c105a' if is_baseline else candidate
+inventory_file = root / ('baseline-source-complete.json' if is_baseline else 'candidate-source-complete.json')
+inventory = json.loads(inventory_file.read_text())
+command = ['node', 'scripts/limited.js', 'node', '--test', '--test-concurrency=1', '--test-reporter=tap']
+command += ['tests/compiler-canonical-managed-replay.test.js', 'tests/compiler-direct-cil-adjacent-replay.test.js'] \
+    if kind == 'original-replays' else ['tests/a05-local-constructor-identity.test.js']
+environment = dict(os.environ)
+dotnet = '/workspace/scratch/1692a10afba9/toolchain/dotnet'
+environment.update(DOTNET_ROOT=dotnet, DOTNET=dotnet + '/dotnet', SHARPFORGE_ORACLE_DOTNET=dotnet + '/dotnet')
+
+def digest(data):
+    return hashlib.sha256(data).hexdigest()
+
+def changes():
+    changed = [entry['path'] for entry in inventory['files']
+               if not (directory / entry['path']).is_file()
+               or digest((directory / entry['path']).read_bytes()) != entry['sha256']]
+    for name in inventory['packages']:
+        alias = directory / 'node_modules/@sharpforge' / name
+        if not alias.is_symlink() or alias.resolve() != directory / 'packages' / name:
+            changed.append('node_modules/@sharpforge/' + name)
+    return changed
+
+def head():
+    return subprocess.check_output(['git', 'rev-parse', 'HEAD'], cwd=candidate, text=True).strip()
+
+before = changes()
+if before:
+    raise SystemExit('Source changes before capture: ' + json.dumps(before))
+if not is_baseline and head() != inventory['commit']:
+    raise SystemExit('Candidate worktree head changed')
+log = root / (kind + '.log')
+if log.exists():
+    raise SystemExit('Refusing to replace existing capture: ' + str(log))
+report = {'kind': kind, 'head': inventory['commit'], 'tree': inventory['tree'], 'command': command,
+          'cwd': str(directory), 'sourceInventory': inventory_file.name,
+          'sourceInventorySha256': digest(inventory_file.read_bytes()),
+          'launcherSha256': digest(Path(__file__).read_bytes()),
+          'environment': {key: environment[key] for key in ['DOTNET_ROOT', 'DOTNET', 'SHARPFORGE_ORACLE_DOTNET']},
+          'startedUtc': time.strftime('%Y-%m-%dT%H:%M:%SZ', time.gmtime())}
+started = time.perf_counter()
+with log.open('xb') as stream:
+    process = subprocess.run(command, cwd=directory, env=environment, stdout=stream, stderr=subprocess.STDOUT)
+report.update(exitCode=process.returncode, wallSeconds=time.perf_counter() - started,
+              changedSourceFiles=changes(), logSha256=digest(log.read_bytes()), logBytes=log.stat().st_size)
+if not is_baseline:
+    report['headAfter'] = head()
+    report['statusAfter'] = subprocess.check_output(['git', 'status', '--short'], cwd=candidate, text=True)
+report['tapSummary'] = dict(re.findall(r'^# (tests|pass|fail|cancelled|skipped|todo|duration_ms) ([\d.]+)$', log.read_text(), re.MULTILINE))
+(root / (kind + '.json')).write_text(json.dumps(report, indent=2) + '\n')
+print(json.dumps(report, indent=2))
+if report['changedSourceFiles'] or not is_baseline and report['headAfter'] != report['head']:
+    raise SystemExit('Source changed during capture')
+raise SystemExit(process.returncode)
