@@ -1,0 +1,5679 @@
+{
+  "schemaVersion": 1,
+  "sdk": "10.0.201",
+  "runtime": "10.0.5",
+  "os": "macOS 26.6.0",
+  "architecture": "Arm64",
+  "culture": "",
+  "sourceSha256": "e34348a3792f85c4b715f86a1df04e8a36d33c3a8ae47abe491695f26b8b4829",
+  "rows": [
+    {
+      "id": "ordinal/empty/4/StartsWith",
+      "group": "ordinal",
+      "method": "StartsWith",
+      "receiver": [],
+      "value": [],
+      "mode": 4,
+      "copyValue": false,
+      "sameReference": true,
+      "result": true,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/empty/4/EndsWith",
+      "group": "ordinal",
+      "method": "EndsWith",
+      "receiver": [],
+      "value": [],
+      "mode": 4,
+      "copyValue": false,
+      "sameReference": true,
+      "result": true,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/empty/5/StartsWith",
+      "group": "ordinal",
+      "method": "StartsWith",
+      "receiver": [],
+      "value": [],
+      "mode": 5,
+      "copyValue": false,
+      "sameReference": true,
+      "result": true,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/empty/5/EndsWith",
+      "group": "ordinal",
+      "method": "EndsWith",
+      "receiver": [],
+      "value": [],
+      "mode": 5,
+      "copyValue": false,
+      "sameReference": true,
+      "result": true,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/empty-value/4/StartsWith",
+      "group": "ordinal",
+      "method": "StartsWith",
+      "receiver": [
+        97,
+        98,
+        99
+      ],
+      "value": [],
+      "mode": 4,
+      "copyValue": false,
+      "sameReference": false,
+      "result": true,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/empty-value/4/EndsWith",
+      "group": "ordinal",
+      "method": "EndsWith",
+      "receiver": [
+        97,
+        98,
+        99
+      ],
+      "value": [],
+      "mode": 4,
+      "copyValue": false,
+      "sameReference": false,
+      "result": true,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/empty-value/5/StartsWith",
+      "group": "ordinal",
+      "method": "StartsWith",
+      "receiver": [
+        97,
+        98,
+        99
+      ],
+      "value": [],
+      "mode": 5,
+      "copyValue": false,
+      "sameReference": false,
+      "result": true,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/empty-value/5/EndsWith",
+      "group": "ordinal",
+      "method": "EndsWith",
+      "receiver": [
+        97,
+        98,
+        99
+      ],
+      "value": [],
+      "mode": 5,
+      "copyValue": false,
+      "sameReference": false,
+      "result": true,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/empty-receiver/4/StartsWith",
+      "group": "ordinal",
+      "method": "StartsWith",
+      "receiver": [],
+      "value": [
+        97
+      ],
+      "mode": 4,
+      "copyValue": false,
+      "sameReference": false,
+      "result": false,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/empty-receiver/4/EndsWith",
+      "group": "ordinal",
+      "method": "EndsWith",
+      "receiver": [],
+      "value": [
+        97
+      ],
+      "mode": 4,
+      "copyValue": false,
+      "sameReference": false,
+      "result": false,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/empty-receiver/5/StartsWith",
+      "group": "ordinal",
+      "method": "StartsWith",
+      "receiver": [],
+      "value": [
+        97
+      ],
+      "mode": 5,
+      "copyValue": false,
+      "sameReference": false,
+      "result": false,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/empty-receiver/5/EndsWith",
+      "group": "ordinal",
+      "method": "EndsWith",
+      "receiver": [],
+      "value": [
+        97
+      ],
+      "mode": 5,
+      "copyValue": false,
+      "sameReference": false,
+      "result": false,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/identity/4/StartsWith",
+      "group": "ordinal",
+      "method": "StartsWith",
+      "receiver": [
+        115,
+        97,
+        109,
+        101
+      ],
+      "value": [
+        115,
+        97,
+        109,
+        101
+      ],
+      "mode": 4,
+      "copyValue": false,
+      "sameReference": true,
+      "result": true,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/identity/4/EndsWith",
+      "group": "ordinal",
+      "method": "EndsWith",
+      "receiver": [
+        115,
+        97,
+        109,
+        101
+      ],
+      "value": [
+        115,
+        97,
+        109,
+        101
+      ],
+      "mode": 4,
+      "copyValue": false,
+      "sameReference": true,
+      "result": true,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/identity/5/StartsWith",
+      "group": "ordinal",
+      "method": "StartsWith",
+      "receiver": [
+        115,
+        97,
+        109,
+        101
+      ],
+      "value": [
+        115,
+        97,
+        109,
+        101
+      ],
+      "mode": 5,
+      "copyValue": false,
+      "sameReference": true,
+      "result": true,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/identity/5/EndsWith",
+      "group": "ordinal",
+      "method": "EndsWith",
+      "receiver": [
+        115,
+        97,
+        109,
+        101
+      ],
+      "value": [
+        115,
+        97,
+        109,
+        101
+      ],
+      "mode": 5,
+      "copyValue": false,
+      "sameReference": true,
+      "result": true,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/allocated-equal/4/StartsWith",
+      "group": "ordinal",
+      "method": "StartsWith",
+      "receiver": [
+        115,
+        97,
+        109,
+        101
+      ],
+      "value": [
+        115,
+        97,
+        109,
+        101
+      ],
+      "mode": 4,
+      "copyValue": true,
+      "sameReference": false,
+      "result": true,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/allocated-equal/4/EndsWith",
+      "group": "ordinal",
+      "method": "EndsWith",
+      "receiver": [
+        115,
+        97,
+        109,
+        101
+      ],
+      "value": [
+        115,
+        97,
+        109,
+        101
+      ],
+      "mode": 4,
+      "copyValue": true,
+      "sameReference": false,
+      "result": true,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/allocated-equal/5/StartsWith",
+      "group": "ordinal",
+      "method": "StartsWith",
+      "receiver": [
+        115,
+        97,
+        109,
+        101
+      ],
+      "value": [
+        115,
+        97,
+        109,
+        101
+      ],
+      "mode": 5,
+      "copyValue": true,
+      "sameReference": false,
+      "result": true,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/allocated-equal/5/EndsWith",
+      "group": "ordinal",
+      "method": "EndsWith",
+      "receiver": [
+        115,
+        97,
+        109,
+        101
+      ],
+      "value": [
+        115,
+        97,
+        109,
+        101
+      ],
+      "mode": 5,
+      "copyValue": true,
+      "sameReference": false,
+      "result": true,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/ascii-prefix/4/StartsWith",
+      "group": "ordinal",
+      "method": "StartsWith",
+      "receiver": [
+        97,
+        98,
+        99,
+        100,
+        101,
+        102
+      ],
+      "value": [
+        97,
+        98,
+        99
+      ],
+      "mode": 4,
+      "copyValue": false,
+      "sameReference": false,
+      "result": true,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/ascii-prefix/4/EndsWith",
+      "group": "ordinal",
+      "method": "EndsWith",
+      "receiver": [
+        97,
+        98,
+        99,
+        100,
+        101,
+        102
+      ],
+      "value": [
+        97,
+        98,
+        99
+      ],
+      "mode": 4,
+      "copyValue": false,
+      "sameReference": false,
+      "result": false,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/ascii-prefix/5/StartsWith",
+      "group": "ordinal",
+      "method": "StartsWith",
+      "receiver": [
+        97,
+        98,
+        99,
+        100,
+        101,
+        102
+      ],
+      "value": [
+        97,
+        98,
+        99
+      ],
+      "mode": 5,
+      "copyValue": false,
+      "sameReference": false,
+      "result": true,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/ascii-prefix/5/EndsWith",
+      "group": "ordinal",
+      "method": "EndsWith",
+      "receiver": [
+        97,
+        98,
+        99,
+        100,
+        101,
+        102
+      ],
+      "value": [
+        97,
+        98,
+        99
+      ],
+      "mode": 5,
+      "copyValue": false,
+      "sameReference": false,
+      "result": false,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/ascii-suffix/4/StartsWith",
+      "group": "ordinal",
+      "method": "StartsWith",
+      "receiver": [
+        97,
+        98,
+        99,
+        100,
+        101,
+        102
+      ],
+      "value": [
+        100,
+        101,
+        102
+      ],
+      "mode": 4,
+      "copyValue": false,
+      "sameReference": false,
+      "result": false,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/ascii-suffix/4/EndsWith",
+      "group": "ordinal",
+      "method": "EndsWith",
+      "receiver": [
+        97,
+        98,
+        99,
+        100,
+        101,
+        102
+      ],
+      "value": [
+        100,
+        101,
+        102
+      ],
+      "mode": 4,
+      "copyValue": false,
+      "sameReference": false,
+      "result": true,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/ascii-suffix/5/StartsWith",
+      "group": "ordinal",
+      "method": "StartsWith",
+      "receiver": [
+        97,
+        98,
+        99,
+        100,
+        101,
+        102
+      ],
+      "value": [
+        100,
+        101,
+        102
+      ],
+      "mode": 5,
+      "copyValue": false,
+      "sameReference": false,
+      "result": false,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/ascii-suffix/5/EndsWith",
+      "group": "ordinal",
+      "method": "EndsWith",
+      "receiver": [
+        97,
+        98,
+        99,
+        100,
+        101,
+        102
+      ],
+      "value": [
+        100,
+        101,
+        102
+      ],
+      "mode": 5,
+      "copyValue": false,
+      "sameReference": false,
+      "result": true,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/ascii-different/4/StartsWith",
+      "group": "ordinal",
+      "method": "StartsWith",
+      "receiver": [
+        97,
+        98,
+        99,
+        100,
+        101,
+        102
+      ],
+      "value": [
+        97,
+        98,
+        100
+      ],
+      "mode": 4,
+      "copyValue": false,
+      "sameReference": false,
+      "result": false,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/ascii-different/4/EndsWith",
+      "group": "ordinal",
+      "method": "EndsWith",
+      "receiver": [
+        97,
+        98,
+        99,
+        100,
+        101,
+        102
+      ],
+      "value": [
+        97,
+        98,
+        100
+      ],
+      "mode": 4,
+      "copyValue": false,
+      "sameReference": false,
+      "result": false,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/ascii-different/5/StartsWith",
+      "group": "ordinal",
+      "method": "StartsWith",
+      "receiver": [
+        97,
+        98,
+        99,
+        100,
+        101,
+        102
+      ],
+      "value": [
+        97,
+        98,
+        100
+      ],
+      "mode": 5,
+      "copyValue": false,
+      "sameReference": false,
+      "result": false,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/ascii-different/5/EndsWith",
+      "group": "ordinal",
+      "method": "EndsWith",
+      "receiver": [
+        97,
+        98,
+        99,
+        100,
+        101,
+        102
+      ],
+      "value": [
+        97,
+        98,
+        100
+      ],
+      "mode": 5,
+      "copyValue": false,
+      "sameReference": false,
+      "result": false,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/longer-value/4/StartsWith",
+      "group": "ordinal",
+      "method": "StartsWith",
+      "receiver": [
+        97,
+        98,
+        99
+      ],
+      "value": [
+        97,
+        98,
+        99,
+        100
+      ],
+      "mode": 4,
+      "copyValue": false,
+      "sameReference": false,
+      "result": false,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/longer-value/4/EndsWith",
+      "group": "ordinal",
+      "method": "EndsWith",
+      "receiver": [
+        97,
+        98,
+        99
+      ],
+      "value": [
+        97,
+        98,
+        99,
+        100
+      ],
+      "mode": 4,
+      "copyValue": false,
+      "sameReference": false,
+      "result": false,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/longer-value/5/StartsWith",
+      "group": "ordinal",
+      "method": "StartsWith",
+      "receiver": [
+        97,
+        98,
+        99
+      ],
+      "value": [
+        97,
+        98,
+        99,
+        100
+      ],
+      "mode": 5,
+      "copyValue": false,
+      "sameReference": false,
+      "result": false,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/longer-value/5/EndsWith",
+      "group": "ordinal",
+      "method": "EndsWith",
+      "receiver": [
+        97,
+        98,
+        99
+      ],
+      "value": [
+        97,
+        98,
+        99,
+        100
+      ],
+      "mode": 5,
+      "copyValue": false,
+      "sameReference": false,
+      "result": false,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/case-prefix/4/StartsWith",
+      "group": "ordinal",
+      "method": "StartsWith",
+      "receiver": [
+        65,
+        98,
+        67,
+        100,
+        101,
+        102
+      ],
+      "value": [
+        97,
+        66,
+        99
+      ],
+      "mode": 4,
+      "copyValue": false,
+      "sameReference": false,
+      "result": false,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/case-prefix/4/EndsWith",
+      "group": "ordinal",
+      "method": "EndsWith",
+      "receiver": [
+        65,
+        98,
+        67,
+        100,
+        101,
+        102
+      ],
+      "value": [
+        97,
+        66,
+        99
+      ],
+      "mode": 4,
+      "copyValue": false,
+      "sameReference": false,
+      "result": false,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/case-prefix/5/StartsWith",
+      "group": "ordinal",
+      "method": "StartsWith",
+      "receiver": [
+        65,
+        98,
+        67,
+        100,
+        101,
+        102
+      ],
+      "value": [
+        97,
+        66,
+        99
+      ],
+      "mode": 5,
+      "copyValue": false,
+      "sameReference": false,
+      "result": true,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/case-prefix/5/EndsWith",
+      "group": "ordinal",
+      "method": "EndsWith",
+      "receiver": [
+        65,
+        98,
+        67,
+        100,
+        101,
+        102
+      ],
+      "value": [
+        97,
+        66,
+        99
+      ],
+      "mode": 5,
+      "copyValue": false,
+      "sameReference": false,
+      "result": false,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/case-suffix/4/StartsWith",
+      "group": "ordinal",
+      "method": "StartsWith",
+      "receiver": [
+        97,
+        98,
+        99,
+        68,
+        101,
+        70
+      ],
+      "value": [
+        100,
+        69,
+        102
+      ],
+      "mode": 4,
+      "copyValue": false,
+      "sameReference": false,
+      "result": false,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/case-suffix/4/EndsWith",
+      "group": "ordinal",
+      "method": "EndsWith",
+      "receiver": [
+        97,
+        98,
+        99,
+        68,
+        101,
+        70
+      ],
+      "value": [
+        100,
+        69,
+        102
+      ],
+      "mode": 4,
+      "copyValue": false,
+      "sameReference": false,
+      "result": false,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/case-suffix/5/StartsWith",
+      "group": "ordinal",
+      "method": "StartsWith",
+      "receiver": [
+        97,
+        98,
+        99,
+        68,
+        101,
+        70
+      ],
+      "value": [
+        100,
+        69,
+        102
+      ],
+      "mode": 5,
+      "copyValue": false,
+      "sameReference": false,
+      "result": false,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/case-suffix/5/EndsWith",
+      "group": "ordinal",
+      "method": "EndsWith",
+      "receiver": [
+        97,
+        98,
+        99,
+        68,
+        101,
+        70
+      ],
+      "value": [
+        100,
+        69,
+        102
+      ],
+      "mode": 5,
+      "copyValue": false,
+      "sameReference": false,
+      "result": true,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/latin-prefix/4/StartsWith",
+      "group": "ordinal",
+      "method": "StartsWith",
+      "receiver": [
+        233,
+        99,
+        108,
+        97,
+        105,
+        114
+      ],
+      "value": [
+        201
+      ],
+      "mode": 4,
+      "copyValue": false,
+      "sameReference": false,
+      "result": false,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/latin-prefix/4/EndsWith",
+      "group": "ordinal",
+      "method": "EndsWith",
+      "receiver": [
+        233,
+        99,
+        108,
+        97,
+        105,
+        114
+      ],
+      "value": [
+        201
+      ],
+      "mode": 4,
+      "copyValue": false,
+      "sameReference": false,
+      "result": false,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/latin-prefix/5/StartsWith",
+      "group": "ordinal",
+      "method": "StartsWith",
+      "receiver": [
+        233,
+        99,
+        108,
+        97,
+        105,
+        114
+      ],
+      "value": [
+        201
+      ],
+      "mode": 5,
+      "copyValue": false,
+      "sameReference": false,
+      "result": true,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/latin-prefix/5/EndsWith",
+      "group": "ordinal",
+      "method": "EndsWith",
+      "receiver": [
+        233,
+        99,
+        108,
+        97,
+        105,
+        114
+      ],
+      "value": [
+        201
+      ],
+      "mode": 5,
+      "copyValue": false,
+      "sameReference": false,
+      "result": false,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/latin-suffix/4/StartsWith",
+      "group": "ordinal",
+      "method": "StartsWith",
+      "receiver": [
+        99,
+        97,
+        102,
+        233
+      ],
+      "value": [
+        201
+      ],
+      "mode": 4,
+      "copyValue": false,
+      "sameReference": false,
+      "result": false,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/latin-suffix/4/EndsWith",
+      "group": "ordinal",
+      "method": "EndsWith",
+      "receiver": [
+        99,
+        97,
+        102,
+        233
+      ],
+      "value": [
+        201
+      ],
+      "mode": 4,
+      "copyValue": false,
+      "sameReference": false,
+      "result": false,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/latin-suffix/5/StartsWith",
+      "group": "ordinal",
+      "method": "StartsWith",
+      "receiver": [
+        99,
+        97,
+        102,
+        233
+      ],
+      "value": [
+        201
+      ],
+      "mode": 5,
+      "copyValue": false,
+      "sameReference": false,
+      "result": false,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/latin-suffix/5/EndsWith",
+      "group": "ordinal",
+      "method": "EndsWith",
+      "receiver": [
+        99,
+        97,
+        102,
+        233
+      ],
+      "value": [
+        201
+      ],
+      "mode": 5,
+      "copyValue": false,
+      "sameReference": false,
+      "result": true,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/sigma/4/StartsWith",
+      "group": "ordinal",
+      "method": "StartsWith",
+      "receiver": [
+        962,
+        963
+      ],
+      "value": [
+        931
+      ],
+      "mode": 4,
+      "copyValue": false,
+      "sameReference": false,
+      "result": false,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/sigma/4/EndsWith",
+      "group": "ordinal",
+      "method": "EndsWith",
+      "receiver": [
+        962,
+        963
+      ],
+      "value": [
+        931
+      ],
+      "mode": 4,
+      "copyValue": false,
+      "sameReference": false,
+      "result": false,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/sigma/5/StartsWith",
+      "group": "ordinal",
+      "method": "StartsWith",
+      "receiver": [
+        962,
+        963
+      ],
+      "value": [
+        931
+      ],
+      "mode": 5,
+      "copyValue": false,
+      "sameReference": false,
+      "result": true,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/sigma/5/EndsWith",
+      "group": "ordinal",
+      "method": "EndsWith",
+      "receiver": [
+        962,
+        963
+      ],
+      "value": [
+        931
+      ],
+      "mode": 5,
+      "copyValue": false,
+      "sameReference": false,
+      "result": true,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/long-s/4/StartsWith",
+      "group": "ordinal",
+      "method": "StartsWith",
+      "receiver": [
+        383
+      ],
+      "value": [
+        83
+      ],
+      "mode": 4,
+      "copyValue": false,
+      "sameReference": false,
+      "result": false,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/long-s/4/EndsWith",
+      "group": "ordinal",
+      "method": "EndsWith",
+      "receiver": [
+        383
+      ],
+      "value": [
+        83
+      ],
+      "mode": 4,
+      "copyValue": false,
+      "sameReference": false,
+      "result": false,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/long-s/5/StartsWith",
+      "group": "ordinal",
+      "method": "StartsWith",
+      "receiver": [
+        383
+      ],
+      "value": [
+        83
+      ],
+      "mode": 5,
+      "copyValue": false,
+      "sameReference": false,
+      "result": false,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/long-s/5/EndsWith",
+      "group": "ordinal",
+      "method": "EndsWith",
+      "receiver": [
+        383
+      ],
+      "value": [
+        83
+      ],
+      "mode": 5,
+      "copyValue": false,
+      "sameReference": false,
+      "result": false,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/turkish-dotless/4/StartsWith",
+      "group": "ordinal",
+      "method": "StartsWith",
+      "receiver": [
+        305
+      ],
+      "value": [
+        73
+      ],
+      "mode": 4,
+      "copyValue": false,
+      "sameReference": false,
+      "result": false,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/turkish-dotless/4/EndsWith",
+      "group": "ordinal",
+      "method": "EndsWith",
+      "receiver": [
+        305
+      ],
+      "value": [
+        73
+      ],
+      "mode": 4,
+      "copyValue": false,
+      "sameReference": false,
+      "result": false,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/turkish-dotless/5/StartsWith",
+      "group": "ordinal",
+      "method": "StartsWith",
+      "receiver": [
+        305
+      ],
+      "value": [
+        73
+      ],
+      "mode": 5,
+      "copyValue": false,
+      "sameReference": false,
+      "result": false,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/turkish-dotless/5/EndsWith",
+      "group": "ordinal",
+      "method": "EndsWith",
+      "receiver": [
+        305
+      ],
+      "value": [
+        73
+      ],
+      "mode": 5,
+      "copyValue": false,
+      "sameReference": false,
+      "result": false,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/turkish-dotted/4/StartsWith",
+      "group": "ordinal",
+      "method": "StartsWith",
+      "receiver": [
+        304
+      ],
+      "value": [
+        105
+      ],
+      "mode": 4,
+      "copyValue": false,
+      "sameReference": false,
+      "result": false,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/turkish-dotted/4/EndsWith",
+      "group": "ordinal",
+      "method": "EndsWith",
+      "receiver": [
+        304
+      ],
+      "value": [
+        105
+      ],
+      "mode": 4,
+      "copyValue": false,
+      "sameReference": false,
+      "result": false,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/turkish-dotted/5/StartsWith",
+      "group": "ordinal",
+      "method": "StartsWith",
+      "receiver": [
+        304
+      ],
+      "value": [
+        105
+      ],
+      "mode": 5,
+      "copyValue": false,
+      "sameReference": false,
+      "result": false,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/turkish-dotted/5/EndsWith",
+      "group": "ordinal",
+      "method": "EndsWith",
+      "receiver": [
+        304
+      ],
+      "value": [
+        105
+      ],
+      "mode": 5,
+      "copyValue": false,
+      "sameReference": false,
+      "result": false,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/sharp-s-expansion/4/StartsWith",
+      "group": "ordinal",
+      "method": "StartsWith",
+      "receiver": [
+        223
+      ],
+      "value": [
+        83,
+        83
+      ],
+      "mode": 4,
+      "copyValue": false,
+      "sameReference": false,
+      "result": false,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/sharp-s-expansion/4/EndsWith",
+      "group": "ordinal",
+      "method": "EndsWith",
+      "receiver": [
+        223
+      ],
+      "value": [
+        83,
+        83
+      ],
+      "mode": 4,
+      "copyValue": false,
+      "sameReference": false,
+      "result": false,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/sharp-s-expansion/5/StartsWith",
+      "group": "ordinal",
+      "method": "StartsWith",
+      "receiver": [
+        223
+      ],
+      "value": [
+        83,
+        83
+      ],
+      "mode": 5,
+      "copyValue": false,
+      "sameReference": false,
+      "result": false,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/sharp-s-expansion/5/EndsWith",
+      "group": "ordinal",
+      "method": "EndsWith",
+      "receiver": [
+        223
+      ],
+      "value": [
+        83,
+        83
+      ],
+      "mode": 5,
+      "copyValue": false,
+      "sameReference": false,
+      "result": false,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/garay/4/StartsWith",
+      "group": "ordinal",
+      "method": "StartsWith",
+      "receiver": [
+        55323,
+        57019
+      ],
+      "value": [
+        55323,
+        56992
+      ],
+      "mode": 4,
+      "copyValue": false,
+      "sameReference": false,
+      "result": false,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/garay/4/EndsWith",
+      "group": "ordinal",
+      "method": "EndsWith",
+      "receiver": [
+        55323,
+        57019
+      ],
+      "value": [
+        55323,
+        56992
+      ],
+      "mode": 4,
+      "copyValue": false,
+      "sameReference": false,
+      "result": false,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/garay/5/StartsWith",
+      "group": "ordinal",
+      "method": "StartsWith",
+      "receiver": [
+        55323,
+        57019
+      ],
+      "value": [
+        55323,
+        56992
+      ],
+      "mode": 5,
+      "copyValue": false,
+      "sameReference": false,
+      "result": false,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/garay/5/EndsWith",
+      "group": "ordinal",
+      "method": "EndsWith",
+      "receiver": [
+        55323,
+        57019
+      ],
+      "value": [
+        55323,
+        56992
+      ],
+      "mode": 5,
+      "copyValue": false,
+      "sameReference": false,
+      "result": false,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/deseret-prefix/4/StartsWith",
+      "group": "ordinal",
+      "method": "StartsWith",
+      "receiver": [
+        55297,
+        56360,
+        120
+      ],
+      "value": [
+        55297,
+        56320
+      ],
+      "mode": 4,
+      "copyValue": false,
+      "sameReference": false,
+      "result": false,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/deseret-prefix/4/EndsWith",
+      "group": "ordinal",
+      "method": "EndsWith",
+      "receiver": [
+        55297,
+        56360,
+        120
+      ],
+      "value": [
+        55297,
+        56320
+      ],
+      "mode": 4,
+      "copyValue": false,
+      "sameReference": false,
+      "result": false,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/deseret-prefix/5/StartsWith",
+      "group": "ordinal",
+      "method": "StartsWith",
+      "receiver": [
+        55297,
+        56360,
+        120
+      ],
+      "value": [
+        55297,
+        56320
+      ],
+      "mode": 5,
+      "copyValue": false,
+      "sameReference": false,
+      "result": true,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/deseret-prefix/5/EndsWith",
+      "group": "ordinal",
+      "method": "EndsWith",
+      "receiver": [
+        55297,
+        56360,
+        120
+      ],
+      "value": [
+        55297,
+        56320
+      ],
+      "mode": 5,
+      "copyValue": false,
+      "sameReference": false,
+      "result": false,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/osage-suffix/4/StartsWith",
+      "group": "ordinal",
+      "method": "StartsWith",
+      "receiver": [
+        120,
+        55297,
+        56536
+      ],
+      "value": [
+        55297,
+        56496
+      ],
+      "mode": 4,
+      "copyValue": false,
+      "sameReference": false,
+      "result": false,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/osage-suffix/4/EndsWith",
+      "group": "ordinal",
+      "method": "EndsWith",
+      "receiver": [
+        120,
+        55297,
+        56536
+      ],
+      "value": [
+        55297,
+        56496
+      ],
+      "mode": 4,
+      "copyValue": false,
+      "sameReference": false,
+      "result": false,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/osage-suffix/5/StartsWith",
+      "group": "ordinal",
+      "method": "StartsWith",
+      "receiver": [
+        120,
+        55297,
+        56536
+      ],
+      "value": [
+        55297,
+        56496
+      ],
+      "mode": 5,
+      "copyValue": false,
+      "sameReference": false,
+      "result": false,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/osage-suffix/5/EndsWith",
+      "group": "ordinal",
+      "method": "EndsWith",
+      "receiver": [
+        120,
+        55297,
+        56536
+      ],
+      "value": [
+        55297,
+        56496
+      ],
+      "mode": 5,
+      "copyValue": false,
+      "sameReference": false,
+      "result": true,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/embedded-null/4/StartsWith",
+      "group": "ordinal",
+      "method": "StartsWith",
+      "receiver": [
+        97,
+        0,
+        66
+      ],
+      "value": [
+        65,
+        0,
+        98
+      ],
+      "mode": 4,
+      "copyValue": false,
+      "sameReference": false,
+      "result": false,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/embedded-null/4/EndsWith",
+      "group": "ordinal",
+      "method": "EndsWith",
+      "receiver": [
+        97,
+        0,
+        66
+      ],
+      "value": [
+        65,
+        0,
+        98
+      ],
+      "mode": 4,
+      "copyValue": false,
+      "sameReference": false,
+      "result": false,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/embedded-null/5/StartsWith",
+      "group": "ordinal",
+      "method": "StartsWith",
+      "receiver": [
+        97,
+        0,
+        66
+      ],
+      "value": [
+        65,
+        0,
+        98
+      ],
+      "mode": 5,
+      "copyValue": false,
+      "sameReference": false,
+      "result": true,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/embedded-null/5/EndsWith",
+      "group": "ordinal",
+      "method": "EndsWith",
+      "receiver": [
+        97,
+        0,
+        66
+      ],
+      "value": [
+        65,
+        0,
+        98
+      ],
+      "mode": 5,
+      "copyValue": false,
+      "sameReference": false,
+      "result": true,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/nul-significant/4/StartsWith",
+      "group": "ordinal",
+      "method": "StartsWith",
+      "receiver": [
+        97,
+        0,
+        98
+      ],
+      "value": [
+        97,
+        98
+      ],
+      "mode": 4,
+      "copyValue": false,
+      "sameReference": false,
+      "result": false,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/nul-significant/4/EndsWith",
+      "group": "ordinal",
+      "method": "EndsWith",
+      "receiver": [
+        97,
+        0,
+        98
+      ],
+      "value": [
+        97,
+        98
+      ],
+      "mode": 4,
+      "copyValue": false,
+      "sameReference": false,
+      "result": false,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/nul-significant/5/StartsWith",
+      "group": "ordinal",
+      "method": "StartsWith",
+      "receiver": [
+        97,
+        0,
+        98
+      ],
+      "value": [
+        97,
+        98
+      ],
+      "mode": 5,
+      "copyValue": false,
+      "sameReference": false,
+      "result": false,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/nul-significant/5/EndsWith",
+      "group": "ordinal",
+      "method": "EndsWith",
+      "receiver": [
+        97,
+        0,
+        98
+      ],
+      "value": [
+        97,
+        98
+      ],
+      "mode": 5,
+      "copyValue": false,
+      "sameReference": false,
+      "result": false,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/normalization/4/StartsWith",
+      "group": "ordinal",
+      "method": "StartsWith",
+      "receiver": [
+        233
+      ],
+      "value": [
+        101,
+        769
+      ],
+      "mode": 4,
+      "copyValue": false,
+      "sameReference": false,
+      "result": false,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/normalization/4/EndsWith",
+      "group": "ordinal",
+      "method": "EndsWith",
+      "receiver": [
+        233
+      ],
+      "value": [
+        101,
+        769
+      ],
+      "mode": 4,
+      "copyValue": false,
+      "sameReference": false,
+      "result": false,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/normalization/5/StartsWith",
+      "group": "ordinal",
+      "method": "StartsWith",
+      "receiver": [
+        233
+      ],
+      "value": [
+        101,
+        769
+      ],
+      "mode": 5,
+      "copyValue": false,
+      "sameReference": false,
+      "result": false,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/normalization/5/EndsWith",
+      "group": "ordinal",
+      "method": "EndsWith",
+      "receiver": [
+        233
+      ],
+      "value": [
+        101,
+        769
+      ],
+      "mode": 5,
+      "copyValue": false,
+      "sameReference": false,
+      "result": false,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/lone-high-equal/4/StartsWith",
+      "group": "ordinal",
+      "method": "StartsWith",
+      "receiver": [
+        55296
+      ],
+      "value": [
+        55296
+      ],
+      "mode": 4,
+      "copyValue": true,
+      "sameReference": false,
+      "result": true,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/lone-high-equal/4/EndsWith",
+      "group": "ordinal",
+      "method": "EndsWith",
+      "receiver": [
+        55296
+      ],
+      "value": [
+        55296
+      ],
+      "mode": 4,
+      "copyValue": true,
+      "sameReference": false,
+      "result": true,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/lone-high-equal/5/StartsWith",
+      "group": "ordinal",
+      "method": "StartsWith",
+      "receiver": [
+        55296
+      ],
+      "value": [
+        55296
+      ],
+      "mode": 5,
+      "copyValue": true,
+      "sameReference": false,
+      "result": true,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/lone-high-equal/5/EndsWith",
+      "group": "ordinal",
+      "method": "EndsWith",
+      "receiver": [
+        55296
+      ],
+      "value": [
+        55296
+      ],
+      "mode": 5,
+      "copyValue": true,
+      "sameReference": false,
+      "result": true,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/lone-high-different/4/StartsWith",
+      "group": "ordinal",
+      "method": "StartsWith",
+      "receiver": [
+        55296
+      ],
+      "value": [
+        55297
+      ],
+      "mode": 4,
+      "copyValue": false,
+      "sameReference": false,
+      "result": false,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/lone-high-different/4/EndsWith",
+      "group": "ordinal",
+      "method": "EndsWith",
+      "receiver": [
+        55296
+      ],
+      "value": [
+        55297
+      ],
+      "mode": 4,
+      "copyValue": false,
+      "sameReference": false,
+      "result": false,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/lone-high-different/5/StartsWith",
+      "group": "ordinal",
+      "method": "StartsWith",
+      "receiver": [
+        55296
+      ],
+      "value": [
+        55297
+      ],
+      "mode": 5,
+      "copyValue": false,
+      "sameReference": false,
+      "result": false,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/lone-high-different/5/EndsWith",
+      "group": "ordinal",
+      "method": "EndsWith",
+      "receiver": [
+        55296
+      ],
+      "value": [
+        55297
+      ],
+      "mode": 5,
+      "copyValue": false,
+      "sameReference": false,
+      "result": false,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/lone-low-case/4/StartsWith",
+      "group": "ordinal",
+      "method": "StartsWith",
+      "receiver": [
+        56320,
+        97
+      ],
+      "value": [
+        56320,
+        65
+      ],
+      "mode": 4,
+      "copyValue": false,
+      "sameReference": false,
+      "result": false,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/lone-low-case/4/EndsWith",
+      "group": "ordinal",
+      "method": "EndsWith",
+      "receiver": [
+        56320,
+        97
+      ],
+      "value": [
+        56320,
+        65
+      ],
+      "mode": 4,
+      "copyValue": false,
+      "sameReference": false,
+      "result": false,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/lone-low-case/5/StartsWith",
+      "group": "ordinal",
+      "method": "StartsWith",
+      "receiver": [
+        56320,
+        97
+      ],
+      "value": [
+        56320,
+        65
+      ],
+      "mode": 5,
+      "copyValue": false,
+      "sameReference": false,
+      "result": true,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/lone-low-case/5/EndsWith",
+      "group": "ordinal",
+      "method": "EndsWith",
+      "receiver": [
+        56320,
+        97
+      ],
+      "value": [
+        56320,
+        65
+      ],
+      "mode": 5,
+      "copyValue": false,
+      "sameReference": false,
+      "result": true,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/malformed-prefix/4/StartsWith",
+      "group": "ordinal",
+      "method": "StartsWith",
+      "receiver": [
+        55296,
+        97,
+        56320,
+        120
+      ],
+      "value": [
+        55296,
+        65,
+        56320
+      ],
+      "mode": 4,
+      "copyValue": false,
+      "sameReference": false,
+      "result": false,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/malformed-prefix/4/EndsWith",
+      "group": "ordinal",
+      "method": "EndsWith",
+      "receiver": [
+        55296,
+        97,
+        56320,
+        120
+      ],
+      "value": [
+        55296,
+        65,
+        56320
+      ],
+      "mode": 4,
+      "copyValue": false,
+      "sameReference": false,
+      "result": false,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/malformed-prefix/5/StartsWith",
+      "group": "ordinal",
+      "method": "StartsWith",
+      "receiver": [
+        55296,
+        97,
+        56320,
+        120
+      ],
+      "value": [
+        55296,
+        65,
+        56320
+      ],
+      "mode": 5,
+      "copyValue": false,
+      "sameReference": false,
+      "result": true,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/malformed-prefix/5/EndsWith",
+      "group": "ordinal",
+      "method": "EndsWith",
+      "receiver": [
+        55296,
+        97,
+        56320,
+        120
+      ],
+      "value": [
+        55296,
+        65,
+        56320
+      ],
+      "mode": 5,
+      "copyValue": false,
+      "sameReference": false,
+      "result": false,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/malformed-suffix/4/StartsWith",
+      "group": "ordinal",
+      "method": "StartsWith",
+      "receiver": [
+        120,
+        55296,
+        97,
+        56320
+      ],
+      "value": [
+        55296,
+        65,
+        56320
+      ],
+      "mode": 4,
+      "copyValue": false,
+      "sameReference": false,
+      "result": false,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/malformed-suffix/4/EndsWith",
+      "group": "ordinal",
+      "method": "EndsWith",
+      "receiver": [
+        120,
+        55296,
+        97,
+        56320
+      ],
+      "value": [
+        55296,
+        65,
+        56320
+      ],
+      "mode": 4,
+      "copyValue": false,
+      "sameReference": false,
+      "result": false,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/malformed-suffix/5/StartsWith",
+      "group": "ordinal",
+      "method": "StartsWith",
+      "receiver": [
+        120,
+        55296,
+        97,
+        56320
+      ],
+      "value": [
+        55296,
+        65,
+        56320
+      ],
+      "mode": 5,
+      "copyValue": false,
+      "sameReference": false,
+      "result": false,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/malformed-suffix/5/EndsWith",
+      "group": "ordinal",
+      "method": "EndsWith",
+      "receiver": [
+        120,
+        55296,
+        97,
+        56320
+      ],
+      "value": [
+        55296,
+        65,
+        56320
+      ],
+      "mode": 5,
+      "copyValue": false,
+      "sameReference": false,
+      "result": true,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/pair-versus-split/4/StartsWith",
+      "group": "ordinal",
+      "method": "StartsWith",
+      "receiver": [
+        55296,
+        56320
+      ],
+      "value": [
+        55296,
+        120,
+        56320
+      ],
+      "mode": 4,
+      "copyValue": false,
+      "sameReference": false,
+      "result": false,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/pair-versus-split/4/EndsWith",
+      "group": "ordinal",
+      "method": "EndsWith",
+      "receiver": [
+        55296,
+        56320
+      ],
+      "value": [
+        55296,
+        120,
+        56320
+      ],
+      "mode": 4,
+      "copyValue": false,
+      "sameReference": false,
+      "result": false,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/pair-versus-split/5/StartsWith",
+      "group": "ordinal",
+      "method": "StartsWith",
+      "receiver": [
+        55296,
+        56320
+      ],
+      "value": [
+        55296,
+        120,
+        56320
+      ],
+      "mode": 5,
+      "copyValue": false,
+      "sameReference": false,
+      "result": false,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/pair-versus-split/5/EndsWith",
+      "group": "ordinal",
+      "method": "EndsWith",
+      "receiver": [
+        55296,
+        56320
+      ],
+      "value": [
+        55296,
+        120,
+        56320
+      ],
+      "mode": 5,
+      "copyValue": false,
+      "sameReference": false,
+      "result": false,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/prefix-split-7/4/StartsWith",
+      "group": "ordinal",
+      "method": "StartsWith",
+      "receiver": [
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        55297,
+        56360
+      ],
+      "value": [
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        55297
+      ],
+      "mode": 4,
+      "copyValue": false,
+      "sameReference": false,
+      "result": false,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/prefix-split-7/4/EndsWith",
+      "group": "ordinal",
+      "method": "EndsWith",
+      "receiver": [
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        55297,
+        56360
+      ],
+      "value": [
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        55297
+      ],
+      "mode": 4,
+      "copyValue": false,
+      "sameReference": false,
+      "result": false,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/prefix-split-7/5/StartsWith",
+      "group": "ordinal",
+      "method": "StartsWith",
+      "receiver": [
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        55297,
+        56360
+      ],
+      "value": [
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        55297
+      ],
+      "mode": 5,
+      "copyValue": false,
+      "sameReference": false,
+      "result": true,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/prefix-split-7/5/EndsWith",
+      "group": "ordinal",
+      "method": "EndsWith",
+      "receiver": [
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        55297,
+        56360
+      ],
+      "value": [
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        55297
+      ],
+      "mode": 5,
+      "copyValue": false,
+      "sameReference": false,
+      "result": false,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/suffix-split-7/4/StartsWith",
+      "group": "ordinal",
+      "method": "StartsWith",
+      "receiver": [
+        55297,
+        56360,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97
+      ],
+      "value": [
+        56360,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65
+      ],
+      "mode": 4,
+      "copyValue": false,
+      "sameReference": false,
+      "result": false,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/suffix-split-7/4/EndsWith",
+      "group": "ordinal",
+      "method": "EndsWith",
+      "receiver": [
+        55297,
+        56360,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97
+      ],
+      "value": [
+        56360,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65
+      ],
+      "mode": 4,
+      "copyValue": false,
+      "sameReference": false,
+      "result": false,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/suffix-split-7/5/StartsWith",
+      "group": "ordinal",
+      "method": "StartsWith",
+      "receiver": [
+        55297,
+        56360,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97
+      ],
+      "value": [
+        56360,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65
+      ],
+      "mode": 5,
+      "copyValue": false,
+      "sameReference": false,
+      "result": false,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/suffix-split-7/5/EndsWith",
+      "group": "ordinal",
+      "method": "EndsWith",
+      "receiver": [
+        55297,
+        56360,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97
+      ],
+      "value": [
+        56360,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65
+      ],
+      "mode": 5,
+      "copyValue": false,
+      "sameReference": false,
+      "result": true,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/prefix-split-15/4/StartsWith",
+      "group": "ordinal",
+      "method": "StartsWith",
+      "receiver": [
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        55297,
+        56360
+      ],
+      "value": [
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        55297
+      ],
+      "mode": 4,
+      "copyValue": false,
+      "sameReference": false,
+      "result": false,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/prefix-split-15/4/EndsWith",
+      "group": "ordinal",
+      "method": "EndsWith",
+      "receiver": [
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        55297,
+        56360
+      ],
+      "value": [
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        55297
+      ],
+      "mode": 4,
+      "copyValue": false,
+      "sameReference": false,
+      "result": false,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/prefix-split-15/5/StartsWith",
+      "group": "ordinal",
+      "method": "StartsWith",
+      "receiver": [
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        55297,
+        56360
+      ],
+      "value": [
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        55297
+      ],
+      "mode": 5,
+      "copyValue": false,
+      "sameReference": false,
+      "result": true,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/prefix-split-15/5/EndsWith",
+      "group": "ordinal",
+      "method": "EndsWith",
+      "receiver": [
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        55297,
+        56360
+      ],
+      "value": [
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        55297
+      ],
+      "mode": 5,
+      "copyValue": false,
+      "sameReference": false,
+      "result": false,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/suffix-split-15/4/StartsWith",
+      "group": "ordinal",
+      "method": "StartsWith",
+      "receiver": [
+        55297,
+        56360,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97
+      ],
+      "value": [
+        56360,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65
+      ],
+      "mode": 4,
+      "copyValue": false,
+      "sameReference": false,
+      "result": false,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/suffix-split-15/4/EndsWith",
+      "group": "ordinal",
+      "method": "EndsWith",
+      "receiver": [
+        55297,
+        56360,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97
+      ],
+      "value": [
+        56360,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65
+      ],
+      "mode": 4,
+      "copyValue": false,
+      "sameReference": false,
+      "result": false,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/suffix-split-15/5/StartsWith",
+      "group": "ordinal",
+      "method": "StartsWith",
+      "receiver": [
+        55297,
+        56360,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97
+      ],
+      "value": [
+        56360,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65
+      ],
+      "mode": 5,
+      "copyValue": false,
+      "sameReference": false,
+      "result": false,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/suffix-split-15/5/EndsWith",
+      "group": "ordinal",
+      "method": "EndsWith",
+      "receiver": [
+        55297,
+        56360,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97
+      ],
+      "value": [
+        56360,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65
+      ],
+      "mode": 5,
+      "copyValue": false,
+      "sameReference": false,
+      "result": true,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/prefix-split-31/4/StartsWith",
+      "group": "ordinal",
+      "method": "StartsWith",
+      "receiver": [
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        55297,
+        56360
+      ],
+      "value": [
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        55297
+      ],
+      "mode": 4,
+      "copyValue": false,
+      "sameReference": false,
+      "result": false,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/prefix-split-31/4/EndsWith",
+      "group": "ordinal",
+      "method": "EndsWith",
+      "receiver": [
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        55297,
+        56360
+      ],
+      "value": [
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        55297
+      ],
+      "mode": 4,
+      "copyValue": false,
+      "sameReference": false,
+      "result": false,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/prefix-split-31/5/StartsWith",
+      "group": "ordinal",
+      "method": "StartsWith",
+      "receiver": [
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        55297,
+        56360
+      ],
+      "value": [
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        55297
+      ],
+      "mode": 5,
+      "copyValue": false,
+      "sameReference": false,
+      "result": true,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/prefix-split-31/5/EndsWith",
+      "group": "ordinal",
+      "method": "EndsWith",
+      "receiver": [
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        55297,
+        56360
+      ],
+      "value": [
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        55297
+      ],
+      "mode": 5,
+      "copyValue": false,
+      "sameReference": false,
+      "result": false,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/suffix-split-31/4/StartsWith",
+      "group": "ordinal",
+      "method": "StartsWith",
+      "receiver": [
+        55297,
+        56360,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97
+      ],
+      "value": [
+        56360,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65
+      ],
+      "mode": 4,
+      "copyValue": false,
+      "sameReference": false,
+      "result": false,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/suffix-split-31/4/EndsWith",
+      "group": "ordinal",
+      "method": "EndsWith",
+      "receiver": [
+        55297,
+        56360,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97
+      ],
+      "value": [
+        56360,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65
+      ],
+      "mode": 4,
+      "copyValue": false,
+      "sameReference": false,
+      "result": false,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/suffix-split-31/5/StartsWith",
+      "group": "ordinal",
+      "method": "StartsWith",
+      "receiver": [
+        55297,
+        56360,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97
+      ],
+      "value": [
+        56360,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65
+      ],
+      "mode": 5,
+      "copyValue": false,
+      "sameReference": false,
+      "result": false,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/suffix-split-31/5/EndsWith",
+      "group": "ordinal",
+      "method": "EndsWith",
+      "receiver": [
+        55297,
+        56360,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97
+      ],
+      "value": [
+        56360,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65
+      ],
+      "mode": 5,
+      "copyValue": false,
+      "sameReference": false,
+      "result": true,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "precedence/nulls/-1/StartsWith",
+      "group": "precedence",
+      "method": "StartsWith",
+      "receiver": null,
+      "value": null,
+      "mode": -1,
+      "copyValue": false,
+      "sameReference": true,
+      "result": null,
+      "fault": "NullReferenceException",
+      "parameter": null
+    },
+    {
+      "id": "precedence/nulls/-1/EndsWith",
+      "group": "precedence",
+      "method": "EndsWith",
+      "receiver": null,
+      "value": null,
+      "mode": -1,
+      "copyValue": false,
+      "sameReference": true,
+      "result": null,
+      "fault": "NullReferenceException",
+      "parameter": null
+    },
+    {
+      "id": "precedence/nulls/6/StartsWith",
+      "group": "precedence",
+      "method": "StartsWith",
+      "receiver": null,
+      "value": null,
+      "mode": 6,
+      "copyValue": false,
+      "sameReference": true,
+      "result": null,
+      "fault": "NullReferenceException",
+      "parameter": null
+    },
+    {
+      "id": "precedence/nulls/6/EndsWith",
+      "group": "precedence",
+      "method": "EndsWith",
+      "receiver": null,
+      "value": null,
+      "mode": 6,
+      "copyValue": false,
+      "sameReference": true,
+      "result": null,
+      "fault": "NullReferenceException",
+      "parameter": null
+    },
+    {
+      "id": "precedence/nulls/-2147483648/StartsWith",
+      "group": "precedence",
+      "method": "StartsWith",
+      "receiver": null,
+      "value": null,
+      "mode": -2147483648,
+      "copyValue": false,
+      "sameReference": true,
+      "result": null,
+      "fault": "NullReferenceException",
+      "parameter": null
+    },
+    {
+      "id": "precedence/nulls/-2147483648/EndsWith",
+      "group": "precedence",
+      "method": "EndsWith",
+      "receiver": null,
+      "value": null,
+      "mode": -2147483648,
+      "copyValue": false,
+      "sameReference": true,
+      "result": null,
+      "fault": "NullReferenceException",
+      "parameter": null
+    },
+    {
+      "id": "precedence/nulls/2147483647/StartsWith",
+      "group": "precedence",
+      "method": "StartsWith",
+      "receiver": null,
+      "value": null,
+      "mode": 2147483647,
+      "copyValue": false,
+      "sameReference": true,
+      "result": null,
+      "fault": "NullReferenceException",
+      "parameter": null
+    },
+    {
+      "id": "precedence/nulls/2147483647/EndsWith",
+      "group": "precedence",
+      "method": "EndsWith",
+      "receiver": null,
+      "value": null,
+      "mode": 2147483647,
+      "copyValue": false,
+      "sameReference": true,
+      "result": null,
+      "fault": "NullReferenceException",
+      "parameter": null
+    },
+    {
+      "id": "precedence/nulls/0/StartsWith",
+      "group": "precedence",
+      "method": "StartsWith",
+      "receiver": null,
+      "value": null,
+      "mode": 0,
+      "copyValue": false,
+      "sameReference": true,
+      "result": null,
+      "fault": "NullReferenceException",
+      "parameter": null
+    },
+    {
+      "id": "precedence/nulls/0/EndsWith",
+      "group": "precedence",
+      "method": "EndsWith",
+      "receiver": null,
+      "value": null,
+      "mode": 0,
+      "copyValue": false,
+      "sameReference": true,
+      "result": null,
+      "fault": "NullReferenceException",
+      "parameter": null
+    },
+    {
+      "id": "precedence/nulls/1/StartsWith",
+      "group": "precedence",
+      "method": "StartsWith",
+      "receiver": null,
+      "value": null,
+      "mode": 1,
+      "copyValue": false,
+      "sameReference": true,
+      "result": null,
+      "fault": "NullReferenceException",
+      "parameter": null
+    },
+    {
+      "id": "precedence/nulls/1/EndsWith",
+      "group": "precedence",
+      "method": "EndsWith",
+      "receiver": null,
+      "value": null,
+      "mode": 1,
+      "copyValue": false,
+      "sameReference": true,
+      "result": null,
+      "fault": "NullReferenceException",
+      "parameter": null
+    },
+    {
+      "id": "precedence/nulls/2/StartsWith",
+      "group": "precedence",
+      "method": "StartsWith",
+      "receiver": null,
+      "value": null,
+      "mode": 2,
+      "copyValue": false,
+      "sameReference": true,
+      "result": null,
+      "fault": "NullReferenceException",
+      "parameter": null
+    },
+    {
+      "id": "precedence/nulls/2/EndsWith",
+      "group": "precedence",
+      "method": "EndsWith",
+      "receiver": null,
+      "value": null,
+      "mode": 2,
+      "copyValue": false,
+      "sameReference": true,
+      "result": null,
+      "fault": "NullReferenceException",
+      "parameter": null
+    },
+    {
+      "id": "precedence/nulls/3/StartsWith",
+      "group": "precedence",
+      "method": "StartsWith",
+      "receiver": null,
+      "value": null,
+      "mode": 3,
+      "copyValue": false,
+      "sameReference": true,
+      "result": null,
+      "fault": "NullReferenceException",
+      "parameter": null
+    },
+    {
+      "id": "precedence/nulls/3/EndsWith",
+      "group": "precedence",
+      "method": "EndsWith",
+      "receiver": null,
+      "value": null,
+      "mode": 3,
+      "copyValue": false,
+      "sameReference": true,
+      "result": null,
+      "fault": "NullReferenceException",
+      "parameter": null
+    },
+    {
+      "id": "precedence/nulls/4/StartsWith",
+      "group": "precedence",
+      "method": "StartsWith",
+      "receiver": null,
+      "value": null,
+      "mode": 4,
+      "copyValue": false,
+      "sameReference": true,
+      "result": null,
+      "fault": "NullReferenceException",
+      "parameter": null
+    },
+    {
+      "id": "precedence/nulls/4/EndsWith",
+      "group": "precedence",
+      "method": "EndsWith",
+      "receiver": null,
+      "value": null,
+      "mode": 4,
+      "copyValue": false,
+      "sameReference": true,
+      "result": null,
+      "fault": "NullReferenceException",
+      "parameter": null
+    },
+    {
+      "id": "precedence/nulls/5/StartsWith",
+      "group": "precedence",
+      "method": "StartsWith",
+      "receiver": null,
+      "value": null,
+      "mode": 5,
+      "copyValue": false,
+      "sameReference": true,
+      "result": null,
+      "fault": "NullReferenceException",
+      "parameter": null
+    },
+    {
+      "id": "precedence/nulls/5/EndsWith",
+      "group": "precedence",
+      "method": "EndsWith",
+      "receiver": null,
+      "value": null,
+      "mode": 5,
+      "copyValue": false,
+      "sameReference": true,
+      "result": null,
+      "fault": "NullReferenceException",
+      "parameter": null
+    },
+    {
+      "id": "precedence/null-receiver/-1/StartsWith",
+      "group": "precedence",
+      "method": "StartsWith",
+      "receiver": null,
+      "value": [
+        97
+      ],
+      "mode": -1,
+      "copyValue": false,
+      "sameReference": false,
+      "result": null,
+      "fault": "NullReferenceException",
+      "parameter": null
+    },
+    {
+      "id": "precedence/null-receiver/-1/EndsWith",
+      "group": "precedence",
+      "method": "EndsWith",
+      "receiver": null,
+      "value": [
+        97
+      ],
+      "mode": -1,
+      "copyValue": false,
+      "sameReference": false,
+      "result": null,
+      "fault": "NullReferenceException",
+      "parameter": null
+    },
+    {
+      "id": "precedence/null-receiver/6/StartsWith",
+      "group": "precedence",
+      "method": "StartsWith",
+      "receiver": null,
+      "value": [
+        97
+      ],
+      "mode": 6,
+      "copyValue": false,
+      "sameReference": false,
+      "result": null,
+      "fault": "NullReferenceException",
+      "parameter": null
+    },
+    {
+      "id": "precedence/null-receiver/6/EndsWith",
+      "group": "precedence",
+      "method": "EndsWith",
+      "receiver": null,
+      "value": [
+        97
+      ],
+      "mode": 6,
+      "copyValue": false,
+      "sameReference": false,
+      "result": null,
+      "fault": "NullReferenceException",
+      "parameter": null
+    },
+    {
+      "id": "precedence/null-receiver/-2147483648/StartsWith",
+      "group": "precedence",
+      "method": "StartsWith",
+      "receiver": null,
+      "value": [
+        97
+      ],
+      "mode": -2147483648,
+      "copyValue": false,
+      "sameReference": false,
+      "result": null,
+      "fault": "NullReferenceException",
+      "parameter": null
+    },
+    {
+      "id": "precedence/null-receiver/-2147483648/EndsWith",
+      "group": "precedence",
+      "method": "EndsWith",
+      "receiver": null,
+      "value": [
+        97
+      ],
+      "mode": -2147483648,
+      "copyValue": false,
+      "sameReference": false,
+      "result": null,
+      "fault": "NullReferenceException",
+      "parameter": null
+    },
+    {
+      "id": "precedence/null-receiver/2147483647/StartsWith",
+      "group": "precedence",
+      "method": "StartsWith",
+      "receiver": null,
+      "value": [
+        97
+      ],
+      "mode": 2147483647,
+      "copyValue": false,
+      "sameReference": false,
+      "result": null,
+      "fault": "NullReferenceException",
+      "parameter": null
+    },
+    {
+      "id": "precedence/null-receiver/2147483647/EndsWith",
+      "group": "precedence",
+      "method": "EndsWith",
+      "receiver": null,
+      "value": [
+        97
+      ],
+      "mode": 2147483647,
+      "copyValue": false,
+      "sameReference": false,
+      "result": null,
+      "fault": "NullReferenceException",
+      "parameter": null
+    },
+    {
+      "id": "precedence/null-receiver/0/StartsWith",
+      "group": "precedence",
+      "method": "StartsWith",
+      "receiver": null,
+      "value": [
+        97
+      ],
+      "mode": 0,
+      "copyValue": false,
+      "sameReference": false,
+      "result": null,
+      "fault": "NullReferenceException",
+      "parameter": null
+    },
+    {
+      "id": "precedence/null-receiver/0/EndsWith",
+      "group": "precedence",
+      "method": "EndsWith",
+      "receiver": null,
+      "value": [
+        97
+      ],
+      "mode": 0,
+      "copyValue": false,
+      "sameReference": false,
+      "result": null,
+      "fault": "NullReferenceException",
+      "parameter": null
+    },
+    {
+      "id": "precedence/null-receiver/1/StartsWith",
+      "group": "precedence",
+      "method": "StartsWith",
+      "receiver": null,
+      "value": [
+        97
+      ],
+      "mode": 1,
+      "copyValue": false,
+      "sameReference": false,
+      "result": null,
+      "fault": "NullReferenceException",
+      "parameter": null
+    },
+    {
+      "id": "precedence/null-receiver/1/EndsWith",
+      "group": "precedence",
+      "method": "EndsWith",
+      "receiver": null,
+      "value": [
+        97
+      ],
+      "mode": 1,
+      "copyValue": false,
+      "sameReference": false,
+      "result": null,
+      "fault": "NullReferenceException",
+      "parameter": null
+    },
+    {
+      "id": "precedence/null-receiver/2/StartsWith",
+      "group": "precedence",
+      "method": "StartsWith",
+      "receiver": null,
+      "value": [
+        97
+      ],
+      "mode": 2,
+      "copyValue": false,
+      "sameReference": false,
+      "result": null,
+      "fault": "NullReferenceException",
+      "parameter": null
+    },
+    {
+      "id": "precedence/null-receiver/2/EndsWith",
+      "group": "precedence",
+      "method": "EndsWith",
+      "receiver": null,
+      "value": [
+        97
+      ],
+      "mode": 2,
+      "copyValue": false,
+      "sameReference": false,
+      "result": null,
+      "fault": "NullReferenceException",
+      "parameter": null
+    },
+    {
+      "id": "precedence/null-receiver/3/StartsWith",
+      "group": "precedence",
+      "method": "StartsWith",
+      "receiver": null,
+      "value": [
+        97
+      ],
+      "mode": 3,
+      "copyValue": false,
+      "sameReference": false,
+      "result": null,
+      "fault": "NullReferenceException",
+      "parameter": null
+    },
+    {
+      "id": "precedence/null-receiver/3/EndsWith",
+      "group": "precedence",
+      "method": "EndsWith",
+      "receiver": null,
+      "value": [
+        97
+      ],
+      "mode": 3,
+      "copyValue": false,
+      "sameReference": false,
+      "result": null,
+      "fault": "NullReferenceException",
+      "parameter": null
+    },
+    {
+      "id": "precedence/null-receiver/4/StartsWith",
+      "group": "precedence",
+      "method": "StartsWith",
+      "receiver": null,
+      "value": [
+        97
+      ],
+      "mode": 4,
+      "copyValue": false,
+      "sameReference": false,
+      "result": null,
+      "fault": "NullReferenceException",
+      "parameter": null
+    },
+    {
+      "id": "precedence/null-receiver/4/EndsWith",
+      "group": "precedence",
+      "method": "EndsWith",
+      "receiver": null,
+      "value": [
+        97
+      ],
+      "mode": 4,
+      "copyValue": false,
+      "sameReference": false,
+      "result": null,
+      "fault": "NullReferenceException",
+      "parameter": null
+    },
+    {
+      "id": "precedence/null-receiver/5/StartsWith",
+      "group": "precedence",
+      "method": "StartsWith",
+      "receiver": null,
+      "value": [
+        97
+      ],
+      "mode": 5,
+      "copyValue": false,
+      "sameReference": false,
+      "result": null,
+      "fault": "NullReferenceException",
+      "parameter": null
+    },
+    {
+      "id": "precedence/null-receiver/5/EndsWith",
+      "group": "precedence",
+      "method": "EndsWith",
+      "receiver": null,
+      "value": [
+        97
+      ],
+      "mode": 5,
+      "copyValue": false,
+      "sameReference": false,
+      "result": null,
+      "fault": "NullReferenceException",
+      "parameter": null
+    },
+    {
+      "id": "precedence/null-value/-1/StartsWith",
+      "group": "precedence",
+      "method": "StartsWith",
+      "receiver": [
+        97
+      ],
+      "value": null,
+      "mode": -1,
+      "copyValue": false,
+      "sameReference": false,
+      "result": null,
+      "fault": "ArgumentNullException",
+      "parameter": "value"
+    },
+    {
+      "id": "precedence/null-value/-1/EndsWith",
+      "group": "precedence",
+      "method": "EndsWith",
+      "receiver": [
+        97
+      ],
+      "value": null,
+      "mode": -1,
+      "copyValue": false,
+      "sameReference": false,
+      "result": null,
+      "fault": "ArgumentNullException",
+      "parameter": "value"
+    },
+    {
+      "id": "precedence/null-value/6/StartsWith",
+      "group": "precedence",
+      "method": "StartsWith",
+      "receiver": [
+        97
+      ],
+      "value": null,
+      "mode": 6,
+      "copyValue": false,
+      "sameReference": false,
+      "result": null,
+      "fault": "ArgumentNullException",
+      "parameter": "value"
+    },
+    {
+      "id": "precedence/null-value/6/EndsWith",
+      "group": "precedence",
+      "method": "EndsWith",
+      "receiver": [
+        97
+      ],
+      "value": null,
+      "mode": 6,
+      "copyValue": false,
+      "sameReference": false,
+      "result": null,
+      "fault": "ArgumentNullException",
+      "parameter": "value"
+    },
+    {
+      "id": "precedence/null-value/-2147483648/StartsWith",
+      "group": "precedence",
+      "method": "StartsWith",
+      "receiver": [
+        97
+      ],
+      "value": null,
+      "mode": -2147483648,
+      "copyValue": false,
+      "sameReference": false,
+      "result": null,
+      "fault": "ArgumentNullException",
+      "parameter": "value"
+    },
+    {
+      "id": "precedence/null-value/-2147483648/EndsWith",
+      "group": "precedence",
+      "method": "EndsWith",
+      "receiver": [
+        97
+      ],
+      "value": null,
+      "mode": -2147483648,
+      "copyValue": false,
+      "sameReference": false,
+      "result": null,
+      "fault": "ArgumentNullException",
+      "parameter": "value"
+    },
+    {
+      "id": "precedence/null-value/2147483647/StartsWith",
+      "group": "precedence",
+      "method": "StartsWith",
+      "receiver": [
+        97
+      ],
+      "value": null,
+      "mode": 2147483647,
+      "copyValue": false,
+      "sameReference": false,
+      "result": null,
+      "fault": "ArgumentNullException",
+      "parameter": "value"
+    },
+    {
+      "id": "precedence/null-value/2147483647/EndsWith",
+      "group": "precedence",
+      "method": "EndsWith",
+      "receiver": [
+        97
+      ],
+      "value": null,
+      "mode": 2147483647,
+      "copyValue": false,
+      "sameReference": false,
+      "result": null,
+      "fault": "ArgumentNullException",
+      "parameter": "value"
+    },
+    {
+      "id": "precedence/null-value/0/StartsWith",
+      "group": "precedence",
+      "method": "StartsWith",
+      "receiver": [
+        97
+      ],
+      "value": null,
+      "mode": 0,
+      "copyValue": false,
+      "sameReference": false,
+      "result": null,
+      "fault": "ArgumentNullException",
+      "parameter": "value"
+    },
+    {
+      "id": "precedence/null-value/0/EndsWith",
+      "group": "precedence",
+      "method": "EndsWith",
+      "receiver": [
+        97
+      ],
+      "value": null,
+      "mode": 0,
+      "copyValue": false,
+      "sameReference": false,
+      "result": null,
+      "fault": "ArgumentNullException",
+      "parameter": "value"
+    },
+    {
+      "id": "precedence/null-value/1/StartsWith",
+      "group": "precedence",
+      "method": "StartsWith",
+      "receiver": [
+        97
+      ],
+      "value": null,
+      "mode": 1,
+      "copyValue": false,
+      "sameReference": false,
+      "result": null,
+      "fault": "ArgumentNullException",
+      "parameter": "value"
+    },
+    {
+      "id": "precedence/null-value/1/EndsWith",
+      "group": "precedence",
+      "method": "EndsWith",
+      "receiver": [
+        97
+      ],
+      "value": null,
+      "mode": 1,
+      "copyValue": false,
+      "sameReference": false,
+      "result": null,
+      "fault": "ArgumentNullException",
+      "parameter": "value"
+    },
+    {
+      "id": "precedence/null-value/2/StartsWith",
+      "group": "precedence",
+      "method": "StartsWith",
+      "receiver": [
+        97
+      ],
+      "value": null,
+      "mode": 2,
+      "copyValue": false,
+      "sameReference": false,
+      "result": null,
+      "fault": "ArgumentNullException",
+      "parameter": "value"
+    },
+    {
+      "id": "precedence/null-value/2/EndsWith",
+      "group": "precedence",
+      "method": "EndsWith",
+      "receiver": [
+        97
+      ],
+      "value": null,
+      "mode": 2,
+      "copyValue": false,
+      "sameReference": false,
+      "result": null,
+      "fault": "ArgumentNullException",
+      "parameter": "value"
+    },
+    {
+      "id": "precedence/null-value/3/StartsWith",
+      "group": "precedence",
+      "method": "StartsWith",
+      "receiver": [
+        97
+      ],
+      "value": null,
+      "mode": 3,
+      "copyValue": false,
+      "sameReference": false,
+      "result": null,
+      "fault": "ArgumentNullException",
+      "parameter": "value"
+    },
+    {
+      "id": "precedence/null-value/3/EndsWith",
+      "group": "precedence",
+      "method": "EndsWith",
+      "receiver": [
+        97
+      ],
+      "value": null,
+      "mode": 3,
+      "copyValue": false,
+      "sameReference": false,
+      "result": null,
+      "fault": "ArgumentNullException",
+      "parameter": "value"
+    },
+    {
+      "id": "precedence/null-value/4/StartsWith",
+      "group": "precedence",
+      "method": "StartsWith",
+      "receiver": [
+        97
+      ],
+      "value": null,
+      "mode": 4,
+      "copyValue": false,
+      "sameReference": false,
+      "result": null,
+      "fault": "ArgumentNullException",
+      "parameter": "value"
+    },
+    {
+      "id": "precedence/null-value/4/EndsWith",
+      "group": "precedence",
+      "method": "EndsWith",
+      "receiver": [
+        97
+      ],
+      "value": null,
+      "mode": 4,
+      "copyValue": false,
+      "sameReference": false,
+      "result": null,
+      "fault": "ArgumentNullException",
+      "parameter": "value"
+    },
+    {
+      "id": "precedence/null-value/5/StartsWith",
+      "group": "precedence",
+      "method": "StartsWith",
+      "receiver": [
+        97
+      ],
+      "value": null,
+      "mode": 5,
+      "copyValue": false,
+      "sameReference": false,
+      "result": null,
+      "fault": "ArgumentNullException",
+      "parameter": "value"
+    },
+    {
+      "id": "precedence/null-value/5/EndsWith",
+      "group": "precedence",
+      "method": "EndsWith",
+      "receiver": [
+        97
+      ],
+      "value": null,
+      "mode": 5,
+      "copyValue": false,
+      "sameReference": false,
+      "result": null,
+      "fault": "ArgumentNullException",
+      "parameter": "value"
+    },
+    {
+      "id": "precedence/identity/-1/StartsWith",
+      "group": "precedence",
+      "method": "StartsWith",
+      "receiver": [
+        115,
+        97,
+        109,
+        101
+      ],
+      "value": [
+        115,
+        97,
+        109,
+        101
+      ],
+      "mode": -1,
+      "copyValue": false,
+      "sameReference": true,
+      "result": null,
+      "fault": "ArgumentException",
+      "parameter": "comparisonType"
+    },
+    {
+      "id": "precedence/identity/-1/EndsWith",
+      "group": "precedence",
+      "method": "EndsWith",
+      "receiver": [
+        115,
+        97,
+        109,
+        101
+      ],
+      "value": [
+        115,
+        97,
+        109,
+        101
+      ],
+      "mode": -1,
+      "copyValue": false,
+      "sameReference": true,
+      "result": null,
+      "fault": "ArgumentException",
+      "parameter": "comparisonType"
+    },
+    {
+      "id": "precedence/identity/6/StartsWith",
+      "group": "precedence",
+      "method": "StartsWith",
+      "receiver": [
+        115,
+        97,
+        109,
+        101
+      ],
+      "value": [
+        115,
+        97,
+        109,
+        101
+      ],
+      "mode": 6,
+      "copyValue": false,
+      "sameReference": true,
+      "result": null,
+      "fault": "ArgumentException",
+      "parameter": "comparisonType"
+    },
+    {
+      "id": "precedence/identity/6/EndsWith",
+      "group": "precedence",
+      "method": "EndsWith",
+      "receiver": [
+        115,
+        97,
+        109,
+        101
+      ],
+      "value": [
+        115,
+        97,
+        109,
+        101
+      ],
+      "mode": 6,
+      "copyValue": false,
+      "sameReference": true,
+      "result": null,
+      "fault": "ArgumentException",
+      "parameter": "comparisonType"
+    },
+    {
+      "id": "precedence/identity/-2147483648/StartsWith",
+      "group": "precedence",
+      "method": "StartsWith",
+      "receiver": [
+        115,
+        97,
+        109,
+        101
+      ],
+      "value": [
+        115,
+        97,
+        109,
+        101
+      ],
+      "mode": -2147483648,
+      "copyValue": false,
+      "sameReference": true,
+      "result": null,
+      "fault": "ArgumentException",
+      "parameter": "comparisonType"
+    },
+    {
+      "id": "precedence/identity/-2147483648/EndsWith",
+      "group": "precedence",
+      "method": "EndsWith",
+      "receiver": [
+        115,
+        97,
+        109,
+        101
+      ],
+      "value": [
+        115,
+        97,
+        109,
+        101
+      ],
+      "mode": -2147483648,
+      "copyValue": false,
+      "sameReference": true,
+      "result": null,
+      "fault": "ArgumentException",
+      "parameter": "comparisonType"
+    },
+    {
+      "id": "precedence/identity/2147483647/StartsWith",
+      "group": "precedence",
+      "method": "StartsWith",
+      "receiver": [
+        115,
+        97,
+        109,
+        101
+      ],
+      "value": [
+        115,
+        97,
+        109,
+        101
+      ],
+      "mode": 2147483647,
+      "copyValue": false,
+      "sameReference": true,
+      "result": null,
+      "fault": "ArgumentException",
+      "parameter": "comparisonType"
+    },
+    {
+      "id": "precedence/identity/2147483647/EndsWith",
+      "group": "precedence",
+      "method": "EndsWith",
+      "receiver": [
+        115,
+        97,
+        109,
+        101
+      ],
+      "value": [
+        115,
+        97,
+        109,
+        101
+      ],
+      "mode": 2147483647,
+      "copyValue": false,
+      "sameReference": true,
+      "result": null,
+      "fault": "ArgumentException",
+      "parameter": "comparisonType"
+    },
+    {
+      "id": "precedence/identity/0/StartsWith",
+      "group": "precedence",
+      "method": "StartsWith",
+      "receiver": [
+        115,
+        97,
+        109,
+        101
+      ],
+      "value": [
+        115,
+        97,
+        109,
+        101
+      ],
+      "mode": 0,
+      "copyValue": false,
+      "sameReference": true,
+      "result": true,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "precedence/identity/0/EndsWith",
+      "group": "precedence",
+      "method": "EndsWith",
+      "receiver": [
+        115,
+        97,
+        109,
+        101
+      ],
+      "value": [
+        115,
+        97,
+        109,
+        101
+      ],
+      "mode": 0,
+      "copyValue": false,
+      "sameReference": true,
+      "result": true,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "precedence/identity/1/StartsWith",
+      "group": "precedence",
+      "method": "StartsWith",
+      "receiver": [
+        115,
+        97,
+        109,
+        101
+      ],
+      "value": [
+        115,
+        97,
+        109,
+        101
+      ],
+      "mode": 1,
+      "copyValue": false,
+      "sameReference": true,
+      "result": true,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "precedence/identity/1/EndsWith",
+      "group": "precedence",
+      "method": "EndsWith",
+      "receiver": [
+        115,
+        97,
+        109,
+        101
+      ],
+      "value": [
+        115,
+        97,
+        109,
+        101
+      ],
+      "mode": 1,
+      "copyValue": false,
+      "sameReference": true,
+      "result": true,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "precedence/identity/2/StartsWith",
+      "group": "precedence",
+      "method": "StartsWith",
+      "receiver": [
+        115,
+        97,
+        109,
+        101
+      ],
+      "value": [
+        115,
+        97,
+        109,
+        101
+      ],
+      "mode": 2,
+      "copyValue": false,
+      "sameReference": true,
+      "result": true,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "precedence/identity/2/EndsWith",
+      "group": "precedence",
+      "method": "EndsWith",
+      "receiver": [
+        115,
+        97,
+        109,
+        101
+      ],
+      "value": [
+        115,
+        97,
+        109,
+        101
+      ],
+      "mode": 2,
+      "copyValue": false,
+      "sameReference": true,
+      "result": true,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "precedence/identity/3/StartsWith",
+      "group": "precedence",
+      "method": "StartsWith",
+      "receiver": [
+        115,
+        97,
+        109,
+        101
+      ],
+      "value": [
+        115,
+        97,
+        109,
+        101
+      ],
+      "mode": 3,
+      "copyValue": false,
+      "sameReference": true,
+      "result": true,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "precedence/identity/3/EndsWith",
+      "group": "precedence",
+      "method": "EndsWith",
+      "receiver": [
+        115,
+        97,
+        109,
+        101
+      ],
+      "value": [
+        115,
+        97,
+        109,
+        101
+      ],
+      "mode": 3,
+      "copyValue": false,
+      "sameReference": true,
+      "result": true,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "precedence/identity/4/StartsWith",
+      "group": "precedence",
+      "method": "StartsWith",
+      "receiver": [
+        115,
+        97,
+        109,
+        101
+      ],
+      "value": [
+        115,
+        97,
+        109,
+        101
+      ],
+      "mode": 4,
+      "copyValue": false,
+      "sameReference": true,
+      "result": true,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "precedence/identity/4/EndsWith",
+      "group": "precedence",
+      "method": "EndsWith",
+      "receiver": [
+        115,
+        97,
+        109,
+        101
+      ],
+      "value": [
+        115,
+        97,
+        109,
+        101
+      ],
+      "mode": 4,
+      "copyValue": false,
+      "sameReference": true,
+      "result": true,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "precedence/identity/5/StartsWith",
+      "group": "precedence",
+      "method": "StartsWith",
+      "receiver": [
+        115,
+        97,
+        109,
+        101
+      ],
+      "value": [
+        115,
+        97,
+        109,
+        101
+      ],
+      "mode": 5,
+      "copyValue": false,
+      "sameReference": true,
+      "result": true,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "precedence/identity/5/EndsWith",
+      "group": "precedence",
+      "method": "EndsWith",
+      "receiver": [
+        115,
+        97,
+        109,
+        101
+      ],
+      "value": [
+        115,
+        97,
+        109,
+        101
+      ],
+      "mode": 5,
+      "copyValue": false,
+      "sameReference": true,
+      "result": true,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "precedence/empty-value/-1/StartsWith",
+      "group": "precedence",
+      "method": "StartsWith",
+      "receiver": [
+        97
+      ],
+      "value": [],
+      "mode": -1,
+      "copyValue": false,
+      "sameReference": false,
+      "result": null,
+      "fault": "ArgumentException",
+      "parameter": "comparisonType"
+    },
+    {
+      "id": "precedence/empty-value/-1/EndsWith",
+      "group": "precedence",
+      "method": "EndsWith",
+      "receiver": [
+        97
+      ],
+      "value": [],
+      "mode": -1,
+      "copyValue": false,
+      "sameReference": false,
+      "result": null,
+      "fault": "ArgumentException",
+      "parameter": "comparisonType"
+    },
+    {
+      "id": "precedence/empty-value/6/StartsWith",
+      "group": "precedence",
+      "method": "StartsWith",
+      "receiver": [
+        97
+      ],
+      "value": [],
+      "mode": 6,
+      "copyValue": false,
+      "sameReference": false,
+      "result": null,
+      "fault": "ArgumentException",
+      "parameter": "comparisonType"
+    },
+    {
+      "id": "precedence/empty-value/6/EndsWith",
+      "group": "precedence",
+      "method": "EndsWith",
+      "receiver": [
+        97
+      ],
+      "value": [],
+      "mode": 6,
+      "copyValue": false,
+      "sameReference": false,
+      "result": null,
+      "fault": "ArgumentException",
+      "parameter": "comparisonType"
+    },
+    {
+      "id": "precedence/empty-value/-2147483648/StartsWith",
+      "group": "precedence",
+      "method": "StartsWith",
+      "receiver": [
+        97
+      ],
+      "value": [],
+      "mode": -2147483648,
+      "copyValue": false,
+      "sameReference": false,
+      "result": null,
+      "fault": "ArgumentException",
+      "parameter": "comparisonType"
+    },
+    {
+      "id": "precedence/empty-value/-2147483648/EndsWith",
+      "group": "precedence",
+      "method": "EndsWith",
+      "receiver": [
+        97
+      ],
+      "value": [],
+      "mode": -2147483648,
+      "copyValue": false,
+      "sameReference": false,
+      "result": null,
+      "fault": "ArgumentException",
+      "parameter": "comparisonType"
+    },
+    {
+      "id": "precedence/empty-value/2147483647/StartsWith",
+      "group": "precedence",
+      "method": "StartsWith",
+      "receiver": [
+        97
+      ],
+      "value": [],
+      "mode": 2147483647,
+      "copyValue": false,
+      "sameReference": false,
+      "result": null,
+      "fault": "ArgumentException",
+      "parameter": "comparisonType"
+    },
+    {
+      "id": "precedence/empty-value/2147483647/EndsWith",
+      "group": "precedence",
+      "method": "EndsWith",
+      "receiver": [
+        97
+      ],
+      "value": [],
+      "mode": 2147483647,
+      "copyValue": false,
+      "sameReference": false,
+      "result": null,
+      "fault": "ArgumentException",
+      "parameter": "comparisonType"
+    },
+    {
+      "id": "precedence/empty-value/0/StartsWith",
+      "group": "precedence",
+      "method": "StartsWith",
+      "receiver": [
+        97
+      ],
+      "value": [],
+      "mode": 0,
+      "copyValue": false,
+      "sameReference": false,
+      "result": true,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "precedence/empty-value/0/EndsWith",
+      "group": "precedence",
+      "method": "EndsWith",
+      "receiver": [
+        97
+      ],
+      "value": [],
+      "mode": 0,
+      "copyValue": false,
+      "sameReference": false,
+      "result": true,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "precedence/empty-value/1/StartsWith",
+      "group": "precedence",
+      "method": "StartsWith",
+      "receiver": [
+        97
+      ],
+      "value": [],
+      "mode": 1,
+      "copyValue": false,
+      "sameReference": false,
+      "result": true,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "precedence/empty-value/1/EndsWith",
+      "group": "precedence",
+      "method": "EndsWith",
+      "receiver": [
+        97
+      ],
+      "value": [],
+      "mode": 1,
+      "copyValue": false,
+      "sameReference": false,
+      "result": true,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "precedence/empty-value/2/StartsWith",
+      "group": "precedence",
+      "method": "StartsWith",
+      "receiver": [
+        97
+      ],
+      "value": [],
+      "mode": 2,
+      "copyValue": false,
+      "sameReference": false,
+      "result": true,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "precedence/empty-value/2/EndsWith",
+      "group": "precedence",
+      "method": "EndsWith",
+      "receiver": [
+        97
+      ],
+      "value": [],
+      "mode": 2,
+      "copyValue": false,
+      "sameReference": false,
+      "result": true,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "precedence/empty-value/3/StartsWith",
+      "group": "precedence",
+      "method": "StartsWith",
+      "receiver": [
+        97
+      ],
+      "value": [],
+      "mode": 3,
+      "copyValue": false,
+      "sameReference": false,
+      "result": true,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "precedence/empty-value/3/EndsWith",
+      "group": "precedence",
+      "method": "EndsWith",
+      "receiver": [
+        97
+      ],
+      "value": [],
+      "mode": 3,
+      "copyValue": false,
+      "sameReference": false,
+      "result": true,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "precedence/empty-value/4/StartsWith",
+      "group": "precedence",
+      "method": "StartsWith",
+      "receiver": [
+        97
+      ],
+      "value": [],
+      "mode": 4,
+      "copyValue": false,
+      "sameReference": false,
+      "result": true,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "precedence/empty-value/4/EndsWith",
+      "group": "precedence",
+      "method": "EndsWith",
+      "receiver": [
+        97
+      ],
+      "value": [],
+      "mode": 4,
+      "copyValue": false,
+      "sameReference": false,
+      "result": true,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "precedence/empty-value/5/StartsWith",
+      "group": "precedence",
+      "method": "StartsWith",
+      "receiver": [
+        97
+      ],
+      "value": [],
+      "mode": 5,
+      "copyValue": false,
+      "sameReference": false,
+      "result": true,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "precedence/empty-value/5/EndsWith",
+      "group": "precedence",
+      "method": "EndsWith",
+      "receiver": [
+        97
+      ],
+      "value": [],
+      "mode": 5,
+      "copyValue": false,
+      "sameReference": false,
+      "result": true,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "precedence/longer-value/-1/StartsWith",
+      "group": "precedence",
+      "method": "StartsWith",
+      "receiver": [
+        97
+      ],
+      "value": [
+        97,
+        98,
+        99
+      ],
+      "mode": -1,
+      "copyValue": false,
+      "sameReference": false,
+      "result": null,
+      "fault": "ArgumentException",
+      "parameter": "comparisonType"
+    },
+    {
+      "id": "precedence/longer-value/-1/EndsWith",
+      "group": "precedence",
+      "method": "EndsWith",
+      "receiver": [
+        97
+      ],
+      "value": [
+        97,
+        98,
+        99
+      ],
+      "mode": -1,
+      "copyValue": false,
+      "sameReference": false,
+      "result": null,
+      "fault": "ArgumentException",
+      "parameter": "comparisonType"
+    },
+    {
+      "id": "precedence/longer-value/6/StartsWith",
+      "group": "precedence",
+      "method": "StartsWith",
+      "receiver": [
+        97
+      ],
+      "value": [
+        97,
+        98,
+        99
+      ],
+      "mode": 6,
+      "copyValue": false,
+      "sameReference": false,
+      "result": null,
+      "fault": "ArgumentException",
+      "parameter": "comparisonType"
+    },
+    {
+      "id": "precedence/longer-value/6/EndsWith",
+      "group": "precedence",
+      "method": "EndsWith",
+      "receiver": [
+        97
+      ],
+      "value": [
+        97,
+        98,
+        99
+      ],
+      "mode": 6,
+      "copyValue": false,
+      "sameReference": false,
+      "result": null,
+      "fault": "ArgumentException",
+      "parameter": "comparisonType"
+    },
+    {
+      "id": "precedence/longer-value/-2147483648/StartsWith",
+      "group": "precedence",
+      "method": "StartsWith",
+      "receiver": [
+        97
+      ],
+      "value": [
+        97,
+        98,
+        99
+      ],
+      "mode": -2147483648,
+      "copyValue": false,
+      "sameReference": false,
+      "result": null,
+      "fault": "ArgumentException",
+      "parameter": "comparisonType"
+    },
+    {
+      "id": "precedence/longer-value/-2147483648/EndsWith",
+      "group": "precedence",
+      "method": "EndsWith",
+      "receiver": [
+        97
+      ],
+      "value": [
+        97,
+        98,
+        99
+      ],
+      "mode": -2147483648,
+      "copyValue": false,
+      "sameReference": false,
+      "result": null,
+      "fault": "ArgumentException",
+      "parameter": "comparisonType"
+    },
+    {
+      "id": "precedence/longer-value/2147483647/StartsWith",
+      "group": "precedence",
+      "method": "StartsWith",
+      "receiver": [
+        97
+      ],
+      "value": [
+        97,
+        98,
+        99
+      ],
+      "mode": 2147483647,
+      "copyValue": false,
+      "sameReference": false,
+      "result": null,
+      "fault": "ArgumentException",
+      "parameter": "comparisonType"
+    },
+    {
+      "id": "precedence/longer-value/2147483647/EndsWith",
+      "group": "precedence",
+      "method": "EndsWith",
+      "receiver": [
+        97
+      ],
+      "value": [
+        97,
+        98,
+        99
+      ],
+      "mode": 2147483647,
+      "copyValue": false,
+      "sameReference": false,
+      "result": null,
+      "fault": "ArgumentException",
+      "parameter": "comparisonType"
+    },
+    {
+      "id": "precedence/longer-value/0/StartsWith",
+      "group": "precedence",
+      "method": "StartsWith",
+      "receiver": [
+        97
+      ],
+      "value": [
+        97,
+        98,
+        99
+      ],
+      "mode": 0,
+      "copyValue": false,
+      "sameReference": false,
+      "result": false,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "precedence/longer-value/0/EndsWith",
+      "group": "precedence",
+      "method": "EndsWith",
+      "receiver": [
+        97
+      ],
+      "value": [
+        97,
+        98,
+        99
+      ],
+      "mode": 0,
+      "copyValue": false,
+      "sameReference": false,
+      "result": false,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "precedence/longer-value/1/StartsWith",
+      "group": "precedence",
+      "method": "StartsWith",
+      "receiver": [
+        97
+      ],
+      "value": [
+        97,
+        98,
+        99
+      ],
+      "mode": 1,
+      "copyValue": false,
+      "sameReference": false,
+      "result": false,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "precedence/longer-value/1/EndsWith",
+      "group": "precedence",
+      "method": "EndsWith",
+      "receiver": [
+        97
+      ],
+      "value": [
+        97,
+        98,
+        99
+      ],
+      "mode": 1,
+      "copyValue": false,
+      "sameReference": false,
+      "result": false,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "precedence/longer-value/2/StartsWith",
+      "group": "precedence",
+      "method": "StartsWith",
+      "receiver": [
+        97
+      ],
+      "value": [
+        97,
+        98,
+        99
+      ],
+      "mode": 2,
+      "copyValue": false,
+      "sameReference": false,
+      "result": false,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "precedence/longer-value/2/EndsWith",
+      "group": "precedence",
+      "method": "EndsWith",
+      "receiver": [
+        97
+      ],
+      "value": [
+        97,
+        98,
+        99
+      ],
+      "mode": 2,
+      "copyValue": false,
+      "sameReference": false,
+      "result": false,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "precedence/longer-value/3/StartsWith",
+      "group": "precedence",
+      "method": "StartsWith",
+      "receiver": [
+        97
+      ],
+      "value": [
+        97,
+        98,
+        99
+      ],
+      "mode": 3,
+      "copyValue": false,
+      "sameReference": false,
+      "result": false,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "precedence/longer-value/3/EndsWith",
+      "group": "precedence",
+      "method": "EndsWith",
+      "receiver": [
+        97
+      ],
+      "value": [
+        97,
+        98,
+        99
+      ],
+      "mode": 3,
+      "copyValue": false,
+      "sameReference": false,
+      "result": false,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "precedence/longer-value/4/StartsWith",
+      "group": "precedence",
+      "method": "StartsWith",
+      "receiver": [
+        97
+      ],
+      "value": [
+        97,
+        98,
+        99
+      ],
+      "mode": 4,
+      "copyValue": false,
+      "sameReference": false,
+      "result": false,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "precedence/longer-value/4/EndsWith",
+      "group": "precedence",
+      "method": "EndsWith",
+      "receiver": [
+        97
+      ],
+      "value": [
+        97,
+        98,
+        99
+      ],
+      "mode": 4,
+      "copyValue": false,
+      "sameReference": false,
+      "result": false,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "precedence/longer-value/5/StartsWith",
+      "group": "precedence",
+      "method": "StartsWith",
+      "receiver": [
+        97
+      ],
+      "value": [
+        97,
+        98,
+        99
+      ],
+      "mode": 5,
+      "copyValue": false,
+      "sameReference": false,
+      "result": false,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "precedence/longer-value/5/EndsWith",
+      "group": "precedence",
+      "method": "EndsWith",
+      "receiver": [
+        97
+      ],
+      "value": [
+        97,
+        98,
+        99
+      ],
+      "mode": 5,
+      "copyValue": false,
+      "sameReference": false,
+      "result": false,
+      "fault": null,
+      "parameter": null
+    }
+  ]
+}

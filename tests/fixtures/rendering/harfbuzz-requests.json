@@ -1,0 +1,26 @@
+{
+  "version": 1,
+  "cases": [
+    {"id":"latin-ligature","text":"office","font":"SharpForgeSans-Variable.ttf","script":"Latn","direction":"ltr",
+      "options":{"fontFamily":"SharpForge Sans Fixture","fontSize":24,"fontWeight":400}},
+    {"id":"variable-italic","text":"AV office","font":"SharpForgeSans-Italic-Variable.ttf","script":"Latn","direction":"ltr",
+      "options":{"fontFamily":"SharpForge Sans Fixture","fontSize":24,"fontWeight":650,"fontStyle":"italic"}},
+    {"id":"arabic-marks","text":"السَّلَامُ","font":"NotoSansArabic-Variable.ttf","script":"Arab","direction":"rtl",
+      "options":{"fontFamily":"Noto Sans Arabic","fontSize":24,"fontWeight":400,"language":"ar","direction":"rtl"}},
+    {"id":"hebrew-marks","text":"שָׁלוֹם","font":"NotoSansHebrew-Regular.ttf","script":"Hebr","direction":"rtl",
+      "options":{"fontFamily":"Noto Sans Hebrew","fontSize":24,"language":"he","direction":"rtl"}},
+    {"id":"devanagari-reordering","text":"क्षि हिन्दी","font":"NotoSansDevanagari-Regular.otf","script":"Deva","direction":"ltr",
+      "options":{"fontFamily":"Noto Sans Devanagari","fontSize":24,"language":"hi","direction":"ltr"}},
+    {"id":"emoji-zwj","text":"👩‍💻","font":"SharpForgeEmojiFixture.ttf","script":"Zyyy","direction":"ltr",
+      "options":{"fontFamily":"SharpForge Sans Fixture","fontSize":32,"direction":"ltr"}},
+    {"id":"emoji-family","text":"👨‍👩‍👧‍👦","font":"SharpForgeEmojiFixture.ttf","script":"Zyyy","direction":"ltr",
+      "options":{"fontFamily":"SharpForge Sans Fixture","fontSize":32,"direction":"ltr"}},
+    {"id":"mixed-hebrew","text":"abc אבג 123","options":{"fontFamily":"SharpForge Sans Fixture","fontSize":24,"direction":"ltr"},
+      "items":[
+        {"start":0,"end":4,"font":"SharpForgeSans-Variable.ttf","script":"Latn","direction":"ltr"},
+        {"start":4,"end":7,"font":"NotoSansHebrew-Regular.ttf","script":"Hebr","direction":"rtl"},
+        {"start":7,"end":8,"font":"SharpForgeSans-Variable.ttf","script":"Hebr","direction":"rtl"},
+        {"start":8,"end":11,"font":"SharpForgeSans-Variable.ttf","script":"Hebr","direction":"ltr"}
+      ]}
+  ]
+}

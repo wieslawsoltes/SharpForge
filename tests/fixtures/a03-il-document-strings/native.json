@@ -1,0 +1,8 @@
+{
+  "runtime": ".NET 10.0.5",
+  "results": {
+    "Main": "new \u0022value\u0022 https://example.test/a//b\n\u03BB \uD83D\uDE80\u0000end",
+    "Original": "old",
+    "Again": "new \u0022value\u0022 https://example.test/a//b\n\u03BB \uD83D\uDE80\u0000end"
+  }
+}
