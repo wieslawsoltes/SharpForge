@@ -19,5 +19,7 @@ export function executeCilStep(vm) {
   if (!handler) {
     throw new ManagedFault('NotSupportedException', `Opcode '${instruction.name}' is not executable`);
   }
+  vm.gcRuntime.beforeInstruction(frame, instruction.name);
   handler(vm, frame, instruction);
+  vm.gcRuntime.afterInstruction(frame, index, instruction.name);
 }
