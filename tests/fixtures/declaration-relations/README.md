@@ -17,18 +17,27 @@ source/compiler/reference/image hashes, exact toolchain/environment and raw proc
 results. Compiler-generated anonymous generic types are avoided so the fixture's
 declared slot families are entirely within this batch's supported domain.
 
-The offline comparison requires `native.json`; generate it in the single granted
-validation slot using:
+The committed `native.json` supplies the offline reference. Replay the complete
+focused Node gate in one serial validation slot:
+
+```sh
+node scripts/limited.js node --test \
+  tests/a13-11-declaration-provider.test.js \
+  tests/a13-11-declaration-reference.test.js \
+  tests/a13-11-declaration-relations.test.js \
+  tests/a13-11-usage-relations.test.js \
+  tests/clr-methods-interface-impl.test.js
+```
+
+The existing usage and CLR MethodImpl suites are included because this batch
+preserves the instruction API and shares row/token validation with the existing
+classifier. Tests do not compile code, contact the network or modify fixtures.
+Recapture only when the native reference needs regeneration; this explicit command
+compiles and executes the reference and writes the output file:
 
 ```sh
 node scripts/limited.js node tests/fixtures/declaration-relations/capture.mjs tests/fixtures/declaration-relations/native.json
-node scripts/limited.js node --test tests/a13-11-declaration-provider.test.js tests/a13-11-declaration-relations.test.js tests/a13-11-declaration-reference.test.js
 ```
-
-Also run existing `tests/a13-11-usage-relations.test.js` and
-`tests/clr-methods-interface-impl.test.js` because the batch preserves the former API
-and extracts common MethodImpl row/token validation from the latter's classifier.
-Tests do not compile code, contact the network or modify fixtures.
 
 ## Exact scope
 
@@ -57,17 +66,36 @@ The issue remains open for those families and wider qualification.
 
 ## Validation status
 
-Implementation, focused positive/negative/boundary/cancellation/disposal tests,
-native capture source and offline comparison are prepared. No new validation or
-benchmark was run by the implementation agent. The root agent owns serial capture,
-tests and publishing. JavaScript metadata services are the affected implementation;
-source-VM/direct-CIL/Rust-native/Rust-Wasm execution and browser/platform coverage are
-not implied by this unexecuted fixture.
+The root validation run passed **33 of 33 focused Node tests**, with no failures,
+skips or cancellations, at implementation commit `902b1fe0`. The exact small output
+is retained in [node-results.txt](node-results.txt); [evidence.json](evidence.json)
+binds it to source, fixture and test hashes and records replay configuration.
+
+The committed native capture contains **19 relationships: four overridden ancestors
+and 15 interface mappings**. The offline JavaScript comparison passed against all
+19 exact `(relation, source, target, implementing type)` tuples. Its recorded reference
+is .NET SDK 10.0.201, CoreCLR/reference pack 10.0.5 and Roslyn
+5.3.0-2.26153.122 on linux-x64. The native capture records a local OS environment,
+not an immutable runner image; full hashes, compiler arguments, execution output and
+assembly bytes remain in [native.json](native.json), committed as `0efea656`.
+
+The initial native comparison exposed a real inheritance mismatch: reimplementation
+selected an older public method instead of preserving an inherited explicit map.
+Commit `902b1fe0` corrected the selection order and the authored assertion that had
+encoded the defect, then added the newly introduced interface regression. The native
+expected observations were not changed to accommodate the implementation.
 
 `browser.mjs` exports `run()` for a browser module harness. It checks the same canonical
 families, snapshot ownership after source destruction/context unload, budgets,
 cancellation and paging, then fetches and replays the captured native reference. This
-qualifies the browser JavaScript metadata API; the browser does not execute managed IL.
+harness is prepared, but the browser was never launched successfully for this batch;
+**browser qualification remains pending**. Its intended scope is the browser
+JavaScript metadata API, with captured CoreCLR observations replayed as data.
+
+These results cover host JavaScript metadata services and the native reference's
+Reflection observations. They do not establish source-VM, direct-CIL, Rust-native,
+Rust-Wasm or wider platform execution coverage. No benchmark was run for this batch;
+test durations are not performance evidence and no speedup is claimed.
 
 The adapter indexes signature identities and MethodImpl owners once, bounds metadata,
 retained relation counts and its own work steps, and uses slot lookups along bounded

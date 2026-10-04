@@ -438,3 +438,9 @@ Declaration diagnostics contain `relation`, a local type/method `token`, stable 
 and bounded `reason`. `complete` is evaluated independently for each declaration
 relation. Their diagnostics do not change the instruction scan's completeness, and
 unsupported native method bodies do not invalidate established metadata relationships.
+
+The [declaration fixture and evidence](../../tests/fixtures/declaration-relations/README.md)
+retain 33 passing focused Node tests and exact comparison with 19 CoreCLR 10.0.5
+relationships, including corrected interface reimplementation precedence. The browser
+harness is prepared but was not launched successfully; browser and wider execution
+coverage remain pending. No benchmark or speedup is claimed for this batch.

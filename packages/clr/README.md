@@ -130,9 +130,14 @@ The adapter indexes names plus canonical signatures and MethodImpl owners once, 
 uses constant-time slot lookups along bounded ancestor chains. Its added work is linear
 in metadata payload and visited maps/ancestor edges, plus emitted relationships; the
 underlying CLR resolver's cost is separate. Queries page prebuilt CIL indexes without
-reloading metadata. No speedup or engine coverage is claimed before qualification.
+reloading metadata. No benchmark was run for this batch; logical storage counters
+and test durations do not establish allocation cost or a speedup.
 
 Reference: [ECMA-335 II.10.3/II.12.2](https://ecma-international.org/wp-content/uploads/ECMA-335_6th_edition_june_2012.pdf)
 and [.NET's interface-method specification addendum](https://github.com/dotnet/runtime/blob/main/docs/design/specs/Ecma-335-Augments.md).
-The independently authored fixture, native `GetBaseDefinition`/`GetInterfaceMap` capture
-source and offline comparison are in `tests/fixtures/declaration-relations/`.
+The [declaration fixture](../../tests/fixtures/declaration-relations/README.md) retains
+33 passing focused Node tests and exact comparison with 19 native
+`GetBaseDefinition`/`GetInterfaceMap` relationships on CoreCLR 10.0.5. It records the
+interface reimplementation correction, source hashes and full reference configuration.
+The browser harness is prepared but has no successful launch or passing result;
+browser and wider execution-platform qualification remain pending.

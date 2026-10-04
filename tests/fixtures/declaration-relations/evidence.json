@@ -1,0 +1,130 @@
+{
+  "format": "sharpforge.declaration-relations.evidence",
+  "version": 1,
+  "workItem": "SF-A13-T11.3",
+  "issue": 2573,
+  "implementationCommit": "902b1fe063f42e653025878282d123094779230f",
+  "implementationTree": "5bc290d366587d18a7fee3c72716c02a21b3af6d",
+  "nativeFixtureCommit": "0efea6566018130e6d928b00c4e95eb135754418",
+  "provenance": "Existing root-agent serial validation evidence retained without rerunning tests or native capture.",
+  "node": {
+    "file": "node-results.txt",
+    "originalFile": "declaration-fixed-tests.tap",
+    "sha256": "724033c654c9ef79982713680ee83d453494f2dbc70930ca8e0275914461f853",
+    "reporter": "Node spec output; original filename used a .tap suffix",
+    "result": {
+      "tests": 33,
+      "suites": 0,
+      "pass": 33,
+      "fail": 0,
+      "cancelled": 0,
+      "skipped": 0,
+      "todo": 0,
+      "duration_ms": 1957.034082
+    },
+    "testFiles": [
+      "tests/a13-11-declaration-provider.test.js",
+      "tests/a13-11-declaration-reference.test.js",
+      "tests/a13-11-declaration-relations.test.js",
+      "tests/a13-11-usage-relations.test.js",
+      "tests/clr-methods-interface-impl.test.js"
+    ],
+    "replayCommand": [
+      "node",
+      "scripts/limited.js",
+      "node",
+      "--test",
+      "tests/a13-11-declaration-provider.test.js",
+      "tests/a13-11-declaration-reference.test.js",
+      "tests/a13-11-declaration-relations.test.js",
+      "tests/a13-11-usage-relations.test.js",
+      "tests/clr-methods-interface-impl.test.js"
+    ],
+    "replayCommandProvenance": "Replay invocation for these five suites; the retained output has no command preamble.",
+    "recordedEnvironment": null,
+    "configurationNote": "The retained Node output does not record environment or resource-limit overrides. Replay uses scripts/limited.js.",
+    "durationNote": "Diagnostic test-run duration only; not a benchmark or throughput measurement."
+  },
+  "native": {
+    "file": "native.json",
+    "sha256": "e7038ee3de3f8dc3413c53f82f9519e3788e883ab4e7a3014ea067b6d4fce44d",
+    "sourceSha256": "ec16b791d2957c52c6f12633200e5cdae46acccacc52fe1430a199ccb3744dd0",
+    "imageSha256": "d2630cc2d781ff411f1f55cab1079df774f1c98fb864e0eb78ac4df841b676d3",
+    "relationships": 19,
+    "relations": {
+      "overridden-by": 4,
+      "implemented-by": 15
+    },
+    "comparison": "Exact relation/source/target/implementing-type tuple equality in the passing offline Node reference test.",
+    "sdk": "10.0.201",
+    "runtime": ".NET 10.0.5",
+    "referencePack": "10.0.5",
+    "environment": {
+      "platform": "linux-x64",
+      "osRelease": "6.18.44",
+      "node": "v24.19.0",
+      "image": {
+        "kind": "local",
+        "pinnedImage": false,
+        "reason": "Local OS is recorded, not an immutable runner image."
+      },
+      "imageOS": null,
+      "imageVersion": null
+    },
+    "configurationNote": "Full compiler/reference hashes, arguments and raw process results are retained once in native.json."
+  },
+  "correction": {
+    "commit": "902b1fe063f42e653025878282d123094779230f",
+    "reason": "Preserve an inherited explicit interface mapping before searching older public ancestors when reimplementation has no current declaration.",
+    "nativeExpectationsChanged": false,
+    "addedRegression": "A newly introduced interface with no inherited mapping still searches ancestral public methods."
+  },
+  "browser": {
+    "entryPoint": "tests/fixtures/declaration-relations/browser.mjs",
+    "export": "run",
+    "status": "prepared; no successful launch or passing browser result",
+    "scope": "Browser JavaScript metadata services replay captured native observations as data."
+  },
+  "performance": {
+    "status": "not measured",
+    "speedupClaim": false
+  },
+  "unqualifiedExecutionTargets": [
+    "source VM",
+    "direct CIL",
+    "Rust native",
+    "Rust Wasm",
+    "wider platform matrix"
+  ],
+  "hashScope": "Changed implementation/tests plus focused dependencies and capture configuration; implementationTree identifies all remaining repository dependencies.",
+  "sourceSha256": {
+    "packages/cil/src/browser/analyzers-declarations.js": "4764ae1f3b5f1807d41856242b646caf39888d2c4045581ccaa46eb54d979086",
+    "packages/cil/src/browser/analyzers-input.js": "6221f51dd8a3c583447b1e1953df36d50418a4e7e57fec845221093b6765e038",
+    "packages/cil/src/browser/analyzers.js": "201fed041da050f01e152de5bfd15ab4c52ee995c0048c157b5ebbc64ff21011",
+    "packages/cil/src/index.js": "cce0de055677f8ee7e07edcec183c67dc39047d34ff7039b4b275bd3f46a4fc9",
+    "packages/clr/src/index.js": "cea87022239d5500f6d993b3ea1c75e6b5f250419a85f49bd25925c795e9fb29",
+    "packages/clr/src/reflection/usage-budget.js": "f0b7263b1618ca3493c505af4197c1dffd3c7fd214428a61365ef2aa291e4478",
+    "packages/clr/src/reflection/usage-interface-maps.js": "0bbc8f0fcc175eb452b7d7431d9530b275da378a68fa71f231bad9b18c1afae5",
+    "packages/clr/src/reflection/usage-metadata.js": "d555ef6aec0cacec70c16e0431aedeb8a23af7efa2f03393e0ce12323341c13f",
+    "packages/clr/src/reflection/usage-relations.js": "e37670ca34fa3669ddc8a40411108cfe296c04e04449756c8e8c9a3786b3e51d",
+    "packages/clr/src/type-system/interface-method-impl.js": "eaad05af6b484cda8b93a97e1d6817740487d94eb6aad1998e84d7a3bcbdbb36",
+    "packages/clr/src/type-system/method-impl-rows.js": "c8ee9e319898301c03af35556f1c75b3a3b8dd580b6d5aa81be5e0a91df45aa5",
+    "planning/qualification/oracle-toolchain.json": "58eaf5e63a8edcf47d3ef96635655f1dd89d230a15b5b39f29503576484fe52d",
+    "scripts/conformance/oracle/clr-run.js": "edb7175a12ffaec9f7aa837b3d3c717514c4d7c1d761c91c8cac5b39f714f2c8",
+    "scripts/conformance/oracle/roslyn-compile.js": "0f7dafdc3a61dcc70e5c354d0277babba10411b744c7921ee141ce42c48898e3",
+    "scripts/conformance/oracle/toolchain.js": "43d734f4899c0484475eb917e58b46161490b4622ace0b0a688488c504c835a6",
+    "scripts/limited.js": "d60fa1310cc85ce9426914dd4b79b1b500dcb2eab0928b422d24994d90a650f7",
+    "scripts/planning/lib/resource-limits.js": "f70d0f2862ad4a5e0afce5e47ecf8e055cf82aefc44fefc96a3b4989293ee382",
+    "tests/a13-11-declaration-provider.test.js": "eed34f98215f5d94d824f7fb74488f780c9274fcc3465d5d465416759bbdfabb",
+    "tests/a13-11-declaration-reference.test.js": "94fc48156b7a2f422385ea8bab94c60e3ea608274bd4d4a727df62c93b1f19d8",
+    "tests/a13-11-declaration-relations.test.js": "e3b732df5091052e1736fb6dffa22beeabb4aed138f687d8cd6726296860ce69",
+    "tests/a13-11-usage-relations.test.js": "daedcf7563356961241ee6d083bce908e8b01a4228c369f575945469212353c7",
+    "tests/clr-methods-base-fixtures.js": "19d667ee461c39fb755e7f668ebf51575a26664b55f2feff9f5ed7a9a9066aa0",
+    "tests/clr-methods-interface-impl.test.js": "b8dee31b3381497d08b180c198e65417e52980c7e63c484af60115e597d047b7",
+    "tests/fixtures/declaration-relations/Program.cs": "ec16b791d2957c52c6f12633200e5cdae46acccacc52fe1430a199ccb3744dd0",
+    "tests/fixtures/declaration-relations/browser.mjs": "9a61b8cd7e36323c8812f2f8749c6daac01f3ecf14484348e78ce126af4b1724",
+    "tests/fixtures/declaration-relations/capture.mjs": "a2840c4aa1b222e912ada13085575fa797a9fe9c6ab9f12a3b9bd171c596d6d7",
+    "tests/fixtures/declaration-relations/input.mjs": "8332d27834a91492ba6d4e05a9d497bdb8acb04295359ce264e77ac4f4f44114",
+    "tests/manifests/A13.json": "a784649b44bd02c808d6f45ccf4be4a181738681fa662699f8e1d4366f893815"
+  }
+}
