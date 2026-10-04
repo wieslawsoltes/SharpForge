@@ -10,7 +10,7 @@ const cases = [{name: 'ordinary-no-async', bytes: managedFixture({methods: [{nam
   body(writer, context) {
     const absolute = context.member('System.Math', 'Abs', 'int', ['int']);
     writer.op('ldc.i4', 0).op('stloc.0').op('ldc.i4', 128).op('stloc.1');
-    writer.label('loop').op('ldloc.0').op('ldloc.1').op('neg').op('call', absolute).op('add').op('stloc.0');
+    writer.mark('loop').op('ldloc.0').op('ldloc.1').op('neg').op('call', absolute).op('add').op('stloc.0');
     writer.op('ldloc.1').op('ldc.i4', 1).op('sub').op('dup').op('stloc.1').op('brtrue', 'loop');
     writer.op('ldloc.0').op('ret');
   }}]})}];
