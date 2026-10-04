@@ -42,3 +42,19 @@ zero, Int32.MaxValue and invalid-negative boundaries, and replacement of a refer
 field in a suspended Release state machine. The snapshot test additionally requests a
 collection at every managed allocation. These are not included in the recorded eight
 pre-fix native outputs.
+
+`GenericMethod.cs`, `GenericOwner.cs`, and `GenericAggregateBoundary.cs` are additional
+source-only controls. No compiler, native or VM execution has been recorded for them.
+They separate generic method and nested owner substitution from the documented user
+aggregate payload boundary. `generic-boundaries.json` records their intended scope and
+the additional malformed-metadata controls still needed. They do not expand this ABI
+contribution to custom builders, ValueTask or custom awaiters.
+
+The capture driver accepts an explicit checked-in fixture list and `--execute` to record
+the same real Roslyn images on the CIL VM. It records the actual outcome; a capture is
+not itself a pass claim for these uncaptured boundaries.
+
+```sh
+node scripts/limited.js node tests/fixtures/cil-async/capture.mjs <output-directory> \
+  GenericMethod GenericOwner GenericAggregateBoundary --execute
+```

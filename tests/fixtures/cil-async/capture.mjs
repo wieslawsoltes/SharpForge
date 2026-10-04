@@ -4,11 +4,18 @@ import {createHash} from 'node:crypto';
 import {mkdirSync, readFileSync, writeFileSync} from 'node:fs';
 import {dirname, join, resolve} from 'node:path';
 import {AssemblyInspector, verifyCilAssembly} from '@sharpforge/cil';
+import {CilVirtualMachine} from '@sharpforge/runtime';
 import {loadReferencePack} from '@sharpforge/compiler/node';
 import {dotnetHost, sdkVersion} from '../../../packages/compiler/test/differential/tools/dotnet-axis.mjs';
 
 const destination = process.argv[2];
 assert.ok(destination, 'capture destination is required');
+const execute = process.argv.includes('--execute');
+const requested = process.argv.slice(3).filter(argument => argument !== '--execute');
+const fixtureNames = requested.length ? requested : ['Completed', 'Suspended', 'Exceptions', 'Retention'];
+const known = new Set(['Completed', 'Suspended', 'Exceptions', 'Retention', 'WaitAndDelay', 'Mutation',
+  'GenericMethod', 'GenericOwner', 'GenericAggregateBoundary']);
+assert.ok(fixtureNames.every(name => known.has(name)), 'capture requires checked-in fixture names');
 mkdirSync(destination, {recursive: true});
 const root = resolve('.');
 const pack = loadReferencePack(), dotnet = dotnetHost(), sdk = sdkVersion(dotnet);
@@ -21,7 +28,24 @@ const capture = {sdk, referencePack: pack.pack.version,
   trackedDiff: execFileSync('git', ['diff', '--name-only'], {encoding: 'utf8'}).trim(), entries: []};
 const config = {runtimeOptions: {tfm: 'net' + sdk.split('.').slice(0, 2).join('.'),
   framework: {name: 'Microsoft.NETCore.App', version: sdk.split('.')[0] + '.0.0'}}};
-for (const name of ['Completed', 'Suspended', 'Exceptions', 'Retention']) {
+function executeImage(bytes) {
+  try {
+    const vm = new CilVirtualMachine(bytes, {virtualTime: true});
+    let result = vm.run();
+    for (let turn = 0; turn < 100 && result.state === 'waiting'; turn++) {
+      const delay = vm.scheduler.nextDelay();
+      if (delay === null) break;
+      vm.scheduler.advance(delay);
+      result = vm.run();
+    }
+    return {state: result.state, output: result.output,
+      fault: result.fault ? {name: result.fault.name, message: result.fault.message} : null};
+  } catch (error) {
+    return {state: 'rejected', error: {name: error.name, message: error.message}};
+  }
+}
+
+for (const name of fixtureNames) {
   const sourcePath = join(root, 'tests', 'fixtures', 'cil-async', name + '.cs');
   const source = readFileSync(sourcePath);
   for (const optimize of [false, true]) {
@@ -43,10 +67,14 @@ for (const name of ['Completed', 'Suspended', 'Exceptions', 'Retention']) {
     const entry = {name, mode, sourceSha256: sha256(source), assemblySha256: sha256(bytes), bytes: bytes.length,
       command: [dotnet, ...args], compilerOutput: built.stdout + built.stderr, output, machines,
       verifier: {success: report.success, methods: report.methods, issues: report.issues}};
+    if (execute) {
+      entry.cil = executeImage(bytes);
+      entry.cil.matchesNative = entry.cil.state === 'terminated' && entry.cil.output === output;
+    }
     capture.entries.push(entry);
     writeFileSync(join(destination, 'capture.json'), JSON.stringify(capture, null, 2) + '\n');
     console.log(name, mode, 'native OK;', machines.map(machine => machine.base).join(','),
-      'CIL admission', report.success ? 'accepted' : 'rejected');
+      'CIL admission', report.success ? 'accepted' : 'rejected', execute ? entry.cil.state : '');
   }
 }
 console.log('Wrote', join(destination, 'capture.json'));
