@@ -26,7 +26,8 @@ function intrinsicMembers(builtin, owner, api) {
 export async function intrinsicMetadata() {
   const api = await import('@sharpforge/bytecode');
   const types = new Map();
-  for (const builtin of api.Builtins) {
+  // Stable IDs reserve sparse array ranges; the public name index visits only real descriptors.
+  for (const builtin of api.BuiltinMap.values()) {
     if (!builtin || builtin.contract || builtin.name.startsWith('$')) continue;
     const prefix = builtin.name.slice(0, builtin.name.lastIndexOf('.'));
     const owner = api.builtinOwners[prefix];
