@@ -75,6 +75,7 @@ and 1 MiB aggregate source signature bytes are allowed. Decoding and canonical
 encoding use depth 32 / nodes 256; name comparison reads eight fixed heap bytes.
 No metadata views, decoded ASTs or cache objects escape the invocation. Budget
 checks precede AST expansion. See the [follow-up reference plan](../../tests/fixtures/a03-prefix-array-address/README.md);
-its authored tests/native capture/benchmark have not run before the scheduled slot.
+it records 222/222 focused/compatibility tests, six in-scope native agreements,
+the retained readonly-store divergence, and raw control/new-path timings.
 The earlier native result above remains historical; the follow-up implements its
 previously unsupported ArrayAddress case while retaining the readonly-store gap.
