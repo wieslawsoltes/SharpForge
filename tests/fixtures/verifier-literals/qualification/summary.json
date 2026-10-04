@@ -1,0 +1,143 @@
+{
+  "schemaVersion": 1,
+  "scope": "SF-A03-T07.5 / PR #4519: ldstr literal verifier batch; issue #2403 remains partial",
+  "productRevision": "6aae05c05d935ae0b90de67ec9a1840fa32ac29d",
+  "originalPrRevision": "52d21294048ed81e6bd8f14120a365f4acdca8c4",
+  "evidencePreparedOn": "2026-10-04",
+  "executionOwner": "coordinating agent serial validation slot",
+  "documentationOnly": true,
+  "environment": {
+    "node": "v24.19.0",
+    "platform": "linux-x64",
+    "osRelease": "6.18.44",
+    "immutableImage": false
+  },
+  "native": {
+    "status": "captured",
+    "file": "../native.json",
+    "sha256": "934c3076e9aac6454b842519c78368f5391446031736c3460dfb6ebb1c762a28",
+    "oracle": "ILVerify",
+    "version": "10.0.5",
+    "sdk": "10.0.201",
+    "runtime": "10.0.5",
+    "toolSHA256": "ca75cb4d2299ee5413eaf602a6ba87b7c089f3785d06f6b8ccad013d4e4646be",
+    "references": {
+      "count": 167,
+      "sha256": "a978e7aaf608f22e860328a42319b908a5a084cdb087b28b5c31a1e6726be362"
+    },
+    "observations": 31,
+    "declaredExpectationsMatched": 31,
+    "accepted": 23,
+    "rejected": 8,
+    "productPolicyStatuses": {
+      "verified": 23,
+      "rejected": 7,
+      "unknown": 1
+    },
+    "determinatePolicyAgreement": 30,
+    "unsupported": [
+      {
+        "name": "NominalReturnUnknown",
+        "policyStatus": "unknown",
+        "nativeAccepted": false,
+        "countsAsPolicyAgreement": false
+      }
+    ]
+  },
+  "node": {
+    "focused": {
+      "status": "passed",
+      "tests": 57,
+      "pass": 57,
+      "fail": 0,
+      "cancelled": 0,
+      "skipped": 0,
+      "file": "focused-node.tap"
+    },
+    "inspectorView": {
+      "status": "passed",
+      "tests": 4,
+      "pass": 4,
+      "fail": 0,
+      "cancelled": 0,
+      "skipped": 0,
+      "file": "inspector-method-view.tap"
+    },
+    "commandProvenance": "Retained logs contain results without command headers; README commands are reproducible replays, not reconstructed invocation records."
+  },
+  "browser": {
+    "status": "host-launch-failed",
+    "productChecksRun": 0,
+    "passed": false,
+    "attempts": [
+      {
+        "engine": "chromium",
+        "stage": "launch",
+        "file": "browser-permission.json",
+        "log": "browser-permission.log",
+        "reason": "spawn EACCES"
+      },
+      {
+        "engine": "chromium",
+        "stage": "launch",
+        "file": "browser-launch.json",
+        "log": "browser-launch.log",
+        "reason": "ProcessSingleton socket Operation not permitted; SIGABRT"
+      }
+    ],
+    "firefox": "not run",
+    "webkit": "not run",
+    "driver": "browser-driver.py.txt"
+  },
+  "performance": {
+    "status": "pending",
+    "measurementsClaimed": false,
+    "owner": "coordinating agent"
+  },
+  "finalPublicationGate": {
+    "status": "pending",
+    "owner": "coordinating agent"
+  },
+  "artifacts": {
+    "focused-node.tap": {
+      "sha256": "f65b33aa40ea88c819907229440bc6a8df6dd95f053c27443f5cdc69d9f4629e",
+      "bytes": 5964,
+      "copiedFrom": "/workspace/scratch/7e3d2a445c44/sf6-verify/artifacts/project6-resume/literals.tap"
+    },
+    "inspector-method-view.tap": {
+      "sha256": "9077d285d1dd5b5e509f9c2d4651e2b1715161844230b1ad6b8b651d85b80933",
+      "bytes": 550,
+      "copiedFrom": "/workspace/scratch/7e3d2a445c44/sf6-verify/artifacts/project6-resume/inspector-method-view.tap"
+    },
+    "native-capture.log": {
+      "sha256": "76dfb4e355511c4b5d51ecc6d9ad0c18693bf5688d69919c55b9604f8d8a51e2",
+      "bytes": 59,
+      "copiedFrom": "/workspace/scratch/7e3d2a445c44/sf6-verify/artifacts/project6-resume/literal-native.log"
+    },
+    "browser-permission.log": {
+      "sha256": "1931c911ed4c796826baf8da647af0dd4f9b5018408bfc14b22bff2bcf335cf3",
+      "bytes": 3810,
+      "copiedFrom": "/workspace/scratch/7e3d2a445c44/browser-literals.log"
+    },
+    "browser-permission.json": {
+      "sha256": "b10f5e1eabee235471f20f02856f0efca7d800a39e0ef458bf29182b6345d30c",
+      "bytes": 2531,
+      "copiedFrom": "/workspace/scratch/7e3d2a445c44/browser-literals/report.json"
+    },
+    "browser-launch.log": {
+      "sha256": "831616fdd6b77d9a8fcfc77a183794e6927d889e169b476b7f97848cbcd16741",
+      "bytes": 13037,
+      "copiedFrom": "/workspace/scratch/7e3d2a445c44/browser-literals-launch.log"
+    },
+    "browser-launch.json": {
+      "sha256": "b6648e50837335e13daefb22730797b3c9f7fd53b5b80fa92d8407606d710709",
+      "bytes": 11838,
+      "copiedFrom": "/workspace/scratch/7e3d2a445c44/browser-literals-launch/report.json"
+    },
+    "browser-driver.py.txt": {
+      "sha256": "296e64b072f9bb6c66957493b11355aec6b5089485a90a442f9378c3f7be0dd6",
+      "bytes": 3790,
+      "copiedFrom": "/workspace/scratch/7e3d2a445c44/project6-browser.py"
+    }
+  }
+}
