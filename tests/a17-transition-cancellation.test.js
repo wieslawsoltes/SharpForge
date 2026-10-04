@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {AnimationClock} from '@sharpforge/framework';
-import {Compositor, ImplicitTransition, ImplicitTransitionCoordinator,
+import {Compositor, CompositionTransport, CompositionTransportHost, ImplicitTransition, ImplicitTransitionCoordinator,
   ThemeTransition, ThemeTransitionCoordinator} from '@sharpforge/rendering';
 
 const clockFactory = adapter => new AnimationClock(adapter);
@@ -46,4 +46,30 @@ test('canceling an exit theme restores base opacity and offset instead of retain
     assert.equal(themes.active.size, 0);
     themes.dispose();
   } finally { await compositor.dispose(); }
+});
+
+test('the data-only stop packet restores host base values without replacing public stop semantics', async () => {
+  const packets = [];
+  const host = new CompositionTransportHost({clockFactory});
+  const compositor = new Compositor({clockFactory});
+  const transport = new CompositionTransport({session: 'transient-cancellation', enqueue: () => {},
+    emit: packet => { packets.push(structuredClone(packet)); host.receive(packet); }});
+  transport.connect(compositor);
+  try {
+    const visual = compositor.CreateSpriteVisual(), owner = {id: 'owner'};
+    visual.Opacity = 1;
+    const implicit = new ImplicitTransitionCoordinator(compositor, {getVisual: () => visual,
+      getTransition: () => new ImplicitTransition('ScalarTransition', 100)});
+    implicit.propertyChanged(owner, 'Opacity', 1, 0);
+    const session = host.sessions.get('transient-cancellation');
+    session.compositor.advance(25);
+    assert.equal(session.objects.get(visual.id).Opacity, 0.75);
+    compositor.advance(50);
+    implicit.cancel(owner, 'Opacity');
+    assert.equal(session.objects.get(visual.id).Opacity, 0);
+    assert.equal(packets.at(-1).op, 'composition-stop');
+    assert.equal(packets.at(-1).restoreBase, true);
+    assert.throws(() => host.receive({...packets.at(-1), restoreBase: 'yes'}), /stop policy/);
+    implicit.dispose();
+  } finally { await compositor.dispose(); host.dispose(); }
 });

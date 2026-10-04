@@ -74,6 +74,10 @@ Scanbeam tessellation preserves holes and self-intersections. Strokes preserve d
 
 `serializeCompositionGraph` emits only bounded data and explicit object identities. `applyCompositionGraph` checks kinds, property types, ownership, roots, cycles and effect sources before committing. It preserves existing object/content identities on placement changes and transports geometry, decoded images and stroke dash collections without executable callbacks or host classes.
 
+## Independent host timelines
+
+`CompositionTransport` and `CompositionTransportHost` install definitions and native visual graphs in an explicit application session. Host frames use an injected shared animation clock and return completion identities, avoiding per-frame managed messages. Independent XAML timelines accept only supported render properties; dependent layout properties stay with managed execution. Snapshot, pause, stop, binding removal and disposal preserve ownership and restore transient base values when requested.
+
 ## Validation
 
 The publication manifest lists authored fixtures and the prior completed-scope evidence separately. Repairs and newly authored cases await the consolidated rerun; required core is pending on this exact branch tree. Browser pixels, native WinUI comparisons and physical GPU qualification remain separate gates.
