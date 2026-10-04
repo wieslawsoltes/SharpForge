@@ -17,9 +17,22 @@ const skip = !pack ? 'no .NET reference pack is installed' : !sdk ? 'no .NET SDK
 const source = `using System;
 using System.Threading.Tasks;
 using System.Collections.Generic;
+enum Choice : short { Selected = -1234 }
 class P {
   static async Task<int> Value() { int value = 40; await Task.Yield(); return value + 2; }
   static IEnumerable<int> Items() { yield return 1; yield return 2; }
+  static void Constants() {
+    const Choice choice = Choice.Selected;
+    const decimal amount = -123.4500m;
+    const ulong limit = 18446744073709551615UL;
+    const P missing = null;
+    Console.WriteLine(1);
+  }
+  static void Render() {
+#line (200, 5) - (201, 8) 8 "component.razor"
+  Console.WriteLine(7);
+#line default
+  }
   static async Task Main() {
     Console.WriteLine(await Value());
     foreach (var item in Items()) Console.WriteLine(item);
@@ -69,8 +82,17 @@ function verifyNative(native, symbols) {
     method: scope.methodToken, StartOffset: scope.start, Length: scope.end - scope.start, importScope: scope.importScope,
     variables: scope.variables.map(variable => variable.id), constants: scope.constants.map(constant => constant.id),
   })));
+  assert.deepEqual(native.constants.map(constant => ({ name: constant.name, signature: constant.signature.toLowerCase() })),
+    symbols.constants.map(constant => ({ name: constant.name, signature: Buffer.from(constant.signature).toString('hex') })));
   assert.deepEqual(native.custom.map(record => ({ ...record, bytes: record.bytes.toLowerCase() })),
     symbols.custom.map(record => ({ parent: record.parent, kind: record.kind, bytes: Buffer.from(record.bytes).toString('hex') })));
+}
+
+function mappedSpans(native, name) {
+  const documents = new Set(native.documents.filter(document => document.name.replaceAll('\\', '/').split('/').at(-1) === name)
+    .map(document => document.id));
+  return native.methods.flatMap(method => method.points.filter(point => documents.has(point.document) && !point.IsHidden)
+    .map(point => [point.StartLine, point.StartColumn, point.EndLine, point.EndColumn]));
 }
 
 test('direct CIL PDBs agree with independent SRM and sidecar/embedded .NET stack traces agree with Roslyn', { skip }, context => {
@@ -87,7 +109,8 @@ test('direct CIL PDBs agree with independent SRM and sidecar/embedded .NET stack
     const expected = run([join(reference, 'bin', 'Reference.dll')]);
     assert.equal(expected, '42\n1\n2\nTrue');
     const nativeReference = JSON.parse(run([reader, 'inspect', join(reference, 'bin', 'Reference.pdb'), join(reference, 'bin', 'Reference.dll')]));
-    assert.ok(nativeReference.documents.some(document => document.name === 'view.cs'));
+    assert.ok(mappedSpans(nativeReference, 'view.cs').some(span => span[0] === 123));
+    assert.deepEqual(mappedSpans(nativeReference, 'component.razor'), [[200, 5, 201, 8]]);
     for (const embeddedPdb of [false, true]) {
       const directory = join(scratch, embeddedPdb ? 'embedded' : 'sidecar');
       mkdirSync(directory);
@@ -106,6 +129,7 @@ test('direct CIL PDBs agree with independent SRM and sidecar/embedded .NET stack
       }));
       const native = JSON.parse(run([reader, 'inspect', pdb, assembly]));
       verifyNative(native, loadSymbols(emitted.assembly, emitted.pdb));
+      assert.deepEqual(mappedSpans(native, 'component.razor'), mappedSpans(nativeReference, 'component.razor'));
       assert.equal(native.directories.some(directory => directory.kind === 17), embeddedPdb);
       if (embeddedPdb) rmSync(pdb);
       assert.equal(run([assembly]), expected, embeddedPdb ? 'embedded symbols' : 'sidecar symbols');

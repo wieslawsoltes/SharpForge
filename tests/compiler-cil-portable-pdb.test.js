@@ -64,7 +64,10 @@ test('enabling symbols preserves every emitted instruction, branch and exception
 });
 
 test('zero-code and unreachable source constructs do not steal another statement sequence point', () => {
-  const source = ['class P { static void Main() {', 'const int constant = 2;', ';', 'System.Console.WriteLine(constant);', 'return;', 'System.Console.WriteLine(99);', '} }'].join('\n');
+  const source = [
+    'class P { static void Main() {', 'const int constant = 2;', ';',
+    'System.Console.WriteLine(constant);', 'return;', 'System.Console.WriteLine(99);', '} }',
+  ].join('\n');
   const { pe, pdb } = compile(source);
   const points = pointsOf(pdb, methodNamed(pe, 'Main').token).filter(point => !point.hidden);
   assert.deepEqual(points.map(point => point.startLine), [4, 5]);
@@ -108,6 +111,61 @@ test('partial-type initializers retain their actual documents inside the same em
   assert.deepEqual(documents, ['one.cs', 'two.cs']);
 });
 
+test('constant scopes retain exact enum, decimal, wide integer and typed-null signatures', () => {
+  const source = `enum Choice : short { Selected = -1234 }
+class P { static void Main() {
+  const Choice choice = Choice.Selected;
+  const decimal amount = -123.4500m;
+  const ulong limit = 18446744073709551615UL;
+  const P missing = null;
+  System.Console.WriteLine(1);
+} }`;
+  const { pe, pdb } = compile(source);
+  const constants = new Map(pdb.constants.map(constant => [constant.name, constant]));
+  assert.equal(constants.get('choice').value, -1234);
+  assert.equal(constants.get('choice').enumTypeVerified, true);
+  assert.equal(constants.get('amount').value, '-123.4500');
+  assert.deepEqual(constants.get('amount').decimal, { coefficient: 1234500n, scale: 4, negative: true });
+  assert.equal(constants.get('limit').value, 18446744073709551615n);
+  assert.equal(constants.get('missing').value, null);
+  assert.equal(constants.get('missing').typeToken, pe.types.find(type => type.name === 'P').token);
+});
+
+test('stackalloc stream replacement retains source points and exact local slots', () => {
+  const source = `unsafe class P { static void Main() {
+    int* values = stackalloc int[2] { 40, 2 };
+    System.Console.WriteLine(values[0] + values[1]);
+  } }`;
+  const { pe, pdb } = compile(source, { allowUnsafe: true });
+  const method = methodNamed(pe, 'Main');
+  const body = pe.getMethod(method.token);
+  const boundaries = new Set(body.instructions.map(instruction => instruction.offset));
+  const points = pointsOf(pdb, method.token);
+  assert.deepEqual(points.filter(point => !point.hidden).map(point => point.startLine), [2, 3]);
+  assert.ok(points.every(point => boundaries.has(point.offset)));
+  const variables = pdb.scopeTree(method.token).flatMap(scope => flattenScopes(scope).flatMap(entry => entry.locals));
+  assert.ok(variables.some(variable => variable.name === 'values'));
+});
+
+test('constructor initializer points start before the receiver and cover complete stores and calls', () => {
+  const source = `class Base { public Base(int value) { } }
+class P : Base {
+  int first = 40;
+  int second = 2;
+  P() : base(42) { }
+  static void Main() { var value = new P(); System.Console.WriteLine(value.first + value.second); }
+}`;
+  const { pe, pdb } = compile(source);
+  const method = pe.types.find(type => type.name === 'P').methods.find(method => method.name === '.ctor');
+  const body = pe.getMethod(method.token);
+  const instructions = new Map(body.instructions.map(instruction => [instruction.offset, instruction]));
+  const points = pointsOf(pdb, method.token).filter(point => !point.hidden);
+  assert.deepEqual(points.map(point => point.startLine), [3, 4, 5]);
+  assert.ok(points.every(point => instructions.get(point.offset).name === 'ldarg.0'));
+  const plain = compileToAssembly(source, { name: 'DebugSample', portablePdb: false });
+  assert.deepEqual(body.instructions, new AssemblyInspector(plain.assembly).getMethod(method.token).instructions);
+});
+
 test('line mappings, hidden regions, reset paths and declared checksums are preserved without fabricated source', () => {
   const hash = '01020304';
   const source = `#pragma checksum "view.cs" "{${PdbGuids.sha256}}" "${hash}"
@@ -133,6 +191,17 @@ System.Console.WriteLine(5);
   assert.deepEqual(pdb.documents.find(document => document.name === 'view.cs').hash, Uint8Array.of(1, 2, 3, 4));
   assert.equal(pdb.documents.find(document => document.name === 'unknown.cs').hashAlgorithm, null);
   assert.equal(pdb.custom.filter(record => record.kind === PdbGuids.embeddedSource).length, 1);
+});
+
+test('enhanced line directives map generated prefixes to the declared whole-span end', () => {
+  const source = `class P { static void Main() {
+#line (200, 5) - (201, 8) 8 "component.razor"
+  System.Console.WriteLine(7);
+#line default
+} }`;
+  const { pe, pdb } = compile(source);
+  const points = pointsOf(pdb, methodNamed(pe, 'Main').token).filter(point => !point.hidden);
+  assert.deepEqual(points.map(point => [point.startLine, point.startColumn, point.endLine, point.endColumn]), [[200, 5, 201, 8]]);
 });
 
 test('portable and embedded symbols are opt-in and explicit false suppresses both modes', () => {
@@ -191,7 +260,11 @@ class P {
     const hoisted = pdb.hoistedLocals(kickoff, visibleScope.start);
     assert.equal(hoisted.available, true, hoisted.reason);
     assert.ok(hoisted.locals.some(local => local.name === 'alive'));
-    const ordinary = pdb.scopeTree(info.stateMachine.moveNext).flatMap(scope => scope.locals);
+    const ordinary = pdb.scopeTree(info.stateMachine.moveNext).flatMap(scope => flattenScopes(scope).flatMap(entry => entry.locals));
     assert.equal(ordinary.some(local => local.name === 'alive'), false);
   }
 });
+
+function flattenScopes(scope) {
+  return [scope, ...scope.children.flatMap(flattenScopes)];
+}

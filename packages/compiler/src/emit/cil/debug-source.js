@@ -32,6 +32,17 @@ function mappingAt(mappings, offset) {
   return mappings[lower];
 }
 
+/** A generated prefix before an enhanced directive's offset maps to its declared whole-span end. */
+function mappedEnd(source, mapping, span) {
+  const entry = mapping.map.entries[0];
+  if (entry?.mode === 'span' && entry.characterOffset > 0) {
+    const start = source.positionAt(span.start);
+    if (start.line === entry.from && start.character < entry.characterOffset)
+      return { line: entry.end.line - 1, character: entry.end.character - 1 };
+  }
+  return mapping.map.map(span.end);
+}
+
 function declaredChecksum(directive) {
   const value = directive.structure;
   if (value?.pragma !== 'checksum' || value.isActive === false || !checksumGuid.test(value.guid) || !checksumBytes.test(value.bytes)) return null;
@@ -79,7 +90,7 @@ export class CilDebugSources {
     if (!file || !Number.isInteger(span?.start) || !Number.isInteger(span?.end) || span.end <= span.start) return null;
     const mapping = mappingAt(file.mappings, span.start);
     const start = mapping.map.map(span.start);
-    const end = mapping.map.map(span.end);
+    const end = mappedEnd(file.source, mapping, span);
     const path = start.hidden ? mapping.path : start.path;
     if (!this.documents.has(path)) this.documents.set(path, { uri: path, documentOnly: true });
     const line = start.line + 1;

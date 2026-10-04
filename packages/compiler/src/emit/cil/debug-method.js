@@ -36,7 +36,7 @@ export class CilMethodDebugInformation {
     this.endPoint(entry.point, end);
   }
   beginExpression(node) {
-    if (this.statementDepth || this.rootExpression) return null;
+    if (this.statementDepth || this.rootExpression || this.emitter.il.depth !== 0) return null;
     const point = this.beginPoint(node.syntax, this.marker());
     this.rootExpression = point;
     return point;
