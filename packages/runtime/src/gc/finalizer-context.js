@@ -130,6 +130,7 @@ export class FinalizerContext {
 
   stop() {
     this.stopped = true;
+    this.active?.runner?.detach?.();
     this.active = null;
   }
 
@@ -145,13 +146,15 @@ export class FinalizerContext {
   }
 
   restore(state) {
+    const active = state.active;
+    const restored = active ? {entry: this.registry.requireEntry(active.reference), runner: active.runner,
+      initialized: active.initialized, instructions: active.instructions} : null;
+    if (this.active?.runner !== restored?.runner) this.active?.runner?.detach?.();
     this.fault = state.fault;
     this.stopped = state.stopped;
     this.totalInstructions = state.totalInstructions;
     this.executing = false;
-    const active = state.active;
-    this.active = active ? {entry: this.registry.requireEntry(active.reference), runner: active.runner,
-      initialized: active.initialized, instructions: active.instructions} : null;
+    this.active = restored;
     active?.runner?.restore(active.runnerState);
   }
 }

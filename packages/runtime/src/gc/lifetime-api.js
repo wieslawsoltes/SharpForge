@@ -113,6 +113,7 @@ function invokeTable(platform, descriptor, args) {
     return platform.managed(result.success, 'bool');
   }
   if (descriptor.name === 'GetValue' || descriptor.name === '$GetValueDelegate') {
+    if (args[2] === null || args[2] === undefined) throw new ManagedFault('ArgumentNullException', 'createValueCallback');
     const factory = typeof args[2] === 'function' ? args[2] : platform.heap.lifetime.dependentValueFactory?.(platform, args[2]);
     if (typeof factory !== 'function') {
       throw new ManagedFault('NotSupportedException', 'The runtime must install a managed ConditionalWeakTable value-factory executor');

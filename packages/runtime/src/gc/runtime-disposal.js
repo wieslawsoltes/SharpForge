@@ -29,14 +29,13 @@ export function disposeRuntimeGC(runtime) {
   vm.platform.animations.bases.clear();
   vm.platform.propertyIndexes = new WeakMap();
   vm.platform.transaction = null;
-  vm.scheduler.contexts.clear();
-  vm.scheduler.tasks.clear();
-  vm.scheduler.enabled = false;
+  vm.scheduler.dispose();
   runtime.finalizerWaits.clear();
   runtime.rootRegistry.clear();
   clearExecution(vm);
   runtime.finalizerRunners.clear();
   vm.layoutCache?.clear();
+  vm.heap.spaces?.frozen.clear();
   vm.heap.collect([], {generation: 2, reason: 'Shutdown', blocking: true});
   runtime.safepointLease?.dispose?.();
   if (typeof runtime.safepointLease === 'function') runtime.safepointLease();
