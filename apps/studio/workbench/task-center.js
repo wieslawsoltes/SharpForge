@@ -36,7 +36,13 @@ export class TaskCenter extends WorkbenchEvents {
         task.message = message;
         this.emit({type: 'progress', task});
       },
-      complete: () => finish(controller.signal.aborted ? 'cancelled' : 'completed'),
+      reportStatus: message => {
+        assertId(message, 'Operation status');
+        if (!['running', 'cancelling'].includes(task.status) || task.message === message) return;
+        task.message = message;
+        this.emit({type: 'progress', task});
+      },
+      complete: ({honorCancellation = true} = {}) => finish(honorCancellation && controller.signal.aborted ? 'cancelled' : 'completed'),
       fail: error => finish(error?.name === 'AbortError' ? 'cancelled' : 'failed', error),
       cancel: () => this.cancel(id)
     };
@@ -47,9 +53,9 @@ export class TaskCenter extends WorkbenchEvents {
     const task = this.tasks.get(id);
     if (!task || task.status !== 'running') return false;
     task.status = 'cancelling';
+    this.emit({type: 'cancelling', task});
     task.controller.abort();
     task.cancel?.();
-    this.emit({type: 'cancelling', task});
     return true;
   }
   async run(options, action) {

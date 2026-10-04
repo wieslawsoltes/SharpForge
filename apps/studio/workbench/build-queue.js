@@ -115,6 +115,17 @@ export class BuildQueue {
     return !!operation;
   }
 
+  /** Return a cancellation callback for the exact currently executing operation, never a later queue sharing its project id. */
+  captureCancellation(projectId) {
+    const operation = this.projectOperations.get(projectId);
+    if (!operation) return null;
+    return reason => {
+      if (this.projectOperations.get(projectId) !== operation || operation.controller.signal.aborted) return false;
+      operation.controller.abort(abortError(reason ?? 'Build cancelled'));
+      return true;
+    };
+  }
+
   dispose() {
     for (const operation of this.operations.values()) operation.controller.abort(abortError('Build queue disposed'));
     this.events.dispose();

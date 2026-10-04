@@ -38,6 +38,8 @@ export class EmitterCore {
     this.substitutions = new Map();
     /** The node being assigned to, while its location is resolved (a get-only auto-property is then its field). */
     this.assignmentTarget = null;
+    /** The section labels of the enclosing switch statements, for `goto case`. */
+    this.switchSections = new Map();
   }
   unsupported(construct, syntax = null) {
     throw new UnsupportedInCil(construct, syntax, this.frame.uri);
@@ -79,10 +81,13 @@ export class EmitterCore {
    * @param {(emitter: this) => void} [prologue] code that runs before the body (a constructor's initialization)
    */
   body(bound, prologue = null) {
+    this.enterBody();
     if (prologue) prologue(this);
     if (bound) this.bodyStatements(bound);
     return this.finish();
   }
+  /** Runs before anything else of a body; the closure family moves captured parameters into their cells here. */
+  enterBody() {}
   bodyStatements(bound) {
     if (bound.kind === 'Block') this.statement(bound);
     else if (bound.kind === 'ExpressionBody') this.expressionBody(bound.expression, !!bound.isReturn);

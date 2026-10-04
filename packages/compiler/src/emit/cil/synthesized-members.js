@@ -13,6 +13,8 @@ import { MethodKind } from '../../symbols/members.js';
 import { walk } from '../../bound/semantic-walker.js';
 import { sourceTypesInMetadataOrder } from '../../codegen/metadata/symbol-metadata.js';
 import { MethodEmitter } from './method-emitter.js';
+import { planClosures } from './closure-plan.js';
+import { completeFieldLikeEvent } from './synthesized-events.js';
 
 const ENTRY_FLAGS = MethodAttributes.Private | MethodAttributes.Static | MethodAttributes.HideBySig;
 const TYPE_INITIALIZER_FLAGS = ENTRY_FLAGS | MethodAttributes.SpecialName | MethodAttributes.RTSpecialName;
@@ -39,8 +41,9 @@ export class SynthesizedMembers {
       programType = topLevel ? analysis.programType : null,
       declared = sourceTypesInMetadataOrder(analysis.assembly);
     this.topLevel = topLevel ? { file: topLevel[0], body: topLevel[1], type: programType } : null;
+    this.closures = planClosures(analysis, this.topLevel);
     /** Types to append after the source types. */
-    this.types = programType && !declared.includes(programType) ? [programType] : [];
+    this.types = [...(programType && !declared.includes(programType) ? [programType] : []), ...this.closures.types];
     /** The planned entry of the synthesized entry point, once `extend` has seen its type. */
     this.entryPoint = null;
   }
@@ -52,6 +55,12 @@ export class SynthesizedMembers {
     }
     const declaresTypeInitializer = plan.methods.some(method => method.name === '.cctor');
     if (!declaresTypeInitializer && this.hasStaticInitializers(type)) plan.methods.push(this.typeInitializer(type));
+    for (const event of plan.events) completeFieldLikeEvent(type, event, plan);
+    const closureMembers = this.closures.additions.get(type);
+    if (closureMembers) {
+      plan.fields.push(...closureMembers.fields);
+      plan.methods.push(...closureMembers.methods);
+    }
   }
   hasStaticInitializers(type) {
     return type.getMembers().some(member => {

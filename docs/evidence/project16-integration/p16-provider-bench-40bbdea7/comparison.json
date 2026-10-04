@@ -1,0 +1,391 @@
+{
+  "baselineRevision": "3f7e51a69cff658e55103626fd3ba1a2128692e3",
+  "candidateRevision": "40bbdea7b45ab64b24c9741046b897a35118814e",
+  "warning": "Descriptive before/after measurements only; shared-host noise and statistical significance are not inferred.",
+  "rows": [
+    {
+      "case": "instance-overloads",
+      "phase": "compile",
+      "baseline": {
+        "elapsedMs": {
+          "median": 10.663857000000007,
+          "p95": 13.608105999999907,
+          "minimum": 9.361693999999943,
+          "maximum": 13.608105999999907
+        },
+        "retainedHeapDeltaBytes": {
+          "median": 69152,
+          "p95": 194408,
+          "minimum": 51312,
+          "maximum": 194408
+        },
+        "uncollectedHeapDeltaBytes": {
+          "median": 3207576,
+          "p95": 3433696,
+          "minimum": 3138224,
+          "maximum": 3433696
+        }
+      },
+      "candidate": {
+        "elapsedMs": {
+          "median": 9.549697999999921,
+          "p95": 11.634902000000011,
+          "minimum": 9.032359000000042,
+          "maximum": 11.634902000000011
+        },
+        "retainedHeapDeltaBytes": {
+          "median": 77080,
+          "p95": 195312,
+          "minimum": 51872,
+          "maximum": 195312
+        },
+        "uncollectedHeapDeltaBytes": {
+          "median": 3201328,
+          "p95": 3433760,
+          "minimum": 3135832,
+          "maximum": 3433760
+        }
+      },
+      "medianChangePercent": -10.447992691575713,
+      "p95ChangePercent": -14.500210389307,
+      "retainedHeapMedianDifferenceBytes": 7928,
+      "observedMedianSlowdownAboveFivePercent": false
+    },
+    {
+      "case": "instance-overloads",
+      "phase": "source-model-bind",
+      "baseline": {
+        "elapsedMs": {
+          "median": 14.368271999999934,
+          "p95": 16.506174999999985,
+          "minimum": 12.512834999999995,
+          "maximum": 16.506174999999985
+        },
+        "retainedHeapDeltaBytes": {
+          "median": 522168,
+          "p95": 609808,
+          "minimum": 468528,
+          "maximum": 609808
+        },
+        "uncollectedHeapDeltaBytes": {
+          "median": 6114344,
+          "p95": 6564528,
+          "minimum": 6087088,
+          "maximum": 6564528
+        }
+      },
+      "candidate": {
+        "elapsedMs": {
+          "median": 15.181199000000106,
+          "p95": 19.198216000000002,
+          "minimum": 12.673397000000023,
+          "maximum": 19.198216000000002
+        },
+        "retainedHeapDeltaBytes": {
+          "median": 596344,
+          "p95": 689152,
+          "minimum": 537088,
+          "maximum": 689152
+        },
+        "uncollectedHeapDeltaBytes": {
+          "median": 6219984,
+          "p95": 6630992,
+          "minimum": 6156072,
+          "maximum": 6630992
+        }
+      },
+      "medianChangePercent": 5.657792391459293,
+      "p95ChangePercent": 16.30929636938916,
+      "retainedHeapMedianDifferenceBytes": 74176,
+      "observedMedianSlowdownAboveFivePercent": true
+    },
+    {
+      "case": "constructed-generic-receiver",
+      "phase": "compile",
+      "baseline": {
+        "elapsedMs": {
+          "median": 41.50811299999987,
+          "p95": 52.78241100000014,
+          "minimum": 36.30507800000032,
+          "maximum": 52.78241100000014
+        },
+        "retainedHeapDeltaBytes": {
+          "median": 154160,
+          "p95": 211024,
+          "minimum": 110344,
+          "maximum": 211024
+        },
+        "uncollectedHeapDeltaBytes": {
+          "median": 14843960,
+          "p95": 14979456,
+          "minimum": 14758080,
+          "maximum": 14979456
+        }
+      },
+      "candidate": {
+        "elapsedMs": {
+          "median": 37.721857,
+          "p95": 61.94802800000025,
+          "minimum": 35.280043999999634,
+          "maximum": 61.94802800000025
+        },
+        "retainedHeapDeltaBytes": {
+          "median": 154744,
+          "p95": 209896,
+          "minimum": 96168,
+          "maximum": 209896
+        },
+        "uncollectedHeapDeltaBytes": {
+          "median": 14868008,
+          "p95": 15175976,
+          "minimum": 14770592,
+          "maximum": 15175976
+        }
+      },
+      "medianChangePercent": -9.12172519140988,
+      "p95ChangePercent": 17.364907790968644,
+      "retainedHeapMedianDifferenceBytes": 584,
+      "observedMedianSlowdownAboveFivePercent": false
+    },
+    {
+      "case": "constructed-generic-receiver",
+      "phase": "source-model-bind",
+      "baseline": {
+        "elapsedMs": {
+          "median": 24.887614000000212,
+          "p95": 29.09056099999998,
+          "minimum": 23.044695000000047,
+          "maximum": 29.09056099999998
+        },
+        "retainedHeapDeltaBytes": {
+          "median": 1087712,
+          "p95": 1172088,
+          "minimum": 1010968,
+          "maximum": 1172088
+        },
+        "uncollectedHeapDeltaBytes": {
+          "median": 11298768,
+          "p95": 11347952,
+          "minimum": 11269536,
+          "maximum": 11347952
+        }
+      },
+      "candidate": {
+        "elapsedMs": {
+          "median": 22.80217300000004,
+          "p95": 26.199007000000165,
+          "minimum": 21.251384000000144,
+          "maximum": 26.199007000000165
+        },
+        "retainedHeapDeltaBytes": {
+          "median": 1221064,
+          "p95": 1324880,
+          "minimum": 1166176,
+          "maximum": 1324880
+        },
+        "uncollectedHeapDeltaBytes": {
+          "median": 11468592,
+          "p95": 11539344,
+          "minimum": 11425664,
+          "maximum": 11539344
+        }
+      },
+      "medianChangePercent": -8.379433239362177,
+      "p95ChangePercent": -9.939835811347253,
+      "retainedHeapMedianDifferenceBytes": 133352,
+      "observedMedianSlowdownAboveFivePercent": false
+    },
+    {
+      "case": "local-functions",
+      "phase": "compile",
+      "baseline": {
+        "elapsedMs": {
+          "median": 16.92375699999957,
+          "p95": 18.175835000000006,
+          "minimum": 15.733371000000261,
+          "maximum": 18.175835000000006
+        },
+        "retainedHeapDeltaBytes": {
+          "median": 66112,
+          "p95": 118304,
+          "minimum": 30032,
+          "maximum": 118304
+        },
+        "uncollectedHeapDeltaBytes": {
+          "median": 6102944,
+          "p95": 6179472,
+          "minimum": 6088704,
+          "maximum": 6179472
+        }
+      },
+      "candidate": {
+        "elapsedMs": {
+          "median": 15.614441000000625,
+          "p95": 18.3451299999997,
+          "minimum": 15.071192000000337,
+          "maximum": 18.3451299999997
+        },
+        "retainedHeapDeltaBytes": {
+          "median": 71432,
+          "p95": 93888,
+          "minimum": 37544,
+          "maximum": 93888
+        },
+        "uncollectedHeapDeltaBytes": {
+          "median": 6128088,
+          "p95": 6174128,
+          "minimum": 6095944,
+          "maximum": 6174128
+        }
+      },
+      "medianChangePercent": -7.7365563686537016,
+      "p95ChangePercent": 0.9314290099997846,
+      "retainedHeapMedianDifferenceBytes": 5320,
+      "observedMedianSlowdownAboveFivePercent": false
+    },
+    {
+      "case": "local-functions",
+      "phase": "source-model-bind",
+      "baseline": {
+        "elapsedMs": {
+          "median": 9.251006999999845,
+          "p95": 10.529915999999503,
+          "minimum": 8.407535999999709,
+          "maximum": 10.529915999999503
+        },
+        "retainedHeapDeltaBytes": {
+          "median": 391040,
+          "p95": 436712,
+          "minimum": 355968,
+          "maximum": 436712
+        },
+        "uncollectedHeapDeltaBytes": {
+          "median": 4598744,
+          "p95": 4629144,
+          "minimum": 4491632,
+          "maximum": 4629144
+        }
+      },
+      "candidate": {
+        "elapsedMs": {
+          "median": 10.363666000000194,
+          "p95": 11.131694000000607,
+          "minimum": 8.395117999999457,
+          "maximum": 11.131694000000607
+        },
+        "retainedHeapDeltaBytes": {
+          "median": 443408,
+          "p95": 469648,
+          "minimum": 412240,
+          "maximum": 469648
+        },
+        "uncollectedHeapDeltaBytes": {
+          "median": 4666048,
+          "p95": 4692416,
+          "minimum": 4553296,
+          "maximum": 4692416
+        }
+      },
+      "medianChangePercent": 12.027436580691898,
+      "p95ChangePercent": 5.714936377470936,
+      "retainedHeapMedianDifferenceBytes": 52368,
+      "observedMedianSlowdownAboveFivePercent": true
+    },
+    {
+      "case": "incomplete-instance-call",
+      "phase": "compile",
+      "baseline": {
+        "elapsedMs": {
+          "median": 21.502520999999433,
+          "p95": 23.486581000000115,
+          "minimum": 20.279516000000513,
+          "maximum": 23.486581000000115
+        },
+        "retainedHeapDeltaBytes": {
+          "median": 87840,
+          "p95": 195976,
+          "minimum": 73576,
+          "maximum": 195976
+        },
+        "uncollectedHeapDeltaBytes": {
+          "median": 8039664,
+          "p95": 8130184,
+          "minimum": 8026928,
+          "maximum": 8130184
+        }
+      },
+      "candidate": {
+        "elapsedMs": {
+          "median": 20.497755999999754,
+          "p95": 28.89514599999984,
+          "minimum": 19.52340699999968,
+          "maximum": 28.89514599999984
+        },
+        "retainedHeapDeltaBytes": {
+          "median": 90480,
+          "p95": 153960,
+          "minimum": 62224,
+          "maximum": 153960
+        },
+        "uncollectedHeapDeltaBytes": {
+          "median": 8060832,
+          "p95": 8109688,
+          "minimum": 8038136,
+          "maximum": 8109688
+        }
+      },
+      "medianChangePercent": -4.672777671044736,
+      "p95ChangePercent": 23.028319873376635,
+      "retainedHeapMedianDifferenceBytes": 2640,
+      "observedMedianSlowdownAboveFivePercent": false
+    },
+    {
+      "case": "incomplete-instance-call",
+      "phase": "source-model-bind",
+      "baseline": {
+        "elapsedMs": {
+          "median": 13.691093000000365,
+          "p95": 17.38188699999955,
+          "minimum": 12.76259200000004,
+          "maximum": 17.38188699999955
+        },
+        "retainedHeapDeltaBytes": {
+          "median": 498408,
+          "p95": 568616,
+          "minimum": 456112,
+          "maximum": 568616
+        },
+        "uncollectedHeapDeltaBytes": {
+          "median": 6113080,
+          "p95": 6249384,
+          "minimum": 6090488,
+          "maximum": 6249384
+        }
+      },
+      "candidate": {
+        "elapsedMs": {
+          "median": 12.804845999999998,
+          "p95": 17.3216910000001,
+          "minimum": 12.217139999999745,
+          "maximum": 17.3216910000001
+        },
+        "retainedHeapDeltaBytes": {
+          "median": 569704,
+          "p95": 628480,
+          "minimum": 526320,
+          "maximum": 628480
+        },
+        "uncollectedHeapDeltaBytes": {
+          "median": 6172776,
+          "p95": 6311024,
+          "minimum": 6151352,
+          "maximum": 6311024
+        }
+      },
+      "medianChangePercent": -6.473164706428792,
+      "p95ChangePercent": -0.34631452844822164,
+      "retainedHeapMedianDifferenceBytes": 71296,
+      "observedMedianSlowdownAboveFivePercent": false
+    }
+  ]
+}

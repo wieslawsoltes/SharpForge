@@ -79,5 +79,9 @@ profiling, scheduling and debugger boundaries still run for every instruction.
 Explicit `runWasmSlice` selection takes precedence over automatic selection;
 its other methods remain interpreted. Ordinary slices continue calling an
 overridden `vm.step`. No methods or functions are attached to pooled frames.
-The authored regression suite is `tests/a05-11-wasm-call-tiering.test.js`;
-execution and performance evidence are pending the serial validation queue.
+Serial Node 24 validation at `d1de978d` passed 76 of 78 focused tiering, bridge,
+method-event, profiler, snapshot and typed-float tests. Two new fixtures left
+test-only observer methods on the VM at snapshot boundaries; `27b32613` removes
+them for capture/restore while preserving instruction and arithmetic assertions.
+All nine call-tiering tests then passed. Broad native/browser qualification and
+performance measurements remain deferred.

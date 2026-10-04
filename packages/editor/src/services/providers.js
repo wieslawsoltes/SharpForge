@@ -3,7 +3,7 @@ export const EDITOR_SERVICE_METHODS = Object.freeze([
   'completion', 'resolveCompletion', 'hover', 'signatureHelp', 'diagnostics', 'codeActions', 'resolveCodeAction',
   'rename', 'prepareRename', 'folding', 'semanticTokens', 'inlayHints', 'codeLens', 'resolveCodeLens',
   'selectionRanges', 'documentHighlights', 'documentSymbols', 'definition', 'references', 'format', 'formatRange', 'formatOnType',
-  'executeCommand', 'readDocument', 'projects', 'documentationComment'
+  'executeCommand', 'readDocument', 'projects', 'documentationComment', 'outlineReorder'
 ]);
 
 export class EditorServiceError extends Error {
@@ -20,6 +20,7 @@ export class EditorLanguageServices {
     this.providers = new Map();
     this.disposables = new Set();
     this.disposed = false;
+    this.changeListeners = new Set();
     for (const [method, provider] of Object.entries(providers)) this.register(method, provider);
   }
 
@@ -42,9 +43,23 @@ export class EditorLanguageServices {
     return this.providers.get(method)(parameters);
   }
 
+  subscribe(listener) {
+    if (this.disposed) throw new EditorServiceError('SFED1002', 'Editor services are disposed');
+    if (typeof listener !== 'function') throw new TypeError('Provider change listener must be a function');
+    this.changeListeners.add(listener);
+    return () => this.changeListeners.delete(listener);
+  }
+
+  invalidate(method, {uri} = {}) {
+    if (this.disposed) return;
+    if (!EDITOR_SERVICE_METHODS.includes(method)) throw new EditorServiceError('SFED1001', `Unknown editor provider: ${method}`);
+    for (const listener of [...this.changeListeners]) listener({method, uri});
+  }
+
   dispose() {
     this.disposed = true;
     this.providers.clear();
+    this.changeListeners.clear();
     for (const dispose of this.disposables) dispose();
     this.disposables.clear();
   }

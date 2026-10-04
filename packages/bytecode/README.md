@@ -26,3 +26,13 @@ including nonenumerable numeric slots, explicit `undefined`, accessors, inherite
 indices, subclass species and proxies; non-array bases retain iterable behavior.
 The JavaScript engine determines array storage costs; no fixed memory reduction
 is part of this API contract.
+
+## Builtin metadata
+
+`builtinOwners`, `builtinMemberShape(builtin)` and `builtinParameterType(builtin, type)` expose the same
+core intrinsic owner and parameter rules used by the compiler. Pass descriptors from `Builtins` or
+`BuiltinMap`; the functions project metadata without modifying descriptors, stable numeric IDs,
+receiver-inclusive runtime parameter lists or execution behavior. `builtinMemberShape` returns
+`{name, instance, property}`. Core builtin entries whose names begin with `$` are internal and should
+not be shown as source API members. Framework contracts continue to use their registered owner and
+signature metadata.

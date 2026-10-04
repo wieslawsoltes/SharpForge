@@ -5,19 +5,25 @@ import {validateStringComparison} from './string-comparison.js';
 /** Append after the mode-aware range Compare contract at the ordered A07 tail. */
 export function registerStringSearchExtensions({member}) {
   member('System.String', 'Contains', ['string', 'System.StringComparison'], 'bool');
+  member('System.String', 'IndexOf', ['string', 'System.StringComparison'], 'int');
 }
 
-/** Search without substring copies: ignore-case is O((n - m + 1) * m) time and constant auxiliary space. */
+/** Preserve Contains validation and diagnostics while sharing the first-match search. */
 export function containsWithComparison(platform, receiver, value, mode) {
+  return indexOfWithComparison(platform, receiver, value, mode, 'Contains') >= 0;
+}
+
+/** Return the first UTF-16 offset or -1; ignore-case is O((n - m + 1) * m) time and constant auxiliary space. */
+export function indexOfWithComparison(platform, receiver, value, mode, member = 'IndexOf') {
   if (value === null) fail(platform, 'ArgumentNullException', "Search value cannot be null. (Parameter 'value')");
-  validateStringComparison(platform, mode, 'Contains');
-  if (value.length > receiver.length) return false;
-  if (value.length === 0 || receiver === value) return true;
-  if (mode === 4) return receiver.includes(value);
+  validateStringComparison(platform, mode, member);
+  if (value.length > receiver.length) return -1;
+  if (value.length === 0 || receiver === value) return 0;
+  if (mode === 4) return receiver.indexOf(value);
   const last = receiver.length - value.length;
   // Candidate starts are UTF-16 units: a needle may start at a paired low surrogate.
   for (let start = 0; start <= last; start++) {
-    if (equalsOrdinalIgnoreCaseRange(receiver, start, value)) return true;
+    if (equalsOrdinalIgnoreCaseRange(receiver, start, value)) return start;
   }
-  return false;
+  return -1;
 }
