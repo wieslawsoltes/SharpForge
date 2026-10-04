@@ -27,7 +27,8 @@ the assembly declares `InternalsVisibleTo`. The following semantic exceptions al
 
 - Virtual methods and explicit interface implementations, with their MethodImpl rows.
 - All struct fields, including private, static and auto-property backing fields.
-- Fixed-buffer nested types and layout, and captured primary-constructor fields, through the executable emitter's existing planners.
+- Fixed-buffer nested types and layout, including generic owners and their inherited type parameters, through the executable emitter's planner.
+- Captured primary-constructor fields through the executable emitter's existing planner.
 - Constructors of attribute classes, including internal constructors needed by applied attributes.
 - Properties and events with retained accessors. A removed private setter has no dangling MethodSemantics row.
 
@@ -56,7 +57,8 @@ also changes the contract's layout. Changes to a retained constant or public sig
 contract bytes. The existing deterministic PE finalizer computes the content-derived MVID and timestamp.
 
 `refout` must be a boolean when supplied. A netmodule request fails with `SF3001`; an assembly manifest is required.
-A fixed buffer in a generic type also fails with `SF3001`, matching the executable planner's existing unsupported boundary.
+Fixed buffers in generic and nested generic structs use the compiler's shared storage-type planner; invalid lengths
+still fail with the source diagnostic `CS1665`.
 Source diagnostics still apply, including errors in method bodies. There is no tolerate-errors mode or implicit change
 to executable compilation. Reference output contains no source debug data, PDB, managed resources or native resources.
 `compileToIL` remains the executable compiler API. This option produces one reference output and does not add a CLI
@@ -87,7 +89,9 @@ node scripts/limited.js node --expose-gc packages/cil/tools/benchmark-reference-
 
 The native capture uses the installed SDK's Roslyn `csc.dll` and reference pack directly, without package restore. It
 compares public and friend-assembly metadata through System.Reflection.Metadata: declarations, signatures, constants,
-layout, base/interface relations, custom attributes, MethodImpl and accessor associations. It checks concrete method
+layout, base/interface relations, custom attributes, MethodImpl and accessor associations. The public and friend
+corpora include fixed buffers in generic and nested generic structs, and the independent consumer accesses both
+storage forms from closed instantiations. It checks concrete method
 bodies, compiles an independent consumer against the SharpForge image, verifies friend access, and compares CoreCLR's
 reference-loading HRESULT against Roslyn while a marker-free control loads successfully. Serialized `typeof` values
 are compared by type name because the reference contract versions differ. Every retained observation records SDK,

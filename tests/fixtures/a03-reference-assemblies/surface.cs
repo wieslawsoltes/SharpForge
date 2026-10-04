@@ -73,4 +73,20 @@ namespace RefSurface
 
     public unsafe struct Packet { public fixed int Data[4]; }
     public struct Captured(object value) { public object Read() { return value; } }
+
+    public unsafe struct GenericPacket<T>
+    {
+        public fixed int Data[3];
+        public T Tag;
+    }
+
+    public class Envelope<T>
+    {
+        public unsafe struct Packet<U>
+        {
+            public fixed byte Data[4];
+            public T First;
+            public U Second;
+        }
+    }
 }

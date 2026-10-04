@@ -141,11 +141,31 @@ test('A03-T22 fixed buffers and captured primary-constructor parameters retain s
   assert.ok(metadata.rows[15].some(([, size, parent]) => size === 16 && parent === (buffer.token & 0xffffff)));
   const captured = declared(inspector, 'RefSurface.Captured');
   assert.deepEqual(names(captured, 'fields'), ['<value>P']);
-  const invalid = compileToReferenceAssembly('public unsafe struct S<T> { public fixed int Data[4]; }',
-    { refout: true, allowUnsafe: true });
+});
+
+test('A03-T22 fixed buffers in generic and nested generic structs preserve inherited parameters and storage signatures', () => {
+  const { inspector, metadata } = emit();
+  const cases = [
+    ['RefSurface.GenericPacket`1', ['T'], 12],
+    ['RefSurface.Envelope`1+Packet`1', ['T', 'U'], 4],
+  ];
+  for (const [ownerName, parameterNames, size] of cases) {
+    const owner = declared(inspector, ownerName);
+    const buffer = declared(inspector, ownerName + '+<Data>e__FixedBuffer');
+    const parameters = metadata.rows[42].filter(row => decodeCoded('TypeOrMethodDef', row[2]) === buffer.token);
+    assert.deepEqual(parameters.map(row => [row[0], metadata.string(row[3])]), parameterNames.map((name, index) => [index, name]));
+    assert.equal(metadata.rows[15].find(([, , parent]) => parent === (buffer.token & 0xffffff))[1], size);
+    const storage = owner.fields.find(field => field.name === 'Data');
+    assert.deepEqual([...metadata.blob(storage.signatureToken)].slice(0, 3), [0x06, 0x15, 0x11], 'FieldSig GENERICINST VALUETYPE');
+    assert.deepEqual(names(buffer, 'fields'), ['FixedElementField']);
+  }
+});
+
+test('A03-T22 a generic fixed buffer still requires a positive source length', () => {
+  const invalid = compileToReferenceAssembly('public unsafe struct S<T> { public fixed int Data[0]; }', { refout: true, allowUnsafe: true });
   assert.equal(invalid.success, false);
   assert.equal(invalid.assembly, null);
-  assert.ok(invalid.diagnostics.some(diagnostic => diagnostic.code === 'SF3001' && /generic type/.test(diagnostic.message)));
+  assert.deepEqual(invalid.diagnostics.filter(diagnostic => diagnostic.severity === 'error').map(diagnostic => diagnostic.code), ['CS1665']);
 });
 
 test('A03-T22 body and stripped declaration edits leave the complete reference bytes unchanged', () => {

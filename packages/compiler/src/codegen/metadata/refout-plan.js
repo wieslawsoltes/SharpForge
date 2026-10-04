@@ -40,13 +40,6 @@ export class RefoutPlan {
     this.fixedBuffers = planFixedBuffers(declared, analysis.core);
     this.primaryCaptures = planPrimaryCaptures(analysis);
     this.types = this.fixedBuffers.types;
-    for (const type of declared) {
-      for (const field of type.getMembers()) {
-        if (field.isFixedSizeBuffer && !this.fixedBuffers.byField.has(field)) {
-          throw new CilError('Reference emission of a fixed buffer in a generic type is unsupported');
-        }
-      }
-    }
   }
 
   isAttributeType(type) {
