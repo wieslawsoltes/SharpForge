@@ -42,13 +42,12 @@ export function stackEffect(inspector,m,i){
   if(arithmetic.test(n)&&!['neg','not'].includes(n))return [2,1];
   return [1,1];
 }
-/** Reachable-method stack heights and lexical EH admission, with an explicit managed-operation allowlist.
- * Broad decoding is separate; this constrained runtime profile is not the CLR verifier/type system. */
+/** Bounded reachable stack heights and lexical EH admission; this runtime profile is not the CLR type verifier. */
 export function verifyCilAssembly(input,{methodToken,arguments:args=[],maxMethods=10000,...options}={}){
   const inspector=input instanceof AssemblyInspector?input:new AssemblyInspector(input,options),issues=[],visited=new Set(),pending=[],stackHeights={},entry=selectMethod(inspector,methodToken,args);
   const dispatch=new CilDispatchTable(inspector),verifiedStacks=new Map(),sizes=new SizeOfProfile(inspector),prefixes=new ExecutionPrefixProfile(inspector,dispatch),pointers=new FunctionPointerProfile(inspector,dispatch);
   const issue=(m,i,code,message,details={})=>{if(issues.length<200)issues.push({methodToken:m?.token,method:m?m.owner+'::'+m.name:undefined,offset:i?.offset,code,message,...details});};
-  const stackContext={issue,issues,stackEffect};
+  const stackContext={issue,issues,stackEffect,options};
   if(!(inspector.pe.flags&1)||inspector.pe.flags&0x10)issue(null,null,'IL_IMAGE','Only IL-only managed images are executable');pending.push(entry);
   // Static initializers can be reached by allocation, field access or method invocation.
   const enqueueType=t=>{const type=inspector.types.find(x=>x.token===t);for(const m of type?.methods??[])if(m.name==='.cctor')pending.push(m.token);};

@@ -149,3 +149,23 @@ or exception sections. Invalid input throws `CilError`. `pe.methodBody` shares
 the same header parser and retains its existing result shape.
 
 Runtime admission checks [reachable try-entry stack heights](VERIFIER-HANDLER-ENTRY.md) before granting stack-capacity proofs.
+
+`verifyCilAssembly` propagates execution stack heights through a bounded basic-block
+worklist. It reuses decoded instructions and the EH offset map, merges incoming
+states before queueing, and holds at most one pending entry per block. Handler
+seeds and `leave` stack clearing retain the execution profile's existing behavior.
+Stack failures retain `IL_STACK` and add the ILVerify category in `diagnostic`
+(`PathStackDepth`, `StackUnderflow`, `StackOverflow` for those three conditions).
+
+The optional limits `maxDataflowInstructions` (default/maximum 1,000,000),
+`maxDataflowEdges` (4,000,000), and `maxDataflowSteps` (16,000,000) may only be
+lowered to nonnegative safe integers. Steps charge every incoming edge/seed and
+instruction in each processed block, including repeated visits. Exhaustion reports
+`IL_LIMIT`/`CILDF0001`; cancellation through `signal` reports
+`IL_CANCELLED`/`CILDF0002` during dataflow. Earlier decoding/EH cancellation keeps
+its existing diagnostics. Failed admission never grants a stack-capacity proof.
+
+The internal solver can reprocess changed immutable typed states using the existing
+verification lattice, but the integrated execution policy still tracks heights.
+Typed opcode transfers, definite initialization, filter execution and complete CLR
+verification remain open under #2401 and the other SF-A03-T07 tasks.
