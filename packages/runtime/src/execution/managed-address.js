@@ -3,6 +3,7 @@ import {checkArrayStore} from './casting.js';
 import {staticStorageType} from './storage.js';
 import {isValueRecord, replaceValueField} from './value-types.js';
 import {instancePointerLocalPlan, instancePointerLocalValue} from './instance-pointer-locals.js';
+import {frameById} from './frame-lifetimes.js';
 
 const invalid = message => { throw new ManagedFault('InvalidProgramException', message); };
 
@@ -23,8 +24,7 @@ function location(vm, address, write = false) {
     storageType = staticStorageType(vm, address.index, write);
   } else {
     if (address.kind !== 'arg' && address.kind !== 'local') invalid('Unknown managed address');
-    frame = vm.allFrames().find(candidate => candidate.id === address.frameId);
-    if (!frame) invalid('Managed address outlived its frame');
+    frame = frameById(vm, address.frameId);
     slots = address.kind === 'arg' ? frame.args : frame.locals;
     storageType = vm.slotType(frame, address.kind === 'arg', address.index);
   }

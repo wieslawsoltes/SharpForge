@@ -6,6 +6,7 @@ import {methodOffsets} from './method-offsets.js';
 import {storageDefault} from './storage.js';
 import {initializeFloatFrame} from './typed-float-frame.js';
 import {enterSourceMethod} from './source-runtime-events.js';
+import {registerFrame} from './frame-lifetimes.js';
 
 /** Copy normalized arguments into owned storage; call scratch buffers never escape. */
 export function cilCallFrame(vm, method, args, extra) {
@@ -54,6 +55,7 @@ export function callSourceFrame(vm, methodId, args) {
     frame.base = vm.stack.length;
     for (let index = 0; index < args.length; index++) frame.locals[index] = args[index];
     vm.frames.push(frame);
+    registerFrame(vm, frame);
     commitStackFrame(ticket, frame);
   } catch (error) {
     cancelStackFrame(ticket);

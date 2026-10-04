@@ -1,11 +1,13 @@
 import {retirePooledFrame, flushFramePool, clearFramePool} from './frame-pool.js';
 import {releaseStackFrame, clearStackBudget} from './stack-budget.js';
 import {forgetContextSuspension} from './context-events.js';
+import {releaseFrame, clearFrameIndex} from './frame-lifetimes.js';
 
 /** Remove an exited frame; defer clearing until its return/unwind handler finishes. */
 export function popPooledFrame(vm) {
   const frame = vm.frames.pop();
   if (frame) {
+    releaseFrame(vm, frame);
     releaseStackFrame(vm, frame);
     retirePooledFrame(vm, frame);
   }
@@ -16,6 +18,7 @@ export function popPooledFrame(vm) {
 export function discardContextFrames(vm, context) {
   for (const frame of context.frames === vm.frames ? [] : context.frames) {
     // A current fatal stack remains inspectable until stop or restore.
+    releaseFrame(vm, frame);
     releaseStackFrame(vm, frame);
     retirePooledFrame(vm, frame);
   }
@@ -25,6 +28,7 @@ export function discardContextFrames(vm, context) {
 }
 
 export function stopFramePool(vm) {
+  clearFrameIndex(vm);
   for (const frame of vm.frames) retirePooledFrame(vm, frame);
   for (const context of vm.scheduler?.contexts.values() ?? []) {
     for (const frame of context.frames) retirePooledFrame(vm, frame);

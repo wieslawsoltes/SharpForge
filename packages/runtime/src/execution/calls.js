@@ -9,6 +9,7 @@ import {constructIntrinsicValue} from './value-intrinsics.js';
 import {invokeIntrinsic} from './intrinsics.js';
 import {stringFromChars} from './strings.js';
 import {cilCallFrame} from './call-frames.js';
+import {registerFrame} from './frame-lifetimes.js';
 import {framePool} from './frame-pool.js';
 import {systemType,intrinsicDefinition,supportedDelegateCall} from '@sharpforge/cil';
 import {invokeBoundDelegate} from './delegate-targets.js';
@@ -26,6 +27,7 @@ export function call(vm,token,args,extra={}) {
   if(!method.signature.isStatic&&args[0]===null)throw new ManagedFault('NullReferenceException','Instance method receiver is null');
   prepareValueReceiver(vm,method,args[0]);
   vm.frames.push(cilCallFrame(vm,method,args,extra));
+  registerFrame(vm,vm.top);
   enterCilMethod(vm, vm.top);
 }
 export function ensureInitialized(vm,typeToken,trigger='field',genericIdentity=null) {
