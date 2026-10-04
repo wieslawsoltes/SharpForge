@@ -143,6 +143,9 @@ try:
         checked('source VM and direct managed IL profiles render and dispatch actual managed callbacks', execution_profiles)
 
         def workspace_cleanup():
+            page.evaluate('sharpforge.execute("stop")')
+            wait_count(second, 3)
+            truth(page.evaluate('sharpforge.designerApps.list().length') == 1)
             page.evaluate('sharpforge.loadDiskRecords([{path:"Program.cs",text:"class Program { static void Main() {} }"}],'
                           '{name:"Another workspace",mode:"folder"})')
             truth(page.evaluate('sharpforge.designerApps.list().length') == 0)
