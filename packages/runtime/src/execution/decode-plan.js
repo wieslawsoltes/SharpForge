@@ -3,6 +3,7 @@ import {ManagedFault} from '../heap.js';
 import {cilHandlers} from './handlers/index.js';
 import {executionCodeState} from './code-version.js';
 import {methodOffsets, methodOffsetAllocations} from './method-offsets.js';
+import {specializeInt32Plan, numericPlanCurrent, numericPlanIdentity} from './numeric-specialization.js';
 
 function invalid(message) {
   throw new ManagedFault('InvalidProgramException', message);
@@ -38,7 +39,7 @@ function operandMetadata(instructions, offsets) {
   return {opcodeIds, operands, branchTargets, switchTargets, operandValues: Object.freeze(operandValues)};
 }
 
-function createPlan(method, state) {
+function createPlan(vm, method, state) {
   const started = performance.now();
   const instructions = Object.freeze([...method.instructions]);
   const allocations = methodOffsetAllocations(method);
@@ -56,12 +57,13 @@ function createPlan(method, state) {
       branchIndex(offsets, instruction.operand);
     }
   }
+  const numericHandlerIds = specializeInt32Plan(vm, method, offsets, handlers);
   // Dispatch only needs handlers and original instructions. Allocate optional
   // numeric diagnostics on their first read; these buffers never enter snapshots.
   let metadata;
   const readMetadata = () => metadata ??= operandMetadata(instructions, offsets);
   const plan = {
-    instructions, offsets, handlers: Object.freeze(handlers),
+    instructions, offsets, handlers: Object.freeze(handlers), numericHandlerIds,
     get operandValues() { return readMetadata().operandValues; },
     get opcodeIds() { return readMetadata().opcodeIds.slice(); },
     get operands() { return readMetadata().operands.slice(); },
@@ -80,12 +82,13 @@ function createPlan(method, state) {
 export function getDecodePlan(vm, method) {
   const state = executionCodeState(vm);
   const cache = state.decode ??= {methods: new Map(), lastMethod: null, lastEntry: null};
-  if (cache.lastMethod === method && cache.lastEntry.instructions === method.instructions) return cache.lastEntry.plan;
+  if (cache.lastMethod === method && cache.lastEntry.instructions === method.instructions &&
+      numericPlanCurrent(vm, method, cache.lastEntry)) return cache.lastEntry.plan;
   let methods = cache.methods.get(method.token);
   if (!methods) cache.methods.set(method.token, methods = new WeakMap());
   let entry = methods.get(method);
-  if (!entry || entry.instructions !== method.instructions) {
-    entry = {instructions: method.instructions, plan: createPlan(method, state)};
+  if (!entry || entry.instructions !== method.instructions || !numericPlanCurrent(vm, method, entry)) {
+    entry = {instructions: method.instructions, plan: createPlan(vm, method, state), ...numericPlanIdentity(vm, method)};
     methods.set(method, entry);
   }
   cache.lastMethod = method;
