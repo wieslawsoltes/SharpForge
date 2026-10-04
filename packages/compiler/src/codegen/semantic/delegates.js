@@ -3,6 +3,9 @@
  * type becomes an image class whose instances name their target by number:
  *
  *   class D { int method; D next; C1 target_C1; C2 target_C2; ... }      // one node per target, `next` chains multicast
+ *
+ * A delegate over an extension method in instance form (`text.Length2`, C# 3) binds its receiver as the first argument
+ * of a static method: the receiver is stored in a target field of its own type and passed first by `Invoke`.
  *   static R D.Invoke(D d, args)   switches on `method` for every node of the chain, in order
  *   static D D.Combine(D a, D b)   a's nodes followed by b's (nodes are immutable, so b's are shared)
  *   static D D.Remove(D a, D b)    a without the last occurrence of b's invocation list
@@ -55,12 +58,16 @@ export class DelegateClasses {
     });
     return info;
   }
-  /** A new delegate over an image method; `receiver` is the target expression for instance methods. */
-  create(info, method, receiver) {
-    let thunk = info.thunks.find(t => t.method === method);
+  /**
+   * A new delegate over an image method; `receiver` is the target expression for instance methods, and with
+   * `bindsFirstArgument` the value bound as the first argument of a static method (an extension method's receiver).
+   */
+  create(info, method, receiver, { bindsFirstArgument = false } = {}) {
+    let thunk = info.thunks.find(t => t.method === method && t.bindsFirstArgument === bindsFirstArgument);
     if (!thunk) {
-      thunk = { id: info.thunks.length + 1, method, targetField: null };
-      if (!method.isStatic) thunk.targetField = this.targetField(info, method.owner);
+      thunk = { id: info.thunks.length + 1, method, targetField: null, bindsFirstArgument };
+      if (bindsFirstArgument) thunk.targetField = this.targetField(info, { name: method.parameters[0].type });
+      else if (!method.isStatic) thunk.targetField = this.targetField(info, method.owner);
       info.thunks.push(thunk);
     }
     const temp = n.newLocal('$delegate', info.record.name);
@@ -71,11 +78,12 @@ export class DelegateClasses {
     if (thunk.targetField) effects.push(n.assign(n.field(n.local(temp), thunk.targetField), receiver));
     return n.sequence([temp], effects, n.local(temp));
   }
+  /** The field holding targets of the image type `owner.name` (one field per type, shared by its methods). */
   targetField(info, owner) {
-    let field = info.targets.get(owner);
+    let field = info.targets.get(owner.name);
     if (!field) {
       field = this.program.addField(info.record, 'target' + info.targets.size, owner.name);
-      info.targets.set(owner, field);
+      info.targets.set(owner.name, field);
     }
     return field;
   }
@@ -84,6 +92,10 @@ export class DelegateClasses {
   }
   combine(info, left, right) {
     return n.call(this.helper(info, 'Combine', 2), null, [left, right]);
+  }
+  /** Delegate equality: the same invocation list (methods and targets), not the same object. */
+  equal(info, left, right) {
+    return n.call(this.helper(info, 'Equal', 2, 'bool'), null, [left, right]);
   }
   remove(info, left, right) {
     return n.call(this.helper(info, 'Remove', 2), null, [left, right]);
@@ -127,7 +139,7 @@ export class DelegateClasses {
     let dispatch = null;
     for (const thunk of [...info.thunks].reverse()) {
       const receiver = thunk.targetField ? n.field(n.local(current), thunk.targetField) : null;
-      const invocation = n.call(thunk.method, receiver, args);
+      const invocation = thunk.bindsFirstArgument ? n.call(thunk.method, null, [receiver, ...args]) : n.call(thunk.method, receiver, args);
       dispatch = n.ifStatement(
         n.equals(n.field(n.local(current), info.methodField), n.literal(thunk.id, 'int')),
         n.expressionStatement(isVoid ? invocation : n.assign(n.local(result), invocation)),
@@ -196,6 +208,17 @@ export class DelegateClasses {
             n.returnStatement(n.literal(false, 'bool')),
           ),
           n.returnStatement(n.call(this.helper(info, 'StartsWith', 2, 'bool'), null, [next(a), next(b)])),
+        ]);
+      case 'Equal':
+        // Both chains end together and agree node by node.
+        return n.block([
+          n.ifStatement(isNull(a), n.returnStatement(isNull(b))),
+          n.ifStatement(isNull(b), n.returnStatement(n.literal(false, 'bool'))),
+          n.ifStatement(
+            n.not(n.call(this.helper(info, 'Same', 2, 'bool'), null, [a, b])),
+            n.returnStatement(n.literal(false, 'bool')),
+          ),
+          n.returnStatement(n.call(this.helper(info, 'Equal', 2, 'bool'), null, [next(a), next(b)])),
         ]);
       case 'Remove':
         return this.removeBody(info, a, b);

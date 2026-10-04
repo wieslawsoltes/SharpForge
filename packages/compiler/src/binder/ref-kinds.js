@@ -108,6 +108,9 @@ export function classifyVariable(expression, context = {}) {
             receiver: expression.receiver,
           };
       }
+      // The members of an anonymous type have no setter; a `with` expression gives them their values in a new instance.
+      if (!p.setMethod && context.inObjectInitializer && expression.receiver?.kind === 'WithCopy' && p.containingType?.isAnonymousType)
+        return { isVariable: false, isWritable: true, isProperty: true, symbol: p };
       if (!p.setMethod) {
         // A get-only auto-property can be assigned in a constructor of its type.
         if (p.isAutoProperty && inConstructorOf(context, p) && (!expression.receiver || expression.receiver.kind === 'This'))
@@ -127,6 +130,10 @@ export function classifyVariable(expression, context = {}) {
       return expression.accessKind === 'index' ? classifyVariable(expression.access, context) : no('notVariable');
     case 'EventAccess':
       return { isVariable: true, isWritable: true };
+    case 'DynamicMemberAccess':
+    case 'DynamicElementAccess':
+      // Whether the member can be written is known only at run time.
+      return { isVariable: false, isWritable: true, isProperty: true };
     case 'Call':
       if (expression.method?.refKind && expression.method.refKind !== RefKind.None)
         return { isVariable: true, isWritable: expression.method.refKind === RefKind.Ref };

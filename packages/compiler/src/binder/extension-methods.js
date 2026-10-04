@@ -18,7 +18,6 @@ import { convertMethodGroup, delegateArguments } from '../conversions/method-gro
 import { delegateInvoke } from '../overload/type-inference.js';
 
 const modifierOf = (parameter, word) => [...(parameter.syntax?.modifiers ?? [])].find(token => token.text === word) ?? null;
-const isDynamicSyntax = type => type?.kind === 'IdentifierName' && type.identifier.valueText === 'dynamic';
 
 /** The rows for the `this` parameter of one extension method declaration. */
 function receiverRows(method, parameter) {
@@ -32,8 +31,8 @@ function receiverRows(method, parameter) {
   const isValueReceiver = type?.isValueType === true || type?.typeKind === TypeKind.TypeParameter;
   if (parameter.refKind === RefKind.Ref && !isValueReceiver) row('CS8337', null, [method.name]);
   if (parameter.refKind === RefKind.In && !isValueReceiver) row('CS8338', null, [method.name]);
-  if (type?.typeKind === TypeKind.Pointer || (isDynamicSyntax(parameter.syntax?.type) && type?.specialType === 'System_Object')) {
-    row('CS1103', parameter.syntax.type, [isDynamicSyntax(parameter.syntax.type) ? 'dynamic' : type.toDisplayString()]);
+  if (type?.typeKind === TypeKind.Pointer || type?.typeKind === TypeKind.Dynamic) {
+    row('CS1103', parameter.syntax.type, [type.toDisplayString()]);
   }
   return rows;
 }
@@ -78,6 +77,8 @@ export const ExtensionMethodBinding = Base =>
   class extends Base {
     groupConversion(group, to) {
       if (!group.isExtensionOnly || !group.receiver || !delegateInvoke(to)) return super.groupConversion(group, to);
+      // As an argument the group carries the argument's name in `name` (none): the method name is on the name node.
+      group.name ??= group.nameNode?.identifier?.valueText ?? null;
       // The nearest scope with a method the receiver fits decides, as for an invocation.
       for (const scope of group.extensionScopes) {
         const fitting = scope.methods.filter(
