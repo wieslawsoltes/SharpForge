@@ -1,4 +1,4 @@
-// Copy this identical runner to parent 1ddab235; run baseline and candidate serially.
+// Copy this identical runner to parent 938d86fe; run baseline and candidate serially.
 import assert from 'node:assert/strict';
 import {cpus} from 'node:os';
 import {performance} from 'node:perf_hooks';
