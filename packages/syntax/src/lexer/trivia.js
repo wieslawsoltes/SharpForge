@@ -69,16 +69,17 @@ function directive(s, hash) {
  * first end-of-line, leading after it) and whether the cursor is at the start of a line (where a directive may stand).
  */
 class TriviaRun {
-  constructor(scanner, trailingMode) {
+  constructor(scanner, trailingMode, capture) {
     const text = scanner.text;
     this.s = scanner;
-    this.trailing = [];
-    this.leading = [];
+    this.capture = capture;
+    this.trailing = capture ? [] : none;
+    this.leading = capture ? [] : none;
     this.out = trailingMode ? this.trailing : this.leading;
     this.lineStart = !trailingMode && (scanner.i === 0 || !!endOfLineLength(text, scanner.i - 1));
   }
   push(kind, start, end) {
-    this.out.push(Object.freeze({ kind, start, end }));
+    if (this.capture) this.out.push(Object.freeze({ kind, start, end }));
   }
   endOfLine(i, length) {
     this.s.i += length;
@@ -145,7 +146,8 @@ class TriviaRun {
       return;
     }
     this.out = this.leading;
-    this.leading.push(directive(s, i));
+    const piece = directive(s, i);
+    if (this.capture) this.leading.push(piece);
     this.lineStart = true;
     if (s.state.active) return;
     const from = s.i;
@@ -153,16 +155,36 @@ class TriviaRun {
     if (s.i > from) this.push('DisabledTextTrivia', from, s.i);
   }
 }
+
+function discardPlainWhitespace(scanner) {
+  const text = scanner.text;
+  let cursor = scanner.i;
+  let code = text.charCodeAt(cursor);
+  while (code === 32 || code === 9 || code === 10 || code === 13) {
+    cursor++;
+    if ((cursor & 4095) === 0) scanner.options.cancellationToken?.throwIfCancellationRequested();
+    code = text.charCodeAt(cursor);
+  }
+  if (cursor === text.length || code > 32 && code < 127 && code !== 47 && code !== 35) {
+    scanner.i = cursor;
+    return true;
+  }
+  // Leave the original offset intact so comments, directives and Unicode trivia retain their exact line-start context.
+  return false;
+}
+
 /**
  * Scans the trivia at `s.i`. In trailing mode (directly after a token) pieces up to and including the first
  * end-of-line belong to the previous token, as in Roslyn; a documentation comment or directive ends the trailing
  * trivia early. Returns { trailing, leading } lists of frozen { kind, start, end, structure? } pieces.
+ * With capture:false the lists stay empty; scanner state, directive records and diagnostics are still updated.
  */
-export function scanTrivia(s, trailingMode) {
+export function scanTrivia(s, trailingMode, capture = true) {
+  if (!capture && discardPlainWhitespace(s)) return {trailing: none, leading: none};
   const text = s.text,
     first = text.charCodeAt(s.i);
   if (first > 32 && first < 127 && first !== 47 && first !== 35) return { trailing: none, leading: none };
-  const run = new TriviaRun(s, trailingMode);
+  const run = new TriviaRun(s, trailingMode, capture);
   for (;;) {
     const i = s.i,
       code = text.charCodeAt(i);

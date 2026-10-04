@@ -1,10 +1,8 @@
+import {invokeDependencyProperty,propertyName,unbox} from './dependency-properties.js';
 import {frameworkType,frameworkAssignable,canonicalType,propertiesFor,XAML,CONTROLS} from '@sharpforge/framework';
 import {isReference,ManagedFault} from './heap.js';
 const bad=m=>{throw new ManagedFault('InvalidOperationException',m);};
 const key=r=>`${r.h}:${r.g}`;
-function propertyName(p,dp){if(!isReference(dp)||p.record(dp).type!==XAML+'DependencyProperty')bad('A registered DependencyProperty is required');return p.native(p.get(dp,'Name'));}
-function boxedValue(p,value,type){if(p.vm.inspector&&(frameworkType(type)?.kind==='value'||frameworkType(type)?.kind==='enum'||['int','double','bool'].includes(type)))return p.heap.withRoots([value],()=>p.heap.allocate('box',type,[value]));return value;}
-function unbox(p,value,type){if(isReference(value)&&p.heap.get(value).kind==='box')value=p.heap.get(value).data[0];if(type==='double'&&typeof value==='number')return p.managed(value,'double');return value;}
 export function styleValues(p,style,type,seen=new Set()){
   if(!style)return {};if(seen.has(key(style))||seen.size>64)bad('Style BasedOn cycle or depth limit');seen.add(key(style));if(p.record(style).type!==XAML+'Style')bad('Style required');
   const target=p.native(p.get(style,'TargetTypeName'));if(target&&!frameworkAssignable(canonicalType(target),type))bad(`Style ${target} is not applicable to ${type}`);
@@ -34,7 +32,9 @@ export function applyTemplate(p,owner){if(!p.styleDepth)return p.styleMutation((
 }
 export function updateBindings(p,owner){const root=p.get(owner,'$templateRoot');if(!root)return;const seen=new Set(),queue=[root];while(queue.length){const ref=queue.pop();if(!isReference(ref)||seen.has(key(ref)))continue;seen.add(key(ref));const r=p.heap.get(ref);if(r.kind==='collection'){queue.push(...p.items(ref));continue;}if(r.kind!=='host')continue;const bindings=p.get(ref,'$bindings');if(bindings)for(const [target,source]of Object.entries(JSON.parse(p.native(bindings)))){if(p.get(ref,'$local:'+target,false))continue;const value=p.get(owner,source);p.set(ref,target,value);p.command({op:'set',id:key(ref),property:target,value:p.exportValue(value)});}for(const [name,v]of p.propertyEntries(ref))if(!name.startsWith('$')&&isReference(v))queue.push(v);}}
 export function invokeStyling(p,d,args){const ref=args[0],values=d.isStatic?args:args.slice(1);
-  if(d.owner===XAML+'DependencyObject'&&['GetValue','SetValue','ClearValue','ReadLocalValue'].includes(d.name)){const name=propertyName(p,values[0]),prop=propertiesFor(p.record(ref).type)[name];if(!prop)bad('Dependency property is not applicable');if(d.name==='GetValue')return {handled:true,value:boxedValue(p,p.get(ref,name),prop.type)};if(d.name==='ReadLocalValue')return {handled:true,value:p.get(ref,'$local:'+name)?boxedValue(p,p.animations.bases.has(p.animations.key(ref,name))?p.managed(p.animations.getBase(ref,name),prop.type):p.get(ref,name),prop.type):p.unsetValue()};if(d.name==='ClearValue'){clearProperty(p,ref,name);return {handled:true,value:null};}const value=unbox(p,values[1],prop.type);p.setProperty(ref,{owner:p.record(ref).type,property:name},value);return {handled:true,value:null};}
+  if(d.owner===XAML+'DependencyObject'&&['GetValue','SetValue','ClearValue','ReadLocalValue'].includes(d.name)){
+    return {handled:true,value:invokeDependencyProperty(p,d,args,clearProperty)};
+  }
   if(d.name==='ApplyTemplate')return {handled:true,value:p.managed(applyTemplate(p,ref),'bool')};
   if(d.name==='GetTemplateChild'){const root=p.get(ref,'$templateRoot'),name=p.native(values[0]),queue=[root],seen=new Set();while(queue.length){const item=queue.pop();if(!isReference(item)||seen.has(key(item)))continue;seen.add(key(item));const r=p.heap.get(item);if(r.kind==='collection'){queue.push(...p.items(item));continue;}if(r.kind!=='host')continue;if(p.native(p.get(item,'Name'))===name)return {handled:true,value:item};for(const [k,v]of p.propertyEntries(item))if(!k.startsWith('$')&&isReference(v))queue.push(v);}return {handled:true,value:null};}
   if(d.owner===CONTROLS+'ControlTemplate'&&d.name==='Bind'){const [part,targetProperty,dp]=values,name=p.native(targetProperty),source=propertyName(p,dp);if(!propertiesFor(p.record(part).type)[name])bad('Unknown template target property');const previous=p.get(part,'$bindings'),map=previous?JSON.parse(p.native(previous)):{};map[name]=source;const json=p.heap.string(JSON.stringify(map));p.heap.withRoots([json],()=>p.set(part,'$bindings',json));return {handled:true,value:null};}

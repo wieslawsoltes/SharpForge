@@ -16,6 +16,7 @@
   "dependencies": {
     "@sharpforge/framework": "0.14.0",
     "@sharpforge/syntax": "0.14.0",
-    "@sharpforge/text": "0.14.0"
+    "@sharpforge/text": "0.14.0",
+    "@sharpforge/compiler": "0.14.0"
   }
 }
