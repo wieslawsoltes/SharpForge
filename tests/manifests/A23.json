@@ -20,7 +20,9 @@
     "tests/a23-native-http-contributions.test.js",
     "tests/a23-native-context-model.test.js",
     "tests/a23-native-context-aliases.test.js",
-    "tests/a23-metadata-inspection.test.js"
+    "tests/a23-metadata-inspection.test.js",
+    "tests/a23-native-design-time.test.js",
+    "tests/a23-native-metadata-service.test.js"
   ],
   "browserScripts": [
     "tests/browser_msbuild_test.py"

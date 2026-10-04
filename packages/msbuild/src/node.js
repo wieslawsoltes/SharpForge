@@ -14,3 +14,7 @@ export * from './service-registry.js';
 export * from './services-sdk.js';
 export * from './services.js';
 export * from './project-context.js';
+export * from './design-time.js';
+export * from './design-time-cache.js';
+export * from './design-time-generated.js';
+export * from './native-metadata.js';

@@ -72,6 +72,10 @@ export class MSBuildClient {
     return this.request('/vfs', { method: 'POST', body: { method, payload }, signal: options.signal });
   }
 
+  projectContext(request, options) { return this.service('project', 'context', request, options); }
+  projectContexts(request, options) { return this.service('project', 'contexts', request, options); }
+  projectMetadata(request, options) { return this.service('project', 'metadata', request, options); }
+
   sdkInventory(options) { return this.service('sdk', 'inventory', {}, options); }
   resolveSdk(request, options) { return this.service('sdk', 'resolve', request, options); }
   workloads(request, options) { return this.service('sdk', 'workloads', request, options); }
