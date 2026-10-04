@@ -7,6 +7,7 @@ import {invalidateExecutionCode} from './execution/code-version.js';
 import {restoreFloatFrames} from './execution/typed-float-frame.js';
 import {isTypedFloatArray} from './execution/typed-stack.js';
 import {captureWasmDeopt, restoreWasmDeopt} from './execution/wasm/deopt.js';
+import {rebuildFrameIndex, validateFrameIndexSnapshot} from './execution/frame-lifetimes.js';
 
 /** Clone execution graphs, preserving aliases, immutable handles and fault identity. */
 export function copyExecution(value, memo = new Map()) {
@@ -140,6 +141,7 @@ export function restoreVM(vm, snapshot, engine) {
   if (!Array.isArray(snapshot.frames) || !Array.isArray(snapshot.output)) throw new TypeError('Invalid snapshot execution state');
   if (engine === 'cil') validateCilStackSnapshot(vm, snapshot);
   else validateSourceStackSnapshot(vm, snapshot);
+  validateFrameIndexSnapshot(snapshot);
   vm.platform.hostOperations.checkRestore(snapshot.hostRevision);
   vm.profiler?.boundary();
   const deopt = engine === 'cil' ? captureWasmDeopt(vm) : null;
@@ -163,4 +165,5 @@ export function restoreVM(vm, snapshot, engine) {
   clearStackBudget(vm);
   restoreFloatFrames(vm);
   if (engine === 'cil') restoreWasmDeopt(vm, deopt);
+  rebuildFrameIndex(vm);
 }

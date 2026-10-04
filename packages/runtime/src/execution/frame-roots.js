@@ -104,7 +104,7 @@ export function visitSchedulerRoots(scheduler, visit, precise = true) {
     offer(context.returnValue, visit);
     offer(context.wait?.task, visit);
     offer(context.resumeFault?.reference, visit);
-    if (context.id === scheduler.currentId && !scheduler.parked) continue;
+    if (context.id === scheduler.currentId && !scheduler.parked && context.frames === vm.frames) continue;
     values(context.stack, visit);
     for (const frame of context.frames) visitFrameRoots(vm, frame, visit, precise, true);
     offer(context.pendingFault?.reference, visit);
