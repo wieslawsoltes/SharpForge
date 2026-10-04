@@ -27,8 +27,8 @@ mutating execution state, then reconstructs accounting from the restored graph.
 Changes to a host byte limit take effect before the next dispatched instruction.
 Budget overflow is the existing fatal `StackOverflowException` category.
 
-This is a CIL-only increment alongside #1401. Source/reloaded-source stack-byte
-admission, unboxed typed operand storage and wider #82 qualification remain open.
+This is the CIL increment alongside #1401. The [source/reloaded-source follow-up](source-stack-byte-budget.md)
+documents shared-stack admission. Unboxed typed operand storage and wider #82 qualification remain open.
 No throughput, allocation-rate or physical memory improvement is claimed.
 All 95 focused byte-budget, verified-stack, pooled-frame, root-visitor and
 call-buffer tests passed serially with Node 24.21.0 at `3a9f50ba`, with a 512 MB
