@@ -20,6 +20,16 @@ Selections use `{anchor,active}` UTF-16 offsets. `{anchor,head}` is an accepted 
 
 Multi-caret functions cover add/remove/collapse, next/all occurrences, and line-end carets. `replaceSelections` performs every caret edit in one transaction. Box selection records visual columns rather than treating columns as UTF-16 indices. Tab interiors expand into equivalent unselected spaces during editing; short rows retain virtual-space padding. Clipboard functions return plain text and optional versioned metadata; matching fragment counts distribute per caret, including fragments containing newlines. Rectangular paste grows missing lines in the same undo operation.
 
+`addNextOccurrence(model,options)` starts after the primary selected range and
+uses the text package's indexed single-match navigator. Earlier matches do not
+consume a result page or cause premature wraparound. Existing selections are
+excluded, including empty carets inside a candidate. The command admits at most
+10,000 selections and reports capacity or search-budget exhaustion before
+changing the selection set. Its `signal`, `maxSteps`, `timeLimitMs`, `matchCase`
+and `wrap` options are explicit; the default synchronous search budget remains
+2,000,000 steps and 25 ms. `addAllOccurrences` retains its separate capped
+find-all behavior and rejects a truncated result.
+
 `boxSelectionEdits` and `boxSelectionText` share the same geometry for editing and copying. Wide graphemes remain indivisible when a rectangle intersects only one of their visual cells. `padVirtualSpace:false` lets deletion leave short rows unchanged. Box insertion defaults to a 16 Mi-character combined payload budget, including tab splitting, virtual padding, and newly created clipboard rows; `maxInsertedCharacters` explicitly configures that budget up to one billion UTF-16 code units. Exceeding it rejects preparation before any model edit.
 
 ## Undo and dirty state
