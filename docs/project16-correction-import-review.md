@@ -60,3 +60,16 @@ does not authorize unrelated dynamic imports or later modifications to the revie
 Review consisted of source/policy inspection and reading the file bytes to confirm the reported hash/site. No scanner,
 linker, test, build, gate or benchmark was executed for this correction. The integration owner will run the existing narrow
 dynamic-use audit after the completed source scope is assembled; the original core failure remains recorded.
+
+## Observed scoped audit
+
+At source `4abe16d863d633b92c8782a12b13b6a1252077d4`, tree
+`315d58ca90153c22a839060c2e849bf427cb0de9`, the unchanged `checkDynamicUses` function
+inspected this one source and its one reviewed policy row: one import at line 61,
+matching exact hash and count, zero errors, exit 0. The source stayed unchanged.
+The operation ran through `node scripts/limited.js` on Node 24.19.0 from
+2026-10-04T06:31:34.878096+00:00 to 2026-10-04T06:31:35.018160+00:00.
+[Raw output, exact command and SHA-256 manifest](evidence/project16-pr10-import-review/manifest.json)
+retain this bounded result. No module linking, whole-repository gate, product
+tests, build or benchmark was repeated. The subsequent required PR core remains
+pending at this evidence boundary; the original failed run is unchanged.

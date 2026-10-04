@@ -1,0 +1,18 @@
+{
+  "scope": [
+    "scripts/benchmarks/a19-correction-paths.mjs"
+  ],
+  "passed": true,
+  "observed": [
+    {
+      "path": "scripts/benchmarks/a19-correction-paths.mjs",
+      "operation": "dynamic-import",
+      "sha256": "87827deddeda04d6fdb6b055ff7448c3d8fe221759a5accf87ca6ab301ce5a3c",
+      "count": 1,
+      "lines": [
+        61
+      ]
+    }
+  ],
+  "errors": []
+}
