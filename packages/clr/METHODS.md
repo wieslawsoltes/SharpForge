@@ -138,7 +138,8 @@ signature lookup measured median 0.00793 µs / p95 0.02924 µs. Exact allocation
 counts were not measured; no speedup is claimed. The committed JSON records
 host details and percentiles.
 
-Full MethodInfo/ConstructorInfo and ParameterInfo facades, defaults,
-GetBaseDefinition, overload resolution, virtual dispatch and invocation are
-separate increments. Source VM, direct CIL and Rust native/Wasm execution are
+The asynchronous [class base-definition service](METHOD-BASE-DEFINITION.md)
+resolves implicit virtual override roots with explicit diagnostics for unsupported
+slot families. Full MethodInfo/ConstructorInfo and ParameterInfo facades, defaults,
+overload resolution, virtual dispatch and invocation remain separate increments. Source VM, direct CIL and Rust native/Wasm execution are
 not qualified by this host metadata API.

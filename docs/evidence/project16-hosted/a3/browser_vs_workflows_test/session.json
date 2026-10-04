@@ -1,0 +1,11 @@
+{
+  "suite": "browser_vs_workflows_test",
+  "passed": false,
+  "engine": "chromium",
+  "cspViolations": [],
+  "browser": "153.0.8010.12",
+  "executable": "playwright-managed",
+  "mode": "http",
+  "seconds": 33.36029820300001,
+  "diagnosticErrors": []
+}

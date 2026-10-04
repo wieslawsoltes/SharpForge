@@ -17,6 +17,7 @@ import { ObjectEmission } from './emit-objects.js';
 import { ArrayEmission } from './emit-arrays.js';
 import { StringEmission } from './emit-strings.js';
 import { ExceptionEmission } from './emit-exceptions.js';
+import { LockEmission } from './emit-lock.js';
 import { AccessorEmission } from './emit-accessors.js';
 import { JumpEmission } from './emit-jumps.js';
 import { NullableEmission } from './emit-nullable.js';
@@ -27,6 +28,17 @@ import { DelegateEmission } from './emit-delegates.js';
 import { ReferenceEmission } from './emit-references.js';
 import { IndexRangeEmission } from './emit-index-range.js';
 import { PrimaryCaptureEmission } from './primary-constructor-captures.js';
+import { TupleEmission } from './emit-tuples.js';
+import { DeconstructionEmission } from './emit-deconstruction.js';
+import { RecordEmission } from './records/emit-records.js';
+import { MultiDimensionalArrayEmission } from './emit-multidim-arrays.js';
+import { IndexValueEmission } from './emit-index-values.js';
+import { ListPatternEmission } from './emit-list-patterns.js';
+import { UserOperatorEmission } from './emit-user-operators.js';
+import { StateMachineEmission } from './emit-state-machine.js';
+import { IteratorEmission } from './emit-iterators.js';
+import { AsyncEmission } from './emit-async.js';
+import { AsyncTryEmission } from './emit-async-try.js';
 
 const families = [
   ConstantEmission,
@@ -43,6 +55,7 @@ const families = [
   ArrayEmission,
   StringEmission,
   ExceptionEmission,
+  LockEmission,
   AccessorEmission,
   JumpEmission,
   NullableEmission,
@@ -53,6 +66,17 @@ const families = [
   ReferenceEmission,
   IndexRangeEmission,
   PrimaryCaptureEmission,
+  TupleEmission,
+  DeconstructionEmission,
+  RecordEmission,
+  MultiDimensionalArrayEmission,
+  IndexValueEmission,
+  ListPatternEmission,
+  UserOperatorEmission,
+  StateMachineEmission,
+  IteratorEmission,
+  AsyncEmission,
+  AsyncTryEmission,
 ];
 
 export class MethodEmitter extends families.reduce((composed, family) => family(composed), EmitterCore) {}

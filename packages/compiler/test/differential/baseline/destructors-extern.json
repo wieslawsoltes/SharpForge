@@ -2,5 +2,5 @@
   "destructors-extern/destructor-and-extern-declarations-do-not-run": ["diagnostics", "warnings", "bytecode", "cil", "directCil"],
   "destructors-extern/destructor-rules": ["diagnostics", "warnings"],
   "destructors-extern/extern-rules": ["diagnostics", "warnings"],
-  "destructors-extern/short-circuit-user-operators": ["diagnostics", "warnings", "bytecode", "cil"]
+  "destructors-extern/short-circuit-user-operators": ["diagnostics", "warnings", "bytecode", "cil", "directCil"]
 }

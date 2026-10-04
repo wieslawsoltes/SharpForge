@@ -12,7 +12,7 @@ export function mountStudioShell(context) {
   });
   let shell = createWorkbenchShell({
     document, root: document.querySelector('#app'), commands, keybindings: keyboard, services, state, docking,
-    requestCompiler: context.requestCompiler, navigate: context.navigate,
+    requestCompiler: context.requestCompiler, navigate: context.navigate, performance: context.performance,
     readAssemblyReference: context.readAssemblyReference,
     getEditor: context.getEditor, designer: context.designer, download: context.download,
     applyEdits: context.applyEdits, projectData: context.projectData, setKeymap: context.setKeymap,

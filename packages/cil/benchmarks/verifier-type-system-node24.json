@@ -1,0 +1,123 @@
+{
+  "node": "v24.21.0",
+  "platform": "darwin",
+  "arch": "arm64",
+  "warmupSamples": 3,
+  "host": "shared; no before/after or speedup claim",
+  "results": {
+    "construction": {
+      "iterations": 1000,
+      "medianMs": 8.103958000000006,
+      "p95Ms": 12.356750000000005,
+      "samples": [
+        {
+          "ms": 7.9548750000000155,
+          "heapDelta": 4124488
+        },
+        {
+          "ms": 4.9322500000000105,
+          "heapDelta": 2488168
+        },
+        {
+          "ms": 4.54079200000001,
+          "heapDelta": 6800336
+        },
+        {
+          "ms": 9.683166999999997,
+          "heapDelta": 6790120
+        },
+        {
+          "ms": 4.077583000000004,
+          "heapDelta": 5872120
+        },
+        {
+          "ms": 8.651666000000006,
+          "heapDelta": 5747712
+        },
+        {
+          "ms": 5.01287499999998,
+          "heapDelta": 5742496
+        },
+        {
+          "ms": 4.550667000000004,
+          "heapDelta": 5742496
+        },
+        {
+          "ms": 5.360749999999996,
+          "heapDelta": 5742496
+        },
+        {
+          "ms": 8.103958000000006,
+          "heapDelta": 5742496
+        },
+        {
+          "ms": 12.356750000000005,
+          "heapDelta": 5742496
+        },
+        {
+          "ms": 10.136832999999996,
+          "heapDelta": 5904544
+        }
+      ]
+    },
+    "inheritedInterface": {
+      "iterations": 1000,
+      "medianMs": 0.36683299999998553,
+      "p95Ms": 2.018709000000001,
+      "samples": [
+        {
+          "ms": 2.6336670000000026,
+          "heapDelta": 2518608
+        },
+        {
+          "ms": 0.40595799999999826,
+          "heapDelta": 2424768
+        },
+        {
+          "ms": 1.0111670000000004,
+          "heapDelta": 2424768
+        },
+        {
+          "ms": 0.556583000000046,
+          "heapDelta": 2424768
+        },
+        {
+          "ms": 2.018709000000001,
+          "heapDelta": 2424768
+        },
+        {
+          "ms": 0.36683299999998553,
+          "heapDelta": 2296608
+        },
+        {
+          "ms": 0.3986250000000382,
+          "heapDelta": 2296760
+        },
+        {
+          "ms": 0.35512500000004366,
+          "heapDelta": 2296760
+        },
+        {
+          "ms": 1.0982910000000174,
+          "heapDelta": 2296760
+        },
+        {
+          "ms": 0.363708000000031,
+          "heapDelta": 2296760
+        },
+        {
+          "ms": 0.35933399999998983,
+          "heapDelta": 2296760
+        },
+        {
+          "ms": 0.36429099999998016,
+          "heapDelta": 2296760
+        }
+      ]
+    }
+  },
+  "sourceCommit": "a15e209fd5a90ef25ae7e422120f65d2a01d6400",
+  "cpu": "Apple M3 Pro",
+  "macOS": "26.6",
+  "heapNote": "heapDelta is observed retained heap change, not allocation volume or peak RSS; GC may run within a sample"
+}

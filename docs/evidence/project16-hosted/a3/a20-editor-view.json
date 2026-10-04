@@ -1,0 +1,12 @@
+{
+  "status": "failed",
+  "engine": "chromium",
+  "passed": 0,
+  "checks": [],
+  "failure": {
+    "type": "Error",
+    "message": "Page.evaluate: TypeError: window.editor?.dispose is not a function\n    at window.setupView (http://127.0.0.1:34491/a20-editor-view-fixture.js:4:18)\n    at eval (eval at evaluate (:311:30), <anonymous>:1:9)\n    at UtilityScript.evaluate (<anonymous>:318:18)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)"
+  },
+  "nativeImeCertified": false,
+  "screenReaderCertified": false
+}
