@@ -95,7 +95,9 @@ test('malformed field operands reject and unsupported storage/layout never quali
   } };
   const malformed = verify(byref);
   assert.equal(malformed.status, 'rejected');
-  assert.equal(malformed.diagnostics[0].code, 'CILVM0001');
+  assert.equal(malformed.diagnostics[0].code, 'CILT0001');
+  assert.equal(malformed.diagnostics[0].diagnostic, 'InvalidMetadata');
+  assert.match(malformed.diagnostics[0].message, /Byref is invalid in this signature/);
 });
 
 test('nominal local stores compose existing definite assignment without constructor or alias shortcuts', () => {
