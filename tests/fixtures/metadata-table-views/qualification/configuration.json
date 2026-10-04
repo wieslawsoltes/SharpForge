@@ -59,5 +59,13 @@
       37
     ]
   },
-  "browser": "Not executed; fixture availability is not qualification."
+  "browser": "Not executed; fixture availability is not qualification.",
+  "integratedReplay": {
+    "testedCommit": "03ed7a6e6719e16671dd0f4acd65e63574d27ca3",
+    "testedTree": "6782891be5099011923dbda4bb3ceb2b7bde96ef",
+    "passed": 14,
+    "failed": 0,
+    "skipped": 0
+  },
+  "integrationFinding": "Automatic merge duplicated the existing a13-05 test glob. Removed the exact duplicate without changing coverage."
 }
