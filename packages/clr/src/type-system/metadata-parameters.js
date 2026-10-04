@@ -1,4 +1,3 @@
-import { decodeCoded, decodeConstant } from '@sharpforge/cil';
 import { createParameterDesc } from './parameter-desc.js';
 import { loadError, LoadErrorCode } from '../load-errors.js';
 
@@ -10,7 +9,6 @@ export class MetadataParameters {
   #bounded = false;
   #methods = new Map();
   #owners = new Map();
-  #constants;
   #descriptorCount = 0;
   constructor(module) { this.#module = module; }
 
@@ -72,32 +70,8 @@ export class MetadataParameters {
     });
   }
 
-  #constantRows() {
-    if (this.#constants) return this.#constants;
-    this.#checkLimits();
-    const constants = new Map();
-    for (let rid = 1; rid <= this.#module.rowCount(11); rid++) {
-      const [type, parent, blob] = this.#module.row(0x0b000000 + rid);
-      const token = decodeCoded('HasConstant', parent);
-      if (token >>> 24 !== 8) continue;
-      if (!(token & 0xffffff) || (token & 0xffffff) > this.#module.rowCount(8) || constants.has(token)) {
-        throw invalid('Invalid or duplicate parameter Constant owner');
-      }
-      constants.set(token, { type, blob });
-    }
-    this.#constants = constants;
-    return constants;
-  }
-
-  /** Only raw CLI Constant rows are interpreted; no enum binding or custom-attribute default evaluation occurs. */
-  constant(token, flags) {
-    if (!token) return null;
-    return this.#read(() => {
-      const constant = this.#constantRows().get(token);
-      if (Boolean(flags & 0x1000) !== Boolean(constant)) throw invalid('Param HasDefault flag and Constant row disagree');
-      if (!constant) return null;
-      const bytes = this.#module.blob(constant.blob, { maxBytes: 1024 * 1024 });
-      return Object.freeze({ type: constant.type, value: decodeConstant(constant.type, bytes) });
-    });
+  /** Raw Constant values share the module index with fields and properties. */
+  constant(token) {
+    return token ? this.#module.constant(token) : null;
   }
 }
