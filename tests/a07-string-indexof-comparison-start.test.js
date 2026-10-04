@@ -204,6 +204,7 @@ test('String.IndexOf start comparison: pinned native bytes and explicit preceden
   assert.equal(reference.sourceSha256, createHash('sha256').update(source).digest('hex'));
   assert.equal(reference.runtime, '10.0.5');
   assert.equal(reference.sdk, '10.0.201');
+  assert.equal(reference.rows.length, 832);
   const row = id => {
     const result = reference.rows.find(value => value.id === id);
     assert(result, id);
