@@ -15,6 +15,7 @@ if (!tools.supported) throw new Error(tools.reason);
 const toolchain = await resolveToolchain();
 const temporary = await mkdtemp(path.join(os.tmpdir(), 'a03-member-access-'));
 const observations = [];
+const attempts = [];
 const normalize = result => ({ ...result, stdout: result.stdout.replaceAll(temporary, '<temporary>'),
   stderr: result.stderr.replaceAll(temporary, '<temporary>') });
 try {
@@ -23,11 +24,16 @@ try {
     const file = path.join(temporary, fixture.name + '.il');
     await writeFile(file, source);
     const assembled = await runProcess(tools.ilasm, ['/dll', `/output:${assembly}`, file], { cwd: temporary, timeoutMs: 30000 });
+    const attempt = { name: fixture.name, sourceSHA256: sha256(source), assembled: normalize(assembled) };
+    attempts.push(attempt);
+    await writeFile(output + '.raw.json', JSON.stringify(attempts, null, 2) + '\n');
     if (assembled.exitCode !== 0 || assembled.signal) throw new Error(JSON.stringify(normalize(assembled)));
     const args = ['--fx-version', pin.runtime, tools.ilverify, assembly, '--system-module', 'System.Runtime',
       '--include', `${fixture.accessor}\\.Test$`, '--statistics'];
     for (const reference of toolchain.references) args.push('--reference', reference);
     const verify = await runProcess(toolchain.dotnet, args, { cwd: temporary, timeoutMs: 30000 });
+    attempt.verify = normalize(verify);
+    await writeFile(output + '.raw.json', JSON.stringify(attempts, null, 2) + '\n');
     const oracle = parseILVerify(verify), bytes = await readFile(assembly);
     const inspector = new AssemblyInspector(bytes), metadata = inspector.metadata;
     const context = createMetadataVerificationContext(inspector);
