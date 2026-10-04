@@ -1,0 +1,23 @@
+✔ A02-T77 actual CLR spans preserve bytes, terminal zero, GC lifetime and zero literal allocations (2097.994721ms)
+ℹ {"mode":"registry","actualAllocatedBytes":0,"roslynAllocatedBytes":0}
+ℹ {"mode":"references","actualAllocatedBytes":0,"roslynAllocatedBytes":0}
+ℹ {"mode":"fallback","actualAllocatedBytes":400000,"roslynAllocatedBytes":1120000}
+✔ A02-T77 actual references select RVA lowering and preserve Roslyn UTF-8 bytes (243.512331ms)
+✔ A02-T77 a missing optional pointer constructor uses the real array/start/length fallback (489.974761ms)
+✔ A02-T77 a missing required array constructor reports Roslyn CS0656 even when pointer ctor exists (357.384531ms)
+✔ A02-T77 repeated literal sites preserve the actual missing-constructor diagnostic count (225.161438ms)
+✔ A02-T77 a constructor initializer retains its literal file in required-member diagnostics (249.463725ms)
+✔ A02-T77 UTF-8 literals use static field addresses and the pointer span constructor without arrays (133.218262ms)
+✔ A02-T77 exact UTF-8 payloads, empty data and deduplication survive real PE layout (117.963632ms)
+✔ A02-T77 nested functions, initializer calls, generic methods and late state machines share planned data (37.197586ms)
+✔ A02-T77 executable assemblies retain literal data; reference assemblies omit body-only storage (25.601216ms)
+✔ A02-T77 malformed UTF-16, language gates and non-literal operators remain C# diagnostics (11.567527ms)
+✔ A02-T77 the bytecode execution profile reports its unsupported span contract explicitly (18.595663ms)
+ℹ tests 12
+ℹ suites 0
+ℹ pass 12
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 7489.176989

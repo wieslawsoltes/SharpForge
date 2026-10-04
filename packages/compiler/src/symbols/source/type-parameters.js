@@ -13,7 +13,7 @@
  */
 import {DiagnosticId} from '../../diagnostics/codes.js';
 import { isDynamicType, containsDynamic } from '../dynamic-types.js';
-import { TypeParameterSymbol, Variance, TypeKind } from '../types.js';
+import { TypeParameterSymbol, TypeWithAnnotations, Variance, TypeKind } from '../types.js';
 
 const span = node => {
   const s = node.span;
@@ -45,7 +45,7 @@ const forbiddenClasses = new Set(['System_Object', 'System_ValueType', 'System_A
 /**
  * Binds `where` clauses onto already declared type parameters.
  * @param {TypeParameterSymbol[]} parameters  @param clauses TypeParameterConstraintClause nodes
- * @param {(typeSyntax)=>TypeSymbol} bindType  @param report (node,code,args)
+ * @param {(typeSyntax)=>TypeSymbol|TypeWithAnnotations} bindType  @param report (node,code,args)
  * @param {{ownerDisplay?:string, useFeature?:(node,featureId:string)=>void}} [options] `useFeature` gates a constraint by language version
  */
 const constraintFeatures = Object.freeze({
@@ -68,7 +68,9 @@ export function bindConstraintClauses(parameters, clauses, bindType, report, opt
     }
     done.add(parameter);
     const types = [],
+      annotatedTypes = new Map(),
       constraints = clause.constraints;
+    parameter.primaryConstraintSyntax = constraints[0] ?? clause;
     constraints.forEach((c, index) => {
       const last = index === constraints.length - 1;
       switch (c.kind) {
@@ -112,7 +114,8 @@ export function bindConstraintClauses(parameters, clauses, bindType, report, opt
             else parameter.hasNotNullConstraint = true;
             break;
           }
-          const type = bindType(c.type);
+          const annotated = bindType(c.type),
+            type = annotated?.type ?? annotated;
           if (!type || type.isErrorType()) {
             parameter.hasUnknownConstraint = true;
             break;
@@ -156,13 +159,15 @@ export function bindConstraintClauses(parameters, clauses, bindType, report, opt
           // `Enum`, `Delegate` and `MulticastDelegate` are constraints from C# 7.3 (the name may come from a using directive).
           if (constraintFeatures[type.specialType]) options.useFeature?.(c.type, constraintFeatures[type.specialType]);
           types.push(type);
+          annotatedTypes.set(type, TypeWithAnnotations.create(annotated));
           // `where T : Shape?`: a nullable constraint type accepts nullable type arguments (nullable/constraint-checks.js).
-          if (c.type.kind === 'NullableType') (parameter.nullableConstraintTypes ??= new Set()).add(type);
+          if (c.type.kind === 'NullableType' || annotated.isAnnotated) (parameter.nullableConstraintTypes ??= new Set()).add(type);
           break;
         }
       }
     });
     parameter._constraintTypes = types;
+    parameter.constraintTypesWithAnnotations = annotatedTypes;
   }
   // A type parameter that must be a value type cannot be the constraint of another one: nothing derives from it.
   for (const p of parameters) {
@@ -199,6 +204,7 @@ export function inheritConstraints(parameters, from, map = t => t) {
     if (!s) return;
     for (const flag of [
       'hasReferenceTypeConstraint',
+      'referenceTypeConstraintIsNullable',
       'hasValueTypeConstraint',
       'hasUnmanagedTypeConstraint',
       'hasNotNullConstraint',
@@ -207,5 +213,10 @@ export function inheritConstraints(parameters, from, map = t => t) {
     ])
       p[flag] = s[flag];
     p._constraintTypes = s.constraintTypes.map(map);
+    p.constraintTypesWithAnnotations = new Map(s.constraintTypes.map((constraint, index) => {
+      const annotated = s.constraintTypesWithAnnotations?.get(constraint) ?? TypeWithAnnotations.create(constraint);
+      return [p._constraintTypes[index], annotated.withType(p._constraintTypes[index].type ?? p._constraintTypes[index])];
+    }));
+    if (s.nullableConstraintTypes) p.nullableConstraintTypes = new Set([...s.nullableConstraintTypes].map(map));
   });
 }

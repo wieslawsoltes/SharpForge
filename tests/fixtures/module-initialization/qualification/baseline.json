@@ -1,0 +1,25 @@
+{
+  "testedCommit": "fc4d9d994d93d75bac94131da62faa8fd13442d3",
+  "tests": 23,
+  "passed": 10,
+  "failed": 13,
+  "skipped": 0,
+  "logSha256": "a841dea12593e01249932f76c880e49fafea9bedbaf70c6567147d8cc49bdd44",
+  "stage": "pre-fix compiler/VM reproduction; no Roslyn capture claimed",
+  "failures": [
+    "\u2716 module initialization baseline: producer emits a module constructor for plain-main (102.393756ms)",
+    "\u2716 module initialization baseline: direct CIL startup for static-field-main (14.72387ms)",
+    "\u2716 module initialization baseline: direct CIL startup for static-constructor-main (14.475645ms)",
+    "\u2716 module initialization baseline: direct CIL startup for initializer-calls-entry-type (10.062246ms)",
+    "\u2716 module initialization baseline: direct CIL startup for pre-entry-fault (11.896432ms)",
+    "\u2716 module initialization baseline: a library owns module startup before a selected static method (4.632471ms)",
+    "\u2716 module initialization baseline: module constructor preserves source declaration order across files (7.133929ms)",
+    "\u2716 module initialization baseline: independent CIL module startup is verified and runs once (entry) (1.692198ms)",
+    "\u2716 module initialization baseline: independent CIL module startup is verified and runs once (library) (0.828288ms)",
+    "\u2716 module initialization baseline: an active module initializer survives snapshot restore and collection (1.942276ms)",
+    "\u2716 module initialization baseline: pre-entry failure bypasses Main catch and stays cached, rooted, and restorable (2.015374ms)",
+    "\u2716 module initialization baseline: an invalid module body is rejected before entry execution (0.634293ms)",
+    "\u2716 module initialization baseline: an invalid module body is rejected before selected method execution (0.630056ms)"
+  ],
+  "command": "node scripts/limited.js node --test --test-concurrency=1 --test-name-pattern='module initialization baseline' tests/compiler-module-initialization.test.js"
+}

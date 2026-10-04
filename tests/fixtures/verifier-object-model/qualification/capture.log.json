@@ -1,0 +1,7 @@
+{
+  "schemaVersion": 1,
+  "encoding": "utf-8",
+  "rawSHA256": "48aa87fe8bcd2e92bdf8203b63714f47d289d8da15d69010e5537a99089fceb7",
+  "rawBytes": 222,
+  "text": "{\"observations\":52,\"unsupported\":[\"NewExternalBase\",\"NewDelegateNumeric\",\"CastTypeSpecification\",\"RefLikeConstruction\",\"RefLikeReturn\",\"MissingAnnotationAuthority\",\"CounterfeitNameWithoutAuthority\",\"EnumBox\",\"EnumUnbox\"]}\n"
+}

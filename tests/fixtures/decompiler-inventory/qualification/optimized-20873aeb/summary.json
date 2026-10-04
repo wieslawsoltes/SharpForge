@@ -1,0 +1,535 @@
+{
+  "format": "sharpforge.decompiler-inventory.optimized-qualification",
+  "schemaVersion": 1,
+  "recordedAt": "2026-10-04T15:25:09.708484+00:00",
+  "executionRevision": "5c14c79d33a8afde7cbdce7e2f2f1389184639c8",
+  "productRevision": "20873aeb2df8f10604ce7bc4a28bc268a20ac73a",
+  "tests": {
+    "status": "pass",
+    "counts": {
+      "tests": 25,
+      "suites": 0,
+      "pass": 25,
+      "fail": 0,
+      "cancelled": 0,
+      "skipped": 0,
+      "todo": 0
+    },
+    "execution": "inventory-5c14c79d-tests-execution.json",
+    "output": "inventory-5c14c79d-tests.tap",
+    "durationMilliseconds": 1730.968374,
+    "nativeQualification": "retained SRM replay in Node",
+    "freshNativeExecution": "not-run",
+    "browserQualification": "not-run",
+    "build": "not-run"
+  },
+  "benchmark": {
+    "status": "completed-with-regressions",
+    "report": "inventory-20873aeb-vs-c169-benchmark.json",
+    "log": "inventory-20873aeb-vs-c169-benchmark.log",
+    "execution": "inventory-20873aeb-vs-c169-benchmark-execution.json",
+    "protocol": {
+      "warmup": 20,
+      "samples": 100,
+      "iterations": 20,
+      "clock": "performance.now",
+      "variantOrder": "alternates each round",
+      "caseOrder": "rotates each round",
+      "median": "mean of the two central measured samples",
+      "p95AndP99": "nearest rank",
+      "rawWarmupsRetained": true,
+      "sampleStatistic": "20-call batch mean in ns/call; p95/p99 are percentiles of batch means, not individual-call tail latency",
+      "timing": "Only API calls and storing returned references; all comparisons, consumption and memory observations are outside timing"
+    },
+    "environment": {
+      "capturedAt": "2026-10-04T15:09:00.291Z",
+      "node": "v24.19.0",
+      "v8": "13.6.233.17-node.51",
+      "platform": "linux",
+      "architecture": "x64",
+      "osRelease": "6.18.44",
+      "cpu": "AMD EPYC 9V74 80-Core Processor",
+      "logicalCpus": 9,
+      "totalMemoryBytes": 10451464192,
+      "freeMemoryBytes": 4692262912,
+      "loadAverage": [
+        2.28,
+        2,
+        1.98
+      ],
+      "execArgv": [
+        "--expose-gc"
+      ],
+      "gcExposed": true,
+      "sharedHost": true
+    },
+    "independentStatisticsMatched": 90,
+    "warmupSamples": 200,
+    "measuredSamples": 1000,
+    "chronologyVerified": true,
+    "checksum": 483708000,
+    "statistics": [
+      {
+        "case": "ArithmeticAssembly",
+        "workload": "decompileAssembly.bytes",
+        "variant": "baseline",
+        "metrics": {
+          "batchMeanNanosecondsPerCall": {
+            "median": 67657.17499984021,
+            "p95": 140376.84999930207,
+            "p99": 232955.85000014398,
+            "min": 55005.349998828024,
+            "max": 316405.4499997292
+          },
+          "batchHeapDeltaBytes": {
+            "median": 2088880.0,
+            "p95": 2110776,
+            "p99": 2126136,
+            "min": -61759720,
+            "max": 2139832
+          },
+          "batchArrayBufferDeltaBytes": {
+            "median": 0.0,
+            "p95": 0,
+            "p99": 0,
+            "min": -2432,
+            "max": 0
+          }
+        }
+      },
+      {
+        "case": "ArithmeticAssembly",
+        "workload": "decompileAssembly.bytes",
+        "variant": "candidate",
+        "metrics": {
+          "batchMeanNanosecondsPerCall": {
+            "median": 167953.60000251094,
+            "p95": 355096.35000198614,
+            "p99": 465524.70000024186,
+            "min": 117805.0999995321,
+            "max": 557282.8999982448
+          },
+          "batchHeapDeltaBytes": {
+            "median": 4072016.0,
+            "p95": 4154264,
+            "p99": 4200552,
+            "min": -203810432,
+            "max": 4202600
+          },
+          "batchArrayBufferDeltaBytes": {
+            "median": 0.0,
+            "p95": 0,
+            "p99": 0,
+            "min": -2987,
+            "max": 0
+          }
+        }
+      },
+      {
+        "case": "ArithmeticAssembly",
+        "workload": "decompileAssembly.cachedInspector",
+        "variant": "baseline",
+        "metrics": {
+          "batchMeanNanosecondsPerCall": {
+            "median": 21744.475000014063,
+            "p95": 42109.89999992307,
+            "p99": 127767.7499994752,
+            "min": 18181.249999906868,
+            "max": 193189.95000066934
+          },
+          "batchHeapDeltaBytes": {
+            "median": 780664.0,
+            "p95": 802296,
+            "p99": 803224,
+            "min": 780512,
+            "max": 805456
+          },
+          "batchArrayBufferDeltaBytes": {
+            "median": 0.0,
+            "p95": 0,
+            "p99": 0,
+            "min": 0,
+            "max": 0
+          }
+        }
+      },
+      {
+        "case": "ArithmeticAssembly",
+        "workload": "decompileAssembly.cachedInspector",
+        "variant": "candidate",
+        "metrics": {
+          "batchMeanNanosecondsPerCall": {
+            "median": 89671.99999897275,
+            "p95": 176999.60000027204,
+            "p99": 300961.35000057984,
+            "min": 69052.94999887701,
+            "max": 308997.54999991274
+          },
+          "batchHeapDeltaBytes": {
+            "median": 2718788.0,
+            "p95": 2772952,
+            "p99": 2794752,
+            "min": -60927304,
+            "max": 2815024
+          },
+          "batchArrayBufferDeltaBytes": {
+            "median": 0.0,
+            "p95": 0,
+            "p99": 0,
+            "min": -2516,
+            "max": 0
+          }
+        }
+      },
+      {
+        "case": "ArithmeticAssembly",
+        "workload": "inventoryOnly.cachedInspector",
+        "variant": "candidate",
+        "metrics": {
+          "batchMeanNanosecondsPerCall": {
+            "median": 56033.075000596,
+            "p95": 164438.7000007555,
+            "p99": 184298.30000095535,
+            "min": 48710.05000022706,
+            "max": 393769.65000119526
+          },
+          "batchHeapDeltaBytes": {
+            "median": 2036588.0,
+            "p95": 2066856,
+            "p99": 2067064,
+            "min": -203764800,
+            "max": 2067288
+          },
+          "batchArrayBufferDeltaBytes": {
+            "median": 0.0,
+            "p95": 0,
+            "p99": 0,
+            "min": -2516,
+            "max": 0
+          }
+        }
+      },
+      {
+        "case": "NativeCfgAssembly",
+        "workload": "decompileAssembly.bytes",
+        "variant": "baseline",
+        "metrics": {
+          "batchMeanNanosecondsPerCall": {
+            "median": 48887095.39999981,
+            "p95": 57568348.84999989,
+            "p99": 61813159.99999933,
+            "min": 40090492.800000355,
+            "max": 68936858.40000108
+          },
+          "batchHeapDeltaBytes": {
+            "median": 3854232.0,
+            "p95": 67586608,
+            "p99": 68178496,
+            "min": -160590496,
+            "max": 68832328
+          },
+          "batchArrayBufferDeltaBytes": {
+            "median": 1529.0,
+            "p95": 2867,
+            "p99": 3119,
+            "min": -1312,
+            "max": 3402
+          }
+        }
+      },
+      {
+        "case": "NativeCfgAssembly",
+        "workload": "decompileAssembly.bytes",
+        "variant": "candidate",
+        "metrics": {
+          "batchMeanNanosecondsPerCall": {
+            "median": 48363249.5249989,
+            "p95": 60058032.750000715,
+            "p99": 62149138.8999988,
+            "min": 40769883.55000067,
+            "max": 66093872.5
+          },
+          "batchHeapDeltaBytes": {
+            "median": 16099908.0,
+            "p95": 79633832,
+            "p99": 80686968,
+            "min": -182617664,
+            "max": 80813200
+          },
+          "batchArrayBufferDeltaBytes": {
+            "median": 489.5,
+            "p95": 2516,
+            "p99": 2987,
+            "min": -3680,
+            "max": 3522
+          }
+        }
+      },
+      {
+        "case": "NativeCfgAssembly",
+        "workload": "decompileAssembly.cachedInspector",
+        "variant": "baseline",
+        "metrics": {
+          "batchMeanNanosecondsPerCall": {
+            "median": 46243271.40000096,
+            "p95": 58104930.69999938,
+            "p99": 62375250.95000019,
+            "min": 37534297.399999924,
+            "max": 63298588.84999994
+          },
+          "batchHeapDeltaBytes": {
+            "median": 20096176.0,
+            "p95": 83551640,
+            "p99": 84197400,
+            "min": -187821832,
+            "max": 84493672
+          },
+          "batchArrayBufferDeltaBytes": {
+            "median": -476.0,
+            "p95": 2516,
+            "p99": 2543,
+            "min": -3313,
+            "max": 2663
+          }
+        }
+      },
+      {
+        "case": "NativeCfgAssembly",
+        "workload": "decompileAssembly.cachedInspector",
+        "variant": "candidate",
+        "metrics": {
+          "batchMeanNanosecondsPerCall": {
+            "median": 48166332.0000007,
+            "p95": 57945586.4500007,
+            "p99": 67115834.05000056,
+            "min": 39071935.600001596,
+            "max": 70333541.94999993
+          },
+          "batchHeapDeltaBytes": {
+            "median": 32499044.0,
+            "p95": 95986424,
+            "p99": 96954872,
+            "min": -192040896,
+            "max": 97415144
+          },
+          "batchArrayBufferDeltaBytes": {
+            "median": 280.0,
+            "p95": 2987,
+            "p99": 3152,
+            "min": -1489,
+            "max": 3956
+          }
+        }
+      },
+      {
+        "case": "NativeCfgAssembly",
+        "workload": "inventoryOnly.cachedInspector",
+        "variant": "candidate",
+        "metrics": {
+          "batchMeanNanosecondsPerCall": {
+            "median": 409056.35000090115,
+            "p95": 709965.2499993681,
+            "p99": 804649.8999989126,
+            "min": 355061.2499995623,
+            "max": 836952.4000008823
+          },
+          "batchHeapDeltaBytes": {
+            "median": 11625860.0,
+            "p95": 11657600,
+            "p99": 11658800,
+            "min": -52894776,
+            "max": 11682072
+          },
+          "batchArrayBufferDeltaBytes": {
+            "median": 0.0,
+            "p95": 0,
+            "p99": 0,
+            "min": -2516,
+            "max": 0
+          }
+        }
+      }
+    ],
+    "comparisons": [
+      {
+        "case": "ArithmeticAssembly",
+        "workload": "decompileAssembly.bytes",
+        "batchMeanChanges": {
+          "median": {
+            "baselineNanosecondsPerCall": 67657.17499984021,
+            "candidateNanosecondsPerCall": 167953.60000251094,
+            "absoluteChangeNanosecondsPerCall": 100296.42500267073,
+            "changePercent": 148.24211179805778,
+            "aboveFivePercent": true
+          },
+          "p95": {
+            "baselineNanosecondsPerCall": 140376.84999930207,
+            "candidateNanosecondsPerCall": 355096.35000198614,
+            "absoluteChangeNanosecondsPerCall": 214719.50000268407,
+            "changePercent": 152.95933767124112,
+            "aboveFivePercent": true
+          },
+          "p99": {
+            "baselineNanosecondsPerCall": 232955.85000014398,
+            "candidateNanosecondsPerCall": 465524.70000024186,
+            "absoluteChangeNanosecondsPerCall": 232568.85000009788,
+            "changePercent": 99.83387410101705,
+            "aboveFivePercent": true
+          }
+        }
+      },
+      {
+        "case": "ArithmeticAssembly",
+        "workload": "decompileAssembly.cachedInspector",
+        "batchMeanChanges": {
+          "median": {
+            "baselineNanosecondsPerCall": 21744.475000014063,
+            "candidateNanosecondsPerCall": 89671.99999897275,
+            "absoluteChangeNanosecondsPerCall": 67927.52499895869,
+            "changePercent": 312.389813959246,
+            "aboveFivePercent": true
+          },
+          "p95": {
+            "baselineNanosecondsPerCall": 42109.89999992307,
+            "candidateNanosecondsPerCall": 176999.60000027204,
+            "absoluteChangeNanosecondsPerCall": 134889.70000034897,
+            "changePercent": 320.32776140668915,
+            "aboveFivePercent": true
+          },
+          "p99": {
+            "baselineNanosecondsPerCall": 127767.7499994752,
+            "candidateNanosecondsPerCall": 300961.35000057984,
+            "absoluteChangeNanosecondsPerCall": 173193.60000110464,
+            "changePercent": 135.5534553921596,
+            "aboveFivePercent": true
+          }
+        }
+      },
+      {
+        "case": "NativeCfgAssembly",
+        "workload": "decompileAssembly.bytes",
+        "batchMeanChanges": {
+          "median": {
+            "baselineNanosecondsPerCall": 48887095.39999981,
+            "candidateNanosecondsPerCall": 48363249.5249989,
+            "absoluteChangeNanosecondsPerCall": -523845.87500090897,
+            "changePercent": -1.071542235665146,
+            "aboveFivePercent": false
+          },
+          "p95": {
+            "baselineNanosecondsPerCall": 57568348.84999989,
+            "candidateNanosecondsPerCall": 60058032.750000715,
+            "absoluteChangeNanosecondsPerCall": 2489683.9000008255,
+            "changePercent": 4.324744325198471,
+            "aboveFivePercent": false
+          },
+          "p99": {
+            "baselineNanosecondsPerCall": 61813159.99999933,
+            "candidateNanosecondsPerCall": 62149138.8999988,
+            "absoluteChangeNanosecondsPerCall": 335978.8999994695,
+            "changePercent": 0.5435394339966981,
+            "aboveFivePercent": false
+          }
+        }
+      },
+      {
+        "case": "NativeCfgAssembly",
+        "workload": "decompileAssembly.cachedInspector",
+        "batchMeanChanges": {
+          "median": {
+            "baselineNanosecondsPerCall": 46243271.40000096,
+            "candidateNanosecondsPerCall": 48166332.0000007,
+            "absoluteChangeNanosecondsPerCall": 1923060.5999997407,
+            "changePercent": 4.158573867677751,
+            "aboveFivePercent": false
+          },
+          "p95": {
+            "baselineNanosecondsPerCall": 58104930.69999938,
+            "candidateNanosecondsPerCall": 57945586.4500007,
+            "absoluteChangeNanosecondsPerCall": -159344.2499986738,
+            "changePercent": -0.2742353326628755,
+            "aboveFivePercent": false
+          },
+          "p99": {
+            "baselineNanosecondsPerCall": 62375250.95000019,
+            "candidateNanosecondsPerCall": 67115834.05000056,
+            "absoluteChangeNanosecondsPerCall": 4740583.100000374,
+            "changePercent": 7.600102649367146,
+            "aboveFivePercent": true
+          }
+        }
+      }
+    ],
+    "driverDifference": "Only implementationCommit changed from the first cohort"
+  },
+  "sourceSha256AtExecution": {
+    "scripts/limited.js": "d60fa1310cc85ce9426914dd4b79b1b500dcb2eab0928b422d24994d90a650f7",
+    "packages/cil/src/decompiler/inventory.js": "ca0bbe9da913d5293d332072b0e83c2ed55fc181d23526562d263bc02a1f89d2",
+    "tests/a13-10-metadata-inventory.test.js": "3b74e33139a5d3255ab3d380ded1c3985c6f6d378d250e340a92473bcadc5e92",
+    "tests/a13-10-metadata-inventory-native.test.js": "0892f3fb2d1d00f20b11b5a1c4859dab2d8bd2c2cdfa86d64c1a33de76811a3f",
+    "tests/a13-07-cfg.test.js": "3978ee71cdbed903a8799af97598c1633f2c801cd06c4fa10d6c7e0b6518a6d9",
+    "tests/a13-07-cfg-reference.test.js": "7b91e0cf4d54c9cacbb56941ce5893aded73e84ccbb032e5798e390dbb6bc745",
+    "packages/cil/tools/benchmark-decompiler-inventory.mjs": "d73e88f1e701b0dfbc65b0c4e4c02a09724224bddedf0734bb3a5d48b2f1ad34"
+  },
+  "performanceReview": {
+    "status": "automated-review-exception-approved-for-PR",
+    "reviewer": "ChatGPT primary agent /root",
+    "humanApproval": false,
+    "thresholdPass": false,
+    "basis": [
+      "The whole-assembly API now returns a complete owned physical metadata inventory, including 53 table schemas.",
+      "Per-call byte/row validation, cancellation, physical identities, copied scalar arrays and method links are required output work.",
+      "Input and output mutation contracts prohibit returning a previously exposed shared inventory.",
+      "The source review removed duplicate per-table layout creation and per-row width reductions without dropping fields or bounds.",
+      "Accept the measured existing-API costs in both retained cohorts for this bounded additional output, including every reported tail regression.",
+      "The two cohorts show mixed timing changes and do not isolate causal savings or explain the total cost.",
+      "No further benchmark rerun is requested; this approval is not a measured budget pass or human sign-off."
+    ],
+    "limits": [
+      "Shared host scheduling, GC and load can affect samples.",
+      "Each batch retains 20 results until its memory observation; observed heap deltas are not allocation counters.",
+      "Correctness checks precede measurement and follow every batch; no process-cold latency is measured.",
+      "The default bytes workload includes parsing/inspector construction; cachedInspector prewarms those phases.",
+      "Whole-API changes include replacing the old full-summary name lookup; inventoryOnly isolates the new census/classification.",
+      "Native fixtures are retained observations; this benchmark does not compile or execute native code."
+    ]
+  },
+  "artifacts": [
+    {
+      "path": "inventory-5c14c79d-tests.tap",
+      "bytes": 3013,
+      "sha256": "a3365e71ac4cdfefdfaaa79ba3d6bbdfa4eed29dbe885fff4250992276891446",
+      "originalPath": "/workspace/scratch/7e3d2a445c44/inventory-5c14c79d-tests.tap"
+    },
+    {
+      "path": "inventory-5c14c79d-tests-execution.json",
+      "bytes": 1549,
+      "sha256": "2d08e78ac8538368d543b6e5c45637947cc7257eb55483da66e44ec64b05a21d",
+      "originalPath": "/workspace/scratch/7e3d2a445c44/inventory-5c14c79d-tests-execution.json"
+    },
+    {
+      "path": "inventory-20873aeb-vs-c169-benchmark.json",
+      "bytes": 489105,
+      "sha256": "601fcd2edbee99ad279380fd0b20264d2c74aabc753ee7dc15985a2ee597b391",
+      "originalPath": "/workspace/scratch/7e3d2a445c44/inventory-20873aeb-vs-c169-benchmark.json"
+    },
+    {
+      "path": "inventory-20873aeb-vs-c169-benchmark.log",
+      "bytes": 6064,
+      "sha256": "1a6f41c737f6d9d6e9e8139214662f066ca9f6bb3593ed7c4d93c20a0a0a5c33",
+      "originalPath": "/workspace/scratch/7e3d2a445c44/inventory-20873aeb-vs-c169-benchmark.log"
+    },
+    {
+      "path": "inventory-20873aeb-vs-c169-benchmark-execution.json",
+      "bytes": 1436,
+      "sha256": "099a9221ce382069a5cbd10b407854161edf124ba37b4ca02742f3dcbeeefb52",
+      "originalPath": "/workspace/scratch/7e3d2a445c44/inventory-20873aeb-vs-c169-benchmark-execution.json"
+    },
+    {
+      "path": "benchmark-decompiler-inventory.mjs.txt",
+      "bytes": 17321,
+      "sha256": "d73e88f1e701b0dfbc65b0c4e4c02a09724224bddedf0734bb3a5d48b2f1ad34",
+      "sourcePath": "packages/cil/tools/benchmark-decompiler-inventory.mjs"
+    }
+  ]
+}

@@ -1,0 +1,1006 @@
+{
+  "format": "sharpforge.pe-inspection.optimized-performance-review",
+  "schemaVersion": 1,
+  "status": "guards-and-sample-audit-passed-performance-exception-pending",
+  "measuredHead": "6c3e8a7ecfcf2df8148b1ed25ef4796d43139eba",
+  "productRevision": "d72a9fe1684ba28064f83f4307721a1d00b13137",
+  "revisions": {
+    "baseline": {
+      "root": "/workspace/scratch/7e3d2a445c44/sf6-pe-baseline-d64188af",
+      "head": "d64188af91f03d02041316bdde2ee64fd0634be0",
+      "tree": "d683a1cee6e29cddb2735734878f70c1ea382a05",
+      "productRevision": "d64188af91f03d02041316bdde2ee64fd0634be0"
+    },
+    "candidate": {
+      "root": "/workspace/scratch/7e3d2a445c44/sf6-pe-inspection",
+      "head": "6c3e8a7ecfcf2df8148b1ed25ef4796d43139eba",
+      "tree": "59c92eeafba420926636383b55849badf332bb3b",
+      "productRevision": "135c4c0b151acc92b28b724b410e9db54066b29e"
+    }
+  },
+  "environment": {
+    "node": "v24.19.0",
+    "platform": "linux",
+    "arch": "x64",
+    "cpu": "AMD EPYC 9V74 80-Core Processor",
+    "logicalCpus": 9,
+    "osRelease": "6.18.44",
+    "runnerName": "4a20ccefcfde",
+    "commit": "6c3e8a7ecfcf2df8148b1ed25ef4796d43139eba",
+    "totalMemoryBytes": 10451464192,
+    "sharedHost": true,
+    "nodeExecutable": "/opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin/node",
+    "nodeExecutableSha256": "bc17c508ffeed0ec622934f9b7fa72f8e78da65350e63c3eceb56fa688aa5e12",
+    "nodeOptions": "--max-old-space-size=2048",
+    "ci": null,
+    "testConcurrency": null,
+    "maximumParallelRuns": null,
+    "maximumOldSpaceMB": null
+  },
+  "configuration": {
+    "warmupBatchesPerWorkloadAndVariant": 20,
+    "measuredBatchesPerWorkloadAndVariant": 100,
+    "clock": "performance.now",
+    "unit": "nanoseconds per call",
+    "median": "mean of the two central samples",
+    "p95": "nearest rank",
+    "p99": "nearest rank",
+    "variantOrder": "alternates each round",
+    "workloadOrder": "rotates each round",
+    "measuredRegion": "API calls and storing returned references into an array allocated before timing",
+    "correctnessRegion": "Each returned result, pre/post full facts, and native comparisons are checked outside timing",
+    "forcedGC": false,
+    "allocationCounter": null
+  },
+  "sampleAudit": {
+    "total": 960,
+    "warmup": 160,
+    "measured": 800,
+    "allGuardsPassed": true,
+    "allCallCountsMatch": true,
+    "exactChronologicalOrderMatchesProtocol": true,
+    "statisticsRecomputedExactly": true,
+    "configurationAndLimitationsUnchanged": true,
+    "allResultHashesEqualFirstCohort": true,
+    "unit": "nanoseconds per call, normalized from each entire batch; percentiles describe batch means"
+  },
+  "sourceSha256": {
+    "baseline": {
+      "packages/cil/src/inspector-pe.js": null,
+      "packages/cil/src/inspector.js": "bf8ada54bbe24b30b38dfdf5c3d34a6457dd0f4aba4d85be150004ffaa003745",
+      "packages/cil/src/inspector-method.js": "6f781e34355ed34b2767d4a9371eec3d21ff1576fb78dca9a2d2e148acfd232c",
+      "packages/cil/src/browser/summary.js": "ad9720ec2f13b84163e868807c79022a5de0e8a15e44edbbfc83c6417a3fc397",
+      "packages/cil/src/pe/reader.js": "171b62004c90528328a3a5a0e65bd383bdcc7242ccb049e13ccc21c926c4e2d2",
+      "packages/cil/src/pe/optional-header.js": null,
+      "packages/cil/src/pe/debug-directory.js": null,
+      "packages/cil/src/pe/method-code.js": null,
+      "packages/cil/src/pe/method-header.js": "50bc95a25c356efc0a77a663522064695b635f192cb2fcb579d065218f1190e7",
+      "packages/cil/src/pe/method-body.js": "b4e35c9ead941fe231602847de1398f82a3fbc39ae5a1d30ec09d2dd3dbd1d17",
+      "packages/cil/src/pe/headers.js": "1777a84dc77e99d60a9c01fbaed4beefc9ba6b53f5500406aa1af0014c1377c2",
+      "tests/fixtures/pe-inspection/comparison.mjs": null,
+      "tests/fixtures/pe-inspection/Program.cs": null,
+      "tests/fixtures/pe-inspection/capture.mjs": null,
+      "packages/cil/src/index.js": "c0cccf5e4a31e2535cf4d31838ad420bd7d0e75b0fca17a8b975e348b628f280",
+      "packages/symbols/src/debug-directory-reader.js": "4255e01e1da549332c86a6dda814d020ec09989bef7ef5527acfc111ac21b5a0",
+      "packages/symbols/src/local-signatures.js": "0029274aa836053a32ed41976bdf0b1eebaedba108b56aedacadd03bfdaa88ce",
+      "tests/managed-fixtures.js": "53b6e844b4a1dccd707aed5ffa0e0e4840558ed4bb67adc9b9ae04ed7573e7fd"
+    },
+    "candidate": {
+      "packages/cil/src/inspector-pe.js": "759dad1c08c5dabb99b3188f4193d4bcf6c6754e0cb0a02c860897ce2df4a709",
+      "packages/cil/src/inspector.js": "e494966c52ba1c3f50943847c5568b6803b6ee287ef07d9374c6186f008b2055",
+      "packages/cil/src/inspector-method.js": "47955a5bba8529264aa9c4bf6e31c44a314549400494a62736d1c5625c62fdf7",
+      "packages/cil/src/browser/summary.js": "b525605a68fd3e4347a28ab47470cf8fffff2826486d93730ff0e85055de58d1",
+      "packages/cil/src/pe/reader.js": "aea8ec59504a333f05c8ff78d34a7023bf3bc57a27cbbc4c99ab88c25d1c9967",
+      "packages/cil/src/pe/optional-header.js": "2a4a81921ee4f377a92cb48b91ab251f9c8e60cc355ae5e7949fcfe48bdc8db6",
+      "packages/cil/src/pe/debug-directory.js": "c30f489d9f4394f7bc39e617d518da73f633ec710638bb9d03ed0b6c4ded14a9",
+      "packages/cil/src/pe/method-code.js": "0463d7e207a1c5a9a056778b5292fa4be4777b97e49b063053eaad577da26c1c",
+      "packages/cil/src/pe/method-header.js": "ebc4e51c9102ee07f4f565c11cdeb39d470940afe8d495b345027b59d8b1f62c",
+      "packages/cil/src/pe/method-body.js": "b4e35c9ead941fe231602847de1398f82a3fbc39ae5a1d30ec09d2dd3dbd1d17",
+      "packages/cil/src/pe/headers.js": "aab2f458c9d281418f51f1d94a38b0e0b68cd444c7eebf4bf1d93b3bf3b51eb4",
+      "tests/fixtures/pe-inspection/comparison.mjs": "bc34a9a8b0d9f76e9c9531f718a0af33aebc23de7959f2fb35cce7e7b0019316",
+      "tests/fixtures/pe-inspection/Program.cs": "88e65e09949ed19e188f43d984f8cad3ba5b9d3fe75bdfa947d8cfe3b6f9c5d7",
+      "tests/fixtures/pe-inspection/capture.mjs": "642d3426023b355e8aa3c9ff7849120ef2358281611f48eb6b67e327b4c43b0a",
+      "packages/cil/src/index.js": "0a9c2b7568663ed102719832c49e9a7a9927e3bd9a926c530012bab041f096fb",
+      "packages/symbols/src/debug-directory-reader.js": "f1c9b380c3411a054a4b42afb2f931014bde865c70478e2c3d3144114105eb6e",
+      "packages/symbols/src/local-signatures.js": "ba711b0fee6da35465d50ae62cb9b6d398f1e1bdcb9ddaf8d1aa60117abd8c04",
+      "tests/managed-fixtures.js": "53b6e844b4a1dccd707aed5ffa0e0e4840558ed4bb67adc9b9ae04ed7573e7fd"
+    }
+  },
+  "toolSha256": {
+    "packages/cil/tools/benchmark-pe-inspection.mjs": "c204eda904ff5768de61dbf319d357c00b997912fd4833f36ce07562f72aa4c1",
+    "packages/cil/tools/pe-benchmark-facts.mjs": "45aeb9d95dd340ec346ebf422bad1550d3139eaebe198b2b502b7ff30083daaf",
+    "scripts/conformance/perf/core.js": "090c25bdb79f97b464b51f1d7bfa55eda9c5104b78ff6d756f684b0f6bfcf1b5",
+    "scripts/planning/schema/validate.js": "5c82f261c4ce311fe563c14ed55b0f5496fed007ef2b8ba25a85cf1ff7853989",
+    "scripts/conformance/static/allowlist.json": "336c6f4881c27be975dba054567e035759e29a269a720a7fe89f5d1ceeba806d",
+    "scripts/limited.js": "d60fa1310cc85ce9426914dd4b79b1b500dcb2eab0928b422d24994d90a650f7"
+  },
+  "nativeEvidence": {
+    "sha256": "8cf9f13a29b3d74f4d6d395a521f130de5abf6d7482d16a8763109a3d0cd80f1",
+    "manifestSha256": "9e56632f1210f44eedf55b9652b719932511c82fddf519cda615ae3386b18760",
+    "toolchain": {
+      "sdk": "10.0.201",
+      "runtime": "10.0.5",
+      "referencePack": "10.0.5",
+      "roslyn": {
+        "version": "5.3.0-2.26153.122 (4d3023de605a78ba3e59e50c657eed70f125c68a)",
+        "sha256": "4913fa70d10c99901edbb825fdedcc92465be08665016a5d258ea45f953624f0"
+      },
+      "referenceAssemblies": {
+        "count": 167,
+        "sha256": "a978e7aaf608f22e860328a42319b908a5a084cdb087b28b5c31a1e6726be362"
+      }
+    }
+  },
+  "statisticsReview": [
+    {
+      "workload": "readPE",
+      "iterationsPerBatch": 200,
+      "statisticsNanosecondsPerCall": {
+        "baseline": {
+          "count": 100,
+          "median": 19654.120000000148,
+          "p95": 35137.65499999863,
+          "p99": 44991.23999999938,
+          "min": 15122.199999996155,
+          "max": 47973.62500000417
+        },
+        "candidate": {
+          "count": 100,
+          "median": 18917.459999997845,
+          "p95": 38420.68000000381,
+          "p99": 44457.50500000031,
+          "min": 16469.41500000139,
+          "max": 54319.210000003295
+        }
+      },
+      "resultHashesEqualFirstCohort": true,
+      "changePercent": {
+        "median": -3.748119987067833,
+        "p95": 9.343324134764575,
+        "p99": -1.1863087125384308
+      },
+      "absoluteChangeNanosecondsPerCall": {
+        "median": -736.6600000023027,
+        "p95": 3283.025000005182,
+        "p99": -533.7349999990693
+      },
+      "candidateSlowerPairedRounds": 70,
+      "firstCohortChangePercent": {
+        "median": 13.62749040289235,
+        "p95": 26.463116468776505,
+        "p99": -4.048343828403089
+      },
+      "crossCohortMedianChangePercent": {
+        "baseline": 11.507755327224212,
+        "candidate": -5.543710873031992
+      },
+      "highestFiveRowsByVariant": {
+        "baseline": [
+          {
+            "sequence": 841,
+            "phase": "measurement",
+            "round": 85,
+            "workload": "readPE",
+            "variant": "baseline",
+            "startedAtMilliseconds": 1791127884510.1724,
+            "completedCalls": 200,
+            "elapsedMs": 9.594725000000835,
+            "nanosecondsPerCall": 47973.62500000417,
+            "heapUsedBefore": 283188608,
+            "heapUsedAfter": 230679688,
+            "heapUsedDelta": -52508920,
+            "guard": "pass"
+          },
+          {
+            "sequence": 301,
+            "phase": "measurement",
+            "round": 17,
+            "workload": "readPE",
+            "variant": "baseline",
+            "startedAtMilliseconds": 1791127876922.0525,
+            "completedCalls": 200,
+            "elapsedMs": 8.998247999999876,
+            "nanosecondsPerCall": 44991.23999999938,
+            "heapUsedBefore": 277229704,
+            "heapUsedAfter": 227380216,
+            "heapUsedDelta": -49849488,
+            "guard": "pass"
+          },
+          {
+            "sequence": 474,
+            "phase": "measurement",
+            "round": 39,
+            "workload": "readPE",
+            "variant": "baseline",
+            "startedAtMilliseconds": 1791127879759.5608,
+            "completedCalls": 200,
+            "elapsedMs": 8.316957000000912,
+            "nanosecondsPerCall": 41584.78500000456,
+            "heapUsedBefore": 140653328,
+            "heapUsedAfter": 87364752,
+            "heapUsedDelta": -53288576,
+            "guard": "pass"
+          },
+          {
+            "sequence": 706,
+            "phase": "measurement",
+            "round": 68,
+            "workload": "readPE",
+            "variant": "baseline",
+            "startedAtMilliseconds": 1791127882839.1187,
+            "completedCalls": 200,
+            "elapsedMs": 7.483942000000752,
+            "nanosecondsPerCall": 37419.71000000376,
+            "heapUsedBefore": 278442608,
+            "heapUsedAfter": 233492656,
+            "heapUsedDelta": -44949952,
+            "guard": "pass"
+          },
+          {
+            "sequence": 735,
+            "phase": "measurement",
+            "round": 71,
+            "workload": "readPE",
+            "variant": "baseline",
+            "startedAtMilliseconds": 1791127883194.9941,
+            "completedCalls": 200,
+            "elapsedMs": 7.343294999998761,
+            "nanosecondsPerCall": 36716.47499999381,
+            "heapUsedBefore": 122365464,
+            "heapUsedAfter": 75173064,
+            "heapUsedDelta": -47192400,
+            "guard": "pass"
+          }
+        ],
+        "candidate": [
+          {
+            "sequence": 174,
+            "phase": "measurement",
+            "round": 1,
+            "workload": "readPE",
+            "variant": "candidate",
+            "startedAtMilliseconds": 1791127874875.4414,
+            "completedCalls": 200,
+            "elapsedMs": 10.863842000000659,
+            "nanosecondsPerCall": 54319.210000003295,
+            "heapUsedBefore": 274518920,
+            "heapUsedAfter": 226739744,
+            "heapUsedDelta": -47779176,
+            "guard": "pass"
+          },
+          {
+            "sequence": 594,
+            "phase": "measurement",
+            "round": 54,
+            "workload": "readPE",
+            "variant": "candidate",
+            "startedAtMilliseconds": 1791127881556.1406,
+            "completedCalls": 200,
+            "elapsedMs": 8.891501000000062,
+            "nanosecondsPerCall": 44457.50500000031,
+            "heapUsedBefore": 122941152,
+            "heapUsedAfter": 71127448,
+            "heapUsedDelta": -51813704,
+            "guard": "pass"
+          },
+          {
+            "sequence": 280,
+            "phase": "measurement",
+            "round": 15,
+            "workload": "readPE",
+            "variant": "candidate",
+            "startedAtMilliseconds": 1791127876609.61,
+            "completedCalls": 200,
+            "elapsedMs": 8.064115000000129,
+            "nanosecondsPerCall": 40320.575000000645,
+            "heapUsedBefore": 244573232,
+            "heapUsedAfter": 195351664,
+            "heapUsedDelta": -49221568,
+            "guard": "pass"
+          },
+          {
+            "sequence": 520,
+            "phase": "measurement",
+            "round": 45,
+            "workload": "readPE",
+            "variant": "candidate",
+            "startedAtMilliseconds": 1791127880404.6157,
+            "completedCalls": 200,
+            "elapsedMs": 7.922386999998707,
+            "nanosecondsPerCall": 39611.93499999354,
+            "heapUsedBefore": 152582904,
+            "heapUsedAfter": 159774488,
+            "heapUsedDelta": 7191584,
+            "guard": "pass"
+          },
+          {
+            "sequence": 901,
+            "phase": "measurement",
+            "round": 92,
+            "workload": "readPE",
+            "variant": "candidate",
+            "startedAtMilliseconds": 1791127885278.4663,
+            "completedCalls": 200,
+            "elapsedMs": 7.775518000000375,
+            "nanosecondsPerCall": 38877.590000001874,
+            "heapUsedBefore": 125381040,
+            "heapUsedAfter": 132573320,
+            "heapUsedDelta": 7192280,
+            "guard": "pass"
+          }
+        ]
+      }
+    },
+    {
+      "workload": "coldSummary",
+      "iterationsPerBatch": 100,
+      "statisticsNanosecondsPerCall": {
+        "baseline": {
+          "count": 100,
+          "median": 40831.049999987954,
+          "p95": 93545.51999998876,
+          "p99": 114155.1199999958,
+          "min": 33470.51000000647,
+          "max": 132069.31000000623
+        },
+        "candidate": {
+          "count": 100,
+          "median": 48277.419999999445,
+          "p95": 106229.27999998866,
+          "p99": 125394.35000000594,
+          "min": 36440.50999999308,
+          "max": 174566.53000000186
+        }
+      },
+      "resultHashesEqualFirstCohort": true,
+      "changePercent": {
+        "median": 18.237027948126936,
+        "p95": 13.558917626414857,
+        "p99": 9.845576790607868
+      },
+      "absoluteChangeNanosecondsPerCall": {
+        "median": 7446.370000011491,
+        "p95": 12683.759999999907,
+        "p99": 11239.230000010139
+      },
+      "candidateSlowerPairedRounds": 64,
+      "firstCohortChangePercent": {
+        "median": 21.928400347662237,
+        "p95": 21.393688661123768,
+        "p99": -6.353097775498662
+      },
+      "crossCohortMedianChangePercent": {
+        "baseline": -3.1293308800656616,
+        "candidate": -6.062082505562527
+      },
+      "highestFiveRowsByVariant": {
+        "baseline": [
+          {
+            "sequence": 582,
+            "phase": "measurement",
+            "round": 52,
+            "workload": "coldSummary",
+            "variant": "baseline",
+            "startedAtMilliseconds": 1791127881362.3284,
+            "completedCalls": 100,
+            "elapsedMs": 13.206931000000623,
+            "nanosecondsPerCall": 132069.31000000623,
+            "heapUsedBefore": 109762184,
+            "heapUsedAfter": 57533112,
+            "heapUsedDelta": -52229072,
+            "guard": "pass"
+          },
+          {
+            "sequence": 548,
+            "phase": "measurement",
+            "round": 48,
+            "workload": "coldSummary",
+            "variant": "baseline",
+            "startedAtMilliseconds": 1791127880832.126,
+            "completedCalls": 100,
+            "elapsedMs": 11.41551199999958,
+            "nanosecondsPerCall": 114155.1199999958,
+            "heapUsedBefore": 244070880,
+            "heapUsedAfter": 196000872,
+            "heapUsedDelta": -48070008,
+            "guard": "pass"
+          },
+          {
+            "sequence": 556,
+            "phase": "measurement",
+            "round": 49,
+            "workload": "coldSummary",
+            "variant": "baseline",
+            "startedAtMilliseconds": 1791127880959.233,
+            "completedCalls": 100,
+            "elapsedMs": 11.107880000001387,
+            "nanosecondsPerCall": 111078.80000001387,
+            "heapUsedBefore": 257946304,
+            "heapUsedAfter": 205776480,
+            "heapUsedDelta": -52169824,
+            "guard": "pass"
+          },
+          {
+            "sequence": 169,
+            "phase": "measurement",
+            "round": 1,
+            "workload": "coldSummary",
+            "variant": "baseline",
+            "startedAtMilliseconds": 1791127874812.817,
+            "completedCalls": 100,
+            "elapsedMs": 10.42535399999997,
+            "nanosecondsPerCall": 104253.5399999997,
+            "heapUsedBefore": 270331232,
+            "heapUsedAfter": 220317280,
+            "heapUsedDelta": -50013952,
+            "guard": "pass"
+          },
+          {
+            "sequence": 363,
+            "phase": "measurement",
+            "round": 25,
+            "workload": "coldSummary",
+            "variant": "baseline",
+            "startedAtMilliseconds": 1791127877969.1074,
+            "completedCalls": 100,
+            "elapsedMs": 9.4147210000001,
+            "nanosecondsPerCall": 94147.21000000098,
+            "heapUsedBefore": 127756400,
+            "heapUsedAfter": 134736856,
+            "heapUsedDelta": 6980456,
+            "guard": "pass"
+          }
+        ],
+        "candidate": [
+          {
+            "sequence": 309,
+            "phase": "measurement",
+            "round": 18,
+            "workload": "coldSummary",
+            "variant": "candidate",
+            "startedAtMilliseconds": 1791127877040.9739,
+            "completedCalls": 100,
+            "elapsedMs": 17.456653000000188,
+            "nanosecondsPerCall": 174566.53000000186,
+            "heapUsedBefore": 239394600,
+            "heapUsedAfter": 40990336,
+            "heapUsedDelta": -198404264,
+            "guard": "pass"
+          },
+          {
+            "sequence": 756,
+            "phase": "measurement",
+            "round": 74,
+            "workload": "coldSummary",
+            "variant": "candidate",
+            "startedAtMilliseconds": 1791127883443.8657,
+            "completedCalls": 100,
+            "elapsedMs": 12.539435000000594,
+            "nanosecondsPerCall": 125394.35000000594,
+            "heapUsedBefore": 120256256,
+            "heapUsedAfter": 127670568,
+            "heapUsedDelta": 7414312,
+            "guard": "pass"
+          },
+          {
+            "sequence": 883,
+            "phase": "measurement",
+            "round": 90,
+            "workload": "coldSummary",
+            "variant": "candidate",
+            "startedAtMilliseconds": 1791127885068.3599,
+            "completedCalls": 100,
+            "elapsedMs": 11.55115300000034,
+            "nanosecondsPerCall": 115511.5300000034,
+            "heapUsedBefore": 155764952,
+            "heapUsedAfter": 104874632,
+            "heapUsedDelta": -50890320,
+            "guard": "pass"
+          },
+          {
+            "sequence": 428,
+            "phase": "measurement",
+            "round": 33,
+            "workload": "coldSummary",
+            "variant": "candidate",
+            "startedAtMilliseconds": 1791127879002.7441,
+            "completedCalls": 100,
+            "elapsedMs": 11.190580999998929,
+            "nanosecondsPerCall": 111905.80999998929,
+            "heapUsedBefore": 259729392,
+            "heapUsedAfter": 212909856,
+            "heapUsedDelta": -46819536,
+            "guard": "pass"
+          },
+          {
+            "sequence": 462,
+            "phase": "measurement",
+            "round": 37,
+            "workload": "coldSummary",
+            "variant": "candidate",
+            "startedAtMilliseconds": 1791127879601.6067,
+            "completedCalls": 100,
+            "elapsedMs": 10.903148999999758,
+            "nanosecondsPerCall": 109031.48999999758,
+            "heapUsedBefore": 65623016,
+            "heapUsedAfter": 73074632,
+            "heapUsedDelta": 7451616,
+            "guard": "pass"
+          }
+        ]
+      }
+    },
+    {
+      "workload": "warmMetadataSummary",
+      "iterationsPerBatch": 500,
+      "statisticsNanosecondsPerCall": {
+        "baseline": {
+          "count": 100,
+          "median": 1043.5939999997572,
+          "p95": 1907.8059999992547,
+          "p99": 7425.296000001254,
+          "min": 941.0439999992377,
+          "max": 10975.655999998708
+        },
+        "candidate": {
+          "count": 100,
+          "median": 1075.2730000003794,
+          "p95": 4406.920000001265,
+          "p99": 9344.50999999899,
+          "min": 984.628000001976,
+          "max": 9435.851999998704
+        }
+      },
+      "resultHashesEqualFirstCohort": true,
+      "changePercent": {
+        "median": 3.0355674717015946,
+        "p95": 130.99413672055684,
+        "p99": 25.84696960225441
+      },
+      "absoluteChangeNanosecondsPerCall": {
+        "median": 31.67900000062218,
+        "p95": 2499.1140000020105,
+        "p99": 1919.2139999977371
+      },
+      "candidateSlowerPairedRounds": 67,
+      "firstCohortChangePercent": {
+        "median": 27.119034728514848,
+        "p95": 19.471914466835383,
+        "p99": 36.85796620036334
+      },
+      "crossCohortMedianChangePercent": {
+        "baseline": 2.356488238161236,
+        "candidate": -17.035565345873604
+      },
+      "highestFiveRowsByVariant": {
+        "baseline": [
+          {
+            "sequence": 710,
+            "phase": "measurement",
+            "round": 68,
+            "workload": "warmMetadataSummary",
+            "variant": "baseline",
+            "startedAtMilliseconds": 1791127882908.2148,
+            "completedCalls": 500,
+            "elapsedMs": 5.487827999999354,
+            "nanosecondsPerCall": 10975.655999998708,
+            "heapUsedBefore": 245698208,
+            "heapUsedAfter": 40053072,
+            "heapUsedDelta": -205645136,
+            "guard": "pass"
+          },
+          {
+            "sequence": 697,
+            "phase": "measurement",
+            "round": 67,
+            "workload": "warmMetadataSummary",
+            "variant": "baseline",
+            "startedAtMilliseconds": 1791127882749.1328,
+            "completedCalls": 500,
+            "elapsedMs": 3.712648000000627,
+            "nanosecondsPerCall": 7425.296000001254,
+            "heapUsedBefore": 271328704,
+            "heapUsedAfter": 216207568,
+            "heapUsedDelta": -55121136,
+            "guard": "pass"
+          },
+          {
+            "sequence": 478,
+            "phase": "measurement",
+            "round": 39,
+            "workload": "warmMetadataSummary",
+            "variant": "baseline",
+            "startedAtMilliseconds": 1791127879819.8076,
+            "completedCalls": 500,
+            "elapsedMs": 3.1619489999993675,
+            "nanosecondsPerCall": 6323.897999998735,
+            "heapUsedBefore": 146482376,
+            "heapUsedAfter": 89447744,
+            "heapUsedDelta": -57034632,
+            "guard": "pass"
+          },
+          {
+            "sequence": 164,
+            "phase": "measurement",
+            "round": 0,
+            "workload": "warmMetadataSummary",
+            "variant": "baseline",
+            "startedAtMilliseconds": 1791127874744.3127,
+            "completedCalls": 500,
+            "elapsedMs": 0.9976470000001427,
+            "nanosecondsPerCall": 1995.2940000002855,
+            "heapUsedBefore": 265666432,
+            "heapUsedAfter": 268295168,
+            "heapUsedDelta": 2628736,
+            "guard": "pass"
+          },
+          {
+            "sequence": 238,
+            "phase": "measurement",
+            "round": 9,
+            "workload": "warmMetadataSummary",
+            "variant": "baseline",
+            "startedAtMilliseconds": 1791127875979.834,
+            "completedCalls": 500,
+            "elapsedMs": 0.9740320000000793,
+            "nanosecondsPerCall": 1948.0640000001586,
+            "heapUsedBefore": 175423720,
+            "heapUsedAfter": 178052840,
+            "heapUsedDelta": 2629120,
+            "guard": "pass"
+          }
+        ],
+        "candidate": [
+          {
+            "sequence": 771,
+            "phase": "measurement",
+            "round": 76,
+            "workload": "warmMetadataSummary",
+            "variant": "candidate",
+            "startedAtMilliseconds": 1791127883652.8816,
+            "completedCalls": 500,
+            "elapsedMs": 4.717925999999352,
+            "nanosecondsPerCall": 9435.851999998704,
+            "heapUsedBefore": 165739528,
+            "heapUsedAfter": 168347840,
+            "heapUsedDelta": 2608312,
+            "guard": "pass"
+          },
+          {
+            "sequence": 190,
+            "phase": "measurement",
+            "round": 3,
+            "workload": "warmMetadataSummary",
+            "variant": "candidate",
+            "startedAtMilliseconds": 1791127875185.0078,
+            "completedCalls": 500,
+            "elapsedMs": 4.672254999999495,
+            "nanosecondsPerCall": 9344.50999999899,
+            "heapUsedBefore": 117229904,
+            "heapUsedAfter": 65235472,
+            "heapUsedDelta": -51994432,
+            "guard": "pass"
+          },
+          {
+            "sequence": 211,
+            "phase": "measurement",
+            "round": 6,
+            "workload": "warmMetadataSummary",
+            "variant": "candidate",
+            "startedAtMilliseconds": 1791127875517.8892,
+            "completedCalls": 500,
+            "elapsedMs": 4.4050969999998415,
+            "nanosecondsPerCall": 8810.193999999683,
+            "heapUsedBefore": 145678360,
+            "heapUsedAfter": 90654616,
+            "heapUsedDelta": -55023744,
+            "guard": "pass"
+          },
+          {
+            "sequence": 198,
+            "phase": "measurement",
+            "round": 4,
+            "workload": "warmMetadataSummary",
+            "variant": "candidate",
+            "startedAtMilliseconds": 1791127875300.544,
+            "completedCalls": 500,
+            "elapsedMs": 3.748751999999513,
+            "nanosecondsPerCall": 7497.503999999026,
+            "heapUsedBefore": 130910712,
+            "heapUsedAfter": 73900640,
+            "heapUsedDelta": -57010072,
+            "guard": "pass"
+          },
+          {
+            "sequence": 684,
+            "phase": "measurement",
+            "round": 65,
+            "workload": "warmMetadataSummary",
+            "variant": "candidate",
+            "startedAtMilliseconds": 1791127882612.1057,
+            "completedCalls": 500,
+            "elapsedMs": 3.6432960000001913,
+            "nanosecondsPerCall": 7286.5920000003825,
+            "heapUsedBefore": 254729664,
+            "heapUsedAfter": 199744072,
+            "heapUsedDelta": -54985592,
+            "guard": "pass"
+          }
+        ]
+      }
+    },
+    {
+      "workload": "inspectPE-r2r",
+      "iterationsPerBatch": 25,
+      "statisticsNanosecondsPerCall": {
+        "candidate": {
+          "count": 100,
+          "median": 177173.17999999068,
+          "p95": 373683.75999998534,
+          "p99": 446262.04000000143,
+          "min": 139271.11999997578,
+          "max": 509610.7599999959
+        }
+      },
+      "resultHashesEqualFirstCohort": true
+    },
+    {
+      "workload": "inspectPE-mixed",
+      "iterationsPerBatch": 25,
+      "statisticsNanosecondsPerCall": {
+        "candidate": {
+          "count": 100,
+          "median": 116879.47999998869,
+          "p95": 244347.60000000097,
+          "p99": 298445.52000002295,
+          "min": 93442.55999996678,
+          "max": 300626.7200000002
+        }
+      },
+      "resultHashesEqualFirstCohort": true
+    }
+  ],
+  "interpretation": [
+    "The second cohort has coldSummary median +18.237027948126936%; all three ordinary p95 values exceed baseline by more than 5%.",
+    "The warmMetadataSummary p95 increase is +130.99413672055684%, an absolute +2499.1140000020105 nanoseconds per batch-normalized call.",
+    "Both baseline and candidate timings vary between the two cohorts; this does not isolate the causal performance contribution of the three source changes.",
+    "Shared-host/JIT/GC possibilities are limitations, not an established explanation or grounds to discard unfavorable rows.",
+    "Passing output guards and sample counts does not waive the repository performance budget. Explicit quantified PR disposition is still required.",
+    "No further cohort, product redesign, or broader qualification was run or recommended automatically."
+  ],
+  "firstCohort": "../performance-first/benchmark.json",
+  "originalNativeCapture": "../performance-first/original-native.json",
+  "freshNativeCapture": "../../native.json",
+  "cohortComparisons": [
+    {
+      "cohort": "first",
+      "report": "../performance-first/benchmark.json",
+      "workload": "readPE",
+      "metric": "median",
+      "baselineNanosecondsPerCall": 17625.7875000033,
+      "candidateNanosecondsPerCall": 20027.74000000045,
+      "absoluteChangeNanosecondsPerCall": 2401.952499997151,
+      "changePercent": 13.62749040289235
+    },
+    {
+      "cohort": "first",
+      "report": "../performance-first/benchmark.json",
+      "workload": "readPE",
+      "metric": "p95",
+      "baselineNanosecondsPerCall": 36880.010000004404,
+      "candidateNanosecondsPerCall": 46639.610000001994,
+      "absoluteChangeNanosecondsPerCall": 9759.59999999759,
+      "changePercent": 26.463116468776505
+    },
+    {
+      "cohort": "first",
+      "report": "../performance-first/benchmark.json",
+      "workload": "readPE",
+      "metric": "p99",
+      "baselineNanosecondsPerCall": 52899.40999999999,
+      "candidateNanosecondsPerCall": 50757.86000000334,
+      "absoluteChangeNanosecondsPerCall": -2141.5499999966487,
+      "changePercent": -4.048343828403089
+    },
+    {
+      "cohort": "first",
+      "report": "../performance-first/benchmark.json",
+      "workload": "coldSummary",
+      "metric": "median",
+      "baselineNanosecondsPerCall": 42150.06500000072,
+      "candidateNanosecondsPerCall": 51392.900000000736,
+      "absoluteChangeNanosecondsPerCall": 9242.835000000014,
+      "changePercent": 21.928400347662237
+    },
+    {
+      "cohort": "first",
+      "report": "../performance-first/benchmark.json",
+      "workload": "coldSummary",
+      "metric": "p95",
+      "baselineNanosecondsPerCall": 100121.07000000469,
+      "candidateNanosecondsPerCall": 121540.65999999148,
+      "absoluteChangeNanosecondsPerCall": 21419.589999986783,
+      "changePercent": 21.393688661123768
+    },
+    {
+      "cohort": "first",
+      "report": "../performance-first/benchmark.json",
+      "workload": "coldSummary",
+      "metric": "p99",
+      "baselineNanosecondsPerCall": 192653.8900000014,
+      "candidateNanosecondsPerCall": 180414.39999999967,
+      "absoluteChangeNanosecondsPerCall": -12239.490000001737,
+      "changePercent": -6.353097775498662
+    },
+    {
+      "cohort": "first",
+      "report": "../performance-first/benchmark.json",
+      "workload": "warmMetadataSummary",
+      "metric": "median",
+      "baselineNanosecondsPerCall": 1019.5679999997083,
+      "candidateNanosecondsPerCall": 1296.0650000004534,
+      "absoluteChangeNanosecondsPerCall": 276.4970000007452,
+      "changePercent": 27.119034728514848
+    },
+    {
+      "cohort": "first",
+      "report": "../performance-first/benchmark.json",
+      "workload": "warmMetadataSummary",
+      "metric": "p95",
+      "baselineNanosecondsPerCall": 1754.639999999199,
+      "candidateNanosecondsPerCall": 2096.3019999999233,
+      "absoluteChangeNanosecondsPerCall": 341.6620000007242,
+      "changePercent": 19.471914466835383
+    },
+    {
+      "cohort": "first",
+      "report": "../performance-first/benchmark.json",
+      "workload": "warmMetadataSummary",
+      "metric": "p99",
+      "baselineNanosecondsPerCall": 1941.214000002219,
+      "candidateNanosecondsPerCall": 2656.705999999758,
+      "absoluteChangeNanosecondsPerCall": 715.4919999975391,
+      "changePercent": 36.85796620036334
+    },
+    {
+      "cohort": "optimized",
+      "report": "benchmark.json",
+      "workload": "readPE",
+      "metric": "median",
+      "baselineNanosecondsPerCall": 19654.120000000148,
+      "candidateNanosecondsPerCall": 18917.459999997845,
+      "absoluteChangeNanosecondsPerCall": -736.6600000023027,
+      "changePercent": -3.748119987067833
+    },
+    {
+      "cohort": "optimized",
+      "report": "benchmark.json",
+      "workload": "readPE",
+      "metric": "p95",
+      "baselineNanosecondsPerCall": 35137.65499999863,
+      "candidateNanosecondsPerCall": 38420.68000000381,
+      "absoluteChangeNanosecondsPerCall": 3283.025000005182,
+      "changePercent": 9.343324134764575
+    },
+    {
+      "cohort": "optimized",
+      "report": "benchmark.json",
+      "workload": "readPE",
+      "metric": "p99",
+      "baselineNanosecondsPerCall": 44991.23999999938,
+      "candidateNanosecondsPerCall": 44457.50500000031,
+      "absoluteChangeNanosecondsPerCall": -533.7349999990693,
+      "changePercent": -1.1863087125384308
+    },
+    {
+      "cohort": "optimized",
+      "report": "benchmark.json",
+      "workload": "coldSummary",
+      "metric": "median",
+      "baselineNanosecondsPerCall": 40831.049999987954,
+      "candidateNanosecondsPerCall": 48277.419999999445,
+      "absoluteChangeNanosecondsPerCall": 7446.370000011491,
+      "changePercent": 18.237027948126936
+    },
+    {
+      "cohort": "optimized",
+      "report": "benchmark.json",
+      "workload": "coldSummary",
+      "metric": "p95",
+      "baselineNanosecondsPerCall": 93545.51999998876,
+      "candidateNanosecondsPerCall": 106229.27999998866,
+      "absoluteChangeNanosecondsPerCall": 12683.759999999907,
+      "changePercent": 13.558917626414857
+    },
+    {
+      "cohort": "optimized",
+      "report": "benchmark.json",
+      "workload": "coldSummary",
+      "metric": "p99",
+      "baselineNanosecondsPerCall": 114155.1199999958,
+      "candidateNanosecondsPerCall": 125394.35000000594,
+      "absoluteChangeNanosecondsPerCall": 11239.230000010139,
+      "changePercent": 9.845576790607868
+    },
+    {
+      "cohort": "optimized",
+      "report": "benchmark.json",
+      "workload": "warmMetadataSummary",
+      "metric": "median",
+      "baselineNanosecondsPerCall": 1043.5939999997572,
+      "candidateNanosecondsPerCall": 1075.2730000003794,
+      "absoluteChangeNanosecondsPerCall": 31.67900000062218,
+      "changePercent": 3.0355674717015946
+    },
+    {
+      "cohort": "optimized",
+      "report": "benchmark.json",
+      "workload": "warmMetadataSummary",
+      "metric": "p95",
+      "baselineNanosecondsPerCall": 1907.8059999992547,
+      "candidateNanosecondsPerCall": 4406.920000001265,
+      "absoluteChangeNanosecondsPerCall": 2499.1140000020105,
+      "changePercent": 130.99413672055684
+    },
+    {
+      "cohort": "optimized",
+      "report": "benchmark.json",
+      "workload": "warmMetadataSummary",
+      "metric": "p99",
+      "baselineNanosecondsPerCall": 7425.296000001254,
+      "candidateNanosecondsPerCall": 9344.50999999899,
+      "absoluteChangeNanosecondsPerCall": 1919.2139999977371,
+      "changePercent": 25.84696960225441
+    }
+  ],
+  "artifacts": [
+    {
+      "path": "benchmark.json",
+      "originalPath": "/workspace/scratch/7e3d2a445c44/project6-pe-performance-optimized.json",
+      "bytes": 453362,
+      "sha256": "d171288f90b9918d62fdfab8b005df86a8b6c3d355bcff55d203c870c4763ee4"
+    },
+    {
+      "path": "benchmark.log",
+      "originalPath": "/workspace/scratch/7e3d2a445c44/project6-pe-performance-optimized.log",
+      "bytes": 6078,
+      "sha256": "e76faffaa8dffe32d22fa9ccd2d0b16c227c61fd73d5cf933b2aa9e6d718afa6"
+    },
+    {
+      "path": "benchmark-execution.json",
+      "originalPath": "/workspace/scratch/7e3d2a445c44/project6-pe-performance-optimized-execution.json",
+      "bytes": 1529,
+      "sha256": "e6dd8a54e9f9fe5fb5f13c9e2100015a3f7d90e23b65c70712bf07d3a3502c43"
+    },
+    {
+      "path": "native-command.json",
+      "bytes": 3284,
+      "sha256": "640f563d644c6ac8f43855f081972f986587a0515aa84bd0d21f9943dad2897a"
+    },
+    {
+      "path": "native-capture.log",
+      "bytes": 359,
+      "sha256": "7d35e2de69be3e1be90615f5effeae7688cd0bef9423094ed6a28b9dafdfaee8"
+    },
+    {
+      "path": "native-comparison.json",
+      "bytes": 4353,
+      "sha256": "5f8c6aac7d848948ce8d188898aa38a13c8435215f1a0dd6cec779038deff456"
+    },
+    {
+      "path": "focused-command.json",
+      "bytes": 4648,
+      "sha256": "4fa2f7507cfc21252a8342a8e8325a1f51255a3a7411b21a7cb6426c5c685820"
+    },
+    {
+      "path": "focused-node.tap",
+      "bytes": 11015,
+      "sha256": "8b81f7b690389be7661beedf84391ce043a1bc63a8be492ab88584f55ec1acd0"
+    },
+    {
+      "path": "focused-review.json",
+      "bytes": 1234,
+      "sha256": "8a96c609adeb41c27444171f7ca56d97b4423e03eb91a30c7151bc055c32104a"
+    }
+  ]
+}

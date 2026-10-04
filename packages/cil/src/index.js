@@ -6,6 +6,7 @@ export * from './emitter.js';
 export * from './loader.js';
 export * from './disassembler.js';
 export * from './inspector.js';
+export { inspectPE } from './inspector-pe.js';
 export * from './execution-profile.js';
 export {intrinsicKey,intrinsicDefinitions,intrinsicDefinition} from './intrinsic-profile.js';
 export * from './il-document.js';
@@ -19,6 +20,7 @@ export {normalizeCallType, substituteCallType, instantiateSignature, callSignatu
   resolveExecutionMethod, methodGenericParameters} from './call-profile.js';
 export { sha256 } from './binary/hash.js';
 export { sha1 } from './binary/sha1.js';
+export { assemblyReferenceIdentity } from './metadata/assembly-references.js';
 export { win32VersionFromAssembly } from './pe/version-attributes.js';
 export { decodeMarshalDescriptor, marshalDiagnosticCatalog } from './metadata/marshal-descriptors.js';
 export { linkAssemblyModules } from './pe/module-linker.js';
@@ -50,7 +52,7 @@ export { createMetadataVerificationContext, verificationMemberDiagnosticCatalog 
 
 export { AssemblySymbolIndex } from './browser/index.js';
 export { AssemblyTypeHierarchy } from './browser/hierarchy.js';
-
+export { referenceAssemblyMemberIncluded, addReferenceAssemblyAttribute } from './emit/ref-assembly.js';
 export { AssemblyUsageAnalysis } from './browser/analyzers.js';
 export { MetadataTableInspector } from './inspector-tables.js';
 export { MetadataGenerations, metadataGenerationDiagnosticCatalog } from './metadata/delta-reader.js';

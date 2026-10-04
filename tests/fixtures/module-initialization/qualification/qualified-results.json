@@ -1,0 +1,40 @@
+{
+  "testedCommit": "e689e7f1e99e3da593db2021191d0e2d0d91589b",
+  "testedTree": "33c2bfbf1b77d35af479b32e2e439807f373095e",
+  "tests": 114,
+  "passed": 114,
+  "failed": 0,
+  "skipped": 0,
+  "durationMs": 14494.075732,
+  "cleanBeforeAndAfter": true,
+  "sdk": "10.0.201",
+  "referencePack": "10.0.5",
+  "roslyn": "5.3.0.0",
+  "platform": "Linux x64",
+  "logSha256": "b71165916e969681f47e862eed501325642538391914ebf59c64d5017f0ddb7a",
+  "command": [
+    "node",
+    "scripts/limited.js",
+    "node",
+    "--test",
+    "--test-concurrency=1",
+    "tests/compiler-module-initialization.test.js",
+    "tests/compiler-module-initialization-native.test.js",
+    "tests/a05-21-static-init.test.js",
+    "tests/managed-il.test.js",
+    "tests/compiler-cil-emission-delegates-refs.test.js",
+    "tests/compiler-pin-selection.test.js"
+  ],
+  "nativeScope": [
+    "Seven direct-CIL executables agree with independent genuine Roslyn pins, including pre-entry failure.",
+    "One genuine Roslyn consumer loads each of genuine Roslyn, registry SharpForge and PE-reference SharpForge libraries in separate directories and observes once-only startup.",
+    "Top-level entry executes with equal native CLR and CIL VM output.",
+    "Async Main executes with expected native CLR output; the CIL VM retains an explicit negative IL_REFERENCE assertion for five unsupported task/awaiter/builder members. No async VM execution pass is claimed."
+  ],
+  "vmScope": [
+    "Independent raw-CIL module constructor is a mandatory verification root, before entry and selected library method.",
+    "Module constructor executes once before selected entry type initialization; ordering, reentrancy, cached failure, GC roots and snapshots are covered.",
+    "Invalid module IL is rejected; unrelated unreachable method body is not admitted as a startup root."
+  ],
+  "initialFailures": "initial-replay-results.json records111/114 with one async VM boundary and two missing sparse-checkout CLI files; apps/cli tracked files were restored before this replay."
+}

@@ -1,0 +1,1851 @@
+{
+  "sdk": "10.0.201",
+  "sources": [
+    {
+      "path": "tests/fixtures/clr-manifest-resources/Images.cs",
+      "sha256": "b968e4a1de9fa82a378d573fb051eabd55a88e34bef356152205fbc99741bc84"
+    },
+    {
+      "path": "tests/fixtures/clr-manifest-resources/Program.cs",
+      "sha256": "df1b6e482428091b1eafa8d4f190f6de13810f1666ec968890c7915afabc7195"
+    },
+    {
+      "path": "packages/clr/tools/capture-manifest-resources.mjs",
+      "sha256": "e6856124a0c720e9e3a01c8ec0529994647b7ad813f36338b4ec985562bda31a"
+    }
+  ],
+  "referenceReader": {
+    "name": "System.Reflection.MetadataLoadContext.dll",
+    "sha256": "42fb03583ec0a097307dd94a0bb76f00cf18dd3241a8c8c93b9f28114dc06dfb"
+  },
+  "toolchain": {
+    "sdk": "10.0.201",
+    "dotnet": {
+      "path": "/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/dotnet",
+      "bytes": 71808,
+      "sha256": "54e50ea9704dfe67c11176d2ed0665f4477843e626c314ada55e40b0a25e48f3"
+    },
+    "compiler": [
+      {
+        "path": "/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/sdk/10.0.201/Roslyn/bincore/csc.dll",
+        "bytes": 138000,
+        "sha256": "4913fa70d10c99901edbb825fdedcc92465be08665016a5d258ea45f953624f0"
+      },
+      {
+        "path": "/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/sdk/10.0.201/Roslyn/bincore/Microsoft.CodeAnalysis.dll",
+        "bytes": 8312592,
+        "sha256": "310ef24474303b166d6f237a407a0b1a47db17f3dd5c60a6824b345998b5806b"
+      },
+      {
+        "path": "/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/sdk/10.0.201/Roslyn/bincore/Microsoft.CodeAnalysis.CSharp.dll",
+        "bytes": 19225872,
+        "sha256": "2e29a995bcee2351d2cc1bb1d3187b1a5d9170e300ef1c15a47a5e4d64c1bb1d"
+      }
+    ],
+    "runtime": {
+      "version": "10.0.5",
+      "files": [
+        {
+          "path": "/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/shared/Microsoft.NETCore.App/10.0.5/System.Private.CoreLib.dll",
+          "bytes": 15573256,
+          "sha256": "a4d8ec9be165f75323c3aad803809170a25421a4ee91b866f2850234b6d3a0fe"
+        },
+        {
+          "path": "/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/shared/Microsoft.NETCore.App/10.0.5/System.Runtime.dll",
+          "bytes": 45320,
+          "sha256": "f9b56087c4266a2be90b1e8708a496efc3b661b98a160c6c2f7f55950500823a"
+        },
+        {
+          "path": "/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/shared/Microsoft.NETCore.App/10.0.5/Microsoft.NETCore.App.runtimeconfig.json",
+          "bytes": 50,
+          "sha256": "b0389faed3531f74a620de69039790f308c6e08affe1ebd21bc51c3b80cde8b5"
+        },
+        {
+          "path": "/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/shared/Microsoft.NETCore.App/10.0.5/libcoreclr.so",
+          "bytes": 7104072,
+          "sha256": "8717d99e8044c8c29eeada9f0710940872ce16683c8999adae7756a94f5eba3c"
+        }
+      ]
+    },
+    "referencePack": {
+      "version": "10.0.5",
+      "files": [
+        {
+          "path": "/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/Microsoft.CSharp.dll",
+          "bytes": 18704,
+          "sha256": "0736f6a10cb233116d9ea389792e4e7bef5fc8cb55c2f583928fecc0ae5ac961"
+        },
+        {
+          "path": "/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/Microsoft.VisualBasic.Core.dll",
+          "bytes": 59664,
+          "sha256": "2d6ab43538cb33e85cce404c8bc4edf56d5dc8f9eb23b567fdc383c4f04e3622"
+        },
+        {
+          "path": "/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/Microsoft.VisualBasic.dll",
+          "bytes": 17712,
+          "sha256": "ee87b36e158bce45e4a892fbd13051daa7e997e4548d25b3dbc795aff3fb0477"
+        },
+        {
+          "path": "/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/Microsoft.Win32.Primitives.dll",
+          "bytes": 16648,
+          "sha256": "2c20b49a2d0c5f6c1525c80d24894b21ec598ab74cb87716eebcc321e1273a05"
+        },
+        {
+          "path": "/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/Microsoft.Win32.Registry.dll",
+          "bytes": 21808,
+          "sha256": "c81a6b0be15d08878ec5404b4c7b18d7464d0319a16d1c42f7bd93aa36e61c10"
+        },
+        {
+          "path": "/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.AppContext.dll",
+          "bytes": 15632,
+          "sha256": "d8db7420d1a97048efb5c69cb43b356da314b8356038c3b3e202534f7344a592"
+        },
+        {
+          "path": "/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Buffers.dll",
+          "bytes": 15632,
+          "sha256": "2d4626e7d4fb26712752c0b8b6fc2a39ef299920d71fc3289c5fc61ea5caf985"
+        },
+        {
+          "path": "/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Collections.Concurrent.dll",
+          "bytes": 27912,
+          "sha256": "e92319c43b00c57be8b3846ded3fd21b76b278aa9f06339ecdcd28c1e5760a44"
+        },
+        {
+          "path": "/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Collections.Immutable.dll",
+          "bytes": 75568,
+          "sha256": "51ef2640b5a8cb1dc74889e4e1115ffef2024884b9f597cab4ba464337ccbe0f"
+        },
+        {
+          "path": "/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Collections.NonGeneric.dll",
+          "bytes": 23352,
+          "sha256": "9ae27e7507123f625b33ae480a1a07788073186ac1afdce5b443b75fef090ce4"
+        },
+        {
+          "path": "/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Collections.Specialized.dll",
+          "bytes": 26376,
+          "sha256": "d21fee4e206095c9b6731e26286efe1a157be03135a3476532a662caac9d3e36"
+        },
+        {
+          "path": "/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Collections.dll",
+          "bytes": 55560,
+          "sha256": "ca113cefbfd9a1b8d248e46cbb056173e9d48a6bd4d1fcebb4849b2b7fbba6e1"
+        },
+        {
+          "path": "/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.ComponentModel.Annotations.dll",
+          "bytes": 32008,
+          "sha256": "52a4f51533cc2b346c4e5ec878ba8999a81fabe743dfb6ca187968641b92315c"
+        },
+        {
+          "path": "/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.ComponentModel.DataAnnotations.dll",
+          "bytes": 17168,
+          "sha256": "ff6e1f5775d7c01210adcb6e3aa774a9cdf0082f2c05a350a5af29dfc1b5a5d7"
+        },
+        {
+          "path": "/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.ComponentModel.EventBasedAsync.dll",
+          "bytes": 19760,
+          "sha256": "b07f9025fa6f7a65900cfba8d703af5ca4478c5c4f0c6562e4c1e53ec8bd0a86"
+        },
+        {
+          "path": "/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.ComponentModel.Primitives.dll",
+          "bytes": 26424,
+          "sha256": "b55b210d7afa3f0ff2ea1f2a818b7586a39e15d6156fdc85b13b7f4a5082f1f3"
+        },
+        {
+          "path": "/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.ComponentModel.TypeConverter.dll",
+          "bytes": 105232,
+          "sha256": "d7893636a2ba4215ca5399c7c6f93913c31779fdab90752c9cbe9d43ca5a2b5c"
+        },
+        {
+          "path": "/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.ComponentModel.dll",
+          "bytes": 16176,
+          "sha256": "17ffb06cd5f618fdb8826e5308a0a8494815cf8b4ad2f69a4c59bcc1cfbdb1fa"
+        },
+        {
+          "path": "/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Configuration.dll",
+          "bytes": 19760,
+          "sha256": "8c528dbc9205284edfd2c74a0ed38b9b2d91590f251483b75fa6306d98cb43ef"
+        },
+        {
+          "path": "/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Console.dll",
+          "bytes": 26888,
+          "sha256": "99a571fe3d67a4f196887dc369d17231850d486b93262255b0622f20883c1141"
+        },
+        {
+          "path": "/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Core.dll",
+          "bytes": 23824,
+          "sha256": "761a1b74fb66052b37b2bdc042a780a4635bd1c2bfe05b22138c85841fddac48"
+        },
+        {
+          "path": "/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Data.Common.dll",
+          "bytes": 154936,
+          "sha256": "9481c8bdf3663499988781776ef6e1e5fef68d5f762be062a17a41c0b0dbebc7"
+        },
+        {
+          "path": "/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Data.DataSetExtensions.dll",
+          "bytes": 16136,
+          "sha256": "1e1f9dfd45ff8e76980cd16e206e6d5427b8346a3033946398f4ae719589f689"
+        },
+        {
+          "path": "/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Data.dll",
+          "bytes": 24368,
+          "sha256": "226479d6fa52b5c4f3c68b1f2690e3dee6f3d7cb729cf0d4671ea7a96f26c2cc"
+        },
+        {
+          "path": "/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Diagnostics.Contracts.dll",
+          "bytes": 20232,
+          "sha256": "cbf3de54286a99624374832a3b19fa1f344ed9bfe3c9c1a92353fc5043aa247c"
+        },
+        {
+          "path": "/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Diagnostics.Debug.dll",
+          "bytes": 16136,
+          "sha256": "cddcfd9d0d18f5ec9a5359eee558b96ca7e559509ec7f5e361198b2f076e68bf"
+        },
+        {
+          "path": "/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Diagnostics.DiagnosticSource.dll",
+          "bytes": 43784,
+          "sha256": "517d0ac654a868d34eca325e46ff4998203851869f111f1f2e62eac9b400962f"
+        },
+        {
+          "path": "/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Diagnostics.FileVersionInfo.dll",
+          "bytes": 17200,
+          "sha256": "298d4c194739301e1e4c45ad3f904d52e7683d92989cf8386d53ef828e805460"
+        },
+        {
+          "path": "/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Diagnostics.Process.dll",
+          "bytes": 32008,
+          "sha256": "ecbbd846aa19c0982506b51d1e5c52853bad946a505d5df4e01308e3c844261c"
+        },
+        {
+          "path": "/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Diagnostics.StackTrace.dll",
+          "bytes": 23312,
+          "sha256": "6640cb8cafc12e4b681a4a619ced883fa7590cfba826037fad8929fd0189fa2e"
+        },
+        {
+          "path": "/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Diagnostics.TextWriterTraceListener.dll",
+          "bytes": 18184,
+          "sha256": "ce49b1cde34fd25621ae28667271daed6320e633c6aedc1b8625fe5fd5a3a44a"
+        },
+        {
+          "path": "/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Diagnostics.Tools.dll",
+          "bytes": 15624,
+          "sha256": "c47bb12969bc5692b2d5afc53e3952ef4d73a40afa04e6c0fcb95f73ef55795f"
+        },
+        {
+          "path": "/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Diagnostics.TraceSource.dll",
+          "bytes": 28432,
+          "sha256": "86585f18c3a0964f0e3a46531e57522964c5c551c0cb5a16e1a60ae2d832bb84"
+        },
+        {
+          "path": "/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Diagnostics.Tracing.dll",
+          "bytes": 29448,
+          "sha256": "895f0bf5c6f9ecb21ad6f45f9052e1d3e1eef0bfa9e3cf810733f894123a288f"
+        },
+        {
+          "path": "/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Drawing.Primitives.dll",
+          "bytes": 36112,
+          "sha256": "8525a947172d23bcdd318b28e2c8eb029c93dede77cd0a4e60dd885d5266a28b"
+        },
+        {
+          "path": "/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Drawing.dll",
+          "bytes": 20752,
+          "sha256": "f3302bb07aadea9e82bbdd2e209d84aba1063225b5bbcc56ec1a57697ec90698"
+        },
+        {
+          "path": "/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Dynamic.Runtime.dll",
+          "bytes": 16656,
+          "sha256": "2738af950efe39d119691538426c151dd9a025ec6695cb2c9f83dbefaebc60ec"
+        },
+        {
+          "path": "/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Formats.Asn1.dll",
+          "bytes": 26888,
+          "sha256": "5ef04baaae48a450500d15fd033ed52acbf9c9e5c8b3ef25e2877c9ad7a43d33"
+        },
+        {
+          "path": "/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Formats.Tar.dll",
+          "bytes": 20752,
+          "sha256": "cf955232bd01075191719e12edb7bd9bdb1f80b7132ee8dd34dfcc5f714841be"
+        },
+        {
+          "path": "/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Globalization.Calendars.dll",
+          "bytes": 16136,
+          "sha256": "3660613d63f55c5261ec9042f25d2fb12d33b646bbf2ddc318f97cc2959edf68"
+        },
+        {
+          "path": "/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Globalization.Extensions.dll",
+          "bytes": 15624,
+          "sha256": "936975655db04c9de42d84f79151e0dfbb9b843c6da478b2206061211c5b1805"
+        },
+        {
+          "path": "/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Globalization.dll",
+          "bytes": 16136,
+          "sha256": "39b48787ca4a2a7f871d9cefcc8bf8de2d805b64c2ed1f7779859d1593fa8b89"
+        },
+        {
+          "path": "/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.IO.Compression.Brotli.dll",
+          "bytes": 18736,
+          "sha256": "594bf2dbd3633f67718faf43e0043a2df5bf838e9d6c1ae8a190d368863e7263"
+        },
+        {
+          "path": "/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.IO.Compression.FileSystem.dll",
+          "bytes": 15624,
+          "sha256": "2143a57f05a7276ba1e5bfb6d7d0b2566c8d956c68a39047d24b0d28104d68b4"
+        },
+        {
+          "path": "/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.IO.Compression.ZipFile.dll",
+          "bytes": 19208,
+          "sha256": "35b8434b5c7caefcaf76760dcebfeaffd6807abe76d8f12b7965b0e000bfacfc"
+        },
+        {
+          "path": "/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.IO.Compression.dll",
+          "bytes": 22288,
+          "sha256": "731b7f0ba66aa39269a83aac0cb46cedf0032ae8af5dbad8ce9f6d405f5e2e09"
+        },
+        {
+          "path": "/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.IO.FileSystem.AccessControl.dll",
+          "bytes": 20792,
+          "sha256": "c4e0b9b54122bb76d6fa9ded051da88cda02af8c992ed7f46e4c7243490c1362"
+        },
+        {
+          "path": "/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.IO.FileSystem.DriveInfo.dll",
+          "bytes": 17712,
+          "sha256": "b53526b9c09b569808302876d249a83a333616b37d3820876ce40c1821f59ea0"
+        },
+        {
+          "path": "/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.IO.FileSystem.Primitives.dll",
+          "bytes": 15672,
+          "sha256": "991b9b87f4c8b01a93d2085e9a7ccbee09ac2c130b46a0fcf985c5d51b2e1ace"
+        },
+        {
+          "path": "/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.IO.FileSystem.Watcher.dll",
+          "bytes": 21304,
+          "sha256": "5ea742a14d3f3ec8e05765fe2a77b980dfd4ff12ef1806f6d7737d4c7c4b057b"
+        },
+        {
+          "path": "/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.IO.FileSystem.dll",
+          "bytes": 16136,
+          "sha256": "4911951d970fb2ea19b4e134cd50aa5310064a65ad09a279e2e1fb7c39e8dcdf"
+        },
+        {
+          "path": "/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.IO.IsolatedStorage.dll",
+          "bytes": 22800,
+          "sha256": "039df639a91d2cc100c0a33d3b315ba5755f374e56b4e7b80caeb8cf9723a55b"
+        },
+        {
+          "path": "/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.IO.MemoryMappedFiles.dll",
+          "bytes": 18696,
+          "sha256": "311e81271e69e5ace792fe5e367109f34d4137354a10c20904ac8b15f3b7d606"
+        },
+        {
+          "path": "/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.IO.Pipelines.dll",
+          "bytes": 20744,
+          "sha256": "272ff0f43ba6823a942d3e75d9f9bf334e75cd550f0e83bc35d924b5d57b2b16"
+        },
+        {
+          "path": "/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.IO.Pipes.AccessControl.dll",
+          "bytes": 18744,
+          "sha256": "a391e9affb9c2d113009bef081a464d1bd606225dd69771c5941899011186458"
+        },
+        {
+          "path": "/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.IO.Pipes.dll",
+          "bytes": 22800,
+          "sha256": "800161fb601e0f01ba9efb210af43105fbee3475b4831ea913638a5a6afe5cb2"
+        },
+        {
+          "path": "/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.IO.UnmanagedMemoryStream.dll",
+          "bytes": 16136,
+          "sha256": "59526a954c7513b78f5829c86e86354074400c3d40153039005350867f77b5eb"
+        },
+        {
+          "path": "/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.IO.dll",
+          "bytes": 16144,
+          "sha256": "b06c097284b7028d8009bf0f0f02edb7bd2ffc691e9a855bd6556653de959eca"
+        },
+        {
+          "path": "/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Linq.AsyncEnumerable.dll",
+          "bytes": 36624,
+          "sha256": "1e1046b7657b897ed3c2cb4b9be8549b71bc90d3961e102f7e2abc260fcff707"
+        },
+        {
+          "path": "/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Linq.Expressions.dll",
+          "bytes": 63792,
+          "sha256": "51d276cd7bb12f36482790387de05b14b9f2987c90b8561472474ed88e8cb800"
+        },
+        {
+          "path": "/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Linq.Parallel.dll",
+          "bytes": 31496,
+          "sha256": "026b95c03e7315f40afa9666f4c423e4b4ec61ed86c538294696dea0c463432b"
+        },
+        {
+          "path": "/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Linq.Queryable.dll",
+          "bytes": 32568,
+          "sha256": "39718fcd6a0037e01a6c85408cfce789155e94257bd05b43d3774ff7e5d0fdba"
+        },
+        {
+          "path": "/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Linq.dll",
+          "bytes": 34064,
+          "sha256": "52b78457fa9cd44d2b837dc374ddf2c18b4117f1cf9f99c0478529d0a62d1f45"
+        },
+        {
+          "path": "/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Memory.dll",
+          "bytes": 57648,
+          "sha256": "ae9bc5d38b5eca7fd1d1c2e662fc7b2c32729ba54f9a1c520e605452e566baaa"
+        },
+        {
+          "path": "/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Net.Http.Json.dll",
+          "bytes": 23824,
+          "sha256": "1180110c6137f73dc2d76f98c1769e2ffb0ff8f91762ac64a350945baa2ee652"
+        },
+        {
+          "path": "/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Net.Http.dll",
+          "bytes": 60688,
+          "sha256": "a9e9573da44c0f8ee11f44932d6aa31f88ab25641b3058ddd9c59cf538cdbf60"
+        },
+        {
+          "path": "/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Net.HttpListener.dll",
+          "bytes": 25872,
+          "sha256": "4b92e19298100d17c62c53d76fda9102fe084457f94147edd506de0eb71c3e00"
+        },
+        {
+          "path": "/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Net.Mail.dll",
+          "bytes": 32520,
+          "sha256": "ce775a21deac060de3c66dd840e8a93a05b83cc567aa58d0011231a9e2fd8b24"
+        },
+        {
+          "path": "/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Net.NameResolution.dll",
+          "bytes": 18184,
+          "sha256": "7f306155076279805091bb109dd9513748365c424cb76a21f7814ff4e04a7be5"
+        },
+        {
+          "path": "/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Net.NetworkInformation.dll",
+          "bytes": 34056,
+          "sha256": "12d7652c3c056f068852fc0d147b7d65b77fbac066420abc753253a6380de7f5"
+        },
+        {
+          "path": "/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Net.Ping.dll",
+          "bytes": 20752,
+          "sha256": "8458ee46c7ab79f898df96a55b4e965cd7aa909138d298a3b30837ba4b27aadb"
+        },
+        {
+          "path": "/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Net.Primitives.dll",
+          "bytes": 37648,
+          "sha256": "84b7490104bc09ddbb0d8601cfe041e0745cc3e0e8c5790935ada1ee2e289cf3"
+        },
+        {
+          "path": "/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Net.Quic.dll",
+          "bytes": 24376,
+          "sha256": "7dedea7ddee0dd691ef73e266c3c42142658aba08695455b8a4ddea29af9599e"
+        },
+        {
+          "path": "/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Net.Requests.dll",
+          "bytes": 41784,
+          "sha256": "fd4867ebd47d8dff2e78f608658f2567c5a1aef78ebc77bce4c5021cf9473fa1"
+        },
+        {
+          "path": "/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Net.Security.dll",
+          "bytes": 54024,
+          "sha256": "0991f0d708425d0a80dc334688ce15f8f7057ef7bf4abaa7e00202112944c508"
+        },
+        {
+          "path": "/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Net.ServerSentEvents.dll",
+          "bytes": 17712,
+          "sha256": "824e1e6094791139fe384591a253dbb6ff1577f248aaa4bd9a6f58b3df73f7fa"
+        },
+        {
+          "path": "/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Net.ServicePoint.dll",
+          "bytes": 15664,
+          "sha256": "47590bb9add21f32ad34d85e46cfd4df238d8f8e5de3fd52597449ced37c4b1c"
+        },
+        {
+          "path": "/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Net.Sockets.dll",
+          "bytes": 47880,
+          "sha256": "614f30239a499bf697a87945d73fee16f7bbd63511d689bc46804c3cc1d394f6"
+        },
+        {
+          "path": "/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Net.WebClient.dll",
+          "bytes": 28424,
+          "sha256": "958b7b5d14887b7d3b4bdd26cf28e74be30b0256ec4e3108f8658fca4586bca4"
+        },
+        {
+          "path": "/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Net.WebHeaderCollection.dll",
+          "bytes": 19720,
+          "sha256": "1e6bb699a9f29557f85f1fbce1abe90b95d5e33309e7d785648c2cf951f349e1"
+        },
+        {
+          "path": "/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Net.WebProxy.dll",
+          "bytes": 18704,
+          "sha256": "d4dd31296367c367512d609caeeff29d5d7b817ce2bd262b9f34532e3f0f9ff6"
+        },
+        {
+          "path": "/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Net.WebSockets.Client.dll",
+          "bytes": 19720,
+          "sha256": "4d1e6e7cfcf5bb5a1a3fa78933fd8530cb0109df876e719a2ae5aeb66f268ff3"
+        },
+        {
+          "path": "/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Net.WebSockets.dll",
+          "bytes": 24328,
+          "sha256": "7499df2224d2530595246155214601bdc545b6a91d9693896664bb66816efbfc"
+        },
+        {
+          "path": "/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Net.dll",
+          "bytes": 17672,
+          "sha256": "40d8fcb64d8ed65b2c07b1d498cf4358019a6bc6e6dd6298cf796dfa24a507d9"
+        },
+        {
+          "path": "/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Numerics.Vectors.dll",
+          "bytes": 58640,
+          "sha256": "3a35701723aa6d5e7ab3afd6c851bfd3317c591f9511e2c48445e83f6ae33e93"
+        },
+        {
+          "path": "/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Numerics.dll",
+          "bytes": 15672,
+          "sha256": "630cec20ba33496df14e4a97ac5a63f9b7bbf8f8b1479c5fdcaa112d2a519cb1"
+        },
+        {
+          "path": "/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.ObjectModel.dll",
+          "bytes": 23816,
+          "sha256": "e3d58dae7286d4cb7744af0add64144c94b72c875ef8b5f6d2a1fd4c84cef868"
+        },
+        {
+          "path": "/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Reflection.DispatchProxy.dll",
+          "bytes": 16184,
+          "sha256": "05b91cae41884dcef57477562e6d365063744e6b67152078388d6e10d9cc747c"
+        },
+        {
+          "path": "/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Reflection.Emit.ILGeneration.dll",
+          "bytes": 21304,
+          "sha256": "fa9ecdaf5958b88cf8baa82c6c0bb8aa77a557959463a01a90fe88c31206b8ab"
+        },
+        {
+          "path": "/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Reflection.Emit.Lightweight.dll",
+          "bytes": 19728,
+          "sha256": "a45c4a379559bbf276d8924437996ae16617d09631dfd405b4a35cdd5492d867"
+        },
+        {
+          "path": "/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Reflection.Emit.dll",
+          "bytes": 44816,
+          "sha256": "93a97c9f0f974841c2daf3cf6bbc0c1433e5f438b6a4991ca2a0dd2a77e04f12"
+        },
+        {
+          "path": "/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Reflection.Extensions.dll",
+          "bytes": 15624,
+          "sha256": "ec8708b1347ae74402f9fa16393f1c4b01c6033fcf9c128670e1a129bbdf1e3e"
+        },
+        {
+          "path": "/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Reflection.Metadata.dll",
+          "bytes": 122632,
+          "sha256": "6781d281eabdd0607d5528bb7383a9c3b93790d94d23684fb56952526daed721"
+        },
+        {
+          "path": "/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Reflection.Primitives.dll",
+          "bytes": 22288,
+          "sha256": "65e54a5a3785009fc1fa3af7d118776302077c31d88287c6567bdcd4d7247b3b"
+        },
+        {
+          "path": "/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Reflection.TypeExtensions.dll",
+          "bytes": 20240,
+          "sha256": "4780d22798c6ba6ab7d1e57dff5cb2ce46de0fabd80d1ab3738b8f4e6dceb1ba"
+        },
+        {
+          "path": "/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Reflection.dll",
+          "bytes": 16656,
+          "sha256": "40410b71c48cd1ecdb450eee656bf175cf333375cf6a662b52a720c378689eb5"
+        },
+        {
+          "path": "/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Resources.Reader.dll",
+          "bytes": 15672,
+          "sha256": "015056331cc404e19cee9e22fdab991b35ae8d75f992312cff4885be72d5159e"
+        },
+        {
+          "path": "/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Resources.ResourceManager.dll",
+          "bytes": 16144,
+          "sha256": "a1d762e9b79850d51b850d892ddba99347c4034a0e89a90be3efb3b77c092df5"
+        },
+        {
+          "path": "/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Resources.Writer.dll",
+          "bytes": 16656,
+          "sha256": "e1da485ce1ec99677cc7646612f2248c4b48c619b0b89d00ee22eff2221969ff"
+        },
+        {
+          "path": "/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Runtime.CompilerServices.Unsafe.dll",
+          "bytes": 15624,
+          "sha256": "4bed487eff52a574d4158c4966f63cd10f757be4e0fb70fc14389d4ca07cfa74"
+        },
+        {
+          "path": "/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Runtime.CompilerServices.VisualC.dll",
+          "bytes": 17712,
+          "sha256": "ddf439cfa22739d051b4919bff4797c3c1528c49e91b1fdbb331b3e20d053390"
+        },
+        {
+          "path": "/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Runtime.Extensions.dll",
+          "bytes": 18192,
+          "sha256": "fb5c3a7854ab0fa57c89f0dc16f8a6f756bfb9297a5037b04def73fca39b033f"
+        },
+        {
+          "path": "/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Runtime.Handles.dll",
+          "bytes": 16184,
+          "sha256": "a65af895720435c85913f1af5e4488a7ce31a893af2a096d94090b8ae4c5fb0e"
+        },
+        {
+          "path": "/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Runtime.InteropServices.JavaScript.dll",
+          "bytes": 26376,
+          "sha256": "0e86d9752f785ccd77767f79d1c6fd50626e64f8226ded490b0c4e716e70c7c3"
+        },
+        {
+          "path": "/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Runtime.InteropServices.RuntimeInformation.dll",
+          "bytes": 15672,
+          "sha256": "a0a68d92e508f44e1614801024790a466e0ebec3d4dd9a5e0b4d84281f050dff"
+        },
+        {
+          "path": "/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Runtime.InteropServices.dll",
+          "bytes": 101640,
+          "sha256": "267890ec32f92e9bf082b4246273f936a5eb24da793e11c12f002d29585a3c46"
+        },
+        {
+          "path": "/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Runtime.Intrinsics.dll",
+          "bytes": 466744,
+          "sha256": "ee4820eac746699d8f740d6022b7bc02c6235a1a4423d6d0dafea39671c251ac"
+        },
+        {
+          "path": "/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Runtime.Loader.dll",
+          "bytes": 20272,
+          "sha256": "c083a961dcd9a9f3e02e0aa9331f256428bfaa57def9ec238a8d5486b0089ee5"
+        },
+        {
+          "path": "/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Runtime.Numerics.dll",
+          "bytes": 36624,
+          "sha256": "98bd4de9d3d52ac02c7a8248f5f50c708a8254cc37e884735dfb380a0243078f"
+        },
+        {
+          "path": "/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Runtime.Serialization.Formatters.dll",
+          "bytes": 23824,
+          "sha256": "ea849d86a9844cd63d97460ae4c4bed893a9d62a53a42bd5102a47ed8f51e030"
+        },
+        {
+          "path": "/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Runtime.Serialization.Json.dll",
+          "bytes": 21264,
+          "sha256": "90530330fa0797ed59a10d414fd3833564442d7f2ed681b196a6ca45fe65824d"
+        },
+        {
+          "path": "/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Runtime.Serialization.Primitives.dll",
+          "bytes": 20240,
+          "sha256": "f1ef0d74fa01035df696a9681de6c2161cae8c33c3d4fa4b1be01ca190a1c81a"
+        },
+        {
+          "path": "/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Runtime.Serialization.Xml.dll",
+          "bytes": 40248,
+          "sha256": "c4ffeb3935fb255df5a32db2b2ba09a8fe7ba8d3fec3ee81fa99135c81950f15"
+        },
+        {
+          "path": "/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Runtime.Serialization.dll",
+          "bytes": 17720,
+          "sha256": "af59a2d0613fb0a89733895b0203fbf15ed0ceecf1a74ac2ca7d4efe3a063e10"
+        },
+        {
+          "path": "/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Runtime.dll",
+          "bytes": 863024,
+          "sha256": "05f3d5bd170a583b2a61e21d30e200c567e9c2d46452a8684a686a510cb359e3"
+        },
+        {
+          "path": "/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Security.AccessControl.dll",
+          "bytes": 37648,
+          "sha256": "8b84fff2c844ed54293ada88b6e92f76f2da5232c2829cb5756fca0c3dc51f2a"
+        },
+        {
+          "path": "/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Security.Claims.dll",
+          "bytes": 33040,
+          "sha256": "4476520e4cce212b443191703c8621f8d90aa1e0c85289462406637a7aee1729"
+        },
+        {
+          "path": "/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Security.Cryptography.Algorithms.dll",
+          "bytes": 17672,
+          "sha256": "86cdc6a6e8549b28191b9a11f30b0e55e58937de03817373ba3e0ce8d0eb2278"
+        },
+        {
+          "path": "/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Security.Cryptography.Cng.dll",
+          "bytes": 16648,
+          "sha256": "df366bbcb8cfc628c4c1bd9879b1bb69a5badd8087a310ff2a489c33e24022bc"
+        },
+        {
+          "path": "/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Security.Cryptography.Csp.dll",
+          "bytes": 16696,
+          "sha256": "ca4ed9868459a58badfa36c7c82b1aae64eebea5dc6ac53a6c8ad4852c7cd2bf"
+        },
+        {
+          "path": "/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Security.Cryptography.Encoding.dll",
+          "bytes": 16176,
+          "sha256": "c3824768a64d5a4ea6c0365a4d072186dbe30a73de4362dda3f04d73373bae70"
+        },
+        {
+          "path": "/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Security.Cryptography.OpenSsl.dll",
+          "bytes": 16136,
+          "sha256": "c6d7d49cc5e8012f313aea2fa611b0aee0fbff2a4411de8a1569f242f4879c6e"
+        },
+        {
+          "path": "/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Security.Cryptography.Primitives.dll",
+          "bytes": 16136,
+          "sha256": "f8930f0619a2e689fbd89aa06454453cc51ee874cb06c2f6ca413546a05366fa"
+        },
+        {
+          "path": "/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Security.Cryptography.X509Certificates.dll",
+          "bytes": 17168,
+          "sha256": "57f9dd7e4f51e998489154c106849c5e07007adab5ad5e0349de211bd9e89104"
+        },
+        {
+          "path": "/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Security.Cryptography.dll",
+          "bytes": 163600,
+          "sha256": "afed42b096f42f3684e72c69fa83a0849b1894829fec4f3fd98aa5872652e4ef"
+        },
+        {
+          "path": "/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Security.Principal.Windows.dll",
+          "bytes": 27408,
+          "sha256": "8ce33abac7edfd678bca13613da3a77015191ea884fc54279c626a6a5974a4cd"
+        },
+        {
+          "path": "/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Security.Principal.dll",
+          "bytes": 15632,
+          "sha256": "4552c76464180c4aee8f5bec20988615204f2a4884e8165ef3e3d858b90f925a"
+        },
+        {
+          "path": "/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Security.SecureString.dll",
+          "bytes": 16184,
+          "sha256": "b8b1e0ae0b5db057b263220cb36f7f363355310a9500cab575c4a746c914cb31"
+        },
+        {
+          "path": "/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Security.dll",
+          "bytes": 18704,
+          "sha256": "a17cbe63c9ca8dcb0261e594a352775ee50af71560c465580af82d4709d61487"
+        },
+        {
+          "path": "/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.ServiceModel.Web.dll",
+          "bytes": 17160,
+          "sha256": "9eab5af9509fc0e4414ee4fbbe90afa36de388790e3b6f2f84d0417fd59585de"
+        },
+        {
+          "path": "/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.ServiceProcess.dll",
+          "bytes": 16136,
+          "sha256": "cab4d774435dab88d7f3bcf259b652440efbf52957b7f9c2dd6382e9dffc51f4"
+        },
+        {
+          "path": "/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Text.Encoding.CodePages.dll",
+          "bytes": 16136,
+          "sha256": "3ee09536c1ad3953b45be5fcff1f520626accc3685ee0e9f2ba51a6659cc7770"
+        },
+        {
+          "path": "/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Text.Encoding.Extensions.dll",
+          "bytes": 21256,
+          "sha256": "36c5e59a37443b5174a46a3b1c020889bbcac06ae410f9da7189a2acc7f5e091"
+        },
+        {
+          "path": "/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Text.Encoding.dll",
+          "bytes": 16144,
+          "sha256": "ad7c177ab50d1e029113d5eaa90353bfa9491f3bda74d0701dbf939d917ec4cf"
+        },
+        {
+          "path": "/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Text.Encodings.Web.dll",
+          "bytes": 26896,
+          "sha256": "875c8a4bd08ee6f87a438d257bfa1eb08977bb3ccefc5715b2ce69ba831321bf"
+        },
+        {
+          "path": "/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Text.Json.dll",
+          "bytes": 82696,
+          "sha256": "dbafb27cb820b4b1f383a807ab4d580ffd419200c70827c378e110cae6bc8893"
+        },
+        {
+          "path": "/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Text.RegularExpressions.dll",
+          "bytes": 37176,
+          "sha256": "9659a900215789645a30c50995a1e1d50a420f8a0724a25019732af261fb1df7"
+        },
+        {
+          "path": "/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Threading.AccessControl.dll",
+          "bytes": 21256,
+          "sha256": "66ee54cddb6beb41db6330f17b7f66e0451256447135d17204ce4294b8f4c4ad"
+        },
+        {
+          "path": "/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Threading.Channels.dll",
+          "bytes": 19768,
+          "sha256": "be44bad22accd51f2c8a441182fbf46c02d455da6a03f3656c0cca8a2da9c714"
+        },
+        {
+          "path": "/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Threading.Overlapped.dll",
+          "bytes": 19248,
+          "sha256": "aea8b28ea27bba273a5df764be8bad40eed422f9980588ca3a1c75d5c8f19a42"
+        },
+        {
+          "path": "/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Threading.Tasks.Dataflow.dll",
+          "bytes": 32560,
+          "sha256": "28dd041815eba66940ca1b8c83624bbca7387f040f4a2d5db72887b56f69b8ea"
+        },
+        {
+          "path": "/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Threading.Tasks.Extensions.dll",
+          "bytes": 16144,
+          "sha256": "8755ba7526f628fd6cc069050d8892861d9533d153da8463347124a618c36f66"
+        },
+        {
+          "path": "/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Threading.Tasks.Parallel.dll",
+          "bytes": 20752,
+          "sha256": "e020e326328dc58bacdeff9761cb344c7a66131358a44f84530b765884bbc313"
+        },
+        {
+          "path": "/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Threading.Tasks.dll",
+          "bytes": 17168,
+          "sha256": "d3022cc610ca067b83de0ef1fdeae3646b65438ae0de4cbe7aabb3b60543b228"
+        },
+        {
+          "path": "/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Threading.Thread.dll",
+          "bytes": 24336,
+          "sha256": "b4aeec7f1f5fb00d89596bbd105269958e6c2e277a2f983fa44b3df600c59055"
+        },
+        {
+          "path": "/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Threading.ThreadPool.dll",
+          "bytes": 18696,
+          "sha256": "97325e59e47e1913d883c1e84283e086492db2225db143ecac7deb29a3ea145b"
+        },
+        {
+          "path": "/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Threading.Timer.dll",
+          "bytes": 15672,
+          "sha256": "776f1ada42c2ddb7917ff7b8c14cf2f4546aa6341dca2a13a6cbb4429f203c1c"
+        },
+        {
+          "path": "/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Threading.dll",
+          "bytes": 34064,
+          "sha256": "a8e144306c94e76a06a14912f9cf152ae9dcaae1150b3aa4f9b17aff57e7d6ad"
+        },
+        {
+          "path": "/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Transactions.Local.dll",
+          "bytes": 26384,
+          "sha256": "ac17ede6ab380e52ec28f301226770d83b2e3372b0037124dbe8076f9d1864d2"
+        },
+        {
+          "path": "/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Transactions.dll",
+          "bytes": 17160,
+          "sha256": "2a0a37a4acd2122d848fea3c8cf98c2f00d34750ec803e62d4e7ecc08d122875"
+        },
+        {
+          "path": "/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.ValueTuple.dll",
+          "bytes": 16144,
+          "sha256": "da0ee576b0f418d07791fb3f68ad3dd12863ba645265e03a108ec9d4c92557e7"
+        },
+        {
+          "path": "/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Web.HttpUtility.dll",
+          "bytes": 17720,
+          "sha256": "05f75c8c665126a1a39c0741e7f06f4084729fbcf6f8fc8b49a292a77e0c67af"
+        },
+        {
+          "path": "/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Web.dll",
+          "bytes": 15624,
+          "sha256": "5241d4ffa2c7b26b698f4815c9d6c97c68451c130c6a1a9c3981426b1e9294ee"
+        },
+        {
+          "path": "/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Windows.dll",
+          "bytes": 16136,
+          "sha256": "2b8c99ab1e00ed7c06897b488666a404fa2b32d429658d77c652f5b90bcbb0b2"
+        },
+        {
+          "path": "/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Xml.Linq.dll",
+          "bytes": 16176,
+          "sha256": "72b1fe44cc0485b7768a484fb6c2db98e4d46e7e30018bdb0132d8eb73e69ee0"
+        },
+        {
+          "path": "/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Xml.ReaderWriter.dll",
+          "bytes": 116528,
+          "sha256": "a3c354051ff94d594f3454a774072bcc4123f26457d727f42f0b16d881b74575"
+        },
+        {
+          "path": "/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Xml.Serialization.dll",
+          "bytes": 16696,
+          "sha256": "712203ab65c8b2b41049c7e47e2068096acf909f2d75b7fc3a25fa23c357ac89"
+        },
+        {
+          "path": "/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Xml.XDocument.dll",
+          "bytes": 34568,
+          "sha256": "490d86295831a587a929c41783dbf711c3fe29c7c65db8f17ae87197bbdcdb0d"
+        },
+        {
+          "path": "/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Xml.XPath.XDocument.dll",
+          "bytes": 16696,
+          "sha256": "c106b7aebe276765283e6277308079b5e35efc8bfcd9151645624705bb1ffaff"
+        },
+        {
+          "path": "/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Xml.XPath.dll",
+          "bytes": 17168,
+          "sha256": "c506ff77c11cf8cd59ad5bf53c78391cb9a65a30d79aa23b79b1d20b52ef2ffc"
+        },
+        {
+          "path": "/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Xml.XmlDocument.dll",
+          "bytes": 16184,
+          "sha256": "f9bc8f4fc30474258be9cb4c788e2c96e397ab0fb9760c31e21787986f63f073"
+        },
+        {
+          "path": "/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Xml.XmlSerializer.dll",
+          "bytes": 51472,
+          "sha256": "07b68891f36eba732da2be219c8cdcb65da2d1d8873c406ddb09fd603494a118"
+        },
+        {
+          "path": "/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.Xml.dll",
+          "bytes": 23824,
+          "sha256": "e709f2f1887e2cddc181f5343d234f074c702432f69032817d164e2b0aead67b"
+        },
+        {
+          "path": "/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/System.dll",
+          "bytes": 49928,
+          "sha256": "4a78f431306daccc354e9cdbc2b84886ebe695a08756b66e95031da2ab1931ba"
+        },
+        {
+          "path": "/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/WindowsBase.dll",
+          "bytes": 16656,
+          "sha256": "f3ee1332184c3db1dca1521ba473006243509dd195e9333f532f505e476d5f04"
+        },
+        {
+          "path": "/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/mscorlib.dll",
+          "bytes": 56080,
+          "sha256": "5db896490a486ee33c749685563de88a2a722073929763ec7ea2e411efdf52e3"
+        },
+        {
+          "path": "/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/netstandard.dll",
+          "bytes": 101136,
+          "sha256": "4922ed9efb749c604bdb18f777627ecd104a2f02d78064120a81f5f055fd7ee3"
+        }
+      ]
+    },
+    "referenceReader": {
+      "path": "/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/sdk/10.0.201/System.Reflection.MetadataLoadContext.dll",
+      "bytes": 573240,
+      "sha256": "42fb03583ec0a097307dd94a0bb76f00cf18dd3241a8c8c93b9f28114dc06dfb"
+    }
+  },
+  "format": 1,
+  "framework": ".NET 10.0.5",
+  "metadataLoadContextVersion": "10.0.0.5",
+  "files": [
+    {
+      "name": "ManifestEmbedded.dll",
+      "assemblyName": "ManifestEmbedded",
+      "bytesBase64": "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",
+      "sha256": "298fef1cc51c9830d94175aaa55f9c2d6fd2cbeaf42ae5b7fb8d556d466903b7"
+    },
+    {
+      "name": "ManifestTarget.dll",
+      "assemblyName": "ManifestTarget",
+      "bytesBase64": "TVqQAAMAAAAEAAAA//8AALgAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAA4fug4AtAnNIbgBTM0hVGhpcyBwcm9ncmFtIGNhbm5vdCBiZSBydW4gaW4gRE9TIG1vZGUuDQ0KJAAAAAAAAABQRQAATAECAKuKc4sAAAAAAAAAAOAAAiALATAAAAIAAAACAAAAAAAA4iEAAAAgAAAAQAAAAABAAAAgAAAAAgAABAAAAAAAAAAEAAAAAAAAAABgAAAAAgAAAAAAAAMAQIUAABAAABAAAAAAEAAAEAAAAAAAABAAAAAAAAAAAAAAAJAhAABPAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAwAAAB0IQAAHAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAACAAAAAAAAAAAAAAACCAAAEgAAAAAAAAAAAAAAC50ZXh0AAAA6AEAAAAgAAAAAgAAAAIAAAAAAAAAAAAAAAAAACAAAGAucmVsb2MAAAwAAAAAQAAAAAIAAAAEAAAAAAAAAAAAAAAAAABAAABCAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADEIQAAAAAAAEgAAAACAAUAUCAAABwBAAABAAAAAAAAAGwhAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEJTSkIBAAEAAAAAAAwAAAB2NC4wLjMwMzE5AAAAAAUAbAAAAGQAAAAjfgAA0AAAADQAAAAjU3RyaW5ncwAAAAAEAQAABAAAACNVUwAIAQAAEAAAACNHVUlEAAAAGAEAAAQAAAAjQmxvYgAAAAAAAAACAAABBQAAAAEBAAAA+gEzABYAAAEAAAABAAAAAQAAAAEAAAAAABIAAQAAAAAAAAAAAAEAAAAAAAEAAQAMgAAAAQAAAAAAAAAAAAAAAAAlAAAAAAAAAAEAAAAKAAAAAAAAPE1vZHVsZT4AcGF5bG9hZABNYW5pZmVzdFRhcmdldC5kbGwATWFuaWZlc3RUYXJnZXQAAAAAADyPRN1YInVDn3H6fzG33ukAAAAABAAAAAB/gP8AAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAuCEAAAAAAAAAAAAA0iEAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAMQhAAAAAAAAAAAAAAAAX0NvckRsbE1haW4AbXNjb3JlZS5kbGwAAAAAAP8lACBAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAMAAAA5DEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+      "sha256": "a2113572c7ec81ffc5c98d3145cdba2e717c613e87f69c475b19315c59e486f9"
+    },
+    {
+      "name": "ManifestBridge.dll",
+      "assemblyName": "ManifestBridge",
+      "bytesBase64": "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",
+      "sha256": "95aaa4b0560c41fbb8a6994fc74ef875b03c7a3442776dd06335aa2493dc351f"
+    },
+    {
+      "name": "ManifestFacade.dll",
+      "assemblyName": "ManifestFacade",
+      "bytesBase64": "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",
+      "sha256": "c5f422d62c622c9f5723c0db66fba0a70c189e06e3ec783eb7db5bfefcdaddec"
+    },
+    {
+      "name": "hash-none.bin",
+      "assemblyName": null,
+      "bytesBase64": "",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "ManifestLinkedNone.dll",
+      "assemblyName": "ManifestLinkedNone",
+      "bytesBase64": "TVqQAAMAAAAEAAAA//8AALgAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAA4fug4AtAnNIbgBTM0hVGhpcyBwcm9ncmFtIGNhbm5vdCBiZSBydW4gaW4gRE9TIG1vZGUuDQ0KJAAAAAAAAABQRQAATAECAPPGfcgAAAAAAAAAAOAAAiALATAAAAQAAAACAAAAAAAAEiIAAAAgAAAAQAAAAABAAAAgAAAAAgAABAAAAAAAAAAEAAAAAAAAAABgAAAAAgAAAAAAAAMAQIUAABAAABAAAAAAEAAAEAAAAAAAABAAAAAAAAAAAAAAAMAhAABPAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAwAAACkIQAAHAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAACAAAAAAAAAAAAAAACCAAAEgAAAAAAAAAAAAAAC50ZXh0AAAAGAIAAAAgAAAABAAAAAIAAAAAAAAAAAAAAAAAACAAAGAucmVsb2MAAAwAAAAAQAAAAAIAAAAGAAAAAAAAAAAAAAAAAABAAABCAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAD0IQAAAAAAAEgAAAACAAUAUCAAAFQBAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEJTSkIBAAEAAAAAAAwAAAB2NC4wLjMwMzE5AAAAAAUAbAAAAHAAAAAjfgAA3AAAAEwAAAAjU3RyaW5ncwAAAAAoAQAABAAAACNVUwAsAQAAEAAAACNHVUlEAAAAPAEAABgAAAAjQmxvYgAAAAAAAAACAAABBQAAAEEBAAAA+gEzABYAAAEAAAABAAAAAQAAAAEAAAABAAAAAAAlAAEAAAAAAAAAAAABAAAAAAABAAEAAAAAAAEAAAAAAAAAAAAAAAAAEgAAAAEAAAA8AAEAAAAAAAEAAAAKAAQAAAAAPE1vZHVsZT4AcGF5bG9hZABNYW5pZmVzdExpbmtlZE5vbmUATWFuaWZlc3RMaW5rZWROb25lLmRsbABoYXNoLW5vbmUuYmluAAAAAAAAAOUCsr8cLXJAu29dWRJWyZIAFNo5o+5ea0sNMlW/75VgGJCv2AcJAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAA6CEAAAAAAAAAAAAAAiIAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPQhAAAAAAAAAAAAAAAAX0NvckRsbE1haW4AbXNjb3JlZS5kbGwAAAAAAP8lACBAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAAwAAAAUMgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=",
+      "sha256": "b3614fde64c228cfa2af7f8079b4705d2fdffb3c5108aa6e50b146b54e01b239"
+    },
+    {
+      "name": "hash-md5.bin",
+      "assemblyName": null,
+      "bytesBase64": "ARIjNEVWZ3iJmqu8zd7vABEiM0RVZneImaq7zN3u/xAhMkNUZXaHmKm6y9zt/g8gMUJTZHWGlw==",
+      "sha256": "176b66bce633d175a474bcaa8b0c57b79cda6529350f9daa22d1484be452174e"
+    },
+    {
+      "name": "ManifestLinkedMD5.dll",
+      "assemblyName": "ManifestLinkedMD5",
+      "bytesBase64": "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",
+      "sha256": "3a2311eccd5046a1962cbac238bb23737f1c58bc758c34aff458116357e0ad8b"
+    },
+    {
+      "name": "hash-sha1.bin",
+      "assemblyName": null,
+      "bytesBase64": "AhMkNUZXaHmKm6y9zt/wARIjNEVWZ3iJmqu8zd7vABEiM0RVZneImaq7zN3u/xAhMkNUZXaHmKk=",
+      "sha256": "722780142d9377b746ea0c62014924cfd8c2a6c6e83fc9fa4577ae3b0112385a"
+    },
+    {
+      "name": "ManifestLinkedSHA1.dll",
+      "assemblyName": "ManifestLinkedSHA1",
+      "bytesBase64": "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",
+      "sha256": "f281dd8c6d2d9d6acfdc23f62ac6d1597c07000fba16fd9415e809cc729c2438"
+    },
+    {
+      "name": "hash-sha256.bin",
+      "assemblyName": null,
+      "bytesBase64": "AxQlNkdYaXqLnK2+z+DxAhMkNUZXaHmKm6y9zt/wARIjNEVWZ3iJmqu8zd7vABEiM0RVZneImaq7",
+      "sha256": "6f622dcd0a7f01cc588f376ac71fd2d8e787dba4b101d0006a9c512212ecbe7c"
+    },
+    {
+      "name": "ManifestLinkedSHA256.dll",
+      "assemblyName": "ManifestLinkedSHA256",
+      "bytesBase64": "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",
+      "sha256": "e863af7458fe9056e2bf217a1c32335bbae56dd99557b943131377f0e1f3eb7f"
+    },
+    {
+      "name": "hash-sha384.bin",
+      "assemblyName": null,
+      "bytesBase64": "BBUmN0hZanuMna6/0OHyAxQlNkdYaXqLnK2+z+DxAhMkNUZXaHmKm6y9zt/wARIjNEVWZ3iJmqu8zd7vABEi",
+      "sha256": "52c886a3d621a7ae69e56b3c23623732ea7e3fcf99ba090e3dd2d454d8e10798"
+    },
+    {
+      "name": "ManifestLinkedSHA384.dll",
+      "assemblyName": "ManifestLinkedSHA384",
+      "bytesBase64": "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",
+      "sha256": "68ab3865edf3404b36c2542d15e8633c2beb3f49170dc727783a3e3328d3a440"
+    },
+    {
+      "name": "hash-sha512.bin",
+      "assemblyName": null,
+      "bytesBase64": "BRYnOElaa3yNnq/A0eLzBBUmN0hZanuMna6/0OHyAxQlNkdYaXqLnK2+z+DxAhMkNUZXaHmKm6y9zt/wARIjNA==",
+      "sha256": "cc78432f81444b1d8f0b919d679003257c381c9eafccf285fcc6e62f6d5a9cda"
+    },
+    {
+      "name": "ManifestLinkedSHA512.dll",
+      "assemblyName": "ManifestLinkedSHA512",
+      "bytesBase64": "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",
+      "sha256": "f0a213e23da8f131b9ace2afdcca1a88f1697be49c14629d9d9a116125daabe8"
+    },
+    {
+      "name": "ManifestLinkedFacade.dll",
+      "assemblyName": "ManifestLinkedFacade",
+      "bytesBase64": "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",
+      "sha256": "c613d05fe5cc3433adc3395ed5cf69bf92ada7352e9d44dfebd465f9294d43ed"
+    },
+    {
+      "name": "ManifestChild.netmodule",
+      "assemblyName": null,
+      "bytesBase64": "TVqQAAMAAAAEAAAA//8AALgAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAA4fug4AtAnNIbgBTM0hVGhpcyBwcm9ncmFtIGNhbm5vdCBiZSBydW4gaW4gRE9TIG1vZGUuDQ0KJAAAAAAAAABQRQAATAECALOWndsAAAAAAAAAAOAAAiALATAAAAIAAAACAAAAAAAA2iEAAAAgAAAAQAAAAABAAAAgAAAAAgAABAAAAAAAAAAEAAAAAAAAAABgAAAAAgAAAAAAAAMAQIUAABAAABAAAAAAEAAAEAAAAAAAABAAAAAAAAAAAAAAAIghAABPAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAwAAABsIQAAHAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAACAAAAAAAAAAAAAAACCAAAEgAAAAAAAAAAAAAAC50ZXh0AAAA4AEAAAAgAAAAAgAAAAIAAAAAAAAAAAAAAAAAACAAAGAucmVsb2MAAAwAAAAAQAAAAAIAAAAEAAAAAAAAAAAAAAAAAABAAABCAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAC8IQAAAAAAAEgAAAACAAUAUCAAAAwBAAABAAAAAAAAAFwhAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEJTSkIBAAEAAAAAAAwAAAB2NC4wLjMwMzE5AAAAAAUAbAAAAFgAAAAjfgAAxAAAADAAAAAjU3RyaW5ncwAAAAD0AAAABAAAACNVUwD4AAAAEAAAACNHVUlEAAAACAEAAAQAAAAjQmxvYgAAAAAAAAACAAABBQAAAAABAAAA+gEzABYAAAEAAAABAAAAAgAAAAAAEgABAAAAAAAAAAAAAQAAAAAAAQABAAAAAAABAAAAKgAAAAgAAAABAAAACgAAAAAAAAAAPE1vZHVsZT4AcGF5bG9hZABNYW5pZmVzdENoaWxkLm5ldG1vZHVsZQBmaXJzdAAAAAAAKaWgp9QesUCwj/A+PLRw1AAAAAABAAAAEQAAAAQAAAAAf4D/AAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAALAhAAAAAAAAAAAAAMohAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAC8IQAAAAAAAAAAAAAAAF9Db3JEbGxNYWluAG1zY29yZWUuZGxsAAAAAAD/JQAgQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAMAAAA3DEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+      "sha256": "8615cde11f7515b16859d23f6e9c2560c48bf3a8734a30317f7e36de038bddf8"
+    },
+    {
+      "name": "ManifestModuleMatch.dll",
+      "assemblyName": "ManifestModuleMatch",
+      "bytesBase64": "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",
+      "sha256": "3afa30ab4d48a70930e00d7bebd1b92a4af166060b9544d653f6a0d5f1656139"
+    },
+    {
+      "name": "ManifestModuleDifference.dll",
+      "assemblyName": "ManifestModuleDifference",
+      "bytesBase64": "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",
+      "sha256": "13c3ec50f0f801ff30da64e3649a7f69c0d077f5ffe8b18ff8ff50d1162f78c8"
+    },
+    {
+      "name": "ManifestModuleAlias.dll",
+      "assemblyName": "ManifestModuleAlias",
+      "bytesBase64": "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",
+      "sha256": "84c3f275857925a4fe66ebb56cc20395ff76b81283e46e0c3a40597757b1d351"
+    },
+    {
+      "name": "ManifestEntryChild.netmodule",
+      "assemblyName": null,
+      "bytesBase64": "TVqQAAMAAAAEAAAA//8AALgAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAA4fug4AtAnNIbgBTM0hVGhpcyBwcm9ncmFtIGNhbm5vdCBiZSBydW4gaW4gRE9TIG1vZGUuDQ0KJAAAAAAAAABQRQAATAECAGSHVegAAAAAAAAAAOAAAiALATAAAAIAAAACAAAAAAAA4iEAAAAgAAAAQAAAAABAAAAgAAAAAgAABAAAAAAAAAAEAAAAAAAAAABgAAAAAgAAAAAAAAMAQIUAABAAABAAAAAAEAAAEAAAAAAAABAAAAAAAAAAAAAAAJAhAABPAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAwAAAB0IQAAHAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAACAAAAAAAAAAAAAAACCAAAEgAAAAAAAAAAAAAAC50ZXh0AAAA6AEAAAAgAAAAAgAAAAIAAAAAAAAAAAAAAAAAACAAAGAucmVsb2MAAAwAAAAAQAAAAAIAAAAEAAAAAAAAAAAAAAAAAABAAABCAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADEIQAAAAAAAEgAAAACAAUAVCAAABgBAAABAAAAAQAABmwhAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAYqAABCU0pCAQABAAAAAAAMAAAAdjQuMC4zMDMxOQAAAAAFAGwAAABcAAAAI34AAMgAAAA0AAAAI1N0cmluZ3MAAAAA/AAAAAQAAAAjVVMAAAEAABAAAAAjR1VJRAAAABABAAAIAAAAI0Jsb2IAAAAAAAAAAgAAAUUAAAAAAQAAAPoBMwAWAAABAAAAAQAAAAEAAAABAAAAAAASAAEAAAAAAAAAAAABAAAAAAABAAEAUCAAAAAAlgAvAAEAAQAAAAAAAQAAAAoAAAAAAAA8TW9kdWxlPgBwYXlsb2FkAE1hbmlmZXN0RW50cnlDaGlsZC5uZXRtb2R1bGUATWFpbgAAAAAAC/PL8HEBkEGUEJfwMdDZSgADAAABAAAABAAAAAB/gP8AAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAuCEAAAAAAAAAAAAA0iEAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAMQhAAAAAAAAAAAAAAAAX0NvckRsbE1haW4AbXNjb3JlZS5kbGwAAAAAAP8lACBAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAMAAAA5DEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+      "sha256": "dae492fe9f2a60347524bf6f2e64f17b7da4bc47c735f287d4425d3c74fba860"
+    },
+    {
+      "name": "ManifestEntryOwner.exe",
+      "assemblyName": "ManifestEntryOwner",
+      "bytesBase64": "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",
+      "sha256": "f8b66d48088399c8a8b011a8f0d4ac0d4e0e919e05b3a6149a3ec93c124208ff"
+    },
+    {
+      "name": "ManifestMalformedEmbedded.dll",
+      "assemblyName": "ManifestMalformedEmbedded",
+      "bytesBase64": "TVqQAAMAAAAEAAAA//8AALgAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAA4fug4AtAnNIbgBTM0hVGhpcyBwcm9ncmFtIGNhbm5vdCBiZSBydW4gaW4gRE9TIG1vZGUuDQ0KJAAAAAAAAABQRQAATAECABEmWMwAAAAAAAAAAOAAAiALATAAAAIAAAACAAAAAAAA+iEAAAAgAAAAQAAAAABAAAAgAAAAAgAABAAAAAAAAAAEAAAAAAAAAABgAAAAAgAAAAAAAAMAQIUAABAAABAAAAAAEAAAEAAAAAAAABAAAAAAAAAAAAAAAKghAABPAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAwAAACMIQAAHAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAACAAAAAAAAAAAAAAACCAAAEgAAAAAAAAAAAAAAC50ZXh0AAAAAAIAAAAgAAAAAgAAAAIAAAAAAAAAAAAAAAAAACAAAGAucmVsb2MAAAwAAAAAQAAAAAIAAAAEAAAAAAAAAAAAAAAAAABAAABCAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADcIQAAAAAAAEgAAAACAAUAUCAAADQBAAABAAAAAAAAAIQhAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEJTSkIBAAEAAAAAAAwAAAB2NC4wLjMwMzE5AAAAAAUAbAAAAGQAAAAjfgAA0AAAAEwAAAAjU3RyaW5ncwAAAAAcAQAABAAAACNVUwAgAQAAEAAAACNHVUlEAAAAMAEAAAQAAAAjQmxvYgAAAAAAAAACAAABBQAAAAEBAAAA+gEzABYAAAEAAAABAAAAAQAAAAEAAAAAACwAAQAAAAAAAAAAAAEAAAAAAAEAAQAMgAAAAQAAAAAAAAAAAAAAAAASAAAAAAAAAAEAAAAKAAAAAAAAPE1vZHVsZT4AcGF5bG9hZABNYW5pZmVzdE1hbGZvcm1lZEVtYmVkZGVkAE1hbmlmZXN0TWFsZm9ybWVkRW1iZWRkZWQuZGxsAAAAAAAAAFzjHj2t78NGpwXo5FJGcrwAAAAA/////wB/gP8AAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAA0CEAAAAAAAAAAAAA6iEAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAANwhAAAAAAAAAAAAAAAAX0NvckRsbE1haW4AbXNjb3JlZS5kbGwAAAAAAP8lACBAAAAgAAAMAAAA/DEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+      "sha256": "27b84db8ff5847695d57333f469676591b0fd3eec96e854924dc7a414fcd42bf"
+    }
+  ],
+  "cases": [
+    {
+      "id": "embedded-binary",
+      "assemblyName": "ManifestEmbedded",
+      "resource": "payload",
+      "classification": "embedded",
+      "expectedBase64": "AH+A/w==",
+      "expectedInfo": {
+        "fileName": null,
+        "referencedAssembly": null,
+        "resourceLocation": 5
+      },
+      "coreClr": {
+        "names": {
+          "value": [
+            "payload",
+            "private/空",
+            "empty"
+          ]
+        },
+        "stream": {
+          "value": "AH+A/w=="
+        },
+        "info": {
+          "value": {
+            "fileName": null,
+            "referencedAssembly": null,
+            "resourceLocation": 5
+          }
+        }
+      },
+      "metadataLoadContext": {
+        "names": {
+          "value": [
+            "payload",
+            "private/空",
+            "empty"
+          ]
+        },
+        "stream": {
+          "value": "AH+A/w=="
+        },
+        "info": {
+          "value": {
+            "fileName": null,
+            "referencedAssembly": null,
+            "resourceLocation": 5
+          }
+        }
+      }
+    },
+    {
+      "id": "embedded-private-unicode",
+      "assemblyName": "ManifestEmbedded",
+      "resource": "private/空",
+      "classification": "embedded",
+      "expectedBase64": "WmHFvMOzxYLEhwDwn5iD",
+      "expectedInfo": {
+        "fileName": null,
+        "referencedAssembly": null,
+        "resourceLocation": 5
+      },
+      "coreClr": {
+        "names": {
+          "value": [
+            "payload",
+            "private/空",
+            "empty"
+          ]
+        },
+        "stream": {
+          "value": "WmHFvMOzxYLEhwDwn5iD"
+        },
+        "info": {
+          "value": {
+            "fileName": null,
+            "referencedAssembly": null,
+            "resourceLocation": 5
+          }
+        }
+      },
+      "metadataLoadContext": {
+        "names": {
+          "value": [
+            "payload",
+            "private/空",
+            "empty"
+          ]
+        },
+        "stream": {
+          "value": "WmHFvMOzxYLEhwDwn5iD"
+        },
+        "info": {
+          "value": {
+            "fileName": null,
+            "referencedAssembly": null,
+            "resourceLocation": 5
+          }
+        }
+      }
+    },
+    {
+      "id": "embedded-empty",
+      "assemblyName": "ManifestEmbedded",
+      "resource": "empty",
+      "classification": "embedded",
+      "expectedBase64": "",
+      "expectedInfo": {
+        "fileName": null,
+        "referencedAssembly": null,
+        "resourceLocation": 5
+      },
+      "coreClr": {
+        "names": {
+          "value": [
+            "payload",
+            "private/空",
+            "empty"
+          ]
+        },
+        "stream": {
+          "value": ""
+        },
+        "info": {
+          "value": {
+            "fileName": null,
+            "referencedAssembly": null,
+            "resourceLocation": 5
+          }
+        }
+      },
+      "metadataLoadContext": {
+        "names": {
+          "value": [
+            "payload",
+            "private/空",
+            "empty"
+          ]
+        },
+        "stream": {
+          "value": ""
+        },
+        "info": {
+          "value": {
+            "fileName": null,
+            "referencedAssembly": null,
+            "resourceLocation": 5
+          }
+        }
+      }
+    },
+    {
+      "id": "embedded-absent",
+      "assemblyName": "ManifestEmbedded",
+      "resource": "absent",
+      "classification": "embedded",
+      "expectedBase64": null,
+      "expectedInfo": null,
+      "coreClr": {
+        "names": {
+          "value": [
+            "payload",
+            "private/空",
+            "empty"
+          ]
+        },
+        "stream": {
+          "value": null
+        },
+        "info": {
+          "value": null
+        }
+      },
+      "metadataLoadContext": {
+        "names": {
+          "value": [
+            "payload",
+            "private/空",
+            "empty"
+          ]
+        },
+        "stream": {
+          "value": null
+        },
+        "info": {
+          "value": null
+        }
+      }
+    },
+    {
+      "id": "forwarded-two-hop",
+      "assemblyName": "ManifestFacade",
+      "resource": "payload",
+      "classification": "forwarded",
+      "expectedBase64": "AH+A/w==",
+      "expectedInfo": {
+        "fileName": null,
+        "referencedAssembly": "ManifestTarget",
+        "resourceLocation": 7
+      },
+      "coreClr": {
+        "names": {
+          "value": [
+            "payload",
+            "missing"
+          ]
+        },
+        "stream": {
+          "value": "AH+A/w=="
+        },
+        "info": {
+          "value": {
+            "fileName": null,
+            "referencedAssembly": "ManifestTarget",
+            "resourceLocation": 7
+          }
+        }
+      },
+      "metadataLoadContext": {
+        "names": {
+          "value": [
+            "payload",
+            "missing"
+          ]
+        },
+        "stream": {
+          "value": "AH+A/w=="
+        },
+        "info": {
+          "value": {
+            "fileName": "",
+            "referencedAssembly": "ManifestTarget",
+            "resourceLocation": 7
+          }
+        }
+      }
+    },
+    {
+      "id": "forwarded-missing",
+      "assemblyName": "ManifestFacade",
+      "resource": "missing",
+      "classification": "forwarded",
+      "expectedBase64": null,
+      "expectedInfo": null,
+      "coreClr": {
+        "names": {
+          "value": [
+            "payload",
+            "missing"
+          ]
+        },
+        "stream": {
+          "value": null
+        },
+        "info": {
+          "value": null
+        }
+      },
+      "metadataLoadContext": {
+        "names": {
+          "value": [
+            "payload",
+            "missing"
+          ]
+        },
+        "stream": {
+          "value": null
+        },
+        "info": {
+          "error": {
+            "type": "System.NullReferenceException",
+            "message": "Object reference not set to an instance of an object.",
+            "hresult": -2147467261
+          }
+        }
+      }
+    },
+    {
+      "id": "linked-file-none",
+      "assemblyName": "ManifestLinkedNone",
+      "resource": "payload",
+      "classification": "linked-file",
+      "expectedBase64": "",
+      "expectedInfo": {
+        "fileName": "hash-none.bin",
+        "referencedAssembly": null,
+        "resourceLocation": 0
+      },
+      "coreClr": {
+        "names": {
+          "value": [
+            "payload"
+          ]
+        },
+        "stream": {
+          "value": null
+        },
+        "info": {
+          "value": null
+        }
+      },
+      "metadataLoadContext": {
+        "names": {
+          "value": [
+            "payload"
+          ]
+        },
+        "stream": {
+          "value": ""
+        },
+        "info": {
+          "value": {
+            "fileName": "hash-none.bin",
+            "referencedAssembly": null,
+            "resourceLocation": 0
+          }
+        }
+      }
+    },
+    {
+      "id": "linked-file-md5",
+      "assemblyName": "ManifestLinkedMD5",
+      "resource": "payload",
+      "classification": "linked-file",
+      "expectedBase64": "ARIjNEVWZ3iJmqu8zd7vABEiM0RVZneImaq7zN3u/xAhMkNUZXaHmKm6y9zt/g8gMUJTZHWGlw==",
+      "expectedInfo": {
+        "fileName": "hash-md5.bin",
+        "referencedAssembly": null,
+        "resourceLocation": 0
+      },
+      "coreClr": {
+        "names": {
+          "value": [
+            "payload"
+          ]
+        },
+        "stream": {
+          "value": null
+        },
+        "info": {
+          "value": null
+        }
+      },
+      "metadataLoadContext": {
+        "names": {
+          "value": [
+            "payload"
+          ]
+        },
+        "stream": {
+          "value": "ARIjNEVWZ3iJmqu8zd7vABEiM0RVZneImaq7zN3u/xAhMkNUZXaHmKm6y9zt/g8gMUJTZHWGlw=="
+        },
+        "info": {
+          "value": {
+            "fileName": "hash-md5.bin",
+            "referencedAssembly": null,
+            "resourceLocation": 0
+          }
+        }
+      }
+    },
+    {
+      "id": "linked-file-sha1",
+      "assemblyName": "ManifestLinkedSHA1",
+      "resource": "payload",
+      "classification": "linked-file",
+      "expectedBase64": "AhMkNUZXaHmKm6y9zt/wARIjNEVWZ3iJmqu8zd7vABEiM0RVZneImaq7zN3u/xAhMkNUZXaHmKk=",
+      "expectedInfo": {
+        "fileName": "hash-sha1.bin",
+        "referencedAssembly": null,
+        "resourceLocation": 0
+      },
+      "coreClr": {
+        "names": {
+          "value": [
+            "payload"
+          ]
+        },
+        "stream": {
+          "value": null
+        },
+        "info": {
+          "value": null
+        }
+      },
+      "metadataLoadContext": {
+        "names": {
+          "value": [
+            "payload"
+          ]
+        },
+        "stream": {
+          "value": "AhMkNUZXaHmKm6y9zt/wARIjNEVWZ3iJmqu8zd7vABEiM0RVZneImaq7zN3u/xAhMkNUZXaHmKk="
+        },
+        "info": {
+          "value": {
+            "fileName": "hash-sha1.bin",
+            "referencedAssembly": null,
+            "resourceLocation": 0
+          }
+        }
+      }
+    },
+    {
+      "id": "linked-file-sha256",
+      "assemblyName": "ManifestLinkedSHA256",
+      "resource": "payload",
+      "classification": "linked-file",
+      "expectedBase64": "AxQlNkdYaXqLnK2+z+DxAhMkNUZXaHmKm6y9zt/wARIjNEVWZ3iJmqu8zd7vABEiM0RVZneImaq7",
+      "expectedInfo": {
+        "fileName": "hash-sha256.bin",
+        "referencedAssembly": null,
+        "resourceLocation": 0
+      },
+      "coreClr": {
+        "names": {
+          "value": [
+            "payload"
+          ]
+        },
+        "stream": {
+          "value": null
+        },
+        "info": {
+          "value": null
+        }
+      },
+      "metadataLoadContext": {
+        "names": {
+          "value": [
+            "payload"
+          ]
+        },
+        "stream": {
+          "value": "AxQlNkdYaXqLnK2+z+DxAhMkNUZXaHmKm6y9zt/wARIjNEVWZ3iJmqu8zd7vABEiM0RVZneImaq7"
+        },
+        "info": {
+          "value": {
+            "fileName": "hash-sha256.bin",
+            "referencedAssembly": null,
+            "resourceLocation": 0
+          }
+        }
+      }
+    },
+    {
+      "id": "linked-file-sha384",
+      "assemblyName": "ManifestLinkedSHA384",
+      "resource": "payload",
+      "classification": "linked-file",
+      "expectedBase64": "BBUmN0hZanuMna6/0OHyAxQlNkdYaXqLnK2+z+DxAhMkNUZXaHmKm6y9zt/wARIjNEVWZ3iJmqu8zd7vABEi",
+      "expectedInfo": {
+        "fileName": "hash-sha384.bin",
+        "referencedAssembly": null,
+        "resourceLocation": 0
+      },
+      "coreClr": {
+        "names": {
+          "value": [
+            "payload"
+          ]
+        },
+        "stream": {
+          "value": null
+        },
+        "info": {
+          "value": null
+        }
+      },
+      "metadataLoadContext": {
+        "names": {
+          "value": [
+            "payload"
+          ]
+        },
+        "stream": {
+          "value": "BBUmN0hZanuMna6/0OHyAxQlNkdYaXqLnK2+z+DxAhMkNUZXaHmKm6y9zt/wARIjNEVWZ3iJmqu8zd7vABEi"
+        },
+        "info": {
+          "value": {
+            "fileName": "hash-sha384.bin",
+            "referencedAssembly": null,
+            "resourceLocation": 0
+          }
+        }
+      }
+    },
+    {
+      "id": "linked-file-sha512",
+      "assemblyName": "ManifestLinkedSHA512",
+      "resource": "payload",
+      "classification": "linked-file",
+      "expectedBase64": "BRYnOElaa3yNnq/A0eLzBBUmN0hZanuMna6/0OHyAxQlNkdYaXqLnK2+z+DxAhMkNUZXaHmKm6y9zt/wARIjNA==",
+      "expectedInfo": {
+        "fileName": "hash-sha512.bin",
+        "referencedAssembly": null,
+        "resourceLocation": 0
+      },
+      "coreClr": {
+        "names": {
+          "value": [
+            "payload"
+          ]
+        },
+        "stream": {
+          "value": null
+        },
+        "info": {
+          "value": null
+        }
+      },
+      "metadataLoadContext": {
+        "names": {
+          "value": [
+            "payload"
+          ]
+        },
+        "stream": {
+          "value": "BRYnOElaa3yNnq/A0eLzBBUmN0hZanuMna6/0OHyAxQlNkdYaXqLnK2+z+DxAhMkNUZXaHmKm6y9zt/wARIjNA=="
+        },
+        "info": {
+          "value": {
+            "fileName": "hash-sha512.bin",
+            "referencedAssembly": null,
+            "resourceLocation": 0
+          }
+        }
+      }
+    },
+    {
+      "id": "forwarded-linked-file",
+      "assemblyName": "ManifestLinkedFacade",
+      "resource": "payload",
+      "classification": "forwarded-linked-file",
+      "expectedBase64": "AxQlNkdYaXqLnK2+z+DxAhMkNUZXaHmKm6y9zt/wARIjNEVWZ3iJmqu8zd7vABEiM0RVZneImaq7",
+      "expectedInfo": {
+        "fileName": "hash-sha256.bin",
+        "referencedAssembly": "ManifestLinkedSHA256",
+        "resourceLocation": 2
+      },
+      "coreClr": {
+        "names": {
+          "value": [
+            "payload"
+          ]
+        },
+        "stream": {
+          "value": null
+        },
+        "info": {
+          "value": null
+        }
+      },
+      "metadataLoadContext": {
+        "names": {
+          "value": [
+            "payload"
+          ]
+        },
+        "stream": {
+          "value": "AxQlNkdYaXqLnK2+z+DxAhMkNUZXaHmKm6y9zt/wARIjNEVWZ3iJmqu8zd7vABEiM0RVZneImaq7"
+        },
+        "info": {
+          "value": {
+            "fileName": "hash-sha256.bin",
+            "referencedAssembly": "ManifestLinkedSHA256",
+            "resourceLocation": 2
+          }
+        }
+      }
+    },
+    {
+      "id": "module-matching-offset",
+      "assemblyName": "ManifestModuleMatch",
+      "resource": "payload",
+      "classification": "linked-module",
+      "expectedBase64": "AH+A/w==",
+      "expectedInfo": {
+        "fileName": "ManifestChild.netmodule",
+        "referencedAssembly": null,
+        "resourceLocation": 1
+      },
+      "coreClr": {
+        "names": {
+          "value": [
+            "payload"
+          ]
+        },
+        "stream": {
+          "value": null
+        },
+        "info": {
+          "value": null
+        }
+      },
+      "metadataLoadContext": {
+        "names": {
+          "value": [
+            "payload"
+          ]
+        },
+        "stream": {
+          "value": "AH+A/w=="
+        },
+        "info": {
+          "value": {
+            "fileName": null,
+            "referencedAssembly": null,
+            "resourceLocation": 5
+          }
+        }
+      }
+    },
+    {
+      "id": "module-offset-disagreement",
+      "assemblyName": "ManifestModuleDifference",
+      "resource": "payload",
+      "classification": "module-offset-difference",
+      "expectedBase64": "EQ==",
+      "expectedInfo": {
+        "fileName": "ManifestChild.netmodule",
+        "referencedAssembly": null,
+        "resourceLocation": 1
+      },
+      "coreClr": {
+        "names": {
+          "value": [
+            "payload"
+          ]
+        },
+        "stream": {
+          "value": null
+        },
+        "info": {
+          "value": null
+        }
+      },
+      "metadataLoadContext": {
+        "names": {
+          "value": [
+            "payload"
+          ]
+        },
+        "stream": {
+          "value": "AH+A/w=="
+        },
+        "info": {
+          "value": {
+            "fileName": null,
+            "referencedAssembly": null,
+            "resourceLocation": 5
+          }
+        }
+      }
+    },
+    {
+      "id": "module-parent-only-name",
+      "assemblyName": "ManifestModuleAlias",
+      "resource": "parent-only",
+      "classification": "module-parent-name",
+      "expectedBase64": "AH+A/w==",
+      "expectedInfo": {
+        "fileName": "ManifestChild.netmodule",
+        "referencedAssembly": null,
+        "resourceLocation": 1
+      },
+      "coreClr": {
+        "names": {
+          "value": [
+            "parent-only"
+          ]
+        },
+        "stream": {
+          "value": null
+        },
+        "info": {
+          "value": null
+        }
+      },
+      "metadataLoadContext": {
+        "names": {
+          "value": [
+            "parent-only"
+          ]
+        },
+        "stream": {
+          "value": null
+        },
+        "info": {
+          "value": null
+        }
+      }
+    },
+    {
+      "id": "module-managed-entry-point",
+      "assemblyName": "ManifestEntryOwner",
+      "resource": "payload",
+      "classification": "module-entry-point",
+      "expectedBase64": "AH+A/w==",
+      "expectedInfo": {
+        "fileName": "ManifestEntryChild.netmodule",
+        "referencedAssembly": null,
+        "resourceLocation": 1
+      },
+      "coreClr": {
+        "names": {
+          "value": [
+            "payload"
+          ]
+        },
+        "stream": {
+          "value": null
+        },
+        "info": {
+          "value": null
+        }
+      },
+      "metadataLoadContext": {
+        "names": {
+          "value": [
+            "payload"
+          ]
+        },
+        "stream": {
+          "value": "AH+A/w=="
+        },
+        "info": {
+          "value": {
+            "fileName": null,
+            "referencedAssembly": null,
+            "resourceLocation": 5
+          }
+        }
+      }
+    },
+    {
+      "id": "malformed-embedded-length",
+      "assemblyName": "ManifestMalformedEmbedded",
+      "resource": "payload",
+      "classification": "malformed-embedded",
+      "expectedBase64": null,
+      "expectedInfo": null,
+      "coreClr": {
+        "names": {
+          "value": [
+            "payload"
+          ]
+        },
+        "stream": {
+          "error": {
+            "type": "System.BadImageFormatException",
+            "message": "An attempt was made to load a program with an incorrect format.\n (0x8007000B)",
+            "hresult": -2147024885
+          }
+        },
+        "info": {
+          "value": {
+            "fileName": null,
+            "referencedAssembly": null,
+            "resourceLocation": 5
+          }
+        }
+      },
+      "metadataLoadContext": {
+        "names": {
+          "value": [
+            "payload"
+          ]
+        },
+        "stream": {
+          "error": {
+            "type": "System.OverflowException",
+            "message": "Arithmetic operation resulted in an overflow.",
+            "hresult": -2146233066
+          }
+        },
+        "info": {
+          "error": {
+            "type": "System.OverflowException",
+            "message": "Arithmetic operation resulted in an overflow.",
+            "hresult": -2146233066
+          }
+        }
+      }
+    }
+  ]
+}

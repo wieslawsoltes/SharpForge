@@ -136,7 +136,7 @@ export const CallBinding = Base =>
           const e = r.error;
           // A wrong argument count is reported on the invoked expression (the member name of `a.b`), as Roslyn does.
           const invoked = syntax.expression?.kind === 'SimpleMemberAccessExpression' ? syntax.expression.name : syntax.expression,
-            isCount = e.code === 'CS1593' || e.code === 'CS7036';
+            isCount = e.code === DiagnosticId.CS1593 || e.code === DiagnosticId.CS7036;
           this.report(isCount && invoked ? invoked : this.errorNode(e, args, syntax), e.code, e.args);
           return this.bad(syntax);
         }

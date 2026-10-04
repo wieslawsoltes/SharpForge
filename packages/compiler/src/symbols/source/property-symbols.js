@@ -16,6 +16,7 @@ import {
 import { bindConstraintClauses } from './type-parameters.js';
 import { words } from './source-type.js';
 import { spanOf } from './source-type.js';
+import { recordContractType } from '../synthesized/record-nullability.js';
 
 /** Class mixin: Property and indexer symbols with their accessors and auto-property backing fields, delegate Invoke */
 export const PropertySymbolBuilder = Base =>
@@ -144,7 +145,7 @@ export const PropertySymbolBuilder = Base =>
         bindConstraintClauses(
           [...type.typeParameters],
           syntax.constraintClauses,
-          t => this.bindType(t, scope).type,
+          t => this.bindType(t, scope),
           (n, c, a) => this.report(uri, n, c, a),
           { ownerDisplay: type.toDisplayString(), useFeature: (node, feature) => this.host.useFeature?.(uri, node, feature) },
         );
@@ -276,11 +277,12 @@ export const PropertySymbolBuilder = Base =>
         type.typeKind === TypeKind.Class &&
         !declared.some(c => c.parameters.length === 1 && (c.parameters[0].type.originalDefinition ?? c.parameters[0].type) === type)
       ) {
+        const self = type.typeParameters?.length ? type.construct(type.typeParameters) : type;
         const copy = new MethodSymbol({
           name: '.ctor',
           methodKind: MethodKind.Constructor,
           returnType: this.core.void,
-          parameters: [new ParameterSymbol({ name: 'original', type: type.typeParameters?.length ? type.construct(type.typeParameters) : type })],
+          parameters: [new ParameterSymbol({ name: 'original', type: recordContractType(type, self) })],
           containingSymbol: type,
           declaredAccessibility: type.isSealed ? Accessibility.Private : Accessibility.Protected,
           modifiers: 0,

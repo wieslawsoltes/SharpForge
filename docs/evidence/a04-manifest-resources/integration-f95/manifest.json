@@ -1,0 +1,26 @@
+{
+  "sourceHead": "f95f71c4e5e17704b3097c2b9b8491269bfa68e4",
+  "files": [
+    {
+      "file": "project6-manifest-f95-integration.tap",
+      "bytes": 5316,
+      "sha256": "ab81975af8a5884a780f5bdfd70421f6617f7fd1aad52d4849c788956284a7ad"
+    },
+    {
+      "file": "project6-manifest-f95-integration.stderr.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "file": "project6-manifest-f95-integration.receipt.json",
+      "bytes": 1182,
+      "sha256": "6a6e1e0b98ea2e1823acf0370dd1fbbfb9df51c62fe22939921c22d6abab651f"
+    },
+    {
+      "file": "project6-manifest-main-integration.json",
+      "bytes": 25246,
+      "sha256": "d9c1ee7968e12f525867ea1a96821e6ee410050841f3ba22a6bab34daf55e19a"
+    }
+  ],
+  "totalBytes": 31744
+}

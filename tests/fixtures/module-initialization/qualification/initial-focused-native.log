@@ -1,0 +1,262 @@
+✔ A05 T21 precise and beforefieldinit types obey distinct lazy triggers (1.764289ms)
+✔ A05 T21 same-context recursive initialization observes partial state and runs once (0.298238ms)
+✔ A05 T21 initializer failure caches a rooted TypeInitializationException and InnerException (5.61516ms)
+✔ A05 T21 another scheduler context waits then retries after initialization (0.263567ms)
+✔ A05 T21 waiting context retries a cached failure at the triggering instruction (3.022525ms)
+✔ A05 T21 initialization wait cycles expose partial state instead of deadlocking (0.241544ms)
+✔ A05 T21 initialization state is separate for each closed generic identity (0.199402ms)
+✔ A05 T21 missing initializers and unknown trigger boundaries are deterministic (0.157401ms)
+✔ A05 T21 a failing managed cctor rethrows on the second field access and keeps its cause (26.951488ms)
+✔ A05 T21 direct delegate-shaped calls initialize before method entry (4.742585ms)
+✔ A05 T21 failure at a direct method-entry gate cannot enter the target catch clause (2.727803ms)
+✔ A05 T21 frame-budget failures retain their fatal resource-fault identity (0.194806ms)
+✔ A02-T30 a delegate over an extension method is closed over the receiver (86.160544ms)
+✔ A02-T30 a delegate over an extension method of a value type receiver stays CS1113 (12.852922ms)
+✔ A02-T30 two delegates are compared by Delegate.op_Equality; null and object comparisons by reference (38.80655ms)
+✔ A02-T30 a delegate type synthesized for a lambda is a TypeDef of the assembly, one per signature (20.961427ms)
+✔ A02-T30 module initializers run from <Module>::.cctor for every entry-point type shape (34.947768ms)
+✔ A02-T30 a program without module initializers declares nothing on <Module> (3.112057ms)
+✔ A02-T30 a constructed attribute class is named through its construction (12.935003ms)
+✔ A02-T30 a ref field is declared with a by-reference signature (130.509128ms)
+✔ A02-T30 a ref conditional denotes the chosen variable (11.546656ms)
+✔ A02-T30 stackalloc is localloc over an empty stack; operands evaluated before it are saved (14.972083ms)
+✔ A02-T30 stackalloc of a pointer type outside the cases the emitter covers is refused, never miscompiled (4.829748ms)
+✔ module initialization native: a real Roslyn host observes library startup once (3607.27298ms)
+ℹ {"backend":"roslyn","output":"first\nsecond\nread\n2\nread\n2\n","libraryBytes":3584,"librarySha256":"5f387ca05e7a4b3123c8ac57cbfcab2824644a846c4c8bbf61d5235618daf209"}
+ℹ {"backend":"registry","output":"first\nsecond\nread\n2\nread\n2\n","libraryBytes":1536,"librarySha256":"af1e815d7e57216a83672e8525cec3bd1ec890564c759ba85603c48543a63a0d"}
+ℹ {"backend":"references","output":"first\nsecond\nread\n2\nread\n2\n","libraryBytes":1536,"librarySha256":"a6806f46bfc17926f695aebbcf63d9556fec391d59d0c2ca28b9740bc43513ac"}
+ℹ Roslyn 5.3.0-2.26153.122 (4d3023de605a78ba3e59e50c657eed70f125c68a); .NET SDK 10.0.201; reference pack 10.0.5
+✔ module initialization native: TopLevel kickoff does not repeat module startup (78.052036ms)
+ℹ {"entry":"TopLevel","output":"module\nmain\n","assemblyBytes":1536,"assemblySha256":"28180b06c2663b9719cc10fdb2eb639c5736d086c6c9451b5297131bacbd2940"}
+✖ module initialization native: AsyncMain kickoff does not repeat module startup (94.002782ms)
+✔ module initialization baseline: producer emits a module constructor for plain-main (106.702365ms)
+✔ module initialization baseline: producer emits a module constructor for static-field-main (11.605317ms)
+✔ module initialization baseline: producer emits a module constructor for static-constructor-main (7.671159ms)
+✔ module initialization baseline: producer emits a module constructor for initializer-calls-entry-type (15.515832ms)
+✔ module initialization baseline: direct CIL startup for plain-main (17.447268ms)
+✔ module initialization baseline: direct CIL startup for static-field-main (10.317366ms)
+✔ module initialization baseline: direct CIL startup for static-constructor-main (8.234485ms)
+✔ module initialization baseline: direct CIL startup for initializer-calls-entry-type (8.654603ms)
+✔ module initialization baseline: direct CIL startup for declaration-order-once (13.587278ms)
+✔ module initialization baseline: direct CIL startup for pre-entry-fault (11.679676ms)
+✔ module initialization baseline: direct CIL startup for no-initializers (3.500923ms)
+✔ module initialization baseline: a library owns module startup before a selected static method (7.73369ms)
+✔ module initialization baseline: module constructor preserves source declaration order across files (9.493516ms)
+✔ module initialization baseline: no initializer leaves the module empty (7.742723ms)
+✔ module initialization baseline: independent CIL module startup is verified and runs once (entry) (4.457738ms)
+✔ module initialization baseline: independent CIL module startup is verified and runs once (library) (2.363081ms)
+✔ module initialization baseline: an active module initializer survives snapshot restore and collection (5.819738ms)
+✔ module initialization baseline: pre-entry failure bypasses Main catch and stays cached, rooted, and restorable (3.964734ms)
+✔ module initialization baseline: an invalid module body is rejected before entry execution (1.410832ms)
+✔ module initialization baseline: an invalid module body is rejected before selected method execution (0.699858ms)
+✔ module initialization baseline: an unrelated unreachable invalid body is not a module initialization root (1.126184ms)
+✔ module initialization baseline: compile source-image startup remains a separate control (21.970793ms)
+✔ module initialization baseline: compileToIL source-image startup remains a separate control (18.819404ms)
+✔ module initialization reference fixtures have current real Roslyn pins (0.642524ms)
+✔ module initialization diagnostics match Roslyn with real reference assemblies (263.90272ms)
+✔ module initialization assemblies execute with the pinned output on real .NET (360.98124ms)
+ℹ 7 assemblies ran on .NET 10.0.201, reference pack 10.0.5
+✔ pin selection defaults to all fixtures and applies --changed after selection (1.869837ms)
+✔ pin selection accepts repeatable exact ids and comma lists in request order (0.268233ms)
+✔ pin selection rejects unknown, duplicate and empty ids before checking currency (0.60612ms)
+✔ incremental pin writes preserve unrelated files and unselected rows, appending only selected new ids (1.542416ms)
+✔ pin writes validate every source hash before changing any file (0.608784ms)
+✔ an empty pin selection does not create the destination (0.27269ms)
+node:internal/modules/cjs/loader:1520
+  throw err;
+  ^
+
+Error: Cannot find module '/workspace/scratch/1692a10afba9/p5-module-initialization/apps/cli/main.js'
+    at Module._resolveFilename (node:internal/modules/cjs/loader:1517:15)
+    at wrapResolveFilename (node:internal/modules/cjs/loader:1071:27)
+    at defaultResolveImplForCJSLoading (node:internal/modules/cjs/loader:1095:10)
+    at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1122:12)
+    at Module._load (node:internal/modules/cjs/loader:1294:5)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:255:19)
+    at Module.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:154:5)
+    at node:internal/main/run_main_module:33:47 {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: []
+}
+
+Node.js v24.19.0
+node:internal/modules/cjs/loader:1520
+  throw err;
+  ^
+
+Error: Cannot find module '/workspace/scratch/1692a10afba9/p5-module-initialization/apps/cli/main.js'
+    at Module._resolveFilename (node:internal/modules/cjs/loader:1517:15)
+    at wrapResolveFilename (node:internal/modules/cjs/loader:1071:27)
+    at defaultResolveImplForCJSLoading (node:internal/modules/cjs/loader:1095:10)
+    at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1122:12)
+    at Module._load (node:internal/modules/cjs/loader:1294:5)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:255:19)
+    at Module.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:154:5)
+    at node:internal/main/run_main_module:33:47 {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: []
+}
+
+Node.js v24.19.0
+✔ Managed DLL without #SF: int output (88.173929ms)
+✔ Managed DLL without #SF: double (10.15089ms)
+✔ Managed DLL without #SF: loop (10.489308ms)
+✔ Managed DLL without #SF: call (8.222728ms)
+✔ Managed DLL without #SF: object (18.565972ms)
+✔ Managed DLL without #SF: array (7.099258ms)
+✔ Managed DLL without #SF: throw catch (9.696663ms)
+✔ Managed DLL without #SF: null catch (6.381704ms)
+✔ Managed DLL without #SF: bool boxing (4.911514ms)
+✔ Managed DLL without #SF: empty catch (4.630682ms)
+✔ Managed DLL without #SF: string ops (5.266887ms)
+✔ Managed DLL without #SF: ceil (4.334507ms)
+✔ Independent managed DLL: methods can be invoked without an entry point (4.082487ms)
+✔ Independent managed DLL: 64-bit arithmetic stays exact (1.157049ms)
+✔ Independent managed DLL: short floating literal and conversion (0.903177ms)
+✔ Independent managed DLL: switch table dispatch (2.521714ms)
+✔ Independent managed DLL: managed address into local (1.168747ms)
+✔ Independent managed DLL: static initializer executes exactly once (1.605208ms)
+✔ Independent managed DLL: finally executes on leave (1.470219ms)
+✔ Independent managed DLL: checked overflow becomes a managed fault (1.085965ms)
+✔ Independent managed DLL: unsigned division uses unsigned operands (0.82348ms)
+✔ Direct CIL: hard instruction limit (0.742661ms)
+✔ Direct CIL: hard output limit (3.83964ms)
+✔ Direct CIL: unknown external method is refused before output (1.632849ms)
+✔ Direct CIL: native pointer instructions remain inspectable, not executable (0.740638ms)
+✔ Direct CIL: invalid local slot and stack underflow rejected (0.957987ms)
+✔ Direct CIL: host arguments use strict declared types and arity (2.132733ms)
+✔ IL text: every method rebuilt; changed constants actually execute (3.107705ms)
+✔ IL text: changed bodies invalidate stale debug-profile metadata (5.683088ms)
+✔ IL text: long, branch and switch round trips (1.090853ms)
+✔ IL text: catches round trip (5.920257ms)
+✔ IL text: omitted or duplicate methods are never read from image fallback (0.824982ms)
+✔ IL text: undefined labels and invalid opcodes are rejected (0.988011ms)
+✔ Decompiler: simple independently authored Add is reconstructable C# (6.469413ms)
+✔ Decompiler: mutable local loads captured before writes (1.656823ms)
+✔ Decompiler: EH returns full IL and explicit fallback, not fake C# (4.516655ms)
+✔ Decoder: i64, r4 and standard two-byte operations (0.147337ms)
+✔ Decoder: branch into operand rejected (0.168097ms)
+✔ Metadata: generic method spec signature uses its blob column (0.981052ms)
+✔ Metadata: generic variables, arrays, byrefs and function pointers inspect (0.286781ms)
+✔ PE: inspection rejects malformed and truncated user DLLs (5.283902ms)
+✔ GC: strong handles retain; weak handles clear after strong release (0.76251ms)
+✔ GC: scratch marks reused; foreign handles rejected (0.516979ms)
+✖ CLI: inspect, invoke, decompile, editable IL, assemble, exec ordinary DLL (56.082529ms)
+✔ Direct CIL storage: byte local truncates and extends (1.919209ms)
+✔ Direct CIL storage: sbyte local truncates and extends (1.164371ms)
+✔ Direct CIL storage: ushort local truncates and extends (0.827145ms)
+✔ Direct CIL storage: short local truncates and extends (0.929245ms)
+✔ Direct CIL storage: ldelem.u1 array extends correctly (1.301001ms)
+✔ Direct CIL storage: ldelem.i1 array extends correctly (1.251688ms)
+✔ Direct CIL storage: indirect byte store truncates before unsigned load (1.03439ms)
+✔ Direct CIL host result keeps uint identity (0.899381ms)
+✔ Direct CIL host result keeps ulong identity (0.761428ms)
+✔ Direct CIL host result keeps bool identity (0.643195ms)
+✔ Direct CIL: string[] Main defaults to an empty argument array (1.222226ms)
+✖ CLI: no dummy arguments required for method decompilation or string[] entry point (60.008557ms)
+ℹ tests 114
+ℹ suites 0
+ℹ pass 111
+ℹ fail 3
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 11003.151489
+
+✖ failing tests:
+
+test at tests/compiler-module-initialization-native.test.js:104:3
+✖ module initialization native: AsyncMain kickoff does not repeat module startup (94.002782ms)
+  Error [CilError]: Managed IL verification failed: Program::<Main> IL_5: External member 'System.Threading.Tasks.Task::GetAwaiter' is not implemented; Program::<Main> IL_d: External member 'System.Runtime.CompilerServices.TaskAwaiter::GetResult' is not implemented; Program::Main IL_7: External member 'System.Runtime.CompilerServices.AsyncTaskMethodBuilder::Create' is not implemented; Program::Main IL_20: External member 'System.Runtime.CompilerServices.AsyncTaskMethodBuilder::Start' is not implemented; Program::Main IL_2b: External member 'System.Runtime.CompilerServices.AsyncTaskMethodBuilder::get_Task' is not implemented
+      at requireVerifiedCil (file:///workspace/scratch/1692a10afba9/p5-module-initialization/packages/runtime/src/execution/verification-error.js:16:13)
+      at new CilVirtualMachine (file:///workspace/scratch/1692a10afba9/p5-module-initialization/packages/runtime/src/cil-vm.js:38:5)
+      at TestContext.<anonymous> (file:///workspace/scratch/1692a10afba9/p5-module-initialization/tests/compiler-module-initialization-native.test.js:112:18)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    offset: undefined,
+    issues: [ { methodToken: 100663301, method: 'Program::<Main>', offset: 5, code: 'IL_REFERENCE', message: "External member 'System.Threading.Tasks.Task::GetAwaiter' is not implemented" }, { methodToken: 100663301, method: 'Program::<Main>', offset: 13, code: 'IL_REFERENCE', message: "External member 'System.Runtime.CompilerServices.TaskAwaiter::GetResult' is not implemented" }, { methodToken: 100663299, method: 'Program::Main', offset: 7, code: 'IL_REFERENCE', message: "External member 'System.Runtime.CompilerServices.AsyncTaskMethodBuilder::Create' is not implemented" }, { methodToken: 100663299, method: 'Program::Main', offset: 32, code: 'IL_REFERENCE', message: "External member 'System.Runtime.CompilerServices.AsyncTaskMethodBuilder::Start' is not implemented" }, { methodToken: 100663299, method: 'Program::Main', offset: 43, code: 'IL_REFERENCE', message: "External member 'System.Runtime.CompilerServices.AsyncTaskMethodBuilder::get_Task' is not implemented" } ]
+  }
+
+test at tests/managed-il.test.js:44:1
+✖ CLI: inspect, invoke, decompile, editable IL, assemble, exec ordinary DLL (56.082529ms)
+  Error: Command failed: /opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin/node apps/cli/main.js inspect /tmp/sf-managed-iR6Lyj/fixture.dll
+  node:internal/modules/cjs/loader:1520
+    throw err;
+    ^
+  
+  Error: Cannot find module '/workspace/scratch/1692a10afba9/p5-module-initialization/apps/cli/main.js'
+      at Module._resolveFilename (node:internal/modules/cjs/loader:1517:15)
+      at wrapResolveFilename (node:internal/modules/cjs/loader:1071:27)
+      at defaultResolveImplForCJSLoading (node:internal/modules/cjs/loader:1095:10)
+      at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1122:12)
+      at Module._load (node:internal/modules/cjs/loader:1294:5)
+      at wrapModuleLoad (node:internal/modules/cjs/loader:255:19)
+      at Module.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:154:5)
+      at node:internal/main/run_main_module:33:47 {
+    code: 'MODULE_NOT_FOUND',
+    requireStack: []
+  }
+  
+  Node.js v24.19.0
+  
+      at genericNodeError (node:internal/errors:985:15)
+      at wrappedFn (node:internal/errors:539:14)
+      at checkExecSyncError (node:child_process:942:11)
+      at execFileSync (node:child_process:978:15)
+      at cli (file:///workspace/scratch/1692a10afba9/p5-module-initialization/tests/managed-il.test.js:44:296)
+      at TestContext.<anonymous> (file:///workspace/scratch/1692a10afba9/p5-module-initialization/tests/managed-il.test.js:44:387)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19) {
+    status: 1,
+    signal: null,
+    output: [ null, '', "node:internal/modules/cjs/loader:1520\n  throw err;\n  ^\n\nError: Cannot find module '/workspace/scratch/1692a10afba9/p5-module-initialization/apps/cli/main.js'\n    at Module._resolveFilename (node:internal/modules/cjs/loader:1517:15)\n    at wrapResolveFilename (node:internal/modules/cjs/loader:1071:27)\n    at defaultResolveImplForCJSLoading (node:internal/modules/cjs/loader:1095:10)\n    at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1122:12)\n    at Module._load (node:internal/modules/cjs/loader:1294:5)\n    at wrapModuleLoad (node:internal/modules/cjs/loader:255:19)\n    at Module.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:154:5)\n    at node:internal/main/run_main_module:33:47 {\n  code: 'MODULE_NOT_FOUND',\n  requireStack: []\n}\n\nNode.js v24.19.0\n" ],
+    pid: 341,
+    stdout: '',
+    stderr: "node:internal/modules/cjs/loader:1520\n  throw err;\n  ^\n\nError: Cannot find module '/workspace/scratch/1692a10afba9/p5-module-initialization/apps/cli/main.js'\n    at Module._resolveFilename (node:internal/modules/cjs/loader:1517:15)\n    at wrapResolveFilename (node:internal/modules/cjs/loader:1071:27)\n    at defaultResolveImplForCJSLoading (node:internal/modules/cjs/loader:1095:10)\n    at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1122:12)\n    at Module._load (node:internal/modules/cjs/loader:1294:5)\n    at wrapModuleLoad (node:internal/modules/cjs/loader:255:19)\n    at Module.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:154:5)\n    at node:internal/main/run_main_module:33:47 {\n  code: 'MODULE_NOT_FOUND',\n  requireStack: []\n}\n\nNode.js v24.19.0\n"
+  }
+
+test at tests/managed-il.test.js:55:1
+✖ CLI: no dummy arguments required for method decompilation or string[] entry point (60.008557ms)
+  Error: Command failed: /opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin/node apps/cli/main.js decompile /tmp/sf-main-i8vFT5/fixture.dll --method Add
+  node:internal/modules/cjs/loader:1520
+    throw err;
+    ^
+  
+  Error: Cannot find module '/workspace/scratch/1692a10afba9/p5-module-initialization/apps/cli/main.js'
+      at Module._resolveFilename (node:internal/modules/cjs/loader:1517:15)
+      at wrapResolveFilename (node:internal/modules/cjs/loader:1071:27)
+      at defaultResolveImplForCJSLoading (node:internal/modules/cjs/loader:1095:10)
+      at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1122:12)
+      at Module._load (node:internal/modules/cjs/loader:1294:5)
+      at wrapModuleLoad (node:internal/modules/cjs/loader:255:19)
+      at Module.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:154:5)
+      at node:internal/main/run_main_module:33:47 {
+    code: 'MODULE_NOT_FOUND',
+    requireStack: []
+  }
+  
+  Node.js v24.19.0
+  
+      at genericNodeError (node:internal/errors:985:15)
+      at wrappedFn (node:internal/errors:539:14)
+      at checkExecSyncError (node:child_process:942:11)
+      at execFileSync (node:child_process:978:15)
+      at cli (file:///workspace/scratch/1692a10afba9/p5-module-initialization/tests/managed-il.test.js:55:197)
+      at TestContext.<anonymous> (file:///workspace/scratch/1692a10afba9/p5-module-initialization/tests/managed-il.test.js:55:327)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19) {
+    status: 1,
+    signal: null,
+    output: [ null, '', "node:internal/modules/cjs/loader:1520\n  throw err;\n  ^\n\nError: Cannot find module '/workspace/scratch/1692a10afba9/p5-module-initialization/apps/cli/main.js'\n    at Module._resolveFilename (node:internal/modules/cjs/loader:1517:15)\n    at wrapResolveFilename (node:internal/modules/cjs/loader:1071:27)\n    at defaultResolveImplForCJSLoading (node:internal/modules/cjs/loader:1095:10)\n    at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1122:12)\n    at Module._load (node:internal/modules/cjs/loader:1294:5)\n    at wrapModuleLoad (node:internal/modules/cjs/loader:255:19)\n    at Module.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:154:5)\n    at node:internal/main/run_main_module:33:47 {\n  code: 'MODULE_NOT_FOUND',\n  requireStack: []\n}\n\nNode.js v24.19.0\n" ],
+    pid: 349,
+    stdout: '',
+    stderr: "node:internal/modules/cjs/loader:1520\n  throw err;\n  ^\n\nError: Cannot find module '/workspace/scratch/1692a10afba9/p5-module-initialization/apps/cli/main.js'\n    at Module._resolveFilename (node:internal/modules/cjs/loader:1517:15)\n    at wrapResolveFilename (node:internal/modules/cjs/loader:1071:27)\n    at defaultResolveImplForCJSLoading (node:internal/modules/cjs/loader:1095:10)\n    at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1122:12)\n    at Module._load (node:internal/modules/cjs/loader:1294:5)\n    at wrapModuleLoad (node:internal/modules/cjs/loader:255:19)\n    at Module.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:154:5)\n    at node:internal/main/run_main_module:33:47 {\n  code: 'MODULE_NOT_FOUND',\n  requireStack: []\n}\n\nNode.js v24.19.0\n"
+  }

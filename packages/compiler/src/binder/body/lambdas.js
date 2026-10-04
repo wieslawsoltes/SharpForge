@@ -3,14 +3,16 @@
  * switch expressions and collection expressions.
  */
 import {DiagnosticId} from '../../diagnostics/codes.js';
-import { RefKind, ErrorTypeSymbol } from '../../symbols/types.js';
+import { RefKind, TypeKind, ErrorTypeSymbol } from '../../symbols/types.js';
 import { ParameterSymbol } from '../../symbols/members.js';
+import { expressionTreeDelegate } from '../../symbols/expression-tree-types.js';
 import { Conversion, ConversionKind } from '../../conversions/classify.js';
 import { delegateInvoke } from '../../overload/type-inference.js';
 import { asyncResultType } from '../csharp70.js';
 import { anonymousFunctionAnchor, anonymousMethodSignatureErrors } from '../anonymous-methods.js';
 
 const unknown = ErrorTypeSymbol.unknown;
+const lambdaDelegate = (type, core) => type?.typeKind === TypeKind.Delegate ? type : expressionTreeDelegate(type, core);
 
 /** The cache key of a lambda binding: its parameter types and return type (`?` while the return type is inferred). */
 const signatureKey = (parameterTypes, returnType) =>
@@ -175,7 +177,16 @@ export const LambdaBinding = Base =>
         },
       };
       node.convert = to => {
-        const invoke = delegateInvoke(to);
+        const treeDelegate = expressionTreeDelegate(to, this.core);
+        if (treeDelegate && treeDelegate.typeKind !== TypeKind.Delegate) {
+          node.lastConversionError = [{ node: anonymousFunctionAnchor(syntax), code: DiagnosticId.CS0835, args: [this.display(treeDelegate)] }];
+          return null;
+        }
+        if (treeDelegate && isAnonymousMethod) {
+          node.lastConversionError = [{ node: syntax.delegateKeyword, code: DiagnosticId.CS1946, args: [] }];
+          return null;
+        }
+        const invoke = delegateInvoke(lambdaDelegate(to, this.core));
         if (!invoke) {
           node.lastConversionError = null;
           return null;
@@ -231,7 +242,7 @@ export const LambdaBinding = Base =>
         return new Conversion(ConversionKind.AnonymousFunction);
       };
       node.bindFinal = to => {
-        const invoke = delegateInvoke(to);
+        const invoke = delegateInvoke(lambdaDelegate(to, this.core));
         return invoke
           ? bindWith(
               invoke.parameters.map(p => p.type),

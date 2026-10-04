@@ -1,0 +1,33 @@
+{
+  "argv": [
+    "node",
+    "scripts/limited.js",
+    "node",
+    "--test",
+    "--test-reporter=tap",
+    "--test-concurrency=1",
+    "tests/clr-resources-manifest-hash-length.test.js",
+    "tests/clr-resources-manifest-malformed.test.js",
+    "tests/clr-resources-manifest-reference.test.js",
+    "tests/clr-resources-manifest.test.js"
+  ],
+  "cwd": "/workspace/scratch/7e3d2a445c44/sf6-manifest-resources",
+  "startedUtc": "2026-10-04T17:14:48.895915+00:00",
+  "headBefore": "f95f71c4e5e17704b3097c2b9b8491269bfa68e4",
+  "integrationRecordSha256": "d9c1ee7968e12f525867ea1a96821e6ee410050841f3ba22a6bab34daf55e19a",
+  "finishedUtc": "2026-10-04T17:14:50.623771+00:00",
+  "exitCode": 0,
+  "headAfter": "f95f71c4e5e17704b3097c2b9b8491269bfa68e4",
+  "outputs": [
+    {
+      "path": "/workspace/scratch/7e3d2a445c44/project6-manifest-f95-integration.tap",
+      "bytes": 5316,
+      "sha256": "ab81975af8a5884a780f5bdfd70421f6617f7fd1aad52d4849c788956284a7ad"
+    },
+    {
+      "path": "/workspace/scratch/7e3d2a445c44/project6-manifest-f95-integration.stderr.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ]
+}

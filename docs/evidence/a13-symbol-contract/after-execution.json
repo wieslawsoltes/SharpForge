@@ -1,0 +1,91 @@
+{
+  "schemaVersion": 1,
+  "phase": "after",
+  "cwd": "/workspace/scratch/7e3d2a445c44/sf6-symbol-contract",
+  "argv": [
+    "node",
+    "scripts/limited.js",
+    "node",
+    "--test",
+    "tests/a13-01-module-contract.test.js"
+  ],
+  "nodeExecutable": "/opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin/node",
+  "nodeVersion": "v24.19.0",
+  "sourceCommit": "037fa6385efa3489b7ca1b044e7d8a60240578a7",
+  "sourceTree": "73e89fadf96f570a97c55942b26aa86a44455ac7",
+  "gitStatusBefore": "",
+  "environment": {
+    "CI": null,
+    "NODE_OPTIONS": null,
+    "SHARPFORGE_TEST_CONCURRENCY": null,
+    "SHARPFORGE_MAX_PARALLEL_RUNS": null,
+    "SHARPFORGE_MAX_OLD_SPACE_MB": null
+  },
+  "platform": {
+    "system": "Linux",
+    "node": "4a20ccefcfde",
+    "release": "6.18.44",
+    "version": "#1 SMP Sat Sep 26 20:02:31 UTC 2026",
+    "machine": "x86_64"
+  },
+  "memoryBytes": 10451464192,
+  "sourceSha256": {
+    "tests/a13-01-module-contract.test.js": "394898092e9f2a3befd7a5c351c9b4bda6e611f11008ab69960dad0f1bdef625",
+    "packages/symbols/src/index.js": "7484d1fc471696a90bc3ed3abdfe319e02b5842cc56fec72a2dcf582733b1ebc",
+    "scripts/limited.js": "d60fa1310cc85ce9426914dd4b79b1b500dcb2eab0928b422d24994d90a650f7",
+    "scripts/planning/lib/resource-limits.js": "f70d0f2862ad4a5e0afce5e47ecf8e055cf82aefc44fefc96a3b4989293ee382",
+    "package.json": "9ed396895997e7afbdb0951b22f56210ed9a66efc19753609107d0a4240ecfe8",
+    "package-lock.json": "0795c3e9cb2007594de2fa207c2a97d80bb927f146f68d8566934485cbddf0cd",
+    "packages/symbols/package.json": "cc128e140a5f55859114083a1c029d57ea56fb6524d7ac2fe82bd20cb1109647",
+    "packages/cil/package.json": "6285282a5ce21823ef4a2e93e0e8173160503f857152bd546f638fa28f353429",
+    "packages/archive/package.json": "e67cb79a2461944333ebe3f583705c2ba499dbc542f9ec34be8fa355e0264221",
+    "packages/bytecode/package.json": "3a4815e50844cb30c392ba0e58266a8dc27ab39ce8897972a4cbf4354a65b27a",
+    "packages/framework/package.json": "ee9eb72f27365f10d83bc1e3ac096ff939c125a5c0a01643c6e90637f57c21a3",
+    "packages/bcl-core/package.json": "b5c0b3309973d0258ca62e584c34d98b0bbbd9e55802a368bc36388ca70ac253",
+    "packages/bcl-collections/package.json": "225ea8f0758022cd3c8c3217d224cdbea98602b7258de9f4c7d16387fc55041e"
+  },
+  "packageSourceFileCount": 423,
+  "packageSourceManifestSha256": "3b301593a9619c8f199043e80391d6e068f7e7fad0e7742945ee2a2e7f2cd8f6",
+  "packageTreeIds": {
+    "symbols": "3ec9ada012491903c79b439b1e4d6924a0621aaa",
+    "cil": "520357e599ef926a55806d2a8f1f5467edc137bc",
+    "archive": "6451aced45878f841bb3343d46f19abb6ade87fb",
+    "bytecode": "89e9d3d1c68773ccf90a8f5a3053e68a67203847",
+    "framework": "4c41adcb56ba2d4f073907da946036f4b82e7e37",
+    "bcl-core": "d0df0962f68a34db058a6a70e28b6fda011e6375",
+    "bcl-collections": "49979d66dd7db7524391423d538036c31e86841c"
+  },
+  "packageAliases": {
+    "symbols": "/workspace/scratch/7e3d2a445c44/sf6-symbol-contract/packages/symbols",
+    "cil": "/workspace/scratch/7e3d2a445c44/sf6-symbol-contract/packages/cil",
+    "archive": "/workspace/scratch/7e3d2a445c44/sf6-symbol-contract/packages/archive",
+    "bytecode": "/workspace/scratch/7e3d2a445c44/sf6-symbol-contract/packages/bytecode",
+    "framework": "/workspace/scratch/7e3d2a445c44/sf6-symbol-contract/packages/framework",
+    "bcl-core": "/workspace/scratch/7e3d2a445c44/sf6-symbol-contract/packages/bcl-core",
+    "bcl-collections": "/workspace/scratch/7e3d2a445c44/sf6-symbol-contract/packages/bcl-collections"
+  },
+  "logFile": "after.log",
+  "startedUtc": "2026-10-04T15:54:59.702+00:00",
+  "completedUtc": "2026-10-04T15:55:00.423+00:00",
+  "durationSeconds": 0.720334247998835,
+  "exitCode": 0,
+  "gitStatusAfter": "",
+  "sourceCommitAfter": "037fa6385efa3489b7ca1b044e7d8a60240578a7",
+  "sourceSha256After": {
+    "tests/a13-01-module-contract.test.js": "394898092e9f2a3befd7a5c351c9b4bda6e611f11008ab69960dad0f1bdef625",
+    "packages/symbols/src/index.js": "7484d1fc471696a90bc3ed3abdfe319e02b5842cc56fec72a2dcf582733b1ebc",
+    "scripts/limited.js": "d60fa1310cc85ce9426914dd4b79b1b500dcb2eab0928b422d24994d90a650f7",
+    "scripts/planning/lib/resource-limits.js": "f70d0f2862ad4a5e0afce5e47ecf8e055cf82aefc44fefc96a3b4989293ee382",
+    "package.json": "9ed396895997e7afbdb0951b22f56210ed9a66efc19753609107d0a4240ecfe8",
+    "package-lock.json": "0795c3e9cb2007594de2fa207c2a97d80bb927f146f68d8566934485cbddf0cd",
+    "packages/symbols/package.json": "cc128e140a5f55859114083a1c029d57ea56fb6524d7ac2fe82bd20cb1109647",
+    "packages/cil/package.json": "6285282a5ce21823ef4a2e93e0e8173160503f857152bd546f638fa28f353429",
+    "packages/archive/package.json": "e67cb79a2461944333ebe3f583705c2ba499dbc542f9ec34be8fa355e0264221",
+    "packages/bytecode/package.json": "3a4815e50844cb30c392ba0e58266a8dc27ab39ce8897972a4cbf4354a65b27a",
+    "packages/framework/package.json": "ee9eb72f27365f10d83bc1e3ac096ff939c125a5c0a01643c6e90637f57c21a3",
+    "packages/bcl-core/package.json": "b5c0b3309973d0258ca62e584c34d98b0bbbd9e55802a368bc36388ca70ac253",
+    "packages/bcl-collections/package.json": "225ea8f0758022cd3c8c3217d224cdbea98602b7258de9f4c7d16387fc55041e"
+  },
+  "logSha256": "f588aee38f9f9d037c1f8e40a339a0f62efa01a5742f568dd33ea7292750f052",
+  "logBytes": 371
+}

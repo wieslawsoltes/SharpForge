@@ -1,0 +1,80 @@
+{
+  "testedHead": "03bc06bff6d2fef444ceb6f9be56b5a12d65c509",
+  "testedTree": "5b73766b6223bfe766566a5c7e17b40660bbb326",
+  "parents": [
+    "b1bcaf51e4900721631b6770bbc83b8c8df9cbe1",
+    "7f4af78df79e3eac36302c50e0a589e0ce9e83ac"
+  ],
+  "command": [
+    "node",
+    "scripts/limited.js",
+    "node",
+    "--test",
+    "--test-concurrency=1",
+    "tests/compiler-cil-utf8-rva.test.js",
+    "tests/compiler-cil-utf8-rva-reference.test.js",
+    "tests/compiler-cil-utf8-rva-native.test.js"
+  ],
+  "environment": {
+    "DOTNET_ROOT": "/workspace/scratch/1692a10afba9/toolchain/dotnet",
+    "DOTNET": "/workspace/scratch/1692a10afba9/toolchain/dotnet/dotnet",
+    "SHARPFORGE_ORACLE_DOTNET": "/workspace/scratch/1692a10afba9/toolchain/dotnet/dotnet"
+  },
+  "toolchainValidatedByNativeTest": {
+    "sdk": "10.0.201",
+    "runtime": "10.0.5",
+    "referencePack": "10.0.5",
+    "roslyn": {
+      "version": "5.3.0-2.26153.122 (4d3023de605a78ba3e59e50c657eed70f125c68a)",
+      "sha256": "4913fa70d10c99901edbb825fdedcc92465be08665016a5d258ea45f953624f0"
+    },
+    "referenceAssemblies": {
+      "count": 167,
+      "sha256": "a978e7aaf608f22e860328a42319b908a5a084cdb087b28b5c31a1e6726be362"
+    }
+  },
+  "result": {
+    "tests": 12,
+    "pass": 12,
+    "fail": 0,
+    "skipped": 0,
+    "exitCode": 0,
+    "durationMs": 7489.176989
+  },
+  "nativeAllocatedBytesPer10000Calls": {
+    "registry": {
+      "sharpforge": 0,
+      "roslyn": 0
+    },
+    "references": {
+      "sharpforge": 0,
+      "roslyn": 0
+    },
+    "fallback": {
+      "sharpforge": 400000,
+      "roslyn": 1120000
+    }
+  },
+  "runtimeScope": "Three newly emitted SharpForge libraries executed through the independently Roslyn-compiled consumer.",
+  "sourceVerification": {
+    "trackedTestedPathsMatchHeadBeforeAndAfter": true,
+    "packageAliases": 10,
+    "manifestDependencyEdges": 15,
+    "literalImportReachableModules": 1198,
+    "literalImportEdges": 3955,
+    "untrackedImportTargets": 0,
+    "wholeWorktreeStayedClean": false,
+    "statusCountBefore": 232,
+    "statusCountAfter": 232,
+    "reason": "Workspace synchronization repopulated unrelated excluded tracked files and untracked files, including unused source helpers. Their bytes were preserved; tested tracked paths stayed exact."
+  },
+  "oracleRecaptured": false,
+  "benchmarkRerun": false,
+  "files": {
+    "node-resolution.json": "78e5429422bff2b57dbb55dad561e18ae10877cd87e129394ea34296d8037596",
+    "aliases-before.json": "102fb4f4feabdaf938fefb0b8289f8640d74ff6bfeda503343c16615e3798103",
+    "aliases-after.json": "ea90a73655693b4ced637ecb98237706f41d2bb3642e41a6d72aa2578dbb9af3",
+    "source-imports.json": "e8e050529d98394f11410e4e5530ecac8be3e14588c019332b6eac25e207bd02",
+    "replay.log": "d8a5d8e7d4dd2d8bfb961196cc2aa325919bda5f43f4905bcce63bc3cb107866"
+  }
+}

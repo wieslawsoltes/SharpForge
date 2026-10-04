@@ -1,5 +1,15 @@
 # @sharpforge/cil
 
+Reference-assembly member policy and marker emission are available through `referenceAssemblyMemberIncluded` and
+`addReferenceAssemblyAttribute`. The compiler's `{ refout: true }` adapter, example and qualification commands are in
+[Reference assembly output](../../docs/reference-assembly-refout.md).
+
+`assemblyReferenceIdentity(builder, name)` returns the exact configured or framework fallback identity used by
+`builder.assemblyRef(name)`: `{ name, version, culture, flags, publicKeyOrToken }`. It does not add a metadata row,
+and each result owns copies of its four-part version and key bytes. Invalid names and missing required `net9`/`net10`
+reference identities raise `CilError`, as emission does. This lets consumers serialize assembly-qualified attribute
+type names without duplicating framework identity defaults.
+
 Genuine ECMA-335 PE/CLI emission, typed CIL lowering, bounded metadata/IL loading, canonical-profile verification and disassembly. JavaScript ESM. Version 0.6.0. MIT. Sibling dependencies: `@sharpforge/bytecode` and `@sharpforge/framework`.
 
 ```js
@@ -22,8 +32,29 @@ The root source release includes the complete backend contract, public API examp
 The [decompiler API](DECOMPILER.md) exposes bounded immutable normal control-flow
 graphs and the conservative source reconstruction pipeline, including explicit
 IL fallbacks and exception-boundary metadata.
+Assembly results include a [physical metadata inventory](DECOMPILER-INVENTORY.md)
+with exact row accounting and explicit limits on source reconstruction.
 
 0.6 emits actual checked arithmetic/conversion instructions and InterfaceImpl metadata for concrete IDisposable resources, alongside finally cleanup. The canonical loader reconstructs and verifies these supported forms.
+
+## PE inspection
+
+`inspectPE(bytes, options)` returns an owned, versioned, JSON-safe PE/CLI snapshot:
+COFF/optional headers, sections and data directories, CorFlags, raw debug records,
+strong-name facts, and ReadyToRun/mixed-mode classification. UInt64 header values
+are hexadecimal strings. Native code is explicitly not disassembled, and signing
+flags are separate from cryptographic verification. Input, debug-record/payload,
+and strong-name byte budgets support bounded inspection with cancellation.
+
+`AssemblyInspector.summary({ includePE: true, peOptions })` includes the same
+snapshot on full or paged summaries. Available CIL remains inspectable in
+ReadyToRun images even with ILOnly unset. Native, OPTIL, Runtime, and unmanaged IL
+method implementations retain metadata and explicit disassembly status without
+parsing their RVAs as CIL. `methodCodeKind(implFlags)` exposes the shared admission
+classification. `readPEDebugDirectory(parsedPE, options)` returns owned raw debug
+entries; the symbols package reuses it for existing semantic PDB decoding.
+See [PE-INSPECTION.md](PE-INSPECTION.md) for exact fields, limits, ownership,
+cancellation, and reference-evidence boundaries.
 
 ## Parameterless Object construction
 

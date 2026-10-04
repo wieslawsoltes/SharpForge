@@ -1,0 +1,642 @@
+{
+  "sdk": "10.0.201",
+  "runtime": "10.0.5",
+  "sourceSha256": "0e6054a48e18e130b4c226c45347c0fd4975e72faf7c163358b9929cf0336743",
+  "referenceAssembly": "System.Private.CoreLib",
+  "assemblyIdentity": {
+    "name": "System.Private.CoreLib",
+    "version": "10.0.0.0",
+    "culture": "",
+    "publicKeyToken": "7cec85d7bea7798e"
+  },
+  "assemblySha256": "a4d8ec9be165f75323c3aad803809170a25421a4ee91b866f2850234b6d3a0fe",
+  "metadataSource": "Public declared runtime metadata obtained through System.Reflection; fields remain distinct from properties.",
+  "frequency": "1000000000",
+  "isHighResolution": true,
+  "metadata": [
+    {
+      "kind": "constructor",
+      "name": ".ctor",
+      "result": "System.Void",
+      "isStatic": false,
+      "parameters": []
+    },
+    {
+      "kind": "field",
+      "name": "IsHighResolution",
+      "result": "System.Boolean",
+      "owner": "System.Diagnostics.Stopwatch",
+      "isStatic": true,
+      "readOnly": true,
+      "literal": false
+    },
+    {
+      "kind": "field",
+      "name": "Frequency",
+      "result": "System.Int64",
+      "owner": "System.Diagnostics.Stopwatch",
+      "isStatic": true,
+      "readOnly": true,
+      "literal": false
+    },
+    {
+      "kind": "method",
+      "name": "get_IsRunning",
+      "result": "System.Boolean",
+      "isStatic": false,
+      "parameters": [],
+      "isVirtual": false,
+      "baseOwner": "System.Diagnostics.Stopwatch"
+    },
+    {
+      "kind": "method",
+      "name": "GetTimestamp",
+      "result": "System.Int64",
+      "isStatic": true,
+      "parameters": [],
+      "isVirtual": false,
+      "baseOwner": "System.Diagnostics.Stopwatch"
+    },
+    {
+      "kind": "method",
+      "name": "get_ElapsedMilliseconds",
+      "result": "System.Int64",
+      "isStatic": false,
+      "parameters": [],
+      "isVirtual": false,
+      "baseOwner": "System.Diagnostics.Stopwatch"
+    },
+    {
+      "kind": "method",
+      "name": "get_ElapsedTicks",
+      "result": "System.Int64",
+      "isStatic": false,
+      "parameters": [],
+      "isVirtual": false,
+      "baseOwner": "System.Diagnostics.Stopwatch"
+    },
+    {
+      "kind": "method",
+      "name": "StartNew",
+      "result": "System.Diagnostics.Stopwatch",
+      "isStatic": true,
+      "parameters": [],
+      "isVirtual": false,
+      "baseOwner": "System.Diagnostics.Stopwatch"
+    },
+    {
+      "kind": "method",
+      "name": "ToString",
+      "result": "System.String",
+      "isStatic": false,
+      "parameters": [],
+      "isVirtual": true,
+      "baseOwner": "System.Object"
+    },
+    {
+      "kind": "method",
+      "name": "GetElapsedTime",
+      "result": "System.TimeSpan",
+      "isStatic": true,
+      "parameters": [
+        "System.Int64"
+      ],
+      "isVirtual": false,
+      "baseOwner": "System.Diagnostics.Stopwatch"
+    },
+    {
+      "kind": "method",
+      "name": "GetElapsedTime",
+      "result": "System.TimeSpan",
+      "isStatic": true,
+      "parameters": [
+        "System.Int64",
+        "System.Int64"
+      ],
+      "isVirtual": false,
+      "baseOwner": "System.Diagnostics.Stopwatch"
+    },
+    {
+      "kind": "method",
+      "name": "get_Elapsed",
+      "result": "System.TimeSpan",
+      "isStatic": false,
+      "parameters": [],
+      "isVirtual": false,
+      "baseOwner": "System.Diagnostics.Stopwatch"
+    },
+    {
+      "kind": "method",
+      "name": "Reset",
+      "result": "System.Void",
+      "isStatic": false,
+      "parameters": [],
+      "isVirtual": false,
+      "baseOwner": "System.Diagnostics.Stopwatch"
+    },
+    {
+      "kind": "method",
+      "name": "Restart",
+      "result": "System.Void",
+      "isStatic": false,
+      "parameters": [],
+      "isVirtual": false,
+      "baseOwner": "System.Diagnostics.Stopwatch"
+    },
+    {
+      "kind": "method",
+      "name": "Start",
+      "result": "System.Void",
+      "isStatic": false,
+      "parameters": [],
+      "isVirtual": false,
+      "baseOwner": "System.Diagnostics.Stopwatch"
+    },
+    {
+      "kind": "method",
+      "name": "Stop",
+      "result": "System.Void",
+      "isStatic": false,
+      "parameters": [],
+      "isVirtual": false,
+      "baseOwner": "System.Diagnostics.Stopwatch"
+    },
+    {
+      "kind": "property",
+      "name": "IsRunning",
+      "result": "System.Boolean",
+      "isStatic": false,
+      "readOnly": true
+    },
+    {
+      "kind": "property",
+      "name": "ElapsedMilliseconds",
+      "result": "System.Int64",
+      "isStatic": false,
+      "readOnly": true
+    },
+    {
+      "kind": "property",
+      "name": "ElapsedTicks",
+      "result": "System.Int64",
+      "isStatic": false,
+      "readOnly": true
+    },
+    {
+      "kind": "property",
+      "name": "Elapsed",
+      "result": "System.TimeSpan",
+      "isStatic": false,
+      "readOnly": true
+    }
+  ],
+  "rows": [
+    {
+      "start": "0",
+      "end": "0",
+      "ticks": "0",
+      "totalMilliseconds": "0",
+      "totalSeconds": "0",
+      "text": "00:00:00"
+    },
+    {
+      "start": "0",
+      "end": "1",
+      "ticks": "0",
+      "totalMilliseconds": "0",
+      "totalSeconds": "0",
+      "text": "00:00:00"
+    },
+    {
+      "start": "0",
+      "end": "-1",
+      "ticks": "0",
+      "totalMilliseconds": "0",
+      "totalSeconds": "0",
+      "text": "00:00:00"
+    },
+    {
+      "start": "0",
+      "end": "49",
+      "ticks": "0",
+      "totalMilliseconds": "0",
+      "totalSeconds": "0",
+      "text": "00:00:00"
+    },
+    {
+      "start": "0",
+      "end": "-49",
+      "ticks": "0",
+      "totalMilliseconds": "0",
+      "totalSeconds": "0",
+      "text": "00:00:00"
+    },
+    {
+      "start": "0",
+      "end": "50",
+      "ticks": "0",
+      "totalMilliseconds": "0",
+      "totalSeconds": "0",
+      "text": "00:00:00"
+    },
+    {
+      "start": "0",
+      "end": "-50",
+      "ticks": "0",
+      "totalMilliseconds": "0",
+      "totalSeconds": "0",
+      "text": "00:00:00"
+    },
+    {
+      "start": "0",
+      "end": "99",
+      "ticks": "0",
+      "totalMilliseconds": "0",
+      "totalSeconds": "0",
+      "text": "00:00:00"
+    },
+    {
+      "start": "0",
+      "end": "-99",
+      "ticks": "0",
+      "totalMilliseconds": "0",
+      "totalSeconds": "0",
+      "text": "00:00:00"
+    },
+    {
+      "start": "0",
+      "end": "100",
+      "ticks": "1",
+      "totalMilliseconds": "0.0001",
+      "totalSeconds": "1E-07",
+      "text": "00:00:00.0000001"
+    },
+    {
+      "start": "0",
+      "end": "-100",
+      "ticks": "-1",
+      "totalMilliseconds": "-0.0001",
+      "totalSeconds": "-1E-07",
+      "text": "-00:00:00.0000001"
+    },
+    {
+      "start": "0",
+      "end": "101",
+      "ticks": "1",
+      "totalMilliseconds": "0.0001",
+      "totalSeconds": "1E-07",
+      "text": "00:00:00.0000001"
+    },
+    {
+      "start": "0",
+      "end": "-101",
+      "ticks": "-1",
+      "totalMilliseconds": "-0.0001",
+      "totalSeconds": "-1E-07",
+      "text": "-00:00:00.0000001"
+    },
+    {
+      "start": "0",
+      "end": "999",
+      "ticks": "9",
+      "totalMilliseconds": "0.0009",
+      "totalSeconds": "9E-07",
+      "text": "00:00:00.0000009"
+    },
+    {
+      "start": "0",
+      "end": "-999",
+      "ticks": "-9",
+      "totalMilliseconds": "-0.0009",
+      "totalSeconds": "-9E-07",
+      "text": "-00:00:00.0000009"
+    },
+    {
+      "start": "0",
+      "end": "1000",
+      "ticks": "10",
+      "totalMilliseconds": "0.001",
+      "totalSeconds": "1E-06",
+      "text": "00:00:00.0000010"
+    },
+    {
+      "start": "0",
+      "end": "-1000",
+      "ticks": "-10",
+      "totalMilliseconds": "-0.001",
+      "totalSeconds": "-1E-06",
+      "text": "-00:00:00.0000010"
+    },
+    {
+      "start": "0",
+      "end": "1001",
+      "ticks": "10",
+      "totalMilliseconds": "0.001",
+      "totalSeconds": "1E-06",
+      "text": "00:00:00.0000010"
+    },
+    {
+      "start": "0",
+      "end": "-1001",
+      "ticks": "-10",
+      "totalMilliseconds": "-0.001",
+      "totalSeconds": "-1E-06",
+      "text": "-00:00:00.0000010"
+    },
+    {
+      "start": "0",
+      "end": "99999",
+      "ticks": "999",
+      "totalMilliseconds": "0.0999",
+      "totalSeconds": "9.99E-05",
+      "text": "00:00:00.0000999"
+    },
+    {
+      "start": "0",
+      "end": "-99999",
+      "ticks": "-999",
+      "totalMilliseconds": "-0.0999",
+      "totalSeconds": "-9.99E-05",
+      "text": "-00:00:00.0000999"
+    },
+    {
+      "start": "0",
+      "end": "100000",
+      "ticks": "1000",
+      "totalMilliseconds": "0.1",
+      "totalSeconds": "0.0001",
+      "text": "00:00:00.0001000"
+    },
+    {
+      "start": "0",
+      "end": "-100000",
+      "ticks": "-1000",
+      "totalMilliseconds": "-0.1",
+      "totalSeconds": "-0.0001",
+      "text": "-00:00:00.0001000"
+    },
+    {
+      "start": "0",
+      "end": "999999",
+      "ticks": "9999",
+      "totalMilliseconds": "0.9999",
+      "totalSeconds": "0.0009999",
+      "text": "00:00:00.0009999"
+    },
+    {
+      "start": "0",
+      "end": "-999999",
+      "ticks": "-9999",
+      "totalMilliseconds": "-0.9999",
+      "totalSeconds": "-0.0009999",
+      "text": "-00:00:00.0009999"
+    },
+    {
+      "start": "0",
+      "end": "1000000",
+      "ticks": "10000",
+      "totalMilliseconds": "1",
+      "totalSeconds": "0.001",
+      "text": "00:00:00.0010000"
+    },
+    {
+      "start": "0",
+      "end": "-1000000",
+      "ticks": "-10000",
+      "totalMilliseconds": "-1",
+      "totalSeconds": "-0.001",
+      "text": "-00:00:00.0010000"
+    },
+    {
+      "start": "0",
+      "end": "1000001",
+      "ticks": "10000",
+      "totalMilliseconds": "1",
+      "totalSeconds": "0.001",
+      "text": "00:00:00.0010000"
+    },
+    {
+      "start": "0",
+      "end": "-1000001",
+      "ticks": "-10000",
+      "totalMilliseconds": "-1",
+      "totalSeconds": "-0.001",
+      "text": "-00:00:00.0010000"
+    },
+    {
+      "start": "0",
+      "end": "999999999",
+      "ticks": "9999999",
+      "totalMilliseconds": "999.9999",
+      "totalSeconds": "0.9999999",
+      "text": "00:00:00.9999999"
+    },
+    {
+      "start": "0",
+      "end": "-999999999",
+      "ticks": "-9999999",
+      "totalMilliseconds": "-999.9999",
+      "totalSeconds": "-0.9999999",
+      "text": "-00:00:00.9999999"
+    },
+    {
+      "start": "0",
+      "end": "1000000000",
+      "ticks": "10000000",
+      "totalMilliseconds": "1000",
+      "totalSeconds": "1",
+      "text": "00:00:01"
+    },
+    {
+      "start": "0",
+      "end": "-1000000000",
+      "ticks": "-10000000",
+      "totalMilliseconds": "-1000",
+      "totalSeconds": "-1",
+      "text": "-00:00:01"
+    },
+    {
+      "start": "0",
+      "end": "1500000000",
+      "ticks": "15000000",
+      "totalMilliseconds": "1500",
+      "totalSeconds": "1.5",
+      "text": "00:00:01.5000000"
+    },
+    {
+      "start": "0",
+      "end": "-1500000000",
+      "ticks": "-15000000",
+      "totalMilliseconds": "-1500",
+      "totalSeconds": "-1.5",
+      "text": "-00:00:01.5000000"
+    },
+    {
+      "start": "0",
+      "end": "86400000000000",
+      "ticks": "864000000000",
+      "totalMilliseconds": "86400000",
+      "totalSeconds": "86400",
+      "text": "1.00:00:00"
+    },
+    {
+      "start": "0",
+      "end": "-86400000000000",
+      "ticks": "-864000000000",
+      "totalMilliseconds": "-86400000",
+      "totalSeconds": "-86400",
+      "text": "-1.00:00:00"
+    },
+    {
+      "start": "0",
+      "end": "9007199254740991",
+      "ticks": "90071992547409",
+      "totalMilliseconds": "9007199254.7409",
+      "totalSeconds": "9007199.2547409",
+      "text": "104.05:59:59.2547409"
+    },
+    {
+      "start": "0",
+      "end": "-9007199254740991",
+      "ticks": "-90071992547409",
+      "totalMilliseconds": "-9007199254.7409",
+      "totalSeconds": "-9007199.2547409",
+      "text": "-104.05:59:59.2547409"
+    },
+    {
+      "start": "0",
+      "end": "9007199254740992",
+      "ticks": "90071992547409",
+      "totalMilliseconds": "9007199254.7409",
+      "totalSeconds": "9007199.2547409",
+      "text": "104.05:59:59.2547409"
+    },
+    {
+      "start": "0",
+      "end": "-9007199254740992",
+      "ticks": "-90071992547409",
+      "totalMilliseconds": "-9007199254.7409",
+      "totalSeconds": "-9007199.2547409",
+      "text": "-104.05:59:59.2547409"
+    },
+    {
+      "start": "0",
+      "end": "9007199254740993",
+      "ticks": "90071992547409",
+      "totalMilliseconds": "9007199254.7409",
+      "totalSeconds": "9007199.2547409",
+      "text": "104.05:59:59.2547409"
+    },
+    {
+      "start": "0",
+      "end": "-9007199254740993",
+      "ticks": "-90071992547409",
+      "totalMilliseconds": "-9007199254.7409",
+      "totalSeconds": "-9007199.2547409",
+      "text": "-104.05:59:59.2547409"
+    },
+    {
+      "start": "0",
+      "end": "123456789012345678",
+      "ticks": "1234567890123456",
+      "totalMilliseconds": "123456789012.3456",
+      "totalSeconds": "123456789.0123456",
+      "text": "1428.21:33:09.0123456"
+    },
+    {
+      "start": "0",
+      "end": "-123456789012345678",
+      "ticks": "-1234567890123456",
+      "totalMilliseconds": "-123456789012.3456",
+      "totalSeconds": "-123456789.0123456",
+      "text": "-1428.21:33:09.0123456"
+    },
+    {
+      "start": "0",
+      "end": "9223372036854775807",
+      "ticks": "92233720368547760",
+      "totalMilliseconds": "9223372036854.775",
+      "totalSeconds": "9223372036.854776",
+      "text": "106751.23:47:16.8547760"
+    },
+    {
+      "start": "0",
+      "end": "-9223372036854775807",
+      "ticks": "-92233720368547760",
+      "totalMilliseconds": "-9223372036854.775",
+      "totalSeconds": "-9223372036.854776",
+      "text": "-106751.23:47:16.8547760"
+    },
+    {
+      "start": "0",
+      "end": "-9223372036854775808",
+      "ticks": "-92233720368547760",
+      "totalMilliseconds": "-9223372036854.775",
+      "totalSeconds": "-9223372036.854776",
+      "text": "-106751.23:47:16.8547760"
+    },
+    {
+      "start": "9007199254740992",
+      "end": "9007199254740993",
+      "ticks": "0",
+      "totalMilliseconds": "0",
+      "totalSeconds": "0",
+      "text": "00:00:00"
+    },
+    {
+      "start": "9007199254740993",
+      "end": "9007199256240993",
+      "ticks": "15000",
+      "totalMilliseconds": "1.5",
+      "totalSeconds": "0.0015",
+      "text": "00:00:00.0015000"
+    },
+    {
+      "start": "9223372036854775807",
+      "end": "-9223372036854775808",
+      "ticks": "0",
+      "totalMilliseconds": "0",
+      "totalSeconds": "0",
+      "text": "00:00:00"
+    },
+    {
+      "start": "-9223372036854775808",
+      "end": "9223372036854775807",
+      "ticks": "0",
+      "totalMilliseconds": "0",
+      "totalSeconds": "0",
+      "text": "00:00:00"
+    },
+    {
+      "start": "-1000",
+      "end": "1000",
+      "ticks": "20",
+      "totalMilliseconds": "0.002",
+      "totalSeconds": "2E-06",
+      "text": "00:00:00.0000020"
+    },
+    {
+      "start": "1000",
+      "end": "-1000",
+      "ticks": "-20",
+      "totalMilliseconds": "-0.002",
+      "totalSeconds": "-2E-06",
+      "text": "-00:00:00.0000020"
+    }
+  ],
+  "observations": {
+    "initiallyStopped": true,
+    "initiallyZero": true,
+    "initialText": "00:00:00",
+    "stoppingStoppedIsNoop": true,
+    "startRuns": true,
+    "repeatedStartRuns": true,
+    "repeatedStopPreservesElapsed": true,
+    "restartRuns": true,
+    "resetClearsState": true,
+    "resetText": "00:00:00",
+    "startNewRuns": true,
+    "timestampMonotonic": true,
+    "elapsedSinceNonnegative": true
+  }
+}

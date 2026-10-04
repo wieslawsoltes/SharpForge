@@ -1,0 +1,214 @@
+{
+  "schemaVersion": 1,
+  "scope": "SF-A03-T07.5 nominal object verification; #2403 remains partial",
+  "initialSourceRevision": "73f9ab77d8b6973324dcc19497b84c1c1eb18010",
+  "testCorrectionRevision": "31b186456584c588795aac03ea09d8f821c9bd84",
+  "environment": {
+    "platform": "linux-x64",
+    "osRelease": "6.18.44",
+    "node": "v24.19.0",
+    "image": {
+      "kind": "local",
+      "pinnedImage": false,
+      "reason": "Local OS is recorded, not an immutable runner image."
+    },
+    "imageOS": null,
+    "imageVersion": null
+  },
+  "native": {
+    "status": "captured-once",
+    "file": "../native.json",
+    "sha256": "038da3f3ca12b21f39c367f726b972b0b89ded606ed66f9157ebeab495996dbb",
+    "observations": 52,
+    "declaredExpectationsMatched": 52,
+    "oracle": "ILVerify",
+    "version": "10.0.5",
+    "sdk": "10.0.201",
+    "runtime": "10.0.5",
+    "toolSHA256": "ca75cb4d2299ee5413eaf602a6ba87b7c089f3785d06f6b8ccad013d4e4646be",
+    "references": {
+      "count": 167,
+      "sha256": "a978e7aaf608f22e860328a42319b908a5a084cdb087b28b5c31a1e6726be362"
+    },
+    "accepted": 34,
+    "rejected": 18,
+    "productPolicyStatuses": {
+      "verified": 26,
+      "rejected": 17,
+      "unknown": 9
+    },
+    "determinatePolicyAgreement": 42,
+    "explicitDifferences": [
+      {
+        "name": "RefLikeBox",
+        "policyStatus": "rejected",
+        "nativeAccepted": true,
+        "reason": "ILVerify 10.0.5 checks only ByRef stack kinds in IsByRefLike; this profile also rejects authoritative ref-like value types."
+      }
+    ],
+    "unknowns": [
+      {
+        "name": "NewExternalBase",
+        "diagnostic": "ConstructorBaseUnavailable",
+        "nativeAccepted": true,
+        "countsAsPolicyAgreement": false
+      },
+      {
+        "name": "NewDelegateNumeric",
+        "diagnostic": "ConstructorBaseUnavailable",
+        "nativeAccepted": false,
+        "countsAsPolicyAgreement": false
+      },
+      {
+        "name": "CastTypeSpecification",
+        "diagnostic": "MetadataUnavailable",
+        "nativeAccepted": true,
+        "countsAsPolicyAgreement": false
+      },
+      {
+        "name": "RefLikeConstruction",
+        "diagnostic": "ByRefLikeLifetimeUnavailable",
+        "nativeAccepted": true,
+        "countsAsPolicyAgreement": false
+      },
+      {
+        "name": "RefLikeReturn",
+        "diagnostic": "ByRefLikeLifetimeUnavailable",
+        "nativeAccepted": false,
+        "countsAsPolicyAgreement": false
+      },
+      {
+        "name": "MissingAnnotationAuthority",
+        "diagnostic": "ObjectAnnotationAuthorityUnavailable",
+        "nativeAccepted": true,
+        "countsAsPolicyAgreement": false
+      },
+      {
+        "name": "CounterfeitNameWithoutAuthority",
+        "diagnostic": "ObjectAnnotationAuthorityUnavailable",
+        "nativeAccepted": true,
+        "countsAsPolicyAgreement": false
+      },
+      {
+        "name": "EnumBox",
+        "diagnostic": "EnumStorageUnavailable",
+        "nativeAccepted": true,
+        "countsAsPolicyAgreement": false
+      },
+      {
+        "name": "EnumUnbox",
+        "diagnostic": "EnumStorageUnavailable",
+        "nativeAccepted": true,
+        "countsAsPolicyAgreement": false
+      }
+    ],
+    "invocation": "capture-invocation.json",
+    "log": "capture.log.json"
+  },
+  "focusedInitial": {
+    "status": "failed",
+    "sourceRevision": "73f9ab77d8b6973324dcc19497b84c1c1eb18010",
+    "files": 14,
+    "tests": 80,
+    "pass": 79,
+    "fail": 1,
+    "cancelled": 0,
+    "skipped": 0,
+    "invocation": "focused-invocation.json",
+    "log": "focused-node.log.json",
+    "failure": "Malformed CustomAttributeType value 0x7fffb exceeded the 2-byte metadata column during fixture serialization before the intended verifier check."
+  },
+  "testCorrection": {
+    "scope": "Test fixture only; product source, native cases and captured observations are unchanged.",
+    "oldPhysicalIndex": {
+      "hex": "0x7fffb",
+      "decimal": 524283,
+      "decodedMemberRef": "0x0a00ffff"
+    },
+    "newPhysicalIndex": {
+      "hex": "0xfffb",
+      "decimal": 65531,
+      "decodedMemberRef": "0x0a001fff"
+    },
+    "assertions": "Encoded target must be outside fixture MemberRef extent. Verifier must reject with CILVM0001 and never call host classification. Existing name/signature/ref-like/unsupported assertions remain."
+  },
+  "focusedCorrection": {
+    "status": "passed",
+    "sourceRevision": "31b186456584c588795aac03ea09d8f821c9bd84",
+    "files": 2,
+    "tests": 8,
+    "pass": 8,
+    "fail": 0,
+    "cancelled": 0,
+    "skipped": 0,
+    "invocation": "correction-invocation.json",
+    "log": "correction-node.log.json",
+    "scope": "Six annotation tests and two strict object-native replay tests only; unrelated original 79 passes were not rerun."
+  },
+  "productAndNativeCasesUnchangedByCorrection": true,
+  "browser": {
+    "status": "not-run",
+    "productChecksRun": 0,
+    "passed": false
+  },
+  "performance": {
+    "status": "prepared-not-run",
+    "baseline": "88c861e3a294a249e7a8cdd7319e032d7c29fb35",
+    "protocol": "../QUALIFICATION.md",
+    "gatePassed": false
+  },
+  "publication": {
+    "status": "not-published"
+  },
+  "artifacts": {
+    "capture-invocation.json": {
+      "sha256": "c9ec4205b3584ad62ca86d35af7a34a55a70eed164ef9395328ca4031240f45c",
+      "bytes": 3315,
+      "copiedFrom": "/workspace/scratch/7e3d2a445c44/project6-object-native-j8___au0/capture-invocation.json"
+    },
+    "focused-invocation.json": {
+      "sha256": "cba5c1869ff8294150ea79cd58fdc4bad28e4ce6f19775da97a43170073dcfc7",
+      "bytes": 2905,
+      "copiedFrom": "/workspace/scratch/7e3d2a445c44/project6-object-native-j8___au0/focused-invocation.json"
+    },
+    "correction-invocation.json": {
+      "sha256": "6c5a52b43df5671269790ab0507ed887487984bc90bf96141c501d1a7e263a2c",
+      "bytes": 1162,
+      "copiedFrom": "/workspace/scratch/7e3d2a445c44/project6-object-native-j8___au0/correction-invocation.json"
+    },
+    "capture.log.json": {
+      "sha256": "296c83a68e425ed44fc15e60a8dcd5eb09e802660b666b7e59e3af4d1b33125a",
+      "bytes": 409,
+      "rawSHA256": "48aa87fe8bcd2e92bdf8203b63714f47d289d8da15d69010e5537a99089fceb7",
+      "rawBytes": 222,
+      "rawTextProperty": "text",
+      "copiedFrom": "/workspace/scratch/7e3d2a445c44/project6-object-native-j8___au0/capture.log"
+    },
+    "focused-node.log.json": {
+      "sha256": "b4e8449c541ee4fa9afc4220be84c0e7014c2a7c81a1298a76042eef4bb976bf",
+      "bytes": 10422,
+      "rawSHA256": "9908fc1c1c775cc809527606af08b92bfc59e79659252320954b1e716200c88d",
+      "rawBytes": 9881,
+      "rawTextProperty": "text",
+      "copiedFrom": "/workspace/scratch/7e3d2a445c44/project6-object-native-j8___au0/focused-node.log"
+    },
+    "correction-node.log.json": {
+      "sha256": "c87adb22d21195eb1191f436ab23d3590677fc148b357327e8698f82ebc349dd",
+      "bytes": 1243,
+      "rawSHA256": "6a2bef829d0ecb1bc20888bbd36624de83358a9e4c7dd6081146e8d16db5b020",
+      "rawBytes": 1014,
+      "rawTextProperty": "text",
+      "copiedFrom": "/workspace/scratch/7e3d2a445c44/project6-object-native-j8___au0/correction-node.log"
+    },
+    "native-capture-helper.mjs.txt": {
+      "sha256": "65853f45a22a5e0f67e1bfb861e9c7e48be186e4e0c7a3b76d095e7715809a52",
+      "bytes": 3266,
+      "copiedFrom": "73f9ab77d8b6973324dcc19497b84c1c1eb18010:tests/helpers/verifier-case-capture.mjs"
+    },
+    "native-process-helper.js.txt": {
+      "sha256": "dd0be49abc7f8e3f79af7103c43017cc882a5327851504e3e8952367fffcf62d",
+      "bytes": 2383,
+      "copiedFrom": "73f9ab77d8b6973324dcc19497b84c1c1eb18010:scripts/conformance/oracle/process.js"
+    }
+  }
+}

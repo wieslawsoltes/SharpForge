@@ -1,0 +1,455 @@
+{
+  "runtime": "10.0.5",
+  "surface": [
+    {
+      "name": "<Module>",
+      "flags": 0,
+      "baseType": "",
+      "classSize": 0,
+      "packingSize": 0,
+      "attributes": [],
+      "interfaces": [],
+      "implementations": [],
+      "fields": [],
+      "methods": [],
+      "properties": [],
+      "events": []
+    },
+    {
+      "name": "Contract",
+      "flags": 1048577,
+      "baseType": "System.Object",
+      "classSize": 0,
+      "packingSize": 0,
+      "attributes": [],
+      "interfaces": [],
+      "implementations": [],
+      "fields": [],
+      "methods": [
+        {
+          "name": ".ctor",
+          "flags": 6278,
+          "implFlags": 0,
+          "signature": "32:0:0:Void()",
+          "attributes": []
+        },
+        {
+          "name": "Hidden",
+          "flags": 131,
+          "implFlags": 0,
+          "signature": "32:0:0:Int32()",
+          "attributes": []
+        }
+      ],
+      "properties": [],
+      "events": []
+    },
+    {
+      "name": "RefProbe.C",
+      "flags": 1048577,
+      "baseType": "System.Object",
+      "classSize": 0,
+      "packingSize": 0,
+      "attributes": [],
+      "interfaces": [
+        "class RefProbe.I`1<Int32>"
+      ],
+      "implementations": [
+        {
+          "body": "RefProbe.C::RefProbe.I<System.Int32>.Get 32:0:0:Int32()",
+          "declaration": "class RefProbe.I`1<Int32>::Get 32:0:0:!0()"
+        },
+        {
+          "body": "RefProbe.C::RefProbe.I<System.Int32>.add_Changed 32:0:1:Void(class System.Action)",
+          "declaration": "class RefProbe.I`1<Int32>::add_Changed 32:0:1:Void(class System.Action)"
+        },
+        {
+          "body": "RefProbe.C::RefProbe.I<System.Int32>.get_Item 32:0:1:Int32(Int32)",
+          "declaration": "class RefProbe.I`1<Int32>::get_Item 32:0:1:!0(Int32)"
+        },
+        {
+          "body": "RefProbe.C::RefProbe.I<System.Int32>.get_Value 32:0:0:Int32()",
+          "declaration": "class RefProbe.I`1<Int32>::get_Value 32:0:0:!0()"
+        },
+        {
+          "body": "RefProbe.C::RefProbe.I<System.Int32>.remove_Changed 32:0:1:Void(class System.Action)",
+          "declaration": "class RefProbe.I`1<Int32>::remove_Changed 32:0:1:Void(class System.Action)"
+        }
+      ],
+      "fields": [],
+      "methods": [
+        {
+          "name": ".ctor",
+          "flags": 6278,
+          "implFlags": 0,
+          "signature": "32:0:0:Void()",
+          "attributes": []
+        },
+        {
+          "name": "RefProbe.I<System.Int32>.Get",
+          "flags": 481,
+          "implFlags": 0,
+          "signature": "32:0:0:Int32()",
+          "attributes": []
+        },
+        {
+          "name": "RefProbe.I<System.Int32>.add_Changed",
+          "flags": 2529,
+          "implFlags": 0,
+          "signature": "32:0:1:Void(class System.Action)",
+          "attributes": []
+        },
+        {
+          "name": "RefProbe.I<System.Int32>.get_Item",
+          "flags": 2529,
+          "implFlags": 0,
+          "signature": "32:0:1:Int32(Int32)",
+          "attributes": []
+        },
+        {
+          "name": "RefProbe.I<System.Int32>.get_Value",
+          "flags": 2529,
+          "implFlags": 0,
+          "signature": "32:0:0:Int32()",
+          "attributes": []
+        },
+        {
+          "name": "RefProbe.I<System.Int32>.remove_Changed",
+          "flags": 2529,
+          "implFlags": 0,
+          "signature": "32:0:1:Void(class System.Action)",
+          "attributes": []
+        }
+      ],
+      "properties": [
+        {
+          "name": "RefProbe.I<System.Int32>.Item",
+          "signature": "40:0:1:Int32(Int32)",
+          "getter": "RefProbe.C::RefProbe.I<System.Int32>.get_Item 32:0:1:Int32(Int32)",
+          "setter": "",
+          "attributes": []
+        },
+        {
+          "name": "RefProbe.I<System.Int32>.Value",
+          "signature": "40:0:0:Int32()",
+          "getter": "RefProbe.C::RefProbe.I<System.Int32>.get_Value 32:0:0:Int32()",
+          "setter": "",
+          "attributes": []
+        }
+      ],
+      "events": [
+        {
+          "name": "RefProbe.I<System.Int32>.Changed",
+          "type": "System.Action",
+          "adder": "RefProbe.C::RefProbe.I<System.Int32>.add_Changed 32:0:1:Void(class System.Action)",
+          "remover": "RefProbe.C::RefProbe.I<System.Int32>.remove_Changed 32:0:1:Void(class System.Action)",
+          "attributes": []
+        }
+      ]
+    },
+    {
+      "name": "RefProbe.ITuple`1",
+      "flags": 1048737,
+      "baseType": "",
+      "classSize": 0,
+      "packingSize": 0,
+      "attributes": [],
+      "interfaces": [],
+      "implementations": [],
+      "fields": [],
+      "methods": [
+        {
+          "name": "Get",
+          "flags": 1478,
+          "implFlags": 0,
+          "signature": "32:0:0:!0()",
+          "attributes": []
+        }
+      ],
+      "properties": [],
+      "events": []
+    },
+    {
+      "name": "RefProbe.I`1",
+      "flags": 1048737,
+      "baseType": "",
+      "classSize": 0,
+      "packingSize": 0,
+      "attributes": [
+        {
+          "name": "System.Reflection.DefaultMemberAttribute",
+          "constructor": "System.Reflection.DefaultMemberAttribute::.ctor 32:0:1:Void(String)",
+          "arguments": [
+            {
+              "type": "String",
+              "value": "Item"
+            }
+          ],
+          "named": []
+        }
+      ],
+      "interfaces": [],
+      "implementations": [],
+      "fields": [],
+      "methods": [
+        {
+          "name": "Get",
+          "flags": 1478,
+          "implFlags": 0,
+          "signature": "32:0:0:!0()",
+          "attributes": []
+        },
+        {
+          "name": "add_Changed",
+          "flags": 3526,
+          "implFlags": 0,
+          "signature": "32:0:1:Void(class System.Action)",
+          "attributes": [
+            {
+              "name": "System.Runtime.CompilerServices.CompilerGeneratedAttribute",
+              "constructor": "System.Runtime.CompilerServices.CompilerGeneratedAttribute::.ctor 32:0:0:Void()",
+              "arguments": [],
+              "named": []
+            }
+          ]
+        },
+        {
+          "name": "get_Item",
+          "flags": 3526,
+          "implFlags": 0,
+          "signature": "32:0:1:!0(Int32)",
+          "attributes": []
+        },
+        {
+          "name": "get_Value",
+          "flags": 3526,
+          "implFlags": 0,
+          "signature": "32:0:0:!0()",
+          "attributes": []
+        },
+        {
+          "name": "remove_Changed",
+          "flags": 3526,
+          "implFlags": 0,
+          "signature": "32:0:1:Void(class System.Action)",
+          "attributes": [
+            {
+              "name": "System.Runtime.CompilerServices.CompilerGeneratedAttribute",
+              "constructor": "System.Runtime.CompilerServices.CompilerGeneratedAttribute::.ctor 32:0:0:Void()",
+              "arguments": [],
+              "named": []
+            }
+          ]
+        }
+      ],
+      "properties": [
+        {
+          "name": "Item",
+          "signature": "40:0:1:!0(Int32)",
+          "getter": "RefProbe.I`1::get_Item 32:0:1:!0(Int32)",
+          "setter": "",
+          "attributes": []
+        },
+        {
+          "name": "Value",
+          "signature": "40:0:0:!0()",
+          "getter": "RefProbe.I`1::get_Value 32:0:0:!0()",
+          "setter": "",
+          "attributes": []
+        }
+      ],
+      "events": [
+        {
+          "name": "Changed",
+          "type": "System.Action",
+          "adder": "RefProbe.I`1::add_Changed 32:0:1:Void(class System.Action)",
+          "remover": "RefProbe.I`1::remove_Changed 32:0:1:Void(class System.Action)",
+          "attributes": []
+        }
+      ]
+    },
+    {
+      "name": "RefProbe.Nested",
+      "flags": 1048577,
+      "baseType": "System.Object",
+      "classSize": 0,
+      "packingSize": 0,
+      "attributes": [],
+      "interfaces": [
+        "class RefProbe.Outer`1+I`1<String,Int32>"
+      ],
+      "implementations": [
+        {
+          "body": "RefProbe.Nested::RefProbe.Outer<System.String>.I<System.Int32>.Get 32:0:1:Int32(String)",
+          "declaration": "class RefProbe.Outer`1+I`1<String,Int32>::Get 32:0:1:!1(!0)"
+        }
+      ],
+      "fields": [],
+      "methods": [
+        {
+          "name": ".ctor",
+          "flags": 6278,
+          "implFlags": 0,
+          "signature": "32:0:0:Void()",
+          "attributes": []
+        },
+        {
+          "name": "RefProbe.Outer<System.String>.I<System.Int32>.Get",
+          "flags": 481,
+          "implFlags": 0,
+          "signature": "32:0:1:Int32(String)",
+          "attributes": []
+        }
+      ],
+      "properties": [],
+      "events": []
+    },
+    {
+      "name": "RefProbe.Outer`1",
+      "flags": 1048577,
+      "baseType": "System.Object",
+      "classSize": 0,
+      "packingSize": 0,
+      "attributes": [],
+      "interfaces": [],
+      "implementations": [],
+      "fields": [],
+      "methods": [
+        {
+          "name": ".ctor",
+          "flags": 6278,
+          "implFlags": 0,
+          "signature": "32:0:0:Void()",
+          "attributes": []
+        }
+      ],
+      "properties": [],
+      "events": []
+    },
+    {
+      "name": "RefProbe.Outer`1+I`1",
+      "flags": 1048738,
+      "baseType": "",
+      "classSize": 0,
+      "packingSize": 0,
+      "attributes": [],
+      "interfaces": [],
+      "implementations": [],
+      "fields": [],
+      "methods": [
+        {
+          "name": "Get",
+          "flags": 1478,
+          "implFlags": 0,
+          "signature": "32:0:1:!1(!0)",
+          "attributes": []
+        }
+      ],
+      "properties": [],
+      "events": []
+    },
+    {
+      "name": "RefProbe.Tuple",
+      "flags": 1048577,
+      "baseType": "System.Object",
+      "classSize": 0,
+      "packingSize": 0,
+      "attributes": [],
+      "interfaces": [
+        "class RefProbe.ITuple`1<valuetype System.ValueTuple`2<Int32,String>>"
+      ],
+      "implementations": [
+        {
+          "body": "RefProbe.Tuple::RefProbe.ITuple<System.ValueTuple<System.Int32,System.String>>.Get 32:0:0:valuetype System.ValueTuple`2<Int32,String>()",
+          "declaration": "class RefProbe.ITuple`1<valuetype System.ValueTuple`2<Int32,String>>::Get 32:0:0:!0()"
+        }
+      ],
+      "fields": [],
+      "methods": [
+        {
+          "name": ".ctor",
+          "flags": 6278,
+          "implFlags": 0,
+          "signature": "32:0:0:Void()",
+          "attributes": []
+        },
+        {
+          "name": "RefProbe.ITuple<System.ValueTuple<System.Int32,System.String>>.Get",
+          "flags": 481,
+          "implFlags": 0,
+          "signature": "32:0:0:valuetype System.ValueTuple`2<Int32,String>()",
+          "attributes": []
+        }
+      ],
+      "properties": [],
+      "events": []
+    },
+    {
+      "name": "System.Runtime.CompilerServices.<Source>FF623BAD49E42FC9913405C9CC2882B4DF1A341715EAD2D24B552F31DA2A3305E__InternalsVisibleToAttribute",
+      "flags": 1048576,
+      "baseType": "System.Attribute",
+      "classSize": 0,
+      "packingSize": 0,
+      "attributes": [],
+      "interfaces": [],
+      "implementations": [],
+      "fields": [],
+      "methods": [
+        {
+          "name": ".ctor",
+          "flags": 6278,
+          "implFlags": 0,
+          "signature": "32:0:1:Void(String)",
+          "attributes": []
+        }
+      ],
+      "properties": [],
+      "events": []
+    },
+    {
+      "name": "System.Runtime.CompilerServices.<Source>FF623BAD49E42FC9913405C9CC2882B4DF1A341715EAD2D24B552F31DA2A3305E__ReferenceAssemblyAttribute",
+      "flags": 1048576,
+      "baseType": "System.Attribute",
+      "classSize": 0,
+      "packingSize": 0,
+      "attributes": [],
+      "interfaces": [],
+      "implementations": [],
+      "fields": [],
+      "methods": [
+        {
+          "name": ".ctor",
+          "flags": 6278,
+          "implFlags": 0,
+          "signature": "32:0:0:Void()",
+          "attributes": []
+        }
+      ],
+      "properties": [],
+      "events": []
+    }
+  ],
+  "markerCount": 0,
+  "bodyCount": 15,
+  "allBodiesThrowNull": true,
+  "loadRejection": "none",
+  "loadHResult": 0,
+  "capture": {
+    "sdk": "10.0.201",
+    "platform": "linux",
+    "architecture": "x64",
+    "referencePack": "10.0.5",
+    "compilerSha256": "4913fa70d10c99901edbb825fdedcc92465be08665016a5d258ea45f953624f0",
+    "sourceSha256": "2cd795e0a4006e179b5f54f7ff0933462a7d17245fe181fefe33e095d907c141",
+    "sourceFileName": "Source.cs",
+    "compilerOptions": [
+      "/target:library",
+      "/refonly",
+      "/deterministic+",
+      "/langversion:latest"
+    ],
+    "oracleSha256": "b36be04ae5253a749228d9aed91955c5d0b47ae6fe187497e3f05707917e578a",
+    "signatureNamesSha256": "e27b56b3b50344690190ad664f0cc559abc0ae8344c374cecf438e92c90d519f",
+    "referenceSha256": "3b32ac80fb81160638af844c438166a8759c126d83161ba8d87240466aec691d"
+  }
+}

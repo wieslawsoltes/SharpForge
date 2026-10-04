@@ -1,0 +1,263 @@
+{
+  "schemaVersion": 1,
+  "format": "sharpforge.pe-inspection.qualification",
+  "workId": "SF-A13-T16",
+  "issue": 706,
+  "productRevision": "bf0d9470e4dc50cfdcafb0a6532cea0892b753d6",
+  "mainIntegratedRevision": "d64188af91f03d02041316bdde2ee64fd0634be0",
+  "date": "2026-10-04",
+  "executionOwner": "PE batch owner, exclusive team heavy slot, serial node scripts/limited.js",
+  "sourceChangesDuringQualification": false,
+  "attempts": {
+    "native": 1,
+    "focusedNode": 1,
+    "reruns": 0,
+    "failures": 0
+  },
+  "native": {
+    "status": "passed",
+    "capture": "../native.json",
+    "command": "native-command.json",
+    "log": "native-capture.log",
+    "startedAt": "2026-10-04T14:13:12.554065+00:00",
+    "finishedAt": "2026-10-04T14:13:14.945335+00:00",
+    "toolchain": {
+      "sdk": "10.0.201",
+      "runtime": "10.0.5",
+      "referencePack": "10.0.5",
+      "roslyn": {
+        "version": "5.3.0-2.26153.122 (4d3023de605a78ba3e59e50c657eed70f125c68a)",
+        "sha256": "4913fa70d10c99901edbb825fdedcc92465be08665016a5d258ea45f953624f0"
+      },
+      "referenceAssemblies": {
+        "count": 167,
+        "sha256": "a978e7aaf608f22e860328a42319b908a5a084cdb087b28b5c31a1e6726be362"
+      }
+    },
+    "environment": {
+      "platform": "linux-x64",
+      "osRelease": "6.18.44",
+      "node": "v24.19.0",
+      "image": {
+        "kind": "local",
+        "pinnedImage": false,
+        "reason": "Local OS is recorded, not an immutable runner image."
+      },
+      "imageOS": null,
+      "imageVersion": null
+    },
+    "observations": [
+      {
+        "id": "r2r",
+        "image": {
+          "name": "System.ComponentModel.Primitives.dll",
+          "bytes": 71432,
+          "sha256": "d34230d85e2dcdd7965812fa9f103e1ea3ebad47a6ec44f60efc5ced0b397c68"
+        },
+        "imageKind": "ReadyToRun",
+        "machine": 64797,
+        "cliFlags": 12,
+        "managedNativeSignature": 5395538,
+        "methods": {
+          "methods": 224,
+          "availableCil": 205,
+          "unavailableCil": 0,
+          "nonCil": 0
+        },
+        "codeKinds": {
+          "CIL": 224
+        },
+        "comparisons": [
+          {
+            "field": "imageKind",
+            "status": "pass"
+          },
+          {
+            "field": "headers",
+            "status": "pass"
+          },
+          {
+            "field": "sections",
+            "status": "pass"
+          },
+          {
+            "field": "directories",
+            "status": "pass"
+          },
+          {
+            "field": "cli",
+            "status": "pass"
+          },
+          {
+            "field": "debugDirectory",
+            "status": "pass"
+          },
+          {
+            "field": "strongName",
+            "status": "pass"
+          },
+          {
+            "field": "methods",
+            "status": "pass"
+          }
+        ],
+        "differences": 0,
+        "inputExecution": {
+          "status": "not-run",
+          "reason": "ReadyToRun image is inspected as data; native code execution and mapping are outside this inspector."
+        }
+      },
+      {
+        "id": "mixed",
+        "image": {
+          "name": "pe-MixedNativeCLI.exe",
+          "bytes": 34816,
+          "sha256": "1bcc83a9da94aeebf0a57f02f254a15e8aebc9157b3e299cb53d1ebc3ce53667"
+        },
+        "imageKind": "MixedMode",
+        "machine": 34404,
+        "cliFlags": 0,
+        "managedNativeSignature": null,
+        "methods": {
+          "methods": 90,
+          "availableCil": 77,
+          "unavailableCil": 0,
+          "nonCil": 11
+        },
+        "codeKinds": {
+          "CIL": 79,
+          "Native": 11
+        },
+        "comparisons": [
+          {
+            "field": "imageKind",
+            "status": "pass"
+          },
+          {
+            "field": "headers",
+            "status": "pass"
+          },
+          {
+            "field": "sections",
+            "status": "pass"
+          },
+          {
+            "field": "directories",
+            "status": "pass"
+          },
+          {
+            "field": "cli",
+            "status": "pass"
+          },
+          {
+            "field": "debugDirectory",
+            "status": "pass"
+          },
+          {
+            "field": "strongName",
+            "status": "pass"
+          },
+          {
+            "field": "methods",
+            "status": "pass"
+          }
+        ],
+        "differences": 0,
+        "inputExecution": {
+          "status": "not-run",
+          "reason": "Windows C++/CLI image is inspected as data; Linux execution is unsupported by this fixture."
+        }
+      }
+    ],
+    "referencePayloads": "external-cache-only"
+  },
+  "node": {
+    "status": "passed",
+    "command": "focused-command.json",
+    "log": "focused-node.tap",
+    "files": 10,
+    "tests": 130,
+    "pass": 130,
+    "fail": 0,
+    "cancelled": 0,
+    "skipped": 0,
+    "durationMs": 12196.46696,
+    "strictNativeProvenanceIncluded": true,
+    "startedAt": "2026-10-04T14:14:55.288034+00:00",
+    "finishedAt": "2026-10-04T14:15:07.604901+00:00"
+  },
+  "otherQualification": {
+    "browser": "not-run",
+    "benchmark": "not-run",
+    "build": "not-run"
+  },
+  "sourceTrees": {
+    "packages/cil/src": "4608acb5569a459da6153878be845c0244d397a2",
+    "packages/symbols/src": "e8fde3ee20599bd25eda6e4405a74641489433f2"
+  },
+  "sourceSha256": {
+    "packages/cil/src/inspector-pe.js": "759dad1c08c5dabb99b3188f4193d4bcf6c6754e0cb0a02c860897ce2df4a709",
+    "packages/cil/src/inspector.js": "e494966c52ba1c3f50943847c5568b6803b6ee287ef07d9374c6186f008b2055",
+    "packages/cil/src/inspector-method.js": "39b3dd4fe16d812c8a374b56d0052e03b9413788c6156348433bd0f5e0491730",
+    "packages/cil/src/browser/summary.js": "d28dd5e805fa8dc3b5e0991a07c1d9c3b196ecf71ad4ae470b96cd8b8e85bc8e",
+    "packages/cil/src/pe/reader.js": "aea8ec59504a333f05c8ff78d34a7023bf3bc57a27cbbc4c99ab88c25d1c9967",
+    "packages/cil/src/pe/optional-header.js": "8996dd48b4614057a2adaee80152e6a3669e420b1663d8b2a7c8ca5f682a7fa4",
+    "packages/cil/src/pe/debug-directory.js": "c30f489d9f4394f7bc39e617d518da73f633ec710638bb9d03ed0b6c4ded14a9",
+    "packages/cil/src/pe/method-code.js": "0463d7e207a1c5a9a056778b5292fa4be4777b97e49b063053eaad577da26c1c",
+    "packages/cil/src/pe/method-header.js": "ebc4e51c9102ee07f4f565c11cdeb39d470940afe8d495b345027b59d8b1f62c",
+    "packages/cil/src/pe/method-body.js": "b4e35c9ead941fe231602847de1398f82a3fbc39ae5a1d30ec09d2dd3dbd1d17",
+    "packages/cil/src/pe/headers.js": "aab2f458c9d281418f51f1d94a38b0e0b68cd444c7eebf4bf1d93b3bf3b51eb4",
+    "tests/fixtures/pe-inspection/comparison.mjs": "bc34a9a8b0d9f76e9c9531f718a0af33aebc23de7959f2fb35cce7e7b0019316",
+    "tests/fixtures/pe-inspection/Program.cs": "88e65e09949ed19e188f43d984f8cad3ba5b9d3fe75bdfa947d8cfe3b6f9c5d7",
+    "tests/fixtures/pe-inspection/capture.mjs": "642d3426023b355e8aa3c9ff7849120ef2358281611f48eb6b67e327b4c43b0a",
+    "tests/a13-16-pe-headers.test.js": "af72087965399c8185f7c81987647325963c983721beb531491154fb62f2f637",
+    "tests/a13-16-method-code.test.js": "cda15f9e700159992afc9e5c2c02f76e04ace46c794be1663f6d7fe6d6c4e6cc",
+    "tests/a13-16-debug-directory.test.js": "bf991217ab620ef1a1fe320133e8848432cf1a8d2cf41e4d3df73ae9ef3751ce",
+    "tests/a13-16-native-reference.test.js": "b7d107c6cbb26a3d290c3d5426a73075847e73a4e2cbc483830d07a69dc2db40",
+    "tests/a13-04-unnamed-slots.test.js": "4c8abcfaf59f3435171dc11ff9956e531e302922e6ecccc3a59b2e9b1b504969",
+    "tests/a13-11-usage-relations.test.js": "daedcf7563356961241ee6d083bce908e8b01a4228c369f575945469212353c7",
+    "tests/a13-11-inspector-navigation.test.js": "0c5010c5bfe8fabc1c211172cc85217d79711647bb5d1051e00d6f4606aae1f0",
+    "tests/a13-01-debug-directory.test.js": "9f55e9bf0d672f40e209948a1c66496384f07328b0d18fef48fd983367649f63",
+    "tests/a13-01-embedded-compression.test.js": "816f67f4118c06fc1f9fda7af6823342d1753cf84ed318ae4924831b776634b5",
+    "tests/managed-il.test.js": "d75565df8aa2446994f64a3b6962915437a70aa294973d184336961d5ab0271b",
+    "tests/fixtures/pe-inspection/input.mjs": "3ef0a406a12d95fe7e9679bf2ef924ea1746b14f687282298dc6fe9fe5245dc1",
+    "packages/symbols/src/debug-directory-reader.js": "f1c9b380c3411a054a4b42afb2f931014bde865c70478e2c3d3144114105eb6e",
+    "packages/symbols/src/local-signatures.js": "ba711b0fee6da35465d50ae62cb9b6d398f1e1bdcb9ddaf8d1aa60117abd8c04",
+    "scripts/limited.js": "d60fa1310cc85ce9426914dd4b79b1b500dcb2eab0928b422d24994d90a650f7"
+  },
+  "artifacts": [
+    {
+      "path": "tests/fixtures/pe-inspection/native.json",
+      "bytes": 231303,
+      "sha256": "bdb094d3714b593bf70a1bac84bb456def0052c0019dc0ecedf1d4b8b2e298e4"
+    },
+    {
+      "path": "tests/fixtures/pe-inspection/qualification/focused-command.json",
+      "bytes": 2966,
+      "sha256": "77f9dcda2e13c6287707382e0b8f4d8998cf14cf9b6215aa49b3c6398f0085eb"
+    },
+    {
+      "path": "tests/fixtures/pe-inspection/qualification/focused-node.tap",
+      "bytes": 11011,
+      "sha256": "d98d2f28b24a9549e552a4f4512753b4c882e11cc2aafa93cdfbbe7b1f3a5f61"
+    },
+    {
+      "path": "tests/fixtures/pe-inspection/qualification/native-capture.log",
+      "bytes": 255,
+      "sha256": "8f174b4f07d2e498d6746c06b61dfada898b578fa62507c6bd0ca030cdac1526"
+    },
+    {
+      "path": "tests/fixtures/pe-inspection/qualification/native-command.json",
+      "bytes": 2441,
+      "sha256": "915a5714fb1e32a1636273846b8d327ee8bed3ecea4c7e004dc59eab7f837861"
+    }
+  ],
+  "limits": [
+    "The supplied upstream binaries remain external-cache-only; no input binary, IL, debug, or signing payload copies are retained.",
+    "The native observer inspects input assemblies as data and never executes their code.",
+    "The Windows mixed-mode image has no Linux execution qualification; native code disassembly and R2R method maps are unsupported.",
+    "Strong-name facts do not constitute cryptographic verification.",
+    "The authored R2R/mixed-mode boundary fixtures test structure; actual native parity comes only from the two pinned reference images.",
+    "No browser replay, benchmark, build, or broader test run was performed during this qualification."
+  ]
+}

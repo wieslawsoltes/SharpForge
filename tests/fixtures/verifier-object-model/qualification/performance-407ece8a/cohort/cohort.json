@@ -1,0 +1,785 @@
+{
+  "commits": {
+    "baseline": "88c861e3a294a249e7a8cdd7319e032d7c29fb35",
+    "candidate": "407ece8a532bdec026fca808097540eff10aefe3"
+  },
+  "harnessCommit": "407ece8a532bdec026fca808097540eff10aefe3",
+  "driverSHA256": "4339bbae562797605691783377d2542976941e5dedf4fb1eff0521f178126cb9",
+  "iterations": 1000,
+  "samples": 100,
+  "warmups": 20,
+  "order": [
+    {
+      "side": "baseline",
+      "name": "Add_0_0",
+      "startedAt": "2026-10-04T16:17:31.400Z",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin/node",
+        "/workspace/scratch/7e3d2a445c44/sf6-objects/packages/cil/tools/benchmark-object-verifier.mjs",
+        "/workspace/scratch/7e3d2a445c44/project6-object-performance-407ece8a/cohort/01-baseline-Add_0_0.json",
+        "--root",
+        "/workspace/scratch/7e3d2a445c44/sf6-object-baseline-88c861e3",
+        "--case",
+        "Add_0_0",
+        "--iterations",
+        "1000",
+        "--samples",
+        "100",
+        "--warmups",
+        "20"
+      ],
+      "file": "/workspace/scratch/7e3d2a445c44/project6-object-performance-407ece8a/cohort/01-baseline-Add_0_0.json",
+      "endedAt": "2026-10-04T16:17:32.549Z",
+      "exitCode": 0
+    },
+    {
+      "side": "candidate",
+      "name": "Add_0_0",
+      "startedAt": "2026-10-04T16:17:32.549Z",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin/node",
+        "/workspace/scratch/7e3d2a445c44/sf6-objects/packages/cil/tools/benchmark-object-verifier.mjs",
+        "/workspace/scratch/7e3d2a445c44/project6-object-performance-407ece8a/cohort/02-candidate-Add_0_0.json",
+        "--root",
+        "/workspace/scratch/7e3d2a445c44/sf6-objects",
+        "--case",
+        "Add_0_0",
+        "--iterations",
+        "1000",
+        "--samples",
+        "100",
+        "--warmups",
+        "20"
+      ],
+      "file": "/workspace/scratch/7e3d2a445c44/project6-object-performance-407ece8a/cohort/02-candidate-Add_0_0.json",
+      "endedAt": "2026-10-04T16:17:33.618Z",
+      "exitCode": 0
+    },
+    {
+      "side": "candidate",
+      "name": "Diamond",
+      "startedAt": "2026-10-04T16:17:33.619Z",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin/node",
+        "/workspace/scratch/7e3d2a445c44/sf6-objects/packages/cil/tools/benchmark-object-verifier.mjs",
+        "/workspace/scratch/7e3d2a445c44/project6-object-performance-407ece8a/cohort/03-candidate-Diamond.json",
+        "--root",
+        "/workspace/scratch/7e3d2a445c44/sf6-objects",
+        "--case",
+        "Diamond",
+        "--iterations",
+        "1000",
+        "--samples",
+        "100",
+        "--warmups",
+        "20"
+      ],
+      "file": "/workspace/scratch/7e3d2a445c44/project6-object-performance-407ece8a/cohort/03-candidate-Diamond.json",
+      "endedAt": "2026-10-04T16:17:34.696Z",
+      "exitCode": 0
+    },
+    {
+      "side": "baseline",
+      "name": "Diamond",
+      "startedAt": "2026-10-04T16:17:34.697Z",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin/node",
+        "/workspace/scratch/7e3d2a445c44/sf6-objects/packages/cil/tools/benchmark-object-verifier.mjs",
+        "/workspace/scratch/7e3d2a445c44/project6-object-performance-407ece8a/cohort/04-baseline-Diamond.json",
+        "--root",
+        "/workspace/scratch/7e3d2a445c44/sf6-object-baseline-88c861e3",
+        "--case",
+        "Diamond",
+        "--iterations",
+        "1000",
+        "--samples",
+        "100",
+        "--warmups",
+        "20"
+      ],
+      "file": "/workspace/scratch/7e3d2a445c44/project6-object-performance-407ece8a/cohort/04-baseline-Diamond.json",
+      "endedAt": "2026-10-04T16:17:35.761Z",
+      "exitCode": 0
+    },
+    {
+      "side": "baseline",
+      "name": "MixedJoin",
+      "startedAt": "2026-10-04T16:17:35.762Z",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin/node",
+        "/workspace/scratch/7e3d2a445c44/sf6-objects/packages/cil/tools/benchmark-object-verifier.mjs",
+        "/workspace/scratch/7e3d2a445c44/project6-object-performance-407ece8a/cohort/05-baseline-MixedJoin.json",
+        "--root",
+        "/workspace/scratch/7e3d2a445c44/sf6-object-baseline-88c861e3",
+        "--case",
+        "MixedJoin",
+        "--iterations",
+        "1000",
+        "--samples",
+        "100",
+        "--warmups",
+        "20"
+      ],
+      "file": "/workspace/scratch/7e3d2a445c44/project6-object-performance-407ece8a/cohort/05-baseline-MixedJoin.json",
+      "endedAt": "2026-10-04T16:17:38.602Z",
+      "exitCode": 0
+    },
+    {
+      "side": "candidate",
+      "name": "MixedJoin",
+      "startedAt": "2026-10-04T16:17:38.602Z",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin/node",
+        "/workspace/scratch/7e3d2a445c44/sf6-objects/packages/cil/tools/benchmark-object-verifier.mjs",
+        "/workspace/scratch/7e3d2a445c44/project6-object-performance-407ece8a/cohort/06-candidate-MixedJoin.json",
+        "--root",
+        "/workspace/scratch/7e3d2a445c44/sf6-objects",
+        "--case",
+        "MixedJoin",
+        "--iterations",
+        "1000",
+        "--samples",
+        "100",
+        "--warmups",
+        "20"
+      ],
+      "file": "/workspace/scratch/7e3d2a445c44/project6-object-performance-407ece8a/cohort/06-candidate-MixedJoin.json",
+      "endedAt": "2026-10-04T16:17:42.068Z",
+      "exitCode": 0
+    },
+    {
+      "side": "candidate",
+      "name": "ExistingAuthority",
+      "startedAt": "2026-10-04T16:17:42.069Z",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin/node",
+        "/workspace/scratch/7e3d2a445c44/sf6-objects/packages/cil/tools/benchmark-object-verifier.mjs",
+        "/workspace/scratch/7e3d2a445c44/project6-object-performance-407ece8a/cohort/07-candidate-ExistingAuthority.json",
+        "--root",
+        "/workspace/scratch/7e3d2a445c44/sf6-objects",
+        "--case",
+        "ExistingAuthority",
+        "--iterations",
+        "1000",
+        "--samples",
+        "100",
+        "--warmups",
+        "20"
+      ],
+      "file": "/workspace/scratch/7e3d2a445c44/project6-object-performance-407ece8a/cohort/07-candidate-ExistingAuthority.json",
+      "endedAt": "2026-10-04T16:17:43.887Z",
+      "exitCode": 0
+    },
+    {
+      "side": "baseline",
+      "name": "ExistingAuthority",
+      "startedAt": "2026-10-04T16:17:43.888Z",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin/node",
+        "/workspace/scratch/7e3d2a445c44/sf6-objects/packages/cil/tools/benchmark-object-verifier.mjs",
+        "/workspace/scratch/7e3d2a445c44/project6-object-performance-407ece8a/cohort/08-baseline-ExistingAuthority.json",
+        "--root",
+        "/workspace/scratch/7e3d2a445c44/sf6-object-baseline-88c861e3",
+        "--case",
+        "ExistingAuthority",
+        "--iterations",
+        "1000",
+        "--samples",
+        "100",
+        "--warmups",
+        "20"
+      ],
+      "file": "/workspace/scratch/7e3d2a445c44/project6-object-performance-407ece8a/cohort/08-baseline-ExistingAuthority.json",
+      "endedAt": "2026-10-04T16:17:45.876Z",
+      "exitCode": 0
+    },
+    {
+      "side": "baseline",
+      "name": "LoadOwner",
+      "startedAt": "2026-10-04T16:17:45.877Z",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin/node",
+        "/workspace/scratch/7e3d2a445c44/sf6-objects/packages/cil/tools/benchmark-object-verifier.mjs",
+        "/workspace/scratch/7e3d2a445c44/project6-object-performance-407ece8a/cohort/09-baseline-LoadOwner.json",
+        "--root",
+        "/workspace/scratch/7e3d2a445c44/sf6-object-baseline-88c861e3",
+        "--case",
+        "LoadOwner",
+        "--iterations",
+        "1000",
+        "--samples",
+        "100",
+        "--warmups",
+        "20"
+      ],
+      "file": "/workspace/scratch/7e3d2a445c44/project6-object-performance-407ece8a/cohort/09-baseline-LoadOwner.json",
+      "endedAt": "2026-10-04T16:17:50.666Z",
+      "exitCode": 0
+    },
+    {
+      "side": "candidate",
+      "name": "LoadOwner",
+      "startedAt": "2026-10-04T16:17:50.666Z",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin/node",
+        "/workspace/scratch/7e3d2a445c44/sf6-objects/packages/cil/tools/benchmark-object-verifier.mjs",
+        "/workspace/scratch/7e3d2a445c44/project6-object-performance-407ece8a/cohort/10-candidate-LoadOwner.json",
+        "--root",
+        "/workspace/scratch/7e3d2a445c44/sf6-objects",
+        "--case",
+        "LoadOwner",
+        "--iterations",
+        "1000",
+        "--samples",
+        "100",
+        "--warmups",
+        "20"
+      ],
+      "file": "/workspace/scratch/7e3d2a445c44/project6-object-performance-407ece8a/cohort/10-candidate-LoadOwner.json",
+      "endedAt": "2026-10-04T16:17:55.675Z",
+      "exitCode": 0
+    },
+    {
+      "side": "candidate",
+      "name": "StoreReferenceDerived",
+      "startedAt": "2026-10-04T16:17:55.676Z",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin/node",
+        "/workspace/scratch/7e3d2a445c44/sf6-objects/packages/cil/tools/benchmark-object-verifier.mjs",
+        "/workspace/scratch/7e3d2a445c44/project6-object-performance-407ece8a/cohort/11-candidate-StoreReferenceDerived.json",
+        "--root",
+        "/workspace/scratch/7e3d2a445c44/sf6-objects",
+        "--case",
+        "StoreReferenceDerived",
+        "--iterations",
+        "1000",
+        "--samples",
+        "100",
+        "--warmups",
+        "20"
+      ],
+      "file": "/workspace/scratch/7e3d2a445c44/project6-object-performance-407ece8a/cohort/11-candidate-StoreReferenceDerived.json",
+      "endedAt": "2026-10-04T16:18:00.529Z",
+      "exitCode": 0
+    },
+    {
+      "side": "baseline",
+      "name": "StoreReferenceDerived",
+      "startedAt": "2026-10-04T16:18:00.530Z",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin/node",
+        "/workspace/scratch/7e3d2a445c44/sf6-objects/packages/cil/tools/benchmark-object-verifier.mjs",
+        "/workspace/scratch/7e3d2a445c44/project6-object-performance-407ece8a/cohort/12-baseline-StoreReferenceDerived.json",
+        "--root",
+        "/workspace/scratch/7e3d2a445c44/sf6-object-baseline-88c861e3",
+        "--case",
+        "StoreReferenceDerived",
+        "--iterations",
+        "1000",
+        "--samples",
+        "100",
+        "--warmups",
+        "20"
+      ],
+      "file": "/workspace/scratch/7e3d2a445c44/project6-object-performance-407ece8a/cohort/12-baseline-StoreReferenceDerived.json",
+      "endedAt": "2026-10-04T16:18:05.139Z",
+      "exitCode": 0
+    },
+    {
+      "side": "baseline",
+      "name": "StringReturn",
+      "startedAt": "2026-10-04T16:18:05.140Z",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin/node",
+        "/workspace/scratch/7e3d2a445c44/sf6-objects/packages/cil/tools/benchmark-object-verifier.mjs",
+        "/workspace/scratch/7e3d2a445c44/project6-object-performance-407ece8a/cohort/13-baseline-StringReturn.json",
+        "--root",
+        "/workspace/scratch/7e3d2a445c44/sf6-object-baseline-88c861e3",
+        "--case",
+        "StringReturn",
+        "--iterations",
+        "1000",
+        "--samples",
+        "100",
+        "--warmups",
+        "20"
+      ],
+      "file": "/workspace/scratch/7e3d2a445c44/project6-object-performance-407ece8a/cohort/13-baseline-StringReturn.json",
+      "endedAt": "2026-10-04T16:18:06.026Z",
+      "exitCode": 0
+    },
+    {
+      "side": "candidate",
+      "name": "StringReturn",
+      "startedAt": "2026-10-04T16:18:06.028Z",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin/node",
+        "/workspace/scratch/7e3d2a445c44/sf6-objects/packages/cil/tools/benchmark-object-verifier.mjs",
+        "/workspace/scratch/7e3d2a445c44/project6-object-performance-407ece8a/cohort/14-candidate-StringReturn.json",
+        "--root",
+        "/workspace/scratch/7e3d2a445c44/sf6-objects",
+        "--case",
+        "StringReturn",
+        "--iterations",
+        "1000",
+        "--samples",
+        "100",
+        "--warmups",
+        "20"
+      ],
+      "file": "/workspace/scratch/7e3d2a445c44/project6-object-performance-407ece8a/cohort/14-candidate-StringReturn.json",
+      "endedAt": "2026-10-04T16:18:07.429Z",
+      "exitCode": 0
+    },
+    {
+      "side": "candidate",
+      "name": "LocalAddressRoundtrip",
+      "startedAt": "2026-10-04T16:18:07.430Z",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin/node",
+        "/workspace/scratch/7e3d2a445c44/sf6-objects/packages/cil/tools/benchmark-object-verifier.mjs",
+        "/workspace/scratch/7e3d2a445c44/project6-object-performance-407ece8a/cohort/15-candidate-LocalAddressRoundtrip.json",
+        "--root",
+        "/workspace/scratch/7e3d2a445c44/sf6-objects",
+        "--case",
+        "LocalAddressRoundtrip",
+        "--iterations",
+        "1000",
+        "--samples",
+        "100",
+        "--warmups",
+        "20"
+      ],
+      "file": "/workspace/scratch/7e3d2a445c44/project6-object-performance-407ece8a/cohort/15-candidate-LocalAddressRoundtrip.json",
+      "endedAt": "2026-10-04T16:18:08.758Z",
+      "exitCode": 0
+    },
+    {
+      "side": "baseline",
+      "name": "LocalAddressRoundtrip",
+      "startedAt": "2026-10-04T16:18:08.758Z",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin/node",
+        "/workspace/scratch/7e3d2a445c44/sf6-objects/packages/cil/tools/benchmark-object-verifier.mjs",
+        "/workspace/scratch/7e3d2a445c44/project6-object-performance-407ece8a/cohort/16-baseline-LocalAddressRoundtrip.json",
+        "--root",
+        "/workspace/scratch/7e3d2a445c44/sf6-object-baseline-88c861e3",
+        "--case",
+        "LocalAddressRoundtrip",
+        "--iterations",
+        "1000",
+        "--samples",
+        "100",
+        "--warmups",
+        "20"
+      ],
+      "file": "/workspace/scratch/7e3d2a445c44/project6-object-performance-407ece8a/cohort/16-baseline-LocalAddressRoundtrip.json",
+      "endedAt": "2026-10-04T16:18:10.003Z",
+      "exitCode": 0
+    },
+    {
+      "side": "baseline",
+      "name": "LoadWideInteger",
+      "startedAt": "2026-10-04T16:18:10.005Z",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin/node",
+        "/workspace/scratch/7e3d2a445c44/sf6-objects/packages/cil/tools/benchmark-object-verifier.mjs",
+        "/workspace/scratch/7e3d2a445c44/project6-object-performance-407ece8a/cohort/17-baseline-LoadWideInteger.json",
+        "--root",
+        "/workspace/scratch/7e3d2a445c44/sf6-object-baseline-88c861e3",
+        "--case",
+        "LoadWideInteger",
+        "--iterations",
+        "1000",
+        "--samples",
+        "100",
+        "--warmups",
+        "20"
+      ],
+      "file": "/workspace/scratch/7e3d2a445c44/project6-object-performance-407ece8a/cohort/17-baseline-LoadWideInteger.json",
+      "endedAt": "2026-10-04T16:18:11.805Z",
+      "exitCode": 0
+    },
+    {
+      "side": "candidate",
+      "name": "LoadWideInteger",
+      "startedAt": "2026-10-04T16:18:11.806Z",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin/node",
+        "/workspace/scratch/7e3d2a445c44/sf6-objects/packages/cil/tools/benchmark-object-verifier.mjs",
+        "/workspace/scratch/7e3d2a445c44/project6-object-performance-407ece8a/cohort/18-candidate-LoadWideInteger.json",
+        "--root",
+        "/workspace/scratch/7e3d2a445c44/sf6-objects",
+        "--case",
+        "LoadWideInteger",
+        "--iterations",
+        "1000",
+        "--samples",
+        "100",
+        "--warmups",
+        "20"
+      ],
+      "file": "/workspace/scratch/7e3d2a445c44/project6-object-performance-407ece8a/cohort/18-candidate-LoadWideInteger.json",
+      "endedAt": "2026-10-04T16:18:13.706Z",
+      "exitCode": 0
+    },
+    {
+      "side": "candidate",
+      "name": "NewClass",
+      "startedAt": "2026-10-04T16:18:13.707Z",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin/node",
+        "/workspace/scratch/7e3d2a445c44/sf6-objects/packages/cil/tools/benchmark-object-verifier.mjs",
+        "/workspace/scratch/7e3d2a445c44/project6-object-performance-407ece8a/cohort/19-candidate-NewClass.json",
+        "--root",
+        "/workspace/scratch/7e3d2a445c44/sf6-objects",
+        "--case",
+        "NewClass",
+        "--iterations",
+        "1000",
+        "--samples",
+        "100",
+        "--warmups",
+        "20"
+      ],
+      "file": "/workspace/scratch/7e3d2a445c44/project6-object-performance-407ece8a/cohort/19-candidate-NewClass.json",
+      "endedAt": "2026-10-04T16:18:19.015Z",
+      "exitCode": 0
+    },
+    {
+      "side": "candidate",
+      "name": "NewArguments",
+      "startedAt": "2026-10-04T16:18:19.016Z",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin/node",
+        "/workspace/scratch/7e3d2a445c44/sf6-objects/packages/cil/tools/benchmark-object-verifier.mjs",
+        "/workspace/scratch/7e3d2a445c44/project6-object-performance-407ece8a/cohort/20-candidate-NewArguments.json",
+        "--root",
+        "/workspace/scratch/7e3d2a445c44/sf6-objects",
+        "--case",
+        "NewArguments",
+        "--iterations",
+        "1000",
+        "--samples",
+        "100",
+        "--warmups",
+        "20"
+      ],
+      "file": "/workspace/scratch/7e3d2a445c44/project6-object-performance-407ece8a/cohort/20-candidate-NewArguments.json",
+      "endedAt": "2026-10-04T16:18:24.503Z",
+      "exitCode": 0
+    },
+    {
+      "side": "candidate",
+      "name": "BoxValue",
+      "startedAt": "2026-10-04T16:18:24.503Z",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin/node",
+        "/workspace/scratch/7e3d2a445c44/sf6-objects/packages/cil/tools/benchmark-object-verifier.mjs",
+        "/workspace/scratch/7e3d2a445c44/project6-object-performance-407ece8a/cohort/21-candidate-BoxValue.json",
+        "--root",
+        "/workspace/scratch/7e3d2a445c44/sf6-objects",
+        "--case",
+        "BoxValue",
+        "--iterations",
+        "1000",
+        "--samples",
+        "100",
+        "--warmups",
+        "20"
+      ],
+      "file": "/workspace/scratch/7e3d2a445c44/project6-object-performance-407ece8a/cohort/21-candidate-BoxValue.json",
+      "endedAt": "2026-10-04T16:18:29.539Z",
+      "exitCode": 0
+    },
+    {
+      "side": "candidate",
+      "name": "HarmlessAnnotation",
+      "startedAt": "2026-10-04T16:18:29.539Z",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin/node",
+        "/workspace/scratch/7e3d2a445c44/sf6-objects/packages/cil/tools/benchmark-object-verifier.mjs",
+        "/workspace/scratch/7e3d2a445c44/project6-object-performance-407ece8a/cohort/22-candidate-HarmlessAnnotation.json",
+        "--root",
+        "/workspace/scratch/7e3d2a445c44/sf6-objects",
+        "--case",
+        "HarmlessAnnotation",
+        "--iterations",
+        "1000",
+        "--samples",
+        "100",
+        "--warmups",
+        "20"
+      ],
+      "file": "/workspace/scratch/7e3d2a445c44/project6-object-performance-407ece8a/cohort/22-candidate-HarmlessAnnotation.json",
+      "endedAt": "2026-10-04T16:18:35.179Z",
+      "exitCode": 0
+    },
+    {
+      "side": "candidate",
+      "name": "UnboxFieldRead",
+      "startedAt": "2026-10-04T16:18:35.179Z",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin/node",
+        "/workspace/scratch/7e3d2a445c44/sf6-objects/packages/cil/tools/benchmark-object-verifier.mjs",
+        "/workspace/scratch/7e3d2a445c44/project6-object-performance-407ece8a/cohort/23-candidate-UnboxFieldRead.json",
+        "--root",
+        "/workspace/scratch/7e3d2a445c44/sf6-objects",
+        "--case",
+        "UnboxFieldRead",
+        "--iterations",
+        "1000",
+        "--samples",
+        "100",
+        "--warmups",
+        "20"
+      ],
+      "file": "/workspace/scratch/7e3d2a445c44/project6-object-performance-407ece8a/cohort/23-candidate-UnboxFieldRead.json",
+      "endedAt": "2026-10-04T16:18:40.700Z",
+      "exitCode": 0
+    },
+    {
+      "side": "candidate",
+      "name": "RepeatedConstructor",
+      "startedAt": "2026-10-04T16:18:40.701Z",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin/node",
+        "/workspace/scratch/7e3d2a445c44/sf6-objects/packages/cil/tools/benchmark-object-verifier.mjs",
+        "/workspace/scratch/7e3d2a445c44/project6-object-performance-407ece8a/cohort/24-candidate-RepeatedConstructor.json",
+        "--root",
+        "/workspace/scratch/7e3d2a445c44/sf6-objects",
+        "--case",
+        "RepeatedConstructor",
+        "--iterations",
+        "1000",
+        "--samples",
+        "100",
+        "--warmups",
+        "20"
+      ],
+      "file": "/workspace/scratch/7e3d2a445c44/project6-object-performance-407ece8a/cohort/24-candidate-RepeatedConstructor.json",
+      "endedAt": "2026-10-04T16:18:53.538Z",
+      "exitCode": 0
+    }
+  ],
+  "comparisons": [
+    {
+      "name": "Add_0_0",
+      "baseline": {
+        "count": 100,
+        "median": 3.093774499999995,
+        "p95": 4.701564000000076,
+        "p99": 5.0404720000000225,
+        "min": 2.7302250000000186,
+        "max": 5.388022999999976
+      },
+      "candidate": {
+        "count": 100,
+        "median": 3.0184984999999642,
+        "p95": 3.483292000000006,
+        "p99": 4.858685000000037,
+        "min": 2.7027349999999615,
+        "max": 4.982146000000057
+      },
+      "changePercent": {
+        "median": -2.4331443678274223,
+        "p95": -25.912058200208488,
+        "p99": -3.6065471646303138
+      }
+    },
+    {
+      "name": "Diamond",
+      "baseline": {
+        "count": 100,
+        "median": 3.4533929999999486,
+        "p95": 3.9703630000000203,
+        "p99": 4.307039000000032,
+        "min": 3.1221140000000105,
+        "max": 13.14559300000002
+      },
+      "candidate": {
+        "count": 100,
+        "median": 3.6690609999999992,
+        "p95": 5.766666999999984,
+        "p99": 6.932706000000053,
+        "min": 3.1077300000000605,
+        "max": 7.05488600000001
+      },
+      "changePercent": {
+        "median": 6.245104452347405,
+        "p95": 45.2428153294788,
+        "p99": 60.962229503842465
+      }
+    },
+    {
+      "name": "MixedJoin",
+      "baseline": {
+        "count": 100,
+        "median": 17.301330500000006,
+        "p95": 24.12100200000009,
+        "p99": 24.300987000000077,
+        "min": 15.441848000000164,
+        "max": 31.701219000000037
+      },
+      "candidate": {
+        "count": 100,
+        "median": 18.924580500000047,
+        "p95": 32.910649999999805,
+        "p99": 54.54257000000007,
+        "min": 15.834397999999965,
+        "max": 57.706616000000054
+      },
+      "changePercent": {
+        "median": 9.382226413165395,
+        "p95": 36.439812906610115,
+        "p99": 124.4459041931091
+      }
+    },
+    {
+      "name": "ExistingAuthority",
+      "baseline": {
+        "count": 100,
+        "median": 9.336504500000046,
+        "p95": 14.436864999999898,
+        "p99": 17.688413000000082,
+        "min": 7.261516000000029,
+        "max": 27.68330200000014
+      },
+      "candidate": {
+        "count": 100,
+        "median": 8.500994499999933,
+        "p95": 13.985661000000164,
+        "p99": 14.643809999999803,
+        "min": 7.468671000000086,
+        "max": 17.280700000000024
+      },
+      "changePercent": {
+        "median": -8.948852324765754,
+        "p95": -3.1253599725406978,
+        "p99": -17.212414703344304
+      }
+    },
+    {
+      "name": "LoadOwner",
+      "baseline": {
+        "count": 100,
+        "median": 26.824984000000086,
+        "p95": 40.80483000000004,
+        "p99": 71.69273799999996,
+        "min": 22.103931999999986,
+        "max": 91.03248400000007
+      },
+      "candidate": {
+        "count": 100,
+        "median": 31.50943149999989,
+        "p95": 44.34427599999981,
+        "p99": 45.322103999999854,
+        "min": 22.315013999999792,
+        "max": 46.06604000000016
+      },
+      "changePercent": {
+        "median": 17.463002028257655,
+        "p95": 8.674085886400619,
+        "p99": -36.782852399918276
+      }
+    },
+    {
+      "name": "StoreReferenceDerived",
+      "baseline": {
+        "count": 100,
+        "median": 27.753390500000023,
+        "p95": 40.00862600000005,
+        "p99": 43.73220300000003,
+        "min": 22.63882799999965,
+        "max": 46.50155700000005
+      },
+      "candidate": {
+        "count": 100,
+        "median": 27.223575499999697,
+        "p95": 49.08897900000011,
+        "p99": 85.71473199999991,
+        "min": 23.55412299999989,
+        "max": 91.07268500000009
+      },
+      "changePercent": {
+        "median": -1.9090100000586419,
+        "p95": 22.695988110164155,
+        "p99": 95.99911762963293
+      }
+    },
+    {
+      "name": "StringReturn",
+      "baseline": {
+        "count": 100,
+        "median": 2.218203000000017,
+        "p95": 2.546124999999961,
+        "p99": 2.65142000000003,
+        "min": 2.13125500000001,
+        "max": 4.341715000000022
+      },
+      "candidate": {
+        "count": 100,
+        "median": 3.938983500000006,
+        "p95": 4.514460999999983,
+        "p99": 7.0009469999999965,
+        "min": 2.229278000000022,
+        "max": 7.811720000000037
+      },
+      "changePercent": {
+        "median": 77.57542930020276,
+        "p95": 77.30712357013314,
+        "p99": 164.04519087884668
+      }
+    },
+    {
+      "name": "LocalAddressRoundtrip",
+      "baseline": {
+        "count": 100,
+        "median": 3.890794000000028,
+        "p95": 4.5581549999999424,
+        "p99": 5.00158799999997,
+        "min": 3.634627000000023,
+        "max": 5.707015999999953
+      },
+      "candidate": {
+        "count": 100,
+        "median": 4.162798500000008,
+        "p95": 7.2507759999999735,
+        "p99": 7.630255000000034,
+        "min": 3.7939509999999927,
+        "max": 7.673348000000033
+      },
+      "changePercent": {
+        "median": 6.990976648981628,
+        "p95": 59.072607228145266,
+        "p99": 52.556648008594074
+      }
+    },
+    {
+      "name": "LoadWideInteger",
+      "baseline": {
+        "count": 100,
+        "median": 9.468860500000005,
+        "p95": 10.72131300000001,
+        "p99": 12.433430999999928,
+        "min": 8.687389999999937,
+        "max": 12.644983000000138
+      },
+      "candidate": {
+        "count": 100,
+        "median": 9.51999099999989,
+        "p95": 15.383210999999847,
+        "p99": 19.50849500000004,
+        "min": 8.569968000000017,
+        "max": 22.549097999999958
+      },
+      "changePercent": {
+        "median": 0.5399857775905126,
+        "p95": 43.4825286790884,
+        "p99": 56.90355300962504
+      }
+    }
+  ],
+  "complete": true,
+  "note": "One predefined cohort. Differences require review; no significance test or automatic gate pass is claimed."
+}

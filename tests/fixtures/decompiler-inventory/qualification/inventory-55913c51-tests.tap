@@ -1,0 +1,33 @@
+✔ A13 native CoreCLR method IL and EH observations agree with normal CFG byte extents and exception boundaries (10.25712ms)
+✔ A13 retained independent SRM/CoreCLR filter and fault references keep exact clause boundaries and no invented dispatch edges (5.256298ms)
+✔ A13 CFGs match reviewed stable JSON for all branch, switch, termination and EH boundary families (6.987934ms)
+✔ A13 switch duplicate targets retain separate case edges and leave records an eventual stack-clearing target (0.82963ms)
+✔ A13 CFG limits allow exact extents and reject before expanding oversized clause input (1.139335ms)
+✔ A13 invalid CFG options, encoded instructions, prefix targets and terminal fallthrough have stable diagnostics (0.555737ms)
+✔ A13 malformed EH geometry and prefix-splitting boundaries reuse existing region diagnostics (0.42841ms)
+✔ A13 graph ownership survives input destruction and cancellation is checked before and during graph work (0.562998ms)
+✔ A13 the pipeline preserves the existing arithmetic source and adds an owned CFG without rereading a cached method (7.374792ms)
+✔ A13 legacy lowering keeps mutable-load captures, numeric literal spelling and member call/field handlers (4.687182ms)
+✔ A13 exception and SSA source fallbacks retain complete IL plus the independently usable normal CFG (5.698558ms)
+✔ A13 bodyless methods, graph failures and pipeline interruption remain explicit (4.633593ms)
+✔ inventory counts and every physical row identity match retained native SRM observations (9.645912ms)
+✔ native rejection of four legacy tables remains explicit while their physical rows remain inventoried (2.429843ms)
+✔ decompile result accounts for every physical CLI table and explicitly unsupported payloads (9.949819ms)
+✔ reconstructed bodies, IL fallback and absent bodies retain exact output links without a full-row rendered claim (8.394872ms)
+✔ orphan physical MethodDefs and invalid method bodies stay in the census exactly once (1.630718ms)
+✔ standalone PDB external ranges never create rows and delta identities stay physical (1.606292ms)
+✔ invalid summary heaps preserve physical rows with an explicit unsupported diagnostic (0.819535ms)
+✔ the public pipeline retains unsupported names and opaque attributes without a second full summary traversal (4.1289ms)
+✔ repeated failed name scans are cached and distinct invalid suffixes share the scan budget (1.494227ms)
+✔ inventory budgets allow exact extents and preflight oversized census before reading rows (3.739969ms)
+✔ empty physical inventories accept zero budgets and row identities cross the 16-bit boundary (107.678325ms)
+✔ invalid inventory options, mismatched table containers and duplicate output tokens reject explicitly (3.923197ms)
+✔ inventory snapshots are independent of later source/output mutation and cancellation returns no partial result (5.203431ms)
+ℹ tests 25
+ℹ suites 0
+ℹ pass 25
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1395.823535

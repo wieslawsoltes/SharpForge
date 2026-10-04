@@ -1,0 +1,134 @@
+{
+  "/workspace/scratch/1692a10afba9/utf8-benchmark-baseline": {
+    "commit": "bf85020e6024cdd679a0234d9f050ca7dedddf53",
+    "packages": [
+      {
+        "name": "archive",
+        "alias": "/workspace/scratch/1692a10afba9/utf8-benchmark-baseline/packages/archive",
+        "entry": "/workspace/scratch/1692a10afba9/utf8-benchmark-baseline/packages/archive/src/index.js",
+        "entrySha256": "6571fb5efe07280437cb59e9b511612d981d691b27bbaffa1b15054a8c34ff6e"
+      },
+      {
+        "name": "bcl-collections",
+        "alias": "/workspace/scratch/1692a10afba9/utf8-benchmark-baseline/packages/bcl-collections",
+        "entry": "/workspace/scratch/1692a10afba9/utf8-benchmark-baseline/packages/bcl-collections/src/index.js",
+        "entrySha256": "1178768fcfffef81408ef5fc0c1f9d1227ad08a5114aff33ae8b512be72df7d6"
+      },
+      {
+        "name": "bcl-core",
+        "alias": "/workspace/scratch/1692a10afba9/utf8-benchmark-baseline/packages/bcl-core",
+        "entry": "/workspace/scratch/1692a10afba9/utf8-benchmark-baseline/packages/bcl-core/src/index.js",
+        "entrySha256": "4fa42769db7197c7919c08876e2367d20c2c3216ccef41ddd38e4caeb6e914f3"
+      },
+      {
+        "name": "bytecode",
+        "alias": "/workspace/scratch/1692a10afba9/utf8-benchmark-baseline/packages/bytecode",
+        "entry": "/workspace/scratch/1692a10afba9/utf8-benchmark-baseline/packages/bytecode/src/index.js",
+        "entrySha256": "0a4906fc6b51585ed9f8a9060f10d9de5cc5699e642ba91a71baa4188181b963"
+      },
+      {
+        "name": "cil",
+        "alias": "/workspace/scratch/1692a10afba9/utf8-benchmark-baseline/packages/cil",
+        "entry": "/workspace/scratch/1692a10afba9/utf8-benchmark-baseline/packages/cil/src/index.js",
+        "entrySha256": "21ee8195134f85989be0dc96eeebb41597b7ee76c8f7a2bc8f4514e7cf7b532c"
+      },
+      {
+        "name": "compiler",
+        "alias": "/workspace/scratch/1692a10afba9/utf8-benchmark-baseline/packages/compiler",
+        "entry": "/workspace/scratch/1692a10afba9/utf8-benchmark-baseline/packages/compiler/src/index.js",
+        "entrySha256": "ccec6058828101345711290aa5906acb4e0dd9ad9fab3794e601c528f3914adf"
+      },
+      {
+        "name": "framework",
+        "alias": "/workspace/scratch/1692a10afba9/utf8-benchmark-baseline/packages/framework",
+        "entry": "/workspace/scratch/1692a10afba9/utf8-benchmark-baseline/packages/framework/src/index.js",
+        "entrySha256": "cc0a0ba89b4e95d3ba119483794a9348c9fd77cfc69a9ce0db3d89d25fb1d08f"
+      },
+      {
+        "name": "symbols",
+        "alias": "/workspace/scratch/1692a10afba9/utf8-benchmark-baseline/packages/symbols",
+        "entry": "/workspace/scratch/1692a10afba9/utf8-benchmark-baseline/packages/symbols/src/index.js",
+        "entrySha256": "a38640902e2c93a6062d80bb90d9283509f91fb7c0d608249da9abede1ab6d5d"
+      },
+      {
+        "name": "syntax",
+        "alias": "/workspace/scratch/1692a10afba9/utf8-benchmark-baseline/packages/syntax",
+        "entry": "/workspace/scratch/1692a10afba9/utf8-benchmark-baseline/packages/syntax/src/index.js",
+        "entrySha256": "b43b8f59df9e5a6b0eadf0db0b9e29d59e38b4a981a769ba791e8b15d7631850"
+      },
+      {
+        "name": "text",
+        "alias": "/workspace/scratch/1692a10afba9/utf8-benchmark-baseline/packages/text",
+        "entry": "/workspace/scratch/1692a10afba9/utf8-benchmark-baseline/packages/text/src/index.js",
+        "entrySha256": "000978094378244d0c0c743ad2d50a902cd679fee33afd509fa1c7cca861879b"
+      }
+    ]
+  },
+  "/workspace/scratch/1692a10afba9/p5-nullable-metadata": {
+    "commit": "41972f6bff4704c5e7597387cfda45f89c3670db",
+    "packages": [
+      {
+        "name": "archive",
+        "alias": "/workspace/scratch/1692a10afba9/p5-nullable-metadata/packages/archive",
+        "entry": "/workspace/scratch/1692a10afba9/p5-nullable-metadata/packages/archive/src/index.js",
+        "entrySha256": "6571fb5efe07280437cb59e9b511612d981d691b27bbaffa1b15054a8c34ff6e"
+      },
+      {
+        "name": "bcl-collections",
+        "alias": "/workspace/scratch/1692a10afba9/p5-nullable-metadata/packages/bcl-collections",
+        "entry": "/workspace/scratch/1692a10afba9/p5-nullable-metadata/packages/bcl-collections/src/index.js",
+        "entrySha256": "1178768fcfffef81408ef5fc0c1f9d1227ad08a5114aff33ae8b512be72df7d6"
+      },
+      {
+        "name": "bcl-core",
+        "alias": "/workspace/scratch/1692a10afba9/p5-nullable-metadata/packages/bcl-core",
+        "entry": "/workspace/scratch/1692a10afba9/p5-nullable-metadata/packages/bcl-core/src/index.js",
+        "entrySha256": "4fa42769db7197c7919c08876e2367d20c2c3216ccef41ddd38e4caeb6e914f3"
+      },
+      {
+        "name": "bytecode",
+        "alias": "/workspace/scratch/1692a10afba9/p5-nullable-metadata/packages/bytecode",
+        "entry": "/workspace/scratch/1692a10afba9/p5-nullable-metadata/packages/bytecode/src/index.js",
+        "entrySha256": "0a4906fc6b51585ed9f8a9060f10d9de5cc5699e642ba91a71baa4188181b963"
+      },
+      {
+        "name": "cil",
+        "alias": "/workspace/scratch/1692a10afba9/p5-nullable-metadata/packages/cil",
+        "entry": "/workspace/scratch/1692a10afba9/p5-nullable-metadata/packages/cil/src/index.js",
+        "entrySha256": "21ee8195134f85989be0dc96eeebb41597b7ee76c8f7a2bc8f4514e7cf7b532c"
+      },
+      {
+        "name": "compiler",
+        "alias": "/workspace/scratch/1692a10afba9/p5-nullable-metadata/packages/compiler",
+        "entry": "/workspace/scratch/1692a10afba9/p5-nullable-metadata/packages/compiler/src/index.js",
+        "entrySha256": "ccec6058828101345711290aa5906acb4e0dd9ad9fab3794e601c528f3914adf"
+      },
+      {
+        "name": "framework",
+        "alias": "/workspace/scratch/1692a10afba9/p5-nullable-metadata/packages/framework",
+        "entry": "/workspace/scratch/1692a10afba9/p5-nullable-metadata/packages/framework/src/index.js",
+        "entrySha256": "cc0a0ba89b4e95d3ba119483794a9348c9fd77cfc69a9ce0db3d89d25fb1d08f"
+      },
+      {
+        "name": "symbols",
+        "alias": "/workspace/scratch/1692a10afba9/p5-nullable-metadata/packages/symbols",
+        "entry": "/workspace/scratch/1692a10afba9/p5-nullable-metadata/packages/symbols/src/index.js",
+        "entrySha256": "a38640902e2c93a6062d80bb90d9283509f91fb7c0d608249da9abede1ab6d5d"
+      },
+      {
+        "name": "syntax",
+        "alias": "/workspace/scratch/1692a10afba9/p5-nullable-metadata/packages/syntax",
+        "entry": "/workspace/scratch/1692a10afba9/p5-nullable-metadata/packages/syntax/src/index.js",
+        "entrySha256": "b43b8f59df9e5a6b0eadf0db0b9e29d59e38b4a981a769ba791e8b15d7631850"
+      },
+      {
+        "name": "text",
+        "alias": "/workspace/scratch/1692a10afba9/p5-nullable-metadata/packages/text",
+        "entry": "/workspace/scratch/1692a10afba9/p5-nullable-metadata/packages/text/src/index.js",
+        "entrySha256": "000978094378244d0c0c743ad2d50a902cd679fee33afd509fa1c7cca861879b"
+      }
+    ]
+  },
+  "benchmarkSha256": "84e5538c58b562bde3c86ea5a06bc642bb26f412cdbfad902fe25f4e280dd43f",
+  "aliasVerification": "All compiler transitive dependencies resolve inside their selected revision; both tracked trees match HEAD."
+}
