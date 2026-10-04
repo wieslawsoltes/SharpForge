@@ -87,7 +87,8 @@ export class DesignerSurfaceController {
 
   onDocumentChanged(event = {}) {
     if (!this.installed || this.disposed) return;
-    if (this.lastDocument !== this.view.document) {
+    const documentChanged = this.lastDocument !== this.view.document;
+    if (documentChanged) {
       this.cancelPointer?.();
       this.gestures.finishKeyboard(true);
       this.text.cancel();
@@ -95,11 +96,13 @@ export class DesignerSurfaceController {
       this.lastClick = null;
       this.preview.environment.update({state: null});
     }
-    if (event.kind !== 'selection') this.geometry.invalidate();
-    this.preview.applyDimensions();
-    this.guides.render();
-    const snap = (this.view.controlsRoot ?? this.view.panel('designer')).querySelector('#designer-snap');
-    if (snap) snap.value = String(guideSettings(this.view.document.value).gridSize);
+    if (documentChanged || event.kind !== 'selection') {
+      this.geometry.invalidate();
+      this.preview.applyDimensions();
+      this.guides.render();
+      const snap = (this.view.controlsRoot ?? this.view.panel('designer')).querySelector('#designer-snap');
+      if (snap) snap.value = String(guideSettings(this.view.document.value).gridSize);
+    }
     this.drawAdorners();
   }
 

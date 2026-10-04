@@ -35,6 +35,7 @@ export class DesignerToolRouter {
         target.replaceChildren(empty);
       }
     }
+    view?.tools?.flushVisiblePanels?.();
   }
 
   dispose() {

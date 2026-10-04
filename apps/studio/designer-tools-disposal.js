@@ -4,7 +4,7 @@ import {releaseAppResources} from './designer-app-host-errors.js';
 export function disposeDesignerTools(view) {
   if (view.disposed) return;
   view.disposed = true;
-  const resources = [view.liveAttachment, view.surface, view.accessibility, view.outline, view.toolbox,
+  const resources = [view.updates, view.liveAttachment, view.surface, view.accessibility, view.outline, view.toolbox,
     view.properties, view.resources, view.resourceGallery, view.resourceContext, view.options, view.assetPreviewController,
     view.assetPreviews, view.chrome, view.treeView, view.host];
   releaseAppResources([

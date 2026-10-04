@@ -8,12 +8,12 @@ export class DesignerOutlineState {
 
   bind(document) {
     this.document = document;
-    const existing = new Set(document.value.nodes.map(node => node.id));
-    for (const id of this.hidden) if (!existing.has(id)) this.hidden.delete(id);
-    for (const id of this.locked) if (!existing.has(id)) this.locked.delete(id);
+    for (const id of this.hidden) if (!document.node(id)) this.hidden.delete(id);
+    for (const id of this.locked) if (!document.node(id)) this.locked.delete(id);
   }
 
   inherited(set, id) {
+    if (!set.size) return false;
     const visited = new Set();
     let node = this.document.node(id);
     while (node && !visited.has(node.id)) {

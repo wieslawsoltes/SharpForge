@@ -1,6 +1,6 @@
 import {
   DesignDocument, DesignerSession, DesignerOptionsService, DesignerAssetPreviewStore,
-  childSlot, projectDesignerAuthoringScene, designerPreviewDecorations
+  projectDesignerAuthoringScene, designerPreviewDecorations
 } from '@sharpforge/designer';
 import {ContextMenu} from '@sharpforge/controls';
 import {WinUIHost} from '@sharpforge/winui';
@@ -21,6 +21,7 @@ import {DesignerAssetPreviewController} from './designer-property-preview.js';
 import {mountDesignerSurface, resizeDesignerArtboard} from './designer-surface-view.js';
 import {createDesignerActions, renderDesignerSource} from './designer-actions.js';
 import {disposeDesignerTools} from './designer-tools-disposal.js';
+import {DesignerDocumentUpdates} from './designer-document-updates.js';
 
 export const DESIGN_TOOLS = Object.freeze(['designer', 'designer-toolbox', 'designer-tree', 'designer-properties',
   'designer-layout', 'designer-styles', 'designer-source']);
@@ -64,6 +65,7 @@ export class DesignerTools {
       makeBlob: (bytes, type) => new Blob([bytes], {type})
     });
     this.assetPreviewController = new DesignerAssetPreviewController(this);
+    this.updates = new DesignerDocumentUpdates(this);
     this.actions = createDesignerActions(this);
     this.subscribeDocument();
   }
@@ -136,12 +138,7 @@ export class DesignerTools {
   renderTool(id) {
     if (!DESIGN_TOOLS.includes(id)) return false;
     this.ensure();
-    const renderers = {
-      'designer-source': () => this.renderSource(), 'designer-properties': () => this.renderProperties(),
-      'designer-layout': () => this.renderLayout(), 'designer-styles': () => this.renderResources(),
-      'designer-toolbox': () => this.renderToolbox()
-    };
-    renderers[id]?.();
+    this.updates.renderTool(id);
     this.drawAdorners();
     return true;
   }
@@ -186,55 +183,14 @@ export class DesignerTools {
   }
 
   update(event = {}) {
-    if (!this.initialized || this.disposed) return;
-    this.syncing = true;
-    try {
-      this.resourceContext.update();
-      this.surface.onDocumentChanged(event);
-      this.updateTree(event);
-      if (event.kind !== 'selection') this.updatePreview();
-      this.renderToolbox();
-      this.renderProperties();
-      this.renderLayout();
-      this.renderResources();
-      this.updateButtons();
-      this.statusElement.textContent = this.status + ' · revision ' + this.document.revision;
-      if (!this.resourceDocument) {
-        this.outline.render();
-        this.accessibility.update(event);
-        this.liveAttachment.update(event);
-      }
-      this.chrome.renderSelection(this.resourceContext.breadcrumbContext());
-      this.chrome.rulers();
-      if (!this.templateScope) this.sourceSync.designChanged(event);
-      if (event.kind !== 'selection') this.safe(() => this.assetPreviewController.refresh());
-    } finally { this.syncing = false; }
+    return this.updates.update(event);
   }
 
   updateTree(event) {
-    if (this.resourceContext.renderPanel('designer-tree')) {
-      this.treeModel.setNodes([]);
-      this.treeModel.selected = new Set();
-      this.treeView.render();
-      return;
-    }
-    const document = this.document;
-    const tree = id => {
-      const node = document.node(id);
-      const container = !!childSlot(node.type);
-      return {id, label: (node.properties.Name ? node.properties.Name + ' · ' : '') + node.type.split('.').at(-1),
-        kind: 'control', icon: container ? '▰' : '◇', defaultExpanded: true, branch: container, dropTarget: container,
-        draggable: id !== document.value.root, children: node.children.map(tree)};
-    };
-    if (event.kind === 'load') this.treeModel.seen = new Set();
-    this.treeModel.setNodes([tree(document.value.root)]);
-    for (const id of document.selection) {
-      for (const ancestor of this.treeModel.ancestors(id)) this.treeModel.expanded.add(ancestor);
-    }
-    this.treeModel.cachedRows = null;
-    this.treeModel.selected = new Set(document.selection);
-    this.treeView.render();
+    return this.updates.updateTree(event);
   }
+
+  flushVisiblePanels() { this.updates.flushVisible(); }
 
   buildPreviewScene() {
     const environment = this.surface.preview.value;

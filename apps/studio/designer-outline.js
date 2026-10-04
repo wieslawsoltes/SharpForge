@@ -16,6 +16,7 @@ export class DesignerOutline {
     this.root = null;
     this.disposed = false;
     this.dropTarget = null;
+    this.hiddenElements = new Map();
   }
 
   bind() {
@@ -37,7 +38,7 @@ export class DesignerOutline {
       if (button) decorateDesignerButton(button, designerCommands[command]);
     }
     this.handlers = {
-      scroll: () => this.render(),
+      scroll: () => this.render({project: false}),
       keydown: event => this.keydown(event),
       dblclick: event => {
         if (this.view.document.readOnly) return;
@@ -56,7 +57,7 @@ export class DesignerOutline {
     for (const [name, handler] of Object.entries(this.handlers)) this.root.addEventListener(name, handler, name !== 'scroll');
   }
 
-  render() {
+  render({project = true} = {}) {
     this.install();
     this.state.bind(this.view.document);
     if (!this.root || this.disposed) return;
@@ -75,11 +76,32 @@ export class DesignerOutline {
       this.renderToggle(controls.children[0], id, 'hidden');
       this.renderToggle(controls.children[1], id, 'locked');
     }
-    for (const [id, element] of this.view.host?.elements ?? []) {
-      if (!this.view.document.node(id)) continue;
-      const hidden = !this.isVisible(id);
-      if (hidden) element.setAttribute('data-design-hidden', 'true');
-      else element.removeAttribute('data-design-hidden');
+    if (project) this.projectVisibility();
+  }
+
+  /** Only hidden subtrees need presentation attributes; ordinary selections never scan host elements. */
+  projectVisibility() {
+    this.state.bind(this.view.document);
+    const hidden = new Set();
+    const queue = [...this.state.hidden];
+    for (let index = 0; index < queue.length; index++) {
+      const id = queue[index];
+      if (hidden.has(id)) continue;
+      const node = this.view.document.node(id);
+      if (!node) continue;
+      hidden.add(id);
+      queue.push(...node.children);
+    }
+    for (const [id, element] of this.hiddenElements) {
+      if (hidden.has(id) && this.view.host?.elements.get(id) === element) continue;
+      element.removeAttribute('data-design-hidden');
+      this.hiddenElements.delete(id);
+    }
+    for (const id of hidden) {
+      const element = this.view.host?.elements.get(id);
+      if (!element || this.hiddenElements.get(id) === element) continue;
+      element.setAttribute('data-design-hidden', 'true');
+      this.hiddenElements.set(id, element);
     }
   }
 
@@ -104,7 +126,10 @@ export class DesignerOutline {
     button.title = button.getAttribute('aria-label');
     button.disabled = kind === 'hidden' && id === this.view.document.value.root;
     const glyph = kind === 'hidden' ? active ? 'hidden' : 'visible' : active ? 'locked' : 'unlocked';
-    button.innerHTML = `<svg viewBox="0 0 16 16" aria-hidden="true">${symbols[glyph]}</svg>`;
+    if (button.dataset.outlineGlyph !== glyph) {
+      button.innerHTML = `<svg viewBox="0 0 16 16" aria-hidden="true">${symbols[glyph]}</svg>`;
+      button.dataset.outlineGlyph = glyph;
+    }
   }
 
   toggle(id, kind) {
@@ -215,6 +240,8 @@ export class DesignerOutline {
     this.disposed = true;
     this.clearDrop();
     for (const [name, handler] of Object.entries(this.handlers ?? {})) this.root?.removeEventListener(name, handler, name !== 'scroll');
+    for (const element of this.hiddenElements.values()) element.removeAttribute('data-design-hidden');
+    this.hiddenElements.clear();
     this.root = null;
   }
 }
