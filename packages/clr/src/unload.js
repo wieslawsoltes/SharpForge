@@ -7,6 +7,8 @@ export class ContextRoots {
   #weak = new Map();
   #sequence = 0;
   #maxRoots;
+  #listeners = new Set();
+  #revision = 0;
   constructor(context, { maxRoots = 65536 } = {}) {
     if (!Number.isSafeInteger(maxRoots) || maxRoots < 1) throw new RangeError('Invalid context root limit');
     this.#context = new WeakRef(context);
@@ -22,6 +24,14 @@ export class ContextRoots {
     const id = ++this.#sequence;
     const entries = weak ? this.#weak : this.#strong;
     entries.set(id, { target: weak ? new WeakRef(target) : target, kind });
+    try {
+      const event = Object.freeze({ id, target, kind, weak });
+      for (const listener of this.#listeners) listener(event);
+    } catch (error) {
+      entries.delete(id);
+      throw error;
+    }
+    this.#revision++;
     let retainedContext = weak ? null : context;
     let released = false;
     return Object.freeze({
@@ -30,6 +40,7 @@ export class ContextRoots {
         if (released) return;
         released = true;
         entries.delete(id);
+        this.#revision++;
         retainedContext = null;
       },
       get context() { return retainedContext; },
@@ -50,4 +61,14 @@ export class ContextRoots {
   }
 
   get strongCount() { return this.#strong.size; }
+
+  get revision() { return this.#revision; }
+
+  /** Synchronous publication hook for managed collectors; listeners never retain weak targets. */
+  subscribe(listener) {
+    if (typeof listener !== 'function') throw new TypeError('Context root listener must be callable');
+    if (this.#listeners.size >= 1024) throw loadError(LoadErrorCode.LimitExceeded, 'Context root listener limit exceeded');
+    this.#listeners.add(listener);
+    return Object.freeze({dispose: () => this.#listeners.delete(listener)});
+  }
 }
