@@ -40,6 +40,7 @@ Capture("repeat-low-surrogate", '\uDC00', 3);
 Capture("repeat-max-unit", '\uFFFF', 3);
 Capture("negative-repeat", 'A', -1);
 Capture("minimum-repeat", 'A', int.MinValue);
+Capture("max-capacity-overflow", 'A', int.MaxValue);
 Capture("null-single", 'A', nullReceiver: true);
 Capture("null-zero", 'A', 0, nullReceiver: true);
 Capture("null-negative", 'A', -1, nullReceiver: true);
