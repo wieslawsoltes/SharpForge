@@ -18,7 +18,7 @@
  *   CS8364  an `in` argument    CS8197  `out var x`    CS8183  `out _`    CS0307  `d.Name<T>` that is not invoked
  *   CS1962  typeof(dynamic)     CS1981  `is dynamic` (warning)            CS8386  new dynamic()
  *
- * Nothing here runs: the runtime has no late binder (see `dynamicOperation` in codegen/semantic/unsupported.js).
+ * Direct CIL emission uses Microsoft.CSharp call sites. The image runtime still reports its missing late binder.
  */
 import {DiagnosticId} from '../diagnostics/codes.js';
 import { TypeKind, RefKind, DynamicTypeSymbol, ArrayTypeSymbol } from '../symbols/types.js';
@@ -170,12 +170,24 @@ export const DynamicBinding = Base =>
       }
       if (!hasDynamicArgument(args) || type.typeKind === TypeKind.Delegate) return super.create(type, args, syntax, typeNode, initializer);
       const { node, isLateBound } = this.lateBound(() => super.create(type, args, syntax, typeNode, initializer));
-      // Only an ambiguity leaves the constructor to the runtime binder; the type of the expression is the class either way.
-      if (!isLateBound || node.kind !== 'Bad' || !this.checkDynamicArguments(args)) return node;
-      return this.dynamicNode('DynamicObjectCreation', syntax, { args: argumentList(args) }, type);
+      if (!isLateBound || !this.checkDynamicArguments(args)) return node;
+      // Even one applicable candidate must be rebound against the argument's runtime type. Keep initializer targets
+      // already bound by the static check; an ambiguous call has no bound initializer and binds it once here.
+      const created = this.dynamicNode('DynamicObjectCreation', syntax, { args: argumentList(args) }, type);
+      return node.kind === 'ObjectCreation' ? { ...node, ...created } : this.withInitializer(created, initializer);
     }
 
     // ---- operators ----
+    delegateOperation(syntax, operator, left, right) {
+      if (isDynamic(left.type) || isDynamic(right.type)) return null;
+      return super.delegateOperation(syntax, operator, left, right);
+    }
+    condition(syntax) {
+      const condition = super.condition(syntax);
+      if (condition.kind !== 'Conversion' || condition.isExplicit || !isDynamic(condition.operand.type)) return condition;
+      // Conditions accept operator true; a conversion binder would incorrectly require a conversion to bool.
+      return this.dynamicNode('DynamicCondition', syntax, { operand: condition.operand }, this.core.bool);
+    }
     resolveUnaryOperator(operator, operand) {
       if (!isDynamic(operand.type)) return super.resolveUnaryOperator(operator, operand);
       return { kind: 'predefined', resultType: dynamicType, leftType: dynamicType, isDynamic: true };
@@ -193,6 +205,7 @@ export const DynamicBinding = Base =>
     }
     expression(syntax, options = {}) {
       const node = super.expression(syntax, options);
+      if (!this.quiet && (isDynamic(node.type) || node.isDynamic)) this.d.hasDynamicExpressions = true;
       if (syntax.kind === 'TypeOfExpression' && isDynamic(node.operandType)) this.report(syntax, DiagnosticId.CS1962);
       return node;
     }
