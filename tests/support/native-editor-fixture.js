@@ -20,7 +20,7 @@ export function createNativeEditor(text = '', { mode = 'vscode', selections = [[
     writeText: async value => { clipboardText = value; }
   };
   const editor = {
-    model, uri: model.uri, options: editorOptions(options), messages, requests,
+    model, contributions: new Set(), uri: model.uri, options: editorOptions(options), messages, requests,
     element: { dataset: {}, clientHeight: 440 }, input: { readOnly: false, focus() { editor.focused = true; } },
     lineHeight: 22, overtype: false, pairs: new Map(pairs), folding: new FoldingModel(), bookmarks: new BookmarkModel(model),
     view: { scrollTop: 0, scrollLeft: 0, viewport: { clientHeight: 440 }, reveal(offset) { this.revealed = offset; },
@@ -69,6 +69,7 @@ export function createNativeEditor(text = '', { mode = 'vscode', selections = [[
     addDecoration(id, decoration) { this.model.decorations.set(id, decoration); },
     removeDecoration(id) { this.model.decorations.delete(id); },
     closeCompletion() { this.completionClosed = true; },
+    registerContribution(contribution) { this.contributions.add(contribution); return () => this.contributions.delete(contribution); },
     cursor() {}, sync() {}, paint() {}
   };
   editor.editing = new EditorEditing(editor);
@@ -82,6 +83,7 @@ export function createNativeEditor(text = '', { mode = 'vscode', selections = [[
     onState: state => { editor.keymapState = state; },
     requestHost: requestHost ?? ((command, params) => { requests.push({ command, params }); return true; })
   });
+  editor.keymapAdapter = editor.adapter;
   const pending = [];
   const execute = editor.adapter.bindings.execute;
   editor.adapter.bindings.execute = (...args) => {
@@ -102,7 +104,11 @@ export function createNativeEditor(text = '', { mode = 'vscode', selections = [[
       await editor.adapter.vim.feed(token === ' ' ? 'Space' : token, true);
     }
   };
-  editor.dispose = () => { editor.adapter.dispose(); subscription(); editor.disposed = true; };
+  editor.dispose = () => {
+    for (const contribution of editor.contributions) contribution.dispose?.();
+    editor.contributions.clear();
+    editor.adapter.dispose(); subscription(); editor.disposed = true;
+  };
   return editor;
 }
 
