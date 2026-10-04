@@ -3,6 +3,7 @@ import {resolveStringComparer, registerStringComparerExtensions} from './string-
 import {registerStringComparisonExtensions} from './string.js';
 import {registerStringBuilderCharacterExtensions} from '../text/string-builder-append.js';
 import {registerStringSearchWindowExtensions} from './string-search.js';
+import {registerStringBuilderIndexerExtensions} from '../text/string-builder-indexer.js';
 
 const comparerType = 'System.Collections.IComparer';
 
@@ -16,6 +17,7 @@ function contracts(registry) {
   registerStringComparisonExtensions(registry);
   registerStringBuilderCharacterExtensions(registry);
   registerStringSearchWindowExtensions(registry);
+  registerStringBuilderIndexerExtensions(registry);
 }
 
 function invoke(platform, descriptor, args) {
