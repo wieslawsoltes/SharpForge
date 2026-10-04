@@ -19,3 +19,7 @@ The executable binding engine and managed adapters consume these definitions in 
 ## Property ABI provider
 
 registerPropertyContracts accepts an explicit reserved framework registry. It appends typed metadata and dependency property callbacks, Binding/RelativeSource/converter contracts, observable notifications, vector/list interfaces and inheritable text/attached identifiers without redefining released members. Importing this provider does not register it in the default framework registry.
+
+## Vector and list host projection
+
+FrameworkVectorAdapter routes mutation to the owning host and publishes exact indexed changes once. Typed vector views copy their values, enumeration checks revisions, GetMany/CopyTo keep managed array bounds and subscriber roots stay explicit. ObservableCollection uses the same vector operations and notification payloads. Native model users can supply these services before the WinUI facade or VM is activated.
