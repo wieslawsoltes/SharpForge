@@ -1,0 +1,13 @@
+<ScrollViewer xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+              x:Name="Subject" AutomationProperties.Name="Overflowing fixed content"
+              Width="200" Height="120" HorizontalScrollBarVisibility="Disabled"
+              VerticalScrollBarVisibility="Auto">
+  <StackPanel x:Name="ScrollableContent" Spacing="6">
+    <TextBlock Text="First visible line" />
+    <Border x:Name="TallContent" Height="200" Background="LightGray">
+      <TextBlock Text="Fixed tall content" TextWrapping="Wrap" />
+    </Border>
+    <TextBlock Text="Final line" />
+  </StackPanel>
+</ScrollViewer>
