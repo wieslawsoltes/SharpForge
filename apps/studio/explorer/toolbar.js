@@ -16,7 +16,13 @@ export function createExplorerToolbar(explorer) {
     toolbar.append(element);
     return element;
   };
-  button('home', 'Home — entire solution', '⌂', () => { explorer.scope = null; explorer.search.value = ''; explorer.render(true); });
+  button('home', 'Home — entire solution', '⌂', () => {
+    explorer.scope = null;
+    explorer.search.value = '';
+    explorer.render();
+    explorer.model.reveal(explorer.model.focused, {select: false});
+    explorer.control.ensureVisible();
+  });
   button('sync', 'Sync with Active Document', '⇥', () => explorer.reveal(explorer.getData().active, true));
   button('collapse', 'Collapse All', '⊟', () => {
     explorer.model.expandAll(false);
