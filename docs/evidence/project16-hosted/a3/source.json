@@ -1,0 +1,15 @@
+{
+  "sourceSha": "e4629f443b59bfc2d7494b731be19afc5974b7b1",
+  "sourceTree": "1733c01dae0e44cea49dd82a574fda7b8286d6be",
+  "trigger": "create",
+  "triggerRef": "refs/heads/codex/project16/qualify-ubuntu-chromium-browser-20261004-a3",
+  "triggerNonce": "20261004-a3",
+  "captureOnly": true,
+  "workflowRunId": "37172716850",
+  "stage": "browser",
+  "engine": "chromium",
+  "runner": "Linux",
+  "runnerLabel": "ubuntu-latest",
+  "editorBaseline": null,
+  "workbenchBaseline": null
+}
