@@ -7,8 +7,8 @@ import { assignGapIds, issueCandidates } from '../../../scripts/conformance/inve
 import { compareMembers } from '../../../scripts/conformance/inventory/bcl-api-diff.js';
 import { encodingProbe } from '../../../scripts/conformance/inventory/ecma335.js';
 import { compilerDiagnosticIds, diagnosticInventory } from '../../../scripts/conformance/inventory/diagnostics.js';
-import { compileProbe, compileFeatureProbes, assertReferenceProbe } from '../../../scripts/conformance/inventory/csharp.js';
-import { referenceProbeArguments, referenceProbeContext } from '../../../scripts/conformance/inventory/reference-language.js';
+import { compileProbe, compileFeatureProbes, assertReferenceProbe, assessFeatureProbes } from '../../../scripts/conformance/inventory/csharp.js';
+import { referenceProbeArguments, referenceProbeContext, languageBoundary, referenceFeatureProbes, assertNativeDecision, malformedProbeSource } from '../../../scripts/conformance/inventory/reference-language.js';
 import { lspProbe, dapProbe } from '../../../scripts/conformance/inventory/ide.js';
 import { executeProbe } from '../../../scripts/conformance/inventory/runtime-runner.js';
 import { validateDenominator } from '../../../scripts/conformance/inventory/generate.js';
@@ -62,12 +62,84 @@ test('feature probes preserve executable context for positive, malformed and bou
 });
 test('native validity cannot be reused after a fixture compilation context changes',()=>{
   const feature={id:'entry',langVersion:'7.1',outputKind:'exe',nativeFeatures:['flag']};
-  const native={sourceSHA256:'digest',...referenceProbeContext(feature)};
+  const native={sourceSHA256:'digest',...referenceProbeContext(feature),accepted:true,exitCode:0,signal:null,diagnostics:[]};
   assertReferenceProbe(feature,native,'digest');
   for(const change of [{target:'library'},{langVersion:'7.0'},{features:[]},{sourceSHA256:'old'}]) {
     assert.throws(()=>assertReferenceProbe(feature,{...native,...change},'digest'),/Stale native probe/);
   }
   assert.deepEqual(referenceProbeContext({langVersion:'1.2'}),{langVersion:'1',target:'library',features:[]});
+});
+test('C# boundaries preserve adjacent minor releases and explicitly distinguish shared ISO-1',async()=>{
+  for(const [version,previous] of [['1.0',null],['1.2','1.0'],['2.0','1.2'],['7.0','6.0'],
+    ['7.1','7.0'],['7.2','7.1'],['7.3','7.2'],['8.0','7.3'],['15.0','14.0']]) {
+    assert.equal(languageBoundary({version}).langVersion,previous);
+  }
+  assert.equal(languageBoundary({version:'1.0'}).kind,'first-release');
+  assert.equal(languageBoundary({version:'1.2'}).kind,'shared-iso-1');
+  assert.match(languageBoundary({version:'1.2'}).reason,/cannot qualify/);
+  const catalog=await readJSON(path.join(probeRoot,'csharp.json'));
+  for(const feature of catalog.features)assert.doesNotThrow(()=>languageBoundary(feature),feature.id);
+  for(const version of ['2','3','4','5','6'])assert.deepEqual(languageBoundary({version}),languageBoundary({version:`${version}.0`}));
+  assert.throws(()=>languageBoundary({version:'7.4'}),/Unknown/);
+});
+test('actual executable feature probes reach async-Main and top-level language checks',async()=>{
+  const catalog=await readJSON(path.join(probeRoot,'csharp.json'));
+  for(const id of ['csharp-7-1-async-main','csharp-9-0-top-level-statements']) {
+    const feature=catalog.features.find(row=>row.id===id), source=await readFile(path.join(root,feature.probe),'utf8');
+    const observed=compileFeatureProbes(source,feature,languageBoundary(feature).langVersion);
+    assert.equal(observed.positive.accepted,true,JSON.stringify(observed.positive));
+    assert.equal(observed.malformed.accepted,false);assert.equal(observed.boundary.accepted,false);
+    assert.ok(observed.boundary.diagnostics.some(diagnostic=>diagnostic.severity==='error'));
+    assert.ok(observed.boundary.diagnostics.every(diagnostic=>diagnostic.code!=='CS8805'),'exe probes must not reject as library top-level statements');
+    if(id.includes('async-main'))assert.ok(observed.boundary.diagnostics.some(diagnostic=>/async main|7\.1/i.test(diagnostic.message)));
+  }
+});
+test('native capture binds positive, malformed and boundary decisions to the same executable context',async()=>{
+  const directory=await mkdtemp(path.join(os.tmpdir(),'sf-language-context-'));
+  const feature={id:'entry',version:'7.1',langVersion:'7.1',outputKind:'exe',nativeFeatures:['flag']}, source='class C {}', calls=[];
+  try {
+    const captured=await referenceFeatureProbes(feature,source,{directory,references:['Core.dll'],toolchain:{dotnet:'not-executed',csc:'csc.dll'},
+      run:async(command,args)=>{
+        const text=await readFile(args.at(-1),'utf8');calls.push({command,args,text});
+        const rejected=text.includes('__Invalid')||args.includes('/langversion:7.0');
+        return {exitCode:rejected?1:0,signal:null,stdout:rejected?'Probe.cs(1,1): error CS8107: rejected\n':'',stderr:''};
+      }});
+    assert.deepEqual(calls.map(call=>call.text),[source,malformedProbeSource(source),source]);
+    assert.ok(calls.every(call=>call.args.includes('/target:exe')&&call.args.includes('/features:flag')));
+    assert.equal(captured.accepted,true);assert.equal(captured.malformed.accepted,false);assert.equal(captured.boundary.accepted,false);
+    assertReferenceProbe(feature,captured,sha256(source));
+    assertReferenceProbe(feature,captured.malformed,sha256(malformedProbeSource(source)));
+    assertReferenceProbe(feature,captured.boundary,sha256(source),'7.0');
+    assert.throws(()=>assertReferenceProbe(feature,captured.malformed,sha256(source)),/Stale/);
+    assert.throws(()=>assertReferenceProbe(feature,captured.boundary,sha256(source),'6.0'),/Stale/);
+    assert.throws(()=>assertReferenceProbe(feature,undefined,sha256(source)),/Stale/);
+  }finally{await rm(directory,{recursive:true,force:true});}
+});
+test('native signals, missing compiler diagnostics and infrastructure errors are never expected rejection',()=>{
+  const rejected={accepted:false,exitCode:1,signal:null,diagnostics:['Probe.cs(1,1): error CS8107: feature requires newer version']};
+  assertNativeDecision(rejected,'valid');
+  assertNativeDecision({accepted:true,exitCode:0,signal:null,diagnostics:['warning CS0168: unused variable']},'warning');
+  for(const change of [{exitCode:null,signal:'SIGSEGV'},{exitCode:2},{diagnostics:[]},
+    {accepted:true,exitCode:0},{diagnostics:['error CS2001: source file missing']},{diagnostics:['error CS2012: cannot write output']}]) {
+    assert.throws(()=>assertNativeDecision({...rejected,...change},'invalid'),/decision/);
+  }
+});
+test('generated feature status requires native boundary agreement and genuine malformed rejection',()=>{
+  const feature={version:'7.1'}, pass={accepted:true,diagnostics:[]}, reject={accepted:false,diagnostics:[{severity:'error',code:'CS8107'}]};
+  const native={accepted:true,malformed:{accepted:false},boundary:{accepted:false}}, observations={positive:pass,malformed:reject,boundary:reject};
+  const good=assessFeatureProbes(feature,observations,native);assert.equal(good.status,'implemented');assert.equal(good.boundary.expectation,'reject');
+  for(const change of [{boundary:pass},{boundary:{...reject,error:'crashed'}},{malformed:{...reject,error:'crashed'}},
+    {malformed:{accepted:false,diagnostics:[]}},{positive:reject},{malformed:pass}]) {
+    assert.equal(assessFeatureProbes(feature,{...observations,...change},native).status,'missing');
+  }
+  const historical={...native,boundary:{accepted:true}};
+  const accepted=assessFeatureProbes(feature,{...observations,boundary:pass},historical);
+  assert.equal(accepted.status,'implemented');assert.equal(accepted.boundary.expectation,'accept');assert.equal(accepted.boundary.referenceVersionGate,'not-demonstrated');
+  assert.equal(assessFeatureProbes(feature,observations,historical).status,'missing');
+  assert.equal(assessFeatureProbes({version:'1.2'},{...observations,boundary:pass},historical).boundary.referenceVersionGate,'not-applicable');
+  assert.equal(assessFeatureProbes({version:'1.0'},{...observations,boundary:null},{...native,boundary:null}).boundary.status,'not-applicable');
+  assert.equal(assessFeatureProbes({version:'15.0'},observations,{...native,accepted:false}).status,'unknown');
+  assert.equal(assessFeatureProbes({version:'15.0'},observations,{...native,accepted:false}).boundary.referenceVersionGate,'not-demonstrated');
 });
 test('pinned reference hashes and all C# history feature probes are present',async()=>{
   const manifest=await readJSON(path.join(inventoryRoot,'references/manifest.json'));
