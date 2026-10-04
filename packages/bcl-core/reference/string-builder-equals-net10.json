@@ -1,0 +1,3489 @@
+{
+  "sdk": "10.0.201",
+  "runtime": "10.0.5",
+  "sourceSha256": "a12c4319983201961904f2400552b7540dd059e4a1207e3657bd2dc5d849e845",
+  "rows": [
+    {
+      "id": "null-both",
+      "first": null,
+      "second": null,
+      "self": false,
+      "nativeOnly": false,
+      "identity": true,
+      "beforeFirst": null,
+      "beforeSecond": null,
+      "result": null,
+      "objectResult": null,
+      "fault": "NullReferenceException",
+      "afterFirst": null,
+      "afterSecond": null
+    },
+    {
+      "id": "null-empty",
+      "first": null,
+      "second": {
+        "segments": [],
+        "capacity": 16,
+        "maxCapacity": null,
+        "clearFirst": false,
+        "length": null
+      },
+      "self": false,
+      "nativeOnly": false,
+      "identity": false,
+      "beforeFirst": null,
+      "beforeSecond": {
+        "text": [],
+        "length": 0,
+        "capacity": 16,
+        "maxCapacity": 2147483647,
+        "chunks": 1
+      },
+      "result": null,
+      "objectResult": null,
+      "fault": "NullReferenceException",
+      "afterFirst": null,
+      "afterSecond": {
+        "text": [],
+        "length": 0,
+        "capacity": 16,
+        "maxCapacity": 2147483647,
+        "chunks": 1
+      }
+    },
+    {
+      "id": "null-text",
+      "first": null,
+      "second": {
+        "segments": [
+          [
+            97,
+            98,
+            99
+          ]
+        ],
+        "capacity": 16,
+        "maxCapacity": null,
+        "clearFirst": false,
+        "length": null
+      },
+      "self": false,
+      "nativeOnly": false,
+      "identity": false,
+      "beforeFirst": null,
+      "beforeSecond": {
+        "text": [
+          97,
+          98,
+          99
+        ],
+        "length": 3,
+        "capacity": 16,
+        "maxCapacity": 2147483647,
+        "chunks": 1
+      },
+      "result": null,
+      "objectResult": null,
+      "fault": "NullReferenceException",
+      "afterFirst": null,
+      "afterSecond": {
+        "text": [
+          97,
+          98,
+          99
+        ],
+        "length": 3,
+        "capacity": 16,
+        "maxCapacity": 2147483647,
+        "chunks": 1
+      }
+    },
+    {
+      "id": "null-self",
+      "first": null,
+      "second": null,
+      "self": true,
+      "nativeOnly": false,
+      "identity": true,
+      "beforeFirst": null,
+      "beforeSecond": null,
+      "result": null,
+      "objectResult": null,
+      "fault": "NullReferenceException",
+      "afterFirst": null,
+      "afterSecond": null
+    },
+    {
+      "id": "empty-null",
+      "first": {
+        "segments": [],
+        "capacity": 16,
+        "maxCapacity": null,
+        "clearFirst": false,
+        "length": null
+      },
+      "second": null,
+      "self": false,
+      "nativeOnly": false,
+      "identity": false,
+      "beforeFirst": {
+        "text": [],
+        "length": 0,
+        "capacity": 16,
+        "maxCapacity": 2147483647,
+        "chunks": 1
+      },
+      "beforeSecond": null,
+      "result": false,
+      "objectResult": false,
+      "fault": null,
+      "afterFirst": {
+        "text": [],
+        "length": 0,
+        "capacity": 16,
+        "maxCapacity": 2147483647,
+        "chunks": 1
+      },
+      "afterSecond": null
+    },
+    {
+      "id": "text-null",
+      "first": {
+        "segments": [
+          [
+            97,
+            98,
+            99
+          ]
+        ],
+        "capacity": 16,
+        "maxCapacity": null,
+        "clearFirst": false,
+        "length": null
+      },
+      "second": null,
+      "self": false,
+      "nativeOnly": false,
+      "identity": false,
+      "beforeFirst": {
+        "text": [
+          97,
+          98,
+          99
+        ],
+        "length": 3,
+        "capacity": 16,
+        "maxCapacity": 2147483647,
+        "chunks": 1
+      },
+      "beforeSecond": null,
+      "result": false,
+      "objectResult": false,
+      "fault": null,
+      "afterFirst": {
+        "text": [
+          97,
+          98,
+          99
+        ],
+        "length": 3,
+        "capacity": 16,
+        "maxCapacity": 2147483647,
+        "chunks": 1
+      },
+      "afterSecond": null
+    },
+    {
+      "id": "empty",
+      "first": {
+        "segments": [],
+        "capacity": 16,
+        "maxCapacity": null,
+        "clearFirst": false,
+        "length": null
+      },
+      "second": {
+        "segments": [],
+        "capacity": 16,
+        "maxCapacity": null,
+        "clearFirst": false,
+        "length": null
+      },
+      "self": false,
+      "nativeOnly": false,
+      "identity": false,
+      "beforeFirst": {
+        "text": [],
+        "length": 0,
+        "capacity": 16,
+        "maxCapacity": 2147483647,
+        "chunks": 1
+      },
+      "beforeSecond": {
+        "text": [],
+        "length": 0,
+        "capacity": 16,
+        "maxCapacity": 2147483647,
+        "chunks": 1
+      },
+      "result": true,
+      "objectResult": false,
+      "fault": null,
+      "afterFirst": {
+        "text": [],
+        "length": 0,
+        "capacity": 16,
+        "maxCapacity": 2147483647,
+        "chunks": 1
+      },
+      "afterSecond": {
+        "text": [],
+        "length": 0,
+        "capacity": 16,
+        "maxCapacity": 2147483647,
+        "chunks": 1
+      }
+    },
+    {
+      "id": "empty-capacities",
+      "first": {
+        "segments": [],
+        "capacity": 1,
+        "maxCapacity": null,
+        "clearFirst": false,
+        "length": null
+      },
+      "second": {
+        "segments": [],
+        "capacity": 4096,
+        "maxCapacity": null,
+        "clearFirst": false,
+        "length": null
+      },
+      "self": false,
+      "nativeOnly": false,
+      "identity": false,
+      "beforeFirst": {
+        "text": [],
+        "length": 0,
+        "capacity": 1,
+        "maxCapacity": 2147483647,
+        "chunks": 1
+      },
+      "beforeSecond": {
+        "text": [],
+        "length": 0,
+        "capacity": 4096,
+        "maxCapacity": 2147483647,
+        "chunks": 1
+      },
+      "result": true,
+      "objectResult": false,
+      "fault": null,
+      "afterFirst": {
+        "text": [],
+        "length": 0,
+        "capacity": 1,
+        "maxCapacity": 2147483647,
+        "chunks": 1
+      },
+      "afterSecond": {
+        "text": [],
+        "length": 0,
+        "capacity": 4096,
+        "maxCapacity": 2147483647,
+        "chunks": 1
+      }
+    },
+    {
+      "id": "self-empty",
+      "first": {
+        "segments": [],
+        "capacity": 16,
+        "maxCapacity": null,
+        "clearFirst": false,
+        "length": null
+      },
+      "second": null,
+      "self": true,
+      "nativeOnly": false,
+      "identity": true,
+      "beforeFirst": {
+        "text": [],
+        "length": 0,
+        "capacity": 16,
+        "maxCapacity": 2147483647,
+        "chunks": 1
+      },
+      "beforeSecond": {
+        "text": [],
+        "length": 0,
+        "capacity": 16,
+        "maxCapacity": 2147483647,
+        "chunks": 1
+      },
+      "result": true,
+      "objectResult": true,
+      "fault": null,
+      "afterFirst": {
+        "text": [],
+        "length": 0,
+        "capacity": 16,
+        "maxCapacity": 2147483647,
+        "chunks": 1
+      },
+      "afterSecond": {
+        "text": [],
+        "length": 0,
+        "capacity": 16,
+        "maxCapacity": 2147483647,
+        "chunks": 1
+      }
+    },
+    {
+      "id": "self-segments",
+      "first": {
+        "segments": [
+          [
+            97
+          ],
+          [
+            55296
+          ],
+          [
+            56320
+          ],
+          [
+            122
+          ]
+        ],
+        "capacity": 1,
+        "maxCapacity": null,
+        "clearFirst": false,
+        "length": null
+      },
+      "second": null,
+      "self": true,
+      "nativeOnly": false,
+      "identity": true,
+      "beforeFirst": {
+        "text": [
+          97,
+          55296,
+          56320,
+          122
+        ],
+        "length": 4,
+        "capacity": 4,
+        "maxCapacity": 2147483647,
+        "chunks": 3
+      },
+      "beforeSecond": {
+        "text": [
+          97,
+          55296,
+          56320,
+          122
+        ],
+        "length": 4,
+        "capacity": 4,
+        "maxCapacity": 2147483647,
+        "chunks": 3
+      },
+      "result": true,
+      "objectResult": true,
+      "fault": null,
+      "afterFirst": {
+        "text": [
+          97,
+          55296,
+          56320,
+          122
+        ],
+        "length": 4,
+        "capacity": 4,
+        "maxCapacity": 2147483647,
+        "chunks": 3
+      },
+      "afterSecond": {
+        "text": [
+          97,
+          55296,
+          56320,
+          122
+        ],
+        "length": 4,
+        "capacity": 4,
+        "maxCapacity": 2147483647,
+        "chunks": 3
+      }
+    },
+    {
+      "id": "same-single",
+      "first": {
+        "segments": [
+          [
+            97,
+            98,
+            99
+          ]
+        ],
+        "capacity": 16,
+        "maxCapacity": null,
+        "clearFirst": false,
+        "length": null
+      },
+      "second": {
+        "segments": [
+          [
+            97,
+            98,
+            99
+          ]
+        ],
+        "capacity": 16,
+        "maxCapacity": null,
+        "clearFirst": false,
+        "length": null
+      },
+      "self": false,
+      "nativeOnly": false,
+      "identity": false,
+      "beforeFirst": {
+        "text": [
+          97,
+          98,
+          99
+        ],
+        "length": 3,
+        "capacity": 16,
+        "maxCapacity": 2147483647,
+        "chunks": 1
+      },
+      "beforeSecond": {
+        "text": [
+          97,
+          98,
+          99
+        ],
+        "length": 3,
+        "capacity": 16,
+        "maxCapacity": 2147483647,
+        "chunks": 1
+      },
+      "result": true,
+      "objectResult": false,
+      "fault": null,
+      "afterFirst": {
+        "text": [
+          97,
+          98,
+          99
+        ],
+        "length": 3,
+        "capacity": 16,
+        "maxCapacity": 2147483647,
+        "chunks": 1
+      },
+      "afterSecond": {
+        "text": [
+          97,
+          98,
+          99
+        ],
+        "length": 3,
+        "capacity": 16,
+        "maxCapacity": 2147483647,
+        "chunks": 1
+      }
+    },
+    {
+      "id": "same-segments",
+      "first": {
+        "segments": [
+          [
+            97
+          ],
+          [
+            98
+          ],
+          [
+            99
+          ]
+        ],
+        "capacity": 1,
+        "maxCapacity": null,
+        "clearFirst": false,
+        "length": null
+      },
+      "second": {
+        "segments": [
+          [
+            97,
+            98,
+            99
+          ]
+        ],
+        "capacity": 64,
+        "maxCapacity": null,
+        "clearFirst": false,
+        "length": null
+      },
+      "self": false,
+      "nativeOnly": false,
+      "identity": false,
+      "beforeFirst": {
+        "text": [
+          97,
+          98,
+          99
+        ],
+        "length": 3,
+        "capacity": 4,
+        "maxCapacity": 2147483647,
+        "chunks": 3
+      },
+      "beforeSecond": {
+        "text": [
+          97,
+          98,
+          99
+        ],
+        "length": 3,
+        "capacity": 64,
+        "maxCapacity": 2147483647,
+        "chunks": 1
+      },
+      "result": true,
+      "objectResult": false,
+      "fault": null,
+      "afterFirst": {
+        "text": [
+          97,
+          98,
+          99
+        ],
+        "length": 3,
+        "capacity": 4,
+        "maxCapacity": 2147483647,
+        "chunks": 3
+      },
+      "afterSecond": {
+        "text": [
+          97,
+          98,
+          99
+        ],
+        "length": 3,
+        "capacity": 64,
+        "maxCapacity": 2147483647,
+        "chunks": 1
+      }
+    },
+    {
+      "id": "same-different-segments",
+      "first": {
+        "segments": [
+          [
+            97,
+            98
+          ],
+          [
+            99,
+            100
+          ],
+          [
+            101,
+            102
+          ]
+        ],
+        "capacity": 1,
+        "maxCapacity": null,
+        "clearFirst": false,
+        "length": null
+      },
+      "second": {
+        "segments": [
+          [
+            97
+          ],
+          [
+            98,
+            99,
+            100,
+            101
+          ],
+          [
+            102
+          ]
+        ],
+        "capacity": 2,
+        "maxCapacity": null,
+        "clearFirst": false,
+        "length": null
+      },
+      "self": false,
+      "nativeOnly": false,
+      "identity": false,
+      "beforeFirst": {
+        "text": [
+          97,
+          98,
+          99,
+          100,
+          101,
+          102
+        ],
+        "length": 6,
+        "capacity": 8,
+        "maxCapacity": 2147483647,
+        "chunks": 4
+      },
+      "beforeSecond": {
+        "text": [
+          97,
+          98,
+          99,
+          100,
+          101,
+          102
+        ],
+        "length": 6,
+        "capacity": 10,
+        "maxCapacity": 2147483647,
+        "chunks": 3
+      },
+      "result": true,
+      "objectResult": false,
+      "fault": null,
+      "afterFirst": {
+        "text": [
+          97,
+          98,
+          99,
+          100,
+          101,
+          102
+        ],
+        "length": 6,
+        "capacity": 8,
+        "maxCapacity": 2147483647,
+        "chunks": 4
+      },
+      "afterSecond": {
+        "text": [
+          97,
+          98,
+          99,
+          100,
+          101,
+          102
+        ],
+        "length": 6,
+        "capacity": 10,
+        "maxCapacity": 2147483647,
+        "chunks": 3
+      }
+    },
+    {
+      "id": "empty-segments",
+      "first": {
+        "segments": [
+          [],
+          [
+            97
+          ],
+          [],
+          [
+            98
+          ],
+          []
+        ],
+        "capacity": 16,
+        "maxCapacity": null,
+        "clearFirst": false,
+        "length": null
+      },
+      "second": {
+        "segments": [
+          [
+            97,
+            98
+          ]
+        ],
+        "capacity": 16,
+        "maxCapacity": null,
+        "clearFirst": false,
+        "length": null
+      },
+      "self": false,
+      "nativeOnly": false,
+      "identity": false,
+      "beforeFirst": {
+        "text": [
+          97,
+          98
+        ],
+        "length": 2,
+        "capacity": 16,
+        "maxCapacity": 2147483647,
+        "chunks": 1
+      },
+      "beforeSecond": {
+        "text": [
+          97,
+          98
+        ],
+        "length": 2,
+        "capacity": 16,
+        "maxCapacity": 2147483647,
+        "chunks": 1
+      },
+      "result": true,
+      "objectResult": false,
+      "fault": null,
+      "afterFirst": {
+        "text": [
+          97,
+          98
+        ],
+        "length": 2,
+        "capacity": 16,
+        "maxCapacity": 2147483647,
+        "chunks": 1
+      },
+      "afterSecond": {
+        "text": [
+          97,
+          98
+        ],
+        "length": 2,
+        "capacity": 16,
+        "maxCapacity": 2147483647,
+        "chunks": 1
+      }
+    },
+    {
+      "id": "different-case",
+      "first": {
+        "segments": [
+          [
+            97
+          ]
+        ],
+        "capacity": 16,
+        "maxCapacity": null,
+        "clearFirst": false,
+        "length": null
+      },
+      "second": {
+        "segments": [
+          [
+            65
+          ]
+        ],
+        "capacity": 16,
+        "maxCapacity": null,
+        "clearFirst": false,
+        "length": null
+      },
+      "self": false,
+      "nativeOnly": false,
+      "identity": false,
+      "beforeFirst": {
+        "text": [
+          97
+        ],
+        "length": 1,
+        "capacity": 16,
+        "maxCapacity": 2147483647,
+        "chunks": 1
+      },
+      "beforeSecond": {
+        "text": [
+          65
+        ],
+        "length": 1,
+        "capacity": 16,
+        "maxCapacity": 2147483647,
+        "chunks": 1
+      },
+      "result": false,
+      "objectResult": false,
+      "fault": null,
+      "afterFirst": {
+        "text": [
+          97
+        ],
+        "length": 1,
+        "capacity": 16,
+        "maxCapacity": 2147483647,
+        "chunks": 1
+      },
+      "afterSecond": {
+        "text": [
+          65
+        ],
+        "length": 1,
+        "capacity": 16,
+        "maxCapacity": 2147483647,
+        "chunks": 1
+      }
+    },
+    {
+      "id": "different-length",
+      "first": {
+        "segments": [
+          [
+            97,
+            98
+          ]
+        ],
+        "capacity": 16,
+        "maxCapacity": null,
+        "clearFirst": false,
+        "length": null
+      },
+      "second": {
+        "segments": [
+          [
+            97,
+            98,
+            99
+          ]
+        ],
+        "capacity": 16,
+        "maxCapacity": null,
+        "clearFirst": false,
+        "length": null
+      },
+      "self": false,
+      "nativeOnly": false,
+      "identity": false,
+      "beforeFirst": {
+        "text": [
+          97,
+          98
+        ],
+        "length": 2,
+        "capacity": 16,
+        "maxCapacity": 2147483647,
+        "chunks": 1
+      },
+      "beforeSecond": {
+        "text": [
+          97,
+          98,
+          99
+        ],
+        "length": 3,
+        "capacity": 16,
+        "maxCapacity": 2147483647,
+        "chunks": 1
+      },
+      "result": false,
+      "objectResult": false,
+      "fault": null,
+      "afterFirst": {
+        "text": [
+          97,
+          98
+        ],
+        "length": 2,
+        "capacity": 16,
+        "maxCapacity": 2147483647,
+        "chunks": 1
+      },
+      "afterSecond": {
+        "text": [
+          97,
+          98,
+          99
+        ],
+        "length": 3,
+        "capacity": 16,
+        "maxCapacity": 2147483647,
+        "chunks": 1
+      }
+    },
+    {
+      "id": "different-first",
+      "first": {
+        "segments": [
+          [
+            120,
+            98,
+            99
+          ]
+        ],
+        "capacity": 16,
+        "maxCapacity": null,
+        "clearFirst": false,
+        "length": null
+      },
+      "second": {
+        "segments": [
+          [
+            97,
+            98,
+            99
+          ]
+        ],
+        "capacity": 16,
+        "maxCapacity": null,
+        "clearFirst": false,
+        "length": null
+      },
+      "self": false,
+      "nativeOnly": false,
+      "identity": false,
+      "beforeFirst": {
+        "text": [
+          120,
+          98,
+          99
+        ],
+        "length": 3,
+        "capacity": 16,
+        "maxCapacity": 2147483647,
+        "chunks": 1
+      },
+      "beforeSecond": {
+        "text": [
+          97,
+          98,
+          99
+        ],
+        "length": 3,
+        "capacity": 16,
+        "maxCapacity": 2147483647,
+        "chunks": 1
+      },
+      "result": false,
+      "objectResult": false,
+      "fault": null,
+      "afterFirst": {
+        "text": [
+          120,
+          98,
+          99
+        ],
+        "length": 3,
+        "capacity": 16,
+        "maxCapacity": 2147483647,
+        "chunks": 1
+      },
+      "afterSecond": {
+        "text": [
+          97,
+          98,
+          99
+        ],
+        "length": 3,
+        "capacity": 16,
+        "maxCapacity": 2147483647,
+        "chunks": 1
+      }
+    },
+    {
+      "id": "different-middle",
+      "first": {
+        "segments": [
+          [
+            97
+          ],
+          [
+            120
+          ],
+          [
+            99
+          ]
+        ],
+        "capacity": 1,
+        "maxCapacity": null,
+        "clearFirst": false,
+        "length": null
+      },
+      "second": {
+        "segments": [
+          [
+            97,
+            98,
+            99
+          ]
+        ],
+        "capacity": 16,
+        "maxCapacity": null,
+        "clearFirst": false,
+        "length": null
+      },
+      "self": false,
+      "nativeOnly": false,
+      "identity": false,
+      "beforeFirst": {
+        "text": [
+          97,
+          120,
+          99
+        ],
+        "length": 3,
+        "capacity": 4,
+        "maxCapacity": 2147483647,
+        "chunks": 3
+      },
+      "beforeSecond": {
+        "text": [
+          97,
+          98,
+          99
+        ],
+        "length": 3,
+        "capacity": 16,
+        "maxCapacity": 2147483647,
+        "chunks": 1
+      },
+      "result": false,
+      "objectResult": false,
+      "fault": null,
+      "afterFirst": {
+        "text": [
+          97,
+          120,
+          99
+        ],
+        "length": 3,
+        "capacity": 4,
+        "maxCapacity": 2147483647,
+        "chunks": 3
+      },
+      "afterSecond": {
+        "text": [
+          97,
+          98,
+          99
+        ],
+        "length": 3,
+        "capacity": 16,
+        "maxCapacity": 2147483647,
+        "chunks": 1
+      }
+    },
+    {
+      "id": "different-last",
+      "first": {
+        "segments": [
+          [
+            97,
+            98,
+            120
+          ]
+        ],
+        "capacity": 16,
+        "maxCapacity": null,
+        "clearFirst": false,
+        "length": null
+      },
+      "second": {
+        "segments": [
+          [
+            97,
+            98,
+            99
+          ]
+        ],
+        "capacity": 16,
+        "maxCapacity": null,
+        "clearFirst": false,
+        "length": null
+      },
+      "self": false,
+      "nativeOnly": false,
+      "identity": false,
+      "beforeFirst": {
+        "text": [
+          97,
+          98,
+          120
+        ],
+        "length": 3,
+        "capacity": 16,
+        "maxCapacity": 2147483647,
+        "chunks": 1
+      },
+      "beforeSecond": {
+        "text": [
+          97,
+          98,
+          99
+        ],
+        "length": 3,
+        "capacity": 16,
+        "maxCapacity": 2147483647,
+        "chunks": 1
+      },
+      "result": false,
+      "objectResult": false,
+      "fault": null,
+      "afterFirst": {
+        "text": [
+          97,
+          98,
+          120
+        ],
+        "length": 3,
+        "capacity": 16,
+        "maxCapacity": 2147483647,
+        "chunks": 1
+      },
+      "afterSecond": {
+        "text": [
+          97,
+          98,
+          99
+        ],
+        "length": 3,
+        "capacity": 16,
+        "maxCapacity": 2147483647,
+        "chunks": 1
+      }
+    },
+    {
+      "id": "embedded-null",
+      "first": {
+        "segments": [
+          [
+            97
+          ],
+          [
+            0
+          ],
+          [
+            98
+          ]
+        ],
+        "capacity": 16,
+        "maxCapacity": null,
+        "clearFirst": false,
+        "length": null
+      },
+      "second": {
+        "segments": [
+          [
+            97,
+            0,
+            98
+          ]
+        ],
+        "capacity": 16,
+        "maxCapacity": null,
+        "clearFirst": false,
+        "length": null
+      },
+      "self": false,
+      "nativeOnly": false,
+      "identity": false,
+      "beforeFirst": {
+        "text": [
+          97,
+          0,
+          98
+        ],
+        "length": 3,
+        "capacity": 16,
+        "maxCapacity": 2147483647,
+        "chunks": 1
+      },
+      "beforeSecond": {
+        "text": [
+          97,
+          0,
+          98
+        ],
+        "length": 3,
+        "capacity": 16,
+        "maxCapacity": 2147483647,
+        "chunks": 1
+      },
+      "result": true,
+      "objectResult": false,
+      "fault": null,
+      "afterFirst": {
+        "text": [
+          97,
+          0,
+          98
+        ],
+        "length": 3,
+        "capacity": 16,
+        "maxCapacity": 2147483647,
+        "chunks": 1
+      },
+      "afterSecond": {
+        "text": [
+          97,
+          0,
+          98
+        ],
+        "length": 3,
+        "capacity": 16,
+        "maxCapacity": 2147483647,
+        "chunks": 1
+      }
+    },
+    {
+      "id": "surrogate-split",
+      "first": {
+        "segments": [
+          [
+            97,
+            55297
+          ],
+          [
+            56360,
+            122
+          ]
+        ],
+        "capacity": 1,
+        "maxCapacity": null,
+        "clearFirst": false,
+        "length": null
+      },
+      "second": {
+        "segments": [
+          [
+            97,
+            55297,
+            56360,
+            122
+          ]
+        ],
+        "capacity": 16,
+        "maxCapacity": null,
+        "clearFirst": false,
+        "length": null
+      },
+      "self": false,
+      "nativeOnly": false,
+      "identity": false,
+      "beforeFirst": {
+        "text": [
+          97,
+          55297,
+          56360,
+          122
+        ],
+        "length": 4,
+        "capacity": 4,
+        "maxCapacity": 2147483647,
+        "chunks": 3
+      },
+      "beforeSecond": {
+        "text": [
+          97,
+          55297,
+          56360,
+          122
+        ],
+        "length": 4,
+        "capacity": 16,
+        "maxCapacity": 2147483647,
+        "chunks": 1
+      },
+      "result": true,
+      "objectResult": false,
+      "fault": null,
+      "afterFirst": {
+        "text": [
+          97,
+          55297,
+          56360,
+          122
+        ],
+        "length": 4,
+        "capacity": 4,
+        "maxCapacity": 2147483647,
+        "chunks": 3
+      },
+      "afterSecond": {
+        "text": [
+          97,
+          55297,
+          56360,
+          122
+        ],
+        "length": 4,
+        "capacity": 16,
+        "maxCapacity": 2147483647,
+        "chunks": 1
+      }
+    },
+    {
+      "id": "surrogate-case",
+      "first": {
+        "segments": [
+          [
+            55297
+          ],
+          [
+            56360
+          ]
+        ],
+        "capacity": 1,
+        "maxCapacity": null,
+        "clearFirst": false,
+        "length": null
+      },
+      "second": {
+        "segments": [
+          [
+            55297,
+            56320
+          ]
+        ],
+        "capacity": 16,
+        "maxCapacity": null,
+        "clearFirst": false,
+        "length": null
+      },
+      "self": false,
+      "nativeOnly": false,
+      "identity": false,
+      "beforeFirst": {
+        "text": [
+          55297,
+          56360
+        ],
+        "length": 2,
+        "capacity": 2,
+        "maxCapacity": 2147483647,
+        "chunks": 2
+      },
+      "beforeSecond": {
+        "text": [
+          55297,
+          56320
+        ],
+        "length": 2,
+        "capacity": 16,
+        "maxCapacity": 2147483647,
+        "chunks": 1
+      },
+      "result": false,
+      "objectResult": false,
+      "fault": null,
+      "afterFirst": {
+        "text": [
+          55297,
+          56360
+        ],
+        "length": 2,
+        "capacity": 2,
+        "maxCapacity": 2147483647,
+        "chunks": 2
+      },
+      "afterSecond": {
+        "text": [
+          55297,
+          56320
+        ],
+        "length": 2,
+        "capacity": 16,
+        "maxCapacity": 2147483647,
+        "chunks": 1
+      }
+    },
+    {
+      "id": "isolated-high",
+      "first": {
+        "segments": [
+          [
+            55297
+          ],
+          [
+            97
+          ]
+        ],
+        "capacity": 1,
+        "maxCapacity": null,
+        "clearFirst": false,
+        "length": null
+      },
+      "second": {
+        "segments": [
+          [
+            55297,
+            97
+          ]
+        ],
+        "capacity": 16,
+        "maxCapacity": null,
+        "clearFirst": false,
+        "length": null
+      },
+      "self": false,
+      "nativeOnly": false,
+      "identity": false,
+      "beforeFirst": {
+        "text": [
+          55297,
+          97
+        ],
+        "length": 2,
+        "capacity": 2,
+        "maxCapacity": 2147483647,
+        "chunks": 2
+      },
+      "beforeSecond": {
+        "text": [
+          55297,
+          97
+        ],
+        "length": 2,
+        "capacity": 16,
+        "maxCapacity": 2147483647,
+        "chunks": 1
+      },
+      "result": true,
+      "objectResult": false,
+      "fault": null,
+      "afterFirst": {
+        "text": [
+          55297,
+          97
+        ],
+        "length": 2,
+        "capacity": 2,
+        "maxCapacity": 2147483647,
+        "chunks": 2
+      },
+      "afterSecond": {
+        "text": [
+          55297,
+          97
+        ],
+        "length": 2,
+        "capacity": 16,
+        "maxCapacity": 2147483647,
+        "chunks": 1
+      }
+    },
+    {
+      "id": "isolated-low",
+      "first": {
+        "segments": [
+          [
+            97
+          ],
+          [
+            56360
+          ]
+        ],
+        "capacity": 1,
+        "maxCapacity": null,
+        "clearFirst": false,
+        "length": null
+      },
+      "second": {
+        "segments": [
+          [
+            97,
+            56360
+          ]
+        ],
+        "capacity": 16,
+        "maxCapacity": null,
+        "clearFirst": false,
+        "length": null
+      },
+      "self": false,
+      "nativeOnly": false,
+      "identity": false,
+      "beforeFirst": {
+        "text": [
+          97,
+          56360
+        ],
+        "length": 2,
+        "capacity": 2,
+        "maxCapacity": 2147483647,
+        "chunks": 2
+      },
+      "beforeSecond": {
+        "text": [
+          97,
+          56360
+        ],
+        "length": 2,
+        "capacity": 16,
+        "maxCapacity": 2147483647,
+        "chunks": 1
+      },
+      "result": true,
+      "objectResult": false,
+      "fault": null,
+      "afterFirst": {
+        "text": [
+          97,
+          56360
+        ],
+        "length": 2,
+        "capacity": 2,
+        "maxCapacity": 2147483647,
+        "chunks": 2
+      },
+      "afterSecond": {
+        "text": [
+          97,
+          56360
+        ],
+        "length": 2,
+        "capacity": 16,
+        "maxCapacity": 2147483647,
+        "chunks": 1
+      }
+    },
+    {
+      "id": "reversed-pair",
+      "first": {
+        "segments": [
+          [
+            56360
+          ],
+          [
+            55297
+          ]
+        ],
+        "capacity": 1,
+        "maxCapacity": null,
+        "clearFirst": false,
+        "length": null
+      },
+      "second": {
+        "segments": [
+          [
+            56360,
+            55297
+          ]
+        ],
+        "capacity": 16,
+        "maxCapacity": null,
+        "clearFirst": false,
+        "length": null
+      },
+      "self": false,
+      "nativeOnly": false,
+      "identity": false,
+      "beforeFirst": {
+        "text": [
+          56360,
+          55297
+        ],
+        "length": 2,
+        "capacity": 2,
+        "maxCapacity": 2147483647,
+        "chunks": 2
+      },
+      "beforeSecond": {
+        "text": [
+          56360,
+          55297
+        ],
+        "length": 2,
+        "capacity": 16,
+        "maxCapacity": 2147483647,
+        "chunks": 1
+      },
+      "result": true,
+      "objectResult": false,
+      "fault": null,
+      "afterFirst": {
+        "text": [
+          56360,
+          55297
+        ],
+        "length": 2,
+        "capacity": 2,
+        "maxCapacity": 2147483647,
+        "chunks": 2
+      },
+      "afterSecond": {
+        "text": [
+          56360,
+          55297
+        ],
+        "length": 2,
+        "capacity": 16,
+        "maxCapacity": 2147483647,
+        "chunks": 1
+      }
+    },
+    {
+      "id": "normalization",
+      "first": {
+        "segments": [
+          [
+            233
+          ]
+        ],
+        "capacity": 16,
+        "maxCapacity": null,
+        "clearFirst": false,
+        "length": null
+      },
+      "second": {
+        "segments": [
+          [
+            101
+          ],
+          [
+            769
+          ]
+        ],
+        "capacity": 16,
+        "maxCapacity": null,
+        "clearFirst": false,
+        "length": null
+      },
+      "self": false,
+      "nativeOnly": false,
+      "identity": false,
+      "beforeFirst": {
+        "text": [
+          233
+        ],
+        "length": 1,
+        "capacity": 16,
+        "maxCapacity": 2147483647,
+        "chunks": 1
+      },
+      "beforeSecond": {
+        "text": [
+          101,
+          769
+        ],
+        "length": 2,
+        "capacity": 16,
+        "maxCapacity": 2147483647,
+        "chunks": 1
+      },
+      "result": false,
+      "objectResult": false,
+      "fault": null,
+      "afterFirst": {
+        "text": [
+          233
+        ],
+        "length": 1,
+        "capacity": 16,
+        "maxCapacity": 2147483647,
+        "chunks": 1
+      },
+      "afterSecond": {
+        "text": [
+          101,
+          769
+        ],
+        "length": 2,
+        "capacity": 16,
+        "maxCapacity": 2147483647,
+        "chunks": 1
+      }
+    },
+    {
+      "id": "clear-history",
+      "first": {
+        "segments": [
+          [
+            97,
+            98
+          ],
+          [
+            99
+          ]
+        ],
+        "capacity": 1,
+        "maxCapacity": null,
+        "clearFirst": true,
+        "length": null
+      },
+      "second": {
+        "segments": [
+          [
+            97,
+            98,
+            99
+          ]
+        ],
+        "capacity": 128,
+        "maxCapacity": null,
+        "clearFirst": false,
+        "length": null
+      },
+      "self": false,
+      "nativeOnly": false,
+      "identity": false,
+      "beforeFirst": {
+        "text": [
+          97,
+          98,
+          99
+        ],
+        "length": 3,
+        "capacity": 19,
+        "maxCapacity": 2147483647,
+        "chunks": 1
+      },
+      "beforeSecond": {
+        "text": [
+          97,
+          98,
+          99
+        ],
+        "length": 3,
+        "capacity": 128,
+        "maxCapacity": 2147483647,
+        "chunks": 1
+      },
+      "result": true,
+      "objectResult": false,
+      "fault": null,
+      "afterFirst": {
+        "text": [
+          97,
+          98,
+          99
+        ],
+        "length": 3,
+        "capacity": 19,
+        "maxCapacity": 2147483647,
+        "chunks": 1
+      },
+      "afterSecond": {
+        "text": [
+          97,
+          98,
+          99
+        ],
+        "length": 3,
+        "capacity": 128,
+        "maxCapacity": 2147483647,
+        "chunks": 1
+      }
+    },
+    {
+      "id": "truncate-history",
+      "first": {
+        "segments": [
+          [
+            97,
+            98,
+            99
+          ],
+          [
+            100,
+            105,
+            115,
+            99,
+            97,
+            114,
+            100,
+            101,
+            100
+          ]
+        ],
+        "capacity": 1,
+        "maxCapacity": null,
+        "clearFirst": false,
+        "length": 3
+      },
+      "second": {
+        "segments": [
+          [
+            97,
+            98,
+            99
+          ]
+        ],
+        "capacity": 16,
+        "maxCapacity": null,
+        "clearFirst": false,
+        "length": null
+      },
+      "self": false,
+      "nativeOnly": false,
+      "identity": false,
+      "beforeFirst": {
+        "text": [
+          97,
+          98,
+          99
+        ],
+        "length": 3,
+        "capacity": 12,
+        "maxCapacity": 2147483647,
+        "chunks": 3
+      },
+      "beforeSecond": {
+        "text": [
+          97,
+          98,
+          99
+        ],
+        "length": 3,
+        "capacity": 16,
+        "maxCapacity": 2147483647,
+        "chunks": 1
+      },
+      "result": true,
+      "objectResult": false,
+      "fault": null,
+      "afterFirst": {
+        "text": [
+          97,
+          98,
+          99
+        ],
+        "length": 3,
+        "capacity": 12,
+        "maxCapacity": 2147483647,
+        "chunks": 3
+      },
+      "afterSecond": {
+        "text": [
+          97,
+          98,
+          99
+        ],
+        "length": 3,
+        "capacity": 16,
+        "maxCapacity": 2147483647,
+        "chunks": 1
+      }
+    },
+    {
+      "id": "length-growth",
+      "first": {
+        "segments": [
+          [
+            97
+          ]
+        ],
+        "capacity": 1,
+        "maxCapacity": null,
+        "clearFirst": false,
+        "length": 3
+      },
+      "second": {
+        "segments": [
+          [
+            97,
+            0,
+            0
+          ]
+        ],
+        "capacity": 32,
+        "maxCapacity": null,
+        "clearFirst": false,
+        "length": null
+      },
+      "self": false,
+      "nativeOnly": false,
+      "identity": false,
+      "beforeFirst": {
+        "text": [
+          97,
+          0,
+          0
+        ],
+        "length": 3,
+        "capacity": 3,
+        "maxCapacity": 2147483647,
+        "chunks": 2
+      },
+      "beforeSecond": {
+        "text": [
+          97,
+          0,
+          0
+        ],
+        "length": 3,
+        "capacity": 32,
+        "maxCapacity": 2147483647,
+        "chunks": 1
+      },
+      "result": true,
+      "objectResult": false,
+      "fault": null,
+      "afterFirst": {
+        "text": [
+          97,
+          0,
+          0
+        ],
+        "length": 3,
+        "capacity": 3,
+        "maxCapacity": 2147483647,
+        "chunks": 2
+      },
+      "afterSecond": {
+        "text": [
+          97,
+          0,
+          0
+        ],
+        "length": 3,
+        "capacity": 32,
+        "maxCapacity": 2147483647,
+        "chunks": 1
+      }
+    },
+    {
+      "id": "same-capacity-different",
+      "first": {
+        "segments": [
+          [
+            97,
+            98,
+            99
+          ]
+        ],
+        "capacity": 3,
+        "maxCapacity": null,
+        "clearFirst": false,
+        "length": null
+      },
+      "second": {
+        "segments": [
+          [
+            97,
+            98,
+            99
+          ]
+        ],
+        "capacity": 4096,
+        "maxCapacity": null,
+        "clearFirst": false,
+        "length": null
+      },
+      "self": false,
+      "nativeOnly": false,
+      "identity": false,
+      "beforeFirst": {
+        "text": [
+          97,
+          98,
+          99
+        ],
+        "length": 3,
+        "capacity": 3,
+        "maxCapacity": 2147483647,
+        "chunks": 1
+      },
+      "beforeSecond": {
+        "text": [
+          97,
+          98,
+          99
+        ],
+        "length": 3,
+        "capacity": 4096,
+        "maxCapacity": 2147483647,
+        "chunks": 1
+      },
+      "result": true,
+      "objectResult": false,
+      "fault": null,
+      "afterFirst": {
+        "text": [
+          97,
+          98,
+          99
+        ],
+        "length": 3,
+        "capacity": 3,
+        "maxCapacity": 2147483647,
+        "chunks": 1
+      },
+      "afterSecond": {
+        "text": [
+          97,
+          98,
+          99
+        ],
+        "length": 3,
+        "capacity": 4096,
+        "maxCapacity": 2147483647,
+        "chunks": 1
+      }
+    },
+    {
+      "id": "many-segments",
+      "first": {
+        "segments": [
+          [
+            97,
+            98
+          ],
+          [
+            97,
+            98
+          ],
+          [
+            97,
+            98
+          ],
+          [
+            97,
+            98
+          ],
+          [
+            97,
+            98
+          ],
+          [
+            97,
+            98
+          ],
+          [
+            97,
+            98
+          ],
+          [
+            97,
+            98
+          ],
+          [
+            97,
+            98
+          ],
+          [
+            97,
+            98
+          ],
+          [
+            97,
+            98
+          ],
+          [
+            97,
+            98
+          ],
+          [
+            97,
+            98
+          ],
+          [
+            97,
+            98
+          ],
+          [
+            97,
+            98
+          ],
+          [
+            97,
+            98
+          ],
+          [
+            97,
+            98
+          ],
+          [
+            97,
+            98
+          ],
+          [
+            97,
+            98
+          ],
+          [
+            97,
+            98
+          ],
+          [
+            97,
+            98
+          ],
+          [
+            97,
+            98
+          ],
+          [
+            97,
+            98
+          ],
+          [
+            97,
+            98
+          ],
+          [
+            97,
+            98
+          ],
+          [
+            97,
+            98
+          ],
+          [
+            97,
+            98
+          ],
+          [
+            97,
+            98
+          ],
+          [
+            97,
+            98
+          ],
+          [
+            97,
+            98
+          ],
+          [
+            97,
+            98
+          ],
+          [
+            97,
+            98
+          ],
+          [
+            97,
+            98
+          ],
+          [
+            97,
+            98
+          ],
+          [
+            97,
+            98
+          ],
+          [
+            97,
+            98
+          ],
+          [
+            97,
+            98
+          ],
+          [
+            97,
+            98
+          ],
+          [
+            97,
+            98
+          ],
+          [
+            97,
+            98
+          ],
+          [
+            97,
+            98
+          ],
+          [
+            97,
+            98
+          ],
+          [
+            97,
+            98
+          ],
+          [
+            97,
+            98
+          ],
+          [
+            97,
+            98
+          ],
+          [
+            97,
+            98
+          ],
+          [
+            97,
+            98
+          ],
+          [
+            97,
+            98
+          ],
+          [
+            97,
+            98
+          ],
+          [
+            97,
+            98
+          ],
+          [
+            97,
+            98
+          ],
+          [
+            97,
+            98
+          ],
+          [
+            97,
+            98
+          ],
+          [
+            97,
+            98
+          ],
+          [
+            97,
+            98
+          ],
+          [
+            97,
+            98
+          ],
+          [
+            97,
+            98
+          ],
+          [
+            97,
+            98
+          ],
+          [
+            97,
+            98
+          ],
+          [
+            97,
+            98
+          ],
+          [
+            97,
+            98
+          ],
+          [
+            97,
+            98
+          ],
+          [
+            97,
+            98
+          ],
+          [
+            97,
+            98
+          ],
+          [
+            97,
+            98
+          ],
+          [
+            97,
+            98
+          ],
+          [
+            97,
+            98
+          ],
+          [
+            97,
+            98
+          ],
+          [
+            97,
+            98
+          ],
+          [
+            97,
+            98
+          ],
+          [
+            97,
+            98
+          ],
+          [
+            97,
+            98
+          ],
+          [
+            97,
+            98
+          ],
+          [
+            97,
+            98
+          ],
+          [
+            97,
+            98
+          ],
+          [
+            97,
+            98
+          ],
+          [
+            97,
+            98
+          ],
+          [
+            97,
+            98
+          ],
+          [
+            97,
+            98
+          ],
+          [
+            97,
+            98
+          ]
+        ],
+        "capacity": 1,
+        "maxCapacity": null,
+        "clearFirst": false,
+        "length": null
+      },
+      "second": {
+        "segments": [
+          [
+            97,
+            98,
+            97,
+            98,
+            97,
+            98,
+            97,
+            98,
+            97,
+            98,
+            97,
+            98,
+            97,
+            98,
+            97,
+            98,
+            97,
+            98,
+            97,
+            98,
+            97,
+            98,
+            97,
+            98,
+            97,
+            98,
+            97,
+            98,
+            97,
+            98,
+            97,
+            98,
+            97,
+            98,
+            97,
+            98,
+            97,
+            98,
+            97,
+            98,
+            97,
+            98,
+            97,
+            98,
+            97,
+            98,
+            97,
+            98,
+            97,
+            98,
+            97,
+            98,
+            97,
+            98,
+            97,
+            98,
+            97,
+            98,
+            97,
+            98,
+            97,
+            98,
+            97,
+            98,
+            97,
+            98,
+            97,
+            98,
+            97,
+            98,
+            97,
+            98,
+            97,
+            98,
+            97,
+            98,
+            97,
+            98,
+            97,
+            98,
+            97,
+            98,
+            97,
+            98,
+            97,
+            98,
+            97,
+            98,
+            97,
+            98,
+            97,
+            98,
+            97,
+            98,
+            97,
+            98,
+            97,
+            98,
+            97,
+            98,
+            97,
+            98,
+            97,
+            98,
+            97,
+            98,
+            97,
+            98,
+            97,
+            98,
+            97,
+            98,
+            97,
+            98,
+            97,
+            98,
+            97,
+            98,
+            97,
+            98,
+            97,
+            98,
+            97,
+            98,
+            97,
+            98,
+            97,
+            98,
+            97,
+            98,
+            97,
+            98,
+            97,
+            98,
+            97,
+            98,
+            97,
+            98,
+            97,
+            98,
+            97,
+            98,
+            97,
+            98,
+            97,
+            98,
+            97,
+            98,
+            97,
+            98,
+            97,
+            98,
+            97,
+            98,
+            97,
+            98,
+            97,
+            98,
+            97,
+            98
+          ]
+        ],
+        "capacity": 512,
+        "maxCapacity": null,
+        "clearFirst": false,
+        "length": null
+      },
+      "self": false,
+      "nativeOnly": false,
+      "identity": false,
+      "beforeFirst": {
+        "text": [
+          97,
+          98,
+          97,
+          98,
+          97,
+          98,
+          97,
+          98,
+          97,
+          98,
+          97,
+          98,
+          97,
+          98,
+          97,
+          98,
+          97,
+          98,
+          97,
+          98,
+          97,
+          98,
+          97,
+          98,
+          97,
+          98,
+          97,
+          98,
+          97,
+          98,
+          97,
+          98,
+          97,
+          98,
+          97,
+          98,
+          97,
+          98,
+          97,
+          98,
+          97,
+          98,
+          97,
+          98,
+          97,
+          98,
+          97,
+          98,
+          97,
+          98,
+          97,
+          98,
+          97,
+          98,
+          97,
+          98,
+          97,
+          98,
+          97,
+          98,
+          97,
+          98,
+          97,
+          98,
+          97,
+          98,
+          97,
+          98,
+          97,
+          98,
+          97,
+          98,
+          97,
+          98,
+          97,
+          98,
+          97,
+          98,
+          97,
+          98,
+          97,
+          98,
+          97,
+          98,
+          97,
+          98,
+          97,
+          98,
+          97,
+          98,
+          97,
+          98,
+          97,
+          98,
+          97,
+          98,
+          97,
+          98,
+          97,
+          98,
+          97,
+          98,
+          97,
+          98,
+          97,
+          98,
+          97,
+          98,
+          97,
+          98,
+          97,
+          98,
+          97,
+          98,
+          97,
+          98,
+          97,
+          98,
+          97,
+          98,
+          97,
+          98,
+          97,
+          98,
+          97,
+          98,
+          97,
+          98,
+          97,
+          98,
+          97,
+          98,
+          97,
+          98,
+          97,
+          98,
+          97,
+          98,
+          97,
+          98,
+          97,
+          98,
+          97,
+          98,
+          97,
+          98,
+          97,
+          98,
+          97,
+          98,
+          97,
+          98,
+          97,
+          98,
+          97,
+          98,
+          97,
+          98,
+          97,
+          98
+        ],
+        "length": 160,
+        "capacity": 256,
+        "maxCapacity": 2147483647,
+        "chunks": 9
+      },
+      "beforeSecond": {
+        "text": [
+          97,
+          98,
+          97,
+          98,
+          97,
+          98,
+          97,
+          98,
+          97,
+          98,
+          97,
+          98,
+          97,
+          98,
+          97,
+          98,
+          97,
+          98,
+          97,
+          98,
+          97,
+          98,
+          97,
+          98,
+          97,
+          98,
+          97,
+          98,
+          97,
+          98,
+          97,
+          98,
+          97,
+          98,
+          97,
+          98,
+          97,
+          98,
+          97,
+          98,
+          97,
+          98,
+          97,
+          98,
+          97,
+          98,
+          97,
+          98,
+          97,
+          98,
+          97,
+          98,
+          97,
+          98,
+          97,
+          98,
+          97,
+          98,
+          97,
+          98,
+          97,
+          98,
+          97,
+          98,
+          97,
+          98,
+          97,
+          98,
+          97,
+          98,
+          97,
+          98,
+          97,
+          98,
+          97,
+          98,
+          97,
+          98,
+          97,
+          98,
+          97,
+          98,
+          97,
+          98,
+          97,
+          98,
+          97,
+          98,
+          97,
+          98,
+          97,
+          98,
+          97,
+          98,
+          97,
+          98,
+          97,
+          98,
+          97,
+          98,
+          97,
+          98,
+          97,
+          98,
+          97,
+          98,
+          97,
+          98,
+          97,
+          98,
+          97,
+          98,
+          97,
+          98,
+          97,
+          98,
+          97,
+          98,
+          97,
+          98,
+          97,
+          98,
+          97,
+          98,
+          97,
+          98,
+          97,
+          98,
+          97,
+          98,
+          97,
+          98,
+          97,
+          98,
+          97,
+          98,
+          97,
+          98,
+          97,
+          98,
+          97,
+          98,
+          97,
+          98,
+          97,
+          98,
+          97,
+          98,
+          97,
+          98,
+          97,
+          98,
+          97,
+          98,
+          97,
+          98,
+          97,
+          98,
+          97,
+          98
+        ],
+        "length": 160,
+        "capacity": 512,
+        "maxCapacity": 2147483647,
+        "chunks": 1
+      },
+      "result": true,
+      "objectResult": false,
+      "fault": null,
+      "afterFirst": {
+        "text": [
+          97,
+          98,
+          97,
+          98,
+          97,
+          98,
+          97,
+          98,
+          97,
+          98,
+          97,
+          98,
+          97,
+          98,
+          97,
+          98,
+          97,
+          98,
+          97,
+          98,
+          97,
+          98,
+          97,
+          98,
+          97,
+          98,
+          97,
+          98,
+          97,
+          98,
+          97,
+          98,
+          97,
+          98,
+          97,
+          98,
+          97,
+          98,
+          97,
+          98,
+          97,
+          98,
+          97,
+          98,
+          97,
+          98,
+          97,
+          98,
+          97,
+          98,
+          97,
+          98,
+          97,
+          98,
+          97,
+          98,
+          97,
+          98,
+          97,
+          98,
+          97,
+          98,
+          97,
+          98,
+          97,
+          98,
+          97,
+          98,
+          97,
+          98,
+          97,
+          98,
+          97,
+          98,
+          97,
+          98,
+          97,
+          98,
+          97,
+          98,
+          97,
+          98,
+          97,
+          98,
+          97,
+          98,
+          97,
+          98,
+          97,
+          98,
+          97,
+          98,
+          97,
+          98,
+          97,
+          98,
+          97,
+          98,
+          97,
+          98,
+          97,
+          98,
+          97,
+          98,
+          97,
+          98,
+          97,
+          98,
+          97,
+          98,
+          97,
+          98,
+          97,
+          98,
+          97,
+          98,
+          97,
+          98,
+          97,
+          98,
+          97,
+          98,
+          97,
+          98,
+          97,
+          98,
+          97,
+          98,
+          97,
+          98,
+          97,
+          98,
+          97,
+          98,
+          97,
+          98,
+          97,
+          98,
+          97,
+          98,
+          97,
+          98,
+          97,
+          98,
+          97,
+          98,
+          97,
+          98,
+          97,
+          98,
+          97,
+          98,
+          97,
+          98,
+          97,
+          98,
+          97,
+          98,
+          97,
+          98
+        ],
+        "length": 160,
+        "capacity": 256,
+        "maxCapacity": 2147483647,
+        "chunks": 9
+      },
+      "afterSecond": {
+        "text": [
+          97,
+          98,
+          97,
+          98,
+          97,
+          98,
+          97,
+          98,
+          97,
+          98,
+          97,
+          98,
+          97,
+          98,
+          97,
+          98,
+          97,
+          98,
+          97,
+          98,
+          97,
+          98,
+          97,
+          98,
+          97,
+          98,
+          97,
+          98,
+          97,
+          98,
+          97,
+          98,
+          97,
+          98,
+          97,
+          98,
+          97,
+          98,
+          97,
+          98,
+          97,
+          98,
+          97,
+          98,
+          97,
+          98,
+          97,
+          98,
+          97,
+          98,
+          97,
+          98,
+          97,
+          98,
+          97,
+          98,
+          97,
+          98,
+          97,
+          98,
+          97,
+          98,
+          97,
+          98,
+          97,
+          98,
+          97,
+          98,
+          97,
+          98,
+          97,
+          98,
+          97,
+          98,
+          97,
+          98,
+          97,
+          98,
+          97,
+          98,
+          97,
+          98,
+          97,
+          98,
+          97,
+          98,
+          97,
+          98,
+          97,
+          98,
+          97,
+          98,
+          97,
+          98,
+          97,
+          98,
+          97,
+          98,
+          97,
+          98,
+          97,
+          98,
+          97,
+          98,
+          97,
+          98,
+          97,
+          98,
+          97,
+          98,
+          97,
+          98,
+          97,
+          98,
+          97,
+          98,
+          97,
+          98,
+          97,
+          98,
+          97,
+          98,
+          97,
+          98,
+          97,
+          98,
+          97,
+          98,
+          97,
+          98,
+          97,
+          98,
+          97,
+          98,
+          97,
+          98,
+          97,
+          98,
+          97,
+          98,
+          97,
+          98,
+          97,
+          98,
+          97,
+          98,
+          97,
+          98,
+          97,
+          98,
+          97,
+          98,
+          97,
+          98,
+          97,
+          98,
+          97,
+          98,
+          97,
+          98
+        ],
+        "length": 160,
+        "capacity": 512,
+        "maxCapacity": 2147483647,
+        "chunks": 1
+      }
+    },
+    {
+      "id": "different-max-capacity",
+      "first": {
+        "segments": [
+          [
+            97,
+            98,
+            99
+          ]
+        ],
+        "capacity": 8,
+        "maxCapacity": 16,
+        "clearFirst": false,
+        "length": null
+      },
+      "second": {
+        "segments": [
+          [
+            97,
+            98,
+            99
+          ]
+        ],
+        "capacity": 8,
+        "maxCapacity": 32,
+        "clearFirst": false,
+        "length": null
+      },
+      "self": false,
+      "nativeOnly": true,
+      "identity": false,
+      "beforeFirst": {
+        "text": [
+          97,
+          98,
+          99
+        ],
+        "length": 3,
+        "capacity": 8,
+        "maxCapacity": 16,
+        "chunks": 1
+      },
+      "beforeSecond": {
+        "text": [
+          97,
+          98,
+          99
+        ],
+        "length": 3,
+        "capacity": 8,
+        "maxCapacity": 32,
+        "chunks": 1
+      },
+      "result": true,
+      "objectResult": false,
+      "fault": null,
+      "afterFirst": {
+        "text": [
+          97,
+          98,
+          99
+        ],
+        "length": 3,
+        "capacity": 8,
+        "maxCapacity": 16,
+        "chunks": 1
+      },
+      "afterSecond": {
+        "text": [
+          97,
+          98,
+          99
+        ],
+        "length": 3,
+        "capacity": 8,
+        "maxCapacity": 32,
+        "chunks": 1
+      }
+    },
+    {
+      "id": "different-all-capacities",
+      "first": {
+        "segments": [
+          [
+            97
+          ],
+          [
+            98,
+            99
+          ]
+        ],
+        "capacity": 4,
+        "maxCapacity": 16,
+        "clearFirst": false,
+        "length": null
+      },
+      "second": {
+        "segments": [
+          [
+            97,
+            98,
+            99
+          ]
+        ],
+        "capacity": 12,
+        "maxCapacity": 128,
+        "clearFirst": false,
+        "length": null
+      },
+      "self": false,
+      "nativeOnly": true,
+      "identity": false,
+      "beforeFirst": {
+        "text": [
+          97,
+          98,
+          99
+        ],
+        "length": 3,
+        "capacity": 4,
+        "maxCapacity": 16,
+        "chunks": 1
+      },
+      "beforeSecond": {
+        "text": [
+          97,
+          98,
+          99
+        ],
+        "length": 3,
+        "capacity": 12,
+        "maxCapacity": 128,
+        "chunks": 1
+      },
+      "result": true,
+      "objectResult": false,
+      "fault": null,
+      "afterFirst": {
+        "text": [
+          97,
+          98,
+          99
+        ],
+        "length": 3,
+        "capacity": 4,
+        "maxCapacity": 16,
+        "chunks": 1
+      },
+      "afterSecond": {
+        "text": [
+          97,
+          98,
+          99
+        ],
+        "length": 3,
+        "capacity": 12,
+        "maxCapacity": 128,
+        "chunks": 1
+      }
+    },
+    {
+      "id": "empty-max-capacity",
+      "first": {
+        "segments": [],
+        "capacity": 1,
+        "maxCapacity": 1,
+        "clearFirst": false,
+        "length": null
+      },
+      "second": {
+        "segments": [],
+        "capacity": 8,
+        "maxCapacity": 32,
+        "clearFirst": false,
+        "length": null
+      },
+      "self": false,
+      "nativeOnly": true,
+      "identity": false,
+      "beforeFirst": {
+        "text": [],
+        "length": 0,
+        "capacity": 1,
+        "maxCapacity": 1,
+        "chunks": 1
+      },
+      "beforeSecond": {
+        "text": [],
+        "length": 0,
+        "capacity": 8,
+        "maxCapacity": 32,
+        "chunks": 1
+      },
+      "result": true,
+      "objectResult": false,
+      "fault": null,
+      "afterFirst": {
+        "text": [],
+        "length": 0,
+        "capacity": 1,
+        "maxCapacity": 1,
+        "chunks": 1
+      },
+      "afterSecond": {
+        "text": [],
+        "length": 0,
+        "capacity": 8,
+        "maxCapacity": 32,
+        "chunks": 1
+      }
+    },
+    {
+      "id": "max-capacity-different-text",
+      "first": {
+        "segments": [
+          [
+            97,
+            98,
+            99
+          ]
+        ],
+        "capacity": 4,
+        "maxCapacity": 16,
+        "clearFirst": false,
+        "length": null
+      },
+      "second": {
+        "segments": [
+          [
+            97,
+            98,
+            100
+          ]
+        ],
+        "capacity": 4,
+        "maxCapacity": 32,
+        "clearFirst": false,
+        "length": null
+      },
+      "self": false,
+      "nativeOnly": true,
+      "identity": false,
+      "beforeFirst": {
+        "text": [
+          97,
+          98,
+          99
+        ],
+        "length": 3,
+        "capacity": 4,
+        "maxCapacity": 16,
+        "chunks": 1
+      },
+      "beforeSecond": {
+        "text": [
+          97,
+          98,
+          100
+        ],
+        "length": 3,
+        "capacity": 4,
+        "maxCapacity": 32,
+        "chunks": 1
+      },
+      "result": false,
+      "objectResult": false,
+      "fault": null,
+      "afterFirst": {
+        "text": [
+          97,
+          98,
+          99
+        ],
+        "length": 3,
+        "capacity": 4,
+        "maxCapacity": 16,
+        "chunks": 1
+      },
+      "afterSecond": {
+        "text": [
+          97,
+          98,
+          100
+        ],
+        "length": 3,
+        "capacity": 4,
+        "maxCapacity": 32,
+        "chunks": 1
+      }
+    }
+  ]
+}

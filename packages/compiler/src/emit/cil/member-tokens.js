@@ -133,7 +133,7 @@ export class MemberTokens {
       owner = field.containingType,
       defined = this.writer.fieldTokens.get(definition);
     if (defined && !isInstantiation(owner)) return defined;
-    return this.builder.member(this.type(owner), definition.name, fieldSignature(this.definitionTypes, definition.type));
+    return this.builder.member(this.type(owner), definition.name, fieldSignature(this.definitionTypes, definition.type, definition.refKind));
   }
   /**
    * MemberRef token of a framework method named by its signature rather than by a symbol (the members lowering needs

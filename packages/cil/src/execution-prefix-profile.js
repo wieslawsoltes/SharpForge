@@ -2,17 +2,20 @@ import {resolveExecutionMethod} from './call-profile.js';
 import {verifyGenericType} from './generic-profile.js';
 import {validateTypePrefixes} from './verify/prefix-constrained.js';
 import {ConstrainedObjectProfile} from './constrained-object-profile.js';
+import {ConstrainedReferenceObjectProfile} from './constrained-reference-object-profile.js';
 
 const supported = new Set(['volatile.', 'constrained.']);
 const memoryTargets = new Set(['ldfld', 'stfld', 'ldsfld', 'stsfld', 'ldobj', 'stobj']);
 
 /** Executable prefix groups retain their flat debugger offsets and may only be entered at the prefix. */
 export class ExecutionPrefixProfile {
-  constructor(inspector) {
+  constructor(inspector, dispatch) {
     this.inspector = inspector;
     this.objects = new ConstrainedObjectProfile(inspector);
     this.types = this.objects.types;
     this.genericOwners = this.objects.genericOwners;
+    this.dispatch = dispatch;
+    this.references = null;
   }
 
   constrained(prefix, next, context, reachable) {
@@ -31,6 +34,13 @@ export class ExecutionPrefixProfile {
       if (object.target) reachable.push(object.target);
       reachable.push(...object.initializers);
       return null;
+    }
+    if (!parameter && this.objects.declaration(declaration)) {
+      this.references ??= new ConstrainedReferenceObjectProfile(this.inspector, this.objects, this.dispatch);
+      if (this.references.select(prefix.operand, declaration)) {
+        for (const target of this.references.targets(prefix.operand)) reachable.push(target);
+        return null;
+      }
     }
     const owner = this.types.get(declaration.ownerToken);
     if (!owner || this.genericOwners.has(owner.token) ||

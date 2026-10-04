@@ -143,7 +143,8 @@ export function planMembers(type, core, constantOf) {
     addField = (field, flags = fieldFlags(field)) => {
       if (declared.has(field)) return;
       declared.add(field);
-      plan.fields.push({ symbol: field, name: field.name, flags, type: field.type, constant: field.isConst ? constantOf(field) : null });
+      const constant = field.isConst ? constantOf(field) : null;
+      plan.fields.push({ symbol: field, name: field.name, flags, type: field.type, refKind: field.refKind, constant });
     },
     addMethod = method => {
       if (declared.has(method)) return null;

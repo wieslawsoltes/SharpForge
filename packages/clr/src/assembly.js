@@ -94,6 +94,39 @@ export class RuntimeModule {
     return this.#pe.metadata.string(index);
   }
 
+  /** Bounded metadata spelling of a TypeDef/TypeRef; no assembly binding or TypeSpec expansion. */
+  typeName(token) {
+    this.#requireTypeNameToken(token);
+    const metadata = this.#pe.metadata;
+    if ((metadata.counts[2] ?? 0) + (metadata.counts[41] ?? 0) > 100000) {
+      throw loadError(LoadErrorCode.LimitExceeded, 'Type name metadata row limit exceeded');
+    }
+    let characters = 0;
+    const adapter = { ...metadata, string: index => {
+      const name = this.string(index, { maxBytes: 16384 });
+      if (name.length > 4096 || (characters += name.length) > 16384) {
+        throw loadError(LoadErrorCode.LimitExceeded, 'Type name expansion limit exceeded');
+      }
+      return name;
+    } };
+    try {
+      const name = metadata.typeName.call(adapter, token);
+      if (name.length > 4096) throw loadError(LoadErrorCode.LimitExceeded, 'Type name length exceeded');
+      return name;
+    } catch (error) {
+      if (error.code?.startsWith('SFCLR')) throw error;
+      throw loadError(LoadErrorCode.InvalidImage, `Invalid type name: ${error.message}`);
+    }
+  }
+
+  #requireTypeNameToken(token) {
+    this.#assembly.ensureUsable();
+    if (!Number.isInteger(token) || token < 0 || token > 0xffffffff ||
+        ![1, 2].includes(token >>> 24) || !(token & 0xffffff)) {
+      throw loadError(LoadErrorCode.InvalidImage, 'Type name requires a TypeDef or TypeRef token');
+    }
+  }
+
   /** Return an owned copy, optionally rejecting maxBytes before materialization (SFCLR006/007 for invalid/exceeded limits). */
   blob(index, { maxBytes } = {}) {
     this.#assembly.ensureUsable();

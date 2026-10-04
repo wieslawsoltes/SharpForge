@@ -1,5 +1,6 @@
 import { decodeSignature } from '@sharpforge/cil';
 import { freezeSignature } from './frozen-signature.js';
+import { formatMethodDisplay } from './method-display.js';
 import { loadError, LoadErrorCode } from '../load-errors.js';
 
 /** Canonical MethodDef metadata identity. Signature and body decoding remain lazy. */
@@ -56,6 +57,8 @@ export class MethodDesc {
       throw loadError(LoadErrorCode.InvalidImage, `Invalid method signature: ${error.message}`);
     }
   }
+  /** Cached Reflection-style signature display; unsupported resolved-type forms report SFCLR012. */
+  toString() { return this.#state.display ??= formatMethodDisplay(this); }
   /** Returns null for absent RVA or an isolated body snapshot; executable bytes are never cached on this descriptor. */
   getMethodBody() { return this.module.methodBody(this.metadataToken); }
 }
