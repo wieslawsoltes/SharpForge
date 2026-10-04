@@ -1,16 +1,13 @@
+import {mountStudioComposition,studioEditorOptions,studioWorkspaceMetadata} from './workbench/studio-composition.js';
 import {installWatchWindows} from './workbench/watch-windows/index.js';
-import {BackgroundTaskBridge} from './workbench/background-tasks.js';
-import {createTestCodeLensProvider} from './workbench/test-code-lens.js';
-import {createStudioLanguageProviders,studioDocumentProjects} from './workbench/studio-language-providers.js';
+import {createStudioLanguageProviders} from './workbench/studio-language-providers.js';
 import {applyExplorerResourceTransaction} from './explorer-resource-transaction.js';
 import {saveStudioSourceAs} from './workbench/source-save-as.js';
 import {canRecoverStudioWorkspace,storeStudioRecovery} from './workbench/studio-recovery-store.js';
 import {createStudioLocationOpener} from './workbench/studio-open-location.js';
 import {StudioNavigation} from './workbench/studio-navigation.js';
-import {createRecentWorkspaces} from './workbench/recent-workspaces.js';
 import {SessionRecovery} from './workbench/session-recovery.js';
 import {createRuntimeToolsBridge} from './workbench/session-runtime-bridge.js';
-import {connectStudioStartupSelection} from './workbench/studio-startup-selection.js';
 import {readStudioFiles,readStudioDirectory} from './workbench/source-imports.js';
 import {importStudioFiles,openStudioWorkspaceZip} from './workbench/studio-file-import.js';
 import {loadStudioSample,importStudioAssembly} from './workbench/studio-built-in-workspace.js';
@@ -18,7 +15,6 @@ import {readStudioSource} from './workbench/studio-source-reader.js';
 import {loadStudioWorkspace} from './workbench/studio-workspace-loader.js';
 import {WorkspaceLoads} from './workbench/workspace-loads.js';
 import {StudioWorkspaceInputs} from './workbench/studio-workspace-inputs.js';
-import {createStudioMetadataReader} from './workbench/studio-metadata-reference.js';
 import {createStudioDiskObserver} from './workbench/studio-disk-observer.js';
 import {commitStudioExplorerWorkspace} from './workbench/studio-explorer-workspace.js';
 import {importStudioExistingProject} from './workbench/studio-existing-project.js';
@@ -29,12 +25,9 @@ import {createStudioLazyFeatures} from './workbench/lazy-features/index.js';
 import {createWorkbenchServices,legacyRuntimeEvent} from './workbench/sessions.js';
 import {StudioProjects} from './workbench/studio-projects.js';
 import {createStudioEditorFactory,remapBreakpointChanges} from './workbench/studio-editor.js';
-import {mountStudioSessions} from './workbench/studio-session-ui.js';
 import {EditorModel,rebaseEditorSource} from '@sharpforge/editor';
 import {StudioExecution} from './workbench/studio-execution.js';
 import {StudioSave} from './workbench/studio-save.js';
-import {createStudioEditorHost} from './workbench/studio-editor-host.js';
-import {mountStudioShell} from './workbench/studio-shell.js';
 import {storage,storageKeys} from './settings/storage.js';
 import {contributeRuntimeAutomation} from './tools/runtime-automation.js';
 import {contributeWorkspaceAutomation} from './tools/workspace-automation.js';
@@ -136,20 +129,16 @@ hydrate();
 let editor=null,advancedTools=null,designerTools=null,runtimeTools=null;
 const editors=workbenchServices.documents.editors;
 let navigation=null,recentWorkspaces=null,openLocation=null;
-let testCodeLens=null,disconnectTestLenses=null;
+let testCodeLens=null;
 function navigationButtons(){for(const [id,enabled]of [['navigate-back',navigation?.canBack],['navigate-forward',navigation?.canForward]]){const button=document.getElementById(id);if(button)button.disabled=!enabled;}}
 function navigate(direction){const target=navigation[direction]();navigationButtons();return target;}
 
-function studioEditorOptions(settings=workbenchShell?.settings.snapshot()){
- const {endOfLine,normalizeLineEndings,...options}=settings?.editor??{};
- return {...options,...(normalizeLineEndings?{endOfLine}:{})};
-}
 editorIntegration=createStudioEditorFactory({services:workbenchServices,state:()=>state,
  providers:createStudioLanguageProviders({projects:projectServices,documents:workbenchServices.documents,state:()=>state,
   getTestCodeLens:()=>testCodeLens,requestHost:editorHostCommand}),
  applyResourceTransaction:plan=>applyExplorerResourceTransaction(plan,{documents:workbenchServices.documents,explorer:explorerActions}),
  supportsResourceRename:()=>!state.nativeMode,
- getConfigurationRecords:()=>explorerContext().records,getLanguageOptions:()=>studioEditorOptions(),
+ getConfigurationRecords:()=>explorerContext().records,getLanguageOptions:()=>studioEditorOptions(workbenchShell?.settings.snapshot()),
  requestCompiler:(method,params,options)=>projectServices.request(method,params,options),requestHost:editorHostCommand,
  onKeymapState:(uri,value)=>{if(!state.active||state.active===uri)updateKeymapStatus(value);},
  onCursor:(uri,position)=>{if(state.active===uri)$('#status-cursor').textContent=`Ln ${position.line+1}, Col ${position.character+1}`;workbenchShell?.update({type:'cursor'});},
@@ -539,7 +528,7 @@ function studioWorkspaceContext() {
  return {
   state, documents: workbenchServices.documents, nativeBuild, projectWizard, sessionRecovery, runtimeBridge, workspaceLoads,
   recentWorkspaces, readSource: readStudioSource, projectServices, stopQuietly, savePrevious, scheduleAnalysis,
-  currentWorkspaceMetadata, resetEditors, renderWorkspace, renderPanel, saveLocal, log,
+  currentWorkspaceMetadata:()=>studioWorkspaceMetadata(state), resetEditors, renderWorkspace, renderPanel, saveLocal, log,
   projectErrors, applyAnalysis, build, status, renderTree,
   confirmLeaveNative: () => !(nativeSourceChanges().length || nativeBuild.sourceChanges().length)
    || globalThis.confirm('Leave the native workspace with unsaved source or project XML changes?')
@@ -736,81 +725,22 @@ async function importExistingProject(){
 async function previewWorkspaceFile(path){const c=explorerContext(),bytes=c.native?await c.client.binary(path):c.records.find(r=>r.path===path)?.bytes;if(!bytes)throw new Error('File bytes unavailable');const image=/\.(png|jpe?g|gif|webp)$/i.test(path),url=image?URL.createObjectURL(new Blob([bytes])):null;showModal(path,`<p>${bytes.length.toLocaleString()} bytes. Previewing does not execute this file.</p>${url?`<img src="${E(url)}" alt="${E(path)}" style="max-width:100%;max-height:55vh">`:`<pre>${Array.from(bytes.slice(0,256),b=>b.toString(16).padStart(2,'0')).join(' ')}${bytes.length>256?' …':''}</pre>`}`,{footer:'<button id="download-workspace-file">Save file</button><button id="modal-done">Close</button>',onClose:()=>{if(url)URL.revokeObjectURL(url);}});$('#download-workspace-file').onclick=()=>download(path.split('/').at(-1),bytes,'application/octet-stream');}
 
 
-editorHost=createStudioEditorHost({documents:workbenchServices.documents,docking,commands:commandRegistry,
- saveAll:()=>studioSave.all(),newDocument:newFile,pathDialog,
- openPath:async path=>{path=normalizePath(path??'');const node=[...solutionExplorer.model.nodes.values()]
-  .find(item=>item.path===path&&['source','file','project-file','assembly'].includes(item.kind));
-  if(!node)throw new Error('No such file in the current workspace: '+path);await openExplorerNode(node);return true;},
- navigate:location=>openLocation(location),language:languageRequest});
-sessionUI=mountStudioSessions({services:workbenchServices,docking,commands:commandRegistry,document,
- stopAll:()=>execution.stop({all:true}),startNewInstance:()=>execution.startNewInstance(),
- onError:error=>toast(error.message,'error'),navigate:frame=>{if(frame?.source)openFile(frame.source);if(frame?.line)editor?.gotoLine(frame.line,frame.column??1);},
- refresh:()=>{setEditorDecorations();renderPanelSoon();}});
-const surfaces=mountStudioShell({document,commands:commandRegistry,services:workbenchServices,state:()=>state,docking,
- readAssemblyReference:createStudioMetadataReader({state:()=>state,nativeBuild:()=>nativeBuild}),
- getEditor:()=>editor,designer:()=>designerTools.peek(),requestCompiler,navigate:location=>openLocation(location),
- download,applyEdits,projectData:explorerContext,setKeymap:setEditorKeymap,importFiles,
- configureEditor:(instance,settings)=>editorIntegration.configure(instance,studioEditorOptions(settings)),
- openRecent:item=>recentWorkspaces.open(item),
- onError:error=>toast(error.message,'error'),onStatus:message=>{$('#status-message').textContent=message;},
- applyConfiguration:async({configuration,platform})=>{state.configuration=configuration;
-  if(state.nativeMode){nativeBuild.settings.configuration=configuration;nativeBuild.settings.platform=platform;}
-  else if(state.projectSystem){const records=explorerContext().records,entry=state.projectSystem.solution.path;
-   state.projectSystem=new ProjectSystem(records,{configuration,maxFiles:20000});state.projectSnapshot=state.projectSystem.load(entry);}
-  projectServices.sync();renderWorkspace();saveLocal();},
- readDisk:(uri,options)=>diskObserver.read(uri,options),
- reloadDocument:(uri,text,options)=>diskObserver.reload(uri,text,options),
- restoreFiles:files=>{const edits=files.filter(file=>workbenchServices.documents.get(file.uri)).map(file=>({uri:file.uri,start:0,
-  end:workbenchServices.documents.models.get(file.uri).buffer.length,newText:file.text,version:workbenchServices.documents.get(file.uri).version}));return applyEdits(edits);}
+mountStudioComposition({
+  document, window, state, services: workbenchServices, projects: projectServices,
+  commands: commandRegistry, menus: menuRegistry, docking, editorIntegration, execution, studioSave,
+  getEditor: () => editor, getDesigner: () => designerTools.peek(), nativeBuild, diskObserver,
+  explorer: {context: explorerContext, actions: explorerActions, view: solutionExplorer, openNode: openExplorerNode},
+  navigation, openLocation, newFile, pathDialog, languageRequest, requestCompiler, download, applyEdits,
+  importFiles, setKeymap: setEditorKeymap, setPanel, openFile, toast, renderWorkspace, renderTree,
+  renderPanel, renderPanelSoon, setEditorDecorations, refreshEngineIndicators, saveLocal, saveSoon,
+  onStatus: message => { $('#status-message').textContent = message; },
+  storage, storageKeys, samples, beginWorkspaceLoad, loadDiskRecords, loadSample, openFolder,
+  workspaceInputs, workspaceLoads, watchWindows, advancedTools, runtimeTools, lazyFeatures, studioServices,
+  automation, recover, build, stopActiveSession, launch,
+  publish: owners => {
+    ({editorHost, sessionUI, workbenchShell, studioKeyboard, backgroundTasks, testCodeLens, recentWorkspaces} = owners);
+  }
 });
-workbenchShell=surfaces.shell;studioKeyboard=surfaces.keyboard;
-backgroundTasks=new BackgroundTaskBridge({tasks:workbenchShell.tasks,builds:workbenchServices.builds,
- onError:error=>toast(error.message,'error')});
-testCodeLens=createTestCodeLensProvider({tests:workbenchShell.tests,
- getDocument:uri=>workbenchServices.documents.get(uri),
- projectIdsForUri:uri=>studioDocumentProjects(state,workbenchServices.documents,uri),
- execute:operation=>workbenchShell.tasks.run({label:'Run selected test'},task=>operation.run({signal:task.signal}))});
-disconnectTestLenses=testCodeLens.subscribe(event=>editorIntegration.language.invalidate('codeLens',{uri:event.uri}));
-function currentWorkspaceMetadata(){return {name:state.projectSystem?.solution?.name??state.name,
- entry:state.projectSystem?.solution?.path,mode:state.workspaceMode??'folder'};}
-recentWorkspaces=createRecentWorkspaces({recent:workbenchShell.recent,getCurrent:currentWorkspaceMetadata,beginLoad:beginWorkspaceLoad,
- readRecovery:slot=>{try{return JSON.parse(storage.getItem(storageKeys[slot]));}catch{return null;}},
- openRecords:loadDiskRecords,loadSample:async(id,options)=>{if(!samples.some(sample=>sample.id===id))throw new Error('Unknown example');
-  const result=await loadSample(id,false,options);return result===false?false:true;},
- openFolder:async(item,options)=>{toast('Choose the folder for '+item.label+' to grant file access.');return openFolder(options);},
- activateCurrent:()=>{setPanel('project');return true;}});
-const historyButton=document.createElement('button');historyButton.id='navigate-history';historyButton.className='icon-button';
-historyButton.setAttribute('aria-label','Navigation history');historyButton.title='Navigation history';historyButton.textContent='▾';
-historyButton.onclick=()=>{const rect=historyButton.getBoundingClientRect();navigation.menu(rect.left,rect.bottom);};
-document.getElementById('navigate-back')?.after(historyButton);
-const disconnectStartup=connectStudioStartupSelection({services:workbenchServices,state:()=>state,save:saveSoon,
- onChanged:()=>{renderTree();renderPanel('project');refreshEngineIndicators();}});
-let studioDisposed=false;
-window.addEventListener('pagehide',event=>{
- if(event.persisted||studioDisposed)return;studioDisposed=true;
- clearTimeout(state.analyzeTimer);clearTimeout(state.saveTimer);
- const dispose=[()=>workspaceInputs.dispose(),()=>workspaceLoads.dispose(),()=>diskObserver.dispose(),()=>studioSave.dispose(),
-  ()=>backgroundTasks.dispose(),()=>disconnectTestLenses(),()=>testCodeLens.dispose(),disconnectStartup,
-  ()=>advancedTools.dispose(),()=>navigation.dispose(),()=>watchWindows.dispose(),()=>explorerActions.dispose(),
-  ()=>solutionExplorer.dispose?.(),()=>sessionUI.dispose(),()=>studioKeyboard.dispose(),()=>workbenchShell.dispose(),
-  ()=>editorIntegration.dispose(),()=>lazyFeatures.dispose(),()=>runtimeTools.dispose?.(),
-  ()=>docking.dispose(),()=>workbenchServices.dispose(),()=>studioServices.dispose()];
- const errors=[];for(const action of dispose)try{action();}catch(error){errors.push(error);}
- if(errors.length)console.error(new AggregateError(errors,'Studio cleanup failed'));
-});
-commandRegistry.configure('stop',{execute:()=>stopActiveSession()});
-commandRegistry.configure('restart',{execute:()=>workbenchServices.sessions.active?.restart()??launch(true)});
-commandRegistry.configure('save',{title:'Save Selected Items',label:'Save Selected Items'});
-commandRegistry.register({id:'document.saveAs',title:'Save File As…',category:'File',
- enabled:()=>!state.nativeMode&&!!workbenchServices.documents.active,execute:()=>studioSave.as()});
-menuRegistry.registerMenu('file',[['Save File As…','document.saveAs','']]);
-studioKeyboard.register({id:'studio:new-project',command:'newProject',keys:'Mod+Shift+N',scope:'Global'});
-const recoveredWorkspace=recover();
-if(recoveredWorkspace){renderWorkspace();if(projectServices.sourceUris(projectServices.selectedId).length)build(true);}else loadSample('particles',true);
-workbenchShell.startup({recovered:recoveredWorkspace}).catch(error=>toast(error.message,'error'));
-automation.contributeAutomation('',{get workbenchShell(){return workbenchShell;},getShell:()=>workbenchShell,
- get sessions(){return workbenchServices.sessions;},get documents(){return workbenchServices.documents;},
- get workbenchServices(){return workbenchServices;},get applicationWindows(){return sessionUI.applications;}});
 
 async function showCallHierarchy(params){try{const items=await requestCompiler('callHierarchy',params);setPanel('calls');const el=docking.content.get('calls');if(!items.length){el.innerHTML=empty('Call Hierarchy','No bound method at this position.');return;}const item=items[0],revision=state.revision,[incoming,outgoing]=await Promise.all([requestCompiler('incomingCalls',{item}),requestCompiler('outgoingCalls',{item})]);if(revision!==state.revision)return;el.innerHTML=`<div class="tool-page"><h2>${E(item.owner?item.owner+'.'+item.name:item.name)}</h2><p>Bound source calls. External intrinsics and unnamed top-level callers are not shown.</p><h3>Calls to this method</h3><div id="incoming-calls"></div><h3>Calls from this method</h3><div id="outgoing-calls"></div></div>`;for(const [selector,calls]of [['#incoming-calls',incoming],['#outgoing-calls',outgoing]]){const host=$(selector,el);if(!calls.length)host.textContent='No source calls.';for(const call of calls){const button=document.createElement('button');button.className='search-result';button.textContent=`${call.item.owner??''}.${call.item.name} · ${call.ranges.length} call site(s)`;button.onclick=()=>{openFile(call.item.uri,call.item.selectionStart,call.item.selectionEnd);showCallHierarchy({uri:call.item.uri,offset:call.item.selectionStart});};host.append(button);}}}catch(error){toast(error.message,'error');}}
 
