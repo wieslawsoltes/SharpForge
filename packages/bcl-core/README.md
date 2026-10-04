@@ -513,7 +513,7 @@ calls allocate no managed strings or arrays.
 Tests cover both compiler pipelines and VMs, independent CIL, managed collection,
 exhaustive prefixes, empty/end normalization and counted overlap reads. The static
 benchmark `scripts/benchmarks/a07-string-lastindexof-comparison-start.mjs` compares
-unchanged first/last controls against integrated parent `310410b2`, then reports
+unchanged first/last controls against merged indexer parent `1fe6e268`, then reports
 the new ordinal and ignore-case prefix routes separately. It includes 8/9/64-unit
 needles, excluded suffixes and all-overlap inputs. Other LastIndexOf overloads,
 culture support and native/Wasm execution remain outside this batch under #2621.

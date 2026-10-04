@@ -138,18 +138,15 @@ function instanceString(platform, descriptor, receiver, values, scalars) {
       : affixWithComparison(platform, receiver, scalars[0], scalars[1], false);
     case 'EndsWith': return scalars.length === 1 ? receiver.endsWith(string(platform, values[0]))
       : affixWithComparison(platform, receiver, scalars[0], scalars[1], true);
-    case 'IndexOf': {
-      const parameters = descriptor.parameters;
-      const parameterCount = parameters.length;
-      if (parameters[parameterCount - 1] === 'System.StringComparison') {
-        switch (parameterCount) {
-          case 2: return indexOfWithComparison(platform, receiver, scalars[0], scalars[1]);
-          case 3: return indexOfFromWithComparison(platform, receiver, scalars[0], scalars[1], scalars[2]);
-          case 4: return indexOfWindowWithComparison(platform, receiver, scalars);
-        }
+    case 'IndexOf':
+      if (descriptor.parameters[3] === 'System.StringComparison') return indexOfWindowWithComparison(platform, receiver, scalars);
+      if (descriptor.parameters[2] === 'System.StringComparison') {
+        return indexOfFromWithComparison(platform, receiver, scalars[0], scalars[1], scalars[2]);
+      }
+      if (descriptor.parameters[1] === 'System.StringComparison') {
+        return indexOfWithComparison(platform, receiver, scalars[0], scalars[1]);
       }
       return receiver.indexOf(string(platform, values[0]), values.length === 2 ? integer(platform, scalars[1], 0, receiver.length) : 0);
-    }
     case 'LastIndexOf': {
       const parameters = descriptor.parameters;
       const parameterCount = parameters.length;

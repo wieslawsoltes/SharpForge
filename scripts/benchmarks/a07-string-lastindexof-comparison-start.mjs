@@ -1,4 +1,4 @@
-// Copy this identical runner to combined parent 310410b2; run baseline and candidate serially.
+// Copy this identical runner to merged indexer parent 1fe6e268; run baseline and candidate serially.
 import assert from 'node:assert/strict';
 import {cpus} from 'node:os';
 import {performance} from 'node:perf_hooks';
