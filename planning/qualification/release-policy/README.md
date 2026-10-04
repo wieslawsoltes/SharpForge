@@ -52,7 +52,7 @@ protected environment's real recorded approval.
 | #1185 | Stable/preview policy; immutable registry check; exact remote maintainer review | Implemented, new tests not run |
 | #1186 | All five pinned preview rows have opt-in admission and stable rejection tests; supported rows have compiler and VM acceptance tests | Three unsupported compiler proposals have explicit skipped positive tests; no full-feature or native qualification |
 | #1187 | Three official upstream feeds; bounded requests; deterministic issue marker; serial watcher; closed/open issue deduplication | Simulated issue API fixtures written, never described as live issue creation |
-| #1188 | Exact tag/root/25-workspace/changelog gate before reusable CI | Positive, malformed, count, version and cancellation fixtures written |
+| #1188 | Tag, root, every workspace version and changelog agreement before reusable CI | Positive, malformed, empty/missing workspace, added-package version and cancellation fixtures written |
 | #1189 | Reused CI; all-asset draft; attached Sigstore proof; required environment and recorded manual approval before publish | No draft release, protected environment, hosted attestation or publication executed |
 | #1190 | Existing PR core dist artifact/provenance; optional read-only locator; unchanged Pages deployment | No new preview artifact or deployment executed from this implementation |
 
