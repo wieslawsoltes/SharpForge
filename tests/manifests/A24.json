@@ -7,7 +7,9 @@
     "tests/workspace-io.test.js",
     "tests/workspace-grammar-options.test.js",
     "tests/release08-explorer.test.js",
-    "tests/a24-studio-startup-recovery.test.js"
+    "tests/a24-studio-startup-recovery.test.js",
+    "tests/a24-editor-model-ownership.test.js",
+    "tests/a24-status-caret-ownership.test.js"
   ],
   "browserScripts": [
     "tests/browser_workspace_test.py",

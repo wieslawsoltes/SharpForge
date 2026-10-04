@@ -1,8 +1,8 @@
 import { Worker } from 'node:worker_threads';
 
 /** Execute the real worker module with only its browser transport adapted to Node. */
-export function connectRuntimeWorker(test) {
-  const worker = new Worker(new URL('./fixtures/a19/runtime-worker-node.js', import.meta.url), { type: 'module' });
+export function connectRuntimeWorker(test, {url = new URL('./fixtures/a19/runtime-worker-node.js', import.meta.url)} = {}) {
+  const worker = new Worker(url, { type: 'module' });
   const pending = new Map();
   const subscribers = new Set();
   const events = [];
