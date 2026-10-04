@@ -111,7 +111,8 @@ export class StudioProjects {
 
   request(method, params = {}, options) {
     const { projectId, ...request } = params;
-    return this.serviceFor(params.uri, projectId).request(method, request, options);
+    const service = this.serviceFor(params.uri, projectId);
+    return service.request(method, {...request, projectId: service.id}, options);
   }
 
   async syncBreakpoints(uri) {
