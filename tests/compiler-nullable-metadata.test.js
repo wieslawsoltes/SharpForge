@@ -97,22 +97,24 @@ test('A02-T05.3 nullable metadata fixture has genuine pinned Roslyn provenance',
 
 test('A02-T29 nullable metadata round-trips like Roslyn on every public signature and constraint target', referenceOptions, () => {
   const source = fixture('NullableMetadata.cs').toString('utf8');
-  const result = compileToAssembly(source, { name: 'NullableMetadata', outputKind: 'library', allowUnsafe: true, references: pack.references });
-  assert.deepEqual(errors(result), []);
-  assert.ok(result.assembly);
   const reference = imported(fixture('NullableMetadata.dll'));
-  const actual = imported(result.assembly);
-  for (const name of [
-    'Surface`6', 'Constraints`6', 'Outer`1', 'Outer`1+Middle`1', 'Outer`1+Middle`1+Inner`1',
-    'NestedUses', 'Contexts', 'EnabledRecord', 'ValueRecord', 'GenericRecord`1', 'Disabled`2',
-    'DisabledRecord', 'OverrideBase', 'OverrideDerived',
-  ]) {
-    const metadataName = 'NullableMetadata.' + name;
-    assert.deepEqual(typeShape(actual.getTypeByMetadataName(metadataName)), typeShape(reference.getTypeByMetadataName(metadataName)), metadataName);
+  for (const emit of [compileToAssembly, compileToReferenceAssembly]) {
+    const result = emit(source, { name: 'NullableMetadata', outputKind: 'library', allowUnsafe: true, references: pack.references });
+    assert.deepEqual(errors(result), []);
+    assert.ok(result.assembly);
+    const actual = imported(result.assembly);
+    for (const name of [
+      'Surface`6', 'Constraints`6', 'Outer`1', 'Outer`1+Middle`1', 'Outer`1+Middle`1+Inner`1',
+      'NestedUses', 'Contexts', 'EnabledRecord', 'ValueRecord', 'GenericRecord`1', 'Disabled`2',
+      'DisabledRecord', 'OverrideBase', 'OverrideDerived',
+    ]) {
+      const metadataName = 'NullableMetadata.' + name;
+      assert.deepEqual(typeShape(actual.getTypeByMetadataName(metadataName)), typeShape(reference.getTypeByMetadataName(metadataName)), metadataName);
+    }
+    const rows = nullableAttributeRows(result.assembly);
+    assert.ok(rows.some(row => row.target.includes(':interface:') && Array.isArray(row.nullable)));
+    assert.ok(rows.some(row => row.target.includes(':constraint:') && Array.isArray(row.nullable)));
+    assert.ok(rows.some(row => row.target.includes(':generic:') && row.nullable !== null));
+    assert.ok(rows.some(row => row.target.includes('::event:Changed') && row.nullable !== null));
   }
-  const rows = nullableAttributeRows(result.assembly);
-  assert.ok(rows.some(row => row.target.includes(':interface:') && Array.isArray(row.nullable)));
-  assert.ok(rows.some(row => row.target.includes(':constraint:') && Array.isArray(row.nullable)));
-  assert.ok(rows.some(row => row.target.includes(':generic:') && row.nullable !== null));
-  assert.ok(rows.some(row => row.target.includes('::event:Changed') && row.nullable !== null));
 });
