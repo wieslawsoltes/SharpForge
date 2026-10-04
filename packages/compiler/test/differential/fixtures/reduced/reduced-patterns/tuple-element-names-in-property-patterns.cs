@@ -1,7 +1,8 @@
 using System;
 
 // Reduced from stress-patterns/message-decoder and stress-language/tuple-alias-raw-strings: property patterns over
-// the element names of a tuple (`{ X: var dx }`, `Delta.X: > 0`), next to positional and list patterns in properties.
+// the element names of a tuple (`{ X: var dx }`, `Delta.X: > 0`), next to positional and list patterns in properties;
+// and a tuple compared with `default`.
 public sealed class Text { public int Channel; public string Body; }
 public sealed class Move { public (int X, int Y) Delta; }
 
@@ -20,5 +21,9 @@ public static class Program
         Console.WriteLine(A(new Text { Body = "/go", Channel = 2 }) + " " + B(new Text { Body = "hello" }));
         Console.WriteLine(C(new Move()) + " " + C(new Move { Delta = (4, 0) }) + " " + D(new Move { Delta = (3, 3) }) + " " + E(new Move { Delta = (2, 9) }));
         Console.WriteLine(F((0, 1)) + " " + F((2, 7)) + " " + G(("a", 5)) + " " + G(("b", 1)));
+        (int Row, int Column) best = default;
+        bool first = best == default, second = default != best;
+        best = (1, 2);
+        Console.WriteLine(first + " " + second + " " + (best == default) + " " + (best != default));
     }
 }
