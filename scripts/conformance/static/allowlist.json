@@ -448,6 +448,13 @@
       "count": 3,
       "sha256": "62dca80988a0899c6e2c93143435f7da4a1644d49db94ce1c7225a172d93e979",
       "reason": "Test imports fixed checked-in workspace or Node modules; no managed or remote source is evaluated as host JavaScript."
+    },
+    {
+      "path": "apps/studio/git-studio.js",
+      "operation": "dynamic-import",
+      "count": 1,
+      "sha256": "9e222ce2fc67b642e8514cb4aa25ec09ca0fcc60da3bac6dec65bc32a9be0f3d",
+      "reason": "Studio lazily imports the fixed checked-in Git workbench after an explicit Git action; no remote or user-selected JavaScript is loaded."
     }
   ]
 }
