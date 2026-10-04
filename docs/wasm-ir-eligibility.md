@@ -97,9 +97,10 @@ exception behavior. Signatures alone never authorize unchecked execution.
 The internal reference executor enforces those guards and uses the shared
 numeric operations. Focused tests compare its result, floating carriers and
 faults with direct CIL, including loops, Int64, Single and signed zero. Other
-tests cover stale proof, byrefs, EH, switch targets and analysis bounds. Test
-execution is scheduled through the root's serial validation queue; this batch
-does not claim a measured speedup or a working Wasm backend.
+tests cover stale proof, byrefs, EH, switch targets and analysis bounds. All 49
+focused eligibility, verified-stack and decode-plan regressions passed serially
+with Node 24.21.0 at `58b5a3a4`. This batch does not claim a measured speedup or
+a working Wasm backend. Browser/native/Rust-Wasm qualification remains staged.
 
 The example is `node examples/runtime/wasm-eligibility.mjs` after workspace
 installation. It prints eligibility without running the program.
