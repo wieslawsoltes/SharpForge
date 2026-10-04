@@ -25,12 +25,14 @@ try {
   const image = join(temporary, 'bin/Release/net10.0/oracle.dll');
   const expected = JSON.parse(run([image]));
   const records = expected.records.map(record => `    ${JSON.stringify(record)}`).join(',\n');
-  const imageBytes = readFileSync(image);
+  const harnessBytes = readFileSync(image);
+  const imageBytes = expected.image ? Buffer.from(expected.image, 'base64') : harnessBytes;
   const hash = bytes => createHash('sha256').update(bytes).digest('hex');
   const constraintCases = expected.constraintCases?.map(record => ({ ...record,
     imageSHA256: hash(Buffer.from(record.image, 'base64')) }));
   const header = JSON.stringify({ sdk, runtime: expected.runtime,
     sourceSHA256: hash(readFileSync(source)), imageSHA256: hash(imageBytes),
+    ...(expected.image ? { harnessSHA256: hash(harnessBytes) } : {}),
     ...(constraintCases ? { constraintCases } : {}) }, null, 2).slice(0, -2);
   writeFileSync(join(output, 'native-method-bases.json'), `${header},\n  "records": [\n${records}\n  ],\n` +
     `  "image": ${JSON.stringify(imageBytes.toString('base64'))}\n}\n`);
