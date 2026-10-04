@@ -91,7 +91,7 @@ imports and cannot be selected by a normal campaign.
 | Target / work item | Actual exercised APIs | Remaining acceptance |
 | --- | --- | --- |
 | `pe-loader` / #1144 | PE reader, metadata validator, assembly inspector and loader with row/code budgets | Ten-minute and cross-platform captures; broader external corpus |
-| `bytecode-image` / #1145 | Deserialization, verifier and actual scalar source VM with instruction/heap/stack budgets | Non-scalar verified programs return unsupported; no CIL or Rust execution claim |
+| `bytecode-image` / #1145 | Deserialization, verifier and [bounded managed source VM](bytecode-profile.md): static calls, storage, fixed objects and int arrays | Verified programs outside the closed profile return unsupported; no general-image, CIL or Rust execution claim |
 | `portable-pdb` / #1146 | Portable PDB builder/reader, locations and locals with reader budgets | Broader existing/native corpus and platform qualification |
 | `zip-archive` / #1147 | In-memory ZIP writer/reader and DEFLATE validation | Workspace import and filesystem extraction are not exercised |
 | `protocol` / #1148 | LSP/DAP message framing, Unicode and deterministic chunking | Semantic server dispatch and request sequences |
