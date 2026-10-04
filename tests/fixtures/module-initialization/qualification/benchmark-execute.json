@@ -1,0 +1,3662 @@
+{
+  "benchmark": "SF-A02-T72 whole-revision module startup",
+  "startedAt": "2026-10-04T17:14:27.453Z",
+  "completedAt": "2026-10-04T17:14:42.103Z",
+  "status": "complete",
+  "settings": {
+    "phase": "execute",
+    "warmupInvocationsPerRevision": 80,
+    "measuredInvocationsPerRevision": 20,
+    "blockOrder": "baseline,candidate,candidate,baseline",
+    "warmupBlocks": 40,
+    "measuredBlocks": 10,
+    "references": "registry",
+    "timeoutMs": 10000,
+    "totalBudgetMs": 180000,
+    "launch": {
+      "maxInstructions": 100000,
+      "maxOutputCharacters": 256
+    }
+  },
+  "sourceHashes": {
+    "module-startup-comparison.bench.js": "d8eff669981acdab5b0800806eb4dd52b55cf6ceee6fe59b35ed05d235ba84eb",
+    "module-startup-benchmark-checkouts.js": "6aa324809e5b796f72a36b7ba972cc67754880600c285977e9f9e2978b435312",
+    "module-startup-benchmark-measure.js": "2058279df57f90844d1c0f3f1d9e68bbbcec763a9721e0420fa71b358714295b",
+    "module-startup-benchmark-workloads.js": "1b15f3ceabe609e695166eadc051cadc2697de40ad327bee02ae353f7cfbf4bf"
+  },
+  "environment": {
+    "node": "v24.19.0",
+    "v8": "13.6.233.17-node.51",
+    "platform": "linux",
+    "architecture": "x64",
+    "cpu": "AMD EPYC 9V74 80-Core Processor",
+    "logicalCpus": 9,
+    "totalMemoryBytes": 10451464192,
+    "freeMemoryBytesAtEnd": 3163885568,
+    "heapSizeLimitBytes": 2348810240,
+    "exposedGc": true,
+    "hostIsolation": "not verified by the runner"
+  },
+  "revisions": [
+    {
+      "role": "baseline",
+      "root": "/workspace/scratch/1692a10afba9/p5-nullable-replay",
+      "revision": "fc4d9d994d93d75bac94131da62faa8fd13442d3",
+      "packageTrees": {
+        "cil": {
+          "package": "6188e568fe0c607f81ef62cea98b149646bf5de5",
+          "source": "8f1711276d10bcaa62cc711ff9d070a97e056993",
+          "manifest": "596ca6965ccda8cdcbd28efae3ae16276ddbd136"
+        },
+        "framework": {
+          "package": "4c41adcb56ba2d4f073907da946036f4b82e7e37",
+          "source": "a28f688cf4c0a540a2f6518777f84f7cd0ff3623",
+          "manifest": "6119fd224afec79e54d5e747b1ef2eba0d970234"
+        },
+        "bcl-collections": {
+          "package": "71e38278536a6e9cbf19f12ac991cef100f7c82d",
+          "source": "92f21ecaf0155213c86c5e82d1c890366028a926",
+          "manifest": "3e22a4ab7614afdd259f5461af5f3ed406b47b23"
+        },
+        "bcl-core": {
+          "package": "e37df4857945d16cf05b5d4f26f236b701f513d1",
+          "source": "5720bb411ce77e9ed0b263e61139dc318e798dc6",
+          "manifest": "02fb9efb81e489131d286b16ffcc7354b33fdb56"
+        },
+        "bytecode": {
+          "package": "89e9d3d1c68773ccf90a8f5a3053e68a67203847",
+          "source": "e929355514cad0a058982101fa52f975a2ea1f55",
+          "manifest": "d2dc2e750f890a6e0e52039bab093c5e26d1afd5"
+        },
+        "runtime": {
+          "package": "223aa10591848ef701eab60af7534935c58746a2",
+          "source": "44213bb2da09640f00b71949ba98fb09327a68dc",
+          "manifest": "78cfae282a015856c481b49ceea2a319b714e782"
+        },
+        "network": {
+          "package": "a0ff0f968d8fd9a04ede276e5a7c90f6317c22e5",
+          "source": "357618e88d369c6f2b7508250f87f1029152c0fc",
+          "manifest": "7fd7505d71d618100bdcb4401c95547ba7c6d09a"
+        },
+        "compute": {
+          "package": "0ba385b2754947d34e884b975fee619d6d2b71ec",
+          "source": "a0b2f47572973f518fb933f9f29c74ea2b3aa5a1",
+          "manifest": "c0a25688728746c57d91bb7ebe99cedfc90776c3"
+        },
+        "designer": {
+          "package": "0d1086a83afd08708b0537a1483ce2e17774a24d",
+          "source": "3d97667b4711645777b3ee5841a3fa545cd3b031",
+          "manifest": "5b813e8d3bf3874323e8ac2af52fca94749950f6"
+        },
+        "text": {
+          "package": "e68012e1423ba4c7dcb5fcab453f22fa87ffda05",
+          "source": "8ce093ac378c10ecd2591313bfb248bfd1eba24c",
+          "manifest": "9d63a21574afadab9ac03581cf4e7ab59853088b"
+        },
+        "syntax": {
+          "package": "71cfb25f113b73a5998c5634a2c67f0597bce50e",
+          "source": "2f9602d3e929781d0399653b03377226c00d3c16",
+          "manifest": "8f75710f1133cd400fd3efd12fdf8439747fe98c"
+        },
+        "compiler": {
+          "package": "897ab240d736e00b5d4fa0532da53e231761fc70",
+          "source": "db2b91a643e7f5b1f5d86e755263d0b39cd318b8",
+          "manifest": "c93f3ca2d9bc38b78a1a52181370e4ccca769845"
+        },
+        "symbols": {
+          "package": "65edbdb9f390955e383f1e91d3902b09b490e158",
+          "source": "b26bef7c3811b5181488c1c746aade489c94bc10",
+          "manifest": "54ba9393bd7036c29fae006ad7c46c6b9cb26f21"
+        },
+        "archive": {
+          "package": "6451aced45878f841bb3343d46f19abb6ade87fb",
+          "source": "efc7f1f82e3401599f470905d812b398a7647280",
+          "manifest": "519455e4bdcb61822878145c5325ca032b67d42c"
+        }
+      },
+      "aliases": {
+        "cil": "/workspace/scratch/1692a10afba9/p5-nullable-replay/packages/cil/src/index.js",
+        "framework": "/workspace/scratch/1692a10afba9/p5-nullable-replay/packages/framework/src/index.js",
+        "bcl-collections": "/workspace/scratch/1692a10afba9/p5-nullable-replay/packages/bcl-collections/src/index.js",
+        "bcl-core": "/workspace/scratch/1692a10afba9/p5-nullable-replay/packages/bcl-core/src/index.js",
+        "bytecode": "/workspace/scratch/1692a10afba9/p5-nullable-replay/packages/bytecode/src/index.js",
+        "runtime": "/workspace/scratch/1692a10afba9/p5-nullable-replay/packages/runtime/src/index.js",
+        "network": "/workspace/scratch/1692a10afba9/p5-nullable-replay/packages/network/src/index.js",
+        "compute": "/workspace/scratch/1692a10afba9/p5-nullable-replay/packages/compute/src/index.js",
+        "designer": "/workspace/scratch/1692a10afba9/p5-nullable-replay/packages/designer/src/index.js",
+        "text": "/workspace/scratch/1692a10afba9/p5-nullable-replay/packages/text/src/index.js",
+        "syntax": "/workspace/scratch/1692a10afba9/p5-nullable-replay/packages/syntax/src/index.js",
+        "compiler": "/workspace/scratch/1692a10afba9/p5-nullable-replay/packages/compiler/src/index.js",
+        "symbols": "/workspace/scratch/1692a10afba9/p5-nullable-replay/packages/symbols/src/index.js",
+        "archive": "/workspace/scratch/1692a10afba9/p5-nullable-replay/packages/archive/src/index.js"
+      },
+      "importMs": 812.935798,
+      "referencePack": null,
+      "referenceLoadMs": null
+    },
+    {
+      "role": "candidate",
+      "root": "/workspace/scratch/1692a10afba9/p5-module-initialization",
+      "revision": "8b2d3c10851992cfd935bcdb29308846446d7809",
+      "packageTrees": {
+        "cil": {
+          "package": "c55b9712d89b05bc997e6889295abc28ec467d0e",
+          "source": "66464ea1bbca7db0f98cc573b98a101dd9fbc56e",
+          "manifest": "596ca6965ccda8cdcbd28efae3ae16276ddbd136"
+        },
+        "framework": {
+          "package": "4c41adcb56ba2d4f073907da946036f4b82e7e37",
+          "source": "a28f688cf4c0a540a2f6518777f84f7cd0ff3623",
+          "manifest": "6119fd224afec79e54d5e747b1ef2eba0d970234"
+        },
+        "bcl-collections": {
+          "package": "71e38278536a6e9cbf19f12ac991cef100f7c82d",
+          "source": "92f21ecaf0155213c86c5e82d1c890366028a926",
+          "manifest": "3e22a4ab7614afdd259f5461af5f3ed406b47b23"
+        },
+        "bcl-core": {
+          "package": "e37df4857945d16cf05b5d4f26f236b701f513d1",
+          "source": "5720bb411ce77e9ed0b263e61139dc318e798dc6",
+          "manifest": "02fb9efb81e489131d286b16ffcc7354b33fdb56"
+        },
+        "bytecode": {
+          "package": "89e9d3d1c68773ccf90a8f5a3053e68a67203847",
+          "source": "e929355514cad0a058982101fa52f975a2ea1f55",
+          "manifest": "d2dc2e750f890a6e0e52039bab093c5e26d1afd5"
+        },
+        "runtime": {
+          "package": "f2f24ce120c4f9412c4ee80e42133847c828e155",
+          "source": "c5db074ed78b2b4711fc0b3356b89cbd32116e44",
+          "manifest": "78cfae282a015856c481b49ceea2a319b714e782"
+        },
+        "network": {
+          "package": "a0ff0f968d8fd9a04ede276e5a7c90f6317c22e5",
+          "source": "357618e88d369c6f2b7508250f87f1029152c0fc",
+          "manifest": "7fd7505d71d618100bdcb4401c95547ba7c6d09a"
+        },
+        "compute": {
+          "package": "0ba385b2754947d34e884b975fee619d6d2b71ec",
+          "source": "a0b2f47572973f518fb933f9f29c74ea2b3aa5a1",
+          "manifest": "c0a25688728746c57d91bb7ebe99cedfc90776c3"
+        },
+        "designer": {
+          "package": "0d1086a83afd08708b0537a1483ce2e17774a24d",
+          "source": "3d97667b4711645777b3ee5841a3fa545cd3b031",
+          "manifest": "5b813e8d3bf3874323e8ac2af52fca94749950f6"
+        },
+        "text": {
+          "package": "e68012e1423ba4c7dcb5fcab453f22fa87ffda05",
+          "source": "8ce093ac378c10ecd2591313bfb248bfd1eba24c",
+          "manifest": "9d63a21574afadab9ac03581cf4e7ab59853088b"
+        },
+        "syntax": {
+          "package": "71cfb25f113b73a5998c5634a2c67f0597bce50e",
+          "source": "2f9602d3e929781d0399653b03377226c00d3c16",
+          "manifest": "8f75710f1133cd400fd3efd12fdf8439747fe98c"
+        },
+        "compiler": {
+          "package": "bbbda41744a81c94461742d9f13cb1b2c79fd3bf",
+          "source": "1ad0d5ea5f6976316dacac9493403d0f67de4be7",
+          "manifest": "c93f3ca2d9bc38b78a1a52181370e4ccca769845"
+        },
+        "symbols": {
+          "package": "65edbdb9f390955e383f1e91d3902b09b490e158",
+          "source": "b26bef7c3811b5181488c1c746aade489c94bc10",
+          "manifest": "54ba9393bd7036c29fae006ad7c46c6b9cb26f21"
+        },
+        "archive": {
+          "package": "6451aced45878f841bb3343d46f19abb6ade87fb",
+          "source": "efc7f1f82e3401599f470905d812b398a7647280",
+          "manifest": "519455e4bdcb61822878145c5325ca032b67d42c"
+        }
+      },
+      "aliases": {
+        "cil": "/workspace/scratch/1692a10afba9/p5-module-initialization/packages/cil/src/index.js",
+        "framework": "/workspace/scratch/1692a10afba9/p5-module-initialization/packages/framework/src/index.js",
+        "bcl-collections": "/workspace/scratch/1692a10afba9/p5-module-initialization/packages/bcl-collections/src/index.js",
+        "bcl-core": "/workspace/scratch/1692a10afba9/p5-module-initialization/packages/bcl-core/src/index.js",
+        "bytecode": "/workspace/scratch/1692a10afba9/p5-module-initialization/packages/bytecode/src/index.js",
+        "runtime": "/workspace/scratch/1692a10afba9/p5-module-initialization/packages/runtime/src/index.js",
+        "network": "/workspace/scratch/1692a10afba9/p5-module-initialization/packages/network/src/index.js",
+        "compute": "/workspace/scratch/1692a10afba9/p5-module-initialization/packages/compute/src/index.js",
+        "designer": "/workspace/scratch/1692a10afba9/p5-module-initialization/packages/designer/src/index.js",
+        "text": "/workspace/scratch/1692a10afba9/p5-module-initialization/packages/text/src/index.js",
+        "syntax": "/workspace/scratch/1692a10afba9/p5-module-initialization/packages/syntax/src/index.js",
+        "compiler": "/workspace/scratch/1692a10afba9/p5-module-initialization/packages/compiler/src/index.js",
+        "symbols": "/workspace/scratch/1692a10afba9/p5-module-initialization/packages/symbols/src/index.js",
+        "archive": "/workspace/scratch/1692a10afba9/p5-module-initialization/packages/archive/src/index.js"
+      },
+      "importMs": 733.9436010000002,
+      "referencePack": null,
+      "referenceLoadMs": null
+    }
+  ],
+  "finalVerification": [
+    {
+      "role": "baseline",
+      "status": "verified",
+      "revision": "fc4d9d994d93d75bac94131da62faa8fd13442d3",
+      "aliases": {
+        "cil": "/workspace/scratch/1692a10afba9/p5-nullable-replay/packages/cil/src/index.js",
+        "framework": "/workspace/scratch/1692a10afba9/p5-nullable-replay/packages/framework/src/index.js",
+        "bcl-collections": "/workspace/scratch/1692a10afba9/p5-nullable-replay/packages/bcl-collections/src/index.js",
+        "bcl-core": "/workspace/scratch/1692a10afba9/p5-nullable-replay/packages/bcl-core/src/index.js",
+        "bytecode": "/workspace/scratch/1692a10afba9/p5-nullable-replay/packages/bytecode/src/index.js",
+        "runtime": "/workspace/scratch/1692a10afba9/p5-nullable-replay/packages/runtime/src/index.js",
+        "network": "/workspace/scratch/1692a10afba9/p5-nullable-replay/packages/network/src/index.js",
+        "compute": "/workspace/scratch/1692a10afba9/p5-nullable-replay/packages/compute/src/index.js",
+        "designer": "/workspace/scratch/1692a10afba9/p5-nullable-replay/packages/designer/src/index.js",
+        "text": "/workspace/scratch/1692a10afba9/p5-nullable-replay/packages/text/src/index.js",
+        "syntax": "/workspace/scratch/1692a10afba9/p5-nullable-replay/packages/syntax/src/index.js",
+        "compiler": "/workspace/scratch/1692a10afba9/p5-nullable-replay/packages/compiler/src/index.js",
+        "symbols": "/workspace/scratch/1692a10afba9/p5-nullable-replay/packages/symbols/src/index.js",
+        "archive": "/workspace/scratch/1692a10afba9/p5-nullable-replay/packages/archive/src/index.js"
+      }
+    },
+    {
+      "role": "candidate",
+      "status": "verified",
+      "revision": "8b2d3c10851992cfd935bcdb29308846446d7809",
+      "aliases": {
+        "cil": "/workspace/scratch/1692a10afba9/p5-module-initialization/packages/cil/src/index.js",
+        "framework": "/workspace/scratch/1692a10afba9/p5-module-initialization/packages/framework/src/index.js",
+        "bcl-collections": "/workspace/scratch/1692a10afba9/p5-module-initialization/packages/bcl-collections/src/index.js",
+        "bcl-core": "/workspace/scratch/1692a10afba9/p5-module-initialization/packages/bcl-core/src/index.js",
+        "bytecode": "/workspace/scratch/1692a10afba9/p5-module-initialization/packages/bytecode/src/index.js",
+        "runtime": "/workspace/scratch/1692a10afba9/p5-module-initialization/packages/runtime/src/index.js",
+        "network": "/workspace/scratch/1692a10afba9/p5-module-initialization/packages/network/src/index.js",
+        "compute": "/workspace/scratch/1692a10afba9/p5-module-initialization/packages/compute/src/index.js",
+        "designer": "/workspace/scratch/1692a10afba9/p5-module-initialization/packages/designer/src/index.js",
+        "text": "/workspace/scratch/1692a10afba9/p5-module-initialization/packages/text/src/index.js",
+        "syntax": "/workspace/scratch/1692a10afba9/p5-module-initialization/packages/syntax/src/index.js",
+        "compiler": "/workspace/scratch/1692a10afba9/p5-module-initialization/packages/compiler/src/index.js",
+        "symbols": "/workspace/scratch/1692a10afba9/p5-module-initialization/packages/symbols/src/index.js",
+        "archive": "/workspace/scratch/1692a10afba9/p5-module-initialization/packages/archive/src/index.js"
+      }
+    }
+  ],
+  "productionChanges": [
+    "cil",
+    "runtime",
+    "compiler"
+  ],
+  "reference": {
+    "roslyn": {
+      "version": "5.3.0.0",
+      "informationalVersion": "5.3.0-2.26153.122+4d3023de605a78ba3e59e50c657eed70f125c68a",
+      "runtime": "10.0.5",
+      "references": "Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0",
+      "options": "OutputKind.ConsoleApplication, default warning level, nullable disabled, no implicit usings, invariant culture"
+    },
+    "pinSha256": "7a802de6d6ab534851568c3313ddec74061a990cc7bf5cde523c82ff6cd7f671"
+  },
+  "methodology": "Separate phases; 80/20 defaults per revision and workload, ABBA blocks, rotating workloads, independent output preflight.",
+  "limitations": [
+    "This compares whole revisions, including the intentional compiler, CIL and runtime changes; it does not isolate one helper.",
+    "Only no-initializers and plain-main have comparable correct baseline outputs. Incorrect baseline library/static-field cases are excluded.",
+    "Execution times a fresh CilVirtualMachine(bytes) constructor plus run(), including decode/verification and program Console.WriteLine calls.",
+    "Host output checks, hashing, memory snapshots, explicit GC and stop() are outside timers. Automatic GC remains included.",
+    "RSS/heap before-after deltas are scoped process proxies, not peak memory, managed allocation totals, retained leaks or isolated revision footprints.",
+    "The shared process retains both imported revisions. Synchronous time limits are checked after calls; execution also has an instruction cap.",
+    "Partial/failed rows retain raw observations and receive no complete comparison. Shared-host noise remains; no CLR timing is inferred.",
+    "Final verification repeats exact HEAD, tracked cleanliness and transitive alias checks for both revisions; drift invalidates comparisons."
+  ],
+  "rows": [
+    {
+      "id": "module-initialization/no-initializers",
+      "sourceSha256": "d318760651415c1cd211eac83f3631eed9e76c709bb7e520a7cbce97a30478d4",
+      "sourceBytes": 82,
+      "pinHash": "99ed604be73237cf",
+      "expectedOutput": "main\n",
+      "langVersion": "14.0",
+      "status": "complete",
+      "artifacts": {
+        "baseline": {
+          "peBytes": 1536,
+          "peSha256": "97469ded68944766a226516f6acf2ba77b2bb038eeaf074110165886185760c8",
+          "verifiedOutput": "main\n"
+        },
+        "candidate": {
+          "peBytes": 1536,
+          "peSha256": "97469ded68944766a226516f6acf2ba77b2bb038eeaf074110165886185760c8",
+          "verifiedOutput": "main\n"
+        }
+      },
+      "warmupInvocations": {
+        "baseline": 80,
+        "candidate": 80
+      },
+      "samples": {
+        "baseline": [
+          {
+            "block": 0,
+            "position": 0,
+            "elapsedMs": 2.1020769999995537,
+            "memory": {
+              "rss": {
+                "beforeBytes": 214552576,
+                "afterBytes": 214552576,
+                "deltaBytes": 0
+              },
+              "heapUsed": {
+                "beforeBytes": 75258192,
+                "afterBytes": 75622024,
+                "deltaBytes": 363832
+              },
+              "heapTotal": {
+                "beforeBytes": 213000192,
+                "afterBytes": 213000192,
+                "deltaBytes": 0
+              },
+              "external": {
+                "beforeBytes": 4086244,
+                "afterBytes": 4086244,
+                "deltaBytes": 0
+              },
+              "arrayBuffers": {
+                "beforeBytes": 237407,
+                "afterBytes": 237407,
+                "deltaBytes": 0
+              }
+            },
+            "instructions": 3,
+            "managedAllocations": 1,
+            "managedAllocatedBytes": 32,
+            "managedCollections": 0,
+            "managedCollectionPauseMs": 0
+          },
+          {
+            "block": 0,
+            "position": 3,
+            "elapsedMs": 1.6304240000008576,
+            "memory": {
+              "rss": {
+                "beforeBytes": 214552576,
+                "afterBytes": 214552576,
+                "deltaBytes": 0
+              },
+              "heapUsed": {
+                "beforeBytes": 75263912,
+                "afterBytes": 75627760,
+                "deltaBytes": 363848
+              },
+              "heapTotal": {
+                "beforeBytes": 213000192,
+                "afterBytes": 213000192,
+                "deltaBytes": 0
+              },
+              "external": {
+                "beforeBytes": 4086244,
+                "afterBytes": 4086244,
+                "deltaBytes": 0
+              },
+              "arrayBuffers": {
+                "beforeBytes": 237407,
+                "afterBytes": 237407,
+                "deltaBytes": 0
+              }
+            },
+            "instructions": 3,
+            "managedAllocations": 1,
+            "managedAllocatedBytes": 32,
+            "managedCollections": 0,
+            "managedCollectionPauseMs": 0
+          },
+          {
+            "block": 1,
+            "position": 0,
+            "elapsedMs": 2.0661639999998442,
+            "memory": {
+              "rss": {
+                "beforeBytes": 214552576,
+                "afterBytes": 214552576,
+                "deltaBytes": 0
+              },
+              "heapUsed": {
+                "beforeBytes": 75283288,
+                "afterBytes": 75647136,
+                "deltaBytes": 363848
+              },
+              "heapTotal": {
+                "beforeBytes": 213000192,
+                "afterBytes": 213000192,
+                "deltaBytes": 0
+              },
+              "external": {
+                "beforeBytes": 4086244,
+                "afterBytes": 4086244,
+                "deltaBytes": 0
+              },
+              "arrayBuffers": {
+                "beforeBytes": 237407,
+                "afterBytes": 237407,
+                "deltaBytes": 0
+              }
+            },
+            "instructions": 3,
+            "managedAllocations": 1,
+            "managedAllocatedBytes": 32,
+            "managedCollections": 0,
+            "managedCollectionPauseMs": 0
+          },
+          {
+            "block": 1,
+            "position": 3,
+            "elapsedMs": 3.5989559999998164,
+            "memory": {
+              "rss": {
+                "beforeBytes": 214552576,
+                "afterBytes": 214552576,
+                "deltaBytes": 0
+              },
+              "heapUsed": {
+                "beforeBytes": 75282280,
+                "afterBytes": 75647920,
+                "deltaBytes": 365640
+              },
+              "heapTotal": {
+                "beforeBytes": 213000192,
+                "afterBytes": 213000192,
+                "deltaBytes": 0
+              },
+              "external": {
+                "beforeBytes": 4086244,
+                "afterBytes": 4086244,
+                "deltaBytes": 0
+              },
+              "arrayBuffers": {
+                "beforeBytes": 237407,
+                "afterBytes": 237407,
+                "deltaBytes": 0
+              }
+            },
+            "instructions": 3,
+            "managedAllocations": 1,
+            "managedAllocatedBytes": 32,
+            "managedCollections": 0,
+            "managedCollectionPauseMs": 0
+          },
+          {
+            "block": 2,
+            "position": 0,
+            "elapsedMs": 2.692243999999846,
+            "memory": {
+              "rss": {
+                "beforeBytes": 214552576,
+                "afterBytes": 214552576,
+                "deltaBytes": 0
+              },
+              "heapUsed": {
+                "beforeBytes": 75284376,
+                "afterBytes": 75648072,
+                "deltaBytes": 363696
+              },
+              "heapTotal": {
+                "beforeBytes": 213000192,
+                "afterBytes": 213000192,
+                "deltaBytes": 0
+              },
+              "external": {
+                "beforeBytes": 4086244,
+                "afterBytes": 4086244,
+                "deltaBytes": 0
+              },
+              "arrayBuffers": {
+                "beforeBytes": 237407,
+                "afterBytes": 237407,
+                "deltaBytes": 0
+              }
+            },
+            "instructions": 3,
+            "managedAllocations": 1,
+            "managedAllocatedBytes": 32,
+            "managedCollections": 0,
+            "managedCollectionPauseMs": 0
+          },
+          {
+            "block": 2,
+            "position": 3,
+            "elapsedMs": 2.1311399999995047,
+            "memory": {
+              "rss": {
+                "beforeBytes": 214552576,
+                "afterBytes": 214552576,
+                "deltaBytes": 0
+              },
+              "heapUsed": {
+                "beforeBytes": 75288328,
+                "afterBytes": 75651952,
+                "deltaBytes": 363624
+              },
+              "heapTotal": {
+                "beforeBytes": 213000192,
+                "afterBytes": 213000192,
+                "deltaBytes": 0
+              },
+              "external": {
+                "beforeBytes": 4086244,
+                "afterBytes": 4086244,
+                "deltaBytes": 0
+              },
+              "arrayBuffers": {
+                "beforeBytes": 237407,
+                "afterBytes": 237407,
+                "deltaBytes": 0
+              }
+            },
+            "instructions": 3,
+            "managedAllocations": 1,
+            "managedAllocatedBytes": 32,
+            "managedCollections": 0,
+            "managedCollectionPauseMs": 0
+          },
+          {
+            "block": 3,
+            "position": 0,
+            "elapsedMs": 2.277154999999766,
+            "memory": {
+              "rss": {
+                "beforeBytes": 214552576,
+                "afterBytes": 214552576,
+                "deltaBytes": 0
+              },
+              "heapUsed": {
+                "beforeBytes": 75296864,
+                "afterBytes": 75660488,
+                "deltaBytes": 363624
+              },
+              "heapTotal": {
+                "beforeBytes": 213000192,
+                "afterBytes": 213000192,
+                "deltaBytes": 0
+              },
+              "external": {
+                "beforeBytes": 4086244,
+                "afterBytes": 4086244,
+                "deltaBytes": 0
+              },
+              "arrayBuffers": {
+                "beforeBytes": 237407,
+                "afterBytes": 237407,
+                "deltaBytes": 0
+              }
+            },
+            "instructions": 3,
+            "managedAllocations": 1,
+            "managedAllocatedBytes": 32,
+            "managedCollections": 0,
+            "managedCollectionPauseMs": 0
+          },
+          {
+            "block": 3,
+            "position": 3,
+            "elapsedMs": 2.073475999999573,
+            "memory": {
+              "rss": {
+                "beforeBytes": 214552576,
+                "afterBytes": 214552576,
+                "deltaBytes": 0
+              },
+              "heapUsed": {
+                "beforeBytes": 75294192,
+                "afterBytes": 75657816,
+                "deltaBytes": 363624
+              },
+              "heapTotal": {
+                "beforeBytes": 213000192,
+                "afterBytes": 213000192,
+                "deltaBytes": 0
+              },
+              "external": {
+                "beforeBytes": 4086244,
+                "afterBytes": 4086244,
+                "deltaBytes": 0
+              },
+              "arrayBuffers": {
+                "beforeBytes": 237407,
+                "afterBytes": 237407,
+                "deltaBytes": 0
+              }
+            },
+            "instructions": 3,
+            "managedAllocations": 1,
+            "managedAllocatedBytes": 32,
+            "managedCollections": 0,
+            "managedCollectionPauseMs": 0
+          },
+          {
+            "block": 4,
+            "position": 0,
+            "elapsedMs": 2.3689789999989443,
+            "memory": {
+              "rss": {
+                "beforeBytes": 214552576,
+                "afterBytes": 214552576,
+                "deltaBytes": 0
+              },
+              "heapUsed": {
+                "beforeBytes": 75296560,
+                "afterBytes": 75660184,
+                "deltaBytes": 363624
+              },
+              "heapTotal": {
+                "beforeBytes": 213000192,
+                "afterBytes": 213000192,
+                "deltaBytes": 0
+              },
+              "external": {
+                "beforeBytes": 4086244,
+                "afterBytes": 4086244,
+                "deltaBytes": 0
+              },
+              "arrayBuffers": {
+                "beforeBytes": 237407,
+                "afterBytes": 237407,
+                "deltaBytes": 0
+              }
+            },
+            "instructions": 3,
+            "managedAllocations": 1,
+            "managedAllocatedBytes": 32,
+            "managedCollections": 0,
+            "managedCollectionPauseMs": 0
+          },
+          {
+            "block": 4,
+            "position": 3,
+            "elapsedMs": 3.1004529999991064,
+            "memory": {
+              "rss": {
+                "beforeBytes": 214552576,
+                "afterBytes": 214552576,
+                "deltaBytes": 0
+              },
+              "heapUsed": {
+                "beforeBytes": 75298672,
+                "afterBytes": 75662296,
+                "deltaBytes": 363624
+              },
+              "heapTotal": {
+                "beforeBytes": 213000192,
+                "afterBytes": 213000192,
+                "deltaBytes": 0
+              },
+              "external": {
+                "beforeBytes": 4086244,
+                "afterBytes": 4086244,
+                "deltaBytes": 0
+              },
+              "arrayBuffers": {
+                "beforeBytes": 237407,
+                "afterBytes": 237407,
+                "deltaBytes": 0
+              }
+            },
+            "instructions": 3,
+            "managedAllocations": 1,
+            "managedAllocatedBytes": 32,
+            "managedCollections": 0,
+            "managedCollectionPauseMs": 0
+          },
+          {
+            "block": 5,
+            "position": 0,
+            "elapsedMs": 1.9298449999987497,
+            "memory": {
+              "rss": {
+                "beforeBytes": 214683648,
+                "afterBytes": 214683648,
+                "deltaBytes": 0
+              },
+              "heapUsed": {
+                "beforeBytes": 75315592,
+                "afterBytes": 75679216,
+                "deltaBytes": 363624
+              },
+              "heapTotal": {
+                "beforeBytes": 213000192,
+                "afterBytes": 213000192,
+                "deltaBytes": 0
+              },
+              "external": {
+                "beforeBytes": 4086244,
+                "afterBytes": 4086244,
+                "deltaBytes": 0
+              },
+              "arrayBuffers": {
+                "beforeBytes": 237407,
+                "afterBytes": 237407,
+                "deltaBytes": 0
+              }
+            },
+            "instructions": 3,
+            "managedAllocations": 1,
+            "managedAllocatedBytes": 32,
+            "managedCollections": 0,
+            "managedCollectionPauseMs": 0
+          },
+          {
+            "block": 5,
+            "position": 3,
+            "elapsedMs": 1.8581300000005285,
+            "memory": {
+              "rss": {
+                "beforeBytes": 214683648,
+                "afterBytes": 214683648,
+                "deltaBytes": 0
+              },
+              "heapUsed": {
+                "beforeBytes": 75314584,
+                "afterBytes": 75678208,
+                "deltaBytes": 363624
+              },
+              "heapTotal": {
+                "beforeBytes": 213000192,
+                "afterBytes": 213000192,
+                "deltaBytes": 0
+              },
+              "external": {
+                "beforeBytes": 4086244,
+                "afterBytes": 4086244,
+                "deltaBytes": 0
+              },
+              "arrayBuffers": {
+                "beforeBytes": 237407,
+                "afterBytes": 237407,
+                "deltaBytes": 0
+              }
+            },
+            "instructions": 3,
+            "managedAllocations": 1,
+            "managedAllocatedBytes": 32,
+            "managedCollections": 0,
+            "managedCollectionPauseMs": 0
+          },
+          {
+            "block": 6,
+            "position": 0,
+            "elapsedMs": 2.4965160000010655,
+            "memory": {
+              "rss": {
+                "beforeBytes": 214683648,
+                "afterBytes": 214683648,
+                "deltaBytes": 0
+              },
+              "heapUsed": {
+                "beforeBytes": 75315288,
+                "afterBytes": 75678912,
+                "deltaBytes": 363624
+              },
+              "heapTotal": {
+                "beforeBytes": 213000192,
+                "afterBytes": 213000192,
+                "deltaBytes": 0
+              },
+              "external": {
+                "beforeBytes": 4086244,
+                "afterBytes": 4086244,
+                "deltaBytes": 0
+              },
+              "arrayBuffers": {
+                "beforeBytes": 237407,
+                "afterBytes": 237407,
+                "deltaBytes": 0
+              }
+            },
+            "instructions": 3,
+            "managedAllocations": 1,
+            "managedAllocatedBytes": 32,
+            "managedCollections": 0,
+            "managedCollectionPauseMs": 0
+          },
+          {
+            "block": 6,
+            "position": 3,
+            "elapsedMs": 2.536786000000575,
+            "memory": {
+              "rss": {
+                "beforeBytes": 214683648,
+                "afterBytes": 214683648,
+                "deltaBytes": 0
+              },
+              "heapUsed": {
+                "beforeBytes": 75317400,
+                "afterBytes": 75681024,
+                "deltaBytes": 363624
+              },
+              "heapTotal": {
+                "beforeBytes": 213000192,
+                "afterBytes": 213000192,
+                "deltaBytes": 0
+              },
+              "external": {
+                "beforeBytes": 4086244,
+                "afterBytes": 4086244,
+                "deltaBytes": 0
+              },
+              "arrayBuffers": {
+                "beforeBytes": 237407,
+                "afterBytes": 237407,
+                "deltaBytes": 0
+              }
+            },
+            "instructions": 3,
+            "managedAllocations": 1,
+            "managedAllocatedBytes": 32,
+            "managedCollections": 0,
+            "managedCollectionPauseMs": 0
+          },
+          {
+            "block": 7,
+            "position": 0,
+            "elapsedMs": 2.387977000000319,
+            "memory": {
+              "rss": {
+                "beforeBytes": 214683648,
+                "afterBytes": 214683648,
+                "deltaBytes": 0
+              },
+              "heapUsed": {
+                "beforeBytes": 75326856,
+                "afterBytes": 75690480,
+                "deltaBytes": 363624
+              },
+              "heapTotal": {
+                "beforeBytes": 213000192,
+                "afterBytes": 213000192,
+                "deltaBytes": 0
+              },
+              "external": {
+                "beforeBytes": 4086244,
+                "afterBytes": 4086244,
+                "deltaBytes": 0
+              },
+              "arrayBuffers": {
+                "beforeBytes": 237407,
+                "afterBytes": 237407,
+                "deltaBytes": 0
+              }
+            },
+            "instructions": 3,
+            "managedAllocations": 1,
+            "managedAllocatedBytes": 32,
+            "managedCollections": 0,
+            "managedCollectionPauseMs": 0
+          },
+          {
+            "block": 7,
+            "position": 3,
+            "elapsedMs": 2.4344360000013694,
+            "memory": {
+              "rss": {
+                "beforeBytes": 214683648,
+                "afterBytes": 214683648,
+                "deltaBytes": 0
+              },
+              "heapUsed": {
+                "beforeBytes": 75325848,
+                "afterBytes": 75689472,
+                "deltaBytes": 363624
+              },
+              "heapTotal": {
+                "beforeBytes": 213000192,
+                "afterBytes": 213000192,
+                "deltaBytes": 0
+              },
+              "external": {
+                "beforeBytes": 4086244,
+                "afterBytes": 4086244,
+                "deltaBytes": 0
+              },
+              "arrayBuffers": {
+                "beforeBytes": 237407,
+                "afterBytes": 237407,
+                "deltaBytes": 0
+              }
+            },
+            "instructions": 3,
+            "managedAllocations": 1,
+            "managedAllocatedBytes": 32,
+            "managedCollections": 0,
+            "managedCollectionPauseMs": 0
+          },
+          {
+            "block": 8,
+            "position": 0,
+            "elapsedMs": 2.1951440000011644,
+            "memory": {
+              "rss": {
+                "beforeBytes": 214683648,
+                "afterBytes": 214683648,
+                "deltaBytes": 0
+              },
+              "heapUsed": {
+                "beforeBytes": 75326552,
+                "afterBytes": 75690176,
+                "deltaBytes": 363624
+              },
+              "heapTotal": {
+                "beforeBytes": 213000192,
+                "afterBytes": 213000192,
+                "deltaBytes": 0
+              },
+              "external": {
+                "beforeBytes": 4086244,
+                "afterBytes": 4086244,
+                "deltaBytes": 0
+              },
+              "arrayBuffers": {
+                "beforeBytes": 237407,
+                "afterBytes": 237407,
+                "deltaBytes": 0
+              }
+            },
+            "instructions": 3,
+            "managedAllocations": 1,
+            "managedAllocatedBytes": 32,
+            "managedCollections": 0,
+            "managedCollectionPauseMs": 0
+          },
+          {
+            "block": 8,
+            "position": 3,
+            "elapsedMs": 2.1758350000000064,
+            "memory": {
+              "rss": {
+                "beforeBytes": 214683648,
+                "afterBytes": 214683648,
+                "deltaBytes": 0
+              },
+              "heapUsed": {
+                "beforeBytes": 75328872,
+                "afterBytes": 75692496,
+                "deltaBytes": 363624
+              },
+              "heapTotal": {
+                "beforeBytes": 213000192,
+                "afterBytes": 213000192,
+                "deltaBytes": 0
+              },
+              "external": {
+                "beforeBytes": 4086244,
+                "afterBytes": 4086244,
+                "deltaBytes": 0
+              },
+              "arrayBuffers": {
+                "beforeBytes": 237407,
+                "afterBytes": 237407,
+                "deltaBytes": 0
+              }
+            },
+            "instructions": 3,
+            "managedAllocations": 1,
+            "managedAllocatedBytes": 32,
+            "managedCollections": 0,
+            "managedCollectionPauseMs": 0
+          },
+          {
+            "block": 9,
+            "position": 0,
+            "elapsedMs": 2.2003220000005967,
+            "memory": {
+              "rss": {
+                "beforeBytes": 214683648,
+                "afterBytes": 214683648,
+                "deltaBytes": 0
+              },
+              "heapUsed": {
+                "beforeBytes": 75338952,
+                "afterBytes": 75702576,
+                "deltaBytes": 363624
+              },
+              "heapTotal": {
+                "beforeBytes": 213000192,
+                "afterBytes": 213000192,
+                "deltaBytes": 0
+              },
+              "external": {
+                "beforeBytes": 4086244,
+                "afterBytes": 4086244,
+                "deltaBytes": 0
+              },
+              "arrayBuffers": {
+                "beforeBytes": 237407,
+                "afterBytes": 237407,
+                "deltaBytes": 0
+              }
+            },
+            "instructions": 3,
+            "managedAllocations": 1,
+            "managedAllocatedBytes": 32,
+            "managedCollections": 0,
+            "managedCollectionPauseMs": 0
+          },
+          {
+            "block": 9,
+            "position": 3,
+            "elapsedMs": 2.2434059999995952,
+            "memory": {
+              "rss": {
+                "beforeBytes": 214683648,
+                "afterBytes": 214683648,
+                "deltaBytes": 0
+              },
+              "heapUsed": {
+                "beforeBytes": 75337944,
+                "afterBytes": 75701568,
+                "deltaBytes": 363624
+              },
+              "heapTotal": {
+                "beforeBytes": 213000192,
+                "afterBytes": 213000192,
+                "deltaBytes": 0
+              },
+              "external": {
+                "beforeBytes": 4086244,
+                "afterBytes": 4086244,
+                "deltaBytes": 0
+              },
+              "arrayBuffers": {
+                "beforeBytes": 237407,
+                "afterBytes": 237407,
+                "deltaBytes": 0
+              }
+            },
+            "instructions": 3,
+            "managedAllocations": 1,
+            "managedAllocatedBytes": 32,
+            "managedCollections": 0,
+            "managedCollectionPauseMs": 0
+          }
+        ],
+        "candidate": [
+          {
+            "block": 0,
+            "position": 1,
+            "elapsedMs": 2.1764659999989817,
+            "memory": {
+              "rss": {
+                "beforeBytes": 214552576,
+                "afterBytes": 214552576,
+                "deltaBytes": 0
+              },
+              "heapUsed": {
+                "beforeBytes": 75260608,
+                "afterBytes": 75625136,
+                "deltaBytes": 364528
+              },
+              "heapTotal": {
+                "beforeBytes": 213000192,
+                "afterBytes": 213000192,
+                "deltaBytes": 0
+              },
+              "external": {
+                "beforeBytes": 4086244,
+                "afterBytes": 4086244,
+                "deltaBytes": 0
+              },
+              "arrayBuffers": {
+                "beforeBytes": 237407,
+                "afterBytes": 237407,
+                "deltaBytes": 0
+              }
+            },
+            "instructions": 3,
+            "managedAllocations": 1,
+            "managedAllocatedBytes": 32,
+            "managedCollections": 0,
+            "managedCollectionPauseMs": 0
+          },
+          {
+            "block": 0,
+            "position": 2,
+            "elapsedMs": 1.8312299999997776,
+            "memory": {
+              "rss": {
+                "beforeBytes": 214552576,
+                "afterBytes": 214552576,
+                "deltaBytes": 0
+              },
+              "heapUsed": {
+                "beforeBytes": 75263360,
+                "afterBytes": 75627712,
+                "deltaBytes": 364352
+              },
+              "heapTotal": {
+                "beforeBytes": 213000192,
+                "afterBytes": 213000192,
+                "deltaBytes": 0
+              },
+              "external": {
+                "beforeBytes": 4086244,
+                "afterBytes": 4086244,
+                "deltaBytes": 0
+              },
+              "arrayBuffers": {
+                "beforeBytes": 237407,
+                "afterBytes": 237407,
+                "deltaBytes": 0
+              }
+            },
+            "instructions": 3,
+            "managedAllocations": 1,
+            "managedAllocatedBytes": 32,
+            "managedCollections": 0,
+            "managedCollectionPauseMs": 0
+          },
+          {
+            "block": 1,
+            "position": 1,
+            "elapsedMs": 8.379076000001078,
+            "memory": {
+              "rss": {
+                "beforeBytes": 214552576,
+                "afterBytes": 214552576,
+                "deltaBytes": 0
+              },
+              "heapUsed": {
+                "beforeBytes": 75282424,
+                "afterBytes": 75646792,
+                "deltaBytes": 364368
+              },
+              "heapTotal": {
+                "beforeBytes": 213000192,
+                "afterBytes": 213000192,
+                "deltaBytes": 0
+              },
+              "external": {
+                "beforeBytes": 4086244,
+                "afterBytes": 4086244,
+                "deltaBytes": 0
+              },
+              "arrayBuffers": {
+                "beforeBytes": 237407,
+                "afterBytes": 237407,
+                "deltaBytes": 0
+              }
+            },
+            "instructions": 3,
+            "managedAllocations": 1,
+            "managedAllocatedBytes": 32,
+            "managedCollections": 0,
+            "managedCollectionPauseMs": 0
+          },
+          {
+            "block": 1,
+            "position": 2,
+            "elapsedMs": 2.345594999998866,
+            "memory": {
+              "rss": {
+                "beforeBytes": 214552576,
+                "afterBytes": 214552576,
+                "deltaBytes": 0
+              },
+              "heapUsed": {
+                "beforeBytes": 75281576,
+                "afterBytes": 75645944,
+                "deltaBytes": 364368
+              },
+              "heapTotal": {
+                "beforeBytes": 213000192,
+                "afterBytes": 213000192,
+                "deltaBytes": 0
+              },
+              "external": {
+                "beforeBytes": 4086244,
+                "afterBytes": 4086244,
+                "deltaBytes": 0
+              },
+              "arrayBuffers": {
+                "beforeBytes": 237407,
+                "afterBytes": 237407,
+                "deltaBytes": 0
+              }
+            },
+            "instructions": 3,
+            "managedAllocations": 1,
+            "managedAllocatedBytes": 32,
+            "managedCollections": 0,
+            "managedCollectionPauseMs": 0
+          },
+          {
+            "block": 2,
+            "position": 1,
+            "elapsedMs": 2.3976619999994,
+            "memory": {
+              "rss": {
+                "beforeBytes": 214552576,
+                "afterBytes": 214552576,
+                "deltaBytes": 0
+              },
+              "heapUsed": {
+                "beforeBytes": 75285024,
+                "afterBytes": 75649392,
+                "deltaBytes": 364368
+              },
+              "heapTotal": {
+                "beforeBytes": 213000192,
+                "afterBytes": 213000192,
+                "deltaBytes": 0
+              },
+              "external": {
+                "beforeBytes": 4086244,
+                "afterBytes": 4086244,
+                "deltaBytes": 0
+              },
+              "arrayBuffers": {
+                "beforeBytes": 237407,
+                "afterBytes": 237407,
+                "deltaBytes": 0
+              }
+            },
+            "instructions": 3,
+            "managedAllocations": 1,
+            "managedAllocatedBytes": 32,
+            "managedCollections": 0,
+            "managedCollectionPauseMs": 0
+          },
+          {
+            "block": 2,
+            "position": 2,
+            "elapsedMs": 1.7867040000000998,
+            "memory": {
+              "rss": {
+                "beforeBytes": 214552576,
+                "afterBytes": 214552576,
+                "deltaBytes": 0
+              },
+              "heapUsed": {
+                "beforeBytes": 75366800,
+                "afterBytes": 75666312,
+                "deltaBytes": 299512
+              },
+              "heapTotal": {
+                "beforeBytes": 213000192,
+                "afterBytes": 213000192,
+                "deltaBytes": 0
+              },
+              "external": {
+                "beforeBytes": 4086244,
+                "afterBytes": 4086244,
+                "deltaBytes": 0
+              },
+              "arrayBuffers": {
+                "beforeBytes": 237407,
+                "afterBytes": 237407,
+                "deltaBytes": 0
+              }
+            },
+            "instructions": 3,
+            "managedAllocations": 1,
+            "managedAllocatedBytes": 32,
+            "managedCollections": 0,
+            "managedCollectionPauseMs": 0
+          },
+          {
+            "block": 3,
+            "position": 1,
+            "elapsedMs": 1.953258999999889,
+            "memory": {
+              "rss": {
+                "beforeBytes": 214552576,
+                "afterBytes": 214552576,
+                "deltaBytes": 0
+              },
+              "heapUsed": {
+                "beforeBytes": 75296000,
+                "afterBytes": 75660368,
+                "deltaBytes": 364368
+              },
+              "heapTotal": {
+                "beforeBytes": 213000192,
+                "afterBytes": 213000192,
+                "deltaBytes": 0
+              },
+              "external": {
+                "beforeBytes": 4086244,
+                "afterBytes": 4086244,
+                "deltaBytes": 0
+              },
+              "arrayBuffers": {
+                "beforeBytes": 237407,
+                "afterBytes": 237407,
+                "deltaBytes": 0
+              }
+            },
+            "instructions": 3,
+            "managedAllocations": 1,
+            "managedAllocatedBytes": 32,
+            "managedCollections": 0,
+            "managedCollectionPauseMs": 0
+          },
+          {
+            "block": 3,
+            "position": 2,
+            "elapsedMs": 2.750088999999207,
+            "memory": {
+              "rss": {
+                "beforeBytes": 214552576,
+                "afterBytes": 214552576,
+                "deltaBytes": 0
+              },
+              "heapUsed": {
+                "beforeBytes": 75295528,
+                "afterBytes": 75659896,
+                "deltaBytes": 364368
+              },
+              "heapTotal": {
+                "beforeBytes": 213000192,
+                "afterBytes": 213000192,
+                "deltaBytes": 0
+              },
+              "external": {
+                "beforeBytes": 4086244,
+                "afterBytes": 4086244,
+                "deltaBytes": 0
+              },
+              "arrayBuffers": {
+                "beforeBytes": 237407,
+                "afterBytes": 237407,
+                "deltaBytes": 0
+              }
+            },
+            "instructions": 3,
+            "managedAllocations": 1,
+            "managedAllocatedBytes": 32,
+            "managedCollections": 0,
+            "managedCollectionPauseMs": 0
+          },
+          {
+            "block": 4,
+            "position": 1,
+            "elapsedMs": 2.6618889999990643,
+            "memory": {
+              "rss": {
+                "beforeBytes": 214552576,
+                "afterBytes": 214552576,
+                "deltaBytes": 0
+              },
+              "heapUsed": {
+                "beforeBytes": 75297264,
+                "afterBytes": 75661632,
+                "deltaBytes": 364368
+              },
+              "heapTotal": {
+                "beforeBytes": 213000192,
+                "afterBytes": 213000192,
+                "deltaBytes": 0
+              },
+              "external": {
+                "beforeBytes": 4086244,
+                "afterBytes": 4086244,
+                "deltaBytes": 0
+              },
+              "arrayBuffers": {
+                "beforeBytes": 237407,
+                "afterBytes": 237407,
+                "deltaBytes": 0
+              }
+            },
+            "instructions": 3,
+            "managedAllocations": 1,
+            "managedAllocatedBytes": 32,
+            "managedCollections": 0,
+            "managedCollectionPauseMs": 0
+          },
+          {
+            "block": 4,
+            "position": 2,
+            "elapsedMs": 2.5231859999985318,
+            "memory": {
+              "rss": {
+                "beforeBytes": 214552576,
+                "afterBytes": 214552576,
+                "deltaBytes": 0
+              },
+              "heapUsed": {
+                "beforeBytes": 75297968,
+                "afterBytes": 75662336,
+                "deltaBytes": 364368
+              },
+              "heapTotal": {
+                "beforeBytes": 213000192,
+                "afterBytes": 213000192,
+                "deltaBytes": 0
+              },
+              "external": {
+                "beforeBytes": 4086244,
+                "afterBytes": 4086244,
+                "deltaBytes": 0
+              },
+              "arrayBuffers": {
+                "beforeBytes": 237407,
+                "afterBytes": 237407,
+                "deltaBytes": 0
+              }
+            },
+            "instructions": 3,
+            "managedAllocations": 1,
+            "managedAllocatedBytes": 32,
+            "managedCollections": 0,
+            "managedCollectionPauseMs": 0
+          },
+          {
+            "block": 5,
+            "position": 1,
+            "elapsedMs": 2.0779810000003636,
+            "memory": {
+              "rss": {
+                "beforeBytes": 214683648,
+                "afterBytes": 214683648,
+                "deltaBytes": 0
+              },
+              "heapUsed": {
+                "beforeBytes": 75314728,
+                "afterBytes": 75679096,
+                "deltaBytes": 364368
+              },
+              "heapTotal": {
+                "beforeBytes": 213000192,
+                "afterBytes": 213000192,
+                "deltaBytes": 0
+              },
+              "external": {
+                "beforeBytes": 4086244,
+                "afterBytes": 4086244,
+                "deltaBytes": 0
+              },
+              "arrayBuffers": {
+                "beforeBytes": 237407,
+                "afterBytes": 237407,
+                "deltaBytes": 0
+              }
+            },
+            "instructions": 3,
+            "managedAllocations": 1,
+            "managedAllocatedBytes": 32,
+            "managedCollections": 0,
+            "managedCollectionPauseMs": 0
+          },
+          {
+            "block": 5,
+            "position": 2,
+            "elapsedMs": 2.132111000000805,
+            "memory": {
+              "rss": {
+                "beforeBytes": 214683648,
+                "afterBytes": 214683648,
+                "deltaBytes": 0
+              },
+              "heapUsed": {
+                "beforeBytes": 75313880,
+                "afterBytes": 75678248,
+                "deltaBytes": 364368
+              },
+              "heapTotal": {
+                "beforeBytes": 213000192,
+                "afterBytes": 213000192,
+                "deltaBytes": 0
+              },
+              "external": {
+                "beforeBytes": 4086244,
+                "afterBytes": 4086244,
+                "deltaBytes": 0
+              },
+              "arrayBuffers": {
+                "beforeBytes": 237407,
+                "afterBytes": 237407,
+                "deltaBytes": 0
+              }
+            },
+            "instructions": 3,
+            "managedAllocations": 1,
+            "managedAllocatedBytes": 32,
+            "managedCollections": 0,
+            "managedCollectionPauseMs": 0
+          },
+          {
+            "block": 6,
+            "position": 1,
+            "elapsedMs": 1.734678000000713,
+            "memory": {
+              "rss": {
+                "beforeBytes": 214683648,
+                "afterBytes": 214683648,
+                "deltaBytes": 0
+              },
+              "heapUsed": {
+                "beforeBytes": 75318032,
+                "afterBytes": 75682400,
+                "deltaBytes": 364368
+              },
+              "heapTotal": {
+                "beforeBytes": 213262336,
+                "afterBytes": 213262336,
+                "deltaBytes": 0
+              },
+              "external": {
+                "beforeBytes": 4086244,
+                "afterBytes": 4086244,
+                "deltaBytes": 0
+              },
+              "arrayBuffers": {
+                "beforeBytes": 237407,
+                "afterBytes": 237407,
+                "deltaBytes": 0
+              }
+            },
+            "instructions": 3,
+            "managedAllocations": 1,
+            "managedAllocatedBytes": 32,
+            "managedCollections": 0,
+            "managedCollectionPauseMs": 0
+          },
+          {
+            "block": 6,
+            "position": 2,
+            "elapsedMs": 1.6918650000006892,
+            "memory": {
+              "rss": {
+                "beforeBytes": 214683648,
+                "afterBytes": 214683648,
+                "deltaBytes": 0
+              },
+              "heapUsed": {
+                "beforeBytes": 75316696,
+                "afterBytes": 75681064,
+                "deltaBytes": 364368
+              },
+              "heapTotal": {
+                "beforeBytes": 213262336,
+                "afterBytes": 213262336,
+                "deltaBytes": 0
+              },
+              "external": {
+                "beforeBytes": 4086244,
+                "afterBytes": 4086244,
+                "deltaBytes": 0
+              },
+              "arrayBuffers": {
+                "beforeBytes": 237407,
+                "afterBytes": 237407,
+                "deltaBytes": 0
+              }
+            },
+            "instructions": 3,
+            "managedAllocations": 1,
+            "managedAllocatedBytes": 32,
+            "managedCollections": 0,
+            "managedCollectionPauseMs": 0
+          },
+          {
+            "block": 7,
+            "position": 1,
+            "elapsedMs": 2.1546650000000227,
+            "memory": {
+              "rss": {
+                "beforeBytes": 214683648,
+                "afterBytes": 214683648,
+                "deltaBytes": 0
+              },
+              "heapUsed": {
+                "beforeBytes": 75325992,
+                "afterBytes": 75690360,
+                "deltaBytes": 364368
+              },
+              "heapTotal": {
+                "beforeBytes": 213000192,
+                "afterBytes": 213000192,
+                "deltaBytes": 0
+              },
+              "external": {
+                "beforeBytes": 4086244,
+                "afterBytes": 4086244,
+                "deltaBytes": 0
+              },
+              "arrayBuffers": {
+                "beforeBytes": 237407,
+                "afterBytes": 237407,
+                "deltaBytes": 0
+              }
+            },
+            "instructions": 3,
+            "managedAllocations": 1,
+            "managedAllocatedBytes": 32,
+            "managedCollections": 0,
+            "managedCollectionPauseMs": 0
+          },
+          {
+            "block": 7,
+            "position": 2,
+            "elapsedMs": 1.7285489999994752,
+            "memory": {
+              "rss": {
+                "beforeBytes": 214683648,
+                "afterBytes": 214683648,
+                "deltaBytes": 0
+              },
+              "heapUsed": {
+                "beforeBytes": 75325144,
+                "afterBytes": 75689512,
+                "deltaBytes": 364368
+              },
+              "heapTotal": {
+                "beforeBytes": 213000192,
+                "afterBytes": 213000192,
+                "deltaBytes": 0
+              },
+              "external": {
+                "beforeBytes": 4086244,
+                "afterBytes": 4086244,
+                "deltaBytes": 0
+              },
+              "arrayBuffers": {
+                "beforeBytes": 237407,
+                "afterBytes": 237407,
+                "deltaBytes": 0
+              }
+            },
+            "instructions": 3,
+            "managedAllocations": 1,
+            "managedAllocatedBytes": 32,
+            "managedCollections": 0,
+            "managedCollectionPauseMs": 0
+          },
+          {
+            "block": 8,
+            "position": 1,
+            "elapsedMs": 2.36088700000073,
+            "memory": {
+              "rss": {
+                "beforeBytes": 214683648,
+                "afterBytes": 214683648,
+                "deltaBytes": 0
+              },
+              "heapUsed": {
+                "beforeBytes": 75327256,
+                "afterBytes": 75691624,
+                "deltaBytes": 364368
+              },
+              "heapTotal": {
+                "beforeBytes": 213000192,
+                "afterBytes": 213000192,
+                "deltaBytes": 0
+              },
+              "external": {
+                "beforeBytes": 4086244,
+                "afterBytes": 4086244,
+                "deltaBytes": 0
+              },
+              "arrayBuffers": {
+                "beforeBytes": 237407,
+                "afterBytes": 237407,
+                "deltaBytes": 0
+              }
+            },
+            "instructions": 3,
+            "managedAllocations": 1,
+            "managedAllocatedBytes": 32,
+            "managedCollections": 0,
+            "managedCollectionPauseMs": 0
+          },
+          {
+            "block": 8,
+            "position": 2,
+            "elapsedMs": 2.2517879999995785,
+            "memory": {
+              "rss": {
+                "beforeBytes": 214683648,
+                "afterBytes": 214683648,
+                "deltaBytes": 0
+              },
+              "heapUsed": {
+                "beforeBytes": 75327960,
+                "afterBytes": 75692328,
+                "deltaBytes": 364368
+              },
+              "heapTotal": {
+                "beforeBytes": 213000192,
+                "afterBytes": 213000192,
+                "deltaBytes": 0
+              },
+              "external": {
+                "beforeBytes": 4086244,
+                "afterBytes": 4086244,
+                "deltaBytes": 0
+              },
+              "arrayBuffers": {
+                "beforeBytes": 237407,
+                "afterBytes": 237407,
+                "deltaBytes": 0
+              }
+            },
+            "instructions": 3,
+            "managedAllocations": 1,
+            "managedAllocatedBytes": 32,
+            "managedCollections": 0,
+            "managedCollectionPauseMs": 0
+          },
+          {
+            "block": 9,
+            "position": 1,
+            "elapsedMs": 1.6661679999997432,
+            "memory": {
+              "rss": {
+                "beforeBytes": 214683648,
+                "afterBytes": 214683648,
+                "deltaBytes": 0
+              },
+              "heapUsed": {
+                "beforeBytes": 75338088,
+                "afterBytes": 75702456,
+                "deltaBytes": 364368
+              },
+              "heapTotal": {
+                "beforeBytes": 213000192,
+                "afterBytes": 213000192,
+                "deltaBytes": 0
+              },
+              "external": {
+                "beforeBytes": 4086244,
+                "afterBytes": 4086244,
+                "deltaBytes": 0
+              },
+              "arrayBuffers": {
+                "beforeBytes": 237407,
+                "afterBytes": 237407,
+                "deltaBytes": 0
+              }
+            },
+            "instructions": 3,
+            "managedAllocations": 1,
+            "managedAllocatedBytes": 32,
+            "managedCollections": 0,
+            "managedCollectionPauseMs": 0
+          },
+          {
+            "block": 9,
+            "position": 2,
+            "elapsedMs": 1.6777449999990495,
+            "memory": {
+              "rss": {
+                "beforeBytes": 214683648,
+                "afterBytes": 214683648,
+                "deltaBytes": 0
+              },
+              "heapUsed": {
+                "beforeBytes": 75337240,
+                "afterBytes": 75701608,
+                "deltaBytes": 364368
+              },
+              "heapTotal": {
+                "beforeBytes": 213000192,
+                "afterBytes": 213000192,
+                "deltaBytes": 0
+              },
+              "external": {
+                "beforeBytes": 4086244,
+                "afterBytes": 4086244,
+                "deltaBytes": 0
+              },
+              "arrayBuffers": {
+                "beforeBytes": 237407,
+                "afterBytes": 237407,
+                "deltaBytes": 0
+              }
+            },
+            "instructions": 3,
+            "managedAllocations": 1,
+            "managedAllocatedBytes": 32,
+            "managedCollections": 0,
+            "managedCollectionPauseMs": 0
+          }
+        ]
+      },
+      "summary": {
+        "baseline": {
+          "elapsedMs": {
+            "median": 2.221864000000096,
+            "p95": 3.1004529999991064,
+            "min": 1.6304240000008576,
+            "max": 3.5989559999998164
+          },
+          "instructions": {
+            "median": 3,
+            "p95": 3,
+            "min": 3,
+            "max": 3
+          },
+          "managedAllocations": {
+            "median": 1,
+            "p95": 1,
+            "min": 1,
+            "max": 1
+          },
+          "managedAllocatedBytes": {
+            "median": 32,
+            "p95": 32,
+            "min": 32,
+            "max": 32
+          },
+          "managedCollections": {
+            "median": 0,
+            "p95": 0,
+            "min": 0,
+            "max": 0
+          },
+          "managedCollectionPauseMs": {
+            "median": 0,
+            "p95": 0,
+            "min": 0,
+            "max": 0
+          },
+          "memoryDeltaBytes": {
+            "rss": {
+              "median": 0,
+              "p95": 0,
+              "min": 0,
+              "max": 0
+            },
+            "heapUsed": {
+              "median": 363624,
+              "p95": 363848,
+              "min": 363624,
+              "max": 365640
+            },
+            "heapTotal": {
+              "median": 0,
+              "p95": 0,
+              "min": 0,
+              "max": 0
+            },
+            "external": {
+              "median": 0,
+              "p95": 0,
+              "min": 0,
+              "max": 0
+            },
+            "arrayBuffers": {
+              "median": 0,
+              "p95": 0,
+              "min": 0,
+              "max": 0
+            }
+          }
+        },
+        "candidate": {
+          "elapsedMs": {
+            "median": 2.1433880000004137,
+            "p95": 2.750088999999207,
+            "min": 1.6661679999997432,
+            "max": 8.379076000001078
+          },
+          "instructions": {
+            "median": 3,
+            "p95": 3,
+            "min": 3,
+            "max": 3
+          },
+          "managedAllocations": {
+            "median": 1,
+            "p95": 1,
+            "min": 1,
+            "max": 1
+          },
+          "managedAllocatedBytes": {
+            "median": 32,
+            "p95": 32,
+            "min": 32,
+            "max": 32
+          },
+          "managedCollections": {
+            "median": 0,
+            "p95": 0,
+            "min": 0,
+            "max": 0
+          },
+          "managedCollectionPauseMs": {
+            "median": 0,
+            "p95": 0,
+            "min": 0,
+            "max": 0
+          },
+          "memoryDeltaBytes": {
+            "rss": {
+              "median": 0,
+              "p95": 0,
+              "min": 0,
+              "max": 0
+            },
+            "heapUsed": {
+              "median": 364368,
+              "p95": 364368,
+              "min": 299512,
+              "max": 364528
+            },
+            "heapTotal": {
+              "median": 0,
+              "p95": 0,
+              "min": 0,
+              "max": 0
+            },
+            "external": {
+              "median": 0,
+              "p95": 0,
+              "min": 0,
+              "max": 0
+            },
+            "arrayBuffers": {
+              "median": 0,
+              "p95": 0,
+              "min": 0,
+              "max": 0
+            }
+          }
+        }
+      },
+      "comparison": {
+        "medianChangePercent": -3.53198935666984,
+        "p95ChangePercent": -11.300413197684357,
+        "peSizeChangePercent": 0,
+        "blockMeanRatios": [
+          1.0737293841309936,
+          1.8931057064988184,
+          0.8675166646487328,
+          1.081072607628597,
+          0.9480097750551508,
+          1.1114360575246591,
+          0.6807743703835545,
+          0.8052429354346338,
+          1.0552956214154936,
+          0.7525017282782943
+        ],
+        "blockMeanRatio": {
+          "median": 1.0016526982353222,
+          "p95": 1.8931057064988184,
+          "min": 0.6807743703835545,
+          "max": 1.8931057064988184
+        },
+        "exceedsFivePercentMedianBudget": false,
+        "exceedsTenPercentPeSizeBudget": false
+      }
+    },
+    {
+      "id": "module-initialization/plain-main",
+      "sourceSha256": "be237cb30df6b70483957ab3e6c8fbe2e647915e075e075fc0b0bb5060afd020",
+      "sourceBytes": 235,
+      "pinHash": "625f09315547306c",
+      "expectedOutput": "module\nmain\n",
+      "langVersion": "14.0",
+      "status": "complete",
+      "artifacts": {
+        "baseline": {
+          "peBytes": 1536,
+          "peSha256": "1dc9361ba97b47311b94dbafa910b559575c4f9b30eb2f3c531bf15af6cfc52e",
+          "verifiedOutput": "module\nmain\n"
+        },
+        "candidate": {
+          "peBytes": 1536,
+          "peSha256": "ba493775fcf53d39b5b377a7172f3a9ab9d23438da6c916e71511a6840a1048c",
+          "verifiedOutput": "module\nmain\n"
+        }
+      },
+      "warmupInvocations": {
+        "baseline": 80,
+        "candidate": 80
+      },
+      "samples": {
+        "baseline": [
+          {
+            "block": 0,
+            "position": 0,
+            "elapsedMs": 2.2496140000002924,
+            "memory": {
+              "rss": {
+                "beforeBytes": 214552576,
+                "afterBytes": 214552576,
+                "deltaBytes": 0
+              },
+              "heapUsed": {
+                "beforeBytes": 75264616,
+                "afterBytes": 75744552,
+                "deltaBytes": 479936
+              },
+              "heapTotal": {
+                "beforeBytes": 213000192,
+                "afterBytes": 213000192,
+                "deltaBytes": 0
+              },
+              "external": {
+                "beforeBytes": 4086244,
+                "afterBytes": 4086244,
+                "deltaBytes": 0
+              },
+              "arrayBuffers": {
+                "beforeBytes": 237407,
+                "afterBytes": 237407,
+                "deltaBytes": 0
+              }
+            },
+            "instructions": 7,
+            "managedAllocations": 2,
+            "managedAllocatedBytes": 68,
+            "managedCollections": 0,
+            "managedCollectionPauseMs": 0
+          },
+          {
+            "block": 0,
+            "position": 3,
+            "elapsedMs": 2.929192999999941,
+            "memory": {
+              "rss": {
+                "beforeBytes": 214552576,
+                "afterBytes": 214552576,
+                "deltaBytes": 0
+              },
+              "heapUsed": {
+                "beforeBytes": 75270232,
+                "afterBytes": 75750168,
+                "deltaBytes": 479936
+              },
+              "heapTotal": {
+                "beforeBytes": 213000192,
+                "afterBytes": 213000192,
+                "deltaBytes": 0
+              },
+              "external": {
+                "beforeBytes": 4086244,
+                "afterBytes": 4086244,
+                "deltaBytes": 0
+              },
+              "arrayBuffers": {
+                "beforeBytes": 237407,
+                "afterBytes": 237407,
+                "deltaBytes": 0
+              }
+            },
+            "instructions": 7,
+            "managedAllocations": 2,
+            "managedAllocatedBytes": 68,
+            "managedCollections": 0,
+            "managedCollectionPauseMs": 0
+          },
+          {
+            "block": 1,
+            "position": 0,
+            "elapsedMs": 3.0731140000007144,
+            "memory": {
+              "rss": {
+                "beforeBytes": 214552576,
+                "afterBytes": 214552576,
+                "deltaBytes": 0
+              },
+              "heapUsed": {
+                "beforeBytes": 75270936,
+                "afterBytes": 75750872,
+                "deltaBytes": 479936
+              },
+              "heapTotal": {
+                "beforeBytes": 213000192,
+                "afterBytes": 213000192,
+                "deltaBytes": 0
+              },
+              "external": {
+                "beforeBytes": 4086244,
+                "afterBytes": 4086244,
+                "deltaBytes": 0
+              },
+              "arrayBuffers": {
+                "beforeBytes": 237407,
+                "afterBytes": 237407,
+                "deltaBytes": 0
+              }
+            },
+            "instructions": 7,
+            "managedAllocations": 2,
+            "managedAllocatedBytes": 68,
+            "managedCollections": 0,
+            "managedCollectionPauseMs": 0
+          },
+          {
+            "block": 1,
+            "position": 3,
+            "elapsedMs": 2.3149300000004587,
+            "memory": {
+              "rss": {
+                "beforeBytes": 214552576,
+                "afterBytes": 214552576,
+                "deltaBytes": 0
+              },
+              "heapUsed": {
+                "beforeBytes": 75282584,
+                "afterBytes": 75762520,
+                "deltaBytes": 479936
+              },
+              "heapTotal": {
+                "beforeBytes": 213000192,
+                "afterBytes": 213000192,
+                "deltaBytes": 0
+              },
+              "external": {
+                "beforeBytes": 4086244,
+                "afterBytes": 4086244,
+                "deltaBytes": 0
+              },
+              "arrayBuffers": {
+                "beforeBytes": 237407,
+                "afterBytes": 237407,
+                "deltaBytes": 0
+              }
+            },
+            "instructions": 7,
+            "managedAllocations": 2,
+            "managedAllocatedBytes": 68,
+            "managedCollections": 0,
+            "managedCollectionPauseMs": 0
+          },
+          {
+            "block": 2,
+            "position": 0,
+            "elapsedMs": 2.6129669999991165,
+            "memory": {
+              "rss": {
+                "beforeBytes": 214552576,
+                "afterBytes": 214552576,
+                "deltaBytes": 0
+              },
+              "heapUsed": {
+                "beforeBytes": 75287192,
+                "afterBytes": 75766912,
+                "deltaBytes": 479720
+              },
+              "heapTotal": {
+                "beforeBytes": 213000192,
+                "afterBytes": 213000192,
+                "deltaBytes": 0
+              },
+              "external": {
+                "beforeBytes": 4086244,
+                "afterBytes": 4086244,
+                "deltaBytes": 0
+              },
+              "arrayBuffers": {
+                "beforeBytes": 237407,
+                "afterBytes": 237407,
+                "deltaBytes": 0
+              }
+            },
+            "instructions": 7,
+            "managedAllocations": 2,
+            "managedAllocatedBytes": 68,
+            "managedCollections": 0,
+            "managedCollectionPauseMs": 0
+          },
+          {
+            "block": 2,
+            "position": 3,
+            "elapsedMs": 2.6547190000001137,
+            "memory": {
+              "rss": {
+                "beforeBytes": 214552576,
+                "afterBytes": 214552576,
+                "deltaBytes": 0
+              },
+              "heapUsed": {
+                "beforeBytes": 75293344,
+                "afterBytes": 75773064,
+                "deltaBytes": 479720
+              },
+              "heapTotal": {
+                "beforeBytes": 213000192,
+                "afterBytes": 213000192,
+                "deltaBytes": 0
+              },
+              "external": {
+                "beforeBytes": 4086244,
+                "afterBytes": 4086244,
+                "deltaBytes": 0
+              },
+              "arrayBuffers": {
+                "beforeBytes": 237407,
+                "afterBytes": 237407,
+                "deltaBytes": 0
+              }
+            },
+            "instructions": 7,
+            "managedAllocations": 2,
+            "managedAllocatedBytes": 68,
+            "managedCollections": 0,
+            "managedCollectionPauseMs": 0
+          },
+          {
+            "block": 3,
+            "position": 0,
+            "elapsedMs": 1.9512459999987186,
+            "memory": {
+              "rss": {
+                "beforeBytes": 214552576,
+                "afterBytes": 214552576,
+                "deltaBytes": 0
+              },
+              "heapUsed": {
+                "beforeBytes": 75294048,
+                "afterBytes": 75773768,
+                "deltaBytes": 479720
+              },
+              "heapTotal": {
+                "beforeBytes": 213000192,
+                "afterBytes": 213000192,
+                "deltaBytes": 0
+              },
+              "external": {
+                "beforeBytes": 4086244,
+                "afterBytes": 4086244,
+                "deltaBytes": 0
+              },
+              "arrayBuffers": {
+                "beforeBytes": 237407,
+                "afterBytes": 237407,
+                "deltaBytes": 0
+              }
+            },
+            "instructions": 7,
+            "managedAllocations": 2,
+            "managedAllocatedBytes": 68,
+            "managedCollections": 0,
+            "managedCollectionPauseMs": 0
+          },
+          {
+            "block": 3,
+            "position": 3,
+            "elapsedMs": 2.2827029999989463,
+            "memory": {
+              "rss": {
+                "beforeBytes": 214552576,
+                "afterBytes": 214552576,
+                "deltaBytes": 0
+              },
+              "heapUsed": {
+                "beforeBytes": 75296160,
+                "afterBytes": 75775880,
+                "deltaBytes": 479720
+              },
+              "heapTotal": {
+                "beforeBytes": 213000192,
+                "afterBytes": 213000192,
+                "deltaBytes": 0
+              },
+              "external": {
+                "beforeBytes": 4086244,
+                "afterBytes": 4086244,
+                "deltaBytes": 0
+              },
+              "arrayBuffers": {
+                "beforeBytes": 237407,
+                "afterBytes": 237407,
+                "deltaBytes": 0
+              }
+            },
+            "instructions": 7,
+            "managedAllocations": 2,
+            "managedAllocatedBytes": 68,
+            "managedCollections": 0,
+            "managedCollectionPauseMs": 0
+          },
+          {
+            "block": 4,
+            "position": 0,
+            "elapsedMs": 3.603943000000072,
+            "memory": {
+              "rss": {
+                "beforeBytes": 214552576,
+                "afterBytes": 214552576,
+                "deltaBytes": 0
+              },
+              "heapUsed": {
+                "beforeBytes": 75299376,
+                "afterBytes": 75779096,
+                "deltaBytes": 479720
+              },
+              "heapTotal": {
+                "beforeBytes": 213000192,
+                "afterBytes": 213000192,
+                "deltaBytes": 0
+              },
+              "external": {
+                "beforeBytes": 4086244,
+                "afterBytes": 4086244,
+                "deltaBytes": 0
+              },
+              "arrayBuffers": {
+                "beforeBytes": 237407,
+                "afterBytes": 237407,
+                "deltaBytes": 0
+              }
+            },
+            "instructions": 7,
+            "managedAllocations": 2,
+            "managedAllocatedBytes": 68,
+            "managedCollections": 0,
+            "managedCollectionPauseMs": 0
+          },
+          {
+            "block": 4,
+            "position": 3,
+            "elapsedMs": 2.545679000000746,
+            "memory": {
+              "rss": {
+                "beforeBytes": 214552576,
+                "afterBytes": 214552576,
+                "deltaBytes": 0
+              },
+              "heapUsed": {
+                "beforeBytes": 75304608,
+                "afterBytes": 75784328,
+                "deltaBytes": 479720
+              },
+              "heapTotal": {
+                "beforeBytes": 213000192,
+                "afterBytes": 213000192,
+                "deltaBytes": 0
+              },
+              "external": {
+                "beforeBytes": 4086244,
+                "afterBytes": 4086244,
+                "deltaBytes": 0
+              },
+              "arrayBuffers": {
+                "beforeBytes": 237407,
+                "afterBytes": 237407,
+                "deltaBytes": 0
+              }
+            },
+            "instructions": 7,
+            "managedAllocations": 2,
+            "managedAllocatedBytes": 68,
+            "managedCollections": 0,
+            "managedCollectionPauseMs": 0
+          },
+          {
+            "block": 5,
+            "position": 0,
+            "elapsedMs": 3.9647530000002007,
+            "memory": {
+              "rss": {
+                "beforeBytes": 214552576,
+                "afterBytes": 214552576,
+                "deltaBytes": 0
+              },
+              "heapUsed": {
+                "beforeBytes": 75305312,
+                "afterBytes": 75785032,
+                "deltaBytes": 479720
+              },
+              "heapTotal": {
+                "beforeBytes": 213000192,
+                "afterBytes": 213000192,
+                "deltaBytes": 0
+              },
+              "external": {
+                "beforeBytes": 4086244,
+                "afterBytes": 4086244,
+                "deltaBytes": 0
+              },
+              "arrayBuffers": {
+                "beforeBytes": 237407,
+                "afterBytes": 237407,
+                "deltaBytes": 0
+              }
+            },
+            "instructions": 7,
+            "managedAllocations": 2,
+            "managedAllocatedBytes": 68,
+            "managedCollections": 0,
+            "managedCollectionPauseMs": 0
+          },
+          {
+            "block": 5,
+            "position": 3,
+            "elapsedMs": 2.986154999998689,
+            "memory": {
+              "rss": {
+                "beforeBytes": 214683648,
+                "afterBytes": 214683648,
+                "deltaBytes": 0
+              },
+              "heapUsed": {
+                "beforeBytes": 75316320,
+                "afterBytes": 75796040,
+                "deltaBytes": 479720
+              },
+              "heapTotal": {
+                "beforeBytes": 213000192,
+                "afterBytes": 213000192,
+                "deltaBytes": 0
+              },
+              "external": {
+                "beforeBytes": 4086244,
+                "afterBytes": 4086244,
+                "deltaBytes": 0
+              },
+              "arrayBuffers": {
+                "beforeBytes": 237407,
+                "afterBytes": 237407,
+                "deltaBytes": 0
+              }
+            },
+            "instructions": 7,
+            "managedAllocations": 2,
+            "managedAllocatedBytes": 68,
+            "managedCollections": 0,
+            "managedCollectionPauseMs": 0
+          },
+          {
+            "block": 6,
+            "position": 0,
+            "elapsedMs": 2.6359119999997347,
+            "memory": {
+              "rss": {
+                "beforeBytes": 214683648,
+                "afterBytes": 214683648,
+                "deltaBytes": 0
+              },
+              "heapUsed": {
+                "beforeBytes": 75318104,
+                "afterBytes": 75797824,
+                "deltaBytes": 479720
+              },
+              "heapTotal": {
+                "beforeBytes": 213000192,
+                "afterBytes": 213000192,
+                "deltaBytes": 0
+              },
+              "external": {
+                "beforeBytes": 4086244,
+                "afterBytes": 4086244,
+                "deltaBytes": 0
+              },
+              "arrayBuffers": {
+                "beforeBytes": 237407,
+                "afterBytes": 237407,
+                "deltaBytes": 0
+              }
+            },
+            "instructions": 7,
+            "managedAllocations": 2,
+            "managedAllocatedBytes": 68,
+            "managedCollections": 0,
+            "managedCollectionPauseMs": 0
+          },
+          {
+            "block": 6,
+            "position": 3,
+            "elapsedMs": 2.599699000000328,
+            "memory": {
+              "rss": {
+                "beforeBytes": 214683648,
+                "afterBytes": 214683648,
+                "deltaBytes": 0
+              },
+              "heapUsed": {
+                "beforeBytes": 75323336,
+                "afterBytes": 75803056,
+                "deltaBytes": 479720
+              },
+              "heapTotal": {
+                "beforeBytes": 213000192,
+                "afterBytes": 213000192,
+                "deltaBytes": 0
+              },
+              "external": {
+                "beforeBytes": 4086244,
+                "afterBytes": 4086244,
+                "deltaBytes": 0
+              },
+              "arrayBuffers": {
+                "beforeBytes": 237407,
+                "afterBytes": 237407,
+                "deltaBytes": 0
+              }
+            },
+            "instructions": 7,
+            "managedAllocations": 2,
+            "managedAllocatedBytes": 68,
+            "managedCollections": 0,
+            "managedCollectionPauseMs": 0
+          },
+          {
+            "block": 7,
+            "position": 0,
+            "elapsedMs": 2.876734999999826,
+            "memory": {
+              "rss": {
+                "beforeBytes": 214683648,
+                "afterBytes": 214683648,
+                "deltaBytes": 0
+              },
+              "heapUsed": {
+                "beforeBytes": 75324040,
+                "afterBytes": 75803760,
+                "deltaBytes": 479720
+              },
+              "heapTotal": {
+                "beforeBytes": 213000192,
+                "afterBytes": 213000192,
+                "deltaBytes": 0
+              },
+              "external": {
+                "beforeBytes": 4086244,
+                "afterBytes": 4086244,
+                "deltaBytes": 0
+              },
+              "arrayBuffers": {
+                "beforeBytes": 237407,
+                "afterBytes": 237407,
+                "deltaBytes": 0
+              }
+            },
+            "instructions": 7,
+            "managedAllocations": 2,
+            "managedAllocatedBytes": 68,
+            "managedCollections": 0,
+            "managedCollectionPauseMs": 0
+          },
+          {
+            "block": 7,
+            "position": 3,
+            "elapsedMs": 2.6181049999995594,
+            "memory": {
+              "rss": {
+                "beforeBytes": 214683648,
+                "afterBytes": 214683648,
+                "deltaBytes": 0
+              },
+              "heapUsed": {
+                "beforeBytes": 75327584,
+                "afterBytes": 75807304,
+                "deltaBytes": 479720
+              },
+              "heapTotal": {
+                "beforeBytes": 213000192,
+                "afterBytes": 213000192,
+                "deltaBytes": 0
+              },
+              "external": {
+                "beforeBytes": 4086244,
+                "afterBytes": 4086244,
+                "deltaBytes": 0
+              },
+              "arrayBuffers": {
+                "beforeBytes": 237407,
+                "afterBytes": 237407,
+                "deltaBytes": 0
+              }
+            },
+            "instructions": 7,
+            "managedAllocations": 2,
+            "managedAllocatedBytes": 68,
+            "managedCollections": 0,
+            "managedCollectionPauseMs": 0
+          },
+          {
+            "block": 8,
+            "position": 0,
+            "elapsedMs": 2.577355000001262,
+            "memory": {
+              "rss": {
+                "beforeBytes": 214683648,
+                "afterBytes": 214683648,
+                "deltaBytes": 0
+              },
+              "heapUsed": {
+                "beforeBytes": 75329784,
+                "afterBytes": 75809504,
+                "deltaBytes": 479720
+              },
+              "heapTotal": {
+                "beforeBytes": 213000192,
+                "afterBytes": 213000192,
+                "deltaBytes": 0
+              },
+              "external": {
+                "beforeBytes": 4086244,
+                "afterBytes": 4086244,
+                "deltaBytes": 0
+              },
+              "arrayBuffers": {
+                "beforeBytes": 237407,
+                "afterBytes": 237407,
+                "deltaBytes": 0
+              }
+            },
+            "instructions": 7,
+            "managedAllocations": 2,
+            "managedAllocatedBytes": 68,
+            "managedCollections": 0,
+            "managedCollectionPauseMs": 0
+          },
+          {
+            "block": 8,
+            "position": 3,
+            "elapsedMs": 2.2397490000003017,
+            "memory": {
+              "rss": {
+                "beforeBytes": 214683648,
+                "afterBytes": 214683648,
+                "deltaBytes": 0
+              },
+              "heapUsed": {
+                "beforeBytes": 75335224,
+                "afterBytes": 75814944,
+                "deltaBytes": 479720
+              },
+              "heapTotal": {
+                "beforeBytes": 213000192,
+                "afterBytes": 213000192,
+                "deltaBytes": 0
+              },
+              "external": {
+                "beforeBytes": 4086244,
+                "afterBytes": 4086244,
+                "deltaBytes": 0
+              },
+              "arrayBuffers": {
+                "beforeBytes": 237407,
+                "afterBytes": 237407,
+                "deltaBytes": 0
+              }
+            },
+            "instructions": 7,
+            "managedAllocations": 2,
+            "managedAllocatedBytes": 68,
+            "managedCollections": 0,
+            "managedCollectionPauseMs": 0
+          },
+          {
+            "block": 9,
+            "position": 0,
+            "elapsedMs": 1.912439000001541,
+            "memory": {
+              "rss": {
+                "beforeBytes": 214683648,
+                "afterBytes": 214683648,
+                "deltaBytes": 0
+              },
+              "heapUsed": {
+                "beforeBytes": 75336136,
+                "afterBytes": 75815856,
+                "deltaBytes": 479720
+              },
+              "heapTotal": {
+                "beforeBytes": 213000192,
+                "afterBytes": 213000192,
+                "deltaBytes": 0
+              },
+              "external": {
+                "beforeBytes": 4086244,
+                "afterBytes": 4086244,
+                "deltaBytes": 0
+              },
+              "arrayBuffers": {
+                "beforeBytes": 237407,
+                "afterBytes": 237407,
+                "deltaBytes": 0
+              }
+            },
+            "instructions": 7,
+            "managedAllocations": 2,
+            "managedAllocatedBytes": 68,
+            "managedCollections": 0,
+            "managedCollectionPauseMs": 0
+          },
+          {
+            "block": 9,
+            "position": 3,
+            "elapsedMs": 2.66237000000001,
+            "memory": {
+              "rss": {
+                "beforeBytes": 214683648,
+                "afterBytes": 214683648,
+                "deltaBytes": 0
+              },
+              "heapUsed": {
+                "beforeBytes": 75338248,
+                "afterBytes": 75817968,
+                "deltaBytes": 479720
+              },
+              "heapTotal": {
+                "beforeBytes": 213000192,
+                "afterBytes": 213000192,
+                "deltaBytes": 0
+              },
+              "external": {
+                "beforeBytes": 4086244,
+                "afterBytes": 4086244,
+                "deltaBytes": 0
+              },
+              "arrayBuffers": {
+                "beforeBytes": 237407,
+                "afterBytes": 237407,
+                "deltaBytes": 0
+              }
+            },
+            "instructions": 7,
+            "managedAllocations": 2,
+            "managedAllocatedBytes": 68,
+            "managedCollections": 0,
+            "managedCollectionPauseMs": 0
+          }
+        ],
+        "candidate": [
+          {
+            "block": 0,
+            "position": 1,
+            "elapsedMs": 3.1435870000004797,
+            "memory": {
+              "rss": {
+                "beforeBytes": 214552576,
+                "afterBytes": 214552576,
+                "deltaBytes": 0
+              },
+              "heapUsed": {
+                "beforeBytes": 75267120,
+                "afterBytes": 75776872,
+                "deltaBytes": 509752
+              },
+              "heapTotal": {
+                "beforeBytes": 213000192,
+                "afterBytes": 213000192,
+                "deltaBytes": 0
+              },
+              "external": {
+                "beforeBytes": 4086244,
+                "afterBytes": 4086244,
+                "deltaBytes": 0
+              },
+              "arrayBuffers": {
+                "beforeBytes": 237407,
+                "afterBytes": 237407,
+                "deltaBytes": 0
+              }
+            },
+            "instructions": 8,
+            "managedAllocations": 2,
+            "managedAllocatedBytes": 68,
+            "managedCollections": 0,
+            "managedCollectionPauseMs": 0
+          },
+          {
+            "block": 0,
+            "position": 2,
+            "elapsedMs": 3.2069510000001173,
+            "memory": {
+              "rss": {
+                "beforeBytes": 214552576,
+                "afterBytes": 214552576,
+                "deltaBytes": 0
+              },
+              "heapUsed": {
+                "beforeBytes": 75269528,
+                "afterBytes": 75779280,
+                "deltaBytes": 509752
+              },
+              "heapTotal": {
+                "beforeBytes": 213000192,
+                "afterBytes": 213000192,
+                "deltaBytes": 0
+              },
+              "external": {
+                "beforeBytes": 4086244,
+                "afterBytes": 4086244,
+                "deltaBytes": 0
+              },
+              "arrayBuffers": {
+                "beforeBytes": 237407,
+                "afterBytes": 237407,
+                "deltaBytes": 0
+              }
+            },
+            "instructions": 8,
+            "managedAllocations": 2,
+            "managedAllocatedBytes": 68,
+            "managedCollections": 0,
+            "managedCollectionPauseMs": 0
+          },
+          {
+            "block": 1,
+            "position": 1,
+            "elapsedMs": 2.345976000000519,
+            "memory": {
+              "rss": {
+                "beforeBytes": 214552576,
+                "afterBytes": 214552576,
+                "deltaBytes": 0
+              },
+              "heapUsed": {
+                "beforeBytes": 75272264,
+                "afterBytes": 75782016,
+                "deltaBytes": 509752
+              },
+              "heapTotal": {
+                "beforeBytes": 213000192,
+                "afterBytes": 213000192,
+                "deltaBytes": 0
+              },
+              "external": {
+                "beforeBytes": 4086244,
+                "afterBytes": 4086244,
+                "deltaBytes": 0
+              },
+              "arrayBuffers": {
+                "beforeBytes": 237407,
+                "afterBytes": 237407,
+                "deltaBytes": 0
+              }
+            },
+            "instructions": 8,
+            "managedAllocations": 2,
+            "managedAllocatedBytes": 68,
+            "managedCollections": 0,
+            "managedCollectionPauseMs": 0
+          },
+          {
+            "block": 1,
+            "position": 2,
+            "elapsedMs": 2.4785400000000664,
+            "memory": {
+              "rss": {
+                "beforeBytes": 214552576,
+                "afterBytes": 214552576,
+                "deltaBytes": 0
+              },
+              "heapUsed": {
+                "beforeBytes": 75281880,
+                "afterBytes": 75791632,
+                "deltaBytes": 509752
+              },
+              "heapTotal": {
+                "beforeBytes": 213000192,
+                "afterBytes": 213000192,
+                "deltaBytes": 0
+              },
+              "external": {
+                "beforeBytes": 4086244,
+                "afterBytes": 4086244,
+                "deltaBytes": 0
+              },
+              "arrayBuffers": {
+                "beforeBytes": 237407,
+                "afterBytes": 237407,
+                "deltaBytes": 0
+              }
+            },
+            "instructions": 8,
+            "managedAllocations": 2,
+            "managedAllocatedBytes": 68,
+            "managedCollections": 0,
+            "managedCollectionPauseMs": 0
+          },
+          {
+            "block": 2,
+            "position": 1,
+            "elapsedMs": 3.339955999999802,
+            "memory": {
+              "rss": {
+                "beforeBytes": 214552576,
+                "afterBytes": 214552576,
+                "deltaBytes": 0
+              },
+              "heapUsed": {
+                "beforeBytes": 75288656,
+                "afterBytes": 75798408,
+                "deltaBytes": 509752
+              },
+              "heapTotal": {
+                "beforeBytes": 213000192,
+                "afterBytes": 213000192,
+                "deltaBytes": 0
+              },
+              "external": {
+                "beforeBytes": 4086244,
+                "afterBytes": 4086244,
+                "deltaBytes": 0
+              },
+              "arrayBuffers": {
+                "beforeBytes": 237407,
+                "afterBytes": 237407,
+                "deltaBytes": 0
+              }
+            },
+            "instructions": 8,
+            "managedAllocations": 2,
+            "managedAllocatedBytes": 68,
+            "managedCollections": 0,
+            "managedCollectionPauseMs": 0
+          },
+          {
+            "block": 2,
+            "position": 2,
+            "elapsedMs": 2.7697079999998095,
+            "memory": {
+              "rss": {
+                "beforeBytes": 214552576,
+                "afterBytes": 214552576,
+                "deltaBytes": 0
+              },
+              "heapUsed": {
+                "beforeBytes": 75292640,
+                "afterBytes": 75802392,
+                "deltaBytes": 509752
+              },
+              "heapTotal": {
+                "beforeBytes": 213000192,
+                "afterBytes": 213000192,
+                "deltaBytes": 0
+              },
+              "external": {
+                "beforeBytes": 4086244,
+                "afterBytes": 4086244,
+                "deltaBytes": 0
+              },
+              "arrayBuffers": {
+                "beforeBytes": 237407,
+                "afterBytes": 237407,
+                "deltaBytes": 0
+              }
+            },
+            "instructions": 8,
+            "managedAllocations": 2,
+            "managedAllocatedBytes": 68,
+            "managedCollections": 0,
+            "managedCollectionPauseMs": 0
+          },
+          {
+            "block": 3,
+            "position": 1,
+            "elapsedMs": 2.2794080000003305,
+            "memory": {
+              "rss": {
+                "beforeBytes": 214552576,
+                "afterBytes": 214552576,
+                "deltaBytes": 0
+              },
+              "heapUsed": {
+                "beforeBytes": 75294752,
+                "afterBytes": 75804504,
+                "deltaBytes": 509752
+              },
+              "heapTotal": {
+                "beforeBytes": 213000192,
+                "afterBytes": 213000192,
+                "deltaBytes": 0
+              },
+              "external": {
+                "beforeBytes": 4086244,
+                "afterBytes": 4086244,
+                "deltaBytes": 0
+              },
+              "arrayBuffers": {
+                "beforeBytes": 237407,
+                "afterBytes": 237407,
+                "deltaBytes": 0
+              }
+            },
+            "instructions": 8,
+            "managedAllocations": 2,
+            "managedAllocatedBytes": 68,
+            "managedCollections": 0,
+            "managedCollectionPauseMs": 0
+          },
+          {
+            "block": 3,
+            "position": 2,
+            "elapsedMs": 2.212710000001607,
+            "memory": {
+              "rss": {
+                "beforeBytes": 214552576,
+                "afterBytes": 214552576,
+                "deltaBytes": 0
+              },
+              "heapUsed": {
+                "beforeBytes": 75295456,
+                "afterBytes": 75805208,
+                "deltaBytes": 509752
+              },
+              "heapTotal": {
+                "beforeBytes": 213000192,
+                "afterBytes": 213000192,
+                "deltaBytes": 0
+              },
+              "external": {
+                "beforeBytes": 4086244,
+                "afterBytes": 4086244,
+                "deltaBytes": 0
+              },
+              "arrayBuffers": {
+                "beforeBytes": 237407,
+                "afterBytes": 237407,
+                "deltaBytes": 0
+              }
+            },
+            "instructions": 8,
+            "managedAllocations": 2,
+            "managedAllocatedBytes": 68,
+            "managedCollections": 0,
+            "managedCollectionPauseMs": 0
+          },
+          {
+            "block": 4,
+            "position": 1,
+            "elapsedMs": 4.696307000000161,
+            "memory": {
+              "rss": {
+                "beforeBytes": 214552576,
+                "afterBytes": 214552576,
+                "deltaBytes": 0
+              },
+              "heapUsed": {
+                "beforeBytes": 75301648,
+                "afterBytes": 75811400,
+                "deltaBytes": 509752
+              },
+              "heapTotal": {
+                "beforeBytes": 213000192,
+                "afterBytes": 213000192,
+                "deltaBytes": 0
+              },
+              "external": {
+                "beforeBytes": 4086244,
+                "afterBytes": 4086244,
+                "deltaBytes": 0
+              },
+              "arrayBuffers": {
+                "beforeBytes": 237407,
+                "afterBytes": 237407,
+                "deltaBytes": 0
+              }
+            },
+            "instructions": 8,
+            "managedAllocations": 2,
+            "managedAllocatedBytes": 68,
+            "managedCollections": 0,
+            "managedCollectionPauseMs": 0
+          },
+          {
+            "block": 4,
+            "position": 2,
+            "elapsedMs": 5.434482000000571,
+            "memory": {
+              "rss": {
+                "beforeBytes": 214552576,
+                "afterBytes": 214552576,
+                "deltaBytes": 0
+              },
+              "heapUsed": {
+                "beforeBytes": 75303904,
+                "afterBytes": 75813656,
+                "deltaBytes": 509752
+              },
+              "heapTotal": {
+                "beforeBytes": 213000192,
+                "afterBytes": 213000192,
+                "deltaBytes": 0
+              },
+              "external": {
+                "beforeBytes": 4086244,
+                "afterBytes": 4086244,
+                "deltaBytes": 0
+              },
+              "arrayBuffers": {
+                "beforeBytes": 237407,
+                "afterBytes": 237407,
+                "deltaBytes": 0
+              }
+            },
+            "instructions": 8,
+            "managedAllocations": 2,
+            "managedAllocatedBytes": 68,
+            "managedCollections": 0,
+            "managedCollectionPauseMs": 0
+          },
+          {
+            "block": 5,
+            "position": 1,
+            "elapsedMs": 3.7749449999992066,
+            "memory": {
+              "rss": {
+                "beforeBytes": 214552576,
+                "afterBytes": 214552576,
+                "deltaBytes": 0
+              },
+              "heapUsed": {
+                "beforeBytes": 75309536,
+                "afterBytes": 75819288,
+                "deltaBytes": 509752
+              },
+              "heapTotal": {
+                "beforeBytes": 213000192,
+                "afterBytes": 213000192,
+                "deltaBytes": 0
+              },
+              "external": {
+                "beforeBytes": 4086244,
+                "afterBytes": 4086244,
+                "deltaBytes": 0
+              },
+              "arrayBuffers": {
+                "beforeBytes": 237407,
+                "afterBytes": 237407,
+                "deltaBytes": 0
+              }
+            },
+            "instructions": 8,
+            "managedAllocations": 2,
+            "managedAllocatedBytes": 68,
+            "managedCollections": 0,
+            "managedCollectionPauseMs": 0
+          },
+          {
+            "block": 5,
+            "position": 2,
+            "elapsedMs": 15.386678000000757,
+            "memory": {
+              "rss": {
+                "beforeBytes": 214552576,
+                "afterBytes": 214683648,
+                "deltaBytes": 131072
+              },
+              "heapUsed": {
+                "beforeBytes": 75310648,
+                "afterBytes": 75824112,
+                "deltaBytes": 513464
+              },
+              "heapTotal": {
+                "beforeBytes": 213000192,
+                "afterBytes": 213000192,
+                "deltaBytes": 0
+              },
+              "external": {
+                "beforeBytes": 4086244,
+                "afterBytes": 4086244,
+                "deltaBytes": 0
+              },
+              "arrayBuffers": {
+                "beforeBytes": 237407,
+                "afterBytes": 237407,
+                "deltaBytes": 0
+              }
+            },
+            "instructions": 8,
+            "managedAllocations": 2,
+            "managedAllocatedBytes": 68,
+            "managedCollections": 0,
+            "managedCollectionPauseMs": 0
+          },
+          {
+            "block": 6,
+            "position": 1,
+            "elapsedMs": 2.835634000000937,
+            "memory": {
+              "rss": {
+                "beforeBytes": 214683648,
+                "afterBytes": 214683648,
+                "deltaBytes": 0
+              },
+              "heapUsed": {
+                "beforeBytes": 75320376,
+                "afterBytes": 75830128,
+                "deltaBytes": 509752
+              },
+              "heapTotal": {
+                "beforeBytes": 213000192,
+                "afterBytes": 213000192,
+                "deltaBytes": 0
+              },
+              "external": {
+                "beforeBytes": 4086244,
+                "afterBytes": 4086244,
+                "deltaBytes": 0
+              },
+              "arrayBuffers": {
+                "beforeBytes": 237407,
+                "afterBytes": 237407,
+                "deltaBytes": 0
+              }
+            },
+            "instructions": 8,
+            "managedAllocations": 2,
+            "managedAllocatedBytes": 68,
+            "managedCollections": 0,
+            "managedCollectionPauseMs": 0
+          },
+          {
+            "block": 6,
+            "position": 2,
+            "elapsedMs": 3.8635839999988093,
+            "memory": {
+              "rss": {
+                "beforeBytes": 214683648,
+                "afterBytes": 214683648,
+                "deltaBytes": 0
+              },
+              "heapUsed": {
+                "beforeBytes": 75322632,
+                "afterBytes": 75832384,
+                "deltaBytes": 509752
+              },
+              "heapTotal": {
+                "beforeBytes": 213000192,
+                "afterBytes": 213000192,
+                "deltaBytes": 0
+              },
+              "external": {
+                "beforeBytes": 4086244,
+                "afterBytes": 4086244,
+                "deltaBytes": 0
+              },
+              "arrayBuffers": {
+                "beforeBytes": 237407,
+                "afterBytes": 237407,
+                "deltaBytes": 0
+              }
+            },
+            "instructions": 8,
+            "managedAllocations": 2,
+            "managedAllocatedBytes": 68,
+            "managedCollections": 0,
+            "managedCollectionPauseMs": 0
+          },
+          {
+            "block": 7,
+            "position": 1,
+            "elapsedMs": 2.8254999999990105,
+            "memory": {
+              "rss": {
+                "beforeBytes": 214683648,
+                "afterBytes": 214683648,
+                "deltaBytes": 0
+              },
+              "heapUsed": {
+                "beforeBytes": 75325152,
+                "afterBytes": 75834904,
+                "deltaBytes": 509752
+              },
+              "heapTotal": {
+                "beforeBytes": 213000192,
+                "afterBytes": 213000192,
+                "deltaBytes": 0
+              },
+              "external": {
+                "beforeBytes": 4086244,
+                "afterBytes": 4086244,
+                "deltaBytes": 0
+              },
+              "arrayBuffers": {
+                "beforeBytes": 237407,
+                "afterBytes": 237407,
+                "deltaBytes": 0
+              }
+            },
+            "instructions": 8,
+            "managedAllocations": 2,
+            "managedAllocatedBytes": 68,
+            "managedCollections": 0,
+            "managedCollectionPauseMs": 0
+          },
+          {
+            "block": 7,
+            "position": 2,
+            "elapsedMs": 2.8129319999989093,
+            "memory": {
+              "rss": {
+                "beforeBytes": 214683648,
+                "afterBytes": 214683648,
+                "deltaBytes": 0
+              },
+              "heapUsed": {
+                "beforeBytes": 75327400,
+                "afterBytes": 75837096,
+                "deltaBytes": 509696
+              },
+              "heapTotal": {
+                "beforeBytes": 213000192,
+                "afterBytes": 213000192,
+                "deltaBytes": 0
+              },
+              "external": {
+                "beforeBytes": 4086244,
+                "afterBytes": 4086244,
+                "deltaBytes": 0
+              },
+              "arrayBuffers": {
+                "beforeBytes": 237407,
+                "afterBytes": 237407,
+                "deltaBytes": 0
+              }
+            },
+            "instructions": 8,
+            "managedAllocations": 2,
+            "managedAllocatedBytes": 68,
+            "managedCollections": 0,
+            "managedCollectionPauseMs": 0
+          },
+          {
+            "block": 8,
+            "position": 1,
+            "elapsedMs": 3.138649999998961,
+            "memory": {
+              "rss": {
+                "beforeBytes": 214683648,
+                "afterBytes": 214683648,
+                "deltaBytes": 0
+              },
+              "heapUsed": {
+                "beforeBytes": 75332056,
+                "afterBytes": 75841808,
+                "deltaBytes": 509752
+              },
+              "heapTotal": {
+                "beforeBytes": 213000192,
+                "afterBytes": 213000192,
+                "deltaBytes": 0
+              },
+              "external": {
+                "beforeBytes": 4086244,
+                "afterBytes": 4086244,
+                "deltaBytes": 0
+              },
+              "arrayBuffers": {
+                "beforeBytes": 237407,
+                "afterBytes": 237407,
+                "deltaBytes": 0
+              }
+            },
+            "instructions": 8,
+            "managedAllocations": 2,
+            "managedAllocatedBytes": 68,
+            "managedCollections": 0,
+            "managedCollectionPauseMs": 0
+          },
+          {
+            "block": 8,
+            "position": 2,
+            "elapsedMs": 2.3665149999997084,
+            "memory": {
+              "rss": {
+                "beforeBytes": 214683648,
+                "afterBytes": 214683648,
+                "deltaBytes": 0
+              },
+              "heapUsed": {
+                "beforeBytes": 75334312,
+                "afterBytes": 75844064,
+                "deltaBytes": 509752
+              },
+              "heapTotal": {
+                "beforeBytes": 213000192,
+                "afterBytes": 213000192,
+                "deltaBytes": 0
+              },
+              "external": {
+                "beforeBytes": 4086244,
+                "afterBytes": 4086244,
+                "deltaBytes": 0
+              },
+              "arrayBuffers": {
+                "beforeBytes": 237407,
+                "afterBytes": 237407,
+                "deltaBytes": 0
+              }
+            },
+            "instructions": 8,
+            "managedAllocations": 2,
+            "managedAllocatedBytes": 68,
+            "managedCollections": 0,
+            "managedCollectionPauseMs": 0
+          },
+          {
+            "block": 9,
+            "position": 1,
+            "elapsedMs": 2.7859320000006846,
+            "memory": {
+              "rss": {
+                "beforeBytes": 214683648,
+                "afterBytes": 214683648,
+                "deltaBytes": 0
+              },
+              "heapUsed": {
+                "beforeBytes": 75336840,
+                "afterBytes": 75846592,
+                "deltaBytes": 509752
+              },
+              "heapTotal": {
+                "beforeBytes": 213000192,
+                "afterBytes": 213000192,
+                "deltaBytes": 0
+              },
+              "external": {
+                "beforeBytes": 4086244,
+                "afterBytes": 4086244,
+                "deltaBytes": 0
+              },
+              "arrayBuffers": {
+                "beforeBytes": 237407,
+                "afterBytes": 237407,
+                "deltaBytes": 0
+              }
+            },
+            "instructions": 8,
+            "managedAllocations": 2,
+            "managedAllocatedBytes": 68,
+            "managedCollections": 0,
+            "managedCollectionPauseMs": 0
+          },
+          {
+            "block": 9,
+            "position": 2,
+            "elapsedMs": 2.7840090000008786,
+            "memory": {
+              "rss": {
+                "beforeBytes": 214683648,
+                "afterBytes": 214683648,
+                "deltaBytes": 0
+              },
+              "heapUsed": {
+                "beforeBytes": 75343480,
+                "afterBytes": 75854688,
+                "deltaBytes": 511208
+              },
+              "heapTotal": {
+                "beforeBytes": 213000192,
+                "afterBytes": 213000192,
+                "deltaBytes": 0
+              },
+              "external": {
+                "beforeBytes": 4086244,
+                "afterBytes": 4086244,
+                "deltaBytes": 0
+              },
+              "arrayBuffers": {
+                "beforeBytes": 237407,
+                "afterBytes": 237407,
+                "deltaBytes": 0
+              }
+            },
+            "instructions": 8,
+            "managedAllocations": 2,
+            "managedAllocatedBytes": 68,
+            "managedCollections": 0,
+            "managedCollectionPauseMs": 0
+          }
+        ]
+      },
+      "summary": {
+        "baseline": {
+          "elapsedMs": {
+            "median": 2.615535999999338,
+            "p95": 3.603943000000072,
+            "min": 1.912439000001541,
+            "max": 3.9647530000002007
+          },
+          "instructions": {
+            "median": 7,
+            "p95": 7,
+            "min": 7,
+            "max": 7
+          },
+          "managedAllocations": {
+            "median": 2,
+            "p95": 2,
+            "min": 2,
+            "max": 2
+          },
+          "managedAllocatedBytes": {
+            "median": 68,
+            "p95": 68,
+            "min": 68,
+            "max": 68
+          },
+          "managedCollections": {
+            "median": 0,
+            "p95": 0,
+            "min": 0,
+            "max": 0
+          },
+          "managedCollectionPauseMs": {
+            "median": 0,
+            "p95": 0,
+            "min": 0,
+            "max": 0
+          },
+          "memoryDeltaBytes": {
+            "rss": {
+              "median": 0,
+              "p95": 0,
+              "min": 0,
+              "max": 0
+            },
+            "heapUsed": {
+              "median": 479720,
+              "p95": 479936,
+              "min": 479720,
+              "max": 479936
+            },
+            "heapTotal": {
+              "median": 0,
+              "p95": 0,
+              "min": 0,
+              "max": 0
+            },
+            "external": {
+              "median": 0,
+              "p95": 0,
+              "min": 0,
+              "max": 0
+            },
+            "arrayBuffers": {
+              "median": 0,
+              "p95": 0,
+              "min": 0,
+              "max": 0
+            }
+          }
+        },
+        "candidate": {
+          "elapsedMs": {
+            "median": 2.8305669999999736,
+            "p95": 5.434482000000571,
+            "min": 2.212710000001607,
+            "max": 15.386678000000757
+          },
+          "instructions": {
+            "median": 8,
+            "p95": 8,
+            "min": 8,
+            "max": 8
+          },
+          "managedAllocations": {
+            "median": 2,
+            "p95": 2,
+            "min": 2,
+            "max": 2
+          },
+          "managedAllocatedBytes": {
+            "median": 68,
+            "p95": 68,
+            "min": 68,
+            "max": 68
+          },
+          "managedCollections": {
+            "median": 0,
+            "p95": 0,
+            "min": 0,
+            "max": 0
+          },
+          "managedCollectionPauseMs": {
+            "median": 0,
+            "p95": 0,
+            "min": 0,
+            "max": 0
+          },
+          "memoryDeltaBytes": {
+            "rss": {
+              "median": 0,
+              "p95": 0,
+              "min": 0,
+              "max": 131072
+            },
+            "heapUsed": {
+              "median": 509752,
+              "p95": 511208,
+              "min": 509696,
+              "max": 513464
+            },
+            "heapTotal": {
+              "median": 0,
+              "p95": 0,
+              "min": 0,
+              "max": 0
+            },
+            "external": {
+              "median": 0,
+              "p95": 0,
+              "min": 0,
+              "max": 0
+            },
+            "arrayBuffers": {
+              "median": 0,
+              "p95": 0,
+              "min": 0,
+              "max": 0
+            }
+          }
+        }
+      },
+      "comparison": {
+        "medianChangePercent": 8.221297661385286,
+        "p95ChangePercent": 50.792673469043834,
+        "peSizeChangePercent": 0,
+        "blockMeanRatios": [
+          1.226255004289658,
+          0.8954113960464196,
+          1.159838304713019,
+          1.0609759352331394,
+          1.6473840180745067,
+          2.756707900608528,
+          1.2795484614880033,
+          1.026132153074257,
+          1.1428370655889684,
+          1.2175242725979762
+        ],
+        "blockMeanRatio": {
+          "median": 1.1886812886554976,
+          "p95": 2.756707900608528,
+          "min": 0.8954113960464196,
+          "max": 2.756707900608528
+        },
+        "exceedsFivePercentMedianBudget": true,
+        "exceedsTenPercentPeSizeBudget": false
+      }
+    }
+  ]
+}

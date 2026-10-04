@@ -518,6 +518,13 @@
       "count": 1,
       "sha256": "8ed551f7f2714711b0a7a5155edf2d9cbb0d5877dbfd838b917f9318dc5a0da1",
       "reason": "Developer-run paired benchmark loads the fixed compiler public entry from two explicitly selected trusted local checkouts. Exact clean commit identities and checkout-local workspace aliases are verified before importing; managed source never selects JavaScript modules. The benchmark is not shipped in the product."
+    },
+    {
+      "path": "packages/compiler/bench/module-startup-benchmark-checkouts.js",
+      "operation": "dynamic-import",
+      "count": 1,
+      "sha256": "6aa324809e5b796f72a36b7ba972cc67754880600c285977e9f9e2978b435312",
+      "reason": "Operator-selected trusted clean exact-SHA checkouts supply only fixed public compiler, runtime and CIL exports plus optional compiler/node. Every transitive workspace alias is verified inside its checkout before loading and again before reporting, with physical links and resolved entries checked. Exact production source/package/manifest Git objects record intentional whole-revision runtime and CIL changes. Program source never forms a module specifier."
     }
   ]
 }

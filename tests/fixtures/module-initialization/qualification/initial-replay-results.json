@@ -1,0 +1,28 @@
+{
+  "afterFixBaseline": {
+    "commit": "629a86aae8ab453a0e35785e64513d2e78a7669e",
+    "tests": 23,
+    "passed": 23,
+    "failed": 0,
+    "skipped": 0,
+    "durationMs": 2128.679099,
+    "log": "after-fix-baseline.log"
+  },
+  "initialFocusedNative": {
+    "commit": "2759049544583680e744f4fa70d04e723c0ff639",
+    "tests": 114,
+    "passed": 111,
+    "failed": 3,
+    "skipped": 0,
+    "durationMs": 11003.151489,
+    "log": "initial-focused-native.log",
+    "failures": [
+      "AsyncMain executes with expected output on native CLR, but CIL VM rejects five unimplemented framework task/awaiter/builder members with IL_REFERENCE. This is retained as an explicit VM admission boundary, not a native failure or VM execution pass.",
+      "Two CLI integration tests could not find apps/cli/main.js because the sparse checkout omitted apps/cli. Restore tracked CLI files and rerun."
+    ]
+  },
+  "logs": {
+    "after-fix-baseline.log": "d229f1bdbb477d560646b952b1dcb30b84c42d2fe52be039e28bbd988ef3828b",
+    "initial-focused-native.log": "83d36756a9513df53c481c27094d68e7ac3eca7dc02433e203a35bfbaae97a60"
+  }
+}

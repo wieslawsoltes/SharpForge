@@ -1,0 +1,33 @@
+{
+  "sourceCommit": "629a86aae8ab453a0e35785e64513d2e78a7669e",
+  "sdk": "10.0.201",
+  "capture": "Roslyn 5.3.0.0, 5.3.0-2.26153.122+4d3023de605a78ba3e59e50c657eed70f125c68a",
+  "referencePack": "10.0.5",
+  "selectedFixtures": [
+    "module-initialization/plain-main",
+    "module-initialization/static-field-main",
+    "module-initialization/static-constructor-main",
+    "module-initialization/initializer-calls-entry-type",
+    "module-initialization/declaration-order-once",
+    "module-initialization/pre-entry-fault",
+    "module-initialization/no-initializers"
+  ],
+  "pinnedSha256": "7a802de6d6ab534851568c3313ddec74061a990cc7bf5cde523c82ff6cd7f671",
+  "unrelatedTrackedPinsChanged": [],
+  "artifacts": {
+    "genuine-capture.log": "25da8540a5a4549af9ce80e63458d5e828a9101071c1e1c0d317cfe408a620a3",
+    "genuine-input.json": "68d7f7b452a2427f8d6fd4fa89f33643b7007ad0ee153c5f70298e93f7904a52",
+    "genuine-output.json": "db493a72435d22f1aed9052204dda435b9cc5d4cabbdad95236f57ccb74e50ce"
+  },
+  "command": [
+    "node",
+    "scripts/limited.js",
+    "node",
+    "packages/compiler/test/differential/tools/pin.mjs",
+    "--only",
+    "module-initialization/plain-main,module-initialization/static-field-main,module-initialization/static-constructor-main,module-initialization/initializer-calls-entry-type,module-initialization/declaration-order-once,module-initialization/pre-entry-fault,module-initialization/no-initializers",
+    "--list",
+    "--scratch",
+    "/workspace/scratch/1692a10afba9/module-initialization-oracle"
+  ]
+}
