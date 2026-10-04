@@ -20,6 +20,7 @@ import {DesignerOptionsController} from './designer-options-view.js';
 import {DesignerAssetPreviewController} from './designer-property-preview.js';
 import {mountDesignerSurface, resizeDesignerArtboard} from './designer-surface-view.js';
 import {createDesignerActions, renderDesignerSource} from './designer-actions.js';
+import {disposeDesignerTools} from './designer-tools-disposal.js';
 
 export const DESIGN_TOOLS = Object.freeze(['designer', 'designer-toolbox', 'designer-tree', 'designer-properties',
   'designer-layout', 'designer-styles', 'designer-source']);
@@ -349,15 +350,5 @@ export class DesignerTools {
       live: !!this.live, status: this.status, zoom: this.zoom, metrics: this.metrics};
   }
 
-  dispose() {
-    if (this.disposed) return;
-    this.disposed = true;
-    this.modelSubscription?.();
-    this.resizeObserver?.disconnect();
-    for (const resource of [this.liveAttachment, this.surface, this.accessibility, this.outline, this.toolbox,
-      this.properties, this.resources, this.resourceGallery, this.resourceContext, this.options, this.assetPreviewController, this.assetPreviews,
-      this.chrome, this.treeView, this.host]) resource?.dispose?.();
-    this.menu.close();
-    if (this.ownsSession) this.session.dispose();
-  }
+  dispose() { disposeDesignerTools(this); }
 }
