@@ -1,0 +1,85 @@
+{
+  "label": "baseline-62126153",
+  "node": "v24.21.0",
+  "platform": "darwin",
+  "architecture": "arm64",
+  "scope": "Cold first naming pass after metadata parsing; seven serial samples",
+  "observations": [
+    {
+      "count": 1000,
+      "metadataBytes": 27153,
+      "medianMs": 7.660916,
+      "p95Ms": 7.895541999999978,
+      "medianHeapDelta": 791520,
+      "underOneSecondEverySample": true,
+      "samples": [
+        {
+          "durationMs": 7.660916,
+          "heapDelta": 1024440
+        },
+        {
+          "durationMs": 7.422957999999994,
+          "heapDelta": 811640
+        },
+        {
+          "durationMs": 7.892333000000008,
+          "heapDelta": 791472
+        },
+        {
+          "durationMs": 7.895541999999978,
+          "heapDelta": 791520
+        },
+        {
+          "durationMs": 7.856667000000016,
+          "heapDelta": 792032
+        },
+        {
+          "durationMs": 7.657624999999996,
+          "heapDelta": 727832
+        },
+        {
+          "durationMs": 7.465834000000001,
+          "heapDelta": 692448
+        }
+      ]
+    },
+    {
+      "count": 5000,
+      "metadataBytes": 139153,
+      "medianMs": 176.27762499999994,
+      "p95Ms": 188.23716599999997,
+      "medianHeapDelta": 3622280,
+      "underOneSecondEverySample": true,
+      "samples": [
+        {
+          "durationMs": 188.23716599999997,
+          "heapDelta": 3641320
+        },
+        {
+          "durationMs": 174.59391699999998,
+          "heapDelta": 3622280
+        },
+        {
+          "durationMs": 174.22070900000006,
+          "heapDelta": 3622280
+        },
+        {
+          "durationMs": 176.27762499999994,
+          "heapDelta": 3634216
+        },
+        {
+          "durationMs": 185.84795800000006,
+          "heapDelta": 3642384
+        },
+        {
+          "durationMs": 187.59924999999998,
+          "heapDelta": 3622280
+        },
+        {
+          "durationMs": 168.02470799999992,
+          "heapDelta": 3438048
+        }
+      ]
+    }
+  ]
+}

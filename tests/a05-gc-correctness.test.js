@@ -104,5 +104,6 @@ test('GC source typing: Int64 results cannot silently narrow into an Int32 local
   assert.equal(BuiltinMap.get('GC.GetTotalMemory').result, 'long');
   const result = compile('int bytes = GC.GetTotalMemory(false);');
   assert.equal(result.success, false);
-  assert(result.diagnostics.some(diagnostic => diagnostic.code === 'CS0029'));
+  // Roslyn 5.3.0: long converts to int explicitly, so the error is CS0266 on the call (not CS0029 on the declarator).
+  assert.deepEqual(result.diagnostics.map(diagnostic => [diagnostic.code, diagnostic.severity, diagnostic.start, diagnostic.length]), [['CS0266', 'error', 12, 24]]);
 });
