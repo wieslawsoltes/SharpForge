@@ -22,6 +22,7 @@ function extensionContracts({member}) {
   member(parentType, 'Write', ['char[]', 'int', 'int'], 'void');
   member(parentType, 'WriteLine', ['char[]'], 'void');
   member(parentType, 'WriteLine', ['char[]', 'int', 'int'], 'void');
+  member(parentType, 'WriteLine', ['char'], 'void');
 }
 
 function invoke(platform, descriptor, args, type = platform.bclHost.frameworkType(descriptor.owner)) {

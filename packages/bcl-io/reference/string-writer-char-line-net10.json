@@ -1,0 +1,821 @@
+{
+  "sdk": "10.0.201",
+  "runtime": "10.0.5",
+  "sourceSha256": "8c7250a1ab1365a100e9dc6be46d8846675b2324582184a3a572aa9236259a6c",
+  "rows": [
+    {
+      "id": "unit-0/StringWriter",
+      "baseView": false,
+      "value": 0,
+      "disposed": false,
+      "nullWriter": false,
+      "newLine": null,
+      "setNewLine": false,
+      "output": [
+        115,
+        101,
+        101,
+        100,
+        124,
+        0,
+        10
+      ],
+      "fault": null
+    },
+    {
+      "id": "unit-0/TextWriter",
+      "baseView": true,
+      "value": 0,
+      "disposed": false,
+      "nullWriter": false,
+      "newLine": null,
+      "setNewLine": false,
+      "output": [
+        115,
+        101,
+        101,
+        100,
+        124,
+        0,
+        10
+      ],
+      "fault": null
+    },
+    {
+      "id": "unit-10/StringWriter",
+      "baseView": false,
+      "value": 10,
+      "disposed": false,
+      "nullWriter": false,
+      "newLine": null,
+      "setNewLine": false,
+      "output": [
+        115,
+        101,
+        101,
+        100,
+        124,
+        10,
+        10
+      ],
+      "fault": null
+    },
+    {
+      "id": "unit-10/TextWriter",
+      "baseView": true,
+      "value": 10,
+      "disposed": false,
+      "nullWriter": false,
+      "newLine": null,
+      "setNewLine": false,
+      "output": [
+        115,
+        101,
+        101,
+        100,
+        124,
+        10,
+        10
+      ],
+      "fault": null
+    },
+    {
+      "id": "unit-13/StringWriter",
+      "baseView": false,
+      "value": 13,
+      "disposed": false,
+      "nullWriter": false,
+      "newLine": null,
+      "setNewLine": false,
+      "output": [
+        115,
+        101,
+        101,
+        100,
+        124,
+        13,
+        10
+      ],
+      "fault": null
+    },
+    {
+      "id": "unit-13/TextWriter",
+      "baseView": true,
+      "value": 13,
+      "disposed": false,
+      "nullWriter": false,
+      "newLine": null,
+      "setNewLine": false,
+      "output": [
+        115,
+        101,
+        101,
+        100,
+        124,
+        13,
+        10
+      ],
+      "fault": null
+    },
+    {
+      "id": "unit-65/StringWriter",
+      "baseView": false,
+      "value": 65,
+      "disposed": false,
+      "nullWriter": false,
+      "newLine": null,
+      "setNewLine": false,
+      "output": [
+        115,
+        101,
+        101,
+        100,
+        124,
+        65,
+        10
+      ],
+      "fault": null
+    },
+    {
+      "id": "unit-65/TextWriter",
+      "baseView": true,
+      "value": 65,
+      "disposed": false,
+      "nullWriter": false,
+      "newLine": null,
+      "setNewLine": false,
+      "output": [
+        115,
+        101,
+        101,
+        100,
+        124,
+        65,
+        10
+      ],
+      "fault": null
+    },
+    {
+      "id": "unit-55295/StringWriter",
+      "baseView": false,
+      "value": 55295,
+      "disposed": false,
+      "nullWriter": false,
+      "newLine": null,
+      "setNewLine": false,
+      "output": [
+        115,
+        101,
+        101,
+        100,
+        124,
+        55295,
+        10
+      ],
+      "fault": null
+    },
+    {
+      "id": "unit-55295/TextWriter",
+      "baseView": true,
+      "value": 55295,
+      "disposed": false,
+      "nullWriter": false,
+      "newLine": null,
+      "setNewLine": false,
+      "output": [
+        115,
+        101,
+        101,
+        100,
+        124,
+        55295,
+        10
+      ],
+      "fault": null
+    },
+    {
+      "id": "unit-55296/StringWriter",
+      "baseView": false,
+      "value": 55296,
+      "disposed": false,
+      "nullWriter": false,
+      "newLine": null,
+      "setNewLine": false,
+      "output": [
+        115,
+        101,
+        101,
+        100,
+        124,
+        55296,
+        10
+      ],
+      "fault": null
+    },
+    {
+      "id": "unit-55296/TextWriter",
+      "baseView": true,
+      "value": 55296,
+      "disposed": false,
+      "nullWriter": false,
+      "newLine": null,
+      "setNewLine": false,
+      "output": [
+        115,
+        101,
+        101,
+        100,
+        124,
+        55296,
+        10
+      ],
+      "fault": null
+    },
+    {
+      "id": "unit-56319/StringWriter",
+      "baseView": false,
+      "value": 56319,
+      "disposed": false,
+      "nullWriter": false,
+      "newLine": null,
+      "setNewLine": false,
+      "output": [
+        115,
+        101,
+        101,
+        100,
+        124,
+        56319,
+        10
+      ],
+      "fault": null
+    },
+    {
+      "id": "unit-56319/TextWriter",
+      "baseView": true,
+      "value": 56319,
+      "disposed": false,
+      "nullWriter": false,
+      "newLine": null,
+      "setNewLine": false,
+      "output": [
+        115,
+        101,
+        101,
+        100,
+        124,
+        56319,
+        10
+      ],
+      "fault": null
+    },
+    {
+      "id": "unit-56320/StringWriter",
+      "baseView": false,
+      "value": 56320,
+      "disposed": false,
+      "nullWriter": false,
+      "newLine": null,
+      "setNewLine": false,
+      "output": [
+        115,
+        101,
+        101,
+        100,
+        124,
+        56320,
+        10
+      ],
+      "fault": null
+    },
+    {
+      "id": "unit-56320/TextWriter",
+      "baseView": true,
+      "value": 56320,
+      "disposed": false,
+      "nullWriter": false,
+      "newLine": null,
+      "setNewLine": false,
+      "output": [
+        115,
+        101,
+        101,
+        100,
+        124,
+        56320,
+        10
+      ],
+      "fault": null
+    },
+    {
+      "id": "unit-57343/StringWriter",
+      "baseView": false,
+      "value": 57343,
+      "disposed": false,
+      "nullWriter": false,
+      "newLine": null,
+      "setNewLine": false,
+      "output": [
+        115,
+        101,
+        101,
+        100,
+        124,
+        57343,
+        10
+      ],
+      "fault": null
+    },
+    {
+      "id": "unit-57343/TextWriter",
+      "baseView": true,
+      "value": 57343,
+      "disposed": false,
+      "nullWriter": false,
+      "newLine": null,
+      "setNewLine": false,
+      "output": [
+        115,
+        101,
+        101,
+        100,
+        124,
+        57343,
+        10
+      ],
+      "fault": null
+    },
+    {
+      "id": "unit-57344/StringWriter",
+      "baseView": false,
+      "value": 57344,
+      "disposed": false,
+      "nullWriter": false,
+      "newLine": null,
+      "setNewLine": false,
+      "output": [
+        115,
+        101,
+        101,
+        100,
+        124,
+        57344,
+        10
+      ],
+      "fault": null
+    },
+    {
+      "id": "unit-57344/TextWriter",
+      "baseView": true,
+      "value": 57344,
+      "disposed": false,
+      "nullWriter": false,
+      "newLine": null,
+      "setNewLine": false,
+      "output": [
+        115,
+        101,
+        101,
+        100,
+        124,
+        57344,
+        10
+      ],
+      "fault": null
+    },
+    {
+      "id": "unit-65535/StringWriter",
+      "baseView": false,
+      "value": 65535,
+      "disposed": false,
+      "nullWriter": false,
+      "newLine": null,
+      "setNewLine": false,
+      "output": [
+        115,
+        101,
+        101,
+        100,
+        124,
+        65535,
+        10
+      ],
+      "fault": null
+    },
+    {
+      "id": "unit-65535/TextWriter",
+      "baseView": true,
+      "value": 65535,
+      "disposed": false,
+      "nullWriter": false,
+      "newLine": null,
+      "setNewLine": false,
+      "output": [
+        115,
+        101,
+        101,
+        100,
+        124,
+        65535,
+        10
+      ],
+      "fault": null
+    },
+    {
+      "id": "disposed-nul/StringWriter",
+      "baseView": false,
+      "value": 0,
+      "disposed": true,
+      "nullWriter": false,
+      "newLine": null,
+      "setNewLine": false,
+      "output": [
+        115,
+        101,
+        101,
+        100,
+        124
+      ],
+      "fault": "ObjectDisposedException"
+    },
+    {
+      "id": "disposed-nul/TextWriter",
+      "baseView": true,
+      "value": 0,
+      "disposed": true,
+      "nullWriter": false,
+      "newLine": null,
+      "setNewLine": false,
+      "output": [
+        115,
+        101,
+        101,
+        100,
+        124
+      ],
+      "fault": "ObjectDisposedException"
+    },
+    {
+      "id": "disposed-surrogate/StringWriter",
+      "baseView": false,
+      "value": 55296,
+      "disposed": true,
+      "nullWriter": false,
+      "newLine": null,
+      "setNewLine": false,
+      "output": [
+        115,
+        101,
+        101,
+        100,
+        124
+      ],
+      "fault": "ObjectDisposedException"
+    },
+    {
+      "id": "disposed-surrogate/TextWriter",
+      "baseView": true,
+      "value": 55296,
+      "disposed": true,
+      "nullWriter": false,
+      "newLine": null,
+      "setNewLine": false,
+      "output": [
+        115,
+        101,
+        101,
+        100,
+        124
+      ],
+      "fault": "ObjectDisposedException"
+    },
+    {
+      "id": "null-receiver-nul/StringWriter",
+      "baseView": false,
+      "value": 0,
+      "disposed": false,
+      "nullWriter": true,
+      "newLine": null,
+      "setNewLine": false,
+      "output": null,
+      "fault": "NullReferenceException"
+    },
+    {
+      "id": "null-receiver-nul/TextWriter",
+      "baseView": true,
+      "value": 0,
+      "disposed": false,
+      "nullWriter": true,
+      "newLine": null,
+      "setNewLine": false,
+      "output": null,
+      "fault": "NullReferenceException"
+    },
+    {
+      "id": "null-receiver-max/StringWriter",
+      "baseView": false,
+      "value": 65535,
+      "disposed": false,
+      "nullWriter": true,
+      "newLine": null,
+      "setNewLine": false,
+      "output": null,
+      "fault": "NullReferenceException"
+    },
+    {
+      "id": "null-receiver-max/TextWriter",
+      "baseView": true,
+      "value": 65535,
+      "disposed": false,
+      "nullWriter": true,
+      "newLine": null,
+      "setNewLine": false,
+      "output": null,
+      "fault": "NullReferenceException"
+    },
+    {
+      "id": "empty-newline/StringWriter",
+      "baseView": false,
+      "value": 65,
+      "disposed": false,
+      "nullWriter": false,
+      "newLine": [],
+      "setNewLine": true,
+      "output": [
+        115,
+        101,
+        101,
+        100,
+        124,
+        65
+      ],
+      "fault": null
+    },
+    {
+      "id": "empty-newline/TextWriter",
+      "baseView": true,
+      "value": 65,
+      "disposed": false,
+      "nullWriter": false,
+      "newLine": [],
+      "setNewLine": true,
+      "output": [
+        115,
+        101,
+        101,
+        100,
+        124,
+        65
+      ],
+      "fault": null
+    },
+    {
+      "id": "custom-newline/StringWriter",
+      "baseView": false,
+      "value": 65,
+      "disposed": false,
+      "nullWriter": false,
+      "newLine": [
+        60,
+        13,
+        10,
+        62
+      ],
+      "setNewLine": true,
+      "output": [
+        115,
+        101,
+        101,
+        100,
+        124,
+        65,
+        60,
+        13,
+        10,
+        62
+      ],
+      "fault": null
+    },
+    {
+      "id": "custom-newline/TextWriter",
+      "baseView": true,
+      "value": 65,
+      "disposed": false,
+      "nullWriter": false,
+      "newLine": [
+        60,
+        13,
+        10,
+        62
+      ],
+      "setNewLine": true,
+      "output": [
+        115,
+        101,
+        101,
+        100,
+        124,
+        65,
+        60,
+        13,
+        10,
+        62
+      ],
+      "fault": null
+    },
+    {
+      "id": "reset-newline/StringWriter",
+      "baseView": false,
+      "value": 65,
+      "disposed": false,
+      "nullWriter": false,
+      "newLine": null,
+      "setNewLine": true,
+      "output": [
+        115,
+        101,
+        101,
+        100,
+        124,
+        65,
+        10
+      ],
+      "fault": null
+    },
+    {
+      "id": "reset-newline/TextWriter",
+      "baseView": true,
+      "value": 65,
+      "disposed": false,
+      "nullWriter": false,
+      "newLine": null,
+      "setNewLine": true,
+      "output": [
+        115,
+        101,
+        101,
+        100,
+        124,
+        65,
+        10
+      ],
+      "fault": null
+    },
+    {
+      "id": "unicode-newline/StringWriter",
+      "baseView": false,
+      "value": 55296,
+      "disposed": false,
+      "nullWriter": false,
+      "newLine": [
+        0,
+        56320,
+        65535
+      ],
+      "setNewLine": true,
+      "output": [
+        115,
+        101,
+        101,
+        100,
+        124,
+        55296,
+        0,
+        56320,
+        65535
+      ],
+      "fault": null
+    },
+    {
+      "id": "unicode-newline/TextWriter",
+      "baseView": true,
+      "value": 55296,
+      "disposed": false,
+      "nullWriter": false,
+      "newLine": [
+        0,
+        56320,
+        65535
+      ],
+      "setNewLine": true,
+      "output": [
+        115,
+        101,
+        101,
+        100,
+        124,
+        55296,
+        0,
+        56320,
+        65535
+      ],
+      "fault": null
+    },
+    {
+      "id": "disposed-empty-newline/StringWriter",
+      "baseView": false,
+      "value": 0,
+      "disposed": true,
+      "nullWriter": false,
+      "newLine": [],
+      "setNewLine": true,
+      "output": [
+        115,
+        101,
+        101,
+        100,
+        124
+      ],
+      "fault": "ObjectDisposedException"
+    },
+    {
+      "id": "disposed-empty-newline/TextWriter",
+      "baseView": true,
+      "value": 0,
+      "disposed": true,
+      "nullWriter": false,
+      "newLine": [],
+      "setNewLine": true,
+      "output": [
+        115,
+        101,
+        101,
+        100,
+        124
+      ],
+      "fault": "ObjectDisposedException"
+    }
+  ],
+  "transitions": [
+    {
+      "mode": "newline",
+      "baseView": false,
+      "value": 55296,
+      "fault": null,
+      "output": [
+        115,
+        101,
+        101,
+        100,
+        124,
+        55296,
+        33
+      ],
+      "newLine": [
+        33
+      ]
+    },
+    {
+      "mode": "newline",
+      "baseView": true,
+      "value": 55296,
+      "fault": null,
+      "output": [
+        115,
+        101,
+        101,
+        100,
+        124,
+        55296,
+        33
+      ],
+      "newLine": [
+        33
+      ]
+    },
+    {
+      "mode": "dispose",
+      "baseView": false,
+      "value": 55296,
+      "fault": "ObjectDisposedException",
+      "output": [
+        115,
+        101,
+        101,
+        100,
+        124,
+        55296
+      ],
+      "newLine": [
+        124
+      ]
+    },
+    {
+      "mode": "dispose",
+      "baseView": true,
+      "value": 55296,
+      "fault": "ObjectDisposedException",
+      "output": [
+        115,
+        101,
+        101,
+        100,
+        124,
+        55296
+      ],
+      "newLine": [
+        124
+      ]
+    }
+  ]
+}

@@ -43,9 +43,11 @@ function appendNewLine(platform, builder, reference) {
 
 function write(platform, descriptor, reference, value) {
   const builder = platform.get(reference, '$builder');
-  if (descriptor.name === 'Write' && descriptor.parameters[0] === 'char') {
+  if (descriptor.parameters[0] === 'char') {
     const unit = integer(platform, bclScalar(platform, value), 0, 65535);
     appendWriterBuilder(platform, builder, String.fromCharCode(unit));
+    // TextWriter.WriteLine(char) re-enters the parameterless newline gate after Write(char).
+    if (descriptor.name === 'WriteLine') requireOpen(platform, reference);
   } else if (descriptor.parameters.length) {
     string(platform, value, true);
     if (value !== null) appendWriterBuilder(platform, builder, value);
