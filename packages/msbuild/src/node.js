@@ -18,3 +18,7 @@ export * from './design-time.js';
 export * from './design-time-cache.js';
 export * from './design-time-generated.js';
 export * from './native-metadata.js';
+export * from './project-graph.js';
+export * from './native-project-graph.js';
+export * from './up-to-date.js';
+export * from './build-service.js';
