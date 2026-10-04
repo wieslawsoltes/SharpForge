@@ -18,6 +18,8 @@ import { SymbolMetadataWriter } from './symbol-metadata.js';
 import { CustomAttributeWriter } from './custom-attributes.js';
 import { MetadataEmitError } from './type-tokens.js';
 
+import { RecordPlan } from './record-plan.js';
+
 const CLI_HEADER_SIZE = 72;
 /** `ldnull; throw`. */
 const THROW_NULL = Uint8Array.of(0x14, 0x7a);
@@ -33,7 +35,9 @@ export function emitReferenceAssembly(analysis, options = {}) {
   // Every body is the same two instructions, so all methods share one body, as Roslyn shares identical small bodies.
   const bodyRva = TEXT_RVA + section.length;
   section.bytes(writeMethodBody(THROW_NULL, 0, 1, []));
-  const writer = new SymbolMetadataWriter(builder, analysis, { bodyRva }).write();
+  const records = new RecordPlan(analysis.core),
+    synthesized = { types: [], extend: (type, plan) => records.extend(type, plan) },
+    writer = new SymbolMetadataWriter(builder, analysis, { bodyRva, synthesized }).write();
   new CustomAttributeWriter(writer, analysis).write();
   section.pad();
   const metadataOffset = section.length,

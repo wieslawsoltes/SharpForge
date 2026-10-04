@@ -1,0 +1,7 @@
+IL_FILTER: Exception filters are inspection-only
+IL_OPCODE: Opcode 'endfilter' is inspection-only
+IL_REFERENCE: External member 'System.ArgumentException::.ctor' is not implemented
+IL_REFERENCE: External member 'System.InvalidOperationException::.ctor' is not implemented
+IL_REFERENCE: External member 'System.NotSupportedException::.ctor' is not implemented
+IL_REFERENCE: External member 'System.Threading.Monitor::Enter' is not implemented
+IL_REFERENCE: External member 'System.Threading.Monitor::Exit' is not implemented

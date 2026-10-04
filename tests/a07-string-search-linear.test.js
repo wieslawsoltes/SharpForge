@@ -4,17 +4,26 @@ import {readFileSync} from 'node:fs';
 import {compileToIL} from '@sharpforge/compiler';
 import {findContracts} from '@sharpforge/framework';
 import {VirtualMachine, CilVirtualMachine} from '@sharpforge/runtime';
-import {indexOfWithComparison} from '../packages/bcl-core/src/system/string-search.js';
-import {indexOfOrdinalIgnoreCase} from '../packages/bcl-core/src/system/string-search-linear.js';
+import {indexOfWithComparison, indexOfFromWithComparison, lastIndexOfWithComparison} from '../packages/bcl-core/src/system/string-search.js';
+import {indexOfOrdinalIgnoreCase, lastIndexOfOrdinalIgnoreCase} from '../packages/bcl-core/src/system/string-search-linear.js';
 import {equalsOrdinalIgnoreCaseRange} from '../packages/bcl-core/src/system/string-compare.js';
 import {simpleUpperPoint} from '../packages/bcl-core/src/system/casing.js';
 import {upperCaseRanges} from '../packages/bcl-core/src/system/unicode-upper-case.js';
 import {containsComparisonAssembly, containsExpectedFault} from './fixtures/comparers/string-contains-comparison.js';
 import {indexOfComparisonAssembly, indexOfExpectedFault} from './fixtures/comparers/string-indexof-comparison.js';
+import {indexOfStartAssembly} from './fixtures/comparers/string-indexof-comparison-start.js';
+import {lastIndexOfComparisonAssembly} from './fixtures/comparers/string-lastindexof-comparison.js';
 
 // This is the released bounded matcher and candidate loop, retained only as an independent differential oracle.
-function previousSearch(source, needle) {
-  for (let start = 0; start <= source.length - needle.length; start++) {
+function previousSearch(source, needle, startIndex = 0) {
+  for (let start = startIndex; start <= source.length - needle.length; start++) {
+    if (equalsOrdinalIgnoreCaseRange(source, start, needle)) return start;
+  }
+  return -1;
+}
+
+function previousLastSearch(source, needle) {
+  for (let start = source.length - needle.length; start >= 0; start--) {
     if (equalsOrdinalIgnoreCaseRange(source, start, needle)) return start;
   }
   return -1;
@@ -159,6 +168,88 @@ test('Linear string search: eight/nine-unit threshold retains offsets and bounde
 
 const executionCases = [...boundaryCases, ...thresholdCases];
 
+function countedPrefix(source, needle, startIndex, findLast) {
+  const reads = {source: 0, needle: 0, minimum: Infinity, maximum: -1};
+  const view = (value, kind) => ({
+    length: value.length,
+    charCodeAt(index) {
+      reads[kind]++;
+      if (kind === 'source') {
+        reads.minimum = Math.min(reads.minimum, index);
+        reads.maximum = Math.max(reads.maximum, index);
+      }
+      return value.charCodeAt(index);
+    }
+  });
+  const first = view(source, 'source');
+  const second = view(needle, 'needle');
+  const result = findLast ? lastIndexOfOrdinalIgnoreCase(first, second) : indexOfOrdinalIgnoreCase(first, second, startIndex);
+  return {result, reads};
+}
+
+test('Linear string search: absent leading raw unit skips core factorization for first and last searches', () => {
+  for (const length of [128, 512, 2048]) {
+    const source = 'é'.repeat(length);
+    const needle = '\uDC28' + 'É'.repeat(length / 4);
+    for (const findLast of [false, true]) {
+      const start = findLast ? 0 : 7;
+      const {result, reads} = countedPrefix(source, needle, start, findLast);
+      assert.equal(result, -1);
+      assert.equal(reads.source, source.length - needle.length - start + 1, 'Read each eligible raw prefix exactly once');
+      assert(reads.needle <= 3, `Absent prefix must skip factorization, observed ${reads.needle} needle reads`);
+      assert.equal(reads.minimum, start);
+      assert.equal(reads.maximum, source.length - needle.length);
+    }
+  }
+});
+
+test('Linear string search: prefix prescan observes the start/full-window bounds and original paired low unit', () => {
+  const cases = [
+    ['\uDC28' + 'é'.repeat(128), '\uDC28' + 'É'.repeat(16), 1],
+    ['é'.repeat(128) + '\uDC28', '\uDC28' + 'É'.repeat(16), 7],
+    ['\uD801\uDC28' + 'é'.repeat(128), '\uDC00' + 'É'.repeat(16), 0]
+  ];
+  for (const [source, needle, start] of cases) {
+    const {result, reads} = countedPrefix(source, needle, start, false);
+    assert.equal(result, previousSearch(source, needle, start));
+    assert.equal(result, -1);
+    assert.equal(reads.source, source.length - needle.length - start + 1);
+    assert(reads.needle <= 3, 'An ineligible or differently folded prefix must not trigger factorization');
+    assert.equal(reads.minimum, start);
+    assert.equal(reads.maximum, source.length - needle.length);
+  }
+});
+
+const prefixNeedle = '\uDC28' + 'É'.repeat(16) + '\uD801';
+const prefixMatch = '\uDC28' + 'é'.repeat(16) + '\uD801';
+const prefixCases = [
+  [prefixMatch + 'x' + prefixMatch, prefixNeedle, 0],
+  [prefixMatch + 'x' + prefixMatch, prefixNeedle, 1],
+  ['x' + prefixMatch, prefixNeedle, 1],
+  ['\uD801' + prefixMatch + '\uDC28x' + prefixMatch, prefixNeedle, 1],
+  ['\uDC28' + 'é'.repeat(15) + 'b\uD801x' + prefixMatch, prefixNeedle, 0],
+  ['\uDC28' + 'é'.repeat(256), prefixNeedle, 0],
+  ['\uDC28é'.repeat(128) + '\uD801', '\uDC28' + 'É\uDC28'.repeat(8) + 'É\uD801', 3],
+  ['é'.repeat(128) + '\uDC28', '\uDC28' + 'É'.repeat(16), 7],
+  ['\uD801\uDC28é\uD801\uDC28', '\uDC28', 1],
+  ['\uD801\uDC28\uD801\uDC28', '\uDC28\uD801', 1],
+  ['\uD801\uDC28', '', 1], ['\uD801\uDC28', '', 2], ['\uD801\uDC28', '\uDC28', 2]
+];
+
+test('Linear string search: initial prefix rejection retains later first/last matches and raw-only paths', () => {
+  for (const [source, needle, start] of prefixCases) {
+    const first = previousSearch(source, needle, start);
+    const last = previousLastSearch(source, needle);
+    assert.equal(indexOfOrdinalIgnoreCase(source, needle, start), first);
+    assert.equal(indexOfFromWithComparison(undefined, source, needle, start, 5), first);
+    assert.equal(lastIndexOfOrdinalIgnoreCase(source, needle), last);
+    assert.equal(lastIndexOfWithComparison(undefined, source, needle, 5), last);
+    const counted = countedPrefix(source, needle, 0, true);
+    assert.equal(counted.result, last);
+    assert(counted.reads.source + counted.reads.needle <= 64 * (source.length + needle.length) + 64);
+  }
+});
+
 test('Linear string search: periodic endpoint rejections preserve earliest offsets', () => {
   for (const [source, needle] of boundaryCases) assertSearch(source, needle);
   for (const needle of words(['\uD801', '\uDC28', '\uDC00'], 2)) {
@@ -201,6 +292,20 @@ function compile(source, pipeline = 'bound') {
 
 for (const [engine, create] of Object.entries(engines)) {
   for (const pipeline of ['bound', 'legacy']) {
+    test(`Linear string search ${pipeline}/${engine}: raw-prefix filtering preserves start-index and last offsets`, () => {
+      const source = prefixCases.map(([receiver, value, start]) =>
+        `Console.WriteLine((${JSON.stringify(receiver)}).IndexOf(${JSON.stringify(value)}, ${start}, StringComparison.OrdinalIgnoreCase));` +
+        `Console.WriteLine((${JSON.stringify(receiver)}).LastIndexOf(${JSON.stringify(value)}, StringComparison.OrdinalIgnoreCase));`).join('\n');
+      const expected = prefixCases.map(([receiver, value, start]) =>
+        previousSearch(receiver, value, start) + '\n' + previousLastSearch(receiver, value)).join('\n') + '\n';
+      const vm = create(compile(source, pipeline));
+      try {
+        const result = vm.run();
+        assert.equal(result.state, 'terminated', result.fault?.stack);
+        assert.equal(result.output, expected);
+      } finally {vm.stop();}
+    });
+
     test(`Linear string search ${pipeline}/${engine}: earliest offsets and Contains agree across endpoints and eight/nine units`, () => {
       const source = executionCases.map(([receiver, value]) =>
         `Console.WriteLine((${JSON.stringify(receiver)}).IndexOf(${JSON.stringify(value)}, StringComparison.OrdinalIgnoreCase));` +
@@ -274,6 +379,25 @@ test('Linear string search: independently assembled CIL preserves the first UTF-
         const result = vm.run();
         assert.equal(result.state, 'terminated', result.fault?.stack);
         assert.equal(result.returnValue, method === 0 ? expected : expected >= 0);
+      } finally {vm.stop();}
+    }
+  }
+});
+
+test('Linear string search: independent CIL preserves prescan start-index and last-match boundaries', () => {
+  const firstAssembly = indexOfStartAssembly();
+  const lastAssembly = lastIndexOfComparisonAssembly();
+  for (const [source, needle, start] of prefixCases) {
+    const cases = [
+      [firstAssembly, [source, needle, start, 5], previousSearch(source, needle, start)],
+      [lastAssembly, [source, needle, 5], previousLastSearch(source, needle)]
+    ];
+    for (const [assembly, args, expected] of cases) {
+      const vm = new CilVirtualMachine(assembly, {arguments: args});
+      try {
+        const result = vm.run();
+        assert.equal(result.state, 'terminated', result.fault?.stack);
+        assert.equal(result.returnValue, expected);
       } finally {vm.stop();}
     }
   }
