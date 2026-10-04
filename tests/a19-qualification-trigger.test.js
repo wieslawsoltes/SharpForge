@@ -39,7 +39,7 @@ test('each explicit platform, engine and stage resolves without running a captur
   }
 });
 
-test('create events always discard baseline and dispatch-style overrides', () => {
+test('default create events discard baseline and dispatch-style overrides', () => {
   const input = created();
   input.event.inputs = { runner: 'macos-latest', engine: 'webkit', stage: 'performance',
     editor_baseline: 'reviewed/editor.json', workbench_baseline: 'reviewed/workbench.json' };
@@ -126,7 +126,8 @@ test('baseline data cannot inject Actions environment records', () => {
   }
   const selected = resolveQualificationTrigger(manual({ editor_baseline: 'docs/editor baseline.json' }));
   const output = qualificationEnvironment(selected, tree);
-  assert.equal(output.split('\n').length, 12);
+  assert.equal(output.split('\n').length, 13);
+  assert(output.includes('QUALIFICATION_BASELINE_PROFILE=\n'));
   assert(output.includes('QUALIFICATION_SOURCE_SHA=' + sha + '\n'));
   assert(output.includes('QUALIFICATION_SOURCE_TREE=' + tree + '\n'));
   assert(output.includes('SHARPFORGE_EDITOR_BASELINE=docs/editor baseline.json\n'));
