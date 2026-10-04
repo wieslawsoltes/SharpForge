@@ -6,8 +6,7 @@ import { metadataColumnKind } from './pointer-tables.js';
 function columnWidths(table, counts, flags, uncompressed, minimalDelta = false) {
   return tableDefinitions[table].types.map((_, column) => {
     const kind = metadataColumnKind(table, column, counts, uncompressed);
-    // #JTD uses four-byte references even when this generation has only a few rows.
-    return minimalDelta ? (kind === 'u16' ? 2 : 4) : metadataIndexWidth(kind, counts, flags);
+    return metadataIndexWidth(kind, counts, flags, minimalDelta);
   });
 }
 

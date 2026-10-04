@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { Writer, readMetadata, metadataSchemas, MetadataBuilder } from '@sharpforge/cil';
+import { Writer, readMetadata, metadataSchemas, metadataIndexWidth, MetadataBuilder } from '@sharpforge/cil';
 
 // SRM MetadataSizes.cs blob 5a7d6ce08f3aa6a87e5e1c7f1a7f0241c0b67b34:
 // IsEncDelta emits #-/#JTD; references are wide and scalar UInt16 columns stay narrow.
@@ -46,6 +46,9 @@ function fixture({ tableName = '#-', marker = new Uint8Array(), truncate = 0, he
 }
 
 test('A03 #JTD forces wide table, heap and coded references while preserving UInt16 scalars', () => {
+  for (const kind of new Set(Object.values(metadataSchemas).flat())) {
+    assert.equal(metadataIndexWidth(kind, {}, 0, true), kind === 'u16' ? 2 : 4, kind);
+  }
   for (const heapFlags of [0, 7]) {
     const { bytes, rows } = fixture({ heapFlags });
     const metadata = readMetadata(bytes);
