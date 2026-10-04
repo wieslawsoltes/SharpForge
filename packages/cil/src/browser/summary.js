@@ -1,8 +1,16 @@
 import { CilError } from '../binary.js';
 import { decodeCoded } from '../metadata.js';
 import { readManagedResources, readMethodHeader } from '../pe.js';
+import { inspectPEHeaders } from '../inspector-pe.js';
+import { methodCodeFacts } from '../inspector-method.js';
 
-function header(inspector) {
+function peOptions(options) {
+  const value = options.peOptions === undefined ? {} : options.peOptions;
+  if (!value || typeof value !== 'object' || Array.isArray(value)) throw new CilError('Invalid PE inspection options');
+  return { ...value, signal: options.signal ?? value.signal };
+}
+
+function header(inspector, options = {}) {
   const { metadata, pe } = inspector;
   const row = metadata.rows[32]?.[0];
   const name = row ? metadata.string(row[7]) : metadata.string(metadata.rows[0]?.[0]?.[1] ?? 0);
@@ -15,15 +23,19 @@ function header(inspector) {
     profile: inspector.debug?.format ?? null,
     machine: pe.machine,
     cliFlags: pe.flags,
+    imageKind: pe.imageKind,
+    ...(options.includePE ? { pe: inspectPEHeaders(pe, peOptions(options)) } : {}),
   };
 }
 
 function methodSummary(inspector, definition, includeMethods) {
-  if (!includeMethods) return { ...definition };
+  if (!includeMethods) return { ...definition, ...methodCodeFacts(definition) };
   try {
     return inspector.getMethod(definition.token);
   } catch (error) {
-    return { ...definition, error: error.message, instructions: [], locals: [], handlers: [], codeSize: 0 };
+    const facts = methodCodeFacts(definition);
+    if (facts.codeKind === 'CIL' && definition.hasBody) facts.disassembly = { status: 'unavailable', reason: error.message };
+    return { ...definition, ...facts, error: error.message, instructions: [], locals: [], handlers: [], codeSize: 0 };
   }
 }
 
@@ -33,7 +45,7 @@ function checkCancelled(signal) {
 
 function pageSummary(
   inspector,
-  { includeMethods = true, methodOffset = 0, methodLimit = 100, maxPageCodeBytes = 1024 * 1024, signal },
+  { includeMethods = true, methodOffset = 0, methodLimit = 100, maxPageCodeBytes = 1024 * 1024, signal, includePE, peOptions },
 ) {
   const total = inspector.metadata.counts[6] ?? 0;
   if (!Number.isSafeInteger(methodOffset) || methodOffset < 0 || methodOffset > total)
@@ -67,7 +79,7 @@ function pageSummary(
     return structuredClone(methodSummary(inspector, definition, includeMethods));
   });
   return {
-    ...header(inspector),
+    ...header(inspector, { includePE, peOptions, signal }),
     methods,
     methodPage: {
       offset: methodOffset,
@@ -81,15 +93,20 @@ function pageSummary(
 
 /** Opt-in pages visit only selected physical MethodDefs. The default retains the complete legacy inventory. */
 export function assemblySummary(inspector, options = {}) {
+  if (options.includePE !== undefined && typeof options.includePE !== 'boolean') throw new CilError('Invalid includePE option');
+  const signal = options.signal ?? (options.includePE ? options.peOptions?.signal : undefined);
+  checkCancelled(signal);
   if (options.methodOffset !== undefined || options.methodLimit !== undefined || options.maxPageCodeBytes !== undefined)
-    return pageSummary(inspector, options);
+    return pageSummary(inspector, { ...options, signal });
   const { includeMethods = true } = options;
   const { metadata, pe } = inspector;
   const methods = [];
-  for (const definition of inspector.methods.values())
+  for (const definition of inspector.methods.values()) {
+    checkCancelled(signal);
     methods.push(methodSummary(inspector, definition, includeMethods));
+  }
   return {
-    ...header(inspector),
+    ...header(inspector, options),
     streams: [...metadata.streams].map(([name, bytes]) => ({ name, bytes: bytes.length })),
     tables: { ...metadata.counts },
     references: (metadata.rows[35] ?? []).map((row) => ({
