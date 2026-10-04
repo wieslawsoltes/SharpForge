@@ -22,11 +22,12 @@ default-interface bodies, readonly/ref-like structs, and source frontend lowerin
 remain unsupported. Full #1357 acceptance remains open. This change does not add
 a native or portable snapshot claim, or a performance result.
 
-Prepared regression coverage includes implicit/explicit dispatch without receiver
+All 85 focused tests passed at `4ecb7ac6`, including integration with the newly
+merged CIL constrained/tail prefix verifier. Regression coverage includes implicit/explicit dispatch without receiver
 allocation, copy isolation, interior mutation through GC, prefix/callee snapshots,
 static initialization retry, stop/fault cleanup, invalid addresses, and malformed
-prefix flow. Tests have not been executed for this leaf. The root-owned serial
-validation queue should run:
+prefix flow. Required PR checks follow the completed serial local validation.
+The core runtime regression command is:
 
 ```sh
 node scripts/limited.js node --test --test-concurrency=1 tests/a05-constrained-interface-calls.test.js tests/a05-boxed-interface-calls.test.js tests/a05-value-instance-calls.test.js tests/a05-statics.test.js tests/a05-02-interface-dispatch.test.js
