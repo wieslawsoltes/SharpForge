@@ -95,6 +95,32 @@ export class FieldLocation {
   }
 }
 
+/** A captured variable: the `Value` field of its heap cell (emit-closures.js). */
+export class CellLocation {
+  /** @param {() => void} pushCell pushes the cell object  @param {number} token the token of its `Value` field */
+  constructor(emitter, pushCell, token, type) {
+    this.emitter = emitter;
+    this.pushCell = pushCell;
+    this.token = token;
+    this.type = type;
+  }
+  capture() {}
+  load() {
+    this.pushCell();
+    this.emitter.il.emit('ldfld', this.token);
+  }
+  beginStore() {
+    this.pushCell();
+  }
+  endStore() {
+    this.emitter.il.emit('stfld', this.token);
+  }
+  address() {
+    this.pushCell();
+    this.emitter.il.emit('ldflda', this.token);
+  }
+}
+
 export class ElementLocation {
   /** @param array, index bound nodes of a one-dimensional array access */
   constructor(emitter, array, index, type) {
