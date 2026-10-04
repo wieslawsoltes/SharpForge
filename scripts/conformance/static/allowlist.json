@@ -469,6 +469,13 @@
       "count": 3,
       "sha256": "62dca80988a0899c6e2c93143435f7da4a1644d49db94ce1c7225a172d93e979",
       "reason": "Test imports fixed checked-in workspace or Node modules; no managed or remote source is evaluated as host JavaScript."
+    },
+    {
+      "path": "packages/compiler/bench/module-startup-benchmark-checkouts.js",
+      "operation": "dynamic-import",
+      "count": 1,
+      "sha256": "6aa324809e5b796f72a36b7ba972cc67754880600c285977e9f9e2978b435312",
+      "reason": "Operator-selected trusted clean exact-SHA checkouts supply only fixed public compiler, runtime and CIL exports plus optional compiler/node. Every transitive workspace alias is verified inside its checkout before loading and again before reporting, with physical links and resolved entries checked. Exact production source/package/manifest Git objects record intentional whole-revision runtime and CIL changes. Program source never forms a module specifier."
     }
   ]
 }
