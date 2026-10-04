@@ -12,6 +12,34 @@ lookup reads only ownership rows and names. It does not resolve type references,
 decode signatures, build virtual slots or load executable bodies. Repeated
 lookups in a module share identity; different loaded modules remain distinct.
 
+`isAbstract`, `isFinal`, `isVirtual`, `isHideBySig` and `isSpecialName` project
+individual MethodAttributes bits. `isPrivate`, `isFamilyAndAssembly`, `isAssembly`,
+`isFamily`, `isFamilyOrAssembly` and `isPublic` compare the masked access value;
+PrivateScope and the reserved access value match none of them. These predicates
+read no signature, Param row or body, and do not validate combinations of flags.
+Raw `flags` and `implementationFlags` remain unchanged.
+
+Lazy `callingConvention` projects the cached signature into Reflection's numeric
+CallingConventions: Standard=1, VarArgs=2, HasThis=32 and ExplicitThis=64. Only the
+ECMA VARARG convention maps to VarArgs; other decoder-supported conventions map
+to Standard, with the two receiver bits preserved. Generic arity is not a
+CallingConventions flag. This mirrors [CoreCLR v10.0.5 SignatureNative](https://github.com/dotnet/runtime/blob/v10.0.5/src/coreclr/vm/runtimehandles.h)
+and [MethodBase attribute predicates](https://github.com/dotnet/runtime/blob/v10.0.5/src/libraries/System.Private.CoreLib/src/System/Reflection/MethodBase.cs).
+It is raw header projection, not validation that a MethodDef can execute with a
+particular unmanaged or explicit-this convention. Existing signature diagnostics
+and limits apply lazily. Queries are O(1) after the existing signature decode,
+add no descriptor fields or result allocations, and remain usable through
+cooperative unloading.
+
+The new method-attribute fixture independently captures CoreCLR visibility,
+virtual/final/abstract/special-name, implementation flags and calling conventions,
+including constructors, generic methods and static/instance varargs. Authored
+metadata covers all access-mask values, each bit independently, explicit-this and
+other decoder-supported conventions, malformed headers, oversized signatures and
+unload. Native capture, focused tests and a raw-sample benchmark are pending the
+scheduled serial validation slot. Full constructor classification, MethodInfo
+ToString, GetBaseDefinition and invocation remain separate capabilities.
+
 The lazy `signature` getter uses the public CIL decoder and caches a deeply frozen
 signature AST. A malformed blob, a non-method signature or a receiver/static flag
 mismatch produces `SFCLR005` only when the signature is requested. The original
