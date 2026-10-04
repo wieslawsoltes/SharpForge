@@ -11,6 +11,11 @@ function-pointer results work, including calling a factory through `calli` and
 then calling its result. `conv.i` and `conv.u` preserve the existing opaque
 carrier; they do not expose a host address. Instance fields use the existing
 native-int physical slot and retain their full callable signature for stores.
+Optional stack-byte quotas charge function-pointer locals and arguments at the
+configured native pointer width, rounded to the existing eight-byte stack slot.
+Array or generic types within a function signature do not become MethodTable
+names or contribute additional storage bytes. Snapshot preflight uses that same
+physical charge.
 
 The verifier follows exact pointer signatures through the evaluation stack,
 local and argument assignments, and control-flow joins. All incoming paths must
@@ -46,7 +51,8 @@ Generic targets, open signatures, external targets, `ldvirtftn`, `tail.`, `jmp`,
 raw function-pointer dereferences, and source-compiler lowering remain outside
 this increment. These boundaries do not change existing delegate binding.
 
-Authored coverage is in `tests/a05-managed-calli.test.js`; the retained Roslyn
+Authored coverage is in `tests/a05-managed-calli.test.js` and
+`tests/a05-calli-stack-byte-budget.test.js`; the retained Roslyn
 example is `tests/fixtures/a05-calli/Program.cs`. Local execution and broader
 platform qualification are pending the serial validation queue. No performance
 or native parity result is claimed by this delivery.
