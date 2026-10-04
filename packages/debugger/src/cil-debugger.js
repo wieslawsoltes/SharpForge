@@ -362,7 +362,7 @@ export class CilDebugSession {
       if(slot.type==='bool'&&result.type!=='bool'||slot.type==='string'&&!['string','null'].includes(result.type))throw new Error('Variable type mismatch');
       next=this.vm.marshal(this.vm.value(result.value),slot.type);
     }else {if(result.value!==null&&(!isReference(result.value)||slot.type!=='object'&&!this.vm.matches(result.value,slot.type)))throw new Error('Variable type mismatch');next=result.value;}
-    this.vm.dereference(Object.freeze({byref:true,kind:slot.kind,index:slot.index,frameId:frame.id}),true,next);this.rememberStop();return this.variable(slot.name,slot.type,next);
+    this.vm.dereference(Object.freeze({...this.vm.address(slot.kind,slot.index),frameId:frame.id}),true,next);this.rememberStop();return this.variable(slot.name,slot.type,next);
   }
   disassemble(reference,{instructionOffset=0,instructionCount=100,offset=0}={}){
     if(!Number.isInteger(instructionOffset)||!Number.isInteger(instructionCount)||instructionCount<0||instructionCount>1000)throw new RangeError('Invalid disassembly page');
