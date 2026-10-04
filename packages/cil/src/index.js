@@ -53,3 +53,4 @@ export { AssemblyTypeHierarchy } from './browser/hierarchy.js';
 
 export { AssemblyUsageAnalysis } from './browser/analyzers.js';
 export { MetadataTableInspector } from './inspector-tables.js';
+export { MetadataGenerations, metadataGenerationDiagnosticCatalog } from './metadata/delta-reader.js';

@@ -219,6 +219,11 @@ including browser and worker signals from another realm. Invalid shapes throw
 `readPE(bytes, { metadataOptions: { maxRows, signal } })` forwards those same
 bounds to its single metadata decode; other PE options retain their behavior.
 
+[MetadataGenerations](./METADATA-GENERATIONS.md) provides owned CLI baseline/delta
+table and heap views, separate handle-introduction/current-row queries, and
+bounded transactional history. It retains raw delta records and does not apply
+runtime updates or reconstruct metadata list ownership.
+
 Win32 version, manifest and ICO emission is documented in [WIN32-RESOURCES.md](./WIN32-RESOURCES.md).
 
 Opt-in [memory-prefix validation](PREFIX-MEMORY.md) checks volatile/unaligned/no. targets and duplicate prefixes.
