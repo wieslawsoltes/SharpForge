@@ -1,0 +1,31 @@
+{
+  "startedAt": "2026-10-04T14:49:18.888615+00:00",
+  "cwd": "/workspace/scratch/7e3d2a445c44/sf6-pe-inspection",
+  "head": "40561f093648ea6cc5f840c0a19b3d8fb512b34b",
+  "argv": [
+    "node",
+    "scripts/limited.js",
+    "node",
+    "packages/cil/tools/benchmark-pe-inspection.mjs",
+    "--baseline",
+    "/workspace/scratch/7e3d2a445c44/sf6-pe-baseline-d64188af",
+    "--r2r",
+    "/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/shared/Microsoft.NETCore.App/10.0.5/System.ComponentModel.Primitives.dll",
+    "--mixed",
+    "/workspace/scratch/7e3d2a445c44/pe-MixedNativeCLI.exe",
+    "--output",
+    "/workspace/scratch/7e3d2a445c44/project6-pe-performance-first.json"
+  ],
+  "log": "/workspace/scratch/7e3d2a445c44/project6-pe-performance-first.log",
+  "output": "/workspace/scratch/7e3d2a445c44/project6-pe-performance-first.json",
+  "environment": {
+    "SHARPFORGE_MAX_PARALLEL_RUNS": null,
+    "SHARPFORGE_TEST_CONCURRENCY": null,
+    "SHARPFORGE_MAX_OLD_SPACE_MB": null,
+    "CI": null
+  },
+  "exitCode": 0,
+  "finishedAt": "2026-10-04T14:49:34.954322+00:00",
+  "logSha256": "df00418b4688be826cc31b9b1ee29f0315536cbba118800ce9fa18d7e9d62a49",
+  "outputSha256": "3bd921de526e52d1b343b4f820c2993e97d917c4964765dd49cb7d87682688db"
+}

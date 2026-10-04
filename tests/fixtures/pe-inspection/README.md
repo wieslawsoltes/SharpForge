@@ -163,5 +163,9 @@ Windows C++/CLI execution on Linux, native instruction disassembly, ReadyToRun
 method maps, and cryptographic signature verification are not qualified by this
 inspection evidence.
 
-**Browser replay, benchmarks, and a build have not been run for this batch.**
-The browser harness remains prepared; no browser or performance pass is claimed.
+The [first benchmark cohort and independent review](qualification/performance-first/independent-review.md)
+retain all 960 samples and the complete original native/Node evidence. All three
+ordinary median regressions exceed 5%; passing output guards does not accept
+those regressions. See the [performance protocol](../../../packages/cil/PE-PERFORMANCE.md).
+Browser replay and a build remain pending; the prepared browser harness has not
+been qualified.

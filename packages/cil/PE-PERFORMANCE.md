@@ -1,13 +1,28 @@
 # SF-A13-T16 performance protocol
 
-**Prepared; not executed.** This protocol adds no product changes and makes no
-performance pass or regression claim. Native inspection and the 130-test Node
-gate remain qualified at the source recorded in the
-[fixture evidence](../../tests/fixtures/pe-inspection/README.md). The benchmark
-uses frozen product revision `26d4808350116a2ae95c5216393bd690032c6034`, whose
-runtime source is the tested integration `bf0d9470e4dc50cfdcafb0a6532cea0892b753d6`.
-Its baseline is the exact pre-PE main revision
-`d64188af91f03d02041316bdde2ee64fd0634be0`.
+**First cohort retained; all three ordinary medians exceed the 5% budget.**
+The once-only run at `40561f093648ea6cc5f840c0a19b3d8fb512b34b` passed every
+output guard and retained all 960 chronological samples. That status does not
+accept its performance regressions. The [complete independent review and original
+artifacts](../../tests/fixtures/pe-inspection/qualification/performance-first/independent-review.md)
+retain the receipt, log, hashes, exact raw samples, unfavorable tails, source
+analysis, and recommendation for three narrow construction changes followed by
+one new unchanged cohort.
+
+| Ordinary workload | Median change | p95 change |
+| --- | ---: | ---: |
+| `readPE` | +13.62749% | +26.46312% |
+| `coldSummary` | +21.92840% | +21.39369% |
+| `warmMetadataSummary` | +27.11903% | +19.47191% |
+
+These statistics describe batch means normalized per call. Native inspection
+and the 130-test Node gate apply to the original source recorded in the
+[fixture evidence](../../tests/fixtures/pe-inspection/README.md). The first
+benchmark used frozen product revision `26d4808350116a2ae95c5216393bd690032c6034`,
+whose runtime source is the tested integration
+`bf0d9470e4dc50cfdcafb0a6532cea0892b753d6`. Its baseline is the exact pre-PE
+main revision `d64188af91f03d02041316bdde2ee64fd0634be0`. Evidence retention
+does not change product source or qualify an optimized candidate.
 
 ## Source review before measurement
 
@@ -82,7 +97,7 @@ SHA-256 outside timing. Retained output contains scalar dimensions and hashes;
 it contains no upstream image, IL, debug, or signing payload. Neither input is
 executed, and no baseline-equivalent inspection of either image is claimed.
 
-## Capture command
+## Original capture command
 
 Use separate clean worktrees with public `@sharpforge/*` aliases pointing into
 their own checkout. The driver checks the exact baseline HEAD, candidate source
@@ -91,8 +106,9 @@ before timing and again afterward. Its two dynamic imports are restricted by an
 exact source-hash/count entry: the verified baseline public CIL entry and the
 fixed adjacent benchmark module. Image bytes never select executable modules.
 
-Run once in the candidate tree during the assigned heavy-work slot. The output
-directory must already exist outside both trees, and the output file must be new:
+The first cohort used this command in the assigned heavy-work slot. It is
+retained as historical provenance; its existing output must not be overwritten.
+The output directory was outside both clean trees and the output file was new:
 
 ```sh
 node scripts/limited.js node packages/cil/tools/benchmark-pe-inspection.mjs \
@@ -117,5 +133,6 @@ Caught failures retain partial chronological samples and a failed status. A
 successful status confirms output guards and sample completeness; it does not
 waive a measured regression. Preserve the first report and log, including slow
 cohorts, and retain explicit quantified PR sign-off if an existing operation
-regresses beyond the repository budget. No benchmark, build, or browser replay
-was run while preparing this protocol.
+regresses beyond the repository budget. The original protocol preparation ran no
+benchmark, build, or browser replay. The subsequent first cohort is retained
+above; the independent review and retention commit ran no additional cohort.
