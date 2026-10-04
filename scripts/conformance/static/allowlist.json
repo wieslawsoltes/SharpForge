@@ -387,6 +387,13 @@
       "reason": "Signature benchmark imports an operator-selected trusted implementation or the fixed workspace CIL package."
     },
     {
+      "path": "tests/browser_designer_gate_performance.mjs",
+      "operation": "dynamic-import",
+      "count": 1,
+      "sha256": "87af26706e34c0d549e1ea91b71d5665c10c6f423820ea608f4ce29712f682cb",
+      "reason": "Browser qualification loads the fixed same-origin production layout-reference module inside the page to compare actual designer, Source VM and CIL DOM geometry; no user-selected or remote JavaScript."
+    },
+    {
       "path": "tests/conformance/flaky/detect.test.js",
       "operation": "dynamic-import",
       "sha256": "e2eec7d15bd893248cedcf1b3efc3824359a9fdbf0f5ea134ca69d95ec71efc2",
