@@ -66,7 +66,8 @@ export async function loadWorkspace(page, records, uri, mode = 'design') {
   await documentHost(page, uri).locator('.design-preview [data-sf-id]').first().waitFor({state: 'visible'});
 }
 
-export async function createGate() {
+export async function createGate({captureMode = process.env.SHARPFORGE_DESIGNER_CAPTURE ?? 'diagnostic'} = {}) {
+  assert(['diagnostic', 'measurement'].includes(captureMode), 'SHARPFORGE_DESIGNER_CAPTURE must be diagnostic or measurement.');
   const baseURL = process.env.SHARPFORGE_BROWSER_URL;
   assert(baseURL, 'Set SHARPFORGE_BROWSER_URL to the already built and served Studio; this driver never starts a server.');
   const require = createRequire(import.meta.url);
@@ -79,10 +80,15 @@ export async function createGate() {
   if (process.env.CHROMIUM_EXECUTABLE) options.executablePath = process.env.CHROMIUM_EXECUTABLE;
   const browser = await chromium.launch(options);
   const context = await browser.newContext({viewport: {width: 1600, height: 1000}, deviceScaleFactor: 1});
-  await context.tracing.start({screenshots: true, snapshots: true, sources: true});
+  // Playwright DOM snapshots walk the whole scene after each action; keep them outside measured input runs.
+  const traceOptions = {screenshots: captureMode === 'diagnostic', snapshots: captureMode === 'diagnostic', sources: true};
+  await context.tracing.start(traceOptions);
   const page = await context.newPage();
   page.setDefaultTimeout(15000);
   const report = {browser: await browser.version(), baseURL, checks: [], errors: [], consoleErrors: [], requestFailures: []};
+  report.capture = {mode: captureMode, playwright: traceOptions, actionTrace: true, finalScreenshot: true,
+    rendererTasks: 'All overlapping raw CDP renderer tasks; no artifact-task filtering.'};
+  process.stdout.write(`CAPTURE ${captureMode}: DOM snapshots ${traceOptions.snapshots}; continuous screenshots ${traceOptions.screenshots}.\n`);
   page.on('pageerror', error => report.errors.push(error.stack ?? String(error)));
   page.on('console', message => { if (message.type() === 'error') report.consoleErrors.push(message.text()); });
   page.on('requestfailed', request => report.requestFailures.push({url: request.url(), error: request.failure()?.errorText}));
@@ -119,7 +125,8 @@ export async function createGate() {
     report.artifactErrors = [];
     try {
       report.cspViolations = await page.evaluate(() => window.__a18CspViolations);
-      if (failure) await page.screenshot({path: resolve(results, 'screenshots/a18-integrated-failure.png')});
+      report.screenshot = `screenshots/a18-integrated-${failure ? 'failure' : 'final'}.png`;
+      await page.screenshot({path: resolve(results, report.screenshot)});
     } catch (error) { report.artifactErrors.push(error.message); }
     try { await context.tracing.stop({path: resolve(results, 'browser-designer-integrated-trace.zip')}); }
     catch (error) { report.artifactErrors.push(error.message); }
