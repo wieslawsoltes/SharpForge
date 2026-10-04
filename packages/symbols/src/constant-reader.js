@@ -83,6 +83,15 @@ export function constantModifierCount(bytes, counts, limit) {
   return prefix(new Reader(bytes), counts, limit).count;
 }
 
+/** Inspect a general constant's payload without copying its already-owned signature. */
+export function generalConstantPayload(bytes, counts) {
+  const reader = new Reader(bytes);
+  const { kind } = prefix(reader, counts, 1024);
+  if (kind !== 17 && kind !== 18) fail('Invalid general local constant');
+  const { token } = typeHandle(reader, counts);
+  return { kind, typeToken: token, bytes: reader.take(reader.end - reader.position) };
+}
+
 /** Decode one complete LocalConstantSig; type-dependent values stay explicitly unresolved without PE metadata. */
 export function decodeConstant(bytes, { counts, maxBytes = 16 * 1024 * 1024, maxModifiers = 64 } = {}) {
   if (
