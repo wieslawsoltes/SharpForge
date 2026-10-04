@@ -14,6 +14,10 @@ Application-owned retained drawing services for SharpForge. The package register
 
 `TextLayoutService` caches actual provider results and shares them with measurement and drawing. The browser provider retains shaped native runs with explicit opaque glyph access. Cluster maps drive caret, hit testing and selection; rich spans, trimming and ink bounds remain separate from raster policy. Numeric portable shaping is supplied by a separate provider.
 
+## Worker native text
+
+`NativeCanvasTextProvider` uses supplied Canvas metrics when the worker has OffscreenCanvas. Its data-only opaque run packets round-trip through display lists and render on the host. Missing Canvas capability produces an explicit diagnostic.
+
 ## Validation
 
 Focused cases were authored and included in the completed A17 scope gate. The publication manifest records its exact prior evidence and any subsequent repair. Required core is pending on this exact branch tree. Browser pixels, native WinUI comparisons and physical GPU qualification are separate gates.
