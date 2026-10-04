@@ -10,3 +10,7 @@ export { expandExpression } from './evaluation/expander.js';
 export { matchesGlob, WorkspacePathIndex } from './evaluation/path-index.js';
 export * from './resources.js';
 export { classifyTask, createTargetGraph } from './evaluation/targets.js';
+export { runPortableTargets } from './evaluation/target-runner.js';
+export * from './build-plan.js';
+export * from './build-contexts.js';
+export * from './output-layout.js';

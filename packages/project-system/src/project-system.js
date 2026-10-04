@@ -4,7 +4,11 @@ import { evaluateProjectContexts } from './multi-target.js';
 import { ProjectContextSelection, findProjectContext } from './context-selection.js';
 import { loadProjectSystem } from './project-loader.js';
 import { combinedCompilationOptions } from './evaluation/compiler-options.js';
+import { createBuildPlan, createBuildUnit } from './build-plan.js';
+import { resolveBuildContextGraph } from './build-contexts.js';
+import { createOutputLayout } from './output-layout.js';
 import { projectRunOptions } from './launch-settings.js';
+import { runPortableTargets } from './evaluation/target-runner.js';
 import { resourceEvaluationInputs } from './resources.js';
 import { buildContextFile } from './evaluation/target-files.js';
 
@@ -62,6 +66,10 @@ export class ProjectSystem {
   buildFile(path, { contextId } = {}) {
     return buildContextFile(this, normalizePath(path), contextId);
   }
+  /** Read one prepared context without materializing any later project's compilation inputs. */
+  buildUnit(startup, contextId) {
+    return createBuildUnit(this, startup, contextId);
+  }
   /** Hydration replaces both ordinary records and any context-specific metadata-only output. */
   setBuildFile(path, record, { contextId } = {}) {
     path = normalizePath(path);
@@ -117,7 +125,7 @@ export class ProjectSystem {
       platform: this.platform,
     };
   }
-  /** Legacy source-combined preview; assembly-isolated build planning is a separate phase. */
+  /** Legacy source-combined preview. Prefer buildPlan() for assembly isolation. */
   compilationFiles(startup = this.solution?.projectPaths[0], { includeAssemblyInfo = false } = {}) {
     if (!this.projects.has(startup)) throw new Error('Startup project was not loaded');
     const sources = new Map();
@@ -135,7 +143,7 @@ export class ProjectSystem {
       }
       for (const source of project.generatedSources ?? []) {
         if (source.kind === 'assembly-info' && !includeAssemblyInfo) {
-          this.diagnostic(project.path, 'Generated assembly attributes require an assembly-emission host.',
+          this.diagnostic(project.path, 'Generated assembly attributes require an assembly-emission host; use buildPlan() to retain them.',
             'warning', 'SFP1405');
           continue;
         }
@@ -147,6 +155,13 @@ export class ProjectSystem {
   }
   compilationOptions(startup = this.solution?.projectPaths[0]) {
     return combinedCompilationOptions(this, startup);
+  }
+  buildPlan(startup = this.solution?.projectPaths[0]) {
+    return createBuildPlan(this, startup);
+  }
+  /** Dependency-ordered selected contexts, available before lazy source contents are loaded. */
+  buildContexts(startup = this.solution?.projectPaths[0]) {
+    return resolveBuildContextGraph(this, startup).nodes.map(node => node.project);
   }
   /** Required resource and dependent-source paths; repeat after loading resx to discover its file references. */
   evaluationInputs() {
@@ -163,10 +178,16 @@ export class ProjectSystem {
     }
     return [...paths];
   }
+  outputLayout(startup = this.solution?.projectPaths[0]) {
+    return createOutputLayout(this.projects, startup);
+  }
   runOptions(startup = this.solution?.projectPaths[0], options = {}) {
     const project = this.projects.get(startup);
     if (!project) throw new Error('Startup project was not loaded');
     return projectRunOptions(project, options);
+  }
+  runTargets(startup = this.solution?.projectPaths[0], targets, options = {}) {
+    return runPortableTargets(this, startup, targets, options);
   }
   closure(startup) {
     const seen = new Set();
