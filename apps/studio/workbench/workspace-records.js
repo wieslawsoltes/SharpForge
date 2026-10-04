@@ -1,13 +1,16 @@
+import { documentSource } from './document-source.js';
+
 function recordView(record, path, source, model, buffer) {
   const descriptors = Object.getOwnPropertyDescriptors(record);
   descriptors.path = { value: path, enumerable: true, writable: true, configurable: true };
-  const snapshot = model?.snapshot();
+  const snapshot = documentSource(source, model);
   if (snapshot || source || buffer) {
     const fallback = snapshot ? null : source ?? buffer;
     descriptors.text = { enumerable: true, configurable: true, get: () => snapshot ? snapshot.text : fallback.text };
     descriptors.length = { enumerable: false, configurable: true, get: () => snapshot?.length ?? fallback.length ?? fallback.text.length };
     descriptors.model = { value: model, enumerable: false, configurable: true };
     if (snapshot) descriptors.source = { value: snapshot, enumerable: false, configurable: true };
+    if (snapshot) descriptors.version = { value: snapshot.version, enumerable: true, configurable: true };
   }
   return Object.defineProperties({}, descriptors);
 }

@@ -1,0 +1,367 @@
+assembly Records
+  [assembly: [System.Runtime.CompilerServices.CompilationRelaxationsAttribute((Int32)8)]]
+  [assembly: [System.Runtime.CompilerServices.RuntimeCompatibilityAttribute(WrapNonExceptionThrows = True)]]
+  [assembly: [System.Diagnostics.DebuggableAttribute((System.Diagnostics.DebuggableAttribute+DebuggingModes)2)]]
+  [assembly: [System.Runtime.Versioning.TargetFrameworkAttribute(".NETCoreApp,Version=v10.0", FrameworkDisplayName = ".NET 10.0")]]
+type Sample.Account : System.Object attrs=Public, BeforeFieldInit
+  [[System.Runtime.CompilerServices.RequiredMemberAttribute()]]
+  field System.Int32 <Level>k__BackingField attrs=Private, InitOnly
+    [[System.Runtime.CompilerServices.CompilerGeneratedAttribute()]]
+  field System.String <Owner>k__BackingField attrs=Private, InitOnly
+    [[System.Runtime.CompilerServices.CompilerGeneratedAttribute()]]
+  field System.Int32 Balance attrs=Public
+    [[System.Runtime.CompilerServices.RequiredMemberAttribute()]]
+  method System.Int32 get_Level() attrs=Public, HideBySig, SpecialName impl=IL
+    [[System.Runtime.CompilerServices.CompilerGeneratedAttribute()]]
+  method System.String get_Owner() attrs=Public, HideBySig, SpecialName impl=IL
+    [[System.Runtime.CompilerServices.CompilerGeneratedAttribute()]]
+  method .ctor() attrs=Public, HideBySig, SpecialName, RTSpecialName impl=IL
+    [[System.ObsoleteAttribute("Constructors of types with required members are not supported in this version of your compiler.", (Boolean)True)]]
+    [[System.Runtime.CompilerServices.CompilerFeatureRequiredAttribute("RequiredMembers")]]
+  method .ctor(System.String owner) attrs=Public, HideBySig, SpecialName, RTSpecialName impl=IL
+    [[System.Diagnostics.CodeAnalysis.SetsRequiredMembersAttribute()]]
+  method System.Void set_Level(System.Int32 value) attrs=Public, HideBySig, SpecialName impl=IL
+    [[System.Runtime.CompilerServices.CompilerGeneratedAttribute()]]
+    return modreq System.Runtime.CompilerServices.IsExternalInit
+  method System.Void set_Owner(System.String value) attrs=Public, HideBySig, SpecialName impl=IL
+    [[System.Runtime.CompilerServices.CompilerGeneratedAttribute()]]
+    return modreq System.Runtime.CompilerServices.IsExternalInit
+  property System.Int32 Level[] get=get_Level set=set_Level
+  property System.String Owner[] get=get_Owner set=set_Owner
+    [[System.Runtime.CompilerServices.RequiredMemberAttribute()]]
+type Sample.Box`1 : System.Object attrs=Public, BeforeFieldInit
+  implements System.IEquatable`1[Sample.Box`1[T]]
+  typeparam T None : 
+  field !T <Value>k__BackingField attrs=Private, InitOnly
+    [[System.Runtime.CompilerServices.CompilerGeneratedAttribute()]]
+  method System.Boolean Equals(Sample.Box`1[T] other) attrs=Public, Virtual, HideBySig, VtableLayoutMask impl=IL
+    [[System.Runtime.CompilerServices.CompilerGeneratedAttribute()]]
+    param other [[System.Runtime.CompilerServices.NullableAttribute(new Byte[2] { 2, 0 })]]
+  method System.Boolean Equals(System.Object obj) attrs=Public, Virtual, HideBySig impl=IL
+    [[System.Runtime.CompilerServices.NullableContextAttribute((Byte)2)]]
+    [[System.Runtime.CompilerServices.CompilerGeneratedAttribute()]]
+  method System.Boolean op_Equality(Sample.Box`1[T] left, Sample.Box`1[T] right) attrs=Public, Static, HideBySig, SpecialName impl=IL
+    [[System.Runtime.CompilerServices.CompilerGeneratedAttribute()]]
+    param left [[System.Runtime.CompilerServices.NullableAttribute(new Byte[2] { 2, 0 })]]
+    param right [[System.Runtime.CompilerServices.NullableAttribute(new Byte[2] { 2, 0 })]]
+  method System.Boolean op_Inequality(Sample.Box`1[T] left, Sample.Box`1[T] right) attrs=Public, Static, HideBySig, SpecialName impl=IL
+    [[System.Runtime.CompilerServices.CompilerGeneratedAttribute()]]
+    param left [[System.Runtime.CompilerServices.NullableAttribute(new Byte[2] { 2, 0 })]]
+    param right [[System.Runtime.CompilerServices.NullableAttribute(new Byte[2] { 2, 0 })]]
+  method System.Boolean PrintMembers(System.Text.StringBuilder builder) attrs=Family, Virtual, HideBySig, VtableLayoutMask impl=IL
+    [[System.Runtime.CompilerServices.NullableContextAttribute((Byte)1)]]
+    [[System.Runtime.CompilerServices.CompilerGeneratedAttribute()]]
+  method System.Int32 GetHashCode() attrs=Public, Virtual, HideBySig impl=IL
+    [[System.Runtime.CompilerServices.CompilerGeneratedAttribute()]]
+  method Sample.Box`1[T] <Clone>$() attrs=Public, Virtual, HideBySig, VtableLayoutMask impl=IL
+    [[System.Runtime.CompilerServices.CompilerGeneratedAttribute()]]
+    return [[System.Runtime.CompilerServices.NullableAttribute(new Byte[2] { 1, 0 })]]
+  method System.String ToString() attrs=Public, Virtual, HideBySig impl=IL
+    [[System.Runtime.CompilerServices.NullableContextAttribute((Byte)1)]]
+    [[System.Runtime.CompilerServices.CompilerGeneratedAttribute()]]
+  method System.Type get_EqualityContract() attrs=Family, Virtual, HideBySig, VtableLayoutMask, SpecialName impl=IL
+    [[System.Runtime.CompilerServices.NullableContextAttribute((Byte)1)]]
+    [[System.Runtime.CompilerServices.CompilerGeneratedAttribute()]]
+  method !T get_Value() attrs=Public, HideBySig, SpecialName impl=IL
+    [[System.Runtime.CompilerServices.CompilerGeneratedAttribute()]]
+  method .ctor(Sample.Box`1[T] original) attrs=Family, HideBySig, SpecialName, RTSpecialName impl=IL
+    [[System.Runtime.CompilerServices.CompilerGeneratedAttribute()]]
+    param original [[System.Runtime.CompilerServices.NullableAttribute(new Byte[2] { 1, 0 })]]
+  method .ctor(!T Value) attrs=Public, HideBySig, SpecialName, RTSpecialName impl=IL
+  method System.Void Deconstruct(out T& Value) attrs=Public, HideBySig impl=IL
+    [[System.Runtime.CompilerServices.CompilerGeneratedAttribute()]]
+    param Value [[System.Runtime.InteropServices.OutAttribute()]]
+  method System.Void set_Value(!T value) attrs=Public, HideBySig, SpecialName impl=IL
+    [[System.Runtime.CompilerServices.CompilerGeneratedAttribute()]]
+    return modreq System.Runtime.CompilerServices.IsExternalInit
+  property System.Type EqualityContract[] get=get_EqualityContract set=
+    [[System.Runtime.CompilerServices.NullableAttribute((Byte)1)]]
+    [[System.Runtime.CompilerServices.CompilerGeneratedAttribute()]]
+  property !T Value[] get=get_Value set=set_Value
+type Sample.Money : System.ValueType attrs=Public, SequentialLayout, Sealed, BeforeFieldInit
+  [[System.Runtime.CompilerServices.IsReadOnlyAttribute()]]
+  implements System.IEquatable`1[Sample.Money]
+  field System.Int64 <Amount>k__BackingField attrs=Private, InitOnly
+    [[System.Runtime.CompilerServices.CompilerGeneratedAttribute()]]
+  field System.String <Currency>k__BackingField attrs=Private, InitOnly
+    [[System.Runtime.CompilerServices.CompilerGeneratedAttribute()]]
+  method System.Boolean Equals(Sample.Money other) attrs=Public, Final, Virtual, HideBySig, VtableLayoutMask impl=IL
+    [[System.Runtime.CompilerServices.CompilerGeneratedAttribute()]]
+  method System.Boolean Equals(System.Object obj) attrs=Public, Virtual, HideBySig impl=IL
+    [[System.Runtime.CompilerServices.CompilerGeneratedAttribute()]]
+  method System.Boolean op_Equality(Sample.Money left, Sample.Money right) attrs=Public, Static, HideBySig, SpecialName impl=IL
+    [[System.Runtime.CompilerServices.CompilerGeneratedAttribute()]]
+  method System.Boolean op_Inequality(Sample.Money left, Sample.Money right) attrs=Public, Static, HideBySig, SpecialName impl=IL
+    [[System.Runtime.CompilerServices.CompilerGeneratedAttribute()]]
+  method System.Boolean PrintMembers(System.Text.StringBuilder builder) attrs=Private, HideBySig impl=IL
+    [[System.Runtime.CompilerServices.CompilerGeneratedAttribute()]]
+  method System.Int32 GetHashCode() attrs=Public, Virtual, HideBySig impl=IL
+    [[System.Runtime.CompilerServices.CompilerGeneratedAttribute()]]
+  method System.Int64 get_Amount() attrs=Public, HideBySig, SpecialName impl=IL
+    [[System.Runtime.CompilerServices.CompilerGeneratedAttribute()]]
+  method System.String get_Currency() attrs=Public, HideBySig, SpecialName impl=IL
+    [[System.Runtime.CompilerServices.CompilerGeneratedAttribute()]]
+  method System.String ToString() attrs=Public, Virtual, HideBySig impl=IL
+    [[System.Runtime.CompilerServices.CompilerGeneratedAttribute()]]
+  method .ctor(System.Int64 Amount, System.String Currency) attrs=Public, HideBySig, SpecialName, RTSpecialName impl=IL
+  method System.Void Deconstruct(out System.Int64& Amount, out System.String& Currency) attrs=Public, HideBySig impl=IL
+    [[System.Runtime.CompilerServices.CompilerGeneratedAttribute()]]
+    param Amount [[System.Runtime.InteropServices.OutAttribute()]]
+    param Currency [[System.Runtime.InteropServices.OutAttribute()]]
+  method System.Void set_Amount(System.Int64 value) attrs=Public, HideBySig, SpecialName impl=IL
+    [[System.Runtime.CompilerServices.CompilerGeneratedAttribute()]]
+    return modreq System.Runtime.CompilerServices.IsExternalInit
+  method System.Void set_Currency(System.String value) attrs=Public, HideBySig, SpecialName impl=IL
+    [[System.Runtime.CompilerServices.CompilerGeneratedAttribute()]]
+    return modreq System.Runtime.CompilerServices.IsExternalInit
+  property System.Int64 Amount[] get=get_Amount set=set_Amount
+  property System.String Currency[] get=get_Currency set=set_Currency
+  map System.IEquatable`1[Sample.Money].Equals -> Sample.Money.Equals
+type Sample.Named : Sample.Point attrs=Public, BeforeFieldInit
+  implements System.IEquatable`1[Sample.Named]
+  implements System.IEquatable`1[Sample.Point]
+  field System.String <Name>k__BackingField attrs=Private, InitOnly
+    [[System.Runtime.CompilerServices.CompilerGeneratedAttribute()]]
+  field System.String <Tag>k__BackingField attrs=Private, InitOnly
+    [[System.Runtime.CompilerServices.CompilerGeneratedAttribute()]]
+  method System.Boolean Equals(Sample.Named other) attrs=Public, Virtual, HideBySig, VtableLayoutMask impl=IL
+    [[System.Runtime.CompilerServices.NullableContextAttribute((Byte)2)]]
+    [[System.Runtime.CompilerServices.CompilerGeneratedAttribute()]]
+  method System.Boolean Equals(Sample.Point other) attrs=Public, Final, Virtual, HideBySig impl=IL
+    [[System.Runtime.CompilerServices.NullableContextAttribute((Byte)2)]]
+    [[System.Runtime.CompilerServices.CompilerGeneratedAttribute()]]
+  method System.Boolean Equals(System.Object obj) attrs=Public, Virtual, HideBySig impl=IL
+    [[System.Runtime.CompilerServices.NullableContextAttribute((Byte)2)]]
+    [[System.Runtime.CompilerServices.CompilerGeneratedAttribute()]]
+  method System.Boolean op_Equality(Sample.Named left, Sample.Named right) attrs=Public, Static, HideBySig, SpecialName impl=IL
+    [[System.Runtime.CompilerServices.NullableContextAttribute((Byte)2)]]
+    [[System.Runtime.CompilerServices.CompilerGeneratedAttribute()]]
+  method System.Boolean op_Inequality(Sample.Named left, Sample.Named right) attrs=Public, Static, HideBySig, SpecialName impl=IL
+    [[System.Runtime.CompilerServices.NullableContextAttribute((Byte)2)]]
+    [[System.Runtime.CompilerServices.CompilerGeneratedAttribute()]]
+  method System.Boolean PrintMembers(System.Text.StringBuilder builder) attrs=Family, Virtual, HideBySig impl=IL
+    [[System.Runtime.CompilerServices.NullableContextAttribute((Byte)1)]]
+    [[System.Runtime.CompilerServices.CompilerGeneratedAttribute()]]
+  method System.Int32 GetHashCode() attrs=Public, Virtual, HideBySig impl=IL
+    [[System.Runtime.CompilerServices.CompilerGeneratedAttribute()]]
+  method Sample.Named <Clone>$() attrs=Public, Virtual, HideBySig, VtableLayoutMask impl=IL
+    [[System.Runtime.CompilerServices.NullableContextAttribute((Byte)1)]]
+    [[System.Runtime.CompilerServices.PreserveBaseOverridesAttribute()]]
+    [[System.Runtime.CompilerServices.CompilerGeneratedAttribute()]]
+  method System.String get_Name() attrs=Public, HideBySig, SpecialName impl=IL
+    [[System.Runtime.CompilerServices.CompilerGeneratedAttribute()]]
+  method System.String get_Tag() attrs=Public, HideBySig, SpecialName impl=IL
+    [[System.Runtime.CompilerServices.CompilerGeneratedAttribute()]]
+  method System.String ToString() attrs=Public, Virtual, HideBySig impl=IL
+    [[System.Runtime.CompilerServices.NullableContextAttribute((Byte)1)]]
+    [[System.Runtime.CompilerServices.CompilerGeneratedAttribute()]]
+  method System.Type get_EqualityContract() attrs=Family, Virtual, HideBySig, SpecialName impl=IL
+    [[System.Runtime.CompilerServices.NullableContextAttribute((Byte)1)]]
+    [[System.Runtime.CompilerServices.CompilerGeneratedAttribute()]]
+  method .ctor(Sample.Named original) attrs=Family, HideBySig, SpecialName, RTSpecialName impl=IL
+    [[System.Runtime.CompilerServices.CompilerGeneratedAttribute()]]
+    param original [[System.Runtime.CompilerServices.NullableAttribute((Byte)1)]]
+  method .ctor(System.String Name, System.Int32 X, System.Int32 Y) attrs=Public, HideBySig, SpecialName, RTSpecialName impl=IL
+  method System.Void Deconstruct(out System.String& Name, out System.Int32& X, out System.Int32& Y) attrs=Public, HideBySig impl=IL
+    [[System.Runtime.CompilerServices.CompilerGeneratedAttribute()]]
+    param Name [[System.Runtime.InteropServices.OutAttribute()]]
+    param X [[System.Runtime.InteropServices.OutAttribute()]]
+    param Y [[System.Runtime.InteropServices.OutAttribute()]]
+  method System.Void set_Name(System.String value) attrs=Public, HideBySig, SpecialName impl=IL
+    [[System.Runtime.CompilerServices.CompilerGeneratedAttribute()]]
+    return modreq System.Runtime.CompilerServices.IsExternalInit
+  method System.Void set_Tag(System.String value) attrs=Public, HideBySig, SpecialName impl=IL
+    [[System.Runtime.CompilerServices.CompilerGeneratedAttribute()]]
+    return modreq System.Runtime.CompilerServices.IsExternalInit
+  property System.Type EqualityContract[] get=get_EqualityContract set=
+    [[System.Runtime.CompilerServices.NullableAttribute((Byte)1)]]
+    [[System.Runtime.CompilerServices.CompilerGeneratedAttribute()]]
+  property System.String Name[] get=get_Name set=set_Name
+  property System.String Tag[] get=get_Tag set=set_Tag
+  map System.IEquatable`1[Sample.Point].Equals -> Sample.Named.Equals
+  map System.IEquatable`1[Sample.Named].Equals -> Sample.Named.Equals
+type Sample.Point : System.Object attrs=Public, BeforeFieldInit
+  [[System.Runtime.CompilerServices.NullableContextAttribute((Byte)1)]]
+  [[System.Runtime.CompilerServices.NullableAttribute((Byte)0)]]
+  implements System.IEquatable`1[Sample.Point]
+  field System.Int32 <X>k__BackingField attrs=Private, InitOnly
+    [[System.Runtime.CompilerServices.CompilerGeneratedAttribute()]]
+  field System.Int32 <Y>k__BackingField attrs=Private, InitOnly
+    [[System.Runtime.CompilerServices.CompilerGeneratedAttribute()]]
+  method System.Boolean Equals(Sample.Point other) attrs=Public, Virtual, HideBySig, VtableLayoutMask impl=IL
+    [[System.Runtime.CompilerServices.NullableContextAttribute((Byte)2)]]
+    [[System.Runtime.CompilerServices.CompilerGeneratedAttribute()]]
+  method System.Boolean Equals(System.Object obj) attrs=Public, Virtual, HideBySig impl=IL
+    [[System.Runtime.CompilerServices.NullableContextAttribute((Byte)2)]]
+    [[System.Runtime.CompilerServices.CompilerGeneratedAttribute()]]
+  method System.Boolean op_Equality(Sample.Point left, Sample.Point right) attrs=Public, Static, HideBySig, SpecialName impl=IL
+    [[System.Runtime.CompilerServices.NullableContextAttribute((Byte)2)]]
+    [[System.Runtime.CompilerServices.CompilerGeneratedAttribute()]]
+  method System.Boolean op_Inequality(Sample.Point left, Sample.Point right) attrs=Public, Static, HideBySig, SpecialName impl=IL
+    [[System.Runtime.CompilerServices.NullableContextAttribute((Byte)2)]]
+    [[System.Runtime.CompilerServices.CompilerGeneratedAttribute()]]
+  method System.Boolean PrintMembers(System.Text.StringBuilder builder) attrs=Family, Virtual, HideBySig, VtableLayoutMask impl=IL
+    [[System.Runtime.CompilerServices.CompilerGeneratedAttribute()]]
+  method System.Int32 get_X() attrs=Public, HideBySig, SpecialName impl=IL
+    [[System.Runtime.CompilerServices.CompilerGeneratedAttribute()]]
+  method System.Int32 get_Y() attrs=Public, HideBySig, SpecialName impl=IL
+    [[System.Runtime.CompilerServices.CompilerGeneratedAttribute()]]
+  method System.Int32 GetHashCode() attrs=Public, Virtual, HideBySig impl=IL
+    [[System.Runtime.CompilerServices.CompilerGeneratedAttribute()]]
+  method Sample.Point <Clone>$() attrs=Public, Virtual, HideBySig, VtableLayoutMask impl=IL
+    [[System.Runtime.CompilerServices.CompilerGeneratedAttribute()]]
+  method System.String ToString() attrs=Public, Virtual, HideBySig impl=IL
+    [[System.Runtime.CompilerServices.CompilerGeneratedAttribute()]]
+  method System.Type get_EqualityContract() attrs=Family, Virtual, HideBySig, VtableLayoutMask, SpecialName impl=IL
+    [[System.Runtime.CompilerServices.CompilerGeneratedAttribute()]]
+  method .ctor(System.Int32 X, System.Int32 Y) attrs=Public, HideBySig, SpecialName, RTSpecialName impl=IL
+  method .ctor(Sample.Point original) attrs=Family, HideBySig, SpecialName, RTSpecialName impl=IL
+    [[System.Runtime.CompilerServices.CompilerGeneratedAttribute()]]
+  method System.Void Deconstruct(out System.Int32& X, out System.Int32& Y) attrs=Public, HideBySig impl=IL
+    [[System.Runtime.CompilerServices.CompilerGeneratedAttribute()]]
+    param X [[System.Runtime.InteropServices.OutAttribute()]]
+    param Y [[System.Runtime.InteropServices.OutAttribute()]]
+  method System.Void set_X(System.Int32 value) attrs=Public, HideBySig, SpecialName impl=IL
+    [[System.Runtime.CompilerServices.CompilerGeneratedAttribute()]]
+    return modreq System.Runtime.CompilerServices.IsExternalInit
+  method System.Void set_Y(System.Int32 value) attrs=Public, HideBySig, SpecialName impl=IL
+    [[System.Runtime.CompilerServices.CompilerGeneratedAttribute()]]
+    return modreq System.Runtime.CompilerServices.IsExternalInit
+  property System.Type EqualityContract[] get=get_EqualityContract set=
+    [[System.Runtime.CompilerServices.CompilerGeneratedAttribute()]]
+  property System.Int32 X[] get=get_X set=set_X
+  property System.Int32 Y[] get=get_Y set=set_Y
+  map System.IEquatable`1[Sample.Point].Equals -> Sample.Point.Equals
+type Sample.Sealed : System.Object attrs=Public, Sealed, BeforeFieldInit
+  [[System.Runtime.CompilerServices.NullableContextAttribute((Byte)1)]]
+  [[System.Runtime.CompilerServices.NullableAttribute((Byte)0)]]
+  implements System.IEquatable`1[Sample.Sealed]
+  field System.Int32 <A>k__BackingField attrs=Private, InitOnly
+    [[System.Runtime.CompilerServices.CompilerGeneratedAttribute()]]
+  method System.Boolean Equals(Sample.Sealed other) attrs=Public, Final, Virtual, HideBySig, VtableLayoutMask impl=IL
+    [[System.Runtime.CompilerServices.NullableContextAttribute((Byte)2)]]
+    [[System.Runtime.CompilerServices.CompilerGeneratedAttribute()]]
+  method System.Boolean Equals(System.Object obj) attrs=Public, Virtual, HideBySig impl=IL
+    [[System.Runtime.CompilerServices.NullableContextAttribute((Byte)2)]]
+    [[System.Runtime.CompilerServices.CompilerGeneratedAttribute()]]
+  method System.Boolean op_Equality(Sample.Sealed left, Sample.Sealed right) attrs=Public, Static, HideBySig, SpecialName impl=IL
+    [[System.Runtime.CompilerServices.NullableContextAttribute((Byte)2)]]
+    [[System.Runtime.CompilerServices.CompilerGeneratedAttribute()]]
+  method System.Boolean op_Inequality(Sample.Sealed left, Sample.Sealed right) attrs=Public, Static, HideBySig, SpecialName impl=IL
+    [[System.Runtime.CompilerServices.NullableContextAttribute((Byte)2)]]
+    [[System.Runtime.CompilerServices.CompilerGeneratedAttribute()]]
+  method System.Boolean PrintMembers(System.Text.StringBuilder builder) attrs=Private, HideBySig impl=IL
+    [[System.Runtime.CompilerServices.CompilerGeneratedAttribute()]]
+  method System.Int32 get_A() attrs=Public, HideBySig, SpecialName impl=IL
+    [[System.Runtime.CompilerServices.CompilerGeneratedAttribute()]]
+  method System.Int32 GetHashCode() attrs=Public, Virtual, HideBySig impl=IL
+    [[System.Runtime.CompilerServices.CompilerGeneratedAttribute()]]
+  method Sample.Sealed <Clone>$() attrs=Public, HideBySig impl=IL
+    [[System.Runtime.CompilerServices.CompilerGeneratedAttribute()]]
+  method System.String ToString() attrs=Public, Virtual, HideBySig impl=IL
+    [[System.Runtime.CompilerServices.CompilerGeneratedAttribute()]]
+  method System.Type get_EqualityContract() attrs=Private, HideBySig, SpecialName impl=IL
+    [[System.Runtime.CompilerServices.CompilerGeneratedAttribute()]]
+  method .ctor(System.Int32 A) attrs=Public, HideBySig, SpecialName, RTSpecialName impl=IL
+  method .ctor(Sample.Sealed original) attrs=Private, HideBySig, SpecialName, RTSpecialName impl=IL
+    [[System.Runtime.CompilerServices.CompilerGeneratedAttribute()]]
+  method System.Void Deconstruct(out System.Int32& A) attrs=Public, HideBySig impl=IL
+    [[System.Runtime.CompilerServices.CompilerGeneratedAttribute()]]
+    param A [[System.Runtime.InteropServices.OutAttribute()]]
+  method System.Void set_A(System.Int32 value) attrs=Public, HideBySig, SpecialName impl=IL
+    [[System.Runtime.CompilerServices.CompilerGeneratedAttribute()]]
+    return modreq System.Runtime.CompilerServices.IsExternalInit
+  property System.Int32 A[] get=get_A set=set_A
+  property System.Type EqualityContract[] get=get_EqualityContract set=
+    [[System.Runtime.CompilerServices.CompilerGeneratedAttribute()]]
+  map System.IEquatable`1[Sample.Sealed].Equals -> Sample.Sealed.Equals
+type Sample.Shape : System.Object attrs=Public, Abstract, BeforeFieldInit
+  implements System.IEquatable`1[Sample.Shape]
+  field System.String <Kind>k__BackingField attrs=Private, InitOnly
+    [[System.Runtime.CompilerServices.CompilerGeneratedAttribute()]]
+  method System.Boolean Equals(Sample.Shape other) attrs=Public, Virtual, HideBySig, VtableLayoutMask impl=IL
+    [[System.Runtime.CompilerServices.NullableContextAttribute((Byte)2)]]
+    [[System.Runtime.CompilerServices.CompilerGeneratedAttribute()]]
+  method System.Boolean Equals(System.Object obj) attrs=Public, Virtual, HideBySig impl=IL
+    [[System.Runtime.CompilerServices.NullableContextAttribute((Byte)2)]]
+    [[System.Runtime.CompilerServices.CompilerGeneratedAttribute()]]
+  method System.Boolean op_Equality(Sample.Shape left, Sample.Shape right) attrs=Public, Static, HideBySig, SpecialName impl=IL
+    [[System.Runtime.CompilerServices.NullableContextAttribute((Byte)2)]]
+    [[System.Runtime.CompilerServices.CompilerGeneratedAttribute()]]
+  method System.Boolean op_Inequality(Sample.Shape left, Sample.Shape right) attrs=Public, Static, HideBySig, SpecialName impl=IL
+    [[System.Runtime.CompilerServices.NullableContextAttribute((Byte)2)]]
+    [[System.Runtime.CompilerServices.CompilerGeneratedAttribute()]]
+  method System.Boolean PrintMembers(System.Text.StringBuilder builder) attrs=Family, Virtual, HideBySig, VtableLayoutMask impl=IL
+    [[System.Runtime.CompilerServices.NullableContextAttribute((Byte)1)]]
+    [[System.Runtime.CompilerServices.CompilerGeneratedAttribute()]]
+  method System.Int32 GetHashCode() attrs=Public, Virtual, HideBySig impl=IL
+    [[System.Runtime.CompilerServices.CompilerGeneratedAttribute()]]
+  method Sample.Shape <Clone>$() attrs=Public, Virtual, HideBySig, VtableLayoutMask, Abstract impl=IL
+    [[System.Runtime.CompilerServices.NullableContextAttribute((Byte)1)]]
+    [[System.Runtime.CompilerServices.CompilerGeneratedAttribute()]]
+  method System.String get_Kind() attrs=Public, HideBySig, SpecialName impl=IL
+    [[System.Runtime.CompilerServices.CompilerGeneratedAttribute()]]
+  method System.String ToString() attrs=Public, Virtual, HideBySig impl=IL
+    [[System.Runtime.CompilerServices.NullableContextAttribute((Byte)1)]]
+    [[System.Runtime.CompilerServices.CompilerGeneratedAttribute()]]
+  method System.Type get_EqualityContract() attrs=Family, Virtual, HideBySig, VtableLayoutMask, SpecialName impl=IL
+    [[System.Runtime.CompilerServices.NullableContextAttribute((Byte)1)]]
+    [[System.Runtime.CompilerServices.CompilerGeneratedAttribute()]]
+  method .ctor(Sample.Shape original) attrs=Family, HideBySig, SpecialName, RTSpecialName impl=IL
+    [[System.Runtime.CompilerServices.CompilerGeneratedAttribute()]]
+    param original [[System.Runtime.CompilerServices.NullableAttribute((Byte)1)]]
+  method .ctor(System.String Kind) attrs=Family, HideBySig, SpecialName, RTSpecialName impl=IL
+  method System.Void Deconstruct(out System.String& Kind) attrs=Public, HideBySig impl=IL
+    [[System.Runtime.CompilerServices.CompilerGeneratedAttribute()]]
+    param Kind [[System.Runtime.InteropServices.OutAttribute()]]
+  method System.Void set_Kind(System.String value) attrs=Public, HideBySig, SpecialName impl=IL
+    [[System.Runtime.CompilerServices.CompilerGeneratedAttribute()]]
+    return modreq System.Runtime.CompilerServices.IsExternalInit
+  property System.Type EqualityContract[] get=get_EqualityContract set=
+    [[System.Runtime.CompilerServices.NullableAttribute((Byte)1)]]
+    [[System.Runtime.CompilerServices.CompilerGeneratedAttribute()]]
+  property System.String Kind[] get=get_Kind set=set_Kind
+type Sample.Vector : System.ValueType attrs=Public, SequentialLayout, Sealed, BeforeFieldInit
+  implements System.IEquatable`1[Sample.Vector]
+  field System.Int32 <Dx>k__BackingField attrs=Private
+    [[System.Runtime.CompilerServices.CompilerGeneratedAttribute()]]
+  field System.Int32 <Dy>k__BackingField attrs=Private
+    [[System.Runtime.CompilerServices.CompilerGeneratedAttribute()]]
+  method System.Boolean Equals(Sample.Vector other) attrs=Public, Final, Virtual, HideBySig, VtableLayoutMask impl=IL
+    [[System.Runtime.CompilerServices.IsReadOnlyAttribute()]]
+    [[System.Runtime.CompilerServices.CompilerGeneratedAttribute()]]
+  method System.Boolean Equals(System.Object obj) attrs=Public, Virtual, HideBySig impl=IL
+    [[System.Runtime.CompilerServices.IsReadOnlyAttribute()]]
+    [[System.Runtime.CompilerServices.CompilerGeneratedAttribute()]]
+  method System.Boolean op_Equality(Sample.Vector left, Sample.Vector right) attrs=Public, Static, HideBySig, SpecialName impl=IL
+    [[System.Runtime.CompilerServices.CompilerGeneratedAttribute()]]
+  method System.Boolean op_Inequality(Sample.Vector left, Sample.Vector right) attrs=Public, Static, HideBySig, SpecialName impl=IL
+    [[System.Runtime.CompilerServices.CompilerGeneratedAttribute()]]
+  method System.Boolean PrintMembers(System.Text.StringBuilder builder) attrs=Private, HideBySig impl=IL
+    [[System.Runtime.CompilerServices.IsReadOnlyAttribute()]]
+    [[System.Runtime.CompilerServices.CompilerGeneratedAttribute()]]
+  method System.Int32 get_Dx() attrs=Public, HideBySig, SpecialName impl=IL
+    [[System.Runtime.CompilerServices.IsReadOnlyAttribute()]]
+    [[System.Runtime.CompilerServices.CompilerGeneratedAttribute()]]
+  method System.Int32 get_Dy() attrs=Public, HideBySig, SpecialName impl=IL
+    [[System.Runtime.CompilerServices.IsReadOnlyAttribute()]]
+    [[System.Runtime.CompilerServices.CompilerGeneratedAttribute()]]
+  method System.Int32 GetHashCode() attrs=Public, Virtual, HideBySig impl=IL
+    [[System.Runtime.CompilerServices.IsReadOnlyAttribute()]]
+    [[System.Runtime.CompilerServices.CompilerGeneratedAttribute()]]
+  method System.String ToString() attrs=Public, Virtual, HideBySig impl=IL
+    [[System.Runtime.CompilerServices.IsReadOnlyAttribute()]]
+    [[System.Runtime.CompilerServices.CompilerGeneratedAttribute()]]
+  method .ctor(System.Int32 Dx, System.Int32 Dy) attrs=Public, HideBySig, SpecialName, RTSpecialName impl=IL
+  method System.Void Deconstruct(out System.Int32& Dx, out System.Int32& Dy) attrs=Public, HideBySig impl=IL
+    [[System.Runtime.CompilerServices.IsReadOnlyAttribute()]]
+    [[System.Runtime.CompilerServices.CompilerGeneratedAttribute()]]
+    param Dx [[System.Runtime.InteropServices.OutAttribute()]]
+    param Dy [[System.Runtime.InteropServices.OutAttribute()]]
+  method System.Void set_Dx(System.Int32 value) attrs=Public, HideBySig, SpecialName impl=IL
+    [[System.Runtime.CompilerServices.CompilerGeneratedAttribute()]]
+  method System.Void set_Dy(System.Int32 value) attrs=Public, HideBySig, SpecialName impl=IL
+    [[System.Runtime.CompilerServices.CompilerGeneratedAttribute()]]
+  property System.Int32 Dx[] get=get_Dx set=set_Dx
+  property System.Int32 Dy[] get=get_Dy set=set_Dy
+  map System.IEquatable`1[Sample.Vector].Equals -> Sample.Vector.Equals

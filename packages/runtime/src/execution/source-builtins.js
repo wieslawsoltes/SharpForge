@@ -4,6 +4,7 @@ import {ManagedFault,isReference} from '../heap.js';
 import {SourceBuiltinResults} from './source-values.js';
 import {objectType,runtimeTypeText} from './tokens.js';
 import {invokeNamedBuiltin} from './source-builtins/index.js';
+import {invokeDecimal} from './decimal-intrinsics.js';
 
 function legacyStringPlatform(vm) {
   // The builtin seam also supports heap/value/format services without a complete VM.
@@ -42,6 +43,7 @@ export function builtin(vm, id, args) {
   }
   const name = entry.name;
   return vm.heap.withRoots(args, () => {
+    if (entry.decimal) return invokeDecimal(vm, entry.decimal, args).value;
     if (hasLegacyBclBuiltin(name)) {
       return invokeLegacyBclBuiltin(legacyHost(vm), name, args);
     }

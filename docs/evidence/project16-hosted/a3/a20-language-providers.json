@@ -1,0 +1,12 @@
+{
+  "status": "failed",
+  "engine": "chromium",
+  "passed": 1,
+  "checks": [
+    "selected Fix All family previews the complete batch and applies exact source edits"
+  ],
+  "failure": {
+    "type": "AssertionError",
+    "message": "Browser predicate timed out: editor.value.includes('//\ud83d\ude00 Gadget') && editor.value.includes('name=\"Gadget\"')"
+  }
+}

@@ -1,0 +1,558 @@
+{
+  "scope": "source-image assembly emission; compile outside timed region",
+  "baseline": "b6c4d52a81d26c0fca5ae17f42cdf08703d7e04f",
+  "candidateProduct": "692dcf70d773db48a01c64b6a0a1f650d008c4e3",
+  "machine": "Apple M3 Pro / Mac15,6 / macOS arm64 shared host",
+  "node": "v24.21.0",
+  "measurement": "Same harness, exact parent followed by candidate, two warmups and seven chronological samples per case, explicit GC before each sample; sole scheduled team job. Shared-host uncertainty; no statistical, causal, speedup or allocation claim. Heap deltas are sampled heap growth, not retained memory or allocation counts. Baseline nested outputs encode the known ordering defect.",
+  "command": "node --expose-gc packages/cil/tools/benchmark-emitter-regions.mjs <output.json>",
+  "results": [
+    {
+      "name": "no-handlers",
+      "baseline": {
+        "name": "no-handlers",
+        "medianMs": 1.3132499999999823,
+        "p95Ms": 6.445875000000001,
+        "samples": [
+          {
+            "ms": 6.445875000000001,
+            "heapDelta": 5531096,
+            "bytes": 24064
+          },
+          {
+            "ms": 1.5860000000000127,
+            "heapDelta": 1477488,
+            "bytes": 24064
+          },
+          {
+            "ms": 1.5839170000000422,
+            "heapDelta": 1453368,
+            "bytes": 24064
+          },
+          {
+            "ms": 1.3132499999999823,
+            "heapDelta": 1124240,
+            "bytes": 24064
+          },
+          {
+            "ms": 1.2922920000000317,
+            "heapDelta": 1586088,
+            "bytes": 24064
+          },
+          {
+            "ms": 1.2695420000000013,
+            "heapDelta": 1170176,
+            "bytes": 24064
+          },
+          {
+            "ms": 1.3118329999999787,
+            "heapDelta": 1210040,
+            "bytes": 24064
+          }
+        ]
+      },
+      "candidate": {
+        "name": "no-handlers",
+        "medianMs": 1.680667000000028,
+        "p95Ms": 4.074125000000038,
+        "samples": [
+          {
+            "ms": 4.074125000000038,
+            "heapDelta": 1966640,
+            "bytes": 24064
+          },
+          {
+            "ms": 1.680667000000028,
+            "heapDelta": 1579040,
+            "bytes": 24064
+          },
+          {
+            "ms": 1.6852080000000456,
+            "heapDelta": 1127120,
+            "bytes": 24064
+          },
+          {
+            "ms": 1.7719169999999735,
+            "heapDelta": 1412560,
+            "bytes": 24064
+          },
+          {
+            "ms": 1.3594580000000178,
+            "heapDelta": 1108520,
+            "bytes": 24064
+          },
+          {
+            "ms": 1.5129999999999768,
+            "heapDelta": 1337624,
+            "bytes": 24064
+          },
+          {
+            "ms": 1.1316249999999854,
+            "heapDelta": 1172144,
+            "bytes": 24064
+          }
+        ]
+      },
+      "medianDeltaMs": 0.36741700000004585,
+      "medianDeltaPercent": 27.977688939657398,
+      "p95DeltaMs": -2.371749999999963,
+      "p95DeltaPercent": -36.794849419201626
+    },
+    {
+      "name": "flat-catch",
+      "baseline": {
+        "name": "flat-catch",
+        "medianMs": 0.7557080000000269,
+        "p95Ms": 0.8008329999999546,
+        "samples": [
+          {
+            "ms": 0.7410840000000007,
+            "heapDelta": 305128,
+            "bytes": 3072
+          },
+          {
+            "ms": 0.7973330000000374,
+            "heapDelta": 305456,
+            "bytes": 3072
+          },
+          {
+            "ms": 0.7557080000000269,
+            "heapDelta": 307504,
+            "bytes": 3072
+          },
+          {
+            "ms": 0.759708000000046,
+            "heapDelta": 314448,
+            "bytes": 3072
+          },
+          {
+            "ms": 0.6964580000000069,
+            "heapDelta": 301456,
+            "bytes": 3072
+          },
+          {
+            "ms": 0.8008329999999546,
+            "heapDelta": 301672,
+            "bytes": 3072
+          },
+          {
+            "ms": 0.64387499999998,
+            "heapDelta": 296032,
+            "bytes": 3072
+          }
+        ]
+      },
+      "candidate": {
+        "name": "flat-catch",
+        "medianMs": 0.8084159999999656,
+        "p95Ms": 1.158083999999974,
+        "samples": [
+          {
+            "ms": 0.8000000000000114,
+            "heapDelta": 319776,
+            "bytes": 3072
+          },
+          {
+            "ms": 1.158083999999974,
+            "heapDelta": 322488,
+            "bytes": 3072
+          },
+          {
+            "ms": 0.8888330000000337,
+            "heapDelta": 334104,
+            "bytes": 3072
+          },
+          {
+            "ms": 0.8084159999999656,
+            "heapDelta": -72192,
+            "bytes": 3072
+          },
+          {
+            "ms": 0.8351670000000126,
+            "heapDelta": 317792,
+            "bytes": 3072
+          },
+          {
+            "ms": 0.7575410000000034,
+            "heapDelta": 315488,
+            "bytes": 3072
+          },
+          {
+            "ms": 0.7431250000000205,
+            "heapDelta": 306192,
+            "bytes": 3072
+          }
+        ]
+      },
+      "medianDeltaMs": 0.05270799999993869,
+      "medianDeltaPercent": 6.974651584995373,
+      "p95DeltaMs": 0.3572510000000193,
+      "p95DeltaPercent": 44.60992491568649
+    },
+    {
+      "name": "TryInFinally",
+      "baseline": {
+        "name": "TryInFinally",
+        "medianMs": 0.7740830000000187,
+        "p95Ms": 1.1878339999999525,
+        "samples": [
+          {
+            "ms": 0.6920409999999606,
+            "heapDelta": 315320,
+            "bytes": 4096
+          },
+          {
+            "ms": 0.6885829999999942,
+            "heapDelta": 315320,
+            "bytes": 4096
+          },
+          {
+            "ms": 0.8264169999999922,
+            "heapDelta": 316912,
+            "bytes": 4096
+          },
+          {
+            "ms": 1.1878339999999525,
+            "heapDelta": 315320,
+            "bytes": 4096
+          },
+          {
+            "ms": 0.7870829999999387,
+            "heapDelta": 315320,
+            "bytes": 4096
+          },
+          {
+            "ms": 0.7740830000000187,
+            "heapDelta": 315320,
+            "bytes": 4096
+          },
+          {
+            "ms": 0.7374169999999367,
+            "heapDelta": 315320,
+            "bytes": 4096
+          }
+        ]
+      },
+      "candidate": {
+        "name": "TryInFinally",
+        "medianMs": 0.8343329999999582,
+        "p95Ms": 0.8444579999999746,
+        "samples": [
+          {
+            "ms": 0.80600000000004,
+            "heapDelta": 326760,
+            "bytes": 4096
+          },
+          {
+            "ms": 0.7777920000000336,
+            "heapDelta": 326760,
+            "bytes": 4096
+          },
+          {
+            "ms": 0.8345410000000015,
+            "heapDelta": -66944,
+            "bytes": 4096
+          },
+          {
+            "ms": 0.8382079999999519,
+            "heapDelta": 326760,
+            "bytes": 4096
+          },
+          {
+            "ms": 0.8078330000000165,
+            "heapDelta": 326760,
+            "bytes": 4096
+          },
+          {
+            "ms": 0.8343329999999582,
+            "heapDelta": 326760,
+            "bytes": 4096
+          },
+          {
+            "ms": 0.8444579999999746,
+            "heapDelta": 326920,
+            "bytes": 4096
+          }
+        ]
+      },
+      "medianDeltaMs": 0.06024999999993952,
+      "medianDeltaPercent": 7.7834030717556235,
+      "p95DeltaMs": -0.3433759999999779,
+      "p95DeltaPercent": -28.90774300112572
+    },
+    {
+      "name": "FinallyInCatch",
+      "baseline": {
+        "name": "FinallyInCatch",
+        "medianMs": 0.7193750000000136,
+        "p95Ms": 0.8422500000000355,
+        "samples": [
+          {
+            "ms": 0.7193750000000136,
+            "heapDelta": 315208,
+            "bytes": 4096
+          },
+          {
+            "ms": 0.7587499999999636,
+            "heapDelta": 314760,
+            "bytes": 4096
+          },
+          {
+            "ms": 0.8422500000000355,
+            "heapDelta": 314696,
+            "bytes": 4096
+          },
+          {
+            "ms": 0.7224999999999682,
+            "heapDelta": 316864,
+            "bytes": 4096
+          },
+          {
+            "ms": 0.699457999999936,
+            "heapDelta": 314696,
+            "bytes": 4096
+          },
+          {
+            "ms": 0.7047079999999823,
+            "heapDelta": 314696,
+            "bytes": 4096
+          },
+          {
+            "ms": 0.6251250000000255,
+            "heapDelta": 299696,
+            "bytes": 4096
+          }
+        ]
+      },
+      "candidate": {
+        "name": "FinallyInCatch",
+        "medianMs": 0.7355419999999526,
+        "p95Ms": 0.850750000000005,
+        "samples": [
+          {
+            "ms": 0.7355419999999526,
+            "heapDelta": 333072,
+            "bytes": 4096
+          },
+          {
+            "ms": 0.6958340000000476,
+            "heapDelta": 326360,
+            "bytes": 4096
+          },
+          {
+            "ms": 0.8317089999999894,
+            "heapDelta": 326296,
+            "bytes": 4096
+          },
+          {
+            "ms": 0.7092910000000074,
+            "heapDelta": 330776,
+            "bytes": 4096
+          },
+          {
+            "ms": 0.7456670000000258,
+            "heapDelta": 323936,
+            "bytes": 4096
+          },
+          {
+            "ms": 0.850750000000005,
+            "heapDelta": 326296,
+            "bytes": 4096
+          },
+          {
+            "ms": 0.6792499999999109,
+            "heapDelta": 623304,
+            "bytes": 4096
+          }
+        ]
+      },
+      "medianDeltaMs": 0.01616699999993898,
+      "medianDeltaPercent": 2.2473675065075582,
+      "p95DeltaMs": 0.008499999999969532,
+      "p95DeltaPercent": 1.009201543481053
+    },
+    {
+      "name": "ThreeLevels",
+      "baseline": {
+        "name": "ThreeLevels",
+        "medianMs": 0.6902499999999918,
+        "p95Ms": 0.7678750000000036,
+        "samples": [
+          {
+            "ms": 0.7396669999999403,
+            "heapDelta": 317656,
+            "bytes": 4096
+          },
+          {
+            "ms": 0.6763750000000073,
+            "heapDelta": 317656,
+            "bytes": 4096
+          },
+          {
+            "ms": 0.7678750000000036,
+            "heapDelta": 315280,
+            "bytes": 4096
+          },
+          {
+            "ms": 0.6902499999999918,
+            "heapDelta": 315368,
+            "bytes": 4096
+          },
+          {
+            "ms": 0.7122920000000477,
+            "heapDelta": 315368,
+            "bytes": 4096
+          },
+          {
+            "ms": 0.6887500000000273,
+            "heapDelta": 316064,
+            "bytes": 4096
+          },
+          {
+            "ms": 0.6420000000000528,
+            "heapDelta": 314800,
+            "bytes": 4096
+          }
+        ]
+      },
+      "candidate": {
+        "name": "ThreeLevels",
+        "medianMs": 0.767708999999968,
+        "p95Ms": 0.8349159999999074,
+        "samples": [
+          {
+            "ms": 0.8017500000000837,
+            "heapDelta": 330088,
+            "bytes": 4096
+          },
+          {
+            "ms": 0.8349159999999074,
+            "heapDelta": 370024,
+            "bytes": 4096
+          },
+          {
+            "ms": 0.7750419999999849,
+            "heapDelta": 327896,
+            "bytes": 4096
+          },
+          {
+            "ms": 0.7612910000000284,
+            "heapDelta": 327896,
+            "bytes": 4096
+          },
+          {
+            "ms": 0.7546660000000429,
+            "heapDelta": 327896,
+            "bytes": 4096
+          },
+          {
+            "ms": 0.767708999999968,
+            "heapDelta": 328592,
+            "bytes": 4096
+          },
+          {
+            "ms": 0.7089579999999387,
+            "heapDelta": 327280,
+            "bytes": 4096
+          }
+        ]
+      },
+      "medianDeltaMs": 0.07745899999997619,
+      "medianDeltaPercent": 11.221876131832964,
+      "p95DeltaMs": 0.06704099999990376,
+      "p95DeltaPercent": 8.730717890269046
+    },
+    {
+      "name": "NestedRethrow",
+      "baseline": {
+        "name": "NestedRethrow",
+        "medianMs": 0.6485000000000127,
+        "p95Ms": 0.8096669999999904,
+        "samples": [
+          {
+            "ms": 0.6405839999999898,
+            "heapDelta": 307256,
+            "bytes": 3584
+          },
+          {
+            "ms": 0.6523750000000064,
+            "heapDelta": 315896,
+            "bytes": 3584
+          },
+          {
+            "ms": 0.60775000000001,
+            "heapDelta": 307256,
+            "bytes": 3584
+          },
+          {
+            "ms": 0.6631660000000466,
+            "heapDelta": 310216,
+            "bytes": 3584
+          },
+          {
+            "ms": 0.6485000000000127,
+            "heapDelta": 307256,
+            "bytes": 3584
+          },
+          {
+            "ms": 0.6275000000000546,
+            "heapDelta": 313296,
+            "bytes": 3584
+          },
+          {
+            "ms": 0.8096669999999904,
+            "heapDelta": 306792,
+            "bytes": 3584
+          }
+        ]
+      },
+      "candidate": {
+        "name": "NestedRethrow",
+        "medianMs": 0.791541000000052,
+        "p95Ms": 1.0475830000000315,
+        "samples": [
+          {
+            "ms": 0.7505840000000035,
+            "heapDelta": 318936,
+            "bytes": 3584
+          },
+          {
+            "ms": 0.8464999999999918,
+            "heapDelta": 327528,
+            "bytes": 3584
+          },
+          {
+            "ms": 0.743959000000018,
+            "heapDelta": 318912,
+            "bytes": 3584
+          },
+          {
+            "ms": 0.791541000000052,
+            "heapDelta": 321872,
+            "bytes": 3584
+          },
+          {
+            "ms": 1.0475830000000315,
+            "heapDelta": 318912,
+            "bytes": 3584
+          },
+          {
+            "ms": 0.7605829999999969,
+            "heapDelta": 324512,
+            "bytes": 3584
+          },
+          {
+            "ms": 0.8107089999999744,
+            "heapDelta": 318296,
+            "bytes": 3584
+          }
+        ]
+      },
+      "medianDeltaMs": 0.14304100000003928,
+      "medianDeltaPercent": 22.057208943721896,
+      "p95DeltaMs": 0.2379160000000411,
+      "p95DeltaPercent": 29.384425943016556
+    }
+  ],
+  "integrationAcceptance": "Root integration review accepts the quantified no-handler median +0.367417 ms/+27.98%, flat-catch median +0.052708 ms/+6.97% and p95 +0.357251 ms/+44.61%, plus retained nested costs. This fixes three previously invalid nested outputs with native four-case evidence and replaces repeated zone/sibling scans with bounded validated geometry. The no-handler path does not construct regions or indexes. Shared-host uncertainty and every chronological sample are retained; no speedup, noise attribution or causal claim, and no tuning rerun."
+}
