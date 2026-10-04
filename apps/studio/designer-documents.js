@@ -63,10 +63,27 @@ export class DesignerDocuments {
     if (this.disposed) throw new Error('Designer documents host is disposed');
     const previous = this.sources.get(uri);
     if (previous && previous.element !== element) this.close(uri, {preserveState: true});
-    this.sources.set(uri, {element, editor, record});
+    else previous?.disposeFocus?.();
+    this.sources.set(uri, {element, editor, record, disposeFocus: this.bindSourceFocus(uri, editor?.input)});
     if (!this.views.has(uri) && this.probe(uri).compatible) this.createView(uri);
     if (this.state.active === uri) this.activate(uri);
     return element;
+  }
+
+  bindSourceFocus(uri, input) {
+    if (!input) return null;
+    const activate = () => this.focusSource(uri);
+    input.addEventListener('focus', activate);
+    return () => input.removeEventListener('focus', activate);
+  }
+
+  /** Native editor focus shares navigation ownership even when this source has no designer session. */
+  focusSource(uri) {
+    if (this.disposed || !this.sources.has(uri)) return null;
+    if (this.navigation?.running && this.navigation.uri !== uri) return null;
+    if (this.state.active === uri) return this.activate(uri);
+    if (!this.navigation?.running) Promise.resolve(this.navigateSource(uri)).catch(this.onError);
+    return this.registry.get(uri);
   }
 
   createView(uri) {
@@ -243,6 +260,7 @@ export class DesignerDocuments {
   /** Remounting an existing file keeps its view recovery; removal and workspace reset discard it. */
   close(uri, {preserveState = false} = {}) {
     if (this.navigation?.uri === uri) this.cancelNavigation();
+    this.sources.get(uri)?.disposeFocus?.();
     this.cancelProbe(uri);
     const closed = this.registry.close(uri, {preserveState: preserveState && !!this.file(uri)});
     this.sources.delete(uri);
@@ -253,7 +271,11 @@ export class DesignerDocuments {
   syncFiles(files = [...this.state.files, ...this.records()]) {
     this.registry.syncFiles(files);
     const uris = new Set(files.map(file => file.uri ?? file.path));
-    for (const uri of this.sources.keys()) if (!uris.has(uri)) this.sources.delete(uri);
+    for (const [uri, source] of this.sources) {
+      if (uris.has(uri)) continue;
+      source.disposeFocus?.();
+      this.sources.delete(uri);
+    }
     for (const uri of this.probes.keys()) if (!uris.has(uri)) this.probes.delete(uri);
     for (const uri of this.probeTimers.keys()) if (!uris.has(uri)) this.cancelProbe(uri);
   }
@@ -277,6 +299,7 @@ export class DesignerDocuments {
     if (this.disposed) return;
     this.disposed = true;
     this.cancelNavigation();
+    for (const source of this.sources.values()) source.disposeFocus?.();
     this.unsubscribe();
     this.router.dispose();
     this.registry.dispose();
