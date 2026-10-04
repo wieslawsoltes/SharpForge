@@ -191,9 +191,11 @@ for (const engine of ['source', 'reload']) {
     assert.equal(vm.output.join(''), '42\n');
     vm.restore(saved);
     vm.stop();
+    assert.equal(vm.allFrames().length, 0, 'cancellation releases all parked frames');
+    assert.ok([...vm.scheduler.contexts.values()].every(context =>
+      ['completed', 'faulted', 'canceled'].includes(context.status)));
     vm.call(vm.image.entryPoint, []);
-    vm.state = 'running';
-    assert.equal(vm.run().state, 'waiting');
+    assert.equal(vm.frames.length, 1, 'a fresh frame can reserve storage after cancellation');
     vm.stop();
   });
 }
