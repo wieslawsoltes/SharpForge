@@ -7,3 +7,4 @@ export {ThemeTransition, ThemeTransitionCoordinator, themeTransitionKinds} from 
 export {ConnectedAnimationService, ConnectedAnimation, NavigationTransitionInfo} from './connected-animation.js';
 export {ImplicitTransition, ImplicitTransitionCoordinator} from './implicit-transitions.js';
 export {NavigationTransitionCoordinator} from './navigation-transitions.js';
+export {IndependentTimelineTransport, IndependentTimelineHost} from './independent-timelines.js';
