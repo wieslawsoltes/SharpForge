@@ -831,8 +831,9 @@ Registered families: <code>string</code>.
 | 1282 | <code>static string System.String::Format(string, object, object, object)</code> | implemented |
 | 1283 | <code>static string System.String::Format(string, object, object, object, object)</code> | implemented |
 | 1284 | <code>static string System.String::Format(string, object[])</code> | implemented |
+| 524298 | <code>static int System.String::CompareOrdinal(string, int, string, int, int)</code> | implemented |
 
-Pinned reference: 36 implemented and 150 missing exact metadata rows.
+Pinned reference: 37 implemented and 149 missing exact metadata rows.
 
 | Reference kind | Exact reference signature | Status | Matching ABI IDs |
 | --- | --- | --- | --- |
@@ -859,7 +860,7 @@ Pinned reference: 36 implemented and 150 missing exact metadata rows.
 | method | <code>System.String::Compare``0(System.String,System.String,System.Boolean,System.Globalization.CultureInfo):System.Int32 static</code> | missing | — |
 | method | <code>System.String::Compare``0(System.String,System.String,System.Globalization.CultureInfo,System.Globalization.CompareOptions):System.Int32 static</code> | missing | — |
 | method | <code>System.String::Compare``0(System.String,System.String,System.StringComparison):System.Int32 static</code> | missing | — |
-| method | <code>System.String::CompareOrdinal``0(System.String,System.Int32,System.String,System.Int32,System.Int32):System.Int32 static</code> | missing | — |
+| method | <code>System.String::CompareOrdinal``0(System.String,System.Int32,System.String,System.Int32,System.Int32):System.Int32 static</code> | implemented | 524298 |
 | method | <code>System.String::CompareOrdinal``0(System.String,System.String):System.Int32 static</code> | implemented | 1254 |
 | method | <code>System.String::CompareTo``0(System.Object):System.Int32 instance</code> | missing | — |
 | method | <code>System.String::CompareTo``0(System.String):System.Int32 instance</code> | missing | — |
@@ -1080,8 +1081,9 @@ Registered families: <code>array</code>.
 | 1708 | <code>static int System.Array::IndexOf(object[], object)</code> | implemented |
 | 1709 | <code>static int System.Array::LastIndexOf(object[], object)</code> | implemented |
 | 1710 | <code>static int System.Array::BinarySearch(object[], object)</code> | implemented |
+| 524296 | <code>static int System.Array::BinarySearch(System.Array, object, System.Collections.IComparer)</code> | implemented |
 
-Pinned reference: 1 implemented and 116 missing exact metadata rows.
+Pinned reference: 2 implemented and 115 missing exact metadata rows.
 
 | Reference kind | Exact reference signature | Status | Matching ABI IDs |
 | --- | --- | --- | --- |
@@ -1098,7 +1100,7 @@ Pinned reference: 1 implemented and 116 missing exact metadata rows.
 | method | <code>System.Array::BinarySearch``0(System.Array,System.Int32,System.Int32,System.Object):System.Int32 static</code> | missing | — |
 | method | <code>System.Array::BinarySearch``0(System.Array,System.Int32,System.Int32,System.Object,System.Collections.IComparer):System.Int32 static</code> | missing | — |
 | method | <code>System.Array::BinarySearch``0(System.Array,System.Object):System.Int32 static</code> | missing | — |
-| method | <code>System.Array::BinarySearch``0(System.Array,System.Object,System.Collections.IComparer):System.Int32 static</code> | missing | — |
+| method | <code>System.Array::BinarySearch``0(System.Array,System.Object,System.Collections.IComparer):System.Int32 static</code> | implemented | 524296 |
 | method | <code>System.Array::BinarySearch``1(!!0[],System.Int32,System.Int32,!!0):System.Int32 static</code> | missing | — |
 | method | <code>System.Array::BinarySearch``1(!!0[],System.Int32,System.Int32,!!0,System.Collections.Generic.IComparer`1&lt;!!0&gt;):System.Int32 static</code> | missing | — |
 | method | <code>System.Array::BinarySearch``1(!!0[],!!0):System.Int32 static</code> | missing | — |
@@ -1244,5 +1246,40 @@ Pinned reference: 9 implemented and 14 missing exact metadata rows.
 | method | <code>System.Random::Shuffle``1(System.Span`1&lt;!!0&gt;):System.Void instance</code> | missing | — |
 | method | <code>System.Random::Shuffle``1(!!0[]):System.Void instance</code> | missing | — |
 | property | <code>System.Random::Shared[]:System.Random get static</code> | implemented | 1713 |
+
+### Module <code>environment</code>
+
+Registered families: <code>environment</code>.
+
+| ABI ID | Registered signature | Registry status |
+| --- | --- | --- |
+| 524289 | <code>static string System.Environment::GetEnvironmentVariable(string)</code> | implemented |
+
+No pinned reference inventory is included for these families; registered rows alone do not establish API coverage.
+
+### Module <code>stringComparer</code>
+
+Registered families: <code>stringComparer</code>, <code>orderingComparer</code>.
+
+| ABI ID | Registered signature | Registry status |
+| --- | --- | --- |
+| 524290 | <code>int System.Collections.Generic.IComparer`1&lt;string&gt;::Compare(string, string)</code> | implemented |
+| 524291 | <code>int System.Collections.Generic.IComparer`1&lt;object&gt;::Compare(object, object)</code> | implemented |
+| 524292 | <code>static System.StringComparer System.StringComparer::get_Ordinal()</code> | implemented |
+| 524293 | <code>int System.StringComparer::Compare(string, string)</code> | implemented |
+| 524295 | <code>int System.StringComparer::Compare(object, object)</code> | implemented |
+| 524297 | <code>static System.StringComparer System.StringComparer::get_OrdinalIgnoreCase()</code> | implemented |
+
+No pinned reference inventory is included for these families; registered rows alone do not establish API coverage.
+
+### Module <code>objectComparer</code>
+
+Registered families: <code>objectComparer</code>.
+
+| ABI ID | Registered signature | Registry status |
+| --- | --- | --- |
+| 524294 | <code>int System.Collections.IComparer::Compare(object, object)</code> | implemented |
+
+No pinned reference inventory is included for these families; registered rows alone do not establish API coverage.
 
 <!-- bcl-module-inventory:end -->
