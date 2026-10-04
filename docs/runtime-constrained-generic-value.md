@@ -41,8 +41,10 @@ copies, array/field/box interiors, GC, prefix/callee snapshots, stop cleanup,
 initializer retry, invalid addresses, constraint violations and storage/body
 rejection. All 87 focused tests below passed at `7e5fbdb5`, after integrating
 the actual merged generic-reference parent. The serial run used Node 24, one
-worker and a 512 MB old-space limit. Native and performance qualification remain
-deferred. The completed command was:
+worker and a 512 MB old-space limit. After integrating newer main `48d84f5f`
+and preserving both independently added CIL exports, all 45 generic-reference
+and generic-value tests passed again at `ea4f328e`. Native and performance
+qualification remain deferred. The initial completed command was:
 
 ```sh
 node scripts/limited.js node --test --test-concurrency=1 tests/a05-constrained-generic-value.test.js tests/a05-constrained-generic-reference.test.js tests/a05-constrained-interface-calls.test.js tests/a05-02-generic-calls.test.js tests/a05-value-instance-calls.test.js
