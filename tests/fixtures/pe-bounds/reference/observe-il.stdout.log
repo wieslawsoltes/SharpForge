@@ -1,0 +1,988 @@
+{
+  "schemaVersion": 1,
+  "observer": {
+    "name": "System.Reflection.Metadata.PEReader",
+    "runtime": ".NET 10.0.5",
+    "os": "Ubuntu 24.04.3 LTS",
+    "architecture": "X64",
+    "metadataAssemblyVersion": "10.0.0.0"
+  },
+  "image": {
+    "name": "ordinary-il.dll",
+    "bytes": 11776,
+    "sha256": "53af64fc5a8db6df9b64fe46ab8e1518a33015a0aec0f33c2101d84edc750aa3"
+  },
+  "imageKind": "ILOnly",
+  "headers": {
+    "dos": {
+      "magic": 23117,
+      "peHeaderOffset": 128
+    },
+    "coff": {
+      "machine": 332,
+      "sectionCount": 3,
+      "timestamp": 2994126344,
+      "pointerToSymbolTable": 0,
+      "numberOfSymbols": 0,
+      "optionalHeaderSize": 224,
+      "characteristics": 34
+    },
+    "optional": {
+      "format": "PE32",
+      "magic": 267,
+      "majorLinkerVersion": 48,
+      "minorLinkerVersion": 0,
+      "sizeOfCode": 9216,
+      "sizeOfInitializedData": 2048,
+      "sizeOfUninitializedData": 0,
+      "addressOfEntryPoint": 17046,
+      "baseOfCode": 8192,
+      "baseOfData": 24576,
+      "imageBase": "0x400000",
+      "sectionAlignment": 8192,
+      "fileAlignment": 512,
+      "majorOperatingSystemVersion": 4,
+      "minorOperatingSystemVersion": 0,
+      "majorImageVersion": 0,
+      "minorImageVersion": 0,
+      "majorSubsystemVersion": 4,
+      "minorSubsystemVersion": 0,
+      "win32VersionValue": 0,
+      "sizeOfImage": 40960,
+      "sizeOfHeaders": 512,
+      "checksum": 0,
+      "subsystem": 3,
+      "dllCharacteristics": 34112,
+      "sizeOfStackReserve": "0x100000",
+      "sizeOfStackCommit": "0x1000",
+      "sizeOfHeapReserve": "0x100000",
+      "sizeOfHeapCommit": "0x1000",
+      "loaderFlags": 0,
+      "directoryCount": 16
+    }
+  },
+  "sections": [
+    {
+      "name": ".text",
+      "rva": 8192,
+      "virtualSize": 8860,
+      "size": 9216,
+      "offset": 512,
+      "characteristics": 1610612768,
+      "pointerToRelocations": 0,
+      "pointerToLineNumbers": 0,
+      "numberOfRelocations": 0,
+      "numberOfLineNumbers": 0
+    },
+    {
+      "name": ".rsrc",
+      "rva": 24576,
+      "virtualSize": 1224,
+      "size": 1536,
+      "offset": 9728,
+      "characteristics": 1073741888,
+      "pointerToRelocations": 0,
+      "pointerToLineNumbers": 0,
+      "numberOfRelocations": 0,
+      "numberOfLineNumbers": 0
+    },
+    {
+      "name": ".reloc",
+      "rva": 32768,
+      "virtualSize": 12,
+      "size": 512,
+      "offset": 11264,
+      "characteristics": 1107296320,
+      "pointerToRelocations": 0,
+      "pointerToLineNumbers": 0,
+      "numberOfRelocations": 0,
+      "numberOfLineNumbers": 0
+    }
+  ],
+  "directories": [
+    {
+      "name": "export",
+      "address": 0,
+      "addressKind": "rva",
+      "size": 0
+    },
+    {
+      "name": "import",
+      "address": 16964,
+      "addressKind": "rva",
+      "size": 79
+    },
+    {
+      "name": "resource",
+      "address": 24576,
+      "addressKind": "rva",
+      "size": 1224
+    },
+    {
+      "name": "exception",
+      "address": 0,
+      "addressKind": "rva",
+      "size": 0
+    },
+    {
+      "name": "certificate",
+      "address": 0,
+      "addressKind": "file-offset",
+      "size": 0
+    },
+    {
+      "name": "baseRelocation",
+      "address": 32768,
+      "addressKind": "rva",
+      "size": 12
+    },
+    {
+      "name": "debug",
+      "address": 16936,
+      "addressKind": "rva",
+      "size": 28
+    },
+    {
+      "name": "architecture",
+      "address": 0,
+      "addressKind": "rva",
+      "size": 0
+    },
+    {
+      "name": "globalPointer",
+      "address": 0,
+      "addressKind": "rva",
+      "size": 0
+    },
+    {
+      "name": "threadLocalStorage",
+      "address": 0,
+      "addressKind": "rva",
+      "size": 0
+    },
+    {
+      "name": "loadConfiguration",
+      "address": 0,
+      "addressKind": "rva",
+      "size": 0
+    },
+    {
+      "name": "boundImport",
+      "address": 0,
+      "addressKind": "rva",
+      "size": 0
+    },
+    {
+      "name": "importAddressTable",
+      "address": 8192,
+      "addressKind": "rva",
+      "size": 8
+    },
+    {
+      "name": "delayImport",
+      "address": 0,
+      "addressKind": "rva",
+      "size": 0
+    },
+    {
+      "name": "cliHeader",
+      "address": 8200,
+      "addressKind": "rva",
+      "size": 72
+    },
+    {
+      "name": "reserved",
+      "address": 0,
+      "addressKind": "rva",
+      "size": 0
+    }
+  ],
+  "cli": {
+    "headerSize": 72,
+    "version": [
+      2,
+      5
+    ],
+    "flags": 1,
+    "entryPoint": {
+      "kind": "managed-token",
+      "value": 100663324
+    },
+    "metadataDirectory": {
+      "rva": 10732,
+      "size": 6204
+    },
+    "resources": {
+      "rva": 0,
+      "size": 0
+    },
+    "strongNameSignature": {
+      "rva": 0,
+      "size": 0
+    },
+    "codeManagerTable": {
+      "rva": 0,
+      "size": 0
+    },
+    "vtableFixups": {
+      "rva": 0,
+      "size": 0
+    },
+    "exportAddressTableJumps": {
+      "rva": 0,
+      "size": 0
+    },
+    "managedNativeHeader": {
+      "rva": 0,
+      "size": 0
+    }
+  },
+  "managedNativeSignature": null,
+  "debugDirectory": [
+    {
+      "characteristics": 0,
+      "stamp": 0,
+      "major": 0,
+      "minor": 0,
+      "kind": 16,
+      "dataRva": 0,
+      "offset": 0,
+      "size": 0,
+      "payloadSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "strongName": {
+    "publicKeyFlag": false,
+    "signedFlag": false,
+    "publicKeySize": 0,
+    "publicKeySha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "signatureSize": 0,
+    "signatureState": "absent",
+    "signatureSha256": null,
+    "verification": "not-performed"
+  },
+  "methods": [
+    {
+      "token": 100663297,
+      "name": "get_name",
+      "implFlags": 0,
+      "rva": 8272,
+      "codeKind": "CIL",
+      "hasCilBody": true,
+      "body": {
+        "headerSize": 1,
+        "totalSize": 8,
+        "codeSize": 7,
+        "maxStack": 8,
+        "localSignature": 0,
+        "initLocals": false,
+        "exceptionRegionCount": 0,
+        "codeSha256": "a3c31d774a823fbb7f6c3188d44e2bdae25ae3dff2ad13e65b1f05548b513352"
+      },
+      "bodyError": null
+    },
+    {
+      "token": 100663298,
+      "name": "get_token",
+      "implFlags": 0,
+      "rva": 8280,
+      "codeKind": "CIL",
+      "hasCilBody": true,
+      "body": {
+        "headerSize": 1,
+        "totalSize": 8,
+        "codeSize": 7,
+        "maxStack": 8,
+        "localSignature": 0,
+        "initLocals": false,
+        "exceptionRegionCount": 0,
+        "codeSha256": "afc4b21fb7c4bf9935ed929225ec9b4e56221c30177cdc003a8fa857adc177a5"
+      },
+      "bodyError": null
+    },
+    {
+      "token": 100663299,
+      "name": "get_code",
+      "implFlags": 0,
+      "rva": 8288,
+      "codeKind": "CIL",
+      "hasCilBody": true,
+      "body": {
+        "headerSize": 1,
+        "totalSize": 8,
+        "codeSize": 7,
+        "maxStack": 8,
+        "localSignature": 0,
+        "initLocals": false,
+        "exceptionRegionCount": 0,
+        "codeSha256": "80054df6a59833f32c3a3c0b37725b403112cc03e968a29d460f3206101abaac"
+      },
+      "bodyError": null
+    },
+    {
+      "token": 100663300,
+      "name": "get_clauses",
+      "implFlags": 0,
+      "rva": 8296,
+      "codeKind": "CIL",
+      "hasCilBody": true,
+      "body": {
+        "headerSize": 1,
+        "totalSize": 8,
+        "codeSize": 7,
+        "maxStack": 8,
+        "localSignature": 0,
+        "initLocals": false,
+        "exceptionRegionCount": 0,
+        "codeSha256": "6f2e94cfb9d0b9723699a12ce2d583eb00a251c9059371c9992e397f300ae3b2"
+      },
+      "bodyError": null
+    },
+    {
+      "token": 100663301,
+      "name": ".ctor",
+      "implFlags": 0,
+      "rva": 8304,
+      "codeKind": "CIL",
+      "hasCilBody": true,
+      "body": {
+        "headerSize": 1,
+        "totalSize": 37,
+        "codeSize": 36,
+        "maxStack": 8,
+        "localSignature": 0,
+        "initLocals": false,
+        "exceptionRegionCount": 0,
+        "codeSha256": "9422fd04e719da3672d2f3901dda3dddef5a70c2b50d217b5213f9ea5d83fde8"
+      },
+      "bodyError": null
+    },
+    {
+      "token": 100663302,
+      "name": "Equals",
+      "implFlags": 0,
+      "rva": 8344,
+      "codeKind": "CIL",
+      "hasCilBody": true,
+      "body": {
+        "headerSize": 12,
+        "totalSize": 125,
+        "codeSize": 113,
+        "maxStack": 3,
+        "localSignature": 285212673,
+        "initLocals": true,
+        "exceptionRegionCount": 0,
+        "codeSha256": "3939c8be4e803f851c110da4a460007cb4b2c825927a5448610d7fa1bc6c6986"
+      },
+      "bodyError": null
+    },
+    {
+      "token": 100663303,
+      "name": "GetHashCode",
+      "implFlags": 0,
+      "rva": 8472,
+      "codeKind": "CIL",
+      "hasCilBody": true,
+      "body": {
+        "headerSize": 12,
+        "totalSize": 110,
+        "codeSize": 98,
+        "maxStack": 3,
+        "localSignature": 0,
+        "initLocals": true,
+        "exceptionRegionCount": 0,
+        "codeSha256": "8bb431a82b3da198658ffc08914a38f00f094336a725abed82e600beff9893f0"
+      },
+      "bodyError": null
+    },
+    {
+      "token": 100663304,
+      "name": "ToString",
+      "implFlags": 0,
+      "rva": 8584,
+      "codeKind": "CIL",
+      "hasCilBody": true,
+      "body": {
+        "headerSize": 12,
+        "totalSize": 190,
+        "codeSize": 178,
+        "maxStack": 7,
+        "localSignature": 285212674,
+        "initLocals": true,
+        "exceptionRegionCount": 0,
+        "codeSha256": "602f9eaa615b5d12096c5a3d077db876dee050129218e45f87cd18e84ebd9476"
+      },
+      "bodyError": null
+    },
+    {
+      "token": 100663305,
+      "name": "get_flags",
+      "implFlags": 0,
+      "rva": 8774,
+      "codeKind": "CIL",
+      "hasCilBody": true,
+      "body": {
+        "headerSize": 1,
+        "totalSize": 8,
+        "codeSize": 7,
+        "maxStack": 8,
+        "localSignature": 0,
+        "initLocals": false,
+        "exceptionRegionCount": 0,
+        "codeSha256": "08bb5432b62aad65eaf2b0e8c029e554e31643cb9038b2912d93e794896beb24"
+      },
+      "bodyError": null
+    },
+    {
+      "token": 100663306,
+      "name": "get_start",
+      "implFlags": 0,
+      "rva": 8782,
+      "codeKind": "CIL",
+      "hasCilBody": true,
+      "body": {
+        "headerSize": 1,
+        "totalSize": 8,
+        "codeSize": 7,
+        "maxStack": 8,
+        "localSignature": 0,
+        "initLocals": false,
+        "exceptionRegionCount": 0,
+        "codeSha256": "dcd9ac44578ca04870d2d5d47535da02b87c294ca89f9702c769b719aeb4cc24"
+      },
+      "bodyError": null
+    },
+    {
+      "token": 100663307,
+      "name": "get_end",
+      "implFlags": 0,
+      "rva": 8790,
+      "codeKind": "CIL",
+      "hasCilBody": true,
+      "body": {
+        "headerSize": 1,
+        "totalSize": 8,
+        "codeSize": 7,
+        "maxStack": 8,
+        "localSignature": 0,
+        "initLocals": false,
+        "exceptionRegionCount": 0,
+        "codeSha256": "674bdf8e4bbc5ee2be14d63f653b3255d13b3e0b43d3a2d74a4a2c757cdd8688"
+      },
+      "bodyError": null
+    },
+    {
+      "token": 100663308,
+      "name": "get_target",
+      "implFlags": 0,
+      "rva": 8798,
+      "codeKind": "CIL",
+      "hasCilBody": true,
+      "body": {
+        "headerSize": 1,
+        "totalSize": 8,
+        "codeSize": 7,
+        "maxStack": 8,
+        "localSignature": 0,
+        "initLocals": false,
+        "exceptionRegionCount": 0,
+        "codeSha256": "90ebc8d20549fc040c93f393ac820e0d587efd9284975293cd08aa6b23c02e58"
+      },
+      "bodyError": null
+    },
+    {
+      "token": 100663309,
+      "name": "get_handlerEnd",
+      "implFlags": 0,
+      "rva": 8806,
+      "codeKind": "CIL",
+      "hasCilBody": true,
+      "body": {
+        "headerSize": 1,
+        "totalSize": 8,
+        "codeSize": 7,
+        "maxStack": 8,
+        "localSignature": 0,
+        "initLocals": false,
+        "exceptionRegionCount": 0,
+        "codeSha256": "504c1836b41c96049dcdd1ad32008f7ffb93205f81e5f05dbeb5d912d4065886"
+      },
+      "bodyError": null
+    },
+    {
+      "token": 100663310,
+      "name": "get_filterOffset",
+      "implFlags": 0,
+      "rva": 8814,
+      "codeKind": "CIL",
+      "hasCilBody": true,
+      "body": {
+        "headerSize": 1,
+        "totalSize": 8,
+        "codeSize": 7,
+        "maxStack": 8,
+        "localSignature": 0,
+        "initLocals": false,
+        "exceptionRegionCount": 0,
+        "codeSha256": "1fa6b2331eeaeceb0a751005bee46a954c5b109db4fbc135c9510c9ac702dafb"
+      },
+      "bodyError": null
+    },
+    {
+      "token": 100663311,
+      "name": ".ctor",
+      "implFlags": 0,
+      "rva": 8822,
+      "codeKind": "CIL",
+      "hasCilBody": true,
+      "body": {
+        "headerSize": 1,
+        "totalSize": 53,
+        "codeSize": 52,
+        "maxStack": 8,
+        "localSignature": 0,
+        "initLocals": false,
+        "exceptionRegionCount": 0,
+        "codeSha256": "df5a7c9d9adb97993c97310fbe3ab76f755383caa64643ee94bdd5ce40e853ee"
+      },
+      "bodyError": null
+    },
+    {
+      "token": 100663312,
+      "name": "Equals",
+      "implFlags": 0,
+      "rva": 8876,
+      "codeKind": "CIL",
+      "hasCilBody": true,
+      "body": {
+        "headerSize": 12,
+        "totalSize": 179,
+        "codeSize": 167,
+        "maxStack": 3,
+        "localSignature": 285212675,
+        "initLocals": true,
+        "exceptionRegionCount": 0,
+        "codeSha256": "85913743f50ae7ad9ec74b7e5c818a252b9559b3b4d3df555fb5c61b5c63d2be"
+      },
+      "bodyError": null
+    },
+    {
+      "token": 100663313,
+      "name": "GetHashCode",
+      "implFlags": 0,
+      "rva": 9056,
+      "codeKind": "CIL",
+      "hasCilBody": true,
+      "body": {
+        "headerSize": 12,
+        "totalSize": 156,
+        "codeSize": 144,
+        "maxStack": 3,
+        "localSignature": 0,
+        "initLocals": true,
+        "exceptionRegionCount": 0,
+        "codeSha256": "e676d11f4e3a91e126b1f6530b17fcd1444a7b351468520c91754b2102816f36"
+      },
+      "bodyError": null
+    },
+    {
+      "token": 100663314,
+      "name": "ToString",
+      "implFlags": 0,
+      "rva": 9212,
+      "codeKind": "CIL",
+      "hasCilBody": true,
+      "body": {
+        "headerSize": 12,
+        "totalSize": 272,
+        "codeSize": 260,
+        "maxStack": 7,
+        "localSignature": 285212676,
+        "initLocals": true,
+        "exceptionRegionCount": 0,
+        "codeSha256": "f141234902b0048b8bb88258d43ae44e5a24c02de5981e6ce9231b67a39bb30c"
+      },
+      "bodyError": null
+    },
+    {
+      "token": 100663315,
+      "name": "get_runtime",
+      "implFlags": 0,
+      "rva": 9484,
+      "codeKind": "CIL",
+      "hasCilBody": true,
+      "body": {
+        "headerSize": 1,
+        "totalSize": 8,
+        "codeSize": 7,
+        "maxStack": 8,
+        "localSignature": 0,
+        "initLocals": false,
+        "exceptionRegionCount": 0,
+        "codeSha256": "537cbf9fc1497885c74b0e11ffbf9cc80a92ccf90fe47ffc19a0f80b27e99172"
+      },
+      "bodyError": null
+    },
+    {
+      "token": 100663316,
+      "name": "get_methods",
+      "implFlags": 0,
+      "rva": 9492,
+      "codeKind": "CIL",
+      "hasCilBody": true,
+      "body": {
+        "headerSize": 1,
+        "totalSize": 8,
+        "codeSize": 7,
+        "maxStack": 8,
+        "localSignature": 0,
+        "initLocals": false,
+        "exceptionRegionCount": 0,
+        "codeSha256": "d64249b8a6d7d93167db5dba9e86f3586de365fa3a9ac5a11941b297a677c7a2"
+      },
+      "bodyError": null
+    },
+    {
+      "token": 100663317,
+      "name": "get_filterResult",
+      "implFlags": 0,
+      "rva": 9500,
+      "codeKind": "CIL",
+      "hasCilBody": true,
+      "body": {
+        "headerSize": 1,
+        "totalSize": 8,
+        "codeSize": 7,
+        "maxStack": 8,
+        "localSignature": 0,
+        "initLocals": false,
+        "exceptionRegionCount": 0,
+        "codeSha256": "5830073aa3b29a4c122489daaa1842954c0ab8cd250f27006de73cfda355fc04"
+      },
+      "bodyError": null
+    },
+    {
+      "token": 100663318,
+      "name": "get_finallyResult",
+      "implFlags": 0,
+      "rva": 9508,
+      "codeKind": "CIL",
+      "hasCilBody": true,
+      "body": {
+        "headerSize": 1,
+        "totalSize": 8,
+        "codeSize": 7,
+        "maxStack": 8,
+        "localSignature": 0,
+        "initLocals": false,
+        "exceptionRegionCount": 0,
+        "codeSha256": "8c54470cc268a2d7e4e16864e201bfb829ac392321a2c64e56f91ec896640d2c"
+      },
+      "bodyError": null
+    },
+    {
+      "token": 100663319,
+      "name": "get_finalizers",
+      "implFlags": 0,
+      "rva": 9516,
+      "codeKind": "CIL",
+      "hasCilBody": true,
+      "body": {
+        "headerSize": 1,
+        "totalSize": 8,
+        "codeSize": 7,
+        "maxStack": 8,
+        "localSignature": 0,
+        "initLocals": false,
+        "exceptionRegionCount": 0,
+        "codeSha256": "39067274dfe52fbbd2e010ce75c96f6f174a6458941e9a7e44c9ee0bf86d50a6"
+      },
+      "bodyError": null
+    },
+    {
+      "token": 100663320,
+      "name": ".ctor",
+      "implFlags": 0,
+      "rva": 9524,
+      "codeKind": "CIL",
+      "hasCilBody": true,
+      "body": {
+        "headerSize": 1,
+        "totalSize": 45,
+        "codeSize": 44,
+        "maxStack": 8,
+        "localSignature": 0,
+        "initLocals": false,
+        "exceptionRegionCount": 0,
+        "codeSha256": "62492857b2d6fb58a180c452256c6cdf485fb03a0aa669e825815971e89f7593"
+      },
+      "bodyError": null
+    },
+    {
+      "token": 100663321,
+      "name": "Equals",
+      "implFlags": 0,
+      "rva": 9572,
+      "codeKind": "CIL",
+      "hasCilBody": true,
+      "body": {
+        "headerSize": 12,
+        "totalSize": 149,
+        "codeSize": 137,
+        "maxStack": 3,
+        "localSignature": 285212677,
+        "initLocals": true,
+        "exceptionRegionCount": 0,
+        "codeSha256": "cb4533216d1cbb1c78088b2fb35fcd6f98af6579d5b9428df9f0356c4b613551"
+      },
+      "bodyError": null
+    },
+    {
+      "token": 100663322,
+      "name": "GetHashCode",
+      "implFlags": 0,
+      "rva": 9724,
+      "codeKind": "CIL",
+      "hasCilBody": true,
+      "body": {
+        "headerSize": 12,
+        "totalSize": 133,
+        "codeSize": 121,
+        "maxStack": 3,
+        "localSignature": 0,
+        "initLocals": true,
+        "exceptionRegionCount": 0,
+        "codeSha256": "1cfe6a946128157503879082ee1438c6a22911b5582a2b9c32acfa912865f93a"
+      },
+      "bodyError": null
+    },
+    {
+      "token": 100663323,
+      "name": "ToString",
+      "implFlags": 0,
+      "rva": 9860,
+      "codeKind": "CIL",
+      "hasCilBody": true,
+      "body": {
+        "headerSize": 12,
+        "totalSize": 231,
+        "codeSize": 219,
+        "maxStack": 7,
+        "localSignature": 285212678,
+        "initLocals": true,
+        "exceptionRegionCount": 0,
+        "codeSha256": "1ad135213e5b85246c855c6221498e6c7dab007c10b253365542a4dd94e1d675"
+      },
+      "bodyError": null
+    },
+    {
+      "token": 100663324,
+      "name": "\u003CMain\u003E$",
+      "implFlags": 0,
+      "rva": 10092,
+      "codeKind": "CIL",
+      "hasCilBody": true,
+      "body": {
+        "headerSize": 12,
+        "totalSize": 264,
+        "codeSize": 233,
+        "maxStack": 7,
+        "localSignature": 285212679,
+        "initLocals": true,
+        "exceptionRegionCount": 1,
+        "codeSha256": "3a48bf773d3cd8804fe6a4989ff69998da75b57383a7aaf002cfc3dad751fc02"
+      },
+      "bodyError": null
+    },
+    {
+      "token": 100663325,
+      "name": ".ctor",
+      "implFlags": 0,
+      "rva": 10356,
+      "codeKind": "CIL",
+      "hasCilBody": true,
+      "body": {
+        "headerSize": 1,
+        "totalSize": 8,
+        "codeSize": 7,
+        "maxStack": 8,
+        "localSignature": 0,
+        "initLocals": false,
+        "exceptionRegionCount": 0,
+        "codeSha256": "733efc1016aa963eb4eee30dd6c20b4a572dfbd5ca396cba4992b3f0170bd32c"
+      },
+      "bodyError": null
+    },
+    {
+      "token": 100663326,
+      "name": "Diamond",
+      "implFlags": 0,
+      "rva": 10364,
+      "codeKind": "CIL",
+      "hasCilBody": true,
+      "body": {
+        "headerSize": 1,
+        "totalSize": 9,
+        "codeSize": 8,
+        "maxStack": 8,
+        "localSignature": 0,
+        "initLocals": false,
+        "exceptionRegionCount": 0,
+        "codeSha256": "6d8f6d750c0f30eced0dd89cab495b05d9b3c2cddd607add5a459682784b1a97"
+      },
+      "bodyError": null
+    },
+    {
+      "token": 100663327,
+      "name": "Loop",
+      "implFlags": 0,
+      "rva": 10376,
+      "codeKind": "CIL",
+      "hasCilBody": true,
+      "body": {
+        "headerSize": 12,
+        "totalSize": 31,
+        "codeSize": 19,
+        "maxStack": 3,
+        "localSignature": 285212680,
+        "initLocals": true,
+        "exceptionRegionCount": 0,
+        "codeSha256": "c20a88f39d49d40025851151caba191abfbb6c33aebebbde1d6ad78039ef2686"
+      },
+      "bodyError": null
+    },
+    {
+      "token": 100663328,
+      "name": "Switch",
+      "implFlags": 0,
+      "rva": 10407,
+      "codeKind": "CIL",
+      "hasCilBody": true,
+      "body": {
+        "headerSize": 1,
+        "totalSize": 52,
+        "codeSize": 51,
+        "maxStack": 8,
+        "localSignature": 0,
+        "initLocals": false,
+        "exceptionRegionCount": 0,
+        "codeSha256": "47a462365da7ccfafbbc5f798b6d6614b21c92d97e9a9f28eae742277f229191"
+      },
+      "bodyError": null
+    },
+    {
+      "token": 100663329,
+      "name": "Finally",
+      "implFlags": 0,
+      "rva": 10460,
+      "codeKind": "CIL",
+      "hasCilBody": true,
+      "body": {
+        "headerSize": 12,
+        "totalSize": 52,
+        "codeSize": 21,
+        "maxStack": 2,
+        "localSignature": 285212680,
+        "initLocals": true,
+        "exceptionRegionCount": 1,
+        "codeSha256": "c0c50669dfa9addd5644c0ea00e6af9bf0feaa3d7c6c7f7e7cb3150a67fcb44d"
+      },
+      "bodyError": null
+    },
+    {
+      "token": 100663330,
+      "name": "FilterFinally",
+      "implFlags": 0,
+      "rva": 10512,
+      "codeKind": "CIL",
+      "hasCilBody": true,
+      "body": {
+        "headerSize": 12,
+        "totalSize": 96,
+        "codeSize": 53,
+        "maxStack": 2,
+        "localSignature": 285212680,
+        "initLocals": true,
+        "exceptionRegionCount": 2,
+        "codeSha256": "a73ac7ca01d969acffad47b7941a7f8411e57582f7f242f6f1b587aa8652f97d"
+      },
+      "bodyError": null
+    },
+    {
+      "token": 100663331,
+      "name": ".cctor",
+      "implFlags": 0,
+      "rva": 10608,
+      "codeKind": "CIL",
+      "hasCilBody": true,
+      "body": {
+        "headerSize": 1,
+        "totalSize": 12,
+        "codeSize": 11,
+        "maxStack": 8,
+        "localSignature": 0,
+        "initLocals": false,
+        "exceptionRegionCount": 0,
+        "codeSha256": "62131344b2d0aa3e3ca99314b3527e237f67c79cab09dfe93e7f2c6b4a8e311e"
+      },
+      "bodyError": null
+    },
+    {
+      "token": 100663332,
+      "name": ".ctor",
+      "implFlags": 0,
+      "rva": 10620,
+      "codeKind": "CIL",
+      "hasCilBody": true,
+      "body": {
+        "headerSize": 1,
+        "totalSize": 8,
+        "codeSize": 7,
+        "maxStack": 8,
+        "localSignature": 0,
+        "initLocals": false,
+        "exceptionRegionCount": 0,
+        "codeSha256": "733efc1016aa963eb4eee30dd6c20b4a572dfbd5ca396cba4992b3f0170bd32c"
+      },
+      "bodyError": null
+    },
+    {
+      "token": 100663333,
+      "name": "\u003C\u003CMain\u003E$\u003Eb__0_0",
+      "implFlags": 0,
+      "rva": 10628,
+      "codeKind": "CIL",
+      "hasCilBody": true,
+      "body": {
+        "headerSize": 1,
+        "totalSize": 8,
+        "codeSize": 7,
+        "maxStack": 8,
+        "localSignature": 0,
+        "initLocals": false,
+        "exceptionRegionCount": 0,
+        "codeSha256": "327b204f8cd400cc745bc6f751982a4a3cd1f6812e00ce8332c66c134fb250d7"
+      },
+      "bodyError": null
+    },
+    {
+      "token": 100663334,
+      "name": "\u003C\u003CMain\u003E$\u003Eb__0_1",
+      "implFlags": 0,
+      "rva": 10636,
+      "codeKind": "CIL",
+      "hasCilBody": true,
+      "body": {
+        "headerSize": 12,
+        "totalSize": 93,
+        "codeSize": 81,
+        "maxStack": 7,
+        "localSignature": 285212681,
+        "initLocals": true,
+        "exceptionRegionCount": 0,
+        "codeSha256": "83a903dcc0089c892f7554e784d5b205f3432aec288c436e94e2d556c597efcd"
+      },
+      "bodyError": null
+    }
+  ]
+}
