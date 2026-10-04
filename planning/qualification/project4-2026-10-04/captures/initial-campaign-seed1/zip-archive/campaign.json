@@ -1,0 +1,1593 @@
+{
+  "schemaVersion": 1,
+  "status": "passed",
+  "requestedCases": 32,
+  "completedCases": 32,
+  "counts": {
+    "accepted": 4,
+    "rejected": 28,
+    "unsupported": 0,
+    "findings": 0,
+    "cancelled": 0
+  },
+  "cases": [
+    {
+      "targetId": "zip-archive",
+      "seed": 1,
+      "caseIndex": 0,
+      "inputBytes": 22,
+      "inputSHA256": "8739c76e681f900923b900c9df0ef75cf421d39cabb54650c4b9ad19b6a76d85",
+      "sourceIdentity": {
+        "commit": "07c833a82084b8fc07e4d9263bf83e315998e1ab",
+        "tree": "1567d3935d15f123bc316ba0a1a0a04fed3ef221",
+        "clean": true
+      },
+      "budgets": {
+        "maxCases": 32,
+        "caseTimeoutMs": 1000,
+        "startupTimeoutMs": 5000,
+        "campaignTimeoutMs": 30000,
+        "maxInputBytes": 65536,
+        "maxOutputBytes": 65536,
+        "heapGrowthBytes": 16777216,
+        "v8HeapMb": 128,
+        "rssBytes": 268435456,
+        "maxCorpusCases": 128,
+        "maxCorpusBytes": 8388608
+      },
+      "qualification": "node-offline-parser",
+      "status": "accepted",
+      "code": "ZIP_READ_IN_MEMORY",
+      "metrics": {
+        "processElapsedMs": 583.9623289999945,
+        "sampledRssBytes": 0,
+        "elapsedMs": 0.7013510000000451,
+        "baselineHeapBytes": 39045504,
+        "heapUsedBytes": 39191152,
+        "heapGrowthBytes": 145648,
+        "externalGrowthBytes": 40714,
+        "arrayBufferGrowthBytes": 22,
+        "observedGrowthBytes": 186362,
+        "peakRssBytes": 85573632
+      },
+      "isolation": {
+        "v8OldSpaceMb": 128,
+        "rssGuard": "not-observed",
+        "osMemorySandbox": false
+      },
+      "seedName": "empty-archive",
+      "mutation": "seed"
+    },
+    {
+      "targetId": "zip-archive",
+      "seed": 1,
+      "caseIndex": 1,
+      "inputBytes": 128,
+      "inputSHA256": "a027ae5a1c09d297ddf1b336fbce86622b54762623d2e4c3942a60311c1f82f5",
+      "sourceIdentity": {
+        "commit": "07c833a82084b8fc07e4d9263bf83e315998e1ab",
+        "tree": "1567d3935d15f123bc316ba0a1a0a04fed3ef221",
+        "clean": true
+      },
+      "budgets": {
+        "maxCases": 32,
+        "caseTimeoutMs": 1000,
+        "startupTimeoutMs": 5000,
+        "campaignTimeoutMs": 30000,
+        "maxInputBytes": 65536,
+        "maxOutputBytes": 65536,
+        "heapGrowthBytes": 16777216,
+        "v8HeapMb": 128,
+        "rssBytes": 268435456,
+        "maxCorpusCases": 128,
+        "maxCorpusBytes": 8388608
+      },
+      "qualification": "node-offline-parser",
+      "status": "accepted",
+      "code": "ZIP_READ_IN_MEMORY",
+      "metrics": {
+        "processElapsedMs": 562.9319810000015,
+        "sampledRssBytes": 0,
+        "elapsedMs": 0.9129319999999552,
+        "baselineHeapBytes": 38938928,
+        "heapUsedBytes": 39099976,
+        "heapGrowthBytes": 161048,
+        "externalGrowthBytes": 40820,
+        "arrayBufferGrowthBytes": 128,
+        "observedGrowthBytes": 201868,
+        "peakRssBytes": 86360064
+      },
+      "isolation": {
+        "v8OldSpaceMb": 128,
+        "rssGuard": "not-observed",
+        "osMemorySandbox": false
+      },
+      "seedName": "single-file",
+      "mutation": "seed"
+    },
+    {
+      "targetId": "zip-archive",
+      "seed": 1,
+      "caseIndex": 2,
+      "inputBytes": 218,
+      "inputSHA256": "49a75c3b510c99c6d51f32a2b7f664b42d597db2cd81775c57b779ca1448c29f",
+      "sourceIdentity": {
+        "commit": "07c833a82084b8fc07e4d9263bf83e315998e1ab",
+        "tree": "1567d3935d15f123bc316ba0a1a0a04fed3ef221",
+        "clean": true
+      },
+      "budgets": {
+        "maxCases": 32,
+        "caseTimeoutMs": 1000,
+        "startupTimeoutMs": 5000,
+        "campaignTimeoutMs": 30000,
+        "maxInputBytes": 65536,
+        "maxOutputBytes": 65536,
+        "heapGrowthBytes": 16777216,
+        "v8HeapMb": 128,
+        "rssBytes": 268435456,
+        "maxCorpusCases": 128,
+        "maxCorpusBytes": 8388608
+      },
+      "qualification": "node-offline-parser",
+      "status": "accepted",
+      "code": "ZIP_READ_IN_MEMORY",
+      "metrics": {
+        "processElapsedMs": 586.6650519999966,
+        "sampledRssBytes": 0,
+        "elapsedMs": 1.218631000000073,
+        "baselineHeapBytes": 36795360,
+        "heapUsedBytes": 36976848,
+        "heapGrowthBytes": 181488,
+        "externalGrowthBytes": 40910,
+        "arrayBufferGrowthBytes": 218,
+        "observedGrowthBytes": 222398,
+        "peakRssBytes": 86605824
+      },
+      "isolation": {
+        "v8OldSpaceMb": 128,
+        "rssGuard": "not-observed",
+        "osMemorySandbox": false
+      },
+      "seedName": "directory-and-file",
+      "mutation": "seed"
+    },
+    {
+      "targetId": "zip-archive",
+      "seed": 1,
+      "caseIndex": 3,
+      "inputBytes": 133,
+      "inputSHA256": "b6e57a1203fd956e890d7cf6d7a6b8b0eaa08b6e2dc5cabc3a8daebdf9cc22fc",
+      "sourceIdentity": {
+        "commit": "07c833a82084b8fc07e4d9263bf83e315998e1ab",
+        "tree": "1567d3935d15f123bc316ba0a1a0a04fed3ef221",
+        "clean": true
+      },
+      "budgets": {
+        "maxCases": 32,
+        "caseTimeoutMs": 1000,
+        "startupTimeoutMs": 5000,
+        "campaignTimeoutMs": 30000,
+        "maxInputBytes": 65536,
+        "maxOutputBytes": 65536,
+        "heapGrowthBytes": 16777216,
+        "v8HeapMb": 128,
+        "rssBytes": 268435456,
+        "maxCorpusCases": 128,
+        "maxCorpusBytes": 8388608
+      },
+      "qualification": "node-offline-parser",
+      "status": "accepted",
+      "code": "ZIP_READ_IN_MEMORY",
+      "metrics": {
+        "processElapsedMs": 656.5835720000032,
+        "sampledRssBytes": 0,
+        "elapsedMs": 1.1318840000000137,
+        "baselineHeapBytes": 38567640,
+        "heapUsedBytes": 38733384,
+        "heapGrowthBytes": 165744,
+        "externalGrowthBytes": 40825,
+        "arrayBufferGrowthBytes": 133,
+        "observedGrowthBytes": 206569,
+        "peakRssBytes": 86204416
+      },
+      "isolation": {
+        "v8OldSpaceMb": 128,
+        "rssGuard": "not-observed",
+        "osMemorySandbox": false
+      },
+      "seedName": "small-deflate",
+      "mutation": "seed"
+    },
+    {
+      "targetId": "zip-archive",
+      "seed": 1,
+      "caseIndex": 4,
+      "inputBytes": 34,
+      "inputSHA256": "bf821a59f605e0577f670b4c2d0673bef3526837690f219a92f9cecaa7df6928",
+      "sourceIdentity": {
+        "commit": "07c833a82084b8fc07e4d9263bf83e315998e1ab",
+        "tree": "1567d3935d15f123bc316ba0a1a0a04fed3ef221",
+        "clean": true
+      },
+      "budgets": {
+        "maxCases": 32,
+        "caseTimeoutMs": 1000,
+        "startupTimeoutMs": 5000,
+        "campaignTimeoutMs": 30000,
+        "maxInputBytes": 65536,
+        "maxOutputBytes": 65536,
+        "heapGrowthBytes": 16777216,
+        "v8HeapMb": 128,
+        "rssBytes": 268435456,
+        "maxCorpusCases": 128,
+        "maxCorpusBytes": 8388608
+      },
+      "qualification": "node-offline-parser",
+      "status": "rejected",
+      "code": "ZIP_VALIDATION",
+      "detail": "ZIP end directory was not found",
+      "metrics": {
+        "processElapsedMs": 610.008044999995,
+        "sampledRssBytes": 0,
+        "elapsedMs": 0.6573960000000625,
+        "baselineHeapBytes": 38695008,
+        "heapUsedBytes": 38840712,
+        "heapGrowthBytes": 145704,
+        "externalGrowthBytes": 40726,
+        "arrayBufferGrowthBytes": 34,
+        "observedGrowthBytes": 186430,
+        "peakRssBytes": 86351872
+      },
+      "isolation": {
+        "v8OldSpaceMb": 128,
+        "rssGuard": "not-observed",
+        "osMemorySandbox": false
+      },
+      "seedName": "empty-archive",
+      "mutation": "duplicate"
+    },
+    {
+      "targetId": "zip-archive",
+      "seed": 1,
+      "caseIndex": 5,
+      "inputBytes": 128,
+      "inputSHA256": "b9036690945947d3b4125f960bb237963e8f5afa04c92ef17de6234c3206c5bf",
+      "sourceIdentity": {
+        "commit": "07c833a82084b8fc07e4d9263bf83e315998e1ab",
+        "tree": "1567d3935d15f123bc316ba0a1a0a04fed3ef221",
+        "clean": true
+      },
+      "budgets": {
+        "maxCases": 32,
+        "caseTimeoutMs": 1000,
+        "startupTimeoutMs": 5000,
+        "campaignTimeoutMs": 30000,
+        "maxInputBytes": 65536,
+        "maxOutputBytes": 65536,
+        "heapGrowthBytes": 16777216,
+        "v8HeapMb": 128,
+        "rssBytes": 268435456,
+        "maxCorpusCases": 128,
+        "maxCorpusBytes": 8388608
+      },
+      "qualification": "node-offline-parser",
+      "status": "rejected",
+      "code": "ZIP_VALIDATION",
+      "detail": "Central/local ZIP header mismatch",
+      "metrics": {
+        "processElapsedMs": 609.5136139999959,
+        "sampledRssBytes": 0,
+        "elapsedMs": 0.8971090000000004,
+        "baselineHeapBytes": 37344392,
+        "heapUsedBytes": 37499856,
+        "heapGrowthBytes": 155464,
+        "externalGrowthBytes": 40820,
+        "arrayBufferGrowthBytes": 128,
+        "observedGrowthBytes": 196284,
+        "peakRssBytes": 85540864
+      },
+      "isolation": {
+        "v8OldSpaceMb": 128,
+        "rssGuard": "not-observed",
+        "osMemorySandbox": false
+      },
+      "seedName": "single-file",
+      "mutation": "replace"
+    },
+    {
+      "targetId": "zip-archive",
+      "seed": 1,
+      "caseIndex": 6,
+      "inputBytes": 164,
+      "inputSHA256": "a379f3d086c6bb36b4570954580fe32ab4771651b1ff1f32f4cc21ca906b87d7",
+      "sourceIdentity": {
+        "commit": "07c833a82084b8fc07e4d9263bf83e315998e1ab",
+        "tree": "1567d3935d15f123bc316ba0a1a0a04fed3ef221",
+        "clean": true
+      },
+      "budgets": {
+        "maxCases": 32,
+        "caseTimeoutMs": 1000,
+        "startupTimeoutMs": 5000,
+        "campaignTimeoutMs": 30000,
+        "maxInputBytes": 65536,
+        "maxOutputBytes": 65536,
+        "heapGrowthBytes": 16777216,
+        "v8HeapMb": 128,
+        "rssBytes": 268435456,
+        "maxCorpusCases": 128,
+        "maxCorpusBytes": 8388608
+      },
+      "qualification": "node-offline-parser",
+      "status": "rejected",
+      "code": "ZIP_VALIDATION",
+      "detail": "ZIP end directory was not found",
+      "metrics": {
+        "processElapsedMs": 578.8860690000001,
+        "sampledRssBytes": 0,
+        "elapsedMs": 0.7144710000000032,
+        "baselineHeapBytes": 38318640,
+        "heapUsedBytes": 38464552,
+        "heapGrowthBytes": 145912,
+        "externalGrowthBytes": 40856,
+        "arrayBufferGrowthBytes": 164,
+        "observedGrowthBytes": 186768,
+        "peakRssBytes": 84475904
+      },
+      "isolation": {
+        "v8OldSpaceMb": 128,
+        "rssGuard": "not-observed",
+        "osMemorySandbox": false
+      },
+      "seedName": "directory-and-file",
+      "mutation": "truncate"
+    },
+    {
+      "targetId": "zip-archive",
+      "seed": 1,
+      "caseIndex": 7,
+      "inputBytes": 129,
+      "inputSHA256": "865387a98a2d6112ee7147136f3bc9c7d07e5579c0c39601c5f293123cd2230b",
+      "sourceIdentity": {
+        "commit": "07c833a82084b8fc07e4d9263bf83e315998e1ab",
+        "tree": "1567d3935d15f123bc316ba0a1a0a04fed3ef221",
+        "clean": true
+      },
+      "budgets": {
+        "maxCases": 32,
+        "caseTimeoutMs": 1000,
+        "startupTimeoutMs": 5000,
+        "campaignTimeoutMs": 30000,
+        "maxInputBytes": 65536,
+        "maxOutputBytes": 65536,
+        "heapGrowthBytes": 16777216,
+        "v8HeapMb": 128,
+        "rssBytes": 268435456,
+        "maxCorpusCases": 128,
+        "maxCorpusBytes": 8388608
+      },
+      "qualification": "node-offline-parser",
+      "status": "rejected",
+      "code": "ZIP_VALIDATION",
+      "detail": "Invalid ZIP central directory or entry limit",
+      "metrics": {
+        "processElapsedMs": 567.2927559999953,
+        "sampledRssBytes": 0,
+        "elapsedMs": 0.606871999999953,
+        "baselineHeapBytes": 38572856,
+        "heapUsedBytes": 38718632,
+        "heapGrowthBytes": 145776,
+        "externalGrowthBytes": 40821,
+        "arrayBufferGrowthBytes": 129,
+        "observedGrowthBytes": 186597,
+        "peakRssBytes": 84221952
+      },
+      "isolation": {
+        "v8OldSpaceMb": 128,
+        "rssGuard": "not-observed",
+        "osMemorySandbox": false
+      },
+      "seedName": "small-deflate",
+      "mutation": "delete"
+    },
+    {
+      "targetId": "zip-archive",
+      "seed": 1,
+      "caseIndex": 8,
+      "inputBytes": 38,
+      "inputSHA256": "af4e83806369368e572888fc7be3600fd2e2b2def3236c3cce9a5644ebc32fbf",
+      "sourceIdentity": {
+        "commit": "07c833a82084b8fc07e4d9263bf83e315998e1ab",
+        "tree": "1567d3935d15f123bc316ba0a1a0a04fed3ef221",
+        "clean": true
+      },
+      "budgets": {
+        "maxCases": 32,
+        "caseTimeoutMs": 1000,
+        "startupTimeoutMs": 5000,
+        "campaignTimeoutMs": 30000,
+        "maxInputBytes": 65536,
+        "maxOutputBytes": 65536,
+        "heapGrowthBytes": 16777216,
+        "v8HeapMb": 128,
+        "rssBytes": 268435456,
+        "maxCorpusCases": 128,
+        "maxCorpusBytes": 8388608
+      },
+      "qualification": "node-offline-parser",
+      "status": "rejected",
+      "code": "ZIP_VALIDATION",
+      "detail": "ZIP end directory was not found",
+      "metrics": {
+        "processElapsedMs": 566.6047299999918,
+        "sampledRssBytes": 0,
+        "elapsedMs": 0.692978999999923,
+        "baselineHeapBytes": 38670040,
+        "heapUsedBytes": 38815784,
+        "heapGrowthBytes": 145744,
+        "externalGrowthBytes": 40730,
+        "arrayBufferGrowthBytes": 38,
+        "observedGrowthBytes": 186474,
+        "peakRssBytes": 86089728
+      },
+      "isolation": {
+        "v8OldSpaceMb": 128,
+        "rssGuard": "not-observed",
+        "osMemorySandbox": false
+      },
+      "seedName": "empty-archive",
+      "mutation": "insert"
+    },
+    {
+      "targetId": "zip-archive",
+      "seed": 1,
+      "caseIndex": 9,
+      "inputBytes": 143,
+      "inputSHA256": "3f3969385e9c72e3af0f397c634b6feec10c6c99770cf4a4a47b7e60acb51d9e",
+      "sourceIdentity": {
+        "commit": "07c833a82084b8fc07e4d9263bf83e315998e1ab",
+        "tree": "1567d3935d15f123bc316ba0a1a0a04fed3ef221",
+        "clean": true
+      },
+      "budgets": {
+        "maxCases": 32,
+        "caseTimeoutMs": 1000,
+        "startupTimeoutMs": 5000,
+        "campaignTimeoutMs": 30000,
+        "maxInputBytes": 65536,
+        "maxOutputBytes": 65536,
+        "heapGrowthBytes": 16777216,
+        "v8HeapMb": 128,
+        "rssBytes": 268435456,
+        "maxCorpusCases": 128,
+        "maxCorpusBytes": 8388608
+      },
+      "qualification": "node-offline-parser",
+      "status": "rejected",
+      "code": "ZIP_VALIDATION",
+      "detail": "Invalid ZIP central directory or entry limit",
+      "metrics": {
+        "processElapsedMs": 585.7915230000071,
+        "sampledRssBytes": 0,
+        "elapsedMs": 0.6326709999999593,
+        "baselineHeapBytes": 36811584,
+        "heapUsedBytes": 36957376,
+        "heapGrowthBytes": 145792,
+        "externalGrowthBytes": 40835,
+        "arrayBufferGrowthBytes": 143,
+        "observedGrowthBytes": 186627,
+        "peakRssBytes": 85823488
+      },
+      "isolation": {
+        "v8OldSpaceMb": 128,
+        "rssGuard": "not-observed",
+        "osMemorySandbox": false
+      },
+      "seedName": "single-file",
+      "mutation": "duplicate"
+    },
+    {
+      "targetId": "zip-archive",
+      "seed": 1,
+      "caseIndex": 10,
+      "inputBytes": 218,
+      "inputSHA256": "ed759dec217d252d42ea4d90891b8ff16bbf8c4afc46b83202d155a4045bf0d7",
+      "sourceIdentity": {
+        "commit": "07c833a82084b8fc07e4d9263bf83e315998e1ab",
+        "tree": "1567d3935d15f123bc316ba0a1a0a04fed3ef221",
+        "clean": true
+      },
+      "budgets": {
+        "maxCases": 32,
+        "caseTimeoutMs": 1000,
+        "startupTimeoutMs": 5000,
+        "campaignTimeoutMs": 30000,
+        "maxInputBytes": 65536,
+        "maxOutputBytes": 65536,
+        "heapGrowthBytes": 16777216,
+        "v8HeapMb": 128,
+        "rssBytes": 268435456,
+        "maxCorpusCases": 128,
+        "maxCorpusBytes": 8388608
+      },
+      "qualification": "node-offline-parser",
+      "status": "rejected",
+      "code": "ZIP_VALIDATION",
+      "detail": "ZIP end directory was not found",
+      "metrics": {
+        "processElapsedMs": 559.9544569999998,
+        "sampledRssBytes": 0,
+        "elapsedMs": 0.7184459999999717,
+        "baselineHeapBytes": 37064288,
+        "heapUsedBytes": 37426496,
+        "heapGrowthBytes": 362208,
+        "externalGrowthBytes": 40910,
+        "arrayBufferGrowthBytes": 218,
+        "observedGrowthBytes": 403118,
+        "peakRssBytes": 88072192
+      },
+      "isolation": {
+        "v8OldSpaceMb": 128,
+        "rssGuard": "not-observed",
+        "osMemorySandbox": false
+      },
+      "seedName": "directory-and-file",
+      "mutation": "replace"
+    },
+    {
+      "targetId": "zip-archive",
+      "seed": 1,
+      "caseIndex": 11,
+      "inputBytes": 90,
+      "inputSHA256": "ee3113dab993cdea57bf80da1b89a66ef9943748446a2287e96638aac6c0e717",
+      "sourceIdentity": {
+        "commit": "07c833a82084b8fc07e4d9263bf83e315998e1ab",
+        "tree": "1567d3935d15f123bc316ba0a1a0a04fed3ef221",
+        "clean": true
+      },
+      "budgets": {
+        "maxCases": 32,
+        "caseTimeoutMs": 1000,
+        "startupTimeoutMs": 5000,
+        "campaignTimeoutMs": 30000,
+        "maxInputBytes": 65536,
+        "maxOutputBytes": 65536,
+        "heapGrowthBytes": 16777216,
+        "v8HeapMb": 128,
+        "rssBytes": 268435456,
+        "maxCorpusCases": 128,
+        "maxCorpusBytes": 8388608
+      },
+      "qualification": "node-offline-parser",
+      "status": "rejected",
+      "code": "ZIP_VALIDATION",
+      "detail": "ZIP end directory was not found",
+      "metrics": {
+        "processElapsedMs": 600.452105999997,
+        "sampledRssBytes": 0,
+        "elapsedMs": 0.6475020000000313,
+        "baselineHeapBytes": 36865856,
+        "heapUsedBytes": 37011640,
+        "heapGrowthBytes": 145784,
+        "externalGrowthBytes": 40782,
+        "arrayBufferGrowthBytes": 90,
+        "observedGrowthBytes": 186566,
+        "peakRssBytes": 87506944
+      },
+      "isolation": {
+        "v8OldSpaceMb": 128,
+        "rssGuard": "not-observed",
+        "osMemorySandbox": false
+      },
+      "seedName": "small-deflate",
+      "mutation": "truncate"
+    },
+    {
+      "targetId": "zip-archive",
+      "seed": 1,
+      "caseIndex": 12,
+      "inputBytes": 21,
+      "inputSHA256": "37150b6ff39ada9f8f4f8d1a3d5f8b988c8957cb28cf6764f44f724646fc2429",
+      "sourceIdentity": {
+        "commit": "07c833a82084b8fc07e4d9263bf83e315998e1ab",
+        "tree": "1567d3935d15f123bc316ba0a1a0a04fed3ef221",
+        "clean": true
+      },
+      "budgets": {
+        "maxCases": 32,
+        "caseTimeoutMs": 1000,
+        "startupTimeoutMs": 5000,
+        "campaignTimeoutMs": 30000,
+        "maxInputBytes": 65536,
+        "maxOutputBytes": 65536,
+        "heapGrowthBytes": 16777216,
+        "v8HeapMb": 128,
+        "rssBytes": 268435456,
+        "maxCorpusCases": 128,
+        "maxCorpusBytes": 8388608
+      },
+      "qualification": "node-offline-parser",
+      "status": "rejected",
+      "code": "ZIP_VALIDATION",
+      "detail": "Invalid or oversized ZIP archive",
+      "metrics": {
+        "processElapsedMs": 629.9856040000013,
+        "sampledRssBytes": 0,
+        "elapsedMs": 0.7611489999999321,
+        "baselineHeapBytes": 38458728,
+        "heapUsedBytes": 38604024,
+        "heapGrowthBytes": 145296,
+        "externalGrowthBytes": 40692,
+        "arrayBufferGrowthBytes": 0,
+        "observedGrowthBytes": 185988,
+        "peakRssBytes": 85069824
+      },
+      "isolation": {
+        "v8OldSpaceMb": 128,
+        "rssGuard": "not-observed",
+        "osMemorySandbox": false
+      },
+      "seedName": "empty-archive",
+      "mutation": "delete"
+    },
+    {
+      "targetId": "zip-archive",
+      "seed": 1,
+      "caseIndex": 13,
+      "inputBytes": 131,
+      "inputSHA256": "24074582eb6c661301e0c232ab266b061d811bb62766012bdba6089e1947e1b8",
+      "sourceIdentity": {
+        "commit": "07c833a82084b8fc07e4d9263bf83e315998e1ab",
+        "tree": "1567d3935d15f123bc316ba0a1a0a04fed3ef221",
+        "clean": true
+      },
+      "budgets": {
+        "maxCases": 32,
+        "caseTimeoutMs": 1000,
+        "startupTimeoutMs": 5000,
+        "campaignTimeoutMs": 30000,
+        "maxInputBytes": 65536,
+        "maxOutputBytes": 65536,
+        "heapGrowthBytes": 16777216,
+        "v8HeapMb": 128,
+        "rssBytes": 268435456,
+        "maxCorpusCases": 128,
+        "maxCorpusBytes": 8388608
+      },
+      "qualification": "node-offline-parser",
+      "status": "rejected",
+      "code": "ZIP_VALIDATION",
+      "detail": "Invalid ZIP central directory or entry limit",
+      "metrics": {
+        "processElapsedMs": 610.5399100000068,
+        "sampledRssBytes": 0,
+        "elapsedMs": 0.6057299999999941,
+        "baselineHeapBytes": 36778160,
+        "heapUsedBytes": 36924024,
+        "heapGrowthBytes": 145864,
+        "externalGrowthBytes": 40823,
+        "arrayBufferGrowthBytes": 131,
+        "observedGrowthBytes": 186687,
+        "peakRssBytes": 87117824
+      },
+      "isolation": {
+        "v8OldSpaceMb": 128,
+        "rssGuard": "not-observed",
+        "osMemorySandbox": false
+      },
+      "seedName": "single-file",
+      "mutation": "insert"
+    },
+    {
+      "targetId": "zip-archive",
+      "seed": 1,
+      "caseIndex": 14,
+      "inputBytes": 232,
+      "inputSHA256": "ca31efa0d4f0fe753281c9bd401886972507fdd243d204b970e666d9106e9701",
+      "sourceIdentity": {
+        "commit": "07c833a82084b8fc07e4d9263bf83e315998e1ab",
+        "tree": "1567d3935d15f123bc316ba0a1a0a04fed3ef221",
+        "clean": true
+      },
+      "budgets": {
+        "maxCases": 32,
+        "caseTimeoutMs": 1000,
+        "startupTimeoutMs": 5000,
+        "campaignTimeoutMs": 30000,
+        "maxInputBytes": 65536,
+        "maxOutputBytes": 65536,
+        "heapGrowthBytes": 16777216,
+        "v8HeapMb": 128,
+        "rssBytes": 268435456,
+        "maxCorpusCases": 128,
+        "maxCorpusBytes": 8388608
+      },
+      "qualification": "node-offline-parser",
+      "status": "rejected",
+      "code": "ZIP_VALIDATION",
+      "detail": "Invalid ZIP central directory or entry limit",
+      "metrics": {
+        "processElapsedMs": 596.4476399999985,
+        "sampledRssBytes": 0,
+        "elapsedMs": 0.6633550000000241,
+        "baselineHeapBytes": 36889496,
+        "heapUsedBytes": 37035408,
+        "heapGrowthBytes": 145912,
+        "externalGrowthBytes": 40924,
+        "arrayBufferGrowthBytes": 232,
+        "observedGrowthBytes": 186836,
+        "peakRssBytes": 86941696
+      },
+      "isolation": {
+        "v8OldSpaceMb": 128,
+        "rssGuard": "not-observed",
+        "osMemorySandbox": false
+      },
+      "seedName": "directory-and-file",
+      "mutation": "duplicate"
+    },
+    {
+      "targetId": "zip-archive",
+      "seed": 1,
+      "caseIndex": 15,
+      "inputBytes": 133,
+      "inputSHA256": "cdb6ee59cbeede937dcc2d627de59e5d355b956737dd934e8c937dc76e8dcf5b",
+      "sourceIdentity": {
+        "commit": "07c833a82084b8fc07e4d9263bf83e315998e1ab",
+        "tree": "1567d3935d15f123bc316ba0a1a0a04fed3ef221",
+        "clean": true
+      },
+      "budgets": {
+        "maxCases": 32,
+        "caseTimeoutMs": 1000,
+        "startupTimeoutMs": 5000,
+        "campaignTimeoutMs": 30000,
+        "maxInputBytes": 65536,
+        "maxOutputBytes": 65536,
+        "heapGrowthBytes": 16777216,
+        "v8HeapMb": 128,
+        "rssBytes": 268435456,
+        "maxCorpusCases": 128,
+        "maxCorpusBytes": 8388608
+      },
+      "qualification": "node-offline-parser",
+      "status": "rejected",
+      "code": "ZIP_VALIDATION",
+      "detail": "Central/local ZIP header mismatch",
+      "metrics": {
+        "processElapsedMs": 663.6041680000053,
+        "sampledRssBytes": 0,
+        "elapsedMs": 1.0939280000000053,
+        "baselineHeapBytes": 36769136,
+        "heapUsedBytes": 36924904,
+        "heapGrowthBytes": 155768,
+        "externalGrowthBytes": 40825,
+        "arrayBufferGrowthBytes": 133,
+        "observedGrowthBytes": 196593,
+        "peakRssBytes": 86081536
+      },
+      "isolation": {
+        "v8OldSpaceMb": 128,
+        "rssGuard": "not-observed",
+        "osMemorySandbox": false
+      },
+      "seedName": "small-deflate",
+      "mutation": "replace"
+    },
+    {
+      "targetId": "zip-archive",
+      "seed": 1,
+      "caseIndex": 16,
+      "inputBytes": 20,
+      "inputSHA256": "4ef1e32abc6b177ed6b7badd48725bf1e7a74708192a09e468c79d4a43610427",
+      "sourceIdentity": {
+        "commit": "07c833a82084b8fc07e4d9263bf83e315998e1ab",
+        "tree": "1567d3935d15f123bc316ba0a1a0a04fed3ef221",
+        "clean": true
+      },
+      "budgets": {
+        "maxCases": 32,
+        "caseTimeoutMs": 1000,
+        "startupTimeoutMs": 5000,
+        "campaignTimeoutMs": 30000,
+        "maxInputBytes": 65536,
+        "maxOutputBytes": 65536,
+        "heapGrowthBytes": 16777216,
+        "v8HeapMb": 128,
+        "rssBytes": 268435456,
+        "maxCorpusCases": 128,
+        "maxCorpusBytes": 8388608
+      },
+      "qualification": "node-offline-parser",
+      "status": "rejected",
+      "code": "ZIP_VALIDATION",
+      "detail": "Invalid or oversized ZIP archive",
+      "metrics": {
+        "processElapsedMs": 608.2718370000075,
+        "sampledRssBytes": 0,
+        "elapsedMs": 0.6452289999999721,
+        "baselineHeapBytes": 39033072,
+        "heapUsedBytes": 39178352,
+        "heapGrowthBytes": 145280,
+        "externalGrowthBytes": 40692,
+        "arrayBufferGrowthBytes": 0,
+        "observedGrowthBytes": 185972,
+        "peakRssBytes": 85893120
+      },
+      "isolation": {
+        "v8OldSpaceMb": 128,
+        "rssGuard": "not-observed",
+        "osMemorySandbox": false
+      },
+      "seedName": "empty-archive",
+      "mutation": "truncate"
+    },
+    {
+      "targetId": "zip-archive",
+      "seed": 1,
+      "caseIndex": 17,
+      "inputBytes": 114,
+      "inputSHA256": "65544d298d2a52bab08f18ab637ebca8c5593b330e5dc8f9ed2413a9e267c5a2",
+      "sourceIdentity": {
+        "commit": "07c833a82084b8fc07e4d9263bf83e315998e1ab",
+        "tree": "1567d3935d15f123bc316ba0a1a0a04fed3ef221",
+        "clean": true
+      },
+      "budgets": {
+        "maxCases": 32,
+        "caseTimeoutMs": 1000,
+        "startupTimeoutMs": 5000,
+        "campaignTimeoutMs": 30000,
+        "maxInputBytes": 65536,
+        "maxOutputBytes": 65536,
+        "heapGrowthBytes": 16777216,
+        "v8HeapMb": 128,
+        "rssBytes": 268435456,
+        "maxCorpusCases": 128,
+        "maxCorpusBytes": 8388608
+      },
+      "qualification": "node-offline-parser",
+      "status": "rejected",
+      "code": "ZIP_VALIDATION",
+      "detail": "Invalid ZIP central directory or entry limit",
+      "metrics": {
+        "processElapsedMs": 566.7571699999971,
+        "sampledRssBytes": 0,
+        "elapsedMs": 0.6489429999999174,
+        "baselineHeapBytes": 38293264,
+        "heapUsedBytes": 38439016,
+        "heapGrowthBytes": 145752,
+        "externalGrowthBytes": 40806,
+        "arrayBufferGrowthBytes": 114,
+        "observedGrowthBytes": 186558,
+        "peakRssBytes": 85262336
+      },
+      "isolation": {
+        "v8OldSpaceMb": 128,
+        "rssGuard": "not-observed",
+        "osMemorySandbox": false
+      },
+      "seedName": "single-file",
+      "mutation": "delete"
+    },
+    {
+      "targetId": "zip-archive",
+      "seed": 1,
+      "caseIndex": 18,
+      "inputBytes": 220,
+      "inputSHA256": "1d4d33881a5c2192787b0e154cdf65e89d9487e516dc3c26431aa58d5ff3825d",
+      "sourceIdentity": {
+        "commit": "07c833a82084b8fc07e4d9263bf83e315998e1ab",
+        "tree": "1567d3935d15f123bc316ba0a1a0a04fed3ef221",
+        "clean": true
+      },
+      "budgets": {
+        "maxCases": 32,
+        "caseTimeoutMs": 1000,
+        "startupTimeoutMs": 5000,
+        "campaignTimeoutMs": 30000,
+        "maxInputBytes": 65536,
+        "maxOutputBytes": 65536,
+        "heapGrowthBytes": 16777216,
+        "v8HeapMb": 128,
+        "rssBytes": 268435456,
+        "maxCorpusCases": 128,
+        "maxCorpusBytes": 8388608
+      },
+      "qualification": "node-offline-parser",
+      "status": "rejected",
+      "code": "ZIP_VALIDATION",
+      "detail": "Invalid ZIP central directory or entry limit",
+      "metrics": {
+        "processElapsedMs": 578.1993130000046,
+        "sampledRssBytes": 0,
+        "elapsedMs": 0.630045999999993,
+        "baselineHeapBytes": 37120128,
+        "heapUsedBytes": 37266024,
+        "heapGrowthBytes": 145896,
+        "externalGrowthBytes": 40912,
+        "arrayBufferGrowthBytes": 220,
+        "observedGrowthBytes": 186808,
+        "peakRssBytes": 86618112
+      },
+      "isolation": {
+        "v8OldSpaceMb": 128,
+        "rssGuard": "not-observed",
+        "osMemorySandbox": false
+      },
+      "seedName": "directory-and-file",
+      "mutation": "insert"
+    },
+    {
+      "targetId": "zip-archive",
+      "seed": 1,
+      "caseIndex": 19,
+      "inputBytes": 134,
+      "inputSHA256": "88d4ccb7134c5668583c88f4bb357257e5c318a208109a789a7ef5869ad8859f",
+      "sourceIdentity": {
+        "commit": "07c833a82084b8fc07e4d9263bf83e315998e1ab",
+        "tree": "1567d3935d15f123bc316ba0a1a0a04fed3ef221",
+        "clean": true
+      },
+      "budgets": {
+        "maxCases": 32,
+        "caseTimeoutMs": 1000,
+        "startupTimeoutMs": 5000,
+        "campaignTimeoutMs": 30000,
+        "maxInputBytes": 65536,
+        "maxOutputBytes": 65536,
+        "heapGrowthBytes": 16777216,
+        "v8HeapMb": 128,
+        "rssBytes": 268435456,
+        "maxCorpusCases": 128,
+        "maxCorpusBytes": 8388608
+      },
+      "qualification": "node-offline-parser",
+      "status": "rejected",
+      "code": "ZIP_VALIDATION",
+      "detail": "Invalid ZIP central directory or entry limit",
+      "metrics": {
+        "processElapsedMs": 637.4045879999903,
+        "sampledRssBytes": 0,
+        "elapsedMs": 0.767296999999985,
+        "baselineHeapBytes": 37153272,
+        "heapUsedBytes": 37299056,
+        "heapGrowthBytes": 145784,
+        "externalGrowthBytes": 40826,
+        "arrayBufferGrowthBytes": 134,
+        "observedGrowthBytes": 186610,
+        "peakRssBytes": 86581248
+      },
+      "isolation": {
+        "v8OldSpaceMb": 128,
+        "rssGuard": "not-observed",
+        "osMemorySandbox": false
+      },
+      "seedName": "small-deflate",
+      "mutation": "duplicate"
+    },
+    {
+      "targetId": "zip-archive",
+      "seed": 1,
+      "caseIndex": 20,
+      "inputBytes": 22,
+      "inputSHA256": "a1973fed35207181c446f1d61cfe0ea58415dda81857f9b13a58b9a0ccc54523",
+      "sourceIdentity": {
+        "commit": "07c833a82084b8fc07e4d9263bf83e315998e1ab",
+        "tree": "1567d3935d15f123bc316ba0a1a0a04fed3ef221",
+        "clean": true
+      },
+      "budgets": {
+        "maxCases": 32,
+        "caseTimeoutMs": 1000,
+        "startupTimeoutMs": 5000,
+        "campaignTimeoutMs": 30000,
+        "maxInputBytes": 65536,
+        "maxOutputBytes": 65536,
+        "heapGrowthBytes": 16777216,
+        "v8HeapMb": 128,
+        "rssBytes": 268435456,
+        "maxCorpusCases": 128,
+        "maxCorpusBytes": 8388608
+      },
+      "qualification": "node-offline-parser",
+      "status": "rejected",
+      "code": "ZIP_VALIDATION",
+      "detail": "ZIP end directory was not found",
+      "metrics": {
+        "processElapsedMs": 573.1173560000025,
+        "sampledRssBytes": 0,
+        "elapsedMs": 0.6669299999999794,
+        "baselineHeapBytes": 38881192,
+        "heapUsedBytes": 39026864,
+        "heapGrowthBytes": 145672,
+        "externalGrowthBytes": 40714,
+        "arrayBufferGrowthBytes": 22,
+        "observedGrowthBytes": 186386,
+        "peakRssBytes": 86102016
+      },
+      "isolation": {
+        "v8OldSpaceMb": 128,
+        "rssGuard": "not-observed",
+        "osMemorySandbox": false
+      },
+      "seedName": "empty-archive",
+      "mutation": "replace"
+    },
+    {
+      "targetId": "zip-archive",
+      "seed": 1,
+      "caseIndex": 21,
+      "inputBytes": 51,
+      "inputSHA256": "e8a9236ead3c9d4d760ec6471747ad650a0d6757809937f620126425a675ac8e",
+      "sourceIdentity": {
+        "commit": "07c833a82084b8fc07e4d9263bf83e315998e1ab",
+        "tree": "1567d3935d15f123bc316ba0a1a0a04fed3ef221",
+        "clean": true
+      },
+      "budgets": {
+        "maxCases": 32,
+        "caseTimeoutMs": 1000,
+        "startupTimeoutMs": 5000,
+        "campaignTimeoutMs": 30000,
+        "maxInputBytes": 65536,
+        "maxOutputBytes": 65536,
+        "heapGrowthBytes": 16777216,
+        "v8HeapMb": 128,
+        "rssBytes": 268435456,
+        "maxCorpusCases": 128,
+        "maxCorpusBytes": 8388608
+      },
+      "qualification": "node-offline-parser",
+      "status": "rejected",
+      "code": "ZIP_VALIDATION",
+      "detail": "ZIP end directory was not found",
+      "metrics": {
+        "processElapsedMs": 584.2656940000015,
+        "sampledRssBytes": 0,
+        "elapsedMs": 0.6346129999999448,
+        "baselineHeapBytes": 37085760,
+        "heapUsedBytes": 37231536,
+        "heapGrowthBytes": 145776,
+        "externalGrowthBytes": 40743,
+        "arrayBufferGrowthBytes": 51,
+        "observedGrowthBytes": 186519,
+        "peakRssBytes": 87400448
+      },
+      "isolation": {
+        "v8OldSpaceMb": 128,
+        "rssGuard": "not-observed",
+        "osMemorySandbox": false
+      },
+      "seedName": "single-file",
+      "mutation": "truncate"
+    },
+    {
+      "targetId": "zip-archive",
+      "seed": 1,
+      "caseIndex": 22,
+      "inputBytes": 217,
+      "inputSHA256": "bd72650636250644319da55ca6cc9dc1bfa5b97a0ab11251a6916256a7bd1a3d",
+      "sourceIdentity": {
+        "commit": "07c833a82084b8fc07e4d9263bf83e315998e1ab",
+        "tree": "1567d3935d15f123bc316ba0a1a0a04fed3ef221",
+        "clean": true
+      },
+      "budgets": {
+        "maxCases": 32,
+        "caseTimeoutMs": 1000,
+        "startupTimeoutMs": 5000,
+        "campaignTimeoutMs": 30000,
+        "maxInputBytes": 65536,
+        "maxOutputBytes": 65536,
+        "heapGrowthBytes": 16777216,
+        "v8HeapMb": 128,
+        "rssBytes": 268435456,
+        "maxCorpusCases": 128,
+        "maxCorpusBytes": 8388608
+      },
+      "qualification": "node-offline-parser",
+      "status": "rejected",
+      "code": "ZIP_VALIDATION",
+      "detail": "Invalid ZIP central directory or entry limit",
+      "metrics": {
+        "processElapsedMs": 591.3914569999906,
+        "sampledRssBytes": 0,
+        "elapsedMs": 0.6167269999999689,
+        "baselineHeapBytes": 38440856,
+        "heapUsedBytes": 38586752,
+        "heapGrowthBytes": 145896,
+        "externalGrowthBytes": 40909,
+        "arrayBufferGrowthBytes": 217,
+        "observedGrowthBytes": 186805,
+        "peakRssBytes": 84430848
+      },
+      "isolation": {
+        "v8OldSpaceMb": 128,
+        "rssGuard": "not-observed",
+        "osMemorySandbox": false
+      },
+      "seedName": "directory-and-file",
+      "mutation": "delete"
+    },
+    {
+      "targetId": "zip-archive",
+      "seed": 1,
+      "caseIndex": 23,
+      "inputBytes": 138,
+      "inputSHA256": "b393ecef6025e88de0970532e3b0b7ed45c7ee5bcec417dad35a06db6f9cfb09",
+      "sourceIdentity": {
+        "commit": "07c833a82084b8fc07e4d9263bf83e315998e1ab",
+        "tree": "1567d3935d15f123bc316ba0a1a0a04fed3ef221",
+        "clean": true
+      },
+      "budgets": {
+        "maxCases": 32,
+        "caseTimeoutMs": 1000,
+        "startupTimeoutMs": 5000,
+        "campaignTimeoutMs": 30000,
+        "maxInputBytes": 65536,
+        "maxOutputBytes": 65536,
+        "heapGrowthBytes": 16777216,
+        "v8HeapMb": 128,
+        "rssBytes": 268435456,
+        "maxCorpusCases": 128,
+        "maxCorpusBytes": 8388608
+      },
+      "qualification": "node-offline-parser",
+      "status": "rejected",
+      "code": "ZIP_VALIDATION",
+      "detail": "Invalid ZIP central directory or entry limit",
+      "metrics": {
+        "processElapsedMs": 587.7895480000007,
+        "sampledRssBytes": 0,
+        "elapsedMs": 0.6954419999999573,
+        "baselineHeapBytes": 36815152,
+        "heapUsedBytes": 36960936,
+        "heapGrowthBytes": 145784,
+        "externalGrowthBytes": 40830,
+        "arrayBufferGrowthBytes": 138,
+        "observedGrowthBytes": 186614,
+        "peakRssBytes": 87687168
+      },
+      "isolation": {
+        "v8OldSpaceMb": 128,
+        "rssGuard": "not-observed",
+        "osMemorySandbox": false
+      },
+      "seedName": "small-deflate",
+      "mutation": "insert"
+    },
+    {
+      "targetId": "zip-archive",
+      "seed": 1,
+      "caseIndex": 24,
+      "inputBytes": 38,
+      "inputSHA256": "0513fcfb80a71b6fb40051f6823ee10572986b511cc4ab30b525a31435f769c3",
+      "sourceIdentity": {
+        "commit": "07c833a82084b8fc07e4d9263bf83e315998e1ab",
+        "tree": "1567d3935d15f123bc316ba0a1a0a04fed3ef221",
+        "clean": true
+      },
+      "budgets": {
+        "maxCases": 32,
+        "caseTimeoutMs": 1000,
+        "startupTimeoutMs": 5000,
+        "campaignTimeoutMs": 30000,
+        "maxInputBytes": 65536,
+        "maxOutputBytes": 65536,
+        "heapGrowthBytes": 16777216,
+        "v8HeapMb": 128,
+        "rssBytes": 268435456,
+        "maxCorpusCases": 128,
+        "maxCorpusBytes": 8388608
+      },
+      "qualification": "node-offline-parser",
+      "status": "rejected",
+      "code": "ZIP_VALIDATION",
+      "detail": "ZIP end directory was not found",
+      "metrics": {
+        "processElapsedMs": 598.2973829999974,
+        "sampledRssBytes": 0,
+        "elapsedMs": 0.6342730000000074,
+        "baselineHeapBytes": 36802528,
+        "heapUsedBytes": 36948240,
+        "heapGrowthBytes": 145712,
+        "externalGrowthBytes": 40730,
+        "arrayBufferGrowthBytes": 38,
+        "observedGrowthBytes": 186442,
+        "peakRssBytes": 86982656
+      },
+      "isolation": {
+        "v8OldSpaceMb": 128,
+        "rssGuard": "not-observed",
+        "osMemorySandbox": false
+      },
+      "seedName": "empty-archive",
+      "mutation": "duplicate"
+    },
+    {
+      "targetId": "zip-archive",
+      "seed": 1,
+      "caseIndex": 25,
+      "inputBytes": 128,
+      "inputSHA256": "d9a6bb82bf1f1e7d73396270db5bf78f9112c5b75cb7a1bd1ea7b6f2e64535dc",
+      "sourceIdentity": {
+        "commit": "07c833a82084b8fc07e4d9263bf83e315998e1ab",
+        "tree": "1567d3935d15f123bc316ba0a1a0a04fed3ef221",
+        "clean": true
+      },
+      "budgets": {
+        "maxCases": 32,
+        "caseTimeoutMs": 1000,
+        "startupTimeoutMs": 5000,
+        "campaignTimeoutMs": 30000,
+        "maxInputBytes": 65536,
+        "maxOutputBytes": 65536,
+        "heapGrowthBytes": 16777216,
+        "v8HeapMb": 128,
+        "rssBytes": 268435456,
+        "maxCorpusCases": 128,
+        "maxCorpusBytes": 8388608
+      },
+      "qualification": "node-offline-parser",
+      "status": "rejected",
+      "code": "ZIP_VALIDATION",
+      "detail": "ZIP data CRC/length mismatch: note.txt",
+      "metrics": {
+        "processElapsedMs": 600.1929209999944,
+        "sampledRssBytes": 0,
+        "elapsedMs": 1.2447089999999434,
+        "baselineHeapBytes": 38643016,
+        "heapUsedBytes": 38806416,
+        "heapGrowthBytes": 163400,
+        "externalGrowthBytes": 40820,
+        "arrayBufferGrowthBytes": 128,
+        "observedGrowthBytes": 204220,
+        "peakRssBytes": 85086208
+      },
+      "isolation": {
+        "v8OldSpaceMb": 128,
+        "rssGuard": "not-observed",
+        "osMemorySandbox": false
+      },
+      "seedName": "single-file",
+      "mutation": "replace"
+    },
+    {
+      "targetId": "zip-archive",
+      "seed": 1,
+      "caseIndex": 26,
+      "inputBytes": 146,
+      "inputSHA256": "b5ae31a1b31f94b28c4a82d2ce929a6aeeb24ba156779a249285f0a4095733a7",
+      "sourceIdentity": {
+        "commit": "07c833a82084b8fc07e4d9263bf83e315998e1ab",
+        "tree": "1567d3935d15f123bc316ba0a1a0a04fed3ef221",
+        "clean": true
+      },
+      "budgets": {
+        "maxCases": 32,
+        "caseTimeoutMs": 1000,
+        "startupTimeoutMs": 5000,
+        "campaignTimeoutMs": 30000,
+        "maxInputBytes": 65536,
+        "maxOutputBytes": 65536,
+        "heapGrowthBytes": 16777216,
+        "v8HeapMb": 128,
+        "rssBytes": 268435456,
+        "maxCorpusCases": 128,
+        "maxCorpusBytes": 8388608
+      },
+      "qualification": "node-offline-parser",
+      "status": "rejected",
+      "code": "ZIP_VALIDATION",
+      "detail": "ZIP end directory was not found",
+      "metrics": {
+        "processElapsedMs": 604.70404099999,
+        "sampledRssBytes": 0,
+        "elapsedMs": 0.6163360000000466,
+        "baselineHeapBytes": 36963216,
+        "heapUsedBytes": 37109080,
+        "heapGrowthBytes": 145864,
+        "externalGrowthBytes": 40838,
+        "arrayBufferGrowthBytes": 146,
+        "observedGrowthBytes": 186702,
+        "peakRssBytes": 87121920
+      },
+      "isolation": {
+        "v8OldSpaceMb": 128,
+        "rssGuard": "not-observed",
+        "osMemorySandbox": false
+      },
+      "seedName": "directory-and-file",
+      "mutation": "truncate"
+    },
+    {
+      "targetId": "zip-archive",
+      "seed": 1,
+      "caseIndex": 27,
+      "inputBytes": 125,
+      "inputSHA256": "8c0949f76c9c97bc217f27cc52e83d356883ec446eea834a1ca457f14100f57b",
+      "sourceIdentity": {
+        "commit": "07c833a82084b8fc07e4d9263bf83e315998e1ab",
+        "tree": "1567d3935d15f123bc316ba0a1a0a04fed3ef221",
+        "clean": true
+      },
+      "budgets": {
+        "maxCases": 32,
+        "caseTimeoutMs": 1000,
+        "startupTimeoutMs": 5000,
+        "campaignTimeoutMs": 30000,
+        "maxInputBytes": 65536,
+        "maxOutputBytes": 65536,
+        "heapGrowthBytes": 16777216,
+        "v8HeapMb": 128,
+        "rssBytes": 268435456,
+        "maxCorpusCases": 128,
+        "maxCorpusBytes": 8388608
+      },
+      "qualification": "node-offline-parser",
+      "status": "rejected",
+      "code": "ZIP_VALIDATION",
+      "detail": "Invalid ZIP central directory or entry limit",
+      "metrics": {
+        "processElapsedMs": 596.6437529999967,
+        "sampledRssBytes": 0,
+        "elapsedMs": 0.6684130000001005,
+        "baselineHeapBytes": 37022144,
+        "heapUsedBytes": 37167912,
+        "heapGrowthBytes": 145768,
+        "externalGrowthBytes": 40817,
+        "arrayBufferGrowthBytes": 125,
+        "observedGrowthBytes": 186585,
+        "peakRssBytes": 85737472
+      },
+      "isolation": {
+        "v8OldSpaceMb": 128,
+        "rssGuard": "not-observed",
+        "osMemorySandbox": false
+      },
+      "seedName": "small-deflate",
+      "mutation": "delete"
+    },
+    {
+      "targetId": "zip-archive",
+      "seed": 1,
+      "caseIndex": 28,
+      "inputBytes": 26,
+      "inputSHA256": "5daf225836dbca9b776b685c773921c91f3510af09472cad7b8fbd6bc8c559fd",
+      "sourceIdentity": {
+        "commit": "07c833a82084b8fc07e4d9263bf83e315998e1ab",
+        "tree": "1567d3935d15f123bc316ba0a1a0a04fed3ef221",
+        "clean": true
+      },
+      "budgets": {
+        "maxCases": 32,
+        "caseTimeoutMs": 1000,
+        "startupTimeoutMs": 5000,
+        "campaignTimeoutMs": 30000,
+        "maxInputBytes": 65536,
+        "maxOutputBytes": 65536,
+        "heapGrowthBytes": 16777216,
+        "v8HeapMb": 128,
+        "rssBytes": 268435456,
+        "maxCorpusCases": 128,
+        "maxCorpusBytes": 8388608
+      },
+      "qualification": "node-offline-parser",
+      "status": "rejected",
+      "code": "ZIP_VALIDATION",
+      "detail": "ZIP end directory was not found",
+      "metrics": {
+        "processElapsedMs": 600.9324920000072,
+        "sampledRssBytes": 0,
+        "elapsedMs": 0.5996509999999944,
+        "baselineHeapBytes": 37007928,
+        "heapUsedBytes": 37153616,
+        "heapGrowthBytes": 145688,
+        "externalGrowthBytes": 40718,
+        "arrayBufferGrowthBytes": 26,
+        "observedGrowthBytes": 186406,
+        "peakRssBytes": 86786048
+      },
+      "isolation": {
+        "v8OldSpaceMb": 128,
+        "rssGuard": "not-observed",
+        "osMemorySandbox": false
+      },
+      "seedName": "empty-archive",
+      "mutation": "insert"
+    },
+    {
+      "targetId": "zip-archive",
+      "seed": 1,
+      "caseIndex": 29,
+      "inputBytes": 131,
+      "inputSHA256": "8bc27258cb749fc49e03b972c287499dc8f8ecd266ac15bae0ab8601ead158b5",
+      "sourceIdentity": {
+        "commit": "07c833a82084b8fc07e4d9263bf83e315998e1ab",
+        "tree": "1567d3935d15f123bc316ba0a1a0a04fed3ef221",
+        "clean": true
+      },
+      "budgets": {
+        "maxCases": 32,
+        "caseTimeoutMs": 1000,
+        "startupTimeoutMs": 5000,
+        "campaignTimeoutMs": 30000,
+        "maxInputBytes": 65536,
+        "maxOutputBytes": 65536,
+        "heapGrowthBytes": 16777216,
+        "v8HeapMb": 128,
+        "rssBytes": 268435456,
+        "maxCorpusCases": 128,
+        "maxCorpusBytes": 8388608
+      },
+      "qualification": "node-offline-parser",
+      "status": "rejected",
+      "code": "ZIP_VALIDATION",
+      "detail": "ZIP end directory was not found",
+      "metrics": {
+        "processElapsedMs": 589.5441280000086,
+        "sampledRssBytes": 0,
+        "elapsedMs": 0.6317579999999907,
+        "baselineHeapBytes": 36659240,
+        "heapUsedBytes": 36805112,
+        "heapGrowthBytes": 145872,
+        "externalGrowthBytes": 40823,
+        "arrayBufferGrowthBytes": 131,
+        "observedGrowthBytes": 186695,
+        "peakRssBytes": 85950464
+      },
+      "isolation": {
+        "v8OldSpaceMb": 128,
+        "rssGuard": "not-observed",
+        "osMemorySandbox": false
+      },
+      "seedName": "single-file",
+      "mutation": "duplicate"
+    },
+    {
+      "targetId": "zip-archive",
+      "seed": 1,
+      "caseIndex": 30,
+      "inputBytes": 218,
+      "inputSHA256": "1a34a7acb7d24853ee374cf11bf2a2a50171c454ef817096dd086e5f3ba9ea9a",
+      "sourceIdentity": {
+        "commit": "07c833a82084b8fc07e4d9263bf83e315998e1ab",
+        "tree": "1567d3935d15f123bc316ba0a1a0a04fed3ef221",
+        "clean": true
+      },
+      "budgets": {
+        "maxCases": 32,
+        "caseTimeoutMs": 1000,
+        "startupTimeoutMs": 5000,
+        "campaignTimeoutMs": 30000,
+        "maxInputBytes": 65536,
+        "maxOutputBytes": 65536,
+        "heapGrowthBytes": 16777216,
+        "v8HeapMb": 128,
+        "rssBytes": 268435456,
+        "maxCorpusCases": 128,
+        "maxCorpusBytes": 8388608
+      },
+      "qualification": "node-offline-parser",
+      "status": "rejected",
+      "code": "ZIP_VALIDATION",
+      "detail": "Central/local ZIP size or CRC mismatch",
+      "metrics": {
+        "processElapsedMs": 607.308309,
+        "sampledRssBytes": 0,
+        "elapsedMs": 1.163000000000011,
+        "baselineHeapBytes": 36840648,
+        "heapUsedBytes": 37016824,
+        "heapGrowthBytes": 176176,
+        "externalGrowthBytes": 40910,
+        "arrayBufferGrowthBytes": 218,
+        "observedGrowthBytes": 217086,
+        "peakRssBytes": 87236608
+      },
+      "isolation": {
+        "v8OldSpaceMb": 128,
+        "rssGuard": "not-observed",
+        "osMemorySandbox": false
+      },
+      "seedName": "directory-and-file",
+      "mutation": "replace"
+    },
+    {
+      "targetId": "zip-archive",
+      "seed": 1,
+      "caseIndex": 31,
+      "inputBytes": 128,
+      "inputSHA256": "4de750df27c67864e748b5b73baeac09c23efecd4240aa9c1b77d5adc70e8d97",
+      "sourceIdentity": {
+        "commit": "07c833a82084b8fc07e4d9263bf83e315998e1ab",
+        "tree": "1567d3935d15f123bc316ba0a1a0a04fed3ef221",
+        "clean": true
+      },
+      "budgets": {
+        "maxCases": 32,
+        "caseTimeoutMs": 1000,
+        "startupTimeoutMs": 5000,
+        "campaignTimeoutMs": 30000,
+        "maxInputBytes": 65536,
+        "maxOutputBytes": 65536,
+        "heapGrowthBytes": 16777216,
+        "v8HeapMb": 128,
+        "rssBytes": 268435456,
+        "maxCorpusCases": 128,
+        "maxCorpusBytes": 8388608
+      },
+      "qualification": "node-offline-parser",
+      "status": "rejected",
+      "code": "ZIP_VALIDATION",
+      "detail": "ZIP end directory was not found",
+      "metrics": {
+        "processElapsedMs": 600.0628739999956,
+        "sampledRssBytes": 0,
+        "elapsedMs": 0.6727089999999407,
+        "baselineHeapBytes": 37048952,
+        "heapUsedBytes": 37194824,
+        "heapGrowthBytes": 145872,
+        "externalGrowthBytes": 40820,
+        "arrayBufferGrowthBytes": 128,
+        "observedGrowthBytes": 186692,
+        "peakRssBytes": 87097344
+      },
+      "isolation": {
+        "v8OldSpaceMb": 128,
+        "rssGuard": "not-observed",
+        "osMemorySandbox": false
+      },
+      "seedName": "small-deflate",
+      "mutation": "truncate"
+    }
+  ],
+  "artifacts": [],
+  "budgets": {
+    "maxCases": 32,
+    "caseTimeoutMs": 1000,
+    "startupTimeoutMs": 5000,
+    "campaignTimeoutMs": 30000,
+    "maxInputBytes": 65536,
+    "maxOutputBytes": 65536,
+    "heapGrowthBytes": 16777216,
+    "v8HeapMb": 128,
+    "rssBytes": 268435456,
+    "maxCorpusCases": 128,
+    "maxCorpusBytes": 8388608
+  },
+  "environment": {
+    "node": "v24.19.0",
+    "platform": "linux",
+    "arch": "x64"
+  },
+  "targetId": "zip-archive",
+  "seed": 1,
+  "sourceIdentity": {
+    "commit": "07c833a82084b8fc07e4d9263bf83e315998e1ab",
+    "tree": "1567d3935d15f123bc316ba0a1a0a04fed3ef221",
+    "clean": true
+  },
+  "seedAcquisition": {
+    "status": "accepted",
+    "metrics": {
+      "processElapsedMs": 585.8638350000037,
+      "sampledRssBytes": 0,
+      "elapsedMs": 1.408580000000029,
+      "baselineHeapBytes": 38741080,
+      "heapUsedBytes": 38931368,
+      "heapGrowthBytes": 190288,
+      "externalGrowthBytes": 42031,
+      "arrayBufferGrowthBytes": 1339,
+      "observedGrowthBytes": 232319,
+      "peakRssBytes": 84967424
+    },
+    "isolation": {
+      "v8OldSpaceMb": 128,
+      "rssGuard": "not-observed",
+      "osMemorySandbox": false
+    }
+  }
+}

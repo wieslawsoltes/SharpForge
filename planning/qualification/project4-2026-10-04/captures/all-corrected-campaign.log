@@ -1,0 +1,112 @@
+{
+  "status": "unsupported",
+  "qualified": false,
+  "source": "8019f2f9b22e26d7c221454f3b751b0b0e0c67df",
+  "targets": [
+    {
+      "targetId": "pe-loader",
+      "status": "passed",
+      "requestedCases": 32,
+      "completedCases": 32,
+      "counts": {
+        "accepted": 2,
+        "rejected": 30,
+        "unsupported": 0,
+        "findings": 0,
+        "cancelled": 0
+      }
+    },
+    {
+      "targetId": "bytecode-image",
+      "status": "unsupported",
+      "requestedCases": 32,
+      "completedCases": 32,
+      "counts": {
+        "accepted": 4,
+        "rejected": 26,
+        "unsupported": 2,
+        "findings": 0,
+        "cancelled": 0
+      }
+    },
+    {
+      "targetId": "portable-pdb",
+      "status": "passed",
+      "requestedCases": 32,
+      "completedCases": 32,
+      "counts": {
+        "accepted": 6,
+        "rejected": 26,
+        "unsupported": 0,
+        "findings": 0,
+        "cancelled": 0
+      }
+    },
+    {
+      "targetId": "zip-archive",
+      "status": "passed",
+      "requestedCases": 32,
+      "completedCases": 32,
+      "counts": {
+        "accepted": 6,
+        "rejected": 26,
+        "unsupported": 0,
+        "findings": 0,
+        "cancelled": 0
+      }
+    },
+    {
+      "targetId": "protocol",
+      "status": "passed",
+      "requestedCases": 32,
+      "completedCases": 32,
+      "counts": {
+        "accepted": 10,
+        "rejected": 22,
+        "unsupported": 0,
+        "findings": 0,
+        "cancelled": 0
+      }
+    },
+    {
+      "targetId": "il-document",
+      "status": "passed",
+      "requestedCases": 32,
+      "completedCases": 32,
+      "counts": {
+        "accepted": 4,
+        "rejected": 28,
+        "unsupported": 0,
+        "findings": 0,
+        "cancelled": 0
+      }
+    },
+    {
+      "targetId": "msbuild-xml",
+      "status": "passed",
+      "requestedCases": 32,
+      "completedCases": 32,
+      "counts": {
+        "accepted": 7,
+        "rejected": 25,
+        "unsupported": 0,
+        "findings": 0,
+        "cancelled": 0
+      }
+    },
+    {
+      "targetId": "network",
+      "status": "passed",
+      "requestedCases": 32,
+      "completedCases": 32,
+      "counts": {
+        "accepted": 23,
+        "rejected": 9,
+        "unsupported": 0,
+        "findings": 0,
+        "cancelled": 0
+      }
+    }
+  ],
+  "output": "/dev/shm/sharpforge-p4/artifacts/fuzz/project4-corrected-seed1"
+}

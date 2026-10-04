@@ -1,0 +1,214 @@
+TAP version 13
+# Subtest: native host target rejects transport and filesystem authority in input before effects
+ok 1 - native host target rejects transport and filesystem authority in input before effects
+  ---
+  duration_ms: 2.171512
+  type: 'test'
+  ...
+# Subtest: native host target retains actual allowed-read status, closed resources and effective response cap
+ok 2 - native host target retains actual allowed-read status, closed resources and effective response cap
+  ---
+  duration_ms: 24.631597
+  type: 'test'
+  ...
+# Subtest: native host rejects missing, same-length wrong and short tokens over actual loopback HTTP
+ok 3 - native host rejects missing, same-length wrong and short tokens over actual loopback HTTP
+  ---
+  duration_ms: 15.951511
+  type: 'test'
+  ...
+# Subtest: native host rejects foreign or opaque Origin, raw Host and both cross-site metadata values
+ok 4 - native host rejects foreign or opaque Origin, raw Host and both cross-site metadata values
+  ---
+  duration_ms: 20.560141
+  type: 'test'
+  ...
+# Subtest: native host refuses relative, absolute, encoded and reserved paths without returning its owned sibling sentinel
+ok 5 - native host refuses relative, absolute, encoded and reserved paths without returning its owned sibling sentinel
+  ---
+  duration_ms: 27.202071
+  type: 'test'
+  ...
+# Subtest: native response overflow propagates as a finding candidate rather than controlled policy rejection
+ok 6 - native response overflow propagates as a finding candidate rather than controlled policy rejection
+  ---
+  duration_ms: 4.410985
+  type: 'test'
+  ...
+# Subtest: native denial proof detects JSON-escaped leaked bytes even inside an error envelope
+ok 7 - native denial proof detects JSON-escaped leaked bytes even inside an error envelope
+  ---
+  duration_ms: 0.497912
+  type: 'test'
+  ...
+# Subtest: active native HTTP cancellation preserves its reason and closes the request before returning
+ok 8 - active native HTTP cancellation preserves its reason and closes the request before returning
+  ---
+  duration_ms: 3.301414
+  type: 'test'
+  ...
+# Subtest: native client refuses a third HTTP request even when every earlier request completed
+ok 9 - native client refuses a third HTTP request even when every earlier request completed
+  ---
+  duration_ms: 4.238481
+  type: 'test'
+  ...
+# Subtest: protocol: local seeds are bounded, deterministic and independently owned
+ok 10 - protocol: local seeds are bounded, deterministic and independently owned
+  ---
+  duration_ms: 2.119076
+  type: 'test'
+  ...
+# Subtest: protocol: rejects an input over the configured or hard byte ceiling
+ok 11 - protocol: rejects an input over the configured or hard byte ceiling
+  ---
+  duration_ms: 0.227575
+  type: 'test'
+  ...
+# Subtest: protocol: cancellation and invalid caller contracts propagate
+ok 12 - protocol: cancellation and invalid caller contracts propagate
+  ---
+  duration_ms: 0.447458
+  type: 'test'
+  ...
+# Subtest: il-document: local seeds are bounded, deterministic and independently owned
+ok 13 - il-document: local seeds are bounded, deterministic and independently owned
+  ---
+  duration_ms: 9.574746
+  type: 'test'
+  ...
+# Subtest: il-document: rejects an input over the configured or hard byte ceiling
+ok 14 - il-document: rejects an input over the configured or hard byte ceiling
+  ---
+  duration_ms: 0.179204
+  type: 'test'
+  ...
+# Subtest: il-document: cancellation and invalid caller contracts propagate
+ok 15 - il-document: cancellation and invalid caller contracts propagate
+  ---
+  duration_ms: 0.099807
+  type: 'test'
+  ...
+# Subtest: msbuild-xml: local seeds are bounded, deterministic and independently owned
+ok 16 - msbuild-xml: local seeds are bounded, deterministic and independently owned
+  ---
+  duration_ms: 0.206383
+  type: 'test'
+  ...
+# Subtest: msbuild-xml: rejects an input over the configured or hard byte ceiling
+ok 17 - msbuild-xml: rejects an input over the configured or hard byte ceiling
+  ---
+  duration_ms: 0.13575
+  type: 'test'
+  ...
+# Subtest: msbuild-xml: cancellation and invalid caller contracts propagate
+ok 18 - msbuild-xml: cancellation and invalid caller contracts propagate
+  ---
+  duration_ms: 0.174907
+  type: 'test'
+  ...
+# Subtest: network: local seeds are bounded, deterministic and independently owned
+ok 19 - network: local seeds are bounded, deterministic and independently owned
+  ---
+  duration_ms: 0.443422
+  type: 'test'
+  ...
+# Subtest: network: rejects an input over the configured or hard byte ceiling
+ok 20 - network: rejects an input over the configured or hard byte ceiling
+  ---
+  duration_ms: 0.122279
+  type: 'test'
+  ...
+# Subtest: network: cancellation and invalid caller contracts propagate
+ok 21 - network: cancellation and invalid caller contracts propagate
+  ---
+  duration_ms: 0.141058
+  type: 'test'
+  ...
+# Subtest: protocol: accepts LSP, DAP, Unicode and coalesced frames under incremental parsing
+ok 22 - protocol: accepts LSP, DAP, Unicode and coalesced frames under incremental parsing
+  ---
+  duration_ms: 1.350014
+  type: 'test'
+  ...
+# Subtest: protocol: diagnoses malformed framing, JSON, UTF-8 and incomplete bodies
+ok 23 - protocol: diagnoses malformed framing, JSON, UTF-8 and incomplete bodies
+  ---
+  duration_ms: 0.566954
+  type: 'test'
+  ...
+# Subtest: protocol: encoded messages respect the output byte budget
+ok 24 - protocol: encoded messages respect the output byte budget
+  ---
+  duration_ms: 0.27201
+  type: 'test'
+  ...
+# Subtest: IL document: canonical roundtrips preserve visible methods and literals containing comment text
+ok 25 - IL document: canonical roundtrips preserve visible methods and literals containing comment text
+  ---
+  duration_ms: 8.289657
+  type: 'test'
+  ...
+# Subtest: IL document: generated-input failures propagate outside the first assembly validation boundary
+ok 26 - IL document: generated-input failures propagate outside the first assembly validation boundary
+  ---
+  duration_ms: 0.182238
+  type: 'test'
+  ...
+# Subtest: IL document: reports syntax/scaffold failures and constrains rebuilt output
+ok 27 - IL document: reports syntax/scaffold failures and constrains rebuilt output
+  ---
+  duration_ms: 3.778124
+  type: 'test'
+  ...
+# Subtest: MSBuild XML: parses data and evaluates attributes or standalone conditions without filesystem access
+ok 28 - MSBuild XML: parses data and evaluates attributes or standalone conditions without filesystem access
+  ---
+  duration_ms: 1.846465
+  type: 'test'
+  ...
+# Subtest: MSBuild XML: rejects malformed XML and unsupported data grammar
+ok 29 - MSBuild XML: rejects malformed XML and unsupported data grammar
+  ---
+  duration_ms: 0.594965
+  type: 'test'
+  ...
+# Subtest: network: exact grants, URL normalization and request headers use pure policy APIs
+ok 30 - network: exact grants, URL normalization and request headers use pure policy APIs
+  ---
+  duration_ms: 1.954754
+  type: 'test'
+  ...
+# Subtest: network: malformed local input and output limits remain controlled failures
+ok 31 - network: malformed local input and output limits remain controlled failures
+  ---
+  duration_ms: 0.681322
+  type: 'test'
+  ...
+# Subtest: network: unavailable native host policy surfaces are explicitly unsupported
+ok 32 - network: unavailable native host policy surfaces are explicitly unsupported
+  ---
+  duration_ms: 0.144052
+  type: 'test'
+  ...
+# Subtest: text targets: error classifiers preserve unexpected failures instead of counting them as rejected inputs
+ok 33 - text targets: error classifiers preserve unexpected failures instead of counting them as rejected inputs
+  ---
+  duration_ms: 0.282916
+  type: 'test'
+  ...
+# Subtest: text targets: cancellation observed during a parse is not an input rejection
+ok 34 - text targets: cancellation observed during a parse is not an input rejection
+  ---
+  duration_ms: 0.133316
+  type: 'test'
+  ...
+1..34
+# tests 34
+# suites 0
+# pass 34
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 861.494037

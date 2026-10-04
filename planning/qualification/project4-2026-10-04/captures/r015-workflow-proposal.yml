@@ -1,0 +1,141 @@
+# PENDING PROPOSAL ONLY. This file is intentionally outside .github/workflows.
+# No task reservation, ci-workflows lock, implementation or hosted qualification is claimed.
+# Dispatch only after the validation owner records the preceding central/main-core run.
+# The producer intentionally exits 2 when the component passes but R015 remains blocked.
+name: R015 production session I/O capture
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: release15-session-io-${{ github.ref }}
+  cancel-in-progress: false
+
+env:
+  PYTHON: python
+  SHARPFORGE_BROWSER_ENGINE: chromium
+  SHARPFORGE_RESULTS_DIR: artifacts/results
+
+jobs:
+  capture:
+    name: Ubuntu Chromium component capture; release remains unqualified
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: Check out the exact dispatched revision
+        id: checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: ${{ github.sha }}
+          fetch-depth: 0
+          persist-credentials: false
+
+      - name: Record the pending process capture
+        shell: bash
+        run: |
+          mkdir -p artifacts/results/release15-session-io-process
+          git rev-parse HEAD > artifacts/results/release15-session-io-process/source-commit.txt
+          printf '%s\n' '{"schemaVersion":1,"status":"unexecuted","exitCode":null,"reason":"Scenario step has not started"}' \
+            > artifacts/results/release15-session-io-process/process.json
+
+      - name: Install the reviewed Node version
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        with:
+          node-version: '24.21.0'
+          cache: npm
+
+      - name: Install Python
+        uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
+        with:
+          python-version: '3.12'
+
+      - name: Install the locked workspace dependencies
+        run: npm ci --ignore-scripts --no-audit --no-fund
+
+      - name: Require the reviewed release toolchain
+        run: node --input-type=module -e "import {assertToolchain} from './scripts/conformance/repro/build.js'; await assertToolchain(process.cwd());"
+
+      - name: Build production assets and their completed-build identity together
+        run: npm run build
+
+      - name: Install hash-pinned Python dependencies
+        run: python -m pip install --require-hashes --only-binary=:all: -r tests/requirements.txt
+
+      - name: Install the pinned Chromium payload and system dependencies
+        run: python -m playwright install --with-deps chromium
+
+      - name: Capture the starting environment
+        shell: bash
+        run: |
+          node scripts/conformance/env-report.js
+          cp artifacts/results/env.json artifacts/results/release15-session-io-process/env-start.json
+
+      - name: Run the unchanged production session I/O CLI and retain its raw exit status
+        id: session_io
+        timeout-minutes: 8
+        shell: bash
+        run: |
+          capture_dir=artifacts/results/release15-session-io-process
+          printf '%s\n' '{"schemaVersion":1,"status":"running","exitCode":null}' > "$capture_dir/process.json"
+          set +e
+          node scripts/limited.js node scripts/conformance/release15/session-io-run.js \
+            --output artifacts/results/release15-session-io \
+            > "$capture_dir/stdout.log" 2> "$capture_dir/stderr.log"
+          session_io_status=$?
+          set -e
+          printf '{"schemaVersion":1,"status":"completed","exitCode":%s}\n' "$session_io_status" \
+            > "$capture_dir/process.json"
+          cat "$capture_dir/stdout.log"
+          cat "$capture_dir/stderr.log" >&2
+          exit "$session_io_status"
+
+      - name: Retain component and release status without changing the producer result
+        if: always()
+        shell: bash
+        run: |
+          node --input-type=module <<'JS'
+          import { appendFile, readFile } from 'node:fs/promises';
+          const read = async path => {
+            try { return JSON.parse(await readFile(path, 'utf8')); }
+            catch (error) { return { unavailable: true, error: error.message }; }
+          };
+          const processRecord = await read('artifacts/results/release15-session-io-process/process.json');
+          const report = await read('artifacts/results/release15-session-io/report.json');
+          const summary = [
+            '## R015 production session I/O capture',
+            '',
+            `Process state: ${processRecord.status ?? 'unavailable'}`,
+            `Raw exit code: ${processRecord.exitCode ?? 'not observed'}`,
+            `Component status: ${report.componentStatus ?? 'unexecuted or unavailable'}`,
+            `Release obligation status: ${report.status ?? 'unqualified; report unavailable'}`,
+            '',
+            'The producer result is unchanged. Exit 2 is a blocked release outcome, even when the component passed.',
+            'Exit 1, missing reports, setup failures and interrupted captures do not qualify the component or release.',
+            'This workflow provides no fairness, managed WebSocket, provider, export, native or cross-platform pass.',
+            ''
+          ].join('\n');
+          await appendFile(process.env.GITHUB_STEP_SUMMARY, summary);
+          JS
+
+      - name: Capture final environment
+        if: always()
+        shell: bash
+        run: |
+          node scripts/conformance/env-report.js
+          cp artifacts/results/env.json artifacts/results/release15-session-io-process/env-final.json
+
+      - name: Require a clean source checkout
+        if: always()
+        run: node scripts/conformance/clean-checkout.js
+
+      - name: Preserve all raw results even for blocked, failed or unexecuted capture
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: release15-session-io-${{ github.run_id }}-${{ github.run_attempt }}
+          path: artifacts/results/
+          if-no-files-found: error
+          retention-days: 14

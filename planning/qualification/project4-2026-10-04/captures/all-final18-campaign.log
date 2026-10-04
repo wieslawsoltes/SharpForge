@@ -1,0 +1,113 @@
+Waiting for a free run slot: 1 heavy runs are allowed at once (SHARPFORGE_MAX_PARALLEL_RUNS).
+{
+  "status": "unsupported",
+  "qualified": false,
+  "source": "d64188af91f03d02041316bdde2ee64fd0634be0",
+  "targets": [
+    {
+      "targetId": "pe-loader",
+      "status": "passed",
+      "requestedCases": 32,
+      "completedCases": 32,
+      "counts": {
+        "accepted": 2,
+        "rejected": 30,
+        "unsupported": 0,
+        "findings": 0,
+        "cancelled": 0
+      }
+    },
+    {
+      "targetId": "bytecode-image",
+      "status": "unsupported",
+      "requestedCases": 32,
+      "completedCases": 32,
+      "counts": {
+        "accepted": 10,
+        "rejected": 16,
+        "unsupported": 6,
+        "findings": 0,
+        "cancelled": 0
+      }
+    },
+    {
+      "targetId": "portable-pdb",
+      "status": "passed",
+      "requestedCases": 32,
+      "completedCases": 32,
+      "counts": {
+        "accepted": 6,
+        "rejected": 26,
+        "unsupported": 0,
+        "findings": 0,
+        "cancelled": 0
+      }
+    },
+    {
+      "targetId": "zip-archive",
+      "status": "passed",
+      "requestedCases": 32,
+      "completedCases": 32,
+      "counts": {
+        "accepted": 6,
+        "rejected": 26,
+        "unsupported": 0,
+        "findings": 0,
+        "cancelled": 0
+      }
+    },
+    {
+      "targetId": "protocol",
+      "status": "passed",
+      "requestedCases": 32,
+      "completedCases": 32,
+      "counts": {
+        "accepted": 10,
+        "rejected": 22,
+        "unsupported": 0,
+        "findings": 0,
+        "cancelled": 0
+      }
+    },
+    {
+      "targetId": "il-document",
+      "status": "passed",
+      "requestedCases": 32,
+      "completedCases": 32,
+      "counts": {
+        "accepted": 7,
+        "rejected": 25,
+        "unsupported": 0,
+        "findings": 0,
+        "cancelled": 0
+      }
+    },
+    {
+      "targetId": "msbuild-xml",
+      "status": "passed",
+      "requestedCases": 32,
+      "completedCases": 32,
+      "counts": {
+        "accepted": 7,
+        "rejected": 25,
+        "unsupported": 0,
+        "findings": 0,
+        "cancelled": 0
+      }
+    },
+    {
+      "targetId": "network",
+      "status": "passed",
+      "requestedCases": 32,
+      "completedCases": 32,
+      "counts": {
+        "accepted": 23,
+        "rejected": 9,
+        "unsupported": 0,
+        "findings": 0,
+        "cancelled": 0
+      }
+    }
+  ],
+  "output": "/dev/shm/sharpforge-p4/artifacts/fuzz/project4-final18-seed1"
+}

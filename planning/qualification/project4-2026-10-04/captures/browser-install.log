@@ -1,0 +1,27 @@
+Downloading Chrome for Testing 153.0.8010.12 (playwright chromium v1243)[2m from https://cdn.playwright.dev/builds/cft/153.0.8010.12/linux64/chrome-linux64.zip[22m
+|■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■| 100% of 0 MiB
+Error: End of central directory record signature not found. Either not a zip file, or file is truncated.
+    at /workspace/scratch/18022b90e5ec/validation-venv/lib/python3.12/site-packages/playwright/driver/package/lib/utilsBundle.js:31029:18
+    at /workspace/scratch/18022b90e5ec/validation-venv/lib/python3.12/site-packages/playwright/driver/package/lib/utilsBundle.js:31555:9
+    at /workspace/scratch/18022b90e5ec/validation-venv/lib/python3.12/site-packages/playwright/driver/package/lib/utilsBundle.js:30452:11
+    at FSReqCallback.wrapper [as oncomplete] (node:fs:730:5)
+Downloading Chrome for Testing 153.0.8010.12 (playwright chromium v1243)[2m from https://cdn.playwright.dev/builds/cft/153.0.8010.12/linux64/chrome-linux64.zip[22m
+|■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■| 100% of 0 MiB
+Error: End of central directory record signature not found. Either not a zip file, or file is truncated.
+    at /workspace/scratch/18022b90e5ec/validation-venv/lib/python3.12/site-packages/playwright/driver/package/lib/utilsBundle.js:31029:18
+    at /workspace/scratch/18022b90e5ec/validation-venv/lib/python3.12/site-packages/playwright/driver/package/lib/utilsBundle.js:31555:9
+    at /workspace/scratch/18022b90e5ec/validation-venv/lib/python3.12/site-packages/playwright/driver/package/lib/utilsBundle.js:30452:11
+    at FSReqCallback.wrapper [as oncomplete] (node:fs:730:5)
+Downloading Chrome for Testing 153.0.8010.12 (playwright chromium v1243)[2m from https://cdn.playwright.dev/builds/cft/153.0.8010.12/linux64/chrome-linux64.zip[22m
+/workspace/scratch/18022b90e5ec/validation-venv/lib/python3.12/site-packages/playwright/driver/package/lib/coreBundle.js:33552
+              throw new Error(`${err.message} Path: ${lockfilePath}`);
+              ^
+
+Error: Unable to update lock within the stale threshold Path: /workspace/scratch/18022b90e5ec/playwright-browsers/__dirlock
+    at Object.onCompromised (/workspace/scratch/18022b90e5ec/validation-venv/lib/python3.12/site-packages/playwright/driver/package/lib/coreBundle.js:33552:21)
+    at setLockAsCompromised (/workspace/scratch/18022b90e5ec/validation-venv/lib/python3.12/site-packages/playwright/driver/package/lib/coreBundle.js:10640:17)
+    at /workspace/scratch/18022b90e5ec/validation-venv/lib/python3.12/site-packages/playwright/driver/package/lib/coreBundle.js:10604:16
+    at callback (/workspace/scratch/18022b90e5ec/validation-venv/lib/python3.12/site-packages/playwright/driver/package/lib/utilsBundle.js:31971:24)
+    at FSReqCallback.oncomplete (node:fs:199:5)
+
+Node.js v24.21.0

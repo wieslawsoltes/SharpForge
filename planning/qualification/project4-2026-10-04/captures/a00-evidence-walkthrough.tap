@@ -1,0 +1,94 @@
+TAP version 13
+# Subtest: evidence task contracts retain legacy area IDs and accept release task and bug IDs
+ok 1 - evidence task contracts retain legacy area IDs and accept release task and bug IDs
+  ---
+  duration_ms: 3.177321
+  type: 'test'
+  ...
+# Subtest: release default capture requires an explicit area before running a command
+ok 2 - release default capture requires an explicit area before running a command
+  ---
+  duration_ms: 107.873016
+  type: 'test'
+  ...
+# Subtest: release capture CLI records the explicitly selected area and verifies its real TAP evidence
+ok 3 - release capture CLI records the explicitly selected area and verifies its real TAP evidence
+  ---
+  duration_ms: 416.537287
+  type: 'test'
+  ...
+# Subtest: release task handoff recaptures explicit commands and replays from a clean clone
+ok 4 - release task handoff recaptures explicit commands and replays from a clean clone
+  ---
+  duration_ms: 655.850726
+  type: 'test'
+  ...
+# Subtest: digest binds TAP bytes, commit, command and exact target/status proof
+ok 5 - digest binds TAP bytes, commit, command and exact target/status proof
+  ---
+  duration_ms: 0.576909
+  type: 'test'
+  ...
+# Subtest: capture refuses dirty passing changes over a failing committed tree before running any command
+ok 6 - capture refuses dirty passing changes over a failing committed tree before running any command
+  ---
+  duration_ms: 21.329456
+  type: 'test'
+  ...
+# Subtest: capture rejects tracked/untracked mutations and even a clean changed HEAD after execution
+ok 7 - capture rejects tracked/untracked mutations and even a clean changed HEAD after execution
+  ---
+  duration_ms: 293.353513
+  type: 'test'
+  ...
+# Subtest: only command-emitted proof for the exact target/status verifies; generic TAP is not parity
+ok 8 - only command-emitted proof for the exact target/status verifies; generic TAP is not parity
+  ---
+  duration_ms: 441.83306
+  type: 'test'
+  ...
+# Subtest: skipped/TODO/ambiguous or absent TAP results cannot qualify a pass, and stderr cannot spoof TAP
+ok 9 - skipped/TODO/ambiguous or absent TAP results cannot qualify a pass, and stderr cannot spoof TAP
+  ---
+  duration_ms: 809.877958
+  type: 'test'
+  ...
+# Subtest: unknown and unsupported proofs retain their reasons and never verify as pass
+ok 10 - unknown and unsupported proofs retain their reasons and never verify as pass
+  ---
+  duration_ms: 361.762612
+  type: 'test'
+  ...
+# Subtest: fake HTTP handoff plus fresh real clone reproduces results; WIP commands are retested at the new commit
+ok 11 - fake HTTP handoff plus fresh real clone reproduces results; WIP commands are retested at the new commit
+  ---
+  duration_ms: 1526.665867
+  type: 'test'
+  ...
+# Subtest: resume detects command mutations and stops before later commands
+ok 12 - resume detects command mutations and stops before later commands
+  ---
+  duration_ms: 569.645813
+  type: 'test'
+  ...
+# Subtest: a real failed target remains verified failure and cannot be relabeled pass
+ok 13 - a real failed target remains verified failure and cannot be relabeled pass
+  ---
+  duration_ms: 176.304257
+  type: 'test'
+  ...
+# Subtest: incomplete or contradictory TAP statistics never qualify a passing target
+ok 14 - incomplete or contradictory TAP statistics never qualify a passing target
+  ---
+  duration_ms: 0.568716
+  type: 'test'
+  ...
+1..14
+# tests 14
+# suites 0
+# pass 14
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 5501.074159

@@ -1,0 +1,21 @@
+{
+  "status": "passed",
+  "qualified": true,
+  "source": "33f754dcac94080842042020719ea6b8a4289e3f",
+  "targets": [
+    {
+      "targetId": "corpus-replay",
+      "status": "passed",
+      "requestedCases": 2,
+      "completedCases": 2,
+      "counts": {
+        "accepted": 0,
+        "rejected": 2,
+        "unsupported": 0,
+        "findings": 0,
+        "cancelled": 0
+      }
+    }
+  ],
+  "output": "/dev/shm/p4-pe-utf8/artifacts/fuzz/pe-utf8-fixed-original-replay"
+}

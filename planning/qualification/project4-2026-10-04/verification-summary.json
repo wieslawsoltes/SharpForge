@@ -1,0 +1,43 @@
+{
+  "status": "passed",
+  "checkedAt": "2026-10-04T14:45:14.329400Z",
+  "scope": "Read-only document/evidence integrity checks only; no product tests, npm checks, build or hosted-core revalidation performed.",
+  "captureFiles": 175,
+  "captureBytes": 7205688,
+  "originalCaptureDigestsPreserved": 169,
+  "newRawFailureCapturesByteMatched": 6,
+  "jsonFiles": 119,
+  "capturedJsonFiles": 114,
+  "totalJsonFiles": 119,
+  "jsonCountScope": "The current check decoded 114 capture JSON files plus five top-level report JSON files. The preceding check's jsonFiles=109 counted capture JSON files only; six added raw failure records include five JSON files and one log.",
+  "campaignReportDigests": 30,
+  "validJsonPointers": 36,
+  "additionalPointerFields": 13,
+  "relativeMarkdownTargets": 69,
+  "brokenMarkdownLinks": [],
+  "mappedIssuePairs": 244,
+  "groupDefinitions": 43,
+  "retainedInitialClaims": 68,
+  "mergedDeliveries": 18,
+  "rawDeliveryIdentityRecords": 54,
+  "renamedArchive": {
+    "path": "captures/bytecode-profile-parent-probe.mjs.txt",
+    "originalFilename": "bytecode-profile-parent-probe.mjs",
+    "bytes": 1341,
+    "sha256": "6fb5f58bb67dc28d0c50592cd154e882a42590a129dd6d18bff3da03d61f5168"
+  },
+  "precedingIntegrityCheck": {
+    "status": "passed",
+    "checkedAt": "2026-10-04T14:25:47.492091Z",
+    "captureFiles": 169,
+    "captureBytes": 6875311,
+    "jsonFiles": 109,
+    "campaignReportDigests": 30,
+    "validJsonPointers": 34,
+    "brokenMarkdownLinks": [],
+    "mappedIssuePairs": 244,
+    "groupDefinitions": 43,
+    "retainedInitialClaims": 68,
+    "mergedDeliveries": 18
+  }
+}

@@ -1,0 +1,88 @@
+{
+  "schemaVersion": 1,
+  "kind": "sharpforge-offline-fuzz-campaign",
+  "status": "passed",
+  "qualified": true,
+  "qualification": "bounded-node-offline-adapters",
+  "sourceBefore": {
+    "commit": "33f754dcac94080842042020719ea6b8a4289e3f",
+    "tree": "7e98dec2629b370ff7aaa6a998e9facc2c629be8",
+    "clean": true
+  },
+  "sourceAfter": {
+    "commit": "33f754dcac94080842042020719ea6b8a4289e3f",
+    "tree": "7e98dec2629b370ff7aaa6a998e9facc2c629be8",
+    "clean": true
+  },
+  "environment": {
+    "node": "v24.19.0",
+    "platform": "linux",
+    "arch": "x64"
+  },
+  "started": "2026-10-04T13:09:58.690Z",
+  "finished": "2026-10-04T13:10:00.106Z",
+  "seed": 1,
+  "budgets": {
+    "maxCases": 512,
+    "caseTimeoutMs": 1000,
+    "startupTimeoutMs": 5000,
+    "campaignTimeoutMs": 600000,
+    "maxInputBytes": 65536,
+    "maxOutputBytes": 65536,
+    "heapGrowthBytes": 16777216,
+    "v8HeapMb": 128,
+    "rssBytes": 268435456,
+    "maxCorpusCases": 128,
+    "maxCorpusBytes": 8388608
+  },
+  "targets": [
+    {
+      "targetId": "corpus-replay",
+      "status": "passed",
+      "requestedCases": 2,
+      "completedCases": 2,
+      "counts": {
+        "accepted": 0,
+        "rejected": 2,
+        "unsupported": 0,
+        "findings": 0,
+        "cancelled": 0
+      }
+    }
+  ],
+  "reports": [
+    {
+      "path": "replay.json",
+      "bytes": 4231,
+      "sha256": "7b6929926aebd50388296157cfadb1c533f41fe771a9cf851b05b8f89dbddf68"
+    }
+  ],
+  "reproduction": {
+    "workingDirectory": "repository-root",
+    "note": "Use the recorded source commit and environment. Each output directory must be new.",
+    "campaign": [
+      "node",
+      "scripts/limited.js",
+      "node",
+      "scripts/conformance/fuzz/run.js",
+      "--replay",
+      "../sharpforge-p4/artifacts/fuzz/project4-pe-seed1/pe-loader/findings",
+      "--seed",
+      "1",
+      "--cases",
+      "512",
+      "--case-ms",
+      "1000",
+      "--campaign-ms",
+      "600000",
+      "--output",
+      "artifacts/fuzz/pe-utf8-fixed-original-replay/reproduction"
+    ],
+    "findings": []
+  },
+  "limitations": [
+    "Only the recorded cases and Node adapter profiles were exercised; mutation campaigns cannot prove parser safety.",
+    "V8 heap limits and sampled RSS guards are not an operating-system memory or network sandbox.",
+    "Provider authentication, archive extraction, physical devices, CLR and Rust/Wasm were not exercised."
+  ]
+}

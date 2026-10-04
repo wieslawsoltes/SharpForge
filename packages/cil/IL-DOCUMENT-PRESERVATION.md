@@ -53,7 +53,13 @@ negative validation and floating payload boundaries. The no-change profile test
 in `managed-il.test.js` now makes a real edit before expecting #SF invalidation;
 an unchanged image has no stale method map to invalidate.
 
-Validation is pending at the implementation revision. The focused commands are:
+The implementation passed 124 focused tests at local commit
+`9e6235635fdfb92939e8d7cbf1985db774d1fa31`, published with the identical Git tree in
+[PR #4554](https://github.com/wieslawsoltes/SharpForge/pull/4554). Its exact-image
+campaign completed 32 cases: seven accepted, 25 controlled rejections and no
+findings. The combined revision also passed the retained integrated checks.
+See the [Project 4 evidence record](../../planning/qualification/project4-2026-10-04/README.md)
+for source identities, raw captures and qualification boundaries. The focused commands are:
 
 ```sh
 node scripts/limited.js node --test tests/a03-il-document-preservation.test.js tests/a03-il-document-floats.test.js

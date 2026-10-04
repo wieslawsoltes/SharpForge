@@ -1,0 +1,1485 @@
+TAP version 13
+# Subtest: a complete Node TAP report remains qualifying evidence with the unchanged summary shape
+ok 1 - a complete Node TAP report remains qualifying evidence with the unchanged summary shape
+  ---
+  duration_ms: 6.344519
+  type: 'test'
+  ...
+# Subtest: malformed evidence cannot qualify a pass: root plan exceeds results
+not ok 2 - malformed evidence cannot qualify a pass: root plan exceeds results
+  ---
+  duration_ms: 0.853495
+  type: 'test'
+  location: '/dev/shm/p4-parent/planning/contracts/tests/tap-evidence.test.js:78:3'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    
+    true !== false
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: false
+  actual: true
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///dev/shm/p4-parent/planning/contracts/tests/tap-evidence.test.js:80:12)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1382:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+    Test.postRun (node:internal/test_runner/test:1522:19)
+    Test.run (node:internal/test_runner/test:1447:12)
+    async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3)
+  ...
+# Subtest: malformed evidence cannot qualify a pass: root plan precedes too few results
+not ok 3 - malformed evidence cannot qualify a pass: root plan precedes too few results
+  ---
+  duration_ms: 0.213524
+  type: 'test'
+  location: '/dev/shm/p4-parent/planning/contracts/tests/tap-evidence.test.js:78:3'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    
+    true !== false
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: false
+  actual: true
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///dev/shm/p4-parent/planning/contracts/tests/tap-evidence.test.js:80:12)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1382:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+    Test.postRun (node:internal/test_runner/test:1522:19)
+    Test.run (node:internal/test_runner/test:1447:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+  ...
+# Subtest: malformed evidence cannot qualify a pass: duplicate root plans
+not ok 4 - malformed evidence cannot qualify a pass: duplicate root plans
+  ---
+  duration_ms: 0.212603
+  type: 'test'
+  location: '/dev/shm/p4-parent/planning/contracts/tests/tap-evidence.test.js:78:3'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    
+    true !== false
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: false
+  actual: true
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///dev/shm/p4-parent/planning/contracts/tests/tap-evidence.test.js:80:12)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1382:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+    Test.postRun (node:internal/test_runner/test:1522:19)
+    Test.run (node:internal/test_runner/test:1447:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+  ...
+# Subtest: malformed evidence cannot qualify a pass: a middle plan is not a second valid stream
+not ok 5 - malformed evidence cannot qualify a pass: a middle plan is not a second valid stream
+  ---
+  duration_ms: 0.157742
+  type: 'test'
+  location: '/dev/shm/p4-parent/planning/contracts/tests/tap-evidence.test.js:78:3'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    
+    true !== false
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: false
+  actual: true
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///dev/shm/p4-parent/planning/contracts/tests/tap-evidence.test.js:80:12)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1382:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+    Test.postRun (node:internal/test_runner/test:1522:19)
+    Test.run (node:internal/test_runner/test:1447:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+  ...
+# Subtest: malformed evidence cannot qualify a pass: result numbering starts at zero
+not ok 6 - malformed evidence cannot qualify a pass: result numbering starts at zero
+  ---
+  duration_ms: 0.208877
+  type: 'test'
+  location: '/dev/shm/p4-parent/planning/contracts/tests/tap-evidence.test.js:78:3'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    
+    true !== false
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: false
+  actual: true
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///dev/shm/p4-parent/planning/contracts/tests/tap-evidence.test.js:80:12)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1382:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+    Test.postRun (node:internal/test_runner/test:1522:19)
+    Test.run (node:internal/test_runner/test:1447:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+  ...
+# Subtest: malformed evidence cannot qualify a pass: result numbering exceeds the plan
+not ok 7 - malformed evidence cannot qualify a pass: result numbering exceeds the plan
+  ---
+  duration_ms: 0.158613
+  type: 'test'
+  location: '/dev/shm/p4-parent/planning/contracts/tests/tap-evidence.test.js:78:3'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    
+    true !== false
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: false
+  actual: true
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///dev/shm/p4-parent/planning/contracts/tests/tap-evidence.test.js:80:12)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1382:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+    Test.postRun (node:internal/test_runner/test:1522:19)
+    Test.run (node:internal/test_runner/test:1447:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+  ...
+# Subtest: malformed evidence cannot qualify a pass: unsafe result number
+not ok 8 - malformed evidence cannot qualify a pass: unsafe result number
+  ---
+  duration_ms: 0.205392
+  type: 'test'
+  location: '/dev/shm/p4-parent/planning/contracts/tests/tap-evidence.test.js:78:3'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    
+    true !== false
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: false
+  actual: true
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///dev/shm/p4-parent/planning/contracts/tests/tap-evidence.test.js:80:12)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1382:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+    Test.postRun (node:internal/test_runner/test:1522:19)
+    Test.run (node:internal/test_runner/test:1447:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+  ...
+# Subtest: malformed evidence cannot qualify a pass: unsafe plan number
+not ok 9 - malformed evidence cannot qualify a pass: unsafe plan number
+  ---
+  duration_ms: 0.240684
+  type: 'test'
+  location: '/dev/shm/p4-parent/planning/contracts/tests/tap-evidence.test.js:78:3'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    
+    true !== false
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: false
+  actual: true
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///dev/shm/p4-parent/planning/contracts/tests/tap-evidence.test.js:80:12)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1382:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+    Test.postRun (node:internal/test_runner/test:1522:19)
+    Test.run (node:internal/test_runner/test:1447:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+  ...
+# Subtest: malformed evidence cannot qualify a pass: duplicate TAP headers
+not ok 10 - malformed evidence cannot qualify a pass: duplicate TAP headers
+  ---
+  duration_ms: 0.376043
+  type: 'test'
+  location: '/dev/shm/p4-parent/planning/contracts/tests/tap-evidence.test.js:78:3'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    
+    true !== false
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: false
+  actual: true
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///dev/shm/p4-parent/planning/contracts/tests/tap-evidence.test.js:80:12)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1382:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+    Test.postRun (node:internal/test_runner/test:1522:19)
+    Test.run (node:internal/test_runner/test:1447:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+  ...
+# Subtest: malformed evidence cannot qualify a pass: misplaced TAP header
+not ok 11 - malformed evidence cannot qualify a pass: misplaced TAP header
+  ---
+  duration_ms: 0.219202
+  type: 'test'
+  location: '/dev/shm/p4-parent/planning/contracts/tests/tap-evidence.test.js:78:3'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    
+    true !== false
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: false
+  actual: true
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///dev/shm/p4-parent/planning/contracts/tests/tap-evidence.test.js:80:12)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1382:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+    Test.postRun (node:internal/test_runner/test:1522:19)
+    Test.run (node:internal/test_runner/test:1447:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+  ...
+# Subtest: malformed evidence cannot qualify a pass: root bailout after counters
+not ok 12 - malformed evidence cannot qualify a pass: root bailout after counters
+  ---
+  duration_ms: 0.198011
+  type: 'test'
+  location: '/dev/shm/p4-parent/planning/contracts/tests/tap-evidence.test.js:78:3'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    
+    true !== false
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: false
+  actual: true
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///dev/shm/p4-parent/planning/contracts/tests/tap-evidence.test.js:80:12)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1382:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+    Test.postRun (node:internal/test_runner/test:1522:19)
+    Test.run (node:internal/test_runner/test:1447:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+  ...
+# Subtest: malformed evidence cannot qualify a pass: case insensitive bailout
+not ok 13 - malformed evidence cannot qualify a pass: case insensitive bailout
+  ---
+  duration_ms: 0.202077
+  type: 'test'
+  location: '/dev/shm/p4-parent/planning/contracts/tests/tap-evidence.test.js:78:3'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    
+    true !== false
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: false
+  actual: true
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///dev/shm/p4-parent/planning/contracts/tests/tap-evidence.test.js:80:12)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1382:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+    Test.postRun (node:internal/test_runner/test:1522:19)
+    Test.run (node:internal/test_runner/test:1447:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+  ...
+# Subtest: malformed evidence cannot qualify a pass: duplicate root suite counter
+not ok 14 - malformed evidence cannot qualify a pass: duplicate root suite counter
+  ---
+  duration_ms: 0.146415
+  type: 'test'
+  location: '/dev/shm/p4-parent/planning/contracts/tests/tap-evidence.test.js:78:3'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    
+    true !== false
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: false
+  actual: true
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///dev/shm/p4-parent/planning/contracts/tests/tap-evidence.test.js:80:12)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1382:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+    Test.postRun (node:internal/test_runner/test:1522:19)
+    Test.run (node:internal/test_runner/test:1447:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+  ...
+# Subtest: malformed evidence cannot qualify a pass: duplicate root test counter
+not ok 15 - malformed evidence cannot qualify a pass: duplicate root test counter
+  ---
+  duration_ms: 0.325909
+  type: 'test'
+  location: '/dev/shm/p4-parent/planning/contracts/tests/tap-evidence.test.js:78:3'
+  failureType: 'testCodeFailure'
+  error: 'Missing expected exception.'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  operator: 'throws'
+  stack: |-
+    TestContext.<anonymous> (file:///dev/shm/p4-parent/planning/contracts/tests/tap-evidence.test.js:81:12)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1382:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+    Test.postRun (node:internal/test_runner/test:1522:19)
+    Test.run (node:internal/test_runner/test:1447:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+  ...
+# Subtest: malformed evidence cannot qualify a pass: negative root counter
+not ok 16 - malformed evidence cannot qualify a pass: negative root counter
+  ---
+  duration_ms: 0.198582
+  type: 'test'
+  location: '/dev/shm/p4-parent/planning/contracts/tests/tap-evidence.test.js:78:3'
+  failureType: 'testCodeFailure'
+  error: 'Missing expected exception.'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  operator: 'throws'
+  stack: |-
+    TestContext.<anonymous> (file:///dev/shm/p4-parent/planning/contracts/tests/tap-evidence.test.js:81:12)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1382:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+    Test.postRun (node:internal/test_runner/test:1522:19)
+    Test.run (node:internal/test_runner/test:1447:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+  ...
+# Subtest: malformed evidence cannot qualify a pass: extra passed counter contradicts observed points
+not ok 17 - malformed evidence cannot qualify a pass: extra passed counter contradicts observed points
+  ---
+  duration_ms: 0.143071
+  type: 'test'
+  location: '/dev/shm/p4-parent/planning/contracts/tests/tap-evidence.test.js:78:3'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    
+    true !== false
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: false
+  actual: true
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///dev/shm/p4-parent/planning/contracts/tests/tap-evidence.test.js:80:12)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1382:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+    Test.postRun (node:internal/test_runner/test:1522:19)
+    Test.run (node:internal/test_runner/test:1447:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+  ...
+# Subtest: malformed evidence cannot qualify a pass: summary counters precede the results
+not ok 18 - malformed evidence cannot qualify a pass: summary counters precede the results
+  ---
+  duration_ms: 0.210038
+  type: 'test'
+  location: '/dev/shm/p4-parent/planning/contracts/tests/tap-evidence.test.js:78:3'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    
+    true !== false
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: false
+  actual: true
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///dev/shm/p4-parent/planning/contracts/tests/tap-evidence.test.js:80:12)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1382:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+    Test.postRun (node:internal/test_runner/test:1522:19)
+    Test.run (node:internal/test_runner/test:1447:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+  ...
+# Subtest: malformed evidence cannot qualify a pass: unterminated diagnostic
+not ok 19 - malformed evidence cannot qualify a pass: unterminated diagnostic
+  ---
+  duration_ms: 0.173976
+  type: 'test'
+  location: '/dev/shm/p4-parent/planning/contracts/tests/tap-evidence.test.js:78:3'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    
+    true !== false
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: false
+  actual: true
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///dev/shm/p4-parent/planning/contracts/tests/tap-evidence.test.js:80:12)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1382:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+    Test.postRun (node:internal/test_runner/test:1522:19)
+    Test.run (node:internal/test_runner/test:1447:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+  ...
+# Subtest: a correctly hashed retained artifact cannot bypass malformed TAP refusal
+not ok 20 - a correctly hashed retained artifact cannot bypass malformed TAP refusal
+  ---
+  duration_ms: 1.463702
+  type: 'test'
+  location: '/dev/shm/p4-parent/planning/contracts/tests/tap-evidence.test.js:85:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    
+    true !== false
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: false
+  actual: true
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///dev/shm/p4-parent/planning/contracts/tests/tap-evidence.test.js:89:10)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1382:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+    Test.postRun (node:internal/test_runner/test:1522:19)
+    Test.run (node:internal/test_runner/test:1447:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+  ...
+# Subtest: each scope permits a leading plan and checks unique in-range result numbers
+not ok 21 - each scope permits a leading plan and checks unique in-range result numbers
+  ---
+  duration_ms: 0.376033
+  type: 'test'
+  location: '/dev/shm/p4-parent/planning/contracts/tests/tap-evidence.test.js:92:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    
+    true !== false
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: false
+  actual: true
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///dev/shm/p4-parent/planning/contracts/tests/tap-evidence.test.js:97:10)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1382:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+    Test.postRun (node:internal/test_runner/test:1522:19)
+    Test.run (node:internal/test_runner/test:1447:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+  ...
+# Subtest: Node nested suites retain their own plans and exclude suite wrappers from test counters
+ok 22 - Node nested suites retain their own plans and exclude suite wrappers from test counters
+  ---
+  duration_ms: 2.113778
+  type: 'test'
+  ...
+# Subtest: Node nested test wrappers are counted as tests instead of suites
+ok 23 - Node nested test wrappers are counted as tests instead of suites
+  ---
+  duration_ms: 0.250228
+  type: 'test'
+  ...
+# Subtest: missing, duplicate, mismatched, or abandoned nested plans refuse qualification
+not ok 24 - missing, duplicate, mismatched, or abandoned nested plans refuse qualification
+  ---
+  duration_ms: 0.34636
+  type: 'test'
+  location: '/dev/shm/p4-parent/planning/contracts/tests/tap-evidence.test.js:144:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    
+    true !== false
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: false
+  actual: true
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///dev/shm/p4-parent/planning/contracts/tests/tap-evidence.test.js:154:12)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1382:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+    Test.postRun (node:internal/test_runner/test:1522:19)
+    Test.run (node:internal/test_runner/test:1447:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+  ...
+# Subtest: diagnostic YAML cannot impersonate test points, proofs, plans, or bailouts
+not ok 25 - diagnostic YAML cannot impersonate test points, proofs, plans, or bailouts
+  ---
+  duration_ms: 7.082724
+  type: 'test'
+  location: '/dev/shm/p4-parent/planning/contracts/tests/tap-evidence.test.js:159:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly deep-equal:
+    + actual - expected
+    ... Skipped lines
+    
+      [
+        {
+          capabilityId: 'fixture.tap-structure',
+          engine: 'node-fixture',
+          platform: 'fixture',
+    ...
+        },
+    +   {
+    +     capabilityId: 'invented',
+    +     engine: 'node-fixture',
+    +     platform: 'fixture',
+    +     specRevision: 'fixture-v1',
+    +     status: 'pass',
+    +     testName: 'invented target'
+    +   }
+      ]
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+    0:
+      capabilityId: 'fixture.tap-structure'
+      platform: 'fixture'
+      engine: 'node-fixture'
+      specRevision: 'fixture-v1'
+      status: 'pass'
+      testName: 'real test'
+  actual:
+    0:
+      capabilityId: 'fixture.tap-structure'
+      platform: 'fixture'
+      engine: 'node-fixture'
+      specRevision: 'fixture-v1'
+      status: 'pass'
+      testName: 'real test'
+    1:
+      capabilityId: 'invented'
+      platform: 'fixture'
+      engine: 'node-fixture'
+      specRevision: 'fixture-v1'
+      status: 'pass'
+      testName: 'invented target'
+  operator: 'deepStrictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///dev/shm/p4-parent/planning/contracts/tests/tap-evidence.test.js:167:10)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1382:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+    Test.postRun (node:internal/test_runner/test:1522:19)
+    Test.run (node:internal/test_runner/test:1447:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+  ...
+# Subtest: failure and cancellation counters retain honest outcomes without becoming passes
+ok 26 - failure and cancellation counters retain honest outcomes without becoming passes
+  ---
+  duration_ms: 1.922898
+  type: 'test'
+  ...
+# Subtest: unknown and unsupported skipped probes remain explicit and cannot be relabeled as passes
+not ok 27 - unknown and unsupported skipped probes remain explicit and cannot be relabeled as passes
+  ---
+  duration_ms: 0.257358
+  type: 'test'
+  location: '/dev/shm/p4-parent/planning/contracts/tests/tap-evidence.test.js:184:1'
+  failureType: 'testCodeFailure'
+  error: 'Target proof requires one unambiguous TAP result: real test'
+  code: 'ERR_TEST_FAILURE'
+  stack: |-
+    proofObligations (file:///dev/shm/p4-parent/scripts/planning/lib/evidence.js:72:35)
+    TestContext.<anonymous> (file:///dev/shm/p4-parent/planning/contracts/tests/tap-evidence.test.js:190:22)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1382:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+    Test.postRun (node:internal/test_runner/test:1522:19)
+    Test.run (node:internal/test_runner/test:1447:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+  ...
+# Subtest: TODO directives and suite skips cannot qualify a nested passing target
+not ok 28 - TODO directives and suite skips cannot qualify a nested passing target
+  ---
+  duration_ms: 0.275435
+  type: 'test'
+  location: '/dev/shm/p4-parent/planning/contracts/tests/tap-evidence.test.js:199:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    The input did not match the regular expression /not a passing test/. Input:
+    
+    'Error: Target proof requires one unambiguous TAP result: real test'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual:
+  error: 'Target proof requires one unambiguous TAP result: real test'
+  stack: |-
+    proofObligations (file:///dev/shm/p4-parent/scripts/planning/lib/evidence.js:72:35)
+    file:///dev/shm/p4-parent/planning/contracts/tests/tap-evidence.test.js:202:23
+    getActual (node:assert:611:5)
+    strict.throws (node:assert:759:24)
+    TestContext.<anonymous> (file:///dev/shm/p4-parent/planning/contracts/tests/tap-evidence.test.js:202:10)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1382:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+    Test.postRun (node:internal/test_runner/test:1522:19)
+    Test.run (node:internal/test_runner/test:1447:12)
+  operator: 'throws'
+  stack: |-
+    TestContext.<anonymous> (file:///dev/shm/p4-parent/planning/contracts/tests/tap-evidence.test.js:202:10)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1382:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+    Test.postRun (node:internal/test_runner/test:1522:19)
+    Test.run (node:internal/test_runner/test:1447:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+  ...
+# Subtest: a failed suite cannot be hidden behind passing test counters and a forged zero exit code
+not ok 29 - a failed suite cannot be hidden behind passing test counters and a forged zero exit code
+  ---
+  duration_ms: 0.413348
+  type: 'test'
+  location: '/dev/shm/p4-parent/planning/contracts/tests/tap-evidence.test.js:208:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly deep-equal:
+    + actual - expected
+    
+      {
+        cancelled: 0,
+    +   complete: true,
+    -   complete: false,
+        exitCode: 0,
+        failed: 0,
+        passed: 1,
+        skipped: 0,
+        tests: 1,
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+    tests: 1
+    passed: 1
+    failed: 0
+    cancelled: 0
+    skipped: 0
+    todo: 0
+    exitCode: 0
+    complete: false
+  actual:
+    tests: 1
+    passed: 1
+    failed: 0
+    cancelled: 0
+    skipped: 0
+    todo: 0
+    exitCode: 0
+    complete: true
+  operator: 'deepStrictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///dev/shm/p4-parent/planning/contracts/tests/tap-evidence.test.js:210:10)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1382:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+    Test.postRun (node:internal/test_runner/test:1522:19)
+    Test.run (node:internal/test_runner/test:1447:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+  ...
+# Subtest: a named suite with an executed passing descendant retains its target proof
+ok 30 - a named suite with an executed passing descendant retains its target proof
+  ---
+  duration_ms: 1.610778
+  type: 'test'
+  ...
+# Subtest: an empty named suite cannot borrow passing evidence from an unrelated test
+not ok 31 - an empty named suite cannot borrow passing evidence from an unrelated test
+  ---
+  duration_ms: 0.352378
+  type: 'test'
+  location: '/dev/shm/p4-parent/planning/contracts/tests/tap-evidence.test.js:243:1'
+  failureType: 'testCodeFailure'
+  error: 'Missing expected exception.'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  operator: 'throws'
+  stack: |-
+    TestContext.<anonymous> (file:///dev/shm/p4-parent/planning/contracts/tests/tap-evidence.test.js:246:10)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1382:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+    Test.postRun (node:internal/test_runner/test:1522:19)
+    Test.run (node:internal/test_runner/test:1447:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+  ...
+# Subtest: an all-skipped named suite cannot borrow passing evidence from an unrelated test
+not ok 32 - an all-skipped named suite cannot borrow passing evidence from an unrelated test
+  ---
+  duration_ms: 0.255256
+  type: 'test'
+  location: '/dev/shm/p4-parent/planning/contracts/tests/tap-evidence.test.js:251:1'
+  failureType: 'testCodeFailure'
+  error: 'Missing expected exception.'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  operator: 'throws'
+  stack: |-
+    TestContext.<anonymous> (file:///dev/shm/p4-parent/planning/contracts/tests/tap-evidence.test.js:256:10)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1382:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+    Test.postRun (node:internal/test_runner/test:1522:19)
+    Test.run (node:internal/test_runner/test:1447:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+  ...
+# Subtest: a nested suite cannot count passing descendants under an inherited skip or TODO directive
+not ok 33 - a nested suite cannot count passing descendants under an inherited skip or TODO directive
+  ---
+  duration_ms: 0.454789
+  type: 'test'
+  location: '/dev/shm/p4-parent/planning/contracts/tests/tap-evidence.test.js:261:1'
+  failureType: 'testCodeFailure'
+  error: 'Missing expected exception.'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  operator: 'throws'
+  stack: |-
+    TestContext.<anonymous> (file:///dev/shm/p4-parent/planning/contracts/tests/tap-evidence.test.js:267:12)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1382:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+    Test.postRun (node:internal/test_runner/test:1522:19)
+    Test.run (node:internal/test_runner/test:1447:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+  ...
+# Subtest: escaped TAP hashes in names are literal text rather than skip directives
+not ok 34 - escaped TAP hashes in names are literal text rather than skip directives
+  ---
+  duration_ms: 0.141848
+  type: 'test'
+  location: '/dev/shm/p4-parent/planning/contracts/tests/tap-evidence.test.js:271:1'
+  failureType: 'testCodeFailure'
+  error: 'Bad escaped character in JSON at position 147 (line 1 column 148)'
+  code: 'ERR_TEST_FAILURE'
+  name: 'SyntaxError'
+  stack: |-
+    JSON.parse (<anonymous>)
+    proofObligations (file:///dev/shm/p4-parent/scripts/planning/lib/evidence.js:69:43)
+    TestContext.<anonymous> (file:///dev/shm/p4-parent/planning/contracts/tests/tap-evidence.test.js:274:20)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1382:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+    Test.postRun (node:internal/test_runner/test:1522:19)
+    Test.run (node:internal/test_runner/test:1447:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+  ...
+# Subtest: an empty Node run is complete but supplies no passing target
+ok 35 - an empty Node run is complete but supplies no passing target
+  ---
+  duration_ms: 0.128549
+  type: 'test'
+  ...
+# Subtest: nested evidence accepts the depth limit and refuses deeper streams without qualification
+not ok 36 - nested evidence accepts the depth limit and refuses deeper streams without qualification
+  ---
+  duration_ms: 4.433669
+  type: 'test'
+  location: '/dev/shm/p4-parent/planning/contracts/tests/tap-evidence.test.js:294:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    
+    true !== false
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: false
+  actual: true
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///dev/shm/p4-parent/planning/contracts/tests/tap-evidence.test.js:299:10)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1382:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+    Test.postRun (node:internal/test_runner/test:1522:19)
+    Test.run (node:internal/test_runner/test:1447:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+  ...
+# Subtest: public Portable PDB reader reports malformed embedded DEFLATE through SymbolError
+not ok 37 - public Portable PDB reader reports malformed embedded DEFLATE through SymbolError
+  ---
+  duration_ms: 7.742104
+  type: 'test'
+  location: '/dev/shm/p4-parent/tests/a13-01-compression-errors.test.js:29:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    The expression evaluated to a falsy value:
+    
+      assert(error instanceof SymbolError)
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: '=='
+  stack: |-
+    Object.<anonymous> (file:///dev/shm/p4-parent/tests/a13-01-compression-errors.test.js:19:5)
+    expectedException (node:assert:578:17)
+    expectsError (node:assert:703:21)
+    strict.throws (node:assert:759:3)
+    TestContext.<anonymous> (file:///dev/shm/p4-parent/tests/a13-01-compression-errors.test.js:41:12)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1382:25)
+    Test.start (node:internal/test_runner/test:1242:17)
+    startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17)
+  ...
+# Subtest: public symbol DEFLATE retains positive output, offset views and existing byte limits
+not ok 38 - public symbol DEFLATE retains positive output, offset views and existing byte limits
+  ---
+  duration_ms: 1.20375
+  type: 'test'
+  location: '/dev/shm/p4-parent/tests/a13-01-compression-errors.test.js:46:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    The expression evaluated to a falsy value:
+    
+      assert(error instanceof SymbolError)
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: '=='
+  stack: |-
+    Object.<anonymous> (file:///dev/shm/p4-parent/tests/a13-01-compression-errors.test.js:19:5)
+    expectedException (node:assert:578:17)
+    expectsError (node:assert:703:21)
+    strict.throws (node:assert:759:3)
+    TestContext.<anonymous> (file:///dev/shm/p4-parent/tests/a13-01-compression-errors.test.js:52:10)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1382:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+    Test.postRun (node:internal/test_runner/test:1522:19)
+    Test.run (node:internal/test_runner/test:1447:12)
+  ...
+# Subtest: public symbol decoder preserves unknown errors and unexpected classes even with familiar messages
+ok 39 - public symbol decoder preserves unknown errors and unexpected classes even with familiar messages
+  ---
+  duration_ms: 0.288664
+  type: 'test'
+  ...
+# Subtest: LSP rejects the null envelope with a stable Invalid Request response
+not ok 40 - LSP rejects the null envelope with a stable Invalid Request response
+  ---
+  duration_ms: 1.590418
+  type: 'test'
+  location: '/dev/shm/p4-parent/tests/protocol-lsp-envelope.test.js:29:3'
+  failureType: 'testCodeFailure'
+  error: "Cannot destructure property 'id' of 'message' as it is null."
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    LanguageServer.handle (file:///dev/shm/p4-parent/packages/protocol/src/lsp.js:16:12)
+    TestContext.<anonymous> (file:///dev/shm/p4-parent/tests/protocol-lsp-envelope.test.js:32:35)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1382:25)
+    Test.start (node:internal/test_runner/test:1242:17)
+    startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17)
+  ...
+# Subtest: LSP rejects the undefined envelope with a stable Invalid Request response
+not ok 41 - LSP rejects the undefined envelope with a stable Invalid Request response
+  ---
+  duration_ms: 0.282075
+  type: 'test'
+  location: '/dev/shm/p4-parent/tests/protocol-lsp-envelope.test.js:29:3'
+  failureType: 'testCodeFailure'
+  error: "Cannot destructure property 'id' of 'message' as it is undefined."
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    LanguageServer.handle (file:///dev/shm/p4-parent/packages/protocol/src/lsp.js:16:12)
+    TestContext.<anonymous> (file:///dev/shm/p4-parent/tests/protocol-lsp-envelope.test.js:32:35)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1382:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+    Test.postRun (node:internal/test_runner/test:1522:19)
+    Test.run (node:internal/test_runner/test:1447:12)
+    async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3)
+  ...
+# Subtest: LSP rejects the string envelope with a stable Invalid Request response
+not ok 42 - LSP rejects the string envelope with a stable Invalid Request response
+  ---
+  duration_ms: 1.209578
+  type: 'test'
+  location: '/dev/shm/p4-parent/tests/protocol-lsp-envelope.test.js:29:3'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly deep-equal:
+    + actual - expected
+    
+    + null
+    - {
+    -   error: {
+    -     code: -32600,
+    -     message: 'Invalid Request'
+    -   },
+    -   id: null,
+    -   jsonrpc: '2.0'
+    - }
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+    jsonrpc: '2.0'
+    id: ~
+    error:
+      code: -32600
+      message: 'Invalid Request'
+  actual: ~
+  operator: 'deepStrictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///dev/shm/p4-parent/tests/protocol-lsp-envelope.test.js:32:12)
+    async Test.run (node:internal/test_runner/test:1389:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+  ...
+# Subtest: LSP rejects the empty string envelope with a stable Invalid Request response
+not ok 43 - LSP rejects the empty string envelope with a stable Invalid Request response
+  ---
+  duration_ms: 0.370455
+  type: 'test'
+  location: '/dev/shm/p4-parent/tests/protocol-lsp-envelope.test.js:29:3'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly deep-equal:
+    + actual - expected
+    
+    + null
+    - {
+    -   error: {
+    -     code: -32600,
+    -     message: 'Invalid Request'
+    -   },
+    -   id: null,
+    -   jsonrpc: '2.0'
+    - }
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+    jsonrpc: '2.0'
+    id: ~
+    error:
+      code: -32600
+      message: 'Invalid Request'
+  actual: ~
+  operator: 'deepStrictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///dev/shm/p4-parent/tests/protocol-lsp-envelope.test.js:32:12)
+    async Test.run (node:internal/test_runner/test:1389:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+  ...
+# Subtest: LSP rejects the number envelope with a stable Invalid Request response
+not ok 44 - LSP rejects the number envelope with a stable Invalid Request response
+  ---
+  duration_ms: 0.210249
+  type: 'test'
+  location: '/dev/shm/p4-parent/tests/protocol-lsp-envelope.test.js:29:3'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly deep-equal:
+    + actual - expected
+    
+    + null
+    - {
+    -   error: {
+    -     code: -32600,
+    -     message: 'Invalid Request'
+    -   },
+    -   id: null,
+    -   jsonrpc: '2.0'
+    - }
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+    jsonrpc: '2.0'
+    id: ~
+    error:
+      code: -32600
+      message: 'Invalid Request'
+  actual: ~
+  operator: 'deepStrictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///dev/shm/p4-parent/tests/protocol-lsp-envelope.test.js:32:12)
+    async Test.run (node:internal/test_runner/test:1389:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+  ...
+# Subtest: LSP rejects the zero envelope with a stable Invalid Request response
+not ok 45 - LSP rejects the zero envelope with a stable Invalid Request response
+  ---
+  duration_ms: 0.268174
+  type: 'test'
+  location: '/dev/shm/p4-parent/tests/protocol-lsp-envelope.test.js:29:3'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly deep-equal:
+    + actual - expected
+    
+    + null
+    - {
+    -   error: {
+    -     code: -32600,
+    -     message: 'Invalid Request'
+    -   },
+    -   id: null,
+    -   jsonrpc: '2.0'
+    - }
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+    jsonrpc: '2.0'
+    id: ~
+    error:
+      code: -32600
+      message: 'Invalid Request'
+  actual: ~
+  operator: 'deepStrictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///dev/shm/p4-parent/tests/protocol-lsp-envelope.test.js:32:12)
+    async Test.run (node:internal/test_runner/test:1389:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+  ...
+# Subtest: LSP rejects the NaN envelope with a stable Invalid Request response
+not ok 46 - LSP rejects the NaN envelope with a stable Invalid Request response
+  ---
+  duration_ms: 0.259752
+  type: 'test'
+  location: '/dev/shm/p4-parent/tests/protocol-lsp-envelope.test.js:29:3'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly deep-equal:
+    + actual - expected
+    
+    + null
+    - {
+    -   error: {
+    -     code: -32600,
+    -     message: 'Invalid Request'
+    -   },
+    -   id: null,
+    -   jsonrpc: '2.0'
+    - }
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+    jsonrpc: '2.0'
+    id: ~
+    error:
+      code: -32600
+      message: 'Invalid Request'
+  actual: ~
+  operator: 'deepStrictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///dev/shm/p4-parent/tests/protocol-lsp-envelope.test.js:32:12)
+    async Test.run (node:internal/test_runner/test:1389:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+  ...
+# Subtest: LSP rejects the true envelope with a stable Invalid Request response
+not ok 47 - LSP rejects the true envelope with a stable Invalid Request response
+  ---
+  duration_ms: 0.196189
+  type: 'test'
+  location: '/dev/shm/p4-parent/tests/protocol-lsp-envelope.test.js:29:3'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly deep-equal:
+    + actual - expected
+    
+    + null
+    - {
+    -   error: {
+    -     code: -32600,
+    -     message: 'Invalid Request'
+    -   },
+    -   id: null,
+    -   jsonrpc: '2.0'
+    - }
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+    jsonrpc: '2.0'
+    id: ~
+    error:
+      code: -32600
+      message: 'Invalid Request'
+  actual: ~
+  operator: 'deepStrictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///dev/shm/p4-parent/tests/protocol-lsp-envelope.test.js:32:12)
+    async Test.run (node:internal/test_runner/test:1389:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+  ...
+# Subtest: LSP rejects the false envelope with a stable Invalid Request response
+not ok 48 - LSP rejects the false envelope with a stable Invalid Request response
+  ---
+  duration_ms: 0.184862
+  type: 'test'
+  location: '/dev/shm/p4-parent/tests/protocol-lsp-envelope.test.js:29:3'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly deep-equal:
+    + actual - expected
+    
+    + null
+    - {
+    -   error: {
+    -     code: -32600,
+    -     message: 'Invalid Request'
+    -   },
+    -   id: null,
+    -   jsonrpc: '2.0'
+    - }
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+    jsonrpc: '2.0'
+    id: ~
+    error:
+      code: -32600
+      message: 'Invalid Request'
+  actual: ~
+  operator: 'deepStrictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///dev/shm/p4-parent/tests/protocol-lsp-envelope.test.js:32:12)
+    async Test.run (node:internal/test_runner/test:1389:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+  ...
+# Subtest: LSP rejects the bigint envelope with a stable Invalid Request response
+not ok 49 - LSP rejects the bigint envelope with a stable Invalid Request response
+  ---
+  duration_ms: 0.237549
+  type: 'test'
+  location: '/dev/shm/p4-parent/tests/protocol-lsp-envelope.test.js:29:3'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly deep-equal:
+    + actual - expected
+    
+    + null
+    - {
+    -   error: {
+    -     code: -32600,
+    -     message: 'Invalid Request'
+    -   },
+    -   id: null,
+    -   jsonrpc: '2.0'
+    - }
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+    jsonrpc: '2.0'
+    id: ~
+    error:
+      code: -32600
+      message: 'Invalid Request'
+  actual: ~
+  operator: 'deepStrictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///dev/shm/p4-parent/tests/protocol-lsp-envelope.test.js:32:12)
+    async Test.run (node:internal/test_runner/test:1389:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+  ...
+# Subtest: LSP rejects the symbol envelope with a stable Invalid Request response
+not ok 50 - LSP rejects the symbol envelope with a stable Invalid Request response
+  ---
+  duration_ms: 0.377385
+  type: 'test'
+  location: '/dev/shm/p4-parent/tests/protocol-lsp-envelope.test.js:29:3'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly deep-equal:
+    + actual - expected
+    
+    + null
+    - {
+    -   error: {
+    -     code: -32600,
+    -     message: 'Invalid Request'
+    -   },
+    -   id: null,
+    -   jsonrpc: '2.0'
+    - }
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+    jsonrpc: '2.0'
+    id: ~
+    error:
+      code: -32600
+      message: 'Invalid Request'
+  actual: ~
+  operator: 'deepStrictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///dev/shm/p4-parent/tests/protocol-lsp-envelope.test.js:32:12)
+    async Test.run (node:internal/test_runner/test:1389:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+  ...
+# Subtest: LSP rejects the function envelope with a stable Invalid Request response
+not ok 51 - LSP rejects the function envelope with a stable Invalid Request response
+  ---
+  duration_ms: 0.26527
+  type: 'test'
+  location: '/dev/shm/p4-parent/tests/protocol-lsp-envelope.test.js:29:3'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly deep-equal:
+    + actual - expected
+    
+    + null
+    - {
+    -   error: {
+    -     code: -32600,
+    -     message: 'Invalid Request'
+    -   },
+    -   id: null,
+    -   jsonrpc: '2.0'
+    - }
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+    jsonrpc: '2.0'
+    id: ~
+    error:
+      code: -32600
+      message: 'Invalid Request'
+  actual: ~
+  operator: 'deepStrictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///dev/shm/p4-parent/tests/protocol-lsp-envelope.test.js:32:12)
+    async Test.run (node:internal/test_runner/test:1389:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+  ...
+# Subtest: LSP rejects the empty array envelope with a stable Invalid Request response
+not ok 52 - LSP rejects the empty array envelope with a stable Invalid Request response
+  ---
+  duration_ms: 0.150451
+  type: 'test'
+  location: '/dev/shm/p4-parent/tests/protocol-lsp-envelope.test.js:29:3'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly deep-equal:
+    + actual - expected
+    
+    + null
+    - {
+    -   error: {
+    -     code: -32600,
+    -     message: 'Invalid Request'
+    -   },
+    -   id: null,
+    -   jsonrpc: '2.0'
+    - }
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+    jsonrpc: '2.0'
+    id: ~
+    error:
+      code: -32600
+      message: 'Invalid Request'
+  actual: ~
+  operator: 'deepStrictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///dev/shm/p4-parent/tests/protocol-lsp-envelope.test.js:32:12)
+    async Test.run (node:internal/test_runner/test:1389:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+  ...
+# Subtest: LSP rejects the batch array envelope with a stable Invalid Request response
+not ok 53 - LSP rejects the batch array envelope with a stable Invalid Request response
+  ---
+  duration_ms: 0.184802
+  type: 'test'
+  location: '/dev/shm/p4-parent/tests/protocol-lsp-envelope.test.js:29:3'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly deep-equal:
+    + actual - expected
+    
+    + null
+    - {
+    -   error: {
+    -     code: -32600,
+    -     message: 'Invalid Request'
+    -   },
+    -   id: null,
+    -   jsonrpc: '2.0'
+    - }
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+    jsonrpc: '2.0'
+    id: ~
+    error:
+      code: -32600
+      message: 'Invalid Request'
+  actual: ~
+  operator: 'deepStrictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///dev/shm/p4-parent/tests/protocol-lsp-envelope.test.js:32:12)
+    async Test.run (node:internal/test_runner/test:1389:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+  ...
+# Subtest: LSP rejects arrays carrying request properties before any dispatch side effect
+not ok 54 - LSP rejects arrays carrying request properties before any dispatch side effect
+  ---
+  duration_ms: 0.770623
+  type: 'test'
+  location: '/dev/shm/p4-parent/tests/protocol-lsp-envelope.test.js:40:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly deep-equal:
+    + actual - expected
+    
+      {
+    +   id: 1,
+    -   error: {
+    -     code: -32600,
+    -     message: 'Invalid Request'
+    -   },
+    -   id: null,
+        jsonrpc: '2.0',
+    +   result: null
+      }
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+    jsonrpc: '2.0'
+    id: ~
+    error:
+      code: -32600
+      message: 'Invalid Request'
+  actual:
+    jsonrpc: '2.0'
+    id: 1
+    result: ~
+  operator: 'deepStrictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///dev/shm/p4-parent/tests/protocol-lsp-envelope.test.js:43:10)
+    async Test.run (node:internal/test_runner/test:1389:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+  ...
+# Subtest: LSP preserves request IDs and the optional jsonrpc field at the public adapter boundary
+ok 55 - LSP preserves request IDs and the optional jsonrpc field at the public adapter boundary
+  ---
+  duration_ms: 0.302124
+  type: 'test'
+  ...
+# Subtest: LSP retains initialization capabilities and the semantic token wire legend
+ok 56 - LSP retains initialization capabilities and the semantic token wire legend
+  ---
+  duration_ms: 0.260373
+  type: 'test'
+  ...
+# Subtest: LSP still dispatches document notifications and publishes diagnostics after a rejected envelope
+not ok 57 - LSP still dispatches document notifications and publishes diagnostics after a rejected envelope
+  ---
+  duration_ms: 0.484723
+  type: 'test'
+  location: '/dev/shm/p4-parent/tests/protocol-lsp-envelope.test.js:79:1'
+  failureType: 'testCodeFailure'
+  error: "Cannot destructure property 'id' of 'message' as it is null."
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    LanguageServer.handle (file:///dev/shm/p4-parent/packages/protocol/src/lsp.js:16:12)
+    TestContext.<anonymous> (file:///dev/shm/p4-parent/tests/protocol-lsp-envelope.test.js:82:33)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1382:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+    Test.postRun (node:internal/test_runner/test:1522:19)
+    Test.run (node:internal/test_runner/test:1447:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+  ...
+# Subtest: LSP still omits responses to notifications and preserves lifecycle errors
+not ok 58 - LSP still omits responses to notifications and preserves lifecycle errors
+  ---
+  duration_ms: 0.357025
+  type: 'test'
+  location: '/dev/shm/p4-parent/tests/protocol-lsp-envelope.test.js:93:1'
+  failureType: 'testCodeFailure'
+  error: "Cannot destructure property 'id' of 'message' as it is null."
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    LanguageServer.handle (file:///dev/shm/p4-parent/packages/protocol/src/lsp.js:16:12)
+    TestContext.<anonymous> (file:///dev/shm/p4-parent/tests/protocol-lsp-envelope.test.js:101:33)
+    async Test.run (node:internal/test_runner/test:1389:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+  ...
+1..58
+# tests 58
+# suites 0
+# pass 9
+# fail 49
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 1008.718378

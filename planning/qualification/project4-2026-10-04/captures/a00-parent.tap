@@ -1,0 +1,166 @@
+✖ a stale explicit reconciler cannot release a replacement agent or its locks (11.590376ms)
+✖ a stale heartbeat cannot mutate a new generation reusing the same agent ID (4.490799ms)
+✖ a stale lock cannot mutate a new generation reusing the same agent ID (2.298993ms)
+✖ a stale unlock cannot mutate a new generation reusing the same agent ID (2.134891ms)
+✖ a stale release cannot mutate a new generation reusing the same agent ID (3.127663ms)
+✖ a disappeared claim reports stale ownership and removes only the temporary operation mutex (1.602328ms)
+✖ an expired-lease reaper cannot label or report a replacement generation (2.040493ms)
+✔ a same-generation heartbeat between inspection and mutex acquisition remains valid (1.898544ms)
+✖ a task identity change cannot redirect an operation to an unrelated mutex namespace (1.226816ms)
+✖ missing claim generation fails before acquiring a mutex or invoking the action (0.923309ms)
+ℹ tests 10
+ℹ suites 0
+ℹ pass 1
+ℹ fail 9
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 113.276339
+
+✖ failing tests:
+
+test at planning/contracts/tests/claim-generation-race.test.js:63:1
+✖ a stale explicit reconciler cannot release a replacement agent or its locks (11.590376ms)
+  AssertionError [ERR_ASSERTION]: Missing expected rejection.
+      at async TestContext.<anonymous> (file:///workspace/scratch/18022b90e5ec/SharpForge-p4-a00-baseline/planning/contracts/tests/claim-generation-race.test.js:74:3)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: /claim generation changed or was released/,
+    operator: 'rejects',
+    diff: 'simple'
+  }
+
+test at planning/contracts/tests/claim-generation-race.test.js:82:3
+✖ a stale heartbeat cannot mutate a new generation reusing the same agent ID (4.490799ms)
+  AssertionError [ERR_ASSERTION]: Missing expected rejection.
+      at async TestContext.<anonymous> (file:///workspace/scratch/18022b90e5ec/SharpForge-p4-a00-baseline/planning/contracts/tests/claim-generation-race.test.js:94:5)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: /claim generation changed or was released/,
+    operator: 'rejects',
+    diff: 'simple'
+  }
+
+test at planning/contracts/tests/claim-generation-race.test.js:82:3
+✖ a stale lock cannot mutate a new generation reusing the same agent ID (2.298993ms)
+  AssertionError [ERR_ASSERTION]: Missing expected rejection.
+      at async TestContext.<anonymous> (file:///workspace/scratch/18022b90e5ec/SharpForge-p4-a00-baseline/planning/contracts/tests/claim-generation-race.test.js:94:5)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: /claim generation changed or was released/,
+    operator: 'rejects',
+    diff: 'simple'
+  }
+
+test at planning/contracts/tests/claim-generation-race.test.js:82:3
+✖ a stale unlock cannot mutate a new generation reusing the same agent ID (2.134891ms)
+  AssertionError [ERR_ASSERTION]: Missing expected rejection.
+      at async TestContext.<anonymous> (file:///workspace/scratch/18022b90e5ec/SharpForge-p4-a00-baseline/planning/contracts/tests/claim-generation-race.test.js:94:5)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: /claim generation changed or was released/,
+    operator: 'rejects',
+    diff: 'simple'
+  }
+
+test at planning/contracts/tests/claim-generation-race.test.js:82:3
+✖ a stale release cannot mutate a new generation reusing the same agent ID (3.127663ms)
+  AssertionError [ERR_ASSERTION]: Missing expected rejection.
+      at async TestContext.<anonymous> (file:///workspace/scratch/18022b90e5ec/SharpForge-p4-a00-baseline/planning/contracts/tests/claim-generation-race.test.js:94:5)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: /claim generation changed or was released/,
+    operator: 'rejects',
+    diff: 'simple'
+  }
+
+test at planning/contracts/tests/claim-generation-race.test.js:99:1
+✖ a disappeared claim reports stale ownership and removes only the temporary operation mutex (1.602328ms)
+  AssertionError [ERR_ASSERTION]: The input did not match the regular expression /claim generation changed or was released/. Input:
+  
+  "TypeError: Cannot read properties of null (reading 'agent')"
+  
+      at async TestContext.<anonymous> (file:///workspace/scratch/18022b90e5ec/SharpForge-p4-a00-baseline/planning/contracts/tests/claim-generation-race.test.js:109:3)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: TypeError: Cannot read properties of null (reading 'agent')
+        at file:///workspace/scratch/18022b90e5ec/SharpForge-p4-a00-baseline/scripts/planning/lib/claims.js:131:24
+        at Claims.exclusive (file:///workspace/scratch/18022b90e5ec/SharpForge-p4-a00-baseline/scripts/planning/lib/claims.js:40:24)
+        at async waitForActual (node:assert:646:5)
+        at async strict.rejects (node:assert:769:25)
+        at async TestContext.<anonymous> (file:///workspace/scratch/18022b90e5ec/SharpForge-p4-a00-baseline/planning/contracts/tests/claim-generation-race.test.js:109:3)
+        at async Test.run (node:internal/test_runner/test:1389:7)
+        at async Test.processPendingSubtests (node:internal/test_runner/test:960:7),
+    expected: /claim generation changed or was released/,
+    operator: 'rejects',
+    diff: 'simple'
+  }
+
+test at planning/contracts/tests/claim-generation-race.test.js:113:1
+✖ an expired-lease reaper cannot label or report a replacement generation (2.040493ms)
+  AssertionError [ERR_ASSERTION]: Missing expected rejection.
+      at async TestContext.<anonymous> (file:///workspace/scratch/18022b90e5ec/SharpForge-p4-a00-baseline/planning/contracts/tests/claim-generation-race.test.js:125:3)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: /claim generation changed or was released/,
+    operator: 'rejects',
+    diff: 'simple'
+  }
+
+test at planning/contracts/tests/claim-generation-race.test.js:149:1
+✖ a task identity change cannot redirect an operation to an unrelated mutex namespace (1.226816ms)
+  AssertionError [ERR_ASSERTION]: The input did not match the regular expression /claim generation changed or was released/. Input:
+  
+  "TypeError: Cannot read properties of null (reading 'agent')"
+  
+      at async TestContext.<anonymous> (file:///workspace/scratch/18022b90e5ec/SharpForge-p4-a00-baseline/planning/contracts/tests/claim-generation-race.test.js:159:3)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: TypeError: Cannot read properties of null (reading 'agent')
+        at file:///workspace/scratch/18022b90e5ec/SharpForge-p4-a00-baseline/scripts/planning/lib/claims.js:131:24
+        at Claims.exclusive (file:///workspace/scratch/18022b90e5ec/SharpForge-p4-a00-baseline/scripts/planning/lib/claims.js:40:24)
+        at async waitForActual (node:assert:646:5)
+        at async strict.rejects (node:assert:769:25)
+        at async TestContext.<anonymous> (file:///workspace/scratch/18022b90e5ec/SharpForge-p4-a00-baseline/planning/contracts/tests/claim-generation-race.test.js:159:3)
+        at async Test.run (node:internal/test_runner/test:1389:7)
+        at async Test.processPendingSubtests (node:internal/test_runner/test:960:7),
+    expected: /claim generation changed or was released/,
+    operator: 'rejects',
+    diff: 'simple'
+  }
+
+test at planning/contracts/tests/claim-generation-race.test.js:163:1
+✖ missing claim generation fails before acquiring a mutex or invoking the action (0.923309ms)
+  AssertionError [ERR_ASSERTION]: Missing expected rejection.
+      at async TestContext.<anonymous> (file:///workspace/scratch/18022b90e5ec/SharpForge-p4-a00-baseline/planning/contracts/tests/claim-generation-race.test.js:170:3)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: /no valid claim generation/,
+    operator: 'rejects',
+    diff: 'simple'
+  }

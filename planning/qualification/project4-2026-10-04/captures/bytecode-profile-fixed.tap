@@ -1,0 +1,245 @@
+Waiting for a free run slot: 1 heavy runs are allowed at once (SHARPFORGE_MAX_PARALLEL_RUNS).
+TAP version 13
+# Subtest: pe-loader: self-authored seeds are deterministic, owned and accepted
+ok 1 - pe-loader: self-authored seeds are deterministic, owned and accepted
+  ---
+  duration_ms: 90.821291
+  type: 'test'
+  ...
+# Subtest: pe-loader: input boundary and pre-cancellation are controlled
+ok 2 - pe-loader: input boundary and pre-cancellation are controlled
+  ---
+  duration_ms: 7.870447
+  type: 'test'
+  ...
+# Subtest: pe-loader: malformed bytes are controlled; harness contract misuse throws
+ok 3 - pe-loader: malformed bytes are controlled; harness contract misuse throws
+  ---
+  duration_ms: 0.793526
+  type: 'test'
+  ...
+# Subtest: bytecode-image: self-authored seeds are deterministic, owned and accepted
+ok 4 - bytecode-image: self-authored seeds are deterministic, owned and accepted
+  ---
+  duration_ms: 13.090409
+  type: 'test'
+  ...
+# Subtest: bytecode-image: input boundary and pre-cancellation are controlled
+ok 5 - bytecode-image: input boundary and pre-cancellation are controlled
+  ---
+  duration_ms: 0.743523
+  type: 'test'
+  ...
+# Subtest: bytecode-image: malformed bytes are controlled; harness contract misuse throws
+ok 6 - bytecode-image: malformed bytes are controlled; harness contract misuse throws
+  ---
+  duration_ms: 0.229517
+  type: 'test'
+  ...
+# Subtest: portable-pdb: self-authored seeds are deterministic, owned and accepted
+ok 7 - portable-pdb: self-authored seeds are deterministic, owned and accepted
+  ---
+  duration_ms: 7.732584
+  type: 'test'
+  ...
+# Subtest: portable-pdb: input boundary and pre-cancellation are controlled
+ok 8 - portable-pdb: input boundary and pre-cancellation are controlled
+  ---
+  duration_ms: 0.962274
+  type: 'test'
+  ...
+# Subtest: portable-pdb: malformed bytes are controlled; harness contract misuse throws
+ok 9 - portable-pdb: malformed bytes are controlled; harness contract misuse throws
+  ---
+  duration_ms: 0.314432
+  type: 'test'
+  ...
+# Subtest: zip-archive: self-authored seeds are deterministic, owned and accepted
+ok 10 - zip-archive: self-authored seeds are deterministic, owned and accepted
+  ---
+  duration_ms: 7.501625
+  type: 'test'
+  ...
+# Subtest: zip-archive: input boundary and pre-cancellation are controlled
+ok 11 - zip-archive: input boundary and pre-cancellation are controlled
+  ---
+  duration_ms: 0.641773
+  type: 'test'
+  ...
+# Subtest: zip-archive: malformed bytes are controlled; harness contract misuse throws
+ok 12 - zip-archive: malformed bytes are controlled; harness contract misuse throws
+  ---
+  duration_ms: 0.228896
+  type: 'test'
+  ...
+# Subtest: PE: malformed magic and truncated extents reach the loader error boundary
+ok 13 - PE: malformed magic and truncated extents reach the loader error boundary
+  ---
+  duration_ms: 5.08308
+  type: 'test'
+  ...
+# Subtest: PE: invalid metadata list ranges reject before loader list expansion
+ok 14 - PE: invalid metadata list ranges reject before loader list expansion
+  ---
+  duration_ms: 4.979518
+  type: 'test'
+  ...
+# Subtest: PE: invalid optional debug UTF-8 is a controlled metadata rejection
+ok 15 - PE: invalid optional debug UTF-8 is a controlled metadata rejection
+  ---
+  duration_ms: 4.691716
+  type: 'test'
+  ...
+# Subtest: bytecode: serialization errors and verifier diagnostics stay separate
+ok 16 - bytecode: serialization errors and verifier diagnostics stay separate
+  ---
+  duration_ms: 0.822188
+  type: 'test'
+  ...
+# Subtest: bytecode: typed-array expansion and recursive reviver work are bounded before deserialization
+ok 17 - bytecode: typed-array expansion and recursive reviver work are bounded before deserialization
+  ---
+  duration_ms: 0.722492
+  type: 'test'
+  ...
+# Subtest: bytecode: a verified scalar loop reaches the fixed instruction budget
+ok 18 - bytecode: a verified scalar loop reaches the fixed instruction budget
+  ---
+  duration_ms: 2.98004
+  type: 'test'
+  ...
+# Subtest: bytecode: verified host-call and library profiles are explicit unsupported cases
+ok 19 - bytecode: verified host-call and library profiles are explicit unsupported cases
+  ---
+  duration_ms: 0.555677
+  type: 'test'
+  ...
+# Subtest: Portable PDB: out-of-range document references retain SymbolError validation
+ok 20 - Portable PDB: out-of-range document references retain SymbolError validation
+  ---
+  duration_ms: 1.521045
+  type: 'test'
+  ...
+# Subtest: Portable PDB: compressed sources respect small decode budgets and unsupported formats stay explicit
+ok 21 - Portable PDB: compressed sources respect small decode budgets and unsupported formats stay explicit
+  ---
+  duration_ms: 0.970236
+  type: 'test'
+  ...
+# Subtest: ZIP: traversal is rejected without filesystem extraction
+ok 22 - ZIP: traversal is rejected without filesystem extraction
+  ---
+  duration_ms: 0.757353
+  type: 'test'
+  ...
+# Subtest: ZIP: duplicate paths and symlink records are rejected as data
+ok 23 - ZIP: duplicate paths and symlink records are rejected as data
+  ---
+  duration_ms: 0.634673
+  type: 'test'
+  ...
+# Subtest: ZIP: stored and deflated payloads enforce actual small output budgets
+ok 24 - ZIP: stored and deflated payloads enforce actual small output budgets
+  ---
+  duration_ms: 1.38797
+  type: 'test'
+  ...
+# Subtest: ZIP: bad checksums and malformed compression are controlled validations
+ok 25 - ZIP: bad checksums and malformed compression are controlled validations
+  ---
+  duration_ms: 0.98712
+  type: 'test'
+  ...
+# Subtest: binary parser errors preserve unknown exceptions as findings
+ok 26 - binary parser errors preserve unknown exceptions as findings
+  ---
+  duration_ms: 0.325438
+  type: 'test'
+  ...
+# Subtest: bytecode profile: original scalar seed bytes are preserved
+ok 27 - bytecode profile: original scalar seed bytes are preserved
+  ---
+  duration_ms: 1.865051
+  type: 'test'
+  ...
+# Subtest: bytecode profile: owned seeds exercise actual managed calls, storage, objects and arrays
+ok 28 - bytecode profile: owned seeds exercise actual managed calls, storage, objects and arrays
+  ---
+  duration_ms: 15.952935
+  type: 'test'
+  ...
+# Subtest: bytecode profile: four helper arguments, sixteen locals and combined code admission boundaries
+ok 29 - bytecode profile: four helper arguments, sixteen locals and combined code admission boundaries
+  ---
+  duration_ms: 7.910116
+  type: 'test'
+  ...
+# Subtest: bytecode profile: method and constant counts cannot exceed the closed metadata budgets
+ok 30 - bytecode profile: method and constant counts cannot exceed the closed metadata budgets
+  ---
+  duration_ms: 1.438944
+  type: 'test'
+  ...
+# Subtest: bytecode profile: the fourth int static and fourth fixed field are executable; extra slots are excluded
+ok 31 - bytecode profile: the fourth int static and fourth fixed field are executable; extra slots are excluded
+  ---
+  duration_ms: 1.976595
+  type: 'test'
+  ...
+# Subtest: bytecode profile: array admission reaches exactly 8 KiB and rejects the next finite element
+ok 32 - bytecode profile: array admission reaches exactly 8 KiB and rejects the next finite element
+  ---
+  duration_ms: 3.468648
+  type: 'test'
+  ...
+# Subtest: bytecode profile: positive fourth call frame and recursive fifth-frame rejection share fixed limits
+ok 33 - bytecode profile: positive fourth call frame and recursive fifth-frame rejection share fixed limits
+  ---
+  duration_ms: 1.628263
+  type: 'test'
+  ...
+# Subtest: bytecode profile: aggregate stack bytes can reject before the fourth frame is allocated
+ok 34 - bytecode profile: aggregate stack bytes can reject before the fourth frame is allocated
+  ---
+  duration_ms: 5.326118
+  type: 'test'
+  ...
+# Subtest: bytecode profile: scans include unreachable host instructions and negative field operands
+ok 35 - bytecode profile: scans include unreachable host instructions and negative field operands
+  ---
+  duration_ms: 4.371665
+  type: 'test'
+  ...
+# Subtest: bytecode profile: closed metadata blocks foreign, generic and non-integer construction paths
+ok 36 - bytecode profile: closed metadata blocks foreign, generic and non-integer construction paths
+  ---
+  duration_ms: 4.732706
+  type: 'test'
+  ...
+# Subtest: bytecode profile: string arithmetic, exception handlers and mismatched parameter slots remain excluded
+ok 37 - bytecode profile: string arithmetic, exception handlers and mismatched parameter slots remain excluded
+  ---
+  duration_ms: 1.139565
+  type: 'test'
+  ...
+# Subtest: bytecode profile: errors cannot become successes through the managed-fault wrapper
+ok 38 - bytecode profile: errors cannot become successes through the managed-fault wrapper
+  ---
+  duration_ms: 2.631367
+  type: 'test'
+  ...
+# Subtest: bytecode profile: pre-cancellation and direct executor admission fail closed
+ok 39 - bytecode profile: pre-cancellation and direct executor admission fail closed
+  ---
+  duration_ms: 0.53762
+  type: 'test'
+  ...
+1..39
+# tests 39
+# suites 0
+# pass 39
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 1293.141707
