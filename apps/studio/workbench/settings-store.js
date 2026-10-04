@@ -156,7 +156,11 @@ export class SettingsStore extends WorkbenchEvents {
   }
 
   snapshot() { return mergeSettings(this.user, this.workspace); }
-  get(category, key) { return clone(this.snapshot()[category]?.[key]); }
+  get(category, key) {
+    const overrides = this.workspace[category];
+    const value = overrides && Object.hasOwn(overrides, key) ? overrides[key] : this.user[category]?.[key];
+    return value !== null && typeof value === 'object' ? clone(value) : value;
+  }
 
   persist(user, workspace) {
     if (!this.storage) return;

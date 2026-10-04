@@ -243,9 +243,9 @@ export class WorkbenchShell {
   applySettings(settings) {
     this.restoreEnvironment?.();
     this.restoreEnvironment = applyEnvironment(this.document.documentElement, settings);
-    this.options.applySettings?.(settings);
-    this.options.getEditor?.()?.updateOptions?.(settings.editor);
-    this.options.setKeymap?.(settings.environment.keymap);
+    if (this.options.applySettings) this.options.applySettings(settings);
+    else this.options.getEditor?.()?.updateOptions?.(settings.editor);
+    if (settings.environment.keymap !== this.context().keymap) this.options.setKeymap?.(settings.environment.keymap);
     if (this.options.applyKeybindings) this.options.applyKeybindings(settings.keyboard.bindings);
     this.services.sessions && (this.services.sessions.maxSessions = settings.runtime.maxSessions);
     this.fileWatch.start(settings.projects.autoRecoverSeconds);
@@ -312,7 +312,7 @@ export class WorkbenchShell {
     this.registeredPanels.clear();
     this.mounts.clear(); this.scheduler.dispose(); this.dialogs.dispose(); this.statusBar?.dispose(); this.announcer?.dispose();
     for (const model of [this.tasks, this.notifications, this.search, this.symbols, this.taskList, this.bookmarks,
-      this.calls, this.tests, this.timeline, this.references, this.recent, this.toolbars, this.configuration]) model.dispose?.();
+      this.calls, this.tests, this.timeline, this.references, this.recent, this.toolbars, this.configuration, this.explorerViews]) model.dispose?.();
     this.restoreEnvironment?.();
     this.contextKeys.dispose();
   }

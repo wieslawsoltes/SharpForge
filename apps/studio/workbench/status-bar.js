@@ -1,5 +1,5 @@
 import {button, element, runAction} from './ui.js';
-import {SourceText} from '@sharpforge/text';
+import {SourceText, analyzeEol} from '@sharpforge/text';
 
 /** Regions update their text in place and contribute independent actions and subscriptions. */
 export class WorkbenchStatusBar {
@@ -32,10 +32,31 @@ export class WorkbenchStatusBar {
 }
 
 export function registerStatusRegions(bar, {context, documents, tasks, notifications, settings, execute}) {
+  const legacySources = new WeakMap();
+  const documentState = () => {
+    const current = context();
+    const record = documents.get(current.uri);
+    if (!record) return {current};
+    const model = documents.models?.get(current.uri) ?? record.model;
+    if (model) return {current, record, source: model, metadata: model.metadata};
+    let cached = legacySources.get(record);
+    if (cached?.version !== record.version) cached = null;
+    if (!cached) {
+      const text = Object.getOwnPropertyDescriptor(record, 'text')?.value;
+      cached = {version: record.version, metadata: record.metadata};
+      // Legacy records have no indexed model. Inspect small eager strings once per version only.
+      if (typeof text === 'string' && text.length <= 65536) {
+        cached.source = new SourceText(text, record.uri, record.version);
+        cached.metadata ??= analyzeEol(text, {encoding: record.encoding ?? 'utf-8'});
+      }
+      legacySources.set(record, cached);
+    }
+    return {current, record, ...cached};
+  };
   const cursor = () => {
-    const current = context(), document = documents.get(current.uri);
-    if (!document) return null;
-    return current.position ?? new SourceText(document.text, document.uri, document.version).positionAt(current.offset ?? 0);
+    const {current, record, source} = documentState();
+    if (!record) return null;
+    return current.position ?? source?.positionAt(current.offset ?? 0);
   };
   const regions = [
     {id: 'message', label: 'Workbench status', value: () => context().status ?? 'Ready', priority: -100},
@@ -50,8 +71,16 @@ export function registerStatusRegions(bar, {context, documents, tasks, notificat
     {id: 'indentation', label: 'Indentation', value: () =>
       `${settings.get('editor', 'insertSpaces') ? 'Spaces' : 'Tabs'}: ${settings.get('editor', 'tabSize')}`,
       action: () => execute('workbench.options')},
-    {id: 'encoding', label: 'Document encoding', value: () => documents.get(context().uri)?.encoding ?? 'UTF-8 export'},
-    {id: 'line-ending', label: 'Line endings', value: () => documents.get(context().uri)?.text.includes('\r\n') ? 'CRLF' : 'LF'},
+    {id: 'encoding', label: 'Document encoding', value: () => {
+      const {record, metadata} = documentState();
+      return record ? metadata?.encoding ?? record.encoding ?? 'UTF-8 export' : null;
+    }},
+    {id: 'line-ending', label: 'Line endings', value: () => {
+      const {record, metadata} = documentState();
+      if (!record) return null;
+      const label = {'\r\n': 'CRLF', '\n': 'LF', '\r': 'CR'}[metadata?.dominantEol ?? metadata?.eol];
+      return label ? label + (metadata.mixedEol ? ' (mixed)' : '') : 'EOL unavailable';
+    }},
     {id: 'zoom', label: 'Editor zoom', value: () => settings.get('editor', 'zoom') + '%', action: () => execute('workbench.options')},
     {id: 'keymap', label: 'Keyboard mapping', value: () => context().keymap ?? settings.get('environment', 'keymap'),
       action: () => execute('workbench.keyboard')},
