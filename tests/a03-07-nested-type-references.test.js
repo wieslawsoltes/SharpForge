@@ -115,10 +115,18 @@ test('reference-chain limits admit the exact boundary and cap long lexical chain
     parent = input.definition(`Level${depth}`, parent);
     scope = input.reference(`Level${depth}`, scope);
   }
-  assert.equal(create(input.inspect()).resolveType(scope).value.token, parent);
-  parent = input.definition('TooDeep', parent);
-  input.reference('TooDeep', scope);
-  assert.throws(() => create(input.inspect()), fails('CILVT0002'));
+  const inspector = input.inspect();
+  assert.equal(create(inspector).resolveType(scope).value.token, parent);
+  // Extend parsed rows to exercise adapter budgets independently of inspector display-name depth.
+  const metadata = inspector.metadata;
+  metadata.rows[1].push([codedIndex('ResolutionScope', scope), row(metadata, scope)[1], 0]);
+  assert.throws(() => create(inspector), fails('CILVT0002'));
+  metadata.rows[1].pop();
+  metadata.rows[2].push([...row(metadata, parent)]);
+  metadata.rows[41].push([metadata.rows[2].length, parent & 0xffffff]);
+  assert.throws(() => create(inspector), fails('CILVT0002'));
+  input.definition('TooDeep', parent);
+  assert.throws(() => input.inspect(), /Recursive TypeSpec or nesting limit exceeded/);
 });
 
 test('nested reference construction and subsequent queries observe cancellation', () => {

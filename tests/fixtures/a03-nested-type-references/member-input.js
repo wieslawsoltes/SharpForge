@@ -5,9 +5,8 @@ import { inheritedMemberFixture } from '../a03-verifier-members/inherited-input.
 export function nestedMemberFixture() {
   const fixture = inheritedMemberFixture((context, tokens) => {
     const { md } = context;
-    const outer = md.addRow('TypeDef', { Flags: 1, Name: 'Outer', Namespace: 'Fixture',
-      Extends: md.typeRef('System.Object'), FieldList: 5, MethodList: 7 });
-    for (const [child, parent] of [[tokens.middle, outer], [tokens.child, tokens.middle]]) {
+    // Enclosing definitions precede nested definitions in a native-loadable TypeDef table.
+    for (const [child, parent] of [[tokens.middle, tokens.base], [tokens.child, tokens.middle]]) {
       const row = md.rows[2][(child & 0xffffff) - 1];
       row[0] = (row[0] & ~7) | 2;
       row[2] = 0;
@@ -17,7 +16,7 @@ export function nestedMemberFixture() {
       ResolutionScope: scope, Name: name, Namespace: namespace,
     });
     const base = reference('Base', 1, 'Fixture');
-    const middle = reference('Middle', reference('Outer', 1, 'Fixture'));
+    const middle = reference('Middle', base);
     const child = reference('Child', middle);
     for (const [name, owner] of Object.entries({ baseField: base, hiddenMethod: child, inheritedOverload: child,
       privateMethod: child, directConstructor: middle, inheritedField: child, inheritedConstructor: child, missing: child })) {
