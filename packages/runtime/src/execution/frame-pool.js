@@ -30,18 +30,20 @@ class FramePool {
   acquire(method, argumentCount) {
     let sizes = this.buckets.get(method);
     if (!sizes) this.buckets.set(method, sizes = new Map());
-    let bucket = sizes.get(argumentCount);
+    let capacities = sizes.get(argumentCount);
+    if (!capacities) sizes.set(argumentCount, capacities = new Map());
+    const cil = !!this.vm.inspector;
+    const stack = cil ? Math.min(method.maxStack, this.vm.options.maxStackValues ?? 65536) : 0;
+    let bucket = capacities.get(stack);
     if (!bucket) {
-      const cil = !!this.vm.inspector;
       const args = cil ? argumentCount : 0;
       const locals = cil ? method.locals.length : Math.max(method.locals.length, argumentCount);
-      // The source VM already owns one shared evaluation stack for all its frames.
-      const stack = cil ? method.maxStack : 0;
+      // Source frames use the VM's shared evaluation stack and need no per-frame capacity.
       if (![args, locals, stack].every(value => Number.isSafeInteger(value) && value >= 0)) {
         throw new TypeError('Invalid frame storage capacity');
       }
       bucket = {args, locals, stack, bytes: 128 + (args + locals + stack) * 8, free: []};
-      sizes.set(argumentCount, bucket);
+      capacities.set(stack, bucket);
     }
     let frame = bucket.free.pop();
     if (frame) {
