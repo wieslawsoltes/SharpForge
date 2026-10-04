@@ -1,6 +1,8 @@
 import { decodeSignature } from '@sharpforge/cil';
 import { fail } from './contracts.js';
 import { createMetadataTypeNames } from './metadata-type-names.js';
+import { annotationContext, hasLocalAnnotations } from './local-annotations.js';
+import { annotationDisplay } from './annotation-display.js';
 
 function localSignatures(pe, symbols) {
   const needed = new Map();
@@ -57,19 +59,39 @@ function snapshotTypes(pe, symbols) {
     }
     facts.set(method, locals);
   }
-  return facts;
+  let annotations, context;
+  for (const scope of symbols.scopes)
+    for (const local of scope.variables) {
+      if (!hasLocalAnnotations(local)) continue;
+      const type = facts.get(scope.methodToken)?.get(local.index)?.type;
+      if (type)
+        (annotations ??= new Map()).set(
+          local.id,
+          annotationDisplay(type, local, (context ??= annotationContext(pe.metadata, displays))),
+        );
+    }
+  let constants;
+  for (const value of symbols.constants ?? []) {
+    if (hasLocalAnnotations(value))
+      (constants ??= new Map()).set(value.id, {
+        displayTypeName: value.displayTypeName,
+        annotationReason: value.annotationReason,
+      });
+  }
+  return { facts, annotations, constants };
 }
 
 /** Snapshot declared local types while metadata is available; query results never borrow ASTs or PE bytes. */
 export function bindLocalTypes(lookup, pe, symbols) {
-  const facts = snapshotTypes(pe, symbols);
+  const { facts, annotations, constants } = snapshotTypes(pe, symbols);
   return (methodToken) => {
     const roots = lookup(methodToken),
       pending = [...roots];
     const locals = structuredClone(facts.get(methodToken));
     while (pending.length) {
       const scope = pending.pop();
-      for (const local of scope.locals) Object.assign(local, locals?.get(local.index));
+      for (const local of scope.locals) Object.assign(local, locals?.get(local.index), annotations?.get(local.id));
+      for (const constant of scope.constantAnnotations ?? []) Object.assign(constant, constants?.get(constant.id));
       for (const child of scope.children) pending.push(child);
     }
     return roots;

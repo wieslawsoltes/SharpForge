@@ -23,6 +23,7 @@ export class StudioDocking {
     this.onError = onError;
     this.onClose = onClose;
     this.pendingRestore = null;
+    this.documentViewsReset = false;
     try { this.pendingRestore = storage.getItem(storageKeys.docking); } catch (error) { onError(error); }
     root.before(breadcrumb);
     breadcrumb.classList.add('workspace-breadcrumb');
@@ -98,33 +99,60 @@ export class StudioDocking {
     let selectedView = this.tabs?.metadata(selected);
     const restoring = Boolean(this.pendingRestore);
     const ids = new Set(files.map(file => `source:${file.uri}`));
-    for (const id of [...this.layout.panels.keys()]) {
-      const view = this.tabs?.metadata(id);
-      if ((id.startsWith('source:') || view) && !ids.has(`source:${view?.uri ?? id.slice(7)}`)) this.unregisterPanel(id);
-    }
-    for (const file of files) {
-      const id = `source:${file.uri}`;
-      if (this.tabs) this.tabs.ensure(file.uri);
-      else if (!this.layout.panels.has(id)) this.layout.register({ id, title: file.uri.split('/').at(-1), description: file.uri, kind: 'document' });
-      this.layout.require(id).dirty = Boolean(this.documents?.get(file.uri)?.dirty ?? file.dirty);
-    }
-    if (this.pendingRestore) {
-      this.restorePending(files);
-      selected = this.layout.state.activePanel;
-      selectedView = this.tabs?.metadata(selected);
-    }
-    for (const uri of tabs) {
-      const id = `source:${uri}`;
-      if (!ids.has(id) || this.layout.locate(id).kind !== 'closed') continue;
-      const group = this.layout.groups().find(item => item.kind === 'document');
-      this.layout.open(id, group?.id, { activate: false });
-    }
-    const preserveActive = (this.documentSyncStarted || restoring) && this.layout.panels.has(selected)
-      && this.layout.locate(selected).kind !== 'closed' && (!selectedView || selectedView.uri === active);
-    if (!preserveActive && active && this.layout.panels.has(`source:${active}`)) this.layout.open(`source:${active}`);
+    let metadataChanged = false;
+    // DocumentService has already committed the workspace. No subscriber may render a partly removed old layout.
+    const changed = this.layout.transaction('syncDocuments', () => {
+      for (const id of [...this.layout.panels.keys()]) {
+        const view = this.tabs?.metadata(id);
+        if ((id.startsWith('source:') || view) && !ids.has(`source:${view?.uri ?? id.slice(7)}`)) this.unregisterPanel(id);
+      }
+      for (const file of files) {
+        const id = `source:${file.uri}`;
+        if (this.tabs) this.tabs.ensure(file.uri);
+        else if (!this.layout.panels.has(id)) {
+          this.layout.register({ id, title: file.uri.split('/').at(-1), description: file.uri, kind: 'document' });
+        }
+        const panel = this.layout.require(id);
+        const dirty = Boolean(this.documents?.get(file.uri)?.dirty ?? file.dirty);
+        metadataChanged ||= Boolean(panel.dirty) !== dirty;
+        panel.dirty = dirty;
+      }
+      if (this.pendingRestore) {
+        this.restorePending(files);
+        selected = this.layout.state.activePanel;
+        selectedView = this.tabs?.metadata(selected);
+      }
+      for (const uri of tabs) {
+        const id = `source:${uri}`;
+        if (!ids.has(id) || this.layout.locate(id).kind !== 'closed') continue;
+        const group = this.layout.groups().find(item => item.kind === 'document');
+        this.layout.open(id, group?.id, { activate: false });
+      }
+      const preserveActive = (this.documentSyncStarted || restoring) && this.layout.panels.has(selected)
+        && this.layout.locate(selected).kind !== 'closed' && (!selectedView || selectedView.uri === active);
+      if (!preserveActive && active && this.layout.panels.has(`source:${active}`)) this.layout.open(`source:${active}`);
+    }, { history: false });
     this.documentSyncStarted = true;
-    if (files.some(file => !this.host.contents.has(`source:${file.uri}`) && tabs.includes(file.uri))) this.host.render();
+    const openTabs = new Set(tabs);
+    const needsRender = metadataChanged || this.documentViewsReset
+      || files.some(file => !this.host.contents.has(`source:${file.uri}`) && openTabs.has(file.uri));
+    if (!changed && needsRender) this.host.render();
+    this.documentViewsReset = false;
     this.adapt();
+  }
+
+  /** Invalidates source views after document replacement; the next sync publishes and renders the complete workspace. */
+  resetDocumentViews() {
+    const ids = new Set([...this.content.keys(), ...this.host.contents.keys(), ...this.host.popouts.keys()]);
+    const sources = [...ids].filter(id => this.tabs?.metadata(id) || id.startsWith('source:'));
+    for (const id of sources) {
+      if (this.host.popouts.has(id)) this.host.returnPopout(id, { reopen: false, render: false });
+    }
+    try { this.documents?.resetEditors(); }
+    finally {
+      for (const id of sources) this.releasePanelContent(id);
+      this.documentViewsReset = true;
+    }
   }
 
   restorePending(files) {
@@ -174,12 +202,16 @@ export class StudioDocking {
 
   unregisterPanel(id) {
     if (!this.layout.panels.has(id)) return;
-    if (this.host.popouts.has(id)) this.host.returnPopout(id);
-    this.host.contents.get(id)?.remove();
+    if (this.host.popouts.has(id)) this.host.returnPopout(id, { reopen: false, render: false });
+    this.releasePanelContent(id);
+    this.tabs?.forget(id);
+    this.layout.unregister(id);
+  }
+
+  releasePanelContent(id) {
+    (this.host.contents.get(id) ?? this.content.get(id))?.remove();
     this.host.contents.delete(id);
     this.content.delete(id);
-    this.tabs?.views.delete(id);
-    this.layout.unregister(id);
   }
 
   registerToolKind(kind, factory, options) { return this.factories.register(kind, factory, options); }

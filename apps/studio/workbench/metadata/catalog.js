@@ -4,13 +4,16 @@ import {frameworkMetadata} from './framework-model.js';
 import {suppliedMetadata} from './legacy-summary.js';
 import {findMetadataDefinition, metadataDefinition} from './definition.js';
 import {metadataLimits, metadataError} from './limits.js';
+import {workerOptions} from '@sharpforge/editor';
 
 /** Per-shell metadata cache. Worker jobs are serialized, cancellable, and invalidated by reference/source identity. */
 export class MetadataCatalog {
   constructor({sources = async () => [], inspect, createWorker, timeoutMs = metadataLimits.timeoutMs} = {}) {
     this.sources = sources;
-    this.createWorker = createWorker ?? (globalThis.Worker ? () => new Worker(
-      new URL('./metadata.worker.js', import.meta.url), {type: 'module'}) : null);
+    this.createWorker = createWorker ?? (globalThis.Worker ? () => {
+      const asset = new URL('./metadata.worker.js', import.meta.url);
+      return new Worker(asset, workerOptions(asset));
+    } : null);
     this.inspect = inspect ?? ((bytes, source, signal) => {
       if (!this.createWorker) throw metadataError('METADATA_WORKER_REQUIRED', 'PE metadata inspection requires an interruptible worker');
       return workerRequest({bytes, source}, {createWorker: this.createWorker, signal, timeoutMs});

@@ -27,9 +27,14 @@ export function createInsightContext(editor, options) {
         return undefined;
       }
     },
+    canRequest(method) {
+      if (lifetime.disposed) return false;
+      for (const allowed of requestSuspensions) if (!allowed.has(method)) return false;
+      if (!editor.model?.previewActive) return true;
+      return requestSuspensions.size > 0 && editor.model.snapshot() === editor.model.publishedSnapshot();
+    },
     async request(method, parameters = {}, requestOptions = {}) {
-      if (!services.supports(method)) return undefined;
-      for (const allowed of requestSuspensions) if (!allowed.has(method)) return undefined;
+      if (!services.supports(method) || !context.canRequest(method)) return undefined;
       const maximum = options.maxSemanticCharacters ?? 2_000_000;
       if (method !== 'readDocument' && !options.languageServicesInLargeFiles && (editor.model?.length ?? editor.value.length) > maximum) {
         return undefined;
@@ -64,13 +69,18 @@ export function createInsightContext(editor, options) {
       if (uri === editor.uri) return editor.goto(destination.start, destination.end);
       return editor.request('openDocument', destination);
     },
+    hostRequest(method, parameters) {
+      if (editor.model?.previewActive || !context.canRequest(method)) return undefined;
+      return editor.request(method, parameters);
+    },
     command(command) {
+      if (editor.model?.previewActive || !context.canRequest('executeCommand')) return undefined;
       if (services.supports('executeCommand')) return services.invoke('executeCommand', {
         command: command.command ?? command.id ?? command, arguments: command.arguments ?? [],
-        uri: editor.uri, version: editor.model?.version ?? editor.sourceSnapshot().version,
+        uri: editor.uri, version: editorRevision(editor).version,
         signal: new AbortController().signal
       });
-      return editor.request(command.command ?? command.id ?? command, command.arguments?.[0] ?? {uri: editor.uri, offset: editor.offset});
+      return context.hostRequest(command.command ?? command.id ?? command, command.arguments?.[0] ?? {uri: editor.uri, offset: editor.offset});
     }
   };
   return context;

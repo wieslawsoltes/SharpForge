@@ -1,0 +1,13 @@
+[
+  {
+    "name": "Access0",
+    "sourceSHA256": "0a57cb66608331f54b1c9f3ceb4471a9a85cad8ab1b18a07809b121a9c7cb2cf",
+    "assembled": {
+      "stdout": "\n.NET IL Assembler.  Version 10.0.5\nCopyright (c) Microsoft Corporation.  All rights reserved.\nAssembling '/dll.il'  to EXE --> '/dll.exe'\nCould not open /dll.il\n\nAssembling '/output:<temporary>/Access0.dll'  to EXE --> '/dll.exe'\nCould not open /output:<temporary>/Access0.dll\n\nAssembling '<temporary>/Access0.il'  to EXE --> '/dll.exe'\nSource file is UTF-8\n\nAssembled method Other::Test\n\n***** FAILURE ***** \n",
+      "stderr": "",
+      "exitCode": 1,
+      "signal": null,
+      "elapsedMs": 460.60870900000003
+    }
+  }
+]
