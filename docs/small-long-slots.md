@@ -55,3 +55,8 @@ allocation measurement or benchmark result.
 The Int32-widening increment passed all 42 focused conversion, small-long, Int64
 and typed-float tests at `a2904830`. Required PR checks follow serial local validation;
 this does not replace the deferred differential or performance qualification.
+
+The guarded division/remainder increment passed all 52 focused tests at `cc98b65d`,
+including exact quotient boundaries, fallback faults, lane lifecycle and the
+unchanged native Int64 boundary fixture. Required PR checks follow serial validation;
+no new native or performance run is claimed.
