@@ -3,6 +3,7 @@ import { readMetadata } from '../metadata.js';
 import { CorFlags } from './headers.js';
 import { readOptionalHeader } from './optional-header.js';
 import { readMethodBody } from './method-body.js';
+import { peRangeEnd, validatePEHeaderExtent, validatePESections } from './bounds.js';
 
 function readSections(reader, sectionCount) {
   const sections = [];
@@ -14,7 +15,6 @@ function readSections(reader, sectionCount) {
     const pointerToRelocations = reader.u32(), pointerToLineNumbers = reader.u32();
     const numberOfRelocations = reader.u16(), numberOfLineNumbers = reader.u16();
     const characteristics = reader.u32();
-    if (offset + size > reader.end || rva + Math.max(size, virtualSize) > 0x100000000) throw new CilError('Truncated PE section');
     sections.push({ name, rva, virtualSize, size, offset, headerOffset, characteristics,
       pointerToRelocations, pointerToLineNumbers, numberOfRelocations, numberOfLineNumbers });
   }
@@ -26,27 +26,33 @@ function readHeaders(bytes) {
   if (reader.u16() !== 0x5a4d) throw new CilError('Not a PE assembly (missing MZ header)');
   reader.position = 0x3c;
   const peHeaderOffset = reader.u32();
+  if (peHeaderOffset < 0x40) throw new CilError('PE header overlaps DOS header', 0x3c);
+  peRangeEnd(peHeaderOffset, 24, bytes.length, 'Invalid PE header range', 0x3c);
   reader.position = peHeaderOffset;
   if (reader.u32() !== 0x4550) throw new CilError('Invalid PE signature');
   const machine = reader.u16(), sectionCount = reader.u16(), timestamp = reader.u32();
   const pointerToSymbolTable = reader.u32(), numberOfSymbols = reader.u32();
   const optionalSize = reader.u16(), characteristics = reader.u16(), optionalStart = reader.position;
   if (sectionCount < 1 || sectionCount > 96) throw new CilError('Invalid PE section count');
+  const sectionTableStart = peRangeEnd(optionalStart, optionalSize, bytes.length,
+    'Invalid optional PE header range', peHeaderOffset + 20);
+  const sectionTableEnd = peRangeEnd(sectionTableStart, sectionCount * 40, bytes.length,
+    'Truncated PE section table', sectionTableStart);
   const optional = readOptionalHeader(bytes, optionalStart, optionalSize);
-  reader.position = optionalStart + optionalSize;
+  validatePEHeaderExtent(optional.sizeOfHeaders, sectionTableEnd, bytes.length, optionalStart + 60);
+  reader.position = sectionTableStart;
   const sections = readSections(reader, sectionCount);
+  validatePESections(sections, bytes.length, optional.sizeOfHeaders);
   return { peHeaderOffset, machine, sectionCount, timestamp, pointerToSymbolTable, numberOfSymbols, characteristics,
     ...optional, sections };
 }
 
 function createOffsetResolver(sections) {
   return (rva, length = 1) => {
-    if (!Number.isInteger(rva) || rva < 0 || !Number.isInteger(length) || length < 0 || rva + length > 0x100000000) {
-      throw new CilError('Invalid RVA range', rva);
-    }
+    peRangeEnd(rva, length, 0x100000000, 'Invalid RVA range', rva);
     let result = -1;
     for (const section of sections) {
-      if (rva < section.rva || rva - section.rva + length > section.size) continue;
+      if (!section.size || rva < section.rva || rva - section.rva + length > section.size) continue;
       if (result !== -1) throw new CilError('Invalid or ambiguous RVA', rva);
       result = section.offset + rva - section.rva;
     }

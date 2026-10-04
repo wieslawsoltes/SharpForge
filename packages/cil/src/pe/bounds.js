@@ -4,7 +4,7 @@ import { CilError } from '../binary/error.js';
 export function peRangeEnd(start, size, limit, message, diagnosticOffset = start) {
   if (!Number.isSafeInteger(start) || start < 0 || !Number.isSafeInteger(size) || size < 0 ||
       !Number.isSafeInteger(limit) || limit < 0 || start > limit || size > limit - start) {
-    throw new CilError(message, diagnosticOffset);
+    throw new CilError(message, typeof diagnosticOffset === 'number' ? diagnosticOffset : undefined);
   }
   return start + size;
 }
