@@ -38,8 +38,9 @@ export class BracketColors {
 
   render() {
     const {editor} = this;
-    const at = this.pairs.has(editor.offset) ? editor.offset : editor.offset - 1;
-    const other = this.pairs.get(at);
+    const pairs = editor.highlightIndex.brackets;
+    const at = pairs.has(editor.offset) ? editor.offset : editor.offset - 1;
+    const other = pairs.get(at);
     for (const node of editor.view.lines.layer.querySelectorAll('[data-bracket]')) {
       const offset = Number(node.dataset.bracket);
       const depth = this.depths.get(offset);
