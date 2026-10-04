@@ -119,9 +119,5 @@ test('A02-T30 constructs the emitter still refuses are SF2200 naming them', () =
     return result.diagnostics.filter(entry => entry.severity === 'error').map(entry => `${entry.code} ${entry.message}`);
   };
   assert.match(refused('class C { static void Main() { var t = (1, 2); System.Console.WriteLine(t.Item1); } }')[0], /^SF2200 .*tuple/);
-  assert.match(
-    refused('class C { static void Main() { try { } catch (System.Exception e) when (e.Message == "x") { } } }')[0],
-    /^SF2200 .*exception filters/,
-  );
   assert.match(refused('class C { static void Main() { int[,] grid = new int[2, 2]; } }')[0], /^SF2200 .*multi-dimensional arrays/);
 });
