@@ -11,23 +11,23 @@
     },
     {
       "source": "apps/studio/styles/designer-documents.css",
-      "order": 12000
+      "order": 13000
     },
     {
       "source": "apps/studio/designer-property.css",
-      "order": 12001
+      "order": 13001
     },
     {
       "source": "apps/studio/designer-chrome.css",
-      "order": 12002
+      "order": 13002
     },
     {
       "source": "apps/studio/designer-app-host.css",
-      "order": 12003
+      "order": 13003
     },
     {
       "source": "apps/studio/designer-resource-gallery.css",
-      "order": 12004
+      "order": 13004
     }
   ],
   "workers": [],

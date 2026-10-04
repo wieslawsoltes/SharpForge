@@ -36,3 +36,32 @@ The pure helper represents CIL floating values with `float(value)` or `float(val
 Run `node scripts/validate-a05-numeric-dotnet.js` with a .NET 10 SDK/runtime. It runs the exact conversion fixture on the native JIT and the direct CIL engine, and separately builds the C# reproducer in `tests/fixtures/a05/numeric-conversions`. The native conversion methods disallow inlining so constant folding cannot hide runtime conversion behavior. The script reports the runtime version, platform, architecture, and counts only after all comparisons pass; unavailable .NET 10 is an explicit failure, not a silent pass.
 
 The source-debugging `VirtualMachine` delegates Int32 casts to the shared conversion helper; constant folding uses the same saturation policy so source execution, emitted IL, and compile-time values agree. Wider source arithmetic remains part of T01. Native 64-bit `nint`/`nuint`, other CLR versions, and CPU-specific historical overflow behavior are outside this profile. Pure JS and direct CIL coverage require no .NET installation; native parity requires running the reference script on each claimed host platform.
+
+## Shared conversion policy increment (T01.6)
+
+`@sharpforge/bytecode` exports `convert`, `conversionTargets`, `number` and
+`isNumber`. Runtime numeric operations consume this same policy. The target
+catalog is immutable and lists the 13 ECMA opcode suffixes; a native target is
+one suffix, not a separate opcode per host width. The native target metadata describes the default 32-bit ABI; conversion calls
+select precompiled 32-bit or 64-bit policies using `context.nativeIntBits`.
+Native results retain their category in an immutable carrier; `number(value)`
+reads the signed payload. See [native width](cil-native-width.md). Decimal
+integration remains separate work.
+
+Valid opcode policies are compiled once into a private lookup table. Integer
+targets share frozen exact bounds and floating saturation thresholds; conversion
+calls do not parse opcode names or reconstruct those bounds. This is a code-path
+change without a measured throughput or allocation-rate claim.
+
+Malformed opcode combinations such as `conv.r`, `conv.ovf.r4` and `conv.u4.un`
+now reject with `CilError` instead of accidentally selecting a valid conversion.
+The optional `error(message)` and `fault(name, message)` factories preserve
+runtime diagnostics. Valid conversions retain the saturation and stack-bit
+rules above. `tests/a05-conversion-policy.test.js` adds public policy, malformed
+opcode, source-tag and injected-error regressions; existing independently
+assembled numeric conversion tests cover guest execution. The serial slot passed
+149 policy/conversion/numeric-seam/storage/value-ABI tests at `2f1a7769` on Node
+24.21.0 (resource wrapper, 512MB, one test file/run). Syntax/import checks passed
+with 1,858 syntax modules and no errors; the non-strict structure report retained
+264 repository warnings. Full T01.6 native-oracle, source/reloaded and platform
+qualification remains pending.

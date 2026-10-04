@@ -1,0 +1,31 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-983e9e38c0c93e92412d",
+  "kind": "diagnostics",
+  "sourceText": "using System;\n\nclass Test\n{\n    static void Main()\n    {\n        CSPropDerived obj = new CSPropDerived();\n        CSPropBase bobj = obj;\n\n        // call derived methods\n        obj.set_WriteOnlyProp(\"Derived \");\n        Console.Write(obj.get_ReadOnlyProp());\n\n        bobj.set_WriteOnlyProp(\"Base \");\n        Console.Write(bobj.get_ReadOnlyProp());\n\n        // call interface prop impl\n        obj.WriteOnlyProp = \"PropImpl\";\n        Console.Write(obj.ReadOnlyProp);\n    }\n}\n",
+  "sourceSHA256": "379ec1344c9e2b9ab31178256c0c6277b25bbd569daa20de94bf8abdb5c1f3ab",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenOverridingAndHiding.cs",
+    "sha256": "1362359003a56088beb732c1b01d57e4b0e4b8b408037adca585b20ae29b4f98",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenOverridingAndHiding.cs",
+    "license": "MIT",
+    "method": "TestOverloadGetSetMethodWithPropMetadata",
+    "offset": 137500
+  },
+  "langVersion": "preview",
+  "target": "exe",
+  "references": "references: new MetadataReference[] { asm01, asm02, new CSharpCompilationReference(comp1), new CSharpCompilationReference(comp2) },\n                options: TestOptions.ReleaseExe,\n                assemblyName: \"OHI_OverloadGetSetMethodWithProp003\")",
+  "options": "(\n                text3,\n                references: new MetadataReference[] { asm01, asm02, new CSharpCompilationReference(comp1), new CSharpCompilationReference(comp2) },\n                options: TestOptions.ReleaseExe,\n                assemblyName: \"OHI_OverloadGetSetMethodWithProp003\")",
+  "expected": {
+    "diagnostics": [],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "",
+  "unsupported": [
+    "Upstream reference profile differs from SharpForge closed framework; references retained for reference-qualified adaptation",
+    "Custom upstream compilation/parse options require an adapter"
+  ]
+}

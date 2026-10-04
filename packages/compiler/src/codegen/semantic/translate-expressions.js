@@ -4,11 +4,12 @@
  */
 import { findContracts } from '@sharpforge/framework';
 import { TypeKind } from '../../symbols/types.js';
+import { isRegisteredInterfaceReference } from '../../conversions/registered-reference.js';
+import { needsPrimitiveBox, primitiveBoxContract } from '../../primitive-boxing.js';
 import { n } from './node-factory.js';
 import { interpolatedText } from '../../binder/csharp6.js';
 
 const foldableTypes = new Set(['int', 'double', 'bool', 'string']);
-const boxValue = () => findContracts('SharpForge.Runtime.Formatting', 'BoxValue', true)[0];
 const formatValue = () => findContracts('SharpForge.Runtime.Formatting', 'FormatValue', true)[0];
 
 /** Class mixin: value expressions. */
@@ -37,6 +38,11 @@ export const ExpressionTranslation = Base =>
       if (node.kind === 'Conversion' && node.operand?.type) this.imageType(node.operand.type, node.syntax);
       if (value.isNull) return n.nullLiteral(node.type ? this.imageType(node.type, node.syntax) : 'object');
       const type = node.type ? this.imageType(node.type, node.syntax) : null;
+      if (node.kind === 'FieldAccess' && value.isEnum && value.enumType === node.type &&
+          this.g.bridge.registryName(node.type) === type) {
+        // The existing enum field IR emits Op.ENUM, retaining the registered carrier on both engines.
+        return {kind: 'FieldAccess', legacyType: type, isExpression: true, receiver: null, field: null, constantValue: value};
+      }
       if (!type || !foldableTypes.has(type)) return null;
       const raw = typeof value.value === 'bigint' ? Number(value.value) : value.value;
       return n.literal(raw, type);
@@ -85,7 +91,7 @@ export const ExpressionTranslation = Base =>
       const elementType = this.imageType(node.type.elementType, node.syntax);
       if (node.type.rank !== 1) return this.unsupported('multi-dimensional arrays', node.syntax);
       if (node.elements) {
-        const elements = node.elements.map(e => this.expression(e));
+        const elements = node.elements.map(e => this.objectArgument(this.expression(e), elementType));
         return n.newArray(elementType, n.literal(elements.length, 'int'), elements);
       }
       const length = this.expression(node.sizes[0]);
@@ -106,6 +112,8 @@ export const ExpressionTranslation = Base =>
         return n.call(this.g.methodOf(node.method, node.syntax), null, [left, right]);
       }
       if (node.family === 'delegate') return this.delegateArithmetic(node, left, right);
+      const delegateEquality = this.delegateEquality(node, left, right);
+      if (delegateEquality) return delegateEquality;
       if (node.operator === '>>>') return this.unsupported('the unsigned right shift operator', node.syntax);
       return n.binary(node.operator, left, right, this.imageType(node.type, node.syntax), !!node.isChecked);
     }
@@ -195,9 +203,14 @@ export const ExpressionTranslation = Base =>
       const kind = node.conversion?.kind,
         operand = node.operand;
       switch (kind) {
+        case 'InterpolatedString':
+          // The string is not built: the object keeps the format and the arguments, to be formatted later.
+          return this.unsupported(
+            `an interpolated string as '${node.type.toDisplayString()}' (the registry has no FormattableStringFactory.Create)`,
+            node.syntax,
+          );
         case 'Identity':
         case 'ImplicitReference':
-        case 'InterpolatedString':
         case 'ImplicitEnumeration':
         case 'ExplicitEnumeration':
           return this.retyped(this.expression(operand), node);
@@ -231,14 +244,15 @@ export const ExpressionTranslation = Base =>
     /** A reference conversion changes only the static type: the value is the same object. */
     retyped(value, node) {
       const type = this.imageType(node.type, node.syntax);
-      // The image has no subtyping: only `object` accepts another representation (interfaces and base classes need dispatch).
-      if (value.legacyType !== type && type !== 'object' && value.kind !== 'Literal' && node.conversion?.kind === 'ImplicitReference')
+      // Registered interface contracts can dispatch the same reference; arbitrary source hierarchies remain unsupported.
+      if (value.legacyType !== type && type !== 'object' && value.kind !== 'Literal' && node.conversion?.kind === 'ImplicitReference' &&
+          (this.g.isSource(node.operand.type) || !isRegisteredInterfaceReference(value.legacyType, type)))
         return this.unsupported(`converting '${node.operand.type?.toDisplayString()}' to '${node.type.toDisplayString()}'`, node.syntax);
       return value.legacyType === type || value.kind !== 'Literal' ? value : { ...value, legacyType: type };
     }
     /**
-     * Boxing: the VM is dynamically typed and the CIL emitter boxes at the store, so the value itself is unchanged.
-     * Only framework contracts need a real box (see `contractArguments`).
+     * General object conversions retain the execution profile's representation.
+     * Contract arguments and object-array elements preserve primitive identity through `objectArgument`.
      */
     box(operand, node) {
       if (operand.type?.typeKind === TypeKind.Enum) return this.unsupported('boxing an enum value', node.syntax);
@@ -247,11 +261,13 @@ export const ExpressionTranslation = Base =>
     /** Arguments of a framework contract: a primitive passed as `object` is boxed with its static type, as the profile does. */
     contractArguments(contract, args) {
       if (!contract) return args;
-      return args.map((value, i) =>
-        contract.parameters[i] === 'object' && ['int', 'double', 'bool'].includes(value.legacyType)
-          ? n.frameworkCall({ contract: boxValue() }, null, [value, n.literal(value.legacyType, 'string')], 'object')
-          : value,
-      );
+      return args.map((value, i) => this.objectArgument(value, contract.parameters[i]));
+    }
+    /** Preserve primitive identity for a contract argument or an object-array element. */
+    objectArgument(value, target) {
+      return needsPrimitiveBox(target, value.legacyType)
+        ? n.frameworkCall({ contract: primitiveBoxContract() }, null, [value, n.literal(value.legacyType, 'string')], 'object')
+        : value;
     }
     userDefinedConversion(node) {
       const method = node.conversion.method ?? node.method;

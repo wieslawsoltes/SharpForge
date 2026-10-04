@@ -1,0 +1,30 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-20d9fe6abf59405c9b66",
+  "kind": "diagnostics",
+  "sourceText": "\npublic class D { }\n",
+  "sourceSHA256": "057e7fd0b0a7274d71a8d18b8ba91ac6b3a5da2d60ebceffa188222abae5bd34",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit2/Emit/EditAndContinue/AssemblyReferencesTests.cs",
+    "sha256": "eadcd3c3a0d1cfba94f9486b3f4da456d8c8a6e7dbbc29fa50da8229d754944a",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit2/Emit/EditAndContinue/AssemblyReferencesTests.cs",
+    "license": "MIT",
+    "method": "ChangingCompilationDependencies",
+    "offset": 7947
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(srcLib, assemblyName: \"Lib\", options: TestOptions.DebugDll)",
+  "expected": {
+    "diagnostics": [],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "",
+  "unsupported": [
+    "Custom upstream compilation/parse options require an adapter"
+  ]
+}

@@ -32,7 +32,10 @@ test('chrome geometry has symmetric borders, explicit font size, focus and densi
   const css = read('apps/studio/designer-chrome.css');
   assert.match(css, /--design-toolbar-height:\s*36px/);
   assert.match(css, /\[data-design-density="compact"\]/);
-  assert.match(css, /html\[data-theme="light"\]/);
+  const colors = read('apps/studio/workbench/theme-tokens.css');
+  assert.match(colors, /html\[data-theme="light"\]/);
+  assert.match(colors, /--design-foreground:\s*#213a52/);
+  assert.match(colors, /html\[data-theme="high-contrast"\]/);
   assert.match(css, /\.toolbar \.toolbar-button\s*\{[^}]*display:\s*inline-flex/);
   assert.match(css, /\.toolbar \.toolbar-button\s*\{[^}]*align-items:\s*center/);
   assert.match(css, /\.design-mode-tabs button\s*\{[^}]*border:\s*1px solid transparent/);

@@ -7,7 +7,7 @@ import {registerCoreControls12} from './core-controls-12.js';
 import {registerBcl} from '../bcl-contracts.js';
 import {registerWinUI13} from '../winui13-contracts.js';
 import {registerRuntime14} from '../runtime14-contracts.js';
-export {bclExtensionContribution, designerLayoutContribution} from './extensions.js';
+export {bclExtensionContribution, collectionExtensionContribution, designerLayoutContribution} from './extensions.js';
 /** Released ranges are exact; additions belong in an independently reserved area. */
 export const contributionManifest=Object.freeze([
   ['core-xaml',0,84,registerCoreXaml],['core-controls',84,299,registerCoreControls],

@@ -1,0 +1,16 @@
+<!doctype html>
+<html lang="en">
+<meta charset="utf-8">
+<title>Actual virtual editor integration fixture</title>
+<link rel="stylesheet" href="../../packages/editor/src/editor.css">
+<style>
+  :root { --text: #eee; --editor: #20232c; --surface: #2b2f3c; --surface2: #34394a; --line: #646e82; }
+  body { margin: 24px; color: #eee; background: #181b22; font: 14px system-ui; }
+  #editor { width: 1000px; height: 620px; border: 1px solid #667; }
+</style>
+<script type="importmap">
+{"imports":{"@sharpforge/text":"../../packages/text/src/index.js","@sharpforge/syntax":"../../packages/syntax/src/index.js"}}
+</script>
+<div id="editor"></div>
+<script type="module" src="./a20-editor-view-fixture.js"></script>
+</html>

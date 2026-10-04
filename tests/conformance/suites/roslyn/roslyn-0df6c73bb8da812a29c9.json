@@ -1,0 +1,31 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-0df6c73bb8da812a29c9",
+  "kind": "diagnostics",
+  "sourceText": "\npublic class C\n{\n    public static void Main()\n    {\n        dynamic d1 = 1;\n        dynamic d2 = 2;\n        System.Console.Write($\"{(d1, 2) == (1, d2)} \");\n        System.Console.Write($\"{(d1, 2) != (1, d2)} \");\n\n        System.Console.Write($\"{(d1, 20) == (10, d2)} \");\n        System.Console.Write($\"{(d1, 20) != (10, d2)} \");\n    }\n}",
+  "sourceSHA256": "5dc677bcdedad81235a56517479d18f6eb60529ecf95ce0bd7911946c1f84c4b",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenTupleEqualityTests.cs",
+    "sha256": "67f5215493f0c497510be9469ae7f2fea3c5e4968412c22001a18cdf5537c930",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenTupleEqualityTests.cs",
+    "license": "MIT",
+    "method": "TestDynamic",
+    "offset": 73787
+  },
+  "langVersion": "preview",
+  "target": "exe",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source, targetFramework: TargetFramework.StandardAndCSharp, options: TestOptions.DebugExe)",
+  "expected": {
+    "diagnostics": [],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "",
+  "unsupported": [
+    "Nondefault upstream target-framework references require adaptation",
+    "Custom upstream compilation/parse options require an adapter"
+  ]
+}

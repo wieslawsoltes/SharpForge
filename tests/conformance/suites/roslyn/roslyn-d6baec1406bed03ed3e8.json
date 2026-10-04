@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-d6baec1406bed03ed3e8",
+  "kind": "diagnostics",
+  "sourceText": "\nusing System;\npublic class C\n{\n    public static void Main()\n    {\n        foreach (var i in 1)\n        {\n            Console.Write(i);\n        }\n    }\n    public sealed class Enumerator\n    {\n        public int Current { get; private set; }\n        public bool MoveNext() => Current++ != 3;\n    }\n}\npublic static class Extensions\n{\n    public static C.Enumerator GetEnumerator(this int? self) => new C.Enumerator();\n}",
+  "sourceSHA256": "75f53f3ed798c1afa7990a82ccc2c236f45cae2f83716170f8e2462339545e66",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenForEachTests.cs",
+    "sha256": "a8916f977bf7fcd541545be2f5e4bdc8faf297975fa81f0c7ad4833e9a24ce17",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenForEachTests.cs",
+    "license": "MIT",
+    "method": "TestGetEnumeratorPatternViaExtensionsWithNullableValueTypeConversion",
+    "offset": 72240
+  },
+  "langVersion": "9",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source, parseOptions: TestOptions.Regular9)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS1929",
+        "severity": "error"
+      },
+      {
+        "code": "CS1579",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                    // (7,27): error CS1929: 'int' does not contain a definition for 'GetEnumerator' and the best extension method overload 'Extensions.GetEnumerator(int?)' requires a receiver of type 'int?'\n                    //         foreach (var i in 1)\n                    Diagnostic(ErrorCode.ERR_BadInstanceArgType, \"1\").WithArguments(\"int\", \"GetEnumerator\", \"Extensions.GetEnumerator(int?)\", \"int?\").WithLocation(7, 27),\n                    // (7,27): error CS1579: foreach statement cannot operate on variables of type 'int' because 'int' does not contain a public instance or extension definition for 'GetEnumerator'\n                    //         foreach (var i in 1)\n                    Diagnostic(ErrorCode.ERR_ForEachMissingMember, \"1\").WithArguments(\"int\", \"GetEnumerator\").WithLocation(7, 27)\n                    ",
+  "unsupported": []
+}

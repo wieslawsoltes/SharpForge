@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "proposal-f89d4a483969c057973e",
+  "kind": "spec",
+  "sourceText": "using System;\nnamespace System.Runtime.CompilerServices\n{\n    [AttributeUsage(AttributeTargets.Method, AllowMultiple = false)]\n    public sealed class ModuleInitializerAttribute : Attribute { }\n}",
+  "sourceSHA256": "2c4d28c223c7f16fd306a420b7007bc866bed1d5e5743b4726d5b72e1c5d5225",
+  "target": "library",
+  "featureId": "csharp-9-0-module-initializers",
+  "langVersion": "9.0",
+  "expected": {
+    "referenceDiagnostics": true
+  },
+  "unsupported": [],
+  "mappingScope": "Exact inventory specSection; fenced fragment compiled as library against pinned Roslyn, not assumed valid standalone program",
+  "provenance": {
+    "repository": "dotnet/csharplang",
+    "commit": "05eb4800fc3dc76259ccd49ac01f1eeb49222380",
+    "path": "proposals/csharp-9.0/module-initializers.md",
+    "sha256": "4db9efac47816e62c55ccfd6a4121feea075f7b9a7045a8cec2704b01a1b7d53",
+    "url": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-9.0/module-initializers.md",
+    "license": "NOASSERTION",
+    "offset": 1528
+  }
+}

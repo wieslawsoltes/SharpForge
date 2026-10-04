@@ -1,0 +1,28 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-11040101da3cb8b550d3",
+  "kind": "diagnostics",
+  "sourceText": "\npublic interface I0\n{\n    void M1((int, int b) x);\n    void M2((int a, int b) x);\n    (int, int b) MR1();\n    (int a, int b) MR2();\n    (int a, int b) P { get; set; }\n}\npublic class C : I0\n{\n    void I0.M1((int, int) z) { }\n    void I0.M2((int, int) z) { }\n    (int, int) I0.MR1() { return (1, 2); }\n    (int, int) I0.MR2() { return (1, 2); }\n    (int, int) I0.P { get; set; }\n}\n",
+  "sourceSHA256": "6981a56068aaa36af56ce850853b732d0c7e4c262531b95519a444f21297959d",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenTupleTest.cs",
+    "sha256": "30eaaa406ddf4fd551ad7581f8ad130bc9dbefa8a64ff2b824d8b5236be03c9a",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenTupleTest.cs",
+    "license": "MIT",
+    "method": "ExplicitInterfaceImplementationWithNoNames",
+    "offset": 889941
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source)",
+  "expected": {
+    "diagnostics": [],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "",
+  "unsupported": []
+}

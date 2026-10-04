@@ -1,4 +1,5 @@
-import {decodeCoded,resolveExecutionField,genericTypeParts} from '@sharpforge/cil';
+import {decimalConstants} from './decimal-intrinsics.js';
+import {decodeCoded,genericTypeParts} from '@sharpforge/cil';
 import {ManagedFault} from '../heap.js';
 import {storageDefault} from './storage.js';
 
@@ -22,15 +23,14 @@ function threadStaticFields(inspector) {
  */
 export function staticSlot(vm, token, frame = vm.top) {
   const contextIdentity = frame?.genericIdentity ?? null;
-  const contextArguments = contextIdentity ? genericTypeParts(contextIdentity).arguments : [];
-  const field = resolveExecutionField(vm.inspector, token, contextArguments);
+  const field = vm.typeSystem.fieldCache.resolve(token, null, contextIdentity).field;
   if (!field.isStatic) throw new ManagedFault('InvalidProgramException', 'Expected a static field');
   const contextType = contextIdentity && genericTypeParts(contextIdentity).definition;
   const instance = field.ownerInstance ?? (contextType === field.owner ? contextIdentity : null);
   const genericIdentity = instance===null?null:vm.typeSystem.table(instance).name;
   const context = threadStaticFields(vm.inspector).has(field.resolvedToken) ? vm.scheduler?.currentId ?? 1 : null;
   const key = genericIdentity !== null || context !== null ? JSON.stringify([field.resolvedToken, genericIdentity, context]) : field.resolvedToken;
-  if (!vm.statics.has(key)) vm.statics.set(key, storageDefault(vm,field.signature.type));
+  if (!vm.statics.has(key)) vm.statics.set(key, field.decimalConstant ? decimalConstants[field.decimalConstant] : storageDefault(vm,field.signature.type));
   return {key, field, typeToken: field.ownerToken, genericIdentity, context};
 }
 

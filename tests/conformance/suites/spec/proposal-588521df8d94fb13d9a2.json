@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "proposal-588521df8d94fb13d9a2",
+  "kind": "spec",
+  "sourceText": "using System.Runtime.CompilerServices;\n\nvar d = new C1();\nint[] arr = [1, 2, 3];\nd.M(arr); // Prints \"Span\"\n\nclass C1\n{\n    [OverloadResolutionPriority(1)]\n    public void M(ReadOnlySpan<int> s) => Console.WriteLine(\"Span\");\n    // Default overload resolution priority\n    public void M(int[] a) => Console.WriteLine(\"Array\");\n}",
+  "sourceSHA256": "1060ed1f8386b05d569534138765dbe1f258e1eee5854a7a70f90e82dcfccca2",
+  "target": "library",
+  "featureId": "csharp-13-0-overload-resolution-priority",
+  "langVersion": "13.0",
+  "expected": {
+    "referenceDiagnostics": true
+  },
+  "unsupported": [],
+  "mappingScope": "Exact inventory specSection; fenced fragment compiled as library against pinned Roslyn, not assumed valid standalone program",
+  "provenance": {
+    "repository": "dotnet/csharplang",
+    "commit": "05eb4800fc3dc76259ccd49ac01f1eeb49222380",
+    "path": "proposals/csharp-13.0/overload-resolution-priority.md",
+    "sha256": "3ae409649aa5fc38d1b6a2d6a156f641c7c72feba0e394ce5765522d2322138b",
+    "url": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-13.0/overload-resolution-priority.md",
+    "license": "NOASSERTION",
+    "offset": 5626
+  }
+}

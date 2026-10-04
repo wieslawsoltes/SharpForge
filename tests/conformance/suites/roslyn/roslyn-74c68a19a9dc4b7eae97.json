@@ -1,0 +1,28 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-74c68a19a9dc4b7eae97",
+  "kind": "diagnostics",
+  "sourceText": "\nusing System.Runtime.InteropServices;\nclass C\n{\n    public static void M([Out]out int p) { p = 0; }\n}",
+  "sourceSHA256": "cd51a23eaf134cbb11d312369d9ccdaeec4a4528e983b58d160480f00113c969",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests_WellKnownAttributes.cs",
+    "sha256": "6d927a5bdb9405565ec70d2c4c97cb9f5f0d51b3a25bcd12a9f4821af6df10ed",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/Attributes/AttributeTests_WellKnownAttributes.cs",
+    "license": "MIT",
+    "method": "OutAttribute_OutParameter",
+    "offset": 84298
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(@\"\nusing System.Runtime.InteropServices;\nclass C\n{\n    public static void M([Out]out int p) { p = 0; }\n}\")",
+  "expected": {
+    "diagnostics": [],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "",
+  "unsupported": []
+}

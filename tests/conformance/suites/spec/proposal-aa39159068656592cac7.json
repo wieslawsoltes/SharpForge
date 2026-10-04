@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "proposal-aa39159068656592cac7",
+  "kind": "spec",
+  "sourceText": "struct R1 : IEquatable<R1>\n{\n    public T1 P1 { get; set; }\n    public T2 P2 { get; set; }\n\n    private bool PrintMembers(StringBuilder builder)\n    {\n        builder.Append(nameof(P1));\n        builder.Append(\" = \");\n        builder.Append(this.P1); // or builder.Append(this.P1.ToString()); if P1 has a value type\n        builder.Append(\", \");\n\n        builder.Append(nameof(P2));\n        builder.Append(\" = \");\n        builder.Append(this.P2); // or builder.Append(this.P2.ToString()); if P2 has a value type\n\n        return true;\n    }\n\n    public override string ToString()\n    {\n        var builder = new StringBuilder();\n        builder.Append(nameof(R1));\n        builder.Append(\" { \");\n\n        if (PrintMembers(builder))\n            builder.Append(\" \");\n\n        builder.Append(\"}\");\n        return builder.ToString();\n    }\n}",
+  "sourceSHA256": "b024f3799fe8a351a9230933947f854c3c7f935d04f04046d3278842ed350b34",
+  "target": "library",
+  "featureId": "csharp-10-0-record-structs",
+  "langVersion": "10.0",
+  "expected": {
+    "referenceDiagnostics": true
+  },
+  "unsupported": [],
+  "mappingScope": "Exact inventory specSection; fenced fragment compiled as library against pinned Roslyn, not assumed valid standalone program",
+  "provenance": {
+    "repository": "dotnet/csharplang",
+    "commit": "05eb4800fc3dc76259ccd49ac01f1eeb49222380",
+    "path": "proposals/csharp-10.0/record-structs.md",
+    "sha256": "6648b21cf551cda46a37801f487f82de1b87eb9ee39f08904ad5b5707ee0ae58",
+    "url": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-10.0/record-structs.md",
+    "license": "NOASSERTION",
+    "offset": 7696
+  }
+}

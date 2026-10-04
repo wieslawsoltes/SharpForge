@@ -1,0 +1,35 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-47d2a4cad47161fb23f5",
+  "kind": "diagnostics",
+  "sourceText": "class C\n{\n    public unsafe void M1(delegate*<ref readonly int, void> p) { }\n    public void M2(ref readonly int p) { }\n}",
+  "sourceSHA256": "6ab05c4841f3074ee1d14699c69d603b1e5157f52f53553cf2d61a07a57abee1",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/RefReadonlyParameterTests.cs",
+    "sha256": "94a0c620b0975febab4af5bf7a1536fee292cd72862f8126c0e8c35cfbf49495",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/RefReadonlyParameterTests.cs",
+    "license": "MIT",
+    "method": "FunctionPointer_NoAttribute_PlusNormalMethod",
+    "offset": 63326
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source, options: TestOptions.UnsafeDebugDll)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0518",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n            // (3,37): error CS0518: Predefined type 'System.Runtime.CompilerServices.RequiresLocationAttribute' is not defined or imported\n            //     public unsafe void M1(delegate*<ref readonly int, void> p) { }\n            Diagnostic(ErrorCode.ERR_PredefinedTypeNotFound, \"ref readonly int\").WithArguments(\"System.Runtime.CompilerServices.RequiresLocationAttribute\").WithLocation(3, 37)",
+  "unsupported": [
+    "Custom upstream compilation/parse options require an adapter"
+  ]
+}

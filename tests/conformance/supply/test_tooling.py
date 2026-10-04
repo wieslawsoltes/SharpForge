@@ -75,6 +75,16 @@ class SupplyToolingTests(unittest.TestCase):
         self.assertEqual(lock.render_lock(metadata['packages']), (ROOT / 'tests/requirements.txt').read_text())
         self.assertIn('playwright', [package['name'] for package in metadata['packages']])
         self.assertGreaterEqual(len(metadata['packages']), 10)
+        self.assertTrue(set(metadata['roots']).issubset(
+            {package['name'] + '==' + package['version'] for package in metadata['packages']}))
+
+    def test_lock_roots_follow_requested_resolution_versions(self):
+        resolution = {'install': [
+            {'requested': True, 'metadata': {'name': 'playwright', 'version': '1.63.0'}},
+            {'requested': False, 'metadata': {'name': 'pyee', 'version': '13.0.1'}},
+            {'requested': True, 'metadata': {'name': 'PyYAML', 'version': '6.0.3'}},
+        ]}
+        self.assertEqual(lock.resolved_roots(resolution), ['playwright==1.63.0', 'PyYAML==6.0.3'])
 
     def test_release_asset_and_permission_ordering(self):
         release = workflows.parse_workflow((ROOT / '.github/workflows/release.yml').read_text())

@@ -1,84 +1,87 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {CodeEditor} from '@sharpforge/editor';
 import {SourceText} from '@sharpforge/text';
-import {editorDom} from './fixtures/a18-editor-dom.js';
+import {createVirtualEditor, gutterLine, sourceRows} from './fixtures/a18-virtual-editor-dom.js';
 
-function createEditor(t, options = {}) {
-  const fixture = editorDom();
-  const previous = Object.getOwnPropertyDescriptor(globalThis, 'ResizeObserver');
-  Object.defineProperty(globalThis, 'ResizeObserver', {value: fixture.document.defaultView.ResizeObserver, configurable: true});
-  const editor = new CodeEditor(fixture.element, options);
-  t.after(() => {
-    if (!editor.disposed) editor.dispose();
-    if (previous) Object.defineProperty(globalThis, 'ResizeObserver', previous);
-    else delete globalThis.ResizeObserver;
-  });
-  return {...fixture, editor};
-}
-
-test('A18 editor: one native revision paints once despite synchronous diagnostic and cursor callbacks', async t => {
+test('A18 editor: one native revision schedules one virtual frame through diagnostic and cursor callbacks', t => {
   const changes = [];
   const cursors = [];
   let editor;
-  const fixture = createEditor(t, {onChange: value => { changes.push(value); editor.setDiagnostics([]); }, onCursor: value => cursors.push(value)});
+  const fixture = createVirtualEditor(t, {
+    onChange: value => { changes.push(value); editor.setDiagnostics([]); }, onCursor: value => cursors.push(value)
+  });
   editor = fixture.editor;
   const text = Array.from({length: 3000}, (_, line) => `int value${line} = ${line};\n`).join('');
   editor.setModel('Large.cs', text);
+  fixture.flushFrames();
   const firstSource = editor.sourceSnapshot();
-  const writes = editor.highlight.htmlWrites;
-  const gutterWrites = editor.gutter.htmlWrites;
+  const row = editor.view.lines.elementFor(0);
+  const writes = row.replaceWrites;
   const start = text.indexOf('= 0') + 2;
-  editor.input.setRangeText('7', start, start + 1, 'end');
-  await editor.input.fire('input');
+  editor.input.setSelectionRange(start, start + 1);
+  fixture.flushFrames();
+  const event = editor.input.dispatch('beforeinput', {inputType: 'insertText', data: '7'});
+  assert.equal(event.defaultPrevented, true, 'the real controller owns the native edit');
   assert.equal(changes.length, 1);
-  assert.equal(editor.highlight.htmlWrites, writes + 1, 'changed source replaces the visible markup only once');
-  assert.equal(editor.gutter.htmlWrites, gutterWrites, 'an edit on the same line must retain identical gutter nodes');
+  assert.equal(row.replaceWrites, writes, 'model publication schedules presentation without an intermediate paint');
+  assert.equal(fixture.frames.size, 1);
   assert.equal(editor.offset, start + 1);
   assert.equal(editor.input.selectionEnd, start + 1);
   assert.equal(cursors.at(-1).offset, start + 1);
   assert.equal(editor.sourceSnapshot().version, firstSource.version + 1);
   assert.equal(editor.sourceSnapshot(), editor.sourceSnapshot());
+  fixture.flushFrames();
+  assert.equal(row.replaceWrites, writes + 1);
   assert.equal(editor.highlightMetrics.totalTokens, editor.highlightIndex.tokenCount);
-  assert(editor.highlightMetrics.lastLine - editor.highlightMetrics.firstLine < 40);
+  assert(editor.highlightMetrics.domLines < 40);
   assert(editor.highlight.querySelectorAll('span').length < 1000);
-  await editor.input.fire('input');
-  assert.equal(changes.length, 1, 'duplicate native input must not publish a second source revision');
-  assert.equal(editor.highlight.htmlWrites, writes + 1);
+  editor.input.dispatch('input', {isComposing: false});
+  fixture.flushFrames();
+  assert.equal(changes.length, 1, 'unchanged native context cannot publish a duplicate source revision');
+  assert.equal(row.replaceWrites, writes + 1);
 });
 
-test('A18 editor: equivalent diagnostics preserve nodes, while visible severity and execution changes repaint', t => {
-  const {editor} = createEditor(t);
+test('A18 editor: equivalent diagnostics retain rows while hover, severity and execution details stay current', t => {
+  const fixture = createVirtualEditor(t);
+  const {editor} = fixture;
   editor.setModel('Decorated.cs', 'int answer = (42);\nConsole.WriteLine(answer);');
   const diagnostic = {start: 4, length: 6, severity: 'warning', range: {start: {line: 0, character: 4}}, message: 'First'};
   editor.setDiagnostics([diagnostic]);
-  const warning = editor.highlight.querySelector('.sf-squiggle-warning');
+  fixture.flushFrames();
+  const row = editor.view.lines.elementFor(0);
+  const warning = editor.highlight.querySelector('.sf-diagnostic-warning');
   assert(warning);
-  const writes = editor.highlight.htmlWrites;
-  const latest = {...diagnostic, message: 'Updated analysis details'};
-  editor.setDiagnostics([latest]);
+  const writes = row.replaceWrites;
+  editor.setDiagnostics([{...diagnostic, message: 'Updated analysis details'}]);
   editor.paint();
   editor.cursor();
-  assert.equal(editor.diagnostics[0], latest, 'latest diagnostics remain observable even when their paint is identical');
-  assert.equal(editor.highlight.htmlWrites, writes);
-  assert.equal(editor.highlight.querySelector('.sf-squiggle-warning'), warning);
-  editor.setDiagnostics([{...latest, severity: 'error'}]);
-  assert.equal(editor.highlight.htmlWrites, writes + 1);
-  assert.equal(editor.highlight.querySelector('.sf-squiggle-warning'), null);
-  assert(editor.gutter.querySelector('[data-line="1"]').classList.contains('error'));
+  fixture.flushFrames();
+  assert.equal(editor.diagnostics[0].message, 'Updated analysis details');
+  assert.equal(row.replaceWrites, writes);
+  assert.equal(editor.highlight.querySelector('.sf-diagnostic-warning'), warning);
+  assert(warning.title.includes('Updated analysis details'));
+  editor.setDiagnostics([{...diagnostic, severity: 'error'}]);
+  fixture.flushFrames();
+  assert.equal(row.replaceWrites, writes + 1);
+  assert.equal(editor.highlight.querySelector('.sf-diagnostic-warning'), null);
+  assert(gutterLine(editor, 1).classList.contains('error'));
   editor.setExecutionLocation({line: 1, start: 0, end: 3}, {phase: 'stopped', description: 'Paused here'});
+  fixture.flushFrames();
   assert(editor.highlight.querySelector('.sf-current-statement'));
-  assert(editor.gutter.querySelector('[data-line="1"]').getAttribute('title').includes('Paused here'));
-  const executionWrites = editor.highlight.htmlWrites;
+  assert(gutterLine(editor, 1).title.includes('Paused here'));
+  const executionWrites = row.replaceWrites;
   editor.setExecutionLocation({line: 1, start: 0, end: 3}, {phase: 'stopped', description: 'New detail'});
-  assert.equal(editor.highlight.htmlWrites, executionWrites);
-  assert(editor.gutter.querySelector('[data-line="1"]').getAttribute('title').includes('New detail'));
+  fixture.flushFrames();
+  assert.equal(row.replaceWrites, executionWrites);
+  assert(gutterLine(editor, 1).title.includes('New detail'));
   editor.setExecutionLocation(null);
+  fixture.flushFrames();
   assert.equal(editor.highlight.querySelector('.sf-current-statement'), null);
 });
 
-test('A18 editor: scrolling, resizing and horizontal movement retain viewport, gutter and caret contracts', t => {
-  const {editor, element, observers} = createEditor(t);
+test('A18 editor: virtual scrolling, resize and horizontal movement preserve gutter and global caret offsets', t => {
+  const fixture = createVirtualEditor(t);
+  const {editor, observers} = fixture;
   const text = Array.from({length: 3000}, (_, line) => `int row${line} = ${line};\n`).join('');
   editor.setModel('Scroll.cs', text);
   const source = editor.sourceSnapshot();
@@ -88,59 +91,72 @@ test('A18 editor: scrolling, resizing and horizontal movement retain viewport, g
   editor.input.scrollLeft = 80;
   editor.setBreakpoints([{line: 1501, verified: false, enabled: false, message: 'Pending breakpoint'}]);
   editor.setSelectedFrameLine(1501);
-  editor.cursor();
+  fixture.flushFrames();
   assert(editor.highlightMetrics.firstLine <= 1500 && editor.highlightMetrics.lastLine > 1500);
-  assert(editor.highlightMetrics.lastLine - editor.highlightMetrics.firstLine <= 30);
-  assert(editor.highlight.style.transform.startsWith('translate(-80px,'));
-  const row = editor.gutter.querySelector('[data-line="1501"]');
-  for (const name of ['current', 'breakpoint', 'pending', 'disabled-breakpoint', 'selected-frame']) assert(row.classList.contains(name));
+  assert(editor.highlightMetrics.domLines <= 30);
+  assert.equal(editor.view.viewport.scrollLeft, 80);
+  const button = gutterLine(editor, 1501);
+  for (const name of ['current', 'breakpoint', 'pending', 'disabled-breakpoint', 'selected-frame']) assert(button.classList.contains(name));
   assert.equal(editor.offset, offset);
   assert.equal(editor.input.selectionEnd, offset + 3);
-  assert.equal(element.querySelector('.sf-current-line').style.top, '14px');
-  const writes = editor.highlight.htmlWrites;
+  const line = editor.view.lines.elementFor(1500);
+  const spans = [...line.children];
+  const position = editor.view.coordsAt(offset);
   editor.input.scrollLeft = 120;
   editor.sync();
-  assert.equal(editor.highlight.htmlWrites, writes, 'horizontal scroll translates existing syntax nodes');
-  assert(editor.highlight.style.transform.startsWith('translate(-120px,'));
-  element.clientHeight = 660;
+  fixture.flushFrames();
+  assert.deepEqual(line.children, spans, 'horizontal scroll reuses the existing virtual syntax row');
+  assert.equal(editor.view.coordsAt(offset).left, position.left - 40);
+  editor.view.viewport.clientHeight = 660;
   observers[0].callback();
-  assert(editor.highlightMetrics.lastLine - editor.highlightMetrics.firstLine > 30);
-  assert(editor.highlightMetrics.lastLine - editor.highlightMetrics.firstLine < 45);
+  fixture.flushFrames();
+  assert(editor.highlightMetrics.domLines > 30 && editor.highlightMetrics.domLines < 45);
   assert.equal(editor.offset, offset);
   assert.equal(editor.sourceSnapshot(), source);
 });
 
-test('A18 editor: offscreen source edits reuse visible nodes and model switches clear stale decoration state', t => {
-  const {editor} = createEditor(t);
+test('A18 editor: offscreen edits reuse visible content and model switches remove stale decorations', t => {
+  const fixture = createVirtualEditor(t);
+  const {editor} = fixture;
   const text = ('int n = 1;\n').repeat(3000);
   editor.setModel('First.cs', text);
-  const writes = editor.highlight.htmlWrites;
+  fixture.flushFrames();
+  const row = editor.view.lines.elementFor(0);
+  const spans = [...row.children];
+  const writes = row.replaceWrites;
   const start = text.lastIndexOf('1');
-  editor.input.setRangeText('2', start, start + 1, 'end');
-  editor.changed();
-  assert.equal(editor.highlight.htmlWrites, writes, 'unchanged visible text must keep its existing nodes');
+  editor.applyEdits([{start, end: start + 1, text: '2'}], {source: 'external-source', undoStop: true});
+  fixture.flushFrames();
+  assert.equal(row.replaceWrites, writes);
+  assert.deepEqual(row.children, spans);
   assert.equal(editor.sourceSnapshot().text, text.slice(0, start) + '2' + text.slice(start + 1));
   editor.setDiagnostics([{start: 0, length: 3, range: {start: {line: 0}}, severity: 'error'}]);
-  assert(editor.highlight.querySelector('.sf-squiggle'));
+  fixture.flushFrames();
+  assert(editor.highlight.querySelector('.sf-diagnostic-error'));
   editor.setModel('Second.cs', 'class Other {}');
+  fixture.flushFrames();
   assert.equal(editor.diagnostics.length, 0);
-  assert.equal(editor.highlight.querySelector('.sf-squiggle'), null);
-  assert.equal(editor.highlight.textContent, 'class Other {}\n');
+  assert.equal(editor.highlight.querySelector('.sf-diagnostic-error'), null);
+  assert.equal(sourceRows(editor).join('\n'), 'class Other {}');
   assert.equal(editor.sourceSnapshot().uri, 'Second.cs');
   assert.deepEqual(editor.sourceSnapshot().lineStarts, new SourceText(editor.value).lineStarts);
 });
 
-test('A18 editor: disposal disconnects the viewport and ignores a previously queued resize notification', t => {
-  const {editor, element, observers} = createEditor(t);
+test('A18 editor: disposal cancels the animation frame and ignores an already queued resize callback', t => {
+  const fixture = createVirtualEditor(t);
+  const {editor, element, observers, writes} = fixture;
   editor.setModel('Dispose.cs', 'class C {}');
   const input = editor.input;
   assert(input.getAttribute('aria-description').includes('Escape'));
+  assert(fixture.frames.size > 0);
   editor.dispose();
-  const writes = element.htmlWrites;
+  const after = {...writes};
   observers[0].callback();
   editor.sync();
+  fixture.flushFrames();
   assert.equal(observers[0].disconnected, true);
-  assert.equal(element.htmlWrites, writes);
+  assert.deepEqual(writes, after);
+  assert.equal(fixture.frames.size, 0);
   assert.equal(element.children.length, 0);
   assert.equal(input.getAttribute('aria-description'), null);
 });

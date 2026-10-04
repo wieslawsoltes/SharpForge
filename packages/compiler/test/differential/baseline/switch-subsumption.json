@@ -1,0 +1,9 @@
+{
+  "switch-subsumption/cs8120-case-behind-type-test": ["diagnostics", "warnings"],
+  "switch-subsumption/cs8509-type-tests-are-not-exhaustive": ["diagnostics", "warnings"],
+  "switch-subsumption/cs8510-after-discard-arm": ["diagnostics", "warnings"],
+  "switch-subsumption/cs8510-arm-behind-type-test": ["diagnostics", "warnings"],
+  "switch-subsumption/cs8510-constant-behind-type-test": ["diagnostics", "warnings"],
+  "switch-subsumption/cs8510-type-parameters": ["diagnostics", "warnings"],
+  "switch-subsumption/unrelated-type-tests-are-reachable": ["diagnostics", "warnings"]
+}

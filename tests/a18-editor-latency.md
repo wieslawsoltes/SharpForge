@@ -39,3 +39,16 @@ editor methods, SourceText, callbacks or highlight results. The browser 16 ms as
 workload remain unchanged. These new tests, existing regressions and the production source-latency browser
 case are **prepared but unrun by this branch**; root owns the serial validation slot and raw receipts.
 No passing latency claim or before/after speedup is made here.
+
+## Upstream editor integration
+
+The description above records the original A18 textarea repair. Upstream `7bd1239a` replaces that editor
+with a persistent `EditorModel`, hidden native input and `VirtualEditorView`. The integration carries
+snapshot identity, incremental lexical reuse and bounded unchanged-row reuse into those components;
+the obsolete private textarea renderer and duplicate highlight index/run modules are retired.
+The viewport lifecycle test now constructs the actual upstream model/view through an explicit native
+DOM and animation boundary. Its assertions cover the new scheduled-presentation contract, current
+source/diagnostics, node reuse, global caret/scroll behavior and disposal. See
+`packages/editor/docs/a18-integration.md` for the complete mapping and short-lived rollback API.
+The historical browser pass at `38ac41a4` qualifies the earlier architecture only. The merged upstream
+architecture requires a fresh coordinator-run gate with the unchanged production workload and budget.

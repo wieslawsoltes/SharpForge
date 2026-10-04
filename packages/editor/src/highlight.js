@@ -1,1 +1,1 @@
-export {SyntaxHighlightIndex} from './highlight-index.js';
+export {SyntaxHighlightIndex} from './view/syntax-index.js';

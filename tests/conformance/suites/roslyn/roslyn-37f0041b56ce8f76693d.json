@@ -1,0 +1,53 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-37f0041b56ce8f76693d",
+  "kind": "diagnostics",
+  "sourceText": "\npartial class Program\n{\n    static void Main()\n    {\n        D d;\n        d = M;\n        d = new D(M);\n        M2(M);\n\n        d = M3;\n        d = new D(M3);\n        M2(M3);\n    }\n    static void M(I1 i1) {}\n    static void M(I2 i2) {}\n    static void M2(D d) {}\n\n    static void M3(int x) {}\n}\ninterface I1 {}\ninterface I2 {}\nclass C : I1, I2 {}\n\ndelegate void D(C c);\n",
+  "sourceSHA256": "9fa460cf53452cf4facd9f0e3ecb6eab27153af84a046e61bc28b3bfc941b49d",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/Diagnostics/MethodGroupConversion.cs",
+    "sha256": "c34e382c41748571c4e95477612c5fee2977d51c96ff0397258f43b1d7aee12d",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/Diagnostics/MethodGroupConversion.cs",
+    "license": "MIT",
+    "method": "TestAmbiguous",
+    "offset": 1089
+  },
+  "langVersion": "preview",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS0121",
+        "severity": "error"
+      },
+      {
+        "code": "CS0121",
+        "severity": "error"
+      },
+      {
+        "code": "CS0121",
+        "severity": "error"
+      },
+      {
+        "code": "CS0123",
+        "severity": "error"
+      },
+      {
+        "code": "CS0123",
+        "severity": "error"
+      },
+      {
+        "code": "CS1503",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n                // (7,13): error CS0121: The call is ambiguous between the following methods or properties: 'Program.M(I1)' and 'Program.M(I2)'\n                //         d = M;\n                Diagnostic(ErrorCode.ERR_AmbigCall, \"M\").WithArguments(\"Program.M(I1)\", \"Program.M(I2)\").WithLocation(7, 13),\n                // (8,19): error CS0121: The call is ambiguous between the following methods or properties: 'Program.M(I1)' and 'Program.M(I2)'\n                //         d = new D(M);\n                Diagnostic(ErrorCode.ERR_AmbigCall, \"M\").WithArguments(\"Program.M(I1)\", \"Program.M(I2)\").WithLocation(8, 19),\n                // (9,12): error CS0121: The call is ambiguous between the following methods or properties: 'Program.M(I1)' and 'Program.M(I2)'\n                //         M2(M);\n                Diagnostic(ErrorCode.ERR_AmbigCall, \"M\").WithArguments(\"Program.M(I1)\", \"Program.M(I2)\").WithLocation(9, 12),\n                // (11,13): error CS0123: No overload for 'M3' matches delegate 'D'\n                //         d = M3;\n                Diagnostic(ErrorCode.ERR_MethDelegateMismatch, \"M3\").WithArguments(\"M3\", \"D\").WithLocation(11, 13),\n                // (12,13): error CS0123: No overload for 'M3' matches delegate 'D'\n                //         d = new D(M3);\n                Diagnostic(ErrorCode.ERR_MethDelegateMismatch, \"new D(M3)\").WithArguments(\"M3\", \"D\").WithLocation(12, 13),\n                // (13,12): error CS1503: Argument 1: cannot convert from 'method group' to 'D'\n                //         M2(M3);\n                Diagnostic(ErrorCode.ERR_BadArgType, \"M3\").WithArguments(\"1\", \"method group\", \"D\").WithLocation(13, 12)\n                ",
+  "unsupported": []
+}

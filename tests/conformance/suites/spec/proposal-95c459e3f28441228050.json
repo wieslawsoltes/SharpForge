@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "proposal-95c459e3f28441228050",
+  "kind": "spec",
+  "sourceText": "var x = new long[] { 1 };\nAssert.Equal([2], x); // previously Assert.Equal<T>(T[], T[]), now ambiguous with Assert.Equal<T>(ReadOnlySpan<T>, Span<T>)\nAssert.Equal([2], x.AsSpan()); // workaround",
+  "sourceSHA256": "707622c7e0df59900c3b1526ff5bb09affaa8f1375c0a4f33e3c0f1ad4c12a6d",
+  "target": "library",
+  "featureId": "csharp-14-0-first-class-span-types",
+  "langVersion": "14.0",
+  "expected": {
+    "referenceDiagnostics": true
+  },
+  "unsupported": [],
+  "mappingScope": "Exact inventory specSection; fenced fragment compiled as library against pinned Roslyn, not assumed valid standalone program",
+  "provenance": {
+    "repository": "dotnet/csharplang",
+    "commit": "05eb4800fc3dc76259ccd49ac01f1eeb49222380",
+    "path": "proposals/csharp-14.0/first-class-span-types.md",
+    "sha256": "3c3ef60c44f7d48f1ee4ada4268a2eb146fa7f74bf6b4a52f09d894366cb626a",
+    "url": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-14.0/first-class-span-types.md",
+    "license": "NOASSERTION",
+    "offset": 22530
+  }
+}

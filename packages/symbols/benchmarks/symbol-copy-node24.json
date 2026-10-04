@@ -1,0 +1,72 @@
+{
+  "protocol": {
+    "script": "tests/benchmarks/symbol-copy.mjs",
+    "beforeCommand": "node scripts/limited.js node --expose-gc --input-type=module < ../SharpForge-a13-symbol-copy/tests/benchmarks/symbol-copy.mjs",
+    "afterCommand": "node scripts/limited.js node --expose-gc tests/benchmarks/symbol-copy.mjs",
+    "testConcurrency": 1,
+    "parallelRuns": 1,
+    "environment": "Exclusive team validation slot and machine-wide limiter; other contributors could perform unrelated work.",
+    "baselineSymbolServerBlob": "0ff4f6a07bfd79b7aa2155acf32511ebe5fd621b",
+    "scope": "Padded managed PE; permission denied; full GC before every sample. Measures ArrayBuffer allocation at permission callback, not downloads, PDB verification or RSS."
+  },
+  "before": {
+    "revision": "183a8ab9",
+    "node": "v24.21.0",
+    "host": "darwin arm64 Apple M3 Pro",
+    "samples": 15,
+    "measurement": "ArrayBuffer delta at permission boundary; permission denied; no download, PDB verification or RSS claim",
+    "cases": [
+      {
+        "inputBytes": 1048576,
+        "medianMs": 0.37725000000000364,
+        "p95Ms": 0.7505829999999492,
+        "medianArrayBufferBytes": 2097428,
+        "p95ArrayBufferBytes": 2097428
+      },
+      {
+        "inputBytes": 16777216,
+        "medianMs": 1.1418749999999704,
+        "p95Ms": 1.1882499999999823,
+        "medianArrayBufferBytes": 33554708,
+        "p95ArrayBufferBytes": 33554708
+      },
+      {
+        "inputBytes": 67108864,
+        "medianMs": 3.800540999999953,
+        "p95Ms": 4.597291000000041,
+        "medianArrayBufferBytes": 134218004,
+        "p95ArrayBufferBytes": 134218004
+      }
+    ]
+  },
+  "after": {
+    "revision": "01db68d1",
+    "node": "v24.21.0",
+    "host": "darwin arm64 Apple M3 Pro",
+    "samples": 15,
+    "measurement": "ArrayBuffer delta at permission boundary; permission denied; no download, PDB verification or RSS claim",
+    "cases": [
+      {
+        "inputBytes": 1048576,
+        "medianMs": 0.34195899999997437,
+        "p95Ms": 0.7650829999999473,
+        "medianArrayBufferBytes": 1048852,
+        "p95ArrayBufferBytes": 1048852
+      },
+      {
+        "inputBytes": 16777216,
+        "medianMs": 0.6366250000000377,
+        "p95Ms": 0.7713750000000346,
+        "medianArrayBufferBytes": 16777492,
+        "p95ArrayBufferBytes": 16777492
+      },
+      {
+        "inputBytes": 67108864,
+        "medianMs": 1.8707919999999945,
+        "p95Ms": 2.1477499999999736,
+        "medianArrayBufferBytes": 67109140,
+        "p95ArrayBufferBytes": 67109140
+      }
+    ]
+  }
+}

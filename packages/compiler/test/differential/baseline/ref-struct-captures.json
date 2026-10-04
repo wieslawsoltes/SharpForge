@@ -1,0 +1,5 @@
+{
+  "ref-struct-captures/cs8175-cs9108-captured-by-functions": ["diagnostics", "warnings"],
+  "ref-struct-captures/cs8175-top-level-local": ["diagnostics", "warnings"],
+  "ref-struct-captures/cs8345-cs0611-fields-and-arrays": ["diagnostics", "warnings"]
+}

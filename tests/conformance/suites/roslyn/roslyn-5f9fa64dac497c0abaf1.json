@@ -1,0 +1,31 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-5f9fa64dac497c0abaf1",
+  "kind": "diagnostics",
+  "sourceText": "\npublic class C\n{\n    public static async System.Threading.Tasks.Task Main()\n    {\n        await foreach (var i in new C())\n        {\n        }\n    }\n    public Enumerator GetAsyncEnumerator(System.Threading.CancellationToken token = default)\n    {\n        return new Enumerator();\n    }\n    public sealed class Enumerator\n    {\n        public async System.Threading.Tasks.Task<bool> MoveNextAsync(int ok = 1)\n        {\n            System.Console.Write($\"MoveNextAsync {ok}\");\n            await System.Threading.Tasks.Task.Yield();\n            return false;\n        }\n        public int Current\n        {\n            get => throw null;\n        }\n    }\n}",
+  "sourceSHA256": "f280b7b0d14c696f791825eeddd87eb3b8c94a88a9e517f4df06444b89616037",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenAwaitForeachTests.cs",
+    "sha256": "3c72028a71b56ed2c5aef9987e6e3104cd6d4d2bfe0a3ef090960b2314c59cf3",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit/CodeGen/CodeGenAwaitForeachTests.cs",
+    "license": "MIT",
+    "method": "TestMoveNextAsync_WithOptionalParameter",
+    "offset": 42073
+  },
+  "langVersion": "preview",
+  "target": "exe",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(source, options: TestOptions.DebugExe)",
+  "expected": {
+    "diagnostics": [],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "",
+  "unsupported": [
+    "Upstream reference profile differs from SharpForge closed framework; references retained for reference-qualified adaptation",
+    "Custom upstream compilation/parse options require an adapter"
+  ]
+}

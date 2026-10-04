@@ -1,16 +1,14 @@
+import {popPooledFrame} from './frame-retirement.js';
+import {continuationRootValues} from './frame-roots.js';
 import {ManagedFault} from '../heap.js';
+import {exceptionMatches} from './exception-types.js';
 
 export function frameState() { return {exception: null, caught: [], unwinds: []}; }
 
 /** Exception continuations can own the only live reference to a return value or fault. */
 export function* roots(vm) {
   for (const frame of vm.frames) {
-    for (const unwind of frame.unwinds ?? []) {
-      yield unwind.value;
-      if (unwind.error?.reference) yield unwind.error.reference;
-    }
-    if (frame.exception?.reference) yield frame.exception.reference;
-    for (const caught of frame.caught ?? []) if (caught.fault.reference) yield caught.fault.reference;
+    yield* continuationRootValues(frame, true);
   }
   if (vm.fault?.reference) yield vm.fault.reference;
   if (vm.pendingFault?.reference) yield vm.pendingFault.reference;
@@ -37,7 +35,7 @@ export function finalizers(vm, frame, source, target = Infinity) {
 
 export function finishReturn(vm, frame, value) {
   vm.stack.length = frame.base;
-  vm.frames.pop();
+  popPooledFrame(vm);
   if (vm.frames.length) vm.stack.push(value);
   else {
     vm.returnValue = value;
@@ -77,7 +75,7 @@ export function resumeUnwind(vm, frame) {
     vm.fault = null;
     return;
   }
-  vm.frames.pop();
+  popPooledFrame(vm);
   vm.stack.length = frame.base;
   vm.handleFault(unwind.error);
 }
@@ -85,6 +83,16 @@ export function resumeUnwind(vm, frame) {
 export function rethrow(frame) {
   throw [...(frame.caught ?? [])].reverse().find(c => frame.pc - 1 >= c.start && frame.pc - 1 < c.end)?.fault
     ?? new ManagedFault('InvalidOperationException', 'No active exception to rethrow');
+}
+
+function matches(vm, fault, type = 'Exception') {
+  if (exceptionMatches(fault.name, type)) return true;
+  if (!fault.reference) return false;
+  const target = vm.heap.methodTables.get(type);
+  for (let table = vm.heap.get(fault.reference).methodTable; table; table = table.base) {
+    if (table === target) return true;
+  }
+  return false;
 }
 
 export function handleFault(vm, error) {
@@ -99,7 +107,9 @@ export function handleFault(vm, error) {
   fault.frames ??= vm.frames.slice().reverse().map(f => ({method: vm.image.methods[f.methodId].qualifiedName, point: f.point}));
   while (vm.frames.length) {
     const frame = vm.top, method = vm.image.methods[frame.methodId], pc = frame.pc - 1;
-    const handler = method.handlers.filter(h => h.kind !== 'finally' && pc >= h.start && pc < h.end).sort((a, b) => (a.end - a.start) - (b.end - b.start))[0];
+    const handler = method.handlers
+      .filter(h => h.kind !== 'finally' && pc >= h.start && pc < h.end && matches(vm, fault, h.type))
+      .sort((a, b) => (a.end - a.start) - (b.end - b.start))[0];
     const target = handler?.target ?? Infinity, finals = vm.finalizers(frame, pc, target);
     // Exceptions caught inside the active finally preserve its original continuation.
     frame.unwinds = frame.unwinds.filter(u => u.active && target >= u.active.target && target < u.active.handlerEnd);
@@ -117,7 +127,7 @@ export function handleFault(vm, error) {
       vm.fault = null;
       return;
     }
-    vm.frames.pop();
+    popPooledFrame(vm);
   }
   vm.state = 'faulted';
 }

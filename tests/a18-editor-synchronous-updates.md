@@ -54,3 +54,15 @@ The measured Studio source-edit path crosses into the editor package. The frozen
 its source-change and undo publication, while the already extracted viewport gains the nested synchronization scope.
 There are no new package exports, dependencies, global caches, source-model shapes or public callback signatures.
 The owning coordinator authorized this small cross-workstream correction under `SF-A18-T04.1` / issue #1682.
+
+## Superseded presentation implementation after upstream integration
+
+This earlier repair's measurements and implementation description remain historical evidence. The
+upstream `7bd1239a` editor has one authoritative persistent model and an existing one-animation-frame
+virtual view scheduler. Its source/diagnostic/history values are synchronous; ordinary DOM presentation
+settles on that frame, or explicitly through `paintViewport()`. It supersedes the old textarea batch's
+outer-callback DOM flush, so the eight regression cases now exercise that production scheduling seam.
+They retain the source, undo/redo, selection, nesting, callback exception, disposal, decoration freshness
+and unchanged-row invariants. New checkpoint tests additionally cover linked views, late callback
+cancellation, native scroll clamping, policy restoration and source-snapshot ownership.
+No old latency result is attributed to the new architecture, and the integration author ran no jobs.

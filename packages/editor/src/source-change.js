@@ -1,4 +1,4 @@
-/** Smallest single UTF-16 replacement between two native textarea values. */
+/** Smallest single UTF-16 replacement between two explicit source strings. */
 export function sourceChange(before, after) {
   let start = 0;
   let oldEnd = before.length;

@@ -51,7 +51,10 @@ export const memberMethods = {
     }
     if (!this.isId()) {
       // An incomplete member that already carries an error (a missing type, say) reports nothing more, as in Roslyn.
-      if (explicit || this.diagnostics.length === this.memberErrors) this.invalidMemberToken();
+      // Directly in a namespace Roslyn reports the type that stands alone instead (`x = 1;`, `Console.WriteLine();`).
+      const clean = this.diagnostics.length === this.memberErrors;
+      if (clean && !explicit && this.typeDepth === 0 && !this.options.backEndProfile) this.namespaceUnexpected(this.tokens[this.i - 1]);
+      else if (explicit || clean) this.invalidMemberToken();
       return explicit
         ? this.n('PropertyDeclaration', attributeLists, modifiers, type, explicit, this.cache.missing('IdentifierToken'), null, null, null, null)
         : this.n('IncompleteMember', attributeLists, modifiers, type);
@@ -123,6 +126,9 @@ export const memberMethods = {
     }
     return accessibility === 3;
   },
+  namespaceUnexpected(token) {
+    this.error(token, 'CS0116', 'A namespace cannot directly contain members such as fields, methods or statements');
+  },
   /** A token that cannot continue a member after its type: a misplaced modifier (CS1585) or anything else (CS1519). */
   invalidMemberToken() {
     const token = this.current;
@@ -154,6 +160,8 @@ export const memberMethods = {
     const typeParameters = this.at('<') ? this.typeParameterList() : null,
       parameters = this.parameterList(),
       constraints = this.constraintClauses();
+    // Roslyn reports an async method at its name.
+    if (modifiers.some(m => m.kind === 'AsyncKeyword')) this.feature('Async', this.memberName);
     const [body, expressionBody, semicolon] = this.asyncBody(modifiers, () => this.functionBody('ExpressionBodiedMethod'));
     this.memberForm(this.memberName, !!(body || expressionBody));
     return this.n(

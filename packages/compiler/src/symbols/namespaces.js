@@ -9,7 +9,7 @@ import {SymbolBase,SymbolKind,SymbolDisplayFormat} from './types.js';
  */
 export const NamespaceExtent=Object.freeze({Source:'source',Metadata:'metadata',Compilation:'compilation'});
 export class NamespaceSymbol extends SymbolBase {
-  constructor(name='',container=null,extent=NamespaceExtent.Source,module=null){super(SymbolKind.Namespace,name);this.containingSymbol=container;this.extent=extent;this.module=module??container?.module??null;this._types=[];this._namespaces=new Map();this.locations=[];}
+  constructor(name='',container=null,extent=NamespaceExtent.Source,module=null){super(SymbolKind.Namespace,name);this.containingSymbol=container;this.extent=extent;this.module=module??container?.module??null;this._types=[];this._typesByName=new Map();this._namespaces=new Map();this.locations=[];}
   get isGlobalNamespace(){return this.containingSymbol===null;}
   get isNamespace(){return true;}
   get containingNamespace(){return this.containingSymbol;}
@@ -18,7 +18,8 @@ export class NamespaceSymbol extends SymbolBase {
   /** Dotted name without `global::`; the global namespace is the empty string. */
   get qualifiedName(){const parts=[];for(let n=this;n&&!n.isGlobalNamespace;n=n.containingSymbol)parts.unshift(n.name);return parts.join('.');}
   getNamespaceMembers(){return [...this._namespaces.values()];}
-  getTypeMembers(name,arity){return this._types.filter(t=>(name===undefined||t.name===name)&&(arity===undefined||t.arity===arity));}
+  /** The types declared directly in this namespace, in declaration order; `name` is looked up in an index, not by scanning. */
+  getTypeMembers(name,arity){const types=name===undefined?this._types:this._typesByName.get(name)??[];return types.filter(t=>arity===undefined||t.arity===arity);}
   /** Types and namespaces declared directly in this namespace. */
   getMembers(name){const namespaces=name===undefined?this.getNamespaceMembers():this.getNamespace(name)?[this.getNamespace(name)]:[];return [...namespaces,...this.getTypeMembers(name)];}
   /** The directly nested namespace with this simple name, or null. */
@@ -27,7 +28,7 @@ export class NamespaceSymbol extends SymbolBase {
   lookupNamespace(qualifiedName){let n=this;if(qualifiedName)for(const part of String(qualifiedName).split('.')){n=n.getNamespace(part);if(!n)return null;}return n;}
   /** Resolves `A.B.Type` relative to this namespace; arity selects among generic overloads. */
   lookupType(qualifiedName,arity){const parts=String(qualifiedName).split('.'),name=parts.pop(),n=this.lookupNamespace(parts.join('.'));return n?.getTypeMembers(name,arity)[0]??null;}
-  addType(type){this._types.push(type);type.containingSymbol=this;return type;}
+  addType(type){this._types.push(type);const named=this._typesByName.get(type.name);if(named)named.push(type);else this._typesByName.set(type.name,[type]);type.containingSymbol=this;return type;}
   getOrAddNamespace(name){let n=this._namespaces.get(name);if(!n){n=new NamespaceSymbol(name,this,this.extent,this.module);this._namespaces.set(name,n);}return n;}
   /** Creates the namespaces of a dotted name as needed and returns the innermost. */
   ensureNamespace(qualifiedName){let n=this;if(qualifiedName)for(const part of String(qualifiedName).split('.'))n=n.getOrAddNamespace(part);return n;}

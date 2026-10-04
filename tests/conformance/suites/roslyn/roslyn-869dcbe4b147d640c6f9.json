@@ -1,0 +1,40 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "roslyn-869dcbe4b147d640c6f9",
+  "kind": "diagnostics",
+  "sourceText": "public class C {}",
+  "sourceSHA256": "ce8f5ace5c4f85a8815ea4b9e0b24724bdffc04c6840208fa64739a5672c9f3d",
+  "provenance": {
+    "repository": "dotnet/roslyn",
+    "commit": "0f557e63420dc3e3791f8f5273f8f8d853d80092",
+    "path": "src/Compilers/CSharp/Test/Emit3/Attributes/InternalsVisibleToAndStrongNameTests.cs",
+    "sha256": "9e10a51f7f673a0e4ecef9e74c9a16fba06fbe3b89f9e5f5374503377b2b2a09",
+    "url": "https://github.com/dotnet/roslyn/blob/0f557e63420dc3e3791f8f5273f8f8d853d80092/src/Compilers/CSharp/Test/Emit3/Attributes/InternalsVisibleToAndStrongNameTests.cs",
+    "license": "MIT",
+    "method": "KeyContainerNoSNProvider_PublicSign",
+    "offset": 32882
+  },
+  "langVersion": "default",
+  "target": "library",
+  "references": "TargetFramework.Standard (pinned Roslyn CSharpTestBase default)",
+  "options": "(\"public class C {}\",\n                options: TestOptions.ReleaseDll\n                    .WithCryptoKeyContainer(\"roslynTestContainer\")\n                    .WithPublicSign(true),\n                parseOptions: parseOptions)",
+  "expected": {
+    "diagnostics": [
+      {
+        "code": "CS7102",
+        "severity": "error"
+      },
+      {
+        "code": "CS8102",
+        "severity": "error"
+      }
+    ],
+    "comparison": "code and severity multiset; locations/arguments retained as upstream expression"
+  },
+  "expectationText": "\n    // error CS7102: Compilation options 'PublicSign' and 'CryptoKeyContainer' can't both be specified at the same time.\n    Diagnostic(ErrorCode.ERR_MutuallyExclusiveOptions).WithArguments(\"PublicSign\", \"CryptoKeyContainer\").WithLocation(1, 1),\n    // error CS8102: Public signing was specified and requires a public key, but no public key was specified.\n    Diagnostic(ErrorCode.ERR_PublicSignButNoKey).WithLocation(1, 1)",
+  "unsupported": [
+    "Dynamic or customized parse options require adaptation",
+    "Custom upstream compilation/parse options require an adapter"
+  ]
+}

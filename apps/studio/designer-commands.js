@@ -12,13 +12,13 @@ export function contributeDesignerCommands(registry, {documents, getActiveUri, t
   };
   const disposables = [
     registry.registerCommand(designerCommandIds.viewDesigner, 'View Designer', 'Shift+F7', (_id, uri) => open('design', uri), {
-      enabled: (_id, uri) => canView('design', uri)
+      enabled: invocation => canView('design', invocation.args?.[0]) || 'Command is unavailable: View Designer'
     }),
     registry.registerCommand(designerCommandIds.viewCode, 'View Code', 'F7', (_id, uri) => open('code', uri), {
-      enabled: (_id, uri) => canView('code', uri)
+      enabled: invocation => canView('code', invocation.args?.[0]) || 'Command is unavailable: View Code'
     }),
     registry.registerCommand(designerCommandIds.openWithDesigner, 'Open With Designer', '', (_id, uri) => open('design', uri), {
-      enabled: (_id, uri) => canView('design', uri)
+      enabled: invocation => canView('design', invocation.args?.[0]) || 'Command is unavailable: Open With Designer'
     })
   ];
   const keydown = event => {

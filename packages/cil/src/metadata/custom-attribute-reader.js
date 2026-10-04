@@ -1,24 +1,10 @@
 import { Reader, text } from '../binary.js';
+import { readPrimitiveValue } from './primitive-values.js';
 import { AttributeContext, AttributeError, attributePrimitiveName } from './custom-attribute-types.js';
 
-const wide = value => Number.isSafeInteger(Number(value)) ? Number(value) : value;
-const readers = Object.freeze({
-  2: reader => reader.u8() !== 0,
-  3: reader => String.fromCharCode(reader.u16()),
-  4: reader => reader.u8() << 24 >> 24,
-  5: reader => reader.u8(),
-  6: reader => reader.u16() << 16 >> 16,
-  7: reader => reader.u16(),
-  8: reader => reader.i32(),
-  9: reader => reader.u32(),
-  10: reader => wide(reader.i64()),
-  11: reader => wide(BigInt.asUintN(64, reader.i64())),
-  12: reader => reader.f32(),
-  13: reader => reader.f64(),
-});
 const constant = (kind, type, value) => Object.freeze({ kind, type, value });
 
-class AttributeReader {
+export class AttributeReader {
   constructor(bytes, context) {
     if (!(bytes instanceof Uint8Array)) throw new AttributeError('MD0100');
     context.size(bytes.length);
@@ -59,7 +45,7 @@ class AttributeReader {
       return this.value(actual, depth + 1);
     }
     if (code === 0x50) return constant('type', 'System.Type', this.string());
-    if (code === 0x55) return constant('enum', type.type, readers[type.underlying](this.reader));
+    if (code === 0x55) return constant('enum', type.type, readPrimitiveValue(this.reader, type.underlying));
     if (code === 0x1d) {
       const length = this.reader.u32();
       if (length === 0xffffffff) return constant('array', null, null);
@@ -69,14 +55,19 @@ class AttributeReader {
       for (let index = 0; index < length; index++) values.push(this.value(type.element, depth + 1));
       return constant('array', null, Object.freeze(values));
     }
-    return constant('primitive', attributePrimitiveName(code), code === 14 ? this.string() : readers[code](this.reader));
+    return constant('primitive', attributePrimitiveName(code), code === 14 ? this.string() : readPrimitiveValue(this.reader, code));
   }
 
   read(parameters) {
     const reader = this.reader;
     if (reader.u16() !== 1) throw new AttributeError('MD0101', undefined, 0);
     const constructorArguments = parameters.map(type => this.value(type));
-    const count = reader.u16();
+    return { constructorArguments, namedArguments: this.namedArguments(reader.u16()) };
+  }
+
+  /** Shared named-argument grammar; permission sets use a compressed count instead of the attribute UInt16. */
+  namedArguments(count) {
+    const reader = this.reader;
     if (count > reader.end - reader.position) throw new AttributeError('MD0102');
     const namedArguments = [];
     for (let index = 0; index < count; index++) {
@@ -88,7 +79,7 @@ class AttributeReader {
       namedArguments.push(Object.freeze({ name, isField: tag === 0x53, value: this.value(type) }));
     }
     if (reader.position !== reader.end) throw new AttributeError('MD0107', undefined, reader.position);
-    return { constructorArguments, namedArguments };
+    return namedArguments;
   }
 }
 

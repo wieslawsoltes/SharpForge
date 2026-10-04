@@ -10,11 +10,12 @@
  *   `{kind: 'leaf', target, type, sourceType, conversion}`  one part stored into one target; `conversion` is null
  *                                                   when the part is stored as it is (a discard, an inferred variable)
  */
+import {DiagnosticId} from '../../diagnostics/codes.js';
 import { ErrorTypeSymbol } from '../../symbols/types.js';
 import { LocalDeclarationKind } from '../../symbols/members.js';
 import { checkWritable } from '../ref-kinds.js';
 import { deconstructionOf } from '../deconstruction.js';
-import { maxTupleElements, tupleTypeOf } from '../tuples.js';
+import { tupleElements, tupleTypeOf } from '../tuples.js';
 
 const unknown = ErrorTypeSymbol.unknown;
 
@@ -54,7 +55,7 @@ export const DeconstructionBinding = Base =>
         failure = { isArity: false };
       const declaresAll = target =>
         target.kind === 'Tuple' ? target.elements.every(declaresAll) : target.kind === 'DeclarationExpression' || target.kind === 'Discard';
-      if (!left.hasErrors && !declaresAll(left)) this.report(syntax.variable, 'CS8186');
+      if (!left.hasErrors && !declaresAll(left)) this.report(syntax.variable, DiagnosticId.CS8186);
       let split = this.bad(syntax.variable, { left });
       if (!left.hasErrors && !elementType.isErrorType()) {
         const plan = this.deconstructionPlan(left, { type: elementType, value, syntax: syntax.expression, whole: syntax.variable, failure });
@@ -76,7 +77,7 @@ export const DeconstructionBinding = Base =>
       }
       if (syntax.kind === 'DeclarationExpression') {
         const bound = this.bindType(syntax.type, { allowVar: true });
-        if (syntax.designation.kind === 'ParenthesizedVariableDesignation' && !bound.isVar) this.report(syntax.type, 'CS8136');
+        if (syntax.designation.kind === 'ParenthesizedVariableDesignation' && !bound.isVar) this.report(syntax.type, DiagnosticId.CS8136);
         return this.designatedTarget(syntax.designation, bound.isVar ? null : bound.type, syntax);
       }
       const target = this.expression(syntax, { allowDiscard: true });
@@ -114,7 +115,7 @@ export const DeconstructionBinding = Base =>
       for (const element of target.elements.slice(partCount)) this.reportUninferredVariables(element);
     }
     reportUninferredVariables(target) {
-      if (target.kind === 'DeclarationExpression' && target.isInferred) this.report(target.local.syntax, 'CS8130', [target.local.name]);
+      if (target.kind === 'DeclarationExpression' && target.isInferred) this.report(target.local.syntax, DiagnosticId.CS8130, [target.local.name]);
       for (const element of target.elements ?? []) this.reportUninferredVariables(element);
     }
     /**
@@ -132,7 +133,7 @@ export const DeconstructionBinding = Base =>
       if (value?.kind === 'Tuple') {
         if (value.elements.length !== count) {
           failure.isArity = true;
-          this.report(source.whole, 'CS8132', [value.elements.length, count]);
+          this.report(source.whole, DiagnosticId.CS8132, [value.elements.length, count]);
           this.reportSurplusVariables(target, value.elements.length);
           return null;
         }
@@ -140,7 +141,7 @@ export const DeconstructionBinding = Base =>
         return parts.includes(null) ? null : { kind: 'literal', parts };
       }
       if (!type || type.isErrorType()) {
-        if (!type) this.report(syntax, 'CS8131');
+        if (!type) this.report(syntax, DiagnosticId.CS8131);
         return null;
       }
       const receiver = value ?? this.node('DeconstructionValue', syntax, type, {});
@@ -148,7 +149,7 @@ export const DeconstructionBinding = Base =>
       if (split.error) {
         failure.isArity = !!split.isArity;
         for (const problem of split.error) this.report(split.isArity ? source.whole : syntax, problem.code, problem.args);
-        if (split.isArity) this.reportSurplusVariables(target, type.typeArguments.length);
+        if (split.isArity) this.reportSurplusVariables(target, tupleElements(type).length);
         return null;
       }
       const parts = split.partTypes.map((partType, index) => part(index, partType, null));
@@ -177,7 +178,7 @@ export const DeconstructionBinding = Base =>
     targetsType(target) {
       if (target.kind !== 'Tuple') return target.type ?? null;
       const types = target.elements.map(element => this.targetsType(element));
-      if (types.includes(null) || types.length > maxTupleElements) return null;
+      if (types.includes(null)) return null;
       return tupleTypeOf(this.core.bridge, types, []);
     }
   };

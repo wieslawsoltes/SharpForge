@@ -1,12 +1,12 @@
 export const retiredDesignerPanelIds = Object.freeze(['designer', 'designer-source']);
 const retired = new Set(retiredDesignerPanelIds);
 
-/** Removes 0.14 standalone designer panels from a version-1 dock record while preserving all live document groups. */
+/** Removes 0.14 standalone panels from v1/v2 dock records, preserving document views and workbench metadata. */
 export function migrateDesignerLayout(input, {knownPanels = null, activeUri = null} = {}) {
   const wasText = typeof input === 'string';
   const state = wasText ? JSON.parse(input) : structuredClone(input);
-  if (state?.version !== 1 || !state.root || !Array.isArray(state.floating) || !Array.isArray(state.closed)) {
-    throw new TypeError('A version-1 docking layout is required for designer migration');
+  if (![1, 2].includes(state?.version) || !state.root || !Array.isArray(state.floating) || !Array.isArray(state.closed)) {
+    throw new TypeError('A version-1 or version-2 docking layout is required for designer migration');
   }
   const known = knownPanels ? new Set([...knownPanels].map(panel => typeof panel === 'string' ? panel : panel.id)) : null;
   const keep = id => !retired.has(id) && (!known || known.has(id));
@@ -40,6 +40,11 @@ export function migrateDesignerLayout(input, {knownPanels = null, activeUri = nu
   }
   state.closed = filter(state.closed);
   if (known) for (const id of known) if (keep(id) && !placed.has(id)) state.closed.push(id);
+  for (const key of ['returnLocations', 'tabState', 'flyoutSizes', 'documentViews', 'panelInstances']) {
+    if (state[key] && typeof state[key] === 'object') {
+      for (const id of Object.keys(state[key])) if (!keep(id)) delete state[key][id];
+    }
+  }
   if (!keep(state.activePanel) || !placed.has(state.activePanel)) {
     const preferred = activeUri ? `source:${activeUri}` : null;
     state.activePanel = preferred && documents.includes(preferred) ? preferred : documents[0] ?? null;

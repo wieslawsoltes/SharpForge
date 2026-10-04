@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "qualification": "unmeasured",
+  "id": "proposal-fa241f357fa9fb55bc44",
+  "kind": "spec",
+  "sourceText": "namespace System.Collections.Generic\n{\n    public interface IAsyncEnumerable<out T>\n    {\n        IAsyncEnumerator<T> GetAsyncEnumerator();\n    }\n\n    public interface IAsyncEnumerator<out T> : IAsyncDisposable\n    {\n        ValueTask<bool> WaitForNextAsync();\n        T TryGetNext(out bool success);\n    }\n}",
+  "sourceSHA256": "776766a9cc3c8cd608a0e9a49cdbf09e7149b5326d2208e9934e7bd55e85fa25",
+  "target": "library",
+  "featureId": "csharp-8-0-async-streams",
+  "langVersion": "8.0",
+  "expected": {
+    "referenceDiagnostics": true
+  },
+  "unsupported": [],
+  "mappingScope": "Exact inventory specSection; fenced fragment compiled as library against pinned Roslyn, not assumed valid standalone program",
+  "provenance": {
+    "repository": "dotnet/csharplang",
+    "commit": "05eb4800fc3dc76259ccd49ac01f1eeb49222380",
+    "path": "proposals/csharp-8.0/async-streams.md",
+    "sha256": "944a31911115989c66e44f5c9e7eca2eeb960622f6f819166a48b91af8247c6a",
+    "url": "https://github.com/dotnet/csharplang/blob/05eb4800fc3dc76259ccd49ac01f1eeb49222380/proposals/csharp-8.0/async-streams.md",
+    "license": "NOASSERTION",
+    "offset": 7347
+  }
+}

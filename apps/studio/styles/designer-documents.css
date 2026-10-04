@@ -12,8 +12,8 @@
   gap: 4px;
   padding: 3px 6px;
   min-width: 0;
-  border-bottom: 1px solid var(--border, #3d424a);
-  background: var(--panel, #25282e);
+  border-bottom: 1px solid var(--design-line);
+  background: var(--design-panel);
 }
 .designer-document-modes,
 .designer-document-layout-controls {
@@ -29,13 +29,13 @@
   white-space: nowrap;
 }
 .designer-document-view-bar [aria-selected="true"] {
-  color: var(--text, #eee);
-  background: var(--selected, #284763);
-  box-shadow: inset 0 -2px var(--accent, #63b3ed);
+  color: var(--design-foreground);
+  background: var(--design-pressed);
+  box-shadow: inset 0 -2px var(--design-accent);
 }
 .designer-document-view-bar button:focus-visible,
 .designer-document-splitter:focus-visible {
-  outline: 2px solid var(--accent, #63b3ed);
+  outline: 2px solid var(--design-accent);
   outline-offset: -2px;
 }
 .designer-document-panes {
@@ -59,13 +59,13 @@
 .designer-document-splitter {
   flex: 0 0 6px;
   position: relative;
-  background: var(--border, #3d424a);
+  background: var(--design-line);
   touch-action: none;
   cursor: col-resize;
   z-index: 2;
 }
 .designer-document-splitter:hover,
-.designer-document-splitter:focus-visible { background: var(--accent, #63b3ed); }
+.designer-document-splitter:focus-visible { background: var(--design-accent); }
 .designer-document-panes[data-orientation="horizontal"] > .designer-document-splitter { cursor: row-resize; }
 .designer-document-panes.resizing { user-select: none; }
 .designer-document-side-panel { height: 100%; min-width: 0; min-height: 0; }
@@ -74,15 +74,15 @@
   place-content: center;
   height: 100%;
   padding: 20px;
-  color: var(--muted, #aeb8c5);
+  color: var(--design-muted);
   text-align: center;
 }
 .designer-document [hidden],
 .designer-document-view-bar [hidden] { display: none !important; }
-[data-theme="light"] .designer-document-view-bar { background: var(--panel, #f7f8fa); }
+[data-theme="light"] .designer-document-view-bar { background: var(--design-panel); }
 [data-theme="light"] .designer-document-view-bar [aria-selected="true"] {
-  color: var(--text, #17212d);
-  background: var(--selected, #dcebf7);
+  color: var(--design-foreground);
+  background: var(--design-pressed);
 }
 @media (max-width: 700px) {
   .designer-document-view-bar { padding: 2px; gap: 2px; }

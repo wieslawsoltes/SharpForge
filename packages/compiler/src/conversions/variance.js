@@ -8,6 +8,7 @@
  * one input-safe (CS1961), walking return types, parameter types (flipped), ref/out parameters (invariant),
  * constraints on generic methods and nested constructed types.
  */
+import {DiagnosticId} from '../diagnostics/codes.js';
 import { Variance, TypeKind, SymbolKind, NamedTypeSymbol, ArrayTypeSymbol, RefKind, typeOf } from '../symbols/types.js';
 
 /**
@@ -88,21 +89,26 @@ export function varianceViolation(type, position) {
 }
 /**
  * Declaration-site validity of a variant interface or delegate.
- * @param type the interface/delegate definition  @returns [{code:'CS1961',args,member,parameter}] - args are
+ * @param type the interface/delegate definition
+ * @param {{staticMembers?:boolean}} [options] `staticMembers`: also check static members (the rule below C# 9: CS8904)
+ * @returns [{code:'CS1961'|'CS8904',args,member,parameter}] - args are
  *   [member display, type parameter name, its declared variance, how the position needs it] as Roslyn formats them.
  */
-export function checkVarianceSafety(type) {
+export function checkVarianceSafety(type, { staticMembers = false } = {}) {
   const results = [];
+  let inStaticMember = false;
   if (!type.typeParameters.some(p => p.variance !== Variance.None) && !hasVariantOuter(type)) return results;
   const report = (violation, member, where) => {
     if (violation)
       results.push({
-        code: 'CS1961',
+        // A static member is exempt from C# 9 on: below it the violation names the version that lifts the rule.
+        code: inStaticMember ? DiagnosticId.CS8904 : DiagnosticId.CS1961,
         args: [
           member.toDisplayString(),
           violation.parameter.name,
           kindText[violation.parameter.variance],
           requiredText[violation.required],
+          ...(inStaticMember ? ['9.0'] : []),
         ],
         member,
         parameter: violation.parameter,
@@ -132,7 +138,8 @@ export function checkVarianceSafety(type) {
   if (type.typeKind !== TypeKind.Interface) return results;
   for (const i of type.interfaces) report(varianceViolation(i, 'out'), type, 'base');
   for (const member of type.getMembers()) {
-    if (member.isStatic) continue;
+    if (member.isStatic && !staticMembers) continue;
+    inStaticMember = !!member.isStatic;
     if (member.kind === SymbolKind.Method && !member.isAccessor) signature(member, member);
     else if (member.kind === SymbolKind.Property) {
       const position = member.getMethod && member.setMethod ? 'invariant' : member.setMethod ? 'in' : 'out';

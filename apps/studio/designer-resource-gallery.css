@@ -74,11 +74,11 @@
   overflow-wrap: anywhere;
 }
 .design-resource-gallery-preview[data-contrast="high"] {
-  --sf-app-bg: #000;
-  --sf-app-fg: #fff;
-  --sf-app-input: #000;
-  --sf-app-line: #fff;
-  --sf-app-accent: #ff0;
+  --sf-app-bg: var(--design-preview-contrast-background);
+  --sf-app-fg: var(--design-preview-contrast-foreground);
+  --sf-app-input: var(--design-preview-contrast-background);
+  --sf-app-line: var(--design-preview-contrast-foreground);
+  --sf-app-accent: var(--design-preview-contrast-accent);
 }
 .design-resource-gallery-options {
   display: flex;

@@ -1,3 +1,4 @@
+import {isDecimal, decimalFormat} from './execution/decimal.js';
 import {createBclRegistry, bclModules} from '@sharpforge/bcl-core';
 import {closedCollectionsModule} from '@sharpforge/bcl-collections';
 import {frameworkType} from '@sharpforge/framework';
@@ -11,8 +12,11 @@ const modules = createBclRegistry([...bclModules, closedCollectionsModule]);
 
 const services = Object.freeze({
   frameworkType,
+  formatDecimal(value, format) {
+    return isDecimal(value) ? decimalFormat(value, format, {fault: (name, message) => new ManagedFault(name, message)}) : null;
+  },
   isReference,
-  fault(type, message) { throw new ManagedFault(type, message); }
+  fault(type, message, reference = null) { throw new ManagedFault(type, message, reference); }
 });
 
 /** Attach immutable services; each platform retains its own managed state. */

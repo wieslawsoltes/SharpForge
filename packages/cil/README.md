@@ -67,8 +67,35 @@ Enums require known storage rather than an assumed Int32 width. The compiler imp
 reuses this codec through its existing result adapter, preserving its historical
 Int32 fallback when callers cannot resolve enum storage.
 
+`encodeConstant(type, value, options)` returns `{ type, bytes }` for a Constant row.
+Types are CLI element codes or primitive signature names. `decodeConstant(type,
+bytes, options)` returns the value, using BigInt outside JavaScript's safe integer
+range. Strings retain raw UTF-16 code units; null string/object values encode as
+element type `0x12` and four zero bytes. Invalid types, values, lengths, budgets and
+cancellation throw `CilError` with stable MD0120–MD0124 codes. The default `maxBytes`
+is 1 MiB, with a 128 MiB hard maximum; `signal` supports cancellation.
+
+`metadata.definitions.constantValue({ Parent, Type, Value }, options)` encodes a
+primitive value, adds its Constant row and sets the existing Field, Param or Property
+owner's HasDefault flag. It preserves other flags and returns the Constant token.
+Parents must exist; MD0125–MD0127 reject invalid parents, duplicates and malformed
+or replaced tables. `maxConstants` defaults to 100000 with a 1000000 hard maximum.
+The append-only parent index is local to the builder and grows linearly; raw row
+appends are indexed once. Do not rewrite already-indexed raw rows. Invalid inputs,
+byte/count limits and cancellation leave metadata rows, flags and heaps unchanged.
+
+The existing `metadata.definitions.constant({ Type, Parent, Value })` writer still
+accepts encoded type and bytes without setting flags. The caller supplies the
+correct primitive storage type (including enum underlying types); source constant
+and default-parameter binding/emission remain separate. The compiler importer
+uses the shared decoder. Native codec evidence is reproducible with
+`node packages/cil/tools/validate-constants.mjs` against .NET SRM and reflection.
+The typed-row writer's flags, default lookup and values are checked by
+`node packages/cil/tools/validate-constant-rows.mjs` against SRM for all three parent kinds.
+
 | Capability | API | Evidence |
 | --- | --- | --- |
+| Constant metadata values | `encodeConstant` / `decodeConstant` | Roslyn blobs, SRM and reflection |
 | Primitive and constructed types | Type AST encoder/decoder | SRM BlobEncoder corpus |
 | Methods, fields, locals, properties, MethodSpec | Signature AST encoder/decoder | SRM and Roslyn corpus |
 | Existing string emission | Member signature adapters | Focused compatibility tests |
@@ -87,4 +114,14 @@ structural diagnostics. See `examples/metadata/table-builder.mjs` for a runnable
 The [PE API](PE.md) supports AnyCPU/x86/x64/ARM64 output, console/library headers,
 desktop CLR import stubs, aligned multi-section layouts and all PE/CLI data directories.
 
+`sha256(bytes)` is the shared synchronous SHA-256 implementation used by CIL and Portable PDB tooling.
+It accepts a `Uint8Array` of at most 128 MiB, preserves the input (including subarray boundaries), and returns
+an independent 32-byte digest. Invalid input types throw `TypeError`; oversized input throws `RangeError`.
+The browser/worker implementation uses no host crypto or asynchronous work. `@sharpforge/symbols` retains
+its existing `sha256` export as a reexport of this function; SHA-1 remains in the symbols package.
+Hashing reads complete 64-byte blocks directly from the input. Padding uses at most 128 bytes,
+with one reusable 256-byte schedule and 32-byte state, so scratch storage is independent of input size.
+
 Embedded data emission and bounded inspection are documented in [RESOURCES.md](./RESOURCES.md).
+
+Win32 version, manifest and ICO emission is documented in [WIN32-RESOURCES.md](./WIN32-RESOURCES.md).
