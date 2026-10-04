@@ -387,6 +387,13 @@
       "reason": "Signature benchmark imports an operator-selected trusted implementation or the fixed workspace CIL package."
     },
     {
+      "path": "tests/browser_designer_gradient_test.mjs",
+      "operation": "dynamic-import",
+      "count": 1,
+      "sha256": "14b63fadc71c31c548ff03d10b1ddebe6030ebf57723571eec6976a51d928996",
+      "reason": "Browser qualification loads the fixed same-origin production public WinUI package to compare actual DOM gradient paint and SVG raster pixels; no user-selected or remote JavaScript."
+    },
+    {
       "path": "tests/browser_designer_gate_performance.mjs",
       "operation": "dynamic-import",
       "count": 1,
