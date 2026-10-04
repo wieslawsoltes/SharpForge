@@ -31,6 +31,12 @@ GraphQL reads. Neither credential reaches candidate commands. Missing credential
 Project access or ownership stop the manual lane before those commands and retain
 the exact PR context with the failure. This wiring does not configure the secret.
 
+Both lanes resolve the authoritative claim issue into its live Project membership;
+neither assumes Project 4. Work-ID-only tracking boards are ignored, while the one
+managed projection must match the claim's Agent and Branch. Manual gate artifacts
+include the selected Project and issue alongside ownership results. Claims, Project
+fields and queue settings are not changed by qualification.
+
 The [serial validation schedule](../serial-validation.md) takes precedence over historical
 trigger descriptions: main keeps core only, central full-ci/merge-group qualification is serial,
 and specialized workflows no longer fan out from that same event.
