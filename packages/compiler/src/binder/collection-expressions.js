@@ -21,6 +21,7 @@ import { SymbolKind, TypeKind, ArrayTypeSymbol, NamedTypeSymbol } from '../symbo
 import { MethodKind, LocalDeclarationKind } from '../symbols/members.js';
 import { Conversion, ConversionKind } from '../conversions/classify.js';
 import { implementsInterface, findConstruction } from '../symbols/substitution.js';
+import { inlineArrayShape } from '../symbols/inline-arrays.js';
 import { attributesNamed } from './bound-attributes.js';
 import { lookupMembers } from './inheritance.js';
 import { isSourceSymbol } from '../semantic/analysis-helpers.js';
@@ -95,6 +96,9 @@ export const CollectionExpressionBinding = Base =>
       if (!type || type.isErrorType()) return null;
       if (type instanceof ArrayTypeSymbol) return type.elementType;
       if (type.specialType === 'System_String') return this.core.char;
+      // Inline arrays use their storage element even when the struct also declares an enumeration pattern.
+      const inlineArray = inlineArrayShape(type);
+      if (inlineArray) return inlineArray.elementType;
       const generic = findConstruction(type, this.core.ienumerableT, this.core);
       if (generic) return generic.typeArguments[0].type;
       if (implementsInterface(type, this.core.ienumerable, this.core)) return this.core.object;
