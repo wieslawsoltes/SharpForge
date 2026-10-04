@@ -18,12 +18,36 @@ active. Sources outside the workspace grant cannot be loaded: open a containing
 workspace before using that complete context.
 
 `createNativeContextHooks(host)` supplies the application `onProjectContext`,
-`getTestInput` and `getTestSources` callbacks. It composes `applyNativeProjectContext` with editor
-reset, workspace rendering and language analysis scheduling. The application
+`getTestInput` and `getTestSources` callbacks. With `host.documents`, it composes
+`applyNativeProjectContext` with a single `DocumentService.replace` ownership
+commit, workspace rendering and language analysis scheduling. Existing hosts
+without that service retain the editor-reset callback. The application
 compiler-request helper consumes `nativeCompilationRequest(state)`, which
 contains exact files and metadata-backed compilation options; files merely
 opened outside that context do not enter its semantic model. The per-document
 editor guard is `nativeDocumentReadOnly(state, file)`.
+
+Context adoption preserves dirty source roots, their saved baselines and their
+existing models. It retires obsolete generated documents through the document
+service, which owns view rebinding and disposal. Semantic/test inputs capture
+immutable source roots without flattening compatibility text getters or
+retaining live editor models. Cancellation or workspace replacement while
+execution is stopping prevents adoption. A committed observer error preserves
+the newly adopted documents and context metadata.
+
+`refreshNativeExplorerWorkspace({state, documents, nativeBuild, renderWorkspace},
+mappings, {partial, signal})` refreshes native Explorer documents through the
+same ownership boundary. It checks the captured workspace, client, document
+revision and immutable sources after each asynchronous read. Renames update
+document URIs, tabs, breakpoints and selected context files. Unrelated dirty
+source documents and native project buffers survive partial disk failures.
+Only the document service disposes formerly owned models. Path mappings are
+bounded to 20,000 and source reads retain the native host's file/byte limits.
+
+`collectNativeSourceChanges(state, documents)` returns only dirty editable native
+sources with their expected hashes. Each lazy `text` property serializes the
+immutable revision captured for that save, so status checks do not materialize
+the other open sources and subsequent edits cannot alter an in-flight payload.
 
 Native references enable supported metadata-backed language binding. Loading
 them does not add a native CLR execution backend or broaden the portable
