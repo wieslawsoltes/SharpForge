@@ -33,3 +33,7 @@ Application-owned UI services for SharpForge. Instances have explicit lifetimes;
 ## Templates and content
 
 `ControlTemplate`, `DataTemplate` and `ItemsPanelTemplate` create fresh per-instance trees with private namescopes. `TemplateHost` replaces and disposes one control template, retaining initial ApplyTemplate/layout timing and snapshot identity. Template bindings subscribe to the owner property store. `ContentPresenterController` resolves explicit templates, selectors, implicit data templates, primitive content and already-owned UI elements through its injected adapter.
+
+## Item realization
+
+`ItemContainerGenerator` maintains occurrence identities, reuses containers and schedules phased preparation. `ItemsSourceController` enforces Items/ItemsSource exclusivity and applies indexed changes. `CollectionViewSource` projects grouped sources and current-item navigation with bounded input. Managed container construction and renderer viewport transport are installed by the later context adapter batch.
