@@ -1,6 +1,9 @@
-/** Registered framework metadata remains distinct from an inspected PE assembly. */
+import {intrinsicMetadata} from './intrinsic-model.js';
+
+/** Registered framework and core intrinsic metadata remain distinct from an inspected PE assembly. */
 export async function frameworkMetadata() {
   const {types, contracts, propertiesFor, eventsFor, ABI_VERSION, frameworkType} = await import('@sharpforge/framework');
+  const intrinsic = await intrinsicMetadata();
   const members = new Map();
   for (const contract of contracts) {
     const list = members.get(contract.owner) ?? [];
@@ -25,8 +28,14 @@ export async function frameworkMetadata() {
       namespace: type.name.slice(0, Math.max(0, type.name.lastIndexOf('.'))), members: list,
       signature: `${type.kind} ${type.name}${type.base ? ' : ' + type.base : ''}`});
   }
+  for (const type of intrinsic.types) {
+    const existing = models.find(model => model.name === type.name);
+    if (existing) existing.members.push(...type.members);
+    else models.push(type);
+  }
   return {schemaVersion: 1, kind: 'framework', name: 'SharpForge Framework', version: String(ABI_VERSION),
-    identity: 'SharpForge Framework ABI ' + ABI_VERSION, mvid: null, source: {id: 'framework', version: ABI_VERSION},
+    identity: 'SharpForge Framework ABI ' + ABI_VERSION, mvid: null,
+    source: {id: 'framework', version: `ABI ${ABI_VERSION}; core bytecode format ${intrinsic.version}`},
     types: models, symbols: models.reduce((sum, type) => sum + 1 + type.members.length, 0), diagnostics: [],
-    canonicalName: name => frameworkType(name)?.name};
+    canonicalName: name => frameworkType(name)?.name ?? intrinsic.aliases[name]};
 }

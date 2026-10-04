@@ -9,7 +9,7 @@ export function findMetadataDefinition(assemblies, query = {}) {
   const expression = String(query.expression ?? query.type ?? '').replace(/\s+/gu, '').replace(/^global::/u, '');
   const matches = [];
   for (const assembly of assemblies) {
-    if (query.assemblyIdentity && assembly.identity !== query.assemblyIdentity) continue;
+    if (query.assemblyIdentity && assembly.identity !== query.assemblyIdentity && assembly.name !== query.assemblyIdentity) continue;
     const owner = query.owner ?? (query.name ? query.type : null);
     for (const type of assembly.types) {
       let memberName = query.name, matchesType = false;

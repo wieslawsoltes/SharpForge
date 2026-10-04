@@ -16,6 +16,10 @@ export function metadataQuery(documents, file, current, hover) {
   const member = symbol && ['method', 'constructor', 'property', 'field', 'event'].includes(symbol.kind);
   const bound = hover?.metadata ?? (member ? {owner: symbol.owner, name: symbol.name, type: symbol.type} :
     symbol ? {type: symbol.type ?? symbol.qualifiedName ?? symbol.name} : {});
+  if (bound.kind && !['method', 'constructor', 'property', 'field', 'event'].includes(bound.kind.toLowerCase())) {
+    const type = bound.type ?? bound.owner ?? expression;
+    return {expression: type, type, assemblyIdentity: bound.assemblyIdentity};
+  }
   return {expression, ...bound};
 }
 
