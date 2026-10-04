@@ -154,7 +154,7 @@ test('document reset subscribers observe the same project XML, membership and ac
   assert.equal(observed.membershipDirty, true);
 });
 
-test('Explorer revalidates source ownership after asynchronous preflight and preserves edits made while preparing', async t => {
+test('Explorer opening guard preserves edits made during asynchronous workspace preflight', async t => {
   const { documents, state, commands, commits, calls } = await explorerFixture(t);
   const original = documents.models.get('A.cs');
   const before = original.snapshot();
@@ -176,9 +176,9 @@ test('Explorer revalidates source ownership after asynchronous preflight and pre
   const stagedModel = commits[0].records.find(record => record.path === 'Stale.cs').model;
   const arrived = '// arrived during preflight\n';
   original.applyEdits([{ start: 0, end: 0, text: arrived }]);
-  await assert.rejects(pending, /Source changed while the Explorer workspace was preparing/);
+  await assert.rejects(pending, { name: 'AbortError', message: 'Documents changed during workspace opening' });
 
-  assert.equal(validations, 2);
+  assert.equal(validations, 1, 'The opening guard rejects before the Explorer commit validator runs again');
   assert.equal(documents.models.get('A.cs'), original);
   assert.equal(documents.get('Stale.cs'), null);
   assert.equal(documents.require('A.cs').dirty, true);
@@ -204,7 +204,7 @@ test('Explorer host rejects a superseding workspace revision before adopting its
   const stagedModel = commits[0].records.find(record => record.path === 'Obsolete.cs').model;
   state.revision++;
   const supersedingRevision = state.revision;
-  await assert.rejects(pending, /Workspace changed while preparing the file operation; no changes were applied/);
+  await assert.rejects(pending, { name: 'AbortError', message: 'Documents changed during workspace opening' });
 
   assert.equal(state.revision, supersedingRevision);
   assert.equal(state.projectSystem, projectSystem);
