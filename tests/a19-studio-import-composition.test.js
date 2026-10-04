@@ -127,7 +127,7 @@ test('sample reset observers see the matching source, workspace metadata and cle
   assert.equal(await loadStudioSample('review', false, {}, current.builtins), true);
   assert.deepEqual(observed, [{ uris: ['Sample.cs'], active: 'Sample.cs', name: 'ReviewWorkspace', disk: null, epoch: 2,
     image: null, result: null, assembly: null, pdb: null, ilDump: null, imported: false }]);
-  assert.equal(oldModel.disposed, true);
+  assert.throws(() => oldModel.prepareEdits([]), /disposed/);
   assert.deepEqual(current.state.watches, ['sample']);
   assert.equal(current.state.watchResults.size, 0);
   assert.deepEqual(current.state.breakpoints, { 'Sample.cs': [{ line: 1 }] });

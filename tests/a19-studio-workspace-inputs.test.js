@@ -117,7 +117,7 @@ test('an uncancellable late reader keeps the original ticket and cannot replace 
   read.resolve(prepared);
   await exited.promise;
   await rejected;
-  assert.equal(stagedModel.disposed, true);
+  assert.throws(() => stagedModel.prepareEdits([]), /disposed/);
   assert.deepEqual(current.services.documents.list().map(record => record.uri), ['New.cs']);
   assert.equal(current.services.documents.require('New.cs').text, '// New.cs');
   assert.deepEqual(current.errors, []);
