@@ -50,6 +50,7 @@ export class VirtualMachine {
     while(this.state==='running'&&this.frames.length&&count<instructionBudget){
       if((count&255)===0&&performance.now()-started>=timeBudgetMs)break;
       this.scheduler.beforeInstruction();if(this.state!=='running'||!this.frames.length)break;const frame=this.top,method=this.image.methods[frame.methodId],code=method.code,base=frame.pc*3,op=code[base],a=code[base+1],b=code[base+2];
+      const frameId = frame.id, methodId = frame.methodId;
       if(!beginSourceStackInstruction(this,frame))break;
       if(op===Op.SEQ){frame.point=this.image.sequencePoints[a];this.currentPoint=frame.point;if(onSequence?.(frame.point,frame)){this.sourcePause=true;this.state='paused';break;}}
       this.sourcePause=false;frame.pc++;count++;this.instructions++;
@@ -57,7 +58,9 @@ export class VirtualMachine {
         if(this.instructions>this.options.maxInstructions)throw new ManagedFault('InstructionLimitException','Program exceeded its instruction budget');
         profiler?.instruction(frame);
         if(!dispatchSourceOpcode(this,frame,op,a,b))throw new ManagedFault('InvalidProgramException','Unknown instruction');
-      }catch(error){if(!handleSourceInstructionFault(this,error))break;}finally{flushFramePool(this);}
+      } catch (error) {
+        if (!handleSourceInstructionFault(this, error, {frame, opcode: op, index: base / 3, method: methodId, frameId})) break;
+      } finally { flushFramePool(this); }
       this.scheduler.afterInstruction();
     }
     this.currentPoint=this.top?.point??null;this.elapsedMs+=performance.now()-started;return this.state;

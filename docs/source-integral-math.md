@@ -39,5 +39,8 @@ Min/Max, native-sized overloads or small-width/Single source overloads. The late
 [Decimal extrema leaf](source-decimal-extrema.md) completes those two overloads
 and documents why mixed signed-variable/UInt64 calls require an explicit cast
 under the actual .NET API. Legacy wire admission remains unchanged.
-Validation, native/platform evidence and performance measurements remain staged;
-#1350/#1351 remain open.
+All 76 focused integral-Math, Decimal Sign, unsigned-CIL Math, source numeric-mode
+and ABI checks passed at `8c4b8a3cf`, with Node 24.21.0, one worker and a
+512 MB old-space limit. Native/platform evidence and performance measurements
+remain staged; #1350/#1351 remain open.
+

@@ -32,3 +32,42 @@ test('ABI sparse slots and heap data fail before encoding instead of becoming nu
 });
 
 test('ABI floating width and signed zero apply inside structs and heap arrays',()=>{const doc={...envelope([{kind:'struct',value:{type:'T:Pair',fields:[{kind:'f32',value:1.1},{kind:'f64',value:-0}]}},{kind:'ref',value:{h:1,g:1}}]),handles:[{h:1,g:1,kind:'array',type:'float[]',data:[{kind:'f32',value:1.1}]}]};const decoded=decode(encode(doc));assert.equal(decoded.slots[0].value.fields[0].value,Math.fround(1.1));assert.equal(decoded.slots[0].value.fields[1].value,'-0');assert.equal(decoded.handles[0].data[0].value,Math.fround(1.1));assert.deepEqual(encode(decoded),encode(doc));});
+
+test('ABI strong leases keep the retained identity across caller and roots mutations',()=>{
+  const table=new HandleLeaseTable(),original=table.allocate('original'),other=table.allocate('other');
+  const borrowed={...original},lease=table.retain(borrowed);
+  Object.assign(borrowed,other);
+  assert.equal(table.dereference(lease),'original');
+  const roots=table.roots();assert.deepEqual(roots,[original]);assert.notEqual(roots[0],borrowed);
+  assert.equal(Object.isFrozen(roots[0]),true);
+  for(const [key,value] of Object.entries({epoch:original.epoch+1,h:other.h,g:original.g+1})){
+    assert.throws(()=>{roots[0][key]=value;},TypeError);
+  }
+  roots.length=0;table.collect();
+  assert.equal(table.get(original),'original');assert.throws(()=>table.get(other),{code:'ABI_STALE_HANDLE'});
+  assert.equal(table.release(lease),true);assert.equal(table.release(lease),false);
+  table.collect();assert.throws(()=>table.get(original),{code:'ABI_STALE_HANDLE'});assert.equal(table.dereference(lease),null);
+});
+
+test('ABI weak leases keep the original identity without rooting a replacement',()=>{
+  const table=new HandleLeaseTable(),original=table.allocate('original'),other=table.allocate('other');
+  const borrowed={...original},lease=table.retain(borrowed,{weak:true});
+  Object.assign(borrowed,other);
+  assert.equal(table.dereference(lease),'original');assert.deepEqual(table.roots(),[]);
+  table.collect([other]);assert.equal(table.get(other),'other');assert.equal(table.dereference(lease),null);
+  assert.throws(()=>table.get(original),{code:'ABI_STALE_HANDLE'});
+  assert.equal(table.release(lease),true);assert.equal(table.release(lease),false);
+});
+
+test('ABI leases validate the captured tuple and preserve typed stale-handle rejection',()=>{
+  const table=new HandleLeaseTable(),original=table.allocate('original'),reads={epoch:0,h:0,g:0};
+  const borrowed=Object.defineProperties({},Object.fromEntries(Object.keys(reads).map(key=>[key,{
+    get(){return ++reads[key]===1?original[key]:0;}
+  }])));
+  const lease=table.retain(borrowed);
+  assert.deepEqual(reads,{epoch:1,h:1,g:1});assert.equal(table.dereference(lease),'original');
+  for(const invalid of [null,{}, {...original,epoch:original.epoch+1},{...original,h:0},{...original,g:original.g+1}]){
+    assert.throws(()=>table.retain(invalid),{code:'ABI_STALE_HANDLE'});
+  }
+  table.collect();assert.equal(table.get(original),'original');
+});

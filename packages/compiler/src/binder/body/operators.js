@@ -216,6 +216,12 @@ export const OperatorBinding = Base =>
         return this.bad(syntax);
       }
       const writable = checkWritable(left, operator === '=' ? 'assignment' : 'compound', this.variableContext);
+      // A ref iteration variable of a foreach denotes the current element for the whole iteration (CS1656).
+      if (isRefAssign && left.kind === 'Local' && left.local.isForEach) {
+        this.report(syntax.left, DiagnosticId.CS1656, [left.local.name, left.local.readOnlyReason]);
+        this.value(syntax.right);
+        return this.bad(syntax);
+      }
       if (writable && !(isRefAssign && left.kind === 'Local' && left.local.refKind !== RefKind.None)) {
         // CS1612 points at the struct-valued expression whose member cannot be modified.
         const target = writable.code === DiagnosticId.CS1612 && left.receiver?.syntax ? left.receiver.syntax : syntax.left;

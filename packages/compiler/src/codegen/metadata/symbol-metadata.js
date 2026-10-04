@@ -21,6 +21,7 @@ import { assemblyResolverOf } from './reference-identities.js';
 import { planMembers, explicitInterfaceOf } from './member-plan.js';
 import { typeFlags, genericParameterFlags } from './attribute-flags.js';
 import { tupleElementNamesOf } from '../../binder/tuples.js';
+import { dynamicTransformFlags } from './dynamic-flags.js';
 import { staticVirtualImplementations } from './static-interface-implementations.js';
 import { fieldSignature, methodSignature, methodSymbolSignature, propertySignature } from './member-signatures.js';
 
@@ -194,7 +195,8 @@ export class SymbolMetadataWriter {
           Signature: signature,
           ParamList: nextParameter,
         });
-        if (method.symbol && tupleElementNamesOf(method.symbol.returnType)) {
+        const returned = method.symbol?.returnType;
+        if (returned && (tupleElementNamesOf(returned) || dynamicTransformFlags(returned))) {
           // The return value has a Param row (sequence 0) only when an attribute is written on it.
           this.returnParameterTokens.set(method.symbol, this.builder.addRow('Param', { Flags: 0, Sequence: 0, Name: '' }));
           nextParameter++;
