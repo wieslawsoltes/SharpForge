@@ -7,9 +7,10 @@ import { ghTransport, isReadOnlyRequest } from '../../planning/lib/gh-retry.js';
 import { isMain } from '../../planning/lib/io.js';
 import { checkContractChange, contractsAt, versionsAt } from '../../planning/check-contract-change.js';
 import { checkSeamLock } from '../../planning/golden-output.js';
-import { claimedIdentity, qualificationEnvironment, reviewOwnership } from './gates.js';
+import { qualificationEnvironment, reviewOwnership } from './gates.js';
 import { groupGit, validateMergeGroupContext } from './merge-group-context.js';
 import { createPlan } from './impact.js';
+import { groupClaimedIdentity } from './merge-group-projects.js';
 
 /** Project GraphQL reads and repository reads use separate, explicitly configured credentials. */
 export function mergeGroupClient(environment = process.env, { spawnProcess = spawn } = {}) {
@@ -53,12 +54,12 @@ export async function runMergeGroupGates({ root = process.cwd(), context, reposi
     const prefix = `PR #${entry.pull_request.number}`;
     let identity, mergeBase;
     try {
-      identity = await claimedIdentity(client, entry.pull_request);
+      identity = await groupClaimedIdentity(client, entry.pull_request);
       mergeBase = groupGit(['merge-base', '--all', verified.base, entry.head], root);
       if (!/^[a-f0-9]{40}$/.test(mergeBase)) throw new Error('Constituent requires one unambiguous merge base');
       for (const [scope, before, after] of [['source', mergeBase, entry.head], ['combined contribution', entry.parent, entry.commit]]) {
-        record(`${prefix} ${scope} ownership`, reviewOwnership({ root, base: verified.base,
-          mergeBase: before, head: after, identity, execute }));
+        record(`${prefix} ${scope} ownership`, { ...reviewOwnership({ root, base: verified.base,
+          mergeBase: before, head: after, identity, execute }), project: identity.project, issue: identity.issue });
       }
     } catch (error) { record(`${prefix} ownership`, { passed: false, error: error.message }); }
     try {

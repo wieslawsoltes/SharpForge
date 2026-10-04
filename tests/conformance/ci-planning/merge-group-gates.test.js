@@ -10,9 +10,16 @@ import { mergeGroupFixture } from './merge-group-fixture.js';
 
 function claims(value, { leftLocks = [] } = {}) {
   const records = value.requests.map((request, index) => ({ task: `SF-A29-T${13 + index}`, branch: request.head.ref,
-    expires: '2099-01-01T00:00:00Z', generation: `generation-${index}`, locks: index ? [] : leftLocks }));
+    issue: 483 + index, agent: 'codex-fixture', expires: '2099-01-01T00:00:00Z', generation: `generation-${index}`, locks: index ? [] : leftLocks }));
   return {
-    items: async () => records.map(record => ({ fields: { 'Work ID': record.task, Branch: record.branch }, content: { title: `[${record.task}] fixture` } })),
+    owner: 'fixture', repo: 'repository',
+    items: async () => assert.fail('Queue claims must not scan default Project4'),
+    graphql: async (_query, variables) => {
+      const record = records.find(record => record.issue === variables.issue);
+      return { repository: { issue: { number: record.issue, title: `[${record.task}] fixture`, repository: { nameWithOwner: value.repository },
+        projectItems: { nodes: [{ id: `item-${record.issue}`, isArchived: false, project: { id: 'project-4', number: 4, owner: { login: 'fixture' } },
+          workId: { text: record.task }, branch: { text: record.branch }, agent: { text: record.agent } }], pageInfo: { hasNextPage: false, endCursor: null } } } } };
+    },
     ref: async name => ({ object: { sha: name } }),
     readRecord: async ref => ref.startsWith('agent-locks/')
       ? { task: records[0].task, generation: records[0].generation, paths: ['packages/private.js'] }
@@ -120,7 +127,7 @@ test('missing Project access and command failures remain failures with pinned co
   const value = compatible(mergeGroupFixture(t));
   const context = await resolveMergeGroupContext(value);
   let result = await runMergeGroupGates({ ...value, context,
-    client: { items: async () => { throw new Error('Project access denied'); } }, execute: execution([]) });
+    client: { ...claims(value), graphql: async () => { throw new Error('Project access denied'); } }, execute: execution([]) });
   assert.equal(result.passed, false);
   assert.match(result.errors.join('\n'), /Project access denied/);
   assert.equal(result.context.head, value.head);
