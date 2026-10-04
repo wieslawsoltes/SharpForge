@@ -42,8 +42,10 @@ native replay and the malformed #US, Unicode, budget, cancellation and mixed-fie
 checks, plus existing numeric, field, indirect-memory and IL-document controls.
 
 [qualification/summary.json](qualification/summary.json) records the exact SHA-256
-and original location of every retained log. Logs were copied byte-for-byte; the
-31-observation `native.json` was retained unchanged. The Node logs have result
+and original location of every retained log. Node and capture logs were copied
+byte-for-byte; browser output is preserved as exact UTF-8 text in JSON envelopes
+with the raw byte hashes. The 31-observation `native.json` was retained unchanged.
+The Node logs have result
 records but no command headers, so the commands below are reproducible replays,
 not reconstructed original invocation records. No test or capture was rerun while
 preparing this documentation/evidence commit.
@@ -70,10 +72,10 @@ node scripts/limited.js node --test tests/a03-inspector-method-view.test.js
 
 Chromium failed before importing `browser.mjs` or invoking `run()` in both
 retained attempts. The first failed with a spawn `EACCES`
-([report](qualification/browser-permission.json), [log](qualification/browser-permission.log)).
+([report](qualification/browser-permission.json), [raw output](qualification/browser-permission.log.json)).
 The second launched but aborted with `SIGABRT` after its ProcessSingleton socket
 operation returned `Operation not permitted`
-([report](qualification/browser-launch.json), [log](qualification/browser-launch.log)).
+([report](qualification/browser-launch.json), [raw output](qualification/browser-launch.log.json)).
 These are host startup failures, with zero product checks and no browser pass.
 The reports record Playwright 1.62.0 and the browser-module source hash.
 

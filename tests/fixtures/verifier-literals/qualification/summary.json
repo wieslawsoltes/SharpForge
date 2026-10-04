@@ -74,14 +74,14 @@
         "engine": "chromium",
         "stage": "launch",
         "file": "browser-permission.json",
-        "log": "browser-permission.log",
+        "log": "browser-permission.log.json",
         "reason": "spawn EACCES"
       },
       {
         "engine": "chromium",
         "stage": "launch",
         "file": "browser-launch.json",
-        "log": "browser-launch.log",
+        "log": "browser-launch.log.json",
         "reason": "ProcessSingleton socket Operation not permitted; SIGABRT"
       }
     ],
@@ -114,20 +114,10 @@
       "bytes": 59,
       "copiedFrom": "/workspace/scratch/7e3d2a445c44/sf6-verify/artifacts/project6-resume/literal-native.log"
     },
-    "browser-permission.log": {
-      "sha256": "1931c911ed4c796826baf8da647af0dd4f9b5018408bfc14b22bff2bcf335cf3",
-      "bytes": 3810,
-      "copiedFrom": "/workspace/scratch/7e3d2a445c44/browser-literals.log"
-    },
     "browser-permission.json": {
       "sha256": "b10f5e1eabee235471f20f02856f0efca7d800a39e0ef458bf29182b6345d30c",
       "bytes": 2531,
       "copiedFrom": "/workspace/scratch/7e3d2a445c44/browser-literals/report.json"
-    },
-    "browser-launch.log": {
-      "sha256": "831616fdd6b77d9a8fcfc77a183794e6927d889e169b476b7f97848cbcd16741",
-      "bytes": 13037,
-      "copiedFrom": "/workspace/scratch/7e3d2a445c44/browser-literals-launch.log"
     },
     "browser-launch.json": {
       "sha256": "b6648e50837335e13daefb22730797b3c9f7fd53b5b80fa92d8407606d710709",
@@ -138,6 +128,22 @@
       "sha256": "296e64b072f9bb6c66957493b11355aec6b5089485a90a442f9378c3f7be0dd6",
       "bytes": 3790,
       "copiedFrom": "/workspace/scratch/7e3d2a445c44/project6-browser.py"
+    },
+    "browser-permission.log.json": {
+      "sha256": "502b8444b490f1ef0b9c46c0eb1e9728b04fb6a238902d9e4a533b171595a09b",
+      "bytes": 4001,
+      "rawSHA256": "1931c911ed4c796826baf8da647af0dd4f9b5018408bfc14b22bff2bcf335cf3",
+      "rawBytes": 3810,
+      "rawTextProperty": "text",
+      "copiedFrom": "/workspace/scratch/7e3d2a445c44/browser-literals.log"
+    },
+    "browser-launch.log.json": {
+      "sha256": "0258eb23072f9701588c63a6e2e0b1bd6e5c7b68a329c30e6371323fd6f4e7cb",
+      "bytes": 13308,
+      "rawSHA256": "831616fdd6b77d9a8fcfc77a183794e6927d889e169b476b7f97848cbcd16741",
+      "rawBytes": 13037,
+      "rawTextProperty": "text",
+      "copiedFrom": "/workspace/scratch/7e3d2a445c44/browser-literals-launch.log"
     }
   }
 }
