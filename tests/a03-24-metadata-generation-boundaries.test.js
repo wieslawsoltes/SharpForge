@@ -56,9 +56,15 @@ test('raw delta admission rejects format, identity and unavailable aggregate ref
 
 test('generation order, prior IDs and baseline admission are explicit', () => {
   const fixture = cliGenerationFixture(), reader = new MetadataGenerations(fixture.baseline);
+  const snapshot = () => ({ generation: reader.generation, identity: reader.identity, counts: reader.counts,
+    retainedBytes: reader.retainedBytes, retainedRecords: reader.retainedRecords, heaps: reader.heaps(),
+    tables: reader.tables({ includeEmpty: false }).map(({ table }) => reader.rows(table)) });
+  const baseline = snapshot();
   assert.throws(() => new MetadataGenerations(fixture.deltas[0].bytes), { code: 'MD_GEN_FORMAT' });
   assert.throws(() => reader.append(fixture.deltas[1].bytes, { generation: 1 }), { code: 'MD_GEN_IDENTITY' });
+  assert.deepEqual(snapshot(), baseline, 'Rejected physical ordinal leaves every retained baseline fact unchanged');
   assert.throws(() => reader.append(fixture.deltas[0].bytes, { generation: 2 }), { code: 'MD_GEN_IDENTITY' });
+  assert.deepEqual(snapshot(), baseline, 'Rejected caller ordinal leaves every retained baseline fact unchanged');
   reader.append(fixture.deltas[0].bytes, { generation: 1 });
   const wrongPrevious = editCliDelta(fixture.deltas[1].bytes, (rows, heaps) => {
     heaps.find(([name]) => name === '#GUID')[1][(rows[0][0][4] - 1) * 16] ^= 1;

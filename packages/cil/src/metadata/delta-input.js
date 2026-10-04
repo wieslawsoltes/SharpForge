@@ -85,7 +85,7 @@ function identity(entries, entry, operation) {
   const mvid = guidIdentity(entry.metadata, row[2]);
   const generationId = guidIdentity(entry.metadata, row[3]), previousGenerationId = guidIdentity(entry.metadata, row[4]);
   const name = generationHeapEntry(entries, '#Strings', row[1], entry.generation, operation).value;
-  if (row[0] !== entry.generation || !name || /^0+$/.test(mvid)) {
+  if (!name || /^0+$/.test(mvid)) {
     generationError('MD_GEN_IDENTITY', 'Invalid Module generation number, name or MVID');
   }
   if (previous) {
@@ -150,6 +150,9 @@ export function prepareMetadataGeneration(input, state, options) {
   const bytes = ownInput(input, state, operation), generation = state.entries.length;
   const { metadata, metadataOffset } = physicalReader(bytes, options.format, state, operation);
   checkFormat(metadata, generation);
+  if (metadata.rows[0][0][0] !== generation) {
+    generationError('MD_GEN_IDENTITY', 'Invalid Module generation number, name or MVID');
+  }
   const previous = state.entries.at(-1);
   const mapping = previous ? generationMap(metadata, previous, operation)
     : { counts: { ...metadata.counts }, updates: {}, localToAggregate: {} };

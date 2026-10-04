@@ -1,0 +1,35 @@
+{
+  "schemaVersion": 1,
+  "status": "source-only correction; no new-source execution",
+  "workItem": "SF-A03-T24 / #693",
+  "parentCommit": "1f3178a9077a28f158e287aaa491fd5e46ef8621",
+  "previousProductCommit": "02df6354e3152beac511d29b20272050ae03f486",
+  "firstQualifiedSourceCommit": "8b9b74f6b7b8faf1692409987da2af4ab4e8b3d5",
+  "firstGate": {
+    "execution": "execution-first/focused.execution.json",
+    "stdout": "execution-first/focused.stdout.txt",
+    "stdoutSha256": "fd04604e3de186bacc5081de5d5f03291b95b3a1adaa676d4c8d9eed470feb72",
+    "tests": 51,
+    "passed": 50,
+    "failed": 1,
+    "expectedCode": "MD_GEN_IDENTITY",
+    "actualCode": "MD_GEN_MAP"
+  },
+  "reason": "A generation-2 physical Module reached aggregate EncMap validation while the history expected generation 1. The map diagnostic therefore preceded the required ordinal diagnostic, and later aggregate heap interpretation would also use the wrong generation context.",
+  "correction": "After physical parsing and checkFormat have established exactly one Module row and the appropriate baseline/delta format, check its generation ordinal before aggregate map or heap preparation. Remove the redundant ordinal term from the later name/MVID check. Keep the existing diagnostic code and message, parsing, ownership, bounds, cancellation and commit behavior.",
+  "testChange": "Preserve the failing MD_GEN_IDENTITY assertion verbatim. Snapshot generation, identity, aggregate counts, retained bytes/records, heap segment summaries and all populated table pages; compare after both the physical-ordinal and caller-ordinal rejections. Existing subsequent successful appends remain unchanged.",
+  "files": [
+    {
+      "path": "packages/cil/src/metadata/delta-input.js",
+      "beforeSha256": "1e9870329b2d1d7dfdb89eedad784807aa4977944d515d1c31c83ae4764dba04",
+      "afterSha256": "0d0ab3ca946dda5c73215f599c44342e8a88a2c00a68e76057ecb92be7ba12fa"
+    },
+    {
+      "path": "tests/a03-24-metadata-generation-boundaries.test.js",
+      "beforeSha256": "2b76d4fcb423d2d6851fe8e4c0fd88bf02ec79d5dc3227c2f7d59583895e6e0e",
+      "afterSha256": "a253725eb68ee4ad35191ff139fe2561c3db5cdc4b57748b5a190aa734e2e8a0"
+    }
+  ],
+  "preservation": "All preexisting native/reference, execution, retention and first-failure evidence remains byte-exact. No assertion is weakened and no old run is relabeled as a new-source pass.",
+  "qualification": "A separate fresh-path capture/qualification overlay will bind the commit containing this receipt. New tests, capture and performance require the next explicit heavy-slot grant; none were run while preparing this correction."
+}
