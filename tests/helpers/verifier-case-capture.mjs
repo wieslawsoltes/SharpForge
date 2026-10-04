@@ -8,17 +8,22 @@ import { parseILVerify } from '../../scripts/conformance/verifier/catalog.js';
 import { checkTools } from '../../scripts/conformance/verifier/tools.js';
 
 /** Capture authored one-method assemblies serially, preserving raw output before parsing or asserting it. */
-export async function captureVerifierCases({ output, input, cases, createFixture, describe }) {
+export async function captureVerifierCases({ output, input, cases, createFixture, describe, inputs }) {
   if (!output) throw new Error('Pass an explicit capture JSON path');
+  const capture = { inputSHA256: sha256(await readFile(input)), observations: [] };
+  if (inputs) {
+    capture.inputs = {};
+    for (const [name, url] of Object.entries(inputs)) capture.inputs[name] = sha256(await readFile(url));
+  }
+  const save = () => writeFile(output, JSON.stringify(capture, null, 2) + '\n');
+  await save();
   const tools = await checkTools({ ilasm: process.env.SHARPFORGE_ILASM, ilverify: process.env.SHARPFORGE_ILVERIFY });
   if (!tools.supported) throw new Error(tools.reason);
   const toolchain = await resolveToolchain();
   const temporary = await mkdtemp(path.join(os.tmpdir(), 'a03-verifier-cases-'));
-  const capture = { oracle: 'ILVerify', version: tools.verifierPin.version, sdk: pin.sdk, runtime: pin.runtime,
+  Object.assign(capture, { oracle: 'ILVerify', version: tools.verifierPin.version, sdk: pin.sdk, runtime: pin.runtime,
     toolSHA256: tools.verifierPin.files.find(value => value.path === tools.verifierPin.entry).sha256,
-    inputSHA256: sha256(await readFile(input)), environment: toolchain.environment,
-    references: toolchain.actual.referenceAssemblies, observations: [] };
-  const save = () => writeFile(output, JSON.stringify(capture, null, 2) + '\n');
+    environment: toolchain.environment, references: toolchain.actual.referenceAssemblies });
   try {
     for (const fixture of cases) {
       const bytes = createFixture(fixture);

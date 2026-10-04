@@ -14,17 +14,17 @@ const hash = bytes => createHash('sha256').update(bytes).digest('hex');
 const categoryInput = externalFixture(coreAuthority());
 const inspector = categoryInput.inspect();
 const nativeCapture = readFileSync(new URL('../../../tests/fixtures/a03-type-categories/native.json', import.meta.url));
-const core = { coreTypes: nativeCategoryInput(JSON.parse(nativeCapture)).coreAuthority };
 const workloads = [{ name: 'existingAuthorityConstruction', expected: 'reference',
   fixtureSHA256: hash(JSON.stringify(categoryInput.builder.rows)), run() {
     const types = createMetadataVerificationTypeSystem(inspector, { coreTypes: categoryInput.coreTypes });
     return types.typeCategory(types.resolveType(categoryInput.tokens.LocalClass).value).value;
   } }];
-for (const name of ['LoadOwner', 'StoreReferenceDerived']) {
+const core = mode === 'candidate' ? { coreTypes: nativeCategoryInput(JSON.parse(nativeCapture)).coreAuthority } : null;
+for (const name of mode === 'candidate' ? ['LoadOwner', 'StoreReferenceDerived'] : []) {
   const input = fieldFixture(fieldCases.find(value => value.name === name));
   const inspector = new AssemblyInspector(input.bytes);
   const options = { coreTypes: fieldAuthority(core, input) };
-  workloads.push({ name, fixtureSHA256: hash(input.bytes), expected: mode === 'baseline' ? 'unknown' : 'verified',
+  workloads.push({ name, fixtureSHA256: hash(input.bytes), expected: 'verified',
     run: () => verifyCilMethodTypes(inspector, input.method, options).status });
 }
 const results = {};

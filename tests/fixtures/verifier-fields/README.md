@@ -28,5 +28,9 @@ member/type-relation tests, Chromium/Firefox/WebKit source-module runs, isolated
 baseline failure and fixed existing/new workload measurements, then static,
 manifest and structure checks. Baseline imports its own CIL source; candidate
 files are never overwritten. Preserve all first attempts and all raw samples.
+The fixed schedule is 120 raw samples: three existing numeric controls plus
+existing authority construction, 12 samples each for baseline and candidate;
+two newly supported field workloads, 12 candidate samples each. New field costs
+are added-capability measurements, with no timing comparison to an old unknown result.
 Execution-engine admission, native/Wasm execution and full object-model/constructor
 qualification remain open under #2403/#2405.
