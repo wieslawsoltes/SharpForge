@@ -28,13 +28,13 @@ classes and member declarations, default-interface bodies, Object/value boxing f
 and source frontend lowering remain unsupported. Full native, browser and other
 platform qualification remains pending; no performance improvement is claimed.
 
-Prepared tests cover class overrides, implicit/explicit interface mapping, warm
+All 85 focused tests passed at `8956478d`. Coverage includes class overrides, implicit/explicit interface mapping, warm
 receiver checks, array/field slots, host callback GC, prefix/active snapshots,
 stop cleanup, null/uninitialized/expired/foreign addresses and unsupported Object
 members. The previous struct-prefix test now rejects an interface constraint in
 place of a class constraint, because this leaf adds the latter deliberately.
-No tests have been executed for this leaf. The sole root validation queue should
-run:
+Required PR checks follow the completed serial local validation. The runtime
+regression command is:
 
 ```sh
 node scripts/limited.js node --test --test-concurrency=1 tests/a05-constrained-reference-calls.test.js tests/a05-constrained-interface-calls.test.js tests/a05-boxed-interface-calls.test.js tests/a05-02-interface-dispatch.test.js tests/a05-inline-cache.test.js
