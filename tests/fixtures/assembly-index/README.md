@@ -24,3 +24,23 @@ or constructed types. No assembly resolver, search or usage analysis is added.
 Budgets count definitions and logical scalar/string payload; engine object/map/array
 overhead and the already-loaded inspectors are not represented as a hard heap limit.
 No measured speed, allocation, memory or untested-platform claim is made.
+
+
+Prepared harnesses (unrun): `browser.py <repository> <output>` serves the sibling
+module with CSP/import-map and records failures before closing every engine/server.
+Its five groups cover 20 modules, owned data, all definition kinds/MethodPtr/pages,
+limits/cancellation and retained native method identities. The existing runner is
+reused unchanged except its page title.
+
+`comparison.mjs.txt` retains one fixed 20-pair AB/BA existing-inspector-constructor
+control and 20 new-index samples (20 assemblies/20,120 definitions). It records all
+60 chronological samples, revisions/dependency hashes, retained native and authored
+fixture hashes, exact median/p95 protocol, and logical storage counters. No actual
+heap measurement is inferred from those counters. Copy to `.mjs` to execute it in
+the scheduled outer limiter. The prepared driver runs one candidate install, an
+own-source CIL baseline archive with hash-proven identical transitive dependencies,
+a baseline missing-API proof, the seven new tests plus eight existing inspector
+navigation tests, the fixed comparison, the shared browser round and checks/structure.
+No unrelated execution suite or native rebuild is scheduled.
+
+Zero-limit pages return `nextOffset: null`, consistent with existing inspector pages.
