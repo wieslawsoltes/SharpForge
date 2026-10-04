@@ -28,6 +28,26 @@ them. The separate native boundary oracle and `scripts/probe-string-ordering.mjs
 report those differences; issues #829/#2619/#2621 remain open for an exact backend.
 See [the reference](reference/culture-ordering-boundaries/README.md).
 
+`String.CompareOrdinal(string, int, string, int, int)` is appended at A07 slot
+`524298`, after OrdinalIgnoreCase `524297`; the released two-string overload and
+its return behavior remain unchanged. The range overload compares UTF-16 units
+directly without substring allocation or normalization. Null ordering precedes
+all index/length validation. Non-null strings validate length, negative indices
+and then endpoints before zero-length or equal-range shortcuts. Requested lengths
+are clipped separately to the two remaining suffixes. Invalid ranges raise
+ArgumentOutOfRangeException with the relevant parameter named in the diagnostic.
+
+The comparison takes O(units compared), constant auxiliary space and no managed
+allocation. The 58-case .NET 10.0.5/SDK 10.0.201 capture covers actual results,
+faults, validation priority, prefix lengths, Int32 bounds and split/lone surrogate
+units through compiled source/CIL and independently assembled CIL. This is one
+ordinal range overload; #2621 remains open for the remaining comparison/culture APIs.
+Run the identical `node --expose-gc scripts/benchmarks/a07-string-compare-ranges.mjs`
+runner serially in baseline `aab81434` and this branch. It reports the existing
+two-argument control separately from new range cost, using one warmup and five
+samples per real VM platform, median/p95 and managed allocation counters. Setup
+is excluded; the absent range overload is explicitly skipped on the baseline.
+
 `StringComparer.OrdinalIgnoreCase` is a separate managed singleton, shared by
 the registered string/object Compare, IComparer, List.Sort and Array.BinarySearch
 routes. Its streaming fold reuses the pinned simple-uppercase table without
