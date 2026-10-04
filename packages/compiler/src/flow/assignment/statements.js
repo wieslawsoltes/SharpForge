@@ -89,7 +89,10 @@ export const AssignmentStatements = Base =>
               }
               if (!l.when) continue;
               // The section runs when the guard is true: what `when x is T t` or `when f(out var v)` assigns is assigned there.
-              const whenTrue = this.cond(l.when, entry).t;
+              // (The guard itself sees the variable of its own label, also when the section has several labels.)
+              const guardEntry = section.labels.length === 1 || !l.local ? entry : entry.clone();
+              if (guardEntry !== entry) guardEntry.add(l.local);
+              const whenTrue = this.cond(l.when, guardEntry).t;
               if (section.labels.length === 1 && whenTrue) entry = whenTrue;
             }
             const end = this.stmt(section.body, entry);
