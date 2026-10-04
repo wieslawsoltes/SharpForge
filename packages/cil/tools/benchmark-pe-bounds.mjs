@@ -24,6 +24,10 @@ const report = { status: 'running', startedAt: new Date().toISOString(), command
     excluded: 'Imports, process startup, fixture construction, native replay, guards, statistics and I/O',
     memory: 'Signed net heapUsed deltas, not allocations or peak RSS; no forced GC' } };
 const save = () => writeJson(resolve(output, 'report.json'), report);
+const controller = new AbortController();
+const cancel = () => controller.abort();
+process.once('SIGINT', cancel);
+process.once('SIGTERM', cancel);
 save();
 
 function saveInput(id, bytes) {
@@ -64,7 +68,7 @@ async function child(label, side, mode, workload, expected) {
   save();
   try {
     command.result = await runProcess(command.argv[0], command.argv.slice(1), {
-      cwd: command.cwd, timeoutMs: 300000, maxOutputBytes: 8 * 1024 * 1024,
+      cwd: command.cwd, timeoutMs: 300000, maxOutputBytes: 8 * 1024 * 1024, signal: controller.signal,
     });
   } catch (error) { command.result = error.result ?? { error: error.message }; throw error; }
   finally {
@@ -74,17 +78,21 @@ async function child(label, side, mode, workload, expected) {
       writeFileSync(resolve(output, label + '.' + stream + '.log'), bytes, { flag: 'wx' });
       command[stream + 'Sha256'] = sha(bytes);
     }
-    if (existsSync(resultPath)) {
-      command.worker = JSON.parse(readFileSync(resultPath));
-      command.workerSha256 = sha(readFileSync(resultPath));
+    if (existsSync(resultPath)) try {
+      const bytes = readFileSync(resultPath);
+      command.workerSha256 = sha(bytes);
+      command.worker = JSON.parse(bytes);
       for (const sample of command.worker.chronologicalSamples)
         report.chronologicalSamples.push({ ...sample, child: label, childSequence: sample.sequence,
           sequence: report.chronologicalSamples.length });
+    } catch (error) {
+      command.outputInspectionError = { name: error.name, message: error.message };
     }
     save();
   }
   assert.equal(command.result.exitCode, 0, label);
   assert.equal(command.result.signal, null, label);
+  assert.equal(command.outputInspectionError, undefined, label + ': complete worker evidence');
   assert.equal(command.worker.status, 'passed', label);
   assert.equal(command.worker.jobSha256, command.jobSha256);
   return command.worker;
@@ -126,12 +134,15 @@ try {
   verifyBoundsCapture(nativePath);
   report.environment.loadAfter = loadavg();
   report.environment.freeMemoryAfter = freemem();
+  controller.signal.throwIfAborted();
   report.status = 'completed';
 } catch (error) {
   report.status = 'failed';
-  report.error = { name: error.name, message: error.message, stack: error.stack };
+  report.error = { name: error.name, message: error.message, stack: error.stack, result: error.result ?? null };
   process.exitCode = 1;
 } finally {
+  process.removeListener('SIGINT', cancel);
+  process.removeListener('SIGTERM', cancel);
   report.finishedAt = new Date().toISOString();
   save();
   console.log(JSON.stringify({ output, status: report.status, error: report.error }));

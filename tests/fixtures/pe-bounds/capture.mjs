@@ -23,6 +23,10 @@ const report = { schemaVersion: 1, status: 'running', sourceCommit: head, starte
   rawProvenance: 'All build/observer workload commands; existing resolveToolchain version probes retain identities only.',
   inputExecution: 'not-run', nativeAcceptancePolicy: 'Observed independently; eager overlap admission is a product policy.' };
 const save = () => writeJson(resolve(output, 'native.json'), report);
+const controller = new AbortController();
+const cancel = () => controller.abort();
+process.once('SIGINT', cancel);
+process.once('SIGTERM', cancel);
 const sourcePaths = git(root, 'ls-files', '--', 'packages/cil/src', 'packages/bytecode/src', 'packages/framework/src',
   'packages/bcl-core/src', 'packages/bcl-collections/src', 'packages/cil/package.json', 'packages/bytecode/package.json',
   'packages/framework/package.json', 'packages/bcl-core/package.json', 'packages/bcl-collections/package.json',
@@ -42,7 +46,8 @@ async function execute(label, argv) {
   report.commands.push(record);
   save();
   try {
-    record.result = await runProcess(argv[0], argv.slice(1), { cwd: output, timeoutMs: 60000, maxOutputBytes: 8 * 1024 * 1024 });
+    record.result = await runProcess(argv[0], argv.slice(1), { cwd: output, timeoutMs: 60000, maxOutputBytes: 8 * 1024 * 1024,
+      signal: controller.signal });
   } catch (error) {
     record.result = error.result ?? { exitCode: null, signal: null, error: error.message };
     throw error;
@@ -73,7 +78,8 @@ async function build(toolchain, label, source) {
 }
 
 try {
-  const toolchain = await resolveToolchain();
+  const toolchain = await resolveToolchain({ processRunner: (command, args, options) =>
+    runProcess(command, args, { ...options, signal: controller.signal }) });
   report.toolchain = toolchain.actual;
   report.environment = toolchain.environment;
   const authoredObserver = await build(toolchain, 'BoundsObserver', 'tests/fixtures/pe-bounds/Program.cs');
@@ -123,12 +129,15 @@ try {
   assert.equal(clean(root), head);
   for (const [path, expected] of Object.entries(report.sourceSha256))
     assert.equal(sha(readFileSync(resolve(root, path))), expected, 'Unchanged source: ' + path);
+  controller.signal.throwIfAborted();
   report.status = 'completed';
 } catch (error) {
   report.status = 'failed';
-  report.error = { name: error.name, message: error.message, stack: error.stack };
+  report.error = { name: error.name, message: error.message, stack: error.stack, result: error.result ?? null };
   process.exitCode = 1;
 } finally {
+  process.removeListener('SIGINT', cancel);
+  process.removeListener('SIGTERM', cancel);
   report.finishedAt = new Date().toISOString();
   save();
   console.log(JSON.stringify({ output, status: report.status, error: report.error }));

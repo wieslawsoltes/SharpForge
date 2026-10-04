@@ -51,6 +51,25 @@ source snapshots, raw stdout/stderr, exit/signal, UTC times and disk availabilit
 It refuses prior-file overwrite and requires successful predecessor receipts.
 The commands already contain `scripts/limited.js`; do not wrap it twice.
 
+The qualification tools forward parent SIGINT/SIGTERM through an AbortSignal to
+native workload children, toolchain probes and benchmark workers. The canonical
+process runner reaps each child before its result or failure is retained. Probe
+outputs remain outside the six-workload raw provenance claim; a failed probe's
+available result is retained with the failure. Interrupted worker output is
+hashed even if its partial JSON cannot be parsed, with the inspection error
+kept separately from the original process failure.
+
+The outer recorder creates a pending receipt before admission, then retains
+actual source hashes, HEAD, Git status, aliases and partial output identities
+in finalization, including on launch/copy failures and source drift. Inspection
+failures are separate from the primary phase failure. Interruptions are forwarded
+to the resource wrapper and awaited; after ten seconds, a stalled process group
+is forcibly stopped. A forced stop, disk failure or host termination can leave
+partial evidence and never qualifies as a pass. Git status is recorded separately
+because exclusive native retention intentionally creates untracked references.
+The original unexecuted plan and recorder from `86b9a550` remain byte-exact in
+`qualification/preparation-86b9a550/`, with their original hashes.
+
 Performance uses five ordinary `readPE` workloads, each compared against the
 exact baseline in separate fresh Node children: a small three-section image,
 a maximum-96-section image, real native IL, real R2R and real mixed mode. The
