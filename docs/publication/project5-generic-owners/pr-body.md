@@ -41,4 +41,4 @@ This is quantified correctness-cost sign-off, not a performance-budget pass. Man
 
 ## Scope
 
-Refs #610 and #645. This completes the generated-name/arity batch; broader async payloads, waiting-boundary restore and additional async families remain in the project. The source VM and Rust/Wasm are unchanged by these direct-CIL identity helpers. Hosted `core` remains the merge gate; the focused Node result above was executed separately.
+Refs #610 and #645. This completes the generated-name/arity batch; broader async payloads, waiting-boundary restore and additional async families remain in the project. Shared source-VM MethodTable normalization is covered by the table controls; separate source-VM execution and Rust/Wasm qualification remain pending. Hosted `core` remains the merge gate; the focused Node result above was executed separately.
