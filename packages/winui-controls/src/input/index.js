@@ -9,3 +9,4 @@ export * from './gestures.js';
 export * from './manipulation.js';
 export * from './transport.js';
 export * from './inertia.js';
+export { dragArgumentTypes } from '../contracts/drag-input.js';
