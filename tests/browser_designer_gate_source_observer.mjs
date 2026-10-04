@@ -44,12 +44,14 @@ export async function observeSourceInput(page, uri) {
     const input = event => {
       const capturedAt = performance.now();
       const timestamp = event.timeStamp > performance.timeOrigin ? event.timeStamp - performance.timeOrigin : event.timeStamp;
-      append(event.type === 'keydown' ? 'keys' : 'inputs', {type: event.type, key: event.key ?? null,
+      append(event.type === 'keydown' ? 'keys' : 'inputs', {type: event.type, key: event.key ?? null, inputType: event.inputType ?? null,
         trusted: event.isTrusted, rawEventTimestamp: event.timeStamp, eventTimestamp: timestamp,
         capturedAt, queueDelayMs: capturedAt - timestamp,
         pending: data.requests.filter(request => request.status === 'pending').map(request => request.label)});
     };
     editor.addEventListener('keydown', input, true);
+    // The editor consumes cancelable beforeinput and updates its model without a native input event.
+    editor.addEventListener('beforeinput', input, true);
     editor.addEventListener('input', input, true);
     const observer = new MutationObserver(sample);
     observer.observe(preview, {childList: true, characterData: true, subtree: true});
@@ -68,6 +70,7 @@ export async function observeSourceInput(page, uri) {
     }, stop() {
       observer.disconnect();
       editor.removeEventListener('keydown', input, true);
+      editor.removeEventListener('beforeinput', input, true);
       editor.removeEventListener('input', input, true);
       sample();
       delete window.__a18SourceObservation;

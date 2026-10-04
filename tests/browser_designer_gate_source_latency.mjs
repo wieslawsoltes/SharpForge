@@ -111,7 +111,9 @@ function assertAcceptance(evidence, fixture) {
   const pendingKeys = input.keys.filter(event => event.pending.length);
   assert(pendingKeys.some(event => event.pending.includes('obsolete')), 'No trusted key arrived while the obsolete read was pending.');
   assert(pendingKeys.some(event => event.pending.includes('latest')), 'No trusted key arrived while the latest analysis was pending.');
-  assert(input.inputs.some(event => event.pending.includes('obsolete') && event.trusted), 'A real editor input did not supersede the pending read.');
+  assert(input.inputs.some(event => event.pending.includes('obsolete') && event.trusted &&
+    (event.type === 'beforeinput' || event.type === 'input') && event.inputType === 'insertText'),
+    'A trusted editor insertion did not supersede the pending read.');
   assert(input.keys.every(event => event.trusted && Number.isFinite(event.queueDelayMs) && event.queueDelayMs >= -0.1),
     'Keyboard evidence has synthetic input or incompatible timestamp clocks.');
   assert(evidence.inputQueueMs.maximum <= 16, `3000-line analysis delayed trusted key input beyond 16 ms: ${JSON.stringify(evidence.inputQueueMs)}`);
