@@ -55,6 +55,20 @@ function validateInput(blob, {uri, version, chunkSize, maxFileBytes, maxCharacte
   if (blob.size > maxFileBytes) throw new RangeError('Source file byte limit exceeded');
 }
 
+/** Rebase a captured prepared source without changing or disposing the caller's original model. */
+export function rebaseEditorSource(record, uri) {
+  if (typeof uri !== 'string' || !uri || uri.length > 4096 || uri.includes('\0')) throw new TypeError('Invalid source URI');
+  const source = record?.source;
+  if (!source || typeof source.withMetadata !== 'function' || source !== record.model?.snapshot()) {
+    throw new TypeError('Rebasing requires a current prepared source snapshot');
+  }
+  const model = new EditorModel(source.withMetadata({uri}), {
+    uri, version: source.version, encoding: record.encoding, bom: record.bom
+  });
+  model.markSaved();
+  return preparedRecord(model, record.byteLength);
+}
+
 function sourceEncoding(prefix, requested) {
   const marker = prefix[0] === 255 && prefix[1] === 254 ? 'utf-16le'
     : prefix[0] === 254 && prefix[1] === 255 ? 'utf-16be'
