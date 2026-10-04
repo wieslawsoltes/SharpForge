@@ -17,7 +17,10 @@
     "tests/project-input-contract.test.js",
     "tests/a23-native-sdk-model.test.js",
     "tests/a23-native-sdk-reference.test.js",
-    "tests/a23-native-http-contributions.test.js"
+    "tests/a23-native-http-contributions.test.js",
+    "tests/a23-native-context-model.test.js",
+    "tests/a23-native-context-aliases.test.js",
+    "tests/a23-metadata-inspection.test.js"
   ],
   "browserScripts": [
     "tests/browser_msbuild_test.py"

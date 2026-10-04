@@ -15,3 +15,14 @@ Install its declared sibling packages together. npm publication is not part of t
 ## 0.10 integration
 
 This package participates in Portable PDB symbols, cooperative async/logical-thread execution, managed Hot Reload, explicit evaluation, guarded instruction relocation and the code-first WinUI web profile. See the source distribution `docs/advanced-debugging-winui.md` for exact semantic limits; no native CLR/WinRT or full Visual Studio compatibility is implied.
+
+## Inspecting explicit metadata references
+
+`inspectMetadataReference(bytes)` accepts a `Uint8Array` containing one managed PE/CLI image, up to 64 MiB (67,108,864 bytes).
+It reuses the compiler's metadata importer and returns `{name, identity, references}`: the simple assembly name, full display identity
+and number of referenced assembly identities. It does not execute code or resolve dependencies. Inspection validates the PE/CLI metadata
+needed for that summary; it does not claim to verify method bodies or establish executable runtime compatibility.
+
+Invalid input types and oversized arrays throw `RangeError`; malformed images preserve the metadata reader's explicit error. The function
+reads only the supplied byte view and does not modify it. The native SDK metadata service uses this public seam after its own trust,
+workspace, file-count and byte-budget checks.
