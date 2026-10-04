@@ -1,6 +1,7 @@
-import { cliSystemName } from '@sharpforge/cil';
 import { createTypeDesc, TypeDesc, TypeKind } from './type-desc.js';
-import { checkCancellation, loadError, LoadErrorCode } from '../load-errors.js';
+import { ConstructedTypeCache } from './constructed-type-cache.js';
+import { SignatureTypes } from './signature-types.js';
+import { loadError, LoadErrorCode } from '../load-errors.js';
 
 const fail = message => loadError(LoadErrorCode.TypeLoad, message);
 const requireType = type => { if (!(type instanceof TypeDesc)) throw new TypeError('Expected TypeDesc'); };
@@ -13,32 +14,30 @@ const method = (name, returnType, parameters) => Object.freeze({ name, returnTyp
 export class ConstructedTypes {
   #loader;
   #context;
-  #maxTypes;
-  #identities = new WeakMap();
-  #nextIdentity = 0;
-  #types = new Map();
-  constructor(loader, context, maxTypes) { this.#loader = loader; this.#context = context; this.#maxTypes = maxTypes; }
+  #cache;
+  #signatures;
+  #signatureExtensions;
+  constructor(loader, context, maxTypes, signatureExtensions = null) {
+    this.#loader = loader;
+    this.#context = context;
+    this.#cache = new ConstructedTypeCache(maxTypes);
+    this.#signatureExtensions = signatureExtensions;
+  }
 
   #identity(type) {
-    requireType(type);
-    if (!this.#identities.has(type)) {
-      if (this.#nextIdentity >= this.#maxTypes) throw loadError(LoadErrorCode.LimitExceeded, 'Constructed type identity limit exceeded');
-      this.#identities.set(type, ++this.#nextIdentity);
-    }
-    return this.#identities.get(type);
+    return this.#cache.identity(type);
   }
 
   #canonical(key, create) {
-    if (!this.#types.has(key)) {
-      if (this.#types.size >= this.#maxTypes) throw loadError(LoadErrorCode.LimitExceeded, 'Constructed type count limit exceeded');
-      const state = { module: null, ...create(), context: this.#context, token: 0, declaringType: null, loaded: true };
-      if (state.fullName.length > 4096) throw loadError(LoadErrorCode.LimitExceeded, 'Constructed type name length exceeded');
-      if (this.#types.size >= this.#maxTypes) throw loadError(LoadErrorCode.LimitExceeded, 'Constructed type count limit exceeded');
-      const type = createTypeDesc(state);
-      if (state.methods) state.methods = Object.freeze(state.methods.map(member => Object.freeze({ ...member, declaringType: type })));
-      this.#types.set(key, type);
-    }
-    return this.#types.get(key);
+    const cached = this.#cache.get(key);
+    if (cached) return cached;
+    this.#cache.ensureCapacity();
+    const state = { module: null, ...create(), context: this.#context, token: 0, declaringType: null, loaded: true };
+    if (state.fullName.length > 4096) throw loadError(LoadErrorCode.LimitExceeded, 'Constructed type name length exceeded');
+    this.#cache.ensureCapacity();
+    const type = createTypeDesc(state);
+    if (state.methods) state.methods = Object.freeze(state.methods.map(member => Object.freeze({ ...member, declaringType: type })));
+    return this.#cache.add(key, type);
   }
 
   element(kind, element, rank = 0) {
@@ -113,26 +112,9 @@ export class ConstructedTypes {
     });
   }
 
-  async signature(signature, resolveType, signal) {
-    checkCancellation(signal);
-    if (signature.kind === 'primitive') return this.#loader.intrinsic(cliSystemName(signature.name));
-    if (['class', 'valuetype'].includes(signature.kind)) {
-      const type = await resolveType(signature.token);
-      const value = [TypeKind.ValueType, TypeKind.Enum].includes(type.kind);
-      if ((signature.kind === 'valuetype') !== value) throw fail('Signature class/value category does not match its definition');
-      return type;
-    }
-    if (['szarray', 'array', 'pointer', 'byref'].includes(signature.kind)) {
-      const element = await this.signature(signature.element, resolveType, signal);
-      return this.#loader.constructElement(signature.kind, element, signature.kind === 'szarray' ? 1 : signature.rank ?? 0);
-    }
-    if (signature.kind === 'functionPointer') {
-      const parameters = [];
-      for (const parameter of signature.signature.parameters) parameters.push(await this.signature(parameter, resolveType, signal));
-      const returnType = await this.signature(signature.signature.returnType, resolveType, signal);
-      return this.functionPointer({ ...signature.signature, returnType, parameters });
-    }
-    throw fail(`Signature type ${signature.kind} requires generic/modifier type services`);
+  signature(signature, resolveType, signal) {
+    this.#signatures ??= new SignatureTypes(this.#loader, value => this.functionPointer(value), this.#signatureExtensions);
+    return this.#signatures.resolve(signature, { resolveType, signal });
   }
 }
 
