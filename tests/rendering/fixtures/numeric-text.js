@@ -3,7 +3,7 @@ import {canvasPixels} from '../rgba.js';
 
 const maximumAssetBytes = 8 * 1024 * 1024;
 
-function canvasFactory(document) {
+export function canvasFactory(document) {
   return (width, height) => {
     const canvas = document.createElement('canvas');
     canvas.width = width;
@@ -12,7 +12,7 @@ function canvasFactory(document) {
   };
 }
 
-function fixtureLoader(base) {
+export function fixtureLoader(base) {
   const prefix = new URL('packages/rendering/vendor/', base);
   return async (input, {signal} = {}) => {
     const url = new URL(input, base);
@@ -44,7 +44,7 @@ function verifyNumericBackend(surface, definition, evidence) {
   return {...evidence, observedGlyphInstances, observedColorGlyphInstances};
 }
 
-function canvasReference(createCanvas, textService, list, resources, definition) {
+export function canvasReference(createCanvas, textService, list, resources, definition) {
   const canvas = createCanvas(1, 1);
   const renderer = new Canvas2DBackend(canvas, {createCanvas, textService});
   try {
