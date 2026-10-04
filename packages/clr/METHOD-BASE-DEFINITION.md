@@ -53,12 +53,28 @@ and publication; a cancelled resolution can be retried. Per-edge comparison is
 linear in explicit constraint count using canonical identity sets, after bounded
 metadata/type loading. No method body is inspected.
 
-Seven authored tests and a mandatory native-oracle test are prepared. The native
-source covers 12 C# method roots and three independently persisted IL cases for
-weakened constraints, constructor implication and stronger-constraint rejection.
-Source/image provenance is required. Capture, focused tests, paired existing-path
-and new-fixture measurements, syntax/static/manifests and structure are pending
-the serial validation slot; no passing result is claimed for this extension.
+SDK 10.0.201/CoreCLR 10.0.5 captured 12 C# method roots and three independently
+persisted IL cases: weakened class/new constraints and constructor implication
+were accepted; the stronger class requirement raised TypeLoadException. All
+32 affected tests pass with zero skips, including mandatory source/image hashes.
+Syntax/static checks pass (3,448/3,444 modules), manifests pass, and structure
+reports 271 existing findings, none in changed files. All local jobs ran serially
+under one limiter with concurrency 1 and a 1 GiB heap cap.
+
+Exact-parent control (`66599db4` → `996b0059`) over 23 methods measured cold median
+154.833 → 154.917 µs (+0.084 µs), p95 310.875 → 350.750 µs (+39.875 µs/+12.827%).
+Cached median was 133.625 → 120.250 ns, p95 185.041 → 169.959 ns. The root
+integration reviewer explicitly accepts the measured cold p95 cost for bounded
+per-edge constraint compatibility. Unconstrained matches allocate no constraint
+service or promise. No repeat or retuning was required.
+
+The new 12-method fixture measured cold median 145.542 µs / p95 317.667 µs and
+cached median 141.833 ns / p95 169.333 ns. [All 600 raw samples, p99, exact heads,
+commands and provenance](benchmarks/constrained-method-overrides-node24.json)
+are retained. Controls import their own CLR implementation; only byte-identical
+CIL/archive dependencies are shared. Runs used shared Apple M3 Pro/darwin-arm64,
+Node 24.21.0. No causal, noise, significance, speed or peak-memory attribution is
+made; allocations and cache footprint are unmeasured.
 
 Generic-instance signature types now match by canonical open definition identity
 and recursively compared argument keys. This supports ordinary overrides whose
