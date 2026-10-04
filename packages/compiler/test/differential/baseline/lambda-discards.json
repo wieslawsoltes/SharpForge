@@ -1,5 +1,5 @@
 {
   "lambda-discards/cs0103-a-discard-is-not-a-name": ["diagnostics", "warnings"],
   "lambda-discards/lambda-discards-in-csharp-8": ["diagnostics", "warnings"],
-  "lambda-discards/several-underscore-parameters": ["diagnostics", "warnings", "bytecode", "cil"]
+  "lambda-discards/several-underscore-parameters": ["diagnostics", "warnings", "bytecode", "cil", "directCil"]
 }

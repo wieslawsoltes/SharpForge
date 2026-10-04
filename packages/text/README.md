@@ -66,11 +66,19 @@ nextGraphemeOffset('👩‍👩‍👧‍👦x', 0, { segmenter });
 visualColumnAt('a\t界😀', 5, { tabSize: 4 });
 ```
 
-`iterateGraphemes`, `graphemeSegments`, `nextGraphemeOffset`, and `previousGraphemeOffset` use `Intl.Segmenter` by default. The explicit fallback covers CRLF, Hangul, combining/spacing marks, emoji modifiers and ZWJ sequences, regional-indicator flags, and common Indic linkers. The fallback is a declared compatibility profile rather than a complete vendored Unicode property database; full native segmentation follows the host's Unicode data. See [Unicode UAX #29](https://www.unicode.org/reports/tr29/).
+`iterateGraphemes`, `graphemeSegments`, `nextGraphemeOffset`, and `previousGraphemeOffset` use a pinned Unicode 16.0 extended-grapheme profile. The default and legacy `{forceFallback:true}` path share the same complete rule/data implementation. An explicit `new GraphemeSegmenter({segmenter:new Intl.Segmenter("und",{granularity:"grapheme"})})` retains host-tailored behavior. The exported `unicodeGraphemeVersion` identifies the pinned profile; [data, license, regeneration and conformance evidence](reference/unicode-16.0.0/README.md) document the compatibility change.
 
 `wordSegments`/`wordRangeAt` use word segmentation; next/previous word commands consume following/preceding whitespace in the usual editor style. `subwordBoundaries` separates camel/Pascal humps, acronyms, digits, underscores, and CJK characters. Pass `{subword:true}` to next/previous movement.
 
 `graphemeWidth`, `visualColumnAt`, `offsetAtVisualColumn`, and `expandTabs` share a monospace column model. Tabs advance to explicit tab stops, East Asian wide characters and emoji occupy two cells, and combining-only/format/control clusters occupy zero. `offsetAtVisualColumn` returns logical offset, resolved column, virtual spaces, and partial-tab details. Offsets remain UTF-16 while displayed columns count visual cells. Ambiguous-width characters default to one cell. Browser bidi run ordering and pixel geometry belong to the editor's native layout integration; see [Unicode UAX #9](https://www.unicode.org/reports/tr9/).
+
+### Indexed visual columns for large lines
+
+`new VisualColumnIndex(buffer,options)` accepts a source with immutable indexed snapshots and an optional `onDidChange` subscription. `await index.get(offset,{tabSize,ambiguousWidth,signal})` resolves an exact zero-based column. `index.getCached(...)` returns an exact number or `null` when asynchronous indexing is needed. UTF-16 offsets inside a grapheme map to that cluster's starting column; offsets in a line terminator map to the line-end column.
+
+Initial work is linear in the unindexed prefix and uses bounded chunks. Cached requests binary-search sparse checkpoints and read at most one configured chunk synchronously; more distant requests yield while scanning. Checkpoints retain constant-size Unicode state, so even a multi-megabyte combining cluster needs no growing overlap string. The index never requests `snapshot.text`, `lineStarts`, or a complete line. Edits preserve unaffected indexes and rewind affected prefixes before a possible UTF-16 pair seam. Cancellation, stale snapshots, disposal and capacity failures reject explicitly.
+
+Defaults: 4,096-unit chunks, 8,192-unit checkpoints, 32 line/style entries, 32,768 checkpoints in total, 256 recent results per entry and 64 pending requests. Checkpoint spacing coarsens within the fixed cache budget. Scheduling yields after 65,536 units or an 8 ms slice; these are cooperative scheduling targets, not a browser frame-latency guarantee. `statistics` exposes actual work and cache sizes. `dispose()` releases subscriptions, rejects pending requests and clears caches. See the [model integration contract](../editor/docs/model.md#exact-visual-status-columns) and `bench/visual-columns.js` for usage and measured comparisons.
 
 ## Bounded search and replacement
 
@@ -105,6 +113,57 @@ Defaults and hard guards:
 `SearchLimitError` identifies step, time, stack, or result-size limits. An aborted signal throws `AbortError`. These bounds stop pathological expressions such as `(a+)+$` during execution. Native single-character/property predicate work is constant in input length. For broad workspace scans, dispatch calls to an explicitly owned worker so sequential document work does not block the view.
 
 Matches retain the existing URI/span/version/line/character/preview fields and add matched `.text`, `.captures`, named `.groups`, and capture `.indices`. `expandReplacement(replacement,match,sourceText?)` supports `$$`, `$&`, `$1`–`$99`, `$<name>`, and prefix/suffix tokens when the source is supplied. Literal replacements remain literal. `replaceTextMatches` preflights match count and output limits and returns `{text,count,matches,edits}`.
+
+### Navigation from a caret
+
+```js
+import { findLiteralMatch, findLiteralMatchAsync } from '@sharpforge/text';
+
+const next = findLiteralMatch(buffer.snapshot(), 'selected text', {
+  origin: selection.end, direction: 1, matchCase: true,
+  excludeRanges: selections.map(({start, end}) => ({start, end}))
+});
+const previous = await findLiteralMatchAsync(buffer, 'needle', {
+  origin: caret, direction: -1, signal
+});
+```
+
+Both functions return `{match,wrapped}`. A match contains `{uri,version,start,end,text}`;
+an exhausted scope returns `{match:null,wrapped:false}`. Forward navigation selects
+the nearest match starting at or after `origin`; reverse navigation selects the
+nearest match ending at or before it. The default origin is the start or end of
+the document for the requested direction. Offsets are UTF-16, scalar boundaries
+remain intact, and overlapping matches are eligible. A successful second pass
+reports `wrapped:true`; `wrap:false` disables that pass. A match crossing the
+origin remains eligible on the wrapped pass.
+
+Navigation reads indexed snapshots in bounded chunks and retains one match.
+It does not scan a document prefix to calculate line numbers or collect a capped
+result page. `findTextMatches` retains its separate 10,000-result ceiling and
+nonoverlap semantics. Sources may be strings, `SourceText`, immutable indexed
+snapshots, or mutable buffers/models exposing `snapshot()`, captured once before
+searching. A custom indexed source must provide stable `length` and
+`getText(start,end)` values for the lifetime of the call. Snapshot `.text` and
+`.lineStarts` are never requested when indexed reads are available.
+
+The same simple case folding, whole-word checks and 1,024-unit query limit apply.
+`excludeRanges` accepts at most 10,000 UTF-16 ranges, sorted and merged for binary
+lookup; a match overlapping a range or strictly containing an empty caret is
+excluded. Work is linear in visited scalars, plus logarithmic exclusion lookup
+per candidate. Retained state is bounded by chunk size, query length and the
+exclusion count, independently of the number of matches before the origin.
+
+Synchronous defaults remain 2,000,000 steps and 25 ms. The asynchronous API
+defaults to at most 1,000,000,000 steps and 30,000 ms for the complete search,
+yields between chunks, and closes its owned message channel on completion or
+failure. Both accept explicit `maxSteps`, `timeLimitMs`, `clock` and `signal`;
+limit exhaustion throws `SearchLimitError`, while cancellation throws
+`AbortError`, rather than returning a partial match or an incorrect wrap.
+`chunkSize` defaults to 16,384 UTF-16 units and accepts 256–262,144; a surrogate
+boundary may require one additional unit. An optional asynchronous
+`yieldControl()` supplies an explicit host scheduler, which must resolve its
+scheduling turn; cancellation and deadlines are checked before work resumes.
+These are work and memory bounds, not a browser frame-time guarantee.
 
 ## Diff and merge
 

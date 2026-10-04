@@ -41,7 +41,8 @@ export function compareOrdinalIgnoreCaseRange(platform, args) {
   return compareRange(platform, args, compareOrdinalIgnoreCaseUnits);
 }
 
-function ordinalUpper(point) {
+/** Internal ordinal fold shared by comparison and search; preserves UTF-16 width and isolated surrogate units. */
+export function ordinalUpper(point) {
   if (point <= 0x7f) return point >= 0x61 && point <= 0x7a ? point - 0x20 : point;
   // The pinned ordinal capture excludes long s and Garay from invariant-uppercase equivalence.
   if (point === 0x17f || point >= 0x16ebb && point <= 0x16ed3) return point;

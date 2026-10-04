@@ -3,6 +3,7 @@ import {ManagedFault} from '../heap.js';
 import {executionCodeState} from './code-version.js';
 import {sourceStackSlots} from './source-stack-size.js';
 import {valueLayout} from './value-layout.js';
+import {isAggregateType} from './value-types.js';
 
 const budgets = new WeakMap();
 const slotBytes = 8;
@@ -29,7 +30,8 @@ function storageBytes(vm, type) {
   // Custom modifiers affect access/call contracts, not physical storage width.
   const name = normalizeCallType(type).replace(/\s+mod(?:req|opt)\([^)]*\)/g, '').replace(/\s+pinned$/, '');
   const table = vm.inspector ? vm.typeSystem.table(name) : vm.heap.methodTables.get(name);
-  const bytes = table.flags.nullable ? valueLayout(vm, table).size : table.flags.valueType ? table.valueSize : slotBytes;
+  const layout = table.flags.nullable || vm.inspector && isAggregateType(table);
+  const bytes = layout ? valueLayout(vm, table).size : table.flags.valueType ? table.valueSize : slotBytes;
   if (!Number.isSafeInteger(bytes) || bytes < 0) throw new TypeError('Invalid managed stack storage size');
   return Math.max(slotBytes, Math.ceil(bytes / slotBytes) * slotBytes);
 }

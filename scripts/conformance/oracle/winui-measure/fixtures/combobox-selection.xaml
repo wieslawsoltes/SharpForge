@@ -1,0 +1,8 @@
+<ComboBox xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+          xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+          x:Name="Subject" AutomationProperties.Name="Build configuration"
+          Header="Build configuration" Width="220" SelectedIndex="1">
+  <ComboBoxItem Content="Debug" />
+  <ComboBoxItem Content="Release" />
+  <ComboBoxItem Content="Profile" />
+</ComboBox>

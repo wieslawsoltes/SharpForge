@@ -1,4 +1,5 @@
 import { readFrozenSignature } from './frozen-signature.js';
+import { readCustomModifierTokens } from './custom-modifiers.js';
 
 /** Canonical Property metadata identity; accessor links and signatures remain lazy. */
 export class PropertyDesc {
@@ -7,6 +8,7 @@ export class PropertyDesc {
   #accessors;
   #constant;
   #indexParameters;
+  #modifiers;
   constructor(state, key) {
     if (key !== creationKey) throw new TypeError('Property descriptors are created by their runtime module');
     this.#state = state;
@@ -21,6 +23,9 @@ export class PropertyDesc {
   get loadContext() { return this.assembly.loadContext; }
   get signature() { return this.#signature ??= readFrozenSignature(this.module, this.#state.signatureIndex, 'property'); }
   get isStatic() { return !this.signature.hasThis; }
+  get #customModifiers() { return this.#modifiers ??= readCustomModifierTokens(this.signature.returnType, this.module); }
+  get requiredCustomModifierTokens() { return this.#customModifiers.required; }
+  get optionalCustomModifierTokens() { return this.#customModifiers.optional; }
   get #methods() { return this.#accessors ??= this.module.propertyAccessors(this.metadataToken); }
   get getMethod() { return this.#methods.getMethod; }
   get setMethod() { return this.#methods.setMethod; }

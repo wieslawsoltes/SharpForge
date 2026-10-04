@@ -1,0 +1,207 @@
+{
+  "schemaVersion": 1,
+  "family": "time",
+  "source": "Time.cs",
+  "cases": [
+    {
+      "id": "time-leap-day",
+      "category": "positive",
+      "exception": null
+    },
+    {
+      "id": "time-leap-century",
+      "category": "boundary",
+      "exception": null
+    },
+    {
+      "id": "time-common-century",
+      "category": "boundary",
+      "exception": null
+    },
+    {
+      "id": "time-february-leap-days",
+      "category": "positive",
+      "exception": null
+    },
+    {
+      "id": "time-february-common-days",
+      "category": "positive",
+      "exception": null
+    },
+    {
+      "id": "time-invalid-month",
+      "category": "negative",
+      "exception": "System.ArgumentOutOfRangeException"
+    },
+    {
+      "id": "time-invalid-leap-day",
+      "category": "negative",
+      "exception": "System.ArgumentOutOfRangeException"
+    },
+    {
+      "id": "time-add-day-leap",
+      "category": "boundary",
+      "exception": null
+    },
+    {
+      "id": "time-add-day-year",
+      "category": "boundary",
+      "exception": null
+    },
+    {
+      "id": "time-add-month-clamps-day",
+      "category": "boundary",
+      "exception": null
+    },
+    {
+      "id": "time-add-year-clamps-leap",
+      "category": "boundary",
+      "exception": null
+    },
+    {
+      "id": "time-max-add-tick",
+      "category": "negative",
+      "exception": "System.ArgumentOutOfRangeException"
+    },
+    {
+      "id": "time-min-subtract-tick",
+      "category": "negative",
+      "exception": "System.ArgumentOutOfRangeException"
+    },
+    {
+      "id": "time-parse-roundtrip-kind",
+      "category": "positive",
+      "exception": null
+    },
+    {
+      "id": "time-parse-invalid-date",
+      "category": "negative",
+      "exception": "System.FormatException"
+    },
+    {
+      "id": "time-compare-dates",
+      "category": "positive",
+      "exception": null
+    },
+    {
+      "id": "time-subtract-dates-ticks",
+      "category": "positive",
+      "exception": null
+    },
+    {
+      "id": "time-specify-kind",
+      "category": "positive",
+      "exception": null
+    },
+    {
+      "id": "time-offset-preserved",
+      "category": "positive",
+      "exception": null
+    },
+    {
+      "id": "time-offset-equal-instants",
+      "category": "positive",
+      "exception": null
+    },
+    {
+      "id": "time-unix-epoch",
+      "category": "boundary",
+      "exception": null
+    },
+    {
+      "id": "time-unix-before-epoch",
+      "category": "boundary",
+      "exception": null
+    },
+    {
+      "id": "time-offset-conversion",
+      "category": "positive",
+      "exception": null
+    },
+    {
+      "id": "time-offset-invalid-range",
+      "category": "negative",
+      "exception": "System.ArgumentOutOfRangeException"
+    },
+    {
+      "id": "time-span-zero",
+      "category": "boundary",
+      "exception": null
+    },
+    {
+      "id": "time-span-components",
+      "category": "positive",
+      "exception": null
+    },
+    {
+      "id": "time-span-negative-ticks",
+      "category": "boundary",
+      "exception": null
+    },
+    {
+      "id": "time-span-add",
+      "category": "positive",
+      "exception": null
+    },
+    {
+      "id": "time-span-subtract",
+      "category": "positive",
+      "exception": null
+    },
+    {
+      "id": "time-span-duration-negative",
+      "category": "positive",
+      "exception": null
+    },
+    {
+      "id": "time-span-duration-min",
+      "category": "negative",
+      "exception": "System.OverflowException"
+    },
+    {
+      "id": "time-span-add-overflow",
+      "category": "negative",
+      "exception": "System.OverflowException"
+    },
+    {
+      "id": "time-span-parse-exact",
+      "category": "positive",
+      "exception": null
+    },
+    {
+      "id": "time-span-parse-invalid",
+      "category": "negative",
+      "exception": "System.FormatException"
+    },
+    {
+      "id": "time-dateonly-from-datetime",
+      "category": "positive",
+      "exception": null
+    },
+    {
+      "id": "time-dateonly-first-day",
+      "category": "boundary",
+      "exception": null
+    },
+    {
+      "id": "time-dateonly-overflow",
+      "category": "negative",
+      "exception": "System.ArgumentOutOfRangeException"
+    },
+    {
+      "id": "time-timeonly-wrap",
+      "category": "boundary",
+      "exception": null
+    },
+    {
+      "id": "time-timeonly-invalid-hour",
+      "category": "negative",
+      "exception": "System.ArgumentOutOfRangeException"
+    },
+    {
+      "id": "time-culture-full-format",
+      "category": "positive",
+      "exception": null
+    }
+  ]
+}

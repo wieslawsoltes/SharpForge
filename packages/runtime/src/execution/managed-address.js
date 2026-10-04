@@ -48,6 +48,11 @@ function leaf(vm, address, base) {
   return {value, type, readonly};
 }
 
+/** Inspect owned storage without reading an uninitialized value; constructors still validate its declared type. */
+export function inspectManagedAddress(vm, address) {
+  return leaf(vm, address, location(vm, address));
+}
+
 /** Store a location and immutable field path, never a direct alias to frame or struct storage. */
 export function createManagedAddress(vm, kind, index, owner) {
   if (owner?.byref) {

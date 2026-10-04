@@ -18,6 +18,7 @@ export function registerExtendedCommands(add, commands, context, feature, viewCo
   add('Edit.PreviousHighlightedReference', () => feature(context, 'nextReference', [-1]));
   add('Edit.GotoNextIssueinFile', () => feature(context, 'nextDiagnostic', [1]));
   add('Edit.GotoPreviousIssueinFile', () => feature(context, 'nextDiagnostic', [-1]));
+  add('Edit.ToggleBlockComment', () => viewCommand(context, 'Edit.ToggleBlockComment'), {edit: true});
   add('Edit.SwapAnchor', () => context.select(context.selections.map(({ anchor, head }) => ({ anchor: head, head: anchor }))));
   for (const [id, method] of Object.entries({
     'Edit.CopyParameterTip': 'copyParameterTip', 'Edit.PasteParameterTip': 'pasteParameterTip',
