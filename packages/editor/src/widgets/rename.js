@@ -54,6 +54,7 @@ export class InlineRenameWidget {
     }
     this.origin = {uri: editor.uri, offset, selectionEnd: editor.input.selectionEnd, range};
     this.preview = new RenamePreview(editor);
+    this.resumeRequests = this.context.suspendRequests(['rename']);
     this.input.value = range.placeholder ?? editor.value.slice(range.start, range.end);
     this.popup.show(range.start);
     this.input.focus();
@@ -115,6 +116,8 @@ export class InlineRenameWidget {
     this.origin = null;
     this.preview = null;
     this.plan = null;
+    this.resumeRequests?.();
+    this.resumeRequests = null;
     this.popup.close();
   }
 
