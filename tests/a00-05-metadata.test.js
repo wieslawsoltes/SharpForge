@@ -84,3 +84,48 @@ test('A00 schema equality traversal consumes the depth and node budgets',()=>{
   const cycle={};cycle.self=cycle;
   assert.throws(()=>validate({uniqueItems:true},[cycle]),error=>error instanceof SchemaError&&error.code==='SCHEMA_LIMIT');
 });
+test('A00 schema input rejects array holes even without an item constraint',()=>{
+  for(const contract of [true,{}, {type:'array'}, {type:'array',items:true}, {type:'array',items:{type:'number'}}]){
+    validate(contract,[]);validate(contract,[1,2,3]);
+    for(const index of [0,1,2]){
+      const sparse=[1,2,3];delete sparse[index];
+      assert.throws(()=>validate(contract,sparse),{code:'SCHEMA_INVALID',path:`$[${index}]`});
+    }
+  }
+  const inherited=Object.assign(Object.create(Array.prototype),{1:2});
+  const sparse=[1,,3];Object.setPrototypeOf(sparse,inherited);
+  assert.throws(()=>validate(true,sparse),{code:'SCHEMA_INVALID',path:'$[1]'});
+  for(const contract of [true,{}, {type:'object',properties:{known:{type:'string'}}}]){
+    assert.throws(()=>validate(contract,{known:'ok',unconstrained:{values:[1,,3]}}),
+      {code:'SCHEMA_INVALID',path:'$.unconstrained.values[1]'});
+  }
+  assert.throws(()=>validate({items:{}},[[,]]),{code:'SCHEMA_INVALID',path:'$[0][0]'});
+});
+test('A00 schema input rejects non-JSON values throughout unconstrained documents',()=>{
+  const invalid=[undefined,NaN,Infinity,-Infinity,1n,Symbol('value'),()=>0,new Date(0),new Map(),new Set(),new Uint8Array([1])];
+  for(const value of invalid)for(const contract of [true,{}]){
+    assert.throws(()=>validate(contract,value),{code:'SCHEMA_INVALID',path:'$'});
+    assert.throws(()=>validate(contract,{values:[value]}),{code:'SCHEMA_INVALID',path:'$.values[0]'});
+  }
+  const plain=Object.assign(Object.create(null),{values:[null,true,false,0,-0,'text',{a:1}]});
+  assert.equal(validate(true,plain),plain);
+});
+test('A00 schema items false forbids every nonempty array',()=>{
+  for(const contract of [{items:false},{type:'array',items:false}]){
+    validate(contract,[]);
+    for(const values of [[null],[0],[{}]])assert.throws(()=>validate(contract,values),{code:'SCHEMA_INVALID',path:'$[0]'});
+  }
+  assert.throws(()=>validate({properties:{values:{items:false}}},{values:[1]}),{code:'SCHEMA_INVALID',path:'$.values[0]'});
+  validate({items:true},[null,1,{},[]]);
+});
+test('A00 schema input walk is bounded and retains newer-version error precedence',()=>{
+  for(const contract of [true,{}]){
+    assert.throws(()=>validate(contract,{nested:[1]},{maxDepth:1}),{code:'SCHEMA_LIMIT',path:'$.nested[0]'});
+    assert.throws(()=>validate(contract,[1,2,3],{maxNodes:3}),{code:'SCHEMA_LIMIT',path:'$[2]'});
+    const cycle={};cycle.self=cycle;
+    assert.throws(()=>validate(contract,cycle),error=>error instanceof SchemaError&&error.code==='SCHEMA_LIMIT');
+  }
+  assert.throws(()=>validate({}, {schemaVersion:2,values:[,]}),{code:'SCHEMA_VERSION'});
+  assert.throws(()=>validate({unsupportedKeyword:true},{}),{code:'SCHEMA_DEFINITION'});
+  assert.throws(()=>validate({$ref:'#/missing'},{}),{code:'SCHEMA_DEFINITION'});
+});
