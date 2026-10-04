@@ -1,5 +1,8 @@
+import {beginHeapCollection, endHeapCollection} from './heap-events.js';
+
 /** Existing non-moving mark/sweep policy, shared by standalone and VM heaps. */
 export function collectHeap(heap, extraRoots, isReference) {
+  beginHeapCollection(heap);
   heap.mutationRevision++;
   const start = performance.now();
   if (heap.marks.length < heap.records.length) {
@@ -19,7 +22,10 @@ export function collectHeap(heap, extraRoots, isReference) {
       work.push(value.h);
     }
   };
-  const visit = value => { rootsScanned++; add(value); };
+  const visit = value => {
+    rootsScanned++;
+    add(value);
+  };
   const provided = heap.rootProvider(visit);
   if (provided !== undefined) for (const value of provided) visit(value);
   for (const value of heap.pins) visit(value);
@@ -27,7 +33,10 @@ export function collectHeap(heap, extraRoots, isReference) {
   for (const handle of heap.handles.values()) if (!handle.weak) visit(handle.value);
   while (work.length) {
     const record = heap.records[work.pop()];
-    if (record.kind !== 'string') for (const value of record.data) { edgesScanned++; add(value); }
+    if (record.kind !== 'string') for (const value of record.data) {
+      edgesScanned++;
+      add(value);
+    }
   }
   const markEnd = performance.now();
   let objects = 0, bytes = 0;
@@ -59,5 +68,7 @@ export function collectHeap(heap, extraRoots, isReference) {
   stats.totalPauseMs += stats.lastPauseMs;
   stats.maxPauseMs = Math.max(stats.maxPauseMs, stats.lastPauseMs);
   heap.threshold = Math.min(heap.maxBytes, Math.max(64 * 1024, stats.liveBytes * 2 + 1024));
-  return {...stats, freedThisCollection: objects, bytesThisCollection: bytes};
+  const result = {...stats, freedThisCollection: objects, bytesThisCollection: bytes};
+  endHeapCollection(heap, result);
+  return result;
 }
