@@ -25,6 +25,7 @@ import { needsTypeSpec } from '../generics.js';
 import { fullNameOf, serializedTypeName } from './serialized-type-names.js';
 import { descriptorOf, valueOf, fixedValues } from './attribute-values.js';
 import { returnAttributeSymbols, returnAttributeSource } from './attribute-targets.js';
+import { writeNullableAttributes } from './nullable-attributes.js';
 import { methodSignature, methodSymbolSignature } from './member-signatures.js';
 import { tupleElementNamesOf } from '../../binder/tuples.js';
 import { dynamicTransformFlags } from './dynamic-flags.js';
@@ -122,6 +123,7 @@ export class CustomAttributeWriter {
       for (const { symbol } of plan.events) this.applied(this.writer.eventTokens.get(symbol), symbol);
     }
     if (declaresExtensions) this.wellKnown(ASSEMBLY_TOKEN, EXTENSION);
+    writeNullableAttributes(this);
   }
   method(planned) {
     const symbol = planned.symbol,
