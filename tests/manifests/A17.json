@@ -7,7 +7,8 @@
   ],
   "browserScripts": [
     "tests/rendering/test_inline_reference.py",
-    "tests/rendering/test_pixel_artifacts.py"
+    "tests/rendering/test_pixel_artifacts.py",
+    "tests/rendering/test_native_reference_consumer.py"
   ],
   "requiredServices": [],
   "timeout": 300000,
