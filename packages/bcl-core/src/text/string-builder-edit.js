@@ -8,8 +8,22 @@ export function registerStringBuilderCharacterEditExtensions({member}) {
   member(owner, 'Replace', ['char', 'char', 'int', 'int'], owner);
 }
 
+/** Append exact character insertion without moving the earlier edit contracts. */
+export function registerStringBuilderCharacterInsertExtensions({member}) {
+  member(owner, 'Insert', ['int', 'char'], owner);
+}
+
 function rangeError(platform, parameter) {
   fail(platform, 'ArgumentOutOfRangeException', "Value is outside the builder range. (Parameter '" + parameter + "')");
+}
+
+/** Convert one Char after native index validation, then reuse the released bounded text insertion. */
+export function insertBuilderCharacter(platform, reference, values, insertText) {
+  const index = values[0];
+  const length = platform.get(reference, '$length', 0);
+  if (!Number.isInteger(index) || index < 0 || index > length) rangeError(platform, 'index');
+  const unit = integer(platform, values[1], 0, 65535);
+  return insertText(platform, reference, index, String.fromCharCode(unit));
 }
 
 function stageChunks(platform, storage, count, range) {

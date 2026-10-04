@@ -1,4 +1,5 @@
 import { execFileSync } from 'node:child_process';
+import { createHash } from 'node:crypto';
 import { mkdtempSync, readFileSync, writeFileSync, mkdirSync, copyFileSync, rmSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { resolve, join } from 'node:path';
@@ -24,9 +25,12 @@ try {
   const image = join(temporary, 'bin/Release/net10.0/oracle.dll');
   const expected = JSON.parse(run([image]));
   const records = expected.records.map(record => `    ${JSON.stringify(record)}`).join(',\n');
-  const header = JSON.stringify({ sdk, runtime: expected.runtime }, null, 2).slice(0, -2);
+  const imageBytes = readFileSync(image);
+  const hash = bytes => createHash('sha256').update(bytes).digest('hex');
+  const header = JSON.stringify({ sdk, runtime: expected.runtime,
+    sourceSHA256: hash(readFileSync(source)), imageSHA256: hash(imageBytes) }, null, 2).slice(0, -2);
   writeFileSync(join(output, 'native-method-bases.json'), `${header},\n  "records": [\n${records}\n  ],\n` +
-    `  "image": ${JSON.stringify(readFileSync(image).toString('base64'))}\n}\n`);
+    `  "image": ${JSON.stringify(imageBytes.toString('base64'))}\n}\n`);
   console.log(`Captured ${expected.records.length} native method base-definition records in ${output}`);
 } finally {
   rmSync(temporary, { recursive: true, force: true });
