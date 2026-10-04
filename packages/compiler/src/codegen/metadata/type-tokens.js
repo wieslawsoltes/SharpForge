@@ -9,6 +9,7 @@ import { token } from '@sharpforge/cil';
 import { SymbolKind, substituteType } from '../../symbols/types.js';
 import { encodeTypeSignature, needsTypeSpec, typeDefOrRefEncoded, ElementType } from '../generics.js';
 import { contractAssemblyOf } from './reference-contracts.js';
+import { referencedAssemblyOf } from './reference-identities.js';
 
 /** The reason a symbol cannot be written to metadata; the emitter reports it instead of writing a wrong row. */
 export class MetadataEmitError extends Error {
@@ -46,9 +47,14 @@ export function definitionNameOf(type) {
 }
 
 export class TypeTokens {
-  /** @param builder a MetadataBuilder  @param {object[]} sourceTypes the source type definitions in TypeDef order (after `<Module>`) */
-  constructor(builder, sourceTypes) {
+  /**
+   * @param builder a MetadataBuilder  @param {object[]} sourceTypes the source type definitions in TypeDef order (after `<Module>`)
+   * @param {(definition: object, fullName: string) => string|undefined} [assemblyOf] the referenced assembly that
+   *   defines a type (reference-identities.js); without it only the contract table decides
+   */
+  constructor(builder, sourceTypes, assemblyOf = referencedAssemblyOf) {
     this.builder = builder;
+    this.assemblyOf = assemblyOf;
     this.definitions = new Map(sourceTypes.map((type, index) => [type, token(2, index + 2)]));
     this.references = new Map();
     this.tokenOf = definition => this.definitionToken(definition);
@@ -79,7 +85,10 @@ export class TypeTokens {
     } else {
       const namespace = namespaceOf(definition),
         name = definition.metadataName;
-      reference = this.builder.typeRef((namespace ? namespace + '.' : '') + name, contractAssemblyOf(namespace, name));
+      // A type read from a reference assembly is referenced through that assembly; a registry type through its contract.
+      const fullName = (namespace ? namespace + '.' : '') + name,
+        assembly = this.assemblyOf(definition, fullName) ?? contractAssemblyOf(namespace, name);
+      reference = this.builder.typeRef(fullName, assembly);
     }
     this.references.set(definition, reference);
     return reference;

@@ -2,12 +2,10 @@
  * `foreach` (SF-A02-T30): over an array by index (emit-arrays.js), over a string by index, and over the enumerator
  * pattern - `GetEnumerator`, `MoveNext`, `Current`, and `Dispose` in a finally block when the enumerator is disposable.
  */
-import { SymbolKind } from '../../symbols/types.js';
+import { SymbolKind, TypeKind, RefKind } from '../../symbols/types.js';
 import { implementsInterface } from '../../symbols/substitution.js';
 import { isReference, primitiveOf, needsBox } from './type-facts.js';
-
-const parameterless = (owner, name) =>
-  owner.getMembers(name).find(member => member.kind === SymbolKind.Method && !member.parameters.length && !member.isStatic);
+import { enumerationPattern } from './foreach-pattern.js';
 
 /** Class mixin: foreach. */
 export const LoopEmission = Base =>
@@ -66,19 +64,21 @@ export const LoopEmission = Base =>
      */
     forEachEnumerator(node) {
       const collectionType = node.collection.type,
-        getEnumerator = node.extensionGetEnumerator ?? (collectionType && parameterless(collectionType, 'GetEnumerator'));
-      if (!getEnumerator) return this.unsupported('foreach over a type without an accessible GetEnumerator method', node.syntax);
-      const enumeratorType = getEnumerator.returnType,
-        moveNext = parameterless(enumeratorType, 'MoveNext'),
-        current = enumeratorType.getMembers('Current').find(member => member.kind === SymbolKind.Property);
-      if (!moveNext || !current?.getMethod) return this.unsupported('foreach over this enumerator type', node.syntax);
-      const il = this.il,
+        pattern = enumerationPattern(collectionType, this.core, node.extensionGetEnumerator ?? null);
+      if (!pattern) return this.unsupported('foreach over a type that cannot be enumerated', node.syntax);
+      const { getEnumerator, viaInterface, enumeratorType, moveNext, current } = pattern,
+        il = this.il,
         enumerator = this.temp(enumeratorType),
         receiver = { kind: 'Temporary', type: enumeratorType },
         pushEnumerator = () => il.emit(isReference(enumeratorType) ? 'ldloc' : 'ldloca', enumerator);
       if (node.extensionGetEnumerator) {
         this.expression(node.collection);
         this.callMethod(getEnumerator, {});
+      } else if (viaInterface) {
+        // The collection implements the interface explicitly: it is enumerated as the interface.
+        this.expression(node.collection);
+        if (needsBox(collectionType)) il.emit('box', this.tokens.type(collectionType));
+        this.callMethod(getEnumerator, { receiver: { type: viaInterface } });
       } else {
         this.receiver(node.collection);
         this.callMethod(getEnumerator, { receiver: node.collection });
@@ -92,6 +92,8 @@ export const LoopEmission = Base =>
         il.mark(body, 0);
         pushEnumerator();
         this.callMethod(current.getMethod, { receiver });
+        // `Current` of a span enumerator returns the element by reference; the iteration variable is its value.
+        if (current.refKind && current.refKind !== RefKind.None) this.loadIndirect(current.type);
         this.iterationValue(node, current.type);
         this.withJumpTargets({ breakLabel: end, continueLabel: test }, () => this.statement(node.body));
         il.mark(test);
@@ -100,7 +102,23 @@ export const LoopEmission = Base =>
         il.emit('brtrue', body);
         il.mark(end);
       };
-      if (!implementsInterface(enumeratorType, this.core.idisposable, this.core)) return loop();
-      return this.tryRegions(loop, [], () => this.disposeCall({ slot: enumerator, type: enumeratorType }, node.syntax));
+      if (implementsInterface(enumeratorType, this.core.idisposable, this.core)) {
+        return this.tryRegions(loop, [], () => this.disposeCall({ slot: enumerator, type: enumeratorType }, node.syntax));
+      }
+      // An enumerator known only as an interface (`IEnumerator`) may be disposable at run time.
+      if (enumeratorType.typeKind !== TypeKind.Interface) return loop();
+      return this.tryRegions(loop, [], () => this.disposeIfDisposable(enumerator));
+    }
+    /** `(e as IDisposable)?.Dispose()` for an enumerator whose static type is not disposable. */
+    disposeIfDisposable(enumerator) {
+      const il = this.il,
+        disposable = this.core.idisposable,
+        dispose = disposable.getMembers('Dispose').find(member => member.kind === SymbolKind.Method && !member.parameters.length),
+        skip = il.newLabel(),
+        asDisposable = this.temp(disposable);
+      il.emit('ldloc', enumerator).emit('isinst', this.tokens.type(disposable)).emit('stloc', asDisposable);
+      il.emit('ldloc', asDisposable).emit('brfalse', skip).emit('ldloc', asDisposable);
+      this.callMethod(dispose, { receiver: { type: disposable } });
+      il.mark(skip);
     }
   };

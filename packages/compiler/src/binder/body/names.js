@@ -16,6 +16,9 @@ import { accessorNamed, isOperatorMethod } from '../special-methods.js';
 import { staticImportsNamed } from '../csharp6.js';
 
 const unknown = ErrorTypeSymbol.unknown;
+/** A member that can be invoked: a method or event, or a field or property of a delegate type or `dynamic`. */
+const isInvocable = member =>
+  ![SymbolKind.Field, SymbolKind.Property].includes(member.kind) || [TypeKind.Delegate, TypeKind.Dynamic].includes(member.type?.typeKind);
 const isSource = symbol => {
   for (let s = symbol?.originalDefinition ?? symbol; s; s = s.containingSymbol) if (s.isSource || s.containingAssembly || s.isAnonymousType) return true;
   return false;
@@ -370,8 +373,13 @@ export const NameBinding = Base =>
         if (name === 'Length' || name === 'Rank') return this.node('ArrayLength', syntax, this.core.int, { array: left, member: name });
         if (name === 'LongLength') return this.node('ArrayLength', syntax, this.core.long, { array: left, member: name });
       }
-      if (found.members.length)
-        return this.memberResult(found.members, syntax, left, type, name, typeArguments, options) ?? this.bad(syntax);
+      if (found.members.length) {
+        // An invoked name ignores the members that cannot be invoked (C# spec 12.5): `list.Count(predicate)` is the
+        // extension method although `List<T>` has a `Count` property.
+        const hidden = options.invoked && !found.members.some(isInvocable),
+          group = hidden ? this.extensionGroup(left, type, name, { nameSyntax, syntax, typeArguments }) : null;
+        return group ?? this.memberResult(found.members, syntax, left, type, name, typeArguments, options) ?? this.bad(syntax);
+      }
       if (found.inaccessible.length) {
         this.reportInaccessible(found.inaccessible[0], type, nameSyntax);
         return this.bad(syntax);
@@ -395,32 +403,39 @@ export const NameBinding = Base =>
         isSpan = !!(spanElementType(type, 'Span') ?? spanElementType(type, 'ReadOnlySpan'));
       if (isOpen && !(type instanceof ArrayTypeSymbol) && !isSpan) return this.lenient(syntax);
       // Extension methods (only meaningful when the name is invoked, but a method group conversion may also use them).
-      const scopes = extensionScopes(
-        this.typeScope.namespaceChain.map(l => ({
-          namespace: l.namespace,
-          usings: l.scope.usings ? this.d.typeBinder.usingsOf(l.scope) : null,
-        })),
-        name,
-      );
-      const takesReceiver = method => method.name === name && isValidReceiverConversion(this.conversions, left, method.parameters[0].type);
+      const scopes = this.extensionScopesNamed(name),
+        takesReceiver = method => method.name === name && isValidReceiverConversion(this.conversions, left, method.parameters[0].type);
       // For a span receiver any extension method of that name is a candidate: its type arguments are inferred later.
       if (isOpen && !isSpan && !scopes.some(scope => scope.methods.some(takesReceiver))) return this.lenient(syntax);
-      if (scopes.length)
-        return this.node('MethodGroup', syntax, null, {
-          methods: [],
-          extensionScopes: scopes,
-          receiver: left,
-          receiverType: type,
-          name,
-          nameNode: nameSyntax,
-          form: 'methodGroup',
-          typeArguments,
-          isExtensionOnly: true,
-        });
+      const group = this.extensionGroup(left, type, name, { nameSyntax, syntax, typeArguments, scopes });
+      if (group) return group;
       if (!isKnownGap && !isSource(type) && type.typeKind !== TypeKind.TypeParameter)
         return this.reportMissingFrameworkMember(type, name, nameSyntax, syntax, DiagnosticId.CS1061);
       this.report(nameSyntax, DiagnosticId.CS1061, [this.display(type), name]);
       return this.bad(syntax);
+    }
+    /** The extension methods named `name` in scope, innermost namespace first. */
+    extensionScopesNamed(name) {
+      const chain = this.typeScope.namespaceChain.map(level => ({
+        namespace: level.namespace,
+        usings: level.scope.usings ? this.d.typeBinder.usingsOf(level.scope) : null,
+      }));
+      return extensionScopes(chain, name);
+    }
+    /** The method group of the extension methods named `name` on the receiver `left`, or null when none is in scope. */
+    extensionGroup(left, type, name, { nameSyntax, syntax, typeArguments, scopes = this.extensionScopesNamed(name) }) {
+      if (!scopes.length) return null;
+      return this.node('MethodGroup', syntax, null, {
+        methods: [],
+        extensionScopes: scopes,
+        receiver: left,
+        receiverType: type,
+        name,
+        nameNode: nameSyntax,
+        form: 'methodGroup',
+        typeArguments,
+        isExtensionOnly: true,
+      });
     }
     /** Seams of binder/extension-members.js: a member the type lacks, found among the extension members in scope (or null). */
     instanceExtensionMember() {
