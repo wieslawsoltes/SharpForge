@@ -54,3 +54,14 @@ Root integration review explicitly accepted these quantified costs: three
 previously invalid nested outputs are corrected with four-case native evidence,
 and repeated zone/sibling scans become bounded validated geometry. The no-handler
 path already avoids region/index construction. No tuning rerun was requested.
+
+A real merge conflict with newer main emitter work required integration at
+`5e4c73b2`: retain main's scalar alias normalization and extracted builtin call,
+plus this branch's EH layout queries. EH helper/geometry, source tests and native
+capture/timing bytes remained unchanged. The native and paired timing evidence
+above belongs to the explicitly recorded pre-integration product commit. The
+merged overlap suite additionally covers scalar wire emission, source numeric
+modes and source Decimal rounding: 380/380 pass; required check passes 3,221
+syntax modules and 3,217 static-import modules with zero errors. Structure reports
+269 existing findings, none in this batch's changed files. No native or benchmark
+repeat was needed for this integration-only resolution.
