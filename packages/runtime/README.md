@@ -89,3 +89,15 @@ The behavior follows the single-string process lookup contract documented by
 [Microsoft](https://learn.microsoft.com/en-us/dotnet/api/system.environment.getenvironmentvariable?view=net-10.0).
 The focused source, emitted CIL, independent CIL and production-worker tests are
 `tests/a19-runtime-*.test.js`; they do not claim native CLR execution parity.
+
+## Readonly string field initialization
+
+Registered readonly strings use existing source constant caches and CIL static
+slots for strong roots and snapshots. Ordinary literals retain the requested
+weak-interning behavior. Cold field/literal allocation checks reentry and explicit
+stop before publishing; a nested completed canonical string is reused. Execution
+snapshot and restore are unavailable while the synchronous allocation observer
+is active, and become available when it returns or throws. These host-observer
+rules are runtime profile policy. The [Boolean field prerequisite](../../docs/readonly-string-fields.md)
+records exact native observations, supported JavaScript paths, and pending
+external source-schema/typed-body qualification.

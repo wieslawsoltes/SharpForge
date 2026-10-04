@@ -69,11 +69,12 @@ test('released BCL groups keep module order and independent registries cannot le
   const modules = createBclRegistry(bclModules);
   assert.deepEqual(modules.modules.map(module => module.group), [
     'bcl-prefix', 'bcl-suffix', 'bcl-suffix', 'runtime14', 'runtime14', 'extensions', 'extensions', 'extensions',
-    undefined // An omitted group registers with the extensions group.
+    undefined, undefined // Omitted groups register with the extensions group.
   ]);
   const empty = createBclRegistry([]);
   assert.equal(empty.modules.length, 0);
-  assert.equal(modules.modules.length, 9);
+  assert.equal(modules.modules.length, 10);
+  assert.deepEqual(modules.modules.slice(-2).map(module => module.name), ['stopwatch', 'boolean']);
   const property = findContracts('System.StringComparer', 'get_OrdinalIgnoreCase', true)[0];
   assert.equal(property.id, 524297, 'StringComparer extension appends after the released object comparer contracts');
   const appends = findContracts('System.Text.StringBuilder', 'Append').filter(member => member.parameters[0] === 'char');

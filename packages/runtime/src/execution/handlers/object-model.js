@@ -8,6 +8,7 @@ const handlers=new Map();
 handlers.set('volatile.',(vm,frame)=>{frame.volatileAccess=true;});
 for(const name of ['ldsfld','stsfld','ldsflda'])handlers.set(name,(vm,frame,instruction)=>{
   const slot=staticSlot(vm,instruction.operand,frame,name);
+  if(!slot||vm.state==='terminated')return;
   if(vm.ensureInitialized(slot.typeToken,'field',slot.genericIdentity)){frame.pc--;return;}
   if(name==='ldsfld')vm.push(loadFieldValue(vm,slot.field,vm.statics.get(slot.key)));
   else if(name==='stsfld')vm.dereference(vm.address('static',slot.key),true,vm.storage(vm.pop(),slot.field.signature.type));
