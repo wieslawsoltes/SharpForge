@@ -180,6 +180,36 @@ def assess(output):
     return result.returncode, json.loads(result.stdout)
 
 
+class StageBudgetFailure(AssertionError):
+    """Retain launcher diagnostics without discarding an otherwise complete raw capture."""
+
+
+def capture_stage(playwright, trace, output, name, capture):
+    stage = trace['stages'][name]
+    suite = Path(__file__).with_name(Path(__file__).stem + '_' + name + '.py')
+    stage.update(status='running', session=suite.stem, cspViolations=[])
+    save(trace, output)
+    try:
+        with launch_browser(playwright, suite) as browser:
+            stage['cspViolations'] = browser.csp.events
+            capture(browser, trace, output)
+            if any(error['stage'] == name for error in trace['browserErrors']):
+                raise AssertionError('Browser page errors during ' + name)
+            # Only a diagnostic precheck: the strict aggregate validator still owns the final verdict.
+            limit = {'definition': 300, 'overview': 16}[name]
+            if any(sample['durationMs'] > limit for sample in stage['samples']):
+                raise StageBudgetFailure(name + ' has raw observations over ' + str(limit) + ' ms')
+    except StageBudgetFailure as error:
+        stage['diagnosticFailure'] = str(error)
+    except BaseException as error:
+        stage.update(status='failed', error={'type': type(error).__name__, 'message': str(error)})
+        if not isinstance(error, Exception):
+            raise
+    finally:
+        trace['cspViolations'].extend({'stage': name, **event} for event in stage['cspViolations'])
+        save(trace, output)
+
+
 def run():
     output = results_dir() / 'editor-ui-budgets.json'
     trace = {'format': 'sharpforge-editor-ui-budgets', 'version': 1, 'units': 'milliseconds',
@@ -189,22 +219,15 @@ def run():
         if os.getenv('SHARPFORGE_IN_MEMORY') == '1':
             raise RuntimeError('Editor UI budget evidence requires production HTTP/CSP, not an in-memory loader')
         trace['source'] = provenance()
-        with sync_playwright() as playwright, launch_browser(playwright, __file__) as browser:
-            trace['cspViolations'] = browser.csp.events
+        with sync_playwright() as playwright:
             for name, capture in [('definition', capture_definition), ('overview', capture_overview)]:
-                trace['stages'][name]['status'] = 'running'
-                save(trace, output)
-                try:
-                    capture(browser, trace, output)
-                except Exception as error:
-                    trace['stages'][name].update(status='failed', error={'type': type(error).__name__, 'message': str(error)})
-                save(trace, output)
-            trace['captureStatus'] = 'completed' if all(stage['status'] == 'captured' for stage in trace['stages'].values()) else 'failed'
-            save(trace, output)
-            status, trace['assessment'] = assess(output)
-            save(trace, output)
-            if status:
-                raise AssertionError('Editor browser budget qualification failed: ' + repr(trace['assessment']))
+                capture_stage(playwright, trace, output, name, capture)
+        trace['captureStatus'] = 'completed' if all(stage['status'] == 'captured' for stage in trace['stages'].values()) else 'failed'
+        save(trace, output)
+        status, trace['assessment'] = assess(output)
+        save(trace, output)
+        if status:
+            raise AssertionError('Editor browser budget qualification failed: ' + repr(trace['assessment']))
     except BaseException as error:
         trace['failure'] = {'type': type(error).__name__, 'message': str(error)}
         raise
