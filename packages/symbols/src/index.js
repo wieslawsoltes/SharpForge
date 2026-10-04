@@ -6,6 +6,7 @@ export { readPortablePdb } from './pdb-reader.js';
 export { readPortablePdbDelta } from './pdb-delta-reader.js';
 export { emitPortablePdbDelta } from './pdb-delta-writer.js';
 export { PortablePdbGenerations } from './pdb-generations.js';
+export { PortablePdbRevisionMap } from './revision-map.js';
 export { PortablePdbBuilder } from './pdb-builder.js';
 export { emitPortablePdb } from './pdb-writer.js';
 export { sourceSpan } from './source-span.js';
