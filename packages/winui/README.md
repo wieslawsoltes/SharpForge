@@ -32,6 +32,11 @@ changes reset this representation through the ordinary renderer. Unset dimension
 CSS transform properties, motion paths and CSS animations/transitions keep the ordinary node-render path. A rejected
 multi-node batch changes neither properties nor retained translation records.
 
+The retained renderer verifies the effective computed transform before measuring. If a stylesheet overrides the inline
+composition, including an identity `!important` transform, it immediately renders the node with canonical `left` and `top`.
+Computed transform serialization outside the conservative tolerance also chooses that fallback. Geometry measurements and
+native input never depend on an inline transform that failed to take effect.
+
 ## 0.13 playback and wrapping
 
 The JS facade includes Storyboard/DoubleAnimation, duration/repeat/easing types, transforms and wrapping panels. Default application playback uses requestAnimationFrame. Set `animationManual: true` on `createWinUIApp` and call `app.advanceAnimations(milliseconds)` for deterministic tests. `app.dispose()` cancels the clock and detaches the host. Animated values overlay local/style bases; Stop restores the latest base. Transformed drawing primitives use DOM fallback rather than rendering an incorrect untransformed GPU primitive. Wrap panels use CSS grid and are not virtualized native WinUI layouts.

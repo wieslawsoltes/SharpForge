@@ -10,15 +10,33 @@ function stationaryStyle(style) {
   return true;
 }
 
-function affineTransform(element, style) {
-  if (!style) return element.style.transform ? null : '';
-  const transform = style.transform;
-  if (!transform || transform === 'none') return '';
+function computedMatrix(transform) {
+  if (!transform || transform === 'none') return [1, 0, 0, 1, 0, 0];
   const match = /^matrix\(([^)]+)\)$/.exec(transform);
   if (!match) return null;
   const values = match[1].split(',').map(Number);
+  return values.length === 6 && values.every(Number.isFinite) ? values : null;
+}
+
+function affineTransform(element, style) {
+  if (!style) return element.style.transform ? null : {text: '', matrix: null};
+  const matrix = computedMatrix(style.transform);
+  if (!matrix) return null;
   // Retain authored transform precision; computed matrices may serialize rounded coefficients.
-  return values.length === 6 && values.every(Number.isFinite) ? element.style.transform || transform : null;
+  const text = !style.transform || style.transform === 'none' ? '' : element.style.transform || style.transform;
+  return {text, matrix};
+}
+
+function effectiveTranslation(style, record, left, top) {
+  if (!style || !record.matrix) return true;
+  if (!stationaryStyle(style)) return false;
+  const actual = computedMatrix(style.transform);
+  if (!actual) return false;
+  return record.matrix.every((value, index) => {
+    const expected = value + (index === 4 ? left : index === 5 ? top : 0);
+    // A conservative serialization tolerance may choose the ordinary renderer for large rounded CSS coefficients.
+    return Math.abs(actual[index] - expected) <= (index < 4 ? 1e-5 : 1e-4);
+  });
 }
 
 /** Fixed-size Canvas translations retain their last layout origin; full renders own every other style change. */
@@ -52,7 +70,8 @@ export class HostCanvasTranslations {
       || Number.parseFloat(element.style.top) !== top) return null;
     const transform = affineTransform(element, style);
     if (transform === null) return null;
-    return {element, left, top, nextLeft, nextTop, transform, inlineTransform: element.style.transform,
+    return {element, left, top, nextLeft, nextTop, transform: transform.text, matrix: transform.matrix,
+      inlineTransform: element.style.transform,
       origin: element.style.transformOrigin, applied: element.style.transform, width: previous.Width, height: previous.Height};
   }
 
@@ -69,6 +88,11 @@ export class HostCanvasTranslations {
     const top = record.nextTop - record.top;
     record.element.style.transform = left || top
       ? `translate(${left}px, ${top}px)${record.transform ? ' ' + record.transform : ''}` : record.inlineTransform;
+    const style = this.host.document.defaultView.getComputedStyle?.(record.element);
+    if (!effectiveTranslation(style, record, left, top)) {
+      this.records.delete(id);
+      return false;
+    }
     record.applied = record.element.style.transform;
     return true;
   }

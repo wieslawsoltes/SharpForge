@@ -17,6 +17,12 @@ function rotatedScene() {
   return scene;
 }
 
+/** Explicit computed-style boundary for the fake DOM; real affine bounds are qualified independently in Chromium. */
+function computedTranslation(element, linear = [1, 0, 0, 1]) {
+  const match = /^translate\(([-\d.]+)px, ([-\d.]+)px\)/.exec(element.style.transform);
+  return `matrix(${linear.join(', ')}, ${match?.[1] ?? 0}, ${match?.[2] ?? 0})`;
+}
+
 test('repeated and queued positions retain one layout origin without accumulating offsets or losing measurements', () => {
   const {host, rendered, measured, layouts} = geometryHost(canvasScene(4));
   const element = host.elements.get('item2');
@@ -58,7 +64,7 @@ test('clearing one absolute coordinate restores its default while reversing both
 test('an existing affine transform and its nonzero origin survive parent-coordinate translation and exact reversal', () => {
   const {host, rendered, measured} = geometryHost(rotatedScene());
   const element = host.elements.get('item2');
-  host.document.defaultView.getComputedStyle = () => ({transform: 'matrix(0, 1, -1, 0, 0, 0)'});
+  host.document.defaultView.getComputedStyle = element => ({transform: computedTranslation(element, [0, 1, -1, 0])});
   assert.equal(element.style.transform, 'rotate(90deg)');
   assert.equal(element.style.transformOrigin, '17px 13px');
   patch(host, {Left: 10, Top: -5});
@@ -168,8 +174,8 @@ test('CSS motion or individual transforms enabled after a retained move invalida
     {transform: 'matrix3d(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1)'}
   ]) {
     const {host, rendered, reset} = geometryHost(canvasScene(4));
-    let style = {transform: 'none', animationName: 'none', transitionDuration: '0s'};
-    host.document.defaultView.getComputedStyle = () => style;
+    let style = {animationName: 'none', transitionDuration: '0s'};
+    host.document.defaultView.getComputedStyle = element => ({transform: computedTranslation(element), ...style});
     patch(host, {Left: 18});
     const element = host.elements.get('item2');
     assert.equal(host.geometryUpdates.translations.records.size, 1);
@@ -184,6 +190,39 @@ test('CSS motion or individual transforms enabled after a retained move invalida
     assert.deepEqual(rendered, ['item2']);
     host.dispose();
   }
+});
+
+test('a CSS transform overriding inline composition falls back synchronously before reporting its updated geometry', () => {
+  for (const transform of ['none', 'matrix(0, 1, -1, 0, 0, 0)']) {
+    const {host, rendered, measured} = geometryHost(canvasScene(4));
+    host.document.defaultView.getComputedStyle = () => ({transform});
+    patch(host, {Left: 18, Top: 12});
+    assert.equal(host.nodes.get('item2').properties.Left, 18);
+    assert.equal(host.nodes.get('item2').properties.Top, 12);
+    assert.equal(host.elements.get('item2').style.left, '18px');
+    assert.equal(host.elements.get('item2').style.top, '12px');
+    assert.equal(host.geometryUpdates.translations.records.size, 0);
+    assert.deepEqual(rendered, ['item2']);
+    assert.deepEqual(measured, ['item2']);
+    host.dispose();
+  }
+});
+
+test('a stylesheet taking transform ownership after an earlier retained move restores canonical layout', () => {
+  const {host, rendered, reset} = geometryHost(canvasScene(4));
+  let override = false;
+  host.document.defaultView.getComputedStyle = element => ({
+    transform: override ? 'matrix(0, 1, -1, 0, 0, 0)' : computedTranslation(element)
+  });
+  patch(host, {Left: 12});
+  assert.equal(host.geometryUpdates.translations.records.size, 1);
+  override = true;
+  reset();
+  patch(host, {Left: 18});
+  assert.equal(host.geometryUpdates.translations.records.size, 0);
+  assert.equal(host.elements.get('item2').style.left, '18px');
+  assert.deepEqual(rendered, ['item2']);
+  host.dispose();
 });
 
 test('geometry style, external scene and complete reload changes reset the retained layout origin', () => {
