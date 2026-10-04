@@ -694,8 +694,9 @@ Registered families: <code>builder</code>.
 | 524333 | <code>System.Text.StringBuilder System.Text.StringBuilder::Append(System.Text.StringBuilder, int, int)</code> | implemented |
 | 524334 | <code>System.Text.StringBuilder System.Text.StringBuilder::Replace(char, char)</code> | implemented |
 | 524335 | <code>System.Text.StringBuilder System.Text.StringBuilder::Replace(char, char, int, int)</code> | implemented |
+| 524336 | <code>System.Text.StringBuilder System.Text.StringBuilder::Insert(int, char)</code> | implemented |
 
-Pinned reference: 52 implemented and 56 missing exact metadata rows.
+Pinned reference: 53 implemented and 55 missing exact metadata rows.
 
 | Reference kind | Exact reference signature | Status | Matching ABI IDs |
 | --- | --- | --- | --- |
@@ -777,7 +778,7 @@ Pinned reference: 52 implemented and 56 missing exact metadata rows.
 | method | <code>System.Text.StringBuilder::GetChunks``0():System.Text.StringBuilder+ChunkEnumerator instance</code> | missing | — |
 | method | <code>System.Text.StringBuilder::Insert``0(System.Int32,System.Boolean):System.Text.StringBuilder instance</code> | missing | — |
 | method | <code>System.Text.StringBuilder::Insert``0(System.Int32,System.Byte):System.Text.StringBuilder instance</code> | missing | — |
-| method | <code>System.Text.StringBuilder::Insert``0(System.Int32,System.Char):System.Text.StringBuilder instance</code> | missing | — |
+| method | <code>System.Text.StringBuilder::Insert``0(System.Int32,System.Char):System.Text.StringBuilder instance</code> | implemented | 524336 |
 | method | <code>System.Text.StringBuilder::Insert``0(System.Int32,System.Char[]):System.Text.StringBuilder instance</code> | missing | — |
 | method | <code>System.Text.StringBuilder::Insert``0(System.Int32,System.Char[],System.Int32,System.Int32):System.Text.StringBuilder instance</code> | missing | — |
 | method | <code>System.Text.StringBuilder::Insert``0(System.Int32,System.Decimal):System.Text.StringBuilder instance</code> | missing | — |
