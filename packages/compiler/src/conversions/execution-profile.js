@@ -16,7 +16,7 @@
  */
 import { Conversions, Conversion, ConversionKind } from './classify.js';
 import { ErrorTypeSymbol, ArrayTypeSymbol } from '../symbols/types.js';
-import { isRegisteredInterfaceReference } from './registered-reference.js';
+import { isRegisteredReferenceUpcast } from './registered-reference.js';
 
 const none = Conversions.noConversion;
 const nullLiteral = new Conversion(ConversionKind.NullLiteral);
@@ -60,7 +60,7 @@ export class ExecutionProfileConversions extends Conversions {
         return to === this.core.object;
       case ConversionKind.ImplicitReference:
         return to === this.core.object || this.derivesFrom(from, to) ||
-          isRegisteredInterfaceReference(this.core.bridge.registryName(from), this.core.bridge.registryName(to));
+          isRegisteredReferenceUpcast(this.core.bridge.registryName(from), this.core.bridge.registryName(to));
       default:
         return false;
     }

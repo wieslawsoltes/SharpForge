@@ -4,10 +4,15 @@ import {castReference} from './casting.js';
 import {isDecimal} from './decimal.js';
 import {isNumber} from './numeric-ops.js';
 import {isAggregateType} from './value-types.js';
+import {nullableValue, copyNullable} from './nullable-value.js';
 
 /** Copy an admitted value into a box whose canonical MethodTable retains its exact type. */
 export function boxValue(vm, value, type) {
   const table = vm.typeSystem.table(type);
+  if (table.flags.nullable) {
+    const nullable = copyNullable(vm, value, table);
+    return nullable.hasValue ? boxValue(vm, nullable.value, table.nullableType) : null;
+  }
   if (!table.flags.valueType) return castReference(vm.heap, value, table);
   // Registered framework values retain their existing immutable heap-backed representation.
   if (isReference(value) && frameworkType(table.name)?.kind === 'value' && vm.heap.get(value).type === table.name) {
@@ -43,6 +48,11 @@ function unboxCompatible(boxed, requested) {
 /** unbox retains a live owned location; unbox.any copies through the declared storage adapter. */
 export function unboxValue(vm, reference, type, byReference = false) {
   const table = vm.typeSystem.table(type);
+  if (table.flags.nullable) {
+    if (byReference) throw new ManagedFault('NotSupportedException', 'A Nullable box interior is not supported');
+    return reference === null ? nullableValue(vm, table)
+      : nullableValue(vm, table, unboxValue(vm, reference, table.nullableType), true);
+  }
   if (!byReference && !table.flags.valueType) return castReference(vm.heap, reference, table);
   const record = vm.heap.get(reference);
   if (record.kind !== 'box' || !unboxCompatible(record.methodTable, table)) {
