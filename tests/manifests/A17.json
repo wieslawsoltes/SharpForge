@@ -5,7 +5,10 @@
     "tests/animation13.test.js",
     "tests/a17-*.test.js"
   ],
-  "browserScripts": [],
+  "browserScripts": [
+    "tests/rendering/test_inline_reference.py",
+    "tests/rendering/test_pixel_artifacts.py"
+  ],
   "requiredServices": [],
   "timeout": 300000,
   "tags": [
