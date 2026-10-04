@@ -76,3 +76,37 @@ import { loadReferencePack } from '@sharpforge/compiler/node';
 const { references } = loadReferencePack();
 const result = compileToAssembly(source, { name: 'App', references });
 ```
+
+## Direct CIL debug information
+
+`compileToAssembly` returns `{ success, assembly, pdb, diagnostics, format: 'cil' }`.
+Both binary fields are null on diagnostic failure. Its symbol options match
+`compileToIL`: `portablePdb` defaults to true, `embeddedPdb` to false and
+`embedSources` to true; `sourceLink` accepts a Portable PDB Source Link document
+map. Disabling `portablePdb` returns `pdb: null` and avoids marker/source-map
+allocation. `includeDebug` selects the image compiler's private debug payload;
+it does not disable the direct compiler's standard symbols.
+
+Source statements map to final instruction offsets after compact encoding,
+branch relaxation and state-machine rewriting. Zero-code and unreachable
+statements have no sequence point. Physical documents retain their exact UTF-8
+source checksum, including BOMs and line endings. The syntax package's line maps
+preserve `#line` paths, hidden regions, default resets and enhanced mappings.
+Mapped files with unavailable content have nil checksum handles unless an active
+`#pragma checksum` supplied one; no missing source is fabricated or embedded.
+
+Ordinary locals retain their actual IL slots and emitted lexical extents for
+blocks, loops, using/fixed statements, switches and exception handlers. Constants
+retain supported primitive, enum, Decimal and typed-null signatures. Closure
+cells are not advertised as value slots. State-machine symbols include actual
+kickoff/MoveNext links, await suspension/resumption offsets and debugger catch
+entries; hoisted user locals carry ranges from the emitted source scopes, while
+temporary hoisted fields have empty scope slots.
+
+This producer does not reconstruct Edit and Continue maps or closure-capture
+maps. A local whose lexical scope is only a lowered query clause or switch
+expression arm is omitted when no dedicated emission scope is available; its
+source statement remains mapped. These limits are independent of Portable PDB
+binary validity. Focused producer regressions are in
+`tests/compiler-cil-portable-pdb.test.js`; independent SRM/runtime qualification
+and performance measurements are reported with the feature change.
