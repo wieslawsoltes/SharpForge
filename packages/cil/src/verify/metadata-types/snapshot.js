@@ -49,6 +49,7 @@ export function snapshotTypes(inspector, budget, coreTypes) {
     if (coreTypes !== undefined) {
       record.category = null;
       record.categoryDepth = 0;
+      record.closedExternalBase = false;
     }
     records.set(token, record);
     identities.set(type, record);
