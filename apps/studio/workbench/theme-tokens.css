@@ -161,7 +161,7 @@ html[data-theme="high-contrast"] {
   --design-warning-background: var(--wb-bg);
   --design-grid-dot: var(--wb-border);
   --design-shadow: var(--wb-shadow);
-  --design-selection-fill: var(--wb-selected);
+  --design-selection-fill: transparent;
   --design-selection-border: var(--wb-accent);
   --design-handle-background: var(--wb-fg);
   --design-binding: var(--wb-accent);
@@ -195,7 +195,7 @@ html[data-theme="high-contrast"] {
     --design-warning-background: var(--wb-bg);
     --design-grid-dot: var(--wb-border);
     --design-shadow: var(--wb-shadow);
-    --design-selection-fill: var(--wb-selected);
+    --design-selection-fill: transparent;
     --design-selection-border: var(--wb-accent);
     --design-handle-background: var(--wb-fg);
     --design-binding: var(--wb-accent);

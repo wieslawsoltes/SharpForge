@@ -51,7 +51,7 @@ test('designer text remains readable and follows Dark, Light, Blue and High Cont
     if (theme === 'blue' || theme === 'high-contrast') {
       assert.equal(resolveThemeToken(palette, '--design-panel'), resolveThemeToken(palette, '--wb-panel'));
       assert.equal(resolveThemeToken(palette, '--design-foreground'), resolveThemeToken(palette, '--wb-fg'));
-      assert.equal(resolveThemeToken(palette, '--design-selection-fill'), resolveThemeToken(palette, '--wb-selected'));
+      assert.equal(resolveThemeToken(palette, '--design-selection-fill'), 'transparent', `${theme}: preview stays visible`);
     }
   }
   assert.equal(resolveThemeToken(activeThemePalette(tokens, 'light'), '--design-background'), '#dfe5ed');
