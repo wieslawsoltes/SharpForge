@@ -12,6 +12,7 @@ const nativeResult = (family, culture) => ({ exitCode: 0, signal: null, stderr: 
 
 test('BCL case identities bind source, declared behavior and culture-specific observations', async () => {
   const corpus = await loadCorpus(), family = corpus.find(item => item.family === 'string');
+  assert.deepEqual(corpus.map(item => item.family).sort(), ['collections', 'formatting', 'math', 'string', 'time']);
   assert.equal(family.cases.length, 40);
   assert.equal(new Set(corpus.flatMap(item => item.cases.map(row => row.id))).size, corpus.length * 40);
   assert.equal(family.sourceSHA256, sha256(family.sourceBytes));
@@ -39,7 +40,8 @@ test('BCL output rejects process failures, missing or extra cases, wrong culture
 test('BCL corpus rejects duplicate IDs and incomplete families before native execution', async () => {
   const temporary = await mkdtemp(path.join(os.tmpdir(), 'sharpforge-bcl-fixture-'));
   try {
-    for (const name of ['Common.cs', 'String.cs', 'string.json']) await cp(new URL(name, directory), path.join(temporary, name));
+    for (const name of ['Common.cs', 'String.cs', 'string.json', 'Formatting.cs', 'formatting.json',
+      'Collections.cs', 'collections.json', 'Math.cs', 'math.json', 'Time.cs', 'time.json']) await cp(new URL(name, directory), path.join(temporary, name));
     const original = JSON.parse(await readFile(path.join(temporary, 'string.json'), 'utf8'));
     for (const mutation of [value => value.cases.pop(), value => { value.cases[1].id = value.cases[0].id; },
       value => { value.source = '../String.cs'; }, value => { value.cases[0].exception = undefined; }]) {
@@ -47,6 +49,9 @@ test('BCL corpus rejects duplicate IDs and incomplete families before native exe
       await writeFile(path.join(temporary, 'string.json'), JSON.stringify(catalog));
       await assert.rejects(loadCorpus(temporary));
     }
+    await writeFile(path.join(temporary, 'string.json'), JSON.stringify(original));
+    await rm(path.join(temporary, 'math.json'));
+    await assert.rejects(loadCorpus(temporary), /all five families and 200 cases/);
   } finally { await rm(temporary, { recursive: true, force: true }); }
 });
 
