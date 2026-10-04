@@ -296,6 +296,9 @@ export class OperatorResolver {
       return builtin('delegate', rt, rt, rt);
     // reference equality
     if (equality.has(operator)) {
+      // `string == string` is the predefined string equality (by value), not reference equality (C# 12.12.8).
+      const bothStrings = lt.specialType === 'System_String' && rt.specialType === 'System_String';
+      if (bothStrings) return builtin('string', core.string, core.string, core.bool);
       const refLike = t => t.isReferenceType === true || (t.typeKind === TypeKind.TypeParameter && t.isValueType !== true);
       if (
         refLike(lt) &&

@@ -1,5 +1,5 @@
 {
-  "discards/discards-evaluate-and-drop": ["diagnostics", "warnings", "bytecode", "cil"],
+  "discards/discards-evaluate-and-drop": ["diagnostics", "warnings", "bytecode", "cil", "directCil"],
   "discards/discards-in-6": ["diagnostics", "warnings"],
   "discards/underscore-is-a-variable-when-one-is-in-scope": ["diagnostics", "warnings"]
 }
