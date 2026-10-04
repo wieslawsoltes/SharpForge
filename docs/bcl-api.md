@@ -674,8 +674,10 @@ Registered families: <code>builder</code>.
 | 524288 | <code>System.Text.StringBuilder System.Text.StringBuilder::AppendFormat(string, object[])</code> | implemented |
 | 524309 | <code>System.Text.StringBuilder System.Text.StringBuilder::Append(char)</code> | implemented |
 | 524310 | <code>System.Text.StringBuilder System.Text.StringBuilder::Append(char, int)</code> | implemented |
+| 524312 | <code>char System.Text.StringBuilder::get_Chars(int)</code> | implemented |
+| 524313 | <code>void System.Text.StringBuilder::set_Chars(int, char)</code> | implemented |
 
-Pinned reference: 33 implemented and 75 missing exact metadata rows.
+Pinned reference: 35 implemented and 73 missing exact metadata rows.
 
 | Reference kind | Exact reference signature | Status | Matching ABI IDs |
 | --- | --- | --- | --- |
@@ -688,8 +690,8 @@ Pinned reference: 33 implemented and 75 missing exact metadata rows.
 | method | <code>System.Text.StringBuilder::.ctor``0(System.String,System.Int32,System.Int32,System.Int32):System.Void instance</code> | missing | — |
 | method | <code>System.Text.StringBuilder::get_Capacity``0():System.Int32 instance</code> | implemented | 801 |
 | method | <code>System.Text.StringBuilder::set_Capacity``0(System.Int32):System.Void instance</code> | implemented | 802 |
-| method | <code>System.Text.StringBuilder::get_Chars``0(System.Int32):System.Char instance</code> | missing | — |
-| method | <code>System.Text.StringBuilder::set_Chars``0(System.Int32,System.Char):System.Void instance</code> | missing | — |
+| method | <code>System.Text.StringBuilder::get_Chars``0(System.Int32):System.Char instance</code> | implemented | 524312 |
+| method | <code>System.Text.StringBuilder::set_Chars``0(System.Int32,System.Char):System.Void instance</code> | implemented | 524313 |
 | method | <code>System.Text.StringBuilder::get_Length``0():System.Int32 instance</code> | implemented | 799 |
 | method | <code>System.Text.StringBuilder::set_Length``0(System.Int32):System.Void instance</code> | implemented | 800 |
 | method | <code>System.Text.StringBuilder::get_MaxCapacity``0():System.Int32 instance</code> | implemented | 803 |
