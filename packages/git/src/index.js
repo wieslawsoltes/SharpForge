@@ -24,6 +24,7 @@ export * from './diff/lines.js';
 export * from './diff/patch.js';
 export * from './diff/tree.js';
 export * from './patch-apply.js';
+export * from './merge/index.js';
 export * from './branch.js';
 export * from './checkout.js';
 export * from './sign.js';
