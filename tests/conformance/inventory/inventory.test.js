@@ -31,8 +31,8 @@ test('gap ledger rejects duplicate, malformed, changed-domain and exhausted iden
   assert.throws(()=>assignGapIds([row('y')],{schemaVersion:1,entries:[{...previous.entries[0],id:'GAP-TEST-9007199254740991'}]}));
 });
 test('reference matching requires full method signature and preserves missing overload denominator',()=>{
-  const member={assembly:'Test',owner:'Example.C',kind:'method',name:'M',isStatic:true,genericArity:0,result:'System.Int32',parameters:['System.Int32'],signature:'M(int)'};
-  const reference={files:[],rows:[member,{...member,parameters:['System.Int64'],signature:'M(long)'},{...member,isStatic:false,signature:'instance M(int)'}]};
+  const member={assembly:'Test',owner:'Example.C',kind:'method',name:'M',isStatic:true,genericArity:0,signatureHeader:0,result:'System.Int32',parameters:['System.Int32'],signature:'M(int)'};
+  const reference={files:[],rows:[member,{...member,parameters:['System.Int64'],signature:'M(long)'},{...member,isStatic:false,signatureHeader:0x20,signature:'instance M(int)'}]};
   const result=compareMembers(reference,{registryTypes:new Map(),registryContracts:[{id:7,owner:'Example.C',name:'M',isStatic:true,result:'int',parameters:['int']}]});
   assert.deepEqual(result.rows.map(r=>r.status),['implemented','missing','missing']);assert.equal(result.totals.denominator,3);assert.match(result.totals.parity,/not calculated/);
   assert.throws(()=>compareMembers({...reference,rows:[member,member]}),/Duplicate/);

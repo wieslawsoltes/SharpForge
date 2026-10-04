@@ -1,5 +1,6 @@
 import {userValueCallType, prepareValueReceiver, constructUserValue} from './value-calls.js';
 import {boxedInterfaceReceiver} from './value-dispatch.js';
+import {invokeConstrainedReferenceObject} from './constrained-reference-object.js';
 import {constrainedCallType, invokeConstrainedValue, constrainedReferenceReceiver,
   requireConstrainedReferenceTarget} from './constrained-call.js';
 import {instantiatedMethod} from './generics.js';
@@ -60,6 +61,7 @@ export function invoke(vm,instruction) {
   try {
   if(constraint)args[0]=constrainedReferenceReceiver(vm,constraint,args[0]);
   vm.heap.withRoots(args,()=>{
+    if(invokeConstrainedReferenceObject(vm,caller,descriptor,args,constraint))return;
     if(delegate) {
       const value=invokeBoundDelegate(vm,descriptor,args,instruction.name==='newobj');
       if((instruction.name==='newobj'||descriptor.signature.returnType!=='void')&&value!==SUSPENDED)caller.stack.push(value);

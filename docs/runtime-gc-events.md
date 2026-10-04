@@ -3,7 +3,8 @@
 The existing `runtimeEvents: true` option now records `GCStart` before a managed
 heap collection and `GCEnd` after its successful sweep. This includes explicit
 collections and allocation-threshold collections. Profiling is independent and
-does not need to be enabled. Standalone heaps and source VMs do not gain a log.
+does not need to be enabled. Standalone heaps do not gain a log.
+[Source VMs](runtime-source-heap-events.md) can enable the same heap observations.
 
 Start payloads contain `{collection, liveBytes, liveObjects}`. End payloads add
 `freedObjects` and `freedBytes` for that collection. These are logical managed
