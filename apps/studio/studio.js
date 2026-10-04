@@ -77,7 +77,6 @@ const aboutDialogs=createAboutDialogs({get showModal(){return showModal;},get $(
 let panelLookup=null;
 const $=(selector,root=document)=>root.querySelector(selector)??(root===document&&panelLookup?[...panelLookup.values()].map(panel=>panel.querySelector(selector)).find(Boolean):null),$$=(selector,root=document)=>[...root.querySelectorAll(selector),...(root===document&&panelLookup?[...panelLookup.values()].filter(panel=>panel.ownerDocument!==document).flatMap(panel=>[...panel.querySelectorAll(selector)]):[])];
 
-
 function hydrate(root=document){$$('[data-icon]',root).forEach(el=>el.innerHTML=icon(el.dataset.icon));}
 let workbenchShell=null,sessionUI=null,editorIntegration=null,studioKeyboard=null,editorHost=null,backgroundTasks=null;
 const workbenchServices=createWorkbenchServices({
@@ -742,7 +741,9 @@ mountStudioComposition({
   }
 });
 
-async function showCallHierarchy(params){try{const items=await requestCompiler('callHierarchy',params);setPanel('calls');const el=docking.content.get('calls');if(!items.length){el.innerHTML=empty('Call Hierarchy','No bound method at this position.');return;}const item=items[0],revision=state.revision,[incoming,outgoing]=await Promise.all([requestCompiler('incomingCalls',{item}),requestCompiler('outgoingCalls',{item})]);if(revision!==state.revision)return;el.innerHTML=`<div class="tool-page"><h2>${E(item.owner?item.owner+'.'+item.name:item.name)}</h2><p>Bound source calls. External intrinsics and unnamed top-level callers are not shown.</p><h3>Calls to this method</h3><div id="incoming-calls"></div><h3>Calls from this method</h3><div id="outgoing-calls"></div></div>`;for(const [selector,calls]of [['#incoming-calls',incoming],['#outgoing-calls',outgoing]]){const host=$(selector,el);if(!calls.length)host.textContent='No source calls.';for(const call of calls){const button=document.createElement('button');button.className='search-result';button.textContent=`${call.item.owner??''}.${call.item.name} · ${call.ranges.length} call site(s)`;button.onclick=()=>{openFile(call.item.uri,call.item.selectionStart,call.item.selectionEnd);showCallHierarchy({uri:call.item.uri,offset:call.item.selectionStart});};host.append(button);}}}catch(error){toast(error.message,'error');}}
+function showCallHierarchy(params) {
+  return workbenchShell.openCallHierarchy(params).catch(error => toast(error.message, 'error'));
+}
 
 // A token-bearing local host URL connects, but never trusts or starts a project automatically.
 nativeBuild.autoConnect().catch(error=>toast(error.message,'error'));
