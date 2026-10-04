@@ -1,0 +1,11 @@
+✔ symbols entry point preserves the published exports after extraction (1.866103ms)
+✔ independent symbol builders keep heaps and failures isolated (4.830619ms)
+✔ extracted source helpers retain UTF-16 offsets and empty-source boundaries (0.518933ms)
+ℹ tests 3
+ℹ suites 0
+ℹ pass 3
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 552.635455

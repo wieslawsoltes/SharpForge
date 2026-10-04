@@ -1,0 +1,497 @@
+{
+  "schemaVersion": 1,
+  "kind": "SF-A03-T22-allocation-follow-up-qualification",
+  "sourceRevision": "588f2b271521f170f278a0d0f183f069bd71f41d",
+  "parentEvidenceRevision": "4f80ef2a5bb952199b35cea7cf5ad83d1b87f6eb",
+  "comparisonSourceRevision": "51db5c5ffbf870a3c2efd195477732d3e6861829",
+  "executionCount": 6,
+  "allExitCodes": 0,
+  "retries": 0,
+  "tests": {
+    "passed": 67,
+    "failed": 0,
+    "skipped": 0
+  },
+  "native": {
+    "refoutCases": 2,
+    "sdk": "10.0.201",
+    "compiler": "5.3.0-2.26153.122 (4d3023de605a78ba3e59e50c657eed70f125c68a)",
+    "runtime": "10.0.5",
+    "mainFixtures": [
+      "attribute-targets",
+      "pseudo-attributes"
+    ],
+    "mainFixtureOracle": "Existing pinned Roslyn output; no --update or fresh Roslyn executable fixture compilation during these two checks."
+  },
+  "sourceBounds": "Three production metadata modules only, one public-API regression and docs. All six executions required clean tracked HEAD588f; per-run records retain exact argv, relevant environment, source and artifact hashes, status and interval. Other qualified source boundaries remain intact.",
+  "recapturePerformedForArchive": false,
+  "archiveIntegrity": {
+    "rawFileCount": 77,
+    "rawBytes": 720217,
+    "verification": "Each source copied byte for byte and read back. Source snapshots match the frozen commit; no product execution while archiving."
+  },
+  "files": [
+    {
+      "sourcePath": "/workspace/scratch/7e3d2a445c44/sf6-emission/artifacts/a03-reference-assemblies-allocation-588f2b271/capture-inputs.json",
+      "archivePath": "native/capture/capture-inputs.json",
+      "bytes": 830,
+      "sha256": "bc5531468d65a9f8e44e0270e9dc7cfafc2887cc843033ea718201b223fc6b77"
+    },
+    {
+      "sourcePath": "/workspace/scratch/7e3d2a445c44/sf6-emission/artifacts/a03-reference-assemblies-allocation-588f2b271/friend-expected.json",
+      "archivePath": "native/capture/friend-expected.json",
+      "bytes": 26972,
+      "sha256": "3936916515749961e84212e44cd3feafa01965f95f6832d30059d55d7cecae9f"
+    },
+    {
+      "sourcePath": "/workspace/scratch/7e3d2a445c44/sf6-emission/artifacts/a03-reference-assemblies-allocation-588f2b271/friend-fixed-buffers-roslyn-diagnostics.json",
+      "archivePath": "native/capture/friend-fixed-buffers-roslyn-diagnostics.json",
+      "bytes": 25964,
+      "sha256": "e9027ce86a11c4d237d98db562d40737ab6c0c622a4e95bd4b0c7ffcf1e745c6"
+    },
+    {
+      "sourcePath": "/workspace/scratch/7e3d2a445c44/sf6-emission/artifacts/a03-reference-assemblies-allocation-588f2b271/friend-fixed-buffers-roslyn-diagnostics.sarif",
+      "archivePath": "native/capture/friend-fixed-buffers-roslyn-diagnostics.sarif",
+      "bytes": 3047,
+      "sha256": "432f11b04a92601c1bd085644fd4aac72a9966c295bc4dca24ef1361334fe865"
+    },
+    {
+      "sourcePath": "/workspace/scratch/7e3d2a445c44/sf6-emission/artifacts/a03-reference-assemblies-allocation-588f2b271/friend-fixed-buffers-sharpforge-diagnostics.json",
+      "archivePath": "native/capture/friend-fixed-buffers-sharpforge-diagnostics.json",
+      "bytes": 25976,
+      "sha256": "93c18f4e5fa8c67d66df49368a187175318f6480a0fffcc88b70d581495a7f9a"
+    },
+    {
+      "sourcePath": "/workspace/scratch/7e3d2a445c44/sf6-emission/artifacts/a03-reference-assemblies-allocation-588f2b271/friend-fixed-buffers-sharpforge-diagnostics.sarif",
+      "archivePath": "native/capture/friend-fixed-buffers-sharpforge-diagnostics.sarif",
+      "bytes": 3047,
+      "sha256": "432f11b04a92601c1bd085644fd4aac72a9966c295bc4dca24ef1361334fe865"
+    },
+    {
+      "sourcePath": "/workspace/scratch/7e3d2a445c44/sf6-emission/artifacts/a03-reference-assemblies-allocation-588f2b271/friend-friend-access-roslyn-diagnostics.json",
+      "archivePath": "native/capture/friend-friend-access-roslyn-diagnostics.json",
+      "bytes": 23937,
+      "sha256": "c38eb40ff2768dccdfac5ed04878801e8c7ee6e708bfe967336d73e7e5d0018f"
+    },
+    {
+      "sourcePath": "/workspace/scratch/7e3d2a445c44/sf6-emission/artifacts/a03-reference-assemblies-allocation-588f2b271/friend-friend-access-roslyn-diagnostics.sarif",
+      "archivePath": "native/capture/friend-friend-access-roslyn-diagnostics.sarif",
+      "bytes": 451,
+      "sha256": "c6a92a5f148ae6cc5c0e5a2b02bb9b91c10ceb406d42bfd7321058e9c8092116"
+    },
+    {
+      "sourcePath": "/workspace/scratch/7e3d2a445c44/sf6-emission/artifacts/a03-reference-assemblies-allocation-588f2b271/friend-friend-access-sharpforge-diagnostics.json",
+      "archivePath": "native/capture/friend-friend-access-sharpforge-diagnostics.json",
+      "bytes": 23949,
+      "sha256": "792698324e458f6f7d913c7e5520dbd54c6c0a5c84acf22a429c95ac9a67e5a3"
+    },
+    {
+      "sourcePath": "/workspace/scratch/7e3d2a445c44/sf6-emission/artifacts/a03-reference-assemblies-allocation-588f2b271/friend-friend-access-sharpforge-diagnostics.sarif",
+      "archivePath": "native/capture/friend-friend-access-sharpforge-diagnostics.sarif",
+      "bytes": 451,
+      "sha256": "c6a92a5f148ae6cc5c0e5a2b02bb9b91c10ceb406d42bfd7321058e9c8092116"
+    },
+    {
+      "sourcePath": "/workspace/scratch/7e3d2a445c44/sf6-emission/artifacts/a03-reference-assemblies-allocation-588f2b271/friend-observed.json",
+      "archivePath": "native/capture/friend-observed.json",
+      "bytes": 26972,
+      "sha256": "3936916515749961e84212e44cd3feafa01965f95f6832d30059d55d7cecae9f"
+    },
+    {
+      "sourcePath": "/workspace/scratch/7e3d2a445c44/sf6-emission/artifacts/a03-reference-assemblies-allocation-588f2b271/friend-positive-roslyn-diagnostics.json",
+      "archivePath": "native/capture/friend-positive-roslyn-diagnostics.json",
+      "bytes": 23995,
+      "sha256": "16fb29c1e476c6a24570d76f4aaa46e8079fd6355231745ed9cc52f7d752acfe"
+    },
+    {
+      "sourcePath": "/workspace/scratch/7e3d2a445c44/sf6-emission/artifacts/a03-reference-assemblies-allocation-588f2b271/friend-positive-roslyn-diagnostics.sarif",
+      "archivePath": "native/capture/friend-positive-roslyn-diagnostics.sarif",
+      "bytes": 451,
+      "sha256": "c6a92a5f148ae6cc5c0e5a2b02bb9b91c10ceb406d42bfd7321058e9c8092116"
+    },
+    {
+      "sourcePath": "/workspace/scratch/7e3d2a445c44/sf6-emission/artifacts/a03-reference-assemblies-allocation-588f2b271/friend-positive-sharpforge-diagnostics.json",
+      "archivePath": "native/capture/friend-positive-sharpforge-diagnostics.json",
+      "bytes": 24007,
+      "sha256": "e5f21987ef40d0765067b8d076ad87b3a54458ee41b9e35c27272a88cb20889f"
+    },
+    {
+      "sourcePath": "/workspace/scratch/7e3d2a445c44/sf6-emission/artifacts/a03-reference-assemblies-allocation-588f2b271/friend-positive-sharpforge-diagnostics.sarif",
+      "archivePath": "native/capture/friend-positive-sharpforge-diagnostics.sarif",
+      "bytes": 451,
+      "sha256": "c6a92a5f148ae6cc5c0e5a2b02bb9b91c10ceb406d42bfd7321058e9c8092116"
+    },
+    {
+      "sourcePath": "/workspace/scratch/7e3d2a445c44/sf6-emission/artifacts/a03-reference-assemblies-allocation-588f2b271/friend-roslyn.dll",
+      "archivePath": "native/capture/friend-roslyn.dll",
+      "bytes": 7680,
+      "sha256": "c8edaefecbd87dc584e5159a6ee62b99c5f11b0cfbff9d20654de7179f33527e"
+    },
+    {
+      "sourcePath": "/workspace/scratch/7e3d2a445c44/sf6-emission/artifacts/a03-reference-assemblies-allocation-588f2b271/friend-sharpforge.dll",
+      "archivePath": "native/capture/friend-sharpforge.dll",
+      "bytes": 4096,
+      "sha256": "e3a2877c08724fb74a016ce71ba2114693f32b27703e2e24f5604505b085b405"
+    },
+    {
+      "sourcePath": "/workspace/scratch/7e3d2a445c44/sf6-emission/artifacts/a03-reference-assemblies-allocation-588f2b271/friend-source.cs",
+      "archivePath": "native/capture/friend-source.cs",
+      "bytes": 2509,
+      "sha256": "8b862890765ad17317881406aace738ed71ab7d5beb5032e17e3e059335d7498"
+    },
+    {
+      "sourcePath": "/workspace/scratch/7e3d2a445c44/sf6-emission/artifacts/a03-reference-assemblies-allocation-588f2b271/metadata-control.dll",
+      "archivePath": "native/capture/metadata-control.dll",
+      "bytes": 4096,
+      "sha256": "708cdfb10ce94e42ae471a12333f26bad2e587ca4a4622e9fb1268b14db1b5dc"
+    },
+    {
+      "sourcePath": "/workspace/scratch/7e3d2a445c44/sf6-emission/artifacts/a03-reference-assemblies-allocation-588f2b271/metadata-control.json",
+      "archivePath": "native/capture/metadata-control.json",
+      "bytes": 29972,
+      "sha256": "1657b35b272bbc582c85c286dd0d9b6e425f090ba90d0da9f0414f09b7ea0f18"
+    },
+    {
+      "sourcePath": "/workspace/scratch/7e3d2a445c44/sf6-emission/artifacts/a03-reference-assemblies-allocation-588f2b271/observer-enums.dll",
+      "archivePath": "native/capture/observer-enums.dll",
+      "bytes": 5632,
+      "sha256": "f88f092413a2e654459fa84e483d648eafebd55a0803a134a2e7e731be61716b"
+    },
+    {
+      "sourcePath": "/workspace/scratch/7e3d2a445c44/sf6-emission/artifacts/a03-reference-assemblies-allocation-588f2b271/observer-enums.json",
+      "archivePath": "native/capture/observer-enums.json",
+      "bytes": 7883,
+      "sha256": "5d39c9af7359c9685567596d169579b2ca0c8685199af0199f0b7fc07dae9757"
+    },
+    {
+      "sourcePath": "/workspace/scratch/7e3d2a445c44/sf6-emission/artifacts/a03-reference-assemblies-allocation-588f2b271/public-expected.json",
+      "archivePath": "native/capture/public-expected.json",
+      "bytes": 24103,
+      "sha256": "6f3895fcdd1f6f48ce6fbf7a1e641bc1ab10bc5b777476c4540bbfd378cbc644"
+    },
+    {
+      "sourcePath": "/workspace/scratch/7e3d2a445c44/sf6-emission/artifacts/a03-reference-assemblies-allocation-588f2b271/public-fixed-buffers-roslyn-diagnostics.json",
+      "archivePath": "native/capture/public-fixed-buffers-roslyn-diagnostics.json",
+      "bytes": 25964,
+      "sha256": "de009b0415c6bf01be66b32cbfd8e17f00a8d8dc1b5d40ab107d24ecf70f972b"
+    },
+    {
+      "sourcePath": "/workspace/scratch/7e3d2a445c44/sf6-emission/artifacts/a03-reference-assemblies-allocation-588f2b271/public-fixed-buffers-roslyn-diagnostics.sarif",
+      "archivePath": "native/capture/public-fixed-buffers-roslyn-diagnostics.sarif",
+      "bytes": 3047,
+      "sha256": "432f11b04a92601c1bd085644fd4aac72a9966c295bc4dca24ef1361334fe865"
+    },
+    {
+      "sourcePath": "/workspace/scratch/7e3d2a445c44/sf6-emission/artifacts/a03-reference-assemblies-allocation-588f2b271/public-fixed-buffers-sharpforge-diagnostics.json",
+      "archivePath": "native/capture/public-fixed-buffers-sharpforge-diagnostics.json",
+      "bytes": 25976,
+      "sha256": "dadaa5da36ce0532b6556a1883b20f4b35a08366ef192d9cdd400f47728e70d9"
+    },
+    {
+      "sourcePath": "/workspace/scratch/7e3d2a445c44/sf6-emission/artifacts/a03-reference-assemblies-allocation-588f2b271/public-fixed-buffers-sharpforge-diagnostics.sarif",
+      "archivePath": "native/capture/public-fixed-buffers-sharpforge-diagnostics.sarif",
+      "bytes": 3047,
+      "sha256": "432f11b04a92601c1bd085644fd4aac72a9966c295bc4dca24ef1361334fe865"
+    },
+    {
+      "sourcePath": "/workspace/scratch/7e3d2a445c44/sf6-emission/artifacts/a03-reference-assemblies-allocation-588f2b271/public-friend-access-roslyn-diagnostics.json",
+      "archivePath": "native/capture/public-friend-access-roslyn-diagnostics.json",
+      "bytes": 24811,
+      "sha256": "a60d19a19befe90a4a62c735268554f258fd70da75b946ac842de59a013da1d6"
+    },
+    {
+      "sourcePath": "/workspace/scratch/7e3d2a445c44/sf6-emission/artifacts/a03-reference-assemblies-allocation-588f2b271/public-friend-access-roslyn-diagnostics.sarif",
+      "archivePath": "native/capture/public-friend-access-roslyn-diagnostics.sarif",
+      "bytes": 1777,
+      "sha256": "3a6fa2051245f528f253c42d42665b656337048959c1f603c9564e3249c89d92"
+    },
+    {
+      "sourcePath": "/workspace/scratch/7e3d2a445c44/sf6-emission/artifacts/a03-reference-assemblies-allocation-588f2b271/public-friend-access-sharpforge-diagnostics.json",
+      "archivePath": "native/capture/public-friend-access-sharpforge-diagnostics.json",
+      "bytes": 24823,
+      "sha256": "3deb9069d98d7a6a0c2398beedc471e73293a589fa50a00cf6685a8a6512c688"
+    },
+    {
+      "sourcePath": "/workspace/scratch/7e3d2a445c44/sf6-emission/artifacts/a03-reference-assemblies-allocation-588f2b271/public-friend-access-sharpforge-diagnostics.sarif",
+      "archivePath": "native/capture/public-friend-access-sharpforge-diagnostics.sarif",
+      "bytes": 1777,
+      "sha256": "3a6fa2051245f528f253c42d42665b656337048959c1f603c9564e3249c89d92"
+    },
+    {
+      "sourcePath": "/workspace/scratch/7e3d2a445c44/sf6-emission/artifacts/a03-reference-assemblies-allocation-588f2b271/public-observed.json",
+      "archivePath": "native/capture/public-observed.json",
+      "bytes": 24103,
+      "sha256": "6f3895fcdd1f6f48ce6fbf7a1e641bc1ab10bc5b777476c4540bbfd378cbc644"
+    },
+    {
+      "sourcePath": "/workspace/scratch/7e3d2a445c44/sf6-emission/artifacts/a03-reference-assemblies-allocation-588f2b271/public-positive-roslyn-diagnostics.json",
+      "archivePath": "native/capture/public-positive-roslyn-diagnostics.json",
+      "bytes": 23995,
+      "sha256": "4a174425cce2397cb9024d42472c2253c28c784a7015853a63be2c4800f75851"
+    },
+    {
+      "sourcePath": "/workspace/scratch/7e3d2a445c44/sf6-emission/artifacts/a03-reference-assemblies-allocation-588f2b271/public-positive-roslyn-diagnostics.sarif",
+      "archivePath": "native/capture/public-positive-roslyn-diagnostics.sarif",
+      "bytes": 451,
+      "sha256": "c6a92a5f148ae6cc5c0e5a2b02bb9b91c10ceb406d42bfd7321058e9c8092116"
+    },
+    {
+      "sourcePath": "/workspace/scratch/7e3d2a445c44/sf6-emission/artifacts/a03-reference-assemblies-allocation-588f2b271/public-positive-sharpforge-diagnostics.json",
+      "archivePath": "native/capture/public-positive-sharpforge-diagnostics.json",
+      "bytes": 24007,
+      "sha256": "89b1c95755263c962d69b62ca971774fa73e10c4e2888dfa8d3ec36129eaab7c"
+    },
+    {
+      "sourcePath": "/workspace/scratch/7e3d2a445c44/sf6-emission/artifacts/a03-reference-assemblies-allocation-588f2b271/public-positive-sharpforge-diagnostics.sarif",
+      "archivePath": "native/capture/public-positive-sharpforge-diagnostics.sarif",
+      "bytes": 451,
+      "sha256": "c6a92a5f148ae6cc5c0e5a2b02bb9b91c10ceb406d42bfd7321058e9c8092116"
+    },
+    {
+      "sourcePath": "/workspace/scratch/7e3d2a445c44/sf6-emission/artifacts/a03-reference-assemblies-allocation-588f2b271/public-roslyn.dll",
+      "archivePath": "native/capture/public-roslyn.dll",
+      "bytes": 7168,
+      "sha256": "b5cacbfe214c0a4d8cb0124dc160ea8fdb4f5ca9f4901255f4bf18b84cbe90a8"
+    },
+    {
+      "sourcePath": "/workspace/scratch/7e3d2a445c44/sf6-emission/artifacts/a03-reference-assemblies-allocation-588f2b271/public-sharpforge.dll",
+      "archivePath": "native/capture/public-sharpforge.dll",
+      "bytes": 4096,
+      "sha256": "a8828868ecab9ff103ee59e3f642d419f71111897ac2fec9908c785d58c62c66"
+    },
+    {
+      "sourcePath": "/workspace/scratch/7e3d2a445c44/sf6-emission/artifacts/a03-reference-assemblies-allocation-588f2b271/public-source.cs",
+      "archivePath": "native/capture/public-source.cs",
+      "bytes": 2436,
+      "sha256": "abca70815be7aeb48add620fe02ae268025db1ba4cbdc57321a654d661091e88"
+    },
+    {
+      "sourcePath": "/workspace/scratch/7e3d2a445c44/sf6-emission/artifacts/a03-reference-assemblies-allocation-588f2b271/reference.json",
+      "archivePath": "native/capture/reference.json",
+      "bytes": 65069,
+      "sha256": "1d4227f0954f9359f9c530298d5ad26a877188a6b1040685a9bd495a07cac7ae"
+    },
+    {
+      "sourcePath": "/workspace/scratch/7e3d2a445c44/sf6-emission/artifacts/a03-reference-allocation-588f2b271/attribute-targets/emitted/Fixture.dll",
+      "archivePath": "main-native/attribute-targets/emitted/Fixture.dll",
+      "bytes": 6144,
+      "sha256": "7cc9cf56599dd552588e21b4dfaf4c1db7302cd24080b71a7740d0cfc368fe3a"
+    },
+    {
+      "sourcePath": "/workspace/scratch/7e3d2a445c44/sf6-emission/artifacts/a03-reference-allocation-588f2b271/attribute-targets/emitted/Fixture.runtimeconfig.json",
+      "archivePath": "main-native/attribute-targets/emitted/Fixture.runtimeconfig.json",
+      "bytes": 159,
+      "sha256": "85d15b6c120eedb78d5b0612c2b947710773f171d60bb565637eb5a6ad48b633"
+    },
+    {
+      "sourcePath": "/workspace/scratch/7e3d2a445c44/sf6-emission/artifacts/a03-reference-allocation-588f2b271/attribute-targets/reference/reference.csproj",
+      "archivePath": "main-native/attribute-targets/reference/reference.csproj",
+      "bytes": 651,
+      "sha256": "b8504a14e143ff08afa345a2b41439cd29ac855692cd1191e11911d439018c0d"
+    },
+    {
+      "sourcePath": "/workspace/scratch/7e3d2a445c44/sf6-emission/artifacts/a03-reference-allocation-588f2b271/pseudo-attributes/emitted/Fixture.dll",
+      "archivePath": "main-native/pseudo-attributes/emitted/Fixture.dll",
+      "bytes": 5632,
+      "sha256": "f3bc8b5128aab9cbc0c081d8131cc1402c9ad47b90c30cd3b1f59d0f37c253c7"
+    },
+    {
+      "sourcePath": "/workspace/scratch/7e3d2a445c44/sf6-emission/artifacts/a03-reference-allocation-588f2b271/pseudo-attributes/emitted/Fixture.runtimeconfig.json",
+      "archivePath": "main-native/pseudo-attributes/emitted/Fixture.runtimeconfig.json",
+      "bytes": 159,
+      "sha256": "85d15b6c120eedb78d5b0612c2b947710773f171d60bb565637eb5a6ad48b633"
+    },
+    {
+      "sourcePath": "/workspace/scratch/7e3d2a445c44/sf6-emission/artifacts/a03-reference-allocation-588f2b271/pseudo-attributes/reference/reference.csproj",
+      "archivePath": "main-native/pseudo-attributes/reference/reference.csproj",
+      "bytes": 651,
+      "sha256": "b8504a14e143ff08afa345a2b41439cd29ac855692cd1191e11911d439018c0d"
+    },
+    {
+      "sourcePath": "/workspace/scratch/7e3d2a445c44/refout-allocation-588f2b271-tests.tap",
+      "archivePath": "execution/tests.tap",
+      "bytes": 7163,
+      "sha256": "571ce8d3fe67aa338ee5f94944ea0111ae038f1de0c8401d4e7edfe75a8ac3e1"
+    },
+    {
+      "sourcePath": "/workspace/scratch/7e3d2a445c44/refout-allocation-588f2b271-tests-execution.json",
+      "archivePath": "execution/tests-execution.json",
+      "bytes": 4190,
+      "sha256": "7cb37ca5709cdc0bb4bda47c3c31f908e6c321caa87992e1275fd464f798b81d"
+    },
+    {
+      "sourcePath": "/workspace/scratch/7e3d2a445c44/refout-allocation-588f2b271-native.log",
+      "archivePath": "execution/native.log",
+      "bytes": 255,
+      "sha256": "c9ae89b3ef993630b617357fcebed936ca8d326ee6e89eca02fbb632288303c5"
+    },
+    {
+      "sourcePath": "/workspace/scratch/7e3d2a445c44/refout-allocation-588f2b271-native-execution.json",
+      "archivePath": "execution/native-execution.json",
+      "bytes": 14758,
+      "sha256": "2268049a84301c8681ac8f0ffedefbef8d8c693315d699764c53ba7757fbf4c7"
+    },
+    {
+      "sourcePath": "/workspace/scratch/7e3d2a445c44/refout-allocation-588f2b271-attribute-targets.log",
+      "archivePath": "execution/attribute-targets.log",
+      "bytes": 132,
+      "sha256": "4aa083bccd873225eab94390ab5b8bf9293fde9fc87ee3573d87de08a092c508"
+    },
+    {
+      "sourcePath": "/workspace/scratch/7e3d2a445c44/refout-allocation-588f2b271-attribute-targets-execution.json",
+      "archivePath": "execution/attribute-targets-execution.json",
+      "bytes": 4836,
+      "sha256": "afe47ea174df2e25982fc410773e957cf0f1b35f6b309fa5bdc9fd98d29ab618"
+    },
+    {
+      "sourcePath": "/workspace/scratch/7e3d2a445c44/refout-allocation-588f2b271-pseudo-attributes.log",
+      "archivePath": "execution/pseudo-attributes.log",
+      "bytes": 132,
+      "sha256": "db3bbe1c14bdb45b3127981bcede709d23fa8e7f184e7a9ef9e0f04ff244e3bd"
+    },
+    {
+      "sourcePath": "/workspace/scratch/7e3d2a445c44/refout-allocation-588f2b271-pseudo-attributes-execution.json",
+      "archivePath": "execution/pseudo-attributes-execution.json",
+      "bytes": 4836,
+      "sha256": "c521e04c11739dcd706adf17de7e99094ee1efd18fa7d1aab34c48803244b617"
+    },
+    {
+      "sourcePath": "/workspace/scratch/7e3d2a445c44/refout-allocation-588f2b271-metadata.log",
+      "archivePath": "execution/metadata.log",
+      "bytes": 7752,
+      "sha256": "b3d148c87880d86cb88512dde7b9f1d2158bf7a2d94d320e68ab4dc2eacd9ade"
+    },
+    {
+      "sourcePath": "/workspace/scratch/7e3d2a445c44/refout-allocation-588f2b271-metadata-execution.json",
+      "archivePath": "execution/metadata-execution.json",
+      "bytes": 4136,
+      "sha256": "8b8768ec8cee3588a1753c76ad10385941f14e3289207a07b138683e1b25be5c"
+    },
+    {
+      "sourcePath": "/workspace/scratch/7e3d2a445c44/refout-allocation-588f2b271-refout.log",
+      "archivePath": "execution/refout.log",
+      "bytes": 7760,
+      "sha256": "d274f3838b6a75b9be3d36dc5dda65ecf160e7ece48bd181d269bdaaa2982cee"
+    },
+    {
+      "sourcePath": "/workspace/scratch/7e3d2a445c44/refout-allocation-588f2b271-refout-execution.json",
+      "archivePath": "execution/refout-execution.json",
+      "bytes": 4124,
+      "sha256": "416a4cdd701fbb64583d9756b299061c6ec8535dd7ef90dbb1ec8cfdc6b00494"
+    },
+    {
+      "sourcePath": "/workspace/scratch/7e3d2a445c44/sf6-emission/artifacts/refout-allocation-588f2b271-metadata.json",
+      "archivePath": "benchmarks/metadata.json",
+      "bytes": 7751,
+      "sha256": "ce6de320065c09213316d32c6a999391cb05228e808a165e5dd7311dafc86769"
+    },
+    {
+      "sourcePath": "/workspace/scratch/7e3d2a445c44/sf6-emission/artifacts/refout-allocation-588f2b271-refout.json",
+      "archivePath": "benchmarks/refout.json",
+      "bytes": 7759,
+      "sha256": "88533a050d4a8b9632cfe996cba768eaedc49ddc4bdefe5a86f1f0721c651ef5"
+    },
+    {
+      "sourcePath": "/workspace/scratch/7e3d2a445c44/refout-allocation-588f-validation-plan.json",
+      "archivePath": "execution/refout-allocation-588f-validation-plan.json",
+      "bytes": 6739,
+      "sha256": "e06caeee74cb927e9b585b22857d1640ae91bc576ca54eeddddf4ebd03b568cf"
+    },
+    {
+      "sourcePath": "/workspace/scratch/7e3d2a445c44/run-refout-allocation-validation.py",
+      "archivePath": "execution/run-refout-allocation-validation.py",
+      "bytes": 4904,
+      "sha256": "8d1c8b70f1d3946ccd5878bad4f9536cf53f404e2414b6a8fd2a48919a13f4b8"
+    },
+    {
+      "sourcePath": "/workspace/scratch/7e3d2a445c44/sf6-emission/packages/compiler/test/cil-emission/reference-fixtures/attribute-targets.cs",
+      "archivePath": "main-native/inputs/attribute-targets.cs",
+      "bytes": 3980,
+      "sha256": "8fbc2e06f050be3099324c21b8c1c5dde9a104d0f33b68b80adaddabfba87c5d"
+    },
+    {
+      "sourcePath": "/workspace/scratch/7e3d2a445c44/sf6-emission/packages/compiler/test/cil-emission/reference-fixtures/attribute-targets.out",
+      "archivePath": "main-native/inputs/attribute-targets.out",
+      "bytes": 378,
+      "sha256": "3f7f9144184029613022af7957de81ba256c9fed25e29ab449b77119706e79f2"
+    },
+    {
+      "sourcePath": "/workspace/scratch/7e3d2a445c44/sf6-emission/packages/compiler/test/cil-emission/reference-fixtures/pseudo-attributes.cs",
+      "archivePath": "main-native/inputs/pseudo-attributes.cs",
+      "bytes": 5964,
+      "sha256": "96e08148ceecf9594b4a49336fecf8c04ba8f860d5a47f7dd039eb17e3b88fe9"
+    },
+    {
+      "sourcePath": "/workspace/scratch/7e3d2a445c44/sf6-emission/packages/compiler/test/cil-emission/reference-fixtures/pseudo-attributes.out",
+      "archivePath": "main-native/inputs/pseudo-attributes.out",
+      "bytes": 279,
+      "sha256": "7ab5595be1b5da951ea44597467fbf889b98a31652ca522591bc2ebd0854d437"
+    },
+    {
+      "sourcePath": "/workspace/scratch/7e3d2a445c44/sf6-emission/tests/fixtures/a03-reference-assemblies/Program.cs",
+      "archivePath": "native/inputs/Program.cs",
+      "bytes": 6885,
+      "sha256": "2499feb153dc9612e4bd185bafb7c232b3fabcdd91e0f108117cbc3f4506eda9"
+    },
+    {
+      "sourcePath": "/workspace/scratch/7e3d2a445c44/sf6-emission/tests/fixtures/a03-reference-assemblies/SignatureNames.cs",
+      "archivePath": "native/inputs/SignatureNames.cs",
+      "bytes": 3245,
+      "sha256": "cd25e6e177724e570b04776628e0a980cb0fd6fc253b0e38acc42686e2223a20"
+    },
+    {
+      "sourcePath": "/workspace/scratch/7e3d2a445c44/sf6-emission/tests/fixtures/a03-reference-assemblies/AttributeTypes.cs",
+      "archivePath": "native/inputs/AttributeTypes.cs",
+      "bytes": 7688,
+      "sha256": "1f4e8371add1c770cc521da24fb58f31c47c35145a9b25e79661b3c6617a359e"
+    },
+    {
+      "sourcePath": "/workspace/scratch/7e3d2a445c44/sf6-emission/tests/fixtures/a03-reference-assemblies/surface.cs",
+      "archivePath": "native/inputs/surface.cs",
+      "bytes": 2436,
+      "sha256": "abca70815be7aeb48add620fe02ae268025db1ba4cbdc57321a654d661091e88"
+    },
+    {
+      "sourcePath": "/workspace/scratch/7e3d2a445c44/sf6-emission/tests/fixtures/a03-reference-assemblies/consumer.cs",
+      "archivePath": "native/inputs/consumer.cs",
+      "bytes": 813,
+      "sha256": "b946bed9db205d6dd65b7fdcf261c5ddaf3ba92ea9aa5d9130143a4d5e8c2716"
+    },
+    {
+      "sourcePath": "/workspace/scratch/7e3d2a445c44/sf6-emission/tests/fixtures/a03-reference-assemblies/positive-consumer.cs",
+      "archivePath": "native/inputs/positive-consumer.cs",
+      "bytes": 685,
+      "sha256": "a46b46d6419d3af766ef37aaab82372fce83954e792a2f083eb72c24f85ff109"
+    },
+    {
+      "sourcePath": "/workspace/scratch/7e3d2a445c44/sf6-emission/tests/fixtures/a03-reference-assemblies/observer-enums.cs",
+      "archivePath": "native/inputs/observer-enums.cs",
+      "bytes": 761,
+      "sha256": "51508e5a7462f297a160228152f8fb418460fc3629790a6bcf69dc6622008f1e"
+    },
+    {
+      "sourcePath": "/workspace/scratch/7e3d2a445c44/sf6-emission/packages/compiler/src/codegen/metadata/pseudo-attributes.js",
+      "archivePath": "source/pseudo-attributes.js",
+      "bytes": 5560,
+      "sha256": "e60e45b72ba838845ea9bc64fa23a966bd8370bc634e10ab78a68ad4dfa7bb92"
+    },
+    {
+      "sourcePath": "/workspace/scratch/7e3d2a445c44/sf6-emission/packages/compiler/src/codegen/metadata/custom-attributes.js",
+      "archivePath": "source/custom-attributes.js",
+      "bytes": 16438,
+      "sha256": "2e3d57b49bdfe5d308728914141eba90b8c4c270ad0c1aed37365775937ab5e0"
+    },
+    {
+      "sourcePath": "/workspace/scratch/7e3d2a445c44/sf6-emission/packages/compiler/src/codegen/metadata/attribute-targets.js",
+      "archivePath": "source/attribute-targets.js",
+      "bytes": 1156,
+      "sha256": "d002901a01a95fa65ebe73c7a1b31b9396e0d960fe30ae146882c626d1ed35fb"
+    },
+    {
+      "sourcePath": "/workspace/scratch/7e3d2a445c44/sf6-emission/tests/a03-22-attribute-dispatch.test.js",
+      "archivePath": "source/a03-22-attribute-dispatch.test.js",
+      "bytes": 3857,
+      "sha256": "2ed2d45d22300463dfb57b11c1e0f5caef0e320d047ea6e56bc29d44edbdea16"
+    }
+  ]
+}

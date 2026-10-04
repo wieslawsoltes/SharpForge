@@ -1,4 +1,5 @@
 import { AssemblyInspector } from '../inspector.js';
+import { decodedInspectorMethod } from '../inspector-method.js';
 import { CilError } from '../binary.js';
 import { DataflowWorklist, dataflowCancellation, dataflowLimit, dataflowFailure } from './dataflow.js';
 import { dataflowBlocks } from './dataflow-blocks.js';
@@ -6,6 +7,7 @@ import { executionHandlerOffsets } from './execution-handlers.js';
 import { typedMethodSignature, primitiveRelations } from './typed-signatures.js';
 import { ensureTypedMetadata } from './typed-metadata.js';
 import { typedTransfers, transferTypedInstruction } from './typed-transfers.js';
+import { prepareTypedInstructions } from './typed-preparation.js';
 import { TypedTransferStack } from './typed-stack.js';
 import { createTypedFlowState } from './typed-state.js';
 
@@ -35,7 +37,9 @@ function preflight(method, state, options) {
       state.instruction = instruction;
       state.fail('UnsupportedOpcode', `Typed policy is unavailable for ${instruction.name}`, true);
     }
-    if (typedTransfers[instruction.name].descriptor.metadata) state.needsMetadata = true;
+    const descriptor = typedTransfers[instruction.name].descriptor;
+    if (descriptor.metadata) state.needsMetadata = true;
+    if (descriptor.prepare) state.needsPreparation = true;
   }
 }
 
@@ -48,13 +52,14 @@ export function verifyCilMethodTypes(input, methodToken, options = {}) {
   try {
     dataflowCancellation(options.signal);
     const inspector = input instanceof AssemblyInspector ? input : new AssemblyInspector(input, options);
-    const method = inspector.getMethod(methodToken);
+    const method = decodedInspectorMethod(inspector, methodToken);
     if (!Number.isInteger(method.maxStack) || method.maxStack < 0 || method.maxStack > 65535)
       throw new CilError('Invalid maxstack header');
     state = new TypedTransferStack(method, options);
     state.relations = primitiveRelations;
     preflight(method, state, options);
     if (state.needsMetadata) ensureTypedMetadata(state, inspector, options);
+    prepareTypedInstructions(state, inspector, options);
     state.signature = typedMethodSignature(inspector, method, options, state);
     const offsets = executionHandlerOffsets(method, options, (current, instruction, code, message, details) => {
       state.instruction = instruction;

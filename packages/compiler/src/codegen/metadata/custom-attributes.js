@@ -32,8 +32,10 @@ import { methodSignature, methodSymbolSignature } from './member-signatures.js';
 import { tupleElementNamesOf } from '../../binder/tuples.js';
 import { dynamicTransformFlags } from './dynamic-flags.js';
 import { contractAssemblyOf } from './reference-contracts.js';
+import { explicitInterfaceOf, metadataPropertyName } from './explicit-interface-names.js';
 import { writeParameterAttributes } from './parameter-metadata.js';
-import { PseudoAttributeWriter } from './pseudo-attributes.js';
+import { fixedBufferTypeName } from './fixed-buffer-type-name.js';
+import { applyPseudoAttribute } from './pseudo-attributes.js';
 
 const ASSEMBLY_TOKEN = token(0x20, 1);
 const REQUIRED_MEMBER = 'System.Runtime.CompilerServices.RequiredMemberAttribute';
@@ -90,7 +92,7 @@ export class CustomAttributeWriter {
         declaresExtensions = true;
       }
       // Roslyn writes the attributes it synthesizes for a type before the ones the program applies.
-      if (plan.properties.some(property => property.symbol.parameters.length)) this.defaultMember(typeToken, plan);
+      this.defaultMember(typeToken, plan);
       // The runtime refuses a by-reference-like field (a `Span<T>`) in a struct that is not marked as a ref struct.
       if (type.isRefLikeType) this.wellKnown(typeToken, IS_BY_REF_LIKE);
       if (type.isFixedBufferType) {
@@ -167,8 +169,7 @@ export class CustomAttributeWriter {
   applied(parent, symbol, location = DEFAULT_LOCATIONS[symbol.kind]) {
     for (const attribute of symbol.boundAttributes ?? []) {
       if (attribute.location !== location) continue;
-      this.pseudo ??= new PseudoAttributeWriter(this);
-      if (this.pseudo.apply(parent, attribute, symbol)) continue;
+      if (applyPseudoAttribute(this, parent, attribute, symbol)) continue;
       this.one(parent, attribute);
     }
   }
@@ -229,7 +230,8 @@ export class CustomAttributeWriter {
   fixedBuffer(parent, { elementType, length }) {
     const shape = { isStatic: false, returnType: this.core.void, parameters: [{ type: this.core.type }, { type: this.core.int }] },
       constructor = this.builder.member(this.builder.typeRef(FIXED_BUFFER), '.ctor', methodSignature(this.types, shape));
-    this.add(parent, constructor, encodeCustomAttribute(['System.Type', 'int'], [serializedTypeName(elementType, this.types), length]));
+    const name = fixedBufferTypeName(this.types, elementType, serializedTypeName(elementType, this.types));
+    this.add(parent, constructor, encodeCustomAttribute(['System.Type', 'int'], [name, length]));
   }
   /**
    * The TypeRef of a framework attribute that is not in the core library's contract: through the reference that
@@ -255,9 +257,10 @@ export class CustomAttributeWriter {
   }
   /** `[DefaultMember]` names the indexer, by the name its accessors have. */
   defaultMember(typeToken, plan) {
-    const indexer = plan.properties.find(property => property.symbol.parameters.length),
-      accessor = indexer.getter ?? indexer.setter;
-    this.wellKnown(typeToken, 'System.Reflection.DefaultMemberAttribute', [accessor.name.slice(4)]);
+    const indexer = plan.properties.find(property => property.symbol.parameters.length && !explicitInterfaceOf(property.symbol));
+    if (!indexer) return;
+    const name = metadataPropertyName(indexer.symbol, indexer.getter ?? indexer.setter);
+    this.wellKnown(typeToken, 'System.Reflection.DefaultMemberAttribute', [name]);
   }
   add(parent, constructor, value) {
     this.builder.addRow('CustomAttribute', { Parent: parent, Type: constructor, Value: value });

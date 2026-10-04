@@ -1,12 +1,14 @@
 import {array, fail, makeArray} from '@sharpforge/bcl-core';
 import {hashSetValues} from './hashset-values.js';
+import {hashSetCapacity, reserveHashSetUnion, trimHashSet} from './hash-set-capacity.js';
+import {hashSetActive, notifyHashSetVersion} from './hash-set-storage-state.js';
 import {count, data, version, positions, keyOf, indexMap, rememberIndex} from './legacy-storage.js';
 import {clearIndexed, insertIndexed, removeIndexed, reserveIndexed} from './indexed-storage.js';
 
 function add(p, reference, value, map) {
+  if (!hashSetActive(p)) return null;
   if (map.has(keyOf(p, value))) return false;
-  insertIndexed(p, reference, [value], map);
-  return true;
+  return insertIndexed(p, reference, [value], map) === false ? null : true;
 }
 
 function remove(p, reference, value, map) {
@@ -19,10 +21,15 @@ function remove(p, reference, value, map) {
 
 /** Construct the released array-input profile with one observable initial version. */
 export function initializeHashSet(p, reference, items) {
+  if (!hashSetActive(p)) return false;
+  if (items.length && reserveIndexed(p, reference, items.length, 1) === false) return false;
   const map = indexMap(p, reference);
-  for (const value of items) add(p, reference, value, map);
-  p.set(reference, '$version', 1);
-  rememberIndex(p, reference, map);
+  for (const value of items) if (add(p, reference, value, map) === null) return false;
+  const size = count(p, reference);
+  if (size && Math.trunc(data(p, reference).length / size) > 3) trimHashSet(p, reference);
+  if (!hashSetActive(p)) return false;
+  if (!notifyHashSetVersion(p, reference, 1)) return false;
+  indexMap(p, reference);
 }
 
 function union(p, reference, items, map) {
@@ -35,8 +42,8 @@ function union(p, reference, items, map) {
   }
   if (!additions.length) return;
   const used = p.get(reference, '$used', count(p, reference));
-  reserveIndexed(p, reference, Math.max(used, count(p, reference) + additions.length), 1);
-  for (const value of additions) insertIndexed(p, reference, [value], map);
+  if (reserveHashSetUnion(p, reference, Math.max(used, count(p, reference) + additions.length)) === false) return false;
+  for (const value of additions) if (insertIndexed(p, reference, [value], map) === false) return false;
 }
 
 function intersect(p, reference, items, map) {
@@ -54,11 +61,13 @@ function intersect(p, reference, items, map) {
 }
 
 function setOperation(p, reference, method, argument) {
+  if (!hashSetActive(p)) return null;
   const items = array(p, argument);
   const map = indexMap(p, reference);
   const revision = version(p, reference);
-  if (method === 'UnionWith') union(p, reference, items, map);
-  else if (method === 'IntersectWith') intersect(p, reference, items, map);
+  if (method === 'UnionWith') {
+    if (union(p, reference, items, map) === false) return null;
+  } else if (method === 'IntersectWith') intersect(p, reference, items, map);
   else for (const value of items) remove(p, reference, value, map);
   // The released profile invalidates enumerators once per bulk call, including a no-op call.
   p.set(reference, '$version', revision + 1);
@@ -69,6 +78,9 @@ function setOperation(p, reference, method, argument) {
 export function hashSet(p, descriptor, context) {
   const {reference, values, type} = context;
   const method = descriptor.name;
+  if (method === 'get_Capacity' || method === 'EnsureCapacity' || method === 'TrimExcess') {
+    return hashSetCapacity(p, descriptor, context);
+  }
   if (method === 'Clear') {
     clearIndexed(p, reference, 1);
     return null;
@@ -79,7 +91,10 @@ export function hashSet(p, descriptor, context) {
   }
   const map = indexMap(p, reference);
   if (method === 'Contains') return p.managed(map.has(keyOf(p, values[0])), 'bool');
-  if (method === 'Add') return p.managed(add(p, reference, values[0], map), 'bool');
+  if (method === 'Add') {
+    const added = add(p, reference, values[0], map);
+    return added === null ? null : p.managed(added, 'bool');
+  }
   if (method === 'Remove') return p.managed(remove(p, reference, values[0], map), 'bool');
   fail(p, 'MissingMethodException', descriptor.owner + '.' + method);
 }

@@ -1,0 +1,24 @@
+START 01-baseline-Add_0_0 2026-10-04T13:12:06.594Z
+END 01-baseline-Add_0_0 {"code":0,"signal":null} 2026-10-04T13:12:09.297Z
+{"Add_0_0":{"medianMs":15.808238999999844,"p95Ms":25.138560000000098}}
+START 02-candidate-Add_0_0 2026-10-04T13:12:09.297Z
+END 02-candidate-Add_0_0 {"code":0,"signal":null} 2026-10-04T13:12:11.499Z
+{"Add_0_0":{"medianMs":14.982578499999931,"p95Ms":18.583349999999996}}
+START 03-candidate-Diamond 2026-10-04T13:12:11.500Z
+END 03-candidate-Diamond {"code":0,"signal":null} 2026-10-04T13:12:14.106Z
+{"Diamond":{"medianMs":18.67506299999991,"p95Ms":21.37073200000009}}
+START 04-baseline-Diamond 2026-10-04T13:12:14.107Z
+END 04-baseline-Diamond {"code":0,"signal":null} 2026-10-04T13:12:16.627Z
+{"Diamond":{"medianMs":17.688238499999954,"p95Ms":19.889439999999922}}
+START 05-baseline-MixedJoin 2026-10-04T13:12:16.627Z
+END 05-baseline-MixedJoin {"code":0,"signal":null} 2026-10-04T13:12:27.722Z
+{"MixedJoin":{"medianMs":86.46850899999981,"p95Ms":98.35863100000006}}
+START 06-candidate-MixedJoin 2026-10-04T13:12:27.722Z
+END 06-candidate-MixedJoin {"code":0,"signal":null} 2026-10-04T13:12:38.896Z
+{"MixedJoin":{"medianMs":87.76177549999966,"p95Ms":106.15996600000017}}
+START 07-candidate-Authority 2026-10-04T13:12:38.897Z
+END 07-candidate-Authority {"code":0,"signal":null} 2026-10-04T13:12:43.901Z
+{"existingAuthorityConstruction":{"medianMs":37.21700899999996,"p95Ms":40.10085600000002}}
+START 08-baseline-Authority 2026-10-04T13:12:43.902Z
+END 08-baseline-Authority {"code":0,"signal":null} 2026-10-04T13:12:48.662Z
+{"existingAuthorityConstruction":{"medianMs":36.734901000000036,"p95Ms":39.640264000000116}}

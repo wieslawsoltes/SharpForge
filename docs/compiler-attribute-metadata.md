@@ -78,3 +78,14 @@ and p95 increase of 12.13% for this correctness batch. Return/target attributes 
 are required for the produced assemblies to represent their source contracts. Generated sizes are unchanged;
 indexed record lookup and lazy helper creation remove avoidable repeated work. The shared-host variation
 does not establish a causal or platform-wide regression, and this batch makes no speedup claim.
+
+## Isolated publication replay
+
+The isolated branch at `b40e575c829c8c5119db9f2d0f20ccc9df3e4de8` passed all 36 focused and neighboring
+tests with zero skips. Both `attribute-targets` and `pseudo-attributes` then matched the genuine Roslyn
+output on the pinned .NET host. Exact commands and raw logs are retained in the qualification directory.
+
+The static import manifest contains one exact-hash review entry for the developer benchmark's fixed
+module import from a trusted, operator-selected checkout. The P/Invoke metadata helper is named
+`writeImport` so the conservative lexical import scanner does not mistake its method declaration for
+a dynamic import. The scanner and product import policy are unchanged.

@@ -1,0 +1,27 @@
+✔ CLR constructed elements preserve rank, vector identity and exact accessor signatures (5.508336ms)
+✔ CLR function pointer identity includes every calling convention field (0.759487ms)
+✔ CLR element constructions preserve the defining context of an explicitly shared type (7.937645ms)
+✔ CLR resolves multidimensional array constructor/accessor MemberRefs and rejects cyclic TypeSpecs (4.213677ms)
+✔ bounded forwarder cache publication does not retain a partial path after capacity failure (1.959682ms)
+✔ facade, nested, cyclic and consumer TypeRef forwarding agree with native CoreCLR (36.146885ms)
+✔ facade and nested ExportedType chains resolve canonical definitions without executable body reads (15.365851ms)
+✔ concurrent forwarder resolutions share load contexts and preserve cross-context descriptor identity after unload (4.766731ms)
+✔ forwarder cycles, missing names and unsupported linked netmodules fail explicitly (3.604902ms)
+✔ forwarder metadata rejects malformed flags, nested scopes, duplicate names and nested ownership cycles (7.031993ms)
+✔ forwarder hop, row, nested-depth and heap limits are enforced before unbounded expansion (8.154845ms)
+✔ cancelled and failed forwarder lookups do not poison success caches (2.858264ms)
+✔ CLR base/interface graphs, enum underlying types and nested ownership match CoreCLR reflection (11.544369ms)
+✔ CLR graph loading retains canonical shared identities and rejects invalid interfaces and cancellation (6.149515ms)
+✔ CLR unresolved framework references and generic inheritance stay explicit diagnostics (3.966864ms)
+✔ CLR metadata type descriptors preserve canonical identity within their defining context (7.454655ms)
+✔ CLR nested metadata names inherit their enclosing namespace and interface flags remain inspectable (3.678991ms)
+✔ CLR type metadata rejects invalid tokens, nested cycles, duplicate owners and excessive names (4.036397ms)
+✔ CLR nested metadata identity has an explicit depth limit (2.089022ms)
+ℹ tests 19
+ℹ suites 0
+ℹ pass 19
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1823.632114

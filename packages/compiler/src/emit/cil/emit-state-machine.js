@@ -123,6 +123,7 @@ export const StateMachineEmission = Base =>
     }
     /** The body of a kickoff: the method the program declared only creates its state machine. */
     kickoffBody(machine) {
+      this.debug?.kickoff(machine);
       if (machine.kind === 'asyncIterator') return this.asyncIteratorKickoff(machine);
       return machine.kind === 'iterator' ? this.iteratorKickoff(machine) : this.asyncKickoff(machine);
     }
@@ -202,6 +203,7 @@ export const StateMachineEmission = Base =>
           name = names.has(slot) ? `<${names.get(slot)}>5__${ordinal}` : `<>7__wrap${ordinal}`;
         fields.set(slot, machine.lateField(this.program, name, type).token);
       }
+      this.debug?.hoistLocals(fields);
       rewriteHoistedSlots(il, fields);
       return undefined;
     }

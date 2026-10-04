@@ -10,6 +10,7 @@ import { TypeKind, Accessibility } from '../types.js';
 import { FieldSymbol, DeclarationModifiers, accessibilityFromSyntax } from '../members.js';
 import { NamespaceSymbol, NamespaceExtent } from '../namespaces.js';
 import { Scope } from '../../binder/type-binder.js';
+import { FileLocalTypes } from '../../binder/file-local-types.js';
 import { declareTypeParameters, bindConstraintClauses } from './type-parameters.js';
 import { typeKindOf, isTypeDeclaration, words, nameParts, SourceTypeSymbol } from './source-type.js';
 import { spanOf } from './source-type.js';
@@ -44,6 +45,7 @@ export class SourceAssemblyCore {
         unit = new Scope('unit', {
           namespace: merged,
           sourceNamespace: this.globalNamespace,
+          fileLocalTypes: new FileLocalTypes(uri),
           usings: {
             directives: [...file.syntax.usings.filter(u => !u.globalKeyword)],
             global: globalUsings.directives,
@@ -92,7 +94,8 @@ export class SourceAssemblyCore {
     const isFileLocal = modifiers.includes('file') && !container,
       fileKey = name + '`' + arity;
     const declaration = { syntax, scope, uri, file },
-      siblings = isFileLocal ? [...(scope.fileTypes?.values() ?? [])] : container ? container._nested : namespace.getTypeMembers(name, arity),
+      siblings = isFileLocal ? scope.fileLocalTypes.getTypeMembers(namespace, name, arity) ?? []
+        : container ? container._nested : namespace.getTypeMembers(name, arity),
       existing = siblings.find(t => t.name === name && t.arity === arity && t.isSource);
     if (existing) {
       const partial = modifiers.includes('partial'),
@@ -157,7 +160,10 @@ export class SourceAssemblyCore {
     type.modifierWords = modifiers;
     type.isFileLocal = isFileLocal;
     if (existing) type.isDuplicate = true;
-    else if (isFileLocal) (scope.fileTypes ??= new Map()).set(fileKey, type);
+    else if (isFileLocal) {
+      (scope.fileTypes ??= new Map()).set(fileKey, type);
+      scope.fileLocalTypes.add(type);
+    }
     else if (container) container._nested.push(type);
     else namespace.addType(type);
     if (container) type.containingSymbol = container;

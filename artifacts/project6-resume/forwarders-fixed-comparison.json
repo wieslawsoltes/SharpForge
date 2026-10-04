@@ -1,0 +1,36 @@
+{
+  "baseline": "8b101c0c7e8ad73675dfe12e68f26329d7ea2d9c",
+  "candidate": "1e9d57f57649e728c945a2c296432f92c6f3f125",
+  "guard": "metadataToken and fullName checked against native fixture",
+  "cohort": "one fixed 12-sample cohort after code change, three warmups",
+  "results": [
+    {
+      "name": "warm token lookup",
+      "beforeMedian": 0.3519402500000126,
+      "afterMedian": 0.4715810000000147,
+      "medianChangePct": 33.994619825381655,
+      "beforeP95": 0.43181999999998766,
+      "afterP95": 0.5375505000000089,
+      "p95ChangePct": 24.484854800616993
+    },
+    {
+      "name": "warm name lookup",
+      "beforeMedian": 0.554397999999992,
+      "afterMedian": 0.549745999999999,
+      "medianChangePct": -0.8391083661905441,
+      "beforeP95": 0.8257639999999924,
+      "afterP95": 0.5977189999999837,
+      "p95ChangePct": -27.61624386628756
+    },
+    {
+      "name": "cold context and inheritance graph",
+      "beforeMedian": 282.78515000000084,
+      "afterMedian": 279.13017500000024,
+      "medianChangePct": -1.2924918440733513,
+      "beforeP95": 390.5068500000027,
+      "afterP95": 438.02259999999933,
+      "p95ChangePct": 12.167712294930633
+    }
+  ],
+  "allocationCounts": "not measured"
+}

@@ -19,6 +19,7 @@ import { needsTypeSpec } from '../generics.js';
 import { TypeTokens, namespaceOf, definitionNameOf } from './type-tokens.js';
 import { assemblyResolverOf } from './reference-identities.js';
 import { planMembers, explicitInterfaceOf } from './member-plan.js';
+import { metadataMemberName, metadataPropertyName } from './explicit-interface-names.js';
 import { typeFlags, genericParameterFlags } from './attribute-flags.js';
 import { tupleElementNamesOf } from '../../binder/tuples.js';
 import { dynamicTransformFlags } from './dynamic-flags.js';
@@ -150,7 +151,7 @@ export class SymbolMetadataWriter {
     for (const type of this.types) {
       const plan = this.plans.get(type),
         // A type initializer that only runs field initializers leaves the type `beforefieldinit`, as Roslyn does.
-        hasStaticConstructor = plan.methods.some(method => method.name === '.cctor' && !method.isInitializerOnly),
+        hasStaticConstructor = plan.hasStaticConstructor ?? plan.methods.some(method => method.name === '.cctor' && !method.isInitializerOnly),
         base = type.typeKind === TypeKind.Interface ? null : type.baseType;
       builder.addRow('TypeDef', {
         Flags: typeFlags(type, { hasStaticConstructor }),
@@ -307,7 +308,7 @@ export class SymbolMetadataWriter {
       defined = this.methodTokens.get(definition);
     // A member of a constructed type (`I<int>.M`) is named through the TypeSpec of the construction.
     if (defined && !needsTypeSpec(method.containingType)) return defined;
-    return this.builder.member(this.tokens.typeToken(method.containingType), definition.metadataName, methodSymbolSignature(this.tokens, definition));
+    return this.builder.member(this.tokens.typeToken(method.containingType), metadataMemberName(definition), methodSymbolSignature(this.tokens, definition));
   }
   /** The type parameters a TypeDef declares: those of its enclosing types first, as VAR numbers them. */
   allTypeParameters(type) {
@@ -340,7 +341,7 @@ export class SymbolMetadataWriter {
     for (const { symbol, getter, setter } of properties) {
       // An indexer is named by its accessors (`Item`, or the name [IndexerName] gives).
       const accessor = getter ?? setter,
-        name = symbol.parameters.length && accessor ? accessor.name.slice(4) : symbol.metadataName,
+        name = metadataPropertyName(symbol, accessor),
         row = builder.addRow('Property', { Flags: 0, Name: name, Type: propertySignature(this.tokens, symbol) });
       this.propertyTokens.set(symbol, row);
       if (getter) builder.addRow('MethodSemantics', { Semantics: SEMANTICS.Getter, Method: getter.token, Association: row });
@@ -354,7 +355,7 @@ export class SymbolMetadataWriter {
       first = (builder.rows[20]?.length ?? 0) + 1;
     builder.addRow('EventMap', { Parent: this.tokens.definitionToken(type), EventList: first });
     for (const { symbol, adder, remover } of events) {
-      const row = builder.addRow('Event', { EventFlags: 0, Name: symbol.name, EventType: this.tokens.typeToken(symbol.type) });
+      const row = builder.addRow('Event', { EventFlags: 0, Name: metadataMemberName(symbol), EventType: this.tokens.typeToken(symbol.type) });
       this.eventTokens.set(symbol, row);
       builder.addRow('MethodSemantics', { Semantics: SEMANTICS.AddOn, Method: adder.token, Association: row });
       builder.addRow('MethodSemantics', { Semantics: SEMANTICS.RemoveOn, Method: remover.token, Association: row });

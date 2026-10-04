@@ -28,7 +28,8 @@ function rangeError(platform, parameter) {
   fail(platform, 'ArgumentOutOfRangeException', "Value is outside the builder range. (Parameter '" + parameter + "')");
 }
 
-function insertionIndex(platform, reference, index) {
+/** Validate an insertion position against the live UTF-16 length, preserving the native parameter name. */
+export function insertionIndex(platform, reference, index) {
   const length = platform.get(reference, '$length', 0);
   if (!Number.isInteger(index) || index < 0 || index > length) rangeError(platform, 'index');
   return index;
