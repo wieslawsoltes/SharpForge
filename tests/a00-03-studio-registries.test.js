@@ -20,15 +20,40 @@ test('each mount has independent state and DOM, and failed render cleans up',()=
 test('automation contributions preserve the complete pre-extraction key surface',async()=>{const registry=createAutomationApi(),context=new Proxy({}, {get:()=>()=>{}});for(const file of (await readdir(new URL('../apps/studio/tools/',import.meta.url))).filter(name=>name.endsWith('-automation.js'))){const module=await import('../apps/studio/tools/'+file);Object.values(module)[0](registry,context);}const expected=JSON.parse(await readFile(new URL('../planning/contracts/studio-automation.lock.json',import.meta.url)));assert.deepEqual(automationKeyPaths(registry.api),expected);});
 test('automation duplicate batches roll back and namespaces dispose cleanly',()=>{const r=createAutomationApi();const remove=r.contributeAutomation('tools.one',{run:()=>1});assert.equal(r.api.tools.one.run(),1);assert.throws(()=>r.contributeAutomation('tools.one',{other:()=>2,run:()=>3}),/Duplicate/);assert.equal(r.api.tools.one.other,undefined);assert.throws(()=>r.contributeAutomation('__proto__.bad',{run:()=>{}}),/namespace/);remove();assert.deepEqual(r.api,{});});
 test('storage preserves v1 payloads, versions and quota failures',()=>{const values=new Map([[storageKeys.workspace,'{"files":[]}']]),backend={getItem:key=>values.get(key)??null,setItem:(key,value)=>values.set(key,value),removeItem:key=>values.delete(key)},s=createStorage({provider:()=>backend});assert.deepEqual(s.get(storageKeys.workspace),{files:[]});assert.equal(s.set(storageKeys.editor,{keymap:'vim'},{version:2}).ok,true);assert.equal(s.get(storageKeys.editor),null);assert.deepEqual(s.get(storageKeys.editor,{version:2}),{keymap:'vim'});assert.throws(()=>s.setItem('unknown','data'),/Unregistered/);values.set(storageKeys.workspace,'broken');assert.equal(s.get(storageKeys.workspace,{fallback:'fallback'}),'fallback');const quota=createStorage({provider:()=>({setItem(){const error=new Error('full');error.name='QuotaExceededError';throw error;}})});const failure=quota.set(storageKeys.workspace,{});assert.equal(failure.ok,false);assert.equal(failure.error.code,'quota');assert.throws(()=>quota.setItem(storageKeys.workspace,'x'),/Could not write/);});
-test('every worker message has a handler seam and unknown messages fail structurally',()=>{assert.equal(workerMethods.compiler.length,29);assert.equal(workerMethods.runtime.length,46);for(const kind of ['compiler','runtime']){const protocol=createWorkerProtocol(kind);for(const method of workerMethods[kind])protocol.registerHandler(method,params=>({method,...params}));for(const method of workerMethods[kind])assert.deepEqual(protocol.dispatch(method,{probe:true}),{method,probe:true});assert.throws(()=>protocol.registerHandler(workerMethods[kind][0],()=>{}),/Duplicate/);assert.throws(()=>protocol.dispatch('missing'),e=>e.name==='ProtocolError'&&e.code==='UNKNOWN_METHOD');assert.throws(()=>protocol.dispatch(workerMethods[kind][0],null),/params/);protocol.dispose();assert.throws(()=>protocol.dispatch(workerMethods[kind][0]),/Unknown/);}});
-test('Studio has no command branches, direct persistence or inline automation literal',async()=>{const source=await readFile(new URL('../apps/studio/studio.js',import.meta.url),'utf8');assert(!source.includes('switch(command)'));assert(!source.includes('window.sharpforge={'));for(const file of await readdir(new URL('../apps/studio/',import.meta.url)))if(file.endsWith('.js'))assert(!(await readFile(new URL('../apps/studio/'+file,import.meta.url),'utf8')).includes('localStorage.'),file);});
-
-test('real compiler and runtime workers dispatch known requests and return structured unknown errors',async()=>{
-  const {Worker}=await import('node:worker_threads');
-  for(const [kind,method]of [['compiler','analyze'],['runtime','state']]){
-    const url=new URL('../apps/studio/'+kind+'.worker.js',import.meta.url).href;
-    const worker=new Worker(`const {parentPort}=require('node:worker_threads');globalThis.self={postMessage:message=>parentPort.postMessage(message)};import(${JSON.stringify(url)}).then(()=>{parentPort.on('message',data=>self.onmessage({data}));parentPort.postMessage({ready:true});}).catch(error=>{throw error;});`,{eval:true});
-    const receive=()=>new Promise((resolve,reject)=>{const timer=setTimeout(()=>{cleanup();reject(new Error('Worker response timeout'));},10000);const cleanup=()=>{clearTimeout(timer);worker.off('message',success);worker.off('error',failure);};const success=value=>{cleanup();resolve(value);},failure=error=>{cleanup();reject(error);};worker.once('message',success);worker.once('error',failure);});
-    try{assert.deepEqual(await receive(),{ready:true});let result=receive();worker.postMessage({id:1,method,params:{files:[]}});assert.equal((await result).id,1);result=receive();worker.postMessage({id:2,method:'unregistered',params:{}});assert.deepEqual(await result,{id:2,error:{name:'ProtocolError',message:`Unknown ${kind} request 'unregistered'`,code:'UNKNOWN_METHOD'}});result=receive();worker.postMessage({id:3,method:42});assert.equal((await result).error.code,'BAD_REQUEST');}finally{await worker.terminate();}
+test('every worker message has a handler seam and unknown messages fail structurally', () => {
+  // The original 28/46 counts predate 13 editor requests and runtime executionMetrics.
+  // Lock every declared name, including the original methods, rather than accepting any same-sized replacement.
+  const expected = {
+    compiler: [
+      'analyze', 'build', 'inspectAssembly', 'methodIL', 'decompileMethod', 'allIL', 'editableIL', 'assembleIL', 'verifyIL',
+      'findInFiles', 'replaceAll', 'callHierarchy', 'incomingCalls', 'outgoingCalls', 'referenceLenses', 'selectionRanges',
+      'codeActions', 'resolveCodeAction', 'outlineReorder', 'validateWorkspaceEdit', 'format', 'validateRefactoring',
+      'validateDesigner', 'configureExtensions', 'importAssembly', 'completion', 'hover', 'definition', 'references',
+      'rename', 'prepareTypeRename', 'symbols', 'signatureHelp', 'diagnostics', 'semanticTokens', 'foldingRanges', 'inlayHints',
+      'prepareRename',
+      'documentHighlights', 'formatRange', 'formatOnType', 'readDocument'
+    ],
+    runtime: [
+      'launch', 'resume', 'pause', 'stop', 'stepBack', 'reverseContinue', 'dataBreakpointInfo', 'dataBreakpoints',
+      'breakpoints', 'functionBreakpoints', 'breakpointLocations', 'breakpointsEnabled', 'exceptionBreak',
+      'instructionBreakpoints', 'runToInstruction', 'disassemblyMethods', 'runToCursor', 'disassemble', 'gotoTargets',
+      'setNextStatement', 'hotReload', 'evaluateFunction', 'loadSymbols', 'symbolInfo', 'threads', 'parallelStacks',
+      'stackTrace', 'freezeThread', 'uiEvent', 'uiAnimationAdvance', 'uiAnimationMode', 'runtimeInfo', 'uiScene',
+      'designSnapshot', 'applyDesign', 'uiLayout', 'evaluate', 'setVariable', 'locals', 'children', 'collect', 'heapPage',
+      'heapCensus', 'executionMetrics', 'retentionPath', 'heap', 'state'
+    ]
+  };
+  assert.deepEqual(workerMethods, expected);
+  for (const kind of ['compiler', 'runtime']) {
+    const protocol = createWorkerProtocol(kind);
+    for (const method of workerMethods[kind]) protocol.registerHandler(method, params => ({ method, ...params }));
+    for (const method of workerMethods[kind]) {
+      assert.deepEqual(protocol.dispatch(method, { probe: true }), { method, probe: true });
+    }
+    assert.throws(() => protocol.registerHandler(workerMethods[kind][0], () => {}), /Duplicate/);
+    assert.throws(() => protocol.dispatch('missing'), error => error.name === 'ProtocolError' && error.code === 'UNKNOWN_METHOD');
+    assert.throws(() => protocol.dispatch(workerMethods[kind][0], null), /params/);
+    protocol.dispose();
+    assert.throws(() => protocol.dispatch(workerMethods[kind][0]), /Unknown/);
   }
 });

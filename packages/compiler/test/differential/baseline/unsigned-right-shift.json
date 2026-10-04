@@ -1,6 +1,7 @@
 {
   "unsigned-right-shift/cs0019-operand-types": ["diagnostics", "warnings"],
-  "unsigned-right-shift/int-operands": ["diagnostics", "warnings", "bytecode", "cil"],
+  "unsigned-right-shift/int-operands": ["diagnostics", "warnings", "bytecode", "cil", "directCil"],
   "unsigned-right-shift/unsigned-right-shift-in-csharp-10": ["diagnostics", "warnings"],
-  "unsigned-right-shift/user-defined-operator": ["diagnostics", "warnings", "bytecode", "cil"]
+  "unsigned-right-shift/user-defined-operator": ["diagnostics", "warnings", "bytecode", "cil", "directCil"],
+  "unsigned-right-shift/wide-and-unsigned-operands": ["diagnostics", "warnings", "bytecode", "cil", "directCil"]
 }

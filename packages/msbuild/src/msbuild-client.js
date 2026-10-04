@@ -49,9 +49,9 @@ export class MSBuildClient {
   }
 
   workspace() { return this.request('/workspace'); }
-  read(path) { return this.request('/file?path=' + encodeURIComponent(path)); }
+  read(path, {signal} = {}) { return this.request('/file?path=' + encodeURIComponent(path), {signal}); }
   inspectItem(path) { return this.request('/item?path=' + encodeURIComponent(path)); }
-  binary(path) { return this.request('/binary?path=' + encodeURIComponent(path), { binary: true }); }
+  binary(path, {signal} = {}) { return this.request('/binary?path=' + encodeURIComponent(path), {binary: true, signal}); }
   mutate(operations) { return this.request('/mutations', { method: 'POST', body: { operations } }); }
   undoMutation(token) { return this.request('/undo-mutation', { method: 'POST', body: { token } }); }
   save(changes) { return this.request('/files', { method: 'POST', body: { changes } }); }

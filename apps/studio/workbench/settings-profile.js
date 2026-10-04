@@ -1,5 +1,6 @@
 import {button, checkbox, element} from './ui.js';
 import {settingsDefaults} from './settings-store.js';
+import {showFirstRun} from './first-run.js';
 
 export function showSettingsProfile({dialogs, settings, download, onError}) {
   const selected = new Set(Object.keys(settingsDefaults));
@@ -30,7 +31,13 @@ export function showSettingsProfile({dialogs, settings, download, onError}) {
     actions: [{label: 'Import previewed changes', run: () => {
       if (!preview) throw new Error('Choose a valid settings profile first');
       const values = Object.fromEntries(Object.entries(preview.settings).filter(([category]) => selected.has(category)));
-      settings.apply(values);
+      settings.apply(values, {clearWorkspaceOverrides: true});
+      return true;
+    }}, {label: 'Choose development environment…', run: () => {
+      showFirstRun({dialogs, settings, force: true});
+      return true;
+    }}, {label: 'Reset selected categories', run: () => {
+      settings.reset([...selected]);
       return true;
     }}]
   });

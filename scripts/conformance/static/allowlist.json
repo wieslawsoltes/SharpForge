@@ -13,7 +13,7 @@
       "operation": "dynamic-import",
       "count": 1,
       "sha256": "516ee05d987fe0e7871fcabfa1c601a080afe626d1ef531b0e9ce404f5416123",
-      "reason": "Task List lazily imports the literal @sharpforge/syntax public entry to lex comment trivia; document text and configured tokens never select a module or become JavaScript."
+      "reason": "Task List lazily imports the literal @sharpforge/syntax public entry to lex comment trivia; document text and configured tokens never select a module or become JavaScript. This hash binds the final reviewed source bytes after main synchronization."
     },
     {
       "path": "apps/studio/workbench/lazy-tools.js",
@@ -23,32 +23,32 @@
       "reason": "The closed Studio loader table imports five literal adjacent designer, assembly, disassembly, MSBuild and wizard modules on activation; tool IDs select trusted callbacks, never module paths supplied by workspace data."
     },
     {
+      "path": "apps/studio/workbench/metadata/framework-model.js",
+      "operation": "dynamic-import",
+      "count": 1,
+      "sha256": "b6cfc1a3d9b4a4c56a898ce1e7ddb19624fe00d27a05583484c23f9811cce8fd",
+      "reason": "The shared metadata adapter lazily imports the literal @sharpforge/framework public entry to build registered framework type and member records; symbol names only query that registry and never select executable module paths."
+    },
+    {
+      "path": "apps/studio/workbench/metadata/intrinsic-model.js",
+      "operation": "dynamic-import",
+      "count": 1,
+      "sha256": "8877a98405a923ec7ca6840c97d95f3fb933545fe0155eed2c730419e87e15e9",
+      "reason": "The shared intrinsic metadata adapter lazily imports the literal @sharpforge/bytecode public entry and projects only actual registered descriptors from BuiltinMap.values() through the pure builtinMemberShape, builtinOwners and builtinParameterType contract; source identifiers and assembly data never select or execute JavaScript modules."
+    },
+    {
       "path": "apps/studio/workbench/shell-models.js",
       "operation": "dynamic-import",
       "count": 2,
-      "sha256": "01c850fd334f94552e12ee8b64b1cd950591cdf6086ad4c5f745ef2aed3a2e2b",
+      "sha256": "74722e894e5e1dd1c79675a85c860c7cb7437da286f1c98294dede42ab9653e3",
       "reason": "Toolbox providers lazily import the literal @sharpforge/editor and @sharpforge/designer public entries for bundled snippets and design-control metadata; user snippet text is editor data, never a module specifier."
     },
     {
       "path": "apps/studio/workbench/shell-tools.js",
       "operation": "dynamic-import",
       "count": 20,
-      "sha256": "d4457d7ed08a636d95931982aea290fa0781fdb5e3ffcd4dd109cef28dbe86fc",
+      "sha256": "817a847519f65cef47f98cefdef4b8a1d676f5daf3871c3c198127edf2d26f78",
       "reason": "The reviewed tool-ID map contains twenty literal imports confined to the adjacent tools directory; instance IDs select fixed loaders and never form a module specifier. Built assets resolve from the same origin under the shipped CSP."
-    },
-    {
-      "path": "apps/studio/workbench/tools/code-definition.js",
-      "operation": "dynamic-import",
-      "count": 1,
-      "sha256": "9613ca4b824ba6751f4045d67f2ca60dc97da7206fe601547424de3a43aa2d85",
-      "reason": "The read-only Code Definition fallback imports the literal @sharpforge/framework public entry and renders registered contract metadata; names from source are lookup keys, not executable module paths."
-    },
-    {
-      "path": "apps/studio/workbench/tools/object-browser.js",
-      "operation": "dynamic-import",
-      "count": 1,
-      "sha256": "2940fd6c1555d475b19ec49c55c6b055e37f3b181e675072472a4e25e2fb956e",
-      "reason": "Object Browser imports the literal @sharpforge/framework public entry to display registered types and contracts; inspected assembly bytes remain metadata and never select or execute JavaScript modules."
     },
     {
       "path": "packages/bcl-core/scripts/benchmark.js",
@@ -152,8 +152,8 @@
       "path": "packages/editor/smoke.mjs",
       "operation": "dynamic-import",
       "count": 3,
-      "sha256": "20b3a66c4097d7b1e6362d590e2f8d8f75503f5a5611dab4c0d82bce70586569",
-      "reason": "Package smoke test imports fixed workspace or Node modules in its bounded test phases."
+      "sha256": "e7bd01267696b7c96f83784eabf229fa10d6d91ef4be531e033626884fdd38c3",
+      "reason": "The isolated package smoke test imports only literal node:fs and @sharpforge/editor entries in three ordered phases. Modular CSS is read as package data and the six-profile assertion checks the bundled ReSharper-like profile; no source, CSS import text or operator input selects executable JavaScript modules."
     },
     {
       "path": "packages/extensions/smoke.mjs",
@@ -362,92 +362,4 @@
       "path": "tests/a00-03-studio-registries.test.js",
       "operation": "dynamic-import",
       "count": 2,
-      "sha256": "4b7ceed2e4498079563c7ca4c1e577c95451c1fe721eca3d5bdd0f7f335c60ed",
-      "reason": "Registry test enumerates trusted checked-in Studio automation modules and imports the fixed Node worker module."
-    },
-    {
-      "path": "tests/a00-integration-contracts.test.js",
-      "operation": "dynamic-import",
-      "count": 3,
-      "sha256": "007c94cc9a7e9baef77d27a089f3ad90c3370d07a5059a317626cb246b6e6cd1",
-      "reason": "Test imports fixed checked-in workspace or Node modules; no managed or remote source is evaluated as host JavaScript."
-    },
-    {
-      "path": "tests/benchmarks/cil-pe.mjs",
-      "operation": "dynamic-import",
-      "count": 1,
-      "sha256": "e21b892d6adfad303b497ca6b85cf6f1012aaedec61289b4b1d9a592f01cd896",
-      "reason": "PE benchmark imports an operator-selected trusted CIL implementation, defaulting to the workspace package."
-    },
-    {
-      "path": "tests/benchmarks/cil-signatures.mjs",
-      "operation": "dynamic-import",
-      "count": 2,
-      "sha256": "2db9238d68c510f869a17be100323c03774ef2828326c1ab7546d40225ec8790",
-      "reason": "Signature benchmark imports an operator-selected trusted implementation or the fixed workspace CIL package."
-    },
-    {
-      "path": "tests/conformance/flaky/detect.test.js",
-      "operation": "dynamic-import",
-      "sha256": "e2eec7d15bd893248cedcf1b3efc3824359a9fdbf0f5ea134ca69d95ec71efc2",
-      "count": 3,
-      "reason": "Regression imports fixed Node filesystem, OS and path modules to create an isolated fail-then-pass fixture."
-    },
-    {
-      "path": "tests/conformance/qualification.test.js",
-      "operation": "dynamic-import",
-      "count": 1,
-      "sha256": "781c4708c6fa6185705256a2ca7e3077edc094fa190f512b92db15363605b441",
-      "reason": "Test imports fixed checked-in workspace or Node modules; no managed or remote source is evaluated as host JavaScript."
-    },
-    {
-      "path": "tests/fixtures/a03-pe/oracle/legacy.js",
-      "operation": "dynamic-import",
-      "count": 1,
-      "sha256": "27b6522d243758a974d62eec74445356853d68751eafdaf0f13e9f0814c30dcb",
-      "reason": "Historical PE oracle generator loads the explicitly selected trusted implementation used to capture provenance."
-    },
-    {
-      "path": "tests/fixtures/compiler-constant-conversion/capture.mjs",
-      "operation": "dynamic-import",
-      "count": 1,
-      "sha256": "bc515d6b2e276b2c40dbb76a23c67ca92c023fcf1cb8f51670e3fb052aea7e9f",
-      "reason": "Oracle capture imports fixed oracle modules from the operator-selected trusted checkout."
-    },
-    {
-      "path": "tests/msbuild-examples.test.js",
-      "operation": "dynamic-import",
-      "count": 1,
-      "sha256": "dd16f281206623069647047ed09edc3be93710e094bf0e03f43adbbf65282cb0",
-      "reason": "Test imports fixed checked-in workspace or Node modules; no managed or remote source is evaluated as host JavaScript."
-    },
-    {
-      "path": "tests/network14.test.js",
-      "operation": "dynamic-import",
-      "count": 1,
-      "sha256": "36d871fb95a12e80cd1219b3b04d0a8887ddd1cb5a374382bace5cc2fda0c6b6",
-      "reason": "Test imports fixed checked-in workspace or Node modules; no managed or remote source is evaluated as host JavaScript."
-    },
-    {
-      "path": "tests/protocol.test.js",
-      "operation": "dynamic-import",
-      "count": 1,
-      "sha256": "79d08e4426e364a0aa6b52a05e65238f3d2b4a87d272debef7a8d31bc52c0d47",
-      "reason": "Test imports fixed checked-in workspace or Node modules; no managed or remote source is evaluated as host JavaScript."
-    },
-    {
-      "path": "tests/support/engine-parity-fixtures.js",
-      "operation": "dynamic-import",
-      "count": 3,
-      "sha256": "2a4d51e38ebd471b91d4532de016c4fbc57e7fbffe5de6e91356b3fcf5977750",
-      "reason": "Parity fixture registry loads explicitly selected trusted fixture modules; fixture paths are host code, not managed input."
-    },
-    {
-      "path": "tests/workspace-io.test.js",
-      "operation": "dynamic-import",
-      "count": 3,
-      "sha256": "62dca80988a0899c6e2c93143435f7da4a1644d49db94ce1c7225a172d93e979",
-      "reason": "Test imports fixed checked-in workspace or Node modules; no managed or remote source is evaluated as host JavaScript."
-    }
-  ]
-}
+      "sha256": "108955af82f46648fb3c79443b36ad484d945f1a1b4bbd442ef7406769bb4445",

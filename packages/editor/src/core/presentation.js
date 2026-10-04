@@ -1,6 +1,7 @@
 import {defaultEditorOptions, editorOptions} from '../options.js';
 import {transformOffset} from '../selections.js';
-import {resolveEditorConfig, saveTextEdits} from '../editorconfig.js';
+import {resolveEditorConfig} from '../editorconfig.js';
+import {prepareEditorSave} from './save-preparation.js';
 
 /** View options and decorations are independently replaceable contributions, never model text. */
 export class EditorPresentation {
@@ -133,11 +134,6 @@ export class EditorPresentation {
     editor.endOfLineExplicit = Object.hasOwn(configured, 'endOfLine') || Object.hasOwn(editor.optionDefaults ?? {}, 'endOfLine');
     return editor.options;
   }
-  prepareSave() {
-    const {editor} = this;
-    const edits = saveTextEdits(editor.model, {...editor.options, normalizeLineEndings: editor.endOfLineExplicit});
-    if (edits.length) editor.applyEdits(edits, {source: 'save-normalize', undoStop: true});
-    return editor.model.snapshot();
-  }
+  prepareSave(options) { return prepareEditorSave(this.editor, options); }
   markSaved() { this.editor.model.markSaved(); this.editor.changeTracking.markSaved(); this.editor.sync(); }
 }

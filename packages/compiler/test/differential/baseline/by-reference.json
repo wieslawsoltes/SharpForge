@@ -1,4 +1,4 @@
 {
   "by-reference/by-reference-with-closures-loops-and-local-functions": ["diagnostics", "warnings", "bytecode", "cil"],
-  "by-reference/ref-out-in-parameters-share-the-variable": ["diagnostics", "warnings", "bytecode", "cil"]
+  "by-reference/ref-out-in-parameters-share-the-variable": ["diagnostics", "warnings", "bytecode", "cil", "directCil"]
 }
