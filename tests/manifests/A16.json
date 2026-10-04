@@ -5,7 +5,7 @@
     "tests/winui-runtime.test.js",
     "tests/winui-contract-ids.test.js",
     "tests/a16-*.test.js",
-    "tests/project14-control-state.test.js"
+    "tests/project14-*.test.js"
   ],
   "browserScripts": [
     "tests/browser_release10_test.py"
