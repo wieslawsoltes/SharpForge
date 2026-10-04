@@ -3,6 +3,16 @@
  */
 import {DiagnosticId} from '../../diagnostics/codes.js';
 import { tupleElements, tupleLiteralNames, tupleNameProblems, tupleTypeOf } from '../tuples.js';
+import { stripNullable } from '../../conversions/nullable.js';
+
+const literalConversionKinds = new Set(['ImplicitTupleLiteral', 'ExplicitTupleLiteral']);
+
+/** The element conversions of a tuple literal conversion, also under the wrapping of a nullable target; else null. */
+function elementConversionsOf(conversion) {
+  if (literalConversionKinds.has(conversion?.kind)) return conversion.underlying ?? null;
+  const inner = conversion?.underlying;
+  return inner && !Array.isArray(inner) && literalConversionKinds.has(inner.kind) ? (inner.underlying ?? null) : null;
+}
 
 const isTupleType = type => !!type?.isTupleType && !type.isDefinition;
 const isTupleOperand = e => e.kind === 'Tuple' || isTupleType(e.type);
@@ -22,6 +32,24 @@ export const TupleBinding = Base =>
         types = elements.map(e => e.type);
       const type = typed && elements.length >= 2 ? tupleTypeOf(this.core.bridge, types, names, inferred) : null;
       return this.node('Tuple', syntax, type, { elements, names, form: 'tupleLiteral' });
+    }
+    /**
+     * A tuple literal converted to a tuple type gives its lambda elements their delegate types: in
+     * `(Type, Func<int, bool>) pair = (typeof(int), n => n > 0)` the lambda is bound as the second element's type.
+     * (The other elements convert where the literal is built; a lambda has no body until it knows its delegate.)
+     */
+    finishTupleLiteralElements(literal, target, conversion) {
+      const parts = elementConversionsOf(conversion);
+      if (literal.kind !== 'Tuple' || !parts) return;
+      const types = tupleElements(stripNullable(target));
+      literal.elements.forEach((element, index) => {
+        const type = types[index]?.type;
+        if (!type) return;
+        if (element.form === 'lambda' && !element.hasErrors) {
+          element.boundAs = type;
+          this.finishLambda(element, type);
+        } else this.finishTupleLiteralElements(element, type, parts[index]);
+      });
     }
     /**
      * CS8383: an element name written in a tuple literal is ignored by `==` and `!=` unless the element on the other

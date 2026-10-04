@@ -8,13 +8,23 @@
  */
 import { SymbolKind, TypeKind } from '../../symbols/types.js';
 
-const isStaticVirtualWithBody = method => method.kind === SymbolKind.Method && method.isStatic && !!method.isVirtual && !method.isAbstract;
+const IMPLEMENTABLE_KINDS = new Set([SymbolKind.Method, SymbolKind.Property, SymbolKind.Event]);
 
-function sameSignature(declared, candidate) {
-  if (candidate.kind !== SymbolKind.Method || !candidate.isStatic || candidate.parameters.length !== declared.parameters.length) return false;
+const isStaticVirtualWithBody = member => IMPLEMENTABLE_KINDS.has(member.kind) && member.isStatic && !!member.isVirtual && !member.isAbstract;
+
+function sameMethodSignature(declared, candidate) {
+  if (candidate.parameters.length !== declared.parameters.length) return false;
   if ((candidate.typeParameters?.length ?? 0) !== (declared.typeParameters?.length ?? 0)) return false;
   if (!candidate.returnType.equals(declared.returnType)) return false;
   return candidate.parameters.every((parameter, index) => parameter.type.equals(declared.parameters[index].type));
+}
+
+/** Whether a static member of the type is the implementation of `declared`: the same kind, name (by lookup) and types. */
+function sameSignature(declared, candidate) {
+  if (candidate.kind !== declared.kind || !candidate.isStatic) return false;
+  if (declared.kind === SymbolKind.Method) return sameMethodSignature(declared, candidate);
+  // A property or an event: its accessors are paired by the writer of the MethodImpl rows.
+  return candidate.type.equals(declared.type);
 }
 
 /** Every interface of a type, with the interfaces those inherit. */
@@ -30,9 +40,9 @@ function allInterfacesOf(type) {
 }
 
 /**
- * The static virtual interface members with a body that a type implements itself.
+ * The static virtual interface members with a body (methods, properties and events) that a type implements itself.
  * @param type a source class or struct
- * @returns {[object, object][]} `[declared, implementing]` method pairs; `declared` is a member of the constructed interface
+ * @returns {[object, object][]} `[declared, implementing]` member pairs; `declared` is a member of the constructed interface
  */
 export function staticVirtualImplementations(type) {
   if (type.typeKind !== TypeKind.Class && type.typeKind !== TypeKind.Struct) return [];

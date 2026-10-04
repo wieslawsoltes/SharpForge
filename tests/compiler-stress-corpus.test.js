@@ -16,8 +16,11 @@ import {
 // print the pinned output. The programs that do so are recorded in dotnet-baseline.json; this file runs exactly those
 // (the others are known failures the baseline does not list), and is skipped where no .NET SDK is installed.
 
+// The programs reduced from them (fixtures/reduced/) run on the same axis.
+
 const STRESS = /^stress-[a-z]+\//,
-  fixtures = loadFixtures().filter(fixture => STRESS.test(fixture.id)),
+  programs = loadFixtures().filter(fixture => fixture.referencesOnly),
+  fixtures = programs.filter(fixture => STRESS.test(fixture.id)),
   pinned = loadPinned(),
   baseline = loadDotnetBaseline();
 
@@ -47,14 +50,14 @@ const pack = loadReferencePack(),
   sdk = pack ? sdkVersion(dotnet) : null,
   skip = !pack ? 'no .NET reference pack is installed' : !sdk ? `no .NET host ('${dotnet}') to run the assemblies on` : false;
 
-test('A02-T30 stress family: every recorded program prints the pinned Roslyn output on real .NET', { skip }, t => {
+test('A02-T30 stress and reduced programs: every recorded one prints the pinned Roslyn output on real .NET', { skip }, t => {
   const recorded = new Set(baseline.references),
     scratch = openDotnetScratch({ dotnet, sdk, pack }),
     failures = [];
   let ran = 0;
   try {
     const context = scratch.context('references');
-    for (const fixture of fixtures) {
+    for (const fixture of programs) {
       if (!recorded.has(fixture.id)) continue;
       const row = runFixtureOnDotnet(fixture, pinned.results.get(fixture.id), context);
       ran++;
@@ -63,6 +66,6 @@ test('A02-T30 stress family: every recorded program prints the pinned Roslyn out
   } finally {
     scratch.close();
   }
-  t.diagnostic(`${ran} of ${fixtures.length} stress programs ran on .NET ${sdk} (reference pack ${pack.pack.version})`);
+  t.diagnostic(`${ran} of ${programs.length} programs ran on .NET ${sdk} (reference pack ${pack.pack.version})`);
   assert.deepEqual(failures, []);
 });
