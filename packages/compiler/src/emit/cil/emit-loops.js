@@ -92,9 +92,15 @@ export const LoopEmission = Base =>
         il.mark(body, 0);
         pushEnumerator();
         this.callMethod(current.getMethod, { receiver });
-        // `Current` of a span enumerator returns the element by reference; the iteration variable is its value.
-        if (current.refKind && current.refKind !== RefKind.None) this.loadIndirect(current.type);
-        this.iterationValue(node, current.type);
+        const returnsReference = !!current.refKind && current.refKind !== RefKind.None,
+          aliases = returnsReference && !!node.local.refKind && node.local.refKind !== RefKind.None;
+        // `foreach (ref var x in ...)`: the variable is the reference `Current` returns (the slot is by-reference).
+        if (aliases) il.emit('stloc', this.slotOf(node.local));
+        else {
+          // `Current` of a span enumerator returns the element by reference; the iteration variable is its value.
+          if (returnsReference) this.loadIndirect(current.type);
+          this.iterationValue(node, current.type);
+        }
         this.withJumpTargets({ breakLabel: end, continueLabel: test }, () => this.statement(node.body));
         il.mark(test);
         pushEnumerator();

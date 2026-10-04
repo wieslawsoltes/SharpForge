@@ -25,6 +25,8 @@ const isSource = symbol => {
   return false;
 };
 
+const nativeIntegerKeywords = new Set(['nint', 'nuint']);
+
 /** Class mixin: Simple names and member access: locals, parameters, members of enclosing types, types, namespaces, */
 export const NameBinding = Base =>
   class extends Base {
@@ -91,6 +93,10 @@ export const NameBinding = Base =>
         }
         if (members.length)
           return this.memberResult(members, syntax, null, members[0].containingType, name, typeArguments, options, false) ?? this.bad(syntax);
+      }
+      // `nint` and `nuint` are contextual keywords: types wherever nothing else has the name (`nint.Size`).
+      if (!symbol && !arity && nativeIntegerKeywords.has(name)) {
+        return this.node('TypeExpression', syntax, null, { referencedType: this.bindType(syntax).type });
       }
       if (!symbol && !arity) {
         const builtin = this.d.executionBuiltin?.(name);

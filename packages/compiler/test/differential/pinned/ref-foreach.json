@@ -1,0 +1,5 @@
+{"roslyn":{"version":"5.3.0.0","informationalVersion":"5.3.0-2.26153.122+4d3023de605a78ba3e59e50c657eed70f125c68a","runtime":"10.0.5","references":"Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0","options":"OutputKind.ConsoleApplication, default warning level, nullable disabled, no implicit usings, invariant culture"},"shape":"diagnostics are [code, startOffset, length, severity]; output is stdout with \\n newlines","fixtures":{
+  "ref-foreach/iteration-variables-alias-the-elements":{"hash":"eb107785d72a5a90","kind":"output","langVersion":"14.0","diagnostics":[],"output":"22 24 26 \n81\n23 25 26 \n"},
+  "ref-foreach/ref-needs-a-current-that-returns-by-reference":{"hash":"a758cb06b62506d1","kind":"diagnostics","langVersion":"14.0","diagnostics":[["CS1510",985,5,"error"],["CS1510",1027,4,"error"],["CS1510",1077,5,"error"],["CS1510",1136,6,"error"],["CS8331",1196,12,"error"],["CS1656",1268,1,"error"],["CS1656",1324,1,"error"],["CS1656",1369,1,"error"],["CS1656",1441,1,"error"]]},
+  "ref-foreach/ref-foreach-in-7-2":{"hash":"b77da9cb0b177a61","kind":"diagnostics","langVersion":"7.2","diagnostics":[["CS8320",855,7,"error"],["CS8320",902,16,"error"]]}
+}}
