@@ -19,6 +19,7 @@ import {loadStudioWorkspace} from './workbench/studio-workspace-loader.js';
 import {WorkspaceLoads} from './workbench/workspace-loads.js';
 import {StudioWorkspaceInputs} from './workbench/studio-workspace-inputs.js';
 import {createStudioMetadataReader} from './workbench/studio-metadata-reference.js';
+import {createStudioDiskObserver} from './workbench/studio-disk-observer.js';
 import {commitStudioExplorerWorkspace} from './workbench/studio-explorer-workspace.js';
 import {importStudioExistingProject} from './workbench/studio-existing-project.js';
 import {studioSourceRecord} from './workbench/studio-source-records.js';
@@ -122,6 +123,8 @@ const execution=new StudioExecution({services:workbenchServices,projects:project
 const studioSave=new StudioSave({documents:workbenchServices.documents,state:()=>state,nativeBuild:()=>nativeBuild,
  saveRecovery:saveLocal,canRecover:()=>canRecoverStudioWorkspace(workbenchServices.documents,state.extraFiles),
  saveAs:(snapshot,options)=>saveStudioSourceAs(snapshot,{...options,download}),notify:toast,refresh:()=>{renderTabs();renderTree();}});
+const diskObserver=createStudioDiskObserver({documents:workbenchServices.documents,state:()=>state,nativeBuild:()=>nativeBuild,
+ target:uri=>studioSave.target(uri),confirm:message=>globalThis.confirm(message)});
 function saveSourceRecord(record){return studioSave.source(record);}
 
 try{const preferences=JSON.parse(storage.getItem(storageKeys.editor)??'{}');if(EDITOR_KEYMAPS.some(k=>k.id===preferences.keymap))state.keymap=preferences.keymap;}catch{}
@@ -755,12 +758,8 @@ const surfaces=mountStudioShell({document,commands:commandRegistry,services:work
   else if(state.projectSystem){const records=explorerContext().records,entry=state.projectSystem.solution.path;
    state.projectSystem=new ProjectSystem(records,{configuration,maxFiles:20000});state.projectSnapshot=state.projectSystem.load(entry);}
   projectServices.sync();renderWorkspace();saveLocal();},
- readDisk:async uri=>{if(state.nativeMode)return nativeBuild.client?.read(uri);
-  const handle=state.disk?.handles.get(uri);return handle?(await handle.getFile()).text():null;},
- reloadDocument:async(uri,text,{expectedVersion,confirmDirty})=>{const record=workbenchServices.documents.require(uri);
-  if(record.version!==expectedVersion)throw new Error('The document changed after the disk notification');
-  if(confirmDirty&&record.dirty&&!confirm('Discard editor changes in '+uri+' and reload from disk?'))return false;
-  workbenchServices.documents.update(uri,text,{version:expectedVersion});workbenchServices.documents.markSaved(uri);return true;},
+ readDisk:(uri,options)=>diskObserver.read(uri,options),
+ reloadDocument:(uri,text,options)=>diskObserver.reload(uri,text,options),
  restoreFiles:files=>{const edits=files.filter(file=>workbenchServices.documents.get(file.uri)).map(file=>({uri:file.uri,start:0,
   end:workbenchServices.documents.models.get(file.uri).buffer.length,newText:file.text,version:workbenchServices.documents.get(file.uri).version}));return applyEdits(edits);}
 });
@@ -790,7 +789,7 @@ let studioDisposed=false;
 window.addEventListener('pagehide',event=>{
  if(event.persisted||studioDisposed)return;studioDisposed=true;
  clearTimeout(state.analyzeTimer);clearTimeout(state.saveTimer);
- const dispose=[()=>workspaceInputs.dispose(),()=>workspaceLoads.dispose(),()=>studioSave.dispose(),
+ const dispose=[()=>workspaceInputs.dispose(),()=>workspaceLoads.dispose(),()=>diskObserver.dispose(),()=>studioSave.dispose(),
   ()=>backgroundTasks.dispose(),()=>disconnectTestLenses(),()=>testCodeLens.dispose(),disconnectStartup,
   ()=>advancedTools.dispose(),()=>navigation.dispose(),()=>watchWindows.dispose(),()=>explorerActions.dispose(),
   ()=>solutionExplorer.dispose?.(),()=>sessionUI.dispose(),()=>studioKeyboard.dispose(),()=>workbenchShell.dispose(),

@@ -40,6 +40,12 @@ late callbacks from repopulating targets or marking a replacement document saved
 Native save completion additionally requires the captured client and backend. Native Save As is not
 advertised through the browser picker because the native host owns its destination policy.
 
+`StudioDiskObserver` reads the effective Save As target using its known encoding and an 8,000,000-code-unit
+automatic watch limit. FileWatch actions retain the exact document and observation token. Reload checks
+the current file again, commits source and encoding metadata through `DocumentService.reload`, and accepts
+the matching disk baseline on the same save queue before notifications. A following save therefore uses
+the new baseline; an obsolete prompt cannot overwrite a different record or destination.
+
 Explorer operations preserve unchanged source models and their clean baselines. Resource renames and
 project XML edits pass through one validated transaction, retain file-operation undo state and keep the
 original disk handles separate from unsaved structural changes. Type-associated file rename is enabled
