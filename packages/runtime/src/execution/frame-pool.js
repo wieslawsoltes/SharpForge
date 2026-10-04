@@ -127,6 +127,12 @@ export function framePool(vm) {
 export function retirePooledFrame(vm, frame) { pools.get(vm)?.retire(frame); }
 export function flushFramePool(vm) { pools.get(vm)?.flush(); }
 
+/** Retired frames remain live until the enclosing return/EH callback reaches its flush. */
+export function visitRetiredFrames(vm, visit) {
+  const pending = pools.get(vm)?.pending;
+  if (pending) for (const frame of pending) visit(frame);
+}
+
 /** Derived storage never enters snapshots or survives successful restore/stop. */
 export function clearFramePool(vm) {
   pools.get(vm)?.flush();
