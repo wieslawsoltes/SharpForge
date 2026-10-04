@@ -300,3 +300,13 @@ criterion passed on Node and Chromium/Firefox/WebKit on macOS after the retained
 initial failure prompted an ASCII preflight optimization. Exact samples, host,
 reference checks and qualification limits are in `tests/fixtures/symbol-search/README.md`;
 these measurements do not imply an untested-platform or universal latency guarantee.
+
+
+`sha1(input)` reuses the existing symbols SHA-1 implementation and returns an owned
+20-byte digest without mutating the input. `@sharpforge/symbols` reexports that same
+function, preserving its byte-array/array-like input behavior and input-sized
+padding allocation. It does not impose a new byte limit or claim constant scratch
+space; bounded callers must preflight their inputs. The cross-assembly browser
+binder uses it to derive declared strong-name tokens; hashing a key does not verify
+an assembly signature. This extraction is implementation-ready, with focused
+vectors, padding boundaries and symbols compatibility tests pending the serial slot.

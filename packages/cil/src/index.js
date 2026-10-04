@@ -17,6 +17,7 @@ export {resolveExecutionField,genericTypeParts,substituteTypeArguments} from './
 export {normalizeCallType, substituteCallType, instantiateSignature, callSignatureKey,
   resolveExecutionMethod, methodGenericParameters} from './call-profile.js';
 export { sha256 } from './binary/hash.js';
+export { sha1 } from './binary/sha1.js';
 export { win32VersionFromAssembly } from './pe/version-attributes.js';
 export { decodeMarshalDescriptor, marshalDiagnosticCatalog } from './metadata/marshal-descriptors.js';
 export { linkAssemblyModules } from './pe/module-linker.js';
