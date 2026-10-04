@@ -334,7 +334,7 @@
       "path": "tests/browser_designer_gate_performance.mjs",
       "operation": "dynamic-import",
       "count": 1,
-      "sha256": "2c6363be757828c2820b6b860b2dba8bc61bacf3b3c8ff51e3f3bea56332f32f",
+      "sha256": "87af26706e34c0d549e1ea91b71d5665c10c6f423820ea608f4ce29712f682cb",
       "reason": "Browser qualification loads the fixed same-origin production layout-reference module inside the page to compare actual designer, Source VM and CIL DOM geometry; no user-selected or remote JavaScript."
     },
     {
