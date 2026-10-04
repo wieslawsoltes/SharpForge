@@ -10,5 +10,7 @@ const registry = createBclRegistry(ioModules);
 
 /** Register IO contracts in the caller's reserved block, after existing A09 entries. */
 export function registerIoModules(target) {
-  registry.register(target);
+  // Base reader/writer contracts precede every extension: their order is part of the A09 ABI.
+  registry.register(target, {group: 'bcl-io'});
+  registry.register(target, {group: 'extensions'});
 }

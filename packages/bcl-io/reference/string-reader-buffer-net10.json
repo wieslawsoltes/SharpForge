@@ -1,0 +1,1495 @@
+{
+  "schemaVersion": 1,
+  "sdk": "10.0.201",
+  "runtime": "10.0.5",
+  "framework": ".NET 10.0.5",
+  "os": "macOS 26.6.0",
+  "architecture": "Arm64",
+  "sourceSha256": "b36c0a098983afea8900039e7b2dde26fdf7eac71b8287bcd58c6458970465a7",
+  "rows": [
+    {
+      "id": "full-slice/Read",
+      "method": "Read",
+      "sourceUnits": [
+        65,
+        66,
+        67,
+        68,
+        69
+      ],
+      "bufferLength": 7,
+      "index": 1,
+      "count": 5,
+      "start": 0,
+      "disposed": false,
+      "nullBuffer": false,
+      "nullReader": false,
+      "countRead": 5,
+      "fault": null,
+      "buffer": [
+        46,
+        65,
+        66,
+        67,
+        68,
+        69,
+        46
+      ],
+      "next": -1,
+      "nextFault": null
+    },
+    {
+      "id": "full-slice/ReadBlock",
+      "method": "ReadBlock",
+      "sourceUnits": [
+        65,
+        66,
+        67,
+        68,
+        69
+      ],
+      "bufferLength": 7,
+      "index": 1,
+      "count": 5,
+      "start": 0,
+      "disposed": false,
+      "nullBuffer": false,
+      "nullReader": false,
+      "countRead": 5,
+      "fault": null,
+      "buffer": [
+        46,
+        65,
+        66,
+        67,
+        68,
+        69,
+        46
+      ],
+      "next": -1,
+      "nextFault": null
+    },
+    {
+      "id": "partial-eof/Read",
+      "method": "Read",
+      "sourceUnits": [
+        65,
+        66
+      ],
+      "bufferLength": 7,
+      "index": 2,
+      "count": 4,
+      "start": 0,
+      "disposed": false,
+      "nullBuffer": false,
+      "nullReader": false,
+      "countRead": 2,
+      "fault": null,
+      "buffer": [
+        46,
+        46,
+        65,
+        66,
+        46,
+        46,
+        46
+      ],
+      "next": -1,
+      "nextFault": null
+    },
+    {
+      "id": "partial-eof/ReadBlock",
+      "method": "ReadBlock",
+      "sourceUnits": [
+        65,
+        66
+      ],
+      "bufferLength": 7,
+      "index": 2,
+      "count": 4,
+      "start": 0,
+      "disposed": false,
+      "nullBuffer": false,
+      "nullReader": false,
+      "countRead": 2,
+      "fault": null,
+      "buffer": [
+        46,
+        46,
+        65,
+        66,
+        46,
+        46,
+        46
+      ],
+      "next": -1,
+      "nextFault": null
+    },
+    {
+      "id": "zero-count/Read",
+      "method": "Read",
+      "sourceUnits": [
+        65,
+        66,
+        67,
+        68,
+        69
+      ],
+      "bufferLength": 7,
+      "index": 2,
+      "count": 0,
+      "start": 0,
+      "disposed": false,
+      "nullBuffer": false,
+      "nullReader": false,
+      "countRead": 0,
+      "fault": null,
+      "buffer": [
+        46,
+        46,
+        46,
+        46,
+        46,
+        46,
+        46
+      ],
+      "next": 65,
+      "nextFault": null
+    },
+    {
+      "id": "zero-count/ReadBlock",
+      "method": "ReadBlock",
+      "sourceUnits": [
+        65,
+        66,
+        67,
+        68,
+        69
+      ],
+      "bufferLength": 7,
+      "index": 2,
+      "count": 0,
+      "start": 0,
+      "disposed": false,
+      "nullBuffer": false,
+      "nullReader": false,
+      "countRead": 0,
+      "fault": null,
+      "buffer": [
+        46,
+        46,
+        46,
+        46,
+        46,
+        46,
+        46
+      ],
+      "next": 65,
+      "nextFault": null
+    },
+    {
+      "id": "zero-at-end/Read",
+      "method": "Read",
+      "sourceUnits": [
+        65,
+        66,
+        67,
+        68,
+        69
+      ],
+      "bufferLength": 7,
+      "index": 7,
+      "count": 0,
+      "start": 0,
+      "disposed": false,
+      "nullBuffer": false,
+      "nullReader": false,
+      "countRead": 0,
+      "fault": null,
+      "buffer": [
+        46,
+        46,
+        46,
+        46,
+        46,
+        46,
+        46
+      ],
+      "next": 65,
+      "nextFault": null
+    },
+    {
+      "id": "zero-at-end/ReadBlock",
+      "method": "ReadBlock",
+      "sourceUnits": [
+        65,
+        66,
+        67,
+        68,
+        69
+      ],
+      "bufferLength": 7,
+      "index": 7,
+      "count": 0,
+      "start": 0,
+      "disposed": false,
+      "nullBuffer": false,
+      "nullReader": false,
+      "countRead": 0,
+      "fault": null,
+      "buffer": [
+        46,
+        46,
+        46,
+        46,
+        46,
+        46,
+        46
+      ],
+      "next": 65,
+      "nextFault": null
+    },
+    {
+      "id": "empty-source/Read",
+      "method": "Read",
+      "sourceUnits": [],
+      "bufferLength": 3,
+      "index": 1,
+      "count": 2,
+      "start": 0,
+      "disposed": false,
+      "nullBuffer": false,
+      "nullReader": false,
+      "countRead": 0,
+      "fault": null,
+      "buffer": [
+        46,
+        46,
+        46
+      ],
+      "next": -1,
+      "nextFault": null
+    },
+    {
+      "id": "empty-source/ReadBlock",
+      "method": "ReadBlock",
+      "sourceUnits": [],
+      "bufferLength": 3,
+      "index": 1,
+      "count": 2,
+      "start": 0,
+      "disposed": false,
+      "nullBuffer": false,
+      "nullReader": false,
+      "countRead": 0,
+      "fault": null,
+      "buffer": [
+        46,
+        46,
+        46
+      ],
+      "next": -1,
+      "nextFault": null
+    },
+    {
+      "id": "empty-buffer/Read",
+      "method": "Read",
+      "sourceUnits": [
+        65,
+        66,
+        67,
+        68,
+        69
+      ],
+      "bufferLength": 0,
+      "index": 0,
+      "count": 0,
+      "start": 0,
+      "disposed": false,
+      "nullBuffer": false,
+      "nullReader": false,
+      "countRead": 0,
+      "fault": null,
+      "buffer": [],
+      "next": 65,
+      "nextFault": null
+    },
+    {
+      "id": "empty-buffer/ReadBlock",
+      "method": "ReadBlock",
+      "sourceUnits": [
+        65,
+        66,
+        67,
+        68,
+        69
+      ],
+      "bufferLength": 0,
+      "index": 0,
+      "count": 0,
+      "start": 0,
+      "disposed": false,
+      "nullBuffer": false,
+      "nullReader": false,
+      "countRead": 0,
+      "fault": null,
+      "buffer": [],
+      "next": 65,
+      "nextFault": null
+    },
+    {
+      "id": "at-eof/Read",
+      "method": "Read",
+      "sourceUnits": [
+        65,
+        66,
+        67,
+        68,
+        69
+      ],
+      "bufferLength": 3,
+      "index": 1,
+      "count": 2,
+      "start": 5,
+      "disposed": false,
+      "nullBuffer": false,
+      "nullReader": false,
+      "countRead": 0,
+      "fault": null,
+      "buffer": [
+        46,
+        46,
+        46
+      ],
+      "next": -1,
+      "nextFault": null
+    },
+    {
+      "id": "at-eof/ReadBlock",
+      "method": "ReadBlock",
+      "sourceUnits": [
+        65,
+        66,
+        67,
+        68,
+        69
+      ],
+      "bufferLength": 3,
+      "index": 1,
+      "count": 2,
+      "start": 5,
+      "disposed": false,
+      "nullBuffer": false,
+      "nullReader": false,
+      "countRead": 0,
+      "fault": null,
+      "buffer": [
+        46,
+        46,
+        46
+      ],
+      "next": -1,
+      "nextFault": null
+    },
+    {
+      "id": "existing-cursor/Read",
+      "method": "Read",
+      "sourceUnits": [
+        65,
+        66,
+        67,
+        68,
+        69
+      ],
+      "bufferLength": 5,
+      "index": 1,
+      "count": 3,
+      "start": 2,
+      "disposed": false,
+      "nullBuffer": false,
+      "nullReader": false,
+      "countRead": 3,
+      "fault": null,
+      "buffer": [
+        46,
+        67,
+        68,
+        69,
+        46
+      ],
+      "next": -1,
+      "nextFault": null
+    },
+    {
+      "id": "existing-cursor/ReadBlock",
+      "method": "ReadBlock",
+      "sourceUnits": [
+        65,
+        66,
+        67,
+        68,
+        69
+      ],
+      "bufferLength": 5,
+      "index": 1,
+      "count": 3,
+      "start": 2,
+      "disposed": false,
+      "nullBuffer": false,
+      "nullReader": false,
+      "countRead": 3,
+      "fault": null,
+      "buffer": [
+        46,
+        67,
+        68,
+        69,
+        46
+      ],
+      "next": -1,
+      "nextFault": null
+    },
+    {
+      "id": "utf16-units/Read",
+      "method": "Read",
+      "sourceUnits": [
+        0,
+        55357,
+        56832,
+        55296,
+        88,
+        56320,
+        13,
+        10
+      ],
+      "bufferLength": 10,
+      "index": 1,
+      "count": 8,
+      "start": 0,
+      "disposed": false,
+      "nullBuffer": false,
+      "nullReader": false,
+      "countRead": 8,
+      "fault": null,
+      "buffer": [
+        46,
+        0,
+        55357,
+        56832,
+        55296,
+        88,
+        56320,
+        13,
+        10,
+        46
+      ],
+      "next": -1,
+      "nextFault": null
+    },
+    {
+      "id": "utf16-units/ReadBlock",
+      "method": "ReadBlock",
+      "sourceUnits": [
+        0,
+        55357,
+        56832,
+        55296,
+        88,
+        56320,
+        13,
+        10
+      ],
+      "bufferLength": 10,
+      "index": 1,
+      "count": 8,
+      "start": 0,
+      "disposed": false,
+      "nullBuffer": false,
+      "nullReader": false,
+      "countRead": 8,
+      "fault": null,
+      "buffer": [
+        46,
+        0,
+        55357,
+        56832,
+        55296,
+        88,
+        56320,
+        13,
+        10,
+        46
+      ],
+      "next": -1,
+      "nextFault": null
+    },
+    {
+      "id": "split-surrogate/Read",
+      "method": "Read",
+      "sourceUnits": [
+        55357,
+        56832
+      ],
+      "bufferLength": 3,
+      "index": 1,
+      "count": 1,
+      "start": 0,
+      "disposed": false,
+      "nullBuffer": false,
+      "nullReader": false,
+      "countRead": 1,
+      "fault": null,
+      "buffer": [
+        46,
+        55357,
+        46
+      ],
+      "next": 56832,
+      "nextFault": null
+    },
+    {
+      "id": "split-surrogate/ReadBlock",
+      "method": "ReadBlock",
+      "sourceUnits": [
+        55357,
+        56832
+      ],
+      "bufferLength": 3,
+      "index": 1,
+      "count": 1,
+      "start": 0,
+      "disposed": false,
+      "nullBuffer": false,
+      "nullReader": false,
+      "countRead": 1,
+      "fault": null,
+      "buffer": [
+        46,
+        55357,
+        46
+      ],
+      "next": 56832,
+      "nextFault": null
+    },
+    {
+      "id": "null-buffer/Read",
+      "method": "Read",
+      "sourceUnits": [
+        65,
+        66,
+        67,
+        68,
+        69
+      ],
+      "bufferLength": 0,
+      "index": 0,
+      "count": 0,
+      "start": 0,
+      "disposed": false,
+      "nullBuffer": true,
+      "nullReader": false,
+      "countRead": null,
+      "fault": "ArgumentNullException",
+      "buffer": null,
+      "next": 65,
+      "nextFault": null
+    },
+    {
+      "id": "null-buffer/ReadBlock",
+      "method": "ReadBlock",
+      "sourceUnits": [
+        65,
+        66,
+        67,
+        68,
+        69
+      ],
+      "bufferLength": 0,
+      "index": 0,
+      "count": 0,
+      "start": 0,
+      "disposed": false,
+      "nullBuffer": true,
+      "nullReader": false,
+      "countRead": null,
+      "fault": "ArgumentNullException",
+      "buffer": null,
+      "next": 65,
+      "nextFault": null
+    },
+    {
+      "id": "negative-index/Read",
+      "method": "Read",
+      "sourceUnits": [
+        65,
+        66,
+        67,
+        68,
+        69
+      ],
+      "bufferLength": 3,
+      "index": -1,
+      "count": 1,
+      "start": 0,
+      "disposed": false,
+      "nullBuffer": false,
+      "nullReader": false,
+      "countRead": null,
+      "fault": "ArgumentOutOfRangeException",
+      "buffer": [
+        46,
+        46,
+        46
+      ],
+      "next": 65,
+      "nextFault": null
+    },
+    {
+      "id": "negative-index/ReadBlock",
+      "method": "ReadBlock",
+      "sourceUnits": [
+        65,
+        66,
+        67,
+        68,
+        69
+      ],
+      "bufferLength": 3,
+      "index": -1,
+      "count": 1,
+      "start": 0,
+      "disposed": false,
+      "nullBuffer": false,
+      "nullReader": false,
+      "countRead": null,
+      "fault": "ArgumentOutOfRangeException",
+      "buffer": [
+        46,
+        46,
+        46
+      ],
+      "next": 65,
+      "nextFault": null
+    },
+    {
+      "id": "negative-count/Read",
+      "method": "Read",
+      "sourceUnits": [
+        65,
+        66,
+        67,
+        68,
+        69
+      ],
+      "bufferLength": 3,
+      "index": 0,
+      "count": -1,
+      "start": 0,
+      "disposed": false,
+      "nullBuffer": false,
+      "nullReader": false,
+      "countRead": null,
+      "fault": "ArgumentOutOfRangeException",
+      "buffer": [
+        46,
+        46,
+        46
+      ],
+      "next": 65,
+      "nextFault": null
+    },
+    {
+      "id": "negative-count/ReadBlock",
+      "method": "ReadBlock",
+      "sourceUnits": [
+        65,
+        66,
+        67,
+        68,
+        69
+      ],
+      "bufferLength": 3,
+      "index": 0,
+      "count": -1,
+      "start": 0,
+      "disposed": false,
+      "nullBuffer": false,
+      "nullReader": false,
+      "countRead": null,
+      "fault": "ArgumentOutOfRangeException",
+      "buffer": [
+        46,
+        46,
+        46
+      ],
+      "next": 65,
+      "nextFault": null
+    },
+    {
+      "id": "index-past-end/Read",
+      "method": "Read",
+      "sourceUnits": [
+        65,
+        66,
+        67,
+        68,
+        69
+      ],
+      "bufferLength": 3,
+      "index": 4,
+      "count": 0,
+      "start": 0,
+      "disposed": false,
+      "nullBuffer": false,
+      "nullReader": false,
+      "countRead": null,
+      "fault": "ArgumentException",
+      "buffer": [
+        46,
+        46,
+        46
+      ],
+      "next": 65,
+      "nextFault": null
+    },
+    {
+      "id": "index-past-end/ReadBlock",
+      "method": "ReadBlock",
+      "sourceUnits": [
+        65,
+        66,
+        67,
+        68,
+        69
+      ],
+      "bufferLength": 3,
+      "index": 4,
+      "count": 0,
+      "start": 0,
+      "disposed": false,
+      "nullBuffer": false,
+      "nullReader": false,
+      "countRead": null,
+      "fault": "ArgumentException",
+      "buffer": [
+        46,
+        46,
+        46
+      ],
+      "next": 65,
+      "nextFault": null
+    },
+    {
+      "id": "cross-end/Read",
+      "method": "Read",
+      "sourceUnits": [
+        65,
+        66,
+        67,
+        68,
+        69
+      ],
+      "bufferLength": 3,
+      "index": 2,
+      "count": 2,
+      "start": 0,
+      "disposed": false,
+      "nullBuffer": false,
+      "nullReader": false,
+      "countRead": null,
+      "fault": "ArgumentException",
+      "buffer": [
+        46,
+        46,
+        46
+      ],
+      "next": 65,
+      "nextFault": null
+    },
+    {
+      "id": "cross-end/ReadBlock",
+      "method": "ReadBlock",
+      "sourceUnits": [
+        65,
+        66,
+        67,
+        68,
+        69
+      ],
+      "bufferLength": 3,
+      "index": 2,
+      "count": 2,
+      "start": 0,
+      "disposed": false,
+      "nullBuffer": false,
+      "nullReader": false,
+      "countRead": null,
+      "fault": "ArgumentException",
+      "buffer": [
+        46,
+        46,
+        46
+      ],
+      "next": 65,
+      "nextFault": null
+    },
+    {
+      "id": "maximum-index/Read",
+      "method": "Read",
+      "sourceUnits": [
+        65,
+        66,
+        67,
+        68,
+        69
+      ],
+      "bufferLength": 3,
+      "index": 2147483647,
+      "count": 0,
+      "start": 0,
+      "disposed": false,
+      "nullBuffer": false,
+      "nullReader": false,
+      "countRead": null,
+      "fault": "ArgumentException",
+      "buffer": [
+        46,
+        46,
+        46
+      ],
+      "next": 65,
+      "nextFault": null
+    },
+    {
+      "id": "maximum-index/ReadBlock",
+      "method": "ReadBlock",
+      "sourceUnits": [
+        65,
+        66,
+        67,
+        68,
+        69
+      ],
+      "bufferLength": 3,
+      "index": 2147483647,
+      "count": 0,
+      "start": 0,
+      "disposed": false,
+      "nullBuffer": false,
+      "nullReader": false,
+      "countRead": null,
+      "fault": "ArgumentException",
+      "buffer": [
+        46,
+        46,
+        46
+      ],
+      "next": 65,
+      "nextFault": null
+    },
+    {
+      "id": "maximum-count/Read",
+      "method": "Read",
+      "sourceUnits": [
+        65,
+        66,
+        67,
+        68,
+        69
+      ],
+      "bufferLength": 3,
+      "index": 0,
+      "count": 2147483647,
+      "start": 0,
+      "disposed": false,
+      "nullBuffer": false,
+      "nullReader": false,
+      "countRead": null,
+      "fault": "ArgumentException",
+      "buffer": [
+        46,
+        46,
+        46
+      ],
+      "next": 65,
+      "nextFault": null
+    },
+    {
+      "id": "maximum-count/ReadBlock",
+      "method": "ReadBlock",
+      "sourceUnits": [
+        65,
+        66,
+        67,
+        68,
+        69
+      ],
+      "bufferLength": 3,
+      "index": 0,
+      "count": 2147483647,
+      "start": 0,
+      "disposed": false,
+      "nullBuffer": false,
+      "nullReader": false,
+      "countRead": null,
+      "fault": "ArgumentException",
+      "buffer": [
+        46,
+        46,
+        46
+      ],
+      "next": 65,
+      "nextFault": null
+    },
+    {
+      "id": "null-before-range/Read",
+      "method": "Read",
+      "sourceUnits": [
+        65,
+        66,
+        67,
+        68,
+        69
+      ],
+      "bufferLength": 0,
+      "index": -1,
+      "count": -1,
+      "start": 0,
+      "disposed": false,
+      "nullBuffer": true,
+      "nullReader": false,
+      "countRead": null,
+      "fault": "ArgumentNullException",
+      "buffer": null,
+      "next": 65,
+      "nextFault": null
+    },
+    {
+      "id": "null-before-range/ReadBlock",
+      "method": "ReadBlock",
+      "sourceUnits": [
+        65,
+        66,
+        67,
+        68,
+        69
+      ],
+      "bufferLength": 0,
+      "index": -1,
+      "count": -1,
+      "start": 0,
+      "disposed": false,
+      "nullBuffer": true,
+      "nullReader": false,
+      "countRead": null,
+      "fault": "ArgumentNullException",
+      "buffer": null,
+      "next": 65,
+      "nextFault": null
+    },
+    {
+      "id": "both-negative/Read",
+      "method": "Read",
+      "sourceUnits": [
+        65,
+        66,
+        67,
+        68,
+        69
+      ],
+      "bufferLength": 3,
+      "index": -1,
+      "count": -1,
+      "start": 0,
+      "disposed": false,
+      "nullBuffer": false,
+      "nullReader": false,
+      "countRead": null,
+      "fault": "ArgumentOutOfRangeException",
+      "buffer": [
+        46,
+        46,
+        46
+      ],
+      "next": 65,
+      "nextFault": null
+    },
+    {
+      "id": "both-negative/ReadBlock",
+      "method": "ReadBlock",
+      "sourceUnits": [
+        65,
+        66,
+        67,
+        68,
+        69
+      ],
+      "bufferLength": 3,
+      "index": -1,
+      "count": -1,
+      "start": 0,
+      "disposed": false,
+      "nullBuffer": false,
+      "nullReader": false,
+      "countRead": null,
+      "fault": "ArgumentOutOfRangeException",
+      "buffer": [
+        46,
+        46,
+        46
+      ],
+      "next": 65,
+      "nextFault": null
+    },
+    {
+      "id": "disposed-valid/Read",
+      "method": "Read",
+      "sourceUnits": [
+        65,
+        66,
+        67,
+        68,
+        69
+      ],
+      "bufferLength": 3,
+      "index": 0,
+      "count": 1,
+      "start": 0,
+      "disposed": true,
+      "nullBuffer": false,
+      "nullReader": false,
+      "countRead": null,
+      "fault": "ObjectDisposedException",
+      "buffer": [
+        46,
+        46,
+        46
+      ],
+      "next": null,
+      "nextFault": "ObjectDisposedException"
+    },
+    {
+      "id": "disposed-valid/ReadBlock",
+      "method": "ReadBlock",
+      "sourceUnits": [
+        65,
+        66,
+        67,
+        68,
+        69
+      ],
+      "bufferLength": 3,
+      "index": 0,
+      "count": 1,
+      "start": 0,
+      "disposed": true,
+      "nullBuffer": false,
+      "nullReader": false,
+      "countRead": null,
+      "fault": "ObjectDisposedException",
+      "buffer": [
+        46,
+        46,
+        46
+      ],
+      "next": null,
+      "nextFault": "ObjectDisposedException"
+    },
+    {
+      "id": "disposed-zero/Read",
+      "method": "Read",
+      "sourceUnits": [
+        65,
+        66,
+        67,
+        68,
+        69
+      ],
+      "bufferLength": 3,
+      "index": 3,
+      "count": 0,
+      "start": 0,
+      "disposed": true,
+      "nullBuffer": false,
+      "nullReader": false,
+      "countRead": null,
+      "fault": "ObjectDisposedException",
+      "buffer": [
+        46,
+        46,
+        46
+      ],
+      "next": null,
+      "nextFault": "ObjectDisposedException"
+    },
+    {
+      "id": "disposed-zero/ReadBlock",
+      "method": "ReadBlock",
+      "sourceUnits": [
+        65,
+        66,
+        67,
+        68,
+        69
+      ],
+      "bufferLength": 3,
+      "index": 3,
+      "count": 0,
+      "start": 0,
+      "disposed": true,
+      "nullBuffer": false,
+      "nullReader": false,
+      "countRead": null,
+      "fault": "ObjectDisposedException",
+      "buffer": [
+        46,
+        46,
+        46
+      ],
+      "next": null,
+      "nextFault": "ObjectDisposedException"
+    },
+    {
+      "id": "disposed-empty/Read",
+      "method": "Read",
+      "sourceUnits": [],
+      "bufferLength": 0,
+      "index": 0,
+      "count": 0,
+      "start": 0,
+      "disposed": true,
+      "nullBuffer": false,
+      "nullReader": false,
+      "countRead": null,
+      "fault": "ObjectDisposedException",
+      "buffer": [],
+      "next": null,
+      "nextFault": "ObjectDisposedException"
+    },
+    {
+      "id": "disposed-empty/ReadBlock",
+      "method": "ReadBlock",
+      "sourceUnits": [],
+      "bufferLength": 0,
+      "index": 0,
+      "count": 0,
+      "start": 0,
+      "disposed": true,
+      "nullBuffer": false,
+      "nullReader": false,
+      "countRead": null,
+      "fault": "ObjectDisposedException",
+      "buffer": [],
+      "next": null,
+      "nextFault": "ObjectDisposedException"
+    },
+    {
+      "id": "disposed-null/Read",
+      "method": "Read",
+      "sourceUnits": [
+        65,
+        66,
+        67,
+        68,
+        69
+      ],
+      "bufferLength": 0,
+      "index": -1,
+      "count": -1,
+      "start": 0,
+      "disposed": true,
+      "nullBuffer": true,
+      "nullReader": false,
+      "countRead": null,
+      "fault": "ArgumentNullException",
+      "buffer": null,
+      "next": null,
+      "nextFault": "ObjectDisposedException"
+    },
+    {
+      "id": "disposed-null/ReadBlock",
+      "method": "ReadBlock",
+      "sourceUnits": [
+        65,
+        66,
+        67,
+        68,
+        69
+      ],
+      "bufferLength": 0,
+      "index": -1,
+      "count": -1,
+      "start": 0,
+      "disposed": true,
+      "nullBuffer": true,
+      "nullReader": false,
+      "countRead": null,
+      "fault": "ArgumentNullException",
+      "buffer": null,
+      "next": null,
+      "nextFault": "ObjectDisposedException"
+    },
+    {
+      "id": "disposed-index/Read",
+      "method": "Read",
+      "sourceUnits": [
+        65,
+        66,
+        67,
+        68,
+        69
+      ],
+      "bufferLength": 3,
+      "index": -1,
+      "count": 1,
+      "start": 0,
+      "disposed": true,
+      "nullBuffer": false,
+      "nullReader": false,
+      "countRead": null,
+      "fault": "ArgumentOutOfRangeException",
+      "buffer": [
+        46,
+        46,
+        46
+      ],
+      "next": null,
+      "nextFault": "ObjectDisposedException"
+    },
+    {
+      "id": "disposed-index/ReadBlock",
+      "method": "ReadBlock",
+      "sourceUnits": [
+        65,
+        66,
+        67,
+        68,
+        69
+      ],
+      "bufferLength": 3,
+      "index": -1,
+      "count": 1,
+      "start": 0,
+      "disposed": true,
+      "nullBuffer": false,
+      "nullReader": false,
+      "countRead": null,
+      "fault": "ArgumentOutOfRangeException",
+      "buffer": [
+        46,
+        46,
+        46
+      ],
+      "next": null,
+      "nextFault": "ObjectDisposedException"
+    },
+    {
+      "id": "disposed-count/Read",
+      "method": "Read",
+      "sourceUnits": [
+        65,
+        66,
+        67,
+        68,
+        69
+      ],
+      "bufferLength": 3,
+      "index": 0,
+      "count": -1,
+      "start": 0,
+      "disposed": true,
+      "nullBuffer": false,
+      "nullReader": false,
+      "countRead": null,
+      "fault": "ArgumentOutOfRangeException",
+      "buffer": [
+        46,
+        46,
+        46
+      ],
+      "next": null,
+      "nextFault": "ObjectDisposedException"
+    },
+    {
+      "id": "disposed-count/ReadBlock",
+      "method": "ReadBlock",
+      "sourceUnits": [
+        65,
+        66,
+        67,
+        68,
+        69
+      ],
+      "bufferLength": 3,
+      "index": 0,
+      "count": -1,
+      "start": 0,
+      "disposed": true,
+      "nullBuffer": false,
+      "nullReader": false,
+      "countRead": null,
+      "fault": "ArgumentOutOfRangeException",
+      "buffer": [
+        46,
+        46,
+        46
+      ],
+      "next": null,
+      "nextFault": "ObjectDisposedException"
+    },
+    {
+      "id": "disposed-slice/Read",
+      "method": "Read",
+      "sourceUnits": [
+        65,
+        66,
+        67,
+        68,
+        69
+      ],
+      "bufferLength": 3,
+      "index": 3,
+      "count": 1,
+      "start": 0,
+      "disposed": true,
+      "nullBuffer": false,
+      "nullReader": false,
+      "countRead": null,
+      "fault": "ArgumentException",
+      "buffer": [
+        46,
+        46,
+        46
+      ],
+      "next": null,
+      "nextFault": "ObjectDisposedException"
+    },
+    {
+      "id": "disposed-slice/ReadBlock",
+      "method": "ReadBlock",
+      "sourceUnits": [
+        65,
+        66,
+        67,
+        68,
+        69
+      ],
+      "bufferLength": 3,
+      "index": 3,
+      "count": 1,
+      "start": 0,
+      "disposed": true,
+      "nullBuffer": false,
+      "nullReader": false,
+      "countRead": null,
+      "fault": "ArgumentException",
+      "buffer": [
+        46,
+        46,
+        46
+      ],
+      "next": null,
+      "nextFault": "ObjectDisposedException"
+    },
+    {
+      "id": "null-reader/Read",
+      "method": "Read",
+      "sourceUnits": [
+        65,
+        66,
+        67,
+        68,
+        69
+      ],
+      "bufferLength": 3,
+      "index": 0,
+      "count": 1,
+      "start": 0,
+      "disposed": false,
+      "nullBuffer": false,
+      "nullReader": true,
+      "countRead": null,
+      "fault": "NullReferenceException",
+      "buffer": [
+        46,
+        46,
+        46
+      ],
+      "next": null,
+      "nextFault": "NullReferenceException"
+    },
+    {
+      "id": "null-reader/ReadBlock",
+      "method": "ReadBlock",
+      "sourceUnits": [
+        65,
+        66,
+        67,
+        68,
+        69
+      ],
+      "bufferLength": 3,
+      "index": 0,
+      "count": 1,
+      "start": 0,
+      "disposed": false,
+      "nullBuffer": false,
+      "nullReader": true,
+      "countRead": null,
+      "fault": "NullReferenceException",
+      "buffer": [
+        46,
+        46,
+        46
+      ],
+      "next": null,
+      "nextFault": "NullReferenceException"
+    },
+    {
+      "id": "null-reader-and-buffer/Read",
+      "method": "Read",
+      "sourceUnits": [
+        65,
+        66,
+        67,
+        68,
+        69
+      ],
+      "bufferLength": 0,
+      "index": -1,
+      "count": -1,
+      "start": 0,
+      "disposed": false,
+      "nullBuffer": true,
+      "nullReader": true,
+      "countRead": null,
+      "fault": "NullReferenceException",
+      "buffer": null,
+      "next": null,
+      "nextFault": "NullReferenceException"
+    },
+    {
+      "id": "null-reader-and-buffer/ReadBlock",
+      "method": "ReadBlock",
+      "sourceUnits": [
+        65,
+        66,
+        67,
+        68,
+        69
+      ],
+      "bufferLength": 0,
+      "index": -1,
+      "count": -1,
+      "start": 0,
+      "disposed": false,
+      "nullBuffer": true,
+      "nullReader": true,
+      "countRead": null,
+      "fault": "NullReferenceException",
+      "buffer": null,
+      "next": null,
+      "nextFault": "NullReferenceException"
+    }
+  ]
+}

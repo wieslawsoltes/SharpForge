@@ -9,6 +9,10 @@ and `registerIoModules(registry)`. Modules implement the core `{name, families,
 contracts, invoke}` protocol. Registration requires the standard `define`, `member`,
 `ctor` and `prop` callbacks inside an active contract reservation. SharpForge registers
 these contracts after JSON GetInt64 in A09, retaining all released IDs.
+Registration order is part of the ABI: the `bcl-io` base group registers reader
+slots 655361–655367 and writer slots 655368–655380, then the `extensions` group
+appends reader buffer slots 655381–655382. Call `registerIoModules` for this canonical
+order; standalone core registration of a module still includes its own extension hook.
 
 This batch provides abstract TextReader metadata and StringReader construction,
 Peek, parameterless Read, ReadLine, ReadToEnd, Close and Dispose. Read/Peek return
@@ -22,6 +26,22 @@ restore the original cursor and live/disposed state. Read/Peek use constant time
 and allocate no managed values. ReadLine/ReadToEnd scan/copy only their returned
 text and use the existing managed heap budget. Output is rooted across write
 notifications; allocation failure leaves the cursor unchanged.
+
+`Read(char[], index, count)` and `ReadBlock(char[], index, count)` copy UTF-16 units
+into the existing buffer and return the count copied, or zero at EOF. They share
+the StringReader cursor; ReadBlock fills the requested slice unless input ends.
+Buffer/range validation precedes disposal checks, including zero-length reads.
+Null buffers raise ArgumentNullException, negative indices/counts raise
+ArgumentOutOfRangeException, and slices outside the buffer raise ArgumentException.
+Valid slices on disposed readers raise ObjectDisposedException.
+
+Copying costs O(units read), uses constant temporary root storage, and allocates no
+managed values. Each written array slot uses the ordinary write observer; the
+cursor commits after copying. Observer failures can leave completed buffer writes
+visible with the original cursor, and temporary roots are always released. GC and
+snapshots preserve both the buffer and reader state. The separate 56-row .NET
+capture executes as source bytecode and independently assembled CIL. Bound and legacy
+source character-array calls have separate coverage on both VMs.
 
 StringWriter adds default and StringBuilder constructors, NewLine, Write(char/string),
 WriteLine()/WriteLine(string), Flush, Close, Dispose, GetStringBuilder and ToString.
@@ -49,7 +69,7 @@ CIL and platform coverage. External `IDisposable.Dispose` invocation
 itself remains outside the CIL profile; metadata does not add a second dispatch path.
 Rust native/Wasm execution is not qualified by this batch.
 
-Issue #2723 remains open: reader/writer buffer overloads, ReadBlock and async methods,
+Issue #2723 remains open: span/memory reader APIs, writer buffer overloads and async methods,
 Null/Synchronized wrappers, numeric/formatting/culture overloads, Encoding, and Console
 writer replacement remain separate batches. These APIs are not registered; unsupported
 source uses continue to fail compilation. User-defined TextReader/TextWriter subclasses
