@@ -2,10 +2,16 @@
   "schemaVersion": 1,
   "sources": {
     "packages/runtime/src/heap.js": "28b86fe51a4a4cd93b7701b682fa2363a07d8a9c6370fd734e96690b16fe853c",
-    "packages/runtime/src/vm.js": "1c3b7cc3fd74d01171ad53f0020de398c8c901906814ef829c9a7c2c633a1f51",
+    "packages/runtime/src/vm.js": "e4459014ea9dc3f0a688e487d1e5b715551edcfa84d80e86973360d1e5b88396",
     "packages/runtime/src/cil-vm.js": "d97d566d72ecf279d3e8f8047ee7f976c4c2a1f57ba7330b812041b588509f94",
     "packages/runtime/src/execution/delegate-targets.js": "ec19efa480e2d864ba35268cfee220015e7655d84213502d6d2fc4b95094ae5d",
     "packages/runtime/src/execution/source-ops.js": "d281c22b9072dc0151a2b0b3571c02b29bfe3074dbf783cf879269b6e5af9a22",
+    "packages/runtime/src/execution/source-ops/load-store.js": "7a99bedd6eef6f44a618a9f905181df553fa01bb98ee6d9912be4936d87c8a3e",
+    "packages/runtime/src/execution/source-ops/arithmetic.js": "658d004672bd71fdd1ab7b6a7747daf319d8fcb24217b925f33531336e9a1762",
+    "packages/runtime/src/execution/source-ops/control.js": "103ed7f7ec218785b9cbbe1dc12cfa956ca7302ea135cf90a8fe2a8a293d8aeb",
+    "packages/runtime/src/execution/source-ops/call.js": "9bbfce817cc8962140bccfcc03c290c42471904cb0cc2ef41239c707ac015f30",
+    "packages/runtime/src/execution/source-ops/object.js": "2a7564083417592455ef5753a4ab759c5a59ef54676f2bb6de779260c51ae872",
+    "packages/runtime/src/execution/source-ops/index.js": "a85b49d45316eedad4f3420c359d01ba64f3ae461df75f4f583346ca11d946ab",
     "packages/runtime/src/execution/storage.js": "d07039d0335c64ae69eccc3313e87b954d4b1c601667c61b392b7274699414ac",
     "packages/runtime/src/execution/numeric-ops.js": "407778ba5fa9b1b97d26e625874dac923b2de5c6e4f9a5a30d42f1b2da7ee2b2",
     "packages/runtime/src/execution/enums.js": "7235807aed0ec81512a186db091608087e4418b38dfbd1cb228cde697a46ff5c",
@@ -99,6 +105,7 @@
     }
   ],
   "evidence": [
+    "execution/source-ops/ groups preserve source opcode stack values, storage writes, arithmetic, control flow and object construction",
     "ManagedHeap.allocate returns Object.freeze({h,g})",
     "ManagedHeap.array caps length at 1000000",
     "execution/storage.js storageValue and execution/numeric-ops.js storage apply narrow and BigInt integer categories through bytecode/numeric/conversions.js",
