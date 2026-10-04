@@ -90,3 +90,14 @@ figures include garbage collection and are not total allocator counts. This
 adds a reproducible measurement surface; results must be recorded from an actual
 scheduled run before making a performance claim. Existing baseline PDB lookup
 performance is compared separately using `scripts/bench-pdb.js --baseline`.
+
+The source-module browser entry point is
+`tests/fixtures/portable-pdb-generations/browser.mjs`. Serve the repository with
+the package import map and call its exported async `run()` under each actual
+Chromium, Firefox and WebKit engine. It fetches the retained native corpora,
+checks SHA-256 hashes, compares native symbol facts, re-emits the SRM-accepted
+delta byte-for-byte, and exercises history/snapshot identity, cache budgets,
+cancellation, malformed tokens/maps and disposal. Its result records the native
+reference versions and explicitly distinguishes corpus comparison from a live
+native invocation. Record browser versions, source commit and command with the
+scheduled run; this entry point does not apply a managed Hot Reload update.
