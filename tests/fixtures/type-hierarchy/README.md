@@ -111,8 +111,10 @@ No unchanged retry, sample exclusion or tuning occurred.
 | New951-node derived tree | unavailable | .522500 / .557667 |
 
 Final nested median increases .003624585ms (+13.0177%) and p95 .003984160ms
-(+11.0497%). Other existing controls are within5%. Root disposition of this
-remaining measured tradeoff is pending. No improvement is claimed from comparing
+(+11.0497%). Other existing controls are within5%. Root explicitly signed off this quantified remaining cost after source review:
+the bounded cross-heap exact-name seam is required for cross-assembly hierarchy,
+and the avoidable default key property/lookup closure has been removed without
+a second name registry or a change to the old default shape/closure count. No improvement is claimed from comparing
 the two runs; the shared-host observations do not establish causality, significance
 or a noise explanation. All320 observations remain committed.
 
