@@ -58,3 +58,13 @@ the tests compare node kinds, spans, trivia, token values and error codes agains
   `preview-revisions.js`, and unsupported forms report SF1098.
 - `bench/incremental.bench.js` and `bench/parse.bench.js` measure keystroke reparse cost, throughput and heap against
   the committed baselines (`--check` fails on a regression).
+
+## Raw token consumers
+
+`new Scanner(source, cache, options).sequence(null, {captureTrivia: false})` scans every token with the shared lexer while omitting
+the raw records' `leading`/`trailing` trivia fields. Returned `head` and `tail` arrays are empty. Token kinds, values, UTF-16 offsets,
+preprocessor state, directive records and lexical diagnostics match the default captured sequence. Consumers that need lossless
+syntax keep the default mode; `run()`, `lex()` and parsing retain their existing behavior. The optional third `capture` argument to
+`scanTrivia(scanner, trailingMode, capture)` controls the same trivia-record allocation without bypassing scanner state updates.
+The discard mode polls cancellation at most 4,096 characters apart while skipping ordinary ASCII whitespace, in addition to the
+scanner's existing token checkpoints. Comments, directives and uncommon whitespace still use the full shared trivia rules.
