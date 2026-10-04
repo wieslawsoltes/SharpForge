@@ -32,6 +32,7 @@ export { validateTailPrefixes, tailPrefixDiagnosticCatalog } from './verify/pref
 
 export {verifiedStackBound} from './verified-stack.js';
 export {parseFunctionPointerType} from './function-pointer-signature.js';
+export {VirtualPointerProfile} from './virtual-pointer-profile.js';
 export {InstanceCalliTargets} from './instance-calli-targets.js';
 export { validateMemoryPrefixes, memoryPrefixDiagnosticCatalog } from './verify/prefix-memory.js';
 export { validateTypePrefixes, typePrefixDiagnosticCatalog } from './verify/prefix-constrained.js';

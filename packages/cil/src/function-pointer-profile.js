@@ -3,6 +3,7 @@ import {callSignatureKey} from './call-profile.js';
 import {parseFunctionPointerType} from './function-pointer-signature.js';
 import {functionPointerExecutionSignature, requireManagedCalli} from './function-pointer-execution-signature.js';
 import {InstanceCalliTargets} from './instance-calli-targets.js';
+import {VirtualPointerProfile} from './virtual-pointer-profile.js';
 
 const pointerKey = type => {
   const signature = parseFunctionPointerType(type);
@@ -31,7 +32,9 @@ function merge(previous, incoming) {
 
 /** Cold per-verification cache; no stale AST facts survive metadata re-verification. */
 export class FunctionPointerProfile {
-  constructor(inspector) {
+  constructor(inspector, dispatch) {
+    this.dispatch = dispatch;
+    this.virtualPointers = null;
     this.inspector = inspector;
     this.signatures = new Map();
     this.instanceTargets = null;
@@ -59,7 +62,7 @@ export class FunctionPointerProfile {
   }
 
   verifyOperand(method, instruction, context, issue, verifyType) {
-    if (instruction.name !== 'calli' && instruction.name !== 'ldftn') return null;
+    if (!['calli', 'ldftn', 'ldvirtftn'].includes(instruction.name)) return null;
     try {
       if (instruction.name === 'calli') {
         const signature = this.indirect(instruction);
@@ -71,9 +74,13 @@ export class FunctionPointerProfile {
         throw new CilError('Generic delegate targets require closed pointer binding');
       }
       if (!descriptor.resolvedToken) throw new CilError('External delegate target is not supported');
-      return descriptor.resolvedToken;
+      if (instruction.name === 'ldvirtftn') {
+        this.virtualPointers ??= new VirtualPointerProfile(this.inspector, this.dispatch);
+        return this.virtualPointers.reachable(descriptor.resolvedToken);
+      }
+      return [descriptor.resolvedToken];
     } catch (error) {
-      issue(method, instruction, error.code ?? (instruction.name === 'ldftn' ? 'IL_TOKEN' : 'IL_CALLI'), error.message,
+      issue(method, instruction, error.code ?? (instruction.name === 'calli' ? 'IL_CALLI' : 'IL_TOKEN'), error.message,
         {exceptionType: error.exceptionType, callingConvention: error.callingConvention, member: method.owner + '::' + method.name});
       return null;
     }
@@ -85,10 +92,13 @@ export class FunctionPointerProfile {
 
   transfer(method, instruction, input, {effects, fail, escaped}) {
     const state = {stack: [...input.stack], locals: [...input.locals], args: [...input.args]}, name = instruction.name;
-    if (name === 'ldftn') {
+    if (name === 'ldftn' || name === 'ldvirtftn') {
       const descriptor = this.method(instruction.operand);
       if (!descriptor.signature.isStatic) this.instanceTargets ??= new InstanceCalliTargets(this.inspector);
-      const callable = descriptor.signature.isStatic || this.instanceTargets.accepts(descriptor.resolvedToken);
+      const virtual = name === 'ldvirtftn';
+      if (virtual) state.stack.pop();
+      const callable = virtual ? this.instanceTargets?.acceptsDeclaration(descriptor.resolvedToken)
+        : descriptor.signature.isStatic || this.instanceTargets.accepts(descriptor.resolvedToken);
       const key = callable ? callSignatureKey(descriptor.signature) : null;
       if (key && !descriptor.signature.isStatic) this.instanceKeys.add(key);
       state.stack.push(key);
@@ -147,7 +157,7 @@ export class FunctionPointerProfile {
       let needed = method.signature.parameters.concat(method.locals, method.signature.returnType).some(type => type.startsWith('method '));
       // A caller can pass/store a forged pointer without invoking calli itself.
       for (const instruction of method.instructions) {
-        if (['calli', 'ldftn'].includes(instruction.name)) needed = true;
+        if (['calli', 'ldftn', 'ldvirtftn'].includes(instruction.name)) needed = true;
         if (['call', 'callvirt', 'newobj'].includes(instruction.name)) {
           const signature = this.method(instruction.operand).signature;
           needed ||= signature.parameters.concat(signature.returnType).some(type => type.startsWith('method '));
