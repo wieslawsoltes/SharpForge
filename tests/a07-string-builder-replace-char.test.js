@@ -223,7 +223,10 @@ for (const [engine, create] of Object.entries(engines)) {
     withBuilder(engine, ['a\0\ud800b\udc00', 'aa\uffffbb', 'abababab'].map(units), ({platform, reference}) => {
       let expected = content(platform, reference);
       let seed = 0x2638;
-      const random = maximum => {seed = (Math.imul(seed, 1664525) + 1013904223) >>> 0; return seed % maximum;};
+      const random = maximum => {
+        seed = (Math.imul(seed, 1664525) + 1013904223) >>> 0;
+        return (seed >>> 8) % maximum;
+      };
       const alphabet = [0, 97, 98, 0xd800, 0xdc00, 0xffff];
       for (let step = 0; step < 10000; step++) {
         const oldUnit = alphabet[random(alphabet.length)], newUnit = alphabet[random(alphabet.length)];
@@ -252,7 +255,8 @@ test('StringBuilder.Replace char: independent CIL matches the complete native re
 });
 
 test('StringBuilder.Replace char: frozen native provenance and appended signatures', () => {
-  assert.equal(native.sourceSha256, createHash('sha256').update(readFileSync(new URL('string-builder-replace-char/Program.cs', directory))).digest('hex'));
+  const source = readFileSync(new URL('string-builder-replace-char/Program.cs', directory));
+  assert.equal(native.sourceSha256, createHash('sha256').update(source).digest('hex'));
   assert.equal(native.sourceSha256, '62398dd9a373494b5dcd608d3488d448514f894cc99e3d9871a4c6a61a573e64');
   assert.equal(native.sdk, '10.0.201');
   assert.equal(native.runtime, '10.0.5');
