@@ -1,0 +1,25 @@
+{
+  "workIds": [
+    "SF-A23-T11",
+    "SF-A23-T39"
+  ],
+  "productSource": "c1a662d18d31e202a6b420bce1e9177b0b1a50ba",
+  "products": [
+    "apps/studio/test-explorer/controller.js",
+    "apps/studio/test-explorer/view.js"
+  ],
+  "priorQualification": {
+    "node22": "106/106 native UI scope passed",
+    "node26": "106/106 native UI scope passed"
+  },
+  "newDirectContractCases": {
+    "path": "tests/a23-test-explorer-controller.test.js",
+    "count": 3,
+    "status": "pending root scheduled cohort"
+  },
+  "remaining": [
+    "Native installed test framework qualification",
+    "Native coverage collector qualification",
+    "Protected Studio entry composition"
+  ]
+}
