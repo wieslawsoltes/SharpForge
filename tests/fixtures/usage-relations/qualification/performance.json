@@ -1,0 +1,1167 @@
+{
+  "configuration": {
+    "variants": {
+      "before": {
+        "directory": "/tmp/sharpforge-a13-usage-qualification/baseline",
+        "sourceRevision": "e984a0f5d9aeaf0b4dcb9d6102a83bc9edb627a6"
+      },
+      "after": {
+        "directory": "/Users/wieslawsoltes/GitHub/SharpForge-a13-usage-relations",
+        "sourceRevision": "f4c6f7aecec1a71624224faa8577a0288ee6d7e2"
+      }
+    },
+    "sharedHashes": {
+      "package.json": "118c0a9af4dc292d5df8f7c5e02121f8309957fe",
+      "package-lock.json": "61aa0aad42fe8ccb71ab679100a14237544c5f7f",
+      "otherPackageTrees": "040000 tree 6451aced45878f841bb3343d46f19abb6ade87fb\tarchive\n040000 tree 71e38278536a6e9cbf19f12ac991cef100f7c82d\tbcl-collections\n040000 tree a60436110fed5effbcd23d43b7d79b04105cffaa\tbcl-core\n040000 tree a5272c86aac71fbfa274f45e093901858a21e794\tbytecode\n040000 tree 78194b582e49a3091344873725f4801577e0027d\tclr\n040000 tree 780285fed4073e2b2ac9e5a3eef9866dc3d3773e\tcompiler\n040000 tree 0ba385b2754947d34e884b975fee619d6d2b71ec\tcompute\n040000 tree fe83d527755ba36794b73e0d34a90f94187055ba\tcontrols\n040000 tree fd17779feebc4ae7c9c202bdfad3e213a2c74d00\tdebugger\n040000 tree 0d1086a83afd08708b0537a1483ce2e17774a24d\tdesigner\n040000 tree aa39592ceb5254769301fe24a0ed64b48b221513\tdocking\n040000 tree 10f9244ea1843fb970479574725c7b78c7a1f964\teditor\n040000 tree 427b86e3d081c0895f4e7664111f21b4986df541\textensions\n040000 tree 7280a4712c2c07c1cf12e8a5d039d74649ad246f\tframework\n040000 tree 51eba0f53f80cf915307e84578a00e0f6632eea4\tlanguage\n040000 tree 3fb5a1ebc086c121907f2c6b2c76353630619783\tmsbuild\n040000 tree a0ff0f968d8fd9a04ede276e5a7c90f6317c22e5\tnetwork\n040000 tree bdfc9583047902789d8bedf0717e0e638582f3c0\tproject-system\n040000 tree 32463189d2d45a832d614d8e81b5924cac073965\tprotocol\n040000 tree 1ae684c57dba0709a30e4dcdbf78bf2815785f34\trefactoring\n040000 tree 1001e27e76a06ef54b8c07db72f3809ac8a5027b\truntime\n040000 tree e3e1e7ea2abaeca2e34bbb09ee69f620178d01d6\tsymbols\n040000 tree 27c325e4a800b63411cecf9b5d0c9f5fdd1d3d77\tsyntax\n040000 tree cd2c191bfb65843ea99448059521d44343b23552\ttemplates\n040000 tree e68012e1423ba4c7dcb5fcab453f22fa87ffda05\ttext\n040000 tree 6158f4499d0ed48e6780605ea05736a97ade3b29\twinui\n040000 tree 2ef61c563232e8ed2966421936e621d4d6466e82\tworkspace"
+    },
+    "dependencies": "Own CIL source per variant; only exact package/manifest matches shared."
+  },
+  "host": {
+    "platform": "darwin",
+    "arch": "arm64",
+    "release": "25.6.0",
+    "cpu": "Apple M3 Pro",
+    "node": "v24.21.0"
+  },
+  "sharedHost": true,
+  "inputSha256": "5b66a7720f1c5762df42215b965ea9864f93dd36df70161e018daec574ce0ae4",
+  "protocol": {
+    "pairs": 20,
+    "warmupsPerVariantAndCase": 3,
+    "iterations": {
+      "cold": 100,
+      "warm": 1000,
+      "construct": 100,
+      "query": 1000
+    },
+    "order": "before/after reversed on odd rounds; fixed case order",
+    "existing": "cold inspector+legacy callGraph; warm cached legacy callGraph. Exact edge/error compatibility checked before timing.",
+    "new": "analysis over prebuilt inspector; indexed one-result page with two total aliases. No decorated method cache.",
+    "limits": "Logical counters are not process heap/allocation measurements; no causality/significance claim."
+  },
+  "logicalStorage": {
+    "methods": 4,
+    "codeBytes": 75,
+    "instructions": 27,
+    "usages": 11,
+    "indexEntries": 33
+  },
+  "samples": [
+    {
+      "round": 0,
+      "kind": "cold",
+      "variant": "before",
+      "iterations": 100,
+      "elapsedMs": 8.53645899999998,
+      "perOperationMs": 0.0853645899999998,
+      "startOffsetMs": 5.364083000000051
+    },
+    {
+      "round": 0,
+      "kind": "cold",
+      "variant": "after",
+      "iterations": 100,
+      "elapsedMs": 14.039333,
+      "perOperationMs": 0.14039332999999998,
+      "startOffsetMs": 19.222500000000025
+    },
+    {
+      "round": 0,
+      "kind": "warm",
+      "variant": "before",
+      "iterations": 1000,
+      "elapsedMs": 0.32233300000001464,
+      "perOperationMs": 0.00032233300000001464,
+      "startOffsetMs": 37.75541700000002
+    },
+    {
+      "round": 0,
+      "kind": "warm",
+      "variant": "after",
+      "iterations": 1000,
+      "elapsedMs": 0.2948339999999803,
+      "perOperationMs": 0.00029483399999998027,
+      "startOffsetMs": 43.15483300000005
+    },
+    {
+      "round": 0,
+      "kind": "construct",
+      "variant": "after",
+      "iterations": 100,
+      "elapsedMs": 4.949124999999981,
+      "perOperationMs": 0.049491249999999806,
+      "startOffsetMs": 47.33133300000003
+    },
+    {
+      "round": 0,
+      "kind": "query",
+      "variant": "after",
+      "iterations": 1000,
+      "elapsedMs": 0.3585830000000101,
+      "perOperationMs": 0.0003585830000000101,
+      "startOffsetMs": 56.39425
+    },
+    {
+      "round": 1,
+      "kind": "cold",
+      "variant": "after",
+      "iterations": 100,
+      "elapsedMs": 7.811374999999998,
+      "perOperationMs": 0.07811374999999998,
+      "startOffsetMs": 60.91737500000005
+    },
+    {
+      "round": 1,
+      "kind": "cold",
+      "variant": "before",
+      "iterations": 100,
+      "elapsedMs": 7.586917000000028,
+      "perOperationMs": 0.07586917000000028,
+      "startOffsetMs": 72.633958
+    },
+    {
+      "round": 1,
+      "kind": "warm",
+      "variant": "after",
+      "iterations": 1000,
+      "elapsedMs": 0.30616699999995944,
+      "perOperationMs": 0.00030616699999995944,
+      "startOffsetMs": 84.20400000000006
+    },
+    {
+      "round": 1,
+      "kind": "warm",
+      "variant": "before",
+      "iterations": 1000,
+      "elapsedMs": 0.5527909999999565,
+      "perOperationMs": 0.0005527909999999565,
+      "startOffsetMs": 89.09304200000008
+    },
+    {
+      "round": 1,
+      "kind": "construct",
+      "variant": "after",
+      "iterations": 100,
+      "elapsedMs": 4.816166000000067,
+      "perOperationMs": 0.04816166000000067,
+      "startOffsetMs": 93.34641699999997
+    },
+    {
+      "round": 1,
+      "kind": "query",
+      "variant": "after",
+      "iterations": 1000,
+      "elapsedMs": 0.3632920000000013,
+      "perOperationMs": 0.0003632920000000013,
+      "startOffsetMs": 101.99300000000005
+    },
+    {
+      "round": 2,
+      "kind": "cold",
+      "variant": "before",
+      "iterations": 100,
+      "elapsedMs": 7.440207999999984,
+      "perOperationMs": 0.07440207999999984,
+      "startOffsetMs": 107.412375
+    },
+    {
+      "round": 2,
+      "kind": "cold",
+      "variant": "after",
+      "iterations": 100,
+      "elapsedMs": 7.730207999999948,
+      "perOperationMs": 0.07730207999999948,
+      "startOffsetMs": 118.47837500000003
+    },
+    {
+      "round": 2,
+      "kind": "warm",
+      "variant": "before",
+      "iterations": 1000,
+      "elapsedMs": 0.27637500000003,
+      "perOperationMs": 0.00027637500000003,
+      "startOffsetMs": 130.14687500000002
+    },
+    {
+      "round": 2,
+      "kind": "warm",
+      "variant": "after",
+      "iterations": 1000,
+      "elapsedMs": 0.26937499999996817,
+      "perOperationMs": 0.00026937499999996815,
+      "startOffsetMs": 134.72887500000002
+    },
+    {
+      "round": 2,
+      "kind": "construct",
+      "variant": "after",
+      "iterations": 100,
+      "elapsedMs": 5.882582999999954,
+      "perOperationMs": 0.058825829999999545,
+      "startOffsetMs": 139.93212500000004
+    },
+    {
+      "round": 2,
+      "kind": "query",
+      "variant": "after",
+      "iterations": 1000,
+      "elapsedMs": 0.3376659999998992,
+      "perOperationMs": 0.0003376659999998992,
+      "startOffsetMs": 149.86979200000007
+    },
+    {
+      "round": 3,
+      "kind": "cold",
+      "variant": "after",
+      "iterations": 100,
+      "elapsedMs": 7.6477089999999635,
+      "perOperationMs": 0.07647708999999964,
+      "startOffsetMs": 153.91758300000004
+    },
+    {
+      "round": 3,
+      "kind": "cold",
+      "variant": "before",
+      "iterations": 100,
+      "elapsedMs": 6.767665999999963,
+      "perOperationMs": 0.06767665999999962,
+      "startOffsetMs": 165.11679200000003
+    },
+    {
+      "round": 3,
+      "kind": "warm",
+      "variant": "after",
+      "iterations": 1000,
+      "elapsedMs": 0.28404199999999946,
+      "perOperationMs": 0.0002840419999999995,
+      "startOffsetMs": 175.84520800000007
+    },
+    {
+      "round": 3,
+      "kind": "warm",
+      "variant": "before",
+      "iterations": 1000,
+      "elapsedMs": 0.6885830000001079,
+      "perOperationMs": 0.0006885830000001079,
+      "startOffsetMs": 180.85479199999997
+    },
+    {
+      "round": 3,
+      "kind": "construct",
+      "variant": "after",
+      "iterations": 100,
+      "elapsedMs": 5.4767499999999245,
+      "perOperationMs": 0.05476749999999925,
+      "startOffsetMs": 185.79666700000007
+    },
+    {
+      "round": 3,
+      "kind": "query",
+      "variant": "after",
+      "iterations": 1000,
+      "elapsedMs": 0.370584000000008,
+      "perOperationMs": 0.000370584000000008,
+      "startOffsetMs": 195.066333
+    },
+    {
+      "round": 4,
+      "kind": "cold",
+      "variant": "before",
+      "iterations": 100,
+      "elapsedMs": 8.061500000000024,
+      "perOperationMs": 0.08061500000000024,
+      "startOffsetMs": 200.21554200000003
+    },
+    {
+      "round": 4,
+      "kind": "cold",
+      "variant": "after",
+      "iterations": 100,
+      "elapsedMs": 7.353875000000016,
+      "perOperationMs": 0.07353875000000017,
+      "startOffsetMs": 211.438
+    },
+    {
+      "round": 4,
+      "kind": "warm",
+      "variant": "before",
+      "iterations": 1000,
+      "elapsedMs": 0.8162079999999605,
+      "perOperationMs": 0.0008162079999999606,
+      "startOffsetMs": 222.21287500000005
+    },
+    {
+      "round": 4,
+      "kind": "warm",
+      "variant": "after",
+      "iterations": 1000,
+      "elapsedMs": 0.2750419999999849,
+      "perOperationMs": 0.0002750419999999849,
+      "startOffsetMs": 227.179708
+    },
+    {
+      "round": 4,
+      "kind": "construct",
+      "variant": "after",
+      "iterations": 100,
+      "elapsedMs": 4.5667909999999665,
+      "perOperationMs": 0.045667909999999666,
+      "startOffsetMs": 231.38066700000002
+    },
+    {
+      "round": 4,
+      "kind": "query",
+      "variant": "after",
+      "iterations": 1000,
+      "elapsedMs": 0.32033400000000256,
+      "perOperationMs": 0.0003203340000000026,
+      "startOffsetMs": 239.345958
+    },
+    {
+      "round": 5,
+      "kind": "cold",
+      "variant": "after",
+      "iterations": 100,
+      "elapsedMs": 6.734749999999963,
+      "perOperationMs": 0.06734749999999963,
+      "startOffsetMs": 243.34191700000008
+    },
+    {
+      "round": 5,
+      "kind": "cold",
+      "variant": "before",
+      "iterations": 100,
+      "elapsedMs": 7.783374999999978,
+      "perOperationMs": 0.07783374999999979,
+      "startOffsetMs": 254.02658300000007
+    },
+    {
+      "round": 5,
+      "kind": "warm",
+      "variant": "after",
+      "iterations": 1000,
+      "elapsedMs": 0.2763329999999087,
+      "perOperationMs": 0.0002763329999999087,
+      "startOffsetMs": 266.93950000000007
+    },
+    {
+      "round": 5,
+      "kind": "warm",
+      "variant": "before",
+      "iterations": 1000,
+      "elapsedMs": 0.29654200000004494,
+      "perOperationMs": 0.00029654200000004495,
+      "startOffsetMs": 272.40075
+    },
+    {
+      "round": 5,
+      "kind": "construct",
+      "variant": "after",
+      "iterations": 100,
+      "elapsedMs": 4.518707999999947,
+      "perOperationMs": 0.04518707999999947,
+      "startOffsetMs": 277.13479200000006
+    },
+    {
+      "round": 5,
+      "kind": "query",
+      "variant": "after",
+      "iterations": 1000,
+      "elapsedMs": 0.31704199999990124,
+      "perOperationMs": 0.00031704199999990125,
+      "startOffsetMs": 285.4462500000001
+    },
+    {
+      "round": 6,
+      "kind": "cold",
+      "variant": "before",
+      "iterations": 100,
+      "elapsedMs": 6.872124999999983,
+      "perOperationMs": 0.06872124999999983,
+      "startOffsetMs": 289.37358300000005
+    },
+    {
+      "round": 6,
+      "kind": "cold",
+      "variant": "after",
+      "iterations": 100,
+      "elapsedMs": 6.567542000000003,
+      "perOperationMs": 0.06567542000000003,
+      "startOffsetMs": 299.5475
+    },
+    {
+      "round": 6,
+      "kind": "warm",
+      "variant": "before",
+      "iterations": 1000,
+      "elapsedMs": 0.27137500000003456,
+      "perOperationMs": 0.00027137500000003456,
+      "startOffsetMs": 309.75020800000004
+    },
+    {
+      "round": 6,
+      "kind": "warm",
+      "variant": "after",
+      "iterations": 1000,
+      "elapsedMs": 0.2685840000000326,
+      "perOperationMs": 0.00026858400000003257,
+      "startOffsetMs": 314.24408300000005
+    },
+    {
+      "round": 6,
+      "kind": "construct",
+      "variant": "after",
+      "iterations": 100,
+      "elapsedMs": 4.393249999999966,
+      "perOperationMs": 0.043932499999999666,
+      "startOffsetMs": 318.97454200000004
+    },
+    {
+      "round": 6,
+      "kind": "query",
+      "variant": "after",
+      "iterations": 1000,
+      "elapsedMs": 0.3168749999999818,
+      "perOperationMs": 0.00031687499999998183,
+      "startOffsetMs": 326.61
+    },
+    {
+      "round": 7,
+      "kind": "cold",
+      "variant": "after",
+      "iterations": 100,
+      "elapsedMs": 6.653957999999989,
+      "perOperationMs": 0.06653957999999989,
+      "startOffsetMs": 330.78654200000005
+    },
+    {
+      "round": 7,
+      "kind": "cold",
+      "variant": "before",
+      "iterations": 100,
+      "elapsedMs": 6.941374999999994,
+      "perOperationMs": 0.06941374999999994,
+      "startOffsetMs": 341.141875
+    },
+    {
+      "round": 7,
+      "kind": "warm",
+      "variant": "after",
+      "iterations": 1000,
+      "elapsedMs": 0.2667500000000018,
+      "perOperationMs": 0.0002667500000000018,
+      "startOffsetMs": 351.58229200000005
+    },
+    {
+      "round": 7,
+      "kind": "warm",
+      "variant": "before",
+      "iterations": 1000,
+      "elapsedMs": 0.27195900000003803,
+      "perOperationMs": 0.00027195900000003806,
+      "startOffsetMs": 356.00133300000005
+    },
+    {
+      "round": 7,
+      "kind": "construct",
+      "variant": "after",
+      "iterations": 100,
+      "elapsedMs": 4.404915999999957,
+      "perOperationMs": 0.044049159999999574,
+      "startOffsetMs": 359.57616700000005
+    },
+    {
+      "round": 7,
+      "kind": "query",
+      "variant": "after",
+      "iterations": 1000,
+      "elapsedMs": 0.34579199999996035,
+      "perOperationMs": 0.00034579199999996036,
+      "startOffsetMs": 367.08850000000007
+    },
+    {
+      "round": 8,
+      "kind": "cold",
+      "variant": "before",
+      "iterations": 100,
+      "elapsedMs": 6.952792000000045,
+      "perOperationMs": 0.06952792000000045,
+      "startOffsetMs": 372.679125
+    },
+    {
+      "round": 8,
+      "kind": "cold",
+      "variant": "after",
+      "iterations": 100,
+      "elapsedMs": 7.168957999999975,
+      "perOperationMs": 0.07168957999999975,
+      "startOffsetMs": 383.385125
+    },
+    {
+      "round": 8,
+      "kind": "warm",
+      "variant": "before",
+      "iterations": 1000,
+      "elapsedMs": 0.27216599999997015,
+      "perOperationMs": 0.00027216599999997014,
+      "startOffsetMs": 393.70904200000007
+    },
+    {
+      "round": 8,
+      "kind": "warm",
+      "variant": "after",
+      "iterations": 1000,
+      "elapsedMs": 0.26662499999997635,
+      "perOperationMs": 0.00026662499999997635,
+      "startOffsetMs": 398.078208
+    },
+    {
+      "round": 8,
+      "kind": "construct",
+      "variant": "after",
+      "iterations": 100,
+      "elapsedMs": 4.308540999999991,
+      "perOperationMs": 0.04308540999999991,
+      "startOffsetMs": 401.694292
+    },
+    {
+      "round": 8,
+      "kind": "query",
+      "variant": "after",
+      "iterations": 1000,
+      "elapsedMs": 0.8762909999999238,
+      "perOperationMs": 0.0008762909999999237,
+      "startOffsetMs": 409.47016700000006
+    },
+    {
+      "round": 9,
+      "kind": "cold",
+      "variant": "after",
+      "iterations": 100,
+      "elapsedMs": 6.867791999999895,
+      "perOperationMs": 0.06867791999999895,
+      "startOffsetMs": 414.4937080000001
+    },
+    {
+      "round": 9,
+      "kind": "cold",
+      "variant": "before",
+      "iterations": 100,
+      "elapsedMs": 6.979917,
+      "perOperationMs": 0.06979917000000001,
+      "startOffsetMs": 424.772208
+    },
+    {
+      "round": 9,
+      "kind": "warm",
+      "variant": "after",
+      "iterations": 1000,
+      "elapsedMs": 0.26766700000007404,
+      "perOperationMs": 0.000267667000000074,
+      "startOffsetMs": 435.336958
+    },
+    {
+      "round": 9,
+      "kind": "warm",
+      "variant": "before",
+      "iterations": 1000,
+      "elapsedMs": 0.27120800000000145,
+      "perOperationMs": 0.00027120800000000146,
+      "startOffsetMs": 439.4524170000001
+    },
+    {
+      "round": 9,
+      "kind": "construct",
+      "variant": "after",
+      "iterations": 100,
+      "elapsedMs": 4.303709000000026,
+      "perOperationMs": 0.043037090000000264,
+      "startOffsetMs": 443.139458
+    },
+    {
+      "round": 9,
+      "kind": "query",
+      "variant": "after",
+      "iterations": 1000,
+      "elapsedMs": 0.3470829999999978,
+      "perOperationMs": 0.0003470829999999978,
+      "startOffsetMs": 450.644667
+    },
+    {
+      "round": 10,
+      "kind": "cold",
+      "variant": "before",
+      "iterations": 100,
+      "elapsedMs": 6.932083000000034,
+      "perOperationMs": 0.06932083000000035,
+      "startOffsetMs": 454.88175
+    },
+    {
+      "round": 10,
+      "kind": "cold",
+      "variant": "after",
+      "iterations": 100,
+      "elapsedMs": 6.862249999999904,
+      "perOperationMs": 0.06862249999999903,
+      "startOffsetMs": 465.3754170000001
+    },
+    {
+      "round": 10,
+      "kind": "warm",
+      "variant": "before",
+      "iterations": 1000,
+      "elapsedMs": 0.2713330000000269,
+      "perOperationMs": 0.0002713330000000269,
+      "startOffsetMs": 475.474917
+    },
+    {
+      "round": 10,
+      "kind": "warm",
+      "variant": "after",
+      "iterations": 1000,
+      "elapsedMs": 0.2653330000000551,
+      "perOperationMs": 0.0002653330000000551,
+      "startOffsetMs": 479.82075
+    },
+    {
+      "round": 10,
+      "kind": "construct",
+      "variant": "after",
+      "iterations": 100,
+      "elapsedMs": 4.274499999999989,
+      "perOperationMs": 0.042744999999999894,
+      "startOffsetMs": 483.71616700000004
+    },
+    {
+      "round": 10,
+      "kind": "query",
+      "variant": "after",
+      "iterations": 1000,
+      "elapsedMs": 0.3444160000000238,
+      "perOperationMs": 0.0003444160000000238,
+      "startOffsetMs": 491.213167
+    },
+    {
+      "round": 11,
+      "kind": "cold",
+      "variant": "after",
+      "iterations": 100,
+      "elapsedMs": 7.414709000000016,
+      "perOperationMs": 0.07414709000000017,
+      "startOffsetMs": 495.646333
+    },
+    {
+      "round": 11,
+      "kind": "cold",
+      "variant": "before",
+      "iterations": 100,
+      "elapsedMs": 6.491624999999999,
+      "perOperationMs": 0.06491625,
+      "startOffsetMs": 506.31050000000005
+    },
+    {
+      "round": 11,
+      "kind": "warm",
+      "variant": "after",
+      "iterations": 1000,
+      "elapsedMs": 0.6268329999999196,
+      "perOperationMs": 0.0006268329999999196,
+      "startOffsetMs": 516.061667
+    },
+    {
+      "round": 11,
+      "kind": "warm",
+      "variant": "before",
+      "iterations": 1000,
+      "elapsedMs": 0.2772909999999911,
+      "perOperationMs": 0.0002772909999999911,
+      "startOffsetMs": 520.041792
+    },
+    {
+      "round": 11,
+      "kind": "construct",
+      "variant": "after",
+      "iterations": 100,
+      "elapsedMs": 5.257292000000007,
+      "perOperationMs": 0.052572920000000065,
+      "startOffsetMs": 523.883458
+    },
+    {
+      "round": 11,
+      "kind": "query",
+      "variant": "after",
+      "iterations": 1000,
+      "elapsedMs": 0.33637499999997544,
+      "perOperationMs": 0.0003363749999999754,
+      "startOffsetMs": 532.2900000000001
+    },
+    {
+      "round": 12,
+      "kind": "cold",
+      "variant": "before",
+      "iterations": 100,
+      "elapsedMs": 6.958624999999984,
+      "perOperationMs": 0.06958624999999984,
+      "startOffsetMs": 536.3631250000001
+    },
+    {
+      "round": 12,
+      "kind": "cold",
+      "variant": "after",
+      "iterations": 100,
+      "elapsedMs": 6.478582999999958,
+      "perOperationMs": 0.06478582999999957,
+      "startOffsetMs": 546.7765
+    },
+    {
+      "round": 12,
+      "kind": "warm",
+      "variant": "before",
+      "iterations": 1000,
+      "elapsedMs": 0.27291700000000674,
+      "perOperationMs": 0.00027291700000000674,
+      "startOffsetMs": 556.8175
+    },
+    {
+      "round": 12,
+      "kind": "warm",
+      "variant": "after",
+      "iterations": 1000,
+      "elapsedMs": 0.2664590000000544,
+      "perOperationMs": 0.0002664590000000544,
+      "startOffsetMs": 560.748333
+    },
+    {
+      "round": 12,
+      "kind": "construct",
+      "variant": "after",
+      "iterations": 100,
+      "elapsedMs": 4.201249999999959,
+      "perOperationMs": 0.04201249999999959,
+      "startOffsetMs": 564.684208
+    },
+    {
+      "round": 12,
+      "kind": "query",
+      "variant": "after",
+      "iterations": 1000,
+      "elapsedMs": 0.3370830000000069,
+      "perOperationMs": 0.0003370830000000069,
+      "startOffsetMs": 572.0765
+    },
+    {
+      "round": 13,
+      "kind": "cold",
+      "variant": "after",
+      "iterations": 100,
+      "elapsedMs": 7.068667000000005,
+      "perOperationMs": 0.07068667000000005,
+      "startOffsetMs": 576.153625
+    },
+    {
+      "round": 13,
+      "kind": "cold",
+      "variant": "before",
+      "iterations": 100,
+      "elapsedMs": 7.616916999999944,
+      "perOperationMs": 0.07616916999999944,
+      "startOffsetMs": 586.4752500000001
+    },
+    {
+      "round": 13,
+      "kind": "warm",
+      "variant": "after",
+      "iterations": 1000,
+      "elapsedMs": 1.2714579999999387,
+      "perOperationMs": 0.0012714579999999387,
+      "startOffsetMs": 597.5322500000001
+    },
+    {
+      "round": 13,
+      "kind": "warm",
+      "variant": "before",
+      "iterations": 1000,
+      "elapsedMs": 0.2724160000000211,
+      "perOperationMs": 0.0002724160000000211,
+      "startOffsetMs": 602.4345420000001
+    },
+    {
+      "round": 13,
+      "kind": "construct",
+      "variant": "after",
+      "iterations": 100,
+      "elapsedMs": 4.496458999999959,
+      "perOperationMs": 0.04496458999999959,
+      "startOffsetMs": 606.676583
+    },
+    {
+      "round": 13,
+      "kind": "query",
+      "variant": "after",
+      "iterations": 1000,
+      "elapsedMs": 0.33720900000002985,
+      "perOperationMs": 0.00033720900000002986,
+      "startOffsetMs": 614.398458
+    },
+    {
+      "round": 14,
+      "kind": "cold",
+      "variant": "before",
+      "iterations": 100,
+      "elapsedMs": 7.02233299999989,
+      "perOperationMs": 0.07022332999999889,
+      "startOffsetMs": 618.433167
+    },
+    {
+      "round": 14,
+      "kind": "cold",
+      "variant": "after",
+      "iterations": 100,
+      "elapsedMs": 6.567000000000007,
+      "perOperationMs": 0.06567000000000008,
+      "startOffsetMs": 629.18125
+    },
+    {
+      "round": 14,
+      "kind": "warm",
+      "variant": "before",
+      "iterations": 1000,
+      "elapsedMs": 0.2524999999998272,
+      "perOperationMs": 0.0002524999999998272,
+      "startOffsetMs": 639.1735830000001
+    },
+    {
+      "round": 14,
+      "kind": "warm",
+      "variant": "after",
+      "iterations": 1000,
+      "elapsedMs": 0.4852499999999509,
+      "perOperationMs": 0.0004852499999999509,
+      "startOffsetMs": 643.0743330000001
+    },
+    {
+      "round": 14,
+      "kind": "construct",
+      "variant": "after",
+      "iterations": 100,
+      "elapsedMs": 4.495042000000012,
+      "perOperationMs": 0.04495042000000012,
+      "startOffsetMs": 646.976583
+    },
+    {
+      "round": 14,
+      "kind": "query",
+      "variant": "after",
+      "iterations": 1000,
+      "elapsedMs": 0.34837500000003274,
+      "perOperationMs": 0.00034837500000003274,
+      "startOffsetMs": 654.759917
+    },
+    {
+      "round": 15,
+      "kind": "cold",
+      "variant": "after",
+      "iterations": 100,
+      "elapsedMs": 7.092041999999992,
+      "perOperationMs": 0.07092041999999993,
+      "startOffsetMs": 658.900833
+    },
+    {
+      "round": 15,
+      "kind": "cold",
+      "variant": "before",
+      "iterations": 100,
+      "elapsedMs": 6.662417000000005,
+      "perOperationMs": 0.06662417000000005,
+      "startOffsetMs": 669.4556249999999
+    },
+    {
+      "round": 15,
+      "kind": "warm",
+      "variant": "after",
+      "iterations": 1000,
+      "elapsedMs": 0.35695799999984956,
+      "perOperationMs": 0.00035695799999984956,
+      "startOffsetMs": 679.6996250000001
+    },
+    {
+      "round": 15,
+      "kind": "warm",
+      "variant": "before",
+      "iterations": 1000,
+      "elapsedMs": 0.2891660000000229,
+      "perOperationMs": 0.0002891660000000229,
+      "startOffsetMs": 683.691917
+    },
+    {
+      "round": 15,
+      "kind": "construct",
+      "variant": "after",
+      "iterations": 100,
+      "elapsedMs": 4.445958000000019,
+      "perOperationMs": 0.044459580000000186,
+      "startOffsetMs": 688.2292920000001
+    },
+    {
+      "round": 15,
+      "kind": "query",
+      "variant": "after",
+      "iterations": 1000,
+      "elapsedMs": 0.3289589999999407,
+      "perOperationMs": 0.00032895899999994073,
+      "startOffsetMs": 696.1967080000001
+    },
+    {
+      "round": 16,
+      "kind": "cold",
+      "variant": "before",
+      "iterations": 100,
+      "elapsedMs": 7.147042000000056,
+      "perOperationMs": 0.07147042000000056,
+      "startOffsetMs": 700.8340830000001
+    },
+    {
+      "round": 16,
+      "kind": "cold",
+      "variant": "after",
+      "iterations": 100,
+      "elapsedMs": 6.497749999999996,
+      "perOperationMs": 0.06497749999999997,
+      "startOffsetMs": 711.7671670000001
+    },
+    {
+      "round": 16,
+      "kind": "warm",
+      "variant": "before",
+      "iterations": 1000,
+      "elapsedMs": 0.26749999999992724,
+      "perOperationMs": 0.00026749999999992725,
+      "startOffsetMs": 721.5037080000001
+    },
+    {
+      "round": 16,
+      "kind": "warm",
+      "variant": "after",
+      "iterations": 1000,
+      "elapsedMs": 0.24641600000018116,
+      "perOperationMs": 0.0002464160000001812,
+      "startOffsetMs": 725.6615419999999
+    },
+    {
+      "round": 16,
+      "kind": "construct",
+      "variant": "after",
+      "iterations": 100,
+      "elapsedMs": 4.226499999999987,
+      "perOperationMs": 0.04226499999999987,
+      "startOffsetMs": 730.0172920000001
+    },
+    {
+      "round": 16,
+      "kind": "query",
+      "variant": "after",
+      "iterations": 1000,
+      "elapsedMs": 0.3082910000000538,
+      "perOperationMs": 0.0003082910000000538,
+      "startOffsetMs": 737.8329170000001
+    },
+    {
+      "round": 17,
+      "kind": "cold",
+      "variant": "after",
+      "iterations": 100,
+      "elapsedMs": 6.795666999999867,
+      "perOperationMs": 0.06795666999999866,
+      "startOffsetMs": 741.9947080000001
+    },
+    {
+      "round": 17,
+      "kind": "cold",
+      "variant": "before",
+      "iterations": 100,
+      "elapsedMs": 6.893917000000101,
+      "perOperationMs": 0.06893917000000101,
+      "startOffsetMs": 752.13775
+    },
+    {
+      "round": 17,
+      "kind": "warm",
+      "variant": "after",
+      "iterations": 1000,
+      "elapsedMs": 0.24616600000013023,
+      "perOperationMs": 0.00024616600000013024,
+      "startOffsetMs": 762.795792
+    },
+    {
+      "round": 17,
+      "kind": "warm",
+      "variant": "before",
+      "iterations": 1000,
+      "elapsedMs": 0.252666999999974,
+      "perOperationMs": 0.000252666999999974,
+      "startOffsetMs": 766.8312500000001
+    },
+    {
+      "round": 17,
+      "kind": "construct",
+      "variant": "after",
+      "iterations": 100,
+      "elapsedMs": 4.506792000000132,
+      "perOperationMs": 0.04506792000000132,
+      "startOffsetMs": 770.8655
+    },
+    {
+      "round": 17,
+      "kind": "query",
+      "variant": "after",
+      "iterations": 1000,
+      "elapsedMs": 0.338416000000052,
+      "perOperationMs": 0.000338416000000052,
+      "startOffsetMs": 778.936417
+    },
+    {
+      "round": 18,
+      "kind": "cold",
+      "variant": "before",
+      "iterations": 100,
+      "elapsedMs": 7.073457999999846,
+      "perOperationMs": 0.07073457999999846,
+      "startOffsetMs": 782.7270420000001
+    },
+    {
+      "round": 18,
+      "kind": "cold",
+      "variant": "after",
+      "iterations": 100,
+      "elapsedMs": 7.413500000000113,
+      "perOperationMs": 0.07413500000000113,
+      "startOffsetMs": 793.0772499999999
+    },
+    {
+      "round": 18,
+      "kind": "warm",
+      "variant": "before",
+      "iterations": 1000,
+      "elapsedMs": 0.25337500000000546,
+      "perOperationMs": 0.00025337500000000544,
+      "startOffsetMs": 804.474
+    },
+    {
+      "round": 18,
+      "kind": "warm",
+      "variant": "after",
+      "iterations": 1000,
+      "elapsedMs": 0.2484589999999116,
+      "perOperationMs": 0.0002484589999999116,
+      "startOffsetMs": 809.7157080000001
+    },
+    {
+      "round": 18,
+      "kind": "construct",
+      "variant": "after",
+      "iterations": 100,
+      "elapsedMs": 4.878999999999905,
+      "perOperationMs": 0.048789999999999056,
+      "startOffsetMs": 814.480625
+    },
+    {
+      "round": 18,
+      "kind": "query",
+      "variant": "after",
+      "iterations": 1000,
+      "elapsedMs": 0.32108400000015536,
+      "perOperationMs": 0.00032108400000015533,
+      "startOffsetMs": 824.084708
+    },
+    {
+      "round": 19,
+      "kind": "cold",
+      "variant": "after",
+      "iterations": 100,
+      "elapsedMs": 9.682999999999993,
+      "perOperationMs": 0.09682999999999993,
+      "startOffsetMs": 829.8057500000001
+    },
+    {
+      "round": 19,
+      "kind": "cold",
+      "variant": "before",
+      "iterations": 100,
+      "elapsedMs": 6.955541999999923,
+      "perOperationMs": 0.06955541999999923,
+      "startOffsetMs": 844.5522500000001
+    },
+    {
+      "round": 19,
+      "kind": "warm",
+      "variant": "after",
+      "iterations": 1000,
+      "elapsedMs": 0.27662500000019463,
+      "perOperationMs": 0.00027662500000019463,
+      "startOffsetMs": 855.1659579999999
+    },
+    {
+      "round": 19,
+      "kind": "warm",
+      "variant": "before",
+      "iterations": 1000,
+      "elapsedMs": 0.25345800000013696,
+      "perOperationMs": 0.00025345800000013696,
+      "startOffsetMs": 859.873792
+    },
+    {
+      "round": 19,
+      "kind": "construct",
+      "variant": "after",
+      "iterations": 100,
+      "elapsedMs": 4.45920799999999,
+      "perOperationMs": 0.044592079999999895,
+      "startOffsetMs": 865.056625
+    },
+    {
+      "round": 19,
+      "kind": "query",
+      "variant": "after",
+      "iterations": 1000,
+      "elapsedMs": 0.34654199999999946,
+      "perOperationMs": 0.0003465419999999995,
+      "startOffsetMs": 873.5343750000001
+    }
+  ],
+  "summary": {
+    "cold": {
+      "before": {
+        "medianMs": 0.06969270999999992,
+        "p95Ms": 0.08061500000000024
+      },
+      "after": {
+        "medianMs": 0.070803545,
+        "p95Ms": 0.09682999999999993
+      }
+    },
+    "warm": {
+      "before": {
+        "medianMs": 0.0002722909999999956,
+        "p95Ms": 0.0006885830000001079
+      },
+      "after": {
+        "medianMs": 0.00027220849999997656,
+        "p95Ms": 0.0006268329999999196
+      }
+    },
+    "construct": {
+      "after": {
+        "medianMs": 0.044957504999999856,
+        "p95Ms": 0.05476749999999925
+      }
+    },
+    "query": {
+      "after": {
+        "medianMs": 0.0003380409999999756,
+        "p95Ms": 0.000370584000000008
+      }
+    }
+  },
+  "consumed": 301300
+}
