@@ -42,13 +42,18 @@ export class SourceConstructionReader {
 
   readValue(node) { return readSourceValue(node, this); }
 
-  controlType(expression) {
+  controlIdentity(expression) {
     if (expression?.kind !== 'New') return null;
     const symbol = this.context.model.getTypeInfo(expression).type;
-    const resolved = symbol?.legacy?.fullName ?? (symbol ? this.context.model.symbols.nameOf(symbol) : expression.type);
-    return isDesignControl(resolved) ? canonicalType(resolved) : this.projectTypes.get(resolved)
-      ?? (isDesignControl(expression.type) ? canonicalType(expression.type) : this.projectTypes.get(expression.type));
+    // Both semantic models publish metadataFullName; source spellings and the execution adapter can lose namespaces.
+    const resolved = symbol?.metadataFullName ?? symbol?.legacy?.fullName
+      ?? (symbol ? this.context.model.symbols.nameOf(symbol) : expression.type);
+    const projectType = this.projectTypes.has(resolved) ? resolved : null;
+    const type = projectType ? this.projectTypes.get(projectType) : isDesignControl(resolved) ? canonicalType(resolved) : null;
+    return type ? {type, projectType} : null;
   }
+
+  controlType(expression) { return this.controlIdentity(expression)?.type ?? null; }
 
   read() {
     for (const statement of this.context.chosen.method.body.statements) {
@@ -115,17 +120,15 @@ export class SourceConstructionReader {
     if (this.nodes.length >= (this.options.maxNodes ?? 5000)) failSource('Design control count limit exceeded', expression, 'SFSYNC_LIMIT');
     const id = designIdentifier(name);
     if (this.bindings[id]) failSource('Ambiguous duplicate control variable ' + name, expression, 'SFSYNC_SYMBOL');
-    const semanticType = this.context.model.getTypeInfo(expression).type;
-    const actualType = semanticType?.legacy?.fullName ?? expression.type;
-    const previewType = this.projectTypes.get(actualType) ?? this.projectTypes.get(expression.type);
-    const type = canonicalType(previewType ?? this.controlType(expression));
+    const identity = this.controlIdentity(expression);
+    const type = canonicalType(identity.type);
     const symbol = controlSourceSymbol(this.context, name, expression, declaration);
     const binding = {id, name, uri: expression.uri, statement, creation: expression, properties: {}, events: {}, edges: [],
       tracks: {rows: [], columns: []}, field: !!symbol.field, fieldDeclaration: symbol.field, inline: !declaration && !symbol.field,
       symbolKey: symbol.key, symbolId: symbol.record?.id ?? null, references: symbol.references, declaration: symbol.location,
       declarationOrder: this.nodes.length, sourceType: expression.type};
     const node = {id, type, properties: {}, children: [], events: {}};
-    if (previewType) node.projectType = actualType;
+    if (identity.projectType) node.projectType = identity.projectType;
     this.nodes.push(node);
     this.nodeMap.set(id, node);
     this.bindings[id] = binding;
