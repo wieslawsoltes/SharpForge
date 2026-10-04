@@ -1,0 +1,269 @@
+{
+  "schema": "sharpforge.git.recorded-provider-fixtures.v1",
+  "provider": "github",
+  "capturePolicy": {
+    "sources": "Public repositories only; existing authorized creation was recorded by the publishing agent. All capture requests by the fixture author were read-only.",
+    "secrets": "No tokens, request Authorization headers, cookies, emails or avatar/profile fields are retained.",
+    "representation": "Selected response fields, not raw HTTP recordings. Missing status, headers, GraphQL connection envelopes and cursor metadata are not inferred."
+  },
+  "records": {
+    "creation": {
+      "source": {
+        "tool": "mcp__codex_apps__github_create_pull_request",
+        "capturedAt": "2026-10-04T00:52:55Z",
+        "repository": "wieslawsoltes/SharpForge",
+        "representation": "connector-normalized-creation-result",
+        "publicUrl": "https://github.com/wieslawsoltes/SharpForge/pull/3635",
+        "selection": {
+          "request": [
+            "repository_full_name",
+            "title",
+            "head",
+            "base",
+            "body",
+            "draft"
+          ],
+          "response": [
+            "url",
+            "number",
+            "state",
+            "draft",
+            "title",
+            "body",
+            "base",
+            "base_sha",
+            "head",
+            "head_sha",
+            "head_repo_full_name",
+            "created_at"
+          ]
+        },
+        "omitted": [
+          "other request options",
+          "other normalized response fields, including user/profile/contact metadata",
+          "transport status and headers (not exposed by connector)"
+        ]
+      },
+      "request": {
+        "repository_full_name": "wieslawsoltes/SharpForge",
+        "title": "SF-A25-T02.4: implement fetch negotiation and shallow history",
+        "head": "codex/project19/p14-fetch-negotiation",
+        "base": "codex/project19/p13-pack-response-cleanup",
+        "body": "Task: SF-A25-T02.4\nArea: A25\nLock keys: none\n\n## Delivered behavior\n\nAdds Git protocol v0/v1 fallback and v2 capability/ref discovery, exact shallow boundaries, explicit promised-object resolution, negotiated wants/haves and pack ingestion, and fetched refs/tags/pruning metadata. Focused fixtures cover these wire and repository contracts.\n\n## Stack and scope\n\nP14 depends on P13 (#3616), branch `codex/project19/p13-pack-response-cleanup`. This layer contains 8 files and 616 changed lines, partitioned into 7 commits with individual WORK-IDs. Related work: #2084, #2085, #2086, #2090, #2091, #2093. Issue acceptance and closure are tracked separately in the complete delivery inventory.\n\n## Evidence and limits\n\nThe remote tree `95bcd9a29f23883688abd042db41e9110dfccaca` exactly matches the prepared partition of integrated source `d496c1d81d090ad847747983e899a79dfc06375b`. Remote head: `044cd91aaecce342447a547e9d6bf2c673932963`.\n\nFull-scope local qualification began only after the implementation was integrated. The retained initial 599-test run and subsequent correction scopes include both failures and passes; they are not presented as a fresh full pass for this partial layer. The final complete-source ledger will record exact commands, source revisions, counts and remaining platform boundaries.\n\nP13 ordinary core passed: https://github.com/wieslawsoltes/SharpForge/actions/runs/37165525013\n\nThis PR receives the repository's ordinary core checks. Local qualification and hosted checks are scheduled serially to avoid overlapping gates. No blanket issue closure is requested.",
+        "draft": false
+      },
+      "response": {
+        "url": "https://github.com/wieslawsoltes/SharpForge/pull/3635",
+        "number": 3635,
+        "state": "open",
+        "draft": false,
+        "title": "SF-A25-T02.4: implement fetch negotiation and shallow history",
+        "body": "Task: SF-A25-T02.4\nArea: A25\nLock keys: none\n\n## Delivered behavior\n\nAdds Git protocol v0/v1 fallback and v2 capability/ref discovery, exact shallow boundaries, explicit promised-object resolution, negotiated wants/haves and pack ingestion, and fetched refs/tags/pruning metadata. Focused fixtures cover these wire and repository contracts.\n\n## Stack and scope\n\nP14 depends on P13 (#3616), branch `codex/project19/p13-pack-response-cleanup`. This layer contains 8 files and 616 changed lines, partitioned into 7 commits with individual WORK-IDs. Related work: #2084, #2085, #2086, #2090, #2091, #2093. Issue acceptance and closure are tracked separately in the complete delivery inventory.\n\n## Evidence and limits\n\nThe remote tree `95bcd9a29f23883688abd042db41e9110dfccaca` exactly matches the prepared partition of integrated source `d496c1d81d090ad847747983e899a79dfc06375b`. Remote head: `044cd91aaecce342447a547e9d6bf2c673932963`.\n\nFull-scope local qualification began only after the implementation was integrated. The retained initial 599-test run and subsequent correction scopes include both failures and passes; they are not presented as a fresh full pass for this partial layer. The final complete-source ledger will record exact commands, source revisions, counts and remaining platform boundaries.\n\nP13 ordinary core passed: https://github.com/wieslawsoltes/SharpForge/actions/runs/37165525013\n\nThis PR receives the repository's ordinary core checks. Local qualification and hosted checks are scheduled serially to avoid overlapping gates. No blanket issue closure is requested.",
+        "base": "codex/project19/p13-pack-response-cleanup",
+        "base_sha": "8c7192639d5e80f3795e256be9bf7e7bd1efa773",
+        "head": "codex/project19/p14-fetch-negotiation",
+        "head_sha": "044cd91aaecce342447a547e9d6bf2c673932963",
+        "head_repo_full_name": "wieslawsoltes/SharpForge",
+        "created_at": "2026-10-04T00:52:55Z"
+      },
+      "integrity": {
+        "serialization": "UTF-8 JSON.stringify of the retained object, in stored property order",
+        "response": {
+          "sha256": "b0d41295178b6eff742dfd48148edd0c43e6ae5733a45cec2f2078d853a580f1",
+          "bytes": 2088
+        },
+        "request": {
+          "sha256": "51130eada0701eed00d7005bf72e77964dda71aa4aad22b63fa5f21ef7042db0",
+          "bytes": 1854
+        }
+      }
+    },
+    "pullRequest": {
+      "source": {
+        "tool": "mcp__codex_apps__github_fetch",
+        "capturedAt": "2026-10-04T00:53:26Z",
+        "request": {
+          "method": "GET",
+          "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/pulls/3635"
+        },
+        "representation": "selected-github-rest-json",
+        "selection": [
+          "number",
+          "title",
+          "body",
+          "state",
+          "html_url",
+          "draft",
+          "head.ref",
+          "head.sha",
+          "head.repo.clone_url",
+          "base.ref",
+          "base.sha"
+        ],
+        "omitted": [
+          "all other REST body fields",
+          "transport status and headers (not exposed by connector)"
+        ]
+      },
+      "response": {
+        "number": 3635,
+        "title": "SF-A25-T02.4: implement fetch negotiation and shallow history",
+        "body": "Task: SF-A25-T02.4\nArea: A25\nLock keys: none\n\n## Delivered behavior\n\nAdds Git protocol v0/v1 fallback and v2 capability/ref discovery, exact shallow boundaries, explicit promised-object resolution, negotiated wants/haves and pack ingestion, and fetched refs/tags/pruning metadata. Focused fixtures cover these wire and repository contracts.\n\n## Stack and scope\n\nP14 depends on P13 (#3616), branch `codex/project19/p13-pack-response-cleanup`. This layer contains 8 files and 616 changed lines, partitioned into 7 commits with individual WORK-IDs. Related work: #2084, #2085, #2086, #2090, #2091, #2093. Issue acceptance and closure are tracked separately in the complete delivery inventory.\n\n## Evidence and limits\n\nThe remote tree `95bcd9a29f23883688abd042db41e9110dfccaca` exactly matches the prepared partition of integrated source `d496c1d81d090ad847747983e899a79dfc06375b`. Remote head: `044cd91aaecce342447a547e9d6bf2c673932963`.\n\nFull-scope local qualification began only after the implementation was integrated. The retained initial 599-test run and subsequent correction scopes include both failures and passes; they are not presented as a fresh full pass for this partial layer. The final complete-source ledger will record exact commands, source revisions, counts and remaining platform boundaries.\n\nP13 ordinary core passed: https://github.com/wieslawsoltes/SharpForge/actions/runs/37165525013\n\nThis PR receives the repository's ordinary core checks. Local qualification and hosted checks are scheduled serially to avoid overlapping gates. No blanket issue closure is requested.",
+        "state": "open",
+        "html_url": "https://github.com/wieslawsoltes/SharpForge/pull/3635",
+        "draft": false,
+        "head": {
+          "ref": "codex/project19/p14-fetch-negotiation",
+          "sha": "044cd91aaecce342447a547e9d6bf2c673932963",
+          "repo": {
+            "clone_url": "https://github.com/wieslawsoltes/SharpForge.git"
+          }
+        },
+        "base": {
+          "ref": "codex/project19/p13-pack-response-cleanup",
+          "sha": "8c7192639d5e80f3795e256be9bf7e7bd1efa773"
+        }
+      },
+      "integrity": {
+        "serialization": "UTF-8 JSON.stringify of the retained object, in stored property order",
+        "response": {
+          "sha256": "865ba5720d08a0ccdb4d360cb65b5aa668671dfefb341f92214ae9b4068a3533",
+          "bytes": 2085
+        }
+      }
+    },
+    "issue": {
+      "source": {
+        "tool": "mcp__codex_apps__github_fetch",
+        "capturedAt": "2026-10-04T00:51:54Z",
+        "request": {
+          "method": "GET",
+          "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/issues/2150"
+        },
+        "representation": "selected-github-rest-json",
+        "selection": [
+          "number",
+          "title",
+          "state",
+          "html_url"
+        ],
+        "omitted": [
+          "body text and all other REST fields",
+          "transport status and headers (not exposed by connector)"
+        ]
+      },
+      "response": {
+        "number": 2150,
+        "title": "[SF-A25-T10.2] Implement GitHub pull request and issue operations",
+        "state": "open",
+        "html_url": "https://github.com/wieslawsoltes/SharpForge/issues/2150"
+      },
+      "integrity": {
+        "serialization": "UTF-8 JSON.stringify of the retained object, in stored property order",
+        "response": {
+          "sha256": "78dcbe61aa1e00697d58b5ad5e47064259eee8897748e16e21837e49e6889209",
+          "bytes": 175
+        }
+      }
+    },
+    "reviewThreads": {
+      "source": {
+        "tool": "mcp__codex_apps__github_list_pull_request_review_threads",
+        "capturedAt": "2026-10-04T00:54:35Z",
+        "request": {
+          "repo_full_name": "nodejs/node",
+          "pr_number": 62530
+        },
+        "publicUrl": "https://github.com/nodejs/node/pull/62530",
+        "representation": "selected-connector-normalized-graphql-thread-nodes",
+        "returnedThreadCount": 12,
+        "selectedThreadIndices": [
+          0
+        ],
+        "selectedCommentIndices": [
+          0
+        ],
+        "returnedCommentCount": 3,
+        "selection": [
+          "id",
+          "is_resolved",
+          "is_outdated",
+          "path",
+          "line",
+          "diff_side",
+          "comments[].id",
+          "comments[].database_id",
+          "comments[].body"
+        ],
+        "omitted": [
+          "other threads and comments",
+          "author/resolver profiles and all other node fields",
+          "original GraphQL response/cursor/pageInfo/URL metadata (not exposed by connector)"
+        ]
+      },
+      "response": {
+        "review_threads": [
+          {
+            "id": "PRRT_kwDOAZ7xs854PKTD",
+            "is_resolved": true,
+            "is_outdated": true,
+            "path": "lib/internal/modules/run_main.js",
+            "line": null,
+            "diff_side": "RIGHT",
+            "comments": [
+              {
+                "id": "PRRC_kwDOAZ7xs860IeYk",
+                "database_id": 3022120484,
+                "body": "Why is `--inspect-brk` an exception?"
+              }
+            ]
+          }
+        ]
+      },
+      "integrity": {
+        "serialization": "UTF-8 JSON.stringify of the retained object, in stored property order",
+        "response": {
+          "sha256": "c0c02a451182951151ac2e0987092d3700e8ef9d3e1050a8e0fff1b3f5d178f5",
+          "bytes": 278
+        }
+      }
+    },
+    "emptyReviewThreads": {
+      "source": {
+        "tool": "mcp__codex_apps__github_list_pull_request_review_threads",
+        "capturedAt": "2026-10-04T00:51:54Z",
+        "request": {
+          "repo_full_name": "wieslawsoltes/SharpForge",
+          "pr_number": 3628
+        },
+        "publicUrl": "https://github.com/wieslawsoltes/SharpForge/pull/3628",
+        "representation": "connector-normalized-graphql-thread-nodes",
+        "omitted": [
+          "original GraphQL response/cursor/pageInfo metadata (not exposed by connector)"
+        ]
+      },
+      "response": {
+        "review_threads": []
+      },
+      "integrity": {
+        "serialization": "UTF-8 JSON.stringify of the retained object, in stored property order",
+        "response": {
+          "sha256": "2e70f446bcf3b0fd4033dde42ae0ad7381a8c0c944e9e4aa557cd56cdb1b860b",
+          "bytes": 21
+        }
+      }
+    }
+  },
+  "replayScaffolding": {
+    "http": "Response status 200/201, content-type and request routing are authored for offline replay; they were not captured from transport.",
+    "creation": "The real normalized creation and later GET are bound by PR number, URL, title, head/base and commit IDs. The later GET supplies the REST response body for createPullRequest replay.",
+    "reviewThreads": "Snake-case connector fields are explicitly mapped to GraphQL camelCase. A single selected-page connection and comments pageInfo are authored; no original cursor or complete-connection capture is claimed.",
+    "issue": "The captured single-issue record is placed in an authored collection envelope for listIssues.",
+    "permissions": "Replay credentials/scopes and confirmation are authored test inputs. Known-insufficient local denial is not represented as a captured remote denial or captured token scope."
+  },
+  "remainingEvidence": [
+    "No recorded unauthorized remote write response or token-scope denial evidence.",
+    "No raw GraphQL connection pagination envelope; pagination bounds/cursors remain covered by separately labeled hand-authored fixtures.",
+    "No GitLab, Bitbucket, Azure DevOps or Gitea response capture is included."
+  ]
+}
