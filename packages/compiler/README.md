@@ -26,3 +26,30 @@ needed for that summary; it does not claim to verify method bodies or establish 
 Invalid input types and oversized arrays throw `RangeError`; malformed images preserve the metadata reader's explicit error. The function
 reads only the supplied byte view and does not modify it. The native SDK metadata service uses this public seam after its own trust,
 workspace, file-count and byte-budget checks.
+
+## Source emission metadata
+
+`sourceTypeDefinitions(parsedFiles, image)` and `sourceMemberDefinitions(parsedFiles, image)` expose the bounded source-to-CLI
+metadata projections used by `compileToIL`. They preserve namespaces, visibility, constructor access, properties and readonly flags.
+See [the source emission contract](docs/source-emission.md) for shapes, limits and explicit-option behavior.
+
+## Closed project assembly references
+
+A supplied PE reference may select `runtimeProfile: 'sharpforge'` to share the consuming compilation's closed framework identities.
+Executable use additionally requires canonical verification of real SharpForge PE method bodies. The compiler retains the complete
+assembly identity, exact SHA-256 and original metadata tokens in bounded external descriptors; dependency types are never redefined
+inside the consumer. Ordinary references keep strict assembly resolution and unsupported execution diagnostics.
+See [the project-reference contract](docs/project-references.md) for supported operations, bounds and the separate graph loader boundary.
+
+## Metadata language queries
+
+`MetadataLanguageModel(files, {references, ...compilationOptions})` decodes explicitly supplied PE references once and exposes
+`resolveType(uri, name, offset)`, `members(uri, receiver, {position, receiverStart, prefix})`, `types(uri, prefix, offset)`,
+`symbolAt(uri, offset)` and `analyze()`. Offsets are UTF-16 code units. Queries return data-only symbols and semantic diagnostics;
+executable support remains subject to the separate lowering and runtime profile checks.
+
+`update(files, options)` retains decoded references and unchanged parsed sources, and invalidates source binding. Construct a new model
+when reference identities, aliases or bytes change. The model accepts at most 512 references totaling 64 MiB, 10,000 source documents
+and 4,000,000 UTF-16 source units. Binding indexes default to 100,000 nodes; queries return at most 256 symbols and traverse at most
+64 base types. Source/binding work observes the supplied abort signal. Invalid PE metadata reports `CS0009`; budget violations throw
+explicit range errors. Imported definitions have no editable source location.

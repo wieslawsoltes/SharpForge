@@ -95,6 +95,21 @@ export const Declarations = Base =>
     declareProperty(owner, symbol) {
       if (symbol.parameters?.length && symbol.refKind && symbol.refKind !== 'none') this.unsupported('ref returns', symbol.locations?.[0]);
       for (const accessor of [symbol.getMethod, symbol.setMethod]) if (accessor) this.declareMethod(owner, accessor);
+      // Named properties need real metadata associations when this image becomes another project's reference.
+      // Indexers retain their existing explicit canonical-profile boundary.
+      if (!symbol.parameters?.length) {
+        const getter = symbol.getMethod ? this.methods.get(symbol.getMethod) : null;
+        const setter = symbol.setMethod ? this.methods.get(symbol.setMethod) : null;
+        if (getter || setter) owner.properties.push({
+          name: symbol.metadataName ?? symbol.name,
+          type: this.types.imageType(symbol.type, symbol.locations?.[0]),
+          isStatic: symbol.isStatic,
+          access: symbol.declaredAccessibility,
+          get: getter?.id ?? null,
+          set: setter?.id ?? null,
+          backing: symbol.isAutoProperty ? backingFieldName(symbol.name) : null,
+        });
+      }
       if (!symbol.isAutoProperty) return;
       // An auto-property: the backing field exists even when the symbol table did not materialise one.
       const backing = symbol.backingField;
@@ -166,7 +181,8 @@ export const Declarations = Base =>
       const property = symbol.associatedSymbol;
       if (symbol.methodKind !== MethodKind.PropertyGet && symbol.methodKind !== MethodKind.PropertySet) return null;
       if (!property || property.parameters?.length) return null;
-      return { property: property.name, kind: symbol.methodKind === MethodKind.PropertyGet ? 'get' : 'set', access: 'public' };
+      return { property: property.name, kind: symbol.methodKind === MethodKind.PropertyGet ? 'get' : 'set',
+        access: symbol.declaredAccessibility };
     }
     /** The image method of a source method symbol. */
     methodOf(symbol, syntax = null) {

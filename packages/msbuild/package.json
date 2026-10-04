@@ -16,7 +16,8 @@
     "docs",
     "README.md",
     "LICENSE",
-    "docs"
+    "binlog-reader",
+    "qualification"
   ],
   "dependencies": {
     "@sharpforge/project-system": "0.14.0",

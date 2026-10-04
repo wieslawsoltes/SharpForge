@@ -125,3 +125,8 @@ with one reusable 256-byte schedule and 32-byte state, so scratch storage is ind
 Embedded data emission and bounded inspection are documented in [RESOURCES.md](./RESOURCES.md).
 
 Win32 version, manifest and ICO emission is documented in [WIN32-RESOURCES.md](./WIN32-RESOURCES.md).
+
+The [project metadata contract](PROJECT-METADATA.md) documents generated assembly
+attributes, resources, source type/member visibility, named properties and canonical
+unlinked external-reference emission. It preserves the existing public emitter and
+loader result shapes.

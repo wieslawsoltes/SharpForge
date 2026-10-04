@@ -26,3 +26,7 @@ export { VerificationKind, verificationType, verificationDiagnosticCatalog } fro
 export { mergeVerificationTypes, mergeVerificationStacks } from './verify/type-relations.js';
 
 export {verifiedStackBound} from './verified-stack.js';
+
+export { AssemblyIdentity, AssemblyIdentityParts, IdentityComparison, compareAssemblyIdentity,
+  referenceMatchesDefinition, compareVersions, publicKeyToken, sha1 } from './assembly-identity.js';
+export { grantsInternalsAccess } from './assembly-access.js';

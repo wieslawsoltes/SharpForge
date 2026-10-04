@@ -1,3 +1,4 @@
+import { registerNativeBinlogServices } from './services-binlog.js';
 import { registerNativeNuGetServices } from './services-nuget.js';
 import { registerNativePublishServices } from './services-publish.js';
 import { registerNativeProjectServices } from './services-project.js';
@@ -16,8 +17,9 @@ export function createNativeServices(engine, options = {}) {
   registerNativePublishServices(registry, context);
   registerNativeNuGetServices(registry, context, options);
   const { discover } = registerNativeSdkServices(registry, context);
+  const { binlog } = registerNativeBinlogServices(registry, context);
   for (const contribution of options.contributions ?? []) contribution(registry, context);
-  return { registry, discover };
+  return { registry, discover, binlog };
 }
 
 export { registerNativeVfsServices } from './services-vfs.js';
@@ -27,3 +29,5 @@ export { registerNativeProjectServices } from './services-project.js';
 export { registerNativePublishServices } from './services-publish.js';
 
 export { registerNativeNuGetServices } from './services-nuget.js';
+
+export { registerNativeBinlogServices } from './services-binlog.js';

@@ -17,6 +17,7 @@
     "node": ">=22"
   },
   "dependencies": {
+    "@sharpforge/compiler": "0.14.0",
     "@sharpforge/syntax": "0.14.0",
     "@sharpforge/bytecode": "0.14.0",
     "@sharpforge/framework": "0.14.0"

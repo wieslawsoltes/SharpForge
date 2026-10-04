@@ -82,6 +82,11 @@ export class MSBuildClient {
 
   packageOperation(operation, request, options) { return this.service('nuget', operation, request, options); }
 
+  buildGraph(request, options) { return this.service('build', 'graph', request, options); }
+  buildAffected(request, options) { return this.service('build', 'affected', request, options); }
+
+  binlog(jobId, request = {}, options) { return this.service('binlog', 'query', { ...request, jobId }, options); }
+
   sdkInventory(options) { return this.service('sdk', 'inventory', {}, options); }
   resolveSdk(request, options) { return this.service('sdk', 'resolve', request, options); }
   workloads(request, options) { return this.service('sdk', 'workloads', request, options); }
