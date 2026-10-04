@@ -16,13 +16,27 @@ export function serialTestArgs(args) {
 }
 export function runProcess(command, args, {cwd, timeout}) {
   return new Promise((resolve, reject) => {
-    const child = spawn(command, args, {cwd, stdio: 'inherit', timeout, shell: false, env: limitedEnv()});
-    const forward = signal => child.kill(signal);
-    const interrupt = () => forward('SIGINT'), terminate = () => forward('SIGTERM');
+    if (timeout != null && (!Number.isInteger(timeout) || timeout < 0)) {
+      const error = new RangeError('timeout must be an unsigned integer');
+      error.code = 'ERR_OUT_OF_RANGE';
+      throw error;
+    }
+    const child = spawn(command, args, {cwd, stdio: 'inherit', shell: false, env: limitedEnv()});
+    let cancellationStatus, timer;
+    const forward = (signal, status) => {
+      // A child may exit zero after graceful cleanup. Cancellation must still stop the caller's next task.
+      cancellationStatus ??= status;
+      try {child.kill(signal);} catch (error) {child.emit('error', error);}
+    };
+    const interrupt = () => forward('SIGINT', 130), terminate = () => forward('SIGTERM', 143);
     process.on('SIGINT', interrupt); process.on('SIGTERM', terminate);
-    const cleanup = () => {process.off('SIGINT', interrupt); process.off('SIGTERM', terminate);};
+    const cleanup = () => {
+      clearTimeout(timer);
+      process.off('SIGINT', interrupt); process.off('SIGTERM', terminate);
+    };
     child.once('error', error => {cleanup(); reject(error);});
-    child.once('exit', (code, signal) => {cleanup(); resolve(code ?? (signal === 'SIGINT' ? 130 : 1));});
+    child.once('exit', (code, signal) => {cleanup(); resolve(cancellationStatus ?? code ?? (signal === 'SIGINT' ? 130 : 1));});
+    if (timeout > 0) timer = setTimeout(() => forward('SIGTERM', 124), timeout);
   });
 }
 export async function runTests(options) {
