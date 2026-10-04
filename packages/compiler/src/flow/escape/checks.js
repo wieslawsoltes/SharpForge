@@ -6,6 +6,7 @@
  *   CS8351  ref conditional branches of different scopes         CS8374 / CS9079  ref assignment to a wider variable
  *   CS8166-CS8170, CS8157, CS8158, CS9075-CS9078  a reference that may not be returned
  */
+import {DiagnosticId} from '../../diagnostics/codes.js';
 import { RefKind } from '../../symbols/types.js';
 import { isRefLike } from '../../binder/ref-struct.js';
 import { EscapeScope, variableOf } from './contexts.js';
@@ -21,9 +22,9 @@ function parameterRefProblem(parameter, refSafe, checkingReceiver) {
   // An `out` parameter is implicitly scoped under the C# 11 rules.
   const scoped = isScopedParameter(parameter) || (parameter.refKind === RefKind.Out && !isUnscopedRef(parameter));
   const byReference = isByReference(parameter.refKind);
-  if (byReference && scoped) return checkingReceiver ? 'CS9076' : 'CS9075';
-  if (byReference && refSafe === EscapeScope.ReturnOnly) return checkingReceiver ? 'CS9078' : 'CS9077';
-  return checkingReceiver ? 'CS8167' : 'CS8166';
+  if (byReference && scoped) return checkingReceiver ? DiagnosticId.CS9076 : DiagnosticId.CS9075;
+  if (byReference && refSafe === EscapeScope.ReturnOnly) return checkingReceiver ? DiagnosticId.CS9078 : DiagnosticId.CS9077;
+  return checkingReceiver ? DiagnosticId.CS8167 : DiagnosticId.CS8166;
 }
 
 /** Class mixin over EscapeContexts. */
@@ -35,13 +36,13 @@ export const EscapeChecks = Base =>
       if (!e || !e.type || !isRefLike(e.type) || this.safeContext(e) <= escapeTo) return [];
       switch (e.kind) {
         case 'Local':
-          return [problem(node, 'CS8352', [e.local.name])];
+          return [problem(node, DiagnosticId.CS8352, [e.local.name])];
         case 'Parameter':
-          return [problem(node, 'CS8352', [e.parameter.name])];
+          return [problem(node, DiagnosticId.CS8352, [e.parameter.name])];
         case 'This':
-          return [problem(node, 'CS8352', ['this'])];
+          return [problem(node, DiagnosticId.CS8352, ['this'])];
         case 'StackAlloc':
-          return [problem(e.syntax, 'CS8353', [e.type.toDisplayString()])];
+          return [problem(e.syntax, DiagnosticId.CS8353, [e.type.toDisplayString()])];
         case 'Ref':
         case 'Conversion':
           return this.valueEscapeProblems(e.operand, escapeTo, e.operand?.kind === 'StackAlloc' ? e.operand.syntax : node);
@@ -64,17 +65,17 @@ export const EscapeChecks = Base =>
       if (refSafe <= escapeTo) return [];
       switch (e.kind) {
         case 'Local': {
-          if (!isReturnable(escapeTo)) return [problem(node, 'CS8352', [e.local.name])];
+          if (!isReturnable(escapeTo)) return [problem(node, DiagnosticId.CS8352, [e.local.name])];
           const isRefLocal = isByReference(e.local.refKind);
-          if (checkingReceiver) return [problem(e.syntax, isRefLocal ? 'CS8158' : 'CS8169', [e.local.name])];
-          return [problem(node, isRefLocal ? 'CS8157' : 'CS8168', [e.local.name])];
+          if (checkingReceiver) return [problem(e.syntax, isRefLocal ? DiagnosticId.CS8158 : DiagnosticId.CS8169, [e.local.name])];
+          return [problem(node, isRefLocal ? DiagnosticId.CS8157 : DiagnosticId.CS8168, [e.local.name])];
         }
         case 'Parameter': {
           const code = parameterRefProblem(e.parameter, refSafe, checkingReceiver);
           return [problem(checkingReceiver ? e.syntax : node, code, [e.parameter.name])];
         }
         case 'This':
-          return [problem(node, 'CS8170')];
+          return [problem(node, DiagnosticId.CS8170)];
         case 'FieldAccess':
           return isRefField(e.field)
             ? this.valueEscapeProblems(e.receiver, escapeTo, node)
@@ -85,10 +86,10 @@ export const EscapeChecks = Base =>
         case 'PropertyAccess':
         case 'IndexerAccess':
           if (isByReference(e.method?.refKind ?? e.property?.refKind)) return this.invocationEscapeProblems(e, escapeTo, node);
-          return isReturnable(escapeTo) ? [problem(node, 'CS8156')] : [];
+          return isReturnable(escapeTo) ? [problem(node, DiagnosticId.CS8156)] : [];
         default:
           // A value passed to an `in` parameter lives in a temporary of the current method.
-          return valueKinds.has(e.kind) && isReturnable(escapeTo) ? [problem(node, 'CS8156')] : [];
+          return valueKinds.has(e.kind) && isReturnable(escapeTo) ? [problem(node, DiagnosticId.CS8156)] : [];
       }
     }
     /** CS8347: the first argument that cannot escape as far as the result is used, with its own problem first. */
@@ -101,7 +102,7 @@ export const EscapeChecks = Base =>
         if (!inner.length) continue;
         // A receiver that cannot escape is blamed on its own; an argument also names the call and the parameter.
         if (!value.parameter) return inner;
-        return [...inner, problem(node, 'CS8347', [invokedSymbol(invocation)?.toDisplayString?.() ?? '', value.parameter.name])];
+        return [...inner, problem(node, DiagnosticId.CS8347, [invokedSymbol(invocation)?.toDisplayString?.() ?? '', value.parameter.name])];
       }
       return [];
     }
@@ -125,7 +126,7 @@ export const EscapeChecks = Base =>
             : this.valueEscapeProblems(source.argument, targetScope);
           if (inner.length) {
             const symbol = invokedSymbol(invocation);
-            return [...inner, problem(invocation.syntax, 'CS8350', [symbol?.toDisplayString?.() ?? '', source.parameter?.name ?? 'this'])];
+            return [...inner, problem(invocation.syntax, DiagnosticId.CS8350, [symbol?.toDisplayString?.() ?? '', source.parameter?.name ?? 'this'])];
           }
         }
       }
@@ -140,7 +141,7 @@ export const EscapeChecks = Base =>
         whenTrue > whenFalse
           ? this.valueEscapeProblems(conditional.whenTrue, whenFalse)
           : this.valueEscapeProblems(conditional.whenFalse, whenTrue);
-      return [...inner, problem(conditional.syntax, 'CS8351')];
+      return [...inner, problem(conditional.syntax, DiagnosticId.CS8351)];
     }
     /** `destination = value` for a ref struct: the value must be allowed to live as long as the destination. */
     assignmentProblems(destination, value) {
@@ -152,7 +153,7 @@ export const EscapeChecks = Base =>
       const target = this.refSafeContext(assignment.left);
       const source = this.refSafeContext(assignment.right);
       if (source <= target) return [];
-      return [problem(assignment.syntax, source === EscapeScope.ReturnOnly ? 'CS9079' : 'CS8374', [describe(assignment.left), describe(assignment.right)])];
+      return [problem(assignment.syntax, source === EscapeScope.ReturnOnly ? DiagnosticId.CS9079 : DiagnosticId.CS8374, [describe(assignment.left), describe(assignment.right)])];
     }
   };
 

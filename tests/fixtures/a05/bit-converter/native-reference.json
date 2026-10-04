@@ -1,0 +1,37 @@
+{
+  "origin": "4fa8e838:tests/fixtures/a05/numeric-oracle/float.cs / float.txt",
+  "sdk": "10.0.201",
+  "runtime": "10.0.5",
+  "rid": "osx-arm64",
+  "globalization": "invariant",
+  "sourceSha256": "08368642a5de7795c416d8268b9a11a00623271dd862248debcbd1bef9aee3cd",
+  "outputSha256": "b86f6d16684daf44a02b98e73172838cd331546ac1e796591254ef1b6e5907ea",
+  "source": "using System;class Program{static void Main(){double nan=double.NaN;double zero=-0.0;float single=16777216F;Console.WriteLine(nan==nan);Console.WriteLine(nan!=nan);Console.WriteLine(nan<1D);Console.WriteLine(nan<=1D);Console.WriteLine(nan>1D);Console.WriteLine(nan>=1D);Console.WriteLine(BitConverter.SingleToInt32Bits(single+1F));Console.WriteLine(BitConverter.DoubleToInt64Bits(zero));Console.WriteLine(1D/zero);Console.WriteLine(3D%2D);Console.WriteLine(Math.IEEERemainder(3D,2D));Console.WriteLine(BitConverter.DoubleToInt64Bits(-4D%2D));Console.WriteLine(BitConverter.SingleToInt32Bits(-4F%2F));Console.WriteLine(BitConverter.DoubleToInt64Bits(3D%2D));float maximum=float.MaxValue;Console.WriteLine(BitConverter.SingleToInt32Bits(maximum*2F));double invalid=double.PositiveInfinity%2D;Console.WriteLine(invalid!=invalid);}}",
+  "stdout": "False\nTrue\nFalse\nFalse\nFalse\nFalse\n1266679808\n-9223372036854775808\n-Infinity\n1\n-1\n-9223372036854775808\n-2147483648\n4607182418800017408\n2139095040\nTrue\n",
+  "observations": [
+    {
+      "id": "single_precision",
+      "line": 7
+    },
+    {
+      "id": "double_negative_zero",
+      "line": 8
+    },
+    {
+      "id": "double_remainder_zero",
+      "line": 12
+    },
+    {
+      "id": "single_remainder_zero",
+      "line": 13
+    },
+    {
+      "id": "double_remainder",
+      "line": 14
+    },
+    {
+      "id": "single_overflow",
+      "line": 15
+    }
+  ]
+}

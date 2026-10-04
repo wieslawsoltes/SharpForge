@@ -1,6 +1,7 @@
 import {frameworkType} from '@sharpforge/framework';
 import {ManagedFault} from './heap.js';
 import {serializeJson} from './json-serialization.js';
+import {invokeJsonNumber} from './json-numeric-accessors.js';
 import {JSON_TEXT_LIMIT as MAX,JSON_NODE_LIMIT as MAX_NODES,JSON_DEPTH_LIMIT} from './json-limits.js';
 const J='System.Text.Json.';
 const fail=(type,message)=>{throw new ManagedFault(type,message);};
@@ -46,8 +47,7 @@ export function invokeJson(p,d,args){
  if(d.name==='EnumerateArray'||d.name==='EnumerateObject'){require(d.name==='EnumerateArray'?2:1);return ok(p.make(d.result,{'$doc':doc,'$index':index,'$cursor':-1}));}
  if(d.name==='GetString'){if(node.kind===7)return ok(null);require(3);return ok(p.managed(node.value,'string'));}
  if(d.name==='GetBoolean'){if(![5,6].includes(node.kind))fail('InvalidOperationException','Boolean required');return ok(p.managed(node.value,'bool'));}
- if(d.name==='GetInt32'){require(4);const raw=data.text.slice(node.start,node.end);if(!/^-?\d+$/.test(raw)||!Number.isInteger(node.value)||node.value< -2147483648||node.value>2147483647)fail('FormatException','JSON number cannot be represented as Int32');return ok(node.value);}
- if(d.name==='GetDouble'){require(4);return ok(p.managed(node.value,'double'));}
+ const numeric=invokeJsonNumber(p,d,data,node);if(numeric)return numeric;
  if(d.name==='GetRawText')return ok(p.managed(data.text.slice(node.start,node.end),'string'));
  if(d.name==='ToString')return ok(p.managed(node.kind===3?node.value:node.kind===7?'':node.kind===5?'True':node.kind===6?'False':data.text.slice(node.start,node.end),'string'));
  fail('MissingMethodException',d.name);

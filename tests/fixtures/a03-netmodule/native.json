@@ -1,0 +1,57 @@
+{
+  "runtime": ".NET 10.0.5",
+  "cases": [
+    {
+      "platform": "anycpu",
+      "isAssembly": false,
+      "name": "Part.netmodule",
+      "assemblyRows": 0,
+      "entryPoint": 0,
+      "types": [
+        "\u003CModule\u003E",
+        "\u003C\u003EProgram",
+        "\u003C\u003EAllocationToken",
+        "Part"
+      ]
+    },
+    {
+      "platform": "arm64",
+      "isAssembly": false,
+      "name": "Part.netmodule",
+      "assemblyRows": 0,
+      "entryPoint": 0,
+      "types": [
+        "\u003CModule\u003E",
+        "\u003C\u003EProgram",
+        "\u003C\u003EAllocationToken",
+        "Part"
+      ]
+    },
+    {
+      "platform": "x64",
+      "isAssembly": false,
+      "name": "Part.netmodule",
+      "assemblyRows": 0,
+      "entryPoint": 0,
+      "types": [
+        "\u003CModule\u003E",
+        "\u003C\u003EProgram",
+        "\u003C\u003EAllocationToken",
+        "Part"
+      ]
+    },
+    {
+      "platform": "x86",
+      "isAssembly": false,
+      "name": "Part.netmodule",
+      "assemblyRows": 0,
+      "entryPoint": 0,
+      "types": [
+        "\u003CModule\u003E",
+        "\u003C\u003EProgram",
+        "\u003C\u003EAllocationToken",
+        "Part"
+      ]
+    }
+  ]
+}

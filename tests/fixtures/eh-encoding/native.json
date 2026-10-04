@@ -1,0 +1,162 @@
+{
+  "runtime": ".NET 10.0.5",
+  "cases": [
+    {
+      "id": "FaultChained",
+      "sha256": "a249c84f6ce153bdf702c5a0ac23350b0f558222c19aad0bcdc494735a4c74b1",
+      "result": null,
+      "error": "System.NullReferenceException",
+      "regions": [
+        {
+          "kind": "Fault",
+          "tryOffset": 9,
+          "tryLength": 2,
+          "handlerOffset": 11,
+          "handlerLength": 10,
+          "catchType": 0,
+          "filterOffset": -1
+        }
+      ],
+      "options": {
+        "kind": "fault",
+        "exceptionFormat": "small",
+        "nativeChained": true,
+        "name": "FaultChained"
+      }
+    },
+    {
+      "id": "FaultFat",
+      "sha256": "eb992b5735a308c966c70014dc4b673bbb20c62a4dbcc3c59c99e3d3e7c2e122",
+      "result": 7,
+      "error": null,
+      "regions": [
+        {
+          "kind": "Fault",
+          "tryOffset": 9,
+          "tryLength": 2,
+          "handlerOffset": 11,
+          "handlerLength": 10,
+          "catchType": 0,
+          "filterOffset": -1
+        },
+        {
+          "kind": "Catch",
+          "tryOffset": 9,
+          "tryLength": 12,
+          "handlerOffset": 21,
+          "handlerLength": 6,
+          "catchType": 16777218,
+          "filterOffset": -1
+        }
+      ],
+      "options": {
+        "kind": "fault",
+        "exceptionFormat": "fat",
+        "name": "FaultFat"
+      }
+    },
+    {
+      "id": "FaultSmall",
+      "sha256": "c23895230d7b4cf192f4426b248f772969d44b10cc7c2f7268ae24e2faac5cb2",
+      "result": 7,
+      "error": null,
+      "regions": [
+        {
+          "kind": "Fault",
+          "tryOffset": 9,
+          "tryLength": 2,
+          "handlerOffset": 11,
+          "handlerLength": 10,
+          "catchType": 0,
+          "filterOffset": -1
+        },
+        {
+          "kind": "Catch",
+          "tryOffset": 9,
+          "tryLength": 12,
+          "handlerOffset": 21,
+          "handlerLength": 6,
+          "catchType": 16777218,
+          "filterOffset": -1
+        }
+      ],
+      "options": {
+        "kind": "fault",
+        "exceptionFormat": "small",
+        "name": "FaultSmall"
+      }
+    },
+    {
+      "id": "FilterAuto",
+      "sha256": "d043e4ee044055b3c2e7f5812c89027d8fcf543838d76f7c810437fef701a2f7",
+      "result": 42,
+      "error": null,
+      "regions": [
+        {
+          "kind": "Filter",
+          "tryOffset": 9,
+          "tryLength": 2,
+          "handlerOffset": 19,
+          "handlerLength": 15,
+          "catchType": 0,
+          "filterOffset": 11
+        }
+      ],
+      "options": {
+        "kind": "filter",
+        "exceptionFormat": "auto",
+        "name": "FilterAuto"
+      }
+    },
+    {
+      "id": "FilterFat",
+      "sha256": "fac38f541af1ff24a5c2cb167d2700fe0f528401725dafbae2b932b84c7ff9aa",
+      "result": 42,
+      "error": null,
+      "regions": [
+        {
+          "kind": "Filter",
+          "tryOffset": 9,
+          "tryLength": 2,
+          "handlerOffset": 19,
+          "handlerLength": 15,
+          "catchType": 0,
+          "filterOffset": 11
+        }
+      ],
+      "options": {
+        "kind": "filter",
+        "exceptionFormat": "fat",
+        "name": "FilterFat"
+      }
+    },
+    {
+      "id": "FilterSmall",
+      "sha256": "365f4f97b3ee4888cdb9b7d2e3d4cf2a96b94560cdfbc55266daba45a8603ed9",
+      "result": 42,
+      "error": null,
+      "regions": [
+        {
+          "kind": "Filter",
+          "tryOffset": 9,
+          "tryLength": 2,
+          "handlerOffset": 19,
+          "handlerLength": 15,
+          "catchType": 0,
+          "filterOffset": 11
+        }
+      ],
+      "options": {
+        "kind": "filter",
+        "exceptionFormat": "small",
+        "name": "FilterSmall"
+      }
+    }
+  ],
+  "sdk": "10.0.201",
+  "sourceSha256": {
+    "ExceptionOracle.csproj": "cdd6f0b4e4b9c72196431282fc7f42508e52e0f6a10b88a948a157bbdabd220b",
+    "Program.cs": "32c49417be1ee2dcb5c1ada0f4f351aa6d2dbe616f55d1a2213cf883870d80cc",
+    "NuGet.Config": "2142cfb2dfa2c7feefbe40fabcc68b0dfecadafa99a1db9b70239d977cf2a7ef"
+  }
+}
