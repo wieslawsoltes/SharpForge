@@ -1,3 +1,4 @@
+import {isAsyncMethodImplementation} from './async-state-machines.js';
 import {CilError} from './binary.js';
 import {decodeCoded, token} from './metadata.js';
 import {genericTypeParts} from './field-profile.js';
@@ -140,6 +141,7 @@ export class CilDispatchTable {
     const {type, name} = context, explicit = new Set();
     const callContext = {ownerToken: type.token, genericIdentity: name, typeArguments: context.arguments};
     for (const implementation of this.implementations.get(type.token) ?? []) {
+      if (isAsyncMethodImplementation(this.inspector, name, implementation)) continue;
       const declaration = this.definition(implementation.declaration, callContext);
       const body = this.definition(implementation.body, callContext);
       if (!(declaration.flags & virtual) || declaration.flags & 0x10 || body.flags & 0x10 ||

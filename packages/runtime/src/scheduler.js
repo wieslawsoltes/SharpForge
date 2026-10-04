@@ -1,6 +1,7 @@
 import {enqueueManagedContext, prepareManagedContext} from './execution/managed-contexts.js';
-import {completeAsyncContinuations, copyAsyncTaskState} from './execution/async-continuations.js';
-import {retainTaskFault, taskFailure} from './execution/task-faults.js';
+import {copyAsyncTaskState} from './execution/async-continuations.js';
+import {completeTask} from './execution/task-completion.js';
+import {taskFailure} from './execution/task-faults.js';
 import {executionFrames} from './execution/callback-frames.js';
 import {loadContext,parkContext} from './execution/context-transitions.js';
 import {forgetContextSuspension} from './execution/context-events.js';
@@ -41,14 +42,7 @@ export class CooperativeScheduler {
     const ref=this.vm.platform.make(type,{Id:id,$status:'waiting',$result:null},'task');
     const t={id,ref,status:'waiting',resultType,result:null,error:null,waiters:new Set(),created:this.now(),...extra};this.tasks.set(id,t);return t;
   }
-  complete(t,result=null,error=null,canceled=false){
-    if(terminal.has(t.status))return;t.result=result;t.error=error;t.status=canceled?'canceled':error?'faulted':'completed';t.completed=this.now();
-    this.vm.heap.withRoots([t.ref,result,error?.reference],()=>{this.vm.platform.set(t.ref,'$status',t.status);this.vm.platform.set(t.ref,'$result',result);if(error){retainTaskFault(this,t,error);const message=this.vm.heap.string(error.name+': '+error.message);this.vm.heap.withRoots([message],()=>this.vm.platform.set(t.ref,'$error',message));}});
-    for(const id of t.waiters){const c=this.contexts.get(id);if(!c||!c.wait||terminal.has(c.status))continue;if(error||canceled)c.resumeFault=this.failure(t,c.wait.failureMode);else if(c.wait.pushResult){const resultValue=c.wait.voidResult?null:result;if(this.vm.inspector)c.frames.at(-1)?.stack.push(resultValue);else c.stack.push(resultValue);}
-      c.wait=null;c.status='ready';
-    }t.waiters.clear();
-    completeAsyncContinuations(this,t);
-  }
+  complete(t,result=null,error=null,canceled=false){return completeTask(this,t,result,error,canceled);}
   failure(t,mode=null){return taskFailure(this,t,mode);}
   enqueue(delegate,args=[],{name=null,kind='task',task=null,parentId=this.currentId,eager=false,thread=null}={}){
     prepareManagedContext(this);
