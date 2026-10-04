@@ -7,7 +7,14 @@ export async function smoke({api}) { assert.ok(Object.keys(api).length > 0); }
 export const smokeSteps = [
   {id: 'editor:stylesheet', order: 670, async run(context) {
     const {readFileSync}=await import('node:fs');
-    assert(readFileSync(new URL(import.meta.resolve('@sharpforge/editor/editor.css')),'utf8').includes('.sf-editor'));
+    const entry = new URL(import.meta.resolve('@sharpforge/editor/editor.css'));
+    const styles = [readFileSync(entry, 'utf8')];
+    for (const match of styles[0].matchAll(/@import\s+['"]([^'"]+)['"]/gu)) {
+      const imported = readFileSync(new URL(match[1], entry), 'utf8');
+      assert(imported.length > 0, `Empty bundled editor stylesheet: ${match[1]}`);
+      styles.push(imported);
+    }
+    assert(styles.some(text => text.includes('.sf-editor')));
     Object.assign(context, {readFileSync});
   }},
   {id: 'editor:viewport-navigation', order: 890, async run(context) {
