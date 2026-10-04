@@ -21,6 +21,7 @@ export * from './resource-clipboard.js';
 export * from './resource-node-references.js';
 export * from './resource-codegen.js';
 export * from './resource-xaml.js';
+export * from './metadata-roots.js';
 export {LiveDesignCapabilityError} from './live-capabilities.js';
 export {designComposedPreviewCapability} from './source-composed-preview.js';
 export {designInheritancePreviewProfile} from './source-preview.js';
