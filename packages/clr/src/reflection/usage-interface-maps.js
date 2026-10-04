@@ -50,7 +50,7 @@ export class UsageInterfaceMaps {
       if (!declaration.isVirtual) continue;
       if (declaration.isStatic) throw unsupportedRelation('Static virtual interface maps require a static-slot provider');
       const inheritedEntry = inherited.get(declaration);
-      const selected = explicit.get(declaration) ?? (direct ? await this.#implicit(type, declaration) : null);
+      const selected = explicit.get(declaration) ?? (direct ? await this.#implicit(type, declaration, !inheritedEntry) : null);
       let implementation = selected;
       let implementationKind = explicit.has(declaration) ? 'explicit' : 'implicit';
       if (!implementation && inheritedEntry) {
@@ -70,9 +70,12 @@ export class UsageInterfaceMaps {
     return result;
   }
 
-  async #implicit(type, declaration) {
+  async #implicit(type, declaration, searchAncestors) {
     const key = await this.#metadata.key(declaration);
     for (const owner of this.#metadata.ancestry(type)) {
+      // Reimplementation can select a declaration on this type. An existing inherited
+      // interface entry takes precedence over searching older public methods (II.12.2).
+      if (owner !== type && !searchAncestors) break;
       if (!owner.module) continue;
       const found = (await this.#metadata.publicSlots(owner)).get(declaration.name)?.get(key);
       if (!found) continue;

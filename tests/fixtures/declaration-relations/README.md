@@ -38,6 +38,10 @@ implementing TypeDef context: an inherited body appears once for every class who
 map uses it. A hider without interface reimplementation does not change the inherited
 map; reimplementation can choose a different public virtual slot. Explicit maps use
 canonical MethodDef/MemberRef identity and full resolved signature compatibility.
+Reimplementation without a matching current declaration preserves the inherited map,
+including an explicit implementation, before searching ancestral public methods. A
+separate authored case introduces an interface with no inherited mapping and verifies
+that its ancestral public method is selected.
 
 The snapshot covers local source/target method definitions and local implementing
 types. External definitions lie outside its query domain. References needed for a
@@ -59,6 +63,11 @@ benchmark was run by the implementation agent. The root agent owns serial captur
 tests and publishing. JavaScript metadata services are the affected implementation;
 source-VM/direct-CIL/Rust-native/Rust-Wasm execution and browser/platform coverage are
 not implied by this unexecuted fixture.
+
+`browser.mjs` exports `run()` for a browser module harness. It checks the same canonical
+families, snapshot ownership after source destruction/context unload, budgets,
+cancellation and paging, then fetches and replays the captured native reference. This
+qualifies the browser JavaScript metadata API; the browser does not execute managed IL.
 
 The adapter indexes signature identities and MethodImpl owners once, bounds metadata,
 retained relation counts and its own work steps, and uses slot lookups along bounded

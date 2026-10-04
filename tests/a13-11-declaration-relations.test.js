@@ -37,9 +37,23 @@ test('A13 interface maps distinguish inherited virtual slots, explicit implement
   ]);
   assert.deepEqual(observations(t.contractOther), [
     [t.root, t.rootOther, 'implicit'], [t.middle, t.explicitOther, 'explicit'], [t.hidden, t.explicitOther, 'inherited'],
-    [t.leaf, t.explicitOther, 'inherited'], [t.reimplemented, t.rootOther, 'implicit'],
+    [t.leaf, t.explicitOther, 'inherited'], [t.reimplemented, t.explicitOther, 'inherited'],
   ]);
   assert.equal(graph.query('implemented-by', t.contractM).complete, true);
+  assert.equal(module.methodBodyReadCount, 0);
+});
+
+test('A13 newly introduced contracts search ancestral public methods when no inherited interface entry exists', async () => {
+  const { module, bytes } = await load({ decorate({ md }) {
+    md.rows[9] = md.rows[9].filter(row => row[0] !== 2 && row[0] !== 3);
+    md.rows[25] = [];
+  } });
+  const snapshot = await createAssemblyMethodRelations(module);
+  assert.deepEqual(snapshot.diagnostics, []);
+  const graph = new AssemblyUsageAnalysis(new AssemblyInspector(bytes), { methodRelations: snapshot });
+  assert.deepEqual(graph.query('implemented-by', t.contractOther).entries
+    .map(entry => [entry.implementingTypeToken, entry.sourceToken, entry.implementationKind]),
+  [[t.reimplemented, t.rootOther, 'implicit']]);
   assert.equal(module.methodBodyReadCount, 0);
 });
 

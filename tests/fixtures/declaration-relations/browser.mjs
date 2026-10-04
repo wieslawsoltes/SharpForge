@@ -43,7 +43,17 @@ export async function run() {
     equal(graph.query('implemented-by', tokens.contractM).entries.map(entry => entry.sourceToken),
       [tokens.rootM, tokens.middleM, tokens.middleM, tokens.leafM, tokens.reimplementedM], 'Inherited slots and reimplementation');
     equal(graph.query('implemented-by', tokens.contractOther).entries.map(entry => entry.sourceToken),
-      [tokens.rootOther, tokens.explicitOther, tokens.explicitOther, tokens.explicitOther, tokens.rootOther], 'Explicit aliases and inheritance');
+      [tokens.rootOther, tokens.explicitOther, tokens.explicitOther, tokens.explicitOther, tokens.explicitOther],
+      'Reimplementation preserves an inherited explicit mapping without a current public declaration');
+    const introducedBytes = declarationFixture({ decorate({ md }) {
+      md.rows[9] = md.rows[9].filter(row => row[0] !== 2 && row[0] !== 3);
+      md.rows[25] = [];
+    } });
+    const introducedModule = (await baseContext().loadFromStream(introducedBytes)).manifestModule;
+    const introduced = await createAssemblyMethodRelations(introducedModule);
+    equal(introduced.diagnostics, [], 'Newly introduced contract diagnostics');
+    equal(introduced.entries.filter(entry => entry.relation === 'implemented-by' && entry.targetToken === tokens.contractOther)
+      .map(entry => entry.sourceToken), [tokens.rootOther], 'Newly introduced interface searches ancestral public methods');
     assert(module.methodBodyReadCount === 0, 'CLR provider does not read method bodies');
     report.checks.push('Canonical override/interface sets, explicit aliases, hiding, inherited slots and reimplementation');
 

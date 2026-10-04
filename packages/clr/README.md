@@ -90,7 +90,11 @@ families. `implemented-by` records each local interface declaration's canonical 
 and implementing type. Interface maps support public virtual instance methods, exact
 MethodDef/MemberRef `MethodImpl` aliases, inheritance, explicit implementation and interface
 reimplementation. An inherited interface map follows overrides of its existing virtual
-slot; a same-name `newslot` method alone does not replace that mapping. Signatures and
+slot; a same-name `newslot` method alone does not replace that mapping. Reimplementation
+can select a method declared on the current type. Without such a declaration, an existing
+inherited mapping takes precedence over older public methods, including when the mapping
+uses an explicit implementation. A newly introduced interface can use ancestral public
+methods when no inherited entry exists. Signatures and
 generic method constraints reuse `OverrideSignatures`; display names never establish
 type identity or slot compatibility.
 
