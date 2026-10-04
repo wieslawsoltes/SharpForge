@@ -1,0 +1,38 @@
+[
+  {
+    "id": 32447535161,
+    "node_id": "LE_lADOU59Ms88AAAABU8KKpc8AAAAHjgYYOQ",
+    "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/issues/events/32447535161",
+    "actor": {
+      "login": "pull-request-size[bot]",
+      "id": 44656223,
+      "node_id": "MDM6Qm90NDQ2NTYyMjM=",
+      "avatar_url": "https://avatars.githubusercontent.com/in/20019?v=4",
+      "gravatar_id": "",
+      "url": "https://api.github.com/users/pull-request-size%5Bbot%5D",
+      "html_url": "https://github.com/apps/pull-request-size",
+      "followers_url": "https://api.github.com/users/pull-request-size%5Bbot%5D/followers",
+      "following_url": "https://api.github.com/users/pull-request-size%5Bbot%5D/following{/other_user}",
+      "gists_url": "https://api.github.com/users/pull-request-size%5Bbot%5D/gists{/gist_id}",
+      "starred_url": "https://api.github.com/users/pull-request-size%5Bbot%5D/starred{/owner}{/repo}",
+      "subscriptions_url": "https://api.github.com/users/pull-request-size%5Bbot%5D/subscriptions",
+      "organizations_url": "https://api.github.com/users/pull-request-size%5Bbot%5D/orgs",
+      "repos_url": "https://api.github.com/users/pull-request-size%5Bbot%5D/repos",
+      "events_url": "https://api.github.com/users/pull-request-size%5Bbot%5D/events{/privacy}",
+      "received_events_url": "https://api.github.com/users/pull-request-size%5Bbot%5D/received_events",
+      "type": "Bot",
+      "user_view_type": "public",
+      "site_admin": false
+    },
+    "event": "labeled",
+    "commit_id": null,
+    "commit_url": null,
+    "created_at": "2026-10-04T14:34:40Z",
+    "label": {
+      "name": "size/XXL",
+      "color": "E50009"
+    },
+    "intent": null,
+    "performed_via_github_app": null
+  }
+]

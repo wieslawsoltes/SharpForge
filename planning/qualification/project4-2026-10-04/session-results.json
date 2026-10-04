@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-10-04T14:23:20.195178Z",
+  "updatedAt": "2026-10-04T14:41:53.193882Z",
   "scope": "Project4 A00/A29/R015 continuation; historical244 mapped identities are separately timestamped.",
   "qualificationPolicy": {
     "localEnvironment": {
@@ -1182,7 +1182,15 @@
         "verified": 9,
         "accepted": 2,
         "unsupported": 7,
-        "capture": "captures/bytecode-profile-parent.log"
+        "capture": "captures/bytecode-profile-parent.log",
+        "sourceArchive": {
+          "path": "captures/bytecode-profile-parent-probe.mjs.txt",
+          "originalFilename": "bytecode-profile-parent-probe.mjs",
+          "format": "archived-javascript-source-text",
+          "bytes": 1341,
+          "sha256": "6fb5f58bb67dc28d0c50592cd154e882a42590a129dd6d18bff3da03d61f5168",
+          "purpose": "Original disposable parent-probe JavaScript source retained as archival text. The .txt suffix distinguishes captured input from a repository runtime module; source bytes are unchanged."
+        }
       },
       "setupFailure": {
         "capture": "captures/bytecode-profile-setup-failure.tap",
@@ -1245,5 +1253,104 @@
       }
     ],
     "note": "Local report history is preserved with a merge of the completed implementation baseline. Published commits preserve each corresponding Git tree; final PR head mapping is recorded in the PR body."
+  },
+  "evidencePublication": {
+    "pr": 4564,
+    "url": "https://github.com/wieslawsoltes/SharpForge/pull/4564",
+    "initialOrdinaryCore": {
+      "status": "completed",
+      "conclusion": "failure",
+      "run": 37209773138,
+      "runUrl": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37209773138",
+      "job": 111458416587,
+      "jobUrl": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37209773138/job/111458416587",
+      "event": "pull_request",
+      "runStartedAt": "2026-10-04T14:34:43Z",
+      "runFinishedAt": "2026-10-04T14:35:18Z",
+      "publishedHead": "24fe2d86e3871997ac2266a9b3b0d21b0d44030c",
+      "actualCheckout": {
+        "commit": "b8c6b9d6c24c953da49c37c64fa2216fb27a8ae3",
+        "tree": "6daacbc1c83710b54aab2dd84c31bba2f7365c20",
+        "kind": "GitHub pull-request merge checkout",
+        "parents": [
+          "7dd8df57a793a528ef36d5ff88b059ce9f87acca",
+          "24fe2d86e3871997ac2266a9b3b0d21b0d44030c"
+        ]
+      },
+      "failure": {
+        "check": "static-imports",
+        "operation": "dynamic-import",
+        "count": 3,
+        "lines": [
+          9,
+          10,
+          11
+        ],
+        "originalFilename": "bytecode-profile-parent-probe.mjs",
+        "originalSha256": "6fb5f58bb67dc28d0c50592cd154e882a42590a129dd6d18bff3da03d61f5168",
+        "reason": "The .mjs archival filename caused the original disposable probe to be inspected as a repository JavaScript module."
+      },
+      "captures": {
+        "run.json": "captures/evidence-pr4564-first-core/run.json",
+        "jobs.json": "captures/evidence-pr4564-first-core/jobs.json",
+        "checkout-commit.json": "captures/evidence-pr4564-first-core/checkout-commit.json",
+        "pr.json": "captures/evidence-pr4564-first-core/pr.json",
+        "events.json": "captures/evidence-pr4564-first-core/events.json",
+        "core-job.log": "captures/evidence-pr4564-first-core/core-job.log"
+      },
+      "otherJobs": [
+        {
+          "name": "core-platforms",
+          "id": 111458499714,
+          "conclusion": "skipped"
+        },
+        {
+          "name": "build",
+          "id": 111458500246,
+          "conclusion": "skipped"
+        },
+        {
+          "name": "packages",
+          "id": 111458500466,
+          "conclusion": "skipped"
+        },
+        {
+          "name": "browser (${{ matrix.os }}, ${{ matrix.suite }})",
+          "id": 111458500680,
+          "conclusion": "skipped"
+        },
+        {
+          "name": "native-il",
+          "id": 111458501043,
+          "conclusion": "skipped"
+        },
+        {
+          "name": "native-msbuild",
+          "id": 111458501619,
+          "conclusion": "skipped"
+        },
+        {
+          "name": "clr-wasm",
+          "id": 111458501754,
+          "conclusion": "skipped"
+        },
+        {
+          "name": "ci-ok",
+          "id": 111458501832,
+          "conclusion": "skipped"
+        }
+      ],
+      "chronology": "First non-cancelled ordinary-core run. Earlier run 37209752375 was cancelled after the size/XXL bot label triggered a replacement; the retained events capture preserves the label event."
+    },
+    "archiveCorrection": {
+      "path": "captures/bytecode-profile-parent-probe.mjs.txt",
+      "originalFilename": "bytecode-profile-parent-probe.mjs",
+      "format": "archived-javascript-source-text",
+      "bytes": 1341,
+      "sha256": "6fb5f58bb67dc28d0c50592cd154e882a42590a129dd6d18bff3da03d61f5168",
+      "purpose": "Original disposable parent-probe JavaScript source retained as archival text. The .txt suffix distinguishes captured input from a repository runtime module; source bytes are unchanged.",
+      "scope": "Rename the archive to .mjs.txt and update evidence references/index metadata; retain the original source, capture bytes and historical results. No policy exception or captured-probe edit.",
+      "status": "prepared locally; corrected npm check/build and hosted core outcomes remain pending"
+    }
   }
 }

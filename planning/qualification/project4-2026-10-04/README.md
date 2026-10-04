@@ -10,7 +10,7 @@ Project-field, release or platform-pass claim.
 - Initial record prepared: `2026-10-04T12:28:25Z`; isolated record base: [dc84bcbfea54](https://github.com/wieslawsoltes/SharpForge/commit/dc84bcbfea548a152e239d60b3950f06b9ebd2c7).
 - Live issue/claim observation: `2026-10-04T11:12:01Z` at source [ca3c083b61d6](https://github.com/wieslawsoltes/SharpForge/commit/ca3c083b61d637f98d53d0e55d9c2e564b11bf5d).
 - Classification code inspection: `2026-10-04T11:45:46.044Z` with local inspection commit `db6eb3278c49043132554463ceffc18f8e50899d`.
-- Session evidence summarized below: [session-results.json](session-results.json), updated at `2026-10-04T14:23:20.195178Z`. Its run-specific sources and owner-observation times remain separate from the earlier classification.
+- Session evidence summarized below: [session-results.json](session-results.json), updated at `2026-10-04T14:41:53.193882Z`. Its run-specific sources and owner-observation times remain separate from the earlier classification.
 - The inputs agree on all 244 unique issue/Work-ID pairs and observed states: **109 A00, 133 A29, 2 R015; 204 open and 40 closed**.
 - The open issues comprise **32 parent trackers and 172 non-parent items**; these are not 204 independent missing features.
 - There are **43 group definitions, 40 populated groups**. `a00-services`, `a00-claims` and `a29-ci` preserve context with zero assigned rows.
@@ -47,8 +47,8 @@ The original issue/claim audit retains its earlier timestamp, states and all 68 
 | [classification.json](classification.json) | Complete parsed classification input: all 43 definitions, all 244 issue records, acceptance text, deliverables, summarized leases and original session follow-ups. Only formatting is compacted. |
 | [source-observations.json](source-observations.json) | Original input hashes, byte counts, timestamps, scope/summary and all 68 full claim records, with explicit references to later session and owner evidence. Full original audit and acceptance-inventory files are hash-identified rather than duplicated. |
 | [session-results.json](session-results.json) | Authoritative session results: tested local and published source mappings, merged PRs, the TAP draft, public-board reconciliation, workflow reservation audit, regression reproductions, integrated runs, original findings, corrected replays and remaining qualification. |
-| [capture-index.json](capture-index.json) | Complete index of the 169 captures retained before central CI, with byte counts, SHA-256 digests and format labels. |
-| [verification-summary.json](verification-summary.json) | Successful data-integrity checks: all indexed bytes, 30 campaign-report digests, 34 JSON pointers, local Markdown links and the complete 244-pair board reconciliation. |
+| [capture-index.json](capture-index.json) | Complete index of 175 captures: the original 169 with unchanged digests, plus six raw records from the first failed evidence-publication core run. Byte counts, SHA-256 digests and explicit archival format labels are retained. |
+| [verification-summary.json](verification-summary.json) | Data-integrity check results for indexed bytes, original-capture preservation, campaign-report digests, JSON reference pointers, local Markdown links, delivery identities and the complete 244-pair board reconciliation. The summary distinguishes integrity checks from product tests/builds and hosted qualification. |
 
 The archived classification column below preserves the supplied classification, including descriptions of earlier in-progress branches.
 The completion-obligation column and session sections explain later implementation evidence and remaining acceptance boundaries.
@@ -273,6 +273,10 @@ Use their counts in the context of the original run. These ordinary test logs ar
 `parity-v2` evidence bundle merely because they are linked here. The [capture index](capture-index.json) identifies retained bytes;
 format acceptance remains a separate check against the applicable evidence contract.
 
+The [original bytecode parent-probe source](captures/bytecode-profile-parent-probe.mjs.txt) is archived as text with original filename
+`bytecode-profile-parent-probe.mjs` recorded in metadata. Its **1,341 bytes** and SHA-256
+`6fb5f58bb67dc28d0c50592cd154e882a42590a129dd6d18bff3da03d61f5168` are unchanged. Historical run logs preserve the original filename.
+
 | Parent regression scope | Recorded source boundary | Actual parent result | Retained capture |
 | --- | --- | --- | --- |
 | Immutable claim generation | `ca3c083b61d637f98d53d0e55d9c2e564b11bf5d` | 1 passed / 9 failed | [Original log](captures/a00-parent.tap) |
@@ -350,6 +354,26 @@ no evidence that an appropriately configured hosted runner is unavailable.
 Host-wide fairness and managed WebSocket support remain code gaps. Remote Git/auth, independent designers, duplicate-instance Hot Reload
 locks, app-only output and actual platform/physical behavior also retain their specific acceptance obligations. An available hosted browser
 or platform runner can still supply useful qualification; the local driver failure does not establish that all platform work is impossible.
+
+## Evidence-publication core failure and archive correction
+
+The first non-cancelled ordinary-core run for [PR #4564](https://github.com/wieslawsoltes/SharpForge/pull/4564)
+[failed](https://github.com/wieslawsoltes/SharpForge/actions/runs/37209773138/job/111458416587) on `static-imports`.
+Its published head was [24fe2d86e387](https://github.com/wieslawsoltes/SharpForge/commit/24fe2d86e3871997ac2266a9b3b0d21b0d44030c),
+while the actual pull-request merge checkout was [b8c6b9d6c24c](https://github.com/wieslawsoltes/SharpForge/commit/b8c6b9d6c24c953da49c37c64fa2216fb27a8ae3).
+The check found the original disposable parent probe’s three dynamic imports at lines 9–11 because its retained `.mjs` filename made it
+look like a repository runtime module. The failure is separate from the earlier passing implementation tests and remains part of this record.
+
+The six original records are preserved: [run](captures/evidence-pr4564-first-core/run.json),
+[jobs](captures/evidence-pr4564-first-core/jobs.json), [actual checkout](captures/evidence-pr4564-first-core/checkout-commit.json),
+[PR snapshot](captures/evidence-pr4564-first-core/pr.json), [events](captures/evidence-pr4564-first-core/events.json)
+and [raw core log](captures/evidence-pr4564-first-core/core-job.log). Other jobs in this run report skipped outcomes and supply no additional platform result.
+
+The correction renames only the archived probe to [bytecode-profile-parent-probe.mjs.txt](captures/bytecode-profile-parent-probe.mjs.txt)
+and updates its references, format metadata and index entry. Original source bytes and all 169 earlier capture digests remain unchanged;
+the original filename is retained in metadata and in the historical diagnostics. No policy exemption or probe-content edit is introduced.
+Corrected local checks/build and a subsequent hosted core result are **pending**. Exact evidence and correction scope are recorded at
+`/evidencePublication` in [session-results.json](session-results.json).
 
 ## Final qualification status
 

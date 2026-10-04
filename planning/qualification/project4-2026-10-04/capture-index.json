@@ -1,9 +1,9 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-04T14:25:47.492091Z",
+  "generatedAt": "2026-10-04T14:41:53.193882Z",
   "scope": "Every regular file recursively under captures/; index excludes itself and the surrounding report documents.",
-  "files": 169,
-  "bytes": 6875311,
+  "files": 175,
+  "bytes": 7205688,
   "entries": [
     {
       "path": "captures/a00-check.log",
@@ -90,10 +90,12 @@
       "format": "tap-with-process-preamble"
     },
     {
-      "path": "captures/bytecode-profile-parent-probe.mjs",
+      "path": "captures/bytecode-profile-parent-probe.mjs.txt",
       "bytes": 1341,
       "sha256": "6fb5f58bb67dc28d0c50592cd154e882a42590a129dd6d18bff3da03d61f5168",
-      "format": "javascript-reproduction-probe"
+      "format": "archived-javascript-source-text",
+      "originalFilename": "bytecode-profile-parent-probe.mjs",
+      "originalFormat": "javascript-reproduction-probe"
     },
     {
       "path": "captures/bytecode-profile-parent.log",
@@ -504,6 +506,42 @@
       "format": "json"
     },
     {
+      "path": "captures/evidence-pr4564-first-core/checkout-commit.json",
+      "bytes": 2701,
+      "sha256": "6907579ead14dde2a4a9dae32d33133d1a241b18da02ec7efdee80bdc09e809a",
+      "format": "raw-github-json"
+    },
+    {
+      "path": "captures/evidence-pr4564-first-core/core-job.log",
+      "bytes": 274721,
+      "sha256": "e74f1830eae57e428895f19234ba5e673e59b75707d2c932dd7ac0278f0d1c1d",
+      "format": "process-log"
+    },
+    {
+      "path": "captures/evidence-pr4564-first-core/events.json",
+      "bytes": 1737,
+      "sha256": "6b8b52e7e79a8349455751806490773cbe0c4088e506ee26cc69285b8f593d72",
+      "format": "raw-github-json"
+    },
+    {
+      "path": "captures/evidence-pr4564-first-core/jobs.json",
+      "bytes": 11805,
+      "sha256": "e34f491a0faa8e43748c771f628f92e46ca8d87113fed69261ad0f896e18048f",
+      "format": "raw-github-json"
+    },
+    {
+      "path": "captures/evidence-pr4564-first-core/pr.json",
+      "bytes": 24035,
+      "sha256": "ad88d349b0986a10d5e25111efdf7d588d256e30b64bfed093c2ab03fb8bb3d6",
+      "format": "raw-github-json"
+    },
+    {
+      "path": "captures/evidence-pr4564-first-core/run.json",
+      "bytes": 15378,
+      "sha256": "3edd368007b619735e38c67a70195a892f19f1552094b6ea335a6178f810d8dd",
+      "format": "raw-github-json"
+    },
+    {
       "path": "captures/final-18/build.log",
       "bytes": 206,
       "sha256": "de4f3fb768d19f2d36810b6733c9d3a0cda2fb0f315396a4f5dc68a9a761294f",
@@ -858,6 +896,12 @@
       "format": "qualification-supervisor-source"
     },
     {
+      "path": "captures/pe-utf8-final-corpus-replay.log",
+      "bytes": 471,
+      "sha256": "a3b0b693cd6ec31a7f74d51123ebcbbbbd689cbd9afe0c3bd86564ae8645f332",
+      "format": "process-log"
+    },
+    {
       "path": "captures/pe-utf8-final-corpus-replay/replay.json",
       "bytes": 5952,
       "sha256": "4b91c562acbd1e92e6892e8f5af035f5905a5dc0a92d207844cdfafcae0615ec",
@@ -868,12 +912,6 @@
       "bytes": 2374,
       "sha256": "25f15f1ff3c81ba4837bd228d83a5c15a79cbe4ffde064dfeb0f85616caf76c6",
       "format": "json"
-    },
-    {
-      "path": "captures/pe-utf8-final-corpus-replay.log",
-      "bytes": 471,
-      "sha256": "a3b0b693cd6ec31a7f74d51123ebcbbbbd689cbd9afe0c3bd86564ae8645f332",
-      "format": "process-log"
     },
     {
       "path": "captures/pe-utf8-final.tap",
@@ -960,6 +998,12 @@
       "format": "process-log"
     },
     {
+      "path": "captures/session-io-capture/browser-adapter-stderr.txt",
+      "bytes": 3007,
+      "sha256": "c466fec172c2693d27f80e2efa717003076ed74b27b01185b9e50efcdae0951e",
+      "format": "text"
+    },
+    {
       "path": "captures/session-io-capture/browser/report.json",
       "bytes": 6497,
       "sha256": "e1ae09f32aaa91568145b002c70cc7189d90b3156400162b7f7a87cc2e47a517",
@@ -970,12 +1014,6 @@
       "bytes": 1636,
       "sha256": "6f38318f45420d489d74e77aab5050ae38b8eacfb0a460c6b9a015567b19cdd8",
       "format": "json"
-    },
-    {
-      "path": "captures/session-io-capture/browser-adapter-stderr.txt",
-      "bytes": 3007,
-      "sha256": "c466fec172c2693d27f80e2efa717003076ed74b27b01185b9e50efcdae0951e",
-      "format": "text"
     },
     {
       "path": "captures/session-io-capture/build-identity.json",
