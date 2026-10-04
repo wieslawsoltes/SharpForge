@@ -49,3 +49,10 @@ initializeBindingContext installs setter bindings, XAML bindings, compiled owner
 ## Application property adapters
 
 registerPropertyAdapters installs metadata, dependency-property, Binding and observable collection members into an explicit UIExtensionRegistry. Managed hosts can disable dependencyProperties and retain their typed boxing boundary while sharing binding and collection behavior. EffectiveValueEmitter tracks mutable value dependencies per owner and batches changed scene properties; flag validation retains declared bit masks.
+
+## Property and binding APIs
+
+- [Property stores, notifications, binding services and host contracts](docs/property.md)
+- [Compiled binding descriptor schema, metadata compiler and lifetime contracts](docs/compiled-binding.md)
+- [A15 issue coverage and qualification inventory](docs/property-acceptance.md)
+- [Runnable property/binding example](examples/property-binding.mjs)
