@@ -1,0 +1,53 @@
+{
+  "schemaVersion": 1,
+  "frozenManifestSha256": "4d94babc794559e4dbf5b9b2b09ace7962d9f52a16bd07f695c0c1bab2dedce2",
+  "source": {
+    "repository": "/workspace/scratch/3e16369943fd/p18-integration",
+    "commit": "c68c77252cd5469c5aaf0c8318ee28fe2ec3b65d",
+    "tree": "55e5f5c443d15030bc47592e6ba511862812f363",
+    "pinnedMain": "1db2e1d540a78403b7aaddcf472311fcde1a81ef",
+    "bundleRefs": [
+      {
+        "ref": "refs/heads/codex/p18-integration",
+        "commit": "c68c77252cd5469c5aaf0c8318ee28fe2ec3b65d"
+      }
+    ],
+    "pinnedTree": "f1e22cde86ba87205730730aeadc877fedc8dda0"
+  },
+  "artifacts": [
+    {
+      "path": "integration.bundle",
+      "bytes": 3353040,
+      "sha256": "84bbf4b19b6bbbf0c0c9fa75317a2f198a0ae39cf487866146c858d741e12c05",
+      "gitBlob": "674e737fa0fc6a63e3cc7603a24b4392ab2a73e4",
+      "verification": {
+        "advertisedRefs": {
+          "refs/heads/codex/p18-integration": "c68c77252cd5469c5aaf0c8318ee28fe2ec3b65d"
+        },
+        "prerequisites": [
+          "2706a82f99f02acef4485f75c288fb37ef5a94bd",
+          "c027b9f35011a5b3983b6bd0017a0ea34fc2f9fb",
+          "0487c35122f2183c2296778e1285f7a30e66edef",
+          "2e700ad86970548dc8f476598b36cdae610093a1",
+          "b34fa27b7812a62f8c10cf81c83d2cbfdd0b347a",
+          "1db2e1d540a78403b7aaddcf472311fcde1a81ef"
+        ],
+        "requiredObjects": 5968,
+        "packedObjects": 6175,
+        "allRequiredObjectsPresent": true,
+        "canonicalTree": "55e5f5c443d15030bc47592e6ba511862812f363",
+        "canonicalCommitTreeVerifiedWithoutAlternates": true
+      }
+    },
+    {
+      "path": "qualification-raw.tar.gz",
+      "bytes": 66648668,
+      "sha256": "9c96eab7185bdedc2c4a99f61106e33c9b2335e4075cbe505eb422c386178dd5",
+      "gitBlob": "6df3e316f58cd5a6c1fc65c62d1afa61ddd694b4",
+      "verifiedMembers": 1321,
+      "frozenManifestSha256": "4d94babc794559e4dbf5b9b2b09ace7962d9f52a16bd07f695c0c1bab2dedce2"
+    }
+  ],
+  "noSourceOrRemoteMutation": true,
+  "verification": "Bundle object coverage and every decompressed archive member were checked; no qualification rerun."
+}

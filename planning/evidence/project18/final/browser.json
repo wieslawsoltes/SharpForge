@@ -1,0 +1,180 @@
+{
+  "schemaVersion": 1,
+  "status": "actual-release13-passed16-storage-and-platform-boundaries-retained",
+  "sourceCommit": "0bb2ed360a13f3cda3d990bd3f2ff4cebb8dd760",
+  "browser": "Chromium 153.0.8010.12",
+  "entry": "Built committed actual Studio; proposed protected entry was not applied or executed",
+  "storageProbe": {
+    "completedSteps": [
+      "production-http-csp",
+      "opfs-write-read",
+      "idb-open",
+      "idb-plain-put",
+      "idb-plain-get",
+      "idb-handle-put"
+    ],
+    "failedDuring": "idb-handle-get",
+    "observedProcessSignal": "SIGTRAP",
+    "notReached": [
+      "handle isSameEntry comparison",
+      "Web Locks probe"
+    ],
+    "notQualified": [
+      "Explorer/session composition",
+      "operating-system picker",
+      "non-Chromium engines"
+    ],
+    "rawRecord": "qualification/final/raw/storage-probe-e9f8a8cd/results/storage-boundary-probe.json",
+    "rawSha256": "60d2b1b703a7abb376c8d8e482fd22d9e5b5143ce5847668d469bf5853792962",
+    "rawProcessLog": "qualification/final/raw/storage-probe-e9f8a8cd/browser-storage-probe.log",
+    "interpretation": "The minimal probe reproduces a process crash at IndexedDB filesystem-handle retrieval. It does not identify the cause or qualify later steps.",
+    "sourceCommit": "e9f8a8cd2ff1aa6506e9457a7591e3915e6e9f40"
+  },
+  "release13": {
+    "operation": "first workspace.load",
+    "completedChecks": 0,
+    "observedError": "AggregateError: Documents committed, but a view or cleanup callback failed",
+    "state": "Historical e9 zero-check failure retained; later editor/capture corrections and browser failures are separately recorded.",
+    "rawReceipt": "qualification/final/raw/designer-release13-e9f8a8cd/final-qualification.json",
+    "rawLog": "qualification/final/raw/designer-release13-e9f8a8cd/browser-release13.log",
+    "rawSession": "qualification/final/raw/designer-release13-e9f8a8cd/results/browser_release13_test/session.json"
+  },
+  "limits": [
+    "The named actual Release13 suite passed16 checks; no broader browser, operating-system or storage-matrix completion follows.",
+    "OPFS/plain IndexedDB primitive successes do not qualify recent-handle restore, cross-window locking or Explorer composition.",
+    "Unrun OS picker, Firefox/WebKit and platform cells remain unqualified."
+  ],
+  "currentCandidate": "0bb2ed360a13f3cda3d990bd3f2ff4cebb8dd760",
+  "release13History": [
+    {
+      "state": "failed",
+      "sourceCommit": "886fb139fc647f0532085b5a0866a498fa7fca52",
+      "completedChecks": 10,
+      "passedChecks": [
+        "connect an existing hand-written construction method without replacing source or workers",
+        "designer modes, grouped property grid, breadcrumb selection and compact chrome initialize",
+        "designer property changes compile-check a minimal C# edit and preserve every other byte",
+        "real source editor input updates the design preview automatically",
+        "source undo and redo resynchronize the preview without replacing the editor",
+        "incomplete C# keeps the last valid preview and recovers when corrected",
+        "structural insertion rewrites only the proven construction method and preserves the hand-written handler",
+        "concurrent source and designer edits are rejected without overwriting either side",
+        "dynamic C# expressions stay code-owned while independent scalar properties remain editable",
+        "device presets and Design/Split/C#/Preview views use the original editor and artboard"
+      ],
+      "failedDuring": "retained hand-written UI handler launch; debug.uiActive did not become true",
+      "observedError": "AggregateError: Workbench event listeners failed, from AppSession.receive at122",
+      "interpretation": "The follow-up read-only probe located the ExecutionCapture timer receiver error; its subsequent de9 correction is recorded separately.",
+      "rawReceipt": "qualification/final/raw/designer-release13-886fb139/final-qualification.json",
+      "rawLog": "qualification/final/raw/designer-release13-886fb139/browser-release13.log",
+      "rawLogSha256": "49369eab59bcb3e4d180ee987a6452e205e2241176811bc24e9dab1d3fd24489",
+      "rawSession": "qualification/final/raw/designer-release13-886fb139/results/browser_release13_test/session.json",
+      "nestedDiagnostic": {
+        "sourceCommit": "886fb139fc647f0532085b5a0866a498fa7fca52",
+        "observedError": "TypeError: Illegal invocation in ExecutionCapture.wake at tools/execution-capture.js65",
+        "cause": "The browser setTimeout default was invoked with the capture object as receiver.",
+        "status": "Corrected and qualified at de9 (11/11 Node26 plus check/build/clean); this886 failure remains historical.",
+        "rawRecord": "qualification/final/raw/runtime-session-probe-886fb139/results/runtime-session-probe.json",
+        "rawSha256": "6f7b1d118921a68653e6e9a81e6d7f76cda6b5e254eefc4a14ae1184cf581e01"
+      }
+    },
+    {
+      "state": "failed",
+      "sourceCommit": "de9a5e8fe2320a5e2e5cdc56d4752def50bd9d04",
+      "completedChecks": 10,
+      "passedChecks": [
+        "connect an existing hand-written construction method without replacing source or workers",
+        "designer modes, grouped property grid, breadcrumb selection and compact chrome initialize",
+        "designer property changes compile-check a minimal C# edit and preserve every other byte",
+        "real source editor input updates the design preview automatically",
+        "source undo and redo resynchronize the preview without replacing the editor",
+        "incomplete C# keeps the last valid preview and recovers when corrected",
+        "structural insertion rewrites only the proven construction method and preserves the hand-written handler",
+        "concurrent source and designer edits are rejected without overwriting either side",
+        "dynamic C# expressions stay code-owned while independent scalar properties remain editable",
+        "device presets and Design/Split/C#/Preview views use the original editor and artboard"
+      ],
+      "pageErrors": [],
+      "failedDuring": "retained UI-handler launch; debug.uiActive did not become true",
+      "observedWorkerError": "TypeError: Illegal invocation",
+      "decodedLaunchResult": {
+        "started": [],
+        "failedCount": 1,
+        "cancelled": []
+      },
+      "interpretation": "The capture correction removed page errors. Existing trace analysis observed a worker TypeError before any app started; localization to RuntimeActivity host timer receiver is an inference pending the separately authored correction and qualification. No full browser pass is claimed.",
+      "rawReceipt": "qualification/final/raw/designer-release13-de9a5e8f/final-qualification.json",
+      "rawLog": "qualification/final/raw/designer-release13-de9a5e8f/browser-release13.log",
+      "rawSession": "qualification/final/raw/designer-release13-de9a5e8f/results/browser_release13_test/session.json",
+      "launchTraceAnalysis": {
+        "rawRecord": "qualification/final/raw/designer-release13-de9a5e8f/runtime-launch-return.json",
+        "rawSha256": "48a23969499a1133b4d1762b64c312a64d52f0ba96884d70f0eb00de6e5b29e8",
+        "kind": "read-only-existing-trace-analysis"
+      }
+    },
+    {
+      "state": "failed-fixture-assertion",
+      "sourceCommit": "7d4c97d29ae847c5810376747f5a3ac682e2dfd1",
+      "completedChecks": 15,
+      "passedChecks": [
+        "connect an existing hand-written construction method without replacing source or workers",
+        "designer modes, grouped property grid, breadcrumb selection and compact chrome initialize",
+        "designer property changes compile-check a minimal C# edit and preserve every other byte",
+        "real source editor input updates the design preview automatically",
+        "source undo and redo resynchronize the preview without replacing the editor",
+        "incomplete C# keeps the last valid preview and recovers when corrected",
+        "structural insertion rewrites only the proven construction method and preserves the hand-written handler",
+        "concurrent source and designer edits are rejected without overwriting either side",
+        "dynamic C# expressions stay code-owned while independent scalar properties remain editable",
+        "device presets and Design/Split/C#/Preview views use the original editor and artboard",
+        "synchronized source builds and runs its retained C# event handler and formatted interpolation",
+        "independent JavaScript storyboard interpolates actual controls, transforms and local-value restoration",
+        "VariableSizedWrapGrid lays out measured two-cell spans and wraps following items",
+        "source VM real worker clock animates after Main and runs managed Completed handler",
+        "direct CIL real worker clock animates after Main and runs managed Completed handler"
+      ],
+      "pageErrors": [],
+      "failedDuring": "legacy all-ever-created-worker-count assertion",
+      "interpretation": "The product passed all15 functional checks; the final fixture assumed two lifetime workers. The fixture-only descendant checks no designer worker churn, exact current worker ownership and bounded live workers for the incoming per-workspace/per-app architecture.",
+      "rawReceipt": "qualification/final/raw/designer-release13-7d4c97d2/final-qualification.json",
+      "rawLog": "qualification/final/raw/designer-release13-7d4c97d2/browser-release13.log"
+    }
+  ],
+  "currentRelease13": {
+    "state": "passed",
+    "sourceCommit": "0bb2ed360a13f3cda3d990bd3f2ff4cebb8dd760",
+    "productBuildSource": "7d4c97d29ae847c5810376747f5a3ac682e2dfd1",
+    "completedChecks": 16,
+    "passedChecks": [
+      "connect an existing hand-written construction method without replacing source or workers",
+      "designer modes, grouped property grid, breadcrumb selection and compact chrome initialize",
+      "designer property changes compile-check a minimal C# edit and preserve every other byte",
+      "real source editor input updates the design preview automatically",
+      "source undo and redo resynchronize the preview without replacing the editor",
+      "incomplete C# keeps the last valid preview and recovers when corrected",
+      "structural insertion rewrites only the proven construction method and preserves the hand-written handler",
+      "concurrent source and designer edits are rejected without overwriting either side",
+      "dynamic C# expressions stay code-owned while independent scalar properties remain editable",
+      "device presets and Design/Split/C#/Preview views use the original editor and artboard",
+      "synchronized source builds and runs its retained C# event handler and formatted interpolation",
+      "independent JavaScript storyboard interpolates actual controls, transforms and local-value restoration",
+      "VariableSizedWrapGrid lays out measured two-cell spans and wraps following items",
+      "source VM real worker clock animates after Main and runs managed Completed handler",
+      "direct CIL real worker clock animates after Main and runs managed Completed handler",
+      "all integration workflows finish without page errors or unowned and churned workers"
+    ],
+    "pageErrors": [],
+    "cspViolations": [],
+    "exitCode": 0,
+    "browser": "153.0.8010.12",
+    "mode": "http",
+    "elapsedSeconds": 20.607364868999866,
+    "interpretation": "This exact actual committed Studio Release13 suite passed. It does not qualify the separately failing IndexedDB handle retrieval probe, unrun browsers/OS pickers, native test frameworks or the unapplied protected proposal.",
+    "rawReceipt": "qualification/final/raw/designer-release13-0bb2ed36/final-qualification.json",
+    "rawReceiptSha256": "ba2f65dce4b799e4b6a7f88fa5526b4dabcbb8db5454fc677f82afe8dba79d40",
+    "rawLog": "qualification/final/raw/designer-release13-0bb2ed36/browser-release13.log",
+    "rawLogSha256": "97255d7614ff8ffaca33acfe84263580d3c3c1bb84a58e709f0af8f12ef1dce0",
+    "rawSession": "qualification/final/raw/designer-release13-0bb2ed36/results/browser_release13_test/session.json",
+    "buildEquivalence": "build-equivalence.json"
+  }
+}
