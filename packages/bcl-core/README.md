@@ -292,6 +292,40 @@ five samples cover ordinary inputs plus 1024-unit repeated-prefix misses, late
 hits and all overlapping matches with 64-unit needles, reporting median/p95 and
 managed allocation counts outside setup and result checks.
 
+`StringBuilder.Replace(char, char)` and `Replace(char, char, int, int)` occupy
+A07 slots `524334` and `524335`, after builder-range Append `524333`. They replace
+raw UTF-16 units, including isolated surrogates, within the selected half-open
+range. Native validation checks `startIndex` before `count`, including equal-unit
+and empty-range calls. A valid call returns the same builder; length, capacity,
+chunk count and unaffected chunk handles remain unchanged.
+
+The implementation stages one managed string per changed chunk before writing.
+An allocation failure leaves live builder slots untouched. It scans chunk prefixes
+and affected text in linear time without flattening the builder or cloning its
+backing array. Temporary host records/strings and roots scale with changed chunks
+and their text; no-match, same-unit and empty-range calls allocate no managed data.
+This immutable-string storage still copies a changed chunk, even for a one-unit
+edit; the rope/capacity redesign in #2636 remains separate.
+
+All staged old/new references and each live backing array used during a callback
+remain rooted. After a callback, a scheduled slot is edited only if it still holds
+the original generation-qualified reference. Thus reentrant Clear or indexer edits
+win, while Append growth can retain untouched scheduled slots. A throwing observer
+stops further writes without rolling back already-notified edits, matching the
+existing indexer observer contract. Normal completion stamps the builder version
+once; underlying array writes keep existing heap/snapshot notifications.
+
+The frozen .NET 10.0.5 / SDK 10.0.201 reference has 266 cases. Focused tests cover
+both compiler pipelines and VMs, independent CIL, exact range/fault precedence,
+allocation failure, forced callback GC, snapshots and a 10,000-step char/range
+replacement trace against a UTF-16 oracle. The unchanged static runner
+`scripts/benchmarks/a07-string-builder-replace-char.mjs` compares released Length
+and string Replace controls separately from new character edit costs, including
+256 chunks and a small range. One warmup/five samples report median/p95 and managed
+allocations; setup and verification are outside timing. Qualification is pending
+in the root serial queue. Native/Wasm runtime execution is outside this batch.
+#2638 remains open for Insert families, ranged string Replace and Remove edge cases.
+
 `StringComparer.OrdinalIgnoreCase` is a separate managed singleton, shared by
 the registered string/object Compare, IComparer, List.Sort and Array.BinarySearch
 routes. Its streaming fold reuses the pinned simple-uppercase table without
