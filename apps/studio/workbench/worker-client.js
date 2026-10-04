@@ -1,5 +1,7 @@
 import { workerMethods } from '../workers/protocol.js';
 import { WorkbenchEvents, abortError, workbenchError } from './state-events.js';
+import {workerOptions} from '@sharpforge/editor';
+import {workerFailure} from './worker-failure.js';
 
 /** One worker connection; request IDs and generations reject late replies after restart. */
 export class WorkerClient {
@@ -28,7 +30,16 @@ export class WorkerClient {
 
   connect() {
     const generation = ++this.generation;
-    const worker = this.factory(this.url, { type: 'module', name: this.options.name });
+    const settings = workerOptions(this.url, {name: this.options.name});
+    const identity = {url: this.url, settings, generation, kind: this.options.kind};
+    let worker;
+    try { worker = this.factory(this.url, settings); }
+    catch (cause) {
+      const error = workerFailure({message: cause?.message, error: cause}, identity);
+      this.failed = true;
+      this.report(error);
+      throw error;
+    }
     if (!worker || typeof worker.postMessage !== 'function' || typeof worker.terminate !== 'function') {
       throw new TypeError('Worker factory must return a Worker-compatible object');
     }
@@ -40,7 +51,7 @@ export class WorkerClient {
     };
     worker.onerror = event => {
       if (this.disposed || generation !== this.generation) return;
-      const error = workbenchError('WORKER_FAILED', event.message || 'Worker failed to initialize', event.error);
+      const error = workerFailure(event, identity);
       this.failed = true;
       this.rejectAll(error);
       this.report(error);
@@ -77,7 +88,9 @@ export class WorkerClient {
   /** Cancellation rejects the caller; cancelAll/restart also terminates synchronous worker work. */
   request(method, params = {}, { signal, timeoutMs = this.timeoutMs, transfer = [] } = {}) {
     if (this.disposed) return Promise.reject(workbenchError('WORKER_DISPOSED', 'Worker client is disposed'));
-    if (this.failed) return Promise.reject(workbenchError('WORKER_FAILED', 'Restart the failed worker before requesting work'));
+    if (this.failed) {
+      return Promise.reject(workbenchError('WORKER_FAILED', 'Restart the failed worker before requesting work', this.lastError));
+    }
     if (this.options.transformRequest) {
       try {
         const transformed = this.options.transformRequest(method, params, { generation: this.generation, client: this });
