@@ -1,3 +1,4 @@
+import {DiagnosticId} from '../diagnostics/codes.js';
 import { Op, BuiltinMap } from '@sharpforge/bytecode';
 import { numeric, pathOf, typeText } from '../type-utils.js';
 
@@ -20,16 +21,16 @@ export function emitCall(node) {
       count++;
     }
     if (count < builtin.min || count > builtin.max)
-      this.c.report(node, 'CS1501', [builtin.name, count]);
+      this.c.report(node, DiagnosticId.CS1501, [builtin.name, count]);
     types.forEach((type, i) => {
       const target = builtin.params[i];
       if (target === 'number') {
         if (!numeric(type))
-          this.c.report(node, 'CS1503', [i + 1, typeText(type), 'double']);
+          this.c.report(node, DiagnosticId.CS1503, [i + 1, typeText(type), 'double']);
       }
       else if (target === 'array') {
         if (!type.endsWith('[]'))
-          this.c.report(node, 'CS1503', [i + 1, typeText(type), 'System.Array']);
+          this.c.report(node, DiagnosticId.CS1503, [i + 1, typeText(type), 'System.Array']);
       }
       else if (target && target !== 'any' && target !== 'exception')
         this.checkAssign(target, type, node.args[Math.max(0, i - (count - node.args.length))] ?? node);

@@ -9,23 +9,29 @@
  *
  * Below C# 13 the attribute itself is the gated construct (CS9202 and its siblings, on the attribute).
  *
- *   Ref locals in iterators and async methods (SF-A02-T82): `refLocalsAcrossSuspensions`, CS9217.
+ *   Ref locals in iterators and async methods (SF-A02-T82): `refLocalsAcrossSuspensions`, CS9217; ref struct
+ *   locals read after a suspension: ./ref-struct-suspensions.js, CS4007.
  */
+import {DiagnosticId} from '../diagnostics/codes.js';
 import { SymbolKind, RefKind } from '../symbols/types.js';
 import { forEachChild } from '../bound/semantic-walker.js';
 import { MethodKind } from '../symbols/members.js';
 import { attributesNamed } from './bound-attributes.js';
 import { overloadPriorityAttribute } from '../overload/params-collections.js';
+import { refStructLocalsAcrossSuspensions } from './ref-struct-suspensions.js';
+import { refAndUnsafeInAsyncFeature } from './ref-struct.js';
 
 /** The diagnostic code for the attribute on `member`, or null when it is allowed there. */
 function priorityPlacementProblem(member) {
-  if (member.isOverride) return 'CS9261';
-  if (member.explicitInterfaceSyntax) return 'CS9262';
-  if (member.kind === SymbolKind.Property) return member.isIndexer ? null : 'CS9262';
+  if (member.isOverride) return DiagnosticId.CS9261;
+  if (member.explicitInterfaceSyntax) return DiagnosticId.CS9262;
+  if (member.kind === SymbolKind.Property) return member.isIndexer ? null : DiagnosticId.CS9262;
   if (member.kind !== SymbolKind.Method) return null;
-  return [MethodKind.StaticConstructor, MethodKind.Destructor, MethodKind.Conversion].includes(member.methodKind) ? 'CS9262' : null;
+  return [MethodKind.StaticConstructor, MethodKind.Destructor, MethodKind.Conversion].includes(member.methodKind) ? DiagnosticId.CS9262 : null;
 }
 
+const unsafeSyntaxKinds = new Set(['PointerType', 'AddressOfExpression']);
+const functionSyntaxKinds = new Set(['ParenthesizedLambdaExpression', 'SimpleLambdaExpression', 'AnonymousMethodExpression', 'LocalFunctionStatement']);
 const loopKinds = new Set(['WhileStatement', 'DoStatement', 'ForStatement', 'ForEachStatement', 'ForEachVariableStatement']);
 const spanOf = node => node.span ?? node;
 const contains = (outer, inner) => outer.start <= inner.start && inner.end <= outer.end;
@@ -78,7 +84,7 @@ export function refLocalsAcrossSuspensions(body) {
       // A loop inside the local's scope that the local was declared outside of: its back edge carries the suspension.
       if (loop && contains(scope, loop) && !(loop.start <= declared && declared < loop.end)) crossed = suspensions.some(s => contains(loop, s));
     }
-    if (crossed) rows.push({ node: use.syntax, code: 'CS9217', args: [] });
+    if (crossed) rows.push({ node: use.syntax, code: DiagnosticId.CS9217, args: [] });
   }
   return rows;
 }
@@ -105,9 +111,32 @@ export const CSharp13BodyRules = Base =>
   class extends Base {
     bindMethodBody(method, context) {
       const body = super.bindMethodBody(method, context);
+      if (!body || context.parent || !(method.isAsync || body.binder?.c?.isIterator)) return body;
       // Below C# 13 the declaration of the ref local is the error (the feature gate); the rule is not applied.
-      if (body && !context.parent && this.versionOf(context.uri).number >= 13 && (method.isAsync || body.binder?.c?.isIterator))
+      if (this.versionOf(context.uri).number >= 13)
         for (const row of refLocalsAcrossSuspensions(body)) this.report(context.uri, row.node, row.code, row.args);
+      else if (body.binder?.c?.isIterator) this.gateUnsafeIterator(method, context.uri);
+      for (const row of refStructLocalsAcrossSuspensions(body)) (this.acrossSuspensions ??= []).push({ uri: context.uri, ...row });
+      // `&local` in an iterator (./unsafe-iterators.js).
+      if (body.binder?.c?.isIterator) for (const operand of body.binder.addressOfLocals ?? []) this.report(context.uri, operand, DiagnosticId.CS9239);
       return body;
+    }
+    /** Below C# 13 unsafe code in an iterator is the gated feature: an `unsafe` iterator, pointer types and `&` in its body. */
+    gateUnsafeIterator(method, uri) {
+      const gate = node => this.gate(uri, node, 'RefUnsafeInIteratorAsync', refAndUnsafeInAsyncFeature),
+        declaration = method.syntax;
+      if ((declaration?.modifiers ?? []).some(token => token.text === 'unsafe') && declaration.identifier) gate(declaration.identifier);
+      const stack = [declaration?.body ?? declaration?.expressionBody].filter(Boolean);
+      while (stack.length) {
+        const node = stack.pop();
+        if (unsafeSyntaxKinds.has(node.kind)) gate(node);
+        if (!functionSyntaxKinds.has(node.kind)) stack.push(...node.childNodes());
+      }
+    }
+    bindBodies() {
+      super.bindBodies();
+      // Roslyn finds CS4007 while it builds the state machine, which it does only for a program without errors.
+      if (this.diagnostics.some(diagnostic => diagnostic.severity === 'error')) return;
+      for (const row of this.acrossSuspensions ?? []) this.report(row.uri, row.node, row.code, row.args);
     }
   };

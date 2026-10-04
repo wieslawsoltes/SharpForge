@@ -1,0 +1,24 @@
+@media (prefers-reduced-motion: reduce) {
+  .sf-editor *, .sf-editor *::before, .sf-editor *::after { animation: none !important; scroll-behavior: auto !important; }
+  .sf-focused .sf-caret { opacity: 1; }
+}
+
+@media (forced-colors: active) {
+  .sf-editor { --editor: Canvas; --surface: Canvas; --text: CanvasText; --muted: CanvasText; --line: CanvasText; --line-soft: GrayText; }
+  .sf-editor button, .sf-editor input, .sf-editor select { forced-color-adjust: auto; }
+  .sf-view-line span { color: CanvasText !important; }
+  .sf-selection { background: Highlight; opacity: .45; forced-color-adjust: none; }
+  .sf-caret { background: CanvasText; forced-color-adjust: none; }
+  .sf-block-caret { border: 1px solid CanvasText; background: transparent; }
+  .sf-squiggle, .sf-diagnostic-error, .sf-diagnostic-warning { text-decoration-color: LinkText; }
+  .sf-current-line { outline: 1px dotted GrayText; }
+  .sf-execution-line, .sf-selected-frame-line { outline: 2px solid LinkText; }
+  .sf-line.breakpoint i { background: LinkText; border-color: LinkText; }
+  .sf-line.bookmark::after, .sf-line.execution::before, .sf-fold-breakpoint { color: LinkText !important; }
+  .sf-scroll-thumb { background: ButtonText; }
+  .sf-fold-hint, .sf-bracket-match { border: 1px solid CanvasText; outline-color: Highlight; }
+  .sf-change-unsaved { background: LinkText !important; }
+  .sf-change-saved { background: CanvasText !important; }
+  .sf-insight-popup, .sf-peek-definition { border: 1px solid CanvasText; background: Canvas; color: CanvasText; }
+  .sf-completion-list [aria-selected=true] { background: Highlight; color: HighlightText; }
+}

@@ -1,0 +1,6 @@
+{"roslyn":{"version":"5.3.0.0","informationalVersion":"5.3.0-2.26153.122+4d3023de605a78ba3e59e50c657eed70f125c68a","runtime":"10.0.5","references":"Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0","options":"OutputKind.ConsoleApplication, default warning level, nullable disabled, no implicit usings, invariant culture"},"shape":"diagnostics are [code, startOffset, length, severity]; output is stdout with \\n newlines","fixtures":{
+  "interface-most-specific/cs8705-diamond":{"hash":"f4504a6d1e4133d3","kind":"diagnostics","langVersion":"14.0","diagnostics":[["CS8705",197,1,"error"],["CS8705",217,1,"error"]]},
+  "interface-most-specific/cs8705-abstract-member-two-defaults":{"hash":"64f3651ea4788f49","kind":"diagnostics","langVersion":"14.0","diagnostics":[["CS8705",106,1,"error"]]},
+  "interface-most-specific/most-specific-wins-and-reabstraction":{"hash":"0f2a65c4dd10a27c","kind":"diagnostics","langVersion":"14.0","diagnostics":[["CS0535",241,1,"error"]]},
+  "interface-most-specific/derived-interface-implements-abstract-member":{"hash":"b5f96fc044e31a57","kind":"diagnostics","langVersion":"14.0","diagnostics":[["CS0535",90,1,"error"],["CS8705",226,1,"error"]]}
+}}

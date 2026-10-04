@@ -12,6 +12,7 @@
  *
  * Every function is pure: it returns `[{ code, args, uri, node }]` for the caller to report at `node`.
  */
+import {DiagnosticId} from '../diagnostics/codes.js';
 import { SymbolKind, TypeKind, Accessibility } from '../symbols/types.js';
 import { MethodKind } from '../symbols/members.js';
 
@@ -48,14 +49,14 @@ function declarationRules(type, add) {
     const syntax = declaration.syntax,
       modifiers = syntax.modifiers ?? [],
       partial = modifiers.find(token => token.text === 'partial');
-    if (partial && !partialTypeKinds.has(syntax.kind)) add('CS0267', [], declaration.uri, syntax.identifier);
-    else if (partial && modifiers.at(-1) !== partial) add('CS0267', [], declaration.uri, partial);
+    if (partial && !partialTypeKinds.has(syntax.kind)) add(DiagnosticId.CS0267, [], declaration.uri, syntax.identifier);
+    else if (partial && modifiers.at(-1) !== partial) add(DiagnosticId.CS0267, [], declaration.uri, partial);
     if (syntax.kind !== 'ClassDeclaration' && modifiers.some(token => token.text === 'static'))
-      add('CS0106', ['static'], declaration.uri, syntax.identifier);
+      add(DiagnosticId.CS0106, ['static'], declaration.uri, syntax.identifier);
   }
   const name = type.toDisplayString();
-  if (all.has('abstract') && (all.has('sealed') || all.has('static'))) add('CS0418', [name], first.uri, first.syntax.identifier);
-  else if (all.has('static') && all.has('sealed')) add('CS0441', [name], first.uri, first.syntax.identifier);
+  if (all.has('abstract') && (all.has('sealed') || all.has('static'))) add(DiagnosticId.CS0418, [name], first.uri, first.syntax.identifier);
+  else if (all.has('static') && all.has('sealed')) add(DiagnosticId.CS0441, [name], first.uri, first.syntax.identifier);
 }
 
 const squeeze = node => node.toString().replace(/\s+/g, '');
@@ -67,7 +68,7 @@ function partialRules(type, add) {
     namesOf = declaration => (declaration.syntax.typeParameterList?.parameters ?? []).map(parameter => parameter.identifier.valueText),
     names = namesOf(first);
   if (type.declarations.some(declaration => namesOf(declaration).join(',') !== names.join(','))) {
-    add('CS0264', [type.toDisplayString()], first.uri, first.syntax.identifier);
+    add(DiagnosticId.CS0264, [type.toDisplayString()], first.uri, first.syntax.identifier);
     return;
   }
   for (const parameter of names) {
@@ -75,7 +76,7 @@ function partialRules(type, add) {
       .map(declaration => (declaration.syntax.constraintClauses ?? []).find(clause => clause.name.identifier.valueText === parameter))
       .filter(Boolean)
       .map(clause => clause.constraints.map(squeeze).sort().join(','));
-    if (new Set(clauses).size > 1) add('CS0265', [type.toDisplayString(), parameter], first.uri, first.syntax.identifier);
+    if (new Set(clauses).size > 1) add(DiagnosticId.CS0265, [type.toDisplayString(), parameter], first.uri, first.syntax.identifier);
   }
 }
 
@@ -85,33 +86,33 @@ function staticClassMemberRules(type, member, add) {
     at = member.locations?.[0],
     protectedAccess = [Accessibility.Protected, Accessibility.ProtectedOrInternal, Accessibility.ProtectedAndInternal];
   if (member.kind === SymbolKind.Method && !member.isAccessor) {
-    if (member.methodKind === MethodKind.Constructor && !member.isStatic) add('CS0710', [], uri, at);
-    else if (member.methodKind === MethodKind.Destructor) add('CS0711', [type.name], uri, at);
+    if (member.methodKind === MethodKind.Constructor && !member.isStatic) add(DiagnosticId.CS0710, [], uri, at);
+    else if (member.methodKind === MethodKind.Destructor) add(DiagnosticId.CS0711, [type.name], uri, at);
     else if (member.methodKind === MethodKind.UserDefinedOperator || member.methodKind === MethodKind.Conversion)
-      add('CS0715', [member.toDisplayString()], uri, at);
+      add(DiagnosticId.CS0715, [member.toDisplayString()], uri, at);
   }
-  if (member.kind === SymbolKind.Property && member.isIndexer) add('CS0720', [member.toDisplayString()], uri, at);
+  if (member.kind === SymbolKind.Property && member.isIndexer) add(DiagnosticId.CS0720, [member.toDisplayString()], uri, at);
   const isAccessor = member.kind === SymbolKind.Method && member.isAccessor;
   const isDestructor = member.kind === SymbolKind.Method && member.methodKind === MethodKind.Destructor;
   if (!isAccessor && !isDestructor && member.kind !== SymbolKind.NamedType && protectedAccess.includes(member.declaredAccessibility))
-    add('CS1057', [member.toDisplayString()], uri, at);
+    add(DiagnosticId.CS1057, [member.toDisplayString()], uri, at);
 }
 
 /** A static class is not the type of a parameter, a return value, a property or a field. */
 function staticTypeUseRules(member, add) {
   const uri = member.uri ?? member.locations?.[0]?.uri,
     at = member.locations?.[0];
-  if (member.kind === SymbolKind.Field && isStaticType(member.type)) add('CS0723', [member.type.toDisplayString()], uri, at);
+  if (member.kind === SymbolKind.Field && isStaticType(member.type)) add(DiagnosticId.CS0723, [member.type.toDisplayString()], uri, at);
   if (member.kind === SymbolKind.Property && isStaticType(member.type))
-    add('CS0722', [member.type.toDisplayString()], uri, member.typeSyntax ?? at);
+    add(DiagnosticId.CS0722, [member.type.toDisplayString()], uri, member.typeSyntax ?? at);
   if (member.kind !== SymbolKind.Method || member.isAccessor) return;
   for (const parameter of member.parameters) {
-    if (isStaticType(parameter.type)) add('CS0721', [parameter.type.toDisplayString()], uri, parameter.syntax?.type ?? parameter.locations?.[0] ?? at);
+    if (isStaticType(parameter.type)) add(DiagnosticId.CS0721, [parameter.type.toDisplayString()], uri, parameter.syntax?.type ?? parameter.locations?.[0] ?? at);
   }
   if (!isStaticType(member.returnType)) return;
   // Roslyn points at the name of a method and at the return type of an operator.
   const isOperator = member.methodKind === MethodKind.UserDefinedOperator || member.methodKind === MethodKind.Conversion;
-  add('CS0722', [member.returnType.toDisplayString()], uri, isOperator ? (member.returnTypeSyntax ?? at) : at);
+  add(DiagnosticId.CS0722, [member.returnType.toDisplayString()], uri, isOperator ? (member.returnTypeSyntax ?? at) : at);
 }
 
 function accessorRules(property, add) {
@@ -123,11 +124,11 @@ function accessorRules(property, add) {
     at = property.locations?.[0],
     display = property.toDisplayString();
   if (withAccess.length > 1) {
-    add('CS0274', [display], uri, at);
+    add(DiagnosticId.CS0274, [display], uri, at);
     return;
   }
   if (accessors.length < 2 && !property.isOverride) {
-    add('CS0276', [display], uri, at);
+    add(DiagnosticId.CS0276, [display], uri, at);
     return;
   }
   const accessor = withAccess[0],
@@ -135,10 +136,10 @@ function accessorRules(property, add) {
   if (!method) return;
   const accessorDisplay = `${display}.${accessor.keyword.text}`;
   if (!isMoreRestrictive(method.declaredAccessibility, property.declaredAccessibility)) {
-    add('CS0273', [accessorDisplay, display], uri, accessor.keyword);
+    add(DiagnosticId.CS0273, [accessorDisplay, display], uri, accessor.keyword);
     return;
   }
-  if (property.isAbstract && method.declaredAccessibility === Accessibility.Private) add('CS0442', [accessorDisplay], uri, accessor.keyword);
+  if (property.isAbstract && method.declaredAccessibility === Accessibility.Private) add(DiagnosticId.CS0442, [accessorDisplay], uri, accessor.keyword);
 }
 
 /** `partial` on a member that cannot be partial (fields; methods and properties have their own rules). */
@@ -147,7 +148,7 @@ function partialMemberRules(type, add) {
     for (const member of declaration.syntax.members ?? []) {
       if (member.kind !== 'FieldDeclaration') continue;
       const partial = (member.modifiers ?? []).find(token => token.text === 'partial');
-      if (partial) add('CS0267', [], declaration.uri, partial);
+      if (partial) add(DiagnosticId.CS0267, [], declaration.uri, partial);
     }
   }
 }
