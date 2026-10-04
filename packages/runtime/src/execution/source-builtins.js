@@ -6,6 +6,7 @@ import {objectType,runtimeTypeText} from './tokens.js';
 import {invokeNamedBuiltin} from './source-builtins/index.js';
 import {invokeDecimal} from './decimal-intrinsics.js';
 import {invokeIntrinsic} from './intrinsics.js';
+import {floatingNumberExtremum} from './float-extrema.js';
 
 function legacyStringPlatform(vm) {
   // The builtin seam also supports heap/value/format services without a complete VM.
@@ -53,7 +54,11 @@ export function builtin(vm, id, args) {
     if(name.startsWith('$type.'))return objectType(vm,args[0],name.split('.')[1]);
     if (name.startsWith('Math.')) {
       const fn = {Abs: 'abs', Min: 'min', Max: 'max', Pow: 'pow', Sqrt: 'sqrt', Floor: 'floor', Ceiling: 'ceil', Round: 'round'}[name.slice(5)];
-      if (fn === 'min' || fn === 'max') return Math[fn](a, vm.value(args[1]));
+      if (fn === 'min' || fn === 'max') {
+        const b = vm.value(args[1]);
+        return typeof a === 'number' && typeof b === 'number'
+          ? floatingNumberExtremum(name.slice(5), a, b) : Math[fn](a, b);
+      }
       if (fn === 'round') {
         const f = Math.floor(a), fraction = a - f;
         return fraction === 0.5 ? (f % 2 === 0 ? f : f + 1) : Math.round(a);
