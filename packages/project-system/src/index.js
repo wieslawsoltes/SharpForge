@@ -21,4 +21,4 @@ export {decodeWorkspaceFile,encodeWorkspaceFile} from '@sharpforge/archive';
 
 export * from './configuration-exports.js';
 
-export {importWorkspaceRecords,workspaceManifestRecord} from './archive.js';
+export * from './archive-stream.js';

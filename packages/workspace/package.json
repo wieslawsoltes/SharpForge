@@ -19,6 +19,7 @@
   "dependencies": {
     "@sharpforge/text": "0.14.0",
     "@sharpforge/syntax": "0.14.0",
-    "@sharpforge/compiler": "0.14.0"
+    "@sharpforge/compiler": "0.14.0",
+    "@sharpforge/archive": "0.14.0"
   }
 }
