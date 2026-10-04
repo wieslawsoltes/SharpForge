@@ -5,7 +5,7 @@ qualification delegated to it. It describes implemented source and observed
 checks; it does not close issues or substitute Node fixtures for browser,
 desktop-editor, operating-system, or assistive-technology qualification.
 
-The latest runtime-source revision is **`e43c811e`**, following the completed
+The exact-column runtime-source revision is **`e43c811e`**, following the completed
 visual-column scope at **`e688ce9c`** and Surround With regression **`5d4b79f2`**.
 Native/block evidence remains at **`de8eeff3`**, with original text foundation
 evidence at **`e87dedf4`**. Both use the production JavaScript
@@ -88,6 +88,49 @@ No full build, full current unit matrix, browser engine, native executable, or
 screen-reader pass is claimed by this branch. Source was completed before each
 focused validation batch. The measured host was shared with other agents; local
 latencies do not establish fixed CI hardware guarantees.
+
+## Large source Save As follow-up
+
+Complete source at **`fe2c20f7`** adds `apps/studio/workbench/source-save-as.js`,
+its adjacent API contract, and `tests/a20-source-save-as.test.js`. It reuses the
+public streamed workspace encoder from view's completed `acdf945d` dependency,
+merged as `66ba8164`. It owns no changes to `studio.js`, `StudioSave`, document
+dirty-state logic, or disk-handle registration; root/session integration supplies
+the captured record and interprets the result against current identity/version.
+
+| Work ID / issue | Implementation | Evidence and acceptance boundary |
+| --- | --- | --- |
+| SF-A20-T44 / [#1513](https://github.com/wieslawsoltes/SharpForge/issues/1513) | `apps/studio/workbench/source-save-as.js`; `fe2c20f7` | Captured immutable source, immediate native picker, streamed close/abort, encoding/BOM preservation, byte caps, and explicit download-only outcomes. This covers large-source output; opening/scrolling/editing p95 and real browser file permissions remain separate view/root qualification. |
+
+The complete focused command was:
+
+```sh
+node scripts/limited.js node --test --test-reporter=spec tests/a20-source-save-as.test.js
+```
+
+Result: **24 passed, zero failed, zero skipped**, **6.496 seconds** on Node.js
+v24.19.0/Linux x64. The 200 MiB ASCII fixture wrote **209,715,200 bytes** through
+**3,200** native-stream chunks. Every byte was checked; source reads stayed
+within 65,537 UTF-16 units, the sink retained no output buffers, the source's
+whole-text cache stayed unmaterialized, and a task ran between chunks even with
+a synchronous sink. The **6.296-second** fixture includes source construction,
+encoding, cooperative yields and output verification. It is not a browser
+latency, storage-throughput, retained-memory or physical-durability measurement.
+
+The same file covers a live-buffer/captured-wrapper race while the picker waits,
+all supported encodings, empty BOMs, surrogate seams, cancellation during stream
+acquisition/pending writes, permission/write/close failures, post-first-chunk
+byte limits, cleanup failures, and fallback Blob/link/URL behavior. Downloads
+always return `ok:false`; exporting cannot silently clear a document's dirty
+state. A successful native result includes actual encoded `byteLength`, the
+chosen `handle.name`, and the original captured source identity/version.
+
+`git diff --cached --check` passed before source commit. `npm run
+check:structure` exits zero with **256 existing/other-scope findings** and none
+for the new Save As paths. `npm run check` stops at **60 unassigned aggregate
+test paths** in this implementation worktree, including the new A20 test. Root
+owns final integrated registration and required gates. No other tests or build
+were run for this completed follow-up.
 
 ## Exact columns and Surround With follow-up
 
@@ -282,6 +325,7 @@ a key-to-paint benchmark.
 | `de8eeff3` | Complete visual-block geometry/edit/register follow-up, bounded box payloads and resumed insert groups. |
 | `e688ce9c`, `e43c811e` | Exact sparse visual-column index, Unicode16 data/state, stable model cancellation/disposal, official and host compatibility cases. |
 | `5d4b79f2` | Exact B01 Surround With shortcut, one-undo snippet result and absent-provider regressions. |
+| `fe2c20f7` | Captured large-source native Save As, explicit download exports, complete focused I/O/encoding/scale tests and contract. |
 
 Root-provided initial native source ends at `909796e3`. This branch also merged
 the view facade correction `ccdd6894`, root dependency merge `447a2325`, and the

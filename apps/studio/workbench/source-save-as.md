@@ -113,3 +113,17 @@ and the
 [File System writable stream specification](https://fs.spec.whatwg.org/#api-filesystemwritablefilestream).
 The shared encoder is qualified separately by
 `tests/a20-prepared-source-workspace.test.js`.
+
+Observed at source revision `fe2c20f7` on Node.js v24.19.0, Linux x64:
+
+```sh
+node scripts/limited.js node --test --test-reporter=spec tests/a20-source-save-as.test.js
+```
+
+All **24 tests passed**, with zero failures or skips, in **6.496 seconds**. The
+200 MiB fixture took **6.296 seconds**, including construction of its persistent
+source, cooperative encoding, byte-by-byte sink verification and stream close.
+It emitted exactly **209,715,200 bytes in 3,200 writes**, retained no output
+chunks in the sink, and kept the persistent snapshot's lazy text cache
+unmaterialized. This fixture duration is not browser save throughput, a memory
+peak measurement, or editor typing/rendering latency.
