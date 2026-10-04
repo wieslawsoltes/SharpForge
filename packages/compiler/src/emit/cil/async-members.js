@@ -61,7 +61,9 @@ export function declareAsync(plan, machine, builder) {
     };
   machine.builder = builder;
   machine.fields.builder = plan.field(type, '<>t__builder', builder.builderType);
-  for (const parameter of machine.kickoff.parameters) machine.parameters.set(parameter, { field: plan.field(type, parameter.name, parameter.type), initial: null });
+  for (const parameter of machine.kickoff.parameters) {
+    machine.parameters.set(parameter, { field: plan.field(type, parameter.name, parameter.type), initial: null });
+  }
   machine.moveNext = implement('MoveNext', [], [], program => moveNextBody(program, machine));
   implement('SetStateMachine', [contract], ['stateMachine'], () => new IlBuilder().emit('ret', undefined, { pops: 0, pushes: 0 }));
 }

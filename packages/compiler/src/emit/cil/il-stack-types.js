@@ -9,7 +9,16 @@
  */
 import { IlBuilder, stackEffectOf } from './il-builder.js';
 
-const constantTypes = Object.freeze({ 'ldc.i4': 'int', 'ldc.i8': 'long', 'ldc.r4': 'float', 'ldc.r8': 'double', ldstr: 'string', ldnull: 'object', box: 'object' });
+/** Instructions whose result has one type whatever their operand: the name of that type on the core types. */
+const constantTypes = Object.freeze({
+  'ldc.i4': 'int',
+  'ldc.i8': 'long',
+  'ldc.r4': 'float',
+  'ldc.r8': 'double',
+  ldstr: 'string',
+  ldnull: 'object',
+  box: 'object',
+});
 
 export class TypedIlBuilder extends IlBuilder {
   /** @param core the CoreTypes of the compilation  @param {(object|null)[]} argumentTypes the type of each argument slot */

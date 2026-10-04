@@ -142,7 +142,8 @@ function kickoffOfFunction(plan) {
 export function planStateMachines(analysis, closures, topLevel = null) {
   const plan = new StateMachinePlan(analysis, closures);
   if (topLevel) {
-    plan.plan({ ...topLevel, name: '<Main>$', syntax: null, isStatic: true, isAsync: true, isGeneric: false, receiverType: null, function: null, method: null });
+    const statements = { name: '<Main>$', syntax: null, isStatic: true, isAsync: true, isGeneric: false };
+    plan.plan({ ...topLevel, ...statements, receiverType: null, function: null, method: null });
   }
   for (const [key, body] of analysis.bound) {
     if (key?.kind !== SymbolKind.Method || !key.containingType || key.methodKind === MethodKind.LocalFunction) continue;
