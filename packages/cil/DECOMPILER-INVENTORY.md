@@ -145,7 +145,7 @@ execution are not provided or qualified by this inventory.
 
 `packages/cil/tools/benchmark-decompiler-inventory.mjs` compares actual merged
 main `c1693a9e322295a43d90c3335885b5b5b3cf8daa` with inventory product source
-`7da8bdc75f834c1ebaa2c4b2585461fca80d7c97`. Documentation/tool commits may follow
+`20873aeb2df8f10604ce7bc4a28bc268a20ac73a`. Documentation/tool commits may follow
 the candidate, but any changed package source, package manifest or fixture
 rejects the run. Each checkout resolves and hashes its own public CIL package
 and complete declared workspace dependency closure. Mixed source aliases and
@@ -204,4 +204,9 @@ Arithmetic byte-input and cached-inspector medians regressed by 113.597357% and
 330.682867%, respectively. Native byte-input median rose 0.775068%, while its
 p95 batch mean rose 9.103720%. These costs require explicit review; no performance
 acceptance is implied. Source review identified repeated table-layout and row-width
-work for a narrow correction, which requires separate qualification.
+work. The separate correction at `20873aeb2df8f10604ce7bc4a28bc268a20ac73a`
+reuses each call's owned table layout and derives row width once from its final
+column extent. Only the benchmark's product pin and matching review hash changed;
+its workloads, guards, sample counts and statistics remain identical. The corrected
+source has not been tested or measured yet and requires a separate scheduled gate
+and one new output file. The first cohort and measured driver remain byte exact.

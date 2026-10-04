@@ -9,7 +9,7 @@ import { performance } from 'node:perf_hooks';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 
 const baselineCommit = 'c1693a9e322295a43d90c3335885b5b5b3cf8daa';
-const implementationCommit = '7da8bdc75f834c1ebaa2c4b2585461fca80d7c97';
+const implementationCommit = '20873aeb2df8f10604ce7bc4a28bc268a20ac73a';
 const candidateRoot = realpathSync(fileURLToPath(new URL('../../../', import.meta.url)));
 const protocol = Object.freeze({ warmup: 20, samples: 100, iterations: 20 });
 const sha256 = (bytes) => createHash('sha256').update(bytes).digest('hex');

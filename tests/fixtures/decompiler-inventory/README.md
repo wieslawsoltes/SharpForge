@@ -154,11 +154,17 @@ Two concrete pieces of avoidable work were identified in `inventory.js`:
    provides the scalar once per table; the normal row bounds and per-column
    scalar checks can remain unchanged.
 
-A narrow product correction was requested before publication. The first
-cohort remains valid evidence for its original source; it does not qualify
-the optimized source or establish how much time these changes will save.
-The existing focused gate and unchanged predetermined cohort must be run once
-for the corrected source in a later coordinated slot.
+The separate product correction at
+`20873aeb2df8f10604ce7bc4a28bc268a20ac73a` reuses each call's owned table layouts
+and computes each row width from the existing final-column extent. It changes
+only `inventory.js`; row/column checks, budgets, cancellation, output fields and
+cross-call mutation visibility remain in place. The first cohort remains valid
+evidence for its original source; it does not qualify the optimized source or
+establish how much time these changes will save. Only the live benchmark product
+pin and matching allowlist hash changed. The corrected source is **untested and
+unmeasured** until the existing focused gate and unchanged predetermined cohort
+run once in a later coordinated slot. Preserve a new report instead of replacing
+the first cohort.
 
 The arithmetic medians and the native byte-input p95/p99 exceed the repository's
 5% comparison budget. The absolute costs above remain part of review. A passing
