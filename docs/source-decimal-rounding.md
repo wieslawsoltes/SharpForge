@@ -120,3 +120,34 @@ focused integral-rounding, Round/Truncate, Parse and Decimal-operation tests
 passed at `3772537a`, using Node 24, one worker and a 512 MB old-space limit.
 Native/platform/performance qualification remains deferred. This family does
 not close #1350 or #1351.
+
+## Static arithmetic methods
+
+Add, Subtract, Multiply, Divide and Remainder each admit the static signature
+`decimal Method(decimal d1, decimal d2)`. Five IDs append after Ceiling/Floor,
+with wire names `decimal.Add#2` through `decimal.Remainder#2`. The real parameter
+names support named arguments without changing their source evaluation order.
+The existing exact-signature adapter routes each method to `invokeDecimal` and
+the same operations used by Decimal operators. No new arithmetic implementation
+or numeric policy is introduced.
+
+```csharp
+using System;
+decimal amount = decimal.Add(d2: 0.2m, d1: 0.1m);
+Console.WriteLine(amount); // 0.3
+Console.WriteLine(decimal.Divide(1m, 3m)); // 0.3333333333333333333333333333
+```
+
+Overflow and division/remainder by zero retain their managed faults, including
+inside `unchecked`. The source family returns the same immutable Decimal carrier
+for ordinary storage and boxing. Invalid arities or incompatible parameter and
+return types remain rejected. Compare/Equals and other library families are not
+registered by this increment.
+
+`tests/a05-source-decimal-arithmetic.test.js` compares static methods and operators
+across source, reloaded source and direct CIL, including exact scale, large values,
+named-argument side effects, value storage and fault boundaries. All 38 focused
+arithmetic, integral-rounding, Round/Truncate and Decimal-operation tests passed
+at `352d3ce1`, using Node 24, one worker and a 512 MB old-space limit. No fresh
+native execution, platform or performance evidence is claimed; #1350/#1351
+remain open.
