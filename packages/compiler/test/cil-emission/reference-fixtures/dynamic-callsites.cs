@@ -16,6 +16,7 @@ class Box
     public string Pick(object value) { return "object"; }
     public string Named(int first, int second = 5) { return first + ":" + second; }
     public T Echo<T>(T value) { return value; }
+    public void Replace<T>(ref T value, T next) { value = next; }
     public void Bump(ref int value, out string result) { value += Value; result = "ref:" + value; }
     public void Ping() { Console.WriteLine("void"); }
     public void Raise() { if (Changed != null) Changed(); }
@@ -44,6 +45,11 @@ class Convertible
     public static explicit operator byte(Convertible value) { return 12; }
 }
 
+class GenericHost<T>
+{
+    public object Echo(T value) { dynamic box = new Box(1); return box.Echo<T>(value); }
+}
+
 class Program
 {
     static Box shared = new Box(10);
@@ -61,8 +67,14 @@ class Program
     static object Generic<T>(T value)
     {
         dynamic box = new Box(1);
+        box.Replace<T>(ref value, value);
         Func<object> read = () => box.Echo<T>(value);
         return read();
+    }
+    static object GenericLocal<T>(T value)
+    {
+        object Read<U>(U item) { dynamic box = new Box(1); return box.Echo<U>(item); }
+        return Read(value);
     }
     string Secret(int value) { return "private:" + value; }
     void PrivateCall()
@@ -92,8 +104,16 @@ class Program
         Console.WriteLine((object)Program.Overload(runtime));
         Console.WriteLine(Generic(13));
         Console.WriteLine(Generic("closed"));
+        Console.WriteLine(GenericLocal(14));
+        Console.WriteLine(GenericLocal("local"));
+        Console.WriteLine(new GenericHost<int>().Echo(15));
+        Console.WriteLine(new GenericHost<string>().Echo("owner"));
         var created = new Box(runtime) { Small = 1 };
         Console.WriteLine(created.Value + ":" + created.Small);
+        var initialized = new Box(1) { [runtime] = 9 };
+        Console.WriteLine(initialized.Value);
+        var list = new System.Collections.Generic.List<int> { runtime };
+        Console.WriteLine(list[0]);
         int number = 5;
         string label;
         box.Bump(ref number, out label);
