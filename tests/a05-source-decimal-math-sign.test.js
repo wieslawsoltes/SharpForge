@@ -74,14 +74,16 @@ test('Sign returns Int32 through arrays, boxing, arithmetic and single named-arg
   'static decimal Read() { Console.Write("R"); return -1.25m; }');
 });
 
-test('existing Min/Max integral and double call admission and wire IDs coexist with Decimal Sign', () => {
-  for (const argumentsText of ['1, 2', '1.25, 2.5', '1u, 2u', '1L, 2L', '1UL, 2UL', '1, 2.5']) {
+test('existing Min/Max call admission coexists with Decimal Sign and exact integral overloads', () => {
+  for (const [argumentsText, suffix] of [['1, 2', ':Int32'], ['1.25, 2.5', ''], ['1u, 2u', ':UInt32'],
+    ['1L, 2L', ':Int64'], ['1UL, 2UL', ':UInt64'], ['1, 2.5', '']]) {
     const compiled = artifact(`Console.WriteLine(Math.Min(${argumentsText}));
       Console.WriteLine(Math.Max(${argumentsText})); Console.WriteLine(Math.Sign(-1m));`);
     for (const image of [compiled.image, loadAssembly(compiled.assembly)]) {
       const ids = builtinIds(image);
-      assert(ids.includes(BuiltinMap.get('Math.Min').id), argumentsText);
-      assert(ids.includes(BuiltinMap.get('Math.Max').id), argumentsText);
+      // New semantic calls select exact integral entries; released wire images keep their old IDs.
+      assert(ids.includes(BuiltinMap.get('Math.Min' + (suffix ? '#2' + suffix : '')).id), argumentsText);
+      assert(ids.includes(BuiltinMap.get('Math.Max' + (suffix ? '#2' + suffix : '')).id), argumentsText);
       assert(ids.includes(BuiltinMap.get('Math.Sign#1:Decimal').id), argumentsText);
     }
   }

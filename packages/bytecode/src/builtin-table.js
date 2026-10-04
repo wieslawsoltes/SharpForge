@@ -1,5 +1,6 @@
 import {runtimeBuiltinDefinitions} from './runtime-builtins.js';
 import {decimalIntrinsicDefinitions} from './decimal-intrinsic-profile.js';
+import {sourceMathBuiltins} from './source-math-builtins.js';
 
 // A closed source-visible subset of the existing CIL profile. Unique wire names
 // distinguish overloads; the descriptor retains the actual CLR member identity.
@@ -57,6 +58,10 @@ export function createBuiltinTable(definitions, contracts, releasedRanges) {
       result: descriptor.returnType === 'System.Decimal' ? 'decimal' : descriptor.returnType, params, decimal: descriptor,
       parameterNames
     });
+  }
+  for (const builtin of sourceMathBuiltins) {
+    const id = runtimeId++;
+    entries[id] = Object.freeze({...builtin, id});
   }
   return Object.freeze(entries);
 }
