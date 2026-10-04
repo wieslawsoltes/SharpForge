@@ -35,7 +35,23 @@ cancellation operation.
 The native fixture covers virtual/overridden, static, private setter, protected,
 write-only, generic, interface, struct and indexed properties. Authored metadata
 adds Other links, raw constants, omitted accessors and malformed/oversized cases.
-Validation is pending the scheduled serial slot.
+SDK 10.0.201/CoreCLR 10.0.5 captured nine properties; all 34 affected property,
+field, method and Buffer-ownership tests pass on Node 24.21.0. Syntax checks
+cover 2,142 modules with no errors; static analysis covers 2,138 modules.
+The structure report has 284 existing findings and none in CLR. All validation
+ran serially through the limiter.
+
+On a shared Apple M3 Pro/darwin-arm64, new property cold indexing/signatures/
+accessors measured median 51.292 µs / p95 147.542 µs; cached identity/signature
+queries measured 0.008071 µs / p95 0.036854 µs. Parent/head MethodDef controls
+measured cold medians 18.084/19.792 µs and p95 56.541/51.875 µs; cached medians
+0.006258/0.005904 µs and p95 0.027800/0.028154 µs. FieldDef cold medians were
+46.083/48.000 µs and p95 132.541/141.833 µs; cached medians 0.012729/0.007662 µs
+and p95 0.032346/0.037463 µs. The root reviewer accepted the bounded absolute
+costs: MethodDef cold median +1.708 µs, FieldDef cold p95 +9.292 µs and cached
+p95 +5.117 ns. These shared-machine controls make no significance or speedup
+claim. Allocation counts were not measured. Exact source identities, identical
+control fixture hashes and all percentiles are committed in the benchmark JSON.
 
 ```sh
 node scripts/limited.js node packages/clr/tools/capture-property-definitions.mjs tests/fixtures/clr-property-definitions
