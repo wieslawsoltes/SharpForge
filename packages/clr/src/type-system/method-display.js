@@ -8,7 +8,8 @@ const identifier = value => {
   return value;
 };
 
-class MethodDisplayTypes {
+/** Internal bounded Reflection type-name seam shared by method and parameter displays. */
+export class MethodDisplayTypes {
   #method;
   #names = new Map();
   #nodes = 0;
