@@ -8,6 +8,10 @@
     {
       "source": "packages/git/styles/editor.css",
       "order": 802
+    },
+    {
+      "source": "packages/git/styles/repository.css",
+      "order": 803
     }
   ],
   "workers": [],
