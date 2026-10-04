@@ -1,5 +1,6 @@
 import {registryAssignable} from './registry-assignability.js';
 import {validateRegistry} from './registry-validation.js';
+import {registerGenericAliases, resolveRegisteredGenericAlias} from './registered-generic-aliases.js';
 /** A closed, versioned ABI. Unlisted members never fall through to host JavaScript. */
 export const ABI_VERSION = 1;
 export const XAML = 'Microsoft.UI.Xaml.';
@@ -21,12 +22,15 @@ function define(name, options = {}) {
   types.set(name, t); aliases.set(name, name);
   const short = name.slice(name.lastIndexOf('.') + 1);
   if (!aliases.has(short)) aliases.set(short, name);
+  registerGenericAliases(name, aliases);
   return t;
 }
 function canonicalType(type) {
   if (typeof type !== 'string') return type;
   // Compiler/metadata descriptors already contain canonical registered names.
   if (types.has(type)) return type;
+  const registered = resolveRegisteredGenericAlias(type, aliases);
+  if (registered) return registered;
   if (type.endsWith('[]')) return canonicalType(type.slice(0, -2)) + '[]';
   const collection = /^(?:System\.Collections\.Generic\.)?(List|Dictionary|HashSet|Queue|Stack|IComparer)(?:`[12])?\s*<(.+)>$/.exec(type);
   if(collection){const args=collection[2].split(',').map(x=>canonicalType(x.trim()));return 'System.Collections.Generic.'+collection[1]+'`'+args.length+'<'+args.join(', ')+'>';}
