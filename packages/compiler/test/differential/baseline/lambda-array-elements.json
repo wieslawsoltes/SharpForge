@@ -1,4 +1,4 @@
 {
   "lambda-array-elements/cs1661-cs0029-element-mismatch": ["diagnostics", "warnings"],
-  "lambda-array-elements/explicitly-typed-initializers": ["diagnostics", "warnings", "bytecode", "cil"]
+  "lambda-array-elements/explicitly-typed-initializers": ["diagnostics", "warnings", "bytecode", "cil", "directCil"]
 }

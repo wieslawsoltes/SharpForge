@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "exceptions": [
+    {
+      "child": "SF-R015-T03",
+      "parent": "SF-A26-T06",
+      "dependency": "SF-A27-T08",
+      "sourceIssue": 425,
+      "reason": "Issue #425 ships the JS/SIMD subset independently of the future Rust runtime while retaining the broader publishing parent and its Rust requirement in #418."
+    }
+  ]
+}

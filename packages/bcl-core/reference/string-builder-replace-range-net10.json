@@ -1,0 +1,10642 @@
+{
+  "sdk": "10.0.201",
+  "runtime": "10.0.5",
+  "sourceSha256": "be99c84c6665ecbc82119145ff14517d33ef9eff5c0be96efcf6ce05ceec8588",
+  "rows": [
+    {
+      "id": "empty-full-replace",
+      "segments": [],
+      "oldValue": [
+        97
+      ],
+      "newValue": [
+        120
+      ],
+      "start": 0,
+      "count": 0,
+      "before": {
+        "text": [],
+        "length": 0,
+        "capacity": 1,
+        "maxCapacity": 2147483647,
+        "chunks": 1
+      },
+      "identity": true,
+      "fault": null,
+      "parameter": null,
+      "after": {
+        "text": [],
+        "length": 0,
+        "capacity": 1,
+        "maxCapacity": 2147483647,
+        "chunks": 1
+      }
+    },
+    {
+      "id": "empty-middle-replace",
+      "segments": [],
+      "oldValue": [
+        97
+      ],
+      "newValue": [
+        120
+      ],
+      "start": 0,
+      "count": 0,
+      "before": {
+        "text": [],
+        "length": 0,
+        "capacity": 1,
+        "maxCapacity": 2147483647,
+        "chunks": 1
+      },
+      "identity": true,
+      "fault": null,
+      "parameter": null,
+      "after": {
+        "text": [],
+        "length": 0,
+        "capacity": 1,
+        "maxCapacity": 2147483647,
+        "chunks": 1
+      }
+    },
+    {
+      "id": "empty-end-zero-replace",
+      "segments": [],
+      "oldValue": [
+        97
+      ],
+      "newValue": [
+        120
+      ],
+      "start": 0,
+      "count": 0,
+      "before": {
+        "text": [],
+        "length": 0,
+        "capacity": 1,
+        "maxCapacity": 2147483647,
+        "chunks": 1
+      },
+      "identity": true,
+      "fault": null,
+      "parameter": null,
+      "after": {
+        "text": [],
+        "length": 0,
+        "capacity": 1,
+        "maxCapacity": 2147483647,
+        "chunks": 1
+      }
+    },
+    {
+      "id": "empty-full-delete",
+      "segments": [],
+      "oldValue": [
+        97
+      ],
+      "newValue": null,
+      "start": 0,
+      "count": 0,
+      "before": {
+        "text": [],
+        "length": 0,
+        "capacity": 1,
+        "maxCapacity": 2147483647,
+        "chunks": 1
+      },
+      "identity": true,
+      "fault": null,
+      "parameter": null,
+      "after": {
+        "text": [],
+        "length": 0,
+        "capacity": 1,
+        "maxCapacity": 2147483647,
+        "chunks": 1
+      }
+    },
+    {
+      "id": "empty-middle-delete",
+      "segments": [],
+      "oldValue": [
+        97
+      ],
+      "newValue": null,
+      "start": 0,
+      "count": 0,
+      "before": {
+        "text": [],
+        "length": 0,
+        "capacity": 1,
+        "maxCapacity": 2147483647,
+        "chunks": 1
+      },
+      "identity": true,
+      "fault": null,
+      "parameter": null,
+      "after": {
+        "text": [],
+        "length": 0,
+        "capacity": 1,
+        "maxCapacity": 2147483647,
+        "chunks": 1
+      }
+    },
+    {
+      "id": "empty-end-zero-delete",
+      "segments": [],
+      "oldValue": [
+        97
+      ],
+      "newValue": null,
+      "start": 0,
+      "count": 0,
+      "before": {
+        "text": [],
+        "length": 0,
+        "capacity": 1,
+        "maxCapacity": 2147483647,
+        "chunks": 1
+      },
+      "identity": true,
+      "fault": null,
+      "parameter": null,
+      "after": {
+        "text": [],
+        "length": 0,
+        "capacity": 1,
+        "maxCapacity": 2147483647,
+        "chunks": 1
+      }
+    },
+    {
+      "id": "empty-full-grow",
+      "segments": [],
+      "oldValue": [
+        97
+      ],
+      "newValue": [
+        97,
+        97
+      ],
+      "start": 0,
+      "count": 0,
+      "before": {
+        "text": [],
+        "length": 0,
+        "capacity": 1,
+        "maxCapacity": 2147483647,
+        "chunks": 1
+      },
+      "identity": true,
+      "fault": null,
+      "parameter": null,
+      "after": {
+        "text": [],
+        "length": 0,
+        "capacity": 1,
+        "maxCapacity": 2147483647,
+        "chunks": 1
+      }
+    },
+    {
+      "id": "empty-middle-grow",
+      "segments": [],
+      "oldValue": [
+        97
+      ],
+      "newValue": [
+        97,
+        97
+      ],
+      "start": 0,
+      "count": 0,
+      "before": {
+        "text": [],
+        "length": 0,
+        "capacity": 1,
+        "maxCapacity": 2147483647,
+        "chunks": 1
+      },
+      "identity": true,
+      "fault": null,
+      "parameter": null,
+      "after": {
+        "text": [],
+        "length": 0,
+        "capacity": 1,
+        "maxCapacity": 2147483647,
+        "chunks": 1
+      }
+    },
+    {
+      "id": "empty-end-zero-grow",
+      "segments": [],
+      "oldValue": [
+        97
+      ],
+      "newValue": [
+        97,
+        97
+      ],
+      "start": 0,
+      "count": 0,
+      "before": {
+        "text": [],
+        "length": 0,
+        "capacity": 1,
+        "maxCapacity": 2147483647,
+        "chunks": 1
+      },
+      "identity": true,
+      "fault": null,
+      "parameter": null,
+      "after": {
+        "text": [],
+        "length": 0,
+        "capacity": 1,
+        "maxCapacity": 2147483647,
+        "chunks": 1
+      }
+    },
+    {
+      "id": "empty-full-shrink",
+      "segments": [],
+      "oldValue": [
+        97,
+        98,
+        97
+      ],
+      "newValue": [
+        81
+      ],
+      "start": 0,
+      "count": 0,
+      "before": {
+        "text": [],
+        "length": 0,
+        "capacity": 1,
+        "maxCapacity": 2147483647,
+        "chunks": 1
+      },
+      "identity": true,
+      "fault": null,
+      "parameter": null,
+      "after": {
+        "text": [],
+        "length": 0,
+        "capacity": 1,
+        "maxCapacity": 2147483647,
+        "chunks": 1
+      }
+    },
+    {
+      "id": "empty-middle-shrink",
+      "segments": [],
+      "oldValue": [
+        97,
+        98,
+        97
+      ],
+      "newValue": [
+        81
+      ],
+      "start": 0,
+      "count": 0,
+      "before": {
+        "text": [],
+        "length": 0,
+        "capacity": 1,
+        "maxCapacity": 2147483647,
+        "chunks": 1
+      },
+      "identity": true,
+      "fault": null,
+      "parameter": null,
+      "after": {
+        "text": [],
+        "length": 0,
+        "capacity": 1,
+        "maxCapacity": 2147483647,
+        "chunks": 1
+      }
+    },
+    {
+      "id": "empty-end-zero-shrink",
+      "segments": [],
+      "oldValue": [
+        97,
+        98,
+        97
+      ],
+      "newValue": [
+        81
+      ],
+      "start": 0,
+      "count": 0,
+      "before": {
+        "text": [],
+        "length": 0,
+        "capacity": 1,
+        "maxCapacity": 2147483647,
+        "chunks": 1
+      },
+      "identity": true,
+      "fault": null,
+      "parameter": null,
+      "after": {
+        "text": [],
+        "length": 0,
+        "capacity": 1,
+        "maxCapacity": 2147483647,
+        "chunks": 1
+      }
+    },
+    {
+      "id": "empty-full-same",
+      "segments": [],
+      "oldValue": [
+        97
+      ],
+      "newValue": [
+        97
+      ],
+      "start": 0,
+      "count": 0,
+      "before": {
+        "text": [],
+        "length": 0,
+        "capacity": 1,
+        "maxCapacity": 2147483647,
+        "chunks": 1
+      },
+      "identity": true,
+      "fault": null,
+      "parameter": null,
+      "after": {
+        "text": [],
+        "length": 0,
+        "capacity": 1,
+        "maxCapacity": 2147483647,
+        "chunks": 1
+      }
+    },
+    {
+      "id": "empty-middle-same",
+      "segments": [],
+      "oldValue": [
+        97
+      ],
+      "newValue": [
+        97
+      ],
+      "start": 0,
+      "count": 0,
+      "before": {
+        "text": [],
+        "length": 0,
+        "capacity": 1,
+        "maxCapacity": 2147483647,
+        "chunks": 1
+      },
+      "identity": true,
+      "fault": null,
+      "parameter": null,
+      "after": {
+        "text": [],
+        "length": 0,
+        "capacity": 1,
+        "maxCapacity": 2147483647,
+        "chunks": 1
+      }
+    },
+    {
+      "id": "empty-end-zero-same",
+      "segments": [],
+      "oldValue": [
+        97
+      ],
+      "newValue": [
+        97
+      ],
+      "start": 0,
+      "count": 0,
+      "before": {
+        "text": [],
+        "length": 0,
+        "capacity": 1,
+        "maxCapacity": 2147483647,
+        "chunks": 1
+      },
+      "identity": true,
+      "fault": null,
+      "parameter": null,
+      "after": {
+        "text": [],
+        "length": 0,
+        "capacity": 1,
+        "maxCapacity": 2147483647,
+        "chunks": 1
+      }
+    },
+    {
+      "id": "empty-full-absent",
+      "segments": [],
+      "oldValue": [
+        97,
+        98,
+        115,
+        101,
+        110,
+        116
+      ],
+      "newValue": [
+        120
+      ],
+      "start": 0,
+      "count": 0,
+      "before": {
+        "text": [],
+        "length": 0,
+        "capacity": 1,
+        "maxCapacity": 2147483647,
+        "chunks": 1
+      },
+      "identity": true,
+      "fault": null,
+      "parameter": null,
+      "after": {
+        "text": [],
+        "length": 0,
+        "capacity": 1,
+        "maxCapacity": 2147483647,
+        "chunks": 1
+      }
+    },
+    {
+      "id": "empty-middle-absent",
+      "segments": [],
+      "oldValue": [
+        97,
+        98,
+        115,
+        101,
+        110,
+        116
+      ],
+      "newValue": [
+        120
+      ],
+      "start": 0,
+      "count": 0,
+      "before": {
+        "text": [],
+        "length": 0,
+        "capacity": 1,
+        "maxCapacity": 2147483647,
+        "chunks": 1
+      },
+      "identity": true,
+      "fault": null,
+      "parameter": null,
+      "after": {
+        "text": [],
+        "length": 0,
+        "capacity": 1,
+        "maxCapacity": 2147483647,
+        "chunks": 1
+      }
+    },
+    {
+      "id": "empty-end-zero-absent",
+      "segments": [],
+      "oldValue": [
+        97,
+        98,
+        115,
+        101,
+        110,
+        116
+      ],
+      "newValue": [
+        120
+      ],
+      "start": 0,
+      "count": 0,
+      "before": {
+        "text": [],
+        "length": 0,
+        "capacity": 1,
+        "maxCapacity": 2147483647,
+        "chunks": 1
+      },
+      "identity": true,
+      "fault": null,
+      "parameter": null,
+      "after": {
+        "text": [],
+        "length": 0,
+        "capacity": 1,
+        "maxCapacity": 2147483647,
+        "chunks": 1
+      }
+    },
+    {
+      "id": "empty-full-nul",
+      "segments": [],
+      "oldValue": [
+        0
+      ],
+      "newValue": [
+        36,
+        38
+      ],
+      "start": 0,
+      "count": 0,
+      "before": {
+        "text": [],
+        "length": 0,
+        "capacity": 1,
+        "maxCapacity": 2147483647,
+        "chunks": 1
+      },
+      "identity": true,
+      "fault": null,
+      "parameter": null,
+      "after": {
+        "text": [],
+        "length": 0,
+        "capacity": 1,
+        "maxCapacity": 2147483647,
+        "chunks": 1
+      }
+    },
+    {
+      "id": "empty-middle-nul",
+      "segments": [],
+      "oldValue": [
+        0
+      ],
+      "newValue": [
+        36,
+        38
+      ],
+      "start": 0,
+      "count": 0,
+      "before": {
+        "text": [],
+        "length": 0,
+        "capacity": 1,
+        "maxCapacity": 2147483647,
+        "chunks": 1
+      },
+      "identity": true,
+      "fault": null,
+      "parameter": null,
+      "after": {
+        "text": [],
+        "length": 0,
+        "capacity": 1,
+        "maxCapacity": 2147483647,
+        "chunks": 1
+      }
+    },
+    {
+      "id": "empty-end-zero-nul",
+      "segments": [],
+      "oldValue": [
+        0
+      ],
+      "newValue": [
+        36,
+        38
+      ],
+      "start": 0,
+      "count": 0,
+      "before": {
+        "text": [],
+        "length": 0,
+        "capacity": 1,
+        "maxCapacity": 2147483647,
+        "chunks": 1
+      },
+      "identity": true,
+      "fault": null,
+      "parameter": null,
+      "after": {
+        "text": [],
+        "length": 0,
+        "capacity": 1,
+        "maxCapacity": 2147483647,
+        "chunks": 1
+      }
+    },
+    {
+      "id": "empty-full-low",
+      "segments": [],
+      "oldValue": [
+        56360
+      ],
+      "newValue": [
+        55296
+      ],
+      "start": 0,
+      "count": 0,
+      "before": {
+        "text": [],
+        "length": 0,
+        "capacity": 1,
+        "maxCapacity": 2147483647,
+        "chunks": 1
+      },
+      "identity": true,
+      "fault": null,
+      "parameter": null,
+      "after": {
+        "text": [],
+        "length": 0,
+        "capacity": 1,
+        "maxCapacity": 2147483647,
+        "chunks": 1
+      }
+    },
+    {
+      "id": "empty-middle-low",
+      "segments": [],
+      "oldValue": [
+        56360
+      ],
+      "newValue": [
+        55296
+      ],
+      "start": 0,
+      "count": 0,
+      "before": {
+        "text": [],
+        "length": 0,
+        "capacity": 1,
+        "maxCapacity": 2147483647,
+        "chunks": 1
+      },
+      "identity": true,
+      "fault": null,
+      "parameter": null,
+      "after": {
+        "text": [],
+        "length": 0,
+        "capacity": 1,
+        "maxCapacity": 2147483647,
+        "chunks": 1
+      }
+    },
+    {
+      "id": "empty-end-zero-low",
+      "segments": [],
+      "oldValue": [
+        56360
+      ],
+      "newValue": [
+        55296
+      ],
+      "start": 0,
+      "count": 0,
+      "before": {
+        "text": [],
+        "length": 0,
+        "capacity": 1,
+        "maxCapacity": 2147483647,
+        "chunks": 1
+      },
+      "identity": true,
+      "fault": null,
+      "parameter": null,
+      "after": {
+        "text": [],
+        "length": 0,
+        "capacity": 1,
+        "maxCapacity": 2147483647,
+        "chunks": 1
+      }
+    },
+    {
+      "id": "flat-full-replace",
+      "segments": [
+        [
+          97,
+          98,
+          97,
+          97,
+          98,
+          97
+        ]
+      ],
+      "oldValue": [
+        97
+      ],
+      "newValue": [
+        120
+      ],
+      "start": 0,
+      "count": 6,
+      "before": {
+        "text": [
+          97,
+          98,
+          97,
+          97,
+          98,
+          97
+        ],
+        "length": 6,
+        "capacity": 6,
+        "maxCapacity": 2147483647,
+        "chunks": 2
+      },
+      "identity": true,
+      "fault": null,
+      "parameter": null,
+      "after": {
+        "text": [
+          120,
+          98,
+          120,
+          120,
+          98,
+          120
+        ],
+        "length": 6,
+        "capacity": 6,
+        "maxCapacity": 2147483647,
+        "chunks": 2
+      }
+    },
+    {
+      "id": "flat-middle-replace",
+      "segments": [
+        [
+          97,
+          98,
+          97,
+          97,
+          98,
+          97
+        ]
+      ],
+      "oldValue": [
+        97
+      ],
+      "newValue": [
+        120
+      ],
+      "start": 1,
+      "count": 4,
+      "before": {
+        "text": [
+          97,
+          98,
+          97,
+          97,
+          98,
+          97
+        ],
+        "length": 6,
+        "capacity": 6,
+        "maxCapacity": 2147483647,
+        "chunks": 2
+      },
+      "identity": true,
+      "fault": null,
+      "parameter": null,
+      "after": {
+        "text": [
+          97,
+          98,
+          120,
+          120,
+          98,
+          97
+        ],
+        "length": 6,
+        "capacity": 6,
+        "maxCapacity": 2147483647,
+        "chunks": 2
+      }
+    },
+    {
+      "id": "flat-end-zero-replace",
+      "segments": [
+        [
+          97,
+          98,
+          97,
+          97,
+          98,
+          97
+        ]
+      ],
+      "oldValue": [
+        97
+      ],
+      "newValue": [
+        120
+      ],
+      "start": 6,
+      "count": 0,
+      "before": {
+        "text": [
+          97,
+          98,
+          97,
+          97,
+          98,
+          97
+        ],
+        "length": 6,
+        "capacity": 6,
+        "maxCapacity": 2147483647,
+        "chunks": 2
+      },
+      "identity": true,
+      "fault": null,
+      "parameter": null,
+      "after": {
+        "text": [
+          97,
+          98,
+          97,
+          97,
+          98,
+          97
+        ],
+        "length": 6,
+        "capacity": 6,
+        "maxCapacity": 2147483647,
+        "chunks": 2
+      }
+    },
+    {
+      "id": "flat-full-delete",
+      "segments": [
+        [
+          97,
+          98,
+          97,
+          97,
+          98,
+          97
+        ]
+      ],
+      "oldValue": [
+        97
+      ],
+      "newValue": null,
+      "start": 0,
+      "count": 6,
+      "before": {
+        "text": [
+          97,
+          98,
+          97,
+          97,
+          98,
+          97
+        ],
+        "length": 6,
+        "capacity": 6,
+        "maxCapacity": 2147483647,
+        "chunks": 2
+      },
+      "identity": true,
+      "fault": null,
+      "parameter": null,
+      "after": {
+        "text": [
+          98,
+          98
+        ],
+        "length": 2,
+        "capacity": 5,
+        "maxCapacity": 2147483647,
+        "chunks": 1
+      }
+    },
+    {
+      "id": "flat-middle-delete",
+      "segments": [
+        [
+          97,
+          98,
+          97,
+          97,
+          98,
+          97
+        ]
+      ],
+      "oldValue": [
+        97
+      ],
+      "newValue": null,
+      "start": 1,
+      "count": 4,
+      "before": {
+        "text": [
+          97,
+          98,
+          97,
+          97,
+          98,
+          97
+        ],
+        "length": 6,
+        "capacity": 6,
+        "maxCapacity": 2147483647,
+        "chunks": 2
+      },
+      "identity": true,
+      "fault": null,
+      "parameter": null,
+      "after": {
+        "text": [
+          97,
+          98,
+          98,
+          97
+        ],
+        "length": 4,
+        "capacity": 6,
+        "maxCapacity": 2147483647,
+        "chunks": 2
+      }
+    },
+    {
+      "id": "flat-end-zero-delete",
+      "segments": [
+        [
+          97,
+          98,
+          97,
+          97,
+          98,
+          97
+        ]
+      ],
+      "oldValue": [
+        97
+      ],
+      "newValue": null,
+      "start": 6,
+      "count": 0,
+      "before": {
+        "text": [
+          97,
+          98,
+          97,
+          97,
+          98,
+          97
+        ],
+        "length": 6,
+        "capacity": 6,
+        "maxCapacity": 2147483647,
+        "chunks": 2
+      },
+      "identity": true,
+      "fault": null,
+      "parameter": null,
+      "after": {
+        "text": [
+          97,
+          98,
+          97,
+          97,
+          98,
+          97
+        ],
+        "length": 6,
+        "capacity": 6,
+        "maxCapacity": 2147483647,
+        "chunks": 2
+      }
+    },
+    {
+      "id": "flat-full-grow",
+      "segments": [
+        [
+          97,
+          98,
+          97,
+          97,
+          98,
+          97
+        ]
+      ],
+      "oldValue": [
+        97
+      ],
+      "newValue": [
+        97,
+        97
+      ],
+      "start": 0,
+      "count": 6,
+      "before": {
+        "text": [
+          97,
+          98,
+          97,
+          97,
+          98,
+          97
+        ],
+        "length": 6,
+        "capacity": 6,
+        "maxCapacity": 2147483647,
+        "chunks": 2
+      },
+      "identity": true,
+      "fault": null,
+      "parameter": null,
+      "after": {
+        "text": [
+          97,
+          97,
+          98,
+          97,
+          97,
+          97,
+          97,
+          98,
+          97,
+          97
+        ],
+        "length": 10,
+        "capacity": 10,
+        "maxCapacity": 2147483647,
+        "chunks": 4
+      }
+    },
+    {
+      "id": "flat-middle-grow",
+      "segments": [
+        [
+          97,
+          98,
+          97,
+          97,
+          98,
+          97
+        ]
+      ],
+      "oldValue": [
+        97
+      ],
+      "newValue": [
+        97,
+        97
+      ],
+      "start": 1,
+      "count": 4,
+      "before": {
+        "text": [
+          97,
+          98,
+          97,
+          97,
+          98,
+          97
+        ],
+        "length": 6,
+        "capacity": 6,
+        "maxCapacity": 2147483647,
+        "chunks": 2
+      },
+      "identity": true,
+      "fault": null,
+      "parameter": null,
+      "after": {
+        "text": [
+          97,
+          98,
+          97,
+          97,
+          97,
+          97,
+          98,
+          97
+        ],
+        "length": 8,
+        "capacity": 8,
+        "maxCapacity": 2147483647,
+        "chunks": 3
+      }
+    },
+    {
+      "id": "flat-end-zero-grow",
+      "segments": [
+        [
+          97,
+          98,
+          97,
+          97,
+          98,
+          97
+        ]
+      ],
+      "oldValue": [
+        97
+      ],
+      "newValue": [
+        97,
+        97
+      ],
+      "start": 6,
+      "count": 0,
+      "before": {
+        "text": [
+          97,
+          98,
+          97,
+          97,
+          98,
+          97
+        ],
+        "length": 6,
+        "capacity": 6,
+        "maxCapacity": 2147483647,
+        "chunks": 2
+      },
+      "identity": true,
+      "fault": null,
+      "parameter": null,
+      "after": {
+        "text": [
+          97,
+          98,
+          97,
+          97,
+          98,
+          97
+        ],
+        "length": 6,
+        "capacity": 6,
+        "maxCapacity": 2147483647,
+        "chunks": 2
+      }
+    },
+    {
+      "id": "flat-full-shrink",
+      "segments": [
+        [
+          97,
+          98,
+          97,
+          97,
+          98,
+          97
+        ]
+      ],
+      "oldValue": [
+        97,
+        98,
+        97
+      ],
+      "newValue": [
+        81
+      ],
+      "start": 0,
+      "count": 6,
+      "before": {
+        "text": [
+          97,
+          98,
+          97,
+          97,
+          98,
+          97
+        ],
+        "length": 6,
+        "capacity": 6,
+        "maxCapacity": 2147483647,
+        "chunks": 2
+      },
+      "identity": true,
+      "fault": null,
+      "parameter": null,
+      "after": {
+        "text": [
+          81,
+          81
+        ],
+        "length": 2,
+        "capacity": 6,
+        "maxCapacity": 2147483647,
+        "chunks": 2
+      }
+    },
+    {
+      "id": "flat-middle-shrink",
+      "segments": [
+        [
+          97,
+          98,
+          97,
+          97,
+          98,
+          97
+        ]
+      ],
+      "oldValue": [
+        97,
+        98,
+        97
+      ],
+      "newValue": [
+        81
+      ],
+      "start": 1,
+      "count": 4,
+      "before": {
+        "text": [
+          97,
+          98,
+          97,
+          97,
+          98,
+          97
+        ],
+        "length": 6,
+        "capacity": 6,
+        "maxCapacity": 2147483647,
+        "chunks": 2
+      },
+      "identity": true,
+      "fault": null,
+      "parameter": null,
+      "after": {
+        "text": [
+          97,
+          98,
+          97,
+          97,
+          98,
+          97
+        ],
+        "length": 6,
+        "capacity": 6,
+        "maxCapacity": 2147483647,
+        "chunks": 2
+      }
+    },
+    {
+      "id": "flat-end-zero-shrink",
+      "segments": [
+        [
+          97,
+          98,
+          97,
+          97,
+          98,
+          97
+        ]
+      ],
+      "oldValue": [
+        97,
+        98,
+        97
+      ],
+      "newValue": [
+        81
+      ],
+      "start": 6,
+      "count": 0,
+      "before": {
+        "text": [
+          97,
+          98,
+          97,
+          97,
+          98,
+          97
+        ],
+        "length": 6,
+        "capacity": 6,
+        "maxCapacity": 2147483647,
+        "chunks": 2
+      },
+      "identity": true,
+      "fault": null,
+      "parameter": null,
+      "after": {
+        "text": [
+          97,
+          98,
+          97,
+          97,
+          98,
+          97
+        ],
+        "length": 6,
+        "capacity": 6,
+        "maxCapacity": 2147483647,
+        "chunks": 2
+      }
+    },
+    {
+      "id": "flat-full-same",
+      "segments": [
+        [
+          97,
+          98,
+          97,
+          97,
+          98,
+          97
+        ]
+      ],
+      "oldValue": [
+        97
+      ],
+      "newValue": [
+        97
+      ],
+      "start": 0,
+      "count": 6,
+      "before": {
+        "text": [
+          97,
+          98,
+          97,
+          97,
+          98,
+          97
+        ],
+        "length": 6,
+        "capacity": 6,
+        "maxCapacity": 2147483647,
+        "chunks": 2
+      },
+      "identity": true,
+      "fault": null,
+      "parameter": null,
+      "after": {
+        "text": [
+          97,
+          98,
+          97,
+          97,
+          98,
+          97
+        ],
+        "length": 6,
+        "capacity": 6,
+        "maxCapacity": 2147483647,
+        "chunks": 2
+      }
+    },
+    {
+      "id": "flat-middle-same",
+      "segments": [
+        [
+          97,
+          98,
+          97,
+          97,
+          98,
+          97
+        ]
+      ],
+      "oldValue": [
+        97
+      ],
+      "newValue": [
+        97
+      ],
+      "start": 1,
+      "count": 4,
+      "before": {
+        "text": [
+          97,
+          98,
+          97,
+          97,
+          98,
+          97
+        ],
+        "length": 6,
+        "capacity": 6,
+        "maxCapacity": 2147483647,
+        "chunks": 2
+      },
+      "identity": true,
+      "fault": null,
+      "parameter": null,
+      "after": {
+        "text": [
+          97,
+          98,
+          97,
+          97,
+          98,
+          97
+        ],
+        "length": 6,
+        "capacity": 6,
+        "maxCapacity": 2147483647,
+        "chunks": 2
+      }
+    },
+    {
+      "id": "flat-end-zero-same",
+      "segments": [
+        [
+          97,
+          98,
+          97,
+          97,
+          98,
+          97
+        ]
+      ],
+      "oldValue": [
+        97
+      ],
+      "newValue": [
+        97
+      ],
+      "start": 6,
+      "count": 0,
+      "before": {
+        "text": [
+          97,
+          98,
+          97,
+          97,
+          98,
+          97
+        ],
+        "length": 6,
+        "capacity": 6,
+        "maxCapacity": 2147483647,
+        "chunks": 2
+      },
+      "identity": true,
+      "fault": null,
+      "parameter": null,
+      "after": {
+        "text": [
+          97,
+          98,
+          97,
+          97,
+          98,
+          97
+        ],
+        "length": 6,
+        "capacity": 6,
+        "maxCapacity": 2147483647,
+        "chunks": 2
+      }
+    },
+    {
+      "id": "flat-full-absent",
+      "segments": [
+        [
+          97,
+          98,
+          97,
+          97,
+          98,
+          97
+        ]
+      ],
+      "oldValue": [
+        97,
+        98,
+        115,
+        101,
+        110,
+        116
+      ],
+      "newValue": [
+        120
+      ],
+      "start": 0,
+      "count": 6,
+      "before": {
+        "text": [
+          97,
+          98,
+          97,
+          97,
+          98,
+          97
+        ],
+        "length": 6,
+        "capacity": 6,
+        "maxCapacity": 2147483647,
+        "chunks": 2
+      },
+      "identity": true,
+      "fault": null,
+      "parameter": null,
+      "after": {
+        "text": [
+          97,
+          98,
+          97,
+          97,
+          98,
+          97
+        ],
+        "length": 6,
+        "capacity": 6,
+        "maxCapacity": 2147483647,
+        "chunks": 2
+      }
+    },
+    {
+      "id": "flat-middle-absent",
+      "segments": [
+        [
+          97,
+          98,
+          97,
+          97,
+          98,
+          97
+        ]
+      ],
+      "oldValue": [
+        97,
+        98,
+        115,
+        101,
+        110,
+        116
+      ],
+      "newValue": [
+        120
+      ],
+      "start": 1,
+      "count": 4,
+      "before": {
+        "text": [
+          97,
+          98,
+          97,
+          97,
+          98,
+          97
+        ],
+        "length": 6,
+        "capacity": 6,
+        "maxCapacity": 2147483647,
+        "chunks": 2
+      },
+      "identity": true,
+      "fault": null,
+      "parameter": null,
+      "after": {
+        "text": [
+          97,
+          98,
+          97,
+          97,
+          98,
+          97
+        ],
+        "length": 6,
+        "capacity": 6,
+        "maxCapacity": 2147483647,
+        "chunks": 2
+      }
+    },
+    {
+      "id": "flat-end-zero-absent",
+      "segments": [
+        [
+          97,
+          98,
+          97,
+          97,
+          98,
+          97
+        ]
+      ],
+      "oldValue": [
+        97,
+        98,
+        115,
+        101,
+        110,
+        116
+      ],
+      "newValue": [
+        120
+      ],
+      "start": 6,
+      "count": 0,
+      "before": {
+        "text": [
+          97,
+          98,
+          97,
+          97,
+          98,
+          97
+        ],
+        "length": 6,
+        "capacity": 6,
+        "maxCapacity": 2147483647,
+        "chunks": 2
+      },
+      "identity": true,
+      "fault": null,
+      "parameter": null,
+      "after": {
+        "text": [
+          97,
+          98,
+          97,
+          97,
+          98,
+          97
+        ],
+        "length": 6,
+        "capacity": 6,
+        "maxCapacity": 2147483647,
+        "chunks": 2
+      }
+    },
+    {
+      "id": "flat-full-nul",
+      "segments": [
+        [
+          97,
+          98,
+          97,
+          97,
+          98,
+          97
+        ]
+      ],
+      "oldValue": [
+        0
+      ],
+      "newValue": [
+        36,
+        38
+      ],
+      "start": 0,
+      "count": 6,
+      "before": {
+        "text": [
+          97,
+          98,
+          97,
+          97,
+          98,
+          97
+        ],
+        "length": 6,
+        "capacity": 6,
+        "maxCapacity": 2147483647,
+        "chunks": 2
+      },
+      "identity": true,
+      "fault": null,
+      "parameter": null,
+      "after": {
+        "text": [
+          97,
+          98,
+          97,
+          97,
+          98,
+          97
+        ],
+        "length": 6,
+        "capacity": 6,
+        "maxCapacity": 2147483647,
+        "chunks": 2
+      }
+    },
+    {
+      "id": "flat-middle-nul",
+      "segments": [
+        [
+          97,
+          98,
+          97,
+          97,
+          98,
+          97
+        ]
+      ],
+      "oldValue": [
+        0
+      ],
+      "newValue": [
+        36,
+        38
+      ],
+      "start": 1,
+      "count": 4,
+      "before": {
+        "text": [
+          97,
+          98,
+          97,
+          97,
+          98,
+          97
+        ],
+        "length": 6,
+        "capacity": 6,
+        "maxCapacity": 2147483647,
+        "chunks": 2
+      },
+      "identity": true,
+      "fault": null,
+      "parameter": null,
+      "after": {
+        "text": [
+          97,
+          98,
+          97,
+          97,
+          98,
+          97
+        ],
+        "length": 6,
+        "capacity": 6,
+        "maxCapacity": 2147483647,
+        "chunks": 2
+      }
+    },
+    {
+      "id": "flat-end-zero-nul",
+      "segments": [
+        [
+          97,
+          98,
+          97,
+          97,
+          98,
+          97
+        ]
+      ],
+      "oldValue": [
+        0
+      ],
+      "newValue": [
+        36,
+        38
+      ],
+      "start": 6,
+      "count": 0,
+      "before": {
+        "text": [
+          97,
+          98,
+          97,
+          97,
+          98,
+          97
+        ],
+        "length": 6,
+        "capacity": 6,
+        "maxCapacity": 2147483647,
+        "chunks": 2
+      },
+      "identity": true,
+      "fault": null,
+      "parameter": null,
+      "after": {
+        "text": [
+          97,
+          98,
+          97,
+          97,
+          98,
+          97
+        ],
+        "length": 6,
+        "capacity": 6,
+        "maxCapacity": 2147483647,
+        "chunks": 2
+      }
+    },
+    {
+      "id": "flat-full-low",
+      "segments": [
+        [
+          97,
+          98,
+          97,
+          97,
+          98,
+          97
+        ]
+      ],
+      "oldValue": [
+        56360
+      ],
+      "newValue": [
+        55296
+      ],
+      "start": 0,
+      "count": 6,
+      "before": {
+        "text": [
+          97,
+          98,
+          97,
+          97,
+          98,
+          97
+        ],
+        "length": 6,
+        "capacity": 6,
+        "maxCapacity": 2147483647,
+        "chunks": 2
+      },
+      "identity": true,
+      "fault": null,
+      "parameter": null,
+      "after": {
+        "text": [
+          97,
+          98,
+          97,
+          97,
+          98,
+          97
+        ],
+        "length": 6,
+        "capacity": 6,
+        "maxCapacity": 2147483647,
+        "chunks": 2
+      }
+    },
+    {
+      "id": "flat-middle-low",
+      "segments": [
+        [
+          97,
+          98,
+          97,
+          97,
+          98,
+          97
+        ]
+      ],
+      "oldValue": [
+        56360
+      ],
+      "newValue": [
+        55296
+      ],
+      "start": 1,
+      "count": 4,
+      "before": {
+        "text": [
+          97,
+          98,
+          97,
+          97,
+          98,
+          97
+        ],
+        "length": 6,
+        "capacity": 6,
+        "maxCapacity": 2147483647,
+        "chunks": 2
+      },
+      "identity": true,
+      "fault": null,
+      "parameter": null,
+      "after": {
+        "text": [
+          97,
+          98,
+          97,
+          97,
+          98,
+          97
+        ],
+        "length": 6,
+        "capacity": 6,
+        "maxCapacity": 2147483647,
+        "chunks": 2
+      }
+    },
+    {
+      "id": "flat-end-zero-low",
+      "segments": [
+        [
+          97,
+          98,
+          97,
+          97,
+          98,
+          97
+        ]
+      ],
+      "oldValue": [
+        56360
+      ],
+      "newValue": [
+        55296
+      ],
+      "start": 6,
+      "count": 0,
+      "before": {
+        "text": [
+          97,
+          98,
+          97,
+          97,
+          98,
+          97
+        ],
+        "length": 6,
+        "capacity": 6,
+        "maxCapacity": 2147483647,
+        "chunks": 2
+      },
+      "identity": true,
+      "fault": null,
+      "parameter": null,
+      "after": {
+        "text": [
+          97,
+          98,
+          97,
+          97,
+          98,
+          97
+        ],
+        "length": 6,
+        "capacity": 6,
+        "maxCapacity": 2147483647,
+        "chunks": 2
+      }
+    },
+    {
+      "id": "chunks-full-replace",
+      "segments": [
+        [
+          97,
+          98
+        ],
+        [
+          97
+        ],
+        [
+          97,
+          98
+        ],
+        [
+          97
+        ]
+      ],
+      "oldValue": [
+        97
+      ],
+      "newValue": [
+        120
+      ],
+      "start": 0,
+      "count": 6,
+      "before": {
+        "text": [
+          97,
+          98,
+          97,
+          97,
+          98,
+          97
+        ],
+        "length": 6,
+        "capacity": 8,
+        "maxCapacity": 2147483647,
+        "chunks": 4
+      },
+      "identity": true,
+      "fault": null,
+      "parameter": null,
+      "after": {
+        "text": [
+          120,
+          98,
+          120,
+          120,
+          98,
+          120
+        ],
+        "length": 6,
+        "capacity": 8,
+        "maxCapacity": 2147483647,
+        "chunks": 4
+      }
+    },
+    {
+      "id": "chunks-middle-replace",
+      "segments": [
+        [
+          97,
+          98
+        ],
+        [
+          97
+        ],
+        [
+          97,
+          98
+        ],
+        [
+          97
+        ]
+      ],
+      "oldValue": [
+        97
+      ],
+      "newValue": [
+        120
+      ],
+      "start": 1,
+      "count": 4,
+      "before": {
+        "text": [
+          97,
+          98,
+          97,
+          97,
+          98,
+          97
+        ],
+        "length": 6,
+        "capacity": 8,
+        "maxCapacity": 2147483647,
+        "chunks": 4
+      },
+      "identity": true,
+      "fault": null,
+      "parameter": null,
+      "after": {
+        "text": [
+          97,
+          98,
+          120,
+          120,
+          98,
+          97
+        ],
+        "length": 6,
+        "capacity": 8,
+        "maxCapacity": 2147483647,
+        "chunks": 4
+      }
+    },
+    {
+      "id": "chunks-end-zero-replace",
+      "segments": [
+        [
+          97,
+          98
+        ],
+        [
+          97
+        ],
+        [
+          97,
+          98
+        ],
+        [
+          97
+        ]
+      ],
+      "oldValue": [
+        97
+      ],
+      "newValue": [
+        120
+      ],
+      "start": 6,
+      "count": 0,
+      "before": {
+        "text": [
+          97,
+          98,
+          97,
+          97,
+          98,
+          97
+        ],
+        "length": 6,
+        "capacity": 8,
+        "maxCapacity": 2147483647,
+        "chunks": 4
+      },
+      "identity": true,
+      "fault": null,
+      "parameter": null,
+      "after": {
+        "text": [
+          97,
+          98,
+          97,
+          97,
+          98,
+          97
+        ],
+        "length": 6,
+        "capacity": 8,
+        "maxCapacity": 2147483647,
+        "chunks": 4
+      }
+    },
+    {
+      "id": "chunks-full-delete",
+      "segments": [
+        [
+          97,
+          98
+        ],
+        [
+          97
+        ],
+        [
+          97,
+          98
+        ],
+        [
+          97
+        ]
+      ],
+      "oldValue": [
+        97
+      ],
+      "newValue": null,
+      "start": 0,
+      "count": 6,
+      "before": {
+        "text": [
+          97,
+          98,
+          97,
+          97,
+          98,
+          97
+        ],
+        "length": 6,
+        "capacity": 8,
+        "maxCapacity": 2147483647,
+        "chunks": 4
+      },
+      "identity": true,
+      "fault": null,
+      "parameter": null,
+      "after": {
+        "text": [
+          98,
+          98
+        ],
+        "length": 2,
+        "capacity": 5,
+        "maxCapacity": 2147483647,
+        "chunks": 2
+      }
+    },
+    {
+      "id": "chunks-middle-delete",
+      "segments": [
+        [
+          97,
+          98
+        ],
+        [
+          97
+        ],
+        [
+          97,
+          98
+        ],
+        [
+          97
+        ]
+      ],
+      "oldValue": [
+        97
+      ],
+      "newValue": null,
+      "start": 1,
+      "count": 4,
+      "before": {
+        "text": [
+          97,
+          98,
+          97,
+          97,
+          98,
+          97
+        ],
+        "length": 6,
+        "capacity": 8,
+        "maxCapacity": 2147483647,
+        "chunks": 4
+      },
+      "identity": true,
+      "fault": null,
+      "parameter": null,
+      "after": {
+        "text": [
+          97,
+          98,
+          98,
+          97
+        ],
+        "length": 4,
+        "capacity": 6,
+        "maxCapacity": 2147483647,
+        "chunks": 3
+      }
+    },
+    {
+      "id": "chunks-end-zero-delete",
+      "segments": [
+        [
+          97,
+          98
+        ],
+        [
+          97
+        ],
+        [
+          97,
+          98
+        ],
+        [
+          97
+        ]
+      ],
+      "oldValue": [
+        97
+      ],
+      "newValue": null,
+      "start": 6,
+      "count": 0,
+      "before": {
+        "text": [
+          97,
+          98,
+          97,
+          97,
+          98,
+          97
+        ],
+        "length": 6,
+        "capacity": 8,
+        "maxCapacity": 2147483647,
+        "chunks": 4
+      },
+      "identity": true,
+      "fault": null,
+      "parameter": null,
+      "after": {
+        "text": [
+          97,
+          98,
+          97,
+          97,
+          98,
+          97
+        ],
+        "length": 6,
+        "capacity": 8,
+        "maxCapacity": 2147483647,
+        "chunks": 4
+      }
+    },
+    {
+      "id": "chunks-full-grow",
+      "segments": [
+        [
+          97,
+          98
+        ],
+        [
+          97
+        ],
+        [
+          97,
+          98
+        ],
+        [
+          97
+        ]
+      ],
+      "oldValue": [
+        97
+      ],
+      "newValue": [
+        97,
+        97
+      ],
+      "start": 0,
+      "count": 6,
+      "before": {
+        "text": [
+          97,
+          98,
+          97,
+          97,
+          98,
+          97
+        ],
+        "length": 6,
+        "capacity": 8,
+        "maxCapacity": 2147483647,
+        "chunks": 4
+      },
+      "identity": true,
+      "fault": null,
+      "parameter": null,
+      "after": {
+        "text": [
+          97,
+          97,
+          98,
+          97,
+          97,
+          97,
+          97,
+          98,
+          97,
+          97
+        ],
+        "length": 10,
+        "capacity": 12,
+        "maxCapacity": 2147483647,
+        "chunks": 7
+      }
+    },
+    {
+      "id": "chunks-middle-grow",
+      "segments": [
+        [
+          97,
+          98
+        ],
+        [
+          97
+        ],
+        [
+          97,
+          98
+        ],
+        [
+          97
+        ]
+      ],
+      "oldValue": [
+        97
+      ],
+      "newValue": [
+        97,
+        97
+      ],
+      "start": 1,
+      "count": 4,
+      "before": {
+        "text": [
+          97,
+          98,
+          97,
+          97,
+          98,
+          97
+        ],
+        "length": 6,
+        "capacity": 8,
+        "maxCapacity": 2147483647,
+        "chunks": 4
+      },
+      "identity": true,
+      "fault": null,
+      "parameter": null,
+      "after": {
+        "text": [
+          97,
+          98,
+          97,
+          97,
+          97,
+          97,
+          98,
+          97
+        ],
+        "length": 8,
+        "capacity": 10,
+        "maxCapacity": 2147483647,
+        "chunks": 5
+      }
+    },
+    {
+      "id": "chunks-end-zero-grow",
+      "segments": [
+        [
+          97,
+          98
+        ],
+        [
+          97
+        ],
+        [
+          97,
+          98
+        ],
+        [
+          97
+        ]
+      ],
+      "oldValue": [
+        97
+      ],
+      "newValue": [
+        97,
+        97
+      ],
+      "start": 6,
+      "count": 0,
+      "before": {
+        "text": [
+          97,
+          98,
+          97,
+          97,
+          98,
+          97
+        ],
+        "length": 6,
+        "capacity": 8,
+        "maxCapacity": 2147483647,
+        "chunks": 4
+      },
+      "identity": true,
+      "fault": null,
+      "parameter": null,
+      "after": {
+        "text": [
+          97,
+          98,
+          97,
+          97,
+          98,
+          97
+        ],
+        "length": 6,
+        "capacity": 8,
+        "maxCapacity": 2147483647,
+        "chunks": 4
+      }
+    },
+    {
+      "id": "chunks-full-shrink",
+      "segments": [
+        [
+          97,
+          98
+        ],
+        [
+          97
+        ],
+        [
+          97,
+          98
+        ],
+        [
+          97
+        ]
+      ],
+      "oldValue": [
+        97,
+        98,
+        97
+      ],
+      "newValue": [
+        81
+      ],
+      "start": 0,
+      "count": 6,
+      "before": {
+        "text": [
+          97,
+          98,
+          97,
+          97,
+          98,
+          97
+        ],
+        "length": 6,
+        "capacity": 8,
+        "maxCapacity": 2147483647,
+        "chunks": 4
+      },
+      "identity": true,
+      "fault": null,
+      "parameter": null,
+      "after": {
+        "text": [
+          81,
+          81
+        ],
+        "length": 2,
+        "capacity": 6,
+        "maxCapacity": 2147483647,
+        "chunks": 3
+      }
+    },
+    {
+      "id": "chunks-middle-shrink",
+      "segments": [
+        [
+          97,
+          98
+        ],
+        [
+          97
+        ],
+        [
+          97,
+          98
+        ],
+        [
+          97
+        ]
+      ],
+      "oldValue": [
+        97,
+        98,
+        97
+      ],
+      "newValue": [
+        81
+      ],
+      "start": 1,
+      "count": 4,
+      "before": {
+        "text": [
+          97,
+          98,
+          97,
+          97,
+          98,
+          97
+        ],
+        "length": 6,
+        "capacity": 8,
+        "maxCapacity": 2147483647,
+        "chunks": 4
+      },
+      "identity": true,
+      "fault": null,
+      "parameter": null,
+      "after": {
+        "text": [
+          97,
+          98,
+          97,
+          97,
+          98,
+          97
+        ],
+        "length": 6,
+        "capacity": 8,
+        "maxCapacity": 2147483647,
+        "chunks": 4
+      }
+    },
+    {
+      "id": "chunks-end-zero-shrink",
+      "segments": [
+        [
+          97,
+          98
+        ],
+        [
+          97
+        ],
+        [
+          97,
+          98
+        ],
+        [
+          97
+        ]
+      ],
+      "oldValue": [
+        97,
+        98,
+        97
+      ],
+      "newValue": [
+        81
+      ],
+      "start": 6,
+      "count": 0,
+      "before": {
+        "text": [
+          97,
+          98,
+          97,
+          97,
+          98,
+          97
+        ],
+        "length": 6,
+        "capacity": 8,
+        "maxCapacity": 2147483647,
+        "chunks": 4
+      },
+      "identity": true,
+      "fault": null,
+      "parameter": null,
+      "after": {
+        "text": [
+          97,
+          98,
+          97,
+          97,
+          98,
+          97
+        ],
+        "length": 6,
+        "capacity": 8,
+        "maxCapacity": 2147483647,
+        "chunks": 4
+      }
+    },
+    {
+      "id": "chunks-full-same",
+      "segments": [
+        [
+          97,
+          98
+        ],
+        [
+          97
+        ],
+        [
+          97,
+          98
+        ],
+        [
+          97
+        ]
+      ],
+      "oldValue": [
+        97
+      ],
+      "newValue": [
+        97
+      ],
+      "start": 0,
+      "count": 6,
+      "before": {
+        "text": [
+          97,
+          98,
+          97,
+          97,
+          98,
+          97
+        ],
+        "length": 6,
+        "capacity": 8,
+        "maxCapacity": 2147483647,
+        "chunks": 4
+      },
+      "identity": true,
+      "fault": null,
+      "parameter": null,
+      "after": {
+        "text": [
+          97,
+          98,
+          97,
+          97,
+          98,
+          97
+        ],
+        "length": 6,
+        "capacity": 8,
+        "maxCapacity": 2147483647,
+        "chunks": 4
+      }
+    },
+    {
+      "id": "chunks-middle-same",
+      "segments": [
+        [
+          97,
+          98
+        ],
+        [
+          97
+        ],
+        [
+          97,
+          98
+        ],
+        [
+          97
+        ]
+      ],
+      "oldValue": [
+        97
+      ],
+      "newValue": [
+        97
+      ],
+      "start": 1,
+      "count": 4,
+      "before": {
+        "text": [
+          97,
+          98,
+          97,
+          97,
+          98,
+          97
+        ],
+        "length": 6,
+        "capacity": 8,
+        "maxCapacity": 2147483647,
+        "chunks": 4
+      },
+      "identity": true,
+      "fault": null,
+      "parameter": null,
+      "after": {
+        "text": [
+          97,
+          98,
+          97,
+          97,
+          98,
+          97
+        ],
+        "length": 6,
+        "capacity": 8,
+        "maxCapacity": 2147483647,
+        "chunks": 4
+      }
+    },
+    {
+      "id": "chunks-end-zero-same",
+      "segments": [
+        [
+          97,
+          98
+        ],
+        [
+          97
+        ],
+        [
+          97,
+          98
+        ],
+        [
+          97
+        ]
+      ],
+      "oldValue": [
+        97
+      ],
+      "newValue": [
+        97
+      ],
+      "start": 6,
+      "count": 0,
+      "before": {
+        "text": [
+          97,
+          98,
+          97,
+          97,
+          98,
+          97
+        ],
+        "length": 6,
+        "capacity": 8,
+        "maxCapacity": 2147483647,
+        "chunks": 4
+      },
+      "identity": true,
+      "fault": null,
+      "parameter": null,
+      "after": {
+        "text": [
+          97,
+          98,
+          97,
+          97,
+          98,
+          97
+        ],
+        "length": 6,
+        "capacity": 8,
+        "maxCapacity": 2147483647,
+        "chunks": 4
+      }
+    },
+    {
+      "id": "chunks-full-absent",
+      "segments": [
+        [
+          97,
+          98
+        ],
+        [
+          97
+        ],
+        [
+          97,
+          98
+        ],
+        [
+          97
+        ]
+      ],
+      "oldValue": [
+        97,
+        98,
+        115,
+        101,
+        110,
+        116
+      ],
+      "newValue": [
+        120
+      ],
+      "start": 0,
+      "count": 6,
+      "before": {
+        "text": [
+          97,
+          98,
+          97,
+          97,
+          98,
+          97
+        ],
+        "length": 6,
+        "capacity": 8,
+        "maxCapacity": 2147483647,
+        "chunks": 4
+      },
+      "identity": true,
+      "fault": null,
+      "parameter": null,
+      "after": {
+        "text": [
+          97,
+          98,
+          97,
+          97,
+          98,
+          97
+        ],
+        "length": 6,
+        "capacity": 8,
+        "maxCapacity": 2147483647,
+        "chunks": 4
+      }
+    },
+    {
+      "id": "chunks-middle-absent",
+      "segments": [
+        [
+          97,
+          98
+        ],
+        [
+          97
+        ],
+        [
+          97,
+          98
+        ],
+        [
+          97
+        ]
+      ],
+      "oldValue": [
+        97,
+        98,
+        115,
+        101,
+        110,
+        116
+      ],
+      "newValue": [
+        120
+      ],
+      "start": 1,
+      "count": 4,
+      "before": {
+        "text": [
+          97,
+          98,
+          97,
+          97,
+          98,
+          97
+        ],
+        "length": 6,
+        "capacity": 8,
+        "maxCapacity": 2147483647,
+        "chunks": 4
+      },
+      "identity": true,
+      "fault": null,
+      "parameter": null,
+      "after": {
+        "text": [
+          97,
+          98,
+          97,
+          97,
+          98,
+          97
+        ],
+        "length": 6,
+        "capacity": 8,
+        "maxCapacity": 2147483647,
+        "chunks": 4
+      }
+    },
+    {
+      "id": "chunks-end-zero-absent",
+      "segments": [
+        [
+          97,
+          98
+        ],
+        [
+          97
+        ],
+        [
+          97,
+          98
+        ],
+        [
+          97
+        ]
+      ],
+      "oldValue": [
+        97,
+        98,
+        115,
+        101,
+        110,
+        116
+      ],
+      "newValue": [
+        120
+      ],
+      "start": 6,
+      "count": 0,
+      "before": {
+        "text": [
+          97,
+          98,
+          97,
+          97,
+          98,
+          97
+        ],
+        "length": 6,
+        "capacity": 8,
+        "maxCapacity": 2147483647,
+        "chunks": 4
+      },
+      "identity": true,
+      "fault": null,
+      "parameter": null,
+      "after": {
+        "text": [
+          97,
+          98,
+          97,
+          97,
+          98,
+          97
+        ],
+        "length": 6,
+        "capacity": 8,
+        "maxCapacity": 2147483647,
+        "chunks": 4
+      }
+    },
+    {
+      "id": "chunks-full-nul",
+      "segments": [
+        [
+          97,
+          98
+        ],
+        [
+          97
+        ],
+        [
+          97,
+          98
+        ],
+        [
+          97
+        ]
+      ],
+      "oldValue": [
+        0
+      ],
+      "newValue": [
+        36,
+        38
+      ],
+      "start": 0,
+      "count": 6,
+      "before": {
+        "text": [
+          97,
+          98,
+          97,
+          97,
+          98,
+          97
+        ],
+        "length": 6,
+        "capacity": 8,
+        "maxCapacity": 2147483647,
+        "chunks": 4
+      },
+      "identity": true,
+      "fault": null,
+      "parameter": null,
+      "after": {
+        "text": [
+          97,
+          98,
+          97,
+          97,
+          98,
+          97
+        ],
+        "length": 6,
+        "capacity": 8,
+        "maxCapacity": 2147483647,
+        "chunks": 4
+      }
+    },
+    {
+      "id": "chunks-middle-nul",
+      "segments": [
+        [
+          97,
+          98
+        ],
+        [
+          97
+        ],
+        [
+          97,
+          98
+        ],
+        [
+          97
+        ]
+      ],
+      "oldValue": [
+        0
+      ],
+      "newValue": [
+        36,
+        38
+      ],
+      "start": 1,
+      "count": 4,
+      "before": {
+        "text": [
+          97,
+          98,
+          97,
+          97,
+          98,
+          97
+        ],
+        "length": 6,
+        "capacity": 8,
+        "maxCapacity": 2147483647,
+        "chunks": 4
+      },
+      "identity": true,
+      "fault": null,
+      "parameter": null,
+      "after": {
+        "text": [
+          97,
+          98,
+          97,
+          97,
+          98,
+          97
+        ],
+        "length": 6,
+        "capacity": 8,
+        "maxCapacity": 2147483647,
+        "chunks": 4
+      }
+    },
+    {
+      "id": "chunks-end-zero-nul",
+      "segments": [
+        [
+          97,
+          98
+        ],
+        [
+          97
+        ],
+        [
+          97,
+          98
+        ],
+        [
+          97
+        ]
+      ],
+      "oldValue": [
+        0
+      ],
+      "newValue": [
+        36,
+        38
+      ],
+      "start": 6,
+      "count": 0,
+      "before": {
+        "text": [
+          97,
+          98,
+          97,
+          97,
+          98,
+          97
+        ],
+        "length": 6,
+        "capacity": 8,
+        "maxCapacity": 2147483647,
+        "chunks": 4
+      },
+      "identity": true,
+      "fault": null,
+      "parameter": null,
+      "after": {
+        "text": [
+          97,
+          98,
+          97,
+          97,
+          98,
+          97
+        ],
+        "length": 6,
+        "capacity": 8,
+        "maxCapacity": 2147483647,
+        "chunks": 4
+      }
+    },
+    {
+      "id": "chunks-full-low",
+      "segments": [
+        [
+          97,
+          98
+        ],
+        [
+          97
+        ],
+        [
+          97,
+          98
+        ],
+        [
+          97
+        ]
+      ],
+      "oldValue": [
+        56360
+      ],
+      "newValue": [
+        55296
+      ],
+      "start": 0,
+      "count": 6,
+      "before": {
+        "text": [
+          97,
+          98,
+          97,
+          97,
+          98,
+          97
+        ],
+        "length": 6,
+        "capacity": 8,
+        "maxCapacity": 2147483647,
+        "chunks": 4
+      },
+      "identity": true,
+      "fault": null,
+      "parameter": null,
+      "after": {
+        "text": [
+          97,
+          98,
+          97,
+          97,
+          98,
+          97
+        ],
+        "length": 6,
+        "capacity": 8,
+        "maxCapacity": 2147483647,
+        "chunks": 4
+      }
+    },
+    {
+      "id": "chunks-middle-low",
+      "segments": [
+        [
+          97,
+          98
+        ],
+        [
+          97
+        ],
+        [
+          97,
+          98
+        ],
+        [
+          97
+        ]
+      ],
+      "oldValue": [
+        56360
+      ],
+      "newValue": [
+        55296
+      ],
+      "start": 1,
+      "count": 4,
+      "before": {
+        "text": [
+          97,
+          98,
+          97,
+          97,
+          98,
+          97
+        ],
+        "length": 6,
+        "capacity": 8,
+        "maxCapacity": 2147483647,
+        "chunks": 4
+      },
+      "identity": true,
+      "fault": null,
+      "parameter": null,
+      "after": {
+        "text": [
+          97,
+          98,
+          97,
+          97,
+          98,
+          97
+        ],
+        "length": 6,
+        "capacity": 8,
+        "maxCapacity": 2147483647,
+        "chunks": 4
+      }
+    },
+    {
+      "id": "chunks-end-zero-low",
+      "segments": [
+        [
+          97,
+          98
+        ],
+        [
+          97
+        ],
+        [
+          97,
+          98
+        ],
+        [
+          97
+        ]
+      ],
+      "oldValue": [
+        56360
+      ],
+      "newValue": [
+        55296
+      ],
+      "start": 6,
+      "count": 0,
+      "before": {
+        "text": [
+          97,
+          98,
+          97,
+          97,
+          98,
+          97
+        ],
+        "length": 6,
+        "capacity": 8,
+        "maxCapacity": 2147483647,
+        "chunks": 4
+      },
+      "identity": true,
+      "fault": null,
+      "parameter": null,
+      "after": {
+        "text": [
+          97,
+          98,
+          97,
+          97,
+          98,
+          97
+        ],
+        "length": 6,
+        "capacity": 8,
+        "maxCapacity": 2147483647,
+        "chunks": 4
+      }
+    },
+    {
+      "id": "raw-full-replace",
+      "segments": [
+        [
+          97,
+          0
+        ],
+        [
+          98,
+          55296
+        ],
+        [
+          56320,
+          97
+        ],
+        [
+          65535
+        ]
+      ],
+      "oldValue": [
+        97
+      ],
+      "newValue": [
+        120
+      ],
+      "start": 0,
+      "count": 7,
+      "before": {
+        "text": [
+          97,
+          0,
+          98,
+          55296,
+          56320,
+          97,
+          65535
+        ],
+        "length": 7,
+        "capacity": 8,
+        "maxCapacity": 2147483647,
+        "chunks": 4
+      },
+      "identity": true,
+      "fault": null,
+      "parameter": null,
+      "after": {
+        "text": [
+          120,
+          0,
+          98,
+          55296,
+          56320,
+          120,
+          65535
+        ],
+        "length": 7,
+        "capacity": 8,
+        "maxCapacity": 2147483647,
+        "chunks": 4
+      }
+    },
+    {
+      "id": "raw-middle-replace",
+      "segments": [
+        [
+          97,
+          0
+        ],
+        [
+          98,
+          55296
+        ],
+        [
+          56320,
+          97
+        ],
+        [
+          65535
+        ]
+      ],
+      "oldValue": [
+        97
+      ],
+      "newValue": [
+        120
+      ],
+      "start": 1,
+      "count": 5,
+      "before": {
+        "text": [
+          97,
+          0,
+          98,
+          55296,
+          56320,
+          97,
+          65535
+        ],
+        "length": 7,
+        "capacity": 8,
+        "maxCapacity": 2147483647,
+        "chunks": 4
+      },
+      "identity": true,
+      "fault": null,
+      "parameter": null,
+      "after": {
+        "text": [
+          97,
+          0,
+          98,
+          55296,
+          56320,
+          120,
+          65535
+        ],
+        "length": 7,
+        "capacity": 8,
+        "maxCapacity": 2147483647,
+        "chunks": 4
+      }
+    },
+    {
+      "id": "raw-end-zero-replace",
+      "segments": [
+        [
+          97,
+          0
+        ],
+        [
+          98,
+          55296
+        ],
+        [
+          56320,
+          97
+        ],
+        [
+          65535
+        ]
+      ],
+      "oldValue": [
+        97
+      ],
+      "newValue": [
+        120
+      ],
+      "start": 7,
+      "count": 0,
+      "before": {
+        "text": [
+          97,
+          0,
+          98,
+          55296,
+          56320,
+          97,
+          65535
+        ],
+        "length": 7,
+        "capacity": 8,
+        "maxCapacity": 2147483647,
+        "chunks": 4
+      },
+      "identity": true,
+      "fault": null,
+      "parameter": null,
+      "after": {
+        "text": [
+          97,
+          0,
+          98,
+          55296,
+          56320,
+          97,
+          65535
+        ],
+        "length": 7,
+        "capacity": 8,
+        "maxCapacity": 2147483647,
+        "chunks": 4
+      }
+    },
+    {
+      "id": "raw-full-delete",
+      "segments": [
+        [
+          97,
+          0
+        ],
+        [
+          98,
+          55296
+        ],
+        [
+          56320,
+          97
+        ],
+        [
+          65535
+        ]
+      ],
+      "oldValue": [
+        97
+      ],
+      "newValue": null,
+      "start": 0,
+      "count": 7,
+      "before": {
+        "text": [
+          97,
+          0,
+          98,
+          55296,
+          56320,
+          97,
+          65535
+        ],
+        "length": 7,
+        "capacity": 8,
+        "maxCapacity": 2147483647,
+        "chunks": 4
+      },
+      "identity": true,
+      "fault": null,
+      "parameter": null,
+      "after": {
+        "text": [
+          0,
+          98,
+          55296,
+          56320,
+          65535
+        ],
+        "length": 5,
+        "capacity": 7,
+        "maxCapacity": 2147483647,
+        "chunks": 3
+      }
+    },
+    {
+      "id": "raw-middle-delete",
+      "segments": [
+        [
+          97,
+          0
+        ],
+        [
+          98,
+          55296
+        ],
+        [
+          56320,
+          97
+        ],
+        [
+          65535
+        ]
+      ],
+      "oldValue": [
+        97
+      ],
+      "newValue": null,
+      "start": 1,
+      "count": 5,
+      "before": {
+        "text": [
+          97,
+          0,
+          98,
+          55296,
+          56320,
+          97,
+          65535
+        ],
+        "length": 7,
+        "capacity": 8,
+        "maxCapacity": 2147483647,
+        "chunks": 4
+      },
+      "identity": true,
+      "fault": null,
+      "parameter": null,
+      "after": {
+        "text": [
+          97,
+          0,
+          98,
+          55296,
+          56320,
+          65535
+        ],
+        "length": 6,
+        "capacity": 8,
+        "maxCapacity": 2147483647,
+        "chunks": 4
+      }
+    },
+    {
+      "id": "raw-end-zero-delete",
+      "segments": [
+        [
+          97,
+          0
+        ],
+        [
+          98,
+          55296
+        ],
+        [
+          56320,
+          97
+        ],
+        [
+          65535
+        ]
+      ],
+      "oldValue": [
+        97
+      ],
+      "newValue": null,
+      "start": 7,
+      "count": 0,
+      "before": {
+        "text": [
+          97,
+          0,
+          98,
+          55296,
+          56320,
+          97,
+          65535
+        ],
+        "length": 7,
+        "capacity": 8,
+        "maxCapacity": 2147483647,
+        "chunks": 4
+      },
+      "identity": true,
+      "fault": null,
+      "parameter": null,
+      "after": {
+        "text": [
+          97,
+          0,
+          98,
+          55296,
+          56320,
+          97,
+          65535
+        ],
+        "length": 7,
+        "capacity": 8,
+        "maxCapacity": 2147483647,
+        "chunks": 4
+      }
+    },
+    {
+      "id": "raw-full-grow",
+      "segments": [
+        [
+          97,
+          0
+        ],
+        [
+          98,
+          55296
+        ],
+        [
+          56320,
+          97
+        ],
+        [
+          65535
+        ]
+      ],
+      "oldValue": [
+        97
+      ],
+      "newValue": [
+        97,
+        97
+      ],
+      "start": 0,
+      "count": 7,
+      "before": {
+        "text": [
+          97,
+          0,
+          98,
+          55296,
+          56320,
+          97,
+          65535
+        ],
+        "length": 7,
+        "capacity": 8,
+        "maxCapacity": 2147483647,
+        "chunks": 4
+      },
+      "identity": true,
+      "fault": null,
+      "parameter": null,
+      "after": {
+        "text": [
+          97,
+          97,
+          0,
+          98,
+          55296,
+          56320,
+          97,
+          97,
+          65535
+        ],
+        "length": 9,
+        "capacity": 10,
+        "maxCapacity": 2147483647,
+        "chunks": 6
+      }
+    },
+    {
+      "id": "raw-middle-grow",
+      "segments": [
+        [
+          97,
+          0
+        ],
+        [
+          98,
+          55296
+        ],
+        [
+          56320,
+          97
+        ],
+        [
+          65535
+        ]
+      ],
+      "oldValue": [
+        97
+      ],
+      "newValue": [
+        97,
+        97
+      ],
+      "start": 1,
+      "count": 5,
+      "before": {
+        "text": [
+          97,
+          0,
+          98,
+          55296,
+          56320,
+          97,
+          65535
+        ],
+        "length": 7,
+        "capacity": 8,
+        "maxCapacity": 2147483647,
+        "chunks": 4
+      },
+      "identity": true,
+      "fault": null,
+      "parameter": null,
+      "after": {
+        "text": [
+          97,
+          0,
+          98,
+          55296,
+          56320,
+          97,
+          97,
+          65535
+        ],
+        "length": 8,
+        "capacity": 9,
+        "maxCapacity": 2147483647,
+        "chunks": 5
+      }
+    },
+    {
+      "id": "raw-end-zero-grow",
+      "segments": [
+        [
+          97,
+          0
+        ],
+        [
+          98,
+          55296
+        ],
+        [
+          56320,
+          97
+        ],
+        [
+          65535
+        ]
+      ],
+      "oldValue": [
+        97
+      ],
+      "newValue": [
+        97,
+        97
+      ],
+      "start": 7,
+      "count": 0,
+      "before": {
+        "text": [
+          97,
+          0,
+          98,
+          55296,
+          56320,
+          97,
+          65535
+        ],
+        "length": 7,
+        "capacity": 8,
+        "maxCapacity": 2147483647,
+        "chunks": 4
+      },
+      "identity": true,
+      "fault": null,
+      "parameter": null,
+      "after": {
+        "text": [
+          97,
+          0,
+          98,
+          55296,
+          56320,
+          97,
+          65535
+        ],
+        "length": 7,
+        "capacity": 8,
+        "maxCapacity": 2147483647,
+        "chunks": 4
+      }
+    },
+    {
+      "id": "raw-full-shrink",
+      "segments": [
+        [
+          97,
+          0
+        ],
+        [
+          98,
+          55296
+        ],
+        [
+          56320,
+          97
+        ],
+        [
+          65535
+        ]
+      ],
+      "oldValue": [
+        97,
+        98,
+        97
+      ],
+      "newValue": [
+        81
+      ],
+      "start": 0,
+      "count": 7,
+      "before": {
+        "text": [
+          97,
+          0,
+          98,
+          55296,
+          56320,
+          97,
+          65535
+        ],
+        "length": 7,
+        "capacity": 8,
+        "maxCapacity": 2147483647,
+        "chunks": 4
+      },
+      "identity": true,
+      "fault": null,
+      "parameter": null,
+      "after": {
+        "text": [
+          97,
+          0,
+          98,
+          55296,
+          56320,
+          97,
+          65535
+        ],
+        "length": 7,
+        "capacity": 8,
+        "maxCapacity": 2147483647,
+        "chunks": 4
+      }
+    },
+    {
+      "id": "raw-middle-shrink",
+      "segments": [
+        [
+          97,
+          0
+        ],
+        [
+          98,
+          55296
+        ],
+        [
+          56320,
+          97
+        ],
+        [
+          65535
+        ]
+      ],
+      "oldValue": [
+        97,
+        98,
+        97
+      ],
+      "newValue": [
+        81
+      ],
+      "start": 1,
+      "count": 5,
+      "before": {
+        "text": [
+          97,
+          0,
+          98,
+          55296,
+          56320,
+          97,
+          65535
+        ],
+        "length": 7,
+        "capacity": 8,
+        "maxCapacity": 2147483647,
+        "chunks": 4
+      },
+      "identity": true,
+      "fault": null,
+      "parameter": null,
+      "after": {
+        "text": [
+          97,
+          0,
+          98,
+          55296,
+          56320,
+          97,
+          65535
+        ],
+        "length": 7,
+        "capacity": 8,
+        "maxCapacity": 2147483647,
+        "chunks": 4
+      }
+    },
+    {
+      "id": "raw-end-zero-shrink",
+      "segments": [
+        [
+          97,
+          0
+        ],
+        [
+          98,
+          55296
+        ],
+        [
+          56320,
+          97
+        ],
+        [
+          65535
+        ]
+      ],
+      "oldValue": [
+        97,
+        98,
+        97
+      ],
+      "newValue": [
+        81
+      ],
+      "start": 7,
+      "count": 0,
+      "before": {
+        "text": [
+          97,
+          0,
+          98,
+          55296,
+          56320,
+          97,
+          65535
+        ],
+        "length": 7,
+        "capacity": 8,
+        "maxCapacity": 2147483647,
+        "chunks": 4
+      },
+      "identity": true,
+      "fault": null,
+      "parameter": null,
+      "after": {
+        "text": [
+          97,
+          0,
+          98,
+          55296,
+          56320,
+          97,
+          65535
+        ],
+        "length": 7,
+        "capacity": 8,
+        "maxCapacity": 2147483647,
+        "chunks": 4
+      }
+    },
+    {
+      "id": "raw-full-same",
+      "segments": [
+        [
+          97,
+          0
+        ],
+        [
+          98,
+          55296
+        ],
+        [
+          56320,
+          97
+        ],
+        [
+          65535
+        ]
+      ],
+      "oldValue": [
+        97
+      ],
+      "newValue": [
+        97
+      ],
+      "start": 0,
+      "count": 7,
+      "before": {
+        "text": [
+          97,
+          0,
+          98,
+          55296,
+          56320,
+          97,
+          65535
+        ],
+        "length": 7,
+        "capacity": 8,
+        "maxCapacity": 2147483647,
+        "chunks": 4
+      },
+      "identity": true,
+      "fault": null,
+      "parameter": null,
+      "after": {
+        "text": [
+          97,
+          0,
+          98,
+          55296,
+          56320,
+          97,
+          65535
+        ],
+        "length": 7,
+        "capacity": 8,
+        "maxCapacity": 2147483647,
+        "chunks": 4
+      }
+    },
+    {
+      "id": "raw-middle-same",
+      "segments": [
+        [
+          97,
+          0
+        ],
+        [
+          98,
+          55296
+        ],
+        [
+          56320,
+          97
+        ],
+        [
+          65535
+        ]
+      ],
+      "oldValue": [
+        97
+      ],
+      "newValue": [
+        97
+      ],
+      "start": 1,
+      "count": 5,
+      "before": {
+        "text": [
+          97,
+          0,
+          98,
+          55296,
+          56320,
+          97,
+          65535
+        ],
+        "length": 7,
+        "capacity": 8,
+        "maxCapacity": 2147483647,
+        "chunks": 4
+      },
+      "identity": true,
+      "fault": null,
+      "parameter": null,
+      "after": {
+        "text": [
+          97,
+          0,
+          98,
+          55296,
+          56320,
+          97,
+          65535
+        ],
+        "length": 7,
+        "capacity": 8,
+        "maxCapacity": 2147483647,
+        "chunks": 4
+      }
+    },
+    {
+      "id": "raw-end-zero-same",
+      "segments": [
+        [
+          97,
+          0
+        ],
+        [
+          98,
+          55296
+        ],
+        [
+          56320,
+          97
+        ],
+        [
+          65535
+        ]
+      ],
+      "oldValue": [
+        97
+      ],
+      "newValue": [
+        97
+      ],
+      "start": 7,
+      "count": 0,
+      "before": {
+        "text": [
+          97,
+          0,
+          98,
+          55296,
+          56320,
+          97,
+          65535
+        ],
+        "length": 7,
+        "capacity": 8,
+        "maxCapacity": 2147483647,
+        "chunks": 4
+      },
+      "identity": true,
+      "fault": null,
+      "parameter": null,
+      "after": {
+        "text": [
+          97,
+          0,
+          98,
+          55296,
+          56320,
+          97,
+          65535
+        ],
+        "length": 7,
+        "capacity": 8,
+        "maxCapacity": 2147483647,
+        "chunks": 4
+      }
+    },
+    {
+      "id": "raw-full-absent",
+      "segments": [
+        [
+          97,
+          0
+        ],
+        [
+          98,
+          55296
+        ],
+        [
+          56320,
+          97
+        ],
+        [
+          65535
+        ]
+      ],
+      "oldValue": [
+        97,
+        98,
+        115,
+        101,
+        110,
+        116
+      ],
+      "newValue": [
+        120
+      ],
+      "start": 0,
+      "count": 7,
+      "before": {
+        "text": [
+          97,
+          0,
+          98,
+          55296,
+          56320,
+          97,
+          65535
+        ],
+        "length": 7,
+        "capacity": 8,
+        "maxCapacity": 2147483647,
+        "chunks": 4
+      },
+      "identity": true,
+      "fault": null,
+      "parameter": null,
+      "after": {
+        "text": [
+          97,
+          0,
+          98,
+          55296,
+          56320,
+          97,
+          65535
+        ],
+        "length": 7,
+        "capacity": 8,
+        "maxCapacity": 2147483647,
+        "chunks": 4
+      }
+    },
+    {
+      "id": "raw-middle-absent",
+      "segments": [
+        [
+          97,
+          0
+        ],
+        [
+          98,
+          55296
+        ],
+        [
+          56320,
+          97
+        ],
+        [
+          65535
+        ]
+      ],
+      "oldValue": [
+        97,
+        98,
+        115,
+        101,
+        110,
+        116
+      ],
+      "newValue": [
+        120
+      ],
+      "start": 1,
+      "count": 5,
+      "before": {
+        "text": [
+          97,
+          0,
+          98,
+          55296,
+          56320,
+          97,
+          65535
+        ],
+        "length": 7,
+        "capacity": 8,
+        "maxCapacity": 2147483647,
+        "chunks": 4
+      },
+      "identity": true,
+      "fault": null,
+      "parameter": null,
+      "after": {
+        "text": [
+          97,
+          0,
+          98,
+          55296,
+          56320,
+          97,
+          65535
+        ],
+        "length": 7,
+        "capacity": 8,
+        "maxCapacity": 2147483647,
+        "chunks": 4
+      }
+    },
+    {
+      "id": "raw-end-zero-absent",
+      "segments": [
+        [
+          97,
+          0
+        ],
+        [
+          98,
+          55296
+        ],
+        [
+          56320,
+          97
+        ],
+        [
+          65535
+        ]
+      ],
+      "oldValue": [
+        97,
+        98,
+        115,
+        101,
+        110,
+        116
+      ],
+      "newValue": [
+        120
+      ],
+      "start": 7,
+      "count": 0,
+      "before": {
+        "text": [
+          97,
+          0,
+          98,
+          55296,
+          56320,
+          97,
+          65535
+        ],
+        "length": 7,
+        "capacity": 8,
+        "maxCapacity": 2147483647,
+        "chunks": 4
+      },
+      "identity": true,
+      "fault": null,
+      "parameter": null,
+      "after": {
+        "text": [
+          97,
+          0,
+          98,
+          55296,
+          56320,
+          97,
+          65535
+        ],
+        "length": 7,
+        "capacity": 8,
+        "maxCapacity": 2147483647,
+        "chunks": 4
+      }
+    },
+    {
+      "id": "raw-full-nul",
+      "segments": [
+        [
+          97,
+          0
+        ],
+        [
+          98,
+          55296
+        ],
+        [
+          56320,
+          97
+        ],
+        [
+          65535
+        ]
+      ],
+      "oldValue": [
+        0
+      ],
+      "newValue": [
+        36,
+        38
+      ],
+      "start": 0,
+      "count": 7,
+      "before": {
+        "text": [
+          97,
+          0,
+          98,
+          55296,
+          56320,
+          97,
+          65535
+        ],
+        "length": 7,
+        "capacity": 8,
+        "maxCapacity": 2147483647,
+        "chunks": 4
+      },
+      "identity": true,
+      "fault": null,
+      "parameter": null,
+      "after": {
+        "text": [
+          97,
+          36,
+          38,
+          98,
+          55296,
+          56320,
+          97,
+          65535
+        ],
+        "length": 8,
+        "capacity": 9,
+        "maxCapacity": 2147483647,
+        "chunks": 5
+      }
+    },
+    {
+      "id": "raw-middle-nul",
+      "segments": [
+        [
+          97,
+          0
+        ],
+        [
+          98,
+          55296
+        ],
+        [
+          56320,
+          97
+        ],
+        [
+          65535
+        ]
+      ],
+      "oldValue": [
+        0
+      ],
+      "newValue": [
+        36,
+        38
+      ],
+      "start": 1,
+      "count": 5,
+      "before": {
+        "text": [
+          97,
+          0,
+          98,
+          55296,
+          56320,
+          97,
+          65535
+        ],
+        "length": 7,
+        "capacity": 8,
+        "maxCapacity": 2147483647,
+        "chunks": 4
+      },
+      "identity": true,
+      "fault": null,
+      "parameter": null,
+      "after": {
+        "text": [
+          97,
+          36,
+          38,
+          98,
+          55296,
+          56320,
+          97,
+          65535
+        ],
+        "length": 8,
+        "capacity": 9,
+        "maxCapacity": 2147483647,
+        "chunks": 5
+      }
+    },
+    {
+      "id": "raw-end-zero-nul",
+      "segments": [
+        [
+          97,
+          0
+        ],
+        [
+          98,
+          55296
+        ],
+        [
+          56320,
+          97
+        ],
+        [
+          65535
+        ]
+      ],
+      "oldValue": [
+        0
+      ],
+      "newValue": [
+        36,
+        38
+      ],
+      "start": 7,
+      "count": 0,
+      "before": {
+        "text": [
+          97,
+          0,
+          98,
+          55296,
+          56320,
+          97,
+          65535
+        ],
+        "length": 7,
+        "capacity": 8,
+        "maxCapacity": 2147483647,
+        "chunks": 4
+      },
+      "identity": true,
+      "fault": null,
+      "parameter": null,
+      "after": {
+        "text": [
+          97,
+          0,
+          98,
+          55296,
+          56320,
+          97,
+          65535
+        ],
+        "length": 7,
+        "capacity": 8,
+        "maxCapacity": 2147483647,
+        "chunks": 4
+      }
+    },
+    {
+      "id": "raw-full-low",
+      "segments": [
+        [
+          97,
+          0
+        ],
+        [
+          98,
+          55296
+        ],
+        [
+          56320,
+          97
+        ],
+        [
+          65535
+        ]
+      ],
+      "oldValue": [
+        56360
+      ],
+      "newValue": [
+        55296
+      ],
+      "start": 0,
+      "count": 7,
+      "before": {
+        "text": [
+          97,
+          0,
+          98,
+          55296,
+          56320,
+          97,
+          65535
+        ],
+        "length": 7,
+        "capacity": 8,
+        "maxCapacity": 2147483647,
+        "chunks": 4
+      },
+      "identity": true,
+      "fault": null,
+      "parameter": null,
+      "after": {
+        "text": [
+          97,
+          0,
+          98,
+          55296,
+          56320,
+          97,
+          65535
+        ],
+        "length": 7,
+        "capacity": 8,
+        "maxCapacity": 2147483647,
+        "chunks": 4
+      }
+    },
+    {
+      "id": "raw-middle-low",
+      "segments": [
+        [
+          97,
+          0
+        ],
+        [
+          98,
+          55296
+        ],
+        [
+          56320,
+          97
+        ],
+        [
+          65535
+        ]
+      ],
+      "oldValue": [
+        56360
+      ],
+      "newValue": [
+        55296
+      ],
+      "start": 1,
+      "count": 5,
+      "before": {
+        "text": [
+          97,
+          0,
+          98,
+          55296,
+          56320,
+          97,
+          65535
+        ],
+        "length": 7,
+        "capacity": 8,
+        "maxCapacity": 2147483647,
+        "chunks": 4
+      },
+      "identity": true,
+      "fault": null,
+      "parameter": null,
+      "after": {
+        "text": [
+          97,
+          0,
+          98,
+          55296,
+          56320,
+          97,
+          65535
+        ],
+        "length": 7,
+        "capacity": 8,
+        "maxCapacity": 2147483647,
+        "chunks": 4
+      }
+    },
+    {
+      "id": "raw-end-zero-low",
+      "segments": [
+        [
+          97,
+          0
+        ],
+        [
+          98,
+          55296
+        ],
+        [
+          56320,
+          97
+        ],
+        [
+          65535
+        ]
+      ],
+      "oldValue": [
+        56360
+      ],
+      "newValue": [
+        55296
+      ],
+      "start": 7,
+      "count": 0,
+      "before": {
+        "text": [
+          97,
+          0,
+          98,
+          55296,
+          56320,
+          97,
+          65535
+        ],
+        "length": 7,
+        "capacity": 8,
+        "maxCapacity": 2147483647,
+        "chunks": 4
+      },
+      "identity": true,
+      "fault": null,
+      "parameter": null,
+      "after": {
+        "text": [
+          97,
+          0,
+          98,
+          55296,
+          56320,
+          97,
+          65535
+        ],
+        "length": 7,
+        "capacity": 8,
+        "maxCapacity": 2147483647,
+        "chunks": 4
+      }
+    },
+    {
+      "id": "pair-cuts-full-replace",
+      "segments": [
+        [
+          55297
+        ],
+        [
+          56360
+        ],
+        [
+          120,
+          55297
+        ],
+        [
+          56360,
+          121
+        ]
+      ],
+      "oldValue": [
+        97
+      ],
+      "newValue": [
+        120
+      ],
+      "start": 0,
+      "count": 6,
+      "before": {
+        "text": [
+          55297,
+          56360,
+          120,
+          55297,
+          56360,
+          121
+        ],
+        "length": 6,
+        "capacity": 8,
+        "maxCapacity": 2147483647,
+        "chunks": 4
+      },
+      "identity": true,
+      "fault": null,
+      "parameter": null,
+      "after": {
+        "text": [
+          55297,
+          56360,
+          120,
+          55297,
+          56360,
+          121
+        ],
+        "length": 6,
+        "capacity": 8,
+        "maxCapacity": 2147483647,
+        "chunks": 4
+      }
+    },
+    {
+      "id": "pair-cuts-middle-replace",
+      "segments": [
+        [
+          55297
+        ],
+        [
+          56360
+        ],
+        [
+          120,
+          55297
+        ],
+        [
+          56360,
+          121
+        ]
+      ],
+      "oldValue": [
+        97
+      ],
+      "newValue": [
+        120
+      ],
+      "start": 1,
+      "count": 4,
+      "before": {
+        "text": [
+          55297,
+          56360,
+          120,
+          55297,
+          56360,
+          121
+        ],
+        "length": 6,
+        "capacity": 8,
+        "maxCapacity": 2147483647,
+        "chunks": 4
+      },
+      "identity": true,
+      "fault": null,
+      "parameter": null,
+      "after": {
+        "text": [
+          55297,
+          56360,
+          120,
+          55297,
+          56360,
+          121
+        ],
+        "length": 6,
+        "capacity": 8,
+        "maxCapacity": 2147483647,
+        "chunks": 4
+      }
+    },
+    {
+      "id": "pair-cuts-end-zero-replace",
+      "segments": [
+        [
+          55297
+        ],
+        [
+          56360
+        ],
+        [
+          120,
+          55297
+        ],
+        [
+          56360,
+          121
+        ]
+      ],
+      "oldValue": [
+        97
+      ],
+      "newValue": [
+        120
+      ],
+      "start": 6,
+      "count": 0,
+      "before": {
+        "text": [
+          55297,
+          56360,
+          120,
+          55297,
+          56360,
+          121
+        ],
+        "length": 6,
+        "capacity": 8,
+        "maxCapacity": 2147483647,
+        "chunks": 4
+      },
+      "identity": true,
+      "fault": null,
+      "parameter": null,
+      "after": {
+        "text": [
+          55297,
+          56360,
+          120,
+          55297,
+          56360,
+          121
+        ],
+        "length": 6,
+        "capacity": 8,
+        "maxCapacity": 2147483647,
+        "chunks": 4
+      }
+    },
+    {
+      "id": "pair-cuts-full-delete",
+      "segments": [
+        [
+          55297
+        ],
+        [
+          56360
+        ],
+        [
+          120,
+          55297
+        ],
+        [
+          56360,
+          121
+        ]
+      ],
+      "oldValue": [
+        97
+      ],
+      "newValue": null,
+      "start": 0,
+      "count": 6,
+      "before": {
+        "text": [
+          55297,
+          56360,
+          120,
+          55297,
+          56360,
+          121
+        ],
+        "length": 6,
+        "capacity": 8,
+        "maxCapacity": 2147483647,
+        "chunks": 4
+      },
+      "identity": true,
+      "fault": null,
+      "parameter": null,
+      "after": {
+        "text": [
+          55297,
+          56360,
+          120,
+          55297,
+          56360,
+          121
+        ],
+        "length": 6,
+        "capacity": 8,
+        "maxCapacity": 2147483647,
+        "chunks": 4
+      }
+    },
+    {
+      "id": "pair-cuts-middle-delete",
+      "segments": [
+        [
+          55297
+        ],
+        [
+          56360
+        ],
+        [
+          120,
+          55297
+        ],
+        [
+          56360,
+          121
+        ]
+      ],
+      "oldValue": [
+        97
+      ],
+      "newValue": null,
+      "start": 1,
+      "count": 4,
+      "before": {
+        "text": [
+          55297,
+          56360,
+          120,
+          55297,
+          56360,
+          121
+        ],
+        "length": 6,
+        "capacity": 8,
+        "maxCapacity": 2147483647,
+        "chunks": 4
+      },
+      "identity": true,
+      "fault": null,
+      "parameter": null,
+      "after": {
+        "text": [
+          55297,
+          56360,
+          120,
+          55297,
+          56360,
+          121
+        ],
+        "length": 6,
+        "capacity": 8,
+        "maxCapacity": 2147483647,
+        "chunks": 4
+      }
+    },
+    {
+      "id": "pair-cuts-end-zero-delete",
+      "segments": [
+        [
+          55297
+        ],
+        [
+          56360
+        ],
+        [
+          120,
+          55297
+        ],
+        [
+          56360,
+          121
+        ]
+      ],
+      "oldValue": [
+        97
+      ],
+      "newValue": null,
+      "start": 6,
+      "count": 0,
+      "before": {
+        "text": [
+          55297,
+          56360,
+          120,
+          55297,
+          56360,
+          121
+        ],
+        "length": 6,
+        "capacity": 8,
+        "maxCapacity": 2147483647,
+        "chunks": 4
+      },
+      "identity": true,
+      "fault": null,
+      "parameter": null,
+      "after": {
+        "text": [
+          55297,
+          56360,
+          120,
+          55297,
+          56360,
+          121
+        ],
+        "length": 6,
+        "capacity": 8,
+        "maxCapacity": 2147483647,
+        "chunks": 4
+      }
+    },
+    {
+      "id": "pair-cuts-full-grow",
+      "segments": [
+        [
+          55297
+        ],
+        [
+          56360
+        ],
+        [
+          120,
+          55297
+        ],
+        [
+          56360,
+          121
+        ]
+      ],
+      "oldValue": [
+        97
+      ],
+      "newValue": [
+        97,
+        97
+      ],
+      "start": 0,
+      "count": 6,
+      "before": {
+        "text": [
+          55297,
+          56360,
+          120,
+          55297,
+          56360,
+          121
+        ],
+        "length": 6,
+        "capacity": 8,
+        "maxCapacity": 2147483647,
+        "chunks": 4
+      },
+      "identity": true,
+      "fault": null,
+      "parameter": null,
+      "after": {
+        "text": [
+          55297,
+          56360,
+          120,
+          55297,
+          56360,
+          121
+        ],
+        "length": 6,
+        "capacity": 8,
+        "maxCapacity": 2147483647,
+        "chunks": 4
+      }
+    },
+    {
+      "id": "pair-cuts-middle-grow",
+      "segments": [
+        [
+          55297
+        ],
+        [
+          56360
+        ],
+        [
+          120,
+          55297
+        ],
+        [
+          56360,
+          121
+        ]
+      ],
+      "oldValue": [
+        97
+      ],
+      "newValue": [
+        97,
+        97
+      ],
+      "start": 1,
+      "count": 4,
+      "before": {
+        "text": [
+          55297,
+          56360,
+          120,
+          55297,
+          56360,
+          121
+        ],
+        "length": 6,
+        "capacity": 8,
+        "maxCapacity": 2147483647,
+        "chunks": 4
+      },
+      "identity": true,
+      "fault": null,
+      "parameter": null,
+      "after": {
+        "text": [
+          55297,
+          56360,
+          120,
+          55297,
+          56360,
+          121
+        ],
+        "length": 6,
+        "capacity": 8,
+        "maxCapacity": 2147483647,
+        "chunks": 4
+      }
+    },
+    {
+      "id": "pair-cuts-end-zero-grow",
+      "segments": [
+        [
+          55297
+        ],
+        [
+          56360
+        ],
+        [
+          120,
+          55297
+        ],
+        [
+          56360,
+          121
+        ]
+      ],
+      "oldValue": [
+        97
+      ],
+      "newValue": [
+        97,
+        97
+      ],
+      "start": 6,
+      "count": 0,
+      "before": {
+        "text": [
+          55297,
+          56360,
+          120,
+          55297,
+          56360,
+          121
+        ],
+        "length": 6,
+        "capacity": 8,
+        "maxCapacity": 2147483647,
+        "chunks": 4
+      },
+      "identity": true,
+      "fault": null,
+      "parameter": null,
+      "after": {
+        "text": [
+          55297,
+          56360,
+          120,
+          55297,
+          56360,
+          121
+        ],
+        "length": 6,
+        "capacity": 8,
+        "maxCapacity": 2147483647,
+        "chunks": 4
+      }
+    },
+    {
+      "id": "pair-cuts-full-shrink",
+      "segments": [
+        [
+          55297
+        ],
+        [
+          56360
+        ],
+        [
+          120,
+          55297
+        ],
+        [
+          56360,
+          121
+        ]
+      ],
+      "oldValue": [
+        97,
+        98,
+        97
+      ],
+      "newValue": [
+        81
+      ],
+      "start": 0,
+      "count": 6,
+      "before": {
+        "text": [
+          55297,
+          56360,
+          120,
+          55297,
+          56360,
+          121
+        ],
+        "length": 6,
+        "capacity": 8,
+        "maxCapacity": 2147483647,
+        "chunks": 4
+      },
+      "identity": true,
+      "fault": null,
+      "parameter": null,
+      "after": {
+        "text": [
+          55297,
+          56360,
+          120,
+          55297,
+          56360,
+          121
+        ],
+        "length": 6,
+        "capacity": 8,
+        "maxCapacity": 2147483647,
+        "chunks": 4
+      }
+    },
+    {
+      "id": "pair-cuts-middle-shrink",
+      "segments": [
+        [
+          55297
+        ],
+        [
+          56360
+        ],
+        [
+          120,
+          55297
+        ],
+        [
+          56360,
+          121
+        ]
+      ],
+      "oldValue": [
+        97,
+        98,
+        97
+      ],
+      "newValue": [
+        81
+      ],
+      "start": 1,
+      "count": 4,
+      "before": {
+        "text": [
+          55297,
+          56360,
+          120,
+          55297,
+          56360,
+          121
+        ],
+        "length": 6,
+        "capacity": 8,
+        "maxCapacity": 2147483647,
+        "chunks": 4
+      },
+      "identity": true,
+      "fault": null,
+      "parameter": null,
+      "after": {
+        "text": [
+          55297,
+          56360,
+          120,
+          55297,
+          56360,
+          121
+        ],
+        "length": 6,
+        "capacity": 8,
+        "maxCapacity": 2147483647,
+        "chunks": 4
+      }
+    },
+    {
+      "id": "pair-cuts-end-zero-shrink",
+      "segments": [
+        [
+          55297
+        ],
+        [
+          56360
+        ],
+        [
+          120,
+          55297
+        ],
+        [
+          56360,
+          121
+        ]
+      ],
+      "oldValue": [
+        97,
+        98,
+        97
+      ],
+      "newValue": [
+        81
+      ],
+      "start": 6,
+      "count": 0,
+      "before": {
+        "text": [
+          55297,
+          56360,
+          120,
+          55297,
+          56360,
+          121
+        ],
+        "length": 6,
+        "capacity": 8,
+        "maxCapacity": 2147483647,
+        "chunks": 4
+      },
+      "identity": true,
+      "fault": null,
+      "parameter": null,
+      "after": {
+        "text": [
+          55297,
+          56360,
+          120,
+          55297,
+          56360,
+          121
+        ],
+        "length": 6,
+        "capacity": 8,
+        "maxCapacity": 2147483647,
+        "chunks": 4
+      }
+    },
+    {
+      "id": "pair-cuts-full-same",
+      "segments": [
+        [
+          55297
+        ],
+        [
+          56360
+        ],
+        [
+          120,
+          55297
+        ],
+        [
+          56360,
+          121
+        ]
+      ],
+      "oldValue": [
+        97
+      ],
+      "newValue": [
+        97
+      ],
+      "start": 0,
+      "count": 6,
+      "before": {
+        "text": [
+          55297,
+          56360,
+          120,
+          55297,
+          56360,
+          121
+        ],
+        "length": 6,
+        "capacity": 8,
+        "maxCapacity": 2147483647,
+        "chunks": 4
+      },
+      "identity": true,
+      "fault": null,
+      "parameter": null,
+      "after": {
+        "text": [
+          55297,
+          56360,
+          120,
+          55297,
+          56360,
+          121
+        ],
+        "length": 6,
+        "capacity": 8,
+        "maxCapacity": 2147483647,
+        "chunks": 4
+      }
+    },
+    {
+      "id": "pair-cuts-middle-same",
+      "segments": [
+        [
+          55297
+        ],
+        [
+          56360
+        ],
+        [
+          120,
+          55297
+        ],
+        [
+          56360,
+          121
+        ]
+      ],
+      "oldValue": [
+        97
+      ],
+      "newValue": [
+        97
+      ],
+      "start": 1,
+      "count": 4,
+      "before": {
+        "text": [
+          55297,
+          56360,
+          120,
+          55297,
+          56360,
+          121
+        ],
+        "length": 6,
+        "capacity": 8,
+        "maxCapacity": 2147483647,
+        "chunks": 4
+      },
+      "identity": true,
+      "fault": null,
+      "parameter": null,
+      "after": {
+        "text": [
+          55297,
+          56360,
+          120,
+          55297,
+          56360,
+          121
+        ],
+        "length": 6,
+        "capacity": 8,
+        "maxCapacity": 2147483647,
+        "chunks": 4
+      }
+    },
+    {
+      "id": "pair-cuts-end-zero-same",
+      "segments": [
+        [
+          55297
+        ],
+        [
+          56360
+        ],
+        [
+          120,
+          55297
+        ],
+        [
+          56360,
+          121
+        ]
+      ],
+      "oldValue": [
+        97
+      ],
+      "newValue": [
+        97
+      ],
+      "start": 6,
+      "count": 0,
+      "before": {
+        "text": [
+          55297,
+          56360,
+          120,
+          55297,
+          56360,
+          121
+        ],
+        "length": 6,
+        "capacity": 8,
+        "maxCapacity": 2147483647,
+        "chunks": 4
+      },
+      "identity": true,
+      "fault": null,
+      "parameter": null,
+      "after": {
+        "text": [
+          55297,
+          56360,
+          120,
+          55297,
+          56360,
+          121
+        ],
+        "length": 6,
+        "capacity": 8,
+        "maxCapacity": 2147483647,
+        "chunks": 4
+      }
+    },
+    {
+      "id": "pair-cuts-full-absent",
+      "segments": [
+        [
+          55297
+        ],
+        [
+          56360
+        ],
+        [
+          120,
+          55297
+        ],
+        [
+          56360,
+          121
+        ]
+      ],
+      "oldValue": [
+        97,
+        98,
+        115,
+        101,
+        110,
+        116
+      ],
+      "newValue": [
+        120
+      ],
+      "start": 0,
+      "count": 6,
+      "before": {
+        "text": [
+          55297,
+          56360,
+          120,
+          55297,
+          56360,
+          121
+        ],
+        "length": 6,
+        "capacity": 8,
+        "maxCapacity": 2147483647,
+        "chunks": 4
+      },
+      "identity": true,
+      "fault": null,
+      "parameter": null,
+      "after": {
+        "text": [
+          55297,
+          56360,
+          120,
+          55297,
+          56360,
+          121
+        ],
+        "length": 6,
+        "capacity": 8,
+        "maxCapacity": 2147483647,
+        "chunks": 4
+      }
+    },
+    {
+      "id": "pair-cuts-middle-absent",
+      "segments": [
+        [
+          55297
+        ],
+        [
+          56360
+        ],
+        [
+          120,
+          55297
+        ],
+        [
+          56360,
+          121
+        ]
+      ],
+      "oldValue": [
+        97,
+        98,
+        115,
+        101,
+        110,
+        116
+      ],
+      "newValue": [
+        120
+      ],
+      "start": 1,
+      "count": 4,
+      "before": {
+        "text": [
+          55297,
+          56360,
+          120,
+          55297,
+          56360,
+          121
+        ],
+        "length": 6,
+        "capacity": 8,
+        "maxCapacity": 2147483647,
+        "chunks": 4
+      },
+      "identity": true,
+      "fault": null,
+      "parameter": null,
+      "after": {
+        "text": [
+          55297,
+          56360,
+          120,
+          55297,
+          56360,
+          121
+        ],
+        "length": 6,
+        "capacity": 8,
+        "maxCapacity": 2147483647,
+        "chunks": 4
+      }
+    },
+    {
+      "id": "pair-cuts-end-zero-absent",
+      "segments": [
+        [
+          55297
+        ],
+        [
+          56360
+        ],
+        [
+          120,
+          55297
+        ],
+        [
+          56360,
+          121
+        ]
+      ],
+      "oldValue": [
+        97,
+        98,
+        115,
+        101,
+        110,
+        116
+      ],
+      "newValue": [
+        120
+      ],
+      "start": 6,
+      "count": 0,
+      "before": {
+        "text": [
+          55297,
+          56360,
+          120,
+          55297,
+          56360,
+          121
+        ],
+        "length": 6,
+        "capacity": 8,
+        "maxCapacity": 2147483647,
+        "chunks": 4
+      },
+      "identity": true,
+      "fault": null,
+      "parameter": null,
+      "after": {
+        "text": [
+          55297,
+          56360,
+          120,
+          55297,
+          56360,
+          121
+        ],
+        "length": 6,
+        "capacity": 8,
+        "maxCapacity": 2147483647,
+        "chunks": 4
+      }
+    },
+    {
+      "id": "pair-cuts-full-nul",
+      "segments": [
+        [
+          55297
+        ],
+        [
+          56360
+        ],
+        [
+          120,
+          55297
+        ],
+        [
+          56360,
+          121
+        ]
+      ],
+      "oldValue": [
+        0
+      ],
+      "newValue": [
+        36,
+        38
+      ],
+      "start": 0,
+      "count": 6,
+      "before": {
+        "text": [
+          55297,
+          56360,
+          120,
+          55297,
+          56360,
+          121
+        ],
+        "length": 6,
+        "capacity": 8,
+        "maxCapacity": 2147483647,
+        "chunks": 4
+      },
+      "identity": true,
+      "fault": null,
+      "parameter": null,
+      "after": {
+        "text": [
+          55297,
+          56360,
+          120,
+          55297,
+          56360,
+          121
+        ],
+        "length": 6,
+        "capacity": 8,
+        "maxCapacity": 2147483647,
+        "chunks": 4
+      }
+    },
+    {
+      "id": "pair-cuts-middle-nul",
+      "segments": [
+        [
+          55297
+        ],
+        [
+          56360
+        ],
+        [
+          120,
+          55297
+        ],
+        [
+          56360,
+          121
+        ]
+      ],
+      "oldValue": [
+        0
+      ],
+      "newValue": [
+        36,
+        38
+      ],
+      "start": 1,
+      "count": 4,
+      "before": {
+        "text": [
+          55297,
+          56360,
+          120,
+          55297,
+          56360,
+          121
+        ],
+        "length": 6,
+        "capacity": 8,
+        "maxCapacity": 2147483647,
+        "chunks": 4
+      },
+      "identity": true,
+      "fault": null,
+      "parameter": null,
+      "after": {
+        "text": [
+          55297,
+          56360,
+          120,
+          55297,
+          56360,
+          121
+        ],
+        "length": 6,
+        "capacity": 8,
+        "maxCapacity": 2147483647,
+        "chunks": 4
+      }
+    },
+    {
+      "id": "pair-cuts-end-zero-nul",
+      "segments": [
+        [
+          55297
+        ],
+        [
+          56360
+        ],
+        [
+          120,
+          55297
+        ],
+        [
+          56360,
+          121
+        ]
+      ],
+      "oldValue": [
+        0
+      ],
+      "newValue": [
+        36,
+        38
+      ],
+      "start": 6,
+      "count": 0,
+      "before": {
+        "text": [
+          55297,
+          56360,
+          120,
+          55297,
+          56360,
+          121
+        ],
+        "length": 6,
+        "capacity": 8,
+        "maxCapacity": 2147483647,
+        "chunks": 4
+      },
+      "identity": true,
+      "fault": null,
+      "parameter": null,
+      "after": {
+        "text": [
+          55297,
+          56360,
+          120,
+          55297,
+          56360,
+          121
+        ],
+        "length": 6,
+        "capacity": 8,
+        "maxCapacity": 2147483647,
+        "chunks": 4
+      }
+    },
+    {
+      "id": "pair-cuts-full-low",
+      "segments": [
+        [
+          55297
+        ],
+        [
+          56360
+        ],
+        [
+          120,
+          55297
+        ],
+        [
+          56360,
+          121
+        ]
+      ],
+      "oldValue": [
+        56360
+      ],
+      "newValue": [
+        55296
+      ],
+      "start": 0,
+      "count": 6,
+      "before": {
+        "text": [
+          55297,
+          56360,
+          120,
+          55297,
+          56360,
+          121
+        ],
+        "length": 6,
+        "capacity": 8,
+        "maxCapacity": 2147483647,
+        "chunks": 4
+      },
+      "identity": true,
+      "fault": null,
+      "parameter": null,
+      "after": {
+        "text": [
+          55297,
+          55296,
+          120,
+          55297,
+          55296,
+          121
+        ],
+        "length": 6,
+        "capacity": 8,
+        "maxCapacity": 2147483647,
+        "chunks": 4
+      }
+    },
+    {
+      "id": "pair-cuts-middle-low",
+      "segments": [
+        [
+          55297
+        ],
+        [
+          56360
+        ],
+        [
+          120,
+          55297
+        ],
+        [
+          56360,
+          121
+        ]
+      ],
+      "oldValue": [
+        56360
+      ],
+      "newValue": [
+        55296
+      ],
+      "start": 1,
+      "count": 4,
+      "before": {
+        "text": [
+          55297,
+          56360,
+          120,
+          55297,
+          56360,
+          121
+        ],
+        "length": 6,
+        "capacity": 8,
+        "maxCapacity": 2147483647,
+        "chunks": 4
+      },
+      "identity": true,
+      "fault": null,
+      "parameter": null,
+      "after": {
+        "text": [
+          55297,
+          55296,
+          120,
+          55297,
+          55296,
+          121
+        ],
+        "length": 6,
+        "capacity": 8,
+        "maxCapacity": 2147483647,
+        "chunks": 4
+      }
+    },
+    {
+      "id": "pair-cuts-end-zero-low",
+      "segments": [
+        [
+          55297
+        ],
+        [
+          56360
+        ],
+        [
+          120,
+          55297
+        ],
+        [
+          56360,
+          121
+        ]
+      ],
+      "oldValue": [
+        56360
+      ],
+      "newValue": [
+        55296
+      ],
+      "start": 6,
+      "count": 0,
+      "before": {
+        "text": [
+          55297,
+          56360,
+          120,
+          55297,
+          56360,
+          121
+        ],
+        "length": 6,
+        "capacity": 8,
+        "maxCapacity": 2147483647,
+        "chunks": 4
+      },
+      "identity": true,
+      "fault": null,
+      "parameter": null,
+      "after": {
+        "text": [
+          55297,
+          56360,
+          120,
+          55297,
+          56360,
+          121
+        ],
+        "length": 6,
+        "capacity": 8,
+        "maxCapacity": 2147483647,
+        "chunks": 4
+      }
+    },
+    {
+      "id": "null-null-old-both-negative",
+      "segments": null,
+      "oldValue": null,
+      "newValue": null,
+      "start": -1,
+      "count": -1,
+      "before": null,
+      "identity": null,
+      "fault": "NullReferenceException",
+      "parameter": null,
+      "after": null
+    },
+    {
+      "id": "null-null-old-negative-start",
+      "segments": null,
+      "oldValue": null,
+      "newValue": null,
+      "start": -1,
+      "count": 0,
+      "before": null,
+      "identity": null,
+      "fault": "NullReferenceException",
+      "parameter": null,
+      "after": null
+    },
+    {
+      "id": "null-null-old-negative-count",
+      "segments": null,
+      "oldValue": null,
+      "newValue": null,
+      "start": 0,
+      "count": -1,
+      "before": null,
+      "identity": null,
+      "fault": "NullReferenceException",
+      "parameter": null,
+      "after": null
+    },
+    {
+      "id": "null-null-old-past-zero",
+      "segments": null,
+      "oldValue": null,
+      "newValue": null,
+      "start": 1,
+      "count": 0,
+      "before": null,
+      "identity": null,
+      "fault": "NullReferenceException",
+      "parameter": null,
+      "after": null
+    },
+    {
+      "id": "null-null-old-past-negative",
+      "segments": null,
+      "oldValue": null,
+      "newValue": null,
+      "start": 1,
+      "count": -1,
+      "before": null,
+      "identity": null,
+      "fault": "NullReferenceException",
+      "parameter": null,
+      "after": null
+    },
+    {
+      "id": "null-null-old-too-long",
+      "segments": null,
+      "oldValue": null,
+      "newValue": null,
+      "start": 0,
+      "count": 1,
+      "before": null,
+      "identity": null,
+      "fault": "NullReferenceException",
+      "parameter": null,
+      "after": null
+    },
+    {
+      "id": "null-null-old-minimum-start",
+      "segments": null,
+      "oldValue": null,
+      "newValue": null,
+      "start": -2147483648,
+      "count": 2147483647,
+      "before": null,
+      "identity": null,
+      "fault": "NullReferenceException",
+      "parameter": null,
+      "after": null
+    },
+    {
+      "id": "null-null-old-maximum-start",
+      "segments": null,
+      "oldValue": null,
+      "newValue": null,
+      "start": 2147483647,
+      "count": -2147483648,
+      "before": null,
+      "identity": null,
+      "fault": "NullReferenceException",
+      "parameter": null,
+      "after": null
+    },
+    {
+      "id": "null-null-old-end-zero",
+      "segments": null,
+      "oldValue": null,
+      "newValue": null,
+      "start": 0,
+      "count": 0,
+      "before": null,
+      "identity": null,
+      "fault": "NullReferenceException",
+      "parameter": null,
+      "after": null
+    },
+    {
+      "id": "null-null-old-both-maximum",
+      "segments": null,
+      "oldValue": null,
+      "newValue": null,
+      "start": 2147483647,
+      "count": 2147483647,
+      "before": null,
+      "identity": null,
+      "fault": "NullReferenceException",
+      "parameter": null,
+      "after": null
+    },
+    {
+      "id": "null-empty-old-both-negative",
+      "segments": null,
+      "oldValue": [],
+      "newValue": null,
+      "start": -1,
+      "count": -1,
+      "before": null,
+      "identity": null,
+      "fault": "NullReferenceException",
+      "parameter": null,
+      "after": null
+    },
+    {
+      "id": "null-empty-old-negative-start",
+      "segments": null,
+      "oldValue": [],
+      "newValue": null,
+      "start": -1,
+      "count": 0,
+      "before": null,
+      "identity": null,
+      "fault": "NullReferenceException",
+      "parameter": null,
+      "after": null
+    },
+    {
+      "id": "null-empty-old-negative-count",
+      "segments": null,
+      "oldValue": [],
+      "newValue": null,
+      "start": 0,
+      "count": -1,
+      "before": null,
+      "identity": null,
+      "fault": "NullReferenceException",
+      "parameter": null,
+      "after": null
+    },
+    {
+      "id": "null-empty-old-past-zero",
+      "segments": null,
+      "oldValue": [],
+      "newValue": null,
+      "start": 1,
+      "count": 0,
+      "before": null,
+      "identity": null,
+      "fault": "NullReferenceException",
+      "parameter": null,
+      "after": null
+    },
+    {
+      "id": "null-empty-old-past-negative",
+      "segments": null,
+      "oldValue": [],
+      "newValue": null,
+      "start": 1,
+      "count": -1,
+      "before": null,
+      "identity": null,
+      "fault": "NullReferenceException",
+      "parameter": null,
+      "after": null
+    },
+    {
+      "id": "null-empty-old-too-long",
+      "segments": null,
+      "oldValue": [],
+      "newValue": null,
+      "start": 0,
+      "count": 1,
+      "before": null,
+      "identity": null,
+      "fault": "NullReferenceException",
+      "parameter": null,
+      "after": null
+    },
+    {
+      "id": "null-empty-old-minimum-start",
+      "segments": null,
+      "oldValue": [],
+      "newValue": null,
+      "start": -2147483648,
+      "count": 2147483647,
+      "before": null,
+      "identity": null,
+      "fault": "NullReferenceException",
+      "parameter": null,
+      "after": null
+    },
+    {
+      "id": "null-empty-old-maximum-start",
+      "segments": null,
+      "oldValue": [],
+      "newValue": null,
+      "start": 2147483647,
+      "count": -2147483648,
+      "before": null,
+      "identity": null,
+      "fault": "NullReferenceException",
+      "parameter": null,
+      "after": null
+    },
+    {
+      "id": "null-empty-old-end-zero",
+      "segments": null,
+      "oldValue": [],
+      "newValue": null,
+      "start": 0,
+      "count": 0,
+      "before": null,
+      "identity": null,
+      "fault": "NullReferenceException",
+      "parameter": null,
+      "after": null
+    },
+    {
+      "id": "null-empty-old-both-maximum",
+      "segments": null,
+      "oldValue": [],
+      "newValue": null,
+      "start": 2147483647,
+      "count": 2147483647,
+      "before": null,
+      "identity": null,
+      "fault": "NullReferenceException",
+      "parameter": null,
+      "after": null
+    },
+    {
+      "id": "null-text-old-both-negative",
+      "segments": null,
+      "oldValue": [
+        97
+      ],
+      "newValue": null,
+      "start": -1,
+      "count": -1,
+      "before": null,
+      "identity": null,
+      "fault": "NullReferenceException",
+      "parameter": null,
+      "after": null
+    },
+    {
+      "id": "null-text-old-negative-start",
+      "segments": null,
+      "oldValue": [
+        97
+      ],
+      "newValue": null,
+      "start": -1,
+      "count": 0,
+      "before": null,
+      "identity": null,
+      "fault": "NullReferenceException",
+      "parameter": null,
+      "after": null
+    },
+    {
+      "id": "null-text-old-negative-count",
+      "segments": null,
+      "oldValue": [
+        97
+      ],
+      "newValue": null,
+      "start": 0,
+      "count": -1,
+      "before": null,
+      "identity": null,
+      "fault": "NullReferenceException",
+      "parameter": null,
+      "after": null
+    },
+    {
+      "id": "null-text-old-past-zero",
+      "segments": null,
+      "oldValue": [
+        97
+      ],
+      "newValue": null,
+      "start": 1,
+      "count": 0,
+      "before": null,
+      "identity": null,
+      "fault": "NullReferenceException",
+      "parameter": null,
+      "after": null
+    },
+    {
+      "id": "null-text-old-past-negative",
+      "segments": null,
+      "oldValue": [
+        97
+      ],
+      "newValue": null,
+      "start": 1,
+      "count": -1,
+      "before": null,
+      "identity": null,
+      "fault": "NullReferenceException",
+      "parameter": null,
+      "after": null
+    },
+    {
+      "id": "null-text-old-too-long",
+      "segments": null,
+      "oldValue": [
+        97
+      ],
+      "newValue": null,
+      "start": 0,
+      "count": 1,
+      "before": null,
+      "identity": null,
+      "fault": "NullReferenceException",
+      "parameter": null,
+      "after": null
+    },
+    {
+      "id": "null-text-old-minimum-start",
+      "segments": null,
+      "oldValue": [
+        97
+      ],
+      "newValue": null,
+      "start": -2147483648,
+      "count": 2147483647,
+      "before": null,
+      "identity": null,
+      "fault": "NullReferenceException",
+      "parameter": null,
+      "after": null
+    },
+    {
+      "id": "null-text-old-maximum-start",
+      "segments": null,
+      "oldValue": [
+        97
+      ],
+      "newValue": null,
+      "start": 2147483647,
+      "count": -2147483648,
+      "before": null,
+      "identity": null,
+      "fault": "NullReferenceException",
+      "parameter": null,
+      "after": null
+    },
+    {
+      "id": "null-text-old-end-zero",
+      "segments": null,
+      "oldValue": [
+        97
+      ],
+      "newValue": null,
+      "start": 0,
+      "count": 0,
+      "before": null,
+      "identity": null,
+      "fault": "NullReferenceException",
+      "parameter": null,
+      "after": null
+    },
+    {
+      "id": "null-text-old-both-maximum",
+      "segments": null,
+      "oldValue": [
+        97
+      ],
+      "newValue": null,
+      "start": 2147483647,
+      "count": 2147483647,
+      "before": null,
+      "identity": null,
+      "fault": "NullReferenceException",
+      "parameter": null,
+      "after": null
+    },
+    {
+      "id": "empty-null-old-both-negative",
+      "segments": [],
+      "oldValue": null,
+      "newValue": null,
+      "start": -1,
+      "count": -1,
+      "before": {
+        "text": [],
+        "length": 0,
+        "capacity": 1,
+        "maxCapacity": 2147483647,
+        "chunks": 1
+      },
+      "identity": null,
+      "fault": "ArgumentNullException",
+      "parameter": "oldValue",
+      "after": {
+        "text": [],
+        "length": 0,
+        "capacity": 1,
+        "maxCapacity": 2147483647,
+        "chunks": 1
+      }
+    },
+    {
+      "id": "empty-null-old-negative-start",
+      "segments": [],
+      "oldValue": null,
+      "newValue": null,
+      "start": -1,
+      "count": 0,
+      "before": {
+        "text": [],
+        "length": 0,
+        "capacity": 1,
+        "maxCapacity": 2147483647,
+        "chunks": 1
+      },
+      "identity": null,
+      "fault": "ArgumentNullException",
+      "parameter": "oldValue",
+      "after": {
+        "text": [],
+        "length": 0,
+        "capacity": 1,
+        "maxCapacity": 2147483647,
+        "chunks": 1
+      }
+    },
+    {
+      "id": "empty-null-old-negative-count",
+      "segments": [],
+      "oldValue": null,
+      "newValue": null,
+      "start": 0,
+      "count": -1,
+      "before": {
+        "text": [],
+        "length": 0,
+        "capacity": 1,
+        "maxCapacity": 2147483647,
+        "chunks": 1
+      },
+      "identity": null,
+      "fault": "ArgumentNullException",
+      "parameter": "oldValue",
+      "after": {
+        "text": [],
+        "length": 0,
+        "capacity": 1,
+        "maxCapacity": 2147483647,
+        "chunks": 1
+      }
+    },
+    {
+      "id": "empty-null-old-past-zero",
+      "segments": [],
+      "oldValue": null,
+      "newValue": null,
+      "start": 1,
+      "count": 0,
+      "before": {
+        "text": [],
+        "length": 0,
+        "capacity": 1,
+        "maxCapacity": 2147483647,
+        "chunks": 1
+      },
+      "identity": null,
+      "fault": "ArgumentNullException",
+      "parameter": "oldValue",
+      "after": {
+        "text": [],
+        "length": 0,
+        "capacity": 1,
+        "maxCapacity": 2147483647,
+        "chunks": 1
+      }
+    },
+    {
+      "id": "empty-null-old-past-negative",
+      "segments": [],
+      "oldValue": null,
+      "newValue": null,
+      "start": 1,
+      "count": -1,
+      "before": {
+        "text": [],
+        "length": 0,
+        "capacity": 1,
+        "maxCapacity": 2147483647,
+        "chunks": 1
+      },
+      "identity": null,
+      "fault": "ArgumentNullException",
+      "parameter": "oldValue",
+      "after": {
+        "text": [],
+        "length": 0,
+        "capacity": 1,
+        "maxCapacity": 2147483647,
+        "chunks": 1
+      }
+    },
+    {
+      "id": "empty-null-old-too-long",
+      "segments": [],
+      "oldValue": null,
+      "newValue": null,
+      "start": 0,
+      "count": 1,
+      "before": {
+        "text": [],
+        "length": 0,
+        "capacity": 1,
+        "maxCapacity": 2147483647,
+        "chunks": 1
+      },
+      "identity": null,
+      "fault": "ArgumentNullException",
+      "parameter": "oldValue",
+      "after": {
+        "text": [],
+        "length": 0,
+        "capacity": 1,
+        "maxCapacity": 2147483647,
+        "chunks": 1
+      }
+    },
+    {
+      "id": "empty-null-old-minimum-start",
+      "segments": [],
+      "oldValue": null,
+      "newValue": null,
+      "start": -2147483648,
+      "count": 2147483647,
+      "before": {
+        "text": [],
+        "length": 0,
+        "capacity": 1,
+        "maxCapacity": 2147483647,
+        "chunks": 1
+      },
+      "identity": null,
+      "fault": "ArgumentNullException",
+      "parameter": "oldValue",
+      "after": {
+        "text": [],
+        "length": 0,
+        "capacity": 1,
+        "maxCapacity": 2147483647,
+        "chunks": 1
+      }
+    },
+    {
+      "id": "empty-null-old-maximum-start",
+      "segments": [],
+      "oldValue": null,
+      "newValue": null,
+      "start": 2147483647,
+      "count": -2147483648,
+      "before": {
+        "text": [],
+        "length": 0,
+        "capacity": 1,
+        "maxCapacity": 2147483647,
+        "chunks": 1
+      },
+      "identity": null,
+      "fault": "ArgumentNullException",
+      "parameter": "oldValue",
+      "after": {
+        "text": [],
+        "length": 0,
+        "capacity": 1,
+        "maxCapacity": 2147483647,
+        "chunks": 1
+      }
+    },
+    {
+      "id": "empty-null-old-end-zero",
+      "segments": [],
+      "oldValue": null,
+      "newValue": null,
+      "start": 0,
+      "count": 0,
+      "before": {
+        "text": [],
+        "length": 0,
+        "capacity": 1,
+        "maxCapacity": 2147483647,
+        "chunks": 1
+      },
+      "identity": null,
+      "fault": "ArgumentNullException",
+      "parameter": "oldValue",
+      "after": {
+        "text": [],
+        "length": 0,
+        "capacity": 1,
+        "maxCapacity": 2147483647,
+        "chunks": 1
+      }
+    },
+    {
+      "id": "empty-null-old-both-maximum",
+      "segments": [],
+      "oldValue": null,
+      "newValue": null,
+      "start": 2147483647,
+      "count": 2147483647,
+      "before": {
+        "text": [],
+        "length": 0,
+        "capacity": 1,
+        "maxCapacity": 2147483647,
+        "chunks": 1
+      },
+      "identity": null,
+      "fault": "ArgumentNullException",
+      "parameter": "oldValue",
+      "after": {
+        "text": [],
+        "length": 0,
+        "capacity": 1,
+        "maxCapacity": 2147483647,
+        "chunks": 1
+      }
+    },
+    {
+      "id": "empty-empty-old-both-negative",
+      "segments": [],
+      "oldValue": [],
+      "newValue": null,
+      "start": -1,
+      "count": -1,
+      "before": {
+        "text": [],
+        "length": 0,
+        "capacity": 1,
+        "maxCapacity": 2147483647,
+        "chunks": 1
+      },
+      "identity": null,
+      "fault": "ArgumentException",
+      "parameter": "oldValue",
+      "after": {
+        "text": [],
+        "length": 0,
+        "capacity": 1,
+        "maxCapacity": 2147483647,
+        "chunks": 1
+      }
+    },
+    {
+      "id": "empty-empty-old-negative-start",
+      "segments": [],
+      "oldValue": [],
+      "newValue": null,
+      "start": -1,
+      "count": 0,
+      "before": {
+        "text": [],
+        "length": 0,
+        "capacity": 1,
+        "maxCapacity": 2147483647,
+        "chunks": 1
+      },
+      "identity": null,
+      "fault": "ArgumentException",
+      "parameter": "oldValue",
+      "after": {
+        "text": [],
+        "length": 0,
+        "capacity": 1,
+        "maxCapacity": 2147483647,
+        "chunks": 1
+      }
+    },
+    {
+      "id": "empty-empty-old-negative-count",
+      "segments": [],
+      "oldValue": [],
+      "newValue": null,
+      "start": 0,
+      "count": -1,
+      "before": {
+        "text": [],
+        "length": 0,
+        "capacity": 1,
+        "maxCapacity": 2147483647,
+        "chunks": 1
+      },
+      "identity": null,
+      "fault": "ArgumentException",
+      "parameter": "oldValue",
+      "after": {
+        "text": [],
+        "length": 0,
+        "capacity": 1,
+        "maxCapacity": 2147483647,
+        "chunks": 1
+      }
+    },
+    {
+      "id": "empty-empty-old-past-zero",
+      "segments": [],
+      "oldValue": [],
+      "newValue": null,
+      "start": 1,
+      "count": 0,
+      "before": {
+        "text": [],
+        "length": 0,
+        "capacity": 1,
+        "maxCapacity": 2147483647,
+        "chunks": 1
+      },
+      "identity": null,
+      "fault": "ArgumentException",
+      "parameter": "oldValue",
+      "after": {
+        "text": [],
+        "length": 0,
+        "capacity": 1,
+        "maxCapacity": 2147483647,
+        "chunks": 1
+      }
+    },
+    {
+      "id": "empty-empty-old-past-negative",
+      "segments": [],
+      "oldValue": [],
+      "newValue": null,
+      "start": 1,
+      "count": -1,
+      "before": {
+        "text": [],
+        "length": 0,
+        "capacity": 1,
+        "maxCapacity": 2147483647,
+        "chunks": 1
+      },
+      "identity": null,
+      "fault": "ArgumentException",
+      "parameter": "oldValue",
+      "after": {
+        "text": [],
+        "length": 0,
+        "capacity": 1,
+        "maxCapacity": 2147483647,
+        "chunks": 1
+      }
+    },
+    {
+      "id": "empty-empty-old-too-long",
+      "segments": [],
+      "oldValue": [],
+      "newValue": null,
+      "start": 0,
+      "count": 1,
+      "before": {
+        "text": [],
+        "length": 0,
+        "capacity": 1,
+        "maxCapacity": 2147483647,
+        "chunks": 1
+      },
+      "identity": null,
+      "fault": "ArgumentException",
+      "parameter": "oldValue",
+      "after": {
+        "text": [],
+        "length": 0,
+        "capacity": 1,
+        "maxCapacity": 2147483647,
+        "chunks": 1
+      }
+    },
+    {
+      "id": "empty-empty-old-minimum-start",
+      "segments": [],
+      "oldValue": [],
+      "newValue": null,
+      "start": -2147483648,
+      "count": 2147483647,
+      "before": {
+        "text": [],
+        "length": 0,
+        "capacity": 1,
+        "maxCapacity": 2147483647,
+        "chunks": 1
+      },
+      "identity": null,
+      "fault": "ArgumentException",
+      "parameter": "oldValue",
+      "after": {
+        "text": [],
+        "length": 0,
+        "capacity": 1,
+        "maxCapacity": 2147483647,
+        "chunks": 1
+      }
+    },
+    {
+      "id": "empty-empty-old-maximum-start",
+      "segments": [],
+      "oldValue": [],
+      "newValue": null,
+      "start": 2147483647,
+      "count": -2147483648,
+      "before": {
+        "text": [],
+        "length": 0,
+        "capacity": 1,
+        "maxCapacity": 2147483647,
+        "chunks": 1
+      },
+      "identity": null,
+      "fault": "ArgumentException",
+      "parameter": "oldValue",
+      "after": {
+        "text": [],
+        "length": 0,
+        "capacity": 1,
+        "maxCapacity": 2147483647,
+        "chunks": 1
+      }
+    },
+    {
+      "id": "empty-empty-old-end-zero",
+      "segments": [],
+      "oldValue": [],
+      "newValue": null,
+      "start": 0,
+      "count": 0,
+      "before": {
+        "text": [],
+        "length": 0,
+        "capacity": 1,
+        "maxCapacity": 2147483647,
+        "chunks": 1
+      },
+      "identity": null,
+      "fault": "ArgumentException",
+      "parameter": "oldValue",
+      "after": {
+        "text": [],
+        "length": 0,
+        "capacity": 1,
+        "maxCapacity": 2147483647,
+        "chunks": 1
+      }
+    },
+    {
+      "id": "empty-empty-old-both-maximum",
+      "segments": [],
+      "oldValue": [],
+      "newValue": null,
+      "start": 2147483647,
+      "count": 2147483647,
+      "before": {
+        "text": [],
+        "length": 0,
+        "capacity": 1,
+        "maxCapacity": 2147483647,
+        "chunks": 1
+      },
+      "identity": null,
+      "fault": "ArgumentException",
+      "parameter": "oldValue",
+      "after": {
+        "text": [],
+        "length": 0,
+        "capacity": 1,
+        "maxCapacity": 2147483647,
+        "chunks": 1
+      }
+    },
+    {
+      "id": "empty-text-old-both-negative",
+      "segments": [],
+      "oldValue": [
+        97
+      ],
+      "newValue": null,
+      "start": -1,
+      "count": -1,
+      "before": {
+        "text": [],
+        "length": 0,
+        "capacity": 1,
+        "maxCapacity": 2147483647,
+        "chunks": 1
+      },
+      "identity": null,
+      "fault": "ArgumentOutOfRangeException",
+      "parameter": "startIndex",
+      "after": {
+        "text": [],
+        "length": 0,
+        "capacity": 1,
+        "maxCapacity": 2147483647,
+        "chunks": 1
+      }
+    },
+    {
+      "id": "empty-text-old-negative-start",
+      "segments": [],
+      "oldValue": [
+        97
+      ],
+      "newValue": null,
+      "start": -1,
+      "count": 0,
+      "before": {
+        "text": [],
+        "length": 0,
+        "capacity": 1,
+        "maxCapacity": 2147483647,
+        "chunks": 1
+      },
+      "identity": null,
+      "fault": "ArgumentOutOfRangeException",
+      "parameter": "startIndex",
+      "after": {
+        "text": [],
+        "length": 0,
+        "capacity": 1,
+        "maxCapacity": 2147483647,
+        "chunks": 1
+      }
+    },
+    {
+      "id": "empty-text-old-negative-count",
+      "segments": [],
+      "oldValue": [
+        97
+      ],
+      "newValue": null,
+      "start": 0,
+      "count": -1,
+      "before": {
+        "text": [],
+        "length": 0,
+        "capacity": 1,
+        "maxCapacity": 2147483647,
+        "chunks": 1
+      },
+      "identity": null,
+      "fault": "ArgumentOutOfRangeException",
+      "parameter": "count",
+      "after": {
+        "text": [],
+        "length": 0,
+        "capacity": 1,
+        "maxCapacity": 2147483647,
+        "chunks": 1
+      }
+    },
+    {
+      "id": "empty-text-old-past-zero",
+      "segments": [],
+      "oldValue": [
+        97
+      ],
+      "newValue": null,
+      "start": 1,
+      "count": 0,
+      "before": {
+        "text": [],
+        "length": 0,
+        "capacity": 1,
+        "maxCapacity": 2147483647,
+        "chunks": 1
+      },
+      "identity": null,
+      "fault": "ArgumentOutOfRangeException",
+      "parameter": "startIndex",
+      "after": {
+        "text": [],
+        "length": 0,
+        "capacity": 1,
+        "maxCapacity": 2147483647,
+        "chunks": 1
+      }
+    },
+    {
+      "id": "empty-text-old-past-negative",
+      "segments": [],
+      "oldValue": [
+        97
+      ],
+      "newValue": null,
+      "start": 1,
+      "count": -1,
+      "before": {
+        "text": [],
+        "length": 0,
+        "capacity": 1,
+        "maxCapacity": 2147483647,
+        "chunks": 1
+      },
+      "identity": null,
+      "fault": "ArgumentOutOfRangeException",
+      "parameter": "startIndex",
+      "after": {
+        "text": [],
+        "length": 0,
+        "capacity": 1,
+        "maxCapacity": 2147483647,
+        "chunks": 1
+      }
+    },
+    {
+      "id": "empty-text-old-too-long",
+      "segments": [],
+      "oldValue": [
+        97
+      ],
+      "newValue": null,
+      "start": 0,
+      "count": 1,
+      "before": {
+        "text": [],
+        "length": 0,
+        "capacity": 1,
+        "maxCapacity": 2147483647,
+        "chunks": 1
+      },
+      "identity": null,
+      "fault": "ArgumentOutOfRangeException",
+      "parameter": "count",
+      "after": {
+        "text": [],
+        "length": 0,
+        "capacity": 1,
+        "maxCapacity": 2147483647,
+        "chunks": 1
+      }
+    },
+    {
+      "id": "empty-text-old-minimum-start",
+      "segments": [],
+      "oldValue": [
+        97
+      ],
+      "newValue": null,
+      "start": -2147483648,
+      "count": 2147483647,
+      "before": {
+        "text": [],
+        "length": 0,
+        "capacity": 1,
+        "maxCapacity": 2147483647,
+        "chunks": 1
+      },
+      "identity": null,
+      "fault": "ArgumentOutOfRangeException",
+      "parameter": "startIndex",
+      "after": {
+        "text": [],
+        "length": 0,
+        "capacity": 1,
+        "maxCapacity": 2147483647,
+        "chunks": 1
+      }
+    },
+    {
+      "id": "empty-text-old-maximum-start",
+      "segments": [],
+      "oldValue": [
+        97
+      ],
+      "newValue": null,
+      "start": 2147483647,
+      "count": -2147483648,
+      "before": {
+        "text": [],
+        "length": 0,
+        "capacity": 1,
+        "maxCapacity": 2147483647,
+        "chunks": 1
+      },
+      "identity": null,
+      "fault": "ArgumentOutOfRangeException",
+      "parameter": "startIndex",
+      "after": {
+        "text": [],
+        "length": 0,
+        "capacity": 1,
+        "maxCapacity": 2147483647,
+        "chunks": 1
+      }
+    },
+    {
+      "id": "empty-text-old-end-zero",
+      "segments": [],
+      "oldValue": [
+        97
+      ],
+      "newValue": null,
+      "start": 0,
+      "count": 0,
+      "before": {
+        "text": [],
+        "length": 0,
+        "capacity": 1,
+        "maxCapacity": 2147483647,
+        "chunks": 1
+      },
+      "identity": true,
+      "fault": null,
+      "parameter": null,
+      "after": {
+        "text": [],
+        "length": 0,
+        "capacity": 1,
+        "maxCapacity": 2147483647,
+        "chunks": 1
+      }
+    },
+    {
+      "id": "empty-text-old-both-maximum",
+      "segments": [],
+      "oldValue": [
+        97
+      ],
+      "newValue": null,
+      "start": 2147483647,
+      "count": 2147483647,
+      "before": {
+        "text": [],
+        "length": 0,
+        "capacity": 1,
+        "maxCapacity": 2147483647,
+        "chunks": 1
+      },
+      "identity": null,
+      "fault": "ArgumentOutOfRangeException",
+      "parameter": "startIndex",
+      "after": {
+        "text": [],
+        "length": 0,
+        "capacity": 1,
+        "maxCapacity": 2147483647,
+        "chunks": 1
+      }
+    },
+    {
+      "id": "flat-null-old-both-negative",
+      "segments": [
+        [
+          97,
+          98,
+          99,
+          100,
+          101
+        ]
+      ],
+      "oldValue": null,
+      "newValue": null,
+      "start": -1,
+      "count": -1,
+      "before": {
+        "text": [
+          97,
+          98,
+          99,
+          100,
+          101
+        ],
+        "length": 5,
+        "capacity": 5,
+        "maxCapacity": 2147483647,
+        "chunks": 2
+      },
+      "identity": null,
+      "fault": "ArgumentNullException",
+      "parameter": "oldValue",
+      "after": {
+        "text": [
+          97,
+          98,
+          99,
+          100,
+          101
+        ],
+        "length": 5,
+        "capacity": 5,
+        "maxCapacity": 2147483647,
+        "chunks": 2
+      }
+    },
+    {
+      "id": "flat-null-old-negative-start",
+      "segments": [
+        [
+          97,
+          98,
+          99,
+          100,
+          101
+        ]
+      ],
+      "oldValue": null,
+      "newValue": null,
+      "start": -1,
+      "count": 0,
+      "before": {
+        "text": [
+          97,
+          98,
+          99,
+          100,
+          101
+        ],
+        "length": 5,
+        "capacity": 5,
+        "maxCapacity": 2147483647,
+        "chunks": 2
+      },
+      "identity": null,
+      "fault": "ArgumentNullException",
+      "parameter": "oldValue",
+      "after": {
+        "text": [
+          97,
+          98,
+          99,
+          100,
+          101
+        ],
+        "length": 5,
+        "capacity": 5,
+        "maxCapacity": 2147483647,
+        "chunks": 2
+      }
+    },
+    {
+      "id": "flat-null-old-negative-count",
+      "segments": [
+        [
+          97,
+          98,
+          99,
+          100,
+          101
+        ]
+      ],
+      "oldValue": null,
+      "newValue": null,
+      "start": 0,
+      "count": -1,
+      "before": {
+        "text": [
+          97,
+          98,
+          99,
+          100,
+          101
+        ],
+        "length": 5,
+        "capacity": 5,
+        "maxCapacity": 2147483647,
+        "chunks": 2
+      },
+      "identity": null,
+      "fault": "ArgumentNullException",
+      "parameter": "oldValue",
+      "after": {
+        "text": [
+          97,
+          98,
+          99,
+          100,
+          101
+        ],
+        "length": 5,
+        "capacity": 5,
+        "maxCapacity": 2147483647,
+        "chunks": 2
+      }
+    },
+    {
+      "id": "flat-null-old-past-zero",
+      "segments": [
+        [
+          97,
+          98,
+          99,
+          100,
+          101
+        ]
+      ],
+      "oldValue": null,
+      "newValue": null,
+      "start": 6,
+      "count": 0,
+      "before": {
+        "text": [
+          97,
+          98,
+          99,
+          100,
+          101
+        ],
+        "length": 5,
+        "capacity": 5,
+        "maxCapacity": 2147483647,
+        "chunks": 2
+      },
+      "identity": null,
+      "fault": "ArgumentNullException",
+      "parameter": "oldValue",
+      "after": {
+        "text": [
+          97,
+          98,
+          99,
+          100,
+          101
+        ],
+        "length": 5,
+        "capacity": 5,
+        "maxCapacity": 2147483647,
+        "chunks": 2
+      }
+    },
+    {
+      "id": "flat-null-old-past-negative",
+      "segments": [
+        [
+          97,
+          98,
+          99,
+          100,
+          101
+        ]
+      ],
+      "oldValue": null,
+      "newValue": null,
+      "start": 6,
+      "count": -1,
+      "before": {
+        "text": [
+          97,
+          98,
+          99,
+          100,
+          101
+        ],
+        "length": 5,
+        "capacity": 5,
+        "maxCapacity": 2147483647,
+        "chunks": 2
+      },
+      "identity": null,
+      "fault": "ArgumentNullException",
+      "parameter": "oldValue",
+      "after": {
+        "text": [
+          97,
+          98,
+          99,
+          100,
+          101
+        ],
+        "length": 5,
+        "capacity": 5,
+        "maxCapacity": 2147483647,
+        "chunks": 2
+      }
+    },
+    {
+      "id": "flat-null-old-too-long",
+      "segments": [
+        [
+          97,
+          98,
+          99,
+          100,
+          101
+        ]
+      ],
+      "oldValue": null,
+      "newValue": null,
+      "start": 0,
+      "count": 6,
+      "before": {
+        "text": [
+          97,
+          98,
+          99,
+          100,
+          101
+        ],
+        "length": 5,
+        "capacity": 5,
+        "maxCapacity": 2147483647,
+        "chunks": 2
+      },
+      "identity": null,
+      "fault": "ArgumentNullException",
+      "parameter": "oldValue",
+      "after": {
+        "text": [
+          97,
+          98,
+          99,
+          100,
+          101
+        ],
+        "length": 5,
+        "capacity": 5,
+        "maxCapacity": 2147483647,
+        "chunks": 2
+      }
+    },
+    {
+      "id": "flat-null-old-minimum-start",
+      "segments": [
+        [
+          97,
+          98,
+          99,
+          100,
+          101
+        ]
+      ],
+      "oldValue": null,
+      "newValue": null,
+      "start": -2147483648,
+      "count": 2147483647,
+      "before": {
+        "text": [
+          97,
+          98,
+          99,
+          100,
+          101
+        ],
+        "length": 5,
+        "capacity": 5,
+        "maxCapacity": 2147483647,
+        "chunks": 2
+      },
+      "identity": null,
+      "fault": "ArgumentNullException",
+      "parameter": "oldValue",
+      "after": {
+        "text": [
+          97,
+          98,
+          99,
+          100,
+          101
+        ],
+        "length": 5,
+        "capacity": 5,
+        "maxCapacity": 2147483647,
+        "chunks": 2
+      }
+    },
+    {
+      "id": "flat-null-old-maximum-start",
+      "segments": [
+        [
+          97,
+          98,
+          99,
+          100,
+          101
+        ]
+      ],
+      "oldValue": null,
+      "newValue": null,
+      "start": 2147483647,
+      "count": -2147483648,
+      "before": {
+        "text": [
+          97,
+          98,
+          99,
+          100,
+          101
+        ],
+        "length": 5,
+        "capacity": 5,
+        "maxCapacity": 2147483647,
+        "chunks": 2
+      },
+      "identity": null,
+      "fault": "ArgumentNullException",
+      "parameter": "oldValue",
+      "after": {
+        "text": [
+          97,
+          98,
+          99,
+          100,
+          101
+        ],
+        "length": 5,
+        "capacity": 5,
+        "maxCapacity": 2147483647,
+        "chunks": 2
+      }
+    },
+    {
+      "id": "flat-null-old-end-zero",
+      "segments": [
+        [
+          97,
+          98,
+          99,
+          100,
+          101
+        ]
+      ],
+      "oldValue": null,
+      "newValue": null,
+      "start": 5,
+      "count": 0,
+      "before": {
+        "text": [
+          97,
+          98,
+          99,
+          100,
+          101
+        ],
+        "length": 5,
+        "capacity": 5,
+        "maxCapacity": 2147483647,
+        "chunks": 2
+      },
+      "identity": null,
+      "fault": "ArgumentNullException",
+      "parameter": "oldValue",
+      "after": {
+        "text": [
+          97,
+          98,
+          99,
+          100,
+          101
+        ],
+        "length": 5,
+        "capacity": 5,
+        "maxCapacity": 2147483647,
+        "chunks": 2
+      }
+    },
+    {
+      "id": "flat-null-old-both-maximum",
+      "segments": [
+        [
+          97,
+          98,
+          99,
+          100,
+          101
+        ]
+      ],
+      "oldValue": null,
+      "newValue": null,
+      "start": 2147483647,
+      "count": 2147483647,
+      "before": {
+        "text": [
+          97,
+          98,
+          99,
+          100,
+          101
+        ],
+        "length": 5,
+        "capacity": 5,
+        "maxCapacity": 2147483647,
+        "chunks": 2
+      },
+      "identity": null,
+      "fault": "ArgumentNullException",
+      "parameter": "oldValue",
+      "after": {
+        "text": [
+          97,
+          98,
+          99,
+          100,
+          101
+        ],
+        "length": 5,
+        "capacity": 5,
+        "maxCapacity": 2147483647,
+        "chunks": 2
+      }
+    },
+    {
+      "id": "flat-empty-old-both-negative",
+      "segments": [
+        [
+          97,
+          98,
+          99,
+          100,
+          101
+        ]
+      ],
+      "oldValue": [],
+      "newValue": null,
+      "start": -1,
+      "count": -1,
+      "before": {
+        "text": [
+          97,
+          98,
+          99,
+          100,
+          101
+        ],
+        "length": 5,
+        "capacity": 5,
+        "maxCapacity": 2147483647,
+        "chunks": 2
+      },
+      "identity": null,
+      "fault": "ArgumentException",
+      "parameter": "oldValue",
+      "after": {
+        "text": [
+          97,
+          98,
+          99,
+          100,
+          101
+        ],
+        "length": 5,
+        "capacity": 5,
+        "maxCapacity": 2147483647,
+        "chunks": 2
+      }
+    },
+    {
+      "id": "flat-empty-old-negative-start",
+      "segments": [
+        [
+          97,
+          98,
+          99,
+          100,
+          101
+        ]
+      ],
+      "oldValue": [],
+      "newValue": null,
+      "start": -1,
+      "count": 0,
+      "before": {
+        "text": [
+          97,
+          98,
+          99,
+          100,
+          101
+        ],
+        "length": 5,
+        "capacity": 5,
+        "maxCapacity": 2147483647,
+        "chunks": 2
+      },
+      "identity": null,
+      "fault": "ArgumentException",
+      "parameter": "oldValue",
+      "after": {
+        "text": [
+          97,
+          98,
+          99,
+          100,
+          101
+        ],
+        "length": 5,
+        "capacity": 5,
+        "maxCapacity": 2147483647,
+        "chunks": 2
+      }
+    },
+    {
+      "id": "flat-empty-old-negative-count",
+      "segments": [
+        [
+          97,
+          98,
+          99,
+          100,
+          101
+        ]
+      ],
+      "oldValue": [],
+      "newValue": null,
+      "start": 0,
+      "count": -1,
+      "before": {
+        "text": [
+          97,
+          98,
+          99,
+          100,
+          101
+        ],
+        "length": 5,
+        "capacity": 5,
+        "maxCapacity": 2147483647,
+        "chunks": 2
+      },
+      "identity": null,
+      "fault": "ArgumentException",
+      "parameter": "oldValue",
+      "after": {
+        "text": [
+          97,
+          98,
+          99,
+          100,
+          101
+        ],
+        "length": 5,
+        "capacity": 5,
+        "maxCapacity": 2147483647,
+        "chunks": 2
+      }
+    },
+    {
+      "id": "flat-empty-old-past-zero",
+      "segments": [
+        [
+          97,
+          98,
+          99,
+          100,
+          101
+        ]
+      ],
+      "oldValue": [],
+      "newValue": null,
+      "start": 6,
+      "count": 0,
+      "before": {
+        "text": [
+          97,
+          98,
+          99,
+          100,
+          101
+        ],
+        "length": 5,
+        "capacity": 5,
+        "maxCapacity": 2147483647,
+        "chunks": 2
+      },
+      "identity": null,
+      "fault": "ArgumentException",
+      "parameter": "oldValue",
+      "after": {
+        "text": [
+          97,
+          98,
+          99,
+          100,
+          101
+        ],
+        "length": 5,
+        "capacity": 5,
+        "maxCapacity": 2147483647,
+        "chunks": 2
+      }
+    },
+    {
+      "id": "flat-empty-old-past-negative",
+      "segments": [
+        [
+          97,
+          98,
+          99,
+          100,
+          101
+        ]
+      ],
+      "oldValue": [],
+      "newValue": null,
+      "start": 6,
+      "count": -1,
+      "before": {
+        "text": [
+          97,
+          98,
+          99,
+          100,
+          101
+        ],
+        "length": 5,
+        "capacity": 5,
+        "maxCapacity": 2147483647,
+        "chunks": 2
+      },
+      "identity": null,
+      "fault": "ArgumentException",
+      "parameter": "oldValue",
+      "after": {
+        "text": [
+          97,
+          98,
+          99,
+          100,
+          101
+        ],
+        "length": 5,
+        "capacity": 5,
+        "maxCapacity": 2147483647,
+        "chunks": 2
+      }
+    },
+    {
+      "id": "flat-empty-old-too-long",
+      "segments": [
+        [
+          97,
+          98,
+          99,
+          100,
+          101
+        ]
+      ],
+      "oldValue": [],
+      "newValue": null,
+      "start": 0,
+      "count": 6,
+      "before": {
+        "text": [
+          97,
+          98,
+          99,
+          100,
+          101
+        ],
+        "length": 5,
+        "capacity": 5,
+        "maxCapacity": 2147483647,
+        "chunks": 2
+      },
+      "identity": null,
+      "fault": "ArgumentException",
+      "parameter": "oldValue",
+      "after": {
+        "text": [
+          97,
+          98,
+          99,
+          100,
+          101
+        ],
+        "length": 5,
+        "capacity": 5,
+        "maxCapacity": 2147483647,
+        "chunks": 2
+      }
+    },
+    {
+      "id": "flat-empty-old-minimum-start",
+      "segments": [
+        [
+          97,
+          98,
+          99,
+          100,
+          101
+        ]
+      ],
+      "oldValue": [],
+      "newValue": null,
+      "start": -2147483648,
+      "count": 2147483647,
+      "before": {
+        "text": [
+          97,
+          98,
+          99,
+          100,
+          101
+        ],
+        "length": 5,
+        "capacity": 5,
+        "maxCapacity": 2147483647,
+        "chunks": 2
+      },
+      "identity": null,
+      "fault": "ArgumentException",
+      "parameter": "oldValue",
+      "after": {
+        "text": [
+          97,
+          98,
+          99,
+          100,
+          101
+        ],
+        "length": 5,
+        "capacity": 5,
+        "maxCapacity": 2147483647,
+        "chunks": 2
+      }
+    },
+    {
+      "id": "flat-empty-old-maximum-start",
+      "segments": [
+        [
+          97,
+          98,
+          99,
+          100,
+          101
+        ]
+      ],
+      "oldValue": [],
+      "newValue": null,
+      "start": 2147483647,
+      "count": -2147483648,
+      "before": {
+        "text": [
+          97,
+          98,
+          99,
+          100,
+          101
+        ],
+        "length": 5,
+        "capacity": 5,
+        "maxCapacity": 2147483647,
+        "chunks": 2
+      },
+      "identity": null,
+      "fault": "ArgumentException",
+      "parameter": "oldValue",
+      "after": {
+        "text": [
+          97,
+          98,
+          99,
+          100,
+          101
+        ],
+        "length": 5,
+        "capacity": 5,
+        "maxCapacity": 2147483647,
+        "chunks": 2
+      }
+    },
+    {
+      "id": "flat-empty-old-end-zero",
+      "segments": [
+        [
+          97,
+          98,
+          99,
+          100,
+          101
+        ]
+      ],
+      "oldValue": [],
+      "newValue": null,
+      "start": 5,
+      "count": 0,
+      "before": {
+        "text": [
+          97,
+          98,
+          99,
+          100,
+          101
+        ],
+        "length": 5,
+        "capacity": 5,
+        "maxCapacity": 2147483647,
+        "chunks": 2
+      },
+      "identity": null,
+      "fault": "ArgumentException",
+      "parameter": "oldValue",
+      "after": {
+        "text": [
+          97,
+          98,
+          99,
+          100,
+          101
+        ],
+        "length": 5,
+        "capacity": 5,
+        "maxCapacity": 2147483647,
+        "chunks": 2
+      }
+    },
+    {
+      "id": "flat-empty-old-both-maximum",
+      "segments": [
+        [
+          97,
+          98,
+          99,
+          100,
+          101
+        ]
+      ],
+      "oldValue": [],
+      "newValue": null,
+      "start": 2147483647,
+      "count": 2147483647,
+      "before": {
+        "text": [
+          97,
+          98,
+          99,
+          100,
+          101
+        ],
+        "length": 5,
+        "capacity": 5,
+        "maxCapacity": 2147483647,
+        "chunks": 2
+      },
+      "identity": null,
+      "fault": "ArgumentException",
+      "parameter": "oldValue",
+      "after": {
+        "text": [
+          97,
+          98,
+          99,
+          100,
+          101
+        ],
+        "length": 5,
+        "capacity": 5,
+        "maxCapacity": 2147483647,
+        "chunks": 2
+      }
+    },
+    {
+      "id": "flat-text-old-both-negative",
+      "segments": [
+        [
+          97,
+          98,
+          99,
+          100,
+          101
+        ]
+      ],
+      "oldValue": [
+        97
+      ],
+      "newValue": null,
+      "start": -1,
+      "count": -1,
+      "before": {
+        "text": [
+          97,
+          98,
+          99,
+          100,
+          101
+        ],
+        "length": 5,
+        "capacity": 5,
+        "maxCapacity": 2147483647,
+        "chunks": 2
+      },
+      "identity": null,
+      "fault": "ArgumentOutOfRangeException",
+      "parameter": "startIndex",
+      "after": {
+        "text": [
+          97,
+          98,
+          99,
+          100,
+          101
+        ],
+        "length": 5,
+        "capacity": 5,
+        "maxCapacity": 2147483647,
+        "chunks": 2
+      }
+    },
+    {
+      "id": "flat-text-old-negative-start",
+      "segments": [
+        [
+          97,
+          98,
+          99,
+          100,
+          101
+        ]
+      ],
+      "oldValue": [
+        97
+      ],
+      "newValue": null,
+      "start": -1,
+      "count": 0,
+      "before": {
+        "text": [
+          97,
+          98,
+          99,
+          100,
+          101
+        ],
+        "length": 5,
+        "capacity": 5,
+        "maxCapacity": 2147483647,
+        "chunks": 2
+      },
+      "identity": null,
+      "fault": "ArgumentOutOfRangeException",
+      "parameter": "startIndex",
+      "after": {
+        "text": [
+          97,
+          98,
+          99,
+          100,
+          101
+        ],
+        "length": 5,
+        "capacity": 5,
+        "maxCapacity": 2147483647,
+        "chunks": 2
+      }
+    },
+    {
+      "id": "flat-text-old-negative-count",
+      "segments": [
+        [
+          97,
+          98,
+          99,
+          100,
+          101
+        ]
+      ],
+      "oldValue": [
+        97
+      ],
+      "newValue": null,
+      "start": 0,
+      "count": -1,
+      "before": {
+        "text": [
+          97,
+          98,
+          99,
+          100,
+          101
+        ],
+        "length": 5,
+        "capacity": 5,
+        "maxCapacity": 2147483647,
+        "chunks": 2
+      },
+      "identity": null,
+      "fault": "ArgumentOutOfRangeException",
+      "parameter": "count",
+      "after": {
+        "text": [
+          97,
+          98,
+          99,
+          100,
+          101
+        ],
+        "length": 5,
+        "capacity": 5,
+        "maxCapacity": 2147483647,
+        "chunks": 2
+      }
+    },
+    {
+      "id": "flat-text-old-past-zero",
+      "segments": [
+        [
+          97,
+          98,
+          99,
+          100,
+          101
+        ]
+      ],
+      "oldValue": [
+        97
+      ],
+      "newValue": null,
+      "start": 6,
+      "count": 0,
+      "before": {
+        "text": [
+          97,
+          98,
+          99,
+          100,
+          101
+        ],
+        "length": 5,
+        "capacity": 5,
+        "maxCapacity": 2147483647,
+        "chunks": 2
+      },
+      "identity": null,
+      "fault": "ArgumentOutOfRangeException",
+      "parameter": "startIndex",
+      "after": {
+        "text": [
+          97,
+          98,
+          99,
+          100,
+          101
+        ],
+        "length": 5,
+        "capacity": 5,
+        "maxCapacity": 2147483647,
+        "chunks": 2
+      }
+    },
+    {
+      "id": "flat-text-old-past-negative",
+      "segments": [
+        [
+          97,
+          98,
+          99,
+          100,
+          101
+        ]
+      ],
+      "oldValue": [
+        97
+      ],
+      "newValue": null,
+      "start": 6,
+      "count": -1,
+      "before": {
+        "text": [
+          97,
+          98,
+          99,
+          100,
+          101
+        ],
+        "length": 5,
+        "capacity": 5,
+        "maxCapacity": 2147483647,
+        "chunks": 2
+      },
+      "identity": null,
+      "fault": "ArgumentOutOfRangeException",
+      "parameter": "startIndex",
+      "after": {
+        "text": [
+          97,
+          98,
+          99,
+          100,
+          101
+        ],
+        "length": 5,
+        "capacity": 5,
+        "maxCapacity": 2147483647,
+        "chunks": 2
+      }
+    },
+    {
+      "id": "flat-text-old-too-long",
+      "segments": [
+        [
+          97,
+          98,
+          99,
+          100,
+          101
+        ]
+      ],
+      "oldValue": [
+        97
+      ],
+      "newValue": null,
+      "start": 0,
+      "count": 6,
+      "before": {
+        "text": [
+          97,
+          98,
+          99,
+          100,
+          101
+        ],
+        "length": 5,
+        "capacity": 5,
+        "maxCapacity": 2147483647,
+        "chunks": 2
+      },
+      "identity": null,
+      "fault": "ArgumentOutOfRangeException",
+      "parameter": "count",
+      "after": {
+        "text": [
+          97,
+          98,
+          99,
+          100,
+          101
+        ],
+        "length": 5,
+        "capacity": 5,
+        "maxCapacity": 2147483647,
+        "chunks": 2
+      }
+    },
+    {
+      "id": "flat-text-old-minimum-start",
+      "segments": [
+        [
+          97,
+          98,
+          99,
+          100,
+          101
+        ]
+      ],
+      "oldValue": [
+        97
+      ],
+      "newValue": null,
+      "start": -2147483648,
+      "count": 2147483647,
+      "before": {
+        "text": [
+          97,
+          98,
+          99,
+          100,
+          101
+        ],
+        "length": 5,
+        "capacity": 5,
+        "maxCapacity": 2147483647,
+        "chunks": 2
+      },
+      "identity": null,
+      "fault": "ArgumentOutOfRangeException",
+      "parameter": "startIndex",
+      "after": {
+        "text": [
+          97,
+          98,
+          99,
+          100,
+          101
+        ],
+        "length": 5,
+        "capacity": 5,
+        "maxCapacity": 2147483647,
+        "chunks": 2
+      }
+    },
+    {
+      "id": "flat-text-old-maximum-start",
+      "segments": [
+        [
+          97,
+          98,
+          99,
+          100,
+          101
+        ]
+      ],
+      "oldValue": [
+        97
+      ],
+      "newValue": null,
+      "start": 2147483647,
+      "count": -2147483648,
+      "before": {
+        "text": [
+          97,
+          98,
+          99,
+          100,
+          101
+        ],
+        "length": 5,
+        "capacity": 5,
+        "maxCapacity": 2147483647,
+        "chunks": 2
+      },
+      "identity": null,
+      "fault": "ArgumentOutOfRangeException",
+      "parameter": "startIndex",
+      "after": {
+        "text": [
+          97,
+          98,
+          99,
+          100,
+          101
+        ],
+        "length": 5,
+        "capacity": 5,
+        "maxCapacity": 2147483647,
+        "chunks": 2
+      }
+    },
+    {
+      "id": "flat-text-old-end-zero",
+      "segments": [
+        [
+          97,
+          98,
+          99,
+          100,
+          101
+        ]
+      ],
+      "oldValue": [
+        97
+      ],
+      "newValue": null,
+      "start": 5,
+      "count": 0,
+      "before": {
+        "text": [
+          97,
+          98,
+          99,
+          100,
+          101
+        ],
+        "length": 5,
+        "capacity": 5,
+        "maxCapacity": 2147483647,
+        "chunks": 2
+      },
+      "identity": true,
+      "fault": null,
+      "parameter": null,
+      "after": {
+        "text": [
+          97,
+          98,
+          99,
+          100,
+          101
+        ],
+        "length": 5,
+        "capacity": 5,
+        "maxCapacity": 2147483647,
+        "chunks": 2
+      }
+    },
+    {
+      "id": "flat-text-old-both-maximum",
+      "segments": [
+        [
+          97,
+          98,
+          99,
+          100,
+          101
+        ]
+      ],
+      "oldValue": [
+        97
+      ],
+      "newValue": null,
+      "start": 2147483647,
+      "count": 2147483647,
+      "before": {
+        "text": [
+          97,
+          98,
+          99,
+          100,
+          101
+        ],
+        "length": 5,
+        "capacity": 5,
+        "maxCapacity": 2147483647,
+        "chunks": 2
+      },
+      "identity": null,
+      "fault": "ArgumentOutOfRangeException",
+      "parameter": "startIndex",
+      "after": {
+        "text": [
+          97,
+          98,
+          99,
+          100,
+          101
+        ],
+        "length": 5,
+        "capacity": 5,
+        "maxCapacity": 2147483647,
+        "chunks": 2
+      }
+    },
+    {
+      "id": "overlap-full",
+      "segments": [
+        [
+          97,
+          97,
+          97,
+          97,
+          97
+        ]
+      ],
+      "oldValue": [
+        97,
+        97
+      ],
+      "newValue": [
+        88
+      ],
+      "start": 0,
+      "count": 5,
+      "before": {
+        "text": [
+          97,
+          97,
+          97,
+          97,
+          97
+        ],
+        "length": 5,
+        "capacity": 5,
+        "maxCapacity": 2147483647,
+        "chunks": 2
+      },
+      "identity": true,
+      "fault": null,
+      "parameter": null,
+      "after": {
+        "text": [
+          88,
+          88,
+          97
+        ],
+        "length": 3,
+        "capacity": 5,
+        "maxCapacity": 2147483647,
+        "chunks": 2
+      }
+    },
+    {
+      "id": "overlap-window",
+      "segments": [
+        [
+          97,
+          97,
+          97,
+          97,
+          97
+        ]
+      ],
+      "oldValue": [
+        97,
+        97
+      ],
+      "newValue": [
+        88
+      ],
+      "start": 1,
+      "count": 3,
+      "before": {
+        "text": [
+          97,
+          97,
+          97,
+          97,
+          97
+        ],
+        "length": 5,
+        "capacity": 5,
+        "maxCapacity": 2147483647,
+        "chunks": 2
+      },
+      "identity": true,
+      "fault": null,
+      "parameter": null,
+      "after": {
+        "text": [
+          97,
+          88,
+          97,
+          97
+        ],
+        "length": 4,
+        "capacity": 5,
+        "maxCapacity": 2147483647,
+        "chunks": 2
+      }
+    },
+    {
+      "id": "inserted-text-not-searched",
+      "segments": [
+        [
+          97,
+          97
+        ],
+        [
+          98,
+          98
+        ]
+      ],
+      "oldValue": [
+        97
+      ],
+      "newValue": [
+        97,
+        97,
+        97
+      ],
+      "start": 0,
+      "count": 2,
+      "before": {
+        "text": [
+          97,
+          97,
+          98,
+          98
+        ],
+        "length": 4,
+        "capacity": 4,
+        "maxCapacity": 2147483647,
+        "chunks": 3
+      },
+      "identity": true,
+      "fault": null,
+      "parameter": null,
+      "after": {
+        "text": [
+          97,
+          97,
+          97,
+          97,
+          97,
+          97,
+          98,
+          98
+        ],
+        "length": 8,
+        "capacity": 8,
+        "maxCapacity": 2147483647,
+        "chunks": 5
+      }
+    },
+    {
+      "id": "literal-dollar-patterns",
+      "segments": [
+        [
+          97,
+          98
+        ],
+        [
+          97,
+          98
+        ]
+      ],
+      "oldValue": [
+        97,
+        98
+      ],
+      "newValue": [
+        36,
+        36,
+        36,
+        38,
+        36,
+        96,
+        36,
+        39
+      ],
+      "start": 0,
+      "count": 4,
+      "before": {
+        "text": [
+          97,
+          98,
+          97,
+          98
+        ],
+        "length": 4,
+        "capacity": 4,
+        "maxCapacity": 2147483647,
+        "chunks": 3
+      },
+      "identity": true,
+      "fault": null,
+      "parameter": null,
+      "after": {
+        "text": [
+          36,
+          36,
+          36,
+          38,
+          36,
+          96,
+          36,
+          39,
+          36,
+          36,
+          36,
+          38,
+          36,
+          96,
+          36,
+          39
+        ],
+        "length": 16,
+        "capacity": 16,
+        "maxCapacity": 2147483647,
+        "chunks": 5
+      }
+    },
+    {
+      "id": "literal-dollar-needle",
+      "segments": [
+        [
+          36,
+          38
+        ],
+        [
+          36,
+          38,
+          120
+        ]
+      ],
+      "oldValue": [
+        36,
+        38
+      ],
+      "newValue": [
+        36,
+        49
+      ],
+      "start": 0,
+      "count": 5,
+      "before": {
+        "text": [
+          36,
+          38,
+          36,
+          38,
+          120
+        ],
+        "length": 5,
+        "capacity": 5,
+        "maxCapacity": 2147483647,
+        "chunks": 3
+      },
+      "identity": true,
+      "fault": null,
+      "parameter": null,
+      "after": {
+        "text": [
+          36,
+          49,
+          36,
+          49,
+          120
+        ],
+        "length": 5,
+        "capacity": 5,
+        "maxCapacity": 2147483647,
+        "chunks": 3
+      }
+    },
+    {
+      "id": "match-start-before-window",
+      "segments": [
+        [
+          97,
+          98,
+          99
+        ],
+        [
+          97,
+          98,
+          99
+        ]
+      ],
+      "oldValue": [
+        98,
+        99
+      ],
+      "newValue": [
+        88
+      ],
+      "start": 2,
+      "count": 4,
+      "before": {
+        "text": [
+          97,
+          98,
+          99,
+          97,
+          98,
+          99
+        ],
+        "length": 6,
+        "capacity": 6,
+        "maxCapacity": 2147483647,
+        "chunks": 3
+      },
+      "identity": true,
+      "fault": null,
+      "parameter": null,
+      "after": {
+        "text": [
+          97,
+          98,
+          99,
+          97,
+          88
+        ],
+        "length": 5,
+        "capacity": 6,
+        "maxCapacity": 2147483647,
+        "chunks": 3
+      }
+    },
+    {
+      "id": "match-end-after-window",
+      "segments": [
+        [
+          97,
+          98,
+          99
+        ],
+        [
+          97,
+          98,
+          99
+        ]
+      ],
+      "oldValue": [
+        98,
+        99
+      ],
+      "newValue": [
+        88
+      ],
+      "start": 0,
+      "count": 5,
+      "before": {
+        "text": [
+          97,
+          98,
+          99,
+          97,
+          98,
+          99
+        ],
+        "length": 6,
+        "capacity": 6,
+        "maxCapacity": 2147483647,
+        "chunks": 3
+      },
+      "identity": true,
+      "fault": null,
+      "parameter": null,
+      "after": {
+        "text": [
+          97,
+          88,
+          97,
+          98,
+          99
+        ],
+        "length": 5,
+        "capacity": 5,
+        "maxCapacity": 2147483647,
+        "chunks": 3
+      }
+    },
+    {
+      "id": "cross-many-chunks",
+      "segments": [
+        [
+          97,
+          98
+        ],
+        [
+          99,
+          100
+        ],
+        [
+          101,
+          102
+        ]
+      ],
+      "oldValue": [
+        98,
+        99,
+        100,
+        101
+      ],
+      "newValue": [
+        36,
+        38
+      ],
+      "start": 1,
+      "count": 4,
+      "before": {
+        "text": [
+          97,
+          98,
+          99,
+          100,
+          101,
+          102
+        ],
+        "length": 6,
+        "capacity": 8,
+        "maxCapacity": 2147483647,
+        "chunks": 4
+      },
+      "identity": true,
+      "fault": null,
+      "parameter": null,
+      "after": {
+        "text": [
+          97,
+          36,
+          38,
+          102
+        ],
+        "length": 4,
+        "capacity": 7,
+        "maxCapacity": 2147483647,
+        "chunks": 4
+      }
+    },
+    {
+      "id": "needle-longer-than-window",
+      "segments": [
+        [
+          97,
+          98,
+          99
+        ]
+      ],
+      "oldValue": [
+        98,
+        99
+      ],
+      "newValue": [
+        120
+      ],
+      "start": 1,
+      "count": 1,
+      "before": {
+        "text": [
+          97,
+          98,
+          99
+        ],
+        "length": 3,
+        "capacity": 3,
+        "maxCapacity": 2147483647,
+        "chunks": 2
+      },
+      "identity": true,
+      "fault": null,
+      "parameter": null,
+      "after": {
+        "text": [
+          97,
+          98,
+          99
+        ],
+        "length": 3,
+        "capacity": 3,
+        "maxCapacity": 2147483647,
+        "chunks": 2
+      }
+    },
+    {
+      "id": "empty-replacement",
+      "segments": [
+        [
+          97,
+          97,
+          98
+        ],
+        [
+          97,
+          97,
+          98
+        ]
+      ],
+      "oldValue": [
+        97,
+        97
+      ],
+      "newValue": [],
+      "start": 0,
+      "count": 6,
+      "before": {
+        "text": [
+          97,
+          97,
+          98,
+          97,
+          97,
+          98
+        ],
+        "length": 6,
+        "capacity": 6,
+        "maxCapacity": 2147483647,
+        "chunks": 3
+      },
+      "identity": true,
+      "fault": null,
+      "parameter": null,
+      "after": {
+        "text": [
+          98,
+          98
+        ],
+        "length": 2,
+        "capacity": 4,
+        "maxCapacity": 2147483647,
+        "chunks": 2
+      }
+    },
+    {
+      "id": "many-chunks",
+      "segments": [
+        [
+          97,
+          98,
+          97
+        ],
+        [
+          97,
+          98,
+          97
+        ],
+        [
+          97,
+          98,
+          97
+        ],
+        [
+          97,
+          98,
+          97
+        ],
+        [
+          97,
+          98,
+          97
+        ],
+        [
+          97,
+          98,
+          97
+        ],
+        [
+          97,
+          98,
+          97
+        ],
+        [
+          97,
+          98,
+          97
+        ],
+        [
+          97,
+          98,
+          97
+        ],
+        [
+          97,
+          98,
+          97
+        ],
+        [
+          97,
+          98,
+          97
+        ],
+        [
+          97,
+          98,
+          97
+        ],
+        [
+          97,
+          98,
+          97
+        ],
+        [
+          97,
+          98,
+          97
+        ],
+        [
+          97,
+          98,
+          97
+        ],
+        [
+          97,
+          98,
+          97
+        ],
+        [
+          97,
+          98,
+          97
+        ],
+        [
+          97,
+          98,
+          97
+        ],
+        [
+          97,
+          98,
+          97
+        ],
+        [
+          97,
+          98,
+          97
+        ],
+        [
+          97,
+          98,
+          97
+        ],
+        [
+          97,
+          98,
+          97
+        ],
+        [
+          97,
+          98,
+          97
+        ],
+        [
+          97,
+          98,
+          97
+        ],
+        [
+          97,
+          98,
+          97
+        ],
+        [
+          97,
+          98,
+          97
+        ],
+        [
+          97,
+          98,
+          97
+        ],
+        [
+          97,
+          98,
+          97
+        ],
+        [
+          97,
+          98,
+          97
+        ],
+        [
+          97,
+          98,
+          97
+        ],
+        [
+          97,
+          98,
+          97
+        ],
+        [
+          97,
+          98,
+          97
+        ],
+        [
+          97,
+          98,
+          97
+        ],
+        [
+          97,
+          98,
+          97
+        ],
+        [
+          97,
+          98,
+          97
+        ],
+        [
+          97,
+          98,
+          97
+        ],
+        [
+          97,
+          98,
+          97
+        ],
+        [
+          97,
+          98,
+          97
+        ],
+        [
+          97,
+          98,
+          97
+        ],
+        [
+          97,
+          98,
+          97
+        ],
+        [
+          97,
+          98,
+          97
+        ],
+        [
+          97,
+          98,
+          97
+        ],
+        [
+          97,
+          98,
+          97
+        ],
+        [
+          97,
+          98,
+          97
+        ],
+        [
+          97,
+          98,
+          97
+        ],
+        [
+          97,
+          98,
+          97
+        ],
+        [
+          97,
+          98,
+          97
+        ],
+        [
+          97,
+          98,
+          97
+        ],
+        [
+          97,
+          98,
+          97
+        ],
+        [
+          97,
+          98,
+          97
+        ],
+        [
+          97,
+          98,
+          97
+        ],
+        [
+          97,
+          98,
+          97
+        ],
+        [
+          97,
+          98,
+          97
+        ],
+        [
+          97,
+          98,
+          97
+        ],
+        [
+          97,
+          98,
+          97
+        ],
+        [
+          97,
+          98,
+          97
+        ],
+        [
+          97,
+          98,
+          97
+        ],
+        [
+          97,
+          98,
+          97
+        ],
+        [
+          97,
+          98,
+          97
+        ],
+        [
+          97,
+          98,
+          97
+        ],
+        [
+          97,
+          98,
+          97
+        ],
+        [
+          97,
+          98,
+          97
+        ],
+        [
+          97,
+          98,
+          97
+        ],
+        [
+          97,
+          98,
+          97
+        ],
+        [
+          97,
+          98,
+          97
+        ],
+        [
+          97,
+          98,
+          97
+        ],
+        [
+          97,
+          98,
+          97
+        ],
+        [
+          97,
+          98,
+          97
+        ],
+        [
+          97,
+          98,
+          97
+        ],
+        [
+          97,
+          98,
+          97
+        ],
+        [
+          97,
+          98,
+          97
+        ],
+        [
+          97,
+          98,
+          97
+        ],
+        [
+          97,
+          98,
+          97
+        ],
+        [
+          97,
+          98,
+          97
+        ],
+        [
+          97,
+          98,
+          97
+        ],
+        [
+          97,
+          98,
+          97
+        ],
+        [
+          97,
+          98,
+          97
+        ],
+        [
+          97,
+          98,
+          97
+        ],
+        [
+          97,
+          98,
+          97
+        ],
+        [
+          97,
+          98,
+          97
+        ]
+      ],
+      "oldValue": [
+        97,
+        98,
+        97
+      ],
+      "newValue": [
+        81
+      ],
+      "start": 2,
+      "count": 236,
+      "before": {
+        "text": [
+          97,
+          98,
+          97,
+          97,
+          98,
+          97,
+          97,
+          98,
+          97,
+          97,
+          98,
+          97,
+          97,
+          98,
+          97,
+          97,
+          98,
+          97,
+          97,
+          98,
+          97,
+          97,
+          98,
+          97,
+          97,
+          98,
+          97,
+          97,
+          98,
+          97,
+          97,
+          98,
+          97,
+          97,
+          98,
+          97,
+          97,
+          98,
+          97,
+          97,
+          98,
+          97,
+          97,
+          98,
+          97,
+          97,
+          98,
+          97,
+          97,
+          98,
+          97,
+          97,
+          98,
+          97,
+          97,
+          98,
+          97,
+          97,
+          98,
+          97,
+          97,
+          98,
+          97,
+          97,
+          98,
+          97,
+          97,
+          98,
+          97,
+          97,
+          98,
+          97,
+          97,
+          98,
+          97,
+          97,
+          98,
+          97,
+          97,
+          98,
+          97,
+          97,
+          98,
+          97,
+          97,
+          98,
+          97,
+          97,
+          98,
+          97,
+          97,
+          98,
+          97,
+          97,
+          98,
+          97,
+          97,
+          98,
+          97,
+          97,
+          98,
+          97,
+          97,
+          98,
+          97,
+          97,
+          98,
+          97,
+          97,
+          98,
+          97,
+          97,
+          98,
+          97,
+          97,
+          98,
+          97,
+          97,
+          98,
+          97,
+          97,
+          98,
+          97,
+          97,
+          98,
+          97,
+          97,
+          98,
+          97,
+          97,
+          98,
+          97,
+          97,
+          98,
+          97,
+          97,
+          98,
+          97,
+          97,
+          98,
+          97,
+          97,
+          98,
+          97,
+          97,
+          98,
+          97,
+          97,
+          98,
+          97,
+          97,
+          98,
+          97,
+          97,
+          98,
+          97,
+          97,
+          98,
+          97,
+          97,
+          98,
+          97,
+          97,
+          98,
+          97,
+          97,
+          98,
+          97,
+          97,
+          98,
+          97,
+          97,
+          98,
+          97,
+          97,
+          98,
+          97,
+          97,
+          98,
+          97,
+          97,
+          98,
+          97,
+          97,
+          98,
+          97,
+          97,
+          98,
+          97,
+          97,
+          98,
+          97,
+          97,
+          98,
+          97,
+          97,
+          98,
+          97,
+          97,
+          98,
+          97,
+          97,
+          98,
+          97,
+          97,
+          98,
+          97,
+          97,
+          98,
+          97,
+          97,
+          98,
+          97,
+          97,
+          98,
+          97,
+          97,
+          98,
+          97,
+          97,
+          98,
+          97,
+          97,
+          98,
+          97,
+          97,
+          98,
+          97,
+          97,
+          98,
+          97,
+          97,
+          98,
+          97,
+          97,
+          98,
+          97,
+          97,
+          98,
+          97
+        ],
+        "length": 240,
+        "capacity": 384,
+        "maxCapacity": 2147483647,
+        "chunks": 9
+      },
+      "identity": true,
+      "fault": null,
+      "parameter": null,
+      "after": {
+        "text": [
+          97,
+          98,
+          97,
+          81,
+          81,
+          81,
+          81,
+          81,
+          81,
+          81,
+          81,
+          81,
+          81,
+          81,
+          81,
+          81,
+          81,
+          81,
+          81,
+          81,
+          81,
+          81,
+          81,
+          81,
+          81,
+          81,
+          81,
+          81,
+          81,
+          81,
+          81,
+          81,
+          81,
+          81,
+          81,
+          81,
+          81,
+          81,
+          81,
+          81,
+          81,
+          81,
+          81,
+          81,
+          81,
+          81,
+          81,
+          81,
+          81,
+          81,
+          81,
+          81,
+          81,
+          81,
+          81,
+          81,
+          81,
+          81,
+          81,
+          81,
+          81,
+          81,
+          81,
+          81,
+          81,
+          81,
+          81,
+          81,
+          81,
+          81,
+          81,
+          81,
+          81,
+          81,
+          81,
+          81,
+          81,
+          81,
+          81,
+          81,
+          81,
+          97,
+          98,
+          97
+        ],
+        "length": 84,
+        "capacity": 258,
+        "maxCapacity": 2147483647,
+        "chunks": 9
+      }
+    },
+    {
+      "id": "delete-full-split",
+      "segments": [
+        [
+          97,
+          98
+        ],
+        [
+          99,
+          100
+        ],
+        [
+          101,
+          102
+        ]
+      ],
+      "oldValue": [
+        97,
+        98,
+        99,
+        100,
+        101,
+        102
+      ],
+      "newValue": null,
+      "start": 0,
+      "count": 6,
+      "before": {
+        "text": [
+          97,
+          98,
+          99,
+          100,
+          101,
+          102
+        ],
+        "length": 6,
+        "capacity": 8,
+        "maxCapacity": 2147483647,
+        "chunks": 4
+      },
+      "identity": true,
+      "fault": null,
+      "parameter": null,
+      "after": {
+        "text": [],
+        "length": 0,
+        "capacity": 4,
+        "maxCapacity": 2147483647,
+        "chunks": 1
+      }
+    },
+    {
+      "id": "surrogate-cut-0-1",
+      "segments": [
+        [
+          55297
+        ],
+        [
+          56360,
+          120,
+          55297
+        ],
+        [
+          56360,
+          121
+        ]
+      ],
+      "oldValue": [
+        55297,
+        56360
+      ],
+      "newValue": [
+        55296
+      ],
+      "start": 0,
+      "count": 1,
+      "before": {
+        "text": [
+          55297,
+          56360,
+          120,
+          55297,
+          56360,
+          121
+        ],
+        "length": 6,
+        "capacity": 8,
+        "maxCapacity": 2147483647,
+        "chunks": 3
+      },
+      "identity": true,
+      "fault": null,
+      "parameter": null,
+      "after": {
+        "text": [
+          55297,
+          56360,
+          120,
+          55297,
+          56360,
+          121
+        ],
+        "length": 6,
+        "capacity": 8,
+        "maxCapacity": 2147483647,
+        "chunks": 3
+      }
+    },
+    {
+      "id": "surrogate-cut-1-1",
+      "segments": [
+        [
+          55297
+        ],
+        [
+          56360,
+          120,
+          55297
+        ],
+        [
+          56360,
+          121
+        ]
+      ],
+      "oldValue": [
+        55297,
+        56360
+      ],
+      "newValue": [
+        55296
+      ],
+      "start": 1,
+      "count": 1,
+      "before": {
+        "text": [
+          55297,
+          56360,
+          120,
+          55297,
+          56360,
+          121
+        ],
+        "length": 6,
+        "capacity": 8,
+        "maxCapacity": 2147483647,
+        "chunks": 3
+      },
+      "identity": true,
+      "fault": null,
+      "parameter": null,
+      "after": {
+        "text": [
+          55297,
+          56360,
+          120,
+          55297,
+          56360,
+          121
+        ],
+        "length": 6,
+        "capacity": 8,
+        "maxCapacity": 2147483647,
+        "chunks": 3
+      }
+    },
+    {
+      "id": "surrogate-cut-2-2",
+      "segments": [
+        [
+          55297
+        ],
+        [
+          56360,
+          120,
+          55297
+        ],
+        [
+          56360,
+          121
+        ]
+      ],
+      "oldValue": [
+        55297,
+        56360
+      ],
+      "newValue": [
+        55296
+      ],
+      "start": 2,
+      "count": 2,
+      "before": {
+        "text": [
+          55297,
+          56360,
+          120,
+          55297,
+          56360,
+          121
+        ],
+        "length": 6,
+        "capacity": 8,
+        "maxCapacity": 2147483647,
+        "chunks": 3
+      },
+      "identity": true,
+      "fault": null,
+      "parameter": null,
+      "after": {
+        "text": [
+          55297,
+          56360,
+          120,
+          55297,
+          56360,
+          121
+        ],
+        "length": 6,
+        "capacity": 8,
+        "maxCapacity": 2147483647,
+        "chunks": 3
+      }
+    },
+    {
+      "id": "surrogate-cut-3-1",
+      "segments": [
+        [
+          55297
+        ],
+        [
+          56360,
+          120,
+          55297
+        ],
+        [
+          56360,
+          121
+        ]
+      ],
+      "oldValue": [
+        55297,
+        56360
+      ],
+      "newValue": [
+        55296
+      ],
+      "start": 3,
+      "count": 1,
+      "before": {
+        "text": [
+          55297,
+          56360,
+          120,
+          55297,
+          56360,
+          121
+        ],
+        "length": 6,
+        "capacity": 8,
+        "maxCapacity": 2147483647,
+        "chunks": 3
+      },
+      "identity": true,
+      "fault": null,
+      "parameter": null,
+      "after": {
+        "text": [
+          55297,
+          56360,
+          120,
+          55297,
+          56360,
+          121
+        ],
+        "length": 6,
+        "capacity": 8,
+        "maxCapacity": 2147483647,
+        "chunks": 3
+      }
+    },
+    {
+      "id": "surrogate-cut-4-1",
+      "segments": [
+        [
+          55297
+        ],
+        [
+          56360,
+          120,
+          55297
+        ],
+        [
+          56360,
+          121
+        ]
+      ],
+      "oldValue": [
+        55297,
+        56360
+      ],
+      "newValue": [
+        55296
+      ],
+      "start": 4,
+      "count": 1,
+      "before": {
+        "text": [
+          55297,
+          56360,
+          120,
+          55297,
+          56360,
+          121
+        ],
+        "length": 6,
+        "capacity": 8,
+        "maxCapacity": 2147483647,
+        "chunks": 3
+      },
+      "identity": true,
+      "fault": null,
+      "parameter": null,
+      "after": {
+        "text": [
+          55297,
+          56360,
+          120,
+          55297,
+          56360,
+          121
+        ],
+        "length": 6,
+        "capacity": 8,
+        "maxCapacity": 2147483647,
+        "chunks": 3
+      }
+    },
+    {
+      "id": "surrogate-cut-1-4",
+      "segments": [
+        [
+          55297
+        ],
+        [
+          56360,
+          120,
+          55297
+        ],
+        [
+          56360,
+          121
+        ]
+      ],
+      "oldValue": [
+        55297,
+        56360
+      ],
+      "newValue": [
+        55296
+      ],
+      "start": 1,
+      "count": 4,
+      "before": {
+        "text": [
+          55297,
+          56360,
+          120,
+          55297,
+          56360,
+          121
+        ],
+        "length": 6,
+        "capacity": 8,
+        "maxCapacity": 2147483647,
+        "chunks": 3
+      },
+      "identity": true,
+      "fault": null,
+      "parameter": null,
+      "after": {
+        "text": [
+          55297,
+          56360,
+          120,
+          55296,
+          121
+        ],
+        "length": 5,
+        "capacity": 8,
+        "maxCapacity": 2147483647,
+        "chunks": 3
+      }
+    },
+    {
+      "id": "surrogate-cut-0-2",
+      "segments": [
+        [
+          55297
+        ],
+        [
+          56360,
+          120,
+          55297
+        ],
+        [
+          56360,
+          121
+        ]
+      ],
+      "oldValue": [
+        55297,
+        56360
+      ],
+      "newValue": [
+        55296
+      ],
+      "start": 0,
+      "count": 2,
+      "before": {
+        "text": [
+          55297,
+          56360,
+          120,
+          55297,
+          56360,
+          121
+        ],
+        "length": 6,
+        "capacity": 8,
+        "maxCapacity": 2147483647,
+        "chunks": 3
+      },
+      "identity": true,
+      "fault": null,
+      "parameter": null,
+      "after": {
+        "text": [
+          55296,
+          120,
+          55297,
+          56360,
+          121
+        ],
+        "length": 5,
+        "capacity": 7,
+        "maxCapacity": 2147483647,
+        "chunks": 3
+      }
+    },
+    {
+      "id": "surrogate-cut-3-2",
+      "segments": [
+        [
+          55297
+        ],
+        [
+          56360,
+          120,
+          55297
+        ],
+        [
+          56360,
+          121
+        ]
+      ],
+      "oldValue": [
+        55297,
+        56360
+      ],
+      "newValue": [
+        55296
+      ],
+      "start": 3,
+      "count": 2,
+      "before": {
+        "text": [
+          55297,
+          56360,
+          120,
+          55297,
+          56360,
+          121
+        ],
+        "length": 6,
+        "capacity": 8,
+        "maxCapacity": 2147483647,
+        "chunks": 3
+      },
+      "identity": true,
+      "fault": null,
+      "parameter": null,
+      "after": {
+        "text": [
+          55297,
+          56360,
+          120,
+          55296,
+          121
+        ],
+        "length": 5,
+        "capacity": 8,
+        "maxCapacity": 2147483647,
+        "chunks": 3
+      }
+    }
+  ]
+}

@@ -1,17 +1,15 @@
+import {popPooledFrame} from './frame-retirement.js';
+import {continuationRootValues} from './frame-roots.js';
 import {ManagedFault} from '../heap.js';
 import {exceptionMatches} from './exception-types.js';
+import {leaveSourceMethod} from './source-runtime-events.js';
 
 export function frameState() { return {exception: null, caught: [], unwinds: []}; }
 
 /** Exception continuations can own the only live reference to a return value or fault. */
 export function* roots(vm) {
   for (const frame of vm.frames) {
-    for (const unwind of frame.unwinds ?? []) {
-      yield unwind.value;
-      if (unwind.error?.reference) yield unwind.error.reference;
-    }
-    if (frame.exception?.reference) yield frame.exception.reference;
-    for (const caught of frame.caught ?? []) if (caught.fault.reference) yield caught.fault.reference;
+    yield* continuationRootValues(frame, true);
   }
   if (vm.fault?.reference) yield vm.fault.reference;
   if (vm.pendingFault?.reference) yield vm.pendingFault.reference;
@@ -38,7 +36,8 @@ export function finalizers(vm, frame, source, target = Infinity) {
 
 export function finishReturn(vm, frame, value) {
   vm.stack.length = frame.base;
-  vm.frames.pop();
+  leaveSourceMethod(vm, frame);
+  popPooledFrame(vm);
   if (vm.frames.length) vm.stack.push(value);
   else {
     vm.returnValue = value;
@@ -78,7 +77,8 @@ export function resumeUnwind(vm, frame) {
     vm.fault = null;
     return;
   }
-  vm.frames.pop();
+  leaveSourceMethod(vm, frame, 'exception');
+  popPooledFrame(vm);
   vm.stack.length = frame.base;
   vm.handleFault(unwind.error);
 }
@@ -130,7 +130,8 @@ export function handleFault(vm, error) {
       vm.fault = null;
       return;
     }
-    vm.frames.pop();
+    leaveSourceMethod(vm, frame, 'exception');
+    popPooledFrame(vm);
   }
   vm.state = 'faulted';
 }

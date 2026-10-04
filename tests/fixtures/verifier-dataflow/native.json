@@ -1,0 +1,192 @@
+{
+  "oracle": "ILVerify",
+  "version": "10.0.5",
+  "sdk": "10.0.201",
+  "runtime": "10.0.5",
+  "toolSHA256": "ca75cb4d2299ee5413eaf602a6ba87b7c089f3785d06f6b8ccad013d4e4646be",
+  "inputSHA256": "295bd41af1ac06ecda72781b736c9869e3d30587507df06fb01e538df7c1935b",
+  "environment": {
+    "platform": "darwin-arm64",
+    "osRelease": "25.6.0",
+    "node": "v24.21.0",
+    "image": {
+      "kind": "local",
+      "pinnedImage": false,
+      "reason": "Local OS is recorded, not an immutable runner image."
+    },
+    "imageOS": null,
+    "imageVersion": null
+  },
+  "references": {
+    "count": 167,
+    "sha256": "a978e7aaf608f22e860328a42319b908a5a084cdb087b28b5c31a1e6726be362"
+  },
+  "observations": [
+    {
+      "name": "Empty",
+      "assemblySHA256": "09094c3a7733b688485aa64520a7704d4c4e2b0396dc4332d1b7a2015ced8e29",
+      "expected": true,
+      "verify": {
+        "stdout": "All Classes and Methods in <temporary>/Empty.dll Verified.\nTypes found: 2\nTypes verified: 2\nMethods found: 1\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 0,
+        "signal": null,
+        "elapsedMs": 72.55591700000002
+      },
+      "oracle": {
+        "accepted": true,
+        "errors": []
+      }
+    },
+    {
+      "name": "Balanced",
+      "assemblySHA256": "d0ca91461fe590412508119e9fafd088378d8e289aff1ad52e048a60258b21e3",
+      "expected": true,
+      "verify": {
+        "stdout": "All Classes and Methods in <temporary>/Balanced.dll Verified.\nTypes found: 2\nTypes verified: 2\nMethods found: 1\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 0,
+        "signal": null,
+        "elapsedMs": 72.270666
+      },
+      "oracle": {
+        "accepted": true,
+        "errors": []
+      }
+    },
+    {
+      "name": "Underflow",
+      "assemblySHA256": "35ad796aa560e1dbf37bfbb81a9810c42782da943aa737dead82693244c84794",
+      "expected": false,
+      "verify": {
+        "stdout": "[IL]: Error [StackUnderflow]: [<temporary>/Underflow.dll : Fixture.Program::Underflow()][offset 0x00000000] Stack underflow.\n1 Error(s) Verifying <temporary>/Underflow.dll\nTypes found: 2\nTypes verified: 2\nMethods found: 1\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 2,
+        "signal": null,
+        "elapsedMs": 72.68433299999998
+      },
+      "oracle": {
+        "accepted": false,
+        "errors": [
+          "StackUnderflow"
+        ]
+      }
+    },
+    {
+      "name": "Overflow",
+      "assemblySHA256": "0f5c7c6004c1f4d6b72add4c4067b821de6b78ac6eed57b4d2e18d1f37b04231",
+      "expected": false,
+      "verify": {
+        "stdout": "[IL]: Error [StackOverflow]: [<temporary>/Overflow.dll : Fixture.Program::Overflow()][offset 0x00000000] Stack overflow.\n1 Error(s) Verifying <temporary>/Overflow.dll\nTypes found: 2\nTypes verified: 2\nMethods found: 1\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 2,
+        "signal": null,
+        "elapsedMs": 72.73366699999997
+      },
+      "oracle": {
+        "accepted": false,
+        "errors": [
+          "StackOverflow"
+        ]
+      }
+    },
+    {
+      "name": "Join",
+      "assemblySHA256": "f5e6787309c78ec4a61bd5b7bfec055b02c352512848f64fbb267c02d0af85ce",
+      "expected": false,
+      "verify": {
+        "stdout": "[IL]: Error [PathStackDepth]: [<temporary>/Join.dll : Fixture.Program::Join()][offset 0x00000005] Stack depth differs depending on path.\n1 Error(s) Verifying <temporary>/Join.dll\nTypes found: 2\nTypes verified: 2\nMethods found: 1\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 2,
+        "signal": null,
+        "elapsedMs": 74.22316599999999
+      },
+      "oracle": {
+        "accepted": false,
+        "errors": [
+          "PathStackDepth"
+        ]
+      }
+    },
+    {
+      "name": "Diamond",
+      "assemblySHA256": "211fda27ab9784c95d2eb508cb946b96e0ac3aab2f01170c9278b77ca943f84a",
+      "expected": true,
+      "verify": {
+        "stdout": "All Classes and Methods in <temporary>/Diamond.dll Verified.\nTypes found: 2\nTypes verified: 2\nMethods found: 1\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 0,
+        "signal": null,
+        "elapsedMs": 75.39049999999997
+      },
+      "oracle": {
+        "accepted": true,
+        "errors": []
+      }
+    },
+    {
+      "name": "Loop",
+      "assemblySHA256": "4c6ed3c69922faab19a5fae5c813348b2b0dd1de99602c3abf0977d05d43c5f9",
+      "expected": true,
+      "verify": {
+        "stdout": "All Classes and Methods in <temporary>/Loop.dll Verified.\nTypes found: 2\nTypes verified: 2\nMethods found: 1\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 0,
+        "signal": null,
+        "elapsedMs": 78.32658300000003
+      },
+      "oracle": {
+        "accepted": true,
+        "errors": []
+      }
+    },
+    {
+      "name": "Switch",
+      "assemblySHA256": "d632aa1492269f3a9fae4aad0ccd4c13cbdafd92fc7ab65d8a9d2ce6f480fd89",
+      "expected": true,
+      "verify": {
+        "stdout": "All Classes and Methods in <temporary>/Switch.dll Verified.\nTypes found: 2\nTypes verified: 2\nMethods found: 1\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 0,
+        "signal": null,
+        "elapsedMs": 71.87795800000004
+      },
+      "oracle": {
+        "accepted": true,
+        "errors": []
+      }
+    },
+    {
+      "name": "Catch",
+      "assemblySHA256": "29c0032895ad0235c9531e1e12f02f034ce61cac476c7b842ce79b1bd8099d9e",
+      "expected": true,
+      "verify": {
+        "stdout": "All Classes and Methods in <temporary>/Catch.dll Verified.\nTypes found: 2\nTypes verified: 2\nMethods found: 1\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 0,
+        "signal": null,
+        "elapsedMs": 73.14441699999998
+      },
+      "oracle": {
+        "accepted": true,
+        "errors": []
+      }
+    },
+    {
+      "name": "Finally",
+      "assemblySHA256": "a6692eac21121910f77f3e1532b395c4e702cfd550afaa67bf9fadfbd41ea9b3",
+      "expected": true,
+      "verify": {
+        "stdout": "All Classes and Methods in <temporary>/Finally.dll Verified.\nTypes found: 2\nTypes verified: 2\nMethods found: 1\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 0,
+        "signal": null,
+        "elapsedMs": 72.08570799999995
+      },
+      "oracle": {
+        "accepted": true,
+        "errors": []
+      }
+    }
+  ]
+}

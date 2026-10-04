@@ -1,0 +1,11 @@
+{
+  "mode": "capture",
+  "absolutePassed": true,
+  "largeFile": {
+    "sizeBytes": 209715200,
+    "measuredP95Ms": 32.40000000002328,
+    "budgetMs": 50,
+    "measurement": "input/keydown/scroll event to two requestAnimationFrame callbacks"
+  },
+  "regressionVerdict": null
+}

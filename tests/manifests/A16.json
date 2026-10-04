@@ -2,7 +2,8 @@
   "schemaVersion": 1,
   "area": "A16",
   "nodeGlobs": [
-    "tests/winui-runtime.test.js"
+    "tests/winui-runtime.test.js",
+    "tests/winui-contract-ids.test.js"
   ],
   "browserScripts": [
     "tests/browser_release10_test.py"

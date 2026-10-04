@@ -1,0 +1,11 @@
+{
+  "suite": "browser_a19_shell_test",
+  "passed": true,
+  "engine": "webkit",
+  "cspViolations": [],
+  "browser": "26.6",
+  "executable": "playwright-managed",
+  "mode": "http",
+  "seconds": 10.760526207999987,
+  "diagnosticErrors": []
+}

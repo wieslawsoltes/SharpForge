@@ -1,0 +1,173 @@
+{
+  "schemaVersion": 1,
+  "kind": "sharpforge-project16-qualification",
+  "stage": "browser",
+  "engine": "chromium",
+  "sourceSha": "e4629f443b59bfc2d7494b731be19afc5974b7b1",
+  "sourceTree": "1733c01dae0e44cea49dd82a574fda7b8286d6be",
+  "workflowRunId": "37172716850",
+  "startedAt": "2026-10-04T03:00:16.723Z",
+  "finishedAt": "2026-10-04T03:01:44.153Z",
+  "status": "failed",
+  "exitCode": 1,
+  "scopes": [
+    {
+      "id": "browser:workbench-docking",
+      "phase": "browser",
+      "command": "python",
+      "args": [
+        "tests/conformance/browser/run_suite.py",
+        "workbench-docking",
+        "--timeout",
+        "1200"
+      ],
+      "timeoutMs": 1320000,
+      "status": "passed",
+      "startedAt": "2026-10-04T03:00:16.724Z",
+      "exitCode": 0,
+      "finishedAt": "2026-10-04T03:00:19.694Z"
+    },
+    {
+      "id": "browser:workbench-shell",
+      "phase": "browser",
+      "command": "python",
+      "args": [
+        "tests/conformance/browser/run_suite.py",
+        "workbench-shell",
+        "--timeout",
+        "1200"
+      ],
+      "timeoutMs": 1320000,
+      "status": "passed",
+      "startedAt": "2026-10-04T03:00:19.694Z",
+      "exitCode": 0,
+      "finishedAt": "2026-10-04T03:00:24.872Z"
+    },
+    {
+      "id": "browser:workbench-sessions",
+      "phase": "browser",
+      "command": "python",
+      "args": [
+        "tests/conformance/browser/run_suite.py",
+        "workbench-sessions",
+        "--timeout",
+        "1200"
+      ],
+      "timeoutMs": 1320000,
+      "status": "failed",
+      "startedAt": "2026-10-04T03:00:24.873Z",
+      "exitCode": 1,
+      "error": {
+        "name": "Error",
+        "message": "Qualification failed (1): python tests/conformance/browser/run_suite.py workbench-sessions --timeout 1200",
+        "code": null
+      },
+      "finishedAt": "2026-10-04T03:00:28.305Z"
+    },
+    {
+      "id": "browser:workbench-lazy",
+      "phase": "browser",
+      "command": "python",
+      "args": [
+        "tests/conformance/browser/run_suite.py",
+        "workbench-lazy",
+        "--timeout",
+        "1200"
+      ],
+      "timeoutMs": 1320000,
+      "status": "passed",
+      "startedAt": "2026-10-04T03:00:28.306Z",
+      "exitCode": 0,
+      "finishedAt": "2026-10-04T03:00:32.991Z"
+    },
+    {
+      "id": "browser:workbench-workflows",
+      "phase": "browser",
+      "command": "python",
+      "args": [
+        "tests/conformance/browser/run_suite.py",
+        "workbench-workflows",
+        "--timeout",
+        "1200"
+      ],
+      "timeoutMs": 1320000,
+      "status": "failed",
+      "startedAt": "2026-10-04T03:00:32.992Z",
+      "exitCode": 1,
+      "error": {
+        "name": "Error",
+        "message": "Qualification failed (1): python tests/conformance/browser/run_suite.py workbench-workflows --timeout 1200",
+        "code": null
+      },
+      "finishedAt": "2026-10-04T03:01:06.932Z"
+    },
+    {
+      "id": "browser:editor-insights",
+      "phase": "browser",
+      "command": "python",
+      "args": [
+        "tests/conformance/browser/run_suite.py",
+        "editor-insights",
+        "--timeout",
+        "1200"
+      ],
+      "timeoutMs": 1320000,
+      "status": "failed",
+      "startedAt": "2026-10-04T03:01:06.933Z",
+      "exitCode": 1,
+      "error": {
+        "name": "Error",
+        "message": "Qualification failed (1): python tests/conformance/browser/run_suite.py editor-insights --timeout 1200",
+        "code": null
+      },
+      "finishedAt": "2026-10-04T03:01:09.201Z"
+    },
+    {
+      "id": "browser:editor-providers",
+      "phase": "browser",
+      "command": "python",
+      "args": [
+        "tests/conformance/browser/run_suite.py",
+        "editor-providers",
+        "--timeout",
+        "1200"
+      ],
+      "timeoutMs": 1320000,
+      "status": "failed",
+      "startedAt": "2026-10-04T03:01:09.201Z",
+      "exitCode": 1,
+      "error": {
+        "name": "Error",
+        "message": "Qualification failed (1): python tests/conformance/browser/run_suite.py editor-providers --timeout 1200",
+        "code": null
+      },
+      "finishedAt": "2026-10-04T03:01:42.486Z"
+    },
+    {
+      "id": "browser:editor-view",
+      "phase": "browser",
+      "command": "python",
+      "args": [
+        "tests/conformance/browser/run_suite.py",
+        "editor-view",
+        "--timeout",
+        "1200"
+      ],
+      "timeoutMs": 1320000,
+      "status": "failed",
+      "startedAt": "2026-10-04T03:01:42.487Z",
+      "exitCode": 1,
+      "error": {
+        "name": "Error",
+        "message": "Qualification failed (1): python tests/conformance/browser/run_suite.py editor-view --timeout 1200",
+        "code": null
+      },
+      "finishedAt": "2026-10-04T03:01:44.152Z"
+    }
+  ],
+  "counts": {
+    "selected": 8,
+    "passed": 3,
+    "failed": 5
+  }
+}

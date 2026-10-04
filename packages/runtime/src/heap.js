@@ -1,4 +1,7 @@
+import {collectHeap} from './execution/heap-collection.js';
 import {MethodTableRegistry} from './execution/method-table.js';
+import {recordAllocation,replaceHeapData} from './execution/heap-allocation.js';
+import {createHeapReference} from './execution/heap-reference.js';
 /** A precise, non-moving tracing heap. Managed references are generation-checked handles, never raw JS object references. */
 export class ManagedFault extends Error {
   constructor(type,message,reference=null){super(message);this.name=type;this.reference=reference;}
@@ -28,10 +31,10 @@ export class ManagedHeap {
     this.reserve(size,allocationRoots);
     const g=this.generationCounter+1;if(!Number.isSafeInteger(g))throw new ManagedFault('OutOfMemoryException','Managed reference identity exhausted');this.generationCounter=g;const h=this.free.length?this.free.pop():this.records.length;
     this.generations[h]=g;this.records[h]={kind,type:typeName,methodTable,data,size};
-    this.mutationRevision++;this.stats.allocatedBytes+=size;this.stats.liveBytes+=size;this.stats.liveObjects++;this.stats.allocations++;this.stats.peakBytes=Math.max(this.stats.peakBytes,this.stats.liveBytes);
-    return Object.freeze({h,g});
+    recordAllocation(this,size);
+    return createHeapReference(this,h,g);
   }
-  replaceData(reference,data){const record=this.get(reference);if(!Array.isArray(data)||record.kind==='string')throw new TypeError('Array-backed record required');const next=32+data.length*8,delta=next-record.size;if(delta>0)this.reserve(delta,[reference,...data]);this.stats.liveBytes+=delta;this.stats.allocatedBytes+=Math.max(0,delta);this.stats.peakBytes=Math.max(this.stats.peakBytes,this.stats.liveBytes);record.data=[...data];record.size=next;this.mutationRevision++;}
+  replaceData(reference,data){return replaceHeapData(this,reference,data);}
   string(value,roots=[]){return this.allocate('string','string',String(value),roots);}
   object(type,fields){return this.allocate('object',type,fields);}
   array(type,length){
@@ -46,20 +49,7 @@ export class ManagedHeap {
     if(!isReference(ref)||this.generations[ref.h]!==ref.g||!this.records[ref.h])throw new ManagedFault('InvalidReferenceException','Stale or invalid managed reference');
     return this.records[ref.h];
   }
-  collect(extraRoots=[]){
-    this.mutationRevision++;
-    const start=performance.now();if(this.marks.length<this.records.length)this.marks=new Uint32Array(Math.max(this.records.length,this.marks.length*2,64));if(++this.markEpoch>=0xffffffff){this.marks.fill(0);this.markEpoch=1;}const marked=this.marks,epoch=this.markEpoch,work=this.markWork;work.length=0;let rootsScanned=0,edgesScanned=0,markedObjects=0;
-    const add=value=>{if(isReference(value)&&this.generations[value.h]===value.g&&this.records[value.h]&&marked[value.h]!==epoch){marked[value.h]=epoch;markedObjects++;work.push(value.h);}};
-    for(const value of this.rootProvider()){rootsScanned++;add(value);}for(const value of this.pins){rootsScanned++;add(value);}for(const value of extraRoots){rootsScanned++;add(value);}for(const h of this.handles.values())if(!h.weak){rootsScanned++;add(h.value);}
-    while(work.length){const record=this.records[work.pop()];if(record.kind!=='string')for(const value of record.data){edgesScanned++;add(value);}}
-    const markEnd=performance.now();let objects=0,bytes=0;
-    for(let h=0;h<this.records.length;h++){const record=this.records[h];if(record&&marked[h]!==epoch){objects++;bytes+=record.size;this.records[h]=null;this.free.push(h);}}
-    for(const h of this.handles.values())if(h.weak&&isReference(h.value)&&(this.generations[h.value.h]!==h.value.g||!this.records[h.value.h]))h.value=null;
-    this.stats.rootsScanned=rootsScanned;this.stats.edgesScanned=edgesScanned;this.stats.markedObjects=markedObjects;this.stats.markMs=markEnd-start;this.stats.sweepMs=performance.now()-markEnd;
-    this.stats.liveBytes-=bytes;this.stats.liveObjects-=objects;this.stats.freedBytes+=bytes;this.stats.freedObjects+=objects;this.stats.collections++;
-    this.stats.lastPauseMs=performance.now()-start;this.stats.totalPauseMs+=this.stats.lastPauseMs;this.stats.maxPauseMs=Math.max(this.stats.maxPauseMs,this.stats.lastPauseMs);this.threshold=Math.min(this.maxBytes,Math.max(64*1024,this.stats.liveBytes*2+1024));
-    return {...this.stats,freedThisCollection:objects,bytesThisCollection:bytes};
-  }
+  collect(extraRoots=[]){return collectHeap(this,extraRoots,isReference);}
   snapshot(){return {generationCounter:this.generationCounter,handles:[...this.handles].map(([id,h])=>[id,{...h}]),nextHandleId:this.nextHandleId,records:this.records.map(r=>r?{...r,data:Array.isArray(r.data)?[...r.data]:r.data}:null),generations:[...this.generations],free:[...this.free],stats:{...this.stats},threshold:this.threshold};}
   restore(snapshot){this.mutationRevision++;this.generationCounter=Math.max(this.generationCounter,snapshot.generationCounter??snapshot.generations.reduce((n,g)=>Math.max(n,g??0),0));this.handles=new Map((snapshot.handles??[]).map(([id,h])=>[id,{...h}]));this.nextHandleId=Math.max(this.nextHandleId,snapshot.nextHandleId??1);this.records=snapshot.records.map(r=>r?{...r,methodTable:r.methodTable?.registry===this.methodTables?r.methodTable:this.methodTables.get(r.methodTable?.name??r.type),data:Array.isArray(r.data)?[...r.data]:r.data}:null);this.generations=[...snapshot.generations];this.free=[...snapshot.free];this.stats={...snapshot.stats};this.threshold=snapshot.threshold;}
   census(){const counts=new Map();for(const record of this.records)if(record){const key=record.kind+':'+record.type;let item=counts.get(key);if(!item)counts.set(key,item={kind:record.kind,type:record.type,objects:0,bytes:0});item.objects++;item.bytes+=record.size;}return {stamp:this.stamp(),objects:this.stats.liveObjects,bytes:this.stats.liveBytes,types:[...counts.values()].sort((a,b)=>b.bytes-a.bytes||a.type.localeCompare(b.type))};}

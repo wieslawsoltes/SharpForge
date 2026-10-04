@@ -10,6 +10,7 @@
  *                         static, parameterless and void), CS8816 (generic, or in a generic type).
  *   SkipLocalsInit      - needs /unsafe (CS0227). The runtime always zeroes locals, which the attribute permits.
  */
+import {DiagnosticId} from '../diagnostics/codes.js';
 import { SymbolKind, Accessibility } from '../symbols/types.js';
 import { MethodKind } from '../symbols/members.js';
 import { attributesNamed } from './bound-attributes.js';
@@ -41,19 +42,26 @@ const isGeneric = method => {
  * @returns {{code:string,args:string[]}[]} empty when the method is a valid module initializer
  */
 export function checkModuleInitializer(method) {
-  if (method.methodKind !== MethodKind.Ordinary) return [{ code: 'CS8813', args: [] }];
+  if (method.methodKind !== MethodKind.Ordinary) return [{ code: DiagnosticId.CS8813, args: [] }];
   const rows = [];
-  if (!isAccessibleAtModuleLevel(method)) rows.push({ code: 'CS8814', args: [method.name] });
+  if (!isAccessibleAtModuleLevel(method)) rows.push({ code: DiagnosticId.CS8814, args: [method.name] });
   const returnsVoid = method.returnType?.specialType === 'System_Void';
   if (!method.isStatic || method.parameters.length || !returnsVoid || method.isAbstract || method.isVirtual)
-    rows.push({ code: 'CS8815', args: [method.name] });
-  if (isGeneric(method)) rows.push({ code: 'CS8816', args: [method.name] });
+    rows.push({ code: DiagnosticId.CS8815, args: [method.name] });
+  if (isGeneric(method)) rows.push({ code: DiagnosticId.CS8816, args: [method.name] });
   return rows;
 }
 
 /**
+ * An override that states another return type than the method it overrides. (The return type of any other override
+ * is the declared one - and of a generic method it is written over the override's own type parameters, which are
+ * not those of the call.)
+ */
+const isCovariantOverride = candidate => !!candidate.hasCovariantReturn && !candidate.typeParameters?.length;
+
+/**
  * The return type of a call to the virtual method `method` through a receiver of type `receiverType`: the return type
- * of the most derived override the receiver type has, which C# 9 allows to be more derived than the declared one.
+ * of the most derived covariant override the receiver type has (C# 9), else the declared one.
  */
 export function covariantReturnType(method, receiverType) {
   const declared = method.returnType ?? null,
@@ -66,7 +74,7 @@ export function covariantReturnType(method, receiverType) {
     for (const candidate of type.getMembers(method.name)) {
       if (candidate.kind !== SymbolKind.Method || !candidate.isOverride) continue;
       for (let base = candidate.overriddenMethod, steps = 0; base && steps < 64; base = base.overriddenMethod, steps++)
-        if (definitionOf(base) === target) return candidate.returnType ?? declared;
+        if (definitionOf(base) === target && isCovariantOverride(candidate)) return candidate.returnType ?? declared;
     }
   }
   return declared;
@@ -95,7 +103,7 @@ export const CSharp9Rules = Base =>
       if (this.options.allowUnsafe) return;
       for (const symbol of targets)
         for (const attribute of attributesNamed(symbol, skipLocalsInitAttribute))
-          this.report(this.uriOfAttribute(symbol), attribute.syntax.name, 'CS0227');
+          this.report(this.uriOfAttribute(symbol), attribute.syntax.name, DiagnosticId.CS0227);
     }
     /**
      * Attributes whose use is a language feature: `[Obsolete]` on a property accessor (C# 8, reported at the

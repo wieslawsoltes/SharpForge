@@ -100,6 +100,8 @@ export class RefSafetyWalker {
     if (node.kind === 'ForEach' && node.local) {
       this.visit(node.collection);
       this.declare(node.local, null);
+      const entry = this.safety.locals.get(node.local);
+      if (entry && isByReference(node.local.refKind) && !entry.scoped) entry.refSafe = this.safety.iterationRefSafe(node.collection, entry.scope);
     }
     this.children(node);
   }

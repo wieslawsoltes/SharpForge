@@ -3,6 +3,12 @@ import { fail } from './contracts.js';
 import { pdbChecksum } from './pdb-checksum.js';
 import { readPortablePdb } from './pdb-reader.js';
 import { readDebugDirectory } from './debug-directory.js';
+import { createHoistedLocalLookup } from './hoisted-locals.js';
+import { createClosureLookup } from './closure-map.js';
+import { bindConstantTypes } from './constant-binding.js';
+import { bindImportNames } from './import-type-names.js';
+import { bindLocalTypes } from './local-types.js';
+import { bindConstantAnnotations } from './local-annotations.js';
 export function loadSymbols(assembly, pdbBytes = null, options = {}) {
   if (pdbBytes instanceof ArrayBuffer) pdbBytes = new Uint8Array(pdbBytes);
   const entries = readDebugDirectory(assembly, options),
@@ -29,5 +35,13 @@ export function loadSymbols(assembly, pdbBytes = null, options = {}) {
     for (const p of m.points) if (p.offset >= body.code.length) fail('Sequence point is outside its method body');
   }
   symbols.bound = codeViews.length > 0;
+  if (symbols.bound) {
+    bindConstantTypes(symbols.constants, pe.metadata);
+    bindConstantAnnotations(symbols.constants, pe.metadata);
+    symbols.effectiveImports = bindImportNames(symbols.effectiveImports, symbols.imports, pe.metadata);
+    Object.assign(symbols, bindLocalTypes(symbols.scopeTree, pe, symbols, options));
+  }
+  symbols.hoistedLocals = createHoistedLocalLookup(pe, symbols, options);
+  symbols.closureInfo = createClosureLookup(pe, symbols, options);
   return symbols;
 }

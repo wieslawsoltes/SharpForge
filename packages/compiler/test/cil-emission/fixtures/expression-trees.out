@@ -1,0 +1,51 @@
+(a, b) => ((a * b) - ((a / 2) % 3))
+  Lambda Subtract Multiply Parameter Parameter Modulo Divide Parameter Constant Constant Parameter Parameter
+x => (((x > 1) AndAlso (x <= 10)) OrElse (x == -5))
+  Lambda OrElse AndAlso GreaterThan Parameter Constant LessThanOrEqual Parameter Constant Equal Parameter Constant Parameter
+d => Convert(d, Int32)
+  Lambda Convert Parameter Parameter
+x => Convert(x, Object)
+  Lambda Convert Parameter Parameter
+o => (o As String)
+  Lambda TypeAs Parameter Parameter
+o => (o Is String)
+  Lambda TypeIs Parameter Parameter
+x => IIF((x > 0), "positive", "other")
+  Lambda Conditional GreaterThan Parameter Constant Constant Constant Parameter
+s => (s ?? "none")
+  Lambda Coalesce Parameter Constant Parameter
+x => (x + 1)
+  Lambda AddChecked Parameter Constant Parameter
+s => ((s + "!") + Convert(s.Length, Object))
+  Lambda Add Add Parameter Constant Convert MemberAccess Parameter Parameter
+p => ((p.X + p.Y) + Point.Count)
+  Lambda Add Add MemberAccess Parameter MemberAccess Parameter MemberAccess Parameter
+p => (p.Sum(3) + Twice(p.X).Plus(2))
+  Lambda Add Call Parameter Constant Call Call MemberAccess Parameter Constant Parameter
+x => new Point(x, 2)
+  Lambda New Parameter Constant Parameter
+x => new Point() {X = x, Y = 1}
+  Lambda MemberInit New Parameter Constant Parameter
+x => new [] {x, 2}
+  Lambda NewArrayInit Parameter Constant Parameter
+a => (a[1] + ArrayLength(a))
+  Lambda Add ArrayIndex Parameter Constant ArrayLength Parameter Parameter
+() => new List`1() {Void Add(Int32)(1), Void Add(Int32)(2)}
+  Lambda ListInit New Constant Constant
+(a, b) => (a + b)
+  Lambda Add Parameter Parameter Parameter Parameter
+(f, x) => Invoke(f, x)
+  Lambda Invoke Parameter Parameter Parameter Parameter
+x => y => (x + y)
+  Lambda Lambda Add Parameter Parameter Parameter Parameter
+x => (x + value(Program).own)
+  Lambda Add Parameter MemberAccess Constant Parameter
+11
+101
+42
+10
+7
+ab!2
+5
+6
+Lambda

@@ -2,10 +2,12 @@
  * Lambdas and anonymous methods (bound per candidate delegate type, cached, diagnostics reported once),
  * switch expressions and collection expressions.
  */
+import {DiagnosticId} from '../../diagnostics/codes.js';
 import { RefKind, ErrorTypeSymbol } from '../../symbols/types.js';
 import { ParameterSymbol } from '../../symbols/members.js';
 import { Conversion, ConversionKind } from '../../conversions/classify.js';
 import { delegateInvoke } from '../../overload/type-inference.js';
+import { asyncResultType } from '../csharp70.js';
 import { anonymousFunctionAnchor, anonymousMethodSignatureErrors } from '../anonymous-methods.js';
 
 const unknown = ErrorTypeSymbol.unknown;
@@ -127,7 +129,7 @@ export const LambdaBinding = Base =>
             returnType?.specialType === 'System_Void'
           ) {
             body = e.kind === 'TypeExpression' ? child.asValue(e) : e;
-            if (!body.hasErrors && !child.isStatementExpression(body.syntax)) child.report(body.syntax, 'CS0201');
+            if (!body.hasErrors && !child.isStatementExpression(body.syntax)) child.report(body.syntax, DiagnosticId.CS0201);
           } else {
             body = child.asValue(e);
             child.returns.push(body);
@@ -181,7 +183,7 @@ export const LambdaBinding = Base =>
         const errors = [];
         const anchor = anonymousFunctionAnchor(syntax);
         if (parameterSyntax && parameterSyntax.length !== invoke.parameters.length) {
-          node.lastConversionError = [{ node: anchor, code: 'CS1593', args: [this.display(to), parameterSyntax.length] }];
+          node.lastConversionError = [{ node: anchor, code: DiagnosticId.CS1593, args: [this.display(to), parameterSyntax.length] }];
           return null;
         }
         const signatureErrors = anonymousMethodSignatureErrors(syntax, parameterSyntax, invoke);
@@ -192,10 +194,10 @@ export const LambdaBinding = Base =>
         if (explicit && !explicit.every((t, i) => t.equals(invoke.parameters[i].type))) {
           const i = explicit.findIndex((t, k) => !t.equals(invoke.parameters[k].type));
           node.lastConversionError = [
-            { node: anchor, code: 'CS1661', args: [isAnonymousMethod ? 'anonymous method' : 'lambda expression', this.display(to)] },
+            { node: anchor, code: DiagnosticId.CS1661, args: [isAnonymousMethod ? 'anonymous method' : 'lambda expression', this.display(to)] },
             {
               node: parameterSyntax[i].identifier ?? parameterSyntax[i],
-              code: 'CS1678',
+              code: DiagnosticId.CS1678,
               // Roslyn's format has a reference-kind prefix in front of each of the two types.
               args: [i + 1, '', this.display(explicit[i]), '', this.display(invoke.parameters[i].type)],
             },
@@ -203,7 +205,7 @@ export const LambdaBinding = Base =>
           return null;
         }
         if (declaredReturn && invoke.returnType && !declaredReturn.isErrorType() && !declaredReturn.equals(invoke.returnType)) {
-          node.lastConversionError = [{ node: syntax.arrowToken ?? anchor, code: 'CS8934', args: ['lambda expression', this.display(to)] }];
+          node.lastConversionError = [{ node: syntax.arrowToken ?? anchor, code: DiagnosticId.CS8934, args: ['lambda expression', this.display(to)] }];
           return null;
         }
         const r = bindWith(
@@ -222,7 +224,7 @@ export const LambdaBinding = Base =>
         if (syntax.block && r.body.completes && returnsValue && !isAsync && !r.child.usesGoto) {
           const what = isAnonymousMethod ? 'anonymous method' : 'lambda expression';
           const at = syntax.arrowToken ?? syntax.delegateKeyword ?? syntax;
-          node.lastConversionError = [{ node: at, code: 'CS1643', args: [what, this.display(to)] }];
+          node.lastConversionError = [{ node: at, code: DiagnosticId.CS1643, args: [what, this.display(to)] }];
           node.bodyErrors = true;
           return null;
         }
@@ -260,7 +262,7 @@ export const LambdaBinding = Base =>
       const returned = new Set(bound.child.returns.filter(Boolean).map(value => value.syntax)),
         what = syntax.kind === 'AnonymousMethodExpression' ? 'anonymous method' : 'lambda expression';
       return errors.flatMap(error =>
-        ['CS0029', 'CS0266'].includes(error.code) && returned.has(error.node) ? [error, { node: error.node, code: 'CS1662', args: [what] }] : [error],
+        [DiagnosticId.CS0029, DiagnosticId.CS0266].includes(error.code) && returned.has(error.node) ? [error, { node: error.node, code: DiagnosticId.CS1662, args: [what] }] : [error],
       );
     }
     /**
@@ -272,10 +274,9 @@ export const LambdaBinding = Base =>
       const isFunction = body.form === 'lambda' || body.kind === 'MethodGroup';
       return isFunction && this.version.number >= 10 ? this.naturalFunctionType(body) : null;
     }
+    /** What the `return` statements of an async lambda produce for a delegate return type: `T` of any task-like type. */
     unwrapTask(type) {
-      if (type.originalDefinition === this.core.taskT) return type.typeArguments[0].type;
-      if (type.equals(this.core.task)) return this.core.void;
-      return type;
+      return asyncResultType(type, this.core) ?? type;
     }
     /** Binds the body of a lambda for the delegate type it was converted to, reporting its diagnostics once. */
     finishLambda(lambda, delegateType) {
@@ -306,7 +307,14 @@ export const LambdaBinding = Base =>
         arms.map(a => ({ pattern: a.pattern, when: a.when, node: a.syntax.pattern })),
         { isExpression: true, node: syntax.switchKeyword },
       );
-      const type = this.bestCommonType(arms.map(a => a.value));
+      // The natural type is the best common type of the arms, provided every arm converts to it: in
+      // `x switch { 1 => State.On, _ => null }` the `null` does not, and the type comes from the target (`State?`).
+      const common = this.bestCommonType(arms.map(a => a.value)),
+        converts = value => {
+          const conversion = this.conversions.classifyFromExpression(value, common);
+          return conversion.exists && conversion.isImplicit;
+        },
+        type = common && arms.every(a => converts(a.value)) ? common : null;
       if (!type) return this.targetTypedSwitch(syntax, governing, arms);
       return this.node('SwitchExpression', syntax, type, {
         governing,

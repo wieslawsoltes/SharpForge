@@ -6,16 +6,23 @@
  * Display follows Roslyn's SymbolDisplayFormat families (see `SymbolDisplayFormat`).
  * The string adapter that keeps the string-typed profile working lives in ./legacy-types.js.
  */
+import {tupleDisplay} from './tuple-elements.js';
+import {withTypeArgumentAnnotations} from './annotated-instantiations.js';
+import {membersNamed} from './member-index.js';
 export const SymbolKind=Object.freeze({Assembly:'Assembly',Namespace:'Namespace',NamedType:'NamedType',ArrayType:'ArrayType',PointerType:'PointerType',FunctionPointerType:'FunctionPointerType',DynamicType:'DynamicType',ErrorType:'ErrorType',TypeParameter:'TypeParameter',Method:'Method',Field:'Field',Property:'Property',Event:'Event',Parameter:'Parameter',Local:'Local',Label:'Label',Alias:'Alias',RangeVariable:'RangeVariable',Discard:'Discard'});
 export const TypeKind=Object.freeze({Class:'class',Struct:'struct',Interface:'interface',Enum:'enum',Delegate:'delegate',Array:'array',Pointer:'pointer',FunctionPointer:'functionPointer',TypeParameter:'typeParameter',Dynamic:'dynamic',Error:'error',Submission:'submission',Module:'module'});
 export const Accessibility=Object.freeze({NotApplicable:'notApplicable',Private:'private',ProtectedAndInternal:'privateProtected',Protected:'protected',Internal:'internal',ProtectedOrInternal:'protectedInternal',Public:'public'});
 export const NullableAnnotation=Object.freeze({Oblivious:'oblivious',NotAnnotated:'notAnnotated',Annotated:'annotated'});
 export const Variance=Object.freeze({None:'none',Out:'out',In:'in'});
 export const RefKind=Object.freeze({None:'none',Ref:'ref',Out:'out',In:'in',RefReadOnly:'ref readonly',RefReadOnlyParameter:'ref readonly parameter'});
-/** Options for `TypeSymbol.equals` (Roslyn TypeCompareKind). Combine with `|`. */
-export const TypeCompareKind=Object.freeze({ConsiderEverything:0,IgnoreCustomModifiers:1,IgnoreDynamic:2,IgnoreTupleNames:4,IgnoreNullableModifiersForReferenceTypes:8,IgnoreNativeIntegers:16,AllIgnoreOptions:31});
+/**
+ * Options for `TypeSymbol.equals` (Roslyn TypeCompareKind). Combine with `|`. Nullable annotations of reference types
+ * are not part of the identity of a type (`List<string?>` is `List<string>` for conversions, overrides and
+ * implementations): they are compared only with `StrictNullability`.
+ */
+export const TypeCompareKind=Object.freeze({ConsiderEverything:0,IgnoreCustomModifiers:1,IgnoreDynamic:2,IgnoreTupleNames:4,IgnoreNullableModifiersForReferenceTypes:8,IgnoreNativeIntegers:16,AllIgnoreOptions:31,StrictNullability:32});
 /** Roslyn display format families. ErrorMessage is the format diagnostics use. */
-export const SymbolDisplayFormat=Object.freeze({ErrorMessage:'errorMessage',MinimallyQualified:'minimal',FullyQualified:'fullyQualified',Test:'test'});
+export const SymbolDisplayFormat=Object.freeze({ErrorMessage:'errorMessage',MinimallyQualified:'minimal',FullyQualified:'fullyQualified',Test:'test',Signature:'signature'});
 const keywords=Object.freeze({System_Object:'object',System_Void:'void',System_Boolean:'bool',System_Char:'char',System_SByte:'sbyte',System_Byte:'byte',System_Int16:'short',System_UInt16:'ushort',System_Int32:'int',System_UInt32:'uint',System_Int64:'long',System_UInt64:'ulong',System_Decimal:'decimal',System_Single:'float',System_Double:'double',System_String:'string'});
 /** C# keyword for a special-type id (for example System_Int32 is int), or null. */
 export const specialTypeKeyword=id=>keywords[id]??null;
@@ -32,7 +39,7 @@ export class SymbolBase {
   toDisplayString(format=SymbolDisplayFormat.ErrorMessage){return this.name;}
   toString(){return this.toDisplayString();}
 }
-const annotationSuffix=(t,format)=>t.nullableAnnotation===NullableAnnotation.Annotated&&t.type.isReferenceType!==false&&!t.type.isNullableValueType?'?':'';
+const annotationSuffix=(t,format)=>format!=='signature'&&t.nullableAnnotation===NullableAnnotation.Annotated&&t.type.isReferenceType!==false&&!t.type.isNullableValueType?'?':'';
 /** A type together with its nullable annotation and custom modifiers (Roslyn TypeWithAnnotations). */
 export class TypeWithAnnotations {
   constructor(type,nullableAnnotation=NullableAnnotation.Oblivious,customModifiers=[]){this.type=type;this.nullableAnnotation=nullableAnnotation;this.customModifiers=Object.freeze([...customModifiers]);Object.freeze(this);}
@@ -43,7 +50,7 @@ export class TypeWithAnnotations {
   withType(type){return type===this.type?this:new TypeWithAnnotations(type,this.nullableAnnotation,this.customModifiers);}
   equals(other,compare=TypeCompareKind.ConsiderEverything){
     if(!(other instanceof TypeWithAnnotations)||!this.type.equals(other.type,compare))return false;
-    if(!(compare&TypeCompareKind.IgnoreNullableModifiersForReferenceTypes)&&this.nullableAnnotation!==other.nullableAnnotation&&this.nullableAnnotation!==NullableAnnotation.Oblivious&&other.nullableAnnotation!==NullableAnnotation.Oblivious)return false;
+    if(compare&TypeCompareKind.StrictNullability&&this.nullableAnnotation!==other.nullableAnnotation&&this.nullableAnnotation!==NullableAnnotation.Oblivious&&other.nullableAnnotation!==NullableAnnotation.Oblivious)return false;
     if(!(compare&TypeCompareKind.IgnoreCustomModifiers)&&(this.customModifiers.length!==other.customModifiers.length||this.customModifiers.some((m,i)=>m.isOptional!==other.customModifiers[i].isOptional||!m.modifier.equals(other.customModifiers[i].modifier,compare))))return false;
     return true;
   }
@@ -52,6 +59,7 @@ export class TypeWithAnnotations {
   toString(){return this.toDisplayString();}
 }
 const twa=t=>t instanceof TypeWithAnnotations?t:new TypeWithAnnotations(t);
+const viewKinds=Object.freeze({delegate:TypeKind.Delegate,oblivious:NullableAnnotation.Oblivious});
 const sameList=(a,b,compare)=>a.length===b.length&&a.every((x,i)=>x.equals(b[i],compare));
 
 /** Maps type parameters to type arguments; the basis of constructed types and members. */
@@ -124,7 +132,10 @@ export class NamedTypeSymbol extends TypeSymbol {
   get interfaces(){return typeof this._interfaces==='function'?this._interfaces=this._interfaces():this._interfaces;}
   get delegateInvokeMethod(){return this.typeKind===TypeKind.Delegate?this.getMembers('Invoke').find(m=>m.kind===SymbolKind.Method)??null:null;}
   /** Members declared by this type; pass a name to filter. */
-  getMembers(name){const all=typeof this._members==='function'?this._members=this._members():this._members;return name===undefined?all:all.filter(m=>m.name===name);}
+  getMembers(name){
+    const all=typeof this._members==='function'?this._members=this._members():this._members;
+    return name===undefined?all:membersNamed(this,all,name);
+  }
   getTypeMembers(name,arity){return this.getMembers(name).filter(m=>m.kind===SymbolKind.NamedType&&(arity===undefined||m.arity===arity));}
   /** Registers a member on a definition while it is being built. */
   addMember(member){if(typeof this._members==='function')this._members=this._members();this._members.push(member);member.containingSymbol=this;return member;}
@@ -134,12 +145,15 @@ export class NamedTypeSymbol extends TypeSymbol {
     if(typeArguments.length!==definition.arity)throw new RangeError(`'${definition.metadataName}' takes ${definition.arity} type arguments, not ${typeArguments.length}`);
     if(!definition.arity)return this;const args=typeArguments.map(twa);
     // A module whose instantiations carry their own members (the closed framework registry) supplies them here.
-    return definition.instanceProvider?.(definition,args)??new ConstructedNamedTypeSymbol(definition,args,this.containingType);
+    return withTypeArgumentAnnotations(definition.instanceProvider?.(definition,args),args,viewKinds)??new ConstructedNamedTypeSymbol(definition,args,this.containingType);
   }
   substitute(map){
     if(map.isEmpty||!this.isGenericType)return this;const container=this.containingType,newContainer=container?container.substitute(map):null,args=this.typeArguments.map(a=>a.substitute(map));
     if(newContainer===container&&args.every((a,i)=>a===this.typeArguments[i]||a.equals(this.typeArguments[i])&&a.nullableAnnotation===this.typeArguments[i].nullableAnnotation))return this;
-    return new ConstructedNamedTypeSymbol(this.originalDefinition,args,newContainer);
+    const result = new ConstructedNamedTypeSymbol(this.originalDefinition, args, newContainer);
+    // Element names belong to the tuple type as written: `(T Value, int Depth)` over `string` is `(string Value, int Depth)`.
+    if (this.tupleElementNames) result.tupleElementNames = this.tupleElementNames;
+    return result;
   }
   equals(other,compare=TypeCompareKind.ConsiderEverything){
     if(this===other)return true;if(!(other instanceof TypeSymbol))return false;
@@ -156,7 +170,7 @@ export class NamedTypeSymbol extends TypeSymbol {
   toDisplayString(format=SymbolDisplayFormat.ErrorMessage){
     const test=format===SymbolDisplayFormat.Test;
     if(this.isNullableValueType&&!this.isDefinition)return this.typeArguments[0].toDisplayString(format)+'?';
-    if(this.isTupleType&&!this.isDefinition&&this.arity>1)return '('+this.typeArguments.map((a,i)=>a.toDisplayString(format)+(this.tupleElementNames?.[i]?' '+this.tupleElementNames[i]:'')).join(', ')+')';
+    if(this.isTupleType&&!this.isDefinition&&this.arity>1)return tupleDisplay(this,a=>a.toDisplayString(format));
     if(test&&this.specialType==='System_Void')return 'void';
     if(!test){if(this.isNativeInteger)return this.specialType==='System_UIntPtr'?'nuint':'nint';const keyword=specialTypeKeyword(this.specialType);if(keyword)return keyword;}
     const outer=this.containingType,prefix=outer?outer.toDisplayString(format)+'.':format===SymbolDisplayFormat.MinimallyQualified?'':qualifiedName(this,format);
@@ -179,7 +193,17 @@ export class ConstructedNamedTypeSymbol extends NamedTypeSymbol {
   get typeMap(){if(this._map)return this._map;const outer=this.containingType;let map=outer instanceof ConstructedNamedTypeSymbol?outer.typeMap:TypeMap.empty;return this._map=map.with(this._definition.typeParameters,this._args);}
   get baseType(){const b=this._definition.baseType;return b?b.substitute(this.typeMap):null;}
   get interfaces(){return this._definition.interfaces.map(i=>i.substitute(this.typeMap));}
-  getMembers(name){this._substituted??=this._definition.getMembers().map(m=>m.asMemberOf?m.asMemberOf(this):m);return name===undefined?this._substituted:this._substituted.filter(m=>m.name===name);}
+  /** Members are substituted on first use, one name at a time: a construction rarely needs more than a few of them. */
+  getMembers(name){
+    if(name===undefined)return this._substituted??=this._definition.getMembers().map(m=>this._memberOf(m));
+    let list=this._byName?.get(name);if(!list){list=this._definition.getMembers(name).map(m=>this._memberOf(m));(this._byName??=new Map()).set(name,list);}
+    return list.slice();
+  }
+  _memberOf(member){
+    if(!member.asMemberOf)return member;
+    let own=this._memberMap?.get(member);if(!own){own=member.asMemberOf(this);(this._memberMap??=new Map()).set(member,own);}
+    return own;
+  }
   addMember(){throw new TypeError('Members are added to the generic definition, not to a constructed type');}
 }
 

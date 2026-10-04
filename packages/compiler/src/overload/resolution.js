@@ -7,10 +7,14 @@
  * An argument is `{type, constantValue?, literal?, form?, convert?, refKind?, name?, lambda?, methodGroup?}` - the
  * shape `Conversions.classifyFromExpression` and the type inferrer consume.
  */
+import {DiagnosticId} from '../diagnostics/codes.js';
 import { RefKind, TypeKind, SymbolDisplayFormat, typeOf } from '../symbols/types.js';
 import { mapArguments, acceptsArgumentCount } from './arguments.js';
+import { namingParameters } from './override-parameters.js';
 import { inferMethodTypeArguments } from './type-inference.js';
 import { numericKind, isSignedKind, isIntegralKind } from '../conversions/numeric.js';
+import { ConversionKind } from '../conversions/classify.js';
+import { spanElementType } from '../conversions/span.js';
 import { baseTypeChain, containsTypeParameter } from '../symbols/substitution.js';
 import { paramsElementType, betterParamsCollection, keepHighestPriority } from './params-collections.js';
 
@@ -51,16 +55,19 @@ export class OverloadResolver {
    * @returns a Candidate; `failure` is `{kind,...}` when not applicable: 'arity' (type argument count), 'mapping'
    *   (mapArguments error), 'inference' (CS0411), 'refKind' {argument,expected}, 'conversion' {argument,to}
    */
-  analyse(method, args, { typeArguments = null, expanded = false } = {}) {
+  analyse(method, args, { typeArguments = null, expanded = false, overrides = null } = {}) {
     const c = new Candidate(method, method.constructedFrom ?? method);
     c.expanded = expanded;
-    const mapping = mapArguments(method.parameters, args, { expanded });
+    // Argument names and defaults are those of the most derived override on the receiver (override-parameters.js).
+    const override = overrides?.get(method.originalDefinition ?? method) ?? null,
+      mapping = mapArguments(namingParameters(method, override), args, { expanded });
+    c.defaultsFrom = override;
     if (!mapping.ok) {
       c.failure = { kind: 'mapping', error: mapping.error };
       return c;
     }
     if (expanded && !paramsElementType(method.parameters.at(-1).type)) {
-      c.failure = { kind: 'mapping', error: { code: 'CS1501', kind: 'notExpandable' } };
+      c.failure = { kind: 'mapping', error: { code: DiagnosticId.CS1501, kind: 'notExpandable' } };
       return c;
     }
     c.mapping = mapping;
@@ -113,12 +120,21 @@ export class OverloadResolver {
         wanted === given ||
         (wanted === RefKind.In && (given === RefKind.None || given === RefKind.Ref)) ||
         (wanted === RefKind.RefReadOnlyParameter && [RefKind.None, RefKind.In, RefKind.Ref].includes(given));
-      if (!refOk) {
+      // COM interop: `ref` may be omitted on a call to a COM interface method; the argument is then passed by value.
+      // An argument that does not convert to the parameter type is still reported as a missing `ref`.
+      // C# 10: an interpolated string is passed to a `ref` handler parameter without `ref` (the handler is a temporary).
+      const missingRef = !refOk && wanted === RefKind.Ref && given === RefKind.None,
+        comOmit = missingRef && !!this.allowsRefOmission?.(method),
+        mayOmit = comOmit || (missingRef && args[i].form === 'interpolatedString'),
+        byValue = mayOmit ? this.conversions.classifyFromExpression(args[i], c.parameterTypes[i]) : null,
+        omitsRef = !!byValue?.exists && byValue.isImplicit && (comOmit || byValue.kind === ConversionKind.InterpolatedStringHandler);
+      if (omitsRef && comOmit) c.omitsRef = true;
+      if (!omitsRef && !refOk) {
         c.failure ??= { kind: 'refKind', argument: i, expected: wanted, given };
         c.conversions.push(null);
         continue;
       }
-      if (wanted === RefKind.Ref || wanted === RefKind.Out) {
+      if ((wanted === RefKind.Ref && !omitsRef) || wanted === RefKind.Out) {
         // By-reference arguments need an identical type; `out var x` / `out _` have none and take the parameter's type.
         const ok = !args[i].type || this.conversions.isIdentity(args[i].type, c.parameterTypes[i]);
         if (!ok) c.failure ??= { kind: 'conversion', argument: i, to: c.parameterTypes[i] };
@@ -138,6 +154,7 @@ export class OverloadResolver {
    * Resolves a call.
    * @param {MethodSymbol[]} methods candidate set (already filtered for accessibility and hiding)
    * @param {object[]} args  @param {{typeArguments?:TypeSymbol[]|null,name?:string,isConstructor?:boolean,isDelegate?:boolean}} [options]
+   *   `options.overrides` (override-parameters.js) names the overrides whose parameter names and defaults the call uses
    * @returns {{succeeded:true,method,expanded,mapping,conversions,candidate}|{succeeded:false,error:{code,args,argument?:number},candidates,best?:Candidate}}
    */
   resolve(methods, args, options = {}) {
@@ -154,6 +171,12 @@ export class OverloadResolver {
       analysed.push(expanded.applicable ? expanded : preferFailure(normal, expanded));
     }
     let applicable = analysed.filter(c => c.applicable);
+    // C# 7.3: a candidate whose type arguments violate its constraints is not a candidate - as long as another one
+    // is left; a lone violator stays and the binder reports its constraint.
+    if (applicable.length > 1 && this.violatesConstraints) {
+      const satisfying = applicable.filter(c => !c.method.typeArguments?.length || !this.violatesConstraints(c.method));
+      if (satisfying.length) applicable = satisfying;
+    }
     // Candidates declared in a base type of an applicable candidate's type are removed (spec 12.6.4.1).
     if (applicable.length > 1 && !options.keepBaseCandidates) {
       const hidden = c =>
@@ -184,7 +207,7 @@ export class OverloadResolver {
       const pair = best.length > 1 ? best : applicable;
       return {
         succeeded: false,
-        error: { code: 'CS0121', args: [memberDisplay(pair[0].definition), memberDisplay(pair[1].definition)] },
+        error: { code: DiagnosticId.CS0121, args: [memberDisplay(pair[0].definition), memberDisplay(pair[1].definition)] },
         candidates: analysed,
         ambiguous: pair.map(c => c.method),
       };
@@ -219,14 +242,14 @@ export class OverloadResolver {
     return [...analysed].sort((a, b) => rank(a) - rank(b) || badCount(a) - badCount(b))[0] ?? null;
   }
   failureDiagnostic(analysed, args, { name = null, isConstructor = false, isDelegate = false } = {}) {
-    if (!analysed.length) return { code: 'CS1501', args: [name ?? '?', args.length] };
+    if (!analysed.length) return { code: DiagnosticId.CS1501, args: [name ?? '?', args.length] };
     const best = this.bestFailure(analysed, args),
       method = best.definition,
       shown = name ?? (isConstructor ? method.containingType?.name : method.name),
       f = best.failure;
     if (f.kind === 'conversion')
       return {
-        code: 'CS1503',
+        code: DiagnosticId.CS1503,
         args: [
           f.argument + 1,
           argumentDisplay(args[f.argument]),
@@ -237,29 +260,29 @@ export class OverloadResolver {
     if (f.kind === 'refKind') {
       const takesNoKeyword = f.expected === RefKind.In || f.expected === RefKind.RefReadOnlyParameter;
       if (f.expected === RefKind.None || (takesNoKeyword && f.given !== RefKind.None))
-        return { code: 'CS1615', args: [f.argument + 1, f.given], argument: f.argument };
-      return { code: 'CS1620', args: [f.argument + 1, f.expected], argument: f.argument };
+        return { code: DiagnosticId.CS1615, args: [f.argument + 1, f.given], argument: f.argument };
+      return { code: DiagnosticId.CS1620, args: [f.argument + 1, f.expected], argument: f.argument };
     }
-    if (f.kind === 'inference') return { code: 'CS0411', args: f.error.args };
+    if (f.kind === 'inference') return { code: DiagnosticId.CS0411, args: f.error.args };
     if (f.kind === 'arity')
       return {
-        code: method.arity ? 'CS0305' : 'CS0308',
+        code: method.arity ? DiagnosticId.CS0305 : DiagnosticId.CS0308,
         args: method.arity ? [memberDisplay(method), 'method group', method.arity] : [memberDisplay(method), 'method'],
       };
     const e = f.error;
-    if (e.kind === 'noSuchName') return { code: 'CS1739', args: [isDelegate ? shown : shown, e.name], argument: e.argument };
-    if (e.kind === 'nameUsedTwice') return { code: 'CS1740', args: [e.name], argument: e.argument };
-    if (e.kind === 'namedAlreadyPositional') return { code: 'CS1744', args: [e.name], argument: e.argument };
-    if (e.kind === 'badNonTrailingName') return { code: 'CS8323', args: [e.name], argument: e.argument };
+    if (e.kind === 'noSuchName') return { code: DiagnosticId.CS1739, args: [isDelegate ? shown : shown, e.name], argument: e.argument };
+    if (e.kind === 'nameUsedTwice') return { code: DiagnosticId.CS1740, args: [e.name], argument: e.argument };
+    if (e.kind === 'namedAlreadyPositional') return { code: DiagnosticId.CS1744, args: [e.name], argument: e.argument };
+    if (e.kind === 'badNonTrailingName') return { code: DiagnosticId.CS8323, args: [e.name], argument: e.argument };
     // Too few arguments: Roslyn names the first required parameter without an argument when exactly one candidate
     // could otherwise be meant; with several candidates of other arities it reports the argument count.
     const missing = analysed.filter(c => c.failure.kind === 'mapping' && c.failure.error.kind === 'missing');
     if (e.kind === 'missing' && analysed.length === 1) {
       const c = missing.sort((a, b) => a.definition.parameters.length - b.definition.parameters.length)[0];
-      return { code: 'CS7036', args: [c.failure.error.parameter.name, memberDisplay(c.definition)] };
+      return { code: DiagnosticId.CS7036, args: [c.failure.error.parameter.name, memberDisplay(c.definition)] };
     }
     return {
-      code: isDelegate ? 'CS1593' : isConstructor ? 'CS1729' : 'CS1501',
+      code: isDelegate ? DiagnosticId.CS1593 : isConstructor ? DiagnosticId.CS1729 : DiagnosticId.CS1501,
       args: isConstructor ? [method.containingType?.toDisplayString() ?? shown, args.length] : [shown, args.length],
     };
   }
@@ -281,6 +304,12 @@ export class OverloadResolver {
     if (a.expanded !== b.expanded) return !a.expanded;
     if (a.expanded && b.expanded && a.definition.parameters.length !== b.definition.parameters.length)
       return a.definition.parameters.length > b.definition.parameters.length;
+    // C# 13: two expanded forms that take no argument into their params collection (`string.Format("text")` over
+    // `params object[]` and `params ReadOnlySpan<object>`) are decided by the better collection type alone.
+    if (a.expanded && b.expanded) {
+      const collection = betterParamsCollection(a.method.parameters.at(-1).type, b.method.parameters.at(-1).type, this.conversions);
+      if (collection !== 0) return collection > 0;
+    }
     if (a.usedDefaults !== b.usedDefaults) return !a.usedDefaults;
     const specific = this.moreSpecific(a, b);
     if (specific !== 0) return specific > 0;
@@ -326,9 +355,19 @@ export class OverloadResolver {
   /** 1 when converting the argument to t1 is better than to t2, -1 for the reverse, 0 when neither is better. */
   betterConversion(arg, t1, c1, t2, c2) {
     if (this.conversions.isIdentity(t1, t2)) return 0;
+    // C# 10: for an interpolated string that is not a constant, the conversion to a handler type is the better one.
+    const handler1 = c1?.kind === ConversionKind.InterpolatedStringHandler,
+      handler2 = c2?.kind === ConversionKind.InterpolatedStringHandler;
+    if (handler1 !== handler2 && !arg.constantValue) return handler1 ? 1 : -1;
     const exact = t => arg.type && !arg.literal && this.conversions.isIdentity(arg.type, t);
     if (exact(t1) && !exact(t2)) return 1;
     if (exact(t2) && !exact(t1)) return -1;
+    // C# 14 (first-class spans): when neither matches exactly, an implicit span conversion is the better conversion.
+    if (this.conversions.firstClassSpans && !exact(t1)) {
+      const span1 = c1?.kind === ConversionKind.ImplicitSpan,
+        span2 = c2?.kind === ConversionKind.ImplicitSpan;
+      if (span1 !== span2) return span1 ? 1 : -1;
+    }
     // A lambda prefers the delegate whose return type is better for its inferred return type.
     if (arg.lambda) {
       const d1 = typeOf(t1).delegateInvokeMethod,
@@ -351,6 +390,16 @@ export class OverloadResolver {
   }
   /** Better conversion target: an implicit conversion t1 -> t2 but not back; signed integral over unsigned. */
   betterTarget(t1, t2) {
+    if (this.conversions.firstClassSpans) {
+      // C# 14: ReadOnlySpan<E> is better than Span<E>; two spans otherwise compare only as two ReadOnlySpans.
+      const span1 = spanElementType(typeOf(t1), 'Span'),
+        span2 = spanElementType(typeOf(t2), 'Span'),
+        readOnly1 = spanElementType(typeOf(t1), 'ReadOnlySpan'),
+        readOnly2 = spanElementType(typeOf(t2), 'ReadOnlySpan');
+      if (readOnly1 && span2 && this.conversions.isIdentity(readOnly1, span2)) return 1;
+      if (readOnly2 && span1 && this.conversions.isIdentity(readOnly2, span1)) return -1;
+      if ((span1 || readOnly1) && (span2 || readOnly2) && !(readOnly1 && readOnly2)) return 0;
+    }
     const to = this.conversions.classifyImplicit(t1, t2).exists,
       from = this.conversions.classifyImplicit(t2, t1).exists;
     if (to && !from) return 1;
@@ -373,6 +422,7 @@ const success = c => ({
   mapping: c.mapping,
   conversions: c.conversions,
   parameterTypes: c.parameterTypes,
+  defaultsFrom: c.defaultsFrom ?? null,
   candidate: c,
 });
 const refPrefix = (parameter, c) =>

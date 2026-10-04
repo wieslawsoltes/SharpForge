@@ -66,7 +66,7 @@ export class DebugAdapter {
         default:throw new Error(`DAP request '${command}' is not implemented`);
       }
       return {seq:++this.seq,type:'response',request_seq:request.seq,command,success:true,body};
-    }catch(error){return {seq:++this.seq,type:'response',request_seq:request.seq,command,success:false,message:error.message};}
+    }catch(error){return {seq:++this.seq,type:'response',request_seq:request.seq,command,success:false,message:error.message,body:{}};}
   }
   launch(a){
     const input=launchInput(a),Session=a.managedIL?CilDebugSession:DebugSession;

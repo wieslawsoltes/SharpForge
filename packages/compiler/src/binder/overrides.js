@@ -9,10 +9,11 @@
  * CS0112, CS0113, CS0238, CS0549, CS0106.
  * `isVirtualCall` says whether a call binds to a virtual slot (callvirt through the vtable) or directly.
  */
+import {DiagnosticId} from '../diagnostics/codes.js';
 import { TypeKind, SymbolKind, Accessibility, TypeCompareKind } from '../symbols/types.js';
 import { MethodKind } from '../symbols/members.js';
 import { baseTypeChain } from '../symbols/substitution.js';
-import { sameParameters } from './inheritance.js';
+import { sameParameters, signatureTypeText } from './inheritance.js';
 
 const accessWord = {
   [Accessibility.Public]: 'public',
@@ -37,6 +38,13 @@ export function findOverridden(member, type, core) {
     for (const c of b.getMembers(member.name)) if (sameKindAndSignature(member, c)) return c;
   return null;
 }
+/** True for `protected override bool PrintMembers(StringBuilder)` and `protected override Type EqualityContract` of a derived record. */
+function overridesSynthesizedRecordMember(member, type) {
+  const base = type.isRecord && type.typeKind === TypeKind.Class ? type.baseType : null;
+  if (!base || !(base.originalDefinition ?? base).isRecord) return false;
+  if (member.kind === SymbolKind.Method) return member.name === 'PrintMembers' && member.parameters.length === 1;
+  return member.kind === SymbolKind.Property && member.name === 'EqualityContract';
+}
 /** Binds the overrides of a source type. @returns [{code,args,member}] */
 export function bindOverrides(type, core, conversions) {
   const results = [];
@@ -44,17 +52,20 @@ export function bindOverrides(type, core, conversions) {
   for (const member of type.getMembers()) {
     if (!overridable(member) || !member.isOverride) continue;
     const base = findOverridden(member, type, core);
+    // `PrintMembers` and `EqualityContract` of a base record are synthesized where code is generated; overriding them
+    // in a derived record is what the language asks for.
+    if (!base && overridesSynthesizedRecordMember(member, type)) continue;
     if (!base) {
       // Roslyn distinguishes a same-named member of another kind or signature only by the message of CS0115.
-      results.push({ code: 'CS0115', args: [member.toDisplayString()], member });
+      results.push({ code: DiagnosticId.CS0115, args: [member.toDisplayString()], member });
       continue;
     }
     if (!(base.isVirtual || base.isAbstract || base.isOverride)) {
-      results.push({ code: 'CS0506', args: [member.toDisplayString(), base.toDisplayString()], member });
+      results.push({ code: DiagnosticId.CS0506, args: [member.toDisplayString(), base.toDisplayString()], member });
       continue;
     }
     if (base.isSealed) {
-      results.push({ code: 'CS0239', args: [member.toDisplayString(), base.toDisplayString()], member });
+      results.push({ code: DiagnosticId.CS0239, args: [member.toDisplayString(), base.toDisplayString()], member });
       continue;
     }
     member.overriddenMember = base;
@@ -63,14 +74,14 @@ export function bindOverrides(type, core, conversions) {
       if (member.getMethod && base.getMethod) member.getMethod.overriddenMethod = base.getMethod;
       if (member.setMethod && base.setMethod) member.setMethod.overriddenMethod = base.setMethod;
       if (member.getMethod && !base.getMethod)
-        results.push({ code: 'CS0545', args: [member.toDisplayString() + '.get', base.toDisplayString()], member });
+        results.push({ code: DiagnosticId.CS0545, args: [member.toDisplayString() + '.get', base.toDisplayString()], member });
       if (member.setMethod && !base.setMethod)
-        results.push({ code: 'CS0546', args: [member.toDisplayString() + '.set', base.toDisplayString()], member });
+        results.push({ code: DiagnosticId.CS0546, args: [member.toDisplayString() + '.set', base.toDisplayString()], member });
     }
     // protected internal in another assembly may become protected; within one compilation the accessibility must be identical.
     if (member.declaredAccessibility !== base.declaredAccessibility)
       results.push({
-        code: 'CS0507',
+        code: DiagnosticId.CS0507,
         args: [member.toDisplayString(), accessWord[base.declaredAccessibility], base.toDisplayString()],
         member,
       });
@@ -81,7 +92,7 @@ export function bindOverrides(type, core, conversions) {
       ]) {
         if (own && inherited && own.declaredAccessibility !== inherited.declaredAccessibility)
           results.push({
-            code: 'CS0507',
+            code: DiagnosticId.CS0507,
             args: [own.toDisplayString(), accessWord[inherited.declaredAccessibility], inherited.toDisplayString()],
             member: own,
           });
@@ -98,7 +109,7 @@ export function bindOverrides(type, core, conversions) {
       if (covariant) member.hasCovariantReturn = true;
       else
         results.push({
-          code: member.kind === SymbolKind.Method ? 'CS0508' : 'CS1715',
+          code: member.kind === SymbolKind.Method ? DiagnosticId.CS0508 : DiagnosticId.CS1715,
           args: [member.toDisplayString(), base.toDisplayString(), bt.toDisplayString()],
           member,
         });
@@ -110,7 +121,9 @@ const sameReturn = (a, b, x, y) => {
   if (x.equals(y, TypeCompareKind.IgnoreDynamic)) return true;
   const ia = (a.typeParameters ?? []).indexOf(x),
     ib = (b.typeParameters ?? []).indexOf(y);
-  return ia >= 0 && ia === ib;
+  if (ia >= 0 || ib >= 0) return ia === ib;
+  // A type built over the method's type parameters (`T?` of a struct T, `List<T>`): the same by position.
+  return !!a.typeParameters?.length && a.typeParameters.length === b.typeParameters?.length && signatureTypeText(a, x) === signatureTypeText(b, y);
 };
 /**
  * Abstract members a non-abstract class leaves unimplemented.
@@ -131,11 +144,11 @@ export function checkAbstractImplementation(type, core) {
           for (const a of [m.getMethod, m.setMethod])
             if (a)
               results.push({
-                code: 'CS0534',
+                code: DiagnosticId.CS0534,
                 args: [type.toDisplayString(), m.toDisplayString() + (a === m.getMethod ? '.get' : '.set')],
                 member: m,
               });
-        } else results.push({ code: 'CS0534', args: [type.toDisplayString(), m.toDisplayString()], member: m });
+        } else results.push({ code: DiagnosticId.CS0534, args: [type.toDisplayString(), m.toDisplayString()], member: m });
       }
     }
   }
@@ -145,7 +158,7 @@ export function checkAbstractImplementation(type, core) {
 export function checkModifiers(member, type) {
   const results = [],
     r = (code, args = []) => results.push({ code, args, member });
-  if (member.kind === SymbolKind.Field && type.isStatic && !member.isStatic && !member.isImplicitlyDeclared) r('CS0708', [member.name]);
+  if (member.kind === SymbolKind.Field && type.isStatic && !member.isStatic && !member.isImplicitlyDeclared) r(DiagnosticId.CS0708, [member.name]);
   if (member.kind !== SymbolKind.Method && member.kind !== SymbolKind.Property && member.kind !== SymbolKind.Event) return results;
   if (member.isImplicitlyDeclared || (member.kind === SymbolKind.Method && member.isAccessor)) return results;
   const display = member.toDisplayString(),
@@ -154,19 +167,19 @@ export function checkModifiers(member, type) {
   const explicitVao = (member.modifierWords ?? member.syntax?.modifiers?.map(t => t.text) ?? []).some(w =>
     ['virtual', 'abstract', 'override'].includes(w),
   );
-  if (member.isStatic && explicitVao && !inInterface) r('CS0112', [display]);
-  if (member.isOverride && (member.isVirtual || member.isNew)) r('CS0113', [display]);
-  if (member.isSealed && !member.isOverride && !inInterface) r('CS0238', [display]);
-  if (member.isAbstract && !inInterface && !type.isAbstract) r('CS0513', [display, type.toDisplayString()]);
+  if (member.isStatic && explicitVao && !inInterface) r(DiagnosticId.CS0112, [display]);
+  if (member.isOverride && (member.isVirtual || member.isNew)) r(DiagnosticId.CS0113, [display]);
+  if (member.isSealed && !member.isOverride && !inInterface) r(DiagnosticId.CS0238, [display]);
+  if (member.isAbstract && !inInterface && !type.isAbstract) r(DiagnosticId.CS0513, [display, type.toDisplayString()]);
   // A partial method without an accessibility modifier has a rule of its own for virtual modifiers (CS8798).
   const words = member.modifierWords ?? [],
     isPlainPartial = words.includes('partial') && !words.some(w => ['public', 'private', 'protected', 'internal'].includes(w));
   if (explicitVao && member.declaredAccessibility === Accessibility.Private && !inInterface && !member.explicitInterfaceSyntax && !isPlainPartial)
-    r('CS0621', [display]);
+    r(DiagnosticId.CS0621, [display]);
   if (member.isVirtual && !member.isOverride && type.isSealed && type.typeKind === TypeKind.Class && !type.isStatic && explicitVao)
-    r('CS0549', [display, type.toDisplayString()]);
+    r(DiagnosticId.CS0549, [display, type.toDisplayString()]);
   if (type.typeKind === TypeKind.Struct && (member.isVirtual || member.isAbstract) && explicitVao)
-    r('CS0106', [member.isAbstract ? 'abstract' : 'virtual']);
+    r(DiagnosticId.CS0106, [member.isAbstract ? 'abstract' : 'virtual']);
   if (
     member.kind === SymbolKind.Method &&
     [MethodKind.Ordinary, MethodKind.Constructor, MethodKind.UserDefinedOperator, MethodKind.Conversion, MethodKind.Destructor].includes(
@@ -174,14 +187,14 @@ export function checkModifiers(member, type) {
     )
   ) {
     const partial = (member.modifierWords ?? []).includes('partial');
-    if (member.isAbstract && member.hasBody && !inInterface) r('CS0500', [display]);
-    else if (!member.isAbstract && !member.isExtern && !partial && !member.hasBody && !member.isPrimaryConstructor) r('CS0501', [display]);
+    if (member.isAbstract && member.hasBody && !inInterface) r(DiagnosticId.CS0500, [display]);
+    else if (!member.isAbstract && !member.isExtern && !partial && !member.hasBody && !member.isPrimaryConstructor) r(DiagnosticId.CS0501, [display]);
   }
   // Constructors, destructors, operators and indexers of a static class have codes of their own (binder/type-modifiers.js).
   const hasOwnCode =
     (member.kind === SymbolKind.Method && (member.isConstructor || member.methodKind === MethodKind.Destructor)) ||
     (member.kind === SymbolKind.Property && member.isIndexer);
-  if (type.isStatic && !member.isStatic && !hasOwnCode) r('CS0708', [member.name]);
+  if (type.isStatic && !member.isStatic && !hasOwnCode) r(DiagnosticId.CS0708, [member.name]);
   return results;
 }
 /** True when a call to `method` on a receiver dispatches virtually (not `base.M()`, not a struct receiver's own method, not sealed-and-final types). */

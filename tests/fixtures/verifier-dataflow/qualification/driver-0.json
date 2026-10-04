@@ -1,0 +1,62 @@
+[
+  {
+    "command": "git",
+    "args": [
+      "-c",
+      "gc.auto=0",
+      "worktree",
+      "add",
+      "--detach",
+      "/tmp/sharpforge-project6-a03-dataflow-baseline",
+      "bf5ed78110a864d9771849ac7845f0139d1986c4"
+    ],
+    "cwd": "/tmp/sharpforge-project6-a03-dataflow",
+    "started": "2026-10-04T07:58:04.637Z",
+    "completed": "2026-10-04T07:58:06.161Z",
+    "status": 0,
+    "signal": null,
+    "log": "00-baseline"
+  },
+  {
+    "command": "npm",
+    "args": [
+      "ci",
+      "--ignore-scripts",
+      "--no-audit",
+      "--no-fund"
+    ],
+    "cwd": "/tmp/sharpforge-project6-a03-dataflow",
+    "started": "2026-10-04T07:58:06.163Z",
+    "completed": "2026-10-04T07:58:06.558Z",
+    "status": 0,
+    "signal": null,
+    "log": "01-install-candidate"
+  },
+  {
+    "command": "npm",
+    "args": [
+      "ci",
+      "--ignore-scripts",
+      "--no-audit",
+      "--no-fund"
+    ],
+    "cwd": "/tmp/sharpforge-project6-a03-dataflow-baseline",
+    "started": "2026-10-04T07:58:06.558Z",
+    "completed": "2026-10-04T07:58:06.811Z",
+    "status": 0,
+    "signal": null,
+    "log": "02-install-baseline"
+  },
+  {
+    "command": "/usr/local/bin/node",
+    "args": [
+      "tests/fixtures/verifier-dataflow/baseline.mjs"
+    ],
+    "cwd": "/tmp/sharpforge-project6-a03-dataflow-baseline",
+    "started": "2026-10-04T07:58:06.812Z",
+    "completed": "2026-10-04T07:58:06.994Z",
+    "status": 1,
+    "signal": null,
+    "log": "03-failing-before"
+  }
+]

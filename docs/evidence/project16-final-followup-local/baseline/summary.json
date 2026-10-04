@@ -1,0 +1,51 @@
+{
+  "purpose": "Expected failing proof at unchanged pre-fix source using exact authored candidate test file; not a passing qualification",
+  "source": "25ef23b0fb86eb3be4151492c2ef6bbc51f0a82e",
+  "tree": "a0922a5f98e4ce38cd377d109a083a1da77df9a1",
+  "testSource": "e8f27e7984503f90c1f4a0b78928d891889f0103",
+  "testSha256": "17e1b3ccc620a0721534f567620d17cea5f0e1867de60466dc2cf37e7f33200f",
+  "command": [
+    "node",
+    "scripts/limited.js",
+    "node",
+    "--test",
+    "--test-reporter=tap",
+    "tests/a20-change-tracking-deletions.test.js"
+  ],
+  "startedAt": "2026-10-04T07:18:55.436535+00:00",
+  "finishedAt": "2026-10-04T07:18:55.955509+00:00",
+  "exitCode": 1,
+  "node": "v24.19.0",
+  "counts": [
+    "# tests 16",
+    "# pass 9",
+    "# fail 7",
+    "# cancelled 0",
+    "# skipped 0",
+    "# todo 0",
+    "# duration_ms 385.244127"
+  ],
+  "trackedCleanAfter": true,
+  "sourceUnchanged": true,
+  "log": {
+    "bytes": 155997,
+    "sha256": "94a61d43bfed0e35a5b75885bfb2069d29595b8120e703f0cfcd374c72963a39"
+  },
+  "untrackedDuringProof": [
+    "packages/clr/src/type-system/metadata-method-definitions.js",
+    "packages/syntax/test/matrix/10/LineSpanDirective/positive.cs",
+    "packages/syntax/test/matrix/10/LineSpanDirective/positive.cs.json",
+    "packages/syntax/test/matrix/10/LineSpanDirective/rejected.cs",
+    "packages/syntax/test/matrix/10/LineSpanDirective/rejected.cs.roslyn.json",
+    "packages/syntax/test/matrix/14/IgnoredDirectives/positive.cs",
+    "packages/syntax/test/matrix/14/IgnoredDirectives/positive.cs.json",
+    "packages/syntax/test/matrix/14/IgnoredDirectives/rejected.cs",
+    "packages/syntax/test/matrix/14/IgnoredDirectives/rejected.cs.roslyn.json",
+    "tests/a20-change-tracking-deletions.test.js"
+  ],
+  "packageRoots": {
+    "editor": "/workspace/scratch/6b99131ca908/p16-integration/packages/editor",
+    "text": "/workspace/scratch/6b99131ca908/p16-integration/packages/text",
+    "syntax": "/workspace/scratch/6b99131ca908/p16-integration/packages/syntax"
+  }
+}

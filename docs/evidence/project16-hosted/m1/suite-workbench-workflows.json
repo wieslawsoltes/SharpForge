@@ -1,0 +1,10 @@
+{
+  "suite": "workbench-workflows",
+  "command": [
+    "/Library/Frameworks/Python.framework/Versions/3.12/bin/python",
+    "tests/browser_vs_workflows_test.py"
+  ],
+  "exitCode": 0,
+  "timedOut": false,
+  "seconds": 7.163386124999988
+}

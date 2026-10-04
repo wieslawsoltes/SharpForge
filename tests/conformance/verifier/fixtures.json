@@ -1,0 +1,3404 @@
+{
+  "schemaVersion": 1,
+  "specification": {
+    "name": "ECMA-335",
+    "edition": 6,
+    "partition": "III",
+    "url": "https://ecma-international.org/wp-content/uploads/ECMA-335_6th_edition_june_2012.pdf"
+  },
+  "cases": [
+    {
+      "id": "stack-underflow-accept",
+      "rule": "stack-underflow",
+      "section": "III.1.8.1",
+      "polarity": "accept",
+      "source": "fixtures/stack-underflow-accept.il",
+      "method": "Test::Run",
+      "expectedErrors": [],
+      "sha256": "04a65790f5152c7911e948315848c11098e86c0fe304cf1a203ce33c48261d11",
+      "rules": [
+        "stack-underflow"
+      ]
+    },
+    {
+      "id": "stack-underflow-reject",
+      "rule": "stack-underflow",
+      "section": "III.1.8.1",
+      "polarity": "reject",
+      "source": "fixtures/stack-underflow-reject.il",
+      "method": "Test::Run",
+      "expectedErrors": [
+        "StackUnderflow"
+      ],
+      "sha256": "e63dfe42fd71c6a4250952bfa7d7282af60642d96f300cd36434e925c6a358f7",
+      "rules": [
+        "stack-underflow"
+      ]
+    },
+    {
+      "id": "stack-overflow-accept",
+      "rule": "stack-overflow",
+      "section": "III.1.8.1",
+      "polarity": "accept",
+      "source": "fixtures/stack-overflow-accept.il",
+      "method": "Test::Run",
+      "expectedErrors": [],
+      "sha256": "6bbc45fdcd389f232e1513eec75e72729e5466892aef6340662223f246bd54ef",
+      "rules": [
+        "stack-overflow"
+      ]
+    },
+    {
+      "id": "stack-overflow-reject",
+      "rule": "stack-overflow",
+      "section": "III.1.8.1",
+      "polarity": "reject",
+      "source": "fixtures/stack-overflow-reject.il",
+      "method": "Test::Run",
+      "expectedErrors": [
+        "StackOverflow"
+      ],
+      "sha256": "612a1c039d276f6b199a7f4bd45ac1d6e21ad2c39ef6b2639580a74334194dcd",
+      "rules": [
+        "stack-overflow"
+      ]
+    },
+    {
+      "id": "void-return-accept",
+      "rule": "void-return",
+      "section": "III.3.57",
+      "polarity": "accept",
+      "source": "fixtures/void-return-accept.il",
+      "method": "Test::Run",
+      "expectedErrors": [],
+      "sha256": "0a98cf19eeec0f169909655b61bd2a9e4f8da6fdf5af1b341b6777230c038b8d",
+      "rules": [
+        "void-return"
+      ]
+    },
+    {
+      "id": "void-return-reject",
+      "rule": "void-return",
+      "section": "III.3.57",
+      "polarity": "reject",
+      "source": "fixtures/void-return-reject.il",
+      "method": "Test::Run",
+      "expectedErrors": [
+        "ReturnVoid"
+      ],
+      "sha256": "e0e00d6b6cc7176ec50217a89a27bccd6e74afaf9461d7e8b74fb2f2af1aeed3",
+      "rules": [
+        "void-return"
+      ]
+    },
+    {
+      "id": "missing-return-accept",
+      "rule": "missing-return",
+      "section": "III.3.57",
+      "polarity": "accept",
+      "source": "fixtures/missing-return-accept.il",
+      "method": "Test::Run",
+      "expectedErrors": [],
+      "sha256": "6aa618b13da6aa834abee61b5395bf168c95bef2c0be1fa0f6790eac95381ecd",
+      "rules": [
+        "missing-return"
+      ]
+    },
+    {
+      "id": "missing-return-reject",
+      "rule": "missing-return",
+      "section": "III.3.57",
+      "polarity": "reject",
+      "source": "fixtures/missing-return-reject.il",
+      "method": "Test::Run",
+      "expectedErrors": [
+        "ReturnMissing"
+      ],
+      "sha256": "6fd6cc9728521b247bcacba77ecd3dcc260ac83d69be671c10302e2091e93260",
+      "rules": [
+        "missing-return"
+      ]
+    },
+    {
+      "id": "extra-return-accept",
+      "rule": "extra-return",
+      "section": "III.3.57",
+      "polarity": "accept",
+      "source": "fixtures/extra-return-accept.il",
+      "method": "Test::Run",
+      "expectedErrors": [],
+      "sha256": "07b55523f0f74df38aea69014d30b180f4e067fff556be1dea63c0217bed40db",
+      "rules": [
+        "extra-return"
+      ]
+    },
+    {
+      "id": "extra-return-reject",
+      "rule": "extra-return",
+      "section": "III.3.57",
+      "polarity": "reject",
+      "source": "fixtures/extra-return-reject.il",
+      "method": "Test::Run",
+      "expectedErrors": [
+        "ReturnEmpty"
+      ],
+      "sha256": "72eea5ebab42437a31a448334203b4ec9009fa3b897db8dd9f55305492edb4e3",
+      "rules": [
+        "extra-return"
+      ]
+    },
+    {
+      "id": "return-type-accept",
+      "rule": "return-type",
+      "section": "III.3.57",
+      "polarity": "accept",
+      "source": "fixtures/return-type-accept.il",
+      "method": "Test::Run",
+      "expectedErrors": [],
+      "sha256": "78cf57335e21b98159e51a4f00c4461374cf9c9aa63f0a61c1b05e44a7b61db3",
+      "rules": [
+        "return-type"
+      ]
+    },
+    {
+      "id": "return-type-reject",
+      "rule": "return-type",
+      "section": "III.3.57",
+      "polarity": "reject",
+      "source": "fixtures/return-type-reject.il",
+      "method": "Test::Run",
+      "expectedErrors": [
+        "StackUnexpected"
+      ],
+      "sha256": "a56643e8165aec672bb91a79b990f8cb52ea6689d8acb65229520d5724773020",
+      "rules": [
+        "return-type"
+      ]
+    },
+    {
+      "id": "local-index-accept",
+      "rule": "local-index",
+      "section": "III.3.43",
+      "polarity": "accept",
+      "source": "fixtures/local-index-accept.il",
+      "method": "Test::Run",
+      "expectedErrors": [],
+      "sha256": "79597edce92fcd7d598e03fd197123521718db8487ea5702ee7421c597e38405",
+      "rules": [
+        "local-index"
+      ]
+    },
+    {
+      "id": "local-index-reject",
+      "rule": "local-index",
+      "section": "III.3.43",
+      "polarity": "reject",
+      "source": "fixtures/local-index-reject.il",
+      "method": "Test::Run",
+      "expectedErrors": [
+        "UnrecognizedLocalNumber"
+      ],
+      "sha256": "db6a7c6b09fce36c88dd1f5ed22c21104229d41ffa9c7673d37c3a14029baf79",
+      "rules": [
+        "local-index"
+      ]
+    },
+    {
+      "id": "argument-index-accept",
+      "rule": "argument-index",
+      "section": "III.3.38",
+      "polarity": "accept",
+      "source": "fixtures/argument-index-accept.il",
+      "method": "Test::Run",
+      "expectedErrors": [],
+      "sha256": "e0bf5edca2ef0ee8dd8e55c10c370b296694d899a80f206202580d4442b731ca",
+      "rules": [
+        "argument-index"
+      ]
+    },
+    {
+      "id": "argument-index-reject",
+      "rule": "argument-index",
+      "section": "III.3.38",
+      "polarity": "reject",
+      "source": "fixtures/argument-index-reject.il",
+      "method": "Test::Run",
+      "expectedErrors": [
+        "UnrecognizedArgumentNumber"
+      ],
+      "sha256": "f5cc995aeaabd9eb661179059070c45a424446f9e413a62f099769ef09bbeeba",
+      "rules": [
+        "argument-index"
+      ]
+    },
+    {
+      "id": "shift-count-accept",
+      "rule": "shift-count",
+      "section": "III.3.58",
+      "polarity": "accept",
+      "source": "fixtures/shift-count-accept.il",
+      "method": "Test::Run",
+      "expectedErrors": [],
+      "sha256": "9e80fd394912db6660fba34fbd3101be47ca7c53f51bd660f3359ca9cc03976d",
+      "rules": [
+        "shift-count"
+      ]
+    },
+    {
+      "id": "shift-count-reject",
+      "rule": "shift-count",
+      "section": "III.3.58",
+      "polarity": "reject",
+      "source": "fixtures/shift-count-reject.il",
+      "method": "Test::Run",
+      "expectedErrors": [
+        "ExpectedIntegerType"
+      ],
+      "sha256": "f1bf6173ca7681467c165de802b9826cc705649430fd796d363353c47a45c559",
+      "rules": [
+        "shift-count"
+      ]
+    },
+    {
+      "id": "numeric-negation-accept",
+      "rule": "numeric-negation",
+      "section": "III.3.50",
+      "polarity": "accept",
+      "source": "fixtures/numeric-negation-accept.il",
+      "method": "Test::Run",
+      "expectedErrors": [],
+      "sha256": "eb43bcc14a9a2f3f4e0e70fff4e3151cdb5daff1e44e39411fd1dcb54c4c5738",
+      "rules": [
+        "numeric-negation"
+      ]
+    },
+    {
+      "id": "numeric-negation-reject",
+      "rule": "numeric-negation",
+      "section": "III.3.50",
+      "polarity": "reject",
+      "source": "fixtures/numeric-negation-reject.il",
+      "method": "Test::Run",
+      "expectedErrors": [
+        "ExpectedNumericType"
+      ],
+      "sha256": "39989c7429d0a6c13598d8ceac088ac0d4a0a3520c3dd2d5e4b1ae5e55f3b301",
+      "rules": [
+        "numeric-negation"
+      ]
+    },
+    {
+      "id": "throw-reference-accept",
+      "rule": "throw-reference",
+      "section": "III.4.31",
+      "polarity": "accept",
+      "source": "fixtures/throw-reference-accept.il",
+      "method": "Test::Run",
+      "expectedErrors": [],
+      "sha256": "0dc97521c6033d5d7ecc5b1e31d56ea7392259b653ad30cd595fde18c26202b5",
+      "rules": [
+        "throw-reference"
+      ]
+    },
+    {
+      "id": "throw-reference-reject",
+      "rule": "throw-reference",
+      "section": "III.4.31",
+      "polarity": "reject",
+      "source": "fixtures/throw-reference-reject.il",
+      "method": "Test::Run",
+      "expectedErrors": [
+        "StackObjRef"
+      ],
+      "sha256": "76eae944afae028ab6fd7e51f6ae5a3a8b429cfc68a09d7f7e2d7b3168fff830",
+      "rules": [
+        "throw-reference"
+      ]
+    },
+    {
+      "id": "rethrow-handler-accept",
+      "rule": "rethrow-handler",
+      "section": "III.4.24",
+      "polarity": "accept",
+      "source": "fixtures/rethrow-handler-accept.il",
+      "method": "Test::Run",
+      "expectedErrors": [],
+      "sha256": "52bdcab673fbda6e90dc636808fa59cc6bb9611e35788cda3f1c836b49b15572",
+      "rules": [
+        "rethrow-handler"
+      ]
+    },
+    {
+      "id": "rethrow-handler-reject",
+      "rule": "rethrow-handler",
+      "section": "III.4.24",
+      "polarity": "reject",
+      "source": "fixtures/rethrow-handler-reject.il",
+      "method": "Test::Run",
+      "expectedErrors": [
+        "Rethrow"
+      ],
+      "sha256": "930926400fd9aabca3883699a26a915ffbb4f9981e87132403ce647a4c875f81",
+      "rules": [
+        "rethrow-handler"
+      ]
+    },
+    {
+      "id": "endfinally-handler-accept",
+      "rule": "endfinally-handler",
+      "section": "III.3.35",
+      "polarity": "accept",
+      "source": "fixtures/endfinally-handler-accept.il",
+      "method": "Test::Run",
+      "expectedErrors": [],
+      "sha256": "b072f7706d028aaa3c3757ee85a2d72ff544513065a757a422834137656d89eb",
+      "rules": [
+        "endfinally-handler"
+      ]
+    },
+    {
+      "id": "endfinally-handler-reject",
+      "rule": "endfinally-handler",
+      "section": "III.3.35",
+      "polarity": "reject",
+      "source": "fixtures/endfinally-handler-reject.il",
+      "method": "Test::Run",
+      "expectedErrors": [
+        "Endfinally"
+      ],
+      "sha256": "45992474b57a80d6ad71824d8709290aa8d30d81caf983ee8109273b32b241a6",
+      "rules": [
+        "endfinally-handler"
+      ]
+    },
+    {
+      "id": "branch-stack-depth-accept",
+      "rule": "branch-stack-depth",
+      "section": "III.1.8.1.3",
+      "polarity": "accept",
+      "source": "fixtures/branch-stack-depth-accept.il",
+      "method": "Test::Run",
+      "expectedErrors": [],
+      "sha256": "88b70f039cbef88d2faf27155c6b872c31bc1b8ce22bcb53e46e3b0f0afe9ec7",
+      "rules": [
+        "branch-stack-depth"
+      ]
+    },
+    {
+      "id": "branch-stack-depth-reject",
+      "rule": "branch-stack-depth",
+      "section": "III.1.8.1.3",
+      "polarity": "reject",
+      "source": "fixtures/branch-stack-depth-reject.il",
+      "method": "Test::Run",
+      "expectedErrors": [
+        "PathStackDepth"
+      ],
+      "sha256": "ab8f594d9b39309a0772cfadfe5fdb5c25450eda4c88ced454f11365b3be5cb8",
+      "rules": [
+        "branch-stack-depth"
+      ]
+    },
+    {
+      "id": "volatile-prefix-accept",
+      "rule": "volatile-prefix",
+      "section": "III.2.6",
+      "polarity": "accept",
+      "source": "fixtures/volatile-prefix-accept.il",
+      "method": "Test::Run",
+      "expectedErrors": [],
+      "sha256": "c6167a544aed868146bbab75402a9ef74c6a3c43c665f14f9b0fc75c284ed347",
+      "rules": [
+        "volatile-prefix"
+      ]
+    },
+    {
+      "id": "volatile-prefix-reject",
+      "rule": "volatile-prefix",
+      "section": "III.2.6",
+      "polarity": "reject",
+      "source": "fixtures/volatile-prefix-reject.il",
+      "method": "Test::Run",
+      "expectedErrors": [
+        "Volatile"
+      ],
+      "sha256": "c20b2fb0ea151531dd17d51f80f8ef51c02cd10a19ecf6ae68d70cb31740909b",
+      "rules": [
+        "volatile-prefix"
+      ]
+    },
+    {
+      "id": "unaligned-prefix-accept",
+      "rule": "unaligned-prefix",
+      "section": "III.2.5",
+      "polarity": "accept",
+      "source": "fixtures/unaligned-prefix-accept.il",
+      "method": "Test::Run",
+      "expectedErrors": [],
+      "sha256": "f04175ecfadec0d46977fd26d3651abecce65934ad852095e07357fab60f9359",
+      "rules": [
+        "unaligned-prefix"
+      ]
+    },
+    {
+      "id": "unaligned-prefix-reject",
+      "rule": "unaligned-prefix",
+      "section": "III.2.5",
+      "polarity": "reject",
+      "source": "fixtures/unaligned-prefix-reject.il",
+      "method": "Test::Run",
+      "expectedErrors": [
+        "Unaligned"
+      ],
+      "sha256": "266bad6e934da7d784e8a5e42211dfa3f776601892664ba45f8325966ee2d350",
+      "rules": [
+        "unaligned-prefix"
+      ]
+    },
+    {
+      "id": "method-fallthrough-accept",
+      "rule": "method-fallthrough",
+      "section": "III.1.7.3",
+      "polarity": "accept",
+      "source": "upstream/src/tests/ilverify/ILTests/ReturnTests.il",
+      "method": "Return.Int32_Valid",
+      "expectedErrors": [],
+      "sha256": "c4e1003e3e62a9ce5749a12babdf9ddd15d35b9355096a5135ebc1b228740d77",
+      "upstreamCase": "ReturnTests:Return.Int32_Valid",
+      "rules": [
+        "method-fallthrough"
+      ]
+    },
+    {
+      "id": "method-fallthrough-reject",
+      "rule": "method-fallthrough",
+      "section": "III.1.7.3",
+      "polarity": "reject",
+      "source": "upstream/src/tests/ilverify/ILTests/ReturnTests.il",
+      "method": "MissingReturn_Invalid_MethodFallthrough",
+      "expectedErrors": [
+        "MethodFallthrough"
+      ],
+      "sha256": "c4e1003e3e62a9ce5749a12babdf9ddd15d35b9355096a5135ebc1b228740d77",
+      "upstreamCase": "ReturnTests:MissingReturn_Invalid_MethodFallthrough",
+      "rules": [
+        "method-fallthrough"
+      ]
+    },
+    {
+      "id": "fallthrough-handler-accept",
+      "rule": "fallthrough-handler",
+      "section": "III.1.8.1",
+      "polarity": "accept",
+      "source": "upstream/src/tests/ilverify/ILTests/BranchingTests.il",
+      "method": "Branching.InsideTry_Valid",
+      "expectedErrors": [],
+      "sha256": "d9603eae0cba50aff2200afd25c0ed4168a0684122b457eadb73436486396f49",
+      "upstreamCase": "BranchingTests:Branching.InsideTry_Valid",
+      "rules": [
+        "fallthrough-handler",
+        "branch-out-of-try",
+        "branch-into-handler",
+        "branch-into-filter"
+      ]
+    },
+    {
+      "id": "fallthrough-handler-reject",
+      "rule": "fallthrough-handler",
+      "section": "III.1.8.1",
+      "polarity": "reject",
+      "source": "upstream/src/tests/ilverify/ILTests/BranchingTests.il",
+      "method": "Fallthrough.OutOfTryIntoFinally_Invalid_FallthroughException.FallthroughIntoHandler",
+      "expectedErrors": [
+        "FallthroughException",
+        "FallthroughIntoHandler"
+      ],
+      "sha256": "d9603eae0cba50aff2200afd25c0ed4168a0684122b457eadb73436486396f49",
+      "upstreamCase": "BranchingTests:Fallthrough.OutOfTryIntoFinally_Invalid_FallthroughException.FallthroughIntoHandler",
+      "rules": [
+        "fallthrough-handler"
+      ]
+    },
+    {
+      "id": "fallthrough-filter-accept",
+      "rule": "fallthrough-filter",
+      "section": "III.1.8.1",
+      "polarity": "accept",
+      "source": "upstream/src/tests/ilverify/ILTests/ExceptionRegionTests.il",
+      "method": "Leave.ToSameFilter_Valid",
+      "expectedErrors": [],
+      "sha256": "dfc9896389d0e9b8b2d2eee8d4003fe9799eaeb66d61093f7bd94b0ee45cf9f9",
+      "upstreamCase": "ExceptionRegionTests:Leave.ToSameFilter_Valid",
+      "rules": [
+        "fallthrough-filter",
+        "leave-into-filter",
+        "leave-out-of-filter"
+      ]
+    },
+    {
+      "id": "fallthrough-filter-reject",
+      "rule": "fallthrough-filter",
+      "section": "III.1.8.1",
+      "polarity": "reject",
+      "source": "upstream/src/tests/ilverify/ILTests/BranchingTests.il",
+      "method": "Fallthrough.OutOfTryIntoFilter_Invalid_FallthroughException.FallthroughIntoFilter",
+      "expectedErrors": [
+        "FallthroughException",
+        "FallthroughIntoFilter"
+      ],
+      "sha256": "d9603eae0cba50aff2200afd25c0ed4168a0684122b457eadb73436486396f49",
+      "upstreamCase": "BranchingTests:Fallthrough.OutOfTryIntoFilter_Invalid_FallthroughException.FallthroughIntoFilter",
+      "rules": [
+        "fallthrough-filter"
+      ]
+    },
+    {
+      "id": "leave-into-try-accept",
+      "rule": "leave-into-try",
+      "section": "III.3.46",
+      "polarity": "accept",
+      "source": "upstream/src/tests/ilverify/ILTests/ExceptionRegionTests.il",
+      "method": "Leave.ToSameTry_Valid",
+      "expectedErrors": [],
+      "sha256": "dfc9896389d0e9b8b2d2eee8d4003fe9799eaeb66d61093f7bd94b0ee45cf9f9",
+      "upstreamCase": "ExceptionRegionTests:Leave.ToSameTry_Valid",
+      "rules": [
+        "leave-into-try"
+      ]
+    },
+    {
+      "id": "leave-into-try-reject",
+      "rule": "leave-into-try",
+      "section": "III.3.46",
+      "polarity": "reject",
+      "source": "upstream/src/tests/ilverify/ILTests/ExceptionRegionTests.il",
+      "method": "Leave.IntoOtherTry_Invalid_LeaveIntoTry",
+      "expectedErrors": [
+        "LeaveIntoTry"
+      ],
+      "sha256": "dfc9896389d0e9b8b2d2eee8d4003fe9799eaeb66d61093f7bd94b0ee45cf9f9",
+      "upstreamCase": "ExceptionRegionTests:Leave.IntoOtherTry_Invalid_LeaveIntoTry",
+      "rules": [
+        "leave-into-try"
+      ]
+    },
+    {
+      "id": "leave-into-handler-accept",
+      "rule": "leave-into-handler",
+      "section": "III.3.46",
+      "polarity": "accept",
+      "source": "upstream/src/tests/ilverify/ILTests/ExceptionRegionTests.il",
+      "method": "Leave.ToSameCatch_Valid",
+      "expectedErrors": [],
+      "sha256": "dfc9896389d0e9b8b2d2eee8d4003fe9799eaeb66d61093f7bd94b0ee45cf9f9",
+      "upstreamCase": "ExceptionRegionTests:Leave.ToSameCatch_Valid",
+      "rules": [
+        "leave-into-handler"
+      ]
+    },
+    {
+      "id": "leave-into-handler-reject",
+      "rule": "leave-into-handler",
+      "section": "III.3.46",
+      "polarity": "reject",
+      "source": "upstream/src/tests/ilverify/ILTests/ExceptionRegionTests.il",
+      "method": "Leave.FromOutsideIntoHandler_Invalid_LeaveIntoHandler",
+      "expectedErrors": [
+        "LeaveIntoHandler"
+      ],
+      "sha256": "dfc9896389d0e9b8b2d2eee8d4003fe9799eaeb66d61093f7bd94b0ee45cf9f9",
+      "upstreamCase": "ExceptionRegionTests:Leave.FromOutsideIntoHandler_Invalid_LeaveIntoHandler",
+      "rules": [
+        "leave-into-handler"
+      ]
+    },
+    {
+      "id": "leave-into-filter-reject",
+      "rule": "leave-into-filter",
+      "section": "III.3.46",
+      "polarity": "reject",
+      "source": "upstream/src/tests/ilverify/ILTests/ExceptionRegionTests.il",
+      "method": "Leave.FromOutsideIntoFilter_Invalid_LeaveIntoFilter",
+      "expectedErrors": [
+        "LeaveIntoFilter"
+      ],
+      "sha256": "dfc9896389d0e9b8b2d2eee8d4003fe9799eaeb66d61093f7bd94b0ee45cf9f9",
+      "upstreamCase": "ExceptionRegionTests:Leave.FromOutsideIntoFilter_Invalid_LeaveIntoFilter",
+      "rules": [
+        "leave-into-filter"
+      ]
+    },
+    {
+      "id": "leave-out-of-filter-reject",
+      "rule": "leave-out-of-filter",
+      "section": "III.3.46",
+      "polarity": "reject",
+      "source": "upstream/src/tests/ilverify/ILTests/ExceptionRegionTests.il",
+      "method": "Leave.OutOfFilter_Invalid_LeaveOutOfFilter",
+      "expectedErrors": [
+        "LeaveOutOfFilter"
+      ],
+      "sha256": "dfc9896389d0e9b8b2d2eee8d4003fe9799eaeb66d61093f7bd94b0ee45cf9f9",
+      "upstreamCase": "ExceptionRegionTests:Leave.OutOfFilter_Invalid_LeaveOutOfFilter",
+      "rules": [
+        "leave-out-of-filter"
+      ]
+    },
+    {
+      "id": "leave-out-of-finally-accept",
+      "rule": "leave-out-of-finally",
+      "section": "III.3.46",
+      "polarity": "accept",
+      "source": "upstream/src/tests/ilverify/ILTests/ExceptionRegionTests.il",
+      "method": "Leave.ToSameFinally_Valid",
+      "expectedErrors": [],
+      "sha256": "dfc9896389d0e9b8b2d2eee8d4003fe9799eaeb66d61093f7bd94b0ee45cf9f9",
+      "upstreamCase": "ExceptionRegionTests:Leave.ToSameFinally_Valid",
+      "rules": [
+        "leave-out-of-finally",
+        "branch-out-of-finally"
+      ]
+    },
+    {
+      "id": "leave-out-of-finally-reject",
+      "rule": "leave-out-of-finally",
+      "section": "III.3.46",
+      "polarity": "reject",
+      "source": "upstream/src/tests/ilverify/ILTests/ExceptionRegionTests.il",
+      "method": "Leave.OutOfFinally_Invalid_LeaveOutOfFinally",
+      "expectedErrors": [
+        "LeaveOutOfFinally"
+      ],
+      "sha256": "dfc9896389d0e9b8b2d2eee8d4003fe9799eaeb66d61093f7bd94b0ee45cf9f9",
+      "upstreamCase": "ExceptionRegionTests:Leave.OutOfFinally_Invalid_LeaveOutOfFinally",
+      "rules": [
+        "leave-out-of-finally"
+      ]
+    },
+    {
+      "id": "leave-out-of-fault-accept",
+      "rule": "leave-out-of-fault",
+      "section": "III.3.46",
+      "polarity": "accept",
+      "source": "upstream/src/tests/ilverify/ILTests/ExceptionRegionTests.il",
+      "method": "Leave.ToSameFault_Valid",
+      "expectedErrors": [],
+      "sha256": "dfc9896389d0e9b8b2d2eee8d4003fe9799eaeb66d61093f7bd94b0ee45cf9f9",
+      "upstreamCase": "ExceptionRegionTests:Leave.ToSameFault_Valid",
+      "rules": [
+        "leave-out-of-fault"
+      ]
+    },
+    {
+      "id": "leave-out-of-fault-reject",
+      "rule": "leave-out-of-fault",
+      "section": "III.3.46",
+      "polarity": "reject",
+      "source": "upstream/src/tests/ilverify/ILTests/ExceptionRegionTests.il",
+      "method": "Leave.OutOfFault_Invalid_LeaveOutOfFault",
+      "expectedErrors": [
+        "LeaveOutOfFault"
+      ],
+      "sha256": "dfc9896389d0e9b8b2d2eee8d4003fe9799eaeb66d61093f7bd94b0ee45cf9f9",
+      "upstreamCase": "ExceptionRegionTests:Leave.OutOfFault_Invalid_LeaveOutOfFault",
+      "rules": [
+        "leave-out-of-fault"
+      ]
+    },
+    {
+      "id": "branch-into-try-accept",
+      "rule": "branch-into-try",
+      "section": "III.1.8.1",
+      "polarity": "accept",
+      "source": "upstream/src/tests/ilverify/ILTests/BranchingTests.il",
+      "method": "Branching.IntoTryStart_Valid",
+      "expectedErrors": [],
+      "sha256": "d9603eae0cba50aff2200afd25c0ed4168a0684122b457eadb73436486396f49",
+      "upstreamCase": "BranchingTests:Branching.IntoTryStart_Valid",
+      "rules": [
+        "branch-into-try"
+      ]
+    },
+    {
+      "id": "branch-into-try-reject",
+      "rule": "branch-into-try",
+      "section": "III.1.8.1",
+      "polarity": "reject",
+      "source": "upstream/src/tests/ilverify/ILTests/BranchingTests.il",
+      "method": "Branching.IntoTryMiddle_Invalid_BranchIntoTry",
+      "expectedErrors": [
+        "BranchIntoTry"
+      ],
+      "sha256": "d9603eae0cba50aff2200afd25c0ed4168a0684122b457eadb73436486396f49",
+      "upstreamCase": "BranchingTests:Branching.IntoTryMiddle_Invalid_BranchIntoTry",
+      "rules": [
+        "branch-into-try"
+      ]
+    },
+    {
+      "id": "branch-out-of-try-reject",
+      "rule": "branch-out-of-try",
+      "section": "III.1.8.1",
+      "polarity": "reject",
+      "source": "upstream/src/tests/ilverify/ILTests/BranchingTests.il",
+      "method": "Branching.OutOfTry_Invalid_BranchOutOfTry",
+      "expectedErrors": [
+        "BranchOutOfTry"
+      ],
+      "sha256": "d9603eae0cba50aff2200afd25c0ed4168a0684122b457eadb73436486396f49",
+      "upstreamCase": "BranchingTests:Branching.OutOfTry_Invalid_BranchOutOfTry",
+      "rules": [
+        "branch-out-of-try"
+      ]
+    },
+    {
+      "id": "branch-into-handler-reject",
+      "rule": "branch-into-handler",
+      "section": "III.1.8.1",
+      "polarity": "reject",
+      "source": "upstream/src/tests/ilverify/ILTests/BranchingTests.il",
+      "method": "Branching.FromTryIntoCatch_Invalid_BranchOutOfTry.BranchIntoHandler",
+      "expectedErrors": [
+        "BranchOutOfTry",
+        "BranchIntoHandler"
+      ],
+      "sha256": "d9603eae0cba50aff2200afd25c0ed4168a0684122b457eadb73436486396f49",
+      "upstreamCase": "BranchingTests:Branching.FromTryIntoCatch_Invalid_BranchOutOfTry.BranchIntoHandler",
+      "rules": [
+        "branch-into-handler"
+      ]
+    },
+    {
+      "id": "branch-into-filter-reject",
+      "rule": "branch-into-filter",
+      "section": "III.1.8.1",
+      "polarity": "reject",
+      "source": "upstream/src/tests/ilverify/ILTests/BranchingTests.il",
+      "method": "Branching.FromTryIntoFilter_Invalid_BranchOutOfTry.BranchIntoFilter",
+      "expectedErrors": [
+        "BranchOutOfTry",
+        "BranchIntoFilter"
+      ],
+      "sha256": "d9603eae0cba50aff2200afd25c0ed4168a0684122b457eadb73436486396f49",
+      "upstreamCase": "BranchingTests:Branching.FromTryIntoFilter_Invalid_BranchOutOfTry.BranchIntoFilter",
+      "rules": [
+        "branch-into-filter"
+      ]
+    },
+    {
+      "id": "branch-out-of-finally-reject",
+      "rule": "branch-out-of-finally",
+      "section": "III.1.8.1",
+      "polarity": "reject",
+      "source": "upstream/src/tests/ilverify/ILTests/BranchingTests.il",
+      "method": "Branching.OutOfFinally_Invalid_BranchOutOfFinally",
+      "expectedErrors": [
+        "BranchOutOfFinally"
+      ],
+      "sha256": "d9603eae0cba50aff2200afd25c0ed4168a0684122b457eadb73436486396f49",
+      "upstreamCase": "BranchingTests:Branching.OutOfFinally_Invalid_BranchOutOfFinally",
+      "rules": [
+        "branch-out-of-finally"
+      ]
+    },
+    {
+      "id": "prefix-branch-target-accept",
+      "rule": "prefix-branch-target",
+      "section": "III.1.7.2",
+      "polarity": "accept",
+      "source": "upstream/src/tests/ilverify/ILTests/BranchingTests.il",
+      "method": "Branch.BeforeReadonlyInstruction_Valid",
+      "expectedErrors": [],
+      "sha256": "d9603eae0cba50aff2200afd25c0ed4168a0684122b457eadb73436486396f49",
+      "upstreamCase": "BranchingTests:Branch.BeforeReadonlyInstruction_Valid",
+      "rules": [
+        "prefix-branch-target"
+      ]
+    },
+    {
+      "id": "prefix-branch-target-reject",
+      "rule": "prefix-branch-target",
+      "section": "III.1.7.2",
+      "polarity": "reject",
+      "source": "upstream/src/tests/ilverify/ILTests/BranchingTests.il",
+      "method": "Branch.IntoReadonlyInstruction_Invalid_BadJumpTarget",
+      "expectedErrors": [
+        "BadJumpTarget"
+      ],
+      "sha256": "d9603eae0cba50aff2200afd25c0ed4168a0684122b457eadb73436486396f49",
+      "upstreamCase": "BranchingTests:Branch.IntoReadonlyInstruction_Invalid_BadJumpTarget",
+      "rules": [
+        "prefix-branch-target"
+      ]
+    },
+    {
+      "id": "return-byref-lifetime-accept",
+      "rule": "return-byref-lifetime",
+      "section": "III.3.57",
+      "polarity": "accept",
+      "source": "upstream/src/tests/ilverify/ILTests/ReturnTests.il",
+      "method": "Return.InstanceFieldByRef_Valid",
+      "expectedErrors": [],
+      "sha256": "c4e1003e3e62a9ce5749a12babdf9ddd15d35b9355096a5135ebc1b228740d77",
+      "upstreamCase": "ReturnTests:Return.InstanceFieldByRef_Valid",
+      "rules": [
+        "return-byref-lifetime"
+      ]
+    },
+    {
+      "id": "return-byref-lifetime-reject",
+      "rule": "return-byref-lifetime",
+      "section": "III.3.57",
+      "polarity": "reject",
+      "source": "upstream/src/tests/ilverify/ILTests/ReturnTests.il",
+      "method": "Return.LocalArgByRef_Invalid_ReturnPtrToStack",
+      "expectedErrors": [
+        "ReturnPtrToStack"
+      ],
+      "sha256": "c4e1003e3e62a9ce5749a12babdf9ddd15d35b9355096a5135ebc1b228740d77",
+      "upstreamCase": "ReturnTests:Return.LocalArgByRef_Invalid_ReturnPtrToStack",
+      "rules": [
+        "return-byref-lifetime"
+      ]
+    },
+    {
+      "id": "delegate-signature-accept",
+      "rule": "delegate-signature",
+      "section": "III.1.8.1.5",
+      "polarity": "accept",
+      "source": "upstream/src/tests/ilverify/ILTests/FtnTests.il",
+      "method": "ObjectFuncFromStringMethod_Valid",
+      "expectedErrors": [],
+      "sha256": "4bb49edd18c1906ca3261fec0fa4971f8fc7673bd575dd2f374879350a688018",
+      "upstreamCase": "FtnTests:ObjectFuncFromStringMethod_Valid",
+      "rules": [
+        "delegate-signature"
+      ]
+    },
+    {
+      "id": "delegate-signature-reject",
+      "rule": "delegate-signature",
+      "section": "III.1.8.1.5",
+      "polarity": "reject",
+      "source": "upstream/src/tests/ilverify/ILTests/FtnTests.il",
+      "method": "StringFuncFromObjectMethod_Invalid_DelegateCtor",
+      "expectedErrors": [
+        "DelegateCtor"
+      ],
+      "sha256": "4bb49edd18c1906ca3261fec0fa4971f8fc7673bd575dd2f374879350a688018",
+      "upstreamCase": "FtnTests:StringFuncFromObjectMethod_Invalid_DelegateCtor",
+      "rules": [
+        "delegate-signature"
+      ]
+    },
+    {
+      "id": "delegate-sequence-accept",
+      "rule": "delegate-sequence",
+      "section": "III.1.8.1.5",
+      "polarity": "accept",
+      "source": "upstream/src/tests/ilverify/ILTests/FtnTests.il",
+      "method": "LdvirtFtn.InstanceMethod_Valid",
+      "expectedErrors": [],
+      "sha256": "4bb49edd18c1906ca3261fec0fa4971f8fc7673bd575dd2f374879350a688018",
+      "upstreamCase": "FtnTests:LdvirtFtn.InstanceMethod_Valid",
+      "rules": [
+        "delegate-sequence",
+        "ldvirtftn-static"
+      ]
+    },
+    {
+      "id": "delegate-sequence-reject",
+      "rule": "delegate-sequence",
+      "section": "III.1.8.1.5",
+      "polarity": "reject",
+      "source": "upstream/src/tests/ilverify/ILTests/FtnTests.il",
+      "method": "LdvirtFtn.NopInDelegatePattern_Invalid_DelegatePattern",
+      "expectedErrors": [
+        "DelegatePattern"
+      ],
+      "sha256": "4bb49edd18c1906ca3261fec0fa4971f8fc7673bd575dd2f374879350a688018",
+      "upstreamCase": "FtnTests:LdvirtFtn.NopInDelegatePattern_Invalid_DelegatePattern",
+      "rules": [
+        "delegate-sequence"
+      ]
+    },
+    {
+      "id": "ldvirtftn-static-reject",
+      "rule": "ldvirtftn-static",
+      "section": "III.4.18",
+      "polarity": "reject",
+      "source": "upstream/src/tests/ilverify/ILTests/FtnTests.il",
+      "method": "LdvirtFtn.StaticMethod_Invalid_LdvirtftnOnStatic",
+      "expectedErrors": [
+        "LdvirtftnOnStatic"
+      ],
+      "sha256": "4bb49edd18c1906ca3261fec0fa4971f8fc7673bd575dd2f374879350a688018",
+      "upstreamCase": "FtnTests:LdvirtFtn.StaticMethod_Invalid_LdvirtftnOnStatic",
+      "rules": [
+        "ldvirtftn-static"
+      ]
+    },
+    {
+      "id": "readonly-prefix-accept",
+      "rule": "readonly-prefix",
+      "section": "III.2.3",
+      "polarity": "accept",
+      "source": "upstream/src/tests/ilverify/ILTests/PrefixTests.il",
+      "method": "Readonly.Ldelema_Valid",
+      "expectedErrors": [],
+      "sha256": "7a81caee59b5e61a4c4941e6cddd4d3ba68e960452d5d76b7a8b629abffca86f",
+      "upstreamCase": "PrefixTests:Readonly.Ldelema_Valid",
+      "rules": [
+        "readonly-prefix"
+      ]
+    },
+    {
+      "id": "readonly-prefix-reject",
+      "rule": "readonly-prefix",
+      "section": "III.2.3",
+      "polarity": "reject",
+      "source": "upstream/src/tests/ilverify/ILTests/PrefixTests.il",
+      "method": "Readonly.Ldelem_Invalid_ReadOnly",
+      "expectedErrors": [
+        "ReadOnly"
+      ],
+      "sha256": "7a81caee59b5e61a4c4941e6cddd4d3ba68e960452d5d76b7a8b629abffca86f",
+      "upstreamCase": "PrefixTests:Readonly.Ldelem_Invalid_ReadOnly",
+      "rules": [
+        "readonly-prefix"
+      ]
+    },
+    {
+      "id": "readonly-callee-accept",
+      "rule": "readonly-callee",
+      "section": "III.2.3",
+      "polarity": "accept",
+      "source": "upstream/src/tests/ilverify/ILTests/PrefixTests.il",
+      "method": "Readonly.ArrayAddress_Valid",
+      "expectedErrors": [],
+      "sha256": "7a81caee59b5e61a4c4941e6cddd4d3ba68e960452d5d76b7a8b629abffca86f",
+      "upstreamCase": "PrefixTests:Readonly.ArrayAddress_Valid",
+      "rules": [
+        "readonly-callee"
+      ]
+    },
+    {
+      "id": "readonly-callee-reject",
+      "rule": "readonly-callee",
+      "section": "III.2.3",
+      "polarity": "reject",
+      "source": "upstream/src/tests/ilverify/ILTests/PrefixTests.il",
+      "method": "Readonly.ArrayGet_Invalid_ReadonlyUnexpectedCallee",
+      "expectedErrors": [
+        "ReadonlyUnexpectedCallee"
+      ],
+      "sha256": "7a81caee59b5e61a4c4941e6cddd4d3ba68e960452d5d76b7a8b629abffca86f",
+      "upstreamCase": "PrefixTests:Readonly.ArrayGet_Invalid_ReadonlyUnexpectedCallee",
+      "rules": [
+        "readonly-callee"
+      ]
+    },
+    {
+      "id": "tail-next-instruction-accept",
+      "rule": "tail-next-instruction",
+      "section": "III.2.4",
+      "polarity": "accept",
+      "source": "upstream/src/tests/ilverify/ILTests/PrefixTests.il",
+      "method": "Tail.FollowedByRet_Valid",
+      "expectedErrors": [],
+      "sha256": "7a81caee59b5e61a4c4941e6cddd4d3ba68e960452d5d76b7a8b629abffca86f",
+      "upstreamCase": "PrefixTests:Tail.FollowedByRet_Valid",
+      "rules": [
+        "tail-next-instruction",
+        "tail-return",
+        "tail-protected-region"
+      ]
+    },
+    {
+      "id": "tail-next-instruction-reject",
+      "rule": "tail-next-instruction",
+      "section": "III.2.4",
+      "polarity": "reject",
+      "source": "upstream/src/tests/ilverify/ILTests/PrefixTests.il",
+      "method": "Tail.Ret_Invalid_TailCall",
+      "expectedErrors": [
+        "TailCall"
+      ],
+      "sha256": "7a81caee59b5e61a4c4941e6cddd4d3ba68e960452d5d76b7a8b629abffca86f",
+      "upstreamCase": "PrefixTests:Tail.Ret_Invalid_TailCall",
+      "rules": [
+        "tail-next-instruction"
+      ]
+    },
+    {
+      "id": "tail-return-reject",
+      "rule": "tail-return",
+      "section": "III.2.4",
+      "polarity": "reject",
+      "source": "upstream/src/tests/ilverify/ILTests/PrefixTests.il",
+      "method": "Tail.DoubleCall_Invalid_TailRet",
+      "expectedErrors": [
+        "TailRet"
+      ],
+      "sha256": "7a81caee59b5e61a4c4941e6cddd4d3ba68e960452d5d76b7a8b629abffca86f",
+      "upstreamCase": "PrefixTests:Tail.DoubleCall_Invalid_TailRet",
+      "rules": [
+        "tail-return"
+      ]
+    },
+    {
+      "id": "tail-protected-region-reject",
+      "rule": "tail-protected-region",
+      "section": "III.2.4",
+      "polarity": "reject",
+      "source": "upstream/src/tests/ilverify/ILTests/PrefixTests.il",
+      "method": "Tail.FromTry_Invalid_TailCallInsideER.TailRet",
+      "expectedErrors": [
+        "TailCallInsideER",
+        "TailRet"
+      ],
+      "sha256": "7a81caee59b5e61a4c4941e6cddd4d3ba68e960452d5d76b7a8b629abffca86f",
+      "upstreamCase": "PrefixTests:Tail.FromTry_Invalid_TailCallInsideER.TailRet",
+      "rules": [
+        "tail-protected-region"
+      ]
+    },
+    {
+      "id": "backward-branch-accept",
+      "rule": "backward-branch",
+      "section": "III.1.7.5",
+      "polarity": "accept",
+      "source": "upstream/src/tests/ilverify/ILTests/BranchingTests.il",
+      "method": "Branch.BackwardWithPredecessor_Valid",
+      "expectedErrors": [],
+      "sha256": "d9603eae0cba50aff2200afd25c0ed4168a0684122b457eadb73436486396f49",
+      "upstreamCase": "BranchingTests:Branch.BackwardWithPredecessor_Valid",
+      "rules": [
+        "backward-branch"
+      ]
+    },
+    {
+      "id": "backward-branch-reject",
+      "rule": "backward-branch",
+      "section": "III.1.7.5",
+      "polarity": "reject",
+      "source": "upstream/src/tests/ilverify/ILTests/BranchingTests.il",
+      "method": "Branch.BackwardWithoutPredecessor_Invalid_BackwardBranch",
+      "expectedErrors": [
+        "BackwardBranch"
+      ],
+      "sha256": "d9603eae0cba50aff2200afd25c0ed4168a0684122b457eadb73436486396f49",
+      "upstreamCase": "BranchingTests:Branch.BackwardWithoutPredecessor_Invalid_BackwardBranch",
+      "rules": [
+        "backward-branch"
+      ]
+    },
+    {
+      "id": "base-call-this-accept",
+      "rule": "base-call-this",
+      "section": "III.3.19",
+      "polarity": "accept",
+      "source": "upstream/src/tests/ilverify/ILTests/CallTests.il",
+      "method": "Call.BaseMethod_Valid",
+      "expectedErrors": [],
+      "sha256": "95711c91a0b2629486969b9445696d59ff8a66b24eac4da17d6ad2d54c118a76",
+      "upstreamCase": "CallTests:Call.BaseMethod_Valid",
+      "rules": [
+        "base-call-this"
+      ]
+    },
+    {
+      "id": "base-call-this-reject",
+      "rule": "base-call-this",
+      "section": "III.3.19",
+      "polarity": "reject",
+      "source": "upstream/src/tests/ilverify/ILTests/CallTests.il",
+      "method": "Call.BaseMethodModThisStarg_Invalid_ThisMismatch",
+      "expectedErrors": [
+        "ThisMismatch"
+      ],
+      "sha256": "95711c91a0b2629486969b9445696d59ff8a66b24eac4da17d6ad2d54c118a76",
+      "upstreamCase": "CallTests:Call.BaseMethodModThisStarg_Invalid_ThisMismatch",
+      "rules": [
+        "base-call-this"
+      ]
+    },
+    {
+      "id": "generic-owner-constraint-accept",
+      "rule": "generic-owner-constraint",
+      "section": "III.3.41",
+      "polarity": "accept",
+      "source": "upstream/src/tests/ilverify/ILTests/FtnTests.il",
+      "method": "LdFtn.StaticClassRefConstraint_Valid",
+      "expectedErrors": [],
+      "sha256": "4bb49edd18c1906ca3261fec0fa4971f8fc7673bd575dd2f374879350a688018",
+      "upstreamCase": "FtnTests:LdFtn.StaticClassRefConstraint_Valid",
+      "rules": [
+        "generic-owner-constraint"
+      ]
+    },
+    {
+      "id": "generic-owner-constraint-reject",
+      "rule": "generic-owner-constraint",
+      "section": "III.3.41",
+      "polarity": "reject",
+      "source": "upstream/src/tests/ilverify/ILTests/FtnTests.il",
+      "method": "LdFtn.IntForStaticClassRefConstraint_Invalid_UnsatisfiedMethodParentInst",
+      "expectedErrors": [
+        "UnsatisfiedMethodParentInst"
+      ],
+      "sha256": "4bb49edd18c1906ca3261fec0fa4971f8fc7673bd575dd2f374879350a688018",
+      "upstreamCase": "FtnTests:LdFtn.IntForStaticClassRefConstraint_Invalid_UnsatisfiedMethodParentInst",
+      "rules": [
+        "generic-owner-constraint"
+      ]
+    },
+    {
+      "id": "endfilter-region-accept",
+      "rule": "endfilter-region",
+      "section": "III.3.34",
+      "polarity": "accept",
+      "source": "fixtures/endfilter-region-accept.il",
+      "method": "Test::Run",
+      "expectedErrors": [],
+      "sha256": "015ac53b9ecf791425e617c926a5c5d2868cc16ac6a325e26b37470df1b30077",
+      "rules": [
+        "endfilter-region"
+      ]
+    },
+    {
+      "id": "endfilter-region-reject",
+      "rule": "endfilter-region",
+      "section": "III.3.34",
+      "polarity": "reject",
+      "source": "fixtures/endfilter-region-reject.il",
+      "method": "Test::Run",
+      "expectedErrors": [
+        "Endfilter"
+      ],
+      "sha256": "18e4f6be4fbbf436527d5520b233067de86b824f52346222a7a23b568a10b7af",
+      "rules": [
+        "endfilter-region"
+      ]
+    },
+    {
+      "id": "branch-out-of-catch-accept",
+      "rule": "branch-out-of-catch",
+      "section": "III.1.8.1",
+      "polarity": "accept",
+      "source": "fixtures/branch-out-of-catch-accept.il",
+      "method": "Test::Run",
+      "expectedErrors": [],
+      "sha256": "3d4d7ca67a7c6f5bbc6b8e0ee54269c6d6af4b4f5e8ffe17aa9e3bf387592b69",
+      "rules": [
+        "branch-out-of-catch"
+      ]
+    },
+    {
+      "id": "branch-out-of-catch-reject",
+      "rule": "branch-out-of-catch",
+      "section": "III.1.8.1",
+      "polarity": "reject",
+      "source": "fixtures/branch-out-of-catch-reject.il",
+      "method": "Test::Run",
+      "expectedErrors": [
+        "BranchOutOfHandler"
+      ],
+      "sha256": "502672138fe310c60a9c95c149c37421002e6287b9e8619f5853451ebdeb5a60",
+      "rules": [
+        "branch-out-of-catch"
+      ]
+    },
+    {
+      "id": "branch-out-of-filter-accept",
+      "rule": "branch-out-of-filter",
+      "section": "III.1.8.1",
+      "polarity": "accept",
+      "source": "fixtures/branch-out-of-filter-accept.il",
+      "method": "Test::Run",
+      "expectedErrors": [],
+      "sha256": "858b6c2d477aec154f026a5bdea1d6e70964551c4f4b43031bfc1d5539fab6d7",
+      "rules": [
+        "branch-out-of-filter"
+      ]
+    },
+    {
+      "id": "branch-out-of-filter-reject",
+      "rule": "branch-out-of-filter",
+      "section": "III.1.8.1",
+      "polarity": "reject",
+      "source": "fixtures/branch-out-of-filter-reject.il",
+      "method": "Test::Run",
+      "expectedErrors": [
+        "BranchOutOfFilter"
+      ],
+      "sha256": "c904ef345e0ac70b92113b8b89f2ae5a7d33721d4d4dd6dbfcd888da69760612",
+      "rules": [
+        "branch-out-of-filter"
+      ]
+    },
+    {
+      "id": "return-in-try-accept",
+      "rule": "return-in-try",
+      "section": "III.3.57",
+      "polarity": "accept",
+      "source": "fixtures/return-in-try-accept.il",
+      "method": "Test::Run",
+      "expectedErrors": [],
+      "sha256": "33f18ccf3158cbf1e47eaee93cc72746bbad931969fa3de309397bb74d0ec2b7",
+      "rules": [
+        "return-in-try"
+      ]
+    },
+    {
+      "id": "return-in-try-reject",
+      "rule": "return-in-try",
+      "section": "III.3.57",
+      "polarity": "reject",
+      "source": "fixtures/return-in-try-reject.il",
+      "method": "Test::Run",
+      "expectedErrors": [
+        "ReturnFromTry"
+      ],
+      "sha256": "8a9094fd45f1540ea1734436f1928e70a2e8260bb2bc3967b05c5738a1dfd7c1",
+      "rules": [
+        "return-in-try"
+      ]
+    },
+    {
+      "id": "return-in-handler-accept",
+      "rule": "return-in-handler",
+      "section": "III.3.57",
+      "polarity": "accept",
+      "source": "fixtures/return-in-handler-accept.il",
+      "method": "Test::Run",
+      "expectedErrors": [],
+      "sha256": "f2c03fd75eb40351666d9edee9f8885c56d6f6d852c65bcaa59c791c8aa3ccee",
+      "rules": [
+        "return-in-handler"
+      ]
+    },
+    {
+      "id": "return-in-handler-reject",
+      "rule": "return-in-handler",
+      "section": "III.3.57",
+      "polarity": "reject",
+      "source": "fixtures/return-in-handler-reject.il",
+      "method": "Test::Run",
+      "expectedErrors": [
+        "ReturnFromHandler"
+      ],
+      "sha256": "228ef7fe1b79a7971346c7f5416350b7bf41b21f5c5fa0339f4fd884a5070ffe",
+      "rules": [
+        "return-in-handler"
+      ]
+    },
+    {
+      "id": "return-in-filter-accept",
+      "rule": "return-in-filter",
+      "section": "III.3.57",
+      "polarity": "accept",
+      "source": "fixtures/return-in-filter-accept.il",
+      "method": "Test::Run",
+      "expectedErrors": [],
+      "sha256": "e13512577e61746f966ebfa7df5b63698cea918e57e0e6b3fba3c2e2da204ec7",
+      "rules": [
+        "return-in-filter"
+      ]
+    },
+    {
+      "id": "return-in-filter-reject",
+      "rule": "return-in-filter",
+      "section": "III.3.57",
+      "polarity": "reject",
+      "source": "fixtures/return-in-filter-reject.il",
+      "method": "Test::Run",
+      "expectedErrors": [
+        "ReturnFromFilter"
+      ],
+      "sha256": "418e00b6eea5d3cf7b46cb0222b5ce15e2d701dbac1c1b82665174849f7ea71c",
+      "rules": [
+        "return-in-filter"
+      ]
+    },
+    {
+      "id": "stack-merge-types-accept",
+      "rule": "stack-merge-types",
+      "section": "III.1.8.1.3",
+      "polarity": "accept",
+      "source": "fixtures/stack-merge-types-accept.il",
+      "method": "Test::Run",
+      "expectedErrors": [],
+      "sha256": "812b1c1c5f68ac7aac74cec0d66842c4b5ae608d0a672068d0ac2f5c309b01e2",
+      "rules": [
+        "stack-merge-types"
+      ]
+    },
+    {
+      "id": "stack-merge-types-reject",
+      "rule": "stack-merge-types",
+      "section": "III.1.8.1.3",
+      "polarity": "reject",
+      "source": "fixtures/stack-merge-types-reject.il",
+      "method": "Test::Run",
+      "expectedErrors": [
+        "PathStackUnexpected"
+      ],
+      "sha256": "0e6f04f82ca33b361511345717081f18d4c76bf739630365b928ba1936689a67",
+      "rules": [
+        "stack-merge-types"
+      ]
+    },
+    {
+      "id": "constructor-initialization-accept",
+      "rule": "constructor-initialization",
+      "section": "III.1.8.1.4",
+      "polarity": "accept",
+      "source": "fixtures/constructor-initialization-accept.il",
+      "method": "Test::.ctor",
+      "expectedErrors": [],
+      "sha256": "55671348f8fd018d690ac61d2a8f8da8583447ce0bbfd8cc013ad1aef48c198e",
+      "rules": [
+        "constructor-initialization"
+      ]
+    },
+    {
+      "id": "constructor-initialization-reject",
+      "rule": "constructor-initialization",
+      "section": "III.1.8.1.4",
+      "polarity": "reject",
+      "source": "fixtures/constructor-initialization-reject.il",
+      "method": "Test::.ctor",
+      "expectedErrors": [
+        "ThisUninitReturn"
+      ],
+      "sha256": "086f0114e3d1ba94a572a2e9f23c1783cd54c5e0561de0015d8358d81f064773",
+      "rules": [
+        "constructor-initialization"
+      ]
+    },
+    {
+      "id": "constructor-this-store-accept",
+      "rule": "constructor-this-store",
+      "section": "III.1.8.1.4",
+      "polarity": "accept",
+      "source": "fixtures/constructor-this-store-accept.il",
+      "method": "Test::.ctor",
+      "expectedErrors": [],
+      "sha256": "ac188cca403699e958d526aa2ab2ca33dcef29cec29c8456c9de240e0b6f28ae",
+      "rules": [
+        "constructor-this-store"
+      ]
+    },
+    {
+      "id": "constructor-this-store-reject",
+      "rule": "constructor-this-store",
+      "section": "III.1.8.1.4",
+      "polarity": "reject",
+      "source": "fixtures/constructor-this-store-reject.il",
+      "method": "Test::.ctor",
+      "expectedErrors": [
+        "ThisUninitStore"
+      ],
+      "sha256": "5a5c6eb317916e8640d11039051c451bce025a3537d37f6abdd92061891bc7ec",
+      "rules": [
+        "constructor-this-store"
+      ]
+    },
+    {
+      "id": "constructor-this-use-accept",
+      "rule": "constructor-this-use",
+      "section": "III.1.8.1.4",
+      "polarity": "accept",
+      "source": "fixtures/constructor-this-use-accept.il",
+      "method": "Test::.ctor",
+      "expectedErrors": [],
+      "sha256": "6dd0d67704e35a6936d29b8fe7acbb0c1dde280ec8aa0e0174befbdfb527cb2b",
+      "rules": [
+        "constructor-this-use"
+      ]
+    },
+    {
+      "id": "constructor-this-use-reject",
+      "rule": "constructor-this-use",
+      "section": "III.1.8.1.4",
+      "polarity": "reject",
+      "source": "fixtures/constructor-this-use-reject.il",
+      "method": "Test::.ctor",
+      "expectedErrors": [
+        "UninitStack"
+      ],
+      "sha256": "6b38ca8d59ae310d00348415dbeaa466cade47e1ee19c17466ee4ad2b7542b3b",
+      "rules": [
+        "constructor-this-use"
+      ]
+    },
+    {
+      "id": "ldftn-constructor-accept",
+      "rule": "ldftn-constructor",
+      "section": "III.3.41",
+      "polarity": "accept",
+      "source": "fixtures/ldftn-constructor-accept.il",
+      "method": "Test::Run",
+      "expectedErrors": [],
+      "sha256": "bcf2fb6e828a107973681152495220f6c7e79f4d0ffb4f2c7a0d3a1bfa1d113c",
+      "rules": [
+        "ldftn-constructor"
+      ]
+    },
+    {
+      "id": "ldftn-constructor-reject",
+      "rule": "ldftn-constructor",
+      "section": "III.3.41",
+      "polarity": "reject",
+      "source": "fixtures/ldftn-constructor-reject.il",
+      "method": "Test::Run",
+      "expectedErrors": [
+        "LdftnCtor"
+      ],
+      "sha256": "77fb3dee664c685065c8be15a8d7a9fbbea3b40abd42c95430d993754317e2c9",
+      "rules": [
+        "ldftn-constructor"
+      ]
+    },
+    {
+      "id": "indirect-element-type-accept",
+      "rule": "indirect-element-type",
+      "section": "III.3.42",
+      "polarity": "accept",
+      "source": "fixtures/indirect-element-type-accept.il",
+      "method": "Test::Run",
+      "expectedErrors": [],
+      "sha256": "5aa371548c679aad3f8c5d722e921bffea1aa3875fec5bc13419d7e665faf614",
+      "rules": [
+        "indirect-element-type"
+      ]
+    },
+    {
+      "id": "indirect-element-type-reject",
+      "rule": "indirect-element-type",
+      "section": "III.3.42",
+      "polarity": "reject",
+      "source": "fixtures/indirect-element-type-reject.il",
+      "method": "Test::Run",
+      "expectedErrors": [
+        "StackUnexpectedArrayType"
+      ],
+      "sha256": "9557e3fa8c829ebac5ce9af431272b365469d802f2e753f0f47ac802de23824e",
+      "rules": [
+        "indirect-element-type"
+      ]
+    },
+    {
+      "id": "finite-float-accept",
+      "rule": "finite-float",
+      "section": "III.3.24",
+      "polarity": "accept",
+      "source": "fixtures/finite-float-accept.il",
+      "method": "Test::Run",
+      "expectedErrors": [],
+      "sha256": "563d6e8d23cd78d5ca8f4c03c4e6a261259af1d7ede6301cf3014a7c20b9fcf2",
+      "rules": [
+        "finite-float"
+      ]
+    },
+    {
+      "id": "finite-float-reject",
+      "rule": "finite-float",
+      "section": "III.3.24",
+      "polarity": "reject",
+      "source": "fixtures/finite-float-reject.il",
+      "method": "Test::Run",
+      "expectedErrors": [
+        "ExpectedFloatType"
+      ],
+      "sha256": "ccbfb1ffed985d9f623b3b30b8c3f7c18bfb0b204b7096c2ea8865abf3053db0",
+      "rules": [
+        "finite-float"
+      ]
+    },
+    {
+      "id": "managed-address-accept",
+      "rule": "managed-address",
+      "section": "III.4.5",
+      "polarity": "accept",
+      "source": "fixtures/managed-address-accept.il",
+      "method": "Test::Run",
+      "expectedErrors": [],
+      "sha256": "74195b4138cdedaf66f431a0e1d8b31d052e70770f4a90c733efab6c552fafc5",
+      "rules": [
+        "managed-address"
+      ]
+    },
+    {
+      "id": "managed-address-reject",
+      "rule": "managed-address",
+      "section": "III.4.5",
+      "polarity": "reject",
+      "source": "fixtures/managed-address-reject.il",
+      "method": "Test::Run",
+      "expectedErrors": [
+        "StackByRef"
+      ],
+      "sha256": "1f04bb849b55a5e2679f2c282bbba1fb8c076ef8286453df67c6fe0fdbfb63bd",
+      "rules": [
+        "managed-address"
+      ]
+    },
+    {
+      "id": "unverifiable-block-copy-accept",
+      "rule": "unverifiable-block-copy",
+      "section": "III.3.30",
+      "polarity": "accept",
+      "source": "fixtures/unverifiable-block-copy-accept.il",
+      "method": "Test::Run",
+      "expectedErrors": [],
+      "sha256": "5d769519988a24f34dd2d7614e7a5117659b9a681a3516bce67c954856c13e77",
+      "rules": [
+        "unverifiable-block-copy"
+      ]
+    },
+    {
+      "id": "unverifiable-block-copy-reject",
+      "rule": "unverifiable-block-copy",
+      "section": "III.3.30",
+      "polarity": "reject",
+      "source": "fixtures/unverifiable-block-copy-reject.il",
+      "method": "Test::Run",
+      "expectedErrors": [
+        "Unverifiable"
+      ],
+      "sha256": "be7f941564aacdaa25efad28e5083b4a47cec6fbe3953264b2712726dbd56bb9",
+      "rules": [
+        "unverifiable-block-copy"
+      ]
+    },
+    {
+      "id": "array-instance-accept",
+      "rule": "array-instance",
+      "section": "III.4.12",
+      "polarity": "accept",
+      "source": "fixtures/array-instance-accept.il",
+      "method": "Test::Run",
+      "expectedErrors": [],
+      "sha256": "04ee467a9371ef79907b5d74361588df2724f4522911ae524bbf2e4844a92e36",
+      "rules": [
+        "array-instance"
+      ]
+    },
+    {
+      "id": "array-instance-reject",
+      "rule": "array-instance",
+      "section": "III.4.12",
+      "polarity": "reject",
+      "source": "fixtures/array-instance-reject.il",
+      "method": "Test::Run",
+      "expectedErrors": [
+        "ExpectedArray"
+      ],
+      "sha256": "3646c632a2c16fda4bf0aca3b50a06480c9b472de6c7ec839dd34f3007f33664",
+      "rules": [
+        "array-instance"
+      ]
+    },
+    {
+      "id": "unbox-value-type-accept",
+      "rule": "unbox-value-type",
+      "section": "III.4.32",
+      "polarity": "accept",
+      "source": "fixtures/unbox-value-type-accept.il",
+      "method": "Test::Run",
+      "expectedErrors": [],
+      "sha256": "29f65f1b0ce9c059286c4600ca6ca9ad5aafc8cbe4b8e63fa0c7bf1cc95ce5aa",
+      "rules": [
+        "unbox-value-type"
+      ]
+    },
+    {
+      "id": "unbox-value-type-reject",
+      "rule": "unbox-value-type",
+      "section": "III.4.32",
+      "polarity": "reject",
+      "source": "fixtures/unbox-value-type-reject.il",
+      "method": "Test::Run",
+      "expectedErrors": [
+        "ValueTypeExpected"
+      ],
+      "sha256": "6435851475acf857d5dea3caf9ee1110d4b740d87a515a10fb97f48b664fab01",
+      "rules": [
+        "unbox-value-type"
+      ]
+    },
+    {
+      "id": "method-access-accept",
+      "rule": "method-access",
+      "section": "III.3.19",
+      "polarity": "accept",
+      "source": "fixtures/method-access-accept.il",
+      "method": "Test::Run",
+      "expectedErrors": [],
+      "sha256": "68f5d3c0e028ea0872f6b1c05857e2f6eb82211411a6521df987bfd7ce53d160",
+      "rules": [
+        "method-access"
+      ]
+    },
+    {
+      "id": "method-access-reject",
+      "rule": "method-access",
+      "section": "III.3.19",
+      "polarity": "reject",
+      "source": "fixtures/method-access-reject.il",
+      "method": "Test::Run",
+      "expectedErrors": [
+        "MethodAccess"
+      ],
+      "sha256": "4cf4616bb0a42d0ecef48ac3b2952834027afeba2bf34b9c87c35f76818b8624",
+      "rules": [
+        "method-access"
+      ]
+    },
+    {
+      "id": "field-access-accept",
+      "rule": "field-access",
+      "section": "III.4.14",
+      "polarity": "accept",
+      "source": "fixtures/field-access-accept.il",
+      "method": "Test::Run",
+      "expectedErrors": [],
+      "sha256": "0ec2382310471cfa43c4857c3ffb93ef4cef9d209f41168763a45d84b69338b3",
+      "rules": [
+        "field-access"
+      ]
+    },
+    {
+      "id": "field-access-reject",
+      "rule": "field-access",
+      "section": "III.4.14",
+      "polarity": "reject",
+      "source": "fixtures/field-access-reject.il",
+      "method": "Test::Run",
+      "expectedErrors": [
+        "FieldAccess"
+      ],
+      "sha256": "f61c13b75201d18fac61a25e5844f54dd75e50d7904efedb68f74c891b6f15ce",
+      "rules": [
+        "field-access"
+      ]
+    },
+    {
+      "id": "static-field-operand-accept",
+      "rule": "static-field-operand",
+      "section": "III.4.14",
+      "polarity": "accept",
+      "source": "fixtures/static-field-operand-accept.il",
+      "method": "Test::Run",
+      "expectedErrors": [],
+      "sha256": "89283145b85900eb4f24235635a51b58aefb6ce16f44499a7fca6f3ba181bdbc",
+      "rules": [
+        "static-field-operand"
+      ]
+    },
+    {
+      "id": "static-field-operand-reject",
+      "rule": "static-field-operand",
+      "section": "III.4.14",
+      "polarity": "reject",
+      "source": "fixtures/static-field-operand-reject.il",
+      "method": "Test::Run",
+      "expectedErrors": [
+        "ExpectedStaticField"
+      ],
+      "sha256": "225e21f2d2fff7c0184accf5424631fd1c92ee51e9970d3ef7eeb217c2748afe",
+      "rules": [
+        "static-field-operand"
+      ]
+    },
+    {
+      "id": "initonly-write-accept",
+      "rule": "initonly-write",
+      "section": "III.4.28",
+      "polarity": "accept",
+      "source": "fixtures/initonly-write-accept.il",
+      "method": "Test::Run",
+      "expectedErrors": [],
+      "sha256": "fefa773288f96f9db9fcc71441d0a59c49981d6e8b8b7d4e37325c64f3e2d342",
+      "rules": [
+        "initonly-write"
+      ]
+    },
+    {
+      "id": "initonly-write-reject",
+      "rule": "initonly-write",
+      "section": "III.4.28",
+      "polarity": "reject",
+      "source": "fixtures/initonly-write-reject.il",
+      "method": "Test::Run",
+      "expectedErrors": [
+        "InitOnly"
+      ],
+      "sha256": "033a59d8db2cd811ffd07ac968a4af1621c7f8fe162b855487952bc532b883b1",
+      "rules": [
+        "initonly-write"
+      ]
+    },
+    {
+      "id": "callvirt-value-type-accept",
+      "rule": "callvirt-value-type",
+      "section": "III.4.2",
+      "polarity": "accept",
+      "source": "fixtures/callvirt-value-type-accept.il",
+      "method": "Test::Run",
+      "expectedErrors": [],
+      "sha256": "54fe885b551d99576d86aa366aea7df6c976270204cea8d1923f0b7c0207021d",
+      "rules": [
+        "callvirt-value-type"
+      ]
+    },
+    {
+      "id": "callvirt-value-type-reject",
+      "rule": "callvirt-value-type",
+      "section": "III.4.2",
+      "polarity": "reject",
+      "source": "fixtures/callvirt-value-type-reject.il",
+      "method": "Test::Run",
+      "expectedErrors": [
+        "CallVirtOnValueType"
+      ],
+      "sha256": "bd39c3541debe9b142d12a6edf965c0fe8a11f482a4b5667e91c8a93ed602468",
+      "rules": [
+        "callvirt-value-type"
+      ]
+    },
+    {
+      "id": "newobj-constructor-accept",
+      "rule": "newobj-constructor",
+      "section": "III.4.21",
+      "polarity": "accept",
+      "source": "fixtures/newobj-constructor-accept.il",
+      "method": "Test::Run",
+      "expectedErrors": [],
+      "sha256": "93370b06e85f8151e0c112292e37b4202fb3a6ecd92de764f85d2ffd112e9b60",
+      "rules": [
+        "newobj-constructor"
+      ]
+    },
+    {
+      "id": "newobj-constructor-reject",
+      "rule": "newobj-constructor",
+      "section": "III.4.21",
+      "polarity": "reject",
+      "source": "fixtures/newobj-constructor-reject.il",
+      "method": "Test::Run",
+      "expectedErrors": [
+        "CtorExpected"
+      ],
+      "sha256": "9f8829d96f2f3c3d6ed6e0d8e0be3658f1a554bfc07861fada122c7d02b9c5a6",
+      "rules": [
+        "newobj-constructor"
+      ]
+    },
+    {
+      "id": "callvirt-static-accept",
+      "rule": "callvirt-static",
+      "section": "III.4.2",
+      "polarity": "accept",
+      "source": "fixtures/callvirt-static-accept.il",
+      "method": "Test::Run",
+      "expectedErrors": [],
+      "sha256": "5ba87a8c6375747ff132dbd38012df7724b2df306504d3325aa61133ea1e78f5",
+      "rules": [
+        "callvirt-static"
+      ]
+    },
+    {
+      "id": "callvirt-static-reject",
+      "rule": "callvirt-static",
+      "section": "III.4.2",
+      "polarity": "reject",
+      "source": "fixtures/callvirt-static-reject.il",
+      "method": "Test::Run",
+      "expectedErrors": [
+        "CallVirtOnStatic"
+      ],
+      "sha256": "6316a033893ab3bf06847620d1335d3e5268a4d824942dbcbef5067f4e4c4ac9",
+      "rules": [
+        "callvirt-static"
+      ]
+    },
+    {
+      "id": "call-existing-constructor-accept",
+      "rule": "call-existing-constructor",
+      "section": "III.3.19",
+      "polarity": "accept",
+      "source": "fixtures/call-existing-constructor-accept.il",
+      "method": "Test::Run",
+      "expectedErrors": [],
+      "sha256": "a78c6e68a1219b282f6b0717723740b0d062c45867664b15c8c5284e1eeae825",
+      "rules": [
+        "call-existing-constructor"
+      ]
+    },
+    {
+      "id": "call-existing-constructor-reject",
+      "rule": "call-existing-constructor",
+      "section": "III.3.19",
+      "polarity": "reject",
+      "source": "fixtures/call-existing-constructor-reject.il",
+      "method": "Test::Run",
+      "expectedErrors": [
+        "CallCtor"
+      ],
+      "sha256": "c15594381eeba48986ba591b959c795a0583afd4a4c7268fdd61caf65930d50f",
+      "rules": [
+        "call-existing-constructor"
+      ]
+    },
+    {
+      "id": "initlocals-required-accept",
+      "rule": "initlocals-required",
+      "section": "III.1.8.1",
+      "polarity": "accept",
+      "source": "fixtures/initlocals-required-accept.il",
+      "method": "Test::Run",
+      "expectedErrors": [],
+      "sha256": "2e41427a0666516b9ee6cc2792060bf0e26721a54038a659618ab357b88e58b8",
+      "rules": [
+        "initlocals-required"
+      ]
+    },
+    {
+      "id": "initlocals-required-reject",
+      "rule": "initlocals-required",
+      "section": "III.1.8.1",
+      "polarity": "reject",
+      "source": "fixtures/initlocals-required-reject.il",
+      "method": "Test::Run",
+      "expectedErrors": [
+        "InitLocals"
+      ],
+      "sha256": "83ad1ced83cd2d2ea8e91a651ff81e2e4088b74e2c0fb30a054fa3c27b41ea7c",
+      "rules": [
+        "initlocals-required"
+      ]
+    },
+    {
+      "id": "tail-byref-accept",
+      "rule": "tail-byref",
+      "section": "III.2.4",
+      "polarity": "accept",
+      "source": "fixtures/tail-byref-accept.il",
+      "method": "Test::Run",
+      "expectedErrors": [],
+      "sha256": "d95084528131fcf70747c15d6f3cac2066159db28b8b4376f50e1af3a5c05b4f",
+      "rules": [
+        "tail-byref"
+      ]
+    },
+    {
+      "id": "tail-byref-reject",
+      "rule": "tail-byref",
+      "section": "III.2.4",
+      "polarity": "reject",
+      "source": "fixtures/tail-byref-reject.il",
+      "method": "Test::Run",
+      "expectedErrors": [
+        "TailByRef"
+      ],
+      "sha256": "354613f2a9fe55c62fd12bbf039ac7de35fd29d2e0a30e0868703bc1163f6d46",
+      "rules": [
+        "tail-byref"
+      ]
+    },
+    {
+      "id": "tail-void-return-accept",
+      "rule": "tail-void-return",
+      "section": "III.2.4",
+      "polarity": "accept",
+      "source": "fixtures/tail-void-return-accept.il",
+      "method": "Test::Run",
+      "expectedErrors": [],
+      "sha256": "f1d4453966ce66db691f989a312e6770daaa3ec6c12410b3897adc1f42d93836",
+      "rules": [
+        "tail-void-return"
+      ]
+    },
+    {
+      "id": "tail-void-return-reject",
+      "rule": "tail-void-return",
+      "section": "III.2.4",
+      "polarity": "reject",
+      "source": "fixtures/tail-void-return-reject.il",
+      "method": "Test::Run",
+      "expectedErrors": [
+        "TailRetVoid"
+      ],
+      "sha256": "322be31524b2ed3e2dabf3385213589d0a5e94ddf3741c118ec86298ab94dbff",
+      "rules": [
+        "tail-void-return"
+      ]
+    },
+    {
+      "id": "tail-return-type-accept",
+      "rule": "tail-return-type",
+      "section": "III.2.4",
+      "polarity": "accept",
+      "source": "fixtures/tail-return-type-accept.il",
+      "method": "Test::Run",
+      "expectedErrors": [],
+      "sha256": "688dcf5e44e17cf42438f1a154a52b414f2fb832cd06c70b644eb07b64895d94",
+      "rules": [
+        "tail-return-type"
+      ]
+    },
+    {
+      "id": "tail-return-type-reject",
+      "rule": "tail-return-type",
+      "section": "III.2.4",
+      "polarity": "reject",
+      "source": "fixtures/tail-return-type-reject.il",
+      "method": "Test::Run",
+      "expectedErrors": [
+        "TailRetType"
+      ],
+      "sha256": "4f167c44bdfb2b5b50a4255864cdae4bc801745496d195821369edba49a99463",
+      "rules": [
+        "tail-return-type"
+      ]
+    },
+    {
+      "id": "tail-empty-stack-accept",
+      "rule": "tail-empty-stack",
+      "section": "III.2.4",
+      "polarity": "accept",
+      "source": "fixtures/tail-empty-stack-accept.il",
+      "method": "Test::Run",
+      "expectedErrors": [],
+      "sha256": "cc4f5f9e89464ad733cd59904b259afb77d028e1c41ed43af72aa4641e7a4b3c",
+      "rules": [
+        "tail-empty-stack"
+      ]
+    },
+    {
+      "id": "tail-empty-stack-reject",
+      "rule": "tail-empty-stack",
+      "section": "III.2.4",
+      "polarity": "reject",
+      "source": "fixtures/tail-empty-stack-reject.il",
+      "method": "Test::Run",
+      "expectedErrors": [
+        "TailStackEmpty"
+      ],
+      "sha256": "91073694d3581a9b741db2adc5fddac823fd2f7d10d6caebefa84d44ed5de5f9",
+      "rules": [
+        "tail-empty-stack"
+      ]
+    },
+    {
+      "id": "call-abstract-accept",
+      "rule": "call-abstract",
+      "section": "III.3.19",
+      "polarity": "accept",
+      "source": "fixtures/call-abstract-accept.il",
+      "method": "Test::Run",
+      "expectedErrors": [],
+      "sha256": "4e6dc3c49d1269574d0ee5d23b8bbee494a22c62107c70306f781158f793a275",
+      "rules": [
+        "call-abstract"
+      ]
+    },
+    {
+      "id": "call-abstract-reject",
+      "rule": "call-abstract",
+      "section": "III.3.19",
+      "polarity": "reject",
+      "source": "fixtures/call-abstract-reject.il",
+      "method": "Test::Run",
+      "expectedErrors": [
+        "CallAbstract"
+      ],
+      "sha256": "2edc181b83ab03a5b24ca9ec9c450489a9260c236f57fc15c4c9fa9d21f860fc",
+      "rules": [
+        "call-abstract"
+      ]
+    },
+    {
+      "id": "try-entry-stack-accept",
+      "rule": "try-entry-stack",
+      "section": "III.1.8.1",
+      "polarity": "accept",
+      "source": "fixtures/try-entry-stack-accept.il",
+      "method": "Test::Run",
+      "expectedErrors": [],
+      "sha256": "f2c16ce7a6112ec242da1431a3a566f5725ec7ea39aac487afa0d0c579795c15",
+      "rules": [
+        "try-entry-stack"
+      ]
+    },
+    {
+      "id": "try-entry-stack-reject",
+      "rule": "try-entry-stack",
+      "section": "III.1.8.1",
+      "polarity": "reject",
+      "source": "fixtures/try-entry-stack-reject.il",
+      "method": "Test::Run",
+      "expectedErrors": [
+        "TryNonEmptyStack"
+      ],
+      "sha256": "b1657f7d5b506bb12cf8b3813eadbf4596293b7ce653ffafda02174d0e937c5c",
+      "rules": [
+        "try-entry-stack"
+      ]
+    },
+    {
+      "id": "filter-exit-stack-accept",
+      "rule": "filter-exit-stack",
+      "section": "III.3.34",
+      "polarity": "accept",
+      "source": "fixtures/filter-exit-stack-accept.il",
+      "method": "Test::Run",
+      "expectedErrors": [],
+      "sha256": "5d02c29104cd11cc7a817457a06e03ddf23888261d91310226c2d97f659fc91f",
+      "rules": [
+        "filter-exit-stack"
+      ]
+    },
+    {
+      "id": "filter-exit-stack-reject",
+      "rule": "filter-exit-stack",
+      "section": "III.3.34",
+      "polarity": "reject",
+      "source": "fixtures/filter-exit-stack-reject.il",
+      "method": "Test::Run",
+      "expectedErrors": [
+        "EndfilterStack"
+      ],
+      "sha256": "b3b2f621e6f5f26f0d60ebac6d64bcd8b6e936e5e92d341b5c58d35c271170aa",
+      "rules": [
+        "filter-exit-stack"
+      ]
+    },
+    {
+      "id": "box-byref-accept",
+      "rule": "box-byref",
+      "section": "III.4.1",
+      "polarity": "accept",
+      "source": "fixtures/box-byref-accept.il",
+      "method": "Test::Run",
+      "expectedErrors": [],
+      "sha256": "eece96b209f919026bc2dcb0463337e4c6e7887053457ce351ed7f0779798d98",
+      "rules": [
+        "box-byref"
+      ]
+    },
+    {
+      "id": "box-byref-reject",
+      "rule": "box-byref",
+      "section": "III.4.1",
+      "polarity": "reject",
+      "source": "fixtures/box-byref-reject.il",
+      "method": "Test::Run",
+      "expectedErrors": [
+        "BoxByRef",
+        "ExpectedValClassObjRefVariable"
+      ],
+      "sha256": "8d828999dc6adbe5a3034a75cfdbfa76642a8697794869a4808ef10bbab2e3cd",
+      "rules": [
+        "box-byref"
+      ]
+    },
+    {
+      "id": "constrained-prefix-accept",
+      "rule": "constrained-prefix",
+      "section": "III.2.1",
+      "polarity": "accept",
+      "source": "fixtures/constrained-prefix-accept.il",
+      "method": "Test::Run",
+      "expectedErrors": [],
+      "sha256": "98e695f5339de2ffdd9d928f3a5f47bd4aee21543ee98a73188f3ffd83673ce3",
+      "rules": [
+        "constrained-prefix"
+      ]
+    },
+    {
+      "id": "constrained-prefix-reject",
+      "rule": "constrained-prefix",
+      "section": "III.2.1",
+      "polarity": "reject",
+      "source": "fixtures/constrained-prefix-reject.il",
+      "method": "Test::Run",
+      "expectedErrors": [
+        "Constrained"
+      ],
+      "sha256": "c260b6a50c5f1d34793d1c0132fdd340fc554ac061ccd81b14d6e8377b51473c",
+      "rules": [
+        "constrained-prefix"
+      ]
+    },
+    {
+      "id": "constrained-this-address-accept",
+      "rule": "constrained-this-address",
+      "section": "III.2.1",
+      "polarity": "accept",
+      "source": "fixtures/constrained-this-address-accept.il",
+      "method": "Test::Run",
+      "expectedErrors": [],
+      "sha256": "bdbb7ef366e13b9523cc653d0716ff639589b185cc93f80c409dd5025c684ca2",
+      "rules": [
+        "constrained-this-address"
+      ]
+    },
+    {
+      "id": "constrained-this-address-reject",
+      "rule": "constrained-this-address",
+      "section": "III.2.1",
+      "polarity": "reject",
+      "source": "fixtures/constrained-this-address-reject.il",
+      "method": "Test::Run",
+      "expectedErrors": [
+        "ConstrainedCallWithNonByRefThis"
+      ],
+      "sha256": "cac0a51eba99af9b61900b332635d93285690ceba6ae63aeee7cff0012d35cbb",
+      "rules": [
+        "constrained-this-address"
+      ]
+    },
+    {
+      "id": "readonly-byref-write-accept",
+      "rule": "readonly-byref-write",
+      "section": "III.1.8.1.2.2",
+      "polarity": "accept",
+      "source": "fixtures/readonly-byref-write-accept.il",
+      "method": "Test::Run",
+      "expectedErrors": [],
+      "sha256": "756b46677f7750e9a38ba31b50e6808d63806140d34c42fa5745197908a362b8",
+      "rules": [
+        "readonly-byref-write"
+      ]
+    },
+    {
+      "id": "readonly-byref-write-reject",
+      "rule": "readonly-byref-write",
+      "section": "III.1.8.1.2.2",
+      "polarity": "reject",
+      "source": "fixtures/readonly-byref-write-reject.il",
+      "method": "Test::Run",
+      "expectedErrors": [
+        "ReadOnlyIllegalWrite"
+      ],
+      "sha256": "7abcb3ca18c188d8aa03b353ca97e1f5ff1178981fe42adbfdf54db0a1deed2b",
+      "rules": [
+        "readonly-byref-write"
+      ]
+    },
+    {
+      "id": "unmanaged-pointer-type-accept",
+      "rule": "unmanaged-pointer-type",
+      "section": "III.1.8.1.2",
+      "polarity": "accept",
+      "source": "fixtures/unmanaged-pointer-type-accept.il",
+      "method": "Test::Run",
+      "expectedErrors": [],
+      "sha256": "5c41b539d64c159f72dec8588b0c7ff8fa760a7aa57f9e782ce40e4f1f535bcf",
+      "rules": [
+        "unmanaged-pointer-type"
+      ]
+    },
+    {
+      "id": "unmanaged-pointer-type-reject",
+      "rule": "unmanaged-pointer-type",
+      "section": "III.1.8.1.2",
+      "polarity": "reject",
+      "source": "fixtures/unmanaged-pointer-type-reject.il",
+      "method": "Test::Run",
+      "expectedErrors": [
+        "UnmanagedPointer"
+      ],
+      "sha256": "4a910b5dde45ed23aba8fd1cd9de71de094c9e2e729449ad38a195e58714c470",
+      "rules": [
+        "unmanaged-pointer-type"
+      ]
+    },
+    {
+      "id": "delegate-method-pointer-accept",
+      "rule": "delegate-method-pointer",
+      "section": "III.1.8.1.5",
+      "polarity": "accept",
+      "source": "fixtures/delegate-method-pointer-accept.il",
+      "method": "Test::Run",
+      "expectedErrors": [],
+      "sha256": "13377e7c90ec4ccff44f80e5cb7eef97052b3d08483565028c2fd0e3896c5f7d",
+      "rules": [
+        "delegate-method-pointer"
+      ]
+    },
+    {
+      "id": "delegate-method-pointer-reject",
+      "rule": "delegate-method-pointer",
+      "section": "III.1.8.1.5",
+      "polarity": "reject",
+      "source": "fixtures/delegate-method-pointer-reject.il",
+      "method": "Test::Run",
+      "expectedErrors": [
+        "StackMethod"
+      ],
+      "sha256": "e338094133917e3fac6a4f1768580ca4159ac0c97265a00dd31afc888dfda0f8",
+      "rules": [
+        "delegate-method-pointer"
+      ]
+    },
+    {
+      "id": "type-access-accept",
+      "rule": "type-access",
+      "section": "III.4.3",
+      "polarity": "accept",
+      "source": "fixtures/type-access-accept.il",
+      "method": "Test::Run",
+      "expectedErrors": [],
+      "sha256": "887403ac6b8c6fc0bbcf542e3d7508566e014000891bd5f7f978235cabe660ee",
+      "rules": [
+        "type-access"
+      ]
+    },
+    {
+      "id": "type-access-reject",
+      "rule": "type-access",
+      "section": "III.4.3",
+      "polarity": "reject",
+      "source": "fixtures/type-access-reject.il",
+      "method": "Test::Run",
+      "expectedErrors": [
+        "TypeAccess"
+      ],
+      "sha256": "19ced4ddc832abefdae5b1d3d4f7bd28730770406b0f9c12ef2bb9622423e0c3",
+      "rules": [
+        "type-access"
+      ]
+    },
+    {
+      "id": "newobj-abstract-method-accept",
+      "rule": "newobj-abstract-method",
+      "section": "III.4.21",
+      "polarity": "accept",
+      "source": "fixtures/newobj-abstract-method-accept.il",
+      "method": "Test::Run",
+      "expectedErrors": [],
+      "sha256": "7d1ec8bb62d091180d4dfffe4bc2c3b7354547e7c3e546d1473a1a7c2c2a5d92",
+      "rules": [
+        "newobj-abstract-method"
+      ]
+    },
+    {
+      "id": "newobj-abstract-method-reject",
+      "rule": "newobj-abstract-method",
+      "section": "III.4.21",
+      "polarity": "reject",
+      "source": "fixtures/newobj-abstract-method-reject.il",
+      "method": "Test::Run",
+      "expectedErrors": [
+        "CtorSig"
+      ],
+      "sha256": "21f19c1607b3b5dcc0dda01468bfcd8dac0bfd52b575614011587a2e6eea7d6c",
+      "rules": [
+        "newobj-abstract-method"
+      ]
+    },
+    {
+      "id": "catch-entry-stack-accept",
+      "rule": "catch-entry-stack",
+      "section": "III.1.8.1",
+      "polarity": "accept",
+      "source": "fixtures/catch-entry-stack-accept.il",
+      "method": "Test::Run",
+      "expectedErrors": [],
+      "sha256": "d76ac05582c933da69f2ff854f7139d65e840031b00290a6a9a81e0a2f5f28b3",
+      "rules": [
+        "catch-entry-stack"
+      ]
+    },
+    {
+      "id": "catch-entry-stack-reject",
+      "rule": "catch-entry-stack",
+      "section": "III.1.8.1",
+      "polarity": "reject",
+      "source": "fixtures/catch-entry-stack-reject.il",
+      "method": "Test::Run",
+      "expectedErrors": [
+        "FilterOrCatchUnexpectedStack"
+      ],
+      "sha256": "66bfead33a3dd1e2b302b95e106073ab3e7333e110ce24f32fa1fd18efe396d7",
+      "rules": [
+        "catch-entry-stack"
+      ]
+    },
+    {
+      "id": "finally-entry-stack-accept",
+      "rule": "finally-entry-stack",
+      "section": "III.1.8.1",
+      "polarity": "accept",
+      "source": "fixtures/finally-entry-stack-accept.il",
+      "method": "Test::Run",
+      "expectedErrors": [],
+      "sha256": "6b28d6efa93a8f0676bd72e341edcab64370d1f431f5da7298769944904c3e20",
+      "rules": [
+        "finally-entry-stack"
+      ]
+    },
+    {
+      "id": "finally-entry-stack-reject",
+      "rule": "finally-entry-stack",
+      "section": "III.1.8.1",
+      "polarity": "reject",
+      "source": "fixtures/finally-entry-stack-reject.il",
+      "method": "Test::Run",
+      "expectedErrors": [
+        "FinOrFaultNonEmptyStack"
+      ],
+      "sha256": "fea340925e7f6e7568c7b73f2497112ccdb2b0687cb92221bfa470febcfb57c4",
+      "rules": [
+        "finally-entry-stack"
+      ]
+    },
+    {
+      "id": "delegate-ctor-pointer-signature-accept",
+      "rule": "delegate-ctor-pointer-signature",
+      "section": "III.1.8.1.5",
+      "polarity": "accept",
+      "source": "fixtures/delegate-ctor-pointer-signature-accept.il",
+      "method": "Test::Run",
+      "expectedErrors": [],
+      "sha256": "b3da8a51afe12d2d730bcda9932b1c76759c131d2094dd34cddd2393523c4062",
+      "rules": [
+        "delegate-ctor-pointer-signature"
+      ]
+    },
+    {
+      "id": "delegate-ctor-pointer-signature-reject",
+      "rule": "delegate-ctor-pointer-signature",
+      "section": "III.1.8.1.5",
+      "polarity": "reject",
+      "source": "fixtures/delegate-ctor-pointer-signature-reject.il",
+      "method": "Test::Run",
+      "expectedErrors": [
+        "DelegateCtorSigI"
+      ],
+      "sha256": "df38e6914ff1b061e5e629b0bbb54223defa15d26dec8073a778923267c131e3",
+      "rules": [
+        "delegate-ctor-pointer-signature"
+      ]
+    },
+    {
+      "id": "delegate-object-argument-accept",
+      "rule": "delegate-object-argument",
+      "section": "III.1.8.1.5",
+      "polarity": "accept",
+      "source": "fixtures/delegate-object-argument-accept.il",
+      "method": "Test::Run",
+      "expectedErrors": [],
+      "sha256": "db465b0946057a1125713b77c4ceaaa4bfa5322b833150cbf5e6e36c424b0e9d",
+      "rules": [
+        "delegate-object-argument"
+      ]
+    },
+    {
+      "id": "delegate-object-argument-reject",
+      "rule": "delegate-object-argument",
+      "section": "III.1.8.1.5",
+      "polarity": "reject",
+      "source": "fixtures/delegate-object-argument-reject.il",
+      "method": "Test::Run",
+      "expectedErrors": [
+        "DelegateCtorSigO"
+      ],
+      "sha256": "84c2e461b0dd822d30979542cdda21a8de1331c146b73631d7ca29311d44ca6b",
+      "rules": [
+        "delegate-object-argument"
+      ]
+    },
+    {
+      "id": "generic-method-constraint-accept",
+      "rule": "generic-method-constraint",
+      "section": "III.3.19",
+      "polarity": "accept",
+      "source": "fixtures/generic-method-constraint-accept.il",
+      "method": "Test::Run",
+      "expectedErrors": [],
+      "sha256": "af87f9893e423e650cca2ff21656aaa17600c7d677d232be99eda88825f14d44",
+      "rules": [
+        "generic-method-constraint"
+      ]
+    },
+    {
+      "id": "generic-method-constraint-reject",
+      "rule": "generic-method-constraint",
+      "section": "III.3.19",
+      "polarity": "reject",
+      "source": "fixtures/generic-method-constraint-reject.il",
+      "method": "Test::Run",
+      "expectedErrors": [
+        "UnsatisfiedMethodInst"
+      ],
+      "sha256": "923003f431ea6c68dd1d3e0cda0613c1c62834a226237d6238d9dbc216d9ecf6",
+      "rules": [
+        "generic-method-constraint"
+      ]
+    },
+    {
+      "id": "generic-field-owner-constraint-accept",
+      "rule": "generic-field-owner-constraint",
+      "section": "III.4.14",
+      "polarity": "accept",
+      "source": "fixtures/generic-field-owner-constraint-accept.il",
+      "method": "Test::Run",
+      "expectedErrors": [],
+      "sha256": "66e19d9413f3bab0951d4d06fb2da75b27fe825c84d66fc30013347170cde033",
+      "rules": [
+        "generic-field-owner-constraint"
+      ]
+    },
+    {
+      "id": "generic-field-owner-constraint-reject",
+      "rule": "generic-field-owner-constraint",
+      "section": "III.4.14",
+      "polarity": "reject",
+      "source": "fixtures/generic-field-owner-constraint-reject.il",
+      "method": "Test::Run",
+      "expectedErrors": [
+        "UnsatisfiedFieldParentInst"
+      ],
+      "sha256": "d6b7ad198d626f7c19c2308fa5d083b36878bb19cab2b49eb07b8cf4383e0142",
+      "rules": [
+        "generic-field-owner-constraint"
+      ]
+    },
+    {
+      "id": "box-generic-constraint-accept",
+      "rule": "box-generic-constraint",
+      "section": "III.4.1",
+      "polarity": "accept",
+      "source": "fixtures/box-generic-constraint-accept.il",
+      "method": "Test::Run",
+      "expectedErrors": [],
+      "sha256": "12761e675c4b4e1f7a387943dfed1b2fa20d5cb7c4de099e6fe8ae7a496c8e34",
+      "rules": [
+        "box-generic-constraint"
+      ]
+    },
+    {
+      "id": "box-generic-constraint-reject",
+      "rule": "box-generic-constraint",
+      "section": "III.4.1",
+      "polarity": "reject",
+      "source": "fixtures/box-generic-constraint-reject.il",
+      "method": "Test::Run",
+      "expectedErrors": [
+        "UnsatisfiedBoxOperand"
+      ],
+      "sha256": "16fe2acbfe49253c37ecf0ab83901e26a525b3a7d7177322adb71fb52dc43d69",
+      "rules": [
+        "box-generic-constraint"
+      ]
+    },
+    {
+      "id": "newobj-abstract-class-accept",
+      "rule": "newobj-abstract-class",
+      "section": "III.4.21",
+      "polarity": "accept",
+      "source": "fixtures/newobj-abstract-class-accept.il",
+      "method": "Test::Run",
+      "expectedErrors": [],
+      "sha256": "f1cb5f142a6caabf592c97e408443abd441a5c59854da4f7f8d1d50cbaf4c37a",
+      "rules": [
+        "newobj-abstract-class"
+      ]
+    },
+    {
+      "id": "newobj-abstract-class-reject",
+      "rule": "newobj-abstract-class",
+      "section": "III.4.21",
+      "polarity": "reject",
+      "source": "fixtures/newobj-abstract-class-reject.il",
+      "method": "Test::Run",
+      "expectedErrors": [
+        "NewobjAbstractClass"
+      ],
+      "sha256": "e39f4bf4dfcd67db4cd61ca31c44d45638e814d4aa483c21bdfff78d7c78a8a8",
+      "rules": [
+        "newobj-abstract-class"
+      ]
+    },
+    {
+      "id": "delegate-nonfinal-virtual-accept",
+      "rule": "delegate-nonfinal-virtual",
+      "section": "III.3.41",
+      "polarity": "accept",
+      "source": "fixtures/delegate-nonfinal-virtual-accept.il",
+      "method": "Test::Run",
+      "expectedErrors": [],
+      "sha256": "20c604348bfb41e026f2156ee04acda078bf8ec0f02aece1f14b87632f2c6f99",
+      "rules": [
+        "delegate-nonfinal-virtual"
+      ]
+    },
+    {
+      "id": "delegate-nonfinal-virtual-reject",
+      "rule": "delegate-nonfinal-virtual",
+      "section": "III.3.41",
+      "polarity": "reject",
+      "source": "fixtures/delegate-nonfinal-virtual-reject.il",
+      "method": "Test::Run",
+      "expectedErrors": [
+        "LdftnNonFinalVirtual"
+      ],
+      "sha256": "76d23f73c8fa7f0b4691c60df29e255706d672be565b5a23240175d08039b01b",
+      "rules": [
+        "delegate-nonfinal-virtual"
+      ]
+    }
+  ],
+  "scope": "93 named Partition III constraints expressed by the pinned ILVerify diagnostics; 95 verification diagnostics mapped. Decoder/metadata, optional sanity and universally unverifiable-instruction correctness checks are separate. Oracle execution is pending.",
+  "rules": [
+    {
+      "id": "stack-underflow",
+      "section": "III.1.8.1",
+      "accept": "stack-underflow-accept",
+      "reject": "stack-underflow-reject",
+      "diagnostics": [
+        "StackUnderflow"
+      ]
+    },
+    {
+      "id": "stack-overflow",
+      "section": "III.1.8.1",
+      "accept": "stack-overflow-accept",
+      "reject": "stack-overflow-reject",
+      "diagnostics": [
+        "StackOverflow"
+      ]
+    },
+    {
+      "id": "void-return",
+      "section": "III.3.57",
+      "accept": "void-return-accept",
+      "reject": "void-return-reject",
+      "diagnostics": [
+        "ReturnVoid"
+      ]
+    },
+    {
+      "id": "missing-return",
+      "section": "III.3.57",
+      "accept": "missing-return-accept",
+      "reject": "missing-return-reject",
+      "diagnostics": [
+        "ReturnMissing"
+      ]
+    },
+    {
+      "id": "extra-return",
+      "section": "III.3.57",
+      "accept": "extra-return-accept",
+      "reject": "extra-return-reject",
+      "diagnostics": [
+        "ReturnEmpty"
+      ]
+    },
+    {
+      "id": "return-type",
+      "section": "III.3.57",
+      "accept": "return-type-accept",
+      "reject": "return-type-reject",
+      "diagnostics": [
+        "StackUnexpected"
+      ]
+    },
+    {
+      "id": "local-index",
+      "section": "III.3.43",
+      "accept": "local-index-accept",
+      "reject": "local-index-reject",
+      "diagnostics": [
+        "UnrecognizedLocalNumber"
+      ]
+    },
+    {
+      "id": "argument-index",
+      "section": "III.3.38",
+      "accept": "argument-index-accept",
+      "reject": "argument-index-reject",
+      "diagnostics": [
+        "UnrecognizedArgumentNumber"
+      ]
+    },
+    {
+      "id": "shift-count",
+      "section": "III.3.58",
+      "accept": "shift-count-accept",
+      "reject": "shift-count-reject",
+      "diagnostics": [
+        "ExpectedIntegerType"
+      ]
+    },
+    {
+      "id": "numeric-negation",
+      "section": "III.3.50",
+      "accept": "numeric-negation-accept",
+      "reject": "numeric-negation-reject",
+      "diagnostics": [
+        "ExpectedNumericType"
+      ]
+    },
+    {
+      "id": "throw-reference",
+      "section": "III.4.31",
+      "accept": "throw-reference-accept",
+      "reject": "throw-reference-reject",
+      "diagnostics": [
+        "StackObjRef"
+      ]
+    },
+    {
+      "id": "rethrow-handler",
+      "section": "III.4.24",
+      "accept": "rethrow-handler-accept",
+      "reject": "rethrow-handler-reject",
+      "diagnostics": [
+        "Rethrow"
+      ]
+    },
+    {
+      "id": "endfinally-handler",
+      "section": "III.3.35",
+      "accept": "endfinally-handler-accept",
+      "reject": "endfinally-handler-reject",
+      "diagnostics": [
+        "Endfinally"
+      ]
+    },
+    {
+      "id": "branch-stack-depth",
+      "section": "III.1.8.1.3",
+      "accept": "branch-stack-depth-accept",
+      "reject": "branch-stack-depth-reject",
+      "diagnostics": [
+        "PathStackDepth"
+      ]
+    },
+    {
+      "id": "volatile-prefix",
+      "section": "III.2.6",
+      "accept": "volatile-prefix-accept",
+      "reject": "volatile-prefix-reject",
+      "diagnostics": [
+        "Volatile"
+      ]
+    },
+    {
+      "id": "unaligned-prefix",
+      "section": "III.2.5",
+      "accept": "unaligned-prefix-accept",
+      "reject": "unaligned-prefix-reject",
+      "diagnostics": [
+        "Unaligned"
+      ]
+    },
+    {
+      "id": "method-fallthrough",
+      "section": "III.1.7.3",
+      "accept": "method-fallthrough-accept",
+      "reject": "method-fallthrough-reject",
+      "diagnostics": [
+        "MethodFallthrough"
+      ]
+    },
+    {
+      "id": "fallthrough-handler",
+      "section": "III.1.8.1",
+      "accept": "fallthrough-handler-accept",
+      "reject": "fallthrough-handler-reject",
+      "diagnostics": [
+        "FallthroughException",
+        "FallthroughIntoHandler"
+      ]
+    },
+    {
+      "id": "fallthrough-filter",
+      "section": "III.1.8.1",
+      "accept": "fallthrough-filter-accept",
+      "reject": "fallthrough-filter-reject",
+      "diagnostics": [
+        "FallthroughException",
+        "FallthroughIntoFilter"
+      ]
+    },
+    {
+      "id": "leave-into-try",
+      "section": "III.3.46",
+      "accept": "leave-into-try-accept",
+      "reject": "leave-into-try-reject",
+      "diagnostics": [
+        "LeaveIntoTry"
+      ]
+    },
+    {
+      "id": "leave-into-handler",
+      "section": "III.3.46",
+      "accept": "leave-into-handler-accept",
+      "reject": "leave-into-handler-reject",
+      "diagnostics": [
+        "LeaveIntoHandler"
+      ]
+    },
+    {
+      "id": "leave-into-filter",
+      "section": "III.3.46",
+      "accept": "fallthrough-filter-accept",
+      "reject": "leave-into-filter-reject",
+      "diagnostics": [
+        "LeaveIntoFilter"
+      ]
+    },
+    {
+      "id": "leave-out-of-filter",
+      "section": "III.3.46",
+      "accept": "fallthrough-filter-accept",
+      "reject": "leave-out-of-filter-reject",
+      "diagnostics": [
+        "LeaveOutOfFilter"
+      ]
+    },
+    {
+      "id": "leave-out-of-finally",
+      "section": "III.3.46",
+      "accept": "leave-out-of-finally-accept",
+      "reject": "leave-out-of-finally-reject",
+      "diagnostics": [
+        "LeaveOutOfFinally"
+      ]
+    },
+    {
+      "id": "leave-out-of-fault",
+      "section": "III.3.46",
+      "accept": "leave-out-of-fault-accept",
+      "reject": "leave-out-of-fault-reject",
+      "diagnostics": [
+        "LeaveOutOfFault"
+      ]
+    },
+    {
+      "id": "branch-into-try",
+      "section": "III.1.8.1",
+      "accept": "branch-into-try-accept",
+      "reject": "branch-into-try-reject",
+      "diagnostics": [
+        "BranchIntoTry"
+      ]
+    },
+    {
+      "id": "branch-out-of-try",
+      "section": "III.1.8.1",
+      "accept": "fallthrough-handler-accept",
+      "reject": "branch-out-of-try-reject",
+      "diagnostics": [
+        "BranchOutOfTry"
+      ]
+    },
+    {
+      "id": "branch-into-handler",
+      "section": "III.1.8.1",
+      "accept": "fallthrough-handler-accept",
+      "reject": "branch-into-handler-reject",
+      "diagnostics": [
+        "BranchIntoHandler",
+        "BranchOutOfTry"
+      ]
+    },
+    {
+      "id": "branch-into-filter",
+      "section": "III.1.8.1",
+      "accept": "fallthrough-handler-accept",
+      "reject": "branch-into-filter-reject",
+      "diagnostics": [
+        "BranchIntoFilter",
+        "BranchOutOfTry"
+      ]
+    },
+    {
+      "id": "branch-out-of-finally",
+      "section": "III.1.8.1",
+      "accept": "leave-out-of-finally-accept",
+      "reject": "branch-out-of-finally-reject",
+      "diagnostics": [
+        "BranchOutOfFinally"
+      ]
+    },
+    {
+      "id": "prefix-branch-target",
+      "section": "III.1.7.2",
+      "accept": "prefix-branch-target-accept",
+      "reject": "prefix-branch-target-reject",
+      "diagnostics": [
+        "BadJumpTarget"
+      ]
+    },
+    {
+      "id": "return-byref-lifetime",
+      "section": "III.3.57",
+      "accept": "return-byref-lifetime-accept",
+      "reject": "return-byref-lifetime-reject",
+      "diagnostics": [
+        "ReturnPtrToStack"
+      ]
+    },
+    {
+      "id": "delegate-signature",
+      "section": "III.1.8.1.5",
+      "accept": "delegate-signature-accept",
+      "reject": "delegate-signature-reject",
+      "diagnostics": [
+        "DelegateCtor"
+      ]
+    },
+    {
+      "id": "delegate-sequence",
+      "section": "III.1.8.1.5",
+      "accept": "delegate-sequence-accept",
+      "reject": "delegate-sequence-reject",
+      "diagnostics": [
+        "DelegatePattern"
+      ]
+    },
+    {
+      "id": "ldvirtftn-static",
+      "section": "III.4.18",
+      "accept": "delegate-sequence-accept",
+      "reject": "ldvirtftn-static-reject",
+      "diagnostics": [
+        "LdvirtftnOnStatic"
+      ]
+    },
+    {
+      "id": "readonly-prefix",
+      "section": "III.2.3",
+      "accept": "readonly-prefix-accept",
+      "reject": "readonly-prefix-reject",
+      "diagnostics": [
+        "ReadOnly"
+      ]
+    },
+    {
+      "id": "readonly-callee",
+      "section": "III.2.3",
+      "accept": "readonly-callee-accept",
+      "reject": "readonly-callee-reject",
+      "diagnostics": [
+        "ReadonlyUnexpectedCallee"
+      ]
+    },
+    {
+      "id": "tail-next-instruction",
+      "section": "III.2.4",
+      "accept": "tail-next-instruction-accept",
+      "reject": "tail-next-instruction-reject",
+      "diagnostics": [
+        "TailCall"
+      ]
+    },
+    {
+      "id": "tail-return",
+      "section": "III.2.4",
+      "accept": "tail-next-instruction-accept",
+      "reject": "tail-return-reject",
+      "diagnostics": [
+        "TailRet"
+      ]
+    },
+    {
+      "id": "tail-protected-region",
+      "section": "III.2.4",
+      "accept": "tail-next-instruction-accept",
+      "reject": "tail-protected-region-reject",
+      "diagnostics": [
+        "TailCallInsideER",
+        "TailRet"
+      ]
+    },
+    {
+      "id": "backward-branch",
+      "section": "III.1.7.5",
+      "accept": "backward-branch-accept",
+      "reject": "backward-branch-reject",
+      "diagnostics": [
+        "BackwardBranch"
+      ]
+    },
+    {
+      "id": "base-call-this",
+      "section": "III.3.19",
+      "accept": "base-call-this-accept",
+      "reject": "base-call-this-reject",
+      "diagnostics": [
+        "ThisMismatch"
+      ]
+    },
+    {
+      "id": "generic-owner-constraint",
+      "section": "III.3.41",
+      "accept": "generic-owner-constraint-accept",
+      "reject": "generic-owner-constraint-reject",
+      "diagnostics": [
+        "UnsatisfiedMethodParentInst"
+      ]
+    },
+    {
+      "id": "endfilter-region",
+      "section": "III.3.34",
+      "accept": "endfilter-region-accept",
+      "reject": "endfilter-region-reject",
+      "diagnostics": [
+        "Endfilter"
+      ]
+    },
+    {
+      "id": "branch-out-of-catch",
+      "section": "III.1.8.1",
+      "accept": "branch-out-of-catch-accept",
+      "reject": "branch-out-of-catch-reject",
+      "diagnostics": [
+        "BranchOutOfHandler"
+      ]
+    },
+    {
+      "id": "branch-out-of-filter",
+      "section": "III.1.8.1",
+      "accept": "branch-out-of-filter-accept",
+      "reject": "branch-out-of-filter-reject",
+      "diagnostics": [
+        "BranchOutOfFilter"
+      ]
+    },
+    {
+      "id": "return-in-try",
+      "section": "III.3.57",
+      "accept": "return-in-try-accept",
+      "reject": "return-in-try-reject",
+      "diagnostics": [
+        "ReturnFromTry"
+      ]
+    },
+    {
+      "id": "return-in-handler",
+      "section": "III.3.57",
+      "accept": "return-in-handler-accept",
+      "reject": "return-in-handler-reject",
+      "diagnostics": [
+        "ReturnFromHandler"
+      ]
+    },
+    {
+      "id": "return-in-filter",
+      "section": "III.3.57",
+      "accept": "return-in-filter-accept",
+      "reject": "return-in-filter-reject",
+      "diagnostics": [
+        "ReturnFromFilter"
+      ]
+    },
+    {
+      "id": "stack-merge-types",
+      "section": "III.1.8.1.3",
+      "accept": "stack-merge-types-accept",
+      "reject": "stack-merge-types-reject",
+      "diagnostics": [
+        "PathStackUnexpected"
+      ]
+    },
+    {
+      "id": "constructor-initialization",
+      "section": "III.1.8.1.4",
+      "accept": "constructor-initialization-accept",
+      "reject": "constructor-initialization-reject",
+      "diagnostics": [
+        "ThisUninitReturn"
+      ]
+    },
+    {
+      "id": "constructor-this-store",
+      "section": "III.1.8.1.4",
+      "accept": "constructor-this-store-accept",
+      "reject": "constructor-this-store-reject",
+      "diagnostics": [
+        "ThisUninitStore"
+      ]
+    },
+    {
+      "id": "constructor-this-use",
+      "section": "III.1.8.1.4",
+      "accept": "constructor-this-use-accept",
+      "reject": "constructor-this-use-reject",
+      "diagnostics": [
+        "UninitStack"
+      ]
+    },
+    {
+      "id": "ldftn-constructor",
+      "section": "III.3.41",
+      "accept": "ldftn-constructor-accept",
+      "reject": "ldftn-constructor-reject",
+      "diagnostics": [
+        "LdftnCtor"
+      ]
+    },
+    {
+      "id": "indirect-element-type",
+      "section": "III.3.42",
+      "accept": "indirect-element-type-accept",
+      "reject": "indirect-element-type-reject",
+      "diagnostics": [
+        "StackUnexpectedArrayType"
+      ]
+    },
+    {
+      "id": "finite-float",
+      "section": "III.3.24",
+      "accept": "finite-float-accept",
+      "reject": "finite-float-reject",
+      "diagnostics": [
+        "ExpectedFloatType"
+      ]
+    },
+    {
+      "id": "managed-address",
+      "section": "III.4.5",
+      "accept": "managed-address-accept",
+      "reject": "managed-address-reject",
+      "diagnostics": [
+        "StackByRef"
+      ]
+    },
+    {
+      "id": "unverifiable-block-copy",
+      "section": "III.3.30",
+      "accept": "unverifiable-block-copy-accept",
+      "reject": "unverifiable-block-copy-reject",
+      "diagnostics": [
+        "Unverifiable"
+      ]
+    },
+    {
+      "id": "array-instance",
+      "section": "III.4.12",
+      "accept": "array-instance-accept",
+      "reject": "array-instance-reject",
+      "diagnostics": [
+        "ExpectedArray"
+      ]
+    },
+    {
+      "id": "unbox-value-type",
+      "section": "III.4.32",
+      "accept": "unbox-value-type-accept",
+      "reject": "unbox-value-type-reject",
+      "diagnostics": [
+        "ValueTypeExpected"
+      ]
+    },
+    {
+      "id": "method-access",
+      "section": "III.3.19",
+      "accept": "method-access-accept",
+      "reject": "method-access-reject",
+      "diagnostics": [
+        "MethodAccess"
+      ]
+    },
+    {
+      "id": "field-access",
+      "section": "III.4.14",
+      "accept": "field-access-accept",
+      "reject": "field-access-reject",
+      "diagnostics": [
+        "FieldAccess"
+      ]
+    },
+    {
+      "id": "static-field-operand",
+      "section": "III.4.14",
+      "accept": "static-field-operand-accept",
+      "reject": "static-field-operand-reject",
+      "diagnostics": [
+        "ExpectedStaticField"
+      ]
+    },
+    {
+      "id": "initonly-write",
+      "section": "III.4.28",
+      "accept": "initonly-write-accept",
+      "reject": "initonly-write-reject",
+      "diagnostics": [
+        "InitOnly"
+      ]
+    },
+    {
+      "id": "callvirt-value-type",
+      "section": "III.4.2",
+      "accept": "callvirt-value-type-accept",
+      "reject": "callvirt-value-type-reject",
+      "diagnostics": [
+        "CallVirtOnValueType"
+      ]
+    },
+    {
+      "id": "newobj-constructor",
+      "section": "III.4.21",
+      "accept": "newobj-constructor-accept",
+      "reject": "newobj-constructor-reject",
+      "diagnostics": [
+        "CtorExpected"
+      ]
+    },
+    {
+      "id": "callvirt-static",
+      "section": "III.4.2",
+      "accept": "callvirt-static-accept",
+      "reject": "callvirt-static-reject",
+      "diagnostics": [
+        "CallVirtOnStatic"
+      ]
+    },
+    {
+      "id": "call-existing-constructor",
+      "section": "III.3.19",
+      "accept": "call-existing-constructor-accept",
+      "reject": "call-existing-constructor-reject",
+      "diagnostics": [
+        "CallCtor"
+      ]
+    },
+    {
+      "id": "initlocals-required",
+      "section": "III.1.8.1",
+      "accept": "initlocals-required-accept",
+      "reject": "initlocals-required-reject",
+      "diagnostics": [
+        "InitLocals"
+      ]
+    },
+    {
+      "id": "tail-byref",
+      "section": "III.2.4",
+      "accept": "tail-byref-accept",
+      "reject": "tail-byref-reject",
+      "diagnostics": [
+        "TailByRef"
+      ]
+    },
+    {
+      "id": "tail-void-return",
+      "section": "III.2.4",
+      "accept": "tail-void-return-accept",
+      "reject": "tail-void-return-reject",
+      "diagnostics": [
+        "TailRetVoid"
+      ]
+    },
+    {
+      "id": "tail-return-type",
+      "section": "III.2.4",
+      "accept": "tail-return-type-accept",
+      "reject": "tail-return-type-reject",
+      "diagnostics": [
+        "TailRetType"
+      ]
+    },
+    {
+      "id": "tail-empty-stack",
+      "section": "III.2.4",
+      "accept": "tail-empty-stack-accept",
+      "reject": "tail-empty-stack-reject",
+      "diagnostics": [
+        "TailStackEmpty"
+      ]
+    },
+    {
+      "id": "call-abstract",
+      "section": "III.3.19",
+      "accept": "call-abstract-accept",
+      "reject": "call-abstract-reject",
+      "diagnostics": [
+        "CallAbstract"
+      ]
+    },
+    {
+      "id": "try-entry-stack",
+      "section": "III.1.8.1",
+      "accept": "try-entry-stack-accept",
+      "reject": "try-entry-stack-reject",
+      "diagnostics": [
+        "TryNonEmptyStack"
+      ]
+    },
+    {
+      "id": "filter-exit-stack",
+      "section": "III.3.34",
+      "accept": "filter-exit-stack-accept",
+      "reject": "filter-exit-stack-reject",
+      "diagnostics": [
+        "EndfilterStack"
+      ]
+    },
+    {
+      "id": "box-byref",
+      "section": "III.4.1",
+      "accept": "box-byref-accept",
+      "reject": "box-byref-reject",
+      "diagnostics": [
+        "BoxByRef",
+        "ExpectedValClassObjRefVariable"
+      ]
+    },
+    {
+      "id": "constrained-prefix",
+      "section": "III.2.1",
+      "accept": "constrained-prefix-accept",
+      "reject": "constrained-prefix-reject",
+      "diagnostics": [
+        "Constrained"
+      ]
+    },
+    {
+      "id": "constrained-this-address",
+      "section": "III.2.1",
+      "accept": "constrained-this-address-accept",
+      "reject": "constrained-this-address-reject",
+      "diagnostics": [
+        "ConstrainedCallWithNonByRefThis"
+      ]
+    },
+    {
+      "id": "readonly-byref-write",
+      "section": "III.1.8.1.2.2",
+      "accept": "readonly-byref-write-accept",
+      "reject": "readonly-byref-write-reject",
+      "diagnostics": [
+        "ReadOnlyIllegalWrite"
+      ]
+    },
+    {
+      "id": "unmanaged-pointer-type",
+      "section": "III.1.8.1.2",
+      "accept": "unmanaged-pointer-type-accept",
+      "reject": "unmanaged-pointer-type-reject",
+      "diagnostics": [
+        "UnmanagedPointer"
+      ]
+    },
+    {
+      "id": "delegate-method-pointer",
+      "section": "III.1.8.1.5",
+      "accept": "delegate-method-pointer-accept",
+      "reject": "delegate-method-pointer-reject",
+      "diagnostics": [
+        "StackMethod"
+      ]
+    },
+    {
+      "id": "type-access",
+      "section": "III.4.3",
+      "accept": "type-access-accept",
+      "reject": "type-access-reject",
+      "diagnostics": [
+        "TypeAccess"
+      ]
+    },
+    {
+      "id": "newobj-abstract-method",
+      "section": "III.4.21",
+      "accept": "newobj-abstract-method-accept",
+      "reject": "newobj-abstract-method-reject",
+      "diagnostics": [
+        "CtorSig"
+      ]
+    },
+    {
+      "id": "catch-entry-stack",
+      "section": "III.1.8.1",
+      "accept": "catch-entry-stack-accept",
+      "reject": "catch-entry-stack-reject",
+      "diagnostics": [
+        "FilterOrCatchUnexpectedStack"
+      ]
+    },
+    {
+      "id": "finally-entry-stack",
+      "section": "III.1.8.1",
+      "accept": "finally-entry-stack-accept",
+      "reject": "finally-entry-stack-reject",
+      "diagnostics": [
+        "FinOrFaultNonEmptyStack"
+      ]
+    },
+    {
+      "id": "delegate-ctor-pointer-signature",
+      "section": "III.1.8.1.5",
+      "accept": "delegate-ctor-pointer-signature-accept",
+      "reject": "delegate-ctor-pointer-signature-reject",
+      "diagnostics": [
+        "DelegateCtorSigI"
+      ]
+    },
+    {
+      "id": "delegate-object-argument",
+      "section": "III.1.8.1.5",
+      "accept": "delegate-object-argument-accept",
+      "reject": "delegate-object-argument-reject",
+      "diagnostics": [
+        "DelegateCtorSigO"
+      ]
+    },
+    {
+      "id": "generic-method-constraint",
+      "section": "III.3.19",
+      "accept": "generic-method-constraint-accept",
+      "reject": "generic-method-constraint-reject",
+      "diagnostics": [
+        "UnsatisfiedMethodInst"
+      ]
+    },
+    {
+      "id": "generic-field-owner-constraint",
+      "section": "III.4.14",
+      "accept": "generic-field-owner-constraint-accept",
+      "reject": "generic-field-owner-constraint-reject",
+      "diagnostics": [
+        "UnsatisfiedFieldParentInst"
+      ]
+    },
+    {
+      "id": "box-generic-constraint",
+      "section": "III.4.1",
+      "accept": "box-generic-constraint-accept",
+      "reject": "box-generic-constraint-reject",
+      "diagnostics": [
+        "UnsatisfiedBoxOperand"
+      ]
+    },
+    {
+      "id": "newobj-abstract-class",
+      "section": "III.4.21",
+      "accept": "newobj-abstract-class-accept",
+      "reject": "newobj-abstract-class-reject",
+      "diagnostics": [
+        "NewobjAbstractClass"
+      ]
+    },
+    {
+      "id": "delegate-nonfinal-virtual",
+      "section": "III.3.41",
+      "accept": "delegate-nonfinal-virtual-accept",
+      "reject": "delegate-nonfinal-virtual-reject",
+      "diagnostics": [
+        "LdftnNonFinalVirtual"
+      ]
+    }
+  ]
+}

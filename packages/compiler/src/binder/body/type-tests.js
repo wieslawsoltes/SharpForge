@@ -1,6 +1,7 @@
 /**
  * `is`, `as`, null-conditional access (lifted to Nullable<T> for value results), await and throw.
  */
+import {DiagnosticId} from '../../diagnostics/codes.js';
 import { reportAwaitOutsideAsync } from '../async.js';
 import { SymbolKind, TypeKind, ErrorTypeSymbol } from '../../symbols/types.js';
 import { ConversionKind } from '../../conversions/classify.js';
@@ -15,6 +16,21 @@ const isSource = symbol => {
   for (let s = symbol?.originalDefinition ?? symbol; s; s = s.containingSymbol) if (s.isSource || s.containingAssembly) return true;
   return false;
 };
+
+/**
+ * A qualified name read as the member access it may also be. After `is` the parser cannot tell `x is A.B` (a type)
+ * from a constant (`x is Color.Red`, `n is Limits.Max`), and gives the name as a type; the constant is found by
+ * binding the same tokens as an expression.
+ */
+function asMemberAccess(syntax) {
+  if (syntax.kind !== 'QualifiedName') return syntax;
+  return Object.create(syntax, {
+    kind: { value: 'SimpleMemberAccessExpression' },
+    expression: { value: asMemberAccess(syntax.left) },
+    name: { value: syntax.right },
+    operatorToken: { value: syntax.dotToken },
+  });
+}
 
 /** Class mixin: `is`, `as`, null-conditional access (lifted to Nullable<T> for value results), await and throw. */
 export const TypeTestBinding = Base =>
@@ -31,7 +47,8 @@ export const TypeTestBinding = Base =>
       this.quiet = [];
       let type;
       try {
-        type = this.bindType(typeSyntax).type;
+        // The first attempt reports nothing: when the name is no type it may still be a constant.
+        type = this.bindType(typeSyntax, { quiet: true }).type;
       } finally {
         this.quiet = saved;
       }
@@ -47,7 +64,7 @@ export const TypeTestBinding = Base =>
     typeTest(syntax, operand, type) {
       if (!operand.type) {
         if (operand.literal === 'null') {
-          this.report(syntax, 'CS0184', [this.display(type)]);
+          this.report(syntax, DiagnosticId.CS0184, [this.display(type)]);
         }
         return this.node('Is', syntax, this.core.bool, { operand, testedType: type });
       }
@@ -55,18 +72,19 @@ export const TypeTestBinding = Base =>
       if (outcome === 'never') {
         const c = this.conversions.classifyExplicit(operand.type, type);
         if (!c.exists || c.isUserDefined || c.kind === ConversionKind.ExplicitNumeric || c.kind === ConversionKind.ImplicitNumeric)
-          this.report(syntax, 'CS0184', [this.display(type)]);
+          this.report(syntax, DiagnosticId.CS0184, [this.display(type)]);
       } else if (outcome === 'always' && operand.type.isValueType === true && !isNullableType(operand.type))
-        this.report(syntax, 'CS0183', [this.display(type)]);
+        this.report(syntax, DiagnosticId.CS0183, [this.display(type)]);
       return this.node('Is', syntax, this.core.bool, { operand, testedType: type, outcome });
     }
     tryConstantPattern(syntax, operand) {
       const saved = this.quiet;
       this.quiet = [];
       try {
-        const e = this.expression(syntax);
+        const e = this.expression(asMemberAccess(syntax));
         if (e.hasErrors || e.kind === 'TypeExpression' || !e.constantValue) return null;
-        return { kind: 'ConstantPattern', syntax, value: operand.type ? this.convertQuiet(e, operand.type) : e };
+        const conversion = operand.type ? this.conversions.classifyFromExpression(e, operand.type) : null;
+        return { kind: 'ConstantPattern', syntax, value: conversion?.exists ? this.constantPatternValue(e, operand.type, conversion) : e };
       } finally {
         this.quiet = saved;
       }
@@ -78,7 +96,7 @@ export const TypeTestBinding = Base =>
       if (!asOperatorTargetValid(type)) {
         this.report(
           syntax,
-          type.typeKind === TypeKind.TypeParameter ? 'CS0413' : 'CS0077',
+          type.typeKind === TypeKind.TypeParameter ? DiagnosticId.CS0413 : DiagnosticId.CS0077,
           type.typeKind === TypeKind.TypeParameter ? [type.name] : [this.display(type)],
         );
         return this.bad(syntax);
@@ -101,11 +119,11 @@ export const TypeTestBinding = Base =>
             operand.type.typeKind === TypeKind.Dynamic ||
             type.typeKind === TypeKind.TypeParameter;
         if (!allowed) {
-          this.report(syntax, 'CS0039', [this.display(operand.type), this.display(type)]);
+          this.report(syntax, DiagnosticId.CS0039, [this.display(operand.type), this.display(type)]);
           return this.bad(syntax);
         }
       } else if (operand.kind === 'MethodGroup' || operand.form === 'lambda') {
-        this.report(syntax, 'CS0837');
+        this.report(syntax, DiagnosticId.CS0837);
         return this.bad(syntax);
       }
       return this.node('As', syntax, type, { operand, targetType: type });
@@ -116,15 +134,15 @@ export const TypeTestBinding = Base =>
       if (receiver.hasErrors) return this.bad(syntax);
       const type = receiver.type;
       if (receiver.kind === 'MethodGroup' && receiver.methods?.length) {
-        this.report(syntax.expression, 'CS0119', [receiver.methods[0].toDisplayString(), 'method']);
+        this.report(syntax.expression, DiagnosticId.CS0119, [receiver.methods[0].toDisplayString(), 'method']);
         return this.bad(syntax);
       }
       if (!type || receiver.kind === 'MethodGroup') {
-        this.report(syntax.operatorToken, 'CS0023', ['?', this.operandDisplay(receiver)]);
+        this.report(syntax.operatorToken, DiagnosticId.CS0023, ['?', this.operandDisplay(receiver)]);
         return this.bad(syntax);
       }
       if (type.isValueType === true && !isNullableType(type)) {
-        this.report(syntax.operatorToken, 'CS0023', ['?', this.display(type)]);
+        this.report(syntax.operatorToken, DiagnosticId.CS0023, ['?', this.display(type)]);
         return this.bad(syntax);
       }
       const placeholder = this.node('ConditionalReceiver', syntax.expression, isNullableType(type) ? stripNullable(type) : type, {});
@@ -132,7 +150,7 @@ export const TypeTestBinding = Base =>
       if (access.hasErrors) return this.bad(syntax);
       if (access.kind === 'MethodGroup') {
         // `a?.M` without a call: a method group has no nullable form.
-        this.report(syntax.whenNotNull, 'CS8978', ['method group']);
+        this.report(syntax.whenNotNull, DiagnosticId.CS8978, ['method group']);
         return this.bad(syntax);
       }
       const t = access.type;
@@ -141,7 +159,7 @@ export const TypeTestBinding = Base =>
       else if (t.isValueType === true && !isNullableType(t)) result = this.core.nullableOf(t);
       else if (syntax.parent?.kind === 'ExpressionStatement') result = t;
       else if (t.typeKind === TypeKind.TypeParameter && t.isReferenceType !== true && t.isValueType !== true) {
-        this.report(syntax.whenNotNull, 'CS8978', [t.name]);
+        this.report(syntax.whenNotNull, DiagnosticId.CS8978, [t.name]);
         return this.bad(syntax);
       } else result = t;
       return this.node('ConditionalAccess', syntax, result, { receiver, whenNotNull: access, isLifted: result !== t });
@@ -209,11 +227,11 @@ export const TypeTestBinding = Base =>
     await(syntax) {
       const operand = this.value(syntax.expression);
       if (reportAwaitOutsideAsync(this, syntax)) return this.bad(syntax);
-      if (this.inUnsafeContext) this.report(syntax, 'CS4004');
+      if (this.inUnsafeContext) this.report(syntax, DiagnosticId.CS4004);
       if (operand.hasErrors) return this.bad(syntax);
       const untyped = untypedAwaitOperand(operand);
       if (untyped || !operand.type) {
-        this.report(syntax, untyped ? 'CS4001' : 'CS8716', untyped ? [untyped] : []);
+        this.report(syntax, untyped ? DiagnosticId.CS4001 : DiagnosticId.CS8716, untyped ? [untyped] : []);
         return this.bad(syntax);
       }
       const t = operand.type;

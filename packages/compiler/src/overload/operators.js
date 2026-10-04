@@ -8,14 +8,17 @@
  * Results: `{kind:'builtin',family,leftType,rightType,resultType,isLifted}` |
  *          `{kind:'user',method,resultType,isLifted,conversions}` | `{kind:'error',code,args}`.
  */
+import {DiagnosticId} from '../diagnostics/codes.js';
 import { withCheckedOperators, checkedOperatorName } from './checked-operators.js';
 import { TypeKind, SymbolKind } from '../symbols/types.js';
+import { tupleElements } from '../symbols/tuple-elements.js';
 import { binaryNumericPromotion, unaryNumericPromotion, shiftPromotion, isIntegralKind, isNumericKind } from '../conversions/numeric.js';
 import { isNullableType, stripNullable } from '../conversions/nullable.js';
 import { baseTypeChain } from '../symbols/substitution.js';
 import { hasExplicitReferenceConversion } from '../conversions/reference.js';
 import { argumentDisplay } from './resolution.js';
 import { resolvePredefinedOperator } from './predefined-operators.js';
+import { interfaceOperators, withoutHiddenInterfaceOperators } from './interface-operators.js';
 import { pointerBinaryOperator, pointerUnaryOperator } from './pointer-operators.js';
 
 export const binaryOperatorNames = Object.freeze({
@@ -75,6 +78,22 @@ const builtin = (family, leftType, rightType, resultType, isLifted = false, extr
 const isNullLiteral = e => e.literal === 'null';
 const isEnum = t => !!t && t.typeKind === TypeKind.Enum;
 
+/**
+ * True for one operator reached through both operands: the same symbol, or the same definition seen as a member of
+ * two equal constructions (`Box<int>` written twice is two type symbols, each with members of its own).
+ */
+function isSameOperator(first, second) {
+  if (first === second) return true;
+  const definition = first.originalDefinition ?? first;
+  return definition !== first && definition === (second.originalDefinition ?? second) && !!first.containingType?.equals(second.containingType);
+}
+
+/**
+ * The special types whose operators are user-defined operator methods (`decimal.op_Addition`, `DateTime.op_Subtraction`);
+ * the operators of the other special types are the predefined ones of the language.
+ */
+const specialTypesWithOperators = new Set(['System_Decimal', 'System_DateTime']);
+
 export class OperatorResolver {
   /** @param conversions Conversions  @param core CoreTypes  @param overloads OverloadResolver */
   constructor(conversions, core, overloads) {
@@ -94,11 +113,12 @@ export class OperatorResolver {
     if (!t || (t.typeKind === TypeKind.TypeParameter && !t.constraintTypes.length)) return [];
     const out = [];
     for (const b of t.typeKind === TypeKind.Interface ? [t] : baseTypeChain(t, this.core)) {
-      if (b.specialType && b.specialType !== 'System_Decimal' && b.typeKind !== TypeKind.Interface) continue;
+      if (b.specialType && !specialTypesWithOperators.has(b.specialType) && b.typeKind !== TypeKind.Interface) continue;
       for (const m of b.getMembers(name)) if (m.kind === SymbolKind.Method && m.isStatic) out.push(m);
       if (out.length) break;
     }
-    return out;
+    // C# 11: a type parameter also has the static abstract operators of its constraint interfaces.
+    return out.length ? out : interfaceOperators(t, name, this.core);
   }
   userDefined(name, operands, parameterCount, isChecked = false) {
     const candidates = [];
@@ -107,10 +127,12 @@ export class OperatorResolver {
       const declared = isChecked
         ? withCheckedOperators(this.declared(o.type, name), this.declared(o.type, checkedOperatorName(name)))
         : this.declared(o.type, name);
-      for (const m of declared) if (m.parameters.length === parameterCount && !candidates.includes(m)) candidates.push(m);
+      for (const m of declared) if (m.parameters.length === parameterCount && !candidates.some(known => isSameOperator(known, m))) candidates.push(m);
     }
     if (!candidates.length) return null;
-    const direct = this.overloads.resolve(candidates, operands, { keepBaseCandidates: true });
+    const applies = m => this.overloads.resolve([m], operands, { keepBaseCandidates: true }).succeeded,
+      visible = withoutHiddenInterfaceOperators(candidates, applies, this.core);
+    const direct = this.overloads.resolve(visible, operands, { keepBaseCandidates: true });
     if (direct.succeeded)
       return {
         kind: 'user',
@@ -119,7 +141,7 @@ export class OperatorResolver {
         isLifted: false,
         conversions: direct.conversions,
       };
-    if (direct.error.code === 'CS0121') return { kind: 'error', code: 'CS0034', ambiguous: true };
+    if (direct.error.code === DiagnosticId.CS0121) return { kind: 'error', code: DiagnosticId.CS0034, ambiguous: true };
     // Lifted form: non-nullable value parameters, nullable operands; null in gives null out (or false for comparisons).
     if (operands.some(o => (o.type && isNullableType(o.type)) || isNullLiteral(o))) {
       const liftable = candidates.filter(
@@ -164,13 +186,13 @@ export class OperatorResolver {
       if (user?.kind === 'user') return user;
       if (user?.kind === 'error') return this.error(user.code, operator, left, right);
     }
-    return this.builtinBinary(operator, left, right) ?? this.throughConversions(operator, [left, right]) ?? this.error('CS0019', operator, left, right);
+    return this.builtinBinary(operator, left, right) ?? this.throughConversions(operator, [left, right]) ?? this.error(DiagnosticId.CS0019, operator, left, right);
   }
   /** A predefined operator applied through user-defined implicit conversions of the operands, or null. */
   throughConversions(operator, operands) {
     const found = resolvePredefinedOperator(this, operator, operands);
     if (!found?.ambiguous) return found;
-    const code = operands.length === 1 ? 'CS0035' : 'CS0034';
+    const code = operands.length === 1 ? DiagnosticId.CS0035 : DiagnosticId.CS0034;
     return { kind: 'error', code, args: [operator, ...operands.map(argumentDisplay)] };
   }
   error(code, operator, left, right) {
@@ -226,12 +248,14 @@ export class OperatorResolver {
     }
     if (operator === '+' && (lt.specialType === 'System_String' || rt.specialType === 'System_String')) {
       if (lt.specialType === 'System_Void' || rt.specialType === 'System_Void') return null;
-      return builtin(
-        'string',
-        lt.specialType === 'System_String' ? core.string : core.object,
-        rt.specialType === 'System_String' ? core.string : core.object,
-        core.string,
-      );
+      // `string + object` unless the other operand has a user-defined implicit conversion to string: then
+      // `string + string` is the better operator, and the operand is converted by its operator.
+      const operandType = type => {
+        if (type.specialType === 'System_String') return core.string;
+        const toString = type.typeKind === TypeKind.Class || type.typeKind === TypeKind.Struct ? this.conversions.classifyImplicit(type, core.string) : null;
+        return toString?.exists && toString.isUserDefined ? core.string : core.object;
+      };
+      return builtin('string', operandType(lt), operandType(rt), core.string);
     }
     const l0 = stripNullable(lt),
       r0 = stripNullable(rt),
@@ -271,7 +295,7 @@ export class OperatorResolver {
         if (!p)
           return {
             kind: 'error',
-            code: lk === 'decimal' || rk === 'decimal' ? 'CS0019' : 'CS0034',
+            code: lk === 'decimal' || rk === 'decimal' ? DiagnosticId.CS0019 : DiagnosticId.CS0034,
             args: [operator, argumentDisplay(left), argumentDisplay(right)],
           };
         if (bitwise.has(operator) && !isIntegralKind(p)) return null;
@@ -290,6 +314,9 @@ export class OperatorResolver {
       return builtin('delegate', rt, rt, rt);
     // reference equality
     if (equality.has(operator)) {
+      // `string == string` is the predefined string equality (by value), not reference equality (C# 12.12.8).
+      const bothStrings = lt.specialType === 'System_String' && rt.specialType === 'System_String';
+      if (bothStrings) return builtin('string', core.string, core.string, core.bool);
       const refLike = t => t.isReferenceType === true || (t.typeKind === TypeKind.TypeParameter && t.isValueType !== true);
       if (
         refLike(lt) &&
@@ -305,7 +332,7 @@ export class OperatorResolver {
       )
         return builtin('object', core.object, core.object, core.bool);
       // Tuples compare element-wise (C# 7.3).
-      if (lt.isTupleType && rt.isTupleType && lt.typeArguments?.length === rt.typeArguments?.length)
+      if (lt.isTupleType && rt.isTupleType && tupleElements(lt).length === tupleElements(rt).length)
         return builtin('tuple', lt, rt, core.bool);
     }
     return null;
@@ -339,10 +366,10 @@ export class OperatorResolver {
     if (!user || user.kind !== 'user') return null;
     const m = user.method,
       t = m.returnType;
-    if (!m.parameters.every(p => p.type.equals(t))) return { kind: 'error', code: 'CS0217', args: [m.toDisplayString()] };
+    if (!m.parameters.every(p => p.type.equals(t))) return { kind: 'error', code: DiagnosticId.CS0217, args: [m.toDisplayString()] };
     const which = operator === '&&' ? 'op_False' : 'op_True',
       test = this.declared(t, which).find(x => x.parameters.length === 1);
-    if (!test) return { kind: 'error', code: 'CS0218', args: [m.toDisplayString(), t.toDisplayString()] };
+    if (!test) return { kind: 'error', code: DiagnosticId.CS0218, args: [m.toDisplayString(), t.toDisplayString()] };
     return { ...user, isLogical: true, shortCircuitOperator: test };
   }
   /** Unary operator resolution: `+ - ! ~ ++ --` (and `true`/`false` for conditions). */
@@ -350,7 +377,7 @@ export class OperatorResolver {
     const core = this.core,
       type = operand.type;
     if (type?.isErrorType()) return { kind: 'error', suppressed: true };
-    const fail = () => ({ kind: 'error', code: 'CS0023', args: [operator, argumentDisplay(operand)] });
+    const fail = () => ({ kind: 'error', code: DiagnosticId.CS0023, args: [operator, argumentDisplay(operand)] });
     if (!type) return fail();
     const pointer = pointerUnaryOperator(operator, operand);
     if (pointer) return pointer;
@@ -358,7 +385,7 @@ export class OperatorResolver {
     if (name) {
       const user = this.userDefined(name, [operand], 1, isChecked);
       if (user?.kind === 'user') return user;
-      if (user?.kind === 'error') return { kind: 'error', code: 'CS0035', args: [operator, argumentDisplay(operand)] };
+      if (user?.kind === 'error') return { kind: 'error', code: DiagnosticId.CS0035, args: [operator, argumentDisplay(operand)] };
     }
     const t0 = stripNullable(type),
       lifted = t0 !== type,
@@ -377,7 +404,7 @@ export class OperatorResolver {
     const p = unaryNumericPromotion(operator, k);
     if (!p)
       return operator === '-' && (k === 'ulong' || k === 'nuint')
-        ? { kind: 'error', code: 'CS0023', args: [operator, argumentDisplay(operand)] }
+        ? { kind: 'error', code: DiagnosticId.CS0023, args: [operator, argumentDisplay(operand)] }
         : fail();
     const t = wrap(this.typeOfKind(p));
     return builtin('numeric', t, null, t, lifted, { operandKind: p });

@@ -1,7 +1,7 @@
 {
-  "nameof/a-method-named-nameof-wins": ["diagnostics", "warnings", "bytecode", "cil"],
+  "nameof/a-method-named-nameof-wins": ["diagnostics", "warnings", "bytecode", "cil", "directCil"],
   "nameof/cs0103-cs0117-cs0120-arguments-that-do-not-bind": ["diagnostics", "warnings"],
   "nameof/cs8081-cs8082-cs8083-cs8084-arguments-without-a-name": ["diagnostics", "warnings"],
   "nameof/cs9058-instance-member-in-nameof-in-csharp-11": ["diagnostics", "warnings"],
-  "nameof/names-of-locals-members-types-and-namespaces": ["diagnostics", "bytecode", "cil"]
+  "nameof/names-of-locals-members-types-and-namespaces": ["diagnostics", "bytecode", "cil", "directCil"]
 }

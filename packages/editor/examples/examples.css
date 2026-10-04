@@ -1,0 +1,27 @@
+body {
+  margin: 20px;
+  color: #e6e8ed;
+  background: #202128;
+  font: 14px system-ui;
+}
+
+nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+button {
+  padding: 6px 10px;
+}
+
+label {
+  display: block;
+}
+
+#editor {
+  height: 70vh;
+  margin-top: 16px;
+  border: 1px solid #5b5768;
+}

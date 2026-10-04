@@ -9,6 +9,7 @@
  * Fixing picks, among the candidate bounds, the unique type every other candidate converts to after discarding those
  * that violate an exact, lower or upper bound.
  */
+import {DiagnosticId} from '../diagnostics/codes.js';
 import {
   TypeKind,
   SymbolKind,
@@ -23,6 +24,7 @@ import {
 } from '../symbols/types.js';
 import { baseTypeChain, allInterfacesOf, containsTypeParameter } from '../symbols/substitution.js';
 import { isNullableType } from '../conversions/nullable.js';
+import { spanInferencePair } from '../conversions/span.js';
 
 class Bounds {
   constructor() {
@@ -35,6 +37,17 @@ class Bounds {
 const add = (list, type) => {
   if (type && !type.isErrorType() && type.specialType !== 'System_Void' && !list.some(t => t.equals(type))) list.push(type);
 };
+
+/**
+ * The inferred return type of an async lambda is `Task<X>`; when the delegate returns another generic task type
+ * (`ValueTask<TOut>`) the result `X` is what `TOut` is inferred from (C# spec: inferred return type of an async
+ * function against a task-like return type).
+ */
+function asyncResultFor(inferred, output) {
+  const isGenericTask = type => type?.typeArguments?.length === 1 && type.containingNamespace?.name === 'Tasks';
+  if (!isGenericTask(inferred) || inferred.name !== 'Task' || !isGenericTask(output) || output.name !== 'ValueTask') return inferred;
+  return (output.originalDefinition ?? output).construct([inferred.typeArguments[0]]);
+}
 
 export class TypeInferrer {
   /**
@@ -67,6 +80,10 @@ export class TypeInferrer {
     return typeOf(this.map.substituteType(type));
   }
 
+  /** The element types of a C# 14 span inference from `u` to `v` (conversions/span.js), or null. */
+  spanPair(u, v) {
+    return this.conversions?.firstClassSpans ? spanInferencePair(u, v) : null;
+  }
   exact(u, v) {
     u = typeOf(u);
     v = typeOf(v);
@@ -81,6 +98,11 @@ export class TypeInferrer {
     }
     if (isNullableType(u) && isNullableType(v)) {
       this.exact(u.nullableUnderlyingType, v.nullableUnderlyingType);
+      return;
+    }
+    const span = this.spanPair(u, v);
+    if (span) {
+      this.exact(span.source, span.target);
       return;
     }
     if (
@@ -108,6 +130,13 @@ export class TypeInferrer {
     // A non-nullable U still infers through V1? (C# 8+): int to T? gives T = int.
     if (isNullableType(v) && u.isValueType === true && !isNullableType(u)) {
       this.exact(u, v.nullableUnderlyingType);
+      return;
+    }
+    const span = this.spanPair(u, v);
+    if (span) {
+      // To a Span<V1> the inference is exact; to a ReadOnlySpan<V1> it is a lower bound for a reference type.
+      if (span.isSpanTarget || span.source.isReferenceType !== true) this.exact(span.source, span.target);
+      else this.lower(span.source, span.target);
       return;
     }
     if (u instanceof ArrayTypeSymbol) {
@@ -265,7 +294,7 @@ export class TypeInferrer {
       arg.outputDone = true;
       if (!result) return;
       const before = this.boundCount();
-      this.lower(result, io.output);
+      this.lower(asyncResultFor(result, io.output), io.output);
       if (this.boundCount() !== before) progress = true;
     });
     for (const arg of args) delete arg.outputDone;
@@ -300,6 +329,6 @@ export function inferMethodTypeArguments(method, parameterTypes, args, conversio
   const definition = method.constructedFrom ?? method,
     inferrer = new TypeInferrer([...definition.typeParameters], conversions, core);
   const result = inferrer.infer(parameterTypes, args);
-  return result ? { typeArguments: result } : { error: { code: 'CS0411', args: [definition.toDisplayString()] } };
+  return result ? { typeArguments: result } : { error: { code: DiagnosticId.CS0411, args: [definition.toDisplayString()] } };
 }
 export { SymbolKind, TypeWithAnnotations };

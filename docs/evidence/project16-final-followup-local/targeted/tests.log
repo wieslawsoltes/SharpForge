@@ -1,0 +1,424 @@
+TAP version 13
+# Subtest: independent areas, browsers and performance all finish after earlier failures without downgrading them
+ok 1 - independent areas, browsers and performance all finish after earlier failures without downgrading them
+  ---
+  duration_ms: 5.057737
+  type: 'test'
+  ...
+# Subtest: stage selection runs only the selected scopes and preserves browser deadlines and capture-only results
+ok 2 - stage selection runs only the selected scopes and preserves browser deadlines and capture-only results
+  ---
+  duration_ms: 9.322147
+  type: 'test'
+  ...
+# Subtest: a scope settles and is checkpointed before the next independent scope starts
+ok 3 - a scope settles and is checkpointed before the next independent scope starts
+  ---
+  duration_ms: 0.4246
+  type: 'test'
+  ...
+# Subtest: setup errors remain fatal before any scope starts
+ok 4 - setup errors remain fatal before any scope starts
+  ---
+  duration_ms: 0.551021
+  type: 'test'
+  ...
+# Subtest: a thrown error carrying exit zero remains a failed outcome and a nonzero aggregate
+ok 5 - a thrown error carrying exit zero remains a failed outcome and a nonzero aggregate
+  ---
+  duration_ms: 0.299542
+  type: 'test'
+  ...
+# Subtest: an unsupported lazy-evaluation engine remains an independent failure after all earlier scopes finish
+ok 6 - an unsupported lazy-evaluation engine remains an independent failure after all earlier scopes finish
+  ---
+  duration_ms: 0.43793
+  type: 'test'
+  ...
+# Subtest: both permitted comparative stages require verification before baseline paths become active
+ok 7 - both permitted comparative stages require verification before baseline paths become active
+  ---
+  duration_ms: 13.521059
+  type: 'test'
+  ...
+# Subtest: ordinary create nonces keep empty baselines and perform no profile file reads
+ok 8 - ordinary create nonces keep empty baselines and perform no profile file reads
+  ---
+  duration_ms: 0.485722
+  type: 'test'
+  ...
+# Subtest: reserved profile requests reject other runners, engines and non-performance stages
+ok 9 - reserved profile requests reject other runners, engines and non-performance stages
+  ---
+  duration_ms: 0.39829
+  type: 'test'
+  ...
+# Subtest: unknown and malformed compare prefixes never fall back to capture-only
+ok 10 - unknown and malformed compare prefixes never fall back to capture-only
+  ---
+  duration_ms: 0.432292
+  type: 'test'
+  ...
+# Subtest: each pinned report and source envelope rejects same-length altered bytes
+ok 11 - each pinned report and source envelope rejects same-length altered bytes
+  ---
+  duration_ms: 10.90919
+  type: 'test'
+  ...
+# Subtest: missing and changed-size pinned files reject activation instead of dropping a baseline
+ok 12 - missing and changed-size pinned files reject activation instead of dropping a baseline
+  ---
+  duration_ms: 3.58123
+  type: 'test'
+  ...
+# Subtest: activation also rejects unsupported direct profile requests and manual-event substitution
+ok 13 - activation also rejects unsupported direct profile requests and manual-event substitution
+  ---
+  duration_ms: 0.350318
+  type: 'test'
+  ...
+# Subtest: pinned schemas activate independently of this machine; existing preflight rejects incompatible live hosts
+ok 14 - pinned schemas activate independently of this machine; existing preflight rejects incompatible live hosts
+  ---
+  duration_ms: 12.819501
+  type: 'test'
+  ...
+# Subtest: performance host rejection remains an independent scope failure after other all-stage scopes
+ok 15 - performance host rejection remains an independent scope failure after other all-stage scopes
+  ---
+  duration_ms: 8.781181
+  type: 'test'
+  ...
+# Subtest: the original comparators still reject changed browser versions, fixtures and relative regressions
+ok 16 - the original comparators still reject changed browser versions, fixtures and relative regressions
+  ---
+  duration_ms: 4.032541
+  type: 'test'
+  ...
+# Subtest: standalone create and manual selections retain platform, engine and immutable source
+ok 17 - standalone create and manual selections retain platform, engine and immutable source
+  ---
+  duration_ms: 3.259885
+  type: 'test'
+  ...
+# Subtest: standalone invokes only the existing supervised suite with its unchanged ID and deadline
+ok 18 - standalone invokes only the existing supervised suite with its unchanged ID and deadline
+  ---
+  duration_ms: 7.613746
+  type: 'test'
+  ...
+# Subtest: standalone failure preserves original cause and source in every checkpoint without widening scope
+ok 19 - standalone failure preserves original cause and source in every checkpoint without widening scope
+  ---
+  duration_ms: 1.317035
+  type: 'test'
+  ...
+# Subtest: standalone cannot request compare-a5 even on Ubuntu Chromium; existing comparative stages remain accepted
+ok 20 - standalone cannot request compare-a5 even on Ubuntu Chromium; existing comparative stages remain accepted
+  ---
+  duration_ms: 0.637221
+  type: 'test'
+  ...
+# Subtest: profile activation rejects a standalone selection before any baseline I/O
+ok 21 - profile activation rejects a standalone selection before any baseline I/O
+  ---
+  duration_ms: 0.350849
+  type: 'test'
+  ...
+# Subtest: each explicit platform, engine and stage resolves without running a capture
+ok 22 - each explicit platform, engine and stage resolves without running a capture
+  ---
+  duration_ms: 2.640201
+  type: 'test'
+  ...
+# Subtest: default create events discard baseline and dispatch-style overrides
+ok 23 - default create events discard baseline and dispatch-style overrides
+  ---
+  duration_ms: 0.161383
+  type: 'test'
+  ...
+# Subtest: manual dispatch preserves defaults and exact supplied baseline paths
+ok 24 - manual dispatch preserves defaults and exact supplied baseline paths
+  ---
+  duration_ms: 0.251069
+  type: 'test'
+  ...
+# Subtest: unrelated creates, tag creates and unsupported event types cannot qualify
+ok 25 - unrelated creates, tag creates and unsupported event types cannot qualify
+  ---
+  duration_ms: 0.488547
+  type: 'test'
+  ...
+# Subtest: the complete branch grammar rejects malformed selection and unsafe or oversized nonces
+ok 26 - the complete branch grammar rejects malformed selection and unsafe or oversized nonces
+  ---
+  duration_ms: 0.446724
+  type: 'test'
+  ...
+# Subtest: event and full ref identity must agree for created and manually selected refs
+ok 27 - event and full ref identity must agree for created and manually selected refs
+  ---
+  duration_ms: 0.345381
+  type: 'test'
+  ...
+# Subtest: a mutable name, missing SHA or different checked-out commit cannot pass immutable source validation
+ok 28 - a mutable name, missing SHA or different checked-out commit cannot pass immutable source validation
+  ---
+  duration_ms: 1.164095
+  type: 'test'
+  ...
+# Subtest: allocated runner and manual choice values are validated before output
+ok 29 - allocated runner and manual choice values are validated before output
+  ---
+  duration_ms: 0.269797
+  type: 'test'
+  ...
+# Subtest: baseline data cannot inject Actions environment records
+ok 30 - baseline data cannot inject Actions environment records
+  ---
+  duration_ms: 0.687066
+  type: 'test'
+  ...
+# Subtest: oversized or malformed event files fail before writing any Actions environment output
+ok 31 - oversized or malformed event files fail before writing any Actions environment output
+  ---
+  duration_ms: 20.605501
+  type: 'test'
+  ...
+# Subtest: 64 KiB paste undo discards deleted touched lines and bounds subsequent overview source reads
+ok 32 - 64 KiB paste undo discards deleted touched lines and bounds subsequent overview source reads
+  ---
+  duration_ms: 18.009287
+  type: 'test'
+  ...
+# Subtest: repeated paste undo redo cycles do not accumulate obsolete markers or overview reads
+ok 33 - repeated paste undo redo cycles do not accumulate obsolete markers or overview reads
+  ---
+  duration_ms: 32.283591
+  type: 'test'
+  ...
+# Subtest: multiline replacement removes interior markers and retains both surviving boundaries and shifted outside markers
+ok 34 - multiline replacement removes interior markers and retains both surviving boundaries and shifted outside markers
+  ---
+  duration_ms: 2.971772
+  type: 'test'
+  ...
+# Subtest: deletion ending exactly at a line start retains the surviving old-end marker at its new line
+ok 35 - deletion ending exactly at a line start retains the surviving old-end marker at its new line
+  ---
+  duration_ms: 0.661938
+  type: 'test'
+  ...
+# Subtest: deletion through EOF and whole-document replacement leave only surviving line candidates
+ok 36 - deletion through EOF and whole-document replacement leave only surviving line candidates
+  ---
+  duration_ms: 2.984391
+  type: 'test'
+  ...
+# Subtest: deletion and undo preserve trailing touched markers with "\\n" line endings
+ok 37 - deletion and undo preserve trailing touched markers with "\\n" line endings
+  ---
+  duration_ms: 2.806602
+  type: 'test'
+  ...
+# Subtest: deletion and undo preserve trailing touched markers with "\\r\\n" line endings
+ok 38 - deletion and undo preserve trailing touched markers with "\\r\\n" line endings
+  ---
+  duration_ms: 0.719825
+  type: 'test'
+  ...
+# Subtest: deletion and undo preserve trailing touched markers with "\\r" line endings
+ok 39 - deletion and undo preserve trailing touched markers with "\\r" line endings
+  ---
+  duration_ms: 1.024215
+  type: 'test'
+  ...
+# Subtest: LF-only deletion within CRLF preserves marked prefix and suffix lines without shifting trailing markers
+ok 40 - LF-only deletion within CRLF preserves marked prefix and suffix lines without shifting trailing markers
+  ---
+  duration_ms: 1.012036
+  type: 'test'
+  ...
+# Subtest: LF insertion after CR joins one delimiter and keeps trailing markers at their existing line
+ok 41 - LF insertion after CR joins one delimiter and keeps trailing markers at their existing line
+  ---
+  duration_ms: 1.136934
+  type: 'test'
+  ...
+# Subtest: splitting and rejoining CRLF maps all surviving source marks through exact snapshot geometry
+ok 42 - splitting and rejoining CRLF maps all surviving source marks through exact snapshot geometry
+  ---
+  duration_ms: 0.474836
+  type: 'test'
+  ...
+# Subtest: reverse-ordered multiple edits map outside markers once and add final-coordinate ranges once
+ok 43 - reverse-ordered multiple edits map outside markers once and add final-coordinate ranges once
+  ---
+  duration_ms: 5.47779
+  type: 'test'
+  ...
+# Subtest: same-line and adjacent edit endpoints preserve inserted line spans without duplicate shifting
+ok 44 - same-line and adjacent edit endpoints preserve inserted line spans without duplicate shifting
+  ---
+  duration_ms: 0.362887
+  type: 'test'
+  ...
+# Subtest: grouped undo uses intermediate event snapshots while the live model is already fully restored
+ok 45 - grouped undo uses intermediate event snapshots while the live model is already fully restored
+  ---
+  duration_ms: 0.615198
+  type: 'test'
+  ...
+# Subtest: saved and unsaved marks and hunk reverts keep their original snapshot semantics
+ok 46 - saved and unsaved marks and hunk reverts keep their original snapshot semantics
+  ---
+  duration_ms: 0.974099
+  type: 'test'
+  ...
+# Subtest: events without precomputed ranges use their immutable before/after positions without flattening source
+ok 47 - events without precomputed ranges use their immutable before/after positions without flattening source
+  ---
+  duration_ms: 0.647176
+  type: 'test'
+  ...
+# Subtest: preview has a visual root but publishes original source without undo entries or change events
+ok 48 - preview has a visual root but publishes original source without undo entries or change events
+  ---
+  duration_ms: 6.868567
+  type: 'test'
+  ...
+# Subtest: non-owner edits, history, checkpoint restores and competing previews reject without mutation
+ok 49 - non-owner edits, history, checkpoint restores and competing previews reject without mutation
+  ---
+  duration_ms: 1.410537
+  type: 'test'
+  ...
+# Subtest: preview ownership epochs reject old prepared commits and editor rebinding after exact-root restoration
+ok 50 - preview ownership epochs reject old prepared commits and editor rebinding after exact-root restoration
+  ---
+  duration_ms: 0.605974
+  type: 'test'
+  ...
+# Subtest: async preparation cannot cross a preview ownership cycle even when root and version are restored
+ok 51 - async preparation cannot cross a preview ownership cycle even when root and version are restored
+  ---
+  duration_ms: 1.037054
+  type: 'test'
+  ...
+# Subtest: saved markers survive preview cancellation and no-op save captures the committed root
+ok 52 - saved markers survive preview cancellation and no-op save captures the committed root
+  ---
+  duration_ms: 0.748289
+  type: 'test'
+  ...
+# Subtest: ordinary atomic silent commits publish every root before the first model notification
+ok 53 - ordinary atomic silent commits publish every root before the first model notification
+  ---
+  duration_ms: 1.109473
+  type: 'test'
+  ...
+# Subtest: disposal restores the published source and invalidates delayed preview capabilities
+ok 54 - disposal restores the published source and invalidates delayed preview capabilities
+  ---
+  duration_ms: 0.37162
+  type: 'test'
+  ...
+# Subtest: a low-level buffer mutation invalidates publication ownership without restoring over external text
+ok 55 - a low-level buffer mutation invalidates publication ownership without restoring over external text
+  ---
+  duration_ms: 0.548677
+  type: 'test'
+  ...
+# Subtest: a borrowed buffer remains externally owned and stale preview disposal preserves its advanced root
+ok 56 - a borrowed buffer remains externally owned and stale preview disposal preserves its advanced root
+  ---
+  duration_ms: 0.705524
+  type: 'test'
+  ...
+# Subtest: the preview owner cannot prepare a write over an independently advanced buffer
+ok 57 - the preview owner cannot prepare a write over an independently advanced buffer
+  ---
+  duration_ms: 0.346362
+  type: 'test'
+  ...
+# Subtest: committed notification ownership survives preview acquisition but cannot be forged or replayed
+ok 58 - committed notification ownership survives preview acquisition but cannot be forged or replayed
+  ---
+  duration_ms: 0.341225
+  type: 'test'
+  ...
+# Subtest: preview restoration repaints every live view of its model and leaves different documents untouched
+ok 59 - preview restoration repaints every live view of its model and leaves different documents untouched
+  ---
+  duration_ms: 0.36476
+  type: 'test'
+  ...
+# Subtest: A20 multi-caret editing commits one undo group and grapheme delete preserves boundaries
+ok 60 - A20 multi-caret editing commits one undo group and grapheme delete preserves boundaries
+  ---
+  duration_ms: 9.966249
+  type: 'test'
+  ...
+# Subtest: A20 deletion boundaries and smart newline at EOF are valid no-ops or atomic edits
+ok 61 - A20 deletion boundaries and smart newline at EOF are valid no-ops or atomic edits
+  ---
+  duration_ms: 1.986185
+  type: 'test'
+  ...
+# Subtest: A20 overtype never replaces a newline and virtual space is materialized only by typing
+ok 62 - A20 overtype never replaces a newline and virtual space is materialized only by typing
+  ---
+  duration_ms: 0.787408
+  type: 'test'
+  ...
+# Subtest: A20 advanced transforms preserve multi-caret atomicity and Unicode case expansion
+ok 63 - A20 advanced transforms preserve multi-caret atomicity and Unicode case expansion
+  ---
+  duration_ms: 2.053867
+  type: 'test'
+  ...
+# Subtest: A20 editorconfig precedence changes indentation per path and save applies EOL trim/final newline
+ok 64 - A20 editorconfig precedence changes indentation per path and save applies EOL trim/final newline
+  ---
+  duration_ms: 3.500388
+  type: 'test'
+  ...
+# Subtest: A20 clipboard ring bounds entries and drag move preserves one undo transaction
+ok 65 - A20 clipboard ring bounds entries and drag move preserves one undo transaction
+  ---
+  duration_ms: 0.556549
+  type: 'test'
+  ...
+# Subtest: A20 bookmarks and unsaved/saved/reverted change marks follow undo
+ok 66 - A20 bookmarks and unsaved/saved/reverted change marks follow undo
+  ---
+  duration_ms: 1.152728
+  type: 'test'
+  ...
+# Subtest: A20 chunk loading commits once and cancellation or malformed UTF-8 keeps original model
+ok 67 - A20 chunk loading commits once and cancellation or malformed UTF-8 keeps original model
+  ---
+  duration_ms: 14.324821
+  type: 'test'
+  ...
+# Subtest: A20 advanced caret transforms and disjoint line moves preserve EOLs and undo selections
+ok 68 - A20 advanced caret transforms and disjoint line moves preserve EOLs and undo selections
+  ---
+  duration_ms: 3.841653
+  type: 'test'
+  ...
+# Subtest: A20 advanced sorting preserves CRLF and read-only rejects transforms
+ok 69 - A20 advanced sorting preserves CRLF and read-only rejects transforms
+  ---
+  duration_ms: 0.744312
+  type: 'test'
+  ...
+1..69
+# tests 69
+# suites 0
+# pass 69
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 1396.190192

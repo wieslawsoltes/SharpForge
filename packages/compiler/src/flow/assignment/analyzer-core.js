@@ -2,6 +2,7 @@
  * Definite assignment state and bookkeeping: tracked variables, struct fields, diagnostics and the exit
  * checks for out parameters and struct constructors.
  */
+import {DiagnosticId} from '../../diagnostics/codes.js';
 import { SymbolKind, TypeKind, RefKind } from '../../symbols/types.js';
 import { MethodKind } from '../../symbols/members.js';
 import { structInstanceFields } from '../../binder/structs.js';
@@ -83,7 +84,7 @@ export class AssignmentAnalyzerCore {
       if (!this.isAssigned(p, state))
         this.report(
           this.exitNode(node),
-          'CS0177',
+          DiagnosticId.CS0177,
           [p.name],
           'out:' + p.name + ':' + (this.exitNode(node).span?.start ?? this.exitNode(node).start),
         );
@@ -101,7 +102,7 @@ export class AssignmentAnalyzerCore {
       const slot = this.fieldSlot(thisSlot, field);
       if (state.has(slot.key) || this.allFieldsAssigned(slot, state)) continue;
       const property = field.associatedSymbol;
-      const code = property ? 'CS0843' : 'CS0171';
+      const code = property ? DiagnosticId.CS0843 : DiagnosticId.CS0171;
       this.report(exit, code, [(property ?? field).toDisplayString(), autoDefaultVersion], `field:${field.name}:${position}`);
     }
   }

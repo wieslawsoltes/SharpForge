@@ -7,3 +7,22 @@ The registry describes exactly supported members; unlisted names do not invoke a
 ## 0.13 contracts and timelines
 
 The registry includes selected closed primitive collection, StringBuilder/string/Math, timeline, transform and wrap-panel contracts. `AnimationClock`, `prepareTimeline`, `timelinePosition` and `easing` provide data-only bounded timeline sampling for managed and JS hosts. Adapter reads/writes must not execute user code; completion callbacks are dispatched after updates. Snapshot data contains no executable closures. The registry is a compatibility inventory, not the complete native BCL or Windows App SDK.
+
+Registry type entries may declare `typeKind: 'interface'`, `interfaces` (canonical
+registered names), `variance` (`'in'`, `'out'`, or `'none'` for generic parameters),
+and `isAbstract`/`isSealed`. Runtime dispatch `kind` remains independent of type
+shape. Interface edges are validated transactionally; unknown/non-interface
+edges and interface cycles are rejected. `frameworkAssignable` follows declared
+base/interface edges with cycle protection. The compiler bridge and runtime
+method tables retain these shapes, and interface methods are abstract. This
+metadata seam does not itself implement managed comparer callback execution.
+
+`contractForMember` matches registered parameters and results with the shared
+`memberSignatureType(type)` spelling normalizer. This public helper maps only
+the scalar CLR name `System.Decimal` to the registry keyword `decimal`; it is
+used after registry canonicalization. It leaves other names, owners, byrefs,
+pointers and arrays unchanged. The resolver retains the declared return type,
+staticness, parameter count and nearest-member preference. Type identity and
+assignability still use the unchanged `canonicalType`/`frameworkAssignable`
+APIs. CIL applies this normalization only to its registered-framework lookup;
+the independent Decimal/Console intrinsic keys retain `System.Decimal`.

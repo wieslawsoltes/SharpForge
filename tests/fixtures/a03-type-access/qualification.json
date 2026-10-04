@@ -1,0 +1,217 @@
+{
+  "productCommit": "8b4e5b40fe2665c45a63db7174f7a2a2896b30de",
+  "native": {
+    "cases": 14,
+    "knownAgreements": 12,
+    "explicitUnknown": 2
+  },
+  "focused": {
+    "tests": 55,
+    "passed": 55,
+    "failed": 0,
+    "skipped": 0
+  },
+  "static": {
+    "syntaxModules": 3330,
+    "importModules": 3326,
+    "errors": 0,
+    "nodeTestFiles": 864,
+    "browserScripts": 36
+  },
+  "structure": {
+    "findings": 271,
+    "changedPathFindings": 0
+  },
+  "driver": [
+    {
+      "command": "git",
+      "args": [
+        "worktree",
+        "add",
+        "--detach",
+        "/tmp/sharpforge-a03-type-access-baseline",
+        "4d269c80e9ef1d3605c04156367599df85037673"
+      ],
+      "cwd": "/tmp/sharpforge-a03-type-accessibility",
+      "started": "2026-10-04T06:16:09.227Z",
+      "completed": "2026-10-04T06:16:10.786Z",
+      "status": 0,
+      "signal": null,
+      "log": "00-baseline"
+    },
+    {
+      "command": "npm",
+      "args": [
+        "ci",
+        "--ignore-scripts",
+        "--no-audit",
+        "--no-fund"
+      ],
+      "cwd": "/tmp/sharpforge-a03-type-accessibility",
+      "started": "2026-10-04T06:16:10.786Z",
+      "completed": "2026-10-04T06:16:11.377Z",
+      "status": 0,
+      "signal": null,
+      "log": "01-install-candidate"
+    },
+    {
+      "command": "npm",
+      "args": [
+        "ci",
+        "--ignore-scripts",
+        "--no-audit",
+        "--no-fund"
+      ],
+      "cwd": "/tmp/sharpforge-a03-type-access-baseline",
+      "started": "2026-10-04T06:16:11.377Z",
+      "completed": "2026-10-04T06:16:11.612Z",
+      "status": 0,
+      "signal": null,
+      "log": "02-install-baseline"
+    },
+    {
+      "command": "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+      "args": [
+        "tests/fixtures/a03-type-access/capture.mjs",
+        "tests/fixtures/a03-type-access/native.json"
+      ],
+      "cwd": "/tmp/sharpforge-a03-type-accessibility",
+      "started": "2026-10-04T06:16:11.612Z",
+      "completed": "2026-10-04T06:16:13.531Z",
+      "status": 0,
+      "signal": null,
+      "log": "03-native"
+    },
+    {
+      "command": "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+      "args": [
+        "--test",
+        "--test-concurrency=1",
+        "tests/a03-07-type-access.test.js",
+        "tests/a03-07-nested-access.test.js",
+        "tests/a03-07-member-access.test.js",
+        "tests/a03-07-members.test.js",
+        "tests/a03-07-type-system.test.js",
+        "tests/a03-07-type-system-native.test.js",
+        "tests/a03-verification-types.test.js",
+        "tests/a03-coded-index-bounds.test.js"
+      ],
+      "cwd": "/tmp/sharpforge-a03-type-accessibility",
+      "started": "2026-10-04T06:16:13.531Z",
+      "completed": "2026-10-04T06:16:14.797Z",
+      "status": 0,
+      "signal": null,
+      "log": "04-focused"
+    },
+    {
+      "command": "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+      "args": [
+        "--expose-gc",
+        "packages/cil/tools/benchmark-member-access.mjs",
+        "/tmp/a03-type-access-validation/baseline.json"
+      ],
+      "cwd": "/tmp/sharpforge-a03-type-access-baseline",
+      "started": "2026-10-04T06:16:14.797Z",
+      "completed": "2026-10-04T06:16:15.096Z",
+      "status": 0,
+      "signal": null,
+      "log": "05-benchmark-baseline"
+    },
+    {
+      "command": "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+      "args": [
+        "--expose-gc",
+        "packages/cil/tools/benchmark-member-access.mjs",
+        "/tmp/a03-type-access-validation/candidate.json"
+      ],
+      "cwd": "/tmp/sharpforge-a03-type-accessibility",
+      "started": "2026-10-04T06:16:15.096Z",
+      "completed": "2026-10-04T06:16:15.407Z",
+      "status": 0,
+      "signal": null,
+      "log": "06-benchmark-candidate"
+    },
+    {
+      "command": "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+      "args": [
+        "--expose-gc",
+        "packages/cil/tools/benchmark-nested-access.mjs",
+        "/tmp/a03-type-access-validation/baseline-nested.json"
+      ],
+      "cwd": "/tmp/sharpforge-a03-type-access-baseline",
+      "started": "2026-10-04T06:16:15.407Z",
+      "completed": "2026-10-04T06:16:15.653Z",
+      "status": 0,
+      "signal": null,
+      "log": "07-benchmark-baseline-nested"
+    },
+    {
+      "command": "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+      "args": [
+        "--expose-gc",
+        "packages/cil/tools/benchmark-nested-access.mjs",
+        "/tmp/a03-type-access-validation/candidate-nested.json"
+      ],
+      "cwd": "/tmp/sharpforge-a03-type-accessibility",
+      "started": "2026-10-04T06:16:15.654Z",
+      "completed": "2026-10-04T06:16:15.990Z",
+      "status": 0,
+      "signal": null,
+      "log": "08-benchmark-candidate-nested"
+    },
+    {
+      "command": "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+      "args": [
+        "--expose-gc",
+        "packages/cil/tools/benchmark-type-access.mjs",
+        "/tmp/a03-type-access-validation/type-queries.json"
+      ],
+      "cwd": "/tmp/sharpforge-a03-type-accessibility",
+      "started": "2026-10-04T06:16:15.991Z",
+      "completed": "2026-10-04T06:16:16.249Z",
+      "status": 0,
+      "signal": null,
+      "log": "09-benchmark-type"
+    },
+    {
+      "command": "npm",
+      "args": [
+        "run",
+        "check"
+      ],
+      "cwd": "/tmp/sharpforge-a03-type-accessibility",
+      "started": "2026-10-04T06:16:16.249Z",
+      "completed": "2026-10-04T06:16:18.870Z",
+      "status": 0,
+      "signal": null,
+      "log": "10-check"
+    },
+    {
+      "command": "npm",
+      "args": [
+        "run",
+        "check:structure"
+      ],
+      "cwd": "/tmp/sharpforge-a03-type-accessibility",
+      "started": "2026-10-04T06:16:18.870Z",
+      "completed": "2026-10-04T06:16:19.148Z",
+      "status": 0,
+      "signal": null,
+      "log": "11-structure"
+    }
+  ],
+  "logs": {
+    "03-native.log": "4418e7f2ded039a302e29f81fb67ebfdc3ded9c67931ba2b49bc3dc6b0e54272",
+    "06-benchmark-candidate.log": "c2b483dbc7f3769072e496494b6a8f13c8918bf7aaaf192ccd95963667d5bf10",
+    "07-benchmark-baseline-nested.log": "e0910dc4b4bddc86cf7bb54fbe1d7433e1301d5869d3efdeb243630938a4d4e0",
+    "05-benchmark-baseline.log": "8733bcab1d1ea0c1473cf538f7ed5603e7a3b41f8d5ffec9960c9411b27f9051",
+    "11-structure.log": "ce8aeb39d1967689ac2b46da011471ee61d699e1647e62606c817b32f275bdc5",
+    "08-benchmark-candidate-nested.log": "a18cdeed5d96dbf4df9a6c205fe6af0d4f2656ee2f016bba6f285a7427613036",
+    "04-focused.log": "283fa5d1b66d8489b9897c85efac5a200ab555dc7320237bcbaf9e5a171b81c0",
+    "10-check.log": "f4876e893cffd5415dae02b211867696012c17a487aba8f97886b10154886ead",
+    "00-baseline.log": "53550f28e62f7b83d9abb27805c9bc3b392ab7113376900170be2099f3332768",
+    "01-install-candidate.log": "e9941caa32ea2d8f2eea5d4c68e8dcdbd78df5988a43a83339bd1c9765f7280c",
+    "02-install-baseline.log": "f01aad0bc7380baadfcb58db3e5d6f15ebb9f73f8a09e76591226172d86b5338",
+    "09-benchmark-type.log": "8f1b428a49097fd886b58515c118290eb31c65e5f3a516930d46f57c025b2623"
+  }
+}

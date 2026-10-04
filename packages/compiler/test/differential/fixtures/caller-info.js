@@ -134,4 +134,55 @@ export const fixtures = feature('caller-info', [
       }
     `,
   ),
+  out(
+    'line-directives-remap-line-and-path-and-the-line-converts-to-double',
+    cs`
+      using System;
+      using System.Runtime.CompilerServices;
+      class Program
+      {
+          static void L([CallerLineNumber] int line = 0) { Console.WriteLine(line); }
+          static void D([CallerLineNumber] double line = 0) { Console.WriteLine(line + 0.5); }
+          static void O([CallerLineNumber] object line = null) { Console.WriteLine(line); }
+          static void S([CallerMemberName] string name = "") { Console.WriteLine(name); }
+          static void SO([CallerMemberName] object name = null) { Console.WriteLine(name); }
+          static void F([CallerFilePath] string path = "") { Console.WriteLine(path); }
+          static void Main()
+          {
+              L(); D(); O(); S(); SO();
+      #line 100 "other.cs"
+              L(); F();
+              D();
+      #line hidden
+              L();
+      #line default
+              L();
+      #line 7
+              L();
+          }
+      }
+    `,
+  ),
+  diag(
+    'cs4017-cs4018-cs4019-which-parameter-types-take-caller-info',
+    cs`
+      using System;
+      using System.Runtime.CompilerServices;
+      class Program
+      {
+          static void A([CallerLineNumber] string line = "") { }
+          static void B([CallerMemberName] int name = 0) { }
+          static void C([CallerLineNumber] short line = 0) { }
+          static void D([CallerLineNumber] byte line = 0) { }
+          static void E([CallerFilePath] char path = 'a') { }
+          static void F([CallerLineNumber] decimal line = 0) { }
+          static void G([CallerLineNumber] float line = 0) { }
+          static void H([CallerLineNumber] uint line = 0) { }
+          static void I([CallerLineNumber] ulong line = 0) { }
+          static void J([CallerLineNumber] long? line = 0) { }
+          static void K([CallerMemberName] IComparable name = null) { }
+          static void Main() { }
+      }
+    `,
+  ),
 ]);

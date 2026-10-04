@@ -32,7 +32,8 @@ test('A02-T29 every example program compiles identically as a library and with o
   for(const {name,text} of examples){verify([{uri:name,text}],{outputKind:'library'});verify([{uri:name,text}],{checkOverflow:true});}
 });
 test('A02-T29 the differential and binder fixture corpora compile to byte-identical images',()=>{
-  const fixtures=loadFixtures();assert(fixtures.length>400);
+  // Both image pipelines bind against the framework registry; `referencesOnly` fixtures are not image programs.
+  const fixtures=loadFixtures().filter(fixture=>!fixture.referencesOnly);assert(fixtures.length>400);
   // A few fixtures crash the current parser (packages/syntax, outside this epic); only pipeline disagreements fail here.
   let parserCrashes=0;for(const f of fixtures){try{verify([{uri:'Program.cs',text:f.source}],f.langVersion?{langVersion:f.langVersion}:{});}catch(error){if(/Pipeline mismatch/.test(error.message))throw error;parserCrashes++;}}
   assert(parserCrashes<10,'parser crashes: '+parserCrashes);
@@ -82,6 +83,9 @@ test('A02-T29 a compilation with errors binds and analyses every method but emit
 });
 test('A02-T29 verification rejects a pipeline that changes the image',()=>{
   const previous=globalThis.SHARPFORGE_PIPELINE_MISMATCH;let seen=null;globalThis.SHARPFORGE_PIPELINE_MISMATCH=m=>{seen=m;};
-  try{compile('int x;if(true)x=1;Console.WriteLine(x);',{pipeline:'verify'});assert(seen&&seen.tolerated,'a flow-only difference is tolerated and reported to the hook');assert.deepEqual(seen.onlyLegacy.map(k=>k.slice(0,6)),['CS0165']);assert.deepEqual(seen.success,[false,true]);}
+  // `implicitUsings:false` keeps `Console` out of the semantic analysis, so each pipeline's own flow diagnostics stand
+  // and differ; with `System` in scope the analysis gives both pipelines Roslyn's answer and there is nothing to report.
+  try{compile('int x;if(true)x=1;Console.WriteLine(x);',{pipeline:'verify'});assert.equal(seen,null,'both pipelines agree with Roslyn');
+    compile('int x;if(true)x=1;Console.WriteLine(x);',{pipeline:'verify',implicitUsings:false});assert(seen&&seen.tolerated,'a flow-only difference is tolerated and reported to the hook');assert.deepEqual(seen.onlyLegacy.map(k=>k.slice(0,6)),['CS0165']);assert.deepEqual(seen.success,[false,true]);}
   finally{globalThis.SHARPFORGE_PIPELINE_MISMATCH=previous;}
 });

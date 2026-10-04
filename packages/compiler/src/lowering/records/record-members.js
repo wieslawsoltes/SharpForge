@@ -11,6 +11,10 @@
 import { SymbolKind, TypeKind } from '../../symbols/types.js';
 import { RecordMember, positionalProperties } from '../../symbols/synthesized/records.js';
 import { n } from '../../codegen/semantic/node-factory.js';
+import { RecordContractBody } from '../../symbols/synthesized/record-contract-members.js';
+
+/** `PrintMembers` and `get_EqualityContract`: emitted only by the .NET assembly back end. */
+const contractKinds = new Set(Object.values(RecordContractBody));
 
 /** The multiplier Roslyn's synthesized GetHashCode combines members with. */
 const hashFactor = -1521134295;
@@ -65,6 +69,7 @@ export class RecordMembers {
     let method = this.methods.get(symbol);
     if (method) return method;
     if (kind === RecordMember.EqualsObject) return this.host.unsupported('Equals(object) on a record (needs a run-time type test)', syntax);
+    if (contractKinds.has(kind)) return this.host.unsupported(`the synthesized record member '${symbol.name}'`, syntax);
     const type = symbol.containingType,
       owner = this.host.classOf(type, syntax),
       parameters = this.host.parametersOf(symbol);

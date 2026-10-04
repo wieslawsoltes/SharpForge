@@ -4,6 +4,7 @@
  */
 import { findContracts } from '@sharpforge/framework';
 import { TypeKind } from '../../symbols/types.js';
+import { isRegisteredReferenceUpcast } from '../../conversions/registered-reference.js';
 import { needsPrimitiveBox, primitiveBoxContract } from '../../primitive-boxing.js';
 import { n } from './node-factory.js';
 import { interpolatedText } from '../../binder/csharp6.js';
@@ -37,6 +38,11 @@ export const ExpressionTranslation = Base =>
       if (node.kind === 'Conversion' && node.operand?.type) this.imageType(node.operand.type, node.syntax);
       if (value.isNull) return n.nullLiteral(node.type ? this.imageType(node.type, node.syntax) : 'object');
       const type = node.type ? this.imageType(node.type, node.syntax) : null;
+      if (node.kind === 'FieldAccess' && value.isEnum && value.enumType === node.type &&
+          this.g.bridge.registryName(node.type) === type) {
+        // The existing enum field IR emits Op.ENUM, retaining the registered carrier on both engines.
+        return {kind: 'FieldAccess', legacyType: type, isExpression: true, receiver: null, field: null, constantValue: value};
+      }
       if (!type || !foldableTypes.has(type)) return null;
       const raw = typeof value.value === 'bigint' ? Number(value.value) : value.value;
       return n.literal(raw, type);
@@ -197,9 +203,14 @@ export const ExpressionTranslation = Base =>
       const kind = node.conversion?.kind,
         operand = node.operand;
       switch (kind) {
+        case 'InterpolatedString':
+          // The string is not built: the object keeps the format and the arguments, to be formatted later.
+          return this.unsupported(
+            `an interpolated string as '${node.type.toDisplayString()}' (the registry has no FormattableStringFactory.Create)`,
+            node.syntax,
+          );
         case 'Identity':
         case 'ImplicitReference':
-        case 'InterpolatedString':
         case 'ImplicitEnumeration':
         case 'ExplicitEnumeration':
           return this.retyped(this.expression(operand), node);
@@ -233,8 +244,9 @@ export const ExpressionTranslation = Base =>
     /** A reference conversion changes only the static type: the value is the same object. */
     retyped(value, node) {
       const type = this.imageType(node.type, node.syntax);
-      // The image has no subtyping: only `object` accepts another representation (interfaces and base classes need dispatch).
-      if (value.legacyType !== type && type !== 'object' && value.kind !== 'Literal' && node.conversion?.kind === 'ImplicitReference')
+      // Registered upcasts preserve the reference; arbitrary source hierarchies remain unsupported.
+      if (value.legacyType !== type && type !== 'object' && value.kind !== 'Literal' && node.conversion?.kind === 'ImplicitReference' &&
+          (this.g.isSource(node.operand.type) || !isRegisteredReferenceUpcast(value.legacyType, type)))
         return this.unsupported(`converting '${node.operand.type?.toDisplayString()}' to '${node.type.toDisplayString()}'`, node.syntax);
       return value.legacyType === type || value.kind !== 'Literal' ? value : { ...value, legacyType: type };
     }

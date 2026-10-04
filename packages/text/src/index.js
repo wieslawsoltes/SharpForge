@@ -112,3 +112,15 @@ export class BoundedCache {
 }
 
 export * from './search.js';
+
+export { PieceTable, PieceTableSnapshot } from './piece-table.js';
+export { LineIndex } from './line-index.js';
+export { TextBuffer, TextVersionError } from './buffer.js';
+export { EndOfLine, analyzeEol, normalizeEol, eolEdits, decodeText, encodeText } from './eol.js';
+export { GraphemeSegmenter, iterateGraphemes, graphemeSegments, nextGraphemeOffset, previousGraphemeOffset } from './graphemes.js';
+export { wordSegments, subwordBoundaries, nextWordOffset, previousWordOffset, wordRangeAt } from './words.js';
+export { graphemeWidth, visualColumnAt, offsetAtVisualColumn, expandTabs } from './columns.js';
+export { diffLines, diffWords, diffCharacters } from './diff.js';
+export { merge3 } from './merge3.js';
+export { VisualColumnIndex } from './visual-column-index.js';
+export { unicodeGraphemeVersion } from './graphemes.js';

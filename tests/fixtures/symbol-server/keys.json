@@ -1,0 +1,74 @@
+{
+  "reference": {
+    "name": "dotnet-symbol",
+    "version": "8.0.532401",
+    "toolSha256": "3621a828be08f8faa8275a31acdc6dc00c9cf00a8826147618fedc2914fe207d",
+    "endpoint": "isolated loopback HTTP server; no external requests"
+  },
+  "cases": [
+    {
+      "kind": "pe",
+      "name": "Foo.DLL",
+      "timestamp": 1412257614,
+      "sizeOfImage": 16384,
+      "key": "foo.dll/542D574E4000/foo.dll",
+      "inputSha256": "805ab0cfea7cb917d6bad323bdb5ee2f940435dfe3e9266da853f5601387c89f"
+    },
+    {
+      "kind": "portable-pdb",
+      "name": "C:\\build\\Foo.PDB",
+      "id": [
+        190,
+        29,
+        190,
+        204,
+        55,
+        222,
+        160,
+        66,
+        184,
+        199,
+        149,
+        213,
+        78,
+        185,
+        213,
+        209,
+        55,
+        201,
+        134,
+        172
+      ],
+      "key": "foo.pdb/ccbe1dbede3742a0b8c795d54eb9d5d1FFFFFFFF/foo.pdb",
+      "inputSha256": "a32c77362a71d2ea44251d5bb8d5e191fbd6d9e9c75f1eef038de4d6f29752e9"
+    },
+    {
+      "kind": "portable-pdb",
+      "name": "ΟΣ.PDB",
+      "id": [
+        137,
+        3,
+        134,
+        173,
+        255,
+        39,
+        86,
+        70,
+        159,
+        63,
+        226,
+        24,
+        75,
+        239,
+        252,
+        192,
+        190,
+        12,
+        82,
+        160
+      ],
+      "key": "οσ.pdb/ad86038927ff46569f3fe2184beffcc0FFFFFFFF/οσ.pdb",
+      "inputSha256": "fc1f588948504f3ad379af668dbddeab21e0a27f117c66ded6fba61b85d9f701"
+    }
+  ]
+}

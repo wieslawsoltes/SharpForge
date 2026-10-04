@@ -1,59 +1,51 @@
 /**
  * Roslyn differential harness (SF-A02-T40).
  *
- * Runs every fixture through SharpForge and compares it with the pinned Roslyn result on four axes:
+ * Runs every fixture through SharpForge and compares it with the pinned Roslyn result on five axes:
  *   diagnostics - the set of (code, start, length) of error-severity diagnostics is identical;
  *   warnings    - the same for warning-severity diagnostics (reported separately);
  *   bytecode    - output fixtures only: stdout of the bytecode VM equals Roslyn's program output;
- *   cil         - output fixtures only: stdout of the CIL VM over the emitted assembly equals Roslyn's program output.
+ *   cil         - output fixtures only: stdout of the CIL VM over the assembly converted from the image equals it;
+ *   directCil   - output fixtures only: stdout of the CIL VM over the assembly `compileToAssembly` emits from bound
+ *                 trees, without the image, equals it (direct-cil-axis.js).
  * (Profile diagnostics next to a semantic analysis do not make a diagnostics fixture unsupported; they are not compared.)
- * A fixture `passed` when its errors match and, for output fixtures, both back ends match; for diagnostics fixtures
- * the warnings must match as well. A fixture is `unsupported` - and can never pass on any axis - when the compiler
- * crashes or reports a non-Roslyn (SFxxxx profile) diagnostic for it, or when its pin is missing or stale.
+ * A fixture `passed` when its errors match and, for output fixtures, both image back ends match; for diagnostics
+ * fixtures the warnings must match as well. A fixture is `unsupported` - and can never pass on an image axis - when
+ * the compiler crashes or reports a non-Roslyn (SFxxxx profile) diagnostic for it, when its pin is missing or
+ * stale, or when the fixture is `referencesOnly` (it needs the real class library; see tools/dotnet-axis.mjs). The direct-CIL axis does not depend on the image: a fixture `unsupported` there can pass on it.
  */
 import {compile,compileToIL} from '@sharpforge/compiler';
 import {VirtualMachine,CilVirtualMachine} from '@sharpforge/runtime';
 import {loadFixtures,loadPinned,fixtureHash} from './corpus-store.js';
+import {runToEnd,compareRun,brief} from './run-program.js';
+import {runDirectCilAxis} from './direct-cil-axis.js';
 
 /** The comparison axes, in report order. */
-export const AXES=Object.freeze(['diagnostics','warnings','bytecode','cil']);
-const INSTRUCTION_BUDGET=20_000_000,TIME_STEPS=10_000;
-/**
- * Runs a program to its end. Time is virtual: when every context waits (Task.Delay, Thread.Sleep) the clock jumps to
- * the next deadline, so asynchronous programs finish deterministically and without real delays.
- */
-function runToEnd(vm){
-  let result=vm.run();
-  for(let step=0;step<TIME_STEPS&&result.state==='waiting';step++){const delay=vm.scheduler.nextDelay();if(delay===null)break;vm.scheduler.advance(delay);result=vm.run();}
-  return result;
-}
+export const AXES=Object.freeze(['diagnostics','warnings','bytecode','cil','directCil']);
+/** The axes that depend on the bytecode image; an `unsupported` fixture passes none of them. */
+export const IMAGE_AXES=Object.freeze(['diagnostics','warnings','bytecode','cil']);
+const INSTRUCTION_BUDGET=20_000_000;
 const key=d=>`${d[0]}@${d[1]}+${d[2]}`;
 // The native capture uses Distinct after projecting code/span/severity; compare that same set on both sides.
 const keys=(rows,severity)=>[...new Set(rows.filter(d=>d[3]===severity).map(key))].sort();
 const same=(a,b)=>a.length===b.length&&a.every((v,i)=>v===b[i]);
-const brief=error=>String(error?.message??error).split('\n')[0].slice(0,200);
-
-/** Run one compiled program; returns `{ok,detail}` against the pinned output and termination kind. */
-function compareRun(run,pinned){
-  let result;try{result=run();}catch(error){return {ok:false,detail:'crash: '+brief(error)};}
-  const expectedState=pinned.exception?'faulted':'terminated';
-  if(result.state!==expectedState)return {ok:false,detail:`state ${result.state}${result.fault?' ('+brief(result.fault)+')':''}, expected ${expectedState}`};
-  if(result.output!==pinned.output)return {ok:false,detail:`output ${JSON.stringify(result.output).slice(0,120)} expected ${JSON.stringify(pinned.output).slice(0,120)}`};
-  return {ok:true,detail:''};
-}
 
 /**
  * Compare one fixture with its pinned Roslyn result.
- * Returns `{id,feature,kind,unsupported,diagnostics,warnings,bytecode,cil,passed,details}` where each axis is
- * true/false, or null when the axis does not apply (back ends of a diagnostics fixture).
+ * Returns `{id,feature,kind,unsupported,diagnostics,warnings,bytecode,cil,directCil,passed,details}` where each axis
+ * is true/false, or null when the axis does not apply (back ends of a diagnostics fixture).
  */
 export function runFixture(fixture,pinned,options={}){
-  const row={id:fixture.id,feature:fixture.feature,kind:fixture.kind,unsupported:false,diagnostics:false,warnings:false,bytecode:fixture.kind==='output'?false:null,cil:fixture.kind==='output'?false:null,passed:false,details:{}};
+  const isOutput=fixture.kind==='output',backEnd=isOutput?false:null;
+  const row={id:fixture.id,feature:fixture.feature,kind:fixture.kind,unsupported:false,diagnostics:false,warnings:false,bytecode:backEnd,cil:backEnd,directCil:backEnd,passed:false,details:{}};
   const unsupported=reason=>{row.unsupported=true;row.details.unsupported=reason;return row;};
   if(!pinned)return unsupported('no pinned Roslyn result; run tools/pin.mjs');
   if(pinned.hash!==fixtureHash(fixture)||pinned.kind!==fixture.kind)return unsupported('pinned Roslyn result is stale; run tools/pin.mjs');
+  // These axes bind against the closed framework registry; a program written for the real class library is not theirs.
+  if(fixture.referencesOnly)return unsupported('bound against reference assemblies only; its axis is tools/dotnet-axis.mjs');
   const compileOptions=fixture.langVersion?{langVersion:fixture.langVersion}:{};
   if(fixture.allowUnsafe)compileOptions.allowUnsafe=true;
+  if(isOutput){const direct=runDirectCilAxis(fixture,pinned,compileOptions,options);row.directCil=direct.ok;if(!direct.ok)row.details.directCil=direct.detail;}
   let result;try{result=(options.compile??compile)(fixture.source,compileOptions);}catch(error){return unsupported('compiler crash: '+brief(error));}
   const actual=result.diagnostics.map(d=>[d.code,d.start,d.length,d.severity]);
   const foreign=actual.filter(d=>!/^CS\d{4}$/.test(String(d[0])));
@@ -86,18 +78,18 @@ export function runFixture(fixture,pinned,options={}){
 
 /**
  * Run the whole corpus (or `options.fixtures`) and aggregate per feature.
- * Returns `{roslyn,features:{[id]:{total,passed,diagnostics,warnings,outputTotal,bytecode,cil,unsupported}},totals,fixtures:[row]}`;
- * `bytecode`/`cil` count passes out of `outputTotal`, the other counters are out of `total`.
+ * Returns `{roslyn,features:{[id]:{total,passed,diagnostics,warnings,outputTotal,bytecode,cil,directCil,unsupported}},totals,fixtures:[row]}`;
+ * `bytecode`/`cil`/`directCil` count passes out of `outputTotal`, the other counters are out of `total`.
  */
 export function report(options={}){
   const fixtures=options.fixtures??loadFixtures(),pinned=options.pinned??loadPinned();
-  const blank=()=>({total:0,passed:0,diagnostics:0,warnings:0,outputTotal:0,bytecode:0,cil:0,unsupported:0});
+  const blank=()=>({total:0,passed:0,diagnostics:0,warnings:0,outputTotal:0,bytecode:0,cil:0,directCil:0,unsupported:0});
   const features={},totals=blank(),rows=[];
   for(const fixture of fixtures){
     const row=runFixture(fixture,pinned.results.get(fixture.id),options);rows.push(row);
     for(const bucket of [features[fixture.feature]??=blank(),totals]){
       bucket.total++;if(row.passed)bucket.passed++;if(row.diagnostics)bucket.diagnostics++;if(row.warnings)bucket.warnings++;if(row.unsupported)bucket.unsupported++;
-      if(row.kind==='output'){bucket.outputTotal++;if(row.bytecode)bucket.bytecode++;if(row.cil)bucket.cil++;}
+      if(row.kind==='output'){bucket.outputTotal++;if(row.bytecode)bucket.bytecode++;if(row.cil)bucket.cil++;if(row.directCil)bucket.directCil++;}
     }
   }
   return {roslyn:pinned.meta,features,totals,fixtures:rows};
@@ -106,8 +98,9 @@ export function report(options={}){
 /** Readable per-feature pass-rate table for a `report()` result. */
 export function formatReport(result){
   const percent=(n,d)=>d?`${n}/${d} ${String(Math.round(100*n/d)).padStart(3)}%`:'-';
-  const header=['feature','passed','errors match','warnings match','bytecode','cil','unsupported'];
-  const line=(name,f)=>[name,percent(f.passed,f.total),percent(f.diagnostics,f.total),percent(f.warnings,f.total),percent(f.bytecode,f.outputTotal),percent(f.cil,f.outputTotal),String(f.unsupported)];
+  const header=['feature','passed','errors match','warnings match','bytecode','cil','direct cil','unsupported'];
+  const output=(f,axis)=>percent(f[axis],f.outputTotal);
+  const line=(name,f)=>[name,percent(f.passed,f.total),percent(f.diagnostics,f.total),percent(f.warnings,f.total),output(f,'bytecode'),output(f,'cil'),output(f,'directCil'),String(f.unsupported)];
   const body=[header,...Object.keys(result.features).sort().map(name=>line(name,result.features[name])),line('TOTAL',result.totals)];
   const widths=header.map((_,i)=>Math.max(...body.map(r=>r[i].length)));
   const text=body.map(r=>r.map((c,i)=>i?c.padStart(widths[i]):c.padEnd(widths[i])).join('  '));

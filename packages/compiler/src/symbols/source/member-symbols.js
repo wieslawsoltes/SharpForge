@@ -2,6 +2,7 @@
  * Member symbols of source types: fields, events, methods, constructors, destructors, operators and
  * conversions, with their parameters, type parameters and constraint clauses.
  */
+import {DiagnosticId} from '../../diagnostics/codes.js';
 import { TypeKind, Accessibility, RefKind, TypeWithAnnotations } from '../types.js';
 import {
   MethodSymbol,
@@ -37,7 +38,7 @@ export const MemberSymbolBuilder = Base =>
       return (list?.parameters ?? []).map((p, ordinal) => {
         const mods = words(p.modifiers),
           name = p.identifier.valueText;
-        if (seen.has(name) && name) this.report(uri, p.identifier, 'CS0100', [name]);
+        if (seen.has(name) && name) this.report(uri, p.identifier, DiagnosticId.CS0100, [name]);
         seen.add(name);
         const refKind = mods.includes('out')
           ? RefKind.Out
@@ -145,7 +146,10 @@ export const MemberSymbolBuilder = Base =>
         case 'FieldDeclaration':
         case 'EventFieldDeclaration': {
           const m = this.modifiers(type, syntax, uri),
-            fieldType = this.bindType(syntax.declaration.type, scope);
+            typeSyntax = syntax.declaration.type,
+            fieldType = this.bindType(typeSyntax, scope),
+            // `ref T field` / `ref readonly T field` of a ref struct (C# 11).
+            refKind = typeSyntax.kind !== 'RefType' ? RefKind.None : typeSyntax.readOnlyKeyword ? RefKind.RefReadOnly : RefKind.Ref;
           for (const v of syntax.declaration.variables) {
             const name = v.identifier.valueText,
               locations = [{ uri, ...spanOf(v.identifier) }];
@@ -174,6 +178,7 @@ export const MemberSymbolBuilder = Base =>
               modifiers: m.flags,
               locations,
               syntax: v,
+              refKind,
               ...(m.flags & DeclarationModifiers.Const ? { constantValue: { value: undefined } } : {}),
             });
             field.initializerSyntax = v.initializer?.value ?? null;
@@ -195,7 +200,7 @@ export const MemberSymbolBuilder = Base =>
               name: isStatic ? '.cctor' : '.ctor',
               kind: isStatic ? MethodKind.StaticConstructor : MethodKind.Constructor,
             });
-          if (syntax.identifier.valueText !== type.name) this.report(uri, syntax.identifier, 'CS1520');
+          if (syntax.identifier.valueText !== type.name) this.report(uri, syntax.identifier, DiagnosticId.CS1520);
           ctor.initializerSyntax = syntax.initializer ?? null;
           members.push(ctor);
           return;
@@ -249,15 +254,24 @@ export const MemberSymbolBuilder = Base =>
             });
           event.scope = scope;
           event.uri = uri;
+          // `event D I.Changed { add ... remove ... }` is named by its interface and reached only through it.
+          const explicit = syntax.explicitInterfaceSpecifier,
+            prefix = explicit ? explicit.name.toString().replace(/\s+/g, '') + '.' : '';
+          if (explicit) {
+            event.explicitInterfaceSyntax = explicit.name;
+            event.simpleName = event.name;
+            event.name = prefix + event.name;
+            event.declaredAccessibility = Accessibility.Private;
+          }
           members.push(event);
           for (const a of syntax.accessorList?.accessors ?? []) {
             const accessor = new MethodSymbol({
-              name: a.keyword.text + '_' + event.name,
+              name: prefix + a.keyword.text + '_' + (event.simpleName ?? event.name),
               methodKind: a.keyword.text === 'add' ? MethodKind.EventAdd : MethodKind.EventRemove,
               returnType: this.core.void,
               parameters: [new ParameterSymbol({ name: 'value', type: event.typeWithAnnotations })],
               containingSymbol: type,
-              declaredAccessibility: m.access,
+              declaredAccessibility: explicit ? Accessibility.Private : m.access,
               modifiers: m.flags,
               syntax: a,
               associatedSymbol: event,

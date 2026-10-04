@@ -22,16 +22,18 @@
  * static extension method that declares type parameters of its own inside a generic block is not found; instance
  * (compound assignment) extension operators are not bound.
  */
+import {DiagnosticId} from '../diagnostics/codes.js';
 import { SymbolKind, TypeKind } from '../symbols/types.js';
 import { PropertySymbol } from '../symbols/members.js';
-import { canDeclareExtensions, isValidReceiverConversion } from '../overload/extension-methods.js';
+import { canDeclareExtensions, extensionClassesIn, isValidReceiverConversion } from '../overload/extension-methods.js';
 import { ConversionKind } from '../conversions/classify.js';
 import { binaryOperatorNames, unaryOperatorNames } from '../overload/operators.js';
 import { lookupMembers } from './inheritance.js';
 
 /** The extension members a class declares (building its members on first use). */
 function extensionMembersOf(type) {
-  if (!canDeclareExtensions(type)) return [];
+  // Extension blocks are read from source only: a class from metadata has none, and its members stay undecoded.
+  if (type.mightContainExtensionMethods !== undefined || !canDeclareExtensions(type)) return [];
   type.getMembers();
   return type.extensionMembers ?? [];
 }
@@ -44,8 +46,8 @@ export function extensionMemberScopes(chain, name, kind) {
   const named = types => types.flatMap(extensionMembersOf).filter(entry => entry.name === name && entry.kind === kind),
     scopes = [];
   for (const level of chain) {
-    if (level.namespace) scopes.push(named(level.namespace.getTypeMembers()));
-    const imported = [...(level.usings?.namespaces ?? []).flatMap(n => n.getTypeMembers()), ...(level.usings?.staticTypes ?? [])];
+    if (level.namespace) scopes.push(named(extensionClassesIn(level.namespace)));
+    const imported = [...(level.usings?.namespaces ?? []).flatMap(extensionClassesIn), ...(level.usings?.staticTypes ?? [])];
     scopes.push(named([...new Set(imported)]));
   }
   return scopes.filter(scope => scope.length);
@@ -102,11 +104,11 @@ export const ExtensionMemberBinding = Base =>
       const found = this.applicableExtensionProperty(name, left);
       if (found) {
         if (options.nameofOperand) {
-          this.report(syntax, 'CS9316');
+          this.report(syntax, DiagnosticId.CS9316);
           return this.bad(syntax);
         }
         if (!found.property) {
-          this.report(syntax, 'CS9339', found.ambiguous.slice(0, 2).map(candidate => candidate.toDisplayString()));
+          this.report(syntax, DiagnosticId.CS9339, found.ambiguous.slice(0, 2).map(candidate => candidate.toDisplayString()));
           return this.bad(syntax);
         }
         const receiver = this.convert(left, found.property.extensionReceiverType, left.syntax);
@@ -116,7 +118,7 @@ export const ExtensionMemberBinding = Base =>
       for (const scope of this.extensionMemberScopes(name, 'static')) {
         const member = scope.map(entry => this.staticExtensionFor(entry.symbol, type)).find(Boolean);
         if (!member) continue;
-        this.report(left.syntax, 'CS0176', [member.toDisplayString()]);
+        this.report(left.syntax, DiagnosticId.CS0176, [member.toDisplayString()]);
         return this.bad(syntax);
       }
       return null;
@@ -172,7 +174,7 @@ export const ExtensionMemberBinding = Base =>
         const members = scope.map(entry => this.staticExtensionFor(entry.symbol, type)).filter(Boolean);
         if (!members.length) continue;
         if (options.nameofOperand) {
-          this.report(syntax, 'CS9316');
+          this.report(syntax, DiagnosticId.CS9316);
           return this.bad(syntax);
         }
         return this.memberResult(members, syntax, left, type, name, typeArguments, options);
@@ -185,7 +187,7 @@ export const ExtensionMemberBinding = Base =>
           .map(entry => this.extensionPropertyFor(entry.symbol, value))
           .find(Boolean);
         if (!property) continue;
-        this.report(left.syntax, 'CS0120', [property.toDisplayString()]);
+        this.report(left.syntax, DiagnosticId.CS0120, [property.toDisplayString()]);
         return this.bad(syntax);
       }
       return null;
@@ -209,8 +211,8 @@ export const ExtensionMemberBinding = Base =>
           resolved = candidates.length ? this.d.overloads.resolve(candidates, operands, {}) : null;
         if (resolved?.succeeded)
           return { kind: 'user', method: resolved.method, resultType: resolved.method.returnType, isLifted: false, conversions: resolved.conversions };
-        if (resolved?.error.code === 'CS0121')
-          return { kind: 'error', code: 'CS9342', atOperator: true, args: resolved.ambiguous.slice(0, 2).map(method => method.toDisplayString()) };
+        if (resolved?.error.code === DiagnosticId.CS0121)
+          return { kind: 'error', code: DiagnosticId.CS9342, atOperator: true, args: resolved.ambiguous.slice(0, 2).map(method => method.toDisplayString()) };
       }
       return null;
     }
@@ -219,7 +221,7 @@ export const ExtensionMemberBinding = Base =>
       const method = this.rootBinder.c.method,
         receiver = method?.extensionReceiver;
       if (receiver?.name && !method.parameters.includes(receiver) && syntax.identifier.valueText === receiver.name && !this.lookupLocal(receiver.name)) {
-        this.report(syntax, 'CS9347', [receiver.name]);
+        this.report(syntax, DiagnosticId.CS9347, [receiver.name]);
         return this.bad(syntax);
       }
       return super.identifier(syntax, options);

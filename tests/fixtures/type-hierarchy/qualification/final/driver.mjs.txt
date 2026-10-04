@@ -1,0 +1,111 @@
+import { spawn, execFileSync } from 'node:child_process';
+import { createWriteStream, existsSync, mkdirSync, readdirSync, readFileSync, symlinkSync, writeFileSync, copyFileSync } from 'node:fs';
+import { join } from 'node:path';
+const root = '/Users/wieslawsoltes/GitHub/SharpForge-a13-type-hierarchy';
+const parent = '/Users/wieslawsoltes/GitHub/SharpForge-a13-hierarchy-sha1';
+const before = '440c4ade9b3dd5de527faa5d686eec4d697449fc';
+const parentRevision = '80adafc3d92fc50e3e49f6bc5554b92c1013e897';
+const previous = 'd1fc86688bd1175d4d008fa723209b33b011bc88';
+const evidence = '/tmp/sharpforge-a13-hierarchy-qualification-02';
+const baseline = '/tmp/sharpforge-a13-hierarchy-qualification/baseline', red = '/tmp/sharpforge-a13-hierarchy-qualification/previous';
+const node = process.execPath;
+mkdirSync(evidence, { recursive: true });
+const git = (...args) => execFileSync('git', args, { cwd: root, encoding: 'utf8' }).trim();
+const product = git('rev-parse', 'HEAD');
+const revisions = [before, parentRevision, product];
+const sharedHashes = {};
+for (const path of ['package.json', 'package-lock.json']) {
+  const hashes = revisions.map(revision => git('rev-parse', revision + ':' + path));
+  if (new Set(hashes).size !== 1) throw Error('Manifest differs: ' + path);
+  sharedHashes[path] = hashes[0];
+}
+const shared = revisions.map(revision => git('ls-tree', revision + ':packages').split('\n')
+  .filter(line => !line.endsWith('\tcil') && !line.endsWith('\tsymbols')).join('\n'));
+if (new Set(shared).size !== 1) throw Error('Shared package sources differ');
+sharedHashes.otherPackageTrees = shared[0];
+if (git('rev-parse', product + ':packages/cil/src/binary/sha1.js') !== git('rev-parse', parentRevision + ':packages/cil/src/binary/sha1.js'))
+  throw Error('SHA1 implementations differ');
+function run(name, command, args, { cwd = root, expected = 0 } = {}) {
+  if (existsSync(join(evidence, name + '.log'))) throw Error('Refusing to overwrite ' + name);
+  console.log(JSON.stringify({ phase: name, command, args, cwd, startedAt: new Date().toISOString() }));
+  return new Promise((resolve, reject) => {
+    const log = createWriteStream(join(evidence, name + '.log'), { flags: 'wx' });
+    const child = spawn(command, args, { cwd, env: process.env, stdio: ['ignore', 'pipe', 'pipe'] });
+    child.stdout.pipe(log, { end: false }); child.stderr.pipe(log, { end: false });
+    child.on('error', error => { log.end(); reject(error); });
+    child.on('close', code => log.end(() => {
+      console.log(JSON.stringify({ phase: name, code, terminalAt: new Date().toISOString() }));
+      code === expected ? resolve() : reject(Error(`${name} returned ${code}, expected ${expected}`));
+    }));
+  });
+}
+function ownDependencies(target) {
+  const modules = join(target, 'node_modules');
+  if (existsSync(modules)) throw Error('Unexpected node_modules: ' + modules);
+  mkdirSync(join(modules, '@sharpforge'), { recursive: true });
+  for (const entry of readdirSync(join(root, 'node_modules'))) {
+    if (entry !== '@sharpforge') symlinkSync(join(root, 'node_modules', entry), join(modules, entry));
+  }
+  for (const entry of readdirSync(join(root, 'node_modules/@sharpforge'))) {
+    const owner = ['cil', 'symbols'].includes(entry) ? target : root;
+    symlinkSync(join(owner, 'packages', entry), join(modules, '@sharpforge', entry));
+  }
+}
+function archive(target, revision) {
+  if (existsSync(target)) throw Error('Refusing to overwrite archive');
+  mkdirSync(target, { recursive: true });
+  const bytes = execFileSync('git', ['archive', revision, 'package.json', 'package-lock.json', 'packages/cil', 'packages/symbols'],
+    { cwd: root, maxBuffer: 32 * 1024 * 1024 });
+  execFileSync('tar', ['-xf', '-', '-C', target], { input: bytes });
+  ownDependencies(target);
+}
+const tests = (...files) => ['--test', '--test-concurrency=1', ...files];
+const phases = {
+  configuration() {
+    const original = JSON.parse(readFileSync('/tmp/sharpforge-a13-hierarchy-qualification/configuration.json', 'utf8'));
+    original.variants.after.sourceRevision = product;
+    original.priorAttempt = '/tmp/sharpforge-a13-hierarchy-qualification/performance.json';
+    original.change = 'Cross-heap keys/lookup closure opt in only for the hierarchy binder; existing adapter default shape preserved.';
+    original.native = 'Replay captured eight identities/two images only; no native rebuild or install repeated.';
+    writeFileSync(join(evidence, 'configuration.json'), JSON.stringify(original, null, 2), { flag: 'wx' });
+  },
+  install: () => run('install', 'npm', ['ci', '--ignore-scripts', '--no-audit', '--no-fund']),
+  dependencies() {
+    archive(baseline, before); archive(red, previous); ownDependencies(parent);
+    mkdirSync(join(red, 'tests/fixtures/type-hierarchy'), { recursive: true });
+    copyFileSync(join(root, 'tests/a13-11-type-hierarchy.test.js'), join(red, 'tests/a13-11-type-hierarchy.test.js'));
+    copyFileSync(join(root, 'tests/fixtures/type-hierarchy/input.mjs'), join(red, 'tests/fixtures/type-hierarchy/input.mjs'));
+    const configuration = { variants: { before: { directory: baseline, sourceRevision: before },
+      after: { directory: root, sourceRevision: product } }, parent: { directory: parent, revision: parentRevision },
+      previousHierarchy: previous, sharedHashes,
+      dependencies: 'Each variant owns changed CIL and symbols sources. Other packages/npm dependencies shared only after Git hash proof.' };
+    writeFileSync(join(evidence, 'configuration.json'), JSON.stringify(configuration, null, 2), { flag: 'wx' });
+  },
+  parentFocused: () => run('parent-focused', node, tests('tests/a13-11-sha1.test.js', 'tests/portable-pdb.test.js',
+    'tests/a13-01-documents.test.js', 'tests/a13-01-module-contract.test.js'), { cwd: parent }),
+  parentCheck: () => run('parent-check', 'npm', ['run', 'check'], { cwd: parent }),
+  parentStructure: () => run('parent-structure', 'npm', ['run', 'check:structure'], { cwd: parent }),
+  async red() {
+    await run('snapshot-regression-before', node, ['--test', '--test-concurrency=1', '--test-name-pattern=numeric assembly snapshot',
+      'tests/a13-11-type-hierarchy.test.js'], { cwd: red, expected: 1 });
+    const log = readFileSync(join(evidence, 'snapshot-regression-before.log'), 'utf8');
+    if (!log.includes('caller map invoked') || !log.includes('fail 1')) throw Error('Red proof did not exercise reviewed bound gap');
+  },
+  native: () => run('native', node, ['tests/fixtures/type-hierarchy/capture.mjs', 'tests/fixtures/type-hierarchy/native.json']),
+  focusedCorrected: () => run('child-focused-corrected', node, tests('tests/a13-11-type-hierarchy.test.js')),
+  focused: () => run('child-focused', node, tests('tests/a13-11-type-hierarchy.test.js', 'tests/a13-11-assembly-index.test.js',
+    'tests/a03-07-type-system.test.js', 'tests/a03-07-type-system-native.test.js', 'tests/a03-07-local-type-references.test.js',
+    'tests/a03-07-local-type-references-native.test.js', 'tests/a03-07-nested-type-references.test.js')),
+  async benchmark() {
+    const script = join(evidence, 'comparison.mjs');
+    writeFileSync(script, readFileSync(join(root, 'tests/fixtures/type-hierarchy/comparison.mjs.txt')), { flag: 'wx' });
+    await run('comparison', node, ['--expose-gc', script, join(evidence, 'configuration.json'), join(evidence, 'performance.json')]);
+  },
+  browser: () => run('browser', '/tmp/sharpforge-bcl-browser-venv/bin/python', ['tests/fixtures/type-hierarchy/browser.py', root, join(evidence, 'browser')]),
+  check: () => run('child-check', 'npm', ['run', 'check']),
+  structure: () => run('child-structure', 'npm', ['run', 'check:structure']),
+};
+for (const phase of process.argv.slice(2)) {
+  if (!phases[phase]) throw Error('Unknown phase: ' + phase);
+  await phases[phase]();
+}

@@ -16,8 +16,9 @@
  * by `ToArray()` when the target is an array. A span target, a `[CollectionBuilder]` type and a spread that cannot be
  * appended that way keep the collection node, which code generation reports as not executable (SF2200).
  */
+import {DiagnosticId} from '../diagnostics/codes.js';
 import { SymbolKind, TypeKind, ArrayTypeSymbol, NamedTypeSymbol } from '../symbols/types.js';
-import { MethodKind } from '../symbols/members.js';
+import { MethodKind, LocalDeclarationKind } from '../symbols/members.js';
 import { Conversion, ConversionKind } from '../conversions/classify.js';
 import { implementsInterface, findConstruction } from '../symbols/substitution.js';
 import { attributesNamed } from './bound-attributes.js';
@@ -32,13 +33,15 @@ export const CollectionExpressionBinding = Base =>
   class extends Base {
     collectionExpression(syntax) {
       const elements = [];
-      for (const element of syntax.elements) {
+      let withArguments = null;
+      for (const [index, element] of syntax.elements.entries()) {
         if (element.kind === 'ExpressionElement') elements.push({ value: this.value(element.expression), syntax: element });
         else if (element.kind === 'SpreadElement') elements.push({ spread: this.value(element.expression), syntax: element });
-        // `with(...)` arguments (a preview feature) are not bound here: the execution pipeline's own rules stand.
+        // `with(...)` arguments (C# 15 preview): ./collection-arguments.js.
+        else if (element.kind === 'WithElement' && this.collectionArguments) withArguments = this.collectionArguments(element, index) ?? withArguments;
         else return this.lenient(syntax);
       }
-      const node = this.node('CollectionExpression', syntax, null, { elements, form: 'collection' });
+      const node = this.node('CollectionExpression', syntax, null, { elements, form: 'collection', withArguments });
       node.convert = to => {
         const target = this.collectionTarget(to);
         return target && elements.every(element => this.elementConverts(element, target.elementType))
@@ -104,14 +107,14 @@ export const CollectionExpressionBinding = Base =>
     reportCollectionFailure(node, type) {
       const target = this.collectionTarget(type);
       if (!target) {
-        this.report(node.syntax, 'CS9174', [this.display(type)]);
+        this.report(node.syntax, DiagnosticId.CS9174, [this.display(type)]);
         return;
       }
       for (const element of node.elements) {
         if (this.elementConverts(element, target.elementType)) continue;
         if (element.spread) {
           const iteration = this.spreadElementType(element.spread);
-          this.report(element.syntax.expression, 'CS0029', [this.display(iteration), this.display(target.elementType)]);
+          this.report(element.syntax.expression, DiagnosticId.CS0029, [this.display(iteration), this.display(target.elementType)]);
         }
         else this.convert(element.value, target.elementType);
       }
@@ -120,13 +123,15 @@ export const CollectionExpressionBinding = Base =>
       const syntax = node.syntax,
         target = this.collectionTarget(to),
         hasSpread = node.elements.some(element => element.spread);
+      // Arguments the target does not take are reported and then left out of the construction.
+      if (node.withArguments && !this.checkCollectionArguments(node, to, target)) node = { ...node, withArguments: null };
       if (target.lacksElementAdd && node.elements.length) {
-        this.report(syntax, 'CS9215', [this.display(to)]);
+        this.report(syntax, DiagnosticId.CS9215, [this.display(to)]);
         return this.bad(syntax);
       }
       for (const element of node.elements)
         if (element.spread && !element.spread.hasErrors && !this.spreadElementType(element.spread) && element.spread.type)
-          this.report(element.syntax.expression, 'CS9212', [this.display(element.spread.type), 'GetEnumerator']);
+          this.report(element.syntax.expression, DiagnosticId.CS9212, [this.display(element.spread.type), 'GetEnumerator']);
       const converted = element => this.convert(element.value, target.elementType, element.syntax.expression);
       if (target.kind === 'array' && !hasSpread)
         return this.node('ArrayCreation', syntax, to, { elements: node.elements.map(converted), isCollectionExpression: true });
@@ -152,12 +157,14 @@ export const CollectionExpressionBinding = Base =>
       if (!isSourceSymbol(type)) return true;
       const constructors = type.getMembers('.ctor').filter(member => member.methodKind === MethodKind.Constructor),
         adds = lookupMembers(type, 'Add', this.core, { within: this.c.containingType }).members.filter(m => m.kind === SymbolKind.Method);
-      if (constructors.length && !constructors.some(constructor => constructor.parameters.every(p => p.isOptional || p.isParams))) {
-        this.report(node.syntax, 'CS9214');
+      // With a `with(...)` element any accessible constructor will do: overload resolution on its arguments decides.
+      const needsParameterless = !node.withArguments;
+      if (needsParameterless && constructors.length && !constructors.some(constructor => constructor.parameters.every(p => p.isOptional || p.isParams))) {
+        this.report(node.syntax, DiagnosticId.CS9214);
         return false;
       }
-      if (!adds.length) this.report(node.syntax, 'CS1061', [this.display(type), 'Add']);
-      else if (!adds.some(add => add.parameters.length === 1)) this.report(node.syntax, 'CS9215', [this.display(type)]);
+      if (!adds.length) this.report(node.syntax, DiagnosticId.CS1061, [this.display(type), 'Add']);
+      else if (!adds.some(add => add.parameters.length === 1)) this.report(node.syntax, DiagnosticId.CS9215, [this.display(type)]);
       else return true;
       return false;
     }
@@ -167,7 +174,8 @@ export const CollectionExpressionBinding = Base =>
      * @returns the creation, a node with errors, or null when a spread cannot be appended this way
      */
     collectionCreation(type, node, target) {
-      const creation = this.create(type, [], node.syntax, node.syntax, null);
+      const withArguments = node.withArguments,
+        creation = this.create(type, withArguments?.args ?? [], node.syntax, withArguments?.syntax ?? node.syntax, null);
       if (creation.hasErrors || creation.kind !== 'ObjectCreation') return creation.hasErrors ? creation : null;
       const receiver = this.implicitReceiver(node.syntax, type),
         argument = value => Object.assign(value.hasErrors ? { ...value } : value, { refKind: null, name: null }),
@@ -178,7 +186,8 @@ export const CollectionExpressionBinding = Base =>
         if (element.spread) {
           const spread = element.spread,
             array = spread.type instanceof ArrayTypeSymbol ? spread : this.receiverCall(spread.type, 'ToArray', [], at, spread);
-          call = array && this.receiverCall(type, 'AddRange', [argument(array)], at, receiver);
+          // A spread without `ToArray()` (an iterator, an interface) is appended as the sequence it is.
+          call = this.receiverCall(type, 'AddRange', [argument(array ?? spread)], at, receiver) ?? this.spreadByAdd(type, spread, at, node.syntax);
           if (!call) return null;
         } else {
           // A collection of a source type takes the element as written: `Add` decides the conversion.
@@ -188,6 +197,23 @@ export const CollectionExpressionBinding = Base =>
         if (call && !call.hasErrors) calls.push(call);
       }
       return { ...creation, collectionInitializers: calls, isCollectionExpression: true };
+    }
+    /**
+     * A spread into a collection that has no `AddRange` (`HashSet<T>`, a source collection): `foreach (var item in
+     * spread) collection.Add(item);`, stated as a bound `foreach` among the collection initializers. Only for
+     * compilations bound against references - the image pipeline names the collection node instead.
+     */
+    spreadByAdd(type, spread, at, syntax) {
+      const elementType = this.spreadElementType(spread);
+      if (!elementType || this.core.object.metadataToken === undefined) return null;
+      const local = this.newLocal('<spread>', elementType, at, LocalDeclarationKind.Foreach),
+        item = Object.assign(this.node('Local', at, elementType, { local }), { refKind: null, name: null }),
+        add = this.addCall(type, [item], at, syntax);
+      if (!add || add.hasErrors) return null;
+      local.writes++;
+      local.reads++;
+      const body = { kind: 'ExpressionStatement', syntax: at, completes: true, expression: add };
+      return { kind: 'ForEach', syntax: at, completes: true, collection: spread, local, elementType, body, isAwait: false };
     }
     /** `receiver.name(values)` for an instance method of `type`, or null when no overload applies. */
     receiverCall(type, name, values, syntax, receiver) {

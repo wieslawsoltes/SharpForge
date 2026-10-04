@@ -1,0 +1,24 @@
+{
+  "sourceCommit": "756ff0cbeb6c8560ee104c53627f5464de8572a1",
+  "comparisonBase": "9ac2d74d2b3992e80eb697474178e58269b17ce5",
+  "scope": "Changed source files only; existing unrelated main violations excluded",
+  "checked": 256,
+  "preexistingCapturedMainViolations": [
+    {
+      "path": "apps/studio/tools/core.js",
+      "metric": "lineLength",
+      "actual": 1952,
+      "allowed": 160,
+      "capturedMainValue": 1952
+    },
+    {
+      "path": "packages/compiler/src/compilation.js",
+      "metric": "lineLength",
+      "actual": 684,
+      "allowed": 160,
+      "capturedMainValue": 684
+    }
+  ],
+  "introducedProblems": [],
+  "note": "This is a scoped comparison, not a full strict structure-gate pass. Two existing long-line violations have unchanged maximum lengths on captured main."
+}

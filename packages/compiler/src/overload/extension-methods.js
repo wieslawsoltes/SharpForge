@@ -9,21 +9,39 @@
  * The receiver must convert to the `this` parameter by an identity, implicit reference or boxing conversion
  * (C# 14 adds span conversions): numeric and user-defined conversions do not make an extension applicable.
  */
+import {DiagnosticId} from '../diagnostics/codes.js';
 import { SymbolKind, TypeKind, RefKind } from '../symbols/types.js';
+import { NamespaceExtent } from '../symbols/namespaces.js';
 import { ConversionKind } from '../conversions/classify.js';
 
 /** Static, non-generic, non-nested classes can declare extension methods. */
 export const canDeclareExtensions = type =>
   type.kind === SymbolKind.NamedType && type.typeKind === TypeKind.Class && type.isStatic && type.arity === 0 && !type.containingType;
-/** The extension methods named `name` declared by a type. */
+/**
+ * The extension methods named `name` declared by a type. A class read from metadata says whether it declares any
+ * (`ExtensionAttribute` on the class), which spares decoding the members of every static class of a namespace.
+ */
 export function extensionMethodsOf(type, name) {
+  if (type.mightContainExtensionMethods === false) return [];
   return canDeclareExtensions(type)
     ? type.getMembers(name).filter(m => m.kind === SymbolKind.Method && m.isExtensionMethod && m.isStatic && m.parameters.length > 0)
     : [];
 }
+/**
+ * The classes declared directly in a namespace that can declare extensions. A namespace read from metadata never
+ * changes, and a framework namespace has hundreds of types of which a handful declare extensions: its list is
+ * computed once and kept on the namespace symbol (it lives as long as the reference set does).
+ */
+export function extensionClassesIn(namespace) {
+  const parts = namespace.constituentNamespaces;
+  if (parts.length !== 1 || parts[0] !== namespace) return parts.flatMap(extensionClassesIn);
+  const declares = type => type.mightContainExtensionMethods !== false && canDeclareExtensions(type);
+  if (namespace.extent !== NamespaceExtent.Metadata) return namespace.getTypeMembers().filter(declares);
+  return (namespace.extensionClasses ??= Object.freeze(namespace.getTypeMembers().filter(declares)));
+}
 /** The extension methods named `name` declared directly in a namespace. */
 export function extensionMethodsInNamespace(namespace, name) {
-  return namespace.getTypeMembers().flatMap(t => extensionMethodsOf(t, name));
+  return extensionClassesIn(namespace).flatMap(type => extensionMethodsOf(type, name));
 }
 const receiverKinds = new Set([
   ConversionKind.Identity,
@@ -31,12 +49,38 @@ const receiverKinds = new Set([
   ConversionKind.Boxing,
   ConversionKind.ImplicitSpan,
 ]);
-/** True when `receiverType` can be the receiver of an extension method whose `this` parameter has type `thisType`. */
-export function isValidReceiverConversion(conversions, receiver, thisType) {
+/**
+ * True when `receiverType` can be the receiver of an extension method whose `this` parameter has type `thisType`.
+ * `forMethodGroup`: a span conversion (C# 14) is not considered for the receiver of a method group conversion.
+ */
+export function isValidReceiverConversion(conversions, receiver, thisType, { forMethodGroup = false } = {}) {
   if (receiver.literal === 'null') return thisType.isReferenceType === true || thisType.isNullableValueType;
   if (!receiver.type) return false;
   const c = conversions.classifyStandardImplicit(receiver.type, thisType);
+  if (forMethodGroup && c.kind === ConversionKind.ImplicitSpan) return false;
   return c.exists && receiverKinds.has(c.kind);
+}
+const mentionsTypeParameter = type =>
+  type?.typeKind === TypeKind.TypeParameter ||
+  !!type?.elementType && mentionsTypeParameter(type.elementType) ||
+  (type?.typeArguments ?? []).some(argument => mentionsTypeParameter(argument.type));
+/**
+ * Whether an extension method could take `receiver` as its `this` argument, before type inference: a `this`
+ * parameter that mentions the method's type parameters accepts a receiver that has a construction of the same
+ * generic type (`List<int>` for `IEnumerable<T>`), an array or string for a span type, and anything for `T` itself.
+ * Used to tell `x.Name` with no extension method for `x` (CS1061) from a method group.
+ * @param {(type, definition) => object|null} constructionOf the construction of a generic definition among the
+ *   base types and interfaces of a type
+ */
+export function couldTakeReceiver(conversions, receiver, thisType, constructionOf) {
+  if (!mentionsTypeParameter(thisType)) return isValidReceiverConversion(conversions, receiver, thisType);
+  const type = receiver.type;
+  if (!type || thisType.typeKind === TypeKind.TypeParameter) return !!type;
+  if (thisType.elementType) return !!type.elementType;
+  const definition = thisType.originalDefinition,
+    isSpan = ['Span', 'ReadOnlySpan'].includes(definition.name) && definition.containingNamespace?.name === 'System';
+  if (isSpan && (type.elementType || type.specialType === 'System_String')) return true;
+  return !!constructionOf(type, definition);
 }
 /**
  * How the receiver is passed to the candidates of one scope: `ref` when every `this` parameter is `ref` (the
@@ -68,7 +112,7 @@ export function resolveExtensionInvocation(name, receiver, args, scopes, resolve
           succeeded: false,
           found: true,
           error: {
-            code: 'CS1929',
+            code: DiagnosticId.CS1929,
             args: [
               receiver.type?.toDisplayString() ?? '<null>',
               name,
@@ -82,7 +126,7 @@ export function resolveExtensionInvocation(name, receiver, args, scopes, resolve
       return { ...result, scope: i };
     }
     // An ambiguity between applicable candidates of one scope is final; other failures let outer scopes try.
-    if (result.error.code === 'CS0121') {
+    if (result.error.code === DiagnosticId.CS0121) {
       const usable = result.ambiguous.filter(m => isValidReceiverConversion(resolver.conversions, receiver, m.parameters[0].type));
       if (usable.length > 1) return { ...result, found: true };
       if (usable.length === 1) {
@@ -96,13 +140,16 @@ export function resolveExtensionInvocation(name, receiver, args, scopes, resolve
 }
 /**
  * The extension scopes of a call site, innermost first.
- * @param {{namespace:NamespaceSymbol|null,usings:{namespaces:NamespaceSymbol[],staticTypes:NamedTypeSymbol[]}}[]} chain
+ * @param {{namespace:NamespaceSymbol|null,usings:{namespaces:NamespaceSymbol[],staticTypes:NamedTypeSymbol[]},fileTypes?:NamedTypeSymbol[]}[]} chain
  *   the enclosing namespace declarations from innermost to the compilation unit, each with its own using directives
+ *   and the file-local types the calling file declares in that namespace
  */
 export function extensionScopes(chain, name) {
   const scopes = [];
   for (const level of chain) {
-    if (level.namespace) scopes.push({ methods: extensionMethodsInNamespace(level.namespace, name) });
+    // `file static class` types of the calling file belong to their namespace too (they are not members of it).
+    const fileLocal = (level.fileTypes ?? []).flatMap(type => extensionMethodsOf(type, name));
+    if (level.namespace) scopes.push({ methods: [...extensionMethodsInNamespace(level.namespace, name), ...fileLocal] });
     const imported = [
       ...(level.usings?.namespaces ?? []).flatMap(n => extensionMethodsInNamespace(n, name)),
       ...(level.usings?.staticTypes ?? []).flatMap(t => extensionMethodsOf(t, name)),

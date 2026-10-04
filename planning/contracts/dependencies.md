@@ -3,8 +3,38 @@
 A task declares `Depends on: SF-A00-T01, SF-A00-T02` or a multiline bullet list.
 `Requires contracts: value-abi@1` names an exact qualified contract version.
 The legacy `## Dependencies` section's work-ID links are also parsed. Malformed
-IDs and conflicting contract versions fail. Parent dependencies apply to each leaf;
-parent completion is not itself a dependency of its own children.
+IDs and conflicting contract versions fail. Parent dependencies apply to each leaf
+unless a reviewed inheritance boundary in `dependency-scopes.json` selects a
+narrower delivery scope. Parent completion is not itself a dependency of its own children.
+
+The versioned repository policy names an exact child, parent, inherited dependency,
+source issue and reason. The JS/SIMD release slice SF-R015-T03 (issue #425) retains
+its SF-A26-T06 parent (issue #418), but does not inherit that parent's SF-A27-T08
+Rust prerequisite. The broader parent and its other children still require Rust.
+Descendants within the release slice use the same boundary. This does not exempt
+other release IDs or make the slice ready before its remaining prerequisites merge.
+
+Only the dependency declared directly on the named parent is omitted at that
+boundary. Own dependencies, the same dependency on another ancestor, independent
+transitive paths, and every mandatory contract on the task or its ancestors remain
+required. The organizational hierarchy is unchanged for leaf detection and rollups.
+The DAG validator supplies these effective edges to readiness and graph exports;
+readiness also checks the complete contract ancestry of each visited dependency.
+Invalid or duplicate policy entries fail validation. A present child must match its
+source issue and parent, and the excluded dependency must still exist and be
+declared on that parent. Absent children do not invalidate partial snapshots.
+Raw unresolved references and parent cycles remain errors, even for excluded edges.
+
+Work IDs use `SF-Axx-Enn`, `SF-Axx-Tnn`, `SF-Axx-Bnn` (or `Rxxx` in place of
+`Axx`), optionally followed by one numeric child suffix such as `.2`.
+Whitespace, commas, semicolons, colons, parentheses, brackets, backticks,
+asterisks, angle brackets, quotes, and exclamation/question marks delimit IDs.
+A single sentence-ending period after a complete ID is allowed. Other attached
+characters remain part of the candidate and must fail validation: for example,
+`SF-A00-T01_2` and `SF-A00-T01/2` must never become `SF-A00-T01`. This applies to
+both explicit lists and work-ID links or prose in the legacy Dependencies section.
+Inline Markdown links contribute their label only; their URL is not a dependency
+declaration, even when its path or query contains a work ID.
 
 A task is ready only when it is an open leaf, the dependency graph has no cycles or
 missing IDs, all transitive requirements are CLOSED with a merged PR targeting the
@@ -51,4 +81,4 @@ Node 22+ is the supported execution target. Test fixtures simulate API responses
 they are not native runtime or browser qualification. The snapshot records real
 GitHub merged states and may accurately contain unready or malformed backlog items.
 
-Readiness also includes every transitive dependency ancestor's prerequisites. Missing parents and inherited cycles are errors. Label sync compares current labels and changes only status:ready transitions; invalid graphs cause no writes. Rename checks include both the deleted source and destination. Numeric project fields, including zero parity, are preserved in snapshots.
+Readiness also includes the effective prerequisites of each transitive dependency and its ancestors. Missing parents and inherited cycles are errors. Label sync compares current labels and changes only status:ready transitions; invalid graphs cause no writes. Rename checks include both the deleted source and destination. Numeric project fields, including zero parity, are preserved in snapshots.

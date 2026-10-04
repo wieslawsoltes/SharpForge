@@ -11,7 +11,9 @@
  * type the algebra does not model - is opaque: it covers nothing, it is not checked for subsumption, and a switch
  * expression that contains one is not checked for exhaustiveness.
  */
+import {DiagnosticId} from '../diagnostics/codes.js';
 import { SymbolKind, TypeKind } from '../symbols/types.js';
+import { tupleElements } from '../symbols/tuple-elements.js';
 import {
   scalarKind,
   universe,
@@ -29,7 +31,9 @@ import {
   subtypeTagType,
   subtypeTagOf,
 } from './pattern-spaces.js';
+import { typesCoveredBy, isSubsumedByTypes, isPartialTypeTest } from './pattern-type-tests.js';
 
+const isReferenceLike = type => type.isReferenceType === true || type.typeKind === TypeKind.TypeParameter;
 const forSubsumption = Object.freeze({ withReferenceNull: true });
 const forExhaustiveness = Object.freeze({ withReferenceNull: false });
 
@@ -141,7 +145,8 @@ class SpaceBuilder {
     }
     if (pattern.hasPositional) {
       const positional = pattern.positional;
-      if (!positional) return null;
+      // An ITuple test over an `object` also fails on the number of elements: it covers nothing that can be named.
+      if (!positional || positional.kind === 'ituple') return null;
       const isTuple = positional.kind === 'tuple';
       if (!isTuple) this.usesDeconstruct = true;
       const keyOf = index => (isTuple ? 'Item' + (index + 1) : `Deconstruct/${positional.parts.length}:${index}`);
@@ -182,7 +187,7 @@ function sampleAtom(atom, type) {
   const entries = [...atom.parts].filter(([key]) => key !== subtypePartKey).map(([key, part]) => [key, sampleSpace(part.space, part.type)]);
   if (type.isTupleType) {
     const byKey = new Map(entries);
-    return '(' + type.typeArguments.map((_, index) => byKey.get('Item' + (index + 1)) ?? '_').join(', ') + ')';
+    return '(' + tupleElements(type).map((_, index) => byKey.get('Item' + (index + 1)) ?? '_').join(', ') + ')';
   }
   const positional = entries.filter(([key]) => !key.startsWith('.')).map(([, text]) => text),
     properties = entries.filter(([key]) => key.startsWith('.')).map(([key, text]) => `${key.slice(1)}: ${text}`);
@@ -206,8 +211,9 @@ function onlyUnnamedEnumValues(space, type) {
  * @param type the type of the governing expression
  * @param {{pattern: object, when: object|null, node: object, isDefault?: boolean}[]} arms in source order; `node` is
  *   where a subsumed arm is reported
- * @param {{isExpression: boolean, node: object, closedHierarchyOf?: Function}} site whether it is a switch expression,
- *   where to report it, and (C# 15 preview) the closed hierarchy of a type at this use site
+ * @param {{isExpression: boolean, node: object, closedHierarchyOf?: Function, isSubtype?: Function}} site whether it
+ *   is a switch expression, where to report it, (C# 15 preview) the closed hierarchy of a type at this use site, and
+ *   whether every value of one type is a value of another (for arms behind a run-time type test)
  * @returns {{code: string, args: any[], node: object}[]}
  */
 export function checkSwitchArms(type, arms, site) {
@@ -218,33 +224,46 @@ export function checkSwitchArms(type, arms, site) {
     coveredIgnoringWhen = [],
     hasOpaque = false,
     hasDefault = false;
+  const coveredTypes = [],
+    isSubtype = site.isSubtype ?? (() => false),
+    nonNull = withoutNull(universe(type)),
+    alwaysMatches = arm => !arm.when || arm.when.constantValue?.value === true;
   for (const arm of arms) {
     if (arm.isDefault) {
       hasDefault = true;
       continue;
     }
-    const subsumed = { code: site.isExpression ? 'CS8510' : 'CS8120', args: [], node: arm.node },
-      space = builder.of(arm.pattern, type);
+    const subsumed = { code: site.isExpression ? DiagnosticId.CS8510 : DiagnosticId.CS8120, args: [], node: arm.node },
+      space = builder.of(arm.pattern, type),
+      isBehindTypeTest = isSubsumedByTypes(arm.pattern, type, coveredTypes, isSubtype);
+    if (alwaysMatches(arm)) coveredTypes.push(...typesCoveredBy(arm.pattern, type));
     if (!space) {
       // Whatever an opaque pattern matches, it cannot be chosen once every value is handled.
-      if (isEmpty(subtract(universe(type), covered, forSubsumption))) diagnostics.push(subsumed);
-      hasOpaque = true;
+      if (isBehindTypeTest || isEmpty(subtract(universe(type), covered, forSubsumption))) diagnostics.push(subsumed);
+      // Type tests for part of the input type never add up to the whole of it: they do not silence the check below.
+      if (!isPartialTypeTest(arm.pattern, type, isSubtype)) hasOpaque = true;
       continue;
     }
-    if (isEmpty(subtract(space, covered, forSubsumption))) diagnostics.push(subsumed);
+    if (isBehindTypeTest || isEmpty(subtract(space, covered, forSubsumption))) diagnostics.push(subsumed);
     coveredIgnoringWhen = union(coveredIgnoringWhen, space);
     // A constant-false `when` never matches, any other may fail: neither arm covers its values.
-    if (!arm.when || arm.when.constantValue?.value === true) covered = union(covered, space);
+    if (!alwaysMatches(arm)) continue;
+    covered = union(covered, space);
+    // Once every non-null value is handled, so is every non-null value of the input type as a type.
+    if (!coveredTypes.includes(type) && isEmpty(subtract(nonNull, covered, forSubsumption))) coveredTypes.push(type);
   }
   const mixesPartKinds = builder.usesDeconstruct && builder.usesProperties;
   if (!site.isExpression || hasOpaque || hasDefault || mixesPartKinds) return diagnostics;
   const all = universe(type, false),
     uncovered = subtract(all, covered, forExhaustiveness);
   if (isEmpty(uncovered)) return diagnostics;
-  const example = sampleSpace(uncovered, type);
-  let code = 'CS8509';
-  if (isEmpty(subtract(all, coveredIgnoringWhen, forExhaustiveness))) code = 'CS8846';
-  else if (onlyUnnamedEnumValues(uncovered, type)) code = 'CS8524';
+  // Every non-null value is left: Roslyn shows that as 'not null' once an arm handles null, and as '_' otherwise.
+  const handlesNull = isReferenceLike(type) && isEmpty(subtract([nullAtom], covered, forSubsumption)),
+    sample = sampleSpace(uncovered, type),
+    example = sample === '_' && handlesNull ? 'not null' : sample;
+  let code = DiagnosticId.CS8509;
+  if (isEmpty(subtract(all, coveredIgnoringWhen, forExhaustiveness))) code = DiagnosticId.CS8846;
+  else if (onlyUnnamedEnumValues(uncovered, type)) code = DiagnosticId.CS8524;
   diagnostics.push({ code, args: [example], node: site.node });
   return diagnostics;
 }

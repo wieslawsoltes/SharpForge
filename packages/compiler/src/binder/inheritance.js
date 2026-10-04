@@ -10,8 +10,9 @@
  * CS0114 (hides a virtual member, `override` or `new` missing) and CS0109 (`new` hides nothing).
  * `lookupMembers` is member lookup with hiding applied: the members a simple name or `e.Name` denotes.
  */
+import {DiagnosticId} from '../diagnostics/codes.js';
 import { isDynamicType, containsDynamic } from '../symbols/dynamic-types.js';
-import { TypeKind, SymbolKind, Accessibility } from '../symbols/types.js';
+import { TypeKind, SymbolKind, Accessibility, SymbolDisplayFormat } from '../symbols/types.js';
 import { MethodKind } from '../symbols/members.js';
 import { baseTypeChain, allInterfacesOf, membersInHierarchy } from '../symbols/substitution.js';
 import { isAccessible } from './accessibility.js';
@@ -84,23 +85,23 @@ export function resolveBases(type, { typeBinder, core, report }) {
       const bound = typeBinder.bindType(entry.type, scope).type;
       if (!bound || bound.isErrorType()) return;
       if (kind === TypeKind.Enum) {
-        if (!integralEnumBases.has(bound.specialType)) rep(entry.type, 'CS1008');
+        if (!integralEnumBases.has(bound.specialType)) rep(entry.type, DiagnosticId.CS1008);
         else enumUnderlyingType = bound;
         return;
       }
       // `dynamic` is `object` in metadata: it cannot be a base, and an interface cannot be implemented over it.
       if (isDynamicType(bound)) {
-        rep(entry.type, 'CS1965', [type.toDisplayString()]);
+        rep(entry.type, DiagnosticId.CS1965, [type.toDisplayString()]);
         return;
       }
       if (bound.typeKind === TypeKind.Interface && containsDynamic(bound)) {
-        rep(entry.type, 'CS1966', [type.toDisplayString(), bound.toDisplayString()]);
+        rep(entry.type, DiagnosticId.CS1966, [type.toDisplayString(), bound.toDisplayString()]);
         return;
       }
       if (bound.typeKind === TypeKind.Interface) {
         if (interfaces.some(i => i.equals(bound))) {
           if (type.declarations.length === 1 || type.interfaceSyntax.get(interfaces.find(i => i.equals(bound)))?.uri === uri)
-            rep(entry.type, 'CS0528', [bound.toDisplayString()]);
+            rep(entry.type, DiagnosticId.CS0528, [bound.toDisplayString()]);
           return;
         }
         interfaces.push(bound);
@@ -108,48 +109,48 @@ export function resolveBases(type, { typeBinder, core, report }) {
         return;
       }
       if (kind !== TypeKind.Class) {
-        rep(entry.type, 'CS0527', [bound.toDisplayString()]);
+        rep(entry.type, DiagnosticId.CS0527, [bound.toDisplayString()]);
         return;
       }
       if (bound.typeKind === TypeKind.TypeParameter) {
-        rep(entry.type, 'CS0689', [bound.name]);
+        rep(entry.type, DiagnosticId.CS0689, [bound.name]);
         return;
       }
       if (index !== 0 && !baseType) {
-        rep(entry.type, 'CS1722');
+        rep(entry.type, DiagnosticId.CS1722);
       }
       if (baseType) {
         if (!baseType.equals(bound))
           if (type.declarations.length > 1 && index === 0)
-            report(type.declarations[0].uri, type.declarations[0].syntax.identifier, 'CS0263', [type.toDisplayString()]);
-          else rep(entry.type, 'CS1721', [type.toDisplayString(), baseType.toDisplayString(), bound.toDisplayString()]);
+            report(type.declarations[0].uri, type.declarations[0].syntax.identifier, DiagnosticId.CS0263, [type.toDisplayString()]);
+          else rep(entry.type, DiagnosticId.CS1721, [type.toDisplayString(), baseType.toDisplayString(), bound.toDisplayString()]);
         return;
       }
       if (type.isStatic && bound.specialType !== 'System_Object') {
-        rep(entry.type, 'CS0713', [type.toDisplayString(), bound.toDisplayString()]);
+        rep(entry.type, DiagnosticId.CS0713, [type.toDisplayString(), bound.toDisplayString()]);
         return;
       }
       if (bound.typeKind !== TypeKind.Class) {
-        rep(entry.type, 'CS0509', [type.toDisplayString(), bound.toDisplayString()]);
+        rep(entry.type, DiagnosticId.CS0509, [type.toDisplayString(), bound.toDisplayString()]);
         return;
       }
       if (bound.isStatic) {
-        rep(declaration.syntax.identifier, 'CS0709', [type.toDisplayString(), bound.toDisplayString()]);
+        rep(declaration.syntax.identifier, DiagnosticId.CS0709, [type.toDisplayString(), bound.toDisplayString()]);
         return;
       }
       if (bound.isSealed) {
-        rep(entry.type, 'CS0509', [type.toDisplayString(), bound.toDisplayString()]);
+        rep(entry.type, DiagnosticId.CS0509, [type.toDisplayString(), bound.toDisplayString()]);
         return;
       }
       if (['System_Enum', 'System_ValueType', 'System_Delegate', 'System_MulticastDelegate', 'System_Array'].includes(bound.specialType)) {
-        rep(entry.type, 'CS0644', [type.toDisplayString(), bound.toDisplayString()]);
+        rep(entry.type, DiagnosticId.CS0644, [type.toDisplayString(), bound.toDisplayString()]);
         return;
       }
       baseType = bound;
       type.baseSyntax = { syntax: entry.type, uri };
     });
     if (type.isStatic && interfaces.length && list.length)
-      rep(list.find(e => e.type)?.type ?? declaration.syntax.identifier, 'CS0714', [type.toDisplayString()]);
+      rep(list.find(e => e.type)?.type ?? declaration.syntax.identifier, DiagnosticId.CS0714, [type.toDisplayString()]);
   }
   const at = type.locations[0],
     repAt = (code, args) => report(at.uri, at, code, args);
@@ -170,7 +171,7 @@ export function resolveBases(type, { typeBinder, core, report }) {
     // A type nested in its own base is a cycle as well.
     for (let c = baseType.originalDefinition.containingType; c && !cyclic; c = c.containingType) if (c === type) cyclic = true;
     if (cyclic) {
-      repAt('CS0146', [baseType.toDisplayString(), type.toDisplayString()]);
+      repAt(DiagnosticId.CS0146, [baseType.toDisplayString(), type.toDisplayString()]);
       type.cycleBase = baseType;
       baseType = null;
       type.hasCircularBase = true;
@@ -192,16 +193,16 @@ export function resolveBases(type, { typeBinder, core, report }) {
       return walk(i);
     });
     for (const i of cyclic) {
-      repAt('CS0529', [type.toDisplayString(), i.toDisplayString()]);
+      repAt(DiagnosticId.CS0529, [type.toDisplayString(), i.toDisplayString()]);
       interfaces.splice(interfaces.indexOf(i), 1);
     }
   }
   // Inconsistent accessibility of the base class and base interfaces.
   const rank = effectiveAccessibility(type);
   if (baseType && baseType.isSource !== undefined && !isAtLeastAsAccessible(baseType, rank))
-    repAt('CS0060', [type.toDisplayString(), baseType.toDisplayString()]);
+    repAt(DiagnosticId.CS0060, [type.toDisplayString(), baseType.toDisplayString()]);
   if (kind === TypeKind.Interface)
-    for (const i of interfaces) if (!isAtLeastAsAccessible(i, rank)) repAt('CS0061', [type.toDisplayString(), i.toDisplayString()]);
+    for (const i of interfaces) if (!isAtLeastAsAccessible(i, rank)) repAt(DiagnosticId.CS0061, [type.toDisplayString(), i.toDisplayString()]);
   return { baseType: baseType ?? implicitBase, interfaces, enumUnderlyingType };
 }
 /** The syntactically declared base class of a source type that is still being resolved (no diagnostics, no recursion). */
@@ -252,9 +253,11 @@ export function sameParameters(a, b, conversions = null) {
     return typeText(a, p.type) === typeText(b, q.type);
   });
 }
+/** The text of a type in the signature of `m`, its method type parameters written by position (`!!0`). */
+export const signatureTypeText = (m, t) => typeText(m, t);
 const typeText = (m, t) => {
-  // `dynamic` is `object` in a signature.
-  let text = t.toDisplayString().replace(/\bdynamic\b/g, 'object');
+  // `dynamic` is `object` in a signature, and nullable annotations of reference types are not part of one.
+  let text = t.toDisplayString(SymbolDisplayFormat.Signature).replace(/\bdynamic\b/g, 'object');
   (m.typeParameters ?? []).forEach((p, i) => {
     text = text.replace(new RegExp('\\b' + p.name + '\\b', 'g'), '!!' + i);
   });
@@ -305,7 +308,7 @@ export function checkHiding(type, core) {
     if (isOverride) continue;
     const hidden = hiddenMembers(member, type, core);
     if (!hidden.length) {
-      if (isNew) results.push({ code: 'CS0109', args: [member.toDisplayString()], member });
+      if (isNew) results.push({ code: DiagnosticId.CS0109, args: [member.toDisplayString()], member });
       continue;
     }
     if (isNew) continue;
@@ -315,7 +318,7 @@ export function checkHiding(type, core) {
         h.kind === member.kind &&
         h.kind !== SymbolKind.Field &&
         type.typeKind !== TypeKind.Interface;
-    results.push({ code: virtualLike ? 'CS0114' : 'CS0108', args: [member.toDisplayString(), h.toDisplayString()], member, hidden: h });
+    results.push({ code: virtualLike ? DiagnosticId.CS0114 : DiagnosticId.CS0108, args: [member.toDisplayString(), h.toDisplayString()], member, hidden: h });
   }
   return results;
 }

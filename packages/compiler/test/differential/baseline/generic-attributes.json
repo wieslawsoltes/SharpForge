@@ -1,5 +1,5 @@
 {
-  "generic-attributes/constructed-attribute-classes": ["diagnostics", "warnings", "bytecode", "cil"],
+  "generic-attributes/constructed-attribute-classes": ["diagnostics", "warnings", "bytecode", "cil", "directCil"],
   "generic-attributes/generic-attributes-in-csharp-10": ["diagnostics", "warnings"],
   "generic-attributes/type-argument-and-arity-rules": ["diagnostics", "warnings"]
 }

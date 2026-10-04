@@ -5,8 +5,10 @@
  *   Extended property patterns - `{ A.B: p }` is bound as `{ A: { B: p } }` (`propertySubpattern`).
  *   `[CallerArgumentExpression]` is bound and lowered with the other caller info attributes (./caller-info.js).
  */
+import {DiagnosticId} from '../diagnostics/codes.js';
 import { SymbolKind, ErrorTypeSymbol } from '../symbols/types.js';
 import { lookupMembers } from './inheritance.js';
+import { tupleElement } from './tuples.js';
 import { isSourceSymbol } from '../semantic/analysis-helpers.js';
 
 const unknown = ErrorTypeSymbol.unknown;
@@ -35,7 +37,7 @@ export const CSharp10Binding = Base =>
     propertySubpattern(sub, type) {
       const written = sub.expressionColon?.expression ?? sub.expressionColon?.name ?? sub.nameColon?.name,
         path = memberPath(written);
-      if (written && !path) this.report(written, 'CS8918');
+      if (written && !path) this.report(written, DiagnosticId.CS8918);
       const members = [];
       let current = type;
       for (const nameNode of path ?? []) {
@@ -54,16 +56,19 @@ export const CSharp10Binding = Base =>
     }
     /** The field or property `nameNode` names in a value of `type`, or null after reporting why there is none. */
     patternMember(type, nameNode) {
-      const name = nameNode.identifier.valueText,
-        found = lookupMembers(type, name, this.core, { within: this.c.containingType }).members,
+      // `{ X: 0 }` over `(int X, int Y)`: an element name stands for the field of the tuple that holds it.
+      const written = nameNode.identifier.valueText,
+        element = tupleElement(type, written),
+        name = element && !element.symbol ? element.field : written,
+        found = element?.symbol ? [element.symbol] : lookupMembers(type, name, this.core, { within: this.c.containingType }).members,
         member = found.find(m => m.kind === SymbolKind.Field || m.kind === SymbolKind.Property);
       if (member) {
         const definition = member.originalDefinition ?? member;
         if (member.kind === SymbolKind.Field) definition.reads = (definition.reads ?? 0) + 1;
         return member;
       }
-      if (found.length) this.report(nameNode, 'CS0154', [name]);
-      else if (isSourceSymbol(type) || type.specialType) this.report(nameNode, 'CS0117', [this.display(type), name]);
+      if (found.length) this.report(nameNode, DiagnosticId.CS0154, [name]);
+      else if (isSourceSymbol(type) || type.specialType) this.report(nameNode, DiagnosticId.CS0117, [this.display(type), name]);
       else this.incomplete = this.d.incomplete = true;
       return null;
     }

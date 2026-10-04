@@ -2,9 +2,11 @@
  * The core of the body binder: scopes and locals, diagnostics, conversions of bound expressions and the
  * expression dispatcher. The expression and statement families are class mixins composed in ../body-binder.js.
  */
+import {DiagnosticId} from '../../diagnostics/codes.js';
 import { TypeKind, ErrorTypeSymbol } from '../../symbols/types.js';
 import { LocalSymbol, LocalDeclarationKind } from '../../symbols/members.js';
 import { ConstantValue } from '../../constants/constant-value.js';
+import { literalConstant } from '../../constants/literal-value.js';
 import { defaultConstant } from '../../constants/default-constant.js';
 import { numericKind } from '../../conversions/numeric.js';
 import { isNullableType } from '../../conversions/nullable.js';
@@ -112,14 +114,14 @@ export class BinderCore {
   declare(name, symbol, node) {
     const current = this.scopes.at(-1);
     if (current.has(name)) {
-      this.report(node, 'CS0128', [name]);
+      this.report(node, DiagnosticId.CS0128, [name]);
       return symbol;
     }
     for (let b = this; b; b = b.c.parent) {
       const from = b === this ? this.scopes.length - 2 : b.scopes.length - 1;
       for (let i = from; i >= 0; i--)
         if (b.scopes[i].has(name)) {
-          this.report(node, 'CS0136', [name]);
+          this.report(node, DiagnosticId.CS0136, [name]);
           current.set(name, symbol);
           return symbol;
         }
@@ -127,7 +129,7 @@ export class BinderCore {
     // A name declared later in an enclosing scope also conflicts (the outer local's scope is its whole block).
     for (let i = this.pending.length - 2; i >= 0; i--)
       if (this.pending[i].has(name)) {
-        this.report(node, 'CS0136', [name]);
+        this.report(node, DiagnosticId.CS0136, [name]);
         break;
       }
     current.set(name, symbol);
@@ -189,7 +191,7 @@ export class BinderCore {
         const type = this.core.keyword(v.type);
         let constant = null;
         try {
-          constant = ConstantValue.of(v.type, v.value);
+          constant = literalConstant(v);
         } catch {
           constant = null;
         }
@@ -233,18 +235,18 @@ export class BinderCore {
         return this.node('TypeExpression', syntax, null, { referencedType: this.core.keyword(syntax.keyword.text) ?? unknown });
       case 'ThisExpression': {
         if (this.c.isStatic || !this.c.containingType) {
-          this.report(syntax, this.c.isFieldInitializer && !this.c.isStaticInitializer ? 'CS0027' : 'CS0026');
+          this.report(syntax, this.c.isFieldInitializer && !this.c.isStaticInitializer ? DiagnosticId.CS0027 : DiagnosticId.CS0026);
           return this.bad(syntax);
         }
         if (this.c.isFieldInitializer) {
-          this.report(syntax, 'CS0027');
+          this.report(syntax, DiagnosticId.CS0027);
           return this.bad(syntax);
         }
         return this.node('This', syntax, this.c.containingType);
       }
       case 'BaseExpression': {
         if (this.c.isStatic || !this.c.containingType) {
-          this.report(syntax, 'CS1511');
+          this.report(syntax, DiagnosticId.CS1511);
           return this.bad(syntax);
         }
         const base = this.c.containingType.baseType;
@@ -296,7 +298,7 @@ export class BinderCore {
       }
       case 'SizeOfExpression': {
         const type = this.bindType(syntax.type).type;
-        const n = this.node('SizeOf', syntax, this.core.int);
+        const n = this.node('SizeOf', syntax, this.core.int, { operandType: type });
         const size = {
           sbyte: 1,
           byte: 1,
@@ -311,7 +313,8 @@ export class BinderCore {
           ulong: 8,
           double: 8,
           decimal: 16,
-        }[keywordOf(type)];
+          // An enum has the size of its underlying type; `sizeof(E)` is a constant like `sizeof(int)`.
+        }[keywordOf(type.typeKind === TypeKind.Enum ? (type.enumUnderlyingType ?? this.core.int) : type)];
         if (size) n.constantValue = ConstantValue.int(size);
         return n;
       }

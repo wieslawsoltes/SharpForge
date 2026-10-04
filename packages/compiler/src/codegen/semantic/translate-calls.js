@@ -5,6 +5,7 @@
 import { BuiltinMap } from '@sharpforge/bytecode';
 import { TypeKind } from '../../symbols/types.js';
 import { MethodKind } from '../../symbols/members.js';
+import { defaultSourceOf } from '../../overload/override-parameters.js';
 import { n } from './node-factory.js';
 
 const primitiveToString = new Set(['int', 'double', 'bool', 'string']);
@@ -44,7 +45,7 @@ export const CallTranslation = Base =>
         if (mapping.expanded && positions[i] === last) rest.push(this.objectArgument(value, elementType));
         else slots[positions[i]] = value;
       });
-      const lowered = slots.map((value, i) => value ?? this.defaultArgument(parameters[i], node, i));
+      const lowered = slots.map((value, i) => value ?? this.defaultArgument(defaultSourceOf(node, parameters[i], i), node, i));
       if (mapping.expanded) {
         lowered.push(n.newArray(elementType, n.literal(rest.length, 'int'), rest));
       }
@@ -58,7 +59,9 @@ export const CallTranslation = Base =>
       const callerInfo = node.callerInfo?.get(parameter.ordinal);
       if (callerInfo !== undefined) {
         const supplied = typeof callerInfo === 'number' ? 'int' : 'string';
-        if (type !== supplied && type !== 'object') return this.unsupported('caller info for a parameter of this type', node.syntax);
+        // The line number converts like any `int` constant: to `double` at compile time.
+        if (supplied === 'int' && type === 'double') return n.literal(callerInfo, 'double');
+        if (type !== supplied && type !== 'object') return this.unsupported(`caller info for a parameter of type '${type}'`, node.syntax);
         return n.literal(callerInfo, supplied);
       }
       // A default that was never bound must not silently become zero.

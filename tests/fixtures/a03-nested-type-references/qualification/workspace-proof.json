@@ -1,0 +1,14 @@
+{
+  "candidate": {
+    "root": "/private/tmp/sharpforge-a03-nested-type-references",
+    "cilLink": "/private/tmp/sharpforge-a03-nested-type-references/packages/cil",
+    "packageSHA256": "9ed396895997e7afbdb0951b22f56210ed9a66efc19753609107d0a4240ecfe8",
+    "lockSHA256": "0795c3e9cb2007594de2fa207c2a97d80bb927f146f68d8566934485cbddf0cd"
+  },
+  "baseline": {
+    "root": "/private/tmp/sharpforge-a03-nested-type-reference-baseline",
+    "cilLink": "/private/tmp/sharpforge-a03-nested-type-reference-baseline/packages/cil",
+    "packageSHA256": "9ed396895997e7afbdb0951b22f56210ed9a66efc19753609107d0a4240ecfe8",
+    "lockSHA256": "0795c3e9cb2007594de2fa207c2a97d80bb927f146f68d8566934485cbddf0cd"
+  }
+}

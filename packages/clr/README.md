@@ -3,6 +3,15 @@
 This package supplies explicit, offline assembly identity and asset-selection
 services. [Assembly load contexts](CONTEXTS.md) add lazy metadata loading and
 explicit lifetimes. Full CLR type construction and execution are separate work.
+Canonical [method definition identities](METHODS.md) retain lazy signature and
+body access for reflection and execution services to consume later.
+Canonical [field definition metadata](FIELDS.md) adds lazy field signatures and raw constants.
+Canonical [property metadata](PROPERTIES.md) adds index signatures and accessor method links.
+Canonical [event metadata](EVENTS.md) adds raw event-type tokens and add/remove/raise method links.
+Bounded AST [generic signature substitution](GENERICS.md) preserves metadata
+tokens and open caller scopes without parsing display names.
+[Prepared CIL core authority](VERIFICATION-CORE-TYPES.md) binds an explicit token
+selection through the loader for synchronous verification category queries.
 
 `AssemblyName.parse(displayName)` parses immutable partial identities, preserving
 unspecified components as `null`. `fullName` formats CLR quoting and escaping.

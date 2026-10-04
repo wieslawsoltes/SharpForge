@@ -1,3 +1,4 @@
+import {DiagnosticId} from '../diagnostics/codes.js';
 import {NamedTypeSymbol,ErrorTypeSymbol,TypeKind,TypeParameterSymbol,Variance} from './types.js';
 /**
  * Special types (the predefined types the language itself knows: System.Object ... System.Nullable<T>) and
@@ -65,6 +66,8 @@ export function declareCoreTypes(globalNamespace,ids=specialTypeIds()){
     const names=d.arity===1?['T']:d.name==='Dictionary'?['TKey','TValue']:d.name==='Func'?[...Array.from({length:d.arity-1},(_,i)=>'T'+(d.arity>2?i+1:'')),'TResult']:Array.from({length:d.arity},(_,i)=>'T'+(i+1));
     const type=new NamedTypeSymbol({name:d.name,typeKind:d.typeKind,specialType:specialTable.has(id)?id:null,typeParameters:names.map(name=>new TypeParameterSymbol({name,variance:variantInterfaces.has(id)?Variance.Out:Variance.None})),isSealed:d.typeKind===TypeKind.Struct||id==='System_String',isStatic:['System_Math','System_Console','System_Threading_Interlocked','System_Threading_Monitor','SharpForge_Runtime_Formatting','SharpForge_Runtime_Async'].includes(id),
       baseType:d.baseId?()=>{const b=provider.getCoreType(d.baseId);return b.isErrorType()?null:b;}:null});
+    // .NET 9: the type parameters of Func and Action are declared `allows ref struct`.
+    if(d.name==='Func'||d.name==='Action')for(const p of type.typeParameters)p.allowsRefLikeType=true;
     type.wellKnownType=wellKnownTable.has(id)?id:null;container.addType(type);declared.push(type);}
   return declared;
 }
@@ -78,8 +81,8 @@ export class TypeProvider {
   getCoreType(id,node=null){
     let type=this.cache.get(id);
     if(!type){const d=coreTypeDescriptor(id);if(!d)throw new RangeError(`Unknown core type '${id}'`);const found=this.globalNamespace.lookupNamespace(d.namespace)?.getTypeMembers(d.name,d.arity)??[];
-      type=found[0]??new ErrorTypeSymbol(d.name,d.arity,{reason:{code:'CS0518',args:[d.metadataName.replace(/`\d+$/,'')]}});this.cache.set(id,type);}
-    if(type.isErrorType()&&this.report&&!this.reported.has(id)){this.reported.add(id);this.report(node,'CS0518',type.reason.args);}
+      type=found[0]??new ErrorTypeSymbol(d.name,d.arity,{reason:{code:DiagnosticId.CS0518,args:[d.metadataName.replace(/`\d+$/,'')]}});this.cache.set(id,type);}
+    if(type.isErrorType()&&this.report&&!this.reported.has(id)){this.reported.add(id);this.report(node,DiagnosticId.CS0518,type.reason.args);}
     return type;
   }
   getSpecialType(id,node=null){if(!specialTable.has(id))throw new RangeError(`'${id}' is not a special type`);return this.getCoreType(id,node);}

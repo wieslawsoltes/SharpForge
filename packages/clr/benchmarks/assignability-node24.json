@@ -1,0 +1,25 @@
+{
+  "node": "v24.21.0",
+  "cpu": "Apple M3 Pro",
+  "platform": "darwin",
+  "arch": "arm64",
+  "pairs": 33,
+  "allocationCount": "not measured",
+  "previousEquivalentImplementation": false,
+  "results": [
+    {
+      "name": "cold pair decisions with loaded descriptors",
+      "unit": "microseconds/operation",
+      "median": 0.7222424242422332,
+      "p95": 2.804303030302866,
+      "p99": 9.996212121211729
+    },
+    {
+      "name": "cached inherited interface decision",
+      "unit": "microseconds/operation",
+      "median": 0.07464589999999874,
+      "p95": 0.09146250000000009,
+      "p99": 0.25822080000000086
+    }
+  ]
+}

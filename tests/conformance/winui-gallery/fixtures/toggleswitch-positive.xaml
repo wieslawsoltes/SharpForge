@@ -1,0 +1,1 @@
+<ToggleSwitch xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" Name="fixture" Header="ToggleSwitch" IsOn="true" Width="120" />
