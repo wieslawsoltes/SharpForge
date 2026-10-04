@@ -181,6 +181,11 @@ export function containsTypeParameter(type, parameters = null) {
   if (!type) return false;
   if (type.kind === SymbolKind.TypeParameter) return !parameters || parameters.includes(type);
   if (type instanceof ArrayTypeSymbol) return containsTypeParameter(type.elementType, parameters);
+  if (type.typeKind === TypeKind.Pointer) return containsTypeParameter(type.pointedAtType, parameters);
+  if (type.typeKind === TypeKind.FunctionPointer) {
+    return containsTypeParameter(type.signature.returnType, parameters) ||
+      type.signature.parameters.some(parameter => containsTypeParameter(parameter.type, parameters));
+  }
   if (type instanceof NamedTypeSymbol)
     return (
       type.typeArguments.some(a => a.type !== type && containsTypeParameter(a, parameters)) ||
