@@ -38,6 +38,14 @@ Retained brush descriptors preserve owned color stops, interpolation space, mask
 
 `DrawingModel` and `DrawingCollection` retain explicit native state and snapshots. Resource descriptors materialize according to the declared CLR type; Point, Size, Rect and Matrix cross value boundaries as flat typed fields, while scene geometry and brushes retain their property descriptors. Browser system backdrops report their approximation policy.
 
+## Text layout services
+
+`TextLayoutService` caches actual provider results and shares them with measurement and drawing. The browser provider retains shaped native runs with explicit opaque glyph access. Cluster maps drive caret, hit testing and selection; rich spans, trimming and ink bounds remain separate from raster policy. Numeric portable shaping is supplied by a separate provider.
+
+## Control drawing delegates
+
+Resolved control templates draw through ordinary shape, border and text delegates. Measurement and drawing share actual text results. Placement/clip changes retain item contents, native input remains a declared host capability, and capture validates cross-session resources and limits. High-contrast colors come from the host system-color resolver.
+
 ## Validation
 
 Focused cases were authored and included in the completed A17 scope gate. The publication manifest records its exact prior evidence and any subsequent repair. Required core is pending on this exact branch tree. Browser pixels, native WinUI comparisons and physical GPU qualification are separate gates.
