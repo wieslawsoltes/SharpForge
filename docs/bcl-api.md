@@ -834,8 +834,11 @@ Registered families: <code>string</code>.
 | 524298 | <code>static int System.String::CompareOrdinal(string, int, string, int, int)</code> | implemented |
 | 524299 | <code>static bool System.String::Equals(string, string, System.StringComparison)</code> | implemented |
 | 524300 | <code>bool System.String::Equals(string, System.StringComparison)</code> | implemented |
+| 524301 | <code>static int System.String::Compare(string, string, System.StringComparison)</code> | implemented |
+| 524302 | <code>bool System.String::StartsWith(string, System.StringComparison)</code> | implemented |
+| 524303 | <code>bool System.String::EndsWith(string, System.StringComparison)</code> | implemented |
 
-Pinned reference: 39 implemented and 147 missing exact metadata rows.
+Pinned reference: 42 implemented and 144 missing exact metadata rows.
 
 | Reference kind | Exact reference signature | Status | Matching ABI IDs |
 | --- | --- | --- | --- |
@@ -861,7 +864,7 @@ Pinned reference: 39 implemented and 147 missing exact metadata rows.
 | method | <code>System.String::Compare``0(System.String,System.String,System.Boolean):System.Int32 static</code> | missing | — |
 | method | <code>System.String::Compare``0(System.String,System.String,System.Boolean,System.Globalization.CultureInfo):System.Int32 static</code> | missing | — |
 | method | <code>System.String::Compare``0(System.String,System.String,System.Globalization.CultureInfo,System.Globalization.CompareOptions):System.Int32 static</code> | missing | — |
-| method | <code>System.String::Compare``0(System.String,System.String,System.StringComparison):System.Int32 static</code> | missing | — |
+| method | <code>System.String::Compare``0(System.String,System.String,System.StringComparison):System.Int32 static</code> | implemented | 524301 |
 | method | <code>System.String::CompareOrdinal``0(System.String,System.Int32,System.String,System.Int32,System.Int32):System.Int32 static</code> | implemented | 524298 |
 | method | <code>System.String::CompareOrdinal``0(System.String,System.String):System.Int32 static</code> | implemented | 1254 |
 | method | <code>System.String::CompareTo``0(System.Object):System.Int32 instance</code> | missing | — |
@@ -894,7 +897,7 @@ Pinned reference: 39 implemented and 147 missing exact metadata rows.
 | method | <code>System.String::EndsWith``0(System.Char):System.Boolean instance</code> | missing | — |
 | method | <code>System.String::EndsWith``0(System.String):System.Boolean instance</code> | implemented | 1263 |
 | method | <code>System.String::EndsWith``0(System.String,System.Boolean,System.Globalization.CultureInfo):System.Boolean instance</code> | missing | — |
-| method | <code>System.String::EndsWith``0(System.String,System.StringComparison):System.Boolean instance</code> | missing | — |
+| method | <code>System.String::EndsWith``0(System.String,System.StringComparison):System.Boolean instance</code> | implemented | 524303 |
 | method | <code>System.String::EnumerateRunes``0():System.Text.StringRuneEnumerator instance</code> | missing | — |
 | method | <code>System.String::Equals``0(System.Object):System.Boolean instance</code> | missing | — |
 | method | <code>System.String::Equals``0(System.String):System.Boolean instance</code> | missing | — |
@@ -999,7 +1002,7 @@ Pinned reference: 39 implemented and 147 missing exact metadata rows.
 | method | <code>System.String::StartsWith``0(System.Char):System.Boolean instance</code> | missing | — |
 | method | <code>System.String::StartsWith``0(System.String):System.Boolean instance</code> | implemented | 1262 |
 | method | <code>System.String::StartsWith``0(System.String,System.Boolean,System.Globalization.CultureInfo):System.Boolean instance</code> | missing | — |
-| method | <code>System.String::StartsWith``0(System.String,System.StringComparison):System.Boolean instance</code> | missing | — |
+| method | <code>System.String::StartsWith``0(System.String,System.StringComparison):System.Boolean instance</code> | implemented | 524302 |
 | method | <code>System.String::Substring``0(System.Int32):System.String instance</code> | implemented | 1256 |
 | method | <code>System.String::Substring``0(System.Int32,System.Int32):System.String instance</code> | implemented | 1257 |
 | method | <code>System.String::ToCharArray``0():System.Char[] instance</code> | missing | — |
