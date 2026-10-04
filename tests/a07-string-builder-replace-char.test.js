@@ -42,6 +42,17 @@ const replace = (platform, reference, args) => platform.invoke(builderContract('
 
 for (const [engine, create] of Object.entries(engines)) {
   for (const pipeline of ['bound', 'legacy']) {
+    test(`StringBuilder.Replace char ${pipeline}/${engine}: literal dollar replacements and released string replacement remain distinct`, () => {
+      const source = 'var builder = new StringBuilder("a.a"); builder.Replace((char)97, (char)36);' +
+        'Console.WriteLine(string.Equals(builder.ToString(), "$.$"));' +
+        'builder.Replace("$", "x"); Console.WriteLine(builder.ToString());';
+      const vm = create(compile(source, pipeline));
+      try {
+        const result = vm.run();
+        assert.equal(result.state, 'terminated', result.fault?.stack);
+        assert.equal(result.output, 'True\nx.x\n');
+      } finally {vm.stop();}
+    });
     test(`StringBuilder.Replace char ${pipeline}/${engine}: native successful text and fluent identity`, () => {
       const rows = native.rows.filter(row => !row.fault);
       const vm = create(compile(rows.map(builderReplaceSource).join('\n'), pipeline));
