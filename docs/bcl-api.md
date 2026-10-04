@@ -831,8 +831,9 @@ Registered families: <code>string</code>.
 | 1282 | <code>static string System.String::Format(string, object, object, object)</code> | implemented |
 | 1283 | <code>static string System.String::Format(string, object, object, object, object)</code> | implemented |
 | 1284 | <code>static string System.String::Format(string, object[])</code> | implemented |
+| 524298 | <code>static int System.String::CompareOrdinal(string, int, string, int, int)</code> | implemented |
 
-Pinned reference: 36 implemented and 150 missing exact metadata rows.
+Pinned reference: 37 implemented and 149 missing exact metadata rows.
 
 | Reference kind | Exact reference signature | Status | Matching ABI IDs |
 | --- | --- | --- | --- |
@@ -859,7 +860,7 @@ Pinned reference: 36 implemented and 150 missing exact metadata rows.
 | method | <code>System.String::Compare``0(System.String,System.String,System.Boolean,System.Globalization.CultureInfo):System.Int32 static</code> | missing | — |
 | method | <code>System.String::Compare``0(System.String,System.String,System.Globalization.CultureInfo,System.Globalization.CompareOptions):System.Int32 static</code> | missing | — |
 | method | <code>System.String::Compare``0(System.String,System.String,System.StringComparison):System.Int32 static</code> | missing | — |
-| method | <code>System.String::CompareOrdinal``0(System.String,System.Int32,System.String,System.Int32,System.Int32):System.Int32 static</code> | missing | — |
+| method | <code>System.String::CompareOrdinal``0(System.String,System.Int32,System.String,System.Int32,System.Int32):System.Int32 static</code> | implemented | 524298 |
 | method | <code>System.String::CompareOrdinal``0(System.String,System.String):System.Int32 static</code> | implemented | 1254 |
 | method | <code>System.String::CompareTo``0(System.Object):System.Int32 instance</code> | missing | — |
 | method | <code>System.String::CompareTo``0(System.String):System.Int32 instance</code> | missing | — |
