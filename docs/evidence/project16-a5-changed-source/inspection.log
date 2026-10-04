@@ -1,0 +1,42 @@
+{
+  "status": "findings",
+  "sourceSha": "e89257052957f4c736512e9c2b46162bb6f23eae",
+  "sourceTree": "9e33eca9a91361201b2e14fea3cded5cbd584d88",
+  "scopeCounts": {
+    "changedTrackedPaths": 102,
+    "sourceFiles": 37,
+    "officialRootSubset": 17,
+    "supplementalTestFixtureSource": 20
+  },
+  "pythonAst": {
+    "path": "tests/browser_editor_budgets_test.py",
+    "sha256": "a3f52ab661f54aaac83930814bc09e171a86c57908c203b50a5c649dd8c9ae80",
+    "status": "parsed",
+    "operation": "ast.parse(decoded UTF-8 Git blob, filename=path); no imports or execution."
+  },
+  "findings": [
+    {
+      "path": "apps/studio/compiler.worker.js",
+      "gate": [],
+      "frozenGrowth": [],
+      "size": [],
+      "longLines": [
+        {
+          "line": 39,
+          "length": 518,
+          "sha256": "5a354bfb6c4308f0ed47a56d1bf2376234df78b1372eda73a23d2cf2a1d256f4"
+        },
+        {
+          "line": 41,
+          "length": 308,
+          "sha256": "06bc3fa93a6d92223019de43ba184488600d9d4f28e4f2249da5d3382ed5355c"
+        },
+        {
+          "line": 48,
+          "length": 562,
+          "sha256": "bba32341bdddc48fb223220b0894c2d229904bbd5fdb1c516757de7ad8908ab5"
+        }
+      ]
+    }
+  ]
+}

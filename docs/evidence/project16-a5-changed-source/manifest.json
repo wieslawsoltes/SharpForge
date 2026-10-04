@@ -1,0 +1,54 @@
+{
+  "schemaVersion": 1,
+  "kind": "project16-a5-bounded-source-evidence",
+  "hashAlgorithm": "SHA-256",
+  "fileCount": 9,
+  "totalBytesExcludingManifest": 100474,
+  "files": [
+    {
+      "path": "inspect.py",
+      "bytes": 7577,
+      "sha256": "e189b744a42854193d43d884c2c99a7fa3d0b178c688a7dfae1f361284479451"
+    },
+    {
+      "path": "inspection.json",
+      "bytes": 47070,
+      "sha256": "6e9c0b129426cae5993b8f7d509ea437f0f662b626908ebfb9380959aedd17ca"
+    },
+    {
+      "path": "inspection.log",
+      "bytes": 1205,
+      "sha256": "e7db8b218fbd10f21fe174a628fc06cee8e3512681d63445edc7450848274350"
+    },
+    {
+      "path": "invocation.json",
+      "bytes": 932,
+      "sha256": "fb59a759f544dd652cde027df02e85ac8bc6d3dae91b8d5bb7b8f7a25a4807fc"
+    },
+    {
+      "path": "publication-identities.json",
+      "bytes": 632,
+      "sha256": "f0dc7d559dae5aabaf0889fd3c9e59ba3ed55477c37c0a25eb3bce42a309186d"
+    },
+    {
+      "path": "reinspect.py",
+      "bytes": 5508,
+      "sha256": "927ddb9b995a5cd1487d6d5f0dc9e2f6b37fd0e7205626652001ca31616e53d3"
+    },
+    {
+      "path": "reinspection-invocation.json",
+      "bytes": 847,
+      "sha256": "66e38561879dbb2a5a5ed9a75b69f70419247bfd774df48956b70165a31824a1"
+    },
+    {
+      "path": "reinspection.json",
+      "bytes": 35495,
+      "sha256": "1afb10cee635e628694b7a8c76b3913749b4d0d23c74127a192b29f38eec65c4"
+    },
+    {
+      "path": "reinspection.log",
+      "bytes": 1208,
+      "sha256": "ce1534883dd930007f1602970749172dbba19fcf4d67b1f4864d8a511a2dd145"
+    }
+  ]
+}
