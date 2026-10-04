@@ -58,7 +58,8 @@ function rootContent(context, environment) {
 }
 function belongsToRoot(context, receiver) {
   const service = context.services.layout;
-  service?.synchronize?.(receiver);
+  // Querying attachment must not measure or materialize a detached control's template.
+  service?.synchronize?.();
   const content = rootContent(context, createContextEnvironment(context));
   if (content == null) return false;
   const contentId = context.id(content), seen = new Set();
