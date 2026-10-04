@@ -20,7 +20,29 @@ async function measuredSelections(page) {
   }, largeUri);
 }
 
+async function visibleDragTarget(host) {
+  const control = host.locator('.design-preview [data-sf-id="item255"]');
+  await control.scrollIntoViewIfNeeded();
+  const bounds = await control.boundingBox();
+  assert(bounds && bounds.width && bounds.height);
+  const origin = {x: bounds.x + bounds.width / 2, y: bounds.y + bounds.height / 2};
+  const hit = await control.evaluate((element, point) => {
+    const target = element.ownerDocument.elementFromPoint(point.x, point.y);
+    const scroll = element.closest('.design-scroll');
+    const visible = scroll.getBoundingClientRect();
+    return {control: target === element || element.contains(target), selectionId: target?.closest('[data-selection-id]')?.dataset.selectionId,
+      sameStage: target?.closest('.design-stage') === element.closest('.design-stage'), resize: !!target?.closest('[data-resize]'),
+      tag: target?.tagName, className: target?.getAttribute('class'),
+      scroller: {left: visible.left, top: visible.top, right: visible.right, bottom: visible.bottom,
+        scrollLeft: scroll.scrollLeft, scrollTop: scroll.scrollTop}};
+  }, origin);
+  assert(hit.sameStage && !hit.resize && (hit.control || hit.selectionId === 'item255'),
+    `The visible drag center must hit the selected control or its drag adorner: ${JSON.stringify({origin, hit})}`);
+  return {bounds, origin, hit};
+}
+
 export async function largeScenePerformance({page, context, results}) {
+  const viewport = await page.evaluate(() => ({width: innerWidth, height: innerHeight, devicePixelRatio}));
   const design = largeDesign();
   const heapBefore = await page.evaluate(() => performance.memory?.usedJSHeapSize ?? null);
   const started = performance.now();
@@ -30,12 +52,19 @@ export async function largeScenePerformance({page, context, results}) {
   assert.equal((await snapshot(page, largeUri)).document.nodes.length, 5000);
   assert.equal(await host.locator('.design-preview [data-sf-id]').count(), 5000, 'The benchmark must render the entire real 5000-node scene.');
   const selections = await measuredSelections(page);
+  const evidence = {nodes: 5000, viewport, constructionMs, selectionColdMs: selections.cold,
+    selectionWarmMs: distribution(selections.warm), selectionWarmSamplesMs: selections.warm, heapBytes: selections.heapBytes,
+    observedHeapDeltaBytes: heapBefore === null ? null : selections.heapBytes - heapBefore,
+    phase: 'selection-complete', drag: null, maximumAdorners: null, budgetMs: 16,
+    measurement: 'Real DOM selection plus forced layout; CDP renderer tasks during trusted mouse input.'};
+  const evidencePath = resolve(results, 'browser-designer-5000-performance.json');
+  await writeFile(evidencePath, JSON.stringify(evidence, null, 2));
   await selectNode(page, largeUri, 'item255');
   const before = (await snapshot(page, largeUri)).document;
-  const control = host.locator('.design-preview [data-sf-id="item255"]');
-  const bounds = await control.boundingBox();
-  assert(bounds && bounds.width && bounds.height);
-  const origin = {x: bounds.x + bounds.width / 2, y: bounds.y + bounds.height / 2};
+  evidence.dragTarget = await visibleDragTarget(host);
+  evidence.phase = 'drag-ready';
+  await writeFile(evidencePath, JSON.stringify(evidence, null, 2));
+  const {origin} = evidence.dragTarget;
   const trace = await traceInteraction(context, page, async () => {
     await page.mouse.move(origin.x, origin.y);
     await page.evaluate(() => performance.mark('a18-drag-start'));
@@ -48,11 +77,13 @@ export async function largeScenePerformance({page, context, results}) {
     await page.evaluate(() => new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve))));
     await page.evaluate(() => performance.mark('a18-drag-end'));
   });
-  const drag = traceMeasurements(trace);
   await writeFile(resolve(results, 'browser-designer-5000-timeline.json'), JSON.stringify(trace));
+  const drag = traceMeasurements(trace);
   const after = (await snapshot(page, largeUri)).document;
   const previous = before.nodes.find(node => node.id === 'item255').properties;
   const next = after.nodes.find(node => node.id === 'item255').properties;
+  Object.assign(evidence, {drag, gesture: {before: previous, after: next}, phase: 'drag-measured'});
+  await writeFile(evidencePath, JSON.stringify(evidence, null, 2));
   assert(next.Left !== previous.Left || next.Top !== previous.Top, 'The measured mouse drag did not move the selected control.');
   assert.equal(next.Width, previous.Width, 'The measured gesture resized a handle instead of dragging the control.');
   assert.equal(next.Height, previous.Height);
@@ -66,11 +97,8 @@ export async function largeScenePerformance({page, context, results}) {
     ?.dataset.selectionCount === '5000', largeUri);
   const maximumAdorners = await host.locator('.design-selection').count();
   assert(maximumAdorners > 0 && maximumAdorners <= 200, 'The 5000-control visible selection adorner bound was exceeded.');
-  const evidence = {nodes: 5000, constructionMs, selectionColdMs: selections.cold,
-    selectionWarmMs: distribution(selections.warm), heapBytes: selections.heapBytes, drag, maximumAdorners,
-    observedHeapDeltaBytes: heapBefore === null ? null : selections.heapBytes - heapBefore,
-    budgetMs: 16, measurement: 'Real DOM selection plus forced layout; CDP renderer tasks during trusted mouse input.'};
-  await writeFile(resolve(results, 'browser-designer-5000-performance.json'), JSON.stringify(evidence, null, 2));
+  Object.assign(evidence, {maximumAdorners, phase: 'measurements-complete'});
+  await writeFile(evidencePath, JSON.stringify(evidence, null, 2));
   assert(selections.cold <= 16, `5000-node cold selection exceeded 16 ms: ${selections.cold}`);
   assert(evidence.selectionWarmMs.maximum <= 16,
     `5000-node selection exceeded 16 ms: ${JSON.stringify(evidence.selectionWarmMs)}`);
