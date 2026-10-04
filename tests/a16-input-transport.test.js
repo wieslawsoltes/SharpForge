@@ -26,7 +26,8 @@ test('pointer coalescing is bounded and invalid/malicious wire data is rejected'
   native.getCoalescedEvents = () => Array.from({ length: 1000 }, (_, index) => ({ ...native, clientX: index }));
   const payload = serializeRoutedEvent(pointerEventArgs(native, { x: 30, y: 40 }));
   assert.equal(payload.IntermediatePoints.length, 256);
-  assert.equal(payload.IntermediatePoints.at(-1).Position.X, 999);
+  assert.equal(payload.IntermediatePoints.at(-2).Position.X, 999);
+  assert.deepEqual(payload.IntermediatePoints.at(-1), payload.CurrentPoint);
   const cycle = {}; cycle.next = cycle;
   assert.throws(() => serializeRoutedEvent(cycle), /cycle/);
   assert.throws(() => serializeRoutedEvent({ value: Infinity }), /finite/);
