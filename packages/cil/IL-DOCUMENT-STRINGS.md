@@ -31,11 +31,34 @@ plus the separately documented optional branch layout.
 
 Use `{ relaxBranches: true }` to combine a new literal with edited long loops; the
 same branch/EH relocation API from IL-DOCUMENT-LAYOUT.md is reused. This completes
-the remaining implementation in #2393, with qualification pending. It remains the
+the remaining implementation and acceptance criterion in #2393. It remains the
 SharpForge document dialect and requires .image. New type/member/signature rows,
 standalone ilasm syntax and Portable PDB rewriting remain separate capabilities.
 
-Seven focused cases and a three-method native fixture are prepared. No local
-native/test/check/benchmark run has occurred for this draft. The serial slot will
-capture actual native results, run the focused/default compatibility cases and
-required checks, and record paired default plus new-literal timings before readiness.
+Validation: the native fixture passes all three methods on .NET 10.0.5 (SDK
+10.0.201); Main executes the edited long loop and returns the new literal, Original
+retains the old numeric token and Again returns the same addition. Seven focused
+cases plus existing document-layout/managed-IL compatibility pass 68/68, including
+direct CIL and the expected source-profile invalidation. Static checks pass with
+2618 syntax modules and 2614 static modules. The structure check reports 268
+pre-existing findings, none in the changed files. Broader browser/Rust/platform
+qualification remains staged for the epic; those engines are not claimed here.
+
+Paired default timings restore both changed pre-existing product modules from
+parent 7bd1239a and use the same candidate harness. On Apple M3 Pro / macOS ARM64,
+Node 24.21.0, two warmups and seven chronological observations per case gave:
+
+| Case | Parent median / p95 ms | Candidate median / p95 ms |
+|---|---:|---:|
+| 1000 default NOPs | 1.829416 / 1.997250 | 1.788833 / 2.028333 |
+| 5000 default NOPs | 5.032792 / 5.825917 | 4.889000 / 5.095625 |
+| 1000 unique new strings | — | 5.287792 / 6.269791 |
+| 5000 unique new strings | — | 18.429916 / 21.884542 |
+
+Default output sizes remain 3072 and 11264 bytes. New-string outputs are 38400
+and 194560 bytes and perform additional string/metadata work, so they are not
+paired default-performance comparisons. Median heapUsed deltas are recorded in
+[the raw report](benchmarks/il-document-strings.json), together with every sample,
+exact sources and command. These deltas are not allocation totals, peak memory or
+RSS. This was the sole scheduled team validation job on a shared host; no
+statistical-significance, speedup or general memory-reduction claim is made.
