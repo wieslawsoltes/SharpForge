@@ -4,7 +4,7 @@ import {DockLayout, createGroup, createSplit} from '@sharpforge/docking';
 import {DesignerDocuments} from '../apps/studio/designer-documents.js';
 import {sessionDom} from './fixtures/a18-session-dom.js';
 
-/** Emits the focusin events caused by docking's remove/reinsert/focus sequence, without a renderer or global DOM. */
+/** Native focus precedes bubbling focusin, including both production listeners installed by DesignerDocuments.wrap. */
 function focusDom() {
   const {document} = sessionDom();
   const createElement = document.createElement;
@@ -21,6 +21,7 @@ function focusDom() {
     element.focus = () => {
       if (document.activeElement === element) return;
       document.activeElement = element;
+      for (const listener of element.listeners.get('focus') ?? []) listener({target: element});
       for (let current = element; current; current = current.parentElement) {
         for (const listener of current.listeners.get('focusin') ?? []) listener({target: element});
       }
@@ -30,15 +31,16 @@ function focusDom() {
   return document;
 }
 
-function navigationHost({connect = () => Promise.resolve()} = {}) {
+function navigationHost({connect = () => Promise.resolve(), secondUri = 'B.cs', secondText} = {}) {
   const document = focusDom();
-  const state = {active: 'A.cs', files: ['A.cs', 'B.cs'].map(uri => ({
-    uri, text: 'class View { static Window Create() { return new Window(); } }'
+  const state = {active: 'A.cs', files: ['A.cs', secondUri].map(uri => ({
+    uri, text: uri === secondUri && secondText !== undefined ? secondText
+      : 'class View { static Window Create() { return new Window(); } }'
   }))};
   const layout = new DockLayout(state.files.map(file => ({id: 'source:' + file.uri, kind: 'document'})), {
     version: 1,
     root: createSplit('documents', 'horizontal', createGroup('left', ['source:A.cs'], 'document'),
-      createGroup('right', ['source:B.cs'], 'document')),
+      createGroup('right', ['source:' + secondUri], 'document')),
     floating: [], autoHide: {left: [], right: [], top: [], bottom: []}, closed: [], activePanel: 'source:A.cs'
   });
   const calls = [];
@@ -98,6 +100,8 @@ test('opening another visible source group suppresses restored focus navigation 
   const {documents, document, state, layout, calls, panels, editors} = host;
   const inputA = editors.get('A.cs').input;
   const inputB = editors.get('B.cs').input;
+  assert.equal(inputA.listeners.get('focus').length, 1);
+  assert.equal(inputB.listeners.get('focus').length, 1);
   inputA.focus();
 
   assert.equal(host.openSource('B.cs'), 'B.cs');
@@ -112,6 +116,50 @@ test('opening another visible source group suppresses restored focus navigation 
   assert.deepEqual([inputA.selectionStart, inputA.selectionEnd], [3, 7]);
   assert.deepEqual(host.failures, []);
   host.dispose();
+});
+
+test('native focus routes an incompatible C# source without reopening the previously focused designer', async () => {
+  const host = navigationHost({secondUri: 'Program.cs', secondText: 'class Program { static void Main() {} }'});
+  await host.ready;
+  const input = host.editors.get('Program.cs').input;
+  assert.equal(host.documents.get('Program.cs'), null);
+  assert.equal(input.listeners.get('focus').length, 1);
+  host.editors.get('A.cs').focus();
+
+  input.focus();
+
+  assert.deepEqual(host.calls, ['Program.cs']);
+  assert.equal(host.state.active, 'Program.cs');
+  assert.equal(host.layout.snapshot().activePanel, 'source:Program.cs');
+  assert.equal(host.documents.active, null);
+  assert.equal(host.document.activeElement, input);
+  assert.ok([...host.panels.values()].every(panel => panel.getAttribute('aria-disabled') === 'true'));
+
+  host.openSource('A.cs');
+
+  assert.deepEqual(host.calls, ['Program.cs', 'A.cs']);
+  assert.equal(host.state.active, 'A.cs');
+  assert.equal(host.documents.active.uri, 'A.cs');
+  assert.equal(host.document.activeElement, host.editors.get('A.cs').input);
+  host.dispose();
+});
+
+test('source removal releases native focus listeners for files that never created designer sessions', async () => {
+  for (const action of ['close', 'syncFiles', 'reset', 'dispose']) {
+    const host = navigationHost({secondUri: 'Program.cs', secondText: 'class Program { static void Main() {} }'});
+    await host.ready;
+    const input = host.editors.get('Program.cs').input;
+    if (action === 'close') host.documents.close('Program.cs');
+    else if (action === 'syncFiles') host.documents.syncFiles(host.state.files.filter(file => file.uri !== 'Program.cs'));
+    else host.documents[action]();
+
+    input.focus();
+
+    assert.equal(input.listeners.get('focus').length, 0);
+    assert.deepEqual(host.calls, []);
+    assert.equal(host.state.active, 'A.cs');
+    host.dispose();
+  }
 });
 
 test('a later deliberate source focus changes the active document once and repeated activation does not reopen it', async () => {
