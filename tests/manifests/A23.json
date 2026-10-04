@@ -31,7 +31,8 @@
     "tests/a23-native-nuget-reference.test.js",
     "tests/a23-nuget-v3.test.js",
     "tests/a23-09-project-edits.test.js",
-    "tests/project-edits-roundtrip.test.js"
+    "tests/project-edits-roundtrip.test.js",
+    "tests/a23-native-nuget-registration.test.js"
   ],
   "browserScripts": [
     "tests/browser_msbuild_test.py"

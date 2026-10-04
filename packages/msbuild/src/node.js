@@ -21,3 +21,5 @@ export * from './native-metadata.js';
 export * from './launch.js';
 export * from './publish-profiles.js';
 export * from './project-edits/index.js';
+export * from './nuget/config-node.js';
+export * from './nuget/operations.js';
