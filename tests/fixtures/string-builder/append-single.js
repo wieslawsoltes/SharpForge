@@ -1,7 +1,7 @@
 import {managedFixture} from '../../managed-fixtures.js';
 import {builderType} from './append-char.js';
 
-// Each source spelling must also produce the exact finite bits asserted from the emitted scalar constants.
+// Each source spelling must also produce the exact finite bits observed in managed local storage.
 export const singleSourceCases = [
   ['00000000', '0f'], ['80000000', '-0f'], ['3dcccccd', '0.1f'],
   ['4e6e6b28', '1000000000f'], ['4e6e6b29', '1.00000006E+09f'],

@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import {readFileSync} from 'node:fs';
 import {createHash} from 'node:crypto';
 import {compileToIL} from '@sharpforge/compiler';
-import {float, int32BitsToSingle, singleToInt32Bits, decodeScalar, disassemble, frameworkBuiltin} from '@sharpforge/bytecode';
+import {float, int32BitsToSingle, singleToInt32Bits, disassemble, frameworkBuiltin} from '@sharpforge/bytecode';
 import {MAX, formatSingleDefault} from '@sharpforge/bcl-core';
 import {findContracts} from '@sharpforge/framework';
 import {VirtualMachine, CilVirtualMachine} from '@sharpforge/runtime';
@@ -194,16 +194,20 @@ for (const pipeline of ['bound', 'legacy']) {
       const instructions = disassemble(program.image).flatMap(method => method.instructions);
       const builtins = instructions.filter(instruction => instruction.op === 'BUILTIN').map(instruction => instruction.a);
       assert(builtins.includes(frameworkBuiltin(builderContract('Append', ['float'])).id));
-      const encoded = new Set(program.image.constants.filter(value => value?.scalar === 'float')
-        .map(value => (singleToInt32Bits(decodeScalar(value)) >>> 0).toString(16).padStart(8, '0')));
-      for (const [bits] of singleSourceCases) if (bits !== '7fc00000') assert(encoded.has(bits), 'Missing exact source bits ' + bits);
       const vm = engine === 'source' ? new VirtualMachine(program.image) : new CilVirtualMachine(program.assembly);
+      const stored = new Set();
       try {
+        vm.onWrite = event => {
+          if (event.kind === 'local' && event.value?.float === 'r4') {
+            stored.add((singleToInt32Bits(event.value) >>> 0).toString(16).padStart(8, '0'));
+          }
+        };
         const result = vm.run();
         assert.equal(result.state, 'terminated', result.fault?.stack);
+        for (const [bits] of singleSourceCases) if (bits !== '7fc00000') assert(stored.has(bits), 'Missing exact source bits ' + bits);
         const expected = singleSourceCases.map(([bits]) => rows.find(row => row.bits === bits).output).join('\n');
         assert.equal(result.output, expected + '\n' + native.fluent.output + '\nTrue\nNullReferenceException\n');
-      } finally { vm.stop(); }
+      } finally { vm.onWrite = null; vm.stop(); }
     });
   }
 }
