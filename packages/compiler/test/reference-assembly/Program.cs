@@ -34,6 +34,7 @@ static class Program
                     + "(" + string.Join(", ", m.GetParameters().Select(p => (p.IsOut ? "out " : "") + (p.IsIn ? "in " : "") + Name(p.ParameterType) + " " + p.Name)) + ") attrs=" + m.Attributes + " impl=" + m.MethodImplementationFlags);
                 foreach (var a in m.GetCustomAttributesData()) Console.WriteLine("    [" + a + "]");
                 if (m is MethodInfo returning) foreach (var a in returning.ReturnParameter.GetCustomAttributesData()) Console.WriteLine("    return [" + a + "]");
+                if (m is MethodInfo modified) foreach (var t in modified.ReturnParameter.GetRequiredCustomModifiers()) Console.WriteLine("    return modreq " + t.FullName);
                 foreach (var p in m.GetParameters()) foreach (var a in p.GetCustomAttributesData()) Console.WriteLine("    param " + p.Name + " [" + a + "]");
             }
             foreach (var p in type.GetProperties(All).OrderBy(p => p.Name))

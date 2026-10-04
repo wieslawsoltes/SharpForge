@@ -47,6 +47,7 @@ export class AssemblyEmitter {
     this.sourceTypes = writer.types;
     this.closures = synthesized.closures;
     this.primaryCaptures = synthesized.primaryCaptures.byParameter;
+    this.records = synthesized.records;
     for (const type of writer.types) {
       for (const method of writer.plans.get(type).methods) {
         if (!method.hasBody) continue;
