@@ -1,11 +1,6 @@
 import { decodeSignature } from '@sharpforge/cil';
+import { freezeSignature } from './frozen-signature.js';
 import { loadError, LoadErrorCode } from '../load-errors.js';
-
-function freezeSignature(node) {
-  if (!node || typeof node !== 'object' || Object.isFrozen(node)) return node;
-  for (const value of Object.values(node)) freezeSignature(value);
-  return Object.freeze(node);
-}
 
 /** Canonical MethodDef metadata identity. Signature and body decoding remain lazy. */
 export class MethodDesc {

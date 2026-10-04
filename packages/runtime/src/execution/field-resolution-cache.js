@@ -32,10 +32,14 @@ export class FieldResolutionCache {
       entries = cache.owners.get(owner);
       if (!entries) cache.owners.set(owner, entries = new Map());
     }
+    const context = vm.top?.method ?? null;
+    let contextual = entries.get(context);
+    if (!contextual) entries.set(context, contextual = new Map());
+    entries = contextual;
     if (entries.has(token)) return entries.get(token);
 
-    const argumentsList = receiverTable?.typeArguments.map(type => type.name) ?? genericTypeParts(owner ?? '').arguments;
-    const resolved = resolveExecutionField(this.typeSystem.inspector, token, argumentsList);
+    const argumentsList = owner !== null ? genericTypeParts(owner).arguments : context?.typeArguments ?? [];
+    const resolved = resolveExecutionField(this.typeSystem.inspector, token, argumentsList, context?.methodArguments ?? []);
     if (resolved.kind !== 'field') throw new CilError('Invalid field token');
     let index;
     if (receiverTable !== null) {
@@ -43,6 +47,14 @@ export class FieldResolutionCache {
         this.typeSystem.table(resolved.ownerInstance), receiverTable)) {
         throw new ManagedFault('InvalidProgramException', 'Field declaring type does not match the receiver');
       }
+      let declaring = receiverTable;
+      while (declaring && declaring.definitionToken !== resolved.ownerToken) declaring = declaring.base;
+      if (!declaring) throw new ManagedFault('InvalidProgramException', 'Field declaring type does not match the receiver');
+      const slot = declaring.declaredFields.find(field => field.token === resolved.resolvedToken);
+      if (!slot) throw new ManagedFault('InvalidProgramException', 'Field is not part of its declaring type');
+      resolved.signature = {...resolved.signature, type: slot.storageType ?? slot.type.name};
+      resolved.ownerInstance = declaring.typeArguments.length ? declaring.name : null;
+      resolved.genericArguments = declaring.typeArguments.map(type => type.name);
       index = this.typeSystem.layout(receiverTable).index.get(resolved.resolvedToken);
       if (index === undefined) {
         throw new ManagedFault('InvalidProgramException', 'Field is not part of this object');

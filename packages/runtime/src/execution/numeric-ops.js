@@ -1,3 +1,4 @@
+import {decimalZero, isDecimal, decimal} from './decimal.js';
 import {
   float, floatBinary, floatCompare, int64Binary, int64Compare, int64Unary,
   uint32Binary, uint32Compare, smallInteger, smallIntegerIndirect, convert, number, isNumber
@@ -18,8 +19,8 @@ const reference = value => value !== null && typeof value === 'object' && Number
 const smallStorageTypes = new Set(['sbyte', 'byte', 'short', 'ushort', 'char', 'bool']);
 const smallIndirectSuffixes = new Set(['i1', 'u1', 'i2', 'u2']);
 
-const numericAliases = {'System.SByte': 'sbyte', 'System.Byte': 'byte', 'System.Int16': 'short', 'System.UInt16': 'ushort', 'System.Char': 'char', 'System.Boolean': 'bool', 'System.Int32': 'int', 'System.UInt32': 'uint', 'System.Int64': 'long', 'System.UInt64': 'ulong', 'System.Single': 'float', 'System.Double': 'double', 'System.IntPtr':'nint', 'System.UIntPtr':'nuint'};
-export const defaults = (input, context) => { const type=numericAliases[input]??input; return type === 'nint' || type === 'nuint' ? nativeInteger(0, nativeIntegerBits(context)) : type === 'long' || type === 'ulong' ? 0n : type === 'double' ? float(0) : type === 'float' ? float(0, 'r4') : ['int', 'uint', 'short', 'ushort', 'byte', 'sbyte', 'char', 'bool', 'nint', 'nuint'].includes(type) ? 0 : null; };
+const numericAliases = {'System.SByte': 'sbyte', 'System.Byte': 'byte', 'System.Int16': 'short', 'System.UInt16': 'ushort', 'System.Char': 'char', 'System.Boolean': 'bool', 'System.Int32': 'int', 'System.UInt32': 'uint', 'System.Int64': 'long', 'System.UInt64': 'ulong', 'System.Single': 'float', 'System.Double': 'double', 'System.IntPtr':'nint', 'System.UIntPtr':'nuint', 'System.Decimal':'decimal'};
+export const defaults = (input, context) => { const type=numericAliases[input]??input; return type === 'decimal' ? decimalZero : type === 'nint' || type === 'nuint' ? nativeInteger(0, nativeIntegerBits(context)) : type === 'long' || type === 'ulong' ? 0n : type === 'double' ? float(0) : type === 'float' ? float(0, 'r4') : ['int', 'uint', 'short', 'ushort', 'byte', 'sbyte', 'char', 'bool', 'nint', 'nuint'].includes(type) ? 0 : null; };
 
 export function compare(a, b, op, unsigned = false, context = {}, branch = false) {
   const {fault: createFault = fault, isReference = reference} = context;
@@ -129,6 +130,10 @@ export function unary(name, value, context = {}) {
 /** CLI storage locations narrow integers and round single precision on write/load. */
 export function storage(value, type, context) {
   type = numericAliases[type] ?? type;
+  if (type === 'decimal') {
+    if (!isDecimal(value)) throw (context?.fault ?? fault)('InvalidProgramException', 'Decimal storage requires a Decimal value');
+    return Object.isFrozen(value) ? value : decimal(value.coefficient, value.scale, value.negative, context);
+  }
   if (value?.methodPointer && isNativeStorageType(type)) return value;
   if (context === undefined && isNativeInteger(value)) context = {nativeIntBits: value.nativeInt};
   if (type === 'bool' && typeof value === 'boolean') return value ? 1 : 0;

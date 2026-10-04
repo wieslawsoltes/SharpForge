@@ -7,7 +7,7 @@ import {cssRules, cssFingerprint} from '../scripts/planning/css-rules.js';
 import {loadBuildContributions, concatenateStyles, buildRoot} from '../scripts/build-contributions.js';
 const json=async path=>JSON.parse(await readFile(path,'utf8'));
 
-test('A00 T20 contributed per-tool CSS preserves every baseline byte and both sorted and ordered rules',async()=>{
+test('A00 T20 contributed CSS matches the reviewed stylesheet snapshot and both sorted and ordered rules',async()=>{
  const {schemaVersion,sourceCommit,...expected}=await json(join(buildRoot,'planning/contracts/fixtures/css/studio-baseline.json'));
  assert.equal(schemaVersion,1);assert.match(sourceCommit,/^[a-f\d]{40}$/);
  const {styles}=await loadBuildContributions(),css=await concatenateStyles(styles);

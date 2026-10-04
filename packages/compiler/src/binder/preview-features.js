@@ -27,6 +27,7 @@ import { DiagnosticId } from '../diagnostics/codes.js';
 import { previewStampText } from '@sharpforge/syntax';
 import { TypeKind } from '../symbols/types.js';
 import { containsTypeParameter } from '../symbols/substitution.js';
+import { isImportedClosedClass } from './closed-metadata.js';
 
 const modifiersOf = syntax => (syntax.modifiers ?? []).map(token => token.text);
 const isZero = value => value === 0 || value === 0n || Number(value?.value ?? NaN) === 0;
@@ -105,6 +106,15 @@ export const PreviewFeatureRules = Base =>
     checkClosedBase(type) {
       const base = type.typeKind === TypeKind.Class ? type.baseType : null,
         definition = base?.originalDefinition;
+      if (isImportedClosedClass(definition)) {
+        // "Same-assembly restriction": a closed class of another assembly has no subtypes outside that assembly.
+        const part = type.declarations[0],
+          at = part.syntax.baseList?.types?.[0] ?? part.syntax.identifier,
+          name = definition.toDisplayString();
+        const text = `a class cannot directly derive from '${name}': it is closed and declared in another assembly`;
+        this.report(part.uri, at, DiagnosticId.SF2203, [text, previewStampText('ClosedClasses')]);
+        return;
+      }
       if (!definition || definition.typeKind !== TypeKind.Class || !this.closedDeclarationOf(definition)) return;
       (definition.closedSubtypes ??= []).push(type);
       const part = type.declarations[0];
