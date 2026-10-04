@@ -18,7 +18,12 @@
       "order": 803
     }
   ],
-  "workers": [],
+  "workers": [
+    {
+      "entry": "git-worker.js",
+      "order": 800
+    }
+  ],
   "assets": [
     {
       "source": "packages/git",
