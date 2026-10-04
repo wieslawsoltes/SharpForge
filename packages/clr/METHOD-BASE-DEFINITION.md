@@ -89,14 +89,23 @@ Invocation, vtable execution, full reflected-member views and source VM/direct
 CIL/Rust native/Wasm execution qualification remain separate. #2475 stays open.
 
 
-Interface-only MethodImpl qualification is pending the serial validation slot and
-the shared coded-index RID bounds correction. An authored malformed MemberRef
-signature covers oversized type RIDs that would otherwise alias a local TypeDef.
-Authored cases cover local/external interface declarations, mixed class mappings,
-malformed ownership/tokens/signatures, limits, cancellation/retry and unloading.
-The independent C# fixture includes explicit local interface and IDisposable
-implementations on an intermediate class. No native or performance result is
-claimed until capture and focused validation complete.
+Interface-only MethodImpl qualification: SDK 10.0.201/CoreCLR 10.0.5 captured six
+independent method records; all 16 focused interface/base-definition tests pass
+without skips. The shared coded-index RID correction is merged; a malformed
+MemberRef signature regression rejects oversized type RIDs before local aliases.
+Syntax/static checks pass (3,259/3,255 modules); structure reports 269 existing
+findings, none in changed files. Native capture, tests, benchmarks and checks ran
+serially under one limiter with concurrency 1 and a 1 GiB Node heap cap.
+
+On shared Apple M3 Pro/darwin-arm64 with Node 24.21.0, existing-path parent/head
+cold median was 141.542 → 143.583 µs (+1.442%) and p95 324.916 → 327.042 µs
+(+0.654%). Cached median was 0.121750 → 0.116292 µs and p95 0.164750 → 0.152333 µs.
+The new six-method fixture measured cold median 79.458 µs / p95 203.083 µs and
+cached median 0.125583 µs / p95 0.159416 µs. All 600 raw samples, p99 values,
+exact sources, fixture hashes and commands are retained in
+[benchmark evidence](benchmarks/method-interface-impl-node24.json). This single
+shared-host pair establishes no causality, statistical significance or general
+speed claim; allocations and added cache footprint are unmeasured.
 
 ```sh
 node scripts/limited.js node packages/clr/tools/capture-method-base-definition.mjs tests/fixtures/clr-method-interface-impl tests/fixtures/clr-method-interface-impl/Program.cs
