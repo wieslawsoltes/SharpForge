@@ -13,9 +13,9 @@
   "files": [
     "src",
     "bin",
+    "docs",
     "README.md",
-    "LICENSE",
-    "docs"
+    "LICENSE"
   ],
   "dependencies": {
     "@sharpforge/project-system": "0.14.0",
