@@ -15,7 +15,7 @@ function validateCopy(platform, length, values, scalars) {
   const destination = values[1];
   if (destination === null) fail(platform, 'ArgumentNullException', "Destination is required. (Parameter 'destination')");
   const record = platform.heap.get(destination);
-  if (record.kind !== 'array' || record.methodTable.elementType?.name !== 'System.Char') {
+  if (record.kind !== 'array' || record.methodTable.name !== 'System.Char[]') {
     fail(platform, 'ArgumentException', 'Destination must be a character array');
   }
   const [sourceIndex, , destinationIndex, count] = scalars;

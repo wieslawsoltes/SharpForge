@@ -23,6 +23,7 @@ function destinationFor(builder, length = 9) {
 function assertFault(error, row) {
   assert.equal(error.name, row.fault, row.id);
   if (row.parameter) assert(error.message.includes("(Parameter '" + row.parameter + "')"), row.id + ': ' + error.message);
+  else if (row.fault === 'ArgumentOutOfRangeException') assert.doesNotMatch(error.message, /\(Parameter '/, row.id);
   return true;
 }
 
@@ -205,8 +206,10 @@ for (const engine of ['source', 'cil']) {
     const {platform, reference} = builder;
     const destination = destinationFor(builder);
     try {
-      const wrongType = platform.heap.allocate('array', 'int[]', [46]);
-      assert.throws(() => copyBuilderTo(platform, reference, wrongType, range(0, 0, 1)), {name: 'ArgumentException'});
+      for (const type of ['int[]', 'char[,]', 'char[*]']) {
+        const wrongType = platform.heap.allocate('array', type, [46]);
+        assert.throws(() => copyBuilderTo(platform, reference, wrongType, range(0, 0, 1)), {name: 'ArgumentException'});
+      }
       for (const [values, parameter] of [[range(NaN, 0, 0), 'sourceIndex'],
         [range(0, 1.5, 0), 'destinationIndex'], [range(0, 0, Infinity), 'count']]) {
         assert.throws(() => copyBuilderTo(platform, reference, destination, values), error => {
