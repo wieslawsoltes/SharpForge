@@ -532,6 +532,13 @@
       "count": 1,
       "sha256": "6aa324809e5b796f72a36b7ba972cc67754880600c285977e9f9e2978b435312",
       "reason": "Operator-selected trusted clean exact-SHA checkouts supply only fixed public compiler, runtime and CIL exports plus optional compiler/node. Every transitive workspace alias is verified inside its checkout before loading and again before reporting, with physical links and resolved entries checked. Exact production source/package/manifest Git objects record intentional whole-revision runtime and CIL changes. Program source never forms a module specifier."
+    },
+    {
+      "path": "packages/cil/tools/pe-bounds-benchmark-worker.mjs",
+      "operation": "dynamic-import",
+      "count": 1,
+      "sha256": "5300ed97d89bf47a14ded3288785008e5bd9fc48e67cb82fe3baa64f71d3fc69",
+      "reason": "Developer benchmark imports only the fixed public CIL entry of the operator-selected, clean, source-pinned checkout after verifying its own package aliases and complete source inventory. Input images never select executable source. This exact worker source/count requires review before qualification."
     }
   ]
 }
