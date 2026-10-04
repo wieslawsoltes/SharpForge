@@ -130,4 +130,15 @@ Opt-in [memory-prefix validation](PREFIX-MEMORY.md) checks volatile/unaligned/no
 
 Opt-in [type-prefix validation](PREFIX-CONSTRAINED.md) checks constrained/readonly lexical targets and type-token row extents.
 
+The source-image emitter uses [nested exception-region layout](EMITTER-EXCEPTION-REGIONS.md) for catch/finally clause ordering and indexed transfers.
 The opt-in [verifier type-system adapter](VERIFIER-TYPE-SYSTEM.md) resolves bounded local hierarchy relations and reports missing metadata as unknown.
+
+`formatSignatureType(node, metadata, options)` optionally accepts
+`formatType(node, formatChild)`, returning a display string or `undefined` to
+use the default formatter. `formatChild` shares the original depth/node budget
+and cancellation signal. This display hook does not change the signature AST
+or its binary encoding; the callback-absent formatting contract is unchanged.
+
+The opt-in [verifier member context](VERIFIER-MEMBERS.md) adds bounded, canonical local field/method declaration resolution to type relations.
+
+Runtime admission checks [reachable try-entry stack heights](VERIFIER-HANDLER-ENTRY.md) before granting stack-capacity proofs.

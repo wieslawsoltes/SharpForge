@@ -1,0 +1,22 @@
+...........{
+  "suite": "wrapper_standalone",
+  "mode": "file",
+  "engine": "chromium",
+  "passed": false,
+  "sourceSha": null,
+  "sourceTree": null,
+  "checks": [],
+  "navigation": {},
+  "httpAttempts": [],
+  "pageErrors": [],
+  "browser": "fixture-browser",
+  "failure": {
+    "type": "AssertionError",
+    "message": "fixture failure"
+  }
+}
+.
+----------------------------------------------------------------------
+Ran 12 tests in 0.080s
+
+OK

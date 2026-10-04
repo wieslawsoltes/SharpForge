@@ -29,8 +29,9 @@ export const CallEmission = Base =>
   class extends Base {
     exprCall(node) {
       // An omitted call to a [Conditional] method evaluates nothing, not even its arguments.
-      if (node.isOmitted) return false;
+      // So does a call of a partial method that no part implements (C# 3): the method does not exist.
       const method = node.method;
+      if (node.isOmitted || (method.originalDefinition ?? method).isUnimplementedPartial) return false;
       if (method.methodKind === MethodKind.LocalFunction) return this.localFunctionCall(node);
       if (method.isStatic) {
         this.arguments(node, method);
@@ -46,6 +47,15 @@ export const CallEmission = Base =>
         return this.callMethod(structOverride, { receiver, syntax: node.syntax });
       }
       const boxedTarget = this.boxedCallTarget(method, receiver.type);
+      if (boxedTarget && receiver.type.isRefLikeType) {
+        // A ref struct cannot be boxed: the virtual method is called on its address (`constrained.`), which
+        // reaches the override the struct declares.
+        this.address(receiver);
+        this.arguments(node, method);
+        this.il.emit('constrained.', this.tokens.type(receiver.type));
+        const effect = { pops: method.parameters.length + 1, pushes: isVoid(method.returnType) ? 0 : 1 };
+        return this.il.emit('callvirt', this.tokens.method(boxedTarget), effect);
+      }
       if (boxedTarget) {
         this.expression(receiver);
         this.il.emit('box', this.tokens.type(receiver.type));
@@ -214,7 +224,8 @@ export const CallEmission = Base =>
       if (callerInfo !== undefined) {
         if (typeof callerInfo === 'number') {
           this.il.emit('ldc.i4', callerInfo);
-          return this.numericConversion(this.core.int, parameter.type, { syntax: node.syntax });
+          // [CallerLineNumber] on a parameter of another type that an `int` converts to (`long`, `double`, `object`).
+          return this.implicitStandardConversion(this.core.int, parameter.type, node.syntax);
         }
         return this.il.emit('ldstr', this.tokens.string(callerInfo));
       }

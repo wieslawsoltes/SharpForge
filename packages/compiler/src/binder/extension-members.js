@@ -25,14 +25,15 @@
 import {DiagnosticId} from '../diagnostics/codes.js';
 import { SymbolKind, TypeKind } from '../symbols/types.js';
 import { PropertySymbol } from '../symbols/members.js';
-import { canDeclareExtensions, isValidReceiverConversion } from '../overload/extension-methods.js';
+import { canDeclareExtensions, extensionClassesIn, isValidReceiverConversion } from '../overload/extension-methods.js';
 import { ConversionKind } from '../conversions/classify.js';
 import { binaryOperatorNames, unaryOperatorNames } from '../overload/operators.js';
 import { lookupMembers } from './inheritance.js';
 
 /** The extension members a class declares (building its members on first use). */
 function extensionMembersOf(type) {
-  if (!canDeclareExtensions(type)) return [];
+  // Extension blocks are read from source only: a class from metadata has none, and its members stay undecoded.
+  if (type.mightContainExtensionMethods !== undefined || !canDeclareExtensions(type)) return [];
   type.getMembers();
   return type.extensionMembers ?? [];
 }
@@ -45,8 +46,8 @@ export function extensionMemberScopes(chain, name, kind) {
   const named = types => types.flatMap(extensionMembersOf).filter(entry => entry.name === name && entry.kind === kind),
     scopes = [];
   for (const level of chain) {
-    if (level.namespace) scopes.push(named(level.namespace.getTypeMembers()));
-    const imported = [...(level.usings?.namespaces ?? []).flatMap(n => n.getTypeMembers()), ...(level.usings?.staticTypes ?? [])];
+    if (level.namespace) scopes.push(named(extensionClassesIn(level.namespace)));
+    const imported = [...(level.usings?.namespaces ?? []).flatMap(extensionClassesIn), ...(level.usings?.staticTypes ?? [])];
     scopes.push(named([...new Set(imported)]));
   }
   return scopes.filter(scope => scope.length);

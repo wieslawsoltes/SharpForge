@@ -1,0 +1,71 @@
+{
+  "format": "sharpforge-project16-evidence-manifest",
+  "version": 1,
+  "evidence": "preview ownership matched model benchmark",
+  "rawCopiesByteIdenticalToRootCaptures": true,
+  "comparatorExitCode": 1,
+  "comparatorPassed": false,
+  "files": [
+    {
+      "path": "README.md",
+      "bytes": 2165,
+      "sha256": "e897a49cd7172f9cbff47709f9553cdf291723421cce7f1aaab75b457dd3f986",
+      "origin": "derived documentation or comparator evidence"
+    },
+    {
+      "path": "analysis.json",
+      "bytes": 14943,
+      "sha256": "63179e4f8fed801d21e5174a8c09be1e4ea822534892f14b6bf2f45993911225",
+      "origin": "derived documentation or comparator evidence"
+    },
+    {
+      "path": "baseline.json",
+      "bytes": 36115,
+      "sha256": "713ea995ec3548cf9aee0de4510523178284fb4173dbdf791501e9aceb8f0cc6",
+      "origin": "unaltered root capture"
+    },
+    {
+      "path": "baseline.log",
+      "bytes": 47,
+      "sha256": "c977e6eca59bc5f7288a9ff6de35721a5cadeada53afd678e5013e8f5a5dd552",
+      "origin": "unaltered root capture"
+    },
+    {
+      "path": "candidate.json",
+      "bytes": 36103,
+      "sha256": "e05a4d7f57e4297920a40f9e4c75d1ecf0352b5885360a3fff641a1b463e31c9",
+      "origin": "unaltered root capture"
+    },
+    {
+      "path": "candidate.log",
+      "bytes": 47,
+      "sha256": "c977e6eca59bc5f7288a9ff6de35721a5cadeada53afd678e5013e8f5a5dd552",
+      "origin": "unaltered root capture"
+    },
+    {
+      "path": "comparator-source.txt",
+      "bytes": 4119,
+      "sha256": "a783c9c69e2892f8a4d813fd3021eec90cf7614c5577efd46063283ad9457dd0",
+      "origin": "derived documentation or comparator evidence"
+    },
+    {
+      "path": "comparator.json",
+      "bytes": 2679,
+      "sha256": "98a6e3c22f2ef55cf8f1e0a0716f7928021a12a54e33ae81cfe5206161322771",
+      "origin": "derived documentation or comparator evidence"
+    },
+    {
+      "path": "comparator.log",
+      "bytes": 2679,
+      "sha256": "98a6e3c22f2ef55cf8f1e0a0716f7928021a12a54e33ae81cfe5206161322771",
+      "origin": "derived documentation or comparator evidence"
+    },
+    {
+      "path": "summary.json",
+      "bytes": 1691,
+      "sha256": "f5a900304ed2343444ab96d1bffdeca682612a102ea5cea3200e762bfc1c8d46",
+      "origin": "unaltered root capture"
+    }
+  ],
+  "totalBytesExcludingManifest": 100588
+}

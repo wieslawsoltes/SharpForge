@@ -14,7 +14,8 @@ function location(vm, address, write = false) {
     if (address.kind === 'box' && record.kind !== 'box') invalid('A boxed value address is required');
     slots = record.data;
     storageType = address.kind === 'array' ? record.methodTable.elementType.name
-      : address.kind === 'box' ? record.methodTable.name : record.methodTable.fields[address.index]?.type.name;
+      : address.kind === 'box' ? record.methodTable.name
+        : record.methodTable.fields[address.index]?.storageType ?? record.methodTable.fields[address.index]?.type.name;
   } else if (address.kind === 'static') {
     if (!vm.statics.has(address.index)) invalid('Unknown static slot');
     storageType = staticStorageType(vm, address.index, write);
@@ -42,7 +43,7 @@ function leaf(vm, address, base) {
         !Number.isInteger(index) || index < 0 || index >= value.fields.length) invalid('Invalid struct interior address');
     const field = value.valueType.fields[index];
     readonly ||= !!(field.flags & 0x20);
-    type = field.type.name;
+    type = field.storageType ?? field.type.name;
     value = value.fields[index];
   }
   return {value, type, readonly};

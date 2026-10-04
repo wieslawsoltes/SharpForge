@@ -7,6 +7,8 @@ import { ConstantEmission } from './emit-constants.js';
 import { VariableEmission } from './emit-variables.js';
 import { ArithmeticEmission } from './emit-arithmetic.js';
 import { ConversionEmission } from './emit-conversions.js';
+import { SpanConversionEmission } from './emit-span-conversions.js';
+import { DecimalConversionEmission } from './emit-decimal-conversions.js';
 import { AssignmentEmission } from './emit-assignments.js';
 import { BranchEmission } from './emit-branches.js';
 import { LoopEmission } from './emit-loops.js';
@@ -34,16 +36,23 @@ import { RecordEmission } from './records/emit-records.js';
 import { MultiDimensionalArrayEmission } from './emit-multidim-arrays.js';
 import { IndexValueEmission } from './emit-index-values.js';
 import { ListPatternEmission } from './emit-list-patterns.js';
+import { UserOperatorEmission } from './emit-user-operators.js';
 import { StateMachineEmission } from './emit-state-machine.js';
 import { IteratorEmission } from './emit-iterators.js';
 import { AsyncEmission } from './emit-async.js';
 import { AsyncTryEmission } from './emit-async-try.js';
+import { AsyncIteratorEmission } from './emit-async-iterators.js';
+import { ExpressionTreeEmission } from './emit-expression-trees.js';
+import { StackAllocEmission } from './emit-stackalloc.js';
+import { AnonymousTypeEmission } from './emit-anonymous-types.js';
 
 const families = [
   ConstantEmission,
   VariableEmission,
   ArithmeticEmission,
   ConversionEmission,
+  SpanConversionEmission,
+  DecimalConversionEmission,
   AssignmentEmission,
   BranchEmission,
   LoopEmission,
@@ -71,10 +80,15 @@ const families = [
   MultiDimensionalArrayEmission,
   IndexValueEmission,
   ListPatternEmission,
+  UserOperatorEmission,
   StateMachineEmission,
   IteratorEmission,
   AsyncEmission,
   AsyncTryEmission,
+  AsyncIteratorEmission,
+  ExpressionTreeEmission,
+  StackAllocEmission,
+  AnonymousTypeEmission,
 ];
 
 export class MethodEmitter extends families.reduce((composed, family) => family(composed), EmitterCore) {}

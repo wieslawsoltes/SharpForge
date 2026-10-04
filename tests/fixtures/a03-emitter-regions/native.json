@@ -1,0 +1,122 @@
+{
+  "oracle": "ILVerify + CoreCLR",
+  "version": "10.0.5",
+  "sdk": "10.0.201",
+  "runtime": "10.0.5",
+  "toolSHA256": "ca75cb4d2299ee5413eaf602a6ba87b7c089f3785d06f6b8ccad013d4e4646be",
+  "fixtureSHA256": "98b52f4d94ff97a931f5fa59a0f11183201834c86899f6b8eeafa9c5cdb0c3b2",
+  "environment": {
+    "platform": "darwin-arm64",
+    "osRelease": "25.6.0",
+    "node": "v24.21.0",
+    "image": {
+      "kind": "local",
+      "pinnedImage": false,
+      "reason": "Local OS is recorded, not an immutable runner image."
+    },
+    "imageOS": null,
+    "imageVersion": null
+  },
+  "references": {
+    "count": 167,
+    "sha256": "a978e7aaf608f22e860328a42319b908a5a084cdb087b28b5c31a1e6726be362"
+  },
+  "observations": [
+    {
+      "name": "TryInFinally",
+      "assemblySHA256": "24d67a8c1af39b7775cf9f5e43cae4d3e9b9f8dcf2216293ffdc7930f6d1e2b4",
+      "sourceSHA256": "26c0f6acd3199958cd2db4e2bc2f94d67c8c11d75f09dfe0d756b7c74e80798f",
+      "oracle": {
+        "accepted": true,
+        "errors": []
+      },
+      "verify": {
+        "stdout": "All Classes and Methods in <temporary>/TryInFinally.dll Verified.\nTypes found: 0\nTypes verified: 3\nMethods found: 3\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 0,
+        "signal": null,
+        "elapsedMs": 85.70854199999997
+      },
+      "execution": {
+        "stdout": "3\n",
+        "stderr": "",
+        "exitCode": 0,
+        "signal": null,
+        "elapsedMs": 28.45658400000002
+      },
+      "expected": "3\n"
+    },
+    {
+      "name": "FinallyInCatch",
+      "assemblySHA256": "935058520273c6314d15a2378a737339afa70db43616882ebac666eef590875d",
+      "sourceSHA256": "efb77b98afb3e43c559a3d5443d2f1ef565714180c6f2e13bf6ae8c7327e4c77",
+      "oracle": {
+        "accepted": true,
+        "errors": []
+      },
+      "verify": {
+        "stdout": "All Classes and Methods in <temporary>/FinallyInCatch.dll Verified.\nTypes found: 0\nTypes verified: 3\nMethods found: 3\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 0,
+        "signal": null,
+        "elapsedMs": 85.73475000000008
+      },
+      "execution": {
+        "stdout": "5\n",
+        "stderr": "",
+        "exitCode": 0,
+        "signal": null,
+        "elapsedMs": 28.06608300000005
+      },
+      "expected": "5\n"
+    },
+    {
+      "name": "ThreeLevels",
+      "assemblySHA256": "e6993e8bf246f5aeb5906403c00c970924252cc4c5b38716dfac5f75f1376a5e",
+      "sourceSHA256": "18723a275cfebfb49b59c379038dd9471a7dbe0d38ed670d3f868a631e731852",
+      "oracle": {
+        "accepted": true,
+        "errors": []
+      },
+      "verify": {
+        "stdout": "All Classes and Methods in <temporary>/ThreeLevels.dll Verified.\nTypes found: 0\nTypes verified: 3\nMethods found: 3\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 0,
+        "signal": null,
+        "elapsedMs": 86.89233300000001
+      },
+      "execution": {
+        "stdout": "15\n",
+        "stderr": "",
+        "exitCode": 0,
+        "signal": null,
+        "elapsedMs": 25.149541999999997
+      },
+      "expected": "15\n"
+    },
+    {
+      "name": "NestedRethrow",
+      "assemblySHA256": "2552ba73bd4f6bf1174122d1c668b8c9a3d56bfa25365e3369270eb78f2ac92c",
+      "sourceSHA256": "1547fca985cb86e67b3fa1a1260af7fe093d4adea28be2552153290b49ba43fb",
+      "oracle": {
+        "accepted": true,
+        "errors": []
+      },
+      "verify": {
+        "stdout": "All Classes and Methods in <temporary>/NestedRethrow.dll Verified.\nTypes found: 0\nTypes verified: 3\nMethods found: 3\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 0,
+        "signal": null,
+        "elapsedMs": 89.37933300000009
+      },
+      "execution": {
+        "stdout": "inner\n",
+        "stderr": "",
+        "exitCode": 0,
+        "signal": null,
+        "elapsedMs": 23.251457999999957
+      },
+      "expected": "inner\n"
+    }
+  ]
+}

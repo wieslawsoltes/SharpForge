@@ -26,8 +26,12 @@ const methodNamed = (type, name, matches) => type.getMembers(name).find(member =
 const takesSelf = type => parameters => parameters.length === 1 && (parameters[0].type.originalDefinition ?? parameters[0].type) === type;
 const typedEqualsOf = type => methodNamed(type, 'Equals', takesSelf(type));
 
-/** Pushes `EqualityComparer<T>.Default` for a field type. */
-function comparer(emitter, type) {
+/**
+ * Pushes `EqualityComparer<T>.Default` for a field type.
+ * @param {{core: object, tokens: object, il: object}} emitter a method emitter, or the three it is used for
+ * @returns {{equals: () => void, hash: () => void}} emit the call of `Equals(T, T)` / `GetHashCode(T)` on it
+ */
+export function comparer(emitter, type) {
   const definition = emitter.core.bridge.coreType('System_Collections_Generic_EqualityComparer_T'),
     open = definition.construct([definition.typeParameters[0]]),
     shape = { isStatic: true, returnType: open, parameters: [] },

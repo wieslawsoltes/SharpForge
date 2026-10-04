@@ -41,10 +41,9 @@ function frameworkAwaiter(emitter, { awaiterType, resultType, pushAwaiter }) {
   };
 }
 
-/** `Task` and `Task<T>`: `callvirt GetAwaiter` on the reference. */
-function taskAwaiter(emitter, operand) {
+/** `Task` and `Task<T>`: `callvirt GetAwaiter` on the reference `pushTask` leaves on the stack. */
+function taskAwaiter(emitter, type, pushTask) {
   const { il, tokens, core } = emitter,
-    type = operand.type,
     isGeneric = sameDefinition(type, core.taskT),
     awaiterType = isGeneric ? core.taskAwaiterT.construct(type.typeArguments[0].type) : core.taskAwaiter,
     declared = isGeneric ? core.taskAwaiterT.construct(core.taskT.typeParameters[0]) : core.taskAwaiter;
@@ -52,16 +51,15 @@ function taskAwaiter(emitter, operand) {
     awaiterType,
     resultType: isGeneric ? core.taskAwaiterT.typeParameters[0] : core.void,
     pushAwaiter: () => {
-      emitter.expression(operand);
+      pushTask();
       il.emit('callvirt', tokens.external(type, 'GetAwaiter', instance(declared)), { pops: 1, pushes: 1 });
     },
   });
 }
 
-/** `ValueTask` and `ValueTask<T>` are structs: `GetAwaiter` is called on the address of the value. */
-function valueTaskAwaiter(emitter, operand) {
+/** `ValueTask` and `ValueTask<T>` are structs: `GetAwaiter` is called on the address `pushAddress` leaves on the stack. */
+function valueTaskAwaiter(emitter, type, pushAddress) {
   const { il, tokens, core } = emitter,
-    type = operand.type,
     isGeneric = sameDefinition(type, core.valueTaskT),
     definition = frameworkType(core, COMPILER_SERVICES, 'ValueTaskAwaiter', { ...struct, arity: isGeneric ? 1 : 0 }),
     awaiterType = isGeneric ? definition.construct(type.typeArguments[0].type) : definition,
@@ -70,7 +68,7 @@ function valueTaskAwaiter(emitter, operand) {
     awaiterType,
     resultType: isGeneric ? definition.typeParameters[0] : core.void,
     pushAwaiter: () => {
-      emitter.address(operand);
+      pushAddress();
       il.emit('call', tokens.external(type, 'GetAwaiter', instance(declared)), { pops: 1, pushes: 1 });
     },
   });
@@ -129,7 +127,26 @@ export function awaiterOf(emitter, node) {
   if (node.isDynamic) return emitter.unsupported('await of a dynamic value', node.syntax);
   if (node.awaitable) return patternAwaiter(emitter, node);
   if (isTaskYield(operand, core)) return yieldAwaiter(emitter);
-  if (sameDefinition(type, core.task) || sameDefinition(type, core.taskT)) return taskAwaiter(emitter, operand);
-  if (sameDefinition(type, core.valueTask) || sameDefinition(type, core.valueTaskT)) return valueTaskAwaiter(emitter, operand);
+  if (sameDefinition(type, core.task) || sameDefinition(type, core.taskT)) return taskAwaiter(emitter, type, () => emitter.expression(operand));
+  if (sameDefinition(type, core.valueTask) || sameDefinition(type, core.valueTaskT)) {
+    return valueTaskAwaiter(emitter, type, () => emitter.address(operand));
+  }
   return emitter.unsupported(`await of '${type?.toDisplayString()}'`, node.syntax);
+}
+
+/**
+ * The awaiter of a value the emitter itself produces (`MoveNextAsync()` in `await foreach`, `DisposeAsync()`): a task
+ * or a value task of the given type, which `pushValue` leaves on the stack.
+ */
+export function awaiterOfValue(emitter, type, pushValue, syntax) {
+  const { il, core } = emitter;
+  if (sameDefinition(type, core.task) || sameDefinition(type, core.taskT)) return taskAwaiter(emitter, type, pushValue);
+  if (sameDefinition(type, core.valueTask) || sameDefinition(type, core.valueTaskT)) {
+    return valueTaskAwaiter(emitter, type, () => {
+      const slot = emitter.temp(type);
+      pushValue();
+      il.emit('stloc', slot).emit('ldloca', slot);
+    });
+  }
+  return emitter.unsupported(`await of '${type?.toDisplayString()}' in await foreach or await using`, syntax);
 }

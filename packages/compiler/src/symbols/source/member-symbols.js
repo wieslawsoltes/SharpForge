@@ -146,7 +146,10 @@ export const MemberSymbolBuilder = Base =>
         case 'FieldDeclaration':
         case 'EventFieldDeclaration': {
           const m = this.modifiers(type, syntax, uri),
-            fieldType = this.bindType(syntax.declaration.type, scope);
+            typeSyntax = syntax.declaration.type,
+            fieldType = this.bindType(typeSyntax, scope),
+            // `ref T field` / `ref readonly T field` of a ref struct (C# 11).
+            refKind = typeSyntax.kind !== 'RefType' ? RefKind.None : typeSyntax.readOnlyKeyword ? RefKind.RefReadOnly : RefKind.Ref;
           for (const v of syntax.declaration.variables) {
             const name = v.identifier.valueText,
               locations = [{ uri, ...spanOf(v.identifier) }];
@@ -175,6 +178,7 @@ export const MemberSymbolBuilder = Base =>
               modifiers: m.flags,
               locations,
               syntax: v,
+              refKind,
               ...(m.flags & DeclarationModifiers.Const ? { constantValue: { value: undefined } } : {}),
             });
             field.initializerSyntax = v.initializer?.value ?? null;
