@@ -109,7 +109,9 @@ export class ClosurePlan extends SynthesizedTypes {
       // `delegate { ... }` without a parameter list fits any signature: the method takes the delegate's parameters.
       takesDelegateParameters = isLambda && key.isAnonymousMethod && !key.parameterSyntax && !!invoke,
       parameters = (takesDelegateParameters ? invoke.parameters : isLambda ? key.parameters : symbol.parameters) ?? [],
-      returnType = isLambda ? invoke?.returnType : symbol.returnType;
+      returnType = isLambda ? invoke?.returnType : symbol.returnType,
+      // A lambda returns by reference when its delegate does (`delegate ref int Selector(int[] items)`).
+      returnRefKind = (isLambda ? invoke?.refKind : symbol.refKind) ?? null;
     const body = isLambda ? key.body : symbol.body,
       ownTypeParameters = symbol?.typeParameters ?? [];
     if (ownTypeParameters.length && declaresFunction(body)) {
@@ -132,7 +134,7 @@ export class ClosurePlan extends SynthesizedTypes {
       scope = closure ? [] : context.typeParameters,
       declared = [...scope, ...ownTypeParameters],
       typeParameters = methodTypeParameterCopies(declared),
-      plan = { key, isLambda, symbol, owner, uri, variables, usesThis: captures.usesThis, closure, isStatic, parameters, returnType };
+      plan = { key, isLambda, symbol, owner, uri, variables, usesThis: captures.usesThis, closure, isStatic, parameters, returnType, returnRefKind };
     plan.body = body;
     /** The type the method is declared in, and the type arguments a use supplies before those of the function itself. */
     plan.declaringType = closure ? closure.definition : owner;
@@ -150,6 +152,7 @@ export class ClosurePlan extends SynthesizedTypes {
             isStatic,
             arity: typeParameters.length,
             returnType,
+            refKind: returnRefKind,
             parameters: parameters.map(parameter => ({ type: parameter.type, refKind: parameter.refKind })),
           }
         : null,

@@ -10,6 +10,8 @@ import { isReference } from './type-facts.js';
 
 const isByReferenceKind = refKind => !!refKind && refKind !== RefKind.None;
 const returnsByReference = method => isByReferenceKind(method?.refKind);
+/** True in the body of a method, local function or lambda that returns by reference (a lambda has no method symbol). */
+const frameReturnsByReference = frame => returnsByReference(frame.method) || isByReferenceKind(frame.function?.returnRefKind);
 
 /** A variable reached through a managed pointer that an expression produces (the result of a ref-returning call). */
 class IndirectLocation {
@@ -47,7 +49,7 @@ export const ReferenceEmission = Base =>
   class extends Base {
     /** True for a call whose result is a managed pointer to a variable. */
     isReferenceCall(node) {
-      return node.kind === 'Call' && node.method?.methodKind !== MethodKind.DelegateInvoke && returnsByReference(node.method);
+      return node.kind === 'Call' && returnsByReference(node.method);
     }
     /** `ref x` denotes the variable itself: its address. */
     exprRef(node) {
@@ -139,14 +141,14 @@ export const ReferenceEmission = Base =>
     }
     /** `return ref x;` returns the address of the variable. */
     stmtReturn(node) {
-      const byReference = node.isRef || returnsByReference(this.frame.method);
+      const byReference = node.isRef || frameReturnsByReference(this.frame);
       if (!byReference || !node.expression) return super.stmtReturn(node);
       if (this.protectedDepth) return this.unsupported('return ref inside a protected region', node.syntax);
       this.address(node.expression);
       return this.il.emit('ret', undefined, { pops: 1, pushes: 0 });
     }
     expressionBody(expression, isReturn) {
-      if (!isReturn || !returnsByReference(this.frame.method)) return super.expressionBody(expression, isReturn);
+      if (!isReturn || !frameReturnsByReference(this.frame)) return super.expressionBody(expression, isReturn);
       this.address(expression);
       return this.il.emit('ret', undefined, { pops: 1, pushes: 0 });
     }
