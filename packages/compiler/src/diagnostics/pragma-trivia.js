@@ -10,9 +10,10 @@
  * The parser's own diagnostics for those lines are replaced by the scanner's, so each malformed line is reported
  * once, with Roslyn's span.
  */
+import {DiagnosticId} from './codes.js';
 import { parsePragmaDirectives } from './suppression.js';
 
-const pragmaCodes = new Set(['CS1633', 'CS1634', 'CS1072', 'CS1696']);
+const pragmaCodes = new Set([DiagnosticId.CS1633, DiagnosticId.CS1634, DiagnosticId.CS1072, DiagnosticId.CS1696]);
 
 /** The active `#pragma` directive trivia of a parsed file. */
 function activePragmas(file) {

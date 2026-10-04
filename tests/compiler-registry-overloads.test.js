@@ -71,6 +71,8 @@ test('A02-T19 symbol lookup yields the registry members of a type and its bases 
 function profileConversion(target, source) {
   if (target === source || (target === 'double' && source === 'int')) return true;
   if (source === 'null' && !['int', 'double', 'bool', 'void'].includes(target)) return true;
+  // An array is a System.Array (Array.BinarySearch(Array, object, IComparer)): the string-typed rule compared names.
+  if (target === 'System.Array' && source.endsWith('[]')) return true;
   return frameworkAssignable(target, source);
 }
 function profileChoice(candidates, argumentTypes, exactlyOne) {

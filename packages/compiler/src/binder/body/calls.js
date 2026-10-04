@@ -2,6 +2,7 @@
  * Arguments and invocations: overload resolution, extension methods, delegate invocation, element access
  * and `out` declarations. A call that cannot be bound keeps its arguments so flow analysis still sees `out` writes.
  */
+import {DiagnosticId} from '../../diagnostics/codes.js';
 import { covariantReturnType } from '../csharp9.js';
 import { SymbolKind, TypeKind, RefKind, ErrorTypeSymbol, ArrayTypeSymbol, TypeParameterSymbol } from '../../symbols/types.js';
 import { MethodKind, LocalDeclarationKind } from '../../symbols/members.js';
@@ -38,7 +39,10 @@ export const CallBinding = Base =>
         !this.lookupLocal('_')
       )
         e = this.node('Discard', a.expression, null, { isOutVarOrDiscard: true });
-      else e = this.expression(a.expression);
+      else {
+        if (refKind !== RefKind.None) this.reportReservedVarPattern(a.expression);
+        e = this.expression(a.expression);
+      }
       if (e.kind === 'TypeExpression' || e.kind === 'NamespaceExpression') e = this.asValue(e);
       else if (refKind === RefKind.Out) this.markWrite(e, null);
       else this.markRead(e);
@@ -47,6 +51,17 @@ export const CallBinding = Base =>
         e.methodGroup = { returnTypeFor: types => this.groupReturnType(e, types) };
       }
       return Object.assign(e.hasErrors ? { ...e } : e, { refKind: refKind === RefKind.None ? null : refKind, name, argumentSyntax: a });
+    }
+    /**
+     * `M(out var (a, b))` parses as a call of something named `var`. Unless the program declares that, Roslyn
+     * reports the name (CS0103) and that the syntax is reserved as an lvalue (CS8199).
+     */
+    reportReservedVarPattern(syntax) {
+      const target = syntax.kind === 'InvocationExpression' ? syntax.expression : null;
+      if (target?.kind !== 'IdentifierName' || target.identifier.valueText !== 'var' || this.lookupLocal('var')) return;
+      for (let type = this.c.containingType; type; type = type.containingType) if (type.getMembers('var').length) return;
+      this.report(target, DiagnosticId.CS0103, ['var']);
+      this.report(syntax, DiagnosticId.CS8199);
     }
     arguments(list) {
       return (list?.arguments ?? []).map(a => this.argument(a));
@@ -83,9 +98,9 @@ export const CallBinding = Base =>
     errorNode(error, args, nameNode, offset = 0) {
       if (error.argument !== undefined && args[error.argument - offset]?.argumentSyntax) {
         const a = args[error.argument - offset].argumentSyntax;
-        return error.code === 'CS1739' || error.code === 'CS1740' || error.code === 'CS1744' || error.code === 'CS8323'
+        return error.code === DiagnosticId.CS1739 || error.code === DiagnosticId.CS1740 || error.code === DiagnosticId.CS1744 || error.code === DiagnosticId.CS8323
           ? a.nameColon.name
-          : error.code === 'CS1620' || error.code === 'CS1615'
+          : error.code === DiagnosticId.CS1620 || error.code === DiagnosticId.CS1615
             ? a.expression
             : a.expression;
       }
@@ -114,7 +129,10 @@ export const CallBinding = Base =>
         if (!r.succeeded) {
           if (args.some(a => a.hasErrors)) return this.bad(syntax);
           const e = r.error;
-          this.report(this.errorNode(e, args, syntax), e.code, e.args);
+          // A wrong argument count is reported on the invoked expression (the member name of `a.b`), as Roslyn does.
+          const invoked = syntax.expression?.kind === 'SimpleMemberAccessExpression' ? syntax.expression.name : syntax.expression,
+            isCount = e.code === 'CS1593' || e.code === 'CS7036';
+          this.report(isCount && invoked ? invoked : this.errorNode(e, args, syntax), e.code, e.args);
           return this.bad(syntax);
         }
         return this.finishCall(r, value, args, syntax, { isDelegateInvoke: true });
@@ -126,12 +144,12 @@ export const CallBinding = Base =>
       )
         return this.lenient(syntax);
       if (value.kind === 'FieldAccess' || value.kind === 'PropertyAccess' || value.kind === 'EventAccess') {
-        this.report(syntax.expression.kind === 'SimpleMemberAccessExpression' ? syntax.expression.name : syntax.expression, 'CS1955', [
+        this.report(syntax.expression.kind === 'SimpleMemberAccessExpression' ? syntax.expression.name : syntax.expression, DiagnosticId.CS1955, [
           (value.field ?? value.property ?? value.event).toDisplayString(),
         ]);
         return this.bad(syntax);
       }
-      this.report(syntax.expression, 'CS0149');
+      this.report(syntax.expression, DiagnosticId.CS0149);
       return this.bad(syntax);
     }
     /** The extension methods named like the group, innermost namespace first. */
@@ -164,15 +182,15 @@ export const CallBinding = Base =>
           if (!result && ext.found) {
             if (ext.error && scopes.flatMap(s => s.methods).every(isSource)) {
               const offset = ext.extensionArgumentOffset ?? 1;
-              if (ext.error.code === 'CS1503' && ext.error.argument === 0 && ext.best) {
+              if (ext.error.code === DiagnosticId.CS1503 && ext.error.argument === 0 && ext.best) {
                 // The receiver does not convert to the `this` parameter of the best candidate.
                 const candidate = ext.best.definition;
                 const receiverType = this.display(group.receiver.type);
                 const wanted = this.display(candidate.parameters[0].type);
-                this.report(group.receiver.syntax, 'CS1929', [receiverType, group.name, candidate.toDisplayString(), wanted]);
+                this.report(group.receiver.syntax, DiagnosticId.CS1929, [receiverType, group.name, candidate.toDisplayString(), wanted]);
                 return this.bad(syntax);
               }
-              if (ext.error.code === 'CS1929') {
+              if (ext.error.code === DiagnosticId.CS1929) {
                 // Applicable by its arguments, but the receiver needs more than an identity, reference or boxing conversion.
                 this.report(group.receiver.syntax, ext.error.code, ext.error.args);
                 return this.bad(syntax);
@@ -182,7 +200,7 @@ export const CallBinding = Base =>
                   ? this.errorNode({ ...ext.error }, args, nameNode, offset)
                   : nameNode,
                 ext.error.code,
-                ext.error.argument !== undefined && ext.error.code === 'CS1503'
+                ext.error.argument !== undefined && ext.error.code === DiagnosticId.CS1503
                   ? [ext.error.args[0], ext.error.args[1], ext.error.args[2]]
                   : ext.error.args,
               );
@@ -194,8 +212,8 @@ export const CallBinding = Base =>
         if (!result) {
           if (anyBad) return this.bad(syntax);
           if (!isSource(group.receiverType))
-            return this.reportMissingFrameworkMember(group.receiverType, group.name, nameNode, syntax, 'CS1061');
-          this.report(nameNode, 'CS1061', [this.display(group.receiverType), group.name]);
+            return this.reportMissingFrameworkMember(group.receiverType, group.name, nameNode, syntax, DiagnosticId.CS1061);
+          this.report(nameNode, DiagnosticId.CS1061, [this.display(group.receiverType), group.name]);
           return this.bad(syntax);
         }
       }
@@ -217,7 +235,7 @@ export const CallBinding = Base =>
      * errors instead of CS1503. @returns {boolean} true when the errors were reported
      */
     reportLambdaBodyErrors(error, args) {
-      const argument = error.code === 'CS1503' && error.argument !== undefined ? args[error.argument] : null;
+      const argument = error.code === DiagnosticId.CS1503 && error.argument !== undefined ? args[error.argument] : null;
       if (!argument || argument.form !== 'lambda' || !argument.bodyErrors || !argument.lastConversionError?.length) return false;
       for (const found of argument.lastConversionError) this.report(found.node ?? argument.syntax, found.code, found.args);
       return true;
@@ -231,16 +249,16 @@ export const CallBinding = Base =>
         if (method.methodKind !== MethodKind.LocalFunction) {
           if (method.isStatic) {
             if (group.receiver && !group.viaType && group.receiver.kind !== 'This') {
-              this.report(nameNode === group.nameNode ? group.syntax : nameNode, 'CS0176', [method.toDisplayString()]);
+              this.report(nameNode === group.nameNode ? group.syntax : nameNode, DiagnosticId.CS0176, [method.toDisplayString()]);
               return this.bad(syntax);
             }
             receiver = null;
           } else if (group.viaType) {
-            this.report(group.syntax, 'CS0120', [method.toDisplayString()]);
+            this.report(group.syntax, DiagnosticId.CS0120, [method.toDisplayString()]);
             return this.bad(syntax);
           } else if (group.implicitReceiver) {
             if (this.c.isStatic || group.outer || (this.c.isFieldInitializer && !this.c.isStaticInitializer)) {
-              this.report(group.syntax, this.c.isFieldInitializer && !this.c.isStatic ? 'CS0236' : 'CS0120', [method.toDisplayString()]);
+              this.report(group.syntax, this.c.isFieldInitializer && !this.c.isStatic ? DiagnosticId.CS0236 : DiagnosticId.CS0120, [method.toDisplayString()]);
               return this.bad(syntax);
             }
             receiver = this.node('This', group.syntax, this.c.containingType, { isImplicit: true });
@@ -251,7 +269,7 @@ export const CallBinding = Base =>
         }
         for (const v of checkConstructedMethod(method, this.core)) this.report(nameNode, v.code, v.args, v.severity);
         if (receiver?.kind === 'Base' && method.isAbstract) {
-          this.report(syntax, 'CS0205', [method.toDisplayString()]);
+          this.report(syntax, DiagnosticId.CS0205, [method.toDisplayString()]);
         }
       }
       if (isExtension) for (const v of checkConstructedMethod(method, this.core)) this.report(nameNode, v.code, v.args);
@@ -321,6 +339,8 @@ export const CallBinding = Base =>
         local = this.newLocal(name, type, designation.identifier, LocalDeclarationKind.Out);
       local.writes++;
       local.isOutVar = true;
+      // The nullable analysis checks what the callee stores against the declared type (`out string s`); `var` takes any state.
+      local.declaredAnnotation = bound.isVar ? null : bound.nullableAnnotation;
       this.declare(name, local, designation.identifier);
       return this.node('DeclarationExpression', syntax, bound.isVar ? null : type, { local, isOutVarOrDiscard: true });
     }
@@ -332,12 +352,12 @@ export const CallBinding = Base =>
       if (target.hasErrors || args.some(a => a.hasErrors)) return this.bad(syntax);
       const type = target.type;
       if (!type) {
-        this.report(syntax, 'CS0021', [target.literal === 'null' ? '<null>' : 'method group']);
+        this.report(syntax, DiagnosticId.CS0021, [target.literal === 'null' ? '<null>' : 'method group']);
         return this.bad(syntax);
       }
       if (type instanceof ArrayTypeSymbol) {
         if (args.length !== type.rank) {
-          this.report(syntax, 'CS0022', [type.rank]);
+          this.report(syntax, DiagnosticId.CS0022, [type.rank]);
           return this.bad(syntax);
         }
         const indices = args.map(a => {
@@ -376,7 +396,7 @@ export const CallBinding = Base =>
         const isObject = type.specialType === 'System_Object';
         if (!isObject && !isSource(type) && type.typeKind !== TypeKind.TypeParameter && !this.d.registryIsComplete(type, 'this[]'))
           return this.lenient(syntax);
-        this.report(syntax, 'CS0021', [this.display(type)]);
+        this.report(syntax, DiagnosticId.CS0021, [this.display(type)]);
         return this.bad(syntax);
       }
       // Candidates are the accessors seen with the indexer's own parameter list (no `value`, defaults included).
@@ -393,8 +413,8 @@ export const CallBinding = Base =>
         const e = r.error;
         this.report(
           this.errorNode(e, args, syntax),
-          e.code === 'CS1501' ? 'CS1501' : e.code,
-          e.code === 'CS1501' ? ['this', args.length] : e.args,
+          e.code === DiagnosticId.CS1501 ? DiagnosticId.CS1501 : e.code,
+          e.code === DiagnosticId.CS1501 ? ['this', args.length] : e.args,
         );
         return this.bad(syntax);
       }
