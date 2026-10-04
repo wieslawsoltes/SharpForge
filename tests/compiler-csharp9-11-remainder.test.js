@@ -75,6 +75,7 @@ class Program {
 `;
   const gates = reported(source, { langVersion: '10' }).filter(entry => entry.startsWith('CS8936'));
   assert.deepEqual(gates, ['CS8936@scoped', 'CS8936@scoped', 'CS8936@scoped', 'CS8936@scoped', 'CS8936@scoped']);
-  assert.deepEqual(reported(source, { langVersion: '11' }), []);
+  // At C# 11 only Roslyn's warning for the unused local is left: `s = default` is not a use of s (CS0219).
+  assert.deepEqual(reported(source, { langVersion: '11' }), ['CS0219@s']);
   assert.match(compile(source, { langVersion: '10' }).diagnostics.find(d => d.code === 'CS8936').message, /^Feature 'ref fields' is not available in C# 10\.0/);
 });

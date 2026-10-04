@@ -1,3 +1,4 @@
+import {DiagnosticId} from '../diagnostics/codes.js';
 /**
  * `unsafe(expression)` (SF-A02-T92). PROVISIONAL: C# 15 preview, after csharplang/proposals/unsafe-evolution.md
  * revision 1, "unsafe expressions" (packages/syntax/src/preview-revisions.js). The pinned Roslyn does not implement
@@ -16,7 +17,7 @@ export const UnsafeExpressionBinding = Base =>
   class extends Base {
     expression(syntax, options = {}) {
       if (syntax.kind !== 'UnsafeExpression') return super.expression(syntax, options);
-      if (!this.d.options?.allowUnsafe) this.report(syntax.unsafeKeyword, 'CS0227');
+      if (!this.d.options?.allowUnsafe) this.report(syntax.unsafeKeyword, DiagnosticId.CS0227);
       this.unsafeBlocks = (this.unsafeBlocks ?? 0) + 1;
       try {
         return this.expression(syntax.expression, options);

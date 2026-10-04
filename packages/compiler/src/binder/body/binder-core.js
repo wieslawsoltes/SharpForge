@@ -6,6 +6,7 @@ import {DiagnosticId} from '../../diagnostics/codes.js';
 import { TypeKind, ErrorTypeSymbol } from '../../symbols/types.js';
 import { LocalSymbol, LocalDeclarationKind } from '../../symbols/members.js';
 import { ConstantValue } from '../../constants/constant-value.js';
+import { literalConstant } from '../../constants/literal-value.js';
 import { defaultConstant } from '../../constants/default-constant.js';
 import { numericKind } from '../../conversions/numeric.js';
 import { isNullableType } from '../../conversions/nullable.js';
@@ -190,7 +191,7 @@ export class BinderCore {
         const type = this.core.keyword(v.type);
         let constant = null;
         try {
-          constant = ConstantValue.of(v.type, v.value);
+          constant = literalConstant(v);
         } catch {
           constant = null;
         }

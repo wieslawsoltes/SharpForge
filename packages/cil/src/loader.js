@@ -1,15 +1,16 @@
+import {decodeScalarSpan,profileOpcodes} from './scalar-loading.js';
 import { canonicalEmissionOptions } from './pe/canonical-options.js';
+import { decodeObjectBuiltin } from './object-builtin-mapping.js';
 import { canonicalWithSymbols } from './pe/canonical-symbols.js';
 import {contractForMember,frameworkType,enumTypes} from '@sharpforge/framework';
-import { Op, Binary, Unary, BuiltinMap, frameworkBuiltin, EnumConvertBase, FORMAT_VERSION, verifyImage } from '@sharpforge/bytecode';
+import { Op, Binary, Unary, BuiltinMap, frameworkBuiltin, numericAliases, EnumConvertBase, FORMAT_VERSION, verifyImage } from '@sharpforge/bytecode';
 import { CilError, text } from './binary.js';
 import { token, decodeCoded, readSignature, cliSystemName } from './metadata.js';
 import { readPE } from './pe.js';
 import { decodeInstructions } from './opcodes.js';
 import { emitAssembly } from './emitter.js';
 import { defaultValue } from './analysis.js';
-const profileOpcodes=new Set(['ldftn','unbox.any','ldloca','ldloca.s','add.ovf','sub.ovf','mul.ovf','conv.ovf.i4','nop', 'ldarg.0', 'ldarg.1', 'ldarg.2', 'ldarg.3', 'ldloc.0', 'ldloc.1', 'ldloc.2', 'ldloc.3', 'stloc.0', 'stloc.1', 'stloc.2', 'stloc.3', 'ldarg.s', 'starg.s', 'ldloc.s', 'stloc.s', 'ldnull', 'ldc.i4.m1', 'ldc.i4.0', 'ldc.i4.1', 'ldc.i4.2', 'ldc.i4.3', 'ldc.i4.4', 'ldc.i4.5', 'ldc.i4.6', 'ldc.i4.7', 'ldc.i4.8', 'ldc.i4.s', 'ldc.i4', 'ldc.r8', 'dup', 'pop', 'call', 'ret', 'br.s', 'brfalse.s', 'brtrue.s', 'br', 'brfalse', 'brtrue', 'add', 'sub', 'mul', 'div', 'rem', 'and', 'or', 'xor', 'shl', 'shr', 'neg', 'not', 'conv.i4', 'conv.r8', 'callvirt', 'ldstr', 'newobj', 'castclass', 'throw', 'ldfld', 'stfld', 'ldsfld', 'stsfld', 'box', 'newarr', 'ldlen', 'ldelem', 'stelem', 'conv.u1', 'leave', 'leave.s', 'ceq', 'cgt', 'cgt.un', 'clt', 'clt.un', 'ldarg', 'starg', 'ldloc', 'stloc', 'rethrow', 'endfinally']);
-const shortTypes={'System.Int32':'int','System.Int64':'long','System.Double':'double','System.Boolean':'bool','System.String':'string','System.Object':'object','System.Exception':'Exception','System.Array':'Array'};
+const shortTypes={...numericAliases,'System.Boolean':'bool','System.String':'string','System.Object':'object','System.Exception':'Exception','System.Array':'Array'};
 const arithmetic={'add.ovf':'+','sub.ovf':'-','mul.ovf':'*',add:'+',sub:'-',mul:'*',div:'/',rem:'%',and:'&',or:'|',xor:'^',shl:'<<',shr:'>>'};
 function nativeLocal(i,prefix){if(i.name===prefix)return i.operand;if(i.name===prefix+'.s')return i.operand;if(i.name.startsWith(prefix+'.'))return Number(i.name.slice(prefix.length+1));return null;}
 function constant(i,metadata){if(i.name==='ldnull')return null;if(i.name==='ldstr')return metadata.userString(i.operand);if(i.name==='ldc.i4'||i.name==='ldc.i4.s'||i.name==='ldc.r8')return i.operand;if(i.name==='ldc.i4.m1')return -1;if(i.name.startsWith('ldc.i4.'))return Number(i.name.slice(7));throw new CilError('Expected a constant instruction');}
@@ -61,6 +62,7 @@ export function loadAssembly(bytes,options={}) {
   return image;
 }
 function decodeSpan(span,c) {
+  const scalar=decodeScalarSpan(span,c);if(scalar)return scalar;
   const emit=(op,a=0,b=0)=>[op,a,b],names=span.map(i=>i.name),call=span.find(i=>['call','callvirt','newobj'].includes(i.name));
   if(names.includes('ldftn')){const functionToken=span.find(i=>i.name==='ldftn').operand,method=c.methodByToken.get(functionToken),constructor=c.resolveCall(call.operand);if(!method||frameworkType(constructor.owner)?.kind!=='delegate')throw new CilError('Invalid delegate construction');return emit(Op.DELEGATE,method.id,c.intern(constructor.owner));}
   if(call){const target=c.resolveCall(call.operand),owner=shortTypes[target.owner]??target.owner,sig=target.sig,count=sig.parameters.length+(sig.isStatic?0:1);
@@ -71,16 +73,15 @@ function decodeSpan(span,c) {
     if(owner==='string'&&target.name==='Concat'&&sig.parameters[0]==='object')return emit(Op.BINARY,Binary['+'],2);
     if(owner==='string'&&target.name.startsWith('op_')){if(!['op_Equality','op_Inequality'].includes(target.name))throw new CilError('Unsupported string operator');return emit(Op.BINARY,Binary[target.name==='op_Equality'?'==':'!=']);}
     if(owner==='string'&&target.name==='get_Length')return emit(Op.LENGTH);
-    let name,argc=count;
+    let name=decodeObjectBuiltin(target,call,span,c.metadata),argc=count;
+    if(name)return emit(Op.BUILTIN,BuiltinMap.get(name).id,argc);
     if(owner==='Exception'&&target.name==='.ctor'&&call.name==='newobj'){name='Exception.new';argc=sig.parameters.length;}
     else if(owner==='Exception'&&target.name==='get_Message')name='Exception.Message';
     else if(target.owner==='System.Math'){name='Math.'+target.name;if(target.name==='Abs'&&sig.parameters[0]==='int')name='$Math.Abs.Int32';}
     else if(target.owner==='System.Console')name='Console.'+target.name;
     else if(target.owner==='System.GC'){name='GC.'+target.name;if(target.name==='GetTotalMemory'&&span.some(i=>i.name.startsWith('ldc.i4')))argc=0;}
-    else if(target.owner==='System.Convert'){name='Convert.'+target.name;if(target.name==='ToString'&&sig.parameters[0]==='object')name='object.ToString';}
-    else if(target.owner==='System.Object'&&target.name==='GetType'){const box=span.find(i=>i.name==='box'),type=box?shortTypes[c.metadata.typeName(box.operand)]??c.metadata.typeName(box.operand):null;name=['int','double','bool','long'].includes(type)?'$type.'+type+'.GetType':'object.GetType';}
+    else if(target.owner==='System.Convert')name='Convert.'+target.name;
     else if(['System.Type','System.Reflection.MemberInfo'].includes(target.owner)&&['get_Name','get_FullName'].includes(target.name))name='Type.'+target.name.slice(4);
-    else if(target.owner==='System.Object'&&target.name==='ReferenceEquals')name='object.ReferenceEquals';
     else if(target.owner==='System.Enum'&&target.name==='HasFlag')name='Enum.HasFlag';
     else if(target.owner==='System.Environment'&&target.name==='get_TickCount')name='Environment.TickCount';
     else if(owner==='int'||owner==='double'||owner==='string'||owner==='Array')name=owner+'.'+target.name;
@@ -105,4 +106,3 @@ function decodeSpan(span,c) {
   if(span[0].name==='dup')return emit(Op.DUP);if(span[0].name==='pop')return emit(Op.POP);if(span[0].name==='conv.i4'||span[0].name==='conv.r8')return emit(Op.UNARY,Unary['+'],span[0].name==='conv.i4'?1:0);
   throw new CilError('CIL sequence is not a supported superinstruction',span[0]?.offset);
 }
-

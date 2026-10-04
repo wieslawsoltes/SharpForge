@@ -1,0 +1,180 @@
+{
+  "schemaVersion": 1,
+  "reference": {
+    "sdk": "10.0.201",
+    "compilerVersion": "5.3.0-2.26153.122 (4d3023de605a78ba3e59e50c657eed70f125c68a)",
+    "compilerSha256": "3ec75447e847f97b2cb3d861463f6de7ea421f2092aaacc7458579adccf8fc16",
+    "runtime": "10.0.5",
+    "mode": "Debug",
+    "sourceSha256": "35f60e6d52baad31644411542e078bd04b51afc98949de0336c9654ae29e2730",
+    "assemblySha256": "2bc24dbbe692eea3cabc20af34808395d8f3c649ff955b1116edc85cf7b33226",
+    "pdbSha256": "4c4b2edea79e17147cec25dc25dc0543223525c69560b93ce203a855fec9b48e"
+  },
+  "native": {
+    "runtime": "10.0.5",
+    "constants": [
+      {
+        "name": "Boolean",
+        "code": 2,
+        "typeToken": null,
+        "enumTypeToken": null,
+        "typeName": null,
+        "value": "true",
+        "signature": "0201"
+      },
+      {
+        "name": "Character",
+        "code": 3,
+        "typeToken": null,
+        "enumTypeToken": null,
+        "typeName": null,
+        "value": "65535",
+        "signature": "03FFFF"
+      },
+      {
+        "name": "SignedByte",
+        "code": 4,
+        "typeToken": null,
+        "enumTypeToken": null,
+        "typeName": null,
+        "value": "-128",
+        "signature": "0480"
+      },
+      {
+        "name": "Byte",
+        "code": 5,
+        "typeToken": null,
+        "enumTypeToken": null,
+        "typeName": null,
+        "value": "255",
+        "signature": "05FF"
+      },
+      {
+        "name": "Int16",
+        "code": 6,
+        "typeToken": null,
+        "enumTypeToken": null,
+        "typeName": null,
+        "value": "-32768",
+        "signature": "060080"
+      },
+      {
+        "name": "UInt16",
+        "code": 7,
+        "typeToken": null,
+        "enumTypeToken": null,
+        "typeName": null,
+        "value": "65535",
+        "signature": "07FFFF"
+      },
+      {
+        "name": "Int32",
+        "code": 8,
+        "typeToken": null,
+        "enumTypeToken": null,
+        "typeName": null,
+        "value": "-2147483648",
+        "signature": "0800000080"
+      },
+      {
+        "name": "UInt32",
+        "code": 9,
+        "typeToken": null,
+        "enumTypeToken": null,
+        "typeName": null,
+        "value": "4294967295",
+        "signature": "09FFFFFFFF"
+      },
+      {
+        "name": "Int64",
+        "code": 10,
+        "typeToken": null,
+        "enumTypeToken": null,
+        "typeName": null,
+        "value": "-9223372036854775808",
+        "signature": "0A0000000000000080"
+      },
+      {
+        "name": "UInt64",
+        "code": 11,
+        "typeToken": null,
+        "enumTypeToken": null,
+        "typeName": null,
+        "value": "18446744073709551615",
+        "signature": "0BFFFFFFFFFFFFFFFF"
+      },
+      {
+        "name": "Single",
+        "code": 12,
+        "typeToken": null,
+        "enumTypeToken": null,
+        "typeName": null,
+        "value": "1.25",
+        "signature": "0C0000A03F"
+      },
+      {
+        "name": "Double",
+        "code": 13,
+        "typeToken": null,
+        "enumTypeToken": null,
+        "typeName": null,
+        "value": "-2.5",
+        "signature": "0D00000000000004C0"
+      },
+      {
+        "name": "Text",
+        "code": 14,
+        "typeToken": null,
+        "enumTypeToken": null,
+        "typeName": null,
+        "value": "A\u0000B",
+        "signature": "0E410000004200"
+      },
+      {
+        "name": "NullString",
+        "code": 14,
+        "typeToken": null,
+        "enumTypeToken": null,
+        "typeName": null,
+        "value": null,
+        "signature": "0EFF"
+      },
+      {
+        "name": "NullObject",
+        "code": 28,
+        "typeToken": null,
+        "enumTypeToken": null,
+        "typeName": null,
+        "value": null,
+        "signature": "1C"
+      },
+      {
+        "name": "NullClass",
+        "code": 18,
+        "typeToken": 33554437,
+        "enumTypeToken": null,
+        "typeName": "Fixture",
+        "value": null,
+        "signature": "1214"
+      },
+      {
+        "name": "Enumeration",
+        "code": 6,
+        "typeToken": null,
+        "enumTypeToken": 33554436,
+        "typeName": null,
+        "value": "-1234",
+        "signature": "062EFB10"
+      },
+      {
+        "name": "Decimal",
+        "code": 17,
+        "typeToken": 16777237,
+        "enumTypeToken": null,
+        "typeName": "System.Decimal",
+        "value": "-123.4500",
+        "signature": "11558444D612000000000000000000"
+      }
+    ]
+  }
+}

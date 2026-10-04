@@ -1,3 +1,4 @@
+import {isDecimal, decimal, decimalParse} from './decimal.js';
 import {CilError} from '@sharpforge/cil';
 import {ManagedFault, isReference} from '../heap.js';
 import {float, number} from './numeric-ops.js';
@@ -42,6 +43,11 @@ function nativeHostValue(value, type, context) {
 
 /** Marshal host values using the declared CLI storage type, including array elements. */
 export function marshalCilValue(vm, value, type) {
+  if (type === 'decimal' || type === 'System.Decimal') {
+    if (isDecimal(value)) return decimal(value.coefficient, value.scale, value.negative);
+    if (typeof value === 'string') return decimalParse(value, cilNumericContext(vm));
+    throw new CilError('Decimal arguments require an exact Decimal value or invariant string');
+  }
   if (type.endsWith('[]')) {
     if (!Array.isArray(value)) throw new CilError(`Expected JSON array for ${type}`);
     const element = type.slice(0, -2), ref = vm.heap.array(element, value.length);

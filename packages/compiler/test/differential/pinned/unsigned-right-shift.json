@@ -2,5 +2,6 @@
   "unsigned-right-shift/int-operands":{"hash":"dc2045a00bb25021","kind":"output","langVersion":"14.0","diagnostics":[],"output":"2147483644\n15\n-1\n-1\n1\n2147483647\n1\n128\n268435440\n2\n2147483644\n3\n2147483647\n"},
   "unsigned-right-shift/user-defined-operator":{"hash":"4891e8c8d7836e08","kind":"output","langVersion":"14.0","diagnostics":[],"output":"12\n8\n15\n"},
   "unsigned-right-shift/cs0019-operand-types":{"hash":"4ce214c9cac86135","kind":"diagnostics","langVersion":"14.0","diagnostics":[["CS0019",63,7,"error"],["CS0019",96,7,"error"],["CS0019",113,9,"error"]]},
-  "unsigned-right-shift/unsigned-right-shift-in-csharp-10":{"hash":"960e4c7e62a9b560","kind":"diagnostics","langVersion":"10.0","diagnostics":[["CS8936",35,3,"error"],["CS8936",82,2,"error"],["CS8936",155,7,"error"],["CS8936",164,8,"error"]]}
+  "unsigned-right-shift/unsigned-right-shift-in-csharp-10":{"hash":"960e4c7e62a9b560","kind":"diagnostics","langVersion":"10.0","diagnostics":[["CS8936",35,3,"error"],["CS8936",82,2,"error"],["CS8936",155,7,"error"],["CS8936",164,8,"error"]]},
+  "unsigned-right-shift/wide-and-unsigned-operands":{"hash":"6d789ef2c37500dc","kind":"output","langVersion":"14.0","diagnostics":[],"output":"0\n9223372036854775804\n-8\n9223372036854775804\n1\n15\n500000000\n4000000000\n2000000000\n1\n15\n18446744073709551615\n1\n2147483647\n25\n15\n1\n16\n3\n9223372036854775807\n9223372036854775807\n1\n"}
 }}

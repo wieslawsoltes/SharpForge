@@ -82,7 +82,7 @@ export function partialSignatureRows(definition, implementation) {
     definition.parameters.some((parameter, index) => parameter.name !== implementation.parameters[index].name) ||
     (definition.typeParameters ?? []).some((parameter, index) => parameter.name !== implementation.typeParameters[index].name);
   const typesDiffer =
-    comparable && (!sameTypes(definition, implementation, TypeCompareKind.ConsiderEverything) || hasNullableDifference(definition, implementation));
+    comparable && (!sameTypes(definition, implementation, TypeCompareKind.StrictNullability) || hasNullableDifference(definition, implementation));
   if (namesDiffer || typesDiffer) row(DiagnosticId.CS8826, [definition.toDisplayString(), implementation.toDisplayString()]);
   return rows;
 }
