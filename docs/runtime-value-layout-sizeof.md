@@ -36,7 +36,8 @@ This change computes physical layouts only. It does not enable user struct
 copying, interior field addresses, boxing, raw-memory access, or GC tracing of
 inline aggregates. Existing generic-call admission still rejects user structs
 as generic call arguments and generic value-type owners until T03 storage is
-available. A closed struct TypeSpec may be a `sizeof` operand without storing
+available, except for the [bounded sizeof-only call shape](runtime-generic-sizeof-calls.md)
+which requires layout metadata only. A closed struct TypeSpec may be a `sizeof` operand without storing
 or passing a struct value. Source/reloaded engines retain existing primitive
 `sizeof` support; no custom-struct source frontend parity is claimed.
 

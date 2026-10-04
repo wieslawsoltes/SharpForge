@@ -5,6 +5,7 @@ import {genericTypeParts} from './field-profile.js';
 import {methodGenericParameters, normalizeCallType} from './call-profile.js';
 import {parseFunctionPointerType} from './function-pointer-signature.js';
 import {isByrefStructForwarder} from './generic-struct-forwarder.js';
+import {isSizeOfOnlyMethod} from './generic-sizeof-method.js';
 
 /** Symbolic context used to qualify one canonical body shared by its instantiations. */
 export function genericDefinitionContext(inspector, method) {
@@ -20,12 +21,12 @@ export function genericDefinitionContext(inspector, method) {
     genericIdentity: typeArguments.length ? method.owner + '<' + typeArguments.join(',') + '>' : null};
 }
 
-function genericArgument(inspector, type, context, methodToken = null) {
+function genericArgument(inspector, type, context, methodToken = null, layoutOnly = false) {
   if (type === 'void' || /[&*]$/.test(type)) throw new CilError('Generic arguments must be managed non-void types');
   verifyGenericType(inspector, type, context);
   const parts = genericTypeParts(type);
   const definition = inspector.types.find(candidate => candidate.name === parts.definition);
-  if (definition?.baseToken && inspector.metadata.typeName(definition.baseToken) === 'System.ValueType') {
+  if (!layoutOnly && definition?.baseToken && inspector.metadata.typeName(definition.baseToken) === 'System.ValueType') {
     if (parts.arguments.length || methodGenericParameters(inspector, definition.token).length ||
         !isByrefStructForwarder(inspector, methodToken)) {
       throw new CilError('Struct generic arguments require a static Apply<T>(ref T, ...) constrained interface forwarder');
@@ -72,20 +73,22 @@ export function verifyGenericType(inspector, input, context, depth = 0) {
 
 export function verifyGenericCall(inspector, descriptor, context) {
   const arity = descriptor.signature.genericArity ?? 0;
+  const target = descriptor.resolvedToken ?? descriptor.definitionToken ?? descriptor.token;
+  const layoutOnly = isSizeOfOnlyMethod(inspector, target);
   if (descriptor.resolvedToken && methodGenericParameters(inspector, descriptor.ownerToken).length && !descriptor.ownerInstance) {
     throw new CilError('Generic declaring type requires a TypeSpec context');
   }
   const owner = inspector.types.find(type => type.token === descriptor.ownerToken);
-  if (descriptor.ownerInstance && owner?.baseToken && inspector.metadata.typeName(owner.baseToken) === 'System.ValueType') {
+  if (!layoutOnly && descriptor.ownerInstance && owner?.baseToken && inspector.metadata.typeName(owner.baseToken) === 'System.ValueType') {
     throw new CilError('Generic aggregate owners require T03 value storage');
   }
   if (arity && !descriptor.genericArguments) throw new CilError('Generic method calls require MethodSpec arguments');
   for (const argument of descriptor.methodArguments ?? []) {
-    genericArgument(inspector, argument, context, descriptor.resolvedToken ?? descriptor.definitionToken ?? descriptor.token);
+    genericArgument(inspector, argument, context, target, layoutOnly);
   }
   for (const argument of descriptor.typeArguments ?? []) {
     if (nullableMethodDefinition(descriptor)) verifyGenericType(inspector, argument, context);
-    else genericArgument(inspector, argument, context);
+    else genericArgument(inspector, argument, context, null, layoutOnly);
   }
   for (const type of [...descriptor.signature.parameters, descriptor.signature.returnType]) verifyGenericType(inspector, type, context);
 }
