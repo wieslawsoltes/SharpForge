@@ -1,11 +1,22 @@
 {
   "schemaVersion": 1,
   "sources": {
-    "packages/runtime/src/heap.js": "28b86fe51a4a4cd93b7701b682fa2363a07d8a9c6370fd734e96690b16fe853c",
-    "packages/runtime/src/vm.js": "f12912ee9f65f9e3e1d71c732d43e4f85c13e021bf5ad19a1e044e9a40db8b7a",
-    "packages/runtime/src/cil-vm.js": "16fc508e58498a6d7966d19e643b67fef4f12a4e4f2b1b742a9bae8ccb02fd87",
-    "packages/bytecode/src/index.js": "25f9d48734d89e4d01be1b64246385986a4c872ca5bfc6fbeefc932796ff1473",
-    "packages/bytecode/src/builtins.js": "5d58c7a4d87f01f65370c7b87a60a0cbfc8e67eb0568675a29f8f159049ec7bf"
+    "packages/runtime/src/heap.js": "eecd3fb6a26637b3feb810f233f377c799f05c119e93c71b4a971056529e5d6b",
+    "packages/runtime/src/vm.js": "8ca36c0934a62a1373e3b915f2b4b572649bf484c7a248329940485ed0321acd",
+    "packages/runtime/src/cil-vm.js": "da17ef03afec2b6fc9e35d80edecbe2224beb0957d719e5f887ae9d94e0c0449",
+    "packages/runtime/src/execution/delegate-targets.js": "ec19efa480e2d864ba35268cfee220015e7655d84213502d6d2fc4b95094ae5d",
+    "packages/runtime/src/execution/source-ops.js": "d281c22b9072dc0151a2b0b3571c02b29bfe3074dbf783cf879269b6e5af9a22",
+    "packages/runtime/src/execution/storage.js": "d07039d0335c64ae69eccc3313e87b954d4b1c601667c61b392b7274699414ac",
+    "packages/runtime/src/execution/numeric-ops.js": "407778ba5fa9b1b97d26e625874dac923b2de5c6e4f9a5a30d42f1b2da7ee2b2",
+    "packages/runtime/src/execution/enums.js": "7235807aed0ec81512a186db091608087e4418b38dfbd1cb228cde697a46ff5c",
+    "packages/bytecode/src/index.js": "a7415f7b70d7fa8b44674f85278a307e5cc9cbd7df0544953733eda2a3a1b32d",
+    "packages/bytecode/src/builtins.js": "52bdae4e1dc6b2e0c418d6fa38cbb980e616891a03415143a656e6def8060d2b",
+    "packages/bytecode/src/numeric/conversions.js": "8ba60ff562911c7c11adb942a0d8b2793bd935cddadf5bc71bb52817b0f16b60",
+    "packages/bytecode/src/numeric/float.js": "aa8fe24bf6c9f0967934f377e1553244aa49a6521fb2c41a9e1e996e25a6ebc0",
+    "packages/bytecode/src/numeric/native-int.js": "1f4075523774128359ff73c3c77c535381a91f09b24df74c7b867b30acfb4f14",
+    "packages/bytecode/src/numeric/decimal-value.js": "d50f090d6e16eae12e2358e8ba45e857b942b3189dd1dbc8c908db8efc772c15",
+    "packages/bytecode/src/numeric/scalar-codec.js": "fa1c28f952cf0482128e995d053b5bbc32e144f05823bd6d80ab78c94ca970fd",
+    "packages/runtime/src/execution/source-numbers.js": "a4314c4024599c99fee05220fa44b328f40e8adc8d823a5b100bb250920a4836"
   },
   "resultKinds": {
     "int": {
@@ -21,12 +32,12 @@
       "cil": "bigint (signed Int64)"
     },
     "double": {
-      "source": "number (IEEE 754 binary64)",
+      "source": "number | frozen {float: r8, value: number} (IEEE 754 binary64)",
       "cil": "frozen {float: r8, value: number}"
     },
     "numeric": {
-      "source": "number",
-      "cil": "number | bigint | frozen {float: r4|r8, value: number}"
+      "source": "number | bigint | frozen float | nativeInt | Decimal",
+      "cil": "number | bigint | frozen {float: r4|r8, value: number} | frozen {nativeInt: 32|64, value: number|bigint}"
     },
     "bool": {
       "source": "boolean",
@@ -45,11 +56,19 @@
       "cil": "ManagedFault with optional reference, frames"
     },
     "any": {
-      "source": "number | bigint | boolean | null | undefined | {h,g} | enum carrier",
-      "cil": "number | bigint | null | undefined | {h,g} | float | byref | methodPointer"
+      "source": "number | bigint | boolean | null | undefined | {h,g} | enum | float | nativeInt | Decimal",
+      "cil": "number | bigint | null | undefined | {h,g} | float | nativeInt | Decimal | byref | methodPointer"
     }
   },
   "additionalShapes": [
+    {
+      "shape": "{decimal:true, coefficient:bigint, scale:0..28, negative:boolean}",
+      "meaning": "immutable System.Decimal value, unsigned 96-bit coefficient; exact source/CIL arithmetic, storage and boxing; not a portable wire value"
+    },
+    {
+      "shape": "{nativeInt: 32|64, value: number|bigint}",
+      "meaning": "immutable source/CIL native-integer stack category; signed payload at the explicitly configured ABI width; not a portable pointer"
+    },
     {
       "shape": "{enumType, underlyingType, value}",
       "meaning": "source enum identity with signed or unsigned integer storage; not a heap reference"
@@ -71,8 +90,8 @@
       "meaning": "CIL managed interior/frame address; never portable raw pointer"
     },
     {
-      "shape": "{methodPointer:true,token}",
-      "meaning": "CIL ldftn pointer identity"
+      "shape": "{methodPointer:true,vmOwner,token}",
+      "meaning": "immutable CIL ldftn pointer with resolved method token and opaque VM identity; delegate binding rejects a different VM owner; not a portable function pointer"
     },
     {
       "shape": "host lease {id,owner}",
@@ -82,13 +101,17 @@
   "evidence": [
     "ManagedHeap.allocate returns Object.freeze({h,g})",
     "ManagedHeap.array caps length at 1000000",
-    "CilVirtualMachine.storage/convert implement narrow and BigInt integer categories",
-    "VirtualMachine.binary uses number with Int32 modes"
+    "execution/storage.js storageValue and execution/numeric-ops.js storage apply narrow and BigInt integer categories through bytecode/numeric/conversions.js",
+    "execution/source-ops.js binary preserves legacy modes and delegates typed modes to shared scalar helpers",
+    "execution/enums.js enumValue freezes source enum identity and underlying storage",
+    "bytecode/numeric/float.js float and bytecode/numeric/native-int.js nativeInteger freeze numeric stack carriers",
+    "execution/delegate-targets.js delegateMethodPointer freezes the resolved token and VM owner; constructBoundDelegate requires the same owner",
+    "bytecode/numeric/decimal-value.js decimal freezes the unsigned 96-bit coefficient, scale and sign used by source/CIL Decimal arithmetic and storage"
   ],
   "unsupported": [
     "Rust engine qualification",
     "Wasm runtime qualification",
-    "decimal execution parity",
+    "Numeric source/direct-CIL cross-platform execution qualification",
     "arbitrary value structs in source VM"
   ]
 }
