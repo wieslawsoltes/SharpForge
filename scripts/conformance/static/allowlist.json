@@ -413,6 +413,13 @@
       "count": 1,
       "sha256": "9e222ce2fc67b642e8514cb4aa25ec09ca0fcc60da3bac6dec65bc32a9be0f3d",
       "reason": "Studio lazily imports the fixed checked-in Git workbench after an explicit Git action; no remote or user-selected JavaScript is loaded."
+    },
+    {
+      "path": "scripts/a25-storage-browser-check.mjs",
+      "operation": "dynamic-import",
+      "count": 1,
+      "sha256": "f8408c71c3b291055dbcccb3fd29789a411e32169f60edc2c46f488705370d39",
+      "reason": "Developer-run browser qualification imports an operator-selected trusted local Playwright module; this harness is not loaded by the product."
     }
   ]
 }
