@@ -125,7 +125,7 @@ test('CLR Property accessor queries defer invalid Event role validation until Ev
 });
 
 test('CLR retained Event metadata survives cooperative unload while the context rejects new loads', async () => {
-  const context = new AssemblyLoadSession().createContext({ collectible: true });
+  const context = new AssemblyLoadSession().createContext({ isCollectible: true });
   const module = (await context.loadFromStream(fixture())).manifestModule;
   const event = module.eventDefinition(0x14000001);
   context.unload();

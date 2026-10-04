@@ -18,6 +18,7 @@ export class MetadataAccessors {
   constructor(module) { this.#module = module; }
 
   #index(table, kind) {
+    if (this.#validated.has(table)) return this.#tables.get(table);
     const count = this.#module.rowCount(24);
     const memberCount = this.#module.rowCount(table);
     if (count + memberCount > 100000) throw loadError(LoadErrorCode.LimitExceeded, 'Accessor row limit exceeded');
