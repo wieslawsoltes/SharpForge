@@ -62,3 +62,14 @@ the publication receipt. No separate local matrix was run for these projections.
 These modules provide the callable session boundary. Protected Studio entry and
 compiler-worker registration remain in the application integration batch; this
 publication does not activate those host hooks or acquire disk permissions.
+
+## Complete regression scope
+
+The dependent regression batch preserves all existing assertions in:
+`a23-project-build-order` (4), `a23-project-target-lifecycle` (9),
+`a23-project-artifact-cache` (4), `a23-project-target-native` (1), and
+`a24-folder-compilation` (4). These 22 cases passed within the same completed
+38-case worker/build scope. The shared target-order fixture feeds both the
+portable order tests and the real offline SDK comparison. Native qualification
+uses an installed SDK when available and reports an explicit skip otherwise;
+the recorded Linux x64 run executed it successfully.
