@@ -276,10 +276,35 @@ explicit manifest/prefix rebasing. `tests/a20-source-loader.test.js`,
 `tests/a20-prepared-source-paths.test.js` cover actual Node File/Blob chunk decoding,
 UTF-8/UTF-16 BOM and byte boundaries, cancellation, failed preparations, snapshot
 saves, disk conflicts and URI/handle rebasing. These follow-up fixtures are
-authored; their consolidated execution is pending the completed source batch.
+qualified at source `acdf945d`: all 28 new cases passed. Across the complete I/O
+scope and its targeted environment repair, 196 distinct cases passed. The first
+invocation reported 90 passes and two setup failures because this worktree lacked
+the local `@sharpforge/bcl-collections` link; adding that untracked workspace link
+unblocked the 105 release04 cases and one CLI ZIP case, all 106 of which passed.
+No source changes occurred during qualification. Test execution took 2.182 seconds
+for the initial invocation and 5.830 seconds for the targeted retry on Node
+24.19.0/Linux; those durations are not editor latency measurements.
 Browser timing, physical File System Access and 200 MB interaction budgets remain
 unqualified until actual captures exist. See `docs/source-loading.md` and
 `packages/project-system/docs/disk-limits.md` for the ownership/public contracts.
+
+Exact completed ingress qualification commands (run only after the full source
+batch was frozen, through the shared serial limiter):
+
+```sh
+node scripts/limited.js node --test --test-concurrency=1 \
+  tests/a20-source-loader.test.js tests/a20-prepared-source-workspace.test.js \
+  tests/a20-prepared-source-paths.test.js tests/a20-large-file-disk.test.js \
+  tests/project-system.test.js tests/workspace-io.test.js tests/release04.test.js
+node scripts/limited.js node --test --test-concurrency=1 \
+  --test-name-pattern='0.4|CLI ZIP/extraction' tests/release04.test.js tests/workspace-io.test.js
+```
+
+| New source-ingress fixture | Passed cases |
+| --- | ---: |
+| `a20-source-loader.test.js` | 9 |
+| `a20-prepared-source-workspace.test.js` | 12 |
+| `a20-prepared-source-paths.test.js` | 7 |
 
 The disk seam lives in `packages/project-system/src/disk/` behind the existing `disk.js` public exports.
 It preserves the 2,000,000 default source limit and carries explicit read limits through to saves.
