@@ -22,6 +22,10 @@ Virtual list/grid/item views consume stable occurrence keys and at most 2,048 re
 
 `registerItemsRenderers` registers the complete item family over shared selection/realization models. Editable ComboBox keeps its edit field and selected item distinct; paging and breadcrumb/selector controls use bounded source navigation and emit structured selection/item notifications.
 
+## Managed selection and tree state
+
+Managed adapters use context-owned `SelectionModel`/`TreeViewModel`, authoritative source collections and ICollectionView current-position updates. Selected items, graph contents and deferred source references are traced through retainedValues; snapshot restoration does not replay input events.
+
 ## Qualification
 
 The complete A16 scope gate ran at d91e0817: 373 tests, 339 passed and 34 failed. Each publication manifest identifies its recorded cases and subsequent repairs; failures remain visible. Required core is pending on each exact publication tree. Native WinUI oracle, browser IME, codec, OS permission and performance evidence are separate qualifications. No speedup or native parity is claimed without a recorded measurement.
