@@ -66,7 +66,7 @@ export function createStudioEditorFactory({ services, state, requestCompiler, re
     create, workspace, language, session,
     apply(edits, label = 'Workspace edit') {
       const versions = new Map(services.documents.list().map(record => [record.uri, record.version]));
-      const plan = prepareWorkspaceEdit(workspace, edits, { label, versions, maxDocumentLength: 128 * 1024 * 1024 });
+      const plan = prepareWorkspaceEdit(workspace, edits, { label, versions, maxDocumentLength: 256 * 1024 * 1024 });
       return commitWorkspaceEdit(workspace, plan);
     },
     dispose() { language.dispose(); }

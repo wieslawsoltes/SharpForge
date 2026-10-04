@@ -14,6 +14,11 @@ export class StudioProjects {
     return state.projectSystem?.projects.has(state.startupProject) ? state.startupProject : '$workspace';
   }
 
+  get currentProjectId() {
+    const memberships = this.services.documents.projectsFor(this.state().active);
+    return memberships.includes(this.selectedId) ? this.selectedId : memberships[0] ?? this.selectedId;
+  }
+
   definitions() {
     const state = this.state();
     if (state.projectSystem?.projects.size) return [...state.projectSystem.projects.values()].map(project => ({
