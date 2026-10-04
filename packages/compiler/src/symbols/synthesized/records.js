@@ -8,6 +8,7 @@
  */
 import { SymbolKind, TypeKind, Accessibility, RefKind } from '../types.js';
 import { MethodSymbol, ParameterSymbol, MethodKind, DeclarationModifiers } from '../members.js';
+import { recordContractType } from './record-nullability.js';
 
 /** The kinds of synthesized record members. */
 export const RecordMember = Object.freeze({
@@ -58,16 +59,16 @@ export function synthesizeRecordMembers(type, members, core) {
   const self = type.typeParameters?.length ? type.construct(type.typeParameters) : type;
   const takesSelf = parameters => parameters.length === 1 && (parameters[0].type.originalDefinition ?? parameters[0].type) === type;
 
-  if (!declares('Equals', takesSelf)) declare(RecordMember.Equals, core.bool, [parameter('other', self)]);
+  if (!declares('Equals', takesSelf)) declare(RecordMember.Equals, core.bool, [parameter('other', recordContractType(type, self, true))]);
   // Overrides of object members: dispatched statically, since nothing derives from the record in a generated image.
   const override = isClass ? DeclarationModifiers.Override : DeclarationModifiers.Override | DeclarationModifiers.ReadOnly;
   const takesObject = parameters => parameters.length === 1 && parameters[0].type === core.object;
-  if (!declares('Equals', takesObject)) declare(RecordMember.EqualsObject, core.bool, [parameter('obj', core.object)], override);
+  if (!declares('Equals', takesObject)) declare(RecordMember.EqualsObject, core.bool, [parameter('obj', recordContractType(type, core.object, true))], override);
   if (!declares('GetHashCode', parameters => !parameters.length)) declare(RecordMember.GetHashCode, core.int, [], override);
   const declaresToString = declares('ToString', parameters => !parameters.length);
-  if (!declaresToString && !inheritsSealedToString(type)) declare(RecordMember.ToString, core.string, [], override);
+  if (!declaresToString && !inheritsSealedToString(type)) declare(RecordMember.ToString, recordContractType(type, core.string), [], override);
   for (const kind of [RecordMember.Equality, RecordMember.Inequality]) {
-    const operator = [parameter('left', self), parameter('right', self)];
+    const operator = [parameter('left', recordContractType(type, self, true)), parameter('right', recordContractType(type, self, true))];
     declare(kind, core.bool, operator, DeclarationModifiers.Static, MethodKind.UserDefinedOperator);
     members.at(-1).operatorToken = kind === RecordMember.Equality ? '==' : '!=';
   }

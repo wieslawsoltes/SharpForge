@@ -29,6 +29,9 @@ import { fieldSignature, methodSignature, methodSymbolSignature, propertySignatu
 import { constantTypeOf, constantRowValue, NULL_REFERENCE_CONSTANT } from './constant-metadata.js';
 import { writeParameterConstant } from './parameter-metadata.js';
 import { hasReturnAttributes, returnAttributeSource } from './attribute-targets.js';
+import { NullableMetadataPlan } from './nullable-plan.js';
+import { CompilerAttributeRegistry } from './compiler-attribute-registry.js';
+import { prepareNullableAttributes } from './nullable-attribute-contracts.js';
 
 const TABLE = Object.freeze({ TypeDef: 2, Field: 4, MethodDef: 6, Param: 8 });
 const SEMANTICS = Object.freeze({ Setter: 1, Getter: 2, AddOn: 8, RemoveOn: 16 });
@@ -76,10 +79,18 @@ export class SymbolMetadataWriter {
     this.builder = builder;
     this.core = analysis.core;
     this.bodyRvaOf = typeof bodyRva === 'function' ? bodyRva : () => bodyRva;
-    this.types = [...sourceTypesInMetadataOrder(analysis.assembly), ...(synthesized?.types ?? [])];
-    this.tokens = new TypeTokens(builder, this.types, assemblyResolverOf(analysis));
+    const declared = sourceTypesInMetadataOrder(analysis.assembly);
+    this.types = [...declared, ...(synthesized?.types ?? [])];
+    this.compilerAttributes = new CompilerAttributeRegistry(analysis);
     this.plans = new Map(this.types.map(type => [type, planMembers(type, this.core, field => analysis.constantOf(field))]));
     if (synthesized) for (const type of this.types) synthesized.extend(type, this.plans.get(type));
+    this.nullableMetadata = new NullableMetadataPlan(this, analysis);
+    prepareNullableAttributes(this);
+    const definitions = this.compilerAttributes.definitions;
+    // State machines remain last: their field lists may grow while executable bodies are emitted.
+    this.types = [...declared, ...definitions.keys(), ...(synthesized?.types ?? [])];
+    for (const [type, contract] of definitions) this.plans.set(type, contract.plan);
+    this.tokens = new TypeTokens(builder, this.types, assemblyResolverOf(analysis));
     /** The methods of `<Module>`, the first TypeDef row: they take the first MethodDef rows. */
     this.moduleMethods = synthesized?.moduleMethods ?? [];
     /** Definition tokens by symbol, for callers that add rows of their own (custom attributes, method bodies). */
@@ -193,7 +204,8 @@ export class SymbolMetadataWriter {
           ParamList: nextParameter,
         });
         const returnSource = returnAttributeSource(method), returned = returnSource?.returnType;
-        if (returned && (tupleElementNamesOf(returned) || dynamicTransformFlags(returned) || hasReturnAttributes(returnSource))) {
+        if ((returned && (tupleElementNamesOf(returned) || dynamicTransformFlags(returned)))
+          || hasReturnAttributes(returnSource) || this.nullableMetadata.needsReturn(method)) {
           // The return value has a Param row (sequence 0) only when an attribute is written on it.
           method.returnParameterToken = this.builder.addRow('Param', { Flags: 0, Sequence: 0, Name: '' });
           if (method.symbol) this.returnParameterTokens.set(method.symbol, method.returnParameterToken);

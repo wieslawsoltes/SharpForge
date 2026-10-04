@@ -497,6 +497,13 @@
       "count": 1,
       "sha256": "870f793b642673fb43ba8abe2acc047050c7da7f1cd5b15f5f9346baef4320a9",
       "reason": "Developer-run union benchmark loads only the fixed direct-CIL compiler module from two explicitly selected trusted local checkouts. Exact commits and clean tracked files are checked before and after each sequential worker; checkout paths are executable host input and the benchmark is not shipped in the product."
+    },
+    {
+      "path": "packages/compiler/bench/nullable-metadata.bench.js",
+      "operation": "dynamic-import",
+      "count": 1,
+      "sha256": "9d5ce736872b1bd1a0f1525f386be5079b904b7cf3e13dbb49c7c3a4e373c884",
+      "reason": "Trusted operator-selected checkout supplies the fixed @sharpforge/compiler public package entry for the paired nullable benchmark; the resolved entry must stay inside that checkout, and managed source or metadata never selects a JavaScript module."
     }
   ]
 }

@@ -110,7 +110,7 @@ export const MemberSymbolBuilder = Base =>
         bindConstraintClauses(
           typeParameters,
           syntax.constraintClauses,
-          t => this.bindType(t, mscope).type,
+          t => this.bindType(t, mscope),
           (n, c, a) => this.report(uri, n, c, a),
           { ownerDisplay: name, useFeature: (node, feature) => this.host.useFeature?.(uri, node, feature) },
         );

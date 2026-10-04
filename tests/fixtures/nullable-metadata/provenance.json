@@ -1,0 +1,22 @@
+{
+  "generator": "build-fixture.mjs",
+  "sdk": "10.0.201",
+  "compiler": "5.3.0-2.26153.122 (4d3023de605a78ba3e59e50c657eed70f125c68a)",
+  "referencePack": "10.0.5",
+  "targetFramework": "net10.0",
+  "options": [
+    "-nologo",
+    "-noconfig",
+    "-nostdlib",
+    "-target:library",
+    "-deterministic",
+    "-debug-",
+    "-optimize+",
+    "-langversion:preview",
+    "-nullable:disable",
+    "-unsafe",
+    "-nowarn:CS8618,CS0067"
+  ],
+  "sourceSha256": "9e8dc453b42ab455f378901e90aef0dd3d467d7df8bb1cdeb4fc499dedfc7eb7",
+  "assemblySha256": "8a4d59f13b93915f5ba66cb24f06e725254947cde53d5af5b476a81e7dfb4517"
+}

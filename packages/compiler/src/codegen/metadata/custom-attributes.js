@@ -25,6 +25,9 @@ import { needsTypeSpec } from '../generics.js';
 import { fullNameOf, serializedTypeName } from './serialized-type-names.js';
 import { descriptorOf, valueOf, fixedValues } from './attribute-values.js';
 import { returnAttributeSymbols, returnAttributeSource } from './attribute-targets.js';
+import { writeNullableAttributes } from './nullable-attributes.js';
+import { writeTupleRelationAttributes } from './tuple-relation-attributes.js';
+import { writeCompilerAttributeDefinitions } from './compiler-attribute-definitions.js';
 import { methodSignature, methodSymbolSignature } from './member-signatures.js';
 import { tupleElementNamesOf } from '../../binder/tuples.js';
 import { dynamicTransformFlags } from './dynamic-flags.js';
@@ -124,6 +127,9 @@ export class CustomAttributeWriter {
       for (const { symbol } of plan.events) this.applied(this.writer.eventTokens.get(symbol), symbol);
     }
     if (declaresExtensions) this.wellKnown(ASSEMBLY_TOKEN, EXTENSION);
+    writeNullableAttributes(this);
+    writeTupleRelationAttributes(this);
+    writeCompilerAttributeDefinitions(this);
   }
   method(planned) {
     const symbol = planned.symbol,
@@ -224,7 +230,7 @@ export class CustomAttributeWriter {
   fixedBuffer(parent, { elementType, length }) {
     const shape = { isStatic: false, returnType: this.core.void, parameters: [{ type: this.core.type }, { type: this.core.int }] },
       constructor = this.builder.member(this.builder.typeRef(FIXED_BUFFER), '.ctor', methodSignature(this.types, shape));
-    const name = fixedBufferTypeName(this.types, elementType, serializedTypeName(elementType));
+    const name = fixedBufferTypeName(this.types, elementType, serializedTypeName(elementType, this.types));
     this.add(parent, constructor, encodeCustomAttribute(['System.Type', 'int'], [name, length]));
   }
   /**

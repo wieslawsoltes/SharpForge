@@ -82,7 +82,8 @@ export function resolveBases(type, { typeBinder, core, report }) {
       scope = declaration.scope.child('type', { type }),
       rep = (node, code, args) => report(uri, node, code, args);
     list.forEach((entry, index) => {
-      const bound = typeBinder.bindType(entry.type, scope).type;
+      const annotated = typeBinder.bindType(entry.type, scope),
+        bound = annotated.type;
       if (!bound || bound.isErrorType()) return;
       if (kind === TypeKind.Enum) {
         if (!integralEnumBases.has(bound.specialType)) rep(entry.type, DiagnosticId.CS1008);
@@ -105,7 +106,7 @@ export function resolveBases(type, { typeBinder, core, report }) {
           return;
         }
         interfaces.push(bound);
-        type.interfaceSyntax.set(bound, { syntax: entry.type, uri });
+        type.interfaceSyntax.set(bound, { syntax: entry.type, uri, typeWithAnnotations: annotated });
         return;
       }
       if (kind !== TypeKind.Class) {
@@ -147,7 +148,7 @@ export function resolveBases(type, { typeBinder, core, report }) {
         return;
       }
       baseType = bound;
-      type.baseSyntax = { syntax: entry.type, uri };
+      type.baseSyntax = { syntax: entry.type, uri, typeWithAnnotations: annotated };
     });
     if (type.isStatic && interfaces.length && list.length)
       rep(list.find(e => e.type)?.type ?? declaration.syntax.identifier, DiagnosticId.CS0714, [type.toDisplayString()]);

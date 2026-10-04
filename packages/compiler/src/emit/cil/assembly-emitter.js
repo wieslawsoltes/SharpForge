@@ -14,6 +14,7 @@ import { MetadataBuilder, Writer, writeMethodBody, writePE, TEXT_RVA } from '@sh
 import { SymbolKind } from '../../symbols/types.js';
 import { MethodKind } from '../../symbols/members.js';
 import { SymbolMetadataWriter } from '../../codegen/metadata/symbol-metadata.js';
+import { installCompilerAttributeBodies } from './compiler-attribute-bodies.js';
 import { CustomAttributeWriter } from '../../codegen/metadata/custom-attributes.js';
 import { referenceIdentitiesOf } from '../../codegen/metadata/reference-identities.js';
 import { MemberTokens } from './member-tokens.js';
@@ -49,6 +50,7 @@ export class AssemblyEmitter {
       synthesized = new SynthesizedMembers(this.analysis),
       writer = new SymbolMetadataWriter(builder, this.analysis, { bodyRva: method => this.bodyAddresses.get(method), synthesized });
     writer.allocateTokens();
+    installCompilerAttributeBodies(writer);
     this.tokens = new MemberTokens(writer);
     /** The synthesized members by definition token; rebuilt when tokens move or a field is added. */
     this.synthesizedIndex = { byToken: null };
@@ -113,6 +115,7 @@ export class AssemblyEmitter {
   methodBody(type, planned) {
     const program = this,
       symbol = planned.symbol;
+    if (planned.emitBody) return planned.emitBody(program);
     if (!symbol) {
       if (!planned.emitBody) throw new UnsupportedInCil(`the synthesized member '${type?.name}.${planned.name}'`, type?.locations?.[0]);
       return planned.emitBody(program);
