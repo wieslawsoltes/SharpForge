@@ -1,0 +1,23 @@
+{
+  "artifacts": [
+    {
+      "id": 11295819002,
+      "name": "project16-windows-latest-firefox-browser",
+      "size_in_bytes": 15322,
+      "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/actions/artifacts/11295819002",
+      "archive_download_url": "https://api.github.com/repos/wieslawsoltes/SharpForge/actions/artifacts/11295819002/zip",
+      "expired": false,
+      "created_at": "2026-10-04T07:07:02Z",
+      "expires_at": "2027-01-02T07:02:40Z",
+      "updated_at": "2026-10-04T07:07:02Z",
+      "digest": "sha256:b79f4c7f36d8771896d6e35415718ba4f8511335a050c3323587f9a2c8804f2d",
+      "workflow_run": {
+        "id": 37184606471,
+        "repository_id": 1402948787,
+        "head_repository_id": 1402948787,
+        "head_branch": "codex/project16/qualify-windows-firefox-browser-20261004-w1",
+        "head_sha": "25ef23b0fb86eb3be4151492c2ef6bbc51f0a82e"
+      }
+    }
+  ]
+}

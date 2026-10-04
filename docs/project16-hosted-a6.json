@@ -1,0 +1,1414 @@
+{
+  "schemaVersion": 1,
+  "kind": "sharpforge-project16-hosted-attempt-evidence",
+  "attempt": "a6",
+  "workId": "SF-A20-T12",
+  "status": "failed",
+  "overallPassed": false,
+  "disposition": "Original completed comparative failure retained. No performance exception, waiver or project completion is claimed.",
+  "source": {
+    "sourceSha": "25ef23b0fb86eb3be4151492c2ef6bbc51f0a82e",
+    "sourceTree": "a0922a5f98e4ce38cd377d109a083a1da77df9a1",
+    "trigger": "create",
+    "triggerRef": "refs/heads/codex/project16/qualify-ubuntu-chromium-all-compare-a5-20261004-a6",
+    "triggerNonce": "compare-a5-20261004-a6",
+    "captureOnly": false,
+    "baselineProfile": "a5",
+    "workflowRunId": "37183721322",
+    "stage": "all",
+    "engine": "chromium",
+    "runner": "Linux",
+    "runnerLabel": "ubuntu-latest",
+    "editorBaseline": "docs/evidence/project16-hosted/a5/editor-browser.json",
+    "workbenchBaseline": "docs/evidence/project16-hosted/a5/workbench-large-trace.json"
+  },
+  "workflow": {
+    "runId": 37183721322,
+    "jobId": 111381241587,
+    "runAttempt": 1,
+    "runUrl": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37183721322",
+    "jobUrl": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37183721322/job/111381241587",
+    "headBranch": "codex/project16/qualify-ubuntu-chromium-all-compare-a5-20261004-a6",
+    "status": "completed",
+    "conclusion": "failure",
+    "createdAt": "2026-10-04T06:45:14Z",
+    "updatedAt": "2026-10-04T06:57:34Z",
+    "metadataEvidence": {
+      "run": "docs/evidence/project16-hosted/a6/github-run.json",
+      "jobs": "docs/evidence/project16-hosted/a6/github-jobs.json",
+      "artifacts": "docs/evidence/project16-hosted/a6/github-artifacts.json"
+    }
+  },
+  "summary": {
+    "evidence": "docs/evidence/project16-hosted/a6/qualification-summary.json",
+    "startedAt": "2026-10-04T06:46:05.437Z",
+    "finishedAt": "2026-10-04T06:57:31.596Z",
+    "status": "failed",
+    "exitCode": 1,
+    "counts": {
+      "selected": 16,
+      "passed": 15,
+      "failed": 1
+    },
+    "scopes": [
+      {
+        "id": "node:A19",
+        "phase": "node",
+        "command": "/opt/hostedtoolcache/node/24.21.0/x64/bin/node",
+        "args": [
+          "scripts/planning/run-tests.js",
+          "--area",
+          "A19"
+        ],
+        "timeoutMs": 1200000,
+        "status": "passed",
+        "startedAt": "2026-10-04T06:46:05.438Z",
+        "exitCode": 0,
+        "finishedAt": "2026-10-04T06:47:00.067Z",
+        "evidence": [
+          "docs/evidence/project16-hosted/a6/job.log"
+        ]
+      },
+      {
+        "id": "node:A20",
+        "phase": "node",
+        "command": "/opt/hostedtoolcache/node/24.21.0/x64/bin/node",
+        "args": [
+          "scripts/planning/run-tests.js",
+          "--area",
+          "A20"
+        ],
+        "timeoutMs": 1200000,
+        "status": "passed",
+        "startedAt": "2026-10-04T06:47:00.068Z",
+        "exitCode": 0,
+        "finishedAt": "2026-10-04T06:47:38.211Z",
+        "evidence": [
+          "docs/evidence/project16-hosted/a6/job.log"
+        ]
+      },
+      {
+        "id": "browser:workbench-docking",
+        "phase": "browser",
+        "command": "python",
+        "args": [
+          "tests/conformance/browser/run_suite.py",
+          "workbench-docking",
+          "--timeout",
+          "1200"
+        ],
+        "timeoutMs": 1320000,
+        "status": "passed",
+        "startedAt": "2026-10-04T06:47:38.212Z",
+        "exitCode": 0,
+        "finishedAt": "2026-10-04T06:47:40.176Z",
+        "evidence": [
+          "docs/evidence/project16-hosted/a6/suite-workbench-docking.json",
+          "docs/evidence/project16-hosted/a6/browser_a19_docking_test/session.json"
+        ]
+      },
+      {
+        "id": "browser:workbench-shell",
+        "phase": "browser",
+        "command": "python",
+        "args": [
+          "tests/conformance/browser/run_suite.py",
+          "workbench-shell",
+          "--timeout",
+          "1200"
+        ],
+        "timeoutMs": 1320000,
+        "status": "passed",
+        "startedAt": "2026-10-04T06:47:40.176Z",
+        "exitCode": 0,
+        "finishedAt": "2026-10-04T06:47:45.862Z",
+        "evidence": [
+          "docs/evidence/project16-hosted/a6/suite-workbench-shell.json",
+          "docs/evidence/project16-hosted/a6/a19-shell-results.json"
+        ]
+      },
+      {
+        "id": "browser:workbench-sessions",
+        "phase": "browser",
+        "command": "python",
+        "args": [
+          "tests/conformance/browser/run_suite.py",
+          "workbench-sessions",
+          "--timeout",
+          "1200"
+        ],
+        "timeoutMs": 1320000,
+        "status": "passed",
+        "startedAt": "2026-10-04T06:47:45.863Z",
+        "exitCode": 0,
+        "finishedAt": "2026-10-04T06:47:53.055Z",
+        "evidence": [
+          "docs/evidence/project16-hosted/a6/suite-workbench-sessions.json",
+          "docs/evidence/project16-hosted/a6/a19-multi-session-results.json"
+        ]
+      },
+      {
+        "id": "browser:workbench-lazy",
+        "phase": "browser",
+        "command": "python",
+        "args": [
+          "tests/conformance/browser/run_suite.py",
+          "workbench-lazy",
+          "--timeout",
+          "1200"
+        ],
+        "timeoutMs": 1320000,
+        "status": "passed",
+        "startedAt": "2026-10-04T06:47:53.056Z",
+        "exitCode": 0,
+        "finishedAt": "2026-10-04T06:47:57.931Z",
+        "evidence": [
+          "docs/evidence/project16-hosted/a6/suite-workbench-lazy.json",
+          "docs/evidence/project16-hosted/a6/browser_a19_lazy_tools_test/session.json"
+        ]
+      },
+      {
+        "id": "browser:workbench-workflows",
+        "phase": "browser",
+        "command": "python",
+        "args": [
+          "tests/conformance/browser/run_suite.py",
+          "workbench-workflows",
+          "--timeout",
+          "1200"
+        ],
+        "timeoutMs": 1320000,
+        "status": "passed",
+        "startedAt": "2026-10-04T06:47:57.931Z",
+        "exitCode": 0,
+        "finishedAt": "2026-10-04T06:48:03.614Z",
+        "evidence": [
+          "docs/evidence/project16-hosted/a6/suite-workbench-workflows.json",
+          "docs/evidence/project16-hosted/a6/vs-workflow-results.json"
+        ]
+      },
+      {
+        "id": "browser:workbench-workflows-standalone",
+        "phase": "browser",
+        "command": "python",
+        "args": [
+          "tests/conformance/browser/run_suite.py",
+          "workbench-workflows-standalone",
+          "--timeout",
+          "1200"
+        ],
+        "timeoutMs": 1320000,
+        "status": "passed",
+        "startedAt": "2026-10-04T06:48:03.615Z",
+        "exitCode": 0,
+        "finishedAt": "2026-10-04T06:48:08.588Z",
+        "evidence": [
+          "docs/evidence/project16-hosted/a6/suite-workbench-workflows-standalone.json",
+          "docs/evidence/project16-hosted/a6/vs-workflow-standalone-results.json"
+        ]
+      },
+      {
+        "id": "browser:editor-insights",
+        "phase": "browser",
+        "command": "python",
+        "args": [
+          "tests/conformance/browser/run_suite.py",
+          "editor-insights",
+          "--timeout",
+          "1200"
+        ],
+        "timeoutMs": 1320000,
+        "status": "passed",
+        "startedAt": "2026-10-04T06:48:08.589Z",
+        "exitCode": 0,
+        "finishedAt": "2026-10-04T06:48:11.208Z",
+        "evidence": [
+          "docs/evidence/project16-hosted/a6/suite-editor-insights.json",
+          "docs/evidence/project16-hosted/a6/a20-editor-insights.json"
+        ]
+      },
+      {
+        "id": "browser:editor-providers",
+        "phase": "browser",
+        "command": "python",
+        "args": [
+          "tests/conformance/browser/run_suite.py",
+          "editor-providers",
+          "--timeout",
+          "1200"
+        ],
+        "timeoutMs": 1320000,
+        "status": "passed",
+        "startedAt": "2026-10-04T06:48:11.208Z",
+        "exitCode": 0,
+        "finishedAt": "2026-10-04T06:48:14.778Z",
+        "evidence": [
+          "docs/evidence/project16-hosted/a6/suite-editor-providers.json",
+          "docs/evidence/project16-hosted/a6/a20-language-providers.json"
+        ]
+      },
+      {
+        "id": "browser:editor-view",
+        "phase": "browser",
+        "command": "python",
+        "args": [
+          "tests/conformance/browser/run_suite.py",
+          "editor-view",
+          "--timeout",
+          "1200"
+        ],
+        "timeoutMs": 1320000,
+        "status": "passed",
+        "startedAt": "2026-10-04T06:48:14.779Z",
+        "exitCode": 0,
+        "finishedAt": "2026-10-04T06:48:17.796Z",
+        "evidence": [
+          "docs/evidence/project16-hosted/a6/suite-editor-view.json",
+          "docs/evidence/project16-hosted/a6/a20-editor-view.json"
+        ]
+      },
+      {
+        "id": "performance",
+        "phase": "performance",
+        "status": "failed",
+        "startedAt": "2026-10-04T06:48:17.797Z",
+        "exitCode": 1,
+        "error": {
+          "name": "Error",
+          "message": "Editor latency budget failed",
+          "code": null
+        },
+        "finishedAt": "2026-10-04T06:53:50.688Z",
+        "evidence": [
+          "docs/evidence/project16-hosted/a6/editor-assessment.json",
+          "docs/evidence/project16-hosted/a6/editor-browser.json",
+          "docs/evidence/project16-hosted/a6/editor-model.json",
+          "docs/evidence/project16-hosted/a6/editor-memory.json",
+          "docs/evidence/project16-hosted/a6/workbench-large-trace.json",
+          "docs/evidence/project16-hosted/a6/suite-workbench-performance.json"
+        ]
+      },
+      {
+        "id": "performance:editor-budgets",
+        "phase": "performance",
+        "command": "python",
+        "args": [
+          "tests/conformance/browser/run_suite.py",
+          "editor-budgets",
+          "--timeout",
+          "1200"
+        ],
+        "timeoutMs": 1320000,
+        "status": "passed",
+        "startedAt": "2026-10-04T06:53:50.689Z",
+        "exitCode": 0,
+        "finishedAt": "2026-10-04T06:54:11.227Z",
+        "evidence": [
+          "docs/evidence/project16-hosted/a6/suite-editor-budgets.json",
+          "docs/evidence/project16-hosted/a6/editor-ui-budgets.json"
+        ]
+      },
+      {
+        "id": "performance:studio-large-file",
+        "phase": "performance",
+        "command": "python",
+        "args": [
+          "tests/conformance/browser/run_suite.py",
+          "studio-large-file",
+          "--timeout",
+          "1200"
+        ],
+        "timeoutMs": 1320000,
+        "status": "passed",
+        "startedAt": "2026-10-04T06:54:11.228Z",
+        "exitCode": 0,
+        "finishedAt": "2026-10-04T06:54:33.660Z",
+        "evidence": [
+          "docs/evidence/project16-hosted/a6/suite-studio-large-file.json",
+          "docs/evidence/project16-hosted/a6/a20-studio-large-file-results.json"
+        ]
+      },
+      {
+        "id": "performance:instrumentation",
+        "phase": "performance",
+        "command": "/opt/hostedtoolcache/node/24.21.0/x64/bin/node",
+        "args": [
+          "scripts/limited.js",
+          "node",
+          "scripts/bench-workbench-overhead.js",
+          "--browser",
+          "chromium",
+          "--output",
+          "/home/runner/work/SharpForge/SharpForge/artifacts/results/project16/instrumentation-overhead.json"
+        ],
+        "timeoutMs": 1200000,
+        "status": "passed",
+        "startedAt": "2026-10-04T06:54:33.661Z",
+        "exitCode": 0,
+        "finishedAt": "2026-10-04T06:56:17.115Z",
+        "evidence": [
+          "docs/evidence/project16-hosted/a6/instrumentation-overhead.json"
+        ]
+      },
+      {
+        "id": "performance:lazy-evaluation",
+        "phase": "performance",
+        "command": "/opt/hostedtoolcache/node/24.21.0/x64/bin/node",
+        "args": [
+          "scripts/limited.js",
+          "node",
+          "scripts/bench-workbench-lazy-evaluation.js",
+          "--browser",
+          "chromium",
+          "--output",
+          "/home/runner/work/SharpForge/SharpForge/artifacts/results/project16/lazy-evaluation.json"
+        ],
+        "timeoutMs": 1200000,
+        "status": "passed",
+        "startedAt": "2026-10-04T06:56:17.116Z",
+        "exitCode": 0,
+        "finishedAt": "2026-10-04T06:57:31.595Z",
+        "evidence": [
+          "docs/evidence/project16-hosted/a6/lazy-evaluation.json"
+        ]
+      }
+    ]
+  },
+  "nodeResults": {
+    "A19": {
+      "tests": 807,
+      "passed": 807,
+      "failed": 0,
+      "cancelled": 0,
+      "skipped": 0,
+      "todo": 0,
+      "durationMs": 54424.298391,
+      "evidence": "docs/evidence/project16-hosted/a6/job.log"
+    },
+    "A20": {
+      "tests": 722,
+      "passed": 713,
+      "failed": 0,
+      "cancelled": 0,
+      "skipped": 9,
+      "todo": 0,
+      "durationMs": 37928.295457,
+      "skipDetails": [
+        {
+          "name": "Unsupported target: shell commands and external filters",
+          "reason": "The browser editor has no shell or process-execution authority."
+        },
+        {
+          "name": "Unsupported target: Vimscript and plugin loading",
+          "reason": "The native modal adapter is not a Vimscript interpreter or plugin runtime."
+        },
+        {
+          "name": "Unsupported target: terminal buffers",
+          "reason": "Terminal emulation is outside the editor document and keymap scope."
+        },
+        {
+          "name": "Unsupported target: native Vim regex extensions",
+          "reason": "Search uses the documented bounded regex engine rather than Vim magic expressions."
+        },
+        {
+          "name": "Unsupported target: operating-system primary selection",
+          "reason": "The injected asynchronous clipboard API exposes ordinary clipboard text."
+        },
+        {
+          "name": "Unsupported target: unlimited recursive macros",
+          "reason": "Native macros have explicit recursion, key-count and register-memory budgets."
+        },
+        {
+          "name": "Unsupported target: desktop Vim executable parity",
+          "reason": "Node fixtures qualify this native model; no installed desktop Vim is used as an oracle."
+        },
+        {
+          "name": "Unsupported target: browser key interception and assistive technology",
+          "reason": "Operating-system/browser key delivery and screen readers need browser/manual qualification."
+        },
+        {
+          "name": "default and explicit native segmentation retain Unicode 16.0 host compatibility",
+          "reason": "The native comparison is pinned to a Unicode 16.0 Intl runtime"
+        }
+      ],
+      "evidence": "docs/evidence/project16-hosted/a6/job.log"
+    }
+  },
+  "browserResults": {
+    "selectedScopes": 9,
+    "passedScopes": 9,
+    "failedScopes": 0,
+    "sessionReports": [
+      "docs/evidence/project16-hosted/a6/browser_a19_docking_test/session.json",
+      "docs/evidence/project16-hosted/a6/browser_a19_lazy_tools_test/session.json",
+      "docs/evidence/project16-hosted/a6/browser_a19_shell_test/session.json",
+      "docs/evidence/project16-hosted/a6/browser_a20_insights_test/session.json",
+      "docs/evidence/project16-hosted/a6/browser_a20_language_providers_test/session.json",
+      "docs/evidence/project16-hosted/a6/browser_a20_studio_large_file_test/session.json",
+      "docs/evidence/project16-hosted/a6/browser_a20_view_test/session.json",
+      "docs/evidence/project16-hosted/a6/browser_editor_budgets_test_definition/session.json",
+      "docs/evidence/project16-hosted/a6/browser_editor_budgets_test_overview/session.json",
+      "docs/evidence/project16-hosted/a6/browser_multi_session_test/session.json",
+      "docs/evidence/project16-hosted/a6/browser_vs_workflows_standalone_test/session.json",
+      "docs/evidence/project16-hosted/a6/browser_vs_workflows_test/session.json",
+      "docs/evidence/project16-hosted/a6/browser_workbench_perf_test/session.json"
+    ],
+    "sessionReportCount": 13,
+    "sessionScopeNote": "Includes nine browser scopes, workbench performance, two separate editor-budget sessions and Studio large-file performance.",
+    "allSessionReportsPassed": true,
+    "reportedCspViolations": 0,
+    "reportedSessionDiagnosticErrors": 0,
+    "engine": "chromium",
+    "browserVersion": "153.0.8010.12",
+    "executable": "playwright-managed",
+    "standalone": {
+      "evidence": "docs/evidence/project16-hosted/a6/vs-workflow-standalone-results.json",
+      "mode": "file",
+      "passed": true,
+      "offline": true,
+      "bytes": 16419776,
+      "artifactSha256": "da60ffe742f3b723d4b1286fc279c6510067570a7cc54b6550d68e2fcfb855a9",
+      "httpAttempts": []
+    }
+  },
+  "baseline": {
+    "profile": "a5",
+    "captureOnly": false,
+    "runnerLabel": "ubuntu-latest",
+    "engine": "chromium",
+    "profileSource": "scripts/project16-baseline-profiles.js",
+    "profileSourceRevision": "25ef23b0fb86eb3be4151492c2ef6bbc51f0a82e",
+    "sourceSha": "c13aa0fd9d27df28b3708bb83d914a04c20a5c7c",
+    "sourceTree": "29023ed8b962b6d91671bdb0c0359d905ef2659e",
+    "workflowRunId": "37178840757",
+    "priorOverallOutcome": "failure",
+    "pins": [
+      {
+        "path": "docs/evidence/project16-hosted/a5/source.json",
+        "bytes": 473,
+        "sha256": "96a4d8ab7806700ec9539048a6eb8b2b71483fb79bcb013b3c06086475378237"
+      },
+      {
+        "path": "docs/evidence/project16-hosted/a5/editor-browser.json",
+        "bytes": 38079,
+        "sha256": "d514882e71ede3ec24fabec5337a3a89381d0ca0ced192aac0bdac4aacee42b8"
+      },
+      {
+        "path": "docs/evidence/project16-hosted/a5/workbench-large-trace.json",
+        "bytes": 29341,
+        "sha256": "4f0c0583e184d63ff58ff1972ed833383d151d3e9aacdb4259900526fe523d83"
+      }
+    ],
+    "interpretation": "Reviewed completed editor/workbench captures are comparative inputs; this does not change the a5 overall failure or waive a6 thresholds."
+  },
+  "performance": {
+    "aggregateScope": {
+      "status": "failed",
+      "error": {
+        "name": "Error",
+        "message": "Editor latency budget failed",
+        "code": null
+      }
+    },
+    "editor": {
+      "assessmentEvidence": "docs/evidence/project16-hosted/a6/editor-assessment.json",
+      "rawEvidence": "docs/evidence/project16-hosted/a6/editor-browser.json",
+      "mode": "compare",
+      "absolutePassed": true,
+      "largeFile": {
+        "sizeBytes": 209715200,
+        "measuredP95Ms": 32.29999999998836,
+        "budgetMs": 50,
+        "measurement": "input/keydown/scroll event to two requestAnimationFrame callbacks"
+      },
+      "regressionVerdict": false,
+      "relativeThreshold": 0.2,
+      "environment": {
+        "node": "v24.21.0",
+        "v8": "13.6.233.17-node.53",
+        "platform": "linux",
+        "arch": "x64",
+        "cpu": "AMD EPYC 7763 64-Core Processor",
+        "logicalCpus": 4,
+        "commit": "25ef23b0fb86eb3be4151492c2ef6bbc51f0a82e",
+        "browser": "chromium",
+        "browserVersion": "153.0.8010.12"
+      },
+      "environmentChanges": [],
+      "configuration": {
+        "sizes": [
+          1024,
+          1048576,
+          10485760,
+          104857600,
+          209715200
+        ],
+        "samples": 20,
+        "warmups": 3
+      },
+      "rowCount": 25,
+      "retainedMeasuredSampleCount": 500,
+      "failedRows": [
+        {
+          "id": "browser-chromium/1048576/browser.undoToPaint",
+          "baselineP95Ms": 36.5,
+          "currentP95Ms": 51.20000000001164,
+          "relativeChange": 0.4027397260277161,
+          "threshold": 0.2,
+          "passed": false,
+          "limitP95Ms": 43.8,
+          "baselineP50Ms": 30.79999999998836,
+          "currentP50Ms": 29.800000000046566
+        },
+        {
+          "id": "browser-chromium/10485760/browser.undoToPaint",
+          "baselineP95Ms": 29.29999999998836,
+          "currentP95Ms": 53.199999999953434,
+          "relativeChange": 0.8156996587022038,
+          "threshold": 0.2,
+          "passed": false,
+          "limitP95Ms": 35.15999999998603,
+          "baselineP50Ms": 28.599999999976717,
+          "currentP50Ms": 28.600000000034925
+        },
+        {
+          "id": "browser-chromium/104857600/browser.undoToPaint",
+          "baselineP95Ms": 41.79999999993015,
+          "currentP95Ms": 58.70000000001164,
+          "relativeChange": 0.40430622009831896,
+          "threshold": 0.2,
+          "passed": false,
+          "limitP95Ms": 50.15999999991618,
+          "baselineP50Ms": 28.79999999993015,
+          "currentP50Ms": 29.599999999976717
+        }
+      ],
+      "methodology": "Real headless browser; event-to-two-RAF upper bound, including frame scheduling; no OS input-to-display or native claim.",
+      "unsupported": [
+        "native-desktop",
+        "physical-display-present",
+        "system-clipboard-permission-latency"
+      ],
+      "cause": "Not established by this capture; there is no scheduler or GC trace.",
+      "exceptionAccepted": false
+    },
+    "workbench": {
+      "rawEvidence": "docs/evidence/project16-hosted/a6/workbench-large-trace.json",
+      "suiteEvidence": "docs/evidence/project16-hosted/a6/suite-workbench-performance.json",
+      "assessment": {
+        "mode": "compare",
+        "absolutePassed": true,
+        "regressionVerdict": true,
+        "failures": []
+      },
+      "sampleCount": 126,
+      "fixture": {
+        "id": "workbench-501-csharp-v2",
+        "sha256": "9296f1fca9909280fd92a7242eba2c794909f8727077e1e973769c28ced2874e",
+        "sourceFiles": 501,
+        "projectFiles": 1,
+        "rounds": 3,
+        "documentSwitches": 20,
+        "tools": [
+          "problems",
+          "output",
+          "object-browser",
+          "command-window",
+          "bookmarks"
+        ],
+        "toolPasses": 4
+      },
+      "environment": {
+        "deviceScaleFactor": 1,
+        "hardwareConcurrency": 4,
+        "deviceMemory": 16,
+        "platform": "Linux x86_64",
+        "appDocument": "/",
+        "engine": "chromium",
+        "browserVersion": "153.0.8010.12",
+        "operatingSystem": "Linux 6.17.0-1022-azure",
+        "architecture": "x86_64",
+        "processor": "x86_64",
+        "viewport": {
+          "width": 1440,
+          "height": 1000
+        },
+        "servingMode": "http-static",
+        "timingProtocol": "fresh-context-paint-v2",
+        "browserProcess": "shared; fresh isolated context per round"
+      },
+      "comparativeP95": [
+        {
+          "name": "cold-app-startup",
+          "count": 3,
+          "baselineP95Ms": 2633.4000000000233,
+          "currentP95Ms": 2602.0999999999767,
+          "relativeLimitP95Ms": 3160.0800000000277
+        },
+        {
+          "name": "workspace-startup",
+          "count": 3,
+          "baselineP95Ms": 2651.5999999999767,
+          "currentP95Ms": 2157.3000000000466,
+          "relativeLimitP95Ms": 3181.919999999972
+        },
+        {
+          "name": "document-switch",
+          "count": 60,
+          "baselineP95Ms": 147.30000000004657,
+          "currentP95Ms": 139.69999999995343,
+          "relativeLimitP95Ms": 176.76000000005587
+        },
+        {
+          "name": "tool-activation",
+          "count": 60,
+          "baselineP95Ms": 56.89999999990687,
+          "currentP95Ms": 55.40000000002328,
+          "relativeLimitP95Ms": 68.27999999988823
+        }
+      ],
+      "scopeNote": "The workbench capture and both comparisons completed and passed before the enclosing performance scope reported the editor failure."
+    },
+    "model": {
+      "evidence": "docs/evidence/project16-hosted/a6/editor-model.json",
+      "correctness": {
+        "passed": true
+      },
+      "rowCount": 20,
+      "methodology": "One cold sample, explicit warmups, then nearest-rank p50/p95/p99 over retained raw samples. Model timings exclude browser events and paint.",
+      "unsupported": [
+        "browser-paint-in-node",
+        "native-desktop"
+      ]
+    },
+    "memory": {
+      "evidence": "docs/evidence/project16-hosted/a6/editor-memory.json",
+      "correctness": {
+        "passed": true
+      },
+      "rowCount": 4,
+      "allRecordedBudgetsPassed": true,
+      "methodology": "Measured signed GC-retained heap/ArrayBuffer deltas. Sources are ASCII. Undo attribution clears history while preserving current text.",
+      "unsupported": [
+        "total-allocation-counts",
+        "native-allocator",
+        "browser-DOM-in-node"
+      ]
+    },
+    "independentScopes": {
+      "editor-budgets": {
+        "status": "passed",
+        "evidence": "docs/evidence/project16-hosted/a6/editor-ui-budgets.json",
+        "assessment": {
+          "absolutePassed": true,
+          "failures": [],
+          "regressionVerdict": null,
+          "physicalFrameRateCertified": false,
+          "safariCertified": false
+        },
+        "definition": {
+          "status": "captured",
+          "sampleCount": 54,
+          "boundaryObservationCount": 2,
+          "budgetMs": 300,
+          "maxAllSamplesMs": 166.5,
+          "measuredSummary": [
+            {
+              "case": "framework-metadata",
+              "phase": "measured",
+              "count": 15,
+              "max": 160.30000000004657,
+              "p50": 154,
+              "p95": 160.30000000004657,
+              "p99": 160.30000000004657
+            },
+            {
+              "case": "source-alpha",
+              "phase": "measured",
+              "count": 15,
+              "max": 166.40000000002328,
+              "p50": 153.40000000002328,
+              "p95": 166.40000000002328,
+              "p99": 166.40000000002328
+            },
+            {
+              "case": "source-beta",
+              "phase": "measured",
+              "count": 15,
+              "max": 166.5,
+              "p50": 153.40000000002328,
+              "p95": 166.5,
+              "p99": 166.5
+            }
+          ],
+          "boundaryObservations": [
+            {
+              "case": "none",
+              "durationMs": 166.09999999997672,
+              "correct": true,
+              "focusPreserved": true,
+              "sourceVersion": 1
+            },
+            {
+              "case": "source-beta",
+              "durationMs": 165.40000000002328,
+              "correct": true,
+              "focusPreserved": true,
+              "sourceVersion": 1
+            }
+          ],
+          "workspaceProof": "Raw capture retains exact four workspace records, three source documents and project ownership plus observed definition boundary DOM state."
+        },
+        "overview": {
+          "status": "captured",
+          "sampleCount": 105,
+          "lineCount": 10000,
+          "budgetMs": 16,
+          "maxAllSamplesMs": 1.900000000023283,
+          "measuredSummary": [
+            {
+              "case": "medium",
+              "phase": "measured",
+              "count": 31,
+              "max": 1.7999999999301508,
+              "p50": 1,
+              "p95": 1.3000000000465661,
+              "p99": 1.7999999999301508
+            },
+            {
+              "case": "narrow",
+              "phase": "measured",
+              "count": 31,
+              "max": 1.7999999999301508,
+              "p50": 1.099999999976717,
+              "p95": 1.7000000000698492,
+              "p99": 1.7999999999301508
+            },
+            {
+              "case": "wide",
+              "phase": "measured",
+              "count": 31,
+              "max": 1.2999999999301508,
+              "p50": 1.099999999976717,
+              "p95": 1.2000000000698492,
+              "p99": 1.2999999999301508
+            }
+          ],
+          "measurement": "Actual OverviewRuler render plus pixel readback; renderMs and followingRafMs remain separate raw fields."
+        },
+        "physicalFrameRateCertified": false,
+        "safariCertified": false
+      },
+      "studio-large-file": {
+        "status": "passed",
+        "evidence": "docs/evidence/project16-hosted/a6/a20-studio-large-file-results.json",
+        "input": "synthetic File/Blob assigned through DataTransfer to the real Studio file-input change handler",
+        "sizeBytes": 209715200,
+        "observedOpenMs": 7278.899999999907,
+        "limits": [
+          "No OS file chooser or native file permission claim",
+          "No physical disk throughput claim",
+          "No cross-application clipboard claim",
+          "Functional case; latency budgets belong to the existing editor benchmark"
+        ]
+      },
+      "instrumentation": {
+        "status": "passed",
+        "evidence": "docs/evidence/project16-hosted/a6/instrumentation-overhead.json",
+        "protocol": "studio-instrumentation-overhead-v1",
+        "environment": {
+          "node": "v24.21.0",
+          "v8": "13.6.233.17-node.53",
+          "platform": "linux",
+          "arch": "x64",
+          "cpu": "AMD EPYC 7763 64-Core Processor",
+          "logicalCpus": 4,
+          "driverCommit": "25ef23b0fb86eb3be4151492c2ef6bbc51f0a82e",
+          "engine": "chromium",
+          "servingMode": "http-production",
+          "viewport": {
+            "width": 1440,
+            "height": 1000
+          },
+          "deviceScaleFactor": 1,
+          "clock": "browser PerformanceNavigationTiming and performance.now",
+          "contexts": "fresh isolated context per capture; browser process shared; serial alternating order",
+          "browserVersion": "153.0.8010.12",
+          "url": "http://127.0.0.1:40315"
+        },
+        "workload": {
+          "id": "studio-instrumentation-overhead-v1",
+          "pairs": 12,
+          "sourceFiles": 17,
+          "documentSwitches": 32,
+          "commands": 64,
+          "inputs": 32,
+          "tools": [
+            "command-window",
+            "bookmarks",
+            "test-explorer"
+          ],
+          "command": "workbench.bookmark.toggle",
+          "key": "x",
+          "budgetPercent": 1
+        },
+        "pairCount": 12,
+        "assessment": {
+          "passed": true,
+          "budgetPercent": 1,
+          "overheadPercent": -0.5070874313119528,
+          "enabledMs": 25310.399999997113,
+          "disabledMs": 25439.399999998277,
+          "deltaMs": -129.00000000116415,
+          "gate": "ratio of paired sums of the identical measured workload; strictly less than 1%",
+          "interpretation": "One bounded shared-host observation; not statistical proof. All raw samples retained."
+        },
+        "operationDiagnostics": [
+          {
+            "operation": "startup",
+            "enabledTotalMs": 16404.999999999884,
+            "disabledTotalMs": 16486.499999999884,
+            "overheadPercent": -0.49434385709520257
+          },
+          {
+            "operation": "document-switch",
+            "enabledTotalMs": 7341.2999999983,
+            "disabledTotalMs": 7400.799999999581,
+            "overheadPercent": -0.8039671387050581
+          },
+          {
+            "operation": "tool-activation",
+            "enabledTotalMs": 453.79999999993015,
+            "disabledTotalMs": 470.90000000037253,
+            "overheadPercent": -3.6313442345357507
+          },
+          {
+            "operation": "command",
+            "enabledTotalMs": 48.69999999983702,
+            "disabledTotalMs": 45,
+            "overheadPercent": 8.222222221860042
+          },
+          {
+            "operation": "trusted-key-input",
+            "enabledTotalMs": 1061.5999999991618,
+            "disabledTotalMs": 1036.19999999844,
+            "overheadPercent": 2.4512642347770712
+          }
+        ]
+      },
+      "lazy-evaluation": {
+        "status": "passed",
+        "evidence": "docs/evidence/project16-hosted/a6/lazy-evaluation.json",
+        "protocol": "studio-lazy-evaluation-v1",
+        "environment": {
+          "node": "v24.21.0",
+          "v8": "13.6.233.17-node.53",
+          "platform": "linux",
+          "arch": "x64",
+          "cpu": "AMD EPYC 7763 64-Core Processor",
+          "logicalCpus": 4,
+          "driverCommit": "25ef23b0fb86eb3be4151492c2ef6bbc51f0a82e",
+          "engine": "chromium",
+          "timeDomain": "threadTicks",
+          "processes": "24 fresh browser processes/profiles, serial, 12 alternating pairs; no warm-ups or retries",
+          "url": "http://127.0.0.1:33211/",
+          "browserVersion": "153.0.8010.12"
+        },
+        "pairCount": 12,
+        "assessment": {
+          "passed": true,
+          "gate": "paired aggregate eager ScriptDuration is strictly greater than lazy ScriptDuration",
+          "eagerMs": 1615.513,
+          "lazyMs": 1588.0179999999998,
+          "savedMs": 27.49500000000012,
+          "reductionPercent": 1.701936165168595,
+          "dispersion": {
+            "positivePairs": 9,
+            "zeroPairs": 0,
+            "negativePairs": 3,
+            "minMs": -7.522999999999996,
+            "maxMs": 11.997000000000014,
+            "meanMs": 2.29125000000001,
+            "medianMs": 2.555000000000007,
+            "populationStandardDeviationMs": 5.883058050098886
+          },
+          "uncertainty": "Untrimmed single shared-host observation; positive aggregate is not statistical proof. CDP/OS clock quantization is unknown; no zero/noise observations are discarded. No historical, worker CPU, paint, or wall-startup speedup claim."
+        }
+      }
+    }
+  },
+  "audit": {
+    "kind": "Read-only evidence and source-identity review",
+    "sourceShaAndTreeMatchGit": true,
+    "baselineBytesMatchPinnedProfile": true,
+    "editorRawStatistics": "Independent text/model owner recomputed all 500 samples, counts, p50/p95/p99/min/max and comparative deltas exactly.",
+    "workbenchRawStatistics": "Independent text/model owner recomputed 126 samples and all group counts/percentiles; baseline environment and fixture match.",
+    "sourceCausality": "No causal attribution, noise explanation or accepted performance waiver is inferred from the observed tails.",
+    "executions": "No tests, build, browser capture, benchmark, scanner or qualification was run while preparing this archive.",
+    "priorAttempts": "Existing a1-a5 archives, failures, documents and publication maps are unchanged."
+  },
+  "archive": {
+    "root": "docs/evidence/project16-hosted/a6",
+    "originalArtifactMemberCount": 56,
+    "originalArtifactExpandedBytes": 9287484,
+    "archivedFileCount": 61,
+    "archivedBytes": 11024060,
+    "artifact": {
+      "id": 11296302001,
+      "name": "project16-ubuntu-latest-chromium-all",
+      "url": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37183721322/artifacts/11296302001",
+      "apiUrl": "https://api.github.com/repos/wieslawsoltes/SharpForge/actions/artifacts/11296302001",
+      "archiveDownloadUrl": "https://api.github.com/repos/wieslawsoltes/SharpForge/actions/artifacts/11296302001/zip",
+      "createdAt": "2026-10-04T06:57:32Z",
+      "expiresAtAtCapture": "2027-01-02T06:45:14Z",
+      "expiredAtCapture": false,
+      "path": "docs/evidence/project16-hosted/a6/p16-hosted-a6.zip",
+      "bytes": 1402514,
+      "sha256": "4d18d06390e92f13c47194e89926a85a674c2ed0249405656491571583b2d74f"
+    },
+    "jobLog": {
+      "path": "docs/evidence/project16-hosted/a6/job.log",
+      "bytes": 315299,
+      "sha256": "dfd8bcdf4bafa3019d0efb8320ae140a219934072eeef6e60ca73790a7f27645"
+    },
+    "files": [
+      {
+        "path": "docs/evidence/project16-hosted/a6/a19-multi-session-results.json",
+        "bytes": 1385,
+        "sha256": "1228e90a83db8df13afa20c7746b9a0a3a72f224e9d86c70d61cc4e09a79a036",
+        "kind": "original artifact member",
+        "zipMember": "a19-multi-session-results.json"
+      },
+      {
+        "path": "docs/evidence/project16-hosted/a6/a19-shell-results.json",
+        "bytes": 3053,
+        "sha256": "d59f6db9c5aa08179176b75f0da1a1ed97427f29e694a385f8a126d7ec705aa4",
+        "kind": "original artifact member",
+        "zipMember": "a19-shell-results.json"
+      },
+      {
+        "path": "docs/evidence/project16-hosted/a6/a20-editor-insights.json",
+        "bytes": 1001,
+        "sha256": "eb5e93864e856bf261813874a1c6d8c8b82d8643af7d753de8c622f03d4939ff",
+        "kind": "original artifact member",
+        "zipMember": "a20-editor-insights.json"
+      },
+      {
+        "path": "docs/evidence/project16-hosted/a6/a20-editor-view.json",
+        "bytes": 905,
+        "sha256": "72cc67c52f5264de2ca6e4a3b50895ce16e185e7f99d0a3b2b19247a07b97093",
+        "kind": "original artifact member",
+        "zipMember": "a20-editor-view.json"
+      },
+      {
+        "path": "docs/evidence/project16-hosted/a6/a20-language-providers.json",
+        "bytes": 376,
+        "sha256": "f179ec3b9150fed5f05b7f6eebf5f5ca2d55c90c398f28707b6f4393d82caf6a",
+        "kind": "original artifact member",
+        "zipMember": "a20-language-providers.json"
+      },
+      {
+        "path": "docs/evidence/project16-hosted/a6/a20-studio-large-file-results.json",
+        "bytes": 2850,
+        "sha256": "04bd9450751d286ca271701138fe8e3d9e4c6d345fb23a62d1360b683c5873e2",
+        "kind": "original artifact member",
+        "zipMember": "a20-studio-large-file-results.json"
+      },
+      {
+        "path": "docs/evidence/project16-hosted/a6/browser_a19_docking_test/console.log",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "kind": "original artifact member",
+        "zipMember": "browser_a19_docking_test/console.log"
+      },
+      {
+        "path": "docs/evidence/project16-hosted/a6/browser_a19_docking_test/session.json",
+        "bytes": 252,
+        "sha256": "ccd4271773b905d3ab2caa97e10ed6e8e90cc894f898d12d3f2a9813bc0e68c9",
+        "kind": "original artifact member",
+        "zipMember": "browser_a19_docking_test/session.json"
+      },
+      {
+        "path": "docs/evidence/project16-hosted/a6/browser_a19_lazy_tools_test/console.log",
+        "bytes": 187,
+        "sha256": "3433e1284a3c79a0b7cd4e54fee3cf2b4009aae52903764ce524d2919a08f858",
+        "kind": "original artifact member",
+        "zipMember": "browser_a19_lazy_tools_test/console.log"
+      },
+      {
+        "path": "docs/evidence/project16-hosted/a6/browser_a19_lazy_tools_test/session.json",
+        "bytes": 254,
+        "sha256": "9ac307e56ba43565126dfe67fa6df9c4e7298877490b14086d6678031037b19d",
+        "kind": "original artifact member",
+        "zipMember": "browser_a19_lazy_tools_test/session.json"
+      },
+      {
+        "path": "docs/evidence/project16-hosted/a6/browser_a19_shell_test/console.log",
+        "bytes": 50,
+        "sha256": "65ac13e1ff30eb32f0ae2d3f4acbba8220b0621428312bd2df09e935c8df1744",
+        "kind": "original artifact member",
+        "zipMember": "browser_a19_shell_test/console.log"
+      },
+      {
+        "path": "docs/evidence/project16-hosted/a6/browser_a19_shell_test/session.json",
+        "bytes": 249,
+        "sha256": "324b984ae059cdbf8a3bfdfd819069e33249ff27fbc8fc2654ff7c74a35c8c1f",
+        "kind": "original artifact member",
+        "zipMember": "browser_a19_shell_test/session.json"
+      },
+      {
+        "path": "docs/evidence/project16-hosted/a6/browser_a20_insights_test/console.log",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "kind": "original artifact member",
+        "zipMember": "browser_a20_insights_test/console.log"
+      },
+      {
+        "path": "docs/evidence/project16-hosted/a6/browser_a20_insights_test/session.json",
+        "bytes": 253,
+        "sha256": "e8bf295675574506477ea40f3786f21d5f3fa621c594f0bb562c4525af670547",
+        "kind": "original artifact member",
+        "zipMember": "browser_a20_insights_test/session.json"
+      },
+      {
+        "path": "docs/evidence/project16-hosted/a6/browser_a20_language_providers_test/console.log",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "kind": "original artifact member",
+        "zipMember": "browser_a20_language_providers_test/console.log"
+      },
+      {
+        "path": "docs/evidence/project16-hosted/a6/browser_a20_language_providers_test/session.json",
+        "bytes": 262,
+        "sha256": "923b3157dc5bf109420924f6d6f7a83ba9df33cf2974e70fbe9cc70eac690784",
+        "kind": "original artifact member",
+        "zipMember": "browser_a20_language_providers_test/session.json"
+      },
+      {
+        "path": "docs/evidence/project16-hosted/a6/browser_a20_studio_large_file_test/console.log",
+        "bytes": 50,
+        "sha256": "5426d657cc36d1a8475efee8c75435ddfd0e04ea6357838a97f55b259b14833e",
+        "kind": "original artifact member",
+        "zipMember": "browser_a20_studio_large_file_test/console.log"
+      },
+      {
+        "path": "docs/evidence/project16-hosted/a6/browser_a20_studio_large_file_test/session.json",
+        "bytes": 262,
+        "sha256": "d34a1d7dd121730732bb60e5b2f4694e055e5de021ee8f12c001a7f9aa6818ca",
+        "kind": "original artifact member",
+        "zipMember": "browser_a20_studio_large_file_test/session.json"
+      },
+      {
+        "path": "docs/evidence/project16-hosted/a6/browser_a20_view_test/console.log",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "kind": "original artifact member",
+        "zipMember": "browser_a20_view_test/console.log"
+      },
+      {
+        "path": "docs/evidence/project16-hosted/a6/browser_a20_view_test/session.json",
+        "bytes": 248,
+        "sha256": "b6ee67191ed16a9a39e27f7b9a193448933d2578cf3c033ddf17055c69f484a9",
+        "kind": "original artifact member",
+        "zipMember": "browser_a20_view_test/session.json"
+      },
+      {
+        "path": "docs/evidence/project16-hosted/a6/browser_editor_budgets_test_definition/console.log",
+        "bytes": 50,
+        "sha256": "39f29e68129dd52f6f26183b8b70372f28ebfe29112ebf47f15779dcf3b4be77",
+        "kind": "original artifact member",
+        "zipMember": "browser_editor_budgets_test_definition/console.log"
+      },
+      {
+        "path": "docs/evidence/project16-hosted/a6/browser_editor_budgets_test_definition/session.json",
+        "bytes": 266,
+        "sha256": "c4045251547ab502c2fd5961a19ad04a4fa534885eb44edc8fd9f4159c22e9a3",
+        "kind": "original artifact member",
+        "zipMember": "browser_editor_budgets_test_definition/session.json"
+      },
+      {
+        "path": "docs/evidence/project16-hosted/a6/browser_editor_budgets_test_overview/console.log",
+        "bytes": 229,
+        "sha256": "e926405ef38c8ae48d19f25860db7d9639ffffb484e01658f565a50bb808d735",
+        "kind": "original artifact member",
+        "zipMember": "browser_editor_budgets_test_overview/console.log"
+      },
+      {
+        "path": "docs/evidence/project16-hosted/a6/browser_editor_budgets_test_overview/session.json",
+        "bytes": 263,
+        "sha256": "0f15b20b5b9f51f9b6cdda0c43d3ca2e4d847762796c745b449959f5abeaa552",
+        "kind": "original artifact member",
+        "zipMember": "browser_editor_budgets_test_overview/session.json"
+      },
+      {
+        "path": "docs/evidence/project16-hosted/a6/browser_multi_session_test/console.log",
+        "bytes": 50,
+        "sha256": "c9a90bf8ec67c2317b0122df0aee3472da4cf79d0c2b87196bce2b389d62107f",
+        "kind": "original artifact member",
+        "zipMember": "browser_multi_session_test/console.log"
+      },
+      {
+        "path": "docs/evidence/project16-hosted/a6/browser_multi_session_test/session.json",
+        "bytes": 253,
+        "sha256": "f9310fb16e3695622a8894f62506fcef7b8f87c683a3e818e31649fc40007007",
+        "kind": "original artifact member",
+        "zipMember": "browser_multi_session_test/session.json"
+      },
+      {
+        "path": "docs/evidence/project16-hosted/a6/browser_vs_workflows_standalone_test/console.log",
+        "bytes": 40,
+        "sha256": "b399a7654f762b515ba5d64a43bf93ff8834bfe94fd85e67ed59d915c55b8297",
+        "kind": "original artifact member",
+        "zipMember": "browser_vs_workflows_standalone_test/console.log"
+      },
+      {
+        "path": "docs/evidence/project16-hosted/a6/browser_vs_workflows_standalone_test/session.json",
+        "bytes": 263,
+        "sha256": "d34fc638d40962f276c21607e570eb79f73abfa5312dd07e87e0fa4a7dea4e98",
+        "kind": "original artifact member",
+        "zipMember": "browser_vs_workflows_standalone_test/session.json"
+      },
+      {
+        "path": "docs/evidence/project16-hosted/a6/browser_vs_workflows_test/console.log",
+        "bytes": 187,
+        "sha256": "e324cb6000ec8f67032a28949fc920f3b02c5c3e1220d279fe2923b84ad87b20",
+        "kind": "original artifact member",
+        "zipMember": "browser_vs_workflows_test/console.log"
+      },
+      {
+        "path": "docs/evidence/project16-hosted/a6/browser_vs_workflows_test/session.json",
+        "bytes": 252,
+        "sha256": "c7757b50bed7d97776644581acbd58ddb1e904a0ef361e3db3ecc3e1bb06810d",
+        "kind": "original artifact member",
+        "zipMember": "browser_vs_workflows_test/session.json"
+      },
+      {
+        "path": "docs/evidence/project16-hosted/a6/browser_workbench_perf_test/console.log",
+        "bytes": 150,
+        "sha256": "ce785722e04d16d317b23edda52042e3f71b0d891c631b2df9e90cca185c4991",
+        "kind": "original artifact member",
+        "zipMember": "browser_workbench_perf_test/console.log"
+      },
+      {
+        "path": "docs/evidence/project16-hosted/a6/browser_workbench_perf_test/session.json",
+        "bytes": 254,
+        "sha256": "8abfb6e1852a2882e5bc2b13fbacf8212ac0e6d5b61f082c8c708337909cf226",
+        "kind": "original artifact member",
+        "zipMember": "browser_workbench_perf_test/session.json"
+      },
+      {
+        "path": "docs/evidence/project16-hosted/a6/editor-assessment.json",
+        "bytes": 7142,
+        "sha256": "a3e4ef3eab017ee4244a4d60bc4ee6a644ed6a8584e4907020523cf178503cc1",
+        "kind": "original artifact member",
+        "zipMember": "editor-assessment.json"
+      },
+      {
+        "path": "docs/evidence/project16-hosted/a6/editor-browser.json",
+        "bytes": 38051,
+        "sha256": "1dfa86c7880da51ddd4fdae3893f0a2374391f186634752570f48ed85655f523",
+        "kind": "original artifact member",
+        "zipMember": "editor-browser.json"
+      },
+      {
+        "path": "docs/evidence/project16-hosted/a6/editor-memory.json",
+        "bytes": 19215,
+        "sha256": "1592f4e89c49e2c8562572efafac8c3de1b2d13e8d8b5199997f70692a592ed1",
+        "kind": "original artifact member",
+        "zipMember": "editor-memory.json"
+      },
+      {
+        "path": "docs/evidence/project16-hosted/a6/editor-model.json",
+        "bytes": 24171,
+        "sha256": "72986874e9b3e6bba5b1876689baa38850a9ea717b49dbbd16b572f01cafd741",
+        "kind": "original artifact member",
+        "zipMember": "editor-model.json"
+      },
+      {
+        "path": "docs/evidence/project16-hosted/a6/editor-ui-budgets.json",
+        "bytes": 331758,
+        "sha256": "5bd24f4e960a361a7120afb428cf549f3bad2c853653466aca243756e7f62be7",
+        "kind": "original artifact member",
+        "zipMember": "editor-ui-budgets.json"
+      },
+      {
+        "path": "docs/evidence/project16-hosted/a6/github-artifacts.json",
+        "bytes": 910,
+        "sha256": "f30857ed359ef980c8e9ef470e1b4a29939764acda0cf1e09b79c1f16873139b",
+        "kind": "recorded GitHub API tool-response JSON",
+        "zipMember": null
+      },
+      {
+        "path": "docs/evidence/project16-hosted/a6/github-jobs.json",
+        "bytes": 3359,
+        "sha256": "2aa10822747f49076f7477a59c0c78b4d783edf86af1f486e188ec59749bcb42",
+        "kind": "recorded GitHub API tool-response JSON",
+        "zipMember": null
+      },
+      {
+        "path": "docs/evidence/project16-hosted/a6/github-run.json",
+        "bytes": 14494,
+        "sha256": "42447b8eabc549320ea94c189b2cad50a1c1e631675909bf3a3cb0f5c11e2922",
+        "kind": "recorded GitHub API tool-response JSON",
+        "zipMember": null
+      },
+      {
+        "path": "docs/evidence/project16-hosted/a6/instrumentation-overhead.json",
+        "bytes": 2874252,
+        "sha256": "4284ceb0d3ed1f2b31a15bc392c9c45305b226666d837fd199cbee174c21e16e",
+        "kind": "original artifact member",
+        "zipMember": "instrumentation-overhead.json"
+      },
+      {
+        "path": "docs/evidence/project16-hosted/a6/job.log",
+        "bytes": 315299,
+        "sha256": "dfd8bcdf4bafa3019d0efb8320ae140a219934072eeef6e60ca73790a7f27645",
+        "kind": "exact downloaded job log",
+        "zipMember": null
+      },
+      {
+        "path": "docs/evidence/project16-hosted/a6/lazy-evaluation.json",
+        "bytes": 5933860,
+        "sha256": "ad95c4fdbfd4bc4796753ce3f25239310765f45b19ed4217440c33d2008606e4",
+        "kind": "original artifact member",
+        "zipMember": "lazy-evaluation.json"
+      },
+      {
+        "path": "docs/evidence/project16-hosted/a6/p16-hosted-a6.zip",
+        "bytes": 1402514,
+        "sha256": "4d18d06390e92f13c47194e89926a85a674c2ed0249405656491571583b2d74f",
+        "kind": "exact downloaded artifact ZIP",
+        "zipMember": null
+      },
+      {
+        "path": "docs/evidence/project16-hosted/a6/qualification-summary.json",
+        "bytes": 7413,
+        "sha256": "6e1572e3e2b0c594628e658fb1d2af5a1a122b1103781ae26eb92f7ce350512b",
+        "kind": "original artifact member",
+        "zipMember": "qualification-summary.json"
+      },
+      {
+        "path": "docs/evidence/project16-hosted/a6/source.json",
+        "bytes": 632,
+        "sha256": "0dd73de1c66c72ee83c345e2db3484f303350886e23f516a11fdda918de0165e",
+        "kind": "original artifact member",
+        "zipMember": "source.json"
+      },
+      {
+        "path": "docs/evidence/project16-hosted/a6/suite-editor-budgets.json",
+        "bytes": 224,
+        "sha256": "9f4362ba32f357a1d50aab31f25472f91478efdde1b9ee282d89faebe510adc3",
+        "kind": "original artifact member",
+        "zipMember": "suite-editor-budgets.json"
+      },
+      {
+        "path": "docs/evidence/project16-hosted/a6/suite-editor-insights.json",
+        "bytes": 223,
+        "sha256": "5c5eae4594f550b975064186d0032f72f404fd0d0ae60b38e9fd369daee652ac",
+        "kind": "original artifact member",
+        "zipMember": "suite-editor-insights.json"
+      },
+      {
+        "path": "docs/evidence/project16-hosted/a6/suite-editor-providers.json",
+        "bytes": 233,
+        "sha256": "a2c4a55f8d5fe595e4cd9fdd0d4d8cdbdbb4991923d85ff8da01eca191936405",
+        "kind": "original artifact member",
+        "zipMember": "suite-editor-providers.json"
+      },
+      {
+        "path": "docs/evidence/project16-hosted/a6/suite-editor-view.json",
+        "bytes": 215,
+        "sha256": "75efc40b240e24e2ba8539333fca40afb006e07d3af3cb20c00eff80e5e2c108",
+        "kind": "original artifact member",
+        "zipMember": "suite-editor-view.json"
+      },
+      {
+        "path": "docs/evidence/project16-hosted/a6/suite-studio-large-file.json",
+        "bytes": 234,
+        "sha256": "f6cbf7ac1ff892ce638fd1c5846f645ee495eed017001c861fad144966390bab",
+        "kind": "original artifact member",
+        "zipMember": "suite-studio-large-file.json"
+      },
+      {
+        "path": "docs/evidence/project16-hosted/a6/suite-workbench-docking.json",
+        "bytes": 223,
+        "sha256": "71b09d37b0172daa4f7e24c9013d72d0573cb4ddb3c670d63306c692333dbfba",
+        "kind": "original artifact member",
+        "zipMember": "suite-workbench-docking.json"
+      },
+      {
+        "path": "docs/evidence/project16-hosted/a6/suite-workbench-lazy.json",
+        "bytes": 223,
+        "sha256": "84b0b220f5894fdcc2e140ae93b5b5eb6cab4b6c1e46032a3bff1eed0e8969f7",
+        "kind": "original artifact member",
+        "zipMember": "suite-workbench-lazy.json"
+      },
+      {
+        "path": "docs/evidence/project16-hosted/a6/suite-workbench-performance.json",
+        "bytes": 231,
+        "sha256": "b1c6d5fc6fb3aa9a39540988bade9b78c5cd9384e3e039531d166f018b41ccd8",
+        "kind": "original artifact member",
+        "zipMember": "suite-workbench-performance.json"
+      },
+      {
+        "path": "docs/evidence/project16-hosted/a6/suite-workbench-sessions.json",
+        "bytes": 227,
+        "sha256": "2a51417bac95efdc31b05e6bf31cf9be65271ee8f6e7729ec3fc2cbec6b726e6",
+        "kind": "original artifact member",
+        "zipMember": "suite-workbench-sessions.json"
+      },
+      {
+        "path": "docs/evidence/project16-hosted/a6/suite-workbench-shell.json",
+        "bytes": 219,
+        "sha256": "7d7f1b44c37f3609a9671c92130756ad68602d4a41dbf7f0d211a891ecf321e7",
+        "kind": "original artifact member",
+        "zipMember": "suite-workbench-shell.json"
+      },
+      {
+        "path": "docs/evidence/project16-hosted/a6/suite-workbench-workflows-standalone.json",
+        "bytes": 248,
+        "sha256": "eba08c83168e93c79c35c3ee8935b13fffec7058fe152bac28ee8630461f74eb",
+        "kind": "original artifact member",
+        "zipMember": "suite-workbench-workflows-standalone.json"
+      },
+      {
+        "path": "docs/evidence/project16-hosted/a6/suite-workbench-workflows.json",
+        "bytes": 226,
+        "sha256": "6cefa901382b522cead75008d349e76224b8f170a4568d127e9f1fa0acd82e5a",
+        "kind": "original artifact member",
+        "zipMember": "suite-workbench-workflows.json"
+      },
+      {
+        "path": "docs/evidence/project16-hosted/a6/vs-workflow-results.json",
+        "bytes": 1817,
+        "sha256": "72bda5f252046e4b11339b4ecf4a60fc28707c8b496c4abeea0eeedf563cafeb",
+        "kind": "original artifact member",
+        "zipMember": "vs-workflow-results.json"
+      },
+      {
+        "path": "docs/evidence/project16-hosted/a6/vs-workflow-standalone-results.json",
+        "bytes": 3213,
+        "sha256": "3ef8f86057954dd4d6d9bddac89f06a61143b69e060e7e1c8f23b56ff5f0e1bd",
+        "kind": "original artifact member",
+        "zipMember": "vs-workflow-standalone-results.json"
+      },
+      {
+        "path": "docs/evidence/project16-hosted/a6/workbench-large-trace.json",
+        "bytes": 29340,
+        "sha256": "d60d79508745f9b005ff9c5e4f9f5003f88581e3a5face5db48ba36156cb494f",
+        "kind": "original artifact member",
+        "zipMember": "workbench-large-trace.json"
+      }
+    ],
+    "integrity": "Every extracted member matches its ZIP member byte-for-byte. The ZIP digest matches the supplied identity, upload log and API metadata; the job-log digest matches its supplied identity. API snapshot bytes are retained exactly as provided; they are decoded tool-response JSON, not claimed raw HTTP wire bytes."
+  },
+  "limits": [
+    "Overall a6 qualification failed; evidence does not close Project16 or accept a performance exception.",
+    "This attempt covers the recorded Linux/Ubuntu Chromium environment only, not other operating systems or browser engines.",
+    "Headless event-to-two-RAF timing includes scheduling and is not physical input-to-display latency, refresh-rate certification or Safari qualification.",
+    "Nine A20 skips remain skips, including unsupported native Vim capabilities and the unavailable pinned Unicode 16.0 host comparison.",
+    "Actual browser IME, screen-reader, native desktop/Visual Studio oracle, OS clipboard grants and physical file chooser/disk throughput are not certified by these fixtures.",
+    "Instrumentation and lazy-evaluation results are bounded aggregate observations; per-operation increases and negative pairs are retained, without a general speedup or statistical-proof claim.",
+    "Model timings and GC-retained Node memory do not measure browser paint, total allocations or browser DOM memory."
+  ]
+}
