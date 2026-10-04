@@ -132,11 +132,19 @@ test('partial disk saves acknowledge only written snapshots and keep edits made 
   assert.deepEqual(changes.map(change => ({uri: change.uri, text: change.source.getText(0, change.source.length)})),
     [{ uri: alpha, text: '// first alpha' }, { uri: beta, text: '// first beta' }]);
   assert.equal(changes.some(change => Object.hasOwn(change, 'text')), false);
+  assert.equal(services.documents.captureState(alpha).baseline, changes[0].source);
+  assert.notEqual(services.documents.captureState(beta).baseline, changes[1].source);
   assert.equal(services.documents.get(alpha).dirty, true);
   assert.equal(services.documents.get(beta).dirty, true);
   services.documents.update(alpha, '// first alpha');
-  assert.equal(services.documents.get(alpha).dirty, false);
+  // Matching text in a newer model revision does not inherit the captured revision's saved marker.
+  assert.equal(services.documents.get(alpha).dirty, true);
   assert.equal(recoveries, 1);
+  state.disk.save = async value => ({ written: value.map(change => change.uri) });
+  await save.disk();
+  assert.equal(services.documents.get(alpha).dirty, false);
+  assert.equal(services.documents.get(beta).dirty, false);
+  assert.equal(recoveries, 2);
 });
 
 test('start new instance keeps existing applications and launches the selected profile', async t => {
