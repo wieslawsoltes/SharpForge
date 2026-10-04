@@ -400,6 +400,19 @@ existing invariant host profile; configurable culture and the remaining builder
 overloads remain separate work under #2637. Each value needs at most 20 decimal
 units, with the existing amortized chunk-storage growth and host text budget.
 
+`StringBuilder.Append(string, int, int)` appends at ID 524319. Its 52-case pinned
+.NET 10.0.5 reference records negative `startIndex`, then negative `count`, then
+null validation. A null string is accepted only for `(0, 0)`. For non-null strings,
+zero count returns without checking the start against the string length, even
+at `Int32.MaxValue`; the helper preserves this native no-op with no writes or
+managed allocations. Nonempty invalid windows name `startIndex`. Valid windows
+copy the selected UTF-16 units into one existing chunk append, preserving NUL
+and isolated surrogates without flattening the builder or creating per-unit
+managed strings. The host output budget is checked before slicing; unselected
+input text does not count toward it. Work and temporary text are O(count), with
+existing amortized chunk growth. Observer faults retain the released partial
+chunk behavior and release roots; this host policy makes no rollback guarantee.
+
 StringBuilder reports the .NET default `MaxCapacity` of `Int32.MaxValue`
 (`2147483647`) in both metadata and execution. The host separately limits text
 and requested capacity to 1,000,000 UTF-16 code units. Exceeding that allocation

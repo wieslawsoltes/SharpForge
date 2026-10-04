@@ -5,6 +5,7 @@ import {registerStringBuilderCharacterExtensions, registerStringBuilderInt64Exte
 import {registerStringSearchWindowExtensions, registerStringLastSearchStartExtensions} from './string-search.js';
 import {registerStringBuilderIndexerExtensions} from '../text/string-builder-indexer.js';
 import {registerStringBuilderCopyExtensions} from '../text/string-builder-copy.js';
+import {registerStringBuilderRangeExtensions} from '../text/string-builder-append-range.js';
 
 const comparerType = 'System.Collections.IComparer';
 
@@ -22,6 +23,7 @@ function contracts(registry) {
   registerStringLastSearchStartExtensions(registry);
   registerStringBuilderCopyExtensions(registry);
   registerStringBuilderInt64Extensions(registry);
+  registerStringBuilderRangeExtensions(registry);
 }
 
 function invoke(platform, descriptor, args) {
