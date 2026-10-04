@@ -21,6 +21,7 @@ export class DesignerDocuments {
     this.views = new Map();
     this.probes = new Map();
     this.probeTimers = new Map();
+    this.navigation = null;
     this.disposed = false;
     this.router = new DesignerToolRouter({
       registry: this.registry, resolveTarget: resolvePanel, resolveView: uri => this.views.get(uri)
@@ -122,13 +123,76 @@ export class DesignerDocuments {
 
   activate(uri) {
     if (this.disposed) return null;
+    if (this.navigation?.running && this.navigation.uri !== uri) return null;
     const session = this.registry.get(uri);
     if (session && this.state.active !== uri) {
-      Promise.resolve(this.openSource(uri)).catch(this.onError);
+      if (!this.navigation?.running) Promise.resolve(this.navigateSource(uri)).catch(this.onError);
+      return session;
     }
     this.registry.activate(session ? uri : null);
     this.router.route(session);
     return session;
+  }
+
+  /** Source navigation owns focus changes made while docking moves its DOM. Nested calls for the same URI join it. */
+  navigateSource(uri, action = () => this.openSource(uri)) {
+    if (this.disposed) throw new Error('Designer documents host is disposed');
+    if (this.navigation?.running && this.navigation.uri === uri) return action();
+    const navigation = {uri, running: true};
+    this.navigation = navigation;
+    try {
+      const result = action();
+      navigation.running = false;
+      if (result && typeof result.then === 'function') {
+        return Promise.resolve(result).then(value => {
+          this.finishNavigation(navigation);
+          return value;
+        }, error => {
+          this.cancelNavigation(navigation);
+          throw error;
+        });
+      }
+      this.finishNavigation(navigation);
+      return result;
+    } catch (error) {
+      this.cancelNavigation(navigation);
+      throw error;
+    }
+  }
+
+  cancelNavigation(navigation = this.navigation) {
+    if (this.navigation === navigation) this.navigation = null;
+  }
+
+  finishNavigation(navigation) {
+    if (this.navigation !== navigation) return;
+    try {
+      navigation.running = true;
+      if (this.disposed || this.state.active !== navigation.uri) return;
+      this.activate(navigation.uri);
+      if (this.navigation === navigation && this.state.active === navigation.uri) this.focusNavigatedSource(navigation.uri);
+    } finally {
+      this.cancelNavigation(navigation);
+    }
+  }
+
+  focusNavigatedSource(uri) {
+    const source = this.sources.get(uri);
+    if (!source?.element.isConnected || source.element.hidden) return;
+    const focused = source.element.ownerDocument.activeElement;
+    if (!focused || source.element.contains(focused)) return;
+    // DockHost can restore an editor in another visible group. Keep explorer and tool-window focus where it is.
+    let previousSource = false;
+    for (const candidate of this.sources.values()) {
+      if (candidate.element.contains(focused)) {
+        previousSource = true;
+        break;
+      }
+    }
+    if (!previousSource) return;
+    const view = this.views.get(uri);
+    if (view?.codePane?.hidden) view.tools.scroller?.focus({preventScroll: true});
+    else source.editor?.focus();
   }
 
   /** Opens the same URI and tab. The compatibility check runs before navigation changes the active editor. */
@@ -137,14 +201,15 @@ export class DesignerDocuments {
     if (!compatibility.compatible && !this.registry.get(uri)) {
       throw new Error(compatibility.reason ?? 'This document has no supported designer view.');
     }
-    await this.openSource(uri);
+    await this.navigateSource(uri);
     const view = this.views.get(uri) ?? this.createView(uri);
     if (view.initializationFailed) this.initializeView(view);
     const initialized = await view.ready;
     if (view.disposed) throw new Error('The document was closed while opening its designer');
     if (!initialized && mode !== 'code') throw new Error(view.session.status || 'Repair source diagnostics before opening the design view');
-    this.activate(uri);
-    view.setMode(mode);
+    const active = this.state.active === uri;
+    if (active) this.activate(uri);
+    view.setMode(mode, {focus: active});
     return view.session;
   }
 
@@ -177,6 +242,7 @@ export class DesignerDocuments {
 
   /** Remounting an existing file keeps its view recovery; removal and workspace reset discard it. */
   close(uri, {preserveState = false} = {}) {
+    if (this.navigation?.uri === uri) this.cancelNavigation();
     this.cancelProbe(uri);
     const closed = this.registry.close(uri, {preserveState: preserveState && !!this.file(uri)});
     this.sources.delete(uri);
@@ -202,6 +268,7 @@ export class DesignerDocuments {
   }
 
   reset() {
+    this.cancelNavigation();
     for (const uri of [...this.sources.keys()]) this.close(uri);
     this.registry.pendingState.clear();
   }
@@ -209,6 +276,7 @@ export class DesignerDocuments {
   dispose() {
     if (this.disposed) return;
     this.disposed = true;
+    this.cancelNavigation();
     this.unsubscribe();
     this.router.dispose();
     this.registry.dispose();

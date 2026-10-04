@@ -200,7 +200,11 @@ function renderTabs(){
  for(const file of documents)docking.title('source:'+file.uri,(state.dirtyFiles.has(file.uri)?'● ':'')+file.uri.split('/').at(-1));
  if(state.active)editor=editors.get(state.active)??editor;
 }
-function openFile(uri,offset=null,end=offset){
+function openFile(uri, offset = null, end = offset) {
+ const navigate = () => openSourceFile(uri, offset, end);
+ return designerWorkbench ? designerWorkbench.documents.navigateSource(uri, navigate) : navigate();
+}
+function openSourceFile(uri,offset=null,end=offset){
  let file=designerWorkbench?.documents.file(uri)??state.files.find(f=>f.uri===uri);if(!file)return;
  if(/\.cs$/i.test(uri)&&!state.files.some(f=>f.uri===uri)){file={uri,text:file.text,version:Date.now()};state.files.push(file);state.revision++;scheduleAnalysis();}
  const record=!navigationReplay&&(state.active!==uri||offset!==null);if(record&&currentLocation())navigation.update(currentLocation());if(!state.tabs.includes(uri))state.tabs.push(uri);state.active=uri;
