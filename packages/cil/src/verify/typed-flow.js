@@ -3,9 +3,8 @@ import { CilError } from '../binary.js';
 import { DataflowWorklist, dataflowCancellation, dataflowLimit, dataflowFailure } from './dataflow.js';
 import { dataflowBlocks } from './dataflow-blocks.js';
 import { executionHandlerOffsets } from './execution-handlers.js';
-import { numericMethodSignature } from './typed-signatures.js';
-import { numericTransfers } from './numeric-tables.js';
-import { transferNumericInstruction } from './ops-numeric.js';
+import { numericMethodSignature, primitiveRelations } from './typed-signatures.js';
+import { typedTransfers, transferTypedInstruction } from './typed-transfers.js';
 import { TypedTransferStack } from './typed-stack.js';
 import { createTypedFlowState } from './typed-state.js';
 
@@ -17,7 +16,7 @@ function transferBlock(block, incoming, state, options, flow) {
     dataflowCancellation(options.signal);
     const instruction = state.method.instructions[index];
     state.instruction = instruction;
-    transferNumericInstruction(numericTransfers[instruction.name], instruction, state);
+    transferTypedInstruction(instruction, state);
     if (state.ended) return null;
   }
   return flow.snapshot();
@@ -31,7 +30,7 @@ function preflight(method, state, options) {
     dataflowFailure('Dataflow instruction limit exceeded');
   for (const instruction of method.instructions) {
     dataflowCancellation(options.signal);
-    if (!Object.hasOwn(numericTransfers, instruction.name)) {
+    if (!Object.hasOwn(typedTransfers, instruction.name)) {
       state.instruction = instruction;
       state.fail('UnsupportedOpcode', `Typed policy is unavailable for ${instruction.name}`, true);
     }
@@ -51,6 +50,7 @@ export function verifyCilMethodTypes(input, methodToken, options = {}) {
     if (!Number.isInteger(method.maxStack) || method.maxStack < 0 || method.maxStack > 65535)
       throw new CilError('Invalid maxstack header');
     state = new TypedTransferStack(method, options);
+    state.relations = primitiveRelations;
     preflight(method, state, options);
     state.signature = numericMethodSignature(inspector, method, options, state.fail);
     const offsets = executionHandlerOffsets(method, options, (current, instruction, code, message, details) => {
