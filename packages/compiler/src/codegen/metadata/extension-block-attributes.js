@@ -1,7 +1,7 @@
 /** Language-generated attributes of extension grouping declarations and their shipped marker contract. */
 import { encodeCustomAttribute, token } from '@sharpforge/cil';
 import { SymbolKind } from '../../symbols/types.js';
-import { methodSymbolSignature } from './member-signatures.js';
+import { compilerAttributeConstructorToken } from './compiler-attribute-definitions.js';
 
 const EXTENSION_ATTRIBUTE = 'System.Runtime.CompilerServices.ExtensionAttribute';
 
@@ -17,12 +17,10 @@ export function writeExtensionBlockAttributes(attributes, assemblyAlreadyMarked)
   }
   if (!assemblyAlreadyMarked) attributes.wellKnown(token(0x20, 1), EXTENSION_ATTRIBUTE);
   const contract = extensions.markerAttribute;
-  const constructor = writer.methodTokens.get(contract.constructor) ?? attributes.builder.member(
-    attributes.types.typeToken(contract.type), '.ctor', methodSymbolSignature(attributes.types, contract.constructor));
+  const constructor = compilerAttributeConstructorToken(attributes, contract);
   for (const [declaration, marker] of extensions.declarations) {
     const parent = declaration.kind === SymbolKind.Property ? writer.propertyTokens.get(declaration) : writer.methodTokens.get(declaration);
     attributes.add(parent, constructor, encodeCustomAttribute(['string'], [marker]));
   }
   for (const marker of extensions.markers) attributes.compilerGenerated(writer.methodTokens.get(marker));
-  if (contract.plan) attributes.compilerGenerated(writer.typeToken(contract.type));
 }

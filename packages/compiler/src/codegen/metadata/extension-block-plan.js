@@ -46,7 +46,7 @@ function groupedBlocks(owner) {
  * plan data. No implementation symbol, source member list or source namespace is mutated.
  */
 export class ExtensionBlockMetadataPlan {
-  constructor(analysis, sourceTypes) {
+  constructor(analysis, sourceTypes, compilerAttributes) {
     this.types = [];
     this.plans = new Map();
     this.markedTypes = new Set();
@@ -60,12 +60,7 @@ export class ExtensionBlockMetadataPlan {
       for (const group of groupedBlocks(owner)) this.addGroup(owner, group, analysis.core);
     }
     if (!this.types.length) return;
-    this.markerAttribute = extensionMarkerAttribute(analysis);
-    if (this.markerAttribute.plan) {
-      this.types.push(this.markerAttribute.type);
-      this.plans.set(this.markerAttribute.type, this.markerAttribute.plan);
-      for (const [method, body] of this.markerAttribute.bodies) this.bodies.set(method, body);
-    }
+    this.markerAttribute = extensionMarkerAttribute(compilerAttributes);
   }
 
   name(owner, prefix, signature) {
