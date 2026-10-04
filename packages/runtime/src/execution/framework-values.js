@@ -3,12 +3,15 @@ import {nullableElementType} from '@sharpforge/cil';
 import {ManagedFault, isReference} from '../heap.js';
 
 /** Framework value adapters use managed property carriers at their public ABI boundary. */
-export function isFrameworkValueType(type) {
-  return typeof type === 'string' && frameworkType(nullableElementType(type) ?? type)?.kind === 'value';
+export function isFrameworkValueType(type, registry = null) {
+  if (typeof type !== 'string') return false;
+  const name = nullableElementType(type) ?? type;
+  const definition = frameworkType(name);
+  return definition?.name === name && definition.kind === 'value' && !registry?.descriptors.has(name);
 }
 
 function copy(vm, value, type, budget, active) {
-  if (value === null || value === undefined || !isFrameworkValueType(type)) return value;
+  if (value === null || value === undefined || !isFrameworkValueType(type, vm.heap.methodTables)) return value;
   type = nullableElementType(type) ?? type;
   if (!isReference(value)) throw new ManagedFault('InvalidCastException', 'A registered framework value is required');
   const record = vm.heap.get(value), table = vm.heap.methodTables.get(type);
@@ -38,6 +41,6 @@ function copy(vm, value, type, budget, active) {
 
 /** Shared source/CIL storage projection; nested registered values copy, reference fields retain their identity. */
 export function copyFrameworkValue(vm, value, type) {
-  if (value === null || value === undefined || !isFrameworkValueType(type)) return value;
+  if (value === null || value === undefined || !isFrameworkValueType(type, vm.heap.methodTables)) return value;
   return vm.heap.withRoots([value], () => copy(vm, value, type, {fields: 65536}, new Set()));
 }

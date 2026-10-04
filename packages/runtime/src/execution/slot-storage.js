@@ -26,7 +26,7 @@ export function loadSlot(vm, frame, argument, index) {
   if (value === undefined) throw new ManagedFault('InvalidProgramException', 'Read of uninitialized local');
   const type = vm.slotType(frame, argument, index);
   // The registered value ABI borrows its carrier for instance access; assignments own copies in storageValue.
-  if (isFrameworkValueType(type)) return value;
+  if (isFrameworkValueType(type, vm.heap.methodTables)) return value;
   if (vm.options.scalarSlotLoads !== false) {
     const accepts = guardFor(frame.method, argument, index, type);
     if (accepts && accepts(value, vm.options)) return value;
