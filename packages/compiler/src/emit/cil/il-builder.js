@@ -3,34 +3,19 @@
  * variable list and the protected regions. `assemble` encodes it through the public `CilWriter` of `@sharpforge/cil`
  * (branches are relaxed to their short forms there) and returns what `writeMethodBody` takes.
  *
- * The evaluation stack depth is tracked while instructions are added, so the header's maxstack is exact for the
- * code that was emitted and an emitter that leaves the stack unbalanced fails here instead of producing bad IL.
+ * Eager stack tracking checks emitter invariants. The completed, relaxed stream is analyzed through the public
+ * CIL graph solver for its exact header bound, including instructions inserted after the initial emission.
  */
-import { CilOpcodes, CilWriter } from '@sharpforge/cil';
+import { CilOpcodes, CilWriter, fixedStackEffect, analyzeMaxStack } from '@sharpforge/cil';
 
 const EXCEPTION_FLAGS = Object.freeze({ catch: 0, filter: 1, finally: 2, fault: 4 });
-const variableCount = /^Var/;
-
-/** How many values a fixed stack behaviour (`Pop1_pop1`, `Pushi`, ...) names. */
-function countOf(behaviour) {
-  return behaviour.endsWith('0') ? 0 : behaviour.split('_').length;
-}
-
-const fixedEffects = new Map(
-  Object.values(CilOpcodes).map(opcode => [
-    opcode.name,
-    variableCount.test(opcode.stackBehaviourPop) || variableCount.test(opcode.stackBehaviourPush)
-      ? null
-      : { pops: countOf(opcode.stackBehaviourPop), pushes: countOf(opcode.stackBehaviourPush) },
-  ]),
-);
 /**
  * How many values an instruction pops and pushes.
  * @param {{pops: number, pushes: number}} [effect] required for an instruction whose effect depends on its operand
  * @returns {{pops?: number, pushes?: number}} empty when the effect is needed and was not given
  */
 export function stackEffectOf(name, effect) {
-  return effect ?? fixedEffects.get(name) ?? {};
+  return effect ?? fixedStackEffect(name) ?? {};
 }
 
 const leavesStackEmpty = new Set(['leave', 'throw', 'rethrow', 'endfinally', 'endfilter']);
@@ -119,7 +104,7 @@ export class IlBuilder {
     if (this.depth < pops) throw new IlBuilderError(`'${name}' pops ${pops} from a stack of ${this.depth}`);
     this.depth = this.depth - pops + pushes;
     this.maxDepth = Math.max(this.maxDepth, this.depth);
-    this.instructions.push({ name, operand });
+    this.instructions.push({ name, operand, effect: fixedStackEffect(name) ? null : { pops, pushes } });
     if (leavesStackEmpty.has(name)) this.depth = 0;
     for (const target of branchTargets(opcode, operand)) this.reach(target, name);
     if (endsFlow.has(opcode.flowControl)) this.depth = null;
@@ -154,6 +139,7 @@ export class IlBuilder {
   assemble() {
     const writer = new CilWriter(undefined, { compact: true }),
       debugOffsets = this.debug ? new Map() : null,
+      variableEffects = new Map(),
       nameOf = label => 'L' + label.id;
     for (const instruction of this.instructions) {
       if (instruction.debugMarker) debugOffsets?.set(instruction.debugMarker, writer.length);
@@ -161,7 +147,10 @@ export class IlBuilder {
         writer.mark(nameOf(instruction.label));
         debugOffsets?.set(instruction.label, writer.length);
       }
-      else encode(writer, instruction, nameOf);
+      else {
+        if (instruction.effect) variableEffects.set(writer.length, instruction.effect);
+        encode(writer, instruction, nameOf);
+      }
     }
     const original = new Map(writer.labels),
       { code, offsetMap } = writer.finishWithLayout(),
@@ -181,7 +170,13 @@ export class IlBuilder {
       ...(region.kind === 'filter' ? { filterOffset: offsetOf(region.filterStart) } : {}),
     }));
     if (debugOffsets) for (const [marker, offset] of debugOffsets) debugOffsets.set(marker, offsetMap.get(offset));
-    return { code, maxStack: this.maxDepth, handlers, debugOffsets };
+    const finalEffects = new Map();
+    for (const [offset, effect] of variableEffects) finalEffects.set(offsetMap.get(offset), effect);
+    const analysis = analyzeMaxStack(code, { handlers,
+      resolveStackEffect: instruction => finalEffects.get(instruction.opcodeOffset) });
+    if (analysis.status !== 'complete') throw new IlBuilderError(analysis.diagnostics.map(item => item.message).join('; '));
+    return { code, maxStack: analysis.maxStack, handlers, debugOffsets,
+      hasDynamicStackAllocation: analysis.hasDynamicStackAllocation };
   }
 }
 
