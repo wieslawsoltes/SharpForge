@@ -49,6 +49,12 @@ export function validateExceptionInstructionPlacement(code, handlers, options = 
   const tree = buildExceptionRegionTree(code, handlers, options);
   // Keep the tree builder's bounded decoding contract independent; this second pass supplies opcode records only.
   const instructions = decodeInstructions(code, options);
+  validateInstructionPlacement(instructions, tree, options);
+  return tree;
+}
+
+/** Internal seam for validators that already own decoded instructions and a checked region tree. */
+export function validateInstructionPlacement(instructions, tree, options) {
   const cursor = new ExceptionRegionCursor(tree);
   for (const instruction of instructions) {
     checkRegionCancellation(options.signal);
@@ -58,5 +64,4 @@ export function validateExceptionInstructionPlacement(code, handlers, options = 
         instruction.name !== 'endfilter') reject('CILCF0007', instruction.offset);
   }
   checkRegionCancellation(options.signal);
-  return tree;
 }
