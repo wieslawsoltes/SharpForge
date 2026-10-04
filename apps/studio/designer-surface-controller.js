@@ -247,8 +247,9 @@ export class DesignerSurfaceController {
       this.view.safe(() => this.view.action('save'));
       return true;
     }
-    if (event.key === 'F10' && event.shiftKey) {
+    if (event.key === 'ContextMenu' || event.key === 'F10' && event.shiftKey) {
       event.preventDefault();
+      event.stopPropagation();
       const rectangle = this.view.stage.getBoundingClientRect();
       this.context({clientX: rectangle.left + 20, clientY: rectangle.top + 20, target: this.view.scroller});
       return true;

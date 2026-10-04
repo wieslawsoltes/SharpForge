@@ -11,6 +11,7 @@ import {registerStudioCommands} from './commands/core.js';
 import {createMenuRegistry} from './menus/registry.js';
 import {registerStudioMenus} from './menus/core.js';
 import {createContextMenus} from './menus/context.js';
+import {StudioContextMenuRouter} from './menus/document-context.js';
 import {createToolRegistry} from './tools/registry.js';
 import {createStudioRenderers} from './tools/core.js';
 import {SourceSymbolPresentation} from './source-symbol-presentation.js';
@@ -584,19 +585,10 @@ function showBreakpointMenu(uri,line,event){sharedMenu.show({items:breakpointIte
 async function pasteEditor(instance){if(instance.input.readOnly)return;let text;try{text=await navigator.clipboard.readText();}catch{text=await ask('Paste',`<p>Clipboard reading is unavailable. Paste into this field, then Insert.</p><textarea id="paste-text" class="explorer-text" autofocus></textarea>`,'Insert',()=>$('#paste-text').value);}if(text!==null&&text!==undefined)instance.insert(text);instance.focus();}
 function editorContextItems(...args){return menuRegistry.items('editorContextItems',...args);}
 function panelContextItems(...args){return menuRegistry.items('panelContextItems',...args);}
-const contextDocuments=new WeakSet();
-function installContextDocument(doc){if(contextDocuments.has(doc))return;contextDocuments.add(doc);
- const show=(event,keyboard=false)=>{const target=event.target;if(!target?.closest||target.closest('.sf-menu,#modal-backdrop,.sf-tree'))return;const source=target.closest('[data-source-uri]'),tab=target.closest('[data-dock-tab]'),tool=target.closest('[data-tool]');let items,anchor=target,x=event.clientX,y=event.clientY;
-  if(keyboard){const r=target.getBoundingClientRect();x=r.left+Math.min(40,r.width/2);y=r.top+Math.min(30,r.height);}
-  if(tab){items=dockMenuItems(tab.dataset.dockTab);}
-  else if(source){const instance=editors.get(source.dataset.sourceUri);if(!instance)return;const gutter=target.closest('[data-line]');if(gutter)items=breakpointItems(instance.uri,Number(gutter.dataset.line));else items=editorContextItems(instance);anchor=instance.keymapAdapter?.cm.getInputField()??instance.input;}
-  else if(tool)items=panelContextItems(tool.dataset.tool,target);
-  if(!items)return;event.preventDefault();event.stopImmediatePropagation();sharedMenu.show({items,x,y,anchor,document:doc});
- };
- doc.addEventListener('contextmenu',event=>show(event),true);doc.addEventListener('keydown',event=>{if(event.key==='ContextMenu'||event.shiftKey&&event.key==='F10')show(event,true);},true);
-}
-installContextDocument(document);
-const dockPopout=docking.host.popout.bind(docking.host);docking.host.popout=id=>{const result=dockPopout(id),child=docking.host.popouts.get(id)?.window;if(child)installContextDocument(child.document);return result;};
+const contextRouter = new StudioContextMenuRouter({editors, menu: sharedMenu, dockItems: dockMenuItems,
+ breakpointItems, editorItems: editorContextItems, panelItems: panelContextItems});
+contextRouter.install(document);
+const dockPopout=docking.host.popout.bind(docking.host);docking.host.popout=id=>{const result=dockPopout(id),child=docking.host.popouts.get(id)?.window;if(child)contextRouter.install(child.document);return result;};
 
 // Project/solution creation and portable workspace IO. ZIP is data only, never code execution.
 function workspaceSettings(){return {langVersion:state.langVersion,name:state.name,mode:state.workspaceMode??(state.projectSystem?'solution':'folder'),entry:state.projectSystem?.solution?.path??undefined,startup:state.startupProject??undefined,configuration:state.configuration,active:state.active,tabs:state.tabs,breakpoints:state.breakpoints,functionBreakpoints:state.functionBreakpoints,extensions:state.extensionConfig};}
