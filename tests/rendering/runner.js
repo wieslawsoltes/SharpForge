@@ -18,14 +18,18 @@ async function readPixels(surface) {
 
 const percentile = (values, fraction) => values[Math.min(values.length - 1, Math.floor(values.length * fraction))] ?? null;
 
-function measuredMetrics(latest, cpu, coldMs, gpuDone) {
+function measuredMetrics(latest, cpu, coldMs, gpuDone, intervals) {
   cpu.sort((left, right) => left - right);
   gpuDone.sort((left, right) => left - right);
+  intervals.sort((left, right) => left - right);
   return {coldFrameMs: coldMs, cpuMedianMs: percentile(cpu, 0.5), cpuP95Ms: percentile(cpu, 0.95), cpuP99Ms: percentile(cpu, 0.99),
     gpuDoneMedianMs: percentile(gpuDone, 0.5), drawCalls: latest.drawCalls ?? null,
     gpuMemoryBytes: latest.totalGpuBytes ?? null, atlasBytes: latest.atlasBytes ?? null,
     renderTargetBytes: latest.renderTargetBytes ?? null, textureBytes: latest.textureBytes ?? null, bufferBytes: latest.bufferBytes ?? null,
     uploadedBytes: latest.uploadedBytes ?? null, sampleCount: latest.sampleCount ?? null,
+    frameIntervalMedianMs: percentile(intervals, 0.5), frameIntervalP95Ms: percentile(intervals, 0.95),
+    frameIntervalSamples: intervals.length,
+    observedFramesPerSecond: intervals.length ? 1000 / (intervals.reduce((sum, value) => sum + value, 0) / intervals.length) : null,
     jsAllocationBytes: null, allocationPolicy: 'Not inferred from heap-size samples; deterministic allocation assertions use API tests'};
 }
 
@@ -33,13 +37,14 @@ function measuredMetrics(latest, cpu, coldMs, gpuDone) {
 class ConformanceSession {
   constructor(container) { this.container = container; this.cleanup = []; this.running = false; }
   async dispose() {
+    this.fixture = null;
     const errors = [];
     for (const close of this.cleanup.splice(0)) {
       try { await close(); } catch (error) { errors.push(error); }
     }
     if (errors.length) throw new AggregateError(errors, 'Conformance fixture disposal failed');
   }
-  async run({fixture: definition, backend = 'webgpu', tier = 'hardware', samples = 30, warmup = 10}) {
+  async run({fixture: definition, backend = 'webgpu', tier = 'hardware', samples = 30, warmup = 10, captureReference = true}) {
     if (this.running) throw new Error('A conformance fixture is already running');
     if (!Number.isInteger(samples) || samples < 1 || samples > 1000 || !Number.isInteger(warmup) || warmup < 0 || warmup > 1000) {
       throw new RangeError('Invalid conformance sample counts');
@@ -49,10 +54,10 @@ class ConformanceSession {
     try {
       await this.dispose();
       this.container.replaceChildren();
-      return await this.render(definition, {backend, tier, samples, warmup});
+      return await this.render(definition, {backend, tier, samples, warmup, captureReference});
     } finally { this.running = false; }
   }
-  async render(definition, {backend, tier, samples, warmup}) {
+  async render(definition, {backend, tier, samples, warmup, captureReference}) {
     const coldStart = performance.now();
     const errors = [], metrics = [];
     const resources = new ResourceTable();
@@ -61,6 +66,7 @@ class ConformanceSession {
     await document.fonts?.ready;
     const fixture = await createFixture(definition, {document, resources, service, backend, container: this.container,
       onError: error => errors.push(String(error)), onMetrics: value => metrics.push(value)});
+    this.fixture = fixture;
     this.cleanup.unshift(() => fixture.dispose());
     const surface = fixture.renderFrame ? null : new RenderSurface(this.container, {backend, deviceService: service, resources,
       textService: fixture.textService, backdropAvailable: !!definition.backdrop,
@@ -68,18 +74,18 @@ class ConformanceSession {
       onError: error => errors.push(String(error)), onMetrics: value => metrics.push(value)});
     if (surface) { this.cleanup.unshift(() => surface.dispose()); await surface.ready; }
     const actual = () => surface?.backend ?? fixture.actualBackend();
-    const frame = () => surface ? surface.draw() : fixture.renderFrame();
+    const frame = iteration => surface ? surface.draw() : fixture.renderFrame(iteration);
     const device = service.device;
     const uncaptured = event => errors.push(String(event.error));
     device?.addEventListener('uncapturederror', uncaptured);
     if (device) this.cleanup.unshift(() => device.removeEventListener('uncapturederror', uncaptured));
     device?.pushErrorScope('validation');
-    let cpu, coldMs;
+    let measurements, coldMs;
     try {
       if (surface) surface.updateDisplayList(fixture.list, resources, fixture.width, fixture.height, definition.dpr ?? 1);
-      else frame();
+      else frame({index: -1, warmup: true});
       coldMs = performance.now() - coldStart;
-      cpu = await this.sample(frame, {samples, warmup});
+      measurements = await this.sample(frame, {samples, warmup});
       await device?.queue.onSubmittedWorkDone();
     } finally {
       const validation = await device?.popErrorScope();
@@ -89,7 +95,7 @@ class ConformanceSession {
     const latest = surface ? metrics.at(-1) ?? {} : fixture.metrics();
     const pixels = surface && actualBackend !== 'dom' ? await readPixels(surface) : null;
     const verification = await fixture.verify?.(surface);
-    const reference = await fixture.reference?.();
+    const reference = captureReference ? await fixture.reference?.() : null;
     const rect = (fixture.captureElement ?? surface?.canvas ?? surface?.domLayer ?? this.container).getBoundingClientRect();
     return {id: definition.id, status: errors.length ? 'failed' : actualBackend !== backend ? 'unavailable' : 'rendered',
       reason: surface?.reason ?? fixture.reason?.() ?? '', requested: backend, actualBackend, adapter: adapterDescription(service),
@@ -97,22 +103,31 @@ class ConformanceSession {
       gallery: fixture.gallery ?? null, userAgent: navigator.userAgent, devicePixelRatio, errors, fallbacks: latest.fallbacks ?? [],
       captureRect: {x: rect.x, y: rect.y, width: rect.width, height: rect.height}, viewport: {width: innerWidth, height: innerHeight},
       verification: verification ?? null,
-      canvasReference: reference ? {kind: reference.kind, provider: reference.provider, glyphAccess: reference.glyphAccess, ...pixelPacket(reference)} : null,
+      canvasReference: reference ? {...Object.fromEntries(Object.entries(reference).filter(([key]) => key !== 'data')), ...pixelPacket(reference)} : null,
       pixels: pixels ? pixelPacket(pixels) : null,
-      metrics: measuredMetrics(latest, cpu, coldMs, metrics.map(value => value.gpuDoneMs).filter(Number.isFinite))};
+      metrics: {...measuredMetrics(latest, measurements.cpu, coldMs,
+        metrics.map(value => value.gpuDoneMs).filter(Number.isFinite), measurements.intervals), ...fixture.measurements?.()}};
+  }
+  interaction(phase) {
+    if (!this.fixture?.interaction) throw new Error('The current fixture has no native interaction phase');
+    return this.fixture.interaction(phase);
   }
   async sample(frame, {samples, warmup}) {
-    const cpu = [];
+    const cpu = [], intervals = [];
+    let previousFrame;
     for (let index = 0; index < warmup + samples; index++) {
       const start = performance.now();
-      frame();
+      frame({index, warmup: index < warmup});
       const elapsed = performance.now() - start;
       if (index >= warmup) cpu.push(elapsed);
-      await new Promise(resolve => requestAnimationFrame(resolve));
+      const timestamp = await new Promise(resolve => requestAnimationFrame(resolve));
+      if (index >= warmup && previousFrame !== undefined) intervals.push(timestamp - previousFrame);
+      previousFrame = timestamp;
     }
-    return cpu;
+    return {cpu, intervals};
   }
 }
 
 const session = new ConformanceSession(document.getElementById('fixture'));
-globalThis.renderingConformance = Object.freeze({run: options => session.run(options), dispose: () => session.dispose(), version: 1});
+globalThis.renderingConformance = Object.freeze({run: options => session.run(options), dispose: () => session.dispose(),
+  interaction: phase => session.interaction(phase), version: 1});
