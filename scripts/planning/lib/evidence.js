@@ -7,6 +7,7 @@ import { isDeepStrictEqual } from 'node:util';
 import { validate } from '../schema/validate.js';
 import { git } from './io.js';
 import { npmCli } from '../../conformance/node-tools.js';
+import { readTapEvidence, summarizeTap } from './tap-evidence.js';
 
 export const digest = value => createHash('sha256').update(value).digest('hex');
 export const obligationKey = value => JSON.stringify([value.capabilityId,value.platform,value.engine,value.specRevision]);
@@ -35,13 +36,7 @@ export function environment(root = process.cwd()) {
 }
 const countKeys=['tests','passed','failed','cancelled','skipped','todo'];
 export function tapSummary(tap, exitCode) {
-  const totals={},names={passed:'pass',failed:'fail'};let complete=/^TAP version 13\r?$/m.test(tap)&&/^1\.\.\d+(?: #.*)?\r?$/m.test(tap);
-  for(const key of countKeys) {
-    const values=[...tap.matchAll(new RegExp(`^# ${names[key]??key} (\\d+)\\s*$`,'gm'))];
-    totals[key]=Number(values.at(-1)?.[1]??0);complete &&= values.length===1&&Number.isSafeInteger(totals[key]);
-  }
-  complete &&= totals.tests===totals.passed+totals.failed+totals.cancelled+totals.skipped+totals.todo;
-  return {...totals,exitCode:Number.isInteger(exitCode)&&exitCode>=0?exitCode:1,complete};
+  return summarizeTap(readTapEvidence(tap), exitCode);
 }
 export function summarizeCommands(commands) {
   const totals={tests:0,passed:0,failed:0,cancelled:0,skipped:0,todo:0,exitCode:0,complete:true};
@@ -63,16 +58,27 @@ export function runCommand(command,root=process.cwd()) {
 }
 const proofSchema=JSON.parse(readFileSync(new URL('../../../planning/contracts/evidence-proof.schema.json',import.meta.url),'utf8'));
 export function proofObligations(tap,summary) {
-  const results=[...tap.matchAll(/^\s*(ok|not ok) \d+ - (.*?)(?:\s+#\s+(SKIP|TODO)\b.*)?\r?$/gm)].map(match=>({ok:match[1]==='ok',name:match[2],directive:match[3]}));
+  const parsed = readTapEvidence(tap);
+  const results = parsed.results;
+  const complete = summary.complete && parsed.complete && isDeepStrictEqual(summary, summarizeTap(parsed, summary.exitCode));
+  const hasFailure = results.some(result => !result.ok && !result.directive);
+  const namedResults = new Map();
+  for (const result of results) {
+    namedResults.set(result.name, namedResults.has(result.name) ? null : result);
+  }
   const obligations=[],seen=new Set();
-  for(const match of tap.matchAll(/^\s*# sharpforge-evidence: (.+)\r?$/gm)) {
-    const proof=validate(proofSchema,JSON.parse(match[1])),key=obligationKey(proof);
+  for(const text of parsed.proofs) {
+    const proof=validate(proofSchema,JSON.parse(text)),key=obligationKey(proof);
     if(seen.has(key)) throw new Error(`Duplicate target proof ${key}`);seen.add(key);
-    const matching=results.filter(result=>result.name===proof.testName);
-    if(matching.length!==1) throw new Error(`Target proof requires one unambiguous TAP result: ${proof.testName}`);
-    const result=matching[0];
-    if(proof.status==='pass'&&(!summary.complete||summary.exitCode!==0||summary.failed||summary.cancelled||summary.passed<1||!result.ok||result.directive)) throw new Error(`Target proof is not a passing test: ${proof.testName}`);
-    if(proof.status==='fail'&&(!summary.complete||result.ok||result.directive||!summary.failed)) throw new Error(`Target proof is not a failing test: ${proof.testName}`);
+    const result = namedResults.get(proof.testName);
+    if (!result) throw new Error(`Target proof requires one unambiguous TAP result: ${proof.testName}`);
+    const excluded = result.directive || result.inheritedDirective;
+    if (proof.status === 'pass' && (!complete || summary.exitCode !== 0 || hasFailure || !result.executedPass)) {
+      throw new Error(`Target proof is not a passing test: ${proof.testName}`);
+    }
+    if (proof.status === 'fail' && (!complete || result.ok || excluded || !summary.failed)) {
+      throw new Error(`Target proof is not a failing test: ${proof.testName}`);
+    }
     if(['unknown','unsupported'].includes(proof.status)&&!proof.reason) throw new Error(`Target proof ${proof.status} requires a reason`);
     obligations.push(proof);
   }
