@@ -129,11 +129,11 @@ test('restore starts a fresh observation baseline without replaying suspension h
     assert.equal(vm.run().returnValue, 7);
     assert.equal(transitions(vm).length, 2);
     vm.restore(snapshot);
+    assert.deepEqual(Object.keys(vm.scheduler), schedulerKeys);
+    assert.deepEqual(Object.keys(vm.scheduler.current), contextKeys);
     vm.scheduler.advance(10);
     assert.equal(vm.run().returnValue, 7);
     assert.equal(transitions(vm).length, 2, 'first activation after restore establishes a new baseline');
-    assert.deepEqual(Object.keys(vm.scheduler), schedulerKeys);
-    assert.deepEqual(Object.keys(vm.scheduler.current), contextKeys);
   } finally { vm.stop(); }
 });
 
