@@ -104,7 +104,8 @@ export class AssemblyEmitter {
     this.debugInformation?.record(method, il, body);
     section.pad();
     this.bodyAddresses.set(method, TEXT_RVA + section.length);
-    section.bytes(writeMethodBody(body.code, program.tokens.locals(il.locals), body.maxStack, body.handlers));
+    section.bytes(writeMethodBody(body.code, program.tokens.locals(il.locals), body.maxStack, body.handlers,
+      { headerFormat: 'auto', initLocals: true, hasDynamicStackAllocation: body.hasDynamicStackAllocation }));
   }
   /** This emitter with tokens that read every type under a substitution (generic-context.js); itself for none. */
   within(substitution) {

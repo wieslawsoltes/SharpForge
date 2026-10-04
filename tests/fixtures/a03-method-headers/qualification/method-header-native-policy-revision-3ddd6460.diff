@@ -1,0 +1,549 @@
+diff --git a/tests/fixtures/a03-method-headers/input.js b/tests/fixtures/a03-method-headers/input.js
+index 77c3850f0d..3959e5e7a2 100644
+--- a/tests/fixtures/a03-method-headers/input.js
++++ b/tests/fixtures/a03-method-headers/input.js
+@@ -15,7 +15,7 @@ export function nativeSource() {
+     const operations = [...Array(item.padding).fill('nop'), ...Array(item.depth).fill('ldc.i4.0'),
+       ...Array(Math.max(0, item.depth - 1)).fill('pop'), 'ret'];
+     return `.method public static ${item.result === 'int' ? 'int32' : 'void'} ${item.name}() cil managed {
+-      .maxstack ${item.depth}
++      .maxstack ${item.headerSize === 1 ? 8 : item.depth}
+       ${item.local ? ".locals init (int32 'value')" : ''}
+       ${operations.join('\n      ')}
+     }`;
+
+--- method-header-run-step-e10cb80d.py
++++ method-header-run-step-3ddd6460.py
+@@ -15,8 +15,8 @@
+ 
+ 
+ ROOT = Path('/workspace/scratch/7e3d2a445c44')
+-PLAN = ROOT / 'method-header-preflight-e10cb80d.json'
+-PLAN_SHA256 = '43a791262290c3846f6bfb1bc957182803ae9ae0ae7fbf88379ba94a8c625aec'
++PLAN = ROOT / 'method-header-preflight-3ddd6460.json'
++PLAN_SHA256 = 'c29a45dcbc86dfae886d404ae6a62d863b5dae8d64fa1af7c8c7a27eacab04b5'
+ 
+ 
+ def sha256(path):
+
+--- method-header-preflight-e10cb80d.json
++++ method-header-preflight-3ddd6460.json
+@@ -1,15 +1,15 @@
+ {
+   "schema": 1,
+-  "status": "prepared-unexecuted ILAsm capture-harness correction; root must explicitly regrant the sole heavy slot",
+-  "createdAt": "2026-10-04T19:25:12.137235+00:00",
++  "status": "prepared-unexecuted native ILAsm header-policy fixture correction; root must explicitly regrant sole heavy slot",
++  "createdAt": "2026-10-04T19:37:03.503805+00:00",
+   "originalProductHead": "3316898efee4a9d23b8e0cb87919b9de28a1084a",
+-  "candidateHead": "e10cb80d38a9da7a3a50a78f5b214b5e7895f8e0",
++  "candidateHead": "3ddd6460260d93f0a5258bd84ac62158e36dce10",
+   "baselineHead": "e60b0764782f1122439e5b161cb9494c75724e32",
+   "checkouts": {
+     "candidate": {
+       "path": "/workspace/scratch/7e3d2a445c44/sf6-maxstack",
+-      "head": "e10cb80d38a9da7a3a50a78f5b214b5e7895f8e0",
+-      "tree": "c02d233aee43569432b2ae5c958135a880fdf663",
++      "head": "3ddd6460260d93f0a5258bd84ac62158e36dce10",
++      "tree": "ae6fd8f3340ef8b6dbfca5614e52ce46f944bc23",
+       "aliases": [
+         {
+           "name": "archive",
+@@ -6350,8 +6350,8 @@
+         },
+         {
+           "path": "tests/fixtures/a03-method-headers/input.js",
+-          "bytes": 3244,
+-          "sha256": "d4d8b748c3032fc840d17b3aecccad9e6cb8a77912e23789471daaf2b612a446"
++          "bytes": 3272,
++          "sha256": "6ea970f236170e2e7cb43317a48ce3bc910123cf8a75e5716a57f3478781ff61"
+         },
+         {
+           "path": "tests/fixtures/a03-method-headers/process-capture.mjs",
+@@ -11470,7 +11470,7 @@
+         },
+         {
+           "path": "tests/fixtures/a03-method-headers/input.js",
+-          "blob": "77c3850f0dcaaba3c930ff1d560cd397703c18da"
++          "blob": "3959e5e7a24516e0cb17007080774ac311708c3f"
+         },
+         {
+           "path": "tests/fixtures/a03-method-headers/process-capture.mjs",
+@@ -22242,7 +22242,7 @@
+       ]
+     }
+   },
+-  "executionDirectory": "/workspace/scratch/7e3d2a445c44/method-header-qualification-e10cb80d",
++  "executionDirectory": "/workspace/scratch/7e3d2a445c44/method-header-qualification-3ddd6460",
+   "nodeExecutable": "/opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin/node",
+   "environment": {
+     "DOTNET_ROOT": "/workspace/scratch/7e3d2a445c44/dotnet-10.0.201",
+@@ -25047,9 +25047,9 @@
+     }
+   ],
+   "sourceArchive": {
+-    "path": "/workspace/scratch/7e3d2a445c44/method-header-source-snapshots-e10cb80d-v2.zip",
+-    "bytes": 4529669,
+-    "sha256": "49b8e8bf2266bc1e38fc690709f2a4915fc3237fa07a5b12fb3cad6ba36ab83d"
++    "path": "/workspace/scratch/7e3d2a445c44/method-header-source-snapshots-3ddd6460.zip",
++    "bytes": 4529679,
++    "sha256": "2d442f157e3f70bffebe8336d0682221f9cc2cd629989f01fa97c377b233b6a9"
+   },
+   "steps": {
+     "native": {
+@@ -25060,7 +25060,7 @@
+         "scripts/limited.js",
+         "node",
+         "tests/fixtures/a03-method-headers/capture.mjs",
+-        "/workspace/scratch/7e3d2a445c44/method-header-qualification-e10cb80d/native-first"
++        "/workspace/scratch/7e3d2a445c44/method-header-qualification-3ddd6460/native-first"
+       ],
+       "originalArgv": [
+         "node",
+@@ -25074,7 +25074,7 @@
+       ],
+       "timeoutSeconds": 900,
+       "minimumFreeBytes": 402653184,
+-      "output": "/workspace/scratch/7e3d2a445c44/method-header-qualification-e10cb80d/native-first"
++      "output": "/workspace/scratch/7e3d2a445c44/method-header-qualification-3ddd6460/native-first"
+     },
+     "refout": {
+       "id": "refout",
+@@ -25241,7 +25241,7 @@
+       "minimumFreeBytes": 134217728,
+       "output": "/workspace/scratch/7e3d2a445c44/method-header-benchmarks-3316898e/candidate-controls.json",
+       "benchmark": {
+-        "compilerRevision": "e10cb80d38a9da7a3a50a78f5b214b5e7895f8e0",
++        "compilerRevision": "3ddd6460260d93f0a5258bd84ac62158e36dce10",
+         "headerMode": "auto",
+         "workload": "controls",
+         "compilerEntry": "/workspace/scratch/7e3d2a445c44/sf6-maxstack/packages/compiler/src/index.js",
+@@ -25337,7 +25337,7 @@
+       "minimumFreeBytes": 134217728,
+       "output": "/workspace/scratch/7e3d2a445c44/method-header-benchmarks-3316898e/candidate-corpus.json",
+       "benchmark": {
+-        "compilerRevision": "e10cb80d38a9da7a3a50a78f5b214b5e7895f8e0",
++        "compilerRevision": "3ddd6460260d93f0a5258bd84ac62158e36dce10",
+         "headerMode": "auto",
+         "workload": "corpus",
+         "compilerEntry": "/workspace/scratch/7e3d2a445c44/sf6-maxstack/packages/compiler/src/index.js",
+@@ -25571,7 +25571,7 @@
+       {
+         "path": "tests/fixtures/a03-method-headers/input.js",
+         "originalSha256": "95c8ad7d4978eb7fb421351f080a77db0d404ec1c2e9df8574bc48735084f118",
+-        "candidateSha256": "d4d8b748c3032fc840d17b3aecccad9e6cb8a77912e23789471daaf2b612a446",
++        "candidateSha256": "6ea970f236170e2e7cb43317a48ce3bc910123cf8a75e5716a57f3478781ff61",
+         "unchanged": false
+       }
+     ],
+@@ -25584,14 +25584,15 @@
+       "tests/fixtures/a03-method-headers/controls.cs"
+     ],
+     "observerCommit": "f261715fa9dc3040fb32046f54e182f765eb0ade",
+-    "harnessCommit": "e10cb80d38a9da7a3a50a78f5b214b5e7895f8e0"
++    "harnessCommit": "e10cb80d38a9da7a3a50a78f5b214b5e7895f8e0",
++    "nativePolicyCommit": "3ddd6460260d93f0a5258bd84ac62158e36dce10"
+   },
+-  "executionPolicy": "One prepared step per invocation; no automatic retries, changed inputs, aliases, installs or publication. Each step has exclusive logs and fresh outputs, and checks all source/fixture/tool hashes before and after. The 13-file gate and four benchmark argv are unchanged. Adapter success is the separately validated original test-passed/recorder-failed adjudication. Native capture retains canonical runner UTF-8 strings, including error.result on failure. Only the native destination changes for this harness revision. Refout and benchmark destinations remain unchanged and absent. Both earlier native failures and original adapter recorder failure remain preserved. A separate explicit root grant is required before execution; pause after focused before any benchmark.",
++  "executionPolicy": "One prepared step per invocation; no automatic retries, changed inputs, aliases, installs or publication. Each step has exclusive logs/fresh outputs and checks source/fixture/tool hashes before and after. The original 13-file gate and four benchmark argv are unchanged. Adapter success is the separately validated original test-passed/recorder-failed adjudication. Native capture retains canonical runner UTF-8 strings, including error.result on failure. Only the native output destination changes in outer argv. Refout/benchmark destinations remain unchanged and absent. All three native failures and the original adapter recorder failure remain preserved. Explicit root grant is required before execution; pause after focused before all benchmarks.",
+   "coverageLimits": "Issue2391 remains open; legacy emitter.js/emit/pe-options.js/loader.js integration under active PR3766/3971 remains outside this batch; inherited #8 schema prerequisite unqualified. No planning/claim mutation.",
+   "previousPlan": {
+-    "path": "/workspace/scratch/7e3d2a445c44/method-header-preflight-f261715f.json",
+-    "bytes": 1029154,
+-    "sha256": "880824acdbc5b4c5a99d3851e7ba30f3ba8a1f08075b21ff5152acaff8891ac6"
++    "path": "/workspace/scratch/7e3d2a445c44/method-header-preflight-e10cb80d.json",
++    "bytes": 1044051,
++    "sha256": "43a791262290c3846f6bfb1bc957182803ae9ae0ae7fbf88379ba94a8c625aec"
+   },
+   "adjudicatedPrerequisites": {
+     "adapter": {
+@@ -25789,7 +25790,7 @@
+       "tests/fixtures/a03-method-headers/process-capture.mjs",
+       "scripts/conformance/oracle/process.js"
+     ],
+-    "reason": "Additional changes are confined to ILAsm platform flags and native IL local-identifier quoting. The adapter test, shared recorder and complete Node process dependency chain remain byte-identical to the adjudicated successful test. No adapter rerun."
++    "reason": "The additional change is only the native IL maxstack directive for expected tiny headers. The Node adapter test, process recorder and shared process implementation remain byte-identical to the adjudicated successful test. No adapter rerun."
+   },
+   "observerSourceOverlay": {
+     "baseHead": "c0e3352e0d68298c5e9653b3e118c28453a193ef",
+@@ -26100,6 +26101,36 @@
+       "path": "/workspace/scratch/7e3d2a445c44/method-header-regrant-guard-f261715f-20261004T191202Z.json",
+       "bytes": 1355,
+       "sha256": "19cfafbac592e4dd4cd4bd71f9daff7c59572cc5c7a06f5824d90be4bf745eef"
++    },
++    {
++      "path": "/workspace/scratch/7e3d2a445c44/method-header-preflight-e10cb80d.json",
++      "bytes": 1044051,
++      "sha256": "43a791262290c3846f6bfb1bc957182803ae9ae0ae7fbf88379ba94a8c625aec"
++    },
++    {
++      "path": "/workspace/scratch/7e3d2a445c44/method-header-run-step-e10cb80d.py",
++      "bytes": 15420,
++      "sha256": "51ddc118070e3141b90bb345575da72bd1adb21f9c242149236983d287f70d09"
++    },
++    {
++      "path": "/workspace/scratch/7e3d2a445c44/method-header-source-snapshots-e10cb80d-v2.zip",
++      "bytes": 4529669,
++      "sha256": "49b8e8bf2266bc1e38fc690709f2a4915fc3237fa07a5b12fb3cad6ba36ab83d"
++    },
++    {
++      "path": "/workspace/scratch/7e3d2a445c44/method-header-harness-revision-e10cb80d.json",
++      "bytes": 12967,
++      "sha256": "5c57d16b1edb0a5ea49f656983156f4033f09d408cd09c417c8b4314c55c7c45"
++    },
++    {
++      "path": "/workspace/scratch/7e3d2a445c44/method-header-harness-revision-e10cb80d.diff",
++      "bytes": 27624,
++      "sha256": "a68ac771e9006856d460b9146e7e2ced6beeb61be77cd1fd113f7d4dd3939a41"
++    },
++    {
++      "path": "/workspace/scratch/7e3d2a445c44/method-header-regrant-guard-e10cb80d-20261004T192734Z.json",
++      "bytes": 1355,
++      "sha256": "0876276996efa8d0f0945472d0cd61152bcfe639cf21ab5660bb8a974bc72298"
+     }
+   ],
+   "preservedSourcePreparationFailure": {
+@@ -26136,5 +26167,343 @@
+     ],
+     "qualificationExecuted": false,
+     "sourceInputsChangedByError": false
++  },
++  "preservedNativeHeaderPolicyFailure": {
++    "execution": {
++      "path": "/workspace/scratch/7e3d2a445c44/method-header-qualification-e10cb80d/steps/native/execution.json",
++      "bytes": 11851,
++      "sha256": "5d2977860aad2992e211b3babb184ab895281559417ba30654180db82e5801ad"
++    },
++    "status": "failed",
++    "files": [
++      {
++        "path": "/workspace/scratch/7e3d2a445c44/method-header-qualification-e10cb80d/steps/native/execution.json",
++        "bytes": 11851,
++        "sha256": "5d2977860aad2992e211b3babb184ab895281559417ba30654180db82e5801ad"
++      },
++      {
++        "path": "/workspace/scratch/7e3d2a445c44/method-header-qualification-e10cb80d/native-first/NativeBoundaries.dll",
++        "bytes": 2048,
++        "sha256": "c1abac60871060ff7d46985c912f8df453168eefc94074af0d2306120f945844"
++      },
++      {
++        "path": "/workspace/scratch/7e3d2a445c44/method-header-qualification-e10cb80d/native-first/Observer.dll",
++        "bytes": 22528,
++        "sha256": "9f81f5c628d59fa610f2fe8883bf458d9a504ed8036cd67eb1f6a801d5b731f3"
++      },
++      {
++        "path": "/workspace/scratch/7e3d2a445c44/method-header-qualification-e10cb80d/native-first/Observer.runtimeconfig.json",
++        "bytes": 100,
++        "sha256": "75494a2c9c324d9e814bc41acfc719b493d28cde3980caf1643b2bdbd85dddb6"
++      },
++      {
++        "path": "/workspace/scratch/7e3d2a445c44/method-header-qualification-e10cb80d/native-first/ProductBoundaries.dll",
++        "bytes": 1536,
++        "sha256": "875448d2ab331cd0538462db12d273f8c0b0f9c7e0f918336b3f4bdf0e4bbbf7"
++      },
++      {
++        "path": "/workspace/scratch/7e3d2a445c44/method-header-qualification-e10cb80d/native-first/Program.cs",
++        "bytes": 6560,
++        "sha256": "6839b078cb3befe22bebc2e2d7bd710924a4b3c3c6acc809e901188723350fa6"
++      },
++      {
++        "path": "/workspace/scratch/7e3d2a445c44/method-header-qualification-e10cb80d/native-first/Roslyn.dll",
++        "bytes": 4608,
++        "sha256": "b41eef889c82b09826e99f33360b444e582f4835c070da91a875242727314de1"
++      },
++      {
++        "path": "/workspace/scratch/7e3d2a445c44/method-header-qualification-e10cb80d/native-first/SharpForge.dll",
++        "bytes": 2560,
++        "sha256": "3d52cf8f642a5bb90dfe912d29a02055adaefde533ce33e451a31581e936c7aa"
++      },
++      {
++        "path": "/workspace/scratch/7e3d2a445c44/method-header-qualification-e10cb80d/native-first/boundaries.il",
++        "bytes": 2612,
++        "sha256": "3bf6f3338884305371d062082aa9e290d0e299ce9d386b5124b7a1abf58021f9"
++      },
++      {
++        "path": "/workspace/scratch/7e3d2a445c44/method-header-qualification-e10cb80d/native-first/capture.json",
++        "bytes": 155376,
++        "sha256": "c1ebbd10d17dc56e6aaaa4122c90d06e8559e3bb18dae7b4e431d9f51b089d84"
++      },
++      {
++        "path": "/workspace/scratch/7e3d2a445c44/method-header-qualification-e10cb80d/native-first/capture.mjs",
++        "bytes": 8493,
++        "sha256": "550ecfb8cc8382aced1a90c6bc48e3332ff181527a9ae819d34e52ec0b65a7c7"
++      },
++      {
++        "path": "/workspace/scratch/7e3d2a445c44/method-header-qualification-e10cb80d/native-first/corpus.cs",
++        "bytes": 1307,
++        "sha256": "6c7a86183afc367e4eb817c3644ea3018ac9756c1211afc1a0556e723c36c8a4"
++      },
++      {
++        "path": "/workspace/scratch/7e3d2a445c44/method-header-qualification-e10cb80d/native-first/input.js",
++        "bytes": 3244,
++        "sha256": "d4d8b748c3032fc840d17b3aecccad9e6cb8a77912e23789471daaf2b612a446"
++      },
++      {
++        "path": "/workspace/scratch/7e3d2a445c44/method-header-qualification-e10cb80d/native-first/process-01.stderr.log",
++        "bytes": 0,
++        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
++      },
++      {
++        "path": "/workspace/scratch/7e3d2a445c44/method-header-qualification-e10cb80d/native-first/process-01.stdout.log",
++        "bytes": 9,
++        "sha256": "38c8354f0a1a3a4e913e03fe6396aa12c2ef1d427921d44b19123e42dcb74e92"
++      },
++      {
++        "path": "/workspace/scratch/7e3d2a445c44/method-header-qualification-e10cb80d/native-first/process-02.stderr.log",
++        "bytes": 0,
++        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
++      },
++      {
++        "path": "/workspace/scratch/7e3d2a445c44/method-header-qualification-e10cb80d/native-first/process-02.stdout.log",
++        "bytes": 63,
++        "sha256": "4d0c9a4904503f1705fefa87cf647485beb84f2ab0e692c446b4abdd615db85f"
++      },
++      {
++        "path": "/workspace/scratch/7e3d2a445c44/method-header-qualification-e10cb80d/native-first/process-03.stderr.log",
++        "bytes": 0,
++        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
++      },
++      {
++        "path": "/workspace/scratch/7e3d2a445c44/method-header-qualification-e10cb80d/native-first/process-03.stdout.log",
++        "bytes": 222,
++        "sha256": "0f888c5dfd832ce30d94fff56d4bdaeeb327567b09d34f328f2cb80e7e9c3633"
++      },
++      {
++        "path": "/workspace/scratch/7e3d2a445c44/method-header-qualification-e10cb80d/native-first/process-04.stderr.log",
++        "bytes": 0,
++        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
++      },
++      {
++        "path": "/workspace/scratch/7e3d2a445c44/method-header-qualification-e10cb80d/native-first/process-04.stdout.log",
++        "bytes": 61,
++        "sha256": "335ee5c8674ef201012063d1afcf0c093316d04c0c357f69b6322dea86a5529d"
++      },
++      {
++        "path": "/workspace/scratch/7e3d2a445c44/method-header-qualification-e10cb80d/native-first/process-05.stderr.log",
++        "bytes": 0,
++        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
++      },
++      {
++        "path": "/workspace/scratch/7e3d2a445c44/method-header-qualification-e10cb80d/native-first/process-05.stdout.log",
++        "bytes": 0,
++        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
++      },
++      {
++        "path": "/workspace/scratch/7e3d2a445c44/method-header-qualification-e10cb80d/native-first/process-06.stderr.log",
++        "bytes": 0,
++        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
++      },
++      {
++        "path": "/workspace/scratch/7e3d2a445c44/method-header-qualification-e10cb80d/native-first/process-06.stdout.log",
++        "bytes": 0,
++        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
++      },
++      {
++        "path": "/workspace/scratch/7e3d2a445c44/method-header-qualification-e10cb80d/native-first/process-07.stderr.log",
++        "bytes": 0,
++        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
++      },
++      {
++        "path": "/workspace/scratch/7e3d2a445c44/method-header-qualification-e10cb80d/native-first/process-07.stdout.log",
++        "bytes": 9422,
++        "sha256": "3e6cd09a9720768c1004d6f41cf6b36484ff3c2ec971a41033bc7e7bed877629"
++      },
++      {
++        "path": "/workspace/scratch/7e3d2a445c44/method-header-qualification-e10cb80d/native-first/process-08.stderr.log",
++        "bytes": 0,
++        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
++      },
++      {
++        "path": "/workspace/scratch/7e3d2a445c44/method-header-qualification-e10cb80d/native-first/process-08.stdout.log",
++        "bytes": 8496,
++        "sha256": "d31c895076865684ad18efcd389ff717a394834550fa85616f1e11907cc3807b"
++      },
++      {
++        "path": "/workspace/scratch/7e3d2a445c44/method-header-qualification-e10cb80d/native-first/process-09.stderr.log",
++        "bytes": 0,
++        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
++      },
++      {
++        "path": "/workspace/scratch/7e3d2a445c44/method-header-qualification-e10cb80d/native-first/process-09.stdout.log",
++        "bytes": 821,
++        "sha256": "8b1f9b342485777b61620bb6bab1f0a3b91dfd7c03b423c3ef95688370bec42f"
++      },
++      {
++        "path": "/workspace/scratch/7e3d2a445c44/method-header-qualification-e10cb80d/native-first/process-10.stderr.log",
++        "bytes": 0,
++        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
++      },
++      {
++        "path": "/workspace/scratch/7e3d2a445c44/method-header-qualification-e10cb80d/native-first/process-10.stdout.log",
++        "bytes": 4875,
++        "sha256": "a03a292808850fe27ad7fcb6d7ba5987dca14a1ffb9e85186afde4d41e776a54"
++      },
++      {
++        "path": "/workspace/scratch/7e3d2a445c44/method-header-qualification-e10cb80d/native-first/process-11.stderr.log",
++        "bytes": 0,
++        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
++      },
++      {
++        "path": "/workspace/scratch/7e3d2a445c44/method-header-qualification-e10cb80d/native-first/process-11.stdout.log",
++        "bytes": 3639,
++        "sha256": "fd0c73bf70859fb173e05833d944303c23312998484e00a16e372318d36e64f5"
++      },
++      {
++        "path": "/workspace/scratch/7e3d2a445c44/method-header-qualification-e10cb80d/native-first/process-capture.mjs",
++        "bytes": 2766,
++        "sha256": "376cf307467c9ccca6407019f0cd76078b48a30b1686b970ee50679adb3a0fef"
++      },
++      {
++        "path": "/workspace/scratch/7e3d2a445c44/method-header-qualification-e10cb80d/steps/native/stdout.log",
++        "bytes": 0,
++        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
++      },
++      {
++        "path": "/workspace/scratch/7e3d2a445c44/method-header-qualification-e10cb80d/steps/native/stderr.log",
++        "bytes": 380,
++        "sha256": "605997bf63bb51c76638922eaca1eb08fefa03b5569fc2f89b7b26ca81442877"
++      },
++      {
++        "path": "/workspace/scratch/7e3d2a445c44/method-header-qualification-e10cb80d/steps/native/source-before.json",
++        "bytes": 601458,
++        "sha256": "d51a028929a48e42f07b0358fee7b40b9102edbb8fdf3a0f05d01cbd7859c274"
++      },
++      {
++        "path": "/workspace/scratch/7e3d2a445c44/method-header-qualification-e10cb80d/steps/native/source-after.json",
++        "bytes": 601458,
++        "sha256": "d51a028929a48e42f07b0358fee7b40b9102edbb8fdf3a0f05d01cbd7859c274"
++      }
++    ],
++    "commandsRecorded": 11,
++    "allNativeProcessesSucceeded": true,
++    "rawProcessLogsVerified": 22,
++    "observationsReached": [
++      "roslyn",
++      "compiler",
++      "ilasm",
++      "body-writer"
++    ],
++    "sourceBeforeAfterEqual": true,
++    "nativePolicySource": {
++      "path": "/workspace/scratch/7e3d2a445c44/method-header-native-ilasm-policy-v10.0.5.json",
++      "bytes": 1166,
++      "sha256": "359f81fd1fe12cf95718d362c9b29a2bb429cc4b8e9fcd97904074356217f5fd"
++    },
++    "rawObservationComparisons": [
++      {
++        "name": "Tiny1",
++        "codeBytes": 1,
++        "ILSha256": "684888c0ebb17f374298b65ee2807526c066094c701bcc7ebbe1c1095f494fc1",
++        "identicalInstructions": true,
++        "identicalExecution": true,
++        "nativeHeaderSize": 12,
++        "nativeMaxStack": 0,
++        "productHeaderSize": 1,
++        "productMaxStack": 8
++      },
++      {
++        "name": "Tiny63",
++        "codeBytes": 63,
++        "ILSha256": "14af75d11ecff26212ce762d5bd384fb1866b16052efd8143a2971f7f573a0dc",
++        "identicalInstructions": true,
++        "identicalExecution": true,
++        "nativeHeaderSize": 12,
++        "nativeMaxStack": 0,
++        "productHeaderSize": 1,
++        "productMaxStack": 8
++      },
++      {
++        "name": "Fat64",
++        "codeBytes": 64,
++        "ILSha256": "c77673a8cc11eb4f660ce1a4ca446423df3b68677ba4c1c1846351ddbeb2e5ef",
++        "identicalInstructions": true,
++        "identicalExecution": true,
++        "nativeHeaderSize": 12,
++        "nativeMaxStack": 0,
++        "productHeaderSize": 12,
++        "productMaxStack": 0
++      },
++      {
++        "name": "Stack8",
++        "codeBytes": 16,
++        "ILSha256": "dafe23a0f225a0927ae7f2abcfa8bfd05dbdfcc95e80d07f31c329ff3f81e7c1",
++        "identicalInstructions": true,
++        "identicalExecution": true,
++        "nativeHeaderSize": 1,
++        "nativeMaxStack": 8,
++        "productHeaderSize": 1,
++        "productMaxStack": 8
++      },
++      {
++        "name": "Stack9",
++        "codeBytes": 18,
++        "ILSha256": "254ddf6bc151e101a8b223aa81203ba5ac39c4d4aed37c449800a8a5419a40c4",
++        "identicalInstructions": true,
++        "identicalExecution": true,
++        "nativeHeaderSize": 12,
++        "nativeMaxStack": 9,
++        "productHeaderSize": 12,
++        "productMaxStack": 9
++      },
++      {
++        "name": "FatLocalZero",
++        "codeBytes": 1,
++        "ILSha256": "684888c0ebb17f374298b65ee2807526c066094c701bcc7ebbe1c1095f494fc1",
++        "identicalInstructions": true,
++        "identicalExecution": true,
++        "nativeHeaderSize": 12,
++        "nativeMaxStack": 0,
++        "productHeaderSize": 12,
++        "productMaxStack": 0
++      }
++    ],
++    "reason": "Final Tiny1 native-header assertion failed: explicit native .maxstack 0 caused a 12-byte fat header under the pinned ILAsm policy, while the product correctly emitted the expected one-byte tiny header with implicit bound 8. Tiny63 has the same raw-observation mismatch. This preserved attempt remains failed; source-only analysis is not a qualification rerun or changed outcome."
++  },
++  "nativePolicySourceOverlay": {
++    "baseHead": "e10cb80d38a9da7a3a50a78f5b214b5e7895f8e0",
++    "head": "3ddd6460260d93f0a5258bd84ac62158e36dce10",
++    "tree": "ae6fd8f3340ef8b6dbfca5614e52ce46f944bc23",
++    "path": "tests/fixtures/a03-method-headers/input.js",
++    "fileChange": {
++      "path": "tests/fixtures/a03-method-headers/input.js",
++      "before": {
++        "path": "tests/fixtures/a03-method-headers/input.js",
++        "bytes": 3244,
++        "sha256": "d4d8b748c3032fc840d17b3aecccad9e6cb8a77912e23789471daaf2b612a446"
++      },
++      "after": {
++        "path": "tests/fixtures/a03-method-headers/input.js",
++        "bytes": 3272,
++        "sha256": "6ea970f236170e2e7cb43317a48ce3bc910123cf8a75e5716a57f3478781ff61"
++      }
++    },
++    "nativePolicySource": {
++      "path": "/workspace/scratch/7e3d2a445c44/method-header-native-ilasm-policy-v10.0.5.json",
++      "bytes": 1166,
++      "sha256": "359f81fd1fe12cf95718d362c9b29a2bb429cc4b8e9fcd97904074356217f5fd"
++    },
++    "sourceUrl": "https://github.com/dotnet/runtime/blob/v10.0.5/src/coreclr/ilasm/assem.cpp",
++    "sourceBlobSha": "8daec130bcc76ae6414f26eec892ec72d06af1c5",
++    "sourceInterpretation": "ILAsm forces a fat header when the declared maxstack is below 8, there is no local-signature token, the code is shorter than 64 bytes and there are no extra sections. It sets InitLocals to preserve the declared bound instead of using a tiny header's implicit bound of 8. Native fixtures intended to test tiny headers must declare 8; exact computed depth and product-header expectations remain unchanged.",
++    "boundaryObjectLiteral": {
++      "bytes": 645,
++      "sha256": "36818259bc7619990ec79a5919fba06a702fb9b729bc013ca453561070457fc4",
++      "unchanged": true
++    },
++    "productBoundariesFunctionText": {
++      "bytes": 1377,
++      "sha256": "dda8dbdcbd3d978d5a8ba1095f2e2a4fc92ab3509e77f752c2f8030d650f214c",
++      "unchanged": true
++    },
++    "authorizedDirective": ".maxstack ${item.headerSize === 1 ? 8 : item.depth}",
++    "changedProductSources": false,
++    "changedInstructions": false,
++    "changedBoundaryObjects": false,
++    "changedAssertions": false,
++    "changedWorkloads": false,
++    "changedObservationMatrix": false
+   }
+ }

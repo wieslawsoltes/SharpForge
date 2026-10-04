@@ -1,0 +1,55 @@
+{
+  "format": "SharpForge.A05CommandCapture/1",
+  "name": "headers-filter-merge",
+  "command": [
+    "/opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin/node",
+    "scripts/limited.js",
+    "node",
+    "--test",
+    "--test-concurrency=1",
+    "tests/a03-07-handler-entry.test.js",
+    "tests/a03-05-maxstack.test.js",
+    "tests/a03-05-maxstack-eh.test.js",
+    "tests/a03-05-method-headers.test.js",
+    "tests/a03-05-compiler-method-headers.test.js",
+    "tests/a03-05-decoding-limit-tags.test.js",
+    "tests/a05-source-filters.test.js",
+    "tests/a05-04-filter-frames.test.js",
+    "tests/a05-tail-prefix-groups.test.js",
+    "tests/a05-filter-entry-policy.test.js"
+  ],
+  "cwd": "/tmp/a05-integration-42f7738360b9",
+  "resources": {
+    "SHARPFORGE_MAX_PARALLEL_RUNS": "1",
+    "SHARPFORGE_TEST_CONCURRENCY": "1",
+    "SHARPFORGE_MAX_OLD_SPACE_MB": "512",
+    "NODE_OPTIONS": null
+  },
+  "toolchainEnvironment": {
+    "DOTNET": null,
+    "DOTNET_ROOT": null,
+    "DOTNET_SDK_VERSION": null,
+    "DOTNET_TARGET_FRAMEWORK": null,
+    "SHARPFORGE_REFERENCE_PACK": null
+  },
+  "node": "v24.19.0",
+  "startIdentity": {
+    "commit": "e16e011ac2b8b789646f861a2e6261a03ddcee2b",
+    "tree": "fe4afe1b9a97d3deb47390711fb1cc3b0ce29639",
+    "status": ""
+  },
+  "startedUTC": "2026-10-04T23:34:50.982923+00:00",
+  "completedUTC": "2026-10-04T23:34:58.589437+00:00",
+  "elapsedSeconds": 7.606227447999117,
+  "exitCode": 0,
+  "endIdentity": {
+    "commit": "e16e011ac2b8b789646f861a2e6261a03ddcee2b",
+    "tree": "fe4afe1b9a97d3deb47390711fb1cc3b0ce29639",
+    "status": ""
+  },
+  "artifact": {
+    "path": "headers-filter-merge.log",
+    "bytes": 6571,
+    "sha256": "8f2c46726701916ebac03a19283dab51f4b7775012aa9d2a1caf0e1339e45d92"
+  }
+}

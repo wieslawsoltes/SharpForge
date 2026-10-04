@@ -1,0 +1,214 @@
+{
+  "schema": 1,
+  "kind": "maxstack current-main integration qualification",
+  "reviewedAt": "2026-10-04T22:40:39.639254+00:00",
+  "reviewer": "root automated source and execution reviewer",
+  "integrationRevision": "bb776c1b0a839edfc12cdb76bc707453b4c87aca",
+  "qualifiedRevision": "56671d1bbe4c0c41d2ce89c1bd5878f23fafdbcc",
+  "qualifiedTree": "e85ac17fb802304f4945f14cf8f34d7190192168",
+  "integratedMain": "dc8b77e7c75ddf6abf63b9c65823ac051e6f9b4a",
+  "firstFailure": {
+    "tests": 79,
+    "pass": 78,
+    "fail": 1,
+    "cancelled": 0,
+    "skipped": 0,
+    "productDrift": false,
+    "firstCommandStoppedLaterCommand": true,
+    "diagnosis": "Exact empty-reference TypeDef expectation predated main\u2019s module ref-safety attribute contract; current emit helper defaults refout:true. Only that exact expected list changed, retaining all marker/member/body assertions."
+  },
+  "qualifiedResult": {
+    "originalGate": {
+      "files": 13,
+      "tests": 79,
+      "pass": 79,
+      "fail": 0,
+      "cancelled": 0,
+      "skipped": 0
+    },
+    "selectedIntegrationGate": {
+      "files": 4,
+      "tests": 5,
+      "pass": 5,
+      "fail": 0,
+      "cancelled": 0,
+      "skipped": 0,
+      "names": [
+        "A02-T05.3 both assembly APIs embed complete nullable attributes matching Roslyn",
+        "A02-T83 executable and reference assemblies publish grouping and marker metadata with original implementations",
+        "A02-T77 exact UTF-8 payloads, empty data and deduplication survive real PE layout",
+        "A02-T77 nested functions, initializer calls, generic methods and late state machines share planned data",
+        "A02-T30 module initializers run from <Module>::.cctor for every entry-point type shape"
+      ]
+    },
+    "beforeAfterSourcesIdentical": true,
+    "secondaryErrors": [],
+    "interruptions": []
+  },
+  "sourceReview": "Both parent export/allowlist sets preserved. Against main, assembly-emitter changes only automatic writeMethodBody header options. Main\u2019s installed attribute/extension body contributions, UTF8 RVA placement and module initializer semantics remain. One stale exact TypeDef assertion was corrected from source and main\u2019s pinned-Roslyn declaration-metadata contract. No product source correction.",
+  "historicalEvidence": "Native and performance evidence remains scoped to original candidate3ddd6460260d93f0a5258bd84ac62158e36dce10 and baselinee60b0764782f1122439e5b161cb9494c75724e32; no native or benchmark recapture was performed solely for this main integration. Prior quantified cost acceptance remains an automated root reviewer decision.",
+  "retention": {
+    "files": 26,
+    "bytes": 1882819,
+    "allCopiedBytesRechecked": true,
+    "filesAndHashes": [
+      {
+        "source": "/workspace/scratch/7e3d2a445c44/method-header-integration-bb776c1b/focused-original.execution.json",
+        "retained": "tests/fixtures/a03-method-headers/qualification/integration-dc8b77e7/method-header-integration-bb776c1b/focused-original.execution.json",
+        "bytes": 2007,
+        "sha256": "d3d272299d35f6fd4b2521b3242f1b7e3e5b104daecc5939b7ed86c2e5e061e3"
+      },
+      {
+        "source": "/workspace/scratch/7e3d2a445c44/method-header-integration-bb776c1b/focused-original.source-after.json",
+        "retained": "tests/fixtures/a03-method-headers/qualification/integration-dc8b77e7/method-header-integration-bb776c1b/focused-original.source-after.json",
+        "bytes": 271753,
+        "sha256": "39b4966c9867575e2b26f82e1530f8649b15299786a0cd2355c56e6c3638235a"
+      },
+      {
+        "source": "/workspace/scratch/7e3d2a445c44/method-header-integration-bb776c1b/focused-original.source-before.json",
+        "retained": "tests/fixtures/a03-method-headers/qualification/integration-dc8b77e7/method-header-integration-bb776c1b/focused-original.source-before.json",
+        "bytes": 271753,
+        "sha256": "39b4966c9867575e2b26f82e1530f8649b15299786a0cd2355c56e6c3638235a"
+      },
+      {
+        "source": "/workspace/scratch/7e3d2a445c44/method-header-integration-bb776c1b/focused-original.stderr.log",
+        "retained": "tests/fixtures/a03-method-headers/qualification/integration-dc8b77e7/method-header-integration-bb776c1b/focused-original.stderr.log",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "source": "/workspace/scratch/7e3d2a445c44/method-header-integration-bb776c1b/focused-original.stdout.tap",
+        "retained": "tests/fixtures/a03-method-headers/qualification/integration-dc8b77e7/method-header-integration-bb776c1b/focused-original.stdout.tap",
+        "bytes": 20836,
+        "sha256": "0049774dab7d28d0858ef46e80654bc8a4772aed334107a634489030b9840ce6"
+      },
+      {
+        "source": "/workspace/scratch/7e3d2a445c44/method-header-integration-bb776c1b/recorder.execution.json",
+        "retained": "tests/fixtures/a03-method-headers/qualification/integration-dc8b77e7/method-header-integration-bb776c1b/recorder.execution.json",
+        "bytes": 6413,
+        "sha256": "2233c3cf6994a32ab366084f51d5737c456593a92bbb07f19e47b26b02742326"
+      },
+      {
+        "source": "/workspace/scratch/7e3d2a445c44/method-header-integration-bb776c1b/recorder.failure.json",
+        "retained": "tests/fixtures/a03-method-headers/qualification/integration-dc8b77e7/method-header-integration-bb776c1b/recorder.failure.json",
+        "bytes": 6413,
+        "sha256": "2233c3cf6994a32ab366084f51d5737c456593a92bbb07f19e47b26b02742326"
+      },
+      {
+        "source": "/workspace/scratch/7e3d2a445c44/method-header-integration-56671d1b/focused-original.execution.json",
+        "retained": "tests/fixtures/a03-method-headers/qualification/integration-dc8b77e7/method-header-integration-56671d1b/focused-original.execution.json",
+        "bytes": 2126,
+        "sha256": "18c0b6954b5f12b90465a2bb21a7f906f45a30f24fe8701cbbc5ed96183123c8"
+      },
+      {
+        "source": "/workspace/scratch/7e3d2a445c44/method-header-integration-56671d1b/focused-original.source-after.json",
+        "retained": "tests/fixtures/a03-method-headers/qualification/integration-dc8b77e7/method-header-integration-56671d1b/focused-original.source-after.json",
+        "bytes": 271753,
+        "sha256": "aad49f3eb0202eef52b9a5ffea1673b066c08e885e29748cce3f0bfe93f59be7"
+      },
+      {
+        "source": "/workspace/scratch/7e3d2a445c44/method-header-integration-56671d1b/focused-original.source-before.json",
+        "retained": "tests/fixtures/a03-method-headers/qualification/integration-dc8b77e7/method-header-integration-56671d1b/focused-original.source-before.json",
+        "bytes": 271753,
+        "sha256": "aad49f3eb0202eef52b9a5ffea1673b066c08e885e29748cce3f0bfe93f59be7"
+      },
+      {
+        "source": "/workspace/scratch/7e3d2a445c44/method-header-integration-56671d1b/focused-original.stderr.log",
+        "retained": "tests/fixtures/a03-method-headers/qualification/integration-dc8b77e7/method-header-integration-56671d1b/focused-original.stderr.log",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "source": "/workspace/scratch/7e3d2a445c44/method-header-integration-56671d1b/focused-original.stdout.tap",
+        "retained": "tests/fixtures/a03-method-headers/qualification/integration-dc8b77e7/method-header-integration-56671d1b/focused-original.stdout.tap",
+        "bytes": 19696,
+        "sha256": "dcf9cd44dd15b72508e101c8504228d6917e70d6bd3f8e7a008ac32e3f16a683"
+      },
+      {
+        "source": "/workspace/scratch/7e3d2a445c44/method-header-integration-56671d1b/focused-synthesized.execution.json",
+        "retained": "tests/fixtures/a03-method-headers/qualification/integration-dc8b77e7/method-header-integration-56671d1b/focused-synthesized.execution.json",
+        "bytes": 2897,
+        "sha256": "59b2b9b64d6e170464b5462517091275bd6c79421409eae7880349621deb58a6"
+      },
+      {
+        "source": "/workspace/scratch/7e3d2a445c44/method-header-integration-56671d1b/focused-synthesized.source-after.json",
+        "retained": "tests/fixtures/a03-method-headers/qualification/integration-dc8b77e7/method-header-integration-56671d1b/focused-synthesized.source-after.json",
+        "bytes": 271753,
+        "sha256": "aad49f3eb0202eef52b9a5ffea1673b066c08e885e29748cce3f0bfe93f59be7"
+      },
+      {
+        "source": "/workspace/scratch/7e3d2a445c44/method-header-integration-56671d1b/focused-synthesized.source-before.json",
+        "retained": "tests/fixtures/a03-method-headers/qualification/integration-dc8b77e7/method-header-integration-56671d1b/focused-synthesized.source-before.json",
+        "bytes": 271753,
+        "sha256": "aad49f3eb0202eef52b9a5ffea1673b066c08e885e29748cce3f0bfe93f59be7"
+      },
+      {
+        "source": "/workspace/scratch/7e3d2a445c44/method-header-integration-56671d1b/focused-synthesized.stderr.log",
+        "retained": "tests/fixtures/a03-method-headers/qualification/integration-dc8b77e7/method-header-integration-56671d1b/focused-synthesized.stderr.log",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "source": "/workspace/scratch/7e3d2a445c44/method-header-integration-56671d1b/focused-synthesized.stdout.tap",
+        "retained": "tests/fixtures/a03-method-headers/qualification/integration-dc8b77e7/method-header-integration-56671d1b/focused-synthesized.stdout.tap",
+        "bytes": 1400,
+        "sha256": "8102c30236ee7988c1be5579a5682b4f83afb9ec644a1f74e9f357be9e745d66"
+      },
+      {
+        "source": "/workspace/scratch/7e3d2a445c44/method-header-integration-56671d1b/recorder.execution.json",
+        "retained": "tests/fixtures/a03-method-headers/qualification/integration-dc8b77e7/method-header-integration-56671d1b/recorder.execution.json",
+        "bytes": 10774,
+        "sha256": "10da805b212c1767a2ea148d5dc6f637fa316c4cf5f1dc4586f617ee17dd9eda"
+      },
+      {
+        "source": "/workspace/scratch/7e3d2a445c44/method-header-integration-bb776c1b-plan.json",
+        "retained": "tests/fixtures/a03-method-headers/qualification/integration-dc8b77e7/preparation/method-header-integration-bb776c1b-plan.json",
+        "bytes": 46096,
+        "sha256": "db67dc41bed5fec3e00a9089bae4c44d5bbc71955dbcfa5308dfa2f60c6b40cc"
+      },
+      {
+        "source": "/workspace/scratch/7e3d2a445c44/method-header-integration-bb776c1b-run.py",
+        "retained": "tests/fixtures/a03-method-headers/qualification/integration-dc8b77e7/preparation/method-header-integration-bb776c1b-run.py",
+        "bytes": 16683,
+        "sha256": "e3d7929945337718ed678e738e9f04fe7c1b4c25786d6c0fadba5673ec80fb62"
+      },
+      {
+        "source": "/workspace/scratch/7e3d2a445c44/method-header-integration-bb776c1b-root-admission.json",
+        "retained": "tests/fixtures/a03-method-headers/qualification/integration-dc8b77e7/preparation/method-header-integration-bb776c1b-root-admission.json",
+        "bytes": 1736,
+        "sha256": "509c905fbe5458d870fce18a961004ed4a314300a0b1680e341a7ed588475078"
+      },
+      {
+        "source": "/workspace/scratch/7e3d2a445c44/method-header-integration-bb776c1b-review1-plan.json",
+        "retained": "tests/fixtures/a03-method-headers/qualification/integration-dc8b77e7/preparation/method-header-integration-bb776c1b-review1-plan.json",
+        "bytes": 45432,
+        "sha256": "e9279d9563a6fc1caf78b9a9f919fa683bc1cc5292d3c196ee5f2eb0cd396c67"
+      },
+      {
+        "source": "/workspace/scratch/7e3d2a445c44/method-header-integration-bb776c1b-review1-run.py",
+        "retained": "tests/fixtures/a03-method-headers/qualification/integration-dc8b77e7/preparation/method-header-integration-bb776c1b-review1-run.py",
+        "bytes": 16362,
+        "sha256": "76ed52cb4cd871df0b391dfe723364b06c821cfd6ba5855a21a1fd1dd57f7ece"
+      },
+      {
+        "source": "/workspace/scratch/7e3d2a445c44/method-header-integration-56671d1b-plan.json",
+        "retained": "tests/fixtures/a03-method-headers/qualification/integration-dc8b77e7/preparation/method-header-integration-56671d1b-plan.json",
+        "bytes": 50746,
+        "sha256": "abef0e4cd10a37095e3106b3534af5b520d46701fd29f0b2ac699c840a63b8b8"
+      },
+      {
+        "source": "/workspace/scratch/7e3d2a445c44/method-header-integration-56671d1b-root-admission.json",
+        "retained": "tests/fixtures/a03-method-headers/qualification/integration-dc8b77e7/preparation/method-header-integration-56671d1b-root-admission.json",
+        "bytes": 1417,
+        "sha256": "2c90c1ea272967b00992eb388f316b0cfbbb53bf3d85a2227c1d8d9717836c6f"
+      },
+      {
+        "source": "/workspace/scratch/7e3d2a445c44/method-header-integration-source-review-dc8b77e7.json",
+        "retained": "tests/fixtures/a03-method-headers/qualification/integration-dc8b77e7/preparation/method-header-integration-source-review-dc8b77e7.json",
+        "bytes": 1267,
+        "sha256": "3f56f3f74a78e4442de80c9b488fcef83cbf15dbda4cf2b1e5d774f2aab538fc"
+      }
+    ]
+  },
+  "pending": "Required PR core check and merge-commit main core remain pending. Broader matrix and remaining2391acceptance stay open."
+}

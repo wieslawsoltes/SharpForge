@@ -26,6 +26,12 @@ function checkCancellation(signal) {
   if (signal?.aborted) throw new CilError('CIL prefix grouping cancelled');
 }
 
+function prefixLimit(offset) {
+  const error = new CilError('CIL prefix chain limit exceeded', offset);
+  error.limitKind = 'prefix-count';
+  throw error;
+}
+
 /** Decode bounded prefix groups. Offsets/targets use original byte positions; flat decoding remains separate. */
 export function decodeInstructionGroups(bytes, { maxInstructions = 1_000_000, maxPrefixes = 64, signal } = {}) {
   checkCancellation(signal);
@@ -39,7 +45,7 @@ export function decodeInstructionGroups(bytes, { maxInstructions = 1_000_000, ma
   for (const instruction of instructions) {
     checkCancellation(signal);
     if (prefixOpcode(instruction.name)) {
-      if (prefixes.length >= maxPrefixes) throw new CilError('CIL prefix chain limit exceeded', instruction.offset);
+      if (prefixes.length >= maxPrefixes) prefixLimit(instruction.offset);
       validatePrefix(instruction);
       prefixes.push(instruction);
       continue;

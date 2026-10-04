@@ -1,0 +1,246 @@
+{
+  "format": "SharpForge.A05ValidationArchive/1",
+  "scope": "Completed main438 integration checkpoints and separately scoped premerge local review reproduction",
+  "archiveBase": {
+    "commit": "e16e011ac2b8b789646f861a2e6261a03ddcee2b",
+    "tree": "fe4afe1b9a97d3deb47390711fb1cc3b0ce29639"
+  },
+  "rawArtifacts": [
+    {
+      "path": "post-main-static.log",
+      "sourcePath": "/workspace/scratch/42f7738360b9/a05-main-438e6ef-validation-20261004/post-main-static.log",
+      "bytes": 382,
+      "sha256": "26c79e32d2a99ebe2bf0cec6263625906523c135fc80b39a03e0676b57ccbc5a"
+    },
+    {
+      "path": "post-main-static-execution.json",
+      "sourcePath": "/workspace/scratch/42f7738360b9/a05-main-438e6ef-validation-20261004/post-main-static-execution.json",
+      "bytes": 1289,
+      "sha256": "0455f2bb85c3668e103a360d2d295d35889472d3baae92ea6b745460367e1a2e"
+    },
+    {
+      "path": "headers-filter-merge.log",
+      "sourcePath": "/workspace/scratch/42f7738360b9/a05-main-438e6ef-validation-20261004/headers-filter-merge.log",
+      "bytes": 6571,
+      "sha256": "8f2c46726701916ebac03a19283dab51f4b7775012aa9d2a1caf0e1339e45d92"
+    },
+    {
+      "path": "headers-filter-merge-execution.json",
+      "sourcePath": "/workspace/scratch/42f7738360b9/a05-main-438e6ef-validation-20261004/headers-filter-merge-execution.json",
+      "bytes": 1749,
+      "sha256": "92dd585871dae6d9b251195fe23445d56820fffd2930cea5e68179674e71495b"
+    },
+    {
+      "path": "post-main-oracle-license.log",
+      "sourcePath": "/workspace/scratch/42f7738360b9/a05-main-438e6ef-validation-20261004/post-main-oracle-license.log",
+      "bytes": 88,
+      "sha256": "73f001d115b1e87b3da6ae26d8467e47ca2550a23d0c4703cc7a2ca58fc034a3"
+    },
+    {
+      "path": "post-main-oracle-license-execution.json",
+      "sourcePath": "/workspace/scratch/42f7738360b9/a05-main-438e6ef-validation-20261004/post-main-oracle-license-execution.json",
+      "bytes": 1332,
+      "sha256": "4b17236b60707d1f24b30aee1ccfcd79588e0efd38ade83c48c319660dae4ef7"
+    },
+    {
+      "path": "post-main-review-gates.log",
+      "sourcePath": "/workspace/scratch/42f7738360b9/a05-main-438e6ef-validation-20261004/post-main-review-gates.log",
+      "bytes": 393,
+      "sha256": "f3ddbf5480462f74beafd1a0d59b3ba6a7b61f8163c450ba76aff3c13b982d97"
+    },
+    {
+      "path": "post-main-review-gates-execution.json",
+      "sourcePath": "/workspace/scratch/42f7738360b9/a05-main-438e6ef-validation-20261004/post-main-review-gates-execution.json",
+      "bytes": 1318,
+      "sha256": "3008f19b776ab5520758fac8814726f0ef4c99ad7022d28eaeede18af2dcc16d"
+    },
+    {
+      "path": "review-event-e16e.json",
+      "sourcePath": "/workspace/scratch/42f7738360b9/a05-main-438e6ef-validation-20261004/review-event-e16e.json",
+      "bytes": 266,
+      "sha256": "832cfa212bd1d64db58502a8c6c999330c7b354a12730448deeffa51180988a1"
+    },
+    {
+      "path": "review-environment-e16e.json",
+      "sourcePath": "/workspace/scratch/42f7738360b9/a05-main-438e6ef-validation-20261004/review-environment-e16e.json",
+      "bytes": 220,
+      "sha256": "1a6de52872859c2dd416ca0e66aa5ba8dbd3e34901548462e136af8cfdf9a900"
+    },
+    {
+      "path": "premerge-7f/checkpoint-review-gates.log",
+      "sourcePath": "/workspace/scratch/42f7738360b9/a05-main-aa74558-validation-20261004/checkpoint-review-gates.log",
+      "bytes": 393,
+      "sha256": "e2901fadb1ff8d9442e665f37a402d41fae99d244dcacc61620dd392624f8e62"
+    },
+    {
+      "path": "premerge-7f/checkpoint-review-gates-execution.json",
+      "sourcePath": "/workspace/scratch/42f7738360b9/a05-main-aa74558-validation-20261004/checkpoint-review-gates-execution.json",
+      "bytes": 1320,
+      "sha256": "08bbca09e34ba1e0a871e0e15333d5341b76bbf963dae4d237d1077397ac05a4"
+    },
+    {
+      "path": "premerge-7f/a05-checkpoint-review-event-7f84164bf.json",
+      "sourcePath": "/workspace/scratch/42f7738360b9/a05-checkpoint-review-event-7f84164bf.json",
+      "bytes": 190,
+      "sha256": "04825ce299398b9ec005f7a377cbd96c07228ce859ad54d33f210f49852ca4e7"
+    },
+    {
+      "path": "premerge-7f/a05-checkpoint-review-environment-7f84164bf.json",
+      "sourcePath": "/workspace/scratch/42f7738360b9/a05-checkpoint-review-environment-7f84164bf.json",
+      "bytes": 195,
+      "sha256": "ce835c5b7851c853bcae6bf8f8309dc15aadf6c86e3eb5ec27d55061cb34e06f"
+    }
+  ],
+  "runs": [
+    {
+      "name": "post-main-static",
+      "testedIdentity": {
+        "commit": "6cf77967f00e4ddd0ce6987ad4aa2b99e5470c22",
+        "tree": "f25dba30dcfc8d0a003e00c8a060b5c9fe1e1aed",
+        "status": ""
+      },
+      "endIdentity": {
+        "commit": "6cf77967f00e4ddd0ce6987ad4aa2b99e5470c22",
+        "tree": "f25dba30dcfc8d0a003e00c8a060b5c9fe1e1aed",
+        "status": ""
+      },
+      "exitCode": 0,
+      "complete": true,
+      "wallSeconds": 7.2117446289994405,
+      "executionRecord": "post-main-static-execution.json"
+    },
+    {
+      "name": "headers-filter-merge",
+      "testedIdentity": {
+        "commit": "e16e011ac2b8b789646f861a2e6261a03ddcee2b",
+        "tree": "fe4afe1b9a97d3deb47390711fb1cc3b0ce29639",
+        "status": ""
+      },
+      "endIdentity": {
+        "commit": "e16e011ac2b8b789646f861a2e6261a03ddcee2b",
+        "tree": "fe4afe1b9a97d3deb47390711fb1cc3b0ce29639",
+        "status": ""
+      },
+      "exitCode": 0,
+      "complete": true,
+      "wallSeconds": 7.606227447999117,
+      "executionRecord": "headers-filter-merge-execution.json"
+    },
+    {
+      "name": "post-main-oracle-license",
+      "testedIdentity": {
+        "commit": "e16e011ac2b8b789646f861a2e6261a03ddcee2b",
+        "tree": "fe4afe1b9a97d3deb47390711fb1cc3b0ce29639",
+        "status": ""
+      },
+      "endIdentity": {
+        "commit": "e16e011ac2b8b789646f861a2e6261a03ddcee2b",
+        "tree": "fe4afe1b9a97d3deb47390711fb1cc3b0ce29639",
+        "status": ""
+      },
+      "exitCode": 0,
+      "complete": true,
+      "wallSeconds": 0.405699161994562,
+      "executionRecord": "post-main-oracle-license-execution.json"
+    },
+    {
+      "name": "post-main-review-gates",
+      "testedIdentity": {
+        "commit": "e16e011ac2b8b789646f861a2e6261a03ddcee2b",
+        "tree": "fe4afe1b9a97d3deb47390711fb1cc3b0ce29639",
+        "status": ""
+      },
+      "endIdentity": {
+        "commit": "e16e011ac2b8b789646f861a2e6261a03ddcee2b",
+        "tree": "fe4afe1b9a97d3deb47390711fb1cc3b0ce29639",
+        "status": ""
+      },
+      "exitCode": 0,
+      "complete": true,
+      "wallSeconds": 0.6644608429996879,
+      "executionRecord": "post-main-review-gates-execution.json"
+    },
+    {
+      "name": "checkpoint-review-gates",
+      "testedIdentity": {
+        "commit": "7f84164bfa3d63326f272e9b1e58265d98eb93b4",
+        "tree": "67014991d84cd1ebaf9bb49738455faafaac619b",
+        "status": ""
+      },
+      "endIdentity": {
+        "commit": "7f84164bfa3d63326f272e9b1e58265d98eb93b4",
+        "tree": "67014991d84cd1ebaf9bb49738455faafaac619b",
+        "status": ""
+      },
+      "exitCode": 0,
+      "complete": true,
+      "wallSeconds": 0.4319602859977749,
+      "executionRecord": "premerge-7f/checkpoint-review-gates-execution.json"
+    }
+  ],
+  "postMainStatic": {
+    "passed": true,
+    "nodeFiles": 1368,
+    "syntaxModules": 4848,
+    "syntaxErrors": 0,
+    "dynamicInspected": 4792,
+    "dynamicModules": 4839,
+    "dynamicErrors": 0
+  },
+  "headersFilterMerge": {
+    "tests": 64,
+    "passed": 64,
+    "failed": 0,
+    "cancelled": 0,
+    "skipped": 0,
+    "todo": 0,
+    "durationMilliseconds": 7400.259436
+  },
+  "postMainOracleLicense": {
+    "passed": true,
+    "tools": 7,
+    "packages": 14,
+    "actions": 4,
+    "images": 3,
+    "trackedPaths": 18997
+  },
+  "reviewContexts": [
+    {
+      "kind": "LOCAL constructed PR-event reproduction, not an observed GitHub job",
+      "run": "post-main-review-gates",
+      "base": "438e6ef456ec2953e18d62ab06b8fdd7cfb1095d",
+      "head": "e16e011ac2b8b789646f861a2e6261a03ddcee2b",
+      "labels": [
+        "full-ci"
+      ],
+      "event": "review-event-e16e.json",
+      "environment": "review-environment-e16e.json",
+      "passed": true,
+      "changes": [],
+      "errors": []
+    },
+    {
+      "kind": "LOCAL constructed PR-event reproduction, not an observed GitHub job",
+      "run": "checkpoint-review-gates",
+      "scope": "premerge observation",
+      "base": "aa74558ccae4851817b23d0a19c5fdfb1ef5a350",
+      "head": "7f84164bfa3d63326f272e9b1e58265d98eb93b4",
+      "labels": [
+        "full-ci"
+      ],
+      "event": "premerge-7f/a05-checkpoint-review-event-7f84164bf.json",
+      "environment": "premerge-7f/a05-checkpoint-review-environment-7f84164bf.json",
+      "passed": true,
+      "changes": [],
+      "errors": []
+    }
+  ],
+  "limitations": [
+    "All captures are original completed commands at separately recorded clean revisions; none was rerun to create this archive.",
+    "The static command ran at6cf77967f00e4ddd0ce6987ad4aa2b99e5470c22, not at the later e16 checkpoint.",
+    "Review event and environment files were constructed locally using the existing full-ci label; their passes are not observed GitHub jobs.",
+    "The premerge7f review result is retained separately and does not establish postmerge qualification.",
+    "No whole-project, full native/browser, build-size, strict-structure or performance pass is claimed.",
+    "No product or progress-ledger change and no test/build/check/benchmark rerun occurred while preparing this archive."
+  ]
+}

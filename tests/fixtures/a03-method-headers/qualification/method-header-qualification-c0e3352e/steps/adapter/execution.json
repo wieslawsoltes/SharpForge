@@ -1,0 +1,84 @@
+{
+  "step": "adapter",
+  "status": "failed",
+  "argv": [
+    "node",
+    "scripts/limited.js",
+    "node",
+    "--test",
+    "tests/a03-05-header-capture.test.js"
+  ],
+  "cwd": "/workspace/scratch/7e3d2a445c44/sf6-maxstack",
+  "originalArgv": [
+    "node",
+    "scripts/limited.js",
+    "node",
+    "--test",
+    "tests/a03-05-header-capture.test.js"
+  ],
+  "planSha256": "e02ab46edd9cdd1e996f3bb70afdbce2365667492ca0a245676078f0aa4a7544",
+  "recorderSha256": "a38bb5c75403c79102f110b68e150a1a57c300856ec3798c708d15fe638b4988",
+  "preflightStartedAt": "2026-10-04T18:23:00.363951+00:00",
+  "qualification": "failed",
+  "sourceBefore": {
+    "path": "/workspace/scratch/7e3d2a445c44/method-header-qualification-c0e3352e/steps/adapter/source-before.json",
+    "bytes": 601458,
+    "sha256": "aa429f6eab530ead35b2095367a738d7f30efaa6528de9fa3bce5c73d4b1a55a"
+  },
+  "startedAt": "2026-10-04T18:23:01.298365+00:00",
+  "timeoutSeconds": 120,
+  "availableDiskBytesBefore": 478633984,
+  "environment": {
+    "PATH": "/root/.codex/tmp/arg0/codex-arg0FW6Pa9:/opt/codex/codex-path:/opt/codex/runtimes/codex-primary-runtime/dependencies/bin/override:/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin:/opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin:/opt/codex/runtimes/codex-primary-runtime/dependencies/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/opt/codex/runtimes/codex-primary-runtime/dependencies/bin/fallback",
+    "LANG": "C.UTF-8",
+    "LC_ALL": "C.UTF-8",
+    "TZ": "Europe/Berlin",
+    "TMPDIR": null,
+    "CI": null,
+    "GITHUB_ACTIONS": null,
+    "NODE_OPTIONS": null,
+    "DOTNET_ROOT": "/workspace/scratch/7e3d2a445c44/dotnet-10.0.201",
+    "DOTNET": "/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/dotnet",
+    "SHARPFORGE_ORACLE_DOTNET": "/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/dotnet",
+    "SHARPFORGE_ILASM": "/workspace/scratch/7e3d2a445c44/dotnet-tools/ilasm",
+    "DOTNET_ROLL_FORWARD": null,
+    "DOTNET_ROLL_FORWARD_TO_PRERELEASE": null,
+    "DOTNET_CLI_TELEMETRY_OPTOUT": null,
+    "DOTNET_NOLOGO": null,
+    "SHARPFORGE_MAX_PARALLEL_RUNS": "1",
+    "SHARPFORGE_TEST_CONCURRENCY": "1",
+    "SHARPFORGE_MAX_OLD_SPACE_MB": "2048",
+    "GIT_OPTIONAL_LOCKS": "0"
+  },
+  "environmentScope": "Public execution settings only; unlisted inherited variables are not serialized.",
+  "pid": 51,
+  "exitCode": 0,
+  "signal": null,
+  "elapsedSeconds": 0.2168661509967933,
+  "finishedAt": "2026-10-04T18:23:01.515391+00:00",
+  "availableDiskBytesAfter": 478633984,
+  "failure": {
+    "type": "AssertionError",
+    "message": ""
+  },
+  "outerLogs": [
+    {
+      "path": "/workspace/scratch/7e3d2a445c44/method-header-qualification-c0e3352e/steps/adapter/stdout.log",
+      "bytes": 238,
+      "sha256": "ec77f51546c9e9811ac1d3beb30f7234ee53469ab9340a4062d2add2f69f955e"
+    },
+    {
+      "path": "/workspace/scratch/7e3d2a445c44/method-header-qualification-c0e3352e/steps/adapter/stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "outputInventory": [],
+  "sourceAfter": {
+    "path": "/workspace/scratch/7e3d2a445c44/method-header-qualification-c0e3352e/steps/adapter/source-after.json",
+    "bytes": 601458,
+    "sha256": "aa429f6eab530ead35b2095367a738d7f30efaa6528de9fa3bce5c73d4b1a55a"
+  },
+  "sourcesAndToolsUnchanged": true,
+  "recordFinishedAt": "2026-10-04T18:23:02.032828+00:00"
+}

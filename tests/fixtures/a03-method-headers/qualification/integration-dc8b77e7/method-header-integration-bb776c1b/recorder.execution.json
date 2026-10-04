@@ -1,0 +1,153 @@
+{
+  "status": "failed",
+  "startedUtc": "2026-10-04T22:27:05.699473+00:00",
+  "argv": [
+    "/workspace/scratch/7e3d2a445c44/method-header-integration-bb776c1b-run.py",
+    "/workspace/scratch/7e3d2a445c44/method-header-integration-bb776c1b-plan.json",
+    "db67dc41bed5fec3e00a9089bae4c44d5bbc71955dbcfa5308dfa2f60c6b40cc",
+    "run-two-focused-commands-once"
+  ],
+  "plan": {
+    "path": "/workspace/scratch/7e3d2a445c44/method-header-integration-bb776c1b-plan.json",
+    "bytes": 46096,
+    "sha256": "db67dc41bed5fec3e00a9089bae4c44d5bbc71955dbcfa5308dfa2f60c6b40cc"
+  },
+  "recorder": {
+    "path": "/workspace/scratch/7e3d2a445c44/method-header-integration-bb776c1b-run.py",
+    "bytes": 16683,
+    "sha256": "e3d7929945337718ed678e738e9f04fe7c1b4c25786d6c0fadba5673ec80fb62"
+  },
+  "candidate": {
+    "path": "/workspace/scratch/7e3d2a445c44/sf6-maxstack",
+    "head": "bb776c1b0a839edfc12cdb76bc707453b4c87aca",
+    "tree": "40dff4b239841c108264f94277f1157f069b953f",
+    "featureParent": "9188e28feb8ebc710bf708ce16aee9e309d76c1b",
+    "mainParent": "dc8b77e7c75ddf6abf63b9c65823ac051e6f9b4a"
+  },
+  "commands": [
+    {
+      "id": "focused-original",
+      "argv": [
+        "node",
+        "scripts/limited.js",
+        "node",
+        "--test",
+        "--test-concurrency=1",
+        "--test-reporter=tap",
+        "tests/a03-05-decoding-limit-tags.test.js",
+        "tests/a03-05-maxstack.test.js",
+        "tests/a03-05-maxstack-eh.test.js",
+        "tests/a03-05-method-headers.test.js",
+        "tests/a03-05-compiler-method-headers.test.js",
+        "tests/a03-06-eh-encoding.test.js",
+        "tests/compiler-cil-portable-pdb.test.js",
+        "tests/a03-22-attribute-dispatch.test.js",
+        "tests/a03-22-reference-assemblies.test.js",
+        "tests/a03-22-reference-identity.test.js",
+        "tests/a03-22-reference-interface-members.test.js",
+        "tests/a03-22-reference-policy.test.js",
+        "tests/a03-22-reference-synthesized-metadata.test.js"
+      ],
+      "cwd": "/workspace/scratch/7e3d2a445c44/sf6-maxstack",
+      "status": "failed",
+      "startedUtc": "2026-10-04T22:27:05.700085+00:00",
+      "exitCode": 1,
+      "signal": null,
+      "outputs": [
+        {
+          "path": "/workspace/scratch/7e3d2a445c44/method-header-integration-bb776c1b/focused-original.stdout.tap",
+          "bytes": 20836,
+          "sha256": "0049774dab7d28d0858ef46e80654bc8a4772aed334107a634489030b9840ce6"
+        },
+        {
+          "path": "/workspace/scratch/7e3d2a445c44/method-header-integration-bb776c1b/focused-original.stderr.log",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      ],
+      "availableDiskBefore": 237363200,
+      "sourceBefore": {
+        "path": "/workspace/scratch/7e3d2a445c44/method-header-integration-bb776c1b/focused-original.source-before.json",
+        "bytes": 271753,
+        "sha256": "39b4966c9867575e2b26f82e1530f8649b15299786a0cd2355c56e6c3638235a"
+      },
+      "pid": 46,
+      "sourceAfter": {
+        "path": "/workspace/scratch/7e3d2a445c44/method-header-integration-bb776c1b/focused-original.source-after.json",
+        "bytes": 271753,
+        "sha256": "39b4966c9867575e2b26f82e1530f8649b15299786a0cd2355c56e6c3638235a"
+      },
+      "finishedUtc": "2026-10-04T22:27:13.411414+00:00",
+      "receipt": {
+        "path": "/workspace/scratch/7e3d2a445c44/method-header-integration-bb776c1b/focused-original.execution.json",
+        "bytes": 2007,
+        "sha256": "d3d272299d35f6fd4b2521b3242f1b7e3e5b104daecc5939b7ed86c2e5e061e3"
+      }
+    }
+  ],
+  "interruptions": [],
+  "secondaryErrors": [],
+  "saveAttempts": [
+    {
+      "stage": "initial",
+      "path": "/workspace/scratch/7e3d2a445c44/method-header-integration-bb776c1b/receipt.pending-001.json",
+      "utc": "2026-10-04T22:27:05.699670+00:00"
+    },
+    {
+      "stage": "focused-original:admitted",
+      "path": "/workspace/scratch/7e3d2a445c44/method-header-integration-bb776c1b/receipt.pending-002.json",
+      "utc": "2026-10-04T22:27:06.127489+00:00"
+    },
+    {
+      "stage": "focused-original:before-launch",
+      "path": "/workspace/scratch/7e3d2a445c44/method-header-integration-bb776c1b/receipt.pending-003.json",
+      "utc": "2026-10-04T22:27:06.127759+00:00"
+    },
+    {
+      "stage": "focused-original:launched",
+      "path": "/workspace/scratch/7e3d2a445c44/method-header-integration-bb776c1b/receipt.pending-004.json",
+      "utc": "2026-10-04T22:27:06.128414+00:00"
+    },
+    {
+      "stage": "focused-original:finished",
+      "path": "/workspace/scratch/7e3d2a445c44/method-header-integration-bb776c1b/receipt.pending-005.json",
+      "utc": "2026-10-04T22:27:13.411455+00:00"
+    },
+    {
+      "stage": "focused-original:receipt-retained",
+      "path": "/workspace/scratch/7e3d2a445c44/method-header-integration-bb776c1b/receipt.pending-006.json",
+      "utc": "2026-10-04T22:27:13.411967+00:00"
+    },
+    {
+      "stage": "final",
+      "path": "/workspace/scratch/7e3d2a445c44/method-header-integration-bb776c1b/receipt.pending-007.json",
+      "utc": "2026-10-04T22:27:13.412222+00:00"
+    },
+    {
+      "stage": "final-failure",
+      "path": "/workspace/scratch/7e3d2a445c44/method-header-integration-bb776c1b/receipt.pending-008.json",
+      "utc": "2026-10-04T22:27:13.412501+00:00"
+    }
+  ],
+  "failure": {
+    "stage": "focused-original",
+    "utc": "2026-10-04T22:27:13.195317+00:00",
+    "type": "AssertionError",
+    "message": "Prepared command exited 1"
+  },
+  "environment": {
+    "PATH": "/root/.codex/tmp/arg0/codex-arg0FW6Pa9:/opt/codex/codex-path:/opt/codex/runtimes/codex-primary-runtime/dependencies/bin/override:/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin:/opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin:/opt/codex/runtimes/codex-primary-runtime/dependencies/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/opt/codex/runtimes/codex-primary-runtime/dependencies/bin/fallback",
+    "LANG": "C.UTF-8",
+    "LC_ALL": "C.UTF-8",
+    "TZ": "UTC",
+    "TMPDIR": null,
+    "NODE_OPTIONS": null,
+    "CI": null,
+    "GITHUB_ACTIONS": null,
+    "DOTNET_ROOT": "/workspace/scratch/7e3d2a445c44/dotnet-10.0.201",
+    "SHARPFORGE_MAX_PARALLEL_RUNS": "1",
+    "SHARPFORGE_TEST_CONCURRENCY": "1",
+    "SHARPFORGE_MAX_OLD_SPACE_MB": "2048"
+  },
+  "finishedUtc": "2026-10-04T22:27:13.412477+00:00"
+}

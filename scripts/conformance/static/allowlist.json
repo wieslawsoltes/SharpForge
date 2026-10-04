@@ -560,6 +560,13 @@
       "count": 1,
       "sha256": "29e53dea4739c957476866d4a8b9ac9333c3b61ff499842c13f161e8d70474ce",
       "reason": "Developer benchmark imports only the fixed public CIL entry of the operator-selected, clean, source-pinned checkout after verifying its own package aliases and complete source inventory. Input images never select executable source. This exact worker source/count requires review before qualification."
+    },
+    {
+      "path": "packages/cil/tools/benchmark-method-headers.mjs",
+      "operation": "dynamic-import",
+      "count": 2,
+      "sha256": "572fd15a6c5844abbf94d2a43fd155ee4c03b6fedb94c84919b217ef3a062432",
+      "reason": "Developer-only direct-emission benchmark imports explicitly selected trusted local compiler and CIL public entries. Own-checkout aliases and the exact legacy revision are checked before timed import; no managed, remote or product input chooses host JavaScript."
     }
   ]
 }

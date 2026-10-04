@@ -79,7 +79,7 @@ export function executionStackHeights(inspector, method, offsets, context) {
       }
     }
     worklist.run();
-    validateHandlerEntryHeights(method, offsets, result.heights, issue);
+    validateHandlerEntryHeights(method, offsets, result.heights, issue, { filteredHandlers: true });
   } catch (error) {
     if (!(error instanceof CilError) || !['CILDF0001', 'CILDF0002'].includes(error.code)) throw error;
     issue(method, null, error.code === 'CILDF0002' ? 'IL_CANCELLED' : 'IL_LIMIT', error.message, { diagnostic: error.code });

@@ -1,0 +1,16 @@
+{
+  "pull_request": {
+    "number": 4507,
+    "base": {
+      "sha": "438e6ef456ec2953e18d62ab06b8fdd7cfb1095d"
+    },
+    "head": {
+      "sha": "e16e011ac2b8b789646f861a2e6261a03ddcee2b"
+    },
+    "labels": [
+      {
+        "name": "full-ci"
+      }
+    ]
+  }
+}

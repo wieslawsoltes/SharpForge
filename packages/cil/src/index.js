@@ -64,6 +64,8 @@ export { referenceAssemblyMemberIncluded, addReferenceAssemblyAttribute } from '
 export { AssemblyUsageAnalysis } from './browser/analyzers.js';
 export { MetadataTableInspector } from './inspector-tables.js';
 export {readSourceTypeIdentities} from './source-type-identities.js';
+export { analyzeMaxStack, maxStackDiagnosticCatalog } from './maxstack.js';
+export { fixedStackEffect } from './stack-effects.js';
 export { MetadataGenerations, metadataGenerationDiagnosticCatalog } from './metadata/delta-reader.js';
 
 export {asyncTypes, asyncValueType} from './async-profile.js';

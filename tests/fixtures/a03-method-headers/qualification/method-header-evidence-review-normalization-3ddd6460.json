@@ -1,0 +1,54 @@
+{
+  "format": "sharpforge.method-header.evidence-review-normalization",
+  "version": 1,
+  "utc": "2026-10-04T20:55:31.077023+00:00",
+  "kind": "source-only inspection assertion failure; no qualification process launched",
+  "originalScript": {
+    "path": "/workspace/scratch/7e3d2a445c44/method-header-review-evidence-3ddd6460-first-inspection.py",
+    "bytes": 24032,
+    "sha256": "85730c8bb61efe369d30d09c11b4cffd9ff881dac65d4872b226437f2e9b0954"
+  },
+  "originalError": "AssertionError comparing full native/product handler dictionaries at line208",
+  "nativeHandlers": [
+    {
+      "flags": 1,
+      "start": 2,
+      "end": 8,
+      "target": 30,
+      "handlerEnd": 35,
+      "catchType": 0,
+      "filterOffset": 8
+    },
+    {
+      "flags": 2,
+      "start": 2,
+      "end": 37,
+      "target": 37,
+      "handlerEnd": 42,
+      "catchType": 0,
+      "filterOffset": null
+    }
+  ],
+  "productHandlers": [
+    {
+      "start": 2,
+      "end": 8,
+      "target": 30,
+      "handlerEnd": 35,
+      "catchType": 8,
+      "flags": 1,
+      "kind": "filter"
+    },
+    {
+      "start": 2,
+      "end": 37,
+      "target": 37,
+      "handlerEnd": 42,
+      "catchType": 0,
+      "flags": 2,
+      "kind": "finally"
+    }
+  ],
+  "correction": "Compare flags/start/end/target/handlerEnd and CLI payload; SRM filter payload is filterOffset, product method-body union payload is catchType. Product kind must match flags. No field, evidence or original qualification outcome changes.",
+  "qualificationReruns": 0
+}

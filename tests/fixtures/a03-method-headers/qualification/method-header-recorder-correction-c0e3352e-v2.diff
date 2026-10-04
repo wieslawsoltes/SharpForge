@@ -1,0 +1,157 @@
+--- method-header-run-step-c0e3352e.py
++++ method-header-run-step-c0e3352e-v2.py
+@@ -5,6 +5,7 @@
+ import json
+ import math
+ import os
++import re
+ from pathlib import Path
+ import shutil
+ import signal
+@@ -14,8 +15,8 @@
+ 
+ 
+ ROOT = Path('/workspace/scratch/7e3d2a445c44')
+-PLAN = ROOT / 'method-header-preflight-c0e3352e.json'
+-PLAN_SHA256 = 'e02ab46edd9cdd1e996f3bb70afdbce2365667492ca0a245676078f0aa4a7544'
++PLAN = ROOT / 'method-header-preflight-c0e3352e-v2.json'
++PLAN_SHA256 = 'eb152c11829e651c66d7f15c0790cc4458692888d203dbc302d1a8891c6e5252'
+ 
+ 
+ def sha256(path):
+@@ -133,6 +134,41 @@
+             'medianMs', 'p95Ms', 'p99Ms', 'assemblyBytes', 'assemblySHA256', 'gcExposed']}
+ 
+ 
++def parse_test_summary(stdout):
++    required = {'tests', 'suites', 'pass', 'fail', 'cancelled', 'skipped', 'todo'}
++    counters, markers = {}, set()
++    pattern = re.compile(r'(#|ℹ) +(tests|suites|pass|fail|cancelled|skipped|todo) +(.+)')
++    for line in Path(stdout).read_text().splitlines():
++        match = pattern.fullmatch(line)
++        if match is None:
++            continue
++        marker, name, value = match.groups()
++        assert name not in counters, f'Duplicate test counter: {name}'
++        assert re.fullmatch(r'[0-9]+', value), f'Invalid test counter: {name}'
++        markers.add(marker)
++        counters[name] = int(value)
++    assert set(counters) == required, 'Incomplete test counter set'
++    assert len(markers) == 1, 'Mixed TAP/spec test counters'
++    assert counters['tests'] > 0 and counters['pass'] == counters['tests'], 'Tests did not all pass'
++    assert all(counters[name] == 0 for name in ['fail', 'cancelled', 'skipped', 'todo']), 'Unsuccessful test counters'
++    return {'reporter': 'tap' if markers == {'#'} else 'node-spec', **counters}
++
++
++def verify_adjudicated_prerequisite(prerequisite):
++    assert prerequisite['kind'] == 'successful-test-with-failed-recorder'
++    proof = prerequisite['evidence']
++    assert file_record(proof['path']) == proof, 'Adjudication changed'
++    adjudication = json.loads(Path(proof['path']).read_text())
++    assert adjudication['disposition'] == 'test-passed-recorder-failed'
++    assert adjudication['testWasRerun'] is False and adjudication['originalRecorderOutcomeChanged'] is False
++    assert adjudication['originalRecorderStatus'] == 'failed' and adjudication['actualTestProcessExitCode'] == 0
++    assert adjudication['sourcesAndToolsUnchanged'] is True
++    for evidence in adjudication['evidenceFiles']:
++        assert file_record(evidence['path']) == evidence, evidence['path']
++    stdout = next(item['path'] for item in adjudication['evidenceFiles'] if Path(item['path']).name == 'stdout.log')
++    assert parse_test_summary(stdout) == adjudication['actualTestResult']
++
++
+ def verify_result(plan, step, stdout):
+     if step['id'] == 'native':
+         return verify_header_capture(step)
+@@ -145,14 +181,7 @@
+                 'provenanceLimit': plan['refoutProvenanceLimit']}
+     if 'benchmark' in step:
+         return verify_benchmark(plan, step)
+-    counters = {}
+-    for line in Path(stdout).read_text().splitlines():
+-        words = line.split()
+-        if len(words) == 3 and words[0] == '#' and words[1] in ['tests', 'pass', 'fail', 'cancelled', 'skipped', 'todo']:
+-            counters[words[1]] = int(words[2])
+-    assert counters.get('tests', 0) > 0 and counters.get('pass') == counters['tests']
+-    assert all(counters.get(name, 0) == 0 for name in ['fail', 'cancelled', 'skipped', 'todo'])
+-    return counters
++    return parse_test_summary(stdout)
+ 
+ 
+ def stop(process):
+@@ -189,8 +218,11 @@
+             lock.write(json.dumps({'pid': os.getpid(), 'step': step['id'], 'startedAt': utc()}) + '\n')
+         lock_acquired = True
+         for dependency in step['after']:
+-            previous = directory / 'steps' / dependency / 'execution.json'
+-            assert json.loads(previous.read_text())['status'] == 'passed', dependency
++            if dependency in plan.get('adjudicatedPrerequisites', {}):
++                verify_adjudicated_prerequisite(plan['adjudicatedPrerequisites'][dependency])
++            else:
++                previous = directory / 'steps' / dependency / 'execution.json'
++                assert json.loads(previous.read_text())['status'] == 'passed', dependency
+         assert shutil.disk_usage(ROOT).free >= step['minimumFreeBytes'], 'Insufficient free disk for the prepared step'
+         if step.get('output'):
+             output = Path(step['output'])
+
+--- method-header-preflight-c0e3352e.json
++++ method-header-preflight-c0e3352e-v2.json
+@@ -1,7 +1,7 @@
+ {
+   "schema": 1,
+-  "status": "prepared-unexecuted; root must explicitly grant the sole heavy slot",
+-  "createdAt": "2026-10-04T18:09:34.875317+00:00",
++  "status": "prepared-unexecuted-v2; existing adapter test adjudicated separately; root must regrant the sole heavy slot",
++  "createdAt": "2026-10-04T18:26:35.819430+00:00",
+   "originalProductHead": "3316898efee4a9d23b8e0cb87919b9de28a1084a",
+   "candidateHead": "c0e3352e0d68298c5e9653b3e118c28453a193ef",
+   "baselineHead": "e60b0764782f1122439e5b161cb9494c75724e32",
+@@ -25052,27 +25052,6 @@
+     "sha256": "1d26a1e7389dc328a07ea20ac11d98cc08ac1715ed8add877221bc6927b9d0f1"
+   },
+   "steps": {
+-    "adapter": {
+-      "id": "adapter",
+-      "cwd": "/workspace/scratch/7e3d2a445c44/sf6-maxstack",
+-      "argv": [
+-        "node",
+-        "scripts/limited.js",
+-        "node",
+-        "--test",
+-        "tests/a03-05-header-capture.test.js"
+-      ],
+-      "originalArgv": [
+-        "node",
+-        "scripts/limited.js",
+-        "node",
+-        "--test",
+-        "tests/a03-05-header-capture.test.js"
+-      ],
+-      "after": [],
+-      "timeoutSeconds": 120,
+-      "minimumFreeBytes": 67108864
+-    },
+     "native": {
+       "id": "native",
+       "cwd": "/workspace/scratch/7e3d2a445c44/sf6-maxstack",
+@@ -25606,5 +25585,21 @@
+     ]
+   },
+   "executionPolicy": "One prepared step per invocation; no automatic retries, changed inputs, aliases, installs or publication. Each step has exclusive logs and fresh outputs, and checks all source/fixture/tool hashes before and after. Only native/refout output destinations are redirected outside the worktree; the 13-file gate and four benchmark argv are unchanged. The added adapter failure test is a separately recorded prerequisite. Native logs retain the canonical runner UTF-8 strings, including error.result on failure, within canonical limits.",
+-  "coverageLimits": "Issue2391 remains open; legacy emitter.js/emit/pe-options.js/loader.js integration under active PR3766/3971 remains outside this batch; inherited #8 schema prerequisite unqualified. No planning/claim mutation."
++  "coverageLimits": "Issue2391 remains open; legacy emitter.js/emit/pe-options.js/loader.js integration under active PR3766/3971 remains outside this batch; inherited #8 schema prerequisite unqualified. No planning/claim mutation.",
++  "previousPlan": {
++    "path": "/workspace/scratch/7e3d2a445c44/method-header-preflight-c0e3352e.json",
++    "bytes": 1019134,
++    "sha256": "e02ab46edd9cdd1e996f3bb70afdbce2365667492ca0a245676078f0aa4a7544"
++  },
++  "adjudicatedPrerequisites": {
++    "adapter": {
++      "kind": "successful-test-with-failed-recorder",
++      "evidence": {
++        "path": "/workspace/scratch/7e3d2a445c44/method-header-adapter-adjudication-c0e3352e.json",
++        "bytes": 3832,
++        "sha256": "645fb5f1cfa88b8f95e2084ff36ce46b07fa27ad9338d5c6566b5d6908aba8c3"
++      }
++    }
++  },
++  "recorderCorrection": "Require a complete, single-format, nonduplicated set of TAP # or Node spec \u2139 test counters. Preserve the original failed adapter attempt and validate its separate adjudication before native launch. No adapter rerun is available in this plan."
+ }

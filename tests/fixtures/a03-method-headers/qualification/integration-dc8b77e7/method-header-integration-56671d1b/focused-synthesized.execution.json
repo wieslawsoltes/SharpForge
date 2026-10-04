@@ -1,0 +1,61 @@
+{
+  "id": "focused-synthesized",
+  "argv": [
+    "node",
+    "scripts/limited.js",
+    "node",
+    "--test",
+    "--test-concurrency=1",
+    "--test-reporter=tap",
+    "--test-name-pattern=^(?:A02\\-T05\\.3\\ both\\ assembly\\ APIs\\ embed\\ complete\\ nullable\\ attributes\\ matching\\ Roslyn|A02\\-T83\\ executable\\ and\\ reference\\ assemblies\\ publish\\ grouping\\ and\\ marker\\ metadata\\ with\\ original\\ implementations|A02\\-T77\\ exact\\ UTF\\-8\\ payloads,\\ empty\\ data\\ and\\ deduplication\\ survive\\ real\\ PE\\ layout|A02\\-T77\\ nested\\ functions,\\ initializer\\ calls,\\ generic\\ methods\\ and\\ late\\ state\\ machines\\ share\\ planned\\ data|A02\\-T30\\ module\\ initializers\\ run\\ from\\ <Module>::\\.cctor\\ for\\ every\\ entry\\-point\\ type\\ shape)$",
+    "tests/compiler-nullable-embedded.test.js",
+    "tests/compiler-exported-extension-blocks.test.js",
+    "tests/compiler-cil-utf8-rva.test.js",
+    "tests/compiler-cil-emission-delegates-refs.test.js"
+  ],
+  "cwd": "/workspace/scratch/7e3d2a445c44/sf6-maxstack",
+  "status": "passed",
+  "startedUtc": "2026-10-04T22:37:40.568674+00:00",
+  "exitCode": 0,
+  "signal": null,
+  "outputs": [
+    {
+      "path": "/workspace/scratch/7e3d2a445c44/method-header-integration-56671d1b/focused-synthesized.stdout.tap",
+      "bytes": 1400,
+      "sha256": "8102c30236ee7988c1be5579a5682b4f83afb9ec644a1f74e9f357be9e745d66"
+    },
+    {
+      "path": "/workspace/scratch/7e3d2a445c44/method-header-integration-56671d1b/focused-synthesized.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "availableDiskBefore": 345645056,
+  "sourceBefore": {
+    "path": "/workspace/scratch/7e3d2a445c44/method-header-integration-56671d1b/focused-synthesized.source-before.json",
+    "bytes": 271753,
+    "sha256": "aad49f3eb0202eef52b9a5ffea1673b066c08e885e29748cce3f0bfe93f59be7"
+  },
+  "pid": 251,
+  "result": {
+    "tests": 5,
+    "pass": 5,
+    "fail": 0,
+    "cancelled": 0,
+    "skipped": 0,
+    "todo": 0,
+    "selectedNames": [
+      "A02-T05.3 both assembly APIs embed complete nullable attributes matching Roslyn",
+      "A02-T83 executable and reference assemblies publish grouping and marker metadata with original implementations",
+      "A02-T77 exact UTF-8 payloads, empty data and deduplication survive real PE layout",
+      "A02-T77 nested functions, initializer calls, generic methods and late state machines share planned data",
+      "A02-T30 module initializers run from <Module>::.cctor for every entry-point type shape"
+    ]
+  },
+  "sourceAfter": {
+    "path": "/workspace/scratch/7e3d2a445c44/method-header-integration-56671d1b/focused-synthesized.source-after.json",
+    "bytes": 271753,
+    "sha256": "aad49f3eb0202eef52b9a5ffea1673b066c08e885e29748cce3f0bfe93f59be7"
+  },
+  "finishedUtc": "2026-10-04T22:37:45.913572+00:00"
+}

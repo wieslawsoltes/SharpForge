@@ -1,0 +1,135 @@
+{
+  "schema": 1,
+  "status": "source-only observer correction prepared; native retry and all other qualification remain unexecuted",
+  "createdAt": "2026-10-04T18:33:15.798464+00:00",
+  "observerCommit": "f261715fa9dc3040fb32046f54e182f765eb0ade",
+  "candidateTree": "00e692fffc122578d4edf51bd922f251f67b35ea",
+  "previousCandidate": "c0e3352e0d68298c5e9653b3e118c28453a193ef",
+  "observer": {
+    "path": "tests/fixtures/a03-method-headers/Program.cs",
+    "bytes": 6560,
+    "sha256": "6839b078cb3befe22bebc2e2d7bd710924a4b3c3c6acc809e901188723350fa6",
+    "lines": 103,
+    "longestLine": 158
+  },
+  "plan": {
+    "path": "/workspace/scratch/7e3d2a445c44/method-header-preflight-f261715f.json",
+    "bytes": 1029154,
+    "sha256": "880824acdbc5b4c5a99d3851e7ba30f3ba8a1f08075b21ff5152acaff8891ac6"
+  },
+  "recorder": {
+    "path": "/workspace/scratch/7e3d2a445c44/method-header-run-step-f261715f.py",
+    "bytes": 15420,
+    "sha256": "af49c101c992225514c301a3f15b3896e7127cb7efe8dbc23c2d6a507cd2af76"
+  },
+  "sourceArchive": {
+    "path": "/workspace/scratch/7e3d2a445c44/method-header-source-snapshots-f261715f.zip",
+    "bytes": 4529628,
+    "sha256": "1b2ce338b282e7e670973b2d2f97d1c85489591bc7398837c41cf001efe4792d"
+  },
+  "exactDiff": {
+    "path": "/workspace/scratch/7e3d2a445c44/method-header-observer-revision-f261715f.diff",
+    "bytes": 19497,
+    "sha256": "76f791fa7ede88f1ee52d4c43a4c9239593ec91762250efb29ac466d50d4e74b"
+  },
+  "sourceOverlay": {
+    "baseHead": "c0e3352e0d68298c5e9653b3e118c28453a193ef",
+    "head": "f261715fa9dc3040fb32046f54e182f765eb0ade",
+    "tree": "00e692fffc122578d4edf51bd922f251f67b35ea",
+    "path": "tests/fixtures/a03-method-headers/Program.cs",
+    "beforeSha256": "5f87da296fe8149aededb73f74cf3edc0dcc295b61fdd2bb8c680dce60f10bb2",
+    "afterSha256": "6839b078cb3befe22bebc2e2d7bd710924a4b3c3c6acc809e901188723350fa6",
+    "changedFixtureMethods": false,
+    "changedProductSources": false
+  },
+  "productTreesUnchanged": [
+    {
+      "path": "packages/archive/src",
+      "original": "efc7f1f82e3401599f470905d812b398a7647280",
+      "candidate": "efc7f1f82e3401599f470905d812b398a7647280",
+      "unchanged": true
+    },
+    {
+      "path": "packages/bcl-collections/src",
+      "original": "f1d1096869a82faaeaeefae45552544b147ba7ae",
+      "candidate": "f1d1096869a82faaeaeefae45552544b147ba7ae",
+      "unchanged": true
+    },
+    {
+      "path": "packages/bcl-core/src",
+      "original": "60f0c837486308c9cb6c03445f4515f6067d67a2",
+      "candidate": "60f0c837486308c9cb6c03445f4515f6067d67a2",
+      "unchanged": true
+    },
+    {
+      "path": "packages/bytecode/src",
+      "original": "e929355514cad0a058982101fa52f975a2ea1f55",
+      "candidate": "e929355514cad0a058982101fa52f975a2ea1f55",
+      "unchanged": true
+    },
+    {
+      "path": "packages/cil/src",
+      "original": "4a0b788760d6b2c08e0fc4d75f5c3ca673f73f71",
+      "candidate": "4a0b788760d6b2c08e0fc4d75f5c3ca673f73f71",
+      "unchanged": true
+    },
+    {
+      "path": "packages/compiler/src",
+      "original": "ec8b5068db6eea603c59161b07b599d34c9880f4",
+      "candidate": "ec8b5068db6eea603c59161b07b599d34c9880f4",
+      "unchanged": true
+    },
+    {
+      "path": "packages/framework/src",
+      "original": "a28f688cf4c0a540a2f6518777f84f7cd0ff3623",
+      "candidate": "a28f688cf4c0a540a2f6518777f84f7cd0ff3623",
+      "unchanged": true
+    },
+    {
+      "path": "packages/symbols/src",
+      "original": "8eecb3e2749c0c5c6d76fd1262aeb09c490f67bb",
+      "candidate": "8eecb3e2749c0c5c6d76fd1262aeb09c490f67bb",
+      "unchanged": true
+    },
+    {
+      "path": "packages/syntax/src",
+      "original": "2f9602d3e929781d0399653b03377226c00d3c16",
+      "candidate": "2f9602d3e929781d0399653b03377226c00d3c16",
+      "unchanged": true
+    },
+    {
+      "path": "packages/text/src",
+      "original": "8ce093ac378c10ecd2591313bfb248bfd1eba24c",
+      "candidate": "8ce093ac378c10ecd2591313bfb248bfd1eba24c",
+      "unchanged": true
+    }
+  ],
+  "toolPinsUnchanged": true,
+  "baselinePinsUnchanged": true,
+  "fixtureMethodsAndObservationMatrixUnchanged": true,
+  "unchangedCommandIds": [
+    "refout",
+    "focused",
+    "baseline-controls",
+    "candidate-controls",
+    "baseline-corpus",
+    "candidate-corpus"
+  ],
+  "nativeArgvDifference": "Only output directory changes to the fresh revision directory; native driver and observation inputs remain the same except this explicit observer output projection.",
+  "adapterSuccessAdjudication": {
+    "path": "/workspace/scratch/7e3d2a445c44/method-header-adapter-adjudication-c0e3352e.json",
+    "bytes": 3832,
+    "sha256": "645fb5f1cfa88b8f95e2084ff36ce46b07fa27ad9338d5c6566b5d6908aba8c3"
+  },
+  "firstNativeFailure": {
+    "path": "/workspace/scratch/7e3d2a445c44/method-header-qualification-c0e3352e/steps/native/execution.json",
+    "bytes": 9253,
+    "sha256": "bd739003c1ebaef28d6d16727339009ae03363b1da6487be8f0c8ed78c5ab039"
+  },
+  "firstNativeFailureFilesVerified": 29,
+  "allPriorFailuresUnchanged": true,
+  "sourceArchiveFilesCompared": 2457,
+  "syntaxParsedWithoutExecution": true,
+  "heavySlotOwned": false,
+  "diskFreeBytes": 415023104
+}

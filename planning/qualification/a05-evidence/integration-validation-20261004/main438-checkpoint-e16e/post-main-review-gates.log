@@ -1,0 +1,14 @@
+{
+  "schemaVersion": 1,
+  "passed": true,
+  "base": "438e6ef456ec2953e18d62ab06b8fdd7cfb1095d",
+  "eventBase": "438e6ef456ec2953e18d62ab06b8fdd7cfb1095d",
+  "head": "e16e011ac2b8b789646f861a2e6261a03ddcee2b",
+  "checkout": "e16e011ac2b8b789646f861a2e6261a03ddcee2b",
+  "mergeBase": "438e6ef456ec2953e18d62ab06b8fdd7cfb1095d",
+  "labels": [
+    "full-ci"
+  ],
+  "changes": [],
+  "errors": []
+}

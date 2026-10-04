@@ -1,0 +1,44 @@
+{
+  "format": "SharpForge.A05CommandCapture/1",
+  "name": "checkpoint-review-gates",
+  "command": [
+    "/opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin/node",
+    "scripts/limited.js",
+    "node",
+    "scripts/planning/review-gates.js"
+  ],
+  "cwd": "/tmp/a05-integration-42f7738360b9",
+  "resources": {
+    "SHARPFORGE_MAX_PARALLEL_RUNS": "1",
+    "SHARPFORGE_TEST_CONCURRENCY": "1",
+    "SHARPFORGE_MAX_OLD_SPACE_MB": "512",
+    "NODE_OPTIONS": null
+  },
+  "toolchainEnvironment": {
+    "DOTNET": null,
+    "DOTNET_ROOT": null,
+    "DOTNET_SDK_VERSION": null,
+    "DOTNET_TARGET_FRAMEWORK": null,
+    "SHARPFORGE_REFERENCE_PACK": null
+  },
+  "node": "v24.19.0",
+  "startIdentity": {
+    "commit": "7f84164bfa3d63326f272e9b1e58265d98eb93b4",
+    "tree": "67014991d84cd1ebaf9bb49738455faafaac619b",
+    "status": ""
+  },
+  "startedUTC": "2026-10-04T23:25:34.218875+00:00",
+  "completedUTC": "2026-10-04T23:25:34.651049+00:00",
+  "elapsedSeconds": 0.4319602859977749,
+  "exitCode": 0,
+  "endIdentity": {
+    "commit": "7f84164bfa3d63326f272e9b1e58265d98eb93b4",
+    "tree": "67014991d84cd1ebaf9bb49738455faafaac619b",
+    "status": ""
+  },
+  "artifact": {
+    "path": "checkpoint-review-gates.log",
+    "bytes": 393,
+    "sha256": "e2901fadb1ff8d9442e665f37a402d41fae99d244dcacc61620dd392624f8e62"
+  }
+}

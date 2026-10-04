@@ -3,12 +3,18 @@ import { CilOpcodes } from './catalog.js';
 
 const byValue = new Map(Object.values(CilOpcodes).map(opcode => [opcode.value, opcode]));
 
+function instructionLimit() {
+  const error = new CilError('IL instruction limit exceeded');
+  error.limitKind = 'instruction-count';
+  throw error;
+}
+
 /** Internal byte decoder; layout supplies its own target resolution before boundary validation. */
 export function decodeInstructionBytes(bytes, maxInstructions = 1_000_000, maxSwitchTargets = Infinity) {
   const reader = new Reader(bytes), result = [];
   let switchTargets = 0;
   while (reader.position < reader.end) {
-    if (result.length >= maxInstructions) throw new CilError('IL instruction limit exceeded');
+    if (result.length >= maxInstructions) instructionLimit();
     const offset = reader.position;
     let value = reader.u8();
     if (value === 0xfe) value = 0xfe00 | reader.u8();

@@ -1,0 +1,146 @@
+{
+  "head": "3316898efee4a9d23b8e0cb87919b9de28a1084a",
+  "base": "e60b0764782f1122439e5b161cb9494c75724e32",
+  "bounds": [
+    {
+      "path": "packages/cil/src/eh-encoding.js",
+      "lines": 106,
+      "bytes": 5124,
+      "longestLine": 131,
+      "sha256": "5e88fcece4674c1a3f0489af7d02183ad225b3d9fccfd1d5ab6a9157b56dd4b0"
+    },
+    {
+      "path": "packages/cil/src/il-prefixes.js",
+      "lines": 81,
+      "bytes": 3954,
+      "longestLine": 127,
+      "sha256": "0bc1dc0c9cde16fbccaa90a8bdda6e945857cf12fa7e004ba5e9cedf0b7ea4ca"
+    },
+    {
+      "path": "packages/cil/src/index.js",
+      "lines": 58,
+      "bytes": 3899,
+      "longestLine": 120,
+      "sha256": "8760938fb9f2495bba54b1a8be01bdbf2e4249b19a7f436b1b4e9ddb4b72239e"
+    },
+    {
+      "path": "packages/cil/src/maxstack.js",
+      "lines": 166,
+      "bytes": 8457,
+      "longestLine": 130,
+      "sha256": "b6eb32d3690435527009bd2eea2290b837420a4f55e24c3576a4e22914079804"
+    },
+    {
+      "path": "packages/cil/src/opcodes/decoder.js",
+      "lines": 62,
+      "bytes": 2746,
+      "longestLine": 118,
+      "sha256": "3c863de60614bb2b44d47849edb76754616bd43f4cdcaca1573a84966823a485"
+    },
+    {
+      "path": "packages/cil/src/stack-effects.js",
+      "lines": 15,
+      "bytes": 649,
+      "longestLine": 119,
+      "sha256": "8e740a382658c77bc849eca40da05906e1cfefc321b0120f7bc660d1ea937f45"
+    },
+    {
+      "path": "packages/cil/src/verify/handlers-access.js",
+      "lines": 25,
+      "bytes": 1264,
+      "longestLine": 111,
+      "sha256": "c7de25499033cef2db6321282988bed158f724133252fee5dfee8f2517b2471c"
+    },
+    {
+      "path": "packages/cil/tools/benchmark-method-headers.mjs",
+      "lines": 101,
+      "bytes": 6577,
+      "longestLine": 150,
+      "sha256": "572fd15a6c5844abbf94d2a43fd155ee4c03b6fedb94c84919b217ef3a062432"
+    },
+    {
+      "path": "packages/compiler/src/emit/cil/assembly-emitter.js",
+      "lines": 188,
+      "bytes": 10715,
+      "longestLine": 136,
+      "sha256": "84986a9f80f5915528888cb62e3ce5a129924b795e7164796a5427f44c0554ca"
+    },
+    {
+      "path": "packages/compiler/src/emit/cil/il-builder.js",
+      "lines": 197,
+      "bytes": 9610,
+      "longestLine": 143,
+      "sha256": "83b9d9dfc88d4fcf4328bd97efd32bcc47afd822f555bb768416e6aaac5ad412"
+    },
+    {
+      "path": "tests/a03-05-compiler-method-headers.test.js",
+      "lines": 79,
+      "bytes": 4561,
+      "longestLine": 143,
+      "sha256": "e024933e9d0a97c6efe596de1a9aad3c7f0a13c5d9e21caa9a61c48aac4c479c"
+    },
+    {
+      "path": "tests/a03-05-decoding-limit-tags.test.js",
+      "lines": 32,
+      "bytes": 1561,
+      "longestLine": 133,
+      "sha256": "7dd7ecf90d557585c27a088970d00d59417663c32443dc7b0ebda0f6e37ba9ff"
+    },
+    {
+      "path": "tests/a03-05-maxstack-eh.test.js",
+      "lines": 100,
+      "bytes": 5441,
+      "longestLine": 120,
+      "sha256": "5a6c46edf41903e4be24c5ade084dab3e7ad0f12a3d051c94c11540e19ebe59c"
+    },
+    {
+      "path": "tests/a03-05-maxstack.test.js",
+      "lines": 117,
+      "bytes": 6563,
+      "longestLine": 131,
+      "sha256": "a2cdf1030472ac0efb6e775c696a5ac18916b6643f1bddd89e357893c66df147"
+    },
+    {
+      "path": "tests/a03-05-method-headers.test.js",
+      "lines": 67,
+      "bytes": 3552,
+      "longestLine": 128,
+      "sha256": "0773e20915488a83b998564ef57cebbe92170bb14a0a7ed745e1e136ae98149d"
+    },
+    {
+      "path": "tests/fixtures/a03-method-headers/Program.cs",
+      "lines": 101,
+      "bytes": 6441,
+      "longestLine": 158,
+      "sha256": "5f87da296fe8149aededb73f74cf3edc0dcc295b61fdd2bb8c680dce60f10bb2"
+    },
+    {
+      "path": "tests/fixtures/a03-method-headers/capture.mjs",
+      "lines": 133,
+      "bytes": 8083,
+      "longestLine": 160,
+      "sha256": "f896fe2ca856da0e13c5fbe575b108ac40e1b3048fbbfe65221d0fb3ff802373"
+    },
+    {
+      "path": "tests/fixtures/a03-method-headers/controls.cs",
+      "lines": 6,
+      "bytes": 165,
+      "longestLine": 51,
+      "sha256": "241d813980f6c759d9157ae177b1c75b367b75a062286c87479899c8c9e6e630"
+    },
+    {
+      "path": "tests/fixtures/a03-method-headers/corpus.cs",
+      "lines": 40,
+      "bytes": 1307,
+      "longestLine": 130,
+      "sha256": "6c7a86183afc367e4eb817c3644ea3018ac9756c1211afc1a0556e723c36c8a4"
+    },
+    {
+      "path": "tests/fixtures/a03-method-headers/input.js",
+      "lines": 64,
+      "bytes": 3242,
+      "longestLine": 128,
+      "sha256": "95c8ad7d4978eb7fb421351f080a77db0d404ec1c2e9df8574bc48735084f118"
+    }
+  ]
+}

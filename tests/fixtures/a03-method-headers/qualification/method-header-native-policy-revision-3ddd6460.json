@@ -1,0 +1,345 @@
+{
+  "schema": 1,
+  "status": "source-only native-policy correction frozen; no execution",
+  "createdAt": "2026-10-04T19:37:03.503805+00:00",
+  "head": "3ddd6460260d93f0a5258bd84ac62158e36dce10",
+  "tree": "ae6fd8f3340ef8b6dbfca5614e52ce46f944bc23",
+  "parent": "e10cb80d38a9da7a3a50a78f5b214b5e7895f8e0",
+  "originalProductHead": "3316898efee4a9d23b8e0cb87919b9de28a1084a",
+  "sourceOnlyDiff": "diff --git a/tests/fixtures/a03-method-headers/input.js b/tests/fixtures/a03-method-headers/input.js\nindex 77c3850f0d..3959e5e7a2 100644\n--- a/tests/fixtures/a03-method-headers/input.js\n+++ b/tests/fixtures/a03-method-headers/input.js\n@@ -15,7 +15,7 @@ export function nativeSource() {\n     const operations = [...Array(item.padding).fill('nop'), ...Array(item.depth).fill('ldc.i4.0'),\n       ...Array(Math.max(0, item.depth - 1)).fill('pop'), 'ret'];\n     return `.method public static ${item.result === 'int' ? 'int32' : 'void'} ${item.name}() cil managed {\n-      .maxstack ${item.depth}\n+      .maxstack ${item.headerSize === 1 ? 8 : item.depth}\n       ${item.local ? \".locals init (int32 'value')\" : ''}\n       ${operations.join('\\n      ')}\n     }`;\n",
+  "sourceOverlay": {
+    "baseHead": "e10cb80d38a9da7a3a50a78f5b214b5e7895f8e0",
+    "head": "3ddd6460260d93f0a5258bd84ac62158e36dce10",
+    "tree": "ae6fd8f3340ef8b6dbfca5614e52ce46f944bc23",
+    "path": "tests/fixtures/a03-method-headers/input.js",
+    "fileChange": {
+      "path": "tests/fixtures/a03-method-headers/input.js",
+      "before": {
+        "path": "tests/fixtures/a03-method-headers/input.js",
+        "bytes": 3244,
+        "sha256": "d4d8b748c3032fc840d17b3aecccad9e6cb8a77912e23789471daaf2b612a446"
+      },
+      "after": {
+        "path": "tests/fixtures/a03-method-headers/input.js",
+        "bytes": 3272,
+        "sha256": "6ea970f236170e2e7cb43317a48ce3bc910123cf8a75e5716a57f3478781ff61"
+      }
+    },
+    "nativePolicySource": {
+      "path": "/workspace/scratch/7e3d2a445c44/method-header-native-ilasm-policy-v10.0.5.json",
+      "bytes": 1166,
+      "sha256": "359f81fd1fe12cf95718d362c9b29a2bb429cc4b8e9fcd97904074356217f5fd"
+    },
+    "sourceUrl": "https://github.com/dotnet/runtime/blob/v10.0.5/src/coreclr/ilasm/assem.cpp",
+    "sourceBlobSha": "8daec130bcc76ae6414f26eec892ec72d06af1c5",
+    "sourceInterpretation": "ILAsm forces a fat header when the declared maxstack is below 8, there is no local-signature token, the code is shorter than 64 bytes and there are no extra sections. It sets InitLocals to preserve the declared bound instead of using a tiny header's implicit bound of 8. Native fixtures intended to test tiny headers must declare 8; exact computed depth and product-header expectations remain unchanged.",
+    "boundaryObjectLiteral": {
+      "bytes": 645,
+      "sha256": "36818259bc7619990ec79a5919fba06a702fb9b729bc013ca453561070457fc4",
+      "unchanged": true
+    },
+    "productBoundariesFunctionText": {
+      "bytes": 1377,
+      "sha256": "dda8dbdcbd3d978d5a8ba1095f2e2a4fc92ab3509e77f752c2f8030d650f214c",
+      "unchanged": true
+    },
+    "authorizedDirective": ".maxstack ${item.headerSize === 1 ? 8 : item.depth}",
+    "changedProductSources": false,
+    "changedInstructions": false,
+    "changedBoundaryObjects": false,
+    "changedAssertions": false,
+    "changedWorkloads": false,
+    "changedObservationMatrix": false
+  },
+  "fileBounds": {
+    "path": "tests/fixtures/a03-method-headers/input.js",
+    "bytes": 3272,
+    "sha256": "6ea970f236170e2e7cb43317a48ce3bc910123cf8a75e5716a57f3478781ff61",
+    "lines": 64,
+    "longestLine": 128
+  },
+  "plan": {
+    "path": "/workspace/scratch/7e3d2a445c44/method-header-preflight-3ddd6460.json",
+    "bytes": 1060708,
+    "sha256": "c29a45dcbc86dfae886d404ae6a62d863b5dae8d64fa1af7c8c7a27eacab04b5"
+  },
+  "recorder": {
+    "path": "/workspace/scratch/7e3d2a445c44/method-header-run-step-3ddd6460.py",
+    "bytes": 15420,
+    "sha256": "9ba748c491c798f5ec320e5e27d8665c8c6387a589ddd918188cf35c76ed6655"
+  },
+  "sourceArchive": {
+    "path": "/workspace/scratch/7e3d2a445c44/method-header-source-snapshots-3ddd6460.zip",
+    "bytes": 4529679,
+    "sha256": "2d442f157e3f70bffebe8336d0682221f9cc2cd629989f01fa97c377b233b6a9"
+  },
+  "exactDiff": {
+    "path": "/workspace/scratch/7e3d2a445c44/method-header-native-policy-revision-3ddd6460.diff",
+    "bytes": 26966,
+    "sha256": "2a8c2db76eba287397c188ec99a1ded1d88d91abd6df68028fc440efa8fa37d5"
+  },
+  "productTreesUnchanged": [
+    {
+      "path": "packages/archive/src",
+      "original": "efc7f1f82e3401599f470905d812b398a7647280",
+      "before": "efc7f1f82e3401599f470905d812b398a7647280",
+      "candidate": "efc7f1f82e3401599f470905d812b398a7647280",
+      "unchanged": true
+    },
+    {
+      "path": "packages/bcl-collections/src",
+      "original": "f1d1096869a82faaeaeefae45552544b147ba7ae",
+      "before": "f1d1096869a82faaeaeefae45552544b147ba7ae",
+      "candidate": "f1d1096869a82faaeaeefae45552544b147ba7ae",
+      "unchanged": true
+    },
+    {
+      "path": "packages/bcl-core/src",
+      "original": "60f0c837486308c9cb6c03445f4515f6067d67a2",
+      "before": "60f0c837486308c9cb6c03445f4515f6067d67a2",
+      "candidate": "60f0c837486308c9cb6c03445f4515f6067d67a2",
+      "unchanged": true
+    },
+    {
+      "path": "packages/bytecode/src",
+      "original": "e929355514cad0a058982101fa52f975a2ea1f55",
+      "before": "e929355514cad0a058982101fa52f975a2ea1f55",
+      "candidate": "e929355514cad0a058982101fa52f975a2ea1f55",
+      "unchanged": true
+    },
+    {
+      "path": "packages/cil/src",
+      "original": "4a0b788760d6b2c08e0fc4d75f5c3ca673f73f71",
+      "before": "4a0b788760d6b2c08e0fc4d75f5c3ca673f73f71",
+      "candidate": "4a0b788760d6b2c08e0fc4d75f5c3ca673f73f71",
+      "unchanged": true
+    },
+    {
+      "path": "packages/compiler/src",
+      "original": "ec8b5068db6eea603c59161b07b599d34c9880f4",
+      "before": "ec8b5068db6eea603c59161b07b599d34c9880f4",
+      "candidate": "ec8b5068db6eea603c59161b07b599d34c9880f4",
+      "unchanged": true
+    },
+    {
+      "path": "packages/framework/src",
+      "original": "a28f688cf4c0a540a2f6518777f84f7cd0ff3623",
+      "before": "a28f688cf4c0a540a2f6518777f84f7cd0ff3623",
+      "candidate": "a28f688cf4c0a540a2f6518777f84f7cd0ff3623",
+      "unchanged": true
+    },
+    {
+      "path": "packages/symbols/src",
+      "original": "8eecb3e2749c0c5c6d76fd1262aeb09c490f67bb",
+      "before": "8eecb3e2749c0c5c6d76fd1262aeb09c490f67bb",
+      "candidate": "8eecb3e2749c0c5c6d76fd1262aeb09c490f67bb",
+      "unchanged": true
+    },
+    {
+      "path": "packages/syntax/src",
+      "original": "2f9602d3e929781d0399653b03377226c00d3c16",
+      "before": "2f9602d3e929781d0399653b03377226c00d3c16",
+      "candidate": "2f9602d3e929781d0399653b03377226c00d3c16",
+      "unchanged": true
+    },
+    {
+      "path": "packages/text/src",
+      "original": "8ce093ac378c10ecd2591313bfb248bfd1eba24c",
+      "before": "8ce093ac378c10ecd2591313bfb248bfd1eba24c",
+      "candidate": "8ce093ac378c10ecd2591313bfb248bfd1eba24c",
+      "unchanged": true
+    }
+  ],
+  "allPackagesTreeUnchangedFromOriginalProductHead": true,
+  "toolPinsUnchanged": true,
+  "toolFilesVerified": 414,
+  "baselinePlanByteEquivalent": true,
+  "sourceFilesVerified": 2457,
+  "archivePathsChanged": [
+    "candidate/tests/fixtures/a03-method-headers/input.js"
+  ],
+  "archiveEntriesVerified": 2461,
+  "historicalArchiveEntries": [
+    {
+      "path": "original331/tests/fixtures/a03-method-headers/capture.mjs",
+      "bytes": 8083,
+      "sha256": "f896fe2ca856da0e13c5fbe575b108ac40e1b3048fbbfe65221d0fb3ff802373"
+    },
+    {
+      "path": "original331/tests/fixtures/a03-method-headers/README.md",
+      "bytes": 6148,
+      "sha256": "5debcea0e1ccafc467dcc182d2ad30a8037986f7448e78571ec3247199e9203f"
+    },
+    {
+      "path": "original331/preparation.json",
+      "bytes": 8119,
+      "sha256": "015aed88a13998ef82d602a4ba0d60f2ade650de0dbc44cf4270f16914f552ed"
+    },
+    {
+      "path": "original331/source-bounds.json",
+      "bytes": 4500,
+      "sha256": "cac0d12d3f3db2f4b3408381c80458574ed651d529c871f7919e15a24c167161"
+    }
+  ],
+  "allPriorFailuresUnchanged": true,
+  "preservedNativeFailureFileCounts": [
+    29,
+    34,
+    40
+  ],
+  "adapterSuccessAdjudication": {
+    "path": "/workspace/scratch/7e3d2a445c44/method-header-adapter-adjudication-c0e3352e.json",
+    "bytes": 3832,
+    "sha256": "645fb5f1cfa88b8f95e2084ff36ce46b07fa27ad9338d5c6566b5d6908aba8c3"
+  },
+  "adapterWasNotRerun": true,
+  "unchangedCommandIds": [
+    "refout",
+    "focused",
+    "baseline-controls",
+    "candidate-controls",
+    "baseline-corpus",
+    "candidate-corpus"
+  ],
+  "nativeArgvDifference": "Only the fresh outer destination changes; nativeSource declares the required implicit bound8 for expected tiny-format cases. Method instructions, boundary definitions, product generator, observation matrix and assertions remain unchanged.",
+  "recorderRuntimeCodeUnchanged": true,
+  "recorderParsedWithoutExecution": true,
+  "freshExecutionDirectoryAbsent": true,
+  "heavySlotOwned": false,
+  "executionNotPerformed": true,
+  "preservedPreviousPreparationArtifacts": [
+    {
+      "path": "/workspace/scratch/7e3d2a445c44/method-header-preflight-f261715f.json",
+      "bytes": 1029154,
+      "sha256": "880824acdbc5b4c5a99d3851e7ba30f3ba8a1f08075b21ff5152acaff8891ac6"
+    },
+    {
+      "path": "/workspace/scratch/7e3d2a445c44/method-header-run-step-f261715f.py",
+      "bytes": 15420,
+      "sha256": "af49c101c992225514c301a3f15b3896e7127cb7efe8dbc23c2d6a507cd2af76"
+    },
+    {
+      "path": "/workspace/scratch/7e3d2a445c44/method-header-source-snapshots-f261715f.zip",
+      "bytes": 4529628,
+      "sha256": "1b2ce338b282e7e670973b2d2f97d1c85489591bc7398837c41cf001efe4792d"
+    },
+    {
+      "path": "/workspace/scratch/7e3d2a445c44/method-header-observer-revision-f261715f.json",
+      "bytes": 5149,
+      "sha256": "7dcc2fccdfffeab80da30e5c7eab3914380f257aec20553c8d03aab67ba2ee9c"
+    },
+    {
+      "path": "/workspace/scratch/7e3d2a445c44/method-header-observer-revision-f261715f.diff",
+      "bytes": 19497,
+      "sha256": "76f791fa7ede88f1ee52d4c43a4c9239593ec91762250efb29ac466d50d4e74b"
+    },
+    {
+      "path": "/workspace/scratch/7e3d2a445c44/method-header-regrant-guard-f261715f-20261004T191202Z.json",
+      "bytes": 1355,
+      "sha256": "19cfafbac592e4dd4cd4bd71f9daff7c59572cc5c7a06f5824d90be4bf745eef"
+    },
+    {
+      "path": "/workspace/scratch/7e3d2a445c44/method-header-preflight-e10cb80d.json",
+      "bytes": 1044051,
+      "sha256": "43a791262290c3846f6bfb1bc957182803ae9ae0ae7fbf88379ba94a8c625aec"
+    },
+    {
+      "path": "/workspace/scratch/7e3d2a445c44/method-header-run-step-e10cb80d.py",
+      "bytes": 15420,
+      "sha256": "51ddc118070e3141b90bb345575da72bd1adb21f9c242149236983d287f70d09"
+    },
+    {
+      "path": "/workspace/scratch/7e3d2a445c44/method-header-source-snapshots-e10cb80d-v2.zip",
+      "bytes": 4529669,
+      "sha256": "49b8e8bf2266bc1e38fc690709f2a4915fc3237fa07a5b12fb3cad6ba36ab83d"
+    },
+    {
+      "path": "/workspace/scratch/7e3d2a445c44/method-header-harness-revision-e10cb80d.json",
+      "bytes": 12967,
+      "sha256": "5c57d16b1edb0a5ea49f656983156f4033f09d408cd09c417c8b4314c55c7c45"
+    },
+    {
+      "path": "/workspace/scratch/7e3d2a445c44/method-header-harness-revision-e10cb80d.diff",
+      "bytes": 27624,
+      "sha256": "a68ac771e9006856d460b9146e7e2ced6beeb61be77cd1fd113f7d4dd3939a41"
+    },
+    {
+      "path": "/workspace/scratch/7e3d2a445c44/method-header-regrant-guard-e10cb80d-20261004T192734Z.json",
+      "bytes": 1355,
+      "sha256": "0876276996efa8d0f0945472d0cd61152bcfe639cf21ab5660bb8a974bc72298"
+    }
+  ],
+  "rawObservationComparisons": [
+    {
+      "name": "Tiny1",
+      "codeBytes": 1,
+      "ILSha256": "684888c0ebb17f374298b65ee2807526c066094c701bcc7ebbe1c1095f494fc1",
+      "identicalInstructions": true,
+      "identicalExecution": true,
+      "nativeHeaderSize": 12,
+      "nativeMaxStack": 0,
+      "productHeaderSize": 1,
+      "productMaxStack": 8
+    },
+    {
+      "name": "Tiny63",
+      "codeBytes": 63,
+      "ILSha256": "14af75d11ecff26212ce762d5bd384fb1866b16052efd8143a2971f7f573a0dc",
+      "identicalInstructions": true,
+      "identicalExecution": true,
+      "nativeHeaderSize": 12,
+      "nativeMaxStack": 0,
+      "productHeaderSize": 1,
+      "productMaxStack": 8
+    },
+    {
+      "name": "Fat64",
+      "codeBytes": 64,
+      "ILSha256": "c77673a8cc11eb4f660ce1a4ca446423df3b68677ba4c1c1846351ddbeb2e5ef",
+      "identicalInstructions": true,
+      "identicalExecution": true,
+      "nativeHeaderSize": 12,
+      "nativeMaxStack": 0,
+      "productHeaderSize": 12,
+      "productMaxStack": 0
+    },
+    {
+      "name": "Stack8",
+      "codeBytes": 16,
+      "ILSha256": "dafe23a0f225a0927ae7f2abcfa8bfd05dbdfcc95e80d07f31c329ff3f81e7c1",
+      "identicalInstructions": true,
+      "identicalExecution": true,
+      "nativeHeaderSize": 1,
+      "nativeMaxStack": 8,
+      "productHeaderSize": 1,
+      "productMaxStack": 8
+    },
+    {
+      "name": "Stack9",
+      "codeBytes": 18,
+      "ILSha256": "254ddf6bc151e101a8b223aa81203ba5ac39c4d4aed37c449800a8a5419a40c4",
+      "identicalInstructions": true,
+      "identicalExecution": true,
+      "nativeHeaderSize": 12,
+      "nativeMaxStack": 9,
+      "productHeaderSize": 12,
+      "productMaxStack": 9
+    },
+    {
+      "name": "FatLocalZero",
+      "codeBytes": 1,
+      "ILSha256": "684888c0ebb17f374298b65ee2807526c066094c701bcc7ebbe1c1095f494fc1",
+      "identicalInstructions": true,
+      "identicalExecution": true,
+      "nativeHeaderSize": 12,
+      "nativeMaxStack": 0,
+      "productHeaderSize": 12,
+      "productMaxStack": 0
+    }
+  ],
+  "sourcePolicy": {
+    "path": "/workspace/scratch/7e3d2a445c44/method-header-native-ilasm-policy-v10.0.5.json",
+    "bytes": 1166,
+    "sha256": "359f81fd1fe12cf95718d362c9b29a2bb429cc4b8e9fcd97904074356217f5fd"
+  }
+}

@@ -1,0 +1,269 @@
+{
+  "schema": 1,
+  "status": "source-only preparation complete; no product imports or qualification executed",
+  "candidateHead": "c0e3352e0d68298c5e9653b3e118c28453a193ef",
+  "candidateTree": "3883211d40be3e7c1594adf4e5dfe584f11d951e",
+  "baselineHead": "e60b0764782f1122439e5b161cb9494c75724e32",
+  "plan": {
+    "path": "/workspace/scratch/7e3d2a445c44/method-header-preflight-c0e3352e.json",
+    "bytes": 1019134,
+    "sha256": "e02ab46edd9cdd1e996f3bb70afdbce2365667492ca0a245676078f0aa4a7544"
+  },
+  "recorder": {
+    "path": "/workspace/scratch/7e3d2a445c44/method-header-run-step-c0e3352e.py",
+    "bytes": 13612,
+    "sha256": "a38bb5c75403c79102f110b68e150a1a57c300856ec3798c708d15fe638b4988"
+  },
+  "sourceArchive": {
+    "path": "/workspace/scratch/7e3d2a445c44/method-header-source-snapshots-c0e3352e.zip",
+    "bytes": 4529610,
+    "sha256": "1d26a1e7389dc328a07ea20ac11d98cc08ac1715ed8add877221bc6927b9d0f1"
+  },
+  "infrastructure": {
+    "path": "/workspace/scratch/7e3d2a445c44/method-header-infrastructure-3316898e.json",
+    "bytes": 273308,
+    "sha256": "1ffbcc30e981c6f0d4dfa87c1f9ce872d5548f3e69c219d1f4a8b7c4a421209e"
+  },
+  "builder": {
+    "path": "/workspace/scratch/7e3d2a445c44/method-header-build-preflight-c0e3352e.py",
+    "bytes": 16825,
+    "sha256": "ee2b2786e2bfeed7a8539af24d44cf71eebac748c5415692c04c8f8e646aae65"
+  },
+  "changedPaths": [
+    "scripts/conformance/oracle/toolchain.js",
+    "tests/a03-05-header-capture.test.js",
+    "tests/fixtures/a03-method-headers/README.md",
+    "tests/fixtures/a03-method-headers/capture.mjs",
+    "tests/fixtures/a03-method-headers/process-capture.mjs"
+  ],
+  "toolOnlyDiff": "diff --git a/scripts/conformance/oracle/toolchain.js b/scripts/conformance/oracle/toolchain.js\nindex 4d631ee48..a2fa893f5 100644\n--- a/scripts/conformance/oracle/toolchain.js\n+++ b/scripts/conformance/oracle/toolchain.js\n@@ -34,9 +34,9 @@ export function assertImage(env = process.env, currentPlatform = process.platfor\n   throw new Error('Hosted oracle requires the pinned Linux container or exact Windows/macOS image');\n }\n \n-export async function resolveToolchain({ checkImage = true } = {}) {\n+export async function resolveToolchain({ checkImage = true, processRunner = runProcess } = {}) {\n   const dotnet = process.env.SHARPFORGE_ORACLE_DOTNET || 'dotnet';\n-  const execute = args => runProcess(dotnet, args, { cwd: oracleRoot });\n+  const execute = args => processRunner(dotnet, args, { cwd: oracleRoot });\n   const sdkResult = await execute(['--version']);\n   if (sdkResult.exitCode !== 0) throw new Error(`Pinned SDK ${pin.sdk} is required: ${sdkResult.stderr}${sdkResult.stdout}`);\n   const sdk = sdkResult.stdout.trim();\ndiff --git a/tests/a03-05-header-capture.test.js b/tests/a03-05-header-capture.test.js\nnew file mode 100644\nindex 000000000..dec39e0ec\n--- /dev/null\n+++ b/tests/a03-05-header-capture.test.js\n@@ -0,0 +1,42 @@\n+import test from 'node:test';\n+import assert from 'node:assert/strict';\n+import { mkdtemp, readFile, rm, writeFile } from 'node:fs/promises';\n+import { tmpdir } from 'node:os';\n+import { join } from 'node:path';\n+import { createHash } from 'node:crypto';\n+import { createProcessRecorder } from './fixtures/a03-method-headers/process-capture.mjs';\n+\n+test('header capture preserves the admitted command and partial native output when the canonical runner rejects', async () => {\n+  const output = await mkdtemp(join(tmpdir(), 'sharpforge-header-recorder-'));\n+  try {\n+    const commands = [];\n+    const reportPath = join(output, 'capture.json');\n+    const result = { stdout: 'partial stdout\\n', stderr: 'partial stderr\\n', exitCode: null, signal: 'SIGTERM', elapsedMs: 2 };\n+    const failure = Object.assign(new Error('Oracle process timed out'), { result });\n+    const save = () => writeFile(reportPath, JSON.stringify({ commands }) + '\\n');\n+    const record = createProcessRecorder({ output, commands, save, processRunner: async (executable, args, options) => {\n+      assert.equal(executable, '/recorded/dotnet');\n+      assert.deepEqual(args, ['--version']);\n+      assert.deepEqual(options, { cwd: output, timeoutMs: 31, maxOutputBytes: 127 });\n+      const admitted = JSON.parse(await readFile(reportPath, 'utf8')).commands;\n+      assert.equal(admitted.length, 1);\n+      assert.equal(admitted[0].status, 'running');\n+      throw failure;\n+    } });\n+    await assert.rejects(record('/recorded/dotnet', ['--version'], { cwd: output, timeoutMs: 31, maxOutputBytes: 127 }),\n+      error => error === failure && error.result === result);\n+    const command = JSON.parse(await readFile(reportPath, 'utf8')).commands[0];\n+    assert.equal(command.status, 'failed');\n+    assert.equal(command.error.message, failure.message);\n+    for (const key of ['stdout', 'stderr', 'exitCode', 'signal', 'elapsedMs']) assert.deepEqual(command[key], result[key]);\n+    for (const stream of ['stdout', 'stderr']) {\n+      const bytes = await readFile(join(output, command.logs[stream].path));\n+      assert.equal(bytes.toString('utf8'), result[stream]);\n+      assert.equal(command.logs[stream].bytes, bytes.length);\n+      assert.equal(command.logs[stream].sha256, createHash('sha256').update(bytes).digest('hex'));\n+    }\n+    assert.ok(Number.isFinite(Date.parse(command.startedAt)) && Number.isFinite(Date.parse(command.finishedAt)));\n+  } finally {\n+    await rm(output, { recursive: true, force: true });\n+  }\n+});\ndiff --git a/tests/fixtures/a03-method-headers/README.md b/tests/fixtures/a03-method-headers/README.md\nindex 76693c486..b19b58141 100644\n--- a/tests/fixtures/a03-method-headers/README.md\n+++ b/tests/fixtures/a03-method-headers/README.md\n@@ -41,12 +41,25 @@ arguments, status/stdout/stderr, source bytes/hashes, produced DLLs, native\n observations and product analysis results are retained, including on failure.\n The helper toolchain's independently pinned identity and environment are recorded.\n Root execution provenance additionally records the exact source/tool revision.\n+The capture records all four toolchain probes and seven workload processes through\n+the canonical native runner. Each admitted command is saved before launch, with\n+public execution settings, bounds and timestamps. Separate output logs and hashes\n+retain the runner's stdout/stderr strings, including the partial `error.result`\n+returned on timeout or output overflow. Source copies precede the first probe.\n+This recorder correction changes no product or fixture input bytes. Its focused\n+failure-retention test is `tests/a03-05-header-capture.test.js`; native success\n+remains unqualified until the actual capture completes.\n \n The existing reference-output public/friend native capture is a separate\n regression gate. It must preserve the refout contract and native/IL findings;\n it must not require unchanged header/RVA/PE bytes if an explicitly integrated\n header policy later changes their encoding. Default legacy emitter replay and\n IL-document no-change bytes remain exact requirements.\n+That unchanged compatibility driver retains native observations and consumer\n+compiler logs, but discards successful non-consumer subprocess stdout/stderr and\n+deletes its temporary build workspace. The external recorder retains its outer\n+process output and produced artifact directory; it cannot recover those discarded\n+inner outputs or claim complete inner-process provenance for this compatibility gate.\n \n ## Performance preparation\n \ndiff --git a/tests/fixtures/a03-method-headers/capture.mjs b/tests/fixtures/a03-method-headers/capture.mjs\nindex f55794150..891ec47a6 100644\n--- a/tests/fixtures/a03-method-headers/capture.mjs\n+++ b/tests/fixtures/a03-method-headers/capture.mjs\n@@ -5,20 +5,21 @@ import { fileURLToPath } from 'node:url';\n import { compileToAssembly } from '@sharpforge/compiler';\n import { analyzeMaxStack, readPE, readMethodHeader } from '@sharpforge/cil';\n import { pin, root, resolveToolchain, sha256 } from '../../../scripts/conformance/oracle/toolchain.js';\n-import { runProcess } from '../../../scripts/conformance/oracle/process.js';\n import { boundaries, nativeSource, productBoundaries } from './input.js';\n+import { createProcessRecorder } from './process-capture.mjs';\n \n const output = path.resolve(process.argv[2] ?? '');\n assert.ok(process.argv[2], 'Pass a NEW explicit capture directory; all inputs, assemblies and process observations are retained');\n await mkdir(path.dirname(output), { recursive: true });\n await mkdir(output); // An existing directory must never overwrite earlier or failed qualification.\n const fixture = fileURLToPath(new URL('./', import.meta.url));\n-const capture = { schemaVersion: 1, commands: [], observations: {}, sourceSHA256: {}, qualified: false };\n+const capture = { schemaVersion: 1, commands: [], observations: {}, sourceSHA256: {}, qualified: false,\n+  startedAt: new Date().toISOString(), argv: [process.execPath, ...process.argv.slice(1)], cwd: process.cwd() };\n const save = () => writeFile(path.join(output, 'capture.json'), JSON.stringify(capture, null, 2) + '\\n');\n+const recordProcess = createProcessRecorder({ output, commands: capture.commands, save });\n async function run(executable, args) {\n-  const result = await runProcess(executable, args, { cwd: output, timeoutMs: 60000 });\n-  capture.commands.push({ executable, args, cwd: output, ...result });\n-  await save();\n+  const result = await recordProcess(executable, args, { cwd: output, timeoutMs: 60000 });\n+  assert.equal(result.signal, null);\n   assert.equal(result.exitCode, 0, `${executable}: ${result.stdout}\\n${result.stderr}`);\n   return result.stdout;\n }\n@@ -64,7 +65,13 @@ async function observe(id, assembly, toolchain, observer) {\n }\n \n try {\n-  const toolchain = await resolveToolchain();\n+  for (const name of ['Program.cs', 'corpus.cs', 'capture.mjs', 'input.js', 'process-capture.mjs']) {\n+    const bytes = await readFile(path.join(fixture, name));\n+    capture.sourceSHA256[name] = sha256(bytes);\n+    await writeFile(path.join(output, name), bytes, { flag: 'wx' });\n+  }\n+  await save();\n+  const toolchain = await resolveToolchain({ processRunner: recordProcess });\n   capture.toolchain = toolchain.actual;\n   capture.environment = toolchain.environment;\n   capture.environmentVariables = Object.fromEntries(['SHARPFORGE_ORACLE_DOTNET', 'SHARPFORGE_ILASM', 'DOTNET_ROOT']\n@@ -78,11 +85,6 @@ try {\n   assert.equal(pins.version, pin.runtime);\n   assert.equal(sha256(await readFile(ilasm)), assembler.sha256);\n   capture.assembler = { executable: ilasm, ...assembler };\n-  for (const name of ['Program.cs', 'corpus.cs', 'capture.mjs', 'input.js']) {\n-    const bytes = await readFile(path.join(fixture, name));\n-    capture.sourceSHA256[name] = sha256(bytes);\n-    await writeFile(path.join(output, name), bytes);\n-  }\n   const common = [toolchain.csc, '-nologo', '-noconfig', '-nostdlib+', '-warn:0', '-deterministic+', '-unsafe+',\n     '-optimize+', '-langversion:latest', ...toolchain.references.map(reference => '-r:' + reference)];\n   const observer = path.join(output, 'Observer.dll');\n@@ -126,8 +128,11 @@ try {\n   await save();\n   console.log(JSON.stringify({ qualified: true, observations: Object.keys(capture.observations) }));\n } catch (error) {\n-  capture.failure = { name: error.name, message: error.message, stack: error.stack };\n+  capture.failure = { name: error.name, message: error.message, stack: error.stack, result: error.result ?? null };\n   if (error.actualToolchain) capture.actualToolchain = error.actualToolchain;\n   await save();\n   throw error;\n+} finally {\n+  capture.finishedAt = new Date().toISOString();\n+  await save();\n }\ndiff --git a/tests/fixtures/a03-method-headers/process-capture.mjs b/tests/fixtures/a03-method-headers/process-capture.mjs\nnew file mode 100644\nindex 000000000..2d5dbc51b\n--- /dev/null\n+++ b/tests/fixtures/a03-method-headers/process-capture.mjs\n@@ -0,0 +1,55 @@\n+import { createHash } from 'node:crypto';\n+import { writeFile } from 'node:fs/promises';\n+import { join } from 'node:path';\n+import { runProcess } from '../../../scripts/conformance/oracle/process.js';\n+\n+// These public overrides are applied by the canonical runner; it remains the only process launcher.\n+const nativeEnvironment = Object.freeze({\n+  DOTNET_CLI_TELEMETRY_OPTOUT: '1', DOTNET_NOLOGO: '1', DOTNET_CLI_UI_LANGUAGE: 'en-US', VSLANG: '1033',\n+  COMPlus_DbgEnableMiniDump: '0', DOTNET_ROLL_FORWARD: 'Disable', DOTNET_ROLL_FORWARD_TO_PRERELEASE: '0',\n+});\n+const publicVariables = Object.freeze([\n+  'PATH', 'LANG', 'LC_ALL', 'TZ', 'TMPDIR', 'DOTNET_ROOT', 'DOTNET', 'SHARPFORGE_ORACLE_DOTNET',\n+  'SHARPFORGE_ILASM', 'NODE_OPTIONS', 'SHARPFORGE_MAX_PARALLEL_RUNS', 'SHARPFORGE_TEST_CONCURRENCY',\n+  'SHARPFORGE_MAX_OLD_SPACE_MB', ...Object.keys(nativeEnvironment),\n+]);\n+\n+/** Retain admitted commands and partial canonical results without replacing the native process runner. */\n+export function createProcessRecorder({ output, commands, save, processRunner = runProcess }) {\n+  return async (executable, args, options = {}) => {\n+    const id = String(commands.length + 1).padStart(2, '0');\n+    const effectiveEnvironment = { ...process.env, ...nativeEnvironment, ...options.env };\n+    const command = { id, executable, args, cwd: options.cwd ?? process.cwd(),\n+      environment: Object.fromEntries(publicVariables.map(name => [name, effectiveEnvironment[name] ?? null])),\n+      environmentScope: 'Public execution settings; unlisted inherited variables are not serialized.',\n+      timeoutMs: options.timeoutMs ?? 30000, maxOutputBytes: options.maxOutputBytes ?? 1024 * 1024,\n+      startedAt: new Date().toISOString(), status: 'running', logs: {} };\n+    commands.push(command);\n+    await save();\n+    let result;\n+    try {\n+      result = await processRunner(executable, args, { ...options, cwd: command.cwd,\n+        timeoutMs: command.timeoutMs, maxOutputBytes: command.maxOutputBytes });\n+      command.status = 'exited';\n+      return result;\n+    } catch (error) {\n+      result = error.result;\n+      command.status = 'failed';\n+      command.error = { name: error.name, message: error.message };\n+      throw error;\n+    } finally {\n+      command.finishedAt = new Date().toISOString();\n+      if (result) {\n+        Object.assign(command, result);\n+        for (const stream of ['stdout', 'stderr']) {\n+          const bytes = Buffer.from(result[stream], 'utf8');\n+          const name = `process-${id}.${stream}.log`;\n+          await writeFile(join(output, name), bytes, { flag: 'wx' });\n+          command.logs[stream] = { path: name, bytes: bytes.length,\n+            sha256: createHash('sha256').update(bytes).digest('hex') };\n+        }\n+      }\n+      await save();\n+    }\n+  };\n+}\n",
+  "productTreesUnchanged": [
+    {
+      "path": "packages/archive/src",
+      "original": "efc7f1f82e3401599f470905d812b398a7647280",
+      "candidate": "efc7f1f82e3401599f470905d812b398a7647280",
+      "unchanged": true
+    },
+    {
+      "path": "packages/bcl-collections/src",
+      "original": "f1d1096869a82faaeaeefae45552544b147ba7ae",
+      "candidate": "f1d1096869a82faaeaeefae45552544b147ba7ae",
+      "unchanged": true
+    },
+    {
+      "path": "packages/bcl-core/src",
+      "original": "60f0c837486308c9cb6c03445f4515f6067d67a2",
+      "candidate": "60f0c837486308c9cb6c03445f4515f6067d67a2",
+      "unchanged": true
+    },
+    {
+      "path": "packages/bytecode/src",
+      "original": "e929355514cad0a058982101fa52f975a2ea1f55",
+      "candidate": "e929355514cad0a058982101fa52f975a2ea1f55",
+      "unchanged": true
+    },
+    {
+      "path": "packages/cil/src",
+      "original": "4a0b788760d6b2c08e0fc4d75f5c3ca673f73f71",
+      "candidate": "4a0b788760d6b2c08e0fc4d75f5c3ca673f73f71",
+      "unchanged": true
+    },
+    {
+      "path": "packages/compiler/src",
+      "original": "ec8b5068db6eea603c59161b07b599d34c9880f4",
+      "candidate": "ec8b5068db6eea603c59161b07b599d34c9880f4",
+      "unchanged": true
+    },
+    {
+      "path": "packages/framework/src",
+      "original": "a28f688cf4c0a540a2f6518777f84f7cd0ff3623",
+      "candidate": "a28f688cf4c0a540a2f6518777f84f7cd0ff3623",
+      "unchanged": true
+    },
+    {
+      "path": "packages/symbols/src",
+      "original": "8eecb3e2749c0c5c6d76fd1262aeb09c490f67bb",
+      "candidate": "8eecb3e2749c0c5c6d76fd1262aeb09c490f67bb",
+      "unchanged": true
+    },
+    {
+      "path": "packages/syntax/src",
+      "original": "2f9602d3e929781d0399653b03377226c00d3c16",
+      "candidate": "2f9602d3e929781d0399653b03377226c00d3c16",
+      "unchanged": true
+    },
+    {
+      "path": "packages/text/src",
+      "original": "8ce093ac378c10ecd2591313bfb248bfd1eba24c",
+      "candidate": "8ce093ac378c10ecd2591313bfb248bfd1eba24c",
+      "unchanged": true
+    }
+  ],
+  "originalPins": [
+    {
+      "path": "packages/cil/METHOD-HEADERS.md",
+      "originalSha256": "4a5e492cc9a9fb8ef8ff3d1dd726439971d705ac766b9ce2eca3c42e8f0c0589",
+      "candidateSha256": "4a5e492cc9a9fb8ef8ff3d1dd726439971d705ac766b9ce2eca3c42e8f0c0589",
+      "unchanged": true
+    },
+    {
+      "path": "packages/cil/README.md",
+      "originalSha256": "0b37a2acc0cf46a6bdb410e800091decb70659e396dd6acd3c74a225cd9db2e6",
+      "candidateSha256": "0b37a2acc0cf46a6bdb410e800091decb70659e396dd6acd3c74a225cd9db2e6",
+      "unchanged": true
+    },
+    {
+      "path": "packages/cil/src/eh-encoding.js",
+      "originalSha256": "5e88fcece4674c1a3f0489af7d02183ad225b3d9fccfd1d5ab6a9157b56dd4b0",
+      "candidateSha256": "5e88fcece4674c1a3f0489af7d02183ad225b3d9fccfd1d5ab6a9157b56dd4b0",
+      "unchanged": true
+    },
+    {
+      "path": "packages/cil/src/il-prefixes.js",
+      "originalSha256": "0bc1dc0c9cde16fbccaa90a8bdda6e945857cf12fa7e004ba5e9cedf0b7ea4ca",
+      "candidateSha256": "0bc1dc0c9cde16fbccaa90a8bdda6e945857cf12fa7e004ba5e9cedf0b7ea4ca",
+      "unchanged": true
+    },
+    {
+      "path": "packages/cil/src/index.js",
+      "originalSha256": "8760938fb9f2495bba54b1a8be01bdbf2e4249b19a7f436b1b4e9ddb4b72239e",
+      "candidateSha256": "8760938fb9f2495bba54b1a8be01bdbf2e4249b19a7f436b1b4e9ddb4b72239e",
+      "unchanged": true
+    },
+    {
+      "path": "packages/cil/src/maxstack.js",
+      "originalSha256": "b6eb32d3690435527009bd2eea2290b837420a4f55e24c3576a4e22914079804",
+      "candidateSha256": "b6eb32d3690435527009bd2eea2290b837420a4f55e24c3576a4e22914079804",
+      "unchanged": true
+    },
+    {
+      "path": "packages/cil/src/opcodes/decoder.js",
+      "originalSha256": "3c863de60614bb2b44d47849edb76754616bd43f4cdcaca1573a84966823a485",
+      "candidateSha256": "3c863de60614bb2b44d47849edb76754616bd43f4cdcaca1573a84966823a485",
+      "unchanged": true
+    },
+    {
+      "path": "packages/cil/src/stack-effects.js",
+      "originalSha256": "8e740a382658c77bc849eca40da05906e1cfefc321b0120f7bc660d1ea937f45",
+      "candidateSha256": "8e740a382658c77bc849eca40da05906e1cfefc321b0120f7bc660d1ea937f45",
+      "unchanged": true
+    },
+    {
+      "path": "packages/cil/src/verify/handlers-access.js",
+      "originalSha256": "c7de25499033cef2db6321282988bed158f724133252fee5dfee8f2517b2471c",
+      "candidateSha256": "c7de25499033cef2db6321282988bed158f724133252fee5dfee8f2517b2471c",
+      "unchanged": true
+    },
+    {
+      "path": "packages/cil/tools/benchmark-method-headers.mjs",
+      "originalSha256": "572fd15a6c5844abbf94d2a43fd155ee4c03b6fedb94c84919b217ef3a062432",
+      "candidateSha256": "572fd15a6c5844abbf94d2a43fd155ee4c03b6fedb94c84919b217ef3a062432",
+      "unchanged": true
+    },
+    {
+      "path": "packages/compiler/README.md",
+      "originalSha256": "6113883da010dd75b74c7740eb552332167acd72881983928d4a6c7da5b0dc58",
+      "candidateSha256": "6113883da010dd75b74c7740eb552332167acd72881983928d4a6c7da5b0dc58",
+      "unchanged": true
+    },
+    {
+      "path": "packages/compiler/src/emit/cil/assembly-emitter.js",
+      "originalSha256": "84986a9f80f5915528888cb62e3ce5a129924b795e7164796a5427f44c0554ca",
+      "candidateSha256": "84986a9f80f5915528888cb62e3ce5a129924b795e7164796a5427f44c0554ca",
+      "unchanged": true
+    },
+    {
+      "path": "packages/compiler/src/emit/cil/il-builder.js",
+      "originalSha256": "83b9d9dfc88d4fcf4328bd97efd32bcc47afd822f555bb768416e6aaac5ad412",
+      "candidateSha256": "83b9d9dfc88d4fcf4328bd97efd32bcc47afd822f555bb768416e6aaac5ad412",
+      "unchanged": true
+    },
+    {
+      "path": "scripts/conformance/static/allowlist.json",
+      "originalSha256": "f34e3fdd3fd12b53e5b3d15761c9c72c66456d36ebbbcc5af3482af1cfd39855",
+      "candidateSha256": "f34e3fdd3fd12b53e5b3d15761c9c72c66456d36ebbbcc5af3482af1cfd39855",
+      "unchanged": true
+    },
+    {
+      "path": "tests/a03-05-compiler-method-headers.test.js",
+      "originalSha256": "e024933e9d0a97c6efe596de1a9aad3c7f0a13c5d9e21caa9a61c48aac4c479c",
+      "candidateSha256": "e024933e9d0a97c6efe596de1a9aad3c7f0a13c5d9e21caa9a61c48aac4c479c",
+      "unchanged": true
+    },
+    {
+      "path": "tests/a03-05-decoding-limit-tags.test.js",
+      "originalSha256": "7dd7ecf90d557585c27a088970d00d59417663c32443dc7b0ebda0f6e37ba9ff",
+      "candidateSha256": "7dd7ecf90d557585c27a088970d00d59417663c32443dc7b0ebda0f6e37ba9ff",
+      "unchanged": true
+    },
+    {
+      "path": "tests/a03-05-maxstack-eh.test.js",
+      "originalSha256": "5a6c46edf41903e4be24c5ade084dab3e7ad0f12a3d051c94c11540e19ebe59c",
+      "candidateSha256": "5a6c46edf41903e4be24c5ade084dab3e7ad0f12a3d051c94c11540e19ebe59c",
+      "unchanged": true
+    },
+    {
+      "path": "tests/a03-05-maxstack.test.js",
+      "originalSha256": "a2cdf1030472ac0efb6e775c696a5ac18916b6643f1bddd89e357893c66df147",
+      "candidateSha256": "a2cdf1030472ac0efb6e775c696a5ac18916b6643f1bddd89e357893c66df147",
+      "unchanged": true
+    },
+    {
+      "path": "tests/a03-05-method-headers.test.js",
+      "originalSha256": "0773e20915488a83b998564ef57cebbe92170bb14a0a7ed745e1e136ae98149d",
+      "candidateSha256": "0773e20915488a83b998564ef57cebbe92170bb14a0a7ed745e1e136ae98149d",
+      "unchanged": true
+    },
+    {
+      "path": "tests/fixtures/a03-method-headers/Program.cs",
+      "originalSha256": "5f87da296fe8149aededb73f74cf3edc0dcc295b61fdd2bb8c680dce60f10bb2",
+      "candidateSha256": "5f87da296fe8149aededb73f74cf3edc0dcc295b61fdd2bb8c680dce60f10bb2",
+      "unchanged": true
+    },
+    {
+      "path": "tests/fixtures/a03-method-headers/README.md",
+      "originalSha256": "5debcea0e1ccafc467dcc182d2ad30a8037986f7448e78571ec3247199e9203f",
+      "candidateSha256": "aa63db6d34ade487461f1bef2b10a11bfaf4d7d7c7728d49a7b19106e2f9d90c",
+      "unchanged": false
+    },
+    {
+      "path": "tests/fixtures/a03-method-headers/capture.mjs",
+      "originalSha256": "f896fe2ca856da0e13c5fbe575b108ac40e1b3048fbbfe65221d0fb3ff802373",
+      "candidateSha256": "6e6d6c858bd7e29d6940228469df5cba227a25004cf25197d9004d37aa8e79a6",
+      "unchanged": false
+    },
+    {
+      "path": "tests/fixtures/a03-method-headers/controls.cs",
+      "originalSha256": "241d813980f6c759d9157ae177b1c75b367b75a062286c87479899c8c9e6e630",
+      "candidateSha256": "241d813980f6c759d9157ae177b1c75b367b75a062286c87479899c8c9e6e630",
+      "unchanged": true
+    },
+    {
+      "path": "tests/fixtures/a03-method-headers/corpus.cs",
+      "originalSha256": "6c7a86183afc367e4eb817c3644ea3018ac9756c1211afc1a0556e723c36c8a4",
+      "candidateSha256": "6c7a86183afc367e4eb817c3644ea3018ac9756c1211afc1a0556e723c36c8a4",
+      "unchanged": true
+    },
+    {
+      "path": "tests/fixtures/a03-method-headers/input.js",
+      "originalSha256": "95c8ad7d4978eb7fb421351f080a77db0d404ec1c2e9df8574bc48735084f118",
+      "candidateSha256": "95c8ad7d4978eb7fb421351f080a77db0d404ec1c2e9df8574bc48735084f118",
+      "unchanged": true
+    }
+  ],
+  "adapterFailureCoverageReason": "Existing EH tests exercise toolchain forwarding and finishCapture, but do not execute this new header process-recorder persistence path. One focused fake-runner rejection test retains admitted commands, partial output, status, hashes and original error identity; actual native capture will exercise success.",
+  "refoutProvenanceLimit": "Unchanged compatibility driver: consumer compiler argv/stdout/stderr/status and native observations are retained; successful non-consumer execFileSync stdout/stderr and its finally-deleted temporary build workspace are unavailable. Outer stdout/stderr, exact invocation, times, source inventories, and produced files are retained externally. No claim of complete inner-process provenance applies to this compatibility step.",
+  "syntaxCheckedWithoutExecution": "/workspace/scratch/7e3d2a445c44/method-header-run-step-c0e3352e.py",
+  "sourceSnapshotCounts": {
+    "candidate": {
+      "files": 1275,
+      "bytes": 6649433
+    },
+    "baseline": {
+      "files": 1182,
+      "bytes": 6243354
+    }
+  },
+  "toolSnapshotFiles": 414,
+  "diskFreeBytes": 636551168
+}

@@ -84,6 +84,12 @@ const result = compileToAssembly(source, { name: 'App', references });
 ## Direct CIL debug information
 
 `compileToAssembly` returns `{ success, assembly, pdb, diagnostics, format: 'cil' }`.
+
+Direct CIL emission computes exact stack heights from the completed relaxed instruction graph, including inserted
+pattern resets and hoisted-field rewrites, then selects eligible tiny method headers. Tiny headers report their
+implicit maxstack of eight; fat headers retain the computed bound. Dynamic stack allocation preserves InitLocals.
+The public CIL analysis/writer contract and legacy integration limits are in
+[Method headers and exact stack heights](../cil/METHOD-HEADERS.md).
 Both binary fields are null on diagnostic failure. Direct CIL symbols are opt-in:
 set `portablePdb: true` for a sidecar PDB or `embeddedPdb: true` for an embedded
 PDB (also returned separately). An explicit `portablePdb: false` disables both.

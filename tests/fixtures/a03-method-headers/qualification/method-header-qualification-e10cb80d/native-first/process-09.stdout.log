@@ -1,0 +1,28 @@
+
+.NET IL Assembler.  Version 10.0.5
+Copyright (c) Microsoft Corporation.  All rights reserved.
+Assembling '/workspace/scratch/7e3d2a445c44/method-header-qualification-e10cb80d/native-first/boundaries.il'  to DLL --> '/workspace/scratch/7e3d2a445c44/method-header-qualification-e10cb80d/native-first/NativeBoundaries.dll'
+Source file is UTF-8
+
+Assembled method Cases::Tiny1
+Assembled method Cases::Tiny63
+Assembled method Cases::Fat64
+Assembled method Cases::Stack8
+Assembled method Cases::Stack9
+Assembled method Cases::FatLocalZero
+Assembled method Cases::InvalidUnderflow
+Assembled method Cases::InvalidJoin
+Creating PE file
+
+Emitting classes:
+Class 1:	Cases
+
+Emitting fields and methods:
+Global 	
+Class 1	Methods: 8;	
+
+Emitting events and properties:
+Global 	
+Class 1	
+Writing PE file
+Operation completed successfully
