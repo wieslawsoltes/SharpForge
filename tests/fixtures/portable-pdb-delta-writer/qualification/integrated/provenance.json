@@ -1,0 +1,301 @@
+{
+  "schemaVersion": 1,
+  "scope": "Retained combined reader/writer/revision validation and benchmark evidence; documentation retention only",
+  "testedCandidate": {
+    "commit": "9cfd593809f85c197be89990bcceaa22bfd0f898",
+    "tree": "7563f9d17ea67672fd392ae2e4dd79c925c62dfc",
+    "source": "Benchmark JSON records this identity; test-run identity supplied by execution coordinator"
+  },
+  "writerPublicationBase": {
+    "commit": "2e4d2f26e6f0700b55aaf5972c16018cdb0bf908",
+    "tree": "c8ad67f93751d603b97bb5b879e64bf66c4b9046",
+    "scope": "Shared writer implementation was present in the integrated candidate; not measured in isolation",
+    "sourceFiles": [
+      {
+        "path": "packages/symbols/src/pdb-delta-input.js",
+        "bytes": 7712,
+        "sha256": "84a78aab34debdf2f8c44f81714c76b8e0e98bc15d6e41604be4ffac99ca9690",
+        "identicalAtWriterAndIntegratedCommits": true
+      },
+      {
+        "path": "packages/symbols/src/pdb-delta-writer.js",
+        "bytes": 5088,
+        "sha256": "097a0e04f526707d43ba7336056243cfba9e440734ff7beb951df9a52332682f",
+        "identicalAtWriterAndIntegratedCommits": true
+      },
+      {
+        "path": "packages/symbols/src/pdb-builder.js",
+        "bytes": 1260,
+        "sha256": "bc357a4e6e68abf1f0c7e4b89a7326e8baf719a20f2d620f96b5fe18b219f788",
+        "identicalAtWriterAndIntegratedCommits": true
+      },
+      {
+        "path": "packages/symbols/src/pdb-serialization.js",
+        "bytes": 3281,
+        "sha256": "262f52a501675f93ae496153a40c640724d25c0aa90ef6690902144601ea2416",
+        "identicalAtWriterAndIntegratedCommits": true
+      }
+    ]
+  },
+  "baseline": {
+    "commit": "8b101c0c7e8ad73675dfe12e68f26329d7ea2d9c",
+    "tree": "a622d9bddf0b233ffe6f753e9c44e4716d9b4b10"
+  },
+  "artifacts": [
+    {
+      "path": "pdb-writer-revision-integrated.tap",
+      "bytes": 5302,
+      "sha256": "ff7845ca723bbf4a1a01204eff8a5d25b13b93d6d055fe6d97acc0b7eeeecab5"
+    },
+    {
+      "path": "pdb-existing-benchmark.json",
+      "bytes": 192618,
+      "sha256": "3d279260a07feb729d4fd0be89e647f4fa90c1b9d722c723c778907ba60f07f7"
+    },
+    {
+      "path": "pdb-existing-benchmark.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "pdb-generation-costs.json",
+      "bytes": 161788,
+      "sha256": "e3b40ccdc285e680dc7229bdfcae200dc38bb00593871ec8ad54e677c3e9b170"
+    },
+    {
+      "path": "pdb-generation-costs.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "automated-review.md",
+      "bytes": 4496,
+      "sha256": "96f698d26a776eb90beff9bc60a18859c3865a9009a0c4667836a3766d154d84"
+    },
+    {
+      "path": "README.md",
+      "bytes": 4636,
+      "sha256": "0b85189c2ba5708fc58493a836542411fac3a4d052ef48ca92e30b49f2a25684"
+    },
+    {
+      "path": "commands.md",
+      "bytes": 2964,
+      "sha256": "2190e1ece078ad3cee359e887af303981ae71302c7ecf3c8a93119baddbda51d"
+    }
+  ],
+  "integratedTests": {
+    "tests": 56,
+    "passed": 56,
+    "failed": 0,
+    "cancelled": 0,
+    "skipped": 0,
+    "todo": 0,
+    "durationMs": 3127.933543,
+    "log": "pdb-writer-revision-integrated.tap",
+    "sourceFiles": [
+      {
+        "path": "tests/a13-05-pdb-generations.test.js",
+        "bytes": 7711,
+        "sha256": "b28fc7573faa3152ea89d98f63103fe273f7ed509bc87b8fe433843591803f07"
+      },
+      {
+        "path": "tests/a13-05-native-generations.test.js",
+        "bytes": 1986,
+        "sha256": "1e9d7a738b44f26ea2b900584d0996312744f14dbde7ffb93b611c9cdb24ac19"
+      },
+      {
+        "path": "tests/a13-05-pdb-delta-writer.test.js",
+        "bytes": 8026,
+        "sha256": "88807fab0f48b258138630ee8159673fce7e3bff9851ce3c727f3f83911d397b"
+      },
+      {
+        "path": "tests/a13-05-native-delta-writer.test.js",
+        "bytes": 1141,
+        "sha256": "cee2e77d47571852d03b699e66fdb916447fbfb8233a9fffc1a6812296272d39"
+      },
+      {
+        "path": "tests/a13-05-revision-map.test.js",
+        "bytes": 7837,
+        "sha256": "576498e577113dd72428970b86eeca957fd89886406298e05b5e42362fecc595"
+      },
+      {
+        "path": "tests/a13-05-native-revision-map.test.js",
+        "bytes": 2712,
+        "sha256": "2c77c0198b49d12c8f3205da3a5691c8946506b93a415629b61918a0b44006d7"
+      },
+      {
+        "path": "tests/portable-pdb.test.js",
+        "bytes": 9222,
+        "sha256": "e0921cb350ef3fe0a79dffa92f4229d47c4e592dbf3f75480f78bddc050a6301"
+      },
+      {
+        "path": "scripts/limited.js",
+        "bytes": 1280,
+        "sha256": "d60fa1310cc85ce9426914dd4b79b1b500dcb2eab0928b422d24994d90a650f7"
+      },
+      {
+        "path": "package.json",
+        "bytes": 3136,
+        "sha256": "9ed396895997e7afbdb0951b22f56210ed9a66efc19753609107d0a4240ecfe8"
+      }
+    ],
+    "invocationProvenance": "Recovered command arguments with file names verified against tested source/TAP; no full shell transcript or test-specific Node version recorded",
+    "nodeVersion": null,
+    "nativeQualification": "Replay of retained SRM/Roslyn fixtures; this gate did not regenerate captures"
+  },
+  "benchmarks": {
+    "candidateScope": "Combined stack, no per-commit cost attribution",
+    "existing": {
+      "report": "pdb-existing-benchmark.json",
+      "stderr": "pdb-existing-benchmark.log",
+      "exitCode": 0,
+      "exitCodeSource": "Execution coordinator reported successful process completion",
+      "environment": {
+        "capturedAt": "2026-10-04T13:56:13.747Z",
+        "node": "v24.19.0",
+        "v8": "13.6.233.17-node.51",
+        "platform": "linux",
+        "arch": "x64",
+        "osRelease": "6.18.44",
+        "cpu": "AMD EPYC 9V74 80-Core Processor",
+        "logicalCpus": 9,
+        "totalMemoryBytes": 10451464192,
+        "freeMemoryBytes": 6345461760,
+        "loadAverage": [
+          1.32,
+          1.58,
+          1.89
+        ],
+        "heapLimitBytes": 2348810240,
+        "gcExposed": true,
+        "execArgv": [
+          "--expose-gc"
+        ]
+      },
+      "measuredSamples": 600,
+      "allSamples": 726
+    },
+    "newApiCosts": {
+      "report": "pdb-generation-costs.json",
+      "stderr": "pdb-generation-costs.log",
+      "exitCode": 0,
+      "exitCodeSource": "Execution coordinator reported successful process completion",
+      "environment": {
+        "capturedAt": "2026-10-04T13:57:04.225Z",
+        "node": "v24.19.0",
+        "v8": "13.6.233.17-node.51",
+        "platform": "linux",
+        "arch": "x64",
+        "osRelease": "6.18.44",
+        "cpu": "AMD EPYC 9V74 80-Core Processor",
+        "logicalCpus": 9,
+        "totalMemoryBytes": 10451464192,
+        "freeMemoryBytes": 6358683648,
+        "loadAverage": [
+          0.99,
+          1.45,
+          1.84
+        ],
+        "heapLimitBytes": 2348810240,
+        "gcExposed": true,
+        "execArgv": [
+          "--expose-gc"
+        ]
+      },
+      "measuredSamples": 500,
+      "allSamples": 605
+    },
+    "protocol": {
+      "measuredRounds": 100,
+      "warmupRounds": 20,
+      "operationsPerSample": 1,
+      "order": "Forward/reverse workload order alternates by round; paired libraries share one process and identical inputs",
+      "first": "First timed call after untimed correctness checks; not process-cold",
+      "timing": "Only operation() is timed; result consumption, assertions, disposal and memory observation are outside timing",
+      "allocation": "Observed per-operation heapUsed/ArrayBuffer deltas include GC noise; not total allocation counters"
+    },
+    "provenance": "Each raw report embeds resolved package/source/manifest, benchmark-source and fixture hashes"
+  },
+  "performanceException": {
+    "status": "Automated review recommends explicit PR acceptance; not granted by this artifact",
+    "review": "automated-review.md",
+    "ordinaryP95PercentIncrease": {
+      "emit": 17.604531228116716,
+      "read": 21.756881588303557,
+      "load": 22.042318112937508
+    },
+    "ordinaryP95AbsoluteIncreaseMs": {
+      "emit": 0.11705199999983051,
+      "read": 0.05723299999976916,
+      "load": 0.1461149999997815
+    },
+    "thresholdPassed": false,
+    "humanApprovalClaimed": false
+  },
+  "priorEvidence": {
+    "preIntegrationManifest": "../pre-integration.json",
+    "preIntegrationPassed": 48,
+    "priorCommitAndNodeVersionKnown": false,
+    "nativeWriter": "../../written.pdb",
+    "nativeReference": "../../reference.json",
+    "nativeWriterBytes": 512,
+    "nativeWriterSha256": "8aa1d9b16d0dcad279fb9c63b416216f40ef367bdf30cf5ce456627bea64fae5",
+    "sdk": "10.0.201",
+    "runtime": "10.0.5"
+  },
+  "limits": {
+    "allocations": "Observed heapUsed/ArrayBuffer changes only; not total allocation counters",
+    "cold": "First timed call followed correctness checks; not process-cold",
+    "browser": "Not run",
+    "managedApplyUpdate": "Not qualified",
+    "nativeActiveFrameBinding": "Not qualified",
+    "visualStudio": "Not qualified",
+    "rustAndWasmRuntime": "Not qualified",
+    "deltaWriterEmissionPerformance": "Not measured by these two runs",
+    "newExecutionDuringEvidenceRetention": false
+  },
+  "invocationRecord": {
+    "kind": "Reconstructed replay, not an exact historical shell transcript",
+    "source": "Recovered execution-coordinator summary; test filenames reconciled against tested files and raw TAP titles",
+    "commandsDocument": "commands.md",
+    "workingDirectory": "/workspace/scratch/7e3d2a445c44/sf6-symbols-revisions",
+    "testArgv": [
+      "node",
+      "scripts/limited.js",
+      "node",
+      "--test",
+      "--test-concurrency=1",
+      "tests/a13-05-pdb-generations.test.js",
+      "tests/a13-05-native-generations.test.js",
+      "tests/a13-05-pdb-delta-writer.test.js",
+      "tests/a13-05-native-delta-writer.test.js",
+      "tests/a13-05-revision-map.test.js",
+      "tests/a13-05-native-revision-map.test.js",
+      "tests/portable-pdb.test.js"
+    ],
+    "existingBenchmarkArgv": [
+      "node",
+      "scripts/limited.js",
+      "node",
+      "--expose-gc",
+      "scripts/bench-pdb.js",
+      "--baseline",
+      "/workspace/scratch/7e3d2a445c44/sf6-integrated",
+      "--baseline-revision",
+      "8b101c0c7e8ad73675dfe12e68f26329d7ea2d9c"
+    ],
+    "newApiBenchmarkArgv": [
+      "node",
+      "scripts/limited.js",
+      "node",
+      "--expose-gc",
+      "packages/symbols/benchmarks/pdb-generations.mjs"
+    ],
+    "environmentOverrides": null,
+    "redirections": "Reconstructed replay redirections in commands.md; output artifact paths were supplied by execution coordinator",
+    "benchmarkExecArgvEmbeddedInJson": [
+      "--expose-gc"
+    ],
+    "completeHistoricalShellTranscriptRetained": false
+  }
+}
