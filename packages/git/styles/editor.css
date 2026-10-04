@@ -1,0 +1,52 @@
+.sf-editor.git-with-blame { --git-margin-width: 180px; --git-editor-gutter-width: 62px; }
+.git-with-blame > .sf-viewport,
+.git-with-blame > .sf-current-line,
+.git-with-blame > .sf-execution-line,
+.git-with-blame > .sf-selected-frame-line { left: calc(var(--git-editor-gutter-width) + var(--git-margin-width)); }
+.git-blame-margin {
+  position: absolute;
+  inset: 0 auto 0 var(--git-editor-gutter-width);
+  width: var(--git-margin-width);
+  overflow: hidden;
+  border-right: 1px solid var(--line-soft);
+  background: var(--editor);
+  z-index: 3;
+}
+.git-blame-margin-row {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  padding: 0 6px;
+  text-align: left;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: var(--muted) !important;
+  font: 10px/22px var(--mono) !important;
+}
+.git-blame-margin-row:hover { background: var(--surface2); }
+.git-blame-margin-row:focus-visible { outline: 2px solid var(--accent); outline-offset: -2px; }
+.git-blame-margin-status { display: block; position: relative; background: var(--editor); font-size: 10px; }
+.git-remote-cursors { position: absolute; inset: 0; pointer-events: none; overflow: hidden; z-index: 4; }
+.git-remote-caret { position: absolute; border-left: 2px solid; }
+.git-remote-caret > span { position: absolute; left: -2px; bottom: 100%; padding: 1px 4px; color: white; font: 10px/14px sans-serif; }
+.git-remote-selection { position: absolute; opacity: .2; }
+.git-review-annotations {
+  position: absolute;
+  right: 12px;
+  bottom: 12px;
+  max-width: min(32rem, 70%);
+  max-height: 40%;
+  overflow: auto;
+  padding: 10px;
+  border: 1px solid var(--line-soft);
+  border-radius: 6px;
+  background: var(--surface, Canvas);
+  color: var(--text, CanvasText);
+  box-shadow: 0 4px 20px #0003;
+  z-index: 5;
+}
+.git-review-annotations article + article { margin-top: 10px; border-top: 1px solid var(--line-soft); padding-top: 8px; }
+.git-review-annotations p { white-space: pre-wrap; overflow-wrap: anywhere; }
+.git-review-annotations button { margin: 3px; }
+.git-review-annotations :focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }

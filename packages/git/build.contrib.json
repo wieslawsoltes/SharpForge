@@ -1,6 +1,11 @@
 {
   "schemaVersion": 1,
-  "styles": [],
+  "styles": [
+    {
+      "source": "packages/git/styles/editor.css",
+      "order": 802
+    }
+  ],
   "workers": [],
   "assets": [
     {
