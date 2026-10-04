@@ -20,6 +20,7 @@ export * from './patch-apply.js';
 export * from './path-safety.js';
 export * from './protocol/pktline.js';
 export * from './protocol/advertisement.js';
+export * from './protocol/v1.js';
 export * from './protocol/v2.js';
 export * from './pack/reader.js';
 export * from './pack/writer.js';
