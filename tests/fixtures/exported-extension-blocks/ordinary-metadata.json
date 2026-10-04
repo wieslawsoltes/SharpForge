@@ -1,0 +1,396 @@
+{
+  "sourceSha256": "f16cdfc69bdfdd275748976c076650a64be93564138e6424a4b9e98489afeee8",
+  "compilerGraphs": {
+    "baseline": {
+      "bytes": 2048,
+      "sha256": "206d116e8b2ce57bc86d3ccf7c55c4d09f3ae8384b53e6a454068e7da36dd7f3",
+      "moduleAttributes": [],
+      "assemblyAttributes": [],
+      "rows": {
+        "TypeRef": 1,
+        "TypeDef": 2,
+        "Field": 0,
+        "MethodDef": 32,
+        "Param": 32,
+        "MemberRef": 0,
+        "CustomAttribute": 0
+      },
+      "types": [
+        {
+          "name": "<Module>",
+          "flags": 0,
+          "attributes": [],
+          "fields": [],
+          "methodCount": 0,
+          "methods": []
+        },
+        {
+          "name": "Ordinary",
+          "flags": 1048961,
+          "attributes": [],
+          "fields": [],
+          "methodCount": 32,
+          "methods": []
+        }
+      ]
+    },
+    "candidate": {
+      "bytes": 2560,
+      "sha256": "790eb2aab33131aaaed5be12843fd62d3661ef7054132d93cb4eb4e54aea8e5c",
+      "moduleAttributes": [
+        {
+          "name": "System.Runtime.CompilerServices.RefSafetyRulesAttribute",
+          "arguments": [
+            11
+          ],
+          "named": [],
+          "bytes": [
+            1,
+            0,
+            11,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        }
+      ],
+      "assemblyAttributes": [],
+      "rows": {
+        "TypeRef": 5,
+        "TypeDef": 4,
+        "Field": 1,
+        "MethodDef": 34,
+        "Param": 33,
+        "MemberRef": 2,
+        "CustomAttribute": 6
+      },
+      "types": [
+        {
+          "name": "<Module>",
+          "flags": 0,
+          "attributes": [],
+          "fields": [],
+          "methodCount": 0,
+          "methods": []
+        },
+        {
+          "name": "Ordinary",
+          "flags": 1048961,
+          "attributes": [],
+          "fields": [],
+          "methodCount": 32,
+          "methods": []
+        },
+        {
+          "name": "Microsoft.CodeAnalysis.EmbeddedAttribute",
+          "flags": 1048832,
+          "attributes": [
+            {
+              "name": "System.Runtime.CompilerServices.CompilerGeneratedAttribute",
+              "arguments": [],
+              "named": [],
+              "bytes": [
+                1,
+                0,
+                0,
+                0
+              ]
+            },
+            {
+              "name": "Microsoft.CodeAnalysis.EmbeddedAttribute",
+              "arguments": [],
+              "named": [],
+              "bytes": [
+                1,
+                0,
+                0,
+                0
+              ]
+            }
+          ],
+          "fields": [],
+          "methodCount": 1,
+          "methods": [
+            {
+              "name": ".ctor",
+              "signature": {
+                "callingConvention": 0,
+                "hasThis": true,
+                "isProperty": false,
+                "genericArity": 0,
+                "returnType": {
+                  "kind": "primitive",
+                  "code": 1
+                },
+                "parameters": [],
+                "sentinel": -1
+              },
+              "attributes": [],
+              "parameters": [],
+              "typeParameters": []
+            }
+          ]
+        },
+        {
+          "name": "System.Runtime.CompilerServices.RefSafetyRulesAttribute",
+          "flags": 1048832,
+          "attributes": [
+            {
+              "name": "System.Runtime.CompilerServices.CompilerGeneratedAttribute",
+              "arguments": [],
+              "named": [],
+              "bytes": [
+                1,
+                0,
+                0,
+                0
+              ]
+            },
+            {
+              "name": "Microsoft.CodeAnalysis.EmbeddedAttribute",
+              "arguments": [],
+              "named": [],
+              "bytes": [
+                1,
+                0,
+                0,
+                0
+              ]
+            },
+            {
+              "name": "System.AttributeUsageAttribute",
+              "arguments": [
+                2
+              ],
+              "named": [
+                [
+                  "AllowMultiple",
+                  false
+                ],
+                [
+                  "Inherited",
+                  false
+                ]
+              ],
+              "bytes": [
+                1,
+                0,
+                2,
+                0,
+                0,
+                0,
+                2,
+                0,
+                84,
+                2,
+                13,
+                65,
+                108,
+                108,
+                111,
+                119,
+                77,
+                117,
+                108,
+                116,
+                105,
+                112,
+                108,
+                101,
+                0,
+                84,
+                2,
+                9,
+                73,
+                110,
+                104,
+                101,
+                114,
+                105,
+                116,
+                101,
+                100,
+                0
+              ]
+            }
+          ],
+          "fields": [
+            {
+              "name": "Version",
+              "flags": 38,
+              "signature": [
+                6,
+                8
+              ]
+            }
+          ],
+          "methodCount": 1,
+          "methods": [
+            {
+              "name": ".ctor",
+              "signature": {
+                "callingConvention": 0,
+                "hasThis": true,
+                "isProperty": false,
+                "genericArity": 0,
+                "returnType": {
+                  "kind": "primitive",
+                  "code": 1
+                },
+                "parameters": [
+                  {
+                    "kind": "primitive",
+                    "code": 8
+                  }
+                ],
+                "sentinel": -1
+              },
+              "attributes": [],
+              "parameters": [
+                {
+                  "flags": 0,
+                  "sequence": 1,
+                  "name": "",
+                  "attributes": []
+                }
+              ],
+              "typeParameters": []
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "roslyn": {
+    "sdk": "10.0.201",
+    "referencePack": "10.0.5",
+    "bytes": 4096,
+    "sha256": "f2e9eea20cb3d2aeec5e6b302c7ab291c9b7e6751dbc172996ebf86c110e1ad2",
+    "moduleAttributes": [
+      {
+        "name": "System.Runtime.CompilerServices.RefSafetyRulesAttribute",
+        "arguments": [
+          11
+        ],
+        "named": [],
+        "bytes": [
+          1,
+          0,
+          11,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      }
+    ],
+    "assemblyAttributes": [
+      {
+        "name": "System.Runtime.CompilerServices.CompilationRelaxationsAttribute",
+        "arguments": [
+          8
+        ],
+        "named": [],
+        "bytes": [
+          1,
+          0,
+          8,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "name": "System.Runtime.CompilerServices.RuntimeCompatibilityAttribute",
+        "arguments": [],
+        "named": [
+          [
+            "WrapNonExceptionThrows",
+            true
+          ]
+        ],
+        "bytes": [
+          1,
+          0,
+          1,
+          0,
+          84,
+          2,
+          22,
+          87,
+          114,
+          97,
+          112,
+          78,
+          111,
+          110,
+          69,
+          120,
+          99,
+          101,
+          112,
+          116,
+          105,
+          111,
+          110,
+          84,
+          104,
+          114,
+          111,
+          119,
+          115,
+          1
+        ]
+      },
+      {
+        "name": "System.Diagnostics.DebuggableAttribute",
+        "arguments": [
+          2
+        ],
+        "named": [],
+        "bytes": [
+          1,
+          0,
+          2,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      }
+    ],
+    "rows": {
+      "TypeRef": 6,
+      "TypeDef": 2,
+      "Field": 0,
+      "MethodDef": 32,
+      "Param": 32,
+      "MemberRef": 4,
+      "CustomAttribute": 4
+    },
+    "types": [
+      {
+        "name": "<Module>",
+        "flags": 0,
+        "attributes": [],
+        "fields": [],
+        "methodCount": 0,
+        "methods": []
+      },
+      {
+        "name": "Ordinary",
+        "flags": 1048961,
+        "attributes": [],
+        "fields": [],
+        "methodCount": 32,
+        "methods": []
+      }
+    ]
+  }
+}
