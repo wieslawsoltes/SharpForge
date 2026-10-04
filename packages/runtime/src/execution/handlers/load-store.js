@@ -1,4 +1,4 @@
-import {ManagedFault} from '../../heap.js';
+import {loadSlot} from '../slot-storage.js';
 import {float} from '../numeric-ops.js';
 import {cachedUserString} from '../token-cache.js';
 
@@ -21,13 +21,10 @@ for(const arg of [false,true]) {
       // Compact load/store forms are registered only where ECMA-335 defines them.
       if(suffix!==''&&suffix!=='.s'&&(operation==='lda'||arg&&operation==='st'))continue;
       handlers.set(stem+suffix,(vm,frame,instruction)=>{
-        const index=instruction.operand??Number(suffix.slice(1)),slots=arg?frame.args:frame.locals;
-        if(operation==='st')vm.dereference(vm.address(kind,index),true,vm.storage(vm.pop(),vm.slotType(frame,arg,index)));
+        const index=instruction.operand??Number(suffix.slice(1));
+        if(operation==='st')vm.dereference(vm.address(kind,index),true,vm.pop());
         else if(operation==='lda')vm.push(vm.address(kind,index));
-        else {
-          if(slots[index]===undefined)throw new ManagedFault('InvalidProgramException','Read of uninitialized local');
-          vm.push(vm.storage(slots[index],vm.slotType(frame,arg,index)));
-        }
+        else vm.push(loadSlot(vm,frame,arg,index));
       });
     }
   }

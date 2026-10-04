@@ -1,5 +1,6 @@
 import {searchWithComparer, binarySearchIndices} from './array-search.js';
 import {nativeEqual as equal, fail, integer} from '../host.js';
+import {defaultStringOrdering} from '../globalization/string-ordering.js';
 
 const owner = 'System.Array';
 
@@ -101,6 +102,7 @@ function binarySearch(p, source, args, native) {
   const value = native[1];
   return binarySearchIndices(source.data.length, index => {
     const current = p.native(source.data[index]);
+    if (typeof current === 'string' && typeof value === 'string') return defaultStringOrdering(p).compare(current, value);
     if (equal(p, source.data[index], args[1])) return 0;
     const less = current === null || typeof current === 'number' && Number.isNaN(current)
       ? true

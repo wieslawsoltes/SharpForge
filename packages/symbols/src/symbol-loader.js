@@ -4,6 +4,7 @@ import { pdbChecksum } from './pdb-checksum.js';
 import { readPortablePdb } from './pdb-reader.js';
 import { readDebugDirectory } from './debug-directory.js';
 import { createHoistedLocalLookup } from './hoisted-locals.js';
+import { createClosureLookup } from './closure-map.js';
 export function loadSymbols(assembly, pdbBytes = null, options = {}) {
   if (pdbBytes instanceof ArrayBuffer) pdbBytes = new Uint8Array(pdbBytes);
   const entries = readDebugDirectory(assembly, options),
@@ -31,5 +32,6 @@ export function loadSymbols(assembly, pdbBytes = null, options = {}) {
   }
   symbols.bound = codeViews.length > 0;
   symbols.hoistedLocals = createHoistedLocalLookup(pe, symbols, options);
+  symbols.closureInfo = createClosureLookup(pe, symbols, options);
   return symbols;
 }

@@ -1,6 +1,7 @@
 import {fail} from '../host.js';
 import {compareObjects} from './object-comparison.js';
-import {compareOrdinal, resolveStringComparer} from './string-comparer.js';
+import {resolveStringComparer} from './string-comparer.js';
+import {defaultStringOrdering} from '../globalization/string-ordering.js';
 import {comparisonFailure} from './comparison-fault.js';
 
 /** Search a vector through IComparer, returning a match or the complemented insertion index. */
@@ -11,8 +12,9 @@ export function searchWithComparer(platform, source, args) {
   }
   // Empty arrays never call the comparer, even if its implementation is unsupported.
   if (source.data.length === 0) return -1;
-  // The released default string profile remains ordinal until the invariant backend in #829.
-  const compare = args[2] === null ? compareOrdinal : resolveStringComparer(platform, args[2]);
+  const compare = args[2] === null
+    ? (first, second) => defaultStringOrdering(platform).compare(first, second)
+    : resolveStringComparer(platform, args[2]);
   const elementType = source.methodTable.elementType;
   return binarySearchIndices(source.data.length, index => {
     try { return compareObjects(platform, source.data[index], args[1], compare, elementType); }

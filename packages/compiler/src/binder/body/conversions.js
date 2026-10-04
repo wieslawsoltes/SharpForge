@@ -17,6 +17,7 @@ import { delegateInvoke } from '../../overload/type-inference.js';
 import { isAccessible } from '../accessibility.js';
 import { anonymousFunctionAnchor } from '../anonymous-methods.js';
 import { reportTupleLiteralFailure } from '../tuples.js';
+import { isWriteAUse } from '../../flow/write-is-a-use.js';
 
 const keywordOf = type =>
   numericKind(type) ??
@@ -208,7 +209,7 @@ export const ConversionBinding = Base =>
     markWrite(e, value) {
       if (e.kind === 'Local') {
         e.local.writes++;
-        if (value && !(value.constantValue || value.literal || value.kind === 'Default')) e.local.nonConstantWrite = true;
+        if (value && isWriteAUse(e.local.type, value)) e.local.nonConstantWrite = true;
       } else if (e.kind === 'FieldAccess') {
         const f = e.field.originalDefinition ?? e.field;
         f.writes = (f.writes ?? 0) + 1;

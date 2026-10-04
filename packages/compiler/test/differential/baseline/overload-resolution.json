@@ -13,5 +13,7 @@
   "overload-resolution/cs1739-cs1744-named-arguments": ["diagnostics", "warnings"],
   "overload-resolution/cs1739-no-parameter-named": ["diagnostics", "warnings"],
   "overload-resolution/cs7036-constructor": ["diagnostics", "warnings"],
-  "overload-resolution/cs7036-missing-required-argument": ["diagnostics", "warnings"]
+  "overload-resolution/cs7036-missing-required-argument": ["diagnostics", "warnings"],
+  "overload-resolution/int-double-string-object": ["diagnostics", "warnings", "bytecode", "cil"],
+  "overload-resolution/optional-vs-exact": ["diagnostics", "warnings", "bytecode", "cil"]
 }

@@ -6,6 +6,14 @@
       "order": 0
     },
     {
+      "source": "apps/studio/workbench/studio-chrome-colors.css",
+      "order": 1
+    },
+    {
+      "source": "apps/studio/workbench/studio-tools-colors.css",
+      "order": 2
+    },
+    {
       "source": "apps/studio/styles/workbench-theme.css",
       "order": 4000
     },
@@ -122,6 +130,26 @@
     {
       "source": "apps/studio/styles/runtime-settings.css",
       "order": 11000
+    },
+    {
+      "source": "apps/studio/workbench/designer-tokens.css",
+      "order": 11998
+    },
+    {
+      "source": "apps/studio/themes.css",
+      "order": 11999
+    },
+    {
+      "source": "apps/studio/workbench/theme-tokens.css",
+      "order": 12000
+    },
+    {
+      "source": "apps/studio/workbench/workbench-shell.css",
+      "order": 12001
+    },
+    {
+      "source": "apps/studio/workbench/studio-integration.css",
+      "order": 12002
     }
   ],
   "workers": [
