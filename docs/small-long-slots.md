@@ -44,3 +44,7 @@ No zero-allocation or throughput claim is made. Plan/plane/proxy setup allocates
 BigInt is materialized at public boundaries and generic fallback. The focused loop
 regression inspects private lane use as a functional storage invariant, not as an
 allocation measurement or benchmark result.
+
+The Int32-widening increment passed all 42 focused conversion, small-long, Int64
+and typed-float tests at `a2904830`. Required PR checks follow serial local validation;
+this does not replace the deferred differential or performance qualification.
