@@ -46,6 +46,8 @@ export const workbenchToolDefinitions = Object.freeze([
 ]);
 
 export function shellToolId(id) {
+  const instance = /^tool:(output|problems|references|find-results):/u.exec(id);
+  if (instance) return instance[1] === 'find-results' ? 'find-results-1' : instance[1];
   if (id.startsWith('references:')) return 'references';
   if (id.startsWith('solution-view:')) return 'solution-view';
   if (id.startsWith('output:')) return 'output';
@@ -68,7 +70,10 @@ export async function mountShellTool(shell, id, host) {
   if (!definition) throw new Error('Unknown workbench tool ' + id);
   const module = await loaders[base]();
   if (shell.disposed) return {refresh() {}, dispose() {}};
-  const scope = new ScopeSelector({sessions: shell.services.sessions, projects: () => shell.projects()});
+  const scope = new ScopeSelector({sessions: shell.services.sessions, projects: () => shell.projects(),
+    initial: shell.settings.get('tools', 'scopes')[id] ?? shell.instanceScopes?.get(id) ?? 'solution', persist: value => shell.settings.apply({
+      tools: {scopes: {...shell.settings.get('tools', 'scopes'), [id]: value}}
+    }, {scope: 'workspace'})});
   const context = () => shell.context();
   const options = {
     context, documents: shell.documents, request: shell.options.requestCompiler,
@@ -77,7 +82,7 @@ export async function mountShellTool(shell, id, host) {
     readDocument: shell.options.readDocument, newWindow: newId => shell.activateTool(newId),
     openNew: newId => shell.activateTool(newId), symbolIndex: shell.symbols,
     assemblies: shell.options.assemblies, inspect: shell.options.inspectAssembly,
-    search: shell.search, initial: shell.search.results.get(id), replace: base === 'replace-files'
+    search: shell.search, initial: shell.search.results.get(id), instanceId: id, scopeSelector: scope, replace: base === 'replace-files'
   };
   const models = {
     'task-list': shell.taskList, bookmarks: shell.bookmarks, calls: shell.calls, references: shell.references,

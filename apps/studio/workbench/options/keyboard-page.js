@@ -1,26 +1,36 @@
 import {button, element, field, input, select} from '../ui.js';
+import {EDITOR_KEYMAPS, KeybindingService, eventStroke} from '@sharpforge/editor';
 
 const scopes = ['Global', 'Text Editor', 'Solution Explorer', 'Designer', 'Debugging'];
 
-function stroke(event) {
-  if (['Control', 'Alt', 'Shift', 'Meta'].includes(event.key)) return '';
-  const modifiers = [];
-  if (event.ctrlKey) modifiers.push('Ctrl');
-  if (event.metaKey) modifiers.push('Meta');
-  if (event.altKey) modifiers.push('Alt');
-  if (event.shiftKey) modifiers.push('Shift');
-  modifiers.push(event.key === ' ' ? 'Space' : event.key.length === 1 ? event.key.toUpperCase() : event.key);
-  return modifiers.join('+');
+export const shortcutStroke = eventStroke;
+
+/** Apply persisted replacements and removals by stable binding id before editing or resolving shortcuts. */
+export function effectiveBindings(defaults, overrides) {
+  const result = new Map(defaults.map(binding => [binding.id, binding]));
+  for (const binding of overrides) {
+    const id = binding.removed ? binding.id.replace(/^removed:/u, '') : binding.id;
+    if (binding.removed) result.delete(id);
+    else result.set(id, binding);
+  }
+  return [...result.values()];
 }
 
-/** Conflict reporting compares normalized sequences within each scope, including existing scheme bindings. */
-export function keyboardConflicts(bindings, candidate) {
-  const normalize = value => (Array.isArray(value) ? value.join(' ') : value).replace(/,\s*/g, ' ').toLowerCase().trim();
-  return bindings.filter(binding => binding.command !== candidate.command &&
-    (binding.scope ?? 'Global') === (candidate.scope ?? 'Global') && normalize(binding.keys) === normalize(candidate.keys));
+/** Global bindings overlap editor/tool scopes; unrelated specific scopes remain independent. */
+export function keyboardConflicts(bindings, candidate, {platform = 'windows'} = {}) {
+  const service = new KeybindingService({execute() {}, platform});
+  try {
+    service.setBindings(bindings.filter(binding => !binding.removed).map((binding, index) => ({
+      ...binding, id: binding.id ?? 'options-binding:' + index, scope: binding.scope ?? 'Global'
+    })));
+    return service.conflicts({...candidate, scope: candidate.scope ?? 'Global'}).filter(conflict =>
+      conflict.kind === 'prefix' || conflict.right.command !== candidate.command).map(conflict => ({
+      ...conflict.right, kind: conflict.kind, shadowing: conflict.shadowing
+    }));
+  } finally { service.dispose(); }
 }
 
-export function keyboardOptionsPage({registry, keybindings, schemes = ['visual-studio', 'vscode', 'resharper']}) {
+export function keyboardOptionsPage({registry, keybindings, schemes = EDITOR_KEYMAPS.map(item => ({value: item.id, label: item.label}))}) {
   return {id: 'Environment.keyboard', category: 'Environment', title: 'Keyboard', keywords: ['shortcuts', 'mapping', 'scheme'],
     render(host, {draft, update}) {
       const document = host.ownerDocument;
@@ -30,19 +40,20 @@ export function keyboardOptionsPage({registry, keybindings, schemes = ['visual-s
       const commands = element(document, 'select', {size: 8, 'aria-label': 'Commands'});
       const existing = element(document, 'select', {size: 4, 'aria-label': 'Current shortcuts'});
       const conflicts = element(document, 'p', {role: 'status'});
-      const currentBindings = () => [...(keybindings?.list() ?? []), ...draft.keyboard.bindings];
-      const keys = input(document, 'Press shortcut keys', '', () => {}, {readonly: true});
+      const currentBindings = () => effectiveBindings(keybindings?.list() ?? [], draft.keyboard.bindings);
+      const keys = input(document, 'Press shortcut keys', '', () => {}, {readonly: true, 'data-shortcut-recorder': 'true'});
       keys.addEventListener('keydown', event => {
+        const value = eventStroke(event, keybindings?.platform ?? 'windows');
+        if (!value) return;
         event.preventDefault();
         event.stopPropagation();
-        const value = stroke(event);
-        if (!value) return;
         if (recorded.length === 3) recorded = [];
         recorded.push(value);
         keys.value = recorded.join(' ');
-        const matches = keyboardConflicts(currentBindings(), {command: selected, keys: keys.value, scope});
+        const matches = keyboardConflicts(currentBindings(), {command: selected, keys: keys.value, scope}, keybindings);
         conflicts.textContent = matches.length ? 'Already bound: ' + matches.map(item =>
-          registry.describe(item.command)?.label ?? item.command).join(', ') : 'No conflicting command in this scope.';
+          (registry.describe(item.command)?.label ?? item.command) + (item.kind === 'prefix' ? ' (chord prefix)' : '')).join(', ') :
+          'No conflicting command in this scope.';
       });
       const renderCurrent = () => {
         existing.replaceChildren();
@@ -70,7 +81,7 @@ export function keyboardOptionsPage({registry, keybindings, schemes = ['visual-s
       actions.append(button(document, 'Assign', () => {
         if (!selected || !keys.value) return;
         const next = {id: 'custom:' + selected + ':' + scope, command: selected, keys: keys.value, scope, priority: 100};
-        const matches = keyboardConflicts(currentBindings(), next);
+        const matches = keyboardConflicts(currentBindings(), next, keybindings);
         if (matches.length) { conflicts.textContent = 'Remove the conflicting binding before assigning this shortcut.'; return; }
         update('keyboard', 'bindings', [...draft.keyboard.bindings.filter(item => item.id !== next.id), next]);
         renderCurrent();

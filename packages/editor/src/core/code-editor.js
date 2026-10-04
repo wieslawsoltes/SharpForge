@@ -46,6 +46,7 @@ export class CodeEditor {
     this.models = this.session.models;
     this.model = options.model ?? new EditorModel('', {uri: ''});
     this.uri = this.model.uri;
+    this.pendingFoldingRestore = !!this.uri;
     if (this.uri) this.models.set(this.uri, this.model);
     this.selections = this.model.selections.map(selection => ({...selection}));
     this.primaryIndex = this.model.primaryIndex;
@@ -100,6 +101,7 @@ export class CodeEditor {
     this.bracketColors.update();
     this.cursor();
     this.view.render();
+    this.foldingProvider.refresh();
   }
 
   get value() { return this.model.getText(); }
@@ -129,6 +131,7 @@ export class CodeEditor {
   }
 
   setModel(uri, text) {
+    this.inputController.composition.cancel();
     this.keymapAdapter.beforeModelChange?.();
     this.saveViewState();
     this.modelSubscription?.();
@@ -143,6 +146,7 @@ export class CodeEditor {
     this.uri = uri;
     this.models.set(uri, model);
     const state = this.viewStates.get(uri);
+    this.pendingFoldingRestore = !state;
     this.selections = state?.selections ?? model.selections.map(selection => ({...selection}));
     this.primaryIndex = state?.primaryIndex ?? 0;
     this.bookmarks = state?.bookmarks ?? new BookmarkModel(model);
@@ -188,11 +192,17 @@ export class CodeEditor {
     const normalized = edits.map(edit => ({start: edit.start, end: edit.end ?? edit.start + (edit.deleteCount ?? 0),
       text: edit.text ?? edit.newText ?? edit.insertText ?? ''}));
     const selections = options.selections?.map(selection => ({...selection, active: selection.active ?? selection.head ?? selection.end}));
+    const event = {edits: normalized, options};
+    this.notifyContributions('beforeEdit', event);
+    const wasApplying = this.applying;
     this.applying = true;
     try {
       this.model.setSelections(this.selections, {primaryIndex: this.primaryIndex, notify: false});
       return this.model.applyEdits(normalized, {...options, command: options.command ?? options.source ?? 'edit', selections});
-    } finally { this.applying = false; }
+    } finally {
+      this.applying = wasApplying;
+      this.notifyContributions('afterEdit', event);
+    }
   }
 
   modelChanged(change) {
@@ -210,7 +220,7 @@ export class CodeEditor {
     this.presentation.transformDecorations(change);
     this.bracketColors.update();
     this.decorationRevision++;
-    this.onEdits?.(change);
+    if (!this.callbacks.splitChild) this.onEdits?.(change);
     this.publishChange();
     this.notifyContributions('changed', change);
     if (change.changes.some(edit => /[{}\r\n#]/.test(edit.text) || edit.range.start.line !== edit.range.end.line)) {
@@ -254,6 +264,8 @@ export class CodeEditor {
   moveLines(direction) { return this.editing.moveLines(direction); }
   moveCursor(direction, options) { return this.movement.move(direction, options); }
   updateOptions(options) { return this.presentation.updateOptions(options); }
+  setOptions(options) { return this.updateOptions(options); }
+  refreshPreview() { return this.presentation.refreshPreview(); }
   setReadOnly(value) { return this.presentation.setReadOnly(value); }
   setDiagnostics(items) { return this.presentation.setDiagnostics(items); }
   setDecorations(owner, items) { return this.presentation.setDecorations(owner, items); }
@@ -294,11 +306,15 @@ export class CodeEditor {
     return kind === 'comment' ? 'comment' : kind === 'string' ? 'literal' : this.highlightIndex.lexed ? 'code' : 'unknown';
   }
   async expandSelection() {
+    const model = this.model;
     const version = this.model.version;
     const start = this.offset;
     const end = this.input.selectionEnd;
-    let range = (await this.request('selectionRanges', {uri: this.uri, offsets: [start]}))?.[0];
-    if (version !== this.model.version || this.disposed || start !== this.offset || end !== this.input.selectionEnd) return;
+    const parameters = {uri: this.uri, version, offsets: [start]};
+    const ranges = this.services?.supports('selectionRanges') ? await this.services.invoke('selectionRanges', parameters)
+      : await this.request('selectionRanges', parameters);
+    let range = ranges?.[0];
+    if (model !== this.model || version !== model.version || this.disposed || start !== this.offset || end !== this.input.selectionEnd) return;
     while (range) {
       const from = this.model.offsetAt(range.range.start);
       const to = this.model.offsetAt(range.range.end);

@@ -1,4 +1,5 @@
 import {element, field, select} from './ui.js';
+import {EDITOR_KEYMAPS} from '@sharpforge/editor';
 
 export function showFirstRun({dialogs, settings}) {
   if (settings.get('environment', 'firstRunComplete')) return null;
@@ -9,9 +10,8 @@ export function showFirstRun({dialogs, settings}) {
     host.append(element(document, 'p', {text: 'Choose a theme and keyboard scheme. You can change these in Tools → Options at any time.'}));
     host.append(field(document, 'Theme', select(document, 'Theme', ['dark', 'light', 'blue', 'high-contrast', 'system'], theme,
       value => { theme = value; })));
-    host.append(field(document, 'Keyboard scheme', select(document, 'Keyboard scheme', [
-      {value: 'visual-studio', label: 'Visual Studio'}, {value: 'vscode', label: 'VS Code'}, {value: 'resharper', label: 'ReSharper-like'}
-    ], keymap, value => { keymap = value; })));
+    host.append(field(document, 'Keyboard scheme', select(document, 'Keyboard scheme',
+      EDITOR_KEYMAPS.map(item => ({value: item.id, label: item.label})), keymap, value => { keymap = value; })));
   }, actions: [{label: 'Start coding', run: () => {
     settings.apply({environment: {theme, keymap, firstRunComplete: true}});
     return true;

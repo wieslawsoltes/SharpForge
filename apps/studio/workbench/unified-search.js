@@ -9,8 +9,8 @@ export class UnifiedSearch {
   }
   async query(text, {tab = 'all', signal, onBatch = () => {}, goTo = false} = {}) {
     const generation = ++this.generation;
-    const prefix = goTo ? /^([ftm#:]|recent)\s*(.*)$/u.exec(text) : null;
-    const kind = prefix?.[1], query = prefix?.[2] ?? text;
+    const prefix = goTo ? /^(?:(f|t|m|recent)(?:\s+|$)|([#:])\s*)(.*)$/u.exec(text) : null;
+    const kind = prefix?.[1] ?? prefix?.[2], query = prefix?.[3] ?? text;
     const matches = [];
     const add = values => {
       signal?.throwIfAborted();

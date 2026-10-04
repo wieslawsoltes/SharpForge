@@ -1,5 +1,7 @@
 import {nextGraphemeOffset, previousGraphemeOffset, nextWordOffset, previousWordOffset} from '@sharpforge/text';
 import {indent} from '../commands/advanced.js';
+import {boxSelectionEdits} from '../commands/box-selection.js';
+import {moveSelectedLines} from '../commands/line-moves.js';
 
 /** Prepare primary and secondary edits against one revision, preserving grapheme and line boundaries. */
 export class EditorEditing {
@@ -8,12 +10,24 @@ export class EditorEditing {
   insertText(text, options = {}) {
     const {editor} = this;
     if (editor.input.readOnly || typeof text !== 'string') return false;
+    if (editor.getSelections().every(selection => selection.box)) {
+      const edits = boxSelectionEdits(editor.model, editor.getSelections(), text);
+      let delta = 0;
+      const selections = edits.map(edit => {
+        const active = edit.start + delta + edit.caretInText;
+        delta += edit.text.length - (edit.end - edit.start);
+        return {anchor: active, active};
+      });
+      editor.applyEdits(edits, {...options, selections, source: options.source ?? 'boxTyping'});
+      return true;
+    }
     const edits = [];
     for (const selection of editor.getSelections()) {
       const start = Math.min(selection.anchor, selection.active);
       let end = Math.max(selection.anchor, selection.active);
       let inserted = text;
-      if (selection.virtualSpaces && start === end) inserted = ' '.repeat(selection.virtualSpaces) + text;
+      const virtualSpaces = selection.activeVirtualSpace ?? selection.virtualSpaces ?? 0;
+      if (virtualSpaces && start === end) inserted = ' '.repeat(virtualSpaces) + text;
       if (editor.overtype && start === end && text && !/[\r\n]/.test(text)) {
         const position = editor.model.positionAt(start);
         const line = editor.model.getLine(position.line);
@@ -40,7 +54,7 @@ export class EditorEditing {
       const step = editor.options.insertSpaces ? ' '.repeat(editor.options.indentSize) : '\t';
       const extra = /[\{\[\(]$/.test(line.trimEnd()) ? step : '';
       const ending = editor.options.endOfLine;
-      const close = extra && /[}\])]/.test(editor.model.getText(start, start + 1));
+      const close = extra && /[}\])]/.test(editor.model.getText(start, Math.min(editor.model.length, start + 1)));
       const text = ending + indentation + extra + (close ? ending + indentation : '');
       edits.push({start, end, text});
       const caret = start + delta + ending.length + indentation.length + extra.length;
@@ -64,7 +78,7 @@ export class EditorEditing {
         if (direction < 0 && position.character === 0 && start > 0) {
           start -= editor.model.getText(Math.max(0, start - 2), start) === '\r\n' ? 2 : 1;
         } else if (direction > 0 && position.character === text.length && end < editor.model.length) {
-          end += editor.model.getText(end, end + 2) === '\r\n' ? 2 : 1;
+          end += editor.model.getText(end, Math.min(editor.model.length, end + 2)) === '\r\n' ? 2 : 1;
         } else if (direction < 0) {
           start = base + (word ? previousWordOffset(text, position.character, {subword}) : previousGraphemeOffset(text, position.character));
         } else {
@@ -73,7 +87,7 @@ export class EditorEditing {
       }
       if (start !== end) edits.push({start, end, text: ''});
     }
-    editor.applyEdits(edits, {selections: caretsAfter(edits), source: 'delete', undoStop: word});
+    if (edits.length) editor.applyEdits(edits, {selections: caretsAfter(edits), source: 'delete', undoStop: word});
   }
 
   tab(unindent = false) {
@@ -106,31 +120,8 @@ export class EditorEditing {
     editor.applyEdits(edits, {source: 'comment', undoStop: true});
   }
 
-  moveLines(direction) {
-    const {editor} = this;
-    if (![1, -1].includes(direction) || editor.input.readOnly) return;
-    const lines = selectedLines(editor);
-    const first = lines[0];
-    const last = lines.at(-1);
-    if (first === undefined || direction < 0 && first === 0 || direction > 0 && last === editor.model.lineCount - 1) return;
-    const before = first + Math.min(0, direction);
-    const after = last + Math.max(0, direction);
-    const start = editor.model.offsetAt({line: before, character: 0});
-    const end = after + 1 < editor.model.lineCount ? editor.model.offsetAt({line: after + 1, character: 0}) : editor.model.length;
-    const block = [];
-    for (let line = before; line <= after; line++) block.push(editor.model.getLine(line));
-    if (direction > 0) block.unshift(block.pop());
-    else block.push(block.shift());
-    const ending = end > 0 && /[\r\n]/.test(editor.model.getText(end - 1, end)) ? editor.options.endOfLine : '';
-    const selections = editor.getSelections().map(selection => ({
-      anchor: editor.model.positionAt(selection.anchor), active: editor.model.positionAt(selection.active)
-    }));
-    editor.applyEdits([{start, end, text: block.join(editor.options.endOfLine) + ending}], {source: 'move-lines', undoStop: true});
-    editor.setSelections(selections.map(selection => ({
-      anchor: editor.model.offsetAt({...selection.anchor, line: selection.anchor.line + direction}),
-      active: editor.model.offsetAt({...selection.active, line: selection.active.line + direction})
-    })));
-  }
+  moveLines(direction) { return moveSelectedLines(this.editor, direction); }
+
 }
 
 export function caretsAfter(edits) {

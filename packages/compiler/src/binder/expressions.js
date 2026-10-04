@@ -36,7 +36,7 @@ export const ExpressionBinder=Base=>class ExpressionBinder extends Base {
     const folded=['Binary','Unary','Cast'].includes(node.kind)?this.constant(node):null,constant=folded?{constantValue:{value:folded.value}}:null;
     switch(node.kind){
       case 'InterpolatedString':{
-        const parts=node.parts.map(part=>{if(part.text!==undefined)return this.node(BoundLiteral,null,{value:part.text},'string');const value=this.bindExpression(part.expression);if(value.legacyType==='void')this.c.report(part.expression,'CS0029',['void','object']);return this.node(BoundStringInsert,null,{value,alignment:part.alignment,format:part.format},'string');});
+        const parts=node.parts.map(part=>{if(part.text!==undefined)return this.node(BoundLiteral,null,{value:part.text},'string');const value=this.bindExpression(part.expression);if(part.alignmentExpression){const width=this.constant(part.alignmentExpression);if(!width||width.type!=='int')this.c.report(part.alignmentExpression,'CS0150');}if(value.legacyType==='void')this.c.report(part.expression,'CS0029',['void','object']);return this.node(BoundStringInsert,null,{value,alignment:part.alignment,format:part.format},'string');});
         return this.node(BoundInterpolatedString,node,{parts},'string');
       }
       case 'Await':{if(!this.m.node.asyncBody&&!this.m.name.startsWith('<startup>'))this.c.report(node,'CS4032',[typeText(this.m.returnType)]);const expression=this.bindExpression(node.expression),type=expression.legacyType,d=this.frameworkExactMethod('SharpForge.Runtime.Async','Await',[type]);if(!d){this.c.report(node,'CS1061',[typeText(type),'GetAwaiter']);return this.bad(node,[expression]);}return this.node(BoundAwaitExpression,node,{expression,awaiter:this.sym.contract(d)},d.result);}

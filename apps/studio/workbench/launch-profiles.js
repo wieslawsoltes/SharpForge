@@ -1,5 +1,6 @@
 import { WorkbenchEvents, requireIdentifier } from './state-events.js';
 import { validateSessionSettings, sessionLaunchSettings } from './session-settings.js';
+import { validateProgramArguments, validateLaunchEnvironment } from '@sharpforge/runtime';
 
 /** Profiles are project-scoped. Export strips environment values and all runtime grants. */
 export class LaunchProfiles {
@@ -13,16 +14,8 @@ export class LaunchProfiles {
 
   validate(profile) {
     const id = requireIdentifier(profile.id ?? 'default', 'Launch profile id');
-    const args = profile.arguments ?? [];
-    if (!Array.isArray(args) || args.length > 1024 || args.some(value => typeof value !== 'string' || value.length > 65_536)) {
-      throw new TypeError('Launch arguments must be a bounded string array');
-    }
-    const environment = profile.environment ?? {};
-    if (!environment || typeof environment !== 'object' || Array.isArray(environment)) throw new TypeError('Invalid launch environment');
-    if (Object.keys(environment).length > 256) throw new RangeError('Launch environment is too large');
-    for (const [key, value] of Object.entries(environment)) {
-      if (!/^[A-Za-z_][A-Za-z0-9_]*$/.test(key) || typeof value !== 'string' || value.length > 65_536) throw new TypeError('Invalid environment entry');
-    }
+    const args = validateProgramArguments(profile.arguments);
+    const environment = validateLaunchEnvironment(profile.environment);
     const renderer = profile.renderer ?? 'auto';
     if (!['auto', 'webgpu', 'canvas2d', 'dom'].includes(renderer)) throw new TypeError('Unknown application renderer');
     return {
@@ -64,7 +57,7 @@ export class LaunchProfiles {
   launchOptions(projectId, id) {
     const profile = this.get(projectId, id);
     return {
-      ...sessionLaunchSettings(profile.runtimeSettings), arguments: [...profile.arguments],
+      ...sessionLaunchSettings(profile.runtimeSettings), programArguments: [...profile.arguments],
       environment: { ...profile.environment }, stopOnEntry: profile.stopOnEntry
     };
   }

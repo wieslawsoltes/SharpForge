@@ -21,16 +21,32 @@ export class EditorPresentation {
   }
   setReadOnly(value) {
     const {editor} = this;
+    editor.model.readOnly = !!value;
     editor.input.readOnly = !!value;
     editor.input.setAttribute('aria-readonly', String(!!value));
     editor.element.classList.toggle('sf-readonly', !!value);
     editor.keymapAdapter?.setReadOnly(!!value);
     editor.cursor();
   }
+  refreshPreview() {
+    const {editor} = this;
+    if (editor.disposed) return;
+    editor.highlightIndex.update(editor.model.snapshot());
+    editor.view.layout.reset();
+    editor.view.scroll.reset();
+    editor.decorationRevision++;
+    editor.view.render();
+    editor.accessibility.update();
+  }
   setDiagnostics(diagnostics) {
     const {editor} = this;
-    editor.diagnostics = diagnostics.map(diagnostic => ({...diagnostic,
-      start: Math.max(0, Math.min(editor.model.length, diagnostic.start ?? editor.model.offsetAt(diagnostic.range.start)))}));
+    editor.diagnostics = diagnostics.map(diagnostic => {
+      const start = Math.max(0, Math.min(editor.model.length, diagnostic.start ?? editor.model.offsetAt(diagnostic.range.start)));
+      const end = diagnostic.range ? editor.model.offsetAt(diagnostic.range.end) : start + (diagnostic.length ?? 0);
+      const severity = typeof diagnostic.severity === 'number' ? ['error', 'warning', 'information', 'hint'][diagnostic.severity - 1]
+        : diagnostic.severity ?? 'error';
+      return {...diagnostic, start, length: Math.max(0, end - start), severity};
+    });
     this.setDecorations('diagnostics', editor.diagnostics.map(diagnostic => ({
       start: diagnostic.start, end: diagnostic.start + Math.max(1, diagnostic.length ?? 1), kind: 'diagnostic',
       className: (diagnostic.severity ?? 'error') === 'error' ? 'sf-squiggle' : 'sf-squiggle sf-squiggle-warning',

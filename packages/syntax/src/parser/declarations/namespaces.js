@@ -34,6 +34,12 @@ export const namespaceMethods = {
       end = this.scanType(type);
     return !(end > type && this.isId(this.tokens[end]));
   },
+  /** Roslyn reports an extern alias that follows a using, an attribute or a member on its `extern` keyword and skips the directive. */
+  misplacedExternAlias() {
+    this.error(this.current, 'CS0439', 'An extern alias declaration must precede all other elements defined in the namespace');
+    for (let count = 0; count < 3; count++) this.skip();
+    if (this.at(';')) this.skip();
+  },
   externAlias() {
     this.feature('ExternAlias', this.current);
     return this.n('ExternAliasDirective', this.take(), this.takeWord('alias'), this.id(), this.expect(';'));
@@ -97,8 +103,10 @@ export const namespaceMethods = {
       // Extern aliases, usings, unit attributes and members are kept in that order in the tree, so a directive that
       // comes after a later part cannot be added to its list: it is reported and skipped.
       const attributed = !!unitAttributes && unitAttributes.length > 0;
-      if (!members.length && !usings.length && !attributed && this.isExternAlias()) externs.push(this.externAlias());
-      else if (this.isUsingDirective(inNamespace)) {
+      if (this.isExternAlias()) {
+        if (!members.length && !usings.length && !attributed) externs.push(this.externAlias());
+        else this.misplacedExternAlias();
+      } else if (this.isUsingDirective(inNamespace)) {
         if (!members.length && !attributed) usings.push(this.usingDirective());
         else {
           // The misplaced directive is parsed only to find its end; Roslyn reports the error over all of it.

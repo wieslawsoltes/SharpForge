@@ -1,42 +1,50 @@
 import { adjacentCharacter } from '../commands/movement.js';
 
 const word = /[\p{L}\p{N}\p{M}_]/u;
-const whitespace = /\s/u;
-const category = (character, big) => character === undefined || whitespace.test(character) ? 0 : big || word.test(character) ? 1 : 2;
+const category = (character, big) => /\s/u.test(character) ? 0 : big || word.test(character) ? 1 : 2;
 
+export function wordRuns(context, line, big) {
+  const runs = [];
+  for (const cluster of context.graphemes.segments(context.line(line))) {
+    const kind = category(cluster.segment, big);
+    const previous = runs.at(-1);
+    if (previous?.kind === kind) { previous.end = cluster.end; previous.last = cluster.index; }
+    else runs.push({ start: cluster.index, end: cluster.end, last: cluster.index, kind });
+  }
+  return runs;
+}
+
+/** Vim word classes retain punctuation runs, while every boundary is a complete grapheme. */
 export function vimWord(context, offset, { direction = 1, end = false, big = false } = {}) {
-  let position = context.position(offset);
+  const position = context.position(offset);
   let line = position.line;
-  let text = context.line(line);
-  let character = position.character;
-  if (direction < 0) {
-    character--;
-    while (character < 0 && line > 0) { line--; text = context.line(line); character = text.length - 1; }
-    while (character >= 0 && category(text[character], big) === 0) {
-      character--;
-      if (character < 0 && line > 0) { line--; text = context.line(line); character = text.length - 1; }
+  let column = position.character;
+  for (;;) {
+    const runs = wordRuns(context, line, big);
+    let run;
+    if (direction < 0) {
+      run = runs.findLast(value => value.kind && (end ? value.last < column : value.start < column));
+    } else if (end) {
+      run = runs.find(value => value.kind && value.last > column);
+    } else {
+      const current = runs.find(value => value.start <= column && value.end > column);
+      run = runs.find(value => value.kind && value.start >= (current?.end ?? column));
     }
-    const kind = category(text[character], big);
-    while (character > 0 && category(text[character - 1], big) === kind) character--;
-    return context.lineStart(line) + Math.max(0, character);
+    if (run) return context.lineStart(line) + (end ? run.last : run.start);
+    if (line + direction < 0) return 0;
+    if (line + direction >= context.lineCount) return context.length;
+    line += direction;
+    column = direction < 0 ? Infinity : -1;
   }
-  if (end) character++;
-  else {
-    const kind = category(text[character], big);
-    while (character < text.length && category(text[character], big) === kind) character++;
-  }
-  while (true) {
-    while (character < text.length && category(text[character], big) === 0) character++;
-    if (character < text.length || line + 1 === context.lineCount) break;
-    line++;
-    text = context.line(line);
-    character = 0;
-  }
-  if (end) {
-    const kind = category(text[character], big);
-    while (character + 1 < text.length && category(text[character + 1], big) === kind) character++;
-  }
-  return context.lineStart(line) + Math.min(text.length, character);
+}
+
+/** Normal-mode carets occupy a grapheme, including the final emoji on a line, never a surrogate half or an EOL. */
+export function normalPoint(context, offset, line = context.position(offset).line) {
+  const start = context.lineStart(line);
+  const text = context.line(line);
+  if (!text.length) return start;
+  const local = Math.max(0, Math.min(text.length - 1, offset - start));
+  return start + context.graphemes.previous(text, local + 1);
 }
 
 export function vimMotion(context, key, offset, { count = 1, explicitCount = false, goalColumn, lastFind } = {}) {
@@ -52,13 +60,12 @@ export function vimMotion(context, key, offset, { count = 1, explicitCount = fal
   } else if (['h', 'l', 'ArrowLeft', 'ArrowRight', 'Backspace', 'Space'].includes(key)) {
     const direction = ['h', 'ArrowLeft', 'Backspace'].includes(key) ? -1 : 1;
     for (let step = 0; step < count; step++) target = adjacentCharacter(context, target, direction);
-    target = Math.max(context.lineStart(position.line), Math.min(target,
-      Math.max(context.lineStart(position.line), context.lineEnd(position.line) - 1)));
+    target = normalPoint(context, target, position.line);
   } else if (['j', 'k', 'ArrowDown', 'ArrowUp', '+', '-', 'Enter'].includes(key)) {
     const direction = ['k', 'ArrowUp', '-'].includes(key) ? -1 : 1;
     const line = Math.max(0, Math.min(context.lineCount - 1, position.line + count * direction));
     const column = ['+', '-', 'Enter'].includes(key) ? context.line(line).match(/^\s*/u)[0].length : goalColumn ?? position.character;
-    target = context.offset({ line, character: Math.min(column, Math.max(0, context.line(line).length - 1)) });
+    target = normalPoint(context, context.offset({ line, character: column }), line);
     linewise = true;
   } else if (key === '0' || key === 'Home') target = context.lineStart(position.line);
   else if (key === '^' || key === '_') {
@@ -107,7 +114,8 @@ export function findCharacter(context, offset, character, { direction = 1, till 
     index = direction > 0 ? text.indexOf(character, index + 1) : text.lastIndexOf(character, index - 1);
     if (index < 0) return null;
   }
-  return { target: context.lineStart(position.line) + index - (till ? direction : 0), inclusive: direction > 0, linewise: false };
+  const found = context.lineStart(position.line) + index;
+  return { target: till ? adjacentCharacter(context, found, -direction) : found, inclusive: direction > 0, linewise: false };
 }
 
 export function motionRange(context, start, motion) {

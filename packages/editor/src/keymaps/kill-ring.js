@@ -96,6 +96,6 @@ export class EmacsState {
     }
   }
   afterCommand(command) {
-    if (!command.startsWith('Emacs.')) this.last = null;
+    if (!/^Emacs\.(KillLine|KillWord|BackwardKillWord|KillRegion|CopyRegion|Yank|YankPop)$/.test(command)) this.last = null;
   }
 }

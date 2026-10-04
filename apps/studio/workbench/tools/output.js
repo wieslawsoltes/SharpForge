@@ -24,7 +24,8 @@ export class OutputModel {
     this.cache = null;
   }
   choices() {
-    return this.channels.list().filter(channel => !this.scope || this.scope.matches(channel, this.context()));
+    return this.channels.list().filter(channel => !this.scope || this.scope.matches(channel, this.context()) ||
+      !channel.projectId && !channel.sessionId);
   }
   rows() {
     const channel = this.channels.get(this.channelId);
@@ -35,13 +36,20 @@ export class OutputModel {
       for (const entry of this.channels.read(channel.id, {count: Math.min(channel.count, this.maxLines)})) {
         const lines = entry.text.split(/\r?\n/u);
         if (!lines.at(-1)) lines.pop();
-        lines.forEach((text, index) => rows.push({id: entry.id + ':' + index, text, timestamp: entry.timestamp,
-          projectId: channel.projectId, sessionId: channel.sessionId, location: outputLocation(text, channel.projectId)}));
+        const projectId = entry.metadata?.projectId ?? entry.projectId ?? channel.projectId;
+        const sessionId = entry.metadata?.sessionId ?? entry.metadata?.appId ?? entry.sessionId ?? channel.sessionId;
+        lines.forEach((text, index) => {
+          const location = outputLocation(text, projectId);
+          rows.push({id: entry.id + ':' + index, text, timestamp: entry.timestamp, projectId, sessionId,
+            uri: entry.metadata?.uri ?? location?.uri, location});
+        });
       }
       this.cache = {key, rows: rows.slice(-this.maxLines)};
     }
     const query = this.search.toLowerCase();
-    return query ? this.cache.rows.filter(row => row.text.toLowerCase().includes(query)) : this.cache.rows;
+    const context = this.context();
+    return this.cache.rows.filter(row => (!this.scope || this.scope.matches(row, context)) &&
+      (!query || row.text.toLowerCase().includes(query)));
   }
 }
 

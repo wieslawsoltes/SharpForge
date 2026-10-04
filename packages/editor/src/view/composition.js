@@ -12,8 +12,10 @@ export class CompositionController {
     editor.element.append(this.overlay);
   }
   start() {
+    if (this.editor.readOnly || this.editor.disposed) return;
     this.active = true;
     this.editor.composing = true;
+    this.model = this.editor.model;
     this.version = this.editor.model.version;
     this.startOffset = this.editor.input.selectionStart;
     this.endOffset = this.editor.input.selectionEnd;
@@ -23,6 +25,7 @@ export class CompositionController {
   }
   update(text) {
     if (!this.active) this.start();
+    if (!this.active) return;
     this.text = text ?? '';
     this.overlay.textContent = this.text;
     const position = this.editor.view.coordsAt(this.startOffset);
@@ -34,7 +37,7 @@ export class CompositionController {
   end(text) {
     if (!this.active) return;
     const committed = text ?? this.text;
-    const valid = this.version === this.editor.model.version && !this.editor.disposed;
+    const valid = this.model === this.editor.model && this.version === this.editor.model.version && !this.editor.disposed;
     this.active = false;
     this.editor.composing = false;
     this.overlay.hidden = true;

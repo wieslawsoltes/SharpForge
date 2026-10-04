@@ -8,6 +8,7 @@ import { commonBindings } from './common.js';
 import { EmacsState } from './kill-ring.js';
 import { VimKeymap } from './vim.js';
 import { NativeCodeMirrorDocument } from './native-document.js';
+import { transformOffset } from '../selections.js';
 
 const profiles = Object.freeze({
   'visual-studio': visualStudioBindings, vscode: vscodeBindings, sublime: sublimeBindings, emacs: emacsBindings,
@@ -43,6 +44,7 @@ export class NativeKeymapAdapter {
       this.commands.register(id, () => this.emacs.execute(id));
     }
     this.setMode(mode);
+    this.observeModel();
   }
   setMode(mode) {
     const bindings = getProfileBindings(mode);
@@ -59,6 +61,7 @@ export class NativeKeymapAdapter {
     this.vim.inUndoGroup = false;
   }
   beforeModelChange() {
+    this.modelSubscription?.();
     this.closeInsertGroup();
     this.bindings.cancel();
     this.vim.resetPending();
@@ -70,6 +73,17 @@ export class NativeKeymapAdapter {
     this.bindings.cancel();
     this.cm.signal('swapDoc');
     this.doc = this.editor.element?.ownerDocument;
+    this.observeModel();
+    this.cm.setModel();
+  }
+  observeModel() {
+    this.modelSubscription?.();
+    this.modelSubscription = this.editor.model?.onDidChange?.(change => {
+      for (const mark of this.vim.marks.values()) {
+        if (mark.uri === this.context.uri) mark.offset = transformOffset(mark.offset, change.changes, 'right');
+      }
+      if (this.emacs.mark !== null) this.emacs.mark = transformOffset(this.emacs.mark, change.changes, 'left');
+    });
   }
   handle(event) {
     if (this.disposed || event.isComposing || this.editor.composing || event.keyCode === 229) return false;
@@ -80,6 +94,7 @@ export class NativeKeymapAdapter {
     return this.bindings.handle(event, { scope: 'Text Editor' });
   }
   execute(command, args) {
+    if (this.disposed) return false;
     if (this.mode === 'emacs' && this.emacs.markActive && /^(Edit\.(Char|Line|Word|Subword|Document|Page))/.test(command) &&
       !command.endsWith('Extend') && this.commands.has(command + 'Extend')) {
       command += 'Extend';
@@ -102,6 +117,7 @@ export class NativeKeymapAdapter {
   dispose() {
     if (this.disposed) return;
     this.disposed = true;
+    this.modelSubscription?.();
     this.bindings.dispose();
     this.commands.dispose();
     this.vim.dispose();

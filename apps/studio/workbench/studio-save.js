@@ -49,15 +49,20 @@ export class StudioSave {
     const changes = this.documents.list().filter(record => state.disk.handles.has(record.uri) && record.dirty)
       .map(record => ({ uri: record.uri, text: record.text, version: record.version }));
     if (!changes.length) return { written: [] };
-    const report = await state.disk.save(changes.map(({ uri, text }) => ({ uri, text })));
     const snapshots = new Map(changes.map(record => [record.uri, record]));
-    for (const uri of report.written) {
-      const snapshot = snapshots.get(uri);
-      if (snapshot && this.documents.get(uri)) this.documents.markSaved(uri, snapshot);
-    }
-    this.saveRecovery();
+    const reconcile = written => {
+      for (const uri of written ?? []) {
+        const snapshot = snapshots.get(uri);
+        if (snapshot && this.documents.get(uri)) this.documents.markSaved(uri, snapshot);
+      }
+      this.saveRecovery();
+      this.refresh();
+    };
+    let report;
+    try { report = await state.disk.save(changes.map(({ uri, text }) => ({ uri, text }))); }
+    catch (error) { reconcile(error.written); throw error; }
+    reconcile(report.written);
     this.notify(`Saved ${report.written.length} source file(s) to disk.`);
-    this.refresh();
     return report;
   }
 }

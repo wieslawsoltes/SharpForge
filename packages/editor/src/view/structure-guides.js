@@ -20,8 +20,9 @@ export class StructureGuides {
         const x = metrics.line(indent).width + editor.padding;
         const topLine = Math.max(first, region.startLine);
         const bottomLine = Math.min(last, region.endLine);
-        const top = editor.padding + this.view.layout.map.rowAt(topLine) * metrics.lineHeight;
-        const bottom = editor.padding + this.view.layout.map.rowAt(bottomLine + 1) * metrics.lineHeight;
+        const leading = this.view.layout.leadingRows;
+        const top = editor.padding + (leading + this.view.layout.map.rowAt(topLine)) * metrics.lineHeight;
+        const bottom = editor.padding + (leading + this.view.layout.map.rowAt(bottomLine + 1)) * metrics.lineHeight;
         const node = this.view.document.createElement('div');
         node.className = 'sf-structure-guide';
         node.style.left = `${x}px`;

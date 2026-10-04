@@ -46,13 +46,17 @@ and navigates the actual DOM editor. It is a functional example, not a native-pl
 | `view.coordsAt(offset)` | `{left,top,height,local:true}` in CSS pixels relative to the editor element. |
 | `view.positionAt(clientX,clientY)` | Global UTF-16 offset from client coordinates. |
 | `view.scrollTo`, `view.render` | Logical scroll coordinates; immediate render for explicit integration/measurement. |
-| `registerContribution` | Disposable `keydown`, `beforeinput`, `changed`, `cursor`, `render`, `dispose` hooks. |
+| `registerContribution` | Disposable input, `beforeEdit`/`afterEdit`, change, cursor, render and disposal hooks. |
 | `setDecorations`, `setViewZones`, `setInlineWidgets` | Replace one owner's visual contributions without modifying document text. |
 | `prepareSave`, `markSaved` | Apply EditorConfig normalization as one edit, then record a successfully saved baseline. |
 | `createEditorOptionsPage(editor)` | Labelled, keyboard-operable text settings form for an embedding workbench. |
+| `refreshPreview()` | Refresh caches after a reversible model checkpoint preview without publishing or recording edits. |
 
 `onEdits` is the preferred workspace integration callback. Legacy `onChange(text)` remains available;
 its string publication is debounced for large files because materializing a whole file is inherently proportional to file size.
+Shared split views publish each change once through the original view. Clipboard events preserve typed multicaret/box/line
+metadata when available and retain a plain-text fallback. `setReadOnly` also sets the shared model's read-only state so
+workspace edits observe the same permission. `setOptions` is the keymap-compatible alias for `updateOptions`.
 
 ## View behavior and resource policy
 

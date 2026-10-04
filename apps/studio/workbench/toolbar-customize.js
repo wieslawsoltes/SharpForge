@@ -1,4 +1,5 @@
 import {button, checkbox, element, select, input} from './ui.js';
+import {defaultToolbars} from './toolbars.js';
 
 export function customizeToolbars({dialogs, toolbars, registry}, initial = 'standard') {
   let draft = structuredClone(toolbars.rows);
@@ -38,6 +39,12 @@ export function customizeToolbars({dialogs, toolbars, registry}, initial = 'stan
         body.append(list, button(document, 'Move up', () => move(-1)), button(document, 'Move down', () => move(1)),
           button(document, 'Remove', () => { row.commands.splice(index, 1); render(); }),
           button(document, 'Add selected command', () => { if (commands.value) row.commands.push(commands.value); render(); }));
+        body.append(button(document, 'Reset selected toolbar', () => {
+          const original = defaultToolbars.find(item => item.id === selected);
+          if (original) draft = draft.map(item => item.id === selected ? structuredClone(original) : item);
+          index = 0;
+          render();
+        }));
       };
       host.append(selector, body, filter, commands);
       render();

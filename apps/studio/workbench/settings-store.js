@@ -1,4 +1,5 @@
 import {WorkbenchEvents} from './events.js';
+import {EDITOR_KEYMAPS} from '@sharpforge/editor';
 
 export const settingsVersion = 2;
 export const settingsKey = 'sharpforge.workbench.settings.v2';
@@ -17,6 +18,7 @@ export const settingsDefaults = Object.freeze({
   tasks: {tokens: [{token: 'TODO', priority: 'normal'}, {token: 'HACK', priority: 'high'}, {token: 'UNDONE', priority: 'normal'}]},
   layouts: {current: null, named: {}},
   explorer: {showAllFiles: false, followActive: true},
+  tools: {scopes: {}},
   toolbars: {rows: []}
 });
 
@@ -51,21 +53,28 @@ export function validateSettings(input, {partial = false} = {}) {
     if (!values || typeof values !== 'object' || Array.isArray(values)) throw new TypeError('Invalid category ' + category);
     output[category] ??= {};
     for (const [key, value] of Object.entries(values)) {
-      if (allowed[category].has(key)) output[category][key] = safeValue(value, 0, category === 'tasks');
+      if (!allowed[category].has(key)) continue;
+      const expected = settingsDefaults[category][key];
+      if (expected !== null && (Array.isArray(expected) ? !Array.isArray(value) :
+        typeof value !== typeof expected || typeof expected === 'object' && (value === null || Array.isArray(value)))) {
+        throw new TypeError('Invalid setting type: ' + category + '.' + key);
+      }
+      output[category][key] = safeValue(value, 0, category === 'tasks');
     }
   }
   const environment = output.environment ?? {};
   const choices = {
     theme: ['dark', 'light', 'blue', 'high-contrast', 'system'],
     density: ['compact', 'comfortable'],
-    keymap: ['visual-studio', 'vscode', 'vs-code', 'resharper', 'vim', 'emacs', 'sublime', 'default']
+    keymap: EDITOR_KEYMAPS.map(item => item.id)
   };
   for (const [key, values] of Object.entries(choices)) {
     if (environment[key] !== undefined && !values.includes(environment[key])) throw new TypeError('Invalid ' + key);
   }
   for (const [category, key, minimum, maximum] of [
     ['environment', 'fontSize', 9, 32], ['editor', 'fontSize', 8, 72], ['editor', 'tabSize', 1, 16],
-    ['editor', 'zoom', 25, 400], ['runtime', 'maxSessions', 1, 32], ['projects', 'autoRecoverSeconds', 5, 3600]
+    ['editor', 'indentSize', 1, 16], ['editor', 'zoom', 25, 400], ['runtime', 'maxSessions', 1, 32],
+    ['projects', 'autoRecoverSeconds', 5, 3600]
   ]) {
     const value = output[category]?.[key];
     if (value !== undefined && (!Number.isFinite(value) || value < minimum || value > maximum)) {
@@ -74,7 +83,8 @@ export function validateSettings(input, {partial = false} = {}) {
   }
   const bindings = output.keyboard?.bindings;
   if (bindings && (!Array.isArray(bindings) || bindings.some(binding =>
-    !binding || typeof binding.command !== 'string' || !['string', 'object'].includes(typeof binding.keys)))) {
+    !binding || typeof binding.id !== 'string' || typeof binding.command !== 'string' ||
+    !(typeof binding.keys === 'string' || Array.isArray(binding.keys) && binding.keys.every(key => typeof key === 'string'))))) {
     throw new TypeError('Invalid custom keyboard bindings');
   }
   const tokens = output.tasks?.tokens;

@@ -34,7 +34,7 @@ export class AnalysisDecorations {
       if (method === 'semanticTokens') this.context.editor.setDecorations?.('semantic',
         semanticDecorations(items, this.context.editor.sourceSnapshot(), result.revision.version));
       if (method === 'inlayHints') { this.hints = items; this.renderHints(); }
-      if (method === 'codeLens') { this.lenses = items.slice(0, 5000); this.renderLenses(); }
+      if (method === 'codeLens') { this.lenses = items.slice(0, 5000).map(lens => ({...lens})); this.renderLenses(); }
     }));
   }
 
@@ -42,7 +42,7 @@ export class AnalysisDecorations {
     const source = this.context.editor.sourceSnapshot();
     if (version !== source.version) return false;
     this.diagnostics = diagnosticDecorations(items, source, {inlineMessages: this.context.options.inlineDiagnosticMessages});
-    this.context.editor.diagnostics = this.diagnostics.map(item => item.diagnostic);
+    this.context.editor.diagnostics = this.diagnostics.map(item => ({...item.diagnostic, start: item.start, end: item.end}));
     this.context.editor.setDecorations?.('diagnostics', this.diagnostics);
     return true;
   }

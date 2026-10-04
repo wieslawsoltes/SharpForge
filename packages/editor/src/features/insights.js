@@ -61,18 +61,21 @@ export function createEditorInsights(editor, options = {}) {
     surroundWith: () => snippets.picker(true),
     openFind: replace => find.open(replace),
     findNext: (reset, direction) => find.next(reset, direction),
-    findSelected(direction = 1) {
+    async findSelected(direction = 1) {
       const start = editor.offset;
       const end = editor.input.selectionEnd;
-      find.open(false);
+      const source = editor.sourceSnapshot();
       if (start === end) {
-        const left = editor.value.slice(0, start).match(/[\p{L}\p{N}_]+$/u)?.[0] ?? '';
-        const right = editor.value.slice(start).match(/^[\p{L}\p{N}_]+/u)?.[0] ?? '';
+        const read = (from, to) => source.getText?.(from, to) ?? source.text.slice(from, to);
+        const left = read(Math.max(0, start - 1024), start).match(/[\p{L}\p{N}_]+$/u)?.[0] ?? '';
+        const right = read(start, Math.min(source.length, start + 1024)).match(/^[\p{L}\p{N}_]+/u)?.[0] ?? '';
         find.find.input.value = left + right;
-        find.search(false);
       }
+      await find.open(false);
+      if (editor.uri !== source.uri || editor.sourceSnapshot().version !== source.version) return;
       find.index = find.session.matches.findIndex(match => match.uri === editor.uri && match.start <= start && match.end >= end);
-      find.next(false, direction);
+      await find.next(false, direction);
+      editor.focus();
     },
     copyParameterTip: () => safe(async () => {
       const signature = signatures.signatures[signatures.index];
@@ -95,6 +98,8 @@ export function createEditorInsights(editor, options = {}) {
     nextDiagnostic: direction => decorations.nextDiagnostic(direction),
     setDiagnostics: (items, version) => decorations.setDiagnostics(items, version),
     refresh,
+    beforeEdit: () => snippets.beforeEdit(),
+    afterEdit: () => snippets.afterEdit(),
     beforeinput(event) {
       if (rename.origin) { event.preventDefault(); return true; }
       formatting.beforeinput(event);
