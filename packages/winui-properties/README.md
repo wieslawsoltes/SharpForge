@@ -45,3 +45,7 @@ Application-owned UI services for SharpForge. Instances have explicit lifetimes;
 ## XAML syntax and literals
 
 `XamlXmlReader`, `XamlSchema` and the documented literal converters are joined from their independently reviewed branch. The lexical/type-allowlist layer has no activation capability by itself. The next writer batch connects it to the approved style/template factories and explicit constructor/property services.
+
+## Approved XAML object construction
+
+`XamlObjectWriter` parses and validates a complete tree before invoking registered constructors and members. Its resource/style/template builders preserve deferred resources, private namescopes and positioned failures. Markup extensions implement approved resources, template bindings and ordinary/compiled binding definitions; actual binding execution is provided explicitly by the host. Deferred child slots preserve their insertion position and own their activation lifetimes. File, network, reflection, DTD and entity expansion have no activation path.
