@@ -77,8 +77,17 @@ static class Program
             }).ToArray();
             return new { token, localRow, localSignature = MetadataTokens.GetRowNumber(method.LocalSignature), points, scopes };
         }).ToArray();
+        var custom = Enumerable.Range(1, reader.GetTableRowCount(TableIndex.CustomDebugInformation)).Select(row => {
+            var record = reader.GetCustomDebugInformation(MetadataTokens.CustomDebugInformationHandle(row));
+            return new { parent = MetadataTokens.GetToken(record.Parent), kind = reader.GetGuid(record.Kind).ToString(),
+                bytes = Convert.ToHexString(reader.GetBlobBytes(record.Value)).ToLowerInvariant() };
+        }).ToArray();
+        var constants = reader.LocalConstants.Select(handle => {
+            var record = reader.GetLocalConstant(handle);
+            return new { name = reader.GetString(record.Name), signature = Convert.ToHexString(reader.GetBlobBytes(record.Signature)).ToLowerInvariant() };
+        }).ToArray();
         return new { id = Convert.ToHexString(reader.DebugMetadataHeader!.Id.AsSpan()).ToLowerInvariant(),
-            mapping, documents, methods };
+            runtime = Environment.Version.ToString(), mapping, documents, methods, custom, constants };
     }
 
     private static object Capture(string directory)

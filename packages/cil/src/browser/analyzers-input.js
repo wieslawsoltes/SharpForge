@@ -2,7 +2,7 @@ import { CilError } from '../binary.js';
 import { readMethodHeader } from '../pe.js';
 
 const maxima = { maxMethods: 16384, maxCodeBytes: 4 * 1024 * 1024, maxMethodCodeBytes: 1024 * 1024,
-  maxInstructions: 250000, maxUsages: 100000 };
+  maxInstructions: 250000, maxUsages: 100000, maxDeclarationRelations: 100000, maxDeclarationDiagnostics: 16384 };
 export const invalidUsage = detail => { throw new CilError(`Invalid usage analysis: ${detail}`); };
 export const usageLimit = detail => { throw new CilError(`Usage analysis limit exceeded: ${detail}`); };
 export function usageCancelled(signal) {

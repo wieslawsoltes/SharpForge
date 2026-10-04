@@ -77,3 +77,69 @@ provider entries on Apple M3 Pro, Node 24.21.0, darwin-arm64:
 
 The benchmark also records retained heap deltas; it does not claim exact
 allocation counts or an unmeasured speedup. Results vary by host and load.
+
+## Canonical assembly usage relationships
+
+`await createAssemblyMethodRelations(module, options)` creates an immutable local-module
+snapshot for `new AssemblyUsageAnalysis(inspector, { methodRelations: snapshot })` in
+`@sharpforge/cil`. Pass a `RuntimeModule` from an explicitly configured load context;
+the inspector must represent the same MVID and metadata extents. This preserves the
+existing dependency direction: CIL does not import CLR or infer virtual slots.
+
+`overridden-by` records every local overridden ancestor declaration, using the existing
+canonical `MethodDesc.getBaseDefinition()` service. `newslot` declarations start distinct
+families. `implemented-by` records each local interface declaration's canonical method
+and implementing type. Interface maps support public virtual instance methods, exact
+MethodDef/MemberRef `MethodImpl` aliases, inheritance, explicit implementation and interface
+reimplementation. An inherited interface map follows overrides of its existing virtual
+slot; a same-name `newslot` method alone does not replace that mapping. Reimplementation
+can select a method declared on the current type. Without such a declaration, an existing
+inherited mapping takes precedence over older public methods, including when the mapping
+uses an explicit implementation. A newly introduced interface can use ancestral public
+methods when no inherited entry exists. Signatures and
+generic method constraints reuse `OverrideSignatures`; display names never establish
+type identity or slot compatibility.
+
+The analysis reads metadata without executing IL or requesting method bodies. Snapshots
+contain only strings, numbers and frozen arrays/records, so they remain usable after a
+collectible context is unloaded. Instruction-body completeness and the two declaration
+relations' completeness are reported independently by the CIL query API. The relation
+snapshot is scoped to methods and implementing types defined in the supplied module;
+external declarations are outside its query domain. References needed to establish a
+local relationship still resolve through the configured CLR context.
+
+Unsupported binding produces a stable per-relation diagnostic. This includes generic
+declaring types/constructed interface slots, default and reabstracted interface fallback,
+static virtual interface slots, class `MethodImpl`/covariant replacement, and canonical
+base-definition forms unsupported by the existing service. MemberRef bodies are resolved
+for interface maps; the current base-definition service can still diagnose them separately.
+Malformed metadata rejects with `SFCLR005`; invalid options, exhausted budgets and
+cancellation reject with `SFCLR006`, `SFCLR007` and `SFCLR009`. No unsupported relationship
+is silently converted into an empty complete answer. Issue #2573 remains open for the
+remaining slot families and wider platform qualification.
+
+Options lower these independent hard maxima: `maxMetadataRows:100000`, `maxMethods:16384`,
+`maxRelations:100000`, `maxDiagnostics:16384`, `maxDepth:128`, `maxMetadataBytes:8388608`,
+and `maxWork:1000000`, plus `signal`. Relevant row counts, per-method/MemberRef signatures
+and names are preflighted before the adapter builds indexes. Each name/signature occurrence
+is bounded to 4096 input bytes; `maxMetadataBytes` counts twice the decoded name character
+count plus signature byte lengths. `snapshot.storage` reports logical preflight/work
+counts, not retained JavaScript heap size. Context/type loading and canonical base-root
+resolution retain their own independent limits; the adapter's work counter does not claim
+to count their internal steps.
+
+The adapter indexes names plus canonical signatures and MethodImpl owners once, then
+uses constant-time slot lookups along bounded ancestor chains. Its added work is linear
+in metadata payload and visited maps/ancestor edges, plus emitted relationships; the
+underlying CLR resolver's cost is separate. Queries page prebuilt CIL indexes without
+reloading metadata. No benchmark was run for this batch; logical storage counters
+and test durations do not establish allocation cost or a speedup.
+
+Reference: [ECMA-335 II.10.3/II.12.2](https://ecma-international.org/wp-content/uploads/ECMA-335_6th_edition_june_2012.pdf)
+and [.NET's interface-method specification addendum](https://github.com/dotnet/runtime/blob/main/docs/design/specs/Ecma-335-Augments.md).
+The [declaration fixture](../../tests/fixtures/declaration-relations/README.md) retains
+33 passing focused Node tests and exact comparison with 19 native
+`GetBaseDefinition`/`GetInterfaceMap` relationships on CoreCLR 10.0.5. It records the
+interface reimplementation correction, source hashes and full reference configuration.
+The browser harness is prepared but has no successful launch or passing result;
+browser and wider execution-platform qualification remain pending.
