@@ -12,7 +12,7 @@ invalidation. With all options omitted, no numeric plane or category analysis is
 created. No public carrier, wire opcode or snapshot schema changes are introduced.
 
 The raw path supports Int64 constants, long/ulong local and argument loads/stores,
-dup/pop, negation, add/subtract/multiply (including checked forms), and comparisons
+dup/pop, negation, add/subtract/multiply (including checked forms), division/remainder, and comparisons
 and branches. Arithmetic accepts a Number result only when it is a safe integer.
 Unsigned checked operations also require nonnegative operands and result. Every
 declined operation uses its original operands in the existing BigInt handler,
@@ -26,7 +26,14 @@ to `conv.ovf.u8` retain the shared managed overflow path before consuming the
 operand. Actual float/native/Int64 tags and noncanonical host-edited Numbers keep
 their original conversion handler, even when the verifier fact says Int32.
 
-Division, remainder, bitwise operations, shifts, other conversions, wide operands and
+Division/remainder first reconstruct the candidate quotient's product and residual.
+Both must be safe integers, the residual magnitude must be smaller than the divisor,
+and its sign must match the dividend unless zero. These constraints establish the
+exact truncating result before any operand is consumed. A zero divisor, unsigned
+negative stack pattern or failed reconstruction uses the existing BigInt handler.
+Wide `Int64.MinValue / -1` and `% -1` still raise the existing managed overflow.
+
+Bitwise operations, shifts, other conversions, wide operands and
 unknown verifier categories retain the existing handlers. Host-edited tags, Array
 replacement, custom descriptors and frozen/sealed arrays also preserve fallback.
 Write observers keep the regular BigInt notification path. The existing reference
@@ -48,3 +55,8 @@ allocation measurement or benchmark result.
 The Int32-widening increment passed all 42 focused conversion, small-long, Int64
 and typed-float tests at `a2904830`. Required PR checks follow serial local validation;
 this does not replace the deferred differential or performance qualification.
+
+The guarded division/remainder increment passed all 52 focused tests at `cc98b65d`,
+including exact quotient boundaries, fallback faults, lane lifecycle and the
+unchanged native Int64 boundary fixture. Required PR checks follow serial validation;
+no new native or performance run is claimed.
