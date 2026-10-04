@@ -1,0 +1,118 @@
+{
+  "accepted": true,
+  "category": "protected",
+  "compilationSucceeded": true,
+  "diagnostics": [],
+  "document": {
+    "height": 480,
+    "name": "View",
+    "nodes": [
+      {
+        "children": [],
+        "events": {},
+        "id": "action",
+        "properties": {
+          "Content": "Run",
+          "Height": 40,
+          "Left": 20,
+          "Name": "Action",
+          "Top": 30,
+          "Width": 160
+        },
+        "type": "Microsoft.UI.Xaml.Controls.Button"
+      },
+      {
+        "children": [
+          "action"
+        ],
+        "events": {},
+        "id": "root",
+        "properties": {
+          "Height": 480,
+          "Name": "Root",
+          "Width": 640
+        },
+        "type": "Microsoft.UI.Xaml.Controls.Canvas"
+      },
+      {
+        "children": [
+          "root"
+        ],
+        "events": {},
+        "id": "window",
+        "properties": {},
+        "type": "Microsoft.UI.Xaml.Window"
+      }
+    ],
+    "root": "window",
+    "styles": {},
+    "templates": {},
+    "version": 1,
+    "width": 640
+  },
+  "entry": {
+    "className": "View",
+    "methodName": "Create",
+    "uri": "View.cs"
+  },
+  "fixture": "42-handwritten-statement",
+  "identity": [
+    {
+      "declaration": {
+        "end": 322,
+        "start": 316,
+        "uri": "View.cs"
+      },
+      "designId": "action",
+      "field": false,
+      "uri": "View.cs",
+      "variable": "action"
+    },
+    {
+      "declaration": {
+        "end": 241,
+        "start": 237,
+        "uri": "View.cs"
+      },
+      "designId": "root",
+      "field": false,
+      "uri": "View.cs",
+      "variable": "root"
+    },
+    {
+      "declaration": {
+        "end": 205,
+        "start": 199,
+        "uri": "View.cs"
+      },
+      "designId": "window",
+      "field": false,
+      "uri": "View.cs",
+      "variable": "window"
+    }
+  ],
+  "ownership": {
+    "designer": 8,
+    "handwritten": 1
+  },
+  "protectedStatements": 1,
+  "sources": [
+    {
+      "sha256": "4ef0aec82862b04ffef8707e83a247b2ab0ea8fa2350f8fd6c3ec8648d2268bd",
+      "uri": "View.cs"
+    }
+  ],
+  "structuralEditable": false,
+  "unsupportedConstructs": [
+    {
+      "kind": "handwritten",
+      "message": "Custom statement is preserved; structural regeneration is disabled",
+      "span": {
+        "end": 510,
+        "start": 479
+      },
+      "syntaxKind": "ExpressionStatement",
+      "uri": "View.cs"
+    }
+  ]
+}

@@ -1,0 +1,107 @@
+{
+  "accepted": true,
+  "category": "generated",
+  "compilationSucceeded": true,
+  "diagnostics": [],
+  "document": {
+    "height": 480,
+    "name": "View",
+    "nodes": [
+      {
+        "children": [],
+        "events": {},
+        "id": "action",
+        "properties": {
+          "Content": "Run",
+          "Height": 40,
+          "Left": 20,
+          "Name": "Action",
+          "Top": 30,
+          "Width": 160
+        },
+        "type": "Microsoft.UI.Xaml.Controls.Button"
+      },
+      {
+        "children": [
+          "action"
+        ],
+        "events": {},
+        "id": "root",
+        "properties": {
+          "Height": 480,
+          "Name": "Root",
+          "Width": 640
+        },
+        "type": "Microsoft.UI.Xaml.Controls.Canvas"
+      },
+      {
+        "children": [
+          "root"
+        ],
+        "events": {},
+        "id": "window",
+        "properties": {},
+        "type": "Microsoft.UI.Xaml.Window"
+      }
+    ],
+    "root": "window",
+    "styles": {},
+    "templates": {},
+    "version": 1,
+    "width": 640
+  },
+  "entry": {
+    "className": "View",
+    "methodName": "Create",
+    "uri": "View.cs"
+  },
+  "fixture": "45-generated-header",
+  "identity": [
+    {
+      "declaration": {
+        "end": 352,
+        "start": 346,
+        "uri": "View.cs"
+      },
+      "designId": "action",
+      "field": false,
+      "uri": "View.cs",
+      "variable": "action"
+    },
+    {
+      "declaration": {
+        "end": 271,
+        "start": 267,
+        "uri": "View.cs"
+      },
+      "designId": "root",
+      "field": false,
+      "uri": "View.cs",
+      "variable": "root"
+    },
+    {
+      "declaration": {
+        "end": 235,
+        "start": 229,
+        "uri": "View.cs"
+      },
+      "designId": "window",
+      "field": false,
+      "uri": "View.cs",
+      "variable": "window"
+    }
+  ],
+  "ownership": {
+    "designer": 8,
+    "handwritten": 0
+  },
+  "protectedStatements": 0,
+  "sources": [
+    {
+      "sha256": "c2a05041774c4168d7155fd936f8453372ca438e77966c9385326a923aabaaad",
+      "uri": "View.cs"
+    }
+  ],
+  "structuralEditable": true,
+  "unsupportedConstructs": []
+}
