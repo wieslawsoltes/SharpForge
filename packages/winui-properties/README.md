@@ -13,3 +13,7 @@ Application-owned UI services for SharpForge. Instances have explicit lifetimes;
 ## Effective values
 
 `PropertyStore` keeps the ordered value sources for one dependency object, applies inherited values, validates transactions before publication and emits effective changes through a bounded FIFO queue. Animation removal reveals the current underlying value. Snapshot and restore preserve callbacks and identity without replaying notifications. Read-only property writes require an injected host capability. `EffectiveValueEmitter` tracks weak consumers of mutable value nodes.
+
+## Flags metadata
+
+`PropertyMetadata.flags` or the injected type definition marks an enumeration as flags. Only integral combinations of declared bits are accepted; ordinary enumerations keep exact membership. Rejected values leave the prior effective value unchanged.

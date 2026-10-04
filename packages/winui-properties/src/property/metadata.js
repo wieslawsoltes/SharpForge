@@ -17,6 +17,7 @@ export class PropertyMetadata {
     this.minimum = options.minimum;
     this.maximum = options.maximum;
     this.enumValues = options.enumValues;
+    this.flags = !!options.flags;
     this.structFields = options.structFields;
     Object.freeze(this);
   }
