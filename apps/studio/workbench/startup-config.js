@@ -1,7 +1,6 @@
 import { WorkbenchEvents, requireIdentifier, workbenchError } from './state-events.js';
-
-export const startupActions = Object.freeze(['none', 'start', 'startWithoutDebugging']);
-export const startupModes = Object.freeze(['single', 'multiple', 'currentSelection']);
+import { startupActions, startupModes } from '@sharpforge/project-system';
+export { startupActions, startupModes } from '@sharpforge/project-system';
 
 function normalizeAction(action) {
   const aliases = { None: 'none', Start: 'start', 'Start without debugging': 'startWithoutDebugging' };
@@ -70,11 +69,11 @@ export class StartupConfiguration {
     });
   }
 
-  resolve({ currentProjectId, debug = true } = {}) {
+  resolve({ currentProjectId, currentProfileId = 'default', debug = true } = {}) {
     let entries = this.entries;
     if (this.mode === 'currentSelection') {
       this.validateProject(currentProjectId);
-      entries = [{ projectId: currentProjectId, action: 'start', order: 0, profile: 'default' }];
+      entries = [{ projectId: currentProjectId, action: 'start', order: 0, profile: currentProfileId }];
     }
     const enabled = entries.filter(entry => entry.action !== 'none');
     const selected = this.mode === 'single' ? enabled.slice(0, 1) : enabled;
@@ -92,6 +91,17 @@ export class StartupConfiguration {
     if (!parsed || parsed.version !== 1) throw new TypeError('Unsupported startup configuration version');
     return this.configure(parsed);
   }
+
+  /** Commit an already validated staging model without invoking a persistence callback during import. */
+  replaceFrom(staged, { notify = true } = {}) {
+    if (!(staged instanceof StartupConfiguration)) throw new TypeError('Expected a staged startup configuration');
+    const value = staged.snapshot();
+    this.mode = value.mode;
+    this.entries = value.entries;
+    if (notify) this.notifyRestored();
+  }
+
+  notifyRestored() { this.events.emit({ type: 'startup', value: this.snapshot(), restored: true }); }
 
   dispose() { this.events.dispose(); }
 }
