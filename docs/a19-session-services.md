@@ -154,6 +154,31 @@ handling and continues the selected managed browser process; it is not OS proces
 detachment. Renderer metrics identify the actual backend rather than claiming that
 a fallback rendered through WebGPU.
 
+### Active application inspection
+
+`DebuggerExtensions` accepts `sessions` and
+`getApplicationWindows: () => applicationWindows` from the Studio composition.
+The getter may return `null` before application windows are mounted. With these
+services, renderer selection, metrics and `uiSettled()` use the selected session's
+existing `ApplicationWindows` host; the debugger does not construct another host
+or apply the runtime's command stream twice. Opening the legacy WinUI tool brings
+the selected application's document window forward. Background tool refreshes
+preserve the focused document.
+
+Live Visual Tree requests capture both the application object and its complete
+worker/runtime identity. Selection, restart, stop and disposal invalidate pending
+requests and clear the old snapshot, including selected object IDs that may be
+reused by another application. `DebuggerExtensions.dispose()` releases inspection
+subscriptions and requests without disposing application-owned windows. The
+composition must call it when releasing the debugger. An embedding that supplies
+no SessionManager retains the existing standalone, single-host behavior.
+
+`tests/a19-application-inspector.test.js` exercises the actual debugger automation,
+session manager and worker-client contracts with controlled protocol replies and
+renderer boundaries. It covers late scenes, equal runtime serials, restart,
+disposal, background focus preservation and the standalone host. These focused
+unit boundaries do not claim browser layout, rendering or CSP qualification.
+
 ## Validation
 
 The focused Node files are `a19-worker-client.test.js`,
@@ -164,11 +189,26 @@ The focused Node files are `a19-worker-client.test.js`,
 shared undo, save races and locks on unopened documents. Their fake Worker
 is explicitly a protocol/lifetime test, not compiler or native parity evidence.
 
-`tests/browser_multi_session_test.py` builds two actual C# WinUI applications with
-separate real compiler and runtime workers, checks their rendered panels and output,
-closes only one, and verifies diagnostic isolation while the other remains alive.
-It requires the HTTP harness. The in-memory Blob loader must instead receive
-rewritten worker URLs from the host; this script does not claim to qualify it.
+`tests/browser_multi_session_test.py` loads `TwoApps.slnx` and two C# projects
+through the running Studio's `loadDiskRecords` API. It uses Studio's existing
+workbench services and application windows. The fixture selects distinct profiles
+through the startup toolbar, starts both projects with the actual Start button,
+checks their rendered docking panels and exact argv/environment output, switches
+the shared debugger through its Process selector, and stops only that application.
+It then checks a failing background build in the other project, starts another
+instance through the registered command, and stops all sessions. These checks also
+cover selected-project preservation, independent document locks and panel disposal.
+The fixture uses the shared supported browser launcher and production HTTP/CSP;
+the in-memory Blob loader is explicitly rejected. Its result JSON records the
+selected engine and failure or completion, including checks completed before a
+failure. Browser execution remains pending until run on an installed supported
+engine; authoring or syntax-checking this fixture is not browser qualification.
+
+`tests/a19-multi-session-fixture.test.js` uses the same C# window source with real
+compiler output and two real runtime worker modules in each JavaScript engine. It
+checks the combined WinUI scene, argv, environment and stop-isolation behavior.
+Its Node message transport adapter does not qualify Studio DOM, toolbar routing,
+docking or browser CSP; those are the separate browser fixture's responsibilities.
 
 `a19-runtime-arguments.test.js`, `a19-runtime-environment.test.js` and
 `a19-runtime-worker-launch.test.js` execute real compiler output in both JavaScript

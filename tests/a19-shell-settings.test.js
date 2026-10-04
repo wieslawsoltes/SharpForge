@@ -37,6 +37,19 @@ test('settings transaction rejects invalid data and persistence failure before p
   assert.deepEqual(settings.snapshot(), before); assert.equal(events, 0);
 });
 
+test('line-ending normalization stays opt-in across theme changes and rejects invalid settings', () => {
+  const settings = new SettingsStore({storage: memoryStorage()});
+  settings.load();
+  assert.equal(settings.get('editor', 'normalizeLineEndings'), false);
+  settings.apply({environment: {theme: 'light'}, editor: {endOfLine: '\r\n'}});
+  assert.equal(settings.get('editor', 'normalizeLineEndings'), false);
+  settings.apply({editor: {normalizeLineEndings: true}});
+  assert.equal(settings.get('editor', 'normalizeLineEndings'), true);
+  assert.equal(settings.get('editor', 'endOfLine'), '\r\n');
+  assert.throws(() => settings.apply({editor: {normalizeLineEndings: 'yes'}}), /type/);
+  assert.throws(() => settings.apply({editor: {endOfLine: 'invalid'}}), /line ending/);
+});
+
 test('workspace preferences override user scope and exported profiles omit secrets recursively', () => {
   const settings = new SettingsStore({storage: memoryStorage(), workspaceId: 'a'}); settings.load();
   settings.apply({environment: {theme: 'light'}});

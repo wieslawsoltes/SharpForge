@@ -34,6 +34,7 @@ export function keyboardOptionsPage({registry, keybindings, schemes = EDITOR_KEY
   return {id: 'Environment.keyboard', category: 'Environment', title: 'Keyboard', keywords: ['shortcuts', 'mapping', 'scheme'],
     render(host, {draft, update}) {
       const document = host.ownerDocument;
+      const bindingOptions = {platform: keybindings?.platform ?? keybindings?.configuration?.platform ?? 'windows'};
       let selected = registry.search()[0]?.id;
       let scope = 'Global';
       let recorded = [];
@@ -43,14 +44,14 @@ export function keyboardOptionsPage({registry, keybindings, schemes = EDITOR_KEY
       const currentBindings = () => effectiveBindings(keybindings?.list() ?? [], draft.keyboard.bindings);
       const keys = input(document, 'Press shortcut keys', '', () => {}, {readonly: true, 'data-shortcut-recorder': 'true'});
       keys.addEventListener('keydown', event => {
-        const value = eventStroke(event, keybindings?.platform ?? 'windows');
+        const value = eventStroke(event, bindingOptions.platform);
         if (!value) return;
         event.preventDefault();
         event.stopPropagation();
         if (recorded.length === 3) recorded = [];
         recorded.push(value);
         keys.value = recorded.join(' ');
-        const matches = keyboardConflicts(currentBindings(), {command: selected, keys: keys.value, scope}, keybindings);
+        const matches = keyboardConflicts(currentBindings(), {command: selected, keys: keys.value, scope}, bindingOptions);
         conflicts.textContent = matches.length ? 'Already bound: ' + matches.map(item =>
           (registry.describe(item.command)?.label ?? item.command) + (item.kind === 'prefix' ? ' (chord prefix)' : '')).join(', ') :
           'No conflicting command in this scope.';
@@ -81,7 +82,7 @@ export function keyboardOptionsPage({registry, keybindings, schemes = EDITOR_KEY
       actions.append(button(document, 'Assign', () => {
         if (!selected || !keys.value) return;
         const next = {id: 'custom:' + selected + ':' + scope, command: selected, keys: keys.value, scope, priority: 100};
-        const matches = keyboardConflicts(currentBindings(), next, keybindings);
+        const matches = keyboardConflicts(currentBindings(), next, bindingOptions);
         if (matches.length) { conflicts.textContent = 'Remove the conflicting binding before assigning this shortcut.'; return; }
         update('keyboard', 'bindings', [...draft.keyboard.bindings.filter(item => item.id !== next.id), next]);
         renderCurrent();

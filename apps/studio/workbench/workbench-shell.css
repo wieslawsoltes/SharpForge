@@ -80,7 +80,7 @@ body { font-family: var(--wb-font-family); font-size: var(--wb-font-size); }
 .wb-grid-spacer { width: 1px; pointer-events: none; }
 .wb-grid-body { position: absolute; inset: 0 0 auto; min-width: 100%; }
 .wb-grid-row { border-bottom: 1px solid color-mix(in srgb, var(--wb-border) 35%, transparent); }
-.wb-grid-row[aria-selected="true"] { background: var(--wb-selected); }
+.wb-grid-row[aria-selected="true"] { background: var(--wb-selected); color: var(--wb-selected-fg); }
 .wb-grid-row:hover { outline: 1px solid var(--wb-border); outline-offset: -1px; }
 .wb-wrap .wb-grid-row > div { white-space: pre-wrap; overflow: auto; overflow-wrap: anywhere; }
 .wb-tree-host { min-height: 120px; overflow: auto; }
@@ -99,13 +99,13 @@ body { font-family: var(--wb-font-family); font-size: var(--wb-font-size); }
 .wb-dialog > .wb-error { padding: 4px 12px; }
 .wb-options-layout { display: grid; grid-template-columns: minmax(150px, 0.8fr) minmax(0, 2fr); min-height: 320px; gap: 12px; }
 .wb-options-tree { display: flex; flex-direction: column; overflow: auto; border-right: 1px solid var(--wb-border); }
-.wb-options-tree button[aria-selected="true"] { background: var(--wb-selected); }
+.wb-options-tree button[aria-selected="true"] { background: var(--wb-selected); color: var(--wb-selected-fg); }
 .wb-options-category { font-weight: 600; padding: 8px 4px 4px; }
 .wb-options-page { overflow: auto; display: flex; flex-direction: column; gap: 8px; min-width: 0; }
 .wb-options-page > h3 { margin: 0; font-size: 14px; }
 .wb-options-page select[size] { width: 100%; min-height: 120px; }
 .wb-menubar { display: flex; flex-wrap: wrap; gap: 1px; position: relative; flex: none; border-bottom: 1px solid var(--wb-border); }
-.wb-menubar > button[aria-expanded="true"] { background: var(--wb-selected); }
+.wb-menubar > button[aria-expanded="true"] { background: var(--wb-selected); color: var(--wb-selected-fg); }
 .wb-menu-popup { position: absolute; z-index: 9000; top: 100%; min-width: 260px; max-width: min(95vw, 560px);
   max-height: 70vh; overflow: auto; border: 1px solid var(--wb-border); box-shadow: 0 6px 20px var(--wb-shadow); padding: 4px; }
 .wb-menu-popup > button { display: flex; align-items: center; gap: 20px; width: 100%; min-height: var(--wb-row-height); padding: 4px 8px; text-align: left; }

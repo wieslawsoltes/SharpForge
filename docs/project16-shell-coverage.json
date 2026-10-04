@@ -21,9 +21,14 @@
       ],
       "focusedValidation": {
         "status": "passed",
-        "batch": "43 unique cases; initial 42/42 plus targeted 26/26 follow-up",
+        "batch": "74/74 combined completed-scope cases: 70 shell cases and 4 shared stylesheet contract cases",
         "runtime": "Node.js v24.19.0",
-        "revision": "b0c5868b"
+        "revision": "d5b1d153",
+        "passed": 74,
+        "failed": 0,
+        "shellCases": 70,
+        "stylesheetContractCases": 4,
+        "command": "node scripts/limited.js node --test tests/a19-shell-commands.test.js tests/a19-shell-settings.test.js tests/a19-shell-search.test.js tests/a19-shell-tools.test.js tests/a19-shell-boundaries.test.js tests/a19-shell-inventory.test.js tests/a19-shell-recents.test.js tests/a19-shell-themes.test.js tests/a00-20-styles.test.js"
       },
       "browserTests": [
         "tests/browser_a19_shell_test.py"
@@ -47,9 +52,14 @@
       ],
       "focusedValidation": {
         "status": "passed",
-        "batch": "43 unique cases; initial 42/42 plus targeted 26/26 follow-up",
+        "batch": "74/74 combined completed-scope cases: 70 shell cases and 4 shared stylesheet contract cases",
         "runtime": "Node.js v24.19.0",
-        "revision": "b0c5868b"
+        "revision": "d5b1d153",
+        "passed": 74,
+        "failed": 0,
+        "shellCases": 70,
+        "stylesheetContractCases": 4,
+        "command": "node scripts/limited.js node --test tests/a19-shell-commands.test.js tests/a19-shell-settings.test.js tests/a19-shell-search.test.js tests/a19-shell-tools.test.js tests/a19-shell-boundaries.test.js tests/a19-shell-inventory.test.js tests/a19-shell-recents.test.js tests/a19-shell-themes.test.js tests/a00-20-styles.test.js"
       },
       "browserTests": [
         "tests/browser_a19_shell_test.py"
@@ -73,9 +83,14 @@
       ],
       "focusedValidation": {
         "status": "passed",
-        "batch": "43 unique cases; initial 42/42 plus targeted 26/26 follow-up",
+        "batch": "74/74 combined completed-scope cases: 70 shell cases and 4 shared stylesheet contract cases",
         "runtime": "Node.js v24.19.0",
-        "revision": "b0c5868b"
+        "revision": "d5b1d153",
+        "passed": 74,
+        "failed": 0,
+        "shellCases": 70,
+        "stylesheetContractCases": 4,
+        "command": "node scripts/limited.js node --test tests/a19-shell-commands.test.js tests/a19-shell-settings.test.js tests/a19-shell-search.test.js tests/a19-shell-tools.test.js tests/a19-shell-boundaries.test.js tests/a19-shell-inventory.test.js tests/a19-shell-recents.test.js tests/a19-shell-themes.test.js tests/a00-20-styles.test.js"
       },
       "browserTests": [
         "tests/browser_a19_shell_test.py"
@@ -99,9 +114,14 @@
       ],
       "focusedValidation": {
         "status": "passed",
-        "batch": "43 unique cases; initial 42/42 plus targeted 26/26 follow-up",
+        "batch": "74/74 combined completed-scope cases: 70 shell cases and 4 shared stylesheet contract cases",
         "runtime": "Node.js v24.19.0",
-        "revision": "b0c5868b"
+        "revision": "d5b1d153",
+        "passed": 74,
+        "failed": 0,
+        "shellCases": 70,
+        "stylesheetContractCases": 4,
+        "command": "node scripts/limited.js node --test tests/a19-shell-commands.test.js tests/a19-shell-settings.test.js tests/a19-shell-search.test.js tests/a19-shell-tools.test.js tests/a19-shell-boundaries.test.js tests/a19-shell-inventory.test.js tests/a19-shell-recents.test.js tests/a19-shell-themes.test.js tests/a00-20-styles.test.js"
       },
       "browserTests": [
         "tests/browser_a19_shell_test.py"
@@ -126,9 +146,14 @@
       ],
       "focusedValidation": {
         "status": "passed",
-        "batch": "43 unique cases; initial 42/42 plus targeted 26/26 follow-up",
+        "batch": "74/74 combined completed-scope cases: 70 shell cases and 4 shared stylesheet contract cases",
         "runtime": "Node.js v24.19.0",
-        "revision": "b0c5868b"
+        "revision": "d5b1d153",
+        "passed": 74,
+        "failed": 0,
+        "shellCases": 70,
+        "stylesheetContractCases": 4,
+        "command": "node scripts/limited.js node --test tests/a19-shell-commands.test.js tests/a19-shell-settings.test.js tests/a19-shell-search.test.js tests/a19-shell-tools.test.js tests/a19-shell-boundaries.test.js tests/a19-shell-inventory.test.js tests/a19-shell-recents.test.js tests/a19-shell-themes.test.js tests/a00-20-styles.test.js"
       },
       "browserTests": [
         "tests/browser_a19_shell_test.py"
@@ -153,9 +178,14 @@
       ],
       "focusedValidation": {
         "status": "passed",
-        "batch": "43 unique cases; initial 42/42 plus targeted 26/26 follow-up",
+        "batch": "74/74 combined completed-scope cases: 70 shell cases and 4 shared stylesheet contract cases",
         "runtime": "Node.js v24.19.0",
-        "revision": "b0c5868b"
+        "revision": "d5b1d153",
+        "passed": 74,
+        "failed": 0,
+        "shellCases": 70,
+        "stylesheetContractCases": 4,
+        "command": "node scripts/limited.js node --test tests/a19-shell-commands.test.js tests/a19-shell-settings.test.js tests/a19-shell-search.test.js tests/a19-shell-tools.test.js tests/a19-shell-boundaries.test.js tests/a19-shell-inventory.test.js tests/a19-shell-recents.test.js tests/a19-shell-themes.test.js tests/a00-20-styles.test.js"
       },
       "browserTests": [
         "tests/browser_a19_shell_test.py",
@@ -181,9 +211,14 @@
       ],
       "focusedValidation": {
         "status": "passed",
-        "batch": "43 unique cases; initial 42/42 plus targeted 26/26 follow-up",
+        "batch": "74/74 combined completed-scope cases: 70 shell cases and 4 shared stylesheet contract cases",
         "runtime": "Node.js v24.19.0",
-        "revision": "b0c5868b"
+        "revision": "d5b1d153",
+        "passed": 74,
+        "failed": 0,
+        "shellCases": 70,
+        "stylesheetContractCases": 4,
+        "command": "node scripts/limited.js node --test tests/a19-shell-commands.test.js tests/a19-shell-settings.test.js tests/a19-shell-search.test.js tests/a19-shell-tools.test.js tests/a19-shell-boundaries.test.js tests/a19-shell-inventory.test.js tests/a19-shell-recents.test.js tests/a19-shell-themes.test.js tests/a00-20-styles.test.js"
       },
       "browserTests": [
         "tests/browser_a19_shell_test.py",
@@ -207,9 +242,14 @@
       ],
       "focusedValidation": {
         "status": "passed",
-        "batch": "43 unique cases; initial 42/42 plus targeted 26/26 follow-up",
+        "batch": "74/74 combined completed-scope cases: 70 shell cases and 4 shared stylesheet contract cases",
         "runtime": "Node.js v24.19.0",
-        "revision": "b0c5868b"
+        "revision": "d5b1d153",
+        "passed": 74,
+        "failed": 0,
+        "shellCases": 70,
+        "stylesheetContractCases": 4,
+        "command": "node scripts/limited.js node --test tests/a19-shell-commands.test.js tests/a19-shell-settings.test.js tests/a19-shell-search.test.js tests/a19-shell-tools.test.js tests/a19-shell-boundaries.test.js tests/a19-shell-inventory.test.js tests/a19-shell-recents.test.js tests/a19-shell-themes.test.js tests/a00-20-styles.test.js"
       },
       "browserTests": [
         "tests/browser_a19_shell_test.py",
@@ -237,9 +277,14 @@
       ],
       "focusedValidation": {
         "status": "passed",
-        "batch": "43 unique cases; initial 42/42 plus targeted 26/26 follow-up",
+        "batch": "74/74 combined completed-scope cases: 70 shell cases and 4 shared stylesheet contract cases",
         "runtime": "Node.js v24.19.0",
-        "revision": "b0c5868b"
+        "revision": "d5b1d153",
+        "passed": 74,
+        "failed": 0,
+        "shellCases": 70,
+        "stylesheetContractCases": 4,
+        "command": "node scripts/limited.js node --test tests/a19-shell-commands.test.js tests/a19-shell-settings.test.js tests/a19-shell-search.test.js tests/a19-shell-tools.test.js tests/a19-shell-boundaries.test.js tests/a19-shell-inventory.test.js tests/a19-shell-recents.test.js tests/a19-shell-themes.test.js tests/a00-20-styles.test.js"
       },
       "browserTests": [
         "tests/browser_a19_shell_test.py"
@@ -262,9 +307,14 @@
       ],
       "focusedValidation": {
         "status": "passed",
-        "batch": "43 unique cases; initial 42/42 plus targeted 26/26 follow-up",
+        "batch": "74/74 combined completed-scope cases: 70 shell cases and 4 shared stylesheet contract cases",
         "runtime": "Node.js v24.19.0",
-        "revision": "b0c5868b"
+        "revision": "d5b1d153",
+        "passed": 74,
+        "failed": 0,
+        "shellCases": 70,
+        "stylesheetContractCases": 4,
+        "command": "node scripts/limited.js node --test tests/a19-shell-commands.test.js tests/a19-shell-settings.test.js tests/a19-shell-search.test.js tests/a19-shell-tools.test.js tests/a19-shell-boundaries.test.js tests/a19-shell-inventory.test.js tests/a19-shell-recents.test.js tests/a19-shell-themes.test.js tests/a00-20-styles.test.js"
       },
       "browserTests": [
         "tests/browser_a19_shell_test.py"
@@ -281,24 +331,32 @@
       "owner": "shell",
       "implementation": "implemented-with-explicit-limits",
       "files": [
-        "apps/studio/workbench/tools/code-definition.js"
+        "apps/studio/workbench/tools/code-definition.js",
+        "apps/studio/workbench/document-size.js"
       ],
       "focusedTests": [
         "tests/a19-shell-search.test.js",
-        "tests/a19-shell-tools.test.js"
+        "tests/a19-shell-tools.test.js",
+        "tests/a19-shell-boundaries.test.js"
       ],
       "focusedValidation": {
         "status": "passed",
-        "batch": "43 unique cases; initial 42/42 plus targeted 26/26 follow-up",
+        "batch": "74/74 combined completed-scope cases: 70 shell cases and 4 shared stylesheet contract cases",
         "runtime": "Node.js v24.19.0",
-        "revision": "b0c5868b"
+        "revision": "d5b1d153",
+        "passed": 74,
+        "failed": 0,
+        "shellCases": 70,
+        "stylesheetContractCases": 4,
+        "command": "node scripts/limited.js node --test tests/a19-shell-commands.test.js tests/a19-shell-settings.test.js tests/a19-shell-search.test.js tests/a19-shell-tools.test.js tests/a19-shell-boundaries.test.js tests/a19-shell-inventory.test.js tests/a19-shell-recents.test.js tests/a19-shell-themes.test.js tests/a00-20-styles.test.js"
       },
       "browserTests": [
         "tests/browser_a19_shell_test.py"
       ],
       "browserValidation": "pending-integrated-static-and-standalone",
       "remainingAcceptanceGaps": [
-        "The 300 ms definition-update threshold requires integrated browser timing; unresolved metadata definitions remain explicit."
+        "The 300 ms definition-update threshold requires integrated browser timing; unresolved metadata definitions remain explicit.",
+        "Large definitions display bounded 64 KiB excerpts; full-source editing remains available through normal document navigation."
       ]
     },
     {
@@ -316,9 +374,14 @@
       ],
       "focusedValidation": {
         "status": "passed",
-        "batch": "43 unique cases; initial 42/42 plus targeted 26/26 follow-up",
+        "batch": "74/74 combined completed-scope cases: 70 shell cases and 4 shared stylesheet contract cases",
         "runtime": "Node.js v24.19.0",
-        "revision": "b0c5868b"
+        "revision": "d5b1d153",
+        "passed": 74,
+        "failed": 0,
+        "shellCases": 70,
+        "stylesheetContractCases": 4,
+        "command": "node scripts/limited.js node --test tests/a19-shell-commands.test.js tests/a19-shell-settings.test.js tests/a19-shell-search.test.js tests/a19-shell-tools.test.js tests/a19-shell-boundaries.test.js tests/a19-shell-inventory.test.js tests/a19-shell-recents.test.js tests/a19-shell-themes.test.js tests/a00-20-styles.test.js"
       },
       "browserTests": [
         "tests/browser_a19_shell_test.py"
@@ -343,9 +406,14 @@
       ],
       "focusedValidation": {
         "status": "passed",
-        "batch": "43 unique cases; initial 42/42 plus targeted 26/26 follow-up",
+        "batch": "74/74 combined completed-scope cases: 70 shell cases and 4 shared stylesheet contract cases",
         "runtime": "Node.js v24.19.0",
-        "revision": "b0c5868b"
+        "revision": "d5b1d153",
+        "passed": 74,
+        "failed": 0,
+        "shellCases": 70,
+        "stylesheetContractCases": 4,
+        "command": "node scripts/limited.js node --test tests/a19-shell-commands.test.js tests/a19-shell-settings.test.js tests/a19-shell-search.test.js tests/a19-shell-tools.test.js tests/a19-shell-boundaries.test.js tests/a19-shell-inventory.test.js tests/a19-shell-recents.test.js tests/a19-shell-themes.test.js tests/a00-20-styles.test.js"
       },
       "browserTests": [
         "tests/browser_a19_shell_test.py"
@@ -370,9 +438,14 @@
       ],
       "focusedValidation": {
         "status": "passed",
-        "batch": "43 unique cases; initial 42/42 plus targeted 26/26 follow-up",
+        "batch": "74/74 combined completed-scope cases: 70 shell cases and 4 shared stylesheet contract cases",
         "runtime": "Node.js v24.19.0",
-        "revision": "b0c5868b"
+        "revision": "d5b1d153",
+        "passed": 74,
+        "failed": 0,
+        "shellCases": 70,
+        "stylesheetContractCases": 4,
+        "command": "node scripts/limited.js node --test tests/a19-shell-commands.test.js tests/a19-shell-settings.test.js tests/a19-shell-search.test.js tests/a19-shell-tools.test.js tests/a19-shell-boundaries.test.js tests/a19-shell-inventory.test.js tests/a19-shell-recents.test.js tests/a19-shell-themes.test.js tests/a00-20-styles.test.js"
       },
       "browserTests": [
         "tests/browser_a19_shell_test.py"
@@ -397,9 +470,14 @@
       ],
       "focusedValidation": {
         "status": "passed",
-        "batch": "43 unique cases; initial 42/42 plus targeted 26/26 follow-up",
+        "batch": "74/74 combined completed-scope cases: 70 shell cases and 4 shared stylesheet contract cases",
         "runtime": "Node.js v24.19.0",
-        "revision": "b0c5868b"
+        "revision": "d5b1d153",
+        "passed": 74,
+        "failed": 0,
+        "shellCases": 70,
+        "stylesheetContractCases": 4,
+        "command": "node scripts/limited.js node --test tests/a19-shell-commands.test.js tests/a19-shell-settings.test.js tests/a19-shell-search.test.js tests/a19-shell-tools.test.js tests/a19-shell-boundaries.test.js tests/a19-shell-inventory.test.js tests/a19-shell-recents.test.js tests/a19-shell-themes.test.js tests/a00-20-styles.test.js"
       },
       "browserTests": [
         "tests/browser_a19_shell_test.py"
@@ -414,23 +492,32 @@
       "owner": "shell",
       "implementation": "implemented-with-explicit-limits",
       "files": [
-        "apps/studio/workbench/tools/solution-explorer-views.js"
+        "apps/studio/workbench/tools/solution-explorer-views.js",
+        "apps/studio/workbench/document-size.js",
+        "apps/studio/workbench/search-service.js"
       ],
       "focusedTests": [
-        "tests/a19-shell-tools.test.js"
+        "tests/a19-shell-tools.test.js",
+        "tests/a19-shell-boundaries.test.js"
       ],
       "focusedValidation": {
         "status": "passed",
-        "batch": "43 unique cases; initial 42/42 plus targeted 26/26 follow-up",
+        "batch": "74/74 combined completed-scope cases: 70 shell cases and 4 shared stylesheet contract cases",
         "runtime": "Node.js v24.19.0",
-        "revision": "b0c5868b"
+        "revision": "d5b1d153",
+        "passed": 74,
+        "failed": 0,
+        "shellCases": 70,
+        "stylesheetContractCases": 4,
+        "command": "node scripts/limited.js node --test tests/a19-shell-commands.test.js tests/a19-shell-settings.test.js tests/a19-shell-search.test.js tests/a19-shell-tools.test.js tests/a19-shell-boundaries.test.js tests/a19-shell-inventory.test.js tests/a19-shell-recents.test.js tests/a19-shell-themes.test.js tests/a00-20-styles.test.js"
       },
       "browserTests": [
         "tests/browser_a19_shell_test.py"
       ],
       "browserValidation": "pending-integrated-static-and-standalone",
       "remainingAcceptanceGaps": [
-        "Independent source views are provided through New Solution Explorer View; the retained legacy primary Explorer remains root-owned."
+        "Independent source views are provided through New Solution Explorer View; the retained legacy primary Explorer remains root-owned.",
+        "Content filtering uses the cancellable search worker with explicit 8-million-unit per-file and 32-million-unit aggregate limits."
       ]
     },
     {
@@ -452,9 +539,14 @@
       ],
       "focusedValidation": {
         "status": "passed",
-        "batch": "43 unique cases; initial 42/42 plus targeted 26/26 follow-up",
+        "batch": "74/74 combined completed-scope cases: 70 shell cases and 4 shared stylesheet contract cases",
         "runtime": "Node.js v24.19.0",
-        "revision": "b0c5868b"
+        "revision": "d5b1d153",
+        "passed": 74,
+        "failed": 0,
+        "shellCases": 70,
+        "stylesheetContractCases": 4,
+        "command": "node scripts/limited.js node --test tests/a19-shell-commands.test.js tests/a19-shell-settings.test.js tests/a19-shell-search.test.js tests/a19-shell-tools.test.js tests/a19-shell-boundaries.test.js tests/a19-shell-inventory.test.js tests/a19-shell-recents.test.js tests/a19-shell-themes.test.js tests/a00-20-styles.test.js"
       },
       "browserTests": [
         "tests/browser_a19_shell_test.py"
@@ -470,23 +562,32 @@
       "implementation": "implemented",
       "files": [
         "apps/studio/workbench/start-window.js",
-        "apps/studio/workbench/recent-items.js"
+        "apps/studio/workbench/recent-items.js",
+        "apps/studio/workbench/recent-workspaces.js"
       ],
       "focusedTests": [
-        "tests/a19-shell-settings.test.js"
+        "tests/a19-shell-settings.test.js",
+        "tests/a19-shell-recents.test.js"
       ],
       "focusedValidation": {
         "status": "passed",
-        "batch": "43 unique cases; initial 42/42 plus targeted 26/26 follow-up",
+        "batch": "74/74 combined completed-scope cases: 70 shell cases and 4 shared stylesheet contract cases",
         "runtime": "Node.js v24.19.0",
-        "revision": "b0c5868b"
+        "revision": "d5b1d153",
+        "passed": 74,
+        "failed": 0,
+        "shellCases": 70,
+        "stylesheetContractCases": 4,
+        "command": "node scripts/limited.js node --test tests/a19-shell-commands.test.js tests/a19-shell-settings.test.js tests/a19-shell-search.test.js tests/a19-shell-tools.test.js tests/a19-shell-boundaries.test.js tests/a19-shell-inventory.test.js tests/a19-shell-recents.test.js tests/a19-shell-themes.test.js tests/a00-20-styles.test.js"
       },
       "browserTests": [
         "tests/browser_a19_shell_test.py",
         "tests/browser_vs_workflows_test.py"
       ],
       "browserValidation": "pending-integrated-static-and-standalone",
-      "remainingAcceptanceGaps": []
+      "remainingAcceptanceGaps": [
+        "Root must mount createRecentWorkspaces providers against current/previous recovery and authorized reopen actions. The helper is qualified for encoding/BOM/binary/source metadata, cancelled opens and missing permissions."
+      ]
     },
     {
       "issue": 1467,
@@ -503,9 +604,14 @@
       ],
       "focusedValidation": {
         "status": "passed",
-        "batch": "43 unique cases; initial 42/42 plus targeted 26/26 follow-up",
+        "batch": "74/74 combined completed-scope cases: 70 shell cases and 4 shared stylesheet contract cases",
         "runtime": "Node.js v24.19.0",
-        "revision": "b0c5868b"
+        "revision": "d5b1d153",
+        "passed": 74,
+        "failed": 0,
+        "shellCases": 70,
+        "stylesheetContractCases": 4,
+        "command": "node scripts/limited.js node --test tests/a19-shell-commands.test.js tests/a19-shell-settings.test.js tests/a19-shell-search.test.js tests/a19-shell-tools.test.js tests/a19-shell-boundaries.test.js tests/a19-shell-inventory.test.js tests/a19-shell-recents.test.js tests/a19-shell-themes.test.js tests/a00-20-styles.test.js"
       },
       "browserTests": [
         "tests/browser_a19_shell_test.py"
@@ -528,18 +634,21 @@
         "tests/a19-shell-boundaries.test.js"
       ],
       "focusedValidation": {
-        "status": "passed-original-batch; canonical-keyboard-follow-up-pending-root-export-integration",
-        "batch": "43 unique cases; initial 42/42 plus targeted 26/26 follow-up",
+        "status": "passed",
+        "batch": "74/74 combined completed-scope cases: 70 shell cases and 4 shared stylesheet contract cases",
         "runtime": "Node.js v24.19.0",
-        "revision": "b0c5868b"
+        "revision": "d5b1d153",
+        "passed": 74,
+        "failed": 0,
+        "shellCases": 70,
+        "stylesheetContractCases": 4,
+        "command": "node scripts/limited.js node --test tests/a19-shell-commands.test.js tests/a19-shell-settings.test.js tests/a19-shell-search.test.js tests/a19-shell-tools.test.js tests/a19-shell-boundaries.test.js tests/a19-shell-inventory.test.js tests/a19-shell-recents.test.js tests/a19-shell-themes.test.js tests/a00-20-styles.test.js"
       },
       "browserTests": [
         "tests/browser_a19_shell_test.py"
       ],
       "browserValidation": "pending-integrated-static-and-standalone",
-      "remainingAcceptanceGaps": [
-        "Canonical key recorder/conflict follow-up requires the public editor eventStroke export; new shifted-punctuation/prefix regression is pending integrated execution."
-      ]
+      "remainingAcceptanceGaps": []
     },
     {
       "issue": 1469,
@@ -557,9 +666,14 @@
       ],
       "focusedValidation": {
         "status": "passed",
-        "batch": "43 unique cases; initial 42/42 plus targeted 26/26 follow-up",
+        "batch": "74/74 combined completed-scope cases: 70 shell cases and 4 shared stylesheet contract cases",
         "runtime": "Node.js v24.19.0",
-        "revision": "b0c5868b"
+        "revision": "d5b1d153",
+        "passed": 74,
+        "failed": 0,
+        "shellCases": 70,
+        "stylesheetContractCases": 4,
+        "command": "node scripts/limited.js node --test tests/a19-shell-commands.test.js tests/a19-shell-settings.test.js tests/a19-shell-search.test.js tests/a19-shell-tools.test.js tests/a19-shell-boundaries.test.js tests/a19-shell-inventory.test.js tests/a19-shell-recents.test.js tests/a19-shell-themes.test.js tests/a00-20-styles.test.js"
       },
       "browserTests": [
         "tests/browser_a19_shell_test.py"
@@ -582,9 +696,14 @@
       ],
       "focusedValidation": {
         "status": "passed",
-        "batch": "43 unique cases; initial 42/42 plus targeted 26/26 follow-up",
+        "batch": "74/74 combined completed-scope cases: 70 shell cases and 4 shared stylesheet contract cases",
         "runtime": "Node.js v24.19.0",
-        "revision": "b0c5868b"
+        "revision": "d5b1d153",
+        "passed": 74,
+        "failed": 0,
+        "shellCases": 70,
+        "stylesheetContractCases": 4,
+        "command": "node scripts/limited.js node --test tests/a19-shell-commands.test.js tests/a19-shell-settings.test.js tests/a19-shell-search.test.js tests/a19-shell-tools.test.js tests/a19-shell-boundaries.test.js tests/a19-shell-inventory.test.js tests/a19-shell-recents.test.js tests/a19-shell-themes.test.js tests/a00-20-styles.test.js"
       },
       "browserTests": [
         "tests/browser_a19_shell_test.py"
@@ -608,9 +727,14 @@
       ],
       "focusedValidation": {
         "status": "passed",
-        "batch": "43 unique cases; initial 42/42 plus targeted 26/26 follow-up",
+        "batch": "74/74 combined completed-scope cases: 70 shell cases and 4 shared stylesheet contract cases",
         "runtime": "Node.js v24.19.0",
-        "revision": "b0c5868b"
+        "revision": "d5b1d153",
+        "passed": 74,
+        "failed": 0,
+        "shellCases": 70,
+        "stylesheetContractCases": 4,
+        "command": "node scripts/limited.js node --test tests/a19-shell-commands.test.js tests/a19-shell-settings.test.js tests/a19-shell-search.test.js tests/a19-shell-tools.test.js tests/a19-shell-boundaries.test.js tests/a19-shell-inventory.test.js tests/a19-shell-recents.test.js tests/a19-shell-themes.test.js tests/a00-20-styles.test.js"
       },
       "browserTests": [
         "tests/browser_a19_shell_test.py"
@@ -627,22 +751,31 @@
       "owner": "shell",
       "implementation": "implemented",
       "files": [
-        "apps/studio/workbench/status-bar.js"
+        "apps/studio/workbench/status-bar.js",
+        "apps/studio/workbench/status-position.js"
       ],
       "focusedTests": [
-        "tests/a19-shell-commands.test.js"
+        "tests/a19-shell-commands.test.js",
+        "tests/a19-shell-boundaries.test.js"
       ],
       "focusedValidation": {
         "status": "passed",
-        "batch": "43 unique cases; initial 42/42 plus targeted 26/26 follow-up",
+        "batch": "74/74 combined completed-scope cases: 70 shell cases and 4 shared stylesheet contract cases",
         "runtime": "Node.js v24.19.0",
-        "revision": "b0c5868b"
+        "revision": "d5b1d153",
+        "passed": 74,
+        "failed": 0,
+        "shellCases": 70,
+        "stylesheetContractCases": 4,
+        "command": "node scripts/limited.js node --test tests/a19-shell-commands.test.js tests/a19-shell-settings.test.js tests/a19-shell-search.test.js tests/a19-shell-tools.test.js tests/a19-shell-boundaries.test.js tests/a19-shell-inventory.test.js tests/a19-shell-recents.test.js tests/a19-shell-themes.test.js tests/a00-20-styles.test.js"
       },
       "browserTests": [
         "tests/browser_a19_shell_test.py"
       ],
       "browserValidation": "pending-integrated-static-and-standalone",
-      "remainingAcceptanceGaps": []
+      "remainingAcceptanceGaps": [
+        "Exact long-prefix visual columns consume the text lane model index. This shell adapter is tested for cancellation/staleness and bounded Unicode fallback; actual integrated browser columns await qualification."
+      ]
     },
     {
       "issue": 1475,
@@ -659,9 +792,14 @@
       ],
       "focusedValidation": {
         "status": "passed",
-        "batch": "43 unique cases; initial 42/42 plus targeted 26/26 follow-up",
+        "batch": "74/74 combined completed-scope cases: 70 shell cases and 4 shared stylesheet contract cases",
         "runtime": "Node.js v24.19.0",
-        "revision": "b0c5868b"
+        "revision": "d5b1d153",
+        "passed": 74,
+        "failed": 0,
+        "shellCases": 70,
+        "stylesheetContractCases": 4,
+        "command": "node scripts/limited.js node --test tests/a19-shell-commands.test.js tests/a19-shell-settings.test.js tests/a19-shell-search.test.js tests/a19-shell-tools.test.js tests/a19-shell-boundaries.test.js tests/a19-shell-inventory.test.js tests/a19-shell-recents.test.js tests/a19-shell-themes.test.js tests/a00-20-styles.test.js"
       },
       "browserTests": [
         "tests/browser_a19_shell_test.py"
@@ -683,9 +821,14 @@
       ],
       "focusedValidation": {
         "status": "passed",
-        "batch": "43 unique cases; initial 42/42 plus targeted 26/26 follow-up",
+        "batch": "74/74 combined completed-scope cases: 70 shell cases and 4 shared stylesheet contract cases",
         "runtime": "Node.js v24.19.0",
-        "revision": "b0c5868b"
+        "revision": "d5b1d153",
+        "passed": 74,
+        "failed": 0,
+        "shellCases": 70,
+        "stylesheetContractCases": 4,
+        "command": "node scripts/limited.js node --test tests/a19-shell-commands.test.js tests/a19-shell-settings.test.js tests/a19-shell-search.test.js tests/a19-shell-tools.test.js tests/a19-shell-boundaries.test.js tests/a19-shell-inventory.test.js tests/a19-shell-recents.test.js tests/a19-shell-themes.test.js tests/a00-20-styles.test.js"
       },
       "browserTests": [
         "tests/browser_a19_shell_test.py",
@@ -710,9 +853,14 @@
       ],
       "focusedValidation": {
         "status": "passed",
-        "batch": "43 unique cases; initial 42/42 plus targeted 26/26 follow-up",
+        "batch": "74/74 combined completed-scope cases: 70 shell cases and 4 shared stylesheet contract cases",
         "runtime": "Node.js v24.19.0",
-        "revision": "b0c5868b"
+        "revision": "d5b1d153",
+        "passed": 74,
+        "failed": 0,
+        "shellCases": 70,
+        "stylesheetContractCases": 4,
+        "command": "node scripts/limited.js node --test tests/a19-shell-commands.test.js tests/a19-shell-settings.test.js tests/a19-shell-search.test.js tests/a19-shell-tools.test.js tests/a19-shell-boundaries.test.js tests/a19-shell-inventory.test.js tests/a19-shell-recents.test.js tests/a19-shell-themes.test.js tests/a00-20-styles.test.js"
       },
       "browserTests": [
         "tests/browser_a19_shell_test.py"
@@ -737,9 +885,14 @@
       ],
       "focusedValidation": {
         "status": "passed",
-        "batch": "43 unique cases; initial 42/42 plus targeted 26/26 follow-up",
+        "batch": "74/74 combined completed-scope cases: 70 shell cases and 4 shared stylesheet contract cases",
         "runtime": "Node.js v24.19.0",
-        "revision": "b0c5868b"
+        "revision": "d5b1d153",
+        "passed": 74,
+        "failed": 0,
+        "shellCases": 70,
+        "stylesheetContractCases": 4,
+        "command": "node scripts/limited.js node --test tests/a19-shell-commands.test.js tests/a19-shell-settings.test.js tests/a19-shell-search.test.js tests/a19-shell-tools.test.js tests/a19-shell-boundaries.test.js tests/a19-shell-inventory.test.js tests/a19-shell-recents.test.js tests/a19-shell-themes.test.js tests/a00-20-styles.test.js"
       },
       "browserTests": [
         "tests/browser_a19_shell_test.py",
@@ -768,9 +921,14 @@
       ],
       "focusedValidation": {
         "status": "passed",
-        "batch": "43 unique cases; initial 42/42 plus targeted 26/26 follow-up",
+        "batch": "74/74 combined completed-scope cases: 70 shell cases and 4 shared stylesheet contract cases",
         "runtime": "Node.js v24.19.0",
-        "revision": "b0c5868b"
+        "revision": "d5b1d153",
+        "passed": 74,
+        "failed": 0,
+        "shellCases": 70,
+        "stylesheetContractCases": 4,
+        "command": "node scripts/limited.js node --test tests/a19-shell-commands.test.js tests/a19-shell-settings.test.js tests/a19-shell-search.test.js tests/a19-shell-tools.test.js tests/a19-shell-boundaries.test.js tests/a19-shell-inventory.test.js tests/a19-shell-recents.test.js tests/a19-shell-themes.test.js tests/a00-20-styles.test.js"
       },
       "browserTests": [
         "tests/browser_a19_shell_test.py"
@@ -793,9 +951,14 @@
       ],
       "focusedValidation": {
         "status": "passed",
-        "batch": "43 unique cases; initial 42/42 plus targeted 26/26 follow-up",
+        "batch": "74/74 combined completed-scope cases: 70 shell cases and 4 shared stylesheet contract cases",
         "runtime": "Node.js v24.19.0",
-        "revision": "b0c5868b"
+        "revision": "d5b1d153",
+        "passed": 74,
+        "failed": 0,
+        "shellCases": 70,
+        "stylesheetContractCases": 4,
+        "command": "node scripts/limited.js node --test tests/a19-shell-commands.test.js tests/a19-shell-settings.test.js tests/a19-shell-search.test.js tests/a19-shell-tools.test.js tests/a19-shell-boundaries.test.js tests/a19-shell-inventory.test.js tests/a19-shell-recents.test.js tests/a19-shell-themes.test.js tests/a00-20-styles.test.js"
       },
       "browserTests": [
         "tests/browser_a19_shell_test.py"
@@ -818,18 +981,22 @@
         "tests/a19-shell-inventory.test.js"
       ],
       "focusedValidation": {
-        "status": "passed-original-batch; canonical-keyboard-follow-up-pending-root-export-integration",
-        "batch": "43 unique cases; initial 42/42 plus targeted 26/26 follow-up",
+        "status": "passed",
+        "batch": "74/74 combined completed-scope cases: 70 shell cases and 4 shared stylesheet contract cases",
         "runtime": "Node.js v24.19.0",
-        "revision": "b0c5868b"
+        "revision": "d5b1d153",
+        "passed": 74,
+        "failed": 0,
+        "shellCases": 70,
+        "stylesheetContractCases": 4,
+        "command": "node scripts/limited.js node --test tests/a19-shell-commands.test.js tests/a19-shell-settings.test.js tests/a19-shell-search.test.js tests/a19-shell-tools.test.js tests/a19-shell-boundaries.test.js tests/a19-shell-inventory.test.js tests/a19-shell-recents.test.js tests/a19-shell-themes.test.js tests/a00-20-styles.test.js"
       },
       "browserTests": [
         "tests/browser_a19_shell_test.py"
       ],
       "browserValidation": "pending-integrated-static-and-standalone",
       "remainingAcceptanceGaps": [
-        "Root integrates the shared editor KeybindingService and active-scope routing; shell contributes commands and Options only.",
-        "Canonical key recorder/conflict follow-up requires the public editor eventStroke export; new shifted-punctuation/prefix regression is pending integrated execution."
+        "Root integrates the shared editor KeybindingService and active-scope routing; shell contributes commands and Options only."
       ]
     },
     {
@@ -849,9 +1016,14 @@
       ],
       "focusedValidation": {
         "status": "passed",
-        "batch": "43 unique cases; initial 42/42 plus targeted 26/26 follow-up",
+        "batch": "74/74 combined completed-scope cases: 70 shell cases and 4 shared stylesheet contract cases",
         "runtime": "Node.js v24.19.0",
-        "revision": "b0c5868b"
+        "revision": "d5b1d153",
+        "passed": 74,
+        "failed": 0,
+        "shellCases": 70,
+        "stylesheetContractCases": 4,
+        "command": "node scripts/limited.js node --test tests/a19-shell-commands.test.js tests/a19-shell-settings.test.js tests/a19-shell-search.test.js tests/a19-shell-tools.test.js tests/a19-shell-boundaries.test.js tests/a19-shell-inventory.test.js tests/a19-shell-recents.test.js tests/a19-shell-themes.test.js tests/a00-20-styles.test.js"
       },
       "browserTests": [
         "tests/browser_a19_shell_test.py"
@@ -875,9 +1047,14 @@
       ],
       "focusedValidation": {
         "status": "passed",
-        "batch": "43 unique cases; initial 42/42 plus targeted 26/26 follow-up",
+        "batch": "74/74 combined completed-scope cases: 70 shell cases and 4 shared stylesheet contract cases",
         "runtime": "Node.js v24.19.0",
-        "revision": "b0c5868b"
+        "revision": "d5b1d153",
+        "passed": 74,
+        "failed": 0,
+        "shellCases": 70,
+        "stylesheetContractCases": 4,
+        "command": "node scripts/limited.js node --test tests/a19-shell-commands.test.js tests/a19-shell-settings.test.js tests/a19-shell-search.test.js tests/a19-shell-tools.test.js tests/a19-shell-boundaries.test.js tests/a19-shell-inventory.test.js tests/a19-shell-recents.test.js tests/a19-shell-themes.test.js tests/a00-20-styles.test.js"
       },
       "browserTests": [
         "tests/browser_a19_shell_test.py"
@@ -901,9 +1078,14 @@
       ],
       "focusedValidation": {
         "status": "passed",
-        "batch": "43 unique cases; initial 42/42 plus targeted 26/26 follow-up",
+        "batch": "74/74 combined completed-scope cases: 70 shell cases and 4 shared stylesheet contract cases",
         "runtime": "Node.js v24.19.0",
-        "revision": "b0c5868b"
+        "revision": "d5b1d153",
+        "passed": 74,
+        "failed": 0,
+        "shellCases": 70,
+        "stylesheetContractCases": 4,
+        "command": "node scripts/limited.js node --test tests/a19-shell-commands.test.js tests/a19-shell-settings.test.js tests/a19-shell-search.test.js tests/a19-shell-tools.test.js tests/a19-shell-boundaries.test.js tests/a19-shell-inventory.test.js tests/a19-shell-recents.test.js tests/a19-shell-themes.test.js tests/a00-20-styles.test.js"
       },
       "browserTests": [
         "tests/browser_a19_shell_test.py"
@@ -918,16 +1100,23 @@
       "owner": "shell",
       "implementation": "implemented",
       "files": [
-        "apps/studio/workbench/settings-store.js"
+        "apps/studio/workbench/settings-store.js",
+        "apps/studio/workbench/options/general-pages.js"
       ],
       "focusedTests": [
-        "tests/a19-shell-settings.test.js"
+        "tests/a19-shell-settings.test.js",
+        "tests/a19-shell-boundaries.test.js"
       ],
       "focusedValidation": {
         "status": "passed",
-        "batch": "43 unique cases; initial 42/42 plus targeted 26/26 follow-up",
+        "batch": "74/74 combined completed-scope cases: 70 shell cases and 4 shared stylesheet contract cases",
         "runtime": "Node.js v24.19.0",
-        "revision": "b0c5868b"
+        "revision": "d5b1d153",
+        "passed": 74,
+        "failed": 0,
+        "shellCases": 70,
+        "stylesheetContractCases": 4,
+        "command": "node scripts/limited.js node --test tests/a19-shell-commands.test.js tests/a19-shell-settings.test.js tests/a19-shell-search.test.js tests/a19-shell-tools.test.js tests/a19-shell-boundaries.test.js tests/a19-shell-inventory.test.js tests/a19-shell-recents.test.js tests/a19-shell-themes.test.js tests/a00-20-styles.test.js"
       },
       "browserTests": [
         "tests/browser_a19_shell_test.py"
@@ -950,9 +1139,14 @@
       ],
       "focusedValidation": {
         "status": "passed",
-        "batch": "43 unique cases; initial 42/42 plus targeted 26/26 follow-up",
+        "batch": "74/74 combined completed-scope cases: 70 shell cases and 4 shared stylesheet contract cases",
         "runtime": "Node.js v24.19.0",
-        "revision": "b0c5868b"
+        "revision": "d5b1d153",
+        "passed": 74,
+        "failed": 0,
+        "shellCases": 70,
+        "stylesheetContractCases": 4,
+        "command": "node scripts/limited.js node --test tests/a19-shell-commands.test.js tests/a19-shell-settings.test.js tests/a19-shell-search.test.js tests/a19-shell-tools.test.js tests/a19-shell-boundaries.test.js tests/a19-shell-inventory.test.js tests/a19-shell-recents.test.js tests/a19-shell-themes.test.js tests/a00-20-styles.test.js"
       },
       "browserTests": [
         "tests/browser_a19_shell_test.py"
@@ -965,28 +1159,76 @@
       "workId": "SF-A19-T08.3",
       "title": "[SF-A19-T08.3] Tokenise themes and add Blue and High Contrast",
       "owner": "shell",
-      "implementation": "implemented-with-explicit-limits",
+      "implementation": "implemented; integrated browser and native visual qualification pending",
       "files": [
+        "apps/studio/build.contrib.json",
+        "apps/studio/studio.css",
+        "apps/studio/styles/context-menus.css",
+        "apps/studio/styles/debugger-effects.css",
+        "apps/studio/styles/debugger.css",
+        "apps/studio/styles/designer-light.css",
+        "apps/studio/styles/designer-sync.css",
+        "apps/studio/styles/designer.css",
+        "apps/studio/styles/editor-theme.css",
+        "apps/studio/styles/project-wizard.css",
+        "apps/studio/styles/runtime-settings.css",
+        "apps/studio/styles/solution-explorer.css",
+        "apps/studio/styles/status-bar.css",
+        "apps/studio/styles/winui-app.css",
+        "apps/studio/styles/workbench-density.css",
+        "apps/studio/styles/workbench-light.css",
+        "apps/studio/styles/workbench-theme.css",
+        "apps/studio/themes.css",
+        "apps/studio/workbench/designer-tokens.css",
+        "apps/studio/workbench/studio-chrome-colors.css",
+        "apps/studio/workbench/studio-tools-colors.css",
         "apps/studio/workbench/theme-tokens.css",
         "apps/studio/workbench/theme.js",
-        "apps/studio/workbench/workbench-shell.css"
+        "apps/studio/workbench/workbench-shell.css",
+        "planning/contracts/fixtures/css/studio-baseline.json",
+        "planning/contracts/fixtures/css/studio-theme-migration.json",
+        "scripts/quality/theme-colors.js"
       ],
       "focusedTests": [
+        "tests/a19-shell-themes.test.js",
+        "tests/a00-20-styles.test.js",
         "tests/a19-shell-settings.test.js"
       ],
       "focusedValidation": {
         "status": "passed",
-        "batch": "43 unique cases; initial 42/42 plus targeted 26/26 follow-up",
+        "batch": "74/74 combined completed-scope cases: 70 shell cases and 4 shared stylesheet contract cases",
         "runtime": "Node.js v24.19.0",
-        "revision": "b0c5868b"
+        "revision": "d5b1d153",
+        "passed": 74,
+        "failed": 0,
+        "shellCases": 70,
+        "stylesheetContractCases": 4,
+        "command": "node scripts/limited.js node --test tests/a19-shell-commands.test.js tests/a19-shell-settings.test.js tests/a19-shell-search.test.js tests/a19-shell-tools.test.js tests/a19-shell-boundaries.test.js tests/a19-shell-inventory.test.js tests/a19-shell-recents.test.js tests/a19-shell-themes.test.js tests/a00-20-styles.test.js"
       },
       "browserTests": [
         "tests/browser_a19_shell_test.py"
       ],
       "browserValidation": "pending-integrated-static-and-standalone",
       "remainingAcceptanceGaps": [
-        "Native device DPI and complete legacy-view pixel parity are not qualified by unit tests."
-      ]
+        "Native device DPI, browser forced-color rendering and full legacy-view pixel parity require integrated browser/native qualification; this lane has not executed it.",
+        "The literal gate covers the Studio and split release08\u201314 styles named in #1566. Package-owned editor/controls/docking CSS is outside that accepted source scope."
+      ],
+      "sourceEvidence": {
+        "tokenFiles": [
+          "apps/studio/themes.css",
+          "apps/studio/workbench/designer-tokens.css",
+          "apps/studio/workbench/theme-tokens.css"
+        ],
+        "migratedTokens": 350,
+        "legacyFiles": 26,
+        "preservedPaintDeclarations": 955,
+        "preservedOtherDeclarations": 2421,
+        "legacyStudioBytesBefore": 49885,
+        "legacyStudioBytesAfter": 37644,
+        "literalGateFindings": 0,
+        "baselineRevision": "34a28b52",
+        "preservationFixture": "planning/contracts/fixtures/css/studio-theme-migration.json"
+      }
     },
     {
       "issue": 1567,
@@ -1004,9 +1246,14 @@
       ],
       "focusedValidation": {
         "status": "passed",
-        "batch": "43 unique cases; initial 42/42 plus targeted 26/26 follow-up",
+        "batch": "74/74 combined completed-scope cases: 70 shell cases and 4 shared stylesheet contract cases",
         "runtime": "Node.js v24.19.0",
-        "revision": "b0c5868b"
+        "revision": "d5b1d153",
+        "passed": 74,
+        "failed": 0,
+        "shellCases": 70,
+        "stylesheetContractCases": 4,
+        "command": "node scripts/limited.js node --test tests/a19-shell-commands.test.js tests/a19-shell-settings.test.js tests/a19-shell-search.test.js tests/a19-shell-tools.test.js tests/a19-shell-boundaries.test.js tests/a19-shell-inventory.test.js tests/a19-shell-recents.test.js tests/a19-shell-themes.test.js tests/a00-20-styles.test.js"
       },
       "browserTests": [
         "tests/browser_a19_shell_test.py"
@@ -1030,9 +1277,14 @@
       ],
       "focusedValidation": {
         "status": "passed",
-        "batch": "43 unique cases; initial 42/42 plus targeted 26/26 follow-up",
+        "batch": "74/74 combined completed-scope cases: 70 shell cases and 4 shared stylesheet contract cases",
         "runtime": "Node.js v24.19.0",
-        "revision": "b0c5868b"
+        "revision": "d5b1d153",
+        "passed": 74,
+        "failed": 0,
+        "shellCases": 70,
+        "stylesheetContractCases": 4,
+        "command": "node scripts/limited.js node --test tests/a19-shell-commands.test.js tests/a19-shell-settings.test.js tests/a19-shell-search.test.js tests/a19-shell-tools.test.js tests/a19-shell-boundaries.test.js tests/a19-shell-inventory.test.js tests/a19-shell-recents.test.js tests/a19-shell-themes.test.js tests/a00-20-styles.test.js"
       },
       "browserTests": [
         "tests/browser_a19_shell_test.py"
@@ -1058,9 +1310,14 @@
       ],
       "focusedValidation": {
         "status": "passed",
-        "batch": "43 unique cases; initial 42/42 plus targeted 26/26 follow-up",
+        "batch": "74/74 combined completed-scope cases: 70 shell cases and 4 shared stylesheet contract cases",
         "runtime": "Node.js v24.19.0",
-        "revision": "b0c5868b"
+        "revision": "d5b1d153",
+        "passed": 74,
+        "failed": 0,
+        "shellCases": 70,
+        "stylesheetContractCases": 4,
+        "command": "node scripts/limited.js node --test tests/a19-shell-commands.test.js tests/a19-shell-settings.test.js tests/a19-shell-search.test.js tests/a19-shell-tools.test.js tests/a19-shell-boundaries.test.js tests/a19-shell-inventory.test.js tests/a19-shell-recents.test.js tests/a19-shell-themes.test.js tests/a00-20-styles.test.js"
       },
       "browserTests": [
         "tests/browser_a19_shell_test.py"
@@ -1084,9 +1341,14 @@
       ],
       "focusedValidation": {
         "status": "passed",
-        "batch": "43 unique cases; initial 42/42 plus targeted 26/26 follow-up",
+        "batch": "74/74 combined completed-scope cases: 70 shell cases and 4 shared stylesheet contract cases",
         "runtime": "Node.js v24.19.0",
-        "revision": "b0c5868b"
+        "revision": "d5b1d153",
+        "passed": 74,
+        "failed": 0,
+        "shellCases": 70,
+        "stylesheetContractCases": 4,
+        "command": "node scripts/limited.js node --test tests/a19-shell-commands.test.js tests/a19-shell-settings.test.js tests/a19-shell-search.test.js tests/a19-shell-tools.test.js tests/a19-shell-boundaries.test.js tests/a19-shell-inventory.test.js tests/a19-shell-recents.test.js tests/a19-shell-themes.test.js tests/a00-20-styles.test.js"
       },
       "browserTests": [
         "tests/browser_a19_shell_test.py"
@@ -1103,24 +1365,31 @@
       "files": [
         "apps/studio/workbench/recent-items.js",
         "apps/studio/workbench/start-window.js",
-        "apps/studio/workbench/shell-events.js"
+        "apps/studio/workbench/shell-events.js",
+        "apps/studio/workbench/recent-workspaces.js"
       ],
       "focusedTests": [
         "tests/a19-shell-search.test.js",
-        "tests/a19-shell-boundaries.test.js"
+        "tests/a19-shell-boundaries.test.js",
+        "tests/a19-shell-recents.test.js"
       ],
       "focusedValidation": {
         "status": "passed",
-        "batch": "43 unique cases; initial 42/42 plus targeted 26/26 follow-up",
+        "batch": "74/74 combined completed-scope cases: 70 shell cases and 4 shared stylesheet contract cases",
         "runtime": "Node.js v24.19.0",
-        "revision": "b0c5868b"
+        "revision": "d5b1d153",
+        "passed": 74,
+        "failed": 0,
+        "shellCases": 70,
+        "stylesheetContractCases": 4,
+        "command": "node scripts/limited.js node --test tests/a19-shell-commands.test.js tests/a19-shell-settings.test.js tests/a19-shell-search.test.js tests/a19-shell-tools.test.js tests/a19-shell-boundaries.test.js tests/a19-shell-inventory.test.js tests/a19-shell-recents.test.js tests/a19-shell-themes.test.js tests/a00-20-styles.test.js"
       },
       "browserTests": [
         "tests/browser_a19_shell_test.py"
       ],
       "browserValidation": "pending-integrated-static-and-standalone",
       "remainingAcceptanceGaps": [
-        "Recent project permission reacquisition uses the supplied root openRecent adapter; browser handles are never persisted as grants."
+        "Root must mount createRecentWorkspaces providers against current/previous recovery and authorized reopen actions. The helper is qualified for encoding/BOM/binary/source metadata, cancelled opens and missing permissions."
       ]
     },
     {
@@ -1139,9 +1408,14 @@
       ],
       "focusedValidation": {
         "status": "passed",
-        "batch": "43 unique cases; initial 42/42 plus targeted 26/26 follow-up",
+        "batch": "74/74 combined completed-scope cases: 70 shell cases and 4 shared stylesheet contract cases",
         "runtime": "Node.js v24.19.0",
-        "revision": "b0c5868b"
+        "revision": "d5b1d153",
+        "passed": 74,
+        "failed": 0,
+        "shellCases": 70,
+        "stylesheetContractCases": 4,
+        "command": "node scripts/limited.js node --test tests/a19-shell-commands.test.js tests/a19-shell-settings.test.js tests/a19-shell-search.test.js tests/a19-shell-tools.test.js tests/a19-shell-boundaries.test.js tests/a19-shell-inventory.test.js tests/a19-shell-recents.test.js tests/a19-shell-themes.test.js tests/a00-20-styles.test.js"
       },
       "browserTests": [
         "tests/browser_a19_shell_test.py"
@@ -1163,9 +1437,14 @@
       ],
       "focusedValidation": {
         "status": "passed",
-        "batch": "43 unique cases; initial 42/42 plus targeted 26/26 follow-up",
+        "batch": "74/74 combined completed-scope cases: 70 shell cases and 4 shared stylesheet contract cases",
         "runtime": "Node.js v24.19.0",
-        "revision": "b0c5868b"
+        "revision": "d5b1d153",
+        "passed": 74,
+        "failed": 0,
+        "shellCases": 70,
+        "stylesheetContractCases": 4,
+        "command": "node scripts/limited.js node --test tests/a19-shell-commands.test.js tests/a19-shell-settings.test.js tests/a19-shell-search.test.js tests/a19-shell-tools.test.js tests/a19-shell-boundaries.test.js tests/a19-shell-inventory.test.js tests/a19-shell-recents.test.js tests/a19-shell-themes.test.js tests/a00-20-styles.test.js"
       },
       "browserTests": [
         "tests/browser_a19_shell_test.py"
@@ -1188,9 +1467,14 @@
       ],
       "focusedValidation": {
         "status": "passed",
-        "batch": "43 unique cases; initial 42/42 plus targeted 26/26 follow-up",
+        "batch": "74/74 combined completed-scope cases: 70 shell cases and 4 shared stylesheet contract cases",
         "runtime": "Node.js v24.19.0",
-        "revision": "b0c5868b"
+        "revision": "d5b1d153",
+        "passed": 74,
+        "failed": 0,
+        "shellCases": 70,
+        "stylesheetContractCases": 4,
+        "command": "node scripts/limited.js node --test tests/a19-shell-commands.test.js tests/a19-shell-settings.test.js tests/a19-shell-search.test.js tests/a19-shell-tools.test.js tests/a19-shell-boundaries.test.js tests/a19-shell-inventory.test.js tests/a19-shell-recents.test.js tests/a19-shell-themes.test.js tests/a00-20-styles.test.js"
       },
       "browserTests": [
         "tests/browser_a19_shell_test.py"
@@ -1207,16 +1491,23 @@
       "files": [
         "apps/studio/workbench/announcer.js",
         "apps/studio/workbench/notifications.js",
-        "apps/studio/workbench/shell-events.js"
+        "apps/studio/workbench/shell-events.js",
+        "apps/studio/workbench/status-position.js"
       ],
       "focusedTests": [
-        "tests/a19-shell-commands.test.js"
+        "tests/a19-shell-commands.test.js",
+        "tests/a19-shell-boundaries.test.js"
       ],
       "focusedValidation": {
         "status": "passed",
-        "batch": "43 unique cases; initial 42/42 plus targeted 26/26 follow-up",
+        "batch": "74/74 combined completed-scope cases: 70 shell cases and 4 shared stylesheet contract cases",
         "runtime": "Node.js v24.19.0",
-        "revision": "b0c5868b"
+        "revision": "d5b1d153",
+        "passed": 74,
+        "failed": 0,
+        "shellCases": 70,
+        "stylesheetContractCases": 4,
+        "command": "node scripts/limited.js node --test tests/a19-shell-commands.test.js tests/a19-shell-settings.test.js tests/a19-shell-search.test.js tests/a19-shell-tools.test.js tests/a19-shell-boundaries.test.js tests/a19-shell-inventory.test.js tests/a19-shell-recents.test.js tests/a19-shell-themes.test.js tests/a00-20-styles.test.js"
       },
       "browserTests": [
         "tests/browser_a19_shell_test.py"
@@ -1239,9 +1530,14 @@
       ],
       "focusedValidation": {
         "status": "passed",
-        "batch": "43 unique cases; initial 42/42 plus targeted 26/26 follow-up",
+        "batch": "74/74 combined completed-scope cases: 70 shell cases and 4 shared stylesheet contract cases",
         "runtime": "Node.js v24.19.0",
-        "revision": "b0c5868b"
+        "revision": "d5b1d153",
+        "passed": 74,
+        "failed": 0,
+        "shellCases": 70,
+        "stylesheetContractCases": 4,
+        "command": "node scripts/limited.js node --test tests/a19-shell-commands.test.js tests/a19-shell-settings.test.js tests/a19-shell-search.test.js tests/a19-shell-tools.test.js tests/a19-shell-boundaries.test.js tests/a19-shell-inventory.test.js tests/a19-shell-recents.test.js tests/a19-shell-themes.test.js tests/a00-20-styles.test.js"
       },
       "browserTests": [
         "tests/browser_a19_shell_test.py"
@@ -1268,9 +1564,14 @@
       ],
       "focusedValidation": {
         "status": "passed",
-        "batch": "43 unique cases; initial 42/42 plus targeted 26/26 follow-up",
+        "batch": "74/74 combined completed-scope cases: 70 shell cases and 4 shared stylesheet contract cases",
         "runtime": "Node.js v24.19.0",
-        "revision": "b0c5868b"
+        "revision": "d5b1d153",
+        "passed": 74,
+        "failed": 0,
+        "shellCases": 70,
+        "stylesheetContractCases": 4,
+        "command": "node scripts/limited.js node --test tests/a19-shell-commands.test.js tests/a19-shell-settings.test.js tests/a19-shell-search.test.js tests/a19-shell-tools.test.js tests/a19-shell-boundaries.test.js tests/a19-shell-inventory.test.js tests/a19-shell-recents.test.js tests/a19-shell-themes.test.js tests/a00-20-styles.test.js"
       },
       "browserTests": [
         "tests/browser_a19_shell_test.py",
@@ -1300,9 +1601,14 @@
       ],
       "focusedValidation": {
         "status": "passed",
-        "batch": "43 unique cases; initial 42/42 plus targeted 26/26 follow-up",
+        "batch": "74/74 combined completed-scope cases: 70 shell cases and 4 shared stylesheet contract cases",
         "runtime": "Node.js v24.19.0",
-        "revision": "b0c5868b"
+        "revision": "d5b1d153",
+        "passed": 74,
+        "failed": 0,
+        "shellCases": 70,
+        "stylesheetContractCases": 4,
+        "command": "node scripts/limited.js node --test tests/a19-shell-commands.test.js tests/a19-shell-settings.test.js tests/a19-shell-search.test.js tests/a19-shell-tools.test.js tests/a19-shell-boundaries.test.js tests/a19-shell-inventory.test.js tests/a19-shell-recents.test.js tests/a19-shell-themes.test.js tests/a00-20-styles.test.js"
       },
       "browserTests": [
         "tests/browser_a19_shell_test.py"
@@ -1327,9 +1633,14 @@
       ],
       "focusedValidation": {
         "status": "passed",
-        "batch": "43 unique cases; initial 42/42 plus targeted 26/26 follow-up",
+        "batch": "74/74 combined completed-scope cases: 70 shell cases and 4 shared stylesheet contract cases",
         "runtime": "Node.js v24.19.0",
-        "revision": "b0c5868b"
+        "revision": "d5b1d153",
+        "passed": 74,
+        "failed": 0,
+        "shellCases": 70,
+        "stylesheetContractCases": 4,
+        "command": "node scripts/limited.js node --test tests/a19-shell-commands.test.js tests/a19-shell-settings.test.js tests/a19-shell-search.test.js tests/a19-shell-tools.test.js tests/a19-shell-boundaries.test.js tests/a19-shell-inventory.test.js tests/a19-shell-recents.test.js tests/a19-shell-themes.test.js tests/a00-20-styles.test.js"
       },
       "browserTests": [
         "tests/browser_a19_shell_test.py"
@@ -1358,9 +1669,14 @@
       ],
       "focusedValidation": {
         "status": "passed",
-        "batch": "43 unique cases; initial 42/42 plus targeted 26/26 follow-up",
+        "batch": "74/74 combined completed-scope cases: 70 shell cases and 4 shared stylesheet contract cases",
         "runtime": "Node.js v24.19.0",
-        "revision": "b0c5868b"
+        "revision": "d5b1d153",
+        "passed": 74,
+        "failed": 0,
+        "shellCases": 70,
+        "stylesheetContractCases": 4,
+        "command": "node scripts/limited.js node --test tests/a19-shell-commands.test.js tests/a19-shell-settings.test.js tests/a19-shell-search.test.js tests/a19-shell-tools.test.js tests/a19-shell-boundaries.test.js tests/a19-shell-inventory.test.js tests/a19-shell-recents.test.js tests/a19-shell-themes.test.js tests/a00-20-styles.test.js"
       },
       "browserTests": [
         "tests/browser_a19_shell_test.py",
@@ -1368,7 +1684,7 @@
       ],
       "browserValidation": "pending-integrated-static-and-standalone",
       "remainingAcceptanceGaps": [
-        "Large 501-source-file benchmark driver is present. Static/standalone capture and CI baseline publication are pending root integration; relative p95 gate requires an explicit prior trace."
+        "Three independent 501-source captures and strict version2 trace validation are implemented. Actual static/standalone captures and reviewed compatible baseline publication remain pending; capture mode reports no relative regression verdict."
       ]
     },
     {
@@ -1385,9 +1701,14 @@
       ],
       "focusedValidation": {
         "status": "passed",
-        "batch": "43 unique cases; initial 42/42 plus targeted 26/26 follow-up",
+        "batch": "74/74 combined completed-scope cases: 70 shell cases and 4 shared stylesheet contract cases",
         "runtime": "Node.js v24.19.0",
-        "revision": "b0c5868b"
+        "revision": "d5b1d153",
+        "passed": 74,
+        "failed": 0,
+        "shellCases": 70,
+        "stylesheetContractCases": 4,
+        "command": "node scripts/limited.js node --test tests/a19-shell-commands.test.js tests/a19-shell-settings.test.js tests/a19-shell-search.test.js tests/a19-shell-tools.test.js tests/a19-shell-boundaries.test.js tests/a19-shell-inventory.test.js tests/a19-shell-recents.test.js tests/a19-shell-themes.test.js tests/a00-20-styles.test.js"
       },
       "browserTests": [
         "tests/browser_a19_shell_test.py",
@@ -1412,9 +1733,14 @@
       ],
       "focusedValidation": {
         "status": "passed",
-        "batch": "43 unique cases; initial 42/42 plus targeted 26/26 follow-up",
+        "batch": "74/74 combined completed-scope cases: 70 shell cases and 4 shared stylesheet contract cases",
         "runtime": "Node.js v24.19.0",
-        "revision": "b0c5868b"
+        "revision": "d5b1d153",
+        "passed": 74,
+        "failed": 0,
+        "shellCases": 70,
+        "stylesheetContractCases": 4,
+        "command": "node scripts/limited.js node --test tests/a19-shell-commands.test.js tests/a19-shell-settings.test.js tests/a19-shell-search.test.js tests/a19-shell-tools.test.js tests/a19-shell-boundaries.test.js tests/a19-shell-inventory.test.js tests/a19-shell-recents.test.js tests/a19-shell-themes.test.js tests/a00-20-styles.test.js"
       },
       "browserTests": [
         "tests/browser_a19_shell_test.py",
@@ -1442,9 +1768,14 @@
       ],
       "focusedValidation": {
         "status": "passed",
-        "batch": "43 unique cases; initial 42/42 plus targeted 26/26 follow-up",
+        "batch": "74/74 combined completed-scope cases: 70 shell cases and 4 shared stylesheet contract cases",
         "runtime": "Node.js v24.19.0",
-        "revision": "b0c5868b"
+        "revision": "d5b1d153",
+        "passed": 74,
+        "failed": 0,
+        "shellCases": 70,
+        "stylesheetContractCases": 4,
+        "command": "node scripts/limited.js node --test tests/a19-shell-commands.test.js tests/a19-shell-settings.test.js tests/a19-shell-search.test.js tests/a19-shell-tools.test.js tests/a19-shell-boundaries.test.js tests/a19-shell-inventory.test.js tests/a19-shell-recents.test.js tests/a19-shell-themes.test.js tests/a00-20-styles.test.js"
       },
       "browserTests": [
         "tests/browser_a19_shell_test.py",
@@ -1457,10 +1788,183 @@
     }
   ],
   "validation": {
-    "focusedNodeTests": "43 unique passed before final browser/keyboard integration follow-up",
-    "repositoryCheck": "Blocked only by new test manifest entries, delegated to root canonical manifest owner",
-    "structure": "Exit0;260 pre-existing repository findings; no committed shell-source findings",
+    "focusedNodeTests": "74/74 passed in one combined 9-file completed-scope batch at d5b1d153: 70 shell cases plus 4 stylesheet contracts; zero failures/skips.",
+    "repositoryCheck": "Root owns canonical test manifests and full repository qualification; the new eighth shell suite is tests/a19-shell-themes.test.js.",
+    "structure": "Historical check: exit 0 with 260 pre-existing findings. Current theme source scope has zero size/line findings; frozen studio.css shrinks from 49,885 to 37,644 bytes.",
     "browser": "Drivers authored against production harness; execution pending integrated root build",
     "native": "No native backend or pixel parity qualification claimed"
-  }
+  },
+  "validationSummary": {
+    "sourceRevision": "d5b1d153",
+    "testCasesPresent": 70,
+    "qualification": "One current combined completed-scope Node cohort, 74/74; no shell-owned browser, native or Visual Studio oracle execution.",
+    "latestBatches": [
+      {
+        "revision": "2a35c28c",
+        "passed": 29,
+        "failed": 0,
+        "command": "node scripts/limited.js node --test tests/a19-shell-boundaries.test.js tests/a19-shell-inventory.test.js tests/a19-shell-settings.test.js"
+      },
+      {
+        "revision": "baa27464",
+        "passed": 34,
+        "failed": 0,
+        "command": "node scripts/limited.js node --test tests/a19-shell-recents.test.js tests/a19-shell-settings.test.js tests/a19-shell-boundaries.test.js"
+      },
+      {
+        "revision": "d5b1d153",
+        "passed": 74,
+        "failed": 0,
+        "shellCases": 70,
+        "stylesheetContractCases": 4,
+        "command": "node scripts/limited.js node --test tests/a19-shell-commands.test.js tests/a19-shell-settings.test.js tests/a19-shell-search.test.js tests/a19-shell-tools.test.js tests/a19-shell-boundaries.test.js tests/a19-shell-inventory.test.js tests/a19-shell-recents.test.js tests/a19-shell-themes.test.js tests/a00-20-styles.test.js"
+      }
+    ],
+    "notes": [
+      "The current combined 9-file cohort passed all 70 shell cases and 4 shared stylesheet contract cases. Earlier 29/29 and 34/34 batches overlap this cohort and are not additive.",
+      "The initial native recorder mismatch was fixed by editor commit 7870600d; the current combined cohort includes its canonical key recorder regression.",
+      "The Studio color gate finds zero out-of-place literals, and source fixtures preserve 955 ordered paint plus 2,421 other declarations across 26 original files.",
+      "Browser drivers parse successfully but have not executed in this lane. Static/standalone timing, visual/DPI, forced-color rendering and screen-reader claims remain unqualified.",
+      "The status adapter tests cover the exact cancellable model-column protocol; integrated browser qualification of the text lane native index remains with root."
+    ]
+  },
+  "ownedPaths": [
+    "apps/studio/build.contrib.json",
+    "apps/studio/commands/registry.js",
+    "apps/studio/studio.css",
+    "apps/studio/styles/context-menus.css",
+    "apps/studio/styles/debugger-effects.css",
+    "apps/studio/styles/debugger.css",
+    "apps/studio/styles/designer-light.css",
+    "apps/studio/styles/designer-sync.css",
+    "apps/studio/styles/designer.css",
+    "apps/studio/styles/editor-theme.css",
+    "apps/studio/styles/project-wizard.css",
+    "apps/studio/styles/runtime-settings.css",
+    "apps/studio/styles/solution-explorer.css",
+    "apps/studio/styles/status-bar.css",
+    "apps/studio/styles/winui-app.css",
+    "apps/studio/styles/workbench-density.css",
+    "apps/studio/styles/workbench-light.css",
+    "apps/studio/styles/workbench-theme.css",
+    "apps/studio/themes.css",
+    "apps/studio/workbench/announcer.js",
+    "apps/studio/workbench/commands.js",
+    "apps/studio/workbench/comment-tasks.js",
+    "apps/studio/workbench/configuration-manager.js",
+    "apps/studio/workbench/context-keys.js",
+    "apps/studio/workbench/designer-tokens.css",
+    "apps/studio/workbench/dialog-host.js",
+    "apps/studio/workbench/document-size.js",
+    "apps/studio/workbench/events.js",
+    "apps/studio/workbench/file-watch.js",
+    "apps/studio/workbench/first-run.js",
+    "apps/studio/workbench/inventory.js",
+    "apps/studio/workbench/lazy-tools.js",
+    "apps/studio/workbench/menus.js",
+    "apps/studio/workbench/notifications.js",
+    "apps/studio/workbench/options-dialog.js",
+    "apps/studio/workbench/options/general-pages.js",
+    "apps/studio/workbench/options/keyboard-page.js",
+    "apps/studio/workbench/perf.js",
+    "apps/studio/workbench/recent-items.js",
+    "apps/studio/workbench/recent-workspaces.js",
+    "apps/studio/workbench/render-scheduler.js",
+    "apps/studio/workbench/search-engine.js",
+    "apps/studio/workbench/search-service.js",
+    "apps/studio/workbench/search.worker.js",
+    "apps/studio/workbench/settings-profile.js",
+    "apps/studio/workbench/settings-store.js",
+    "apps/studio/workbench/shell-commands.js",
+    "apps/studio/workbench/shell-events.js",
+    "apps/studio/workbench/shell-models.js",
+    "apps/studio/workbench/shell-tools.js",
+    "apps/studio/workbench/shell.js",
+    "apps/studio/workbench/start-window.js",
+    "apps/studio/workbench/status-bar.js",
+    "apps/studio/workbench/status-position.js",
+    "apps/studio/workbench/studio-chrome-colors.css",
+    "apps/studio/workbench/studio-tools-colors.css",
+    "apps/studio/workbench/task-center.js",
+    "apps/studio/workbench/theme-tokens.css",
+    "apps/studio/workbench/theme.js",
+    "apps/studio/workbench/toolbar-customize.js",
+    "apps/studio/workbench/toolbars.js",
+    "apps/studio/workbench/tools/bookmarks.js",
+    "apps/studio/workbench/tools/call-hierarchy.js",
+    "apps/studio/workbench/tools/class-view.js",
+    "apps/studio/workbench/tools/code-definition.js",
+    "apps/studio/workbench/tools/command-window.js",
+    "apps/studio/workbench/tools/diagnostic-timeline.js",
+    "apps/studio/workbench/tools/error-list.js",
+    "apps/studio/workbench/tools/find-results.js",
+    "apps/studio/workbench/tools/object-browser.js",
+    "apps/studio/workbench/tools/outline.js",
+    "apps/studio/workbench/tools/output.js",
+    "apps/studio/workbench/tools/properties.js",
+    "apps/studio/workbench/tools/references.js",
+    "apps/studio/workbench/tools/scope-selector.js",
+    "apps/studio/workbench/tools/solution-explorer-views.js",
+    "apps/studio/workbench/tools/task-list.js",
+    "apps/studio/workbench/tools/test-explorer.js",
+    "apps/studio/workbench/tools/toolbox.js",
+    "apps/studio/workbench/tools/tree-host.js",
+    "apps/studio/workbench/tools/virtual-table.js",
+    "apps/studio/workbench/ui.js",
+    "apps/studio/workbench/unified-search.js",
+    "apps/studio/workbench/workbench-shell.css",
+    "apps/studio/workbench/worker-request.js",
+    "docs/project16-shell-coverage.json",
+    "docs/vs-workbench-inventory.json",
+    "docs/vs-workflow-matrix.md",
+    "planning/contracts/fixtures/css/studio-baseline.json",
+    "planning/contracts/fixtures/css/studio-theme-migration.json",
+    "scripts/benchmark-workbench.js",
+    "scripts/quality/theme-colors.js",
+    "tests/a00-20-styles.test.js",
+    "tests/a19-shell-boundaries.test.js",
+    "tests/a19-shell-commands.test.js",
+    "tests/a19-shell-inventory.test.js",
+    "tests/a19-shell-recents.test.js",
+    "tests/a19-shell-search.test.js",
+    "tests/a19-shell-settings.test.js",
+    "tests/a19-shell-themes.test.js",
+    "tests/a19-shell-tools.test.js",
+    "tests/browser_a19_shell_test.py",
+    "tests/browser_vs_workflows_test.py",
+    "tests/browser_workbench_perf_test.py",
+    "tests/helpers/studio-theme-proof.js",
+    "tests/workbench-perf-budget.mjs"
+  ],
+  "originalSourceClosure": [
+    "bcd1f02c8c1e32825efbc6fa3e59d869d5eb9801",
+    "9db937a7f6391e2091626b74b59ab8b2c858e904",
+    "7f336b889e8556c798d53de65ca141885d8efe34",
+    "db314b2eccc50017b9777050de3197540268c810",
+    "d6f6f191df8ba61ad93995f1673d201ba94a8288",
+    "c744c223df9994cef197d32ac3a092dd0097a134",
+    "2bb22515d3efdd5f349681db9fc6ddd49a9486f9",
+    "05436e34471c36eb0f1d509f2b01725289d8fc5d",
+    "deab4b5eafb94cea3ab8ba94b1b3d343460d28b8",
+    "9811bffc14fc73c556eec76d7933ea694bb649aa",
+    "3cfec70bfde8133de60fb7d50a4e49e60cf1d869",
+    "9637ce3faa55f191df2f959fc0093e1efffad03f"
+  ],
+  "followupSourceCommits": [
+    "ba3e4b96ae42a524a5b35f4fffd76a002fd9a3df",
+    "26ed77baa1ab9df8f721bc7faa940371c5231ae8",
+    "b0c5868b73622056b429e7008c64301e6e0811b4",
+    "30cd501f80a79852f987491a53a209d13ee03c34",
+    "6b4de7da7ec763a83522aa6e02c53a7f4395350d",
+    "c54d436e34ce2f1d75236fdc5a5248b9957ed190",
+    "2a35c28c9efbb143da01a856a34b52d9df5de307",
+    "e8ae39631f438c4aeef2d8889637be30402cfe04",
+    "d1a0938be67088303f5006900a97a8e5637f8534",
+    "b7599fe75c5129691b95ecc1e9417bd3539edd1a",
+    "baa274644736d0999e34123820e53424df3d6ece",
+    "34a28b52028b1d06839a35c082e56b0962d7e6e2",
+    "0c3a340eeefbeb31f53e3ea97380a8b156c2346c",
+    "f0bbd9bcc844ef1a0d80a78ada2ee5722dc6ba67",
+    "d5b1d1531c4e7dc141b9cc156f551f65f24f8883"
+  ]
 }

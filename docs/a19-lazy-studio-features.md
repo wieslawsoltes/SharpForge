@@ -44,5 +44,7 @@ be provisioned in this environment: the supported Playwright installer exhausted
 its download attempts without a valid archive. The fixture has therefore not been
 run here. Cold-start script evaluation reduction, browser first-use latency, and
 fully offline standalone qualification remain unmeasured. Standalone packaging
-must preserve deferred initialization of the closed module graph and embedded
-worker graphs; that integration is tracked separately from these source checks.
+now preserves deferred initialization of the closed module graph and embeds all
+four actual worker graphs. Full normal/standalone builds and 26 combined focused
+regressions passed; see `standalone-module-graph.md` for the generated-code and CSP
+checks and their browser qualification boundary.

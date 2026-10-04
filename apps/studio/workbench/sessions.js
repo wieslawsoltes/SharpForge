@@ -91,7 +91,11 @@ export function createWorkbenchServices(options = {}) {
       createSession: () => {
         const project = builds.active?.project;
         if (!project) throw workbenchError('PROJECT_MISSING', 'Choose a project before launching');
-        return sessions.create({ projectId: project.id, name: project.name });
+        const profile = profiles.get(project.id);
+        return sessions.create({
+          projectId: project.id, name: project.name, profileId: profile.id,
+          renderer: profile.renderer, runtimeSettings: profile.runtimeSettings
+        });
       }
     }),
     compiler: {

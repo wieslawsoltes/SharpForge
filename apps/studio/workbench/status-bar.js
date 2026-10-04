@@ -1,5 +1,6 @@
 import {button, element, runAction} from './ui.js';
-import {SourceText} from '@sharpforge/text';
+import {SourceText, analyzeEol} from '@sharpforge/text';
+import {StatusPosition} from './status-position.js';
 
 /** Regions update their text in place and contribute independent actions and subscriptions. */
 export class WorkbenchStatusBar {
@@ -32,26 +33,67 @@ export class WorkbenchStatusBar {
 }
 
 export function registerStatusRegions(bar, {context, documents, tasks, notifications, settings, execute}) {
+  const legacySources = new WeakMap();
+  let updateCursor;
+  const positionStatus = new StatusPosition({onChange: () => updateCursor?.(), onError: error => bar.onError?.(error)});
+  const documentState = () => {
+    const current = context();
+    const record = documents.get(current.uri);
+    if (!record) return {current};
+    const model = documents.models?.get(current.uri) ?? record.model;
+    if (model) return {current, record, source: model, metadata: model.metadata};
+    let cached = legacySources.get(record);
+    if (cached?.version !== record.version) cached = null;
+    if (!cached) {
+      const text = Object.getOwnPropertyDescriptor(record, 'text')?.value;
+      cached = {version: record.version, metadata: record.metadata};
+      // Legacy records have no indexed model. Inspect small eager strings once per version only.
+      if (typeof text === 'string' && text.length <= 65536) {
+        cached.source = new SourceText(text, record.uri, record.version);
+        cached.metadata ??= analyzeEol(text, {encoding: record.encoding ?? 'utf-8'});
+      }
+      legacySources.set(record, cached);
+    }
+    return {current, record, ...cached};
+  };
   const cursor = () => {
-    const current = context(), document = documents.get(current.uri);
-    if (!document) return null;
-    return current.position ?? new SourceText(document.text, document.uri, document.version).positionAt(current.offset ?? 0);
+    const {current, record, source} = documentState();
+    if (!record) return null;
+    const offset = current.caretOffset ?? current.offset ?? 0;
+    const position = current.caretPosition ?? current.position ?? source?.positionAt(offset);
+    if (!position) return null;
+    const column = positionStatus.column(source, position, {offset, visualColumn: current.visualColumn,
+      tabSize: current.tabSize ?? settings.get('editor', 'tabSize') ?? 4});
+    return {position, column, columnStatus: positionStatus.pending ? 'pending' : 'unavailable'};
   };
   const regions = [
     {id: 'message', label: 'Workbench status', value: () => context().status ?? 'Ready', priority: -100},
     {id: 'tasks', label: 'Background tasks', value: () => tasks.running.length ? `${tasks.running.length} tasks` : 'No tasks',
       action: () => execute('tool:background-tasks'), subscribe: listener => tasks.subscribe(listener)},
-    {id: 'cursor', label: 'Line, column and character', value: () => {
-      const position = cursor();
-      return position ? `Ln ${position.line + 1}, Col ${position.character + 1}, Ch ${(context().offset ?? 0) + 1}` : null;
-    }, action: () => execute('workbench.goToLine')},
+    {id: 'cursor', label: 'Line, visual column and line character', value: () => {
+      const current = cursor();
+      if (!current) return null;
+      const {position, column, columnStatus} = current;
+      return `Ln ${position.line + 1}, Col ${column === null ? columnStatus : column + 1}, Ch ${position.character + 1}`;
+    }, action: () => execute('workbench.goToLine'), subscribe: listener => {
+      updateCursor = listener;
+      return () => { updateCursor = null; positionStatus.dispose(); };
+    }},
     {id: 'selection', label: 'Selected characters', value: () => `${context().selectionLength ?? 0} selected`},
     {id: 'insert', label: 'Insert mode', value: () => context().overwrite ? 'OVR' : 'INS'},
     {id: 'indentation', label: 'Indentation', value: () =>
       `${settings.get('editor', 'insertSpaces') ? 'Spaces' : 'Tabs'}: ${settings.get('editor', 'tabSize')}`,
       action: () => execute('workbench.options')},
-    {id: 'encoding', label: 'Document encoding', value: () => documents.get(context().uri)?.encoding ?? 'UTF-8 export'},
-    {id: 'line-ending', label: 'Line endings', value: () => documents.get(context().uri)?.text.includes('\r\n') ? 'CRLF' : 'LF'},
+    {id: 'encoding', label: 'Document encoding', value: () => {
+      const {record, metadata} = documentState();
+      return record ? metadata?.encoding ?? record.encoding ?? 'UTF-8 export' : null;
+    }},
+    {id: 'line-ending', label: 'Line endings', value: () => {
+      const {record, metadata} = documentState();
+      if (!record) return null;
+      const label = {'\r\n': 'CRLF', '\n': 'LF', '\r': 'CR'}[metadata?.dominantEol ?? metadata?.eol];
+      return label ? label + (metadata.mixedEol ? ' (mixed)' : '') : 'EOL unavailable';
+    }},
     {id: 'zoom', label: 'Editor zoom', value: () => settings.get('editor', 'zoom') + '%', action: () => execute('workbench.options')},
     {id: 'keymap', label: 'Keyboard mapping', value: () => context().keymap ?? settings.get('environment', 'keymap'),
       action: () => execute('workbench.keyboard')},

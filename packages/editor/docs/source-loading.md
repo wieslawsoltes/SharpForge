@@ -45,3 +45,15 @@ leaf indexing are linear in input length, and each append updates a logarithmic
 tree path. This is an implementation bound, not a measured main-thread latency
 claim. Actual browser event-loop and 200 MB interaction qualification remains
 separate from the deterministic Node File/Blob tests.
+
+## Qualification
+
+The complete source batch at `acdf945d` passed all 28 new ingress fixtures:
+nine decoder/model-adoption cases, twelve prepared workspace/streaming-save
+cases and seven path-rebasing/handle-ownership cases. The complete affected I/O
+regression scope reached 196 distinct passes after repairing one missing local
+workspace package link and rerunning only the checks that it blocked. The
+commands and exact initial failure/retry counts are retained in
+`../VIEW-COVERAGE.md`. Node 24.19.0 File/Blob/TextDecoder behavior was exercised;
+writable filesystem handles were explicit test doubles. No actual browser
+latency, native permission-dialog or physical disk-throughput result is implied.

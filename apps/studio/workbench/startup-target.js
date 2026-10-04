@@ -26,15 +26,17 @@ export function mountStartupTarget(root, { startup, profiles, onConfigure, onErr
         startup.configure({ mode: 'multiple' });
         onConfigure?.();
       } else if (value === '$selection') startup.configure({ mode: 'currentSelection' });
-      else startup.select(value);
+      else startup.select(value, { profile: profiles.selected.get(value) ?? 'default' });
       render();
     } catch (error) { onError(error); }
   }, { signal: controller.signal });
   profile.select.addEventListener('change', () => {
     try {
       const projectId = startup.entries[0]?.projectId;
-      profiles.select(projectId, profile.select.value);
-      startup.select(projectId, { profile: profile.select.value });
+      const profileId = profile.select.value;
+      const debug = startup.entries[0]?.action !== 'startWithoutDebugging';
+      profiles.select(projectId, profileId);
+      startup.select(projectId, { profile: profileId, debug });
     } catch (error) { onError(error); }
   }, { signal: controller.signal });
   const disposers = [startup.subscribe(render), profiles.subscribe(render)];
