@@ -44,19 +44,25 @@ The focused fixtures compile C# once and run source IR, reloaded source IR, and
 direct CIL. They cover narrow wrapping, checked faults, UInt64 limits, shifts,
 Single rounding, exact Decimal arithmetic/scale, both native widths, boxing,
 capture, array storage, JSON image round trips and snapshot replay. Serial
-qualification is in progress; the new top-level/delegate follow-up regressions
-have **not been executed**. Root owns the validation queue; the prepared
-command is:
+validation with Node24.21.0 passed 226/232 tests at `f5d60ce9`; the six failures
+identified a registry-adapter lookup defect. After fixing that lookup and replacing
+two stale unsupported expectations with positive execution regressions, all 175
+source numeric/compiler cases passed at `2d28cde0`. Alias-policy and global-using
+cases also passed in the intervening focused run. Scalar wire/box/ABI tests passed
+in the integrated batch. No original failing scalar assertion was removed.
+
+The formerly rejected generic and init-property declarations were already handled
+by semantic lowering; retaining the profile's Console shorthand now allows their
+existing code generation to run. Fixtures assert their emitted execution, including
+actual generic calls and init-property values, across all three engines.
 
 ```sh
-node scripts/limited.js node --test tests/a05-source-numeric-modes.test.js
+node scripts/limited.js node --test --test-concurrency=1 tests/a05-source-numeric-modes.test.js tests/compiler.test.js
 ```
 
-Then run the existing compiler, source runtime, IL round-trip, native-width,
-Decimal and ABI inventory regressions in separate scheduled slots. No native,
-browser, Windows, Linux, Rust, Wasm or performance qualification is claimed by
-this implementation commit. The original full acceptance of #1351 remains open
-until its engine/platform evidence is collected.
+Native, browser, Windows, Linux, Rust, Wasm and performance qualification remains
+staged. The original full acceptance of #1351 remains open until its independent
+engine/platform evidence is collected.
 
 This slice does not register additional framework overloads. Numeric library
 methods, parsing APIs and unregistered constructions such as `Task<long>` retain
