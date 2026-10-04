@@ -22,7 +22,7 @@ signatures remain lazy; no executable body is read.
 This is an explicit partial GetBaseDefinition contract. Class/covariant MethodImpl
 slot mappings, strict access checks,
 generic base instantiation, type generic variables,
-TypeSpec/open-generic modifier definitions, function-pointer signature types, array sizes and nonzero
+TypeSpec/open-generic modifier definitions, unsupported function-pointer headers, array sizes and nonzero
 lower bounds require later services and fail with `SFCLR012` when traversal needs them.
 Opaque host intrinsics have no method metadata: reaching one before locating a
 slot introduction also fails, so an Object override cannot silently become its
@@ -72,6 +72,32 @@ measured cold median/p95 159.417/435.875 µs and cached 122.750/173.375 ns.
 are retained. The existing cached result path is unchanged. These measurements
 establish no cause, noise, significance or general speedup claim; allocation
 counts and peak memory were not measured. No repeat or retuning was requested.
+
+Managed/default and unmanaged function-pointer signatures participate in the
+same bounded key recursion. Matching preserves the exact calling-convention
+header, parameter count, return type and each parameter type, including nested
+function pointers, supported modifiers and enclosing method generic positions.
+This follows [CoreCLR's function-pointer signature comparison](https://github.com/dotnet/runtime/blob/v10.0.5/src/coreclr/vm/siginfo.cpp#L3822).
+Function pointers with their own generic header, has-this/explicit-this, vararg
+or native-vararg conventions remain unsupported and report SFCLR012. The
+supported convention values are default, cdecl, stdcall, thiscall, fastcall and
+unmanaged (0, 1, 2, 3, 4 and 9). This compares metadata signatures; it does not
+invoke pointers, normalize ABI conventions or claim execution support.
+
+Function-pointer-bearing generic argument subtrees remain unsupported, including
+beneath arrays or nested generic instances. The existing scalar generic-argument
+context preserves both this and the modifier boundary without a second tree walk.
+No registry or persistent cache is added. Existing signature depth/node limits,
+context identity limits and cancellation checks bound recursive work; successful
+keys remain cached through the existing service.
+
+This function-pointer increment has eight authored tests and a mandatory native
+plan with twelve matches plus six independent three-level mismatches (managed
+versus unmanaged, specific unmanaged convention, arity, return/parameter type and
+nested signature). Source/image provenance is mandatory and no emitted pointer
+is invoked. Installation, native capture, focused tests, paired controls, the
+new-fixture benchmark and checks are pending the serial validation slot; no
+passing result or performance claim is made for this increment yet.
 
 Constrained generic methods now follow the same implicit class-slot walk. Each
 matched override edge compares method GenericParam constraints separately from
