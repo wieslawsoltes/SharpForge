@@ -111,12 +111,39 @@ used to reinterpret a foreign argument's token inside the referring module.
 ## Graph completion and unsupported semantics
 
 `baseType` and `interfaces` contain canonical substituted handles. Interface
-diamonds deduplicate by identity. Completion detects real inheritance and
-TypeSpec cycles, while arguments such as `Node<T> : Box<Node<T>>` remain finite.
-An argument's identity can be present before its own inheritance graph has
-been requested. Calling `instantiate` for that argument completes the same
-handle later; loading every argument's inheritance recursively would expand
-legal self-referential metadata without bound.
+diamonds deduplicate by identity. Before generic graph completion, an
+identity-only metadata pass checks the finite-instantiation rule in
+[ECMA-335, II.9.1–II.9.2](https://ecma-international.org/wp-content/uploads/ECMA-335_6th_edition_june_2012.pdf).
+It visits the requested definition and every definition referred to by its
+base/interface signatures, including nested arguments and arguments supplied
+by the caller. It does not enumerate unrelated definitions for this proof.
+The ordinary bounded module name/interface index remains unchanged.
+
+| Relationship | Finite-closure rule |
+| --- | --- |
+| `C<T> : Box<C<T>>` | Valid self-reference: no expanding formal cycle |
+| `C<T> : Box<C<C<T>>>` | Invalid: a cycle expands a formal inside another construction |
+| `A<T,U> : Box<B<U,T>>`, `B<T,U> : Box<A<T,U>>` | Non-expanding formal cycles are allowed |
+| `A<T> : B<int>`, `B<T> : A<string>` | Invalid erased inheritance cycle, even without a formal expansion cycle |
+
+Formals use canonical owner-scoped `TypeDesc` identities. The proof graph uses
+canonical compound shapes as auxiliary containment vertices: containment edges
+expand, while binding an actual argument to a formal does not. Contracting a
+containment path yields the direct or expanding formal-occurrence edge. This
+avoids rescanning every nested argument for each enclosing slot. Two iterative
+strongly connected component passes reject an expanding edge inside a component;
+a separate erased definition graph rejects any inheritance cycle. Caller
+arguments are checked for valid reachable definitions but do not themselves
+invent inheritance-template edges. For example, repeated explicit construction
+of a valid `C<C<T>>` remains valid.
+
+An argument identity can be present before its own inheritance graph has been
+requested. Its finite metadata closure is validated without recursively
+completing all substituted argument graphs. Calling `instantiate` for that
+argument completes the same handle later. This distinction permits legal
+self-reference without expanding an infinite sequence of requested graphs.
+Async TypeSpec resolution also checks compound result shapes; existing
+synchronous array/pointer/function-pointer factories remain identity factories.
 
 `isLoaded` means the requested base/interface graph completed. It does not
 certify every CLR semantic rule or executable member. In this batch:
@@ -199,6 +226,44 @@ all such roots permits collection while a shared definition remains alive.
 This transitive property corresponds to the scope of
 [MemberInfo.IsCollectible](https://learn.microsoft.com/en-us/dotnet/api/system.reflection.memberinfo.iscollectible?view=net-10.0).
 
+Finite-closure successes have a separate bounded WeakSet. In-progress graphs,
+strong visited sets, and prospective admissions belong only to the root
+operation and are cleared in `finally`. A reentrant host resolver receives an
+independent proof collector; it cannot observe another collector's unfinished
+proof as successful. Completed local proofs can be reused within that root,
+and only a successful root's final cancellation/lifetime poll admits weak
+success entries. A failed or cancelled root does not admit them. Reaching this
+optional proof cache's high-water limit stops further admission; uncached
+requests are checked again, never accepted merely because the cache is full.
+An admission is withheld when any examined metadata definition remains unloaded:
+a later host callback could still choose its direct graph. Loaded tuples and
+metadata definitions completed through this service reprove such dependencies
+on later public requests. No descriptor or foreign context is retained by a
+parallel strong registry.
+
+Proof and completion consume the same fully resolved immutable direct-binding
+record. A reentrant reader may produce an alternate record, but the first
+completed record for that root is authoritative. Nominal publication retains a
+private weak-keyed record of the actual direct base and interfaces; flattened
+inherited interfaces do not replace those original edges. After an asynchronous
+read, a root adopts any record another root already published. Live roots that
+previously observed a conflicting record are invalidated synchronously with
+publication and reject before their next successful return or publication.
+The publisher also checks its own expected record before changing loaded state.
+
+Each root strongly owns its subscription records. A definition's pending
+registry holds only WeakRefs to them, so a permanent shared definition cannot
+root an abandoned foreign consumer. Registration precharges one bounded direct
+edge comparison; both per-definition concurrent registrations and root work
+are limited by `maxGenericWork`. Cancellation, ordinary unload notification and
+`finally` release subscriptions. At capacity, bounded registration work removes
+dead weak entries without depending on finalization scheduling. An earlier
+throwing host unload listener can prevent the existing lifetime monitor from
+being notified; in that case cleanup waits for cancellation, provider settlement
+or collection of the abandoned operation, and the final completion poll rejects
+an observed transition. No prompt cleanup is claimed for a retained operation
+whose provider never settles after such a listener failure.
+
 The cache uses lifetime high-water limits. Collected weak values do not reset
 the count of admitted tuple keys or assigned identity IDs. A collected value
 can be recreated for its existing key while its component handles remain live;
@@ -211,9 +276,9 @@ Options are configured through the existing context `typeOptions` object.
 
 | Bound | Default | Accepted limit |
 | --- | ---: | --- |
-| `maxDepth` | 128 | 1–512; graph ancestry and construction shape depth |
+| `maxDepth` | 128 | 1–512; graph ancestry, closure discovery and construction shape depth |
 | `maxMetadataRows` | 100,000 | 1–1,000,000; existing TypeDef/InterfaceImpl graph index |
-| `maxConstructedTypes` | 100,000 | 1–1,000,000; tuple entries and handle IDs, separately |
+| `maxConstructedTypes` | 100,000 | 1–1,000,000; tuple entries, handle IDs and weak closure admissions, separately |
 | `maxGenericWork` | 100,000 | 1–1,000,000; shape, traversal and context-observer allowances, separately |
 | `maxTypeSignatureBytes` | 65,536 | 1–1,048,576; each TypeSpec blob before decoding |
 | Explicit argument arrays and definition arity | 1,024 | Fixed maximum per scope |
@@ -223,7 +288,8 @@ The canonical GenericParam reader separately bounds GenericParam plus
 GenericParamConstraint rows to 100,000. CIL signature decoding retains its own
 64-level/4,096-node defaults. Context binding, metadata heaps and constructed
 element types retain their pre-existing independent limits. The generic work
-counter includes repeated visits and context-lifetime checks; shape preflight
+counter includes closure definition/shape/edge visits, SCC work, repeated visits
+direct-binding observation/comparison work and context-lifetime checks; shape preflight
 has its own allowance before a cache entry is admitted. Each root completion
 check scans at most the context monitors already admitted by those visits; it
 does not reset or expand the operation's work allowance. No counter claims to
@@ -248,8 +314,14 @@ validation and tuple key. Cold work is bounded by the distinct construction
 shapes visited, metadata indexes, substituted inheritance/interface edges and
 output, with memoized immutable shape depths and per-substitution identities.
 TypeSpec decoding occurs once per admitted module/token; binding and scope
-resolution remain explicit on each call. No graph expansion is performed for
-an argument merely because that argument has an inheritance graph.
+resolution remain explicit on each call. The closure check reads each reachable definition template once per active
+proof and builds each unique canonical shape edge once. With V visited vertices
+and E edges, graph construction and iterative SCC work use O(V + E) space and
+time, apart from the already bounded identity resolution, decoding and metadata
+index work. Reentrant host callbacks have independent proof collectors and
+share the same root work allowance. Argument inheritance metadata is examined,
+but its substituted graph is not recursively expanded merely because the type
+appears as an argument.
 
 ## Reference and performance qualification
 
@@ -262,8 +334,8 @@ an absent fixture is a failure, never an availability skip.
 ```sh
 SHARPFORGE_ORACLE_DOTNET=/absolute/dotnet-10.0.201/dotnet \
   node scripts/limited.js node packages/clr/tools/capture-generic-instantiation.mjs \
-  --output tests/fixtures/clr-generic-instantiation
-node scripts/limited.js node --test tests/clr-generics-instantiation*.test.js
+  --output /absolute/fresh-generic-instantiation-capture
+node scripts/limited.js node --test tests/clr-generics-closure.test.js tests/clr-generics-closure-reference.test.js
 ```
 
 The focused tests include hostile metadata, exact owner/context distinctions,
@@ -310,6 +382,32 @@ Inputs and product sources must be committed and clean. Exact allocations and
 concurrent host activity are not measured. The new service has no previous
 equivalent implementation; performance thresholds apply to the existing controls.
 
-Native capture, the focused Node gate and benchmarks are pending the scheduled
-validation slot. No passing result or speedup is claimed here. Source VM,
-direct CIL, Rust native/Wasm and browser execution qualification remain separate.
+The first native attempt at product `2042ca6b` failed in the observer before
+producing results because an eager `typeof(Node<>)` encountered expanding
+inheritance. Observer-only revision `f551d51c` retained the fixture unchanged
+and captured all 101 main and seven lifetime observations. CoreCLR rejected
+five Node operations. The retained pre-correction product gate ran 84 tests:
+82 passed and two failed. One failure was the product's missing rejection of
+the Node definition; the other was an obsolete generic-service diagnostic
+assertion which now correctly reaches a missing assembly. The historical raw
+records, plans and receipts are in
+[evidence/generic-instantiation/qualification-initial/README.md](evidence/generic-instantiation/qualification-initial/README.md).
+Neither failure is presented as passing qualification.
+
+The dedicated `interop/GenericClosure/` preparation adds 34 isolated cases,
+71 explicit requests, 38 within-process identity observations and 14 SRM images.
+It has its own pinned capture, with a fresh output directory and a separate
+fresh raw-evidence directory. Its strict replay requires the actual capture,
+checks each source/image/toolchain pin and raw observer output, and replays
+every request. Missing files fail; no availability skip exists. Unavailable
+native identity endpoints carry null identity facts, and cannot conceal a
+product acceptance of a native-rejected request. Native error stages and
+HResults remain provenance; this batch expects TypeLoad rejection for the
+finite-closure defects and flags any new native category for investigation.
+
+The finite-closure correction, new native capture and focused replay remain
+pending the serial validation slot. No corrected passing result or benchmark
+speedup is claimed. The benchmark audit found no timed request reaching the
+invalid Node fixture, so the original drivers, fixture bytes and prescribed
+cohorts remain unchanged. Source VM, direct CIL, Rust native/Wasm and browser
+execution qualification remain separate.

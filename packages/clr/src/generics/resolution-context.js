@@ -42,7 +42,9 @@ export class GenericResolutionContext {
   #watch;
   #monitors = [];
   #unloaded = false;
+  #bindingsChanged = false;
   #disposed = false;
+  #closure;
 
   constructor(maxWork, signal, watch) {
     this.#remaining = maxWork;
@@ -54,6 +56,7 @@ export class GenericResolutionContext {
     checkCancellation(this.#signal);
     if (this.#disposed) throw loadError(LoadErrorCode.Disposed, 'Generic resolution operation has ended');
     if (this.#unloaded) throw loadError(LoadErrorCode.Disposed, 'A generic type context began unloading during resolution');
+    if (this.#bindingsChanged) throw loadError(LoadErrorCode.TypeLoad, 'Canonical generic definition bindings changed during resolution');
     this.#remaining -= count;
     if (this.#remaining < 0) throw loadError(LoadErrorCode.LimitExceeded, 'Generic resolution work limit exceeded');
   }
@@ -67,7 +70,20 @@ export class GenericResolutionContext {
     else this.#monitors.push(this.#watch(context, this));
   }
 
-  invalidate() { this.#unloaded = true; }
+  invalidate() {
+    this.#unloaded = true;
+    this.#closure?.releaseBindings();
+  }
+
+  invalidateBindings() {
+    this.#bindingsChanged = true;
+    this.#closure?.releaseBindings();
+  }
+
+  closure(service) { return this.#closure ??= service.operation(this); }
+  publishClosure() { this.#closure?.publish(); }
+  template(type) { return this.#closure?.template(type); }
+  verifyBinding(type, binding) { this.#closure?.verifyBinding(type, binding); }
 
   complete() {
     this.visit(0);
@@ -84,6 +100,7 @@ export class GenericResolutionContext {
     this.#disposed = true;
     for (const monitor of this.#monitors) monitor.release(this);
     this.#monitors.length = 0;
+    this.#closure?.dispose();
   }
 
   observe(type) {

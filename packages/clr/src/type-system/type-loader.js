@@ -1,4 +1,4 @@
-import { cliSystemName, decodeCoded, decodeSignature } from '@sharpforge/cil';
+import { decodeCoded, decodeSignature } from '@sharpforge/cil';
 import { createTypeDesc, completeTypeDesc, TypeDesc, TypeKind } from './type-desc.js';
 import { ConstructedTypes, resolveArrayMethod } from './constructed-types.js';
 import { TypeAssignability } from './casting.js';
@@ -9,12 +9,14 @@ import { copyResolutionContext, copyTypeArguments, GenericResolutionContext } fr
 import { genericSignatureTypes } from '../generics/signature-types.js';
 import { GenericTypeCompletion, isGenericCompletionKind } from '../generics/type-completion.js';
 import { GenericContextLifetime } from '../generics/context-lifetime.js';
+import { InstantiationClosures } from '../generics/instantiation-closure.js';
+import { DefinitionBindings } from '../generics/definition-bindings.js';
+import { TypeDefinitionCompletion } from './type-definition-completion.js';
 import { TypeSpecifications } from './type-specifications.js';
 import { awaitContextBinding } from '../binding-wait.js';
 import { checkCancellation, loadError, LoadErrorCode } from '../load-errors.js';
 
 const fail = message => loadError(LoadErrorCode.TypeLoad, message);
-const enumPrimitives = new Set(['sbyte', 'byte', 'short', 'ushort', 'int', 'uint', 'long', 'ulong']);
 
 function requireTypeToken(token) {
   if (!Number.isInteger(token) || token < 0 || token > 0xffffffff || !(token & 0xffffff)) {
@@ -44,6 +46,10 @@ export class TypeLoader {
   #maxTypeSignatureBytes;
   #genericLifetime;
   #completion;
+  #closures;
+  #bindings;
+  #definitions;
+  #closureDefinitions;
   constructor(context, { resolveExternalType = null, maxDepth = 128, maxMetadataRows = 100000,
     maxConstructedTypes = 100000, maxForwarderHops = 128, maxGenericWork = 100000, maxTypeSignatureBytes = 65536 } = {}) {
     if (resolveExternalType !== null && typeof resolveExternalType !== 'function') throw new TypeError('Invalid external type resolver');
@@ -127,7 +133,7 @@ export class TypeLoader {
       const type = this.#intern(definition, arguments_);
       checkCancellation(options.signal);
       if (!originWasUnloading && originContext.isUnloading) throw loadError(LoadErrorCode.Disposed, 'Generic type context began unloading');
-      if (type.isLoaded) return type;
+      if (type.isLoaded && this.#closures?.has(type)) return type;
       const operation = this.#operation(options.signal);
       operation.contextOwnedBindings = true;
       operation.originContext = originContext;
@@ -235,6 +241,7 @@ export class TypeLoader {
     try {
       const result = await action();
       operation.generic?.complete();
+      operation.generic?.publishClosure();
       return result;
     } finally {
       operation.generic?.dispose();
@@ -250,7 +257,7 @@ export class TypeLoader {
     if (scope) checkCancellation(options.signal);
     if (token >>> 24 === 2) {
       const type = module.typeDefinition(token);
-      if (type.isLoaded) return type;
+      if (type.isLoaded && (!this.#closureDefinitions?.has(type) || this.#closures?.has(type))) return type;
     }
     const operation = this.#operation(options.signal, scope);
     return this.#finish(operation, () => this.#load(module, token, operation));
@@ -279,9 +286,36 @@ export class TypeLoader {
     const owner = type.loadContext.types;
     if (owner !== this) return owner.#complete(type, operation);
     if (operation.path.has(type)) throw fail(`Circular inheritance involving ${type.fullName}`);
+    if (operation.root.contextOwnedBindings || type.genericDefinition || type.genericParameters.length
+        || type.elementType || type.signature || this.#closureDefinitions?.has(type)) {
+      operation.root.contextOwnedBindings = true;
+      const work = this.#genericOperation(operation);
+      work.observeContext(operation.root.originContext, operation.root.originWasUnloading);
+      await work.closure(this.#closureService).require(type, operation);
+      this.#checkOperation(operation);
+    }
     if (type.isLoaded) return type;
     if (isGenericCompletionKind(type.kind)) return this.#genericCompletion.complete(type, operation);
-    return this.#definition(type, operation);
+    return this.#definitionCompletion.complete(type, operation);
+  }
+
+  get #closureService() {
+    return this.#closures ??= new InstantiationClosures((type, operation) => type.loadContext.types.#closureTemplate(type, operation),
+      { maxEntries: this.#maxConstructedTypes, maxDepth: this.#maxDepth },
+      (type, binding, work) => type.loadContext.types.#definitionBindings.observe(type, binding, work));
+  }
+
+  async #closureTemplate(type, operation) {
+    if (type.isLoaded) return this.#definitionBindings.get(type);
+    const module = type.module;
+    const nested = { ...operation, scope: this.#definitionScope(type), identityOnly: true, rootResult: false };
+    const parent = module.row(type.metadataToken)[3];
+    const baseType = parent ? await this.#load(module, decodeCoded('TypeDefOrRef', parent), nested) : null;
+    const interfaces = [];
+    for (const token of this.#index(module).interfaces.get(type.metadataToken & 0xffffff) ?? []) {
+      interfaces.push(await this.#load(module, token, nested));
+    }
+    return { baseType, interfaces };
   }
 
   #definitionScope(type) {
@@ -295,33 +329,18 @@ export class TypeLoader {
     return scope;
   }
 
-  async #definition(type, operation) {
-    const module = type.module;
-    const token = type.metadataToken;
-    const row = module.row(token);
-    const nested = { ...operation, path: new Set([...operation.path, type]), scope: this.#definitionScope(type),
-      identityOnly: false, rootResult: false };
-    const baseType = row[3] ? await this.#load(module, decodeCoded('TypeDefOrRef', row[3]), nested) : null;
-    if (baseType?.isInterface || (type.isInterface && baseType)) throw fail('Invalid class/interface base relationship');
-    if (baseType && [TypeKind.Array, TypeKind.SZArray, TypeKind.Pointer, TypeKind.ByRef, TypeKind.FunctionPointer].includes(baseType.kind)) {
-      throw fail('Invalid constructed base type');
-    }
-    if (baseType && ((baseType.flags & 0x100) || [TypeKind.ValueType, TypeKind.Enum].includes((baseType.genericDefinition ?? baseType).kind))) {
-      throw fail('A type cannot derive from a sealed or value type');
-    }
-    const interfaces = new Set(baseType?.interfaces ?? []);
-    for (const reference of this.#index(module).interfaces.get(token & 0xffffff) ?? []) {
-      const contract = await this.#load(module, reference, nested);
-      if (!contract.isInterface) throw fail('InterfaceImpl does not name an interface');
-      interfaces.add(contract);
-      for (const inherited of contract.interfaces) interfaces.add(inherited);
-    }
-    const kind = type.isInterface ? TypeKind.Interface : baseType === this.#intrinsics.get('System.Enum') ? TypeKind.Enum
-      : baseType === this.#intrinsics.get('System.ValueType') ? TypeKind.ValueType : TypeKind.Class;
-    const underlyingType = kind === TypeKind.Enum ? this.#enumUnderlying(module, token) : null;
-    if (kind === TypeKind.Enum && nested.scope) throw fail('Enums cannot declare generic type parameters');
-    this.#publish(type, { kind, baseType, interfaces: Object.freeze([...interfaces]), underlyingType, loaded: true }, operation);
-    return type;
+  get #definitionBindings() { return this.#bindings ??= new DefinitionBindings(this.#maxGenericWork); }
+
+  get #definitionCompletion() {
+    return this.#definitions ??= new TypeDefinitionCompletion({
+      scope: type => this.#definitionScope(type),
+      complete: (type, operation) => this.#complete(type, operation),
+      load: (module, token, operation) => this.#load(module, token, operation),
+      interfaces: (module, token) => this.#index(module).interfaces.get(token & 0xffffff),
+      intrinsic: name => this.#intrinsics.get(name),
+      requireIntrinsic: name => this.intrinsic(name),
+      publish: (type, graph, operation, binding) => this.#publish(type, graph, operation, binding),
+    });
   }
 
   #genericOperation(operation) {
@@ -348,10 +367,14 @@ export class TypeLoader {
     if (operation.root.contextOwnedBindings) this.#genericOperation(operation).visit();
   }
 
-  #publish(type, state, operation) {
+  #publish(type, state, operation, binding = null) {
     this.#checkOperation(operation);
     if (operation.rootResult) operation.root.generic?.complete();
-    if (!type.isLoaded) completeTypeDesc(type, state);
+    if (binding) {
+      operation.root.generic?.verifyBinding(type, binding);
+      if (operation.root.contextOwnedBindings) (this.#closureDefinitions ??= new WeakSet()).add(type);
+      this.#definitionBindings.publish(type, state, binding);
+    } else if (!type.isLoaded) completeTypeDesc(type, state);
   }
 
   get #typeSpecifications() {
@@ -407,7 +430,7 @@ export class TypeLoader {
         if (!(external instanceof TypeDesc) || !external.isLoaded) throw fail('External resolver must return a loaded TypeDesc');
         if (external.fullName !== fullName) throw fail(`External type resolver returned ${external.fullName} for ${fullName}`);
         if (operation.root.contextOwnedBindings) this.#genericOperation(operation).observe(external);
-        return external;
+        return operation.identityOnly ? external : this.#complete(external, operation);
       }
       target = (await this.#assemblyReference(module.assembly, rid, operation)).manifestModule;
     } else if (tag !== 0 || rid !== 1) throw fail('ModuleRef and null-scoped TypeRef resolution require a later loader batch');
@@ -418,16 +441,6 @@ export class TypeLoader {
     this.#checkOperation(operation);
     if (!operation.root.contextOwnedBindings) return assembly.resolveReference(index, operation);
     return awaitContextBinding(assembly.resolveReference(index), operation.signal);
-  }
-
-  #enumUnderlying(module, token) {
-    const fields = module.list(token, 'FieldList').filter(field => !(module.row(field)[0] & 0x10));
-    if (fields.length !== 1) throw fail('Enum must have one instance field');
-    const signature = decodeSignature(module.blob(module.row(fields[0])[2]));
-    if (signature.kind !== 'field' || signature.type.kind !== 'primitive' || !enumPrimitives.has(signature.type.name)) {
-      throw fail('Enum instance field must have an integral type');
-    }
-    return this.intrinsic(cliSystemName(signature.type.name));
   }
 
   /** Decode and exactly resolve an array MemberRef, including rank and lower-bound constructor signatures. */

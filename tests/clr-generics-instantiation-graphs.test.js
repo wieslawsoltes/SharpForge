@@ -24,21 +24,16 @@ test('CLR substituted base and diamond interface graphs preserve exact argument 
   assert.equal(module.methodBodyReadCount, 0);
 });
 
-test('CLR self-referential generic arguments remain finite while the requested inheritance graph completes', async () => {
+test('CLR expanding Node inheritance rejects before any definition graph is published', async () => {
+  // The original acceptance assertion encoded a defect: native CoreCLR rejects this unchanged fixture.
+  // Retained native results and the pre-fix 82/84 gate are in the qualification-initial evidence directory.
   const { types, definitions, module } = await openGenerics();
-  const integer = types.intrinsic('System.Int32');
-  const definition = await types.load(module, definitions.node.metadataToken);
-  assert.equal(definition.baseType.genericArguments[0], definition);
-  const instance = await types.instantiate(definition, [integer]);
-  assert.equal(instance.baseType.genericArguments[0], instance);
-  const argument = instance.interfaces[0].genericArguments[0];
-  assert.equal(argument.genericDefinition, definition);
-  assert.equal(argument.genericArguments[0], instance);
-  assert.equal(argument.isLoaded, false, 'Argument identity does not recursively expand another inherited graph');
-  const completedArgument = await types.instantiate(definition, [instance]);
-  assert.equal(completedArgument, argument);
-  assert.equal(argument.isLoaded, true);
-  assert.equal(argument.baseType.genericArguments[0], argument);
+  const fails = error => error.code === LoadErrorCode.TypeLoad;
+  await assert.rejects(types.load(module, definitions.node.metadataToken), fails);
+  await assert.rejects(types.instantiate(definitions.node, [types.intrinsic('System.Int32')]), fails);
+  await assert.rejects(types.instantiate(definitions.box, [definitions.node]), fails);
+  assert.equal(definitions.node.isLoaded, false);
+  assert.equal(definitions.box.isLoaded, false);
   assert.equal(module.methodBodyReadCount, 0);
 });
 
