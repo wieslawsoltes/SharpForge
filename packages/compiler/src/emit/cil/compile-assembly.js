@@ -25,8 +25,9 @@ function emissionFailure(error, files) {
     span = error.syntax?.span ?? error.syntax,
     start = span?.start ?? 0,
     length = span?.start === undefined ? 1 : Math.max(1, span.end - span.start),
-    code = unsupported ? DiagnosticId.SF2200 : DiagnosticId.SF3001;
-  return diagnostic(file.source, start, length, code, formatMessage(code, [unsupported ? error.construct : error.message]), 'error');
+    code = error.diagnosticCode ?? (unsupported ? DiagnosticId.SF2200 : DiagnosticId.SF3001),
+    args = error.diagnosticArguments ?? [unsupported ? error.construct : error.message];
+  return diagnostic(file.source, start, length, code, formatMessage(code, args), 'error');
 }
 
 /**
