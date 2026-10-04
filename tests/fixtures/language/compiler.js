@@ -1,5 +1,11 @@
 /** Shared language cases: original regression suite and automatic engine parity discovery. */
 export const cases=[
+ // Semantic fallback now retains Console shorthand for these already supported declarations.
+ ['generic declaration with profile Console','Console.WriteLine(1);class A<T>{}','1\n'],
+ ['init declaration with profile Console','Console.WriteLine(1);class A{public int X{get;init;}}','1\n'],
+ ['long source mode','long x=2147483647L;x++;Console.WriteLine(x);','2147483648\n'],
+ ['float source mode','float x=1.25f;Console.WriteLine(x);','1.25\n'],
+ ['decimal source mode','decimal x=1.0m;Console.WriteLine(x);','1.0\n'],
  ['hello','Console.WriteLine("Hello, managed world");','Hello, managed world\n'],
  ['precedence','Console.WriteLine(2 + 3 * 4);','14\n'],
  ['Int32 wrap','int x = 2147483647; x++; Console.WriteLine(x);','-2147483648\n'],
@@ -60,17 +66,12 @@ export const diagnosticCases=[
  ['double to int','int x=1.2;','CS0266'],
  ['const write','const int x=1;x=2;','CS0131'],
  ['no entry','class A {}','CS5001'],
- ['unsupported long','long x=1;','SF2200'],
- ['unsupported float literal','var x=1.2f;','SF1005'],
  ['invalid condition','if(1)Console.WriteLine(1);','CS0029']
 ];
 export const unsupportedCases=[
- 'Console.WriteLine(1);class A<T>{}',
- 'Console.WriteLine(1);class A{public int X{get;init;}}',
  'Console.WriteLine(1);class B{}class A:B{}',
  'class A{static async void Main(){}}',
  'try{Console.WriteLine(1);}catch(Exception e) when(true){}',
- 'Console.WriteLine(1m);'
 ];
 export const languageFixtures=[
  ...cases.map(([name,source,output])=>({id:'compiler/'+name,source,expected:{output}})),

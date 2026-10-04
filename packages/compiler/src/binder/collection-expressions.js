@@ -16,6 +16,7 @@
  * by `ToArray()` when the target is an array. A span target, a `[CollectionBuilder]` type and a spread that cannot be
  * appended that way keep the collection node, which code generation reports as not executable (SF2200).
  */
+import {DiagnosticId} from '../diagnostics/codes.js';
 import { SymbolKind, TypeKind, ArrayTypeSymbol, NamedTypeSymbol } from '../symbols/types.js';
 import { MethodKind } from '../symbols/members.js';
 import { Conversion, ConversionKind } from '../conversions/classify.js';
@@ -106,14 +107,14 @@ export const CollectionExpressionBinding = Base =>
     reportCollectionFailure(node, type) {
       const target = this.collectionTarget(type);
       if (!target) {
-        this.report(node.syntax, 'CS9174', [this.display(type)]);
+        this.report(node.syntax, DiagnosticId.CS9174, [this.display(type)]);
         return;
       }
       for (const element of node.elements) {
         if (this.elementConverts(element, target.elementType)) continue;
         if (element.spread) {
           const iteration = this.spreadElementType(element.spread);
-          this.report(element.syntax.expression, 'CS0029', [this.display(iteration), this.display(target.elementType)]);
+          this.report(element.syntax.expression, DiagnosticId.CS0029, [this.display(iteration), this.display(target.elementType)]);
         }
         else this.convert(element.value, target.elementType);
       }
@@ -125,12 +126,12 @@ export const CollectionExpressionBinding = Base =>
       // Arguments the target does not take are reported and then left out of the construction.
       if (node.withArguments && !this.checkCollectionArguments(node, to, target)) node = { ...node, withArguments: null };
       if (target.lacksElementAdd && node.elements.length) {
-        this.report(syntax, 'CS9215', [this.display(to)]);
+        this.report(syntax, DiagnosticId.CS9215, [this.display(to)]);
         return this.bad(syntax);
       }
       for (const element of node.elements)
         if (element.spread && !element.spread.hasErrors && !this.spreadElementType(element.spread) && element.spread.type)
-          this.report(element.syntax.expression, 'CS9212', [this.display(element.spread.type), 'GetEnumerator']);
+          this.report(element.syntax.expression, DiagnosticId.CS9212, [this.display(element.spread.type), 'GetEnumerator']);
       const converted = element => this.convert(element.value, target.elementType, element.syntax.expression);
       if (target.kind === 'array' && !hasSpread)
         return this.node('ArrayCreation', syntax, to, { elements: node.elements.map(converted), isCollectionExpression: true });
@@ -159,11 +160,11 @@ export const CollectionExpressionBinding = Base =>
       // With a `with(...)` element any accessible constructor will do: overload resolution on its arguments decides.
       const needsParameterless = !node.withArguments;
       if (needsParameterless && constructors.length && !constructors.some(constructor => constructor.parameters.every(p => p.isOptional || p.isParams))) {
-        this.report(node.syntax, 'CS9214');
+        this.report(node.syntax, DiagnosticId.CS9214);
         return false;
       }
-      if (!adds.length) this.report(node.syntax, 'CS1061', [this.display(type), 'Add']);
-      else if (!adds.some(add => add.parameters.length === 1)) this.report(node.syntax, 'CS9215', [this.display(type)]);
+      if (!adds.length) this.report(node.syntax, DiagnosticId.CS1061, [this.display(type), 'Add']);
+      else if (!adds.some(add => add.parameters.length === 1)) this.report(node.syntax, DiagnosticId.CS9215, [this.display(type)]);
       else return true;
       return false;
     }

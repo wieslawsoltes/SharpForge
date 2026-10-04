@@ -12,12 +12,14 @@ function nextVersion(vm, owner, reason) {
   if (!Number.isSafeInteger(epoch)) throw new RangeError('Execution code epoch exhausted');
   // Drop every cache together, including derived entries that refer to old tokens.
   if (previous) {
+    previous.wasmCalls?.invalidate();
+    previous.wasmCalls = null;
     previous.owner = null;
     previous.registry = null;
-    previous.decode = null;
+    previous.decode = previous.tokens = previous.fields = previous.inline = previous.generics = previous.calls = null;
   }
-  const state = {owner, registry: vm.heap?.methodTables, epoch, reason, decode: null,
-    statistics: {decodePlans: 0, decodedInstructions: 0, decodeMilliseconds: 0, offsetMapAllocations: 0}};
+  const state = {owner, registry: vm.heap?.methodTables, epoch, reason, decode: null, tokens: null, fields: null, inline: null, generics: null, calls: null,
+    wasmCalls: null, statistics: {decodePlans: 0, decodedInstructions: 0, decodeMilliseconds: 0, offsetMapAllocations: 0}};
   versions.set(vm, state);
   return state;
 }

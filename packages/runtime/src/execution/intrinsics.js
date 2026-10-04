@@ -1,3 +1,7 @@
+import {invokeDecimal} from './decimal-intrinsics.js';
+import {valueIntrinsicHandler} from './value-intrinsics.js';
+import {invokeBitConverter} from './bit-converter.js';
+import {nativeSize} from './native-int.js';
 import {invokeLegacyBclBuiltin} from '@sharpforge/bcl-core';
 import {mutateArray} from './array-ops.js';
 import {intrinsicDefinition,intrinsicDefinitions} from '@sharpforge/cil';
@@ -37,10 +41,13 @@ function stringReceiver(context) {
   return value;
 }
 const implementations={
+  decimal:({vm,descriptor,self,parameters})=>invokeDecimal(vm,descriptor,descriptor.signature.isStatic?parameters:[self,...parameters]).value,
+  bitConverter:({descriptor,parameters})=>invokeBitConverter(descriptor,parameters),
+  nativeSize:({vm})=>nativeSize(vm.options),
   arrayMutate:({vm,descriptor,parameters})=>mutateArray(vm,descriptor.name,parameters[0]),
   console:({vm,descriptor,parameters})=>{vm.emitOutput((parameters.length?vm.format(parameters[0],descriptor.signature.parameters[0]):'')+(descriptor.name==='WriteLine'?'\n':''));return null;},
   objectCtor:()=>null,
-  objectToString:({vm,self})=>invokeLegacyBclBuiltin(legacyHost(vm),'object.ToString',[self]),
+  objectToString:({vm,self,isVirtual})=>invokeLegacyBclBuiltin(legacyHost(vm),isVirtual?'object.ToString':'Convert.ToString',[self]),
   objectGetType:({vm,self})=>objectType(vm,self),
   typeFromHandle:({vm,parameters})=>typeFromHandle(vm,parameters[0]),
   typeCompare:({vm,descriptor,parameters})=>typeEquals(vm,parameters[0],parameters[1])!==(descriptor.name==='op_Inequality')?1:0,
@@ -116,22 +123,22 @@ const implementations={
 
 };
 
-const sharedConversions = new Set(['convertInt32', 'convertDouble', 'convertString']);
+const sharedConversions = new Set(['convertInt32', 'convertDouble', 'convertString', 'decimal']);
 
 /** Closed owner::name(signature) registry shared with verifier acceptance. */
 export const intrinsicHandlers=new Map(intrinsicDefinitions.map(definition=>{
   if(!definition.contract&&!implementations[definition.implementation])throw new Error(`Missing intrinsic implementation '${definition.implementation}'`);
-  return [definition.key,(vm,descriptor,args,selected=definition)=>{
+  return [definition.key,(vm,descriptor,args,selected=definition,isVirtual=false)=>{
     if(selected.contract)return vm.platform.invoke(selected.contract,args);
     const self=descriptor.signature.isStatic?null:args[0],parameters=descriptor.signature.isStatic?args:args.slice(1);
     if(!descriptor.signature.isStatic&&self===null)throw new ManagedFault('NullReferenceException','Null instance receiver');
     // Shared conversions decode their own arguments through the host adapter.
     const values = sharedConversions.has(selected.implementation) ? null : parameters.map(value => vm.value(value));
-    return implementations[selected.implementation]({vm,descriptor,self,parameters,values});
+    return implementations[selected.implementation]({vm,descriptor,self,parameters,values,isVirtual});
   }];
 }));
-export function invokeIntrinsic(vm,descriptor,args) {
-  const definition=intrinsicDefinition(descriptor),handler=definition&&intrinsicHandlers.get(definition.key);
+export function invokeIntrinsic(vm,descriptor,args,isVirtual=false) {
+  const definition=intrinsicDefinition(descriptor),handler=definition&&(intrinsicHandlers.get(definition.key)??valueIntrinsicHandler(definition));
   if(!handler)throw new ManagedFault('MissingMethodException',`${descriptor.owner}::${descriptor.name}`);
-  return handler(vm,descriptor,args,definition);
+  return handler(vm,descriptor,args,definition,isVirtual);
 }

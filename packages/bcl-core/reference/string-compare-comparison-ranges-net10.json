@@ -1,0 +1,7337 @@
+{
+  "schemaVersion": 1,
+  "sdk": "10.0.201",
+  "runtime": "10.0.5",
+  "os": "macOS 26.6.0",
+  "architecture": "Arm64",
+  "culture": "",
+  "sourceSha256": "f79259c1f47e816497a9570501177ff84ebe841c070c79091b463b25a4ee0161",
+  "rows": [
+    {
+      "id": "ordinal/equal/4",
+      "group": "ordinal",
+      "left": [
+        97,
+        98,
+        99
+      ],
+      "indexA": 0,
+      "right": [
+        97,
+        98,
+        99
+      ],
+      "indexB": 0,
+      "length": 3,
+      "mode": 4,
+      "sameReference": true,
+      "copyRight": false,
+      "result": 0,
+      "sign": 0,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/equal/5",
+      "group": "ordinal",
+      "left": [
+        97,
+        98,
+        99
+      ],
+      "indexA": 0,
+      "right": [
+        97,
+        98,
+        99
+      ],
+      "indexB": 0,
+      "length": 3,
+      "mode": 5,
+      "sameReference": true,
+      "copyRight": false,
+      "result": 0,
+      "sign": 0,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/case/4",
+      "group": "ordinal",
+      "left": [
+        97,
+        98,
+        99
+      ],
+      "indexA": 0,
+      "right": [
+        65,
+        98,
+        99
+      ],
+      "indexB": 0,
+      "length": 3,
+      "mode": 4,
+      "sameReference": false,
+      "copyRight": false,
+      "result": 32,
+      "sign": 1,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/case/5",
+      "group": "ordinal",
+      "left": [
+        97,
+        98,
+        99
+      ],
+      "indexA": 0,
+      "right": [
+        65,
+        98,
+        99
+      ],
+      "indexB": 0,
+      "length": 3,
+      "mode": 5,
+      "sameReference": false,
+      "copyRight": false,
+      "result": 0,
+      "sign": 0,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/inside/4",
+      "group": "ordinal",
+      "left": [
+        95,
+        95,
+        97,
+        98,
+        99,
+        95
+      ],
+      "indexA": 2,
+      "right": [
+        95,
+        97,
+        98,
+        100,
+        95,
+        95
+      ],
+      "indexB": 1,
+      "length": 3,
+      "mode": 4,
+      "sameReference": false,
+      "copyRight": false,
+      "result": -1,
+      "sign": -1,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/inside/5",
+      "group": "ordinal",
+      "left": [
+        95,
+        95,
+        97,
+        98,
+        99,
+        95
+      ],
+      "indexA": 2,
+      "right": [
+        95,
+        97,
+        98,
+        100,
+        95,
+        95
+      ],
+      "indexB": 1,
+      "length": 3,
+      "mode": 5,
+      "sameReference": false,
+      "copyRight": false,
+      "result": -1,
+      "sign": -1,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/same-range/4",
+      "group": "ordinal",
+      "left": [
+        97,
+        98,
+        99,
+        100,
+        101,
+        102
+      ],
+      "indexA": 2,
+      "right": [
+        97,
+        98,
+        99,
+        100,
+        101,
+        102
+      ],
+      "indexB": 2,
+      "length": 3,
+      "mode": 4,
+      "sameReference": true,
+      "copyRight": false,
+      "result": 0,
+      "sign": 0,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/same-range/5",
+      "group": "ordinal",
+      "left": [
+        97,
+        98,
+        99,
+        100,
+        101,
+        102
+      ],
+      "indexA": 2,
+      "right": [
+        97,
+        98,
+        99,
+        100,
+        101,
+        102
+      ],
+      "indexB": 2,
+      "length": 3,
+      "mode": 5,
+      "sameReference": true,
+      "copyRight": false,
+      "result": 0,
+      "sign": 0,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/same-string-different-offset/4",
+      "group": "ordinal",
+      "left": [
+        97,
+        98,
+        99,
+        97,
+        98,
+        99
+      ],
+      "indexA": 0,
+      "right": [
+        97,
+        98,
+        99,
+        97,
+        98,
+        99
+      ],
+      "indexB": 3,
+      "length": 3,
+      "mode": 4,
+      "sameReference": true,
+      "copyRight": false,
+      "result": 0,
+      "sign": 0,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/same-string-different-offset/5",
+      "group": "ordinal",
+      "left": [
+        97,
+        98,
+        99,
+        97,
+        98,
+        99
+      ],
+      "indexA": 0,
+      "right": [
+        97,
+        98,
+        99,
+        97,
+        98,
+        99
+      ],
+      "indexB": 3,
+      "length": 3,
+      "mode": 5,
+      "sameReference": true,
+      "copyRight": false,
+      "result": 0,
+      "sign": 0,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/zero/4",
+      "group": "ordinal",
+      "left": [
+        97,
+        98,
+        99
+      ],
+      "indexA": 1,
+      "right": [
+        120,
+        121,
+        122
+      ],
+      "indexB": 2,
+      "length": 0,
+      "mode": 4,
+      "sameReference": false,
+      "copyRight": false,
+      "result": 0,
+      "sign": 0,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/zero/5",
+      "group": "ordinal",
+      "left": [
+        97,
+        98,
+        99
+      ],
+      "indexA": 1,
+      "right": [
+        120,
+        121,
+        122
+      ],
+      "indexB": 2,
+      "length": 0,
+      "mode": 5,
+      "sameReference": false,
+      "copyRight": false,
+      "result": 0,
+      "sign": 0,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/both-endpoints/4",
+      "group": "ordinal",
+      "left": [
+        97,
+        98,
+        99
+      ],
+      "indexA": 3,
+      "right": [
+        97,
+        98,
+        99,
+        100,
+        101,
+        102
+      ],
+      "indexB": 6,
+      "length": 3,
+      "mode": 4,
+      "sameReference": false,
+      "copyRight": false,
+      "result": 0,
+      "sign": 0,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/both-endpoints/5",
+      "group": "ordinal",
+      "left": [
+        97,
+        98,
+        99
+      ],
+      "indexA": 3,
+      "right": [
+        97,
+        98,
+        99,
+        100,
+        101,
+        102
+      ],
+      "indexB": 6,
+      "length": 3,
+      "mode": 5,
+      "sameReference": false,
+      "copyRight": false,
+      "result": 0,
+      "sign": 0,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/left-endpoint/4",
+      "group": "ordinal",
+      "left": [
+        97,
+        98,
+        99
+      ],
+      "indexA": 3,
+      "right": [
+        97,
+        98,
+        99
+      ],
+      "indexB": 1,
+      "length": 3,
+      "mode": 4,
+      "sameReference": true,
+      "copyRight": false,
+      "result": -2,
+      "sign": -1,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/left-endpoint/5",
+      "group": "ordinal",
+      "left": [
+        97,
+        98,
+        99
+      ],
+      "indexA": 3,
+      "right": [
+        97,
+        98,
+        99
+      ],
+      "indexB": 1,
+      "length": 3,
+      "mode": 5,
+      "sameReference": true,
+      "copyRight": false,
+      "result": -2,
+      "sign": -1,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/right-endpoint/4",
+      "group": "ordinal",
+      "left": [
+        97,
+        98,
+        99
+      ],
+      "indexA": 1,
+      "right": [
+        97,
+        98,
+        99
+      ],
+      "indexB": 3,
+      "length": 3,
+      "mode": 4,
+      "sameReference": true,
+      "copyRight": false,
+      "result": 2,
+      "sign": 1,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/right-endpoint/5",
+      "group": "ordinal",
+      "left": [
+        97,
+        98,
+        99
+      ],
+      "indexA": 1,
+      "right": [
+        97,
+        98,
+        99
+      ],
+      "indexB": 3,
+      "length": 3,
+      "mode": 5,
+      "sameReference": true,
+      "copyRight": false,
+      "result": 2,
+      "sign": 1,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/empty/4",
+      "group": "ordinal",
+      "left": [],
+      "indexA": 0,
+      "right": [],
+      "indexB": 0,
+      "length": 20,
+      "mode": 4,
+      "sameReference": true,
+      "copyRight": false,
+      "result": 0,
+      "sign": 0,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/empty/5",
+      "group": "ordinal",
+      "left": [],
+      "indexA": 0,
+      "right": [],
+      "indexB": 0,
+      "length": 20,
+      "mode": 5,
+      "sameReference": true,
+      "copyRight": false,
+      "result": 0,
+      "sign": 0,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/empty-left/4",
+      "group": "ordinal",
+      "left": [],
+      "indexA": 0,
+      "right": [
+        97,
+        98,
+        99
+      ],
+      "indexB": 0,
+      "length": 3,
+      "mode": 4,
+      "sameReference": false,
+      "copyRight": false,
+      "result": -3,
+      "sign": -1,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/empty-left/5",
+      "group": "ordinal",
+      "left": [],
+      "indexA": 0,
+      "right": [
+        97,
+        98,
+        99
+      ],
+      "indexB": 0,
+      "length": 3,
+      "mode": 5,
+      "sameReference": false,
+      "copyRight": false,
+      "result": -3,
+      "sign": -1,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/empty-right/4",
+      "group": "ordinal",
+      "left": [
+        97,
+        98,
+        99
+      ],
+      "indexA": 0,
+      "right": [],
+      "indexB": 0,
+      "length": 3,
+      "mode": 4,
+      "sameReference": false,
+      "copyRight": false,
+      "result": 3,
+      "sign": 1,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/empty-right/5",
+      "group": "ordinal",
+      "left": [
+        97,
+        98,
+        99
+      ],
+      "indexA": 0,
+      "right": [],
+      "indexB": 0,
+      "length": 3,
+      "mode": 5,
+      "sameReference": false,
+      "copyRight": false,
+      "result": 3,
+      "sign": 1,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/truncate-left/4",
+      "group": "ordinal",
+      "left": [
+        97,
+        98
+      ],
+      "indexA": 0,
+      "right": [
+        97,
+        98,
+        99,
+        100,
+        101
+      ],
+      "indexB": 0,
+      "length": 5,
+      "mode": 4,
+      "sameReference": false,
+      "copyRight": false,
+      "result": -3,
+      "sign": -1,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/truncate-left/5",
+      "group": "ordinal",
+      "left": [
+        97,
+        98
+      ],
+      "indexA": 0,
+      "right": [
+        97,
+        98,
+        99,
+        100,
+        101
+      ],
+      "indexB": 0,
+      "length": 5,
+      "mode": 5,
+      "sameReference": false,
+      "copyRight": false,
+      "result": -3,
+      "sign": -1,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/truncate-right/4",
+      "group": "ordinal",
+      "left": [
+        97,
+        98,
+        99,
+        100,
+        101
+      ],
+      "indexA": 0,
+      "right": [
+        97,
+        98
+      ],
+      "indexB": 0,
+      "length": 5,
+      "mode": 4,
+      "sameReference": false,
+      "copyRight": false,
+      "result": 3,
+      "sign": 1,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/truncate-right/5",
+      "group": "ordinal",
+      "left": [
+        97,
+        98,
+        99,
+        100,
+        101
+      ],
+      "indexA": 0,
+      "right": [
+        97,
+        98
+      ],
+      "indexB": 0,
+      "length": 5,
+      "mode": 5,
+      "sameReference": false,
+      "copyRight": false,
+      "result": 3,
+      "sign": 1,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/truncate-both/4",
+      "group": "ordinal",
+      "left": [
+        97,
+        98,
+        99
+      ],
+      "indexA": 1,
+      "right": [
+        98,
+        99
+      ],
+      "indexB": 0,
+      "length": 2147483647,
+      "mode": 4,
+      "sameReference": false,
+      "copyRight": false,
+      "result": 0,
+      "sign": 0,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/truncate-both/5",
+      "group": "ordinal",
+      "left": [
+        97,
+        98,
+        99
+      ],
+      "indexA": 1,
+      "right": [
+        98,
+        99
+      ],
+      "indexB": 0,
+      "length": 2147483647,
+      "mode": 5,
+      "sameReference": false,
+      "copyRight": false,
+      "result": 0,
+      "sign": 0,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/maximum-length/4",
+      "group": "ordinal",
+      "left": [
+        97,
+        98,
+        99,
+        100,
+        101,
+        102
+      ],
+      "indexA": 2,
+      "right": [
+        97,
+        98,
+        99,
+        100,
+        101,
+        103
+      ],
+      "indexB": 2,
+      "length": 2147483647,
+      "mode": 4,
+      "sameReference": false,
+      "copyRight": false,
+      "result": -1,
+      "sign": -1,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/maximum-length/5",
+      "group": "ordinal",
+      "left": [
+        97,
+        98,
+        99,
+        100,
+        101,
+        102
+      ],
+      "indexA": 2,
+      "right": [
+        97,
+        98,
+        99,
+        100,
+        101,
+        103
+      ],
+      "indexB": 2,
+      "length": 2147483647,
+      "mode": 5,
+      "sameReference": false,
+      "copyRight": false,
+      "result": -1,
+      "sign": -1,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/ignore-before-after/4",
+      "group": "ordinal",
+      "left": [
+        120,
+        97,
+        98,
+        99,
+        113
+      ],
+      "indexA": 1,
+      "right": [
+        121,
+        97,
+        98,
+        99,
+        122
+      ],
+      "indexB": 1,
+      "length": 3,
+      "mode": 4,
+      "sameReference": false,
+      "copyRight": false,
+      "result": 0,
+      "sign": 0,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/ignore-before-after/5",
+      "group": "ordinal",
+      "left": [
+        120,
+        97,
+        98,
+        99,
+        113
+      ],
+      "indexA": 1,
+      "right": [
+        121,
+        97,
+        98,
+        99,
+        122
+      ],
+      "indexB": 1,
+      "length": 3,
+      "mode": 5,
+      "sameReference": false,
+      "copyRight": false,
+      "result": 0,
+      "sign": 0,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/embedded-null/4",
+      "group": "ordinal",
+      "left": [
+        97,
+        0,
+        98
+      ],
+      "indexA": 0,
+      "right": [
+        97,
+        0,
+        99
+      ],
+      "indexB": 0,
+      "length": 3,
+      "mode": 4,
+      "sameReference": false,
+      "copyRight": false,
+      "result": -1,
+      "sign": -1,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/embedded-null/5",
+      "group": "ordinal",
+      "left": [
+        97,
+        0,
+        98
+      ],
+      "indexA": 0,
+      "right": [
+        97,
+        0,
+        99
+      ],
+      "indexB": 0,
+      "length": 3,
+      "mode": 5,
+      "sameReference": false,
+      "copyRight": false,
+      "result": -1,
+      "sign": -1,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/null-unit-prefix/4",
+      "group": "ordinal",
+      "left": [
+        97,
+        0
+      ],
+      "indexA": 1,
+      "right": [],
+      "indexB": 0,
+      "length": 2,
+      "mode": 4,
+      "sameReference": false,
+      "copyRight": false,
+      "result": 1,
+      "sign": 1,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/null-unit-prefix/5",
+      "group": "ordinal",
+      "left": [
+        97,
+        0
+      ],
+      "indexA": 1,
+      "right": [],
+      "indexB": 0,
+      "length": 2,
+      "mode": 5,
+      "sameReference": false,
+      "copyRight": false,
+      "result": 1,
+      "sign": 1,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/high-unit-difference/4",
+      "group": "ordinal",
+      "left": [
+        0
+      ],
+      "indexA": 0,
+      "right": [
+        65535
+      ],
+      "indexB": 0,
+      "length": 1,
+      "mode": 4,
+      "sameReference": false,
+      "copyRight": false,
+      "result": -65535,
+      "sign": -1,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/high-unit-difference/5",
+      "group": "ordinal",
+      "left": [
+        0
+      ],
+      "indexA": 0,
+      "right": [
+        65535
+      ],
+      "indexB": 0,
+      "length": 1,
+      "mode": 5,
+      "sameReference": false,
+      "copyRight": false,
+      "result": -65535,
+      "sign": -1,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/decomposed/4",
+      "group": "ordinal",
+      "left": [
+        233
+      ],
+      "indexA": 0,
+      "right": [
+        101,
+        769
+      ],
+      "indexB": 0,
+      "length": 2,
+      "mode": 4,
+      "sameReference": false,
+      "copyRight": false,
+      "result": 132,
+      "sign": 1,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/decomposed/5",
+      "group": "ordinal",
+      "left": [
+        233
+      ],
+      "indexA": 0,
+      "right": [
+        101,
+        769
+      ],
+      "indexB": 0,
+      "length": 2,
+      "mode": 5,
+      "sameReference": false,
+      "copyRight": false,
+      "result": 132,
+      "sign": 1,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/surrogate-pair/4",
+      "group": "ordinal",
+      "left": [
+        55357,
+        56832
+      ],
+      "indexA": 0,
+      "right": [
+        55357,
+        56833
+      ],
+      "indexB": 0,
+      "length": 2,
+      "mode": 4,
+      "sameReference": false,
+      "copyRight": false,
+      "result": -1,
+      "sign": -1,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/surrogate-pair/5",
+      "group": "ordinal",
+      "left": [
+        55357,
+        56832
+      ],
+      "indexA": 0,
+      "right": [
+        55357,
+        56833
+      ],
+      "indexB": 0,
+      "length": 2,
+      "mode": 5,
+      "sameReference": false,
+      "copyRight": false,
+      "result": -1,
+      "sign": -1,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/split-high/4",
+      "group": "ordinal",
+      "left": [
+        55357,
+        56832
+      ],
+      "indexA": 0,
+      "right": [
+        55357,
+        56833
+      ],
+      "indexB": 0,
+      "length": 1,
+      "mode": 4,
+      "sameReference": false,
+      "copyRight": false,
+      "result": 0,
+      "sign": 0,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/split-high/5",
+      "group": "ordinal",
+      "left": [
+        55357,
+        56832
+      ],
+      "indexA": 0,
+      "right": [
+        55357,
+        56833
+      ],
+      "indexB": 0,
+      "length": 1,
+      "mode": 5,
+      "sameReference": false,
+      "copyRight": false,
+      "result": 0,
+      "sign": 0,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/split-low/4",
+      "group": "ordinal",
+      "left": [
+        55357,
+        56832
+      ],
+      "indexA": 1,
+      "right": [
+        55357,
+        56833
+      ],
+      "indexB": 1,
+      "length": 1,
+      "mode": 4,
+      "sameReference": false,
+      "copyRight": false,
+      "result": -1,
+      "sign": -1,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/split-low/5",
+      "group": "ordinal",
+      "left": [
+        55357,
+        56832
+      ],
+      "indexA": 1,
+      "right": [
+        55357,
+        56833
+      ],
+      "indexB": 1,
+      "length": 1,
+      "mode": 5,
+      "sameReference": false,
+      "copyRight": false,
+      "result": -1,
+      "sign": -1,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/isolated-high-low/4",
+      "group": "ordinal",
+      "left": [
+        120,
+        55296,
+        122
+      ],
+      "indexA": 1,
+      "right": [
+        121,
+        56320,
+        122
+      ],
+      "indexB": 1,
+      "length": 1,
+      "mode": 4,
+      "sameReference": false,
+      "copyRight": false,
+      "result": -1024,
+      "sign": -1,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/isolated-high-low/5",
+      "group": "ordinal",
+      "left": [
+        120,
+        55296,
+        122
+      ],
+      "indexA": 1,
+      "right": [
+        121,
+        56320,
+        122
+      ],
+      "indexB": 1,
+      "length": 1,
+      "mode": 5,
+      "sameReference": false,
+      "copyRight": false,
+      "result": -1024,
+      "sign": -1,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/supplementary-vs-bmp/4",
+      "group": "ordinal",
+      "left": [
+        55296,
+        56320
+      ],
+      "indexA": 0,
+      "right": [
+        57344
+      ],
+      "indexB": 0,
+      "length": 2,
+      "mode": 4,
+      "sameReference": false,
+      "copyRight": false,
+      "result": -2048,
+      "sign": -1,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/supplementary-vs-bmp/5",
+      "group": "ordinal",
+      "left": [
+        55296,
+        56320
+      ],
+      "indexA": 0,
+      "right": [
+        57344
+      ],
+      "indexB": 0,
+      "length": 2,
+      "mode": 5,
+      "sameReference": false,
+      "copyRight": false,
+      "result": 1,
+      "sign": 1,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/vector-prefix/4",
+      "group": "ordinal",
+      "left": [
+        97,
+        98,
+        99,
+        100,
+        101,
+        102,
+        103,
+        104,
+        105,
+        106,
+        107,
+        108,
+        109,
+        110,
+        111,
+        112,
+        88
+      ],
+      "indexA": 0,
+      "right": [
+        97,
+        98,
+        99,
+        100,
+        101,
+        102,
+        103,
+        104,
+        105,
+        106,
+        107,
+        108,
+        109,
+        110,
+        111,
+        112,
+        89
+      ],
+      "indexB": 0,
+      "length": 17,
+      "mode": 4,
+      "sameReference": false,
+      "copyRight": false,
+      "result": -1,
+      "sign": -1,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/vector-prefix/5",
+      "group": "ordinal",
+      "left": [
+        97,
+        98,
+        99,
+        100,
+        101,
+        102,
+        103,
+        104,
+        105,
+        106,
+        107,
+        108,
+        109,
+        110,
+        111,
+        112,
+        88
+      ],
+      "indexA": 0,
+      "right": [
+        97,
+        98,
+        99,
+        100,
+        101,
+        102,
+        103,
+        104,
+        105,
+        106,
+        107,
+        108,
+        109,
+        110,
+        111,
+        112,
+        89
+      ],
+      "indexB": 0,
+      "length": 17,
+      "mode": 5,
+      "sameReference": false,
+      "copyRight": false,
+      "result": -1,
+      "sign": -1,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/vector-offset/4",
+      "group": "ordinal",
+      "left": [
+        120,
+        97,
+        98,
+        99,
+        100,
+        101,
+        102,
+        103,
+        104,
+        105,
+        106,
+        107,
+        108,
+        109,
+        110,
+        111,
+        112,
+        88
+      ],
+      "indexA": 1,
+      "right": [
+        121,
+        121,
+        97,
+        98,
+        99,
+        100,
+        101,
+        102,
+        103,
+        104,
+        105,
+        106,
+        107,
+        108,
+        109,
+        110,
+        111,
+        112,
+        89
+      ],
+      "indexB": 2,
+      "length": 17,
+      "mode": 4,
+      "sameReference": false,
+      "copyRight": false,
+      "result": -1,
+      "sign": -1,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/vector-offset/5",
+      "group": "ordinal",
+      "left": [
+        120,
+        97,
+        98,
+        99,
+        100,
+        101,
+        102,
+        103,
+        104,
+        105,
+        106,
+        107,
+        108,
+        109,
+        110,
+        111,
+        112,
+        88
+      ],
+      "indexA": 1,
+      "right": [
+        121,
+        121,
+        97,
+        98,
+        99,
+        100,
+        101,
+        102,
+        103,
+        104,
+        105,
+        106,
+        107,
+        108,
+        109,
+        110,
+        111,
+        112,
+        89
+      ],
+      "indexB": 2,
+      "length": 17,
+      "mode": 5,
+      "sameReference": false,
+      "copyRight": false,
+      "result": -1,
+      "sign": -1,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/long-prefix-length/4",
+      "group": "ordinal",
+      "left": [
+        97,
+        98,
+        99,
+        100,
+        101,
+        102,
+        103,
+        104,
+        105,
+        106,
+        107,
+        108,
+        109,
+        110,
+        111,
+        112
+      ],
+      "indexA": 0,
+      "right": [
+        97,
+        98,
+        99,
+        100,
+        101,
+        102,
+        103,
+        104,
+        105,
+        106,
+        107,
+        108,
+        109,
+        110,
+        111,
+        112,
+        88,
+        89,
+        90
+      ],
+      "indexB": 0,
+      "length": 2147483647,
+      "mode": 4,
+      "sameReference": false,
+      "copyRight": false,
+      "result": -3,
+      "sign": -1,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/long-prefix-length/5",
+      "group": "ordinal",
+      "left": [
+        97,
+        98,
+        99,
+        100,
+        101,
+        102,
+        103,
+        104,
+        105,
+        106,
+        107,
+        108,
+        109,
+        110,
+        111,
+        112
+      ],
+      "indexA": 0,
+      "right": [
+        97,
+        98,
+        99,
+        100,
+        101,
+        102,
+        103,
+        104,
+        105,
+        106,
+        107,
+        108,
+        109,
+        110,
+        111,
+        112,
+        88,
+        89,
+        90
+      ],
+      "indexB": 0,
+      "length": 2147483647,
+      "mode": 5,
+      "sameReference": false,
+      "copyRight": false,
+      "result": -3,
+      "sign": -1,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/nulls-valid/4",
+      "group": "ordinal",
+      "left": null,
+      "indexA": 0,
+      "right": null,
+      "indexB": 0,
+      "length": 0,
+      "mode": 4,
+      "sameReference": true,
+      "copyRight": false,
+      "result": 0,
+      "sign": 0,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/nulls-valid/5",
+      "group": "ordinal",
+      "left": null,
+      "indexA": 0,
+      "right": null,
+      "indexB": 0,
+      "length": 0,
+      "mode": 5,
+      "sameReference": true,
+      "copyRight": false,
+      "result": 0,
+      "sign": 0,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/nulls-negative/4",
+      "group": "ordinal",
+      "left": null,
+      "indexA": -1,
+      "right": null,
+      "indexB": -1,
+      "length": -1,
+      "mode": 4,
+      "sameReference": true,
+      "copyRight": false,
+      "result": 0,
+      "sign": 0,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/nulls-negative/5",
+      "group": "ordinal",
+      "left": null,
+      "indexA": -1,
+      "right": null,
+      "indexB": -1,
+      "length": -1,
+      "mode": 5,
+      "sameReference": true,
+      "copyRight": false,
+      "result": 0,
+      "sign": 0,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/nulls-overflow/4",
+      "group": "ordinal",
+      "left": null,
+      "indexA": 2147483647,
+      "right": null,
+      "indexB": 2147483647,
+      "length": -2147483648,
+      "mode": 4,
+      "sameReference": true,
+      "copyRight": false,
+      "result": 0,
+      "sign": 0,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/nulls-overflow/5",
+      "group": "ordinal",
+      "left": null,
+      "indexA": 2147483647,
+      "right": null,
+      "indexB": 2147483647,
+      "length": -2147483648,
+      "mode": 5,
+      "sameReference": true,
+      "copyRight": false,
+      "result": 0,
+      "sign": 0,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/null-left-negative/4",
+      "group": "ordinal",
+      "left": null,
+      "indexA": -1,
+      "right": [
+        97,
+        98,
+        99
+      ],
+      "indexB": -1,
+      "length": -1,
+      "mode": 4,
+      "sameReference": false,
+      "copyRight": false,
+      "result": -1,
+      "sign": -1,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/null-left-negative/5",
+      "group": "ordinal",
+      "left": null,
+      "indexA": -1,
+      "right": [
+        97,
+        98,
+        99
+      ],
+      "indexB": -1,
+      "length": -1,
+      "mode": 5,
+      "sameReference": false,
+      "copyRight": false,
+      "result": -1,
+      "sign": -1,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/null-right-negative/4",
+      "group": "ordinal",
+      "left": [
+        97,
+        98,
+        99
+      ],
+      "indexA": -1,
+      "right": null,
+      "indexB": -1,
+      "length": -1,
+      "mode": 4,
+      "sameReference": false,
+      "copyRight": false,
+      "result": 1,
+      "sign": 1,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/null-right-negative/5",
+      "group": "ordinal",
+      "left": [
+        97,
+        98,
+        99
+      ],
+      "indexA": -1,
+      "right": null,
+      "indexB": -1,
+      "length": -1,
+      "mode": 5,
+      "sameReference": false,
+      "copyRight": false,
+      "result": 1,
+      "sign": 1,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/null-left-overflow/4",
+      "group": "ordinal",
+      "left": null,
+      "indexA": 2147483647,
+      "right": [
+        97,
+        98,
+        99
+      ],
+      "indexB": 2147483647,
+      "length": 2147483647,
+      "mode": 4,
+      "sameReference": false,
+      "copyRight": false,
+      "result": -1,
+      "sign": -1,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/null-left-overflow/5",
+      "group": "ordinal",
+      "left": null,
+      "indexA": 2147483647,
+      "right": [
+        97,
+        98,
+        99
+      ],
+      "indexB": 2147483647,
+      "length": 2147483647,
+      "mode": 5,
+      "sameReference": false,
+      "copyRight": false,
+      "result": -1,
+      "sign": -1,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/null-right-overflow/4",
+      "group": "ordinal",
+      "left": [
+        97,
+        98,
+        99
+      ],
+      "indexA": 2147483647,
+      "right": null,
+      "indexB": 2147483647,
+      "length": 2147483647,
+      "mode": 4,
+      "sameReference": false,
+      "copyRight": false,
+      "result": 1,
+      "sign": 1,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/null-right-overflow/5",
+      "group": "ordinal",
+      "left": [
+        97,
+        98,
+        99
+      ],
+      "indexA": 2147483647,
+      "right": null,
+      "indexB": 2147483647,
+      "length": 2147483647,
+      "mode": 5,
+      "sameReference": false,
+      "copyRight": false,
+      "result": 1,
+      "sign": 1,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/null-left-empty/4",
+      "group": "ordinal",
+      "left": null,
+      "indexA": 0,
+      "right": [],
+      "indexB": 0,
+      "length": 0,
+      "mode": 4,
+      "sameReference": false,
+      "copyRight": false,
+      "result": -1,
+      "sign": -1,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/null-left-empty/5",
+      "group": "ordinal",
+      "left": null,
+      "indexA": 0,
+      "right": [],
+      "indexB": 0,
+      "length": 0,
+      "mode": 5,
+      "sameReference": false,
+      "copyRight": false,
+      "result": -1,
+      "sign": -1,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/null-right-empty/4",
+      "group": "ordinal",
+      "left": [],
+      "indexA": 0,
+      "right": null,
+      "indexB": 0,
+      "length": 0,
+      "mode": 4,
+      "sameReference": false,
+      "copyRight": false,
+      "result": 1,
+      "sign": 1,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/null-right-empty/5",
+      "group": "ordinal",
+      "left": [],
+      "indexA": 0,
+      "right": null,
+      "indexB": 0,
+      "length": 0,
+      "mode": 5,
+      "sameReference": false,
+      "copyRight": false,
+      "result": 1,
+      "sign": 1,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/negative-length/4",
+      "group": "ordinal",
+      "left": [
+        97,
+        98,
+        99
+      ],
+      "indexA": 0,
+      "right": [
+        97,
+        98,
+        99
+      ],
+      "indexB": 0,
+      "length": -1,
+      "mode": 4,
+      "sameReference": true,
+      "copyRight": false,
+      "result": null,
+      "sign": null,
+      "fault": "ArgumentOutOfRangeException",
+      "parameter": "length"
+    },
+    {
+      "id": "ordinal/negative-length/5",
+      "group": "ordinal",
+      "left": [
+        97,
+        98,
+        99
+      ],
+      "indexA": 0,
+      "right": [
+        97,
+        98,
+        99
+      ],
+      "indexB": 0,
+      "length": -1,
+      "mode": 5,
+      "sameReference": true,
+      "copyRight": false,
+      "result": null,
+      "sign": null,
+      "fault": "ArgumentOutOfRangeException",
+      "parameter": "length"
+    },
+    {
+      "id": "ordinal/minimum-length/4",
+      "group": "ordinal",
+      "left": [
+        97,
+        98,
+        99
+      ],
+      "indexA": 0,
+      "right": [
+        97,
+        98,
+        99
+      ],
+      "indexB": 0,
+      "length": -2147483648,
+      "mode": 4,
+      "sameReference": true,
+      "copyRight": false,
+      "result": null,
+      "sign": null,
+      "fault": "ArgumentOutOfRangeException",
+      "parameter": "length"
+    },
+    {
+      "id": "ordinal/minimum-length/5",
+      "group": "ordinal",
+      "left": [
+        97,
+        98,
+        99
+      ],
+      "indexA": 0,
+      "right": [
+        97,
+        98,
+        99
+      ],
+      "indexB": 0,
+      "length": -2147483648,
+      "mode": 5,
+      "sameReference": true,
+      "copyRight": false,
+      "result": null,
+      "sign": null,
+      "fault": "ArgumentOutOfRangeException",
+      "parameter": "length"
+    },
+    {
+      "id": "ordinal/negative-first-index/4",
+      "group": "ordinal",
+      "left": [
+        97,
+        98,
+        99
+      ],
+      "indexA": -1,
+      "right": [
+        97,
+        98,
+        99
+      ],
+      "indexB": 0,
+      "length": 1,
+      "mode": 4,
+      "sameReference": true,
+      "copyRight": false,
+      "result": null,
+      "sign": null,
+      "fault": "ArgumentOutOfRangeException",
+      "parameter": "indexA"
+    },
+    {
+      "id": "ordinal/negative-first-index/5",
+      "group": "ordinal",
+      "left": [
+        97,
+        98,
+        99
+      ],
+      "indexA": -1,
+      "right": [
+        97,
+        98,
+        99
+      ],
+      "indexB": 0,
+      "length": 1,
+      "mode": 5,
+      "sameReference": true,
+      "copyRight": false,
+      "result": null,
+      "sign": null,
+      "fault": "ArgumentOutOfRangeException",
+      "parameter": "indexA"
+    },
+    {
+      "id": "ordinal/negative-second-index/4",
+      "group": "ordinal",
+      "left": [
+        97,
+        98,
+        99
+      ],
+      "indexA": 0,
+      "right": [
+        97,
+        98,
+        99
+      ],
+      "indexB": -1,
+      "length": 1,
+      "mode": 4,
+      "sameReference": true,
+      "copyRight": false,
+      "result": null,
+      "sign": null,
+      "fault": "ArgumentOutOfRangeException",
+      "parameter": "indexB"
+    },
+    {
+      "id": "ordinal/negative-second-index/5",
+      "group": "ordinal",
+      "left": [
+        97,
+        98,
+        99
+      ],
+      "indexA": 0,
+      "right": [
+        97,
+        98,
+        99
+      ],
+      "indexB": -1,
+      "length": 1,
+      "mode": 5,
+      "sameReference": true,
+      "copyRight": false,
+      "result": null,
+      "sign": null,
+      "fault": "ArgumentOutOfRangeException",
+      "parameter": "indexB"
+    },
+    {
+      "id": "ordinal/minimum-first-index/4",
+      "group": "ordinal",
+      "left": [
+        97,
+        98,
+        99
+      ],
+      "indexA": -2147483648,
+      "right": [
+        97,
+        98,
+        99
+      ],
+      "indexB": 0,
+      "length": 1,
+      "mode": 4,
+      "sameReference": true,
+      "copyRight": false,
+      "result": null,
+      "sign": null,
+      "fault": "ArgumentOutOfRangeException",
+      "parameter": "indexA"
+    },
+    {
+      "id": "ordinal/minimum-first-index/5",
+      "group": "ordinal",
+      "left": [
+        97,
+        98,
+        99
+      ],
+      "indexA": -2147483648,
+      "right": [
+        97,
+        98,
+        99
+      ],
+      "indexB": 0,
+      "length": 1,
+      "mode": 5,
+      "sameReference": true,
+      "copyRight": false,
+      "result": null,
+      "sign": null,
+      "fault": "ArgumentOutOfRangeException",
+      "parameter": "indexA"
+    },
+    {
+      "id": "ordinal/minimum-second-index/4",
+      "group": "ordinal",
+      "left": [
+        97,
+        98,
+        99
+      ],
+      "indexA": 0,
+      "right": [
+        97,
+        98,
+        99
+      ],
+      "indexB": -2147483648,
+      "length": 1,
+      "mode": 4,
+      "sameReference": true,
+      "copyRight": false,
+      "result": null,
+      "sign": null,
+      "fault": "ArgumentOutOfRangeException",
+      "parameter": "indexB"
+    },
+    {
+      "id": "ordinal/minimum-second-index/5",
+      "group": "ordinal",
+      "left": [
+        97,
+        98,
+        99
+      ],
+      "indexA": 0,
+      "right": [
+        97,
+        98,
+        99
+      ],
+      "indexB": -2147483648,
+      "length": 1,
+      "mode": 5,
+      "sameReference": true,
+      "copyRight": false,
+      "result": null,
+      "sign": null,
+      "fault": "ArgumentOutOfRangeException",
+      "parameter": "indexB"
+    },
+    {
+      "id": "ordinal/first-past-end/4",
+      "group": "ordinal",
+      "left": [
+        97,
+        98,
+        99
+      ],
+      "indexA": 4,
+      "right": [
+        97,
+        98,
+        99
+      ],
+      "indexB": 0,
+      "length": 1,
+      "mode": 4,
+      "sameReference": true,
+      "copyRight": false,
+      "result": null,
+      "sign": null,
+      "fault": "ArgumentOutOfRangeException",
+      "parameter": "indexA"
+    },
+    {
+      "id": "ordinal/first-past-end/5",
+      "group": "ordinal",
+      "left": [
+        97,
+        98,
+        99
+      ],
+      "indexA": 4,
+      "right": [
+        97,
+        98,
+        99
+      ],
+      "indexB": 0,
+      "length": 1,
+      "mode": 5,
+      "sameReference": true,
+      "copyRight": false,
+      "result": null,
+      "sign": null,
+      "fault": "ArgumentOutOfRangeException",
+      "parameter": "indexA"
+    },
+    {
+      "id": "ordinal/second-past-end/4",
+      "group": "ordinal",
+      "left": [
+        97,
+        98,
+        99
+      ],
+      "indexA": 0,
+      "right": [
+        97,
+        98,
+        99
+      ],
+      "indexB": 4,
+      "length": 1,
+      "mode": 4,
+      "sameReference": true,
+      "copyRight": false,
+      "result": null,
+      "sign": null,
+      "fault": "ArgumentOutOfRangeException",
+      "parameter": "indexB"
+    },
+    {
+      "id": "ordinal/second-past-end/5",
+      "group": "ordinal",
+      "left": [
+        97,
+        98,
+        99
+      ],
+      "indexA": 0,
+      "right": [
+        97,
+        98,
+        99
+      ],
+      "indexB": 4,
+      "length": 1,
+      "mode": 5,
+      "sameReference": true,
+      "copyRight": false,
+      "result": null,
+      "sign": null,
+      "fault": "ArgumentOutOfRangeException",
+      "parameter": "indexB"
+    },
+    {
+      "id": "ordinal/first-maximum-index/4",
+      "group": "ordinal",
+      "left": [
+        97,
+        98,
+        99
+      ],
+      "indexA": 2147483647,
+      "right": [
+        97,
+        98,
+        99
+      ],
+      "indexB": 0,
+      "length": 2147483647,
+      "mode": 4,
+      "sameReference": true,
+      "copyRight": false,
+      "result": null,
+      "sign": null,
+      "fault": "ArgumentOutOfRangeException",
+      "parameter": "indexA"
+    },
+    {
+      "id": "ordinal/first-maximum-index/5",
+      "group": "ordinal",
+      "left": [
+        97,
+        98,
+        99
+      ],
+      "indexA": 2147483647,
+      "right": [
+        97,
+        98,
+        99
+      ],
+      "indexB": 0,
+      "length": 2147483647,
+      "mode": 5,
+      "sameReference": true,
+      "copyRight": false,
+      "result": null,
+      "sign": null,
+      "fault": "ArgumentOutOfRangeException",
+      "parameter": "indexA"
+    },
+    {
+      "id": "ordinal/second-maximum-index/4",
+      "group": "ordinal",
+      "left": [
+        97,
+        98,
+        99
+      ],
+      "indexA": 0,
+      "right": [
+        97,
+        98,
+        99
+      ],
+      "indexB": 2147483647,
+      "length": 2147483647,
+      "mode": 4,
+      "sameReference": true,
+      "copyRight": false,
+      "result": null,
+      "sign": null,
+      "fault": "ArgumentOutOfRangeException",
+      "parameter": "indexB"
+    },
+    {
+      "id": "ordinal/second-maximum-index/5",
+      "group": "ordinal",
+      "left": [
+        97,
+        98,
+        99
+      ],
+      "indexA": 0,
+      "right": [
+        97,
+        98,
+        99
+      ],
+      "indexB": 2147483647,
+      "length": 2147483647,
+      "mode": 5,
+      "sameReference": true,
+      "copyRight": false,
+      "result": null,
+      "sign": null,
+      "fault": "ArgumentOutOfRangeException",
+      "parameter": "indexB"
+    },
+    {
+      "id": "ordinal/zero-first-past-end/4",
+      "group": "ordinal",
+      "left": [
+        97,
+        98,
+        99
+      ],
+      "indexA": 4,
+      "right": [
+        97,
+        98,
+        99
+      ],
+      "indexB": 0,
+      "length": 0,
+      "mode": 4,
+      "sameReference": true,
+      "copyRight": false,
+      "result": null,
+      "sign": null,
+      "fault": "ArgumentOutOfRangeException",
+      "parameter": "indexA"
+    },
+    {
+      "id": "ordinal/zero-first-past-end/5",
+      "group": "ordinal",
+      "left": [
+        97,
+        98,
+        99
+      ],
+      "indexA": 4,
+      "right": [
+        97,
+        98,
+        99
+      ],
+      "indexB": 0,
+      "length": 0,
+      "mode": 5,
+      "sameReference": true,
+      "copyRight": false,
+      "result": null,
+      "sign": null,
+      "fault": "ArgumentOutOfRangeException",
+      "parameter": "indexA"
+    },
+    {
+      "id": "ordinal/zero-second-past-end/4",
+      "group": "ordinal",
+      "left": [
+        97,
+        98,
+        99
+      ],
+      "indexA": 0,
+      "right": [
+        97,
+        98,
+        99
+      ],
+      "indexB": 4,
+      "length": 0,
+      "mode": 4,
+      "sameReference": true,
+      "copyRight": false,
+      "result": null,
+      "sign": null,
+      "fault": "ArgumentOutOfRangeException",
+      "parameter": "indexB"
+    },
+    {
+      "id": "ordinal/zero-second-past-end/5",
+      "group": "ordinal",
+      "left": [
+        97,
+        98,
+        99
+      ],
+      "indexA": 0,
+      "right": [
+        97,
+        98,
+        99
+      ],
+      "indexB": 4,
+      "length": 0,
+      "mode": 5,
+      "sameReference": true,
+      "copyRight": false,
+      "result": null,
+      "sign": null,
+      "fault": "ArgumentOutOfRangeException",
+      "parameter": "indexB"
+    },
+    {
+      "id": "ordinal/zero-negative-first/4",
+      "group": "ordinal",
+      "left": [
+        97,
+        98,
+        99
+      ],
+      "indexA": -1,
+      "right": [
+        97,
+        98,
+        99
+      ],
+      "indexB": 0,
+      "length": 0,
+      "mode": 4,
+      "sameReference": true,
+      "copyRight": false,
+      "result": null,
+      "sign": null,
+      "fault": "ArgumentOutOfRangeException",
+      "parameter": "indexA"
+    },
+    {
+      "id": "ordinal/zero-negative-first/5",
+      "group": "ordinal",
+      "left": [
+        97,
+        98,
+        99
+      ],
+      "indexA": -1,
+      "right": [
+        97,
+        98,
+        99
+      ],
+      "indexB": 0,
+      "length": 0,
+      "mode": 5,
+      "sameReference": true,
+      "copyRight": false,
+      "result": null,
+      "sign": null,
+      "fault": "ArgumentOutOfRangeException",
+      "parameter": "indexA"
+    },
+    {
+      "id": "ordinal/zero-negative-second/4",
+      "group": "ordinal",
+      "left": [
+        97,
+        98,
+        99
+      ],
+      "indexA": 0,
+      "right": [
+        97,
+        98,
+        99
+      ],
+      "indexB": -1,
+      "length": 0,
+      "mode": 4,
+      "sameReference": true,
+      "copyRight": false,
+      "result": null,
+      "sign": null,
+      "fault": "ArgumentOutOfRangeException",
+      "parameter": "indexB"
+    },
+    {
+      "id": "ordinal/zero-negative-second/5",
+      "group": "ordinal",
+      "left": [
+        97,
+        98,
+        99
+      ],
+      "indexA": 0,
+      "right": [
+        97,
+        98,
+        99
+      ],
+      "indexB": -1,
+      "length": 0,
+      "mode": 5,
+      "sameReference": true,
+      "copyRight": false,
+      "result": null,
+      "sign": null,
+      "fault": "ArgumentOutOfRangeException",
+      "parameter": "indexB"
+    },
+    {
+      "id": "ordinal/equal-invalid/4",
+      "group": "ordinal",
+      "left": [
+        97,
+        98,
+        99
+      ],
+      "indexA": 4,
+      "right": [
+        97,
+        98,
+        99
+      ],
+      "indexB": 4,
+      "length": 1,
+      "mode": 4,
+      "sameReference": true,
+      "copyRight": false,
+      "result": null,
+      "sign": null,
+      "fault": "ArgumentOutOfRangeException",
+      "parameter": "indexA"
+    },
+    {
+      "id": "ordinal/equal-invalid/5",
+      "group": "ordinal",
+      "left": [
+        97,
+        98,
+        99
+      ],
+      "indexA": 4,
+      "right": [
+        97,
+        98,
+        99
+      ],
+      "indexB": 4,
+      "length": 1,
+      "mode": 5,
+      "sameReference": true,
+      "copyRight": false,
+      "result": null,
+      "sign": null,
+      "fault": "ArgumentOutOfRangeException",
+      "parameter": "indexA"
+    },
+    {
+      "id": "ordinal/equal-negative/4",
+      "group": "ordinal",
+      "left": [
+        97,
+        98,
+        99
+      ],
+      "indexA": -1,
+      "right": [
+        97,
+        98,
+        99
+      ],
+      "indexB": -1,
+      "length": 1,
+      "mode": 4,
+      "sameReference": true,
+      "copyRight": false,
+      "result": null,
+      "sign": null,
+      "fault": "ArgumentOutOfRangeException",
+      "parameter": "indexA"
+    },
+    {
+      "id": "ordinal/equal-negative/5",
+      "group": "ordinal",
+      "left": [
+        97,
+        98,
+        99
+      ],
+      "indexA": -1,
+      "right": [
+        97,
+        98,
+        99
+      ],
+      "indexB": -1,
+      "length": 1,
+      "mode": 5,
+      "sameReference": true,
+      "copyRight": false,
+      "result": null,
+      "sign": null,
+      "fault": "ArgumentOutOfRangeException",
+      "parameter": "indexA"
+    },
+    {
+      "id": "ordinal/length-before-indices/4",
+      "group": "ordinal",
+      "left": [
+        97,
+        98,
+        99
+      ],
+      "indexA": -1,
+      "right": [
+        97,
+        98,
+        99
+      ],
+      "indexB": -1,
+      "length": -1,
+      "mode": 4,
+      "sameReference": true,
+      "copyRight": false,
+      "result": null,
+      "sign": null,
+      "fault": "ArgumentOutOfRangeException",
+      "parameter": "length"
+    },
+    {
+      "id": "ordinal/length-before-indices/5",
+      "group": "ordinal",
+      "left": [
+        97,
+        98,
+        99
+      ],
+      "indexA": -1,
+      "right": [
+        97,
+        98,
+        99
+      ],
+      "indexB": -1,
+      "length": -1,
+      "mode": 5,
+      "sameReference": true,
+      "copyRight": false,
+      "result": null,
+      "sign": null,
+      "fault": "ArgumentOutOfRangeException",
+      "parameter": "length"
+    },
+    {
+      "id": "ordinal/negative-second-before-first-bounds/4",
+      "group": "ordinal",
+      "left": [
+        97,
+        98,
+        99
+      ],
+      "indexA": 4,
+      "right": [
+        97,
+        98,
+        99
+      ],
+      "indexB": -1,
+      "length": 1,
+      "mode": 4,
+      "sameReference": true,
+      "copyRight": false,
+      "result": null,
+      "sign": null,
+      "fault": "ArgumentOutOfRangeException",
+      "parameter": "indexB"
+    },
+    {
+      "id": "ordinal/negative-second-before-first-bounds/5",
+      "group": "ordinal",
+      "left": [
+        97,
+        98,
+        99
+      ],
+      "indexA": 4,
+      "right": [
+        97,
+        98,
+        99
+      ],
+      "indexB": -1,
+      "length": 1,
+      "mode": 5,
+      "sameReference": true,
+      "copyRight": false,
+      "result": null,
+      "sign": null,
+      "fault": "ArgumentOutOfRangeException",
+      "parameter": "indexB"
+    },
+    {
+      "id": "ordinal/first-negative-before-second-bounds/4",
+      "group": "ordinal",
+      "left": [
+        97,
+        98,
+        99
+      ],
+      "indexA": -1,
+      "right": [
+        97,
+        98,
+        99
+      ],
+      "indexB": 4,
+      "length": 1,
+      "mode": 4,
+      "sameReference": true,
+      "copyRight": false,
+      "result": null,
+      "sign": null,
+      "fault": "ArgumentOutOfRangeException",
+      "parameter": "indexA"
+    },
+    {
+      "id": "ordinal/first-negative-before-second-bounds/5",
+      "group": "ordinal",
+      "left": [
+        97,
+        98,
+        99
+      ],
+      "indexA": -1,
+      "right": [
+        97,
+        98,
+        99
+      ],
+      "indexB": 4,
+      "length": 1,
+      "mode": 5,
+      "sameReference": true,
+      "copyRight": false,
+      "result": null,
+      "sign": null,
+      "fault": "ArgumentOutOfRangeException",
+      "parameter": "indexA"
+    },
+    {
+      "id": "ordinal/empty-past-end/4",
+      "group": "ordinal",
+      "left": [],
+      "indexA": 1,
+      "right": [],
+      "indexB": 0,
+      "length": 0,
+      "mode": 4,
+      "sameReference": true,
+      "copyRight": false,
+      "result": null,
+      "sign": null,
+      "fault": "ArgumentOutOfRangeException",
+      "parameter": "indexA"
+    },
+    {
+      "id": "ordinal/empty-past-end/5",
+      "group": "ordinal",
+      "left": [],
+      "indexA": 1,
+      "right": [],
+      "indexB": 0,
+      "length": 0,
+      "mode": 5,
+      "sameReference": true,
+      "copyRight": false,
+      "result": null,
+      "sign": null,
+      "fault": "ArgumentOutOfRangeException",
+      "parameter": "indexA"
+    },
+    {
+      "id": "ordinal/latin-case-offset/4",
+      "group": "ordinal",
+      "left": [
+        120,
+        233,
+        99,
+        108,
+        97,
+        105,
+        114
+      ],
+      "indexA": 1,
+      "right": [
+        121,
+        121,
+        201,
+        67,
+        76,
+        65,
+        73,
+        82
+      ],
+      "indexB": 2,
+      "length": 6,
+      "mode": 4,
+      "sameReference": false,
+      "copyRight": false,
+      "result": 32,
+      "sign": 1,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/latin-case-offset/5",
+      "group": "ordinal",
+      "left": [
+        120,
+        233,
+        99,
+        108,
+        97,
+        105,
+        114
+      ],
+      "indexA": 1,
+      "right": [
+        121,
+        121,
+        201,
+        67,
+        76,
+        65,
+        73,
+        82
+      ],
+      "indexB": 2,
+      "length": 6,
+      "mode": 5,
+      "sameReference": false,
+      "copyRight": false,
+      "result": 0,
+      "sign": 0,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/sigma-offset/4",
+      "group": "ordinal",
+      "left": [
+        120,
+        962,
+        963
+      ],
+      "indexA": 1,
+      "right": [
+        121,
+        931,
+        931
+      ],
+      "indexB": 1,
+      "length": 2,
+      "mode": 4,
+      "sameReference": false,
+      "copyRight": false,
+      "result": 31,
+      "sign": 1,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/sigma-offset/5",
+      "group": "ordinal",
+      "left": [
+        120,
+        962,
+        963
+      ],
+      "indexA": 1,
+      "right": [
+        121,
+        931,
+        931
+      ],
+      "indexB": 1,
+      "length": 2,
+      "mode": 5,
+      "sameReference": false,
+      "copyRight": false,
+      "result": 0,
+      "sign": 0,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/long-s/4",
+      "group": "ordinal",
+      "left": [
+        120,
+        383
+      ],
+      "indexA": 1,
+      "right": [
+        121,
+        83
+      ],
+      "indexB": 1,
+      "length": 1,
+      "mode": 4,
+      "sameReference": false,
+      "copyRight": false,
+      "result": 300,
+      "sign": 1,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/long-s/5",
+      "group": "ordinal",
+      "left": [
+        120,
+        383
+      ],
+      "indexA": 1,
+      "right": [
+        121,
+        83
+      ],
+      "indexB": 1,
+      "length": 1,
+      "mode": 5,
+      "sameReference": false,
+      "copyRight": false,
+      "result": 300,
+      "sign": 1,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/dotless-i/4",
+      "group": "ordinal",
+      "left": [
+        120,
+        305
+      ],
+      "indexA": 1,
+      "right": [
+        121,
+        73
+      ],
+      "indexB": 1,
+      "length": 1,
+      "mode": 4,
+      "sameReference": false,
+      "copyRight": false,
+      "result": 232,
+      "sign": 1,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/dotless-i/5",
+      "group": "ordinal",
+      "left": [
+        120,
+        305
+      ],
+      "indexA": 1,
+      "right": [
+        121,
+        73
+      ],
+      "indexB": 1,
+      "length": 1,
+      "mode": 5,
+      "sameReference": false,
+      "copyRight": false,
+      "result": 232,
+      "sign": 1,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/dotted-i/4",
+      "group": "ordinal",
+      "left": [
+        120,
+        304
+      ],
+      "indexA": 1,
+      "right": [
+        121,
+        105
+      ],
+      "indexB": 1,
+      "length": 1,
+      "mode": 4,
+      "sameReference": false,
+      "copyRight": false,
+      "result": 199,
+      "sign": 1,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/dotted-i/5",
+      "group": "ordinal",
+      "left": [
+        120,
+        304
+      ],
+      "indexA": 1,
+      "right": [
+        121,
+        105
+      ],
+      "indexB": 1,
+      "length": 1,
+      "mode": 5,
+      "sameReference": false,
+      "copyRight": false,
+      "result": 231,
+      "sign": 1,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/sharp-s-expansion/4",
+      "group": "ordinal",
+      "left": [
+        120,
+        223
+      ],
+      "indexA": 1,
+      "right": [
+        121,
+        83,
+        83
+      ],
+      "indexB": 1,
+      "length": 2,
+      "mode": 4,
+      "sameReference": false,
+      "copyRight": false,
+      "result": 140,
+      "sign": 1,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/sharp-s-expansion/5",
+      "group": "ordinal",
+      "left": [
+        120,
+        223
+      ],
+      "indexA": 1,
+      "right": [
+        121,
+        83,
+        83
+      ],
+      "indexB": 1,
+      "length": 2,
+      "mode": 5,
+      "sameReference": false,
+      "copyRight": false,
+      "result": 140,
+      "sign": 1,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/sharp-s-capital/4",
+      "group": "ordinal",
+      "left": [
+        120,
+        223
+      ],
+      "indexA": 1,
+      "right": [
+        121,
+        7838
+      ],
+      "indexB": 1,
+      "length": 1,
+      "mode": 4,
+      "sameReference": false,
+      "copyRight": false,
+      "result": -7615,
+      "sign": -1,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/sharp-s-capital/5",
+      "group": "ordinal",
+      "left": [
+        120,
+        223
+      ],
+      "indexA": 1,
+      "right": [
+        121,
+        7838
+      ],
+      "indexB": 1,
+      "length": 1,
+      "mode": 5,
+      "sameReference": false,
+      "copyRight": false,
+      "result": -7615,
+      "sign": -1,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/kelvin/4",
+      "group": "ordinal",
+      "left": [
+        120,
+        8490
+      ],
+      "indexA": 1,
+      "right": [
+        121,
+        107
+      ],
+      "indexB": 1,
+      "length": 1,
+      "mode": 4,
+      "sameReference": false,
+      "copyRight": false,
+      "result": 8383,
+      "sign": 1,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/kelvin/5",
+      "group": "ordinal",
+      "left": [
+        120,
+        8490
+      ],
+      "indexA": 1,
+      "right": [
+        121,
+        107
+      ],
+      "indexB": 1,
+      "length": 1,
+      "mode": 5,
+      "sameReference": false,
+      "copyRight": false,
+      "result": 8415,
+      "sign": 1,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/deseret/4",
+      "group": "ordinal",
+      "left": [
+        120,
+        55297,
+        56360,
+        122
+      ],
+      "indexA": 1,
+      "right": [
+        121,
+        121,
+        55297,
+        56320,
+        90
+      ],
+      "indexB": 2,
+      "length": 3,
+      "mode": 4,
+      "sameReference": false,
+      "copyRight": false,
+      "result": 40,
+      "sign": 1,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/deseret/5",
+      "group": "ordinal",
+      "left": [
+        120,
+        55297,
+        56360,
+        122
+      ],
+      "indexA": 1,
+      "right": [
+        121,
+        121,
+        55297,
+        56320,
+        90
+      ],
+      "indexB": 2,
+      "length": 3,
+      "mode": 5,
+      "sameReference": false,
+      "copyRight": false,
+      "result": 0,
+      "sign": 0,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/osage/4",
+      "group": "ordinal",
+      "left": [
+        120,
+        55297,
+        56536
+      ],
+      "indexA": 1,
+      "right": [
+        121,
+        55297,
+        56496
+      ],
+      "indexB": 1,
+      "length": 2,
+      "mode": 4,
+      "sameReference": false,
+      "copyRight": false,
+      "result": 40,
+      "sign": 1,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/osage/5",
+      "group": "ordinal",
+      "left": [
+        120,
+        55297,
+        56536
+      ],
+      "indexA": 1,
+      "right": [
+        121,
+        55297,
+        56496
+      ],
+      "indexB": 1,
+      "length": 2,
+      "mode": 5,
+      "sameReference": false,
+      "copyRight": false,
+      "result": 0,
+      "sign": 0,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/garay/4",
+      "group": "ordinal",
+      "left": [
+        120,
+        55323,
+        57019
+      ],
+      "indexA": 1,
+      "right": [
+        121,
+        55323,
+        56992
+      ],
+      "indexB": 1,
+      "length": 2,
+      "mode": 4,
+      "sameReference": false,
+      "copyRight": false,
+      "result": 27,
+      "sign": 1,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/garay/5",
+      "group": "ordinal",
+      "left": [
+        120,
+        55323,
+        57019
+      ],
+      "indexA": 1,
+      "right": [
+        121,
+        55323,
+        56992
+      ],
+      "indexB": 1,
+      "length": 2,
+      "mode": 5,
+      "sameReference": false,
+      "copyRight": false,
+      "result": 27,
+      "sign": 1,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/folded-clipped-left/4",
+      "group": "ordinal",
+      "left": [
+        120,
+        97,
+        98,
+        99
+      ],
+      "indexA": 1,
+      "right": [
+        121,
+        65,
+        66,
+        67,
+        68,
+        69,
+        70
+      ],
+      "indexB": 1,
+      "length": 2147483647,
+      "mode": 4,
+      "sameReference": false,
+      "copyRight": false,
+      "result": 32,
+      "sign": 1,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/folded-clipped-left/5",
+      "group": "ordinal",
+      "left": [
+        120,
+        97,
+        98,
+        99
+      ],
+      "indexA": 1,
+      "right": [
+        121,
+        65,
+        66,
+        67,
+        68,
+        69,
+        70
+      ],
+      "indexB": 1,
+      "length": 2147483647,
+      "mode": 5,
+      "sameReference": false,
+      "copyRight": false,
+      "result": -3,
+      "sign": -1,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/folded-clipped-right/4",
+      "group": "ordinal",
+      "left": [
+        120,
+        97,
+        98,
+        99,
+        100,
+        101,
+        102
+      ],
+      "indexA": 1,
+      "right": [
+        121,
+        65,
+        66,
+        67
+      ],
+      "indexB": 1,
+      "length": 2147483647,
+      "mode": 4,
+      "sameReference": false,
+      "copyRight": false,
+      "result": 32,
+      "sign": 1,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/folded-clipped-right/5",
+      "group": "ordinal",
+      "left": [
+        120,
+        97,
+        98,
+        99,
+        100,
+        101,
+        102
+      ],
+      "indexA": 1,
+      "right": [
+        121,
+        65,
+        66,
+        67
+      ],
+      "indexB": 1,
+      "length": 2147483647,
+      "mode": 5,
+      "sameReference": false,
+      "copyRight": false,
+      "result": 3,
+      "sign": 1,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/folded-clipped-both/4",
+      "group": "ordinal",
+      "left": [
+        120,
+        97,
+        98,
+        99
+      ],
+      "indexA": 1,
+      "right": [
+        121,
+        121,
+        65,
+        66,
+        67
+      ],
+      "indexB": 2,
+      "length": 2147483647,
+      "mode": 4,
+      "sameReference": false,
+      "copyRight": false,
+      "result": 32,
+      "sign": 1,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/folded-clipped-both/5",
+      "group": "ordinal",
+      "left": [
+        120,
+        97,
+        98,
+        99
+      ],
+      "indexA": 1,
+      "right": [
+        121,
+        121,
+        65,
+        66,
+        67
+      ],
+      "indexB": 2,
+      "length": 2147483647,
+      "mode": 5,
+      "sameReference": false,
+      "copyRight": false,
+      "result": 0,
+      "sign": 0,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/allocated-equal/4",
+      "group": "ordinal",
+      "left": [
+        97,
+        98,
+        99
+      ],
+      "indexA": 0,
+      "right": [
+        97,
+        98,
+        99
+      ],
+      "indexB": 0,
+      "length": 3,
+      "mode": 4,
+      "sameReference": false,
+      "copyRight": true,
+      "result": 0,
+      "sign": 0,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/allocated-equal/5",
+      "group": "ordinal",
+      "left": [
+        97,
+        98,
+        99
+      ],
+      "indexA": 0,
+      "right": [
+        97,
+        98,
+        99
+      ],
+      "indexB": 0,
+      "length": 3,
+      "mode": 5,
+      "sameReference": false,
+      "copyRight": true,
+      "result": 0,
+      "sign": 0,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/allocated-equal-invalid/4",
+      "group": "ordinal",
+      "left": [
+        97,
+        98,
+        99
+      ],
+      "indexA": 4,
+      "right": [
+        97,
+        98,
+        99
+      ],
+      "indexB": 4,
+      "length": 1,
+      "mode": 4,
+      "sameReference": false,
+      "copyRight": true,
+      "result": null,
+      "sign": null,
+      "fault": "ArgumentOutOfRangeException",
+      "parameter": "indexA"
+    },
+    {
+      "id": "ordinal/allocated-equal-invalid/5",
+      "group": "ordinal",
+      "left": [
+        97,
+        98,
+        99
+      ],
+      "indexA": 4,
+      "right": [
+        97,
+        98,
+        99
+      ],
+      "indexB": 4,
+      "length": 1,
+      "mode": 5,
+      "sameReference": false,
+      "copyRight": true,
+      "result": null,
+      "sign": null,
+      "fault": "ArgumentOutOfRangeException",
+      "parameter": "indexA"
+    },
+    {
+      "id": "ordinal/surrogate-cut-left/4",
+      "group": "ordinal",
+      "left": [
+        120,
+        55297,
+        56360
+      ],
+      "indexA": 1,
+      "right": [
+        121,
+        55297
+      ],
+      "indexB": 1,
+      "length": 1,
+      "mode": 4,
+      "sameReference": false,
+      "copyRight": false,
+      "result": 0,
+      "sign": 0,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/surrogate-cut-left/5",
+      "group": "ordinal",
+      "left": [
+        120,
+        55297,
+        56360
+      ],
+      "indexA": 1,
+      "right": [
+        121,
+        55297
+      ],
+      "indexB": 1,
+      "length": 1,
+      "mode": 5,
+      "sameReference": false,
+      "copyRight": false,
+      "result": 0,
+      "sign": 0,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/surrogate-cut-right/4",
+      "group": "ordinal",
+      "left": [
+        120,
+        55297
+      ],
+      "indexA": 1,
+      "right": [
+        121,
+        55297,
+        56320
+      ],
+      "indexB": 1,
+      "length": 1,
+      "mode": 4,
+      "sameReference": false,
+      "copyRight": false,
+      "result": 0,
+      "sign": 0,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/surrogate-cut-right/5",
+      "group": "ordinal",
+      "left": [
+        120,
+        55297
+      ],
+      "indexA": 1,
+      "right": [
+        121,
+        55297,
+        56320
+      ],
+      "indexB": 1,
+      "length": 1,
+      "mode": 5,
+      "sameReference": false,
+      "copyRight": false,
+      "result": 0,
+      "sign": 0,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/surrogate-cut-both/4",
+      "group": "ordinal",
+      "left": [
+        120,
+        55297,
+        56360
+      ],
+      "indexA": 1,
+      "right": [
+        121,
+        55297,
+        56320
+      ],
+      "indexB": 1,
+      "length": 1,
+      "mode": 4,
+      "sameReference": false,
+      "copyRight": false,
+      "result": 0,
+      "sign": 0,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/surrogate-cut-both/5",
+      "group": "ordinal",
+      "left": [
+        120,
+        55297,
+        56360
+      ],
+      "indexA": 1,
+      "right": [
+        121,
+        55297,
+        56320
+      ],
+      "indexB": 1,
+      "length": 1,
+      "mode": 5,
+      "sameReference": false,
+      "copyRight": false,
+      "result": 0,
+      "sign": 0,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/surrogate-start-low-left/4",
+      "group": "ordinal",
+      "left": [
+        120,
+        55297,
+        56360,
+        97
+      ],
+      "indexA": 2,
+      "right": [
+        121,
+        56360,
+        65
+      ],
+      "indexB": 1,
+      "length": 2,
+      "mode": 4,
+      "sameReference": false,
+      "copyRight": false,
+      "result": 32,
+      "sign": 1,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/surrogate-start-low-left/5",
+      "group": "ordinal",
+      "left": [
+        120,
+        55297,
+        56360,
+        97
+      ],
+      "indexA": 2,
+      "right": [
+        121,
+        56360,
+        65
+      ],
+      "indexB": 1,
+      "length": 2,
+      "mode": 5,
+      "sameReference": false,
+      "copyRight": false,
+      "result": 0,
+      "sign": 0,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/surrogate-start-low-right/4",
+      "group": "ordinal",
+      "left": [
+        120,
+        56360,
+        97
+      ],
+      "indexA": 1,
+      "right": [
+        121,
+        55297,
+        56360,
+        65
+      ],
+      "indexB": 2,
+      "length": 2,
+      "mode": 4,
+      "sameReference": false,
+      "copyRight": false,
+      "result": 32,
+      "sign": 1,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/surrogate-start-low-right/5",
+      "group": "ordinal",
+      "left": [
+        120,
+        56360,
+        97
+      ],
+      "indexA": 1,
+      "right": [
+        121,
+        55297,
+        56360,
+        65
+      ],
+      "indexB": 2,
+      "length": 2,
+      "mode": 5,
+      "sameReference": false,
+      "copyRight": false,
+      "result": 0,
+      "sign": 0,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/unequal-extent-pair-left/4",
+      "group": "ordinal",
+      "left": [
+        120,
+        55296,
+        56320
+      ],
+      "indexA": 1,
+      "right": [
+        121,
+        55296
+      ],
+      "indexB": 1,
+      "length": 2,
+      "mode": 4,
+      "sameReference": false,
+      "copyRight": false,
+      "result": 1,
+      "sign": 1,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/unequal-extent-pair-left/5",
+      "group": "ordinal",
+      "left": [
+        120,
+        55296,
+        56320
+      ],
+      "indexA": 1,
+      "right": [
+        121,
+        55296
+      ],
+      "indexB": 1,
+      "length": 2,
+      "mode": 5,
+      "sameReference": false,
+      "copyRight": false,
+      "result": 1,
+      "sign": 1,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/unequal-extent-pair-right/4",
+      "group": "ordinal",
+      "left": [
+        120,
+        55296
+      ],
+      "indexA": 1,
+      "right": [
+        121,
+        55296,
+        56320
+      ],
+      "indexB": 1,
+      "length": 2,
+      "mode": 4,
+      "sameReference": false,
+      "copyRight": false,
+      "result": -1,
+      "sign": -1,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/unequal-extent-pair-right/5",
+      "group": "ordinal",
+      "left": [
+        120,
+        55296
+      ],
+      "indexA": 1,
+      "right": [
+        121,
+        55296,
+        56320
+      ],
+      "indexB": 1,
+      "length": 2,
+      "mode": 5,
+      "sameReference": false,
+      "copyRight": false,
+      "result": -1,
+      "sign": -1,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/scalar-vs-bmp/4",
+      "group": "ordinal",
+      "left": [
+        120,
+        55296,
+        56320
+      ],
+      "indexA": 1,
+      "right": [
+        121,
+        57344
+      ],
+      "indexB": 1,
+      "length": 2,
+      "mode": 4,
+      "sameReference": false,
+      "copyRight": false,
+      "result": -2048,
+      "sign": -1,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/scalar-vs-bmp/5",
+      "group": "ordinal",
+      "left": [
+        120,
+        55296,
+        56320
+      ],
+      "indexA": 1,
+      "right": [
+        121,
+        57344
+      ],
+      "indexB": 1,
+      "length": 2,
+      "mode": 5,
+      "sameReference": false,
+      "copyRight": false,
+      "result": 1,
+      "sign": 1,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/bmp-vs-scalar/4",
+      "group": "ordinal",
+      "left": [
+        120,
+        57344
+      ],
+      "indexA": 1,
+      "right": [
+        121,
+        55296,
+        56320
+      ],
+      "indexB": 1,
+      "length": 2,
+      "mode": 4,
+      "sameReference": false,
+      "copyRight": false,
+      "result": 2048,
+      "sign": 1,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/bmp-vs-scalar/5",
+      "group": "ordinal",
+      "left": [
+        120,
+        57344
+      ],
+      "indexA": 1,
+      "right": [
+        121,
+        55296,
+        56320
+      ],
+      "indexB": 1,
+      "length": 2,
+      "mode": 5,
+      "sameReference": false,
+      "copyRight": false,
+      "result": -1,
+      "sign": -1,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/bounded-nul-case/4",
+      "group": "ordinal",
+      "left": [
+        120,
+        97,
+        0,
+        66,
+        122
+      ],
+      "indexA": 1,
+      "right": [
+        121,
+        65,
+        0,
+        98,
+        113
+      ],
+      "indexB": 1,
+      "length": 3,
+      "mode": 4,
+      "sameReference": false,
+      "copyRight": false,
+      "result": 32,
+      "sign": 1,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/bounded-nul-case/5",
+      "group": "ordinal",
+      "left": [
+        120,
+        97,
+        0,
+        66,
+        122
+      ],
+      "indexA": 1,
+      "right": [
+        121,
+        65,
+        0,
+        98,
+        113
+      ],
+      "indexB": 1,
+      "length": 3,
+      "mode": 5,
+      "sameReference": false,
+      "copyRight": false,
+      "result": 0,
+      "sign": 0,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/prefix-cut-7/4",
+      "group": "ordinal",
+      "left": [
+        120,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        55297,
+        56360
+      ],
+      "indexA": 1,
+      "right": [
+        121,
+        121,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        55297,
+        56320
+      ],
+      "indexB": 2,
+      "length": 8,
+      "mode": 4,
+      "sameReference": false,
+      "copyRight": false,
+      "result": 32,
+      "sign": 1,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/prefix-cut-7/5",
+      "group": "ordinal",
+      "left": [
+        120,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        55297,
+        56360
+      ],
+      "indexA": 1,
+      "right": [
+        121,
+        121,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        55297,
+        56320
+      ],
+      "indexB": 2,
+      "length": 8,
+      "mode": 5,
+      "sameReference": false,
+      "copyRight": false,
+      "result": 0,
+      "sign": 0,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/suffix-cut-7/4",
+      "group": "ordinal",
+      "left": [
+        120,
+        55297,
+        56360,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97
+      ],
+      "indexA": 2,
+      "right": [
+        121,
+        121,
+        55297,
+        56360,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65
+      ],
+      "indexB": 3,
+      "length": 8,
+      "mode": 4,
+      "sameReference": false,
+      "copyRight": false,
+      "result": 32,
+      "sign": 1,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/suffix-cut-7/5",
+      "group": "ordinal",
+      "left": [
+        120,
+        55297,
+        56360,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97
+      ],
+      "indexA": 2,
+      "right": [
+        121,
+        121,
+        55297,
+        56360,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65
+      ],
+      "indexB": 3,
+      "length": 8,
+      "mode": 5,
+      "sameReference": false,
+      "copyRight": false,
+      "result": 0,
+      "sign": 0,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/prefix-cut-15/4",
+      "group": "ordinal",
+      "left": [
+        120,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        55297,
+        56360
+      ],
+      "indexA": 1,
+      "right": [
+        121,
+        121,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        55297,
+        56320
+      ],
+      "indexB": 2,
+      "length": 16,
+      "mode": 4,
+      "sameReference": false,
+      "copyRight": false,
+      "result": 32,
+      "sign": 1,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/prefix-cut-15/5",
+      "group": "ordinal",
+      "left": [
+        120,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        55297,
+        56360
+      ],
+      "indexA": 1,
+      "right": [
+        121,
+        121,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        55297,
+        56320
+      ],
+      "indexB": 2,
+      "length": 16,
+      "mode": 5,
+      "sameReference": false,
+      "copyRight": false,
+      "result": 0,
+      "sign": 0,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/suffix-cut-15/4",
+      "group": "ordinal",
+      "left": [
+        120,
+        55297,
+        56360,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97
+      ],
+      "indexA": 2,
+      "right": [
+        121,
+        121,
+        55297,
+        56360,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65
+      ],
+      "indexB": 3,
+      "length": 16,
+      "mode": 4,
+      "sameReference": false,
+      "copyRight": false,
+      "result": 32,
+      "sign": 1,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/suffix-cut-15/5",
+      "group": "ordinal",
+      "left": [
+        120,
+        55297,
+        56360,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97
+      ],
+      "indexA": 2,
+      "right": [
+        121,
+        121,
+        55297,
+        56360,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65
+      ],
+      "indexB": 3,
+      "length": 16,
+      "mode": 5,
+      "sameReference": false,
+      "copyRight": false,
+      "result": 0,
+      "sign": 0,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/prefix-cut-31/4",
+      "group": "ordinal",
+      "left": [
+        120,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        55297,
+        56360
+      ],
+      "indexA": 1,
+      "right": [
+        121,
+        121,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        55297,
+        56320
+      ],
+      "indexB": 2,
+      "length": 32,
+      "mode": 4,
+      "sameReference": false,
+      "copyRight": false,
+      "result": 32,
+      "sign": 1,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/prefix-cut-31/5",
+      "group": "ordinal",
+      "left": [
+        120,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        55297,
+        56360
+      ],
+      "indexA": 1,
+      "right": [
+        121,
+        121,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        55297,
+        56320
+      ],
+      "indexB": 2,
+      "length": 32,
+      "mode": 5,
+      "sameReference": false,
+      "copyRight": false,
+      "result": 0,
+      "sign": 0,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/suffix-cut-31/4",
+      "group": "ordinal",
+      "left": [
+        120,
+        55297,
+        56360,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97
+      ],
+      "indexA": 2,
+      "right": [
+        121,
+        121,
+        55297,
+        56360,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65
+      ],
+      "indexB": 3,
+      "length": 32,
+      "mode": 4,
+      "sameReference": false,
+      "copyRight": false,
+      "result": 32,
+      "sign": 1,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/suffix-cut-31/5",
+      "group": "ordinal",
+      "left": [
+        120,
+        55297,
+        56360,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97,
+        97
+      ],
+      "indexA": 2,
+      "right": [
+        121,
+        121,
+        55297,
+        56360,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65,
+        65
+      ],
+      "indexB": 3,
+      "length": 32,
+      "mode": 5,
+      "sameReference": false,
+      "copyRight": false,
+      "result": 0,
+      "sign": 0,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "invalid/nulls-valid/-1",
+      "group": "invalid",
+      "left": null,
+      "indexA": 0,
+      "right": null,
+      "indexB": 0,
+      "length": 0,
+      "mode": -1,
+      "sameReference": true,
+      "copyRight": false,
+      "result": null,
+      "sign": null,
+      "fault": "ArgumentException",
+      "parameter": "comparisonType"
+    },
+    {
+      "id": "invalid/nulls-valid/6",
+      "group": "invalid",
+      "left": null,
+      "indexA": 0,
+      "right": null,
+      "indexB": 0,
+      "length": 0,
+      "mode": 6,
+      "sameReference": true,
+      "copyRight": false,
+      "result": null,
+      "sign": null,
+      "fault": "ArgumentException",
+      "parameter": "comparisonType"
+    },
+    {
+      "id": "invalid/nulls-valid/-2147483648",
+      "group": "invalid",
+      "left": null,
+      "indexA": 0,
+      "right": null,
+      "indexB": 0,
+      "length": 0,
+      "mode": -2147483648,
+      "sameReference": true,
+      "copyRight": false,
+      "result": null,
+      "sign": null,
+      "fault": "ArgumentException",
+      "parameter": "comparisonType"
+    },
+    {
+      "id": "invalid/nulls-valid/2147483647",
+      "group": "invalid",
+      "left": null,
+      "indexA": 0,
+      "right": null,
+      "indexB": 0,
+      "length": 0,
+      "mode": 2147483647,
+      "sameReference": true,
+      "copyRight": false,
+      "result": null,
+      "sign": null,
+      "fault": "ArgumentException",
+      "parameter": "comparisonType"
+    },
+    {
+      "id": "invalid/nulls-invalid-range/-1",
+      "group": "invalid",
+      "left": null,
+      "indexA": -1,
+      "right": null,
+      "indexB": 2147483647,
+      "length": -1,
+      "mode": -1,
+      "sameReference": true,
+      "copyRight": false,
+      "result": null,
+      "sign": null,
+      "fault": "ArgumentException",
+      "parameter": "comparisonType"
+    },
+    {
+      "id": "invalid/nulls-invalid-range/6",
+      "group": "invalid",
+      "left": null,
+      "indexA": -1,
+      "right": null,
+      "indexB": 2147483647,
+      "length": -1,
+      "mode": 6,
+      "sameReference": true,
+      "copyRight": false,
+      "result": null,
+      "sign": null,
+      "fault": "ArgumentException",
+      "parameter": "comparisonType"
+    },
+    {
+      "id": "invalid/nulls-invalid-range/-2147483648",
+      "group": "invalid",
+      "left": null,
+      "indexA": -1,
+      "right": null,
+      "indexB": 2147483647,
+      "length": -1,
+      "mode": -2147483648,
+      "sameReference": true,
+      "copyRight": false,
+      "result": null,
+      "sign": null,
+      "fault": "ArgumentException",
+      "parameter": "comparisonType"
+    },
+    {
+      "id": "invalid/nulls-invalid-range/2147483647",
+      "group": "invalid",
+      "left": null,
+      "indexA": -1,
+      "right": null,
+      "indexB": 2147483647,
+      "length": -1,
+      "mode": 2147483647,
+      "sameReference": true,
+      "copyRight": false,
+      "result": null,
+      "sign": null,
+      "fault": "ArgumentException",
+      "parameter": "comparisonType"
+    },
+    {
+      "id": "invalid/null-left-invalid-range/-1",
+      "group": "invalid",
+      "left": null,
+      "indexA": -1,
+      "right": [
+        97,
+        98,
+        99
+      ],
+      "indexB": 2147483647,
+      "length": -1,
+      "mode": -1,
+      "sameReference": false,
+      "copyRight": false,
+      "result": null,
+      "sign": null,
+      "fault": "ArgumentException",
+      "parameter": "comparisonType"
+    },
+    {
+      "id": "invalid/null-left-invalid-range/6",
+      "group": "invalid",
+      "left": null,
+      "indexA": -1,
+      "right": [
+        97,
+        98,
+        99
+      ],
+      "indexB": 2147483647,
+      "length": -1,
+      "mode": 6,
+      "sameReference": false,
+      "copyRight": false,
+      "result": null,
+      "sign": null,
+      "fault": "ArgumentException",
+      "parameter": "comparisonType"
+    },
+    {
+      "id": "invalid/null-left-invalid-range/-2147483648",
+      "group": "invalid",
+      "left": null,
+      "indexA": -1,
+      "right": [
+        97,
+        98,
+        99
+      ],
+      "indexB": 2147483647,
+      "length": -1,
+      "mode": -2147483648,
+      "sameReference": false,
+      "copyRight": false,
+      "result": null,
+      "sign": null,
+      "fault": "ArgumentException",
+      "parameter": "comparisonType"
+    },
+    {
+      "id": "invalid/null-left-invalid-range/2147483647",
+      "group": "invalid",
+      "left": null,
+      "indexA": -1,
+      "right": [
+        97,
+        98,
+        99
+      ],
+      "indexB": 2147483647,
+      "length": -1,
+      "mode": 2147483647,
+      "sameReference": false,
+      "copyRight": false,
+      "result": null,
+      "sign": null,
+      "fault": "ArgumentException",
+      "parameter": "comparisonType"
+    },
+    {
+      "id": "invalid/null-right-invalid-range/-1",
+      "group": "invalid",
+      "left": [
+        97,
+        98,
+        99
+      ],
+      "indexA": 2147483647,
+      "right": null,
+      "indexB": -1,
+      "length": -1,
+      "mode": -1,
+      "sameReference": false,
+      "copyRight": false,
+      "result": null,
+      "sign": null,
+      "fault": "ArgumentException",
+      "parameter": "comparisonType"
+    },
+    {
+      "id": "invalid/null-right-invalid-range/6",
+      "group": "invalid",
+      "left": [
+        97,
+        98,
+        99
+      ],
+      "indexA": 2147483647,
+      "right": null,
+      "indexB": -1,
+      "length": -1,
+      "mode": 6,
+      "sameReference": false,
+      "copyRight": false,
+      "result": null,
+      "sign": null,
+      "fault": "ArgumentException",
+      "parameter": "comparisonType"
+    },
+    {
+      "id": "invalid/null-right-invalid-range/-2147483648",
+      "group": "invalid",
+      "left": [
+        97,
+        98,
+        99
+      ],
+      "indexA": 2147483647,
+      "right": null,
+      "indexB": -1,
+      "length": -1,
+      "mode": -2147483648,
+      "sameReference": false,
+      "copyRight": false,
+      "result": null,
+      "sign": null,
+      "fault": "ArgumentException",
+      "parameter": "comparisonType"
+    },
+    {
+      "id": "invalid/null-right-invalid-range/2147483647",
+      "group": "invalid",
+      "left": [
+        97,
+        98,
+        99
+      ],
+      "indexA": 2147483647,
+      "right": null,
+      "indexB": -1,
+      "length": -1,
+      "mode": 2147483647,
+      "sameReference": false,
+      "copyRight": false,
+      "result": null,
+      "sign": null,
+      "fault": "ArgumentException",
+      "parameter": "comparisonType"
+    },
+    {
+      "id": "invalid/identity/-1",
+      "group": "invalid",
+      "left": [
+        97,
+        98,
+        99
+      ],
+      "indexA": 0,
+      "right": [
+        97,
+        98,
+        99
+      ],
+      "indexB": 0,
+      "length": 3,
+      "mode": -1,
+      "sameReference": true,
+      "copyRight": false,
+      "result": null,
+      "sign": null,
+      "fault": "ArgumentException",
+      "parameter": "comparisonType"
+    },
+    {
+      "id": "invalid/identity/6",
+      "group": "invalid",
+      "left": [
+        97,
+        98,
+        99
+      ],
+      "indexA": 0,
+      "right": [
+        97,
+        98,
+        99
+      ],
+      "indexB": 0,
+      "length": 3,
+      "mode": 6,
+      "sameReference": true,
+      "copyRight": false,
+      "result": null,
+      "sign": null,
+      "fault": "ArgumentException",
+      "parameter": "comparisonType"
+    },
+    {
+      "id": "invalid/identity/-2147483648",
+      "group": "invalid",
+      "left": [
+        97,
+        98,
+        99
+      ],
+      "indexA": 0,
+      "right": [
+        97,
+        98,
+        99
+      ],
+      "indexB": 0,
+      "length": 3,
+      "mode": -2147483648,
+      "sameReference": true,
+      "copyRight": false,
+      "result": null,
+      "sign": null,
+      "fault": "ArgumentException",
+      "parameter": "comparisonType"
+    },
+    {
+      "id": "invalid/identity/2147483647",
+      "group": "invalid",
+      "left": [
+        97,
+        98,
+        99
+      ],
+      "indexA": 0,
+      "right": [
+        97,
+        98,
+        99
+      ],
+      "indexB": 0,
+      "length": 3,
+      "mode": 2147483647,
+      "sameReference": true,
+      "copyRight": false,
+      "result": null,
+      "sign": null,
+      "fault": "ArgumentException",
+      "parameter": "comparisonType"
+    },
+    {
+      "id": "invalid/allocated-equal/-1",
+      "group": "invalid",
+      "left": [
+        97,
+        98,
+        99
+      ],
+      "indexA": 0,
+      "right": [
+        97,
+        98,
+        99
+      ],
+      "indexB": 0,
+      "length": 3,
+      "mode": -1,
+      "sameReference": false,
+      "copyRight": true,
+      "result": null,
+      "sign": null,
+      "fault": "ArgumentException",
+      "parameter": "comparisonType"
+    },
+    {
+      "id": "invalid/allocated-equal/6",
+      "group": "invalid",
+      "left": [
+        97,
+        98,
+        99
+      ],
+      "indexA": 0,
+      "right": [
+        97,
+        98,
+        99
+      ],
+      "indexB": 0,
+      "length": 3,
+      "mode": 6,
+      "sameReference": false,
+      "copyRight": true,
+      "result": null,
+      "sign": null,
+      "fault": "ArgumentException",
+      "parameter": "comparisonType"
+    },
+    {
+      "id": "invalid/allocated-equal/-2147483648",
+      "group": "invalid",
+      "left": [
+        97,
+        98,
+        99
+      ],
+      "indexA": 0,
+      "right": [
+        97,
+        98,
+        99
+      ],
+      "indexB": 0,
+      "length": 3,
+      "mode": -2147483648,
+      "sameReference": false,
+      "copyRight": true,
+      "result": null,
+      "sign": null,
+      "fault": "ArgumentException",
+      "parameter": "comparisonType"
+    },
+    {
+      "id": "invalid/allocated-equal/2147483647",
+      "group": "invalid",
+      "left": [
+        97,
+        98,
+        99
+      ],
+      "indexA": 0,
+      "right": [
+        97,
+        98,
+        99
+      ],
+      "indexB": 0,
+      "length": 3,
+      "mode": 2147483647,
+      "sameReference": false,
+      "copyRight": true,
+      "result": null,
+      "sign": null,
+      "fault": "ArgumentException",
+      "parameter": "comparisonType"
+    },
+    {
+      "id": "invalid/identity-invalid-range/-1",
+      "group": "invalid",
+      "left": [
+        97,
+        98,
+        99
+      ],
+      "indexA": -1,
+      "right": [
+        97,
+        98,
+        99
+      ],
+      "indexB": -1,
+      "length": -1,
+      "mode": -1,
+      "sameReference": true,
+      "copyRight": false,
+      "result": null,
+      "sign": null,
+      "fault": "ArgumentException",
+      "parameter": "comparisonType"
+    },
+    {
+      "id": "invalid/identity-invalid-range/6",
+      "group": "invalid",
+      "left": [
+        97,
+        98,
+        99
+      ],
+      "indexA": -1,
+      "right": [
+        97,
+        98,
+        99
+      ],
+      "indexB": -1,
+      "length": -1,
+      "mode": 6,
+      "sameReference": true,
+      "copyRight": false,
+      "result": null,
+      "sign": null,
+      "fault": "ArgumentException",
+      "parameter": "comparisonType"
+    },
+    {
+      "id": "invalid/identity-invalid-range/-2147483648",
+      "group": "invalid",
+      "left": [
+        97,
+        98,
+        99
+      ],
+      "indexA": -1,
+      "right": [
+        97,
+        98,
+        99
+      ],
+      "indexB": -1,
+      "length": -1,
+      "mode": -2147483648,
+      "sameReference": true,
+      "copyRight": false,
+      "result": null,
+      "sign": null,
+      "fault": "ArgumentException",
+      "parameter": "comparisonType"
+    },
+    {
+      "id": "invalid/identity-invalid-range/2147483647",
+      "group": "invalid",
+      "left": [
+        97,
+        98,
+        99
+      ],
+      "indexA": -1,
+      "right": [
+        97,
+        98,
+        99
+      ],
+      "indexB": -1,
+      "length": -1,
+      "mode": 2147483647,
+      "sameReference": true,
+      "copyRight": false,
+      "result": null,
+      "sign": null,
+      "fault": "ArgumentException",
+      "parameter": "comparisonType"
+    },
+    {
+      "id": "invalid/zero-valid/-1",
+      "group": "invalid",
+      "left": [
+        97,
+        98,
+        99
+      ],
+      "indexA": 1,
+      "right": [
+        120,
+        121,
+        122
+      ],
+      "indexB": 2,
+      "length": 0,
+      "mode": -1,
+      "sameReference": false,
+      "copyRight": false,
+      "result": null,
+      "sign": null,
+      "fault": "ArgumentException",
+      "parameter": "comparisonType"
+    },
+    {
+      "id": "invalid/zero-valid/6",
+      "group": "invalid",
+      "left": [
+        97,
+        98,
+        99
+      ],
+      "indexA": 1,
+      "right": [
+        120,
+        121,
+        122
+      ],
+      "indexB": 2,
+      "length": 0,
+      "mode": 6,
+      "sameReference": false,
+      "copyRight": false,
+      "result": null,
+      "sign": null,
+      "fault": "ArgumentException",
+      "parameter": "comparisonType"
+    },
+    {
+      "id": "invalid/zero-valid/-2147483648",
+      "group": "invalid",
+      "left": [
+        97,
+        98,
+        99
+      ],
+      "indexA": 1,
+      "right": [
+        120,
+        121,
+        122
+      ],
+      "indexB": 2,
+      "length": 0,
+      "mode": -2147483648,
+      "sameReference": false,
+      "copyRight": false,
+      "result": null,
+      "sign": null,
+      "fault": "ArgumentException",
+      "parameter": "comparisonType"
+    },
+    {
+      "id": "invalid/zero-valid/2147483647",
+      "group": "invalid",
+      "left": [
+        97,
+        98,
+        99
+      ],
+      "indexA": 1,
+      "right": [
+        120,
+        121,
+        122
+      ],
+      "indexB": 2,
+      "length": 0,
+      "mode": 2147483647,
+      "sameReference": false,
+      "copyRight": false,
+      "result": null,
+      "sign": null,
+      "fault": "ArgumentException",
+      "parameter": "comparisonType"
+    },
+    {
+      "id": "invalid/zero-invalid-range/-1",
+      "group": "invalid",
+      "left": [
+        97,
+        98,
+        99
+      ],
+      "indexA": 4,
+      "right": [
+        120,
+        121,
+        122
+      ],
+      "indexB": 0,
+      "length": 0,
+      "mode": -1,
+      "sameReference": false,
+      "copyRight": false,
+      "result": null,
+      "sign": null,
+      "fault": "ArgumentException",
+      "parameter": "comparisonType"
+    },
+    {
+      "id": "invalid/zero-invalid-range/6",
+      "group": "invalid",
+      "left": [
+        97,
+        98,
+        99
+      ],
+      "indexA": 4,
+      "right": [
+        120,
+        121,
+        122
+      ],
+      "indexB": 0,
+      "length": 0,
+      "mode": 6,
+      "sameReference": false,
+      "copyRight": false,
+      "result": null,
+      "sign": null,
+      "fault": "ArgumentException",
+      "parameter": "comparisonType"
+    },
+    {
+      "id": "invalid/zero-invalid-range/-2147483648",
+      "group": "invalid",
+      "left": [
+        97,
+        98,
+        99
+      ],
+      "indexA": 4,
+      "right": [
+        120,
+        121,
+        122
+      ],
+      "indexB": 0,
+      "length": 0,
+      "mode": -2147483648,
+      "sameReference": false,
+      "copyRight": false,
+      "result": null,
+      "sign": null,
+      "fault": "ArgumentException",
+      "parameter": "comparisonType"
+    },
+    {
+      "id": "invalid/zero-invalid-range/2147483647",
+      "group": "invalid",
+      "left": [
+        97,
+        98,
+        99
+      ],
+      "indexA": 4,
+      "right": [
+        120,
+        121,
+        122
+      ],
+      "indexB": 0,
+      "length": 0,
+      "mode": 2147483647,
+      "sameReference": false,
+      "copyRight": false,
+      "result": null,
+      "sign": null,
+      "fault": "ArgumentException",
+      "parameter": "comparisonType"
+    },
+    {
+      "id": "invalid/length-before-indices/-1",
+      "group": "invalid",
+      "left": [
+        97,
+        98,
+        99
+      ],
+      "indexA": -1,
+      "right": [
+        97,
+        98,
+        99
+      ],
+      "indexB": -1,
+      "length": -1,
+      "mode": -1,
+      "sameReference": true,
+      "copyRight": false,
+      "result": null,
+      "sign": null,
+      "fault": "ArgumentException",
+      "parameter": "comparisonType"
+    },
+    {
+      "id": "invalid/length-before-indices/6",
+      "group": "invalid",
+      "left": [
+        97,
+        98,
+        99
+      ],
+      "indexA": -1,
+      "right": [
+        97,
+        98,
+        99
+      ],
+      "indexB": -1,
+      "length": -1,
+      "mode": 6,
+      "sameReference": true,
+      "copyRight": false,
+      "result": null,
+      "sign": null,
+      "fault": "ArgumentException",
+      "parameter": "comparisonType"
+    },
+    {
+      "id": "invalid/length-before-indices/-2147483648",
+      "group": "invalid",
+      "left": [
+        97,
+        98,
+        99
+      ],
+      "indexA": -1,
+      "right": [
+        97,
+        98,
+        99
+      ],
+      "indexB": -1,
+      "length": -1,
+      "mode": -2147483648,
+      "sameReference": true,
+      "copyRight": false,
+      "result": null,
+      "sign": null,
+      "fault": "ArgumentException",
+      "parameter": "comparisonType"
+    },
+    {
+      "id": "invalid/length-before-indices/2147483647",
+      "group": "invalid",
+      "left": [
+        97,
+        98,
+        99
+      ],
+      "indexA": -1,
+      "right": [
+        97,
+        98,
+        99
+      ],
+      "indexB": -1,
+      "length": -1,
+      "mode": 2147483647,
+      "sameReference": true,
+      "copyRight": false,
+      "result": null,
+      "sign": null,
+      "fault": "ArgumentException",
+      "parameter": "comparisonType"
+    },
+    {
+      "id": "invalid/negative-indexB-before-indexA-bounds/-1",
+      "group": "invalid",
+      "left": [
+        97,
+        98,
+        99
+      ],
+      "indexA": 4,
+      "right": [
+        97,
+        98,
+        99
+      ],
+      "indexB": -1,
+      "length": 1,
+      "mode": -1,
+      "sameReference": true,
+      "copyRight": false,
+      "result": null,
+      "sign": null,
+      "fault": "ArgumentException",
+      "parameter": "comparisonType"
+    },
+    {
+      "id": "invalid/negative-indexB-before-indexA-bounds/6",
+      "group": "invalid",
+      "left": [
+        97,
+        98,
+        99
+      ],
+      "indexA": 4,
+      "right": [
+        97,
+        98,
+        99
+      ],
+      "indexB": -1,
+      "length": 1,
+      "mode": 6,
+      "sameReference": true,
+      "copyRight": false,
+      "result": null,
+      "sign": null,
+      "fault": "ArgumentException",
+      "parameter": "comparisonType"
+    },
+    {
+      "id": "invalid/negative-indexB-before-indexA-bounds/-2147483648",
+      "group": "invalid",
+      "left": [
+        97,
+        98,
+        99
+      ],
+      "indexA": 4,
+      "right": [
+        97,
+        98,
+        99
+      ],
+      "indexB": -1,
+      "length": 1,
+      "mode": -2147483648,
+      "sameReference": true,
+      "copyRight": false,
+      "result": null,
+      "sign": null,
+      "fault": "ArgumentException",
+      "parameter": "comparisonType"
+    },
+    {
+      "id": "invalid/negative-indexB-before-indexA-bounds/2147483647",
+      "group": "invalid",
+      "left": [
+        97,
+        98,
+        99
+      ],
+      "indexA": 4,
+      "right": [
+        97,
+        98,
+        99
+      ],
+      "indexB": -1,
+      "length": 1,
+      "mode": 2147483647,
+      "sameReference": true,
+      "copyRight": false,
+      "result": null,
+      "sign": null,
+      "fault": "ArgumentException",
+      "parameter": "comparisonType"
+    },
+    {
+      "id": "invalid/indexA-bounds-before-indexB-bounds/-1",
+      "group": "invalid",
+      "left": [
+        97,
+        98,
+        99
+      ],
+      "indexA": 4,
+      "right": [
+        97,
+        98,
+        99
+      ],
+      "indexB": 4,
+      "length": 1,
+      "mode": -1,
+      "sameReference": true,
+      "copyRight": false,
+      "result": null,
+      "sign": null,
+      "fault": "ArgumentException",
+      "parameter": "comparisonType"
+    },
+    {
+      "id": "invalid/indexA-bounds-before-indexB-bounds/6",
+      "group": "invalid",
+      "left": [
+        97,
+        98,
+        99
+      ],
+      "indexA": 4,
+      "right": [
+        97,
+        98,
+        99
+      ],
+      "indexB": 4,
+      "length": 1,
+      "mode": 6,
+      "sameReference": true,
+      "copyRight": false,
+      "result": null,
+      "sign": null,
+      "fault": "ArgumentException",
+      "parameter": "comparisonType"
+    },
+    {
+      "id": "invalid/indexA-bounds-before-indexB-bounds/-2147483648",
+      "group": "invalid",
+      "left": [
+        97,
+        98,
+        99
+      ],
+      "indexA": 4,
+      "right": [
+        97,
+        98,
+        99
+      ],
+      "indexB": 4,
+      "length": 1,
+      "mode": -2147483648,
+      "sameReference": true,
+      "copyRight": false,
+      "result": null,
+      "sign": null,
+      "fault": "ArgumentException",
+      "parameter": "comparisonType"
+    },
+    {
+      "id": "invalid/indexA-bounds-before-indexB-bounds/2147483647",
+      "group": "invalid",
+      "left": [
+        97,
+        98,
+        99
+      ],
+      "indexA": 4,
+      "right": [
+        97,
+        98,
+        99
+      ],
+      "indexB": 4,
+      "length": 1,
+      "mode": 2147483647,
+      "sameReference": true,
+      "copyRight": false,
+      "result": null,
+      "sign": null,
+      "fault": "ArgumentException",
+      "parameter": "comparisonType"
+    },
+    {
+      "id": "invalid/normal-difference/-1",
+      "group": "invalid",
+      "left": [
+        97,
+        98,
+        99
+      ],
+      "indexA": 0,
+      "right": [
+        97,
+        98,
+        100
+      ],
+      "indexB": 0,
+      "length": 3,
+      "mode": -1,
+      "sameReference": false,
+      "copyRight": false,
+      "result": null,
+      "sign": null,
+      "fault": "ArgumentException",
+      "parameter": "comparisonType"
+    },
+    {
+      "id": "invalid/normal-difference/6",
+      "group": "invalid",
+      "left": [
+        97,
+        98,
+        99
+      ],
+      "indexA": 0,
+      "right": [
+        97,
+        98,
+        100
+      ],
+      "indexB": 0,
+      "length": 3,
+      "mode": 6,
+      "sameReference": false,
+      "copyRight": false,
+      "result": null,
+      "sign": null,
+      "fault": "ArgumentException",
+      "parameter": "comparisonType"
+    },
+    {
+      "id": "invalid/normal-difference/-2147483648",
+      "group": "invalid",
+      "left": [
+        97,
+        98,
+        99
+      ],
+      "indexA": 0,
+      "right": [
+        97,
+        98,
+        100
+      ],
+      "indexB": 0,
+      "length": 3,
+      "mode": -2147483648,
+      "sameReference": false,
+      "copyRight": false,
+      "result": null,
+      "sign": null,
+      "fault": "ArgumentException",
+      "parameter": "comparisonType"
+    },
+    {
+      "id": "invalid/normal-difference/2147483647",
+      "group": "invalid",
+      "left": [
+        97,
+        98,
+        99
+      ],
+      "indexA": 0,
+      "right": [
+        97,
+        98,
+        100
+      ],
+      "indexB": 0,
+      "length": 3,
+      "mode": 2147483647,
+      "sameReference": false,
+      "copyRight": false,
+      "result": null,
+      "sign": null,
+      "fault": "ArgumentException",
+      "parameter": "comparisonType"
+    },
+    {
+      "id": "invalid/unequal-clipped/-1",
+      "group": "invalid",
+      "left": [
+        97,
+        98,
+        99
+      ],
+      "indexA": 1,
+      "right": [
+        66,
+        67,
+        68,
+        69
+      ],
+      "indexB": 0,
+      "length": 2147483647,
+      "mode": -1,
+      "sameReference": false,
+      "copyRight": false,
+      "result": null,
+      "sign": null,
+      "fault": "ArgumentException",
+      "parameter": "comparisonType"
+    },
+    {
+      "id": "invalid/unequal-clipped/6",
+      "group": "invalid",
+      "left": [
+        97,
+        98,
+        99
+      ],
+      "indexA": 1,
+      "right": [
+        66,
+        67,
+        68,
+        69
+      ],
+      "indexB": 0,
+      "length": 2147483647,
+      "mode": 6,
+      "sameReference": false,
+      "copyRight": false,
+      "result": null,
+      "sign": null,
+      "fault": "ArgumentException",
+      "parameter": "comparisonType"
+    },
+    {
+      "id": "invalid/unequal-clipped/-2147483648",
+      "group": "invalid",
+      "left": [
+        97,
+        98,
+        99
+      ],
+      "indexA": 1,
+      "right": [
+        66,
+        67,
+        68,
+        69
+      ],
+      "indexB": 0,
+      "length": 2147483647,
+      "mode": -2147483648,
+      "sameReference": false,
+      "copyRight": false,
+      "result": null,
+      "sign": null,
+      "fault": "ArgumentException",
+      "parameter": "comparisonType"
+    },
+    {
+      "id": "invalid/unequal-clipped/2147483647",
+      "group": "invalid",
+      "left": [
+        97,
+        98,
+        99
+      ],
+      "indexA": 1,
+      "right": [
+        66,
+        67,
+        68,
+        69
+      ],
+      "indexB": 0,
+      "length": 2147483647,
+      "mode": 2147483647,
+      "sameReference": false,
+      "copyRight": false,
+      "result": null,
+      "sign": null,
+      "fault": "ArgumentException",
+      "parameter": "comparisonType"
+    },
+    {
+      "id": "culture/nulls-valid/0",
+      "group": "culture",
+      "left": null,
+      "indexA": 0,
+      "right": null,
+      "indexB": 0,
+      "length": 0,
+      "mode": 0,
+      "sameReference": true,
+      "copyRight": false,
+      "result": 0,
+      "sign": 0,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "culture/nulls-valid/1",
+      "group": "culture",
+      "left": null,
+      "indexA": 0,
+      "right": null,
+      "indexB": 0,
+      "length": 0,
+      "mode": 1,
+      "sameReference": true,
+      "copyRight": false,
+      "result": 0,
+      "sign": 0,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "culture/nulls-valid/2",
+      "group": "culture",
+      "left": null,
+      "indexA": 0,
+      "right": null,
+      "indexB": 0,
+      "length": 0,
+      "mode": 2,
+      "sameReference": true,
+      "copyRight": false,
+      "result": 0,
+      "sign": 0,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "culture/nulls-valid/3",
+      "group": "culture",
+      "left": null,
+      "indexA": 0,
+      "right": null,
+      "indexB": 0,
+      "length": 0,
+      "mode": 3,
+      "sameReference": true,
+      "copyRight": false,
+      "result": 0,
+      "sign": 0,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "culture/nulls-invalid-range/0",
+      "group": "culture",
+      "left": null,
+      "indexA": -1,
+      "right": null,
+      "indexB": 2147483647,
+      "length": -1,
+      "mode": 0,
+      "sameReference": true,
+      "copyRight": false,
+      "result": 0,
+      "sign": 0,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "culture/nulls-invalid-range/1",
+      "group": "culture",
+      "left": null,
+      "indexA": -1,
+      "right": null,
+      "indexB": 2147483647,
+      "length": -1,
+      "mode": 1,
+      "sameReference": true,
+      "copyRight": false,
+      "result": 0,
+      "sign": 0,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "culture/nulls-invalid-range/2",
+      "group": "culture",
+      "left": null,
+      "indexA": -1,
+      "right": null,
+      "indexB": 2147483647,
+      "length": -1,
+      "mode": 2,
+      "sameReference": true,
+      "copyRight": false,
+      "result": 0,
+      "sign": 0,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "culture/nulls-invalid-range/3",
+      "group": "culture",
+      "left": null,
+      "indexA": -1,
+      "right": null,
+      "indexB": 2147483647,
+      "length": -1,
+      "mode": 3,
+      "sameReference": true,
+      "copyRight": false,
+      "result": 0,
+      "sign": 0,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "culture/null-left-invalid-range/0",
+      "group": "culture",
+      "left": null,
+      "indexA": -1,
+      "right": [
+        97,
+        98,
+        99
+      ],
+      "indexB": 2147483647,
+      "length": -1,
+      "mode": 0,
+      "sameReference": false,
+      "copyRight": false,
+      "result": -1,
+      "sign": -1,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "culture/null-left-invalid-range/1",
+      "group": "culture",
+      "left": null,
+      "indexA": -1,
+      "right": [
+        97,
+        98,
+        99
+      ],
+      "indexB": 2147483647,
+      "length": -1,
+      "mode": 1,
+      "sameReference": false,
+      "copyRight": false,
+      "result": -1,
+      "sign": -1,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "culture/null-left-invalid-range/2",
+      "group": "culture",
+      "left": null,
+      "indexA": -1,
+      "right": [
+        97,
+        98,
+        99
+      ],
+      "indexB": 2147483647,
+      "length": -1,
+      "mode": 2,
+      "sameReference": false,
+      "copyRight": false,
+      "result": -1,
+      "sign": -1,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "culture/null-left-invalid-range/3",
+      "group": "culture",
+      "left": null,
+      "indexA": -1,
+      "right": [
+        97,
+        98,
+        99
+      ],
+      "indexB": 2147483647,
+      "length": -1,
+      "mode": 3,
+      "sameReference": false,
+      "copyRight": false,
+      "result": -1,
+      "sign": -1,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "culture/null-right-invalid-range/0",
+      "group": "culture",
+      "left": [
+        97,
+        98,
+        99
+      ],
+      "indexA": 2147483647,
+      "right": null,
+      "indexB": -1,
+      "length": -1,
+      "mode": 0,
+      "sameReference": false,
+      "copyRight": false,
+      "result": 1,
+      "sign": 1,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "culture/null-right-invalid-range/1",
+      "group": "culture",
+      "left": [
+        97,
+        98,
+        99
+      ],
+      "indexA": 2147483647,
+      "right": null,
+      "indexB": -1,
+      "length": -1,
+      "mode": 1,
+      "sameReference": false,
+      "copyRight": false,
+      "result": 1,
+      "sign": 1,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "culture/null-right-invalid-range/2",
+      "group": "culture",
+      "left": [
+        97,
+        98,
+        99
+      ],
+      "indexA": 2147483647,
+      "right": null,
+      "indexB": -1,
+      "length": -1,
+      "mode": 2,
+      "sameReference": false,
+      "copyRight": false,
+      "result": 1,
+      "sign": 1,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "culture/null-right-invalid-range/3",
+      "group": "culture",
+      "left": [
+        97,
+        98,
+        99
+      ],
+      "indexA": 2147483647,
+      "right": null,
+      "indexB": -1,
+      "length": -1,
+      "mode": 3,
+      "sameReference": false,
+      "copyRight": false,
+      "result": 1,
+      "sign": 1,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "culture/identity/0",
+      "group": "culture",
+      "left": [
+        97,
+        98,
+        99
+      ],
+      "indexA": 0,
+      "right": [
+        97,
+        98,
+        99
+      ],
+      "indexB": 0,
+      "length": 3,
+      "mode": 0,
+      "sameReference": true,
+      "copyRight": false,
+      "result": 0,
+      "sign": 0,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "culture/identity/1",
+      "group": "culture",
+      "left": [
+        97,
+        98,
+        99
+      ],
+      "indexA": 0,
+      "right": [
+        97,
+        98,
+        99
+      ],
+      "indexB": 0,
+      "length": 3,
+      "mode": 1,
+      "sameReference": true,
+      "copyRight": false,
+      "result": 0,
+      "sign": 0,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "culture/identity/2",
+      "group": "culture",
+      "left": [
+        97,
+        98,
+        99
+      ],
+      "indexA": 0,
+      "right": [
+        97,
+        98,
+        99
+      ],
+      "indexB": 0,
+      "length": 3,
+      "mode": 2,
+      "sameReference": true,
+      "copyRight": false,
+      "result": 0,
+      "sign": 0,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "culture/identity/3",
+      "group": "culture",
+      "left": [
+        97,
+        98,
+        99
+      ],
+      "indexA": 0,
+      "right": [
+        97,
+        98,
+        99
+      ],
+      "indexB": 0,
+      "length": 3,
+      "mode": 3,
+      "sameReference": true,
+      "copyRight": false,
+      "result": 0,
+      "sign": 0,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "culture/allocated-equal/0",
+      "group": "culture",
+      "left": [
+        97,
+        98,
+        99
+      ],
+      "indexA": 0,
+      "right": [
+        97,
+        98,
+        99
+      ],
+      "indexB": 0,
+      "length": 3,
+      "mode": 0,
+      "sameReference": false,
+      "copyRight": true,
+      "result": 0,
+      "sign": 0,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "culture/allocated-equal/1",
+      "group": "culture",
+      "left": [
+        97,
+        98,
+        99
+      ],
+      "indexA": 0,
+      "right": [
+        97,
+        98,
+        99
+      ],
+      "indexB": 0,
+      "length": 3,
+      "mode": 1,
+      "sameReference": false,
+      "copyRight": true,
+      "result": 0,
+      "sign": 0,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "culture/allocated-equal/2",
+      "group": "culture",
+      "left": [
+        97,
+        98,
+        99
+      ],
+      "indexA": 0,
+      "right": [
+        97,
+        98,
+        99
+      ],
+      "indexB": 0,
+      "length": 3,
+      "mode": 2,
+      "sameReference": false,
+      "copyRight": true,
+      "result": 0,
+      "sign": 0,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "culture/allocated-equal/3",
+      "group": "culture",
+      "left": [
+        97,
+        98,
+        99
+      ],
+      "indexA": 0,
+      "right": [
+        97,
+        98,
+        99
+      ],
+      "indexB": 0,
+      "length": 3,
+      "mode": 3,
+      "sameReference": false,
+      "copyRight": true,
+      "result": 0,
+      "sign": 0,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "culture/identity-invalid-range/0",
+      "group": "culture",
+      "left": [
+        97,
+        98,
+        99
+      ],
+      "indexA": -1,
+      "right": [
+        97,
+        98,
+        99
+      ],
+      "indexB": -1,
+      "length": -1,
+      "mode": 0,
+      "sameReference": true,
+      "copyRight": false,
+      "result": null,
+      "sign": null,
+      "fault": "ArgumentOutOfRangeException",
+      "parameter": "length"
+    },
+    {
+      "id": "culture/identity-invalid-range/1",
+      "group": "culture",
+      "left": [
+        97,
+        98,
+        99
+      ],
+      "indexA": -1,
+      "right": [
+        97,
+        98,
+        99
+      ],
+      "indexB": -1,
+      "length": -1,
+      "mode": 1,
+      "sameReference": true,
+      "copyRight": false,
+      "result": null,
+      "sign": null,
+      "fault": "ArgumentOutOfRangeException",
+      "parameter": "length"
+    },
+    {
+      "id": "culture/identity-invalid-range/2",
+      "group": "culture",
+      "left": [
+        97,
+        98,
+        99
+      ],
+      "indexA": -1,
+      "right": [
+        97,
+        98,
+        99
+      ],
+      "indexB": -1,
+      "length": -1,
+      "mode": 2,
+      "sameReference": true,
+      "copyRight": false,
+      "result": null,
+      "sign": null,
+      "fault": "ArgumentOutOfRangeException",
+      "parameter": "length"
+    },
+    {
+      "id": "culture/identity-invalid-range/3",
+      "group": "culture",
+      "left": [
+        97,
+        98,
+        99
+      ],
+      "indexA": -1,
+      "right": [
+        97,
+        98,
+        99
+      ],
+      "indexB": -1,
+      "length": -1,
+      "mode": 3,
+      "sameReference": true,
+      "copyRight": false,
+      "result": null,
+      "sign": null,
+      "fault": "ArgumentOutOfRangeException",
+      "parameter": "length"
+    },
+    {
+      "id": "culture/zero-valid/0",
+      "group": "culture",
+      "left": [
+        97,
+        98,
+        99
+      ],
+      "indexA": 1,
+      "right": [
+        120,
+        121,
+        122
+      ],
+      "indexB": 2,
+      "length": 0,
+      "mode": 0,
+      "sameReference": false,
+      "copyRight": false,
+      "result": 0,
+      "sign": 0,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "culture/zero-valid/1",
+      "group": "culture",
+      "left": [
+        97,
+        98,
+        99
+      ],
+      "indexA": 1,
+      "right": [
+        120,
+        121,
+        122
+      ],
+      "indexB": 2,
+      "length": 0,
+      "mode": 1,
+      "sameReference": false,
+      "copyRight": false,
+      "result": 0,
+      "sign": 0,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "culture/zero-valid/2",
+      "group": "culture",
+      "left": [
+        97,
+        98,
+        99
+      ],
+      "indexA": 1,
+      "right": [
+        120,
+        121,
+        122
+      ],
+      "indexB": 2,
+      "length": 0,
+      "mode": 2,
+      "sameReference": false,
+      "copyRight": false,
+      "result": 0,
+      "sign": 0,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "culture/zero-valid/3",
+      "group": "culture",
+      "left": [
+        97,
+        98,
+        99
+      ],
+      "indexA": 1,
+      "right": [
+        120,
+        121,
+        122
+      ],
+      "indexB": 2,
+      "length": 0,
+      "mode": 3,
+      "sameReference": false,
+      "copyRight": false,
+      "result": 0,
+      "sign": 0,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "culture/zero-invalid-range/0",
+      "group": "culture",
+      "left": [
+        97,
+        98,
+        99
+      ],
+      "indexA": 4,
+      "right": [
+        120,
+        121,
+        122
+      ],
+      "indexB": 0,
+      "length": 0,
+      "mode": 0,
+      "sameReference": false,
+      "copyRight": false,
+      "result": null,
+      "sign": null,
+      "fault": "ArgumentOutOfRangeException",
+      "parameter": "indexA"
+    },
+    {
+      "id": "culture/zero-invalid-range/1",
+      "group": "culture",
+      "left": [
+        97,
+        98,
+        99
+      ],
+      "indexA": 4,
+      "right": [
+        120,
+        121,
+        122
+      ],
+      "indexB": 0,
+      "length": 0,
+      "mode": 1,
+      "sameReference": false,
+      "copyRight": false,
+      "result": null,
+      "sign": null,
+      "fault": "ArgumentOutOfRangeException",
+      "parameter": "indexA"
+    },
+    {
+      "id": "culture/zero-invalid-range/2",
+      "group": "culture",
+      "left": [
+        97,
+        98,
+        99
+      ],
+      "indexA": 4,
+      "right": [
+        120,
+        121,
+        122
+      ],
+      "indexB": 0,
+      "length": 0,
+      "mode": 2,
+      "sameReference": false,
+      "copyRight": false,
+      "result": null,
+      "sign": null,
+      "fault": "ArgumentOutOfRangeException",
+      "parameter": "indexA"
+    },
+    {
+      "id": "culture/zero-invalid-range/3",
+      "group": "culture",
+      "left": [
+        97,
+        98,
+        99
+      ],
+      "indexA": 4,
+      "right": [
+        120,
+        121,
+        122
+      ],
+      "indexB": 0,
+      "length": 0,
+      "mode": 3,
+      "sameReference": false,
+      "copyRight": false,
+      "result": null,
+      "sign": null,
+      "fault": "ArgumentOutOfRangeException",
+      "parameter": "indexA"
+    },
+    {
+      "id": "culture/length-before-indices/0",
+      "group": "culture",
+      "left": [
+        97,
+        98,
+        99
+      ],
+      "indexA": -1,
+      "right": [
+        97,
+        98,
+        99
+      ],
+      "indexB": -1,
+      "length": -1,
+      "mode": 0,
+      "sameReference": true,
+      "copyRight": false,
+      "result": null,
+      "sign": null,
+      "fault": "ArgumentOutOfRangeException",
+      "parameter": "length"
+    },
+    {
+      "id": "culture/length-before-indices/1",
+      "group": "culture",
+      "left": [
+        97,
+        98,
+        99
+      ],
+      "indexA": -1,
+      "right": [
+        97,
+        98,
+        99
+      ],
+      "indexB": -1,
+      "length": -1,
+      "mode": 1,
+      "sameReference": true,
+      "copyRight": false,
+      "result": null,
+      "sign": null,
+      "fault": "ArgumentOutOfRangeException",
+      "parameter": "length"
+    },
+    {
+      "id": "culture/length-before-indices/2",
+      "group": "culture",
+      "left": [
+        97,
+        98,
+        99
+      ],
+      "indexA": -1,
+      "right": [
+        97,
+        98,
+        99
+      ],
+      "indexB": -1,
+      "length": -1,
+      "mode": 2,
+      "sameReference": true,
+      "copyRight": false,
+      "result": null,
+      "sign": null,
+      "fault": "ArgumentOutOfRangeException",
+      "parameter": "length"
+    },
+    {
+      "id": "culture/length-before-indices/3",
+      "group": "culture",
+      "left": [
+        97,
+        98,
+        99
+      ],
+      "indexA": -1,
+      "right": [
+        97,
+        98,
+        99
+      ],
+      "indexB": -1,
+      "length": -1,
+      "mode": 3,
+      "sameReference": true,
+      "copyRight": false,
+      "result": null,
+      "sign": null,
+      "fault": "ArgumentOutOfRangeException",
+      "parameter": "length"
+    },
+    {
+      "id": "culture/negative-indexB-before-indexA-bounds/0",
+      "group": "culture",
+      "left": [
+        97,
+        98,
+        99
+      ],
+      "indexA": 4,
+      "right": [
+        97,
+        98,
+        99
+      ],
+      "indexB": -1,
+      "length": 1,
+      "mode": 0,
+      "sameReference": true,
+      "copyRight": false,
+      "result": null,
+      "sign": null,
+      "fault": "ArgumentOutOfRangeException",
+      "parameter": "indexB"
+    },
+    {
+      "id": "culture/negative-indexB-before-indexA-bounds/1",
+      "group": "culture",
+      "left": [
+        97,
+        98,
+        99
+      ],
+      "indexA": 4,
+      "right": [
+        97,
+        98,
+        99
+      ],
+      "indexB": -1,
+      "length": 1,
+      "mode": 1,
+      "sameReference": true,
+      "copyRight": false,
+      "result": null,
+      "sign": null,
+      "fault": "ArgumentOutOfRangeException",
+      "parameter": "indexB"
+    },
+    {
+      "id": "culture/negative-indexB-before-indexA-bounds/2",
+      "group": "culture",
+      "left": [
+        97,
+        98,
+        99
+      ],
+      "indexA": 4,
+      "right": [
+        97,
+        98,
+        99
+      ],
+      "indexB": -1,
+      "length": 1,
+      "mode": 2,
+      "sameReference": true,
+      "copyRight": false,
+      "result": null,
+      "sign": null,
+      "fault": "ArgumentOutOfRangeException",
+      "parameter": "indexB"
+    },
+    {
+      "id": "culture/negative-indexB-before-indexA-bounds/3",
+      "group": "culture",
+      "left": [
+        97,
+        98,
+        99
+      ],
+      "indexA": 4,
+      "right": [
+        97,
+        98,
+        99
+      ],
+      "indexB": -1,
+      "length": 1,
+      "mode": 3,
+      "sameReference": true,
+      "copyRight": false,
+      "result": null,
+      "sign": null,
+      "fault": "ArgumentOutOfRangeException",
+      "parameter": "indexB"
+    },
+    {
+      "id": "culture/indexA-bounds-before-indexB-bounds/0",
+      "group": "culture",
+      "left": [
+        97,
+        98,
+        99
+      ],
+      "indexA": 4,
+      "right": [
+        97,
+        98,
+        99
+      ],
+      "indexB": 4,
+      "length": 1,
+      "mode": 0,
+      "sameReference": true,
+      "copyRight": false,
+      "result": null,
+      "sign": null,
+      "fault": "ArgumentOutOfRangeException",
+      "parameter": "indexA"
+    },
+    {
+      "id": "culture/indexA-bounds-before-indexB-bounds/1",
+      "group": "culture",
+      "left": [
+        97,
+        98,
+        99
+      ],
+      "indexA": 4,
+      "right": [
+        97,
+        98,
+        99
+      ],
+      "indexB": 4,
+      "length": 1,
+      "mode": 1,
+      "sameReference": true,
+      "copyRight": false,
+      "result": null,
+      "sign": null,
+      "fault": "ArgumentOutOfRangeException",
+      "parameter": "indexA"
+    },
+    {
+      "id": "culture/indexA-bounds-before-indexB-bounds/2",
+      "group": "culture",
+      "left": [
+        97,
+        98,
+        99
+      ],
+      "indexA": 4,
+      "right": [
+        97,
+        98,
+        99
+      ],
+      "indexB": 4,
+      "length": 1,
+      "mode": 2,
+      "sameReference": true,
+      "copyRight": false,
+      "result": null,
+      "sign": null,
+      "fault": "ArgumentOutOfRangeException",
+      "parameter": "indexA"
+    },
+    {
+      "id": "culture/indexA-bounds-before-indexB-bounds/3",
+      "group": "culture",
+      "left": [
+        97,
+        98,
+        99
+      ],
+      "indexA": 4,
+      "right": [
+        97,
+        98,
+        99
+      ],
+      "indexB": 4,
+      "length": 1,
+      "mode": 3,
+      "sameReference": true,
+      "copyRight": false,
+      "result": null,
+      "sign": null,
+      "fault": "ArgumentOutOfRangeException",
+      "parameter": "indexA"
+    },
+    {
+      "id": "culture/normal-difference/0",
+      "group": "culture",
+      "left": [
+        97,
+        98,
+        99
+      ],
+      "indexA": 0,
+      "right": [
+        97,
+        98,
+        100
+      ],
+      "indexB": 0,
+      "length": 3,
+      "mode": 0,
+      "sameReference": false,
+      "copyRight": false,
+      "result": -1,
+      "sign": -1,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "culture/normal-difference/1",
+      "group": "culture",
+      "left": [
+        97,
+        98,
+        99
+      ],
+      "indexA": 0,
+      "right": [
+        97,
+        98,
+        100
+      ],
+      "indexB": 0,
+      "length": 3,
+      "mode": 1,
+      "sameReference": false,
+      "copyRight": false,
+      "result": -1,
+      "sign": -1,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "culture/normal-difference/2",
+      "group": "culture",
+      "left": [
+        97,
+        98,
+        99
+      ],
+      "indexA": 0,
+      "right": [
+        97,
+        98,
+        100
+      ],
+      "indexB": 0,
+      "length": 3,
+      "mode": 2,
+      "sameReference": false,
+      "copyRight": false,
+      "result": -1,
+      "sign": -1,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "culture/normal-difference/3",
+      "group": "culture",
+      "left": [
+        97,
+        98,
+        99
+      ],
+      "indexA": 0,
+      "right": [
+        97,
+        98,
+        100
+      ],
+      "indexB": 0,
+      "length": 3,
+      "mode": 3,
+      "sameReference": false,
+      "copyRight": false,
+      "result": -1,
+      "sign": -1,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "culture/unequal-clipped/0",
+      "group": "culture",
+      "left": [
+        97,
+        98,
+        99
+      ],
+      "indexA": 1,
+      "right": [
+        66,
+        67,
+        68,
+        69
+      ],
+      "indexB": 0,
+      "length": 2147483647,
+      "mode": 0,
+      "sameReference": false,
+      "copyRight": false,
+      "result": -1,
+      "sign": -1,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "culture/unequal-clipped/1",
+      "group": "culture",
+      "left": [
+        97,
+        98,
+        99
+      ],
+      "indexA": 1,
+      "right": [
+        66,
+        67,
+        68,
+        69
+      ],
+      "indexB": 0,
+      "length": 2147483647,
+      "mode": 1,
+      "sameReference": false,
+      "copyRight": false,
+      "result": -1,
+      "sign": -1,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "culture/unequal-clipped/2",
+      "group": "culture",
+      "left": [
+        97,
+        98,
+        99
+      ],
+      "indexA": 1,
+      "right": [
+        66,
+        67,
+        68,
+        69
+      ],
+      "indexB": 0,
+      "length": 2147483647,
+      "mode": 2,
+      "sameReference": false,
+      "copyRight": false,
+      "result": -1,
+      "sign": -1,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "culture/unequal-clipped/3",
+      "group": "culture",
+      "left": [
+        97,
+        98,
+        99
+      ],
+      "indexA": 1,
+      "right": [
+        66,
+        67,
+        68,
+        69
+      ],
+      "indexB": 0,
+      "length": 2147483647,
+      "mode": 3,
+      "sameReference": false,
+      "copyRight": false,
+      "result": -1,
+      "sign": -1,
+      "fault": null,
+      "parameter": null
+    }
+  ]
+}

@@ -1,0 +1,65 @@
+{
+  "baselineRevision": "ceced1c2ad0b7acead2333609d8568ab41f2f902",
+  "candidateRevision": "1699e53a664bb54752a216a98f59a9f947da5eeb",
+  "capturedMain": "9ac2d74d2b3992e80eb697474178e58269b17ce5",
+  "harnessCommit": "756ff0cbeb6c8560ee104c53627f5464de8572a1",
+  "startedAt": "2026-10-04T01:57:14.764446+00:00",
+  "sharedHost": true,
+  "purpose": "Resolve the generic binding p95 increase in the synchronized 15-sample completed-scope capture. Retain all earlier observations.",
+  "commands": [
+    [
+      "node",
+      "scripts/benchmarks/a20-provider-binding-export.mjs",
+      "ceced1c2ad0b7acead2333609d8568ab41f2f902",
+      "/workspace/scratch/6b99131ca908/p16-provider-tail-1699e53a/baseline"
+    ],
+    [
+      "node",
+      "scripts/limited.js",
+      "node",
+      "--expose-gc",
+      "/workspace/scratch/6b99131ca908/p16-provider-tail-1699e53a/baseline/a20-provider-binding.mjs",
+      "--case",
+      "constructed-generic-receiver",
+      "--calls",
+      "96",
+      "--samples",
+      "101",
+      "--warmups",
+      "10",
+      "--output",
+      "/workspace/scratch/6b99131ca908/p16-provider-tail-1699e53a/baseline.json"
+    ],
+    [
+      "node",
+      "scripts/benchmarks/a20-provider-binding-export.mjs",
+      "1699e53a664bb54752a216a98f59a9f947da5eeb",
+      "/workspace/scratch/6b99131ca908/p16-provider-tail-1699e53a/candidate"
+    ],
+    [
+      "node",
+      "scripts/limited.js",
+      "node",
+      "--expose-gc",
+      "/workspace/scratch/6b99131ca908/p16-provider-tail-1699e53a/candidate/a20-provider-binding.mjs",
+      "--case",
+      "constructed-generic-receiver",
+      "--calls",
+      "96",
+      "--samples",
+      "101",
+      "--warmups",
+      "10",
+      "--output",
+      "/workspace/scratch/6b99131ca908/p16-provider-tail-1699e53a/candidate.json"
+    ],
+    [
+      "node",
+      "scripts/benchmarks/a20-provider-binding-compare.mjs",
+      "/workspace/scratch/6b99131ca908/p16-provider-tail-1699e53a/baseline.json",
+      "/workspace/scratch/6b99131ca908/p16-provider-tail-1699e53a/candidate.json"
+    ]
+  ],
+  "comparisonExitCode": 0,
+  "finishedAt": "2026-10-04T01:57:56.952464+00:00"
+}

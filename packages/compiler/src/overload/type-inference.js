@@ -9,6 +9,7 @@
  * Fixing picks, among the candidate bounds, the unique type every other candidate converts to after discarding those
  * that violate an exact, lower or upper bound.
  */
+import {DiagnosticId} from '../diagnostics/codes.js';
 import {
   TypeKind,
   SymbolKind,
@@ -317,6 +318,6 @@ export function inferMethodTypeArguments(method, parameterTypes, args, conversio
   const definition = method.constructedFrom ?? method,
     inferrer = new TypeInferrer([...definition.typeParameters], conversions, core);
   const result = inferrer.infer(parameterTypes, args);
-  return result ? { typeArguments: result } : { error: { code: 'CS0411', args: [definition.toDisplayString()] } };
+  return result ? { typeArguments: result } : { error: { code: DiagnosticId.CS0411, args: [definition.toDisplayString()] } };
 }
 export { SymbolKind, TypeWithAnnotations };

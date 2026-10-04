@@ -1,6 +1,10 @@
+import {flushFramePool} from './frame-pool.js';
 import {ManagedFault} from '../heap.js';
 import {fatalFaults} from './eh.js';
 import {flushCilMethodEvents} from './cil-method-events.js';
+
+const slicing = new WeakSet();
+export const cilSliceActive = vm => slicing.has(vm);
 
 function raiseInstructionFault(vm, error) {
   const fault = error instanceof ManagedFault ? error : new ManagedFault('InvalidProgramException', error.message ?? String(error));
@@ -15,9 +19,12 @@ function raiseInstructionFault(vm, error) {
 }
 
 /** Existing cooperative CIL loop, with host observer delivery outside managed fault dispatch. */
-export function runCilSlice(vm, {instructionBudget = 15000, timeBudgetMs = 8, onInstruction = null} = {}) {
+export function runCilSlice(vm, {instructionBudget = 15000, timeBudgetMs = 8, onInstruction = null} = {}, executor = null) {
   let started;
+  const nested = slicing.has(vm);
+  slicing.add(vm);
   try {
+    vm.profiler?.beginSlice();
     vm.scheduler.beforeSlice();
     if (vm.state === 'ready') vm.state = 'running';
     if (vm.state !== 'running') return vm.state;
@@ -37,21 +44,31 @@ export function runCilSlice(vm, {instructionBudget = 15000, timeBudgetMs = 8, on
         vm.state = 'paused';
         break;
       }
+      executor?.validate(vm);
       count++;
       vm.instructions++;
       try {
         if (vm.instructions > vm.options.maxInstructions) {
           throw new ManagedFault('InstructionLimitException', 'Program exceeded its instruction budget');
         }
-        vm.step();
+        if (executor) executor.step(vm);
+        else vm.step();
       } catch (error) {
         raiseInstructionFault(vm, error);
       }
+      flushFramePool(vm);
       vm.scheduler.afterInstruction();
     }
     return vm.state;
   } finally {
-    if (started !== undefined) vm.elapsedMs += performance.now() - started;
-    flushCilMethodEvents(vm);
+    try {
+      if (started !== undefined) vm.elapsedMs += performance.now() - started;
+      flushFramePool(vm);
+      vm.profiler?.closeSlice();
+      flushCilMethodEvents(vm);
+      vm.profiler?.reportClockFailure();
+    } finally {
+      if (!nested) slicing.delete(vm);
+    }
   }
 }

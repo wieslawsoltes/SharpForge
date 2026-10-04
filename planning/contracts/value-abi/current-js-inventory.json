@@ -1,11 +1,33 @@
 {
   "schemaVersion": 1,
   "sources": {
-    "packages/runtime/src/heap.js": "28b86fe51a4a4cd93b7701b682fa2363a07d8a9c6370fd734e96690b16fe853c",
-    "packages/runtime/src/vm.js": "f12912ee9f65f9e3e1d71c732d43e4f85c13e021bf5ad19a1e044e9a40db8b7a",
-    "packages/runtime/src/cil-vm.js": "b1dee881f5aa7908052bded39f7e491017a582cee49d36febb9f600d2a109cc9",
-    "packages/bytecode/src/index.js": "3446e25f24d3b2d097a81f8a362ba43dcaf9906e5f11d42cdd347514bd8ccacc",
-    "packages/bytecode/src/builtins.js": "5d58c7a4d87f01f65370c7b87a60a0cbfc8e67eb0568675a29f8f159049ec7bf"
+    "packages/runtime/src/heap.js": "eecd3fb6a26637b3feb810f233f377c799f05c119e93c71b4a971056529e5d6b",
+    "packages/runtime/src/vm.js": "e698585e110a9d30335ee2ea4f86f4f041239a0a99f8a97becd783976f87c629",
+    "packages/runtime/src/cil-vm.js": "7e0cfd8c71f171fb11089fa8767753da4ff71905bd4edff1617821a923293f11",
+    "packages/runtime/src/execution/delegate-targets.js": "ec19efa480e2d864ba35268cfee220015e7655d84213502d6d2fc4b95094ae5d",
+    "packages/runtime/src/execution/source-ops.js": "d281c22b9072dc0151a2b0b3571c02b29bfe3074dbf783cf879269b6e5af9a22",
+    "packages/runtime/src/execution/source-ops/load-store.js": "7a99bedd6eef6f44a618a9f905181df553fa01bb98ee6d9912be4936d87c8a3e",
+    "packages/runtime/src/execution/source-ops/arithmetic.js": "658d004672bd71fdd1ab7b6a7747daf319d8fcb24217b925f33531336e9a1762",
+    "packages/runtime/src/execution/source-ops/control.js": "103ed7f7ec218785b9cbbe1dc12cfa956ca7302ea135cf90a8fe2a8a293d8aeb",
+    "packages/runtime/src/execution/source-ops/call.js": "9bbfce817cc8962140bccfcc03c290c42471904cb0cc2ef41239c707ac015f30",
+    "packages/runtime/src/execution/source-ops/object.js": "2a7564083417592455ef5753a4ab759c5a59ef54676f2bb6de779260c51ae872",
+    "packages/runtime/src/execution/source-ops/index.js": "893e36bfd952bd80a09dfa248ed9c0b4052bb0a0cea48a4b6aafdebde0f8cca0",
+    "packages/runtime/src/execution/source-builtins.js": "ddbc1a4f62e70cb89e91748af58900d99009c5ed16037decda08840aeb733fad",
+    "packages/runtime/src/execution/source-builtins/objects.js": "1c48decebb5ca2803409afa097f610e201d0b1556d7e46461dd444dfe03a3d3a",
+    "packages/runtime/src/execution/source-builtins/collections.js": "7c29355d5d9e39fd29641ffb9d2bf0e0ee6b406b70d75829f5dfe57dad0508cc",
+    "packages/runtime/src/execution/source-builtins/services.js": "b91d5a6acbd232e5d3e63e7a727e180ec4b7a4baff44ce82a6a51b1f6234cd8e",
+    "packages/runtime/src/execution/source-builtins/index.js": "5f158f73b07154bad9b3a3c2602cdac4ef2203b7984f1ad464a8b22d06f8211e",
+    "packages/runtime/src/execution/storage.js": "f38aeb44cd753cb77f8a3e9e15519ae94436dc4bcb7d24ea96e180526c2d8fe3",
+    "packages/runtime/src/execution/numeric-ops.js": "407778ba5fa9b1b97d26e625874dac923b2de5c6e4f9a5a30d42f1b2da7ee2b2",
+    "packages/runtime/src/execution/enums.js": "7235807aed0ec81512a186db091608087e4418b38dfbd1cb228cde697a46ff5c",
+    "packages/bytecode/src/index.js": "3d06bc8813cdd608360f8744c6bd8b7006845af5ac5918ca730b182be04ab058",
+    "packages/bytecode/src/builtins.js": "52bdae4e1dc6b2e0c418d6fa38cbb980e616891a03415143a656e6def8060d2b",
+    "packages/bytecode/src/numeric/conversions.js": "8ba60ff562911c7c11adb942a0d8b2793bd935cddadf5bc71bb52817b0f16b60",
+    "packages/bytecode/src/numeric/float.js": "aa8fe24bf6c9f0967934f377e1553244aa49a6521fb2c41a9e1e996e25a6ebc0",
+    "packages/bytecode/src/numeric/native-int.js": "1f4075523774128359ff73c3c77c535381a91f09b24df74c7b867b30acfb4f14",
+    "packages/bytecode/src/numeric/decimal-value.js": "d50f090d6e16eae12e2358e8ba45e857b942b3189dd1dbc8c908db8efc772c15",
+    "packages/bytecode/src/numeric/scalar-codec.js": "fa1c28f952cf0482128e995d053b5bbc32e144f05823bd6d80ab78c94ca970fd",
+    "packages/runtime/src/execution/source-numbers.js": "a4314c4024599c99fee05220fa44b328f40e8adc8d823a5b100bb250920a4836"
   },
   "resultKinds": {
     "int": {
@@ -21,12 +43,12 @@
       "cil": "bigint (signed Int64)"
     },
     "double": {
-      "source": "number (IEEE 754 binary64)",
+      "source": "number | frozen {float: r8, value: number} (IEEE 754 binary64)",
       "cil": "frozen {float: r8, value: number}"
     },
     "numeric": {
-      "source": "number",
-      "cil": "number | bigint | frozen {float: r4|r8, value: number}"
+      "source": "number | bigint | frozen float | nativeInt | Decimal",
+      "cil": "number | bigint | frozen {float: r4|r8, value: number} | frozen {nativeInt: 32|64, value: number|bigint}"
     },
     "bool": {
       "source": "boolean",
@@ -45,11 +67,31 @@
       "cil": "ManagedFault with optional reference, frames"
     },
     "any": {
-      "source": "number | bigint | boolean | null | undefined | {h,g} | enum carrier",
-      "cil": "number | bigint | null | undefined | {h,g} | float | byref | methodPointer"
+      "source": "number | bigint | boolean | null | undefined | {h,g} | enum | float | nativeInt | Decimal",
+      "cil": "number | bigint | null | undefined | {h,g} | float | nativeInt | Decimal | byref | methodPointer | frozen {valueType,fields} | frozen Nullable"
     }
   },
   "additionalShapes": [
+    {
+      "shape": "{nullableType:MethodTable,hasValue:boolean,value}",
+      "meaning": "immutable direct-CIL Nullable with an admitted reference-free copied payload or null; boxes as null or underlying T; ordinary same-VM snapshot-safe"
+    },
+    {
+      "shape": "{valueType:MethodTable,fields:frozen array}",
+      "meaning": "immutable VM-owned direct-CIL reference-free sequential struct; nested copied values; ordinary same-VM snapshot-safe, not portable wire data"
+    },
+    {
+      "shape": "{byref:true,vmOwner,kind,index,owner,frameId,path:frozen array}",
+      "meaning": "owned CIL address with immutable struct field indices; resolves live storage on access; rejects foreign VM and expired frames"
+    },
+    {
+      "shape": "{decimal:true, coefficient:bigint, scale:0..28, negative:boolean}",
+      "meaning": "immutable System.Decimal value, unsigned 96-bit coefficient; exact source/CIL arithmetic, storage and boxing; not a portable wire value"
+    },
+    {
+      "shape": "{nativeInt: 32|64, value: number|bigint}",
+      "meaning": "immutable source/CIL native-integer stack category; signed payload at the explicitly configured ABI width; not a portable pointer"
+    },
     {
       "shape": "{enumType, underlyingType, value}",
       "meaning": "source enum identity with signed or unsigned integer storage; not a heap reference"
@@ -71,8 +113,8 @@
       "meaning": "CIL managed interior/frame address; never portable raw pointer"
     },
     {
-      "shape": "{methodPointer:true,token}",
-      "meaning": "CIL ldftn pointer identity"
+      "shape": "{methodPointer:true,vmOwner,token}",
+      "meaning": "immutable CIL ldftn pointer with resolved method token and opaque VM identity; delegate binding rejects a different VM owner; not a portable function pointer"
     },
     {
       "shape": "host lease {id,owner}",
@@ -80,15 +122,21 @@
     }
   ],
   "evidence": [
+    "execution/source-builtins.js and source-builtins/ groups preserve rooted intrinsic results and VM-local result/host metadata",
+    "execution/source-ops/ groups preserve source opcode stack values, storage writes, arithmetic, control flow and object construction",
     "ManagedHeap.allocate returns Object.freeze({h,g})",
     "ManagedHeap.array caps length at 1000000",
-    "CilVirtualMachine.storage/convert implement narrow and BigInt integer categories",
-    "VirtualMachine.binary uses number with Int32 modes"
+    "execution/storage.js storageValue and execution/numeric-ops.js storage apply narrow and BigInt integer categories through bytecode/numeric/conversions.js",
+    "execution/source-ops.js binary preserves legacy modes and delegates typed modes to shared scalar helpers",
+    "execution/enums.js enumValue freezes source enum identity and underlying storage",
+    "bytecode/numeric/float.js float and bytecode/numeric/native-int.js nativeInteger freeze numeric stack carriers",
+    "execution/delegate-targets.js delegateMethodPointer freezes the resolved token and VM owner; constructBoundDelegate requires the same owner",
+    "bytecode/numeric/decimal-value.js decimal freezes the unsigned 96-bit coefficient, scale and sign used by source/CIL Decimal arithmetic and storage"
   ],
   "unsupported": [
     "Rust engine qualification",
     "Wasm runtime qualification",
-    "decimal execution parity",
+    "Numeric source/direct-CIL cross-platform execution qualification",
     "arbitrary value structs in source VM"
   ]
 }

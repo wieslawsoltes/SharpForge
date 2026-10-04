@@ -1,6 +1,7 @@
 import {float} from './float.js';
 import {number, isNumber} from './numeric-values.js';
 import {smallIntegerIndirect} from './small-int.js';
+import {nativeInteger, nativeIntegerBits} from './native-int.js';
 import {numericFault} from './checked.js';
 
 const integerTargets = {
@@ -11,7 +12,7 @@ const integerTargets = {
   i: {bits: 32, native: true, signed: true}, u: {bits: 32, native: true, signed: false},
 };
 
-/** All 13 ECMA conversion targets in the current 32-bit native-integer profile. */
+/** All 13 ECMA conversion targets; native metadata describes the default 32-bit ABI. */
 export const conversionTargets = Object.freeze([
   ...Object.entries(integerTargets).map(([name, layout]) => Object.freeze({name, ...layout})),
   Object.freeze({name: 'r4', floating: true}), Object.freeze({name: 'r8', floating: true}),
@@ -30,16 +31,18 @@ function integerBounds(bits, signed) {
   return Object.freeze({minimum, maximum, numericMinimum: Number(minimum), numericMaximum: Number(maximum)});
 }
 
-function compilePolicies() {
+function compilePolicies(nativeIntBits) {
+  const targets = conversionTargets.map(target => target.native && nativeIntBits === 64 ?
+    Object.freeze({...target, bits: 64}) : target);
   const policies = new Map();
   const boundsByLayout = new Map();
-  for (const target of conversionTargets) {
+  for (const target of targets) {
     if (!target.floating) {
       const key = target.bits * 2 + Number(target.signed);
       if (!boundsByLayout.has(key)) boundsByLayout.set(key, integerBounds(target.bits, target.signed));
     }
   }
-  for (const target of conversionTargets) {
+  for (const target of targets) {
     if (target.floating) {
       policies.set('conv.' + target.name, Object.freeze({
         target, unsignedSource: !!target.unsignedSource, kind: target.name === 'r4' ? 'r4' : 'r8'
@@ -57,7 +60,8 @@ function compilePolicies() {
 }
 
 // Opcode parsing and bounds construction belong to policy initialization, not guest execution.
-const conversionPolicies = compilePolicies();
+const conversionPolicies32 = compilePolicies(32);
+const conversionPolicies64 = compilePolicies(64);
 const emptyContext = Object.freeze({});
 
 function floatingInteger(value, policy, context) {
@@ -75,7 +79,7 @@ function floatingInteger(value, policy, context) {
 
 function integerSource(raw, target, checked, unsignedSource) {
   if (typeof raw === 'bigint') return unsignedSource ? BigInt.asUintN(64, raw) : raw;
-  const zeroExtend = unsignedSource || !checked && target.name === 'u8';
+  const zeroExtend = unsignedSource || !checked && (target.name === 'u8' || target.name === 'u' && target.bits === 64);
   return BigInt(zeroExtend ? raw >>> 0 : raw);
 }
 
@@ -84,7 +88,8 @@ export function convert(name, value, context = emptyContext) {
   if (!isNumber(value)) {
     numericFault(context, 'InvalidProgramException', 'Numeric conversion required');
   }
-  const policy = conversionPolicies.get(name);
+  const policies = nativeIntegerBits(context) === 64 ? conversionPolicies64 : conversionPolicies32;
+  const policy = policies.get(name);
   if (!policy) invalidConversion(context);
   const {target, checked, unsignedSource} = policy;
   const raw = number(value);
@@ -105,6 +110,7 @@ export function convert(name, value, context = emptyContext) {
       numericFault(context, 'OverflowException', 'Checked conversion overflow');
     }
   }
+  if (target.native) return nativeInteger(integer, target.bits);
   if (target.bits < 32) return smallIntegerIndirect(integer, target.name, context);
   const narrowed = (target.signed ? BigInt.asIntN : BigInt.asUintN)(target.bits, integer);
   return target.bits === 64 ? BigInt.asIntN(64, narrowed) : Number(narrowed) | 0;
