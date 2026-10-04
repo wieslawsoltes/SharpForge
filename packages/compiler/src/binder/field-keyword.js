@@ -12,6 +12,7 @@
  * to a member named `field` or is CS0103, as in Roslyn; only an accessor without a body next to one with a body
  * needs the feature (CS9260 on the property name).
  */
+import {DiagnosticId} from '../diagnostics/codes.js';
 import { SymbolKind } from '../symbols/types.js';
 import { MethodKind } from '../symbols/members.js';
 import { lookupMembers } from './inheritance.js';
@@ -45,8 +46,8 @@ export function reportFieldKeywordUses(node, version, report) {
   if (version.number < 14) return false;
   const bodies = node.accessors.map(accessor => accessor.body),
     uses = collect(bodies, candidate => candidate.kind === 'Name' && candidate.name === 'field' && !candidate.escaped);
-  for (const use of uses) report(use, 'SF2098', ['field']);
-  for (const local of collect(bodies, candidate => candidate.kind === 'Variable' && candidate.name === 'field')) report(local, 'CS9273', [version.name]);
+  for (const use of uses) report(use, DiagnosticId.SF2098, ['field']);
+  for (const local of collect(bodies, candidate => candidate.kind === 'Variable' && candidate.name === 'field')) report(local, DiagnosticId.CS9273, [version.name]);
   return uses.length > 0;
 }
 
@@ -62,10 +63,10 @@ export const FieldKeywordBinding = Base =>
         property = isPropertyAccessor ? accessor.associatedSymbol : null,
         backing = property && !property.isIndexer ? property.backingField : null;
       if (!backing) {
-        this.report(syntax, 'CS0103', ['field']);
+        this.report(syntax, DiagnosticId.CS0103, ['field']);
         return this.bad(syntax);
       }
-      if (this.memberNamedField()) this.report(syntax, 'CS9258', [this.d.versionOf(this.c.uri).name ?? '14.0']);
+      if (this.memberNamedField()) this.report(syntax, DiagnosticId.CS9258, [this.d.versionOf(this.c.uri).name ?? '14.0']);
       const receiver = backing.isStatic ? null : this.node('This', syntax, this.c.containingType, { isImplicit: true });
       return this.node('FieldAccess', syntax, backing.type, { field: backing, receiver });
     }
