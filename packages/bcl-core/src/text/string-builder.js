@@ -4,6 +4,7 @@ import {appendBuilderCharacter} from './string-builder-append.js';
 import {accessBuilderCharacter} from './string-builder-indexer.js';
 import {copyBuilderCharacters} from './string-builder-copy.js';
 import {appendBuilderRange} from './string-builder-append-range.js';
+import {appendBuilderArray} from './string-builder-append-array.js';
 
 const owner = 'System.Text.StringBuilder';
 const maximumCapacity = 2147483647;
@@ -193,6 +194,7 @@ function invokeMember(platform, descriptor, reference, values, scalars) {
       platform.set(reference, '$capacity', scalars[0]);
       return null;
     case 'Append':
+      if (descriptor.parameters[0] === 'char[]') return appendBuilderArray(platform, reference, values, scalars, appendText);
       if (descriptor.parameters.length === 3) return appendBuilderRange(platform, reference, scalars, appendText);
       return descriptor.parameters[0] === 'char'
         ? appendBuilderCharacter(platform, reference, scalars, appendText)
