@@ -198,6 +198,20 @@ test('framework public keys are bounded before hashing', () => {
   assert.throws(() => bindConstantTypes([constant], metadata), /assembly key byte limit/);
 });
 
+test('aggregate assembly keys and scope count are bounded across distinct type references', () => {
+  for (const [count, size, flags, error] of [
+    [65, 16384, 1, /key byte limit/],
+    [1025, 8, 0, /identity limit/],
+  ]) {
+    const { metadata } = declaredDecimal({ reference: true, name: 'System.Runtime', key: new Uint8Array(size), flags });
+    const type = metadata.row(0x01000001);
+    const identity = metadata.row(0x23000001);
+    metadata.row = (token) => (token >>> 24 === 1 ? [(token & 0xffffff) * 4 + 2, type[1], type[2]] : identity);
+    const constants = Array.from({ length: count }, (_, index) => ({ typeToken: 0x01000001 + index }));
+    assert.throws(() => bindConstantTypes(constants, metadata), error);
+  }
+});
+
 test('bound decimal values own their scalar representation after PE/PDB mutation', () => {
   const peBytes = new Uint8Array(assembly),
     pdbBytes = new Uint8Array(pdb);
