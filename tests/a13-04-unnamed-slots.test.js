@@ -206,14 +206,20 @@ test('Release CLR slot types and SRM declarations match without reconstructing e
 test('CLI headers are authoritative when in-range PDB signatures disagree or bodies are absent', () => {
   const input = fixture({ extraTypes: [primitive('bool')] });
   const metadata = readPE(input.rawAssembly).metadata;
+  const document = (builder) => {
+    const name = builder.blob(new TextEncoder().encode('Fixture.cs'));
+    builder.add(48, [builder.blob(new Writer().u8(47).compressed(name).finish()), 0, 0, 0]);
+  };
   const pdb = new PortablePdbBuilder();
-  pdb.add(49, [0, pdb.blob(new Uint8Array([2]))]);
+  document(pdb);
+  pdb.add(49, [1, pdb.blob(new Uint8Array([2, 0, 0, 0]))]);
   const mismatch = pdb.finish(metadata.counts, 0).bytes;
   assert.throws(() => loadSymbols(attachPortablePdb(input.rawAssembly, mismatch), mismatch), /local signatures differ/);
   const absent = fixture({ noBody: true });
   const noBody = readPE(absent.rawAssembly);
   const missing = new PortablePdbBuilder();
-  missing.add(49, [0, missing.blob(new Uint8Array([1]))]);
+  document(missing);
+  missing.add(49, [1, missing.blob(new Uint8Array([1, 0, 0, 0]))]);
   const bytes = missing.finish(noBody.metadata.counts, 0).bytes;
   assert.throws(() => loadSymbols(attachPortablePdb(absent.rawAssembly, bytes), bytes), /requires a CIL method body/);
 });
