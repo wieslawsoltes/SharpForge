@@ -1,9 +1,10 @@
 import { readFile } from 'node:fs/promises';
-import { isAbsolute, relative, resolve } from 'node:path';
+import { resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { runProcess } from './planning/run-tests.js';
-import { writeReport } from './editor-benchmarks/common.js';
+import { writeReport, isMain } from './editor-benchmarks/common.js';
 import { validateEditorReport, compareEditorPerformance } from './check-editor-perf.js';
+import { loadPerformanceBaselines } from './project16-baselines.js';
 
 const root = fileURLToPath(new URL('../', import.meta.url));
 const directory = resolve(root, process.env.SHARPFORGE_RESULTS_DIR || 'artifacts/results/project16');
@@ -14,33 +15,25 @@ const stages = new Set(['node', 'browser', 'performance', 'all']);
 const suites = ['workbench-docking', 'workbench-shell', 'workbench-sessions', 'workbench-lazy',
   'workbench-workflows', 'editor-insights', 'editor-providers', 'editor-view'];
 
-function repositoryFile(value) {
-  if (!value) return null;
-  const path = resolve(root, value);
-  const subpath = relative(root, path);
-  if (!subpath || isAbsolute(subpath) || subpath === '..' || subpath.startsWith('../') || subpath.startsWith('..\\')) {
-    throw new Error('A performance baseline must be a file inside the checkout');
-  }
-  return path;
-}
-
 async function run(command, args, timeout = 1_200_000) {
   const code = await runProcess(command, args, { cwd: root, timeout });
   if (code) throw new Error(`Qualification failed (${code}): ${command} ${args.join(' ')}`);
 }
 
-async function performance() {
-  const baseline = repositoryFile(process.env.SHARPFORGE_EDITOR_BASELINE);
-  const workbench = repositoryFile(process.env.SHARPFORGE_WORKBENCH_BASELINE);
-  if (workbench) process.env.SHARPFORGE_WORKBENCH_BASELINE = workbench;
-  const browserPath = resolve(directory, 'editor-browser.json');
-  await run(process.execPath, ['scripts/limited.js', 'node', 'scripts/benchmark-editor.js', '--backend', 'model',
-    '--output', resolve(directory, 'editor-model.json')]);
-  await run(process.execPath, ['scripts/limited.js', 'node', '--expose-gc', 'scripts/benchmark-editor-memory.js',
-    '--output', resolve(directory, 'editor-memory.json')]);
-  await run(process.execPath, ['scripts/limited.js', 'node', 'scripts/benchmark-editor.js', '--backend', 'browser',
-    '--browser', engine, '--sizes', '1024,1048576,10485760,104857600,209715200', '--output', browserPath]);
-  const current = JSON.parse(await readFile(browserPath, 'utf8'));
+/** Serial capture orchestration; injectable I/O lets preflight regressions run without starting benchmarks. */
+export async function performance({ runCapture = run, read = readFile, write = writeReport, host, env = process.env,
+  selectedEngine = engine, checkoutRoot = root, outputDirectory = directory } = {}) {
+  const { editor: baseline, workbench } = await loadPerformanceBaselines({ root: checkoutRoot, engine: selectedEngine, host, read,
+    editorPath: env.SHARPFORGE_EDITOR_BASELINE, workbenchPath: env.SHARPFORGE_WORKBENCH_BASELINE });
+  if (workbench) env.SHARPFORGE_WORKBENCH_BASELINE = workbench.path;
+  const browserPath = resolve(outputDirectory, 'editor-browser.json');
+  await runCapture(process.execPath, ['scripts/limited.js', 'node', 'scripts/benchmark-editor.js', '--backend', 'model',
+    '--output', resolve(outputDirectory, 'editor-model.json')]);
+  await runCapture(process.execPath, ['scripts/limited.js', 'node', '--expose-gc', 'scripts/benchmark-editor-memory.js',
+    '--output', resolve(outputDirectory, 'editor-memory.json')]);
+  await runCapture(process.execPath, ['scripts/limited.js', 'node', 'scripts/benchmark-editor.js', '--backend', 'browser',
+    '--browser', selectedEngine, '--sizes', '1024,1048576,10485760,104857600,209715200', '--output', browserPath]);
+  const current = JSON.parse(await read(browserPath, 'utf8'));
   validateEditorReport(current);
   const typing = current.rows.find(row => row.sizeBytes === 209_715_200 && row.operation === 'browser.keystrokeToPaint');
   if (!typing) throw new Error('The 200 MiB editor typing measurement is missing');
@@ -50,12 +43,13 @@ async function performance() {
       measurement: typing.measurement }, regressionVerdict: null
   };
   if (baseline) {
-    assessment.comparison = compareEditorPerformance(JSON.parse(await readFile(baseline, 'utf8')), current, { requireBrowser: true });
+    assessment.comparison = compareEditorPerformance(baseline.report, current, { requireBrowser: true });
     assessment.regressionVerdict = assessment.comparison.passed;
   }
-  await writeReport(resolve(directory, 'editor-assessment.json'), assessment);
-  await run(python, ['tests/conformance/browser/run_suite.py', 'workbench-performance', '--timeout', '1200'], browserSupervisorTimeout);
+  await write(resolve(outputDirectory, 'editor-assessment.json'), assessment);
+  await runCapture(python, ['tests/conformance/browser/run_suite.py', 'workbench-performance', '--timeout', '1200'], browserSupervisorTimeout);
   if (!assessment.absolutePassed || assessment.regressionVerdict === false) throw new Error('Editor latency budget failed');
+  return assessment;
 }
 
 async function main() {
@@ -74,5 +68,7 @@ async function main() {
   if (stage === 'performance' || stage === 'all') await performance();
 }
 
-try { await main(); }
-catch (error) { process.stderr.write(`${error.message}\n`); process.exitCode = 1; }
+if (isMain(import.meta.url)) {
+  try { await main(); }
+  catch (error) { process.stderr.write(`${error.message}\n`); process.exitCode = 1; }
+}
