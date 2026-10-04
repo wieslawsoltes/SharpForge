@@ -99,6 +99,7 @@ function mountSurfaces(context, owners) {
   return mountStudioShell({
     document: context.document,
     commands: context.commands,
+    performance: context.performance,
     services: context.services,
     state: () => context.state,
     docking: context.docking,
