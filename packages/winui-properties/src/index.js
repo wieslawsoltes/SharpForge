@@ -11,3 +11,5 @@ export * from './styles/index.js';
 export * from './adapters/context-resources.js';
 export * from './visual-states/index.js';
 export * from './items/index.js';
+export * from './contracts/resources.js';
+export * from './contracts/object-model-contracts.js';
