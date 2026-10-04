@@ -88,6 +88,9 @@ export function createWorkspaceLanguageActions({projects, documents, getProjectD
       const edit = mergeWorkspaceEdits(results);
       await validateMerged(batches, edit, options);
       checkSource(start);
+      if (parameters.scope === 'solution' && builds.list().map(item => item.id).sort().join('\n') !== ids) {
+        throw new Error('Solution membership changed while validating Fix All');
+      }
       return [{title: `Fix ${edit.edits.length} occurrences in ${parameters.scope}`, kind: 'refactor.rewrite',
         equivalenceKey: parameters.equivalenceKey, scope: parameters.scope, edits: edit.edits}];
     },
@@ -110,6 +113,7 @@ export function createWorkspaceLanguageActions({projects, documents, getProjectD
       await validateMerged(batches, merged, options,
         {uri: declaration.uri, offset: target.declaration.start, newName: parameters.newName});
       checkSource(start);
+      if (builds.list().map(item => item.id).sort().join('\n') !== ids) throw new Error('Solution changed while validating rename');
       const groups = new Map();
       for (const edit of merged.edits) {
         if (!groups.has(edit.uri)) groups.set(edit.uri, []);

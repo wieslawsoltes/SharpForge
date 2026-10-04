@@ -82,7 +82,7 @@ test('real bound type rename preview restores original source, selection and und
   const workspace = new Workspace({compilationOptions: {outputKind: 'library'}});
   workspace.update('Widget.cs', text, model.version);
   const refactoring = new RefactoringEngine(workspace, new LanguageService(workspace));
-  const editor = {model, paint() {}, refreshPreview() {}};
+  const editor = {model, get value() {return model.value;}, paint() {}, refreshPreview() {}};
   const preview = new RenamePreview(editor);
   const target = new EditorModelWorkspace(new Map([['Widget.cs', model]]));
   for (const [name, options] of [['Gadget', {}], ['Changed', {includeComments: true, includeStrings: true}]]) {
@@ -113,4 +113,34 @@ test('provider invalidation is scoped, explicitly disposable and does not fabric
   services.dispose();
   services.invalidate('codeLens');
   assert.throws(() => services.subscribe(() => {}), /disposed/);
+});
+
+test('rename preview refuses a newer source revision even when external edits reproduce its displayed bytes', () => {
+  const model = new EditorModel('class Widget {}', {uri: 'Widget.cs'});
+  const editor = {model, get value() {return this.model.value;}, refreshPreview() {}};
+  const preview = new RenamePreview(editor);
+  preview.show([{start: 6, end: 12, text: 'Gadget'}]);
+  const displayed = model.value;
+  model.applyEdits([{start: model.length, end: model.length, text: ' '}]);
+  model.applyEdits([{start: model.length - 1, end: model.length, text: ''}]);
+  assert.equal(model.value, displayed);
+  const version = model.version;
+  assert.throws(() => preview.restore(), /outside the rename preview/);
+  assert.equal(model.value, displayed);
+  assert.equal(model.version, version);
+});
+
+test('changing the active model restores only the captured rename preview and refuses another preview', () => {
+  const original = new EditorModel('class Widget {}', {uri: 'Widget.cs'});
+  const replacement = new EditorModel('class Other {}', {uri: 'Other.cs'});
+  const editor = {model: original, get value() {return this.model.value;}, refreshPreview() {}};
+  const preview = new RenamePreview(editor);
+  preview.show([{start: 6, end: 12, text: 'Gadget'}]);
+  editor.model = replacement;
+  preview.restore();
+  assert.equal(original.value, 'class Widget {}');
+  assert.equal(original.version, 1);
+  assert.equal(replacement.value, 'class Other {}');
+  assert.equal(replacement.version, 1);
+  assert.throws(() => preview.show([{start: 6, end: 12, text: 'Changed'}]), /active document/);
 });

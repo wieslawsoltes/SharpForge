@@ -85,6 +85,13 @@ export function renameSource(workspace, uri, offset, newName, options = {}) {
     symbolId: record.id, symbol: record, newName};
 }
 
+/** The historical edit-array API refuses resource intent; callers must preserve it through renamePlan. */
+export function renameSourceText(workspace, uri, offset, newName, options = {}) {
+  const plan = renameSource(workspace, uri, offset, newName, options);
+  if (plan.resources.length) throw new Error('A file rename requires renamePlan and an atomic resource host');
+  return plan.edits;
+}
+
 export function prepareSourceRename(workspace, uri, offset) {
   const {record, reference, symbol} = renameTarget(workspace, uri, offset);
   const capabilities = ['comments', 'strings'];

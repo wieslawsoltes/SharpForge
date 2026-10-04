@@ -5,6 +5,7 @@
  */
 import { SymbolKind } from '../symbols/types.js';
 import { ConstantValue } from '../constants/constant-value.js';
+import {namedSourceReferences} from './named-references.js';
 
 const nameKinds = new Set(['IdentifierName', 'GenericName']);
 const missingMemberCodes = new Set(['CS0117', 'CS1061']);
@@ -100,6 +101,7 @@ export const CSharp6Binding = Base =>
       if (problem) this.report(problem.node, problem.code);
       else if (operand.kind === 'MethodGroup' && operand.typeArguments) this.report(argument, 'CS8084');
       if (operand.kind === 'Local') operand.local.reads++;
+      if (!errors.length) node.nameOfReferences = namedSourceReferences(operand);
       node.constantValue = ConstantValue.string(nameofValue(argument));
       return node;
     }

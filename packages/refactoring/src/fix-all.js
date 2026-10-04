@@ -22,6 +22,7 @@ function typeActions(workspace, uri) {
     const current = type.toString();
     const implicit = current === 'var';
     if (!implicit && (!variable.initializer?.value?.kind?.endsWith('LiteralExpression') || current !== symbol.type)) continue;
+    if (!implicit && !workspace.sourceModel().localInitializerTypes.get(symbol.id)?.equals(boundType)) continue;
     const equivalenceKey = implicit ? 'sharpforge.local.explicit-type' : 'sharpforge.local.implicit-type';
     actions.push({title: implicit ? `Use explicit type '${symbol.type}'` : 'Use implicit type var', kind: 'refactor.rewrite',
       equivalenceKey, fixAllScopes: scopes, data: {uri, version: source.version, start: node.span.start, end: node.span.end},

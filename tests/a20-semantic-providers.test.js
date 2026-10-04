@@ -101,7 +101,8 @@ test('partial generic type rename covers aliases, constructors, arrays, qualifie
     'Use.cs': 'using Alias=N.Box<int>; namespace Use { class Holder { N.Box<int>[] values; ' +
       'Alias Get()=>new N.Box<int>(); System.Type Kind()=>typeof(N.Box<int>); Other.Box untouched; } }'
   };
-  const {workspace, refactoring} = fixture(files);
+  const {workspace, language, refactoring} = fixture(files);
+  assert.throws(() => language.rename('Box.cs', files['Box.cs'].indexOf('Box'), 'Crate', {renameFile: true}), /renamePlan/);
   const action = refactoring.rename('Box.cs', files['Box.cs'].indexOf('Box'), 'Crate', {renameFile: true});
   assert.equal(action.edits.filter(edit => edit.uri === 'Box.cs').length, 3);
   assert.equal(action.edits.filter(edit => edit.uri === 'Part.cs').length, 1);
@@ -207,4 +208,19 @@ test('framework hover carries a structured callable target for metadata navigati
   assert.equal(hover.metadata.name, 'WriteLine');
   assert.match(hover.metadata.owner, /Console$/);
   assert.equal(text.slice(hover.start, hover.end), 'WriteLine');
+});
+
+test('nameof and selected method-group conversions retain actual bound source references', () => {
+  const text = 'class Widget { static void Target(){} static void Target(int value){} ' +
+    'static void M(int input){int local=input;System.Action action=Target;' +
+    'System.Console.WriteLine(nameof(Widget)+nameof(local)+nameof(input));} }';
+  const {language, refactoring, workspace} = fixture({'Widget.cs': text});
+  assert.equal(language.references('Widget.cs', text.indexOf('Widget')).length, 2);
+  assert.equal(language.references('Widget.cs', text.indexOf('local')).length, 2);
+  assert.equal(language.references('Widget.cs', text.indexOf('input')).length, 3);
+  const target = language.references('Widget.cs', text.indexOf('Target'));
+  assert.deepEqual(target.map(row => row.start), [text.indexOf('Target'), text.indexOf('action=Target') + 7]);
+  const action = refactoring.rename('Widget.cs', text.indexOf('Widget'), 'Gadget');
+  refactoring.apply(action);
+  assert(workspace.documents.get('Widget.cs').source.text.includes('nameof(Gadget)'));
 });

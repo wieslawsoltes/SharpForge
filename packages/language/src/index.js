@@ -1,7 +1,7 @@
 import {sourceHover} from './hover.js';
 import {boundInlayHints} from './inlay-hints.js';
 import {boundSignatureHelp} from './signature-help.js';
-import {renameSource, prepareSourceRename} from './rename.js';
+import {renameSource, renameSourceText, prepareSourceRename} from './rename.js';
 import {sourceReferences, sourceReferenceLenses} from './source-queries.js';
 import {types as frameworkTypes,frameworkType,canonicalType,propertiesFor,eventsFor,findContracts,contracts} from '@sharpforge/framework';
 import { findTextMatches } from '@sharpforge/text';
@@ -33,7 +33,7 @@ export class LanguageService {
   hover(uri,offset){return sourceHover(this,uri,offset,symbolDetail,intrinsicDocs);}
   definition(uri,offset){const symbol=this.symbolAt(uri,offset);return symbol?{uri:symbol.uri,start:symbol.start,end:symbol.end}:null;}
   references(uri,offset,includeDeclaration=true){return sourceReferences(this.workspace,uri,offset,includeDeclaration);}
-  rename(uri,offset,newName,options={}){return renameSource(this.workspace,uri,offset,newName,options).edits;}
+  rename(uri,offset,newName,options={}){return renameSourceText(this.workspace,uri,offset,newName,options);}
   renamePlan(uri,offset,newName,options={}){return renameSource(this.workspace,uri,offset,newName,options);}
   prepareRename(uri,offset){return prepareSourceRename(this.workspace,uri,offset);}
   findInFiles(query,options={}){return findTextMatches([...this.workspace.documents.values()].map(d=>d.source),query,options);}
