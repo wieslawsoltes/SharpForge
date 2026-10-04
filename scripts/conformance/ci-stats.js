@@ -40,12 +40,13 @@ export function ciStatistics(runs, budget) {
     if (identities.has(identity)) throw new Error('Duplicate CI run or attempt');
     identities.add(identity);
     if (!/^[a-f0-9]{40}$/.test(run.head_sha ?? '') || !Array.isArray(run.jobs)) throw new Error('CI run lacks commit or jobs');
+    const attempts = attemptHistory(run), countedJobs = new Map();
     const path = run.path.split('@')[0];
     const group = groups.get(path) ?? { path, durations: [], queues: [], jobs: new Map(), runs: [], attempts: 0, jobSeconds: 0 };
     group.durations.push(seconds(run.created_at, run.updated_at));
-    group.queues.push(seconds(run.created_at, run.run_started_at));
+    // GitHub resets run_started_at on rerun; only attempt 1 measures the initial queue.
+    group.queues.push(seconds(run.created_at, attempts[0].run_started_at));
     group.runs.push({ id: run.id, attempt: run.run_attempt, commit: run.head_sha, conclusion: run.conclusion });
-    const attempts = attemptHistory(run), countedJobs = new Map();
     group.attempts += attempts.length;
     for (const attempt of attempts) for (const job of attempt.jobs) {
       // A carried-forward successful job in a partial rerun is still one execution.
@@ -136,11 +137,11 @@ export async function collectRuns({ repository, since, request = ghTransport(), 
 
 export function statsMarkdown(report) {
   const cell = value => String(value ?? 'unknown').replaceAll('|', '\\|').replaceAll('\n', ' ');
-  return '# Weekly PR CI timing\n\n| Workflow | PR runs | Total p50 / p95 (s) | Queue p50 / p95 (s) | Attempts | Recorded job seconds |\n' +
+  return '# Weekly PR CI timing\n\n| Workflow | PR runs | Total p50 / p95 (s) | Initial queue p50 / p95 (s) | Attempts | Recorded job seconds |\n' +
     '| --- | ---: | ---: | ---: | ---: | ---: |\n' + report.workflows.map(row =>
       `| ${cell(row.path)} | ${row.duration.samples} | ${row.duration.p50Seconds} / ${row.duration.p95Seconds} | ` +
       `${row.queue.p50Seconds} / ${row.queue.p95Seconds} | ${row.attempts} | ${row.recordedJobSeconds} |`).join('\n') +
-    '\n\nPR lifecycle budgets count each run once; job durations include every captured attempt. Recorded job seconds are elapsed execution time, not billed cost.\n' +
+    '\n\nPR lifecycle budgets count each run once; initial queue time ends at the first attempt start, and job durations include every captured attempt. Recorded job seconds are elapsed execution time, not billed cost.\n' +
     `\nBudget: ${report.passed ? 'pass' : 'fail/unknown'}\n\n${report.errors.map(error => '- ' + cell(error)).join('\n')}\n`;
 }
 
