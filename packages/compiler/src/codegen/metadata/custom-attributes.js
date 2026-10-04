@@ -19,7 +19,7 @@
 import { encodeCustomAttribute, TypeAttributes, token } from '@sharpforge/cil';
 import { SymbolKind, TypeKind, ArrayTypeSymbol } from '../../symbols/types.js';
 import { MethodKind } from '../../symbols/members.js';
-import { MetadataEmitError, namespaceOf } from './type-tokens.js';
+import { MetadataEmitError, namespaceOf, definitionNameOf } from './type-tokens.js';
 import { methodSignature, methodSymbolSignature } from './member-signatures.js';
 import { tupleElementNamesOf } from './tuple-element-names.js';
 
@@ -63,6 +63,7 @@ const primitiveNames = Object.freeze({
 function fullNameOf(type) {
   const definition = type.originalDefinition ?? type;
   if (definition.containingType) return fullNameOf(definition.containingType) + '+' + definition.metadataName;
+  if (definition.isFileLocal) return (namespaceOf(definition) ? namespaceOf(definition) + '.' : '') + definitionNameOf(definition);
   const namespace = namespaceOf(definition);
   return (namespace ? namespace + '.' : '') + definition.metadataName;
 }

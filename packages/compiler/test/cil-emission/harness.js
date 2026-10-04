@@ -8,6 +8,10 @@
  *                         wrong result). A fixture that does not print the .NET output must fail for exactly that
  *                         reason, so it is never counted as running; once the runtime gains the capability the
  *                         output is compared as usual and `verify-dotnet.mjs --update` removes the file.
+ *   fixtures/<name>.image present only when the metadata validator of `@sharpforge/cil` reports something for an image
+ *                         .NET loads and runs (a rule older than the feature, such as "a static method cannot be
+ *                         virtual" for C# 11 static abstract interface members): the reports, one per line, pinned
+ *                         the same way.
  *
  * `checkFixture` verifies an emitted assembly on the two levels that need no .NET SDK: the image is read back and
  * validated by `@sharpforge/cil`, and it runs on the direct-CIL runtime. verify-dotnet.mjs is the third level.
@@ -24,7 +28,10 @@ const INSTRUCTION_BUDGET = 20_000_000;
 const normalize = text => text.replace(/\r\n/g, '\n');
 const read = path => (existsSync(path) ? normalize(readFileSync(path, 'utf8')) : null);
 
-/** Every fixture: `{name, source, expected, runtimeLimit}`; `runtimeLimit` is the content of the `.vm` file or null. */
+/**
+ * Every fixture: `{name, source, expected, runtimeLimit, imageLimit}`; `runtimeLimit` is the content of the `.vm`
+ * file and `imageLimit` that of the `.image` file, or null.
+ */
 export function loadFixtures() {
   return readdirSync(fixtureDirectory)
     .filter(file => file.endsWith('.cs'))
@@ -36,6 +43,7 @@ export function loadFixtures() {
         source: normalize(readFileSync(join(fixtureDirectory, file), 'utf8')),
         expected: read(join(fixtureDirectory, name + '.out')),
         runtimeLimit: read(join(fixtureDirectory, name + '.vm')),
+        imageLimit: read(join(fixtureDirectory, name + '.image')),
       };
     });
 }
