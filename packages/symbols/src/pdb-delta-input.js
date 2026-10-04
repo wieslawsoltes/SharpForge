@@ -6,6 +6,16 @@ const maximumBytes = 64 * 1024 * 1024;
 
 function inputError(message) { generationError('PDB_DELTA_INPUT', message); }
 
+function methodToken(value, counts) {
+  return Number.isInteger(value) && value >= 0x06000001 && value <= 0x06000000 + (counts[6] ?? 0);
+}
+
+function customParent(value) {
+  if (!Number.isInteger(value) || value < 1 || value > 0xffffffff || (value & 0xffffff) === 0) {
+    inputError('Invalid PDB delta custom debug parent token');
+  }
+}
+
 class InputBudget {
   constructor(options) {
     this.signal = options.signal;
@@ -102,8 +112,7 @@ export function preparePdbDeltaInput(debug, counts, options) {
   const seen = new Set();
   const methods = budget.array(debug.methods, 'methods').map((method) => {
     budget.check();
-    if (!method || !Number.isInteger(method.token) || method.token < 0x06000001 ||
-        method.token > 0x06000000 + (counts[6] ?? 0) || seen.has(method.token)) inputError('Invalid or duplicate PDB delta method');
+    if (!method || !methodToken(method.token, counts) || seen.has(method.token)) inputError('Invalid or duplicate PDB delta method');
     seen.add(method.token);
     const localSignature = method.localSignature ?? 0;
     if (!Number.isInteger(localSignature) || localSignature < 0 || localSignature > (counts[17] ?? 0)) inputError('Invalid PDB delta local signature');
@@ -128,8 +137,15 @@ export function preparePdbDeltaInput(debug, counts, options) {
   const custom = budget.array(debug.custom, 'custom debug records');
   for (const record of custom) {
     if (!record || typeof record.kind !== 'string') inputError('Invalid PDB delta custom debug record');
+    customParent(record.parent);
     budget.payload(record.bytes, 'custom debug');
   }
   const stateMachines = budget.array(debug.stateMachines, 'state machines');
+  for (const record of stateMachines) {
+    if (!record || typeof record !== 'object') inputError('Invalid PDB delta state-machine record');
+    if (!methodToken(record.moveNext, counts) || !methodToken(record.kickoff, counts)) {
+      inputError('Invalid PDB delta state-machine method token');
+    }
+  }
   return { methods, sources, imports, custom, stateMachines, budget };
 }

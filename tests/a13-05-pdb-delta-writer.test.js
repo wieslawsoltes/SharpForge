@@ -117,6 +117,30 @@ test('unchanged method references, malformed CDI, invalid scopes and incorrect d
   assert.throws(() => emit(badScope), /Root local scope|outside method body/);
 });
 
+test('writer rejects malformed state-machine records and token coercion before bit operations', () => {
+  for (const value of [null, undefined, false, 1, 'record', []]) {
+    const debug = input();
+    debug.stateMachines = [value];
+    code(() => emit(debug), 'PDB_DELTA_INPUT');
+  }
+  const invalid = [0, -1, 1.5, NaN, Infinity, Number.MAX_SAFE_INTEGER, String(updatedToken), BigInt(updatedToken),
+    token(6, 0), token(6, 4), token(4, 2), 0x100000000 + updatedToken];
+  for (const value of invalid) {
+    for (const field of ['method', 'moveNext', 'kickoff']) {
+      const debug = input();
+      if (field === 'method') debug.methods[0].token = value;
+      else debug.stateMachines[0][field] = value;
+      code(() => emit(debug), 'PDB_DELTA_INPUT');
+    }
+  }
+  for (const value of [0, -1, 1.5, NaN, Infinity, Number.MAX_SAFE_INTEGER, String(updatedToken), BigInt(updatedToken),
+    token(6, 0), 0x100000000 + token(51, 1)]) {
+    const debug = input();
+    debug.custom[1].parent = value;
+    code(() => emit(debug), 'PDB_DELTA_INPUT');
+  }
+});
+
 test('writer cancellation and budgets reject before returning any delta', () => {
   const cancelled = new AbortController();
   cancelled.abort();
