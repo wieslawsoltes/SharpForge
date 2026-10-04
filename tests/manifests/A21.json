@@ -6,6 +6,7 @@
     "tests/language14.test.js",
     "tests/language-ide-extensions.test.js",
     "tests/protocol.test.js",
+    "tests/protocol-lsp-envelope.test.js",
     "tests/release05-language.test.js",
     "tests/release06-language.test.js",
     "tests/release05-msil-protocol.test.js"

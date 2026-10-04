@@ -2,8 +2,7 @@ import {renameWorkspaceEdit,prepareRename,workspaceSymbols} from './lsp-source.j
 import { RefactoringEngine, formatDocument, foldingRanges, selectionRanges } from '@sharpforge/refactoring';
 import { Workspace } from '@sharpforge/workspace';
 import { LanguageService } from '@sharpforge/language';
-const tokenTypes=['namespace','class','method','field','variable','keyword','string','number','operator','property'];
-const symbolKinds={property:7,class:5,struct:23,interface:11,enum:10,delegate:12,method:6,field:8,event:24,local:13};
+import { tokenTypes, symbolKinds, isRequestObject, invalidRequest } from './lsp-wire.js';
 /** Transport-independent LSP 3.17 subset. Feed JSON-RPC messages; send emitted notifications on your transport. */
 export class LanguageServer {
   constructor({workspace=new Workspace(),send=()=>{}}={}){this.workspace=workspace;this.language=new LanguageService(workspace);this.refactoring=new RefactoringEngine(workspace,this.language);this.send=send;this.shutdown=false;}
@@ -13,6 +12,7 @@ export class LanguageServer {
   callItem(item){return {name:item.name,kind:6,detail:item.owner??'',uri:item.uri,range:this.location(item).range,selectionRange:this.location({...item,start:item.selectionStart,end:item.selectionEnd}).range,data:item};}
   publish(){const r=this.workspace.compile();for(const [uri,d]of this.workspace.documents)this.send({jsonrpc:'2.0',method:'textDocument/publishDiagnostics',params:{uri,version:d.source.version,diagnostics:r.diagnostics.filter(x=>x.uri===uri).map(x=>({range:x.range,severity:({error:1,warning:2,info:3,hint:4}[x.severity]??2),code:x.code,source:'SharpForge',message:x.message}))}});}
   async handle(message){
+    if (!isRequestObject(message)) return invalidRequest();
     const {id,method,params:p={}}=message;let result=null;
     try{
       if(this.shutdown&&method!=='exit')return id===undefined?null:{jsonrpc:'2.0',id,error:{code:-32600,message:'The language server has shut down'}};
