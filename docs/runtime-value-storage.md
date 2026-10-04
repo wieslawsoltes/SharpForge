@@ -41,7 +41,10 @@ also retain their existing storage path. At `6017ca32`, all 34 affected struct,
 address and scalar-field cases passed, plus four existing framework boxing/GC
 cases across source, canonical, CIL and reassembled execution. Tests used Node
 24.21.0, 512 MB and concurrency 1. Core static/build evidence is on the PR;
-native tools and performance qualification remain deferred.
+native tools and performance qualification remain deferred. After merging main
+`9d09838b`, all 29 struct/address and newly extracted source-dispatch integration
+tests passed at `26426fa0`; only the inventory generator and generated inventory
+needed conflict resolution, preserving both main and struct shape additions.
 
 Root owns the serial queue:
 
