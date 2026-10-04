@@ -35,8 +35,14 @@ export function createInsightContext(editor, options) {
     },
     async request(method, parameters = {}, requestOptions = {}) {
       if (!services.supports(method) || !context.canRequest(method)) return undefined;
+      const availability = options.languageAvailability?.({ ...parameters, method, uri: editor.uri });
+      if (availability?.available === false) {
+        context.status(`${availability.code ? `${availability.code}: ` : ''}${availability.reason}`);
+        return undefined;
+      }
       const maximum = options.maxSemanticCharacters ?? 2_000_000;
-      if (method !== 'readDocument' && !options.languageServicesInLargeFiles && (editor.model?.length ?? editor.value.length) > maximum) {
+      if (!['readDocument', 'projects'].includes(method) && !options.languageServicesInLargeFiles
+        && (editor.model?.length ?? editor.value.length) > maximum) {
         return undefined;
       }
       const versions = workspaceVersions(workspace);

@@ -65,13 +65,16 @@ function validateEnvironment(stage, name) {
   ensure(required.every(path => hash(stage.assets?.[path])), 'Missing verified served asset digests: ' + name);
 }
 
-function validateDefinition(sample, fixture) {
-  const target = fixture.targets.find(target => target.id === sample.case);
-  ensure(target && sample.focusPreserved === true && sample.readOnly === true && sample.visible === true &&
+function validateDefinition(sample, fixture, expectedTarget) {
+  const target = expectedTarget ?? fixture.targets.find(target => target.id === sample.case);
+  ensure(target && sample.case === target.id && sample.focusPreserved === true && sample.readOnly === true && sample.visible === true &&
     Array.isArray(sample.focusEvents) && sample.focusEvents.length === 0 && integer(sample.sourceVersion) &&
     sample.sourceVersion > 0 && sample.offset === target.offset && finite(sample.observedDomMs) &&
     sample.observedDomMs <= sample.durationMs, 'Definition focus, version or DOM observation failed');
-  if (target.kind === 'source') {
+  if (target.id === 'none') {
+    ensure(sample.title.startsWith('No source or referenced metadata definition') && sample.text === '' && sample.selection === '',
+      'Neutral caret did not clear the actual definition source and selection');
+  } else if (target.kind === 'source') {
     ensure(sample.title === target.uri && sample.text === target.text && sample.selection === target.name,
       'Definition did not show the exact source target and selection');
   } else {
@@ -79,6 +82,57 @@ function validateDefinition(sample, fixture) {
       sample.text.startsWith('// Read-only registered framework contracts') && sample.selection.includes('WriteLine('),
     'Actual framework metadata target/selection is absent');
   }
+}
+
+function proofRecords(records) {
+  ensure(Array.isArray(records) && records.every(record => nonempty(record?.path) && typeof record.text === 'string'),
+    'Missing exact workspace record contents');
+  return records.map(({path, text}) => ({path, text})).sort((left, right) => left.path < right.path ? -1 : left.path > right.path ? 1 : 0);
+}
+
+function sameNames(actual, expected) {
+  return Array.isArray(actual) && actual.every(nonempty) && isDeepStrictEqual([...actual].sort(), [...expected].sort());
+}
+
+/** Validate actual workspace records separately from source documents, then inspect both raw caret boundary observations. */
+export function validateDefinitionProof(definition, fixture) {
+  const expected = proofRecords(fixture.records);
+  const sources = expected.filter(record => record.path.endsWith('.cs'));
+  const projects = expected.filter(record => record.path.endsWith('.csproj')).map(record => record.path);
+  ensure(expected.length === 4 && sources.length === 3 && projects.length === 1 &&
+    new Set(expected.map(record => record.path)).size === expected.length && sources.some(record => record.path === fixture.callerUri) &&
+    integer(fixture.neutralOffset), 'Invalid source/project workspace fixture');
+  const setup = definition.setup;
+  const workspace = setup?.workspace;
+  ensure(setup?.uri === fixture.callerUri && setup.projectId === projects[0] && setup.readOnly === true && setup.visible === true &&
+    integer(setup.sourceVersion) && setup.sourceVersion > 0 && workspace?.version === 1 &&
+    sameNames(workspace.projectIds, projects), 'Missing actual workspace setup or project ownership');
+  ensure(isDeepStrictEqual(proofRecords(workspace.records), expected), 'Actual workspace source/project records differ from the fixture');
+  ensure(Array.isArray(workspace.sourceDocuments) && workspace.sourceDocuments.length === sources.length,
+    'Actual source-document count differs from the loaded source files');
+  for (const source of sources) {
+    const documents = workspace.sourceDocuments.filter(document => document?.uri === source.path);
+    const document = documents[0];
+    ensure(documents.length === 1 && document.text === source.text && integer(document.version) && document.version > 0 &&
+      sameNames(document.projectIds, projects), 'Actual source document contents, version or project ownership differ: ' + source.path);
+    if (source.path === fixture.callerUri) ensure(document.version === setup.sourceVersion, 'Caller source version differs from setup');
+  }
+  for (const target of fixture.targets.filter(target => target.kind === 'source')) {
+    ensure(sources.some(source => source.path === target.uri && source.text === target.text),
+      'Definition target differs from the actual loaded source');
+  }
+  const boundaries = definition.boundaries;
+  ensure(boundaries?.neutralClears === true && boundaries.rapidCaretUsesLatest === true &&
+    Array.isArray(boundaries.observations) && boundaries.observations.length === 2,
+    'Missing actual definition boundary observations');
+  const targets = [{id: 'none', offset: fixture.neutralOffset}, fixture.targets[1]];
+  for (const [index, observation] of boundaries.observations.entries()) {
+    ensure(observation?.phase === 'boundary' && observation.index === index && observation.correct === true &&
+      finite(observation.durationMs), 'Invalid definition boundary identity or correctness');
+    validateDefinition(observation, fixture, targets[index]);
+  }
+  ensure([...definition.samples, ...boundaries.observations].every(sample => sample.sourceVersion === setup.sourceVersion),
+    'Definition source version changed after workspace setup');
 }
 
 function validateOverview(sample) {
@@ -134,9 +188,7 @@ export function validateEditorBudgetTrace(trace) {
   ensure(isDeepStrictEqual(Object.keys(trace.stages ?? {}).sort(), Object.keys(cases).sort()), 'Missing or unknown capture stage');
   for (const name of Object.keys(cases)) validateStage(trace.stages?.[name], name, fixture);
   const definition = trace.stages.definition;
-  ensure(definition.setup?.uri === fixture.callerUri && nonempty(definition.setup.projectId) &&
-    definition.setup.workspaceRecords === 4 && definition.boundaries?.neutralClears === true &&
-    definition.boundaries.rapidCaretUsesLatest === true, 'Missing actual workspace or definition boundary checks');
+  validateDefinitionProof(definition, fixture);
   const overview = trace.stages.overview;
   ensure(overview.setup?.lineCount === 10000 && overview.setup.largeFileActive === false &&
     isDeepStrictEqual(overview.setup.annotationKinds, annotations.map(([kind]) => kind)) &&
@@ -147,10 +199,10 @@ export function validateEditorBudgetTrace(trace) {
   return trace;
 }
 
-/** Gate every observed first/warmup/measured sample; no relative-regression or physical refresh-rate verdict is inferred. */
+/** Gate every observed sample and definition boundary; no relative-regression or physical refresh-rate verdict is inferred. */
 export function assessEditorBudgetTrace(trace) {
   validateEditorBudgetTrace(trace);
-  const failures = Object.entries(trace.stages).flatMap(([name, stage]) => stage.samples
+  const failures = Object.entries(trace.stages).flatMap(([name, stage]) => [...stage.samples, ...(stage.boundaries?.observations ?? [])]
     .filter(sample => sample.durationMs > editorBrowserBudgets[name])
     .map(sample => ({stage: name, case: sample.case, phase: sample.phase, index: sample.index,
       durationMs: sample.durationMs, budgetMs: editorBrowserBudgets[name]})));

@@ -1,0 +1,45 @@
+{
+  "status": "no_introduced_file_dimension_violations",
+  "sourceSha": "a5977d0e0713997766e2d16101f44bc2a776a114",
+  "sourceTree": "cf7a61b6964b794d1b0128cbaffafd180b643ef0",
+  "sourceFiles": 37,
+  "changedSinceInitial": [
+    {
+      "path": "apps/studio/compiler.worker.js",
+      "scope": "official-root-subset",
+      "sha256": "df5d8bda1988bce55606f9a845df88c11be905f1c86429707113c63ea64fd0a7",
+      "before": {
+        "lines": 53,
+        "bytes": 8553,
+        "lineLength": 817
+      },
+      "afterInitial": {
+        "lines": 52,
+        "bytes": 8394,
+        "lineLength": 817
+      },
+      "after": {
+        "lines": 83,
+        "bytes": 8553,
+        "lineLength": 817
+      },
+      "historicalBaseline": {
+        "lines": 64,
+        "bytes": 8227,
+        "lineLength": 817
+      },
+      "unchangedSinceInitial": false,
+      "officialGateViolations": [],
+      "frozenByteGrowthFromComparisonBase": false,
+      "supplementalSizeViolations": [],
+      "introducedLongLines": []
+    }
+  ],
+  "findings": [],
+  "pythonAst": {
+    "executed": false,
+    "retainedSourceSha": "e89257052957f4c736512e9c2b46162bb6f23eae",
+    "evidence": "inspection.json",
+    "fileUnchanged": true
+  }
+}

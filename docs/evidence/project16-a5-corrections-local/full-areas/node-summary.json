@@ -1,0 +1,94 @@
+{
+  "kind": "project16-a5-product-correction-local",
+  "sourceSha": "cae69484b1ece1991e99b39a61a77303d96fca39",
+  "sourceTree": "bbad9762d256d60d74e5b4cadbc6344d2e969cad",
+  "startedAt": "2026-10-04T05:44:36.570029+00:00",
+  "finishedAt": "2026-10-04T05:46:09.720958+00:00",
+  "node": "v24.19.0",
+  "runs": [
+    {
+      "area": "A19",
+      "command": [
+        "node",
+        "scripts/planning/run-tests.js",
+        "--area",
+        "A19"
+      ],
+      "startedAt": "2026-10-04T05:44:36.577583+00:00",
+      "log": "A19.log",
+      "finishedAt": "2026-10-04T05:45:29.480796+00:00",
+      "exitCode": 1,
+      "nodeSummaries": {
+        "tests": "790",
+        "suites": "0",
+        "pass": "787",
+        "fail": "3",
+        "cancelled": "0",
+        "skipped": "0",
+        "todo": "0",
+        "duration_ms": "52500.854497"
+      },
+      "tail": [
+        "          onError: [Function: onError],",
+        "          onEvent: [Function: onEvent],",
+        "          workerFactory: [Function: workerFactory]",
+        "        },",
+        "        pending: Map(0) {},",
+        "  ",
+        "      at TestContext.<anonymous> (file:///workspace/scratch/6b99131ca908/p16-integration/tests/a19-studio-runtime-timers.test.js:87:12)",
+        "      at async Test.run (node:internal/test_runner/test:1389:7)",
+        "      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {",
+        "    generatedMessage: true,",
+        "    code: 'ERR_ASSERTION',",
+        "    actual: [AppSession],",
+        "    expected: [AppSession],",
+        "    operator: 'strictEqual',",
+        "    diff: 'simple'",
+        "  }"
+      ]
+    },
+    {
+      "area": "A20",
+      "command": [
+        "node",
+        "scripts/planning/run-tests.js",
+        "--area",
+        "A20"
+      ],
+      "startedAt": "2026-10-04T05:45:29.482757+00:00",
+      "log": "A20.log",
+      "finishedAt": "2026-10-04T05:46:09.719251+00:00",
+      "exitCode": 1,
+      "nodeSummaries": {
+        "tests": "722",
+        "suites": "0",
+        "pass": "712",
+        "fail": "1",
+        "cancelled": "0",
+        "skipped": "9",
+        "todo": "0",
+        "duration_ms": "39960.53517"
+      },
+      "tail": [
+        "test at tests/a20-studio-streamed-workspace.test.js:16:1",
+        "\u2716 200 MiB File reaches the actual Studio workspace model through chunked ingress with automatic work bounded (2724.241221ms)",
+        "  AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:",
+        "  ",
+        "    assert(calls.statuses.includes('Large file mode \u2014 automatic build disabled'))",
+        "  ",
+        "      at TestContext.<anonymous> (file:///workspace/scratch/6b99131ca908/p16-integration/tests/a20-studio-streamed-workspace.test.js:36:3)",
+        "      at async Test.run (node:internal/test_runner/test:1389:7)",
+        "      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {",
+        "    generatedMessage: true,",
+        "    code: 'ERR_ASSERTION',",
+        "    actual: false,",
+        "    expected: true,",
+        "    operator: '==',",
+        "    diff: 'simple'",
+        "  }"
+      ]
+    }
+  ],
+  "sourceUnchanged": true,
+  "passed": false
+}

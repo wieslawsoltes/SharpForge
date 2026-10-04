@@ -1,0 +1,25 @@
+{
+  "sourceSha": "e89257052957f4c736512e9c2b46162bb6f23eae",
+  "sourceTree": "9e33eca9a91361201b2e14fea3cded5cbd584d88",
+  "command": [
+    "node",
+    "scripts/limited.js",
+    "node",
+    "--test",
+    "tests/a19-correction-benchmark.test.js"
+  ],
+  "startedAt": "2026-10-04T05:58:25.804977+00:00",
+  "log": "harness.log",
+  "finishedAt": "2026-10-04T05:58:26.118089+00:00",
+  "exitCode": 0,
+  "nodeSummaries": {
+    "tests": "7",
+    "suites": "0",
+    "pass": "7",
+    "fail": "0",
+    "cancelled": "0",
+    "skipped": "0",
+    "todo": "0",
+    "duration_ms": "111.129886"
+  }
+}

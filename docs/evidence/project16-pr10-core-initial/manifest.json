@@ -1,0 +1,17 @@
+{
+  "schemaVersion": 1,
+  "hashAlgorithm": "SHA-256",
+  "files": [
+    {
+      "path": "core.log",
+      "bytes": 245625,
+      "sha256": "9360fcdc01f7f2a5c696766942452b41903df549196a3e0fddfb440915df146a"
+    },
+    {
+      "path": "run.json",
+      "bytes": 3361,
+      "sha256": "c839befb25cfa3d649090c9f42cf7c48befaa86f6260b8f0301cc399a42e0e4e"
+    }
+  ],
+  "totalBytesExcludingManifest": 248986
+}

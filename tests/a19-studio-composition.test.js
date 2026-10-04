@@ -182,7 +182,11 @@ test('silent Studio builds leave large documents available without sending them 
   let status;
   const execution = new StudioExecution({ services, projects, state: () => state, ui: { status: value => { status = value; } } });
   assert.equal(await execution.build(true), null);
-  assert.match(status, /automatic build disabled/);
+  assert.equal(status, "STUDIO_COMPILER_SOURCE_LIMIT: Source 'Alpha/Program.cs' has 8388609 UTF-16 units; "
+    + 'the compiler supports at most 2000000 per source. Editing, saving and text search remain available; '
+    + 'project language services and compilation are unavailable.');
+  assert.equal(projects.sourceAvailability().projectId, 'Alpha/Alpha.csproj');
+  assert.equal(state.startupProject, 'Alpha/Alpha.csproj');
   assert.equal(fake.workers.every(worker => worker.requests.length === 0), true);
 });
 

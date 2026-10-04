@@ -45,6 +45,28 @@ void (globalThis.codeDefinitionBudget = {
     return {state: this.state(), observedDomMs: null};
   },
 
+  workspaceProof(expectedRecords) {
+    const shell = sharpforge.workbenchShell;
+    const records = sharpforge.getWorkspace().records.map(({path, text}) => ({path, text}));
+    const sourceDocuments = shell.documents.list().map(record => ({uri: record.uri, text: record.text,
+      version: record.version, projectIds: shell.documents.projectsFor(record.uri)}));
+    const projectIds = shell.projects().map(project => project.id);
+    const expectedSources = expectedRecords.filter(record => record.path.endsWith('.cs'));
+    const expectedProjects = expectedRecords.filter(record => record.path.endsWith('.csproj')).map(record => record.path).sort();
+    const sameNames = (actual, expected) => JSON.stringify([...actual].sort()) === JSON.stringify([...expected].sort());
+    if (records.length !== expectedRecords.length || expectedRecords.some(expected =>
+      records.filter(record => record.path === expected.path && record.text === expected.text).length !== 1)) {
+      throw new Error('The actual workspace does not contain the exact source and project records');
+    }
+    if (!sameNames(projectIds, expectedProjects) || sourceDocuments.length !== expectedSources.length ||
+      expectedSources.some(expected => sourceDocuments.filter(record => record.uri === expected.path &&
+        record.text === expected.text && Number.isSafeInteger(record.version) && record.version > 0 &&
+        sameNames(record.projectIds, expectedProjects)).length !== 1)) {
+      throw new Error('The actual source documents or project ownership do not match the loaded workspace');
+    }
+    return {version: 1, records, sourceDocuments, projectIds};
+  },
+
   async setup({records, callerUri, neutralOffset}) {
     await sharpforge.loadDiskRecords(records, {name: 'CodeDefinitionBudget'});
     const shell = sharpforge.workbenchShell;
@@ -63,7 +85,7 @@ void (globalThis.codeDefinitionBudget = {
     if (ready.observedDomMs === null) throw new Error('Code Definition did not clear at neutral source whitespace');
     await this.frame();
     return {uri: callerUri, sourceVersion: this.editor.model.version, projectId: shell.context().projectId,
-      readOnly: ready.state.readOnly, visible: ready.state.visible, workspaceRecords: shell.documents.list().length};
+      readOnly: ready.state.readOnly, visible: ready.state.visible, workspace: this.workspaceProof(records)};
   },
 
   async sample({target, phase, index}) {
