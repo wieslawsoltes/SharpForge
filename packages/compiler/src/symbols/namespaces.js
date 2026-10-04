@@ -40,7 +40,10 @@ export class NamespaceSymbol extends SymbolBase {
 /** A merged metadata namespace remembers at most this many lookups by name (misses included) before it starts over. */
 const MAX_REMEMBERED_LOOKUPS=8192;
 export class MergedNamespaceSymbol extends NamespaceSymbol {
-  constructor(constituents,container=null){super(constituents[0]?.name??'',container,NamespaceExtent.Compilation);this._constituents=constituents;this._merged=new Map();this._typesByKey=new Map();this._immutable=null;}
+  constructor(constituents,container=null){
+    super(constituents[0]?.name??'',container,NamespaceExtent.Compilation);this._constituents=constituents;this._merged=new Map();
+    this._typesByKey=new Map();this._immutable=null;
+  }
   get constituentNamespaces(){return this._constituents;}
   getNamespace(name){
     if(this._merged.has(name))return this._merged.get(name);const parts=this._constituents.map(c=>c.getNamespace(name)).filter(Boolean),result=parts.length?new MergedNamespaceSymbol(parts,this):null;this._merged.set(name,result);return result;
@@ -53,7 +56,10 @@ export class MergedNamespaceSymbol extends NamespaceSymbol {
   getTypeMembers(name,arity){
     if(name===undefined||!this.isImmutable)return this._constituents.flatMap(c=>c.getTypeMembers(name,arity));
     const key=arity===undefined?name:name+'`'+arity;let found=this._typesByKey.get(key);
-    if(!found){if(this._typesByKey.size>=MAX_REMEMBERED_LOOKUPS)this._typesByKey.clear();found=this._constituents.flatMap(c=>c.getTypeMembers(name,arity));this._typesByKey.set(key,found);}
+    if(!found){
+      if(this._typesByKey.size>=MAX_REMEMBERED_LOOKUPS)this._typesByKey.clear();
+      found=this._constituents.flatMap(c=>c.getTypeMembers(name,arity));this._typesByKey.set(key,found);
+    }
     return found.slice();
   }
   /** True when every constituent was read from metadata. */

@@ -132,7 +132,10 @@ export class NamedTypeSymbol extends TypeSymbol {
   get interfaces(){return typeof this._interfaces==='function'?this._interfaces=this._interfaces():this._interfaces;}
   get delegateInvokeMethod(){return this.typeKind===TypeKind.Delegate?this.getMembers('Invoke').find(m=>m.kind===SymbolKind.Method)??null:null;}
   /** Members declared by this type; pass a name to filter. */
-  getMembers(name){const all=typeof this._members==='function'?this._members=this._members():this._members;return name===undefined?all:membersNamed(this,all,name);}
+  getMembers(name){
+    const all=typeof this._members==='function'?this._members=this._members():this._members;
+    return name===undefined?all:membersNamed(this,all,name);
+  }
   getTypeMembers(name,arity){return this.getMembers(name).filter(m=>m.kind===SymbolKind.NamedType&&(arity===undefined||m.arity===arity));}
   /** Registers a member on a definition while it is being built. */
   addMember(member){if(typeof this._members==='function')this._members=this._members();this._members.push(member);member.containingSymbol=this;return member;}
@@ -193,7 +196,11 @@ export class ConstructedNamedTypeSymbol extends NamedTypeSymbol {
     let list=this._byName?.get(name);if(!list){list=this._definition.getMembers(name).map(m=>this._memberOf(m));(this._byName??=new Map()).set(name,list);}
     return list.slice();
   }
-  _memberOf(member){if(!member.asMemberOf)return member;let own=this._memberMap?.get(member);if(!own){own=member.asMemberOf(this);(this._memberMap??=new Map()).set(member,own);}return own;}
+  _memberOf(member){
+    if(!member.asMemberOf)return member;
+    let own=this._memberMap?.get(member);if(!own){own=member.asMemberOf(this);(this._memberMap??=new Map()).set(member,own);}
+    return own;
+  }
   addMember(){throw new TypeError('Members are added to the generic definition, not to a constructed type');}
 }
 
