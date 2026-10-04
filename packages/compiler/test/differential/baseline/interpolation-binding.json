@@ -1,9 +1,9 @@
 {
-  "interpolation-binding/constant-expression-alignments": ["diagnostics", "warnings", "bytecode", "cil"],
+  "interpolation-binding/constant-expression-alignments": ["diagnostics", "warnings", "bytecode", "cil", "directCil"],
   "interpolation-binding/cs0029-formattable-string-and-iformattable-targets": ["diagnostics", "warnings"],
   "interpolation-binding/cs0150-cs0266-cs0029-alignments-that-are-not-int-constants": ["diagnostics", "warnings"],
   "interpolation-binding/cs8094-alignment-out-of-range-in-a-program-that-compiles": ["diagnostics", "warnings"],
   "interpolation-binding/cs8094-cs1503-cs8917-holes-without-a-value": ["diagnostics", "warnings"],
   "interpolation-binding/cs8773-constant-interpolated-string-in-csharp-9": ["diagnostics", "warnings"],
-  "interpolation-binding/holes-alignment-format-and-nesting": ["diagnostics", "warnings", "bytecode", "cil"]
+  "interpolation-binding/holes-alignment-format-and-nesting": ["diagnostics", "warnings", "bytecode", "cil", "directCil"]
 }

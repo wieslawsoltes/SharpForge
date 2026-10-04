@@ -9,4 +9,4 @@ export const CSHARP_SNIPPETS = Object.freeze([
   {prefix: 'class', label: 'Class', body: '${1|public,internal|} class ${2:ClassName}\n{\n    $0\n}'},
   {prefix: 'region', label: 'Region', body: '#region ${1:Name}\n$TM_SELECTED_TEXT\n#endregion$0', surround: true},
   {prefix: 'using', label: 'Using statement', body: 'using (${1:var resource = expression})\n{\n    $TM_SELECTED_TEXT$0\n}', surround: true}
-]);
+].map(snippet => Object.freeze({...snippet, indentSize: 4})));

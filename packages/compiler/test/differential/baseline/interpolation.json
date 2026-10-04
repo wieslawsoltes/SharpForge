@@ -1,9 +1,9 @@
 {
-  "interpolation/basic": ["diagnostics", "warnings", "bytecode", "cil"],
-  "interpolation/braces-and-conditional": ["diagnostics", "warnings", "bytecode", "cil"],
+  "interpolation/basic": ["diagnostics", "warnings", "bytecode", "cil", "directCil"],
+  "interpolation/braces-and-conditional": ["diagnostics", "warnings", "bytecode", "cil", "directCil"],
   "interpolation/cs0103-in-hole": ["diagnostics", "warnings"],
   "interpolation/cs1061-in-hole": ["diagnostics", "warnings"],
-  "interpolation/format-and-alignment": ["diagnostics", "warnings", "bytecode", "cil"],
-  "interpolation/nested": ["diagnostics", "warnings", "bytecode", "cil"],
-  "interpolation/raw-string-literal": ["diagnostics", "warnings", "bytecode", "cil"]
+  "interpolation/format-and-alignment": ["diagnostics", "warnings", "bytecode", "cil", "directCil"],
+  "interpolation/nested": ["diagnostics", "warnings", "bytecode", "cil", "directCil"],
+  "interpolation/raw-string-literal": ["diagnostics", "warnings", "bytecode", "cil", "directCil"]
 }

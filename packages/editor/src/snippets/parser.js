@@ -74,13 +74,13 @@ function parseChoices(state) {
   throw new SyntaxError('Unterminated snippet choices');
 }
 
-/** Expands placeholders with UTF-16 ranges; undefined variables use their fallback or remain empty. */
-export function expandSnippet(template, variables = {}) {
+/** Expands UTF-16 placeholders; an optional formatVariable callback receives {name, value, prefix} and must return text. */
+export function expandSnippet(template, variables = {}, {formatVariable} = {}) {
   const nodes = Array.isArray(template) ? template : parseSnippet(template);
   const defaults = new Map();
   collectDefaults(nodes, defaults);
   const output = {text: '', stops: new Map()};
-  renderNodes(nodes, {variables, defaults, values: new Map(), resolving: new Set()}, output);
+  renderNodes(nodes, {variables, defaults, formatVariable, values: new Map(), resolving: new Set()}, output);
   if (!output.stops.has(0)) output.stops.set(0, [{start: output.text.length, end: output.text.length, choices: []}]);
   return {text: output.text, stops: output.stops, order: [...output.stops.keys()].filter(index => index !== 0).sort((a, b) => a - b).concat(0)};
 }
@@ -96,8 +96,12 @@ function renderNodes(nodes, context, output) {
   for (const node of nodes) {
     if (node.kind === 'text') { output.text += node.text; continue; }
     if (node.kind === 'variable') {
-      if (context.variables[node.name] !== undefined) output.text += String(context.variables[node.name]);
-      else if (node.children) renderNodes(node.children, context, output);
+      if (context.variables[node.name] !== undefined) {
+        const value = String(context.variables[node.name]);
+        const formatted = context.formatVariable ? context.formatVariable({name: node.name, value, prefix: output.text}) : value;
+        if (typeof formatted !== 'string') throw new TypeError('Snippet variable formatter must return text');
+        output.text += formatted;
+      } else if (node.children) renderNodes(node.children, context, output);
       continue;
     }
     const start = output.text.length;

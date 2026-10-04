@@ -11,10 +11,17 @@ const task = 'SF-A29-T13';
 const pr = { head: { ref: 'codex/planning' }, body: `Task: ${task}`, base: { sha: 'a'.repeat(40) } };
 function client() {
   return {
+    owner: 'fixture', repo: 'repository',
     items: async () => [{ fields: { 'Work ID': task, Branch: pr.head.ref }, content: { title: `[${task}] task` } }],
     ref: async name => ({ object: { sha: name } }),
     readRecord: async name => name.startsWith('agent-locks/') ? { task, generation: 'generation', paths: ['packages/other/**'] } :
-      { task, branch: pr.head.ref, expires: '2099-01-01T00:00:00Z', generation: 'generation', locks: ['fixture'] },
+      { task, issue: 483, agent: 'fixture-agent', branch: pr.head.ref, expires: '2099-01-01T00:00:00Z', generation: 'generation', locks: ['fixture'] },
+    graphql: async () => ({repository: {issue: {number: 483, title: `[${task}] task`,
+      repository: {nameWithOwner: 'fixture/repository'}, projectItems: {nodes: [{
+        id: 'item-4', isArchived: false, project: {id: 'project-4', number: 4, owner: {login: 'fixture'}},
+        workId: {text: task}, branch: {text: pr.head.ref}, agent: {text: 'fixture-agent'},
+      }], pageInfo: {hasNextPage: false, endCursor: null}},
+    }}}),
   };
 }
 test('PR identity binds project branch and authoritative claim/lock generation', async () => {
