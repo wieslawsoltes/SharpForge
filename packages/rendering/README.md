@@ -194,6 +194,14 @@ Registration preserves released numeric identities and exposes typed geometry, b
 
 `createRenderingCoverage` derives exact type/member identities from the supplied integrated registry and records the actual adapter source. Unknown methods remain review-runtime-dispatch rows. The generator emits deterministic JSON and Markdown with explicit native-input, material and backend policies; generated artifacts are implementation metadata rather than passing qualification results.
 
+## Independent path fixtures
+
+The path corpus includes100 distinct valid cases, malformed syntax boundaries and pinned licensed Fluent assets. Independent SVG/Path2D capture helpers provide browser references without calling the renderer tessellator. Their presence is not recorded as executed browser pixel qualification.
+
+## Portable qualification fixtures
+
+The real-render fixture corpus records geometry, composition, effects, large instancing and pinned numeric text through public rendering APIs. Expected pixels require actual reviewed captures; native WinUI remains an explicit independent oracle. Control gallery activation is deferred until the full host/facade closure exists.
+
 ## Validation
 
 Focused cases are authored. The publication manifest records the exact previously tested selection, subsequent repairs and any unrun new fixtures. Required core is pending on this exact branch tree. Browser pixels, native WinUI comparisons and physical GPU qualification are separate gates.

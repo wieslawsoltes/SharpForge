@@ -1,0 +1,149 @@
+{
+  "version": 1,
+  "specification": "SharpForge A17 / Microsoft.WindowsAppSDK 1.8.260921001; native oracle captures remain pending",
+  "windowsAppSdkVersion": "1.8.260921001",
+  "fixtures": [
+    {
+      "id": "path-corpus-100", "scene": "path-reference", "width": 640, "height": 640, "canvasReference": true,
+      "tolerance": {"maxChannel": 16, "meanChannel": 1, "differentPixelFraction": 0.04},
+      "reference": {"status": "pending-native", "kind": "browser-native-path-and-svg"}
+    },
+    {
+      "id": "shapes", "scene": "shapes", "width": 128, "height": 96,
+      "tolerance": {"maxChannel": 8, "meanChannel": 1.0, "differentPixelFraction": 0.05},
+      "reference": {"status": "pending-native", "kind": "rendered-backend-baseline"}
+    },
+    {
+      "id": "strokes", "scene": "strokes", "width": 128, "height": 96,
+      "tolerance": {"maxChannel": 8, "meanChannel": 1.0, "differentPixelFraction": 0.05},
+      "reference": {"status": "pending-native", "kind": "rendered-backend-baseline"}
+    },
+    {
+      "id": "gradients", "scene": "gradients", "width": 128, "height": 96,
+      "tolerance": {"maxChannel": 8, "meanChannel": 1.0, "differentPixelFraction": 0.05},
+      "reference": {"status": "pending-native", "kind": "rendered-backend-baseline"}
+    },
+    {
+      "id": "images", "scene": "images", "width": 128, "height": 96,
+      "tolerance": {"maxChannel": 8, "meanChannel": 1.0, "differentPixelFraction": 0.05},
+      "reference": {"status": "pending-native", "kind": "rendered-backend-baseline"}
+    },
+    {
+      "id": "clips", "scene": "clips", "width": 128, "height": 96,
+      "tolerance": {"maxChannel": 8, "meanChannel": 1.0, "differentPixelFraction": 0.05},
+      "reference": {"status": "pending-native", "kind": "rendered-backend-baseline"}
+    },
+    {
+      "id": "effects", "scene": "effects", "width": 128, "height": 96,
+      "tolerance": {"maxChannel": 16, "meanChannel": 1.0, "differentPixelFraction": 0.05},
+      "reference": {"status": "pending-native", "kind": "rendered-backend-baseline"}
+    },
+    {
+      "id": "opacity", "scene": "opacity", "width": 128, "height": 96,
+      "tolerance": {"maxChannel": 8, "meanChannel": 1.0, "differentPixelFraction": 0.05},
+      "reference": {"status": "pending-native", "kind": "rendered-backend-baseline"}
+    },
+    {
+      "id": "text", "scene": "text", "width": 128, "height": 96,
+      "tolerance": {"maxChannel": 16, "meanChannel": 1.0, "differentPixelFraction": 0.05},
+      "reference": {"status": "pending-native", "kind": "rendered-backend-baseline"}
+    },
+    {
+      "id": "instances-10k", "scene": "instances-10k", "width": 1000, "height": 1000, "benchmark": true,
+      "tolerance": {"maxChannel": 8, "meanChannel": 0.5, "differentPixelFraction": 0.02},
+      "reference": {"status": "pending-native", "kind": "rendered-backend-baseline"}
+    },
+    {
+      "id": "effect-saturation", "scene": "effects", "effectType": "Saturation", "width": 128, "height": 96,
+      "tolerance": {"maxChannel": 16, "meanChannel": 1, "differentPixelFraction": 0.05},
+      "reference": {"status": "pending-native", "kind": "rendered-backend-baseline"}
+    },
+    {
+      "id": "effect-opacity", "scene": "effects", "effectType": "Opacity", "width": 128, "height": 96,
+      "tolerance": {"maxChannel": 16, "meanChannel": 1, "differentPixelFraction": 0.05},
+      "reference": {"status": "pending-native", "kind": "rendered-backend-baseline"}
+    },
+    {
+      "id": "effect-tint", "scene": "effects", "effectType": "Tint", "width": 128, "height": 96,
+      "tolerance": {"maxChannel": 16, "meanChannel": 1, "differentPixelFraction": 0.05},
+      "reference": {"status": "pending-native", "kind": "rendered-backend-baseline"}
+    },
+    {
+      "id": "effect-colorsource", "scene": "effects", "effectType": "ColorSource", "width": 128, "height": 96,
+      "tolerance": {"maxChannel": 16, "meanChannel": 1, "differentPixelFraction": 0.05},
+      "reference": {"status": "pending-native", "kind": "rendered-backend-baseline"}
+    },
+    {
+      "id": "effect-blend", "scene": "effects", "effectType": "Blend", "width": 128, "height": 96,
+      "tolerance": {"maxChannel": 16, "meanChannel": 1, "differentPixelFraction": 0.05},
+      "reference": {"status": "pending-native", "kind": "rendered-backend-baseline"}
+    },
+    {
+      "id": "effect-arithmeticcomposite", "scene": "effects", "effectType": "ArithmeticComposite", "width": 128, "height": 96,
+      "tolerance": {"maxChannel": 16, "meanChannel": 1, "differentPixelFraction": 0.05},
+      "reference": {"status": "pending-native", "kind": "rendered-backend-baseline"}
+    },
+    {
+      "id": "composition-brushes", "scene": "composition-brushes", "width": 128, "height": 128, "backdrop": true,
+      "tolerance": {"maxChannel": 16, "meanChannel": 1, "differentPixelFraction": 0.05},
+      "reference": {"status": "pending-native", "kind": "rendered-backend-baseline"}
+    },
+    {
+      "id": "composition-trim", "scene": "composition-trim", "width": 128, "height": 96,
+      "tolerance": {"maxChannel": 16, "meanChannel": 1, "differentPixelFraction": 0.05},
+      "reference": {"status": "pending-native", "kind": "rendered-backend-baseline"}
+    },
+    {
+      "id": "effects-dpr2", "scene": "effects", "width": 128, "height": 96, "dpr": 2,
+      "tolerance": {"maxChannel": 16, "meanChannel": 1, "differentPixelFraction": 0.05},
+      "reference": {"status": "pending-native", "kind": "rendered-backend-baseline"}
+    },
+    {
+      "id": "numeric-text-10", "scene": "numeric-text", "width": 640, "height": 64, "fontSize": 10, "canvasReference": true,
+      "tolerance": {"maxChannel": 16, "meanChannel": 1, "differentPixelFraction": 0.02},
+      "reference": {"status": "pending-native", "kind": "pinned-numeric-glyphs"}
+    },
+    {
+      "id": "numeric-text-12", "scene": "numeric-text", "width": 640, "height": 64, "fontSize": 12, "canvasReference": true,
+      "tolerance": {"maxChannel": 16, "meanChannel": 1, "differentPixelFraction": 0.02},
+      "reference": {"status": "pending-native", "kind": "pinned-numeric-glyphs"}
+    },
+    {
+      "id": "numeric-text-16", "scene": "numeric-text", "width": 640, "height": 96, "fontSize": 16, "canvasReference": true,
+      "tolerance": {"maxChannel": 16, "meanChannel": 1, "differentPixelFraction": 0.02},
+      "reference": {"status": "pending-native", "kind": "pinned-numeric-glyphs"}
+    },
+    {
+      "id": "numeric-text-24", "scene": "numeric-text", "width": 640, "height": 128, "fontSize": 24, "canvasReference": true,
+      "tolerance": {"maxChannel": 16, "meanChannel": 1, "differentPixelFraction": 0.02},
+      "reference": {"status": "pending-native", "kind": "pinned-numeric-glyphs"}
+    },
+    {
+      "id": "numeric-text-48", "scene": "numeric-text", "width": 640, "height": 224, "fontSize": 48, "canvasReference": true,
+      "tolerance": {"maxChannel": 16, "meanChannel": 1, "differentPixelFraction": 0.02},
+      "reference": {"status": "pending-native", "kind": "pinned-numeric-glyphs"}
+    },
+    {
+      "id": "numeric-text-72", "scene": "numeric-text", "width": 640, "height": 320, "fontSize": 72, "canvasReference": true,
+      "tolerance": {"maxChannel": 16, "meanChannel": 1, "differentPixelFraction": 0.02},
+      "reference": {"status": "pending-native", "kind": "pinned-numeric-glyphs"}
+    },
+    {
+      "id": "numeric-text-dpr2", "scene": "numeric-text", "width": 512, "height": 96, "fontSize": 16, "dpr": 2,
+      "canvasReference": true, "tolerance": {"maxChannel": 16, "meanChannel": 1, "differentPixelFraction": 0.02},
+      "reference": {"status": "pending-native", "kind": "pinned-numeric-glyphs"}
+    },
+    {
+      "id": "numeric-text-color", "scene": "numeric-text", "width": 640, "height": 192, "fontSize": 48,
+      "text": "😀 👩‍💻 👍🏽\n👨‍👩‍👧‍👦 🏳️‍🌈", "canvasReference": true, "colorGlyphs": true,
+      "tolerance": {"maxChannel": 16, "meanChannel": 1, "differentPixelFraction": 0.02},
+      "reference": {"status": "pending-native", "kind": "pinned-color-glyphs"}
+    },
+    {
+      "id": "numeric-text-variable", "scene": "numeric-text", "width": 640, "height": 96, "fontSize": 24,
+      "fontWeight": 700, "fontStyle": "italic", "underline": true, "text": "AV fi Á — variable italic",
+      "canvasReference": true, "tolerance": {"maxChannel": 16, "meanChannel": 1, "differentPixelFraction": 0.02},
+      "reference": {"status": "pending-native", "kind": "pinned-numeric-glyphs"}
+    }
+  ]
+}
