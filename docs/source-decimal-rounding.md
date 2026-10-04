@@ -358,5 +358,7 @@ resolution. A complete typed Math overload family is separate work.
 boxing/precision cases and exact signature rejection. Separate compile/reload
 cases preserve Min/Max admission and wire IDs for Int32, Double and wider
 integral arguments; they make no new claim about those methods' runtime
-qualification. Validation and native/platform/performance evidence remain staged.
+qualification. All 16 focused Sign, GetBits, comparison and Decimal-operation
+checks passed at `dd735f45`, using Node 24.21.0, one worker and a 512 MB
+old-space limit. Native/platform/performance evidence remains staged;
 #1350/#1351 remain open.

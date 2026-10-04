@@ -690,6 +690,7 @@ Registered families: <code>builder</code>.
 | 524328 | <code>System.Text.StringBuilder System.Text.StringBuilder::Append(uint)</code> | implemented |
 | 524330 | <code>System.Text.StringBuilder System.Text.StringBuilder::Append(float)</code> | implemented |
 | 524331 | <code>bool System.Text.StringBuilder::Equals(System.Text.StringBuilder)</code> | implemented |
+| 524332 | <code>System.Text.StringBuilder System.Text.StringBuilder::Append(decimal)</code> | implemented |
 
 Pinned reference: 49 implemented and 59 missing exact metadata rows.
 

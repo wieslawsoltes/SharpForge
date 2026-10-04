@@ -22,5 +22,8 @@ Math source overloads or Decimal Min/Max, and does not complete T01.7/T01.8.
 the signed/high-bit boundary, equal operands, both operand orders, raw stack and
 host results, fields, arrays, boxing, GC retention and malformed MemberRefs.
 It also checks that existing signed/floating signatures retain their handler.
-Tests and native/platform qualification are pending the serial validation queue;
-no performance or allocation improvement is claimed.
+All 69 focused unsigned-Math, UInt32/Int64 arithmetic and CIL-intrinsic checks
+passed at `4fc54923b` with Node 24.21.0, one worker and a 512 MB old-space
+limit. Existing native fixtures were consumed; no new native run occurred.
+Native/platform qualification remains deferred; no performance or allocation
+improvement is claimed.
