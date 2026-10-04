@@ -1,7 +1,8 @@
 import {memberAccessFlags} from './metadata/member-definitions.js';
 import {emissionMethodDebugInfo} from './emit/method-debug-info.js';
 import {emitHelper, projectTypeInitializer} from './emit/helpers.js';
-import * as instruction from './emit/instruction-profile.js';
+import {createInstructionProfile, handlerLayout, isValue, prepareProjectReferenceMembers,
+  prepareProjectReferenceTypes, scalarMetadataType} from './emit/instruction-profile.js';
 import {emissionDebugProfile} from './emit/debug-profile.js';
 import { prepareEmission } from './emit/emission-context.js';
 import {applyMemberDefinitions} from './emit/member-definitions.js';
@@ -22,12 +23,12 @@ export function emitAssembly(image,options={}) { return emitAssemblyDetailed(ima
 export function emitAssemblyDetailed(image,options={}) {
   const {name,framework,embedSources,includeDebug,peOptions,metadata,typeDescriptors,memberDefinitions,started}=prepareEmission(image,options);
   const context={image,metadata,framework,typeTokens:new Map(),methodTokens:new Map(),fieldTokens:new Map(),staticTokens:[],allocTokens:new Map(),descriptors:[],helperToken:0};
-  context.resolveType=t=>context.typeTokens.get(t)??metadata.typeRef(cliSystemName(instruction.scalarMetadataType(t)));
+  context.resolveType=t=>context.typeTokens.get(t)??metadata.typeRef(cliSystemName(scalarMetadataType(t)));
   const objectToken=context.resolveType('object');
   typeDescriptors.forEach((t,index)=>{t.token=token(2,index+1);if(t.original)context.typeTokens.set(t.original.name,t.token);if(t.marker)context.typeTokens.set(markerName,t.token);});
-  instruction.prepareProjectReferenceTypes(context);
+  prepareProjectReferenceTypes(context);
   context.signatures=new EmitterSignatures(context.typeTokens,context.resolveType);
-  instruction.prepareProjectReferenceMembers(context);
+  prepareProjectReferenceMembers(context);
   // Preallocate all definition tokens before signatures or bodies can reference them.
   let nextMethod=1,nextField=1;
   for(const type of typeDescriptors){type.fieldStart=nextField;type.methodStart=nextMethod;type.fields=[];type.methods=[];
@@ -56,10 +57,10 @@ export function emitAssemblyDetailed(image,options={}) {
   return {bytes,debug:includeDebug?debug:null,symbolData:{...debug,sources:image.sources},metrics:{emitIlMs:performance.now()-started,assemblyBytes:bytes.length,ilBytes,metadataBytes,methods:context.descriptors.length},framework};
 }
 function emitMethod(c,d) {
-  const m=d.original,analysis=analyzeMethod(c.image,m),w=new CilWriter(),locals=m.locals.map(l=>l.type),scratch=new Map(),spans=[],starts=[],patches=[],prefixes=new Map(),handlers=instruction.handlerLayout(m),n=m.code.length/3;
+  const m=d.original,analysis=analyzeMethod(c.image,m),w=new CilWriter(),locals=m.locals.map(l=>l.type),scratch=new Map(),spans=[],starts=[],patches=[],prefixes=new Map(),handlers=handlerLayout(m),n=m.code.length/3;
   const getScratch=(type,index=0)=>{type=type==='null'?'object':type;const key=type+':'+index;if(scratch.has(key))return scratch.get(key);const slot=locals.length;if(slot>=65535)throw new CilError('Scratch locals exceed CLI limit');locals.push(type);scratch.set(key,slot);return slot;};
   const args=m.parameters.length+(m.isStatic?0:1);for(let i=0;i<args;i++)w.local('ldarg',i).local('stloc',i);
-  const {needs,convert,adapt,relative,zones,leaves,emit}=instruction.createInstructionProfile(c,w,{getScratch,handlers,patches});
+  const {needs,convert,adapt,relative,zones,leaves,emit}=createInstructionProfile(c,w,{getScratch,handlers,patches});
   const returnSlot=handlers.length&&m.returnType!=='void'?getScratch(m.returnType,999):null;
   for(let pc=0;pc<n;pc++){
     const handler=handlers.find(h=>h.target===pc);if(handler){prefixes.set(pc,w.length);if(handler.kind!=='finally')w.local('stloc',handler.slot);}
@@ -107,11 +108,11 @@ function emitMethod(c,d) {
 }
 function emitBuiltin(c,w,id,count,types,adapt) {
   const name=Builtins[id].name;let owner,member,result,params,instance=false,newObject=false,extra=false;
-  if(name.startsWith('Console.')){owner='System.Console';member=name.slice(8);result='void';params=count?[types[0]==='null'?'string':frameworkType(types[0])?.kind==='enum'?'object':instruction.isValue(types[0])||types[0]==='string'?types[0]:'object']:[];}
+  if(name.startsWith('Console.')){owner='System.Console';member=name.slice(8);result='void';params=count?[types[0]==='null'?'string':frameworkType(types[0])?.kind==='enum'?'object':isValue(types[0])||types[0]==='string'?types[0]:'object']:[];}
   else if(name.startsWith('Math.')||name==='$Math.Abs.Int32'){owner='System.Math';member=name==='$Math.Abs.Int32'?'Abs':name.slice(5);const intResult=['Abs','Min','Max'].includes(member)&&types.every(t=>t==='int');result=intResult?'int':'double';params=types.map(()=>result);}
   else if(name.startsWith('GC.')){owner='System.GC';member=name.slice(3);result=member==='Collect'?'void':member==='GetTotalMemory'?'long':'int';params=member==='Collect'?[]:member==='GetTotalMemory'?['bool']:['int'];if(member==='GetTotalMemory'&&!count){w.integer(0);extra=true;}}
   else if(name==='int.Parse'||name==='double.Parse'){owner=name.startsWith('int')?'int':'double';member='Parse';result=owner;params=['string'];}
-  else if(name.startsWith('Convert.')){owner='System.Convert';member=name.slice(8);result={ToInt32:'int',ToDouble:'double',ToString:'string'}[member];params=[types[0]==='null'?'object':instruction.isValue(types[0])||types[0]==='string'?types[0]:'object'];}
+  else if(name.startsWith('Convert.')){owner='System.Convert';member=name.slice(8);result={ToInt32:'int',ToDouble:'double',ToString:'string'}[member];params=[types[0]==='null'?'object':isValue(types[0])||types[0]==='string'?types[0]:'object'];}
   else if(name.startsWith('Array.')){owner='Array';member=name.slice(6);result='void';params=['Array'];}
   else if(name==='object.GetType'||name.startsWith('$type.')){owner='object';member='GetType';result='System.Type';params=[];instance=true;}
   else if(name==='Type.Name'||name==='Type.FullName'){owner=name==='Type.Name'?'System.Reflection.MemberInfo':'System.Type';member='get_'+name.slice(5);result='string';params=[];instance=true;}
