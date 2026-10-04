@@ -6,7 +6,10 @@ Published Git modules for SharpForge. Each stacked layer exposes only its implem
 
 - [auth](docs/auth.md)
 - [blame](docs/blame.md)
+- [collaboration](docs/collaboration.md)
 - [conformance](docs/conformance.md)
+- [objects](docs/objects.md)
+- [protocol](docs/protocol.md)
 
 ## Revision graph and history
 
