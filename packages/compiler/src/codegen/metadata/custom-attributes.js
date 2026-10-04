@@ -45,6 +45,7 @@ const pseudoAttributes = new Set([
   'System.Runtime.CompilerServices.SpecialNameAttribute',
 ]);
 const REQUIRED_MEMBER = 'System.Runtime.CompilerServices.RequiredMemberAttribute';
+const IS_BY_REF_LIKE = 'System.Runtime.CompilerServices.IsByRefLikeAttribute';
 const EXTENSION = 'System.Runtime.CompilerServices.ExtensionAttribute';
 const SETS_REQUIRED_MEMBERS = 'System.Diagnostics.CodeAnalysis.SetsRequiredMembersAttribute';
 const REQUIRED_MEMBERS_MESSAGE = 'Constructors of types with required members are not supported in this version of your compiler.';
@@ -155,6 +156,8 @@ export class CustomAttributeWriter {
       }
       // Roslyn writes the attributes it synthesizes for a type before the ones the program applies.
       if (plan.properties.some(property => property.symbol.parameters.length)) this.defaultMember(typeToken, plan);
+      // The runtime refuses a by-reference-like field (a `Span<T>`) in a struct that is not marked as a ref struct.
+      if (type.isRefLikeType) this.wellKnown(typeToken, IS_BY_REF_LIKE);
       this.applied(typeToken, type);
       const requiresMembers = declaresRequiredMember(type);
       if (requiresMembers) this.wellKnown(typeToken, REQUIRED_MEMBER);

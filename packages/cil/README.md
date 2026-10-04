@@ -138,3 +138,5 @@ The opt-in [verifier type-system adapter](VERIFIER-TYPE-SYSTEM.md) resolves boun
 use the default formatter. `formatChild` shares the original depth/node budget
 and cancellation signal. This display hook does not change the signature AST
 or its binary encoding; the callback-absent formatting contract is unchanged.
+
+The opt-in [verifier member context](VERIFIER-MEMBERS.md) adds bounded, canonical local field/method declaration resolution to type relations.

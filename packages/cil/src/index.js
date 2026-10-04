@@ -36,3 +36,4 @@ export { validateMemoryPrefixes, memoryPrefixDiagnosticCatalog } from './verify/
 export { validateTypePrefixes, typePrefixDiagnosticCatalog } from './verify/prefix-constrained.js';
 export {isByrefStructForwarder} from './generic-struct-forwarder.js';
 export { createMetadataVerificationTypeSystem, verificationTypeSystemDiagnosticCatalog } from './verify/type-system.js';
+export { createMetadataVerificationContext, verificationMemberDiagnosticCatalog } from './verify/member-system.js';
