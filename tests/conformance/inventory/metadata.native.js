@@ -55,6 +55,46 @@ test('native reader retains nested function-pointer conventions, flags, generic 
     assert.equal(compareMembers({rows:[cdeclMember]},{registryTypes:new Map(),registryContracts:[{...contract,parameters:[display('01')]}]}).rows[0].status,'implemented');
   }finally{await rm(directory,{recursive:true,force:true});}
 });
+test('native reader distinguishes SZ arrays, non-SZ rank one and complete general-array shapes',async()=>{
+  const integer={kind:'primitive',name:'int'}, voidType={kind:'primitive',name:'void'};
+  const array=(rank,sizes=[],lowerBounds=[],element=integer)=>({kind:'array',element,rank,sizes,lowerBounds});
+  const vector={kind:'szarray',element:integer};
+  const cases=[
+    ['Vector',vector,'System.Int32[]'],
+    ['GeneralOne',array(1),'System.Int32[*]'],
+    ['GeneralTwo',array(2),'System.Int32[,]'],
+    ['GeneralThree',array(3),'System.Int32[,,]'],
+    ['ExplicitZero',array(1,[],[0]),'System.Int32[rank=1;sizes=();lower=(0)]'],
+    ['NegativeLower',array(1,[],[-1]),'System.Int32[rank=1;sizes=();lower=(-1)]'],
+    ['ZeroSize',array(1,[0]),'System.Int32[rank=1;sizes=(0);lower=()]'],
+    ['KnownSize',array(1,[3]),'System.Int32[rank=1;sizes=(3);lower=()]'],
+    ['SizePrefix',array(2,[3]),'System.Int32[rank=2;sizes=(3);lower=()]'],
+    ['LowerPrefix',array(2,[],[0]),'System.Int32[rank=2;sizes=();lower=(0)]'],
+    ['BothPrefixes',array(2,[3],[0]),'System.Int32[rank=2;sizes=(3);lower=(0)]'],
+    ['FullLower',array(2,[3],[0,0]),'System.Int32[rank=2;sizes=(3);lower=(0,0)]'],
+    ['FullShape',array(2,[3,4],[-1,2]),'System.Int32[rank=2;sizes=(3,4);lower=(-1,2)]'],
+    ['NestedVector',{kind:'szarray',element:array(1)},'System.Int32[*][]'],
+    ['NestedGeneral',array(2,[3],[1],vector),'System.Int32[][rank=2;sizes=(3);lower=(1)]'],
+  ];
+  const assembly=genericCallFixture([
+    {name:'ArrayApi',flags:0x100081,methods:cases.map(([name,type])=>({name,static:false,flags:0x5c6,
+      signature:encodeSignature({kind:'method',hasThis:true,returnType:voidType,parameters:[type]})}))},
+    {name:'Program',methods:[{name:'Main',body:writer=>writer.op('ret')}]},
+  ]);
+  const directory=await mkdtemp(path.join(os.tmpdir(),'sf-array-metadata-')),file=path.join(directory,'Arrays.dll');
+  try {
+    await writeFile(file,assembly);
+    const reference=await extractNative('metadata',[file],{toolchain});
+    const methods=reference.rows.filter(row=>row.owner==='ArrayApi'&&row.kind==='method');
+    assert.equal(methods.length,cases.length);
+    for(const [name,,expected] of cases)assert.deepEqual(methods.find(row=>row.name===name).parameters,[expected],name);
+    assert.equal(new Set(methods.map(row=>row.parameters[0])).size,cases.length);
+    const member=methods.find(row=>row.name==='GeneralOne');
+    const contract={id:1,owner:'ArrayApi',name:'GeneralOne',isStatic:false,result:'void',parameters:['int[]']};
+    assert.equal(compareMembers({rows:[member]},{registryTypes:new Map(),registryContracts:[contract]}).rows[0].status,'missing');
+    assert.equal(compareMembers({rows:[member]},{registryTypes:new Map(),registryContracts:[{...contract,parameters:['int[*]']}]}).rows[0].status,'implemented');
+  }finally{await rm(directory,{recursive:true,force:true});}
+});
 test('real pinned reference pack yields public metadata across all 167 assemblies',async()=>{
   const reference=await bclMetadata({toolchain});assert.equal(reference.files.length,167);assert.ok(reference.rows.length>40000);
   assert.ok(reference.rows.some(r=>r.owner==='System.GC'&&r.name==='Collect'));

@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -13,7 +14,14 @@ using System.Text.Json;
 
 internal sealed class Types : ISignatureTypeProvider<string, object?>
 {
-    public string GetArrayType(string element, ArrayShape shape) => element + "[" + new string(',', shape.Rank - 1) + "]";
+    public string GetArrayType(string element, ArrayShape shape) {
+        // Omitted shape vectors are different from explicit zero bounds/sizes.
+        if (shape.Sizes.IsEmpty && shape.LowerBounds.IsEmpty)
+            return element + "[" + (shape.Rank == 1 ? "*" : new string(',', shape.Rank - 1)) + "]";
+        string sizes = string.Join(",", shape.Sizes.Select(value => value.ToString(CultureInfo.InvariantCulture)));
+        string lower = string.Join(",", shape.LowerBounds.Select(value => value.ToString(CultureInfo.InvariantCulture)));
+        return element + FormattableString.Invariant($"[rank={shape.Rank};sizes=({sizes});lower=({lower})]");
+    }
     public string GetByReferenceType(string element) => element + "&";
     // Preserve the calling convention/flags and the vararg boundary, including inside other types.
     public string GetFunctionPointerType(MethodSignature<string> signature) => FormattableString.Invariant(
