@@ -2,8 +2,13 @@
 
 The normal A29 Node manifest runs `../fuzz/retained-corpus.test.js`. It verifies
 and replays every hash-named JSON record in this directory through the same fixed
-adapter used by the campaign. No records are present at initial implementation;
-the test explicitly skips, and that skip is not parser qualification.
+adapter used by the campaign. The first reviewed record preserves a malformed
+Portable PDB embedded-source DEFLATE stream observed at published commit
+`ad0ea92f16bddcbcfecce884b93579fe94617c04`. The original public reader threw
+`Error: Reserved DEFLATE block`; the corrected symbol contract rejects it through
+`SymbolError` with `SF_SYMBOL_INVALID_COMPRESSION`. The original record, input,
+source identity, finding and effective budgets are unchanged. An empty corpus
+still produces an explicit skip, which is not parser qualification.
 
 Campaign findings are written under the explicitly selected `artifacts/fuzz`
 output, together with the exact source, literal input, original finding and
