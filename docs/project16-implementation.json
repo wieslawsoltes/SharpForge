@@ -4,6 +4,181 @@
   "project": "https://github.com/users/wieslawsoltes/projects/16",
   "repository": "https://github.com/wieslawsoltes/SharpForge",
   "generatedAt": "2026-10-04T01:26:55.971234+00:00",
+  "statusReconciledDate": "2026-10-04",
+  "currentStatusPolicy": "Latest publication and qualification supplement the historical audit below. sourceSnapshot, generatedAt, per-leaf statuses/bounds, historical counts and all closeIssue:false entries retain their original audit meaning; they are not a fresh audit of the follow-up branch.",
+  "latestPublishedSource": {
+    "pullRequest": 4105,
+    "pullRequestUrl": "https://github.com/wieslawsoltes/SharpForge/pull/4105",
+    "mergedPullRequests": [
+      3451,
+      3475,
+      3485,
+      3533,
+      3843,
+      3865,
+      3904,
+      4105
+    ],
+    "localSource": "0858f721e8e737e6bcca1365748409cb6b0b5f35",
+    "publishedHead": "cce1aa2ceb6bce8247c4ab62c76a7d56d9518370",
+    "sourceTree": "543ac1fd0f99e60bd7be5319ecad1590ba1eeccd",
+    "mergeCommit": "8d1be9cffa04b0fd7390e5cb6fe5f6c03b997557",
+    "mergeTree": "dc9d4e337b91c6e878e7c6c7d65f013667b5ec6b",
+    "ownCore": {
+      "runId": 37175219507,
+      "jobId": 111356347344,
+      "conclusion": "success"
+    },
+    "mainCore": {
+      "runId": 37175263470,
+      "jobId": 111356461984,
+      "conclusion": "success"
+    },
+    "earlierSameHeadCore": {
+      "runId": 37175211209,
+      "conclusion": "cancelled",
+      "note": "Automatic cancellation; not a passing run."
+    },
+    "evidence": "docs/project16-hosted-qualification.json",
+    "interpretation": "Merged implementation and successful hosted core do not establish full browser, platform or acceptance qualification."
+  },
+  "latestQualification": {
+    "attempt": "a4",
+    "runId": 37175293552,
+    "jobId": 111356550684,
+    "sourceCommit": "8d1be9cffa04b0fd7390e5cb6fe5f6c03b997557",
+    "sourceTree": "dc9d4e337b91c6e878e7c6c7d65f013667b5ec6b",
+    "runner": "ubuntu-latest",
+    "engine": "chromium",
+    "browserVersion": "153.0.8010.12",
+    "status": "failed",
+    "selectedOutcomes": 15,
+    "passedOutcomes": 9,
+    "failedOutcomes": 6,
+    "node": {
+      "A19": {
+        "tests": 710,
+        "passed": 710,
+        "failed": 0,
+        "skipped": 0
+      },
+      "A20": {
+        "tests": 686,
+        "passed": 677,
+        "failed": 0,
+        "skipped": 9
+      }
+    },
+    "failedScopes": [
+      "browser:workbench-sessions",
+      "browser:workbench-workflows",
+      "browser:workbench-workflows-standalone",
+      "browser:editor-insights",
+      "performance:editor-budgets",
+      "performance:studio-large-file"
+    ],
+    "performanceObservations": {
+      "generatedModel200MiB": {
+        "p95Ms": 32.29999999998836,
+        "budgetMs": 50,
+        "absolutePassed": true,
+        "note": "Generated-model event-to-paint capture; actual Studio File-input ingress failed separately."
+      },
+      "instrumentation": {
+        "pairedCaptures": 12,
+        "overheadPercent": 0.19641649896905353,
+        "budgetPercent": 1,
+        "passed": true,
+        "note": "Specified paired aggregate gate on one Ubuntu/Chromium host; not statistical or cross-platform proof."
+      },
+      "relativeRegressionVerdict": null
+    },
+    "evidence": "docs/project16-hosted-qualification.json",
+    "summaryEvidence": "docs/evidence/project16-hosted/a4/qualification-summary.json",
+    "interpretation": "Fifteen scopes are not fifteen tests. Partial scenario checks do not turn failed suites into passes; overlapping runs are never added. Every historical outcome and skip remains intact."
+  },
+  "currentFollowupSource": {
+    "branch": "codex/project16/09-hosted-followup",
+    "implementation": "complete_followup_source_present",
+    "qualification": "pending_completed_scope_checks_and_hosted_execution",
+    "identityPolicy": "No moving follow-up HEAD is pinned here. The integration owner will append exact publication and execution identities from actual later results.",
+    "corrections": [
+      {
+        "scope": "Workspace document/layout reconciliation",
+        "issues": [
+          1517,
+          1524,
+          1538,
+          1542,
+          1543,
+          1544,
+          1583
+        ],
+        "evidence": "docs/project16-workspace-layout.md"
+      },
+      {
+        "scope": "Production Watch storage registration",
+        "issues": [
+          1547,
+          1513
+        ],
+        "evidence": "docs/project16-watch-storage-correction.md"
+      },
+      {
+        "scope": "Native Find history combobox fixture and independent budget interpretation",
+        "issues": [
+          1506,
+          1459,
+          1497
+        ],
+        "evidence": "docs/project16-editor-a4-corrections.md"
+      },
+      {
+        "scope": "Standalone worker startup and failure diagnostics",
+        "issues": [
+          1515,
+          1583
+        ],
+        "evidence": "planning/qualification/project16-standalone-worker-startup.md"
+      },
+      {
+        "scope": "Committed source, save and transaction ownership during rename preview",
+        "issues": [
+          1488,
+          1517,
+          1615,
+          1617
+        ],
+        "evidence": "docs/project16-preview-publication.md"
+      },
+      {
+        "scope": "Committed diagnostic presentation during visual rename",
+        "issues": [
+          1488,
+          1492
+        ],
+        "evidence": "docs/project16-preview-diagnostics.md"
+      },
+      {
+        "scope": "Same-source lazy-evaluation measurement and independent serial registration",
+        "issues": [
+          1580
+        ],
+        "evidence": "docs/workbench-lazy-evaluation.md",
+        "registrationEvidence": "docs/project16-qualification-outcomes.md"
+      }
+    ],
+    "nextRegisteredScopeCount": 16,
+    "registrationNote": "The new lazy-evaluation performance outcome makes future all selections 16 scopes. Historical a4 remains 15. Registration is not an execution result.",
+    "remainingQualification": [
+      "Corrected hosted outcomes on the assembled published source",
+      "Standalone workflow and offline first-use acceptance",
+      "Actual Studio 200 MiB File ingress independent of the passing generated-model capture",
+      "Compatible baseline comparisons for relative performance acceptance",
+      "Additional OS/browser coverage and explicit native, physical-input, IME, assistive and external-oracle evidence"
+    ],
+    "closeIssueRecommendations": 0
+  },
   "inventory": {
     "file": "project16-issues.json (provided snapshot)",
     "sha256": "cad6dba97c7dfd09063c9e764df788b88cdf579b38915124505b0bac69a26f0c",

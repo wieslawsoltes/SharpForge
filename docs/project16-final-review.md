@@ -1,6 +1,65 @@
 # Project 16 final review: providers, source ownership and Studio integration
 
-## Review boundary and stack
+## Current publication and qualification
+
+**The implementation stack through PR4105 is merged; full acceptance qualification is still incomplete.**
+The eight merged PRs are
+[#3451](https://github.com/wieslawsoltes/SharpForge/pull/3451),
+[#3475](https://github.com/wieslawsoltes/SharpForge/pull/3475),
+[#3485](https://github.com/wieslawsoltes/SharpForge/pull/3485),
+[#3533](https://github.com/wieslawsoltes/SharpForge/pull/3533),
+[#3843](https://github.com/wieslawsoltes/SharpForge/pull/3843),
+[#3865](https://github.com/wieslawsoltes/SharpForge/pull/3865),
+[#3904](https://github.com/wieslawsoltes/SharpForge/pull/3904) and
+[#4105](https://github.com/wieslawsoltes/SharpForge/pull/4105).
+PR4105 merged as `8d1be9cffa04b0fd7390e5cb6fe5f6c03b997557`, tree
+`dc9d4e337b91c6e878e7c6c7d65f013667b5ec6b`.
+Its [own core](https://github.com/wieslawsoltes/SharpForge/actions/runs/37175219507/job/111356347344)
+and [main core](https://github.com/wieslawsoltes/SharpForge/actions/runs/37175263470/job/111356461984)
+succeeded; the earlier same-head run 37175211209 was automatically cancelled.
+
+The latest complete hosted observation,
+[a4 / run 37175293552](https://github.com/wieslawsoltes/SharpForge/actions/runs/37175293552),
+ran on that merged source with Ubuntu/Chromium: **15 outcomes, nine passed and six failed**.
+A19 passed **710/710**; A20 reported **686 tests, 677 passed, nine skipped, zero failed**.
+Sessions, HTTP workflows, standalone workflows, editor insights, editor UI budgets
+and actual Studio 200 MiB ingress remained failed. The
+[hosted ledger](project16-hosted-qualification.md) retains the original reports,
+exact source identities and each passing or failing scope. No overlapping run
+counts are added and no issue is closed by this update.
+
+PR4105's source identity is local `0858f721e8e737e6bcca1365748409cb6b0b5f35`,
+public head `cce1aa2ceb6bce8247c4ab62c76a7d56d9518370`, with identical tree
+`543ac1fd0f99e60bd7be5319ecad1590ba1eeccd`. The merged tree above is the actual
+a4 execution source. The [local correction archive](project16-acceptance-corrections.md)
+retains initial failures and affected retries separately from hosted evidence.
+
+The complete follow-up source is now implemented on
+`codex/project16/09-hosted-followup`; its completed-scope checks and corrected
+hosted/browser qualification are **pending at this documentation cutoff**.
+The owning records describe:
+
+- [Workspace document/layout reconciliation](project16-workspace-layout.md).
+- [Production Watch storage registration](project16-watch-storage-correction.md).
+- [Native Find history fixture and independent budget evidence](project16-editor-a4-corrections.md).
+- [Standalone worker startup and diagnostics](../planning/qualification/project16-standalone-worker-startup.md).
+- [Rename preview source, save and transaction ownership](project16-preview-publication.md)
+  and [committed diagnostic presentation](project16-preview-diagnostics.md).
+- [Same-source lazy-evaluation measurement](workbench-lazy-evaluation.md) and its
+  [independent serial registration](project16-qualification-outcomes.md).
+
+The new registration selects 16 outcomes for future `all` runs; a4 remains its
+original 15-outcome execution. No moving branch HEAD or unobserved follow-up
+result is embedded here. Later publication, a5 and platform results must append
+their own exact identities and observations.
+
+The review below is a **historical product/source audit**, including its
+`48472269` boundary, original diff/history counts, local failures and previously
+pending hosted checks. Those statements describe their recorded revisions; they
+do not override the latest publication and a4 evidence above. This reconciliation
+changes no source, historical result, per-leaf bound or closure recommendation.
+
+## Historical review boundary and stack
 
 Final product source is `48472269ec106049debc0d448985882463365215`, tree
 `8ad180ab94fb21a57e6e9a5c3b17cf553015a717`; its equivalent published commit is
