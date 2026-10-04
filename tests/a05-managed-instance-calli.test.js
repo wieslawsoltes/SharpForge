@@ -243,11 +243,10 @@ for (const callSignature of [{explicitThis: true}, {callingConvention: 1}, {call
   });
 }
 
-for (const location of ['local', 'parameter', 'return', 'field']) {
+for (const location of ['parameter', 'return', 'field']) {
   test(`typed instance function-pointer ${location} is rejected without changing inspection formatting`, () => {
     const pointer = {kind: 'functionPointer', signature: signature()};
     const method = {name: 'Main', body: writer => writer.op('ret')};
-    if (location === 'local') method.localsSignature = encodeSignature({kind: 'locals', types: [pointer]});
     if (location === 'parameter') method.signature = encodeSignature(signature({hasThis: false,
       returnType: scalar('void'), parameters: [pointer]}));
     if (location === 'return') {
@@ -260,7 +259,6 @@ for (const location of ['local', 'parameter', 'return', 'field']) {
       method.body = (writer, context) => writer.op('ldsfld', context.fields.get('Program.Pointer')).op('pop').op('ret');
     }
     const inspector = new AssemblyInspector(genericCallFixture([type]));
-    if (location === 'local') assert.equal(inspector.getMethod(inspector.pe.entryPoint).locals[0], 'method int *(int)');
     const report = verifyCilAssembly(inspector);
     assert.equal(report.success, false);
     assert(report.issues.some(issue => issue.exceptionType === 'NotSupportedException' && /function-pointer/.test(issue.message)));

@@ -2,6 +2,7 @@ import {ManagedFault} from '../heap.js';
 import {checkArrayStore} from './casting.js';
 import {staticStorageType} from './storage.js';
 import {isValueRecord, replaceValueField} from './value-types.js';
+import {instancePointerLocalPlan, instancePointerLocalValue} from './instance-pointer-locals.js';
 
 const invalid = message => { throw new ManagedFault('InvalidProgramException', message); };
 
@@ -9,6 +10,7 @@ function location(vm, address, write = false) {
   if (!address?.byref) invalid('A managed address is required');
   let slots;
   let storageType;
+  let frame;
   if (address.kind === 'box' || address.kind === 'field' || address.kind === 'array') {
     const record = address.kind === 'array' ? vm.indexed(address.owner, address.index) : vm.heap.get(address.owner);
     if (address.kind === 'box' && record.kind !== 'box') invalid('A boxed value address is required');
@@ -21,7 +23,7 @@ function location(vm, address, write = false) {
     storageType = staticStorageType(vm, address.index, write);
   } else {
     if (address.kind !== 'arg' && address.kind !== 'local') invalid('Unknown managed address');
-    const frame = vm.allFrames().find(candidate => candidate.id === address.frameId);
+    frame = vm.allFrames().find(candidate => candidate.id === address.frameId);
     if (!frame) invalid('Managed address outlived its frame');
     slots = address.kind === 'arg' ? frame.args : frame.locals;
     storageType = vm.slotType(frame, address.kind === 'arg', address.index);
@@ -31,7 +33,7 @@ function location(vm, address, write = false) {
   if (slots && (!Number.isInteger(address.index) || address.index < 0 || address.index >= slots.length)) {
     invalid('Invalid managed address slot');
   }
-  return {slots, storageType};
+  return {slots, storageType, frame};
 }
 
 function leaf(vm, address, base) {
@@ -81,7 +83,8 @@ export function dereferenceManagedAddress(vm, address, write = false, value) {
     return current.value;
   }
   if (current.readonly) invalid('Cannot write through a readonly managed address');
-  value = vm.storage(value, current.type);
+  const pointer = address.kind === 'local' && !address.path.length && instancePointerLocalPlan(vm, base.frame, address.index);
+  value = pointer ? instancePointerLocalValue(vm, value, pointer) : vm.storage(value, current.type);
   if (value?.byref && !['arg', 'local'].includes(address.kind)) invalid('Managed addresses cannot escape into aggregate storage');
   if (address.kind === 'array' && !address.path.length) checkArrayStore(vm.heap, vm.heap.get(address.owner), value);
   const original = base.slots ? base.slots[address.index] : vm.statics.get(address.index);

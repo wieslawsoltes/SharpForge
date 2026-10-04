@@ -3,6 +3,8 @@
 The public CIL helpers `readExecutionSignatureAst` and `signatureSlotType` expose
 the existing signature AST at executable metadata slots. This is a prerequisite
 for #1359 typed instance-pointer storage, not admission of that storage.
+The later [typed-local consumer](runtime-typed-instance-pointer-locals.md) uses
+these APIs for its separate, narrowly admitted runtime behavior.
 
 `readExecutionSignatureAst(metadata, token, options = {})` reads Field (4),
 MethodDef (6), MemberRef (10), StandAloneSig (17) or MethodSpec (43) signatures

@@ -5,14 +5,19 @@ import {ownsHeapReference} from './heap-reference.js';
 
 const targets = new WeakMap();
 
-/** Validate all receiver facts while the original operands still own their roots. */
-export function requireInstanceCalliReceiver(vm, token, receiver) {
+/** Share the selected body eligibility between typed local storage and actual calls. */
+export function requireInstanceCalliTarget(vm, token) {
   const epoch = executionCodeState(vm);
   let profile = targets.get(epoch);
   if (!profile) targets.set(epoch, profile = new InstanceCalliTargets(vm.inspector));
   if (!profile.accepts(token)) {
     throw new ManagedFault('NotSupportedException', 'Instance calli requires a nongeneric internal reference-class method');
   }
+}
+
+/** Validate all receiver facts while the original operands still own their roots. */
+export function requireInstanceCalliReceiver(vm, token, receiver) {
+  requireInstanceCalliTarget(vm, token);
   if (receiver === null) throw new ManagedFault('NullReferenceException', 'Null instance calli receiver');
   if (!ownsHeapReference(vm.heap, receiver)) {
     throw new ManagedFault('InvalidProgramException', 'Instance calli requires an allocated receiver from this heap');

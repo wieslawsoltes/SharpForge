@@ -151,9 +151,10 @@ test('parser bounds, cancellation and malformed blob errors are preserved', () =
   }
 });
 
-test('execution still admits static pointer locals and rejects unsupported raw headers before display projection', () => {
+test('execution admits ordinary pointer locals and rejects unsupported raw headers before display projection', () => {
   assert.equal(verifyCilAssembly(fixture(pointer()).inspector).success, true);
-  for (const [, options] of variants.slice(1)) {
+  assert.equal(verifyCilAssembly(fixture(pointer({hasThis: true})).inspector).success, true);
+  for (const [, options] of variants.slice(2)) {
     const report = verifyCilAssembly(fixture(pointer(options)).inspector);
     assert.equal(report.success, false);
     assert(report.issues.some(issue => ['IL_CALLI', 'IL_UNMANAGED'].includes(issue.code) &&
