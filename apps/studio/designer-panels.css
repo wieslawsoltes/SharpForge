@@ -1,0 +1,304 @@
+.design-side {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  min-height: 0;
+  overflow: auto;
+  font-size: 12px;
+  background: var(--design-panel);
+}
+.design-side>.panel-tools {
+  flex: none;
+  height: auto!important;
+  min-height: 30px;
+  padding: 4px 8px;
+  gap: 5px;
+  flex-wrap: wrap;
+}
+.design-side>.panel-tools b {
+  font-size: 11px;
+}
+.design-side>input {
+  margin: 7px 8px;
+  padding: 5px 7px;
+  flex: none;
+  width: calc(100% - 16px);
+}
+.design-side section {
+  padding: 9px;
+  border-bottom: 1px solid var(--design-line-soft);
+}
+.design-side h4 {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: .04em;
+  margin: 4px 0 9px;
+  color: var(--design-muted);
+}
+.design-side>p,.design-side section>p {
+  font-size: 11px;
+  line-height: 1.55;
+  padding: 0 10px;
+  color: var(--design-muted);
+}
+.design-side label {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  margin: 5px 0;
+}
+.design-side label>input,.design-side label>select {
+  flex: 1;
+  width: 50%;
+  padding: 4px;
+}
+.design-side label>input[type=checkbox] {
+  flex: none;
+  width: auto;
+}
+.design-toolbox-list {
+  overflow: auto;
+  flex: 1;
+  min-height: 0;
+  padding: 2px 5px 15px;
+}
+.design-toolbox-list h4 {
+  margin: 10px 4px 5px;
+  padding-bottom: 4px;
+  border-bottom: 1px solid var(--design-line-soft);
+}
+.design-toolbox-list button {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  text-align: left;
+  height: 27px;
+  gap: 8px;
+}
+.design-toolbox-list button span:first-child {
+  color: var(--design-accent);
+  font-size: 14px;
+  width: 18px;
+}
+.design-toolbox-list button:hover {
+  background: var(--design-hover);
+}
+.design-tree {
+  flex: 1;
+  min-height: 100px;
+  overflow: hidden;
+}
+.design-tree .sf-tree-row {
+  font-size: 12px;
+}
+.design-resource-select {
+  padding: 2px 8px 8px;
+  border-bottom: 1px solid var(--design-line-soft);
+}
+.design-resource-select label {
+  font-size: 11px;
+}
+.design-property-list {
+  overflow: auto;
+  min-height: 80px;
+  flex: 1;
+}
+.design-property-row {
+  display: grid;
+  grid-template-columns: minmax(88px,.95fr) minmax(60px,1.1fr) 25px;
+  align-items: center;
+  border-bottom: 1px solid var(--design-line-soft);
+  min-height: 29px;
+  padding: 0 5px 0 9px;
+  gap: 4px;
+  font-size: 11px;
+}
+.design-property-row>label {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: var(--design-foreground);
+}
+.design-property-row input,.design-property-row select {
+  width: 100%;
+  padding: 2px 4px;
+  font-family: inherit;
+  font-size: 11px;
+  line-height: 20px;
+  border-color: transparent;
+  background: var(--design-input);
+  min-height: 23px;
+}
+.design-property-row input:focus,.design-property-row select:focus {
+  border-color: var(--design-accent);
+  outline: none;
+}
+.design-property-row input[type=checkbox] {
+  width: 15px;
+}
+.design-property-row>span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.design-property-row button {
+  padding: 0;
+  font-size: 16px;
+  color: var(--design-subtle);
+}
+.design-property-row .local-value {
+  color: var(--design-accent);
+}
+.design-events {
+  flex: none;
+  padding: 8px;
+  border-top: 1px solid var(--design-line);
+}
+.design-events summary {
+  font-size: 11px;
+  color: var(--design-muted);
+  cursor: pointer;
+}
+.design-events label {
+  font-size: 11px;
+}
+.design-events p {
+  font-size: 11px;
+  line-height: 1.5;
+  color: var(--design-muted);
+}
+.design-layout-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 3px;
+}
+.design-layout-actions button {
+  border-color: var(--design-line);
+  font-size: 11px;
+}
+.design-side textarea {
+  resize: vertical;
+  min-height: 100px;
+  width: 100%;
+  font: 11px/1.6 ui-monospace,Consolas,monospace;
+  padding: 8px;
+  tab-size: 4;
+}
+.design-side>details {
+  padding: 9px;
+}
+.design-side details>summary {
+  cursor: pointer;
+  font-size: 11px;
+  color: var(--design-muted);
+}
+.design-side details>textarea {
+  margin-top: 8px;
+}
+.design-resource-add {
+  display: grid;
+  grid-template-columns: 1fr 1fr auto;
+  gap: 4px;
+  padding-top: 8px;
+}
+.design-resource-add input,.design-resource-add select {
+  width: 100%;
+  font-size: 11px;
+  padding: 3px;
+}
+.design-template-parts {
+  padding: 5px 0;
+  border-bottom: 1px solid var(--design-line);
+}
+.design-template-parts>button {
+  display: block;
+  text-align: left;
+  width: 100%;
+  font-size: 11px;
+  border-radius: 0;
+}
+.design-template-parts>button.selected {
+  background: var(--design-pressed);
+  color: var(--design-on-primary);
+}
+.design-template-parts .panel-tools {
+  padding: 5px;
+  gap: 3px;
+  display: flex;
+}
+.design-template-parts select {
+  width: 50%;
+}
+.design-source-view {
+  flex: 1;
+  min-height: 120px;
+  overflow: auto;
+  background: var(--design-background);
+  color: var(--design-foreground);
+  white-space: pre;
+  font: 12px/1.65 ui-monospace,Consolas,monospace;
+  padding: 12px;
+}
+.design-json-editor {
+  min-height: 170px!important;
+  flex: 1;
+  resize: none!important;
+}
+.design-grid-line {
+  position: absolute;
+  pointer-events: none;
+  border-color: var(--design-selection-border);
+  border-style: dashed;
+  border-width: 0;
+  z-index: 11;
+}
+.design-grid-line.horizontal {
+  border-top-width: 1px;
+}
+.design-grid-line.vertical {
+  border-left-width: 1px;
+}
+@media(max-width:900px) {
+  .design-toolbar {
+    font-size: 10px;
+  }
+  .design-toolbar button {
+    padding: 3px 5px;
+  }
+  .design-property-row {
+    grid-template-columns: minmax(60px,.8fr) minmax(40px,1fr) 20px;
+  }
+  .design-size {
+    margin-left: 24px;
+  }
+}
+.design-marquee {
+  position: absolute;
+  border: 1px solid var(--design-selection-border);
+  background: var(--design-selection-fill);
+  pointer-events: none;
+}
+.design-grid-track {
+  position: absolute;
+  pointer-events: auto;
+  background: var(--design-selection-border)!important;
+  border: 0!important;
+  padding: 0!important;
+  min-width: 0!important;
+  min-height: 0!important;
+  z-index: 6;
+}
+.design-grid-track.rows {
+  height: 5px;
+  cursor: row-resize;
+  transform: translateY(-2px);
+}
+.design-grid-track.columns {
+  width: 5px;
+  cursor: col-resize;
+  transform: translateX(-2px);
+}
+.design-grid-track:hover,.design-grid-track:focus-visible {
+  background: var(--design-accent)!important;
+  outline: 1px solid var(--design-handle-background);
+}
