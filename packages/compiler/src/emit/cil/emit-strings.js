@@ -9,6 +9,7 @@
  */
 import { interpolatedText } from '../../binder/csharp6.js';
 import { needsBox } from './type-facts.js';
+import { frameworkType } from './framework-types.js';
 
 const isString = type => type?.specialType === 'System_String';
 const escapeBraces = text => text.replace(/\{/g, '{{').replace(/\}/g, '}}');
@@ -44,8 +45,30 @@ export const StringEmission = Base =>
     exprInterpolatedString(node) {
       const il = this.il,
         string = this.core.string,
-        object = this.core.object,
-        holes = [];
+        { format, holes } = this.interpolationFormat(node);
+      if (!holes.length) return il.emit('ldstr', this.tokens.string(format.replace(/\{\{/g, '{').replace(/\}\}/g, '}')));
+      this.pushFormatAndArguments(format, holes);
+      const shape = { isStatic: true, returnType: string, parameters: [{ type: string }, { type: this.core.arrayOf(this.core.object) }] };
+      return il.emit('call', this.tokens.external(string, 'Format', shape), { pops: 2, pushes: 1 });
+    }
+    /**
+     * An interpolated string converted to `FormattableString` or `IFormattable` (C# 6) keeps its composite format
+     * and arguments: `FormattableStringFactory.Create(format, arguments)`.
+     */
+    exprConversion(node) {
+      if (node.conversion?.kind !== 'InterpolatedString' || node.operand.kind !== 'InterpolatedString') return super.exprConversion(node);
+      const core = this.core,
+        services = 'System.Runtime.CompilerServices',
+        factory = frameworkType(core, services, 'FormattableStringFactory'),
+        formattable = frameworkType(core, 'System', 'FormattableString'),
+        { format, holes } = this.interpolationFormat(node.operand),
+        shape = { isStatic: true, returnType: formattable, parameters: [{ type: core.string }, { type: core.arrayOf(core.object) }] };
+      this.pushFormatAndArguments(format, holes);
+      return this.il.emit('call', this.tokens.external(factory, 'Create', shape), { pops: 2, pushes: 1 });
+    }
+    /** The composite format string of an interpolated string and the bound expressions of its holes, in order. */
+    interpolationFormat(node) {
+      const holes = [];
       let format = '',
         index = 0;
       for (const content of node.syntax.contents) {
@@ -58,16 +81,18 @@ export const StringEmission = Base =>
         format += '{' + holes.length + (alignment === null ? '' : ',' + alignment) + clause + '}';
         holes.push(node.parts[index++]);
       }
-      if (!holes.length) return il.emit('ldstr', this.tokens.string(format.replace(/\{\{/g, '{').replace(/\}\}/g, '}')));
+      return { format, holes };
+    }
+    /** Pushes a composite format string and the `object[]` of its (boxed) arguments. */
+    pushFormatAndArguments(format, holes) {
+      const il = this.il;
       il.emit('ldstr', this.tokens.string(format));
-      il.emit('ldc.i4', holes.length).emit('newarr', this.tokens.type(object));
+      il.emit('ldc.i4', holes.length).emit('newarr', this.tokens.type(this.core.object));
       holes.forEach((hole, position) => {
         il.emit('dup').emit('ldc.i4', position);
         this.concatenationOperand(hole, false);
         il.emit('stelem.ref');
       });
-      const shape = { isStatic: true, returnType: string, parameters: [{ type: string }, { type: this.core.arrayOf(object) }] };
-      return il.emit('call', this.tokens.external(string, 'Format', shape), { pops: 2, pushes: 1 });
     }
     /** The alignment of a hole: the constant the binder computed, else the literal as written; null when there is none. */
     alignmentOf(content, bound) {

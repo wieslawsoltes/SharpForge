@@ -2,6 +2,6 @@
   "lambda-defaults/cs0029-natural-types-differ": ["diagnostics", "warnings"],
   "lambda-defaults/cs1736-cs1750-cs1737-declaration": ["diagnostics", "warnings"],
   "lambda-defaults/cs9099-cs9100-target-differs": ["diagnostics", "warnings"],
-  "lambda-defaults/defaults-and-params": ["diagnostics", "warnings", "bytecode", "cil"],
-  "lambda-defaults/synthesized-delegate-types": ["diagnostics", "warnings", "bytecode", "cil"]
+  "lambda-defaults/defaults-and-params": ["diagnostics", "warnings", "bytecode", "cil", "directCil"],
+  "lambda-defaults/synthesized-delegate-types": ["diagnostics", "warnings", "bytecode", "cil", "directCil"]
 }

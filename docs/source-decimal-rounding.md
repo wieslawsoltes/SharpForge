@@ -142,7 +142,8 @@ Overflow and division/remainder by zero retain their managed faults, including
 inside `unchecked`. The source family returns the same immutable Decimal carrier
 for ordinary storage and boxing. Invalid arities or incompatible parameter and
 return types remain rejected. Compare/Equals and other library families are not
-registered by this increment.
+registered by this arithmetic increment; the following comparison family adds
+only their two static Decimal signatures.
 
 `tests/a05-source-decimal-arithmetic.test.js` compares static methods and operators
 across source, reloaded source and direct CIL, including exact scale, large values,
@@ -151,3 +152,212 @@ arithmetic, integral-rounding, Round/Truncate and Decimal-operation tests passed
 at `352d3ce1`, using Node 24, one worker and a 512 MB old-space limit. No fresh
 native execution, platform or performance evidence is claimed; #1350/#1351
 remain open.
+
+## Static comparison methods
+
+`decimal.Compare(decimal d1, decimal d2)` returns Int32 -1, 0 or 1;
+`decimal.Equals(decimal d1, decimal d2)` returns Boolean. Their IDs append after
+the arithmetic family as `decimal.Compare#2` and `decimal.Equals#2`.
+
+Each private registration row selects its exact expected result type as well as
+owner, staticness and parameter types. Existing rows keep their Decimal result.
+The builtin result metadata uses that selected descriptor; it does not invent an
+operand or result conversion or admit additional profile members. The existing
+intrinsic keeps Boolean values in source execution and the CLI Boolean stack
+representation in direct CIL. Emission and reload retain the exact signature.
+
+Comparison ignores representational scale and the sign of zero, while preserving
+the full Decimal coefficient. Named arguments `d1`/`d2` keep source evaluation
+order. Instance Equals/CompareTo and object overloads remain outside this source
+family.
+
+```csharp
+using System;
+int order = decimal.Compare(1.00m, 2m); // -1
+bool same = decimal.Equals(1.0m, 1.00m); // true
+Console.WriteLine(order);
+Console.WriteLine(same);
+```
+
+`tests/a05-source-decimal-comparison.test.js` authors source/reloaded/direct-CIL
+cases for scale, signed zero, close large values, typed result arrays and boxes,
+branching, named-argument effects and rejected operand/result signatures.
+All 39 focused comparison, arithmetic, rounding, and Decimal-operation checks
+passed at `ace585df2a8a693ea7a45b43fd0535b364972801`, using Node 24, one worker,
+and a 512 MB old-space limit. Platform/performance qualification remains deferred;
+no new native evidence or completion of #1350/#1351 is claimed.
+
+## Static sign methods
+
+`decimal.Negate(decimal d)` and `decimal.Abs(decimal value)` append after the
+comparison entries as `decimal.Negate#1` and `decimal.Abs#1`. Registration retains
+the distinct parameter names, allowing `Negate(d: amount)` and
+`Abs(value: amount)` without accepting the other method's argument name.
+
+Both methods reuse existing Decimal operations. Negate toggles the sign and Abs
+clears it; coefficient and scale remain unchanged, including for zero. Decimal's
+range is symmetric, so both methods accept `decimal.MinValue` without an overflow.
+These contracts and parameter names follow the pinned .NET 10.0.5
+[Negate](https://github.com/dotnet/runtime/blob/v10.0.5/src/libraries/System.Private.CoreLib/src/System/Decimal.cs#L608-L614)
+and [Abs](https://github.com/dotnet/runtime/blob/v10.0.5/src/libraries/System.Private.CoreLib/src/System/Decimal.cs#L1200-L1204)
+implementations. No numeric policy changes accompany the source registrations.
+
+```csharp
+using System;
+decimal amount = -1.2300m;
+Console.WriteLine(decimal.Negate(d: amount)); // 1.2300
+Console.WriteLine(decimal.Abs(value: decimal.MinValue)); // 79228162514264337593543950335
+```
+
+`tests/a05-source-decimal-sign.test.js` authors source/reloaded/direct-CIL cases
+for scale, full coefficient range, signed-zero carrier bits and Double conversion,
+named-argument evaluation, arrays, boxing, integral widening and rejected
+signatures. Math overloads, additional Decimal library APIs and generic numeric
+interfaces are not admitted by this registration. All 25 focused sign, comparison,
+rounding, and Decimal-operation checks passed at `60fc6d7d`, using Node 24, one
+worker, and a 512 MB old-space limit. Platform/performance qualification remains
+deferred; #1350/#1351 remain open.
+
+## Static integral conversions
+
+Eight one-argument methods append after Abs. Each uses the exact existing
+System.Decimal intrinsic signature, including its result width and parameter name:
+
+| Method | Parameter | Result |
+|---|---|---|
+| ToSByte | `decimal value` | `sbyte` |
+| ToByte | `decimal value` | `byte` |
+| ToInt16 | `decimal value` | `short` |
+| ToUInt16 | `decimal value` | `ushort` |
+| ToInt32 | `decimal d` | `int` |
+| ToUInt32 | `decimal d` | `uint` |
+| ToInt64 | `decimal d` | `long` |
+| ToUInt64 | `decimal d` | `ulong` |
+
+The existing intrinsic truncates toward zero, then checks the destination bounds.
+For example, ToByte accepts -0.9 as zero and 255.9 as 255, while -1 and 256 throw
+OverflowException. This rule applies inside both `checked` and `unchecked`.
+It follows the pinned .NET 10.0.5
+[Decimal conversion implementations](https://github.com/dotnet/runtime/blob/v10.0.5/src/libraries/System.Private.CoreLib/src/System/Decimal.cs#L645-L804).
+No conversion or overflow policy is changed by the source registrations.
+
+```csharp
+using System;
+byte count = decimal.ToByte(value: 255.9m);
+ulong largest = decimal.ToUInt64(d: 18446744073709551615.9m);
+Console.WriteLine(count);   // 255
+Console.WriteLine(largest); // 18446744073709551615
+```
+
+Source typing, ordinary CLI calls, reload, storage, boxing and text formatting
+reuse their existing declared-width contracts. Internal UInt32/UInt64 values
+keep the shared signed CLI bit-pattern carriers; their declared types govern
+widening and display. Each wire name is `decimal.ToName#1`, with append-only IDs
+and exact return-type validation. No new implicit operand or result conversions
+are admitted. The floating family below adds ToSingle/ToDouble separately;
+The separate GetBits family below returns a managed array; other unregistered
+Decimal members remain separate work.
+
+`tests/a05-source-decimal-integral-conversions.test.js` authors three-engine
+coverage for every signed/unsigned width, fractional boundary truncation,
+negative zero, both overflow boundaries and checked contexts, named evaluation,
+arrays, exact boxed types, unsigned formatting and Decimal widening. All 30 focused
+integral-conversion, sign, and Decimal-operation checks passed at `ebc2fea8`,
+using Node 24, one worker, and a 512 MB old-space limit. Native/platform/performance
+evidence remains staged; #1350/#1351 stay open.
+
+## Static floating conversions
+
+`float decimal.ToSingle(decimal d)` and `double decimal.ToDouble(decimal d)`
+append after the integral conversions. Their existing intrinsic returns the
+shared immutable `r4` and `r8` carriers. The registrations reuse the existing
+Decimal conversion, with no second algorithm or changed rounding policy.
+
+The pinned .NET 10.0.5
+[Decimal methods](https://github.com/dotnet/runtime/blob/v10.0.5/src/libraries/System.Private.CoreLib/src/System/Decimal.cs#L703-L811)
+use the common
+[DecCalc implementation](https://github.com/dotnet/runtime/blob/v10.0.5/src/libraries/System.Private.CoreLib/src/System/Decimal.DecCalc.cs#L1741-L1762):
+ToDouble combines the coefficient limbs and applies the decimal scale and sign;
+ToSingle narrows that result to binary32. Precision may be lost. Decimal's finite
+range fits both floating formats, and a negative Decimal zero retains its sign.
+The methods behave the same inside `checked` and `unchecked`.
+
+```csharp
+using System;
+Console.WriteLine(decimal.ToSingle(d: 16777217m)); // 16777216
+Console.WriteLine(decimal.ToDouble(d: 16777217m)); // 16777217
+```
+
+`tests/a05-source-decimal-floating-conversions.test.js` authors source, reloaded
+source and direct-CIL cases for actual stored carrier tags and IEEE bits,
+binary rounding boundaries, the full Decimal range, signed zero, named-argument
+evaluation, typed boxes, widening after Single rounding and rejected signatures.
+All 30 focused floating-conversion, integral-conversion, and Decimal-operation
+checks passed at `7a06ec21`, using Node 24, one worker, and a 512 MB old-space
+limit. Native/platform/performance evidence remains deferred; #1350/#1351 stay
+open.
+
+## GetBits array result
+
+`int[] decimal.GetBits(decimal d)` appends as `decimal.GetBits#1`. It uses the
+existing descriptor and managed intrinsic, with the result type and parameter
+name preserved through source binding, CIL emission and reload. No additional
+constructor, conversion algorithm or heap adapter is introduced.
+
+The returned array contains four signed Int32 words: low, middle and high
+coefficient limbs, then flags. The flags retain the decimal scale in bits 16–23
+and sign in bit 31, including for zero. This follows the pinned .NET 10.0.5
+[GetBits implementation](https://github.com/dotnet/runtime/blob/v10.0.5/src/libraries/System.Private.CoreLib/src/System/Decimal.cs#L523-L536).
+Each call creates a fresh ordinary managed `int[]`. Changing it does not change
+the immutable Decimal or an array returned by another call. Ordinary managed
+references retain the result through garbage collection.
+
+```csharp
+using System;
+int[] words = decimal.GetBits(d: -1.2300m);
+Console.WriteLine(words[0]); // 12300
+Console.WriteLine(words[3]); // -2147221504: negative, scale 4
+```
+
+`tests/a05-source-decimal-getbits.test.js` authors three-engine cases for limb
+boundaries, full coefficient range, signed zero, scale 28, array identity,
+mutation isolation, named evaluation, GC retention and exact signature rejection.
+Span/destination overloads and TryGetBits are not admitted. All 15 focused GetBits,
+floating-conversion, and Decimal-operation checks passed at `36be18bb`, using
+Node 24, one worker, and a 512 MB old-space limit. Native/platform/performance
+qualification remains staged; #1350/#1351 remain open.
+
+## Math.Sign with Decimal
+
+`int Math.Sign(decimal value)` appends after GetBits with wire name
+`Math.Sign#1:Decimal`. The private registration selects its exact System.Math
+descriptor. Reload checks the declaring owner in addition to staticness,
+parameter types and result type. Existing Decimal registrations still require
+their own System.Decimal owner.
+
+The existing intrinsic returns -1, 0 or 1 from Decimal's numeric sign. Scale and
+the sign of zero do not change that result, and the full Decimal range is
+supported. The parameter name follows the pinned .NET 10.0.5
+[Math.Sign implementation](https://github.com/dotnet/runtime/blob/v10.0.5/src/libraries/System.Private.CoreLib/src/System/Math.cs#L1306-L1310).
+There is no new comparison algorithm, source carrier or runtime adapter.
+
+```csharp
+using System;
+int direction = Math.Sign(value: -0.0001m);
+Console.WriteLine(direction); // -1
+```
+
+Before this registration the source registry exposed no Math.Sign overload.
+Integral arguments can use their existing implicit conversion to Decimal;
+floating arguments cannot. This does not register Math.Sign(double/float/int/long)
+or Decimal.Sign, nor change the existing Min/Max registrations or overload
+resolution. A complete typed Math overload family is separate work.
+
+`tests/a05-source-decimal-math-sign.test.js` authors three-engine result/storage/
+boxing/precision cases and exact signature rejection. Separate compile/reload
+cases preserve Min/Max admission and wire IDs for Int32, Double and wider
+integral arguments; they make no new claim about those methods' runtime
+qualification. All 16 focused Sign, GetBits, comparison and Decimal-operation
+checks passed at `dd735f45`, using Node 24.21.0, one worker and a 512 MB
+old-space limit. Native/platform/performance evidence remains staged;
+#1350/#1351 remain open.

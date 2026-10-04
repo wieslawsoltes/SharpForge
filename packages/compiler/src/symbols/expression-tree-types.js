@@ -49,6 +49,8 @@ export function declareExpressionTreeTypes(core) {
   core.expression = expression;
   core.lambdaExpression = bridge.coreType('System_Linq_Expressions_LambdaExpression');
   core.expressionT = bridge.coreType('System_Linq_Expressions_Expression_T');
+  // A referenced core library (it has an `assembly`) reads the expression tree classes, with all their members, from metadata.
+  if (bridge.assembly && expression.containingAssembly) return;
   if (bridge.expressionTreesDeclared) return;
   bridge.expressionTreesDeclared = true;
   addMethod(core.expressionT, 'Compile', new TypeWithAnnotations(core.expressionT.typeParameters[0]), []);

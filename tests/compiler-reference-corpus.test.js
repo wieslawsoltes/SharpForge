@@ -25,34 +25,15 @@ test('A02-T30 the real-.NET baseline names output fixtures, sorted and without d
 });
 
 test('A02-T30 binding against real references does not lose a fixture the registry build runs on .NET', () => {
-  // The fixtures below still need work in the binder or the emitter when they are bound against real metadata; the
-  // list only shrinks.
   const references = new Set(baseline.references),
     missing = baseline.registry.filter(id => !references.has(id));
-  assert.deepEqual(missing, [
-    'arithmetic/checked-overflow',
-    'arithmetic/int-overflow-wraps',
-    'deconstruction/foreach-deconstructs-each-element',
-    'extension-blocks/generic-blocks',
-    'foreach-patterns/extension-get-enumerator',
-    'foreach/custom-enumerable',
-    'generic-interactions/tuples-and-iterators-over-constructions',
-    'generic-lowering/iterators-async-and-local-functions',
-    'iterator-disposal/iterators-over-iterators-dispose-inner',
-    'iterator-disposal/jumps-out-of-a-protected-region',
-    'iterator-disposal/nested-finally-and-early-break',
-    'iterator-disposal/using-inside-iterator',
-    'iterator-disposal/yield-break-and-exception-run-finally',
-    'iterators/iterators-with-closures-and-local-functions',
-    'iterators/laziness-and-re-enumeration',
-    'iterators/yield-in-loops-and-branches',
-    'string-elements/foreach-over-a-string',
-  ]);
+  assert.deepEqual(missing, []);
 });
 
-const pack = loadReferencePack();
+const pack = loadReferencePack(),
+  skip = pack ? false : 'no .NET reference pack is installed';
 
-test('A02-T30 every fixture recorded for the references column emits against the reference pack', { skip: pack ? false : 'no .NET reference pack is installed' }, () => {
+test('A02-T30 every fixture recorded for the references column emits against the reference pack', { skip }, () => {
   const failures = [];
   for (const id of baseline.references) {
     const fixture = fixtures.get(id),
