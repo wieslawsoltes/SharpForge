@@ -24,7 +24,9 @@ and 12.6 ms Layout over 10,656 objects. This editor change alone does not establ
 - `a18-editor-incremental-highlight.test.js`: 3,000-line bounded literal rescan and distant-token identity;
   independent complete lexer comparison; CRLF/UTF-16 line positions; comments, raw strings and conditional
   preprocessing transitions; matching/mismatched delimiters; full snapshot compatibility; invalid hints;
-  lexical fallback and URI isolation.
+  lexical fallback and URI isolation. A read-only review reproduced quote deletion moving a cached code
+  pair into a literal despite equal bracket-kind sequences; its exact regression requires cache endpoints
+  to remain outside the complete rescanned window, not merely outside the raw edit span.
 - `a18-editor-viewport-lifecycle.test.js`: actual exported CodeEditor with an explicit DOM/input boundary;
   one changed-input paint through reentrant diagnostics; unchanged node identity; live severity and execution
   updates; viewport/scroll/resize, caret and gutter fidelity; offscreen edit reuse; document switching;

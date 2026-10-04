@@ -105,6 +105,23 @@ test('A18 editor: dense unmatched and nested brackets preserve complete query re
   }
 });
 
+test('A18 editor: quote edits cannot reuse a code bracket pair that moved into a string', () => {
+  const source = new SourceText('"()" () ""', 'Quotes.cs');
+  const initial = new SyntaxHighlightIndex(source);
+  assert.equal(initial.brackets.get(5), 6);
+  initial.window();
+  const next = initial.withSource(source.withChange(0, 1, ''), {start: 0, length: 1, newLength: 0});
+  assert.equal(next.brackets.get(4), undefined, 'old code bracket must not be paired inside the new literal');
+  assert.equal(next.brackets.get(5), undefined);
+  assert.equal(next.brackets.get(0), 1);
+  assert.equal(next.contextAt(5), 'literal');
+  assertFreshScan(next);
+  const restored = next.withSource(next.source.withChange(0, 0, '"'));
+  assert.equal(restored.brackets.get(5), 6);
+  assert.equal(restored.brackets.get(1), undefined);
+  assertFreshScan(restored);
+});
+
 test('A18 editor: explicit full snapshots survive viewport reuse, fallback transitions and invalid edit hints', () => {
   const source = new SourceText('int x = (1);\n', 'A.cs');
   const initial = new SyntaxHighlightIndex(source, {maxLexCharacters: 32});

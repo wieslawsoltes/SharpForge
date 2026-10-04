@@ -28,8 +28,10 @@ export class HighlightBrackets {
     this.complete = null;
     if (!previous?.tokens || !tokens || !window || !change) return;
     if (bracketSequence(previous.tokens, window.first, window.oldEnd) !== bracketSequence(tokens, window.first, window.end)) return;
-    const oldEnd = change.start + change.length;
-    const shift = position => position < change.start ? position : position >= oldEnd ? position + window.delta : null;
+    // Quote/comment changes can preserve bracket kinds while changing which occurrences are code.
+    // Only positions outside the entire rescanned window retain proven token identity.
+    const oldEnd = window.endPosition - window.delta;
+    const shift = position => position < window.start ? position : position >= oldEnd ? position + window.delta : null;
     for (const [position, partner] of previous.cache) {
       const nextPosition = shift(position);
       const nextPartner = partner === undefined ? undefined : shift(partner);
