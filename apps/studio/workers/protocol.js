@@ -84,6 +84,7 @@ export const workerMethods=Object.freeze({
     "collect",
     "heapPage",
     "heapCensus",
+    "executionMetrics",
     "retentionPath",
     "heap",
     "state"
