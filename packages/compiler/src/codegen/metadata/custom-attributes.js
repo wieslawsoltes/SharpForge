@@ -33,6 +33,7 @@ import { writeParameterAttributes } from './parameter-metadata.js';
 import { writeExtensionBlockAttributes } from './extension-block-attributes.js';
 import { writeUnmanagedAttributes } from './unmanaged-metadata.js';
 import { writeRefSafetyRulesAttribute, writeReadonlyReturnAttribute } from './ref-declaration-metadata.js';
+import { writeCompilerAttributeDefinitions } from './compiler-attribute-definitions.js';
 
 const ASSEMBLY_TOKEN = token(0x20, 1);
 const TYPE_DEF_TABLE = 2;
@@ -144,6 +145,7 @@ export class CustomAttributeWriter {
     writeExtensionBlockAttributes(this, declaresExtensions);
     writeUnmanagedAttributes(this);
     writeRefSafetyRulesAttribute(this);
+    writeCompilerAttributeDefinitions(this);
   }
   method(planned) {
     const symbol = planned.symbol,

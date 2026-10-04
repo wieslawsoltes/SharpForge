@@ -28,8 +28,9 @@ import { fieldSignature, methodSignature, methodSymbolSignature, propertySignatu
 import { constantTypeOf, constantRowValue, NULL_REFERENCE_CONSTANT } from './constant-metadata.js';
 import { writeParameterConstant } from './parameter-metadata.js';
 import { ExtensionBlockMetadataPlan } from './extension-block-plan.js';
-import { valueTypeConstraintToken } from './unmanaged-metadata.js';
-import { declarationRefSafetyVersion, hasReadonlyReturn } from './ref-declaration-metadata.js';
+import { CompilerAttributeRegistry } from './compiler-attribute-registry.js';
+import { valueTypeConstraintToken, planUnmanagedAttributes } from './unmanaged-metadata.js';
+import { declarationRefSafetyVersion, hasReadonlyReturn, planRefDeclarationAttributes } from './ref-declaration-metadata.js';
 import { hasReturnAttributes } from './attribute-targets.js';
 
 const TABLE = Object.freeze({ TypeDef: 2, Field: 4, MethodDef: 6, Param: 8 });
@@ -79,14 +80,21 @@ export class SymbolMetadataWriter {
     this.core = analysis.core;
     this.bodyRvaOf = typeof bodyRva === 'function' ? bodyRva : () => bodyRva;
     const declared = sourceTypesInMetadataOrder(analysis.assembly);
-    this.extensions = new ExtensionBlockMetadataPlan(analysis, declared);
+    this.compilerAttributes = new CompilerAttributeRegistry(analysis);
+    this.extensions = new ExtensionBlockMetadataPlan(analysis, declared, this.compilerAttributes);
     this.refSafetyRulesVersion = declarationRefSafetyVersion(analysis);
     this.types = [...declared, ...this.extensions.types, ...(synthesized?.types ?? [])];
-    this.tokens = new TypeTokens(builder, this.types, assemblyResolverOf(analysis));
     this.plans = new Map(this.types.map(type => [type,
       this.extensions.plans.get(type) ?? planMembers(type, this.core, field => analysis.constantOf(field)),
     ]));
     if (synthesized) for (const type of this.types) synthesized.extend(type, this.plans.get(type));
+    planRefDeclarationAttributes(this.compilerAttributes, this.plans, this.refSafetyRulesVersion);
+    planUnmanagedAttributes(this.compilerAttributes, this.plans);
+    const definitions = this.compilerAttributes.definitions;
+    // State machines remain last: their field lists may grow while executable bodies are emitted.
+    this.types = [...declared, ...this.extensions.types, ...definitions.keys(), ...(synthesized?.types ?? [])];
+    for (const [type, contract] of definitions) this.plans.set(type, contract.plan);
+    this.tokens = new TypeTokens(builder, this.types, assemblyResolverOf(analysis));
     /** The methods of `<Module>`, the first TypeDef row: they take the first MethodDef rows. */
     this.moduleMethods = synthesized?.moduleMethods ?? [];
     /** Definition tokens by symbol, for callers that add rows of their own (custom attributes, method bodies). */

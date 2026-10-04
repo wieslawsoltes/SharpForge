@@ -22,6 +22,7 @@ import { SynthesizedMembers, isEntryPointMethod } from './synthesized-members.js
 import { UnsupportedInCil } from './unsupported.js';
 import { nameThroughInstantiations, synthesizedMembersByToken } from './instantiated-members.js';
 import { installExtensionBlockBodies } from './extension-block-bodies.js';
+import { installCompilerAttributeBodies } from './compiler-attribute-bodies.js';
 
 const CLI_HEADER_SIZE = 72;
 const initializedKinds = new Set([SymbolKind.Field, SymbolKind.Property, SymbolKind.Event]);
@@ -48,6 +49,7 @@ export class AssemblyEmitter {
       writer = new SymbolMetadataWriter(builder, this.analysis, { bodyRva: method => this.bodyAddresses.get(method), synthesized });
     writer.allocateTokens();
     installExtensionBlockBodies(writer);
+    installCompilerAttributeBodies(writer);
     this.tokens = new MemberTokens(writer);
     /** The synthesized members by definition token; rebuilt when tokens move or a field is added. */
     this.synthesizedIndex = { byToken: null };
