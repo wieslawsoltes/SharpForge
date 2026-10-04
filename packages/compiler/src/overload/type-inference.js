@@ -25,6 +25,7 @@ import {
 import { baseTypeChain, allInterfacesOf, containsTypeParameter } from '../symbols/substitution.js';
 import { isNullableType } from '../conversions/nullable.js';
 import { spanInferencePair } from '../conversions/span.js';
+import { collectionInferenceArguments } from './collection-inference.js';
 
 class Bounds {
   constructor() {
@@ -238,6 +239,8 @@ export class TypeInferrer {
    * @returns {TypeSymbol[]|null} the inferred type arguments in type-parameter order, or null (CS0411)
    */
   infer(parameterTypes, args) {
+    const collectionInputs = collectionInferenceArguments(parameterTypes, args);
+    if (collectionInputs) ({ parameterTypes, args } = collectionInputs);
     // Phase 1
     args.forEach((arg, i) => {
       const t = parameterTypes[i];
