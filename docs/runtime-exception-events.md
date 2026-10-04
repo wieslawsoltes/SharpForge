@@ -43,4 +43,8 @@ To observe the stream, subscribe to `vm.runtimeEvents` after constructing
 `CilVirtualMachine(bytes, {runtimeEvents: true})` and filter
 `event.name === RuntimeEventName.ExceptionThrown`. Run through `runSlice`,
 `run`, or `runAsync` for deferred delivery. Focused direct-CIL fixtures are in
-`tests/a05-exception-events.test.js`; their execution awaits the serial queue.
+`tests/a05-exception-events.test.js`. The initial focused run passed 34 of 40
+checks; six new fixtures failed admission because their EH labels used object
+access on a Map, or their zero instruction limit rejected decoding. After those
+fixture corrections, all eight exception-event cases passed at `eaf9897f`, using
+Node 24, one worker, and a 512 MB old-space limit. Product dispatch was unchanged.
