@@ -7,7 +7,8 @@ import {equalsWithComparison, registerStringEqualityExtensions} from './string-e
 import {compareWithComparison, compareRangeWithComparison} from './string-comparison.js';
 import {affixWithComparison, registerStringAffixExtensions} from './string-affix.js';
 import {containsWithComparison, indexOfWithComparison, indexOfFromWithComparison, indexOfWindowWithComparison,
-  lastIndexOfWithComparison, lastIndexOfFromWithComparison, registerStringSearchExtensions} from './string-search.js';
+  lastIndexOfWithComparison, lastIndexOfFromWithComparison, lastIndexOfWindowWithComparison,
+  registerStringSearchExtensions} from './string-search.js';
 
 const owner = 'System.String';
 
@@ -151,6 +152,7 @@ function instanceString(platform, descriptor, receiver, values, scalars) {
       const parameters = descriptor.parameters;
       const parameterCount = parameters.length;
       if (parameters[parameterCount - 1] === 'System.StringComparison') {
+        if (parameterCount === 4) return lastIndexOfWindowWithComparison(platform, receiver, scalars);
         return parameterCount === 3 ? lastIndexOfFromWithComparison(platform, receiver, scalars[0], scalars[1], scalars[2])
           : lastIndexOfWithComparison(platform, receiver, scalars[0], scalars[1]);
       }

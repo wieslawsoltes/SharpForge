@@ -18,6 +18,7 @@ import { UnsupportedInCil } from './unsupported.js';
 import { declareIterator, iteratorShapeOf } from './iterator-members.js';
 import { declareAsync, asyncStateMachineInterface } from './async-members.js';
 import { asyncBuilderOf } from './async-builders.js';
+import { declareAsyncIterator, asyncIteratorShapeOf } from './async-iterator-members.js';
 
 const FIELD_TABLE = 4;
 const STATE_FIELD_NAME = '<>1__state';
@@ -27,7 +28,7 @@ const THIS_FIELD_NAME = '<>4__this';
 export class StateMachine {
   /** @param type the class as code names it  @param definition its definition, the key of its members */
   constructor(kind, kickoff, type, definition) {
-    /** 'iterator' or 'async' */
+    /** 'iterator', 'async' or 'asyncIterator' */
     this.kind = kind;
     this.definition = definition;
     /** `{key, owner, name, uri, isStatic, parameters, returnType, body, receiverType, function, method}` */
@@ -79,18 +80,20 @@ export class StateMachinePlan extends SynthesizedTypes {
         throw new UnsupportedInCil(construct, kickoff.syntax, kickoff.uri);
       };
     if (!isIterator && !kickoff.isAsync) return;
-    if (isIterator && kickoff.isAsync) refuse('async iterators');
-    const returned = kickoff.returnType.toDisplayString(),
-      shape = isIterator ? (iteratorShapeOf(kickoff.returnType, this.core) ?? refuse(`an iterator returning '${returned}'`)) : null,
+    const kind = !isIterator ? 'async' : kickoff.isAsync ? 'asyncIterator' : 'iterator',
+      returned = kickoff.returnType.toDisplayString(),
+      shapeOf = kind === 'asyncIterator' ? asyncIteratorShapeOf : iteratorShapeOf,
+      shape = isIterator ? (shapeOf(kickoff.returnType, this.core) ?? refuse(`an iterator returning '${returned}'`)) : null,
       builder = isIterator ? null : (asyncBuilderOf(kickoff.returnType, this.core) ?? refuse(`an async method returning '${returned}'`)),
       name = `<${kickoff.name}>d__${this.closures.nextOrdinal(kickoff.owner)}`,
       interfaces = isIterator ? shape.interfaces : [asyncStateMachineInterface(this.core)],
       classOptions = { interfaces, hasDefaultConstructor: !isIterator, typeParameters: kickoff.typeParameters },
       { type, definition, constructor } = this.nestedClass(kickoff.owner, name, classOptions),
-      machine = new StateMachine(isIterator ? 'iterator' : 'async', kickoff, type, definition);
+      machine = new StateMachine(kind, kickoff, type, definition);
     machine.instanceConstructor = constructor;
     machine.fields.state = this.field(definition, STATE_FIELD_NAME, this.core.int);
-    if (isIterator) declareIterator(this, machine, shape);
+    if (kind === 'iterator') declareIterator(this, machine, shape);
+    else if (kind === 'asyncIterator') declareAsyncIterator(this, machine, shape);
     else declareAsync(this, machine, builder);
     if (kickoff.receiverType) machine.fields.receiver = this.field(definition, THIS_FIELD_NAME, kickoff.receiverType);
     this.machines.set(kickoff.key, machine);
