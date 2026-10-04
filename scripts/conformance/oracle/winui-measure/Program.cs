@@ -63,7 +63,6 @@ internal sealed class MeasurementApplication : Application, IXamlMetadataProvide
         UnhandledException += (_, args) => { Console.Error.WriteLine(args.Exception); Environment.Exit(1); };
         metadata = new XamlControlsXamlMetaDataProvider();
         RequestedTheme = ApplicationTheme.Light;
-        Resources.MergedDictionaries.Add(new XamlControlsResources());
     }
     IXamlType IXamlMetadataProvider.GetXamlType(Type type) => metadata.GetXamlType(type);
     IXamlType IXamlMetadataProvider.GetXamlType(string fullName) => metadata.GetXamlType(fullName);
@@ -72,6 +71,7 @@ internal sealed class MeasurementApplication : Application, IXamlMetadataProvide
     {
         try
         {
+            Resources.MergedDictionaries.Add(new XamlControlsResources());
             window = new Window { Title = "SharpForge WinUI measurement oracle" };
             window.Content = new Grid();
             window.Activate();

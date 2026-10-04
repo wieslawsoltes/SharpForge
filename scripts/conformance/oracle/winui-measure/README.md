@@ -33,6 +33,9 @@ The code-only application implements `IXamlMetadataProvider` and forwards type
 and XML namespace lookup to `XamlControlsXamlMetaDataProvider` before loading
 control resources or fixture XAML, following Microsoft's
 [managed host setup](https://learn.microsoft.com/en-us/windows/apps/desktop/modernize/host-controls-existing-desktop-apps#set-up-the-host).
+Control resources are installed at the start of `OnLaunched`, after application
+initialization and before creating the window or loading fixture XAML. Reading
+`Application.Resources` in the code-only constructor can fail before launch.
 Startup callback exceptions are written to stderr before failing the process.
 The runner retains native exit codes, signals and output; an unexplained crash
 is not classified as an unavailable desktop.
