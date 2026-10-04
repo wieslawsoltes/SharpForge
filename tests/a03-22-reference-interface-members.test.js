@@ -99,3 +99,22 @@ test('A03-T22 qualified generic file-local attributes bind their suffixed source
   assert.ok(constructors.some(method => method.owner === 'System.Runtime.CompilerServices.ReferenceAssemblyAttribute'));
   assert.deepEqual(type(inspector, 'Contract').methods.map(method => method.name), ['.ctor']);
 });
+
+test('A03-T22 assembly attributes can call internal constructors in their own source module', () => {
+  for (const modifier of ['internal', 'file']) {
+    const inspector = emit(`[assembly: Local(7)]
+      ${modifier} class LocalAttribute : System.Attribute { internal LocalAttribute(int value) { } }`);
+    const applied = (inspector.metadata.rows[12] ?? []).find(([parent, constructor]) =>
+      decodeCoded('HasCustomAttribute', parent) === 0x20000001 && decodeCoded('CustomAttributeType', constructor) >>> 24 === 6);
+    assert.ok(applied, modifier);
+    assert.deepEqual([...inspector.metadata.blob(applied[2])], [1, 0, 7, 0, 0, 0, 0, 0]);
+  }
+});
+
+test('A03-T22 assembly attribute binding still rejects a private constructor with its accessibility diagnostic', () => {
+  const compiled = compileToReferenceAssembly(`[assembly: Local(7)]
+    file class LocalAttribute : System.Attribute { private LocalAttribute(int value) { } }`, { refout: true });
+  assert.equal(compiled.success, false);
+  assert.equal(compiled.assembly, null);
+  assert.deepEqual(compiled.diagnostics.filter(diagnostic => diagnostic.severity === 'error').map(diagnostic => diagnostic.code), ['CS0122']);
+});
