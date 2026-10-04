@@ -1,4 +1,4 @@
-import {isReference} from './heap.js';
+import {isReference} from './heap-reference.js';
 
 const observers = new WeakMap();
 
