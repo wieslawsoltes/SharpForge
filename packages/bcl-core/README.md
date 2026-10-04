@@ -944,3 +944,29 @@ runtime checks and custom comparer implementations remain guarded. Independently
 assembled CIL exercises interface Compare, List.Sort, castclass and isinst without
 bypassing runtime call or cast paths. Source-negative tests retain the remaining
 guards; this does not enable arbitrary source interface implementations.
+
+`StringBuilder.Remove(int startIndex, int length)` retains released contract 815.
+It validates negative `length` before negative `startIndex`, then rejects ranges
+past Length with parameter `length`, including a zero-length range starting past
+the end. Validation reads Length metadata before any chunk text. Valid empty
+ranges return the original builder with no chunk reads, writes, version changes,
+or managed allocations, even when the managed heap budget is exhausted.
+
+Nonempty removal retains the existing full-text `bufferText`/`setBuffer` path:
+O(builder UTF-16 units + backing slots), temporary host text, one managed result
+string, and the existing backing replacement/field notification policy. It does
+not add transactionality or change observer partial progress. The released
+runtime Capacity remains unchanged. The 150-case .NET 10.0.5 native reference
+records that native nonempty removal can reduce Capacity when chunks collapse;
+exact native capacity/chunk topology remains outside this correction. Text,
+length, fluent identity, exception type and parameter precedence are compared
+through both real VM platforms, both compiler pipelines, and independent CIL.
+The fixed native source/hash and complete capacity evidence are retained in
+[`reference/string-builder-remove`](reference/string-builder-remove/README.md).
+
+`scripts/benchmarks/a07-string-builder-remove.mjs` measures released Length,
+substring, and nonempty Remove controls alongside flat, segmented, and longer
+zero-range inputs using the same before/after runner, one warmup and five samples.
+It reports managed allocations and writes separately from host allocations.
+Run comparisons serially on the same host. Other Insert and Replace surfaces in
+#2638 remain separate work.
