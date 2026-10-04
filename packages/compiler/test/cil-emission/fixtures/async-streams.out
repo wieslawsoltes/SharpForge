@@ -1,0 +1,46 @@
+numbers start
+2
+4
+6
+numbers finally
+--- early break
+numbers start
+1
+2
+numbers finally
+--- nested
+a
+b
+numbers start
+n1
+n2
+numbers finally
+c3
+--- manual
+same object: True False
+numbers start
+True 1
+numbers finally
+False
+unstarted disposed: False
+--- generic, enumerator, pattern
+x
+y
+False
+True
+only
+14
+tick 3
+tick 2
+tick 1
+ticker disposed
+--- failure
+1
+caught stream failed
+--- await using
+open outer
+open inner
+body
+close inner
+close outer
+done

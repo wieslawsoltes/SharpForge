@@ -6,7 +6,7 @@ export const settingsKey = 'sharpforge.workbench.settings.v2';
 export const settingsDefaults = Object.freeze({
   environment: {
     theme: 'dark', density: 'compact', fontFamily: 'system-ui', fontSize: 12,
-    showStartWindow: true, firstRunComplete: false, keymap: 'visual-studio'
+    showStartWindow: true, firstRunComplete: false, keymap: 'visual-studio', performanceTracing: true
   },
   editor: {fontSize: 14, tabSize: 4, indentSize: 4, insertSpaces: true, wordWrap: false, lineNumbers: true, zoom: 100,
     endOfLine: '\n', normalizeLineEndings: false, renderWhitespace: false,

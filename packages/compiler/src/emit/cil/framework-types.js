@@ -3,7 +3,7 @@
  * `System.Environment` in an iterator's `GetEnumerator`. Such a type is a symbol of its own, good for a TypeRef and
  * for signatures; it is not declared in the framework registry, so binding never sees it.
  */
-import { NamedTypeSymbol, TypeKind, Accessibility } from '../../symbols/types.js';
+import { NamedTypeSymbol, TypeParameterSymbol, TypeKind, Accessibility, SymbolKind } from '../../symbols/types.js';
 import { NamespaceSymbol } from '../../symbols/namespaces.js';
 
 const byCore = new WeakMap();
@@ -24,24 +24,34 @@ function namespaceChain(cache, qualifiedName) {
 /**
  * The symbol of a framework type by its namespace and name.
  * @param core the CoreTypes of the compilation (the symbols are cached per compilation core)
- * @param {{arity?: number, typeKind?: string}} [shape] a struct must say so: its signatures are `VALUETYPE`
+ * @param {{arity?: number, typeKind?: string, outer?: object}} [shape] a struct must say so: its signatures are
+ *   `VALUETYPE`; `outer` is the type a nested type is declared in
  * @returns a NamedTypeSymbol; a generic one is constructed with `construct(...)`
  */
-export function frameworkType(core, namespace, name, { arity = 0, typeKind = TypeKind.Class } = {}) {
+export function frameworkType(core, namespace, name, { arity = 0, typeKind = TypeKind.Class, outer = null } = {}) {
   let cache = byCore.get(core);
   if (!cache) byCore.set(core, (cache = { namespaces: new Map(), types: new Map() }));
-  const key = `${namespace}.${name}\`${arity}`;
+  const key = `${namespace}.${outer ? outer.name + '+' : ''}${name}\`${arity}`;
   let type = cache.types.get(key);
   if (!type) {
     type = new NamedTypeSymbol({
       name,
       arity,
       typeKind,
-      containingSymbol: namespaceChain(cache.namespaces, namespace),
+      containingSymbol: outer ?? namespaceChain(cache.namespaces, namespace),
       declaredAccessibility: Accessibility.Public,
       baseType: () => (typeKind === TypeKind.Struct ? core.valueType : typeKind === TypeKind.Interface ? null : core.object),
     });
     cache.types.set(key, type);
   }
   return type;
+}
+
+const methodScope = Object.freeze({ kind: SymbolKind.Method });
+const methodTypeParameters = [];
+
+/** The type parameter `!!ordinal` of a generic method, for the signature of a framework method named by its shape. */
+export function methodTypeParameter(ordinal) {
+  methodTypeParameters[ordinal] ??= new TypeParameterSymbol({ name: 'TM' + ordinal, ordinal, containingSymbol: methodScope });
+  return methodTypeParameters[ordinal];
 }

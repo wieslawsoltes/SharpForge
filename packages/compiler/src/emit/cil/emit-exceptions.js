@@ -102,7 +102,7 @@ export const ExceptionEmission = Base =>
           if (clause.local) this.initializeLocal(clause.local);
           else il.emit('pop');
         }
-        this.statement(clause.block);
+        this.catchBlock(clause);
         if (il.isReachable) il.emit('leave', exit);
         il.addRegion(region);
         handlerStart = handlerEnd;
@@ -110,6 +110,10 @@ export const ExceptionEmission = Base =>
       // The end of the last handler: a boundary only, nothing falls into it.
       il.mark(handlerStart);
       return undefined;
+    }
+    /** The statements of a handler; the exception is already in the clause's variable. */
+    catchBlock(clause) {
+      return this.statement(clause.block);
     }
     /**
      * The filter block of `catch (T e) when (condition)` (ECMA-335 II.19.4): it runs during the first pass of exception
@@ -134,7 +138,6 @@ export const ExceptionEmission = Base =>
     }
     /** `using (R r = e) body` is `{ R r = e; try body finally { if (r != null) r.Dispose(); } }`. */
     stmtUsing(node) {
-      if (node.isAwait) return this.unsupported('await using', node.syntax);
       const resources = [];
       if (Array.isArray(node.resources)) {
         for (const declarator of node.resources) {
@@ -147,14 +150,23 @@ export const ExceptionEmission = Base =>
         this.il.emit('stloc', slot);
         resources.push({ slot, type: node.resources.type });
       }
-      return this.disposeAround(resources, 0, () => this.statement(node.body), node.syntax);
+      return this.disposeAround(resources, () => this.statement(node.body), node);
+    }
+    /**
+     * Runs `emitBody` with the resources disposed afterwards, the first resource last.
+     * @param {{syntax: object, isAwait?: boolean}} statement the using statement or declaration: `await using` disposes
+     *   asynchronously (emit-async-iterators.js)
+     */
+    disposeAround(resources, emitBody, { syntax, isAwait }) {
+      if (isAwait) return this.unsupported('await using', syntax);
+      return this.disposeFrom(resources, 0, emitBody, syntax);
     }
     /** Nested try-finally regions, one per resource, the first resource outermost. */
-    disposeAround(resources, index, emitBody, syntax) {
+    disposeFrom(resources, index, emitBody, syntax) {
       if (index === resources.length) return emitBody();
       const resource = resources[index];
       return this.tryRegions(
-        () => this.disposeAround(resources, index + 1, emitBody, syntax),
+        () => this.disposeFrom(resources, index + 1, emitBody, syntax),
         [],
         () => this.disposeCall(resource, syntax),
       );

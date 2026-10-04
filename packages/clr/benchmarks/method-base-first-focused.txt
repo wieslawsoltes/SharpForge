@@ -1,0 +1,66 @@
+Waiting for a free run slot: 1 heavy runs are allowed at once (SHARPFORGE_MAX_PARALLEL_RUNS).
+✔ CLR method attributes and calling conventions match independent CoreCLR reflection (3.189292ms)
+✔ CLR MethodBase access predicates decode mutually exclusive access masks without reading signatures (4.725416ms)
+✔ CLR method attribute predicates preserve independent bits and raw implementation flags (2.124625ms)
+✔ CLR reflection calling conventions project decoded headers and reuse the lazy signature (0.936834ms)
+✔ CLR method convention keeps signature errors and heap bounds lazy and remains usable after unload (10.9825ms)
+✔ CLR class base definitions follow overloads, skipped ancestors and nearest new-slot boundaries without bodies (7.016416ms)
+✔ CLR static, nonvirtual and interface base queries are identity operations without signatures or base loading (2.420875ms)
+✔ CLR base matching resolves equivalent TypeDef/TypeRef signatures across assembly boundaries (1.367ms)
+✔ CLR invalid and unsupported override families fail explicitly rather than inventing roots (4.181ms)
+✔ CLR reuse-slot without any matching ancestor introduces itself when the metadata chain is complete (0.329541ms)
+✔ CLR base queries bound metadata/candidates and preserve cancellation and cached identity through unload (0.679292ms)
+✖ CLR implicit class override roots match independent CoreCLR GetBaseDefinition results (6.765ms)
+✔ CLR method identities are canonical and isolate lazy immutable signatures and method body bytes (4.8935ms)
+✔ CLR MethodPtr indirection preserves physical definition identity and declared list order (0.668416ms)
+✔ CLR method identity rejects invalid tokens, ownership and bounded names (2.072125ms)
+✔ CLR malformed signature diagnostics remain lazy and absent RVA bodies return null (1.086625ms)
+✔ CLR method ownership index rejects oversized table counts before allocating ownership storage (0.220541ms)
+✔ CLR method-owned generic parameter identities match independent CoreCLR reflection and SRM (5.842208ms)
+✔ CLR method generic parameter arity and owner validation reject inconsistent metadata (3.933041ms)
+✔ CLR method descriptors memoize empty and populated generic parameter arrays (0.085541ms)
+✔ CLR MethodDef rejects excessive name bytes before the metadata decoder materializes them (4.472417ms)
+✔ CLR MethodDef signature rejects an excessive heap view before making its defensive copy (12.139541ms)
+✔ CLR MethodDef byte preflight preserves its existing 4096 UTF-16-unit name boundary (2.240583ms)
+✔ CLR parameter name byte limits reject before the metadata string decoder runs (4.109458ms)
+✔ CLR parameter Constant blob limits reject the heap view before defensive materialization (10.4245ms)
+✔ CLR heap preflight limits count bytes, accept exact boundaries and preserve blob ownership (0.791958ms)
+✔ CLR parameter positions, names, flags and raw Constant values match independent CoreCLR reflection/SRM (3.908ms)
+✔ CLR parameter identities preserve position, flags, signature AST and lazy raw constants (5.031542ms)
+✔ CLR missing Param rows have canonical positional identities and ParamPtr lists retain signature order (1.018125ms)
+✔ CLR parameter metadata rejects duplicate/out-of-range sequences, ownership and names (2.49275ms)
+✔ CLR parameter constants diagnose flag disagreement, duplicate rows and malformed primitive payloads lazily (3.319625ms)
+✔ CLR parameter indexing rejects oversized Param/ParamPtr/Constant tables before row access (0.145458ms)
+✔ CLR declared MethodDef identities, signatures and body bytes match independent CoreCLR reflection (3.959959ms)
+✔ CLR base/interface graphs, enum underlying types and nested ownership match CoreCLR reflection (5.781042ms)
+✔ CLR graph loading retains canonical shared identities and rejects invalid interfaces and cancellation (4.076625ms)
+✔ CLR unresolved framework references and generic inheritance stay explicit diagnostics (1.627458ms)
+ℹ tests 36
+ℹ suites 0
+ℹ pass 35
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1565.05675
+
+✖ failing tests:
+
+test at tests/clr-methods-base-reference.test.js:8:1
+✖ CLR implicit class override roots match independent CoreCLR GetBaseDefinition results (6.765ms)
+  TypeLoadException: Explicit array bounds in override signatures require a later binding service
+      at loadError (file:///private/tmp/sharpforge-project6-a04-method-base-definition/packages/clr/src/load-errors.js:45:10)
+      at fail (file:///private/tmp/sharpforge-project6-a04-method-base-definition/packages/clr/src/type-system/override-signature.js:4:25)
+      at #type (file:///private/tmp/sharpforge-project6-a04-method-base-definition/packages/clr/src/type-system/override-signature.js:55:15)
+      at OverrideSignatures.key (file:///private/tmp/sharpforge-project6-a04-method-base-definition/packages/clr/src/type-system/override-signature.js:34:34)
+      at MethodBaseDefinitions.get (file:///private/tmp/sharpforge-project6-a04-method-base-definition/packages/clr/src/type-system/method-base-definition.js:31:40)
+      at async TestContext.<anonymous> (file:///private/tmp/sharpforge-project6-a04-method-base-definition/tests/clr-methods-base-reference.test.js:14:18)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    code: 'SFCLR012',
+    managedType: 'System.TypeLoadException',
+    requestedAssembly: null,
+    requestingAssembly: null,
+    attempts: [],
+    fusionLog: 'Requested: <unspecified>\nRequester: <unspecified>\nSFCLR012: Explicit array bounds in override signatures require a later binding service'
+  }

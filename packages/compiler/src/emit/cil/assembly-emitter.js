@@ -19,6 +19,7 @@ import { MemberTokens } from './member-tokens.js';
 import { MethodEmitter } from './method-emitter.js';
 import { SynthesizedMembers, isEntryPointMethod } from './synthesized-members.js';
 import { UnsupportedInCil } from './unsupported.js';
+import { nameThroughInstantiations, synthesizedMembersByToken } from './instantiated-members.js';
 
 const CLI_HEADER_SIZE = 72;
 const initializedKinds = new Set([SymbolKind.Field, SymbolKind.Property, SymbolKind.Event]);
@@ -43,6 +44,8 @@ export class AssemblyEmitter {
       writer = new SymbolMetadataWriter(builder, this.analysis, { bodyRva: method => this.bodyAddresses.get(method), synthesized });
     writer.allocateTokens();
     this.tokens = new MemberTokens(writer);
+    /** The synthesized members by definition token; rebuilt when tokens move or a field is added. */
+    this.synthesizedIndex = { byToken: null };
     /** Every type the assembly defines, for questions that need the whole program (who derives from a class). */
     this.sourceTypes = writer.types;
     this.closures = synthesized.closures;
@@ -50,12 +53,10 @@ export class AssemblyEmitter {
     this.primaryCaptures = synthesized.primaryCaptures.byParameter;
     this.records = synthesized.records;
     // A state machine class gets fields while its `MoveNext` is emitted, which moves the field tokens of the classes
-    // after it: those bodies come first, class by class, and nothing emitted before names a later class's fields.
+    // after it (`emitBodies` allocates again): those bodies come first, class by class, and nothing emitted before
+    // names a later class's fields.
     const lateFieldTypes = new Set(synthesized.stateMachines.lateFieldTypes);
-    for (const type of lateFieldTypes) {
-      this.emitBodies(type, writer, section);
-      writer.allocateTokens();
-    }
+    for (const type of lateFieldTypes) this.emitBodies(type, writer, section);
     for (const type of writer.types) if (!lateFieldTypes.has(type)) this.emitBodies(type, writer, section);
     writer.write();
     new CustomAttributeWriter(writer, this.analysis).write();
@@ -73,12 +74,27 @@ export class AssemblyEmitter {
   emitBodies(type, writer, section) {
     for (const method of writer.plans.get(type).methods) {
       if (!method.hasBody) continue;
-      const il = this.methodBody(type, method),
-        body = il.assemble();
+      // The code of a synthesized generic class or method reads the type parameters it was written over as its own.
+      const program = this.within(method.substitution ?? type.typeSubstitution ?? null),
+        il = program.methodBody(type, method);
+      if (!this.synthesizedIndex.byToken) {
+        // A field added while the body was emitted took the next token of its class: the classes after it move up.
+        writer.allocateTokens();
+        this.synthesizedIndex.byToken = synthesizedMembersByToken(writer);
+      }
+      nameThroughInstantiations(il, program.tokens, this.synthesizedIndex.byToken);
+      const body = il.assemble();
       section.pad();
       this.bodyAddresses.set(method, TEXT_RVA + section.length);
-      section.bytes(writeMethodBody(body.code, this.tokens.locals(il.locals), body.maxStack, body.handlers));
+      section.bytes(writeMethodBody(body.code, program.tokens.locals(il.locals), body.maxStack, body.handlers));
     }
+  }
+  /** This emitter with tokens that read every type under a substitution (generic-context.js); itself for none. */
+  within(substitution) {
+    if (!substitution) return this;
+    const view = Object.create(this);
+    view.tokens = this.tokens.within(substitution);
+    return view;
   }
   /** The instruction stream of one planned method. */
   methodBody(type, planned) {
@@ -98,11 +114,15 @@ export class AssemblyEmitter {
         method: symbol,
       });
     const machine = this.stateMachines.of(symbol);
-    if (machine) return emitter.iteratorKickoff(machine);
+    if (machine) {
+      if (isEntryPointMethod(symbol)) emitter.moduleInitializers();
+      return emitter.kickoffBody(machine);
+    }
     if (bound?.binder?.c?.isIterator) emitter.unsupported('iterator methods', symbol.locations?.[0]);
     if (symbol.isAsync) emitter.unsupported('async methods', symbol.locations?.[0]);
     if (symbol.methodKind === MethodKind.Constructor) return emitter.body(bound, () => emitter.constructorPrologue(symbol));
     if (symbol.methodKind === MethodKind.StaticConstructor) return emitter.body(bound, () => emitter.staticInitializers(type));
+    if (symbol.methodKind === MethodKind.Destructor && bound) return emitter.destructorBody(bound, type);
     if (bound) return emitter.body(bound, isEntryPointMethod(symbol) ? () => emitter.moduleInitializers() : null);
     return emitter.synthesizedBody(symbol) ?? emitter.unsupported(`'${symbol.toDisplayString()}' (no body)`, symbol.locations?.[0]);
   }
@@ -128,11 +148,15 @@ export class AssemblyEmitter {
   /** The entry point: the top-level statements, else the single static `Main`. */
   entryPointToken(writer, synthesized) {
     if (synthesized.entryPoint) return synthesized.entryPoint.token;
-    const candidates = [...writer.methodTokens].filter(([method]) => isEntryPointMethod(method));
+    // A `Main` that returns a task is the entry point only when no other `Main` is; `<Main>` then waits for it.
+    const all = [...writer.methodTokens].filter(([method]) => isEntryPointMethod(method)),
+      synchronous = all.filter(([method]) => !synthesized.asyncEntryPoints.has(method)),
+      candidates = synchronous.length ? synchronous : all;
     if (candidates.length !== 1) {
       throw new UnsupportedInCil(candidates.length ? 'several Main methods' : 'a program without an entry point');
     }
-    return candidates[0][1];
+    const [method, token] = candidates[0];
+    return synthesized.asyncEntryPoints.get(method)?.token ?? token;
   }
 }
 
