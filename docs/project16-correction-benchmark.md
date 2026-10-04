@@ -1,8 +1,10 @@
 # Project16 Studio correction boundary measurements
 
 Work-IDs: SF-A19-T04, SF-A19-T26, SF-A19-T35, SF-A20-T07. This harness supplies the matched Node measurements for the
-compiler source eligibility and native timer receiver corrections after hosted qualification a5. Its source is prepared;
-no timing result or test pass is claimed here. The parent integration owns serial execution and the >5% review.
+compiler source eligibility and native timer receiver corrections after hosted qualification a5. The completed local
+capture pair, 7/7 report-harness tests and explicit integration review are recorded in
+[the correction performance review](project16-correction-performance-review.md). The comparison retains exit code 2
+and three >5% case flags; reviewer acceptance does not turn that result into a performance-budget pass.
 
 ## Run the same harness against each checkout
 
