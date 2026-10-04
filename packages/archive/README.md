@@ -18,6 +18,15 @@ Default limits: 20,000 entries, 64 MiB per file, 128 MiB total expanded bytes, 1
 
 Rejects absolute/traversing/reserved paths, links/special files, ambiguous case or Unicode identities (including implicit parents), CRC mismatch, overlapping entries, inconsistent headers, encryption, ZIP64, unsupported methods and multi-disk files. It is not a general TAR/7z/RAR reader or a security sandbox for subsequent execution of extracted programs.
 
+## Workspace text policy
+
+Use `isWorkspaceTextPath(path)` to share file-type recognition across ZIP imports, folder providers, and native editing.
+Recognition is case-insensitive and includes `.xaml`, `.manifest`, `.appxmanifest`, and `.pubxml` alongside the existing
+code, project, and configuration formats. `decodeWorkspaceFile` still rejects binary contents for recognized suffixes;
+recognition alone never forces a binary file into a text editor. The returned records retain their original bytes,
+encoding, BOM, and line endings. Pass those records to `encodeWorkspaceFile` to preserve unchanged bytes exactly and
+retain the original encoding when editing text.
+
 ## File encoding and path identity
 
 `decodeWorkspaceFile(path, bytes)` retains a copy of the original bytes, recognizes UTF-8 and UTF-16 in either byte order, and records the BOM, each line delimiter and final-newline status. BOM-less UTF-16 is inferred only from a bounded zero-byte pattern. Unsupported text remains binary; failed UTF-8 can use an explicitly flagged Windows-1252 fallback (`lossy: true`), disabled with `{legacyFallback: false}`.
