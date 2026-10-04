@@ -44,7 +44,9 @@ export function invoke(vm,instruction) {
   if(target&&vm.ensureInitialized(descriptor.ownerToken,trigger,genericIdentity)){caller.pc--;return;}
   const delegate = supportedDelegateCall(vm.inspector, descriptor);
   const intrinsic = intrinsicDefinition(descriptor), contract = intrinsic?.contract;
-  const pool = target && !delegate && !contract ? framePool(vm) : null;
+  // Managed delegates copy their inputs before returning; ordinary intrinsics
+  // consume them synchronously. Platform contracts may retain an owned array.
+  const pool = delegate || !contract ? framePool(vm) : null;
   const args = pool ? pool.arguments(caller.stack, count) : caller.stack.splice(caller.stack.length - count, count);
   try {
   vm.heap.withRoots(args,()=>{

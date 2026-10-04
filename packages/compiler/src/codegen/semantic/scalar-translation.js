@@ -39,19 +39,24 @@ export const ScalarTranslation = Base => class extends Base {
   }
 
   exprUnary(node) {
+    // A lifted operator has nullable operands: the general path lowers it, and mapping its types here would reject them.
+    if (node.isLifted) return super.exprUnary(node);
     const type = this.imageType(node.type, node.syntax);
-    if (!node.isLifted && isScalarType(type) && isScalarType(this.imageType(node.operand.type, node.syntax))) {
+    if (isScalarType(type) && isScalarType(this.imageType(node.operand.type, node.syntax))) {
       return n.unary(node.operator, this.expression(node.operand), type, !!node.isChecked);
     }
     return super.exprUnary(node);
   }
 
   exprBinary(node) {
+    if (node.isLifted) return super.exprBinary(node);
     const left = this.imageType(node.left.type, node.syntax), right = this.imageType(node.right.type, node.syntax);
-    if (!node.isLifted && isScalarType(left) && isScalarType(right)) {
+    if (isScalarType(left) && isScalarType(right)) {
       return n.binary(node.operator, this.expression(node.left), this.expression(node.right), this.imageType(node.type), !!node.isChecked);
     }
-    if (node.operator === '+' && (left === 'string' || right === 'string')) {
+    // Only a concatenation with a wider scalar is formatted here: the general path knows how tuples, records and the
+    // other operands turn into text.
+    if (node.operator === '+' && (left === 'string' || right === 'string') && (extendedScalar(left) || extendedScalar(right))) {
       const text = operand => {
         const value = this.expression(operand);
         return extendedScalar(value.legacyType) ? formatted(value) : value;
@@ -61,13 +66,15 @@ export const ScalarTranslation = Base => class extends Base {
     return super.exprBinary(node);
   }
 
+  // int and double keep the general path: it lowers the targets that need temporaries (array elements, indexers,
+  // members of a?.b). The direct form is for the wider scalar types, which that path does not know.
   exprCompoundAssignment(node) {
-    return isScalarType(this.imageType(node.left.type, node.syntax)) ? this.assignStatic(node.left,
+    return extendedScalar(this.imageType(node.left.type, node.syntax)) ? this.assignStatic(node.left,
       n.compoundAssign(node.operator, this.target(node.left), this.expression(node.right), !!node.isChecked)) : super.exprCompoundAssignment(node);
   }
 
   exprIncrement(node) {
-    return isScalarType(this.imageType(node.operand.type, node.syntax)) ? this.assignStatic(node.operand,
+    return extendedScalar(this.imageType(node.operand.type, node.syntax)) ? this.assignStatic(node.operand,
       n.increment(node.operator, this.target(node.operand), !!node.isPostfix, !!node.isChecked)) : super.exprIncrement(node);
   }
 
