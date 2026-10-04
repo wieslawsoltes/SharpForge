@@ -31,3 +31,4 @@ export { mergeVerificationTypes, mergeVerificationStacks } from './verify/type-r
 
 export {verifiedStackBound} from './verified-stack.js';
 export { validateMemoryPrefixes, memoryPrefixDiagnosticCatalog } from './verify/prefix-memory.js';
+export { validateTypePrefixes, typePrefixDiagnosticCatalog } from './verify/prefix-constrained.js';
