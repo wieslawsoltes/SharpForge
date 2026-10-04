@@ -70,6 +70,10 @@ Vector, analytic rectangle/ellipse and glyph pipelines share explicit premultipl
 
 `MeshBuilder` reuses the shared fill/stroke geometry and image/brush policy. Eligible solid primitives pack analytic instances; other shapes retain exact meshes or explicit raster fallback. Numeric glyphs pack measured origin, atlas coordinates, color and opacity without reshaping or guessing glyph IDs.
 
+## GPU effects and local rasters
+
+Effects allocate explicit pooled targets and uniforms with submission retirement. Gaussian blur scales DIP radius by the actual surface density. Local raster cache entries exclude placement from their keys and pin plans while referenced; backdrop-dependent content bypasses static caching. Capability selection returns a concrete backend and reason for every operation.
+
 ## Validation
 
 Focused cases were authored and included in the completed A17 scope gate. The publication manifest records its exact prior evidence and any subsequent repair. Required core is pending on this exact branch tree. Browser pixels, native WinUI comparisons and physical GPU qualification are separate gates.
