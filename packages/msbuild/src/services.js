@@ -1,3 +1,4 @@
+import { registerNativeTestingServices } from './testing/native-adapter.js';
 import { registerNativePublishServices } from './services-publish.js';
 import { registerNativeProjectServices } from './services-project.js';
 import { registerNativeVfsServices } from './services-vfs.js';
@@ -13,6 +14,7 @@ export function createNativeServices(engine, options = {}) {
   registerNativeVfsServices(registry, context);
   registerNativeProjectServices(registry, context);
   registerNativePublishServices(registry, context);
+  registerNativeTestingServices(registry, context);
   const { discover } = registerNativeSdkServices(registry, context);
   for (const contribution of options.contributions ?? []) contribution(registry, context);
   return { registry, discover };
