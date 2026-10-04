@@ -1,0 +1,100 @@
+name: Project 16 completed scope qualification
+on:
+  workflow_dispatch:
+    inputs:
+      stage:
+        description: Completed scope to qualify serially
+        type: choice
+        options: [all, node, browser, performance]
+        default: all
+      runner:
+        description: Platform for this explicit qualification run
+        type: choice
+        options: [ubuntu-latest, windows-latest, macos-latest]
+        default: ubuntu-latest
+      engine:
+        description: Browser engine
+        type: choice
+        options: [chromium, firefox, webkit]
+        default: chromium
+      editor_baseline:
+        description: Reviewed compatible editor browser baseline path, or empty for capture only
+        type: string
+      workbench_baseline:
+        description: Reviewed compatible workbench trace path, or empty for capture only
+        type: string
+permissions:
+  contents: read
+concurrency:
+  group: project16-qualification
+  cancel-in-progress: false
+jobs:
+  qualify:
+    runs-on: ${{ inputs.runner }}
+    timeout-minutes: 90
+    env:
+      SHARPFORGE_BROWSER_ENGINE: ${{ inputs.engine }}
+      SHARPFORGE_EDITOR_BASELINE: ${{ inputs.editor_baseline }}
+      SHARPFORGE_WORKBENCH_BASELINE: ${{ inputs.workbench_baseline }}
+      SHARPFORGE_RESULTS_DIR: artifacts/results/project16
+      QUALIFICATION_STAGE: ${{ inputs.stage }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        with:
+          node-version: 24
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
+        with:
+          python-version: '3.12'
+      - run: npm ci --ignore-scripts --no-audit --no-fund
+      - name: Static consistency and completed application build
+        run: |
+          npm run check
+          npm run build
+          npm run standalone
+      - name: Install pinned browser qualification dependencies
+        if: inputs.stage != 'node'
+        run: python -m pip install --require-hashes --only-binary=:all: -r tests/requirements.txt
+      - name: Install the selected supported browser
+        if: inputs.stage != 'node'
+        shell: bash
+        run: python -m playwright install --with-deps "$SHARPFORGE_BROWSER_ENGINE"
+      - name: Locate the pinned Playwright JavaScript driver
+        if: inputs.stage != 'node'
+        shell: python
+        run: |
+          import os
+          from pathlib import Path
+          import playwright
+          driver = Path(playwright.__file__).parent / 'driver' / 'package'
+          if not (driver / 'package.json').is_file():
+              raise RuntimeError('Pinned Playwright driver is missing')
+          with open(os.environ['GITHUB_ENV'], 'a', encoding='utf8') as output:
+              output.write('SHARPFORGE_PLAYWRIGHT_MODULE=' + str(driver) + '\n')
+      - name: Run the selected completed scopes without parallel heavy jobs
+        shell: bash
+        run: node scripts/project16-qualification.js "$QUALIFICATION_STAGE"
+      - name: Preserve exact-source qualification evidence
+        if: always()
+        shell: python
+        run: |
+          import json
+          import os
+          from pathlib import Path
+          output = Path(os.environ['SHARPFORGE_RESULTS_DIR'])
+          output.mkdir(parents=True, exist_ok=True)
+          (output / 'source.json').write_text(json.dumps({
+              'sourceSha': os.environ['GITHUB_SHA'],
+              'workflowRunId': os.environ['GITHUB_RUN_ID'],
+              'stage': os.environ['QUALIFICATION_STAGE'],
+              'engine': os.environ['SHARPFORGE_BROWSER_ENGINE'],
+              'runner': os.environ['RUNNER_OS'],
+              'editorBaseline': os.environ['SHARPFORGE_EDITOR_BASELINE'] or None,
+              'workbenchBaseline': os.environ['SHARPFORGE_WORKBENCH_BASELINE'] or None,
+          }, indent=2) + '\n', encoding='utf8')
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        if: always()
+        with:
+          name: project16-${{ inputs.runner }}-${{ inputs.engine }}-${{ inputs.stage }}
+          path: artifacts/results/project16/
+          if-no-files-found: error
