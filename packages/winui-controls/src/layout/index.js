@@ -1,37 +1,5 @@
-import { RendererRegistry } from '../registry.js';
-import { contentLayout } from './border-viewbox.js';
-import { buttonLayout } from './button-layout.js';
-import { stackPanelLayout } from './stackpanel.js';
-import { canvasLayout } from './canvas.js';
-import { gridLayout } from './grid.js';
-import { relativePanelLayout } from './relativepanel.js';
-import { wrapGridLayout } from './wrapgrid.js';
-import { scrollViewerLayout } from './scrollviewer.js';
-import { scrollViewLayout } from './scroll-presenter.js';
-import { annotatedScrollLayout } from './annotated-layout.js';
-import { viewboxLayout } from './border-viewbox.js';
-import { expanderLayout } from './expander.js';
-import { twoPaneLayout } from './twopaneview.js';
-import { parallaxLayout } from './parallaxview.js';
-
 export function createLayoutRegistry(options) {
   const registry = new RendererRegistry(options);
-  registry.register('*', contentLayout);
-  registry.register(['Button', 'ToggleButton', 'AppBarButton', 'HyperlinkButton'], buttonLayout);
-  registry.register('StackPanel', stackPanelLayout);
-  registry.register('Canvas', canvasLayout);
-  registry.register('Grid', gridLayout);
-  registry.register('RelativePanel', relativePanelLayout);
-  registry.register(['WrapGrid', 'VariableSizedWrapGrid'], wrapGridLayout);
-  registry.register(['ScrollViewer', 'ScrollPresenter'], scrollViewerLayout);
-  registry.register('ScrollView', scrollViewLayout);
-  registry.register('AnnotatedScrollBar', annotatedScrollLayout);
-  registry.register('Viewbox', viewboxLayout);
-  registry.register('Expander', expanderLayout);
-  registry.register('TwoPaneView', twoPaneLayout);
-  registry.register('ParallaxView', parallaxLayout);
-  return registry;
-}
 export * from './geometry.js';
 export * from './layout-engine.js';
 export * from './framework-element-layout.js';
@@ -68,3 +36,5 @@ export * from './environment-state.js';
 export * from './environment-browser.js';
 export * from './environment-adapters.js';
 export { registerEnvironmentContracts } from '../contracts/environment.js';
+export * from './annotated-adapters.js';
+export * from './adapters.js';

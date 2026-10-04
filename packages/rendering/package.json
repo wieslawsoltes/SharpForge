@@ -1,0 +1,19 @@
+{
+  "name": "@sharpforge/rendering",
+  "version": "0.14.0",
+  "description": "Retained drawing, composition and explicit rendering resource lifetimes.",
+  "type": "module",
+  "main": "./src/index.js",
+  "exports": {
+    ".": "./src/index.js"
+  },
+  "files": [
+    "src",
+    "README.md",
+    "LICENSE"
+  ],
+  "license": "MIT",
+  "engines": {
+    "node": ">=22"
+  }
+}

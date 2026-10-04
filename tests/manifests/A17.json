@@ -2,15 +2,13 @@
   "schemaVersion": 1,
   "area": "A17",
   "nodeGlobs": [
-    "tests/a17-*.test.js",
-    "tests/animation13.test.js"
+    "tests/animation13.test.js",
+    "tests/a17-*.test.js"
   ],
   "browserScripts": [],
   "requiredServices": [],
   "timeout": 300000,
   "tags": [
-    "legacy",
-    "drawing",
-    "composition"
+    "legacy"
   ]
 }
