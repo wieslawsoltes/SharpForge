@@ -36,6 +36,15 @@ The worker resolves the target ID against its active managed scene and checks th
 
 `UIEventTransactions` owns only native pending decisions. It releases timers and abort listeners before settling a Promise, rejects duplicate identities and handles an injected timer failure without leaking an entry. Aborted, timed-out and disposed entries reject once; late resolution returns false.
 
+
+## Session-scoped RPC helpers
+
+`StudioUIEventClient` invokes one injected RPC for a decision and sends an explicit cancellation when its external decision fails. It checks the current session, pause state and target presence before dispatch and again when a reply arrives. Request identities remain monotonic across replacement hosts.
+
+`RuntimeUIEventRequests` rejects replayed identities and passes an AbortSignal into the injected managed request seam. It rejects paused, faulted, closed and stale sessions. The handler installer flushes and schedules the current bridge before awaiting and again after completion; it never acts on a replacement bridge.
+
+The protocol allowlist adds only `uiEventRequest` and `uiEventCancel` in this stage. No browser host or worker instance is constructed until its later activation stage.
+
 ## Qualification
 
-The packet and transaction cases in `tests/a16-ui-event-transactions.test.js` are authored but unrun in this exact branch. They cover strict envelopes, payload budgets, accessors, classes, executable values, duplicate identities, the 64-request bound, timeout, abort, disposal and timer failure. The consolidated completed-scope gate owns execution.
+All four cases in `tests/a16-ui-event-transactions.test.js` are present, including injected browser and runtime bridges. They cover one RPC without duplicate dispatch, replay, session replacement, pause, target removal, cancellation propagation, late replies and lifecycle cleanup. They remain authored but unrun on this exact branch.
