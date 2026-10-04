@@ -13,3 +13,4 @@ export * from './global-json.js';
 export * from './service-registry.js';
 export * from './services-sdk.js';
 export * from './services.js';
+export {NativeTestAdapter, registerNativeTestingServices} from './testing/native-adapter.js';
