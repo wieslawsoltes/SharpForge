@@ -1,5 +1,43 @@
+import { RendererRegistry } from '../registry.js';
+import { contentLayout } from './border-viewbox.js';
+import { buttonLayout } from './button-layout.js';
+import { stackPanelLayout } from './stackpanel.js';
+import { canvasLayout } from './canvas.js';
+import { gridLayout } from './grid.js';
+import { relativePanelLayout } from './relativepanel.js';
+import { wrapGridLayout } from './wrapgrid.js';
+import { scrollViewerLayout } from './scrollviewer.js';
+import { scrollViewLayout } from './scroll-presenter.js';
+import { annotatedScrollLayout } from './annotated-layout.js';
+import { viewboxLayout } from './border-viewbox.js';
+import { expanderLayout } from './expander.js';
+import { twoPaneLayout } from './twopaneview.js';
+import { parallaxLayout } from './parallaxview.js';
+import { registerNavigationLayouts } from '../navigation/layout.js';
+import { registerCommandLayouts } from '../commands/layout.js';
+import { registerMenuLayouts } from '../commands/menu-layout.js';
+
 export function createLayoutRegistry(options) {
   const registry = new RendererRegistry(options);
+  registry.register('*', contentLayout);
+  registry.register(['Button', 'ToggleButton', 'AppBarButton', 'HyperlinkButton'], buttonLayout);
+  registry.register('StackPanel', stackPanelLayout);
+  registry.register('Canvas', canvasLayout);
+  registry.register('Grid', gridLayout);
+  registry.register('RelativePanel', relativePanelLayout);
+  registry.register(['WrapGrid', 'VariableSizedWrapGrid'], wrapGridLayout);
+  registry.register(['ScrollViewer', 'ScrollPresenter'], scrollViewerLayout);
+  registry.register('ScrollView', scrollViewLayout);
+  registry.register('AnnotatedScrollBar', annotatedScrollLayout);
+  registry.register('Viewbox', viewboxLayout);
+  registry.register('Expander', expanderLayout);
+  registry.register('TwoPaneView', twoPaneLayout);
+  registry.register('ParallaxView', parallaxLayout);
+  registerNavigationLayouts(registry);
+  registerCommandLayouts(registry);
+  registerMenuLayouts(registry);
+  return registry;
+}
 export * from './geometry.js';
 export * from './layout-engine.js';
 export * from './framework-element-layout.js';
