@@ -87,10 +87,10 @@ export class DesignerSurfaceZoom {
       this.controller.trackPointer(event, pointer => {
         view.scroller.scrollLeft = initial.left + initial.x - pointer.clientX;
         view.scroller.scrollTop = initial.top + initial.y - pointer.clientY;
-      }, () => { release(); this.controller.geometry.invalidate(); }, release);
+      }, () => { release(); this.controller.geometry.viewportChanged(); }, release);
     }, true);
     listen(view.scroller, 'scroll', () => {
-      this.controller.geometry.invalidate();
+      this.controller.geometry.viewportChanged();
       this.controller.drawAdorners();
     }, {passive: true});
   }

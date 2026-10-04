@@ -1,6 +1,7 @@
 import {affineMatrix, boundsOfPoints, designRectangle, DesignSpatialIndex, geometryInvariant, identityMatrix,
   inverseMatrix, multiplyMatrix, rectanglePoints, transformPoint, transformRectangle} from '@sharpforge/designer';
 import {DesignerTextBaselines} from './designer-surface-baseline.js';
+import {localSnapTarget} from './designer-surface-snap-targets.js';
 
 function cssMatrix(text) {
   if (!text || text === 'none') return identityMatrix();
@@ -39,6 +40,8 @@ export class DesignerSurfaceGeometry {
     this.stageElement = null;
     this.ownerDocument = null;
     this.baselines = null;
+    this.viewportTranslation = {x: 0, y: 0};
+    this.hostRevision = null;
   }
 
   /** Tools are constructed before their surface is mounted; browser-owned metrics bind on the first measurement. */
@@ -66,10 +69,46 @@ export class DesignerSurfaceGeometry {
     this.pending = null;
   }
 
+  /** An outer viewport scroll translates client coordinates, leaving measured layout and snap targets intact. */
+  viewportChanged() {
+    if (!this.valid || this.document !== this.view.document || this.revision !== this.view.document.revision
+      || this.hostRevision !== this.view.host.sceneRevision || this.stageElement !== this.view.stage) {
+      this.invalidate();
+      return false;
+    }
+    const rectangle = this.stageElement.getBoundingClientRect();
+    const before = transformRectangle({Width: this.stage.width, Height: this.stage.height}, this.stage.matrix);
+    if (Math.abs(rectangle.width - before.Width) > .01 || Math.abs(rectangle.height - before.Height) > .01) {
+      this.invalidate();
+      return false;
+    }
+    const x = rectangle.left - before.Left;
+    const y = rectangle.top - before.Top;
+    this.viewportTranslation.x += x;
+    this.viewportTranslation.y += y;
+    this.stage.matrix[4] += x;
+    this.stage.matrix[5] += y;
+    this.stageInverse = inverseMatrix(this.stage.matrix);
+    return true;
+  }
+
+  translateEntry(entry) {
+    const x = this.viewportTranslation.x - entry.viewportX;
+    const y = this.viewportTranslation.y - entry.viewportY;
+    if (!x && !y) return entry;
+    entry.parentMatrix = (entry.parentId ? this.ensureEntry(entry.parentId)?.matrix : null) ?? this.stage.matrix;
+    entry.matrix[4] += x;
+    entry.matrix[5] += y;
+    entry.viewportX = this.viewportTranslation.x;
+    entry.viewportY = this.viewportTranslation.y;
+    return entry;
+  }
+
   refresh({all = false} = {}) {
     const view = this.view;
     const window = this.bindSurface();
-    if (this.valid && this.document === view.document && this.revision === view.document.revision) {
+    if (this.valid && this.document === view.document && this.revision === view.document.revision
+      && this.hostRevision === view.host.sceneRevision) {
       for (const id of view.document.selection.slice(0, 32)) this.ensureEntry(id);
       if (all && this.pending) this.measurePending(Infinity);
       return;
@@ -77,6 +116,7 @@ export class DesignerSurfaceGeometry {
     this.invalidate();
     this.entries.clear();
     this.index.clear();
+    this.viewportTranslation = {x: 0, y: 0};
     const matrices = new WeakMap();
     const styles = new WeakMap();
     const styleOf = element => {
@@ -110,7 +150,7 @@ export class DesignerSurfaceGeometry {
     const nodes = new Map(view.document.value.nodes.map(node => [node.id, node]));
     this.ensureEntry = (id, {force = false} = {}) => {
       if (force) this.entries.delete(id);
-      if (this.entries.has(id)) return this.entries.get(id);
+      if (this.entries.has(id)) return this.translateEntry(this.entries.get(id));
       const node = nodes.get(id);
       if (!node) return null;
       const element = view.host.elements.get(node.id);
@@ -122,10 +162,13 @@ export class DesignerSurfaceGeometry {
       const stageMatrix = multiplyMatrix(this.stageInverse, measured.matrix);
       const bounds = transformRectangle({Width: measured.width, Height: measured.height}, stageMatrix);
       const entry = {id: node.id, node, element, ...measured, stageMatrix, bounds,
-        parentMatrix: parent?.matrix ?? this.stage.matrix};
+        parentId, parentMatrix: parent?.matrix ?? this.stage.matrix,
+        viewportX: this.viewportTranslation.x, viewportY: this.viewportTranslation.y};
       entry.baseline = this.baselines.measure(entry);
       this.index.set(node.id, bounds);
-      const position = transformPoint(inverseMatrix(entry.parentMatrix), transformPoint(entry.matrix, {x: 0, y: 0}));
+      const relative = multiplyMatrix(inverseMatrix(entry.parentMatrix), entry.matrix);
+      const position = transformPoint(relative, {x: 0, y: 0});
+      entry.snap = localSnapTarget(entry, relative);
       const parentIsCanvas = parent?.node.type.endsWith('.Canvas');
       entry.rectangle = designRectangle({Left: parentIsCanvas ? entry.node.properties.Left ?? position.x : position.x,
         Top: parentIsCanvas ? entry.node.properties.Top ?? position.y : position.y,
@@ -135,6 +178,7 @@ export class DesignerSurfaceGeometry {
     };
     this.document = view.document;
     this.revision = view.document.revision;
+    this.hostRevision = view.host.sceneRevision;
     this.valid = true;
     this.pending = {nodes: [...nodes.keys()], offset: 0};
     if (all || nodes.size <= 128) this.measurePending(Infinity);
@@ -168,7 +212,7 @@ export class DesignerSurfaceGeometry {
 
   get(id) {
     this.refresh();
-    return this.entries.get(id) ?? this.ensureEntry(id);
+    return this.ensureEntry(id);
   }
 
   /** Refresh only edited controls and their ancestor path after a temporary layout write. */
